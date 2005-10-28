@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="120" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="121" clone_windows="0"/>
 <globals body_outline_ratio="0.579954954955">
 	<global_window_position top="24" left="264" height="873" width="915"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -43,8 +43,9 @@
 <v t="ekr.20041119041019.1"><vh>@string remove_sentinels_extension = .txt</vh></v>
 <v t="ekr.20041119041019.2"><vh>@bool save_clears_undo_buffer = False</vh></v>
 <v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
-<v t="ekr.20041119050749.11" a="TV"><vh>@string headline_gmt_time = None</vh></v>
+<v t="ekr.20041119050749.11"><vh>@string headline_gmt_time = None</vh></v>
 <v t="ekr.20050126083026"><vh>@string undo_granularity = None</vh></v>
+<v t="ekr.20051027175030" a="TV"><vh>@bool autocomplete-brackets = False</vh></v>
 </v>
 <v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
 <v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
@@ -1781,5 +1782,7 @@ False: Selecting an outline node transfers focus to the body pane.
 <t tx="ekr.20051025084017.2">The full path to the spelling dictionary.</t>
 <t tx="ekr.20051025085144"></t>
 <t tx="ekr.20051025085144.1"></t>
+<t tx="ekr.20051027175030">True: When typing an opening bracket '(','[' or '{', immediately type the
+corresponding closing bracket.  To move past the closing bracket, just type it.</t>
 </tnodes>
 </leo_file>

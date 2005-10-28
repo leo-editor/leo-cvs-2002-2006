@@ -21,7 +21,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841" a="TV" annotate="7d71002e"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20051015100336"><vh>Older...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
@@ -1649,7 +1649,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050809091430.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
 </v>
-<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041121151002" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050104095950"><vh>@shortcutsEqualSizedPanes</vh></v>
 <v t="ekr.20050328101834"><vh>@page http plugin</vh>
 <v t="ekr.20050328101834.1"><vh>@bool http_active = False</vh></v>
@@ -1804,7 +1804,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit tests...</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -2463,7 +2463,7 @@ marks="ekr.20050415070840.12,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
+<v t="ekr.20051017093427" a="E"><vh>Test of remove-blank-lines</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"

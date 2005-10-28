@@ -2233,68 +2233,6 @@ while g.match(s,i,tag):
 #@nonl
 #@-node:ekr.20041005105605.158:<< put all @first lines in root >> (4.x)
 #@-node:ekr.20050506094742:Unused from atFile.writeOpenFile
-#@+node:ekr.20051021140337:Unused cut/copy/paste
-#@+node:ekr.20051011072049:OnCut (no longer used)
-# No longer used.  Was called from tkBody.createBindings.
-
-def OnCut (self,event=None):
-    
-    """The handler for the virtual Cut event."""
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    f = self ; c = f.c
-    
-    if 0: # g.app.gui.win32clipboard is always None.
-        if g.app.gui.win32clipboard:
-            data = f.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
-
-    # Activate the body key handler by hand.
-    f.body.forceFullRecolor()
-    f.body.onBodyWillChange(c.currentPosition(),"Cut")
-#@nonl
-#@-node:ekr.20051011072049:OnCut (no longer used)
-#@+node:ekr.20051011072903:OnCopy (no longer used)
-# No longer used.  Was called from tkBody.createBindings.
-
-def OnCopy (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    if 0: # g.app.gui.win32clipboard is always None.
-        f = self
-        if g.app.gui.win32clipboard:
-            data = f.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
-        
-    # Copy never changes dirty bits or syntax coloring.
-    
-#@-node:ekr.20051011072903:OnCopy (no longer used)
-#@+node:ekr.20051011072903.3:OnPaste (no longer used)
-# No longer used.  Was called from tkBody.createBindings.
-
-def OnPaste (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    f = self ; c = f.c
-  
-    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
-        bodyCtrl = f.body.bodyCtrl
-        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
-        bodyCtrl.insert('insert', s)
-        bodyCtrl.event_generate('<Key>')
-        bodyCtrl.update_idletasks()
-    else:
-        # Activate the body key handler by hand.
-        f.body.forceFullRecolor()
-        f.body.onBodyWillChange(c.currentPosition(),"Paste")
-    
-#@-node:ekr.20051011072903.3:OnPaste (no longer used)
-#@-node:ekr.20051021140337:Unused cut/copy/paste
 #@+node:ekr.20051021143159:From menu.createMenuEnties
 # From << set realLabel, amp_index and menu_shortcut >>
 
@@ -2852,6 +2790,547 @@ elif changed:
 #@-node:ekr.20051027045029.5:<< update the screen >>
 #@-node:ekr.20051027045029:OLDidle_head_key
 #@-node:ekr.20051026144126:From idle key handlers
+#@+node:ekr.20051028165714:NewHeadline
+#@+node:ekr.20051012124209:From leoEditCommands...
+#@+node:ekr.20050920084036.129:zapTo
+def zapTo (self,event):
+
+    k = self.k ; c = k.c ; w = event.widget
+    s = string.ascii_letters+string.digits+string.punctuation
+
+    if len(event.char) != 0 and event.char in s:
+        k.setState('zap',0)
+        i = w.search(event.char,'insert',stopindex='end')
+        k.resetLabel()
+        if i:
+            t = w.get('insert','%s+1c' % i)
+            c.killBufferCommands.addToKillBuffer(t)
+            w.delete('insert','%s+1c' % i)
+
+    return 'break'
+#@-node:ekr.20050920084036.129:zapTo
+#@+node:ekr.20050927102645:From bufferCommandsClass
+#@+node:ekr.20050920084036.46:setBufferListGetter
+def setBufferListGetter (self,buffer,method):
+
+    #Sets a method that returns a buffer name and its text, and its insert position.
+    self.bufferListGetters [buffer] = method
+#@nonl
+#@-node:ekr.20050920084036.46:setBufferListGetter
+#@+node:ekr.20050920084036.47:setBufferSetter
+def setBufferSetter( self, buffer, method ):
+
+    #Sets a method that takes a buffer name and the new contents.
+    self.bufferSetters[ buffer ] = method
+#@nonl
+#@-node:ekr.20050920084036.47:setBufferSetter
+#@+node:ekr.20050920084036.48:getBufferDict
+def getBufferDict (self,event):
+
+    w = event.widget
+    meth = self.bufferListGetters [w]
+    return meth()
+#@nonl
+#@-node:ekr.20050920084036.48:getBufferDict
+#@+node:ekr.20050920084036.49:setBufferData
+def setBufferData( self, event, name, data ):
+    
+    w = event.widget
+    meth = self.bufferSetters[ w ]
+    meth( name, data )
+#@nonl
+#@-node:ekr.20050920084036.49:setBufferData
+#@+node:ekr.20050920084036.50:setBufferGoto
+def setBufferGoto( self, w, method ):
+
+    self.bufferGotos[ w ] = method
+#@nonl
+#@-node:ekr.20050920084036.50:setBufferGoto
+#@+node:ekr.20050920084036.51:setBufferDelete
+def setBufferDelete( self, w, method ):
+    
+    self.bufferDeletes[ w ] = method
+#@nonl
+#@-node:ekr.20050920084036.51:setBufferDelete
+#@+node:ekr.20050920084036.52:setBufferRename
+def setBufferRename( self, buffer, method ):
+    
+    self.renameBuffers[ buffer ] = method
+#@nonl
+#@-node:ekr.20050920084036.52:setBufferRename
+#@-node:ekr.20050927102645:From bufferCommandsClass
+#@+node:ekr.20050920085536.43:findItemsWithPrefix (Not used)
+def findItemsWithPrefix (self,s,aList=None):
+
+    '''This method returns a sorted list of matches.
+    
+    It returns the list of matches and the longest common prefix of all the matches.'''
+
+    k = self ; c = k.c
+
+    common_prefix = ''
+
+    if s: pmatches = [a for a in aList if a.startswith(s)]
+    else: pmatches = []
+        
+    if pmatches:
+        s = pmatches[0] ; done = False
+        for i in xrange(len(s)):
+            prefix = s[:i]
+            for z in pmatches:
+                if not z.startswith(prefix):
+                    done = True ; break
+            if done:
+                break
+            else:
+                common_prefix = prefix
+        pmatches.sort()
+
+    # g.trace(repr(s),len(pmatches))
+    return pmatches,common_prefix
+#@nonl
+#@-node:ekr.20050920085536.43:findItemsWithPrefix (Not used)
+#@+node:ekr.20050920084036.73:startGoto (No longer used)
+def startGoto (self,event,ch=False):
+
+    k = self.k ; state = k.getState('goto')
+    k.setState('goto',state+1,handler=self.Goto)
+    k.setLabelBlue('')
+    return 'break'
+#@nonl
+#@-node:ekr.20050920084036.73:startGoto (No longer used)
+#@+node:ekr.20050920084036.143:Goto (no longer used)
+def Goto (self,event):
+
+    k = self.k ; w = event.widget
+    if event.keysym == 'Return':
+        i = k.getLabel()
+        k.resetLabel()
+        state = k.getState('goto')
+        k.setState('goto',0)
+        if i.isdigit():
+            if state == 1:
+                w.mark_set('insert','%s.0' % i)
+            elif state == 2:
+                w.mark_set('insert','1.0 +%sc' % i)
+            w.event_generate('<Key>')
+            w.update_idletasks()
+            w.see('insert')
+    else:
+        k.updateLabel(event)
+
+    return 'break'
+#@nonl
+#@-node:ekr.20050920084036.143:Goto (no longer used)
+#@+node:ekr.20050930091642:walkKB
+def walkKB( self, event, frm, which ):# kb = self.iterateKillBuffer() ):
+
+    k = self.k ; w = event.widget
+    i = w.index( 'insert' )
+    t , t1 = i.split( '.' )
+    clip_text = self.getClipboard( w )    
+    if self.killbuffer or clip_text:
+        if which == 'c':
+            self.reset = True
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            w.tag_delete( 'kb' )
+            w.insert( frm, txt, ('kb') )
+            w.mark_set( 'insert', i )
+        else:
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            t1 = str( int( t1 ) + len( txt ) )
+            r = w.tag_ranges( 'kb' )
+            if r and r[ 0 ] == i:
+                w.delete( r[ 0 ], r[ -1 ] )
+            w.tag_delete( 'kb' )
+            w.insert( frm, txt, ('kb') )
+            w.mark_set( 'insert', i )
+    return k._tailEnd( w )
+#@nonl
+#@-node:ekr.20050930091642:walkKB
+#@+node:ekr.20050930095323:killSentenceHelper
+def killSentenceHelper (self,event,back):
+    w = event.widget
+    i = w.search('.','insert',stopindex='end')
+    if back:
+        i = w.search('.','insert',backwards=True,stopindex='1.0')
+        if not i: return 'break'
+        i2 = w.search('.',i,backwards=True,stopindex='1.0') or '1.0'
+        return self.kill(event,i2,'%s + 1c' % i)
+    else:
+        i  = w.search('.','insert',stopindex='end')
+        i2 = w.search('.','insert',backwards=True,stopindex='1.0')
+    if i:
+        i2 = g.choose(i2=='','1.0',i2+'+1c ')
+        self.kill(event,i2,'%s + 1c' % i)
+
+    return 'break'
+#@nonl
+#@-node:ekr.20050930095323:killSentenceHelper
+#@+node:ekr.20050920085536.69:tailEnd...
+#@+node:ekr.20050920114619.1:utTailEnd
+def utTailEnd (self,event=None):
+
+    '''A method that Emacs will call with its _tailEnd method'''
+    
+    k = self ; c = k.c ; w = c.frame.bodyCtrl
+
+    # w.event_generate('<Key>')
+    w.focus_force()
+    w.update_idletasks()
+    # c.frame.bodyWantsFocus(w,later=True,tag='utTailEnd')
+
+    return 'break'
+#@nonl
+#@-node:ekr.20050920114619.1:utTailEnd
+#@+node:ekr.20050920085536.70:_tailEnd
+def _tailEnd (self,w):
+    
+    '''This returns the tailEnd function that has been configure for the w parameter.'''
+    
+    k = self
+    func = k.tailEnds.get(w)
+    if func:
+        # g.trace(func)
+        return func(w)
+    else:
+        return 'break'
+#@-node:ekr.20050920085536.70:_tailEnd
+#@+node:ekr.20050920085536.71:setTailEnd
+def setTailEnd (self,w,tailCall):
+
+    '''This method sets a ending call that is specific for a particular Text widget.
+       Some environments require that specific end calls be made after a keystroke
+       or command is executed.'''
+
+    k = self
+
+    k.tailEnds [w] = tailCall
+#@-node:ekr.20050920085536.71:setTailEnd
+#@-node:ekr.20050920085536.69:tailEnd...
+#@+node:ekr.20050920084036.44:setInBufferMode
+def setInBufferMode (self,event,which):
+    
+    k = self.k ; w = event.widget
+
+    k.keyboardQuit(event)
+    k.setState('bufferList','start%s' % which)
+    k.setLabelBlue('Choose Buffer Name: ',protect=True)
+    self.bufferDict = self.getBufferDict(event)
+
+    return 'break'
+#@nonl
+#@-node:ekr.20050920084036.44:setInBufferMode
+#@+node:ekr.20050920084036.256:executeRegister (not used)
+def executeRegister (self,event):
+    
+    k = self.k
+
+    if self.method:
+        self.method(event)
+
+        if self.registerMode != 0:
+            k.keyboardQuit(event)
+#@nonl
+#@-node:ekr.20050920084036.256:executeRegister (not used)
+#@-node:ekr.20051012124209:From leoEditCommands...
+#@+node:ekr.20051012141518:From bufferCommandsClass
+#@+node:ekr.20050927101829.2:buildBufferList (not used)
+def buildBufferList (self):
+
+    '''Build a buffer list from an outline.'''
+    
+    self.positions =  {}
+    self.tnodes = {}
+
+    for p in c.allNodes_iter():
+    
+        t = p.v.t ; h = t.headString()
+        
+        theList = self.positions.get(h,[])
+        theList.append(p.copy())
+        self.positions [h] = theList
+        
+        self.tnodes [h] = t.bodyString()
+#@nonl
+#@-node:ekr.20050927101829.2:buildBufferList (not used)
+#@+node:ekr.20050920084036.41:bufferList (to be deleted)
+def bufferList (self,event):
+    
+    k = self.k
+    state = k.getState('bufferList')
+    if state.startswith('start'):
+        state = state[5:]
+        k.setState('bufferList',state)
+        k.setLabel('')
+    if event.keysym=='Tab':
+        stext = k.getLabel().strip()
+        if self.bufferTracker.prefix and stext.startswith(self.bufferTracker.prefix):
+            k.setLabel(self.bufferTracker.next())#get next in iteration
+        else:
+            prefix = k.getLabel()
+            pmatches =[]
+            for z in self.bufferDict.keys():
+                if z.startswith(prefix):
+                    pmatches.append(z)
+            self.bufferTracker.setTabList(prefix,pmatches)
+            k.setLabel(self.bufferTracker.next())#begin iteration on new lsit
+    elif event.keysym=='Return':
+       bMode = k.getState('bufferList')
+       c.commandsDict[bMode](event,k.getLabel())
+    else:
+        self.update(event)
+#@nonl
+#@-node:ekr.20050920084036.41:bufferList (to be deleted)
+#@+node:ekr.20051012133615:switchToBuffer (not used)
+def switchToBuffer (self,event,name):
+
+    method = self.bufferGotos [event.widget]
+    self.keyboardQuit(event)
+    method(name)
+    return 'break'
+#@-node:ekr.20051012133615:switchToBuffer (not used)
+#@-node:ekr.20051012141518:From bufferCommandsClass
+#@+node:ekr.20050920084036.251:_ToReg (not used)
+def _ToReg (self,event,which):
+
+    if not self._chckSel(event):
+        return
+    if self._checkIfRectangle(event):
+        return
+
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        w = event.widget
+        if not self.registers.has_key(event.keysym):
+            self.registers [event.keysym] = ''
+        txt = w.get('sel.first','sel.last')
+        rtxt = self.registers [event.keysym]
+        if self.which == 'p':
+            txt = txt + rtxt
+        else:
+            txt = rtxt + txt
+        self.registers [event.keysym] = txt
+#@nonl
+#@-node:ekr.20050920084036.251:_ToReg (not used)
+#@-node:ekr.20051028165714:NewHeadline
+#@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
+class editCommands:
+
+    @others
+#@nonl
+#@+node:ekr.20050723064110.1:ctor
+def __init__ (self,c):
+    
+    self.c = c
+
+    self.mode = 'default'
+    self.modeStack = []
+    
+    self.defaultWordChars1, self.defaultWordChars2 = self.setDefaultWordChars()
+    self.wordChars1 = self.defaultWordChars1
+    self.wordChars2 = self.defaultWordChars2
+
+    self.setDefaultOptions()
+#@nonl
+#@-node:ekr.20050723064110.1:ctor
+#@+node:ekr.20050723064110.3:Options...
+#@+node:ekr.20050723064110.4:setDefaultOptions
+def setDefaultOptions(self):
+    
+    self.options = {
+        'extendMovesForward':   True,  # True: moving forward may cross node boundaries.
+        'extendMovesBack':      True,  # True: moving back may cross node boundaries.
+        'extendFindsForward':   True,   # True: find forward may cross node boundaries.
+        'extendFindsBack':      True,   # True: find back may cross node boundaries.
+    }
+#@nonl
+#@-node:ekr.20050723064110.4:setDefaultOptions
+#@+node:ekr.20050723064110.5:getOption
+def getOption (self,optionName):
+    
+    # This may change when modes get put in.
+    return self.options.get(optionName)
+#@nonl
+#@-node:ekr.20050723064110.5:getOption
+#@-node:ekr.20050723064110.3:Options...
+#@+node:ekr.20050723064110.6:Word stuff...
+#@+node:ekr.20050723064110.7:findWordStart
+def findWordStart(self,s,i):
+    
+    while i < len(s):
+        if s[i] in self.wordChars1:
+            return i
+        else:
+            i += 1
+    return i
+#@nonl
+#@-node:ekr.20050723064110.7:findWordStart
+#@+node:ekr.20050723064110.8:insideWord
+def insideWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        0 < i < len(s) and
+        s[i] in self.wordChars2 and
+        s[i-1] in self.wordChars2
+    )
+#@nonl
+#@-node:ekr.20050723064110.8:insideWord
+#@+node:ekr.20050723064110.9:skipWord
+def skipWord(self,s,i):
+    
+    while i < len(s) and s[i] in self.wordChars2:
+        i += 1
+    return i
+#@nonl
+#@-node:ekr.20050723064110.9:skipWord
+#@+node:ekr.20050723064110.10:startsWord
+def startsWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        i < len(s) and 
+        s[i] in self.wordChars1 and
+        (i == 0 or s[i-1] not in self.wordChars1)
+    )
+#@nonl
+#@-node:ekr.20050723064110.10:startsWord
+#@+node:ekr.20050723064110.11:setDefaultWordChars
+def setDefaultWordChars (self):
+    
+    chars1 = '_' + string.letters
+    chars2 = '_' + string.letters + string.digits
+    return chars1, chars2
+#@nonl
+#@-node:ekr.20050723064110.11:setDefaultWordChars
+#@-node:ekr.20050723064110.6:Word stuff...
+#@+node:ekr.20050723064110.12:Cursor movement
+#@+node:ekr.20050723064110.13:moveBackwardChar
+def moveBackwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i -= 1
+    if i >= 0:
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            s = p.bodyString()
+            if len(s) > 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(len(s)-1)
+                return True
+            else:
+                p.moveToThreadBack()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.13:moveBackwardChar
+#@+node:ekr.20050723064110.14:moveBackwardWord (Finish)
+def moveBackwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.findWordStart(s,i)
+    i = self.findWordStart(s,i) ###
+    if self.startsWord(s,i): ###
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            c.selectPosition(p)
+            if self.moveBackwardWord(0):
+                return True
+            p.moveToThreadBack()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.14:moveBackwardWord (Finish)
+#@+node:ekr.20050723064110.15:moveForwardChar
+def moveForwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i += 1
+    if i < len(s):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            if len(p.bodyString()) > 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(0)
+                return True
+            else:
+                p.moveToThreadNext()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.15:moveForwardChar
+#@+node:ekr.20050723064110.16:moveForwardWord
+def moveForwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.skipWord(s,i)
+    i = self.findWordStart(s,i)
+    if self.startsWord(s,i):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            c.selectPosition(p)
+            if self.moveForwardWord(0):
+                return True
+            p.moveToThreadNext()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.16:moveForwardWord
+#@+node:ekr.20050723064110.17:selectWord
+#@-node:ekr.20050723064110.17:selectWord
+#@+node:ekr.20050723064110.18:selectForwordWord
+def selectForwardWord (self):
+    
+    c = self ; b = c.frame.body ; s = b.getAllText()
+
+    i = i1 = b.getPythonInsertionPoint()
+    
+    if i < len(s) and g.is_c_id(s[i]):
+        i = g.skip_c_id(s,i+1)
+    
+    while i < len(s) and not g.is_c_id(s[i]):
+        i += 1
+        
+    if i < len(s) and g.is_c_id(s[i]):
+        # b.setPythonTextSelection(i1,i)
+        pass ### TODO
+#@nonl
+#@-node:ekr.20050723064110.18:selectForwordWord
+#@-node:ekr.20050723064110.12:Cursor movement
+#@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
