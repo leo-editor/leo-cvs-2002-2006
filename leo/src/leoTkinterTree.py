@@ -1931,8 +1931,10 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; u = c.undoer ; w = self.edit_text(p)
         
         # Use the revert point, if present, as the undo point.
-        undoData = u.beforeChangeNodeContents(p,
-            oldHead=c.frame.revertHeadline or p.headString())
+        # UndoType can be None: aborting a headline edit is not undoable.
+        if undoType:
+            undoData = u.beforeChangeNodeContents(p,
+                oldHead=c.frame.revertHeadline or p.headString())
         if w:
             s = w.get('1.0','end')
             #@        << truncate s if it has multiple lines >>
@@ -1968,8 +1970,9 @@ class leoTkinterTree (leoFrame.leoTree):
         finally:
             c.endUpdate()
     
-        u.afterChangeNodeContents(p,undoType,undoData,
-            dirtyVnodeList=dirtyVnodeList)
+        if undoType:
+            u.afterChangeNodeContents(p,undoType,undoData,
+                dirtyVnodeList=dirtyVnodeList)
     #@nonl
     #@-node:ekr.20040803072955.91:onHeadChanged
     #@-node:ekr.20040803072955.90:head key handlers

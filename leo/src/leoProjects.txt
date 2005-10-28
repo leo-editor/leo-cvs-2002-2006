@@ -23032,8 +23032,10 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
     
     # Use the revert point, if present, as the undo point.
-    undoData = u.beforeChangeNodeContents(p,
-        oldHead=c.frame.revertHeadline or p.headString())
+    # UndoType can be None: aborting a headline edit is not undoable.
+    if undoType:
+        undoData = u.beforeChangeNodeContents(p,
+            oldHead=c.frame.revertHeadline or p.headString())
     if w:
         s = w.get('1.0','end')
         << truncate s if it has multiple lines >>
@@ -23046,8 +23048,9 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     finally:
         c.endUpdate()
 
-    u.afterChangeNodeContents(p,undoType,undoData,
-        dirtyVnodeList=dirtyVnodeList)
+    if undoType:
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)
 #@nonl
 #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
 # Kludge remove one or two trailing newlines before warning of truncation.
@@ -24894,8 +24897,10 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
     
     # Use the revert point, if present, as the undo point.
-    undoData = u.beforeChangeNodeContents(p,
-        oldHead=c.frame.revertHeadline or p.headString())
+    # UndoType can be None: aborting a headline edit is not undoable.
+    if undoType:
+        undoData = u.beforeChangeNodeContents(p,
+            oldHead=c.frame.revertHeadline or p.headString())
     if w:
         s = w.get('1.0','end')
         << truncate s if it has multiple lines >>
@@ -24908,8 +24913,9 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     finally:
         c.endUpdate()
 
-    u.afterChangeNodeContents(p,undoType,undoData,
-        dirtyVnodeList=dirtyVnodeList)
+    if undoType:
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)
 #@nonl
 #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
 # Kludge remove one or two trailing newlines before warning of truncation.
@@ -25200,7 +25206,12 @@ w.delete("insert -%dc" % (max(1,count)),"insert")
 
 - Clicking in the body pane could loose the latest headline edit
 
-The fix was always to call p.initHeadString(s) in updateHead.  This required reimplementing the abort editing logic.
+The fix was always to call p.initHeadString(s) in updateHead. This required
+reimplementing the abort editing logic.
+
+- abortEditLabelCommand calls onHeadChanged with undoType = None. Indeed,
+aborting a headline edit is not undoable, and does not affect the undo state in
+any way.
 #@nonl
 #@-node:ekr.20051027182727:Notes
 #@+node:ekr.20040803072955.90:head key handlers
@@ -25283,8 +25294,10 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
     
     # Use the revert point, if present, as the undo point.
-    undoData = u.beforeChangeNodeContents(p,
-        oldHead=c.frame.revertHeadline or p.headString())
+    # UndoType can be None: aborting a headline edit is not undoable.
+    if undoType:
+        undoData = u.beforeChangeNodeContents(p,
+            oldHead=c.frame.revertHeadline or p.headString())
     if w:
         s = w.get('1.0','end')
         << truncate s if it has multiple lines >>
@@ -25297,8 +25310,9 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     finally:
         c.endUpdate()
 
-    u.afterChangeNodeContents(p,undoType,undoData,
-        dirtyVnodeList=dirtyVnodeList)
+    if undoType:
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)
 #@nonl
 #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
 # Kludge remove one or two trailing newlines before warning of truncation.
