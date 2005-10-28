@@ -219,6 +219,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         self.default_line_height = 17 + 2 # default if can't set line_height from font.
         self.line_height = self.default_line_height
+        
+        self.minimum_headline_width = 20 # In characters.
         #@nonl
         #@-node:ekr.20040803072955.17:<< define drawing constants >>
         #@nl
@@ -600,7 +602,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # Common configuration.
         # We must call setText even if p matches: p's text may have changed!
         self.setText(t,p.headString())
-        t.configure(width=self.headWidth(p))
+        t.configure(width=self.headWidth(p=p))
         t.leo_position = p # Never changes.
         t.leo_generation = self.generation
     
@@ -721,11 +723,14 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.27:tree.getFont,setFont,setFontFromConfig
     #@+node:ekr.20040803072955.28:headWidth & widthInPixels
-    def headWidth(self,v):
+    def headWidth(self,p=None,s=''):
     
         """Returns the proper width of the entry widget for the headline."""
+        
+        if p:
+            s = p.headString()
     
-        return max(10,5 + len(v.headString()))
+        return max(self.minimum_headline_width,5 + len(s))
         
     def widthInPixels(self,s):
     
@@ -1910,7 +1915,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if 0: # p does not *officially* change until onHeadChanged is called.
             p.initHeadString(s)
-        w.configure(width=max(20,self.headWidth(p)))
+        w.configure(width=self.headWidth(s=s))
         w.update_idletasks()
     
         # The granularity is the entire editing session,
