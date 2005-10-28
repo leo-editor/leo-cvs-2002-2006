@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="8508" clone_windows="0"/>
 <globals body_outline_ratio="0.518959913326">
-	<global_window_position top="11" left="391" height="923" width="797"/>
+	<global_window_position top="10" left="452" height="923" width="768"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,8 +14,7 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040711135244.11,ekr.20040711135244.11,ekr.20051025071455,ekr.20031218072017.2052,ekr.20031218072017.2052,"
-expanded="ekr.20040803072955.91,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040711135244.11,ekr.20040711135244.11,ekr.20031218072017.2052,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20050831131028"><vh>opml</vh>
@@ -26,7 +25,8 @@ expanded="ekr.20040803072955.91,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20050915062404"><vh>My post</vh></v>
 </v>
 <v t="ekr.20040117181936"
-expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+marks="ekr.20051025071455,"
+expanded="ekr.20051028061611.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20051025065958"><vh>(Recent)</vh>
@@ -80,129 +80,7 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
-<v t="ekr.20051023094009"><vh>Search classes</vh>
-<v t="ekr.20051020120306.6"><vh>class findTab (leoFind.leoFind)</vh>
-<v t="ekr.20051020120306.10"><vh>Birth &amp; death</vh>
-<v t="ekr.20051020120306.11"><vh>__init__</vh>
-<v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051023181449"><vh>find.createBindings</vh></v>
-<v t="ekr.20051020120306.13"><vh>find.createFrame</vh>
-<v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
-<v t="ekr.20051020120306.16"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.17"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.18"><vh>&lt;&lt; Create two columns of buttons &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.19"><vh>find.init</vh>
-<v t="ekr.20051020120306.20"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.21"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051020120306.22"><vh>find.update_ivars</vh></v>
-<v t="ekr.20051023183028"><vh>findButtonCallback</vh></v>
-<v t="ekr.20051024192602"><vh> Top level</vh>
-<v t="ekr.20051024192642.2"><vh>findNext/PrefCommand</vh></v>
-<v t="ekr.20051024192642.3"><vh>change/ThenFindCommand</vh></v>
-</v>
-<v t="ekr.20051020120306.25"><vh>hideTab</vh></v>
-<v t="ekr.20051020120306.26"><vh>bringToFront</vh></v>
-<v t="ekr.20051020120306.27"><vh>selectAllFindText</vh></v>
-<v t="ekr.20051020120306.28"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
-<v t="ekr.20051020120306.1"><vh>class underlinedTkButton</vh>
-<v t="ekr.20051020120306.2"><vh>__init__</vh>
-<v t="ekr.20051020120306.3"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.4"><vh>bindHotKey</vh></v>
-<v t="ekr.20051020120306.5"><vh>buttonCallback</vh></v>
-</v>
-</v>
-<v t="ekr.20050920084036.257"><vh>class searchCommandsClass</vh>
-<v t="ekr.20050920084036.258"><vh> ctor</vh></v>
-<v t="ekr.20050920084036.259"><vh>getPublicCommands (searchCommandsClass)</vh></v>
-<v t="ekr.20051022211617"><vh>find tab...</vh>
-<v t="ekr.20051020120306"><vh>openFindTab</vh></v>
-<v t="ekr.20051022212004"><vh>commands...</vh></v>
-</v>
-<v t="ekr.20050920084036.261"><vh>incremental search...</vh>
-<v t="ekr.20050920084036.262"><vh>startIncremental</vh></v>
-<v t="ekr.20050920084036.264"><vh>iSearchStateHandler &amp; helper</vh>
-<v t="ekr.20051002120125"><vh>&lt;&lt; do a non-incremental search &gt;&gt;</vh></v>
-<v t="ekr.20050920084036.263"><vh>iSearchHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.265"><vh>scolorizer</vh></v>
-</v>
-<v t="ekr.20050920084036.267"><vh>non-incremental search...</vh>
-<v t="ekr.20050920084036.269"><vh>seachForward/Backward &amp; helper</vh>
-<v t="ekr.20050920084036.268"><vh>plainSearchHelper</vh></v>
-</v>
-<v t="ekr.20051002111614"><vh>wordSearchBackward/Forward &amp; helper</vh>
-<v t="ekr.20050920084036.272"><vh>wordSearchHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.274"><vh>reSearchBackward/Forward &amp; helper</vh>
-<v t="ekr.20050920084036.275"><vh>reSearchHelper</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20051025071455" a="M"><vh>Spell classes</vh>
-<v t="ekr.20051025071455.3"><vh>&lt;&lt; specify aspell directories &gt;&gt;</vh></v>
-<v t="ekr.20051025071455.6"><vh>class Aspell</vh>
-<v t="ekr.20051025071455.7"><vh>Birth &amp; death</vh>
-<v t="ekr.20051025071455.8"><vh>__init__</vh></v>
-<v t="ekr.20051025071455.9"><vh>getAspellDirectory (not used)</vh></v>
-</v>
-<v t="ekr.20051025071455.10"><vh>processWord</vh></v>
-<v t="ekr.20051025071455.11"><vh>updateDictionary</vh></v>
-</v>
-<v t="ekr.20051025071455.1"><vh>class spellCommandsClass</vh>
-<v t="ekr.20051025080056"><vh>ctor</vh></v>
-<v t="ekr.20051025080420"><vh>getPublicCommands (searchCommandsClass)</vh></v>
-<v t="ekr.20051025080633"><vh>openSpellTab</vh></v>
-<v t="ekr.20051025080420.1"><vh>commands...</vh></v>
-</v>
-<v t="ekr.20051025071455.18"><vh>class spellTab (leoFind.leoFind)</vh>
-<v t="ekr.20051025071455.19"><vh>Birth &amp; death</vh>
-<v t="ekr.20051025071455.20"><vh>spellTab.__init__</vh></v>
-<v t="ekr.20051025094004"><vh>init_aspell</vh></v>
-<v t="ekr.20051025071455.22"><vh>createSpellTab</vh>
-<v t="ekr.20051025071455.23"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
-<v t="ekr.20051025071455.24"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051025120920"><vh>createBindings</vh></v>
-<v t="ekr.20051025071455.16"><vh>readDictionary</vh></v>
-</v>
-<v t="ekr.20051025071455.29"><vh>Buttons</vh>
-<v t="ekr.20051025071455.30"><vh>onAddButton</vh></v>
-<v t="ekr.20051025071455.31"><vh>onIgnoreButton</vh></v>
-<v t="ekr.20051025071455.32"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
-<v t="ekr.20051025071455.33"><vh>onFindButton</vh></v>
-<v t="ekr.20051025071455.34"><vh>onHideButton</vh></v>
-</v>
-<v t="ekr.20051025071455.36"><vh>Commands</vh>
-<v t="ekr.20051025071455.37"><vh>add</vh></v>
-<v t="ekr.20051025071455.38"><vh>change</vh></v>
-<v t="ekr.20051025071455.40"><vh>find</vh></v>
-<v t="ekr.20051025121408"><vh>hide</vh></v>
-<v t="ekr.20051025071455.41"><vh>ignore</vh></v>
-</v>
-<v t="ekr.20051025071455.42"><vh>Helpers</vh>
-<v t="ekr.20051025071455.43"><vh>bringToFront</vh></v>
-<v t="ekr.20051025071455.44"><vh>fillbox</vh></v>
-<v t="ekr.20051025071455.45"><vh>findNextMisspelledWord</vh>
-<v t="ekr.20051025071455.46"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051025071455.47"><vh>findNextWord</vh></v>
-<v t="ekr.20051025071455.48"><vh>getSuggestion</vh></v>
-<v t="ekr.20051025071455.49"><vh>onMap</vh></v>
-<v t="ekr.20051025071455.50"><vh>onSelectListBox</vh></v>
-<v t="ekr.20051025071455.51"><vh>update</vh></v>
-<v t="ekr.20051025071455.52"><vh>updateButtons</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20031218072017.3756"><vh>defineEditMenuFindMenuTable</vh></v>
+<v t="ekr.20051025150224"><vh>onIdleTime</vh></v>
 </v>
 <v t="ekr.20051016115757"><vh>4.4a1 projects</vh>
 <v t="ekr.20050929075341"><vh>Added option for selected body text</vh>
@@ -549,6 +427,7 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20051018102027"><vh>deleteTab</vh></v>
+<v t="ekr.20051027114433"><vh>getSelectedTab</vh></v>
 <v t="ekr.20051018061932.1"><vh>ower/raiseTab</vh></v>
 <v t="ekr.20051019170806"><vh>renameTab</vh></v>
 <v t="ekr.20051016101724.1"><vh>selectTab</vh></v>
@@ -738,6 +617,7 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20051018102027"><vh>deleteTab</vh></v>
+<v t="ekr.20051027114433"><vh>getSelectedTab</vh></v>
 <v t="ekr.20051018061932.1"><vh>ower/raiseTab</vh></v>
 <v t="ekr.20051019170806"><vh>renameTab</vh></v>
 <v t="ekr.20051016101724.1"><vh>selectTab</vh></v>
@@ -842,7 +722,7 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20051024152318.2"><vh>Event handlers</vh>
 <v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
-<v t="ekr.20040803072955.91" a="E"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
 <v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
 </v>
 </v>
@@ -904,6 +784,7 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20051018102027"><vh>deleteTab</vh></v>
+<v t="ekr.20051027114433"><vh>getSelectedTab</vh></v>
 <v t="ekr.20051018061932.1"><vh>ower/raiseTab</vh></v>
 <v t="ekr.20051019170806"><vh>renameTab</vh></v>
 <v t="ekr.20051016101724.1"><vh>selectTab</vh></v>
@@ -935,70 +816,130 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051011072903.4"><vh>OnPasteFromMenu</vh></v>
 </v>
 </v>
+<v t="ekr.20051025161103"><vh>(Fixed settingsTree)</vh>
+<v t="ekr.20041225063637.79"><vh>ctor (settingsTree)</vh></v>
+</v>
+<v t="ekr.20051025162409"><vh>(Fix warnings in compare dialog)</vh>
+<v t="ekr.20051026070250"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.3842"><vh>finishCreate (tkComparePanel)</vh></v>
+</v>
 <v t="ekr.20051025110549"><vh>(Keep the focus in the body)</vh>
-<v t="ekr.20031218072017.2812"><vh>c.__init__</vh></v>
+<v t="ekr.20051027114909"><vh>Notes</vh></v>
+<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
 <v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
 <v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
 <v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
 </v>
-</v>
-<v t="ekr.20051025161103"><vh>(Fixed settingsTree)</vh>
-<v t="ekr.20041225063637.79"><vh>ctor (settingsTree)</vh></v>
-</v>
-<v t="ekr.20051025150540"><vh>(Test focus at idle time)</vh>
-<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
-<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
-</v>
-<v t="ekr.20051025150224"><vh>onIdleTime</vh></v>
 <v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
 <v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
 <v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
 <v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
 </v>
+<v t="ekr.20051025150224"><vh>onIdleTime</vh></v>
 </v>
-<v t="ekr.20051025162409"><vh>(Fix warnings in compare dialog)</vh>
-<v t="ekr.20051026070250"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3842"><vh>finishCreate (tkComparePanel)</vh></v>
+<v t="ekr.20051025152727"><vh>(Replaced idle-key logic with direct logic) </vh>
+<v t="ekr.20051027135712"><vh>Notes</vh></v>
+<v t="ekr.20040803072955.125"><vh>Selecting &amp; editing... (tkTree)</vh>
+<v t="ekr.20040803072955.126"><vh>endEditLabel</vh></v>
+<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.134"><vh>tree.set...LabelState</vh>
+<v t="ekr.20040803072955.135"><vh>setNormalLabelState</vh></v>
+<v t="ekr.20040803072955.136"><vh>setDisabledLabelState</vh></v>
+<v t="ekr.20040803072955.137"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20040803072955.138"><vh>setUnselectedLabelState</vh></v>
+<v t="ekr.20040803072955.139"><vh>setDisabledHeadlineColors</vh></v>
+<v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
+<v t="ekr.20040803072955.141"><vh>setUnselectedHeadlineColors</vh></v>
+</v>
+<v t="ekr.20040803072955.142"><vh>dimEditLabel, undimEditLabel</vh></v>
+<v t="ekr.20040803072955.143"><vh>tree.expandAllAncestors</vh></v>
+</v>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+<v t="ekr.20051011072903.1"><vh>OnCopyFromMenu</vh></v>
+<v t="ekr.20051011072049.1"><vh>OnCutFromMenu</vh></v>
+<v t="ekr.20051011072903.4"><vh>OnPasteFromMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.1320"><vh>body key handlers</vh>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkTree)</vh></v>
+<v t="ekr.20051026083733"><vh>updateBody (new in 4.4a2)</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
+<v t="ekr.20051026143009"><vh>&lt;&lt; remove extra Trailing newlines &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
+<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
+<v t="ekr.20051026092433"><vh>updateTab</vh></v>
+<v t="ekr.20051026092433.1"><vh>updateBackspace</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.3070"><vh>changeSelection</vh></v>
+<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051027170318"><vh>(Implemented Auto () {} []  )</vh>
+<v t="ekr.20051027175147"><vh>Notes</vh></v>
+<v t="ekr.20051026083733"><vh>updateBody (new in 4.4a2)</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
+<v t="ekr.20051026143009"><vh>&lt;&lt; remove extra Trailing newlines &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
+<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
+<v t="ekr.20051026092433"><vh>updateTab</vh></v>
+<v t="ekr.20051026092433.1"><vh>updateBackspace</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051027170018.1"><vh>( Fixed various headlineproblems )</vh>
+<v t="ekr.20051027182727"><vh>Notes</vh></v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
 </v>
 <v t="ekr.20051026170025"><vh>Other improvements</vh></v>
 </v>
 </v>
 <v t="ekr.20050921094025"><vh>4.4 To do</vh>
 <v t="ekr.20051025101030"><vh>before a2</vh>
-<v t="ekr.20051008131807"><vh>Unit tests</vh></v>
-<v t="ekr.20051021210459"><vh>Docs</vh>
-<v t="ekr.20051017140811"><vh>Original temac bindings</vh></v>
-</v>
-<v t="ekr.20051014104337.1"><vh>Crash in undo</vh></v>
+<v t="ekr.20051021210459"><vh>Docs</vh></v>
 <v t="ekr.20051017132446"><vh>Hang in MacOS scripting</vh></v>
+<v t="ekr.20051014104337.1"><vh>Crash in undo</vh></v>
 </v>
 <v t="ekr.20051016162724"><vh>before a3</vh>
-<v t="ekr.20051018104223"><vh>Improve minibuffer commands</vh>
-<v t="ekr.20051012053017.4"><vh>Search improvements</vh></v>
-<v t="ekr.20051014122218"><vh>kill/yank from the xemacs tutorial</vh></v>
-<v t="ekr.20051017111216"><vh>Commands to fix</vh>
-<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
-<v t="ekr.20050920084036.75"><vh>backToIndentation</vh></v>
-<v t="ekr.20050920084036.78"><vh>indentRelative</vh></v>
-<v t="ekr.20050920084036.149"><vh>back/forwardWord &amp; helper</vh></v>
-<v t="ekr.20050920084036.107"><vh>indentRegion</vh></v>
-<v t="ekr.20050920084036.219"><vh>findNextMatch</vh>
-<v t="ekr.20051005155611"><vh>&lt;&lt; handle regexp &gt;&gt;</vh></v>
-<v t="ekr.20051005160923"><vh>&lt;&lt; handle plain search &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051012054228"><vh>Vim mode (k.vimMode)</vh></v>
-<v t="ekr.20050928144501"><vh>Expand commands to handle Leo environment</vh></v>
-<v t="ekr.20051021074728"><vh>Space completion</vh></v>
-</v>
-<v t="ekr.20051027105304"><vh>before b1</vh>
-<v t="ekr.20051014152256"><vh>Fix long-standing bug in import code</vh>
-<v t="ekr.20040930075711"><vh>Handle underindented lines</vh></v>
-<v t="ekr.20040722132104"><vh>Write script to report underindented lines</vh></v>
-</v>
-</v>
-<v t="ekr.20051023125705"><vh>Asap (cool)</vh>
+<v t="ekr.20051028061802"><vh>Use tab for autocompleter</vh>
 <v t="ekr.20051025144611"><vh>Autocompleter (Do not delete)</vh>
 <v t="ekr.20051025144611.1"><vh>Configuration</vh>
 <v t="ekr.20051025144611.2"><vh>autocompleter.ini</vh></v>
@@ -1050,6 +991,158 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20051028061546"><vh>Improve spell tab</vh>
+<v t="ekr.20051025071455" a="M"><vh>Spell classes</vh>
+<v t="ekr.20051025071455.3"><vh>&lt;&lt; specify aspell directories &gt;&gt;</vh></v>
+<v t="ekr.20051025071455.6"><vh>class Aspell</vh>
+<v t="ekr.20051025071455.7"><vh>Birth &amp; death</vh>
+<v t="ekr.20051025071455.8"><vh>__init__</vh></v>
+<v t="ekr.20051025071455.9"><vh>getAspellDirectory (not used)</vh></v>
+</v>
+<v t="ekr.20051025071455.10"><vh>processWord</vh></v>
+<v t="ekr.20051025071455.11"><vh>updateDictionary</vh></v>
+</v>
+<v t="ekr.20051025071455.1"><vh>class spellCommandsClass</vh>
+<v t="ekr.20051025080056"><vh>ctor</vh></v>
+<v t="ekr.20051025080420"><vh>getPublicCommands (searchCommandsClass)</vh></v>
+<v t="ekr.20051025080633"><vh>openSpellTab</vh></v>
+<v t="ekr.20051025080420.1"><vh>commands...</vh></v>
+</v>
+<v t="ekr.20051025071455.18"><vh>class spellTab (leoFind.leoFind)</vh>
+<v t="ekr.20051025071455.19"><vh>Birth &amp; death</vh>
+<v t="ekr.20051025071455.20"><vh>spellTab.__init__</vh></v>
+<v t="ekr.20051025094004"><vh>init_aspell</vh></v>
+<v t="ekr.20051025071455.22"><vh>createSpellTab</vh>
+<v t="ekr.20051025071455.23"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
+<v t="ekr.20051025071455.24"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051025120920"><vh>createBindings</vh></v>
+<v t="ekr.20051025071455.16"><vh>readDictionary</vh></v>
+</v>
+<v t="ekr.20051025071455.29"><vh>Buttons</vh>
+<v t="ekr.20051025071455.30"><vh>onAddButton</vh></v>
+<v t="ekr.20051025071455.31"><vh>onIgnoreButton</vh></v>
+<v t="ekr.20051025071455.32"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
+<v t="ekr.20051025071455.33"><vh>onFindButton</vh></v>
+<v t="ekr.20051025071455.34"><vh>onHideButton</vh></v>
+</v>
+<v t="ekr.20051025071455.36"><vh>Commands</vh>
+<v t="ekr.20051025071455.37"><vh>add</vh></v>
+<v t="ekr.20051025071455.38"><vh>change</vh></v>
+<v t="ekr.20051025071455.40"><vh>find</vh></v>
+<v t="ekr.20051025121408"><vh>hide</vh></v>
+<v t="ekr.20051025071455.41"><vh>ignore</vh></v>
+</v>
+<v t="ekr.20051025071455.42"><vh>Helpers</vh>
+<v t="ekr.20051025071455.43"><vh>bringToFront</vh></v>
+<v t="ekr.20051025071455.44"><vh>fillbox</vh></v>
+<v t="ekr.20051025071455.45"><vh>findNextMisspelledWord</vh>
+<v t="ekr.20051025071455.46"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051025071455.47"><vh>findNextWord</vh></v>
+<v t="ekr.20051025071455.48"><vh>getSuggestion</vh></v>
+<v t="ekr.20051025071455.49"><vh>onMap</vh></v>
+<v t="ekr.20051025071455.50"><vh>onSelectListBox</vh></v>
+<v t="ekr.20051025071455.51"><vh>update</vh></v>
+<v t="ekr.20051025071455.52"><vh>updateButtons</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20051028061611.1" a="E"><vh>Unify all search commands</vh>
+<v t="ekr.20051023094009"><vh>Search classes</vh>
+<v t="ekr.20051020120306.6"><vh>class findTab (leoFind.leoFind)</vh>
+<v t="ekr.20051020120306.10"><vh>Birth &amp; death</vh>
+<v t="ekr.20051020120306.11"><vh>__init__</vh>
+<v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051023181449"><vh>find.createBindings</vh></v>
+<v t="ekr.20051020120306.13"><vh>find.createFrame</vh>
+<v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
+<v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
+<v t="ekr.20051020120306.16"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020120306.17"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20051020120306.18"><vh>&lt;&lt; Create two columns of buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020120306.19"><vh>find.init</vh>
+<v t="ekr.20051020120306.20"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
+<v t="ekr.20051020120306.21"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051020120306.22"><vh>find.update_ivars</vh></v>
+<v t="ekr.20051023183028"><vh>findButtonCallback</vh></v>
+<v t="ekr.20051024192602"><vh> Top level</vh>
+<v t="ekr.20051024192642.2"><vh>findNext/PrefCommand</vh></v>
+<v t="ekr.20051024192642.3"><vh>change/ThenFindCommand</vh></v>
+</v>
+<v t="ekr.20051020120306.25"><vh>hideTab</vh></v>
+<v t="ekr.20051020120306.26"><vh>bringToFront</vh></v>
+<v t="ekr.20051020120306.27"><vh>selectAllFindText</vh></v>
+<v t="ekr.20051020120306.28"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
+<v t="ekr.20051020120306.1"><vh>class underlinedTkButton</vh>
+<v t="ekr.20051020120306.2"><vh>__init__</vh>
+<v t="ekr.20051020120306.3"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020120306.4"><vh>bindHotKey</vh></v>
+<v t="ekr.20051020120306.5"><vh>buttonCallback</vh></v>
+</v>
+</v>
+<v t="ekr.20050920084036.257"><vh>class searchCommandsClass</vh>
+<v t="ekr.20050920084036.258"><vh> ctor</vh></v>
+<v t="ekr.20050920084036.259"><vh>getPublicCommands (searchCommandsClass)</vh></v>
+<v t="ekr.20051022211617"><vh>find tab...</vh>
+<v t="ekr.20051020120306"><vh>openFindTab</vh></v>
+<v t="ekr.20051022212004"><vh>commands...</vh></v>
+</v>
+<v t="ekr.20050920084036.261"><vh>incremental search...</vh>
+<v t="ekr.20050920084036.262"><vh>startIncremental</vh></v>
+<v t="ekr.20050920084036.264"><vh>iSearchStateHandler &amp; helper</vh>
+<v t="ekr.20051002120125"><vh>&lt;&lt; do a non-incremental search &gt;&gt;</vh></v>
+<v t="ekr.20050920084036.263"><vh>iSearchHelper</vh></v>
+</v>
+<v t="ekr.20050920084036.265"><vh>scolorizer</vh></v>
+</v>
+<v t="ekr.20050920084036.267"><vh>non-incremental search...</vh>
+<v t="ekr.20050920084036.269"><vh>seachForward/Backward &amp; helper</vh>
+<v t="ekr.20050920084036.268"><vh>plainSearchHelper</vh></v>
+</v>
+<v t="ekr.20051002111614"><vh>wordSearchBackward/Forward &amp; helper</vh>
+<v t="ekr.20050920084036.272"><vh>wordSearchHelper</vh></v>
+</v>
+<v t="ekr.20050920084036.274"><vh>reSearchBackward/Forward &amp; helper</vh>
+<v t="ekr.20050920084036.275"><vh>reSearchHelper</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20051008131807"><vh>Unit tests</vh></v>
+<v t="ekr.20051018104223"><vh>Improve minibuffer commands</vh>
+<v t="ekr.20051012053017.4"><vh>Search improvements</vh></v>
+<v t="ekr.20051014122218"><vh>kill/yank from the xemacs tutorial</vh></v>
+<v t="ekr.20051017111216"><vh>Commands to fix</vh>
+<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
+<v t="ekr.20050920084036.75"><vh>backToIndentation</vh></v>
+<v t="ekr.20050920084036.78"><vh>indentRelative</vh></v>
+<v t="ekr.20050920084036.149"><vh>back/forwardWord &amp; helper</vh></v>
+<v t="ekr.20050920084036.107"><vh>indentRegion</vh></v>
+<v t="ekr.20050920084036.219"><vh>findNextMatch</vh>
+<v t="ekr.20051005155611"><vh>&lt;&lt; handle regexp &gt;&gt;</vh></v>
+<v t="ekr.20051005160923"><vh>&lt;&lt; handle plain search &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051012054228"><vh>Vim mode (k.vimMode)</vh></v>
+<v t="ekr.20050928144501"><vh>Expand commands to handle Leo environment</vh></v>
+<v t="ekr.20051021074728"><vh>Space completion</vh></v>
+</v>
+<v t="ekr.20051027105304"><vh>before b1</vh>
+<v t="ekr.20051014152256"><vh>Fix long-standing bug in import code</vh>
+<v t="ekr.20040930075711"><vh>Handle underindented lines</vh></v>
+<v t="ekr.20040722132104"><vh>Write script to report underindented lines</vh></v>
+</v>
+</v>
 <v t="ekr.20050925105522"><vh>Big</vh>
 <v t="ekr.20050928144501.1"><vh>Mouseless Leo</vh>
 <v t="ekr.20050707085637"><vh>Suggestions from an emacs user</vh></v>
@@ -1097,7 +1190,7 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20050712094115.7"><vh>xwem</vh></v>
 </v>
 </v>
-<v t="ekr.20051014161015" a="E"><vh>Full input modes</vh>
+<v t="ekr.20051014161015"><vh>Full input modes</vh>
 <v t="ekr.20051017140811.1"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)</vh></v>
 </v>
 </v>
@@ -1144,20 +1237,22 @@ expanded="ekr.20051014161015,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
-<v t="ekr.20031218072017.2608" a="E"
+<v t="ekr.20031218072017.2608"
 marks="ekr.20031218072017.2619,"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
 marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20050710142719" a="E"
-marks="ekr.20051025071455,"
-expanded="ekr.20050920084036.53,ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
+<v t="ekr.20050710142719"
+marks="ekr.20051025071455,"><vh>@thin leoEditCommands.py</vh></v>
+<v t="ekr.20050710142719"
+marks="ekr.20051025071455,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"
 marks="ekr.20031218072017.2052,ekr.20050503112513.7,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
@@ -1181,53 +1276,8 @@ marks="ekr.20031218072017.2410,"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-<v t="ekr.20040803072955"
-expanded="ekr.20040803072955.91,"><vh>@thin leoTkinterTree.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
-</v>
-<v t="ekr.20050710142719"
-marks="ekr.20051025071455,"
-expanded="ekr.20050920084036.53,ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20051025152727"><vh>(Replaced idle-key logic with direct logic) </vh>
-<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
-<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
-<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
-<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
-<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
-</v>
-<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
-<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
-<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
-<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
-<v t="ekr.20051011072903.1"><vh>OnCopyFromMenu</vh></v>
-<v t="ekr.20051011072049.1"><vh>OnCutFromMenu</vh></v>
-<v t="ekr.20051011072903.4"><vh>OnPasteFromMenu</vh></v>
-</v>
-<v t="ekr.20031218072017.1320"><vh>body key handlers</vh>
-<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkTree)</vh></v>
-<v t="ekr.20051026083733"><vh>updateBody (new in 4.4a2)</vh>
-<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
-<v t="ekr.20051026143009"><vh>&lt;&lt; remove extra Trailing newlines &gt;&gt;</vh></v>
-<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
-<v t="ekr.20051026092433"><vh>updateTab</vh></v>
-<v t="ekr.20051026092433.1"><vh>updateBackspace</vh>
-<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
-<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
-<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
-<v t="ekr.20040803072955.91" a="E"><vh>onHeadChanged</vh>
-<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
-<v t="ekr.20031218072017.3070"><vh>changeSelection</vh></v>
-<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1302,7 +1352,7 @@ def idleTimeHookHandler(*args,**keys):
     top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
-        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
+        # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
         # New in 4.4 a2: direct support for k.onIdleTime()
         c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
@@ -2172,7 +2222,7 @@ def changeSelection(self):
     # Update the selection for the next match.
     gui.setSelectionRangeWithLength(t,start,len(self.change_text))
     newSel = gui.getTextSelection(t)
-    gui.set_focus(c,t)
+    c.frame.widgetWantsFocus(t,later=False)
 
     c.beginUpdate()
     try:
@@ -3001,14 +3051,21 @@ def finishCreate (self):
         self.makeWhitespaceVisibleVar.set(b)</t>
 <t tx="ekr.20031218072017.3981">def abortEditLabelCommand (self):
     
-    frame = self ; c = frame.c
+    frame = self ; c = frame.c ; tree = frame.tree
+    p = c.currentPosition() ; w = p.edit_text()
     
     if g.app.batchMode:
         c.notValidInBatchMode("Abort Edit Headline")
         return
-
-    c.frame.tree.endEditLabel()
-    c.selectPosition(c.currentPosition())</t>
+        
+    if self.revertHeadline and w and p == tree.editPosition():
+    
+        w.delete("1.0","end")
+        w.insert("end",self.revertHeadline)
+        tree.onHeadChanged(p,undoType=None) # Must be done immediately.
+        tree.revertHeadline = None
+        c.frame.tree.endEditLabel()
+        c.selectPosition(c.currentPosition())</t>
 <t tx="ekr.20031218072017.3982">def endEditLabelCommand (self):
 
     frame = self ; c = frame.c
@@ -3556,14 +3613,16 @@ def findEditWidget (self,p):
     """Update headline text at idle time."""
     
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
-    undoData = u.beforeChangeNodeContents(p)
     
+    # Use the revert point, if present, as the undo point.
+    # UndoType can be None: aborting a headline edit is not undoable.
+    if undoType:
+        undoData = u.beforeChangeNodeContents(p,
+            oldHead=c.frame.revertHeadline or p.headString())
     if w:
         s = w.get('1.0','end')
         &lt;&lt; truncate s if it has multiple lines &gt;&gt;
-        # g.trace(repr(s))
         p.initHeadString(s)
-        w.configure(width=self.headWidth(p))
     self.endEditLabel()
     c.beginUpdate()
     try:
@@ -3572,8 +3631,9 @@ def findEditWidget (self,p):
     finally:
         c.endUpdate()
 
-    u.afterChangeNodeContents(p,undoType,undoData,
-        dirtyVnodeList=dirtyVnodeList)</t>
+    if undoType:
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)</t>
 <t tx="ekr.20040803072955.94"># Kludge remove one or two trailing newlines before warning of truncation.
 for i in (0,1):
     if s and s[-1] == '\n':
@@ -3676,6 +3736,7 @@ self.active = True</t>
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
+        self.frame.revertHeadline = None
         
     self.setEditPosition(p)
     
@@ -3683,6 +3744,7 @@ self.active = True</t>
 
     # Start editing
     if p and p.edit_text():
+        self.frame.revertHeadline = p.headString()
         self.setNormalLabelState(p)
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)</t>
@@ -3719,7 +3781,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        # g.trace("unselect:",old_p.headString())
+        self.onHeadChanged(old_p)
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -4437,14 +4499,10 @@ except ImportError:
                 else:
                     # g.trace("%20s %s = %s" % ('g.app.config',ivar,val))
                     setattr(self,ivar,val)</t>
-<t tx="ekr.20050120083053">@
+<t tx="ekr.20050120083053">@ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
 
-New in 4.3
-
-Rather than calling g.app.gui.set_focus directly, the code calls
-self.xWantsFocus. This defers to idle-time code in the status-line class.
-
-N.B.  This code never calls select, so there can be no race condition here that alters text improperly.</t>
+Important: This code never calls select, so there can be no race condition here
+that alters text improperly.</t>
 <t tx="ekr.20050120092028">@ All these do the same thing, but separate names are good for tracing and
 makes the intent of the code clearer.
 @c 
@@ -4484,8 +4542,8 @@ regardless of what we did previously.
 
 Alas, because of bugs in Tk and/or window managers, we can not call method at
 idle time: that would interfere with switching between windows. Instead, the
-xWantFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
+xWantFocus routines call this with later=True, to queue up a ONE-SHOT call
+that actually changes the focus.
 @c
 
 def set_focus(self,widget,later=False):
@@ -8407,19 +8465,15 @@ if 0: # traces
     return 'break'</t>
 <t tx="ekr.20050921094025">@nocolor
 
+- Add buttons.txt to distribution list.
 
+** Incremental syntax coloring not working properly when an ancestor is an @nocolor node.
+   Example: 4.4a2 release notes on a line containing 'for' or 'in'.
 
-* Cleanup: review all calls to g.app.gui.set_focus.
+- All headlines should have a minimum width:
+    - The flash when suddenly increasing the width is annoying.
 
-** Ctrl-Z does not properly set focus.
-- Command name for Ctrl-Z is not right.
-
-- Alt-0 leaves present tree alone?
-
-- Call onHeadChanged when switching nodes?
-    - No: that won't make 'Paste' stick.
-
-- Add buttons.txt to distribution list.</t>
+* Run pychecker.</t>
 <t tx="ekr.20050921094025.6">@nocolor</t>
 <t tx="ekr.20050921094025.7">There may be bugs here.  The old code had definite strange aspects to it.</t>
 <t tx="ekr.20050921094025.8">createBindings now sets c.emacs, so modifyOnBodyKey just uses c.emacs.</t>
@@ -12579,6 +12633,9 @@ Leo 4.3.3, build  1.282 , Python 2.4.2, Tk 8.4.7, win2k</t>
     f = self ; c = f.c
     w = f.getFocus() ; name = w._name
     
+    if 0: # For reference.
+        s = g.app.gui.getTextFromClipboard()
+    
     if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('body'):
@@ -12844,7 +12901,7 @@ r.IntVar instance at 0x0171B800&gt;&gt; ignored
     c.frame.log.clearTab('Command')
     for key in keys:
         b = k.bindingsDict.get(key)
-        g.es('[%s]' % b.pane,key,b.commandName or b.name,tabName='Command')</t>
+        g.es('[%s]' % b.pane,key,b.commandName,tabName='Command')</t>
 <t tx="ekr.20051012205437"># Such calls will fail if keys have been rebound.</t>
 <t tx="ekr.20051013103457"></t>
 <t tx="ekr.20051013103838">@
@@ -12999,7 +13056,7 @@ unfinished.
     if command:
         for key in k.bindingsDict:
             b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
+            if b.commandName == command.__name__:
                 return key
     
     return ''
@@ -13011,7 +13068,7 @@ def getShortcutForCommand (self,command):
     if command:
         for key in k.bindingsDict:
             b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
+            if b.commandName == command.__name__:
                 return key
     
     return ''</t>
@@ -13288,160 +13345,6 @@ Python 2.3.5, Tk 8.4.7, darwin
 
 Mac OS 10.4.2
 </t>
-<t tx="ekr.20051017140811">Buffer Keyboard Commands:
-----------------------------------------
-
-&lt;Control-p&gt;: move up one line
-&lt;Control-n&gt;: move down one line
-&lt;Control-f&gt;: move forward one char
-&lt;Conftol-b&gt;: move backward one char
-&lt;Control-o&gt;: insert newline
-&lt;Control-Alt-o&gt; : insert newline and indent
-&lt;Control-j&gt;: insert newline and tab
-&lt;Alt-&lt;&gt; : move to start of Buffer
-&lt;Alt- &gt; &gt;: move to end of Buffer
-&lt;Control a&gt;: move to start of line
-&lt;Control e&gt; :move to end of line
-&lt;Alt-Up&gt;: move to start of line
-&lt;Alt-Down&gt;: move to end of line
-&lt;Alt b&gt;: move one word backward
-&lt;Alt f&gt; : move one word forward
-&lt;Control - Right Arrow&gt;: move one word forward
-&lt;Control - Left Arrow&gt;: move one word backwards
-&lt;Alt-m&gt; : move to beginning of indentation
-&lt;Alt-g&gt; : goto line number
-&lt;Control-v&gt;: scroll forward one screen
-&lt;Alt-v&gt;: scroll up one screen
-&lt;Alt-a&gt;: move back one sentence
-&lt;Alt-e&gt;: move forward one sentence
-&lt;Alt-}&gt;: move forward one paragraph
-&lt;Alt-{&gt;: move backwards one paragraph
-&lt;Alt-:&gt; evaluate a Python expression in the minibuffer and insert the value in the current buffer
-Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer
-&lt;Control-x . &gt;: set fill prefix
-&lt;Alt-q&gt;: fill paragraph
-&lt;Alt-h&gt;: select current or next paragraph
-&lt;Control-x Control-@&gt;: pop global mark
-&lt;Control-u&gt;: universal command, repeats the next command n times.
-&lt;Alt -n &gt; : n is a number.  Processes the next command n times.
-&lt;Control-x (&gt;: start definition of kbd macro
-&lt;Control-x ) &gt; : stop definition of kbd macro
-&lt;Control-x e : execute last macro defined
-&lt;Control-u Control-x ( &gt;: execute last macro and edit
-&lt;Control-x Esc Esc &gt;: execute last complex command( last Alt-x command
-&lt;Control-x Control-c &gt;: save buffers kill Emacs
-&lt;Control-x u &gt; : advertised undo.   This function utilizes the environments.
-        If the buffer is not configure explicitly, there is no operation.
-&lt;Control-_&gt;: advertised undo.  See above
-&lt;Control-z&gt;: iconfify frame
-----------------------------------------
-
-&lt;Delete&gt; : delete previous character
-&lt;Control d&gt;: delete next character
-&lt;Control k&gt; : delete from cursor to end of line. Text goes to kill buffer
-&lt;Alt d&gt;: delete word. Word goes to kill buffer
-&lt;Alt Delete&gt;: delete previous word. Word goes to kill buffer
-&lt;Alt k &gt;: delete current sentence. Sentence goes to kill buffer
-&lt;Control x Delete&gt;: delete previous sentence. Sentence goes to kill buffer
-&lt;Control y &gt;: yank last deleted text segment from
- kill buffer and inserts it.
-&lt;Alt y &gt;: cycle and yank through kill buffer.
-
-&lt;Alt z &gt;: zap to typed letter. Text goes to kill buffer
-&lt;Alt-^ &gt;: join this line to the previous one
-&lt;Alt-\ &gt;: delete surrounding spaces
-&lt;Alt-s&gt; &gt;: center line in current fill column
-&lt;Control-Alt-w&gt;: next kill is appended to kill buffer
-----------------------------------------
-
-&lt;Alt c&gt;: Capitalize the word the cursor is under.
-&lt;Alt u&gt;: Uppercase the characters in the word.
-&lt;Alt l&gt;: Lowercase the characters in the word.
-----------------------------------------
-
-&lt;Alt t&gt;: Mark word for word swapping.  Marking a second
- word will swap this word with the first
-&lt;Control-t&gt;: Swap characters
-&lt;Ctrl-@&gt;: Begin marking region.
-&lt;Ctrl-W&gt;: Kill marked region
-&lt;Alt-W&gt;: Copy marked region
-&lt;Ctrl-x Ctrl-u&gt;: uppercase a marked region
-&lt;Ctrl-x Ctrl-l&gt;: lowercase a marked region
-&lt;Ctrl-x h&gt;: mark entire buffer
-&lt;Alt-Ctrl-backslash&gt;: indent region to indentation of line 1 of the region.
-&lt;Ctrl-x tab&gt; : indent region by 1 tab
-&lt;Control-x Control-x&gt; : swap point and mark
-&lt;Control-x semicolon&gt;: set comment column
-&lt;Alt-semicolon&gt;: indent to comment column
-----------------------------------------
-
-M-! cmd -- Run the shell command line cmd and display the output
-M-| cmd -- Run the shell command line cmd with region contents as input
-----------------------------------------
-
-&lt;Control-x a e&gt;: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled
-&lt;Control-x a g&gt;: Define an abbreviation for previous word
-&lt;Control-x a i g&gt;: Define a word as abbreviation for word before point, or in point
-----------------------------------------
-
-&lt;Control s&gt;: forward search, using pattern in Mini buffer.
-
-&lt;Control r&gt;: backward search, using pattern in Mini buffer.
-
-&lt;Control s Enter&gt;: search forward for a word, nonincremental
-
-&lt;Control r Enter&gt;: search backward for a word, nonincremental
-
-&lt;Control s Enter Control w&gt;: Search for words, ignoring details of punctuation
-&lt;Control r Enter Control w&gt;: Search backward for words, ignoring details of punctuation
-&lt;Control-Alt s&gt;: forward regular expression search, using pattern in Mini buffer
-
-&lt;Control-Alt r&gt;: backward regular expression search, using pattern in Mini buffer
-
-&lt;Alt-%&gt;: begin query search/replace. n skips to next match. y changes current match.  
-        q or Return exits. ! to replace all remaining matches with no more questions
-&lt;Control Alt %&gt; begin regex search replace, like Alt-%
-&lt;Alt-=&gt;: count lines and characters in regions
-&lt;Alt-( &gt;: insert parentheses()
-&lt;Alt-) &gt;:  move past close
-&lt;Control-x Control-t&gt;: transpose lines.
-&lt;Control-x Control-o&gt;: delete blank lines
-&lt;Control-x r s&gt;: save region to register
-&lt;Control-x r i&gt;: insert to buffer from register
-&lt;Control-x r +&gt;: increment register
-&lt;Control-x r n&gt;: insert number 0 to register
-&lt;Control-x r space &gt; : point insert point to register
-&lt;Control-x r j &gt; : jump to register
-&lt;Control-x x&gt;: save region to register
-&lt;Control-x r r&gt; : save rectangle to register
-&lt;Control-x r o&gt;: open up rectangle
-&lt;Control-x r c&gt; : clear rectangle
-&lt;Control-x r d&gt; : delete rectangle
-&lt;Control-x r t&gt; : replace rectangle with string
-&lt;Control-x r k&gt; : kill rectangle
-&lt;Control-x r y&gt; : yank rectangle
-&lt;Control-g&gt; : keyboard quit
-
-&lt;Control-x = &gt; : position of cursor
-&lt;Control-x . &gt; : set fill prefix
-&lt;Control-x f &gt; : set the fill column
-&lt;Control-x Control-b &gt; : display the buffer list
-&lt;Control-x b &gt; : switch to buffer
-&lt;Control-x k &gt; : kill the specified buffer
-----------------------------------------
-
-&lt;Alt - - Alt-l &gt;: lowercase previous word
-&lt;Alt - - Alt-u&gt;: uppercase previous word
-&lt;Alt - - Alt-c&gt;: capitalise previous word
-----------------------------------------
-
-&lt;Alt-/ &gt;: dynamic expansion
-&lt;Control-Alt-/&gt;: dynamic expansion.  Expands to common prefix in buffer
-----------------------------------------
-
-Alt-x commands:
-
-(Pressing Tab will result in auto completion of the options if an appropriate match is found</t>
 <t tx="ekr.20051017140811.1"></t>
 <t tx="ekr.20051017184201"></t>
 <t tx="ekr.20051017204206">@nocolor
@@ -14078,11 +13981,14 @@ minibuffer commands, so we must do a bit of extra translation to discover
 whether the user has overridden their bindings.
 
 Important: this affect only the **appearance** of the menu, **not** any bindings!</t>
-<t tx="ekr.20051021210459">- Document new settings.
+<t tx="ekr.20051021210459">@nocolor
+
+- Document new settings.
 - Document how to create and manage tabs in the log pane.
 - Document how to script the log pane.
 
 - Document @command and @button @key.
+
 - Posting: how to program tabs in the log pane.
 - Posting: Not possible to use @command inside a derived file.
 
@@ -14293,8 +14199,6 @@ def hideFindTab (self,event=None):
     if self.findTabHandler:
         self.c.frame.log.selectTab('Log')</t>
 <t tx="ekr.20051023094009"></t>
-<t tx="ekr.20051023125705">- Autocompleter 
-</t>
 <t tx="ekr.20051023130656"></t>
 <t tx="ekr.20051023132350">def getLabel (self,ignorePrompt=False):
     
@@ -14503,13 +14407,7 @@ def changeThenFindCommand(self,event=None):
     self.setup_command(c)
     self.changeThenFind()</t>
 <t tx="ekr.20051025065958"></t>
-<t tx="ekr.20051025071455">@ To do:
-- open the minibuffer to get suggestions.
-- Per-pane key bindings. (arrows, etc.)
-- Accumulate status messages.
-@c
-
-&lt;&lt; specify aspell directories &gt;&gt;
+<t tx="ekr.20051025071455">&lt;&lt; specify aspell directories &gt;&gt;
 
 @others</t>
 <t tx="ekr.20051025071455.1">class spellCommandsClass (baseEditCommandsClass):
@@ -15113,10 +15011,12 @@ def ignore (self,event=None):
         
     self.dictionary = self.readDictionary(dictionaryFileName)
     return True</t>
-<t tx="ekr.20051025101030">
+<t tx="ekr.20051025101030"></t>
+<t tx="ekr.20051025110549">@
 
-</t>
-<t tx="ekr.20051025110549"># minibufferWantsFocus is now the same as bodyWantsFocus.</t>
+Force focus to body at idle time if it isn't a known pane, the outer pane or a dialog.
+
+This scheme is fragile. I also dislike doing anything at idle time.</t>
 <t tx="ekr.20051025120920">def createBindings (self):
     
     c = self.c ; k = c.keyHandler
@@ -15973,16 +15873,18 @@ Creating the background:
         ok = (
             name[0] in string.letters # A known Leo frame.
             or w == c.frame.top # The top of the Leo window
-            or g.app.dialogs &gt; 0) # A dialog.
+            or g.app.dialogs &gt; 0 # A dialog.
+            or isinstance(w,Tk.Text)
+        )
+            # This doesn't work.
+            # or c.frame.log.getSelectedTab() not in 'Log','Completions'
+            # Assume all other tabs select their text widgets.
+            # in ('Find','Spell','Colors','Fonts')
+
         if not ok:
             # Not a name created by Leo.
              g.trace(self.idleCount,name,g.top())
              c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20051025150540">@
-
-Force focus to body at idle time if it isn't a known pane, the outer pane or a dialog.
-
-This works, but I don't like it: it is fragile. I also dislike doing anything at idle time.</t>
 <t tx="ekr.20051025152727"></t>
 <t tx="ekr.20051025161103"># Just had to call setBindings in the ctor.</t>
 <t tx="ekr.20051025162409"></t>
@@ -16029,29 +15931,56 @@ Yet another reason to get rid of dialogs!</t>
     ch = event and event.char or ''
     i,j = g.app.gui.getTextSelection(w)
     
-    if ch == '\b':
+    if event is None:
+        # A bad kludge: compute what is *already* in the widget,
+        # but what is not reported properly.
+        ch = g.app.gui.getTextFromClipboard()
+        i = int(i.split('.')[1])
+        j = int(j.split('.')[1])
+        # g.trace('before',i,j,repr(ch))
+        s = w.get('1.0','end')
         if i != j:
-            w.delete(i,j)
+            s = s[:i] + ch + s[j:]
         else:
-            w.delete('insert-1c')
-    elif ch and ch not in ('\n','\r'):
-        if i != j:
-            w.delete(i,j)
-        i = w.index('insert')
-        w.insert(i,ch)
-
-    s = w.get('1.0','end')
-
+            i = w.index('insert')
+            i = int(i.split('.')[1])
+            s = s[:i] + ch + s[i:]
+        # Now force the widget to tell us the truth.
+        w.delete('1.0','end')
+        w.insert('1.0',s)
+        s = w.get('1.0','end')
+        # g.trace('after',s)
+    else:
+        if ch == '\b':
+            if i != j:
+                w.delete(i,j)
+            else:
+                w.delete('insert-1c')
+        elif ch and ch not in ('\n','\r'):
+            if i != j:
+                w.delete(i,j)
+            i = w.index('insert')
+            w.insert(i,ch)
+    
+        s = w.get('1.0','end')
+    
     if s.endswith('\n'):
         if len(s) &gt; 1: s = s[:-1]
         else:          s = ''
+        
+    # This cause undo problems, but is much safer.
+    p.initHeadString(s)
+    w.configure(width=max(20,self.headWidth(p)))
+    w.update_idletasks()
 
     if 0: # For tracing.
         if ch or not event or p.headString().strip() != s.strip():
             g.trace(w._name,repr(ch),repr(s),g.callers(5))
-         
+
+    # The granularity is the entire editing session,
+    # starting at the revert point.
     if ch in ('\n','\r'):
-        self.onHeadChanged(p)</t>
+        self.onHeadChanged(p,undoType='Typing')</t>
 <t tx="ekr.20051026083733"># This replaces idle_body_key.  It is never called at idle time.
 # Called only from k.handleDefaultChar and tkBody.onBodyChanged.
 
@@ -16075,6 +16004,8 @@ def updateBody (self,event,w,undoType,
     elif ch in ('\r','\n'):
         ch = '\n'
         &lt;&lt; handle newline &gt;&gt;
+    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+        self.updateAutomatchBracket(p,w,ch,oldSel)
     elif ch: # Null chars must not delete the selection.
         i,j = oldSel
         if i != j: w.delete(i,j)
@@ -16205,7 +16136,11 @@ if 0:
 <t tx="ekr.20051026170025">@nocolor
 
 - g.openWithFileName puts the focus in the body pane.
-  Surprisingly important.</t>
+  Surprisingly important.
+
+- undo/redo now put the focus in the body.
+
+- Compute length of headline on every key.</t>
 <t tx="ekr.20051026171121">i,j = oldSel
 
 if i != j:
@@ -16252,5 +16187,77 @@ def updateAutoIndent (self,p):
 indicies. It's probably time to do this.
 
 - Make sure there is some way of executing script find/changes.</t>
+<t tx="ekr.20051027114433">def getSelectedTab (self):
+    
+    return self.tabName</t>
+<t tx="ekr.20051027114909">@nocolor
+
+Fixed immediate problems with complex log tabs.
+(Show fonts was being hidden because of focus-changing logic.)</t>
+<t tx="ekr.20051027135712">@nocolor
+
+I have removed the requirement that you have to type &lt;return&gt; to make the
+headline stick, yet I have retained the larger undo granularity in headlines.
+
+I had to use a real hack to make this work. I finally remembered that
+g.app.gui.getTextSelection(w) will return the contents of the clipboard. This
+allowed me to get around the fact that w.get does not provide (even after idle
+time!) the proper contents of a Tk canvas text widget after a paste.
+
+The workaround: tree.updateHead computes what the widget *already* contains,
+then stuffs that value back into the widget. So later calls (especially in
+tree.onHeadChanged) get the correct value.
+
+The final piece of the puzzle: tree.select now calls onHeadChanged when
+unselecting a node. This allows us to dispense with return characters.</t>
+<t tx="ekr.20051027170018.1"></t>
+<t tx="ekr.20051027170318"></t>
+<t tx="ekr.20051027172949">def updateAutomatchBracket (self,p,w,ch,oldSel):
+    
+    # assert ch in ('(',')','[',']','{','}')
+    
+    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+    language = d.get('language')
+    
+    if ch in ('(','[','{',):
+        automatch = language not in ('plain',)
+        if automatch:
+            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,ch)
+        if automatch:
+            w.mark_set('insert','insert-1c')
+    else:
+        ch2 = w.get('insert')
+        if ch2 in (')',']','}'):
+            w.mark_set('insert','insert+1c')
+        else:
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)</t>
+<t tx="ekr.20051027175147">@nocolor
+
+controlled by @bool autocomplete-brackets setting.
+
+Nothing happens in @language plain.</t>
+<t tx="ekr.20051027182727">@nocolor
+
+- Clicking in the body pane could loose the latest headline edit
+
+The fix was always to call p.initHeadString(s) in updateHead. This required
+reimplementing the abort editing logic.
+
+- abortEditLabelCommand calls onHeadChanged with undoType = None. Indeed,
+aborting a headline edit is not undoable, and does not affect the undo state in
+any way.</t>
+<t tx="ekr.20051028061546">@nocolor
+
+- open the minibuffer to get suggestions.
+- Per-pane key bindings. (arrows, etc.)
+
+@color</t>
+<t tx="ekr.20051028061611.1"></t>
+<t tx="ekr.20051028061802"></t>
 </tnodes>
 </leo_file>

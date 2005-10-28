@@ -3410,7 +3410,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        self.onHeadChanged(old_p)
+        self.onHeadChanged(old_p,'Typing')
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -3420,6 +3420,9 @@ if old_p:
 #@nonl
 #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 #@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
 frame.setWrap(p)
 
 # Always do this.  Otherwise there can be problems with trailing hewlines.
@@ -10383,1694 +10386,37 @@ def set_focus(self,widget,later=False):
         g.app.wantedCommander = None
 #@nonl
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
-#@+node:ekr.20051023094009:Search classes
-#@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
-class findTab (leoFind.leoFind):
-
-    """A class that implements Leo's tkinter find tab."""
-
-    @others
-#@nonl
-#@+node:ekr.20051020120306.10:Birth & death
-#@+node:ekr.20051020120306.11:__init__
-def __init__(self,c,parentFrame):
-
-    # Init the base class...
-    leoFind.leoFind.__init__(self,c,title='Find Tab')
-    self.c = c
-    
-    << create the tkinter intVars >>
-    
-    # These are created later.
-    self.find_ctrl = None
-    self.change_ctrl = None 
-
-    self.createFrame(parentFrame)
-    self.createBindings()
-    
-    self.init(c) # New in 4.3: init only once.
-#@nonl
-#@+node:ekr.20051020120306.12:<< create the tkinter intVars >>
-self.dict = {}
-
-for key in self.intKeys:
-    self.dict[key] = Tk.IntVar()
-
-for key in self.newStringKeys:
-    self.dict[key] = Tk.StringVar()
-    
-self.s_ctrl = Tk.Text() # Used by find.search()
-#@nonl
-#@-node:ekr.20051020120306.12:<< create the tkinter intVars >>
-#@-node:ekr.20051020120306.11:__init__
-#@+node:ekr.20051023181449:find.createBindings
-def createBindings (self):
-    
-    c = self.c ; k = c.keyHandler
-
-    for w in (self.find_ctrl, self.change_ctrl):
-        k.copyBindingsToWidget('text',w)
-        # Bind shortcuts for the following commands...
-        for commandName,func in (
-            ('find-tab-find',       self.findNextCommand),
-            ('find-tab-find-prev',  self.findPrevCommand),
-            ('find-tab-change',     self.changeCommand),
-            ('find-tab-change-find',self.changeThenFindCommand),
-        ):
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            if shortcut:
-                # g.trace(shortcut,commandName)
-                w.bind(shortcut,func)
-        w.bind ("<1>",  self.resetWrap,'+')
-        w.bind("<Key>", self.resetWrap,'+')
-
-    for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
-        w.bind("<Key-Return>", self.findButtonCallback)
-        w.bind("<Key-Escape>", self.hideTab)
-#@nonl
-#@-node:ekr.20051023181449:find.createBindings
-#@+node:ekr.20051020120306.13:find.createFrame
-def createFrame (self,parentFrame):
-    
-    c = self.c
-    
-    << Create the outer frames >>
-    << Create the Find and Change panes >>
-    << Create two columns of radio and checkboxes >>
-    << Create two columns of buttons >>
-    
-    for w in buttons:
-        w.bindHotKey(ftxt)
-        w.bindHotKey(ctxt)
-#@nonl
-#@+node:ekr.20051020120306.14:<< Create the outer frames >>
-configName = 'log_pane_Find_tab_background_color'
-bg = c.config.getColor(configName) or 'MistyRose1'
-
-parentFrame.configure(background=bg)
-
-self.top = Tk.Frame(parentFrame,background=bg)
-self.frame = Tk.Frame(self.top,background=bg)
-self.outerFrame = outer = Tk.Frame(self.frame,background=bg)
-
-self.top.pack   (side='top',expand=0,fill='x',pady=5)
-    # Don't expand, so the frame goes to the top.
-
-self.frame.pack (side="top",expand=1,fill='x')
-outer.pack      (side='top',expand=1,fill='x',padx=2,pady=2,)
-#@nonl
-#@-node:ekr.20051020120306.14:<< Create the outer frames >>
-#@+node:ekr.20051020120306.15:<< Create the Find and Change panes >>
-fc = Tk.Frame(outer, bd="1m",background=bg)
-fc.pack(anchor="n", fill="x", expand=1)
-
-# Removed unused height/width params: using fractions causes problems in some locales!
-fpane = Tk.Frame(fc, bd=1,background=bg)
-cpane = Tk.Frame(fc, bd=1,background=bg)
-
-fpane.pack(anchor="n", expand=1, fill="x")
-cpane.pack(anchor="s", expand=1, fill="x")
-
-# Create the labels and text fields...
-flab = Tk.Label(fpane, width=8, text="Find:",background=bg)
-clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
-
-# Use bigger boxes for scripts.
-self.find_ctrl = ftxt = Tk.Text(
-    fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
-self.change_ctrl = ctxt = Tk.Text(
-    cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
-<< Bind Tab and control-tab >>
-
-if 0: # Add scrollbars.
-    fBar = Tk.Scrollbar(fpane,name='findBar')
-    cBar = Tk.Scrollbar(cpane,name='changeBar')
-    
-    for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
-        txt['yscrollcommand'] = bar.set
-        bar['command'] = txt.yview
-        bar.pack(side="right", fill="y")
-
-flab.pack(side="left")
-clab.pack(side="left")
-ctxt.pack(side="right", expand=1, fill="x") 
-ftxt.pack(side="right", expand=1, fill="x")
-#@nonl
-#@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
-def setFocus(w):
-    w.focus_set()
-    g.app.gui.setSelectionRange(w,"1.0","1.0")
-    return "break"
-    
-def toFind(event,w=ftxt): return setFocus(w)
-def toChange(event,w=ctxt): return setFocus(w)
-    
-def insertTab(w):
-    data = g.app.gui.getSelectionRange(w)
-    if data: start,end = data
-    else: start = end = g.app.gui.getInsertPoint(w)
-    g.app.gui.replaceSelectionRangeWithText(w,start,end,"\t")
-    return "break"
-
-def insertFindTab(event,w=ftxt): return insertTab(w)
-def insertChangeTab(event,w=ctxt): return insertTab(w)
-
-ftxt.bind("<Tab>",toChange)
-ctxt.bind("<Tab>",toFind)
-ftxt.bind("<Control-Tab>",insertFindTab)
-ctxt.bind("<Control-Tab>",insertChangeTab)
-#@nonl
-#@-node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
-#@-node:ekr.20051020120306.15:<< Create the Find and Change panes >>
-#@+node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
-columnsFrame = Tk.Frame(outer,relief="groove",bd=2,background=bg)
-
-columnsFrame.pack(expand=0,padx="7p",pady="2p")
-
-numberOfColumns = 2 # Number of columns
-columns = [] ; radioLists = [] ; checkLists = []
-for i in xrange(numberOfColumns):
-    columns.append(Tk.Frame(columnsFrame,bd=1))
-    radioLists.append([])
-    checkLists.append([])
-
-for i in xrange(numberOfColumns):
-    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
-    
-# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
-
-radioLists[0] = [
-    #(self.dict["radio-find-type"],"P&Lain Search","plain-search"),  
-    #(self.dict["radio-find-type"],"&Pattern Match Search","pattern-search"),
-    # (self.dict["radio-find-type"],"&Script Search","script-search"),
-]
-checkLists[0] = [
-    # ("Scrip&t Change",self.dict["script_change"]),
-    ("Whole Word",      self.dict["whole_word"]),
-    ("Ignore Case",     self.dict["ignore_case"]),
-    ("Wrap Around",     self.dict["wrap"]),
-    ("Reverse",         self.dict["reverse"]),
-    ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
-    ("Search Headline", self.dict["search_headline"]),
-    ("Search Body",     self.dict["search_body"]),
-]
-
-radioLists[1] = [
-    (self.dict["radio-search-scope"],"&Entire Outline","entire-outine"),
-    (self.dict["radio-search-scope"],"Suboutline &Only","suboutline-only"),  
-    (self.dict["radio-search-scope"],"&Node Only","node-only"),
-    # I don't know what selection-only is supposed to do.
-    (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
-]
-checkLists[1] = [
-    ("&Mark Finds",           self.dict["mark_finds"]),
-    ("Mark &Changes",         self.dict["mark_changes"]),
-    ('Show Context',          self.dict['batch']),
-]
-
-for i in xrange(numberOfColumns):
-    for var,name,val in radioLists[i]:
-        box = self.underlinedTkButton(
-            "radio",columns[i],anchor="w",text=name,variable=var,value=val,background=bg)
-        box.button.pack(fill="x")
-        box.button.bind("<1>", self.resetWrap)
-        if val == None: box.button.configure(state="disabled")
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-    for name,var in checkLists[i]:
-        box = self.underlinedTkButton(
-            "check",columns[i],anchor="w",text=name,variable=var,background=bg)
-        box.button.pack(fill="x")
-        box.button.bind("<1>", self.resetWrap)
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-        if var is None: box.button.configure(state="disabled")
-#@nonl
-#@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
-#@+node:ekr.20051020120306.18:<< Create two columns of buttons >>
-# Create the alignment panes.
-buttons  = Tk.Frame(outer,background=bg)
-buttons1 = Tk.Frame(buttons,bd=1,background=bg)
-buttons2 = Tk.Frame(buttons,bd=1,background=bg)
-buttons.pack(side='top',expand=1)
-buttons1.pack(side='left')
-buttons2.pack(side='right')
-
-width = 15 ; defaultText = 'Find' ; buttons = []
-
-for text,boxKind,frame,callback in (
-    # Column 1...
-    ('Find','button',buttons1,self.findButtonCallback),
-    ('Incremental','check', buttons1,None),
-        ## variable=self.dict['incremental'])
-        ## May affect the file format.
-    ('Find All','button',buttons1,self.findAllButton),
-    # Column 2...
-    ('Change','button',buttons2,self.changeButton),
-    ('Change, Then Find','button',buttons2,self.changeThenFindButton),
-    ('Change All','button',buttons2,self.changeAllButton),
-):
-    w = self.underlinedTkButton(boxKind,frame,
-        text=text,command=callback)
-    buttons.append(w)
-    if text == defaultText:
-        w.button.configure(width=width-1,bd=4)
-    elif boxKind != 'check':
-        w.button.configure(width=width)
-    w.button.pack(side='top',anchor='w',pady=2,padx=2)
-#@nonl
-#@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
-#@-node:ekr.20051020120306.13:find.createFrame
-#@+node:ekr.20051020120306.19:find.init
-def init (self,c):
-
-    # N.B.: separate c.ivars are much more convenient than a dict.
-    for key in self.intKeys:
-        # New in 4.3: get ivars from @settings.
-        val = c.config.getBool(key)
-        setattr(self,key,val)
-        val = g.choose(val,1,0) # Work around major Tk problem.
-        self.dict[key].set(val)
-        # g.trace(key,val)
-
-    << set find/change widgets >>
-    << set radio buttons from ivars >>
-#@nonl
-#@+node:ekr.20051020120306.20:<< set find/change widgets >>
-self.find_ctrl.delete("1.0","end")
-self.change_ctrl.delete("1.0","end")
-
-# New in 4.3: Get setting from @settings.
-for w,setting,defaultText in (
-    (self.find_ctrl,"find_text",'<find pattern here>'),
-    (self.change_ctrl,"change_text",''),
-):
-    s = c.config.getString(setting)
-    if not s: s = defaultText
-    w.insert("end",s)
-#@nonl
-#@-node:ekr.20051020120306.20:<< set find/change widgets >>
-#@+node:ekr.20051020120306.21:<< set radio buttons from ivars >>
-found = False
-for var,setting in (
-    ("pattern_match","pattern-search"),
-    #("script_search","script-search")
-):
-    val = self.dict[var].get()
-    if val:
-        self.dict["radio-find-type"].set(setting)
-        found = True ; break
-if not found:
-    self.dict["radio-find-type"].set("plain-search")
-    
-found = False
-for var,setting in (
-    ("suboutline_only","suboutline-only"),
-    ("node_only","node-only"),
-    ("selection_only","selection-only")): # 11/9/03
-    val = self.dict[var].get()
-    if val:
-        self.dict["radio-search-scope"].set(setting)
-        found = True ; break
-if not found:
-    self.dict["radio-search-scope"].set("entire-outine")
-#@nonl
-#@-node:ekr.20051020120306.21:<< set radio buttons from ivars >>
-#@-node:ekr.20051020120306.19:find.init
-#@-node:ekr.20051020120306.10:Birth & death
-#@+node:ekr.20051020120306.22:find.update_ivars
-def update_ivars (self):
-    
-    """Called just before doing a find to update ivars from the find panel."""
-
-    for key in self.intKeys:
-        val = self.dict[key].get()
-        setattr(self, key, val) # No more _flag hack.
-        # g.trace(key,val)
-
-    # Set ivars from radio buttons. Convert these to 1 or 0.
-    find_type = self.dict["radio-find-type"].get()
-    self.pattern_match = g.choose(find_type == "pattern-search",1,0)
-    self.script_search = g.choose(find_type == "script-search",1,0)
-
-    search_scope = self.dict["radio-search-scope"].get()
-    self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
-    self.node_only       = g.choose(search_scope == "node-only",1,0)
-    self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
-
-    # New in 4.3: The caller is responsible for removing most trailing cruft.
-    # Among other things, this allows Leo to search for a single trailing space.
-    s = self.find_ctrl.get("1.0","end")
-    s = g.toUnicode(s,g.app.tkEncoding)
-    # g.trace(repr(s))
-    if s and s[-1] in ('\r','\n'):
-        s = s[:-1]
-    self.find_text = s
-
-    s = self.change_ctrl.get("1.0","end")
-    if s and s[-1] in ('\r','\n'):
-        s = s[:-1]
-    s = g.toUnicode(s,g.app.tkEncoding)
-    self.change_text = s
-#@nonl
-#@-node:ekr.20051020120306.22:find.update_ivars
-#@+node:ekr.20051023183028:findButtonCallback
-def findButtonCallback(self,event=None):
-    
-    __pychecker__ = '--no-argsused'
-
-    self.findButton()
-    return 'break'
-#@nonl
-#@-node:ekr.20051023183028:findButtonCallback
-#@+node:ekr.20051024192602: Top level
-#@+node:ekr.20051024192642.2:findNext/PrefCommand
-def findNextCommand (self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.findNext()
-    
-def findPrevCommand (self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.reverse = not self.reverse
-    self.findNext()
-    self.reverse = not self.reverse
-#@nonl
-#@-node:ekr.20051024192642.2:findNext/PrefCommand
-#@+node:ekr.20051024192642.3:change/ThenFindCommand
-def changeCommand (self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.change()
-    
-def changeThenFindCommand(self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.changeThenFind()
-#@nonl
-#@-node:ekr.20051024192642.3:change/ThenFindCommand
-#@-node:ekr.20051024192602: Top level
-#@+node:ekr.20051020120306.25:hideTab
-def hideTab (self,event=None):
-    
-    c = self.c
-    
-    c.frame.log.selectTab('Log')
-    c.frame.bodyWantsFocus()
-#@nonl
-#@-node:ekr.20051020120306.25:hideTab
-#@+node:ekr.20051020120306.26:bringToFront
-def bringToFront (self):
-
-    """Bring the Find Tab to the front and select the entire find text."""
-
-    c = self.c ; t = self.find_ctrl
-        
-    # The widget must have focus before we can adjust the text.
-    c.frame.widgetWantsFocus(t,later=False)
-    
-    # Delete one trailing newline.
-    s = t.get('1.0','end')
-    if s and s[-1] in ('\n','\r'):
-        t.delete('end-1c','end')
-
-    # Don't highlight the added trailing newline!
-    g.app.gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
-    
-    # This is also needed.
-    c.frame.widgetWantsFocus(t,later=True)
-#@nonl
-#@-node:ekr.20051020120306.26:bringToFront
-#@+node:ekr.20051020120306.27:selectAllFindText
-def selectAllFindText (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # the event param must be present.
-
-    try:
-        w = self.frame.focus_get()
-        g.app.gui.setTextSelection(w,"1.0","end")
-        return "break"
-    except:
-        return None # To keep pychecker happy.
-#@nonl
-#@-node:ekr.20051020120306.27:selectAllFindText
-#@+node:ekr.20051020120306.28:Tkinter wrappers (leoTkinterFind)
-def gui_search (self,t,*args,**keys):
-    return t.search(*args,**keys)
-
-def init_s_ctrl (self,s):
-    t = self.s_ctrl	
-    t.delete("1.0","end")
-    t.insert("end",s)
-    t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
-    return t
-#@nonl
-#@-node:ekr.20051020120306.28:Tkinter wrappers (leoTkinterFind)
-#@+node:ekr.20051020120306.1:class underlinedTkButton
-class underlinedTkButton:
-    
-    @others
-#@nonl
-#@+node:ekr.20051020120306.2:__init__
-def __init__(self,buttonType,parent_widget,**keywords):
-
-    self.buttonType = buttonType
-    self.parent_widget = parent_widget
-    self.hotKey = None
-    text = keywords['text']
-
-    << set self.hotKey if '&' is in the string >>
-
-    # Create the button...
-    if self.hotKey:
-        keywords['text'] = text
-        keywords['underline'] = index
-
-    if buttonType.lower() == "button":
-        self.button = Tk.Button(parent_widget,keywords)
-    elif buttonType.lower() == "check":
-        self.button = Tk.Checkbutton(parent_widget,keywords)
-    elif buttonType.lower() == "radio":
-        self.button = Tk.Radiobutton(parent_widget,keywords)
-    else:
-        g.trace("bad buttonType")
-    
-    self.text = text # for traces
-#@nonl
-#@+node:ekr.20051020120306.3:<< set self.hotKey if '&' is in the string >>
-index = text.find('&')
-
-if index > -1:
-
-    if index == len(text)-1:
-        # The word ends in an ampersand.  Ignore it; there is no hot key.
-        text = text[:-1]
-    else:
-        self.hotKey = text [index + 1]
-        text = text[:index] + text[index+1:]
-#@nonl
-#@-node:ekr.20051020120306.3:<< set self.hotKey if '&' is in the string >>
-#@-node:ekr.20051020120306.2:__init__
-#@+node:ekr.20051020120306.4:bindHotKey
-def bindHotKey (self,widget):
-    
-    if self.hotKey:
-        for key in (self.hotKey.lower(),self.hotKey.upper()):
-            widget.bind("<Alt-%s>" % key,self.buttonCallback)
-#@-node:ekr.20051020120306.4:bindHotKey
-#@+node:ekr.20051020120306.5:buttonCallback
-# The hot key has been hit.  Call the button's command.
-
-def buttonCallback (self, event=None):
-    
-    __pychecker__ = '--no-argsused' # the event param must be present.
-
-    # g.trace(self.text)
-
-    self.button.invoke ()
-    
-    # See if this helps.
-    return 'break'
-#@-node:ekr.20051020120306.5:buttonCallback
-#@-node:ekr.20051020120306.1:class underlinedTkButton
-#@-node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
-#@+node:ekr.20050920084036.257:class searchCommandsClass
-class searchCommandsClass (baseEditCommandsClass):
-    
-    '''Implements many kinds of searches.'''
-
-    @others
-#@nonl
-#@+node:ekr.20050920084036.258: ctor
-def __init__ (self,c):
-    
-    # g.trace('searchCommandsClass')
-
-    baseEditCommandsClass.__init__(self,c) # init the base class.
-    
-    self.findTabHandler = None
-    
-    self.forward = True
-    self.regexp = False
-
-    # For replace-string and replace-regexp
-    self._sString = ''
-    self._rpString = ''
-#@nonl
-#@-node:ekr.20050920084036.258: ctor
-#@+node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
-def getPublicCommands (self):
-    
-    return {
-        # The new find tab replaces the find dialog.
-        'hide-find-tab':            self.hideFindTab,
-        'open-find-tab':            self.openFindTab,
-        'find-tab-find':            self.findTabFindNext,
-        'find-tab-find-prev':       self.findTabFindPrev,
-        'find-tab-change':          self.findTabChange,
-        'find-tab-change-then-find':self.findTabChangeThenFind,
-
-        'isearch-forward':          self.isearchForward,
-        'isearch-backward':         self.isearchBackward,
-        'isearch-forward-regexp':   self.isearchForwardRegexp,
-        'isearch-backward-regexp':  self.isearchBackwardRegexp,
-        
-        're-search-forward':        self.reSearchForward,
-        're-search-backward':       self.reSearchBackward,
-        
-        'search-forward':           self.searchForward,
-        'search-backward':          self.searchBackward,
-        'word-search-forward':      self.wordSearchForward,
-        'word-search-backward':     self.wordSearchBackward,
-    }
-#@nonl
-#@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
-#@+node:ekr.20051022211617:find tab...
-#@+node:ekr.20051020120306:openFindTab
-def openFindTab (self,event=None):
-
-    c = self.c ; log = c.frame.log ; tabName = 'Find'
-
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    else:
-        log.selectTab(tabName)
-        f = log.frameDict.get(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        self.findTabHandler = findTab(c,f)
-        
-    self.findTabHandler.bringToFront()
-#@nonl
-#@-node:ekr.20051020120306:openFindTab
-#@+node:ekr.20051022212004:commands...
-# Just open the Find tab if it has never been opened.
-# For minibuffer commands, it would be good to force the Find tab to be visible.
-# However, this leads to unfortunate confusion when executed from a shortcut.
-
-def findTabChange(self,event=None):
-
-    if self.findTabHandler:
-        #self.openFindTab()
-        self.findTabHandler.changeCommand()
-    else:
-        self.openFindTab()
-
-def findTabChangeThenFind(self,event=None):
-
-    if self.findTabHandler:
-        #self.openFindTab()
-        self.findTabHandler.changeThenFindCommand()
-    else:
-        self.openFindTab()
-
-def findTabFindNext (self,event=None):
-    
-    if self.findTabHandler:
-        #self.openFindTab()
-        self.findTabHandler.findNextCommand()
-    else:
-        self.openFindTab()
-
-def findTabFindPrev (self,event=None):
-    
-    if self.findTabHandler:
-        #self.openFindTab()
-        self.findTabHandler.findPrevCommand()
-    else:
-        self.openFindTab()
-        
-def hideFindTab (self,event=None):
-    if self.findTabHandler:
-        self.c.frame.log.selectTab('Log')
-#@nonl
-#@-node:ekr.20051022212004:commands...
-#@-node:ekr.20051022211617:find tab...
-#@+node:ekr.20050920084036.261:incremental search...
-def isearchForward (self,event):
-    self.startIncremental(event,forward=True,regexp=False)
-    
-def isearchBackward (self,event):
-    self.startIncremental(event,forward=False,regexp=False)
-    
-def isearchForwardRegexp (self,event):
-    self.startIncremental(event,forward=True,regexp=True)
-    
-def isearchBackwardRegexp (self,event):
-    self.startIncremental(event,forward=False,regexp=True)
-#@nonl
-#@+node:ekr.20050920084036.262:startIncremental
-def startIncremental (self,event,forward,regexp):
-
-    k = self.k
-    
-    self.forward = forward
-    self.regexp = regexp
-    k.setLabelBlue('isearch: ',protect=True)
-    k.setState('isearch',1,handler=self.iSearchStateHandler)
-#@nonl
-#@-node:ekr.20050920084036.262:startIncremental
-#@+node:ekr.20050920084036.264:iSearchStateHandler & helper
-# Called when from the state manager when the state is 'isearch'
-
-def iSearchStateHandler (self,event):
-
-    k = self.k ; w = event.widget ; keysym = event.keysym
-    if keysym == 'Control_L': return
-    
-    # g.trace('keysym',keysym,'stroke',k.stroke)
-    
-    if 0: # Useful, but presently conflicts with other bindings.
-        if k.stroke == '<Control-s>':
-            self.startIncremental(event,forward=True,regexp=False)
-        elif k.stroke == '<Control-r>':
-            self.startIncremental(event,forward=False,regexp=False)
-
-    if keysym == 'Return':
-        if 0: # Doesn't do anything at present.
-            << do a non-incremental search >>
-        k.resetLabel()
-        k.clearState()
-        return
-
-    if event.char == '\b':
-        g.trace('backspace not handled yet')
-        return
-    
-    if event.char:
-        k.updateLabel(event)
-        s = k.getLabel(ignorePrompt=True)
-        z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
-        if not z:
-           self.iSearchHelper(event,self.forward,self.regexp)
-        self.scolorizer(event)
-#@nonl
-#@+node:ekr.20051002120125:<< do a non-incremental search >>
-s = k.getLabel(ignorePrompt=True)
-
-if s:
-    if self.forward:
-        if self.regexp: self.reSearchForward(event)
-        else:           self.searchForward(event)
-    else:
-        if self.regexp: self.reSearchBackward(event)
-        else:           self.searchBackward(event)
-#@nonl
-#@-node:ekr.20051002120125:<< do a non-incremental search >>
-#@+node:ekr.20050920084036.263:iSearchHelper
-def iSearchHelper (self,event,forward,regexp):
-
-    '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
-    
-    k = self.k ; w = event.widget
-    s = k.getLabel(ignorePrompt=True)
-    g.trace(forward,repr(s))
-    if s:
-        try:
-            if forward:
-                i = w.search(s,"insert + 1c",stopindex='end',regexp=regexp)
-                if not i:
-                    # Start again at the top of the buffer.
-                    i = w.search(s,'1.0',stopindex='insert',regexp=regexp)
-            else:
-                i = w.search(s,'insert',backwards=True,stopindex='1.0',regexp=regexp)
-                if not i:
-                    # Start again at the bottom of the buffer.
-                    i = w.search(s,'end',backwards=True,stopindex='insert',regexp=regexp)
-            
-        except: pass
-
-        if i and not i.isspace():
-            w.mark_set('insert',i)
-            w.see('insert')
-#@nonl
-#@-node:ekr.20050920084036.263:iSearchHelper
-#@-node:ekr.20050920084036.264:iSearchStateHandler & helper
-#@+node:ekr.20050920084036.265:scolorizer
-def scolorizer (self,event):
-
-    k = self.k ; w = event.widget
-
-    stext = k.getLabel(ignorePrompt=True)
-    w.tag_delete('color')
-    w.tag_delete('color1')
-    if stext == '': return
-    ind = '1.0'
-    while ind:
-        try:
-            ind = w.search(stext,ind,stopindex='end',regexp=self.regexp)
-        except:
-            break
-        if ind:
-            i, d = ind.split('.')
-            d = str(int(d)+len(stext))
-            index = w.index('insert')
-            if ind == index:
-                w.tag_add('color1',ind,'%s.%s' % (i,d))
-            w.tag_add('color',ind,'%s.%s' % (i,d))
-            ind = i + '.' + d
-    w.tag_config('color',foreground='red')
-    w.tag_config('color1',background='lightblue')
-#@nonl
-#@-node:ekr.20050920084036.265:scolorizer
-#@-node:ekr.20050920084036.261:incremental search...
-#@+node:ekr.20050920084036.267:non-incremental search...
-#@+node:ekr.20050920084036.269:seachForward/Backward & helper
-def searchBackward (self,event):
-
-    k = self.k ; state = k.getState('search-backward')
-    if state == 0:
-        k.setLabelBlue('Search Backward: ',protect=True)
-        k.getArg(event,'search-backward',1,self.searchBackward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.plainSearchHelper(event,k.arg,forward=False)
-
-def searchForward (self,event):
-
-    k = self.k ; state = k.getState('search-forward')
-    if state == 0:
-        k.setLabelBlue('Search: ',protect=True)
-        k.getArg(event,'search-forward',1,self.searchForward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.plainSearchHelper(event,k.arg,forward=True)
-#@nonl
-#@+node:ekr.20050920084036.268:plainSearchHelper
-def plainSearchHelper (self,event,pattern,forward):
-
-    k = self.k ; w = event.widget ; i = w.index('insert')
-
-    try:
-        if forward:
-            s = w.search(pattern,i,stopindex='end')
-            if s: s = w.index('%s +%sc' % (s,len(pattern)))
-        else:
-            s = w.search(pattern,i,stopindex='1.0',backwards=True)
-    except Exception:
-        return
-
-    if s:
-        w.mark_set('insert',s)
-#@nonl
-#@-node:ekr.20050920084036.268:plainSearchHelper
-#@-node:ekr.20050920084036.269:seachForward/Backward & helper
-#@+node:ekr.20051002111614:wordSearchBackward/Forward & helper
-def wordSearchBackward (self,event):
-
-    k = self.k ; state = k.getState('word-search-backward')
-    if state == 0:
-        k.setLabelBlue('Word Search Backward: ',protect=True)
-        k.getArg(event,'word-search-backward',1,self.wordSearchBackward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.wordSearchHelper(event,k.arg,forward=False)
-
-def wordSearchForward (self,event):
-
-    k = self.k ; state = k.getState('word-search-forward')
-    if state == 0:
-        k.setLabelBlue('Word Search: ',protect=True)
-        k.getArg(event,'word-search-forward',1,self.wordSearchForward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.wordSearchHelper(event,k.arg,forward=True)
-#@nonl
-#@+node:ekr.20050920084036.272:wordSearchHelper
-def wordSearchHelper (self,event,pattern,forward):
-
-    k = self.k ; w = event.widget ; i = w.index('insert')
-    words = pattern.split()
-    sep = '[%s%s]+' % (string.punctuation,string.whitespace)
-    pattern = sep.join(words)
-    cpattern = re.compile(pattern)
-    if forward:
-        txt = w.get('insert','end')
-        match = cpattern.search(txt)
-        if not match: return
-        end = match.end()
-    else:
-        txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
-        a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
-        if len(a) > 1:
-            b = re.findall(pattern,txt)
-            end = len(a[-1]) + len(b[-1])
-        else: return
-        
-    s = g.choose(forward,'insert +%sc','insert -%sc')
-    w.mark_set('insert',s % end)
-    w.see('insert')
-#@-node:ekr.20050920084036.272:wordSearchHelper
-#@-node:ekr.20051002111614:wordSearchBackward/Forward & helper
-#@+node:ekr.20050920084036.274:reSearchBackward/Forward & helper
-def reSearchBackward (self,event):
-
-    k = self.k ; state = k.getState('re-search-backward')
-    if state == 0:
-        k.setLabelBlue('Regexp Search backward:',protect=True)
-        k.getArg(event,'re-search-backward',1,self.reSearchBackward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.reSearchHelper(event,k.arg,forward=False)
-
-def reSearchForward (self,event):
-
-    k = self.k ; state = k.getState('re-search-forward')
-    if state == 0:
-        k.setLabelBlue('Regexp Search:',protect=True)
-        k.getArg(event,'re-search-forward',1,self.reSearchForward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.reSearchHelper(event,k.arg,forward=True)
-#@nonl
-#@+node:ekr.20050920084036.275:reSearchHelper
-def reSearchHelper (self,event,pattern,forward):
-
-    k = self.k ; w = event.widget
-    cpattern = re.compile(pattern)
-
-    if forward:
-        txt = w.get('insert','end')
-        match = cpattern.search(txt)
-        end = match.end()
-    else:
-        # The reverse words formula for Python Cookbook didn't quite work.
-        txt = w.get('1.0','insert') 
-        a = re.split(pattern,txt)
-        if len(a) > 1:
-            b = re.findall(pattern,txt)
-            end = len(a[-1]) + len(b[-1])
-        else: return
-
-    if end:
-        s = g.choose(forward,'insert +%sc','insert -%sc')
-        w.mark_set('insert',s % end)
-        w.see('insert')
-#@nonl
-#@-node:ekr.20050920084036.275:reSearchHelper
-#@-node:ekr.20050920084036.274:reSearchBackward/Forward & helper
-#@-node:ekr.20050920084036.267:non-incremental search...
-#@-node:ekr.20050920084036.257:class searchCommandsClass
-#@-node:ekr.20051023094009:Search classes
-#@+node:ekr.20051025071455:Spell classes
-@ To do:
-- open the minibuffer to get suggestions.
-- Per-pane key bindings. (arrows, etc.)
-- Accumulate status messages.
-@c
-
-<< specify aspell directories >>
-
-@others
-#@nonl
-#@+node:ekr.20051025071455.3:<< specify aspell directories >>
-if sys.platform == 'darwin':
-    aspell_dir = '/sw/lib'
-        # The top-level directory.
-    aspell_bin_dir = '/sw/lib/bin'
-        # NOT TESTED YET.
-else:
-    aspell_dir = r'c:\Aspell'
-        # The top-level directory.
-    aspell_bin_dir = r'c:\Aspell\bin'
-        # The directory continaing apell.pyd and aspell-15.dll
-#@nonl
-#@-node:ekr.20051025071455.3:<< specify aspell directories >>
-#@+node:ekr.20051025071455.6:class Aspell
-class Aspell:
-    
-    """A wrapper class for Aspell spell checker"""
-    
-    @others
-
-#@+node:ekr.20051025071455.7:Birth & death
-#@+node:ekr.20051025071455.8:__init__
-def __init__(self,c,local_dictionary_file,local_language_code):
-    
-    """Ctor for the Aspell class."""
-    
-    self.c = c
-    
-    # Specify the path to the top-level Aspell directory.
-    if sys.platform == 'darwin':
-        aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-    else:
-        aspell = g.importFromPath(
-            "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
-            
-    self.aspell = aspell
-
-    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
-    # g.trace(self.sc)
-    
-    self.aspell_exe_loc = (c.config.getString('aspell_bin_dir') or aspell_bin_dir)
-    # g.trace(self.aspell_exe_loc)
-
-    self.local_language_code = local_language_code
-    self.local_dictionary_file = local_dictionary_file
-    self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
-    # g.trace(self.local_dictionary)
-#@nonl
-#@-node:ekr.20051025071455.8:__init__
-#@+node:ekr.20051025071455.9:getAspellDirectory (not used)
-def getAspellDirectory(self):
-
-    """Get the directory containing aspell.exe from the .ini file"""
-
-    try:
-        fileName = os.path.join(g.app.loadDir,"..","plugins",ini_file_name)
-        config = ConfigParser.ConfigParser()
-        config.read(fileName)
-        return config.get("main", "aspell_dir")
-    except:
-        g.es_exception()
-        return None
-#@nonl
-#@-node:ekr.20051025071455.9:getAspellDirectory (not used)
-#@-node:ekr.20051025071455.7:Birth & death
-#@+node:ekr.20051025071455.10:processWord
-def processWord(self, word):
-    """Pass a word to aspell and return the list of alternatives.
-    OK: 
-    * 
-    Suggestions: 
-    & «original» «count» «offset»: «miss», «miss», ... 
-    None: 
-    # «original» «offset» 
-    simplifyed to not create the string then make a list from it    
-    """
-
-    if self.sc.check(word):
-        return None
-    else:
-        return self.sc.suggest(word)
-#@nonl
-#@-node:ekr.20051025071455.10:processWord
-#@+node:ekr.20051025071455.11:updateDictionary
-def updateDictionary(self):
-
-    """Update the aspell dictionary from a list of words.
-    
-    Return True if the dictionary was updated correctly."""
-
-    try:
-        # Create master list
-        basename = os.path.splitext(self.local_dictionary)[0]
-        cmd = (
-            "%s --lang=%s create master %s.wl < %s.txt" %
-            (self.aspell_exe_loc, self.local_language_code, basename,basename))
-        os.popen(cmd)
-        return True
-
-    except Exception, err:
-        g.es("Unable to update local aspell dictionary: %s" % err)
-        print err
-        add_dicts = ""
-        return False
-#@nonl
-#@-node:ekr.20051025071455.11:updateDictionary
-#@-node:ekr.20051025071455.6:class Aspell
-#@+node:ekr.20051025071455.1:class spellCommandsClass
-class spellCommandsClass (baseEditCommandsClass):
-    
-    '''Commands to support the Spell Tab.'''
-
-    @others
-#@nonl
-#@+node:ekr.20051025080056:ctor
-def __init__ (self,c):
-
-    baseEditCommandsClass.__init__(self,c) # init the base class.
-    
-    self.handler = None
-    
-    # All the work happens when we first open the frame.
-#@nonl
-#@-node:ekr.20051025080056:ctor
-#@+node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
-def getPublicCommands (self):
-    
-    return {
-        'open-spell-tab':           self.openSpellTab,
-        'spell-find':               self.find,
-        'spell-change':             self.change,
-        'spell-change-then-find':   self.changeThenFind,
-        'spell-ignore':             self.ignore,
-        'hide-spell-tab':           self.hide,
-    }
-#@nonl
-#@-node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
-#@+node:ekr.20051025080633:openSpellTab
-def openSpellTab (self,event=None):
-
-    c = self.c ; log = c.frame.log ; tabName = 'Spell'
-
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    elif self.handler:
-        if self.handler.loaded:
-            self.handler.bringToFront()
-    else:
-        log.selectTab(tabName)
-        f = log.frameDict.get(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        self.handler = spellTab(c,f)
-        
-    self.handler.bringToFront()
-#@nonl
-#@-node:ekr.20051025080633:openSpellTab
-#@+node:ekr.20051025080420.1:commands...
-# Just open the Spell tab if it has never been opened.
-# For minibuffer commands, we must also force the Spell tab to be visible.
-
-def find (self,event=None):
-
-    if self.handler:
-        self.openSpellTab()
-        self.handler.find()
-    else:
-        self.openSpellTab()
-
-def change(self,event=None):
-
-    if self.handler:
-        self.openSpellTab()
-        self.handler.change()
-    else:
-        self.openSpellTab()
-
-def changeThenFind (self,event=None):
-    
-    if self.handler:
-        self.openSpellTab()
-        self.handler.changeThenFind()
-    else:
-        self.openSpellTab()
-        
-def hide (self,event=None):
-    
-    if self.handler:
-        self.c.frame.log.selectTab('Log')
-        self.c.frame.bodyWantsFocus()
-
-def ignore (self,event=None):
-    
-    if self.handler:
-        self.openSpellTab()
-        self.handler.ignore()
-    else:
-        self.openSpellTab()
-#@nonl
-#@-node:ekr.20051025080420.1:commands...
-#@-node:ekr.20051025071455.1:class spellCommandsClass
-#@+node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
-class spellTab(leoFind.leoFind):
-
-    """A class to create and manage Leo's Spell Check dialog."""
-    
-    @others
-#@nonl
-#@+node:ekr.20051025071455.19:Birth & death
-#@+node:ekr.20051025071455.20:spellTab.__init__
-def __init__(self,c,parentFrame):
-    
-    """Ctor for the Leo Spelling dialog."""
-
-    self.c = c ; log = c.frame.log ; tabName = 'Spell'
-    
-    leoFind.leoFind.__init__(self,c) # Call the base ctor.
-    
-    self.c = c
-    self.body = c.frame.body
-    self.currentWord = None
-    self.suggestions = []
-    self.messages = [] # List of message to be displayed when hiding the tab.
-    self.workCtrl = Tk.Text(None) # A text widget for scanning.
-    
-    self.loaded = self.init_aspell(c)
-    if self.loaded:
-        self.createSpellTab(parentFrame)
-        self.createBindings()
-#@nonl
-#@-node:ekr.20051025071455.20:spellTab.__init__
-#@+node:ekr.20051025094004:init_aspell
-def init_aspell (self,c):
-
-    '''Init aspell and related ivars.  Return True if all went well.'''
-
-    self.local_language_code = c.config.getString('spell_local_language_code') or 'en'
-
-    self.dictionaryFileName = dictionaryFileName = (
-        c.config.getString('spell_local_dictionary') or
-        os.path.join(g.app.loadDir,"../","plugins",'spellpyx.txt'))
-    
-    if not dictionaryFileName or not g.os_path_exists(dictionaryFileName):
-        g.es_print('Can not open dictionary file: %s' % (
-            dictionaryFileName), color='red')
-        return False
-
-    self.aspell = Aspell(c,dictionaryFileName,self.local_language_code)
-    if not self.aspell.aspell:
-        g.es_print('Can not open Aspell',color='red')
-        return False
-        
-    self.dictionary = self.readDictionary(dictionaryFileName)
-    return True
-#@nonl
-#@-node:ekr.20051025094004:init_aspell
-#@+node:ekr.20051025071455.22:createSpellTab
-def createSpellTab(self,parentFrame):
-
-    """Create the Spell tab."""
-    
-    c = self.c
-    
-    # Set the common background color.
-    bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
-    
-    # Create the outer frame.
-    self.outerFrame = outer = Tk.Frame(parentFrame,bd=2,bg=bg)
-    outer.pack(expand=1,fill='both',padx=2,pady=2)
-    
-    << Create the text and suggestion panes >>
-    << Create the spelling buttons >>
-    
-    self.fillbox([])
-    self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
-    self.listBox.bind("<Button-1>",self.onSelectListBox)
-    self.listBox.bind("<Map>",self.onMap)
-#@nonl
-#@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
-f2 = Tk.Frame(outer,bg=bg)
-f2.pack(side='top',expand=0,fill='x')
-
-self.wordLabel = Tk.Label(f2,text="Suggestions for:")
-self.wordLabel.pack(side='left')
-self.wordLabel.configure(font=('verdana',10,'bold'))
-
-fpane = Tk.Frame(outer,bg=bg,bd=2)
-fpane.pack(side='top',expand=1,fill='both')
-
-self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
-self.listBox.pack(side='left',expand=1,fill='both')
-self.listBox.configure(font=('verdana',11,'normal'))
-
-listBoxBar = Tk.Scrollbar(fpane,name='listBoxBar')
-
-bar, txt = listBoxBar, self.listBox
-txt ['yscrollcommand'] = bar.set
-bar ['command'] = txt.yview
-bar.pack(side='right',fill='y')
-#@nonl
-#@-node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
-#@+node:ekr.20051025071455.24:<< Create the spelling buttons >>
-# Create the alignment panes
-buttons1 = Tk.Frame(outer,bd=1,bg=bg)
-buttons2 = Tk.Frame(outer,bd=1,bg=bg)
-buttons3 = Tk.Frame(outer,bd=1,bg=bg)
-for w in (buttons1,buttons2,buttons3):
-    w.pack(side='top',expand=0,fill='x')
-
-buttonList = [] ; font = ('verdana',9,'normal') ; width = 12
-for frame, text, command in (
-    (buttons1,"Find",self.onFindButton),
-    (buttons1,"Add",self.onAddButton),
-    (buttons2,"Change",self.onChangeButton),
-    (buttons2,"Change, Find",self.onChangeThenFindButton),
-    (buttons3,"Ignore",self.onIgnoreButton),
-    (buttons3,"Hide",self.onHideButton),
-):
-    b = Tk.Button(frame,font=font,width=width,text=text,command=command)
-    b.pack(side='left',expand=0,fill='none')
-    buttonList.append(b)
-
-# Used to enable or disable buttons.
-(self.findButton,self.addButton,
- self.changeButton, self.changeFindButton,
- self.ignoreButton, self.hideButton) = buttonList
-#@nonl
-#@-node:ekr.20051025071455.24:<< Create the spelling buttons >>
-#@-node:ekr.20051025071455.22:createSpellTab
-#@+node:ekr.20051025120920:createBindings
-def createBindings (self):
-    
-    c = self.c ; k = c.keyHandler
-    widgets = (self.listBox, self.outerFrame)
-
-    for w in widgets:
-        k.copyBindingsToWidget('text',w)
-        # Bind shortcuts for the following commands...
-        for commandName,func in (
-            ('full-command',            k.fullCommand),
-            ('hide-spell-tab',          self.hide),
-            ('spell-add',               self.add),
-            ('spell-find',              self.find),
-            ('spell-ignore',            self.ignore),
-            ('spell-change-then-find',  self.changeThenFind),
-        ):
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            if shortcut:
-                # g.trace(shortcut,commandName)
-                w.bind(shortcut,func)
-#@nonl
-#@-node:ekr.20051025120920:createBindings
-#@+node:ekr.20051025071455.16:readDictionary
-def readDictionary (self,fileName):
-
-    """Read the dictionary of words which we use as a local dictionary
-    
-    Although Aspell itself has the functionality to handle this kind of things
-    we duplicate it here so that we can also use it for the "ignore" functionality
-    and so that in future a Python only solution could be developed."""
-    
-    d = {}
-
-    try:
-        f = open(fileName,"r")
-    except IOError:
-        g.es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
-        return d
-
-    try:
-        # Create the dictionary - there are better ways to do this
-        # in later Python's but we stick with this method for compatibility
-        for word in f.readlines():
-            d [word.strip().lower()] = 0
-    finally:
-        f.close()
-
-    return d
-#@nonl
-#@-node:ekr.20051025071455.16:readDictionary
-#@-node:ekr.20051025071455.19:Birth & death
-#@+node:ekr.20051025071455.29:Buttons
-#@+node:ekr.20051025071455.30:onAddButton
-def onAddButton(self):
-    """Handle a click in the Add button in the Check Spelling dialog."""
-
-    self.add()
-#@nonl
-#@-node:ekr.20051025071455.30:onAddButton
-#@+node:ekr.20051025071455.31:onIgnoreButton
-def onIgnoreButton(self,event=None):
-
-    """Handle a click in the Ignore button in the Check Spelling dialog."""
-
-    self.ignore()
-#@nonl
-#@-node:ekr.20051025071455.31:onIgnoreButton
-#@+node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
-def onChangeButton(self,event=None):
-
-    """Handle a click in the Change button in the Spell tab."""
-
-    self.change()
-    self.updateButtons()
-    
-
-def onChangeThenFindButton(self,event=None):
-    
-    """Handle a click in the "Change, Find" button in the Spell tab."""
-
-    if self.change():
-        self.find()
-    self.updateButtons()
-#@-node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
-#@+node:ekr.20051025071455.33:onFindButton
-def onFindButton(self):
-
-    """Handle a click in the Find button in the Spell tab."""
-
-    self.find()
-    self.updateButtons()
-    self.c.frame.bodyWantsFocus()
-#@nonl
-#@-node:ekr.20051025071455.33:onFindButton
-#@+node:ekr.20051025071455.34:onHideButton
-def onHideButton(self):
-    
-    """Handle a click in the Hide button in the Spell tab."""
-    
-    self.hide()
-#@nonl
-#@-node:ekr.20051025071455.34:onHideButton
-#@-node:ekr.20051025071455.29:Buttons
-#@+node:ekr.20051025071455.36:Commands
-#@+node:ekr.20051025071455.37:add
-def add(self,event=None):
-    """Add the selected suggestion to the dictionary."""
-    
-    try:
-        f = None
-        try:
-            # Rewrite the dictionary in alphabetical order.
-            f = open(self.dictionaryFileName, "r")
-            words = f.readlines()
-            f.close()
-            words = [word.strip() for word in words]
-            words.append(self.currentWord)
-            words.sort()
-            f = open(self.dictionaryFileName, "w")
-            for word in words:
-                f.write("%s\n" % word)
-            f.flush()
-            f.close()
-            if 1:
-                s = 'Spell: added %s' % self.currentWord
-                self.messages.append(s)
-            else: # Too distracting.
-                g.es("Adding ", color= "blue", newline= False) 
-                g.es('%s' % self.currentWord)
-        except IOError:
-            g.es("Can not add %s to dictionary" % self.currentWord, color="red")
-    finally:
-        if f: f.close()
-        
-    self.dictionary[self.currentWord.lower()] = 0
-    self.onFindButton()
-#@nonl
-#@-node:ekr.20051025071455.37:add
-#@+node:ekr.20051025071455.38:change
-def change(self,event=None):
-    """Make the selected change to the text"""
-
-    c = self.c ; current = c.currentPosition()
-    body = self.body ; t = body.bodyCtrl
-    
-    selection = self.getSuggestion()
-    if selection:
-        start,end = oldSel = g.app.gui.getTextSelection(t)
-        if start:
-            if t.compare(start, ">", end):
-                start,end = end,start
-            t.delete(start,end)
-            t.insert(start,selection)
-            g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
-            newSel = g.app.gui.getTextSelection(t)
-
-            # update node, undo status, dirty flag, changed mark & recolor
-            c.beginUpdate()
-            c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
-            c.endUpdate(True)
-            t.focus_set()
-            return True
-
-    # The focus must never leave the body pane.
-    t.focus_set()
-    return False
-#@nonl
-#@-node:ekr.20051025071455.38:change
-#@+node:ekr.20051025071455.40:find
-def find (self,event=None):
-    """Find the next unknown word."""
-
-    c = self.c ; body = c.frame.body ; bodyCtrl = body.bodyCtrl
-
-    # Reload the work pane from the present node.
-    s = bodyCtrl.get("1.0","end").rstrip()
-    self.workCtrl.delete("1.0","end")
-    self.workCtrl.insert("end",s)
-
-    # Reset the insertion point of the work widget.
-    ins = bodyCtrl.index("insert")
-    self.workCtrl.mark_set("insert",ins)
-
-    alts, word = self.findNextMisspelledWord()
-    self.currentWord = word # Need to remember this for 'add' and 'ignore'
-
-    if alts:
-        self.fillbox(alts,word)
-        c.frame.bodyWantsFocus(later=False)
-        # Copy the working selection range to the body pane
-        start, end = g.app.gui.getTextSelection(self.workCtrl)
-        g.app.gui.setTextSelection(bodyCtrl,start,end)
-        bodyCtrl.see(start)
-    else:
-        g.es("no more misspellings")
-        self.fillbox([])
-#@nonl
-#@-node:ekr.20051025071455.40:find
-#@+node:ekr.20051025121408:hide
-def hide (self,event=None):
-    
-    self.c.frame.log.selectTab('Log')
-    
-    for message in self.messages:
-        g.es(message,color='blue')
-        
-    self.messages = []
-#@nonl
-#@-node:ekr.20051025121408:hide
-#@+node:ekr.20051025071455.41:ignore
-def ignore(self,event=None):
-
-    """Ignore the incorrect word for the duration of this spell check session."""
-    
-    if 1: # Somewhat helpful: applies until the tab is destroyed.
-        s = 'Spell: ignore %s' % self.currentWord
-        self.messages.append(s)
-
-    if 0: # Too distracting
-        g.es("Ignoring ", color= "blue", newline= False)
-        g.es('%s' % self.currentWord)
-
-    self.dictionary[self.currentWord.lower()] = 0
-    self.onFindButton()
-#@nonl
-#@-node:ekr.20051025071455.41:ignore
-#@-node:ekr.20051025071455.36:Commands
-#@+node:ekr.20051025071455.42:Helpers
-#@+node:ekr.20051025071455.43:bringToFront
-def bringToFront (self):
-    
-    self.c.frame.log.selectTab('Spell')
-#@nonl
-#@-node:ekr.20051025071455.43:bringToFront
-#@+node:ekr.20051025071455.44:fillbox
-def fillbox(self, alts, word=None):
-    """Update the suggestions listbox in the Check Spelling dialog."""
-    
-    self.suggestions = alts
-    
-    if not word:
-        word = ""
-
-    self.wordLabel.configure(text= "Suggestions for: " + word)
-    self.listBox.delete(0, "end")
-
-    for i in xrange(len(self.suggestions)):
-        self.listBox.insert(i, self.suggestions[i])
-    
-    # This doesn't show up because we don't have focus.
-    if len(self.suggestions):
-        self.listBox.select_set(1) 
-
-#@-node:ekr.20051025071455.44:fillbox
-#@+node:ekr.20051025071455.45:findNextMisspelledWord
-def findNextMisspelledWord(self):
-    """Find the next unknown word."""
-    
-    c = self.c ; p = c.currentPosition() ; t = self.workCtrl
-    aspell = self.aspell ; alts = None ; word = None
-   
-    try:
-        while 1:
-            p, word = self.findNextWord(p) 
-            if not p or not word:
-                alts = None
-                break
-            << Skip word if ignored or in local dictionary >>
-            alts = aspell.processWord(word)
-            if alts:
-                c.beginUpdate()
-                c.frame.tree.expandAllAncestors(p)
-                c.selectPosition(p)
-                c.endUpdate()
-                break
-    except:
-        g.es_exception()
-    return alts, word
-#@nonl
-#@+node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
-@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not True and this code could easily be located after the aspell call
-@c
-
-if self.dictionary.has_key(word.lower()):
-    
-    # print "Ignored", word
-    continue
-    
-# print "Didn't ignore '%s'" % word
-#@nonl
-#@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
-#@-node:ekr.20051025071455.45:findNextMisspelledWord
-#@+node:ekr.20051025071455.47:findNextWord
-# Unicode characters may cause index problems.
-
-def findNextWord(self,p):
-
-    """Scan for the next word, leaving the result in the work widget"""
-
-    t = self.workCtrl
-
-    # Allow quotes and underscores in the middle of words, but not at the beginning or end.
-    # This breaks words at non-ascii 'letters' such as é.  I don't know what the solution is.
-    word_start = string.letters
-    word_end   = string.letters + string.digits
-    word_chars = string.letters + string.digits + "`" + "'" + "_"
-    while 1:
-        line = t.get('insert wordstart','insert lineend')
-        # g.trace('insert',t.index('insert'),'insert wordstart',t.index('insert wordstart'))
-        # g.trace(repr(line))
-        # Start the word at the first letter.
-        i = 0
-        while i < len(line) and line[i] not in word_start:
-            i += 1
-        if i < len(line):
-            # A non-empty word has been found.
-            line = t.get('insert wordstart','insert lineend')
-            j = i
-            while j < len(line) and line[j] in word_chars:
-                j += 1
-            word = line[i:j]
-            while word and word[-1] not in word_end:
-                word = word[:-1]
-            # This trace is important: it verifies that all words have actually been checked.
-            # g.trace(repr(word))
-            x1 = t.index('insert + %dc' % (i))
-            x2 = t.index('insert + %dc' % (i+len(word)))
-            g.app.gui.setTextSelection(t,x1,x2)
-            return p, word
-        else:
-            # End of the line. Bug fix: 9/8/05.
-            t.mark_set('insert','insert lineend + 1c')
-            if t.compare("insert",">=", "end - 1c"):
-                p.moveToThreadNext()
-                if not p: return None,None
-                t.delete("1.0", "end")
-                t.insert("end", p.bodyString())
-                t.mark_set("insert", "1.0")
-#@nonl
-#@-node:ekr.20051025071455.47:findNextWord
-#@+node:ekr.20051025071455.48:getSuggestion
-def getSuggestion(self):
-    """Return the selected suggestion from the listBox."""
-    
-    # Work around an old Python bug.  Convert strings to ints.
-    items = self.listBox.curselection()
-    try:
-        items = map(int, items)
-    except ValueError: pass
-
-    if items:
-        n = items[0]
-        suggestion = self.suggestions[n]
-        return suggestion
-    else:
-        return None
-#@nonl
-#@-node:ekr.20051025071455.48:getSuggestion
-#@+node:ekr.20051025071455.49:onMap
-def onMap (self, event=None):
-    """Respond to a Tk <Map> event."""
-    
-    self.update(show= False, fill= False)
-#@nonl
-#@-node:ekr.20051025071455.49:onMap
-#@+node:ekr.20051025071455.50:onSelectListBox
-def onSelectListBox(self, event=None):
-    """Respond to a click in the selection listBox."""
-    
-    self.updateButtons()
-    self.body.bodyCtrl.focus_set()
-#@-node:ekr.20051025071455.50:onSelectListBox
-#@+node:ekr.20051025071455.51:update
-def update(self,show=True,fill=False):
-    
-    """Update the Spell Check dialog."""
-    
-    c = self.c
-    
-    if fill:
-        self.fillbox([])
-
-    self.updateButtons()
-
-    if show:
-        self.bringToFront()
-        c.frame.body.bodyCtrl.focus_set()
-#@nonl
-#@-node:ekr.20051025071455.51:update
-#@+node:ekr.20051025071455.52:updateButtons
-def updateButtons (self):
-
-    """Enable or disable buttons in the Check Spelling dialog."""
-
-    c = self.c
-
-    start, end = g.app.gui.getTextSelection(c.frame.body.bodyCtrl)
-    state = g.choose(self.suggestions and start,"normal","disabled")
-
-    self.changeButton.configure(state=state)
-    self.changeFindButton.configure(state=state)
-
-    # state = g.choose(self.c.undoer.canRedo(),"normal","disabled")
-    # self.redoButton.configure(state=state)
-    # state = g.choose(self.c.undoer.canUndo(),"normal","disabled")
-    # self.undoButton.configure(state=state)
-
-    self.addButton.configure(state='normal')
-    self.ignoreButton.configure(state='normal')
-#@nonl
-#@-node:ekr.20051025071455.52:updateButtons
-#@-node:ekr.20051025071455.42:Helpers
-#@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
-#@-node:ekr.20051025071455:Spell classes
-#@+node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
-def defineEditMenuFindMenuTable (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-    
-    c = self.c ; f = self.frame
-    
-    if 1: # Bind to the Find tab.
-        sc = c.searchCommands
-        self.editMenuFindMenuTable = [
-            ("&Show Find Tab",sc.openFindTab),
-            ("&Hide Find Tab",sc.hideFindTab),
-            ("-",None),
-            ("Find &Next",          sc.findTabFindNext),
-            ("Find &Previous",      sc.findTabFindPrev),
-            ("&Replace",            sc.findTabChange),
-            ("Replace, &Then Find", sc.findTabChangeThenFind),
-        ]
-    else: # Bind to deprecated Find dialog.
-        self.editMenuFindMenuTable = [
-            ("&Find Panel",c.showFindPanel),
-            ("-",None),
-            ("Find &Next",c.findNext),
-            ("Find &Previous",c.findPrevious),
-            ("&Replace",c.replace),
-            ("Replace, &Then Find",c.replaceThenFind),
-        ]
-#@nonl
-#@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
+#@+node:ekr.20051025150224:onIdleTime
+def onIdleTime (self):
+    
+    '''Set the focus to the body pane if the focus is in limbo.
+    
+    We must allow dialogs and the outer window frame to retain focus.'''
+    
+    k = self ; c = k.c
+    if g.app.quitting: return # Essential.
+    
+    w = g.app.gui.get_focus(c.frame)
+    if w:
+        # Allow clicks in enclosing window frame or in dialogs.
+        name = w._name
+        ok = (
+            name[0] in string.letters # A known Leo frame.
+            or w == c.frame.top # The top of the Leo window
+            or g.app.dialogs > 0 # A dialog.
+            or isinstance(w,Tk.Text)
+        )
+            # This doesn't work.
+            # or c.frame.log.getSelectedTab() not in 'Log','Completions'
+            # Assume all other tabs select their text widgets.
+            # in ('Find','Spell','Colors','Fonts')
+
+        if not ok:
+            # Not a name created by Leo.
+             g.trace(self.idleCount,name,g.top())
+             c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051025150224:onIdleTime
 #@-node:ekr.20051025065958:(Recent)
 #@+node:ekr.20051016115757:4.4a1 projects
 #@+node:ekr.20050929075341:Added option for selected body text
@@ -17060,7 +15406,7 @@ def endEditLabelCommand (self):
         c.notValidInBatchMode("End Edit Headline")
     else:
         p = c.currentPosition()
-        c.frame.tree.onHeadChanged(p)
+        c.frame.tree.onHeadChanged(p,'Typing')
         c.selectPosition(p)
         c.frame.bodyWantsFocus()
 #@nonl
@@ -17075,13 +15421,17 @@ def abortEditLabelCommand (self):
         c.notValidInBatchMode("Abort Edit Headline")
         return
         
-    if self.revertHeadline and w and p == tree.editPosition():
-    
+    # g.trace(p == tree.editPosition(),repr(tree.revertHeadline))
+        
+    if w and p == tree.editPosition():
+        # Revert the headline text.
         w.delete("1.0","end")
-        w.insert("end",self.revertHeadline)
-        tree.onHeadChanged(p,undoType=None) # Must be done immediately.
-        tree.revertHeadline = None
-        c.frame.tree.endEditLabel()
+        w.insert("end",tree.revertHeadline)
+    
+        # Duplicate relevant logic from tree.onHeadChanged.
+        p.initHeadString(tree.revertHeadline)
+        tree.endEditLabel()
+        c.redraw()
         c.selectPosition(c.currentPosition())
 #@nonl
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
@@ -18301,7 +16651,7 @@ def printBindings (self,event):
     c.frame.log.clearTab('Command')
     for key in keys:
         b = k.bindingsDict.get(key)
-        g.es('[%s]' % b.pane,key,b.commandName or b.name,tabName='Command')
+        g.es('[%s]' % b.pane,key,b.commandName,tabName='Command')
 #@nonl
 #@-node:ekr.20051012201831:printBindings
 #@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
@@ -20497,7 +18847,7 @@ def printBindings (self,event):
     c.frame.log.clearTab('Command')
     for key in keys:
         b = k.bindingsDict.get(key)
-        g.es('[%s]' % b.pane,key,b.commandName or b.name,tabName='Command')
+        g.es('[%s]' % b.pane,key,b.commandName,tabName='Command')
 #@nonl
 #@-node:ekr.20051012201831:printBindings
 #@+node:ekr.20051014061332:printCommands
@@ -21081,7 +19431,7 @@ def getShortcutForCommandName (self,commandName):
     if command:
         for key in k.bindingsDict:
             b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
+            if b.commandName == command.__name__:
                 return key
     
     return ''
@@ -21093,7 +19443,7 @@ def getShortcutForCommand (self,command):
     if command:
         for key in k.bindingsDict:
             b = k.bindingsDict.get(key)
-            if b.name == command.__name__:
+            if b.commandName == command.__name__:
                 return key
     
     return ''
@@ -21909,15 +20259,12 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
-        self.frame.revertHeadline = None
-        
+
     self.setEditPosition(p)
-    
-    # g.trace(p,p.edit_text())
 
     # Start editing
     if p and p.edit_text():
-        self.frame.revertHeadline = p.headString()
+        
         self.setNormalLabelState(p)
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
@@ -21959,7 +20306,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        self.onHeadChanged(old_p)
+        self.onHeadChanged(old_p,'Typing')
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -21969,6 +20316,9 @@ if old_p:
 #@nonl
 #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 #@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
 frame.setWrap(p)
 
 # Always do this.  Otherwise there can be problems with trailing hewlines.
@@ -23025,22 +21375,32 @@ def onHeadlineKey (self,event):
 #@nonl
 #@-node:ekr.20040803072955.88:onHeadlineKey
 #@+node:ekr.20040803072955.91:onHeadChanged
-def onHeadChanged (self,p,undoType='Change Headline'):
+# Tricky code: do not change without careful thought and testing.
+
+def onHeadChanged (self,p,undoType):
     
-    """Update headline text at idle time."""
+    '''Officially change a headline.
+    Set the old undo text to the previous revert point.'''
     
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    if not w:
+        g.trace('no widget')
+        return
+
+    s = w.get('1.0','end')
+    << truncate s if it has multiple lines >>
+    changed = s != p.headString()
     
-    # Use the revert point, if present, as the undo point.
-    # UndoType can be None: aborting a headline edit is not undoable.
-    if undoType:
-        undoData = u.beforeChangeNodeContents(p,
-            oldHead=c.frame.revertHeadline or p.headString())
-    if w:
-        s = w.get('1.0','end')
-        << truncate s if it has multiple lines >>
-        p.initHeadString(s)
+    # Make the change official, but undo to the *old* revert point.
+    oldRevert = self.revertHeadline
+    self.revertHeadline = s
+    p.initHeadString(s)
     self.endEditLabel()
+    if not changed: return
+
+    g.trace('undo to:',oldRevert)
+    undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+
     c.beginUpdate()
     try:
         if not c.changed: c.setChanged(True)
@@ -23048,9 +21408,8 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     finally:
         c.endUpdate()
 
-    if undoType:
-        u.afterChangeNodeContents(p,undoType,undoData,
-            dirtyVnodeList=dirtyVnodeList)
+    u.afterChangeNodeContents(p,undoType,undoData,
+        dirtyVnodeList=dirtyVnodeList)
 #@nonl
 #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
 # Kludge remove one or two trailing newlines before warning of truncation.
@@ -23154,15 +21513,12 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
-        self.frame.revertHeadline = None
-        
+
     self.setEditPosition(p)
-    
-    # g.trace(p,p.edit_text())
 
     # Start editing
     if p and p.edit_text():
-        self.frame.revertHeadline = p.headString()
+        
         self.setNormalLabelState(p)
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
@@ -23597,17 +21953,6 @@ def finishCreate (self):
 #@nonl
 #@-node:ekr.20031218072017.3842:finishCreate (tkComparePanel)
 #@-node:ekr.20051025162409:(Fix warnings in compare dialog)
-#@+node:ekr.20051026170025:Other improvements
-@nocolor
-
-- g.openWithFileName puts the focus in the body pane.
-  Surprisingly important.
-
-- undo/redo now put the focus in the body.
-
-- Compute length of headline on every key.
-#@nonl
-#@-node:ekr.20051026170025:Other improvements
 #@+node:ekr.20051025110549:(Keep the focus in the body)
 @
 
@@ -23821,7 +22166,7 @@ def idleTimeHookHandler(*args,**keys):
     top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
-        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
+        # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
         # New in 4.4 a2: direct support for k.onIdleTime()
         c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
@@ -23855,10 +22200,13 @@ def onIdleTime (self):
             name[0] in string.letters # A known Leo frame.
             or w == c.frame.top # The top of the Leo window
             or g.app.dialogs > 0 # A dialog.
-            or c.frame.log.getSelectedTab() not in 'Log','Completions'
+            or isinstance(w,Tk.Text)
+        )
+            # This doesn't work.
+            # or c.frame.log.getSelectedTab() not in 'Log','Completions'
             # Assume all other tabs select their text widgets.
             # in ('Find','Spell','Colors','Fonts')
-        ) 
+
         if not ok:
             # Not a name created by Leo.
              g.trace(self.idleCount,name,g.top())
@@ -23866,12 +22214,449 @@ def onIdleTime (self):
 #@nonl
 #@-node:ekr.20051025150224:onIdleTime
 #@-node:ekr.20051025110549:(Keep the focus in the body)
+#@+node:ekr.20051027170318:(Implemented Auto () {} []  )
+#@+node:ekr.20051027175147:Notes
+@nocolor
+
+controlled by @bool autocomplete-brackets setting.
+
+Nothing happens in @language plain.
+#@nonl
+#@-node:ekr.20051027175147:Notes
+#@+node:ekr.20051026083733:updateBody (new in 4.4a2)
+# This replaces idle_body_key.  It is never called at idle time.
+# Called only from k.handleDefaultChar and tkBody.onBodyChanged.
+
+def updateBody (self,event,w,undoType,
+    oldSel=None,oldYview=None,newSel=None,oldText=None):
+
+    '''Update Leo after the body have been changed.'''
+    
+    c = self.c ; p = c.currentPosition()
+    ch = event and event.char or ''
+    orignalText = oldText # for use by undo.
+    removeTrailing = None # A signal to compute it later.
+    # g.trace(repr(ch))
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = p.bodyString()
+    if ch == '\t':
+        self.updateTab(p,w)
+    elif ch == '\b': ## chr(8):
+        # Not strictly correct: we should test for present delete binding...
+        self.updateBackspace(p,w)
+    elif ch in ('\r','\n'):
+        ch = '\n'
+        << handle newline >>
+    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+        self.updateAutomatchBracket(p,w,ch,oldSel)
+    elif ch: # Null chars must not delete the selection.
+        i,j = oldSel
+        if i != j: w.delete(i,j)
+        w.insert(i,ch)
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return # The hook claims to have handled the event.
+    # Update the text and handle undo.
+    if not newSel: newSel = g.app.gui.getTextSelection(w)
+    newText = w.get('1.0','end')
+    << remove extra Trailing newlines >> # Same logic as always.
+    if newText == oldText: return
+    c.undoer.setUndoTypingParams(p,undoType,
+        orignalText or oldText,newText,oldSel,newSel,oldYview)
+    p.v.setTnodeText(newText)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed: c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+#@nonl
+#@+node:ekr.20051026083733.6:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+# incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+
+incremental = not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20051026083733.6:<< recolor the body >>
+#@+node:ekr.20051026171121:<< handle newline >>
+i,j = oldSel
+
+if i != j:
+    # No auto-indent if there is selected text.
+    w.delete(i,j)
+    w.insert(i,ch)
+else:
+    w.insert(i,ch)
+    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+        # No auto-indent if in @nocolor mode or after a Change command.
+        removeTrailing = self.updateAutoIndent(p)
+#@nonl
+#@-node:ekr.20051026171121:<< handle newline >>
+#@+node:ekr.20051026143009:<< remove extra Trailing newlines >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = newText ; old = oldText
+
+if removeTrailing != None:
+    pass # Use the value returned from updateAutoIndent.
+elif len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+    
+if removeTrailing:
+    if len(newText) > 1: newText = newText[:-1]
+    else: newText = ''
+    
+if 0:
+    if removeTrailing:
+        g.trace('removeTrailing')
+        # g.trace(repr(oldText))
+    # g.trace(repr(newText))
+#@nonl
+#@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
+#@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+redraw_flag = False
+c.beginUpdate()
+try:
+    # Update dirty bits.
+    # p.setDirty() sets all cloned and @file dirty bits.
+    if not p.isDirty() and p.setDirty():
+        redraw_flag = True
+        
+    # Update icons.  p.v.iconVal may not exist during unit tests.
+    val = p.computeIcon()
+    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+        p.v.iconVal = val
+        redraw_flag = True
+finally:
+    # Redraw only if necessary.
+    c.endUpdate(redraw_flag) 
+#@nonl
+#@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+#@+node:ekr.20051027172949:updateAutomatchBracket
+def updateAutomatchBracket (self,p,w,ch,oldSel):
+    
+    # assert ch in ('(',')','[',']','{','}')
+    
+    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+    language = d.get('language')
+    
+    if ch in ('(','[','{',):
+        automatch = language not in ('plain',)
+        if automatch:
+            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,ch)
+        if automatch:
+            w.mark_set('insert','insert-1c')
+    else:
+        ch2 = w.get('insert')
+        if ch2 in (')',']','}'):
+            w.mark_set('insert','insert+1c')
+        else:
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+#@nonl
+#@-node:ekr.20051027172949:updateAutomatchBracket
+#@+node:ekr.20051026171121.1:udpateAutoIndent
+# By David McNab:
+def updateAutoIndent (self,p):
+
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s [ -1] == ':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if c.config.getBool("smart_auto_indent"):
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width] ; tabex = 0
+        for i in range(0,len(s)):
+            if s [i] == '\t':
+                tabex += tab_width-1
+            if s [i] in '([{':
+                brackets.append(i+tabex+1)
+            elif s [i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+    ws = g.computeLeadingWhitespace(width,tab_width)
+    if ws:
+        c.frame.bodyCtrl.insert("insert",ws)
+        removeTrailing = False
+    else:
+        removeTrailing = None
+    return removeTrailing
+#@nonl
+#@-node:ekr.20051026171121.1:udpateAutoIndent
+#@+node:ekr.20051026092433:updateTab
+def updateTab (self,p,w):
+
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    if tab_width > 0:
+        w.insert("insert",'\t')
+    else:
+        # Get the preceeding characters.
+        s = w.get("insert linestart","insert")
+    
+        # Compute n, the number of spaces to insert.
+        width = g.computeWidth(s,tab_width)
+        n = abs(tab_width) - (width % abs(tab_width))
+        w.insert("insert",' ' * n)
+#@nonl
+#@-node:ekr.20051026092433:updateTab
+#@+node:ekr.20051026092433.1:updateBackspace
+def updateBackspace (self,p,w):
+    
+    c = self.c
+    d = g.scanDirectives(c,p)
+    tab_width = d.get("tabwidth",c.tab_width)
+    
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        w.delete(i,j)
+    elif tab_width > 0:
+        w.delete('insert-1c')
+    else:
+        << backspace with negative tab_width >>
+#@nonl
+#@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+s = prev = w.get("insert linestart","insert")
+n = len(prev)
+abs_width = abs(tab_width)
+
+# Delete up to this many spaces.
+n2 = (n % abs_width) or abs_width
+n2 = min(n,n2) ; count = 0
+
+while n2 > 0:
+    n2 -= 1
+    ch = prev[n-count-1]
+    if ch != ' ': break
+    else: count += 1
+
+# Make sure we actually delete something.
+w.delete("insert -%dc" % (max(1,count)),"insert")
+#@nonl
+#@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+#@-node:ekr.20051026092433.1:updateBackspace
+#@-node:ekr.20051026083733:updateBody (new in 4.4a2)
+#@-node:ekr.20051027170318:(Implemented Auto () {} []  )
+#@+node:ekr.20051027170018.1:( Fixed various headlineproblems )
+#@+node:ekr.20051027182727:Notes
+@nocolor
+
+- Clicking in the body pane could loose the latest headline edit
+
+The fix was always to call p.initHeadString(s) in updateHead. This required
+reimplementing the abort editing logic.
+
+- abortEditLabelCommand calls onHeadChanged with undoType = None. Indeed,
+aborting a headline edit is not undoable, and does not affect the undo state in
+any way.
+#@nonl
+#@-node:ekr.20051027182727:Notes
+#@+node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20040803072955.88:onHeadlineKey
+def onHeadlineKey (self,event):
+    
+    """Handle a key event in a headline."""
+    
+    w = event and event.widget or None
+    
+    self.updateHead(event,w,undoType='Typing')
+
+    return 'break' # Required
+#@nonl
+#@-node:ekr.20040803072955.88:onHeadlineKey
+#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+def updateHead (self,event,w,undoType='Typing'):
+    
+    c = self.c ; p = c.currentPosition() ; u = c.undoer
+    ch = event and event.char or ''
+    i,j = g.app.gui.getTextSelection(w)
+    
+    if event is None:
+        # A bad kludge: compute what is *already* in the widget,
+        # but what is not reported properly.
+        ch = g.app.gui.getTextFromClipboard()
+        i = int(i.split('.')[1])
+        j = int(j.split('.')[1])
+        # g.trace('before',i,j,repr(ch))
+        s = w.get('1.0','end')
+        if i != j:
+            s = s[:i] + ch + s[j:]
+        else:
+            i = w.index('insert')
+            i = int(i.split('.')[1])
+            s = s[:i] + ch + s[i:]
+        # Now force the widget to tell us the truth.
+        w.delete('1.0','end')
+        w.insert('1.0',s)
+        s = w.get('1.0','end')
+        # g.trace('after',s)
+    else:
+        if ch == '\b':
+            if i != j:
+                w.delete(i,j)
+            else:
+                w.delete('insert-1c')
+        elif ch and ch not in ('\n','\r'):
+            if i != j:
+                w.delete(i,j)
+            i = w.index('insert')
+            w.insert(i,ch)
+    
+        s = w.get('1.0','end')
+    
+    if s.endswith('\n'):
+        if len(s) > 1: s = s[:-1]
+        else:          s = ''
+
+    if 0: # p does not *officially* change until onHeadChanged is called.
+        p.initHeadString(s)
+    w.configure(width=max(20,self.headWidth(p)))
+    w.update_idletasks()
+
+    # The granularity is the entire editing session,
+    # starting at the revert point.
+    if ch in ('\n','\r'):
+        self.onHeadChanged(p,'Typing')
+#@nonl
+#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20040803072955.91:onHeadChanged
+# Tricky code: do not change without careful thought and testing.
+
+def onHeadChanged (self,p,undoType):
+    
+    '''Officially change a headline.
+    Set the old undo text to the previous revert point.'''
+    
+    c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    if not w:
+        g.trace('no widget')
+        return
+
+    s = w.get('1.0','end')
+    << truncate s if it has multiple lines >>
+    changed = s != p.headString()
+    
+    # Make the change official, but undo to the *old* revert point.
+    oldRevert = self.revertHeadline
+    self.revertHeadline = s
+    p.initHeadString(s)
+    self.endEditLabel()
+    if not changed: return
+
+    g.trace('undo to:',oldRevert)
+    undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+
+    c.beginUpdate()
+    try:
+        if not c.changed: c.setChanged(True)
+        dirtyVnodeList = p.setDirty()
+    finally:
+        c.endUpdate()
+
+    u.afterChangeNodeContents(p,undoType,undoData,
+        dirtyVnodeList=dirtyVnodeList)
+#@nonl
+#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+# Kludge remove one or two trailing newlines before warning of truncation.
+for i in (0,1):
+    if s and s[-1] == '\n':
+        if len(s) > 1: s = s[:-1]
+        else: s = ''
+
+# Warn if there are multiple lines.
+i = s.find('\n')
+if i > -1:
+    # g.trace(i,len(s),repr(s))
+    g.es("Truncating headline to one line",color="blue")
+    s = s[:i]
+
+limit = 1000
+if len(s) > limit:
+    g.es("Truncating headline to %d characters" % (limit),color="blue")
+    s = s[:limit]
+
+s = g.toUnicode(s or '',g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+#@-node:ekr.20040803072955.91:onHeadChanged
+#@-node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20031218072017.3981:abortEditLabelCommand
+def abortEditLabelCommand (self):
+    
+    frame = self ; c = frame.c ; tree = frame.tree
+    p = c.currentPosition() ; w = p.edit_text()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Abort Edit Headline")
+        return
+        
+    # g.trace(p == tree.editPosition(),repr(tree.revertHeadline))
+        
+    if w and p == tree.editPosition():
+        # Revert the headline text.
+        w.delete("1.0","end")
+        w.insert("end",tree.revertHeadline)
+    
+        # Duplicate relevant logic from tree.onHeadChanged.
+        p.initHeadString(tree.revertHeadline)
+        tree.endEditLabel()
+        c.redraw()
+        c.selectPosition(c.currentPosition())
+#@nonl
+#@-node:ekr.20031218072017.3981:abortEditLabelCommand
+#@-node:ekr.20051027170018.1:( Fixed various headlineproblems )
+#@+node:ekr.20051026170025:Other improvements
+@nocolor
+
+- g.openWithFileName puts the focus in the body pane.
+  Surprisingly important.
+
+- undo/redo now put the focus in the body.
+
+- Compute length of headline on every key.
+#@nonl
+#@-node:ekr.20051026170025:Other improvements
 #@+node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
 #@+node:ekr.20051027135712:Notes
 @nocolor
 
-I have removed the requirement that you have to type <return> to make the
-headline stick, yet I have retained the larger undo granularity in headlines.
+1. Removed the requirement that you have to type <return> to make the headline
+stick, yet I have retained the larger undo granularity in headlines.
 
 I had to use a real hack to make this work. I finally remembered that
 g.app.gui.getTextSelection(w) will return the contents of the clipboard. This
@@ -23884,6 +22669,10 @@ tree.onHeadChanged) get the correct value.
 
 The final piece of the puzzle: tree.select now calls onHeadChanged when
 unselecting a node. This allows us to dispense with return characters.
+
+2. Fixed an long-standing bug involving revertHeadline. This must be set in
+tree.select for *all* headlines, whether or not they are ever edited. This ivar
+is now defined in tkTree, where it belongs.
 #@nonl
 #@-node:ekr.20051027135712:Notes
 #@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
@@ -23921,15 +22710,12 @@ def editLabel (self,p):
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
-        self.frame.revertHeadline = None
-        
+
     self.setEditPosition(p)
-    
-    # g.trace(p,p.edit_text())
 
     # Start editing
     if p and p.edit_text():
-        self.frame.revertHeadline = p.headString()
+        
         self.setNormalLabelState(p)
         self.setEditPosition(p)
         self.frame.headlineWantsFocus(p)
@@ -23971,7 +22757,7 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        self.onHeadChanged(old_p)
+        self.onHeadChanged(old_p,'Typing')
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -23981,6 +22767,9 @@ if old_p:
 #@nonl
 #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 #@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
 frame.setWrap(p)
 
 # Always do this.  Otherwise there can be problems with trailing hewlines.
@@ -24745,7 +23534,7 @@ def endEditLabelCommand (self):
         c.notValidInBatchMode("End Edit Headline")
     else:
         p = c.currentPosition()
-        c.frame.tree.onHeadChanged(p)
+        c.frame.tree.onHeadChanged(p,'Typing')
         c.selectPosition(p)
         c.frame.bodyWantsFocus()
 #@nonl
@@ -24873,39 +23662,45 @@ def updateHead (self,event,w,undoType='Typing'):
     if s.endswith('\n'):
         if len(s) > 1: s = s[:-1]
         else:          s = ''
-        
-    # This cause undo problems, but is much safer.
-    p.initHeadString(s)
+
+    if 0: # p does not *officially* change until onHeadChanged is called.
+        p.initHeadString(s)
     w.configure(width=max(20,self.headWidth(p)))
     w.update_idletasks()
-
-    if 0: # For tracing.
-        if ch or not event or p.headString().strip() != s.strip():
-            g.trace(w._name,repr(ch),repr(s),g.callers(5))
 
     # The granularity is the entire editing session,
     # starting at the revert point.
     if ch in ('\n','\r'):
-        self.onHeadChanged(p,undoType='Typing')
+        self.onHeadChanged(p,'Typing')
 #@nonl
 #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
 #@+node:ekr.20040803072955.91:onHeadChanged
-def onHeadChanged (self,p,undoType='Change Headline'):
+# Tricky code: do not change without careful thought and testing.
+
+def onHeadChanged (self,p,undoType):
     
-    """Update headline text at idle time."""
+    '''Officially change a headline.
+    Set the old undo text to the previous revert point.'''
     
     c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    if not w:
+        g.trace('no widget')
+        return
+
+    s = w.get('1.0','end')
+    << truncate s if it has multiple lines >>
+    changed = s != p.headString()
     
-    # Use the revert point, if present, as the undo point.
-    # UndoType can be None: aborting a headline edit is not undoable.
-    if undoType:
-        undoData = u.beforeChangeNodeContents(p,
-            oldHead=c.frame.revertHeadline or p.headString())
-    if w:
-        s = w.get('1.0','end')
-        << truncate s if it has multiple lines >>
-        p.initHeadString(s)
+    # Make the change official, but undo to the *old* revert point.
+    oldRevert = self.revertHeadline
+    self.revertHeadline = s
+    p.initHeadString(s)
     self.endEditLabel()
+    if not changed: return
+
+    g.trace('undo to:',oldRevert)
+    undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+
     c.beginUpdate()
     try:
         if not c.changed: c.setChanged(True)
@@ -24913,406 +23708,8 @@ def onHeadChanged (self,p,undoType='Change Headline'):
     finally:
         c.endUpdate()
 
-    if undoType:
-        u.afterChangeNodeContents(p,undoType,undoData,
-            dirtyVnodeList=dirtyVnodeList)
-#@nonl
-#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-# Kludge remove one or two trailing newlines before warning of truncation.
-for i in (0,1):
-    if s and s[-1] == '\n':
-        if len(s) > 1: s = s[:-1]
-        else: s = ''
-
-# Warn if there are multiple lines.
-i = s.find('\n')
-if i > -1:
-    # g.trace(i,len(s),repr(s))
-    g.es("Truncating headline to one line",color="blue")
-    s = s[:i]
-
-limit = 1000
-if len(s) > limit:
-    g.es("Truncating headline to %d characters" % (limit),color="blue")
-    s = s[:limit]
-
-s = g.toUnicode(s or '',g.app.tkEncoding)
-#@nonl
-#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-#@-node:ekr.20040803072955.91:onHeadChanged
-#@-node:ekr.20040803072955.90:head key handlers
-#@-node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
-#@+node:ekr.20051027170318:(Implemented Auto () {} []  )
-#@+node:ekr.20051027175147:Notes
-@nocolor
-
-controlled by @bool autocomplete-brackets setting.
-
-Nothing happens in @language plain.
-#@nonl
-#@-node:ekr.20051027175147:Notes
-#@+node:ekr.20051026083733:updateBody (new in 4.4a2)
-# This replaces idle_body_key.  It is never called at idle time.
-# Called only from k.handleDefaultChar and tkBody.onBodyChanged.
-
-def updateBody (self,event,w,undoType,
-    oldSel=None,oldYview=None,newSel=None,oldText=None):
-
-    '''Update Leo after the body have been changed.'''
-    
-    c = self.c ; p = c.currentPosition()
-    ch = event and event.char or ''
-    orignalText = oldText # for use by undo.
-    removeTrailing = None # A signal to compute it later.
-    # g.trace(repr(ch))
-    oldSel = g.app.gui.getTextSelection(w)
-    oldText = p.bodyString()
-    if ch == '\t':
-        self.updateTab(p,w)
-    elif ch == '\b': ## chr(8):
-        # Not strictly correct: we should test for present delete binding...
-        self.updateBackspace(p,w)
-    elif ch in ('\r','\n'):
-        ch = '\n'
-        << handle newline >>
-    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
-        self.updateAutomatchBracket(p,w,ch,oldSel)
-    elif ch: # Null chars must not delete the selection.
-        i,j = oldSel
-        if i != j: w.delete(i,j)
-        w.insert(i,ch)
-    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-        return # The hook claims to have handled the event.
-    # Update the text and handle undo.
-    if not newSel: newSel = g.app.gui.getTextSelection(w)
-    newText = w.get('1.0','end')
-    << remove extra Trailing newlines >> # Same logic as always.
-    if newText == oldText: return
-    c.undoer.setUndoTypingParams(p,undoType,
-        orignalText or oldText,newText,oldSel,newSel,oldYview)
-    p.v.setTnodeText(newText)
-    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
-    << recolor the body >>
-    if not c.changed: c.setChanged(True)
-    << redraw the screen if necessary >>
-    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-#@nonl
-#@+node:ekr.20051026083733.6:<< recolor the body >>
-self.frame.scanForTabWidth(p)
-
-# incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-
-incremental = not self.forceFullRecolorFlag
-self.frame.body.recolor_now(p,incremental=incremental)
-self.forceFullRecolorFlag = False
-#@nonl
-#@-node:ekr.20051026083733.6:<< recolor the body >>
-#@+node:ekr.20051026171121:<< handle newline >>
-i,j = oldSel
-
-if i != j:
-    # No auto-indent if there is selected text.
-    w.delete(i,j)
-    w.insert(i,ch)
-else:
-    w.insert(i,ch)
-    if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-        # No auto-indent if in @nocolor mode or after a Change command.
-        removeTrailing = self.updateAutoIndent(p)
-#@nonl
-#@-node:ekr.20051026171121:<< handle newline >>
-#@+node:ekr.20051026143009:<< remove extra Trailing newlines >>
-@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
-
-It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
-@c
-new = newText ; old = oldText
-
-if removeTrailing != None:
-    pass # Use the value returned from updateAutoIndent.
-elif len(new) == 0 or new[-1] != '\n':
-    # There is no newline to remove.  Probably will never happen.
-    removeTrailing = False
-elif len(old) == 0:
-    # Ambigous case.  Formerly always returned False.
-    if new == "\n\n":
-        removeTrailing = True # Handle a very strange special case.
-    else:
-        removeTrailing = ch not in ('\r','\n')
-elif old == new[:-1]:
-    # A single trailing character has been added.
-    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
-else:
-    # The text didn't have a newline, and now it does.
-    # Moveover, some other change has been made to the text,
-    # So at worst we have misrepresented the user's intentions slightly.
-    removeTrailing = True
-    
-if removeTrailing:
-    if len(newText) > 1: newText = newText[:-1]
-    else: newText = ''
-    
-if 0:
-    if removeTrailing:
-        g.trace('removeTrailing')
-        # g.trace(repr(oldText))
-    # g.trace(repr(newText))
-#@nonl
-#@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
-#@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-redraw_flag = False
-c.beginUpdate()
-try:
-    # Update dirty bits.
-    # p.setDirty() sets all cloned and @file dirty bits.
-    if not p.isDirty() and p.setDirty():
-        redraw_flag = True
-        
-    # Update icons.  p.v.iconVal may not exist during unit tests.
-    val = p.computeIcon()
-    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-        p.v.iconVal = val
-        redraw_flag = True
-finally:
-    # Redraw only if necessary.
-    c.endUpdate(redraw_flag) 
-#@nonl
-#@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-#@+node:ekr.20051027172949:updateAutomatchBracket
-def updateAutomatchBracket (self,p,w,ch,oldSel):
-    
-    # assert ch in ('(',')','[',']','{','}')
-    
-    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
-    language = d.get('language')
-    
-    if ch in ('(','[','{',):
-        automatch = language not in ('plain',)
-        if automatch:
-            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
-        if i != j:
-            w.delete(i,j)
-        w.insert(i,ch)
-        if automatch:
-            w.mark_set('insert','insert-1c')
-    else:
-        ch2 = w.get('insert')
-        if ch2 in (')',']','}'):
-            w.mark_set('insert','insert+1c')
-        else:
-            if i != j:
-                w.delete(i,j)
-            w.insert(i,ch)
-#@nonl
-#@-node:ekr.20051027172949:updateAutomatchBracket
-#@+node:ekr.20051026171121.1:udpateAutoIndent
-# By David McNab:
-def updateAutoIndent (self,p):
-
-    c = self.c
-    d = g.scanDirectives(c,p)
-    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
-    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # Add the leading whitespace to the present line.
-    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) > 0 and s [ -1] == ':':
-        # For Python: increase auto-indent after colons.
-        if self.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if c.config.getBool("smart_auto_indent"):
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width] ; tabex = 0
-        for i in range(0,len(s)):
-            if s [i] == '\t':
-                tabex += tab_width-1
-            if s [i] in '([{':
-                brackets.append(i+tabex+1)
-            elif s [i] in '}])' and len(brackets) > 1:
-                brackets.pop()
-        width = brackets.pop()
-    ws = g.computeLeadingWhitespace(width,tab_width)
-    if ws:
-        c.frame.bodyCtrl.insert("insert",ws)
-        removeTrailing = False
-    else:
-        removeTrailing = None
-    return removeTrailing
-#@nonl
-#@-node:ekr.20051026171121.1:udpateAutoIndent
-#@+node:ekr.20051026092433:updateTab
-def updateTab (self,p,w):
-
-    c = self.c
-    d = g.scanDirectives(c,p)
-    tab_width = d.get("tabwidth",c.tab_width)
-    
-    i,j = g.app.gui.getTextSelection(w)
-    if i != j:
-        w.delete(i,j)
-    if tab_width > 0:
-        w.insert("insert",'\t')
-    else:
-        # Get the preceeding characters.
-        s = w.get("insert linestart","insert")
-    
-        # Compute n, the number of spaces to insert.
-        width = g.computeWidth(s,tab_width)
-        n = abs(tab_width) - (width % abs(tab_width))
-        w.insert("insert",' ' * n)
-#@nonl
-#@-node:ekr.20051026092433:updateTab
-#@+node:ekr.20051026092433.1:updateBackspace
-def updateBackspace (self,p,w):
-    
-    c = self.c
-    d = g.scanDirectives(c,p)
-    tab_width = d.get("tabwidth",c.tab_width)
-    
-    i,j = g.app.gui.getTextSelection(w)
-    if i != j:
-        w.delete(i,j)
-    elif tab_width > 0:
-        w.delete('insert-1c')
-    else:
-        << backspace with negative tab_width >>
-#@nonl
-#@+node:ekr.20051026092746:<< backspace with negative tab_width >>
-s = prev = w.get("insert linestart","insert")
-n = len(prev)
-abs_width = abs(tab_width)
-
-# Delete up to this many spaces.
-n2 = (n % abs_width) or abs_width
-n2 = min(n,n2) ; count = 0
-
-while n2 > 0:
-    n2 -= 1
-    ch = prev[n-count-1]
-    if ch != ' ': break
-    else: count += 1
-
-# Make sure we actually delete something.
-w.delete("insert -%dc" % (max(1,count)),"insert")
-#@nonl
-#@-node:ekr.20051026092746:<< backspace with negative tab_width >>
-#@-node:ekr.20051026092433.1:updateBackspace
-#@-node:ekr.20051026083733:updateBody (new in 4.4a2)
-#@-node:ekr.20051027170318:(Implemented Auto () {} []  )
-#@+node:ekr.20051027170018.1:( Fixed various headlineproblems )
-#@+node:ekr.20051027182727:Notes
-@nocolor
-
-- Clicking in the body pane could loose the latest headline edit
-
-The fix was always to call p.initHeadString(s) in updateHead. This required
-reimplementing the abort editing logic.
-
-- abortEditLabelCommand calls onHeadChanged with undoType = None. Indeed,
-aborting a headline edit is not undoable, and does not affect the undo state in
-any way.
-#@nonl
-#@-node:ekr.20051027182727:Notes
-#@+node:ekr.20040803072955.90:head key handlers
-#@+node:ekr.20040803072955.88:onHeadlineKey
-def onHeadlineKey (self,event):
-    
-    """Handle a key event in a headline."""
-    
-    w = event and event.widget or None
-    
-    self.updateHead(event,w,undoType='Typing')
-
-    return 'break' # Required
-#@nonl
-#@-node:ekr.20040803072955.88:onHeadlineKey
-#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-def updateHead (self,event,w,undoType='Typing'):
-    
-    c = self.c ; p = c.currentPosition() ; u = c.undoer
-    ch = event and event.char or ''
-    i,j = g.app.gui.getTextSelection(w)
-    
-    if event is None:
-        # A bad kludge: compute what is *already* in the widget,
-        # but what is not reported properly.
-        ch = g.app.gui.getTextFromClipboard()
-        i = int(i.split('.')[1])
-        j = int(j.split('.')[1])
-        # g.trace('before',i,j,repr(ch))
-        s = w.get('1.0','end')
-        if i != j:
-            s = s[:i] + ch + s[j:]
-        else:
-            i = w.index('insert')
-            i = int(i.split('.')[1])
-            s = s[:i] + ch + s[i:]
-        # Now force the widget to tell us the truth.
-        w.delete('1.0','end')
-        w.insert('1.0',s)
-        s = w.get('1.0','end')
-        # g.trace('after',s)
-    else:
-        if ch == '\b':
-            if i != j:
-                w.delete(i,j)
-            else:
-                w.delete('insert-1c')
-        elif ch and ch not in ('\n','\r'):
-            if i != j:
-                w.delete(i,j)
-            i = w.index('insert')
-            w.insert(i,ch)
-    
-        s = w.get('1.0','end')
-    
-    if s.endswith('\n'):
-        if len(s) > 1: s = s[:-1]
-        else:          s = ''
-        
-    # This cause undo problems, but is much safer.
-    p.initHeadString(s)
-    w.configure(width=max(20,self.headWidth(p)))
-    w.update_idletasks()
-
-    if 0: # For tracing.
-        if ch or not event or p.headString().strip() != s.strip():
-            g.trace(w._name,repr(ch),repr(s),g.callers(5))
-
-    # The granularity is the entire editing session,
-    # starting at the revert point.
-    if ch in ('\n','\r'):
-        self.onHeadChanged(p,undoType='Typing')
-#@nonl
-#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-#@+node:ekr.20040803072955.91:onHeadChanged
-def onHeadChanged (self,p,undoType='Change Headline'):
-    
-    """Update headline text at idle time."""
-    
-    c = self.c ; u = c.undoer ; w = self.edit_text(p)
-    
-    # Use the revert point, if present, as the undo point.
-    # UndoType can be None: aborting a headline edit is not undoable.
-    if undoType:
-        undoData = u.beforeChangeNodeContents(p,
-            oldHead=c.frame.revertHeadline or p.headString())
-    if w:
-        s = w.get('1.0','end')
-        << truncate s if it has multiple lines >>
-        p.initHeadString(s)
-    self.endEditLabel()
-    c.beginUpdate()
-    try:
-        if not c.changed: c.setChanged(True)
-        dirtyVnodeList = p.setDirty()
-    finally:
-        c.endUpdate()
-
-    if undoType:
-        u.afterChangeNodeContents(p,undoType,undoData,
-            dirtyVnodeList=dirtyVnodeList)
+    u.afterChangeNodeContents(p,undoType,undoData,
+        dirtyVnodeList=dirtyVnodeList)
 #@nonl
 #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
 # Kludge remove one or two trailing newlines before warning of truncation.
@@ -25348,17 +23745,21 @@ def abortEditLabelCommand (self):
         c.notValidInBatchMode("Abort Edit Headline")
         return
         
-    if self.revertHeadline and w and p == tree.editPosition():
-    
+    # g.trace(p == tree.editPosition(),repr(tree.revertHeadline))
+        
+    if w and p == tree.editPosition():
+        # Revert the headline text.
         w.delete("1.0","end")
-        w.insert("end",self.revertHeadline)
-        tree.onHeadChanged(p,undoType=None) # Must be done immediately.
-        tree.revertHeadline = None
-        c.frame.tree.endEditLabel()
+        w.insert("end",tree.revertHeadline)
+    
+        # Duplicate relevant logic from tree.onHeadChanged.
+        p.initHeadString(tree.revertHeadline)
+        tree.endEditLabel()
+        c.redraw()
         c.selectPosition(c.currentPosition())
 #@nonl
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
-#@-node:ekr.20051027170018.1:( Fixed various headlineproblems )
+#@-node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

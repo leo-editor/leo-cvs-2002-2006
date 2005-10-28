@@ -5534,15 +5534,6 @@ class searchCommandsClass (baseEditCommandsClass):
 #@-node:ekr.20050920084036.257:class searchCommandsClass
 #@-node:ekr.20051023094009:Search classes
 #@+node:ekr.20051025071455:Spell classes
-#@+at 
-#@nonl
-# To do:
-# - open the minibuffer to get suggestions.
-# - Per-pane key bindings. (arrows, etc.)
-# - Accumulate status messages.
-#@-at
-#@@c
-
 #@<< specify aspell directories >>
 #@+node:ekr.20051025071455.3:<< specify aspell directories >>
 if sys.platform == 'darwin':

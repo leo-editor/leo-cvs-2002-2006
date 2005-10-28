@@ -1512,7 +1512,7 @@ class keyHandlerClass:
         c.frame.log.clearTab('Command')
         for key in keys:
             b = k.bindingsDict.get(key)
-            g.es('[%s]' % b.pane,key,b.commandName or b.name,tabName='Command')
+            g.es('[%s]' % b.pane,key,b.commandName,tabName='Command')
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
@@ -1892,10 +1892,13 @@ class keyHandlerClass:
                 name[0] in string.letters # A known Leo frame.
                 or w == c.frame.top # The top of the Leo window
                 or g.app.dialogs > 0 # A dialog.
-                or c.frame.log.getSelectedTab() not in 'Log','Completions'
+                or isinstance(w,Tk.Text)
+            )
+                # This doesn't work.
+                # or c.frame.log.getSelectedTab() not in 'Log','Completions'
                 # Assume all other tabs select their text widgets.
                 # in ('Find','Spell','Colors','Fonts')
-            ) 
+    
             if not ok:
                 # Not a name created by Leo.
                  g.trace(self.idleCount,name,g.top())
@@ -2121,7 +2124,7 @@ class keyHandlerClass:
         if command:
             for key in k.bindingsDict:
                 b = k.bindingsDict.get(key)
-                if b.name == command.__name__:
+                if b.commandName == command.__name__:
                     return key
         
         return ''
@@ -2133,7 +2136,7 @@ class keyHandlerClass:
         if command:
             for key in k.bindingsDict:
                 b = k.bindingsDict.get(key)
-                if b.name == command.__name__:
+                if b.commandName == command.__name__:
                     return key
         
         return ''

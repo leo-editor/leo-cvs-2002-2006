@@ -81,7 +81,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.draggedItem = None
         self.isActive = True
         self.redrawCount = 0
-        self.revertHeadline = None # Previous headline text for abortEditLabel.
         self.wantedWidget = None
         self.wantedCallbackScheduled = False
         self.scrollWay = None
@@ -1713,13 +1712,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.notValidInBatchMode("Abort Edit Headline")
             return
             
-        if self.revertHeadline and w and p == tree.editPosition():
-        
+        # g.trace(p == tree.editPosition(),repr(tree.revertHeadline))
+            
+        if w and p == tree.editPosition():
+            # Revert the headline text.
             w.delete("1.0","end")
-            w.insert("end",self.revertHeadline)
-            tree.onHeadChanged(p,undoType=None) # Must be done immediately.
-            tree.revertHeadline = None
-            c.frame.tree.endEditLabel()
+            w.insert("end",tree.revertHeadline)
+        
+            # Duplicate relevant logic from tree.onHeadChanged.
+            p.initHeadString(tree.revertHeadline)
+            tree.endEditLabel()
+            c.redraw()
             c.selectPosition(c.currentPosition())
     #@nonl
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
@@ -1836,7 +1839,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.notValidInBatchMode("End Edit Headline")
         else:
             p = c.currentPosition()
-            c.frame.tree.onHeadChanged(p)
+            c.frame.tree.onHeadChanged(p,'Typing')
             c.selectPosition(p)
             c.frame.bodyWantsFocus()
     #@nonl

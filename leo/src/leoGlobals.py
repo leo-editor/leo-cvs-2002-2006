@@ -2321,7 +2321,7 @@ def idleTimeHookHandler(*args,**keys):
     top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
-        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
+        # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
         # New in 4.4 a2: direct support for k.onIdleTime()
         c and c.keyHandler and c == top and c.keyHandler.onIdleTime()

@@ -266,19 +266,19 @@ class leoTkinterTree (leoFrame.leoTree):
         #@-node:ekr.20040803072955.19:<< inject callbacks into the position class >>
         #@nl
         
+        self.dragging = False
+        self.expanded_click_area = c.config.getBool("expanded_click_area")
+        self.generation = 0
+        self.prevPositions = 0
         self.redrawing = False # Used only to disable traces.
+        self.revertHeadline = None # Previous headline text for abortEditLabel.
         self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
             # New in 4.4: We should stay in the tree to use per-pane bindings.
-        self.trace = False
-        self.verbose = True
-        self.useBindtags = True
-        self.generation = 0
-        self.dragging = False
-        self.prevPositions = 0
-        self.expanded_click_area = c.config.getBool("expanded_click_area")
         self.textNumber = 0 # To make names unique.
+        self.trace = False
+        self.useBindtags = True
+        self.verbose = True
         
-        # self.createPermanentBindings()
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
         
         # Keys are id's, values are unchanging positions...
@@ -1907,62 +1907,68 @@ class leoTkinterTree (leoFrame.leoTree):
         if s.endswith('\n'):
             if len(s) > 1: s = s[:-1]
             else:          s = ''
-            
-        # This cause undo problems, but is much safer.
-        p.initHeadString(s)
+    
+        if 0: # p does not *officially* change until onHeadChanged is called.
+            p.initHeadString(s)
         w.configure(width=max(20,self.headWidth(p)))
         w.update_idletasks()
-    
-        if 0: # For tracing.
-            if ch or not event or p.headString().strip() != s.strip():
-                g.trace(w._name,repr(ch),repr(s),g.callers(5))
     
         # The granularity is the entire editing session,
         # starting at the revert point.
         if ch in ('\n','\r'):
-            self.onHeadChanged(p,undoType='Typing')
+            self.onHeadChanged(p,'Typing')
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     #@+node:ekr.20040803072955.91:onHeadChanged
-    def onHeadChanged (self,p,undoType='Change Headline'):
+    # Tricky code: do not change without careful thought and testing.
+    
+    def onHeadChanged (self,p,undoType):
         
-        """Update headline text at idle time."""
+        '''Officially change a headline.
+        Set the old undo text to the previous revert point.'''
         
         c = self.c ; u = c.undoer ; w = self.edit_text(p)
+        if not w:
+            g.trace('no widget')
+            return
+    
+        s = w.get('1.0','end')
+        #@    << truncate s if it has multiple lines >>
+        #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+        # Kludge remove one or two trailing newlines before warning of truncation.
+        for i in (0,1):
+            if s and s[-1] == '\n':
+                if len(s) > 1: s = s[:-1]
+                else: s = ''
         
-        # Use the revert point, if present, as the undo point.
-        # UndoType can be None: aborting a headline edit is not undoable.
-        if undoType:
-            undoData = u.beforeChangeNodeContents(p,
-                oldHead=c.frame.revertHeadline or p.headString())
-        if w:
-            s = w.get('1.0','end')
-            #@        << truncate s if it has multiple lines >>
-            #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-            # Kludge remove one or two trailing newlines before warning of truncation.
-            for i in (0,1):
-                if s and s[-1] == '\n':
-                    if len(s) > 1: s = s[:-1]
-                    else: s = ''
-            
-            # Warn if there are multiple lines.
-            i = s.find('\n')
-            if i > -1:
-                # g.trace(i,len(s),repr(s))
-                g.es("Truncating headline to one line",color="blue")
-                s = s[:i]
-            
-            limit = 1000
-            if len(s) > limit:
-                g.es("Truncating headline to %d characters" % (limit),color="blue")
-                s = s[:limit]
-            
-            s = g.toUnicode(s or '',g.app.tkEncoding)
-            #@nonl
-            #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-            #@nl
-            p.initHeadString(s)
+        # Warn if there are multiple lines.
+        i = s.find('\n')
+        if i > -1:
+            # g.trace(i,len(s),repr(s))
+            g.es("Truncating headline to one line",color="blue")
+            s = s[:i]
+        
+        limit = 1000
+        if len(s) > limit:
+            g.es("Truncating headline to %d characters" % (limit),color="blue")
+            s = s[:limit]
+        
+        s = g.toUnicode(s or '',g.app.tkEncoding)
+        #@nonl
+        #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+        #@nl
+        changed = s != p.headString()
+        
+        # Make the change official, but undo to the *old* revert point.
+        oldRevert = self.revertHeadline
+        self.revertHeadline = s
+        p.initHeadString(s)
         self.endEditLabel()
+        if not changed: return
+    
+        g.trace('undo to:',oldRevert)
+        undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+    
         c.beginUpdate()
         try:
             if not c.changed: c.setChanged(True)
@@ -1970,9 +1976,8 @@ class leoTkinterTree (leoFrame.leoTree):
         finally:
             c.endUpdate()
     
-        if undoType:
-            u.afterChangeNodeContents(p,undoType,undoData,
-                dirtyVnodeList=dirtyVnodeList)
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)
     #@nonl
     #@-node:ekr.20040803072955.91:onHeadChanged
     #@-node:ekr.20040803072955.90:head key handlers
@@ -2596,15 +2601,12 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if self.editPosition() and p != self.editPosition():
             self.endEditLabel()
-            self.frame.revertHeadline = None
-            
+    
         self.setEditPosition(p)
-        
-        # g.trace(p,p.edit_text())
     
         # Start editing
         if p and p.edit_text():
-            self.frame.revertHeadline = p.headString()
+            
             self.setNormalLabelState(p)
             self.setEditPosition(p)
             self.frame.headlineWantsFocus(p)
@@ -2629,7 +2631,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 insertSpot = c.frame.body.getInsertionPoint()
                 
                 if old_p != p:
-                    self.onHeadChanged(old_p)
+                    self.onHeadChanged(old_p,'Typing')
                     self.endEditLabel() # sets editPosition = None
                     self.setUnselectedLabelState(old_p)
                 
@@ -2645,6 +2647,9 @@ class leoTkinterTree (leoFrame.leoTree):
         if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             #@        << select the new node >>
             #@+node:ekr.20040803072955.130:<< select the new node >>
+            # Bug fix: we must always set this, even if we never edit the node.
+            self.revertHeadline = p.headString()
+            
             frame.setWrap(p)
             
             # Always do this.  Otherwise there can be problems with trailing hewlines.
