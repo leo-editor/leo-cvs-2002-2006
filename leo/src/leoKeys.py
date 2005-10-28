@@ -696,15 +696,18 @@ class keyHandlerClass:
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
         callback calls commandName (for error messages).'''
         
-        k = self ; c = k.c
-        
+        k = self ; c = k.c 
+    
         if not shortcut: g.trace('No shortcut for %s' % commandName)
         bunch = k.bindingsDict.get(shortcut)
         if bunch and bunch.pane == pane:
+            # g.trace('Not bound',shortcut)
             if commandName != bunch.commandName:
                 g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
                     shortcut,bunch.commandName,commandName,pane),color='blue')
             return
+            
+        # g.trace(pane,shortcut)
     
         try:
             #@        << bind callback to shortcut in pane >>
@@ -717,9 +720,6 @@ class keyHandlerClass:
             
             # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
             # There should only be one binding for the minibuffer: the <Key>+ binding.
-            
-            allPanes = [body,log,tree,menu,minibuffer]
-            
             d = {
                 'all':  [body,log,tree], # Probably not wise: menu
                 'body': [body],
@@ -734,7 +734,7 @@ class keyHandlerClass:
                 if pane and pane != 'all':
                     g.trace('%4s %20s %s' % (pane, shortcut,commandName))
             
-            widgets = d.get((pane or 'all').lower(),[])
+            widgets = d.get((pane or '').lower(),[])
             
             if shortcut == '<Key>':
                 # Important.  We must make this binding if the minibuffer can ever get focus.
@@ -844,8 +844,8 @@ class keyHandlerClass:
     
         k = self ; d = k.bindingsDict
         keys = d.keys() ; keys.sort()
-        
         panes = list(paneOrPanes)
+        # g.trace(paneOrPanes,g.callers(5))
         
         for shortcut in keys:
             bunch = d.get(shortcut)
@@ -1034,13 +1034,16 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         k.stroke = stroke # Set this global for general use.
+        keysym = event and event.keysym
+        ch = event and event.char
         k.func = func
         commandName = k.ultimateFuncName(func)
-        special = event.keysym in (
+        special = keysym in (
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func or stroke != '<Key>'
         
-        # g.trace(stroke,k.inState(),k.getStateKind())
+        #g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+            # stroke,k.inState(),k.getStateKind())
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
@@ -1109,15 +1112,15 @@ class keyHandlerClass:
             func(event)
             k.endCommand(event,commandName,forceFocus)
             return 'break'
-    
+            
+        # New logic in 4.4:
+        if stroke == '<Key>' and not ch:
+            # Let Tk handle the char.  Example: default bindings for arrow keys.
+            # g.trace('to tk:','stroke',stroke,'ch',repr(ch))
+            return None
         else:
-            # A huge change in 4.4: update *now*, not at idle time.
-            if 1:
-                self.handleDefaultChar(event)
-                return 'break'
-            else:
-                # c.frame.body.onBodyKey(event)
-                return None # Not 'break'
+            # Pass the stroke to one of Leo's event handlers.
+            return self.handleDefaultChar(event)
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,event):
@@ -1159,22 +1162,20 @@ class keyHandlerClass:
     def handleDefaultChar(self,event):
         
         c = self.c
-        
-        try:
-            w = event.widget ; name = w._name
-            # g.trace(name)
-            if name.startswith('body'):
-                c.frame.body.updateBody(event,w,undoType='Typing')
-                return 'break'
-            elif name.startswith('head'):
-                g.trace("can't happen: %s" % (name),color='red')
-                c.frame.tree.updateHead(event,w,undoType='Typing')
-                return 'break'
-            else:
-                # Let tkinter handle the event.
-                return None
-        except Exception:
-            g.es_exception()
+        ch = event and event.char
+        w = event and event.widget
+        name = w and w._name
+    
+        if name.startswith('body'):
+            c.frame.body.updateBody(event,w,undoType='Typing')
+            return 'break'
+        elif name.startswith('head'):
+            g.trace("can't happen: %s" % (name),color='red')
+            c.frame.tree.updateHead(event,w,undoType='Typing')
+            return 'break'
+        else:
+            # Let tkinter handle the event.
+            # g.trace('to tk:',name,repr(ch))
             return None
     #@nonl
     #@-node:ekr.20051026083544:handleDefaultChar
