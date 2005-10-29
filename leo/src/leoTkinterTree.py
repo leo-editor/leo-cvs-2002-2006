@@ -1875,6 +1875,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; p = c.currentPosition() ; u = c.undoer
         ch = event and event.char or ''
         i,j = g.app.gui.getTextSelection(w)
+        # g.trace(g.callers(6))
         
         if event is None:
             # A bad kludge: compute what is *already* in the widget,
@@ -1882,9 +1883,7 @@ class leoTkinterTree (leoFrame.leoTree):
             ch = g.app.gui.getTextFromClipboard()
             i = int(i.split('.')[1])
             j = int(j.split('.')[1])
-            # g.trace('before',i,j,repr(ch))
             s = w.get('1.0','end')
-            g.trace('before: s,ch',repr(s),repr(ch))
             if i != j:
                 s = s[:i] + ch + s[j:]
             else:
@@ -1895,7 +1894,6 @@ class leoTkinterTree (leoFrame.leoTree):
             w.delete('1.0','end')
             w.insert('1.0',s)
             s = w.get('1.0','end')
-            # g.trace('after',s)
         else:
             if ch == '\b':
                 if i != j:
@@ -1917,7 +1915,6 @@ class leoTkinterTree (leoFrame.leoTree):
         if 0: # p does not *officially* change until onHeadChanged is called.
             p.initHeadString(s)
         w.configure(width=self.headWidth(s=s))
-        w.update_idletasks()
     
         # The granularity is the entire editing session,
         # starting at the revert point.
@@ -1943,7 +1940,6 @@ class leoTkinterTree (leoFrame.leoTree):
         #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
         # Remove one or two trailing newlines before warning of truncation.
         for i in (0,1):
-            g.trace(repr(s))
             if s and s[-1] == '\n':
                 if len(s) > 1: s = s[:-1]
                 else: s = ''
@@ -2638,7 +2634,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 insertSpot = c.frame.body.getInsertionPoint()
                 
                 if old_p != p:
-                    self.onHeadChanged(old_p,'Typing')
+                    ## self.onHeadChanged(old_p,'Typing')
                     self.endEditLabel() # sets editPosition = None
                     self.setUnselectedLabelState(old_p)
                 

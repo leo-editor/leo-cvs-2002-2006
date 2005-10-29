@@ -1603,6 +1603,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             self.bodyWantsFocus()
         except:
             g.es_event_exception("activate body")
+            
+        return 'break'
     #@nonl
     #@-node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
     #@+node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
@@ -1777,7 +1779,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         elif name.startswith('head'):
             # I have no idea why the paste gets done automatically.
             # There are Tk bugs lurking here...
-            f.tree.updateHead(event=None,w=w,undoType='Paste')
+            # f.tree.updateHead(event=None,w=w,undoType='Paste')
+            pass
         else: pass
     #@nonl
     #@-node:ekr.20051011072903.5:pasteText
