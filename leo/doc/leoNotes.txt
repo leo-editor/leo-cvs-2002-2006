@@ -3331,6 +3331,21 @@ def selectForwardWord (self):
 #@-node:ekr.20050723064110.18:selectForwordWord
 #@-node:ekr.20050723064110.12:Cursor movement
 #@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
+#@+node:ekr.20051025071455.9:getAspellDirectory (not used)
+def getAspellDirectory(self):
+
+    """Get the directory containing aspell.exe from the .ini file"""
+
+    try:
+        fileName = os.path.join(g.app.loadDir,"..","plugins",ini_file_name)
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
+        return config.get("main", "aspell_dir")
+    except:
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20051025071455.9:getAspellDirectory (not used)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

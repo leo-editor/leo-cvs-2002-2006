@@ -26,13 +26,6 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Don't issue truncation message if only one newline.  (Test with paste.)
-
-- Incremental syntax coloring not working properly when an ancestor is an @nocolor node.
-   Example: 4.4a2 release notes on a line containing 'for' or 'in'.
-
-* Run pychecker.
-
 - Add buttons.txt to distribution list.
 #@nonl
 #@+node:ekr.20051025101030:before a2
@@ -99,10 +92,10 @@ Traceback (most recent call last):
   File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
     command()
 
-  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1571, in undo
+  File "leoUndo.py", line 1571, in undo
     u.undoHelper()
 
-  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 1720, in undoMove
+  File "leoUndo.py", line 1720, in undoMove
     u.p.moveToNthChildOf(u.oldParent,u.oldN)
 
   File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
@@ -1132,21 +1125,6 @@ def __init__(self,c,local_dictionary_file,local_language_code):
     # g.trace(self.local_dictionary)
 #@nonl
 #@-node:ekr.20051025071455.8:__init__
-#@+node:ekr.20051025071455.9:getAspellDirectory (not used)
-def getAspellDirectory(self):
-
-    """Get the directory containing aspell.exe from the .ini file"""
-
-    try:
-        fileName = os.path.join(g.app.loadDir,"..","plugins",ini_file_name)
-        config = ConfigParser.ConfigParser()
-        config.read(fileName)
-        return config.get("main", "aspell_dir")
-    except:
-        g.es_exception()
-        return None
-#@nonl
-#@-node:ekr.20051025071455.9:getAspellDirectory (not used)
 #@-node:ekr.20051025071455.7:Birth & death
 #@+node:ekr.20051025071455.10:processWord
 def processWord(self, word):
@@ -1183,9 +1161,7 @@ def updateDictionary(self):
         return True
 
     except Exception, err:
-        g.es("Unable to update local aspell dictionary: %s" % err)
-        print err
-        add_dicts = ""
+        g.es_print("Unable to update local aspell dictionary: %s" % err)
         return False
 #@nonl
 #@-node:ekr.20051025071455.11:updateDictionary
@@ -1297,10 +1273,8 @@ def __init__(self,c,parentFrame):
     
     """Ctor for the Leo Spelling dialog."""
 
-    self.c = c ; log = c.frame.log ; tabName = 'Spell'
-    
     leoFind.leoFind.__init__(self,c) # Call the base ctor.
-    
+
     self.c = c
     self.body = c.frame.body
     self.currentWord = None
@@ -1451,7 +1425,7 @@ def readDictionary (self,fileName):
     try:
         f = open(fileName,"r")
     except IOError:
-        g.es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
+        g.es("Unable to open local dictionary '%s' - using a blank one instead" % fileName)
         return d
 
     try:
@@ -1556,6 +1530,9 @@ def add(self,event=None):
 #@+node:ekr.20051025071455.38:change
 def change(self,event=None):
     """Make the selected change to the text"""
+
+    __pychecker__ = '--no-override --no-argsused'
+         # event param is not used, required, and different from base class.
 
     c = self.c ; current = c.currentPosition()
     body = self.body ; t = body.bodyCtrl
@@ -1673,7 +1650,7 @@ def fillbox(self, alts, word=None):
 def findNextMisspelledWord(self):
     """Find the next unknown word."""
     
-    c = self.c ; p = c.currentPosition() ; t = self.workCtrl
+    c = self.c ; p = c.currentPosition()
     aspell = self.aspell ; alts = None ; word = None
    
     try:
@@ -1699,11 +1676,7 @@ def findNextMisspelledWord(self):
 @c
 
 if self.dictionary.has_key(word.lower()):
-    
-    # print "Ignored", word
     continue
-    
-# print "Didn't ignore '%s'" % word
 #@nonl
 #@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
 #@-node:ekr.20051025071455.45:findNextMisspelledWord
@@ -1753,6 +1726,8 @@ def findNextWord(self,p):
                 t.delete("1.0", "end")
                 t.insert("end", p.bodyString())
                 t.mark_set("insert", "1.0")
+                
+    __pychecker__ = '--no-implicitreturns' # This is not really an implicit return.
 #@nonl
 #@-node:ekr.20051025071455.47:findNextWord
 #@+node:ekr.20051025071455.48:getSuggestion
@@ -5522,13 +5497,13 @@ always be enabled.
 #@+node:ekr.20051015113252:Pychecker report
 # None of the following are correct.
 
-C:\prog\leoCVS\leo\src\leoGlobals.py:1417: Setting aList to itself has no effect
+leoGlobals.py:1417: Setting aList to itself has no effect
 
-C:\prog\leoCVS\leo\src\leoGlobals.py:1433: Setting aList to itself has no effect
+leoGlobals.py:1433: Setting aList to itself has no effect
 
-C:\prog\leoCVS\leo\src\leoKeys.py:803: Redefining attribute (keyCallback) original line (792)
+leoKeys.py:803: Redefining attribute (keyCallback) original line (792)
 
-C:\prog\leoCVS\leo\src\leoKeys.py:1315: No module attribute (initAllEditCommanders) found
+leoKeys.py:1315: No module attribute (initAllEditCommanders) found
 #@nonl
 #@-node:ekr.20051015113252:Pychecker report
 #@+node:ekr.20041126060136:print_list & listToString
@@ -5606,7 +5581,7 @@ def endCommand (self,event,commandName,forceFocus=True):
         p = c.currentPosition()
     except AttributeError:
         return
-        
+
     # Set the best possible undoType: prefer explicit commandName to k.commandName.
     commandName = commandName or k.commandName or ''
     k.commandName = k.commandName or commandName or ''
@@ -5624,8 +5599,10 @@ def endCommand (self,event,commandName,forceFocus=True):
                 pass
         bodyCtrl.update_idletasks()
         c.frame.body.onBodyChanged(p,undoType='Typing')
-
+        
     w.update_idletasks()
+    if forceFocus:
+        c.frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@-node:ekr.20051015123432:(Methods with pychecker problems)
@@ -16070,7 +16047,8 @@ def pasteText (self,fromMinibuffer=False):
     elif name.startswith('head'):
         # I have no idea why the paste gets done automatically.
         # There are Tk bugs lurking here...
-        f.tree.updateHead(event=None,w=w,undoType='Paste')
+        # f.tree.updateHead(event=None,w=w)
+        pass
     else: pass
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
@@ -19369,7 +19347,8 @@ def pasteText (self,fromMinibuffer=False):
     elif name.startswith('head'):
         # I have no idea why the paste gets done automatically.
         # There are Tk bugs lurking here...
-        f.tree.updateHead(event=None,w=w,undoType='Paste')
+        # f.tree.updateHead(event=None,w=w)
+        pass
     else: pass
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText

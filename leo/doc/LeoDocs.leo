@@ -678,7 +678,6 @@
 </v>
 </v>
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh></v>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20051011141302"><vh>4.4 alpha 1</vh>
 <v t="ekr.20051014103845.3"><vh>Quick Start</vh></v>
@@ -2173,8 +2172,8 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20051028051444" a="E"><vh>4.4 alpha 2</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20051028051444" a="TV"><vh>4.4 alpha 2</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh></v>
 <v t="ekr.20051028051444.3"><vh>Planned improvements</vh></v>
@@ -2200,7 +2199,7 @@
 </v>
 </v>
 <v t="ekr.20051028051616.1" a="E"><vh>New in alpha 2</vh>
-<v t="ekr.20051028061322" a="TV"><vh>New commands</vh></v>
+<v t="ekr.20051028061322"><vh>New commands</vh></v>
 <v t="ekr.20051028051616.2"><vh>(Added f.show/hideMinibuffer)</vh></v>
 <v t="ekr.20051028051616.3" a="E"><vh>(Help command)</vh>
 <v t="ekr.20051028051616.4"><vh>k.help</vh></v>
@@ -2787,6 +2786,8 @@
 </v>
 </v>
 <v t="ekr.20051028051616.303"><vh>abortEditLabelCommand</vh></v>
+</v>
+</v>
 </v>
 </v>
 </v>
@@ -5284,7 +5285,7 @@ Leo will draw a Leo icon in Leo windows only if you have installed Fredrik Lundh
 -   Download PIL from http://www.pythonware.com/downloads/index.htm#pil
 
 -   Download tkIcon from http://www.effbot.org/downloads/#tkIcon</t>
-<t tx="edream.110203163054.63">@nocolor</t>
+<t tx="edream.110203163054.63"></t>
 <t tx="edream.110203163054.64">Leo 4.1 alpha 1                   November 3, 2003
 
 *** Alpha quality code:  Please make full backups before playing with this code!
@@ -22192,9 +22193,7 @@ def f (event):
 
 k.registerCommand('print-hello','Alt-Ctrl-Shift-p',f)
 k.registerCommand('print-hello2',None,f)</t>
-<t tx="ekr.20051028051444">@nocolor
-
-Leo 4.4 alpha 2                 October 29, 2005
+<t tx="ekr.20051028051444">Leo 4.4 alpha 2                 October 29, 2005
 
 Leo 4.4 a2 is a big step forward in meeting the following goals:
 
