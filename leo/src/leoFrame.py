@@ -474,9 +474,9 @@ class leoFrame:
     def OnCopyFromMenu (self):     self.oops()
     def OnPasteFromMenu (self):    self.oops()
     
-    copyText  = OnCopyFromMenu
-    cutText   = OnCutFromMenu
-    pasteText = OnPasteFromMenu
+    def copyText  (self,fromMinibuffer=False): self.oops()
+    def cutText   (self,fromMinibuffer=False): self.oops()
+    def pasteText (self,fromMinibuffer=False): self.oops()
     
     def abortEditLabelCommand (self): self.oops()
     def endEditLabelCommand (self):   self.oops()
@@ -759,10 +759,10 @@ class leoLog:
     #@+node:ekr.20031218072017.3703:leoLog.put & putnl
     # All output to the log stream eventually comes here.
     
-    def put (self,s,color=None):
+    def put (self,s,color=None,tabName='Log'):
         self.oops()
     
-    def putnl (self):
+    def putnl (self,tabName='Log'):
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3703:leoLog.put & putnl
@@ -1501,7 +1501,7 @@ class nullFrame (leoFrame):
     #@+node:ekr.20040327105706.3:oops
     def oops(self):
         
-        g.trace("nullFrame:", g.callerName(2))
+        g.trace("nullFrame:", g.callers(5))
     #@nonl
     #@-node:ekr.20040327105706.3:oops
     #@+node:ekr.20041130090749:setInitialWindowGeometry
@@ -1550,12 +1550,12 @@ class nullLog (leoLog):
         
     #@-node:ekr.20041012083237.2:oops
     #@+node:ekr.20041012083237.3:put and putnl (nullLog)
-    def put (self,s,color=None):
+    def put (self,s,color=None,tabName='Log'):
         if self.enabled:
             # g.trace('nullLog',s)
             g.rawPrint(s)
     
-    def putnl (self):
+    def putnl (self,tabName='Log'):
         if self.enabled:
             g.rawPrint("")
     #@nonl

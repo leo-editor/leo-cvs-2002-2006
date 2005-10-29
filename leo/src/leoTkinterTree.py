@@ -1820,18 +1820,6 @@ class leoTkinterTree (leoFrame.leoTree):
         return "continue"
     #@nonl
     #@-node:ekr.20040803072955.87:onHeadlineClick
-    #@+node:ekr.20040803072955.88:onHeadlineKey
-    def onHeadlineKey (self,event):
-        
-        """Handle a key event in a headline."""
-        
-        w = event and event.widget or None
-        
-        self.updateHead(event,w,undoType='Typing')
-    
-        return 'break' # Required
-    #@nonl
-    #@-node:ekr.20040803072955.88:onHeadlineKey
     #@+node:ekr.20040803072955.83:onHeadlineRightClick
     def onHeadlineRightClick (self,event):
     
@@ -1864,15 +1852,15 @@ class leoTkinterTree (leoFrame.leoTree):
         
         w = event and event.widget or None
         
-        self.updateHead(event,w,undoType='Typing')
+        self.updateHead(event,w)
     
         return 'break' # Required
     #@nonl
     #@-node:ekr.20040803072955.88:onHeadlineKey
     #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-    def updateHead (self,event,w,undoType='Typing'):
+    def updateHead (self,event,w):
         
-        c = self.c ; p = c.currentPosition() ; u = c.undoer
+        c = self.c ; p = c.currentPosition()
         ch = event and event.char or ''
         i,j = g.app.gui.getTextSelection(w)
         # g.trace(g.callers(6))

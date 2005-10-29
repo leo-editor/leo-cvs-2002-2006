@@ -332,8 +332,6 @@ class baseCommands:
             if not p.v in marks:
                 marks[p.v] = p.v
                 yield p.v
-                
-    all_unique_vnodes_iter
     #@nonl
     #@-node:EKR.20040529091232.4:c.all_unique_vnodes_iter
     #@-node:ekr.20040312090934:c.iterators
@@ -1608,6 +1606,7 @@ class baseCommands:
             c.frame.body.setInsertionPointToEnd()
             g.es("%d lines" % len(lines), color="blue")
         
+        c.frame.bodyWantsFocus(later=False)
         c.frame.body.makeInsertPointVisible()
         #@nonl
         #@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>

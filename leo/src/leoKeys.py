@@ -1171,7 +1171,7 @@ class keyHandlerClass:
             return 'break'
         elif name.startswith('head'):
             g.trace("can't happen: %s" % (name),color='red')
-            c.frame.tree.updateHead(event,w,undoType='Typing')
+            c.frame.tree.updateHead(event,w)
             return 'break'
         else:
             # Let tkinter handle the event.
@@ -1381,7 +1381,7 @@ class keyHandlerClass:
             p = c.currentPosition()
         except AttributeError:
             return
-            
+    
         # Set the best possible undoType: prefer explicit commandName to k.commandName.
         commandName = commandName or k.commandName or ''
         k.commandName = k.commandName or commandName or ''
@@ -1399,8 +1399,10 @@ class keyHandlerClass:
                     pass
             bodyCtrl.update_idletasks()
             c.frame.body.onBodyChanged(p,undoType='Typing')
-    
+            
         w.update_idletasks()
+        if forceFocus:
+            c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
@@ -1894,15 +1896,12 @@ class keyHandlerClass:
                 or w == c.frame.top # The top of the Leo window
                 or g.app.dialogs > 0 # A dialog.
                 or isinstance(w,Tk.Text)
+                or isinstance(w,Tk.Entry)
+                or isinstance(w,Tk.Button)
             )
-                # This doesn't work.
-                # or c.frame.log.getSelectedTab() not in 'Log','Completions'
-                # Assume all other tabs select their text widgets.
-                # in ('Find','Spell','Colors','Fonts')
-    
             if not ok:
                 # Not a name created by Leo.
-                 g.trace(self.idleCount,name,g.top())
+                 g.trace(self.idleCount,name,w)
                  c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051025150224:onIdleTime

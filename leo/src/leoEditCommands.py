@@ -5586,21 +5586,6 @@ class Aspell:
         # g.trace(self.local_dictionary)
     #@nonl
     #@-node:ekr.20051025071455.8:__init__
-    #@+node:ekr.20051025071455.9:getAspellDirectory (not used)
-    def getAspellDirectory(self):
-    
-        """Get the directory containing aspell.exe from the .ini file"""
-    
-        try:
-            fileName = os.path.join(g.app.loadDir,"..","plugins",ini_file_name)
-            config = ConfigParser.ConfigParser()
-            config.read(fileName)
-            return config.get("main", "aspell_dir")
-        except:
-            g.es_exception()
-            return None
-    #@nonl
-    #@-node:ekr.20051025071455.9:getAspellDirectory (not used)
     #@-node:ekr.20051025071455.7:Birth & death
     #@+node:ekr.20051025071455.10:processWord
     def processWord(self, word):
@@ -5637,9 +5622,7 @@ class Aspell:
             return True
     
         except Exception, err:
-            g.es("Unable to update local aspell dictionary: %s" % err)
-            print err
-            add_dicts = ""
+            g.es_print("Unable to update local aspell dictionary: %s" % err)
             return False
     #@nonl
     #@-node:ekr.20051025071455.11:updateDictionary
@@ -5753,10 +5736,8 @@ class spellTab(leoFind.leoFind):
         
         """Ctor for the Leo Spelling dialog."""
     
-        self.c = c ; log = c.frame.log ; tabName = 'Spell'
-        
         leoFind.leoFind.__init__(self,c) # Call the base ctor.
-        
+    
         self.c = c
         self.body = c.frame.body
         self.currentWord = None
@@ -5909,7 +5890,7 @@ class spellTab(leoFind.leoFind):
         try:
             f = open(fileName,"r")
         except IOError:
-            g.es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
+            g.es("Unable to open local dictionary '%s' - using a blank one instead" % fileName)
             return d
     
         try:
@@ -6014,6 +5995,9 @@ class spellTab(leoFind.leoFind):
     #@+node:ekr.20051025071455.38:change
     def change(self,event=None):
         """Make the selected change to the text"""
+    
+        __pychecker__ = '--no-override --no-argsused'
+             # event param is not used, required, and different from base class.
     
         c = self.c ; current = c.currentPosition()
         body = self.body ; t = body.bodyCtrl
@@ -6131,7 +6115,7 @@ class spellTab(leoFind.leoFind):
     def findNextMisspelledWord(self):
         """Find the next unknown word."""
         
-        c = self.c ; p = c.currentPosition() ; t = self.workCtrl
+        c = self.c ; p = c.currentPosition()
         aspell = self.aspell ; alts = None ; word = None
        
         try:
@@ -6155,11 +6139,7 @@ class spellTab(leoFind.leoFind):
                 #@@c
                 
                 if self.dictionary.has_key(word.lower()):
-                    
-                    # print "Ignored", word
                     continue
-                    
-                # print "Didn't ignore '%s'" % word
                 #@nonl
                 #@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
                 #@nl
@@ -6221,6 +6201,8 @@ class spellTab(leoFind.leoFind):
                     t.delete("1.0", "end")
                     t.insert("end", p.bodyString())
                     t.mark_set("insert", "1.0")
+                    
+        __pychecker__ = '--no-implicitreturns' # This is not really an implicit return.
     #@nonl
     #@-node:ekr.20051025071455.47:findNextWord
     #@+node:ekr.20051025071455.48:getSuggestion

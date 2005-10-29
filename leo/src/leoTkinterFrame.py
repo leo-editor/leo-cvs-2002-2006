@@ -1779,7 +1779,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         elif name.startswith('head'):
             # I have no idea why the paste gets done automatically.
             # There are Tk bugs lurking here...
-            # f.tree.updateHead(event=None,w=w,undoType='Paste')
+            # f.tree.updateHead(event=None,w=w)
             pass
         else: pass
     #@nonl
@@ -3753,10 +3753,10 @@ class leoTkinterLog (leoFrame.leoLog):
         parentFrame = self.frameDict.get(tabName)
         
         # This is called by getTabName.
-        def selectTabCallback (oldName,newName):
+        def selectTabCallback (newName):
             self.selectTab(newName)
     
-        self.getTabName(parentFrame,'',selectTabCallback)
+        self.getTabName(parentFrame,selectTabCallback)
     #@nonl
     #@-node:ekr.20051019140004.1:newTabFromMenu
     #@+node:ekr.20051019165401:renameTabFromMenu
@@ -3766,11 +3766,11 @@ class leoTkinterLog (leoFrame.leoLog):
             g.es('can not rename %s tab' % (tabName),color='blue')
         else:
             parentFrame = self.frameDict.get(tabName)
-            self.getTabName(parentFrame,tabName,self.renameTab)
+            self.getTabName(parentFrame,self.renameTab)
     #@nonl
     #@-node:ekr.20051019165401:renameTabFromMenu
     #@+node:ekr.20051019172811:getTabName
-    def getTabName (self,parentFrame,tabName,exitCallback):
+    def getTabName (self,parentFrame,exitCallback):
     
         f = Tk.Frame(parentFrame)
         f.pack(side='bottom',fill='x',expand=1)
@@ -3783,7 +3783,7 @@ class leoTkinterLog (leoFrame.leoLog):
         def getNameCallback (event=None):
             s = e.get().strip()
             f.pack_forget()
-            if s: exitCallback(tabName,s)
+            if s: exitCallback(s)
         
         if 0:
             b = Tk.Button(row,text="Close",command=getNameCallback)

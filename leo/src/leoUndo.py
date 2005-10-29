@@ -1971,7 +1971,7 @@ class nullUndoer (undoer):
         pass
     #@-node:ekr.20050415165731:other methods
     #@+node:ekr.20050415165731.1:before undo handlers...
-    def beforeChangeNodeContents (self,p):
+    def beforeChangeNodeContents (self,p,oldBody=None,oldHead=None):
         pass
     def beforeChangeTree (self,p):
         pass

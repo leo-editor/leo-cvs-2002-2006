@@ -15,8 +15,7 @@
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
 if 0: # Set to 1 for lint-like testing.
-
-    # Note:  Pychecker presently works only on Python 2.3.
+      # Use t23.bat: only on Python 2.3.
 
     try:
         import pychecker.checker
