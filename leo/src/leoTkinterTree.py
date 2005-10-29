@@ -1884,6 +1884,7 @@ class leoTkinterTree (leoFrame.leoTree):
             j = int(j.split('.')[1])
             # g.trace('before',i,j,repr(ch))
             s = w.get('1.0','end')
+            g.trace('before: s,ch',repr(s),repr(ch))
             if i != j:
                 s = s[:i] + ch + s[j:]
             else:
@@ -1940,8 +1941,9 @@ class leoTkinterTree (leoFrame.leoTree):
         s = w.get('1.0','end')
         #@    << truncate s if it has multiple lines >>
         #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-        # Kludge remove one or two trailing newlines before warning of truncation.
+        # Remove one or two trailing newlines before warning of truncation.
         for i in (0,1):
+            g.trace(repr(s))
             if s and s[-1] == '\n':
                 if len(s) > 1: s = s[:-1]
                 else: s = ''

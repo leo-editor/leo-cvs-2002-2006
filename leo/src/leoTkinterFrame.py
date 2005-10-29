@@ -1595,6 +1595,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             frame = self ; gui = g.app.gui
+            frame.tree.onHeadChanged(frame.c.currentPosition(),'Typing')
             g.app.setLog(frame.log,"OnActivateBody")
             w = gui.get_focus(frame)
             if w != frame.body.bodyCtrl:
