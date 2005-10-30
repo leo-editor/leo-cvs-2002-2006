@@ -982,6 +982,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 t.insert("end",s)
             
             t.configure(state="disabled")
+            # g.trace('update_idletasks',t._name,g.callers())
             t.update_idletasks()
         #@nonl
         #@-node:ekr.20031218072017.3963:put (leoTkinterFrame:statusLineClass)
@@ -1595,7 +1596,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             frame = self ; gui = g.app.gui
-            frame.tree.onHeadChanged(frame.c.currentPosition(),'Typing')
+            frame.tree.onHeadChanged(frame.c.currentPosition())
             g.app.setLog(frame.log,"OnActivateBody")
             w = gui.get_focus(frame)
             if w != frame.body.bodyCtrl:
@@ -1843,7 +1844,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.notValidInBatchMode("End Edit Headline")
         else:
             p = c.currentPosition()
-            c.frame.tree.onHeadChanged(p,'Typing')
+            c.frame.tree.onHeadChanged(p)
             c.selectPosition(p)
             c.frame.bodyWantsFocus()
     #@nonl

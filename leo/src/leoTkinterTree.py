@@ -273,6 +273,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.generation = 0
         self.prevPositions = 0
         self.redrawing = False # Used only to disable traces.
+        self.redrawCount = 0 # Count for debugging.
         self.revertHeadline = None # Previous headline text for abortEditLabel.
         self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
             # New in 4.4: We should stay in the tree to use per-pane bindings.
@@ -343,7 +344,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         if self.useBindtags:
             # This _must_ be a Text widget attached to the canvas!
-            self.bindingWidget = t = Tk.Text(self.canvas)
+            self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
             self.c.keyHandler.copyBindingsToWidget(['all','tree'],t)
     
             # newText() attaches these bindings to all headlines.
@@ -1197,9 +1198,8 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; canvas = self.canvas
         
         if 0:
-            try: self.redrawCount += 1
-            except: self.radrawCount = 1
-            g.trace(self.redrawCount,c.rootPosition())
+            self.redrawCount += 1
+            g.trace(self.redrawCount,g.callers(5))
     
         self.redrawing = True
         
@@ -1277,9 +1277,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         __pychecker__ = '--no-argsused' # event not used.
         
-        # g.trace(self.updateCount,self.redrawScheduled)
-        
         if self.updateCount == 0 and not self.redrawScheduled:
+            # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
             self.redrawScheduled = True
             self.canvas.after_idle(self.idle_redraw)
     #@nonl
@@ -1297,6 +1296,7 @@ class leoTkinterTree (leoFrame.leoTree):
         """Make sure drawing is enabled following an exception."""
             
         if not self.redrawScheduled:
+            g.trace('*'*20,self.redrawCount,g.callers(5))
             self.redrawScheduled = True
             self.canvas.after_idle(self.idle_redraw)
             self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
@@ -1306,10 +1306,8 @@ class leoTkinterTree (leoFrame.leoTree):
     # Schedules a redraw even if inside beginUpdate/endUpdate
     def force_redraw (self):
         
-        if self.trace: g.trace(self.redrawScheduled)
-        # import traceback ; traceback.print_stack()
-    
         if not self.redrawScheduled:
+            g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
             self.redrawScheduled = True
             self.canvas.after_idle(self.idle_redraw)
     #@nonl
@@ -1326,6 +1324,8 @@ class leoTkinterTree (leoFrame.leoTree):
         self.disableRedraw = False
             
         # Now do the actual redraw.
+    
+        # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
         self.idle_redraw(scroll=scroll)
     #@nonl
     #@-node:ekr.20040803072955.58:redraw_now
@@ -1357,6 +1357,7 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
     
         # g.print_bindings("canvas",self.canvas)
+        # g.trace(self.redrawCount,self.updateCount,g.callers(5))
     
         self.expandAllAncestors(c.currentPosition())
     
@@ -1907,20 +1908,20 @@ class leoTkinterTree (leoFrame.leoTree):
         # The granularity is the entire editing session,
         # starting at the revert point.
         if ch in ('\n','\r'):
-            self.onHeadChanged(p,'Typing')
+            self.onHeadChanged(p)
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     #@+node:ekr.20040803072955.91:onHeadChanged
     # Tricky code: do not change without careful thought and testing.
     
-    def onHeadChanged (self,p,undoType):
+    def onHeadChanged (self,p,undoType='Typing'):
         
         '''Officially change a headline.
         Set the old undo text to the previous revert point.'''
         
-        c = self.c ; u = c.undoer ; w = self.edit_text(p)
+        c = self.c ; u = c.undoer ; w = p and self.edit_text(p)
         if not w:
-            g.trace('no widget')
+            # g.trace('no widget')
             return
     
         s = w.get('1.0','end')
@@ -1954,10 +1955,12 @@ class leoTkinterTree (leoFrame.leoTree):
         oldRevert = self.revertHeadline
         self.revertHeadline = s
         p.initHeadString(s)
-        self.endEditLabel()
+        # Do not call endEditLabel here: we may have been called from there.
+        if p and p.edit_text():
+            self.setEditPosition(None)
         if not changed: return
     
-        g.trace('undo to:',oldRevert)
+        # g.trace('undo to:',oldRevert)
         undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
     
         c.beginUpdate()
@@ -2566,6 +2569,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; frame = c.frame
         
         p = self.editPosition()
+        self.onHeadChanged(p)
         
         # g.trace(p and p.headString())
     
@@ -2622,7 +2626,6 @@ class leoTkinterTree (leoFrame.leoTree):
                 insertSpot = c.frame.body.getInsertionPoint()
                 
                 if old_p != p:
-                    ## self.onHeadChanged(old_p,'Typing')
                     self.endEditLabel() # sets editPosition = None
                     self.setUnselectedLabelState(old_p)
                 
@@ -2724,50 +2727,34 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.135:setNormalLabelState
     def setNormalLabelState (self,p): # selected, editing
     
-        # Do nothing if a redraw is already sheduled.
-        # This prevents race conditions.
-        if self.redrawScheduled: return 
-        
-        if p and p.edit_text():
-            self.setEditHeadlineColors(p)
-            p.edit_text().tag_remove("sel","1.0","end")
-            p.edit_text().tag_add("sel","1.0","end")
-            
-            # self.frame.headlineWantsFocus(p,later=False)
+        if not self.redrawScheduled:
+            if p and p.edit_text():
+                self.setEditHeadlineColors(p)
+                p.edit_text().tag_remove("sel","1.0","end")
+                p.edit_text().tag_add("sel","1.0","end")
     #@nonl
     #@-node:ekr.20040803072955.135:setNormalLabelState
     #@+node:ekr.20040803072955.136:setDisabledLabelState
     def setDisabledLabelState (self,p): # selected, disabled
     
-        # Do nothing if a redraw is already sheduled.
-        # This prevents race conditions.
-        if self.redrawScheduled: return
-    
-        if p and p.edit_text():
-            self.setDisabledHeadlineColors(p)
+        if not self.redrawScheduled:
+            if p and p.edit_text():
+                self.setDisabledHeadlineColors(p)
     #@nonl
     #@-node:ekr.20040803072955.136:setDisabledLabelState
     #@+node:ekr.20040803072955.137:setSelectedLabelState
     def setSelectedLabelState (self,p): # selected, not editing
     
-        # Do nothing if a redraw is already sheduled.
-        # This prevents race conditions.
-        if self.redrawScheduled: return 
-    
-        # g.trace(p)
-        self.setDisabledLabelState(p)
+        if not self.redrawScheduled:
+            self.setDisabledLabelState(p)
     
     #@-node:ekr.20040803072955.137:setSelectedLabelState
     #@+node:ekr.20040803072955.138:setUnselectedLabelState
     def setUnselectedLabelState (self,p): # not selected.
     
-        # Do nothing if a redraw is already sheduled.
-        # This prevents race conditions.
-        if self.redrawScheduled: return 
-    
-        if p and p.edit_text():
-            # g.trace(p.headString())
-            self.setUnselectedHeadlineColors(p)
+        if not self.redrawScheduled:
+            if p and p.edit_text():
+                self.setUnselectedHeadlineColors(p)
     #@nonl
     #@-node:ekr.20040803072955.138:setUnselectedLabelState
     #@+node:ekr.20040803072955.139:setDisabledHeadlineColors
