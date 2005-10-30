@@ -65,7 +65,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.13"
+__version__ = "0.14"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -99,8 +99,10 @@ __version__ = "0.13"
 # 0.12 EKR:
 #     - Use c.executeScript(p=p,silent=True) in @command so the
 #       'end of script' message doesn't switch tabs.
-# 0.13 - Use set silent=True in all calls to c.executeScript except for the 
+# 0.13 EKR: Use set silent=True in all calls to c.executeScript except for the 
 # 'Run Script' button.
+# 0.14 EKR:
+#     - All created buttons call bodyWantsFocus when the script completes.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -323,6 +325,7 @@ class scriptingController:
         
             c = self.c
             c.executeScript(c.currentPosition(),useSelectedText=True)
+            c.frame.bodyWantsFocus()
         #@nonl
         #@-node:EKR.20040618091543.1:<< define runScriptCommand >>
         #@nl
@@ -371,6 +374,7 @@ class scriptingController:
             b.bind('<3>',deleteButtonCallback)
             b.bind('<Enter>', mouseEnterCallback)
             b.bind('<Leave>', mouseLeaveCallback)
+            c.frame.bodyWantsFocus()
         #@nonl
         #@-node:EKR.20040618091543.2:<< define addScriptButtonCommand >>
         #@nl
@@ -414,6 +418,8 @@ class scriptingController:
         if button:
             button.pack_forget()
             # button.destroy()
+            
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:EKR.20040614002229:deleteButton
     #@+node:ekr.20041001203145:executeScriptNode
@@ -432,6 +438,8 @@ class scriptingController:
             c.executeScript(p,useSelectedText=False,silent=True)
         else:
             g.es("disabled @script: %s" % (name),color="blue")
+    
+        c.frame.bodyWantsFocus(later=True)
     #@nonl
     #@-node:ekr.20041001203145:executeScriptNode
     #@+node:ekr.20041001202905:loadPlugin
@@ -494,6 +502,8 @@ class scriptingController:
             if g.app.scriptDict.get('removeMe'):
                 g.es("Removing '%s' button at its request" % buttonText)
                 b.pack_forget()
+                
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051016210846:executeScriptFromCallback
     #@-others
