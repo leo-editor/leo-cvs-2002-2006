@@ -524,7 +524,7 @@ class keyHandlerClass:
         # Previously defined bindings.
         self.bindingsDict = {}
             # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-            
+        
         # Special bindings for k.fullCommand.
         self.mb_copyKey = None
         self.mb_pasteKey = None
@@ -707,19 +707,19 @@ class keyHandlerClass:
                     shortcut,bunch.commandName,commandName,pane),color='blue')
             return
             
-        # g.trace(pane,shortcut)
+        # g.trace(pane,shortcut,commandName)
     
         try:
             #@        << bind callback to shortcut in pane >>
             #@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+            # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
+            # There should only be one binding for the minibuffer: the <Key>+ binding.
             body = c.frame.body.bodyCtrl
             log  = c.frame.log.logCtrl
             menu = c.frame.menu
             minibuffer = c.miniBufferWidget
             tree = c.frame.tree.canvas
             
-            # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
-            # There should only be one binding for the minibuffer: the <Key>+ binding.
             d = {
                 'all':  [body,log,tree], # Probably not wise: menu
                 'body': [body],
@@ -844,15 +844,37 @@ class keyHandlerClass:
     
         k = self ; d = k.bindingsDict
         keys = d.keys() ; keys.sort()
-        panes = list(paneOrPanes)
-        # g.trace(paneOrPanes,g.callers(5))
+        if type(paneOrPanes) == type('abc'):
+            panes = [paneOrPanes] # list(paneOrPanes) does not work.
+        else:
+            panes = paneOrPanes
+    
+        # Keys are requests, values are list of panes that match.
+        matchingPanesDict = {
+            'all':  ['all','body','log','mini','text','tree'],
+            'body': ['all','body'],
+            'log':  ['all','log'],
+            # 'menu': [menu], # Not used.  Probably dubious.
+            'mini': ['all','mini'],                   
+            'text': ['all','body','log','text'],  # Text = body+log
+            'tree': ['all','tree'],
+        }
+    
+        matchingPanes = []
+        for pane in panes:
+            matches = matchingPanesDict.get(pane,[])
+            for match in matches:
+                if match not in matchingPanes:
+                    matchingPanes.append(match)
+    
+        # g.trace(widget._name,'matchingPanes',matchingPanes,g.callers(3))
         
         for shortcut in keys:
             bunch = d.get(shortcut)
-            if bunch.pane in panes:
+            if bunch.pane in matchingPanes:
                 func = bunch.func
                 commandName = bunch.commandName
-                # g.trace('find tab',shortcut,commandName)
+                # g.trace('**binding',bunch.pane,shortcut,commandName,widget._name)
                 
                 # This callback executes the command in the given widget.
                 def textBindingsRedirectionCallback(event,
@@ -1107,10 +1129,9 @@ class keyHandlerClass:
         if func: # Func is an argument.
             # g.trace('executing func',commandName)
             forceFocus = func.__name__ != 'leoCallback'
-            if forceFocus:
-                k.forceFocusToBody()
+            if forceFocus: k.forceFocusToBody()
             func(event)
-            k.endCommand(event,commandName,forceFocus)
+            k.endCommand(event,commandName)
             return 'break'
             
         # New logic in 4.4:
@@ -1152,8 +1173,8 @@ class keyHandlerClass:
         if func:
             func(event)
             commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-            forceFocus = func.__name__ != 'leoCallback'
-            k.endCommand(event,commandName,forceFocus)
+            # forceFocus = func.__name__ != 'leoCallback'
+            k.endCommand(event,commandName)
         
         return func
     #@nonl
@@ -1366,7 +1387,7 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
     #@-node:ekr.20051002152108:Top-level
     #@+node:ekr.20051001050607:endCommand
-    def endCommand (self,event,commandName,forceFocus=True):
+    def endCommand (self,event,commandName):
     
         '''Make sure Leo updates the widget following a command.
         
@@ -1397,12 +1418,12 @@ class keyHandlerClass:
                     bodyCtrl.tag_delete('color1')
                 except Exception:
                     pass
+            g.trace('update_idletasks',bodyCtrl._name,g.callers())
             bodyCtrl.update_idletasks()
             c.frame.body.onBodyChanged(p,undoType='Typing')
             
-        w.update_idletasks()
-        if forceFocus:
-            c.frame.bodyWantsFocus()
+        # g.trace('update_idletasks',w._name,g.callers())
+        # w.update_idletasks()
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
@@ -1897,7 +1918,7 @@ class keyHandlerClass:
                 or g.app.dialogs > 0 # A dialog.
                 or isinstance(w,Tk.Text)
                 or isinstance(w,Tk.Entry)
-                or isinstance(w,Tk.Button)
+                # or isinstance(w,Tk.Button)
             )
             if not ok:
                 # Not a name created by Leo.
@@ -1922,6 +1943,7 @@ class keyHandlerClass:
         k = self ; w = self.widget
         
         if self.useTextWidget:
+            g.trace('update_idletasks',w._name,g.callers())
             w.update_idletasks()
             s = w and w.get('1.0','end')
             # Remove the cursed Tk newline.
@@ -1948,8 +1970,7 @@ class keyHandlerClass:
         else:
             if k.svar:
                 k.mb_prefix = k.svar.get()
-    
-    
+    #@nonl
     #@-node:ekr.20051023132350.2:protectLabel
     #@+node:ekr.20050920085536.37:resetLabel
     def resetLabel (self):
