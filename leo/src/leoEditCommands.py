@@ -4658,13 +4658,13 @@ class findTab (leoFind.leoFind):
         self.init(c) # New in 4.3: init only once.
     #@nonl
     #@-node:ekr.20051020120306.11:__init__
-    #@+node:ekr.20051023181449:find.createBindings
+    #@+node:ekr.20051023181449:find.createBindings (findTab)
     def createBindings (self):
         
         c = self.c ; k = c.keyHandler
     
         for w in (self.find_ctrl, self.change_ctrl):
-            k.copyBindingsToWidget('text',w)
+            k.copyBindingsToWidget(['text','mini'],w)
             # Bind shortcuts for the following commands...
             for commandName,func in (
                 ('find-tab-find',       self.findNextCommand),
@@ -4685,7 +4685,7 @@ class findTab (leoFind.leoFind):
             w.bind("<Key-Return>", self.findButtonCallback)
             w.bind("<Key-Escape>", self.hideTab)
     #@nonl
-    #@-node:ekr.20051023181449:find.createBindings
+    #@-node:ekr.20051023181449:find.createBindings (findTab)
     #@+node:ekr.20051020120306.13:find.createFrame
     def createFrame (self,parentFrame):
         

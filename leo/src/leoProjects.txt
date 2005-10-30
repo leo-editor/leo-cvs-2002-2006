@@ -1521,6 +1521,7 @@ def idle_redraw (self,scroll=True):
     << return if disabled, or quitting or dragging >>
 
     # g.print_bindings("canvas",self.canvas)
+    # g.trace(self.redrawCount,self.updateCount,g.callers(5))
 
     self.expandAllAncestors(c.currentPosition())
 
@@ -3409,7 +3410,6 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        ## self.onHeadChanged(old_p,'Typing')
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -9478,7 +9478,7 @@ self.state = g.bunch(kind=None,n=None,handler=None)
 # Previously defined bindings.
 self.bindingsDict = {}
     # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-    
+
 # Special bindings for k.fullCommand.
 self.mb_copyKey = None
 self.mb_pasteKey = None
@@ -10052,7 +10052,7 @@ def onIdleTime (self):
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
-            or isinstance(w,Tk.Button)
+            # or isinstance(w,Tk.Button)
         )
         if not ok:
             # Not a name created by Leo.
@@ -11836,6 +11836,7 @@ def endEditLabel (self):
     c = self.c ; frame = c.frame
     
     p = self.editPosition()
+    self.onHeadChanged(p)
     
     # g.trace(p and p.headString())
 
@@ -11909,7 +11910,6 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        ## self.onHeadChanged(old_p,'Typing')
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -11989,50 +11989,34 @@ else:
 #@+node:ekr.20040803072955.135:setNormalLabelState
 def setNormalLabelState (self,p): # selected, editing
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-    
-    if p and p.edit_text():
-        self.setEditHeadlineColors(p)
-        p.edit_text().tag_remove("sel","1.0","end")
-        p.edit_text().tag_add("sel","1.0","end")
-        
-        # self.frame.headlineWantsFocus(p,later=False)
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setEditHeadlineColors(p)
+            p.edit_text().tag_remove("sel","1.0","end")
+            p.edit_text().tag_add("sel","1.0","end")
 #@nonl
 #@-node:ekr.20040803072955.135:setNormalLabelState
 #@+node:ekr.20040803072955.136:setDisabledLabelState
 def setDisabledLabelState (self,p): # selected, disabled
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return
-
-    if p and p.edit_text():
-        self.setDisabledHeadlineColors(p)
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setDisabledHeadlineColors(p)
 #@nonl
 #@-node:ekr.20040803072955.136:setDisabledLabelState
 #@+node:ekr.20040803072955.137:setSelectedLabelState
 def setSelectedLabelState (self,p): # selected, not editing
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    # g.trace(p)
-    self.setDisabledLabelState(p)
+    if not self.redrawScheduled:
+        self.setDisabledLabelState(p)
 
 #@-node:ekr.20040803072955.137:setSelectedLabelState
 #@+node:ekr.20040803072955.138:setUnselectedLabelState
 def setUnselectedLabelState (self,p): # not selected.
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    if p and p.edit_text():
-        # g.trace(p.headString())
-        self.setUnselectedHeadlineColors(p)
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setUnselectedHeadlineColors(p)
 #@nonl
 #@-node:ekr.20040803072955.138:setUnselectedLabelState
 #@+node:ekr.20040803072955.139:setDisabledHeadlineColors
@@ -12229,7 +12213,7 @@ self.state = g.bunch(kind=None,n=None,handler=None)
 # Previously defined bindings.
 self.bindingsDict = {}
     # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-    
+
 # Special bindings for k.fullCommand.
 self.mb_copyKey = None
 self.mb_pasteKey = None
@@ -12267,6 +12251,7 @@ def getLabel (self,ignorePrompt=False):
     k = self ; w = self.widget
     
     if self.useTextWidget:
+        g.trace('update_idletasks',w._name,g.callers())
         w.update_idletasks()
         s = w and w.get('1.0','end')
         # Remove the cursed Tk newline.
@@ -12293,8 +12278,7 @@ def protectLabel (self):
     else:
         if k.svar:
             k.mb_prefix = k.svar.get()
-
-
+#@nonl
 #@-node:ekr.20051023132350.2:protectLabel
 #@+node:ekr.20050920085536.37:resetLabel
 def resetLabel (self):
@@ -12654,7 +12638,7 @@ def setBindings (self):
     
     if self.useBindtags:
         # This _must_ be a Text widget attached to the canvas!
-        self.bindingWidget = t = Tk.Text(self.canvas)
+        self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
         self.c.keyHandler.copyBindingsToWidget(['all','tree'],t)
 
         # newText() attaches these bindings to all headlines.
@@ -13003,10 +12987,9 @@ def masterCommand (self,event,func,stroke):
     if func: # Func is an argument.
         # g.trace('executing func',commandName)
         forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
+        if forceFocus: k.forceFocusToBody()
         func(event)
-        k.endCommand(event,commandName,forceFocus)
+        k.endCommand(event,commandName)
         return 'break'
         
     # New logic in 4.4:
@@ -13064,8 +13047,8 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus)
+        # forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName)
     
     return func
 #@nonl
@@ -13107,8 +13090,224 @@ def handleDefaultChar(self,event):
   The flash when suddenly increasing the width was annoying.
 
 - Go To Line Number command forces focus to body immediately.
+
+- Got rid of forceFocus arg to endCommand.
+
+- Investigated unexpected redraws: update_idletasks triggers idle time!
 #@nonl
 #@-node:ekr.20051026170025:Other improvements
+#@+node:ekr.20051030081605:(Made atl-x (full-command) work in find panel)
+# Rewrote the pane matching logic in copyBindingsToWidget.
+# Added 'mini' to the list of binding request in findTab.createBindings.
+#@nonl
+#@+node:ekr.20051023181449:find.createBindings (findTab)
+def createBindings (self):
+    
+    c = self.c ; k = c.keyHandler
+
+    for w in (self.find_ctrl, self.change_ctrl):
+        k.copyBindingsToWidget(['text','mini'],w)
+        # Bind shortcuts for the following commands...
+        for commandName,func in (
+            ('find-tab-find',       self.findNextCommand),
+            ('find-tab-find-prev',  self.findPrevCommand),
+            ('find-tab-change',     self.changeCommand),
+            ('find-tab-change-find',self.changeThenFindCommand),
+        ):
+            junk, bunch = c.config.getShortcut(commandName)
+            accel = bunch and bunch.val
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            if shortcut:
+                # g.trace(shortcut,commandName)
+                w.bind(shortcut,func)
+        w.bind ("<1>",  self.resetWrap,'+')
+        w.bind("<Key>", self.resetWrap,'+')
+
+    for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
+        w.bind("<Key-Return>", self.findButtonCallback)
+        w.bind("<Key-Escape>", self.hideTab)
+#@nonl
+#@-node:ekr.20051023181449:find.createBindings (findTab)
+#@+node:ekr.20050920094633:k.finishCreate & helpers
+def finishCreate (self):
+    
+    '''Complete the construction of the keyHandler class.
+    c.commandsDict has been created when this is called.'''
+    
+    k = self ; c = k.c
+   
+    k.createInverseCommandsDict()
+    
+    if not c.miniBufferWidget:
+        # Does not exist for leoSettings.leo files.
+        return
+        
+    # g.trace('keyHandler')
+
+    # Important: bindings exist even if c.showMiniBuffer is False.
+    k.makeAllBindings()
+    
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
+    if 1: # I wish there were an easier way...
+        g.enableIdleTimeHook(250)
+    
+    if 0:
+        addTemacsExtensions(k)
+        addTemacsAbbreviations(k)
+        changeKeyStrokes(k,f.bodyCtrl)
+#@nonl
+#@+node:ekr.20051008082929:createInverseCommandsDict
+def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict,
+    except when c.commandDict.get(key) refers to the leoCallback function.
+    leoCommands.getPublicCommands has already added an entry in this case.
+    
+    In c.commandsDict        keys are command names, values are funcions f.
+    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        
+        # 'leoCallback' callback created by leoCommands.getPublicCommands.
+        if f.__name__ != 'leoCallback':
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+#@nonl
+#@-node:ekr.20051008082929:createInverseCommandsDict
+#@-node:ekr.20050920094633:k.finishCreate & helpers
+#@+node:ekr.20050920085536.16:bindKey
+def bindKey (self,pane,shortcut,callback,commandName):
+
+    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
+    callback calls commandName (for error messages).'''
+    
+    k = self ; c = k.c 
+
+    if not shortcut: g.trace('No shortcut for %s' % commandName)
+    bunch = k.bindingsDict.get(shortcut)
+    if bunch and bunch.pane == pane:
+        # g.trace('Not bound',shortcut)
+        if commandName != bunch.commandName:
+            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                shortcut,bunch.commandName,commandName,pane),color='blue')
+        return
+        
+    # g.trace(pane,shortcut,commandName)
+
+    try:
+        << bind callback to shortcut in pane >>
+
+        k.bindingsDict [shortcut] = g.bunch(
+            pane=pane,func=callback,commandName=commandName)
+
+        return True
+
+    except Exception: # Could be a user error.
+        if not g.app.menuWarningsGiven:
+            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
+            # g.es_exception()
+            # g.printStack()
+            g.app.menuWarningsGiven = True
+
+        return False
+#@nonl
+#@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+# Binding to 'menu' causes problems with multiple pastes in the Find Tab.
+# There should only be one binding for the minibuffer: the <Key>+ binding.
+body = c.frame.body.bodyCtrl
+log  = c.frame.log.logCtrl
+menu = c.frame.menu
+minibuffer = c.miniBufferWidget
+tree = c.frame.tree.canvas
+
+d = {
+    'all':  [body,log,tree], # Probably not wise: menu
+    'body': [body],
+    'log':  [log],
+    'menu': [menu], # Not used, and probably dubious.
+    'mini': [minibuffer], # Needed so ctrl-g will work in the minibuffer!
+    'text': [body,log],
+    'tree': [tree],
+}
+
+if 0: # A useful trace.
+    if pane and pane != 'all':
+        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+
+widgets = d.get((pane or '').lower(),[])
+
+if shortcut == '<Key>':
+    # Important.  We must make this binding if the minibuffer can ever get focus.
+    if self.useTextWidget:
+        widgets.append(minibuffer)
+    for w in widgets:
+        w.bind(shortcut,callback,'+')
+else:
+    for w in widgets:
+        w.bind(shortcut,callback)
+    # Get rid of the default binding in the menu. (E.g., Alt-f)
+    menu.bind(shortcut,lambda e: 'break')
+#@nonl
+#@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
+#@-node:ekr.20050920085536.16:bindKey
+#@+node:ekr.20051023182326:copyBindingsToWidget
+def copyBindingsToWidget (self,paneOrPanes,widget):
+    
+    '''Copy all bindings for the given panes to widget.
+    
+    paneOrPanes may be a single pane name or a list of pane names.'''
+
+    k = self ; d = k.bindingsDict
+    keys = d.keys() ; keys.sort()
+    if type(paneOrPanes) == type('abc'):
+        panes = [paneOrPanes] # list(paneOrPanes) does not work.
+    else:
+        panes = paneOrPanes
+
+    # Keys are requests, values are list of panes that match.
+    matchingPanesDict = {
+        'all':  ['all','body','log','mini','text','tree'],
+        'body': ['all','body'],
+        'log':  ['all','log'],
+        # 'menu': [menu], # Not used.  Probably dubious.
+        'mini': ['all','mini'],                   
+        'text': ['all','body','log','text'],  # Text = body+log
+        'tree': ['all','tree'],
+    }
+
+    matchingPanes = []
+    for pane in panes:
+        matches = matchingPanesDict.get(pane,[])
+        for match in matches:
+            if match not in matchingPanes:
+                matchingPanes.append(match)
+
+    # g.trace(widget._name,'matchingPanes',matchingPanes,g.callers(3))
+    
+    for shortcut in keys:
+        bunch = d.get(shortcut)
+        if bunch.pane in matchingPanes:
+            func = bunch.func
+            commandName = bunch.commandName
+            # g.trace('**binding',bunch.pane,shortcut,commandName,widget._name)
+            
+            # This callback executes the command in the given widget.
+            def textBindingsRedirectionCallback(event,
+                func=func,widget=widget,commandName=commandName):
+                event.widget = widget
+                # g.trace(commandName,widget)
+                func(event)
+
+            widget.bind(shortcut,textBindingsRedirectionCallback)
+#@nonl
+#@-node:ekr.20051023182326:copyBindingsToWidget
+#@-node:ekr.20051030081605:(Made atl-x (full-command) work in find panel)
+#@-node:ekr.20051016115757.1:4.4a2 projects
 #@+node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
 #@+node:ekr.20051027135712:Notes
 @nocolor
@@ -13202,10 +13401,9 @@ def masterCommand (self,event,func,stroke):
     if func: # Func is an argument.
         # g.trace('executing func',commandName)
         forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
+        if forceFocus: k.forceFocusToBody()
         func(event)
-        k.endCommand(event,commandName,forceFocus)
+        k.endCommand(event,commandName)
         return 'break'
         
     # New logic in 4.4:
@@ -13263,8 +13461,8 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus)
+        # forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName)
     
     return func
 #@nonl
@@ -13325,7 +13523,7 @@ def endEditLabelCommand (self):
         c.notValidInBatchMode("End Edit Headline")
     else:
         p = c.currentPosition()
-        c.frame.tree.onHeadChanged(p,'Typing')
+        c.frame.tree.onHeadChanged(p)
         c.selectPosition(p)
         c.frame.bodyWantsFocus()
 #@nonl
@@ -13529,7 +13727,7 @@ def OnActivateBody (self,event=None):
 
     try:
         frame = self ; gui = g.app.gui
-        frame.tree.onHeadChanged(frame.c.currentPosition(),'Typing')
+        frame.tree.onHeadChanged(frame.c.currentPosition())
         g.app.setLog(frame.log,"OnActivateBody")
         w = gui.get_focus(frame)
         if w != frame.body.bodyCtrl:
@@ -13550,6 +13748,7 @@ def endEditLabel (self):
     c = self.c ; frame = c.frame
     
     p = self.editPosition()
+    self.onHeadChanged(p)
     
     # g.trace(p and p.headString())
 
@@ -13623,7 +13822,6 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        ## self.onHeadChanged(old_p,'Typing')
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -13703,50 +13901,34 @@ else:
 #@+node:ekr.20040803072955.135:setNormalLabelState
 def setNormalLabelState (self,p): # selected, editing
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-    
-    if p and p.edit_text():
-        self.setEditHeadlineColors(p)
-        p.edit_text().tag_remove("sel","1.0","end")
-        p.edit_text().tag_add("sel","1.0","end")
-        
-        # self.frame.headlineWantsFocus(p,later=False)
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setEditHeadlineColors(p)
+            p.edit_text().tag_remove("sel","1.0","end")
+            p.edit_text().tag_add("sel","1.0","end")
 #@nonl
 #@-node:ekr.20040803072955.135:setNormalLabelState
 #@+node:ekr.20040803072955.136:setDisabledLabelState
 def setDisabledLabelState (self,p): # selected, disabled
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return
-
-    if p and p.edit_text():
-        self.setDisabledHeadlineColors(p)
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setDisabledHeadlineColors(p)
 #@nonl
 #@-node:ekr.20040803072955.136:setDisabledLabelState
 #@+node:ekr.20040803072955.137:setSelectedLabelState
 def setSelectedLabelState (self,p): # selected, not editing
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    # g.trace(p)
-    self.setDisabledLabelState(p)
+    if not self.redrawScheduled:
+        self.setDisabledLabelState(p)
 
 #@-node:ekr.20040803072955.137:setSelectedLabelState
 #@+node:ekr.20040803072955.138:setUnselectedLabelState
 def setUnselectedLabelState (self,p): # not selected.
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    if p and p.edit_text():
-        # g.trace(p.headString())
-        self.setUnselectedHeadlineColors(p)
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setUnselectedHeadlineColors(p)
 #@nonl
 #@-node:ekr.20040803072955.138:setUnselectedLabelState
 #@+node:ekr.20040803072955.139:setDisabledHeadlineColors
@@ -14198,20 +14380,20 @@ def updateHead (self,event,w):
     # The granularity is the entire editing session,
     # starting at the revert point.
     if ch in ('\n','\r'):
-        self.onHeadChanged(p,'Typing')
+        self.onHeadChanged(p)
 #@nonl
 #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
 
-def onHeadChanged (self,p,undoType):
+def onHeadChanged (self,p,undoType='Typing'):
     
     '''Officially change a headline.
     Set the old undo text to the previous revert point.'''
     
-    c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    c = self.c ; u = c.undoer ; w = p and self.edit_text(p)
     if not w:
-        g.trace('no widget')
+        # g.trace('no widget')
         return
 
     s = w.get('1.0','end')
@@ -14222,10 +14404,12 @@ def onHeadChanged (self,p,undoType):
     oldRevert = self.revertHeadline
     self.revertHeadline = s
     p.initHeadString(s)
-    self.endEditLabel()
+    # Do not call endEditLabel here: we may have been called from there.
+    if p and p.edit_text():
+        self.setEditPosition(None)
     if not changed: return
 
-    g.trace('undo to:',oldRevert)
+    # g.trace('undo to:',oldRevert)
     undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
 
     c.beginUpdate()
@@ -14512,7 +14696,7 @@ def onIdleTime (self):
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
-            or isinstance(w,Tk.Button)
+            # or isinstance(w,Tk.Button)
         )
         if not ok:
             # Not a name created by Leo.
@@ -14521,7 +14705,6 @@ def onIdleTime (self):
 #@nonl
 #@-node:ekr.20051025150224:onIdleTime
 #@-node:ekr.20051025110549:(Keep the focus in the body)
-#@-node:ekr.20051016115757.1:4.4a2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl
