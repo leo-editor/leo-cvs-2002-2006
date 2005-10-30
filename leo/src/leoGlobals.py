@@ -912,7 +912,7 @@ def callers (n=3,excludeCaller=True):
             if excludeCaller and result:
                 del result [-1]
             break
-        else:
+        elif s:
             result.append(s)
         n -= 1
         
@@ -927,8 +927,9 @@ def callerName (n=1):
         code1 = f1.f_code # The code object
         return code1.co_name # The code name
     except:
-        g.es_exception()
-        return "<no caller name>"
+        # g.es_exception()
+        return '' # "<no caller name>"
+#@nonl
 #@-node:ekr.20031218072017.3107:callerName
 #@+node:ekr.20041105091148:g.pdb & test
 def pdb ():
