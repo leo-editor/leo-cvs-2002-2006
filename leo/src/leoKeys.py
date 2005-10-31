@@ -1394,7 +1394,7 @@ class keyHandlerClass:
         Never changes the minibuffer label: individual commands must do that.
         '''
     
-        k = self ; c = k.c ; w = event.widget
+        k = self ; c = k.c
         if g.app.quitting: return
         
         # The command may have closed the window, so this may fail.
@@ -1418,12 +1418,8 @@ class keyHandlerClass:
                     bodyCtrl.tag_delete('color1')
                 except Exception:
                     pass
-            g.trace('update_idletasks',bodyCtrl._name,g.callers())
             bodyCtrl.update_idletasks()
             c.frame.body.onBodyChanged(p,undoType='Typing')
-            
-        # g.trace('update_idletasks',w._name,g.callers())
-        # w.update_idletasks()
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
@@ -1943,7 +1939,6 @@ class keyHandlerClass:
         k = self ; w = self.widget
         
         if self.useTextWidget:
-            g.trace('update_idletasks',w._name,g.callers())
             w.update_idletasks()
             s = w and w.get('1.0','end')
             # Remove the cursed Tk newline.

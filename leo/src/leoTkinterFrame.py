@@ -982,7 +982,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 t.insert("end",s)
             
             t.configure(state="disabled")
-            # g.trace('update_idletasks',t._name,g.callers())
             t.update_idletasks()
         #@nonl
         #@-node:ekr.20031218072017.3963:put (leoTkinterFrame:statusLineClass)
@@ -3739,11 +3738,13 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers
     #@+node:ekr.20051019134422:onRightClick & onClick
     def onRightClick (self,event,menu):
-    
+        
+        c = self.c
         menu.post(event.x_root,event.y_root)
         
-    def onClick (self,event,tabName):
         
+    def onClick (self,event,tabName):
+    
         self.selectTab(tabName)
     #@nonl
     #@-node:ekr.20051019134422:onRightClick & onClick
