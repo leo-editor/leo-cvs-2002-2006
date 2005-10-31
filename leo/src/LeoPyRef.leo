@@ -25,10 +25,10 @@ marks="ekr.20040711135244.11,ekr.20040711135244.11,ekr.20031218072017.2052,"><vh
 <v t="ekr.20050915062404"><vh>My post</vh></v>
 </v>
 <v t="ekr.20040117181936"
-marks="ekr.20051025071455,"
-expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
+<v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20051025065958"><vh>(Recent)</vh>
 <v t="ekr.20051010062551.1"><vh>(key dicts)</vh></v>
 <v t="ekr.20051009120608"><vh>(ctors &amp; finishCreate)</vh>
@@ -180,7 +180,6 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20041120094940.9"><vh>set (parseBaseClass)</vh></v>
 <v t="ekr.20041227071423"><vh>setShortcut (ParserBaseClass)</vh></v>
 </v>
-<v t="ekr.20051016113907"><vh>Moved TabbedLog code into Leo's core</vh></v>
 <v t="ekr.20051022061226"><vh>Refactored createMenuEntries</vh></v>
 <v t="ekr.20051021143159.1"><vh>Removed all key bindings from createMenuEntries</vh></v>
 <v t="ekr.20051022083459"><vh>Simplified the inverseBindingsDict</vh></v>
@@ -289,7 +288,6 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051027170318"><vh>(Implemented Auto () {} []  )</vh>
 <v t="ekr.20051027175147"><vh>Notes</vh></v>
 </v>
-<v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20051028145159"><vh>(Arrow keys were not working in the body pane)</vh>
 <v t="ekr.20051028165351"><vh>Notes</vh></v>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
@@ -298,6 +296,18 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
 <v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
 </v>
+</v>
+<v t="ekr.20051030081605"><vh>(Made atl-x (full-command) work in find panel)</vh>
+<v t="ekr.20051023181449"><vh>find.createBindings (findTab)</vh></v>
+<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051023182326"><vh>copyBindingsToWidget</vh></v>
+</v>
+<v t="ekr.20051016113907"><vh>Moved TabbedLog code into Leo's core</vh></v>
 </v>
 <v t="ekr.20051026170025"><vh>Other improvements</vh></v>
 <v t="ekr.20051025152727"><vh>(Replaced idle-key logic with direct logic) </vh>
@@ -386,14 +396,12 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051025150224"><vh>onIdleTime</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20050921094025" a="TV"><vh>4.4 To do</vh>
-<v t="ekr.20051025101030" a="E"><vh>before a2</vh>
+<v t="ekr.20050921094025"><vh>4.4 To do</vh>
+<v t="ekr.20051025101030"><vh>before a2</vh>
+<v t="ekr.20051017132446"><vh>Fix Hang in MacOS scripting</vh></v>
 <v t="ekr.20051021210459"><vh>Docs</vh>
 <v t="ekr.20051016113907.1"><vh>How to use the new code</vh></v>
 </v>
-<v t="ekr.20051017132446"><vh>Hang in MacOS scripting</vh></v>
-<v t="ekr.20051014104337.1"><vh>Crash in undo</vh></v>
 </v>
 <v t="ekr.20051016162724"><vh>before a3</vh>
 <v t="ekr.20051008131807"><vh>*** Unit tests</vh>
@@ -515,7 +523,7 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051020120306.11"><vh>__init__</vh>
 <v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051023181449"><vh>find.createBindings</vh></v>
+<v t="ekr.20051023181449"><vh>find.createBindings (findTab)</vh></v>
 <v t="ekr.20051020120306.13"><vh>find.createFrame</vh>
 <v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
 <v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
@@ -600,6 +608,7 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20040930075711"><vh>Handle underindented lines</vh></v>
 <v t="ekr.20040722132104"><vh>Write script to report underindented lines</vh></v>
 </v>
+<v t="ekr.20051014104337.1"><vh>Crash in undo</vh></v>
 </v>
 <v t="ekr.20050925105522"><vh>Big</vh>
 <v t="ekr.20050928144501.1"><vh>Mouseless Leo</vh>
@@ -706,7 +715,7 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2415"><vh> Scripts</vh>
 <v t="ekr.20040327103735.2"><vh>Script Tools (leoGlobals.py)</vh>
 <v t="ekr.20031218072017.2418"><vh>g.initScriptFind (set up dialog)</vh></v>
@@ -725,11 +734,13 @@ expanded="ekr.20051025101030,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
 <v t="ekr.20040629121554.3"><vh>signOnWithVersion</vh></v>
 </v>
+<v t="ekr.20051031040240"><vh>Buttons and settings</vh>
 <v t="ekr.20051027111215"><vh>@thin buttons.txt</vh></v>
 <v t="ekr.20041119040438"><vh>@settings</vh>
 <v t="ekr.20050420073615"><vh>@recent-files</vh></v>
 <v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041211042119"><vh>@int page_width = 80</vh></v>
+</v>
 </v>
 <v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
@@ -740,10 +751,7 @@ marks="ekr.20031218072017.2619,"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20031218072017.2810"
 marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20050710142719"
-marks="ekr.20051025071455,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20050710142719"
-marks="ekr.20051025071455,"><vh>@thin leoEditCommands.py</vh></v>
+<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"
 marks="ekr.20031218072017.2052,ekr.20050503112513.7,"><vh>@thin leoGlobals.py</vh></v>
@@ -1485,7 +1493,7 @@ def changeSelection(self):
 
     try:
         frame = self ; gui = g.app.gui
-        frame.tree.onHeadChanged(frame.c.currentPosition(),'Typing')
+        frame.tree.onHeadChanged(frame.c.currentPosition())
         g.app.setLog(frame.log,"OnActivateBody")
         w = gui.get_focus(frame)
         if w != frame.body.bodyCtrl:
@@ -1524,7 +1532,7 @@ def changeSelection(self):
         c.notValidInBatchMode("End Edit Headline")
     else:
         p = c.currentPosition()
-        c.frame.tree.onHeadChanged(p,'Typing')
+        c.frame.tree.onHeadChanged(p)
         c.selectPosition(p)
         c.frame.bodyWantsFocus()</t>
 <t tx="ekr.20031218072017.3983">def insertHeadlineTime (self):
@@ -1661,7 +1669,7 @@ if not setTop and len(self.topVnodeStack) &gt; 0 and appendToTopStack:
     return "Leo 4.4 alpha 1, build %s, October 15, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.314 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.315 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -1819,14 +1827,14 @@ def widthInPixels(self,s):
 <t tx="ekr.20040803072955.90"></t>
 <t tx="ekr.20040803072955.91"># Tricky code: do not change without careful thought and testing.
 
-def onHeadChanged (self,p,undoType):
+def onHeadChanged (self,p,undoType='Typing'):
     
     '''Officially change a headline.
     Set the old undo text to the previous revert point.'''
     
-    c = self.c ; u = c.undoer ; w = self.edit_text(p)
+    c = self.c ; u = c.undoer ; w = p and self.edit_text(p)
     if not w:
-        g.trace('no widget')
+        # g.trace('no widget')
         return
 
     s = w.get('1.0','end')
@@ -1837,10 +1845,12 @@ def onHeadChanged (self,p,undoType):
     oldRevert = self.revertHeadline
     self.revertHeadline = s
     p.initHeadString(s)
-    self.endEditLabel()
+    # Do not call endEditLabel here: we may have been called from there.
+    if p and p.edit_text():
+        self.setEditPosition(None)
     if not changed: return
 
-    g.trace('undo to:',oldRevert)
+    # g.trace('undo to:',oldRevert)
     undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
 
     c.beginUpdate()
@@ -1931,6 +1941,7 @@ self.active = True</t>
     c = self.c ; frame = c.frame
     
     p = self.editPosition()
+    self.onHeadChanged(p)
     
     # g.trace(p and p.headString())
 
@@ -1996,7 +2007,6 @@ if old_p:
     insertSpot = c.frame.body.getInsertionPoint()
     
     if old_p != p:
-        ## self.onHeadChanged(old_p,'Typing')
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
@@ -2060,43 +2070,27 @@ else:
 <t tx="ekr.20040803072955.134"></t>
 <t tx="ekr.20040803072955.135">def setNormalLabelState (self,p): # selected, editing
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-    
-    if p and p.edit_text():
-        self.setEditHeadlineColors(p)
-        p.edit_text().tag_remove("sel","1.0","end")
-        p.edit_text().tag_add("sel","1.0","end")
-        
-        # self.frame.headlineWantsFocus(p,later=False)</t>
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setEditHeadlineColors(p)
+            p.edit_text().tag_remove("sel","1.0","end")
+            p.edit_text().tag_add("sel","1.0","end")</t>
 <t tx="ekr.20040803072955.136">def setDisabledLabelState (self,p): # selected, disabled
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return
-
-    if p and p.edit_text():
-        self.setDisabledHeadlineColors(p)</t>
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setDisabledHeadlineColors(p)</t>
 <t tx="ekr.20040803072955.137">def setSelectedLabelState (self,p): # selected, not editing
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    # g.trace(p)
-    self.setDisabledLabelState(p)
+    if not self.redrawScheduled:
+        self.setDisabledLabelState(p)
 
 </t>
 <t tx="ekr.20040803072955.138">def setUnselectedLabelState (self,p): # not selected.
 
-    # Do nothing if a redraw is already sheduled.
-    # This prevents race conditions.
-    if self.redrawScheduled: return 
-
-    if p and p.edit_text():
-        # g.trace(p.headString())
-        self.setUnselectedHeadlineColors(p)</t>
+    if not self.redrawScheduled:
+        if p and p.edit_text():
+            self.setUnselectedHeadlineColors(p)</t>
 <t tx="ekr.20040803072955.139">def setDisabledHeadlineColors (self,p):
 
     c = self.c ; w = p.edit_text()
@@ -5633,6 +5627,40 @@ def reSearchForward (self,event):
     &lt;&lt; define Tk ivars &gt;&gt;
     &lt;&lt; define externally visible ivars &gt;&gt;
     &lt;&lt; define internal ivars &gt;&gt;</t>
+<t tx="ekr.20050920085536.16">def bindKey (self,pane,shortcut,callback,commandName):
+
+    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
+    callback calls commandName (for error messages).'''
+    
+    k = self ; c = k.c 
+
+    if not shortcut: g.trace('No shortcut for %s' % commandName)
+    bunch = k.bindingsDict.get(shortcut)
+    if bunch and bunch.pane == pane:
+        # g.trace('Not bound',shortcut)
+        if commandName != bunch.commandName:
+            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                shortcut,bunch.commandName,commandName,pane),color='blue')
+        return
+        
+    # g.trace(pane,shortcut,commandName)
+
+    try:
+        &lt;&lt; bind callback to shortcut in pane &gt;&gt;
+
+        k.bindingsDict [shortcut] = g.bunch(
+            pane=pane,func=callback,commandName=commandName)
+
+        return True
+
+    except Exception: # Could be a user error.
+        if not g.app.menuWarningsGiven:
+            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
+            # g.es_exception()
+            # g.printStack()
+            g.app.menuWarningsGiven = True
+
+        return False</t>
 <t tx="ekr.20050920085536.35">def setLabelGrey (self,label=None):
 
     k = self
@@ -5806,10 +5834,9 @@ setLabelGray = setLabelGrey</t>
     if func: # Func is an argument.
         # g.trace('executing func',commandName)
         forceFocus = func.__name__ != 'leoCallback'
-        if forceFocus:
-            k.forceFocusToBody()
+        if forceFocus: k.forceFocusToBody()
         func(event)
-        k.endCommand(event,commandName,forceFocus)
+        k.endCommand(event,commandName)
         return 'break'
         
     # New logic in 4.4:
@@ -5910,7 +5937,7 @@ if 0: # traces
         changeKeyStrokes(k,f.bodyCtrl)</t>
 <t tx="ekr.20050921094025">@nocolor
 
-- Add buttons.txt to distribution list.</t>
+- </t>
 <t tx="ekr.20050921094025.7">There may be bugs here.  The old code had definite strange aspects to it.</t>
 <t tx="ekr.20050921094025.8">createBindings now sets c.emacs, so modifyOnBodyKey just uses c.emacs.</t>
 <t tx="ekr.20050921094025.9">This is an important addition:  it guarantees that the proper commander is always used.</t>
@@ -8777,14 +8804,14 @@ It was an ugly hack anyway ;-)</t>
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName,forceFocus)
+        # forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName)
     
     return func</t>
 <t tx="ekr.20050923213858"># Previously defined bindings.
 self.bindingsDict = {}
     # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-    
+
 # Special bindings for k.fullCommand.
 self.mb_copyKey = None
 self.mb_pasteKey = None
@@ -9151,14 +9178,14 @@ Compiling Programs withing Emacs
     C-c ` next-error
     C-u C-x ` start at first error again
     E-x grep</t>
-<t tx="ekr.20051001050607">def endCommand (self,event,commandName,forceFocus=True):
+<t tx="ekr.20051001050607">def endCommand (self,event,commandName):
 
     '''Make sure Leo updates the widget following a command.
     
     Never changes the minibuffer label: individual commands must do that.
     '''
 
-    k = self ; c = k.c ; w = event.widget
+    k = self ; c = k.c
     if g.app.quitting: return
     
     # The command may have closed the window, so this may fail.
@@ -9183,11 +9210,7 @@ Compiling Programs withing Emacs
             except Exception:
                 pass
         bodyCtrl.update_idletasks()
-        c.frame.body.onBodyChanged(p,undoType='Typing')
-        
-    w.update_idletasks()
-    if forceFocus:
-        c.frame.bodyWantsFocus()</t>
+        c.frame.body.onBodyChanged(p,undoType='Typing')</t>
 <t tx="ekr.20051001180444">10/1/05
 
 Important simplifications:
@@ -10134,7 +10157,16 @@ bit differently from other options, say by loading it first (or last) or
 possibly looking somewhere besides the leo/plugins folder, or maybe having it
 always be enabled.</t>
 <t tx="ekr.20051016162459">k.finishCreate sets k.inverseCommandsDict, but k.registerShortcut can be called after that.</t>
-<t tx="ekr.20051016162724">Urgent:
+<t tx="ekr.20051016162724">* Keep focus visible without using idle-time logic.
+    - This can probably be done in k.masterCommand.
+
+The present delayed focus scheme is broken by update_idletasks. Rather than
+queuing up an idle-time handler, the delayed focus methods will simply set an
+ivar telling k.masterCommand what widget should get focus. This will probably be
+an excellent and simple solution.
+
+- More clever way to analyze modules in autocomplete.
+    Use inspect module to import the text and get what is wanted.
 
 - Improve emacs-search commands
 
@@ -10845,6 +10877,41 @@ simplifies the calls to k.bindKey.
 
 As a result, the print-commands and print-bindings commands no longer need a
 helper function.</t>
+<t tx="ekr.20051022094136"># Binding to 'menu' causes problems with multiple pastes in the Find Tab.
+# There should only be one binding for the minibuffer: the &lt;Key&gt;+ binding.
+body = c.frame.body.bodyCtrl
+log  = c.frame.log.logCtrl
+menu = c.frame.menu
+minibuffer = c.miniBufferWidget
+tree = c.frame.tree.canvas
+
+d = {
+    'all':  [body,log,tree], # Probably not wise: menu
+    'body': [body],
+    'log':  [log],
+    'menu': [menu], # Not used, and probably dubious.
+    'mini': [minibuffer], # Needed so ctrl-g will work in the minibuffer!
+    'text': [body,log],
+    'tree': [tree],
+}
+
+if 0: # A useful trace.
+    if pane and pane != 'all':
+        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+
+widgets = d.get((pane or '').lower(),[])
+
+if shortcut == '&lt;Key&gt;':
+    # Important.  We must make this binding if the minibuffer can ever get focus.
+    if self.useTextWidget:
+        widgets.append(minibuffer)
+    for w in widgets:
+        w.bind(shortcut,callback,'+')
+else:
+    for w in widgets:
+        w.bind(shortcut,callback)
+    # Get rid of the default binding in the menu. (E.g., Alt-f)
+    menu.bind(shortcut,lambda e: 'break')</t>
 <t tx="ekr.20051022132934"></t>
 <t tx="ekr.20051022141020">def onTreeClick (self,event=None):
     
@@ -10980,10 +11047,7 @@ def hideFindTab (self,event=None):
             k.mb_prefix = w.get('1.0','end')
     else:
         if k.svar:
-            k.mb_prefix = k.svar.get()
-
-
-</t>
+            k.mb_prefix = k.svar.get()</t>
 <t tx="ekr.20051023135812">@nocolor
 
 - Made the minibuffer a Tk.Text widget rather than a Tk.Label.
@@ -11008,7 +11072,7 @@ def hideFindTab (self,event=None):
     c = self.c ; k = c.keyHandler
 
     for w in (self.find_ctrl, self.change_ctrl):
-        k.copyBindingsToWidget('text',w)
+        k.copyBindingsToWidget(['text','mini'],w)
         # Bind shortcuts for the following commands...
         for commandName,func in (
             ('find-tab-find',       self.findNextCommand),
@@ -11028,6 +11092,54 @@ def hideFindTab (self,event=None):
     for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
         w.bind("&lt;Key-Return&gt;", self.findButtonCallback)
         w.bind("&lt;Key-Escape&gt;", self.hideTab)</t>
+<t tx="ekr.20051023182326">def copyBindingsToWidget (self,paneOrPanes,widget):
+    
+    '''Copy all bindings for the given panes to widget.
+    
+    paneOrPanes may be a single pane name or a list of pane names.'''
+
+    k = self ; d = k.bindingsDict
+    keys = d.keys() ; keys.sort()
+    if type(paneOrPanes) == type('abc'):
+        panes = [paneOrPanes] # list(paneOrPanes) does not work.
+    else:
+        panes = paneOrPanes
+
+    # Keys are requests, values are list of panes that match.
+    matchingPanesDict = {
+        'all':  ['all','body','log','mini','text','tree'],
+        'body': ['all','body'],
+        'log':  ['all','log'],
+        # 'menu': [menu], # Not used.  Probably dubious.
+        'mini': ['all','mini'],                   
+        'text': ['all','body','log','text'],  # Text = body+log
+        'tree': ['all','tree'],
+    }
+
+    matchingPanes = []
+    for pane in panes:
+        matches = matchingPanesDict.get(pane,[])
+        for match in matches:
+            if match not in matchingPanes:
+                matchingPanes.append(match)
+
+    # g.trace(widget._name,'matchingPanes',matchingPanes,g.callers(3))
+    
+    for shortcut in keys:
+        bunch = d.get(shortcut)
+        if bunch.pane in matchingPanes:
+            func = bunch.func
+            commandName = bunch.commandName
+            # g.trace('**binding',bunch.pane,shortcut,commandName,widget._name)
+            
+            # This callback executes the command in the given widget.
+            def textBindingsRedirectionCallback(event,
+                func=func,widget=widget,commandName=commandName):
+                event.widget = widget
+                # g.trace(commandName,widget)
+                func(event)
+
+            widget.bind(shortcut,textBindingsRedirectionCallback)</t>
 <t tx="ekr.20051023183028">def findButtonCallback(self,event=None):
     
     __pychecker__ = '--no-argsused'
@@ -11069,7 +11181,7 @@ def setBindings (self):
     
     if self.useBindtags:
         # This _must_ be a Text widget attached to the canvas!
-        self.bindingWidget = t = Tk.Text(self.canvas)
+        self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
         self.c.keyHandler.copyBindingsToWidget(['all','tree'],t)
 
         # newText() attaches these bindings to all headlines.
@@ -12558,7 +12670,7 @@ Creating the background:
             or g.app.dialogs &gt; 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
-            or isinstance(w,Tk.Button)
+            # or isinstance(w,Tk.Button)
         )
         if not ok:
             # Not a name created by Leo.
@@ -12651,7 +12763,7 @@ Yet another reason to get rid of dialogs!</t>
     # The granularity is the entire editing session,
     # starting at the revert point.
     if ch in ('\n','\r'):
-        self.onHeadChanged(p,'Typing')</t>
+        self.onHeadChanged(p)</t>
 <t tx="ekr.20051026083733"># This replaces idle_body_key.  It is never called at idle time.
 # Called only from k.handleDefaultChar and tkBody.onBodyChanged.
 
@@ -12816,7 +12928,15 @@ if 0:
 - All headlines now have a minimum width:
   The flash when suddenly increasing the width was annoying.
 
-- Go To Line Number command forces focus to body immediately.</t>
+- Go To Line Number command forces focus to body immediately.
+
+- Got rid of forceFocus arg to endCommand.
+
+- Investigated unexpected redraws: update_idletasks triggers idle time!
+
+- Added buttons.txt to cvs and the distribution list. This ensures that new
+buttons are saved even if the user mistakenly closes the console window while
+Leo is saving LeoPy.leo.  It happened to me :-)</t>
 <t tx="ekr.20051026171121">i,j = oldSel
 
 if i != j:
@@ -12944,5 +13064,8 @@ leoKeys.py:1369: Parameter (forceFocus) not used [added call to bodyWantsFocus a
 
 # Can't suppress
 leoEditCommands.py:5996: Overridden method (change) doesn't match signature in class (leoFind.leoFind)</t>
+<t tx="ekr.20051030081605"># Rewrote the pane matching logic in copyBindingsToWidget.
+# Added 'mini' to the list of binding request in findTab.createBindings.</t>
+<t tx="ekr.20051031040240"></t>
 </tnodes>
 </leo_file>

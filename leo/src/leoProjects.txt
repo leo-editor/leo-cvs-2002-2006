@@ -9248,6 +9248,16 @@ def skip_ws_and_nl(s,i):
 #@-node:ekr.20031218072017.3173:Scanners: no error messages
 #@-node:ekr.20050710102922.1:(Using Python indices instead of Tk indices)
 #@+node:ekr.20050924073836:4.4 projects
+#@+node:ekr.20051029070945:Pychecker report
+# Bugs fixed
+    
+leoEditCommands.py:5912: No global (local_dictionary) found [changed to fileName].
+leoKeys.py:1369: Parameter (forceFocus) not used [added call to bodyWantsFocus as end of k.endCommand.]
+
+# Can't suppress
+leoEditCommands.py:5996: Overridden method (change) doesn't match signature in class (leoFind.leoFind)
+#@nonl
+#@-node:ekr.20051029070945:Pychecker report
 #@+node:ekr.20051025065958:(Recent)
 #@+node:ekr.20051010062551.1:(key dicts)
 @
@@ -11522,25 +11532,6 @@ def setShortcut (self,name,bunch):
 #@nonl
 #@-node:ekr.20041227071423:setShortcut (ParserBaseClass)
 #@-node:ekr.20051021074728.1:(Improved shortcuts parser)
-#@+node:ekr.20051016113907:Moved TabbedLog code into Leo's core
-@nocolor
-
-I removed the TabbedLog plugin from cvs, and changed the UASearch and URLloader
-plugins so they create create tabbed logs using c.frame.log.selectTab rather
-than TabbedLog.getPane. No other official plugins use TabbedLog. 
-
-We can't use nb.selectpage('Log') after writing the tab completion list,
-but we want to restore the default page to 'Log'.
-
-There are at least two approaches:
-
-1. Create a method, say, setDefaultTab(), that causes *future* writes to go to the 'Log' tab but does *not* change the presently selected tab.
-
-2. Add tabName='Log' as a keyword argument to g.es, g.enl, etc. and tkLog.put/putnl.
-
-This is more explicit and easier to program, and does the same thing.  This is what I have done.  So by default, g.es does what it always has done, but it is easy to switch to other panes.
-#@nonl
-#@-node:ekr.20051016113907:Moved TabbedLog code into Leo's core
 #@+node:ekr.20051022061226:Refactored createMenuEntries
 @nocolor
 
@@ -12251,7 +12242,6 @@ def getLabel (self,ignorePrompt=False):
     k = self ; w = self.widget
     
     if self.useTextWidget:
-        g.trace('update_idletasks',w._name,g.callers())
         w.update_idletasks()
         s = w and w.get('1.0','end')
         # Remove the cursed Tk newline.
@@ -12905,16 +12895,6 @@ Nothing happens in @language plain.
 #@nonl
 #@-node:ekr.20051027175147:Notes
 #@-node:ekr.20051027170318:(Implemented Auto () {} []  )
-#@+node:ekr.20051029070945:Pychecker report
-# Bugs fixed
-    
-leoEditCommands.py:5912: No global (local_dictionary) found [changed to fileName].
-leoKeys.py:1369: Parameter (forceFocus) not used [added call to bodyWantsFocus as end of k.endCommand.]
-
-# Can't suppress
-leoEditCommands.py:5996: Overridden method (change) doesn't match signature in class (leoFind.leoFind)
-#@nonl
-#@-node:ekr.20051029070945:Pychecker report
 #@+node:ekr.20051028145159:(Arrow keys were not working in the body pane)
 #@+node:ekr.20051028165351:Notes
 @nocolor
@@ -13076,26 +13056,6 @@ def handleDefaultChar(self,event):
 #@-node:ekr.20051026083544:handleDefaultChar
 #@-node:ekr.20050920085536.65: masterCommand & helpers
 #@-node:ekr.20051028145159:(Arrow keys were not working in the body pane)
-#@+node:ekr.20051026170025:Other improvements
-@nocolor
-
-- g.openWithFileName puts the focus in the body pane.
-  Surprisingly important.
-
-- undo/redo now put the focus in the body.
-
-- Compute length of headline on every key.
-
-- All headlines now have a minimum width:
-  The flash when suddenly increasing the width was annoying.
-
-- Go To Line Number command forces focus to body immediately.
-
-- Got rid of forceFocus arg to endCommand.
-
-- Investigated unexpected redraws: update_idletasks triggers idle time!
-#@nonl
-#@-node:ekr.20051026170025:Other improvements
 #@+node:ekr.20051030081605:(Made atl-x (full-command) work in find panel)
 # Rewrote the pane matching logic in copyBindingsToWidget.
 # Added 'mini' to the list of binding request in findTab.createBindings.
@@ -13307,7 +13267,50 @@ def copyBindingsToWidget (self,paneOrPanes,widget):
 #@nonl
 #@-node:ekr.20051023182326:copyBindingsToWidget
 #@-node:ekr.20051030081605:(Made atl-x (full-command) work in find panel)
+#@+node:ekr.20051016113907:Moved TabbedLog code into Leo's core
+@nocolor
+
+I removed the TabbedLog plugin from cvs, and changed the UASearch and URLloader
+plugins so they create create tabbed logs using c.frame.log.selectTab rather
+than TabbedLog.getPane. No other official plugins use TabbedLog. 
+
+We can't use nb.selectpage('Log') after writing the tab completion list,
+but we want to restore the default page to 'Log'.
+
+There are at least two approaches:
+
+1. Create a method, say, setDefaultTab(), that causes *future* writes to go to the 'Log' tab but does *not* change the presently selected tab.
+
+2. Add tabName='Log' as a keyword argument to g.es, g.enl, etc. and tkLog.put/putnl.
+
+This is more explicit and easier to program, and does the same thing.  This is what I have done.  So by default, g.es does what it always has done, but it is easy to switch to other panes.
+#@nonl
+#@-node:ekr.20051016113907:Moved TabbedLog code into Leo's core
 #@-node:ekr.20051016115757.1:4.4a2 projects
+#@+node:ekr.20051026170025:Other improvements
+@nocolor
+
+- g.openWithFileName puts the focus in the body pane.
+  Surprisingly important.
+
+- undo/redo now put the focus in the body.
+
+- Compute length of headline on every key.
+
+- All headlines now have a minimum width:
+  The flash when suddenly increasing the width was annoying.
+
+- Go To Line Number command forces focus to body immediately.
+
+- Got rid of forceFocus arg to endCommand.
+
+- Investigated unexpected redraws: update_idletasks triggers idle time!
+
+- Added buttons.txt to cvs and the distribution list. This ensures that new
+buttons are saved even if the user mistakenly closes the console window while
+Leo is saving LeoPy.leo.  It happened to me :-)
+#@nonl
+#@-node:ekr.20051026170025:Other improvements
 #@+node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
 #@+node:ekr.20051027135712:Notes
 @nocolor
