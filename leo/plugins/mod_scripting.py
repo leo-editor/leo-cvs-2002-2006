@@ -65,7 +65,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.14"
+__version__ = "0.15"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -103,6 +103,8 @@ __version__ = "0.14"
 # 'Run Script' button.
 # 0.14 EKR:
 #     - All created buttons call bodyWantsFocus when the script completes.
+# 0.15 EKR:
+#     - Fixed a recent crasher in deleteButton.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -414,6 +416,7 @@ class scriptingController:
         
         """Delete the button at self.d[key]."""
     
+        c = self.c
         button = self.d.get(key)
         if button:
             button.pack_forget()
