@@ -801,12 +801,18 @@ class ManagerDialog:
         #@nl
         self.plugin_list.populateList("All")
         
+        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
+        g.app.dialogs += 1
+        
         if not standalone:
             top.grab_set() # Make the dialog a modal dialog.
             top.focus_force() # Get all keystrokes.
             root.wait_window(top)
         else:
             root.mainloop()
+            
+        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
+        g.app.dialogs -= 1
     #@nonl
     #@-node:pap.20041006215108.1:ManagerDialog._init__
     #@+node:pap.20041006224151:enablePlugin
@@ -1019,7 +1025,11 @@ class ListReportDialog:
             
         top.grab_set() # Make the dialog a modal dialog.
         top.focus_force() # Get all keystrokes.
+        
+        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
+        g.app.dialogs += 1
         root.wait_window(top)
+        g.app.dialogs -= 1
     #@-node:pap.20041009233937.1:ListReportDialog.__init__
     #@+node:pap.20041009234850:getFilterOptions
     def getFilterOptions(self, list_data):

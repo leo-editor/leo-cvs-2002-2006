@@ -397,7 +397,11 @@ class PropertiesWindow:
         g.app.gui.center_dialog(top) # Do this after packing.
         top.grab_set() # Make the dialog a modal dialog.
         top.focus_force() # Get all keystrokes.
+        
+        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
+        g.app.dialogs += 1
         root.wait_window(top)
+        g.app.dialogs -= 1
         #@nonl
         #@-node:EKR.20040517080555.13:<< create the frame from the configuration data >>
         #@nl
@@ -480,7 +484,11 @@ class PluginAbout:
         g.app.gui.center_dialog(top) # Do this after packing.
         top.grab_set() # Make the dialog a modal dialog.
         top.focus_force() # Get all keystrokes.
+        
+        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
+        g.app.dialogs += 1
         root.wait_window(top)
+        g.app.dialogs -= 1
     #@nonl
     #@-node:EKR.20040517080555.20:__init__
     #@-others
