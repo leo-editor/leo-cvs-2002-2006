@@ -25,91 +25,19 @@ Others
 #@-node:ekr.20051012053017.2:Schedule
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
-
-- Add buttons.txt to distribution list.
 #@nonl
-#@+node:ekr.20051025101030:before a2
-#@+node:ekr.20051021210459:Docs
-@nocolor
-
-- Document new settings.
-- Document how to create and manage tabs in the log pane.
-- Document how to script the log pane.
-
-- Document @command and @button @key.
-
-- Posting: how to program tabs in the log pane.
-- Posting: Not possible to use @command inside a derived file.
-
-- Add an entry in the FAQ that g.trace is usually more useful than pdb.
-#@nonl
-#@+node:ekr.20051016113907.1:How to use the new code
-@nocolor
-
-c.frame.log.selectTab(tabName) selects the tab in the log pane, creating it if
-necessary.
-
-The g.es, g.enl, g.ecnl, g.ecnls write to the log tab specified by the optional
-tabName argument. The default for tabName is 'Log', so existing code works as
-before.
-
-Minor notes:
-
-1. The following are official status ivars.  They can be read by client code,
-but they should never be changed outside of the leoTkinterLog class:
-
-c.frame.log.tabName: the name of the active tab.
-c.frame.log.logCtrl: the Tk.Text widget for the active tab.
-c.frame.log.tabFrame: the Tk.Frame containing the active tab.
-
-These ivars may not exist in nullLog's.
-
-2. The put and putnl methods of the tkinterLog class also take an optional
-tabName argument which defaults to 'Log'.
-#@nonl
-#@-node:ekr.20051016113907.1:How to use the new code
-#@-node:ekr.20051021210459:Docs
-#@+node:ekr.20051017132446:Hang in MacOS scripting
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3384016
-By: slott56
-
-Executing [any] script throws me into a loop with a lot of "exception execution
-script" messages.  There's a copy of Python left running in the background,
-it appears, which is hung up.
-
-Here's the full header...
-
-Leo 4.3 final, build  1.262 , May 23, 2005
-Python 2.3.5, Tk 8.4.7, darwin
-
-Mac OS 10.4.2
-#@-node:ekr.20051017132446:Hang in MacOS scripting
-#@+node:ekr.20051014104337.1:Crash in undo
-exception executing command
-Traceback (most recent call last):
-
-  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
-    command()
-
-  File "leoUndo.py", line 1571, in undo
-    u.undoHelper()
-
-  File "leoUndo.py", line 1720, in undoMove
-    u.p.moveToNthChildOf(u.oldParent,u.oldN)
-
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
-    p.unlink()
-
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3307, in unlink
-    assert(parent.v in p.v.directParents())
-
-AssertionError
-#@nonl
-#@-node:ekr.20051014104337.1:Crash in undo
-#@-node:ekr.20051025101030:before a2
 #@+node:ekr.20051016162724:before a3
-Urgent:
+* Keep focus visible without using idle-time logic.
+    - This can probably be done in k.masterCommand.
+    - Removed g.app.dialogs hack in leoPlugins.leo as well as here.
+
+The present delayed focus scheme is broken by update_idletasks. Rather than
+queuing up an idle-time handler, the delayed focus methods will simply set an
+ivar telling k.masterCommand what widget should get focus. This will probably be
+an excellent and simple solution.
+
+- More clever way to analyze modules in autocomplete.
+    Use inspect module to import the text and get what is wanted.
 
 - Improve emacs-search commands
 
@@ -1104,12 +1032,15 @@ def __init__(self,c,local_dictionary_file,local_language_code):
     
     self.c = c
     
-    # Specify the path to the top-level Aspell directory.
-    if sys.platform == 'darwin':
-        aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-    else:
-        aspell = g.importFromPath(
-            "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
+    try:
+        import aspell
+    except ImportError:
+        # Specify the path to the top-level Aspell directory.
+        if sys.platform == 'darwin':
+            aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
+        else:
+            aspell = g.importFromPath(
+                "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
             
     self.aspell = aspell
 
@@ -1846,13 +1777,13 @@ self.s_ctrl = Tk.Text() # Used by find.search()
 #@nonl
 #@-node:ekr.20051020120306.12:<< create the tkinter intVars >>
 #@-node:ekr.20051020120306.11:__init__
-#@+node:ekr.20051023181449:find.createBindings
+#@+node:ekr.20051023181449:find.createBindings (findTab)
 def createBindings (self):
     
     c = self.c ; k = c.keyHandler
 
     for w in (self.find_ctrl, self.change_ctrl):
-        k.copyBindingsToWidget('text',w)
+        k.copyBindingsToWidget(['text','mini'],w)
         # Bind shortcuts for the following commands...
         for commandName,func in (
             ('find-tab-find',       self.findNextCommand),
@@ -1873,7 +1804,7 @@ def createBindings (self):
         w.bind("<Key-Return>", self.findButtonCallback)
         w.bind("<Key-Escape>", self.hideTab)
 #@nonl
-#@-node:ekr.20051023181449:find.createBindings
+#@-node:ekr.20051023181449:find.createBindings (findTab)
 #@+node:ekr.20051020120306.13:find.createFrame
 def createFrame (self,parentFrame):
     
@@ -3072,6 +3003,28 @@ Leo's import code can't handle this:
 #@+node:ekr.20040722132104:Write script to report underindented lines
 #@-node:ekr.20040722132104:Write script to report underindented lines
 #@-node:ekr.20051014152256:Fix long-standing bug in import code
+#@+node:ekr.20051014104337.1:Crash in undo
+exception executing command
+Traceback (most recent call last):
+
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 213, in doCommand
+    command()
+
+  File "leoUndo.py", line 1571, in undo
+    u.undoHelper()
+
+  File "leoUndo.py", line 1720, in undoMove
+    u.p.moveToNthChildOf(u.oldParent,u.oldN)
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2764, in moveToNthChildOf
+    p.unlink()
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3307, in unlink
+    assert(parent.v in p.v.directParents())
+
+AssertionError
+#@nonl
+#@-node:ekr.20051014104337.1:Crash in undo
 #@-node:ekr.20051027105304:before b1
 #@+node:ekr.20050925105522:Big
 * Complete Editor menu.
@@ -5566,14 +5519,14 @@ def bindShortcut (self,pane,shortcut,command,commandName):
 #@nonl
 #@-node:ekr.20051006125633.1:bindShortcut
 #@+node:ekr.20051001050607:endCommand
-def endCommand (self,event,commandName,forceFocus=True):
+def endCommand (self,event,commandName):
 
     '''Make sure Leo updates the widget following a command.
     
     Never changes the minibuffer label: individual commands must do that.
     '''
 
-    k = self ; c = k.c ; w = event.widget
+    k = self ; c = k.c
     if g.app.quitting: return
     
     # The command may have closed the window, so this may fail.
@@ -5599,10 +5552,6 @@ def endCommand (self,event,commandName,forceFocus=True):
                 pass
         bodyCtrl.update_idletasks()
         c.frame.body.onBodyChanged(p,undoType='Typing')
-        
-    w.update_idletasks()
-    if forceFocus:
-        c.frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@-node:ekr.20051015123432:(Methods with pychecker problems)

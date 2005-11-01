@@ -13286,6 +13286,349 @@ There are at least two approaches:
 This is more explicit and easier to program, and does the same thing.  This is what I have done.  So by default, g.es does what it always has done, but it is easy to switch to other panes.
 #@nonl
 #@-node:ekr.20051016113907:Moved TabbedLog code into Leo's core
+#@+node:ekr.20051031102544:(Fix bugs reported by 'e')
+#@+node:ekr.20051101082646:Plugins manager dialog doesn't stay in front
+@nocolor
+
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3406291
+By: e
+
+> any "about" display in the plugin manager, and dialogs, compare, Library seem to get lost
+behind Leo, making them unusable.
+
+This is a known problem.  It can't be fixed properly in a2, but I'll put in temporary fix for the plugins manager plugin.
+
+> I do question the need for focus grabbing the body after script execution. Isn't this what causes the problem in the first place?
+
+It's related to what causes the problem.  The real problem is that keystrokes are bound to individual widgets, and if none of those individual panes has focus then no key binding will be in effect, which we obviously don't want.
+
+So Leo must guarantee that some widget with useful bindings gets focus.  Plugins and dialogs complicate matters: we can't yank the focus away from dialog.  The behavior you describe arises because the plugin dialogs haven't 'announced' themselves as having widgets that should retain focus.  The present base dialog class has a temporary hack that does this announcing: that's why Leo's About dialog stays in front.  I'll have to do something similar for the plugins manager.
+
+It just may be possible to bind the most important bindings (esp. for the command that activates the minibuffer) to c.frame.top or some other all-enclosing frame. This isn't as easy as it might sound, and I shan't delay a2 to fiddle with it.
+
+Edward
+#@-node:ekr.20051101082646:Plugins manager dialog doesn't stay in front
+#@+node:ekr.20051101082646.1:Spellpyx settings (use Spell tab)
+@nocolor
+
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3406291
+By: e
+
+> maybe the hardwired paths can be overridden by
+@settings?
+
+Use the spell tab, not the spellpyx plugin.  The settings for the spell tab are in leoSettings.leo at:
+
+@settings-->@page Spell tab
+
+The open-spell-tab command opens that Spell tab, and the following script button does the same:
+
+c.spellCommands.openSpellTab()
+#@-node:ekr.20051101082646.1:Spellpyx settings (use Spell tab)
+#@+node:ekr.20051101082646.2:Improve import of aspell
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3406291
+By: e
+
+@color
+#@nonl
+#@+node:ekr.20051025071455.6:class Aspell
+class Aspell:
+    
+    """A wrapper class for Aspell spell checker"""
+    
+    @others
+
+#@+node:ekr.20051025071455.7:Birth & death
+#@+node:ekr.20051025071455.8:__init__
+def __init__(self,c,local_dictionary_file,local_language_code):
+    
+    """Ctor for the Aspell class."""
+    
+    self.c = c
+    
+    try:
+        import aspell
+    except ImportError:
+        # Specify the path to the top-level Aspell directory.
+        if sys.platform == 'darwin':
+            aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
+        else:
+            aspell = g.importFromPath(
+                "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
+            
+    self.aspell = aspell
+
+    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
+    # g.trace(self.sc)
+    
+    self.aspell_exe_loc = (c.config.getString('aspell_bin_dir') or aspell_bin_dir)
+    # g.trace(self.aspell_exe_loc)
+
+    self.local_language_code = local_language_code
+    self.local_dictionary_file = local_dictionary_file
+    self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
+    # g.trace(self.local_dictionary)
+#@nonl
+#@-node:ekr.20051025071455.8:__init__
+#@-node:ekr.20051025071455.7:Birth & death
+#@+node:ekr.20051025071455.10:processWord
+def processWord(self, word):
+    """Pass a word to aspell and return the list of alternatives.
+    OK: 
+    * 
+    Suggestions: 
+    & «original» «count» «offset»: «miss», «miss», ... 
+    None: 
+    # «original» «offset» 
+    simplifyed to not create the string then make a list from it    
+    """
+
+    if self.sc.check(word):
+        return None
+    else:
+        return self.sc.suggest(word)
+#@nonl
+#@-node:ekr.20051025071455.10:processWord
+#@+node:ekr.20051025071455.11:updateDictionary
+def updateDictionary(self):
+
+    """Update the aspell dictionary from a list of words.
+    
+    Return True if the dictionary was updated correctly."""
+
+    try:
+        # Create master list
+        basename = os.path.splitext(self.local_dictionary)[0]
+        cmd = (
+            "%s --lang=%s create master %s.wl < %s.txt" %
+            (self.aspell_exe_loc, self.local_language_code, basename,basename))
+        os.popen(cmd)
+        return True
+
+    except Exception, err:
+        g.es_print("Unable to update local aspell dictionary: %s" % err)
+        return False
+#@nonl
+#@-node:ekr.20051025071455.11:updateDictionary
+#@-node:ekr.20051025071455.6:class Aspell
+#@-node:ekr.20051101082646.2:Improve import of aspell
+#@+node:ekr.20051031102544.1:(Fixed crash when right clicking in headline)
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3406291
+By: e
+
+rightclick in outline isn't working for me.
+the normal Leo popup rclick in outline fails.
+possibly related to my custom rClick.py, not sure.
+the name of the body widget has changed?
+
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 2182, in onHeadlineRightClick
+    self.OnPopup(p,event)
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 2284, in OnPopup
+    self.createPopupMenu(event)
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 2333, in createPopupMenu
+    frame.menu.createOpenWithMenuEntries(menu,g.app.openWithTable)
+AttributeError: leoTkinterMenu instance has no attribute 'createOpenWithMenuEntries'
+
+# Use createOpenWithMenuItemsFromTable rather than createOpenWithMenuEntries
+# I don't remember why the name got changed.
+
+@color
+#@nonl
+#@+node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
+def createOpenWithMenuItemsFromTable (self,menu,table):
+    
+    '''Create an entry in the Open with Menu from the table.
+    
+    Each entry should be a sequence with 2 or 3 elements.'''
+
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label, accelerator & command or continue >>
+        realLabel = self.getRealMenuName(label)
+        underline=realLabel.find("&")
+        realLabel = realLabel.replace("&","")
+        callback = self.defineOpenWithMenuCallback(openWithData)
+    
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator or '',
+            command=callback,underline=underline)
+#@+node:ekr.20051022043713.1:<< get label, accelerator & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        label,openWithData = data ; accelerator = None
+    else:
+        label,accelerator,openWithData = data
+        junk,accelerator = self.canonicalizeShortcut(accelerator)
+else:
+    g.trace('bad data in Open With table: %s' % repr(data))
+    continue # Ignore bad data
+#@nonl
+#@-node:ekr.20051022043713.1:<< get label, accelerator & command or continue >>
+#@-node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
+#@+node:ekr.20040803072955.110:tree.OnPopup & allies
+def OnPopup (self,p,event):
+    
+    """Handle right-clicks in the outline."""
+    
+    # Note: "headrclick" hooks handled by vnode callback routine.
+
+    if event != None:
+        c = self.c
+        if not g.doHook("create-popup-menu",c=c,p=p,v=p,event=event):
+            self.createPopupMenu(event)
+        if not g.doHook("enable-popup-menu-items",c=c,p=p,v=p,event=event):
+            self.enablePopupMenuItems(p,event)
+        if not g.doHook("show-popup-menu",c=c,p=p,v=p,event=event):
+            self.showPopupMenu(event)
+
+    return "break"
+#@nonl
+#@+node:ekr.20040803072955.111:OnPopupFocusLost
+@ On Linux we must do something special to make the popup menu "unpost" if the mouse is clicked elsewhere.  So we have to catch the <FocusOut> event and explicitly unpost.  In order to process the <FocusOut> event, we need to be able to find the reference to the popup window again, so this needs to be an attribute of the tree object; hence, "self.popupMenu".
+
+Aside: though Tk tries to be muli-platform, the interaction with different window managers does cause small differences that will need to be compensated by system specific application code. :-(
+@c
+
+# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
+
+def OnPopupFocusLost(self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    self.popupMenu.unpost()
+#@nonl
+#@-node:ekr.20040803072955.111:OnPopupFocusLost
+#@+node:ekr.20040803072955.112:createPopupMenu
+def createPopupMenu (self,event):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    c = self.c ; frame = c.frame
+    
+    # If we are going to recreate it, we had better destroy it.
+    if self.popupMenu:
+        self.popupMenu.destroy()
+        self.popupMenu = None
+    
+    self.popupMenu = menu = Tk.Menu(g.app.root, tearoff=0)
+    
+    # Add the Open With entries if they exist.
+    if g.app.openWithTable:
+        frame.menu.createOpenWithMenuItemsFromTable(menu,g.app.openWithTable)
+        table = (("-",None,None),)
+        frame.menu.createMenuEntries(menu,table)
+        
+    << Create the menu table >>
+    
+    # New in 4.4.  There is no need for a dontBind argument because
+    # Bindings from tables are ignored.
+    frame.menu.createMenuEntries(menu,table)
+#@nonl
+#@+node:ekr.20040803072955.113:<< Create the menu table >>
+table = (
+    ("&Read @file Nodes",c.readAtFileNodes),
+    ("&Write @file Nodes",c.fileCommands.writeAtFileNodes),
+    ("-",None),
+    ("&Tangle",c.tangle),
+    ("&Untangle",c.untangle),
+    ("-",None),
+    ("Toggle Angle &Brackets",c.toggleAngleBrackets),
+    ("-",None),
+    ("Cut Node",c.cutOutline),
+    ("Copy Node",c.copyOutline),
+    ("&Paste Node",c.pasteOutline),
+    ("&Delete Node",c.deleteOutline),
+    ("-",None),
+    ("&Insert Node",c.insertHeadline),
+    ("&Clone Node",c.clone),
+    ("Sort C&hildren",c.sortChildren),
+    ("&Sort Siblings",c.sortSiblings),
+    ("-",None),
+    ("Contract Parent",c.contractParent),
+)
+#@nonl
+#@-node:ekr.20040803072955.113:<< Create the menu table >>
+#@-node:ekr.20040803072955.112:createPopupMenu
+#@+node:ekr.20040803072955.114:enablePopupMenuItems
+def enablePopupMenuItems (self,v,event):
+    
+    """Enable and disable items in the popup menu."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    c = self.c ; menu = self.popupMenu
+
+    << set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+    isAtFile = g.choose(isAtFile,1,0)
+    isAtRoot = g.choose(isAtRoot,1,0)
+    canContract = v.parent() != None
+    canContract = g.choose(canContract,1,0)
+    
+    enable = self.frame.menu.enableMenu
+    
+    for name in ("Read @file Nodes", "Write @file Nodes"):
+        enable(menu,name,isAtFile)
+    for name in ("Tangle", "Untangle"):
+        enable(menu,name,isAtRoot)
+
+    enable(menu,"Cut Node",c.canCutOutline())
+    enable(menu,"Delete Node",c.canDeleteHeadline())
+    enable(menu,"Paste Node",c.canPasteOutline())
+    enable(menu,"Sort Children",c.canSortChildren())
+    enable(menu,"Sort Siblings",c.canSortSiblings())
+    enable(menu,"Contract Parent",c.canContractParent())
+#@nonl
+#@+node:ekr.20040803072955.115:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+isAtFile = False
+isAtRoot = False
+
+for v2 in v.self_and_subtree_iter():
+    if isAtFile and isAtRoot:
+        break
+    if (v2.isAtFileNode() or
+        v2.isAtNorefFileNode() or
+        v2.isAtAsisFileNode() or
+        v2.isAtNoSentFileNode()
+    ):
+        isAtFile = True
+        
+    isRoot,junk = g.is_special(v2.bodyString(),0,"@root")
+    if isRoot:
+        isAtRoot = True
+#@nonl
+#@-node:ekr.20040803072955.115:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+#@-node:ekr.20040803072955.114:enablePopupMenuItems
+#@+node:ekr.20040803072955.116:showPopupMenu
+def showPopupMenu (self,event):
+    
+    """Show a popup menu."""
+    
+    c = self.c ; menu = self.popupMenu
+
+    if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
+        menu.bind("<FocusOut>",self.OnPopupFocusLost)
+    
+    menu.post(event.x_root, event.y_root)
+
+    # Set the focus immediately so we know when we lose it.
+    c.frame.widgetWantsFocus(menu,later=False)
+#@nonl
+#@-node:ekr.20040803072955.116:showPopupMenu
+#@-node:ekr.20040803072955.110:tree.OnPopup & allies
+#@-node:ekr.20051031102544.1:(Fixed crash when right clicking in headline)
+#@-node:ekr.20051031102544:(Fix bugs reported by 'e')
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@+node:ekr.20051026170025:Other improvements
 @nocolor

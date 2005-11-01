@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.4-alpha-1"
+!define PRODUCT_VERSION "4.4-alpha-2"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl
@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a1.exe"
+OutFile "LeoSetup-4-4-a2.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -349,6 +349,7 @@ Section "Leo" SEC01
   SetOutPath "$INSTDIR\src"
   ;@  << install src files >>
   ;@+node:ekr.20050118104901.10:<< install src files >>
+  File "..\src\buttons.txt"
   File "..\src\leoProjects.txt"
   File "..\src\LeoPy.leo"
   File "..\src\oldLeoProjects.leo"
@@ -624,6 +625,7 @@ Section Uninstall
   ;@nl
   ;@  << uninstall src files >>
   ;@+node:ekr.20050118104901.11:<< uninstall src files >>
+  Delete "$INSTDIR\src\buttons.txt"
   Delete "$INSTDIR\src\leoProjects.txt"
   Delete "$INSTDIR\src\LeoPy.leo"
   Delete "$INSTDIR\src\oldLeoProjects.leo"

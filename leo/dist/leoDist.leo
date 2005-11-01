@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1119" clone_windows="0"/>
-<globals body_outline_ratio="0.428571428571">
+<globals body_outline_ratio="0.598465473146">
 	<global_window_position top="27" left="275" height="782" width="860"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
 <v t="ekr.20051015172713"><vh>@button save</vh></v>
 </v>
-<v t="EKR.20040519091259" a="E"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -24,7 +24,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20051015171839" a="ETV"><vh>ANN: Leo 4.4a1</vh></v>
+<v t="ekr.20051015171839" a="E"><vh>ANN: Leo 4.4a1</vh></v>
 <v t="ekr.20050919101619"><vh>ANN: Leo 4.3.3</vh></v>
 <v t="ekr.20050916073410"><vh>ANN: Leo 4.3.2-final</vh></v>
 <v t="ekr.20050905095110"><vh>ANN: Leo 4.3.2-b1</vh></v>
@@ -159,7 +159,7 @@
 <v t="ekr.20050118104901.13"><vh>&lt;&lt; install scripts &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.14"><vh>&lt;&lt; uninstall scripts &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104901.9"><vh>src files</vh>
+<v t="ekr.20050118104901.9" a="E"><vh>src files</vh>
 <v t="ekr.20050118104901.10"><vh>&lt;&lt; install src files &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.11"><vh>&lt;&lt; uninstall src files &gt;&gt;</vh></v>
 </v>
@@ -197,7 +197,7 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
@@ -479,7 +479,7 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-4-a1", # No spaces here!
+version="4-4-a2", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -804,6 +804,7 @@ include scripts/leoScripts.txt
 include scripts/*.py
 
 include src/__init__.py
+include src/buttons.txt
 include src/LeoPy.leo
 include src/leo*.py
 include src/leoProjects.txt
@@ -3489,7 +3490,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a1.exe"
+OutFile "LeoSetup-4-4-a2.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3613,14 +3614,16 @@ Delete "$INSTDIR\plugins\*.ini"
 Delete "$INSTDIR\plugins\*.p*"
 </t>
 <t tx="ekr.20050118104901.9"></t>
-<t tx="ekr.20050118104901.10">File "..\src\leoProjects.txt"
+<t tx="ekr.20050118104901.10">File "..\src\buttons.txt"
+File "..\src\leoProjects.txt"
 File "..\src\LeoPy.leo"
 File "..\src\oldLeoProjects.leo"
 
 File "..\src\__init__.py"
 File "..\src\leo*.py"
 </t>
-<t tx="ekr.20050118104901.11">Delete "$INSTDIR\src\leoProjects.txt"
+<t tx="ekr.20050118104901.11">Delete "$INSTDIR\src\buttons.txt"
+Delete "$INSTDIR\src\leoProjects.txt"
 Delete "$INSTDIR\src\LeoPy.leo"
 Delete "$INSTDIR\src\oldLeoProjects.leo"
 
@@ -3697,7 +3700,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"
 </t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-alpha-1"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-alpha-2"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/

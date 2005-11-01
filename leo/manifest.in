@@ -92,6 +92,7 @@ include scripts/leoScripts.txt
 include scripts/*.py
 
 include src/__init__.py
+include src/buttons.txt
 include src/LeoPy.leo
 include src/leo*.py
 include src/leoProjects.txt
