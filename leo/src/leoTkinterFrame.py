@@ -2541,6 +2541,7 @@ class leoTkinterBody (leoFrame.leoBody):
         #@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
         #@afterref
  # Same logic as always.
+        w.see(w.index('insert'))
         if newText == oldText: return
         c.undoer.setUndoTypingParams(p,undoType,
             orignalText or oldText,newText,oldSel,newSel,oldYview)
