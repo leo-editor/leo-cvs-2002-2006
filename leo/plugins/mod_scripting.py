@@ -13,12 +13,12 @@ entire text if no text is selected.
 
 The 'script Button' button creates another button in the icon area every time
 you push it. The name of the button is the headline of the presently selected
-node. Hitting this _new_ button executes the button's script.
+node. Hitting this *newly created* button executes the button's script.
 
 For example, to run a script on any part of an outline do the following:
 
-1.  Select the node containing the script.
-2.  Press the scriptButton button.  This will create a new button, call it X.
+1.  Select the node containing the script.  Suppose its headline is X
+2.  Press the scriptButton button.  This will create a new button called X.
 3.  Select the node on which you want to run the script.
 4.  Push button X.
 
@@ -65,7 +65,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.15"
+__version__ = "0.16"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -105,15 +105,14 @@ __version__ = "0.15"
 #     - All created buttons call bodyWantsFocus when the script completes.
 # 0.15 EKR:
 #     - Fixed a recent crasher in deleteButton.
+# 0.16 EKR:
+#     - Removed the unused bindLate global.
+#     - Set silent=True in the Run Script callback.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
 #@nl
 
-bindLate = True
-    # True (recommended) bind script when script is executed.
-    # Allows you to change the script after creating the script button.
-    # False: Bind script when button is created.
 atButtonNodes = True
     # True: adds a button for every @button node.
 atCommandsNodes = True
@@ -326,7 +325,7 @@ class scriptingController:
             '''Called when user presses the 'Run Script' button.'''
         
             c = self.c
-            c.executeScript(c.currentPosition(),useSelectedText=True)
+            c.executeScript(c.currentPosition(),useSelectedText=True,silent=False)
             c.frame.bodyWantsFocus()
         #@nonl
         #@-node:EKR.20040618091543.1:<< define runScriptCommand >>
