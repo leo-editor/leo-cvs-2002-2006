@@ -5565,12 +5565,15 @@ class Aspell:
         
         self.c = c
         
-        # Specify the path to the top-level Aspell directory.
-        if sys.platform == 'darwin':
-            aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-        else:
-            aspell = g.importFromPath(
-                "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
+        try:
+            import aspell
+        except ImportError:
+            # Specify the path to the top-level Aspell directory.
+            if sys.platform == 'darwin':
+                aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
+            else:
+                aspell = g.importFromPath(
+                    "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
                 
         self.aspell = aspell
     
