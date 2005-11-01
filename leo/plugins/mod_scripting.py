@@ -325,7 +325,7 @@ class scriptingController:
             '''Called when user presses the 'Run Script' button.'''
         
             c = self.c
-            c.executeScript(c.currentPosition(),useSelectedText=True,silent=False)
+            c.executeScript(c.currentPosition(),useSelectedText=True,silent=True)
             c.frame.bodyWantsFocus()
         #@nonl
         #@-node:EKR.20040618091543.1:<< define runScriptCommand >>
