@@ -1592,98 +1592,6 @@ class leoTkinterTree (leoFrame.leoTree):
         return True
     #@nonl
     #@-node:ekr.20040803072955.72:checkWidgetList
-    #@+node:ekr.20040803072955.73:dumpWidgetList
-    def dumpWidgetList (self,tag):
-        
-        print
-        print "checkWidgetList: %s" % tag
-        
-        for t in self.visibleText:
-            
-            p = t.leo_position
-            if p:
-                s = t.get("1.0","end").strip()
-                h = p.headString().strip()
-        
-                addr = self.textAddr(t)
-                print "p:",addr,h
-                if h != s:
-                    print "t:",'*' * len(addr),s
-            else:
-                print "t.leo_position == None",t
-    #@nonl
-    #@-node:ekr.20040803072955.73:dumpWidgetList
-    #@+node:ekr.20040803072955.74:eventToPosition
-    def eventToPosition (self,event):
-    
-        canvas = self.canvas
-        x,y = event.x,event.y
-        # 7/28/04: Not doing this translation was the real bug.
-        x = canvas.canvasx(x) 
-        y = canvas.canvasy(y)
-        if self.trace: g.trace(x,y)
-        item = canvas.find_overlapping(x,y,x,y)
-        if not item: return None
-    
-        # Item may be a tuple, possibly empty.
-        try:    theId = item[0]
-        except: theId = item
-        if not theId: return None
-    
-        p = self.ids.get(theId)
-        
-        # A kludge: p will be None for vertical lines.
-        if not p:
-            item = canvas.find_overlapping(x+1,y,x+1,y)
-            try:    theId = item[0]
-            except: theId = item
-            if not theId: return None
-            p = self.ids.get(theId)
-            # g.trace("was vertical line",p)
-        
-        if self.trace and self.verbose:
-            if p:
-                w = self.findEditWidget(p)
-                g.trace("%3d %3d %3d %d" % (theId,x,y,id(w)),p.headString())
-            else:
-                g.trace("%3d %3d %3d" % (theId,x,y),None)
-            
-        # defensive programming: this copy is not needed.
-        if p: return p.copy() # Make _sure_ nobody changes this table!
-        else: return None
-    #@nonl
-    #@-node:ekr.20040803072955.74:eventToPosition
-    #@+node:ekr.20040803072955.75:edit_text
-    def edit_text (self,p):
-        
-        """Returns the Tk.Edit widget for position p."""
-    
-        return self.findEditWidget(p)
-    #@nonl
-    #@-node:ekr.20040803072955.75:edit_text
-    #@+node:ekr.20040803072955.76:findEditWidget
-    # Search the widget list for widget t with t.leo_position == p.
-    
-    def findEditWidget (self,p):
-        
-        """Return the Tk.Text item corresponding to p."""
-    
-        c = self.c
-        
-        if c:
-            # New in 4.2: the dictionary is a list of pairs(p,v)
-            pairs = self.visibleText.get(p.v,[])
-            for p2,t2,id2 in pairs:
-                assert t2.leo_window_id == id2
-                assert t2.leo_position == p2
-                if p.equal(p2):
-                    # g.trace('found',t2)
-                    return t2
-            
-        # g.trace(not found',p.headString())
-        return None
-    #@nonl
-    #@-node:ekr.20040803072955.76:findEditWidget
     #@+node:ekr.20040803072955.78:Click Box...
     #@+node:ekr.20040803072955.79:onClickBoxClick
     def onClickBoxClick (self,event):
@@ -1712,270 +1620,6 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.79:onClickBoxClick
     #@-node:ekr.20040803072955.78:Click Box...
-    #@+node:ekr.20040803072955.80:Icon Box...
-    #@+node:ekr.20040803072955.81:onIconBoxClick
-    def onIconBoxClick (self,event):
-        
-        c = self.c ; tree = self
-        
-        p = self.eventToPosition(event)
-        if not p: return
-        
-        if self.trace and self.verbose: g.trace()
-        
-        if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
-            if event:
-                self.onDrag(event)
-            tree.select(p)
-            if c.frame.findPanel:
-                c.frame.findPanel.handleUserClick(p)
-        g.doHook("iconclick2",c=c,p=p,v=p,event=event)
-            
-        return "break" # disable expanded box handling.
-    #@nonl
-    #@-node:ekr.20040803072955.81:onIconBoxClick
-    #@+node:ekr.20040803072955.89:onIconBoxRightClick
-    def onIconBoxRightClick (self,event):
-        
-        """Handle a right click in any outline widget."""
-    
-        c = self.c
-        
-        p = self.eventToPosition(event)
-        if not p: return
-    
-        try:
-            if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
-                self.OnActivateHeadline(p)
-                self.endEditLabel()
-                self.OnPopup(p,event)
-            g.doHook("iconrclick2",c=c,p=p,v=p,event=event)
-        except:
-            g.es_event_exception("iconrclick")
-            
-        return "continue"
-    #@nonl
-    #@-node:ekr.20040803072955.89:onIconBoxRightClick
-    #@+node:ekr.20040803072955.82:onIconBoxDoubleClick
-    def onIconBoxDoubleClick (self,event):
-        
-        c = self.c
-    
-        p = self.eventToPosition(event)
-        if not p: return
-        
-        if self.trace and self.verbose: g.trace()
-        
-        try:
-            if not g.doHook("icondclick1",c=c,p=p,v=p,event=event):
-                self.OnIconDoubleClick(p) # Call the method in the base class.
-            g.doHook("icondclick2",c=c,p=p,v=p,event=event)
-        except:
-            g.es_event_exception("icondclick")
-    #@nonl
-    #@-node:ekr.20040803072955.82:onIconBoxDoubleClick
-    #@-node:ekr.20040803072955.80:Icon Box...
-    #@+node:ekr.20040803072955.84:Text Box...
-    #@+node:ekr.20040803072955.85:configureTextState
-    def configureTextState (self,p):
-        
-        if not p: return
-        
-        if p.isCurrentPosition():
-            if p == self.editPosition():
-                self.setNormalLabelState(p)
-            else:
-                self.setDisabledLabelState(p) # selected, disabled
-        else:
-            self.setUnselectedLabelState(p) # unselected
-    #@nonl
-    #@-node:ekr.20040803072955.85:configureTextState
-    #@+node:ekr.20040803072955.86:onCtontrolT
-    # This works around an apparent Tk bug.
-    
-    def onControlT (self,event=None):
-    
-        # If we don't inhibit further processing the Tx.Text widget switches characters!
-        return "break"
-    #@nonl
-    #@-node:ekr.20040803072955.86:onCtontrolT
-    #@+node:ekr.20040803072955.87:onHeadlineClick
-    def onHeadlineClick (self,event):
-        
-        c = self.c ; w = event.widget
-        
-        try:
-            p = w.leo_position
-        except AttributeError:
-            return "continue"
-            
-        # g.trace(p.headString())
-        
-        try:
-            if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
-                self.OnActivateHeadline(p)
-            g.doHook("headclick2",c=c,p=p,v=p,event=event)
-        except:
-            g.es_event_exception("headclick")
-            
-        return "continue"
-    #@nonl
-    #@-node:ekr.20040803072955.87:onHeadlineClick
-    #@+node:ekr.20040803072955.83:onHeadlineRightClick
-    def onHeadlineRightClick (self,event):
-    
-        """Handle a right click in any outline widget."""
-    
-        c = self.c ; w = event.widget
-        
-        try:
-            p = w.leo_position
-        except AttributeError:
-            return "continue"
-    
-        try:
-            if not g.doHook("headrclick1",c=c,p=p,v=p,event=event):
-                self.OnActivateHeadline(p)
-                self.endEditLabel()
-                self.OnPopup(p,event)
-            g.doHook("headrclick2",c=c,p=p,v=p,event=event)
-        except:
-            g.es_event_exception("headrclick")
-            
-        return "continue"
-    #@nonl
-    #@-node:ekr.20040803072955.83:onHeadlineRightClick
-    #@+node:ekr.20040803072955.90:head key handlers
-    #@+node:ekr.20040803072955.88:onHeadlineKey
-    def onHeadlineKey (self,event):
-        
-        """Handle a key event in a headline."""
-        
-        w = event and event.widget or None
-        
-        self.updateHead(event,w)
-    
-        return 'break' # Required
-    #@nonl
-    #@-node:ekr.20040803072955.88:onHeadlineKey
-    #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-    def updateHead (self,event,w):
-        
-        c = self.c ; p = c.currentPosition()
-        ch = event and event.char or ''
-        i,j = g.app.gui.getTextSelection(w)
-        # g.trace(g.callers(6))
-        
-        if event is None:
-            # A bad kludge: compute what is *already* in the widget,
-            # but what is not reported properly.
-            ch = g.app.gui.getTextFromClipboard()
-            i = int(i.split('.')[1])
-            j = int(j.split('.')[1])
-            s = w.get('1.0','end')
-            if i != j:
-                s = s[:i] + ch + s[j:]
-            else:
-                i = w.index('insert')
-                i = int(i.split('.')[1])
-                s = s[:i] + ch + s[i:]
-            # Now force the widget to tell us the truth.
-            w.delete('1.0','end')
-            w.insert('1.0',s)
-            s = w.get('1.0','end')
-        else:
-            if ch == '\b':
-                if i != j:
-                    w.delete(i,j)
-                else:
-                    w.delete('insert-1c')
-            elif ch and ch not in ('\n','\r'):
-                if i != j:
-                    w.delete(i,j)
-                i = w.index('insert')
-                w.insert(i,ch)
-        
-            s = w.get('1.0','end')
-        
-        if s.endswith('\n'):
-            if len(s) > 1: s = s[:-1]
-            else:          s = ''
-    
-        if 0: # p does not *officially* change until onHeadChanged is called.
-            p.initHeadString(s)
-        w.configure(width=self.headWidth(s=s))
-    
-        # The granularity is the entire editing session,
-        # starting at the revert point.
-        if ch in ('\n','\r'):
-            self.onHeadChanged(p)
-    #@nonl
-    #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
-    #@+node:ekr.20040803072955.91:onHeadChanged
-    # Tricky code: do not change without careful thought and testing.
-    
-    def onHeadChanged (self,p,undoType='Typing'):
-        
-        '''Officially change a headline.
-        Set the old undo text to the previous revert point.'''
-        
-        c = self.c ; u = c.undoer ; w = p and self.edit_text(p)
-        if not w:
-            # g.trace('no widget')
-            return
-    
-        s = w.get('1.0','end')
-        #@    << truncate s if it has multiple lines >>
-        #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-        # Remove one or two trailing newlines before warning of truncation.
-        for i in (0,1):
-            if s and s[-1] == '\n':
-                if len(s) > 1: s = s[:-1]
-                else: s = ''
-        
-        # Warn if there are multiple lines.
-        i = s.find('\n')
-        if i > -1:
-            # g.trace(i,len(s),repr(s))
-            g.es("Truncating headline to one line",color="blue")
-            s = s[:i]
-        
-        limit = 1000
-        if len(s) > limit:
-            g.es("Truncating headline to %d characters" % (limit),color="blue")
-            s = s[:limit]
-        
-        s = g.toUnicode(s or '',g.app.tkEncoding)
-        #@nonl
-        #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-        #@nl
-        changed = s != p.headString()
-        
-        # Make the change official, but undo to the *old* revert point.
-        oldRevert = self.revertHeadline
-        self.revertHeadline = s
-        p.initHeadString(s)
-        # Do not call endEditLabel here: we may have been called from there.
-        if p and p.edit_text():
-            self.setEditPosition(None)
-        if not changed: return
-    
-        # g.trace('undo to:',oldRevert)
-        undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
-    
-        c.beginUpdate()
-        try:
-            if not c.changed: c.setChanged(True)
-            dirtyVnodeList = p.setDirty()
-        finally:
-            c.endUpdate()
-    
-        u.afterChangeNodeContents(p,undoType,undoData,
-            dirtyVnodeList=dirtyVnodeList)
-    #@nonl
-    #@-node:ekr.20040803072955.91:onHeadChanged
-    #@-node:ekr.20040803072955.90:head key handlers
-    #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.99:Dragging
     #@+node:ekr.20041111115908:endDrag
     def endDrag (self,event):
@@ -2139,13 +1783,291 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.103:onEndDrag
     #@-node:ekr.20040803072955.99:Dragging
-    #@+node:ekr.20051022141020:onTreeClick
-    def onTreeClick (self,event=None):
+    #@+node:ekr.20040803072955.73:dumpWidgetList
+    def dumpWidgetList (self,tag):
         
-        self.frame.treeWantsFocus()
+        print
+        print "checkWidgetList: %s" % tag
         
-        return 'break'
-    #@-node:ekr.20051022141020:onTreeClick
+        for t in self.visibleText:
+            
+            p = t.leo_position
+            if p:
+                s = t.get("1.0","end").strip()
+                h = p.headString().strip()
+        
+                addr = self.textAddr(t)
+                print "p:",addr,h
+                if h != s:
+                    print "t:",'*' * len(addr),s
+            else:
+                print "t.leo_position == None",t
+    #@nonl
+    #@-node:ekr.20040803072955.73:dumpWidgetList
+    #@+node:ekr.20040803072955.75:edit_text
+    def edit_text (self,p):
+        
+        """Returns the Tk.Edit widget for position p."""
+    
+        return self.findEditWidget(p)
+    #@nonl
+    #@-node:ekr.20040803072955.75:edit_text
+    #@+node:ekr.20040803072955.74:eventToPosition
+    def eventToPosition (self,event):
+    
+        canvas = self.canvas
+        x,y = event.x,event.y
+        # 7/28/04: Not doing this translation was the real bug.
+        x = canvas.canvasx(x) 
+        y = canvas.canvasy(y)
+        if self.trace: g.trace(x,y)
+        item = canvas.find_overlapping(x,y,x,y)
+        if not item: return None
+    
+        # Item may be a tuple, possibly empty.
+        try:    theId = item[0]
+        except: theId = item
+        if not theId: return None
+    
+        p = self.ids.get(theId)
+        
+        # A kludge: p will be None for vertical lines.
+        if not p:
+            item = canvas.find_overlapping(x+1,y,x+1,y)
+            try:    theId = item[0]
+            except: theId = item
+            if not theId: return None
+            p = self.ids.get(theId)
+            # g.trace("was vertical line",p)
+        
+        if self.trace and self.verbose:
+            if p:
+                w = self.findEditWidget(p)
+                g.trace("%3d %3d %3d %d" % (theId,x,y,id(w)),p.headString())
+            else:
+                g.trace("%3d %3d %3d" % (theId,x,y),None)
+            
+        # defensive programming: this copy is not needed.
+        if p: return p.copy() # Make _sure_ nobody changes this table!
+        else: return None
+    #@nonl
+    #@-node:ekr.20040803072955.74:eventToPosition
+    #@+node:ekr.20040803072955.76:findEditWidget
+    # Search the widget list for widget t with t.leo_position == p.
+    
+    def findEditWidget (self,p):
+        
+        """Return the Tk.Text item corresponding to p."""
+    
+        c = self.c
+        
+        if c:
+            # New in 4.2: the dictionary is a list of pairs(p,v)
+            pairs = self.visibleText.get(p.v,[])
+            for p2,t2,id2 in pairs:
+                assert t2.leo_window_id == id2
+                assert t2.leo_position == p2
+                if p.equal(p2):
+                    # g.trace('found',t2)
+                    return t2
+            
+        # g.trace(not found',p.headString())
+        return None
+    #@nonl
+    #@-node:ekr.20040803072955.76:findEditWidget
+    #@+node:ekr.20040803072955.90:head key handlers
+    #@+node:ekr.20040803072955.88:onHeadlineKey
+    def onHeadlineKey (self,event):
+        
+        """Handle a key event in a headline."""
+        
+        w = event and event.widget or None
+        
+        self.updateHead(event,w)
+    
+        return 'break' # Required
+    #@nonl
+    #@-node:ekr.20040803072955.88:onHeadlineKey
+    #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+    def updateHead (self,event,w):
+        
+        c = self.c ; p = c.currentPosition()
+        ch = event and event.char or ''
+        i,j = g.app.gui.getTextSelection(w)
+        # g.trace(g.callers(6))
+        
+        if event is None:
+            # A bad kludge: compute what is *already* in the widget,
+            # but what is not reported properly.
+            ch = g.app.gui.getTextFromClipboard()
+            i = int(i.split('.')[1])
+            j = int(j.split('.')[1])
+            s = w.get('1.0','end')
+            if i != j:
+                s = s[:i] + ch + s[j:]
+            else:
+                i = w.index('insert')
+                i = int(i.split('.')[1])
+                s = s[:i] + ch + s[i:]
+            # Now force the widget to tell us the truth.
+            w.delete('1.0','end')
+            w.insert('1.0',s)
+            s = w.get('1.0','end')
+        else:
+            if ch == '\b':
+                if i != j:
+                    w.delete(i,j)
+                else:
+                    w.delete('insert-1c')
+            elif ch and ch not in ('\n','\r'):
+                if i != j:
+                    w.delete(i,j)
+                i = w.index('insert')
+                w.insert(i,ch)
+        
+            s = w.get('1.0','end')
+        
+        if s.endswith('\n'):
+            if len(s) > 1: s = s[:-1]
+            else:          s = ''
+    
+        if 0: # p does not *officially* change until onHeadChanged is called.
+            p.initHeadString(s)
+        w.configure(width=self.headWidth(s=s))
+    
+        # The granularity is the entire editing session,
+        # starting at the revert point.
+        if ch in ('\n','\r'):
+            self.onHeadChanged(p)
+    #@nonl
+    #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+    #@+node:ekr.20040803072955.91:onHeadChanged
+    # Tricky code: do not change without careful thought and testing.
+    
+    def onHeadChanged (self,p,undoType='Typing'):
+        
+        '''Officially change a headline.
+        Set the old undo text to the previous revert point.'''
+        
+        c = self.c ; u = c.undoer ; w = p and self.edit_text(p)
+        if not w:
+            # g.trace('no widget')
+            return
+    
+        s = w.get('1.0','end')
+        #@    << truncate s if it has multiple lines >>
+        #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+        # Remove one or two trailing newlines before warning of truncation.
+        for i in (0,1):
+            if s and s[-1] == '\n':
+                if len(s) > 1: s = s[:-1]
+                else: s = ''
+        
+        # Warn if there are multiple lines.
+        i = s.find('\n')
+        if i > -1:
+            # g.trace(i,len(s),repr(s))
+            g.es("Truncating headline to one line",color="blue")
+            s = s[:i]
+        
+        limit = 1000
+        if len(s) > limit:
+            g.es("Truncating headline to %d characters" % (limit),color="blue")
+            s = s[:limit]
+        
+        s = g.toUnicode(s or '',g.app.tkEncoding)
+        #@nonl
+        #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+        #@nl
+        changed = s != p.headString()
+        
+        # Make the change official, but undo to the *old* revert point.
+        oldRevert = self.revertHeadline
+        self.revertHeadline = s
+        p.initHeadString(s)
+        # Do not call endEditLabel here: we may have been called from there.
+        if p and p.edit_text():
+            self.setEditPosition(None)
+        if not changed: return
+    
+        # g.trace('undo to:',oldRevert)
+        undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+    
+        c.beginUpdate()
+        try:
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+        finally:
+            c.endUpdate()
+    
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)
+    #@nonl
+    #@-node:ekr.20040803072955.91:onHeadChanged
+    #@-node:ekr.20040803072955.90:head key handlers
+    #@+node:ekr.20040803072955.80:Icon Box...
+    #@+node:ekr.20040803072955.81:onIconBoxClick
+    def onIconBoxClick (self,event):
+        
+        c = self.c ; tree = self
+        
+        p = self.eventToPosition(event)
+        if not p: return
+        
+        if self.trace and self.verbose: g.trace()
+        
+        if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
+            if event:
+                self.onDrag(event)
+            tree.select(p)
+            if c.frame.findPanel:
+                c.frame.findPanel.handleUserClick(p)
+        g.doHook("iconclick2",c=c,p=p,v=p,event=event)
+            
+        return "break" # disable expanded box handling.
+    #@nonl
+    #@-node:ekr.20040803072955.81:onIconBoxClick
+    #@+node:ekr.20040803072955.89:onIconBoxRightClick
+    def onIconBoxRightClick (self,event):
+        
+        """Handle a right click in any outline widget."""
+    
+        c = self.c
+        
+        p = self.eventToPosition(event)
+        if not p: return
+    
+        try:
+            if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
+                self.OnActivateHeadline(p)
+                self.endEditLabel()
+                self.OnPopup(p,event)
+            g.doHook("iconrclick2",c=c,p=p,v=p,event=event)
+        except:
+            g.es_event_exception("iconrclick")
+            
+        return "continue"
+    #@nonl
+    #@-node:ekr.20040803072955.89:onIconBoxRightClick
+    #@+node:ekr.20040803072955.82:onIconBoxDoubleClick
+    def onIconBoxDoubleClick (self,event):
+        
+        c = self.c
+    
+        p = self.eventToPosition(event)
+        if not p: return
+        
+        if self.trace and self.verbose: g.trace()
+        
+        try:
+            if not g.doHook("icondclick1",c=c,p=p,v=p,event=event):
+                self.OnIconDoubleClick(p) # Call the method in the base class.
+            g.doHook("icondclick2",c=c,p=p,v=p,event=event)
+        except:
+            g.es_event_exception("icondclick")
+    #@nonl
+    #@-node:ekr.20040803072955.82:onIconBoxDoubleClick
+    #@-node:ekr.20040803072955.80:Icon Box...
     #@+node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
     def OnActivateHeadline (self,p,event=None):
         
@@ -2188,30 +2110,84 @@ class leoTkinterTree (leoFrame.leoTree):
             g.es_event_exception("activate tree")
     #@nonl
     #@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
-    #@+node:ekr.20040803072955.107:Unchanged Event handers
-    #@+at 
+    #@+node:ekr.20051022141020:onTreeClick
+    def onTreeClick (self,event=None):
+        
+        self.frame.treeWantsFocus()
+        
+        return 'break'
+    #@-node:ekr.20051022141020:onTreeClick
+    #@+node:ekr.20040803072955.84:Text Box...
+    #@+node:ekr.20040803072955.85:configureTextState
+    def configureTextState (self,p):
+        
+        if not p: return
+        
+        if p.isCurrentPosition():
+            if p == self.editPosition():
+                self.setNormalLabelState(p)
+            else:
+                self.setDisabledLabelState(p) # selected, disabled
+        else:
+            self.setUnselectedLabelState(p) # unselected
     #@nonl
-    # Important note: most hooks are created in the vnode callback routines, 
-    # _not_ here.
-    #@-at
-    #@+node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
-    def OnDeactivate (self,event=None):
-        
-        """Deactivate the tree pane, dimming any headline being edited."""
-        
-        __pychecker__ = '--no-argsused' # event not used.
+    #@-node:ekr.20040803072955.85:configureTextState
+    #@+node:ekr.20040803072955.86:onCtontrolT
+    # This works around an apparent Tk bug.
     
-        tree = self ; c = self.c
-        focus = g.app.gui.get_focus(c.frame)
+    def onControlT (self,event=None):
     
-        # Doing this on every click would interfere with the double-clicking.
-        if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
-            try:
-                tree.endEditLabel()
-                tree.dimEditLabel()
-            except:
-                g.es_event_exception("deactivate tree")
-    #@-node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+        # If we don't inhibit further processing the Tx.Text widget switches characters!
+        return "break"
+    #@nonl
+    #@-node:ekr.20040803072955.86:onCtontrolT
+    #@+node:ekr.20040803072955.87:onHeadlineClick
+    def onHeadlineClick (self,event):
+        
+        c = self.c ; w = event.widget
+        
+        try:
+            p = w.leo_position
+        except AttributeError:
+            return "continue"
+            
+        # g.trace(p.headString())
+        
+        try:
+            if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
+                self.OnActivateHeadline(p)
+            g.doHook("headclick2",c=c,p=p,v=p,event=event)
+        except:
+            g.es_event_exception("headclick")
+            
+        return "continue"
+    #@nonl
+    #@-node:ekr.20040803072955.87:onHeadlineClick
+    #@+node:ekr.20040803072955.83:onHeadlineRightClick
+    def onHeadlineRightClick (self,event):
+    
+        """Handle a right click in any outline widget."""
+    
+        c = self.c ; w = event.widget
+        
+        try:
+            p = w.leo_position
+        except AttributeError:
+            return "continue"
+    
+        try:
+            if not g.doHook("headrclick1",c=c,p=p,v=p,event=event):
+                self.OnActivateHeadline(p)
+                self.endEditLabel()
+                self.OnPopup(p,event)
+            g.doHook("headrclick2",c=c,p=p,v=p,event=event)
+        except:
+            g.es_event_exception("headrclick")
+            
+        return "continue"
+    #@nonl
+    #@-node:ekr.20040803072955.83:onHeadlineRightClick
+    #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.109:tree.findVnodeWithIconId
     def findPositionWithIconId (self,theId):
         
@@ -2237,6 +2213,64 @@ class leoTkinterTree (leoFrame.leoTree):
             
         
     #@-node:ekr.20040803072955.109:tree.findVnodeWithIconId
+    #@+node:ekr.20040803072955.117:tree.moveUpDown
+    def OnUpKey   (self,event=None):
+        __pychecker__ = '--no-argsused' # event not used.
+        return self.moveUpDown("up")
+    def OnDownKey (self,event=None):
+        __pychecker__ = '--no-argsused' # event not used.
+        return self.moveUpDown("down")
+    
+    def moveUpDown (self,upOrDown):
+        c = self.c ; body = c.frame.bodyCtrl
+        # Make the insertion cursor visible so bbox won't return an empty list.
+        body.see("insert")
+        # Find the coordinates of the cursor and set the new height.
+        # There may be roundoff errors because character postions may not match exactly.
+        ins =  body.index("insert")
+        lines,char = g.scanf(ins,"%d.%d")
+        x,y,junk,textH = body.bbox("insert")
+        bodyW,bodyH = body.winfo_width(),body.winfo_height()
+        junk,maxy,junk,junk = body.bbox("@%d,%d" % (bodyW,bodyH))
+        # Make sure y is within text boundaries.
+        if upOrDown == "up":
+            if y <= textH:
+                body.yview("scroll",-1,"units")
+            else: y = max(y-textH,0)
+        else:
+            if y >= maxy:
+                body.yview("scroll",1,"units")
+            else: y = min(y+textH,maxy)
+        # Position the cursor on the proper side of the characters.
+        newx,newy,width,junk = body.bbox("@%d,%d" % (x,y))
+        if x > newx + width/2:
+            x = newx + width + 1
+        result = body.index("@%d,%d" % (x,y))
+        body.mark_set("insert",result)
+        # g.trace("entry:  %s.%s" % (lines,char))
+        # g.trace("result:",result)
+        # g.trace("insert:",body.index("insert"))
+        return "break" # Inhibit further bindings.
+    #@nonl
+    #@-node:ekr.20040803072955.117:tree.moveUpDown
+    #@+node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+    def OnDeactivate (self,event=None):
+        
+        """Deactivate the tree pane, dimming any headline being edited."""
+        
+        __pychecker__ = '--no-argsused' # event not used.
+    
+        tree = self ; c = self.c
+        focus = g.app.gui.get_focus(c.frame)
+    
+        # Doing this on every click would interfere with the double-clicking.
+        if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
+            try:
+                tree.endEditLabel()
+                tree.dimEditLabel()
+            except:
+                g.es_event_exception("deactivate tree")
+    #@-node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
     #@+node:ekr.20040803072955.110:tree.OnPopup & allies
     def OnPopup (self,p,event):
         
@@ -2296,7 +2330,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         # Add the Open With entries if they exist.
         if g.app.openWithTable:
-            frame.menu.createOpenWithMenuEntries(menu,g.app.openWithTable)
+            frame.menu.createOpenWithMenuItemsFromTable(menu,g.app.openWithTable)
             table = (("-",None,None),)
             frame.menu.createMenuEntries(menu,table)
             
@@ -2399,47 +2433,6 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.116:showPopupMenu
     #@-node:ekr.20040803072955.110:tree.OnPopup & allies
-    #@+node:ekr.20040803072955.117:tree.moveUpDown
-    def OnUpKey   (self,event=None):
-        __pychecker__ = '--no-argsused' # event not used.
-        return self.moveUpDown("up")
-    def OnDownKey (self,event=None):
-        __pychecker__ = '--no-argsused' # event not used.
-        return self.moveUpDown("down")
-    
-    def moveUpDown (self,upOrDown):
-        c = self.c ; body = c.frame.bodyCtrl
-        # Make the insertion cursor visible so bbox won't return an empty list.
-        body.see("insert")
-        # Find the coordinates of the cursor and set the new height.
-        # There may be roundoff errors because character postions may not match exactly.
-        ins =  body.index("insert")
-        lines,char = g.scanf(ins,"%d.%d")
-        x,y,junk,textH = body.bbox("insert")
-        bodyW,bodyH = body.winfo_width(),body.winfo_height()
-        junk,maxy,junk,junk = body.bbox("@%d,%d" % (bodyW,bodyH))
-        # Make sure y is within text boundaries.
-        if upOrDown == "up":
-            if y <= textH:
-                body.yview("scroll",-1,"units")
-            else: y = max(y-textH,0)
-        else:
-            if y >= maxy:
-                body.yview("scroll",1,"units")
-            else: y = min(y+textH,maxy)
-        # Position the cursor on the proper side of the characters.
-        newx,newy,width,junk = body.bbox("@%d,%d" % (x,y))
-        if x > newx + width/2:
-            x = newx + width + 1
-        result = body.index("@%d,%d" % (x,y))
-        body.mark_set("insert",result)
-        # g.trace("entry:  %s.%s" % (lines,char))
-        # g.trace("result:",result)
-        # g.trace("insert:",body.index("insert"))
-        return "break" # Inhibit further bindings.
-    #@nonl
-    #@-node:ekr.20040803072955.117:tree.moveUpDown
-    #@-node:ekr.20040803072955.107:Unchanged Event handers
     #@-node:ekr.20040803072955.71:Event handlers...
     #@+node:ekr.20040803072955.118:Incremental drawing...
     #@+node:ekr.20040803072955.119:allocateNodes
