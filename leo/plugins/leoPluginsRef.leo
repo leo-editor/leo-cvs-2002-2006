@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6175" clone_windows="0"/>
-<globals body_outline_ratio="0.59295929593">
-	<global_window_position top="92" left="379" height="833" width="859"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6178" clone_windows="0"/>
+<globals body_outline_ratio="0.434543454345">
+	<global_window_position top="18" left="236" height="909" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -35,12 +35,12 @@
 </v>
 <v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 <v t="ekr.20050724100334"><vh>@button Beautify</vh></v>
+<v t="ekr.20051025144116"><vh>@button Spell</vh></v>
 <v t="ekr.20050819055746"><vh>@button Save</vh></v>
 <v t="ekr.20050722075812"><vh>Remove blank trailing lines</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="ETV"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -156,10 +156,11 @@
 </v>
 </v>
 <v t="edream.110203113231.729"><vh>Debugging &amp;  testing</vh>
-<v t="ekr.20050130120433"><vh>@thin failed_import.py</vh></v>
 <v t="edream.110203113231.730"><vh>@thin dump_globals.py</vh></v>
 <v t="edream.110203113231.732"><vh>@thin enable_gc.py</vh></v>
+<v t="ekr.20050130120433"><vh>@thin failed_import.py</vh></v>
 <v t="edream.110203113231.734"><vh>@thin quit_leo.py</vh></v>
+<v t="ekr.20051016160700"><vh>@thin testRegisterCommand.py</vh></v>
 <v t="edream.110203113231.735"><vh>@thin trace_gc.py</vh></v>
 <v t="edream.110203113231.736"><vh>@thin trace_keys.py</vh></v>
 <v t="edream.110203113231.738"><vh>@thin trace_tags.py</vh></v>
@@ -333,11 +334,34 @@
 <v t="ekr.20050329082101.115"><vh>@thin autotrees.py</vh></v>
 <v t="ekr.20050329082101.145"><vh>@--thin trees\pluginsManager.txt</vh></v>
 <v t="ekr.20050329082101.146"><vh>Example tree handlers</vh>
-<v t="ekr.20050329082101.147"><vh>@thin trees\test.py</vh></v>
-<v t="ekr.20050329082101.150"><vh>@thin trees\rss.py</vh></v>
-<v t="ekr.20050329082101.153"><vh>@thin trees\news.py</vh></v>
-<v t="ekr.20050329082101.162"><vh>@thin trees\remote.py</vh></v>
-<v t="ekr.20050329082101.165"><vh>@thin trees\doc.py</vh></v>
+<v t="ekr.20050329082101.147"><vh>@--thin trees\test.py</vh>
+<v t="ekr.20050329082101.148"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.149"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050329082101.150"><vh>@--thin trees\rss.py</vh>
+<v t="ekr.20050329082101.151"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.152"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050329082101.153"><vh>@--thin trees\news.py</vh>
+<v t="ekr.20050329082101.154"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.155"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.156"><vh>Error Classes</vh></v>
+<v t="ekr.20050329082101.157"><vh>getConnection</vh></v>
+<v t="ekr.20050329082101.158"><vh>class News</vh>
+<v t="ekr.20050329082101.159"><vh>initFrom</vh></v>
+</v>
+<v t="ekr.20050329082101.160"><vh>class NewsItem</vh>
+<v t="ekr.20050329082101.161"><vh>initFrom</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.162"><vh>@--thin trees\remote.py</vh>
+<v t="ekr.20050329082101.163"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.164"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050329082101.165"><vh>@--thin trees\doc.py</vh>
+<v t="ekr.20050329082101.166"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.167"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -351,7 +375,8 @@
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
 <v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
-<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
+<v t="ekr.20041017043622"
+marks="ekr.20041017043622.23,"><vh>@thin autocompleter.py</vh></v>
 </v>
 <v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
 <v t="edream.110403140857.1"><vh>Plugin documentation</vh>
@@ -370,8 +395,7 @@
 </v>
 <v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
 <v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
-<v t="pap.20051010170720"
-expanded="pap.20051011154233,pap.20051010195044,pap.20051011153949.1,pap.20051010173800.1,"><vh>@thin newButtons.py</vh></v>
+<v t="pap.20051010170720"><vh>@thin newButtons.py</vh></v>
 <v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
 <v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
 <v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
@@ -435,10 +459,9 @@ expanded="pap.20051011154233,pap.20051010195044,pap.20051011153949.1,pap.2005101
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
-<v t="ekr.20040915073637"><vh>@thin TabbedLog.py</vh></v>
-<v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
+<v t="ekr.20040915075530" a="M"><vh>@thin UASearch.py</vh></v>
 <v t="ekr.20040831122004"><vh>@thin UniversalScrolling.py</vh></v>
-<v t="ekr.20040831115238"><vh>@thin URLloader.py</vh></v>
+<v t="ekr.20040831115238" a="M"><vh>@thin URLloader.py</vh></v>
 </v>
 <v t="ekr.20040722141148"><vh>Example code</vh>
 <v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
@@ -814,19 +837,428 @@ marks="ekr.20050915090544.4,ekr.20050915084416.10,ekr.20050915084416.14,"><vh>@t
 <v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
 <v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
-<v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
-<v t="ekr.20050527081321"><vh>EKR Notes</vh>
-<v t="ekr.20050710094310.2"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (must do all these)</vh></v>
-<v t="ekr.20050514095136"><vh>ekr usetemacs.ini (doesn't solve the problem I was trying to solve)</vh></v>
-<v t="ekr.20050514095136.1"><vh>Key references</vh></v>
-</v>
-<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
-<v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
-<v t="ekr.20050518085205"><vh>@thin usetemacs.ini</vh></v>
-</v>
 <v t="EKR.20040517075715.13"><vh>Word export</vh>
 <v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
 <v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
+</v>
+<v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
+<v t="mork.20041013092542.1"><vh>usetemacs.py</vh>
+<v t="ekr.20050513171201"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20041106100326"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="mork.20041013092542.2"><vh>&lt;&lt; globals &gt;&gt;</vh></v>
+<v t="mork.20041101132349"><vh>&lt;&lt;version history&gt;&gt;</vh></v>
+<v t="ekr.20041106100326.1"><vh>&lt;&lt; documentation &gt;&gt;</vh>
+<v t="mork.20041104100514"><vh>future directions</vh></v>
+<v t="mork.20041101204659"><vh>adding Emacs extensions via usetemacs</vh></v>
+<v t="mork.20041104100856"><vh>where to put your temacs-Emacs Python extensions</vh></v>
+<v t="mork.20041102102111"><vh>change Emacs keystrokes via configuration</vh></v>
+<v t="mork.20041102094131"><vh>usetemacs design</vh></v>
+<v t="mork.20041102094341"><vh>a note on loading temacs</vh></v>
+</v>
+<v t="ekr.20050311155753"><vh>init</vh>
+<v t="ekr.20041106100326.2"><vh>&lt;&lt; override createBindings and onBodyKey &gt;&gt;</vh></v>
+</v>
+<v t="mork.20041013092542.3"><vh>utTailEnd</vh></v>
+<v t="mork.20041013092542.6"><vh>seeHelp</vh></v>
+<v t="mork.20041013092542.5"><vh>addMenu</vh></v>
+<v t="mork.20041101124927"><vh>modifyOnBodyKey</vh></v>
+<v t="mork.20041101205414"><vh>watchDelete</vh></v>
+<v t="mork.20041102094928"><vh>changeKeyStrokes</vh></v>
+<v t="mork.20041101210722"><vh>addTemacsAbbreviations</vh></v>
+<v t="mork.20041101191351"><vh>loadConfig</vh></v>
+<v t="mork.20041101202945"><vh>addTemacsExtensions</vh></v>
+<v t="mork.20041103160433"><vh>setBufferGetters and Setters</vh></v>
+<v t="mork.20041213112640"><vh>gotoPosition</vh></v>
+<v t="mork.20041104145603"><vh>initialise</vh></v>
+<v t="mork.20041204141826"><vh>addLeoCommands</vh></v>
+<v t="mork.20041102091309"><vh>&lt;&lt;exampleTemacsExtension.py&gt;&gt;</vh></v>
+<v t="mork.20041102092057"><vh>&lt;&lt;usetemacs.ini example&gt;&gt;</vh></v>
+</v>
+<v t="mork.20041030164547"><vh>temacs.py</vh>
+<v t="mork.20041101100635"><vh>&lt;&lt;version history&gt;&gt;</vh></v>
+<v t="ekr.20041106101311"><vh>&lt;&lt; documentation &gt;&gt;</vh>
+<v t="mork.20041101203748"><vh>How to write an Emacs extension</vh></v>
+<v t="mork.20041102081834"><vh>Coding convenions</vh></v>
+<v t="mork.20041102082911"><vh>Known bugs</vh></v>
+<v t="mork.20041102103822"><vh>Future directions</vh></v>
+<v t="mork.20041104095745"><vh>A Note on Alt-X</vh></v>
+<v t="mork.20041122151944"><vh>A Note on the volume of methods</vh></v>
+<v t="mork.20041126091717"><vh>plans for .7</vh></v>
+<v t="mork.20041123150836"><vh>the master command is the center of an Emacs instance</vh></v>
+<v t="mork.20041122152311"><vh>adding stateful commands to temacs</vh></v>
+<v t="mork.20041123150144"><vh>how to mix python regular expressions and the Text widget</vh></v>
+</v>
+<v t="mork.20041030164547.1"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="mork.20041104102456"><vh>Emacs helper classes</vh>
+<v t="mork.20041031131847"><vh>class ControlXHandler</vh>
+<v t="mork.20041031162953"><vh>__init__</vh></v>
+<v t="mork.20041031132342"><vh>__call__</vh></v>
+<v t="mork.20041031133146"><vh>processKey</vh></v>
+<v t="mork.20041031134709"><vh>processRectangle</vh></v>
+<v t="mork.20041031135748"><vh>processAbbreviation</vh></v>
+</v>
+<v t="mork.20041031145157"><vh>class MC_StateManager</vh>
+<v t="mork.20041031162857"><vh>__init__</vh>
+<v t="mork.20041031150125"><vh>&lt;&lt;statecommands&gt;&gt;</vh></v>
+</v>
+<v t="mork.20041031162857.1"><vh>setState</vh></v>
+<v t="mork.20041031162857.2"><vh>getState</vh></v>
+<v t="mork.20041031162857.3"><vh>hasState</vh></v>
+<v t="mork.20041124094511"><vh>whichState</vh></v>
+<v t="mork.20041031162857.4"><vh>__call__</vh></v>
+<v t="mork.20041031162857.5"><vh>clear</vh></v>
+</v>
+<v t="mork.20041101083527"><vh>class MC_KeyStrokeManager  (hard-coded keystrokes)</vh>
+<v t="mork.20041101083527.1"><vh>__init__</vh>
+<v t="mork.20041101083527.2"><vh>&lt;&lt;keystrokes&gt;&gt; (hard-coded keystrokes)</vh></v>
+</v>
+<v t="mork.20041101084148"><vh>hasKeyStroke</vh></v>
+<v t="mork.20041101084148.1"><vh>__call__</vh></v>
+</v>
+<v t="mork.20041102131352"><vh>class Tracker</vh>
+<v t="mork.20041102131352.1"><vh>init</vh></v>
+<v t="mork.20041102131352.2"><vh>setTabList</vh></v>
+<v t="mork.20041102131352.3"><vh>_next</vh></v>
+<v t="mork.20041102132710"><vh>next</vh></v>
+<v t="mork.20041102160313"><vh>clear</vh></v>
+</v>
+</v>
+<v t="mork.20041030165020"><vh>class Emacs</vh>
+<v t="mork.20041030165020.1"><vh>Emacs.__init__</vh></v>
+<v t="mork.20041030164547.41"><vh>getHelpText</vh></v>
+<v t="mork.20041030164547.43"><vh>masterCommand</vh>
+<v t="ekr.20050527112828"><vh>&lt;&lt; old insert code &gt;&gt;</vh></v>
+<v t="ekr.20050527084754"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+<v t="ekr.20050527084754.1"><vh>&lt;&lt; old code 2 &gt;&gt;</vh></v>
+</v>
+<v t="mork.20041102082023"><vh>keyboardQuit</vh></v>
+<v t="mork.20041031182258"><vh>add command dictionary methods</vh>
+<v t="mork.20041030183331"><vh>addCallBackDict (creates cbDict)</vh></v>
+<v t="mork.20041030183633"><vh>addXCommands</vh></v>
+<v t="mork.20041030190903"><vh>addAltXCommands</vh></v>
+<v t="mork.20041030190729"><vh>addRegisterItems</vh></v>
+</v>
+<v t="mork.20041031183614"><vh>general utility methods</vh>
+<v t="mork.20041031195549"><vh>buffer altering methods</vh>
+<v t="mork.20041030164547.31"><vh>moveTo</vh></v>
+<v t="mork.20041030164547.33"><vh>moveword</vh></v>
+<v t="mork.20041030164547.39"><vh>capitalize</vh></v>
+<v t="mork.20041030164547.40"><vh>swapWords</vh></v>
+<v t="mork.20041030164547.103"><vh>insertParentheses</vh></v>
+<v t="mork.20041123095436"><vh>replace-string and replace-regex</vh>
+<v t="mork.20041030164547.115"><vh>replaceString</vh></v>
+<v t="mork.20041123095123"><vh>activateReplaceRegex</vh></v>
+</v>
+<v t="mork.20041030164547.116"><vh>swapCharacters</vh></v>
+<v t="mork.20041123095507"><vh>insert new line methods</vh>
+<v t="mork.20041030164547.117"><vh>insertNewLine</vh></v>
+<v t="mork.20041030164547.131"><vh>insertNewLineIndent</vh></v>
+<v t="mork.20041103135515"><vh>insertNewLineAndTab</vh></v>
+</v>
+<v t="mork.20041030164547.148"><vh>transposeLines</vh></v>
+<v t="mork.20041030164547.130"><vh>changePreviousWord</vh></v>
+<v t="mork.20041030164547.150"><vh>removeBlankLines</vh></v>
+<v t="mork.20041030164547.101"><vh>screenscroll</vh></v>
+<v t="mork.20041030164547.22"><vh>exchangePointMark</vh></v>
+<v t="mork.20041030164547.96"><vh>backToIndentation</vh></v>
+<v t="mork.20041124130434"><vh>indent-relative</vh></v>
+<v t="mork.20041030164547.129"><vh>negativeArgument</vh></v>
+<v t="mork.20041030164547.114"><vh>movePastClose</vh></v>
+<v t="mork.20041030164547.119"><vh>prevNexSentence</vh></v>
+<v t="mork.20041031202438"><vh>selectAll</vh></v>
+<v t="mork.20041120195951"><vh>suspend</vh></v>
+</v>
+<v t="mork.20041031195908"><vh>informational methods</vh>
+<v t="mork.20041030164547.118"><vh>lineNumber</vh></v>
+<v t="mork.20041102161859"><vh>viewLossage</vh></v>
+<v t="mork.20041121195816"><vh>whatLine</vh></v>
+</v>
+<v t="mork.20041031195908.1"><vh>pure utility methods</vh>
+<v t="mork.20041102151939"><vh>setEvent</vh></v>
+<v t="mork.20041030164547.127"><vh>getWSString</vh></v>
+<v t="mork.20041030164547.135"><vh>findPre</vh></v>
+<v t="mork.20041030164547.100"><vh>measure</vh></v>
+<v t="mork.20041030164547.95"><vh>manufactureKeyPress</vh></v>
+<v t="mork.20041030164547.83"><vh>changecbDict</vh></v>
+<v t="mork.20041030164547.92"><vh>removeRKeys</vh></v>
+<v t="mork.20041030164547.142"><vh>_findMatch2</vh></v>
+<v t="mork.20041102133805"><vh>_findMatch</vh></v>
+</v>
+</v>
+<v t="mork.20041120223251"><vh>shutdown methods</vh>
+<v t="mork.20041120222336"><vh>shutdown</vh></v>
+<v t="mork.20041120223251.1"><vh>setShutdownHook</vh></v>
+</v>
+<v t="mork.20041031182215"><vh>Label( minibuffer ) and svar methods</vh>
+<v t="mork.20041102183901"><vh>label( minibuffer ) methods</vh>
+<v t="mork.20041030164547.2"><vh>setLabelGrey</vh></v>
+<v t="mork.20041030164547.3"><vh>setLabelBlue</vh></v>
+<v t="mork.20041030164547.86"><vh>resetMiniBuffer</vh></v>
+</v>
+<v t="mork.20041031182943"><vh>svar methods</vh>
+<v t="mork.20041030164547.112"><vh>getSvarLabel</vh></v>
+<v t="mork.20041030164547.113"><vh>setSvar</vh></v>
+</v>
+</v>
+<v t="mork.20041031194746"><vh>configurable methods</vh>
+<v t="mork.20041031182643"><vh>tailEnd methods</vh>
+<v t="mork.20041030164547.4"><vh>_tailEnd</vh></v>
+<v t="mork.20041030164547.5"><vh>setTailEnd</vh></v>
+</v>
+<v t="mork.20041031182643.1"><vh>undoer methods</vh>
+<v t="mork.20041030164547.6"><vh>setUndoer</vh></v>
+<v t="mork.20041030164547.7"><vh>doUndo</vh></v>
+</v>
+<v t="mork.20041030164547.30"><vh>setBufferStrokes</vh></v>
+<v t="mork.20041101190309"><vh>extendAltX</vh></v>
+<v t="mork.20041102094716"><vh>reconfigureKeyStroke</vh></v>
+<v t="mork.20041103155347"><vh>buffer recognition and alterers</vh>
+<v t="mork.20041104094826"><vh>configure buffer methods</vh>
+<v t="mork.20041103155347.1"><vh>setBufferGetter</vh></v>
+<v t="mork.20041103155347.2"><vh>setBufferSetter</vh></v>
+<v t="mork.20041103155347.3"><vh>getBufferDict</vh></v>
+<v t="mork.20041103162147"><vh>setBufferData</vh></v>
+<v t="mork.20041103191311"><vh>setBufferGoto</vh></v>
+<v t="mork.20041104090224"><vh>setBufferDelete</vh></v>
+<v t="mork.20041104092349"><vh>setBufferRename</vh></v>
+</v>
+<v t="mork.20041104094826.1"><vh>buffer operations</vh>
+<v t="mork.20041103155347.4"><vh>appendToBuffer</vh></v>
+<v t="mork.20041103155347.5"><vh>prependToBuffer</vh></v>
+<v t="mork.20041103155347.6"><vh>insertToBuffer</vh></v>
+<v t="mork.20041103190332"><vh>listBuffers</vh></v>
+<v t="mork.20041103155347.7"><vh>copyToBuffer</vh></v>
+<v t="mork.20041103191311.1"><vh>switchToBuffer</vh></v>
+<v t="mork.20041104090224.1"><vh>killBuffer</vh></v>
+<v t="mork.20041104092058"><vh>renameBuffer</vh></v>
+<v t="mork.20041103161202"><vh>chooseBuffer</vh></v>
+<v t="mork.20041103161202.1"><vh>setInBufferMode</vh></v>
+</v>
+</v>
+</v>
+<v t="mork.20041031155753"><vh>macro methods</vh>
+<v t="mork.20041030164547.8"><vh>startKBDMacro</vh></v>
+<v t="mork.20041030164547.9"><vh>recordKBDMacro</vh></v>
+<v t="mork.20041030164547.10"><vh>stopKBDMacro</vh></v>
+<v t="mork.20041030164547.11"><vh>_executeMacro</vh></v>
+<v t="mork.20041030164547.12"><vh>executeLastMacro</vh></v>
+<v t="mork.20041030164547.13"><vh>nameLastMacro</vh></v>
+<v t="mork.20041030164547.14"><vh>_addToDoAltX</vh></v>
+<v t="mork.20041030164547.15"><vh>loadMacros</vh></v>
+<v t="mork.20041030164547.16"><vh>_loadMacros</vh></v>
+<v t="mork.20041030164547.17"><vh>getMacroName</vh></v>
+<v t="mork.20041030164547.18"><vh>saveMacros</vh></v>
+<v t="mork.20041030164547.19"><vh>_saveMacros</vh></v>
+</v>
+<v t="mork.20041031194703"><vh>comment column methods</vh>
+<v t="mork.20041030164547.20"><vh>setCommentColumn</vh></v>
+<v t="mork.20041030164547.21"><vh>indentToCommentColumn</vh></v>
+</v>
+<v t="mork.20041031182709"><vh>how many methods</vh>
+<v t="mork.20041030164547.23"><vh>howMany</vh></v>
+<v t="mork.20041030164547.24"><vh>startHowMany</vh></v>
+</v>
+<v t="mork.20041031155913"><vh>paragraph methods</vh>
+<v t="mork.20041030164547.25"><vh>selectParagraph</vh></v>
+<v t="mork.20041030164547.26"><vh>_selectParagraph</vh></v>
+<v t="mork.20041030164547.27"><vh>killParagraph</vh></v>
+<v t="mork.20041030164547.28"><vh>backwardKillParagraph</vh></v>
+</v>
+<v t="mork.20041031181929"><vh>kill methods</vh>
+<v t="mork.20041030164547.34"><vh>kill</vh></v>
+<v t="mork.20041030164547.36"><vh>walkKB</vh></v>
+<v t="mork.20041030164547.35"><vh>deletelastWord</vh></v>
+<v t="mork.20041030164547.37"><vh>killsentence</vh></v>
+<v t="mork.20041030164547.91"><vh>killRegion</vh></v>
+<v t="mork.20041030164547.42"><vh>addToKillBuffer</vh></v>
+<v t="mork.20041030164547.29"><vh>iterateKillBuffer</vh></v>
+<v t="mork.20041103120919"><vh>getClipboard</vh></v>
+</v>
+<v t="mork.20041031155642"><vh>register methods</vh>
+<v t="mork.20041030164547.44"><vh>copyToRegister</vh></v>
+<v t="mork.20041030164547.45"><vh>copyRectangleToRegister</vh></v>
+<v t="mork.20041030164547.46"><vh>prependToRegister</vh></v>
+<v t="mork.20041030164547.47"><vh>appendToRegister</vh></v>
+<v t="mork.20041030164547.49"><vh>_ToReg</vh></v>
+<v t="mork.20041030164547.48"><vh>_chckSel</vh></v>
+<v t="mork.20041030164547.50"><vh>_checkIfRectangle</vh></v>
+<v t="mork.20041030164547.51"><vh>insertFromRegister</vh></v>
+<v t="mork.20041030164547.52"><vh>incrementRegister</vh></v>
+<v t="mork.20041030164547.53"><vh>numberToRegister</vh></v>
+<v t="mork.20041030164547.54"><vh>pointToRegister</vh></v>
+<v t="mork.20041030164547.55"><vh>jumpToRegister</vh></v>
+<v t="mork.20041030164547.56"><vh>invalidRegister</vh></v>
+<v t="mork.20041030164547.57"><vh>setNextRegister</vh></v>
+<v t="mork.20041030164547.58"><vh>executeRegister</vh></v>
+<v t="mork.20041030164547.59"><vh>deactivateRegister</vh></v>
+<v t="mork.20041102151545"><vh>viewRegister</vh></v>
+</v>
+<v t="mork.20041031181701"><vh>abbreviation methods</vh>
+<v t="mork.20041030164547.60"><vh>abbreviationDispatch</vh></v>
+<v t="mork.20041030164547.61"><vh>abbrevCommand1</vh></v>
+<v t="mork.20041030164547.62"><vh>expandAbbrev</vh></v>
+<v t="mork.20041030164547.63"><vh>regionalExpandAbbrev</vh>
+<v t="ekr.20050527111832"><vh>&lt;&lt; define a new generator searchXR &gt;&gt;</vh></v>
+</v>
+<v t="mork.20041030164547.64"><vh>_setRAvars</vh></v>
+<v t="mork.20041030164547.65"><vh>killAllAbbrevs</vh></v>
+<v t="mork.20041030164547.66"><vh>toggleAbbrevMode</vh></v>
+<v t="mork.20041030164547.67"><vh>listAbbrevs</vh></v>
+<v t="mork.20041030164547.68"><vh>readAbbreviations</vh></v>
+<v t="mork.20041030164547.69"><vh>_readAbbrevs</vh></v>
+<v t="mork.20041030164547.70"><vh>writeAbbreviations</vh></v>
+<v t="mork.20041030164547.71"><vh>_writeAbbrevs</vh></v>
+</v>
+<v t="mork.20041031182137"><vh>paragraph methods</vh>
+<v t="mork.20041030164547.72"><vh>movingParagraphs</vh></v>
+<v t="mork.20041030164547.74"><vh>fillParagraph</vh></v>
+<v t="mork.20041030164547.76"><vh>fillRegionAsParagraph</vh></v>
+</v>
+<v t="mork.20041031182916"><vh>fill prefix methods</vh>
+<v t="mork.20041030164547.73"><vh>setFillPrefix</vh></v>
+<v t="mork.20041030164547.75"><vh>_addPrefix</vh></v>
+</v>
+<v t="mork.20041103085329"><vh>fill column and centering</vh>
+<v t="mork.20041103085329.1"><vh>centerLine</vh></v>
+<v t="mork.20041103095628"><vh>centerRegion</vh></v>
+<v t="mork.20041103085329.2"><vh>setFillColumn</vh></v>
+</v>
+<v t="mork.20041031183136"><vh>region methods</vh>
+<v t="mork.20041030164547.77"><vh>fillRegion</vh></v>
+<v t="mork.20041030164547.87"><vh>setRegion</vh></v>
+<v t="mork.20041030164547.93"><vh>indentRegion</vh></v>
+<v t="mork.20041030164547.94"><vh>tabIndentRegion</vh></v>
+<v t="mork.20041030164547.102"><vh>countRegion</vh></v>
+<v t="mork.20041030164547.138"><vh>reverseRegion</vh></v>
+<v t="mork.20041030164547.149"><vh>upperLowerRegion</vh></v>
+</v>
+<v t="mork.20041122190403"><vh>searching</vh>
+<v t="mork.20041031182837"><vh>incremental search methods</vh>
+<v t="mork.20041030164547.79"><vh>startIncremental</vh></v>
+<v t="mork.20041030164547.38"><vh>search</vh></v>
+<v t="mork.20041030164547.80"><vh>iSearch</vh></v>
+<v t="mork.20041030164547.153"><vh>scolorizer</vh></v>
+<v t="mork.20041121125455"><vh>useRegex</vh></v>
+</v>
+<v t="mork.20041122154604"><vh>non-incremental search methods</vh>
+<v t="mork.20041122154604.1"><vh>nonincrSearch</vh></v>
+<v t="mork.20041122155708"><vh>startNonIncrSearch</vh></v>
+</v>
+<v t="mork.20041122171601"><vh>word search methods</vh>
+<v t="mork.20041122171601.1"><vh>startWordSearch</vh></v>
+<v t="mork.20041122171601.2"><vh>wordSearch</vh></v>
+</v>
+<v t="mork.20041121103034"><vh>re-search methods</vh>
+<v t="mork.20041121103034.1"><vh>reStart</vh></v>
+<v t="mork.20041121103034.2"><vh>re_search</vh></v>
+</v>
+</v>
+<v t="mork.20041121140620"><vh>diff methods</vh>
+<v t="mork.20041121140620.1"><vh>diff</vh></v>
+</v>
+<v t="mork.20041031182332"><vh>Zap methods</vh>
+<v t="mork.20041030164547.81"><vh>startZap</vh></v>
+<v t="mork.20041030164547.82"><vh>zapTo</vh></v>
+</v>
+<v t="mork.20041031181740"><vh>ControlX methods</vh>
+<v t="mork.20041030164547.84"><vh>startControlX</vh></v>
+<v t="mork.20041030164547.85"><vh>stopControlX</vh></v>
+<v t="mork.20041030164547.78"><vh>doControlX</vh></v>
+</v>
+<v t="mork.20041031183614.1"><vh>range methods</vh>
+<v t="mork.20041030164547.88"><vh>inRange</vh></v>
+<v t="mork.20041030164547.89"><vh>contRanges</vh></v>
+<v t="mork.20041030164547.90"><vh>testinrange</vh></v>
+</v>
+<v t="mork.20041031182402"><vh>delete methods</vh>
+<v t="mork.20041030164547.97"><vh>deleteIndentation</vh></v>
+<v t="mork.20041030164547.98"><vh>deleteNextChar</vh></v>
+<v t="mork.20041030164547.99"><vh>deleteSpaces</vh></v>
+</v>
+<v t="mork.20041031181701.1"><vh>query replace methods</vh>
+<v t="mork.20041030164547.107"><vh>qreplace</vh></v>
+<v t="mork.20041030164547.108"><vh>_qreplace</vh></v>
+<v t="mork.20041030164547.109"><vh>getQuery</vh></v>
+<v t="mork.20041030164547.110"><vh>getReplace</vh></v>
+<v t="mork.20041030164547.111"><vh>masterQR</vh></v>
+<v t="mork.20041123113640"><vh>startRegexReplace</vh></v>
+<v t="mork.20041031194858"><vh>query search methods</vh>
+<v t="mork.20041030164547.104"><vh>listenQR</vh></v>
+<v t="mork.20041030164547.105"><vh>qsearch</vh></v>
+<v t="mork.20041030164547.106"><vh>quitQSearch</vh></v>
+</v>
+</v>
+<v t="mork.20041031155313"><vh>Rectangles methods</vh>
+<v t="mork.20041031202908"><vh>activateRectangleMethods</vh></v>
+<v t="mork.20041030164547.120"><vh>openRectangle</vh></v>
+<v t="mork.20041030164547.121"><vh>clearRectangle</vh></v>
+<v t="mork.20041030164547.122"><vh>deleteRectangle</vh></v>
+<v t="mork.20041030164547.123"><vh>stringRectangle</vh></v>
+<v t="mork.20041030164547.124"><vh>killRectangle</vh></v>
+<v t="mork.20041030164547.125"><vh>closeRectangle</vh></v>
+<v t="mork.20041030164547.126"><vh>yankRectangle</vh></v>
+<v t="mork.20041030164547.128"><vh>getRectanglePoints</vh></v>
+</v>
+<v t="mork.20041031181701.2"><vh>dynamic abbreviations methods</vh>
+<v t="mork.20041030164547.132"><vh>dynamicExpansion</vh></v>
+<v t="mork.20041030164547.133"><vh>dynamicExpansion2</vh></v>
+<v t="mork.20041030164547.134"><vh>getDynamicList</vh></v>
+</v>
+<v t="mork.20041031183018"><vh>sort methods</vh>
+<v t="mork.20041030164547.136"><vh>sortLines</vh></v>
+<v t="mork.20041030164547.137"><vh>sortColumns</vh></v>
+<v t="mork.20041030164547.139"><vh>sortFields</vh></v>
+</v>
+<v t="mork.20041031181929.1"><vh>Alt_X methods</vh>
+<v t="mork.20041030164547.140"><vh>alt_X</vh></v>
+<v t="mork.20041030164547.141"><vh>doAlt_X</vh></v>
+<v t="mork.20041123093234"><vh>execute last altx methods</vh>
+<v t="mork.20041122223754"><vh>executeLastAltX</vh></v>
+<v t="mork.20041122225107"><vh>repeatComplexCommand</vh></v>
+</v>
+</v>
+<v t="mork.20041031155455"><vh>universal methods</vh>
+<v t="mork.20041030164547.143"><vh>universalDispatch</vh></v>
+<v t="mork.20041030164547.144"><vh>universalCommand1</vh></v>
+<v t="mork.20041030164547.145"><vh>universalCommand2</vh></v>
+<v t="mork.20041030164547.146"><vh>universalCommand3</vh></v>
+<v t="mork.20041030164547.147"><vh>numberCommand</vh></v>
+</v>
+<v t="mork.20041121201041"><vh>line methods</vh>
+<v t="mork.20041121201041.1"><vh>alterLines</vh></v>
+<v t="mork.20041121210221"><vh>processLines</vh></v>
+<v t="mork.20041121201112"><vh>startLines</vh></v>
+</v>
+<v t="mork.20041031160002"><vh>goto methods</vh>
+<v t="mork.20041030164547.154"><vh>startGoto</vh></v>
+<v t="mork.20041030164547.155"><vh>Goto</vh></v>
+</v>
+<v t="mork.20041122110739"><vh>directory methods</vh>
+<v t="mork.20041122110739.1"><vh>makeDirectory</vh></v>
+<v t="mork.20041122111431"><vh>removeDirectory</vh></v>
+</v>
+<v t="mork.20041031182449"><vh>file methods</vh>
+<v t="mork.20041122112210"><vh>deleteFile</vh></v>
+<v t="mork.20041030164547.151"><vh>insertFile</vh></v>
+<v t="mork.20041030164547.152"><vh>saveFile</vh></v>
+<v t="mork.20041121140620.2"><vh>getReadableFile</vh></v>
+</v>
+<v t="mork.20041123192555"><vh>Esc methods for Python evaluation</vh>
+<v t="mork.20041123192555.1"><vh>watchEscape</vh></v>
+<v t="mork.20041124095452"><vh>escEvaluate</vh></v>
+<v t="mork.20041124102729"><vh>startEvaluate</vh></v>
+</v>
+<v t="mork.20041124123825"><vh>tabify/untabify</vh>
+<v t="mork.20041124123825.1"><vh>tabify</vh></v>
+</v>
+<v t="mork.20041208120232"><vh>shell and subprocess</vh>
+<v t="mork.20041208120232.1"><vh>def startSubprocess</vh></v>
+<v t="mork.20041208120232.2"><vh>subprocess</vh></v>
+<v t="mork.20041208121502"><vh>executeSubprocess</vh></v>
+</v>
+</v>
+<v t="ekr.20041106100834"><vh>&lt;&lt; run standalone tests &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 <v t="EKR.20040517080049"><vh>Files</vh>
@@ -8189,29 +8621,74 @@ print s</t>
 'utils_rename',
 'windows',
 'wrap_lines')</t>
+<t tx="ekr.20041106100326">import leoGlobals as g
+import leoNodes
+import leoPlugins
+import leoTkinterFrame
+
+try:
+    import Tkinter as Tk
+    import ScrolledText
+    import tkFont
+except:
+    Tk = None
+
+import ConfigParser
+import os
+import sys
+import weakref
+
+try:
+    pth = os.path.split( g.app.loadDir ) 
+    ppath = pth[ 0 ] + os.sep + 'plugins'
+    ext_path = pth[ 0 ] + os.sep + 'plugins' + os.sep + 'temacs_ext'
+    try:
+        if not os.path.exists( ext_path ):
+            os.mkdir( ext_path )
+    except Exception, x:
+        g.es( "Attempt to create %s failed because of %s" %( ext_path, x ) )
+    sys.path.append( ppath )
+    sys.path.append( ext_path )
+    temacs = __import__( 'temacs', globals(), locals())
+except Exception, x:
+    g.es( "temacs not loadable. Aborting load of usetemacs because of: " + str( x ))
+    temacs = None
+</t>
+<t tx="ekr.20041106100326.1">@others
+@nocolor</t>
+<t tx="ekr.20041106100326.2">orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
+leoTkinterFrame.leoTkinterBody.createBindings = initialise() #createBindings
+
+orig_OnBodyKey = leoTkinterFrame.leoTkinterBody.onBodyKey
+leoTkinterFrame.leoTkinterBody.onBodyKey = modifyOnBodyKey</t>
+<t tx="ekr.20041106100834">@
+This part runs Temacs with a Text widget.
+It should be accessible by typing python temacs.py at the command prompt
+Note: There is no configuration as to buffers and such, so dont access that functionality.  Just a proof of concept.
+
+@c
+
+Tl = Tkinter.Tk()
+Tl.title( 'temacs Emacs test' )
+Tx = Tkinter.Text( background = 'white', foreground = 'blue' )
+f2 = Tkinter.Frame()
+f2.pack( side = 'bottom' )
+def onQuit():
+    import sys
+    sys.exit( 0 )
+    
+minibuffer = Tkinter.Label( f2 )
+minibuffer.pack( side = 'right', expand = 1, fill = 'both' )
+quitb = Tkinter.Button( f2, text = 'Quit' , command = onQuit )
+quitb.pack( side = 'left' )
+Tx.pack( side = 'top' )
+emacs = Emacs( Tx, minibuffer, True, True )
+Tl.mainloop()</t>
+<t tx="ekr.20041106101311">@nocolor
+
+@others</t>
 <t tx="ekr.20041107165824"></t>
 <t tx="ekr.20041110104350"></t>
-<t tx="ekr.20041113110210">import leoGlobals as g
-import leoPlugins
-c = g.top()
-
-spellpyx = leoPlugins.getPluginModule("spellpyx")
-createMenu = spellpyx is None
-keys = {'c':c}
-
-if not spellpyx:
-    print 'loading spellpyx plugin'
-    spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose=True)
-    if spellpyx:
-        spellpyx.onCreate('tag',keys)
-
-if spellpyx:
-    # g.trace(g.dictToString(spellpyx.spellFrames,tag='spellFrames'))
-    spellFrame = spellpyx.spellFrames.get(c)
-    if spellFrame and createMenu:
-        spellFrame.createSpellMenu('tag',keys)
-    if spellFrame:
-        spellFrame.checkSpelling()</t>
 <t tx="ekr.20041114102139">@nocolor</t>
 <t tx="ekr.20041114102139.1">- Several plugins show the docstring, so please take care to do a good job of
 describing what the plugin does and how to use it.
@@ -8668,6 +9145,22 @@ If a plugin catches exceptions during startup it should do one of the following:
 - raise the exception again.
 - provide an init function at the top level that reports the failure.</t>
 <t tx="ekr.20050306081349"></t>
+<t tx="ekr.20050311155753">def init ():
+    
+    ok = temacs and Tk and not g.app.unitTesting
+    
+    if ok:
+        if g.app.gui is None: 
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            global orig_Bindings,orig_OnBodyKey
+            &lt;&lt; override createBindings and onBodyKey &gt;&gt;
+            loadConfig()
+            g.plugin_signon(__name__)
+            leoPlugins.registerHandler( ('open2', "new") , addMenu )
+            
+    return ok</t>
 <t tx="ekr.20050328092641">from Library.py for Leo4.3
 see forum &lt;http://sourceforge.net/forum/forum.php?thread_id=1244564&amp;forum_id=10226&gt;
 a better configparser would be nice.
@@ -9475,6 +9968,373 @@ news.py
 
 plugin_manager.py</t>
 <t tx="ekr.20050329082101.146"></t>
+<t tx="ekr.20050329082101.147">&lt;&lt; docstring &gt;&gt;
+
+from autotrees import BaseTreeHandler, TreeNode
+
+__version__ = "0.1"
+__plugin_requires__ = ["autotrees"]
+__plugin_group__ = "Test"
+
+&lt;&lt; version history &gt;&gt;
+
+
+# This module contains multiple handlers for testing only
+# This isn't recommended since the Manager dialog cannot
+# cope with it very well - it assumes a single handler per
+# file.
+
+class Test(BaseTreeHandler):
+    """A test handler"""
+    
+    def initFrom(self, parameter):
+        """Initialize the tree"""
+        self.children = [
+            TreeNode("one", "this is one"),
+            TreeNode("two", "this is two !!!"),
+            TreeNode("three", "this is three",[
+                TreeNode("three-one"),
+                TreeNode("three-two"),
+                TreeNode("three-three"),
+            ])
+        ]
+        
+class Test2(BaseTreeHandler):
+    """A test2 handler - wont do much!"""
+    
+class Test3(Test):
+    """A test3 handler - much like Test but the nodes don't get deleted"""
+    
+    def preprocessNode(self):
+        """Override the default deleting of child nodes"""
+        pass
+        
+    </t>
+<t tx="ekr.20050329082101.148">"""A Test handler.
+
+This defines
+    @auto-test = adds some nodes
+    @auto-test2 = doesn't do anything
+    @auto-test3 = adds nodes but doesn't delete the old ones
+     
+"""
+
+</t>
+<t tx="ekr.20050329082101.149">@
+
+Version history
+
+0.1 Paul Paterson:
+    - Initial version</t>
+<t tx="ekr.20050329082101.150">&lt;&lt; docstring &gt;&gt;
+
+from autotrees import BaseTreeHandler, TreeNode
+import feedparser
+import leoGlobals as g
+
+__version__ = "0.1"
+__plugin_requires__ = ["feedparser", "autotrees", "plugin_manager"]
+__plugin_group__ = "Network"
+
+&lt;&lt; version history &gt;&gt;
+
+class RSS(BaseTreeHandler):
+    """RSS auto tree handler"""
+        
+    def initFrom(self, parameter):
+        """Initialize the tree"""
+        node_body = self.node.bodyString().strip()
+        self.children = []
+        #
+        g.es("Starting download", color="blue")
+        try:
+            feed = feedparser.parse(parameter)
+        except Exception, err:
+            g.es("Failed: %s" % (err,), color="red")
+            self.children.append(TreeNode("error", str(err)))
+        #
+        else:
+            g.es("Done!", color="blue")
+            for item in feed['items']:
+                if not node_body:
+                    content = '\n'.join(['%s:\n%s\n' % (name, item[name]) for name in item.keys()])
+                else:
+                    content = self.replaceAll(node_body, item)
+                self.children.append(TreeNode(
+                        item.get('title', 'No title1'),
+                        content))
+        
+    def replaceAll(self, text, dct):
+        """Replace all suitable looking names in text with their dictionary values"""
+        for name in dct.keys():
+            item = dct[name]
+            if isinstance(item, dict):
+                item = item.get('value', item)
+            text = text.replace(name, str(item))
+        return text
+</t>
+<t tx="ekr.20050329082101.151">"""A handler that downloads RSS feeds
+
+The parameter in the @auto-rss headline is the URL to load from. The
+body of the node contains the keys to display in the created node
+bodies.
+
+To begin with, leave the main body empty - this signifies to use *all*
+the data in the bodies of the node. You can then use the keys identified
+there to select which things you want to see.
+
+Details will appear as "key:" followed by the content. If you want to 
+see the keyed value, then put "key" in the body of the @auto-rss node.
+Actually the body text is a series of keywords which will be replaced
+by their values in the stream, so the formatting is kept too!
+
+Requires feedparser installed:
+    http://sourceforge.net/projects/feedparser/
+    
+"""
+</t>
+<t tx="ekr.20050329082101.152">@
+
+Version history
+
+0.1 Paul Paterson:
+    - Initial version</t>
+<t tx="ekr.20050329082101.153">&lt;&lt; docstring &gt;&gt;
+
+from autotrees import BaseTreeHandler, TreeNode
+import feedparser
+import leoGlobals as g
+import nntplib
+import sets
+
+__version__ = "0.1"
+__plugin_requires__ = ["autotrees"]
+__plugin_group__ = "Network"
+
+&lt;&lt; version history &gt;&gt;
+
+@others</t>
+<t tx="ekr.20050329082101.154">"""A handler that downloads messages from a news server
+
+The parameter in the @auto-rss headline is the news server followed
+by the group name in the form:
+    
+    @auto-news newserver.myisp.com/comp.lang.python
+    
+Messages will be downloaded directly as nodes. Doesn't support threading
+but message bodies are downloaded lazily, ie only when you click on the
+header. This is achieved by using the @auto-newsitem headline. 
+    
+"""
+</t>
+<t tx="ekr.20050329082101.155">@
+
+Version history
+
+0.1 Paul Paterson:
+    - Initial version</t>
+<t tx="ekr.20050329082101.156">class NewsTreeError(Exception):
+    """Something went wrong with the tree"""
+    
+</t>
+<t tx="ekr.20050329082101.157">def getConnection(parameter):
+    """Return a connection to a news server group"""
+    try:
+        server, group = parameter.split(r"/")
+    except ValueError:
+        g.es("Could not decifer server/group from '%s'" % (parameter,), color="red")
+        raise NewsTreeError
+    #
+    try:
+        connection = nntplib.NNTP(server)
+    except Exception, err:
+        g.es("Unable to connect to '%s': %s" % (server, err), color="red")
+        raise NewsTreeError
+    #
+    try:
+        resp, count, first, last, name = connection.group(group)
+    except Exception, err:
+        g.es("Unable to talk to group '%s': %s" % (group, err), color="red")
+        raise NewsTreeError
+    #
+    return (connection, resp, count, first, last, name)</t>
+<t tx="ekr.20050329082101.158">class News(BaseTreeHandler):
+    """News auto tree handler"""
+        
+    @others</t>
+<t tx="ekr.20050329082101.159">def initFrom(self, parameter):
+    """Initialize the tree"""
+    self.children = []
+    #
+    try:
+        connection, resp, count, first, last, name = getConnection(parameter)
+    except NewsTreeError:
+        return
+    #
+    resp, subs = connection.xhdr('subject', first + '-' + last)
+    #
+    for item in subs[:10]: # First 10 articles .... just for testing as this is slooooow!
+        id, subject = item
+        self.children.append(
+            TreeNode("@auto-newsitem %s - %s" % (id, subject),
+                     parameter
+            )
+        )
+    
+    connection.quit()</t>
+<t tx="ekr.20050329082101.160">class NewsItem(BaseTreeHandler):
+    """Handlers news item bodies"""
+    
+    handles = sets.Set(["headclick1"])    
+    
+    @others
+</t>
+<t tx="ekr.20050329082101.161">def initFrom(self, parameter):
+    """Initialize the tree"""
+    self.children = []
+    #
+    # Get the server name which we conveniently left in the body
+    body = self.node.bodyString().splitlines()[0]
+    try:
+        connection, resp, count, first, last, name = getConnection(body)
+    except NewsTreeError:
+        return
+    #
+    # Now get the article 
+    id = self.node.headString().split(" - ", 1)[0][15:]
+    article = connection.body(id)
+    self.node.setBodyTextOrPane("\n".join(article[-1]))
+    #
+    connection.quit()
+
+</t>
+<t tx="ekr.20050329082101.162">&lt;&lt; docstring &gt;&gt;
+
+from autotrees import BaseTreeHandler, TreeNode
+import pycurl
+import StringIO
+
+import leoGlobals as g
+
+__version__ = "0.1"
+__plugin_requires__ = ["pycurl", "autotrees", "plugin_manager"]
+__plugin_group__ = "Network"
+
+&lt;&lt; version history &gt;&gt;
+
+
+class Remote(BaseTreeHandler):
+    """A handler for remote files"""
+        
+    def initFrom(self, parameter):
+        """Initialize the tree"""
+        self.children = []
+
+        content = StringIO.StringIO()
+        #
+        g.es("Starting download", color="blue")
+        connection = pycurl.Curl()
+        connection.setopt(pycurl.URL, str(parameter)) # Cannot take unicode!
+        connection.setopt(pycurl.WRITEFUNCTION, content.write)
+        #
+        try:
+            connection.perform()
+        except Exception, err:
+            g.es("Failed: %s" % (err,), color="red")
+            self.children.append(TreeNode("error", str(err)))
+        #
+        else:
+            g.es("Done!", color="blue")
+            self.node.setBodyTextOrPane(content.getvalue())
+        
+</t>
+<t tx="ekr.20050329082101.163">"""A handler that downloads remote files
+
+The parameter in the @auto-remote headline is the URL to load from. You
+can pass username passwords in the URL, eg
+    ftp://username:password@mysite.org/myfile.txt
+
+Requires pyCurl:
+    http://pycurl.sourceforge.net/
+    
+"""
+</t>
+<t tx="ekr.20050329082101.164">@
+
+Version history
+
+0.1 - Paul Paterson:
+      Initial version
+</t>
+<t tx="ekr.20050329082101.165">&lt;&lt; docstring &gt;&gt;
+
+from autotrees import BaseTreeHandler, TreeNode
+import inspect
+import sets
+
+import leoGlobals as g
+
+__version__ = "0.1"
+__plugin_requires__ = ["autotrees"]
+__plugin_group__ = "Coding"
+
+&lt;&lt; version history &gt;&gt;
+
+
+class Doc(BaseTreeHandler):
+    """Handler for documentation nodes"""
+        
+    def initFrom(self, parameter):
+        """Initialize the tree"""
+        self.children = []
+        self.done = sets.Set()
+        try:
+            module = __import__(parameter)
+        except Exception, err:
+            g.es("Failed: %s" % (err,), color="red")
+        else:
+            components = parameter.split('.')
+            for comp in components[1:]:
+                module = getattr(module, comp)
+            self.children.extend(self.getDocsFor(module))
+            
+    def getDocsFor(self, object):
+        """Return a list of child nodes documenting the object"""
+        #print object
+        children = []
+        for name in dir(object):
+            item = getattr(object, name)
+            if not name.startswith("_") and not id(item) in self.done:
+                self.done.add(id(item))
+                if inspect.isclass(item):
+                    #print "Class", item.__name__
+                    grandchildren = self.getDocsFor(item)
+                else:
+                    #print "item", item
+                    grandchildren = []
+                children.append(
+                    TreeNode(
+                        name,
+                        getattr(item, "__doc__", "No documentation for %s" % name),
+                        grandchildren
+                    )
+                )
+        return children
+            
+</t>
+<t tx="ekr.20050329082101.166">"""A handler that documents a module
+
+The parameter in the @auto-doc headline is the module to document.
+    
+"""
+</t>
+<t tx="ekr.20050329082101.167">@
+
+Version history
+
+0.1 - Paul Paterson:
+      Initial version
+</t>
 <t tx="ekr.20050329092553">Hundreds die in Indonesia quake
 
 Hundreds are believed to have died in Indonesia after a strong earthquake which sparked fears of a tsunami.</t>
@@ -9879,234 +10739,107 @@ token_bg         =  #FFFAFA  ;snow
 @language elisp
 </t>
 <t tx="ekr.20050427102121"></t>
-<t tx="ekr.20050514095136">[ newkeystrokes ]
+<t tx="ekr.20050513171201">'''usetemacs is a Leo plugin that patches the temacs modules Emacs emulation
+into the standard Leo Tkinter Text editor.
 
-#Alt-q=Alt-f # rebind Alt-q to what Alt-f does.
-# Cut and paste first
-Alt-Ctrl-x = Ctrl-x
-Alt-Ctrl-x ( =Ctrl-x (
-Alt-Ctrl-x ) =Ctrl-x )
-Alt-Ctrl-x e =Ctrl-x e
+Create a usetemacs.ini file to rebind shortcuts that conflict with those in your
+leoSettings.leo file. There are many such conflicts. For example, Ctrl-s is
+incremental search forward here but by default it is Save in Leo. 
 
-Alt-Ctrl-z=Ctrl-z
-
-Alt-Ctrl-x Ctrl-u=Ctrl-x Ctrl-u
-Alt-Ctrl-x Ctrl-l=Ctrl-x Ctrl-l
-Alt-Ctrl-x h=Ctrl-x
-
-Alt-Ctrl-x tab=Ctrl-x tab
-Alt-Ctrl-x Ctrl-x=Ctrl-x Ctrl-x
-Alt-Ctrl-x semicolon=Ctrl-x semicolon
-
-Alt-Ctrl-x a e=Ctrl-x a e
-Alt-Ctrl-x a g=Ctrl-x a g
-Alt-Ctrl-x a i g=Ctrl-x a i g
-
-Alt-Ctrl s=Ctrl s
-Alt-Ctrl r=Ctrl r
-
-# Alt-Ctrl XXX=
-
-Alt-Ctrl-s Enter=Ctrl-s Enter
-Alt-Ctrl-r Enter=Ctrl-r Enter
-Alt-Ctrl-s Enter Ctrl-w=Ctrl-s Enter Ctrl-w
-Alt-Ctrl-r Enter Ctrl-w=Ctrl-r Enter Ctrl-w
- 
-# Ctrl-Alt s
-# Ctrl-Alt r
-Alt-Ctrl-%=Alt-%
-#&lt;Ctrl Alt %
-Alt-Ctrl-==Alt-=
-Alt-Ctrl-(=Alt-(
-Alt-Ctrl-)=&lt;Alt-)
-
-Alt-Ctrl-x Ctrl-t=Ctrl-x Ctrl-t
-Alt-Ctrl-x Ctrl-o=Ctrl-x Ctrl-o
-Alt-Ctrl-x r s=Ctrl-x r s
-Alt-Ctrl-x r i=Ctrl-x r i
-Alt-Ctrl-x r +=Ctrl-x r +
-Alt-Ctrl-x r n=Ctrl-x r n
-Alt-Ctrl-x r space=Ctrl-x r space
-Alt-Ctrl-x r j=Ctrl-x r j
-Alt-Ctrl-x x=Ctrl-x x
-Alt-Ctrl-x r r=Ctrl-x r r
-Alt-Ctrl-x r o=Ctrl-x r o
-Alt-Ctrl-x r c=Ctrl-x r c
-Alt-Ctrl-x r d=Ctrl-x r d
-Alt-Ctrl-x r t=Ctrl-x r t
-Alt-Ctrl-x r k=Ctrl-x r k
-Alt-Ctrl-x r y=Ctrl-x r y
-
-Alt-Ctrl-x = =Ctrl-x =
-Alt-Ctrl-x . =Ctrl-x .
-Alt-Ctrl-x f =Ctrl-x f
-Alt-Ctrl-x Ctrl-b =Ctrl-x Ctrl-b
-Alt-Ctrl-x b =Ctrl-x b
-Alt-Ctrl-x k =Ctrl-x k
-
-Alt-Ctrl-g=Ctrl-g
-
-Alt-Ctrl - - Alt-l =Alt - - Alt-l
-Alt-Ctrl - - Alt-u =Alt - - Alt-u
-Alt-Ctrl - - Alt-c =Alt - - Alt-c
-
-Alt-Ctrl-/=Alt-/</t>
-<t tx="ekr.20050514095136.1">Buffer Keyboard Commands:
-----------------------------------------
-
-&lt;Control-p&gt;: move up one line
-&lt;Control-n&gt;: move down one line
-&lt;Control-f&gt;: move forward one char
-&lt;Conftol-b&gt;: move backward one char
-&lt;Control-o&gt;: insert newline
-&lt;Control-Alt-o&gt; : insert newline and indent
-&lt;Control-j&gt;: insert newline and tab
-&lt;Alt-&lt;&gt; : move to start of Buffer
-&lt;Alt- &gt; &gt;: move to end of Buffer
-&lt;Control a&gt;: move to start of line
-&lt;Control e&gt; :move to end of line
-&lt;Alt-Up&gt;: move to start of line
-&lt;Alt-Down&gt;: move to end of line
-&lt;Alt b&gt;: move one word backward
-&lt;Alt f&gt; : move one word forward
-&lt;Control - Right Arrow&gt;: move one word forward
-&lt;Control - Left Arrow&gt;: move one word backwards
-&lt;Alt-m&gt; : move to beginning of indentation
-&lt;Alt-g&gt; : goto line number
-&lt;Control-v&gt;: scroll forward one screen
-&lt;Alt-v&gt;: scroll up one screen
-&lt;Alt-a&gt;: move back one sentence
-&lt;Alt-e&gt;: move forward one sentence
-&lt;Alt-}&gt;: move forward one paragraph
-&lt;Alt-{&gt;: move backwards one paragraph
-&lt;Alt-:&gt; evaluate a Python expression in the minibuffer and insert the value in the current buffer
-Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer
-&lt;Control-x . &gt;: set fill prefix
-&lt;Alt-q&gt;: fill paragraph
-&lt;Alt-h&gt;: select current or next paragraph
-&lt;Control-x Control-@&gt;: pop global mark
-&lt;Control-u&gt;: universal command, repeats the next command n times.
-&lt;Alt -n &gt; : n is a number.  Processes the next command n times.
-&lt;Control-x (&gt;: start definition of kbd macro
-&lt;Control-x ) &gt; : stop definition of kbd macro
-&lt;Control-x e : execute last macro defined
-&lt;Control-u Control-x ( &gt;: execute last macro and edit
-&lt;Control-x Esc Esc &gt;: execute last complex command( last Alt-x command
-&lt;Control-x Control-c &gt;: save buffers kill Emacs
-&lt;Control-x u &gt; : advertised undo.   This function utilizes the environments.
-        If the buffer is not configure explicitly, there is no operation.
-&lt;Control-_&gt;: advertised undo.  See above
-&lt;Control-z&gt;: iconfify frame
-----------------------------------------
-
-&lt;Delete&gt; : delete previous character
-&lt;Control d&gt;: delete next character
-&lt;Control k&gt; : delete from cursor to end of line. Text goes to kill buffer
-&lt;Alt d&gt;: delete word. Word goes to kill buffer
-&lt;Alt Delete&gt;: delete previous word. Word goes to kill buffer
-&lt;Alt k &gt;: delete current sentence. Sentence goes to kill buffer
-&lt;Control x Delete&gt;: delete previous sentence. Sentence goes to kill buffer
-&lt;Control y &gt;: yank last deleted text segment from
- kill buffer and inserts it.
-&lt;Alt y &gt;: cycle and yank through kill buffer.
-
-&lt;Alt z &gt;: zap to typed letter. Text goes to kill buffer
-&lt;Alt-^ &gt;: join this line to the previous one
-&lt;Alt-\ &gt;: delete surrounding spaces
-&lt;Alt-s&gt; &gt;: center line in current fill column
-&lt;Control-Alt-w&gt;: next kill is appended to kill buffer
-----------------------------------------
-
-&lt;Alt c&gt;: Capitalize the word the cursor is under.
-&lt;Alt u&gt;: Uppercase the characters in the word.
-&lt;Alt l&gt;: Lowercase the characters in the word.
-----------------------------------------
-
-&lt;Alt t&gt;: Mark word for word swapping.  Marking a second
- word will swap this word with the first
-&lt;Control-t&gt;: Swap characters
-&lt;Ctrl-@&gt;: Begin marking region.
-&lt;Ctrl-W&gt;: Kill marked region
-&lt;Alt-W&gt;: Copy marked region
-&lt;Ctrl-x Ctrl-u&gt;: uppercase a marked region
-&lt;Ctrl-x Ctrl-l&gt;: lowercase a marked region
-&lt;Ctrl-x h&gt;: mark entire buffer
-&lt;Alt-Ctrl-backslash&gt;: indent region to indentation of line 1 of the region.
-&lt;Ctrl-x tab&gt; : indent region by 1 tab
-&lt;Control-x Control-x&gt; : swap point and mark
-&lt;Control-x semicolon&gt;: set comment column
-&lt;Alt-semicolon&gt;: indent to comment column
-----------------------------------------
-
-M-! cmd -- Run the shell command line cmd and display the output
-M-| cmd -- Run the shell command line cmd with region contents as input
-----------------------------------------
-
-&lt;Control-x a e&gt;: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled
-&lt;Control-x a g&gt;: Define an abbreviation for previous word
-&lt;Control-x a i g&gt;: Define a word as abbreviation for word before point, or in point
-----------------------------------------
-
-&lt;Control s&gt;: forward search, using pattern in Mini buffer.
-
-&lt;Control r&gt;: backward search, using pattern in Mini buffer.
-
-&lt;Control s Enter&gt;: search forward for a word, nonincremental
-
-&lt;Control r Enter&gt;: search backward for a word, nonincremental
-
-&lt;Control s Enter Control w&gt;: Search for words, ignoring details of punctuation
-&lt;Control r Enter Control w&gt;: Search backward for words, ignoring details of punctuation
-&lt;Control-Alt s&gt;: forward regular expression search, using pattern in Mini buffer
-
-&lt;Control-Alt r&gt;: backward regular expression search, using pattern in Mini buffer
-
-&lt;Alt-%&gt;: begin query search/replace. n skips to next match. y changes current match.  
-        q or Return exits. ! to replace all remaining matches with no more questions
-&lt;Control Alt %&gt; begin regex search replace, like Alt-%
-&lt;Alt-=&gt;: count lines and characters in regions
-&lt;Alt-( &gt;: insert parentheses()
-&lt;Alt-) &gt;:  move past close
-&lt;Control-x Control-t&gt;: transpose lines.
-&lt;Control-x Control-o&gt;: delete blank lines
-&lt;Control-x r s&gt;: save region to register
-&lt;Control-x r i&gt;: insert to buffer from register
-&lt;Control-x r +&gt;: increment register
-&lt;Control-x r n&gt;: insert number 0 to register
-&lt;Control-x r space &gt; : point insert point to register
-&lt;Control-x r j &gt; : jump to register
-&lt;Control-x x&gt;: save region to register
-&lt;Control-x r r&gt; : save rectangle to register
-&lt;Control-x r o&gt;: open up rectangle
-&lt;Control-x r c&gt; : clear rectangle
-&lt;Control-x r d&gt; : delete rectangle
-&lt;Control-x r t&gt; : replace rectangle with string
-&lt;Control-x r k&gt; : kill rectangle
-&lt;Control-x r y&gt; : yank rectangle
-&lt;Control-g&gt; : keyboard quit
-
-&lt;Control-x = &gt; : position of cursor
-&lt;Control-x . &gt; : set fill prefix
-&lt;Control-x f &gt; : set the fill column
-&lt;Control-x Control-b &gt; : display the buffer list
-&lt;Control-x b &gt; : switch to buffer
-&lt;Control-x k &gt; : kill the specified buffer
-----------------------------------------
-
-&lt;Alt - - Alt-l &gt;: lowercase previous word
-&lt;Alt - - Alt-u&gt;: uppercase previous word
-&lt;Alt - - Alt-c&gt;: capitalise previous word
-----------------------------------------
-
-&lt;Alt-/ &gt;: dynamic expansion
-&lt;Control-Alt-/&gt;: dynamic expansion.  Expands to common prefix in buffer
-----------------------------------------
-
-Alt-x commands:
-
-(Pressing Tab will result in auto completion of the options if an appropriate match is found</t>
+See Help-&gt;Temacs Help for a complete listing of commands and keystrokes.
+'''</t>
 <t tx="ekr.20050523073009"></t>
-<t tx="ekr.20050527081321"></t>
+<t tx="ekr.20050527084754">
+#if self.uC:
+#    self.previousStroke = stroke
+#    return self.universalDispatch( event, stroke )
+
+#if self.controlx:
+#    self.previousStroke = stroke
+#     return self.doControlX( event, stroke )
+
+
+#if stroke in ('&lt;Control-s&gt;', '&lt;Control-r&gt;' ): 
+#    self.previousStroke = stroke
+#    return self.startIncremental( event, stroke )
+
+#if self.isearch:
+#   return self.iSearch( event )
+
+#if stroke == '&lt;Alt-g&gt;':
+#    self.previousStroke = stroke
+#    return self.startGoto( event )
+#if self.goto:
+#    return self.Goto( event )
+
+#if stroke == '&lt;Alt-z&gt;':
+#    self.previousStroke = stroke
+#    return self.startZap( event )
+
+#if self.zap:
+#    return self.zapTo( event )</t>
+<t tx="ekr.20050527084754.1">
+    #if self.howM:
+    #    return self.howMany( event )
+        
+    #if self.abbrevMode:
+    #    return self.abbrevCommand1( event )
+        
+    #if self.altx:
+    #    return self.doAlt_X( event )
+
+    #if stroke == '&lt;Alt-percent&gt;':
+    #    self.previousStroke = stroke
+    #    return self.masterQR( event )  
+    #if self.qlisten:
+    #    return self.masterQR( event )
+        
+    #if self.rString:
+    #    return self.replaceString( event )
+     
+    #if self.negativeArg:
+    #    return self.negativeArgument( event, stroke )
+    
+    #if stroke == '&lt;Control-Alt-w&gt;':
+    #    self.previousStroke = '&lt;Control-Alt-w&gt;'   
+    #    return 'break'</t>
+<t tx="ekr.20050527111832"># EKR: This is a generator (it contains a yield).
+# EKR: To make this work we must define a new generator for each call to regionalExpandAbbrev.
+def searchXR( i1 , i2, ins, event ):
+    tbuffer.tag_add( 'sXR', i1, i2 )
+    while i1:
+        tr = tbuffer.tag_ranges( 'sXR' )
+        if not tr: break
+        i1 = tbuffer.search( r'\w', i1, stopindex = tr[ 1 ] , regexp = True )
+        if i1:
+            word = tbuffer.get( '%s wordstart' % i1, '%s wordend' % i1 )
+            tbuffer.tag_delete( 'found' )
+            tbuffer.tag_add( 'found',  '%s wordstart' % i1, '%s wordend' % i1 )
+            tbuffer.tag_config( 'found', background = 'yellow' )
+            if self.abbrevs.has_key( word ):
+                svar, label = self.getSvarLabel( event )
+                svar.set( 'Replace %s with %s? y/n' % ( word, self.abbrevs[ word ] ) )
+                yield None
+                if self.regXKey == 'y':
+                    ind = tbuffer.index( '%s wordstart' % i1 )
+                    tbuffer.delete( '%s wordstart' % i1, '%s wordend' % i1 )
+                    tbuffer.insert( ind, self.abbrevs[ word ] )
+            i1 = '%s wordend' % i1
+    tbuffer.mark_set( 'insert', ins )
+    tbuffer.selection_clear()
+    tbuffer.tag_delete( 'sXR' )
+    tbuffer.tag_delete( 'found' )
+    svar, label = self.getSvarLabel( event )
+    svar.set( '' )
+    self.setLabelGrey( label )
+    self._setRAvars()</t>
+<t tx="ekr.20050527112828">Emacs.lossage.reverse()
+Emacs.lossage.append( event.char ) #Then we add the new char.  Hopefully this will keep Python from allocating a new array each time.
+Emacs.lossage.reverse()
+
+self.keysymhistory.reverse()
+self.keysymhistory.append( event.keysym )
+self.keysymhistory.reverse()</t>
 <t tx="ekr.20050529143413.30">def colorize(self,p,incremental=False):
     
     '''The main colorizer entry point.'''
@@ -10938,7 +11671,6 @@ for ch in word_chars:
         self.rulesDict = self.save_rulesDict</t>
 <t tx="ekr.20050607220512"># To do: honor default:comment3 attribute of ruleset.</t>
 <t tx="ekr.20050612074047"></t>
-<t tx="ekr.20050710094310.2"></t>
 <t tx="ekr.20050718142601"></t>
 <t tx="ekr.20050718142601.1">@nocolor
 
@@ -12452,6 +13184,7 @@ Edward K. Ream:  Aug 22, 2005.</t>
 
 - Added init function that always returns False.  This helps Leo's unit tests.</t>
 <t tx="ekr.20050830091910"></t>
+<t tx="ekr.20051025144116">c.spellCommands.openSpellTab()</t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO
@@ -12497,5 +13230,5786 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
         chapList[ x ].seek( 0 )
         zf.writestr( zif ,chapList[ x ].read() )
     zf.close()</t>
+<t tx="mork.20041013092542.1">&lt;&lt; docstring &gt;&gt;
+
+@language python
+@tabwidth -4
+
+&lt;&lt; imports &gt;&gt;
+&lt;&lt; globals &gt;&gt;
+__version__ = '.57'
+&lt;&lt;version history&gt;&gt;
+&lt;&lt; documentation &gt;&gt;
+
+@others
+
+&lt;&lt;exampleTemacsExtension.py&gt;&gt;
+&lt;&lt;usetemacs.ini example&gt;&gt;</t>
+<t tx="mork.20041013092542.2">
+
+labels = weakref.WeakKeyDictionary()
+editors = weakref.WeakKeyDictionary()
+haveseen = weakref.WeakKeyDictionary()
+extensions = []
+new_keystrokes = {}
+leocommandnames = None</t>
+<t tx="mork.20041013092542.3">def utTailEnd( buffer , frame ):
+    '''A method that Emacs will call with its _tailEnd method'''
+    buffer.event_generate( '&lt;Key&gt;' )
+    buffer.update_idletasks()
+    return 'break'
+</t>
+<t tx="mork.20041013092542.5">def addMenu( tag, keywords ):
+    '''Adds the Temacs Help option to Leo's Help menu'''
+    
+    c = keywords.get('c')
+    if not c: return
+
+    men = c.frame.menu.getMenu( 'Help' )
+    men.add_separator()
+    men.add_command( label = 'Temacs Help', command = seeHelp )</t>
+<t tx="mork.20041013092542.6">def seeHelp():
+    '''Opens a Help dialog that shows the Emac systems commands and keystrokes'''
+    tl = Tk.Toplevel()
+    ms = tl.maxsize()
+    tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 )) #half the screen height, half the screen width
+    tl.title( "Temacs Help" )
+    #fixedFont = Pmw.logicalfont( 'Fixed' )
+    fixedFont = tkFont.Font( family = 'Fixed', size = 14 )
+    #t = Pmw.ScrolledText( tl , text_font = fixedFont , text_background = 'white', hscrollmode = 'static', text_wrap='none')
+    tc = ScrolledText.ScrolledText( tl, font = fixedFont, background = 'white', wrap = 'word' )
+    sbar = Tk.Scrollbar( tc.frame, orient = 'horizontal' )
+    sbar.configure( command = tc.xview )
+    tc.configure( xscrollcommand = sbar.set )
+    sbar.pack( side = 'bottom', fill = 'x' )
+    for z in tc.frame.children.values():
+        sbar.pack_configure( before = z )
+    #t.settext( temacs.Emacs.getHelpText() )
+    tc.insert( '1.0', temacs.Emacs.getHelpText() )
+    lc='''\n---------Leo Commands-----------\n'''
+    tc.insert( 'end', lc )
+    leocommandnames.sort()
+    lstring = '\n'.join( leocommandnames )
+    tc.insert( 'end', lstring )
+    def clz( tl = tl ):
+        tl.withdraw()
+        tl.destroy()
+    #g = Pmw.Group( tl )
+    g = Tk.Frame( tl )
+    g.pack( side = 'bottom' )
+    tc.pack( side = 'top' ,expand = 1, fill = 'both')
+    e = Tk.Label( g, text = 'Search:' )
+    e.pack( side = 'left' )
+    #ef = Pmw.EntryField( g.interior() , 
+    #                     labelpos = 'w', 
+    #                     label_text = 'Search:' ,
+    #                     entry_background = 'white',
+    #                     entry_foreground = 'blue')
+    #ef.pack( side = 'left' )
+    ef = Tk.Entry( g, background = 'white', foreground = 'blue' )
+    ef.pack( side = 'left' )
+    def search():
+        
+        #stext = ef.getvalue()
+        stext = ef.get()
+        #tc = t.component( 'text' )
+        tc.tag_delete( 'found' )
+        tc.tag_configure( 'found', background = 'red' )
+        ins = tc.index( 'insert' )
+        ind = tc.search( stext, 'insert', stopindex = 'end', nocase = True )
+        if not ind:
+            ind = tc.search( stext, '1.0', stopindex = 'end', nocase = True )
+        if ind:
+            tc.mark_set( 'insert', '%s +%sc' % ( ind , len( stext ) ) )
+            tc.tag_add(  'found', 'insert -%sc' % len( stext ) , 'insert' )
+            tc.see( ind )
+        
+    go = Tk.Button( g , text = 'Go', command = search )
+    go.pack( side = 'left' )
+    b = Tk.Button( g  , text = 'Close' , command = clz )
+    b.pack( side = 'left' )
+    def watch( event ):
+        search()
+        
+    #ef.component( 'entry' ).bind( '&lt;Return&gt;', watch )
+    ef.bind( '&lt;Return&gt;', watch )
+    #fixedFont = Pmw.logicalfont( 'Fixed' )
+    #t = Pmw.ScrolledText( tl , text_font = fixedFont , text_background = 'white', hscrollmode = 'static', text_wrap='none')
+    #t.pack( expand = 1, fill = 'both')
+    #t.settext( temacs.Emacs.getHelpText() )
+</t>
+<t tx="mork.20041030164547">'''temacs is a binding module for the Tkinter Text widget.
+
+Using the setBufferStrokes def will bind callbacks to the widget.'''
+
+@language python
+@tabwidth -4
+
+__version__ = ".55"
+&lt;&lt; version history &gt;&gt;
+&lt;&lt; documentation &gt;&gt;
+&lt;&lt; imports &gt;&gt;
+
+@others
+
+if __name__ == '__main__':
+    &lt;&lt; run standalone tests &gt;&gt;</t>
+<t tx="mork.20041030164547.1"># pretty low level imports. These may be all the imports the module needs
+
+import leoGlobals as g # ekr
+
+import Tkinter
+import string
+import weakref
+import new
+import sys
+import re
+import os
+</t>
+<t tx="mork.20041030164547.2">def setLabelGrey( self, label ):
+    label.configure( background = 'lightgrey' )
+</t>
+<t tx="mork.20041030164547.3">def setLabelBlue( self ,label ):
+    label.configure( background = 'lightblue' ) 
+</t>
+<t tx="mork.20041030164547.4">def _tailEnd( self, tbuffer ):
+    '''This returns the tailEnd function that has been configure for the tbuffer parameter.'''
+    if self.tailEnds.has_key( tbuffer ):
+        return self.tailEnds[ tbuffer ]( tbuffer )
+    else:
+        return 'break'
+</t>
+<t tx="mork.20041030164547.5">#self.tailEnds = {}
+def setTailEnd( self, tbuffer , tailCall ):
+    '''This method sets a ending call that is specific for a particular Text widget.
+       Some environments require that specific end calls be made after a keystroke
+       or command is executed.'''
+    self.tailEnds[ tbuffer ] = tailCall
+</t>
+<t tx="mork.20041030164547.6">#self.undoers = {}
+def setUndoer( self, tbuffer, undoer ):
+    '''This method sets the undoer method for the Emacs instance.'''
+    self.undoers[ tbuffer ] = undoer
+</t>
+<t tx="mork.20041030164547.7">def doUndo(  self, event, amount = 1 ):
+    tbuffer = event.widget
+    if self.undoers.has_key( tbuffer ):
+        for z in xrange( amount ):
+            self.undoers[ tbuffer ]()
+    return 'break'
+</t>
+<t tx="mork.20041030164547.8">#self.lastMacro = None
+#self.macs = []
+#self.macro = []
+#self.namedMacros = {}
+#self.macroing = False
+def startKBDMacro( self, event ):
+
+    svar, label = self.getSvarLabel( event )
+    svar.set( 'Recording Keyboard Macro' )
+    label.configure( background = 'lightblue' )
+    self.macroing = True
+    return 'break'
+</t>
+<t tx="mork.20041030164547.9">def recordKBDMacro( self, event, stroke ):
+    if stroke != '&lt;Key&gt;':
+        self.macro.append( (stroke, event.keycode, event.keysym, event.char) )
+    elif stroke == '&lt;Key&gt;':
+        if event.keysym != '??':
+            self.macro.append( ( event.keycode, event.keysym ) )
+    return
+</t>
+<t tx="mork.20041030164547.10">def stopKBDMacro( self, event ):
+    #global macro, lastMacro, macroing
+    if self.macro:
+        self.macro = self.macro[ : -4 ]
+        self.macs.insert( 0, self.macro )
+        self.lastMacro = self.macro
+        self.macro = []
+
+    self.macroing = False
+    svar, label = self.getSvarLabel( event )
+    svar.set( 'Keyboard macro defined' )
+    label.configure( background = 'lightgrey' )
+    return 'break' 
+</t>
+<t tx="mork.20041030164547.11">def _executeMacro( self, macro, tbuffer ):
+    
+    for z in macro:
+        if len( z ) == 2:
+            tbuffer.event_generate( '&lt;Key&gt;', keycode = z[ 0 ], keysym = z[ 1 ] ) 
+        else:
+            meth = z[ 0 ].lstrip( '&lt;' ).rstrip( '&gt;' )
+            method = self.cbDict[ meth ]
+            ev = Tkinter.Event()
+            ev.widget = tbuffer
+            ev.keycode = z[ 1 ]
+            ev.keysym = z[ 2 ]
+            ev.char = z[ 3 ]
+            self.masterCommand( ev , method, '&lt;%s&gt;' % meth )
+    return self._tailEnd( tbuffer )  
+
+</t>
+<t tx="mork.20041030164547.12">def executeLastMacro( self, event ):
+    tbuffer = event.widget
+    if self.lastMacro:
+        return self._executeMacro( self.lastMacro, tbuffer )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.13">def nameLastMacro( self, event ):
+    '''Names the last macro defined.'''
+    #global macroing
+    svar, label = self.getSvarLabel( event )    
+    if not self.macroing :
+        self.macroing = 2
+        svar.set( '' )
+        self.setLabelBlue( label )
+        return 'break'
+    if event.keysym == 'Return':
+        name = svar.get()
+        self._addToDoAltX( name, self.lastMacro )
+        svar.set( '' )
+        self.setLabelBlue( label )
+        self.macroing = False
+        self.stopControlX( event )
+        return 'break'
+    self.setSvar( event, svar )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.14">def _addToDoAltX( self, name, macro ):
+    '''Adds macro to Alt-X commands.'''
+    if not self.doAltX.has_key( name ):
+        def exe( event, macro = macro ):
+            self.stopControlX( event )
+            return self._executeMacro( macro, event.widget )
+        self.doAltX[ name ] = exe
+        self.namedMacros[ name ] = macro
+        return True
+    else:
+        return False
+</t>
+<t tx="mork.20041030164547.15">def loadMacros( self,event ):
+    '''Asks for a macro file name to load.'''
+    import tkFileDialog
+    f = tkFileDialog.askopenfile()
+    if f == None: return 'break'
+    else:
+        return self._loadMacros( f )       
+</t>
+<t tx="mork.20041030164547.16">def _loadMacros( self, f ):
+    '''Loads a macro file into the macros dictionary.'''
+    import cPickle
+    macros = cPickle.load( f )
+    for z in macros:
+        self._addToDoAltX( z, macros[ z ] )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.17">def getMacroName( self, event ):
+    '''A method to save your macros to file.'''
+    #global macroing
+    svar, label = self.getSvarLabel( event )
+    if not self.macroing:
+        self.macroing = 3
+        svar.set('')
+        self.setLabelBlue( label )
+        return 'break'
+    if event.keysym == 'Return':
+        self.macroing = False
+        self.saveMacros( event, svar.get() )
+        return 'break'
+    if event.keysym == 'Tab':
+        svar.set( self._findMatch( svar, self.namedMacros ) )
+        return 'break'        
+    self.setSvar( event, svar )
+    return 'break'    
+</t>
+<t tx="mork.20041030164547.18">def saveMacros( self, event, macname ):
+    '''Asks for a file name and saves it.'''
+    import tkFileDialog
+    name = tkFileDialog.asksaveasfilename()
+    if name:
+        f = file( name, 'a+' )
+        f.seek( 0 )
+        if f:
+            self._saveMacros( f, macname ) 
+    return 'break'
+</t>
+<t tx="mork.20041030164547.19">def _saveMacros( self, f , name ):
+    '''Saves the macros as a pickled dictionary'''
+    import cPickle
+    fname = f.name
+    try:
+        macs = cPickle.load( f )
+    except:
+        macs = {}
+    f.close()
+    if self.namedMacros.has_key( name ):
+        macs[ name ] = self.namedMacros[ name ]
+        f = file( fname, 'w' )
+        cPickle.dump( macs, f )
+        f.close()   
+</t>
+<t tx="mork.20041030164547.20">#self.ccolumn = '0'
+def setCommentColumn( self, event ):
+    #global ccolumn
+    cc= event.widget.index( 'insert' )
+    cc1, cc2 = cc.split( '.' )
+    self.ccolumn = cc2
+    return 'break'
+</t>
+<t tx="mork.20041030164547.21">def indentToCommentColumn( self, event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert lineend' )
+    i1, i2 = i.split( '.' )
+    i2 = int( i2 )
+    c1 = int( self.ccolumn )
+    if i2 &lt; c1:
+        wsn = c1 - i2
+        tbuffer.insert( 'insert lineend', ' '* wsn )
+    if i2 &gt;= c1:
+        tbuffer.insert( 'insert lineend', ' ')
+    tbuffer.mark_set( 'insert', 'insert lineend' )
+    return self._tailEnd( tbuffer ) 
+</t>
+<t tx="mork.20041030164547.22">def exchangePointMark( self, event ):
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    s1 = tbuffer.index( 'sel.first' )
+    s2 = tbuffer.index( 'sel.last' )
+    i = tbuffer.index( 'insert' )
+    if i == s1:
+        tbuffer.mark_set( 'insert', s2 )
+    else:
+        tbuffer.mark_set('insert', s1 )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.23">#self.howM = False
+def howMany( self, event ):
+    #global howM
+    svar, label = self.getSvarLabel( event )
+    if event.keysym == 'Return':
+        tbuffer = event.widget
+        txt = tbuffer.get( '1.0', 'end' )
+        import re
+        reg1 = svar.get()
+        reg = re.compile( reg1 )
+        i = reg.findall( txt )
+        svar.set( '%s occurances found of %s' % (len(i), reg1 ) )
+        self.setLabelGrey( label )
+        #self.howM = False
+        self.mcStateManager.setState( 'howM', False )
+        return 'break'
+    self.setSvar( event, svar )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.24">def startHowMany( self, event ):
+    #global howM
+    #self.howM = True
+    self.mcStateManager.setState( 'howM', True )
+    svar, label = self.getSvarLabel( event )
+    svar.set( '' )
+    self.setLabelBlue( label )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.25">def selectParagraph( self, event ):
+    tbuffer = event.widget
+    txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+    txt = txt.lstrip().rstrip()
+    i = tbuffer.index( 'insert' )
+    if not txt:
+        while 1:
+            i = tbuffer.index( '%s + 1 lines' % i )
+            txt = tbuffer.get( '%s linestart' % i, '%s lineend' % i )
+            txt = txt.lstrip().rstrip()
+            if txt:
+                self._selectParagraph( tbuffer, i )
+                break
+            if tbuffer.index( '%s lineend' % i ) == tbuffer.index( 'end' ):
+                return 'break'
+    if txt:
+        while 1:
+            i = tbuffer.index( '%s - 1 lines' % i )
+            txt = tbuffer.get( '%s linestart' % i, '%s lineend' % i )
+            txt = txt.lstrip().rstrip()
+            if not txt or tbuffer.index( '%s linestart' % i ) == tbuffer.index( '1.0' ):
+                if not txt:
+                    i = tbuffer.index( '%s + 1 lines' % i )
+                self._selectParagraph( tbuffer, i )
+                break     
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.26">def _selectParagraph( self, tbuffer, start ):
+    i2 = start
+    while 1:
+        txt = tbuffer.get( '%s linestart' % i2, '%s lineend' % i2 )
+        if tbuffer.index( '%s lineend' % i2 )  == tbuffer.index( 'end' ):
+            break
+        txt = txt.lstrip().rstrip()
+        if not txt: break
+        else:
+            i2 = tbuffer.index( '%s + 1 lines' % i2 )
+    tbuffer.tag_add( 'sel', '%s linestart' % start, '%s lineend' % i2 )
+    tbuffer.mark_set( 'insert', '%s lineend' % i2 )
+</t>
+<t tx="mork.20041030164547.27">def killParagraph( self, event ):   
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+    if not txt.rstrip().lstrip():
+        i = tbuffer.search( r'\w', i, regexp = True, stopindex = 'end' )
+    self._selectParagraph( tbuffer, i )
+    i2 = tbuffer.index( 'insert' )
+    self.kill( event, i, i2 )
+    tbuffer.mark_set( 'insert', i )
+    tbuffer.selection_clear()
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.28">def backwardKillParagraph( self, event ):   
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    i2 = i
+    txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+    if not txt.rstrip().lstrip():
+        self.movingParagraphs( event, -1 )
+        i2 = tbuffer.index( 'insert' )
+    self.selectParagraph( event )
+    i3 = tbuffer.index( 'sel.first' )
+    self.kill( event, i3, i2 )
+    tbuffer.mark_set( 'insert', i )
+    tbuffer.selection_clear()
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.29">#self.reset = False
+def iterateKillBuffer( self ):
+    #global reset
+    while 1:
+        if self.killbuffer:
+            self.last_clipboard = None
+            for z in self.killbuffer:
+                if self.reset:
+                    self.reset = False
+                    break        
+                yield z
+        
+            
+</t>
+<t tx="mork.20041030164547.30">#mbuffers = {}
+#svars = {}
+def setBufferStrokes( self, tbuffer, label ):
+        '''setBufferStrokes takes a Tk Text widget called 'tbuffer'. 'stext' is a function or method
+        that when called will return the value of the search text. 'rtext' is a function or method
+        that when called will return the value of the replace text.  It is this method and
+        getHelpText that users of the temacs module should call.  The rest are callback functions
+        that enable the Emacs emulation.'''
+        
+        g.trace(tbuffer,label)
+    
+        Emacs.Emacs_instances[ tbuffer ] = self
+        def cb( evstring ):
+            _cb = None
+            if self.cbDict.has_key( evstring ):
+                _cb = self.cbDict[ evstring ]
+            evstring = '&lt;%s&gt;' % evstring
+            if evstring != '&lt;Key&gt;':
+                # g.trace(evstring)
+                tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring) )
+            else:
+                # g.trace('+',evstring)
+                tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring), '+' )
+
+        # EKR: create one binding for each entry in cbDict.
+        for z in self.cbDict:
+            cb( z )
+        
+        self.mbuffers[ tbuffer ] = label
+        self.svars[ tbuffer ] = Tkinter.StringVar()
+        def setVar( event ):
+            label = self.mbuffers[ event.widget ]
+            svar = self.svars[ event.widget ]
+            label.configure( textvariable = svar )
+        tbuffer.bind( '&lt;FocusIn&gt;', setVar, '+' )
+        def scrollTo( event ):
+            event.widget.see( 'insert' )
+        
+        #tbuffer.bind( '&lt;Enter&gt;', scrollTo, '+' )
+        
+        # EKR: This _adds_ a binding for all &lt;Key&gt; events, so _all_ key events go through masterCommand.
+        cb( 'Key' )
+</t>
+<t tx="mork.20041030164547.31">def moveTo( self, event, spot ):
+    tbuffer = event.widget
+    tbuffer.mark_set( Tkinter.INSERT, spot )
+    tbuffer.see( spot )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.33">def moveword( self, event, way  ):
+    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+    
+    tbuffer = event.widget
+    #i = way
+    
+    ind = tbuffer.index( 'insert' )
+    if way == 1:
+         ind = tbuffer.search( '\w', 'insert', stopindex = 'end', regexp=True )
+         if ind:
+            nind = '%s wordend' % ind
+         else:
+            nind = 'end'
+    else:
+         ind = tbuffer.search( '\w', 'insert -1c', stopindex= '1.0', regexp = True, backwards = True )
+         if ind:
+            nind = '%s wordstart' % ind 
+         else:
+            nind = '1.0'
+    tbuffer.mark_set( 'insert', nind )
+    tbuffer.see( 'insert' )
+    tbuffer.event_generate( '&lt;Key&gt;' )
+    tbuffer.update_idletasks()
+    return 'break'</t>
+<t tx="mork.20041030164547.34">def kill( self, event, frm, to  ):
+    tbuffer = event.widget
+    text = tbuffer.get( frm, to )
+    self.addToKillBuffer( text )
+    tbuffer.clipboard_clear()
+    tbuffer.clipboard_append( text )    
+    if frm == 'insert' and to =='insert lineend' and tbuffer.index( frm ) == tbuffer.index( to ):
+        tbuffer.delete( 'insert', 'insert lineend +1c' )
+        self.addToKillBuffer( '\n' )
+    else:
+        tbuffer.delete( frm, to )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.35">def deletelastWord( self, event ):
+    #tbuffer = event.widget
+    #i = tbuffer.get( 'insert' )
+    self.moveword( event, -1 )
+    self.kill( event, 'insert', 'insert wordend')
+    self.moveword( event ,1 )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.36">def walkKB( self, event, frm, which ):# kb = self.iterateKillBuffer() ):
+        #if not kb1:
+        #    kb1.append( self.iterateKillBuffer() )
+        #kb = kb1[ 0 ]
+        #global reset
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    t , t1 = i.split( '.' )
+    clip_text = self.getClipboard( tbuffer )    
+    if self.killbuffer or clip_text:
+        if which == 'c':
+            self.reset = True
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            tbuffer.tag_delete( 'kb' )
+            tbuffer.insert( frm, txt, ('kb') )
+            tbuffer.mark_set( 'insert', i )
+        else:
+            if clip_text:
+                txt = clip_text
+            else:
+                txt = self.kbiterator.next()
+            t1 = str( int( t1 ) + len( txt ) )
+            r = tbuffer.tag_ranges( 'kb' )
+            if r and r[ 0 ] == i:
+                tbuffer.delete( r[ 0 ], r[ -1 ] )
+            tbuffer.tag_delete( 'kb' )
+            tbuffer.insert( frm, txt, ('kb') )
+            tbuffer.mark_set( 'insert', i )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.37">def killsentence( self, event, back = False ):
+    tbuffer = event.widget
+    i = tbuffer.search( '.' , 'insert', stopindex = 'end' )
+    if back:
+        i = tbuffer.search( '.' , 'insert', backwards = True, stopindex = '1.0' ) 
+        if i == '':
+            return 'break'
+        i2 = tbuffer.search( '.' , i, backwards = True , stopindex = '1.0' )
+        if i2 == '':
+            i2 = '1.0'
+        return self.kill( event, i2, '%s + 1c' % i )
+        #return self.kill( event , '%s +1c' % i, 'insert' )
+    else:
+        i = tbuffer.search( '.' , 'insert', stopindex = 'end' )
+        i2 = tbuffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
+    if i2 == '':
+       i2 = '1.0'
+    else:
+       i2 = i2 + ' + 1c '
+    if i == '': return 'break'
+    return self.kill( event, i2, '%s + 1c' % i )
+</t>
+<t tx="mork.20041030164547.38">def search( self, event, way , useregex=False):
+    '''This method moves the insert spot to position that matches the pattern in the minibuffer'''
+    tbuffer = event.widget
+    svar, label = self.getSvarLabel( event )
+    stext = svar.get()
+    if stext == '': return 'break'
+    try:
+        if way == 'bak': #Means search backwards.
+            i = tbuffer.search( stext, 'insert', backwards = True,  stopindex = '1.0' , regexp = useregex )
+            if not i: #If we dont find one we start again at the bottom of the buffer. 
+                i = tbuffer.search( stext, 'end', backwards = True, stopindex = 'insert', regexp = useregex)
+        else: #Since its not 'bak' it means search forwards.
+            i = tbuffer.search(  stext, "insert + 1c", stopindex = 'end', regexp = useregex ) 
+            if not i: #If we dont find one we start at the top of the buffer. 
+                i = tbuffer.search( stext, '1.0', stopindex = 'insert', regexp = useregex )
+    except:
+        return 'break'
+    if not i or i.isspace(): return 'break'
+    tbuffer.mark_set( 'insert', i )
+    tbuffer.see( 'insert' )
+</t>
+<t tx="mork.20041030164547.39">def capitalize( self, event, which ):
+    tbuffer = event.widget
+    text = tbuffer.get( 'insert wordstart', 'insert wordend' )
+    i = tbuffer.index( 'insert' )
+    if text == ' ': return 'break'
+    tbuffer.delete( 'insert wordstart', 'insert wordend' )
+    if which == 'cap':
+        text = text.capitalize() 
+    if which == 'low':
+        text = text.lower()
+    if which == 'up':
+        text = text.upper()
+    tbuffer.insert( 'insert', text )
+    tbuffer.mark_set( 'insert', i )    
+    return 'break' 
+</t>
+<t tx="mork.20041030164547.40">def swapWords( self, event , swapspots ):
+    tbuffer = event.widget
+    txt = tbuffer.get( 'insert wordstart', 'insert wordend' )
+    if txt == ' ' : return 'break'
+    i = tbuffer.index( 'insert wordstart' )
+    if len( swapspots ) != 0:
+        def swp( find, ftext, lind, ltext ):
+            tbuffer.delete( find, '%s wordend' % find )
+            tbuffer.insert( find, ltext )
+            tbuffer.delete( lind, '%s wordend' % lind )
+            tbuffer.insert( lind, ftext )
+            swapspots.pop()
+            swapspots.pop()
+            return 'break'
+        if tbuffer.compare( i , '&gt;', swapspots[ 1 ] ):
+            return swp( i, txt, swapspots[ 1 ], swapspots[ 0 ] )
+        elif tbuffer.compare( i , '&lt;', swapspots[ 1 ] ):
+            return swp( swapspots[ 1 ], swapspots[ 0 ], i, txt )
+        else:
+            return 'break'
+    else:
+        swapspots.append( txt )
+        swapspots.append( i )
+        return 'break'
+</t>
+<t tx="mork.20041030164547.41">def getHelpText():
+    '''This returns a string that describes what all the
+    keystrokes do with a bound Text widget.'''
+    help_t = [ 'Buffer Keyboard Commands:',
+    '----------------------------------------\n',
+    '&lt;Control-p&gt;: move up one line',
+    '&lt;Control-n&gt;: move down one line',
+    '&lt;Control-f&gt;: move forward one char',
+    '&lt;Conftol-b&gt;: move backward one char',
+    '&lt;Control-o&gt;: insert newline',
+    '&lt;Control-Alt-o&gt; : insert newline and indent',
+    '&lt;Control-j&gt;: insert newline and tab',
+    '&lt;Alt-&lt;&gt; : move to start of Buffer',
+    '&lt;Alt- &gt;' +' &gt;: move to end of Buffer',
+    '&lt;Control a&gt;: move to start of line',
+    '&lt;Control e&gt; :move to end of line',
+    '&lt;Alt-Up&gt;: move to start of line',
+    '&lt;Alt-Down&gt;: move to end of line',
+    '&lt;Alt b&gt;: move one word backward',
+    '&lt;Alt f&gt; : move one word forward',
+    '&lt;Control - Right Arrow&gt;: move one word forward',
+    '&lt;Control - Left Arrow&gt;: move one word backwards',
+    '&lt;Alt-m&gt; : move to beginning of indentation',
+    '&lt;Alt-g&gt; : goto line number',
+    '&lt;Control-v&gt;: scroll forward one screen',
+    '&lt;Alt-v&gt;: scroll up one screen',
+    '&lt;Alt-a&gt;: move back one sentence',
+    '&lt;Alt-e&gt;: move forward one sentence',
+    '&lt;Alt-}&gt;: move forward one paragraph',
+    '&lt;Alt-{&gt;: move backwards one paragraph',
+    '&lt;Alt-:&gt; evaluate a Python expression in the minibuffer and insert the value in the current buffer',
+    'Esc Esc : evaluate a Python expression in the minibuffer and insert the value in the current buffer',
+    '&lt;Control-x . &gt;: set fill prefix',
+    '&lt;Alt-q&gt;: fill paragraph',
+    '&lt;Alt-h&gt;: select current or next paragraph',
+    '&lt;Control-x Control-@&gt;: pop global mark',
+    '&lt;Control-u&gt;: universal command, repeats the next command n times.',
+    '&lt;Alt -n &gt; : n is a number.  Processes the next command n times.',
+    '&lt;Control-x (&gt;: start definition of kbd macro',
+    '&lt;Control-x ) &gt; : stop definition of kbd macro',
+    '&lt;Control-x e : execute last macro defined',
+    '&lt;Control-u Control-x ( &gt;: execute last macro and edit',
+    '&lt;Control-x Esc Esc &gt;: execute last complex command( last Alt-x command',
+    '&lt;Control-x Control-c &gt;: save buffers kill Emacs',
+    '''&lt;Control-x u &gt; : advertised undo.   This function utilizes the environments.
+    If the buffer is not configure explicitly, there is no operation.''',
+    '&lt;Control-_&gt;: advertised undo.  See above',
+    '&lt;Control-z&gt;: iconfify frame',
+    '----------------------------------------\n',
+    '&lt;Delete&gt; : delete previous character',
+    '&lt;Control d&gt;: delete next character',
+    '&lt;Control k&gt; : delete from cursor to end of line. Text goes to kill buffer',
+    '&lt;Alt d&gt;: delete word. Word goes to kill buffer',
+    '&lt;Alt Delete&gt;: delete previous word. Word goes to kill buffer',
+    '&lt;Alt k &gt;: delete current sentence. Sentence goes to kill buffer',
+    '&lt;Control x Delete&gt;: delete previous sentence. Sentence goes to kill buffer',
+    '&lt;Control y &gt;: yank last deleted text segment from\n kill buffer and inserts it.',
+    '&lt;Alt y &gt;: cycle and yank through kill buffer.\n',
+    '&lt;Alt z &gt;: zap to typed letter. Text goes to kill buffer',
+    '&lt;Alt-^ &gt;: join this line to the previous one',
+    '&lt;Alt-\ &gt;: delete surrounding spaces',
+    '&lt;Alt-s&gt; &gt;: center line in current fill column',
+    '&lt;Control-Alt-w&gt;: next kill is appended to kill buffer\n'
+    
+    '----------------------------------------\n',
+    '&lt;Alt c&gt;: Capitalize the word the cursor is under.',
+    '&lt;Alt u&gt;: Uppercase the characters in the word.',
+    '&lt;Alt l&gt;: Lowercase the characters in the word.',
+    '----------------------------------------\n',
+    '&lt;Alt t&gt;: Mark word for word swapping.  Marking a second\n word will swap this word with the first',
+    '&lt;Control-t&gt;: Swap characters',
+    '&lt;Ctrl-@&gt;: Begin marking region.',
+    '&lt;Ctrl-W&gt;: Kill marked region',
+    '&lt;Alt-W&gt;: Copy marked region',
+    '&lt;Ctrl-x Ctrl-u&gt;: uppercase a marked region',
+    '&lt;Ctrl-x Ctrl-l&gt;: lowercase a marked region',
+    '&lt;Ctrl-x h&gt;: mark entire buffer',
+    '&lt;Alt-Ctrl-backslash&gt;: indent region to indentation of line 1 of the region.',
+    '&lt;Ctrl-x tab&gt; : indent region by 1 tab',
+    '&lt;Control-x Control-x&gt; : swap point and mark',
+    '&lt;Control-x semicolon&gt;: set comment column',
+    '&lt;Alt-semicolon&gt;: indent to comment column',
+    '----------------------------------------\n',
+    'M-! cmd -- Run the shell command line cmd and display the output',
+    'M-| cmd -- Run the shell command line cmd with region contents as input',
+    '----------------------------------------\n',
+    '&lt;Control-x a e&gt;: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled',
+    '&lt;Control-x a g&gt;: Define an abbreviation for previous word',
+    '&lt;Control-x a i g&gt;: Define a word as abbreviation for word before point, or in point',                        
+    '----------------------------------------\n',
+    '&lt;Control s&gt;: forward search, using pattern in Mini buffer.\n',
+    '&lt;Control r&gt;: backward search, using pattern in Mini buffer.\n' ,
+    '&lt;Control s Enter&gt;: search forward for a word, nonincremental\n',
+    '&lt;Control r Enter&gt;: search backward for a word, nonincremental\n',
+    '&lt;Control s Enter Control w&gt;: Search for words, ignoring details of punctuation',
+    '&lt;Control r Enter Control w&gt;: Search backward for words, ignoring details of punctuation',
+    '&lt;Control-Alt s&gt;: forward regular expression search, using pattern in Mini buffer\n',
+    '&lt;Control-Alt r&gt;: backward regular expression search, using pattern in Mini buffer\n',
+    '''&lt;Alt-%&gt;: begin query search/replace. n skips to next match. y changes current match.  
+    q or Return exits. ! to replace all remaining matches with no more questions''',
+    '''&lt;Control Alt %&gt; begin regex search replace, like Alt-%''',
+    '&lt;Alt-=&gt;: count lines and characters in regions',
+    '&lt;Alt-( &gt;: insert parentheses()',
+    '&lt;Alt-) &gt;:  move past close',
+    '&lt;Control-x Control-t&gt;: transpose lines.',
+    '&lt;Control-x Control-o&gt;: delete blank lines' ,
+    '&lt;Control-x r s&gt;: save region to register',
+    '&lt;Control-x r i&gt;: insert to buffer from register',
+    '&lt;Control-x r +&gt;: increment register',
+    '&lt;Control-x r n&gt;: insert number 0 to register',
+    '&lt;Control-x r space &gt; : point insert point to register',
+    '&lt;Control-x r j &gt; : jump to register',
+    '&lt;Control-x x&gt;: save region to register',
+    '&lt;Control-x r r&gt; : save rectangle to register',
+    '&lt;Control-x r o&gt;: open up rectangle',
+    '&lt;Control-x r c&gt; : clear rectangle',
+    '&lt;Control-x r d&gt; : delete rectangle',
+    '&lt;Control-x r t&gt; : replace rectangle with string',
+    '&lt;Control-x r k&gt; : kill rectangle',
+    '&lt;Control-x r y&gt; : yank rectangle',
+    '&lt;Control-g&gt; : keyboard quit\n',
+    '&lt;Control-x = &gt; : position of cursor',
+    '&lt;Control-x . &gt; : set fill prefix',
+    '&lt;Control-x f &gt; : set the fill column',
+    '&lt;Control-x Control-b &gt; : display the buffer list',
+    '&lt;Control-x b &gt; : switch to buffer',
+    '&lt;Control-x k &gt; : kill the specified buffer',
+    '----------------------------------------\n',
+    '&lt;Alt - - Alt-l &gt;: lowercase previous word',
+    '&lt;Alt - - Alt-u&gt;: uppercase previous word',
+    '&lt;Alt - - Alt-c&gt;: capitalise previous word',
+    '----------------------------------------\n',
+    '&lt;Alt-/ &gt;: dynamic expansion',
+    '&lt;Control-Alt-/&gt;: dynamic expansion.  Expands to common prefix in buffer\n'
+    '----------------------------------------\n',
+    'Alt-x commands:\n',
+    '(Pressing Tab will result in auto completion of the options if an appropriate match is found',
+    'replace-string  -  replace string with string',
+    'replace-regex - replace python regular expression with string',
+    'append-to-register  - append region to register',
+    'prepend-to-register - prepend region to register\n'
+    'sort-lines - sort selected lines',
+    'sort-columns - sort by selected columns',
+    'reverse-region - reverse selected lines',
+    'sort-fields  - sort by fields',
+    'abbrev-mode - toggle abbrev mode on/off',
+    'kill-all-abbrevs - kill current abbreviations',
+    'expand-region-abbrevs - expand all abrevs in region',
+    'read-abbrev-file - read abbreviations from file',
+    'write-abbrev-file - write abbreviations to file',
+    'list-abbrevs   - list abbrevs in minibuffer',
+    'fill-region-as-paragraph - treat region as one paragraph and add fill prefix',
+    'fill-region - fill paragraphs in region with fill prefix',
+    'close-rectangle  - close whitespace rectangle',
+    'how-many - counts occurances of python regular expression',
+    'kill-paragraph - delete from cursor to end of paragraph',
+    'backward-kill-paragraph - delete from cursor to start of paragraph',
+    'backward-kill-sentence - delete from the cursor to the start of the sentence',
+    'name-last-kbd-macro - give the last kbd-macro a name',
+    'insert-keyboard-macro - save macros to file',
+    'load-file - load a macro file',
+    'kill-word - delete the word the cursor is on',
+    'kill-line - delete form the cursor to end of the line', 
+    'kill-sentence - delete the sentence the cursor is on',
+    'kill-region - delete a marked region',
+    'yank - restore what you have deleted',
+    'backward-kill-word - delete previous word',
+    'backward-delete-char - delete previous character',
+    'delete-char - delete character under cursor' , 
+    'isearch-forward - start forward incremental search',
+    'isearch-backward - start backward incremental search',
+    'isearch-forward-regexp - start forward regular expression incremental search',
+    'isearch-backward-regexp - start backward return expression incremental search',
+    'capitalize-word - capitalize the current word',
+    'upcase-word - switch word to upper case',
+    'downcase-word - switch word to lower case',
+    'indent-region - indent region to first line in region',
+    'indent-rigidly - indent region by a tab',
+    'indent-relative - Indent from point to under an indentation point in the previous line',
+    'set-mark-command - mark the beginning or end of a region',
+     'kill-rectangle - kill the rectangle',
+    'delete-rectangle - delete the rectangle',
+    'yank-rectangle - yank the rectangle',
+    'open-rectangle - open the rectangle',
+    'clear-rectangle - clear the rectangle',
+    'copy-to-register - copy selection to register',
+    'insert-register - insert register into buffer',
+    'copy-rectangle-to-register - copy buffer rectangle to register',
+    'jump-to-register - jump to position in register',
+    'point-to-register - insert point into register',
+    'number-to-register - insert number into register',
+    'increment-register - increment number in register',
+    'view-register - view what register contains',
+    'beginning-of-line - move to the beginning of the line',
+    'end-of-line - move to the end of the line',
+    'beginning-of-buffer - move to the beginning of the buffer',
+    'end-of-buffer - move to the end of the buffer',
+    'newline-and-indent - insert a newline and tab',
+    'keyboard-quit - abort current command',
+    'iconify-or-deiconify-frame - iconfiy current frame',
+    'advertised-undo - undo the last operation',
+    'back-to-indentation - move to first non-blank character of line',
+    'delete-indentation - join this line to the previous one',
+    'view-lossage - see the last 100 characters typed',
+    'transpose-chars - transpose two letters',
+    'transpose-words - transpose two words',
+    'transpose-line - transpose two lines',
+    'flush-lines - delete lines that match regex',
+    'keep-lines - keep lines that only match regex',
+    'insert-file - insert file at current position',
+    'save-buffer - save file',
+    'split-line - split line at cursor. indent to column of cursor',
+    'upcase-region - Upper case region',
+    'downcase-region - lower case region',
+    'goto-line - goto a line in the buffer',
+    'what-line - display what line the cursor is on',
+    'goto-char - goto a char in the buffer',
+    'set-fill-column - sets the fill column',
+    'center-line - centers the current line within the fill column',
+    'center-region - centers the current region within the fill column',   
+    'forward-char - move the cursor forward one char',
+    'backward-char - move the cursor backward one char',
+    'previous-line - move the cursor up one line',
+    'next-line - move the cursor down one line',
+    'universal-argument - Repeat the next command "n" times',
+    'digit-argument - Repeat the next command "n" times',
+    'set-fill-prefix - Sets the prefix from the insert point to the start of the line',
+    'scroll-up - scrolls up one screen',
+    'scroll-down - scrolls down one screen',
+    'append-to-buffer - Append region to a specified buffer',
+    'prepend-to-buffer - Prepend region to a specified buffer',
+    'copy-to-buffer - Copy region to a specified buffer, deleting the previous contents',
+    'insert-buffer - Insert the contents of a specified buffer into current buffer at point',
+    'list-buffers - Display the buffer list',
+    'switch-to-buffer - switch to a different buffer, if it does not exits, it is created.',
+    'kill-buffer - kill the specified buffer',
+    'rename-buffer - rename the buffer',
+    'query-replace - query buffer for pattern and replace it.  The user will be asked for a pattern, and for text to replace the pattern with.',
+    'query-replace-regex - query buffer with regex and replace it.  The user will be asked for a pattern, and for text to replace the regex matches with.',
+    'inverse-add-global-abbrev - add global abbreviation from previous word.  Will ask user for word to expand to',
+    'expand-abbrev - Expand the abbrev before point. This is effective even when Abbrev mode is not enabled',
+    're-search-forward - do a python regular expression search forward',
+    're-search-backward - do a python regular expression search backward',
+    'diff - compares two files, displaying the differences in an Emacs buffer named *diff*',
+    'make-directory - create a new directory',
+    'remove-directory - remove an existing directory if its empty',
+    'delete-file - remove an existing file',
+    'search-forward - search forward for a word',
+    'search-backward - search backward for a word',
+    'word-search-forward - Search for words, ignoring details of punctuation.', 
+    'word-search-backward - Search backward for words, ignoring details of punctuation',
+    'repeat-complex-command - repeat the last Alt-x command',
+    'eval-expression - evaluate a Python expression and put the value in the current buffer',
+    'tabify - turn the selected text\'s spaces into tabs',
+    'untabify - turn the selected text\'s tabs into spaces',
+    'shell-command -Run the shell command line cmd and display the output',
+    'shell-command-on-region -Run the shell command line cmd with region contents as input',
+    ]
+    
+    return '\n'.join( help_t )
+
+getHelpText = staticmethod( getHelpText )
+
+
+
+
+
+
+
+
+
+
+
+</t>
+<t tx="mork.20041030164547.42">#self.killbuffer = []
+def addToKillBuffer( self, text ):
+    #global reset
+    self.reset = True 
+    if self.previousStroke in ( '&lt;Control-k&gt;', '&lt;Control-w&gt;' ,
+     '&lt;Alt-d&gt;', '&lt;Alt-Delete', '&lt;Alt-z&gt;', '&lt;Delete&gt;',
+     '&lt;Control-Alt-w&gt;' ) and len( self.killbuffer):
+        self.killbuffer[ 0 ] = self.killbuffer[ 0 ] + text
+        return
+    self.killbuffer.insert( 0, text )
+</t>
+<t tx="mork.20041030164547.43">#self.controlx = False
+#self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
+#self.pref = None
+#self.zap = False
+#self.goto = False
+#self.previousStroke = ''
+def masterCommand( self, event, method , stroke):
+    '''The masterCommand is the central routing method of the Emacs method.
+       All commands and keystrokes pass through here.'''
+       
+    special = event.keysym in ('Control_L','Control_R','Alt_L','Alt-R','Shift_L','Shift_R')
+    inserted = not special or len(self.keysymhistory) == 0 or self.keysymhistory[0] != event.keysym
+
+    # Don't add multiple special characters to history.
+    if inserted:
+        self.keysymhistory.insert(0,event.keysym)
+        if len(event.char) &gt; 0:
+            if len(Emacs.lossage) &gt; 99: Emacs.lossage.pop()
+            Emacs.lossage.insert(0,event.char)
+        
+        if 1: # traces
+            print event.keysym,stroke
+            g.trace(self.keysymhistory)
+            g.trace(Emacs.lossage)
+        
+    if 0:
+        &lt;&lt; old insert code &gt;&gt;
+    
+            
+    if self.macroing:
+        if self.macroing == 2 and stroke != '&lt;Control-x&gt;':
+            return self.nameLastMacro( event )
+        elif self.macroing == 3 and stroke != '&lt;Control-x&gt;':
+            return self.getMacroName( event )
+        else:
+           self.recordKBDMacro( event, stroke )
+         
+    if  stroke == '&lt;Control-g&gt;':
+        self.previousStroke = stroke
+        return self.keyboardQuit( event )
+        
+    if self.mcStateManager.hasState():
+        self.previousStroke = stroke
+        return self.mcStateManager( event, stroke ) # EKR: Invoke the __call__ method.
+        
+    if self.kstrokeManager.hasKeyStroke( stroke ):
+        self.previousStroke = stroke
+        return self.kstrokeManager( event, stroke ) # EKR: Invoke the __call__ method.
+
+    &lt;&lt; old code &gt;&gt;
+    if self.regXRpl: # EKR: a generator.
+        try:
+            self.regXKey = event.keysym
+            self.regXRpl.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    &lt;&lt; old code 2 &gt;&gt;
+    if self.abbrevOn:
+        if self.expandAbbrev( event ) :
+            return 'break'       
+
+    if method:
+        rt = method( event )
+        self.previousStroke = stroke
+        return rt</t>
+<t tx="mork.20041030164547.44">#self.registers = {}
+
+def copyToRegister( self, event ):
+
+    if not self._chckSel( event ):
+        return
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        tbuffer = event.widget
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        self.registers[ event.keysym ] = txt
+        return 
+    self.stopControlX( event )
+</t>
+<t tx="mork.20041030164547.45">def copyRectangleToRegister( self, event ):
+    if not self._chckSel( event ):
+        return
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        tbuffer = event.widget
+        r1, r2, r3, r4 = self.getRectanglePoints( event )
+        rect = []
+        while r1 &lt;= r3:
+            txt = tbuffer.get( '%s.%s' %( r1, r2 ), '%s.%s' %( r1, r4 ) )
+            rect.append( txt )
+            r1 = r1 +1
+        self.registers[ event.keysym ] = rect
+    self.stopControlX( event )        
+</t>
+<t tx="mork.20041030164547.46">def prependToRegister( self, event ):
+    #global regMeth, registermode, controlx, registermode
+    event.keysym = 'p'
+    self.setNextRegister( event )
+    self.mcStateManager.setState( 'controlx', False )
+    #self.controlx = True
+</t>
+<t tx="mork.20041030164547.47">def appendToRegister( self, event ):
+    #global regMeth, registermode, controlx
+    event.keysym = 'a'
+    self.setNextRegister( event )
+    self.mcStateManager.setState( 'controlx', True )
+    #self.controlx = True
+</t>
+<t tx="mork.20041030164547.48">def _chckSel( self, event ):
+     if not 'sel' in event.widget.tag_names():
+        return False
+     if not event.widget.tag_ranges( 'sel' ):
+        return False  
+     return True
+</t>
+<t tx="mork.20041030164547.49">def _ToReg( self, event , which):
+    if not self._chckSel( event ):
+        return
+    if self._checkIfRectangle( event ):
+        return
+    if event.keysym in string.letters:
+        event.keysym = event.keysym.lower()
+        tbuffer = event.widget
+        if not self.registers.has_key( event.keysym ):
+            self.registers[ event.keysym ] = ''
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        rtxt = self.registers[ event.keysym ]
+        if self.which == 'p':
+            txt = txt + rtxt
+        else:
+            txt = rtxt + txt
+        self.registers[ event.keysym ] = txt
+        return
+</t>
+<t tx="mork.20041030164547.50">def _checkIfRectangle( self, event ):
+    if self.registers.has_key( event.keysym ):
+        if isinstance( self.registers[ event.keysym ], list ):
+            svar, label = self.getSvarLabel( event )
+            self.stopControlX( event )
+            svar.set( "Register contains Rectangle, not text" )
+            return True
+    return False           
+</t>
+<t tx="mork.20041030164547.51">def insertFromRegister( self, event ):
+    tbuffer = event.widget
+    if self.registers.has_key( event.keysym ):
+        if isinstance( self.registers[ event.keysym ], list ):
+            self.yankRectangle( event, self.registers[ event.keysym ] )
+        else:
+            tbuffer.insert( 'insert', self.registers[ event.keysym ] )
+            tbuffer.event_generate( '&lt;Key&gt;' )
+            tbuffer.update_idletasks()
+    self.stopControlX( event )
+</t>
+<t tx="mork.20041030164547.52">def incrementRegister( self, event ):
+    if self.registers.has_key( event.keysym ):
+        if self._checkIfRectangle( event ):
+            return
+        if self.registers[ event.keysym ] in string.digits:
+            i = self.registers[ event.keysym ]
+            i = str( int( i ) + 1 )
+            self.registers[ event.keysym ] = i
+        else:
+            self.invalidRegister( event, 'number' )
+            return
+    self.stopControlX( event )
+</t>
+<t tx="mork.20041030164547.53">def numberToRegister( self, event ):
+    if event.keysym in string.letters:
+        self.registers[ event.keysym.lower() ] = str( 0 )
+    self.stopControlX( event )
+</t>
+<t tx="mork.20041030164547.54">def pointToRegister( self, event ):
+    if event.keysym in string.letters:
+        tbuffer = event.widget
+        self.registers[ event.keysym.lower() ] = tbuffer.index( 'insert' )
+    self.stopControlX( event )
+</t>
+<t tx="mork.20041030164547.55">def jumpToRegister( self, event ):
+    if event.keysym in string.letters:
+        if self._checkIfRectangle( event ):
+            return
+        tbuffer = event.widget
+        i = self.registers[ event.keysym.lower() ]
+        i2 = i.split( '.' )
+        if len( i2 ) == 2:
+            if i2[ 0 ].isdigit() and i2[ 1 ].isdigit():
+                pass
+            else:
+                self.invalidRegister( event, 'index' )
+                return
+        else:
+            self.invalidRegister( event, 'index' )
+            return
+        tbuffer.mark_set( 'insert', i )
+        tbuffer.event_generate( '&lt;Key&gt;' )
+        tbuffer.update_idletasks() 
+    self.stopControlX( event ) 
+</t>
+<t tx="mork.20041030164547.56">def invalidRegister( self, event, what ):
+    self.deactivateRegister( event )
+    svar, label = self.getSvarLabel( event )
+    svar.set( 'Register does not contain valid %s'  % what)
+    return    
+</t>
+<t tx="mork.20041030164547.57">def setNextRegister( self, event ):
+    #global regMeth, registermode
+    if event.keysym == 'Shift':
+        return
+    if self.regMeths.has_key( event.keysym ):
+        self.mcStateManager.setState( 'controlx', True )
+        self.regMeth = self.regMeths[ event.keysym ]
+        self.registermode = 2
+        svar = self.svars[ event.widget ]
+        svar.set( self.regText[ event.keysym ] )
+        return
+    self.stopControlX( event )
+</t>
+<t tx="mork.20041030164547.58">def executeRegister( self, event ):
+    self.regMeth( event )
+    if self.registermode: 
+        self.stopControlX( event )
+    return
+</t>
+<t tx="mork.20041030164547.59">def deactivateRegister( self, event ):
+    #global registermode, regMeth
+    svar, label = self.getSvarLabel( event )
+    svar.set( '' )
+    self.setLabelGrey( label )
+    self.registermode = False
+    self.regMeth = None
+</t>
+<t tx="mork.20041030164547.60">#self.abbrevMode = False
+#self.abbrevOn = False
+#self.abbrevs = {}
+def abbreviationDispatch( self, event, which ):
+    #global abbrevMode
+    #if not self.abbrevMode:
+    aM = self.mcStateManager.getState( 'abbrevMode' )
+    if not aM:
+        #self.abbrevMode = which
+        self.mcStateManager.setState( 'abbrevMode', which )
+        svar, label = self.getSvarLabel( event )
+        svar.set( '' )
+        self.setLabelBlue( label )
+        return 'break'
+    if aM:
+        self.abbrevCommand1( event )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.61">def abbrevCommand1( self, event ):
+    #global abbrevMode
+    if event.keysym == 'Return':
+        tbuffer = event.widget
+        word = tbuffer.get( 'insert -1c wordstart', 'insert -1c wordend' )
+        if word == ' ': return
+        svar, label = self.getSvarLabel( event )
+        aM = self.mcStateManager.getState( 'abbrevMode' )
+        if aM == 1:
+            self.abbrevs[ svar.get() ] = word
+        elif aM == 2:
+            self.abbrevs[ word ] = svar.get()
+        #self.abbrevMode = False
+        #self.mcStateManager.setState( 'abbrevMode', False )
+        self.keyboardQuit( event )
+        self.resetMiniBuffer( event )
+        return 'break'
+    svar, label = self.getSvarLabel( event )
+    self.setSvar( event, svar )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.62">def expandAbbrev( self,event ):
+    tbuffer = event.widget
+    word = tbuffer.get( 'insert -1c wordstart', 'insert -1c wordend' )
+    c = event.char.strip()
+    if c: #We have to do this because this method is called from Alt-x and Control-x, we get two differnt types of data and tbuffer states.
+        word = '%s%s' %( word, event.char )
+    if self.abbrevs.has_key( word ):
+        tbuffer.delete( 'insert -1c wordstart', 'insert -1c wordend' )
+        tbuffer.insert( 'insert', self.abbrevs[ word ] ) 
+        return self._tailEnd( tbuffer )
+        #return True
+    else: return False
+</t>
+<t tx="mork.20041030164547.63">#self.regXRpl = None
+#self.regXKey = None
+def regionalExpandAbbrev( self, event ):
+    #global regXRpl
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    i1 = tbuffer.index( 'sel.first' )
+    i2 = tbuffer.index( 'sel.last' ) 
+    ins = tbuffer.index( 'insert' )
+    &lt;&lt; define a new generator searchXR &gt;&gt;
+    # EKR: the 'result' of calling searchXR is a generator object.
+    self.regXRpl = searchXR( i1, i2, ins, event)
+    self.regXRpl.next() # Call it the first time.
+    return 'break' </t>
+<t tx="mork.20041030164547.64">def _setRAvars( self ):
+    #global regXRpl, regXKey
+    self.regXRpl = self.regXKey = None 
+</t>
+<t tx="mork.20041030164547.65">def killAllAbbrevs( self, event ):
+    #global abbrevs
+    self.abbrevs = {}
+    return self.keyboardQuit( event )
+</t>
+<t tx="mork.20041030164547.66">def toggleAbbrevMode( self, event ):
+    #global abbrevOn
+    #aO = self.mcStateManager.getState( 'abbrevOn' )
+    svar, label = self.getSvarLabel( event )
+    if self.abbrevOn:
+        self.abbrevOn = False
+        self.keyboardQuit( event )
+        svar.set( "Abbreviations are Off" )  
+        #self.mcStateManager.setState( 'abbrevOn', False ) #This doesnt work too well with the mcStateManager
+    else:
+        self.abbrevOn = True
+        self.keyboardQuit( event )
+        svar.set( "Abbreviations are On" )
+        #self.mcStateManager.setState( 'abbrevOn', True )
+</t>
+<t tx="mork.20041030164547.67">def listAbbrevs( self, event ):
+    svar, label = self.getSvarLabel( event )
+    txt = ''
+    for z in self.abbrevs:
+        txt = '%s%s=%s\n' %( txt, z, self.abbrevs[ z ] )
+    svar.set( '' )
+    svar.set( txt )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.68">def readAbbreviations( self, event ):
+    import tkFileDialog
+    f = tkFileDialog.askopenfile()
+    if f == None: return 'break'        
+    return self._readAbbrevs( f )
+</t>
+<t tx="mork.20041030164547.69">def _readAbbrevs( self, f ):
+    for x in f:
+        a, b = x.split( '=' )
+        b = b[ : -1 ]
+        self.abbrevs[ a ] = b
+    f.close()        
+    return 'break'
+</t>
+<t tx="mork.20041030164547.70">def writeAbbreviations( self, event ):
+    import tkFileDialog
+    f = tkFileDialog.asksaveasfile() 
+    if f == None: return 'break' 
+    return self._writeAbbrevs( f )
+</t>
+<t tx="mork.20041030164547.71">def _writeAbbrevs( self, f ):
+    for x in self.abbrevs:
+        f.write( '%s=%s\n' %( x, self.abbrevs[ x ] ) )
+    f.close()    
+    return 'break'
+</t>
+<t tx="mork.20041030164547.72">def movingParagraphs( self, event, way ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    
+    if way == 1:
+        while 1:
+            txt = tbuffer.get( '%s linestart' % i, '%s lineend' %i )
+            txt = txt.rstrip().lstrip()
+            if not txt:
+                i = tbuffer.search( r'\w', i, regexp = True, stopindex = 'end' )
+                i = '%s' %i
+                break
+            else:
+                i = tbuffer.index( '%s + 1 lines' % i )
+                if tbuffer.index( '%s linestart' % i ) == tbuffer.index( 'end' ):
+                    i = tbuffer.search( r'\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
+                    i = '%s + 1c' % i
+                    break
+    else:
+        while 1:
+            txt = tbuffer.get( '%s linestart' % i, '%s lineend' %i )
+            txt = txt.rstrip().lstrip()
+            if not txt:
+                i = tbuffer.search( r'\w', i, backwards = True, regexp = True, stopindex = '1.0' )
+                i = '%s +1c' %i
+                break
+            else:
+                i = tbuffer.index( '%s - 1 lines' % i )
+                if tbuffer.index( '%s linestart' % i ) == '1.0':
+                    i = tbuffer.search( r'\w', '1.0', regexp = True, stopindex = 'end' )
+                    break
+    if i : 
+        tbuffer.mark_set( 'insert', i )
+        tbuffer.see( 'insert' )
+        return self._tailEnd( tbuffer )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.73">#self.fillPrefix = ''
+def setFillPrefix( self, event ):
+    #global fillPrefix
+    tbuffer = event.widget
+    txt = tbuffer.get( 'insert linestart', 'insert' )
+    self.fillPrefix = txt
+    return 'break'
+</t>
+<t tx="mork.20041030164547.74">def fillParagraph( self, event ):
+    tbuffer = event.widget
+    txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+    txt = txt.lstrip().rstrip()
+    if txt:
+        i = tbuffer.index( 'insert' )
+        i2 = i
+        txt2 = txt
+        while txt2:
+            pi2 = tbuffer.index( '%s - 1 lines' % i2)
+            txt2 = tbuffer.get( '%s linestart' % pi2, '%s lineend' % pi2 )
+            if tbuffer.index( '%s linestart' % pi2 ) == '1.0':
+                i2 = tbuffer.search( '\w', '1.0', regexp = True, stopindex = 'end' )
+                break
+            if txt2.lstrip().rstrip() == '': break
+            i2 = pi2
+        i3 = i
+        txt3 = txt
+        while txt3:
+            pi3 = tbuffer.index( '%s + 1 lines' %i3 )
+            txt3 = tbuffer.get( '%s linestart' % pi3, '%s lineend' % pi3 )
+            if tbuffer.index( '%s lineend' % pi3 ) == tbuffer.index( 'end' ):
+                i3 = tbuffer.search( '\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
+                break
+            if txt3.lstrip().rstrip() == '': break
+            i3 = pi3
+        ntxt = tbuffer.get( '%s linestart' %i2, '%s lineend' %i3 )
+        ntxt = self._addPrefix( ntxt )
+        tbuffer.delete( '%s linestart' %i2, '%s lineend' % i3 )
+        tbuffer.insert( i2, ntxt )
+        tbuffer.mark_set( 'insert', i )
+        return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.75">def _addPrefix( self, ntxt ):
+        ntxt = ntxt.split( '.' )
+        ntxt = map( lambda a: self.fillPrefix+a, ntxt )
+        ntxt = '.'.join( ntxt )               
+        return ntxt
+</t>
+<t tx="mork.20041030164547.76">def fillRegionAsParagraph( self, event ):
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    i1 = tbuffer.index( 'sel.first linestart' )
+    i2 = tbuffer.index( 'sel.last lineend' )
+    txt = tbuffer.get(  i1,  i2 )
+    txt = self._addPrefix( txt )
+    tbuffer.delete( i1, i2 )
+    tbuffer.insert( i1, txt )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.77">def fillRegion( self, event ):
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    #i = tbuffer.index( 'insert' ) 
+    s1 = tbuffer.index( 'sel.first' )
+    s2 = tbuffer.index( 'sel.last' )
+    tbuffer.mark_set( 'insert', s1 )
+    self.movingParagraphs( event, -1 )
+    if tbuffer.index( 'insert linestart' ) == '1.0':
+        self.fillParagraph( event )
+    while 1:
+        self.movingParagraphs( event, 1 )
+        if tbuffer.compare( 'insert', '&gt;', s2 ):
+            break
+        self.fillParagraph( event )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.78">#self.registermode = False
+def doControlX( self, event, stroke, previous = [] ):
+    #global registermode
+    """previous.insert( 0, event.keysym )
+    if len( previous ) &gt; 10: previous.pop()
+    if stroke == '&lt;Key&gt;':
+        if event.keysym in ( 'Shift_L', 'Shift_R' ):
+            return
+        if event.keysym == 'period':
+            self.stopControlX( event )
+            return self.setFillPrefix( event )
+        if event.keysym == 'parenleft':
+            self.stopControlX( event )
+            return self.startKBDMacro( event )
+        if event.keysym == 'parenright':
+            self.stopControlX( event )
+            return self.stopKBDMacro( event )
+        if event.keysym == 'semicolon':
+            self.stopControlX( event )
+            return self.setCommentColumn( event )
+        if event.keysym == 'Tab':
+            self.stopControlX( event )
+            return self.tabIndentRegion( event )
+        if self.sRect:
+            self.stringRectangle( event )
+            return 'break'
+        if event.keysym in ( 'a', 'i' , 'e'):
+            svar, label = self.getSvarLabel( event )
+            if svar.get() != 'a' and event.keysym == 'a':
+                svar.set( 'a' )
+                return 'break'
+            elif svar.get() == 'a':
+                if event.char == 'i':
+                    svar.set( 'a i' )
+                elif event.char == 'e':
+                    self.stopControlX( event )
+                    event.char = ''
+                    self.expandAbbrev( event )
+                return 'break'
+        if event.keysym == 'g':
+            svar, label = self.getSvarLabel( event )
+            l = svar.get()
+            if l == 'a':
+                self.stopControlX( event )
+                return self.abbreviationDispatch( event, 1 )
+            elif l == 'a i':
+                self.stopControlX( event )
+                return self.abbreviationDispatch( event, 2 )
+        if event.keysym == 'e':
+            self.stopControlX( event )
+            return self.executeLastMacro( event )
+        if event.keysym == 'x' and previous[ 1 ] not in ( 'Control_L', 'Control_R'):
+            event.keysym = 's' 
+            self.setNextRegister( event )
+            return 'break'
+        if event.keysym == 'o' and self.registermode == 1:
+            self.openRectangle( event )
+            return 'break'
+        if event.keysym == 'c' and self.registermode == 1:
+            self.clearRectangle( event )
+            return 'break'
+        if event.keysym == 't' and self.registermode == 1:
+            self.stringRectangle( event )
+            return 'break'
+        if event.keysym == 'y' and self.registermode == 1:
+            self.yankRectangle( event )
+            return 'break'
+        if event.keysym == 'd' and self.registermode == 1:
+            self.deleteRectangle( event )
+            return 'break'
+        if event.keysym == 'k' and self.registermode == 1:
+            self.killRectangle( event )
+            return 'break'       
+        if self.registermode == 1:
+            self.setNextRegister( event )
+            return 'break'
+        elif self.registermode == 2:
+            self.executeRegister( event )
+            return 'break'
+        if event.keysym == 'r':
+            self.registermode = 1
+            svar = self.svars[ event.widget ]
+            svar.set( 'C - x r' )
+            return 'break'
+        if event.keysym== 'h':
+           self.stopControlX( event )
+           event.widget.tag_add( 'sel', '1.0', 'end' )
+           return 'break' 
+        if event.keysym == 'equal':
+            self.lineNumber( event )
+            return 'break'
+        if event.keysym == 'u':
+            self.stopControlX( event )
+            return self.doUndo( event, 2 )
+    if stroke in self.xcommands:
+        self.xcommands[ stroke ]( event )
+        self.stopControlX( event )
+    return 'break' """
+    return self.cxHandler( event, stroke )
+</t>
+<t tx="mork.20041030164547.79">def startIncremental( self, event, stroke, which='normal' ):
+    #global isearch, pref
+    #widget = event.widget
+    #if self.isearch:
+    isearch = self.mcStateManager.getState( 'isearch' )
+    if isearch:
+        self.search( event, way = self.csr[ stroke ], useregex = self.useRegex() )
+        self.pref = self.csr[ stroke ]
+        self.scolorizer( event )
+        return 'break'
+    else:
+        svar, label = self.getSvarLabel( event )
+        #self.isearch = True'
+        self.mcStateManager.setState( 'isearch', which )
+        self.pref = self.csr[ stroke ]
+        label.configure( background = 'lightblue' )
+        label.configure( textvariable = svar )
+        return 'break'
+</t>
+<t tx="mork.20041030164547.80">def iSearch( self, event, stroke ):
+    if len( event.char ) == 0: return
+    
+    if stroke in self.csr: return self.startIncremental( event, stroke )
+    svar, label = self.getSvarLabel( event )
+    if event.keysym == 'Return':
+          if svar.get() == '':
+              return self.startNonIncrSearch( event, self.pref )
+          else:
+            return self.stopControlX( event )
+          #return self._tailEnd( event.widget )
+    widget = event.widget
+    label.configure( textvariable = svar )
+    #if event.keysym == 'Return':
+    #      return self.stopControlX( event )
+    self.setSvar( event, svar )
+    if event.char != '\b':
+       stext = svar.get()
+       z = widget.search( stext , 'insert' , stopindex = 'insert +%sc' % len( stext ) )
+       if not z:
+           self.search( event, self.pref, useregex= self.useRegex() )
+    self.scolorizer( event )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.81">def startZap( self, event ):
+    #global zap
+    #self.zap = True
+    self.mcStateManager.setState( 'zap', True )
+    svar, label = self.getSvarLabel( event )
+    label.configure( background = 'lightblue' )
+    svar.set( 'Zap To Character' )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.82">def zapTo( self, event ):
+        #global zap
+
+        widget = event.widget
+        s = string.ascii_letters + string.digits + string.punctuation
+        if len( event.char ) != 0 and event.char in s:
+            #self.zap = False
+            self.mcStateManager.setState( 'zap', False )
+            i = widget.search( event.char , 'insert',  stopindex = 'end' )
+            self.resetMiniBuffer( event )
+            if i:
+                t = widget.get( 'insert', '%s+1c'% i )
+                self.addToKillBuffer( t )
+                widget.delete( 'insert', '%s+1c' % i)
+                return 'break'
+        else:
+            return 'break'
+</t>
+<t tx="mork.20041030164547.83">def changecbDict( self, changes ):
+    for z in changes:
+        if self.cbDict.has_key( z ):
+            self.cbDict[ z ] = self.changes[ z ]
+</t>
+<t tx="mork.20041030164547.84">def startControlX( self, event ):
+    '''This method starts the Control-X command sequence.'''  
+    #global controlx
+    #self.controlx = True
+    self.mcStateManager.setState( 'controlx', True )
+    svar, label = self.getSvarLabel( event )
+    svar.set( 'Control - X' )
+    label.configure( background = 'lightblue' )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.85">def stopControlX( self, event ):  #This will all be migrated to keyboardQuit eventually.
+    '''This method clears the state of the Emacs instance'''
+    #global controlx, rstring, isearch, sRect,negativeArg, uC, howM, altx
+    #self.altx = False
+    #self.howM = False
+    #self.controlx = False
+    #self.isearch = False
+    if self.shuttingdown: return
+    self.sRect = False
+    #self.uC = False
+    #self.negativeArg = False
+    self.mcStateManager.clear()
+    event.widget.tag_delete( 'color' )
+    event.widget.tag_delete( 'color1' )
+    if self.registermode:
+        self.deactivateRegister( event )
+    self.rectanglemode = 0
+    self.bufferMode = None
+    #self.rString = False
+    self.resetMiniBuffer( event )
+    event.widget.update_idletasks()     
+    return 'break'
+
+</t>
+<t tx="mork.20041030164547.86">def resetMiniBuffer( self, event ):
+    svar, label = self.getSvarLabel( event )
+    svar.set( '' )
+    label.configure( background = 'lightgrey' )
+</t>
+<t tx="mork.20041030164547.87">def setRegion( self, event ):   
+    mrk = 'sel'
+    tbuffer = event.widget
+    def extend( event ):
+        widget = event.widget
+        widget.mark_set( 'insert', 'insert + 1c' )
+        if self.inRange( widget, mrk ):
+            widget.tag_remove( mrk, 'insert -1c' )
+        else:
+            widget.tag_add( mrk, 'insert -1c' )
+            widget.tag_configure( mrk, background = 'lightgrey' )
+            self.testinrange( widget )
+        return 'break'
+        
+    def truncate( event ):
+        widget = event.widget
+        widget.mark_set( 'insert', 'insert -1c' )
+        if self.inRange( widget, mrk ):
+            self.testinrange( widget )
+            widget.tag_remove( mrk, 'insert' )
+        else:
+            widget.tag_add( mrk, 'insert' )
+            widget.tag_configure( mrk, background = 'lightgrey' )
+            self.testinrange( widget  )
+        return 'break'
+        
+    def up( event ):
+        widget = event.widget
+        if not self.testinrange( widget ):
+            return 'break'
+        widget.tag_add( mrk, 'insert linestart', 'insert' )
+        i = widget.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = str( int( i1 ) - 1 )
+        widget.mark_set( 'insert', i1+'.'+i2)
+        widget.tag_add( mrk, 'insert', 'insert lineend + 1c' )
+        if self.inRange( widget, mrk ,l = '-1c', r = '+1c') and widget.index( 'insert' ) != '1.0':
+            widget.tag_remove( mrk, 'insert', 'end' )  
+        return 'break'
+        
+    def down( event ):
+        widget = event.widget
+        if not self.testinrange( widget ):
+            return 'break'
+        widget.tag_add( mrk, 'insert', 'insert lineend' )
+        i = widget.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = str( int( i1 ) + 1 )
+        widget.mark_set( 'insert', i1 +'.'+i2 )
+        widget.tag_add( mrk, 'insert linestart -1c', 'insert' )
+        if self.inRange( widget, mrk , l = '-1c', r = '+1c' ): 
+            widget.tag_remove( mrk, '1.0', 'insert' )
+        return 'break'
+        
+    extend( event )   
+    tbuffer.bind( '&lt;Right&gt;', extend, '+' )
+    tbuffer.bind( '&lt;Left&gt;', truncate, '+' )
+    tbuffer.bind( '&lt;Up&gt;', up, '+' )
+    tbuffer.bind( '&lt;Down&gt;', down, '+' )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.88">def inRange( self, widget, range, l = '', r = '' ):
+    ranges = widget.tag_ranges( range )
+    #i = widget.index( 'insert' )
+    for z in xrange( 0,  len( ranges) , 2 ):
+        z1 = z + 1
+        l1 = 'insert%s' %l
+        r1 = 'insert%s' % r
+        if widget.compare( l1, '&gt;=', ranges[ z ]) and widget.compare( r1, '&lt;=', ranges[ z1] ):
+            return True
+    return False
+</t>
+<t tx="mork.20041030164547.89">def contRanges( self, widget, range ):
+    ranges = widget.tag_ranges( range)
+    t1 = widget.get( ranges[ 0 ], ranges[ -1 ] )
+    t2 = []
+    for z in xrange( 0,  len( ranges) , 2 ):
+        z1 = z + 1
+        t2.append( widget.get( ranges[ z ], ranges[ z1 ] ) )
+    t2 = '\n'.join( t2 )
+    return t1 == t2
+</t>
+<t tx="mork.20041030164547.90">def testinrange( self, widget ):
+    mrk = 'sel'
+    #ranges = widget.tag_ranges( mrk)
+    if not self.inRange( widget , mrk) or not self.contRanges( widget, mrk ):
+        self.removeRKeys( widget )
+        return False
+    return True
+</t>
+<t tx="mork.20041030164547.91">def killRegion( self, event, which ):
+    mrk = 'sel'
+    tbuffer = event.widget
+    trange = tbuffer.tag_ranges( mrk )
+    if len( trange ) != 0:
+        txt = tbuffer.get( trange[ 0 ] , trange[ -1 ] )
+        if which == 'd':
+            tbuffer.delete( trange[ 0 ], trange[ -1 ] )   
+        self.addToKillBuffer( txt )
+        tbuffer.clipboard_clear()
+        tbuffer.clipboard_append( txt )
+    self.removeRKeys( tbuffer )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.92">def removeRKeys( self, widget ):
+    mrk = 'sel'
+    widget.tag_delete( mrk )
+    widget.unbind( '&lt;Left&gt;' )
+    widget.unbind( '&lt;Right&gt;' )
+    widget.unbind( '&lt;Up&gt;' )
+    widget.unbind( '&lt;Down&gt;' )
+</t>
+<t tx="mork.20041030164547.93">def indentRegion( self, event ):
+    tbuffer = event.widget
+    mrk = 'sel'
+    trange = tbuffer.tag_ranges( mrk )
+    if len( trange ) != 0:
+        ind = tbuffer.search( '\w', '%s linestart' % trange[ 0 ], stopindex = 'end', regexp = True )
+        if not ind : return
+        text = tbuffer.get( '%s linestart' % ind ,  '%s lineend' % ind)
+        sstring = text.lstrip()
+        sstring = sstring[ 0 ]
+        ws = text.split( sstring )
+        if len( ws ) &gt; 1:
+            ws = ws[ 0 ]
+        else:
+            ws = ''
+        s , s1 = trange[ 0 ].split( '.' )
+        e , e1 = trange[ -1 ].split( '.' )
+        s = int( s )
+        s = s + 1
+        e = int( e ) + 1
+        for z in xrange( s , e ):
+            t2 = tbuffer.get( '%s.0' %z ,  '%s.0 lineend'%z)
+            t2 = t2.lstrip()
+            t2 = ws + t2
+            tbuffer.delete( '%s.0' % z ,  '%s.0 lineend' %z)
+            tbuffer.insert( '%s.0' % z, t2 )
+        tbuffer.event_generate( '&lt;Key&gt;' )
+        tbuffer.update_idletasks()
+    self.removeRKeys( tbuffer )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.94">def tabIndentRegion( self,event ):
+    tbuffer = event.widget
+    if not self._chckSel( event ):
+        return
+    i = tbuffer.index( 'sel.first' )
+    i2 = tbuffer.index( 'sel.last' )
+    i = tbuffer.index( '%s linestart' %i )
+    i2 = tbuffer.index( '%s linestart' % i2)
+    while 1:
+        tbuffer.insert( i, '\t' )
+        if i == i2: break
+        i = tbuffer.index( '%s + 1 lines' % i )    
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.95">def manufactureKeyPress( self, event, which ):
+    tbuffer = event.widget
+    tbuffer.event_generate( '&lt;Key&gt;',  keysym = which  )
+    tbuffer.update_idletasks()
+    return 'break'</t>
+<t tx="mork.20041030164547.96">def backToIndentation( self, event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert linestart' )
+    i2 = tbuffer.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
+    tbuffer.mark_set( 'insert', i2 )
+    tbuffer.update_idletasks()
+    return 'break'
+</t>
+<t tx="mork.20041030164547.97">def deleteIndentation( self, event ):
+    tbuffer = event.widget
+    txt = tbuffer.get( 'insert linestart' , 'insert lineend' )
+    txt = ' %s' % txt.lstrip()
+    tbuffer.delete( 'insert linestart' , 'insert lineend +1c' )    
+    i  = tbuffer.index( 'insert - 1c' )
+    tbuffer.insert( 'insert -1c', txt )
+    tbuffer.mark_set( 'insert', i )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.98">def deleteNextChar( self,event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    tbuffer.delete( i, '%s +1c' % i )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.99">def deleteSpaces( self, event , insertspace = False):
+    tbuffer = event.widget
+    char = tbuffer.get( 'insert', 'insert + 1c ' )
+    if char.isspace():
+        i = tbuffer.index( 'insert' )
+        wf = tbuffer.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
+        wb = tbuffer.search( r'\w', i, stopindex = '%s linestart' % i, regexp = True, backwards = True )
+        if '' in ( wf, wb ):
+            return 'break'
+        tbuffer.delete( '%s +1c' %wb, wf )
+        if insertspace:
+            tbuffer.insert( 'insert', ' ' )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.100">def measure( self, tbuffer ):
+    i = tbuffer.index( 'insert' )
+    i1, i2 = i.split( '.' )
+    start = int( i1 )
+    watch = 0
+    ustart = start
+    pone = 1
+    top = i
+    bottom = i
+    while pone:
+        ustart = ustart - 1
+        if ustart &lt; 0:
+            break
+        ds = '%s.0' % ustart
+        pone = tbuffer.dlineinfo( ds )
+        if pone:
+            top = ds
+            watch = watch  + 1
+    
+    pone = 1
+    ustart = start
+    while pone:
+        ustart = ustart +1
+        ds = '%s.0' % ustart
+        pone = tbuffer.dlineinfo( ds )
+        if pone:
+            bottom = ds
+            watch = watch + 1
+            
+    return watch , top, bottom
+</t>
+<t tx="mork.20041030164547.101">def screenscroll( self, event, way = 'north' ):
+    tbuffer = event.widget
+    chng = self.measure( tbuffer )
+    i = tbuffer.index( 'insert' )
+    
+    if way == 'north':
+        #top = chng[ 1 ]
+        i1, i2 = i.split( '.' )
+        i1 = int( i1 ) - chng[ 0 ]
+    else:
+        #bottom = chng[ 2 ]
+        i1, i2 = i.split( '.' )
+        i1 = int( i1 ) + chng[ 0 ]
+        
+    tbuffer.mark_set( 'insert', '%s.%s' % ( i1, i2 ) )
+    tbuffer.see( 'insert' )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.102">def countRegion( self, event ):
+    tbuffer = event.widget
+    txt = tbuffer.get( 'sel.first', 'sel.last')
+    svar = self.svars[ tbuffer ]
+    lines = 1
+    chars = 0
+    for z in txt:
+        if z == '\n': lines = lines + 1
+        else:
+            chars = chars + 1       
+    svar.set( 'Region has %s lines, %s characters' %( lines, chars ) )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.103">def insertParentheses( self, event ):
+    tbuffer = event.widget
+    tbuffer.insert( 'insert', '()' )
+    tbuffer.mark_set( 'insert', 'insert -1c' )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.104">#self.qQ = None
+#self.qR = None
+#self.qlisten = False
+#self.lqR = Tkinter.StringVar()
+#self.lqR.set( 'Query with: ' )
+def listenQR( self, event ):
+    #global qgetQuery, qlisten
+    #self.qlisten = True
+    self.mcStateManager.setState( 'qlisten', 'replace-caption' )
+    #tbuffer = event.widget
+    svar, label = self.getSvarLabel( event )
+    self.setLabelBlue( label )
+    if self.querytype == 'regex':
+        svar.set( "Regex Query with:" )
+    else:
+        svar.set( "Query with:" )
+    #label.configure( background = 'lightblue' , textvariable = self.lqR)
+    self.qgetQuery = True
+</t>
+<t tx="mork.20041030164547.105">def qsearch( self, event ):
+    if self.qQ:
+        tbuffer = event.widget
+        tbuffer.tag_delete( 'qR' )
+        svar, label = self.getSvarLabel( event )
+        if self.querytype == 'regex':
+            try:
+                regex = re.compile( self.qQ )
+            except:
+                self.keyboardQuit( event )
+                svar.set( "Illegal regular expression" )
+                
+            txt = tbuffer.get( 'insert', 'end' )
+            match = regex.search( txt )
+            if match:
+                start = match.start()
+                end = match.end()
+                length = end - start
+                tbuffer.mark_set( 'insert', 'insert +%sc' % start )
+                tbuffer.update_idletasks()
+                tbuffer.tag_add( 'qR', 'insert', 'insert +%sc' % length )
+                tbuffer.tag_config( 'qR', background = 'lightblue' )
+                txt = tbuffer.get( 'insert', 'insert +%sc' % length )
+                svar.set( "Replace %s with %s? y/n(! for all )" % ( txt, self.qR ) )
+                return True
+        else:
+            i = tbuffer.search( self.qQ, 'insert', stopindex = 'end' )
+            if i:
+                tbuffer.mark_set( 'insert', i )
+                tbuffer.update_idletasks()
+                tbuffer.tag_add( 'qR', 'insert', 'insert +%sc'% len( self.qQ ) )
+                tbuffer.tag_config( 'qR', background = 'lightblue' )
+                self._tailEnd( tbuffer )
+                return True
+        self.quitQSearch( event )
+        return False
+
+</t>
+<t tx="mork.20041030164547.106">def quitQSearch( self,event ):
+    #global qQ, qR, qlisten, qrexecute
+    event.widget.tag_delete( 'qR' )
+    self.qQ = None
+    self.qR = None
+    #self.qlisten = False
+    self.mcStateManager.setState( 'qlisten', False )
+    self.qrexecute = False
+    svar, label = self.getSvarLabel( event )
+    svar.set( '' )
+    label.configure( background = 'lightgrey' )
+    #self.keyboardQuit( event )
+    self.querytype = 'normal'
+    self._tailEnd( event.widget )
+    #event.widget.event_generate( '&lt;Key&gt;' )
+    #event.widget.update_idletasks()
+</t>
+<t tx="mork.20041030164547.107">def qreplace( self, event ):
+
+    if event.keysym == 'y':
+        self._qreplace( event )
+        return
+    elif event.keysym in ( 'q', 'Return' ):
+        self.quitQSearch( event )
+    elif event.keysym == 'exclam':
+        while self.qrexecute:
+            self._qreplace( event )
+    elif event.keysym in ( 'n', 'Delete'):
+        #i = event.widget.index( 'insert' )
+        event.widget.mark_set( 'insert', 'insert +%sc' % len( self.qQ ) )
+        self.qsearch( event )
+    event.widget.see( 'insert' )
+</t>
+<t tx="mork.20041030164547.108">def _qreplace( self, event ):
+    i = event.widget.tag_ranges( 'qR' )
+    event.widget.delete( i[ 0 ], i[ 1 ] )
+    event.widget.insert( 'insert', self.qR )
+    self.qsearch( event )
+</t>
+<t tx="mork.20041030164547.109">#self.qgetQuery = False
+#self.lqQ = Tkinter.StringVar()
+#self.lqQ.set( 'Replace with:' )      
+def getQuery( self, event ):
+    #global qQ, qgetQuery, qgetReplace
+    l = event.keysym
+    svar, label = self.getSvarLabel( event )
+    label.configure( textvariable = svar )
+    if l == 'Return':
+        self.qgetQuery = False
+        self.qgetReplace = True
+        self.qQ = svar.get()
+        svar.set( "Replace with:" )
+        self.mcStateManager.setState( 'qlisten', 'replace-caption' )
+        #label.configure( textvariable = self.lqQ)
+        return
+    if self.mcStateManager.getState( 'qlisten' ) == 'replace-caption':
+        svar.set( '' )
+        self.mcStateManager.setState( 'qlisten', True )
+    self.setSvar( event, svar )
+</t>
+<t tx="mork.20041030164547.110">#self.qgetReplace = False
+def getReplace( self, event ):
+    #global qR, qgetReplace, qrexecute
+    l = event.keysym
+    svar, label = self.getSvarLabel( event )
+    label.configure( textvariable = svar )
+    if l == 'Return':
+        self.qgetReplace = False
+        self.qR = svar.get()
+        self.qrexecute = True
+        ok = self.qsearch( event )
+        if self.querytype == 'regex' and ok:
+            tbuffer = event.widget
+            range = tbuffer.tag_ranges( 'qR' )
+            txt = tbuffer.get( range[ 0 ], range[ 1 ] )
+            svar.set( 'Replace %s with %s y/n(! for all )' %( txt, self.qR ) )
+        elif ok:
+            svar.set( 'Replace %s with %s y/n(! for all )' %( self.qQ, self.qR ) )
+        #self.qrexecute = True
+        #ok = self.qsearch( event )
+        return
+    if self.mcStateManager.getState( 'qlisten' ) == 'replace-caption':
+        svar.set( '' )
+        self.mcStateManager.setState( 'qlisten', True )
+    self.setSvar( event, svar )
+</t>
+<t tx="mork.20041030164547.111">#self.qrexecute = False   
+def masterQR( self, event ):
+
+    if self.qgetQuery:
+        self.getQuery( event )
+    elif self.qgetReplace:
+        self.getReplace( event )
+    elif self.qrexecute:
+        self.qreplace( event )
+    else:
+        #svar, label = self.getSvarLabel( event )
+        #svar.set( '' )
+        self.listenQR( event )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.112">def getSvarLabel( self, event ):
+    
+    '''returns the StringVar and Label( minibuffer ) for a specific Text editor'''
+    svar = self.svars[ event.widget ]
+    label = self.mbuffers[ event.widget ]
+    return svar, label
+
+</t>
+<t tx="mork.20041030164547.113">def setSvar( self, event, svar ):
+    '''Alters the StringVar svar to represent the change in the event.
+       It mimics what would happen with the keyboard and a Text editor
+       instead of plain accumalation.''' 
+    t = svar.get()  
+    if event.char == '\b':
+           if len( t ) == 1:
+               t = ''
+           else:
+               t = t[ 0 : -1 ]
+           svar.set( t )
+    else:
+            t = t + event.char
+            svar.set( t )
+</t>
+<t tx="mork.20041030164547.114">def movePastClose( self, event ):
+    tbuffer = event.widget
+    i = tbuffer.search( '(', 'insert' , backwards = True ,stopindex = '1.0' )
+    icheck = tbuffer.search( ')', 'insert',  backwards = True, stopindex = '1.0' )
+    if ''  ==  i:
+        return 'break'
+    if icheck:
+        ic = tbuffer.compare( i, '&lt;', icheck )
+        if ic: 
+            return 'break'
+    i2 = tbuffer.search( ')', 'insert' ,stopindex = 'end' )
+    i2check = tbuffer.search( '(', 'insert', stopindex = 'end' )
+    if '' == i2:
+        return 'break'
+    if i2check:
+        ic2 = tbuffer.compare( i2, '&gt;', i2check )
+        if ic2:
+            return 'break'
+    ib = tbuffer.index( 'insert' )
+    tbuffer.mark_set( 'insert', '%s lineend +1c' % i2 )
+    if tbuffer.index( 'insert' ) == tbuffer.index( '%s lineend' % ib ):
+        tbuffer.insert( 'insert' , '\n')
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.115">#self.rString = False
+#self._sString = ''
+#self._rpString = ''
+def replaceString( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+    if event.keysym in ( 'Control_L', 'Control_R' ):
+        return
+    rS = self.mcStateManager.getState( 'rString' )
+    regex = self._useRegex
+    if not rS:
+        #self.rString = 1
+        self.mcStateManager.setState( 'rString', 1 )
+        self._sString = ''
+        self._rpString = ''
+        if regex:
+            svar.set( 'Replace Regex' )
+        else:
+            svar.set( 'Replace String' )
+        return
+    if event.keysym == 'Return':
+        #self.rString = self.rString + 1
+        rS = rS + 1
+        self.mcStateManager.setState( 'rString', rS  )
+        #return 'break'
+    if rS == 1:
+        svar.set( '' )
+        #self.rString = self.rString + 1
+        rS = rS + 1
+        self.mcStateManager.setState( 'rString', rS )
+    if rS == 2:
+        self.setSvar( event, svar )
+        self._sString = svar.get()
+        return 'break'
+    if rS == 3:
+        if regex:
+            svar.set( 'Replace regex %s with:' % self._sString )
+        else:
+            svar.set( 'Replace string %s with:' % self._sString )
+        self.mcStateManager.setState( 'rString',rS + 1 )
+        #self.rString = self.rString + 1
+        return 'break'
+    if rS == 4:
+        svar.set( '' )
+        #self.rString = self.rString + 1
+        rS = rS + 1
+        self.mcStateManager.setState( 'rString', rS )
+    if rS == 5:
+        self.setSvar( event, svar )
+        self._rpString = svar.get()
+        return 'break'
+    if rS == 6:
+        tbuffer = event.widget
+        i = 'insert'
+        end = 'end'
+        ct = 0
+        if tbuffer.tag_ranges( 'sel' ):
+            i = tbuffer.index( 'sel.first' )
+            end = tbuffer.index( 'sel.last' )
+        if regex:
+            txt = tbuffer.get( i, end )
+            try:
+                pattern = re.compile( self._sString )
+            except:
+                self.keyboardQuit( event )
+                svar.set( "Illegal regular expression" )
+                return 'break'
+            ct = len( pattern.findall( txt ) )
+            if ct:
+                ntxt = pattern.sub( self._rpString, txt )
+                tbuffer.delete( i, end )
+                tbuffer.insert( i, ntxt )
+        else:
+            txt = tbuffer.get( i, end )
+            ct = txt.count( self._sString )
+            if ct:
+                ntxt = txt.replace( self._sString, self._rpString )
+                tbuffer.delete( i, end )
+                tbuffer.insert( i, ntxt )
+                
+        svar.set( 'Replaced %s occurances' % ct )
+        #label.configure( background = 'lightgrey' )
+        self.setLabelGrey( label ) 
+        #self.rString = False
+        self.mcStateManager.clear()
+        self._useRegex = False
+        #self.mcStateManager.setState( 'rString', False )
+        return self._tailEnd( tbuffer )
+
+</t>
+<t tx="mork.20041030164547.116">def swapCharacters( self, event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    c1 = tbuffer.get( 'insert', 'insert +1c' )
+    c2 = tbuffer.get( 'insert -1c', 'insert' )
+    tbuffer.delete( 'insert -1c', 'insert' )
+    tbuffer.insert( 'insert', c1 )
+    tbuffer.delete( 'insert', 'insert +1c' )
+    tbuffer.insert( 'insert', c2 )
+    tbuffer.mark_set( 'insert', i )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.117">def insertNewLine( self,event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    tbuffer.insert( 'insert', '\n' )
+    tbuffer.mark_set( 'insert', i )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.118">def lineNumber( self, event ):
+    self.stopControlX( event )
+    svar, label = self.getSvarLabel( event )
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    i1, i2 = i.split( '.' )
+    c = tbuffer.get( 'insert', 'insert + 1c' )
+    txt = tbuffer.get( '1.0', 'end' )
+    txt2 = tbuffer.get( '1.0', 'insert' )
+    perc = len( txt ) * .01
+    perc = int( len( txt2 ) / perc )
+    svar.set( 'Char: %s point %s of %s(%s%s)  Column %s' %( c, len( txt2), len( txt), perc,'%', i1 ) )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.119">def prevNexSentence( self, event , way ):
+    tbuffer = event.widget
+    if way == 'bak':
+        i = tbuffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
+        if i:
+            i2 = tbuffer.search( '.', i, backwards = True, stopindex = '1.0' )
+            if not i2:
+                i2 = '1.0'
+            if i2:
+                i3 = tbuffer.search( '\w', i2, stopindex = i, regexp = True )
+                if i3:
+                    tbuffer.mark_set( 'insert', i3 )
+        else:
+            tbuffer.mark_set( 'insert', '1.0' )
+    else:
+        i = tbuffer.search( '.', 'insert', stopindex = 'end' )
+        if i:
+            tbuffer.mark_set( 'insert', '%s +1c' %i )
+        else:
+            tbuffer.mark_set( 'insert', 'end' )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.120">def openRectangle( self, event ):
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    r1, r2, r3, r4 = self.getRectanglePoints( event )
+    lth = ' ' * ( r4 - r2 )
+    self.stopControlX( event )
+    while r1 &lt;= r3:
+        tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth)
+        r1 = r1 + 1
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.121">def clearRectangle( self, event ):
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    r1, r2, r3, r4 = self.getRectanglePoints( event )
+    lth = ' ' * ( r4 - r2 )
+    self.stopControlX( event )
+    while r1 &lt;= r3:
+        tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+        tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth)
+        r1 = r1 + 1
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.122">def deleteRectangle( self, event ):
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    r1, r2, r3, r4 = self.getRectanglePoints( event )
+    #lth = ' ' * ( r4 - r2 )
+    self.stopControlX( event )
+    while r1 &lt;= r3:
+        tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+        r1 = r1 + 1
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.123">#self.sRect = False   
+def stringRectangle( self, event ):
+    #global sRect
+    svar, label = self.getSvarLabel( event )
+    if not self.sRect:
+        self.sRect = 1
+        svar.set( 'String rectangle :' )
+        self.setLabelBlue( label )
+        return 'break'
+    if event.keysym == 'Return':
+        self.sRect = 3
+    if self.sRect == 1:
+        svar.set( '' )
+        self.sRect = 2
+    if self.sRect == 2:
+        self.setSvar( event, svar )
+        return 'break'
+    if self.sRect == 3:
+        if not self._chckSel( event ):
+            self.stopControlX( event )
+            return
+        tbuffer = event.widget
+        r1, r2, r3, r4 = self.getRectanglePoints( event )
+        lth = svar.get()
+        #self.stopControlX( event )
+        while r1 &lt;= r3:
+            tbuffer.delete( '%s.%s' % ( r1, r2 ),  '%s.%s' % ( r1, r4 ) )
+            tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth )
+            r1 = r1 + 1
+        #i = tbuffer.index( 'insert' )
+        #tbuffer.mark_set( 'insert', 'insert wordend' )
+        #tbuffer.tag_remove( 'sel', '1.0', 'end' )
+        #return self._tailEnd( tbuffer )
+        self.stopControlX( event )
+        return self._tailEnd( tbuffer )
+        #return 'break'
+        #return 'break'
+        #tbuffer.mark_set( 'insert', i )
+        #return 'break'
+</t>
+<t tx="mork.20041030164547.124">#self.krectangle = None       
+def killRectangle( self, event ):
+    #global krectangle
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    r1, r2, r3, r4 = self.getRectanglePoints( event )
+    #lth = ' ' * ( r4 - r2 )
+    self.stopControlX( event )
+    self.krectangle = []
+    while r1 &lt;= r3:
+        txt = tbuffer.get( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+        self.krectangle.append( txt )
+        tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+        r1 = r1 + 1
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.125">def closeRectangle( self, event ):
+    if not self._chckSel( event ):
+        return
+    tbuffer = event.widget
+    r1, r2, r3, r4 = self.getRectanglePoints( event ) 
+    ar1 = r1
+    txt = []
+    while ar1 &lt;= r3:
+        txt.append( tbuffer.get( '%s.%s' %( ar1, r2 ), '%s.%s' %( ar1, r4 ) ) )
+        ar1 = ar1 + 1 
+    for z in txt:
+        if z.lstrip().rstrip():
+            return
+    while r1 &lt;= r3:
+        tbuffer.delete( '%s.%s' %(r1, r2 ), '%s.%s' %( r1, r4 ) )
+        r1 = r1 + 1
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.126">def yankRectangle( self, event , krec = None ):
+    self.stopControlX( event )
+    if not krec:
+        krec = self.krectangle
+    if not krec:
+        return 'break'
+    tbuffer = event.widget
+    txt = tbuffer.get( 'insert linestart', 'insert' )
+    txt = self.getWSString( txt )
+    i = tbuffer.index( 'insert' )
+    i1, i2 = i.split( '.' )
+    i1 = int( i1 )
+    for z in krec:        
+        txt2 = tbuffer.get( '%s.0 linestart' % i1, '%s.%s' % ( i1, i2 ) )
+        if len( txt2 ) != len( txt ):
+            amount = len( txt ) - len( txt2 )
+            z = txt[ -amount : ] + z
+        tbuffer.insert( '%s.%s' %( i1, i2 ) , z )
+        if tbuffer.index( '%s.0 lineend +1c' % i1 ) == tbuffer.index( 'end' ):
+            tbuffer.insert( '%s.0 lineend' % i1, '\n' )
+        i1 = i1 + 1
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.127">def getWSString( self, txt ):
+    ntxt = []
+    for z in txt:
+        if z == '\t':
+            ntxt.append( z )
+        else:
+            ntxt.append( ' ' )
+    return ''.join( ntxt )
+</t>
+<t tx="mork.20041030164547.128">def getRectanglePoints( self, event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'sel.first' )
+    i2 = tbuffer.index( 'sel.last' )
+    r1, r2 = i.split( '.' )
+    r3, r4 = i2.split( '.' )
+    r1 = int( r1 )
+    r2 = int( r2 )
+    r3 = int( r3 )
+    r4 = int( r4 )
+    return r1, r2, r3, r4
+</t>
+<t tx="mork.20041030164547.129">#self.negativeArg = False
+def negativeArgument( self, event, stroke = None ):
+    #global negativeArg
+    svar, label = self.getSvarLabel( event )
+    svar.set( "Negative Argument" )
+    label.configure( background = 'lightblue' )
+    nA = self.mcStateManager.getState( 'negativeArg' )
+    if not nA:
+        self.mcStateManager.setState( 'negativeArg', True )
+        #self.negativeArg = True
+    if nA:
+        if self.negArgs.has_key( stroke ):
+            self.negArgs[ stroke ]( event , stroke)
+    return 'break'
+</t>
+<t tx="mork.20041030164547.130">def changePreviousWord( self, event, stroke ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    self.moveword( event, -1  )
+    if stroke == '&lt;Alt-c&gt;': 
+        self.capitalize( event, 'cap' )
+    elif stroke =='&lt;Alt-u&gt;':
+         self.capitalize( event, 'up' )
+    elif stroke == '&lt;Alt-l&gt;': 
+        self.capitalize( event, 'low' )
+    tbuffer.mark_set( 'insert', i )
+    self.stopControlX( event )
+    return self._tailEnd( tbuffer )    
+</t>
+<t tx="mork.20041030164547.131">#self.negArgs = { '&lt;Alt-c&gt;': changePreviousWord,
+#'&lt;Alt-u&gt;' : changePreviousWord,
+#'&lt;Alt-l&gt;': changePreviousWord }
+
+
+
+def insertNewLineIndent( self, event ):
+    tbuffer =  event.widget
+    txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+    txt = self.getWSString( txt )
+    i = tbuffer.index( 'insert' )
+    tbuffer.insert( i, txt )
+    tbuffer.mark_set( 'insert', i )    
+    return self.insertNewLine( event )
+</t>
+<t tx="mork.20041030164547.132">def dynamicExpansion( self, event ):#, store = {'rlist': [], 'stext': ''} ):
+    tbuffer = event.widget
+    rlist = self.store[ 'rlist' ]
+    stext = self.store[ 'stext' ]
+    i = tbuffer.index( 'insert -1c wordstart' )
+    i2 = tbuffer.index( 'insert -1c wordend' )
+    txt = tbuffer.get( i, i2 )
+    dA = tbuffer.tag_ranges( 'dA' )
+    tbuffer.tag_delete( 'dA' )
+    def doDa( txt, from_ = 'insert -1c wordstart', to_ = 'insert -1c wordend' ):
+
+        tbuffer.delete( from_, to_ ) 
+        tbuffer.insert( 'insert', txt, 'dA' )
+        return self._tailEnd( tbuffer )
+        
+    if dA:
+        dA1, dA2 = dA
+        dtext = tbuffer.get( dA1, dA2 )
+        if dtext.startswith( stext ) and i2 == dA2: #This seems reasonable, since we cant get a whole word that has the '-' char in it, we do a good guess
+            if rlist:
+                txt = rlist.pop()
+            else:
+                txt = stext
+                tbuffer.delete( dA1, dA2 )
+                dA2 = dA1 #since the text is going to be reread, we dont want to include the last dynamic abbreviation
+                self.getDynamicList( tbuffer, txt, rlist )
+            return doDa( txt, dA1, dA2 )
+        else:
+            dA = None
+            
+    if not dA:
+        self.store[ 'stext' ] = txt
+        self.store[ 'rlist' ] = rlist = []
+        self.getDynamicList( tbuffer, txt, rlist )
+        if not rlist:
+            return 'break'
+        txt = rlist.pop()
+        return doDa( txt )
+</t>
+<t tx="mork.20041030164547.133">def dynamicExpansion2( self, event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert -1c wordstart' )
+    i2 = tbuffer.index( 'insert -1c wordend' )
+    txt = tbuffer.get( i, i2 )   
+    rlist = []
+    self.getDynamicList( tbuffer, txt, rlist )
+    dEstring = reduce( self.findPre, rlist )
+    if dEstring:
+        tbuffer.delete( i , i2 )
+        tbuffer.insert( i, dEstring )    
+        return self._tailEnd( tbuffer )          
+</t>
+<t tx="mork.20041030164547.134">def getDynamicList( self, tbuffer, txt , rlist ):
+
+     ttext = tbuffer.get( '1.0', 'end' )
+     items = self.dynaregex.findall( ttext ) #make a big list of what we are considering a 'word'
+     if items:
+         for word in items:
+             if not word.startswith( txt ) or word == txt: continue #dont need words that dont match or == the pattern
+             if word not in rlist:
+                 rlist.append( word )
+             else:
+                 rlist.remove( word )
+                 rlist.append( word )
+                 
+        
+
+
+</t>
+<t tx="mork.20041030164547.135">def findPre( self, a, b ):
+    st = ''
+    for z in a:
+        st1 = st + z
+        if b.startswith( st1 ):
+            st = st1
+        else:
+            return st
+    return st  
+</t>
+<t tx="mork.20041030164547.136">def sortLines( self, event , which = None ):
+    tbuffer = event.widget  
+    if not self._chckSel( event ):
+        return self.keyboardQuit( event )
+
+    i = tbuffer.index( 'sel.first' )
+    i2 = tbuffer.index( 'sel.last' )
+    is1 = i.split( '.' )
+    is2 = i2.split( '.' )
+    txt = tbuffer.get( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
+    ins = tbuffer.index( 'insert' )
+    txt = txt.split( '\n' )
+    tbuffer.delete( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
+    txt.sort()
+    if which:
+        txt.reverse()
+    inum = int(is1[ 0 ])
+    for z in txt:
+        tbuffer.insert( '%s.0' % inum, '%s\n' % z ) 
+        inum = inum + 1
+    tbuffer.mark_set( 'insert', ins )
+    self.keyboardQuit( event )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.137">def sortColumns( self, event ):
+    tbuffer = event.widget
+    if not self._chckSel( event ):
+        return self.keyboardQuit( event )
+        
+    ins = tbuffer.index( 'insert' )
+    is1 = tbuffer.index( 'sel.first' )
+    is2 = tbuffer.index( 'sel.last' )   
+    sint1, sint2 = is1.split( '.' )
+    sint2 = int( sint2 )
+    sint3, sint4 = is2.split( '.' )
+    sint4 = int( sint4 )
+    txt = tbuffer.get( '%s.0' % sint1, '%s.0 lineend' % sint3 )
+    tbuffer.delete( '%s.0' % sint1, '%s.0 lineend' % sint3 )
+    columns = []
+    i = int( sint1 )
+    i2 = int( sint3 )
+    while i &lt;= i2:
+        t = tbuffer.get( '%s.%s' %( i, sint2 ), '%s.%s' % ( i, sint4 ) )
+        columns.append( t )
+        i = i + 1
+    txt = txt.split( '\n' )
+    zlist = zip( columns, txt )
+    zlist.sort()
+    i = int( sint1 )      
+    for z in xrange( len( zlist ) ):
+         tbuffer.insert( '%s.0' % i, '%s\n' % zlist[ z ][ 1 ] ) 
+         i = i + 1
+    tbuffer.mark_set( 'insert', ins )
+    return self._tailEnd( tbuffer ) 
+
+</t>
+<t tx="mork.20041030164547.138">def reverseRegion( self, event ):
+    tbuffer = event.widget
+    if not self._chckSel( event ):
+        return
+    ins = tbuffer.index( 'insert' )
+    is1 = tbuffer.index( 'sel.first' )
+    is2 = tbuffer.index( 'sel.last' )    
+    txt = tbuffer.get( '%s linestart' % is1, '%s lineend' %is2 )
+    tbuffer.delete( '%s linestart' % is1, '%s lineend' %is2  )
+    txt = txt.split( '\n' )
+    txt.reverse()
+    istart = is1.split( '.' )
+    istart = int( istart[ 0 ] )
+    for z in txt:
+        tbuffer.insert( '%s.0' % istart, '%s\n' % z )
+        istart = istart + 1
+    tbuffer.mark_set( 'insert', ins )
+    self.mcStateManager.clear()
+    self.resetMiniBuffer( event )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.139">def sortFields( self, event, which = None ):
+    tbuffer = event.widget
+    if not self._chckSel( event ):
+        return self.keyboardQuit( event )
+
+    ins = tbuffer.index( 'insert' )
+    is1 = tbuffer.index( 'sel.first' )
+    is2 = tbuffer.index( 'sel.last' )
+    
+    txt = tbuffer.get( '%s linestart' % is1, '%s lineend' % is2 )
+    txt = txt.split( '\n' )
+    fields = []
+    import re
+    fn = r'\w+'
+    frx = re.compile( fn )
+    for z in txt:
+        f = frx.findall( z )
+        if not which:
+            fields.append( f[ 0 ] )
+        else:
+            i =  int( which )
+            if len( f ) &lt; i:
+                return self._tailEnd( tbuffer )
+            i = i - 1            
+            fields.append( f[ i ] )
+    nz = zip( fields, txt )
+    nz.sort()
+    tbuffer.delete( '%s linestart' % is1, '%s lineend' % is2 )
+    i = is1.split( '.' )
+    #i2 = is2.split( '.' )
+    int1 = int( i[ 0 ] )
+    for z in nz:
+        tbuffer.insert( '%s.0' % int1, '%s\n'% z[1] )
+        int1 = int1 + 1
+    tbuffer.mark_set( 'insert' , ins )
+    return self._tailEnd( tbuffer )
+
+</t>
+<t tx="mork.20041030164547.140">#self.altx = False
+def alt_X( self, event , which = None):
+    #global altx
+    if which:
+        self.mcStateManager.setState( 'altx', which )
+    else:
+        self.mcStateManager.setState( 'altx', 'True' )
+
+    svar, label = self.getSvarLabel( event )
+    if which:
+        svar.set( '%s M-x:' % which )
+    else:
+        svar.set( 'M-x:' )
+    self.setLabelBlue( label )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.141">def doAlt_X( self, event ):
+    '''This method executes the correct Alt-X command'''
+    svar, label = self.getSvarLabel( event )
+    if svar.get().endswith( 'M-x:' ): 
+        self.axTabList.clear() #clear the list, new Alt-x command is in effect
+        svar.set( '' )
+    if event.keysym == 'Return':
+        txt = svar.get()
+        if self.doAltX.has_key( txt ):
+            if txt != 'repeat-complex-command':
+                self.altx_history.reverse()
+                self.altx_history.append( txt )
+                self.altx_history.reverse()
+            aX = self.mcStateManager.getState( 'altx' )
+            if aX.isdigit() and txt in self.x_hasNumeric:
+                self.doAltX[ txt]( event, aX )
+            else:
+                self.doAltX[ txt ]( event )
+        else:
+            self.keyboardQuit( event )
+            svar.set('Command does not exist' )
+
+        #self.altx = False
+        #self.mcStateManager.setState( 'altx', False )
+        return 'break'
+    if event.keysym == 'Tab':
+        
+        stext = svar.get().strip()
+        if self.axTabList.prefix and stext.startswith( self.axTabList.prefix ):
+            svar.set( self.axTabList.next() ) #get next in iteration
+        else:
+            prefix = svar.get()
+            pmatches = self._findMatch2( svar )
+            self.axTabList.setTabList( prefix, pmatches )
+            svar.set( self.axTabList.next() ) #begin iteration on new lsit
+        return 'break'   
+    else:
+        self.axTabList.clear() #clear the list, any other character besides tab indicates that a new prefix is in effect.    
+    self.setSvar( event, svar )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.142">def _findMatch2( self, svar, fdict = None ):#, fdict = self.doAltX ):
+    '''This method returns a sorted list of matches.'''
+    if not fdict:
+        fdict = self.doAltX
+    txt = svar.get()
+    if not txt.isspace() and txt != '':
+        txt = txt.strip()
+        pmatches = filter( lambda a : a.startswith( txt ), fdict )
+    else:
+        pmatches = []
+    pmatches.sort()
+    return pmatches
+    #if pmatches:
+    #    #mstring = reduce( self.findPre, pmatches )
+    #    #return mstring
+    #return txt
+</t>
+<t tx="mork.20041030164547.143">#self.uC = False
+def universalDispatch( self, event, stroke ):
+    #global uC    
+    uC = self.mcStateManager.getState( 'uC' )
+    if not uC:
+        #self.uC = 1
+        self.mcStateManager.setState( 'uC', 1 )
+        svar, label = self.getSvarLabel( event )
+        svar.set( '' )
+        self.setLabelBlue( label ) 
+    elif uC == 1:
+        self.universalCommand1( event, stroke )
+    elif uC == 2:
+        self.universalCommand3( event, stroke )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.144">#import string
+#self.uCstring = string.digits + '\b'
+
+def universalCommand1( self, event, stroke ):
+    #global uC
+    if event.char not in self.uCstring:
+        return self.universalCommand2( event, stroke )
+    svar, label = self.getSvarLabel( event )
+    self.setSvar( event, svar )
+    if event.char != '\b':
+        svar.set( '%s ' %svar.get() )
+</t>
+<t tx="mork.20041030164547.145">def universalCommand2(  self, event , stroke ):
+    #global uC
+    #self.uC = False
+    #self.mcStateManager.setState( 'uC', False )
+    svar, label = self.getSvarLabel( event )
+    txt = svar.get()
+    self.keyboardQuit( event )
+    txt = txt.replace( ' ', '' )
+    self.resetMiniBuffer( event )
+    if not txt.isdigit(): #This takes us to macro state.  For example Control-u Control-x (  will execute the last macro and begin editing of it.
+        if stroke == '&lt;Control-x&gt;':
+            #self.uC = 2
+            self.mcStateManager.setState( 'uC', 2 )
+            return self.universalCommand3( event, stroke )
+        return self._tailEnd( event.widget )
+    if self.uCdict.has_key( stroke ): #This executes the keystroke 'n' number of times.
+            self.uCdict[ stroke ]( event , txt )
+    else:
+        tbuffer = event.widget
+        i = int( txt )
+        stroke = stroke.lstrip( '&lt;' ).rstrip( '&gt;' )
+        if self.cbDict.has_key( stroke ):
+            for z in xrange( i ):
+                method = self.cbDict[ stroke ]
+                ev = Tkinter.Event()
+                ev.widget = event.widget
+                ev.keysym = event.keysym
+                ev.keycode = event.keycode
+                ev.char = event.char
+                self.masterCommand( ev , method, '&lt;%s&gt;' % stroke )
+        else:
+            for z in xrange( i ):
+                tbuffer.event_generate( '&lt;Key&gt;', keycode = event.keycode, keysym = event.keysym )
+                self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.146">#self.uCdict = { '&lt;Alt-x&gt;' : alt_X }
+def universalCommand3( self, event, stroke ):
+    svar, label = self.getSvarLabel( event )
+    svar.set( 'Control-u %s' % stroke.lstrip( '&lt;' ).rstrip( '&gt;' ) )
+    self.setLabelBlue( label )
+    if event.keysym == 'parenleft':
+        self.keyboardQuit( event )
+        self.startKBDMacro( event )
+        self.executeLastMacro( event )
+        return 'break'
+</t>
+<t tx="mork.20041030164547.147">def numberCommand( self, event, stroke, number ):
+    self.universalDispatch( event, stroke )
+    tbuffer = event.widget
+    tbuffer.event_generate( '&lt;Key&gt;', keysym = number )
+    return 'break'       
+</t>
+<t tx="mork.20041030164547.148">def transposeLines( self, event ):
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    i1, i2 = i.split( '.' )
+    i1 = str( int( i1 ) -1 )
+    if i1 != '0':
+        l2 = tbuffer.get( 'insert linestart', 'insert lineend' )
+        tbuffer.delete( 'insert linestart-1c', 'insert lineend' )
+        tbuffer.insert( i1+'.0', l2 +'\n')
+    else:
+        l2 = tbuffer.get( '2.0', '2.0 lineend' )
+        tbuffer.delete( '2.0', '2.0 lineend' )
+        tbuffer.insert( '1.0', l2 + '\n' )
+    return self._tailEnd( tbuffer )         
+</t>
+<t tx="mork.20041030164547.149">def upperLowerRegion( self, event, way ):
+    tbuffer = event.widget
+    mrk = 'sel'
+    trange = tbuffer.tag_ranges( mrk )
+    if len( trange ) != 0:
+        text = tbuffer.get( trange[ 0 ] , trange[ -1 ] )
+        i = tbuffer.index( 'insert' )
+        if text == ' ': return 'break'
+        tbuffer.delete( trange[ 0 ], trange[ -1 ] )
+        if way == 'low':
+            text = text.lower()
+        if way == 'up':
+            text = text.upper()
+        tbuffer.insert( 'insert', text )
+        tbuffer.mark_set( 'insert', i ) 
+    self.removeRKeys( tbuffer )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.150">def removeBlankLines (self,event):
+    tbuffer = event.widget
+    i = tbuffer.index('insert')
+    i1, i2 = i.split('.')
+    i1 = int(i1)
+    dindex = []
+    if tbuffer.get('insert linestart','insert lineend').strip() == '':
+        while 1:
+            if str(i1) + '.0' == '1.0':
+                break
+            i1 = i1-1
+            txt = tbuffer.get('%s.0' % i1,'%s.0 lineend' % i1)
+            txt = txt.strip()
+            if len(txt) == 0:
+                dindex.append('%s.0' % i1)
+                dindex.append('%s.0 lineend' % i1)
+            elif dindex:
+                tbuffer.delete('%s-1c' % dindex[-2],dindex[1])
+                tbuffer.event_generate('&lt;Key&gt;')
+                tbuffer.update_idletasks()
+                break
+            else:
+                break
+    i = tbuffer.index('insert')
+    i1, i2 = i.split('.')
+    i1 = int(i1)
+    dindex = []
+    while 1:
+        if tbuffer.index('%s.0 lineend' % i1) == tbuffer.index('end'):
+            break
+        i1 = i1 + 1
+        txt = tbuffer.get('%s.0' % i1,'%s.0 lineend' % i1)
+        txt = txt.strip()
+        if len(txt) == 0:
+            dindex.append('%s.0' % i1)
+            dindex.append('%s.0 lineend' % i1)
+        elif dindex:
+            tbuffer.delete('%s-1c' % dindex[0],dindex[-1])
+            tbuffer.event_generate('&lt;Key&gt;')
+            tbuffer.update_idletasks()
+            break
+        else:
+            break</t>
+<t tx="mork.20041030164547.151">def insertFile( self, event ):
+    tbuffer = event.widget
+    f, name = self.getReadableTextFile()
+    if not f: return None
+    txt = f.read()
+    f.close()
+    tbuffer.insert( 'insert', txt )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041030164547.152">def saveFile( self, event ):
+    tbuffer = event.widget
+    import tkFileDialog
+    txt = tbuffer.get( '1.0', 'end' )
+    f = tkFileDialog.asksaveasfile()
+    if f == None : return None
+    f.write( txt )
+    f.close()
+</t>
+<t tx="mork.20041030164547.153">def scolorizer( self, event ):
+
+    tbuffer = event.widget
+    svar, label = self.getSvarLabel( event )
+    stext = svar.get()
+    tbuffer.tag_delete( 'color' )
+    tbuffer.tag_delete( 'color1' )
+    if stext == '': return 'break'
+    ind = '1.0'
+    while ind:
+        try:
+            ind = tbuffer.search( stext, ind, stopindex = 'end', regexp = self.useRegex() )
+        except:
+            break
+        if ind:
+            i, d = ind.split('.')
+            d = str(int( d ) + len( stext ))
+            index = tbuffer.index( 'insert' )
+            if ind == index:
+                tbuffer.tag_add( 'color1', ind, '%s.%s' % (i,d) )
+            tbuffer.tag_add( 'color', ind, '%s.%s' % (i, d) )
+            ind = i +'.'+d
+    tbuffer.tag_config( 'color', foreground = 'red' ) 
+    tbuffer.tag_config( 'color1', background = 'lightblue' ) 
+</t>
+<t tx="mork.20041030164547.154">def startGoto( self, event , ch = False):
+    #global goto
+    #self.goto = True
+    if not ch:
+        self.mcStateManager.setState( 'goto', 1 )
+    else:
+        self.mcStateManager.setState( 'goto', 2 )
+    #label = self.mbuffers[ event.widget ] 
+    svar , label = self.getSvarLabel( event )
+    svar.set( '' )
+    label.configure( background = 'lightblue' )
+    return 'break'
+</t>
+<t tx="mork.20041030164547.155">def Goto( self, event ):
+    #global goto
+    widget = event.widget
+    svar, label = self.getSvarLabel( event )
+    if event.keysym == 'Return':
+          i = svar.get()
+          self.resetMiniBuffer( event )
+          #self.goto = False
+          state = self.mcStateManager.getState( 'goto' )
+          self.mcStateManager.setState( 'goto', False )
+          if i.isdigit():
+              
+              if state == 1:
+                widget.mark_set( 'insert', '%s.0' % i )
+              elif state == 2:
+                widget.mark_set( 'insert', '1.0 +%sc' % i )
+              widget.event_generate( '&lt;Key&gt;' )
+              widget.update_idletasks()
+              widget.see( 'insert' )
+          return 'break'
+    t = svar.get()
+    if event.char == '\b':
+           if len( t ) == 1:
+               t = ''
+           else:
+               t = t[ 0 : -1 ]
+           svar.set( t )
+    else:
+            t = t + event.char
+            svar.set( t )
+    return 'break'
+</t>
+<t tx="mork.20041030165020">class Emacs:
+    '''The Emacs class binds to a Tkinter Text widget and adds Emac derived keystrokes and commands
+       to it.'''
+    
+    Emacs_instances = weakref.WeakKeyDictionary()
+    global_killbuffer = []
+    global_registers = {}
+    lossage = [] ### EKR: list( ' ' * 100 )
+    @others</t>
+<t tx="mork.20041030165020.1">def __init__( self , tbuffer = None , minibuffer = None, useGlobalKillbuffer = False, useGlobalRegisters = False):
+    '''Sets up Emacs instance.
+    
+    If a Tkinter Text widget and Tkinter Label are passed in
+    via the tbuffer and minibuffer parameters, these are bound to.
+    Otherwise an explicit call to setBufferStrokes must be done.
+    useGlobalRegisters set to True indicates that the Emacs instance should use a class attribute that functions
+    as a global register.
+    useGlobalKillbuffer set to True indicates that the Emacs instances should use a class attribute that functions
+    as a global killbuffer.'''
+    
+    self.mbuffers = {} 
+    self.svars = {}
+    
+    
+    #self.isearch = False
+    self.tailEnds = {} #functions to execute at the end of many Emac methods.  Configurable by environment.
+    self.undoers = {} #Emacs instance tracks undoers given to it.
+    
+    
+    self.store = {'rlist': [], 'stext': ''} 
+    
+    #macros
+    self.lastMacro = None 
+    self.macs = []
+    self.macro = []
+    self.namedMacros = {}
+    self.macroing = False
+    self.dynaregex = re.compile( r'[%s%s\-_]+' %( string.ascii_letters, string.digits ) ) #for dynamic abbreviations
+    self.altx_history = []
+    self.keysymhistory = [] 
+    
+    #This section sets up the buffer data structures
+    self.bufferListGetters = {}
+    self.bufferSetters = {}
+    self.bufferGotos = {}
+    self.bufferDeletes = {}
+    self.renameBuffers = {}
+    self.bufferDict = None
+    self.bufferTracker = Tracker()
+    self.bufferCommands = {
+    
+    'append-to-buffer': self.appendToBuffer,
+    'prepend-to-buffer': self.prependToBuffer,
+    'copy-to-buffer': self.copyToBuffer,
+    'insert-buffer': self.insertToBuffer,
+    'switch-to-buffer': self.switchToBuffer,
+     'kill-buffer': self.killBuffer,   
+    }
+    
+    self.swapSpots = []
+    self.ccolumn = '0'
+    #self.howM = False
+    self.reset = False
+    if useGlobalKillbuffer:
+        self.killbuffer = Emacs.global_killbuffer
+    else:
+        self.killbuffer = []
+    self.kbiterator = self.iterateKillBuffer()
+    
+    #self.controlx = False
+    self.csr = { '&lt;Control-s&gt;': 'for', '&lt;Control-r&gt;':'bak' }
+    self.pref = None
+    #self.zap = False
+    #self.goto = False
+    self.previousStroke = ''
+    if useGlobalRegisters:
+        self.registers = Emacs.global_registers
+    else:
+        self.registers = {}
+    
+    #registers
+    self.regMeth = None
+    self.regMeths, self.regText = self.addRegisterItems()
+
+    #Abbreviations
+    self.abbrevMode = False 
+    self.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations
+    self.abbrevs = {}
+    
+    self.regXRpl = None # EKR: a generator: calling self.regXRpl.next() get the next value.
+    self.regXKey = None
+    
+    self.fillPrefix = '' #for fill prefix functions
+    self.fillColumn = 70 #for line centering
+    self.registermode = False #for rectangles and registers
+    
+    self.qQ = None
+    self.qR = None
+    #self.qlisten = False
+    #self.lqR = Tkinter.StringVar()
+    #self.lqR.set( 'Query with: ' ) # replaced with using the svar and self.mcStateManager
+    self.qgetQuery = False
+    #self.lqQ = Tkinter.StringVar()
+    #self.lqQ.set( 'Replace with:' )# replaced with using the svar and self.mcStateManager
+    self.qgetReplace = False
+    self.qrexecute = False
+    self.querytype = 'normal'
+    
+    #self.rString = False
+    #These attributes are for replace-string and replace-regex
+    self._sString = ''
+    self._rpString = ''
+    self._useRegex = False
+    
+    self.sRect = False  #State indicating string rectangle.  May be moved to MC_StateManager
+    self.krectangle = None #The kill rectangle
+    self.rectanglemode = 0 #Determines what state the rectangle system is in.
+    
+    self.last_clipboard = None #For interacting with system clipboard.
+    
+    self.negativeArg = False 
+    self.negArgs = { '&lt;Alt-c&gt;': self.changePreviousWord,
+    '&lt;Alt-u&gt;' : self.changePreviousWord,
+    '&lt;Alt-l&gt;': self.changePreviousWord } #For negative argument functionality
+    
+    #self.altx = False
+    #Alt-X commands.
+    self.doAltX = self.addAltXCommands()
+    self.axTabList = Tracker()
+    self.x_hasNumeric = [ 'sort-lines' , 'sort-fields']
+    
+    #self.uC = False
+    #These attributes are for the universal command functionality.
+    self.uCstring = string.digits + '\b'
+    self.uCdict = { '&lt;Alt-x&gt;' : self.alt_X }
+    
+    self.cbDict = self.addCallBackDict()# Creates callback dictionary, primarily used in the master command
+    self.xcommands = self.addXCommands() # Creates the X commands dictionary
+    self.cxHandler = ControlXHandler( self ) #Creates the handler for Control-x commands
+    self.mcStateManager = MC_StateManager( self ) #Manages state for the master command
+    self.kstrokeManager = MC_KeyStrokeManager( self ) #Manages some keystroke state for the master command.
+    self.shutdownhook = None #If this is set via setShutdownHook, it is executed instead of sys.exit when Control-x Control-c is fired
+    self.shuttingdown = False #indicates that the Emacs instance is shutting down and no work needs to be done.
+    
+    if tbuffer and minibuffer:
+        self.setBufferStrokes( tbuffer, minibuffer )
+
+</t>
+<t tx="mork.20041030183331">def addCallBackDict( self ):
+    '''This method adds a dictionary to the Emacs instance through which the masterCommand can
+       call the specified method.'''
+    cbDict = {
+    'Alt-less' : lambda event, spot = '1.0' : self.moveTo( event, spot ),
+    'Alt-greater': lambda event, spot = 'end' : self.moveTo( event, spot ),
+    'Control-Right': lambda event, way = 1: self.moveword( event, way ),
+    'Control-Left': lambda event, way = -1: self.moveword( event, way ),
+    'Control-a': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
+    'Control-e': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
+    'Alt-Up': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
+    'Alt-Down': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
+    'Alt-f': lambda event, way = 1: self.moveword( event, way ),
+    'Alt-b' : lambda event, way = -1: self.moveword( event, way ),
+    'Control-o': self.insertNewLine,
+    'Control-k': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) ,
+    'Alt-d': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ),
+    'Alt-Delete': lambda event: self.deletelastWord( event ),
+    "Control-y": lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which),
+    "Alt-y": lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ),
+    "Alt-k": lambda event : self.killsentence( event ),
+    'Control-s' : None,
+    'Control-r' : None,
+    'Alt-c': lambda event, which = 'cap' : self.capitalize( event, which ),
+    'Alt-u': lambda event, which = 'up' : self.capitalize( event, which ),
+    'Alt-l': lambda event, which = 'low' : self.capitalize( event, which ),
+    'Alt-t': lambda event, sw = self.swapSpots: self.swapWords( event, sw ),
+    'Alt-x': self.alt_X,
+    'Control-x': self.startControlX,
+    'Control-g': self.keyboardQuit,
+    'Control-Shift-at': self.setRegion,
+    'Control-w': lambda event, which = 'd' :self.killRegion( event, which ),
+    'Alt-w': lambda event, which = 'c' : self.killRegion( event, which ),
+    'Control-t': self.swapCharacters,
+    'Control-u': None,
+    'Control-l': None,
+    'Alt-z': None,
+    'Control-i': None,
+    'Alt-Control-backslash': self.indentRegion,
+    'Alt-m' : self.backToIndentation,
+    'Alt-asciicircum' : self.deleteIndentation,
+    'Control-d': self.deleteNextChar,
+    'Alt-backslash': self.deleteSpaces, 
+    'Alt-g': None,
+    'Control-v' : lambda event, way = 'south': self.screenscroll( event, way ),
+    'Alt-v' : lambda event, way = 'north' : self.screenscroll( event, way ),
+    'Alt-equal': self.countRegion,
+    'Alt-parenleft': self.insertParentheses,
+    'Alt-parenright': self.movePastClose,
+    'Alt-percent' : None,
+    'Control-c': None,
+    'Delete': lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ),
+    'Control-p': lambda event, which = 'Up': self.manufactureKeyPress( event, which ),
+    'Control-n': lambda event, which = 'Down': self.manufactureKeyPress( event, which ),
+    'Control-f': lambda event, which = 'Right':self.manufactureKeyPress( event, which ),
+    'Control-b': lambda event, which = 'Left': self.manufactureKeyPress( event, which ),
+    'Control-Alt-w': None,
+    'Alt-a': lambda event, which = 'bak': self.prevNexSentence( event, which ),
+    'Alt-e': lambda event, which = 'for': self.prevNexSentence( event, which ),
+    'Control-Alt-o': self.insertNewLineIndent,
+    'Control-j': self.insertNewLineAndTab,
+    'Alt-minus': self.negativeArgument,
+    'Alt-slash': self.dynamicExpansion,
+    'Control-Alt-slash': self.dynamicExpansion2,
+    'Control-u': lambda event, keystroke = '&lt;Control-u&gt;': self.universalDispatch( event, keystroke ),
+    'Alt-braceright': lambda event, which = 1: self.movingParagraphs( event, which ),
+    'Alt-braceleft': lambda event , which = 0: self.movingParagraphs( event, which ),
+    'Alt-q': self.fillParagraph,
+    'Alt-h': self.selectParagraph,
+    'Alt-semicolon': self.indentToCommentColumn,
+    'Alt-0': lambda event, stroke = '&lt;Alt-0&gt;', number = 0: self.numberCommand( event, stroke, number ) ,
+    'Alt-1': lambda event, stroke = '&lt;Alt-1&gt;', number = 1: self.numberCommand( event, stroke, number ) ,
+    'Alt-2': lambda event, stroke = '&lt;Alt-2&gt;', number = 2: self.numberCommand( event, stroke, number ) ,
+    'Alt-3': lambda event, stroke = '&lt;Alt-3&gt;', number = 3: self.numberCommand( event, stroke, number ) ,
+    'Alt-4': lambda event, stroke = '&lt;Alt-4&gt;', number = 4: self.numberCommand( event, stroke, number ) ,
+    'Alt-5': lambda event, stroke = '&lt;Alt-5&gt;', number = 5: self.numberCommand( event, stroke, number ) ,
+    'Alt-6': lambda event, stroke = '&lt;Alt-6&gt;', number = 6: self.numberCommand( event, stroke, number ) ,
+    'Alt-7': lambda event, stroke = '&lt;Alt-7&gt;', number = 7: self.numberCommand( event, stroke, number ) ,
+    'Alt-8': lambda event, stroke = '&lt;Alt-8&gt;', number = 8: self.numberCommand( event, stroke, number ) ,
+    'Alt-9': lambda event, stroke = '&lt;Alt-9&gt;', number = 9: self.numberCommand( event, stroke, number ) ,
+    'Control-underscore': self.doUndo,
+    'Alt-s': self.centerLine,
+    'Control-z': self.suspend, 
+    'Control-Alt-s': lambda event, stroke='&lt;Control-s&gt;': self.startIncremental( event, stroke, which='regexp' ),
+    'Control-Alt-r': lambda event, stroke='&lt;Control-r&gt;': self.startIncremental( event, stroke, which='regexp' ),
+    'Control-Alt-percent': lambda event: self.startRegexReplace() and self.masterQR( event ),
+    'Escape': self.watchEscape,
+    'Alt-colon': self.startEvaluate,
+    'Alt-exclam': self.startSubprocess,
+    'Alt-bar': lambda event: self.startSubprocess( event, which = 1 ),
+    }
+    
+    return cbDict</t>
+<t tx="mork.20041030183633">def addXCommands( self ):
+    
+    xcommands = {
+    '&lt;Control-t&gt;': self.transposeLines, 
+    '&lt;Control-u&gt;': lambda event , way ='up': self.upperLowerRegion( event, way ),
+    '&lt;Control-l&gt;':  lambda event , way ='low': self.upperLowerRegion( event, way ),
+    '&lt;Control-o&gt;': self.removeBlankLines,
+    '&lt;Control-i&gt;': self.insertFile,
+    '&lt;Control-s&gt;': self.saveFile,
+    '&lt;Control-x&gt;': self.exchangePointMark,
+    '&lt;Control-c&gt;': self.shutdown,
+    '&lt;Control-b&gt;': self.listBuffers,
+    '&lt;Control-Shift-at&gt;': lambda event: event.widget.selection_clear(),
+    '&lt;Delete&gt;' : lambda event, back = True: self.killsentence( event, back ),
+    }
+    
+    return xcommands</t>
+<t tx="mork.20041030190729">def addRegisterItems( self ):
+    
+    regMeths = {
+    's' : self.copyToRegister,
+    'i' : self.insertFromRegister,
+    'n': self.numberToRegister,
+    'plus': self.incrementRegister,
+    'space': self.pointToRegister,
+    'j': self.jumpToRegister,
+    'a': lambda event , which = 'a': self._ToReg( event, which ),
+    'p': lambda event , which = 'p': self._ToReg( event, which ),
+    'r': self.copyRectangleToRegister,
+    'view' : self.viewRegister,
+    }    
+    
+    regText = {
+    's' : 'copy to register',
+    'i' : 'insert from register',
+    'plus': 'increment register',
+    'n' : 'number to register',
+    'p' : 'prepend to register',
+    'a' : 'append to register',
+    'space' : 'point to register',
+    'j': 'jump to register',
+    'r': 'rectangle to register',
+    'view': 'view register',
+    }
+    
+    return regMeths, regText</t>
+<t tx="mork.20041030190903">def addAltXCommands( self ):
+    
+    #many of the simpler methods need self.keyboardQuit( event ) appended to the end to stop the Alt-x mode.
+    doAltX= {
+    'prepend-to-register': self.prependToRegister,
+    'append-to-register': self.appendToRegister,
+    'replace-string': self.replaceString,
+    'replace-regex': lambda event:  self.activateReplaceRegex() and self.replaceString( event ),
+    'sort-lines': self.sortLines,
+    'sort-columns': self.sortColumns,
+    'reverse-region': self.reverseRegion,
+    'sort-fields': self.sortFields,
+    'abbrev-mode': self.toggleAbbrevMode,
+    'kill-all-abbrevs': self.killAllAbbrevs,
+    'expand-region-abbrevs': self.regionalExpandAbbrev,
+    'write-abbrev-file': self.writeAbbreviations,
+    'read-abbrev-file': self.readAbbreviations,
+    'fill-region-as-paragraph': self.fillRegionAsParagraph,
+    'fill-region': self.fillRegion,
+    'close-rectangle': self.closeRectangle,
+    'how-many': self.startHowMany,
+    'kill-paragraph': self.killParagraph,
+    'backward-kill-paragraph': self.backwardKillParagraph,
+    'backward-kill-sentence': lambda event: self.keyboardQuit( event ) and self.killsentence( event, back = True ),
+    'name-last-kbd-macro': self.nameLastMacro,
+    'load-file': self.loadMacros,
+    'insert-keyboard-macro' : self.getMacroName,
+    'list-abbrevs': self.listAbbrevs,
+    'kill-word': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ) and self.keyboardQuit( event ),
+    'kill-line': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) and self.keyboardQuit( event ), 
+    'kill-sentence': lambda event : self.killsentence( event ) and self.keyboardQuit( event ),
+    'kill-region': lambda event, which = 'd' :self.killRegion( event, which ) and self.keyboardQuit( event ),
+    'yank': lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which) and self.keyboardQuit( event ),
+    'yank-pop' : lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ) and self.keyboardQuit( event ),
+    'backward-kill-word': lambda event: self.deletelastWord( event ) and self.keyboardQuit( event ),
+    'backward-delete-char':lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ) and self.keyboardQuit( event ),
+    'delete-char': lambda event: self.deleteNextChar( event ) and self.keyboardQuit( event ) , 
+    'isearch-forward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-s&gt;' ),
+    'isearch-backward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-r&gt;' ),
+    'isearch-forward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-s&gt;', which = 'regexp' ),
+    'isearch-backward-regexp': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '&lt;Control-r&gt;', which = 'regexp' ),
+    'capitalize-word': lambda event, which = 'cap' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+    'upcase-word': lambda event, which = 'up' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+    'downcase-word': lambda event, which = 'low' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+    'indent-region': lambda event: self.indentRegion( event ) and self.keyboardQuit( event ),
+    'indent-rigidly': lambda event: self.tabIndentRegion( event ) and self.keyboardQuit( event ),
+    'indent-relative': self.indent_relative,
+    'set-mark-command': lambda event: self.setRegion( event ) and self.keyboardQuit( event ),
+    'kill-rectangle': lambda event: self.killRectangle( event ),
+    'delete-rectangle': lambda event: self.deleteRectangle( event ),
+    'yank-rectangle': lambda event: self.yankRectangle( event ),
+    'open-rectangle': lambda event: self.openRectangle( event ),
+    'clear-rectangle': lambda event: self.clearRectangle( event ),
+    'copy-to-register': lambda event: self.setEvent( event, 's' ) and self.setNextRegister( event ),
+    'insert-register': lambda event: self.setEvent( event, 'i' ) and self.setNextRegister( event ),
+    'copy-rectangle-to-register': lambda event: self.setEvent( event, 'r' ) and self.setNextRegister( event ),
+    'jump-to-register': lambda event: self.setEvent( event, 'j' ) and self.setNextRegister( event ),
+    'point-to-register': lambda event: self.setEvent( event, 'space' ) and self.setNextRegister( event ),
+    'number-to-register': lambda event: self.setEvent( event, 'n' ) and self.setNextRegister( event ),
+    'increment-register': lambda event: self.setEvent( event, 'plus' ) and self.setNextRegister( event ),
+    'view-register': lambda event: self.setEvent( event, 'view' ) and self.setNextRegister( event ),
+    'beginning-of-line': lambda event, spot = 'insert linestart': self.moveTo( event, spot ) and self.keyboardQuit( event ),
+    'end-of-line': lambda event, spot = 'insert lineend': self.moveTo( event, spot ) and self.keyboardQuit( event ),
+    'keyboard-quit': lambda event: self.keyboardQuit( event ),
+    'advertised-undo': lambda event: self.doUndo( event ) and self.keyboardQuit( event ),
+    'back-to-indentation': lambda event: self.backToIndentation( event ) and self.keyboardQuit( event ),
+    'delete-indentation': lambda event: self.deleteIndentation( event ) and self.keyboardQuit( event ),    
+    'view-lossage': lambda event: self.viewLossage( event ),
+     'transpose-chars': lambda event : self.swapCharacters( event ) and self.keyboardQuit( event ),
+     'transpose-words': lambda event, sw = self.swapSpots: self.swapWords( event, sw ) and self.keyboardQuit( event ),
+     'transpose-lines': lambda event: self.transposeLines( event ) and self.keyboardQuit( event ),
+     'insert-file' : lambda event: self.insertFile( event ) and self.keyboardQuit( event ),
+     'save-buffer' : lambda event: self.saveFile( event ) and self.keyboardQuit( event ),
+     'split-line' : lambda event: self.insertNewLineIndent( event ) and self.keyboardQuit( event ),
+     'upcase-region': lambda event: self.upperLowerRegion( event, 'up' ) and self.keyboardQuit( event ),
+     'downcase-region': lambda event: self.upperLowerRegion( event , 'low' ) and self.keyboardQuit( event ),
+     'dabbrev-expands': lambda event: self.dynamicExpansion( event ) and self.keyboardQuit( event ),
+     'dabbrev-completion': lambda event: self.dynamicExpansion2( event ) and self.keyboardQuit( event ),
+     'goto-line': lambda event: self.startGoto( event ),
+     'goto-char': lambda event: self.startGoto( event, True ),
+     'set-fill-prefix': lambda event: self.setFillPrefix( event ) and self.keyboardQuit( event ),
+     'set-fill-column': lambda event: self.setFillColumn( event ),
+     'center-line': lambda event: self.centerLine( event ) and self.keyboardQuit( event ),
+     'center-region': lambda event: self.centerRegion( event ) and self.keyboardQuit( event ),
+     'forward-char': lambda event, which = 'Right': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'backward-char': lambda event, which = 'Left': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'previous-line': lambda event, which = 'Up': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'next-line': lambda event, which = 'Down': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+     'digit-argument': lambda event: self.universalDispatch( event, '' ),
+     'universal-argument': lambda event: self.universalDispatch( event, '' ),   
+     'newline-and-indent': lambda event: self.insertNewLineAndTab( event ) and self.keyboardQuit( event ),
+     'beginning-of-buffer': lambda event, spot = '1.0' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
+     'end-of-buffer': lambda event, spot = 'end' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
+     'scroll-up': lambda event, way = 'north' : self.screenscroll( event, way ) and self.keyboardQuit( event ),
+     'scroll-down': lambda event, way = 'south': self.screenscroll( event, way ) and self.keyboardQuit( event ),
+     'copy-to-buffer': lambda event, which = 'copy-to-buffer': self.setInBufferMode( event, which ),
+     'insert-buffer': lambda event, which = 'insert-buffer': self.setInBufferMode( event, which ),
+     'append-to-buffer': lambda event , which = 'append-to-buffer':  self.setInBufferMode( event, which ),
+     'prepend-to-buffer': lambda event, which = 'prepend-to-buffer': self.setInBufferMode( event, which ),
+     'switch-to-buffer': lambda event, which = 'switch-to-buffer': self.setInBufferMode( event, which ),
+     'list-buffers' : lambda event: self.listBuffers( event ),
+     'kill-buffer' : lambda event, which = 'kill-buffer': self.setInBufferMode( event, which ),
+     'rename-buffer': lambda event: self.renameBuffer( event ),
+     'query-replace': lambda event: self.masterQR( event ), 
+     'query-replace-regex': lambda event: self.startRegexReplace() and self.masterQR( event ),
+     'inverse-add-global-abbrev': lambda event: self.abbreviationDispatch( event, 2 ) ,  
+     'expand-abbrev': lambda event : self.keyboardQuit( event ) and self.expandAbbrev( event ), 
+     'iconfify-or-deiconify-frame': lambda event: self.suspend( event ) and self.keyboardQuit( event ),
+     'save-buffers-kill-emacs': lambda event: self.keyboardQuit( event ) and self.shutdown( event ),
+     're-search-forward': lambda event: self.reStart( event ),
+     're-search-backward': lambda event: self.reStart( event, which = 'backward' ),
+     'diff': self.diff, 
+     'what-line': self.whatLine,
+     'flush-lines': lambda event: self.startLines( event ),
+     'keep-lines': lambda event: self.startLines( event, which = 'keep' ),
+     'make-directory': lambda event: self.makeDirectory( event ),
+     'remove-directory': lambda event: self.removeDirectory( event ),
+     'delete-file': lambda event: self.deleteFile( event ),
+     'search-forward': lambda event: self.startNonIncrSearch( event, 'for' ),
+     'search-backward': lambda event: self.startNonIncrSearch( event, 'bak' ),
+     'word-search-forward': lambda event : self.startWordSearch( event, 'for' ),
+     'word-search-backward': lambda event: self.startWordSearch( event, 'bak' ),
+     'repeat-complex-command': lambda event: self.repeatComplexCommand( event ),
+     'eval-expression': self.startEvaluate,
+     'tabify': self.tabify,
+     'untabify': lambda event: self.tabify( event, which = 'untabify' ),
+     'shell-command': self.startSubprocess,
+     'shell-command-on-region': lambda event: self.startSubprocess( event, which=1 ),
+    }    
+    #Note: if we are reusing some of the cbDict lambdas we need to alter many by adding: self.keyboardQuit( event )
+    #Otherwise the darn thing just sits in Alt-X land.  Putting the 'and self.keyboardQuit( event )' part in the killbuffer
+    #and yanking it out for each new item, works well.  Adding it to a register might be good to.
+    return doAltX
+
+
+
+
+
+
+ </t>
+<t tx="mork.20041031131847">class ControlXHandler:
+    '''The ControlXHandler manages how the Control-X based commands operate on the
+       Emacs instance.'''    
+    
+    @others
+
+</t>
+<t tx="mork.20041031132342">def __call__( self, event , stroke ):
+    
+    self.previous.insert( 0, event.keysym )
+    emacs = self.emacs 
+    if len( self.previous ) &gt; 10: self.previous.pop()
+    if stroke in ('&lt;Key&gt;', '&lt;Escape&gt;' ):
+        return self.processKey( event )
+    if stroke in emacs.xcommands:
+        emacs.xcommands[ stroke ]( event )
+        if stroke != '&lt;Control-b&gt;': emacs.keyboardQuit( event )
+    return 'break'</t>
+<t tx="mork.20041031133146">def processKey( self, event ):
+        
+    emacs = self.emacs 
+    previous = self.previous
+    if event.keysym in ( 'Shift_L', 'Shift_R' ):
+        return
+        
+    if emacs.sRect:
+        return emacs.stringRectangle( event )
+        
+    if ( event.keysym == 'r' and emacs.rectanglemode == 0 ) and not emacs.registermode:
+        return self.processRectangle( event )
+    elif self.rect_commands.has_key( event.keysym ) and emacs.rectanglemode == 1:
+        return self.processRectangle( event )
+        
+    if self.register_commands.has_key( emacs.registermode ):
+        self.register_commands[ emacs.registermode ]( event )
+        return 'break'
+    
+    if self.variety_commands.has_key( event.keysym ):
+        emacs.stopControlX( event )
+        return self.variety_commands[ event.keysym ]( event )
+        
+    
+    #if emacs.sRect:
+    #    return emacs.stringRectangle( event )
+    #    #return 'break'
+    if event.keysym in ( 'a', 'i' , 'e'):
+        if self.processAbbreviation( event ): return 'break'
+
+    if event.keysym == 'g':
+        svar, label = emacs.getSvarLabel( event )
+        l = svar.get()
+        if self.abbreviationDispatch.has_key( l ):
+            emacs.stopControlX( event )
+            return self.abbreviationDispatch[ l ]( event )
+        #if l == 'a':
+        #    emacs.stopControlX( event )
+        #    return emacs.abbreviationDispatch( event, 1 )
+        #elif l == 'a i':
+        #    emacs.stopControlX( event )
+        #    return emacs.abbreviationDispatch( event, 2 )
+    if event.keysym == 'e':
+        emacs.stopControlX( event )
+        return emacs.executeLastMacro( event )
+    if event.keysym == 'x' and previous[ 1 ] not in ( 'Control_L', 'Control_R'):
+        event.keysym = 's' 
+        emacs.setNextRegister( event )
+        return 'break'
+    
+    if event.keysym == 'Escape':
+        if len( previous ) &gt; 1:
+            if previous[ 1 ] == 'Escape':
+                return emacs.repeatComplexCommand( event )
+    #if event.keysym == 'r':
+    #    return emacs.activateRectangleMethods( event )
+    #if self.rect_commands.has_key( event.keysym ):# and emacs.registermode == 1:
+    #    return self.processRectangle( event )
+     
+    #if emacs.registermode == 1:
+    #    emacs.setNextRegister( event )
+    #    return 'break'
+    #elif emacs.registermode == 2:
+    #    emacs.executeRegister( event )
+    #    return 'break'
+    #if self.register_commands.has_key( emacs.registermode ):
+    #    print 'register commands'
+    #    self.register_commands[ emacs.registermode ]( event )
+    #    return 'break'
+    #if event.keysym == 'r':
+    #    return emacs.activateRectangleMethods( event )
+    #    emacs.registermode = 1
+    #    svar = emacs.svars[ event.widget ]
+    #    svar.set( 'C - x r' )
+    #    return 'break'
+    #if event.keysym== 'h':
+    #    emacs.stopControlX( event )
+    #    event.widget.tag_add( 'sel', '1.0', 'end' )
+    #tag_add( 'sel', '1.0', 'end' )    return 'break' 
+    #if event.keysym == 'equal':
+    #    emacs.lineNumber( event )
+    #    return 'break'
+    #if event.keysym == 'u':
+    #    emacs.stopControlX( event )
+    #    return emacs.doUndo( event, 2 )   
+        
+         
+
+
+
+</t>
+<t tx="mork.20041031134709">def processRectangle( self, event ):
+    
+    self.rect_commands[ event.keysym ]( event )
+    return 'break'
+    #if event.keysym == 'o':
+    #    emacs.openRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'c':
+    #    emacs.clearRectangle( event )
+    #    return 'break'
+    #if event.keysym == 't':
+    #    emacs.stringRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'y':
+    #    emacs.yankRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'd':
+    #    emacs.deleteRectangle( event )
+    #    return 'break'
+    #if event.keysym == 'k':
+    #    emacs.killRectangle( event )
+    #    return 'break'       
+</t>
+<t tx="mork.20041031135748">def processAbbreviation( self, event ):
+    
+    emacs = self.emacs
+    svar, label = emacs.getSvarLabel( event )
+    if svar.get() != 'a' and event.keysym == 'a':
+        svar.set( 'a' )
+        return 'break'
+    elif svar.get() == 'a':
+        if event.char == 'i':
+            svar.set( 'a i' )
+        elif event.char == 'e':
+            emacs.stopControlX( event )
+            event.char = ''
+            emacs.expandAbbrev( event )
+        return 'break'</t>
+<t tx="mork.20041031145157">class MC_StateManager:
+    
+    '''MC_StateManager manages the state that the Emacs instance has entered and
+       routes key events to the right method, dependent upon the state in the MC_StateManager'''
+       
+    @others
+
+
+
+</t>
+<t tx="mork.20041031150125"># EKR: used only below.
+def eA( event ):
+    if self.emacs.expandAbbrev( event ) :
+        return 'break'
+
+self.stateCommands = { #1 == one parameter, 2 == all
+    'uC': ( 2, emacs.universalDispatch ),
+    'controlx': ( 2, emacs.doControlX ),
+    'isearch':( 2, emacs.iSearch ),
+    'goto': ( 1, emacs.Goto ),
+    'zap': ( 1, emacs.zapTo ),
+    'howM': ( 1, emacs.howMany ),
+    'abbrevMode': ( 1, emacs.abbrevCommand1 ),
+    'altx': ( 1, emacs.doAlt_X ),
+    'qlisten': ( 1, emacs.masterQR ),
+    'rString': ( 1, emacs.replaceString ),
+    'negativeArg':( 2, emacs.negativeArgument ),
+    'abbrevOn': ( 1, eA ),
+    'set-fill-column': ( 1, emacs.setFillColumn ),
+    'chooseBuffer': ( 1, emacs.chooseBuffer ),
+    'renameBuffer': ( 1, emacs.renameBuffer ),
+    're_search': ( 1, emacs.re_search ),
+    'alterlines': ( 1, emacs.processLines ),
+    'make_directory': ( 1, emacs.makeDirectory ),
+    'remove_directory': ( 1, emacs.removeDirectory ),
+    'delete_file': ( 1, emacs.deleteFile ),
+    'nonincr-search': ( 2, emacs.nonincrSearch ),
+    'word-search':( 1, emacs.wordSearch ),
+    'last-altx': ( 1, emacs.executeLastAltX ),
+    'escape': ( 1, emacs.watchEscape ),
+    'subprocess': ( 1, emacs.subprocesser ),
+    }</t>
+<t tx="mork.20041031155313">@others</t>
+<t tx="mork.20041031155455">@others</t>
+<t tx="mork.20041031155642">@
+These methods add things to the registers( a-z )
+
+@c
+
+@others</t>
+<t tx="mork.20041031155753">@
+general macro methods.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031155913">@others</t>
+<t tx="mork.20041031160002">@
+These methods take the user to a specific line or a specific character in the buffer
+
+
+@c
+
+@others</t>
+<t tx="mork.20041031162857">def __init__( self, emacs ):
+        
+    self.emacs = emacs
+    self.state = None
+    self.states = {}
+    &lt;&lt;statecommands&gt;&gt;</t>
+<t tx="mork.20041031162857.1">def setState( self, state, value ):
+        
+    self.state = state
+    self.states[ state ] = value</t>
+<t tx="mork.20041031162857.2">def getState( self, state ):
+    
+    return self.states.get(state,False)</t>
+<t tx="mork.20041031162857.3">def hasState( self ):
+
+    if self.state:
+        return self.states[ self.state ]
+</t>
+<t tx="mork.20041031162857.4">def __call__( self, *args ):
+        
+    if self.state:
+        which = self.stateCommands[ self.state ]
+        
+        # EKR: which[0] is a flag: 1 == one parameter, 2 == all
+        # EKR: which[1] is the function.
+        
+        if which[ 0 ] == 1:
+            return which[ 1 ]( args[ 0 ] )
+        else:
+            return which[ 1 ]( *args )
+</t>
+<t tx="mork.20041031162857.5">def clear( self ):
+        
+    self.state = None
+
+    for z in self.states.keys():
+        self.states[ z ] = False</t>
+<t tx="mork.20041031162953">def __init__( self, emacs ):
+        
+    self.emacs = emacs
+    self.previous = []
+    self.rect_commands = {
+    'o': emacs.openRectangle,
+    'c': emacs.clearRectangle,
+    't': emacs.stringRectangle,
+    'y': emacs.yankRectangle,
+    'd': emacs.deleteRectangle,
+    'k': emacs.killRectangle,
+    'r': emacs.activateRectangleMethods,             
+    }
+    
+    self.variety_commands = {
+    'period': emacs.setFillPrefix,
+    'parenleft': emacs.startKBDMacro,
+    'parenright' : emacs.stopKBDMacro,
+    'semicolon': emacs.setCommentColumn,
+    'Tab': emacs.tabIndentRegion,
+    'u': lambda event: emacs.doUndo( event, 2 ),
+    'equal': emacs.lineNumber,
+    'h': emacs.selectAll,
+    'f': emacs.setFillColumn,
+    'b': lambda event, which = 'switch-to-buffer': emacs.setInBufferMode( event, which ),
+    'k': lambda event, which = 'kill-buffer': emacs.setInBufferMode( event, which ),
+    }
+    
+    self.abbreviationDispatch = {    
+    'a': lambda event: emacs.abbreviationDispatch( event, 1 ),
+    'a i': lambda event: emacs.abbreviationDispatch( event, 2 ),    
+    }
+    
+    self.register_commands ={    
+    1: emacs.setNextRegister,
+    2: emacs.executeRegister,        
+    }
+</t>
+<t tx="mork.20041031181701">@
+
+type some text, set its abbreviation with Control-x a i g, type the text for abbreviation expansion
+type Control-x a e ( or Alt-x expand-abbrev ) to expand abbreviation
+type Alt-x abbrev-on to turn on automatic abbreviation expansion
+Alt-x abbrev-on to turn it off
+
+an example:
+type:
+frogs
+after typing 's' type Control-x a i g.  This will turn the minibuffer blue, type in your definition. For example: turtles.
+
+Now in the buffer type:
+frogs
+after typing 's' type Control-x a e.  This will turn the 'frogs' into:
+turtles
+
+
+
+@c
+
+@others</t>
+<t tx="mork.20041031181701.1">@
+These methods handle the query-replace and query-replace-regex commands.  They need to be fully migrated
+to the self.mcStateManager mechanism, which should simplify things greatly, or at least the amount of variables its required
+so far.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031181701.2">@others</t>
+<t tx="mork.20041031181740">@others</t>
+<t tx="mork.20041031181929">@
+These methods add text to the killbuffer.
+@c
+
+@others</t>
+<t tx="mork.20041031181929.1">@
+These methods control the Alt-x command functionality.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031182137">@
+
+untested as of yet for .5 conversion.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031182215">@
+Two closely related categories under this one heading.  Svars are the internals of the minibuffer
+and the labels are the presentation of those internals
+
+@c
+
+@others</t>
+<t tx="mork.20041031182258">@
+These methods create the dispatch dictionarys that the
+Emacs instance uses to execute specific keystrokes and commands.
+Dont mess with it if you dont understand this section, without these dictionarys
+the Emacs system cant work.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031182332">@
+These methods start and execute the Zap to functionality.
+@c
+
+
+
+@others</t>
+<t tx="mork.20041031182402">@others</t>
+<t tx="mork.20041031182449">@
+These methods load files into buffers and save buffers to files
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031182643">@others</t>
+<t tx="mork.20041031182643.1">@
+Emacs requires an undo mechanism be added from the environment.
+If there is no undo mechanism added, there will be no undo functionality in the instance.
+@c
+
+
+
+@others</t>
+<t tx="mork.20041031182709">@others</t>
+<t tx="mork.20041031182837">@
+These methods enable the incremental search functionality.
+
+@c
+
+@others</t>
+<t tx="mork.20041031182916">@others</t>
+<t tx="mork.20041031182943">@
+These methods get and alter the Svar variable which is a Tkinter
+StringVar.  This StringVar contains what is displayed in the minibuffer.
+@c
+
+
+@others</t>
+<t tx="mork.20041031183018">@others</t>
+<t tx="mork.20041031183136">@others</t>
+<t tx="mork.20041031183614">@
+These methods currently do not have a specific class that they belong to.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031183614.1">@others</t>
+<t tx="mork.20041031194703">@others</t>
+<t tx="mork.20041031194746">@
+These methods contain methods by which an Emacs instance is extended, changed, added to , etc...
+
+@c
+
+
+@others</t>
+<t tx="mork.20041031194858">@others</t>
+<t tx="mork.20041031195549">@others</t>
+<t tx="mork.20041031195908">@others</t>
+<t tx="mork.20041031195908.1">@others</t>
+<t tx="mork.20041031202438">def selectAll( event ):
+
+    event.widget.tag_add( 'sel', '1.0', 'end' )
+    return 'break'
+    
+</t>
+<t tx="mork.20041031202908">def activateRectangleMethods( self, event ):
+    
+    self.rectanglemode = 1
+    svar = self.svars[ event.widget ]
+    svar.set( 'C - x r' )
+    return 'break'
+</t>
+<t tx="mork.20041101083527">class MC_KeyStrokeManager:
+    
+    @others</t>
+<t tx="mork.20041101083527.1">def __init__( self, emacs ):
+    
+    self.emacs = emacs
+
+    &lt;&lt;keystrokes&gt;&gt;
+</t>
+<t tx="mork.20041101083527.2">self.keystrokes = {
+
+    '&lt;Control-s&gt;': ( 2, emacs.startIncremental ), 
+    '&lt;Control-r&gt;': ( 2, emacs.startIncremental ),
+    '&lt;Alt-g&gt;': ( 1, emacs.startGoto ),
+    '&lt;Alt-z&gt;': ( 1, emacs.startZap ),
+    '&lt;Alt-percent&gt;': ( 1,  emacs.masterQR ) ,
+    '&lt;Control-Alt-w&gt;': ( 1, lambda event: 'break' ),
+}</t>
+<t tx="mork.20041101084148">def hasKeyStroke( self, stroke ):
+    
+    return self.keystrokes.has_key( stroke )</t>
+<t tx="mork.20041101084148.1">def __call__( self, event, stroke ):
+    
+    kstroke = self.keystrokes[ stroke ]
+    
+    if 0: # EKR: this would be better:
+        numberOfArgs,func = self.keystrokes[ stroke ]
+        if numberOfArgs == 1:
+            return func(event)
+        else:
+            return func(event,stroke)
+    
+    # EKR: which[0] is the number of params.
+    # EKR: which[1] is the function.
+
+    if kstroke[ 0 ] == 1:
+        return kstroke[ 1 ]( event )
+    else:
+        return kstroke[ 1 ]( event, stroke )
+        
+    </t>
+<t tx="mork.20041101100635">@
+
+.5
+       This was a fairly major shift for temacs.
+   -- Changed structure from pure functional to Object Oriented.  Emacs is the central class in the temacs package now.
+      The changes wrought by this are quite extensive.
+   -- worked on complicated control logic, turned some parts into Objects that are state Handlers and Managers
+   -- fixed a bug in block indentation.  If the first line was blank it throw an Exception.  It now finds the first text line.
+   -- added the ability to add extensions.  see 'how to write an Emacs extension' section.  Also look at exampleTemacsExtension.py
+      for a simple example as to how this works.
+   -- fixed control-left control-right up so they do what Emacs does.  This has ramifications for delete previous word as well,
+      since that command relies on the control-left command to do its work.
+   -- added the ability to change the keystrokes via the reconfigureKeyStroke method.  This method is largely untested.
+   -- last count: at around 204 keystrokes and commands( note some commands and keystrokes are the same,
+      just different ways of accesing the functionality.
+   -- enhanced incremental search so that if the search doesnt find anything it will start again either at the top or bottom, depending
+      on which direction it is going.  This is a nice little enhancement.
+   -- enhanced Tabing with alt-x, so that the user can cycle through the matches. Added Tracker class to accomplish this.
+      This will speed up the use of the Alt-x commands and expose functionality that is hard for a user to remember by keystroke.
+   -- added Control-x and regular keystroke commands to Alt-x commands.  Ive focused on the ones Ive found most usefull.  This might be
+      the best way to access rectangle functionality and registers.
+   -- Created a better organized Outline.  There are several organizing nodes now.  Its easier to find things when looking for them.
+   -- Added killing append to system clipboard.  The clipboard gets set with every kill.  Control - y will return the fresh clipboard kill as well as Alt-y.  This will be very nice to have.
+   -- Added ability to test standalone.  Just type: python temacs.py and a simple Editor will appear.
+   -- New commands and keystrokes:
+       Control-j ( insert newline and tab )
+       added goto-char
+       added set-fill-column ( Control-x f )
+       added center-line  ( Alt- s )
+       added center-region ( see node 'fill column and centering' to see what these do )
+       ( these buffer ops have to be configured so the Emacs instance knows what is a 'buffer' in the environment,
+       see 'buffer recognition and alterers' node )
+       append-to-buffer
+       prepend-to-buffer
+       copy-to-buffer
+       insert-buffer
+       list-buffer ( aka Control-x Control-b )
+       switch-to-buffer ( aka Control-x b )
+       kill-buffer ( aka Control-x k )
+       rename-buffer
+
+
+0.51 EKR:  Minor stylistic changes.
+
+0.55:
+    added:
+    Control-z or 'iconify-or-deiconfify-frame'
+    Control-x Esc Esc - executes last Alt-x command( repeat-complex-command )
+    Control-x Control-c shutdown code, as well as a replacement hook if configured to do so.
+    re-search-forward, re-search-backward - simple Alt-x regular expression commands
+    Control-Alt-s, Control-Alt-r - regular expression cousins of incremental search( which makes me think that I need to change isearch to python based searches instead of the Tcl way..
+    diff - does a diff on 2 files and adds it as a buffer
+    what-line
+    keep-lines and flush-lines, two fun new text manipulation commands!(see help text )
+    make-directory and remove-directory, two commands that remove and add directories.
+    delete-file - removes a file
+    search-forward search-backward, searchs backward and forward for a word, non-incrementally.  Accessed by Conrtrol-s Enter and Control-r
+    word-search-forward and word-search-backward, incredible!  You search for a group of words ignoring punctuation.  This is mighty stuff, dont know if Ill use it, but I like what I see.
+    replace-regex - like replace-string but uses a python regular expression for the match.
+    query-replace-regex( Control-Alt-% ) -like query-replace but with a python regular expression
+    Esc Esc :, Alt-:, eval-expression  - these evaluate a Python expression in the minibuffer and puts the value in the current buffer.  This I think is different than what Emacs does, but I think it makes the value more accessible if its in the current buffer.  Nice little calculator too.
+    tabify, untabify - turns spaces to tabs and tabs into spaces( current does it on 4 spaces to one tab ).
+    indent-relative - a very nice command that indents from the insert point until it matches the indentation of a word in the above line.
+    changed:
+    replace-string command now will operate on a selection if there is one.  Also the function now uses string functionality to replace the
+    strings instead of using the Tk Text widget to do the job.
+    dynamic expansion now will expand with the '-' character, which helps greatly in some cases.  Alot of work for a what will hopefully be a long term gain.  Also will now use quoted strings as actual completion targets, thank goodness.
+    fixed:
+    sort-lines will now clear its state after sorting the lines.
+    Alt-!(shell-command, Alt-|(shell-command-on-region) --now temacs allows one to execute shell commands.  I dont see a shell being added to temacs, so thats one area where it will probably not stray.
+    total 26 new commands added
+    fixed up: sort-lines and its cousins, if nothing is selected the command is deactivated.
+</t>
+<t tx="mork.20041101124927">def modifyOnBodyKey( self, event ):
+    '''stops Return and Tab from being processed if the Emacs instance has state.'''
+    if event.char.isspace(): 
+        Emacs = temacs.Emacs.Emacs_instances[ event.widget ]   
+        if Emacs.mcStateManager.hasState():
+           return None
+    return orig_OnBodyKey( self, event )
+</t>
+<t tx="mork.20041101132349">@ 
+
+.5 -- fixed problem with spurious whitespace being added in some of the paste commands when Return was entered.  This was
+      because Leo is programmed to indent after Enter is pressed.  We decorate the OnBodyKey with usetemacs modifyOnBodyKey.
+   -- made transitions to temacs.Emacs class
+   -- Help text can now be searched.  Search is initiated by either typing Return in the Entry or pressing the go button.
+   -- Set it up so when the Text widget has all of its text deleted via a call to delete '1.0', 'end', this calls
+      the StopControlX method of the Emacs object.  This is equivilant of pressing Control-G.
+   -- Added ability to load temacs.Emacs extensions
+   -- Added ability to change default key bindings( in alpha stage ).
+   -- Created example Emacs extension.
+   -- Added ability for user to see each node in the outline as a buffer.  There are methods in temacs such as
+      append-to-buffer, copy-to-buffer, etc... that needs a name and some supplied functionality to do its work.
+      usetemacs does this for the Emacs instance.  Note: if a group of nodes have the same name, then only one will be viewable
+      by the Emacs instance.  This might be enhanced in the future to include all headlines.
+      I would not recommend 'list-buffers' if you have a large outline.  This will have to be enhanced in the future as well.
+   -- Removed all references to Pmw in code( still exists in comments ).  Reports of some weirdness with the string.atoi and how
+      it was behaving in Pmw.  This helps lower the bar of entry to this.  I have replaced the megawidgets with items like
+      ScrolledText and a minibuffer composed of a Frame, a Frame in this Frame, and 2 labels.
+   -- folded in changes from .4 that could be detected
+
+.51
+.52 EKR: Minor style changes.
+.53 EKR: Use __name__ in .plugin_signon
+.55
+    --added a def that adds all the Leo Commands to the Emacs instance, in command addLeoCommands.  I no longer need to
+    remember how to summon the find panel, its done via Alt-x 'find panel'.  This was a very good use of the extension mechanism
+    that was put into place in .5.  I should note that there are a couple I left out like Recent Files, and End Edit Headline,
+    since they didnt seem to functional( i.e. no good way to use them within the Alt-x mechanism).
+    --changed the location of where text appears in the minibuffer, it now always starts from the left instead of the center.
+    This is what Emacs does, and its less disorienting.
+    --added a dialog to show up if there are multiple nodes with the same name.  This gives the user the ability to select a node
+    in its numerical position in the graph, from 1 to N.  Im still surprised that this works as quick as it does, more power to the
+    graph!
+    --added Leo Commands to Temacs Help, good to see which Leo commands you can execute.
+.56 EKR:
+    - Removed 'start2' hook and haveseen dict.
+    - Added init function.
+.57 EKR:
+    - Added global orig_Bindings,orig_OnBodyKey to init().
+    - Removed writeNewDerivedFiles writeOldDerivedFiles and 'apply settings' commands.
+    - Changed c.findPanel to c.showFindPanel.
+    - Changed leoConfig.txt to leoSettings.leo in docstring.
+</t>
+<t tx="mork.20041101190309">def extendAltX( self, name, function ):
+    '''A simple method that extends the functions Alt-X offers.'''
+    
+    nfunction = new.instancemethod( function, self, Emacs ) #making it an instance method allows the function to be passed 'self'.
+    self.doAltX[ name ] = nfunction
+    
+
+</t>
+<t tx="mork.20041101191351">def loadConfig():
+    '''Loads Emacs extensions and new keystrokes to be added to Emacs instances'''
+    pth = os.path.split(g.app.loadDir)   
+    aini = pth[0]+r"/plugins/usetemacs.ini"
+    if os.path.exists( aini ):
+        
+        cp = ConfigParser.ConfigParser()
+        cp.read( aini )
+        section = None
+        for z in cp.sections():
+            if z.strip() == 'extensions':
+                section = z
+                break
+        
+        if section:
+            for z in cp.options( section ):
+                extension = cp.get( section, z )
+                try:
+                    ex = __import__( extension )
+                    extensions.append( ex )
+                except Exception, x:
+                    g.es( "Could not load %s because of %s" % ( extension, x ), color = 'red' )
+                
+        kstroke_sec = None
+        for z in cp.sections():
+            if z.strip() == 'newkeystrokes':
+                kstroke_sec = z
+                break
+        if kstroke_sec:
+            for z in cp.options( kstroke_sec ):
+                new_keystrokes[ z.capitalize() ] = cp.get( kstroke_sec, z )
+
+
+
+
+</t>
+<t tx="mork.20041101202945">def addTemacsExtensions( Emacs ):
+    '''Adds extensions to Emacs parameter.'''
+    for z in extensions:
+            try:
+                if hasattr( z, 'getExtensions' ):
+                    ex_meths = z.getExtensions()
+                    for x in ex_meths.keys():
+                        Emacs.extendAltX( x, ex_meths[ x ] )
+                else:
+                    g.es( 'Module %s does not have a getExtensions function' % z , color = 'red' )
+            except Exception, x:
+                g.es( 'Could not add extension because of %s' % x, color = 'red' )
+</t>
+<t tx="mork.20041101203748">@
+Emacs instances offer the user the ability to add functionality
+to itself.  This is accomplished through the Emacs extendAltX method.  Functions passed in should not be methods
+but just plain functions.
+
+An example:
+def burp( self, event ):
+    print 'burp %s' % self     #This will print info about the Emacs instance
+    self.stopControlX( event ) #every extension should call this or the function will be called for each keystroke.
+                               #To be more precise, it should be called when the function has completely cycled through.
+ei.extendAltX( 'burp', burp ) #burp has been added as an Alt-x command and the burp function has become
+                              #a method of the Emacs instance.  self, will now reflect this.
+
+accessing it through the Alt-X interface will be done like so
+Alt-x
+burp ( Hit return , alternatively the user could type b and hit the tab button )
+
+Each function/method will be called with two parameters:
+    self -- which is the Emacs instance
+    event -- which is an Tkinter Event instance.
+    self gives the extension writer the ability to access the Emacs intances functionality
+    event gives the user the ability to access the Text widget that the Emacs instance is bound to.
+    the preferred way to do so is like this:
+    tbuffer = event.widget</t>
+<t tx="mork.20041101204659">@
+
+to begin to understand how to write an Emacs extension see temacs.py section 'how to write an Emacs extension'.
+
+usetemacs will look for a file called usetemacs.ini
+
+It will open this file and look for a sections called [ extensions ]
+
+every option under this section will act as an indicator to import a module.
+
+For example:
+[ extensions ]
+1=anExtension
+
+The module anExtension.py must be importable by usetemacs.
+
+-----
+usetemacs will load anExtension as a module.  For each Emacs object created it will
+call the modules getExtensions() method which should return a dictionary containing:
+    a. keys that are strings.  These are the names that will be added to the Alt-x command in Emacs.
+    b. functions.  These should not be methods, as they become methods when added to Emacs.
+    for example:
+        module test.py:
+        def power( self, event ):
+            print 'power'
+        def getExtensions():
+            return { 'power' : power }
+    upon loading by usetemacs, every Emacs instance will have 'power' added as an Alt-x command which will call
+    the power function( method after adding ).  The extension write should not worry about the name of the function,
+    they should only worry about the name that they want to access the function-method by.  It is possible to overwrite
+    a default Alt-x method if the same name is used.
+-----
+
+To test an Emacs extensions try out the exampleTemacsExtension.py with this mechanism.
+
+</t>
+<t tx="mork.20041101205414">def watchDelete(  i, j = None, Emacs = None , orig_del = None , Text = None ):
+    '''Watches for complete text deletion.  If it occurs, turns off all state in the Emacs instance.'''
+    if j:
+        if i == '1.0' and j == 'end':
+            event = Tk.Event()
+            event.widget = Text
+            Emacs.keyboardQuit( event )
+    return orig_del( i, j )</t>
+<t tx="mork.20041101210722">def addTemacsAbbreviations( Emacs ):
+    '''Adds abbreviatios and kbd macros to an Emacs instance'''
+    pth = os.path.split( g.app.loadDir ) 
+    aini = pth[ 0 ] + os.sep + 'plugins' + os.sep
+    if os.path.exists( aini + r'usetemacs.kbd' ):
+        f = file( aini +  r'usetemacs.kbd', 'r' )
+        Emacs._loadMacros( f )
+    if os.path.exists( aini + r'usetemacs.abv' ):
+        f = file( aini + r'usetemacs.abv', 'r' )
+        Emacs._readAbbrevs( f )
+        
+
+</t>
+<t tx="mork.20041102081834">@ 
+
+tbuffer - a Tkinter Text widget.  Would be called buffer, but this shadows a Python builin.  This is the widget carried
+by the events in the Emacs instancs.  Can be accessed like so 'event.widget'
+svar - a Tkinter StringVar widget.  This should hold what the minibuffer is showing currently.  Can
+be acquired by 'self.getSvarLabel'.
+
+
+
+</t>
+<t tx="mork.20041102082023">def keyboardQuit( self, event ):
+    '''This method cleans the Emacs instance of state and ceases current operations.'''
+    return self.stopControlX( event )#This method will eventually contain the stopControlX code.
+    
+</t>
+<t tx="mork.20041102082911">@ 
+
+.5
+
+- control-u seems kinda flaky.  Will enhance in the next iteration and make less flaky. :)
+- digit-arguments seem pretty flaky as well.
+--- These are no longer flaky.  A simple change to calling self.keyboardQuit, has eliminated the flakiness Ive seen. :)
+    This was centered on using a command that wasnt a commadn like typing 99a, made it burp!  You can also see the commands
+    as they are done in the Editor.  For example 'Control-u 99 a'  will type 'a' 99 times in the editor.  Or
+    'Control-u 99 Control-_'  will undo the last 99 changes, thats if the Emacs instance has been configure with an undoer.</t>
+<t tx="mork.20041102091309">@
+
+'''An example of a temacs Extension.  To test example:
+    1. Create usetemacs.ini file.
+    2. Make an [ extensions ] section.
+    3. put:
+       1=exampleTemacsExtension
+    When Leo starts,
+    select a set of lines
+    type Alt-x
+    the format-selection-as-list and hit Enter( or type format and hit tab, the autocompletion will work ).
+    After typing Enter you should see you selection indented and each line prefixed with an ascending number.'''
+
+
+def formatSelectionAsList( self, event ):
+    '''This function indents and prepends a number to a selection of text'''
+    try: #We guard against there not being anything selected, which throws an Exception in this block.
+        tbuffer = event.widget # call the Text instance tbuffer as in Emacs class.
+        self.indentRegion( event ) # use the Emacs instances indentRegion method to do initial formatting.
+        start = tbuffer.index( 'sel.first linestart' )
+        start = tbuffer.search( '\w', start, regexp = True, stopindex = '%s lineend' % 'sel.last' )
+        if not start:
+            return self.keyboardQuit( event )
+        end = tbuffer.index( 'sel.last' )
+    except Exception, x:
+        return self.keyboardQuit( event )
+    r1, c1 = start.split( '.' )
+    r1, c1 = int( r1 ), int( c1 )
+    r2, c2 = end.split( '.' )
+    r2 = int( r2 )
+    amount = r2 - r1
+    for z in xrange( amount + 1 ):
+        tbuffer.insert( '%s.%s' % ( r1, c1 ), '%s. ' % ( z + 1 ))
+        r1 = r1 + 1
+    self.keyboardQuit( event ) # this turns off the state and sets things to normal
+    return self._tailEnd( tbuffer ) # this calls the _tailEnd method, which when used with usetemacs will ensure that the text sticks.
+
+def getExtensions():
+
+    return { 'format-selection-as-list': formatSelectionAsList } #We return the one function in this module.</t>
+<t tx="mork.20041102092057">@
+
+#An example usetemacs .ini file
+[ extensions ]
+1=exampleTemacsExtension
+
+[ newkeystrokes ]
+#Alt-q=Alt-f</t>
+<t tx="mork.20041102094131">@ 
+
+usetemacs depends on temacs and Leo like so:
+temacs.py  &lt;------ usetemacs.py -------&gt; Leo
+
+temacs can function by itself.
+Leo can function by itself.
+
+usetemacs brings the two together.
+
+Its the glue between the temacs module and Leo.  Leo doesn't need usetemacs to function, temacs doesn't need usetemacs to be used.
+But if temacs.py and Leo are to work together usetemacs.py must be employed as a plugin for Leo.
+
+It performs several helpful functions for temacs and Leo:
+
+1. Protects against bad whitespace being added because of a Return key press.
+2. Does a keyboardQuit if a new node is selected.
+3. Configures temacs with temacs extensions.
+4. Adds abbreviations and macros to Emacs instances
+5. Configures Emac instances with functions that allow it to treat nodes as buffers.</t>
+<t tx="mork.20041102094341">@ 
+
+temacs.py prior to the .4 version needed to be installed so that it could be loaded anywhere from a python instance.
+Now all the user needs to do is have temacs.py in the same plugins directory of the usetemacs plugin.  The plugin should
+be able to load the module if done in this way.</t>
+<t tx="mork.20041102094716">def reconfigureKeyStroke( self, tbuffer, keystroke , set_to ):
+    
+    '''This method allows the user to reconfigure what a keystroke does.
+       This feature is alpha at best, and untested.'''
+
+    if self.cbDict.has_key( set_to ):
+        
+        command = self.cbDict[ set_to ]
+        self.cbDict[ keystroke ] = command
+        evstring = '&lt;%s&gt;' % keystroke
+        tbuffer.bind( evstring,  lambda event, meth = command: self.masterCommand( event, meth , evstring)  )</t>
+<t tx="mork.20041102094928">def changeKeyStrokes( Emacs, tbuffer ):
+    
+    for z in new_keystrokes.keys():
+        Emacs.reconfigureKeyStroke( tbuffer, z, new_keystrokes[ z ] )
+</t>
+<t tx="mork.20041102102111">@
+
+usetemacs allows the user to change keystrokes in the Emacs instances via the ustemacs.ini file.
+
+the section should be called [ newkeystrokes ].
+
+To reconfigure a keystroke or add a keystroke, under the section add for example:
+Alt-q=Alt-f
+
+
+
+this will rebind Alt-q to what Alt-f does.
+
+------
+note this feature is largely untested and will most likely need work.
+
+</t>
+<t tx="mork.20041102103822">@
+
+1. Continue adding the keystroke command names to the Alt-x mechanism.  Much of this has already been done.
+2. Maybe make it possible for the user to add state to the MC_StateManager instance.  This could allow the extension writer
+to create specific state based extension functions.  They may already be able to do this.
+3. When python 2.4 is official, look at subprocess module and decide if it can be used to run exterior commands.  Pythons current
+cross platform process commands, dont seem too cross platform at this point.  subprocess hopefully will fix this.
+4. Continue migrating statefull commands to the MC_StateManager class.
+5. Add ability for a user to learn the keystroke for a command.  The Help Text should be considered a definitive source of
+information, but it may be quicker for the user to just ask.  This will be accomplished by adding the 'where-is' command or
+'Control-h w'.  Not essential at this point, and will be done when we are entering a polish iteration.
+6. Maybe add the ability for the user to evaluate Python expressions.  Vanilla Emacs has the ability to do something with
+Lisp expressions, so it may make sense to do this with Python since Python is what this is built out of.
+7. Maybe add Emacs variables for the commands.  Ive noticed that you can set Emac variables to change some of the behavior
+in subtle ways.  A dictionary should be used to implement this, adding 1000 attributes to the Emacs class doesnt seem like a good idea.
+8 Maybe add local abbreviations 'Control-x a i l'</t>
+<t tx="mork.20041102131352">class Tracker:
+    '''A class designed to allow the user to cycle through a list
+       and to change the list as deemed appropiate.'''
+
+    @others</t>
+<t tx="mork.20041102131352.1">def __init__( self ):
+    
+    self.tablist = []
+    self.prefix = None
+    self.ng = self._next()</t>
+<t tx="mork.20041102131352.2">def setTabList( self, prefix, tlist ):
+    
+    self.prefix = prefix
+    self.tablist = tlist
+    
+
+</t>
+<t tx="mork.20041102131352.3">def _next( self ):
+    
+    while 1:
+        
+        tlist = self.tablist
+        if not tlist: yield ''
+        for z in self.tablist:
+            if tlist != self.tablist:
+                break
+            yield z
+</t>
+<t tx="mork.20041102132710">def next( self ):
+    
+    return self.ng.next()
+</t>
+<t tx="mork.20041102133805">def _findMatch( self, svar, fdict = None ):#, fdict = self.doAltX ):
+    '''This method finds the first match it can find in a sorted list'''
+    if not fdict:
+        fdict = self.doAltX
+    txt = svar.get()
+    pmatches = filter( lambda a : a.startswith( txt ), fdict )
+    pmatches.sort()
+    if pmatches:
+        mstring = reduce( self.findPre, pmatches )
+        return mstring
+    return txt
+</t>
+<t tx="mork.20041102151545">def viewRegister( self, event ):
+    
+    self.stopControlX( event )
+    if event.keysym in string.letters:
+        text = self.registers[ event.keysym.lower() ]
+        svar, label = self.getSvarLabel( event )
+        svar.set( text )</t>
+<t tx="mork.20041102151939">def setEvent( self, event, l ):
+    event.keysym = l
+    return event
+    
+</t>
+<t tx="mork.20041102160313">def clear( self ):
+
+    self.tablist = []
+    self.prefix = None
+</t>
+<t tx="mork.20041102161859">def viewLossage( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+    loss = ''.join( Emacs.lossage )
+    self.keyboardQuit( event )
+    svar.set( loss )</t>
+<t tx="mork.20041102183901"></t>
+<t tx="mork.20041103085329">@
+These methods are currently just used in tandem to center the line or region within the fill column.
+for example, dependent upon the fill column, this text:
+
+cats
+raaaaaaaaaaaats
+mats
+zaaaaaaaaap
+
+may look like
+
+                                 cats
+                           raaaaaaaaaaaats
+                                 mats
+                             zaaaaaaaaap
+after an center-region command via Alt-x.
+
+
+@c
+
+
+@others
+
+</t>
+<t tx="mork.20041103085329.1">def centerLine( self, event ):
+    '''Centers line within current fillColumn'''
+    
+    tbuffer = event.widget
+    ind = tbuffer.index( 'insert linestart' )
+    txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+    txt = txt.strip()
+    if len( txt ) &gt;= self.fillColumn: return self._tailEnd( tbuffer )
+    amount = ( self.fillColumn - len( txt ) ) / 2
+    ws = ' ' * amount
+    col, nind = ind.split( '.' )
+    ind = tbuffer.search( '\w', 'insert linestart', regexp = True, stopindex = 'insert lineend' )
+    if not ind: return 'break'
+    tbuffer.delete( 'insert linestart', '%s' % ind )
+    tbuffer.insert( 'insert linestart', ws )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041103085329.2">def setFillColumn( self, event ):
+    
+    if self.mcStateManager.getState( 'set-fill-column' ):
+        
+        if event.keysym == 'Return':
+            svar, label = self.getSvarLabel( event )
+            value = svar.get()
+            if value.isdigit():
+                self.fillColumn = int( value )
+            return self.keyboardQuit( event )
+        elif event.char.isdigit() or event.char == '\b':
+            svar, label = self.getSvarLabel( event )
+            self.setSvar( event, svar )
+            return 'break'
+        return 'break'
+        
+        
+        
+    else:
+        self.mcStateManager.setState( 'set-fill-column', 1 )
+        svar, label = self.getSvarLabel( event )
+        svar.set( '' )
+        label.configure( background = 'lightblue' )
+        return 'break'
+</t>
+<t tx="mork.20041103095628">def centerRegion( self, event ):
+    '''This method centers the current region within the fill column'''
+    tbuffer = event.widget
+    start = tbuffer.index( 'sel.first linestart' )
+    sindex , x = start.split( '.' )
+    sindex = int( sindex )
+    end = tbuffer.index( 'sel.last linestart' )
+    eindex , x = end.split( '.' )
+    eindex = int( eindex )
+    while sindex &lt;= eindex:
+        txt = tbuffer.get( '%s.0 linestart' % sindex , '%s.0 lineend' % sindex )
+        txt = txt.strip()
+        if len( txt ) &gt;= self.fillColumn:
+            sindex = sindex + 1
+            continue
+        amount = ( self.fillColumn - len( txt ) ) / 2
+        ws = ' ' * amount
+        ind = tbuffer.search( '\w', '%s.0' % sindex, regexp = True, stopindex = '%s.0 lineend' % sindex )
+        if not ind: 
+            sindex = sindex + 1
+            continue
+        tbuffer.delete( '%s.0' % sindex , '%s' % ind )
+        tbuffer.insert( '%s.0' % sindex , ws )
+        sindex = sindex + 1
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041103120919">def getClipboard( self, tbuffer ):
+    
+    ctxt = None
+    try:
+        ctxt = tbuffer.selection_get( selection='CLIPBOARD' )
+        if ctxt != self.last_clipboard or not self.killbuffer:
+            self.last_clipboard = ctxt
+            if self.killbuffer and self.killbuffer[ 0 ] == ctxt:
+                return None
+            return ctxt
+        else:
+            return None
+        
+    except:
+        return None
+        
+    return None</t>
+<t tx="mork.20041103135515">def insertNewLineAndTab( self, event ):
+    '''Insert a newline and tab'''
+    tbuffer = event.widget
+    self.insertNewLine( event )
+    i = tbuffer.index( 'insert +1c' )
+    tbuffer.insert( i, '\t' )
+    tbuffer.mark_set( 'insert', '%s lineend' % i )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041103155347">@
+an Emacs instance does not have knowledge of what is considered a buffer in the environment.
+It must be configured by the user so that it can operate on the other buffers.  Otherwise
+these methods will be useless.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041103155347.1">def setBufferListGetter( self, buffer, method ):
+    #Sets a method that returns a buffer name and its text, and its insert position.
+    self.bufferListGetters[ buffer ] = method
+</t>
+<t tx="mork.20041103155347.2">def setBufferSetter( self, buffer, method ):
+    #Sets a method that takes a buffer name and the new contents.
+    self.bufferSetters[ buffer ] = method</t>
+<t tx="mork.20041103155347.3">def getBufferDict( self, event ):
+    
+    tbuffer = event.widget
+    meth = self.bufferListGetters[ tbuffer ]
+    return meth()</t>
+<t tx="mork.20041103155347.4">def appendToBuffer( self, event, name ):
+
+    tbuffer = event.widget
+    try:
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        bdata = self.bufferDict[ name ]
+        bdata = '%s%s' % ( bdata, txt )
+        self.setBufferData( event, name, bdata )
+    except Exception, x:
+        pass
+    return self.keyboardQuit( event )</t>
+<t tx="mork.20041103155347.5">def prependToBuffer( self, event, name ):
+    
+    tbuffer = event.widget
+    try:
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        bdata = self.bufferDict[ name ]
+        bdata = '%s%s' % ( txt, bdata )
+        self.setBufferData( event, name, bdata )
+    except Exception, x:
+        pass
+    return self.keyboardQuit( event )</t>
+<t tx="mork.20041103155347.6">def insertToBuffer( self, event, name ):
+
+    tbuffer = event.widget
+    bdata = self.bufferDict[ name ]
+    tbuffer.insert( 'insert', bdata )
+    self._tailEnd( tbuffer )
+    return self.keyboardQuit( event )
+</t>
+<t tx="mork.20041103155347.7">def copyToBuffer( self, event, name ):
+    
+    tbuffer = event.widget
+    try:
+        txt = tbuffer.get( 'sel.first', 'sel.last' )
+        self.setBufferData( event, name, txt )
+    except Exception, x:
+        pass
+    return self.keyboardQuit( event )
+    
+</t>
+<t tx="mork.20041103160433">tnodes = {}
+positions =  {}
+def setBufferInteractionMethods( c, emacs, buffer ):
+    '''This function configures the Emacs instance so that
+       it can see all the nodes as buffers for its buffer commands.'''
+    def buildBufferList(): #This builds a buffer list from what is in the outline.  Worked surprisingly fast on LeoPy.
+        if not tnodes.has_key( c ): #I was worried that speed factors would make it unusable.
+            tnodes[ c ] = {}
+        tdict = tnodes[ c ]
+        pos = c.rootPosition()
+        utni = pos.allNodes_iter()
+        bufferdict = {}
+        tdict.clear()
+        positions.clear()
+        for z in utni:
+        
+           t = z.v.t
+           if positions.has_key( t.headString ):
+            positions[ t.headString ].append( z.copy() )
+           else:
+            positions[ t.headString ] = [ z.copy() ]#not using a copy seems to have bad results.
+           #positions[ t.headString ] = z
+        
+           bS = ''
+           if t.bodyString: bS = t.bodyString
+ 
+           
+           bufferdict[ t.headString ] = bS
+           tdict[ t.headString ] = t 
+        
+        return bufferdict
+        
+    def setBufferData( name, data ):
+        
+        data = unicode( data )
+        tdict = tnodes[ c ]
+        if tdict.has_key( name ):
+            tdict[ name ].bodyString = data
+            
+    def gotoNode( name ):
+        
+        c.beginUpdate()
+        if positions.has_key( name ):
+            posis = positions[ name ]
+            if len( posis ) &gt; 1:
+                tl = Tk.Toplevel()
+                #tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 ))
+                tl.title( "Select node by numeric position" )
+                fr = Tk.Frame( tl )
+                fr.pack()
+                header = Tk.Label( fr, text='select position' )
+                header.pack()
+                lbox = Tk.Listbox( fr, background='white', foreground='blue' )
+                lbox.pack()
+                for z in xrange( len( posis ) ):
+                    lbox.insert( z, z + 1 )
+                lbox.selection_set( 0 )
+                def setPos( event ):
+                    cpos = int( lbox.nearest( event.y ) )
+                    tl.withdraw()
+                    tl.destroy()
+                    if cpos != None:
+                        gotoPosition( c, posis[ cpos ] )
+                lbox.bind( '&lt;Button-1&gt;', setPos )
+                geometry = tl.geometry()
+                geometry = geometry.split( '+' )
+                geometry = geometry[ 0 ]
+                width = tl.winfo_screenwidth()/3
+                height = tl.winfo_screenheight()/3
+                geometry= '+%s+%s' %( width,height )
+                tl.geometry( geometry )
+            else:
+                pos = posis[ 0 ]
+                gotoPosition( c, pos )
+        else:
+            pos2 = c.currentPosition()
+            tnd = leoNodes.tnode( '', name )
+            pos = pos2.insertAfter( tnd )
+            gotoPosition( c, pos )
+        #c.frame.tree.expandAllAncestors( pos )
+        #c.selectPosition( pos )
+        #c.endUpdate()
+    
+    def deleteNode( name ):
+        
+        c.beginUpdate()
+        if positions.has_key( name ):
+            pos = positions[ name ]
+            cpos = c.currentPosition()
+            pos.doDelete( cpos )
+        c.endUpdate()
+    
+    def renameNode( name ):
+    
+        c.beginUpdate()
+        pos = c.currentPosition()
+        pos.setHeadString( name )
+        c.endUpdate()
+
+        
+    emacs.setBufferListGetter( buffer, buildBufferList ) #This gives the Emacs instance the ability to get a buffer list
+    emacs.setBufferSetter( buffer, setBufferData )# This gives the Emacs instance the ability to set a tnodes bodyString
+    emacs.setBufferGoto( buffer, gotoNode )# This gives the Emacs instance the ability to jump to a node
+    emacs.setBufferDelete( buffer, deleteNode )# This gives the Emacs instance the ability to delete a node
+    emacs.setBufferRename( buffer, renameNode )# This gives the Emacs instance the ability to rename the current node
+
+</t>
+<t tx="mork.20041103161202">def chooseBuffer( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+
+    state = self.mcStateManager.getState( 'chooseBuffer' )
+    if state.startswith( 'start' ):
+        state = state[ 5: ]
+        self.mcStateManager.setState( 'chooseBuffer', state )
+        svar.set( '' )
+    if event.keysym == 'Tab':
+        
+        stext = svar.get().strip()
+        if self.bufferTracker.prefix and stext.startswith( self.bufferTracker.prefix ):
+            svar.set( self.bufferTracker.next() ) #get next in iteration
+        else:
+            prefix = svar.get()
+            pmatches = []
+            for z in self.bufferDict.keys():
+                if z.startswith( prefix ):
+                    pmatches.append( z )
+            self.bufferTracker.setTabList( prefix, pmatches )
+            svar.set( self.bufferTracker.next() ) #begin iteration on new lsit
+        return 'break'        
+
+        
+    elif event.keysym == 'Return':
+       
+       bMode = self.mcStateManager.getState( 'chooseBuffer' )
+       return self.bufferCommands[ bMode ]( event, svar.get() )
+        
+        
+    else:
+        self.setSvar( event, svar )
+        return 'break'
+
+</t>
+<t tx="mork.20041103161202.1">def setInBufferMode( self, event, which ):
+    
+    self.keyboardQuit( event )
+    tbuffer = event.widget
+    self.mcStateManager.setState( 'chooseBuffer', 'start%s' % which )
+    svar, label = self.getSvarLabel( event )
+    label.configure( background = 'lightblue' )
+    svar.set( 'Choose Buffer Name:' )
+    self.bufferDict = self.getBufferDict( event )
+    return 'break'</t>
+<t tx="mork.20041103162147">def setBufferData( self, event, name, data ):
+    
+    tbuffer = event.widget
+    meth = self.bufferSetters[ tbuffer ]
+    meth( name, data )</t>
+<t tx="mork.20041103190332">def listBuffers( self, event ):
+    
+    bdict  = self.getBufferDict( event )
+    list = bdict.keys()
+    list.sort()
+    svar, label = self.getSvarLabel( event )
+    data = '\n'.join( list )
+    self.keyboardQuit( event )
+    svar.set( data )
+    return 'break'
+    </t>
+<t tx="mork.20041103191311">def setBufferGoto( self, tbuffer, method ):
+    self.bufferGotos[ tbuffer ] = method </t>
+<t tx="mork.20041103191311.1">def switchToBuffer( self, event, name ):
+    
+    method = self.bufferGotos[ event.widget ]
+    self.keyboardQuit( event )
+    method( name )
+    return 'break'
+</t>
+<t tx="mork.20041104090224">def setBufferDelete( self, tbuffer, method ):
+    
+    self.bufferDeletes[ tbuffer ] = method
+    
+
+</t>
+<t tx="mork.20041104090224.1">def killBuffer( self, event, name ):
+    
+    method = self.bufferDeletes[ event.widget ]
+    self.keyboardQuit( event )
+    method( name )
+    return 'break'
+    
+
+</t>
+<t tx="mork.20041104092058">def renameBuffer( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+    if not self.mcStateManager.getState( 'renameBuffer' ):
+        self.mcStateManager.setState( 'renameBuffer', True )
+        svar.set( '' )
+        label.configure( background = 'lightblue' )
+        return 'break'
+    if event.keysym == 'Return':
+       
+       nname = svar.get()
+       self.keyboardQuit( event )
+       self.renameBuffers[ event.widget ]( nname )
+        
+        
+    else:
+        self.setSvar( event, svar )
+        return 'break'</t>
+<t tx="mork.20041104092349">def setBufferRename( self, buffer, method ):
+    
+    self.renameBuffers[ buffer ] = method</t>
+<t tx="mork.20041104094826">@others</t>
+<t tx="mork.20041104094826.1">@others</t>
+<t tx="mork.20041104095745">@
+Alt-x is the mechanism by which the user should be able to access any command in the Emacs instance.
+The first steps in developing temacs was focused on the keystrokes.  Though in reality the keystrokes
+are just ways to access the commands.
+
+To initiate a command type Alt-x
+Start typing the command name
+Press Tab.  If the command does not come up, continue pressing Tab.
+If you placed the correct prefix in the minibuffer, eventually the command will appear.
+
+
+This will help a user to quickly cycle through commands and select the one they want, even if they can somewhat remember what
+the spelling is.</t>
+<t tx="mork.20041104100514">@
+
+Hard to say at this point.  usetemacs is essentially the glue between Leo and temacs.py.  Anytime
+temacs needs some machinery from the surrounding environment, usetemacs.py is supposed to supply it.
+temacs development drives this development.
+</t>
+<t tx="mork.20041104100856">@
+In the plugins directory there should be a subdirectory called: temacs_ext.
+usetemacs will add that directory to the import list.
+
+
+This keeps temacs extensions separate from regular plugins.
+
+usetemacs creates this directory for the user if it doesn't alread exist upon startup.
+
+</t>
+<t tx="mork.20041104102456">@others
+</t>
+<t tx="mork.20041104145603">def initialise():
+    '''This fuction sets up the module'''
+    def createBindings (self,frame): 
+     
+        if not labels.has_key( frame ):
+            #group = Pmw.Group( frame.split2Pane2, tag_text = 'mini buffer' )
+            group = Tk.Frame( frame.split2Pane2 , 
+                              relief = 'ridge', 
+                              borderwidth = 3 )
+            f2 = Tk.Frame( group )
+            f2.pack( side = 'top', fill = 'x' )
+            gtitle = Tk.Label( f2, 
+                               text = 'mini-buffer' , 
+                               justify = 'left' , 
+                               anchor = 'nw',
+                               foreground = 'blue',
+                               background = 'white' )
+            #gtitle.pack( side = 'top', fill ='x' )
+            #gtitle.place( x = 5, y = 10 )
+            group.pack( side = 'bottom', fill = 'x', expand = 1 )
+            #gtitle.place( x = 0, y = 0 , relwidth = 1.0, relheight = 1.0 )
+            #gtitle.grid( columnspan = 5 )
+            for z in frame.split2Pane2.children.values():
+                group.pack_configure( before = z )
+            label = Tk.Label( group , 
+                              relief = 'groove',
+                              justify = 'left',
+                              anchor='w',
+                               )
+            label.pack( side = 'bottom', fill = 'both', expand = 1, padx = 2, pady = 2 )   
+            gtitle.pack( side = 'left' ) #, fill ='x' )
+            #label.place( x = 10, y = 10 )
+            #label.grid( column =2, columnspan = 15, rowspan = 3 )
+            labels[ frame ] = label  
+        else:
+            label = labels[ frame ]
+            
+        orig_Bindings( self, frame )
+        Emacs = temacs.Emacs( frame.bodyCtrl, label, useGlobalKillbuffer = True, useGlobalRegisters = True )
+        Emacs.setUndoer( frame.bodyCtrl, self.c.undoer.undo ) 
+        Emacs.setTailEnd( frame.bodyCtrl, lambda buffer, frame = frame: utTailEnd( buffer, frame ) )
+        Emacs.setShutdownHook( self.c.close )
+        addTemacsExtensions( Emacs )
+        addTemacsAbbreviations( Emacs )
+        addLeoCommands( self.c, Emacs )
+        changeKeyStrokes( Emacs, frame.bodyCtrl )
+        setBufferInteractionMethods( self.c, Emacs, frame.bodyCtrl )
+                
+        orig_del = frame.bodyCtrl.delete
+        def wD( i, j = None, Emacs = Emacs, orig_del = orig_del, Text = frame.bodyCtrl ):
+                return watchDelete( i,j, Emacs, orig_del, Text )
+        frame.bodyCtrl.delete = wD
+
+    return createBindings</t>
+<t tx="mork.20041120195951">def suspend( self, event ):
+    
+    widget = event.widget
+    widget.winfo_toplevel().iconify()
+</t>
+<t tx="mork.20041120222336">def shutdown( self, event ):
+    
+    self.shuttingdown = True
+    if self.shutdownhook:
+        self.shutdownhook()
+    else:
+        sys.exit( 0 )</t>
+<t tx="mork.20041120223251">@others</t>
+<t tx="mork.20041120223251.1">def setShutdownHook( self, hook ):
+        
+    self.shutdownhook = hook</t>
+<t tx="mork.20041121103034">@
+For the re-search-backward and re-search-forward Alt-x commands
+
+@c
+
+
+
+@others</t>
+<t tx="mork.20041121103034.1">def reStart( self, event, which='forward' ):
+    self.keyboardQuit( event )
+    tbuffer = event.widget
+    self.mcStateManager.setState( 're_search', 'start%s' % which )
+    svar, label = self.getSvarLabel( event )
+    label.configure( background = 'lightblue' )
+    svar.set( 'RE Search:' )
+    return 'break'
+</t>
+<t tx="mork.20041121103034.2">def re_search( self, event ):
+    svar, label = self.getSvarLabel( event )
+
+    state = self.mcStateManager.getState( 're_search' )
+    if state.startswith( 'start' ):
+        state = state[ 5: ]
+        self.mcStateManager.setState( 're_search', state )
+        svar.set( '' )
+       
+
+        
+    if event.keysym == 'Return':
+       
+        tbuffer = event.widget
+        pattern = svar.get()
+        cpattern = re.compile( pattern )
+        end = None
+        if state == 'forward':
+            
+            txt = tbuffer.get( 'insert', 'end' )
+            match = cpattern.search( txt )
+            end = match.end()
+        
+        else:
+
+            txt = tbuffer.get( '1.0', 'insert' ) #initially the reverse words formula for Python Cookbook was going to be used.
+            a = re.split( pattern, txt )         #that didnt quite work right.  This one apparently does.   
+            if len( a ) &gt; 1:
+                b = re.findall( pattern, txt )
+                end = len( a[ -1 ] ) + len( b[ -1 ] )
+        
+        if end:
+            
+            wdict ={ 'forward': 'insert +%sc', 'backward': 'insert -%sc' }
+                
+            tbuffer.mark_set( 'insert', wdict[ state ] % end )                                
+            self._tailEnd( tbuffer )
+            tbuffer.see( 'insert' )
+            
+        return self.keyboardQuit( event )    
+        
+        
+    else:
+        self.setSvar( event, svar )
+        return 'break'
+
+</t>
+<t tx="mork.20041121125455">def useRegex( self ):
+
+    isearch = self.mcStateManager.getState( 'isearch' )
+    risearch = False
+    if isearch != 'normal':
+        risearch=True
+    return risearch</t>
+<t tx="mork.20041121140620">@
+the diff command, accessed by Alt-x diff.  Creates a buffer and puts the diff between 2 files into it.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041121140620.1">def diff( self, event ):
+    
+    try:
+        f, name = self.getReadableTextFile()
+        txt1 = f.read()
+        f.close()
+        
+        f2, name2 = self.getReadableTextFile()
+        txt2 = f2.read()
+        f2.close()
+    except:
+        return self.keyboardQuit( event )
+    
+    
+    self.switchToBuffer( event, "*diff* of ( %s , %s )" %( name, name2 ) )
+    import difflib
+    data = difflib.ndiff( txt1, txt2 )
+    idata = []
+    for z in data:
+        idata.append( z )
+    tbuffer = event.widget
+    tbuffer.delete( '1.0', 'end' )
+    tbuffer.insert( '1.0', ''.join( idata ) )
+    self._tailEnd( tbuffer )
+    return self.keyboardQuit( event )
+</t>
+<t tx="mork.20041121140620.2">def getReadableTextFile( self ):
+    
+    import tkFileDialog
+    fname = tkFileDialog.askopenfilename()
+    if fname == None: return None, None
+    f = open( fname, 'rt' )
+    return f, fname
+</t>
+<t tx="mork.20041121195816">def whatLine( self, event ):
+    
+    tbuffer = event.widget
+    svar, label = self.getSvarLabel( event )
+    i = tbuffer.index( 'insert' )
+    i1, i2 = i.split( '.' )
+    self.keyboardQuit( event )
+    svar.set( "Line %s" % i1 )
+</t>
+<t tx="mork.20041121201041">@
+
+flush-lines
+Delete each line that contains a match for regexp, operating on the text after point. In Transient Mark mode, if the region is active, the command operates on the region instead.
+
+
+keep-lines
+Delete each line that does not contain a match for regexp, operating on the text after point. In Transient Mark mode, if the region is active, the command operates on the region instead.
+
+@c
+
+@others</t>
+<t tx="mork.20041121201041.1">def alterLines( self, event, which ):
+    
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    end = 'end'
+    if tbuffer.tag_ranges( 'sel' ):
+        i = tbuffer.index( 'sel.first' )
+        end = tbuffer.index( 'sel.last' )
+        
+    txt = tbuffer.get( i, end )
+    tlines = txt.splitlines( True )
+    if which == 'flush':
+        keeplines = list( tlines )
+    else:
+        keeplines = []
+    svar, label = self.getSvarLabel( event )
+    pattern = svar.get()
+    try:
+        regex = re.compile( pattern )
+        for n , z in enumerate( tlines ):
+            f = regex.findall( z )
+            if which == 'flush' and f:
+                keeplines[ n ] = None
+            elif f:
+                keeplines.append( z )
+    except Exception,x:
+        return
+    
+    if which == 'flush':
+        keeplines = [ x for x in keeplines if x != None ]
+    tbuffer.delete( i, end )
+    tbuffer.insert( i, ''.join( keeplines ) )
+    tbuffer.mark_set( 'insert', i )
+    self._tailEnd( tbuffer )
+        
+    
+
+
+
+</t>
+<t tx="mork.20041121201112">def startLines( self , event, which = 'flush' ):
+
+    self.keyboardQuit( event )
+    tbuffer = event.widget
+    self.mcStateManager.setState( 'alterlines', 'start%s' % which )
+    svar, label = self.getSvarLabel( event )
+    label.configure( background = 'lightblue' )
+    return 'break'
+    
+</t>
+<t tx="mork.20041121210221">def processLines( self, event ):
+    svar, label = self.getSvarLabel( event )
+
+    state = self.mcStateManager.getState( 'alterlines' )
+    if state.startswith( 'start' ):
+        state = state[ 5: ]
+        self.mcStateManager.setState( 'alterlines', state )
+        svar.set( '' )
+       
+
+        
+    if event.keysym == 'Return':
+       
+        self.alterLines( event, state )
+            
+        return self.keyboardQuit( event )    
+        
+        
+    else:
+        self.setSvar( event, svar )
+        return 'break'</t>
+<t tx="mork.20041122110739">@others</t>
+<t tx="mork.20041122110739.1">def makeDirectory( self, event ):
+    
+    svar,label = self.getSvarLabel( event )
+    state = self.mcStateManager.getState( 'make_directory' )
+    if not state:
+        self.mcStateManager.setState( 'make_directory', True )
+        self.setLabelBlue( label )
+        directory = os.getcwd()
+        svar.set( '%s%s' %( directory, os.sep ) )
+        return 'break'
+    
+    if event.keysym == 'Return':
+        
+        ndirectory = svar.get()
+        self.keyboardQuit( event )
+        try:
+            os.mkdir( ndirectory )
+        except:
+            svar.set( "Could not make %s%" % ndirectory  )
+        return 'break'
+    else:
+        self.setSvar( event, svar )
+        return 'break'</t>
+<t tx="mork.20041122111431">def removeDirectory( self, event ):
+    
+    svar,label = self.getSvarLabel( event )
+    state = self.mcStateManager.getState( 'remove_directory' )
+    if not state:
+        self.mcStateManager.setState( 'remove_directory', True )
+        self.setLabelBlue( label )
+        directory = os.getcwd()
+        svar.set( '%s%s' %( directory, os.sep ) )
+        return 'break'
+    
+    if event.keysym == 'Return':
+        
+        ndirectory = svar.get()
+        self.keyboardQuit( event )
+        try:
+            os.rmdir( ndirectory )
+        except:
+            svar.set( "Could not remove %s%" % ndirectory  )
+        return 'break'
+    else:
+        self.setSvar( event, svar )
+        return 'break'</t>
+<t tx="mork.20041122112210">def deleteFile( self, event ):
+
+    svar,label = self.getSvarLabel( event )
+    state = self.mcStateManager.getState( 'delete_file' )
+    if not state:
+        self.mcStateManager.setState( 'delete_file', True )
+        self.setLabelBlue( label )
+        directory = os.getcwd()
+        svar.set( '%s%s' %( directory, os.sep ) )
+        return 'break'
+    
+    if event.keysym == 'Return':
+        
+        dfile = svar.get()
+        self.keyboardQuit( event )
+        try:
+            os.remove( dfile )
+        except:
+            svar.set( "Could not delete %s%" % dfile  )
+        return 'break'
+    else:
+        self.setSvar( event, svar )
+        return 'break'
+</t>
+<t tx="mork.20041122151944">@
+originally when this project started it was not envisioned that there would be that many emacs like commands and stuff implemented.
+But then things changed, it grew.  At one point there were too many functions for the module to be flexible and understandable anymore.
+
+The first reaction in the development was to decompose the pure module approach to an object approach.  This has helped immensely in
+making temacs more manageable.  But, an Emacs instance now has over 200+ methods in it.  If it continues to grow, there may be
+the need to decompose the families of methods into their own objects.  This could have two benefits:
+1. More intellectually managable.
+2. Swapable functionality.  Though its possible to do so now with python, this could be made much easier by having all
+calls to a certain family be made through the __call__ operator.  Then swaping could be simply done by changing the object
+the call is made to.
+
+
+We will see if this approach may be taken.  At this point I can say for certain that the original pure functional design was a mistake, but one that was correctable by using Leo and pychecker.  Without these 2 tools, I think it may have been better to start over from scratch.
+</t>
+<t tx="mork.20041122152311">@
+Ive noticed a general strategy that works for adding commands that need state to develop.
+
+1. Create a start method.  This sets the mcStateManager into a specific state
+2. Create a process method.  This watches events as they happen in the state
+3. Create endpoint methods. These perform the final steps in processing the stateful command.
+
+
+This general strategy works well so far.  A whole family of methods can be created in this manner.  Steps 1 and 2
+could be combined but at a cost of more complexity, so Id recommend keeping them separate.
+</t>
+<t tx="mork.20041122154604">@
+Accessed by Control-s Enter or Control-r Enter.  Alt-x forward-search or backward-search, just looks for words...
+
+
+@c
+
+
+@others</t>
+<t tx="mork.20041122154604.1">def nonincrSearch( self, event, stroke ):
+    
+    if event.keysym in ('Control_L', 'Control_R' ): return
+    state = self.mcStateManager.getState( 'nonincr-search' )
+    svar, label = self.getSvarLabel( event )
+    if state.startswith( 'start' ):
+        state = state[ 5: ]
+        self.mcStateManager.setState( 'nonincr-search', state )
+        svar.set( '' )
+        
+    if svar.get() == '' and stroke=='&lt;Control-w&gt;':
+        return self.startWordSearch( event, state )
+    
+    if event.keysym == 'Return':
+        
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        word = svar.get()
+        if state == 'for':
+            s = tbuffer.search( word, i , stopindex = 'end' )
+            if s:
+                s = tbuffer.index( '%s +%sc' %( s, len( word ) ) )
+        else:            
+            s = tbuffer.search( word,i, stopindex = '1.0', backwards = True )
+            
+        if s:
+            tbuffer.mark_set( 'insert', s )    
+        self.keyboardQuit( event )
+        return self._tailEnd( tbuffer )        
+            
+    else:
+        self.setSvar( event, svar )
+        return 'break'
+
+
+</t>
+<t tx="mork.20041122155708">def startNonIncrSearch( self, event, which ):
+    
+    self.keyboardQuit( event )
+    tbuffer = event.widget
+    self.mcStateManager.setState( 'nonincr-search', 'start%s' % which )
+    svar, label = self.getSvarLabel( event )
+    self.setLabelBlue( label )
+    svar.set( 'Search:' )
+    return 'break'
+</t>
+<t tx="mork.20041122171601">@
+
+Control-s(r) Enter Control-w words Enter, pattern entered is treated as a regular expression.
+
+for example in the buffer we see:
+    cats......................dogs
+if we are after this and we enter the backwards look, search for 'cats dogs' if will take us to the match.
+
+@c
+
+@others</t>
+<t tx="mork.20041122171601.1">def startWordSearch( self, event, which ):
+
+    self.keyboardQuit( event )
+    tbuffer = event.widget
+    self.mcStateManager.setState( 'word-search', 'start%s' % which )
+    svar, label = self.getSvarLabel( event )
+    self.setLabelBlue( label )
+    if which == 'bak':
+        txt = 'Backward'
+    else:
+        txt = 'Forward'
+    svar.set( 'Word Search %s:' % txt ) 
+    return 'break'
+</t>
+<t tx="mork.20041122171601.2">def wordSearch( self, event ):
+
+    state = self.mcStateManager.getState( 'word-search' )
+    svar, label = self.getSvarLabel( event )
+    if state.startswith( 'start' ):
+        state = state[ 5: ]
+        self.mcStateManager.setState( 'word-search', state )
+        svar.set( '' )
+        
+    
+    if event.keysym == 'Return':
+        
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        words = svar.get().split()
+        sep = '[%s%s]+' %( string.punctuation, string.whitespace )
+        pattern = sep.join( words )
+        cpattern = re.compile( pattern )
+        if state == 'for':
+            
+            txt = tbuffer.get( 'insert', 'end' )
+            match = cpattern.search( txt )
+            if not match: return self.keyboardQuit( event )
+            end = match.end()
+            
+        else:            
+            txt = tbuffer.get( '1.0', 'insert' ) #initially the reverse words formula for Python Cookbook was going to be used.
+            a = re.split( pattern, txt )         #that didnt quite work right.  This one apparently does.   
+            if len( a ) &gt; 1:
+                b = re.findall( pattern, txt )
+                end = len( a[ -1 ] ) + len( b[ -1 ] )
+            else:
+                return self.keyboardQuit( event )
+            
+        wdict ={ 'for': 'insert +%sc', 'bak': 'insert -%sc' }
+        
+        tbuffer.mark_set( 'insert', wdict[ state ] % end )                                
+        tbuffer.see( 'insert' )    
+        self.keyboardQuit( event )
+        return self._tailEnd( tbuffer )        
+            
+    else:
+        self.setSvar( event, svar )
+        return 'break'</t>
+<t tx="mork.20041122190403">@
+A tremendous variety of searching methods are available.
+
+@c
+
+
+@others</t>
+<t tx="mork.20041122223754">def executeLastAltX( self, event ):
+    
+    if event.keysym == 'Return' and self.altx_history:
+        last = self.altx_history[ 0 ]
+        self.doAltX[ last ]( event )
+        return 'break'
+    else:
+        return self.keyboardQuit( event )
+</t>
+<t tx="mork.20041122225107">def repeatComplexCommand( self, event ):
+
+    self.keyboardQuit( event )
+    if self.altx_history:
+        svar, label = self.getSvarLabel( event )
+        self.setLabelBlue( label )
+        svar.set( "Redo: %s" % self.altx_history[ 0 ] )
+        self.mcStateManager.setState( 'last-altx', True )
+    return 'break'
+</t>
+<t tx="mork.20041123093234">@others</t>
+<t tx="mork.20041123095123">def activateReplaceRegex( self ):
+    '''This method turns regex replace on for replaceString'''
+    self._useRegex = True
+    return True
+    
+
+</t>
+<t tx="mork.20041123095436">@
+both commands use the replaceString method, differentiated by a state variable
+
+@c
+
+
+@others</t>
+<t tx="mork.20041123095507">@others</t>
+<t tx="mork.20041123113640">def startRegexReplace( self ):
+    
+    self.querytype = 'regex'
+    return True
+</t>
+<t tx="mork.20041123150144">@
+Using python regular expressions and the Text widget may seem difficult but in reality it is very easy.
+A simple formula:
+1. get the text you are interested in from the Text widget.
+2. Do a python regex on it, get the start value from the match object: match.start()
+3. This gives you the position in the text widget where the regex matched.  Change the 'insert' point
+in the Text like so:
+
+tbuffer.mark_set( 'insert', 'insert +%sc' % match.start() )
+
+
+this will change the insert point to where the match started.  Since you can move forward in the Text widget
+by the character amount, bridging python regexes and Text is a simple operation.
+  Need to go after the match, just use
+match.end() instead of match.start().
+
+I puzzled over this for awhile, so this note is a reminder that it is easy.  See the implementation for query-replace-regex for
+an example.  Doing this with just plain string can follow a similar pattern.
+
+@c</t>
+<t tx="mork.20041123150836">@
+
+just a short note to anyone, including myself, that is working on temacs.  Currently all( well all the ones that we have registered interest in ) key events get
+routed through:
+
+def masterCommand( self, event, method , stroke):
+
+
+to understand the flow of the Emacs class, you need to understand this method.  Everything goes through it, there are no sidecuts or anything.  This offers the implementor complete control over what happens, and for the stateful commands it is essential to
+keep states from being corrupted.
+
+
+dont mess with this method lightly.
+</t>
+<t tx="mork.20041123192555">@others</t>
+<t tx="mork.20041123192555.1">def watchEscape( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+    if not self.mcStateManager.hasState():
+        self.mcStateManager.setState( 'escape' , 'start' )
+        self.setLabelBlue( label )
+        svar.set( 'Esc' )
+        return 'break'
+    if self.mcStateManager.whichState() == 'escape':
+        
+        state = self.mcStateManager.getState( 'escape' )
+        hi1 = self.keysymhistory[ 0 ]
+        hi2 = self.keysymhistory[ 1 ]
+        if state == 'esc esc' and event.keysym == 'colon':
+            return self.startEvaluate( event )
+        elif state == 'evaluate':
+            return self.escEvaluate( event )    
+        elif hi1 == hi2 == 'Escape':
+            self.mcStateManager.setState( 'escape', 'esc esc' )
+            svar.set( 'Esc Esc -' )
+            return 'break'
+        elif event.keysym in ( 'Shift_L', 'Shift_R' ):
+            return
+        else:
+            return self.keyboardQuit( event )
+    
+
+
+</t>
+<t tx="mork.20041124094511">def whichState( self ):
+    
+    return self.state
+</t>
+<t tx="mork.20041124095452">def escEvaluate( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+    if svar.get() == 'Eval:':
+        svar.set( '' )
+    
+    if event.keysym =='Return':
+    
+        expression = svar.get()
+        try:
+            ok = False
+            tbuffer = event.widget
+            result = eval( expression, {}, {} )
+            result = str( result )
+            tbuffer.insert( 'insert', result )
+            ok = True
+        finally:
+            self.keyboardQuit( event )
+            if not ok:
+                svar.set( 'Error: Invalid Expression' )
+            return self._tailEnd( tbuffer )
+        
+        
+    else:
+        
+        self.setSvar( event, svar )
+        return 'break'
+    
+</t>
+<t tx="mork.20041124102729">def startEvaluate( self, event ):
+    
+    svar, label = self.getSvarLabel( event )
+    self.setLabelBlue( label )
+    svar.set( 'Eval:' )
+    self.mcStateManager.setState( 'escape', 'evaluate' )
+    return 'break'
+</t>
+<t tx="mork.20041124123825">@
+For the tabify and untabify Alt-x commands.  Turns tabs to spaces and spaces to tabs in the selection
+
+@c
+
+
+@others</t>
+<t tx="mork.20041124123825.1">def tabify( self, event, which='tabify' ):
+    
+    tbuffer = event.widget
+    if tbuffer.tag_ranges( 'sel' ):
+        i = tbuffer.index( 'sel.first' )
+        end = tbuffer.index( 'sel.last' )
+        txt = tbuffer.get( i, end )
+        if which == 'tabify':
+            
+            pattern = re.compile( ' {4,4}' )
+            ntxt = pattern.sub( '\t', txt )
+
+        else:
+            
+            pattern = re.compile( '\t' )
+            ntxt = pattern.sub( '    ', txt )
+        tbuffer.delete( i, end )
+        tbuffer.insert( i , ntxt )
+        self.keyboardQuit( event )
+        return self._tailEnd( tbuffer )
+    self.keyboardQuit( event )
+
+</t>
+<t tx="mork.20041124130434">def indent_relative( self, event ):
+    
+    tbuffer = event.widget
+    i = tbuffer.index( 'insert' )
+    l,c = i.split( '.' )
+    c2 = int( c )
+    l2 = int( l ) - 1
+    if l2 &lt; 1: return self.keyboardQuit( event )
+    txt = tbuffer.get( '%s.%s' % (l2, c2 ), '%s.0 lineend' % l2 )
+    if len( txt ) &lt;= len( tbuffer.get( 'insert', 'insert lineend' ) ):
+        tbuffer.insert(  'insert', '\t' )
+    else:
+        reg = re.compile( '(\s+)' )
+        ntxt = reg.split( txt )
+        replace_word = re.compile( '\w' )
+        for z in ntxt:
+            if z.isspace():
+                tbuffer.insert( 'insert', z )
+                break
+            else:
+                z = replace_word.subn( ' ', z )
+                tbuffer.insert( 'insert', z[ 0 ] )
+                tbuffer.update_idletasks()
+        
+        
+    self.keyboardQuit( event )
+    return self._tailEnd( tbuffer )
+</t>
+<t tx="mork.20041126091717">@
+
+I believe in .7 the transition from one big Emacs object to an Emacs object composed of many method-family objects
+will begin.  This may be as a big as a transition as the change from the flat module structure to the Emacs class based
+structure.  The .6 cycle Ill reserve for improving the functionality and documentation.  The current command crop may be
+froze in that cycle.</t>
+<t tx="mork.20041204141826">def addLeoCommands( c, emacs ):
+    
+    global leocommandnames
+    f = c.frame
+    
+    commands = {
+    'new': c.new,
+    'open': c.open,
+    'openWith': c.openWith,
+    'close': c.close,
+    'save': c.save,
+    'saveAs': c.saveAs,
+    'saveTo': c.saveTo,
+    'revert': c.revert,
+    'readOutlineOnly': c.readOutlineOnly,
+    'readAtFileNodes': c.readAtFileNodes,
+    'importDerivedFile': c.importDerivedFile,
+    #'writeNewDerivedFiles': c.writeNewDerivedFiles,
+    #'writeOldDerivedFiles': c.writeOldDerivedFiles,
+    'tangle': c.tangle,
+    'tangle all': c.tangleAll,
+    'tangle marked': c.tangleMarked,
+    'untangle': c.untangle,
+    'untangle all': c.untangleAll,
+    'untangle marked': c.untangleMarked,
+    'export headlines': c.exportHeadlines,
+    'flatten outline': c.flattenOutline,
+    'import AtRoot': c.importAtRoot,
+    'import AtFile': c.importAtFile,
+    'import CWEB Files': c.importCWEBFiles,
+    'import Flattened Outline': c.importFlattenedOutline,
+    'import Noweb Files': c.importNowebFiles,
+    'outline to Noweb': c.outlineToNoweb,
+    'outline to CWEB': c.outlineToCWEB,
+    'remove sentinels': c.removeSentinels,
+    'weave': c.weave,
+    'delete': c.delete,
+    'execute script': c.executeScript,
+    'go to line number': c.goToLineNumber,
+    'set font': c.fontPanel,
+    'set colors': c.colorPanel,
+    'show invisibles': c.viewAllCharacters,
+    'preferences': c.preferences,
+    'convert all blanks': c.convertAllBlanks,
+    'convert all tabs': c.convertAllTabs,
+    'convert blanks': c.convertBlanks,
+    'convert tabs': c.convertTabs,
+    'indent': c.indentBody,
+    'unindent': c.dedentBody,
+    'reformat paragraph': c.reformatParagraph,
+    'insert time': c.insertBodyTime,
+    'extract section': c.extractSection,
+    'extract names': c.extractSectionNames,
+    'extract': c.extract,
+    'match bracket': c.findMatchingBracket,
+    'find panel': c.showFindPanel, ## c.findPanel,
+    'find next': c.findNext,
+    'find previous': c.findPrevious,
+    'replace': c.replace,
+    'replace then find': c.replaceThenFind,
+    'edit headline': c.editHeadline,
+    'toggle angle brackets': c.toggleAngleBrackets,
+    'cut node': c.cutOutline,
+    'copy node': c.copyOutline,
+    'paste node': c.pasteOutline,
+    'paste retaining clone': c.pasteOutlineRetainingClones,
+    'hoist': c.hoist,
+    'de-hoist': c.dehoist,
+    'insert node': c.insertHeadline,
+    'clone node': c.clone,
+    'delete node': c.deleteOutline,
+    'sort children': c.sortChildren,
+    'sort siblings': c.sortSiblings,
+    'demote': c.demote,
+    'promote': c.promote,
+    'move right': c.moveOutlineRight,
+    'move left': c.moveOutlineLeft,
+    'move up': c.moveOutlineUp,
+    'move down': c.moveOutlineDown,
+    'unmark all': c.unmarkAll,
+    'mark clones': c.markClones,
+    'mark': c.markHeadline,
+    'mark subheads': c.markSubheads,
+    'mark changed items': c.markChangedHeadlines,
+    'mark changed roots': c.markChangedRoots,
+    'contract all': c.contractAllHeadlines,
+    'contract node': c.contractNode,
+    'contract parent': c.contractParent,
+    'expand to level 1': c.expandLevel1,
+    'expand to level 2': c.expandLevel2,
+    'expand to level 3': c.expandLevel3,
+    'expand to level 4': c.expandLevel4,
+    'expand to level 5': c.expandLevel5,
+    'expand to level 6': c.expandLevel6,
+    'expand to level 7': c.expandLevel7,
+    'expand to level 8': c.expandLevel8,
+    'expand to level 9': c.expandLevel9,
+    'expand prev level': c.expandPrevLevel,
+    'expand next level': c.expandNextLevel,
+    'expand all': c.expandAllHeadlines,
+    'expand node': c.expandNode,
+    'check outline': c.checkOutline,
+    'dump outline': c.dumpOutline,
+    'check python code': c.checkPythonCode,
+    'check all python code': c.checkAllPythonCode,
+    'pretty print python code': c.prettyPrintPythonCode,
+    'pretty print all python code': c.prettyPrintAllPythonCode,
+    'goto parent': c.goToParent,
+    'goto next sibling': c.goToNextSibling,
+    'goto previous sibling': c.goToPrevSibling,
+    'goto next clone': c.goToNextClone,
+    'goto next marked': c.goToNextMarkedHeadline,
+    'goto next changed': c.goToNextDirtyHeadline,
+    'goto first': c.goToFirstNode,
+    'goto last': c.goToLastNode,
+    "go to prev visible":c.selectVisBack,
+    "go to next visible" : c.selectVisNext,
+    "go to prev node" : c.selectThreadBack,
+    "go to next node" : c.selectThreadNext,
+    'about leo...': c.about,
+    #'apply settings': c.applyConfig,
+    'open LeoConfig.leo': c.leoConfig,
+    'open LeoDocs.leo': c.leoDocumentation,
+    'open online home': c.leoHome,
+    'open online tutorial': c.leoTutorial,
+    'open compare window': c.openCompareWindow,
+    'open Python window': c.openPythonWindow,
+    "equal sized panes": f.equalSizedPanes,
+    "toggle active pane": f.toggleActivePane,
+    "toggle split direction": f.toggleSplitDirection,
+    "resize to screen": f.resizeToScreen,
+    "cascade": f.cascade,
+    "minimize all": f.minimizeAll,
+    }
+    
+    for z in commands.keys():
+        #z2 = 'leo-%s' % z -- no need to do this, Leos command names dont clash with temacs so far
+        def coverdef( self, event, command=commands[ z ] ):
+            command()
+            emacs.keyboardQuit( event )
+            
+        emacs.extendAltX( z, coverdef )
+    leocommandnames = commands.keys()
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</t>
+<t tx="mork.20041208120232">@others</t>
+<t tx="mork.20041208120232.1">def startSubprocess( self, event, which = 0 ):
+    
+    svar, label = self.getSvarLabel( event )
+    statecontents = { 'state':'start', 'payload': None }
+    self.mcStateManager.setState( 'subprocess', statecontents )
+    if which:
+        tbuffer = event.widget
+        svar.set( "Shell command on region:" )
+        is1 = is2 = None
+        try:
+            is1 = tbuffer.index( 'sel.first' )
+            is2 = tbuffer.index( 'sel.last' )
+        finally:
+            if is1:
+                statecontents[ 'payload' ] = tbuffer.get( is1, is2 )
+            else:
+                return self.keyboardQuit( event )
+    else:
+        svar.set( "Alt - !:" )
+    self.setLabelBlue( label )
+    return 'break'    
+</t>
+<t tx="mork.20041208120232.2">def subprocesser( self, event ):
+    
+    state = self.mcStateManager.getState( 'subprocess' )
+    svar, label = self.getSvarLabel( event )
+    if state[ 'state' ] == 'start':
+        state[ 'state' ] = 'watching'
+        svar.set( "" )
+    
+    if event.keysym == "Return":
+        #cmdline = svar.get().split()
+        cmdline = svar.get()
+        return self.executeSubprocess( event, cmdline, input=state[ 'payload' ] )
+       
+    else:
+        self.setSvar(  event, svar )
+        return 'break'
+</t>
+<t tx="mork.20041208121502">def executeSubprocess( self, event, command  ,input = None ):
+    import subprocess
+    try:
+        try:
+            out ,err = os.tmpnam(), os.tmpnam()
+            ofile = open( out, 'wt+' ) 
+            efile = open( err, 'wt+' )
+            process = subprocess.Popen( command, bufsize=-1, 
+                                        stdout = ofile.fileno(), 
+                                        stderr= ofile.fileno(), 
+                                        stdin=subprocess.PIPE,
+                                        shell=True )
+            if input:
+                process.communicate( input )
+            process.wait()   
+            tbuffer = event.widget
+            efile.seek( 0 )
+            errinfo = efile.read()
+            if errinfo:
+                tbuffer.insert( 'insert', errinfo )
+            ofile.seek( 0 )
+            okout = ofile.read()
+            if okout:
+                tbuffer.insert( 'insert', okout )
+        except Exception, x:
+            tbuffer = event.widget
+            tbuffer.insert( 'insert', x )
+    finally:
+        os.remove( out )
+        os.remove( err )
+    self.keyboardQuit( event )
+    return self._tailEnd( tbuffer )
+
+
+
+</t>
+<t tx="mork.20041213112640">def gotoPosition( c, pos ):
+    c.frame.tree.expandAllAncestors( pos )
+    c.selectPosition( pos )
+    c.endUpdate()
+    
+</t>
 </tnodes>
 </leo_file>
