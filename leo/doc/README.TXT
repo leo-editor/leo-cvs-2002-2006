@@ -3,36 +3,60 @@ Leo 4.4 alpha 1                                      October 15, 2005
 Leo 4.4 alpha 1 is now available at:
 
 http://sourceforge.net/project/showfiles.php?group_id=3458&package_id=29106
-
-Leo 4.4 adds an Emacs-like minibuffer and support for all frequently-used Emacs
-commands. Emacs users will be able to choose key bindings compatible with their
-present finger habits. Eventually, Vim users will be able to do the same.
-
-The new code in Leo 4.4 is a complete rewrite of most of the temacs and
-usetemacs plugins. Those plugins have now been retired. Besides many code-level
-improvements, it is now possible to specify key bindings for all commands
-(including the new Emacs-style commands) using @shortcuts nodes in
-leoSettings.leo.
-
-This is definitely an alpha release. Several of the new Emacs-style commands are
-buggy. However, improvements to Leo's error-handling logic mean that you should
-be able to recover from the odd crash much more reliably than previously. I have
-used this code for about a week with no significant problems at all.
-
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
-The highlights of Leo 4.4 alpha 1:
+Leo 4.4a2 contains some of the most important changes to Leo's look
+(tabbed log) and feel (per-pane key bindings) in Leo's history. This
+release is a big step forward in meeting the following goals:
+
+- To allow Emacs and Vim users to retain their present 'finger habits'.
+- To support an emacs-like minibuffer, complete with typing completion.
+- To make Leo usable without a mouse (mouseless Leo).
+
+This is an alpha release: there are known bugs (see below). However, you should
+be able to use this version safely. In particular, the Leo 4.4 code base
+recovers from errors more reliably than all previous versions.
+
+The highlights of Leo 4.4:
 ----------------------------------
-- Support for all frequently-used Emacs commands, including cursor and screen
-movement, basic character, word and paragraph manipulation, and commands to
-manipulate buffers, the kill ring, regions and rectangles. Almost all commands
-found in the Emacs Cmds menu are implemented.
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+name. Support for tab completion.
 
-- An Emacs-like mini-buffer: you can now execute any command by name, both the
-new Emacs-style commands and the traditional Leo commands.
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+dialogs, making those commands much easier to use. Plugins or scripts can easily
+create new tabs. The 'Completion' tab shows possible typing completions. 
 
-- You can define key bindings using @shortcuts nodes in leoSettings.leo files.
-You can define multiple sets of key bindings and switch between those sets
-easily.
+- Support for almost all commands in the Emacs Cmds menu, including cursor
+and screen movement, basic character, word and paragraph manipulation, and
+commands to manipulate buffers, the kill ring, regions and rectangles.
 
-- Several fixes made to the 4.3 code base.
+- Per-pane key bindings. You can bind shortcuts to multiple commands depending
+on which of Leo's panes presently has focus. For example, you can use arrow keys
+to move nodes in the outline pane, while retaining their defaults in Leo's body
+pane. Per-pane key binds are essential for mouseless Leo.
+
+- @command nodes create minibuffer commands. You can bind key shortcuts to
+@button and @command nodes.
+
+- A rewrite of Leo's keystroke handling. In particular, Leo handles key events
+immediately rather than queuing them for idle time.
+
+- Several fixes made to the 4.3 code base. In particular, Leo 4.4 continues
+after crashes much more reliably than in any previous version.
+
+Known bugs in Leo 4.4a2
+-----------------------
+- Typing in the minibuffer doesn't work if the focus is 'in limbo', that is, not
+in the outline, body or log panes. Leo usually forces the focus to the body pane
+in such cases, but the code doesn't always work and sometimes causes other
+problems. This *minor* annoyance will be fixed completely in Leo 4.4a3.
+
+- Several minibuffer commands do not work; many new features lack unit tests.
+
+Coming in later releases of Leo 4.4:
+------------------------------------
+- More support for mouseless Leo. There will be commands to manipulate all
+aspects of Leo using commands, so your fingers will never have to leave the
+keyboard.
+
+- Support for Vim and other 'plain-key' input modes.

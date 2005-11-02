@@ -288,6 +288,7 @@ Tomaz
 Toplevel
 Traduit
 TreePad
+TrueOrFalse
 TypeError
 UNL
 UNL's
@@ -334,6 +335,7 @@ a1
 a2
 a3
 aClass
+aColor
 aDirectory
 aList
 aMethod
@@ -427,6 +429,7 @@ bibtext
 bigpond
 binascii
 bindKey
+bindLate
 bind_shortcut
 bindingsDict
 bindtags
@@ -610,6 +613,7 @@ cxx
 d'Accueil
 d1
 d2
+d6c7d3
 darwin
 dataParent_v
 data_p

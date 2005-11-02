@@ -125,7 +125,7 @@
 <v t="ekr.20050830115714.17"><vh>I can't write Imported files.  What's going on?</vh></v>
 <v t="ekr.20050908113904"><vh>Can I scroll the outline pane with the mouse wheel?</vh></v>
 <v t="ekr.20050830115714.75"><vh>Leo is hanging on my Linux box.  What should I do?</vh></v>
-<v t="ekr.20050830115714.114" a="E"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
+<v t="ekr.20050830115714.114"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
 <v t="ekr.20050830115714.115"><vh>Error messages from the rst3 plugin aren't helpful. What can I do?</vh></v>
 <v t="ekr.20050830115714.117"><vh>The new Python decorator syntax causes problems.  What can I do?</vh></v>
 </v>
@@ -351,7 +351,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4" a="E"><vh>@rst html\customizing.html</vh>
+<v t="ekr.20050901101608.4"><vh>@rst html\customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
 <v t="ekr.20050903161843"><vh>Creating script buttons</vh></v>
@@ -2210,7 +2210,7 @@
 <v t="ekr.20051028051616.172"><vh>Programming the tabbed log</vh></v>
 </v>
 <v t="ekr.20051028061322"><vh>New minibuffer commands</vh></v>
-<v t="ekr.20051028051616.299" a="E"><vh>Optional generation of closing brackets</vh></v>
+<v t="ekr.20051028051616.299"><vh>Optional generation of closing brackets</vh></v>
 <v t="ekr.20051101182739"><vh>New settings in leoSettings.leo</vh></v>
 <v t="ekr.20051101161949"><vh>Improved and retired plugins</vh>
 <v t="ekr.20051028051616.160"><vh>Improved the scripting plugin</vh></v>
@@ -21626,7 +21626,7 @@ def f (event):
 
 k.registerCommand('print-hello','Alt-Ctrl-Shift-p',f)
 k.registerCommand('print-hello2',None,f)</t>
-<t tx="ekr.20051028051444">Leo 4.4 alpha 2                 October 29, 2005
+<t tx="ekr.20051028051444">Leo 4.4 alpha 2                 November 2, 2005
 
 Leo 4.4 a2 is a big step forward in meeting the following goals:
 
@@ -21665,7 +21665,7 @@ pane. Per-pane key binds are essential for mouseless Leo.
 immediately rather than queuing them for idle time.
 
 - Several fixes made to the 4.3 code base. In particular, Leo 4.4 continues
-after crashes much more reliabley than in any previous version.
+after crashes much more reliably than in any previous version.
 
 Known bugs in Leo 4.4a2
 -----------------------
@@ -21902,11 +21902,14 @@ If True, Leo will immediately type the corresponding closing bracket whenever
 you type a '(', '[' or '{' character. You can use the forward-char command to
 move past the closing bracket, and Leo will move past any closing bracket if you
 type the closing bracket with the cursor just to the left of a closing bracket.</t>
-<t tx="ekr.20051028061322">- The help command tells how to use the minibuffer.
+<t tx="ekr.20051028061322">**Important**: The print-bindings and print-commands commands (new in a1) show
+what commands exist and what keys are bound to them.
+
+- The help command tells how to use the minibuffer.
 
 - The show-minibuffer, hide-minibuffer and toggle-mini-buffer commands show and hide the minibuffer.
 
-It *is* possible to execute these command even if the mimibuffer isn't presently
+It *is* possible to execute these command even if the minibuffer isn't presently
 visible. For example, typing 
 
 &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt;
