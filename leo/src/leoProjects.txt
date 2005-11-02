@@ -13631,6 +13631,22 @@ def showPopupMenu (self,event):
 #@-node:ekr.20040803072955.110:tree.OnPopup & allies
 #@-node:ekr.20051031102544.1:(Fixed crash when right clicking in headline)
 #@-node:ekr.20051031102544:(Fix bugs reported by 'e')
+#@+node:ekr.20051017132446:Investigated hang in MacOS scripting
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3384016
+By: slott56
+
+Executing [any] script throws me into a loop with a lot of "exception execution
+script" messages.  There's a copy of Python left running in the background,
+it appears, which is hung up.
+
+Here's the full header...
+
+Leo 4.3 final, build  1.262 , May 23, 2005
+Python 2.3.5, Tk 8.4.7, darwin
+
+Mac OS 10.4.2
+#@-node:ekr.20051017132446:Investigated hang in MacOS scripting
 #@-node:ekr.20051016115757.1:4.4a2 projects
 #@+node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
 #@+node:ekr.20051027135712:Notes
