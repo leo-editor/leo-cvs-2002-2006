@@ -5433,6 +5433,12 @@ possibly looking somewhere besides the leo/plugins folder, or maybe having it
 always be enabled.
 #@nonl
 #@-node:ekr.20051016155819:treat plugins/options.py  differently?
+#@+node:ekr.20051101161545:Allow multiple bindings for the same minibuffer command
+The standard Emacs bindings assigns several keys to the same command. The syntax
+of entries in @shortcuts nodes will be expanded to allow entries like this:
+
+    next-line = (body) [DnArrow,Ctrl-N]
+#@-node:ekr.20051101161545:Allow multiple bindings for the same minibuffer command
 #@-node:ekr.20051012062458.1:Minor
 #@+node:ekr.20051023192433:Maybe...
 - Convert Emacs-Style Names to Menu Style Names when creating undo name.

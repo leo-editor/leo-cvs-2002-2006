@@ -37,7 +37,7 @@
 <v t="ekr.20051010093913"><vh>@button save</vh></v>
 <v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119034357.10" a="E"><vh>@page Command options</vh>
+<v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 <v t="ekr.20041119041019.1"><vh>@string remove_sentinels_extension = .txt</vh></v>
@@ -45,7 +45,7 @@
 <v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
 <v t="ekr.20041119050749.11"><vh>@string headline_gmt_time = None</vh></v>
 <v t="ekr.20050126083026"><vh>@string undo_granularity = None</vh></v>
-<v t="ekr.20051027175030" a="TV"><vh>@bool autocomplete-brackets = False</vh></v>
+<v t="ekr.20051027175030"><vh>@bool autocomplete-brackets = False</vh></v>
 </v>
 <v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
 <v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
@@ -230,14 +230,15 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20051007200824.1"><vh>About keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
+<v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with import emacs bindings</vh></v>
+<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1282,38 +1283,15 @@ weave                        = None
 write-at-file-nodes          = Shift-Ctrl-W
 write-dirty-at-file-nodes    = None
 write-outline-only           = None </t>
-<t tx="ekr.20051007200824">Keyboard shortcuts for menu commands.
+<t tx="ekr.20051007200824"></t>
+<t tx="ekr.20051007200824.1">The following special single characters may be used in the tails of shortcuts.
+They are listed along with their associated Tk binding value. Leo contains
+special code to handle these characters. No other single characters may be
+specified.
 
-A shortcut specification has the form:
-    
-commandName = shortcutSpecifier
-
-where commandName is the name of the command in the menu with all non-alphabetic characters removed.
-    
-To remove any default shortcut, use None as the specifier.
-
-Otherwise, a shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
-
-Case is ignored in commandName, and in the head of the shortcutSpecifier. Case is significant in multi-character tails.  Also, - may be used instead of + in heads.  The following are all equivalent:
-    
-    Ctrl+A
-    Ctrl-a
-    Control+A
-
-The following are not equivalent:
-    
-    Ctrl+-
-    Ctrl-+
-
-and the following are not equivalent:
-
-    Ctrl+Tab (may be valid)
-    Ctrl+tab (will never be valid)
-    
-See "About keyboard shortcuts" for a full discussion of what may appear in the tail of a shortcut.</t>
-<t tx="ekr.20051007200824.1">The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
-
-For example, you could specify Ctrl+! as a shortcut, and Leo will create a binding for &lt;Control+exclam&gt;.  Some of these values may be invalid on some machines.
+For example, you could specify Ctrl+! as a shortcut, and Leo will create a
+binding for &lt;Control+exclam&gt;. Some of these values may be invalid on some
+machines.
 
 ! exclam
 " quotedbl
@@ -1348,7 +1326,8 @@ _ underscore
 } braceright
 ~ asciitilde
 
-Leo recognizes the following mult-character names, and translates the indicated strings in the menu items:
+Leo recognizes the following mult-character names, and translates the indicated
+strings in the menu items:
     
 "bksp"     : "BkSp"
 "dnarrow"  : "DnArrow"
@@ -1360,11 +1339,15 @@ Leo recognizes the following mult-character names, and translates the indicated 
 
 For example, "Ctrl-uparrow"  will appear as "Ctrl+UpArrow" in the menu.
 
-Leo passes all other mult-character names verbatim to Tk, so on some platforms you may be able to use any of the following.  Most appear on the numeric keypad. For example, the following may work on some systems:
+Leo passes all other mult-character names verbatim to Tk, so on some platforms
+you may be able to use any of the following. Most appear on the numeric keypad.
+For example, the following may work on some systems:
     
 "Ctrl+BackSpace"
 
-Don't use these if you want to be sure that the binding work on all platforms. The complete list of names may be found at: http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+Don't use these if you want to be sure that the binding work on all platforms.
+The complete list of names may be found at:
+http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
     
 F1, F2, F3, F4, F5, F6, F7, F8, F9, F10,
 BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab, 
@@ -1784,5 +1767,48 @@ False: Selecting an outline node transfers focus to the body pane.
 <t tx="ekr.20051025085144.1"></t>
 <t tx="ekr.20051027175030">True: When typing an opening bracket '(','[' or '{', immediately type the
 corresponding closing bracket.  To move past the closing bracket, just type it.</t>
+<t tx="ekr.20051101160257">A shortcut specification has the form:
+    
+command-name = shortcutSpecifier
+
+or
+
+command-name ! pane = shortcutSpecifier
+
+The first form creates a binding for all panes. The second form creates a
+binding for one or more panes. The possible values for 'pane' are:
+
+pane    bound panes
+----    -----------
+all     body,log,tree
+body    body
+log     log
+mini    minibuffer
+text    body,log
+tree    tree
+    
+To remove any default shortcut, use None as the specifier. Otherwise, a shortcut
+specifier consists of a head followed by a tail. The head may be empty, or may
+be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
+
+Case is ignored in command-name, and in the head of the shortcutSpecifier. Case
+is significant in multi-character tails. Also, - may be used instead of + in
+heads. The following are all equivalent:
+    
+    Ctrl+A
+    Ctrl-a
+    Control+A
+
+The following are not equivalent:
+    
+    Ctrl+-
+    Ctrl-+
+
+and the following are not equivalent:
+
+    Ctrl+Tab (may be valid)
+    Ctrl+tab (will never be valid)
+    
+See "About shortcut specifiers" for a full discussion of what may appear in the tail of a shortcut.</t>
 </tnodes>
 </leo_file>

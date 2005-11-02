@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="19736" clone_windows="0"/>
 <globals body_outline_ratio="0.518181818182">
-	<global_window_position top="10" left="299" height="915" width="808"/>
+	<global_window_position top="11" left="412" height="915" width="808"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -41,7 +41,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -83,8 +83,8 @@
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.1" a="E"><vh>FAQ</vh>
-<v t="ekr.20050830115714" a="TV"><vh>@rst html\FAQ.html</vh>
+<v t="ekr.20050831195331.1"><vh>FAQ</vh>
+<v t="ekr.20050830115714"><vh>@rst html\FAQ.html</vh>
 <v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830115714.1"><vh>Learning about Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
@@ -351,7 +351,7 @@
 </v>
 </v>
 <v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4"><vh>@rst html\customizing.html</vh>
+<v t="ekr.20050901101608.4" a="E"><vh>@rst html\customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
 <v t="ekr.20050903161843"><vh>Creating script buttons</vh></v>
@@ -678,7 +678,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20051011141302"><vh>4.4 alpha 1</vh>
 <v t="ekr.20051014103845.3"><vh>Quick Start</vh></v>
@@ -2173,8 +2173,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="ekr.20051028051444" a="E"><vh>4.4 alpha 2</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20051028051444" a="ETV"><vh>4.4 alpha 2</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -2211,6 +2211,7 @@
 </v>
 <v t="ekr.20051028061322"><vh>New minibuffer commands</vh></v>
 <v t="ekr.20051028051616.299" a="E"><vh>Optional generation of closing brackets</vh></v>
+<v t="ekr.20051101182739"><vh>New settings in leoSettings.leo</vh></v>
 <v t="ekr.20051101161949"><vh>Improved and retired plugins</vh>
 <v t="ekr.20051028051616.160"><vh>Improved the scripting plugin</vh></v>
 <v t="ekr.20051101162947"><vh>Retired the TabbedLog plugin</vh></v>
@@ -17499,7 +17500,7 @@ good to create a subclass of pdb.Pdb that uses Leo's log pane rather than a
 console window, but I haven't done that. It could be done easily enough in a
 plugin...
 
-Important: I recommend using g.trace instead of pdb.  For example::
+**Important**: I recommend using g.trace instead of pdb.  For example::
 
     g.trace(x)
 
@@ -21631,7 +21632,7 @@ Leo 4.4 a2 is a big step forward in meeting the following goals:
 
 - To allow Emacs and Vim users to retain their present 'finger habits'.
 - To support an emacs-like minibuffer, complete with typing completion.
-- To make Leo usable without a mouse (mouselesss Leo).
+- To make Leo usable without a mouse (mouseless Leo).
 
 This is an alpha release: there are known bugs (see below). However, you should
 be able to use this version safely. In particular, the Leo 4.4 code base
@@ -21646,7 +21647,7 @@ name. Support for tab completion.
 
 - A tabbed log pane. The Find and Spell Check commands now use tabs instead of
 dialogs, making those commands much easier to use. Plugins or scripts can easily
-create new tabs. The 'Completion' tab shows possible typing completions.  Also, the 
+create new tabs. The 'Completion' tab shows possible typing completions.
 
 - Support for almost all commands in the Emacs Cmds menu, including cursor
 and screen movement, basic character, word and paragraph manipulation, and
@@ -22021,14 +22022,14 @@ The following creates a tab named test or make it visible if it already exists::
  
     c.frame.log.selectTab('Test')
 
-The c.frame.log class contains two ivars that make it easy to put content into tabs:
-
-- c.frame.log.tabFrame contains the Tk.Frame that contains all the other widgets of the frame.
-
-- c.frame.log.logCtrl contains the Tk.Text widget that is initially the only widget in this frame.
-
 When first created, a tab contains a text widget.
-The following line removes this text widget::
+The c.frame.log class contains the following 'official' ivars:
+
+- c.frame.log.tabName is the name of the active tab.
+- c.frame.log.tabFrame is the Tk.Frame containing all the other widgets of the tab.
+- c.frame.log.logCtrl is the initial Tk.Text widget.
+
+The following line removes the initial text widget::
     
     c.frame.log.logCtrl.pack_forget()
 
@@ -22043,6 +22044,33 @@ For example, the following replaces the default text widget with a red box::
     log.selectTab('Test')
     log.logCtrl.pack_forget()
     f = Tk.Frame(log.tabFrame,bg='red',height='1inch',width='2inch')
-    f.pack(side='left',expand=0,fill='none')</t>
+    f.pack(side='left',expand=0,fill='none')
+
+Notes:
+
+- g.es, g.enl, g.ecnl, g.ecnls write to the log tab specified by the optional
+  tabName argument. The default for tabName is 'Log', so existing code works as
+  before.
+
+- The put and putnl methods of the tkinterLog class also take an optional
+  tabName argument which defaults to 'Log'.</t>
+<t tx="ekr.20051101182739">- The node::
+
+    @shortcuts traditional Leo shortcuts with important emacs bindings
+
+contains Leo key bindings.
+
+- The settings in @page Spell tab replace the settings in spellpyx.ini.
+
+- You can specify the background of tabs using the following pattern::
+
+    @color log_pane_XXX_tab_background_color = aColor
+
+For example::
+
+    @color log_pane_Find_tab_background_color = #d6c7d3
+
+- The @bool autocomplete-brackets setting controls whether Leo types a matching
+closing bracket immediately when you type '(', '[' or '{'.</t>
 </tnodes>
 </leo_file>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1119" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1120" clone_windows="0"/>
 <globals body_outline_ratio="0.598465473146">
 	<global_window_position top="27" left="275" height="782" width="860"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
 <v t="ekr.20051015172713"><vh>@button save</vh></v>
 </v>
-<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259" a="E"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -24,6 +24,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
+<v t="ekr.20051101183219" a="ETV"><vh>ANN: Leo 4.4a2</vh></v>
 <v t="ekr.20051015171839" a="E"><vh>ANN: Leo 4.4a1</vh></v>
 <v t="ekr.20050919101619"><vh>ANN: Leo 4.3.3</vh></v>
 <v t="ekr.20050916073410"><vh>ANN: Leo 4.3.2-final</vh></v>
@@ -197,7 +198,7 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
@@ -4543,5 +4544,78 @@ Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 Edward K. Ream
 October 17, 2005</t>
 <t tx="ekr.20051015172713">c.save()</t>
+<t tx="ekr.20051101183219">[ANN: Leo 4.4a2 released]
+
+Leo 4.4 alpha 2 is now available at:
+
+http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
+To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+
+Leo 4.4a2 contains some of the most important changes to Leo's look
+(tabbed log) and feel (per-pane key bindings) in Leo's history. This
+release is a big step forward in meeting the following goals:
+
+- To allow Emacs and Vim users to retain their present 'finger habits'.
+- To support an emacs-like minibuffer, complete with typing completion.
+- To make Leo usable without a mouse (mouseless Leo).
+
+This is an alpha release: there are known bugs (see below). However, you should
+be able to use this version safely. In particular, the Leo 4.4 code base
+recovers from errors more reliably than all previous versions.
+
+The highlights of Leo 4.4:
+----------------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+name. Support for tab completion.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+dialogs, making those commands much easier to use. Plugins or scripts can easily
+create new tabs. The 'Completion' tab shows possible typing completions. 
+
+- Support for almost all commands in the Emacs Cmds menu, including cursor
+and screen movement, basic character, word and paragraph manipulation, and
+commands to manipulate buffers, the kill ring, regions and rectangles.
+
+- Per-pane key bindings. You can bind shortcuts to multiple commands depending
+on which of Leo's panes presently has focus. For example, you can use arrow keys
+to move nodes in the outline pane, while retaining their defaults in Leo's body
+pane. Per-pane key binds are essential for mouseless Leo.
+
+- @command nodes create minibuffer commands. You can bind key shortcuts to
+@button and @command nodes.
+
+- A rewrite of Leo's keystroke handling. In particular, Leo handles key events
+immediately rather than queuing them for idle time.
+
+- Several fixes made to the 4.3 code base. In particular, Leo 4.4 continues
+after crashes much more reliabley than in any previous version.
+
+Known bugs in Leo 4.4a2
+-----------------------
+- Typing in the minibuffer doesn't work if the focus is 'in limbo', that is, not
+in the outline, body or log panes. Leo usually forces the focus to the body pane
+in such cases, but the code doesn't always work and sometimes causes other
+problems. This *minor* annoyance will be fixed completely in Leo 4.4a3.
+
+- Several minibuffer commands do not work; many new features lack unit tests.
+
+Coming in later releases of Leo 4.4:
+------------------------------------
+- More support for mouseless Leo. There will be commands to manipulate all
+aspects of Leo using commands, so your fingers will never have to leave the
+keyboard.
+
+- Support for Vim and other 'plain-key' input modes.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
+
+Edward K. Ream
+November 2, 2005</t>
 </tnodes>
 </leo_file>

@@ -13630,30 +13630,6 @@ def showPopupMenu (self,event):
 #@-node:ekr.20051031102544.1:(Fixed crash when right clicking in headline)
 #@-node:ekr.20051031102544:(Fix bugs reported by 'e')
 #@-node:ekr.20051016115757.1:4.4a2 projects
-#@+node:ekr.20051026170025:Other improvements
-@nocolor
-
-- g.openWithFileName puts the focus in the body pane.
-  Surprisingly important.
-
-- undo/redo now put the focus in the body.
-
-- Compute length of headline on every key.
-
-- All headlines now have a minimum width:
-  The flash when suddenly increasing the width was annoying.
-
-- Go To Line Number command forces focus to body immediately.
-
-- Got rid of forceFocus arg to endCommand.
-
-- Investigated unexpected redraws: update_idletasks triggers idle time!
-
-- Added buttons.txt to cvs and the distribution list. This ensures that new
-buttons are saved even if the user mistakenly closes the console window while
-Leo is saving LeoPy.leo.  It happened to me :-)
-#@nonl
-#@-node:ekr.20051026170025:Other improvements
 #@+node:ekr.20051025152727:(Replaced idle-key logic with direct logic) 
 #@+node:ekr.20051027135712:Notes
 @nocolor
@@ -14450,6 +14426,7 @@ def updateBody (self,event,w,undoType,
     if not newSel: newSel = g.app.gui.getTextSelection(w)
     newText = w.get('1.0','end')
     << remove extra Trailing newlines >> # Same logic as always.
+    w.see(w.index('insert'))
     if newText == oldText: return
     c.undoer.setUndoTypingParams(p,undoType,
         orignalText or oldText,newText,oldSel,newSel,oldYview)
@@ -15051,6 +15028,32 @@ def onIdleTime (self):
 #@nonl
 #@-node:ekr.20051025150224:onIdleTime
 #@-node:ekr.20051025110549:(Keep the focus in the body)
+#@+node:ekr.20051026170025:Other improvements
+@nocolor
+
+- g.openWithFileName puts the focus in the body pane.
+  Surprisingly important.
+
+- undo/redo now put the focus in the body.
+
+- Compute length of headline on every key.
+
+- All headlines now have a minimum width:
+  The flash when suddenly increasing the width was annoying.
+
+- Go To Line Number command forces focus to body immediately.
+
+- Got rid of forceFocus arg to endCommand.
+
+- Investigated unexpected redraws: update_idletasks triggers idle time!
+
+- Added buttons.txt to cvs and the distribution list. This ensures that new
+buttons are saved even if the user mistakenly closes the console window while
+Leo is saving LeoPy.leo.  It happened to me :-)
+
+- Did a w.see in the body key handlers.
+#@nonl
+#@-node:ekr.20051026170025:Other improvements
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

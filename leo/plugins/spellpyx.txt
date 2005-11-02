@@ -421,6 +421,7 @@ beforeIcon
 beforeX
 before_v
 beginUpdate
+bg
 biblio
 bibtext
 bigpond
@@ -695,6 +696,8 @@ dumpCodeList
 dx
 dy
 dyna_menu
+ecnl
+ecnls
 editBody
 editPosition
 editVnode
@@ -723,6 +726,7 @@ end_raw
 enddrag1
 enddrag2
 endif
+enl
 entrytype
 enum
 env
@@ -1491,6 +1495,7 @@ putSentinel
 putTnodes
 putVnode
 put_all_roots
+putnl
 py
 py2
 pyc
@@ -1794,6 +1799,7 @@ synch
 synchVnode
 syntax_prefs
 t1
+tabFrame
 tabName
 tab_width
 tabnanny
@@ -1858,6 +1864,7 @@ tkFont
 tkIcon
 tk_encoding
 tk_relief
+tkinterLog
 tktable
 tmp
 tnode
