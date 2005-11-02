@@ -2033,12 +2033,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
         w = top.winfo_screenwidth()
         h = top.winfo_screenheight()
     
-        if 1: # Fill the entire screen (almost)
-            # This works well on Windows.  YMMV for other platforms.
-            geom = "%dx%d%+d%+d" % (w-8,h-46,0,0)
-        else: # The old way.
+        if sys.platform == 'darwin':
+            # Must leave room to get at very small resizing area.
             geom = "%dx%d%+d%+d" % (w-20,h-55,10,25)
-    
+        else:
+            # Fill almost the entire screen.
+            # Works on Windows. YMMV for other platforms.
+            geom = "%dx%d%+d%+d" % (w-8,h-46,0,0)
+       
         top.geometry(geom)
     #@nonl
     #@-node:EKR.20040422130619:resizeToScreen

@@ -1296,7 +1296,7 @@ class leoTkinterTree (leoFrame.leoTree):
         """Make sure drawing is enabled following an exception."""
             
         if not self.redrawScheduled:
-            g.trace('*'*20,self.redrawCount,g.callers(5))
+            # g.trace('*'*20,self.redrawCount,g.callers(5))
             self.redrawScheduled = True
             self.canvas.after_idle(self.idle_redraw)
             self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
@@ -1307,7 +1307,7 @@ class leoTkinterTree (leoFrame.leoTree):
     def force_redraw (self):
         
         if not self.redrawScheduled:
-            g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
+            # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
             self.redrawScheduled = True
             self.canvas.after_idle(self.idle_redraw)
     #@nonl
@@ -1459,10 +1459,10 @@ class leoTkinterTree (leoFrame.leoTree):
         if not p or not p.exists(c):
             p = c.currentPosition()
         if not p or not p.exists(c):
-            g.trace('current p does not exist',p)
+            # g.trace('current p does not exist',p)
             p = c.rootPosition()
         if not p or not p.exists(c):
-            g.trace('no position')
+            # g.trace('no position')
             return
         try:
             last = p.lastVisible()
