@@ -1767,7 +1767,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         '''Invoked from the mini-buffer and from shortcuts.'''
         
         f = self ; c = f.c
-        w = f.getFocus() ; name = w._name
+        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
         
         if 0: # For reference.
             s = g.app.gui.getTextFromClipboard()

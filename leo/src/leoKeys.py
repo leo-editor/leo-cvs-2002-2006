@@ -1185,7 +1185,7 @@ class keyHandlerClass:
         c = self.c
         ch = event and event.char
         w = event and event.widget
-        name = w and w._name
+        name = w and hasattr(w,'_name') and w._name or ''
     
         if name.startswith('body'):
             c.frame.body.updateBody(event,w,undoType='Typing')
@@ -1907,9 +1907,9 @@ class keyHandlerClass:
         w = g.app.gui.get_focus(c.frame)
         if w:
             # Allow clicks in enclosing window frame or in dialogs.
-            name = w._name
+            name = hasattr(w,'_name') and w._name or ''
             ok = (
-                name[0] in string.letters # A known Leo frame.
+                name and name[0] in string.letters # A known Leo frame.
                 or w == c.frame.top # The top of the Leo window
                 or g.app.dialogs > 0 # A dialog.
                 or isinstance(w,Tk.Text)
