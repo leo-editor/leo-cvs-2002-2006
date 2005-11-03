@@ -1138,10 +1138,16 @@ class keyHandlerClass:
         if stroke == '<Key>' and not ch:
             # Let Tk handle the char.  Example: default bindings for arrow keys.
             # g.trace('to tk:','stroke',stroke,'ch',repr(ch))
-            return None
+            val = None
         else:
             # Pass the stroke to one of Leo's event handlers.
-            return self.handleDefaultChar(event)
+            val = self.handleDefaultChar(event)
+            
+        if g.app.newWorldOrder:
+            k.redraw()
+            k.setFocus()
+            
+        return val
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,event):
@@ -1200,6 +1206,46 @@ class keyHandlerClass:
             return None
     #@nonl
     #@-node:ekr.20051026083544:handleDefaultChar
+    #@+node:ekr.20051103114520:k.redraw
+    def redraw (self):
+        
+        k = self ; c = k.c ; frame = c.frame
+    
+        if frame.requestRedraw:
+            g.trace(frame.requestRedraw)
+            frame.tree.redraw_now()
+    #@nonl
+    #@-node:ekr.20051103114520:k.redraw
+    #@+node:ekr.20051103114520.1:k.setFocus
+    def setFocus (self):
+        
+        k = self ; c = k.c ; frame = c.frame
+        
+        if frame.wantedWidget:
+            w = frame.wantedWidget
+            # g.trace(hasattr(w,'_name') and w._name or '')
+            g.app.gui.set_focus(c,w)
+            frame.wantedWidget = None
+        else:
+            # Force the widget to some standard place.
+            w = g.app.gui.get_focus(c.frame)
+            if not w: return
+            # Allow clicks in enclosing window frame or in dialogs.
+            name = hasattr(w,'_name') and w._name or ''
+            if (
+                name and name[0] in string.letters # A known Leo frame.
+                or w == c.frame.top # The top of the Leo window
+                or g.app.dialogs > 0 # A dialog.
+                or isinstance(w,Tk.Text)
+                or isinstance(w,Tk.Entry)
+                # or isinstance(w,Tk.Button)
+            ):
+                return
+            # Not a name created by Leo.
+            g.trace('setting default focus',name)
+            c.frame.bodyWantsFocus()
+    #@nonl
+    #@-node:ekr.20051103114520.1:k.setFocus
     #@-node:ekr.20050920085536.65: masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
     def fullCommand (self,event,specialStroke=None,specialFunc=None):
@@ -1420,6 +1466,10 @@ class keyHandlerClass:
                     pass
             bodyCtrl.update_idletasks()
             c.frame.body.onBodyChanged(p,undoType='Typing')
+    
+        if g.app.newWorldOrder:
+            k.redraw()
+            k.setFocus()
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
@@ -2140,7 +2190,7 @@ class keyHandlerClass:
         if command:
             for key in k.bindingsDict:
                 b = k.bindingsDict.get(key)
-                if b.commandName == command.__name__:
+                if b.commandName == commandName:
                     return key
         
         return ''

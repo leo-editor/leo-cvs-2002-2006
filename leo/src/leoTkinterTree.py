@@ -1277,10 +1277,14 @@ class leoTkinterTree (leoFrame.leoTree):
         
         __pychecker__ = '--no-argsused' # event not used.
         
-        if self.updateCount == 0 and not self.redrawScheduled:
-            # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
-            self.redrawScheduled = True
-            self.canvas.after_idle(self.idle_redraw)
+        # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
+        
+        if g.app.newWorldOrder:
+            self.c.frame.requestRedraw = True
+        else:
+            if self.updateCount == 0 and not self.redrawScheduled:
+                self.redrawScheduled = True
+                self.canvas.after_idle(self.idle_redraw)
     #@nonl
     #@-node:ekr.20040803072955.55:tree.redraw
     #@+node:ekr.20040803072955.56:tkTree.redrawAfterException
@@ -1294,22 +1298,28 @@ class leoTkinterTree (leoFrame.leoTree):
     def redrawAfterException (self):
         
         """Make sure drawing is enabled following an exception."""
-            
-        if not self.redrawScheduled:
-            # g.trace('*'*20,self.redrawCount,g.callers(5))
-            self.redrawScheduled = True
-            self.canvas.after_idle(self.idle_redraw)
-            self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
+        
+        if g.app.newWorldOrder:
+            self.c.frame.requestRedraw = True
+        else:
+            if not self.redrawScheduled:
+                # g.trace('*'*20,self.redrawCount,g.callers(5))
+                self.redrawScheduled = True
+                self.canvas.after_idle(self.idle_redraw)
+                self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
     #@nonl
     #@-node:ekr.20040803072955.56:tkTree.redrawAfterException
     #@+node:ekr.20040803072955.57:force_redraw
     # Schedules a redraw even if inside beginUpdate/endUpdate
     def force_redraw (self):
         
-        if not self.redrawScheduled:
-            # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
-            self.redrawScheduled = True
-            self.canvas.after_idle(self.idle_redraw)
+        if g.app.newWorldOrder:
+            self.c.frame.requestRedraw = True
+        else:
+            if not self.redrawScheduled:
+                # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
+                self.redrawScheduled = True
+                self.canvas.after_idle(self.idle_redraw)
     #@nonl
     #@-node:ekr.20040803072955.57:force_redraw
     #@+node:ekr.20040803072955.58:redraw_now
@@ -1319,14 +1329,17 @@ class leoTkinterTree (leoFrame.leoTree):
         
         # Bug fix: Cancel any pending redraw "by hand".
         # Make _sure_ that no other redraws take place after this.
-        self.disableRedraw = True
-        self.canvas.update_idletasks()
-        self.disableRedraw = False
+    
+        if not g.app.newWorldOrder:
+            self.disableRedraw = True
+            self.canvas.update_idletasks()
+            self.disableRedraw = False
             
         # Now do the actual redraw.
     
-        # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
+        g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
         self.idle_redraw(scroll=scroll)
+        self.c.frame.requestRedraw = False
     #@nonl
     #@-node:ekr.20040803072955.58:redraw_now
     #@+node:ekr.20040803072955.59:idle_redraw
@@ -1357,7 +1370,7 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
     
         # g.print_bindings("canvas",self.canvas)
-        # g.trace(self.redrawCount,self.updateCount,g.callers(5))
+        g.trace(self.redrawCount,self.updateCount,g.callers(5))
     
         self.expandAllAncestors(c.currentPosition())
     
@@ -1373,7 +1386,10 @@ class leoTkinterTree (leoFrame.leoTree):
             self.canvas.configure(scrollregion=(0, 0, x1, y1))
             # Do a scrolling operation after the scrollbar is redrawn
             if scroll:
-                self.canvas.after_idle(self.idle_scrollTo)
+                if g.app.newWorldOrder:
+                    self.idle_scrollTo(c.currentPosition())
+                else:
+                    self.canvas.after_idle(self.idle_scrollTo)
             if 0:
                 self.redrawCount += 1
                 print "idle_redraw allocated:",self.redrawCount
@@ -1525,13 +1541,15 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.68:numberOfVisibleNodes
     #@+node:ekr.20040803072955.69:scrollTo
     def scrollTo (self,p):
-        
-        def scrollToCallback(event=None,self=self,p=p):
-            __pychecker__ = '--no-argsused' # event not used.
     
-            self.idle_scrollTo(p)
-        
-        self.canvas.after_idle(scrollToCallback)
+        if g.app.newWorldOrder:
+             self.idle_scrollTo(p)
+        else:
+            def scrollToCallback(event=None,self=self,p=p):
+                __pychecker__ = '--no-argsused' # event not used.
+                self.idle_scrollTo(p)
+    
+            self.canvas.after_idle(scrollToCallback)
     #@nonl
     #@-node:ekr.20040803072955.69:scrollTo
     #@+node:ekr.20040803072955.70:yoffset
@@ -1608,7 +1626,10 @@ class leoTkinterTree (leoFrame.leoTree):
             self.active = True
             # Schedule the redraw _before_ calling select.
             # This disables any call that would configure old text widgets.
-            self.redraw()
+            if g.app.newWorldOrder:
+                self.redraw_now()
+            else:
+                self.redraw()
             self.select(p)
             if c.frame.findPanel:
                 c.frame.findPanel.handleUserClick(p)
@@ -1651,9 +1672,8 @@ class leoTkinterTree (leoFrame.leoTree):
         if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
             #@        << drag p to vdrag >>
             #@+node:ekr.20041111114148:<< drag p to vdrag >>
-            if self.trace and self.verbose:
-                g.trace("*** end drag   ***",\
-                    theId,x,y,p.headString(),vdrag.headString())
+            g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
+            
             if self.controlDrag: # Clone p and move the clone.
                 if childFlag:
                     c.dragCloneToNthChildOf(p,vdrag,0)
@@ -1674,6 +1694,10 @@ class leoTkinterTree (leoFrame.leoTree):
         self.canvas['cursor'] = "arrow"
         self.dragging = False
         self.drag_p = None
+        
+        # Must set self.drag_p = None first.
+        if g.app.newWorldOrder:
+            self.redraw_now()
     #@-node:ekr.20041111115908:endDrag
     #@+node:ekr.20041111114944:startDrag
     # This precomputes numberOfVisibleNodes(), a significant optimization.
@@ -1696,8 +1720,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if not p: return
         self.drag_p = p.copy() # defensive programming: not needed.
         self.dragging = True
-        if self.trace and self.verbose:
-            g.trace("*** start drag ***",theId,self.drag_p.headString())
+        g.trace("*** start drag ***",theId,self.drag_p.headString())
         # Only do this once: greatly speeds drags.
         self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
         if c.config.getBool("allow_clone_drags"):
@@ -1773,6 +1796,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def onEndDrag(self,event):
         
         """Tree end-of-drag handler called from vnode event handler."""
+        
+        g.trace(self.drag_p)
         
         c = self.c ; p = self.drag_p
         if not p: return

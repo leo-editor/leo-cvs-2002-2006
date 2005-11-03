@@ -5291,8 +5291,11 @@ class baseCommands:
     #@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
     #@+node:ekr.20031218072017.2950:beginUpdate
     def beginUpdate(self):
-    
-        self.frame.tree.beginUpdate()
+        
+        if g.app.newWorldOrder:
+            pass
+        else:
+            self.frame.tree.beginUpdate()
         
     BeginUpdate = beginUpdate # Compatibility with old scripts
     #@nonl
@@ -5325,11 +5328,15 @@ class baseCommands:
             
         Python automatically re-raises an exception after executing a finally block,
         so there is no need to do so here.'''
-    
-        try:
-            self.frame.tree.endUpdate(flag)
-        except Exception:
-            pass
+        
+        if g.app.newWorldOrder:
+            if flag:
+                self.frame.requestRedraw = True
+        else:
+            try:
+                self.frame.tree.endUpdate(flag)
+            except Exception:
+                pass
         
     EndUpdate = endUpdate # Compatibility with old scripts
     #@nonl
@@ -5360,8 +5367,11 @@ class baseCommands:
     #@-node:ekr.20031218072017.2953:recolor
     #@+node:ekr.20031218072017.2954:redraw & repaint
     def redraw(self):
-    
-        self.frame.tree.redraw()
+        
+        if g.app.newWorldOrder:
+            self.frame.requestRedraw = True
+        else:
+            self.frame.tree.redraw()
         
     # Compatibility with old scripts
     Redraw = redraw 

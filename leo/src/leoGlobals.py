@@ -2325,7 +2325,8 @@ def idleTimeHookHandler(*args,**keys):
         # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
         # New in 4.4 a2: direct support for k.onIdleTime()
-        c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
+        if 0:
+            c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
         g.doHook("idle",c=c)
 
     # Requeue this routine after g.app.idleTimeDelay msec.
@@ -2336,6 +2337,7 @@ def idleTimeHookHandler(*args,**keys):
         g.app.afterHandler = g.idleTimeHookHandler
     else:
         g.app.afterHandler = None
+#@nonl
 #@-node:EKR.20040602125018.2:idleTimeHookHandler
 #@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
 #@+node:ekr.20031218072017.1596:g.doHook

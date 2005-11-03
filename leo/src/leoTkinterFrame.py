@@ -2173,8 +2173,19 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c = self.c
         # This is a *very* effective trace.
         # g.trace(widget._name,g.callers(5))
+        
+        if not widget or g.app.unitTesting:
+            # Cancel any previous request.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
     
-        if widget and not g.app.unitTesting:
+        if g.app.newWorldOrder:
+            if later:
+                self.wantedWidget = widget
+            else:
+                g.app.gui.set_focus(c,widget)
+                self.wantedWidget = None
+        else:
             # Messing with focus may be dangerous in unit tests.
             if later:
                 # Queue up the call (just once) for later.
@@ -2205,10 +2216,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 # It may be re-enabled later, but that doesn't matter.
                 self.wantedWidget = None
                 g.app.wantedCommander = None
-        else:
-            # Cancel any previous request.
-            self.wantedWidget = None
-            g.app.wantedCommander = None
     #@nonl
     #@-node:ekr.20050120092028.1:set_focus (tkFrame)
     #@-node:ekr.20050120083053:Delayed Focus (tkFrame)

@@ -53,6 +53,7 @@ class LeoApp:
         self.logIsLocked = False # True: no changes to log are allowed.
         self.logWaiting = [] # List of messages waiting to go to a log.
         self.menuWarningsGiven = False # True: supress warnings in menu code.
+        self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
         self.nodeIndices = None # Singleton node indices instance.
         self.numberOfWindows = 0 # Number of opened windows.
         self.openWithFiles = [] # List of data used by Open With command.
