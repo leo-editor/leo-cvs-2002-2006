@@ -338,10 +338,9 @@ Section "Leo" SEC01
   SetOutPath "$INSTDIR\scripts"
   ;@  << install scripts >>
   ;@+node:ekr.20050118104901.13:<< install scripts >>
+  File "..\scripts\leoScripts.leo"
   File "..\scripts\leoScripts.txt"
-  
   File "..\scripts\*.py"
-  
   File "..\scripts\openLeoScript.sh"
   ;@nonl
   ;@-node:ekr.20050118104901.13:<< install scripts >>
@@ -363,6 +362,7 @@ Section "Leo" SEC01
   ;@+node:ekr.20050118122404.1:<< install test files >>
   File "..\test\__init__.py"
   File "..\test\test.leo"
+  File "..\test\unitTest.leo"
   ;@-node:ekr.20050118122404.1:<< install test files >>
   ;@nl
   SetOutPath "$INSTDIR\test\unittest"
@@ -615,10 +615,9 @@ Section Uninstall
   ;@nl
   ;@  << uninstall scripts >>
   ;@+node:ekr.20050118104901.14:<< uninstall scripts >>
+  Delete "$INSTDIR\scripts\leoScripts.leo"
   Delete "$INSTDIR\scripts\leoScripts.txt"
-  
   Delete "$INSTDIR\scripts\*.p*"
-  
   Delete "$INSTDIR\scripts\openLeoScript.sh"
   ;@nonl
   ;@-node:ekr.20050118104901.14:<< uninstall scripts >>
@@ -640,6 +639,7 @@ Section Uninstall
   ;@+node:ekr.20050118122740.3:<< uninstall test files >>
   Delete "$INSTDIR\test\__init__.py"
   Delete "$INSTDIR\test\test.leo"
+  Delete "$INSTDIR\test\unitTest.leo"
   ;@-node:ekr.20050118122740.3:<< uninstall test files >>
   ;@nl
   ;@  << uninstall unittest files >>

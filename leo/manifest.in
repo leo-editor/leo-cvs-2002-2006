@@ -88,6 +88,7 @@ include plugins/*.txt
 include plugins/*.py
 
 include scripts/openLeoScript.sh
+include scripts/leoScripts.leo
 include scripts/leoScripts.txt
 include scripts/*.py
 
@@ -100,6 +101,7 @@ include src/oldLeoProjects.leo
 
 include test/__init__.py
 include test/test.leo
+include test/unitTest.leo
 
 include test/unittest/batchTest.py
 include test/unittest/errorTest.py

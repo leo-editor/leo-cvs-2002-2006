@@ -105,7 +105,6 @@ doc\html\outlines.html
 doc\html\plugins.html
 doc\html\rstplugin3.html
 doc\html\rstplugin4.html
-doc\html\scripting.html
 doc\html\silver_city.css
 doc\html\techReport.html
 doc\html\testimonials.html
@@ -350,7 +349,6 @@ plugins\FileActions.py
 plugins\LeoN.py
 plugins\Library.ini
 plugins\Library.py
-plugins\TabbedLog.py
 plugins\UASearch.py
 plugins\UNL.py
 plugins\URLloader.py
@@ -453,6 +451,7 @@ plugins\startfile.py
 plugins\table.py
 plugins\temacs.py
 plugins\templates.py
+plugins\testRegisterCommand.py
 plugins\trace_gc.py
 plugins\trace_keys.py
 plugins\trace_tags.py
@@ -481,6 +480,7 @@ scripts\tangle_done.py
 scripts\untangle_done.py
 src\LeoPy.leo
 src\__init__.py
+src\buttons.txt
 src\leo.py
 src\leoApp.py
 src\leoAtFile.py
