@@ -282,11 +282,14 @@ class LeoApp:
     #@-node:ekr.20031218072017.2614:app.destroyOpenWithFileWithDict
     #@+node:ekr.20031218072017.2615:app.destroyWindow
     def destroyWindow (self,frame):
+        
+        # g.trace(frame in g.app.windowList,frame)
             
         g.app.destroyOpenWithFilesForFrame(frame)
     
         if frame in g.app.windowList:
             g.app.windowList.remove(frame)
+            # g.trace(g.app.windowList)
     
         # force the window to go away now.
         frame.destroySelf()

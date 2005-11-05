@@ -235,7 +235,7 @@ class baseCommands:
     
         if not g.doHook("command1",c=c,p=p,v=p,label=label):
             try:
-                command()
+                c.keyHandler.funcReturn = command()
             except:
                 g.es("exception executing command")
                 print "exception executing command"
@@ -367,6 +367,7 @@ class baseCommands:
         c.editPosition(p)
         c.redraw_now() # Leo 4.4: Must be done here. c is not known outside this method.
         frame.body.setFocus()
+        # g.trace('*'*10,c.frame,g.callers(7))
         return c # For unit test.
     #@nonl
     #@-node:ekr.20031218072017.1623:new
