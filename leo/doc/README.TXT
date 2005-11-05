@@ -1,6 +1,6 @@
-Leo 4.4 alpha 1                                      October 15, 2005
+Leo 4.4 alpha 2                                      November 2, 2005
 
-Leo 4.4 alpha 1 is now available at:
+Leo 4.4 alpha 2 is now available at:
 
 http://sourceforge.net/project/showfiles.php?group_id=3458&package_id=29106
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html

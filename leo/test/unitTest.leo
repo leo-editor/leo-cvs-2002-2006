@@ -2,14 +2,14 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="8358" clone_windows="0"/>
-<globals body_outline_ratio="0.540216086435">
+<globals body_outline_ratio="0.654261704682">
 	<global_window_position top="39" left="149" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20051104080236" a="TV"><vh>Other</vh>
+<v t="ekr.20051104080236"><vh>Other</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050104095950"><vh>@shortcutsEqualSizedPanes</vh></v>
 <v t="ekr.20050328101834"><vh>@page http plugin</vh>
@@ -27,6 +27,7 @@
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
 </v>
 <v t="ekr.20051012104957"><vh>Docs</vh>
+<v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20050618061835"><vh>How to use the @test directive, by Roger Erens</vh>
 <v t="ekr.20050618061835.1"><vh>Intro</vh>
 <v t="ekr.20050618061835.2"><vh>@url http://www.onlamp.com/pub/a/python/2005/02/03/tdd_pyunit2.html</vh></v>
@@ -58,18 +59,6 @@
 <v t="ekr.20050618061835.19"><vh>How about @suite?</vh></v>
 <v t="ekr.20050618061835.20"><vh>Final remarks</vh></v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files...</vh>
-<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
-<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
-<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
-<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
-<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
-<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
-<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
-<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
-</v>
-<v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -969,6 +958,17 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040712101754.2" a="TV"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
+<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
+<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
+<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
+<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
+<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
+<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
+<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
+</v>
 <v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines (runs some tests twice!)</vh>
@@ -1188,7 +1188,11 @@
 </v>
 <v t="ekr.20050512083822.2"><vh>@test unmarkAll</vh></v>
 </v>
-<v t="ekr.20040712101754.174"><vh>Mini tests...</vh>
+<v t="ekr.20040712101754.36"><vh>Mini tests...</vh>
+<v t="ekr.20050112095306"><vh>g.utils tests...</vh>
+<v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
+<v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
+</v>
 <v t="ekr.20040712101754.175"><vh>@test p.t == p.v.t</vh></v>
 <v t="ekr.20040712101754.177"><vh>@test convertTreeToString and allies</vh>
 <v t="ekr.20040712101754.178"><vh>File Conversion</vh>
@@ -1206,14 +1210,8 @@
 </v>
 <v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
-</v>
-<v t="ekr.20040712101754.36"><vh>Misc tests...</vh>
-<v t="ekr.20050112095306"><vh>g.utils tests...</vh>
-<v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
-<v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
-</v>
 <v t="ekr.20050208135429"><vh>@test pre-definition of g in scripts</vh></v>
-<v t="ekr.20040803091512"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
+<v t="ekr.20040803091512"><vh>@@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
 <v t="ekr.20040917062206"><vh>@test g.cantImport returns None</vh></v>
 </v>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -1333,65 +1331,6 @@
 <v t="ekr.20050203084930"><vh>Test settings...</vh>
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
-</v>
-<v t="ekr.20040712101754.102"><vh>Tests of @file nodes...</vh>
-<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
-<v t="ekr.20040712101754.104"><vh>#@file</vh></v>
-<v t="ekr.20040712101754.105"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
-<v t="ekr.20040712101754.107"><vh>#@file</vh></v>
-<v t="ekr.20040712101754.108"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
-<v t="ekr.20040712101754.110"><vh>#@file</vh></v>
-<v t="ekr.20040712101754.111"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
-<v t="ekr.20040707141957.13"><vh>#@thin</vh></v>
-<v t="ekr.20040707141957.14"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041020100733"><vh>@test @nosent</vh>
-<v t="ekr.20041020100733.1"><vh>#@nosent</vh>
-<v t="ekr.20041020100918"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041020100918.1"><vh>unnamed node</vh></v>
-</v>
-<v t="ekr.20041020100733.2"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041021062800"><vh>@test @noref</vh>
-<v t="ekr.20041021063220"><vh>#@noref</vh>
-<v t="ekr.20041021063220.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041021063220.2"><vh>unnamed node</vh></v>
-</v>
-<v t="ekr.20041021063220.3"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041021065844"><vh>@test @asis</vh>
-<v t="ekr.20041021065903"><vh>#@asis</vh>
-<v t="ekr.20041021065903.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041021065903.2"><vh>unnamed node</vh></v>
-</v>
-<v t="ekr.20041021065844.1"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041004093917"><vh>@test read from string</vh>
-<v t="ekr.20041004093917.1"><vh>Input</vh></v>
-<v t="ekr.20041021071036"><vh>Result</vh></v>
-<v t="ekr.20041004100940"><vh>Expected</vh>
-<v t="ekr.20041001111106"><vh>@thin c:\prog\test\at-file-thin-test2.txt</vh>
-<v t="ekr.20041001111106.1"><vh>node 1</vh>
-<v t="ekr.20041001111106.2"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
-<v t="ekr.20041001111106.3"><vh>child node 1</vh></v>
-<v t="ekr.20041001111106.4"><vh>child node 2</vh></v>
-</v>
-</v>
-<v t="ekr.20041001111106.5"><vh>&lt;&lt; ref &gt;&gt;</vh>
-<v t="ekr.20041001111106.6"><vh>organizer node</vh>
-<v t="ekr.20041001111106.7"><vh>ref child 1</vh></v>
-<v t="ekr.20041001111106.8"><vh>ref child 2</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
 </v>
 <v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
@@ -1581,6 +1520,65 @@
 <v t="ekr.20050208073718"><vh>@test open file with chinese characters in path &amp; file</vh></v>
 <v t="ekr.20050208111037"><vh>@test failure to convert unicode characters to ascii</vh></v>
 <v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.102"><vh>Tests of @file nodes...</vh>
+<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
+<v t="ekr.20040712101754.104"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.105"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
+<v t="ekr.20040712101754.107"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.108"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
+<v t="ekr.20040712101754.110"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.111"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
+<v t="ekr.20040707141957.13"><vh>#@thin</vh></v>
+<v t="ekr.20040707141957.14"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041020100733"><vh>@test @nosent</vh>
+<v t="ekr.20041020100733.1"><vh>#@nosent</vh>
+<v t="ekr.20041020100918"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041020100918.1"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041020100733.2"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041021062800"><vh>@test @noref</vh>
+<v t="ekr.20041021063220"><vh>#@noref</vh>
+<v t="ekr.20041021063220.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041021063220.2"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041021063220.3"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041021065844"><vh>@test @asis</vh>
+<v t="ekr.20041021065903"><vh>#@asis</vh>
+<v t="ekr.20041021065903.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041021065903.2"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041021065844.1"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041004093917"><vh>@test read from string</vh>
+<v t="ekr.20041004093917.1"><vh>Input</vh></v>
+<v t="ekr.20041021071036"><vh>Result</vh></v>
+<v t="ekr.20041004100940"><vh>Expected</vh>
+<v t="ekr.20041001111106"><vh>@thin c:\prog\test\at-file-thin-test2.txt</vh>
+<v t="ekr.20041001111106.1"><vh>node 1</vh>
+<v t="ekr.20041001111106.2"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
+<v t="ekr.20041001111106.3"><vh>child node 1</vh></v>
+<v t="ekr.20041001111106.4"><vh>child node 2</vh></v>
+</v>
+</v>
+<v t="ekr.20041001111106.5"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="ekr.20041001111106.6"><vh>organizer node</vh>
+<v t="ekr.20041001111106.7"><vh>ref child 1</vh></v>
+<v t="ekr.20041001111106.8"><vh>ref child 2</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 </v>
 </v>
@@ -3095,7 +3093,6 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 
 if 1 and 2:
     pass</t>
-<t tx="ekr.20040712101754.174"></t>
 <t tx="ekr.20040712101754.175">root = c.rootPosition()
 
 # NOTE: p.__getattr__ must be enabled for this test to work.
@@ -4240,7 +4237,7 @@ leoTest.runLeoTest(path,verbose=False,full=True)
 <t tx="ekr.20041001111106.6"># text of organizer node</t>
 <t tx="ekr.20041001111106.7"></t>
 <t tx="ekr.20041001111106.8"></t>
-<t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
+<t tx="ekr.20041001194357"># You can run unit tests by selecting an outline containing unit tests.
 
 import leoTest
 
@@ -6665,6 +6662,7 @@ To get the button right away in the tool bar, I have to assume that you started 
 
 We'll see the use of this added button soon, but before that, read up on the 'assert' function in the Python manuals, since it is used a lot in testing. It won't be long before you're back here!</t>
 <t tx="ekr.20050618061835.4">@color
+
 import leoTest
 
 print "\nStart of Do @test"
@@ -7755,7 +7753,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;

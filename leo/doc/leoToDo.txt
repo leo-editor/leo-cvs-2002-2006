@@ -25,16 +25,162 @@ Others
 #@-node:ekr.20051012053017.2:Schedule
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
-#@nonl
-#@+node:ekr.20051016162724:before a3
-* Keep focus visible without using idle-time logic.
-    - This can probably be done in k.masterCommand.
-    - Removed g.app.dialogs hack in leoPlugins.leo as well as here.
 
-The present delayed focus scheme is broken by update_idletasks. Rather than
-queuing up an idle-time handler, the delayed focus methods will simply set an
-ivar telling k.masterCommand what widget should get focus. This will probably be
-an excellent and simple solution.
+- Rename c/tree.redraw to c.requestRedraw.
+
+** Screen not redrawn immediately after changing headline. (clones don't change)
+
+- Resize headline widget after pastes.
+
+- Remove most calls to update_idletasks ?
+    - update_idletasks should be benign.
+    - Warning: log code calls update_idletasks.
+
+Before a3:
+- Create a convenience method to execute minibuffer commands by name.
+- Fix all bugs: update plugins and fix problems applying settings.
+- Disable minibuffer when not in use.
+#@nonl
+#@+node:ekr.20051103094005:Fix bugs
+#@+node:ekr.20051103092502.1:Update 'e's plugins
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3408579
+By: e
+
+the fix for rClick.py is
+change 'body' to 'body-pane'
+where it builds the menu
+
+and 1 or 2 places
+change onBodyWillChange to onBodyChanged
+
+in dynacommon.py 2 places
+change onBodyWillChange to onBodyChanged
+
+people who download updates of plugins 
+from cvs on less than Leo4.4 from plugin-manager
+will have to be aware to get earlier versions.
+#@nonl
+#@-node:ekr.20051103092502.1:Update 'e's plugins
+#@+node:ekr.20051103093034:Fix problems applying settings
+#@+node:ekr.20051103093034.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3389810
+By: vpe
+
+There is still a problem with applying in-file settings when opening outline
+with a @settings from another outline.
+These file specific settings are not applied when the outline is opened from
+another outline for the first time. They are now applied when the file is opened
+2nd time from the same outline.
+
+The settings I tested are:
+@language target_language = plain
+@color body_text_background_color = pink
+
+Leo 4.4 alpha 1, build  1.303 , October 15, 2005
+Python 2.4.2, Tk 8.4.7, win32
+#@nonl
+#@-node:ekr.20051103093034.1:Report
+#@-node:ekr.20051103093034:Fix problems applying settings
+#@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@+node:ekr.20051104152338.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3413805
+By: nobody
+
+I thought this might be for 4.4a2, but I see the same effect w/ 
+Leo 4.3.3, build  1.282 , September 17, 2005
+Python 2.3.5, Tk 8.4.7, win32
+
+I haven't used Leo for code, but just started to try to re-organize some Perl
+I inherited.
+
+Leo apears to remove sentinels, AND preceding newlines, so the effect is something
+like this:
+
+.... some code....
+
+   next line;
+}
+#@verbatim
+#@ leo sentinel here...
+#
+
+    If  ( something ) {
+      more code;
+......
+
+becomes:
+
+.... some code....
+
+   next line;
+} If  ( something ) {
+      more code;
+......
+
+Now, that may be annoying, but mildly so - it still runs.
+When this:
+
+#
+#@verbatim
+#@ sentinel
+if () {
+
+turns to this:
+
+# if() {
+
+code just breaks.
+#@nonl
+#@-node:ekr.20051104152338.1:Report
+#@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@-node:ekr.20051103094005:Fix bugs
+#@+node:ekr.20051104131527:From e
+@nocolor
+
+cvs after a2
+
+not just paste to headline, 
+but paste from the
+edit menu to body doesn't stick.
+and rClick calls a few of those commands
+so pastes from there don't stick unless you also
+hit a space or some other key.
+
+editing under settings is a little whacky too.
+you can replace a whole line in a string dialog
+but try to just replace the last char and it won't stick.
+can't select headline text at all.
+#@nonl
+#@-node:ekr.20051104131527:From e
+#@+node:ekr.20051104053655:Create a convenience method to execute minibuffer commands by name
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3412644
+By: btheado
+
+Executing the script
+
+    g.printList(dir(c))
+
+I can see that many of the minibuffer commands are available by using a simple
+transformation on the name.  For example, if I want to execute the 'expand-node'
+minibuffer command, then I can call c.expandNode().  However, the 'full-buffer'
+command doesn't seem to have a corresponding method in c.  Is there a centralized
+way to execute minibuffer commands in scripts?
+#@nonl
+#@-node:ekr.20051104053655:Create a convenience method to execute minibuffer commands by name
+#@+node:ekr.20051103092502:Update screen shots
+#@-node:ekr.20051103092502:Update screen shots
+#@+node:ekr.20051103144316:before a3
+#@-node:ekr.20051103144316:before a3
+#@+node:ekr.20051016162724:before a4
+- Use focus-in event in minibuffer?
 
 - More clever way to analyze modules in autocomplete.
     Use inspect module to import the text and get what is wanted.
@@ -49,1693 +195,50 @@ an excellent and simple solution.
     - Try default fonts for spell buttons.
     - Select the first entry.
     - Support up/down arrows.
+
+- Complete Editor menu.
+
+- Put About dialog (all? dialogs) in tab.
 #@nonl
-#@+node:ekr.20051008131807:*** Unit tests
+#@+node:ekr.20051104051733:Use focus-in binding?
 @nocolor
+http://sourceforge.net/forum/message.php?msg_id=3412640
+By: btheado
 
-** New utils for unit testing
-    - The idea is to avoid subclassing TestCase,
-      and to avoid the kind of helper code that is in leoTest.leo.
-    - data = g.saveSubtree()
-    - g.restoreSubtree(data)
+Currently clicking on the minibuffer and typing text has no effect.  Kinda confusing
+until the Alt-x binding I discovered that Alt-x is the way to access the minibuffer
+command mode.
 
-- g.simulateKeystrokes (keystrokes,p=None)
-    - keystrokes is a list of bindings to be 'executed' as if typed.
-        - This is an easy way of simulating user interaction.
-
-- unit calls k.simulateKeystrokes and then makes assertions about
-    - state
-    - Contents of label.
-    - ivars
-    - Contents of body text.
-    - what widget has focus.
-    - what the point, mark and selection are.
-    - etc.
-
-@color
+It would be nice if the <FocusIn> binding on the minibuffer widget were equivilent
+to Alt-x.
 #@nonl
-#@+node:ekr.20050920085536.64:k.manufactureKeyPress
-def manufactureKeyPress (self,event,keysym):
-    
-    '''Implement a command by passing a keypress to Tkinter.'''
-
-    w = event.widget
-    w.event_generate('<Key>',keysym=keysym)
-    
-    ### Synthesize commandName instead of keysym?
-    self.endCommand(event,keysym,tag='manufactureKeyPress')
-    
-    return 'break'
-#@nonl
-#@-node:ekr.20050920085536.64:k.manufactureKeyPress
-#@-node:ekr.20051008131807:*** Unit tests
-#@+node:ekr.20051028061802:Use tab for autocompleter
-#@+node:ekr.20051025144611:Autocompleter (Do not delete)
-- list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
-  (Autocompleter may already do this)
-#@+node:ekr.20051025144611.1:Configuration
+#@-node:ekr.20051104051733:Use focus-in binding?
+#@+node:ekr.20051103091115:Update docs for find tab
+#@+node:ekr.20051103091115.1:Report
 @nocolor
-#@nonl
-#@+node:ekr.20051025144611.2:autocompleter.ini
-The plugin looks in the plugins folder for a file called autocompleter.ini.
-
-This follows the windows .ini file format as used in ConfigParser, see: http://docs.python.org/lib/module-ConfigParser.html
-
-1. Specify options in autocompleter.ini as follows:
-
-[ autocompleter ]
-
-useauto = 0 # turns off autocompletion
-usecalltips = 0 # turns of calltips
-autopattern = pattern #pattern is a regular expression
-
-The autopattern changes the pattern by which autocompletion options are recognized.
-I wouldnt use it unless you understood how the code works though.
-
-2. You can add a language by putting this in autocompleter.ini:
-
-[ yourlanguage ]
-
-pat = put regular expression here
-
-Then the plugin will recognize your language for the calltip system. This only works if Leo currently recognizes your language, since we are getting our info from the colorizer as to what language is in use.
-#@nonl
-#@-node:ekr.20051025144611.2:autocompleter.ini
-#@+node:ekr.20051025144611.3:.ato files in the autocompleter folder
-The plugin uses specific pattern matching based on the language you are using.
-
-For example, if you are in a node and the language is python, it will only recognize def word(     ) as the calltip.
-
-Support for Python, C, C++, Perl and Java is built-in, other languages may be supported as follows:
-
-You can supply a library of prebuilt calltip definitions and autocompleter info by putting a directory called autocompleter in the plugins directory. It will look for a file(s) of the languages used in the Leo project. The file name must be language.ato.
-
-For java it would be java.ato, which might contain:
-
-dog.eat
-burt.you
-public static void main( String[] args )
-
-and dog.eat, burt.you would be added to autocompletion and the 3rd line would be added to the calltips section.
-#@nonl
-#@-node:ekr.20051025144611.3:.ato files in the autocompleter folder
-#@-node:ekr.20051025144611.1:Configuration
-#@+node:ekr.20051025144611.4:autocompleter.py
-<< docstring >>
-<<imports>>
-<<version history>>
-<<a note on newCreateControl>>
-<<coding conventions>>
-<< configuration >>
-
-#These two global determine if the autocompleter and calltip systems are used.  Default is on.
-useauto = 1
-usecall = 1
-
-<<globals>>
-<<patterns>>
-
-@others
-#@nonl
-#@+node:ekr.20051025144611.5:<< docstring >>
-'''Autocompletion and calltips plugin.
-
-- ``.`` summons the autocompletion.
-- ``(`` summons the calltips
-- ``Escape`` closes either box.
-- ``Ctrl`` selects an item.
-- ``alt-up_arrow``, ``alt-down_arrow`` move up or down in the list.
-  The mouse will work for this as well.
-
-This plugin scans the complete outline at startup.
-You many enable or disable features in autocomplete.ini.
-This file contains two options under the [ autocompleter ] section::
-
-    useauto
-    usecalltips
-
-Setting either to 1 will turn on the feature. 0 means off. If there is a section
-called [ newlanguages ] it will read each option as a new language for
-autocompleter to recognize, and compile its value as a regex pattern for the
-autocompleter system to recognize as a calltip. This has relevance for the .ato
-system described below.  Languages that currently have patterns::
-
-    python, java, c++, c, perl
-
-Autocompleter looks in the plugin directory for a directory called
-autocompleter. If it doesnt find one it will attempt to create this directory.
-This directory should contain what are called .ato files ( pronounced auto ).
-Autocompleter will scan each .ato file that has a first part that matches a
-languages name. For example: python.ato autocompleter recognizes python, and
-will scan this file. The contents are read with the same mechanism that reads
-the information in the nodes, so calltip and autocompleter information is added
-to autocompleters runtime database. If a new language has been added in the
-autocompleter.ini file then an .ato file that starts with the new languages name
-will be recognized and read in. Note, this language needs to be recognizable to
-Leo. Used correctly an .ato file is a mechanism by which a user can carry
-autocompletion and calltip information between .leo files/sessions.
-'''
-#@nonl
-#@-node:ekr.20051025144611.5:<< docstring >>
-#@+node:ekr.20051025144611.6:<< imports >>
-## import leoTkinterFrame 
-
-import sets 
-import threading
-import weakref
-#@nonl
-#@-node:ekr.20051025144611.6:<< imports >>
-#@+node:ekr.20051025144611.7:<<version history>>
-@
-.425:
-    -The initial scan thread is now a daemon thread.
-    -Creates autocompleter box and Calltip box once.
-    -Broke long functions apart.
-    -'Esc'now closes autobox and calltip.
-
-.500 EKR:
-    - Made minor changes based on .425:
-    -Improved docstring.
-    -Converted to 4.2style.
-.501 EKR:
-    - Changed select method following patch by original author.
-    - Added event.keysym=='Up' case to
-.55 Lu:
-     - Made the watcher def more greedy.  See def for rationale
-     - Made the calltip identification regex more liberal.
-     - streamlined some code.
-     - added DictSet class, experimental in the sense that I haven't had a bug with it yet.  see <<DictSet>> node, under << globals>>
-     - discovered dependency between this and Chapters, auto needs to be loaded first
-.60 Lu
-    - Changed some method names to more acuaretely reflect what they do.  Added more comments.
-    - processKeyStroke cleaned up.
-    - added Functionality where any mouse button press, anywhere in Leo will turn off autobox and calltip label.
-    - waiting for Chapters( or chapters ) to have its walkChapters def fixed up, so we can walk the chapters on startup.
- .7 Lu( The placer revolution!)
-   -migrated to the placer!  This got rid of Canvas based drawing.  The placer may be a good tool to know in the future.  This seemed to
-   be about an even replacement codewise, but I think it gives us an efficiency boost.
-   -changed some lambdas to defs, more for clarities sake then anything.
-   -made global changes to how objects are referred to
-   -got rid of factory defs, autobox and calltip label are created at Editor creation time
-   -dependency between this and Chapters eliminated.
-   -added code to automatically create the .ini file and the autocompleter directory if they do not exist.
-   -added a section about how to configure autocompleter
-   -switched the patterns from using '+' to add pieces together to using '%s'.
-.71 investigated and hopefully fixed startup bug on Windows. Changes that appear to have fixed it:
-1. We synchronize with an threading Event object.  IO acting screw on windows in a thread.
-2. There is a global flag indicating whether the config file needs to be read again.
-3. Explicitly set the file type to 't'.  This could all be attributed to a bug in ConfigParser.  I looked at the source and it doesnt write its data with a 't'.  This indicates trouble with windows.
-4. Make the 'aini' path composed of os.sep instead of the char '/'.  Im uncertain if the config file ever got read on Windows at this point because of the explicit '/' , instead of using os.path.
-5. Moved createConfig part out of thread. problems seems centered on Windows/IO/Threading.
-
- .72 The thesis and experiments to confirm the problem identified in .71 appear
-completely wrong. I could not recreate threading+writeIO staling on XP at all.
-Windows 98 didnt even work. But after commenting out g.es calls it did work. My
-new target for the problem is now focused on keeping g.es calls out of the
-initialScan thread. This will just entail moving all the reading and writing of
-the config and language files out of the thread.
-
-.73 EKR:
-    - Changed 'new_c' logic to 'c' logic in initialScan.
-    - Added init function.
-.74 EKR:
-    - Changed 'start2' hook to 'new' hook.
-.75 EKR:
-    - Disable scan during unit testing.
-#@nonl
-#@-node:ekr.20051025144611.7:<<version history>>
-#@+node:ekr.20051025144611.8:<<a note on newCreateControl>>
-@
-
-the function newCreateControl decorates the leoTkinterFrame.leoTkinterBody.createControl method.
-It does so to intercept the point where the editor is created.  By doing so, autocompleter is able
-to ensure that the placer is used instead of the packer.  By using the placer autocompleter is able
-to put the autobox and calltip label over the editor when the appropiate time is reached.  In versions
-prior to .7, this was achieved by using a Tk Canvas as the background of the Editor.  The placer is simpler
-and from what I see more efficient.
-
-#@-node:ekr.20051025144611.8:<<a note on newCreateControl>>
-#@+node:ekr.20051025144611.10:<<coding conventions>>
-@
-
-context - means the widget that backs the editor.  In versions before .7 it was called c and was a canvas.  context is the new name, and it is no longer a canvas. c, now means commander.
-
-context.autobox - means the Pmw.ScrolledListBox that offers the autocompletion options.
-
-The autobox contains other widgets that can be accessed by autobox.component( 'widgetname' )
-
-context.calltip - means the Tk.Label that offers calltip information
-
-context.which = 0 indicates its in autocompleter mode
-context.which = 1 indicates its in calltip mode
-#@nonl
-#@-node:ekr.20051025144611.10:<<coding conventions>>
-#@+node:ekr.20051025144611.11:<< configuration >>
-@
-Autocompleter looks in the plugin directory for a file called autocompleter.ini
-
-This file contains two options under the [ autocompleter ] section:
-    useauto
-    usecalltips
-    setting either to 1 will turn on the feature. 0 means off.
-If there is a section called [ newlanguages ] it will read each option as a new language for autocompleter to recognize,
-and compile its value as a regex pattern for the autocompleter system to recognize as a calltip.  This has relevance for the .ato
-system described below.
-
-languages that currently have patterns:
-    python, java, c++, c and perl
-This file will automatically be generated for the user if it does not exist at startup time.
-
-
-Autocompleter looks in the plugin directory for a directory called autocompleter.  If it doesnt find one
-it will attempt to create this directory.  This directory should contain what are called .ato files ( pronounced auto ).
-Autocompleter will scan each .ato file that has a first part that matches a languages name.  For example:
-    python.ato
-    autocompleter recognizes python, and will scan this file.  The contents are read with the same mechanism that
-    reads the information in the nodes, so calltip and autocompleter information is added to autocompleters runtime database.
-If a new language has been added in the autocompleter.ini file then an .ato file that starts with the new languages name will be recognized and read in.  Note, this language needs to be recognizable to Leo.
-Used correctly an .ato file is a mechanism by which a user can carry autocompletion and calltip information between .leo files/sessions.
-#@nonl
-#@-node:ekr.20051025144611.11:<< configuration >>
-#@+node:ekr.20051025144611.12:<< globals >>
-orig_CreateControl = leoTkinterFrame.leoTkinterBody.createControl 
-
-<<DictSet>>
-#watchwords ={} switched to DictSet
-watchwords = DictSet() # a DictSet that is the autocompleter database.
-#calltips ={} switched to DictSet
-calltips = DictSet( factory = DictSet) # a DictSet that is the calltip database
-pats ={} #used to hold regex patterns to find defintions for calltips
-lang = None #determines what language is in effect.  Though its global, only one autobox or calltip label should be visible for the entire leo instance.
-configfilesread = False #Determines if the config files need to be read
-haveseen = weakref.WeakKeyDictionary()# a dict that tracks the commanders that have been seen without stopping garbage collection of that commander.
-#@+node:ekr.20051025144611.13:<<DictSet>>
-class DictSet( dict ):
-    '''A dictionary that always returns either a fresh sets.Set or one that has been stored from a previous call.
-    a different datatype can be used by setting the factory keyword in __init__ to a different class.'''
-    
-    def __init__( self , factory = sets.Set ):
-        dict.__init__( self )
-        self.factory = factory
-        
-    def __getitem__( self, key ):
-        try:
-            return dict.__getitem__( self, key ) # EAFTP
-        except:
-            dict.__setitem__( self, key, self.factory() )
-            return dict.__getitem__( self, key )
-#@-node:ekr.20051025144611.13:<<DictSet>>
-#@-node:ekr.20051025144611.12:<< globals >>
-#@+node:ekr.20051025144611.14:<< patterns >>
-# This section defines patterns for calltips.
-space = r'[ \t\r\f\v ]+'
-end = r'\w+\s*\([^)]*\)'
-
-pats ['python'] = re.compile(r'def\s+%s' % end)
-
-pats ['java'] = re.compile(
-    r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
-        space, space, end))
-
-pats ['perl'] = re.compile(r'sub\s+%s' % end)
-
-pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (space,end))
-
-pats ['c'] = re.compile(r'\w+%s%s' % (space,end))
-
-r = string.punctuation.replace('(','').replace('.','')
-pt = string.digits + string.letters + r
-
-ripout = string.punctuation + string.whitespace + '\n'
-ripout = ripout.replace('_','')
-
-okchars = {}
-for z in string.ascii_letters:
-    okchars [z] = z
-okchars ['_'] = '_'
-#@nonl
-#@-node:ekr.20051025144611.14:<< patterns >>
-#@+node:ekr.20051025170832:Initialization
-#@+node:ekr.20051025144611.15:init
-def init ():
-    
-    ok = Pmw and Tk and not g.app.unitTesting # Not for unit tests: modifies core classes.
-    
-    if ok:
-        leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
-        leoPlugins.registerHandler(('new','open2'),initialScan)   
-        g.plugin_signon(__name__)
-        
-    return ok
-#@nonl
-#@-node:ekr.20051025144611.15:init
-#@+node:ekr.20051025170832.1:Config stuff
-#@+node:ekr.20051025144611.24:has read config file meths
-#These functions determine if the config and language files have been read or not.
-# No need to read it more than once.
-
-def hasReadConfig():
-    return configfilesread
-
-def setReadConfig():
-    global configfilesread
-    configfilesread = True
-#@nonl
-#@-node:ekr.20051025144611.24:has read config file meths
-#@+node:ekr.20051025144611.25:readConfigFile
-def readConfigFile (aini):
-    '''reads the autocompleter config file in.'''
-    global usecall, useauto 
-    
-    try:
-        cp = ConfigParser.ConfigParser()
-        fp = open( aini, 'rt' )
-        cp.readfp( fp )
-        fp.close()
-    except Exception, x:
-        g.es( "Could not open %s because of %s" % ( aini, x ), color = 'red' )
-    ac = None 
-    
-    for z in cp.sections():
-        if z.strip()=='autocompleter':
-            ac = z 
-        else:
-            continue
-        if cp.has_section(ac):
-            if cp.has_option(ac,'useauto'):
-                useauto = int(cp.get(ac,'useauto'))
-                if useauto:
-                    g.es( "autocompleter enabled", color = 'blue' )
-            if cp.has_option(ac,'usecalltips'):
-                usecall = int(cp.get(ac,'usecalltips'))
-                if usecall:
-                    g.es( "calltips enabled" , color = 'blue' )
-        break
-
-    nl = None
-    for z in cp.sections():
-        if z.strip()=='newlanguages':
-            nl = z 
-        else:
-            continue
-        if nl and cp.has_section( nl ):
-            for z in cp.options( nl ):
-                try:
-                    pats[ z ] = re.compile( cp.get( nl, z ) )
-                    g.es( 'added %s to autocompleter languages' % z , color = 'blue' )
-                except Exception, x:
-                    g.es( "Could not add %s pattern, because of %s " %( z, x ) , color = 'red')
-                    
-        break
-#@-node:ekr.20051025144611.25:readConfigFile
-#@+node:ekr.20051025144611.26:createConfigFile
-def createConfigFile( aini ):
-    '''This function creates a config file identified by the parameter aini'''
-    cp = ConfigParser.ConfigParser()
-    cp.add_section( 'autocompleter' )
-    cp.set( 'autocompleter', 'useauto', '1' )
-    cp.set( 'autocompleter', 'usecalltips', '1' )
-    cp.add_section( 'newlanguages' )
-    try:
-        ini = open( aini, 'wt' )
-        cp.write( ini )
-        ini.close()
-        g.es( "autocompleter .ini file created in %s" % aini, color = 'blue' )
-    except Exception, x:
-        g.es( "Error in creating %s, caused by %s" % ( aini, x ) , color = 'red' )
-
-
-#@-node:ekr.20051025144611.26:createConfigFile
-#@+node:ekr.20051025144611.27:readLanguageFiles
-def readLanguageFiles (bankpath):
-    '''reads language files in directory specified by the bankpath parameter'''
-    global lang
-    if not os.path.exists( bankpath ):
-        try:
-            os.mkdir( bankpath )
-        except Exception, x:
-            g.es( "Could not make %s because of %s" %( bankpath, x ) )
-    for z in pats:
-        bpath = bankpath+z+'.ato'
-        if os.path.exists(bpath):
-            f = open(bpath)
-            lang = z 
-            map( scanText, f )
-            #for x in f:
-            #    scanText(x)
-            f.close()
-#@nonl
-#@-node:ekr.20051025144611.27:readLanguageFiles
-#@+node:ekr.20051025144611.28:readOutline
-def readOutline (c):
-    '''This method walks the Outline(s) and builds the database from which
-    autocompleter draws its autocompletion options
-    c is a commander in this case'''
-    global lang
-    if 'Chapters'in g.app.loadedPlugins: #Chapters or chapters needs work for this function properly again.
-        import chapters 
-        it = chapters.walkChapters()
-        for x in it:
-            lang = None 
-            setLanguage(x)
-            scanText(x.bodyString())
-    else:
-        for z in c.rootPosition().allNodes_iter():
-            setLanguage( z )
-            scanText( z.bodyString() )
-#@nonl
-#@-node:ekr.20051025144611.28:readOutline
-#@-node:ekr.20051025170832.1:Config stuff
-#@+node:ekr.20051025144611.16:watcher
-watchitems = ('.',')')
-txt_template = '%s%s%s'
-
-def watcher (event):
-    '''A function that tracks what chars are typed in the Text Editor.
-    Certain chars activate the text scanning code.'''
-    global lang
-    if not (event.char.isspace() or event.char in watchitems):
-        return
-        
-@
-This if statement ensures that attributes set in another node are put in the
-database.Of course the user has to type a whitespace to make sure it happens.
-We try to be selective so that we dont burn through the scanText def for  every
-whitespace char entered.This will help when the nodes become big.
-@c
-    bCtrl = event.widget
-    if event.char.isspace():
-        # Do nothing if the previous char was a whitespace
-        if bCtrl.get('insert -1c').isspace(): return
-        if bCtrl.get('insert -1c wordstart -1c') != '.': return
-    c = bCtrl.commander
-    lang = c.frame.body.getColorizer().language
-    txt = txt_template % (
-        bCtrl.get("1.0",'insert'),
-        event.char, bCtrl.get('insert',"end"))
-        # Add the newest char; its not in the bCtrl yet
-    scanText(txt)
-#@nonl
-#@-node:ekr.20051025144611.16:watcher
-#@+node:ekr.20051025144611.23:initialScan
-def initialScan (tag,keywords):
-    '''This method walks the node structure to build the in memory database.'''
-    c = keywords.get("c")
-    if not c or haveseen.has_key(c):
-        return 
-
-    haveseen[c] = None 
-    
-    #This part used to be in its own thread until problems were encountered on Windows 98 and XP with g.es
-    pth = os.path.split(g.app.loadDir)  
-    aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )    
-    if not os.path.exists(aini):
-        createConfigFile( aini )
-    try:
-        if not hasReadConfig():
-            if os.path.exists(aini):
-                readConfigFile(aini) 
-
-            bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
-            readLanguageFiles(bankpath)#This could be too expensive to do here if the user has many and large language files.
-    finally:
-        setReadConfig()
-    
-    # Use a thread to do the initial scan so as not to interfere with the user.            
-    def scan():
-        #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
-        # During unit testing c gets destroyed before the scan finishes.
-        if not g.app.unitTesting:
-            readOutline( c )
-        
-    t = threading.Thread( target = scan )
-    t.setDaemon(True)
-    t.start()
-#@-node:ekr.20051025144611.23:initialScan
-#@-node:ekr.20051025170832:Initialization
-#@+node:ekr.20051025144611.17:scanText
-def scanText (txt):
-
-    '''This function guides what gets scanned.'''
-
-    if useauto:
-        scanForAutoCompleter(txt)
-    if usecall:
-        scanForCallTip(txt)
-#@nonl
-#@-node:ekr.20051025144611.17:scanText
-#@+node:ekr.20051025144611.18:scanForAutoCompleter
-def scanForAutoCompleter (txt):
-    
-    '''This function scans text for the autocompleter database.'''
-
-    t1 = txt.split('.')
-    g =[]
-    reduce(lambda a,b:makeAutocompletionList(a,b,g),t1)
-    if g:
-        for a, b in g:
-            #if watchwords.has_key(a):
-            #    watchwords[a].add(b)
-            #else:
-            #    watchwords[a] = sets.Set([b])
-            watchwords[ a ].add( b )
-            # we are using the experimental DictSet class here.
-            # usage removed the above statements
-            # notice we have cut it down to one line of code here!
-#@nonl
-#@-node:ekr.20051025144611.18:scanForAutoCompleter
-#@+node:ekr.20051025144611.19:scanForCallTip
-def scanForCallTip (txt):
-
-    '''this function scans text for calltip info'''
-
-    # pat2 = pats['python']
-    # if lang:
-        # if pats.has_key(lang):
-            # pat2 = pats[lang]
-
-    pat2 = pats.get(lang or 'python')
-    g2 = pat2.findall(txt) or []
-
-    for z in g2:
-        if isinstance(z,tuple):
-            z = z [0]
-        pieces2 = z.split('(')
-        pieces2 [0] = pieces2 [0].split() [ -1]
-        a, b = pieces2 [0], pieces2 [1]
-        calltips [lang][a].add(z)
-#@nonl
-#@-node:ekr.20051025144611.19:scanForCallTip
-#@+node:ekr.20051025144611.20:makeAutocompletionList
-def makeAutocompletionList (a,b,glist):
-    
-    '''A helper function for autocompletion'''
-    a1 = _reverseFindWhitespace(a)
-    if a1:
-        b2 = _getCleanString(b)
-        if b2!='':
-            glist.append((a1,b2))
-    return b 
-
-#@-node:ekr.20051025144611.20:makeAutocompletionList
-#@+node:ekr.20051025144611.21:_getCleanString
-def _getCleanString (s):
-    '''a helper for autocompletion scanning'''
-    if s.isalpha():return s 
-
-    for n, l in enumerate(s):
-        if l in okchars:pass 
-        else:return s[:n]
-    return s 
-#@-node:ekr.20051025144611.21:_getCleanString
-#@+node:ekr.20051025144611.22:_reverseFindWhitespace
-def _reverseFindWhitespace (s):
-    '''A helper for autocompletion scan'''
-    for n, l in enumerate(s):
-        n =(n+1)*-1
-        if s[n].isspace()or s[n]=='.':return s[n+1:]
-    return s 
-#@-node:ekr.20051025144611.22:_reverseFindWhitespace
-#@+node:ekr.20051025144611.29:reducer
-def reducer (lis,pat):
-    '''This def cuts a list down to only those items that start with the parameter pat, pure utility.'''
-    return[x for x in lis if x.startswith(pat)]
-#@-node:ekr.20051025144611.29:reducer
-#@+node:ekr.20051025144611.30:unbind
-def unbind (context):
-
-    '''This method turns everything off and removes the calltip and autobox from the canvas.'''
-
-    if context.on: #no need to do this stuff, if were not 'on'
-        context.on = False
-        context.clean_editor()
-        map(context.unbind,(
-            "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>", "<Alt_R>"))
-        context.unbind_all('<Button>')
-        context.update_idletasks()
-#@nonl
-#@-node:ekr.20051025144611.30:unbind
-#@+node:ekr.20051025144611.31:moveSelItem
-def moveSelItem (event, context ):
-
-    '''Move the selection in the autobox up or down.'''
-
-    autobox = context.autobox
-    i = autobox.curselection()
-    if len(i)==0:
-        return None 
-    i = int(i[0])
-    # g.trace(event.keysym,i)
-    try:
-        if event.keysym=='Down':
-            if autobox.size() - 1 > autobox.index( i ):
-                i += 1
-            elif i!=0:
-                i -1  ## Can't be correct.
-        elif event.keysym=='Up': # EKR.
-            if i > 0:
-                i -= 1
-    finally:
-        autobox.select_clear( 0, 'end' )
-        autobox.select_set( i )
-        autobox.see( i )
-        context.update_idletasks()
-        return "break"
-#@-node:ekr.20051025144611.31:moveSelItem
-#@+node:ekr.20051025144611.32:processKeyStroke
-def processKeyStroke (event,context,body):
-
-    '''Take action based on the state of context (a Tk.Canvas) and the event'''
-    
-    autobox = context.autobox
-
-    if not context.on or event.keysym in ("??","Shift_L","Shift_R"):
-        return None
-    elif testForUnbind(event,context):
-        unbind(context)
-        return None
-    elif context.which == 1:
-        return None # It is calltip time.
-        
-    index = body.index('insert-1c wordstart')
-    pat = body.get(index,'insert') + event.char
-    pat = pat.lstrip('.')
-    ww = list(autobox.get(0,'end'))
-    aList = reducer(ww,pat)
-    if not aList: return None
-    # Select which item to select based on what the user has typed.
-    i = ww.index(aList[0])
-    # Set the current selection to match what the user has typed.
-    autobox.select_clear(0,'end') 
-    autobox.select_set(i)
-    autobox.see(i)
-    return 'break'
-#@nonl
-#@-node:ekr.20051025144611.32:processKeyStroke
-#@+node:ekr.20051025144611.33:testForUnbind
-def testForUnbind( event, context ):
-    '''c in this case is a Tkinter Canvas.
-      This def checks if the autobox or calltip label needs to be turned off'''
-
-    if event.keysym in ('parenright','Control_L','Control_R', 'Escape' ):
-        return True
-    elif not context.which and event.char in ripout:
-        return True
-    return False
-#@-node:ekr.20051025144611.33:testForUnbind
-#@+node:ekr.20051025144611.34:processAutoBox
-def processAutoBox(event, context , body ):
-    '''This method processes the selection from the autobox.'''
-    if event.keysym in("Alt_L","Alt_R"):
-        return None 
-
-    a = context.autobox.getvalue()
-    if len(a)==0:return None 
-    try:
-        a = a[0]
-        ind = body.index('insert-1c wordstart')
-        pat = body.get(ind,'insert')
-        pat = pat.lstrip('.')
-
-        if a.startswith(pat):a = a[len(pat):]
-        body.insert('insert',a)
-        body.event_generate("<Key>")
-        body.update_idletasks()
-    finally:
-        unbind( context )
-#@-node:ekr.20051025144611.34:processAutoBox
-#@+node:ekr.20051025144611.35:add_item
-def add_item (event, context ,body,colorizer):
-    '''This function will add the autobox or the calltip label.'''
-    if not event.char in('.','(')or context.on:return None 
-    txt = body.get('insert linestart','insert')
-    txt = _reverseFindWhitespace(txt)
-    if event.char!='('and not watchwords.has_key(txt):
-         return None 
-
-    if event.char=='.' and useauto:
-
-        ww = list(watchwords[txt])
-        ww.sort()
-        autobox = context.autobox
-        configureAutoBox( autobox, ww )
-        autolist = autobox.component( 'listbox' )
-        #We have to hand the listbox in, its the only thing providing accuracy of size and position.
-        calculatePlace( body, autolist, context, autobox )
-        autobox.select_set( 0 )
-        context.which = 0 #indicates it's in autocompletion mode
-        add_bindings( context, body )
-    
-    elif event.char=='(' and usecall:
-        language = colorizer.language 
-        if calltips.has_key(language):
-            if calltips[language].has_key(txt):
-
-                s = list(calltips[language][txt])
-                t = '\n'.join(s)
-                calltip = context.calltip 
-                calltip.configure(text=t)
-                #The calltip provides sufficient size information to calculate its place on top of the context. 
-                calculatePlace(body, calltip ,context, calltip  )
-                context.which = 1 #indicates it's in calltip mode
-        
-        else:
-            context.on = False 
-            return None 
-
-#@-node:ekr.20051025144611.35:add_item
-#@+node:ekr.20051025144611.36:add_bindings
-def add_bindings( context, body ):
-    
-    '''This def adds bindings to the Canvas so it can work with the autobox properly.'''
-            
-    event = Tk.Event()
-    event.keysym = ''
-    
-    def processAutoBoxHandler( event = event , context = context, body = body  ): 
-        processAutoBox( event, context , body  )
-        
-    context.autobox.configure( selectioncommand = processAutoBoxHandler )
-    
-    def moveSelItemHandler( event, context = context ): 
-        moveSelItem( event, context )
-    
-    bindings = ( ( "<Control_L>", processAutoBoxHandler ), ( "<Control_R>", processAutoBoxHandler ),
-                 ( "<Alt-Up>", moveSelItemHandler, '+' ), ( "<Alt-Down>", moveSelItemHandler , '+'),
-                 ( "<Alt_L>", processAutoBoxHandler ), ( "<Alt_R>", processAutoBoxHandler ) )
-         
-    def bind2( args ): context.bind( *args )
-    map( bind2, bindings )
-#@-node:ekr.20051025144611.36:add_bindings
-#@+node:ekr.20051025144611.37:configureAutoBox
-def configureAutoBox ( autobox ,ww):
-    '''sets data and size of autobox.'''
-    autobox.setlist(ww)
-    lb = autobox.component('listbox')
-    height = len(ww)
-    if height>5:height = 5
-    lb.configure(height=height)
-#@-node:ekr.20051025144611.37:configureAutoBox
-#@+node:ekr.20051025144611.38:calculatePlace
-def calculatePlace (body,cwidg, context ,toBePlaced):
-     '''This def determines where the autobox or calltip label goes on the canvas.
-       And then it puts it on the canvas.
-       body is the Tk Text instance.
-       cwidg is the widget from which we derive the calculations.
-       context is the parent of the cwidg, we bind the context in this function.
-       toBePlaced is the widget that is placed with the calculatsions performed.'''
-     try:
-        x, y, lww, lwh = body.bbox('insert -1c')
-        x, y = x+lww, y+lwh 
-     except:
-         x = 1
-         y = 1
-     rwidth = cwidg.winfo_reqwidth()
-     rheight = cwidg.winfo_reqheight()
-     if body.winfo_width()<x+rwidth:  
-        x = x-rwidth 
-     if y>body.winfo_height()/2:
-        h2 = rheight 
-        h3 = h2+lwh 
-        y = y-h3 
-
-     toBePlaced.place( x = x, y = y )
-     context.on = True
-     context.bind_all( '<Button>', context.do_unbind )
-#@-node:ekr.20051025144611.38:calculatePlace
-#@+node:ekr.20051025144611.39:setLanguage
-def setLanguage ( pos ):
-    '''This method checks a node for the current language in effect
-       and accends the parent line until it finds a language.'''
-    global lang 
-    while pos:
-        xs1 = pos.bodyString()
-        dict = g.get_directives_dict(xs1)
-        if dict.has_key('language'):
-            lang = g.set_language(xs1,dict['language'])[0]
-            break 
-        pos = pos.parent()
-#@-node:ekr.20051025144611.39:setLanguage
-#@+node:ekr.20051025144611.40:newCreateControl
-def newCreateControl (self,frame,parentFrame):
-    '''A decoration of the createControl def.
-    We set up the ancestory of the control so we can draw
-    widgets over the Text editor without disturbing the text.'''
-
-@
-Creating the background:
-- We now use a placer: simpler to use and more efficient.
-- We have to decorate the Tk.Text widget with a constructor that creates an
-  intermediate Frame for the Text to be placed instead of packed.
-  Had no idea that the placer could do this so nicely.
-  With a couple changes in 3 places, we are using the placer !
-@c
-    orig_init = Tk.Text.__init__ #We stash the original init of Tk.Text
-    def pre_init (self,master,*args,**kwords):
-
-        context = Tk.Frame(master)
-            #This is what we need to put in before the text to make place work.
-        orig_init(self,context,*args,**kwords)
-
-    Tk.Text.__init__ = pre_init #We restore the original init of Tk.Text
-    body = orig_CreateControl(self,frame,parentFrame) #orig_CreatControl is the method this def decorates
-    Tk.Text.__init__ = orig_init
-
-    context = body.master #This is the Frame we created to intercept the passed in master.
-    context.pack(expand=1,fill='both',after=frame.bodyBar) #We have to add it to the environment, since we pass on it in the __init__
-    body.place(relwidth=1.0,relheight=1.0)
-    body.commander = self.c #used in watcher
-    context.on = False #determines if the system is autocompleting or calltiping
-    addAutoboxAndCalltipWidgets(context)
-    #These used to be lambdas, but I think this is clearer.
-    def processKeyStrokeHandler (event,context=context,body=body):
-        processKeyStroke(event,context,body)
-    def addItemHandler (event,context=context,body=body,colorizer=frame.body):
-        add_item(event,context,body,colorizer.getColorizer())
-
-    for z in (watcher,processKeyStrokeHandler,addItemHandler):
-        context.bind("<Key>",z,'+')
-
-    ignore = [] #ignore items added to this list when a Button event occurs.
-    if hasattr(context,'autobox'):
-        ignore.append(context.autobox.component('listbox'))
-        ignore.append(context.autobox.component('vertscrollbar'))
-    def do_unbind (event):
-        '''This def is for doing the unbind on any <Button> events.
-           It only is in effect when the autobox or calltip label are showing.'''
-        if event.widget not in ignore: #This ensures a click or scroll in the autobox takes effect.
-                unbind(context)
-
-    context.do_unbind = do_unbind
-
-    # This part protects this plugin from others that use Alt-Up, Alt-Down.
-    # The frame didnt seem to work.  Im assuming it was not appropiate enought in the bindtag order for the event.
-    context.block_alt = Tk.Entry()
-    def block_alt (event):
-        '''This def blocks specific keyboard commands from reaching the Text editor.  'breaking' in
-           the context does not occur before the event reaches the Text editor, so it has no effect'''
-        if context.on: return 'break'
-    for z in ('<Alt-Up>','<Alt-Down>'): context.block_alt.bind(z,block_alt)
-
-    #set the bindtags for the body, protects the autocompleter from other plugins unbinding this plugins bindings.
-    ctags = []
-    ctags.append(context.bindtags()[0])
-    ctags.append(context.block_alt.bindtags()[0])
-    ctags.extend(body.bindtags())
-    body.bindtags(tuple(ctags))
-
-    return body
-
-#@-node:ekr.20051025144611.40:newCreateControl
-#@+node:ekr.20051025144611.41:addAutoboxAndCalltipWidgets
-def addAutoboxAndCalltipWidgets( context ):
-    '''This builds the autobox and the calltip label for the editor.
-      It should be called once for every editor created.'''
-    
-    call_pack_forget = []
-
-    if useauto:
-        context.autobox = Pmw.ScrolledListBox(
-            context ,hscrollmode='none',
-            listbox_selectbackground='#FFE7C6',
-            listbox_selectforeground='blue',
-            listbox_background='white',
-            listbox_foreground='blue',
-            vertscrollbar_background='#FFE7C6',
-            vertscrollbar_width=10)
-        call_pack_forget.append( context.autobox.component( 'hull' ) )
-    
-    if usecall:            
-        context.calltip = Tk.Label(context,background='lightyellow',foreground='black')
-        call_pack_forget.append( context.calltip )
-    
-    def clean_editor( ca = call_pack_forget ):
-        #This def makes removing the autobox or calltip label easy.
-        # No need for an intermediate variable like 'current'.
-        for z in ca: z.place_forget()
-
-    context.clean_editor = clean_editor
-#@nonl
-#@-node:ekr.20051025144611.41:addAutoboxAndCalltipWidgets
-#@+node:ekr.20051025144611.42:onOpenWindow
-def onOpenWindow ():
-
-    #what does this do?
-    c = keywords.get("c")
-    if haveseen.has_key(c):
-        return 
-        
-    autocompleter = autocomplet(c)
-#@nonl
-#@-node:ekr.20051025144611.42:onOpenWindow
-#@-node:ekr.20051025144611.4:autocompleter.py
-#@-node:ekr.20051025144611:Autocompleter (Do not delete)
-#@-node:ekr.20051028061802:Use tab for autocompleter
-#@+node:ekr.20051028061546:Improve spell tab
-@nocolor
-
-- open the minibuffer to get suggestions.
-- Per-pane key bindings. (arrows, etc.)
-
-@color
-#@nonl
-#@+node:ekr.20051025071455:Spell classes
-<< specify aspell directories >>
-
-@others
-#@nonl
-#@+node:ekr.20051025071455.3:<< specify aspell directories >>
-if sys.platform == 'darwin':
-    aspell_dir = '/sw/lib'
-        # The top-level directory.
-    aspell_bin_dir = '/sw/lib/bin'
-        # NOT TESTED YET.
-else:
-    aspell_dir = r'c:\Aspell'
-        # The top-level directory.
-    aspell_bin_dir = r'c:\Aspell\bin'
-        # The directory continaing apell.pyd and aspell-15.dll
-#@nonl
-#@-node:ekr.20051025071455.3:<< specify aspell directories >>
-#@+node:ekr.20051025071455.6:class Aspell
-class Aspell:
-    
-    """A wrapper class for Aspell spell checker"""
-    
-    @others
-
-#@+node:ekr.20051025071455.7:Birth & death
-#@+node:ekr.20051025071455.8:__init__
-def __init__(self,c,local_dictionary_file,local_language_code):
-    
-    """Ctor for the Aspell class."""
-    
-    self.c = c
-    
-    try:
-        import aspell
-    except ImportError:
-        # Specify the path to the top-level Aspell directory.
-        if sys.platform == 'darwin':
-            aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-        else:
-            aspell = g.importFromPath(
-                "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
-            
-    self.aspell = aspell
-
-    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
-    # g.trace(self.sc)
-    
-    self.aspell_exe_loc = (c.config.getString('aspell_bin_dir') or aspell_bin_dir)
-    # g.trace(self.aspell_exe_loc)
-
-    self.local_language_code = local_language_code
-    self.local_dictionary_file = local_dictionary_file
-    self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
-    # g.trace(self.local_dictionary)
-#@nonl
-#@-node:ekr.20051025071455.8:__init__
-#@-node:ekr.20051025071455.7:Birth & death
-#@+node:ekr.20051025071455.10:processWord
-def processWord(self, word):
-    """Pass a word to aspell and return the list of alternatives.
-    OK: 
-    * 
-    Suggestions: 
-    & «original» «count» «offset»: «miss», «miss», ... 
-    None: 
-    # «original» «offset» 
-    simplifyed to not create the string then make a list from it    
-    """
-
-    if self.sc.check(word):
-        return None
-    else:
-        return self.sc.suggest(word)
-#@nonl
-#@-node:ekr.20051025071455.10:processWord
-#@+node:ekr.20051025071455.11:updateDictionary
-def updateDictionary(self):
-
-    """Update the aspell dictionary from a list of words.
-    
-    Return True if the dictionary was updated correctly."""
-
-    try:
-        # Create master list
-        basename = os.path.splitext(self.local_dictionary)[0]
-        cmd = (
-            "%s --lang=%s create master %s.wl < %s.txt" %
-            (self.aspell_exe_loc, self.local_language_code, basename,basename))
-        os.popen(cmd)
-        return True
-
-    except Exception, err:
-        g.es_print("Unable to update local aspell dictionary: %s" % err)
-        return False
-#@nonl
-#@-node:ekr.20051025071455.11:updateDictionary
-#@-node:ekr.20051025071455.6:class Aspell
-#@+node:ekr.20051025071455.1:class spellCommandsClass
-class spellCommandsClass (baseEditCommandsClass):
-    
-    '''Commands to support the Spell Tab.'''
-
-    @others
-#@nonl
-#@+node:ekr.20051025080056:ctor
-def __init__ (self,c):
-
-    baseEditCommandsClass.__init__(self,c) # init the base class.
-    
-    self.handler = None
-    
-    # All the work happens when we first open the frame.
-#@nonl
-#@-node:ekr.20051025080056:ctor
-#@+node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
-def getPublicCommands (self):
-    
-    return {
-        'open-spell-tab':           self.openSpellTab,
-        'spell-find':               self.find,
-        'spell-change':             self.change,
-        'spell-change-then-find':   self.changeThenFind,
-        'spell-ignore':             self.ignore,
-        'hide-spell-tab':           self.hide,
-    }
-#@nonl
-#@-node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
-#@+node:ekr.20051025080633:openSpellTab
-def openSpellTab (self,event=None):
-
-    c = self.c ; log = c.frame.log ; tabName = 'Spell'
-
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    elif self.handler:
-        if self.handler.loaded:
-            self.handler.bringToFront()
-    else:
-        log.selectTab(tabName)
-        f = log.frameDict.get(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        self.handler = spellTab(c,f)
-        
-    self.handler.bringToFront()
-#@nonl
-#@-node:ekr.20051025080633:openSpellTab
-#@+node:ekr.20051025080420.1:commands...
-# Just open the Spell tab if it has never been opened.
-# For minibuffer commands, we must also force the Spell tab to be visible.
-
-def find (self,event=None):
-
-    if self.handler:
-        self.openSpellTab()
-        self.handler.find()
-    else:
-        self.openSpellTab()
-
-def change(self,event=None):
-
-    if self.handler:
-        self.openSpellTab()
-        self.handler.change()
-    else:
-        self.openSpellTab()
-
-def changeThenFind (self,event=None):
-    
-    if self.handler:
-        self.openSpellTab()
-        self.handler.changeThenFind()
-    else:
-        self.openSpellTab()
-        
-def hide (self,event=None):
-    
-    if self.handler:
-        self.c.frame.log.selectTab('Log')
-        self.c.frame.bodyWantsFocus()
-
-def ignore (self,event=None):
-    
-    if self.handler:
-        self.openSpellTab()
-        self.handler.ignore()
-    else:
-        self.openSpellTab()
-#@nonl
-#@-node:ekr.20051025080420.1:commands...
-#@-node:ekr.20051025071455.1:class spellCommandsClass
-#@+node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
-class spellTab(leoFind.leoFind):
-
-    """A class to create and manage Leo's Spell Check dialog."""
-    
-    @others
-#@nonl
-#@+node:ekr.20051025071455.19:Birth & death
-#@+node:ekr.20051025071455.20:spellTab.__init__
-def __init__(self,c,parentFrame):
-    
-    """Ctor for the Leo Spelling dialog."""
-
-    leoFind.leoFind.__init__(self,c) # Call the base ctor.
-
-    self.c = c
-    self.body = c.frame.body
-    self.currentWord = None
-    self.suggestions = []
-    self.messages = [] # List of message to be displayed when hiding the tab.
-    self.workCtrl = Tk.Text(None) # A text widget for scanning.
-    
-    self.loaded = self.init_aspell(c)
-    if self.loaded:
-        self.createSpellTab(parentFrame)
-        self.createBindings()
-#@nonl
-#@-node:ekr.20051025071455.20:spellTab.__init__
-#@+node:ekr.20051025094004:init_aspell
-def init_aspell (self,c):
-
-    '''Init aspell and related ivars.  Return True if all went well.'''
-
-    self.local_language_code = c.config.getString('spell_local_language_code') or 'en'
-
-    self.dictionaryFileName = dictionaryFileName = (
-        c.config.getString('spell_local_dictionary') or
-        os.path.join(g.app.loadDir,"../","plugins",'spellpyx.txt'))
-    
-    if not dictionaryFileName or not g.os_path_exists(dictionaryFileName):
-        g.es_print('Can not open dictionary file: %s' % (
-            dictionaryFileName), color='red')
-        return False
-
-    self.aspell = Aspell(c,dictionaryFileName,self.local_language_code)
-    if not self.aspell.aspell:
-        g.es_print('Can not open Aspell',color='red')
-        return False
-        
-    self.dictionary = self.readDictionary(dictionaryFileName)
-    return True
-#@nonl
-#@-node:ekr.20051025094004:init_aspell
-#@+node:ekr.20051025071455.22:createSpellTab
-def createSpellTab(self,parentFrame):
-
-    """Create the Spell tab."""
-    
-    c = self.c
-    
-    # Set the common background color.
-    bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
-    
-    # Create the outer frame.
-    self.outerFrame = outer = Tk.Frame(parentFrame,bd=2,bg=bg)
-    outer.pack(expand=1,fill='both',padx=2,pady=2)
-    
-    << Create the text and suggestion panes >>
-    << Create the spelling buttons >>
-    
-    self.fillbox([])
-    self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
-    self.listBox.bind("<Button-1>",self.onSelectListBox)
-    self.listBox.bind("<Map>",self.onMap)
-#@nonl
-#@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
-f2 = Tk.Frame(outer,bg=bg)
-f2.pack(side='top',expand=0,fill='x')
-
-self.wordLabel = Tk.Label(f2,text="Suggestions for:")
-self.wordLabel.pack(side='left')
-self.wordLabel.configure(font=('verdana',10,'bold'))
-
-fpane = Tk.Frame(outer,bg=bg,bd=2)
-fpane.pack(side='top',expand=1,fill='both')
-
-self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
-self.listBox.pack(side='left',expand=1,fill='both')
-self.listBox.configure(font=('verdana',11,'normal'))
-
-listBoxBar = Tk.Scrollbar(fpane,name='listBoxBar')
-
-bar, txt = listBoxBar, self.listBox
-txt ['yscrollcommand'] = bar.set
-bar ['command'] = txt.yview
-bar.pack(side='right',fill='y')
-#@nonl
-#@-node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
-#@+node:ekr.20051025071455.24:<< Create the spelling buttons >>
-# Create the alignment panes
-buttons1 = Tk.Frame(outer,bd=1,bg=bg)
-buttons2 = Tk.Frame(outer,bd=1,bg=bg)
-buttons3 = Tk.Frame(outer,bd=1,bg=bg)
-for w in (buttons1,buttons2,buttons3):
-    w.pack(side='top',expand=0,fill='x')
-
-buttonList = [] ; font = ('verdana',9,'normal') ; width = 12
-for frame, text, command in (
-    (buttons1,"Find",self.onFindButton),
-    (buttons1,"Add",self.onAddButton),
-    (buttons2,"Change",self.onChangeButton),
-    (buttons2,"Change, Find",self.onChangeThenFindButton),
-    (buttons3,"Ignore",self.onIgnoreButton),
-    (buttons3,"Hide",self.onHideButton),
-):
-    b = Tk.Button(frame,font=font,width=width,text=text,command=command)
-    b.pack(side='left',expand=0,fill='none')
-    buttonList.append(b)
-
-# Used to enable or disable buttons.
-(self.findButton,self.addButton,
- self.changeButton, self.changeFindButton,
- self.ignoreButton, self.hideButton) = buttonList
-#@nonl
-#@-node:ekr.20051025071455.24:<< Create the spelling buttons >>
-#@-node:ekr.20051025071455.22:createSpellTab
-#@+node:ekr.20051025120920:createBindings
-def createBindings (self):
-    
-    c = self.c ; k = c.keyHandler
-    widgets = (self.listBox, self.outerFrame)
-
-    for w in widgets:
-        k.copyBindingsToWidget('text',w)
-        # Bind shortcuts for the following commands...
-        for commandName,func in (
-            ('full-command',            k.fullCommand),
-            ('hide-spell-tab',          self.hide),
-            ('spell-add',               self.add),
-            ('spell-find',              self.find),
-            ('spell-ignore',            self.ignore),
-            ('spell-change-then-find',  self.changeThenFind),
-        ):
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            if shortcut:
-                # g.trace(shortcut,commandName)
-                w.bind(shortcut,func)
-#@nonl
-#@-node:ekr.20051025120920:createBindings
-#@+node:ekr.20051025071455.16:readDictionary
-def readDictionary (self,fileName):
-
-    """Read the dictionary of words which we use as a local dictionary
-    
-    Although Aspell itself has the functionality to handle this kind of things
-    we duplicate it here so that we can also use it for the "ignore" functionality
-    and so that in future a Python only solution could be developed."""
-    
-    d = {}
-
-    try:
-        f = open(fileName,"r")
-    except IOError:
-        g.es("Unable to open local dictionary '%s' - using a blank one instead" % fileName)
-        return d
-
-    try:
-        # Create the dictionary - there are better ways to do this
-        # in later Python's but we stick with this method for compatibility
-        for word in f.readlines():
-            d [word.strip().lower()] = 0
-    finally:
-        f.close()
-
-    return d
-#@nonl
-#@-node:ekr.20051025071455.16:readDictionary
-#@-node:ekr.20051025071455.19:Birth & death
-#@+node:ekr.20051025071455.29:Buttons
-#@+node:ekr.20051025071455.30:onAddButton
-def onAddButton(self):
-    """Handle a click in the Add button in the Check Spelling dialog."""
-
-    self.add()
-#@nonl
-#@-node:ekr.20051025071455.30:onAddButton
-#@+node:ekr.20051025071455.31:onIgnoreButton
-def onIgnoreButton(self,event=None):
-
-    """Handle a click in the Ignore button in the Check Spelling dialog."""
-
-    self.ignore()
-#@nonl
-#@-node:ekr.20051025071455.31:onIgnoreButton
-#@+node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
-def onChangeButton(self,event=None):
-
-    """Handle a click in the Change button in the Spell tab."""
-
-    self.change()
-    self.updateButtons()
-    
-
-def onChangeThenFindButton(self,event=None):
-    
-    """Handle a click in the "Change, Find" button in the Spell tab."""
-
-    if self.change():
-        self.find()
-    self.updateButtons()
-#@-node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
-#@+node:ekr.20051025071455.33:onFindButton
-def onFindButton(self):
-
-    """Handle a click in the Find button in the Spell tab."""
-
-    self.find()
-    self.updateButtons()
-    self.c.frame.bodyWantsFocus()
-#@nonl
-#@-node:ekr.20051025071455.33:onFindButton
-#@+node:ekr.20051025071455.34:onHideButton
-def onHideButton(self):
-    
-    """Handle a click in the Hide button in the Spell tab."""
-    
-    self.hide()
-#@nonl
-#@-node:ekr.20051025071455.34:onHideButton
-#@-node:ekr.20051025071455.29:Buttons
-#@+node:ekr.20051025071455.36:Commands
-#@+node:ekr.20051025071455.37:add
-def add(self,event=None):
-    """Add the selected suggestion to the dictionary."""
-    
-    try:
-        f = None
-        try:
-            # Rewrite the dictionary in alphabetical order.
-            f = open(self.dictionaryFileName, "r")
-            words = f.readlines()
-            f.close()
-            words = [word.strip() for word in words]
-            words.append(self.currentWord)
-            words.sort()
-            f = open(self.dictionaryFileName, "w")
-            for word in words:
-                f.write("%s\n" % word)
-            f.flush()
-            f.close()
-            if 1:
-                s = 'Spell: added %s' % self.currentWord
-                self.messages.append(s)
-            else: # Too distracting.
-                g.es("Adding ", color= "blue", newline= False) 
-                g.es('%s' % self.currentWord)
-        except IOError:
-            g.es("Can not add %s to dictionary" % self.currentWord, color="red")
-    finally:
-        if f: f.close()
-        
-    self.dictionary[self.currentWord.lower()] = 0
-    self.onFindButton()
-#@nonl
-#@-node:ekr.20051025071455.37:add
-#@+node:ekr.20051025071455.38:change
-def change(self,event=None):
-    """Make the selected change to the text"""
-
-    __pychecker__ = '--no-override --no-argsused'
-         # event param is not used, required, and different from base class.
-
-    c = self.c ; current = c.currentPosition()
-    body = self.body ; t = body.bodyCtrl
-    
-    selection = self.getSuggestion()
-    if selection:
-        start,end = oldSel = g.app.gui.getTextSelection(t)
-        if start:
-            if t.compare(start, ">", end):
-                start,end = end,start
-            t.delete(start,end)
-            t.insert(start,selection)
-            g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
-            newSel = g.app.gui.getTextSelection(t)
-
-            # update node, undo status, dirty flag, changed mark & recolor
-            c.beginUpdate()
-            c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
-            c.endUpdate(True)
-            t.focus_set()
-            return True
-
-    # The focus must never leave the body pane.
-    t.focus_set()
-    return False
-#@nonl
-#@-node:ekr.20051025071455.38:change
-#@+node:ekr.20051025071455.40:find
-def find (self,event=None):
-    """Find the next unknown word."""
-
-    c = self.c ; body = c.frame.body ; bodyCtrl = body.bodyCtrl
-
-    # Reload the work pane from the present node.
-    s = bodyCtrl.get("1.0","end").rstrip()
-    self.workCtrl.delete("1.0","end")
-    self.workCtrl.insert("end",s)
-
-    # Reset the insertion point of the work widget.
-    ins = bodyCtrl.index("insert")
-    self.workCtrl.mark_set("insert",ins)
-
-    alts, word = self.findNextMisspelledWord()
-    self.currentWord = word # Need to remember this for 'add' and 'ignore'
-
-    if alts:
-        self.fillbox(alts,word)
-        c.frame.bodyWantsFocus(later=False)
-        # Copy the working selection range to the body pane
-        start, end = g.app.gui.getTextSelection(self.workCtrl)
-        g.app.gui.setTextSelection(bodyCtrl,start,end)
-        bodyCtrl.see(start)
-    else:
-        g.es("no more misspellings")
-        self.fillbox([])
-#@nonl
-#@-node:ekr.20051025071455.40:find
-#@+node:ekr.20051025121408:hide
-def hide (self,event=None):
-    
-    self.c.frame.log.selectTab('Log')
-    
-    for message in self.messages:
-        g.es(message,color='blue')
-        
-    self.messages = []
-#@nonl
-#@-node:ekr.20051025121408:hide
-#@+node:ekr.20051025071455.41:ignore
-def ignore(self,event=None):
-
-    """Ignore the incorrect word for the duration of this spell check session."""
-    
-    if 1: # Somewhat helpful: applies until the tab is destroyed.
-        s = 'Spell: ignore %s' % self.currentWord
-        self.messages.append(s)
-
-    if 0: # Too distracting
-        g.es("Ignoring ", color= "blue", newline= False)
-        g.es('%s' % self.currentWord)
-
-    self.dictionary[self.currentWord.lower()] = 0
-    self.onFindButton()
-#@nonl
-#@-node:ekr.20051025071455.41:ignore
-#@-node:ekr.20051025071455.36:Commands
-#@+node:ekr.20051025071455.42:Helpers
-#@+node:ekr.20051025071455.43:bringToFront
-def bringToFront (self):
-    
-    self.c.frame.log.selectTab('Spell')
-#@nonl
-#@-node:ekr.20051025071455.43:bringToFront
-#@+node:ekr.20051025071455.44:fillbox
-def fillbox(self, alts, word=None):
-    """Update the suggestions listbox in the Check Spelling dialog."""
-    
-    self.suggestions = alts
-    
-    if not word:
-        word = ""
-
-    self.wordLabel.configure(text= "Suggestions for: " + word)
-    self.listBox.delete(0, "end")
-
-    for i in xrange(len(self.suggestions)):
-        self.listBox.insert(i, self.suggestions[i])
-    
-    # This doesn't show up because we don't have focus.
-    if len(self.suggestions):
-        self.listBox.select_set(1) 
-
-#@-node:ekr.20051025071455.44:fillbox
-#@+node:ekr.20051025071455.45:findNextMisspelledWord
-def findNextMisspelledWord(self):
-    """Find the next unknown word."""
-    
-    c = self.c ; p = c.currentPosition()
-    aspell = self.aspell ; alts = None ; word = None
-   
-    try:
-        while 1:
-            p, word = self.findNextWord(p) 
-            if not p or not word:
-                alts = None
-                break
-            << Skip word if ignored or in local dictionary >>
-            alts = aspell.processWord(word)
-            if alts:
-                c.beginUpdate()
-                c.frame.tree.expandAllAncestors(p)
-                c.selectPosition(p)
-                c.endUpdate()
-                break
-    except:
-        g.es_exception()
-    return alts, word
-#@nonl
-#@+node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
-@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not True and this code could easily be located after the aspell call
-@c
-
-if self.dictionary.has_key(word.lower()):
-    continue
-#@nonl
-#@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
-#@-node:ekr.20051025071455.45:findNextMisspelledWord
-#@+node:ekr.20051025071455.47:findNextWord
-# Unicode characters may cause index problems.
-
-def findNextWord(self,p):
-
-    """Scan for the next word, leaving the result in the work widget"""
-
-    t = self.workCtrl
-
-    # Allow quotes and underscores in the middle of words, but not at the beginning or end.
-    # This breaks words at non-ascii 'letters' such as é.  I don't know what the solution is.
-    word_start = string.letters
-    word_end   = string.letters + string.digits
-    word_chars = string.letters + string.digits + "`" + "'" + "_"
-    while 1:
-        line = t.get('insert wordstart','insert lineend')
-        # g.trace('insert',t.index('insert'),'insert wordstart',t.index('insert wordstart'))
-        # g.trace(repr(line))
-        # Start the word at the first letter.
-        i = 0
-        while i < len(line) and line[i] not in word_start:
-            i += 1
-        if i < len(line):
-            # A non-empty word has been found.
-            line = t.get('insert wordstart','insert lineend')
-            j = i
-            while j < len(line) and line[j] in word_chars:
-                j += 1
-            word = line[i:j]
-            while word and word[-1] not in word_end:
-                word = word[:-1]
-            # This trace is important: it verifies that all words have actually been checked.
-            # g.trace(repr(word))
-            x1 = t.index('insert + %dc' % (i))
-            x2 = t.index('insert + %dc' % (i+len(word)))
-            g.app.gui.setTextSelection(t,x1,x2)
-            return p, word
-        else:
-            # End of the line. Bug fix: 9/8/05.
-            t.mark_set('insert','insert lineend + 1c')
-            if t.compare("insert",">=", "end - 1c"):
-                p.moveToThreadNext()
-                if not p: return None,None
-                t.delete("1.0", "end")
-                t.insert("end", p.bodyString())
-                t.mark_set("insert", "1.0")
-                
-    __pychecker__ = '--no-implicitreturns' # This is not really an implicit return.
-#@nonl
-#@-node:ekr.20051025071455.47:findNextWord
-#@+node:ekr.20051025071455.48:getSuggestion
-def getSuggestion(self):
-    """Return the selected suggestion from the listBox."""
-    
-    # Work around an old Python bug.  Convert strings to ints.
-    items = self.listBox.curselection()
-    try:
-        items = map(int, items)
-    except ValueError: pass
-
-    if items:
-        n = items[0]
-        suggestion = self.suggestions[n]
-        return suggestion
-    else:
-        return None
-#@nonl
-#@-node:ekr.20051025071455.48:getSuggestion
-#@+node:ekr.20051025071455.49:onMap
-def onMap (self, event=None):
-    """Respond to a Tk <Map> event."""
-    
-    self.update(show= False, fill= False)
-#@nonl
-#@-node:ekr.20051025071455.49:onMap
-#@+node:ekr.20051025071455.50:onSelectListBox
-def onSelectListBox(self, event=None):
-    """Respond to a click in the selection listBox."""
-    
-    self.updateButtons()
-    self.body.bodyCtrl.focus_set()
-#@-node:ekr.20051025071455.50:onSelectListBox
-#@+node:ekr.20051025071455.51:update
-def update(self,show=True,fill=False):
-    
-    """Update the Spell Check dialog."""
-    
-    c = self.c
-    
-    if fill:
-        self.fillbox([])
-
-    self.updateButtons()
-
-    if show:
-        self.bringToFront()
-        c.frame.body.bodyCtrl.focus_set()
-#@nonl
-#@-node:ekr.20051025071455.51:update
-#@+node:ekr.20051025071455.52:updateButtons
-def updateButtons (self):
-
-    """Enable or disable buttons in the Check Spelling dialog."""
-
-    c = self.c
-
-    start, end = g.app.gui.getTextSelection(c.frame.body.bodyCtrl)
-    state = g.choose(self.suggestions and start,"normal","disabled")
-
-    self.changeButton.configure(state=state)
-    self.changeFindButton.configure(state=state)
-
-    # state = g.choose(self.c.undoer.canRedo(),"normal","disabled")
-    # self.redoButton.configure(state=state)
-    # state = g.choose(self.c.undoer.canUndo(),"normal","disabled")
-    # self.undoButton.configure(state=state)
-
-    self.addButton.configure(state='normal')
-    self.ignoreButton.configure(state='normal')
-#@nonl
-#@-node:ekr.20051025071455.52:updateButtons
-#@-node:ekr.20051025071455.42:Helpers
-#@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
-#@-node:ekr.20051025071455:Spell classes
-#@-node:ekr.20051028061546:Improve spell tab
+http://sourceforge.net/forum/message.php?msg_id=3411067
+By: rogererens
+
+I forgot to mention that I seem to be unable to scroll in the Find Tab, so I
+need to resize the pane to press the Find button.
+
+Also, in the settings of Find/Change, I would choose for grouping the settings
+node_only, search_body, search_headline, wrap (and possibly the whole_word option
+also) together under search extent radio buttons. Although this organizational
+mode mentions radio buttons, check boxes are used for selection_only and
+suboutline_only, which I can enable both at the same time.
+It's also not (yet?) very clear to me how selection_only, suboutline_only, node_only
+(should) interact...
+
+Finally, the comment on the batch settings tells me it's really the "Show Context"
+option. However, the meaning of "Show Context" is not explained by the comment.
+
+Regards,
+Roger
+#@-node:ekr.20051103091115.1:Report
+#@-node:ekr.20051103091115:Update docs for find tab
+#@+node:ekr.20051103100302:Make find tab scrollable
+#@-node:ekr.20051103100302:Make find tab scrollable
 #@+node:ekr.20051028061611.1:Unify all search commands
 #@+node:ekr.20051023094009:Search classes
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
@@ -2945,13 +1448,1665 @@ outline.
 #@-node:ekr.20050928144501:Expand commands to handle Leo environment
 #@+node:ekr.20051021074728:Space completion
 #@-node:ekr.20051021074728:Space completion
-#@-node:ekr.20051016162724:before a3
+#@-node:ekr.20051016162724:before a4
 #@+node:ekr.20051027105304:before b1
 - Review the posting about making positions permanent, or recording vnode
 indicies. It's probably time to do this.
 
 - Make sure there is some way of executing script find/changes.
 #@nonl
+#@+node:ekr.20051028061546:Improve spell tab
+@nocolor
+
+- open the minibuffer to get suggestions.
+- Per-pane key bindings. (arrows, etc.)
+
+@color
+#@nonl
+#@+node:ekr.20051025071455:Spell classes
+<< specify aspell directories >>
+
+@others
+#@nonl
+#@+node:ekr.20051025071455.3:<< specify aspell directories >>
+if sys.platform == 'darwin':
+    aspell_dir = '/sw/lib'
+        # The top-level directory.
+    aspell_bin_dir = '/sw/lib/bin'
+        # NOT TESTED YET.
+else:
+    aspell_dir = r'c:\Aspell'
+        # The top-level directory.
+    aspell_bin_dir = r'c:\Aspell\bin'
+        # The directory continaing apell.pyd and aspell-15.dll
+#@nonl
+#@-node:ekr.20051025071455.3:<< specify aspell directories >>
+#@+node:ekr.20051025071455.6:class Aspell
+class Aspell:
+    
+    """A wrapper class for Aspell spell checker"""
+    
+    @others
+
+#@+node:ekr.20051025071455.7:Birth & death
+#@+node:ekr.20051025071455.8:__init__
+def __init__(self,c,local_dictionary_file,local_language_code):
+    
+    """Ctor for the Aspell class."""
+    
+    self.c = c
+    
+    try:
+        import aspell
+    except ImportError:
+        # Specify the path to the top-level Aspell directory.
+        if sys.platform == 'darwin':
+            aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
+        else:
+            aspell = g.importFromPath(
+                "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
+            
+    self.aspell = aspell
+
+    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
+    # g.trace(self.sc)
+    
+    self.aspell_exe_loc = (c.config.getString('aspell_bin_dir') or aspell_bin_dir)
+    # g.trace(self.aspell_exe_loc)
+
+    self.local_language_code = local_language_code
+    self.local_dictionary_file = local_dictionary_file
+    self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
+    # g.trace(self.local_dictionary)
+#@nonl
+#@-node:ekr.20051025071455.8:__init__
+#@-node:ekr.20051025071455.7:Birth & death
+#@+node:ekr.20051025071455.10:processWord
+def processWord(self, word):
+    """Pass a word to aspell and return the list of alternatives.
+    OK: 
+    * 
+    Suggestions: 
+    & «original» «count» «offset»: «miss», «miss», ... 
+    None: 
+    # «original» «offset» 
+    simplifyed to not create the string then make a list from it    
+    """
+
+    if self.sc.check(word):
+        return None
+    else:
+        return self.sc.suggest(word)
+#@nonl
+#@-node:ekr.20051025071455.10:processWord
+#@+node:ekr.20051025071455.11:updateDictionary
+def updateDictionary(self):
+
+    """Update the aspell dictionary from a list of words.
+    
+    Return True if the dictionary was updated correctly."""
+
+    try:
+        # Create master list
+        basename = os.path.splitext(self.local_dictionary)[0]
+        cmd = (
+            "%s --lang=%s create master %s.wl < %s.txt" %
+            (self.aspell_exe_loc, self.local_language_code, basename,basename))
+        os.popen(cmd)
+        return True
+
+    except Exception, err:
+        g.es_print("Unable to update local aspell dictionary: %s" % err)
+        return False
+#@nonl
+#@-node:ekr.20051025071455.11:updateDictionary
+#@-node:ekr.20051025071455.6:class Aspell
+#@+node:ekr.20051025071455.1:class spellCommandsClass
+class spellCommandsClass (baseEditCommandsClass):
+    
+    '''Commands to support the Spell Tab.'''
+
+    @others
+#@nonl
+#@+node:ekr.20051025080056:ctor
+def __init__ (self,c):
+
+    baseEditCommandsClass.__init__(self,c) # init the base class.
+    
+    self.handler = None
+    
+    # All the work happens when we first open the frame.
+#@nonl
+#@-node:ekr.20051025080056:ctor
+#@+node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
+def getPublicCommands (self):
+    
+    return {
+        'open-spell-tab':           self.openSpellTab,
+        'spell-find':               self.find,
+        'spell-change':             self.change,
+        'spell-change-then-find':   self.changeThenFind,
+        'spell-ignore':             self.ignore,
+        'hide-spell-tab':           self.hide,
+    }
+#@nonl
+#@-node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
+#@+node:ekr.20051025080633:openSpellTab
+def openSpellTab (self,event=None):
+
+    c = self.c ; log = c.frame.log ; tabName = 'Spell'
+
+    if log.frameDict.get(tabName):
+        log.selectTab(tabName)
+    elif self.handler:
+        if self.handler.loaded:
+            self.handler.bringToFront()
+    else:
+        log.selectTab(tabName)
+        f = log.frameDict.get(tabName)
+        t = log.textDict.get(tabName)
+        t.pack_forget()
+        self.handler = spellTab(c,f)
+        
+    self.handler.bringToFront()
+#@nonl
+#@-node:ekr.20051025080633:openSpellTab
+#@+node:ekr.20051025080420.1:commands...
+# Just open the Spell tab if it has never been opened.
+# For minibuffer commands, we must also force the Spell tab to be visible.
+
+def find (self,event=None):
+
+    if self.handler:
+        self.openSpellTab()
+        self.handler.find()
+    else:
+        self.openSpellTab()
+
+def change(self,event=None):
+
+    if self.handler:
+        self.openSpellTab()
+        self.handler.change()
+    else:
+        self.openSpellTab()
+
+def changeThenFind (self,event=None):
+    
+    if self.handler:
+        self.openSpellTab()
+        self.handler.changeThenFind()
+    else:
+        self.openSpellTab()
+        
+def hide (self,event=None):
+    
+    if self.handler:
+        self.c.frame.log.selectTab('Log')
+        self.c.frame.bodyWantsFocus()
+
+def ignore (self,event=None):
+    
+    if self.handler:
+        self.openSpellTab()
+        self.handler.ignore()
+    else:
+        self.openSpellTab()
+#@nonl
+#@-node:ekr.20051025080420.1:commands...
+#@-node:ekr.20051025071455.1:class spellCommandsClass
+#@+node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
+class spellTab(leoFind.leoFind):
+
+    """A class to create and manage Leo's Spell Check dialog."""
+    
+    @others
+#@nonl
+#@+node:ekr.20051025071455.19:Birth & death
+#@+node:ekr.20051025071455.20:spellTab.__init__
+def __init__(self,c,parentFrame):
+    
+    """Ctor for the Leo Spelling dialog."""
+
+    leoFind.leoFind.__init__(self,c) # Call the base ctor.
+
+    self.c = c
+    self.body = c.frame.body
+    self.currentWord = None
+    self.suggestions = []
+    self.messages = [] # List of message to be displayed when hiding the tab.
+    self.workCtrl = Tk.Text(None) # A text widget for scanning.
+    
+    self.loaded = self.init_aspell(c)
+    if self.loaded:
+        self.createSpellTab(parentFrame)
+        self.createBindings()
+#@nonl
+#@-node:ekr.20051025071455.20:spellTab.__init__
+#@+node:ekr.20051025094004:init_aspell
+def init_aspell (self,c):
+
+    '''Init aspell and related ivars.  Return True if all went well.'''
+
+    self.local_language_code = c.config.getString('spell_local_language_code') or 'en'
+
+    self.dictionaryFileName = dictionaryFileName = (
+        c.config.getString('spell_local_dictionary') or
+        os.path.join(g.app.loadDir,"../","plugins",'spellpyx.txt'))
+    
+    if not dictionaryFileName or not g.os_path_exists(dictionaryFileName):
+        g.es_print('Can not open dictionary file: %s' % (
+            dictionaryFileName), color='red')
+        return False
+
+    self.aspell = Aspell(c,dictionaryFileName,self.local_language_code)
+    if not self.aspell.aspell:
+        g.es_print('Can not open Aspell',color='red')
+        return False
+        
+    self.dictionary = self.readDictionary(dictionaryFileName)
+    return True
+#@nonl
+#@-node:ekr.20051025094004:init_aspell
+#@+node:ekr.20051025071455.22:createSpellTab
+def createSpellTab(self,parentFrame):
+
+    """Create the Spell tab."""
+    
+    c = self.c
+    
+    # Set the common background color.
+    bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
+    
+    # Create the outer frame.
+    self.outerFrame = outer = Tk.Frame(parentFrame,bd=2,bg=bg)
+    outer.pack(expand=1,fill='both',padx=2,pady=2)
+    
+    << Create the text and suggestion panes >>
+    << Create the spelling buttons >>
+    
+    self.fillbox([])
+    self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
+    self.listBox.bind("<Button-1>",self.onSelectListBox)
+    self.listBox.bind("<Map>",self.onMap)
+#@nonl
+#@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
+f2 = Tk.Frame(outer,bg=bg)
+f2.pack(side='top',expand=0,fill='x')
+
+self.wordLabel = Tk.Label(f2,text="Suggestions for:")
+self.wordLabel.pack(side='left')
+self.wordLabel.configure(font=('verdana',10,'bold'))
+
+fpane = Tk.Frame(outer,bg=bg,bd=2)
+fpane.pack(side='top',expand=1,fill='both')
+
+self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
+self.listBox.pack(side='left',expand=1,fill='both')
+self.listBox.configure(font=('verdana',11,'normal'))
+
+listBoxBar = Tk.Scrollbar(fpane,name='listBoxBar')
+
+bar, txt = listBoxBar, self.listBox
+txt ['yscrollcommand'] = bar.set
+bar ['command'] = txt.yview
+bar.pack(side='right',fill='y')
+#@nonl
+#@-node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
+#@+node:ekr.20051025071455.24:<< Create the spelling buttons >>
+# Create the alignment panes
+buttons1 = Tk.Frame(outer,bd=1,bg=bg)
+buttons2 = Tk.Frame(outer,bd=1,bg=bg)
+buttons3 = Tk.Frame(outer,bd=1,bg=bg)
+for w in (buttons1,buttons2,buttons3):
+    w.pack(side='top',expand=0,fill='x')
+
+buttonList = [] ; font = ('verdana',9,'normal') ; width = 12
+for frame, text, command in (
+    (buttons1,"Find",self.onFindButton),
+    (buttons1,"Add",self.onAddButton),
+    (buttons2,"Change",self.onChangeButton),
+    (buttons2,"Change, Find",self.onChangeThenFindButton),
+    (buttons3,"Ignore",self.onIgnoreButton),
+    (buttons3,"Hide",self.onHideButton),
+):
+    b = Tk.Button(frame,font=font,width=width,text=text,command=command)
+    b.pack(side='left',expand=0,fill='none')
+    buttonList.append(b)
+
+# Used to enable or disable buttons.
+(self.findButton,self.addButton,
+ self.changeButton, self.changeFindButton,
+ self.ignoreButton, self.hideButton) = buttonList
+#@nonl
+#@-node:ekr.20051025071455.24:<< Create the spelling buttons >>
+#@-node:ekr.20051025071455.22:createSpellTab
+#@+node:ekr.20051025120920:createBindings
+def createBindings (self):
+    
+    c = self.c ; k = c.keyHandler
+    widgets = (self.listBox, self.outerFrame)
+
+    for w in widgets:
+        k.copyBindingsToWidget('text',w)
+        # Bind shortcuts for the following commands...
+        for commandName,func in (
+            ('full-command',            k.fullCommand),
+            ('hide-spell-tab',          self.hide),
+            ('spell-add',               self.add),
+            ('spell-find',              self.find),
+            ('spell-ignore',            self.ignore),
+            ('spell-change-then-find',  self.changeThenFind),
+        ):
+            junk, bunch = c.config.getShortcut(commandName)
+            accel = bunch and bunch.val
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            if shortcut:
+                # g.trace(shortcut,commandName)
+                w.bind(shortcut,func)
+#@nonl
+#@-node:ekr.20051025120920:createBindings
+#@+node:ekr.20051025071455.16:readDictionary
+def readDictionary (self,fileName):
+
+    """Read the dictionary of words which we use as a local dictionary
+    
+    Although Aspell itself has the functionality to handle this kind of things
+    we duplicate it here so that we can also use it for the "ignore" functionality
+    and so that in future a Python only solution could be developed."""
+    
+    d = {}
+
+    try:
+        f = open(fileName,"r")
+    except IOError:
+        g.es("Unable to open local dictionary '%s' - using a blank one instead" % fileName)
+        return d
+
+    try:
+        # Create the dictionary - there are better ways to do this
+        # in later Python's but we stick with this method for compatibility
+        for word in f.readlines():
+            d [word.strip().lower()] = 0
+    finally:
+        f.close()
+
+    return d
+#@nonl
+#@-node:ekr.20051025071455.16:readDictionary
+#@-node:ekr.20051025071455.19:Birth & death
+#@+node:ekr.20051025071455.29:Buttons
+#@+node:ekr.20051025071455.30:onAddButton
+def onAddButton(self):
+    """Handle a click in the Add button in the Check Spelling dialog."""
+
+    self.add()
+#@nonl
+#@-node:ekr.20051025071455.30:onAddButton
+#@+node:ekr.20051025071455.31:onIgnoreButton
+def onIgnoreButton(self,event=None):
+
+    """Handle a click in the Ignore button in the Check Spelling dialog."""
+
+    self.ignore()
+#@nonl
+#@-node:ekr.20051025071455.31:onIgnoreButton
+#@+node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
+def onChangeButton(self,event=None):
+
+    """Handle a click in the Change button in the Spell tab."""
+
+    self.change()
+    self.updateButtons()
+    
+
+def onChangeThenFindButton(self,event=None):
+    
+    """Handle a click in the "Change, Find" button in the Spell tab."""
+
+    if self.change():
+        self.find()
+    self.updateButtons()
+#@-node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
+#@+node:ekr.20051025071455.33:onFindButton
+def onFindButton(self):
+
+    """Handle a click in the Find button in the Spell tab."""
+
+    self.find()
+    self.updateButtons()
+    self.c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051025071455.33:onFindButton
+#@+node:ekr.20051025071455.34:onHideButton
+def onHideButton(self):
+    
+    """Handle a click in the Hide button in the Spell tab."""
+    
+    self.hide()
+#@nonl
+#@-node:ekr.20051025071455.34:onHideButton
+#@-node:ekr.20051025071455.29:Buttons
+#@+node:ekr.20051025071455.36:Commands
+#@+node:ekr.20051025071455.37:add
+def add(self,event=None):
+    """Add the selected suggestion to the dictionary."""
+    
+    try:
+        f = None
+        try:
+            # Rewrite the dictionary in alphabetical order.
+            f = open(self.dictionaryFileName, "r")
+            words = f.readlines()
+            f.close()
+            words = [word.strip() for word in words]
+            words.append(self.currentWord)
+            words.sort()
+            f = open(self.dictionaryFileName, "w")
+            for word in words:
+                f.write("%s\n" % word)
+            f.flush()
+            f.close()
+            if 1:
+                s = 'Spell: added %s' % self.currentWord
+                self.messages.append(s)
+            else: # Too distracting.
+                g.es("Adding ", color= "blue", newline= False) 
+                g.es('%s' % self.currentWord)
+        except IOError:
+            g.es("Can not add %s to dictionary" % self.currentWord, color="red")
+    finally:
+        if f: f.close()
+        
+    self.dictionary[self.currentWord.lower()] = 0
+    self.onFindButton()
+#@nonl
+#@-node:ekr.20051025071455.37:add
+#@+node:ekr.20051025071455.38:change
+def change(self,event=None):
+    """Make the selected change to the text"""
+
+    __pychecker__ = '--no-override --no-argsused'
+         # event param is not used, required, and different from base class.
+
+    c = self.c ; current = c.currentPosition()
+    body = self.body ; t = body.bodyCtrl
+    
+    selection = self.getSuggestion()
+    if selection:
+        start,end = oldSel = g.app.gui.getTextSelection(t)
+        if start:
+            if t.compare(start, ">", end):
+                start,end = end,start
+            t.delete(start,end)
+            t.insert(start,selection)
+            g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
+            newSel = g.app.gui.getTextSelection(t)
+
+            # update node, undo status, dirty flag, changed mark & recolor
+            c.beginUpdate()
+            c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
+            c.endUpdate(True)
+            t.focus_set()
+            return True
+
+    # The focus must never leave the body pane.
+    t.focus_set()
+    return False
+#@nonl
+#@-node:ekr.20051025071455.38:change
+#@+node:ekr.20051025071455.40:find
+def find (self,event=None):
+    """Find the next unknown word."""
+
+    c = self.c ; body = c.frame.body ; bodyCtrl = body.bodyCtrl
+
+    # Reload the work pane from the present node.
+    s = bodyCtrl.get("1.0","end").rstrip()
+    self.workCtrl.delete("1.0","end")
+    self.workCtrl.insert("end",s)
+
+    # Reset the insertion point of the work widget.
+    ins = bodyCtrl.index("insert")
+    self.workCtrl.mark_set("insert",ins)
+
+    alts, word = self.findNextMisspelledWord()
+    self.currentWord = word # Need to remember this for 'add' and 'ignore'
+
+    if alts:
+        self.fillbox(alts,word)
+        c.frame.bodyWantsFocus(later=False)
+        # Copy the working selection range to the body pane
+        start, end = g.app.gui.getTextSelection(self.workCtrl)
+        g.app.gui.setTextSelection(bodyCtrl,start,end)
+        bodyCtrl.see(start)
+    else:
+        g.es("no more misspellings")
+        self.fillbox([])
+#@nonl
+#@-node:ekr.20051025071455.40:find
+#@+node:ekr.20051025121408:hide
+def hide (self,event=None):
+    
+    self.c.frame.log.selectTab('Log')
+    
+    for message in self.messages:
+        g.es(message,color='blue')
+        
+    self.messages = []
+#@nonl
+#@-node:ekr.20051025121408:hide
+#@+node:ekr.20051025071455.41:ignore
+def ignore(self,event=None):
+
+    """Ignore the incorrect word for the duration of this spell check session."""
+    
+    if 1: # Somewhat helpful: applies until the tab is destroyed.
+        s = 'Spell: ignore %s' % self.currentWord
+        self.messages.append(s)
+
+    if 0: # Too distracting
+        g.es("Ignoring ", color= "blue", newline= False)
+        g.es('%s' % self.currentWord)
+
+    self.dictionary[self.currentWord.lower()] = 0
+    self.onFindButton()
+#@nonl
+#@-node:ekr.20051025071455.41:ignore
+#@-node:ekr.20051025071455.36:Commands
+#@+node:ekr.20051025071455.42:Helpers
+#@+node:ekr.20051025071455.43:bringToFront
+def bringToFront (self):
+    
+    self.c.frame.log.selectTab('Spell')
+#@nonl
+#@-node:ekr.20051025071455.43:bringToFront
+#@+node:ekr.20051025071455.44:fillbox
+def fillbox(self, alts, word=None):
+    """Update the suggestions listbox in the Check Spelling dialog."""
+    
+    self.suggestions = alts
+    
+    if not word:
+        word = ""
+
+    self.wordLabel.configure(text= "Suggestions for: " + word)
+    self.listBox.delete(0, "end")
+
+    for i in xrange(len(self.suggestions)):
+        self.listBox.insert(i, self.suggestions[i])
+    
+    # This doesn't show up because we don't have focus.
+    if len(self.suggestions):
+        self.listBox.select_set(1) 
+
+#@-node:ekr.20051025071455.44:fillbox
+#@+node:ekr.20051025071455.45:findNextMisspelledWord
+def findNextMisspelledWord(self):
+    """Find the next unknown word."""
+    
+    c = self.c ; p = c.currentPosition()
+    aspell = self.aspell ; alts = None ; word = None
+   
+    try:
+        while 1:
+            p, word = self.findNextWord(p) 
+            if not p or not word:
+                alts = None
+                break
+            << Skip word if ignored or in local dictionary >>
+            alts = aspell.processWord(word)
+            if alts:
+                c.beginUpdate()
+                c.frame.tree.expandAllAncestors(p)
+                c.selectPosition(p)
+                c.endUpdate()
+                break
+    except:
+        g.es_exception()
+    return alts, word
+#@nonl
+#@+node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
+@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not True and this code could easily be located after the aspell call
+@c
+
+if self.dictionary.has_key(word.lower()):
+    continue
+#@nonl
+#@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
+#@-node:ekr.20051025071455.45:findNextMisspelledWord
+#@+node:ekr.20051025071455.47:findNextWord
+# Unicode characters may cause index problems.
+
+def findNextWord(self,p):
+
+    """Scan for the next word, leaving the result in the work widget"""
+
+    t = self.workCtrl
+
+    # Allow quotes and underscores in the middle of words, but not at the beginning or end.
+    # This breaks words at non-ascii 'letters' such as é.  I don't know what the solution is.
+    word_start = string.letters
+    word_end   = string.letters + string.digits
+    word_chars = string.letters + string.digits + "`" + "'" + "_"
+    while 1:
+        line = t.get('insert wordstart','insert lineend')
+        # g.trace('insert',t.index('insert'),'insert wordstart',t.index('insert wordstart'))
+        # g.trace(repr(line))
+        # Start the word at the first letter.
+        i = 0
+        while i < len(line) and line[i] not in word_start:
+            i += 1
+        if i < len(line):
+            # A non-empty word has been found.
+            line = t.get('insert wordstart','insert lineend')
+            j = i
+            while j < len(line) and line[j] in word_chars:
+                j += 1
+            word = line[i:j]
+            while word and word[-1] not in word_end:
+                word = word[:-1]
+            # This trace is important: it verifies that all words have actually been checked.
+            # g.trace(repr(word))
+            x1 = t.index('insert + %dc' % (i))
+            x2 = t.index('insert + %dc' % (i+len(word)))
+            g.app.gui.setTextSelection(t,x1,x2)
+            return p, word
+        else:
+            # End of the line. Bug fix: 9/8/05.
+            t.mark_set('insert','insert lineend + 1c')
+            if t.compare("insert",">=", "end - 1c"):
+                p.moveToThreadNext()
+                if not p: return None,None
+                t.delete("1.0", "end")
+                t.insert("end", p.bodyString())
+                t.mark_set("insert", "1.0")
+                
+    __pychecker__ = '--no-implicitreturns' # This is not really an implicit return.
+#@nonl
+#@-node:ekr.20051025071455.47:findNextWord
+#@+node:ekr.20051025071455.48:getSuggestion
+def getSuggestion(self):
+    """Return the selected suggestion from the listBox."""
+    
+    # Work around an old Python bug.  Convert strings to ints.
+    items = self.listBox.curselection()
+    try:
+        items = map(int, items)
+    except ValueError: pass
+
+    if items:
+        n = items[0]
+        suggestion = self.suggestions[n]
+        return suggestion
+    else:
+        return None
+#@nonl
+#@-node:ekr.20051025071455.48:getSuggestion
+#@+node:ekr.20051025071455.49:onMap
+def onMap (self, event=None):
+    """Respond to a Tk <Map> event."""
+    
+    self.update(show= False, fill= False)
+#@nonl
+#@-node:ekr.20051025071455.49:onMap
+#@+node:ekr.20051025071455.50:onSelectListBox
+def onSelectListBox(self, event=None):
+    """Respond to a click in the selection listBox."""
+    
+    self.updateButtons()
+    self.body.bodyCtrl.focus_set()
+#@-node:ekr.20051025071455.50:onSelectListBox
+#@+node:ekr.20051025071455.51:update
+def update(self,show=True,fill=False):
+    
+    """Update the Spell Check dialog."""
+    
+    c = self.c
+    
+    if fill:
+        self.fillbox([])
+
+    self.updateButtons()
+
+    if show:
+        self.bringToFront()
+        c.frame.body.bodyCtrl.focus_set()
+#@nonl
+#@-node:ekr.20051025071455.51:update
+#@+node:ekr.20051025071455.52:updateButtons
+def updateButtons (self):
+
+    """Enable or disable buttons in the Check Spelling dialog."""
+
+    c = self.c
+
+    start, end = g.app.gui.getTextSelection(c.frame.body.bodyCtrl)
+    state = g.choose(self.suggestions and start,"normal","disabled")
+
+    self.changeButton.configure(state=state)
+    self.changeFindButton.configure(state=state)
+
+    # state = g.choose(self.c.undoer.canRedo(),"normal","disabled")
+    # self.redoButton.configure(state=state)
+    # state = g.choose(self.c.undoer.canUndo(),"normal","disabled")
+    # self.undoButton.configure(state=state)
+
+    self.addButton.configure(state='normal')
+    self.ignoreButton.configure(state='normal')
+#@nonl
+#@-node:ekr.20051025071455.52:updateButtons
+#@-node:ekr.20051025071455.42:Helpers
+#@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
+#@-node:ekr.20051025071455:Spell classes
+#@-node:ekr.20051028061546:Improve spell tab
+#@+node:ekr.20051028061802:Use tab for autocompleter
+- Use typing completion to select desired word.
+- No auto-scan: use database instead.
+- Scan button does manual scan.
+- Use import or inspect instead of text scan.
+- @strings autocompleter-info
+list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
+  (Autocompleter may already do this)
+#@+node:ekr.20051025144611:Autocompleter (Do not delete)
+#@+node:ekr.20051025144611.1:Configuration
+@nocolor
+#@nonl
+#@+node:ekr.20051025144611.2:autocompleter.ini
+The plugin looks in the plugins folder for a file called autocompleter.ini.
+
+This follows the windows .ini file format as used in ConfigParser, see: http://docs.python.org/lib/module-ConfigParser.html
+
+1. Specify options in autocompleter.ini as follows:
+
+[ autocompleter ]
+
+useauto = 0 # turns off autocompletion
+usecalltips = 0 # turns of calltips
+autopattern = pattern #pattern is a regular expression
+
+The autopattern changes the pattern by which autocompletion options are recognized.
+I wouldnt use it unless you understood how the code works though.
+
+2. You can add a language by putting this in autocompleter.ini:
+
+[ yourlanguage ]
+
+pat = put regular expression here
+
+Then the plugin will recognize your language for the calltip system. This only works if Leo currently recognizes your language, since we are getting our info from the colorizer as to what language is in use.
+#@nonl
+#@-node:ekr.20051025144611.2:autocompleter.ini
+#@+node:ekr.20051025144611.3:.ato files in the autocompleter folder
+The plugin uses specific pattern matching based on the language you are using.
+
+For example, if you are in a node and the language is python, it will only recognize def word(     ) as the calltip.
+
+Support for Python, C, C++, Perl and Java is built-in, other languages may be supported as follows:
+
+You can supply a library of prebuilt calltip definitions and autocompleter info by putting a directory called autocompleter in the plugins directory. It will look for a file(s) of the languages used in the Leo project. The file name must be language.ato.
+
+For java it would be java.ato, which might contain:
+
+dog.eat
+burt.you
+public static void main( String[] args )
+
+and dog.eat, burt.you would be added to autocompletion and the 3rd line would be added to the calltips section.
+#@nonl
+#@-node:ekr.20051025144611.3:.ato files in the autocompleter folder
+#@-node:ekr.20051025144611.1:Configuration
+#@+node:ekr.20051025144611.4:autocompleter.py
+<< docstring >>
+<<imports>>
+<<version history>>
+<<a note on newCreateControl>>
+<<coding conventions>>
+<< configuration >>
+
+#These two global determine if the autocompleter and calltip systems are used.  Default is on.
+useauto = 1
+usecall = 1
+
+<<globals>>
+<<patterns>>
+
+@others
+#@nonl
+#@+node:ekr.20051025144611.5:<< docstring >>
+'''Autocompletion and calltips plugin.
+
+- ``.`` summons the autocompletion.
+- ``(`` summons the calltips
+- ``Escape`` closes either box.
+- ``Ctrl`` selects an item.
+- ``alt-up_arrow``, ``alt-down_arrow`` move up or down in the list.
+  The mouse will work for this as well.
+
+This plugin scans the complete outline at startup.
+You many enable or disable features in autocomplete.ini.
+This file contains two options under the [ autocompleter ] section::
+
+    useauto
+    usecalltips
+
+Setting either to 1 will turn on the feature. 0 means off. If there is a section
+called [ newlanguages ] it will read each option as a new language for
+autocompleter to recognize, and compile its value as a regex pattern for the
+autocompleter system to recognize as a calltip. This has relevance for the .ato
+system described below.  Languages that currently have patterns::
+
+    python, java, c++, c, perl
+
+Autocompleter looks in the plugin directory for a directory called
+autocompleter. If it doesnt find one it will attempt to create this directory.
+This directory should contain what are called .ato files ( pronounced auto ).
+Autocompleter will scan each .ato file that has a first part that matches a
+languages name. For example: python.ato autocompleter recognizes python, and
+will scan this file. The contents are read with the same mechanism that reads
+the information in the nodes, so calltip and autocompleter information is added
+to autocompleters runtime database. If a new language has been added in the
+autocompleter.ini file then an .ato file that starts with the new languages name
+will be recognized and read in. Note, this language needs to be recognizable to
+Leo. Used correctly an .ato file is a mechanism by which a user can carry
+autocompletion and calltip information between .leo files/sessions.
+'''
+#@nonl
+#@-node:ekr.20051025144611.5:<< docstring >>
+#@+node:ekr.20051025144611.6:<< imports >>
+## import leoTkinterFrame 
+
+import sets 
+import threading
+import weakref
+#@nonl
+#@-node:ekr.20051025144611.6:<< imports >>
+#@+node:ekr.20051025144611.7:<<version history>>
+@
+.425:
+    -The initial scan thread is now a daemon thread.
+    -Creates autocompleter box and Calltip box once.
+    -Broke long functions apart.
+    -'Esc'now closes autobox and calltip.
+
+.500 EKR:
+    - Made minor changes based on .425:
+    -Improved docstring.
+    -Converted to 4.2style.
+.501 EKR:
+    - Changed select method following patch by original author.
+    - Added event.keysym=='Up' case to
+.55 Lu:
+     - Made the watcher def more greedy.  See def for rationale
+     - Made the calltip identification regex more liberal.
+     - streamlined some code.
+     - added DictSet class, experimental in the sense that I haven't had a bug with it yet.  see <<DictSet>> node, under << globals>>
+     - discovered dependency between this and Chapters, auto needs to be loaded first
+.60 Lu
+    - Changed some method names to more acuaretely reflect what they do.  Added more comments.
+    - processKeyStroke cleaned up.
+    - added Functionality where any mouse button press, anywhere in Leo will turn off autobox and calltip label.
+    - waiting for Chapters( or chapters ) to have its walkChapters def fixed up, so we can walk the chapters on startup.
+ .7 Lu( The placer revolution!)
+   -migrated to the placer!  This got rid of Canvas based drawing.  The placer may be a good tool to know in the future.  This seemed to
+   be about an even replacement codewise, but I think it gives us an efficiency boost.
+   -changed some lambdas to defs, more for clarities sake then anything.
+   -made global changes to how objects are referred to
+   -got rid of factory defs, autobox and calltip label are created at Editor creation time
+   -dependency between this and Chapters eliminated.
+   -added code to automatically create the .ini file and the autocompleter directory if they do not exist.
+   -added a section about how to configure autocompleter
+   -switched the patterns from using '+' to add pieces together to using '%s'.
+.71 investigated and hopefully fixed startup bug on Windows. Changes that appear to have fixed it:
+1. We synchronize with an threading Event object.  IO acting screw on windows in a thread.
+2. There is a global flag indicating whether the config file needs to be read again.
+3. Explicitly set the file type to 't'.  This could all be attributed to a bug in ConfigParser.  I looked at the source and it doesnt write its data with a 't'.  This indicates trouble with windows.
+4. Make the 'aini' path composed of os.sep instead of the char '/'.  Im uncertain if the config file ever got read on Windows at this point because of the explicit '/' , instead of using os.path.
+5. Moved createConfig part out of thread. problems seems centered on Windows/IO/Threading.
+
+ .72 The thesis and experiments to confirm the problem identified in .71 appear
+completely wrong. I could not recreate threading+writeIO staling on XP at all.
+Windows 98 didnt even work. But after commenting out g.es calls it did work. My
+new target for the problem is now focused on keeping g.es calls out of the
+initialScan thread. This will just entail moving all the reading and writing of
+the config and language files out of the thread.
+
+.73 EKR:
+    - Changed 'new_c' logic to 'c' logic in initialScan.
+    - Added init function.
+.74 EKR:
+    - Changed 'start2' hook to 'new' hook.
+.75 EKR:
+    - Disable scan during unit testing.
+#@nonl
+#@-node:ekr.20051025144611.7:<<version history>>
+#@+node:ekr.20051025144611.8:<<a note on newCreateControl>>
+@
+
+the function newCreateControl decorates the leoTkinterFrame.leoTkinterBody.createControl method.
+It does so to intercept the point where the editor is created.  By doing so, autocompleter is able
+to ensure that the placer is used instead of the packer.  By using the placer autocompleter is able
+to put the autobox and calltip label over the editor when the appropiate time is reached.  In versions
+prior to .7, this was achieved by using a Tk Canvas as the background of the Editor.  The placer is simpler
+and from what I see more efficient.
+
+#@-node:ekr.20051025144611.8:<<a note on newCreateControl>>
+#@+node:ekr.20051025144611.10:<<coding conventions>>
+@
+
+context - means the widget that backs the editor.  In versions before .7 it was called c and was a canvas.  context is the new name, and it is no longer a canvas. c, now means commander.
+
+context.autobox - means the Pmw.ScrolledListBox that offers the autocompletion options.
+
+The autobox contains other widgets that can be accessed by autobox.component( 'widgetname' )
+
+context.calltip - means the Tk.Label that offers calltip information
+
+context.which = 0 indicates its in autocompleter mode
+context.which = 1 indicates its in calltip mode
+#@nonl
+#@-node:ekr.20051025144611.10:<<coding conventions>>
+#@+node:ekr.20051025144611.11:<< configuration >>
+@
+Autocompleter looks in the plugin directory for a file called autocompleter.ini
+
+This file contains two options under the [ autocompleter ] section:
+    useauto
+    usecalltips
+    setting either to 1 will turn on the feature. 0 means off.
+If there is a section called [ newlanguages ] it will read each option as a new language for autocompleter to recognize,
+and compile its value as a regex pattern for the autocompleter system to recognize as a calltip.  This has relevance for the .ato
+system described below.
+
+languages that currently have patterns:
+    python, java, c++, c and perl
+This file will automatically be generated for the user if it does not exist at startup time.
+
+
+Autocompleter looks in the plugin directory for a directory called autocompleter.  If it doesnt find one
+it will attempt to create this directory.  This directory should contain what are called .ato files ( pronounced auto ).
+Autocompleter will scan each .ato file that has a first part that matches a languages name.  For example:
+    python.ato
+    autocompleter recognizes python, and will scan this file.  The contents are read with the same mechanism that
+    reads the information in the nodes, so calltip and autocompleter information is added to autocompleters runtime database.
+If a new language has been added in the autocompleter.ini file then an .ato file that starts with the new languages name will be recognized and read in.  Note, this language needs to be recognizable to Leo.
+Used correctly an .ato file is a mechanism by which a user can carry autocompletion and calltip information between .leo files/sessions.
+#@nonl
+#@-node:ekr.20051025144611.11:<< configuration >>
+#@+node:ekr.20051025144611.12:<< globals >>
+orig_CreateControl = leoTkinterFrame.leoTkinterBody.createControl 
+
+<<DictSet>>
+#watchwords ={} switched to DictSet
+watchwords = DictSet() # a DictSet that is the autocompleter database.
+#calltips ={} switched to DictSet
+calltips = DictSet( factory = DictSet) # a DictSet that is the calltip database
+pats ={} #used to hold regex patterns to find defintions for calltips
+lang = None #determines what language is in effect.  Though its global, only one autobox or calltip label should be visible for the entire leo instance.
+configfilesread = False #Determines if the config files need to be read
+haveseen = weakref.WeakKeyDictionary()# a dict that tracks the commanders that have been seen without stopping garbage collection of that commander.
+#@+node:ekr.20051025144611.13:<<DictSet>>
+class DictSet( dict ):
+    '''A dictionary that always returns either a fresh sets.Set or one that has been stored from a previous call.
+    a different datatype can be used by setting the factory keyword in __init__ to a different class.'''
+    
+    def __init__( self , factory = sets.Set ):
+        dict.__init__( self )
+        self.factory = factory
+        
+    def __getitem__( self, key ):
+        try:
+            return dict.__getitem__( self, key ) # EAFTP
+        except:
+            dict.__setitem__( self, key, self.factory() )
+            return dict.__getitem__( self, key )
+#@-node:ekr.20051025144611.13:<<DictSet>>
+#@-node:ekr.20051025144611.12:<< globals >>
+#@+node:ekr.20051025144611.14:<< patterns >>
+# This section defines patterns for calltips.
+space = r'[ \t\r\f\v ]+'
+end = r'\w+\s*\([^)]*\)'
+
+pats ['python'] = re.compile(r'def\s+%s' % end)
+
+pats ['java'] = re.compile(
+    r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
+        space, space, end))
+
+pats ['perl'] = re.compile(r'sub\s+%s' % end)
+
+pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (space,end))
+
+pats ['c'] = re.compile(r'\w+%s%s' % (space,end))
+
+r = string.punctuation.replace('(','').replace('.','')
+pt = string.digits + string.letters + r
+
+ripout = string.punctuation + string.whitespace + '\n'
+ripout = ripout.replace('_','')
+
+okchars = {}
+for z in string.ascii_letters:
+    okchars [z] = z
+okchars ['_'] = '_'
+#@nonl
+#@-node:ekr.20051025144611.14:<< patterns >>
+#@+node:ekr.20051025170832:Initialization
+#@+node:ekr.20051025144611.15:init
+def init ():
+    
+    ok = Pmw and Tk and not g.app.unitTesting # Not for unit tests: modifies core classes.
+    
+    if ok:
+        leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
+        leoPlugins.registerHandler(('new','open2'),initialScan)   
+        g.plugin_signon(__name__)
+        
+    return ok
+#@nonl
+#@-node:ekr.20051025144611.15:init
+#@+node:ekr.20051025170832.1:Config stuff
+#@+node:ekr.20051025144611.24:has read config file meths
+#These functions determine if the config and language files have been read or not.
+# No need to read it more than once.
+
+def hasReadConfig():
+    return configfilesread
+
+def setReadConfig():
+    global configfilesread
+    configfilesread = True
+#@nonl
+#@-node:ekr.20051025144611.24:has read config file meths
+#@+node:ekr.20051025144611.25:readConfigFile
+def readConfigFile (aini):
+    '''reads the autocompleter config file in.'''
+    global usecall, useauto 
+    
+    try:
+        cp = ConfigParser.ConfigParser()
+        fp = open( aini, 'rt' )
+        cp.readfp( fp )
+        fp.close()
+    except Exception, x:
+        g.es( "Could not open %s because of %s" % ( aini, x ), color = 'red' )
+    ac = None 
+    
+    for z in cp.sections():
+        if z.strip()=='autocompleter':
+            ac = z 
+        else:
+            continue
+        if cp.has_section(ac):
+            if cp.has_option(ac,'useauto'):
+                useauto = int(cp.get(ac,'useauto'))
+                if useauto:
+                    g.es( "autocompleter enabled", color = 'blue' )
+            if cp.has_option(ac,'usecalltips'):
+                usecall = int(cp.get(ac,'usecalltips'))
+                if usecall:
+                    g.es( "calltips enabled" , color = 'blue' )
+        break
+
+    nl = None
+    for z in cp.sections():
+        if z.strip()=='newlanguages':
+            nl = z 
+        else:
+            continue
+        if nl and cp.has_section( nl ):
+            for z in cp.options( nl ):
+                try:
+                    pats[ z ] = re.compile( cp.get( nl, z ) )
+                    g.es( 'added %s to autocompleter languages' % z , color = 'blue' )
+                except Exception, x:
+                    g.es( "Could not add %s pattern, because of %s " %( z, x ) , color = 'red')
+                    
+        break
+#@-node:ekr.20051025144611.25:readConfigFile
+#@+node:ekr.20051025144611.26:createConfigFile
+def createConfigFile( aini ):
+    '''This function creates a config file identified by the parameter aini'''
+    cp = ConfigParser.ConfigParser()
+    cp.add_section( 'autocompleter' )
+    cp.set( 'autocompleter', 'useauto', '1' )
+    cp.set( 'autocompleter', 'usecalltips', '1' )
+    cp.add_section( 'newlanguages' )
+    try:
+        ini = open( aini, 'wt' )
+        cp.write( ini )
+        ini.close()
+        g.es( "autocompleter .ini file created in %s" % aini, color = 'blue' )
+    except Exception, x:
+        g.es( "Error in creating %s, caused by %s" % ( aini, x ) , color = 'red' )
+
+
+#@-node:ekr.20051025144611.26:createConfigFile
+#@+node:ekr.20051025144611.27:readLanguageFiles
+def readLanguageFiles (bankpath):
+    '''reads language files in directory specified by the bankpath parameter'''
+    global lang
+    if not os.path.exists( bankpath ):
+        try:
+            os.mkdir( bankpath )
+        except Exception, x:
+            g.es( "Could not make %s because of %s" %( bankpath, x ) )
+    for z in pats:
+        bpath = bankpath+z+'.ato'
+        if os.path.exists(bpath):
+            f = open(bpath)
+            lang = z 
+            map( scanText, f )
+            #for x in f:
+            #    scanText(x)
+            f.close()
+#@nonl
+#@-node:ekr.20051025144611.27:readLanguageFiles
+#@+node:ekr.20051025144611.28:readOutline
+def readOutline (c):
+    '''This method walks the Outline(s) and builds the database from which
+    autocompleter draws its autocompletion options
+    c is a commander in this case'''
+    global lang
+    if 'Chapters'in g.app.loadedPlugins: #Chapters or chapters needs work for this function properly again.
+        import chapters 
+        it = chapters.walkChapters()
+        for x in it:
+            lang = None 
+            setLanguage(x)
+            scanText(x.bodyString())
+    else:
+        for z in c.rootPosition().allNodes_iter():
+            setLanguage( z )
+            scanText( z.bodyString() )
+#@nonl
+#@-node:ekr.20051025144611.28:readOutline
+#@-node:ekr.20051025170832.1:Config stuff
+#@+node:ekr.20051025144611.16:watcher
+watchitems = ('.',')')
+txt_template = '%s%s%s'
+
+def watcher (event):
+    '''A function that tracks what chars are typed in the Text Editor.
+    Certain chars activate the text scanning code.'''
+    global lang
+    if not (event.char.isspace() or event.char in watchitems):
+        return
+        
+@
+This if statement ensures that attributes set in another node are put in the
+database.Of course the user has to type a whitespace to make sure it happens.
+We try to be selective so that we dont burn through the scanText def for  every
+whitespace char entered.This will help when the nodes become big.
+@c
+    bCtrl = event.widget
+    if event.char.isspace():
+        # Do nothing if the previous char was a whitespace
+        if bCtrl.get('insert -1c').isspace(): return
+        if bCtrl.get('insert -1c wordstart -1c') != '.': return
+    c = bCtrl.commander
+    lang = c.frame.body.getColorizer().language
+    txt = txt_template % (
+        bCtrl.get("1.0",'insert'),
+        event.char, bCtrl.get('insert',"end"))
+        # Add the newest char; its not in the bCtrl yet
+    scanText(txt)
+#@nonl
+#@-node:ekr.20051025144611.16:watcher
+#@+node:ekr.20051025144611.23:initialScan
+def initialScan (tag,keywords):
+    '''This method walks the node structure to build the in memory database.'''
+    c = keywords.get("c")
+    if not c or haveseen.has_key(c):
+        return 
+
+    haveseen[c] = None 
+    
+    #This part used to be in its own thread until problems were encountered on Windows 98 and XP with g.es
+    pth = os.path.split(g.app.loadDir)  
+    aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )    
+    if not os.path.exists(aini):
+        createConfigFile( aini )
+    try:
+        if not hasReadConfig():
+            if os.path.exists(aini):
+                readConfigFile(aini) 
+
+            bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
+            readLanguageFiles(bankpath)#This could be too expensive to do here if the user has many and large language files.
+    finally:
+        setReadConfig()
+    
+    # Use a thread to do the initial scan so as not to interfere with the user.            
+    def scan():
+        #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
+        # During unit testing c gets destroyed before the scan finishes.
+        if not g.app.unitTesting:
+            readOutline( c )
+        
+    t = threading.Thread( target = scan )
+    t.setDaemon(True)
+    t.start()
+#@-node:ekr.20051025144611.23:initialScan
+#@-node:ekr.20051025170832:Initialization
+#@+node:ekr.20051025144611.17:scanText
+def scanText (txt):
+
+    '''This function guides what gets scanned.'''
+
+    if useauto:
+        scanForAutoCompleter(txt)
+    if usecall:
+        scanForCallTip(txt)
+#@nonl
+#@-node:ekr.20051025144611.17:scanText
+#@+node:ekr.20051025144611.18:scanForAutoCompleter
+def scanForAutoCompleter (txt):
+    
+    '''This function scans text for the autocompleter database.'''
+
+    t1 = txt.split('.')
+    g =[]
+    reduce(lambda a,b:makeAutocompletionList(a,b,g),t1)
+    if g:
+        for a, b in g:
+            #if watchwords.has_key(a):
+            #    watchwords[a].add(b)
+            #else:
+            #    watchwords[a] = sets.Set([b])
+            watchwords[ a ].add( b )
+            # we are using the experimental DictSet class here.
+            # usage removed the above statements
+            # notice we have cut it down to one line of code here!
+#@nonl
+#@-node:ekr.20051025144611.18:scanForAutoCompleter
+#@+node:ekr.20051025144611.19:scanForCallTip
+def scanForCallTip (txt):
+
+    '''this function scans text for calltip info'''
+
+    # pat2 = pats['python']
+    # if lang:
+        # if pats.has_key(lang):
+            # pat2 = pats[lang]
+
+    pat2 = pats.get(lang or 'python')
+    g2 = pat2.findall(txt) or []
+
+    for z in g2:
+        if isinstance(z,tuple):
+            z = z [0]
+        pieces2 = z.split('(')
+        pieces2 [0] = pieces2 [0].split() [ -1]
+        a, b = pieces2 [0], pieces2 [1]
+        calltips [lang][a].add(z)
+#@nonl
+#@-node:ekr.20051025144611.19:scanForCallTip
+#@+node:ekr.20051025144611.20:makeAutocompletionList
+def makeAutocompletionList (a,b,glist):
+    
+    '''A helper function for autocompletion'''
+    a1 = _reverseFindWhitespace(a)
+    if a1:
+        b2 = _getCleanString(b)
+        if b2!='':
+            glist.append((a1,b2))
+    return b 
+
+#@-node:ekr.20051025144611.20:makeAutocompletionList
+#@+node:ekr.20051025144611.21:_getCleanString
+def _getCleanString (s):
+    '''a helper for autocompletion scanning'''
+    if s.isalpha():return s 
+
+    for n, l in enumerate(s):
+        if l in okchars:pass 
+        else:return s[:n]
+    return s 
+#@-node:ekr.20051025144611.21:_getCleanString
+#@+node:ekr.20051025144611.22:_reverseFindWhitespace
+def _reverseFindWhitespace (s):
+    '''A helper for autocompletion scan'''
+    for n, l in enumerate(s):
+        n =(n+1)*-1
+        if s[n].isspace()or s[n]=='.':return s[n+1:]
+    return s 
+#@-node:ekr.20051025144611.22:_reverseFindWhitespace
+#@+node:ekr.20051025144611.29:reducer
+def reducer (lis,pat):
+    '''This def cuts a list down to only those items that start with the parameter pat, pure utility.'''
+    return[x for x in lis if x.startswith(pat)]
+#@-node:ekr.20051025144611.29:reducer
+#@+node:ekr.20051025144611.30:unbind
+def unbind (context):
+
+    '''This method turns everything off and removes the calltip and autobox from the canvas.'''
+
+    if context.on: #no need to do this stuff, if were not 'on'
+        context.on = False
+        context.clean_editor()
+        map(context.unbind,(
+            "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>", "<Alt_R>"))
+        context.unbind_all('<Button>')
+        context.update_idletasks()
+#@nonl
+#@-node:ekr.20051025144611.30:unbind
+#@+node:ekr.20051025144611.31:moveSelItem
+def moveSelItem (event, context ):
+
+    '''Move the selection in the autobox up or down.'''
+
+    autobox = context.autobox
+    i = autobox.curselection()
+    if len(i)==0:
+        return None 
+    i = int(i[0])
+    # g.trace(event.keysym,i)
+    try:
+        if event.keysym=='Down':
+            if autobox.size() - 1 > autobox.index( i ):
+                i += 1
+            elif i!=0:
+                i -1  ## Can't be correct.
+        elif event.keysym=='Up': # EKR.
+            if i > 0:
+                i -= 1
+    finally:
+        autobox.select_clear( 0, 'end' )
+        autobox.select_set( i )
+        autobox.see( i )
+        context.update_idletasks()
+        return "break"
+#@-node:ekr.20051025144611.31:moveSelItem
+#@+node:ekr.20051025144611.32:processKeyStroke
+def processKeyStroke (event,context,body):
+
+    '''Take action based on the state of context (a Tk.Canvas) and the event'''
+    
+    autobox = context.autobox
+
+    if not context.on or event.keysym in ("??","Shift_L","Shift_R"):
+        return None
+    elif testForUnbind(event,context):
+        unbind(context)
+        return None
+    elif context.which == 1:
+        return None # It is calltip time.
+        
+    index = body.index('insert-1c wordstart')
+    pat = body.get(index,'insert') + event.char
+    pat = pat.lstrip('.')
+    ww = list(autobox.get(0,'end'))
+    aList = reducer(ww,pat)
+    if not aList: return None
+    # Select which item to select based on what the user has typed.
+    i = ww.index(aList[0])
+    # Set the current selection to match what the user has typed.
+    autobox.select_clear(0,'end') 
+    autobox.select_set(i)
+    autobox.see(i)
+    return 'break'
+#@nonl
+#@-node:ekr.20051025144611.32:processKeyStroke
+#@+node:ekr.20051025144611.33:testForUnbind
+def testForUnbind( event, context ):
+    '''c in this case is a Tkinter Canvas.
+      This def checks if the autobox or calltip label needs to be turned off'''
+
+    if event.keysym in ('parenright','Control_L','Control_R', 'Escape' ):
+        return True
+    elif not context.which and event.char in ripout:
+        return True
+    return False
+#@-node:ekr.20051025144611.33:testForUnbind
+#@+node:ekr.20051025144611.34:processAutoBox
+def processAutoBox(event, context , body ):
+    '''This method processes the selection from the autobox.'''
+    if event.keysym in("Alt_L","Alt_R"):
+        return None 
+
+    a = context.autobox.getvalue()
+    if len(a)==0:return None 
+    try:
+        a = a[0]
+        ind = body.index('insert-1c wordstart')
+        pat = body.get(ind,'insert')
+        pat = pat.lstrip('.')
+
+        if a.startswith(pat):a = a[len(pat):]
+        body.insert('insert',a)
+        body.event_generate("<Key>")
+        body.update_idletasks()
+    finally:
+        unbind( context )
+#@-node:ekr.20051025144611.34:processAutoBox
+#@+node:ekr.20051025144611.35:add_item
+def add_item (event, context ,body,colorizer):
+    '''This function will add the autobox or the calltip label.'''
+    if not event.char in('.','(')or context.on:return None 
+    txt = body.get('insert linestart','insert')
+    txt = _reverseFindWhitespace(txt)
+    if event.char!='('and not watchwords.has_key(txt):
+         return None 
+
+    if event.char=='.' and useauto:
+
+        ww = list(watchwords[txt])
+        ww.sort()
+        autobox = context.autobox
+        configureAutoBox( autobox, ww )
+        autolist = autobox.component( 'listbox' )
+        #We have to hand the listbox in, its the only thing providing accuracy of size and position.
+        calculatePlace( body, autolist, context, autobox )
+        autobox.select_set( 0 )
+        context.which = 0 #indicates it's in autocompletion mode
+        add_bindings( context, body )
+    
+    elif event.char=='(' and usecall:
+        language = colorizer.language 
+        if calltips.has_key(language):
+            if calltips[language].has_key(txt):
+
+                s = list(calltips[language][txt])
+                t = '\n'.join(s)
+                calltip = context.calltip 
+                calltip.configure(text=t)
+                #The calltip provides sufficient size information to calculate its place on top of the context. 
+                calculatePlace(body, calltip ,context, calltip  )
+                context.which = 1 #indicates it's in calltip mode
+        
+        else:
+            context.on = False 
+            return None 
+
+#@-node:ekr.20051025144611.35:add_item
+#@+node:ekr.20051025144611.36:add_bindings
+def add_bindings( context, body ):
+    
+    '''This def adds bindings to the Canvas so it can work with the autobox properly.'''
+            
+    event = Tk.Event()
+    event.keysym = ''
+    
+    def processAutoBoxHandler( event = event , context = context, body = body  ): 
+        processAutoBox( event, context , body  )
+        
+    context.autobox.configure( selectioncommand = processAutoBoxHandler )
+    
+    def moveSelItemHandler( event, context = context ): 
+        moveSelItem( event, context )
+    
+    bindings = ( ( "<Control_L>", processAutoBoxHandler ), ( "<Control_R>", processAutoBoxHandler ),
+                 ( "<Alt-Up>", moveSelItemHandler, '+' ), ( "<Alt-Down>", moveSelItemHandler , '+'),
+                 ( "<Alt_L>", processAutoBoxHandler ), ( "<Alt_R>", processAutoBoxHandler ) )
+         
+    def bind2( args ): context.bind( *args )
+    map( bind2, bindings )
+#@-node:ekr.20051025144611.36:add_bindings
+#@+node:ekr.20051025144611.37:configureAutoBox
+def configureAutoBox ( autobox ,ww):
+    '''sets data and size of autobox.'''
+    autobox.setlist(ww)
+    lb = autobox.component('listbox')
+    height = len(ww)
+    if height>5:height = 5
+    lb.configure(height=height)
+#@-node:ekr.20051025144611.37:configureAutoBox
+#@+node:ekr.20051025144611.38:calculatePlace
+def calculatePlace (body,cwidg, context ,toBePlaced):
+     '''This def determines where the autobox or calltip label goes on the canvas.
+       And then it puts it on the canvas.
+       body is the Tk Text instance.
+       cwidg is the widget from which we derive the calculations.
+       context is the parent of the cwidg, we bind the context in this function.
+       toBePlaced is the widget that is placed with the calculatsions performed.'''
+     try:
+        x, y, lww, lwh = body.bbox('insert -1c')
+        x, y = x+lww, y+lwh 
+     except:
+         x = 1
+         y = 1
+     rwidth = cwidg.winfo_reqwidth()
+     rheight = cwidg.winfo_reqheight()
+     if body.winfo_width()<x+rwidth:  
+        x = x-rwidth 
+     if y>body.winfo_height()/2:
+        h2 = rheight 
+        h3 = h2+lwh 
+        y = y-h3 
+
+     toBePlaced.place( x = x, y = y )
+     context.on = True
+     context.bind_all( '<Button>', context.do_unbind )
+#@-node:ekr.20051025144611.38:calculatePlace
+#@+node:ekr.20051025144611.39:setLanguage
+def setLanguage ( pos ):
+    '''This method checks a node for the current language in effect
+       and accends the parent line until it finds a language.'''
+    global lang 
+    while pos:
+        xs1 = pos.bodyString()
+        dict = g.get_directives_dict(xs1)
+        if dict.has_key('language'):
+            lang = g.set_language(xs1,dict['language'])[0]
+            break 
+        pos = pos.parent()
+#@-node:ekr.20051025144611.39:setLanguage
+#@+node:ekr.20051025144611.40:newCreateControl
+def newCreateControl (self,frame,parentFrame):
+    '''A decoration of the createControl def.
+    We set up the ancestory of the control so we can draw
+    widgets over the Text editor without disturbing the text.'''
+
+@
+Creating the background:
+- We now use a placer: simpler to use and more efficient.
+- We have to decorate the Tk.Text widget with a constructor that creates an
+  intermediate Frame for the Text to be placed instead of packed.
+  Had no idea that the placer could do this so nicely.
+  With a couple changes in 3 places, we are using the placer !
+@c
+    orig_init = Tk.Text.__init__ #We stash the original init of Tk.Text
+    def pre_init (self,master,*args,**kwords):
+
+        context = Tk.Frame(master)
+            #This is what we need to put in before the text to make place work.
+        orig_init(self,context,*args,**kwords)
+
+    Tk.Text.__init__ = pre_init #We restore the original init of Tk.Text
+    body = orig_CreateControl(self,frame,parentFrame) #orig_CreatControl is the method this def decorates
+    Tk.Text.__init__ = orig_init
+
+    context = body.master #This is the Frame we created to intercept the passed in master.
+    context.pack(expand=1,fill='both',after=frame.bodyBar) #We have to add it to the environment, since we pass on it in the __init__
+    body.place(relwidth=1.0,relheight=1.0)
+    body.commander = self.c #used in watcher
+    context.on = False #determines if the system is autocompleting or calltiping
+    addAutoboxAndCalltipWidgets(context)
+    #These used to be lambdas, but I think this is clearer.
+    def processKeyStrokeHandler (event,context=context,body=body):
+        processKeyStroke(event,context,body)
+    def addItemHandler (event,context=context,body=body,colorizer=frame.body):
+        add_item(event,context,body,colorizer.getColorizer())
+
+    for z in (watcher,processKeyStrokeHandler,addItemHandler):
+        context.bind("<Key>",z,'+')
+
+    ignore = [] #ignore items added to this list when a Button event occurs.
+    if hasattr(context,'autobox'):
+        ignore.append(context.autobox.component('listbox'))
+        ignore.append(context.autobox.component('vertscrollbar'))
+    def do_unbind (event):
+        '''This def is for doing the unbind on any <Button> events.
+           It only is in effect when the autobox or calltip label are showing.'''
+        if event.widget not in ignore: #This ensures a click or scroll in the autobox takes effect.
+                unbind(context)
+
+    context.do_unbind = do_unbind
+
+    # This part protects this plugin from others that use Alt-Up, Alt-Down.
+    # The frame didnt seem to work.  Im assuming it was not appropiate enought in the bindtag order for the event.
+    context.block_alt = Tk.Entry()
+    def block_alt (event):
+        '''This def blocks specific keyboard commands from reaching the Text editor.  'breaking' in
+           the context does not occur before the event reaches the Text editor, so it has no effect'''
+        if context.on: return 'break'
+    for z in ('<Alt-Up>','<Alt-Down>'): context.block_alt.bind(z,block_alt)
+
+    #set the bindtags for the body, protects the autocompleter from other plugins unbinding this plugins bindings.
+    ctags = []
+    ctags.append(context.bindtags()[0])
+    ctags.append(context.block_alt.bindtags()[0])
+    ctags.extend(body.bindtags())
+    body.bindtags(tuple(ctags))
+
+    return body
+
+#@-node:ekr.20051025144611.40:newCreateControl
+#@+node:ekr.20051025144611.41:addAutoboxAndCalltipWidgets
+def addAutoboxAndCalltipWidgets( context ):
+    '''This builds the autobox and the calltip label for the editor.
+      It should be called once for every editor created.'''
+    
+    call_pack_forget = []
+
+    if useauto:
+        context.autobox = Pmw.ScrolledListBox(
+            context ,hscrollmode='none',
+            listbox_selectbackground='#FFE7C6',
+            listbox_selectforeground='blue',
+            listbox_background='white',
+            listbox_foreground='blue',
+            vertscrollbar_background='#FFE7C6',
+            vertscrollbar_width=10)
+        call_pack_forget.append( context.autobox.component( 'hull' ) )
+    
+    if usecall:            
+        context.calltip = Tk.Label(context,background='lightyellow',foreground='black')
+        call_pack_forget.append( context.calltip )
+    
+    def clean_editor( ca = call_pack_forget ):
+        #This def makes removing the autobox or calltip label easy.
+        # No need for an intermediate variable like 'current'.
+        for z in ca: z.place_forget()
+
+    context.clean_editor = clean_editor
+#@nonl
+#@-node:ekr.20051025144611.41:addAutoboxAndCalltipWidgets
+#@+node:ekr.20051025144611.42:onOpenWindow
+def onOpenWindow ():
+
+    #what does this do?
+    c = keywords.get("c")
+    if haveseen.has_key(c):
+        return 
+        
+    autocompleter = autocomplet(c)
+#@nonl
+#@-node:ekr.20051025144611.42:onOpenWindow
+#@-node:ekr.20051025144611.4:autocompleter.py
+#@-node:ekr.20051025144611:Autocompleter (Do not delete)
+#@-node:ekr.20051028061802:Use tab for autocompleter
 #@+node:ekr.20051014152256:Fix long-standing bug in import code
 Improve import code so it handles stufff like this from Ipyton/iplib
 
@@ -3027,8 +3182,6 @@ AssertionError
 #@-node:ekr.20051014104337.1:Crash in undo
 #@-node:ekr.20051027105304:before b1
 #@+node:ekr.20050925105522:Big
-* Complete Editor menu.
-
 - (1-2 days) Complete generalization of code.
     - Allow state-oriented shortcuts (C-x C-x, for example)
     - Create new kinds of commands dispatchers: vim, tree, etc.
@@ -5371,6 +5524,36 @@ xwem-worklog-tasks-description
 #@-node:ekr.20050712092501.1:xemacs variables
 #@-node:ekr.20050928144501.1:Mouseless Leo
 #@+node:ekr.20051014161015:Full input modes
+#@+node:ekr.20051103100302.1:Posting: @input-mode coming
+Leo will support both vim and xemacs by implementing @input-mode nodes in @settings trees.  For example, the xemacs <ctrl-c> mode will be implemented entirely as an input mode, with no special support from Leo.
+
+The headline of  @input-mode nodes will be:
+
+@input-mode mode-name
+
+This creates a new minibuffer command called enter-mode-mode-name. The body text of the @input-mode node will contain key bindings for that input mode.  *Only* those key bindings will be in effect in the input mode.
+
+To define standard emacs control-c mode we simply do the following:
+
+1. Put the following in the main @shortcuts node:
+
+enter-mode-quick-command = ctrl-c
+
+2. Create the @input-mode quick-command node with the desired bindings in its body text.
+
+That's all!
+
+Some details:
+
+- We'll probably want a way to copy bindings from one input mode to another.
+
+- I don't plan to implement a stack of input modes, but it would be easy to do so: just have an input mode define a minibuffer command called push-mode-mode-name as well as enter-mode-mode-name.  You can fill in the details...
+
+- It will probably be a good idea not to allow rebinding of ctrl-g (keyboard-quit) in an input mode.  That way there is always at least one way out :-)
+
+I like this scheme.  It is simple, powerful, general and easy to use.  It will eliminate all the hard binding presently in the code.  It will support vim (plain-key) bindings and all the similar plain-key modes in emacs.  It will allow for unlimited experimentation with key bindings.
+#@nonl
+#@-node:ekr.20051103100302.1:Posting: @input-mode coming
 #@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
 #@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
 #@-node:ekr.20051014161015:Full input modes
@@ -5558,6 +5741,8 @@ def endCommand (self,event,commandName):
                 pass
         bodyCtrl.update_idletasks()
         c.frame.body.onBodyChanged(p,undoType='Typing')
+        
+    c.updateScreen()
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@-node:ekr.20051015123432:(Methods with pychecker problems)
@@ -9229,6 +9414,7 @@ def __init__(self):
     self.logIsLocked = False # True: no changes to log are allowed.
     self.logWaiting = [] # List of messages waiting to go to a log.
     self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
     self.nodeIndices = None # Singleton node indices instance.
     self.numberOfWindows = 0 # Number of opened windows.
     self.openWithFiles = [] # List of data used by Open With command.
@@ -11213,6 +11399,7 @@ def __init__(self):
     self.logIsLocked = False # True: no changes to log are allowed.
     self.logWaiting = [] # List of messages waiting to go to a log.
     self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
     self.nodeIndices = None # Singleton node indices instance.
     self.numberOfWindows = 0 # Number of opened windows.
     self.openWithFiles = [] # List of data used by Open With command.
@@ -13714,6 +13901,7 @@ def __init__(self):
     self.logIsLocked = False # True: no changes to log are allowed.
     self.logWaiting = [] # List of messages waiting to go to a log.
     self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
     self.nodeIndices = None # Singleton node indices instance.
     self.numberOfWindows = 0 # Number of opened windows.
     self.openWithFiles = [] # List of data used by Open With command.
@@ -15989,23 +16177,50 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
-    w = f.getFocus() ; name = w._name
-    
-    if 0: # For reference.
-        s = g.app.gui.getTextFromClipboard()
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    name = hasattr(w,'_name') and w._name or ''
     
     if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('body'):
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('head'):
-        # I have no idea why the paste gets done automatically.
-        # There are Tk bugs lurking here...
-        # f.tree.updateHead(event=None,w=w)
-        pass
+        if 0:
+            s = g.app.gui.getTextFromClipboard()
+            i,j = g.app.gui.getTextSelection(w)
+            g.trace(i,j,repr(s),g.callers(6))
+        if 1:
+            << paste the text into w >>
+            # c.frame.tree.endEditLabel() # Emergency: works!
+            c.frame.tree.onHeadChanged(p)
     else: pass
+#@+node:ekr.20051103160025:<< paste the text into w >>
+ch  = g.app.gui.getTextFromClipboard()
+i,j = g.app.gui.getTextSelection(w)
+
+i = int(i.split('.')[1])
+j = int(j.split('.')[1])
+s = w.get('1.0','end')
+
+if s.endswith('\n'):
+    if len(s) > 1: s = s[:-1]
+    else:          s = ''
+
+if i != j:
+    s = s[:i] + ch + s[j:]
+else:
+    i = w.index('insert')
+    i = int(i.split('.')[1])
+    s = s[:i] + ch + s[i:]
+
+# g.trace(i,j,repr(s))
+c.frame.widgetWantsFocus(w,later=False)
+w.delete('1.0','end')
+w.insert('1.0',s)
+w.configure(width=f.tree.headWidth(s=s))
 #@nonl
+#@-node:ekr.20051103160025:<< paste the text into w >>
 #@-node:ekr.20051011072903.5:pasteText
 #@+node:ekr.20051011072903.1:OnCopyFromMenu
 def OnCopyFromMenu (self):
@@ -19289,23 +19504,50 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
-    w = f.getFocus() ; name = w._name
-    
-    if 0: # For reference.
-        s = g.app.gui.getTextFromClipboard()
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    name = hasattr(w,'_name') and w._name or ''
     
     if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('body'):
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('head'):
-        # I have no idea why the paste gets done automatically.
-        # There are Tk bugs lurking here...
-        # f.tree.updateHead(event=None,w=w)
-        pass
+        if 0:
+            s = g.app.gui.getTextFromClipboard()
+            i,j = g.app.gui.getTextSelection(w)
+            g.trace(i,j,repr(s),g.callers(6))
+        if 1:
+            << paste the text into w >>
+            # c.frame.tree.endEditLabel() # Emergency: works!
+            c.frame.tree.onHeadChanged(p)
     else: pass
+#@+node:ekr.20051103160025:<< paste the text into w >>
+ch  = g.app.gui.getTextFromClipboard()
+i,j = g.app.gui.getTextSelection(w)
+
+i = int(i.split('.')[1])
+j = int(j.split('.')[1])
+s = w.get('1.0','end')
+
+if s.endswith('\n'):
+    if len(s) > 1: s = s[:-1]
+    else:          s = ''
+
+if i != j:
+    s = s[:i] + ch + s[j:]
+else:
+    i = w.index('insert')
+    i = int(i.split('.')[1])
+    s = s[:i] + ch + s[i:]
+
+# g.trace(i,j,repr(s))
+c.frame.widgetWantsFocus(w,later=False)
+w.delete('1.0','end')
+w.insert('1.0',s)
+w.configure(width=f.tree.headWidth(s=s))
 #@nonl
+#@-node:ekr.20051103160025:<< paste the text into w >>
 #@-node:ekr.20051011072903.5:pasteText
 #@+node:ekr.20051011072903.1:OnCopyFromMenu
 def OnCopyFromMenu (self):

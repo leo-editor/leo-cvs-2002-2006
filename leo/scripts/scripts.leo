@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -30,96 +30,6 @@
 <v t="ekr.20050911112310"><vh>@button save</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
-<v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
-<v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041220172118"><vh>Resolve CVS Conflicts command</vh>
-<v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
-<v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
-<v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
-<v t="ekr.20041220173748"><vh>Design notes</vh></v>
-</v>
-<v t="ekr.20050103092214"><vh>Python parser (abandoned)</vh>
-<v t="ekr.20050103092214.5"><vh>class pythonParser</vh>
-<v t="ekr.20050103092214.6"><vh>To be deleted</vh>
-<v t="ekr.20050103092214.7"><vh>clear</vh></v>
-<v t="ekr.20050103092214.8"><vh>endUndo</vh></v>
-<v t="ekr.20050103092214.9"><vh>get</vh></v>
-<v t="ekr.20050103092214.10"><vh>put</vh></v>
-<v t="ekr.20050103092214.11"><vh>putArray</vh></v>
-<v t="ekr.20050103092214.12"><vh>replaceBody</vh></v>
-<v t="ekr.20050103092214.13"><vh>prettyPrintNode</vh></v>
-<v t="ekr.20050103092214.14"><vh>putToken</vh></v>
-<v t="ekr.20050103092214.18"><vh>dumpLines (not used)</vh></v>
-</v>
-<v t="ekr.20050103092214.15"><vh>__init__</vh>
-<v t="ekr.20050103092214.16"><vh>&lt;&lt; define dispatch dict &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050103092214.17"><vh>parseNode(top level)</vh></v>
-<v t="ekr.20050103092214.19"><vh>dumpToken</vh></v>
-<v t="ekr.20050103092214.21"><vh>oops</vh></v>
-<v t="ekr.20050103092214.22"><vh>trace</vh></v>
-<v t="ekr.20050103092214.23"><vh>doToken &amp; allies</vh>
-<v t="ekr.20050103095602"><vh>handleAtPart</vh></v>
-<v t="ekr.20050103092214.24"><vh>doEndMarker</vh></v>
-<v t="ekr.20050103092214.25"><vh>doErrorToken</vh></v>
-<v t="ekr.20050103092214.26"><vh>doIndent &amp; doDedent</vh></v>
-<v t="ekr.20050103092214.27"><vh>doMultiLine</vh></v>
-<v t="ekr.20050103092214.28"><vh>doName</vh></v>
-<v t="ekr.20050103092214.29"><vh>doNewline</vh></v>
-<v t="ekr.20050103092214.30"><vh>doNumber</vh></v>
-<v t="ekr.20050103092214.31"><vh>doOp</vh></v>
-<v t="ekr.20050103092214.32"><vh>doStartLine</vh></v>
-</v>
-</v>
-<v t="ekr.20050103092214.3"><vh>class dumper (pythonParser)</vh>
-<v t="ekr.20050103092214.4"><vh>__init__</vh></v>
-</v>
-</v>
-<v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20040918093738"><vh>Prototypes for Python-to-Tk indices</vh>
-<v t="ekr.20040918093738.1"><vh>py2tkIndex</vh>
-<v t="ekr.20040918093738.2"><vh>test</vh></v>
-</v>
-<v t="ekr.20040918093738.3"><vh>pyRowColToTkIndex</vh>
-<v t="ekr.20040918093738.4"><vh>test</vh></v>
-</v>
-<v t="ekr.20050314104217"><vh>Develop g.convertPythonIndexToRowCol</vh>
-<v t="ekr.20050314103747"><vh>g.convertPythonIndexToRowCol  &amp; tests</vh>
-<v t="ekr.20050314103747.1"><vh>bruteForceConvertPythonIndexToRowCol</vh></v>
-<v t="ekr.20050314103747.2"><vh>test_g_convertPythonIndexToRowCol</vh></v>
-</v>
-</v>
-<v t="ekr.20050315072359"><vh>Develop g.convertRowColToPythonIndex</vh>
-<v t="ekr.20050315072359.1"><vh>g.convertRowColToPythonIndex &amp; test</vh>
-<v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050427101736"><vh>Zip files experiments</vh>
-<v t="ekr.20050427102426"><vh>@url http://docs.python.org/lib/module-zipfile.html</vh></v>
-<v t="ekr.20050427101736.1"><vh>write zip</vh></v>
-<v t="ekr.20050427101736.2"><vh>read zip</vh></v>
-</v>
-<v t="ekr.20050618061950"><vh>Tests for new colorizer</vh>
-<v t="ekr.20050601072505"><vh>Large coloring test</vh></v>
-<v t="ekr.20050602213517"><vh>Doc part test</vh></v>
-<v t="ekr.20050603134109"><vh>C language test</vh></v>
-<v t="ekr.20050607084934"><vh>Plain test</vh></v>
-<v t="ekr.20050608082208"><vh>Leading @sign tests</vh>
-<v t="ekr.20050608081744" tnodeList="ekr.20050608081744"><vh>@file leadingAtTest.py</vh></v>
-<v t="ekr.20050608081942"><vh>@thin leadingAtTest2.py</vh></v>
-<v t="ekr.20050608082702" tnodeList="ekr.20050608082702"><vh>@file leadingAtTest3.py</vh></v>
-<v t="ekr.20050608082702.1"><vh>@thin leadingAtTest4.py</vh></v>
-</v>
-</v>
-<v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
-<v t="ekr.20050726101926"><vh>keyPressed</vh>
-<v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
-<v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
-<v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050824190822"><vh> Zope test</vh></v>
 <v t="ekr.20051011211253"><vh>Debugger canvas</vh>
 <v t="ekr.20051011213138"><vh>getImage</vh></v>
 <v t="ekr.20051011215038"><vh>getLineHeight</vh></v>
@@ -186,110 +96,98 @@
 <v t="ekr.20050708105323.3"><vh>ipmagic &amp; palias</vh></v>
 <v t="ekr.20050708165531.1"><vh>esc_quotes</vh></v>
 </v>
-<v t="ekr.20051020104412.37"><vh>Functional prototype of open-find-tab</vh>
-<v t="ekr.20051020110046"><vh>class underlinedTkButton</vh>
-<v t="ekr.20051020110046.1"><vh>__init__</vh>
-<v t="ekr.20051020110046.2"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
+<v t="ekr.20050726101926"><vh>keyPressed</vh>
+<v t="ekr.20050726101926.1"><vh>&lt;&lt; create the command &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.2"><vh>&lt;&lt; handle auto completion &gt;&gt;</vh></v>
+<v t="ekr.20050726101926.3"><vh>&lt;&lt; handle auto-tabbing &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051020110046.3"><vh>bindHotKey</vh></v>
-<v t="ekr.20051020110046.4"><vh>buttonCallback</vh></v>
+<v t="ekr.20040918093738"><vh>Prototypes for Python-to-Tk indices</vh>
+<v t="ekr.20040918093738.1"><vh>py2tkIndex</vh>
+<v t="ekr.20040918093738.2"><vh>test</vh></v>
 </v>
-<v t="ekr.20051020104805"><vh>class leoTkinterFindTab</vh>
-<v t="ekr.20051020104805.1"><vh> Not used</vh>
-<v t="ekr.20051020104805.2"><vh>destroySelf</vh></v>
-<v t="ekr.20051020104805.9"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20040918093738.3"><vh>pyRowColToTkIndex</vh>
+<v t="ekr.20040918093738.4"><vh>test</vh></v>
 </v>
-<v t="ekr.20051020104805.3"><vh>Birth &amp; death</vh>
-<v t="ekr.20051020104805.4"><vh>__init__</vh>
-<v t="ekr.20051020104805.5"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020104805.6"><vh>find.createFrame</vh>
-<v t="ekr.20051020105921"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
-<v t="ekr.20051020104805.7"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
-<v t="ekr.20051020104805.8"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020111605"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
-<v t="ekr.20051020104805.10"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020104805.11"><vh>find.init</vh>
-<v t="ekr.20051020104805.12"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
-<v t="ekr.20051020104805.13"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
+<v t="ekr.20050314104217"><vh>Develop g.convertPythonIndexToRowCol</vh>
+<v t="ekr.20050314103747"><vh>g.convertPythonIndexToRowCol  &amp; tests</vh>
+<v t="ekr.20050314103747.1"><vh>bruteForceConvertPythonIndexToRowCol</vh></v>
+<v t="ekr.20050314103747.2"><vh>test_g_convertPythonIndexToRowCol</vh></v>
 </v>
 </v>
-<v t="ekr.20051020104805.14"><vh>find.update_ivars</vh></v>
-<v t="ekr.20051020104805.15"><vh>tkFind.adjust_find_text</vh></v>
-<v t="ekr.20051020104805.16"><vh>onCloseWindow</vh></v>
-<v t="ekr.20051020104805.17"><vh>dismiss</vh></v>
-<v t="ekr.20051020104805.18"><vh>bringToFront</vh></v>
-<v t="ekr.20051020104805.19"><vh>selectAllFindText</vh></v>
-<v t="ekr.20051020104805.20"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
-</v>
-</v>
-<v t="ekr.20051024205040"><vh>Spell Tab (proto)</vh>
-<v t="ekr.20051024205040.4"><vh>&lt;&lt; specify aspell directories for imports &gt;&gt;</vh></v>
-<v t="ekr.20051024205040.5"><vh>&lt;&lt; spellpx imports &gt;&gt;</vh></v>
-<v t="ekr.20051024205040.7"><vh>init (not used)</vh></v>
-<v t="ekr.20051024205040.8"><vh>class Aspell</vh>
-<v t="ekr.20051024205040.9"><vh>Birth &amp; death</vh>
-<v t="ekr.20051024205040.10"><vh>__init__</vh></v>
-<v t="ekr.20051024205040.11"><vh>getAspellDirectory</vh></v>
-</v>
-<v t="ekr.20051024205040.12"><vh>processWord</vh></v>
-<v t="ekr.20051024205040.13"><vh>updateDictionary</vh></v>
-</v>
-<v t="ekr.20051024205040.14"><vh>class globalDataClass</vh>
-<v t="ekr.20051024205040.15"><vh>ctor</vh></v>
-<v t="ekr.20051024205040.16"><vh>getLocalDictionary</vh></v>
-<v t="ekr.20051024205040.17"><vh>getLocalLanguageCode</vh></v>
-<v t="ekr.20051024205040.18"><vh>readLocalDictionary</vh></v>
-<v t="ekr.20051024205040.19"><vh>setLocalDictionary</vh></v>
-</v>
-<v t="ekr.20051024205040.20"><vh>class spellDialog (leoFind.leoFind)</vh>
-<v t="ekr.20051024205040.21"><vh>Birth &amp; death</vh>
-<v t="ekr.20051024205040.22"><vh>spellTab.__init__</vh></v>
-<v t="ekr.20051024205040.23"><vh>init</vh></v>
-<v t="ekr.20051024205040.25"><vh>createTab</vh>
-<v t="ekr.20051024205040.26"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
-<v t="ekr.20051024205040.27"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051024205040.28"><vh>Event handlers (not used)</vh>
-<v t="ekr.20051024205040.29"><vh>createSpellMenu</vh></v>
-<v t="ekr.20051024205040.30"><vh>onSelect</vh></v>
-<v t="ekr.20051024205040.31"><vh>onCommand</vh></v>
-</v>
-<v t="ekr.20051024205040.32"><vh>Buttons</vh>
-<v t="ekr.20051024205040.33"><vh>onAddButton</vh></v>
-<v t="ekr.20051024205040.34"><vh>onIgnoreButton</vh></v>
-<v t="ekr.20051024205040.35"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
-<v t="ekr.20051024205040.36"><vh>onFindButton</vh></v>
-<v t="ekr.20051024205040.37"><vh>onHideButton</vh></v>
-<v t="ekr.20051024205040.38"><vh>onRedoButton &amp; onUndoButton</vh></v>
-</v>
-<v t="ekr.20051024205040.39"><vh>Commands</vh>
-<v t="ekr.20051024205040.40"><vh>add</vh></v>
-<v t="ekr.20051024205040.41"><vh>change</vh></v>
-<v t="ekr.20051024205040.42"><vh>checkSpelling</vh></v>
-<v t="ekr.20051024205040.43"><vh>find</vh></v>
-<v t="ekr.20051024205040.44"><vh>ignore</vh></v>
-</v>
-<v t="ekr.20051024205040.45"><vh>Helpers</vh>
-<v t="ekr.20051024205040.46"><vh>bringToFront</vh></v>
-<v t="ekr.20051024205040.47"><vh>fillbox</vh></v>
-<v t="ekr.20051024205040.48"><vh>findNextMisspelledWord</vh>
-<v t="ekr.20051024205040.49"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051024205040.50"><vh>findNextWord</vh></v>
-<v t="ekr.20051024205040.51"><vh>getSuggestion</vh></v>
-<v t="ekr.20051024205040.52"><vh>onMap</vh></v>
-<v t="ekr.20051024205040.53"><vh>onSelectListBox</vh></v>
-<v t="ekr.20051024205040.54"><vh>update</vh></v>
-<v t="ekr.20051024205040.55"><vh>updateButtons</vh></v>
+<v t="ekr.20050315072359"><vh>Develop g.convertRowColToPythonIndex</vh>
+<v t="ekr.20050315072359.1"><vh>g.convertRowColToPythonIndex &amp; test</vh>
+<v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
 </v>
 </v>
 </v>
+<v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
+<v t="ekr.20050715132524"><vh>Pymacs (hangs)</vh></v>
+<v t="ekr.20050103092214"><vh>Python parser (abandoned)</vh>
+<v t="ekr.20050103092214.5"><vh>class pythonParser</vh>
+<v t="ekr.20050103092214.6"><vh>To be deleted</vh>
+<v t="ekr.20050103092214.7"><vh>clear</vh></v>
+<v t="ekr.20050103092214.8"><vh>endUndo</vh></v>
+<v t="ekr.20050103092214.9"><vh>get</vh></v>
+<v t="ekr.20050103092214.10"><vh>put</vh></v>
+<v t="ekr.20050103092214.11"><vh>putArray</vh></v>
+<v t="ekr.20050103092214.12"><vh>replaceBody</vh></v>
+<v t="ekr.20050103092214.13"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20050103092214.14"><vh>putToken</vh></v>
+<v t="ekr.20050103092214.18"><vh>dumpLines (not used)</vh></v>
 </v>
-<v t="ekr.20051103074730"><vh>Scripts</vh>
+<v t="ekr.20050103092214.15"><vh>__init__</vh>
+<v t="ekr.20050103092214.16"><vh>&lt;&lt; define dispatch dict &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050103092214.17"><vh>parseNode(top level)</vh></v>
+<v t="ekr.20050103092214.19"><vh>dumpToken</vh></v>
+<v t="ekr.20050103092214.21"><vh>oops</vh></v>
+<v t="ekr.20050103092214.22"><vh>trace</vh></v>
+<v t="ekr.20050103092214.23"><vh>doToken &amp; allies</vh>
+<v t="ekr.20050103095602"><vh>handleAtPart</vh></v>
+<v t="ekr.20050103092214.24"><vh>doEndMarker</vh></v>
+<v t="ekr.20050103092214.25"><vh>doErrorToken</vh></v>
+<v t="ekr.20050103092214.26"><vh>doIndent &amp; doDedent</vh></v>
+<v t="ekr.20050103092214.27"><vh>doMultiLine</vh></v>
+<v t="ekr.20050103092214.28"><vh>doName</vh></v>
+<v t="ekr.20050103092214.29"><vh>doNewline</vh></v>
+<v t="ekr.20050103092214.30"><vh>doNumber</vh></v>
+<v t="ekr.20050103092214.31"><vh>doOp</vh></v>
+<v t="ekr.20050103092214.32"><vh>doStartLine</vh></v>
+</v>
+</v>
+<v t="ekr.20050103092214.3"><vh>class dumper (pythonParser)</vh>
+<v t="ekr.20050103092214.4"><vh>__init__</vh></v>
+</v>
+</v>
+<v t="ekr.20041220172118"><vh>Resolve CVS Conflicts command</vh>
+<v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
+<v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
+<v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
+<v t="ekr.20041220173748"><vh>Design notes</vh></v>
+</v>
+<v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
+<v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050618061950"><vh>Tests for new colorizer</vh>
+<v t="ekr.20050601072505"><vh>Large coloring test</vh></v>
+<v t="ekr.20050602213517"><vh>Doc part test</vh></v>
+<v t="ekr.20050603134109"><vh>C language test</vh></v>
+<v t="ekr.20050607084934"><vh>Plain test</vh></v>
+<v t="ekr.20050608082208"><vh>Leading @sign tests</vh>
+<v t="ekr.20050608081744" tnodeList="ekr.20050608081744"><vh>@file leadingAtTest.py</vh></v>
+<v t="ekr.20050608081942"><vh>@thin leadingAtTest2.py</vh></v>
+<v t="ekr.20050608082702" tnodeList="ekr.20050608082702"><vh>@file leadingAtTest3.py</vh></v>
+<v t="ekr.20050608082702.1"><vh>@thin leadingAtTest4.py</vh></v>
+</v>
+</v>
+<v t="ekr.20050427101736"><vh>Zip files experiments</vh>
+<v t="ekr.20050427102426"><vh>@url http://docs.python.org/lib/module-zipfile.html</vh></v>
+<v t="ekr.20050427101736.1"><vh>write zip</vh></v>
+<v t="ekr.20050427101736.2"><vh>read zip</vh></v>
+</v>
+<v t="ekr.20050824190822"><vh>Zope test</vh></v>
+</v>
+<v t="ekr.20051103074730" a="ETV"><vh>Scripts</vh>
 <v t="ekr.20040715105834"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
@@ -710,6 +608,14 @@
 </v>
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
+<v t="ekr.20051103072643"><vh>Export to treepad</vh></v>
+<v t="ekr.20051025070722.1"><vh>Runniung tcl scripts from the body pane</vh>
+<v t="ekr.20051024223801"><vh>run tcl </vh></v>
+<v t="ekr.20051024223801.1"><vh>My first tcl script</vh></v>
+<v t="ekr.20051025115413"><vh>My second tcl scrip, organized with noweb markup</vh>
+<v t="ekr.20051025115413.1"><vh>the actual script</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20051104082151"><vh>Reports</vh>
 <v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
@@ -789,16 +695,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20040312021734" a="E" annotate="7d71002e"><vh>Recent</vh>
-<v t="ekr.20051025070722.1"><vh>Runniung tcl scripts from the body pane</vh>
-<v t="ekr.20051024223801"><vh>run tcl </vh></v>
-<v t="ekr.20051024223801.1"><vh>My first tcl script</vh></v>
-<v t="ekr.20051025115413"><vh>My second tcl scrip, organized with noweb markup</vh>
-<v t="ekr.20051025115413.1"><vh>the actual script</vh></v>
-</v>
-</v>
-<v t="ekr.20051103072643"><vh>Export to treepad</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1013,7 +909,6 @@ for n in xrange(1):
 print "done"</t>
 <t tx="ekr.20040311090054">for p in c.allNodes_iter():
     print p.v.t.fileIndex</t>
-<t tx="ekr.20040312021734"></t>
 <t tx="ekr.20040312021734.1">count = 0
 for p in c.rootPosition().allNodes_iter():
     count += 1
@@ -8832,503 +8727,6 @@ while y &lt; h:
         g.es("exception setting outline line height")
         g.es_exception()
         return 20 # default</t>
-<t tx="ekr.20051020104412.37">import leoFind
-import leoTkinterDialog
-import Tkinter as Tk
-
-@others
-
-#c = self.c ; 
-log = c.frame.log ; tabName = 'Find'
-
-if log.frameDict.get(tabName):
-    log.selectTab(tabName)
-else:
-    log.selectTab(tabName)
-    f = log.frameDict.get(tabName)
-    t = log.textDict.get(tabName)
-    t.pack_forget()
-    leoTkinterFindTab(c,f)
-    # End of script causes the tab to be hidden.</t>
-<t tx="ekr.20051020104805">class leoTkinterFindTab (leoFind.leoFind):
-
-    """A class that implements Leo's tkinter find tab."""
-
-    @others</t>
-<t tx="ekr.20051020104805.1">if 0:
-    @others</t>
-<t tx="ekr.20051020104805.2">def destroySelf (self):
-    
-    self.top.destroy()</t>
-<t tx="ekr.20051020104805.3"></t>
-<t tx="ekr.20051020104805.4">def __init__(self,c,parentFrame):
-
-    # Init the base class...
-    leoFind.leoFind.__init__(self,c,title='Find Tab')
-    
-    &lt;&lt; create the tkinter intVars &gt;&gt;
-    
-    # These are created later.
-    self.find_ctrl = None
-    self.change_ctrl = None 
-
-    self.createFrame(parentFrame)
-    
-    self.init(c) # New in 4.3: init only once.</t>
-<t tx="ekr.20051020104805.5">self.dict = {}
-
-for key in self.intKeys:
-    self.dict[key] = Tk.IntVar()
-
-for key in self.newStringKeys:
-    self.dict[key] = Tk.StringVar()
-    
-self.s_ctrl = Tk.Text() # Used by find.search()</t>
-<t tx="ekr.20051020104805.6">def createFrame (self,parentFrame):
-    
-    &lt;&lt; Create the outer frames &gt;&gt;
-    &lt;&lt; Create the Find and Change panes &gt;&gt;
-    &lt;&lt; Create two columns of radio and checkboxes &gt;&gt;
-    &lt;&lt; Create two rows of buttons &gt;&gt;
-    
-    for widget in (self.find_ctrl, self.change_ctrl):
-        widget.bind ("&lt;1&gt;",  self.resetWrap)
-        widget.bind("&lt;Key&gt;", self.resetWrap)
-        widget.bind("&lt;Control-a&gt;",self.selectAllFindText)
-        #widget.bind(g.virtual_event_name("SelectAll"),self.selectAllFindText)
-    
-    for widget in (outer, self.find_ctrl, self.change_ctrl):
-        widget.bind("&lt;Key-Return&gt;", findButtonCallback)
-        widget.bind("&lt;Key-Escape&gt;", self.onCloseWindow)</t>
-<t tx="ekr.20051020104805.7">fc = Tk.Frame(outer, bd="1m")
-fc.pack(anchor="n", fill="x", expand=1)
-
-# Removed unused height/width params: using fractions causes problems in some locales!
-fpane = Tk.Frame(fc, bd=1)
-cpane = Tk.Frame(fc, bd=1)
-
-fpane.pack(anchor="n", expand=1, fill="x")
-cpane.pack(anchor="s", expand=1, fill="x")
-
-# Create the labels and text fields...
-flab = Tk.Label(fpane, width=8, text="Find:")
-clab = Tk.Label(cpane, width=8, text="Change:")
-
-# Use bigger boxes for scripts.
-self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=2,width=15) # was height=4,width=20
-self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=2,width=15) # was height=4,width=20
-&lt;&lt; Bind Tab and control-tab &gt;&gt;
-
-if 0:# Add scrollbars.
-    fBar = Tk.Scrollbar(fpane,name='findBar')
-    cBar = Tk.Scrollbar(cpane,name='changeBar')
-    
-    for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
-        txt['yscrollcommand'] = bar.set
-        bar['command'] = txt.yview
-        bar.pack(side="right", fill="y")
-
-flab.pack(side="left")
-clab.pack(side="left")
-ctxt.pack(side="right", expand=1, fill="x") # was 'both'
-ftxt.pack(side="right", expand=1, fill="x") # was 'both'</t>
-<t tx="ekr.20051020104805.8">def setFocus(w):
-    w.focus_set()
-    g.app.gui.setSelectionRange(w,"1.0","1.0")
-    return "break"
-    
-def toFind(event,w=ftxt): return setFocus(w)
-def toChange(event,w=ctxt): return setFocus(w)
-    
-def insertTab(w):
-    data = g.app.gui.getSelectionRange(w)
-    if data: start,end = data
-    else: start = end = g.app.gui.getInsertPoint(w)
-    g.app.gui.replaceSelectionRangeWithText(w,start,end,"\t")
-    return "break"
-
-def insertFindTab(event,w=ftxt): return insertTab(w)
-def insertChangeTab(event,w=ctxt): return insertTab(w)
-
-ftxt.bind("&lt;Tab&gt;",toChange)
-ctxt.bind("&lt;Tab&gt;",toFind)
-ftxt.bind("&lt;Control-Tab&gt;",insertFindTab)
-ctxt.bind("&lt;Control-Tab&gt;",insertChangeTab)</t>
-<t tx="ekr.20051020104805.9">columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
-columnsFrame.pack(anchor="e",expand=1,padx="7p",pady="2p") # Don't fill.
-
-numberOfColumns = 4 # Number of columns
-columns = [] ; radioLists = [] ; checkLists = []
-for i in xrange(numberOfColumns):
-    columns.append(Tk.Frame(columnsFrame,bd=1))
-    radioLists.append([])
-    checkLists.append([])
-
-for i in xrange(numberOfColumns):
-    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
-    
-# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
-
-radioLists[0] = [
-    (self.dict["radio-find-type"],"P&amp;Lain Search","plain-search"),  
-    (self.dict["radio-find-type"],"&amp;Pattern Match Search","pattern-search"),
-    (self.dict["radio-find-type"],"&amp;Script Search","script-search")]
-checkLists[0] = [
-    ("Scrip&amp;t Change",self.dict["script_change"])]
-checkLists[1] = [
-    ("&amp;Whole Word",  self.dict["whole_word"]),
-    ("&amp;Ignore Case", self.dict["ignore_case"]),
-    ("Wrap &amp;Around", self.dict["wrap"]),
-    ("&amp;Reverse",     self.dict["reverse"])]
-radioLists[2] = [
-    (self.dict["radio-search-scope"],"&amp;Entire Outline","entire-outine"),
-    (self.dict["radio-search-scope"],"Suboutline &amp;Only","suboutline-only"),  
-    (self.dict["radio-search-scope"],"&amp;Node Only","node-only"),
-    # I don't know what selection-only is supposed to do.
-    (self.dict["radio-search-scope"],"Selection Only",None)] #,"selection-only")]
-checkLists[2] = []
-checkLists[3] = [
-    ("Search &amp;Headline Text", self.dict["search_headline"]),
-    ("Search &amp;Body Text",     self.dict["search_body"]),
-    ("&amp;Mark Finds",           self.dict["mark_finds"]),
-    ("Mark &amp;Changes",         self.dict["mark_changes"])]
-
-for i in xrange(numberOfColumns):
-    for var,name,val in radioLists[i]:
-        box = underlinedTkButton("radio",columns[i],anchor="w",text=name,variable=var,value=val)
-        box.button.pack(fill="x")
-        box.button.bind("&lt;1&gt;", self.resetWrap)
-        if val == None: box.button.configure(state="disabled")
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-    for name,var in checkLists[i]:
-        box = underlinedTkButton("check",columns[i],anchor="w",text=name,variable=var)
-        box.button.pack(fill="x")
-        box.button.bind("&lt;1&gt;", self.resetWrap)
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-        if var is None: box.button.configure(state="disabled")</t>
-<t tx="ekr.20051020104805.10"># Create the button panes
-buttons  = Tk.Frame(outer,bd=1)
-buttons2 = Tk.Frame(outer,bd=1)
-buttons.pack (anchor="n",expand=1,fill="x")
-buttons2.pack(anchor="n",expand=1,fill="x")
-
-# In 4.4 it's dubious to define these keys.  For example, Alt-x must be reserved!
-# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
-# HotKeys used for plain buttons (enter),d,g,t
-
-def findButtonCallback(event=None):
-    __pychecker__ = '--no-argsused' # the event param must be present.
-    self.findButton()
-    return 'break'
-
-# Create the first row of buttons
-findButton=Tk.Button(buttons,
-    width=9,text="Find",bd=4,command=findButtonCallback) # The default.
-findButton.pack(pady="1p",padx="25p",side="left")
-
-if 1:
-    incrementalBox = underlinedTkButton("check",buttons,
-        anchor="w",text="Incremental")
-        # Not yet.  This may affect the file format!
-        # ,variable=self.dict['incremental'])
-    incrementalBox.button.pack(pady="1p",side="left",expand=1)
-    incrementalBox.bindHotKey(ftxt)
-    incrementalBox.bindHotKey(ctxt)
-
-findAllButton = underlinedTkButton("button",buttons,
-    width=9,text="Find All",command=self.findAllButton)
-findAllButton.button.pack(pady="1p",padx="25p",side="right",fill="x")
-findAllButton.bindHotKey(ftxt)
-findAllButton.bindHotKey(ctxt)
-
-# Create the second row of buttons
-changeButton = underlinedTkButton("button",buttons2,
-    width=10,text="Change",command=self.changeButton)
-changeButton.button.pack(pady="1p",padx="25p",side="left")
-changeButton.bindHotKey(ftxt)
-changeButton.bindHotKey(ctxt)
-
-changeFindButton = underlinedTkButton("button",buttons2,
-    text="Change, Then Find",command=self.changeThenFindButton)
-changeFindButton.button.pack(pady="1p",side="left",expand=1)
-changeFindButton.bindHotKey(ftxt)
-changeFindButton.bindHotKey(ctxt)
-    
-changeAllButton = underlinedTkButton("button",buttons2,
-    width=10,text="Change All",command=self.changeAllButton)
-changeAllButton.button.pack(pady="1p",padx="25p",side="right")
-changeAllButton.bindHotKey(ftxt)
-changeAllButton.bindHotKey(ctxt)</t>
-<t tx="ekr.20051020104805.11">def init (self,c):
-
-    # N.B.: separate c.ivars are much more convenient than a dict.
-    for key in self.intKeys:
-        # New in 4.3: get ivars from @settings.
-        val = c.config.getBool(key)
-        setattr(self,key,val)
-        val = g.choose(val,1,0) # Work around major Tk problem.
-        self.dict[key].set(val)
-        # g.trace(key,val)
-
-    &lt;&lt; set find/change widgets &gt;&gt;
-    &lt;&lt; set radio buttons from ivars &gt;&gt;</t>
-<t tx="ekr.20051020104805.12">self.find_ctrl.delete("1.0","end")
-self.change_ctrl.delete("1.0","end")
-
-# New in 4.3: Get setting from @settings.
-for w,setting,defaultText in (
-    (self.find_ctrl,"find_text",'&lt;find pattern here&gt;'),
-    (self.change_ctrl,"change_text",''),
-):
-    s = c.config.getString(setting)
-    if not s: s = defaultText
-    w.insert("end",s)</t>
-<t tx="ekr.20051020104805.13">found = False
-for var,setting in (
-    ("pattern_match","pattern-search"),
-    #("script_search","script-search")
-):
-    val = self.dict[var].get()
-    if val:
-        self.dict["radio-find-type"].set(setting)
-        found = True ; break
-if not found:
-    self.dict["radio-find-type"].set("plain-search")
-    
-found = False
-for var,setting in (
-    ("suboutline_only","suboutline-only"),
-    ("node_only","node-only"),
-    ("selection_only","selection-only")): # 11/9/03
-    val = self.dict[var].get()
-    if val:
-        self.dict["radio-search-scope"].set(setting)
-        found = True ; break
-if not found:
-    self.dict["radio-search-scope"].set("entire-outine")</t>
-<t tx="ekr.20051020104805.14">def update_ivars (self):
-    
-    """Called just before doing a find to update ivars from the find panel."""
-
-    for key in self.intKeys:
-        val = self.dict[key].get()
-        setattr(self, key, val) # No more _flag hack.
-        # g.trace(key,val)
-
-    # Set ivars from radio buttons. Convert these to 1 or 0.
-    find_type = self.dict["radio-find-type"].get()
-    self.pattern_match = g.choose(find_type == "pattern-search",1,0)
-    self.script_search = g.choose(find_type == "script-search",1,0)
-
-    search_scope = self.dict["radio-search-scope"].get()
-    self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
-    self.node_only       = g.choose(search_scope == "node-only",1,0)
-    self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
-
-    # New in 4.3: The caller is responsible for removing most trailing cruft.
-    # Among other things, this allows Leo to search for a single trailing space.
-    s = self.find_ctrl.get("1.0","end")
-    s = g.toUnicode(s,g.app.tkEncoding)
-    # g.trace(repr(s))
-    if s and s[-1] in ('\r','\n'):
-        s = s[:-1]
-    self.find_text = s
-
-    s = self.change_ctrl.get("1.0","end")
-    if s and s[-1] in ('\r','\n'):
-        s = s[:-1]
-    s = g.toUnicode(s,g.app.tkEncoding)
-    self.change_text = s</t>
-<t tx="ekr.20051020104805.15">def adjust_find_text(self,s):
-    
-    w = self.find_ctrl
-    
-    w.delete("1.0","end")
-    w.insert("end",s)</t>
-<t tx="ekr.20051020104805.16">def onCloseWindow(self,event=None):
-    
-    __pychecker__ = '--no-argsused' # the event param must be present.
-
-    self.top.withdraw()</t>
-<t tx="ekr.20051020104805.17">def dismiss (self):
-    
-    self.top.withdraw()</t>
-<t tx="ekr.20051020104805.18">def bringToFront (self):
-    
-    """Bring the tkinter Find Panel to the front."""
-    
-    c = self.c ; t = self.find_ctrl ; gui = g.app.gui
-            
-    self.top.withdraw() # Helps bring the window to the front.
-    self.top.deiconify()
-    self.top.lift()
-
-    gui.set_focus(c,t,tag='bringToFront')
-    
-    # Apparently, the text can not be adjusted unless the widget has focus...
-    s = t.get('1.0','end')
-    if s and s[-1] in ('\n','\r'):
-        t.delete('end-1c','end')
-
-    # New in 4.3: don't highlight the stupid added trailing newline!
-    gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
-    
-    def setFocusCallback():
-        # g.trace()
-        gui.set_focus(c,t,tag='tkFind.bringToFront')
-    
-    # We must do this after other callbacks.  Sheesh.
-    self.top.after(500,setFocusCallback)
-</t>
-<t tx="ekr.20051020104805.19">def selectAllFindText (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # the event param must be present.
-
-    try:
-        w = self.frame.focus_get()
-        g.app.gui.setTextSelection(w,"1.0","end")
-        return "break"
-    except:
-        return None # To keep pychecker happy.</t>
-<t tx="ekr.20051020104805.20">def gui_search (self,t,*args,**keys):
-    return t.search(*args,**keys)
-
-def init_s_ctrl (self,s):
-    t = self.s_ctrl	
-    t.delete("1.0","end")
-    t.insert("end",s)
-    t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
-    return t</t>
-<t tx="ekr.20051020105921">self.top = Tk.Frame(parentFrame)
-
-if 1: # Left justify
-    self.top.pack(side='left',fill='y',pady=10)
-else:
-    self.top.pack(side='top',pady=20)
-
-self.frame = Tk.Frame(self.top)
-self.frame.pack(side="top")
-
-# Used for alignment.
-outer = Tk.Frame(self.frame)
-outer.pack(padx=2,pady=2)</t>
-<t tx="ekr.20051020110046">class underlinedTkButton:
-    
-    @others</t>
-<t tx="ekr.20051020110046.1">def __init__(self,buttonType,parent_widget,**keywords):
-
-    self.buttonType = buttonType
-    self.parent_widget = parent_widget
-    self.hotKey = None
-    text = keywords['text']
-
-    &lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;
-
-    # Create the button...
-    if self.hotKey:
-        keywords['text'] = text
-        keywords['underline'] = index
-
-    if buttonType.lower() == "button":
-        self.button = Tk.Button(parent_widget,keywords)
-    elif buttonType.lower() == "check":
-        self.button = Tk.Checkbutton(parent_widget,keywords)
-    elif buttonType.lower() == "radio":
-        self.button = Tk.Radiobutton(parent_widget,keywords)
-    else:
-        g.trace("bad buttonType")
-    
-    self.text = text # for traces</t>
-<t tx="ekr.20051020110046.2">index = text.find('&amp;')
-
-if index &gt; -1:
-
-    if index == len(text)-1:
-        # The word ends in an ampersand.  Ignore it; there is no hot key.
-        text = text[:-1]
-    else:
-        self.hotKey = text [index + 1]
-        text = text[:index] + text[index+1:]</t>
-<t tx="ekr.20051020110046.3">def bindHotKey (self,widget):
-    
-    if self.hotKey:
-        for key in (self.hotKey.lower(),self.hotKey.upper()):
-            widget.bind("&lt;Alt-%s&gt;" % key,self.buttonCallback)
-</t>
-<t tx="ekr.20051020110046.4"># The hot key has been hit.  Call the button's command.
-
-def buttonCallback (self, event=None):
-    
-    __pychecker__ = '--no-argsused' # the event param must be present.
-
-    # g.trace(self.text)
-
-    self.button.invoke ()
-    
-    # See if this helps.
-    return 'break'
-</t>
-<t tx="ekr.20051020111605">columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
-columnsFrame.pack(expand=1,padx="7p",pady="2p") # Use ,fill='x' to left justify
-
-numberOfColumns = 2 # Number of columns
-columns = [] ; radioLists = [] ; checkLists = []
-for i in xrange(numberOfColumns):
-    columns.append(Tk.Frame(columnsFrame,bd=1))
-    radioLists.append([])
-    checkLists.append([])
-
-for i in xrange(numberOfColumns):
-    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
-    
-# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
-
-radioLists[0] = [
-    #(self.dict["radio-find-type"],"P&amp;Lain Search","plain-search"),  
-    #(self.dict["radio-find-type"],"&amp;Pattern Match Search","pattern-search"),
-    # (self.dict["radio-find-type"],"&amp;Script Search","script-search"),
-]
-checkLists[0] = [
-    # ("Scrip&amp;t Change",self.dict["script_change"]),
-    ("Whole Word",      self.dict["whole_word"]),
-    ("Ignore Case",     self.dict["ignore_case"]),
-    ("Wrap Around",     self.dict["wrap"]),
-    ("Reverse",         self.dict["reverse"]),
-    ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
-    ("Search Headline", self.dict["search_headline"]),
-    ("Search Body",     self.dict["search_body"]),
-]
-
-radioLists[1] = [
-    (self.dict["radio-search-scope"],"&amp;Entire Outline","entire-outine"),
-    (self.dict["radio-search-scope"],"Suboutline &amp;Only","suboutline-only"),  
-    (self.dict["radio-search-scope"],"&amp;Node Only","node-only"),
-    # I don't know what selection-only is supposed to do.
-    (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
-]
-checkLists[1] = [
-    ("&amp;Mark Finds",           self.dict["mark_finds"]),
-    ("Mark &amp;Changes",         self.dict["mark_changes"]),
-    ('Show Context',          self.dict['batch']),
-]
-
-for i in xrange(numberOfColumns):
-    for var,name,val in radioLists[i]:
-        box = underlinedTkButton("radio",columns[i],anchor="w",text=name,variable=var,value=val)
-        box.button.pack(fill="x")
-        box.button.bind("&lt;1&gt;", self.resetWrap)
-        if val == None: box.button.configure(state="disabled")
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-    for name,var in checkLists[i]:
-        box = underlinedTkButton("check",columns[i],anchor="w",text=name,variable=var)
-        box.button.pack(fill="x")
-        box.button.bind("&lt;1&gt;", self.resetWrap)
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-        if var is None: box.button.configure(state="disabled")</t>
 <t tx="ekr.20051020124457"></t>
 <t tx="ekr.20051023104813"># This works, but is too slow to be really useful.
 
@@ -9340,718 +8738,6 @@ for p in c.all_positions_iter():
         count += 1
         
 g.es('%s nodes checked' % count)</t>
-<t tx="ekr.20051024205040">@language python
-@tabwidth -4
-
-@ To do:
-- open the minibuffer to get suggestions.  
-- Per-pane key bindings. (arrows, etc.)
-- Accumulate status messages.
-@c
-
-&lt;&lt; specify aspell directories for imports &gt;&gt;
-&lt;&lt; spellpx imports &gt;&gt;
-
-ini_file_name = 'spellpyx.ini'
-
-@others
-
-globalData = globalDataClass()
-
-if aspell:
-    spelllTab(c,aspell,globalData)</t>
-<t tx="ekr.20051024205040.4">import sys
-
-if sys.platform == 'darwin':
-    aspell_dir = '/sw/lib'
-        # The top-level directory.
-    aspell_bin_dir = '/sw/lib/bin'
-        # NOT TESTED YET.
-else:
-    aspell_dir = r'c:\Aspell'
-        # The top-level directory.
-    aspell_bin_dir = r'c:\Aspell\bin'
-        # The directory continaing apell.pyd and aspell-15.dll</t>
-<t tx="ekr.20051024205040.5"># import leoGlobals as g
-import sys
-
-# Specify the path to the top-level Aspell directory.
-if sys.platform == 'darwin':
-    aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-else:
-     aspell = g.importFromPath(
-        "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
-
-import leoPlugins
-import leoFind
-
-Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-
-import ConfigParser
-import os
-import re
-import string
-import traceback</t>
-<t tx="ekr.20051024205040.7">def init (c):
-    
-    global globalData,spellFrames
-  
-    spellFrames[c] = spellFrame = spelllTab(c,aspell,globalData)
-
-    # New in 4.3: do this immediately.
-    if 0:
-        spellFrame.createSpellMenu()
-
-    if 0: # Register handlers.
-        leoPlugins.registerHandler("command2",spellFrame.onCommand)
-    
-        leoPlugins.registerHandler(
-            ("bodyclick2","bodydclick2","bodyrclick2","bodykey2","select2"),
-            spellFrame.onSelect)</t>
-<t tx="ekr.20051024205040.8">class Aspell:
-    
-    """A wrapper class for Aspell spell checker"""
-    
-    @others
-
-</t>
-<t tx="ekr.20051024205040.9"></t>
-<t tx="ekr.20051024205040.10">def __init__(self,aspell,local_dictionary_file,local_language_code):
-    
-    """Ctor for the Aspell class."""
-
-    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
-    
-    self.aspell_exe_loc = self.getAspellDirectory()
-    self.local_language_code = local_language_code
-    
-    if local_dictionary_file:
-        self.local_dictionary_file = local_dictionary_file
-        self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
-    else:
-        print "failed to set aspell.local_dictionary"
-        self.local.dictionary_file = None
-        self.local_dictionary = None</t>
-<t tx="ekr.20051024205040.11">def getAspellDirectory(self):
-
-    """Get the directory containing aspell.exe from the .ini file"""
-
-    try:
-        fileName = os.path.join(g.app.loadDir,"..","plugins",ini_file_name)
-        config = ConfigParser.ConfigParser()
-        config.read(fileName)
-        return config.get("main", "aspell_dir")
-    except:
-        g.es_exception()
-        return None</t>
-<t tx="ekr.20051024205040.12">def processWord(self, word):
-    """Pass a word to aspell and return the list of alternatives.
-    OK: 
-    * 
-    Suggestions: 
-    &amp; «original» «count» «offset»: «miss», «miss», ... 
-    None: 
-    # «original» «offset» 
-    simplifyed to not create the string then make a list from it    
-    """
-
-    if self.sc.check(word):
-        return None
-    else:
-        return self.sc.suggest(word)</t>
-<t tx="ekr.20051024205040.13">def updateDictionary(self):
-
-    """Update the aspell dictionary from a list of words.
-    
-    Return True if the dictionary was updated correctly."""
-
-    try:
-        # Create master list
-        basename = os.path.splitext(self.local_dictionary)[0]
-        cmd = (
-            "%s --lang=%s create master %s.wl &lt; %s.txt" %
-            (self.aspell_exe_loc, self.local_language_code, basename,basename))
-        os.popen(cmd)
-        return True
-
-    except Exception, err:
-        g.es("Unable to update local aspell dictionary: %s" % err)
-        print err
-        add_dicts = ""
-        return False</t>
-<t tx="ekr.20051024205040.14">class globalDataClass:
-    
-    @others</t>
-<t tx="ekr.20051024205040.15">def __init__ (self):
-
-    self.local_dictionary_file = self.getLocalDictionary()
-    self.local_language_code = self.getLocalLanguageCode("en")
-    self.aspell = Aspell(aspell,self.local_dictionary_file,self.local_language_code)
-    self.setLocalDictionary()</t>
-<t tx="ekr.20051024205040.16">def getLocalDictionary(self):
-    
-    """Get the dictionaries containing words not in the standard dictionary from the .ini file."""
-
-    try:
-        fileName = os.path.join(g.app.loadDir,"../","plugins",ini_file_name)
-        config = ConfigParser.ConfigParser()
-        config.read(fileName)
-        return config.get("main","local_leo_dictionary",None)
-    except:
-        g.es_exception()
-        return None</t>
-<t tx="ekr.20051024205040.17">def getLocalLanguageCode(self, defaultLanguageCode):
-    """Get the dictionaries containing words not in the standard dictionary from the .ini file."""
-
-    try:
-        fileName = os.path.join(g.app.loadDir,"../","plugins",ini_file_name)
-        config = ConfigParser.ConfigParser()
-        config.read(fileName)
-        return config.get("main", "local_language_code", defaultLanguageCode)
-    except:
-        g.es_exception()
-        return defaultLanguageCode</t>
-<t tx="ekr.20051024205040.18">def readLocalDictionary(self, local_dictionary):
-    """Read the dictionary of words which we use as a local dictionary
-    
-    Although Aspell itself has the functionality to handle this kind of things
-    we duplicate it here so that we can also use it for the "ignore" functionality
-    and so that in future a Python only solution could be developed."""
-
-    try:
-        f = open(local_dictionary,"r")
-    except IOError:
-        g.es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
-        return None
-    
-    try:
-        # Create the dictionary - there are better ways to do this
-        # in later Python's but we stick with this method for compatibility
-        dct = {}
-        for word in f.readlines():
-            dct[word.strip().lower()] = 0
-    finally:
-        f.close()
-
-    return dct</t>
-<t tx="ekr.20051024205040.19">def setLocalDictionary (self):
-
-    if self.local_dictionary_file:
-        self.dictionary = self.readLocalDictionary(self.local_dictionary_file)
-        if self.dictionary:
-            g.es("Aspell local dictionary: %s" % \
-                g.shortFileName(self.local_dictionary_file), color="blue")
-            if 0:
-                keys = self.dictionary.keys()
-                keys.sort()
-                print "local dict:", keys
-        else:
-            self.dictionary = {}
-            self.local_dictionary_file = None
-    else:
-        self.dictionary = {}</t>
-<t tx="ekr.20051024205040.20">class spelllTab(leoFind.leoFind):
-
-    """A class to create and manage Leo's Spell Check dialog."""
-    
-    @others</t>
-<t tx="ekr.20051024205040.21"></t>
-<t tx="ekr.20051024205040.22">def __init__(self,c,aspell,globalData):
-    
-    """Ctor for the Leo Spelling dialog."""
-
-    self.c = c ; log = c.frame.log ; tabName = 'Spell'
-    
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    else:
-        leoFind.leoFind.__init__(self,c) # Call the base ctor.
-        self.c = c
-        log.selectTab(tabName)
-        self.frame = log.frameDict.get(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        self.init()
-        </t>
-<t tx="ekr.20051024205040.23">def init (self):
-    
-    global globalData
-
-    # Get these from the globals.
-    self.local_dictionary_file = globalData.local_dictionary_file
-    self.local_language_code = globalData.local_language_code
-    self.aspell = globalData.aspell
-    self.dictionary = globalData.dictionary
-    
-    # State variables.
-    self.currentWord = None
-    self.suggestions = []
-    self.v = None
-    self.body = None
-    self.messages = [] # List of message to be displayed when hiding the tab.
-    self.workCtrl = Tk.Text(None) # A text widget for scanning.
-
-    # Create the Spell tab and its contents.
-    self.createTab()
-    self.fillbox([])
-    self.listBox.bind("&lt;Double-Button-1&gt;",self.onChangeThenFindButton)
-    self.listBox.bind("&lt;Button-1&gt;",self.onSelectListBox)
-    self.listBox.bind("&lt;Map&gt;",self.onMap)</t>
-<t tx="ekr.20051024205040.25">def createTab(self):
-
-    """Create the Spell tab."""
-    
-    c = self.c
-    
-    # Set the common background color.
-    bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
-    
-    # Create the find panel...
-    outer = Tk.Frame(self.frame,bd=2,bg=bg)
-    outer.pack(expand=1,fill='both',padx=2,pady=2)
-    
-    &lt;&lt; Create the text and suggestion panes &gt;&gt;
-    &lt;&lt; Create the spelling buttons &gt;&gt;</t>
-<t tx="ekr.20051024205040.26">f = outer
-
-f2 = Tk.Frame(f,bg=bg)
-f2.pack(side='top',expand=0,fill='x')
-
-self.wordLabel = Tk.Label(f2,text="Suggestions for:")
-self.wordLabel.pack(side='left')
-self.wordLabel.configure(font=('verdana',10,'bold'))
-
-fpane = Tk.Frame(f,bg=bg,bd=2)
-fpane.pack(side='top',expand=1,fill='both')
-
-self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
-self.listBox.pack(side='left',expand=1,fill='both')
-self.listBox.configure(font=('verdana',11,'normal'))
-
-listBoxBar = Tk.Scrollbar(fpane,name='listBoxBar')
-
-bar, txt = listBoxBar, self.listBox
-txt ['yscrollcommand'] = bar.set
-bar ['command'] = txt.yview
-bar.pack(side='right',fill='y')</t>
-<t tx="ekr.20051024205040.27"># Create the button panes
-buttons1 = Tk.Frame(outer,bd=1,bg=bg)
-buttons1.pack (side='top',expand=0,fill='x')  
-
-buttons2 = Tk.Frame(outer,bd=1,bg=bg)
-buttons2.pack (side='top',expand=0,fill='x') 
-
-buttonList = []
-for text,command in (
-    ("Find",self.onFindButton),
-    ("Change",self.onChangeButton),
-    ("Change, Find",self.onChangeThenFindButton),
-    ("Add",self.onAddButton)):
-    font = ('verdana', 9, 'normal')
-    width = max(6,len(text)-1)
-    b=Tk.Button(
-        buttons1, font= font, width= width, text= text, command= command)
-    b.pack(side='left',expand = 0,fill='none')
-
-    buttonList.append(b)
-        
-for text,command in (
-    ("Undo",self.onUndoButton),
-    ("Redo",self.onRedoButton),
-    ("Ignore",self.onIgnoreButton),
-    ("Hide",self.onHideButton)):
-    font = ('verdana', 9, 'normal')
-    width = max(6,len(text)-1)
-    b=Tk.Button(
-        buttons2, font= font, width= width, text= text, command= command)
-    b.pack(side='left',expand = 0,fill='none')
-    buttonList.append(b)
-
-# We need these to enable or disable buttons.
-(self.findButton, self.changeButton,
- self.changeFindButton, self.addButton, 
- self.undoButton, self.redoButton,
- self.ignoreButton, self.hideButton) = buttonList</t>
-<t tx="ekr.20051024205040.28"># These formerly were global functions.</t>
-<t tx="ekr.20051024205040.29">def createSpellMenu(self,*args,**keys):
-
-    """Create the Check Spelling menu item in the Edit menu.
-    
-    The args and keys params are for backward compatibility."""
-
-    c = self.c
-
-    table = (
-        ("-", None, None),
-        ("Check Spelling", "Alt+Shift+A",self.checkSpelling))
-
-    c.frame.menu.createMenuItemsFromTable("Edit",table)</t>
-<t tx="ekr.20051024205040.30">def onSelect(self,tag,keys):
-    
-    """A new position has just been selected.  Update the Spell Check window."""
-    
-    c = self.c
-    
-    if keys.get('c') == c:
-        if c.currentPosition() != self.v:
-            self.update(show=False,fill=True)
-        else:
-            self.updateButtons()</t>
-<t tx="ekr.20051024205040.31">def onCommand(self,tag,keys):
-    
-    """Update the Spell Check window after any command that might change text."""
-    
-    c = self.c
-
-    if keys.get('c') == c:
-        self.update(show=False,fill=False)</t>
-<t tx="ekr.20051024205040.32"></t>
-<t tx="ekr.20051024205040.33">def onAddButton(self):
-    """Handle a click in the Add button in the Check Spelling dialog."""
-
-    self.add()
-    #self.closePipes()
-
-</t>
-<t tx="ekr.20051024205040.34">def onIgnoreButton(self):
-    """Handle a click in the Ignore button in the Check Spelling dialog."""
-
-    self.ignore()
-    #self.closePipes()</t>
-<t tx="ekr.20051024205040.35">def onChangeButton(self):
-    """Handle a click in the Change button in the Check Spelling dialog."""
-
-    self.change()
-    #self.closePipes()
-    self.updateButtons()
-    
-# Event needed for double-click event.
-def onChangeThenFindButton(self,event=None): 
-    """Handle a click in the "Change, Find" button in the Check Spelling dialog."""
-
-    if self.change():
-        self.find()
-    #self.closePipes()
-    self.updateButtons()</t>
-<t tx="ekr.20051024205040.36">def onFindButton(self):
-    """Handle a click in the Find button in the Check Spelling dialog."""
-
-    self.find()
-    self.updateButtons()
-    self.c.frame.bodyWantsFocus()
-    #self.closePipes()</t>
-<t tx="ekr.20051024205040.37">def onHideButton(self):
-    
-    """Handle a click in the Hide button in the Check Spelling dialog."""
-
-    #self.closePipes()
-    self.c.frame.log.selectTab('Log')
-    
-    for message in self.messages:
-        g.es(message,color='blue')
-        
-    self.messages = []</t>
-<t tx="ekr.20051024205040.38">def onRedoButton(self):
-    """Handle a click in the Redo button in the Check Spelling dialog."""
-
-    self.c.undoer.redo() # Not a command, so command hook doesn't fire.
-    self.update(show= False, fill= False)
-    # self.c.frame.body.bodyCtrl.focus_force()
-    self.c.frame.bodyWantsFocus()
-    
-def onUndoButton(self):
-    """Handle a click in the Undo button in the Check Spelling dialog."""
-
-    self.c.undoer.undo() # Not a command, so command hook doesn't fire.
-    self.update(show=False,fill=False)
-    # self.c.frame.body.bodyCtrl.focus_force()
-    self.c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20051024205040.39"></t>
-<t tx="ekr.20051024205040.40">def add(self):
-    """Add the selected suggestion to the dictionary."""
-    
-    if not self.local_dictionary_file:
-        return
-    
-    try:
-        f = None
-        try:
-            # Rewrite the dictionary in alphabetical order.
-            f = open(self.local_dictionary_file, "r")
-            words = f.readlines()
-            f.close()
-            words = [word.strip() for word in words]
-            words.append(self.currentWord)
-            words.sort()
-            f = open(self.local_dictionary_file, "w")
-            for word in words:
-                f.write("%s\n" % word)
-            f.flush()
-            f.close()
-            if 1:
-                s = 'Spell: added %s' % self.currentWord
-                self.messages.append(s)
-            else: # Too distracting.
-                g.es("Adding ", color= "blue", newline= False) 
-                g.es('%s' % self.currentWord)
-        except IOError:
-            g.es("Can not add %s to dictionary" % self.currentWord, color="red")
-    finally:
-        if f: f.close()
-        
-    self.dictionary[self.currentWord.lower()] = 0
-    
-    # Restart aspell so that it re-reads its dictionary.
-    #why? since we are checking local words ourself anyway
-    #self.aspell.closePipes()
-    #self.aspell.openPipes()
-    
-    self.onFindButton()</t>
-<t tx="ekr.20051024205040.41">def change(self):
-    """Make the selected change to the text"""
-
-    c = self.c ; v = self.v ; body = self.body ; t = body.bodyCtrl
-    
-    selection = self.getSuggestion()
-    if selection:
-        start,end = oldSel = g.app.gui.getTextSelection(t)
-        if start:
-            if t.compare(start, "&gt;", end):
-                start,end = end,start
-            t.delete(start,end)
-            t.insert(start,selection)
-            g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
-            newSel = g.app.gui.getTextSelection(t)
-
-            # update node, undo status, dirty flag, changed mark &amp; recolor
-            c.beginUpdate()
-            c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
-            c.endUpdate(True)
-            t.focus_set()
-            return True
-
-    # The focus must never leave the body pane.
-    t.focus_set()
-    return False</t>
-<t tx="ekr.20051024205040.42">def checkSpelling(self,event=None):
-
-    """Open the Check Spelling dialog."""
-
-    self.bringToFront()
-    self.update(show=True,fill=False)</t>
-<t tx="ekr.20051024205040.43">def find(self):
-    """Find the next unknown word."""
-    
-    # Reload the work pane from the present node.
-    s = self.body.bodyCtrl.get("1.0", "end").rstrip()
-    self.workCtrl.delete("1.0", "end")
-    self.workCtrl.insert("end", s)
-    
-    # Reset the insertion point of the work widget.
-    ins = self.body.bodyCtrl.index("insert")
-    self.workCtrl.mark_set("insert", ins)
-
-    alts, word = self.findNextMisspelledWord()
-    self.currentWord = word # Need to remember this for 'add' and 'ignore'
-    
-    if alts:
-        self.fillbox(alts, word)
-        self.body.bodyCtrl.focus_set()
-                    
-        # Copy the working selection range to the body pane
-        start, end = g.app.gui.getTextSelection(self.workCtrl)
-        g.app.gui.setTextSelection(self.body.bodyCtrl, start, end)
-        #fix selection getting hidden in not visable section of body
-        self.body.bodyCtrl.see(start)
-    else:
-        g.es("no more misspellings")
-        self.fillbox([])</t>
-<t tx="ekr.20051024205040.44">def ignore(self):
-
-    """Ignore the incorrect word for the duration of this spell check session."""
-    
-    if 1: # Somewhat helpful: applies until the tab is destroyed.
-        s = 'Spell: ignore %s' % self.currentWord
-        self.messages.append(s)
-
-    if 0: # Too distracting
-        g.es("Ignoring ", color= "blue", newline= False)
-        g.es('%s' % self.currentWord)
-
-    self.dictionary[self.currentWord.lower()] = 0
-    self.onFindButton()</t>
-<t tx="ekr.20051024205040.45"></t>
-<t tx="ekr.20051024205040.46">def bringToFront (self):
-    
-    self.c.frame.log.selectTab('Spell')</t>
-<t tx="ekr.20051024205040.47">def fillbox(self, alts, word=None):
-    """Update the suggestions listbox in the Check Spelling dialog."""
-    
-    self.suggestions = alts
-    
-    if not word:
-        word = ""
-
-    self.wordLabel.configure(text= "Suggestions for: " + word)
-    self.listBox.delete(0, "end")
-
-    for i in xrange(len(self.suggestions)):
-        self.listBox.insert(i, self.suggestions[i])
-    
-    # This doesn't show up because we don't have focus.
-    if len(self.suggestions):
-        self.listBox.select_set(1) 
-
-</t>
-<t tx="ekr.20051024205040.48">def findNextMisspelledWord(self):
-    """Find the next unknown word."""
-    
-    aspell = self.aspell ; alts = None ; word = None
-    c = self.c ; p = self.v ; t = self.workCtrl
-    try:
-        #aspell.openPipes()
-        try:
-            while 1:
-                p, word = self.findNextWord(p) 
-                if not p or not word:
-                    alts = None
-                    break
-                &lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;
-                alts = aspell.processWord(word)
-                if alts:
-                    self.v = p
-                    c.beginUpdate()
-                    c.frame.tree.expandAllAncestors(p)
-                    c.selectPosition(p)
-                    c.endUpdate()
-                    break
-        except:
-            g.es_exception()
-    finally:
-        #aspell.closePipes()
-        return alts, word</t>
-<t tx="ekr.20051024205040.49">@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not True and this code could easily be located after the aspell call
-@c
-
-if self.dictionary.has_key(word.lower()):
-    
-    # print "Ignored", word
-    continue
-    
-# print "Didn't ignore '%s'" % word</t>
-<t tx="ekr.20051024205040.50"># Unicode characters may cause index problems.
-
-def findNextWord(self,p):
-
-    """Scan for the next word, leaving the result in the work widget"""
-
-    t = self.workCtrl
-
-    # Allow quotes and underscores in the middle of words, but not at the beginning or end.
-    # This breaks words at non-ascii 'letters' such as é.  I don't know what the solution is.
-    word_start = string.letters
-    word_end   = string.letters + string.digits
-    word_chars = string.letters + string.digits + "`" + "'" + "_"
-    while 1:
-        line = t.get('insert wordstart','insert lineend')
-        # g.trace('insert',t.index('insert'),'insert wordstart',t.index('insert wordstart'))
-        # g.trace(repr(line))
-        # Start the word at the first letter.
-        i = 0
-        while i &lt; len(line) and line[i] not in word_start:
-            i += 1
-        if i &lt; len(line):
-            # A non-empty word has been found.
-            line = t.get('insert wordstart','insert lineend')
-            j = i
-            while j &lt; len(line) and line[j] in word_chars:
-                j += 1
-            word = line[i:j]
-            while word and word[-1] not in word_end:
-                word = word[:-1]
-            # This trace is important: it verifies that all words have actually been checked.
-            # g.trace(repr(word))
-            x1 = t.index('insert + %dc' % (i))
-            x2 = t.index('insert + %dc' % (i+len(word)))
-            g.app.gui.setTextSelection(t,x1,x2)
-            return p, word
-        else:
-            # End of the line. Bug fix: 9/8/05.
-            t.mark_set('insert','insert lineend + 1c')
-            if t.compare("insert","&gt;=", "end - 1c"):
-                p.moveToThreadNext()
-                if not p: return None,None
-                t.delete("1.0", "end")
-                t.insert("end", p.bodyString())
-                t.mark_set("insert", "1.0")</t>
-<t tx="ekr.20051024205040.51">def getSuggestion(self):
-    """Return the selected suggestion from the listBox."""
-    
-    # Work around an old Python bug.  Convert strings to ints.
-    items = self.listBox.curselection()
-    try:
-        items = map(int, items)
-    except ValueError: pass
-
-    if items:
-        n = items[0]
-        suggestion = self.suggestions[n]
-        return suggestion
-    else:
-        return None</t>
-<t tx="ekr.20051024205040.52">def onMap (self, event=None):
-    """Respond to a Tk &lt;Map&gt; event."""
-    
-    self.update(show= False, fill= False)</t>
-<t tx="ekr.20051024205040.53">def onSelectListBox(self, event=None):
-    """Respond to a click in the selection listBox."""
-    
-    self.updateButtons()
-    self.body.bodyCtrl.focus_set()
-</t>
-<t tx="ekr.20051024205040.54">def update(self,show=True,fill=False):
-    
-    """Update the Spell Check dialog."""
-    
-    # print "update(show=%d,fill=%d)" % (show,fill)
-    
-    # Always assume that the user has changed text.
-    if not self.c: return
-
-    c = self.c
-    self.v = c.currentVnode()
-    self.body = c.frame.body
-    if fill:
-        self.fillbox([])
-    self.updateButtons()
-    if show:
-        self.bringToFront()
-        # Don't interfere with Edit Headline commands.
-        self.body.bodyCtrl.focus_set()
-
-</t>
-<t tx="ekr.20051024205040.55">def updateButtons(self):
-    
-    """Enable or disable buttons in the Check Spelling dialog."""
-    
-    c = self.c
-
-    start,end = g.app.gui.getTextSelection(c.frame.body.bodyCtrl)
-    state = g.choose(self.suggestions and start,"normal", "disabled")
-    
-    self.changeButton.configure(state= state)
-    self.changeFindButton.configure(state= state)
-
-    state = g.choose(self.c.undoer.canRedo(), "normal", "disabled")
-    self.redoButton.configure(state= state)
-    
-    state = g.choose(self.c.undoer.canUndo(), "normal", "disabled")
-    self.undoButton.configure(state= state)
-    
-    state = g.choose(self.local_dictionary_file, "normal", "disabled")
-    self.addButton.configure(state= state)
-
-    self.ignoreButton.configure(state= "normal")</t>
 <t tx="ekr.20051024223801"># To use this script, you must make this a script button, either with the
 # 'Script Button' button or by making this an @button node.
 
