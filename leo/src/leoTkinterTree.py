@@ -1728,7 +1728,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
             #@        << drag p to vdrag >>
             #@+node:ekr.20041111114148:<< drag p to vdrag >>
-            g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
+            # g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
             
             if self.controlDrag: # Clone p and move the clone.
                 if childFlag:
@@ -1752,7 +1752,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.drag_p = None
         
         # Must set self.drag_p = None first.
-        c.requestRedraw()
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20041111115908:endDrag
     #@+node:ekr.20041111114944:startDrag
@@ -1776,7 +1776,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if not p: return
         self.drag_p = p.copy() # defensive programming: not needed.
         self.dragging = True
-        g.trace("*** start drag ***",theId,self.drag_p.headString())
+        # g.trace("*** start drag ***",theId,self.drag_p.headString())
         # Only do this once: greatly speeds drags.
         self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
         if c.config.getBool("allow_clone_drags"):
@@ -1853,7 +1853,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Tree end-of-drag handler called from vnode event handler."""
         
-        g.trace(self.drag_p)
+        # g.trace(self.drag_p)
         
         c = self.c ; p = self.drag_p
         if not p: return
