@@ -126,7 +126,7 @@ def installDrawMethod(tags, kw):
 #@+node:pap.20041020001841:doFootprint
 def doFootprint(self, p):  
     """Do the colouring""" 
-    if p and p.edit_text(): 
+    if p and p.edit_widget(): 
         config = g.app.config 
          
         #fg = config.getWindowPref("headline_text_unselected_foreground_color") 
@@ -139,7 +139,7 @@ def doFootprint(self, p):
             coloured_nodes.add(p) 
  
         try: 
-            p.edit_text().configure( 
+            p.edit_widget().configure( 
                 state="disabled",highlightthickness=0, fg=fg, bg=bg) 
         except: 
          g.es_exception()
@@ -182,8 +182,8 @@ def updateNodes():
                     if click_registry[node.v] <= 0: 
                         #print "removing", node.v 
                         expired.add(node) 
-                        if node.edit_text(): 
-                            node.edit_text().configure( 
+                        if node.edit_widget(): 
+                            node.edit_widget().configure( 
                                 state="disabled",highlightthickness=0, fg=fg, bg=bg) 
             # 
             # Remove the expired nodes - cannot do that in the loop above 

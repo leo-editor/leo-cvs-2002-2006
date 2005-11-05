@@ -1923,13 +1923,13 @@ def buildPositionClass (controller=None):
         #@nonl
         #@-node:ekr.20050826134701.93:p.Status bits
         #@+node:ekr.20050826134701.94:p.edit_text
-        def edit_text (self):
+        def edit_widget (self):
             
             # New in 4.3 beta 3: let the tree classes do all the work.
             
             p = self ; c = p.c
             
-            return c.frame.tree.edit_text(p)
+            return c.frame.tree.edit_widget(p)
         #@nonl
         #@-node:ekr.20050826134701.94:p.edit_text
         #@+node:ekr.20050826134701.95:p.directParents
@@ -2320,7 +2320,7 @@ def buildPositionClass (controller=None):
         #@+node:ekr.20050826134701.125:p.setHeadStringOrHeadline
         def setHeadStringOrHeadline (self,s,encoding="utf-8"):
         
-            p = self ; t = p.edit_text()
+            p = self ; t = p.edit_widget()
             
             p.initHeadString(s,encoding)
         

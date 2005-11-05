@@ -445,35 +445,25 @@ class cleoController:
     #@-node:ekr.20050227074440.4:draw_topT
     #@-node:ekr.20050227071948.44:draw box area
     #@+node:ekr.20050227081640:tree.set...LabelState
-    #@+node:ekr.20050227081640.1:No change from 4.3 code base
+    #@+node:ekr.20050227081640.1:No change from 4.4 code base
     if 0:
         #@    @+others
-        #@+node:ekr.20050227081640.2:setNormalLabelState
-        def setNormalLabelState (self,p): # selected, editing
-        
-            # Do nothing if a redraw is already sheduled.
-            # This prevents race conditions.
-            if self.redrawScheduled: return 
-            
-            if p and p.edit_text():
-                self.setEditHeadlineColors(p)
-                p.edit_text().tag_remove("sel","1.0","end")
-                p.edit_text().tag_add("sel","1.0","end")
-                # Set the focus immediately
-                self.frame.treeWantsFocus(p.edit_text(),later=False,tag='setNormalLabelState')
-        #@nonl
-        #@-node:ekr.20050227081640.2:setNormalLabelState
-        #@+node:ekr.20050227081640.3:setDisabledLabelState
-        def setDisabledLabelState (self,p): # selected, disabled
+        #@+node:ekr.20050227081640.2:setEditLabelState
+        def setEditLabelState (self,p): # selected, editing
         
             # Do nothing if a redraw is already sheduled.
             # This prevents race conditions.
             if self.redrawScheduled: return
-        
-            if p and p.edit_text():
-                self.setDisabledHeadlineColors(p)
+            
+            w = p.edit_widget()
+            
+            if p and w:
+                self.frame.widgetWantsFocus(w,later=False)
+                self.setEditHeadlineColors(p)
+                w.tag_remove("sel","1.0","end")
+                w.tag_add("sel","1.0","end")
         #@nonl
-        #@-node:ekr.20050227081640.3:setDisabledLabelState
+        #@-node:ekr.20050227081640.2:setEditLabelState
         #@+node:ekr.20050227081640.4:setSelectedLabelState
         def setSelectedLabelState (self,p): # selected, not editing
         
@@ -492,14 +482,14 @@ class cleoController:
             # This prevents race conditions.
             if self.redrawScheduled: return 
         
-            if p and p.edit_text():
+            if p and p.edit_widget():
                 self.setUnselectedHeadlineColors(p)
         #@nonl
         #@-node:ekr.20050227081640.5:setUnselectedLabelState
         #@+node:ekr.20050227081640.6:setDisabledHeadlineColors
         def setDisabledHeadlineColors (self,p):
         
-            c = self.c ; w = p.edit_text()
+            c = self.c ; w = p.edit_widget()
         
             if self.trace and self.verbose:
                 if not self.redrawing:
@@ -518,7 +508,7 @@ class cleoController:
         #@+node:ekr.20050227081640.7:setEditHeadlineColors
         def setEditHeadlineColors (self,p):
         
-            c = self.c ; w = p.edit_text()
+            c = self.c ; w = p.edit_widget()
             
             if self.trace and self.verbose:
                 if not self.redrawing:
@@ -551,11 +541,11 @@ class cleoController:
         #@-node:ekr.20050227081640.7:setEditHeadlineColors
         #@-others
     #@nonl
-    #@-node:ekr.20050227081640.1:No change from 4.3 code base
+    #@-node:ekr.20050227081640.1:No change from 4.4 code base
     #@+node:ekr.20050227081640.8:setUnselectedHeadlineColors
     def setUnselectedHeadlineColors (self,p):
         
-        c = p.c ; config = g.app.config ; w = p.edit_text()
+        c = p.c ; config = g.app.config ; w = p.edit_widget()
         
         if 0: # EKR: this is immediately changed!
             fg = config.getColor(c,"headline_text_unselected_foreground_color")
@@ -574,7 +564,7 @@ class cleoController:
         
         if 0: # original code from leoTkinterTree.
         
-            c = self.c ; w = p.edit_text()
+            c = self.c ; w = p.edit_widget()
             
             if self.trace and self.verbose:
                 if not self.redrawing:
