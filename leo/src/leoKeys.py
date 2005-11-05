@@ -507,6 +507,7 @@ class keyHandlerClass:
         self.abbrevOn = False # True: abbreviations are on.
         self.arg = '' # The value returned by k.getArg.
         self.commandName = None
+        self.funcReturn = None # For k.simulateCommand
         self.inverseCommandsDict = {}
             # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
         self.leoCallbackDict = {}
@@ -1053,9 +1054,10 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         k.stroke = stroke # Set this global for general use.
-        keysym = event and event.keysym
-        ch = event and event.char
+        keysym = event and event.keysym or ''
+        ch = event and event.char or ''
         k.func = func
+        k.funcReturn = None # For unit testing.
         commandName = k.ultimateFuncName(func)
         special = keysym in (
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
@@ -1067,23 +1069,23 @@ class keyHandlerClass:
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
         inserted = not special or (
-            stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
+            stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
     
         if inserted:
-            # g.trace(stroke,event.keysym)
+            # g.trace(stroke,keysym)
             #@        << add character to history >>
             #@+node:ekr.20050920085536.67:<< add character to history >>
             # Don't add multiple special characters to history.
             
-            k.keysymHistory.insert(0,event.keysym)
+            k.keysymHistory.insert(0,keysym)
             
-            if len(event.char) > 0:
+            if len(ch) > 0:
                 if len(keyHandlerClass.lossage) > 99:
                     keyHandlerClass.lossage.pop()
-                keyHandlerClass.lossage.insert(0,event.char)
+                keyHandlerClass.lossage.insert(0,ch)
             
             if 0: # traces
-                g.trace(event.keysym,stroke)
+                g.trace(keysym,stroke)
                 g.trace(k.keysymHistory)
                 g.trace(keyHandlerClass.lossage)
             #@nonl
@@ -1118,7 +1120,7 @@ class keyHandlerClass:
     
         if k.regx.iter:
             try:
-                k.regXKey = event.keysym
+                k.regXKey = keysym
                 k.regx.iter.next() # EKR: next() may throw StopIteration.
             finally:
                 c.updateScreen()
@@ -1134,9 +1136,10 @@ class keyHandlerClass:
             # g.trace('executing func',commandName)
             forceFocus = func.__name__ != 'leoCallback'
             if forceFocus: k.forceFocusToBody()
-            func(event)
+            val = func(event)
+            k.funcReturn = k.funcReturn or val # For unit tests.
             k.endCommand(event,commandName)
-            # g.trace('returns "break"')
+            # g.trace('funcReturn',k.funcReturn)
             return 'break'
             
         # New logic in 4.4:
@@ -1817,6 +1820,22 @@ class keyHandlerClass:
              g.trace('no shortcut for %s' % (commandName),color='red')
     #@nonl
     #@-node:ekr.20050920085536.64:manufactureKeyPressForCommandName
+    #@+node:ekr.20051105155441:simulateCommand
+    def simulateCommand (self,commandName):
+        
+        k = self ; c = k.c
+        
+        func = c.commandsDict.get(commandName)
+        
+        if func:
+            event = stroke = None
+            k.masterCommand(event,func,stroke)
+            return k.funcReturn
+        else:
+            g.trace('no command for %s' % (commandName),color='red')
+            raise AttributeError
+    #@nonl
+    #@-node:ekr.20051105155441:simulateCommand
     #@+node:ekr.20050920085536.62:getArg
     def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
         
