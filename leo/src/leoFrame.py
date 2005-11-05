@@ -456,7 +456,7 @@ class leoFrame:
         self.componentsDict = {} # Keys are names, values are componentClass instances.
         self.es_newlines = 0 # newline count for this log stream
         self.openDirectory = ""
-        self.requestRedraw = False
+        self.requestRedrawFlag = False
         self.saved=False # True if ever saved
         self.splitVerticalFlag,self.ratio, self.secondary_ratio = True,0.5,0.5 # Set by initialRatios later.
         self.startupWindow=False # True if initially opened window
@@ -788,17 +788,12 @@ class leoTree:
         self.c = frame.c
     
         self.edit_text_dict = {}
-            # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
+            # New in 3.12: keys vnodes, values are edit_widget (Tk.Text widgets)
             # New in 4.2: keys are vnodes, values are pairs (p,Tk.Text).
         
         # "public" ivars: correspond to setters & getters.
         self._editPosition = None
-    
-        # Controlling redraws
-        self.disableRedraw = False
-        self.updateCount = 0 # self.redraw does nothing unless this is zero.
         self.redrawCount = 0 # For traces
-        self.redrawScheduled = False # True if redraw scheduled.
     #@nonl
     #@-node:ekr.20031218072017.3705:  tree.__init__ (base class)
     #@+node:ekr.20031218072017.3706: Must be defined in subclasses
@@ -836,16 +831,15 @@ class leoTree:
     def endEditLabel(self):
         self.oops()
     
-    def setNormalLabelState(self,v):
+    def setEditLabelState(self,v):
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3708:Edit label
     #@+node:ekr.20031218072017.3711:Scrolling
     def scrollTo(self,p):
         self.oops()
-    
-    def idle_scrollTo(self,p=None):
-        self.oops()
+        
+    idle_scrollTo = scrollTo # For compatibility.
     #@nonl
     #@-node:ekr.20031218072017.3711:Scrolling
     #@+node:ekr.20031218072017.3712:Selecting
@@ -864,7 +858,7 @@ class leoTree:
     #@+node:ekr.20031218072017.3714:beginUpdate
     def beginUpdate (self):
     
-        self.updateCount += 1
+        pass
     #@nonl
     #@-node:ekr.20031218072017.3714:beginUpdate
     #@+node:ekr.20031218072017.3715:tree.endUpdate
@@ -875,15 +869,9 @@ class leoTree:
         Calls to g.es() will disable redraws, so calls to c.endUpdate
         should follow all such writes to the log pane.'''
     
-        assert(self.updateCount > 0)
-        self.updateCount -= 1
-        # g.trace(self.updateCount, 'disableRedraw',self.disableRedraw)
     
-        if flag and self.updateCount == 0:
-            # Bug fix: 3/11/05. Force a redraw here.
-            # Writing to the log sets self.disableRedraw.
-            self.disableRedraw = False
-            self.redraw()
+        if flag:
+            c.requestRedraw()
     #@nonl
     #@-node:ekr.20031218072017.3715:tree.endUpdate
     #@+node:ekr.20031218072017.3716:Getters/Setters (tree)
@@ -1619,16 +1607,15 @@ class nullTree (leoTree):
     def endEditLabel(self):
         pass
     
-    def setNormalLabelState(self,v):
+    def setEditLabelState(self,v):
         pass
     #@nonl
     #@-node:ekr.20031218072017.2238:Edit label
     #@+node:ekr.20031218072017.2239:Scrolling
     def scrollTo(self,p):
         pass
-    
-    def idle_scrollTo(self,p=None):
-        pass
+        
+    idle_scrollTo = scrollTo # For compatibility.
     #@nonl
     #@-node:ekr.20031218072017.2239:Scrolling
     #@+node:ekr.20031218072017.2240:Tree operations
@@ -1637,12 +1624,14 @@ class nullTree (leoTree):
         pass
     #@nonl
     #@-node:ekr.20031218072017.2240:Tree operations
-    #@+node:ekr.20040725044521:edit_text
-    def edit_text (self,p):
+    #@+node:ekr.20040725044521:edit_widget
+    def edit_widget (self,p):
         
         self.oops()
+        
+    edit_text = edit_widget # For compatibility.
     #@nonl
-    #@-node:ekr.20040725044521:edit_text
+    #@-node:ekr.20040725044521:edit_widget
     #@-node:ekr.20031218072017.2236:Dummy operations...
     #@+node:ekr.20031218072017.2241:getFont & setFont
     def getFont(self):

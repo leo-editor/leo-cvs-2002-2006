@@ -1492,7 +1492,9 @@ class leoMenu:
         # The first parameter must be event, and it must default to None.
         def menuCallback(event=None,self=self,command=command,label=name):
             __pychecker__ = '--no-argsused' # event not used, and must be present.
-            return self.c.doCommand(command,label)
+            
+            c = self.c
+            return c.doCommand(command,label)
     
         return menuCallback
     #@nonl

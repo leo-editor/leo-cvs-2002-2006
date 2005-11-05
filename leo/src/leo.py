@@ -138,8 +138,9 @@ def run(fileName=None,*args,**keywords):
     p = c.currentPosition()
     g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
     g.enableIdleTimeHook()
-    frame.tree.redraw()
-    frame.body.setFocus()
+    # c.redraw_now()
+    frame.bodyWantsFocus()
+    c.updateScreen()
     g.app.gui.runMainLoop()
 #@nonl
 #@+node:ekr.20031218072017.1936:isValidPython

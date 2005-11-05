@@ -67,7 +67,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.iconFrame = None 
         self.log = None
         self.canvas = None
-        self.outerFrame = None 
+        self.outerFrame = None
         self.statusFrame = None
         self.statusLineComponentName = 'statusLine'
         self.statusText = None 
@@ -145,7 +145,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # there is NO WAY to know which window is on top!
         f.top.bind("<Activate>",f.OnActivateLeoEvent)
         f.top.bind("<Deactivate>",f.OnDeactivateLeoEvent)
-        
         f.top.bind("<Control-KeyPress>",f.OnControlKeyDown)
         f.top.bind("<Control-KeyRelease>",f.OnControlKeyUp)
         
@@ -916,8 +915,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c = self.c ; t = self.textWidget
             if t:
                 t.configure(state="normal",background=background)
-                c.frame.widgetWantsFocus(t)
-                t.focus_set()
+                c.frame.widgetWantsFocus(t,later=False)
             self.enabled = True
                 
         def isEnabled(self):
@@ -985,17 +983,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
             t.update_idletasks()
         #@nonl
         #@-node:ekr.20031218072017.3963:put (leoTkinterFrame:statusLineClass)
-        #@+node:EKR.20040424154804:setFocus
-        if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
-        
-            def setFocus (self):
-            
-                # Force the focus to the icon area.
-                t = self.textWidget
-                if t:
-                    t.focus_set()
-        #@nonl
-        #@-node:EKR.20040424154804:setFocus
         #@+node:ekr.20041223111916.1:unpack & hide
         def unpack (self):
             
@@ -1610,9 +1597,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
     def OnActivateLeoEvent(self,event=None):
         
-        __pychecker__ = '--no-argsused' # event not used.
+        '''Handle a click anywhere in the Leo window.'''
         
-        # g.trace(self.c.shortFileName())
+        __pychecker__ = '--no-argsused' # event not used.
+    
+        c = self.c
+        # g.trace(g.callers(5))
     
         try:
             g.app.setLog(self.log,"OnActivateLeoEvent")
@@ -1709,7 +1699,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def abortEditLabelCommand (self):
         
         frame = self ; c = frame.c ; tree = frame.tree
-        p = c.currentPosition() ; w = p.edit_text()
+        p = c.currentPosition() ; w = p.edit_widget()
         
         if g.app.batchMode:
             c.notValidInBatchMode("Abort Edit Headline")
@@ -1766,23 +1756,51 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        f = self ; c = f.c
-        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-        
-        if 0: # For reference.
-            s = g.app.gui.getTextFromClipboard()
+        f = self ; c = f.c ; p = c.currentPosition()
+        w = f.getFocus()
+        name = hasattr(w,'_name') and w._name or ''
         
         if fromMinibuffer:
             w.event_generate(g.virtual_event_name("Paste"))
         elif name.startswith('body'):
             w.event_generate(g.virtual_event_name("Paste"))
         elif name.startswith('head'):
-            # I have no idea why the paste gets done automatically.
-            # There are Tk bugs lurking here...
-            # f.tree.updateHead(event=None,w=w)
-            pass
+            if 0:
+                s = g.app.gui.getTextFromClipboard()
+                i,j = g.app.gui.getTextSelection(w)
+                g.trace(i,j,repr(s),g.callers(6))
+            if 1:
+                #@            << paste the text into w >>
+                #@+node:ekr.20051103160025:<< paste the text into w >>
+                ch  = g.app.gui.getTextFromClipboard()
+                i,j = g.app.gui.getTextSelection(w)
+                
+                i = int(i.split('.')[1])
+                j = int(j.split('.')[1])
+                s = w.get('1.0','end')
+                
+                if s.endswith('\n'):
+                    if len(s) > 1: s = s[:-1]
+                    else:          s = ''
+                
+                if i != j:
+                    s = s[:i] + ch + s[j:]
+                else:
+                    i = w.index('insert')
+                    i = int(i.split('.')[1])
+                    s = s[:i] + ch + s[i:]
+                
+                # g.trace(i,j,repr(s))
+                c.frame.widgetWantsFocus(w,later=False)
+                w.delete('1.0','end')
+                w.insert('1.0',s)
+                w.configure(width=f.tree.headWidth(s=s))
+                #@nonl
+                #@-node:ekr.20051103160025:<< paste the text into w >>
+                #@nl
+                # c.frame.tree.endEditLabel() # Emergency: works!
+                c.frame.tree.onHeadChanged(p)
         else: pass
-    #@nonl
     #@-node:ekr.20051011072903.5:pasteText
     #@+node:ekr.20051011072903.1:OnCopyFromMenu
     def OnCopyFromMenu (self):
@@ -1858,8 +1876,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             return
             
         c.editPosition(p)
-        c.frame.tree.setNormalLabelState(p)
-        w = p.edit_text()
+        c.frame.tree.setEditLabelState(p)
+        w = p.edit_widget()
         if w:
             time = c.getTime(body=False)
             if 1: # We can't know if we were already editing, so insert at end.
@@ -2125,7 +2143,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             self.set_focus(self.body.bodyCtrl,later=later)
             
     def headlineWantsFocus(self,p,later=True):
-        w = p and p.edit_text()
+        w = p and p.edit_widget()
         if w:
             self.set_focus(w,later=later)
         
@@ -2151,71 +2169,25 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@nonl
     #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
     #@+node:ekr.20050120092028.1:set_focus (tkFrame)
-    #@+at
-    # Very tricky code:
-    # Many Tk calls can mess with the focus, so we must always set the focus,
-    # regardless of what we did previously.
-    # 
-    # Alas, because of bugs in Tk and/or window managers, we can not call 
-    # method at
-    # idle time: that would interfere with switching between windows. Instead, 
-    # the
-    # xWantFocus routines call this with later=True, to queue up a ONE-SHOT 
-    # call
-    # that actually changes the focus.
-    #@-at
-    #@@c
+    # New in Leo 4.4a3: nothing happens at idle time.
     
-    def set_focus(self,widget,later=False):
+    def set_focus(self,w,later=False):
         
         '''Set the focus to the widget specified in the xWantsFocus methods.'''
     
         c = self.c
-        # This is a *very* effective trace.
-        # g.trace(widget._name,g.callers(5))
-        
-        if not widget or g.app.unitTesting:
-            # Cancel any previous request.
-            self.wantedWidget = None
-            g.app.wantedCommander = None
     
-        if g.app.newWorldOrder:
+        if 0: # A *very* effective trace.
+            name = w and hasattr(w,'_name,') or '<no name>'
+            when = g.choose(later,'   ','NOW')
+            g.trace(when,name,g.callers(7)) 
+    
+        if w:
             if later:
-                self.wantedWidget = widget
+                self.wantedWidget = w
             else:
-                g.app.gui.set_focus(c,widget)
+                g.app.gui.set_focus(c,w)
                 self.wantedWidget = None
-        else:
-            # Messing with focus may be dangerous in unit tests.
-            if later:
-                # Queue up the call (just once) for later.
-                def setFocusCallback(c=c):
-                    self.wantedCallbackScheduled = False
-                    if c == g.app.wantedCommander and c.frame.wantedWidget:
-                        # g.trace(c.frame.wantedWidget)
-                        g.app.gui.set_focus(
-                            g.app.wantedCommander,
-                            c.frame.wantedWidget)
-                    self.wantedWidget = None
-                    g.app.wantedCommander = None
-                        
-                # Crucial: This may change what the callback does.
-                self.wantedWidget = widget
-                g.app.wantedCommander = c
-                if not self.wantedCallbackScheduled:
-                    # g.trace(g.callers(4),c.shortFileName())
-                    self.wantedCallbackScheduled = True
-                    # We don't have to wait so long now that we don't call this so often.
-                    # The difference between 500 msec. and 100 msec. is significant.
-                    # New in 4.4: set the delay to 1 msec.: the smaller the better.
-                    self.outerFrame.after(1,setFocusCallback)
-            else:
-                # g.trace(g.callers(4),c.shortFileName())
-                g.app.gui.set_focus(c,widget)
-                # Crucial: cancel any previous callback.
-                # It may be re-enabled later, but that doesn't matter.
-                self.wantedWidget = None
-                g.app.wantedCommander = None
     #@nonl
     #@-node:ekr.20050120092028.1:set_focus (tkFrame)
     #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -2795,7 +2767,8 @@ class leoTkinterBody (leoFrame.leoBody):
         
     def setFocus (self):
         
-        self.bodyCtrl.focus_set()
+        self.frame.widgetWantsFocus(self.bodyCtrl,later=False)
+        # self.bodyCtrl.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.4003:Focus (tkBody)
     #@+node:ekr.20031218072017.4004:Height & width
@@ -3513,9 +3486,7 @@ class leoTkinterLog (leoFrame.leoLog):
                 # g.app may not be inited during scripts!
                 print g.toEncodedString(s,'utf-8')
         else:
-            self.frame.tree.disableRedraw = True
             self.logCtrl.update_idletasks()
-            self.frame.tree.disableRedraw = False
     #@nonl
     #@-node:ekr.20050208133438:forceLogUpdate
     #@-node:ekr.20051016095907.2:Focus & update (tkLog)

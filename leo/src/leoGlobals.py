@@ -896,7 +896,7 @@ def alert(message):
     import tkMessageBox
     tkMessageBox.showwarning("Alert", message)
 #@-node:ekr.20031218072017.3105:alert
-#@+node:ekr.20051023083258:callerList
+#@+node:ekr.20051023083258:callers
 def callers (n=3,excludeCaller=True):
     
     '''Return a list containing the callers of the function that called g.callerList.
@@ -918,7 +918,7 @@ def callers (n=3,excludeCaller=True):
         
     return ','.join(result)
 #@nonl
-#@-node:ekr.20051023083258:callerList
+#@-node:ekr.20051023083258:callers
 #@+node:ekr.20031218072017.3107:callerName
 def callerName (n=1):
 

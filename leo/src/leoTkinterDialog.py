@@ -811,7 +811,6 @@ class tkinterListBoxDialog (leoTkinterDialog):
                     # A case could be made for updateBeadList=False
             finally:
                 c.endUpdate()
-            c.frame.tree.idle_scrollTo(p)
     #@nonl
     #@-node:ekr.20031218072017.3896:go
     #@-others

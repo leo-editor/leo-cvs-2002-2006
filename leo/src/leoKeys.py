@@ -574,7 +574,7 @@ class keyHandlerClass:
         
         c.frame.log.setTabBindings('Log')
         c.frame.tree.setBindings()
-        if 1: # I wish there were an easier way...
+        if 0: # Hurray.  This was a massive kludge.
             g.enableIdleTimeHook(250)
         
         if 0:
@@ -1045,9 +1045,6 @@ class keyHandlerClass:
     #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20051001051355:Dispatching...
-    #@+node:ekr.20051002152108:Top-level
-    # These must return 'break' unless more processing is needed.
-    #@nonl
     #@+node:ekr.20050920085536.65: masterCommand & helpers
     def masterCommand (self,event,func,stroke):
     
@@ -1096,7 +1093,9 @@ class keyHandlerClass:
         # We *must not* interfere with the global state in the macro class.
         if c.macroCommands.recordingMacro:
             done = c.macroCommands.startKbdMacro(event)
-            if done: return 'break'
+            if done:
+                c.updateScreen()
+                return 'break'
             
         # g.trace(stroke,k.abortAllModesKey)
     
@@ -1104,11 +1103,13 @@ class keyHandlerClass:
             k.clearState()
             k.keyboardQuit(event)
             k.endCommand(event,commandName)
+            c.updateScreen()
             return 'break'
     
         if k.inState():
             if not special: # Don't pass these on.
                 k.callStateFunction(event) # Calls end-command.
+            c.updateScreen()
             return 'break'
     
         # if k.keystrokeFunctionDict.has_key(stroke):
@@ -1120,11 +1121,14 @@ class keyHandlerClass:
                 k.regXKey = event.keysym
                 k.regx.iter.next() # EKR: next() may throw StopIteration.
             finally:
+                c.updateScreen()
                 return 'break'
     
         if k.abbrevOn:
             expanded = c.abbrevCommands.expandAbbrev(event)
-            if expanded: return 'break'
+            if expanded:
+                c.updateScreen()
+                return 'break'
     
         if func: # Func is an argument.
             # g.trace('executing func',commandName)
@@ -1132,6 +1136,7 @@ class keyHandlerClass:
             if forceFocus: k.forceFocusToBody()
             func(event)
             k.endCommand(event,commandName)
+            # g.trace('returns "break"')
             return 'break'
             
         # New logic in 4.4:
@@ -1143,10 +1148,8 @@ class keyHandlerClass:
             # Pass the stroke to one of Leo's event handlers.
             val = self.handleDefaultChar(event)
             
-        if g.app.newWorldOrder:
-            k.redraw()
-            k.setFocus()
-            
+        c.updateScreen()
+        # g.trace('returns %s' % repr(val))
         return val
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction
@@ -1206,46 +1209,6 @@ class keyHandlerClass:
             return None
     #@nonl
     #@-node:ekr.20051026083544:handleDefaultChar
-    #@+node:ekr.20051103114520:k.redraw
-    def redraw (self):
-        
-        k = self ; c = k.c ; frame = c.frame
-    
-        if frame.requestRedraw:
-            g.trace(frame.requestRedraw)
-            frame.tree.redraw_now()
-    #@nonl
-    #@-node:ekr.20051103114520:k.redraw
-    #@+node:ekr.20051103114520.1:k.setFocus
-    def setFocus (self):
-        
-        k = self ; c = k.c ; frame = c.frame
-        
-        if frame.wantedWidget:
-            w = frame.wantedWidget
-            # g.trace(hasattr(w,'_name') and w._name or '')
-            g.app.gui.set_focus(c,w)
-            frame.wantedWidget = None
-        else:
-            # Force the widget to some standard place.
-            w = g.app.gui.get_focus(c.frame)
-            if not w: return
-            # Allow clicks in enclosing window frame or in dialogs.
-            name = hasattr(w,'_name') and w._name or ''
-            if (
-                name and name[0] in string.letters # A known Leo frame.
-                or w == c.frame.top # The top of the Leo window
-                or g.app.dialogs > 0 # A dialog.
-                or isinstance(w,Tk.Text)
-                or isinstance(w,Tk.Entry)
-                # or isinstance(w,Tk.Button)
-            ):
-                return
-            # Not a name created by Leo.
-            g.trace('setting default focus',name)
-            c.frame.bodyWantsFocus()
-    #@nonl
-    #@-node:ekr.20051103114520.1:k.setFocus
     #@-node:ekr.20050920085536.65: masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
     def fullCommand (self,event,specialStroke=None,specialFunc=None):
@@ -1329,8 +1292,7 @@ class keyHandlerClass:
             elif stroke in k.xcommands:
                 k.clearState()
                 k.xcommands [stroke](event)
-                
-            ### Probably should use commandName instead of stroke.
+    
             k.endCommand(event,stroke)
             
         return 'break'
@@ -1431,7 +1393,6 @@ class keyHandlerClass:
     #@-node:ekr.20050923183943.6:processAbbreviation
     #@-node:ekr.20050923183943.4:processKey
     #@-node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
-    #@-node:ekr.20051002152108:Top-level
     #@+node:ekr.20051001050607:endCommand
     def endCommand (self,event,commandName):
     
@@ -1466,10 +1427,8 @@ class keyHandlerClass:
                     pass
             bodyCtrl.update_idletasks()
             c.frame.body.onBodyChanged(p,undoType='Typing')
-    
-        if g.app.newWorldOrder:
-            k.redraw()
-            k.setFocus()
+            
+        c.updateScreen()
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
@@ -1843,6 +1802,21 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.76:doControlU
     #@-node:ekr.20050920085536.73:universalDispatcher & helpers
     #@+node:ekr.20051006065121:Externally visible helpers
+    #@+node:ekr.20050920085536.64:manufactureKeyPressForCommandName
+    def manufactureKeyPressForCommandName (self,w,commandName):
+        
+        '''Implement a command by passing a keypress to Tkinter.'''
+    
+        k = self
+        
+        shortcut = k.getShortcutForCommandName(commandName)
+        
+        if shortcut and w:
+            w.event_generate(shortcut)
+        else:
+             g.trace('no shortcut for %s' % (commandName),color='red')
+    #@nonl
+    #@-node:ekr.20050920085536.64:manufactureKeyPressForCommandName
     #@+node:ekr.20050920085536.62:getArg
     def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
         

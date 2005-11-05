@@ -278,9 +278,19 @@ class baseCommands:
         n1,n2,n3,junk,junk=sys.version_info
         tkLevel = c.frame.top.getvar("tk_patchLevel")
         
+        if sys.platform.startswith('win'):
+            version = 'Windows '
+            try:
+                v = os.sys.getwindowsversion()
+                version += ', '.join([str(z) for z in v])
+            except Exception:
+                pass
+                
+        else: version = sys.platform
+        
         g.es("Leo Log Window...",color=color)
         g.es(signon)
-        g.es("Python %d.%d.%d, Tk %s, %s" % (n1,n2,n3,tkLevel,sys.platform))
+        g.es("Python %d.%d.%d, Tk %s\n%s" % (n1,n2,n3,tkLevel,version))
         g.enl()
     #@nonl
     #@-node:ekr.20040629121554.3:signOnWithVersion
@@ -342,27 +352,20 @@ class baseCommands:
     def new (self):
     
         c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
-        
-        # 5/16/03: Needed for plugins.
+        # Needed for plugins.
         g.doHook("new",old_c=self,c=c,new_c=c)
-    
         # Use the config params to set the size and location of the window.
         frame.setInitialWindowGeometry()
         frame.deiconify()
         frame.lift()
         frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
-        
-        c.beginUpdate()
-        try:
-            t = leoNodes.tnode()
-            v = leoNodes.vnode(c,t)
-            p = leoNodes.position(v,[])
-            v.initHeadString("NewHeadline")
-            v.moveToRoot()
-            c.editPosition(p)
-        finally:
-            c.endUpdate()
-    
+        t = leoNodes.tnode()
+        v = leoNodes.vnode(c,t)
+        p = leoNodes.position(v,[])
+        v.initHeadString("NewHeadline")
+        v.moveToRoot()
+        c.editPosition(p)
+        c.redraw_now() # Leo 4.4: Must be done here. c is not known outside this method.
         frame.body.setFocus()
         return c # For unit test.
     #@nonl
@@ -1331,7 +1334,7 @@ class baseCommands:
             #@nl
     
         # Force a redraw _after_ all messages have been output.
-        c.redraw() 
+        c.redraw()
     #@nonl
     #@-node:ekr.20031218072017.2140:c.executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
@@ -2711,7 +2714,7 @@ class baseCommands:
             s = g.angleBrackets(' ' + s + ' ')
         
         c.frame.tree.editLabel(v)
-        w = v.edit_text()
+        w = v.edit_widget()
         if w:
             w.delete("1.0","end")
             w.insert("1.0",s)
@@ -3034,7 +3037,7 @@ class baseCommands:
             c.selectPosition(p)
         finally:
             c.endUpdate()
-            c.editPosition(p) # Do this again after the redraw so p.edit_text() will succeed.
+            c.editPosition(p) # Do this again after the redraw so p.edit_widget() will succeed.
         return p # for mod_labels plugin.
     #@nonl
     #@-node:ekr.20031218072017.1761:c.insertHeadline
@@ -3338,7 +3341,7 @@ class baseCommands:
                     # This test may fail if a joined node is being editred.
                     
                     if isTkinter:
-                        t = p.edit_text()
+                        t = p.edit_widget()
                         if t:
                             s = t.get("1.0","end")
                             assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
@@ -4221,7 +4224,6 @@ class baseCommands:
                     c.selectVnode(v,updateBeadList=False)
                 finally:
                     c.endUpdate()
-                c.frame.tree.idle_scrollTo(v)
                 return
     #@nonl
     #@-node:ekr.20031218072017.1628:goNextVisitedNode
@@ -4240,7 +4242,6 @@ class baseCommands:
                     c.selectVnode(v,updateBeadList=False)
                 finally:
                     c.endUpdate()
-                c.frame.tree.idle_scrollTo(v)
                 return
     #@-node:ekr.20031218072017.1627:goPrevVisitedNode
     #@+node:ekr.20031218072017.2914:goToFirstNode
@@ -5289,96 +5290,101 @@ class baseCommands:
     #@-node:ekr.20031218072017.2948:c.dragCloneAfter
     #@-node:ekr.20031218072017.2945:Dragging (commands)
     #@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
-    #@+node:ekr.20031218072017.2950:beginUpdate
+    #@+node:ekr.20031218072017.2950:c.begin/endUpdate
     def beginUpdate(self):
         
-        if g.app.newWorldOrder:
-            pass
-        else:
-            self.frame.tree.beginUpdate()
+        pass
         
+    def endUpdate(self, flag=True):
+        
+        '''Request a redraw if flag is True.'''
+        c = self
+        if flag:
+            c.requestRedraw()
+    
     BeginUpdate = beginUpdate # Compatibility with old scripts
+    EndUpdate = endUpdate # Compatibility with old scripts
     #@nonl
-    #@-node:ekr.20031218072017.2950:beginUpdate
-    #@+node:ekr.20031218072017.2951:bringToFront
+    #@-node:ekr.20031218072017.2950:c.begin/endUpdate
+    #@+node:ekr.20031218072017.2951:c.bringToFront
     def bringToFront(self):
     
         self.frame.deiconify()
     
     BringToFront = bringToFront # Compatibility with old scripts
     #@nonl
-    #@-node:ekr.20031218072017.2951:bringToFront
-    #@+node:ekr.20031218072017.2952:c.endUpdate & test
-    def endUpdate(self, flag=True):
-        
-        '''End a beginUpdate/endUpdate region.
-        
-        Redraw the tree if this is the outermost endUpdate.
-        
-        Note that calls to g.es() will disable redraws, so calls to endUpdate
-        should follow all such writes to the log pane.
-        
-        New in Python 4.4:  All of Leo's core code uses this pattern::
-            
-            c.beginUpdate()
-            try:
-                ...
-            finally:
-                c.endUpdate()
-            
-        Python automatically re-raises an exception after executing a finally block,
-        so there is no need to do so here.'''
-        
-        if g.app.newWorldOrder:
-            if flag:
-                self.frame.requestRedraw = True
-        else:
-            try:
-                self.frame.tree.endUpdate(flag)
-            except Exception:
-                pass
-        
-    EndUpdate = endUpdate # Compatibility with old scripts
-    #@nonl
-    #@+node:ekr.20050916100046:test_c_endUpdate
-    def test_c_endUpdate (self):
-    
-        try:
-            c.beginUpdate()
-            try:
-                assert(0)
-            finally:
-                c.endUpdate()
-        except AssertionError:
-            return
-        
-        # This will never happen: finally always re-raises a pending exception.
-        assert(0,'no re-raise after finally')
-    #@nonl
-    #@-node:ekr.20050916100046:test_c_endUpdate
-    #@-node:ekr.20031218072017.2952:c.endUpdate & test
-    #@+node:ekr.20031218072017.2953:recolor
+    #@-node:ekr.20031218072017.2951:c.bringToFront
+    #@+node:ekr.20031218072017.2953:c.recolor
     def recolor(self):
     
         c = self
     
-        c.frame.body.recolor(c.currentVnode())
+        c.frame.body.recolor(c.currentPosition())
     #@nonl
-    #@-node:ekr.20031218072017.2953:recolor
-    #@+node:ekr.20031218072017.2954:redraw & repaint
-    def redraw(self):
+    #@-node:ekr.20031218072017.2953:c.recolor
+    #@+node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
+    def requestRedraw (self):
+    
+        c = self
+        # g.trace(g.callers(9))
+    
+        c.frame.requestRedrawFlag = True
         
-        if g.app.newWorldOrder:
-            self.frame.requestRedraw = True
-        else:
-            self.frame.tree.redraw()
+    def redraw_now (self):
         
+        c = self
+        # g.trace(g.callers(9))
+    
+        c.frame.requestRedrawFlag = True
+        c.updateScreen()
+    
     # Compatibility with old scripts
-    Redraw = redraw 
-    repaint = redraw
-    Repaint = redraw
+    redraw = Redraw = repaint = Repaint = requestRedraw
     #@nonl
-    #@-node:ekr.20031218072017.2954:redraw & repaint
+    #@-node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
+    #@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
+    def updateScreen (self):
+        
+        c = self
+    
+        if c.frame.requestRedrawFlag:
+            # g.trace(g.callers(9))
+            c.frame.tree.redraw_now()
+            c.setFocusHelper()
+            c.frame.requestRedrawFlag = False
+    #@nonl
+    #@+node:ekr.20051103114520.1:c.setFocusHelper
+    def setFocusHelper (self):
+        
+        c = self ; frame = c.frame
+        
+        if frame.wantedWidget:
+            w = frame.wantedWidget
+            # g.trace(hasattr(w,'_name') and w._name or '')
+            g.app.gui.set_focus(c,w)
+            frame.wantedWidget = None
+        else:
+            # Force the widget to some standard place.
+            w = g.app.gui.get_focus(c.frame)
+            if not w: return
+            # Allow clicks in enclosing window frame or in dialogs.
+            name = hasattr(w,'_name') and w._name or ''
+            if (
+                name and name[0] in string.letters # A known Leo frame.
+                or w == c.frame.top # The top of the Leo window
+                or g.app.dialogs > 0 # A dialog.
+                or isinstance(w,Tk.Text)
+                or isinstance(w,Tk.Entry)
+                # or isinstance(w,Tk.Button)
+            ):
+                # g.trace('ok',hasattr(w,'_name') and w._name or '')
+                return
+            # Not a name created by Leo.
+            g.trace('setting default focus',name)
+            frame.bodyWantsFocus()
+    #@nonl
+    #@-node:ekr.20051103114520.1:c.setFocusHelper
+    #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
     #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
     #@+node:ekr.20031218072017.2955:Enabling Menu Items
     #@+node:ekr.20040323172420:Slow routines: no longer used
@@ -6007,7 +6013,7 @@ class baseCommands:
     #@-node:ekr.20040311173238:c.topPosition & c.setTopPosition
     #@-node:ekr.20031218072017.2982:Getters & Setters
     #@+node:ekr.20031218072017.2990:Selecting & Updating (commands)
-    #@+node:ekr.20031218072017.2991:c.editVnode (calls tree.editLabel)
+    #@+node:ekr.20031218072017.2991:c.editPosition
     # Selects v: sets the focus to p and edits p.
     
     def editPosition(self,p):
@@ -6015,10 +6021,10 @@ class baseCommands:
         c = self
     
         if p:
-            c.selectVnode(p)
+            c.selectPosition(p)
             c.frame.tree.editLabel(p)
     #@nonl
-    #@-node:ekr.20031218072017.2991:c.editVnode (calls tree.editLabel)
+    #@-node:ekr.20031218072017.2991:c.editPosition
     #@+node:ekr.20031218072017.2992:endEditing (calls tree.endEditLabel)
     # Ends the editing in the outline.
     

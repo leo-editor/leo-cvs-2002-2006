@@ -496,7 +496,7 @@ class leoFind:
     
         c = self.c ; p = self.p ; gui = g.app.gui
         # g.trace(self.in_headline)
-        t = g.choose(self.in_headline,p.edit_text(),c.frame.bodyCtrl)
+        t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
         oldSel = sel = gui.getTextSelection(t)
         if sel and len(sel) == 2:
             start,end = sel
@@ -942,7 +942,7 @@ class leoFind:
         self.errors = 0
         if self.in_headline:
             c.frame.tree.setEditPosition(p)
-            t = p.edit_text()
+            t = p.edit_widget()
             sel = None
         else:
             t = c.frame.bodyCtrl
@@ -1008,7 +1008,7 @@ class leoFind:
     def save (self):
     
         c = self.c ; p = self.p ; gui = g.app.gui
-        t = g.choose(self.in_headline,p.edit_text(),c.frame.bodyCtrl)
+        t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
         insert = gui.getInsertPoint(t)
         sel = gui.getSelectionRange(t)
         if len(sel) == 2:
@@ -1023,7 +1023,7 @@ class leoFind:
     
         """Displays the final result.
     
-        Returns self.dummy_vnode, p.edit_text() or c.frame.bodyCtrl with
+        Returns self.dummy_vnode, p.edit_widget() or c.frame.bodyCtrl with
         "insert" and "sel" points set properly."""
     
         c = self.c ; p = self.p ; gui = g.app.gui
@@ -1034,18 +1034,18 @@ class leoFind:
         c.beginUpdate()
         try: # range of update...
             c.selectPosition(p)
-            c.frame.tree.redraw_now() # Redraw now so selections are not destroyed.
+            c.redraw_now() # Redraw now so selections are not destroyed.
             # Select the found vnode again after redraw.
             if self.in_headline:
                 c.editPosition(p)
-                c.frame.tree.setNormalLabelState(p)
-                assert(p.edit_text())
+                ### c.frame.tree.setEditLabelState(p)
+                assert(p.edit_widget())
             else:
                 c.selectVnode(p)
         finally:
             c.endUpdate(False) # Do not draw again!
     
-        t = g.choose(self.in_headline,p.edit_text(),c.frame.bodyCtrl)
+        t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
         insert = g.choose(self.reverse,pos,newpos)
         # g.trace(pos,newpos,t)
         gui.setInsertPoint(t,insert)

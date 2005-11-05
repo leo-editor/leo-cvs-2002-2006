@@ -1667,16 +1667,18 @@ class position (object):
     def status      (self): return self.v.status()
     #@nonl
     #@-node:ekr.20040306214401:p.Status bits
-    #@+node:ekr.20040306220230.1:p.edit_text
-    def edit_text (self):
+    #@+node:ekr.20040306220230.1:p.edit_widget
+    def edit_widget (self):
         
         # New in 4.3 beta 3: let the tree classes do all the work.
         
         p = self ; c = p.c
         
-        return c.frame.tree.edit_text(p)
+        return p and c.frame.tree.edit_widget(p)
+        
+    edit_text = edit_widget # For compatibility.
     #@nonl
-    #@-node:ekr.20040306220230.1:p.edit_text
+    #@-node:ekr.20040306220230.1:p.edit_widget
     #@+node:ekr.20040323160302:p.directParents
     def directParents (self):
         
@@ -2065,7 +2067,7 @@ class position (object):
     #@+node:ekr.20040305223225:p.setHeadStringOrHeadline
     def setHeadStringOrHeadline (self,s,encoding="utf-8"):
     
-        p = self ; t = p.edit_text()
+        p = self ; t = p.edit_widget()
         
         p.initHeadString(s,encoding)
     

@@ -648,7 +648,8 @@ class baseFileCommands:
                 #@nl
             ok = False
     
-        c.frame.tree.redraw_now(scroll=False)
+        ### c.frame.tree.redraw_now(scroll=False)
+        c.requestRedraw()
         
         # g.trace(readAtFileNodesFlag,c.mFileName)
     

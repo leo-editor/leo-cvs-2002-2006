@@ -412,7 +412,7 @@ class tkinterGui(leoGui.leoGui):
         """Returns the widget that has focus, or body if None."""
     
         return frame.top.focus_displayof()
-        
+    #@nonl
     #@-node:ekr.20031218072017.4065:get_focus
     #@+node:ekr.20031218072017.2373:set_focus (app.gui)
     def set_focus(self,c,widget):
@@ -421,18 +421,11 @@ class tkinterGui(leoGui.leoGui):
         
         """Put the focus on the widget."""
         
-        # g.trace('g.app.gui',g.callers(4))
-        
-        # g.trace(c.frame.top.wm_stackorder())
-        
         if widget:
+            if 0:
+                name = hasattr(widget,'_name') and widget._name or '<no name>'
+                g.trace('GUI',name,g.callers(9))
             widget.focus_set()
-    
-        if 0: # Causes a weird problem on some machines.
-            if c.frame.top:
-                focus = c.frame.top.focus_displayof()
-                if focus != widget:
-                    widget.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
     #@+node:ekr.20050210082320:widget_wants_focus (tk.gui)
