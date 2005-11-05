@@ -235,12 +235,16 @@ class baseCommands:
     
         if not g.doHook("command1",c=c,p=p,v=p,label=label):
             try:
-                c.keyHandler.funcReturn = command()
+                val = command()
+                # Be careful: the command could destroy c.
+                if c and hasattr(c,'keyHandler'):
+                    c.keyHandler.funcReturn = val
             except:
                 g.es("exception executing command")
                 print "exception executing command"
                 g.es_exception(c=c)
-                c.frame.tree.redrawAfterException() # 1/26/04
+                if c and hasattr(c,'frame'):
+                    c.frame.tree.redrawAfterException()
         
         c = g.top() # 6/17/04: The command can change the commander.
         if c:
