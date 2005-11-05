@@ -65,7 +65,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.16"
+__version__ = "0.17"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -108,6 +108,8 @@ __version__ = "0.16"
 # 0.16 EKR:
 #     - Removed the unused bindLate global.
 #     - Set silent=True in the Run Script callback.
+# 0.17 EKR:
+#     - Added calls to c.updateScreen.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -327,6 +329,7 @@ class scriptingController:
             c = self.c
             c.executeScript(c.currentPosition(),useSelectedText=True,silent=True)
             c.frame.bodyWantsFocus()
+            c.updateScreen()
         #@nonl
         #@-node:EKR.20040618091543.1:<< define runScriptCommand >>
         #@nl
@@ -442,6 +445,7 @@ class scriptingController:
             g.es("disabled @script: %s" % (name),color="blue")
     
         c.frame.bodyWantsFocus(later=True)
+        c.updateScreen()
     #@nonl
     #@-node:ekr.20041001203145:executeScriptNode
     #@+node:ekr.20041001202905:loadPlugin
@@ -506,6 +510,7 @@ class scriptingController:
                 b.pack_forget()
                 
         c.frame.bodyWantsFocus()
+        c.updateScreen()
     #@nonl
     #@-node:ekr.20051016210846:executeScriptFromCallback
     #@-others
