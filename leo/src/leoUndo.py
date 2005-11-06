@@ -107,7 +107,6 @@ class baseUndoer:
         
         # New in 4.2...
         u.optionalIvars = []
-        u.redrawFlag = True
     #@nonl
     #@+node:ekr.20031218072017.3607:clearIvars
     def clearIvars (self):
@@ -1304,23 +1303,19 @@ class baseUndoer:
         if not c.currentPosition():
             g.trace('no current position')
             return
+            
         # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
-    
         u.redoing = True 
-        u.redrawFlag = True
         u.groupCount = 0
-    
-        # Execute the redoHelper.
-        c.beginUpdate()
-        try:
-            if u.redoHelper:
-                u.redoHelper()
-            else:
-                g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
-        finally:
-            c.endUpdate(u.redrawFlag)
-            c.frame.bodyWantsFocus(later=True)
-    
+        if u.redoHelper:
+            u.redoHelper()
+        else:
+            g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
+            
+        # New in 4.4a3: Almost any change could change an icon,
+        # So we always request a redraw.
+        c.frame.bodyWantsFocus(later=True)
+        c.requestRedraw()
         u.redoing = False
         u.bead += 1
         u.setUndoTypes()
@@ -1541,9 +1536,6 @@ class baseUndoer:
         if u.yview:
             c.frame.bodyWantsFocus(later=False)
             c.frame.body.setYScrollPosition(u.yview)
-        
-        if u.groupCount == 0:
-            u.redrawFlag = (current != u.p)
     #@nonl
     #@-node:EKR.20040526075238.5:redoTyping
     #@-node:ekr.20031218072017.2030:redo & helpers...
@@ -1565,24 +1557,20 @@ class baseUndoer:
         if not c.currentPosition():
             g.trace('no current position')
             return
-        # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
     
-        
+        # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
         u.undoing = True
-        u.redrawFlag = True
         u.groupCount = 0
     
-        # Execute the undoHelper.
-        c.beginUpdate()
-        try:
-            if u.undoHelper:
-                u.undoHelper()
-            else:
-                g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
-        finally:
-            c.endUpdate(u.redrawFlag)
-            c.frame.bodyWantsFocus(later=True)
+        if u.undoHelper:
+            u.undoHelper()
+        else:
+            g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
     
+        # New in 4.4a3: Almost any change could change an icon,
+        # So we always request a redraw.
+        c.frame.bodyWantsFocus(later=True)
+        c.requestRedraw()
         u.undoing = False
         u.bead -= 1
         u.setUndoTypes()
@@ -1823,9 +1811,6 @@ class baseUndoer:
         if u.yview:
             c.frame.bodyWantsFocus(later=False)
             c.frame.body.setYScrollPosition(u.yview)
-            
-        if u.groupCount == 0:
-            u.redrawFlag = (current != u.p)
     #@nonl
     #@-node:EKR.20040526090701.4:undoTyping
     #@+node:ekr.20031218072017.1493:undoRedoText

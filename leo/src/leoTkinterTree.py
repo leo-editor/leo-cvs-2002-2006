@@ -839,6 +839,8 @@ class leoTkinterTree (leoFrame.leoTree):
             return
             
         c = self.c
+        
+        # An important trace.
         # g.trace(self.redrawCount,g.callers(7))
             
         # Do the actual redraw.
@@ -865,7 +867,8 @@ class leoTkinterTree (leoFrame.leoTree):
             x0, y0, x1, y1 = self.canvas.bbox("all")
             self.canvas.configure(scrollregion=(0, 0, x1, y1))
             if scroll:
-                self.scrollTo(c.currentPosition())
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo()
                 
         g.doHook("after-redraw-outline",c=c)
     
@@ -2475,7 +2478,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.124:tree.updateTree
     #@-node:ekr.20040803072955.118:Incremental drawing...
     #@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
-    #@+node:ekr.20040803072955.126:endEditLabel
+    #@+node:ekr.20040803072955.126:c.endEditLabel
     def endEditLabel (self):
         
         """End editing for self.editText."""
@@ -2484,7 +2487,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         self.onHeadChanged(p)
     #@nonl
-    #@-node:ekr.20040803072955.126:endEditLabel
+    #@-node:ekr.20040803072955.126:c.endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
     def editLabel (self,p):
         
@@ -2564,8 +2567,10 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nl
             if p and p != old_p: # Suppress duplicate call.
                 try: # may fail during initialization.
-                    self.scrollTo(p) # p is NOT c.currentPosition() here!
-                except: pass
+                    # p is NOT c.currentPosition() here!
+                    self.canvas.update_idletasks() # Essential.
+                    self.scrollTo(p)
+                except Exception: pass
             #@        << update c.beadList or c.beadPointer >>
             #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
             if updateBeadList:

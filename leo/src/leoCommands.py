@@ -71,7 +71,7 @@ class baseCommands:
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()
     
-        self.useTextMinibuffer = True
+        self.useTextMinibuffer = False
         self.showMinibuffer = c.config.getBool('useMinibuffer')
     
         # initialize the sub-commanders.
@@ -5335,14 +5335,18 @@ class baseCommands:
     BringToFront = bringToFront # Compatibility with old scripts
     #@nonl
     #@-node:ekr.20031218072017.2951:c.bringToFront
-    #@+node:ekr.20031218072017.2953:c.recolor
+    #@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
     def recolor(self):
     
         c = self
-    
         c.frame.body.recolor(c.currentPosition())
+        
+    def requestRecolor (self):
+        
+        c = self
+        c.frame.requestRecolorFlag = True
     #@nonl
-    #@-node:ekr.20031218072017.2953:c.recolor
+    #@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
     #@+node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
     def requestRedraw (self):
     
@@ -5366,18 +5370,23 @@ class baseCommands:
     #@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
     def updateScreen (self):
         
+        '''Update the screen after a command.'''
+        
         c = self
         
-        # g.trace(c.frame.requestRedrawFlag,g.callers(7))
+        if g.app.quitting or not hasattr(c.frame,'top'):
+            return # nullFrame's do not have a top frame.
     
         if c.frame.requestRedrawFlag:
             c.frame.tree.redraw_now()
             c.frame.requestRedrawFlag = False
-            
-        # nullFrame's do not have a top frame.
-        if hasattr(c.frame,'top'):
-            c.frame.top.update_idletasks()
-            c.setFocusHelper()
+    
+        c.frame.top.update_idletasks()
+        c.setFocusHelper()
+        
+        if c.frame.requestRecolorFlag:
+            c.frame.requestRecolorFlag = False
+            c.recolor()
     #@nonl
     #@+node:ekr.20051103114520.1:c.setFocusHelper
     def setFocusHelper (self):

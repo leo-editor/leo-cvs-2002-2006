@@ -1761,49 +1761,24 @@ class leoTkinterFrame (leoFrame.leoFrame):
         f = self ; c = f.c ; p = c.currentPosition()
         w = f.getFocus()
         name = hasattr(w,'_name') and w._name or ''
+        # g.trace(name)
         
         if fromMinibuffer:
             w.event_generate(g.virtual_event_name("Paste"))
         elif name.startswith('body'):
             w.event_generate(g.virtual_event_name("Paste"))
+            c.requestRecolor()
         elif name.startswith('head'):
-            if 0:
-                s = g.app.gui.getTextFromClipboard()
-                i,j = g.app.gui.getTextSelection(w)
-                g.trace(i,j,repr(s),g.callers(6))
-            if 0:
-                #@            << paste the text into w >>
-                #@+node:ekr.20051103160025:<< paste the text into w >>
-                ch  = g.app.gui.getTextFromClipboard()
-                i,j = g.app.gui.getTextSelection(w)
-                
-                i = int(i.split('.')[1])
-                j = int(j.split('.')[1])
-                s = w.get('1.0','end')
-                
-                if s.endswith('\n'):
-                    if len(s) > 1: s = s[:-1]
-                    else:          s = ''
-                
-                if i != j:
-                    s = s[:i] + ch + s[j:]
-                else:
-                    i = w.index('insert')
-                    i = int(i.split('.')[1])
-                    s = s[:i] + ch + s[i:]
-                
-                # g.trace(i,j,repr(s))
-                c.frame.widgetWantsFocus(w,later=False)
-                w.delete('1.0','end')
-                w.insert('1.0',s)
-                w.configure(width=f.tree.headWidth(s=s))
-                #@nonl
-                #@-node:ekr.20051103160025:<< paste the text into w >>
-                #@nl
-            # c.frame.tree.endEditLabel() # Emergency: works!
-            # Gives a double paste.  Would have to return 'break', or something
-            # c.frame.tree.onHeadChanged(p)
+            # Strip trailing newlines so the truncation doesn't cause confusion.
+            s = s1 = g.app.gui.getTextFromClipboard()
+            while s and s[-1] in ('\n','\r'):
+                s = s[:-1]
+            if s != s1:
+                g.app.gui.replaceClipboardWith(s)
+            g.app.unitTestDict ['headWidth'] = True
+            w.configure(width=f.tree.headWidth(s=s))
         else: pass
+    #@nonl
     #@-node:ekr.20051011072903.5:pasteText
     #@+node:ekr.20051011072903.1:OnCopyFromMenu
     def OnCopyFromMenu (self):
@@ -1843,13 +1818,23 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         ''' Called **only** when invoked using the menu instead of a shortcut.'''
         
-        f = self ; c = f.c ; w = f.getFocus()
-        w = self.getFocus()
+        f = self ; c = f.c ; p = c.currentPosition()
+        w = f.getFocus()
         isBody = w == f.body.bodyCtrl
     
         if isBody:
             w.event_generate(g.virtual_event_name("Paste"))
+            f.body.onBodyChanged(p,undoType='Typing')
+            c.updateScreen()
         else:
+            # Strip trailing newlines so the truncation doesn't cause confusion.
+            s = s1 = g.app.gui.getTextFromClipboard()
+            while s and s[-1] in ('\n','\r'):
+                s = s[:-1]
+            if s != s1:
+                g.app.gui.replaceClipboardWith(s)
+            g.app.unitTestDict ['headWidth'] = True
+            w.configure(width=f.tree.headWidth(s=s))
             w.event_generate(g.virtual_event_name("Paste"))
             f.tree.onHeadChanged(c.currentPosition(),'Paste')
     #@nonl
@@ -2525,7 +2510,9 @@ class leoTkinterBody (leoFrame.leoBody):
         #@afterref
  # Same logic as always.
         w.see(w.index('insert'))
-        if newText == oldText: return
+        if newText == oldText:
+            # g.trace('no change')
+            return
         c.undoer.setUndoTypingParams(p,undoType,
             orignalText or oldText,newText,oldSel,newSel,oldYview)
         p.v.setTnodeText(newText)
