@@ -5358,8 +5358,10 @@ class baseCommands:
             c.frame.tree.redraw_now()
             c.frame.requestRedrawFlag = False
             
-        c.frame.top.update_idletasks()
-        c.setFocusHelper()
+        # nullFrame's do not have a top frame.
+        if hasattr(c.frame,'top'):
+            c.frame.top.update_idletasks()
+            c.setFocusHelper()
     #@nonl
     #@+node:ekr.20051103114520.1:c.setFocusHelper
     def setFocusHelper (self):

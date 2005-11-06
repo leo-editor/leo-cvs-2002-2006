@@ -2589,7 +2589,7 @@ def undo (self):
     """Undo the operation described by the undo parmaters."""
     
     u = self ; c = u.c
-    g.trace(g.callers(7))
+    # g.trace(g.callers(7))
     c.endEditing() # Capture the headline *before* checking for undo.
     
     if not u.canUndo():
@@ -3249,8 +3249,10 @@ def updateScreen (self):
         c.frame.tree.redraw_now()
         c.frame.requestRedrawFlag = False
         
-    c.frame.top.update_idletasks()
-    c.setFocusHelper()
+    # nullFrame's do not have a top frame.
+    if hasattr(c.frame,'top'):
+        c.frame.top.update_idletasks()
+        c.setFocusHelper()
 #@nonl
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
@@ -3639,8 +3641,10 @@ def updateScreen (self):
         c.frame.tree.redraw_now()
         c.frame.requestRedrawFlag = False
         
-    c.frame.top.update_idletasks()
-    c.setFocusHelper()
+    # nullFrame's do not have a top frame.
+    if hasattr(c.frame,'top'):
+        c.frame.top.update_idletasks()
+        c.setFocusHelper()
 #@nonl
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
@@ -4478,7 +4482,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     # g.trace(repr(s),g.callers(7))
         
     if changed:
-        g.trace('undo to:',repr(oldRevert))
+        # g.trace('undo to:',repr(oldRevert))
         undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
         if not c.changed: c.setChanged(True)
         dirtyVnodeList = p.setDirty()
@@ -4886,8 +4890,10 @@ def updateScreen (self):
         c.frame.tree.redraw_now()
         c.frame.requestRedrawFlag = False
         
-    c.frame.top.update_idletasks()
-    c.setFocusHelper()
+    # nullFrame's do not have a top frame.
+    if hasattr(c.frame,'top'):
+        c.frame.top.update_idletasks()
+        c.setFocusHelper()
 #@nonl
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
@@ -6769,7 +6775,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     # g.trace(repr(s),g.callers(7))
         
     if changed:
-        g.trace('undo to:',repr(oldRevert))
+        # g.trace('undo to:',repr(oldRevert))
         undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
         if not c.changed: c.setChanged(True)
         dirtyVnodeList = p.setDirty()
@@ -7017,8 +7023,10 @@ def updateScreen (self):
         c.frame.tree.redraw_now()
         c.frame.requestRedrawFlag = False
         
-    c.frame.top.update_idletasks()
-    c.setFocusHelper()
+    # nullFrame's do not have a top frame.
+    if hasattr(c.frame,'top'):
+        c.frame.top.update_idletasks()
+        c.setFocusHelper()
 #@nonl
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
@@ -8052,7 +8060,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     # g.trace(repr(s),g.callers(7))
         
     if changed:
-        g.trace('undo to:',repr(oldRevert))
+        # g.trace('undo to:',repr(oldRevert))
         undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
         if not c.changed: c.setChanged(True)
         dirtyVnodeList = p.setDirty()
@@ -9414,7 +9422,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     # g.trace(repr(s),g.callers(7))
         
     if changed:
-        g.trace('undo to:',repr(oldRevert))
+        # g.trace('undo to:',repr(oldRevert))
         undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
         if not c.changed: c.setChanged(True)
         dirtyVnodeList = p.setDirty()

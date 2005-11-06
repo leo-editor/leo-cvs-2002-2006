@@ -1553,7 +1553,7 @@ class baseUndoer:
         """Undo the operation described by the undo parmaters."""
         
         u = self ; c = u.c
-        g.trace(g.callers(7))
+        # g.trace(g.callers(7))
         c.endEditing() # Capture the headline *before* checking for undo.
         
         if not u.canUndo():

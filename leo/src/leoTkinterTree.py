@@ -1969,7 +1969,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # g.trace(repr(s),g.callers(7))
             
         if changed:
-            g.trace('undo to:',repr(oldRevert))
+            # g.trace('undo to:',repr(oldRevert))
             undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
             if not c.changed: c.setChanged(True)
             dirtyVnodeList = p.setDirty()
