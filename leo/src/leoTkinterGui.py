@@ -415,17 +415,17 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4065:get_focus
     #@+node:ekr.20031218072017.2373:set_focus (app.gui)
-    def set_focus(self,c,widget):
+    def set_focus(self,c,w):
         
         __pychecker__ = '--no-argsused' # c not used at present.
         
         """Put the focus on the widget."""
         
-        if widget:
+        if w:
             if 0:
-                name = hasattr(widget,'_name') and widget._name or '<no name>'
-                g.trace('GUI',name,g.callers(9))
-            widget.focus_set()
+                name = hasattr(w,'_name') and w._name or '<no name>'
+                g.trace('GUI',name,g.callers(7))
+            w.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
     #@+node:ekr.20050210082320:widget_wants_focus (tk.gui)

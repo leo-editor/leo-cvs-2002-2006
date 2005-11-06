@@ -4734,7 +4734,8 @@ class findTab (leoFind.leoFind):
         #@<< Bind Tab and control-tab >>
         #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
         def setFocus(w):
-            w.focus_set()
+            c = self.c
+            c.frame.widgetWantsFocus(w,later=False)
             g.app.gui.setSelectionRange(w,"1.0","1.0")
             return "break"
             
@@ -6020,11 +6021,11 @@ class spellTab(leoFind.leoFind):
                 c.beginUpdate()
                 c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
                 c.endUpdate(True)
-                t.focus_set()
+                c.frame.widgetWantsFocus(t,later=False)
                 return True
     
         # The focus must never leave the body pane.
-        t.focus_set()
+        c.frame.widgetWantsFocus(t,later=False)
         return False
     #@nonl
     #@-node:ekr.20051025071455.38:change
@@ -6237,8 +6238,10 @@ class spellTab(leoFind.leoFind):
     def onSelectListBox(self, event=None):
         """Respond to a click in the selection listBox."""
         
+        c = self.c
         self.updateButtons()
-        self.body.bodyCtrl.focus_set()
+        # self.body.bodyCtrl.focus_set()
+        c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
     #@-node:ekr.20051025071455.50:onSelectListBox
     #@+node:ekr.20051025071455.51:update
     def update(self,show=True,fill=False):
@@ -6254,7 +6257,8 @@ class spellTab(leoFind.leoFind):
     
         if show:
             self.bringToFront()
-            c.frame.body.bodyCtrl.focus_set()
+            # c.frame.body.bodyCtrl.focus_set()
+            c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
     #@nonl
     #@-node:ekr.20051025071455.51:update
     #@+node:ekr.20051025071455.52:updateButtons

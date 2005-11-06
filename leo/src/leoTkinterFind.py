@@ -157,7 +157,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         #@<< Bind Tab and control-tab >>
         #@+node:ekr.20041026092141:<< Bind Tab and control-tab >>
         def setFocus(w):
-            w.focus_set()
+            c = self.c
+            c.frame.widgetWantsFocus(w,later=False)
             g.app.gui.setSelectionRange(w,"1.0","1.0")
             return "break"
             

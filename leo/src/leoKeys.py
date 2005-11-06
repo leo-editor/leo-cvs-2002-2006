@@ -1198,6 +1198,7 @@ class keyHandlerClass:
         ch = event and event.char
         w = event and event.widget
         name = w and hasattr(w,'_name') and w._name or ''
+        # g.trace(name)
     
         if name.startswith('body'):
             c.frame.body.updateBody(event,w,undoType='Typing')

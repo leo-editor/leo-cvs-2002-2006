@@ -167,10 +167,9 @@ class leoTkinterDialog:
         if self.focus_widget == None:
             self.focus_widget = self.top
             
-        self.focus_widget.focus_set() # Get all keystrokes.
+        # self.focus_widget.focus_set() # Get all keystrokes.
         if c:
-            # g.trace(self.focus_widget,c)
-            g.app.gui.widget_wants_focus(c,self.focus_widget)
+            c.frame.widgetWantsFocus(self.focus_widget,later=False)
            
         self.root.wait_window(self.top)
         

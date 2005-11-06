@@ -1868,16 +1868,16 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.88:onHeadlineKey
     def onHeadlineKey (self,event):
         
-        """Handle a key event in a headline."""
-        
-        c = self.c
+        '''Handle a key event in a headline.'''
+    
         w = event and event.widget or None
         ch = event and event.char
-        # g.trace(repr(ch),g.callers(5))
     
+        # Testing for ch here prevents flashing in the headline
+        # when the control key is held down.
         if ch:
+            # g.trace(repr(ch),g.callers(7))
             self.updateHead(event,w)
-            c.updateScreen()
     
         return 'break' # Required
     #@nonl
@@ -1885,11 +1885,13 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     def updateHead (self,event,w):
         
+        '''Update a headline from an event.
+        
+        The headline officially changes only when editing ends.'''
+        
         c = self.c ; p = c.currentPosition()
         ch = event and event.char or ''
         i,j = g.app.gui.getTextSelection(w)
-        
-        # if ch: g.trace(g.callers(5))
         
         if ch == '\b':
             if i != j:
@@ -1901,7 +1903,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 w.delete(i,j)
             i = w.index('insert')
             w.insert(i,ch)
-        
+    
         s = w.get('1.0','end')
         # g.trace(repr(ch),repr(s))
     
@@ -1964,21 +1966,23 @@ class leoTkinterTree (leoFrame.leoTree):
         oldRevert = self.revertHeadline
         self.revertHeadline = s
         p.initHeadString(s)
+        # g.trace(repr(s),g.callers(7))
             
         if changed:
-            # g.trace('undo to:',oldRevert)
+            g.trace('undo to:',repr(oldRevert))
             undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
             if not c.changed: c.setChanged(True)
             dirtyVnodeList = p.setDirty()
             u.afterChangeNodeContents(p,undoType,undoData,
                 dirtyVnodeList=dirtyVnodeList)
     
-        c.requestRedraw() # Must always do this to clear the selection.
-        self.setEditPosition(None)
+        self.setEditPosition(None) # Will end the ending when the redraw happens.
         if self.stayInTree:
             frame.treeWantsFocus()
         else:
             frame.bodyWantsFocus()
+        c.redraw_now() # Ensure a complete redraw immediately.
+       
     #@nonl
     #@-node:ekr.20040803072955.91:onHeadChanged
     #@-node:ekr.20040803072955.90:head key handlers

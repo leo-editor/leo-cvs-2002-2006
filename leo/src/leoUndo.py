@@ -1553,6 +1553,9 @@ class baseUndoer:
         """Undo the operation described by the undo parmaters."""
         
         u = self ; c = u.c
+        g.trace(g.callers(7))
+        c.endEditing() # Capture the headline *before* checking for undo.
+        
         if not u.canUndo():
             # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
             return
@@ -1564,7 +1567,7 @@ class baseUndoer:
             return
         # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
     
-        c.endEditing()# Make sure we capture the headline for a redo.
+        
         u.undoing = True
         u.redrawFlag = True
         u.groupCount = 0

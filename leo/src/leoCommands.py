@@ -5351,12 +5351,15 @@ class baseCommands:
     def updateScreen (self):
         
         c = self
+        
+        # g.trace(c.frame.requestRedrawFlag,g.callers(7))
     
         if c.frame.requestRedrawFlag:
-            # g.trace(g.callers(9))
             c.frame.tree.redraw_now()
-            c.setFocusHelper()
             c.frame.requestRedrawFlag = False
+            
+        c.frame.top.update_idletasks()
+        c.setFocusHelper()
     #@nonl
     #@+node:ekr.20051103114520.1:c.setFocusHelper
     def setFocusHelper (self):
@@ -5383,10 +5386,11 @@ class baseCommands:
                 # or isinstance(w,Tk.Button)
             ):
                 # g.trace('ok',hasattr(w,'_name') and w._name or '')
+                g.app.gui.set_focus(c,w)
                 return
             # Not a name created by Leo.
             g.trace('setting default focus',name)
-            frame.bodyWantsFocus()
+            g.app.gui.set_focus(c,c.frame.body.bodyCtrl)
     #@nonl
     #@-node:ekr.20051103114520.1:c.setFocusHelper
     #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)

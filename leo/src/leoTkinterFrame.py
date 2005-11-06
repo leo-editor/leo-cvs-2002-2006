@@ -1606,6 +1606,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             g.app.setLog(self.log,"OnActivateLeoEvent")
+            c.setFocusHelper() # Try to guess the best possible focus.
         except:
             g.es_event_exception("activate Leo")
     
@@ -1744,11 +1745,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if isBody:
             w.event_generate(g.virtual_event_name("Cut"))
         else:
-            # Old: Do **not** call w.event_generate.
-            # New: Do call w.event_generate.
-            w.event_generate(g.virtual_event_name("Cut"))
-            if not fromMinibuffer:
-                f.tree.onHeadChanged(c.currentPosition(),'Cut')
+            if 0:
+                # Old: Do **not** call w.event_generate.
+                # New: Do call w.event_generate.
+                w.event_generate(g.virtual_event_name("Cut"))
+                if not fromMinibuffer:
+                    f.tree.onHeadChanged(c.currentPosition(),'Cut')
     #@nonl
     #@-node:ekr.20051011072049.2:cutText
     #@+node:ekr.20051011072903.5:pasteText
@@ -1769,7 +1771,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 s = g.app.gui.getTextFromClipboard()
                 i,j = g.app.gui.getTextSelection(w)
                 g.trace(i,j,repr(s),g.callers(6))
-            if 1:
+            if 0:
                 #@            << paste the text into w >>
                 #@+node:ekr.20051103160025:<< paste the text into w >>
                 ch  = g.app.gui.getTextFromClipboard()
@@ -1798,8 +1800,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 #@nonl
                 #@-node:ekr.20051103160025:<< paste the text into w >>
                 #@nl
-                # c.frame.tree.endEditLabel() # Emergency: works!
-                c.frame.tree.onHeadChanged(p)
+            # c.frame.tree.endEditLabel() # Emergency: works!
+            # Gives a double paste.  Would have to return 'break', or something
+            # c.frame.tree.onHeadChanged(p)
         else: pass
     #@-node:ekr.20051011072903.5:pasteText
     #@+node:ekr.20051011072903.1:OnCopyFromMenu
@@ -2178,16 +2181,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c = self.c
     
         if 0: # A *very* effective trace.
-            name = w and hasattr(w,'_name,') or '<no name>'
+            name = w and hasattr(w,'_name') and w._name or '<no name>'
             when = g.choose(later,'   ','NOW')
             g.trace(when,name,g.callers(7)) 
     
         if w:
-            if later:
-                self.wantedWidget = w
-            else:
+            self.wantedWidget = w
+                # Set this even if we call g.app.gui.set_focus.
+            if not later:
                 g.app.gui.set_focus(c,w)
-                self.wantedWidget = None
     #@nonl
     #@-node:ekr.20050120092028.1:set_focus (tkFrame)
     #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -2768,7 +2770,6 @@ class leoTkinterBody (leoFrame.leoBody):
     def setFocus (self):
         
         self.frame.widgetWantsFocus(self.bodyCtrl,later=False)
-        # self.bodyCtrl.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.4003:Focus (tkBody)
     #@+node:ekr.20031218072017.4004:Height & width
@@ -3601,6 +3602,9 @@ class leoTkinterLog (leoFrame.leoLog):
         
         tab.bind('<Button-1>',tabMenuClickCallback)
         tab.bind('<Button-3>',tabMenuRightClickCallback)
+        
+        # tab.bind('<ButtonRelease-1>',tabMenuClickCallback)
+        # tab.bind('<ButtonRelease-3>',tabMenuRightClickCallback)
         #@nonl
         #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
         #@nl
@@ -3657,7 +3661,7 @@ class leoTkinterLog (leoFrame.leoLog):
         return self.tabName
     #@nonl
     #@-node:ekr.20051027114433:getSelectedTab
-    #@+node:ekr.20051018061932.1:ower/raiseTab
+    #@+node:ekr.20051018061932.1:lower/raiseTab
     def lowerTab (self,tabName):
         
         if tabName:
@@ -3672,7 +3676,7 @@ class leoTkinterLog (leoFrame.leoLog):
             logCtrl = self.textDict.get(tabName)
             self.c.frame.widgetWantsFocus(logCtrl)
     #@nonl
-    #@-node:ekr.20051018061932.1:ower/raiseTab
+    #@-node:ekr.20051018061932.1:lower/raiseTab
     #@+node:ekr.20051019170806:renameTab
     def renameTab (self,oldName,newName):
         
@@ -3699,7 +3703,8 @@ class leoTkinterLog (leoFrame.leoLog):
         # Update the status vars.
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
-        c.frame.widgetWantsFocus(self.logCtrl)
+        # g.trace(tabName,self.logCtrl._name)
+        c.frame.widgetWantsFocus(self.logCtrl,later=True)
         self.tabFrame = self.frameDict.get(tabName)
         return tabFrame
     #@nonl
@@ -3709,11 +3714,15 @@ class leoTkinterLog (leoFrame.leoLog):
         
         c = self.c ; k = c.keyHandler
     
-        textWidget = self.textDict.get(tabName)
+        w = self.textDict.get(tabName)
     
-        if k and textWidget:
+        if k and w:
+            k.copyBindingsToWidget(['all','log','text'],w)
     
-            k.copyBindingsToWidget(['all','log','text'],textWidget)
+            # A wretched kludge: put the bindings in the tab!
+            # We can't seem to get focus away from it.
+            tab = self.nb.tab(tabName) # b is a Tk.Button.
+            k.copyBindingsToWidget(['all','log','text'],tab)
     #@nonl
     #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers
