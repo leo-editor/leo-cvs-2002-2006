@@ -349,6 +349,22 @@ class baseCommands:
     #@nonl
     #@-node:EKR.20040529091232.4:c.all_unique_vnodes_iter
     #@-node:ekr.20040312090934:c.iterators
+    #@+node:ekr.20051106040126:c.executeMinibufferCommand
+    def executeMinibufferCommand (self,commandName):
+        
+        c = self ; k = c.keyHandler
+        
+        func = c.commandsDict.get(commandName)
+        
+        if func:
+            event = stroke = None
+            k.masterCommand(event,func,stroke)
+            return k.funcReturn
+        else:
+            g.trace('no such command: %s' % (commandName),color='red')
+            return None
+    #@nonl
+    #@-node:ekr.20051106040126:c.executeMinibufferCommand
     #@+node:ekr.20031218072017.2818:Command handlers...
     #@+node:ekr.20031218072017.2819:File Menu
     #@+node:ekr.20031218072017.2820:top level
