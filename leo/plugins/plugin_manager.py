@@ -85,9 +85,9 @@ __plugin_group__ = "Core"
 #     - Added code to dynamically enable a plugin at runtime
 # 0.16 Paul Paterson:
 #     - Complete code to dynamically enable plugins
-# 0.17 EKR:
-#     - Added dynamicMenu arg to calls to createMenuEntries to suppress the 
-# 'no inverse' message.
+# 0.17 Paul Paterson:
+#     - Speeded up the getVersionHistory step of reading plugins
+#     - Allow specification of plugin load order
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -222,7 +222,7 @@ def grabCommander(tag, keywords):
 def topLevelMenu():
     
     """Manage the plugins"""
-    dlg = ManagerDialog()
+    dlg = ManagerDialog(True)
 #@nonl
 #@-node:ekr.20041231134702:topLevelMenu
 #@+node:pap.20041006193459:Error Classes
@@ -654,6 +654,130 @@ class PluginList(Tk.Frame):
 
 
 #@-node:pap.20041008225226:class PluginList
+#@+node:pap.20051102233259:class LoadOrderView
+class LoadOrderView(Tk.Frame):
+    """Shows the load order of items"""
+    
+    #@    @+others
+    #@+node:pap.20051102233259.1:__init__
+    def __init__(self, parent, file_text="Plugin", collection=None, enabler=None, 
+                 plugin_view=None, *args, **kw):
+        """Initialise the view"""
+        Tk.Frame.__init__(self, parent, *args, **kw)
+    
+        self.file_text = file_text
+        self.collection = collection
+        self.enabler = enabler
+        self.plugin_view = plugin_view
+        
+        self.items = Pmw.ScrolledListBox(self,
+                labelpos='nw',
+                label_text='%s:' % self.file_text,
+                selectioncommand = self.onClick,
+                listbox_height = 6,
+                usehullsize = 1,
+                hull_width = 300,
+                hull_height = 200,
+        )
+    
+        self.items.component("listbox").configure(font=("Courier", 8))
+        self.items.pack(side="top", fill='both', expand=1)    
+        
+        self.buttonBox = Pmw.ButtonBox(
+            self,
+            labelpos = 'w',
+            label_text = 'Change Order',
+            frame_borderwidth = 2,
+            frame_relief = 'groove')
+        
+        self.buttonBox.add('First', command = self.moveFirst)
+        self.buttonBox.add('Up', command = self.moveUp)
+        self.buttonBox.add('Down', command = self.moveDown)
+        self.buttonBox.add('Last', command = self.moveLast)
+        self.buttonBox.add('Save', command = self.save)
+        
+        self.buttonBox.alignbuttons()
+        
+        self.buttonBox.pack(side="top", padx=5)    
+    
+    #@-node:pap.20051102233259.1:__init__
+    #@+node:pap.20051103000804:initList
+    def initList(self):
+        """Initialise the members of the list"""
+        self.items.setlist([self.collection[name].nicename for name in self.enabler.actives])
+        self.local_dict = dict([(self.collection[name].nicename, self.collection[name])
+                                    for name in self.collection])
+        
+    #@nonl
+    #@-node:pap.20051103000804:initList
+    #@+node:pap.20051102233801:moveFirst
+    def moveFirst(self):
+        """Move the plugin to the first"""
+        item = self.getSelection()
+        if item:
+            self.enabler.actives.moveFirst(item.name)
+            self.initList()
+            self.items.setvalue([item.nicename])
+    #@nonl
+    #@-node:pap.20051102233801:moveFirst
+    #@+node:pap.20051102233937:moveUp
+    def moveUp(self):
+        """Move the plugin up one"""
+        item = self.getSelection()
+        if item:
+            self.enabler.actives.moveUp(item.name)
+            self.initList()
+            self.items.setvalue([item.nicename])        
+        
+    #@nonl
+    #@-node:pap.20051102233937:moveUp
+    #@+node:pap.20051102233937.1:moveDown
+    def moveDown(self):
+        """Move the plugin down one"""
+        item = self.getSelection()
+        if item:
+            self.enabler.actives.moveDown(item.name)
+            self.initList()
+            self.items.setvalue([item.nicename])        
+        
+    #@nonl
+    #@-node:pap.20051102233937.1:moveDown
+    #@+node:pap.20051102233937.2:moveLast
+    def moveLast(self):
+        """Move the plugin to the last"""
+        item = self.getSelection()
+        if item:
+            self.enabler.actives.moveLast(item.name)
+            self.initList()
+            self.items.setvalue([item.nicename])
+    #@nonl
+    #@-node:pap.20051102233937.2:moveLast
+    #@+node:pap.20051103002306:onClick
+    def onClick(self):
+        """Clicked on an item in the order view"""
+        item = self.getSelection()
+        if item:
+            self.plugin_view.showPlugin(item)    
+    #@-node:pap.20051103002306:onClick
+    #@+node:pap.20051103001707:save
+    def save(self):
+        """Save the current order"""
+        self.enabler.storeOrder()
+    #@nonl
+    #@-node:pap.20051103001707:save
+    #@+node:pap.20051103002808:getSelection
+    def getSelection(self):
+        """Return the selected plugin"""
+        sels = self.items.getcurselection()
+        if len(sels) == 0:
+            return None
+        else:
+            return self.local_dict[sels[0]]
+        
+    #@-node:pap.20051103002808:getSelection
+    #@-others
+#@nonl
+#@-node:pap.20051102233259:class LoadOrderView
 #@+node:pap.20041009013256:class LocalPluginList
 class LocalPluginList(PluginList):
     """A list showing plugins based on the local file system"""
@@ -681,7 +805,7 @@ class ManagerDialog:
     install_text = "Install"   
     #@    @+others
     #@+node:pap.20041006215108.1:ManagerDialog._init__
-    def __init__(self):
+    def __init__(self, show_order=False):
         """Initialise the dialog"""
         self.setPaths()
         #@    << create top level window >>
@@ -725,7 +849,7 @@ class ManagerDialog:
         #@nl
         #@    << create PluginList >>
         #@+node:pap.20041006223915:<< create PluginList >>
-        self.notebook = notebook = Pmw.NoteBook(self.upper)
+        self.notebook = notebook = Pmw.NoteBook(self.upper, raisecommand=self.selectPage)
         notebook.pack(side="left", fill='both', expand=1, padx=5, pady=5)
         
         self.local_list_page = local_list_page = notebook.add('Installed %ss' % self.file_text)
@@ -744,6 +868,15 @@ class ManagerDialog:
         #@nonl
         #@-node:pap.20041006223915:<< create PluginList >>
         #@nl
+        if show_order:
+            #@        << create order >>
+            #@+node:pap.20051102225718:<< create order >>
+            self.order_view_page = order_view_page = notebook.add('%s Load Order' % self.file_text)
+            
+            self.order_view = order_view = LoadOrderView(order_view_page, self.file_text, self.local, self.enable, self.plugin_view)
+            order_view.pack(side="top", fill='both', expand=1)
+            #@-node:pap.20051102225718:<< create order >>
+            #@nl
         #@    << create local buttons >>
         #@+node:pap.20041006223915.2:<< create local buttons >>
         self.buttonBox = Pmw.ButtonBox(
@@ -801,19 +934,12 @@ class ManagerDialog:
         #@nl
         self.plugin_list.populateList("All")
         
-        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
-        g.app.dialogs += 1
-        
         if not standalone:
             top.grab_set() # Make the dialog a modal dialog.
             top.focus_force() # Get all keystrokes.
             root.wait_window(top)
         else:
             root.mainloop()
-            
-        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
-        g.app.dialogs -= 1
-    #@nonl
     #@-node:pap.20041006215108.1:ManagerDialog._init__
     #@+node:pap.20041006224151:enablePlugin
     def enablePlugin(self):
@@ -934,6 +1060,13 @@ class ManagerDialog:
             webbrowser.open(plugin.getViewFilename())
     #@nonl
     #@-node:pap.20041009020000.2:viewPlugin
+    #@+node:pap.20051103001158:selectPage
+    def selectPage(self, pagename):
+        """Select a page in the tab view"""
+        if pagename == "%s Load Order" % self.file_text:
+            self.order_view.initList()
+    #@nonl
+    #@-node:pap.20051103001158:selectPage
     #@+node:pap.20041009025708:checkConflicts
     def checkConflicts(self):
         """Check for plugin conflicts"""
@@ -1025,11 +1158,7 @@ class ListReportDialog:
             
         top.grab_set() # Make the dialog a modal dialog.
         top.focus_force() # Get all keystrokes.
-        
-        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
-        g.app.dialogs += 1
         root.wait_window(top)
-        g.app.dialogs -= 1
     #@-node:pap.20041009233937.1:ListReportDialog.__init__
     #@+node:pap.20041009234850:getFilterOptions
     def getFilterOptions(self, list_data):
@@ -1068,6 +1197,110 @@ class ListReportDialog:
 #@-node:pap.20041009233937:class ListReportDialog
 #@-node:pap.20041009140132:UI
 #@+node:pap.20041009140132.1:Implementation
+#@+node:pap.20051103001707.1:class OrderedDict
+class OrderedDict(list):
+    """A dictionary that retains its order
+    
+    This is implemented as a list of (key, value) pairs
+    and so is not suitable for large numbers of items.
+    
+    """
+    
+    #@    @+others
+    #@+node:pap.20051103002042:__init__
+    def __init__(self, items=None):
+        """Initialise"""
+        if items is None:
+            items = []
+        self.items = items
+    #@nonl
+    #@-node:pap.20051103002042:__init__
+    #@+node:pap.20051103001707.3:__getitem__
+    def __getitem__(self, name):
+        """Return an item"""
+        for key, value in self.items:
+            if key == name:
+                return value
+        else:
+            raise KeyError("Item '%s' not found" % name)
+    #@-node:pap.20051103001707.3:__getitem__
+    #@+node:pap.20051104224633:__setitem__
+    def __setitem__(self, name, value):
+        """Set an item"""
+        self.items.append((name, value))
+    #@-node:pap.20051104224633:__setitem__
+    #@+node:pap.20051103001922:__iter__
+    def __iter__(self):
+        """Iterate over keys"""
+        return iter(self.keys())
+    #@nonl
+    #@-node:pap.20051103001922:__iter__
+    #@+node:pap.20051103004807:__contains__
+    def __contains__(self, name):
+        """Check for item inside"""
+        try:
+            dummy = self[name]
+            return True
+        except KeyError:
+            return False
+    #@nonl
+    #@-node:pap.20051103004807:__contains__
+    #@+node:pap.20051104224544:get
+    def get(self, key, default=None):
+        """Return the value"""
+        try:
+            self[key]
+        except KeyError:
+            return default
+    #@nonl
+    #@-node:pap.20051104224544:get
+    #@+node:pap.20051103001743:keys
+    def keys(self):
+        """Return the keys"""
+        return [key for key, value in self.items]
+    #@nonl
+    #@-node:pap.20051103001743:keys
+    #@+node:pap.20051104221348:values
+    def values(self):
+        """Return the values"""
+        return [value for key, value in self.items]
+    #@-node:pap.20051104221348:values
+    #@+node:pap.20051103003310:moveFirst
+    def moveFirst(self, name):
+        """Move the named item to the front"""
+        item = name, self[name]
+        self.items.remove(item)
+        self.items.insert(0, item)
+    #@nonl
+    #@-node:pap.20051103003310:moveFirst
+    #@+node:pap.20051103004312:moveUp
+    def moveUp(self, name):
+        """Move the named item up"""
+        item = name, self[name]
+        pos = self.items.index(item)
+        if pos <> 0:
+            self.items[pos], self.items[pos-1] = self.items[pos-1], self.items[pos]
+    #@nonl
+    #@-node:pap.20051103004312:moveUp
+    #@+node:pap.20051103004312.1:moveDown
+    def moveDown(self, name):
+        """Move an item down in the list"""
+        item = name, self[name]
+        pos = self.items.index(item)
+        if pos <> len(self.items)-1:
+            self.items[pos], self.items[pos+1] = self.items[pos+1], self.items[pos]    
+    #@nonl
+    #@-node:pap.20051103004312.1:moveDown
+    #@+node:pap.20051103003447:moveLast
+    def moveLast(self, name):
+        """Move the named item to the back"""
+        item = name, self[name]
+        self.items.remove(item)
+        self.items.append(item)
+    #@nonl
+    #@-node:pap.20051103003447:moveLast
+    #@-others
+#@-node:pap.20051103001707.1:class OrderedDict
 #@+node:pap.20041006184225.6:class Plugin
 class Plugin:   
     """Represents a single plugin instance"""
@@ -1223,6 +1456,7 @@ class Plugin:
             self.priority = self.getPattern(text, r'__plugin_priority__\s*=\s*(.*?)$', "-")
         self.has_toplevel = self.hasPattern(text, "def topLevelMenu")
         self.getVersionHistory(text)
+        
     #@nonl
     #@-node:pap.20041006194759:getDetails
     #@+node:pap.20041006200000:hasPattern
@@ -1349,12 +1583,14 @@ class Plugin:
         This only works if the plugin was developed in Leo as a @thin file.
         
         """
-        #if self.group == "Core":
-        #    import pdb; pdb.set_trace()
         extractor =r'.*\+node\S+?\<\< %s \>\>.*?\#\@\+at(.*)\#\@\-at.*\-node.*?\<\< %s \>\>.*'
+        #
+        # This Re is very slow on large files so we truncate since we are really pretty
+        # sure that version history will be within the first 150 lines
+        lines = "\n".join(text.split("\n")[:150])
         for name in ("version history", "change log"):
             searcher = re.compile(extractor % (name, name), re.DOTALL+re.M)
-            match = searcher.match(text)
+            match = searcher.match(lines)
             if match:
                 version_text = match.groups()[0]
                 self.versions = version_text.replace("#", "")
@@ -1885,12 +2121,12 @@ class EnableManager:
         """Parse the text in the manager file"""
     
         # Regular expressions for scanning the file
-        find_active = re.compile(r"^\s*(\w+)\.py", re.MULTILINE)
-        find_inactive = re.compile(r"^\s*#\s*(\w+)\.py", re.MULTILINE)
+        find_active = re.compile(r"^\s*?(\w+)\.py", re.MULTILINE)
+        find_inactive = re.compile(r"^\s*?#\s*(\w+)\.py", re.MULTILINE)
         find_manager = re.compile(r"^\s*plugin_manager\.py", re.MULTILINE)
     
         if 1: # Put the first match in the starts dict.
-            starts = {}
+            starts = OrderedDict()
             for kind,iter in (
                 ('on',find_active.finditer(text)),
                 ('off',find_inactive.finditer(text)),
@@ -1904,10 +2140,10 @@ class EnableManager:
                           starts[name] = g.Bunch(
                             kind=kind,name=name,start=start,match=match)
                         
-            self.actives = dict(
+            self.actives = OrderedDict(
                 [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='on'])
                 
-            self.inactives = dict(
+            self.inactives = OrderedDict(
                 [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='off'])
                 
             if 0: # debugging.
@@ -1938,15 +2174,21 @@ class EnableManager:
     #@+node:pap.20041008234256:updateState
     def updateState(self, plugin):
         """Update the state for the given plugin"""
+        self._updateItemState(plugin.name, plugin.enabled)
+    #@nonl
+    #@-node:pap.20041008234256:updateState
+    #@+node:pap.20051104222141:_updateItemState
+    def _updateItemState(self, name, state):
+        """Update the state of an item"""
         # Get the filename for the new entry
-        if plugin.enabled == "On":
-            newentry = "%s.py" % plugin.name
+        if state == "On":
+            newentry = "%s.py" % name
         else:
-            newentry = "#%s.py" % plugin.name 
+            newentry = "#%s.py" % name 
     
-        if plugin.name in self.all:
+        if name in self.all:
             # Plugin exists in the management file
-            item = self.all[plugin.name]
+            item = self.all[name]
             # TODO: Unicode issues with the following line??
             self.text = "%s%s%s" % (
                 self.text[:item.start()],
@@ -1959,9 +2201,48 @@ class EnableManager:
                 str(newentry),
                 self.text[self.manager.start():])
     
-        self.writeFile(self.location)
+        self.writeFile(self.location)    
     #@nonl
-    #@-node:pap.20041008234256:updateState
+    #@-node:pap.20051104222141:_updateItemState
+    #@+node:pap.20051104220845:storeOrder
+    def storeOrder(self):
+        """Store the load order of plugins
+        
+        Order is stored by putting a section in the file delimited by
+            # Load Order
+            plugin1
+            plugin2
+            plugin3
+            # Load Order
+            
+        We disable all plugins and insert them in the new section.
+        We check to see if a load order exists and create it if not. 
+        
+        """
+        #
+        # Disable all active plugins
+        active_plugins = self.actives.keys()
+        for name in active_plugins:
+            self._updateItemState(name, False)
+        #
+        # Look for an existing section and chop it out
+        existing_parts = self.text.split("# Load Order")
+        if len(existing_parts) == 3:
+            self.text = "%s\n%s" % (existing_parts[0], existing_parts[2])
+        #
+        # Now add the section in at the end
+        self.text = "# Load Order\n%s\n# Load Order%s" % (
+                    "\n".join([("%s.py" % name) for name in active_plugins]),
+                    self.text.strip())
+        #
+        # And store the new version
+        self.writeFile(self.location)
+        #
+        # The active plugins will have been set to enabled by the writeFile
+        # operation so we are now good to go again!
+            
+    #@nonl
+    #@-node:pap.20051104220845:storeOrder
     #@-others
 #@nonl
 #@-node:pap.20041006232717:class EnableManager

@@ -1089,13 +1089,13 @@ def dynaput(c, slst):
         
                 #btw, Tk insert doesnt disturb the selection.
                 Tx.deleteTextSelection()
-                #Tx.onBodyWillChange(v, "Delete")
+                #Tx.onBodyChanged(v, "Delete")
         
                 Tx.setInsertionPoint(Tst)
         
                 #print '%r', ux
                 Tx.insertAtInsertPoint(ux)
-                Tx.onBodyWillChange(v, "Typing")
+                Tx.onBodyChanged(v, "Typing")
         
                 #selection may wander depending on the final size
                 Tx.setTextSelection(Tst,  Ten)

@@ -44,6 +44,7 @@ plugins_menu.py
 rst3.py
 # zodb.py
 # testRegisterCommand.py
+rClick.py
 plugin_manager.py
 
 # Icon area: order is important.

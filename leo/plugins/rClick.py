@@ -28,6 +28,8 @@
 #     - Simplified crop method.
 # 0.6 EKR:
 #     - Use g.importExtension to import Tk.
+# 0.7 EKR:
+#     - Use e.widget._name.startswith('body') to test for the body pane.
 #@-at
 #@nonl
 #@-node:ekr.20040422081253:<< version history >>
@@ -81,7 +83,7 @@ def rc_dbody():
     if c.frame.body.hasTextSelection():
 
         c.frame.body.deleteTextSelection()
-        c.frame.body.onBodyWillChange(v,"Delete")
+        c.frame.body.onBodyChanged(v,"Delete")
 #@nonl
 #@-node:ekr.20040422072343.2:rc_dbody
 #@+node:ekr.20040422072343.3:rc_nl
@@ -92,7 +94,7 @@ def rc_nl():
     c = g.top()
 
     c.frame.body.insertAtInsertPoint('\n')
-    c.frame.body.onBodyWillChange(c.currentPosition(),"Typing")
+    c.frame.body.onBodyChanged(c.currentPosition(),"Typing")
 #@nonl
 #@-node:ekr.20040422072343.3:rc_nl
 #@+node:ekr.20040422072343.4:rc_selectAll
@@ -126,7 +128,7 @@ def rClicker(tag,keywords):
 
     e.widget.focus()
 
-    if e.widget._name == 'body':
+    if e.widget._name.startswith('body'):
         #@        << define commandList for body >>
         #@+node:ekr.20040422072343.7:<< define commandList for body >>
         commandList = [
@@ -348,7 +350,7 @@ def getdoc(thing, title='Help on %s', forceload=0):
 #@-node:ekr.20040422072343.9:Utils for context sensitive commands
 #@-others
 
-__version__ = "0.6"
+__version__ = "0.7"
 
 if Tk: # OK for unit tests.
     

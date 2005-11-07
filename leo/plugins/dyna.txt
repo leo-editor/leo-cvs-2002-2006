@@ -245,7 +245,7 @@ def insertAhome(wch= 'i'): #i/r
         Tx = c.frame.body
         Tx.setInsertionPoint(1.0)
         Tx.insertAtInsertPoint('#@path %s\n'%(home,))
-        Tx.onBodyWillChange(p, "Typing")  
+        Tx.onBodyChanged(p, "Typing")  
 
     #return home
 #@+node:ekr.20050421093045.139:windefs
