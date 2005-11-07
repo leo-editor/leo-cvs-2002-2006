@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6178" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6180" clone_windows="0"/>
 <globals body_outline_ratio="0.434543454345">
-	<global_window_position top="18" left="236" height="909" width="841"/>
+	<global_window_position top="10" left="343" height="909" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -40,7 +40,7 @@
 <v t="ekr.20050819055746"><vh>@button Save</vh></v>
 <v t="ekr.20050722075812"><vh>Remove blank trailing lines</vh></v>
 </v>
-<v t="edream.110203113231.618" a="ETV"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -1317,8 +1317,6 @@ marks="ekr.20050915090544.4,ekr.20050915084416.10,ekr.20050915084416.14,"><vh>@t
 <v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
 </v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
-<v t="ekr.20041009165858"><vh>@thin spellpyx.ini</vh></v>
-<v t="ekr.20040809151600.1"><vh>@thin spellpyx.py</vh></v>
 <v t="ekr.20040809151600.52"><vh>Notes for creating aspell.pyd</vh>
 <v t="ekr.20040809160744"><vh>Notes: e</vh></v>
 <v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
@@ -3855,7 +3853,7 @@ active = Yes
 interval = 20</t>
 <t tx="edream.110203113231.729"></t>
 <t tx="edream.110203113231.872"></t>
-<t tx="edream.110203113231.930"></t>
+<t tx="edream.110203113231.930"># The spellpyx plugin has been retired because the Spell Tab is more convenient to use.</t>
 <t tx="edream.110403140857"></t>
 <t tx="edream.110403140857.1"></t>
 <t tx="edream.110403140857.2">@
@@ -3969,11 +3967,11 @@ Made changes for 4.1 g.app.gui architecture. (More work needed).</t>
     frame = self ; c = frame.c ; v = c.currentVnode()
     h = v.headString() # Remember the old value.
 
-    if v.edit_text():
-        sel1,sel2 = g.app.gui.getTextSelection(v.edit_text())
+    if v.edit_widget():
+        sel1,sel2 = g.app.gui.getTextSelection(v.edit_widget())
         if sel1 and sel2 and sel1 != sel2: # 7/7/03
-            v.edit_text().delete(sel1,sel2)
-        v.edit_text().insert("insert",c.getTime(body=False))
+            v.edit_widget().delete(sel1,sel2)
+        v.edit_widget().insert("insert",c.getTime(body=False))
         frame.idle_head_key(v)
 
     # A kludge to get around not knowing whether we are editing or not.
@@ -4065,11 +4063,11 @@ def toggleSplitDirection(self):
     
     c = self.c ; v = c.currentVnode ; tree = self.tree
     # g.trace(v)
-    if self.revertHeadline and v.edit_text() and v == self.editVnode:
+    if self.revertHeadline and v.edit_widget() and v == self.editVnode:
         
         # g.trace(`self.revertHeadline`)
-        v.edit_text().delete("1.0","end")
-        v.edit_text().insert("end",self.revertHeadline)
+        v.edit_widget().delete("1.0","end")
+        v.edit_widget().insert("end",self.revertHeadline)
         tree.idle_head_key(v) # Must be done immediately.
         tree.revertHeadline = None
         tree.select(v)
@@ -4083,7 +4081,7 @@ def toggleSplitDirection(self):
 
     c = self.c ; tree = self.tree ; v = self.editVnode
 
-    if v and v.edit_text():
+    if v and v.edit_widget():
         tree.select(v)
 
     if v: # Bug fix 10/9/02: also redraw ancestor headlines.
@@ -8346,7 +8344,9 @@ That web site is produced from a Leo outline.
 
 I am enclosing this code as-is; use with reasonable caution.
 
-You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html</t>
+You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html
+
+11/7/05: Changed onBodyWillChange to onBodyChanged throughout.</t>
 <t tx="ekr.20041103052443"># Execute this in a script button.
 
 import leoGlobals as g
@@ -8878,12 +8878,6 @@ Automatically hilight @ nodes
 <t tx="ekr.20050227071948.16"></t>
 <t tx="ekr.20050227071948.17">
 Store semantics instead of colours.  Semantics then map to colours.
-
-v.edit_text():  ?? instead of pulling it of tree ?
-
-yes.
-
-4.2 it is p.edit_text()
 
 
 headline colours are reseted by the tree select and unselect methods.
@@ -10667,7 +10661,7 @@ insertAplug()
         Tx = c.frame.body
         Tx.setInsertionPoint(1.0)
         Tx.insertAtInsertPoint('#@path %s\n'%(path,))
-        Tx.onBodyWillChange(p, "Typing")  
+        Tx.onBodyChanged(p, "Typing")  
 </t>
 <t tx="ekr.20050421093045.133">;ini may be shortlived in favor of @settings when thats feasible
 ;leave nosent so it isn't updated on leo open and all comments lost
@@ -12921,7 +12915,8 @@ bunch = Bunch</t>
 <t tx="ekr.20050818105023"></t>
 <t tx="ekr.20050818105023.1"></t>
 <t tx="ekr.20050818130249"></t>
-<t tx="ekr.20050819055746">c.save()</t>
+<t tx="ekr.20050819055746">c.save()
+c.redraw_now()</t>
 <t tx="ekr.20050819055746.1">@
 
 - Added dummyPDFTranslator class.
