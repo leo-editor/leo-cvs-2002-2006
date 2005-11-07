@@ -795,6 +795,7 @@ def openWithFileName(fileName,old_c,
             g.app.config.updateSettings(c,localFlag=True)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         frame.bodyWantsFocus()
+        c.redraw_now()
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -2319,14 +2320,10 @@ def idleTimeHookHandler(*args,**keys):
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed: return
     
-    top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
         # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
-        # New in 4.4 a2: direct support for k.onIdleTime()
-        if 0:
-            c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
         g.doHook("idle",c=c)
 
     # Requeue this routine after g.app.idleTimeDelay msec.

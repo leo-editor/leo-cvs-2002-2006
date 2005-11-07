@@ -1611,7 +1611,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         pass # Editing is not allowed.
     #@nonl
     #@-node:ekr.20041225063637.82:editLabel
-    #@+node:ekr.20041225063637.83:tree.select
+    #@+node:ekr.20041225063637.83:tree.select (config tree)
     def select (self,p,updateBeadList=True):
         
         __pychecker__ = '--no-argsused' # updateBeadList required for compatibility.
@@ -1637,7 +1637,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         # For the UNL plugin.
         g.doHook("select2",c=p.c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     #@nonl
-    #@-node:ekr.20041225063637.83:tree.select
+    #@-node:ekr.20041225063637.83:tree.select (config tree)
     #@+node:ekr.20041225063637.91:getTextWidget
     def getTextWidget (self,p):
         
@@ -1676,8 +1676,9 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
         else:              p.expand()
     
         tree.active = True
-        tree.redraw()
+        tree.redraw_now()
         tree.select(p)
+        
     #@nonl
     #@-node:ekr.20041225063637.94:onClickBoxClick
     #@-node:ekr.20041225063637.92:Event handlers...
@@ -2905,7 +2906,7 @@ class settingsController:
     #@-node:ekr.20041225063637.53:onPaneResize
     #@+node:ekr.20041225063637.54:handleTreeClick
     def onTreeClick (self,p):
-        
+    
         self.p = p.copy()
         self.updateSetter(p)
     #@nonl

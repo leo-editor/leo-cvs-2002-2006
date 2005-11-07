@@ -137,8 +137,10 @@ class LeoApp:
             "latex" : "tex", # 1/8/04
             "noweb" : "nw",
             "pascal" : "p",
-            "perl" : "perl",
-            "perlpod" : "perl",
+            # "perl" : "perl",
+            # "perlpod" : "perl",
+            "perl" : "pl",      # 11/7/05
+            "perlpod" : "pod",  # 11/7/05
             "php" : "php",
             "plain" : "txt",
             "python" : "py",
@@ -164,7 +166,9 @@ class LeoApp:
             "java"  : "java",
             "noweb" : "nw",
             "p"     : "pascal",
-            "perl"  : "perl",
+            # "perl"  : "perl",
+            "pl"    : "perl",   # 11/7/05
+            "pod"   : "perlod", # 11/7/05
             "php"   : "php",
             "py"    : "python",
             "sql"   : "plsql", # qt02537 2005-05-27
@@ -174,6 +178,7 @@ class LeoApp:
             "txt"   : "plain",
             "tcl"   : "tcltk",
             "w"     : "cweb" }
+        #@nonl
         #@-node:ekr.20031218072017.368:<< define global data structures >> app
         #@nl
     #@nonl

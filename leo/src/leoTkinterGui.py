@@ -424,7 +424,7 @@ class tkinterGui(leoGui.leoGui):
         if w:
             if 0:
                 name = hasattr(w,'_name') and w._name or '<no name>'
-                g.trace('GUI',name,g.callers(7))
+                g.trace('GUI',name,g.callers(8))
             w.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)

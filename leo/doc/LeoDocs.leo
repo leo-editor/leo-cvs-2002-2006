@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627" a="TV"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Spell</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
 <v t="ekr.20050407144417"><vh>@settings</vh>
@@ -30,7 +30,7 @@
 <v t="ekr.20050812123002.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
 </v>
-<v t="ekr.20050901054622"><vh>@button save</vh></v>
+<v t="ekr.20050901054622"><vh>@button Save</vh></v>
 <v t="ekr.20050901055150"><vh>@@button promote</vh></v>
 <v t="ekr.20050901060119"><vh>@@button def list</vh>
 <v t="ekr.20050901061220"><vh>createDefList</vh></v>
@@ -2174,7 +2174,7 @@
 </v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20051028051444" a="ETV"><vh>4.4 alpha 2</vh>
+<v t="ekr.20051028051444" a="E"><vh>4.4 alpha 2</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -17871,7 +17871,8 @@ Appendices
 
 .. |leo|   image:: leo.gif
 	:target: front.html</t>
-<t tx="ekr.20050901054622">c.save()</t>
+<t tx="ekr.20050901054622">c.save()
+c.redraw_now()</t>
 <t tx="ekr.20050901055150">@color
 # Script to promote headlines and body text
 

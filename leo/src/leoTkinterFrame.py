@@ -1582,7 +1582,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             frame = self ; gui = g.app.gui
-            frame.tree.onHeadChanged(frame.c.currentPosition())
+            # frame.tree.onHeadChanged(frame.c.currentPosition())
             g.app.setLog(frame.log,"OnActivateBody")
             w = gui.get_focus(frame)
             if w != frame.body.bodyCtrl:
@@ -1737,6 +1737,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
+        __pychecker__ = '--no-argsused' # fromMinibuffer not used.
+        
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl
         
@@ -1745,12 +1747,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if isBody:
             w.event_generate(g.virtual_event_name("Cut"))
         else:
-            if 0:
-                # Old: Do **not** call w.event_generate.
-                # New: Do call w.event_generate.
-                w.event_generate(g.virtual_event_name("Cut"))
-                if not fromMinibuffer:
-                    f.tree.onHeadChanged(c.currentPosition(),'Cut')
+            # Do **not** call w.event_generate.
+            pass
     #@nonl
     #@-node:ekr.20051011072049.2:cutText
     #@+node:ekr.20051011072903.5:pasteText
@@ -1758,10 +1756,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        f = self ; c = f.c ; p = c.currentPosition()
+        f = self ; c = f.c
         w = f.getFocus()
         name = hasattr(w,'_name') and w._name or ''
-        # g.trace(name)
         
         if fromMinibuffer:
             w.event_generate(g.virtual_event_name("Paste"))
@@ -1784,8 +1781,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def OnCopyFromMenu (self):
         
         ''' Called **only** when invoked using the menu instead of a shortcut.'''
-        
-        #g.trace()
         
         f = self ; c = f.c ; w = f.getFocus()
         isBody = w == f.body.bodyCtrl

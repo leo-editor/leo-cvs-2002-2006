@@ -1511,6 +1511,7 @@ python2
 python22
 python24
 pythonDecorator
+pythonDir
 pythonFunction
 python_keywords
 python_language
@@ -1551,6 +1552,7 @@ redoBletch
 redoButton
 redoHelper
 redraw_flag
+redraw_now
 refLinesCount
 refactor
 reformatParagraph

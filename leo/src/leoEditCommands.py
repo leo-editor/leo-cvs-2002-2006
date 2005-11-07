@@ -4632,6 +4632,7 @@ class findTab (leoFind.leoFind):
         # Init the base class...
         leoFind.leoFind.__init__(self,c,title='Find Tab')
         self.c = c
+        self.frame = self.outerFrame = self.top = None # To keep pychecker happy.
         
         #@    << create the tkinter intVars >>
         #@+node:ekr.20051020120306.12:<< create the tkinter intVars >>
@@ -5535,22 +5536,6 @@ class searchCommandsClass (baseEditCommandsClass):
 #@-node:ekr.20050920084036.257:class searchCommandsClass
 #@-node:ekr.20051023094009:Search classes
 #@+node:ekr.20051025071455:Spell classes
-#@<< specify aspell directories >>
-#@+node:ekr.20051025071455.3:<< specify aspell directories >>
-if sys.platform == 'darwin':
-    aspell_dir = '/sw/lib'
-        # The top-level directory.
-    aspell_bin_dir = '/sw/lib/bin'
-        # NOT TESTED YET.
-else:
-    aspell_dir = r'c:\Aspell'
-        # The top-level directory.
-    aspell_bin_dir = r'c:\Aspell\bin'
-        # The directory continaing apell.pyd and aspell-15.dll
-#@nonl
-#@-node:ekr.20051025071455.3:<< specify aspell directories >>
-#@nl
-
 #@+others
 #@+node:ekr.20051025071455.6:class Aspell
 class Aspell:
@@ -5560,34 +5545,28 @@ class Aspell:
     #@    @+others
     #@+node:ekr.20051025071455.7:Birth & death
     #@+node:ekr.20051025071455.8:__init__
-    def __init__(self,c,local_dictionary_file,local_language_code):
-        
+    def __init__ (self,c,local_dictionary_file,local_language_code):
+    
         """Ctor for the Aspell class."""
-        
+    
         self.c = c
-        
+    
+        self.aspell_dir = c.config.getString('aspell_dir')
+        self.aspell_bin_dir = c.config.getString('aspell_bin_dir')
+    
         try:
             import aspell
         except ImportError:
             # Specify the path to the top-level Aspell directory.
-            if sys.platform == 'darwin':
-                aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-            else:
-                aspell = g.importFromPath(
-                    "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
-                
+            theDir = g.choose(sys.platform=='darwin',self.aspell_dir,self.aspell_bin_dir)
+            aspell = g.importFromPath('aspell',theDir,pluginName=__name__,verbose=True)
+            
         self.aspell = aspell
-    
-        self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
-        # g.trace(self.sc)
-        
-        self.aspell_exe_loc = (c.config.getString('aspell_bin_dir') or aspell_bin_dir)
-        # g.trace(self.aspell_exe_loc)
-    
-        self.local_language_code = local_language_code
-        self.local_dictionary_file = local_dictionary_file
-        self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
-        # g.trace(self.local_dictionary)
+        if aspell:
+            self.sc = aspell.spell_checker(prefix=self.aspell_dir,lang=local_language_code)
+            self.local_language_code = local_language_code
+            self.local_dictionary_file = local_dictionary_file
+            self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file) [0]
     #@nonl
     #@-node:ekr.20051025071455.8:__init__
     #@-node:ekr.20051025071455.7:Birth & death
@@ -5621,7 +5600,7 @@ class Aspell:
             basename = os.path.splitext(self.local_dictionary)[0]
             cmd = (
                 "%s --lang=%s create master %s.wl < %s.txt" %
-                (self.aspell_exe_loc, self.local_language_code, basename,basename))
+                (self.aspell_bin_dir, self.local_language_code, basename,basename))
             os.popen(cmd)
             return True
     
@@ -5772,13 +5751,13 @@ class spellTab(leoFind.leoFind):
             return False
     
         self.aspell = Aspell(c,dictionaryFileName,self.local_language_code)
+        
         if not self.aspell.aspell:
             g.es_print('Can not open Aspell',color='red')
             return False
             
         self.dictionary = self.readDictionary(dictionaryFileName)
         return True
-    #@nonl
     #@-node:ekr.20051025094004:init_aspell
     #@+node:ekr.20051025071455.22:createSpellTab
     def createSpellTab(self,parentFrame):
@@ -5806,7 +5785,7 @@ class spellTab(leoFind.leoFind):
         fpane = Tk.Frame(outer,bg=bg,bd=2)
         fpane.pack(side='top',expand=1,fill='both')
         
-        self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
+        self.listBox = Tk.Listbox(fpane,height=6,width=10,selectmode="single")
         self.listBox.pack(side='left',expand=1,fill='both')
         self.listBox.configure(font=('verdana',11,'normal'))
         
@@ -6288,7 +6267,6 @@ class spellTab(leoFind.leoFind):
 #@nonl
 #@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
 #@-others
-#@nonl
 #@-node:ekr.20051025071455:Spell classes
 #@-others
 

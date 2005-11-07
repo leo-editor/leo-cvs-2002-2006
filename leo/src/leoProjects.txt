@@ -2572,8 +2572,10 @@ self.language_extension_dict = {
     "latex" : "tex", # 1/8/04
     "noweb" : "nw",
     "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
@@ -2599,7 +2601,9 @@ self.extension_dict = {
     "java"  : "java",
     "noweb" : "nw",
     "p"     : "pascal",
-    "perl"  : "perl",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -2609,6 +2613,7 @@ self.extension_dict = {
     "txt"   : "plain",
     "tcl"   : "tcltk",
     "w"     : "cweb" }
+#@nonl
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20031218072017.4059:app.gui.Tkinter.utils
@@ -2765,7 +2770,7 @@ def set_focus(self,c,w):
     if w:
         if 0:
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(7))
+            g.trace('GUI',name,g.callers(8))
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -3099,6 +3104,8 @@ def cutText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
+    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
+    
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
     
@@ -3107,12 +3114,8 @@ def cutText (self,fromMinibuffer=False):
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
-        if 0:
-            # Old: Do **not** call w.event_generate.
-            # New: Do call w.event_generate.
-            w.event_generate(g.virtual_event_name("Cut"))
-            if not fromMinibuffer:
-                f.tree.onHeadChanged(c.currentPosition(),'Cut')
+        # Do **not** call w.event_generate.
+        pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -3120,10 +3123,9 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; p = c.currentPosition()
+    f = self ; c = f.c
     w = f.getFocus()
     name = hasattr(w,'_name') and w._name or ''
-    # g.trace(name)
     
     if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
@@ -3146,8 +3148,6 @@ def pasteText (self,fromMinibuffer=False):
 def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -3439,31 +3439,38 @@ def setFocusHelper (self):
     
     c = self ; frame = c.frame
     
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+    
     if frame.wantedWidget:
         w = frame.wantedWidget
         # g.trace(hasattr(w,'_name') and w._name or '')
-        g.app.gui.set_focus(c,w)
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
-        w = g.app.gui.get_focus(c.frame)
+        w = g.app.gui.get_focus(frame)
         if not w: return
         # Allow clicks in enclosing window frame or in dialogs.
         name = hasattr(w,'_name') and w._name or ''
         if (
             name and name[0] in string.letters # A known Leo frame.
-            or w == c.frame.top # The top of the Leo window
+            or w == frame.top # The top of the Leo window
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
             # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            g.app.gui.set_focus(c,w)
+            # g.app.gui.set_focus(c,w)
             return
         # Not a name created by Leo.
         g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,c.frame.body.bodyCtrl)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
 #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
@@ -3532,31 +3539,38 @@ def setFocusHelper (self):
     
     c = self ; frame = c.frame
     
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+    
     if frame.wantedWidget:
         w = frame.wantedWidget
         # g.trace(hasattr(w,'_name') and w._name or '')
-        g.app.gui.set_focus(c,w)
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
-        w = g.app.gui.get_focus(c.frame)
+        w = g.app.gui.get_focus(frame)
         if not w: return
         # Allow clicks in enclosing window frame or in dialogs.
         name = hasattr(w,'_name') and w._name or ''
         if (
             name and name[0] in string.letters # A known Leo frame.
-            or w == c.frame.top # The top of the Leo window
+            or w == frame.top # The top of the Leo window
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
             # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            g.app.gui.set_focus(c,w)
+            # g.app.gui.set_focus(c,w)
             return
         # Not a name created by Leo.
         g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,c.frame.body.bodyCtrl)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
 #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
@@ -4271,7 +4285,7 @@ def OnActivateBody (self,event=None):
 
     try:
         frame = self ; gui = g.app.gui
-        frame.tree.onHeadChanged(frame.c.currentPosition())
+        # frame.tree.onHeadChanged(frame.c.currentPosition())
         g.app.setLog(frame.log,"OnActivateBody")
         w = gui.get_focus(frame)
         if w != frame.body.bodyCtrl:
@@ -5942,31 +5956,38 @@ def setFocusHelper (self):
     
     c = self ; frame = c.frame
     
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+    
     if frame.wantedWidget:
         w = frame.wantedWidget
         # g.trace(hasattr(w,'_name') and w._name or '')
-        g.app.gui.set_focus(c,w)
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
-        w = g.app.gui.get_focus(c.frame)
+        w = g.app.gui.get_focus(frame)
         if not w: return
         # Allow clicks in enclosing window frame or in dialogs.
         name = hasattr(w,'_name') and w._name or ''
         if (
             name and name[0] in string.letters # A known Leo frame.
-            or w == c.frame.top # The top of the Leo window
+            or w == frame.top # The top of the Leo window
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
             # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            g.app.gui.set_focus(c,w)
+            # g.app.gui.set_focus(c,w)
             return
         # Not a name created by Leo.
         g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,c.frame.body.bodyCtrl)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
 #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
@@ -6043,220 +6064,173 @@ def set_focus(self,c,w):
     if w:
         if 0:
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(7))
+            g.trace('GUI',name,g.callers(8))
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
-#@+node:ekr.20051018061932:Tab (TkLog)
-#@+node:ekr.20051017212057:clearTab
-def clearTab (self,tabName):
+#@+node:ekr.20051103114520.1:c.setFocusHelper
+def setFocusHelper (self):
     
-    self.selectTab(tabName)
-    t = self.logCtrl
-    t.delete('1.0','end')
-#@nonl
-#@-node:ekr.20051017212057:clearTab
-#@+node:ekr.20051024173701:createTab
-def createTab (self,tabName):
+    c = self ; frame = c.frame
     
-    c = self.c ; k = c.keyHandler
-    tabFrame = self.nb.add(tabName)
-    << bind a tab-specific pop-up menu to the tab >>
-    << Create the tab's text widget >>
-    self.setTabBindings(tabName)
-#@nonl
-#@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-menu = self.makeTabMenu(tabName)
-tab = self.nb.tab(tabName)
-
-def tabMenuRightClickCallback(event):
-    self.onRightClick(event,menu)
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
     
-def tabMenuClickCallback(event):
-    self.onClick(event,tabName)
-
-tab.bind('<Button-1>',tabMenuClickCallback)
-tab.bind('<Button-3>',tabMenuRightClickCallback)
-
-# tab.bind('<ButtonRelease-1>',tabMenuClickCallback)
-# tab.bind('<ButtonRelease-3>',tabMenuRightClickCallback)
-#@nonl
-#@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-#@+node:ekr.20051018072306:<< Create the tab's text widget >>
-textWidget = self.createTextWidget(tabFrame)
-
-# Set the background color.
-configName = 'log_pane_%s_tab_background_color' % tabName
-bg = c.config.getColor(configName) or 'MistyRose1'
-try: textWidget.configure(bg=bg)
-except Exception: pass # Could be a user error.
-
-self.frameDict [tabName] = tabFrame
-self.textDict [tabName] = textWidget
-
-# Switch to a new colorTags list.
-if self.tabName:
-    self.colorTagsDict [self.tabName] = self.colorTags [:]
-self.colorTags = ['black']
-self.colorTagsDict [tabName] = self.colorTags
-
-# Make the bindings.
-textWidget.bind("<Button-1>",self.onActivateLog)
-textWidget.tag_config('black',foreground='black')
-#@nonl
-#@-node:ekr.20051018072306:<< Create the tab's text widget >>
-#@-node:ekr.20051024173701:createTab
-#@+node:ekr.20051018102027:deleteTab
-def deleteTab (self,tabName):
-    
-    if tabName == 'Log':
-        return
-
-    if tabName in ('Find','Spell'):
-        self.selectTab('Log')
-        return
-    
-    if tabName in self.nb.pagenames():
-        self.nb.delete(tabName)
-        self.colorTagsDict [tabName] = []
-        self.textDict [tabName] = None
-        self.frameDict [tabName] = None
-        self.tabName = None
-        self.selectTab('Log')
-#@nonl
-#@-node:ekr.20051018102027:deleteTab
-#@+node:ekr.20051027114433:getSelectedTab
-def getSelectedTab (self):
-    
-    return self.tabName
-#@nonl
-#@-node:ekr.20051027114433:getSelectedTab
-#@+node:ekr.20051018061932.1:lower/raiseTab
-def lowerTab (self,tabName):
-    
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='grey80')
-    
-def raiseTab (self,tabName):
-
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='LightSteelBlue1')
-        logCtrl = self.textDict.get(tabName)
-        self.c.frame.widgetWantsFocus(logCtrl)
-#@nonl
-#@-node:ekr.20051018061932.1:lower/raiseTab
-#@+node:ekr.20051019170806:renameTab
-def renameTab (self,oldName,newName):
-    
-    label = self.nb.tab(oldName)
-    label.configure(text=newName)
-#@nonl
-#@-node:ekr.20051019170806:renameTab
-#@+node:ekr.20051016101724.1:selectTab
-def selectTab (self,tabName):
-
-    '''Create the tab if necessary and make it active.'''
-
-    c = self.c ; tabFrame = self.frameDict.get(tabName)
-
-    if tabFrame:
-        # Switch to a new colorTags list.
-        newColorTags = self.colorTagsDict.get(tabName)
-        self.colorTagsDict [self.tabName] = self.colorTags [:]
-        self.colorTags = newColorTags
+    if frame.wantedWidget:
+        w = frame.wantedWidget
+        # g.trace(hasattr(w,'_name') and w._name or '')
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        frame.wantedWidget = None
     else:
-        self.createTab(tabName)
+        # Force the widget to some standard place.
+        w = g.app.gui.get_focus(frame)
+        if not w: return
+        # Allow clicks in enclosing window frame or in dialogs.
+        name = hasattr(w,'_name') and w._name or ''
+        if (
+            name and name[0] in string.letters # A known Leo frame.
+            or w == frame.top # The top of the Leo window
+            or g.app.dialogs > 0 # A dialog.
+            or isinstance(w,Tk.Text)
+            or isinstance(w,Tk.Entry)
+            # or isinstance(w,Tk.Button)
+        ):
+            # g.trace('ok',hasattr(w,'_name') and w._name or '')
+            # g.app.gui.set_focus(c,w)
+            return
+        # Not a name created by Leo.
+        g.trace('setting default focus',name)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
+#@nonl
+#@-node:ekr.20051103114520.1:c.setFocusHelper
+#@+node:ekr.20031218072017.2997:c.selectPosition
+def selectPosition(self,p,updateBeadList=True):
+    
+    """Select a new position."""
+
+    c = self
+    c.frame.tree.select(p,updateBeadList)
+
+selectVnode = selectPosition
+#@nonl
+#@-node:ekr.20031218072017.2997:c.selectPosition
+#@+node:ekr.20040803072955.128:tree.select
+# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    if not p or not p.exists(c): return # Not an error.
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                # p is NOT c.currentPosition() here!
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo(p)
+            except Exception: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+if old_p:
+
+    yview=body.yview()
+    insertSpot = c.frame.body.getInsertionPoint()
+    
+    if old_p != p:
+        self.endEditLabel() # sets editPosition = None
+        self.setUnselectedLabelState(old_p)
+    
+    if old_p.edit_widget():
+        old_p.v.t.scrollBarSpot = yview
+        old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
+frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
         
-    self.nb.selectpage(tabName)
-    # Update the status vars.
-    self.tabName = tabName
-    self.logCtrl = self.textDict.get(tabName)
-    # g.trace(tabName,self.logCtrl._name)
-    c.frame.widgetWantsFocus(self.logCtrl,later=True)
-    self.tabFrame = self.frameDict.get(tabName)
-    return tabFrame
+    # g.trace(c.beadPointer,p,present_p)
 #@nonl
-#@-node:ekr.20051016101724.1:selectTab
-#@+node:ekr.20051022162730:setTabBindings
-def setTabBindings (self,tabName):
-    
-    c = self.c ; k = c.keyHandler
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
 
-    w = self.textDict.get(tabName)
-
-    if k and w:
-        k.copyBindingsToWidget(['all','log','text'],w)
-
-        # A wretched kludge: put the bindings in the tab!
-        # We can't seem to get focus away from it.
-        tab = self.nb.tab(tabName) # b is a Tk.Button.
-        k.copyBindingsToWidget(['all','log','text'],tab)
+c.visitedList.insert(0,p.copy())
 #@nonl
-#@-node:ekr.20051022162730:setTabBindings
-#@+node:ekr.20051019134106:Tab menu callbacks & helpers
-#@+node:ekr.20051019134422:onRightClick & onClick
-def onRightClick (self,event,menu):
-    
-    c = self.c
-    menu.post(event.x_root,event.y_root)
-    
-    
-def onClick (self,event,tabName):
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+c.setCurrentPosition(p)
 
-    self.selectTab(tabName)
+if p != old_p:
+    self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.frame.treeWantsFocus()
+else:
+    frame.bodyWantsFocus()
 #@nonl
-#@-node:ekr.20051019134422:onRightClick & onClick
-#@+node:ekr.20051019140004.1:newTabFromMenu
-def newTabFromMenu (self,tabName='Log'):
-
-    self.selectTab(tabName)
-    parentFrame = self.frameDict.get(tabName)
-    
-    # This is called by getTabName.
-    def selectTabCallback (newName):
-        self.selectTab(newName)
-
-    self.getTabName(parentFrame,selectTabCallback)
-#@nonl
-#@-node:ekr.20051019140004.1:newTabFromMenu
-#@+node:ekr.20051019165401:renameTabFromMenu
-def renameTabFromMenu (self,tabName):
-
-    if tabName in ('Log','Completions'):
-        g.es('can not rename %s tab' % (tabName),color='blue')
-    else:
-        parentFrame = self.frameDict.get(tabName)
-        self.getTabName(parentFrame,self.renameTab)
-#@nonl
-#@-node:ekr.20051019165401:renameTabFromMenu
-#@+node:ekr.20051019172811:getTabName
-def getTabName (self,parentFrame,exitCallback):
-
-    f = Tk.Frame(parentFrame)
-    f.pack(side='bottom',fill='x',expand=1)
-
-    Tk.Label(f,text='Tab name').pack(side='left')
-
-    e = Tk.Entry(f,background='white')
-    e.pack(side='left')
-
-    def getNameCallback (event=None):
-        s = e.get().strip()
-        f.pack_forget()
-        if s: exitCallback(s)
-    
-    if 0:
-        b = Tk.Button(row,text="Close",command=getNameCallback)
-        b.pack(side='left')
-
-    e.focus_force()
-    e.bind('<Return>',getNameCallback)
-#@nonl
-#@-node:ekr.20051019172811:getTabName
-#@-node:ekr.20051019134106:Tab menu callbacks & helpers
-#@-node:ekr.20051018061932:Tab (TkLog)
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
 #@-node:ekr.20051022152427:Focus
 #@+node:ekr.20051104100739:Idle Time
 #@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
@@ -6304,14 +6278,10 @@ def idleTimeHookHandler(*args,**keys):
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed: return
     
-    top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
         # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
-        # New in 4.4 a2: direct support for k.onIdleTime()
-        if 0:
-            c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
         g.doHook("idle",c=c)
 
     # Requeue this routine after g.app.idleTimeDelay msec.
@@ -6406,14 +6376,10 @@ def idleTimeHookHandler(*args,**keys):
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed: return
     
-    top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
         # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
-        # New in 4.4 a2: direct support for k.onIdleTime()
-        if 0:
-            c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
         g.doHook("idle",c=c)
 
     # Requeue this routine after g.app.idleTimeDelay msec.
@@ -6863,6 +6829,8 @@ def cutText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
+    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
+    
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
     
@@ -6871,12 +6839,8 @@ def cutText (self,fromMinibuffer=False):
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
-        if 0:
-            # Old: Do **not** call w.event_generate.
-            # New: Do call w.event_generate.
-            w.event_generate(g.virtual_event_name("Cut"))
-            if not fromMinibuffer:
-                f.tree.onHeadChanged(c.currentPosition(),'Cut')
+        # Do **not** call w.event_generate.
+        pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -6884,10 +6848,9 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; p = c.currentPosition()
+    f = self ; c = f.c
     w = f.getFocus()
     name = hasattr(w,'_name') and w._name or ''
-    # g.trace(name)
     
     if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
@@ -6910,8 +6873,6 @@ def pasteText (self,fromMinibuffer=False):
 def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -7051,31 +7012,38 @@ def setFocusHelper (self):
     
     c = self ; frame = c.frame
     
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+    
     if frame.wantedWidget:
         w = frame.wantedWidget
         # g.trace(hasattr(w,'_name') and w._name or '')
-        g.app.gui.set_focus(c,w)
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
-        w = g.app.gui.get_focus(c.frame)
+        w = g.app.gui.get_focus(frame)
         if not w: return
         # Allow clicks in enclosing window frame or in dialogs.
         name = hasattr(w,'_name') and w._name or ''
         if (
             name and name[0] in string.letters # A known Leo frame.
-            or w == c.frame.top # The top of the Leo window
+            or w == frame.top # The top of the Leo window
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
             # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            g.app.gui.set_focus(c,w)
+            # g.app.gui.set_focus(c,w)
             return
         # Not a name created by Leo.
         g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,c.frame.body.bodyCtrl)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
 #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
@@ -7248,38 +7216,6 @@ def handleDefaultChar(self,event):
 #@nonl
 #@-node:ekr.20051026083544:handleDefaultChar
 #@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20051103114520.1:c.setFocusHelper
-def setFocusHelper (self):
-    
-    c = self ; frame = c.frame
-    
-    if frame.wantedWidget:
-        w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
-        g.app.gui.set_focus(c,w)
-        frame.wantedWidget = None
-    else:
-        # Force the widget to some standard place.
-        w = g.app.gui.get_focus(c.frame)
-        if not w: return
-        # Allow clicks in enclosing window frame or in dialogs.
-        name = hasattr(w,'_name') and w._name or ''
-        if (
-            name and name[0] in string.letters # A known Leo frame.
-            or w == c.frame.top # The top of the Leo window
-            or g.app.dialogs > 0 # A dialog.
-            or isinstance(w,Tk.Text)
-            or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
-        ):
-            # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            g.app.gui.set_focus(c,w)
-            return
-        # Not a name created by Leo.
-        g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,c.frame.body.bodyCtrl)
-#@nonl
-#@-node:ekr.20051103114520.1:c.setFocusHelper
 #@-node:ekr.20051105100804:keyHandler
 #@+node:ekr.20051105100804.1:Tree
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
@@ -8152,7 +8088,7 @@ def set_focus(self,c,w):
     if w:
         if 0:
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(7))
+            g.trace('GUI',name,g.callers(8))
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -8238,14 +8174,10 @@ def idleTimeHookHandler(*args,**keys):
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed: return
     
-    top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
         # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
-        # New in 4.4 a2: direct support for k.onIdleTime()
-        if 0:
-            c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
         g.doHook("idle",c=c)
 
     # Requeue this routine after g.app.idleTimeDelay msec.
@@ -8988,6 +8920,969 @@ The fix: call self.canvas.update_idletasks() before calling tree.scrollTo.
 Calling tree.scrollTo at idle time also works, but is slower.
 #@nonl
 #@-node:ekr.20051106152948:Made tree.scrollTo work
+#@+node:ekr.20051105114841:Investigated problem with Find
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3414248
+By: yarkot
+
+I just had an interesting experience in Leo 4.4a2:
+
+Editing a node's content, let's say I had code in it like this:
+
+....
+somevar = array[findme][0];
+other = findme;
+.........
+
+The "FIND" tab had "findme" in it (which is how i got to this block of code);
+
+NOW:   I deleted the second line, then hit "find next" - the line
+re-appeared!!!!!
+
+Ok.
+
+I deleted the line again;  I saved the Leo file (the source file - @thin - was
+saved correctly - i checked in an external editor) --  I hit "find next" ---
+the deleted line reappeared!!!
+
+Ok.... I delete the line AGAIN;
+I saved the file (yup, it saved correct);  I re-load it (thru "File > Read/Write
+> Read @file nodes"
+
+try "find" again.... you guessed it.
+
+I had to exit Leo after the delete; re-start Leo, go back to the node, re-enter
+the find string to get to the next occurence in the project.
+#@nonl
+#@-node:ekr.20051105114841:Investigated problem with Find
+#@+node:ekr.20051107052029:Can't expand or contract settings panel
+#@-node:ekr.20051107052029:Can't expand or contract settings panel
+#@+node:ekr.20051107054425:Fixed bug: find was not showing selection
+#@+node:ekr.20031218072017.3091:showSuccess
+def showSuccess(self,pos,newpos):
+
+    """Displays the final result.
+
+    Returns self.dummy_vnode, p.edit_widget() or c.frame.bodyCtrl with
+    "insert" and "sel" points set properly."""
+
+    c = self.c ; p = self.p ; gui = g.app.gui
+    
+    c.frame.bringToFront() # Needed on the Mac
+    c.selectPosition(p)
+    c.redraw_now()
+    if self.in_headline:
+        c.editPosition(p)
+    # Set the focus and selection after the redraw.
+    t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
+    insert = g.choose(self.reverse,pos,newpos)
+    gui.setInsertPoint(t,insert)
+    gui.setSelectionRange(t,pos,newpos)
+    gui.makeIndexVisible(t,insert)
+    c.frame.widgetWantsFocus(t,later=False)
+    if self.wrap and not self.wrapPosition:
+        self.wrapPosition = self.p
+#@nonl
+#@-node:ekr.20031218072017.3091:showSuccess
+#@-node:ekr.20051107054425:Fixed bug: find was not showing selection
+#@+node:ekr.20051107105818:Fixed spell-tab problems
+#@+node:ekr.20051107112158:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3415021
+By: nobody
+
+when you get time:
+found a few typos for Spell tab:
+@settings-->@page Spell tab-->@string spell_local_language_code = 
+and
+spell_local_dictionary  = 
+should start with aspell_?
+
+in leoEditCommands.py, note the program flow:
+#defaults set
+aspell_dir = r'
+aspell_bin_dir = r'
+
+class Aspell
+....def  __init__
+....#defaults used
+....self.sc = aspell.spell_checker    
+....#config checked and defaults reset if necessary.
+
+in leoEditCommands.py,
+a few things should rearrranged in 
+class Aspell __init__
+so the @settings config is checked
+before the defaults are used for
+aspell_dir & bin & local_language_code.
+
+I could be wrong about the flow,
+I see init_aspell,
+but if I edit the paths in leoEditCommands.py
+aspell_dir & aspell_bin_dir = r'where my apell is'
+Spell tab now works,
+its possibly that the config is consulted 
+in more than one place. but, by then the
+hard wired default has already been used.
+you don't notice, because either way the
+defaults are setup to work on your system
+I assume using the default aspell instalation path.
+its very close to working from @settings though.
+
+in the Spell tab:
+if the found words list box was made smaller
+and resizeable then you won't have to open
+the tab so far to see the bottom buttons.
+seems like 2 rows of 3 buttons would fit better.
+
+I think if not aspell: 'please install spellpyx.
+would be better than a traceback in __init__
+what you get on failure even to find the dictionary
+is traceback and an empty Spell tab that you can't delete.
+its a pretty good bet, most people will try the
+Spell checking button before installing the pyd/so
+or even aspell itself.
+
+going directly from "if not aspell:"
+to an installation using setuptools eggs
+would be possibly, but its only been released
+in the past few weeks. turbogears already uses it.
+something to watch for the future.
+it even installs itself!
+e
+#@nonl
+#@-node:ekr.20051107112158:Report
+#@+node:ekr.20051025071455:Spell classes
+@others
+#@+node:ekr.20051025071455.6:class Aspell
+class Aspell:
+    
+    """A wrapper class for Aspell spell checker"""
+    
+    @others
+
+#@+node:ekr.20051025071455.7:Birth & death
+#@+node:ekr.20051025071455.8:__init__
+def __init__ (self,c,local_dictionary_file,local_language_code):
+
+    """Ctor for the Aspell class."""
+
+    self.c = c
+
+    self.aspell_dir = c.config.getString('aspell_dir')
+    self.aspell_bin_dir = c.config.getString('aspell_bin_dir')
+
+    try:
+        import aspell
+    except ImportError:
+        # Specify the path to the top-level Aspell directory.
+        theDir = g.choose(sys.platform=='darwin',self.aspell_dir,self.aspell_bin_dir)
+        aspell = g.importFromPath('aspell',theDir,pluginName=__name__,verbose=True)
+        
+    self.aspell = aspell
+    if aspell:
+        self.sc = aspell.spell_checker(prefix=self.aspell_dir,lang=local_language_code)
+        self.local_language_code = local_language_code
+        self.local_dictionary_file = local_dictionary_file
+        self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file) [0]
+#@nonl
+#@-node:ekr.20051025071455.8:__init__
+#@-node:ekr.20051025071455.7:Birth & death
+#@+node:ekr.20051025071455.10:processWord
+def processWord(self, word):
+    """Pass a word to aspell and return the list of alternatives.
+    OK: 
+    * 
+    Suggestions: 
+    & «original» «count» «offset»: «miss», «miss», ... 
+    None: 
+    # «original» «offset» 
+    simplifyed to not create the string then make a list from it    
+    """
+
+    if self.sc.check(word):
+        return None
+    else:
+        return self.sc.suggest(word)
+#@nonl
+#@-node:ekr.20051025071455.10:processWord
+#@+node:ekr.20051025071455.11:updateDictionary
+def updateDictionary(self):
+
+    """Update the aspell dictionary from a list of words.
+    
+    Return True if the dictionary was updated correctly."""
+
+    try:
+        # Create master list
+        basename = os.path.splitext(self.local_dictionary)[0]
+        cmd = (
+            "%s --lang=%s create master %s.wl < %s.txt" %
+            (self.aspell_bin_dir, self.local_language_code, basename,basename))
+        os.popen(cmd)
+        return True
+
+    except Exception, err:
+        g.es_print("Unable to update local aspell dictionary: %s" % err)
+        return False
+#@nonl
+#@-node:ekr.20051025071455.11:updateDictionary
+#@-node:ekr.20051025071455.6:class Aspell
+#@+node:ekr.20051025071455.1:class spellCommandsClass
+class spellCommandsClass (baseEditCommandsClass):
+    
+    '''Commands to support the Spell Tab.'''
+
+    @others
+#@nonl
+#@+node:ekr.20051025080056:ctor
+def __init__ (self,c):
+
+    baseEditCommandsClass.__init__(self,c) # init the base class.
+    
+    self.handler = None
+    
+    # All the work happens when we first open the frame.
+#@nonl
+#@-node:ekr.20051025080056:ctor
+#@+node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
+def getPublicCommands (self):
+    
+    return {
+        'open-spell-tab':           self.openSpellTab,
+        'spell-find':               self.find,
+        'spell-change':             self.change,
+        'spell-change-then-find':   self.changeThenFind,
+        'spell-ignore':             self.ignore,
+        'hide-spell-tab':           self.hide,
+    }
+#@nonl
+#@-node:ekr.20051025080420:getPublicCommands (searchCommandsClass)
+#@+node:ekr.20051025080633:openSpellTab
+def openSpellTab (self,event=None):
+
+    c = self.c ; log = c.frame.log ; tabName = 'Spell'
+
+    if log.frameDict.get(tabName):
+        log.selectTab(tabName)
+    elif self.handler:
+        if self.handler.loaded:
+            self.handler.bringToFront()
+    else:
+        log.selectTab(tabName)
+        f = log.frameDict.get(tabName)
+        t = log.textDict.get(tabName)
+        t.pack_forget()
+        self.handler = spellTab(c,f)
+        
+    self.handler.bringToFront()
+#@nonl
+#@-node:ekr.20051025080633:openSpellTab
+#@+node:ekr.20051025080420.1:commands...
+# Just open the Spell tab if it has never been opened.
+# For minibuffer commands, we must also force the Spell tab to be visible.
+
+def find (self,event=None):
+
+    if self.handler:
+        self.openSpellTab()
+        self.handler.find()
+    else:
+        self.openSpellTab()
+
+def change(self,event=None):
+
+    if self.handler:
+        self.openSpellTab()
+        self.handler.change()
+    else:
+        self.openSpellTab()
+
+def changeThenFind (self,event=None):
+    
+    if self.handler:
+        self.openSpellTab()
+        self.handler.changeThenFind()
+    else:
+        self.openSpellTab()
+        
+def hide (self,event=None):
+    
+    if self.handler:
+        self.c.frame.log.selectTab('Log')
+        self.c.frame.bodyWantsFocus()
+
+def ignore (self,event=None):
+    
+    if self.handler:
+        self.openSpellTab()
+        self.handler.ignore()
+    else:
+        self.openSpellTab()
+#@nonl
+#@-node:ekr.20051025080420.1:commands...
+#@-node:ekr.20051025071455.1:class spellCommandsClass
+#@+node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
+class spellTab(leoFind.leoFind):
+
+    """A class to create and manage Leo's Spell Check dialog."""
+    
+    @others
+#@nonl
+#@+node:ekr.20051025071455.19:Birth & death
+#@+node:ekr.20051025071455.20:spellTab.__init__
+def __init__(self,c,parentFrame):
+    
+    """Ctor for the Leo Spelling dialog."""
+
+    leoFind.leoFind.__init__(self,c) # Call the base ctor.
+
+    self.c = c
+    self.body = c.frame.body
+    self.currentWord = None
+    self.suggestions = []
+    self.messages = [] # List of message to be displayed when hiding the tab.
+    self.workCtrl = Tk.Text(None) # A text widget for scanning.
+    
+    self.loaded = self.init_aspell(c)
+    if self.loaded:
+        self.createSpellTab(parentFrame)
+        self.createBindings()
+#@nonl
+#@-node:ekr.20051025071455.20:spellTab.__init__
+#@+node:ekr.20051025094004:init_aspell
+def init_aspell (self,c):
+
+    '''Init aspell and related ivars.  Return True if all went well.'''
+
+    self.local_language_code = c.config.getString('spell_local_language_code') or 'en'
+
+    self.dictionaryFileName = dictionaryFileName = (
+        c.config.getString('spell_local_dictionary') or
+        os.path.join(g.app.loadDir,"../","plugins",'spellpyx.txt'))
+    
+    if not dictionaryFileName or not g.os_path_exists(dictionaryFileName):
+        g.es_print('Can not open dictionary file: %s' % (
+            dictionaryFileName), color='red')
+        return False
+
+    self.aspell = Aspell(c,dictionaryFileName,self.local_language_code)
+    
+    if not self.aspell.aspell:
+        g.es_print('Can not open Aspell',color='red')
+        return False
+        
+    self.dictionary = self.readDictionary(dictionaryFileName)
+    return True
+#@-node:ekr.20051025094004:init_aspell
+#@+node:ekr.20051025071455.22:createSpellTab
+def createSpellTab(self,parentFrame):
+
+    """Create the Spell tab."""
+    
+    c = self.c
+    
+    # Set the common background color.
+    bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
+    
+    # Create the outer frame.
+    self.outerFrame = outer = Tk.Frame(parentFrame,bd=2,bg=bg)
+    outer.pack(expand=1,fill='both',padx=2,pady=2)
+    
+    << Create the text and suggestion panes >>
+    << Create the spelling buttons >>
+    
+    self.fillbox([])
+    self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
+    self.listBox.bind("<Button-1>",self.onSelectListBox)
+    self.listBox.bind("<Map>",self.onMap)
+#@nonl
+#@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
+f2 = Tk.Frame(outer,bg=bg)
+f2.pack(side='top',expand=0,fill='x')
+
+self.wordLabel = Tk.Label(f2,text="Suggestions for:")
+self.wordLabel.pack(side='left')
+self.wordLabel.configure(font=('verdana',10,'bold'))
+
+fpane = Tk.Frame(outer,bg=bg,bd=2)
+fpane.pack(side='top',expand=1,fill='both')
+
+self.listBox = Tk.Listbox(fpane,height=6,width=10,selectmode="single")
+self.listBox.pack(side='left',expand=1,fill='both')
+self.listBox.configure(font=('verdana',11,'normal'))
+
+listBoxBar = Tk.Scrollbar(fpane,name='listBoxBar')
+
+bar, txt = listBoxBar, self.listBox
+txt ['yscrollcommand'] = bar.set
+bar ['command'] = txt.yview
+bar.pack(side='right',fill='y')
+#@nonl
+#@-node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
+#@+node:ekr.20051025071455.24:<< Create the spelling buttons >>
+# Create the alignment panes
+buttons1 = Tk.Frame(outer,bd=1,bg=bg)
+buttons2 = Tk.Frame(outer,bd=1,bg=bg)
+buttons3 = Tk.Frame(outer,bd=1,bg=bg)
+for w in (buttons1,buttons2,buttons3):
+    w.pack(side='top',expand=0,fill='x')
+
+buttonList = [] ; font = ('verdana',9,'normal') ; width = 12
+for frame, text, command in (
+    (buttons1,"Find",self.onFindButton),
+    (buttons1,"Add",self.onAddButton),
+    (buttons2,"Change",self.onChangeButton),
+    (buttons2,"Change, Find",self.onChangeThenFindButton),
+    (buttons3,"Ignore",self.onIgnoreButton),
+    (buttons3,"Hide",self.onHideButton),
+):
+    b = Tk.Button(frame,font=font,width=width,text=text,command=command)
+    b.pack(side='left',expand=0,fill='none')
+    buttonList.append(b)
+
+# Used to enable or disable buttons.
+(self.findButton,self.addButton,
+ self.changeButton, self.changeFindButton,
+ self.ignoreButton, self.hideButton) = buttonList
+#@nonl
+#@-node:ekr.20051025071455.24:<< Create the spelling buttons >>
+#@-node:ekr.20051025071455.22:createSpellTab
+#@+node:ekr.20051025120920:createBindings
+def createBindings (self):
+    
+    c = self.c ; k = c.keyHandler
+    widgets = (self.listBox, self.outerFrame)
+
+    for w in widgets:
+        k.copyBindingsToWidget('text',w)
+        # Bind shortcuts for the following commands...
+        for commandName,func in (
+            ('full-command',            k.fullCommand),
+            ('hide-spell-tab',          self.hide),
+            ('spell-add',               self.add),
+            ('spell-find',              self.find),
+            ('spell-ignore',            self.ignore),
+            ('spell-change-then-find',  self.changeThenFind),
+        ):
+            junk, bunch = c.config.getShortcut(commandName)
+            accel = bunch and bunch.val
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            if shortcut:
+                # g.trace(shortcut,commandName)
+                w.bind(shortcut,func)
+#@nonl
+#@-node:ekr.20051025120920:createBindings
+#@+node:ekr.20051025071455.16:readDictionary
+def readDictionary (self,fileName):
+
+    """Read the dictionary of words which we use as a local dictionary
+    
+    Although Aspell itself has the functionality to handle this kind of things
+    we duplicate it here so that we can also use it for the "ignore" functionality
+    and so that in future a Python only solution could be developed."""
+    
+    d = {}
+
+    try:
+        f = open(fileName,"r")
+    except IOError:
+        g.es("Unable to open local dictionary '%s' - using a blank one instead" % fileName)
+        return d
+
+    try:
+        # Create the dictionary - there are better ways to do this
+        # in later Python's but we stick with this method for compatibility
+        for word in f.readlines():
+            d [word.strip().lower()] = 0
+    finally:
+        f.close()
+
+    return d
+#@nonl
+#@-node:ekr.20051025071455.16:readDictionary
+#@-node:ekr.20051025071455.19:Birth & death
+#@+node:ekr.20051025071455.29:Buttons
+#@+node:ekr.20051025071455.30:onAddButton
+def onAddButton(self):
+    """Handle a click in the Add button in the Check Spelling dialog."""
+
+    self.add()
+#@nonl
+#@-node:ekr.20051025071455.30:onAddButton
+#@+node:ekr.20051025071455.31:onIgnoreButton
+def onIgnoreButton(self,event=None):
+
+    """Handle a click in the Ignore button in the Check Spelling dialog."""
+
+    self.ignore()
+#@nonl
+#@-node:ekr.20051025071455.31:onIgnoreButton
+#@+node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
+def onChangeButton(self,event=None):
+
+    """Handle a click in the Change button in the Spell tab."""
+
+    self.change()
+    self.updateButtons()
+    
+
+def onChangeThenFindButton(self,event=None):
+    
+    """Handle a click in the "Change, Find" button in the Spell tab."""
+
+    if self.change():
+        self.find()
+    self.updateButtons()
+#@-node:ekr.20051025071455.32:onChangeButton & onChangeThenFindButton
+#@+node:ekr.20051025071455.33:onFindButton
+def onFindButton(self):
+
+    """Handle a click in the Find button in the Spell tab."""
+
+    self.find()
+    self.updateButtons()
+    self.c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051025071455.33:onFindButton
+#@+node:ekr.20051025071455.34:onHideButton
+def onHideButton(self):
+    
+    """Handle a click in the Hide button in the Spell tab."""
+    
+    self.hide()
+#@nonl
+#@-node:ekr.20051025071455.34:onHideButton
+#@-node:ekr.20051025071455.29:Buttons
+#@+node:ekr.20051025071455.36:Commands
+#@+node:ekr.20051025071455.37:add
+def add(self,event=None):
+    """Add the selected suggestion to the dictionary."""
+    
+    try:
+        f = None
+        try:
+            # Rewrite the dictionary in alphabetical order.
+            f = open(self.dictionaryFileName, "r")
+            words = f.readlines()
+            f.close()
+            words = [word.strip() for word in words]
+            words.append(self.currentWord)
+            words.sort()
+            f = open(self.dictionaryFileName, "w")
+            for word in words:
+                f.write("%s\n" % word)
+            f.flush()
+            f.close()
+            if 1:
+                s = 'Spell: added %s' % self.currentWord
+                self.messages.append(s)
+            else: # Too distracting.
+                g.es("Adding ", color= "blue", newline= False) 
+                g.es('%s' % self.currentWord)
+        except IOError:
+            g.es("Can not add %s to dictionary" % self.currentWord, color="red")
+    finally:
+        if f: f.close()
+        
+    self.dictionary[self.currentWord.lower()] = 0
+    self.onFindButton()
+#@nonl
+#@-node:ekr.20051025071455.37:add
+#@+node:ekr.20051025071455.38:change
+def change(self,event=None):
+    """Make the selected change to the text"""
+
+    __pychecker__ = '--no-override --no-argsused'
+         # event param is not used, required, and different from base class.
+
+    c = self.c ; current = c.currentPosition()
+    body = self.body ; t = body.bodyCtrl
+    
+    selection = self.getSuggestion()
+    if selection:
+        start,end = oldSel = g.app.gui.getTextSelection(t)
+        if start:
+            if t.compare(start, ">", end):
+                start,end = end,start
+            t.delete(start,end)
+            t.insert(start,selection)
+            g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
+            newSel = g.app.gui.getTextSelection(t)
+
+            # update node, undo status, dirty flag, changed mark & recolor
+            c.beginUpdate()
+            c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
+            c.endUpdate(True)
+            c.frame.widgetWantsFocus(t,later=False)
+            return True
+
+    # The focus must never leave the body pane.
+    c.frame.widgetWantsFocus(t,later=False)
+    return False
+#@nonl
+#@-node:ekr.20051025071455.38:change
+#@+node:ekr.20051025071455.40:find
+def find (self,event=None):
+    """Find the next unknown word."""
+
+    c = self.c ; body = c.frame.body ; bodyCtrl = body.bodyCtrl
+
+    # Reload the work pane from the present node.
+    s = bodyCtrl.get("1.0","end").rstrip()
+    self.workCtrl.delete("1.0","end")
+    self.workCtrl.insert("end",s)
+
+    # Reset the insertion point of the work widget.
+    ins = bodyCtrl.index("insert")
+    self.workCtrl.mark_set("insert",ins)
+
+    alts, word = self.findNextMisspelledWord()
+    self.currentWord = word # Need to remember this for 'add' and 'ignore'
+
+    if alts:
+        self.fillbox(alts,word)
+        c.frame.bodyWantsFocus(later=False)
+        # Copy the working selection range to the body pane
+        start, end = g.app.gui.getTextSelection(self.workCtrl)
+        g.app.gui.setTextSelection(bodyCtrl,start,end)
+        bodyCtrl.see(start)
+    else:
+        g.es("no more misspellings")
+        self.fillbox([])
+#@nonl
+#@-node:ekr.20051025071455.40:find
+#@+node:ekr.20051025121408:hide
+def hide (self,event=None):
+    
+    self.c.frame.log.selectTab('Log')
+    
+    for message in self.messages:
+        g.es(message,color='blue')
+        
+    self.messages = []
+#@nonl
+#@-node:ekr.20051025121408:hide
+#@+node:ekr.20051025071455.41:ignore
+def ignore(self,event=None):
+
+    """Ignore the incorrect word for the duration of this spell check session."""
+    
+    if 1: # Somewhat helpful: applies until the tab is destroyed.
+        s = 'Spell: ignore %s' % self.currentWord
+        self.messages.append(s)
+
+    if 0: # Too distracting
+        g.es("Ignoring ", color= "blue", newline= False)
+        g.es('%s' % self.currentWord)
+
+    self.dictionary[self.currentWord.lower()] = 0
+    self.onFindButton()
+#@nonl
+#@-node:ekr.20051025071455.41:ignore
+#@-node:ekr.20051025071455.36:Commands
+#@+node:ekr.20051025071455.42:Helpers
+#@+node:ekr.20051025071455.43:bringToFront
+def bringToFront (self):
+    
+    self.c.frame.log.selectTab('Spell')
+#@nonl
+#@-node:ekr.20051025071455.43:bringToFront
+#@+node:ekr.20051025071455.44:fillbox
+def fillbox(self, alts, word=None):
+    """Update the suggestions listbox in the Check Spelling dialog."""
+    
+    self.suggestions = alts
+    
+    if not word:
+        word = ""
+
+    self.wordLabel.configure(text= "Suggestions for: " + word)
+    self.listBox.delete(0, "end")
+
+    for i in xrange(len(self.suggestions)):
+        self.listBox.insert(i, self.suggestions[i])
+    
+    # This doesn't show up because we don't have focus.
+    if len(self.suggestions):
+        self.listBox.select_set(1) 
+
+#@-node:ekr.20051025071455.44:fillbox
+#@+node:ekr.20051025071455.45:findNextMisspelledWord
+def findNextMisspelledWord(self):
+    """Find the next unknown word."""
+    
+    c = self.c ; p = c.currentPosition()
+    aspell = self.aspell ; alts = None ; word = None
+   
+    try:
+        while 1:
+            p, word = self.findNextWord(p) 
+            if not p or not word:
+                alts = None
+                break
+            << Skip word if ignored or in local dictionary >>
+            alts = aspell.processWord(word)
+            if alts:
+                c.beginUpdate()
+                c.frame.tree.expandAllAncestors(p)
+                c.selectPosition(p)
+                c.endUpdate()
+                break
+    except:
+        g.es_exception()
+    return alts, word
+#@nonl
+#@+node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
+@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not True and this code could easily be located after the aspell call
+@c
+
+if self.dictionary.has_key(word.lower()):
+    continue
+#@nonl
+#@-node:ekr.20051025071455.46:<< Skip word if ignored or in local dictionary >>
+#@-node:ekr.20051025071455.45:findNextMisspelledWord
+#@+node:ekr.20051025071455.47:findNextWord
+# Unicode characters may cause index problems.
+
+def findNextWord(self,p):
+
+    """Scan for the next word, leaving the result in the work widget"""
+
+    t = self.workCtrl
+
+    # Allow quotes and underscores in the middle of words, but not at the beginning or end.
+    # This breaks words at non-ascii 'letters' such as é.  I don't know what the solution is.
+    word_start = string.letters
+    word_end   = string.letters + string.digits
+    word_chars = string.letters + string.digits + "`" + "'" + "_"
+    while 1:
+        line = t.get('insert wordstart','insert lineend')
+        # g.trace('insert',t.index('insert'),'insert wordstart',t.index('insert wordstart'))
+        # g.trace(repr(line))
+        # Start the word at the first letter.
+        i = 0
+        while i < len(line) and line[i] not in word_start:
+            i += 1
+        if i < len(line):
+            # A non-empty word has been found.
+            line = t.get('insert wordstart','insert lineend')
+            j = i
+            while j < len(line) and line[j] in word_chars:
+                j += 1
+            word = line[i:j]
+            while word and word[-1] not in word_end:
+                word = word[:-1]
+            # This trace is important: it verifies that all words have actually been checked.
+            # g.trace(repr(word))
+            x1 = t.index('insert + %dc' % (i))
+            x2 = t.index('insert + %dc' % (i+len(word)))
+            g.app.gui.setTextSelection(t,x1,x2)
+            return p, word
+        else:
+            # End of the line. Bug fix: 9/8/05.
+            t.mark_set('insert','insert lineend + 1c')
+            if t.compare("insert",">=", "end - 1c"):
+                p.moveToThreadNext()
+                if not p: return None,None
+                t.delete("1.0", "end")
+                t.insert("end", p.bodyString())
+                t.mark_set("insert", "1.0")
+                
+    __pychecker__ = '--no-implicitreturns' # This is not really an implicit return.
+#@nonl
+#@-node:ekr.20051025071455.47:findNextWord
+#@+node:ekr.20051025071455.48:getSuggestion
+def getSuggestion(self):
+    """Return the selected suggestion from the listBox."""
+    
+    # Work around an old Python bug.  Convert strings to ints.
+    items = self.listBox.curselection()
+    try:
+        items = map(int, items)
+    except ValueError: pass
+
+    if items:
+        n = items[0]
+        suggestion = self.suggestions[n]
+        return suggestion
+    else:
+        return None
+#@nonl
+#@-node:ekr.20051025071455.48:getSuggestion
+#@+node:ekr.20051025071455.49:onMap
+def onMap (self, event=None):
+    """Respond to a Tk <Map> event."""
+    
+    self.update(show= False, fill= False)
+#@nonl
+#@-node:ekr.20051025071455.49:onMap
+#@+node:ekr.20051025071455.50:onSelectListBox
+def onSelectListBox(self, event=None):
+    """Respond to a click in the selection listBox."""
+    
+    c = self.c
+    self.updateButtons()
+    # self.body.bodyCtrl.focus_set()
+    c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
+#@-node:ekr.20051025071455.50:onSelectListBox
+#@+node:ekr.20051025071455.51:update
+def update(self,show=True,fill=False):
+    
+    """Update the Spell Check dialog."""
+    
+    c = self.c
+    
+    if fill:
+        self.fillbox([])
+
+    self.updateButtons()
+
+    if show:
+        self.bringToFront()
+        # c.frame.body.bodyCtrl.focus_set()
+        c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
+#@nonl
+#@-node:ekr.20051025071455.51:update
+#@+node:ekr.20051025071455.52:updateButtons
+def updateButtons (self):
+
+    """Enable or disable buttons in the Check Spelling dialog."""
+
+    c = self.c
+
+    start, end = g.app.gui.getTextSelection(c.frame.body.bodyCtrl)
+    state = g.choose(self.suggestions and start,"normal","disabled")
+
+    self.changeButton.configure(state=state)
+    self.changeFindButton.configure(state=state)
+
+    # state = g.choose(self.c.undoer.canRedo(),"normal","disabled")
+    # self.redoButton.configure(state=state)
+    # state = g.choose(self.c.undoer.canUndo(),"normal","disabled")
+    # self.undoButton.configure(state=state)
+
+    self.addButton.configure(state='normal')
+    self.ignoreButton.configure(state='normal')
+#@nonl
+#@-node:ekr.20051025071455.52:updateButtons
+#@-node:ekr.20051025071455.42:Helpers
+#@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
+#@-node:ekr.20051025071455:Spell classes
+#@-node:ekr.20051107105818:Fixed spell-tab problems
+#@+node:ekr.20051106172517:Improved perl entries in language dicts
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3414639
+By: nobody
+
+I made the following changes in 4.4.a2 (and my
+4.3.3).   They help w/ Vim-from-Leo (coloring), and this is the way Perl files
+are named in the Perl world:
+
+@color
+
+self.language_extension_dict = {
+    "perl" : "pl",
+    "perlpod" : "pod",
+}
+
+# and for recognizing these the other way around too:
+
+self.extension_dict = {
+    "pl"    : "perl",
+    "pod"   : "perlod",
+}
+#@nonl
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
+    "php"   : "php",
+    "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@nonl
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20051106172517:Improved perl entries in language dicts
+#@+node:ekr.20051107122545:Don't redraw the screen when clicking in the body!
+#@-node:ekr.20051107122545:Don't redraw the screen when clicking in the body!
 #@-node:ekr.20051103112558:4.4a3 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

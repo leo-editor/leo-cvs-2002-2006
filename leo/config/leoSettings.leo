@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="121" clone_windows="0"/>
-<globals body_outline_ratio="0.579954954955">
+<globals body_outline_ratio="0.5">
 	<global_window_position top="24" left="264" height="873" width="915"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -34,7 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20051010093913"><vh>@button save</vh></v>
+<v t="ekr.20051010093913" a="TV"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
@@ -138,14 +138,14 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20051025084017"><vh>@page Spell tab</vh>
-<v t="ekr.20051025084017.1"><vh>@string spell_local_language_code = en</vh></v>
-<v t="ekr.20051025084017.2"><vh>@string spell_local_dictionary = None</vh></v>
+<v t="ekr.20051025084017" a="E"><vh>@page Spell tab</vh>
+<v t="ekr.20051025084017.1"><vh>@string aspell_local_language_code = en</vh></v>
+<v t="ekr.20051025084017.2"><vh>@string aspell_local_dictionary = None</vh></v>
 <v t="ekr.20051025085144"><vh>@string aspell_dir = c:\aspell</vh></v>
 <v t="ekr.20051025085144.1"><vh>@string aspell_bin_dir = c:\aspell\bin</vh></v>
 </v>
 <v t="ekr.20041213105007.1"><vh>Colors</vh>
-<v t="ekr.20041213105007.3" a="E"><vh>@page Log pane colors</vh>
+<v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
@@ -162,7 +162,7 @@
 <v t="ekr.20051006200015"><vh>@color body_text_selection_background_color = Gray80</vh></v>
 <v t="ekr.20051006200015.1"><vh>@color body_text_selection_foreground_color = white</vh></v>
 </v>
-<v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
+<v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
 <v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
 <v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
@@ -230,7 +230,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -1358,7 +1358,8 @@ KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
 KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
-<t tx="ekr.20051010093913">c.save()</t>
+<t tx="ekr.20051010093913">c.save()
+c.redraw_now()</t>
 <t tx="ekr.20051010112558">@color
 
 # Important: the print-commands and print-bindings show what bindings are in effect.
@@ -1763,8 +1764,25 @@ False: Selecting an outline node transfers focus to the body pane.
 <t tx="ekr.20051025084017"></t>
 <t tx="ekr.20051025084017.1"></t>
 <t tx="ekr.20051025084017.2">The full path to the spelling dictionary.</t>
-<t tx="ekr.20051025085144"></t>
-<t tx="ekr.20051025085144.1"></t>
+<t tx="ekr.20051025085144">@color
+
+# The top-level aspell directory.
+
+if sys.platform == 'darwin':
+    aspell_dir = '/sw/lib'
+else:
+    aspell_dir = r'c:\Aspell'</t>
+<t tx="ekr.20051025085144.1">@color
+
+# The directory containing the executable
+
+if sys.platform == 'darwin':
+   
+    aspell_bin_dir = '/sw/lib/bin'
+        # NOT TESTED YET.
+else:
+    aspell_bin_dir = r'c:\Aspell\bin'
+        # The directory continaing apell.pyd and aspell-15.dll</t>
 <t tx="ekr.20051027175030">True: When typing an opening bracket '(','[' or '{', immediately type the
 corresponding closing bracket.  To move past the closing bracket, just type it.</t>
 <t tx="ekr.20051101160257">A shortcut specification has the form:

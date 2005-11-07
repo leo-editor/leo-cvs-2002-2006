@@ -43,6 +43,8 @@ import tempfile
 import tabnanny # for Check Python command
 import tokenize # for Check Python command
 
+Tk = g.importExtension('Tkinter',       pluginName=None,verbose=False)
+
 # The following import _is_ used.
 __pychecker__ = '--no-import'
 import token    # for Check Python command
@@ -5393,31 +5395,38 @@ class baseCommands:
         
         c = self ; frame = c.frame
         
+        if g.app.quitting or not hasattr(frame,'top'):
+            return # nullFrame's do not have a top frame.
+        
         if frame.wantedWidget:
             w = frame.wantedWidget
             # g.trace(hasattr(w,'_name') and w._name or '')
-            g.app.gui.set_focus(c,w)
+            # It is possible that w no longer exists.
+            try:
+                g.app.gui.set_focus(c,w)
+            except Exception:
+                g.app.gui.set_focus(c,frame.body.bodyCtrl)
             frame.wantedWidget = None
         else:
             # Force the widget to some standard place.
-            w = g.app.gui.get_focus(c.frame)
+            w = g.app.gui.get_focus(frame)
             if not w: return
             # Allow clicks in enclosing window frame or in dialogs.
             name = hasattr(w,'_name') and w._name or ''
             if (
                 name and name[0] in string.letters # A known Leo frame.
-                or w == c.frame.top # The top of the Leo window
+                or w == frame.top # The top of the Leo window
                 or g.app.dialogs > 0 # A dialog.
                 or isinstance(w,Tk.Text)
                 or isinstance(w,Tk.Entry)
                 # or isinstance(w,Tk.Button)
             ):
                 # g.trace('ok',hasattr(w,'_name') and w._name or '')
-                g.app.gui.set_focus(c,w)
+                # g.app.gui.set_focus(c,w)
                 return
             # Not a name created by Leo.
             g.trace('setting default focus',name)
-            g.app.gui.set_focus(c,c.frame.body.bodyCtrl)
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
     #@nonl
     #@-node:ekr.20051103114520.1:c.setFocusHelper
     #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
@@ -6068,21 +6077,17 @@ class baseCommands:
     
         self.frame.tree.endEditLabel()
     #@-node:ekr.20031218072017.2992:endEditing (calls tree.endEditLabel)
-    #@+node:ekr.20031218072017.2997:selectVnode & selectPosition (calls tree.select)
-    def selectVnode(self,p,updateBeadList=True):
+    #@+node:ekr.20031218072017.2997:c.selectPosition
+    def selectPosition(self,p,updateBeadList=True):
         
-        """Select a new vnode."""
+        """Select a new position."""
     
-        # All updating and "synching" of nodes are now done in the event handlers!
         c = self
-        c.frame.tree.endEditLabel()
         c.frame.tree.select(p,updateBeadList)
-        c.frame.body.setFocus()
-        self.editing = False
-        
-    selectPosition = selectVnode
+    
+    selectVnode = selectPosition
     #@nonl
-    #@-node:ekr.20031218072017.2997:selectVnode & selectPosition (calls tree.select)
+    #@-node:ekr.20031218072017.2997:c.selectPosition
     #@+node:ekr.20031218072017.2998:selectVnodeWithEditing
     # Selects the given node and enables editing of the headline if editFlag is True.
     

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8358" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8393" clone_windows="0"/>
 <globals body_outline_ratio="0.654261704682">
-	<global_window_position top="39" left="149" height="833" width="872"/>
+	<global_window_position top="75" left="278" height="833" width="872"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="TV"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1618,6 +1618,47 @@
 <v t="ekr.20050120095423.9"><vh>runTest</vh></v>
 <v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20051107115231" a="E"><vh>Unit tests for Tkinter</vh>
+<v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
+<v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
+<v t="ekr.20051107115231.3"><vh>Reference</vh>
+<v t="ekr.20051107115231.4"><vh>manufactureKeyPressForCommandName</vh></v>
+<v t="ekr.20051107115231.5"><vh>simulateCommand</vh></v>
+</v>
+<v t="ekr.20051107115231.6" a="E"><vh>Tests that pass</vh>
+<v t="ekr.20051107115231.7"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
+<v t="ekr.20051107115231.8" a="E"><vh>Redrawing after commands</vh>
+<v t="ekr.20051107115231.9" a="E"><vh>@test Select a node when file is first loaded</vh></v>
+<v t="ekr.20051107115231.10" a="TV"><vh>@test Save command redraws the screen</vh></v>
+<v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
+<v t="ekr.20051107115231.12"><vh>@test openWithFileName draws the screen once</vh></v>
+</v>
+<v t="ekr.20051107115231.13"><vh>Typing and undo tests</vh>
+<v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
+<v t="ekr.20051107115231.15" a="E"><vh>@test editLabel selects entire headline</vh></v>
+<v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
+<v t="ekr.20051107115231.17" a="E"><vh>@test typing and undo in headline - at end</vh></v>
+<v t="ekr.20051107115231.18" a="E"><vh>@test paste and undo in headline - at end</vh></v>
+<v t="ekr.20051107115231.19"><vh>@test typing and undo in headline - with selection</vh></v>
+<v t="ekr.20051107115231.20"><vh>@test paste and undo in headline - with selection</vh></v>
+<v t="ekr.20051107115231.21"><vh>@test selecting new node retains typing in headline</vh></v>
+<v t="ekr.20051107115231.22" a="E"><vh>@test paste from menu into body sticks</vh></v>
+<v t="ekr.20051107115231.23" a="E"><vh>@test paste from menu into headline sticks</vh></v>
+<v t="ekr.20051107115231.24"><vh>@test paste from menu to body recolors the body</vh></v>
+<v t="ekr.20051107115231.25"><vh>@test typing in headline recomputes width</vh></v>
+<v t="ekr.20051107115231.26"><vh>@test paste in headline recomputes width</vh></v>
+</v>
+</v>
+<v t="ekr.20051107115231.27"><vh>Not yet</vh>
+<v t="ekr.20051107115231.28"><vh>@test selecting new node retains paste in headline</vh></v>
+<v t="ekr.20051107115231.29" a="E"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
+<v t="ekr.20051107115231.30"><vh>@test Find keeps focus in headline &amp; shows selected text</vh></v>
+<v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
+<v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
+<v t="ekr.20051107115231.33"><vh>@test rclick paste</vh></v>
+<v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
 </v>
 </v>
 </vnodes>
@@ -7753,7 +7794,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13643,5 +13684,342 @@ k.registerCommand('print-hello2',None,f2)</t>
 
 ---*---*---*
 ab</t>
+<t tx="ekr.20051107115231"></t>
+<t tx="ekr.20051107115231.1">g.es_print('Test of @command')
+g.app.unitTestDict ['unit-test-command1'] = True</t>
+<t tx="ekr.20051107115231.2"></t>
+<t tx="ekr.20051107115231.3"></t>
+<t tx="ekr.20051107115231.4">def manufactureKeyPressForCommandName (self,w,commandName):
+    
+    '''Implement a command by passing a keypress to Tkinter.'''
+
+    k = self
+    
+    shortcut = k.getShortcutForCommandName(commandName)
+    
+    if shortcut and w:
+        w.event_generate(shortcut)
+    else:
+         g.trace('no shortcut for %s' % (commandName),color='red')</t>
+<t tx="ekr.20051107115231.5">def simulateCommand (self,commandName):
+    
+    k = self ; c = k.c
+    
+    func = c.commandsDict.get(commandName)
+    
+    if func:
+        event = stroke = None
+        k.masterCommand(event,func,stroke)
+    else:
+        g.trace('no command for %s' % (commandName),color='red')
+        raise AttributeError</t>
+<t tx="ekr.20051107115231.6"></t>
+<t tx="ekr.20051107115231.7">g.app.unitTestDict = {}
+c.executeMinibufferCommand('unit-test-command1')
+assert g.app.unitTestDict.get('unit-test-command1') == True</t>
+<t tx="ekr.20051107115231.8"></t>
+<t tx="ekr.20051107115231.9">c.redraw_now() # To make node visible
+
+c2 = c.new()
+p2 = c2.currentPosition()
+assert p.edit_widget()
+c2.close()</t>
+<t tx="ekr.20051107115231.10">c.redraw_now() # To make node visible
+
+k = c.keyHandler
+n = c.frame.tree.redrawCount
+k.simulateCommand('save-file')
+assert c.frame.tree.redrawCount &gt; n</t>
+<t tx="ekr.20051107115231.11">k = c.keyHandler
+k.simulateCommand('new')
+c2 = k.funcReturn
+try:
+    assert c and c != c2
+    assert c2.frame.tree.redrawCount &gt; 0
+finally:
+    c2.close()</t>
+<t tx="ekr.20051107115231.12">c.redraw_now() # To make node visible
+
+k = c.keyHandler
+fileName = g.os_path_join('..','scripts','scripts.leo')
+ok,frame2 = g.openWithFileName(fileName,c)
+try:
+    assert ok
+    assert frame2
+    assert frame2.tree.redrawCount == 1
+finally:
+    frame2.c.close()</t>
+<t tx="ekr.20051107115231.13"></t>
+<t tx="ekr.20051107115231.14">import leoTest ; u = leoTest.testUtils()
+
+h = '@test return ends editing of headline'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+c.frame.tree.editLabel(p)
+w = p.edit_widget()
+w2 = g.app.gui.get_focus(c.frame)
+assert w == w2, 'oops1 %s != %s' % (w,w2)
+w.event_generate('&lt;Return&gt;')
+assert w != g.app.gui.get_focus(c.frame),'oops2'</t>
+<t tx="ekr.20051107115231.15">import leoTest ; u = leoTest.testUtils()
+
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = '@test editLabel selects entire headline'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+assert w
+i,j = g.app.gui.getSelectionRange(w)
+assert i == '1.0'
+assert j == w.index('end')</t>
+<t tx="ekr.20051107115231.16">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    paste = 'ABC'
+    g.app.gui.replaceClipboardWith(paste)
+    g.app.gui.setSelectionRange(w,'end','end')
+    k.manufactureKeyPressForCommandName(w,'paste-text')
+    w.event_generate('&lt;Return&gt;')
+    assert p.headString() == h + paste
+finally:
+    p.initHeadString(h)
+    c.redraw_now()</t>
+<t tx="ekr.20051107115231.17">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    g.app.gui.setSelectionRange(w,'end','end')
+    w.event_generate('X')
+    w.event_generate('Y')
+    w.event_generate('Z')
+    w.event_generate('&lt;Return&gt;')
+    assert p.headString() == h + 'XYZ'
+    k.manufactureKeyPressForCommandName(w,'undo')
+    assert p.headString() == h
+finally:
+    p.initHeadString(h)
+    c.redraw_now()</t>
+<t tx="ekr.20051107115231.18">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    g.app.gui.setSelectionRange(w,'end','end')
+    paste = 'ABC'
+    g.app.gui.replaceClipboardWith(paste)
+    g.app.gui.setSelectionRange(w,'end','end')
+    k.manufactureKeyPressForCommandName(w,'paste-text')
+    w.event_generate('&lt;Return&gt;')
+    assert p.headString() == h + paste
+    k.manufactureKeyPressForCommandName(w,'undo')
+    assert p.headString() == h
+finally:
+    p.initHeadString(h)
+    c.redraw_now()</t>
+<t tx="ekr.20051107115231.19">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    g.app.gui.setSelectionRange(w,'1.1','1.2')
+    w.event_generate('X')
+    w.event_generate('Y')
+    w.event_generate('Z')
+    w.event_generate('&lt;Return&gt;')
+    assert p.headString() == h[0] + 'XYZ' + h[2:]
+    k.manufactureKeyPressForCommandName(w,'undo')
+    assert p.headString() == h
+finally:
+    p.initHeadString(h)
+    c.redraw_now()</t>
+<t tx="ekr.20051107115231.20">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    paste = 'ABC'
+    g.app.gui.replaceClipboardWith(paste)
+    g.app.gui.setSelectionRange(w,'1.1','1.2')
+    k.manufactureKeyPressForCommandName(w,'paste-text')
+    w.event_generate('&lt;Return&gt;')
+    assert p.headString() == h[0] + paste + h[2:]
+    k.manufactureKeyPressForCommandName(w,'undo')
+    assert p.headString() == h
+finally:
+    p.initHeadString(h)
+    c.redraw_now()</t>
+<t tx="ekr.20051107115231.21">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    g.app.gui.setSelectionRange(w,'end','end')
+    w.event_generate('X')
+    w.event_generate('Y')
+    w.event_generate('Z')
+    w.event_generate('&lt;Return&gt;')
+    assert p.headString() == h + 'XYZ'
+    k.manufactureKeyPressForCommandName(w,'undo')
+    assert p.headString() == h
+finally:
+    p.initHeadString(h)
+    c.redraw_now()</t>
+<t tx="ekr.20051107115231.22">import leoTest ; u = leoTest.testUtils()
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+# Post by hand.
+menu = c.frame.menu.getMenu('Edit')
+i = menu.index('Paste')
+c.selectPosition(p)
+c.frame.bodyWantsFocus(later=False)
+paste = 'ABC'
+g.app.gui.replaceClipboardWith(paste)
+menu.invoke(i)
+# Move around and and make sure it doesn't change.
+try:
+    assert p.bodyString() == paste
+    c.selectPosition(p.threadBack())
+    assert p.bodyString() == paste
+    c.selectPosition(p)
+    assert p.bodyString() == paste
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()</t>
+<t tx="ekr.20051107115231.23">import leoTest ; u = leoTest.testUtils()
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+# Post by hand.
+menu = c.frame.menu.getMenu('Edit')
+i = menu.index('Paste')
+c.selectPosition(p)
+c.frame.tree.editLabel(p)
+w = p.edit_widget()
+g.app.gui.setSelectionRange(w,'end','end')
+paste = 'ABC'
+g.app.gui.replaceClipboardWith(paste)
+menu.invoke(i)
+# Move around and and make sure it doesn't change.
+try:
+    c.selectPosition(p.threadBack())
+    assert p.headString() == h + paste
+    c.selectPosition(p)
+    assert p.headString() == h + paste
+finally:
+    if 1:
+        p.setHeadString(h)
+        c.redraw_now()</t>
+<t tx="ekr.20051107115231.24">import leoTest ; u = leoTest.testUtils()
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+# Post by hand.
+menu = c.frame.menu.getMenu('Edit')
+i = menu.index('Paste')
+c.selectPosition(p)
+c.frame.bodyWantsFocus(later=False)
+paste = '# Should be a comment'
+g.app.gui.replaceClipboardWith(paste)
+n = c.frame.body.colorizer.count
+menu.invoke(i)
+# Move around and and make sure it doesn't change.
+try:
+    assert c.frame.body.colorizer.count &gt; n
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()</t>
+<t tx="ekr.20051107115231.25">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+c.frame.tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    g.app.gui.setSelectionRange(w,'end','end')
+    n = w.cget('width')
+    w.event_generate('X')
+    w.event_generate('Y')
+    w.event_generate('Z')
+    n2 = w.cget('width')
+    assert n2 &gt; n, '%s %s' % (n2,n1)
+    # g.trace(n,n2)
+finally:
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
+<t tx="ekr.20051107115231.26">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+c.frame.tree.editLabel(p)
+w = p.edit_widget()
+paste = 'ABC'
+g.app.gui.replaceClipboardWith(paste)
+try:
+    assert w, 'no w'
+    g.app.gui.setSelectionRange(w,'end','end')
+    g.app.unitTestDict = {}
+    k.manufactureKeyPressForCommandName(w,'paste-text')
+    assert g.app.unitTestDict.get('headWidth') == True
+finally:
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
+<t tx="ekr.20051107115231.27"></t>
+<t tx="ekr.20051107115231.28"></t>
+<t tx="ekr.20051107115231.29"></t>
+<t tx="ekr.20051107115231.30"></t>
+<t tx="ekr.20051107115231.31"></t>
+<t tx="ekr.20051107115231.32"></t>
+<t tx="ekr.20051107115231.33"></t>
+<t tx="ekr.20051107115231.34"></t>
 </tnodes>
 </leo_file>

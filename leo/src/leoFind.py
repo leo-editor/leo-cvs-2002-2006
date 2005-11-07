@@ -1028,30 +1028,18 @@ class leoFind:
     
         c = self.c ; p = self.p ; gui = g.app.gui
         
-        # g.trace()
         c.frame.bringToFront() # Needed on the Mac
-    
-        c.beginUpdate()
-        try: # range of update...
-            c.selectPosition(p)
-            c.redraw_now() # Redraw now so selections are not destroyed.
-            # Select the found vnode again after redraw.
-            if self.in_headline:
-                c.editPosition(p)
-                ### c.frame.tree.setEditLabelState(p)
-                assert(p.edit_widget())
-            else:
-                c.selectVnode(p)
-        finally:
-            c.endUpdate(False) # Do not draw again!
-    
+        c.selectPosition(p)
+        c.redraw_now()
+        if self.in_headline:
+            c.editPosition(p)
+        # Set the focus and selection after the redraw.
         t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
         insert = g.choose(self.reverse,pos,newpos)
-        # g.trace(pos,newpos,t)
         gui.setInsertPoint(t,insert)
         gui.setSelectionRange(t,pos,newpos)
         gui.makeIndexVisible(t,insert)
-        c.frame.widgetWantsFocus(t)
+        c.frame.widgetWantsFocus(t,later=False)
         if self.wrap and not self.wrapPosition:
             self.wrapPosition = self.p
     #@nonl

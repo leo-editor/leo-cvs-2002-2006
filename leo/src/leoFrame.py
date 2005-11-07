@@ -842,8 +842,8 @@ class leoTree:
     def redraw_now(self,scroll=True):
         self.oops()
         
-    def redrawAfterException (self):
-        self.oops()
+    redrawAfterException = redraw
+    #@nonl
     #@-node:ekr.20031218072017.3707:Drawing
     #@+node:ekr.20031218072017.3708:Edit label
     def editLabel(self,v):
@@ -889,7 +889,8 @@ class leoTree:
         
         Calls to g.es() will disable redraws, so calls to c.endUpdate
         should follow all such writes to the log pane.'''
-    
+        
+        c = self.c
     
         if flag:
             c.requestRedraw()

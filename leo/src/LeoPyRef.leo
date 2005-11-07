@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8614" clone_windows="0"/>
-<globals body_outline_ratio="0.615384615385">
-	<global_window_position top="27" left="361" height="871" width="864"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8616" clone_windows="0"/>
+<globals body_outline_ratio="0.538461538462">
+	<global_window_position top="42" left="278" height="858" width="859"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,7 +13,8 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"
+marks="ekr.20051025071455,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20050831131028"><vh>opml</vh>
@@ -26,7 +27,7 @@
 <v t="ekr.20040117181936"
 marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="TV"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20051010062551.1"><vh>(key dicts)</vh></v>
 <v t="ekr.20051009120608"><vh>(ctors &amp; finishCreate)</vh>
@@ -65,19 +66,6 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20050920084036.189"><vh>&lt;&lt; define dictionary d of names and Leo commands &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20051104105403"><vh>Calls to update_idletasks</vh>
-<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
-<v t="ekr.20051001050607"><vh>endCommand</vh></v>
-<v t="ekr.20050924064254"><vh>Label...</vh>
-<v t="ekr.20051023132350"><vh>getLabel</vh></v>
-<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
-<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
-<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
-<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
-<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
-<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
-</v>
-</v>
 <v t="ekr.20051103114520.2"><vh>(New World Order)</vh>
 <v t="ekr.20051027135712"><vh>a2 Notes</vh></v>
 <v t="ekr.20051104101307"><vh>a3 Notes</vh></v>
@@ -85,22 +73,70 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
 </v>
+<v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
+<v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
+<v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
+<v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
+</v>
+<v t="ekr.20031218072017.4060"><vh>Dialog</vh>
+<v t="ekr.20031218072017.4061"><vh>get_window_info</vh></v>
+<v t="ekr.20031218072017.4062"><vh>center_dialog</vh></v>
+<v t="ekr.20031218072017.4063"><vh>create_labeled_frame</vh></v>
+</v>
+<v t="ekr.20031218072017.4064"><vh>Focus</vh>
+<v t="ekr.20031218072017.4065"><vh>get_focus</vh></v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20050210082320"><vh>widget_wants_focus (tk.gui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4066"><vh>Font</vh>
+<v t="ekr.20031218072017.2187"><vh>tkGui.getFontFromParams</vh></v>
+</v>
+<v t="ekr.20031218072017.4067"><vh>Icons</vh>
+<v t="ekr.20031218072017.4068"><vh>attachLeoIcon &amp; createLeoIcon</vh>
+<v t="ekr.20031218072017.4069"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.4070"><vh>createLeoIcon</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.4071"><vh>Idle Time</vh>
+<v t="ekr.20031218072017.4072"><vh>tkinterGui.setIdleTimeHook</vh></v>
+<v t="ekr.20031218072017.4073"><vh>setIdleTimeHookAfterDelay</vh></v>
+</v>
+<v t="ekr.20031218072017.4074"><vh>Indices (Tk)</vh>
+<v t="ekr.20031218072017.4075"><vh>firstIndex</vh></v>
+<v t="ekr.20031218072017.4076"><vh>lastIndex</vh></v>
+<v t="ekr.20031218072017.4077"><vh>moveIndexBackward</vh></v>
+<v t="ekr.20031218072017.4078"><vh>moveIndexForward &amp; moveIndexToNextLine</vh></v>
+<v t="ekr.20031218072017.4079"><vh>compareIndices</vh></v>
+<v t="ekr.20031218072017.4080"><vh>getindex</vh></v>
+</v>
+<v t="ekr.20031218072017.4081"><vh>Insert Point</vh>
+<v t="ekr.20031218072017.4082"><vh>getInsertPoint</vh></v>
+<v t="ekr.20031218072017.4083"><vh>setInsertPoint</vh></v>
+</v>
+<v t="ekr.20031218072017.4084"><vh>Selection</vh>
+<v t="ekr.20031218072017.4085"><vh>getSelectionRange</vh></v>
+<v t="ekr.20031218072017.4086"><vh>getTextSelection</vh></v>
+<v t="ekr.20031218072017.4087"><vh>setSelectionRange</vh></v>
+<v t="ekr.20031218072017.4088"><vh>setSelectionRangeWithLength</vh></v>
+<v t="ekr.20031218072017.4089"><vh>setTextSelection</vh></v>
+</v>
+<v t="ekr.20031218072017.4090"><vh>Text</vh>
+<v t="ekr.20031218072017.4091"><vh>getAllText</vh></v>
+<v t="ekr.20031218072017.4092"><vh>getCharAfterIndex</vh></v>
+<v t="ekr.20031218072017.4093"><vh>getCharAtIndex</vh></v>
+<v t="ekr.20031218072017.4094"><vh>getCharBeforeIndex</vh></v>
+<v t="ekr.20031218072017.4095"><vh>getLineContainingIndex</vh></v>
+<v t="ekr.20031218072017.4096"><vh>replaceSelectionRangeWithText (leoTkinterGui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4097"><vh>Visibility</vh>
+<v t="ekr.20031218072017.4098"><vh>makeIndexVisible</vh></v>
+</v>
+</v>
 <v t="ekr.20051029065806"><vh>Commands</vh>
-<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
-<v t="ekr.20031218072017.2950"><vh>beginUpdate</vh></v>
-<v t="ekr.20031218072017.2951"><vh>bringToFront</vh></v>
-<v t="ekr.20031218072017.2952"><vh>c.endUpdate &amp; test</vh>
-<v t="ekr.20050916100046"><vh>test_c_endUpdate</vh></v>
-</v>
-<v t="ekr.20031218072017.2953"><vh>recolor</vh></v>
-<v t="ekr.20031218072017.2954"><vh>redraw &amp; repaint</vh></v>
-</v>
 <v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
 <v t="ekr.20051011072903.2"><vh>copyText</vh></v>
 <v t="ekr.20051011072049.2"><vh>cutText</vh></v>
-<v t="ekr.20051011072903.5"><vh>pasteText</vh>
-<v t="ekr.20051103160025"><vh>&lt;&lt; paste the text into w &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
 <v t="ekr.20051011072903.1"><vh>OnCopyFromMenu</vh></v>
 <v t="ekr.20051011072049.1"><vh>OnCutFromMenu</vh></v>
 <v t="ekr.20051011072903.4"><vh>OnPasteFromMenu</vh></v>
@@ -109,83 +145,33 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
 <v t="ekr.20031218072017.3070"><vh>changeSelection</vh></v>
 <v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="ekr.20051022152427"><vh>Focus</vh>
-<v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
-<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
-<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
-</v>
 <v t="ekr.20051022142249"><vh>focus (editCommandsClass)</vh>
 <v t="ekr.20051022144825"><vh>focusToBody/Log/Tree/Minibuffer</vh></v>
 <v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
 </v>
-<v t="ekr.20051022132934"><vh>Click event handlers (tkTree)</vh>
-<v t="ekr.20040803072955.20"><vh>tkTree.createPermanentBindings</vh></v>
-<v t="ekr.20051016095907.2"><vh>Focus &amp; update (tkLog)</vh>
-<v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
-<v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
-<v t="ekr.20050208133438"><vh>forceLogUpdate</vh></v>
 </v>
-<v t="ekr.20031218072017.4003"><vh>Focus (tkBody)</vh></v>
-<v t="ekr.20040803072955.108"><vh>tree.OnDeactivate (caused double-click problem)</vh></v>
-<v t="ekr.20040803072955.87"><vh>onHeadlineClick</vh></v>
-<v t="ekr.20051022141020"><vh>onTreeClick</vh></v>
-<v t="ekr.20040803072955.105"><vh>OnActivateHeadline (tkTree)</vh>
-<v t="ekr.20040803072955.106"><vh>&lt;&lt; activate this window &gt;&gt;</vh></v>
+<v t="ekr.20051106103835"><vh>Drawing</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.requestRedraw &amp; c.redraw_now</vh></v>
+<v t="ekr.20051105091102"><vh>c.updateScreen &amp; helper (new in 4.4a3)</vh>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
 </v>
-</v>
-<v t="ekr.20040803072955.125"><vh>Selecting &amp; editing... (tkTree)</vh>
-<v t="ekr.20040803072955.126"><vh>endEditLabel</vh></v>
-<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
-<v t="ekr.20040803072955.128"><vh>tree.select</vh>
-<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
-<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.134"><vh>tree.set...LabelState</vh>
-<v t="ekr.20040803072955.135"><vh>setNormalLabelState</vh></v>
-<v t="ekr.20040803072955.136"><vh>setDisabledLabelState</vh></v>
-<v t="ekr.20040803072955.137"><vh>setSelectedLabelState</vh></v>
-<v t="ekr.20040803072955.138"><vh>setUnselectedLabelState</vh></v>
-<v t="ekr.20040803072955.139"><vh>setDisabledHeadlineColors</vh></v>
-<v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
-<v t="ekr.20040803072955.141"><vh>setUnselectedHeadlineColors</vh></v>
-</v>
-<v t="ekr.20040803072955.142"><vh>dimEditLabel, undimEditLabel</vh></v>
-<v t="ekr.20040803072955.143"><vh>tree.expandAllAncestors</vh></v>
-</v>
-</v>
-<v t="ekr.20051104100739"><vh>Idle Time</vh>
-<v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
-<v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
-<v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
-<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
-</v>
-<v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
-<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
-<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
-</v>
-<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
-<v t="ekr.20051025150224"><vh>onIdleTime</vh></v>
-</v>
-<v t="ekr.20051104100657"><vh>keyHandler</vh>
-<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
-<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
-</v>
-<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
-<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
-<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
-<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
-<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
-<v t="ekr.20051103114520"><vh>k.redraw</vh></v>
-<v t="ekr.20051103114520.1"><vh>k.setFocus</vh></v>
 </v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
+<v t="ekr.20051105091102"><vh>c.updateScreen &amp; helper (new in 4.4a3)</vh>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
 </v>
-<v t="ekr.20051103161147"><vh>Tree</vh>
-<v t="ekr.20040803072955.35"><vh>Drawing...</vh>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
+<v t="ekr.20040803072955.55"><vh>tree.redraw</vh></v>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
+<v t="ekr.20051105073850"><vh>drawX...</vh>
 <v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
 <v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
 <v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
@@ -209,30 +195,40 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
 <v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
-<v t="ekr.20040803072955.54"><vh>Top level...</vh>
-<v t="ekr.20040803072955.55"><vh>tree.redraw</vh></v>
-<v t="ekr.20040803072955.56"><vh>tkTree.redrawAfterException</vh></v>
-<v t="ekr.20040803072955.57"><vh>force_redraw</vh></v>
-<v t="ekr.20040803072955.58"><vh>redraw_now</vh></v>
-<v t="ekr.20040803072955.59"><vh>idle_redraw</vh>
-<v t="ekr.20040803072955.60"><vh>&lt;&lt; return if disabled, or quitting or dragging &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
-</v>
-<v t="ekr.20040803072955.62"><vh>Unchanged...</vh>
+<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
 <v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
-<v t="ekr.20040803072955.65"><vh>idle_scrollTo</vh>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
 <v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
 <v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
-<v t="ekr.20040803072955.69"><vh>scrollTo</vh></v>
 <v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
 </v>
 </v>
-<v t="ekr.20040803072955.71"><vh>Event handlers...</vh>
+</v>
+<v t="ekr.20051105090649"><vh>Event handlers</vh>
+<v t="ekr.20031218072017.3971"><vh>Event handlers (tkFrame)</vh>
+<v t="ekr.20031218072017.3972"><vh>frame.OnCloseLeoEvent</vh></v>
+<v t="ekr.20031218072017.3973"><vh>frame.OnControlKeyUp/Down</vh></v>
+<v t="ekr.20031218072017.3975"><vh>OnActivateBody (tkFrame)</vh></v>
+<v t="ekr.20031218072017.2253"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
+<v t="ekr.20031218072017.3976"><vh>OnActivateTree</vh></v>
+<v t="ekr.20031218072017.3977"><vh>OnBodyClick, OnBodyRClick (Events)</vh></v>
+<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events)</vh></v>
+<v t="ekr.20031218072017.1803"><vh>OnMouseWheel (Tomaz Ficko)</vh></v>
+</v>
+<v t="ekr.20040803072955.71"><vh>Event handlers (tkTree)</vh>
+<v t="ekr.20051105103233"><vh>Helpers</vh>
 <v t="ekr.20040803072955.72"><vh>checkWidgetList</vh></v>
+<v t="ekr.20040803072955.73"><vh>dumpWidgetList</vh></v>
+<v t="ekr.20040803072955.75"><vh>edit_widget</vh></v>
+<v t="ekr.20040803072955.74"><vh>eventToPosition</vh></v>
+<v t="ekr.20040803072955.76"><vh>findEditWidget</vh></v>
+<v t="ekr.20040803072955.109"><vh>findVnodeWithIconId</vh></v>
+<v t="ekr.20040803072955.117"><vh>tree.moveUpDown (not used)</vh></v>
+</v>
 <v t="ekr.20040803072955.78"><vh>Click Box...</vh>
 <v t="ekr.20040803072955.79"><vh>onClickBoxClick</vh></v>
 </v>
@@ -248,10 +244,6 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20040803072955.102"><vh>onDrag</vh></v>
 <v t="ekr.20040803072955.103"><vh>onEndDrag</vh></v>
 </v>
-<v t="ekr.20040803072955.73"><vh>dumpWidgetList</vh></v>
-<v t="ekr.20040803072955.75"><vh>edit_text</vh></v>
-<v t="ekr.20040803072955.74"><vh>eventToPosition</vh></v>
-<v t="ekr.20040803072955.76"><vh>findEditWidget</vh></v>
 <v t="ekr.20040803072955.90"><vh>head key handlers</vh>
 <v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
 <v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
@@ -274,8 +266,6 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20040803072955.87"><vh>onHeadlineClick</vh></v>
 <v t="ekr.20040803072955.83"><vh>onHeadlineRightClick</vh></v>
 </v>
-<v t="ekr.20040803072955.109"><vh>tree.findVnodeWithIconId</vh></v>
-<v t="ekr.20040803072955.117"><vh>tree.moveUpDown</vh></v>
 <v t="ekr.20040803072955.108"><vh>tree.OnDeactivate (caused double-click problem)</vh></v>
 <v t="ekr.20040803072955.110"><vh>tree.OnPopup &amp; allies</vh>
 <v t="ekr.20040803072955.111"><vh>OnPopupFocusLost</vh></v>
@@ -289,7 +279,7 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20040803072955.125"><vh>Selecting &amp; editing... (tkTree)</vh>
-<v t="ekr.20040803072955.126"><vh>endEditLabel</vh></v>
+<v t="ekr.20040803072955.126"><vh>c.endEditLabel</vh></v>
 <v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
 <v t="ekr.20040803072955.128"><vh>tree.select</vh>
 <v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
@@ -299,9 +289,8 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040803072955.134"><vh>tree.set...LabelState</vh>
-<v t="ekr.20040803072955.135"><vh>setNormalLabelState</vh></v>
-<v t="ekr.20040803072955.136"><vh>setDisabledLabelState</vh></v>
-<v t="ekr.20040803072955.137"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20040803072955.135"><vh>setEditLabelState</vh></v>
+<v t="ekr.20040803072955.136"><vh>setSelectedLabelState</vh></v>
 <v t="ekr.20040803072955.138"><vh>setUnselectedLabelState</vh></v>
 <v t="ekr.20040803072955.139"><vh>setDisabledHeadlineColors</vh></v>
 <v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
@@ -309,7 +298,6 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20040803072955.142"><vh>dimEditLabel, undimEditLabel</vh></v>
 <v t="ekr.20040803072955.143"><vh>tree.expandAllAncestors</vh></v>
-</v>
 </v>
 <v t="ekr.20040803072955.90"><vh>head key handlers</vh>
 <v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
@@ -334,55 +322,142 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20051104111040"><vh>(Master-click binding)</vh>
+<v t="ekr.20051022152427"><vh>Focus</vh>
+<v t="ekr.20051105091102"><vh>c.updateScreen &amp; helper (new in 4.4a3)</vh>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+<v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
+<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
+<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
+</v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+<v t="ekr.20031218072017.2997"><vh>c.selectPosition</vh></v>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051104100739"><vh>Idle Time</vh>
+<v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
+<v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
+</v>
+<v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
+<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
+<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
+</v>
+<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
+<v t="ekr.20051025150224"><vh>onIdleTime</vh></v>
+</v>
+<v t="ekr.20051104100657"><vh>keyHandler</vh>
+<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+</v>
+<v t="ekr.20051105121438"><vh>Pastes</vh>
+<v t="ekr.20040803072955.126"><vh>c.endEditLabel</vh></v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+<v t="ekr.20051011072903.1"><vh>OnCopyFromMenu</vh></v>
+<v t="ekr.20051011072049.1"><vh>OnCutFromMenu</vh></v>
+<v t="ekr.20051011072903.4"><vh>OnPasteFromMenu</vh></v>
+</v>
+</v>
+<v t="ekr.20051105073439.1"><vh>Traces</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.requestRedraw &amp; c.redraw_now</vh></v>
+<v t="ekr.20051105091102"><vh>c.updateScreen &amp; helper (new in 4.4a3)</vh>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+</v>
+<v t="ekr.20051105100804"><vh>keyHandler</vh>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+</v>
+<v t="ekr.20051105100804.1"><vh>Tree</vh>
+<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
+<v t="ekr.20040803072955.55"><vh>tree.redraw</vh></v>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
+<v t="ekr.20051105073850"><vh>drawX...</vh>
+<v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
+<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
+<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.39"><vh>drawIcon</vh>
+<v t="ekr.20040803072955.40"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.41"><vh>drawLine</vh></v>
+<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20040803072955.44"><vh>drawText</vh>
+<v t="ekr.20040803072955.45"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.46"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040803072955.47"><vh>drawUserIcon</vh>
+<v t="ekr.20040803072955.48"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.49"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.50"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.51"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
+</v>
+<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
+<v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
+<v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
+<v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
+</v>
+</v>
 <v t="ekr.20031218072017.2253"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
-<v t="ekr.20031218072017.3941"><vh> Birth &amp; Death (tkFrame)</vh>
-<v t="ekr.20031218072017.1801"><vh>__init__ (tkFrame)</vh>
-<v t="ekr.20031218072017.1802"><vh>&lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3942"><vh>__repr__ (tkFrame)</vh></v>
-<v t="ekr.20041221122440"><vh>f.component &amp; components</vh></v>
-<v t="ekr.20031218072017.2176"><vh>f.finishCreate &amp; helpers</vh>
-<v t="ekr.20051009044751"><vh>createOuterFrames</vh></v>
-<v t="ekr.20051009044920"><vh>createIconBarComponents</vh></v>
-<v t="ekr.20051009045208"><vh>createSplitterComponents</vh></v>
-<v t="ekr.20051009045300"><vh>createStatusLineComponents</vh></v>
-<v t="ekr.20051009045404"><vh>createFirstTreeNode</vh></v>
-<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
-</v>
-<v t="ekr.20031218072017.3944"><vh>f.createCanvas &amp; helpers</vh>
-<v t="ekr.20041221071131"><vh>createPmwTreeCanvas</vh></v>
-<v t="ekr.20041221071131.1"><vh>createTkTreeCanvas</vh>
-<v t="ekr.20050119210541"><vh>&lt;&lt; workaround for mouse-wheel problems &gt;&gt;</vh></v>
-<v t="ekr.20040709081208"><vh>&lt;&lt; do scrolling by hand in a separate thread &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
+<v t="ekr.20040803072955.126"><vh>c.endEditLabel</vh></v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20041221123325"><vh>createLeoSplitters &amp; helpers</vh>
-<v t="ekr.20041223130032"><vh>&lt;&lt; create Pmw splitters and their components &gt;&gt;</vh></v>
-<v t="ekr.20041221195402"><vh>Pmw...</vh>
-<v t="ekr.20041221073427"><vh>createLeoPmwSplitter</vh></v>
-<v t="ekr.20031218072017.3946"><vh>resizePanesToRatio</vh>
-<v t="ekr.20050104084531"><vh>&lt;&lt; resize the Pmw panes &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041221075743"><vh>onPmwResizeSplitter1/2</vh></v>
-</v>
-<v t="ekr.20041221185246"><vh>Tk...</vh>
-<v t="ekr.20041221073427.1"><vh>createLeoTkSplitter</vh></v>
-<v t="ekr.20031218072017.3947"><vh>bindBar</vh></v>
-<v t="ekr.20031218072017.3949"><vh>divideAnySplitter</vh></v>
-<v t="ekr.20031218072017.3950"><vh>divideLeoSplitter</vh></v>
-<v t="ekr.20031218072017.3951"><vh>onDrag...</vh></v>
-<v t="ekr.20031218072017.3952"><vh>placeSplitter</vh></v>
-<v t="ekr.20031218072017.998"><vh>Scrolling callbacks (frame)</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.3964"><vh>Destroying the frame</vh>
-<v t="ekr.20031218072017.1975"><vh>destroyAllObjects</vh>
-<v t="ekr.20031218072017.1976"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3965"><vh>destroyAllPanels</vh></v>
-<v t="ekr.20031218072017.1974"><vh>destroySelf</vh></v>
-</v>
+<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
 </v>
 </v>
 <v t="ekr.20051103112558"><vh>4.4a3 projects</vh>
@@ -393,33 +468,132 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20051104094952"><vh>Moved old projects into oldLeoProjects.leo</vh></v>
 <v t="ekr.20051104094952.1"><vh>Added scripts.leo and unitTest.leo to distribution</vh></v>
+<v t="ekr.20051105085625"><vh>Changed  edit_text to edit_widget everywhere</vh></v>
+<v t="ekr.20051105100445"><vh>Removed tree ivars</vh></v>
+<v t="ekr.20051106024223"><vh>changed New command</vh>
+<v t="ekr.20031218072017.1623"><vh>new</vh></v>
+</v>
+<v t="ekr.20051106031029"><vh>(Undo ends editing)</vh>
+<v t="ekr.20031218072017.2992"><vh>endEditing (calls tree.endEditLabel)</vh></v>
+<v t="ekr.20031218072017.2039"><vh>undo &amp; helpers...</vh>
+<v t="ekr.20050424170219.1"><vh>undoClearRecentFiles</vh></v>
+<v t="ekr.20050412083057.1"><vh>undoCloneNode</vh></v>
+<v t="ekr.20050412084055"><vh>undoDeleteNode</vh></v>
+<v t="ekr.20050318085713"><vh>undoGroup</vh></v>
+<v t="ekr.20050412083244"><vh>undoHoistNode &amp; undoDehoistNode</vh></v>
+<v t="ekr.20050412085112"><vh>undoInsertNode</vh></v>
+<v t="ekr.20050526124906"><vh>undoMark</vh></v>
+<v t="ekr.20050411112033"><vh>undoMove</vh></v>
+<v t="ekr.20050318085713.1"><vh>undoNodeContents</vh></v>
+<v t="ekr.20050318085713.2"><vh>undoTree</vh></v>
+<v t="ekr.20050408100042"><vh>undoRedoTree</vh></v>
+<v t="EKR.20040526090701.4"><vh>undoTyping</vh></v>
+<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
+<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using p's body text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051105164153"><vh>(New command &amp; k.funcReturn)</vh>
+<v t="ekr.20031218072017.1623"><vh>new</vh></v>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20031218072017.1974"><vh>destroySelf</vh></v>
+</v>
+<v t="ekr.20051104053655"><vh>(c.executeMinibufferCommand executes a minibuffer command by name)</vh>
+<v t="ekr.20051106042124"><vh>Request</vh></v>
+<v t="ekr.20051106040126"><vh>c.executeMinibufferCommand</vh></v>
+</v>
+<v t="ekr.20051106102227"><vh>Disabled minibuffer when not in use</vh></v>
+<v t="ekr.20051106105705"><vh>Call c.updateScreen() in paste from menu</vh></v>
+<v t="ekr.20051106105705.1"><vh>Always queue c.updateScreen() in undo,redo</vh></v>
+<v t="ekr.20051106152948"><vh>Made tree.scrollTo work</vh></v>
+<v t="ekr.20051105114841"><vh>Investigated problem with Find</vh></v>
+<v t="ekr.20051107052029"><vh>Can't expand or contract settings panel</vh></v>
+<v t="ekr.20051107054425"><vh>Fixed bug: find was not showing selection</vh>
+<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
+</v>
+<v t="ekr.20051107105818"><vh>Fixed spell-tab problems</vh>
+<v t="ekr.20051107112158"><vh>Report</vh></v>
+<v t="ekr.20051025071455" a="M"><vh>Spell classes</vh>
+<v t="ekr.20051025071455.6"><vh>class Aspell</vh>
+<v t="ekr.20051025071455.7"><vh>Birth &amp; death</vh>
+<v t="ekr.20051025071455.8"><vh>__init__</vh></v>
+</v>
+<v t="ekr.20051025071455.10"><vh>processWord</vh></v>
+<v t="ekr.20051025071455.11"><vh>updateDictionary</vh></v>
+</v>
+<v t="ekr.20051025071455.1"><vh>class spellCommandsClass</vh>
+<v t="ekr.20051025080056"><vh>ctor</vh></v>
+<v t="ekr.20051025080420"><vh>getPublicCommands (searchCommandsClass)</vh></v>
+<v t="ekr.20051025080633"><vh>openSpellTab</vh></v>
+<v t="ekr.20051025080420.1"><vh>commands...</vh></v>
+</v>
+<v t="ekr.20051025071455.18"><vh>class spellTab (leoFind.leoFind)</vh>
+<v t="ekr.20051025071455.19"><vh>Birth &amp; death</vh>
+<v t="ekr.20051025071455.20"><vh>spellTab.__init__</vh></v>
+<v t="ekr.20051025094004"><vh>init_aspell</vh></v>
+<v t="ekr.20051025071455.22"><vh>createSpellTab</vh>
+<v t="ekr.20051025071455.23"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
+<v t="ekr.20051025071455.24"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051025120920"><vh>createBindings</vh></v>
+<v t="ekr.20051025071455.16"><vh>readDictionary</vh></v>
+</v>
+<v t="ekr.20051025071455.29"><vh>Buttons</vh>
+<v t="ekr.20051025071455.30"><vh>onAddButton</vh></v>
+<v t="ekr.20051025071455.31"><vh>onIgnoreButton</vh></v>
+<v t="ekr.20051025071455.32"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
+<v t="ekr.20051025071455.33"><vh>onFindButton</vh></v>
+<v t="ekr.20051025071455.34"><vh>onHideButton</vh></v>
+</v>
+<v t="ekr.20051025071455.36"><vh>Commands</vh>
+<v t="ekr.20051025071455.37"><vh>add</vh></v>
+<v t="ekr.20051025071455.38"><vh>change</vh></v>
+<v t="ekr.20051025071455.40"><vh>find</vh></v>
+<v t="ekr.20051025121408"><vh>hide</vh></v>
+<v t="ekr.20051025071455.41"><vh>ignore</vh></v>
+</v>
+<v t="ekr.20051025071455.42"><vh>Helpers</vh>
+<v t="ekr.20051025071455.43"><vh>bringToFront</vh></v>
+<v t="ekr.20051025071455.44"><vh>fillbox</vh></v>
+<v t="ekr.20051025071455.45"><vh>findNextMisspelledWord</vh>
+<v t="ekr.20051025071455.46"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051025071455.47"><vh>findNextWord</vh></v>
+<v t="ekr.20051025071455.48"><vh>getSuggestion</vh></v>
+<v t="ekr.20051025071455.49"><vh>onMap</vh></v>
+<v t="ekr.20051025071455.50"><vh>onSelectListBox</vh></v>
+<v t="ekr.20051025071455.51"><vh>update</vh></v>
+<v t="ekr.20051025071455.52"><vh>updateButtons</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20051106172517"><vh>Improved perl entries in language dicts</vh>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20050921094025"><vh>4.4 To do</vh>
-<v t="ekr.20051104051733"><vh>Use focus-in binding?</vh></v>
-<v t="ekr.20051104152338"><vh>Fix bug in Remove Sentinels command</vh>
-<v t="ekr.20051104152338.1"><vh>Report</vh></v>
-</v>
-<v t="ekr.20051104131527"><vh>From e</vh></v>
-<v t="ekr.20051104053655"><vh>Create a convenience method to execute minibuffer commands by name</vh></v>
 <v t="ekr.20051103092502"><vh>Update screen shots</vh></v>
-<v t="ekr.20051103144316"><vh>before a3</vh>
+<v t="ekr.20051016162724"><vh>before a4</vh>
+<v t="ekr.20051107102734"><vh>Implement Newer World Order</vh></v>
 <v t="ekr.20051103094005"><vh>Fix bugs</vh>
-<v t="ekr.20051103092502.1"><vh>Update 'e's plugins</vh></v>
 <v t="ekr.20051103093034"><vh>Fix problems applying settings</vh>
 <v t="ekr.20051103093034.1"><vh>Report</vh></v>
 </v>
+<v t="ekr.20051104152338"><vh>Fix bug in Remove Sentinels command</vh>
+<v t="ekr.20051104152338.1"><vh>Report</vh></v>
 </v>
 </v>
-<v t="ekr.20051016162724"><vh>before a4</vh>
-<v t="ekr.20051008131807"><vh>*** Unit tests</vh>
-<v t="ekr.20051102122405"><vh>Notes</vh></v>
-<v t="ekr.20050920085536.16"><vh>bindKey</vh>
-<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051014170754.1"><vh>getShortcutForCommand/Name</vh></v>
-<v t="ekr.20050920085536.64"><vh>k.manufactureKeyPressForCommandName</vh></v>
-</v>
+<v t="ekr.20051104051733"><vh>Use focus-in binding?</vh></v>
 <v t="ekr.20051103091115"><vh>Update docs for find tab</vh>
 <v t="ekr.20051103091115.1"><vh>Report</vh></v>
 </v>
@@ -514,7 +688,6 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051027105304"><vh>before b1</vh>
 <v t="ekr.20051028061546"><vh>Improve spell tab</vh>
 <v t="ekr.20051025071455" a="M"><vh>Spell classes</vh>
-<v t="ekr.20051025071455.3"><vh>&lt;&lt; specify aspell directories &gt;&gt;</vh></v>
 <v t="ekr.20051025071455.6"><vh>class Aspell</vh>
 <v t="ekr.20051025071455.7"><vh>Birth &amp; death</vh>
 <v t="ekr.20051025071455.8"><vh>__init__</vh></v>
@@ -734,7 +907,7 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2415"><vh> Scripts</vh>
 <v t="ekr.20040327103735.2"><vh>Script Tools (leoGlobals.py)</vh>
 <v t="ekr.20031218072017.2418"><vh>g.initScriptFind (set up dialog)</vh></v>
@@ -809,6 +982,28 @@ marks="ekr.20031218072017.2410,"><vh>@thin leoFrame.py</vh></v>
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
+<t tx="EKR.20040526090701.4">def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+
+    if u.oldSel:
+        c.frame.bodyWantsFocus(later=False)
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.frame.bodyWantsFocus(later=False)
+        c.frame.body.setYScrollPosition(u.yview)</t>
 <t tx="EKR.20040602125018">@ Enables the "idle" hook.
 After enableIdleTimeHook is called, Leo will call the "idle" hook
 approximately every g.idleTimeDelay milliseconds.
@@ -907,8 +1102,10 @@ self.language_extension_dict = {
     "latex" : "tex", # 1/8/04
     "noweb" : "nw",
     "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
@@ -934,7 +1131,9 @@ self.extension_dict = {
     "java"  : "java",
     "noweb" : "nw",
     "p"     : "pascal",
-    "perl"  : "perl",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -943,32 +1142,52 @@ self.extension_dict = {
     "tex"   : "tex",
     "txt"   : "plain",
     "tcl"   : "tcltk",
-    "w"     : "cweb" }
-</t>
+    "w"     : "cweb" }</t>
 <t tx="ekr.20031218072017.840"></t>
-<t tx="ekr.20031218072017.998">def setCallback (self,*args,**keys):
+<t tx="ekr.20031218072017.844">@
+
+The following are called only when g.app.gui.win32clipboard is not None, and
+presently that never happens.</t>
+<t tx="ekr.20031218072017.845">def replaceClipboardWith (self,s):
+
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            wcb.EmptyClipboard()
+            wcb.SetClipboardText(s)
+            wcb.CloseClipboard()
+        except:
+            g.es_exception()
+    else:
+        self.root.clipboard_clear()
+        self.root.clipboard_append(s)</t>
+<t tx="ekr.20031218072017.846">def getTextFromClipboard (self):
     
-    """Callback to adjust the scrollbar.
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
     
-    Args is a tuple of two floats describing the fraction of the visible area."""
-
-    # g.trace(self.tree.redrawCount,args)
-
-    apply(self.treeBar.set,args,keys)
-
-    if self.tree.allocateOnlyVisibleNodes:
-        self.tree.setVisibleArea(args)
-        
-def yviewCallback (self,*args,**keys):
-    
-    """Tell the canvas to scroll"""
-    
-    # g.trace(vyiewCallback",args,keys)
-
-    if self.tree.allocateOnlyVisibleNodes:
-        self.tree.allocateNodesBeforeScrolling(args)
-
-    apply(self.canvas.yview,args,keys)</t>
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            data = wcb.GetClipboardData()
+            wcb.CloseClipboard()
+            # g.trace(data)
+            return data
+        except TypeError:
+            # g.trace(None)
+            return None
+        except:
+            g.es_exception()
+            return None
+    else:
+        try:
+            s = self.root.selection_get(selection="CLIPBOARD")
+            return s
+        except:
+            return None</t>
 <t tx="ekr.20031218072017.1315"></t>
 <t tx="ekr.20031218072017.1320">@ The &lt;Key&gt; event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
 
@@ -1035,7 +1254,7 @@ def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText
     self.logIsLocked = False # True: no changes to log are allowed.
     self.logWaiting = [] # List of messages waiting to go to a log.
     self.menuWarningsGiven = False # True: supress warnings in menu code.
-    self.newWorldOrder = False # True: redraw and shift focus at end of k.masterCommand
+    self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
     self.nodeIndices = None # Singleton node indices instance.
     self.numberOfWindows = 0 # Number of opened windows.
     self.openWithFiles = [] # List of data used by Open With command.
@@ -1073,49 +1292,131 @@ self.prolog_postfix_string = "?&gt;"
 # leo.py 3.11
 self.use_unicode = True # True: use new unicode logic.
 </t>
-<t tx="ekr.20031218072017.1801">def __init__(self,title,gui):
+<t tx="ekr.20031218072017.1493"># Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
 
-    # Init the base class.
-    leoFrame.leoFrame.__init__(self,gui)
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading &amp; trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+        
+    __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
 
-    self.title = title
+    u = self ; c = u.c
+    # assert p == c.currentPosition(),'not current position'+repr(p)
 
-    leoTkinterFrame.instances += 1
+    &lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;
+    &lt;&lt; Compute the result using p's body text &gt;&gt;
+    # g.trace(undoType)
+    p.setTnodeText(result)
+    &lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            &lt;&lt; print mismatch trace &gt;&gt;
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)</t>
+<t tx="ekr.20031218072017.1494"># Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading &gt; 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len &gt; 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading &gt; 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i &gt;= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+# g.trace(newlines,oldNewlines)
+while newlines &gt; oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines &gt; newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))</t>
+<t tx="ekr.20031218072017.1495"># Recreate the text using the present body text.
+body = p.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading &gt; 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) &gt; 0:
+    s.extend(oldMidLines)
+if trailing &gt; 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) &gt; 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines &gt; 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result</t>
+<t tx="ekr.20031218072017.1496">textResult = c.frame.body.getAllText()
 
-    self.c = None # Set in finishCreate.
-    self.iconBar = None
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) &gt; 0 and textResult[:-1] == result:
+        textResult = result</t>
+<t tx="ekr.20031218072017.1497">print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult</t>
+<t tx="ekr.20031218072017.1623">def new (self):
 
-    &lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</t>
-<t tx="ekr.20031218072017.1802"># "Official ivars created in createLeoFrame and its allies.
-self.bar1 = None
-self.bar2 = None
-self.body = None
-self.bodyBar = None
-self.bodyCtrl = None
-self.bodyXBar = None
-self.f1 = self.f2 = None
-self.findPanel = None # Inited when first opened.
-self.iconBarComponentName = 'iconBar'
-self.iconFrame = None 
-self.log = None
-self.canvas = None
-self.outerFrame = None
-self.statusFrame = None
-self.statusLineComponentName = 'statusLine'
-self.statusText = None 
-self.statusLabel = None 
-self.top = None
-self.tree = None
-self.treeBar = None
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
+    # Needed for plugins.
+    g.doHook("new",old_c=self,c=c,new_c=c)
+    # Use the config params to set the size and location of the window.
+    frame.setInitialWindowGeometry()
+    frame.deiconify()
+    frame.lift()
+    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+    t = leoNodes.tnode()
+    v = leoNodes.vnode(c,t)
+    p = leoNodes.position(v,[])
+    v.initHeadString("NewHeadline")
+    v.moveToRoot()
+    c.editPosition(p)
+    c.redraw_now() # Leo 4.4: Must be done here. c is not known outside this method.
+    frame.body.setFocus()
+    # g.trace('*'*10,c.frame,g.callers(7))
+    return c # For unit test.</t>
+<t tx="ekr.20031218072017.1803"># Contributed by Tomaz Ficko.  This works on some systems.
+# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
 
-# Used by event handlers...
-self.controlKeyIsDown = False # For control-drags
-self.draggedItem = None
-self.isActive = True
-self.redrawCount = 0
-self.wantedWidget = None
-self.wantedCallbackScheduled = False
-self.scrollWay = None</t>
+def OnMouseWheel(self, event=None):
+
+    try:
+        if event.delta &lt; 1:
+            self.canvas.yview(Tk.SCROLL, 1, Tk.UNITS)
+        else:
+            self.canvas.yview(Tk.SCROLL, -1, Tk.UNITS)
+    except:
+        g.es_event_exception("scroll wheel")
+
+    return "break"</t>
 <t tx="ekr.20031218072017.1974">def destroySelf (self):
     
     top = self.top # Remember this: we are about to destroy all of our ivars!
@@ -1125,46 +1426,40 @@ self.scrollWay = None</t>
     self.destroyAllObjects()
 
     top.destroy()</t>
-<t tx="ekr.20031218072017.1975">def destroyAllObjects (self):
+<t tx="ekr.20031218072017.2039">def undo (self):
 
-    """Clear all links to objects in a Leo window."""
+    """Undo the operation described by the undo parmaters."""
+    
+    u = self ; c = u.c
+    # g.trace(g.callers(7))
+    c.endEditing() # Capture the headline *before* checking for undo.
+    
+    if not u.canUndo():
+        # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+        return
+    if not u.getBead(u.bead):
+        # g.trace('no bead')
+        return # Sets ivars.
+    if not c.currentPosition():
+        g.trace('no current position')
+        return
 
-    frame = self ; c = self.c ; tree = frame.tree ; body = self.body
+    # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
+    u.undoing = True
+    u.groupCount = 0
 
-    # Do this first.
-    &lt;&lt; clear all vnodes and tnodes in the tree &gt;&gt;
+    if u.undoHelper:
+        u.undoHelper()
+    else:
+        g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
 
-    # Destroy all ivars in subcommanders.
-    g.clearAllIvars(c.atFileCommands)
-    g.clearAllIvars(c.fileCommands)
-    g.clearAllIvars(c.importCommands)
-    g.clearAllIvars(c.tangleCommands)
-    g.clearAllIvars(c.undoer)
-    g.clearAllIvars(c)
-    g.clearAllIvars(body.colorizer)
-    g.clearAllIvars(body)
-    g.clearAllIvars(tree)
-
-    # This must be done last.
-    frame.destroyAllPanels()
-    g.clearAllIvars(frame)</t>
-<t tx="ekr.20031218072017.1976"># Using a dict here is essential for adequate speed.
-vList = [] ; tDict = {}
-
-for p in c.allNodes_iter():
-    vList.append(p.v)
-    if p.v.t:
-        key = id(p.v.t)
-        if not tDict.has_key(key):
-            tDict[key] = p.v.t
-
-for key in tDict.keys():
-    g.clearAllIvars(tDict[key])
-
-for v in vList:
-    g.clearAllIvars(v)
-
-vList = [] ; tDict = {} # Remove these references immediately.</t>
+    # New in 4.4a3: Almost any change could change an icon,
+    # So we always request a redraw.
+    c.frame.bodyWantsFocus(later=True)
+    c.requestRedraw()
+    u.undoing = False
+    u.bead -= 1
+    u.setUndoTypes()</t>
 <t tx="ekr.20031218072017.2176">def finishCreate (self,c):
     
     f = self ; f.c = c
@@ -1185,14 +1480,33 @@ vList = [] ; tDict = {} # Remove these references immediately.</t>
     c.signOnWithVersion()
     f.miniBufferWidget = f.createMiniBufferWidget()
     f.body.createBindings(f)</t>
+<t tx="ekr.20031218072017.2187">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
+    
+    __pychecker__ = '--no-argsused' # defaultSize not used.
+
+    family_name = family
+    
+    try:
+        font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+        # if g.app.trace: g.trace(font)
+        return font
+    except:
+        g.es("exception setting font from ",family_name)
+        g.es("family,size,slant,weight:",family,size,slant,weight)
+        # g.es_exception() # This just confuses people.
+        return g.app.config.defaultFont</t>
 <t tx="ekr.20031218072017.2253">def OnActivateLeoEvent(self,event=None):
     
-    __pychecker__ = '--no-argsused' # event not used.
+    '''Handle a click anywhere in the Leo window.'''
     
-    g.trace(g.callers(5))
+    __pychecker__ = '--no-argsused' # event not used.
+
+    c = self.c
+    # g.trace(g.callers(5))
 
     try:
         g.app.setLog(self.log,"OnActivateLeoEvent")
+        c.setFocusHelper() # Try to guess the best possible focus.
     except:
         g.es_event_exception("activate Leo")
 
@@ -1203,6 +1517,17 @@ def OnDeactivateLeoEvent(self,event=None):
             g.app.setLog(None,"OnDeactivateLeoEvent")
         except:
             g.es_event_exception("deactivate Leo")</t>
+<t tx="ekr.20031218072017.2373">def set_focus(self,c,w):
+    
+    __pychecker__ = '--no-argsused' # c not used at present.
+    
+    """Put the focus on the widget."""
+    
+    if w:
+        if 0:
+            name = hasattr(w,'_name') and w._name or '&lt;no name&gt;'
+            g.trace('GUI',name,g.callers(8))
+        w.focus_set()</t>
 <t tx="ekr.20031218072017.2406">@language python
 @tabwidth -4
 @pagewidth 80
@@ -1281,7 +1606,7 @@ For more documentation, see the node called "Overview of Leo's code" in LeoDocs.
     # g.trace(c) # Do this after setting c.mFileName.
     c.initIvars()
 
-    self.useTextMinibuffer = True
+    self.useTextMinibuffer = False
     self.showMinibuffer = c.config.getBool('useMinibuffer')
 
     # initialize the sub-commanders.
@@ -1354,63 +1679,62 @@ __str__ = __repr__
 <t tx="ekr.20031218072017.2949"></t>
 <t tx="ekr.20031218072017.2950">def beginUpdate(self):
     
-    if g.app.newWorldOrder:
-        pass
-    else:
-        self.frame.tree.beginUpdate()
+    pass
     
-BeginUpdate = beginUpdate # Compatibility with old scripts</t>
+def endUpdate(self, flag=True):
+    
+    '''Request a redraw if flag is True.'''
+    c = self
+    if flag:
+        c.requestRedraw()
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts</t>
 <t tx="ekr.20031218072017.2951">def bringToFront(self):
 
     self.frame.deiconify()
 
 BringToFront = bringToFront # Compatibility with old scripts</t>
-<t tx="ekr.20031218072017.2952">def endUpdate(self, flag=True):
-    
-    '''End a beginUpdate/endUpdate region.
-    
-    Redraw the tree if this is the outermost endUpdate.
-    
-    Note that calls to g.es() will disable redraws, so calls to endUpdate
-    should follow all such writes to the log pane.
-    
-    New in Python 4.4:  All of Leo's core code uses this pattern::
-        
-        c.beginUpdate()
-        try:
-            ...
-        finally:
-            c.endUpdate()
-        
-    Python automatically re-raises an exception after executing a finally block,
-    so there is no need to do so here.'''
-    
-    if g.app.newWorldOrder:
-        if flag:
-            self.frame.requestRedraw = True
-    else:
-        try:
-            self.frame.tree.endUpdate(flag)
-        except Exception:
-            pass
-    
-EndUpdate = endUpdate # Compatibility with old scripts</t>
 <t tx="ekr.20031218072017.2953">def recolor(self):
 
     c = self
+    c.frame.body.recolor(c.currentPosition())
+    
+def requestRecolor (self):
+    
+    c = self
+    c.frame.requestRecolorFlag = True</t>
+<t tx="ekr.20031218072017.2954">def requestRedraw (self):
 
-    c.frame.body.recolor(c.currentVnode())</t>
-<t tx="ekr.20031218072017.2954">def redraw(self):
+    c = self
+    # g.trace(g.callers(9))
+
+    c.frame.requestRedrawFlag = True
     
-    if g.app.newWorldOrder:
-        self.frame.requestRedraw = True
-    else:
-        self.frame.tree.redraw()
+def redraw_now (self):
     
+    c = self
+    # g.trace(g.callers(9))
+
+    c.frame.requestRedrawFlag = True
+    c.updateScreen()
+
 # Compatibility with old scripts
-Redraw = redraw 
-repaint = redraw
-Repaint = redraw</t>
+redraw = Redraw = repaint = Repaint = requestRedraw</t>
+<t tx="ekr.20031218072017.2992"># Ends the editing in the outline.
+
+def endEditing(self):
+
+    self.frame.tree.endEditLabel()
+</t>
+<t tx="ekr.20031218072017.2997">def selectPosition(self,p,updateBeadList=True):
+    
+    """Select a new position."""
+
+    c = self
+    c.frame.tree.select(p,updateBeadList)
+
+selectVnode = selectPosition</t>
 <t tx="ekr.20031218072017.3070"># Replace selection with self.change_text.
 # If no selection, insert self.change_text at the cursor.
 
@@ -1418,7 +1742,7 @@ def changeSelection(self):
 
     c = self.c ; p = self.p ; gui = g.app.gui
     # g.trace(self.in_headline)
-    t = g.choose(self.in_headline,p.edit_text(),c.frame.bodyCtrl)
+    t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
     oldSel = sel = gui.getTextSelection(t)
     if sel and len(sel) == 2:
         start,end = sel
@@ -1450,141 +1774,119 @@ def changeSelection(self):
     finally:
         c.endUpdate(False) # No redraws here: they would destroy the headline selection.
     return True</t>
+<t tx="ekr.20031218072017.3091">def showSuccess(self,pos,newpos):
+
+    """Displays the final result.
+
+    Returns self.dummy_vnode, p.edit_widget() or c.frame.bodyCtrl with
+    "insert" and "sel" points set properly."""
+
+    c = self.c ; p = self.p ; gui = g.app.gui
+    
+    c.frame.bringToFront() # Needed on the Mac
+    c.selectPosition(p)
+    c.redraw_now()
+    if self.in_headline:
+        c.editPosition(p)
+    # Set the focus and selection after the redraw.
+    t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
+    insert = g.choose(self.reverse,pos,newpos)
+    gui.setInsertPoint(t,insert)
+    gui.setSelectionRange(t,pos,newpos)
+    gui.makeIndexVisible(t,insert)
+    c.frame.widgetWantsFocus(t,later=False)
+    if self.wrap and not self.wrapPosition:
+        self.wrapPosition = self.p</t>
 <t tx="ekr.20031218072017.3625">&lt;&lt; about gui classes and gui plugins &gt;&gt;</t>
 <t tx="ekr.20031218072017.3821"></t>
-<t tx="ekr.20031218072017.3941"></t>
-<t tx="ekr.20031218072017.3942">def __repr__ (self):
+<t tx="ekr.20031218072017.3971"></t>
+<t tx="ekr.20031218072017.3972"># Called from quit logic and when user closes the window.
+# Returns True if the close happened.
 
-    return "&lt;leoTkinterFrame: %s&gt;" % self.title
+def OnCloseLeoEvent(self):
+
+    g.app.closeLeoWindow(self)</t>
+<t tx="ekr.20031218072017.3973">def OnControlKeyDown (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    self.controlKeyIsDown = True
+    
+def OnControlKeyUp (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    self.controlKeyIsDown = False</t>
+<t tx="ekr.20031218072017.3975">def OnActivateBody (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    try:
+        frame = self ; gui = g.app.gui
+        frame.tree.onHeadChanged(frame.c.currentPosition())
+        g.app.setLog(frame.log,"OnActivateBody")
+        w = gui.get_focus(frame)
+        if w != frame.body.bodyCtrl:
+            self.tree.OnDeactivate()
+        self.bodyWantsFocus()
+    except:
+        g.es_event_exception("activate body")
+        
+    return 'break'</t>
+<t tx="ekr.20031218072017.3976">def OnActivateTree (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    try:
+        frame = self
+        g.app.setLog(frame.log,"OnActivateTree")
+        if 0: # Do NOT do this here!
+            # OnActivateTree can get called when the tree gets DE-activated!!
+            frame.bodyWantsFocus()
+            
+    except:
+        g.es_event_exception("activate tree")
 </t>
-<t tx="ekr.20031218072017.3944">def createCanvas (self,parentFrame,pack=True):
+<t tx="ekr.20031218072017.3977">def OnBodyClick (self,event=None):
+
+    try:
+        c = self.c ; v = c.currentVnode()
+        if not g.doHook("bodyclick1",c=c,p=v,v=v,event=event):
+            self.OnActivateBody(event=event)
+        g.doHook("bodyclick2",c=c,p=v,v=v,event=event)
+    except:
+        g.es_event_exception("bodyclick")
+
+def OnBodyRClick(self,event=None):
     
-    c = self.c
-    
-    scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
-    scrolls = g.choose(scrolls,1,0)
-    
-    if use_Pmw and Pmw:
-        canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
-    else:
-        canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
+    try:
+        c = self.c ; v = c.currentVnode()
+        if not g.doHook("bodyrclick1",c=c,p=v,v=v,event=event):
+            pass # By default Leo does nothing.
+        g.doHook("bodyrclick2",c=c,p=v,v=v,event=event)
+    except:
+        g.es_event_exception("iconrclick")</t>
+<t tx="ekr.20031218072017.3978">def OnBodyDoubleClick (self,event=None):
 
-    return canvas</t>
-<t tx="ekr.20031218072017.3946">def resizePanesToRatio(self,ratio,ratio2):
-    
-    # g.trace(ratio,ratio2)
-    
-    if use_Pmw and Pmw:
-        &lt;&lt; resize the Pmw panes &gt;&gt;
-    else:
-        self.divideLeoSplitter(self.splitVerticalFlag,ratio)
-        self.divideLeoSplitter(not self.splitVerticalFlag,ratio2)</t>
-<t tx="ekr.20031218072017.3947">def bindBar (self, bar, verticalFlag):
-
-    if verticalFlag == self.splitVerticalFlag:
-        bar.bind("&lt;B1-Motion&gt;", self.onDragMainSplitBar)
-
-    else:
-        bar.bind("&lt;B1-Motion&gt;", self.onDragSecondarySplitBar)</t>
-<t tx="ekr.20031218072017.3949"># This is the general-purpose placer for splitters.
-# It is the only general-purpose splitter code in Leo.
-
-def divideAnySplitter (self, frac, verticalFlag, bar, pane1, pane2):
-
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        bar.place(rely=frac)
-        pane1.place(relheight=frac)
-        pane2.place(relheight=1-frac)
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        bar.place(relx=frac)
-        pane1.place(relwidth=frac)
-        pane2.place(relwidth=1-frac)</t>
-<t tx="ekr.20031218072017.3950"># Divides the main or secondary splitter, using the key invariant.
-def divideLeoSplitter (self, verticalFlag, frac):
-
-    if self.splitVerticalFlag == verticalFlag:
-        self.divideLeoSplitter1(frac,verticalFlag)
-        self.ratio = frac # Ratio of body pane to tree pane.
-    else:
-        self.divideLeoSplitter2(frac,verticalFlag)
-        self.secondary_ratio = frac # Ratio of tree pane to log pane.
-
-# Divides the main splitter.
-def divideLeoSplitter1 (self, frac, verticalFlag): 
-    self.divideAnySplitter(frac, verticalFlag,
-        self.bar1, self.split1Pane1, self.split1Pane2)
-
-# Divides the secondary splitter.
-def divideLeoSplitter2 (self, frac, verticalFlag): 
-    self.divideAnySplitter (frac, verticalFlag,
-        self.bar2, self.split2Pane1, self.split2Pane2)</t>
-<t tx="ekr.20031218072017.3951">def onDragMainSplitBar (self, event):
-    self.onDragSplitterBar(event,self.splitVerticalFlag)
-
-def onDragSecondarySplitBar (self, event):
-    self.onDragSplitterBar(event,not self.splitVerticalFlag)
-
-def onDragSplitterBar (self, event, verticalFlag):
-
-    # x and y are the coordinates of the cursor relative to the bar, not the main window.
-    bar = event.widget
-    x = event.x
-    y = event.y
-    top = bar.winfo_toplevel()
-
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        wRoot	= top.winfo_rooty()
-        barRoot = bar.winfo_rooty()
-        wMax	= top.winfo_height()
-        offset = float(barRoot) + y - wRoot
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        wRoot	= top.winfo_rootx()
-        barRoot = bar.winfo_rootx()
-        wMax	= top.winfo_width()
-        offset = float(barRoot) + x - wRoot
-
-    # Adjust the pixels, not the frac.
-    if offset &lt; 3: offset = 3
-    if offset &gt; wMax - 2: offset = wMax - 2
-    # Redraw the splitter as the drag is occuring.
-    frac = float(offset) / wMax
-    # g.trace(frac)
-    self.divideLeoSplitter(verticalFlag, frac)</t>
-<t tx="ekr.20031218072017.3952">def placeSplitter (self,bar,pane1,pane2,verticalFlag):
-
-    if use_Pmw and Pmw:
-        return
-
-    if verticalFlag:
-        # Panes arranged vertically; horizontal splitter bar
-        pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
-        pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
-        bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
-    else:
-        # Panes arranged horizontally; vertical splitter bar
-        # adj gives tree pane more room when tiling vertically.
-        adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
-        pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
-        pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
-        bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)</t>
-<t tx="ekr.20031218072017.3964"></t>
-<t tx="ekr.20031218072017.3965">def destroyAllPanels (self):
-
-    """Destroy all panels attached to this frame."""
-    
-    panels = (self.comparePanel, self.colorPanel, self.findPanel, self.fontPanel, self.prefsPanel)
-
-    for panel in panels:
-        if panel:
-            panel.top.destroy()</t>
+    try:
+        c = self.c ; v = c.currentVnode()
+        if not g.doHook("bodydclick1",c=c,p=v,v=v,event=event):
+            if event: # 8/4/02: prevent wandering insertion point.
+                index = "@%d,%d" % (event.x, event.y) # Find where we clicked.
+                event.widget.tag_add('sel', 'insert wordstart', 'insert wordend')
+            body = self.bodyCtrl
+            start = body.index(index + " wordstart")
+            end = body.index(index + " wordend")
+            self.body.setTextSelection(start,end)
+        g.doHook("bodydclick2",c=c,p=v,v=v,event=event)
+    except:
+        g.es_event_exception("bodydclick")
+        
+    return "break" # Restore this to handle proper double-click logic.</t>
 <t tx="ekr.20031218072017.3981">def abortEditLabelCommand (self):
     
     frame = self ; c = frame.c ; tree = frame.tree
-    p = c.currentPosition() ; w = p.edit_text()
+    p = c.currentPosition() ; w = p.edit_widget()
     
     if g.app.batchMode:
         c.notValidInBatchMode("Abort Edit Headline")
@@ -1622,8 +1924,8 @@ def onDragSplitterBar (self, event, verticalFlag):
         return
         
     c.editPosition(p)
-    c.frame.tree.setNormalLabelState(p)
-    w = p.edit_text()
+    c.frame.tree.setEditLabelState(p)
+    w = p.edit_widget()
     if w:
         time = c.getTime(body=False)
         if 1: # We can't know if we were already editing, so insert at end.
@@ -1635,26 +1937,284 @@ def onDragSplitterBar (self, event, verticalFlag):
                 w.delete(i,j)
             w.insert("insert",time)
         c.frame.tree.onHeadChanged(p,'Insert Headline Time')</t>
-<t tx="ekr.20031218072017.4003">def hasFocus (self):
-    
-    return self.bodyCtrl == self.frame.top.focus_displayof()
-    
-def setFocus (self):
-    
-    self.bodyCtrl.focus_set()</t>
-<t tx="ekr.20031218072017.4044">def hasFocus (self):
-    
-    return g.app.gui.get_focus(self.frame) == self.logCtrl</t>
-<t tx="ekr.20031218072017.4045">def onActivateLog (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
+<t tx="ekr.20031218072017.4059"></t>
+<t tx="ekr.20031218072017.4060"></t>
+<t tx="ekr.20031218072017.4061"># WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
 
+def get_window_info (self,top):
+    
+    top.update_idletasks() # Required to get proper info.
+
+    # Get the information about top and the screen.
+    geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+    dim,x,y = string.split(geom,'+')
+    w,h = string.split(dim,'x')
+    w,h,x,y = int(w),int(h),int(x),int(y)
+    
+    return w,h,x,y</t>
+<t tx="ekr.20031218072017.4062">def center_dialog(self,top):
+
+    """Center the dialog on the screen.
+
+    WARNING: Call this routine _after_ creating a dialog.
+    (This routine inhibits the grid and pack geometry managers.)"""
+
+    sw = top.winfo_screenwidth()
+    sh = top.winfo_screenheight()
+    w,h,x,y = self.get_window_info(top)
+    
+    # Set the new window coordinates, leaving w and h unchanged.
+    x = (sw - w)/2
+    y = (sh - h)/2
+    top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+    
+    return w,h,x,y</t>
+<t tx="ekr.20031218072017.4063"># Returns frames w and f.
+# Typically the caller would pack w into other frames, and pack content into f.
+
+def create_labeled_frame (self,parent,
+    caption=None,relief="groove",bd=2,padx=0,pady=0):
+
+    # Create w, the master frame.
+    w = Tk.Frame(parent)
+    w.grid(sticky="news")
+    
+    # Configure w as a grid with 5 rows and columns.
+    # The middle of this grid will contain f, the expandable content area.
+    w.columnconfigure(1,minsize=bd)
+    w.columnconfigure(2,minsize=padx)
+    w.columnconfigure(3,weight=1)
+    w.columnconfigure(4,minsize=padx)
+    w.columnconfigure(5,minsize=bd)
+    
+    w.rowconfigure(1,minsize=bd)
+    w.rowconfigure(2,minsize=pady)
+    w.rowconfigure(3,weight=1)
+    w.rowconfigure(4,minsize=pady)
+    w.rowconfigure(5,minsize=bd)
+
+    # Create the border spanning all rows and columns.
+    border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
+    border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
+    
+    # Create the content frame, f, in the center of the grid.
+    f = Tk.Frame(w,bd=bd)
+    f.grid(row=3,column=3,sticky="news")
+    
+    # Add the caption.
+    if caption and len(caption) &gt; 0:
+        caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
+        caption.tkraise(w)
+        caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
+
+    return w,f</t>
+<t tx="ekr.20031218072017.4064"></t>
+<t tx="ekr.20031218072017.4065">def get_focus(self,frame):
+    
+    """Returns the widget that has focus, or body if None."""
+
+    return frame.top.focus_displayof()</t>
+<t tx="ekr.20031218072017.4066"></t>
+<t tx="ekr.20031218072017.4067"></t>
+<t tx="ekr.20031218072017.4068">def attachLeoIcon (self,w):
+    
+    """Try to attach a Leo icon to the Leo Window.
+    
+    Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
+    Otherwise, try to use the Python Imaging Library and the tkIcon package."""
+
+    if self.bitmap != None:
+        # We don't need PIL or tkicon: this is tk 8.3.4 or greater.
+        try:
+            w.wm_iconbitmap(self.bitmap)
+        except:
+            self.bitmap = None
+    
+    if self.bitmap == None:
+        try:
+            &lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;
+        except:
+            # import traceback ; traceback.print_exc()
+            self.leoIcon = None</t>
+<t tx="ekr.20031218072017.4069">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
+
+Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
+Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+
+Many thanks to Jonathan M. Gilligan for suggesting this code.
+@c
+
+import Image
+import tkIcon
+
+# Wait until the window has been drawn once before attaching the icon in OnVisiblity.
+def visibilityCallback(event,self=self,w=w):
+    __pychecker__ = '--no-argsused' # event not used.
+    try: self.leoIcon.attach(w.winfo_id())
+    except: pass
+w.bind("&lt;Visibility&gt;",visibilityCallback)
+if not self.leoIcon:
+    # Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
+    icon_file_name = g.os_path_join(g.app.loadDir,'..','Icons','LeoWin.gif')
+    icon_file_name = g.os_path_normpath(icon_file_name)
+    icon_image = Image.open(icon_file_name)
+    if 1: # Doesn't resize.
+        self.leoIcon = self.createLeoIcon(icon_image)
+    else: # Assumes 64x64
+        self.leoIcon = tkIcon.Icon(icon_image)</t>
+<t tx="ekr.20031218072017.4070"># This code is adapted from tkIcon.__init__
+# Unlike the tkIcon code, this code does _not_ resize the icon file.
+
+def createLeoIcon (self,icon):
+    
     try:
-        g.app.setLog(self,"OnActivateLog")
-        self.frame.tree.OnDeactivate()
-        self.frame.logWantsFocus()
+        import Image,_tkicon
+        
+        i = icon ; m = None
+        # create transparency mask
+        if i.mode == "P":
+            try:
+                t = i.info["transparency"]
+                m = i.point(lambda i, t=t: i==t, "1")
+            except KeyError: pass
+        elif i.mode == "RGBA":
+            # get transparency layer
+            m = i.split()[3].point(lambda i: i == 0, "1")
+        if not m:
+            m = Image.new("1", i.size, 0) # opaque
+        # clear unused parts of the original image
+        i = i.convert("RGB")
+        i.paste((0, 0, 0), (0, 0), m)
+        # create icon
+        m = m.tostring("raw", ("1", 0, 1))
+        c = i.tostring("raw", ("BGRX", 0, -1))
+        return _tkicon.new(i.size, c, m)
     except:
-        g.es_event_exception("activate log")</t>
+        return None</t>
+<t tx="ekr.20031218072017.4071"></t>
+<t tx="ekr.20031218072017.4072">def setIdleTimeHook (self,idleTimeHookHandler):
+
+    if self.root:
+        self.root.after_idle(idleTimeHookHandler)</t>
+<t tx="ekr.20031218072017.4073">def setIdleTimeHookAfterDelay (self,idleTimeHookHandler):
+    
+    if self.root:
+        g.app.root.after(g.app.idleTimeDelay,idleTimeHookHandler)</t>
+<t tx="ekr.20031218072017.4074"></t>
+<t tx="ekr.20031218072017.4075">def firstIndex (self):
+
+    return "1.0"</t>
+<t tx="ekr.20031218072017.4076">def lastIndex (self):
+
+    return "end"</t>
+<t tx="ekr.20031218072017.4077">def moveIndexBackward(self,index,n):
+
+    return "%s-%dc" % (index,n)
+</t>
+<t tx="ekr.20031218072017.4078">def moveIndexForward(self,t,index,n):
+
+    newpos = t.index("%s+%dc" % (index,n))
+    
+    return g.choose(t.compare(newpos,"==","end"),None,newpos)
+    
+def moveIndexToNextLine(self,t,index):
+
+    newpos = t.index("%s linestart + 1lines" % (index))
+    
+    return g.choose(t.compare(newpos,"==","end"),None,newpos)</t>
+<t tx="ekr.20031218072017.4079">def compareIndices (self,t,n1,rel,n2):
+    return t.compare(n1,rel,n2)</t>
+<t tx="ekr.20031218072017.4080">def getindex(self,text,index):
+    
+    """Convert string index of the form line.col into a tuple of two ints."""
+    
+    return tuple(map(int,string.split(text.index(index), ".")))</t>
+<t tx="ekr.20031218072017.4081"></t>
+<t tx="ekr.20031218072017.4082">def getInsertPoint(self,t):
+
+    return t.index("insert")</t>
+<t tx="ekr.20031218072017.4083">def setInsertPoint (self,t,pos):
+
+    return t.mark_set("insert",pos)</t>
+<t tx="ekr.20031218072017.4084"></t>
+<t tx="ekr.20031218072017.4085">def getSelectionRange (self,t):
+
+    return t.tag_ranges("sel")</t>
+<t tx="ekr.20031218072017.4086">def getTextSelection (self,t):
+    
+    """Return a tuple representing the selected range of t, a Tk.Text widget.
+    
+    Return a tuple giving the insertion point if no range of text is selected."""
+
+    # To get the current selection
+    sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
+    if len(sel) == 2:
+        return sel
+    else:
+        # 7/1/03: Return the insertion point if there is no selected text.
+        insert = t.index("insert")
+        return insert,insert</t>
+<t tx="ekr.20031218072017.4087">def setSelectionRange(self,t,n1,n2):
+
+    return g.app.gui.setTextSelection(t,n1,n2)</t>
+<t tx="ekr.20031218072017.4088">def setSelectionRangeWithLength(self,t,start,length):
+    
+    return g.app.gui.setTextSelection(t,start,"%s+%dc" % (start,length))</t>
+<t tx="ekr.20031218072017.4089">def setTextSelection (self,t,start,end):
+    
+    """tk gui: set the selection range in Tk.Text widget t."""
+
+    if not start or not end:
+        return
+
+    if t.compare(start, "&gt;", end):
+        start,end = end,start
+        
+    t.tag_remove("sel","1.0",start)
+    t.tag_add("sel",start,end)
+    t.tag_remove("sel",end,"end")
+    t.mark_set("insert",end)</t>
+<t tx="ekr.20031218072017.4090"></t>
+<t tx="ekr.20031218072017.4091">def getAllText (self,t):
+    
+    """Return all the text of Tk.Text t converted to unicode."""
+    
+    s = t.get("1.0","end")
+    if s is None:
+        return u""
+    else:
+        return g.toUnicode(s,g.app.tkEncoding)</t>
+<t tx="ekr.20031218072017.4092">def getCharAfterIndex (self,t,index):
+    
+    if t.compare(index + "+1c","&gt;=","end"):
+        return None
+    else:
+        ch = t.get(index + "+1c")
+        return g.toUnicode(ch,g.app.tkEncoding)</t>
+<t tx="ekr.20031218072017.4093">def getCharAtIndex (self,t,index):
+    ch = t.get(index)
+    return g.toUnicode(ch,g.app.tkEncoding)</t>
+<t tx="ekr.20031218072017.4094">def getCharBeforeIndex (self,t,index):
+    
+    index = t.index(index)
+    if index == "1.0":
+        return None
+    else:
+        ch = t.get(index + "-1c")
+        return g.toUnicode(ch,g.app.tkEncoding)</t>
+<t tx="ekr.20031218072017.4095">def getLineContainingIndex (self,t,index):
+
+    line = t.get(index + " linestart", index + " lineend")
+    return g.toUnicode(line,g.app.tkEncoding)</t>
+<t tx="ekr.20031218072017.4096">def replaceSelectionRangeWithText (self,t,start,end,text):
+
+    t.delete(start,end)
+    t.insert(start,text)</t>
+<t tx="ekr.20031218072017.4097"></t>
+<t tx="ekr.20031218072017.4098">def makeIndexVisible(self,t,index):
+
+    return t.see(index)</t>
 <t tx="ekr.20040321065415">def findNodeInTree(p,headline):
 
     """Search for a node in v's tree matching the given headline."""
@@ -1689,7 +2249,7 @@ def findTopLevelNode(headline):
     return "Leo 4.4 alpha 2, build %s, November 2, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.318 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.324 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -1712,46 +2272,6 @@ def findTopLevelNode(headline):
     g.es(signon)
     g.es("Python %d.%d.%d, Tk %s\n%s" % (n1,n2,n3,tkLevel,version))
     g.enl()</t>
-<t tx="ekr.20040709081208"># New in 4.3: replaced global way with scrollWay ivar.
-ev = threading.Event()
-
-def run(self=self,canvas=canvas,ev=ev):
-
-    while 1:
-        ev.wait()
-        if self.scrollWay =='Down': canvas.yview("scroll", 1,"units")
-        else:                       canvas.yview("scroll",-1,"units")
-        time.sleep(.1)
-
-t = threading.Thread(target = run)
-t.setDaemon(True)
-t.start()
-
-def scrollUp(event): scrollUpOrDown(event,'Down')
-def scrollDn(event): scrollUpOrDown(event,'Up')
-    
-def scrollUpOrDown(event,theWay):
-    if event.widget!=canvas: return
-    if 0: # This seems to interfere with scrolling.
-        if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
-    ev.set()
-    self.scrollWay = theWay
-        
-def off(event,ev=ev,canvas=canvas):
-    if event.widget!=canvas: return
-    ev.clear()
-
-if 1: # Use shift-click
-    # Shift-button-1 scrolls up, Shift-button-2 scrolls down
-    canvas.bind_all('&lt;Shift Button-3&gt;',scrollDn)
-    canvas.bind_all('&lt;Shift Button-1&gt;',scrollUp)
-    canvas.bind_all('&lt;Shift ButtonRelease-1&gt;',off)
-    canvas.bind_all('&lt;Shift ButtonRelease-3&gt;',off)
-else: # Use plain click.
-    canvas.bind_all( '&lt;Button-3&gt;',scrollDn)
-    canvas.bind_all( '&lt;Button-1&gt;',scrollUp)
-    canvas.bind_all( '&lt;ButtonRelease-1&gt;',off)
-    canvas.bind_all( '&lt;ButtonRelease-3&gt;',off)</t>
 <t tx="ekr.20040722132104"></t>
 <t tx="ekr.20040731071037">def initIvars(self):
 
@@ -1759,33 +2279,6 @@ else: # Use plain click.
     &lt;&lt; initialize ivars &gt;&gt;
     self.config = configSettings(c)
     g.app.config.setIvarsFromSettings(c)</t>
-<t tx="ekr.20040803072955.20">def createPermanentBindings (self):
-    
-    c = self.c ; canvas = self.canvas
-    
-    canvas.bind('&lt;Button-1&gt;',self.onTreeClick)
-
-    if self.expanded_click_area:
-        canvas.tag_bind('clickBox','&lt;Button-1&gt;', self.onClickBoxClick)
-    else:
-        canvas.tag_bind('plusBox','&lt;Button-1&gt;',   self.onClickBoxClick)
-
-    canvas.tag_bind('iconBox','&lt;Button-1&gt;', self.onIconBoxClick)
-
-    canvas.tag_bind('iconBox','&lt;Double-1&gt;', self.onIconBoxDoubleClick)
-    canvas.tag_bind('iconBox','&lt;Button-3&gt;', self.onIconBoxRightClick)
-    canvas.tag_bind('iconBox','&lt;B1-Motion&gt;',            self.onDrag)
-    canvas.tag_bind('iconBox','&lt;Any-ButtonRelease-1&gt;',  self.onEndDrag)
-
-    if self.useBindtags: # Create a dummy widget to hold all bindings.
-        t = self.bindingWidget
-        t.bind("&lt;Button-1&gt;", self.onHeadlineClick, '+')
-        t.bind("&lt;Button-3&gt;", self.onHeadlineRightClick, '+')
-        t.bind("&lt;Key&gt;",      self.onHeadlineKey)
-            # There must be only one general key handler.
-
-        if 0: # This does not appear necessary in 4.4.
-            t.bind("&lt;Control-t&gt;",self.onControlT)</t>
 <t tx="ekr.20040803072955.35"></t>
 <t tx="ekr.20040803072955.36">def drawBox (self,p,x,y):
 
@@ -2169,77 +2662,40 @@ if image:
     else:
         self.drawLine(None,x,yfirst-h1/2-1,x,ylast+self.hline_y-h)
     return y</t>
-<t tx="ekr.20040803072955.54"></t>
-<t tx="ekr.20040803072955.55"># Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
-# This _is_ useful when a flag is passed to c.endUpdate.
-
-def redraw (self,event=None):
+<t tx="ekr.20040803072955.55">def redraw (self,event=None):
+    
+    '''Request a screen redraw when c.updateScreen is executed.'''
     
     __pychecker__ = '--no-argsused' # event not used.
     
-    # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
+    c = self.c
+    c.requestRedraw()
     
-    if g.app.newWorldOrder:
-        self.c.frame.requestRedraw = True
-    else:
-        if self.updateCount == 0 and not self.redrawScheduled:
-            self.redrawScheduled = True
-            self.canvas.after_idle(self.idle_redraw)</t>
-<t tx="ekr.20040803072955.56">@ This is called only from doCommand.  The implicit assumption is that doCommand itself is not contained in a beginUpdate/endUpdate pair.
-@c
-
-def redrawAfterException (self):
-    
-    """Make sure drawing is enabled following an exception."""
-    
-    if g.app.newWorldOrder:
-        self.c.frame.requestRedraw = True
-    else:
-        if not self.redrawScheduled:
-            # g.trace('*'*20,self.redrawCount,g.callers(5))
-            self.redrawScheduled = True
-            self.canvas.after_idle(self.idle_redraw)
-            self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.</t>
-<t tx="ekr.20040803072955.57"># Schedules a redraw even if inside beginUpdate/endUpdate
-def force_redraw (self):
-    
-    if g.app.newWorldOrder:
-        self.c.frame.requestRedraw = True
-    else:
-        if not self.redrawScheduled:
-            # g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
-            self.redrawScheduled = True
-            self.canvas.after_idle(self.idle_redraw)</t>
+force_redraw = redraw # For compatibility
+redrawAfterException = redraw # For compatibility</t>
 <t tx="ekr.20040803072955.58"># Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
 def redraw_now (self,scroll=True):
-    
-    # Bug fix: Cancel any pending redraw "by hand".
-    # Make _sure_ that no other redraws take place after this.
 
-    if not g.app.newWorldOrder:
-        self.disableRedraw = True
-        self.canvas.update_idletasks()
-        self.disableRedraw = False
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
         
-    # Now do the actual redraw.
-
-    g.trace('*'*20,self.redrawCount,self.updateCount,g.callers(5))
-    self.idle_redraw(scroll=scroll)
-    self.c.frame.requestRedraw = False</t>
-<t tx="ekr.20040803072955.59">def idle_redraw (self,scroll=True):
+    c = self.c
     
-    c = self.c ; frame = c.frame
-
-    self.redrawScheduled = False # Always do this here.
-
-    &lt;&lt; return if disabled, or quitting or dragging &gt;&gt;
-
-    # g.print_bindings("canvas",self.canvas)
-    g.trace(self.redrawCount,self.updateCount,g.callers(5))
-
+    # An important trace.
+    # g.trace(self.redrawCount,g.callers(7))
+        
+    # Do the actual redraw.
+    self.redrawCount += 1
     self.expandAllAncestors(c.currentPosition())
-
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    
+    # Cancel any pending drawing requests.
+    c.frame.requestRedrawFlag = False</t>
+<t tx="ekr.20040803072955.59">def redrawHelper (self,scroll=True):
+    
+    c = self.c
     oldcursor = self.canvas['cursor']
     self.canvas['cursor'] = "watch"
 
@@ -2250,32 +2706,13 @@ def redraw_now (self,scroll=True):
         # Set up the scroll region after the tree has been redrawn.
         x0, y0, x1, y1 = self.canvas.bbox("all")
         self.canvas.configure(scrollregion=(0, 0, x1, y1))
-        # Do a scrolling operation after the scrollbar is redrawn
         if scroll:
-            if g.app.newWorldOrder:
-                self.idle_scrollTo(c.currentPosition())
-            else:
-                self.canvas.after_idle(self.idle_scrollTo)
-        if 0:
-            self.redrawCount += 1
-            print "idle_redraw allocated:",self.redrawCount
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
     g.doHook("after-redraw-outline",c=c)
 
     self.canvas['cursor'] = oldcursor</t>
-<t tx="ekr.20040803072955.60"># g.trace('disableRedraw',self.disableRedraw)
-
-if self.disableRedraw:
-    # We have been called as the result of an update_idletasks in the log pane.
-    # Don't do anything now.
-    return
-
-if frame not in g.app.windowList or g.app.quitting:
-    # g.trace("no frame")
-    return
-
-if self.drag_p:
-    # g.trace("dragging",self.drag_p)
-    return</t>
 <t tx="ekr.20040803072955.61">def idle_second_redraw (self):
     
     c = self.c
@@ -2330,11 +2767,9 @@ def inExpandedVisibleArea (self,y1):
         g.es("Exception loading: " + fullname)
         g.es_exception()
         return None</t>
-<t tx="ekr.20040803072955.65">def idle_scrollTo(self,p=None):
+<t tx="ekr.20040803072955.65">def scrollTo(self,p=None):
 
-    """Scrolls the canvas so that p is in view.
-    
-    This is done at idle time after a redraw so that treeBar.get() will return proper values."""
+    """Scrolls the canvas so that p is in view."""
     
     __pychecker__ = '--no-argsused' # event not used.
 
@@ -2369,7 +2804,9 @@ def inExpandedVisibleArea (self,y1):
         c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
         # g.trace("%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi))
     except:
-        g.es_exception()</t>
+        g.es_exception()
+        
+idle_scrollTo = scrollTo # For compatibility.</t>
 <t tx="ekr.20040803072955.66">if nextToLast: # 2/2/03: compute approximate line height.
     lineHeight = h2 - self.yoffset(nextToLast)
 else:
@@ -2393,16 +2830,6 @@ frac2 = max(min(frac2,1.0),0.0)</t>
         n += 1
         p.moveToVisNext()
     return n</t>
-<t tx="ekr.20040803072955.69">def scrollTo (self,p):
-
-    if g.app.newWorldOrder:
-         self.idle_scrollTo(p)
-    else:
-        def scrollToCallback(event=None,self=self,p=p):
-            __pychecker__ = '--no-argsused' # event not used.
-            self.idle_scrollTo(p)
-
-        self.canvas.after_idle(scrollToCallback)</t>
 <t tx="ekr.20040803072955.70">@ We can't just return icony because the tree hasn't been redrawn yet.
 For the same reason we can't rely on any TK canvas methods here.
 @c
@@ -2505,11 +2932,13 @@ def yoffsetTree(self,p,p1):
     # defensive programming: this copy is not needed.
     if p: return p.copy() # Make _sure_ nobody changes this table!
     else: return None</t>
-<t tx="ekr.20040803072955.75">def edit_text (self,p):
+<t tx="ekr.20040803072955.75">def edit_widget (self,p):
     
     """Returns the Tk.Edit widget for position p."""
 
-    return self.findEditWidget(p)</t>
+    return self.findEditWidget(p)
+    
+edit_text = edit_widget # For compatibility.</t>
 <t tx="ekr.20040803072955.76"># Search the widget list for widget t with t.leo_position == p.
 
 def findEditWidget (self,p):
@@ -2518,7 +2947,7 @@ def findEditWidget (self,p):
 
     c = self.c
     
-    if c:
+    if p and c:
         # New in 4.2: the dictionary is a list of pairs(p,v)
         pairs = self.visibleText.get(p.v,[])
         for p2,t2,id2 in pairs:
@@ -2533,30 +2962,23 @@ def findEditWidget (self,p):
 <t tx="ekr.20040803072955.78"></t>
 <t tx="ekr.20040803072955.79">def onClickBoxClick (self,event):
     
-    c = self.c
-    
-    if self.trace and self.verbose: g.trace()
-    p = self.eventToPosition(event)
-    if not p: return
+    c = self.c ; p = self.eventToPosition(event)
 
-    if not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
         if p.isExpanded(): p.contract()
         else:              p.expand()
         self.active = True
-        # Schedule the redraw _before_ calling select.
-        # This disables any call that would configure old text widgets.
-        if g.app.newWorldOrder:
-            self.redraw_now()
-        else:
-            self.redraw()
+        # New in 4.4a3: we can call select before redrawing: no problem.
         self.select(p)
+        c.requestRedraw()
         if c.frame.findPanel:
             c.frame.findPanel.handleUserClick(p)
         if self.stayInTree:
             c.frame.treeWantsFocus()
         else:
             c.frame.bodyWantsFocus()
-    g.doHook("boxclick2",c=c,p=p,v=p,event=event)</t>
+    g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+    c.updateScreen()</t>
 <t tx="ekr.20040803072955.80"></t>
 <t tx="ekr.20040803072955.81">def onIconBoxClick (self,event):
     
@@ -2619,9 +3041,9 @@ def findEditWidget (self,p):
     
     if p.isCurrentPosition():
         if p == self.editPosition():
-            self.setNormalLabelState(p)
+            self.setEditLabelState(p) # selected, editing.
         else:
-            self.setDisabledLabelState(p) # selected, disabled
+            self.setSelectedLabelState(p) # selected, not editing.
     else:
         self.setUnselectedLabelState(p) # unselected</t>
 <t tx="ekr.20040803072955.86"># This works around an apparent Tk bug.
@@ -2647,15 +3069,21 @@ def onControlT (self,event=None):
         g.doHook("headclick2",c=c,p=p,v=p,event=event)
     except:
         g.es_event_exception("headclick")
-        
+
+    # c.updateScreen()
     return "continue"</t>
 <t tx="ekr.20040803072955.88">def onHeadlineKey (self,event):
     
-    """Handle a key event in a headline."""
-    
+    '''Handle a key event in a headline.'''
+
     w = event and event.widget or None
-    
-    self.updateHead(event,w)
+    ch = event and event.char
+
+    # Testing for ch here prevents flashing in the headline
+    # when the control key is held down.
+    if ch:
+        # g.trace(repr(ch),g.callers(7))
+        self.updateHead(event,w)
 
     return 'break' # Required</t>
 <t tx="ekr.20040803072955.89">def onIconBoxRightClick (self,event):
@@ -2685,10 +3113,9 @@ def onHeadChanged (self,p,undoType='Typing'):
     '''Officially change a headline.
     Set the old undo text to the previous revert point.'''
     
-    c = self.c ; u = c.undoer ; w = p and self.edit_text(p)
-    if not w:
-        # g.trace('no widget')
-        return
+    c = self.c ; frame = c.frame ; u = c.undoer
+    w = self.edit_widget(p)
+    if not w: return
 
     s = w.get('1.0','end')
     &lt;&lt; truncate s if it has multiple lines &gt;&gt;
@@ -2698,23 +3125,23 @@ def onHeadChanged (self,p,undoType='Typing'):
     oldRevert = self.revertHeadline
     self.revertHeadline = s
     p.initHeadString(s)
-    # Do not call endEditLabel here: we may have been called from there.
-    if p and p.edit_text():
-        self.setEditPosition(None)
-    if not changed: return
-
-    # g.trace('undo to:',oldRevert)
-    undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
-
-    c.beginUpdate()
-    try:
+    # g.trace(repr(s),g.callers(7))
+        
+    if changed:
+        # g.trace('undo to:',repr(oldRevert))
+        undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
         if not c.changed: c.setChanged(True)
         dirtyVnodeList = p.setDirty()
-    finally:
-        c.endUpdate()
+        u.afterChangeNodeContents(p,undoType,undoData,
+            dirtyVnodeList=dirtyVnodeList)
 
-    u.afterChangeNodeContents(p,undoType,undoData,
-        dirtyVnodeList=dirtyVnodeList)</t>
+    self.setEditPosition(None) # Will end the ending when the redraw happens.
+    if self.stayInTree:
+        frame.treeWantsFocus()
+    else:
+        frame.bodyWantsFocus()
+    c.redraw_now() # Ensure a complete redraw immediately.
+   </t>
 <t tx="ekr.20040803072955.94"># Remove one or two trailing newlines before warning of truncation.
 for i in (0,1):
     if s and s[-1] == '\n':
@@ -2786,7 +3213,7 @@ if y &lt; 0 or y &gt; h:
     
     """Tree end-of-drag handler called from vnode event handler."""
     
-    g.trace(self.drag_p)
+    # g.trace(self.drag_p)
     
     c = self.c ; p = self.drag_p
     if not p: return
@@ -3050,42 +3477,23 @@ def moveUpDown (self,upOrDown):
     
     """End editing for self.editText."""
 
-    c = self.c ; frame = c.frame
-    
-    p = self.editPosition()
-    self.onHeadChanged(p)
-    
-    g.trace(p and p.headString())
+    c = self.c ; p = self.editPosition()
 
-    if p and p.edit_text():
-        if 0: # New in recycled widgets scheme: this could cause a race condition.
-            # This will be done in the redraw code becaused editPosition will be None.
-            self.setUnselectedLabelState(p)
-
-        self.setEditPosition(None)
-
-        # force a redraw of joined and ancestor headlines.
-        self.force_redraw() 
-
-    if self.stayInTree:
-        c.frame.treeWantsFocus()
-    else:
-        frame.bodyWantsFocus()</t>
+    self.onHeadChanged(p)</t>
 <t tx="ekr.20040803072955.127">def editLabel (self,p):
     
-    """Start editing p.edit_text."""
+    """Start editing p's headline."""
 
     if self.editPosition() and p != self.editPosition():
         self.endEditLabel()
 
-    self.setEditPosition(p)
+    self.setEditPosition(p) # That is, self._editPosition = p
+    
+    # g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget!'))
 
-    # Start editing
-    if p and p.edit_text():
-        
-        self.setNormalLabelState(p)
-        self.setEditPosition(p)
-        self.frame.headlineWantsFocus(p)</t>
+    if p and p.edit_widget():
+        self.setEditLabelState(p) # Sets the focus immediately.
+        self.frame.headlineWantsFocus(p) # Make sure the focus sticks.</t>
 <t tx="ekr.20040803072955.128"># Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
 
 def select (self,p,updateBeadList=True):
@@ -3103,8 +3511,10 @@ def select (self,p,updateBeadList=True):
         &lt;&lt; select the new node &gt;&gt;
         if p and p != old_p: # Suppress duplicate call.
             try: # may fail during initialization.
-                self.idle_scrollTo(p) # p is NOT c.currentPosition() here!
-            except: pass
+                # p is NOT c.currentPosition() here!
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo(p)
+            except Exception: pass
         &lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
         &lt;&lt; update c.visitedList &gt;&gt;
 
@@ -3122,7 +3532,7 @@ if old_p:
         self.endEditLabel() # sets editPosition = None
         self.setUnselectedLabelState(old_p)
     
-    if old_p.edit_text():
+    if old_p.edit_widget():
         old_p.v.t.scrollBarSpot = yview
         old_p.v.t.insertSpot = insertSpot</t>
 <t tx="ekr.20040803072955.130"># Bug fix: we must always set this, even if we never edit the node.
@@ -3180,32 +3590,30 @@ if self.stayInTree:
 else:
     frame.bodyWantsFocus()</t>
 <t tx="ekr.20040803072955.134"></t>
-<t tx="ekr.20040803072955.135">def setNormalLabelState (self,p): # selected, editing
+<t tx="ekr.20040803072955.135">def setEditLabelState (self,p): # selected, editing
 
-    if not self.redrawScheduled:
-        if p and p.edit_text():
-            self.setEditHeadlineColors(p)
-            p.edit_text().tag_remove("sel","1.0","end")
-            p.edit_text().tag_add("sel","1.0","end")</t>
-<t tx="ekr.20040803072955.136">def setDisabledLabelState (self,p): # selected, disabled
+    c = self.c ; w = p.edit_widget()
 
-    if not self.redrawScheduled:
-        if p and p.edit_text():
-            self.setDisabledHeadlineColors(p)</t>
-<t tx="ekr.20040803072955.137">def setSelectedLabelState (self,p): # selected, not editing
+    if p and w:
+        c.frame.widgetWantsFocus(w,later=False) ## 4.4b2
+        self.setEditHeadlineColors(p)
+        w.tag_remove("sel","1.0","end")
+        w.tag_add("sel","1.0","end")
+    else:
+        g.trace('no edit_widget')
+        
+setNormalLabelState = setEditLabelState # For compatibility.</t>
+<t tx="ekr.20040803072955.136">def setSelectedLabelState (self,p): # selected, disabled
 
-    if not self.redrawScheduled:
-        self.setDisabledLabelState(p)
-
-</t>
+    if p and p.edit_widget():
+        self.setDisabledHeadlineColors(p)</t>
 <t tx="ekr.20040803072955.138">def setUnselectedLabelState (self,p): # not selected.
 
-    if not self.redrawScheduled:
-        if p and p.edit_text():
-            self.setUnselectedHeadlineColors(p)</t>
+    if p and p.edit_widget():
+        self.setUnselectedHeadlineColors(p)</t>
 <t tx="ekr.20040803072955.139">def setDisabledHeadlineColors (self,p):
 
-    c = self.c ; w = p.edit_text()
+    c = self.c ; w = p.edit_widget()
 
     if self.trace and self.verbose:
         if not self.redrawing:
@@ -3221,7 +3629,7 @@ else:
         g.es_exception()</t>
 <t tx="ekr.20040803072955.140">def setEditHeadlineColors (self,p):
 
-    c = self.c ; w = p.edit_text()
+    c = self.c ; w = p.edit_widget()
     
     if self.trace and self.verbose:
         if not self.redrawing:
@@ -3252,7 +3660,7 @@ else:
         g.es_exception()</t>
 <t tx="ekr.20040803072955.141">def setUnselectedHeadlineColors (self,p):
     
-    c = self.c ; w = p.edit_text()
+    c = self.c ; w = p.edit_widget()
     
     if self.trace and self.verbose:
         if not self.redrawing:
@@ -3271,7 +3679,7 @@ else:
 def dimEditLabel (self):
     
     p = self.c.currentPosition()
-    self.setDisabledLabelState(p)
+    self.setSelectedLabelState(p)
 
 def undimEditLabel (self):
 
@@ -3311,7 +3719,7 @@ Leo's import code can't handle this:
 - Having the comment line stop the scanning of aClass is even worse.
 
 - This usually shows up with an unindented blank line instead of the comment line.</t>
-<t tx="ekr.20041111114148">g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
+<t tx="ekr.20041111114148"># g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
 
 if self.controlDrag: # Clone p and move the clone.
     if childFlag:
@@ -3343,7 +3751,7 @@ def startDrag (self,event):
     if not p: return
     self.drag_p = p.copy() # defensive programming: not needed.
     self.dragging = True
-    g.trace("*** start drag ***",theId,self.drag_p.headString())
+    # g.trace("*** start drag ***",theId,self.drag_p.headString())
     # Only do this once: greatly speeds drags.
     self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
     if c.config.getBool("allow_clone_drags"):
@@ -3380,9 +3788,7 @@ def startDrag (self,event):
     self.drag_p = None
     
     # Must set self.drag_p = None first.
-    if g.app.newWorldOrder:
-        self.redraw_now()
-</t>
+    c.redraw_now()</t>
 <t tx="ekr.20041119040438">@nocolor
 
 This tree contains settings unique to this outline.</t>
@@ -3429,214 +3835,6 @@ def listToString(aList,tag=None,sort=False,indent=''):
     else:
         return 0</t>
 <t tx="ekr.20041211042119"></t>
-<t tx="ekr.20041221071131">def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
-    
-    hscrollmode = g.choose(hScrollMode,'dynamic','none')
-    
-    self.scrolledCanvas = scrolledCanvas = Pmw.ScrolledCanvas(
-        parentFrame,
-        hscrollmode=hscrollmode,
-        vscrollmode='dynamic')
-
-    if pack:
-        scrolledCanvas.pack(side='top',expand=1,fill="both")
-
-    self.treeBar = scrolledCanvas.component('vertscrollbar')
-    
-    canvas = scrolledCanvas.component('canvas')
-    canvas.configure(background='white')
-    
-    return canvas</t>
-<t tx="ekr.20041221071131.1">def createTkTreeCanvas (self,parentFrame,scrolls,pack):
-    
-    frame = self
-    
-    canvas = Tk.Canvas(parentFrame,name="canvas",
-        bd=0,bg="white",relief="flat")
-
-    frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
-    
-    # Bind mouse wheel event to canvas
-    if sys.platform != "win32": # Works on 98, crashes on XP.
-        canvas.bind("&lt;MouseWheel&gt;", frame.OnMouseWheel)
-        if 1: # New in 4.3.
-            &lt;&lt; workaround for mouse-wheel problems &gt;&gt;
-        
-    canvas['yscrollcommand'] = self.setCallback
-    treeBar['command']     = self.yviewCallback
-    treeBar.pack(side="right", fill="y")
-    if scrolls: 
-        treeXBar = Tk.Scrollbar( 
-            parentFrame,name='treeXBar',orient="horizontal") 
-        canvas['xscrollcommand'] = treeXBar.set 
-        treeXBar['command'] = canvas.xview 
-        treeXBar.pack(side="bottom", fill="x")
-    
-    if pack:
-        canvas.pack(expand=1,fill="both")
-
-    canvas.bind("&lt;Button-1&gt;", frame.OnActivateTree)
-
-    # Handle mouse wheel in the outline pane.
-    if sys.platform == "linux2": # This crashes tcl83.dll
-        canvas.bind("&lt;MouseWheel&gt;", frame.OnMouseWheel)
-    if 1:
-        &lt;&lt; do scrolling by hand in a separate thread &gt;&gt;
-    
-    # g.print_bindings("canvas",canvas)
-    return canvas</t>
-<t tx="ekr.20041221073427">def createLeoPmwSplitter (self,parent,verticalFlag,name):
-    
-    c = self.c
-    
-    orient = g.choose(verticalFlag,'vertical','horizontal')
-    command = g.choose(name=='splitter1',
-        self.onPmwResizeSplitter1,self.onPmwResizeSplitter2)
-
-    panedFrame = Pmw.PanedWidget(parent,
-        orient=orient,
-        separatorthickness = 6, # default is 2
-        handlesize = 8,         # default is 8
-        command = command)
-
-    panedFrame.pack(expand=1,fill='both')
-    
-    self.componentClass(c,name,panedFrame,panedFrame)
-
-    return panedFrame</t>
-<t tx="ekr.20041221073427.1">def createLeoTkSplitter (self,parent,verticalFlag,componentName):
-    
-    c = self.c
-
-    # Create the frames.
-    f = Tk.Frame(parent,bd=0,relief="flat")
-    f.pack(expand=1,fill="both",pady=1)
-    
-    f1 = Tk.Frame(f)
-    f2 = Tk.Frame(f)
-    bar = Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
-
-    # Configure and place the frames.
-    self.configureBar(bar,verticalFlag)
-    self.bindBar(bar,verticalFlag)
-    self.placeSplitter(bar,f1,f2,verticalFlag)
-    
-    # Define the splitter, bar and outer frame components.
-    # It would be useless to define placed components here.
-    # N.B. All frames managed by the placer must descend from splitterFrame1 or splitterFrame2
-    self.componentClass(self.c,componentName,f)
-    if componentName == 'splitter1':
-        self.componentClass(c,'splitter1Frame',f)
-        self.componentClass(c,'splitBar1',bar)
-    else:
-        self.componentClass(c,'splitter2Frame',f)
-        self.componentClass(c,'splitBar2',bar)
-
-    return f, bar, f1, f2</t>
-<t tx="ekr.20041221075743">@ These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
-
-We don't need to remember changes to pane sizes, for several reasons:
-1. The initial secondary ratio is always set by leoFrame.initialRatios().
-    - Remembering this ratio implies a change to the file format and is not worth the cost.
-    - The user can set these initial ratios with user options.
-2. The only benefit of remembering the secondary ratio is when using the Equal Sized Panes command.
-    - But resetting the secondary ratio to the default secondary ratio is good enough.
-3. Not remembering these ratios simplifies the code enough to be worth doing.
-@c
-
-def onPmwResizeSplitter1 (self,sizes):
-    if 0: # Don't try to remember size changes.
-        if not self.initing:
-            n1,n2 = sizes
-            n1,n2 = float(n1),float(n2)
-            self.ratio = n1/(n1+n2)
-            # g.trace(self.ratio)
-    
-def onPmwResizeSplitter2 (self,sizes):
-    if 0: # Don't try to remember size changes.
-        if not self.initing:
-            n1,n2 = sizes
-            n1,n2 = float(n1),float(n2)
-            self.secondary_ratio = n1/(n1+n2)
-            # g.trace(self.secondary_ratio)</t>
-<t tx="ekr.20041221122440">def component (self,name):
-    
-    return self.componentsDict.get(name)
-    
-def components (self):
-
-    return self.componentsDict.keys()</t>
-<t tx="ekr.20041221123325">def createLeoSplitters (self,parentFrame):
-    
-    if use_Pmw and Pmw:
-        &lt;&lt; create Pmw splitters and their components &gt;&gt;
-    else:
-        # Splitter 1 is the main splitter containing splitter2 and the body pane.
-        f1,bar1,split1Pane1,split1Pane2 = self.createLeoTkSplitter(
-            parentFrame,self.splitVerticalFlag,'splitter1')
-
-        self.f1,self.bar1 = f1,bar1
-        self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
-
-        # Splitter 2 is the secondary splitter containing the tree and log panes.
-        f2,bar2,split2Pane1,split2Pane2 = self.createLeoTkSplitter(
-            split1Pane1,not self.splitVerticalFlag,'splitter2')
-
-        self.f2,self.bar2 = f2,bar2
-        self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2</t>
-<t tx="ekr.20041221185246">@ The key invariants used throughout this code:
-
-1. self.splitVerticalFlag tells the alignment of the main splitter and
-2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
-
-Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.</t>
-<t tx="ekr.20041221195402"></t>
-<t tx="ekr.20041223130032"># Create splitter1 and its components.
-splitter1 = self.createLeoPmwSplitter(parentFrame,self.splitVerticalFlag,'splitter1')
-self.split1Pane1 = splitter2Frame = splitter1.add('splitter2Frame',min=50,size=300)
-self.split1Pane2 = splitter1.add('body',min=50,size=300)
-
-# Create splitter2 and its components.
-splitter2 = self.createLeoPmwSplitter(splitter2Frame,not self.splitVerticalFlag,'splitter2')
-self.split2Pane1 = splitter2.add('outline',min=50,size=300)
-self.split2Pane2 = splitter2.add('log',min=50,size=50)
-
-# Set the colors of the separator and handle after adding the dynamic frames.
-for splitter in (splitter1,splitter2):
-    bar = splitter.component('separator-1')
-    bar.configure(background='LightSteelBlue2')
-    handle = splitter.component('handle-1')
-    handle.configure(background='SteelBlue2')</t>
-<t tx="ekr.20050104084531">self.ratio = ratio
-self.secondary_ratio = ratio2
-splitter1 = self.component('splitter1').getObject()
-splitter2 = self.component('splitter2').getObject()
-
-if self.splitVerticalFlag:
-    # Use ratio to set splitter2 height.
-    size = ratio * float(splitter1.winfo_height())
-    splitter1.configurepane('splitter2Frame',size=int(size))
-    # Use ratio2 to set outline width.
-    size = ratio2 * float(splitter2.winfo_width())
-    splitter2.configurepane('outline',size=int(size))
-else:
-    # Use ratio to set splitter2 width.
-    size = ratio * float(splitter1.winfo_width())
-    splitter1.configurepane('splitter2Frame',size=int(size))
-    # Use ratio2 to set outline height.
-    size = ratio2 * float(splitter2.winfo_height())
-    splitter2.configurepane('outline',size=int(size))</t>
-<t tx="ekr.20050119210541"># Handle mapping of mouse-wheel to buttons 4 and 5.
-
-def mapWheel(e):
-    if e.num == 4: # Button 4
-        e.delta = 120
-        return frame.OnMouseWheel(e)
-    elif e.num == 5: # Button 5
-        e.delta = -120
-        return frame.OnMouseWheel(e)
-
-canvas.bind("&lt;ButtonPress&gt;",mapWheel,add=1)</t>
 <t tx="ekr.20050120083053">@ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
 
 Important: This code never calls select, so there can be no race condition here
@@ -3650,7 +3848,7 @@ def bodyWantsFocus(self,later=True):
         self.set_focus(self.body.bodyCtrl,later=later)
         
 def headlineWantsFocus(self,p,later=True):
-    w = p and p.edit_text()
+    w = p and p.edit_widget()
     if w:
         self.set_focus(w,later=later)
     
@@ -3673,83 +3871,204 @@ def treeWantsFocus(self,later=True):
 def widgetWantsFocus(self,widget,later=True):
     if widget:
         self.set_focus(widget,later=later)</t>
-<t tx="ekr.20050120092028.1">@
-Very tricky code:
-Many Tk calls can mess with the focus, so we must always set the focus,
-regardless of what we did previously.
+<t tx="ekr.20050120092028.1"># New in Leo 4.4a3: nothing happens at idle time.
 
-Alas, because of bugs in Tk and/or window managers, we can not call method at
-idle time: that would interfere with switching between windows. Instead, the
-xWantFocus routines call this with later=True, to queue up a ONE-SHOT call
-that actually changes the focus.
-@c
-
-def set_focus(self,widget,later=False):
+def set_focus(self,w,later=False):
     
     '''Set the focus to the widget specified in the xWantsFocus methods.'''
 
     c = self.c
-    # This is a *very* effective trace.
-    # g.trace(widget._name,g.callers(5))
+
+    if 0: # A *very* effective trace.
+        name = w and hasattr(w,'_name') and w._name or '&lt;no name&gt;'
+        when = g.choose(later,'   ','NOW')
+        g.trace(when,name,g.callers(7)) 
+
+    if w:
+        self.wantedWidget = w
+            # Set this even if we call g.app.gui.set_focus.
+        if not later:
+            g.app.gui.set_focus(c,w)</t>
+<t tx="ekr.20050210082320">def widget_wants_focus(self,c,widget):
+
+    """Indicate that a widget want to get focus."""
     
-    if not widget or g.app.unitTesting:
-        # Cancel any previous request.
-        self.wantedWidget = None
-        g.app.wantedCommander = None
+    if c:
+        c.frame.widgetWantsFocus(widget,True)
+        
+widgetWantsFocus = widget_wants_focus</t>
+<t tx="ekr.20050318085713">def undoGroup (self):
+    
+    '''Process beads until the matching 'beforeGroup' bead is seen.'''
 
-    if g.app.newWorldOrder:
-        if later:
-            self.wantedWidget = widget
-        else:
-            g.app.gui.set_focus(c,widget)
-            self.wantedWidget = None
-    else:
-        # Messing with focus may be dangerous in unit tests.
-        if later:
-            # Queue up the call (just once) for later.
-            def setFocusCallback(c=c):
-                self.wantedCallbackScheduled = False
-                if c == g.app.wantedCommander and c.frame.wantedWidget:
-                    # g.trace(c.frame.wantedWidget)
-                    g.app.gui.set_focus(
-                        g.app.wantedCommander,
-                        c.frame.wantedWidget)
-                self.wantedWidget = None
-                g.app.wantedCommander = None
-                    
-            # Crucial: This may change what the callback does.
-            self.wantedWidget = widget
-            g.app.wantedCommander = c
-            if not self.wantedCallbackScheduled:
-                # g.trace(g.callers(4),c.shortFileName())
-                self.wantedCallbackScheduled = True
-                # We don't have to wait so long now that we don't call this so often.
-                # The difference between 500 msec. and 100 msec. is significant.
-                # New in 4.4: set the delay to 1 msec.: the smaller the better.
-                self.outerFrame.after(1,setFocusCallback)
-        else:
-            # g.trace(g.callers(4),c.shortFileName())
-            g.app.gui.set_focus(c,widget)
-            # Crucial: cancel any previous callback.
-            # It may be re-enabled later, but that doesn't matter.
-            self.wantedWidget = None
-            g.app.wantedCommander = None</t>
-<t tx="ekr.20050208133438">def forceLogUpdate (self,s):
+    u = self ; c = u.c ; count = 0
+    reportFlag = u.reportFlag
+    u.groupCount += 1
 
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        try:
-            print s, # Don't add a newline.
-        except UnicodeError:
-            # g.app may not be inited during scripts!
-            print g.toEncodedString(s,'utf-8')
+    while 1:
+        u.bead -= 1
+        d = u.getBead(u.bead) # sets ivars, including u.p.
+        if not d:
+            s = "Undo stack underrun for %s" % u.undoType
+            g.es_trace(s,color="red")
+            break
+        elif u.kind == 'beforeGroup':
+            break
+        elif u.undoHelper:
+            count += 1
+            u.undoHelper()
+        else:
+            s = "No group undo helper for %s" % u.undoType
+            g.es_trace(s, color="red")
+           
+    if u.dirtyVnodeList: # May be None instead of [].
+        for v in u.dirtyVnodeList:
+            v.t.clearDirty()
+
+    u.groupCount -= 1
+    if reportFlag:
+        g.es("undo %d instances" % count)
+        
+    c.selectPosition(u.p)
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)</t>
+<t tx="ekr.20050318085713.1">def undoNodeContents (self):
+    
+    '''Undo all changes to the contents of a node,
+    including headline and body text, and dirty and marked bits.
+    '''
+    
+    u = self
+    
+    u.p.setTnodeText(u.oldBody)
+    u.p.initHeadString(u.oldHead)
+
+    if u.groupCount == 0 and u.oldSel:
+        u.c.frame.body.setTextSelection(u.oldSel)
+    
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()</t>
+<t tx="ekr.20050318085713.2">def undoTree (self):
+    
+    '''Redo replacement of an entire tree.'''
+    
+    u = self ; c = u.c
+
+    u.p = self.undoRedoTree(u.p,u.newTree,u.oldTree)
+    c.selectPosition(u.p) # Does full recolor.
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)</t>
+<t tx="ekr.20050408100042">def undoRedoTree (self,p,new_data,old_data):
+    
+    '''Replace p and its subtree using old_data during undo.'''
+    
+    # Same as undoReplace except uses g.Bunch.
+
+    u = self
+    
+    if new_data == None:
+        # This is the first time we have undone the operation.
+        # Put the new data in the bead.
+        bunch = u.beads[u.bead]
+        bunch.newTree = u.saveTree(p.copy())
+        u.beads[u.bead] = bunch
+    
+    # Replace data in tree with old data.
+    u.restoreTree(old_data)
+    p.setBodyStringOrPane(p.bodyString())
+    
+    return p # Nothing really changes.</t>
+<t tx="ekr.20050411112033">def undoMove (self):
+    
+    u = self ; c = u.c
+
+    # g.trace(u.p,u.oldParent,u.oldN)
+
+    if u.oldParent:
+        u.p.moveToNthChildOf(u.oldParent,u.oldN)
+    elif u.oldBack:
+        u.p.moveAfter(u.oldBack)
     else:
-        self.frame.tree.disableRedraw = True
-        self.logCtrl.update_idletasks()
-        self.frame.tree.disableRedraw = False</t>
+        oldRoot = c.rootPosition()
+        u.p.moveToRoot(oldRoot)
+
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+
+    # Selecting can scroll the tree which causes flash.
+    if u.groupCount == 0:
+        c.selectPosition(u.p)</t>
+<t tx="ekr.20050412083057.1">def undoCloneNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP)
+    c.deleteOutline()
+    c.selectPosition(u.p)</t>
+<t tx="ekr.20050412083244">def undoHoistNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p)
+    c.dehoist()
+    
+def undoDehoistNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p)
+    c.hoist()</t>
+<t tx="ekr.20050412084055">def undoDeleteNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.oldBack:
+        u.p.linkAfter(u.oldBack)
+    elif u.oldParent:
+        u.p.linkAsNthChild(u.oldParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+
+    c.selectPosition(u.p)</t>
+<t tx="ekr.20050412085112">def undoInsertNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP)
+    c.deleteOutline()
+    
+    if u.pasteAsClone:
+        for bunch in u.beforeTree:
+            t = bunch.t
+            if u.p.v.t == t:
+                u.p.setBodyStringOrPane(bunch.body)
+                u.p.setHeadString(bunch.head)
+            else:
+                t.setTnodeText(bunch.body)
+                t.setHeadString(bunch.head)
+            # g.trace(t,bunch.head,bunch.body)
+
+    c.selectPosition(u.p)</t>
 <t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
 c:\prog\leoCVS\leo\config\leoSettings.leo</t>
+<t tx="ekr.20050424170219.1">def undoClearRecentFiles (self):
+    
+    u = self ; c = u.c
+    
+    g.app.recentFiles = u.oldRecentFiles[:]
+    c.recentFiles = u.oldRecentFiles[:]
+
+    c.frame.menu.createRecentFilesMenuItems()</t>
 <t tx="ekr.20050503112513.7">def executeFile(filename, options= ''):
 
     if not os.access(filename, os.R_OK): return
@@ -3790,6 +4109,18 @@ By: niccl
 In the CVS leo from 12 May, yet another minor but mildly irritating bug: the
 split ratio between log and outline windows isn't restored on re-opening a .leo
 file. The  split between body and the others is, however.</t>
+<t tx="ekr.20050526124906">def undoMark (self):
+    
+    u = self ; c = u.c
+
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+    
+    # Selecting can scroll the tree which causes flash.
+    if u.groupCount == 0:
+        c.selectPosition(u.p)</t>
 <t tx="ekr.20050707085637">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3237845
 By: eichin
@@ -6130,19 +6461,6 @@ Thanks.
 
 Edward
 </t>
-<t tx="ekr.20050916100046">def test_c_endUpdate (self):
-
-    try:
-        c.beginUpdate()
-        try:
-            assert(0)
-        finally:
-            c.endUpdate()
-    except AssertionError:
-        return
-    
-    # This will never happen: finally always re-raises a pending exception.
-    assert(0,'no re-raise after finally')</t>
 <t tx="ekr.20050916180203">@nocolor
 
 Make Alt-arrow commands undoable.
@@ -6745,95 +7063,6 @@ def reSearchForward (self,event):
     &lt;&lt; define Tk ivars &gt;&gt;
     &lt;&lt; define externally visible ivars &gt;&gt;
     &lt;&lt; define internal ivars &gt;&gt;</t>
-<t tx="ekr.20050920085536.16">def bindKey (self,pane,shortcut,callback,commandName):
-
-    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
-    callback calls commandName (for error messages).'''
-    
-    k = self ; c = k.c 
-
-    if not shortcut: g.trace('No shortcut for %s' % commandName)
-    bunch = k.bindingsDict.get(shortcut)
-    if bunch and bunch.pane == pane:
-        # g.trace('Not bound',shortcut)
-        if commandName != bunch.commandName:
-            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
-                shortcut,bunch.commandName,commandName,pane),color='blue')
-        return
-        
-    # g.trace(pane,shortcut,commandName)
-
-    try:
-        &lt;&lt; bind callback to shortcut in pane &gt;&gt;
-
-        k.bindingsDict [shortcut] = g.bunch(
-            pane=pane,func=callback,commandName=commandName)
-
-        return True
-
-    except Exception: # Could be a user error.
-        if not g.app.menuWarningsGiven:
-            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
-            # g.es_exception()
-            # g.printStack()
-            g.app.menuWarningsGiven = True
-
-        return False</t>
-<t tx="ekr.20050920085536.35">def setLabelGrey (self,label=None):
-
-    k = self
-    k.widget.configure(background='lightgrey')
-    if label is not None:
-        k.setLabel(label)
-        
-setLabelGray = setLabelGrey</t>
-<t tx="ekr.20050920085536.36">def setLabelBlue (self,label=None,protect=False):
-    
-    k = self
-
-    k.widget.configure(background='lightblue')
-
-    if label is not None:
-        k.setLabel(label,protect)</t>
-<t tx="ekr.20050920085536.37">def resetLabel (self):
-    
-    k = self
-    k.setLabelGrey('')
-    k.mb_prefix = ''</t>
-<t tx="ekr.20050920085536.38">def updateLabel (self,event,suppressControlChars=True):
-
-    '''Mimic what would happen with the keyboard and a Text editor
-    instead of plain accumalation.'''
-    
-    k = self ; s = k.getLabel()
-    ch = (event and event.char) or ''
-    keysym = (event and event.keysym) or ''
-    
-    # g.trace(repr(s),ch,keysym,k.stroke)
-    
-    if ch == '\b': # Handle backspace.
-        # Don't backspace over the prompt.
-        if len(s) &lt;= k.mb_prefix:
-            return 
-        elif len(s) == 1: s = ''
-        else: s = s [0:-1]
-    elif suppressControlChars and ch not in string.printable:
-        return
-    elif ch and ch not in ('\n','\r'):
-        s = s + ch # Add the character.
-    
-    k.setLabel(s)</t>
-<t tx="ekr.20050920085536.64">def manufactureKeyPressForCommandName (self,w,commandName):
-    
-    '''Implement a command by passing a keypress to Tkinter.'''
-
-    k = self
-    
-    shortcut = k.getShortcutForCommandName(commandName)
-    
-    if shortcut and w:
-    
-        w.event_generate(shortcut)</t>
 <t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke):
 
     '''This is the central dispatching method.
@@ -6841,9 +7070,10 @@ setLabelGray = setLabelGrey</t>
 
     k = self ; c = k.c
     k.stroke = stroke # Set this global for general use.
-    keysym = event and event.keysym
-    ch = event and event.char
+    keysym = event and event.keysym or ''
+    ch = event and event.char or ''
     k.func = func
+    k.funcReturn = None # For unit testing.
     commandName = k.ultimateFuncName(func)
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
@@ -6855,16 +7085,18 @@ setLabelGray = setLabelGrey</t>
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
 
     inserted = not special or (
-        stroke != '&lt;Key&gt;' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=event.keysym))
+        stroke != '&lt;Key&gt;' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
 
     if inserted:
-        # g.trace(stroke,event.keysym)
+        # g.trace(stroke,keysym)
         &lt;&lt; add character to history &gt;&gt;
         
     # We *must not* interfere with the global state in the macro class.
     if c.macroCommands.recordingMacro:
         done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
+        if done:
+            c.updateScreen()
+            return 'break'
         
     # g.trace(stroke,k.abortAllModesKey)
 
@@ -6872,11 +7104,13 @@ setLabelGray = setLabelGrey</t>
         k.clearState()
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
+        c.updateScreen()
         return 'break'
 
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
+        c.updateScreen()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -6885,21 +7119,26 @@ setLabelGray = setLabelGrey</t>
 
     if k.regx.iter:
         try:
-            k.regXKey = event.keysym
+            k.regXKey = keysym
             k.regx.iter.next() # EKR: next() may throw StopIteration.
         finally:
+            c.updateScreen()
             return 'break'
 
     if k.abbrevOn:
         expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
+        if expanded:
+            c.updateScreen()
+            return 'break'
 
     if func: # Func is an argument.
         # g.trace('executing func',commandName)
         forceFocus = func.__name__ != 'leoCallback'
         if forceFocus: k.forceFocusToBody()
-        func(event)
+        val = func(event)
+        k.funcReturn = k.funcReturn or val # For unit tests.
         k.endCommand(event,commandName)
+        # g.trace('funcReturn',k.funcReturn)
         return 'break'
         
     # New logic in 4.4:
@@ -6911,22 +7150,20 @@ setLabelGray = setLabelGrey</t>
         # Pass the stroke to one of Leo's event handlers.
         val = self.handleDefaultChar(event)
         
-    if g.app.newWorldOrder:
-        k.redraw()
-        k.setFocus()
-        
+    c.updateScreen()
+    # g.trace('returns %s' % repr(val))
     return val</t>
 <t tx="ekr.20050920085536.67"># Don't add multiple special characters to history.
 
-k.keysymHistory.insert(0,event.keysym)
+k.keysymHistory.insert(0,keysym)
 
-if len(event.char) &gt; 0:
+if len(ch) &gt; 0:
     if len(keyHandlerClass.lossage) &gt; 99:
         keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,event.char)
+    keyHandlerClass.lossage.insert(0,ch)
 
 if 0: # traces
-    g.trace(event.keysym,stroke)
+    g.trace(keysym,stroke)
     g.trace(k.keysymHistory)
     g.trace(keyHandlerClass.lossage)</t>
 <t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
@@ -6997,8 +7234,7 @@ if 0: # traces
     
     c.frame.log.setTabBindings('Log')
     c.frame.tree.setBindings()
-    if not g.app.newWorldOrder:
-        # Hurray.  This was a massive kludge.
+    if 0: # Hurray.  This was a massive kludge.
         g.enableIdleTimeHook(250)
     
     if 0:
@@ -7007,26 +7243,7 @@ if 0: # traces
         changeKeyStrokes(k,f.bodyCtrl)</t>
 <t tx="ekr.20050921094025">@nocolor
 
-**** Create a robust strategy for redrawing the screen.
-    - It should be insensitive to premature idle time.
-    - It should happen once per event.
-    ?? Create masterEventHandler ??
-        - Executes events, ** then ** redraws the screen and updates focus.
-
-**** Create a robust strategy for updating focus.
-    ?? Can it use OnActivateLeoEvent ??
-        - This might be the only time focus could go into limbo!
-
-- Resize headline widget after pastes.
-
-- Remove most calls to update_idletasks ?
-    - update_idletasks should be benign.
-    - Warning: log code calls update_idletasks.
-
-Before a3:
-- Create a convenience method to execute minibuffer commands by name.
-- Fix all bugs: update plugins and fix problems applying settings.
-- Disable minibuffer when not in use.</t>
+- Rerun pychecker.</t>
 <t tx="ekr.20050921094025.254">@killcolor
 </t>
 <t tx="ekr.20050921094025.255">Buffer-menu-1-window
@@ -9882,9 +10099,6 @@ self.argTabList = []
 
 # For onIdleTime
 self.idleCount = 0</t>
-<t tx="ekr.20050924064254">@ There is something dubious about tracking states separately for separate commands.
-In fact, there is only one mini-buffer, and it has only one state.
-OTOH, maintaining separate states makes it impossible for one command to influence another.</t>
 <t tx="ekr.20050924073836"></t>
 <t tx="ekr.20050925105522">- (1-2 days) Complete generalization of code.
     - Allow state-oriented shortcuts (C-x C-x, for example)
@@ -10191,10 +10405,8 @@ Compiling Programs withing Emacs
                 pass
         bodyCtrl.update_idletasks()
         c.frame.body.onBodyChanged(p,undoType='Typing')
-
-    if g.app.newWorldOrder:
-        k.redraw()
-        k.setFocus()</t>
+        
+    c.updateScreen()</t>
 <t tx="ekr.20051002111614">def wordSearchBackward (self,event):
 
     k = self.k ; state = k.getState('word-search-backward')
@@ -10271,6 +10483,7 @@ else:
 <t tx="ekr.20051006092617.1">self.abbrevOn = False # True: abbreviations are on.
 self.arg = '' # The value returned by k.getArg.
 self.commandName = None
+self.funcReturn = None # For k.simulateCommand
 self.inverseCommandsDict = {}
     # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
 self.leoCallbackDict = {}
@@ -10334,8 +10547,6 @@ self.state = g.bunch(kind=None,n=None,handler=None)
         if f.__name__ != 'leoCallback':
             k.inverseCommandsDict [f.__name__] = name
             # g.trace('%24s = %s' % (f.__name__,name))</t>
-<t tx="ekr.20051008131807">- we need k.shortcutForCommand
-</t>
 <t tx="ekr.20051009044751">def createOuterFrames (self):
 
     f = self ; c = f.c
@@ -10476,11 +10687,12 @@ k.bindingsDict:
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
-        w.event_generate(g.virtual_event_name("Cut"))
-        if not fromMinibuffer:
-            f.tree.onHeadChanged(c.currentPosition(),'Cut')</t>
+        if 0:
+            # Old: Do **not** call w.event_generate.
+            # New: Do call w.event_generate.
+            w.event_generate(g.virtual_event_name("Cut"))
+            if not fromMinibuffer:
+                f.tree.onHeadChanged(c.currentPosition(),'Cut')</t>
 <t tx="ekr.20051011072903.1">def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
@@ -10507,32 +10719,49 @@ k.bindingsDict:
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    w = self.getFocus()
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
     isBody = w == f.body.bodyCtrl
 
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
+        f.body.onBodyChanged(p,undoType='Typing')
+        c.updateScreen()
     else:
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        s = s1 = g.app.gui.getTextFromClipboard()
+        while s and s[-1] in ('\n','\r'):
+            s = s[:-1]
+        if s != s1:
+            g.app.gui.replaceClipboardWith(s)
+        g.app.unitTestDict ['headWidth'] = True
+        w.configure(width=f.tree.headWidth(s=s))
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')</t>
 <t tx="ekr.20051011072903.5">def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
+    f = self ; c = f.c ; p = c.currentPosition()
     w = f.getFocus()
     name = hasattr(w,'_name') and w._name or ''
+    # g.trace(name)
     
     if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('body'):
         w.event_generate(g.virtual_event_name("Paste"))
+        c.requestRecolor()
     elif name.startswith('head'):
-        if 0:
-            &lt;&lt; paste the text into w &gt;&gt;
-    else: pass
-</t>
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        s = s1 = g.app.gui.getTextFromClipboard()
+        while s and s[-1] in ('\n','\r'):
+            s = s[:-1]
+        if s != s1:
+            g.app.gui.replaceClipboardWith(s)
+        g.app.unitTestDict ['headWidth'] = True
+        w.configure(width=f.tree.headWidth(s=s))
+    else: pass</t>
 <t tx="ekr.20051012053017.4">** Important: search headline option.
     
 [iqr] incremental,query,regex
@@ -10636,31 +10865,6 @@ Bound to Alt-@, Ctrl--, Ctrl-space</t>
 - Ignore (optionally?) underindented blank lines.
 - Use pyclbr to parse Python imports?</t>
 <t tx="ekr.20051014161015"></t>
-<t tx="ekr.20051014170754.1">def getShortcutForCommandName (self,commandName):
-    
-    k = self ; c = k.c
-
-    command = c.commandsDict.get(commandName)
-
-    if command:
-        for key in k.bindingsDict:
-            b = k.bindingsDict.get(key)
-            if b.commandName == commandName:
-                return key
-    
-    return ''
-    
-def getShortcutForCommand (self,command):
-    
-    k = self ; c = k.c
-    
-    if command:
-        for key in k.bindingsDict:
-            b = k.bindingsDict.get(key)
-            if b.commandName == command.__name__:
-                return key
-    
-    return ''</t>
 <t tx="ekr.20051015113252"># None of the following are correct.
 
 leoGlobals.py:1417: Setting aList to itself has no effect
@@ -10671,7 +10875,6 @@ leoKeys.py:803: Redefining attribute (keyCallback) original line (792)
 
 leoKeys.py:1315: No module attribute (initAllEditCommanders) found</t>
 <t tx="ekr.20051015123432"># None of the following warnings are correct.</t>
-<t tx="ekr.20051016095907.2"></t>
 <t tx="ekr.20051016155819">Any plugin could be considered an options file such as Emacs loads on startup.
 Indeed, any plugin can specify options and change any part of Leo's operation.
 Still, I am wondering whether Leo might treat one plugin, say options.py, just a
@@ -10696,7 +10899,9 @@ always be enabled.</t>
 
 - Complete Editor menu.
 
-- Put About dialog (all? dialogs) in tab.</t>
+- Put About dialog (all? dialogs) in tab.
+
+- Create minibuffer commands to close tabs by name.</t>
 <t tx="ekr.20051017111216">- Removed update_idletasks and event_generate from minibuffer commands...
 
 It is unlikely that any of the following commands work:
@@ -11030,7 +11235,8 @@ clab.pack(side="left")
 ctxt.pack(side="right", expand=1, fill="x") 
 ftxt.pack(side="right", expand=1, fill="x")</t>
 <t tx="ekr.20051020120306.16">def setFocus(w):
-    w.focus_set()
+    c = self.c
+    c.frame.widgetWantsFocus(w,later=False)
     g.app.gui.setSelectionRange(w,"1.0","1.0")
     return "break"
     
@@ -11268,46 +11474,13 @@ def init_s_ctrl (self,s):
     t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
     return t</t>
 <t tx="ekr.20051021074728"></t>
-<t tx="ekr.20051022094136"># Binding to 'menu' causes problems with multiple pastes in the Find Tab.
-# There should only be one binding for the minibuffer: the &lt;Key&gt;+ binding.
-body = c.frame.body.bodyCtrl
-log  = c.frame.log.logCtrl
-menu = c.frame.menu
-minibuffer = c.miniBufferWidget
-tree = c.frame.tree.canvas
-
-d = {
-    'all':  [body,log,tree], # Probably not wise: menu
-    'body': [body],
-    'log':  [log],
-    'menu': [menu], # Not used, and probably dubious.
-    'mini': [minibuffer], # Needed so ctrl-g will work in the minibuffer!
-    'text': [body,log],
-    'tree': [tree],
-}
-
-if 0: # A useful trace.
-    if pane and pane != 'all':
-        g.trace('%4s %20s %s' % (pane, shortcut,commandName))
-
-widgets = d.get((pane or '').lower(),[])
-
-if shortcut == '&lt;Key&gt;':
-    # Important.  We must make this binding if the minibuffer can ever get focus.
-    if self.useTextWidget:
-        widgets.append(minibuffer)
-    for w in widgets:
-        w.bind(shortcut,callback,'+')
-else:
-    for w in widgets:
-        w.bind(shortcut,callback)
-    # Get rid of the default binding in the menu. (E.g., Alt-f)
-    menu.bind(shortcut,lambda e: 'break')</t>
-<t tx="ekr.20051022132934"></t>
 <t tx="ekr.20051022141020">def onTreeClick (self,event=None):
     
-    self.frame.treeWantsFocus()
+    c = self.c
     
+    self.frame.treeWantsFocus()
+    c.updateScreen()
+
     return 'break'</t>
 <t tx="ekr.20051022142249"></t>
 <t tx="ekr.20051022144825">def focusToBody (self,event):
@@ -11391,52 +11564,6 @@ def hideFindTab (self,event=None):
     if self.findTabHandler:
         self.c.frame.log.selectTab('Log')</t>
 <t tx="ekr.20051023094009"></t>
-<t tx="ekr.20051023132350">def getLabel (self,ignorePrompt=False):
-    
-    k = self ; w = self.widget
-    
-    if self.useTextWidget:
-        w.update_idletasks()
-        s = w and w.get('1.0','end')
-        # Remove the cursed Tk newline.
-        if s.endswith('\n') or s.endswith('\r'): s = s[:-1]
-        # g.trace(repr(s))
-    else:
-        s = k.svar and k.svar.get()
-
-    if ignorePrompt:
-        return s[len(k.mb_prefix):]
-    else:
-        return s or ''
-
-</t>
-<t tx="ekr.20051023132350.1">def setLabel (self,s,protect=False):
-
-    k = self ; w = self.widget
-
-    # g.trace(repr(s))
-
-    if self.useTextWidget:
-        if w:
-            k.c.frame.minibufferWantsFocus(later=False)
-            w.update_idletasks()
-            w.delete('1.0','end') ; w.insert('1.0',s)
-    else:
-        if k.svar: k.svar.set(s)
-
-    if protect:
-        k.mb_prefix = s</t>
-<t tx="ekr.20051023132350.2">def protectLabel (self):
-    
-    k = self ; w = self.widget
-
-    if self.useTextWidget:
-        if w:
-            w.update_idletasks()
-            k.mb_prefix = w.get('1.0','end')
-    else:
-        if k.svar:
-            k.mb_prefix = k.svar.get()</t>
 <t tx="ekr.20051023181449">def createBindings (self):
     
     c = self.c ; k = c.keyHandler
@@ -11500,24 +11627,13 @@ def changeThenFindCommand(self,event=None):
     c = self.c
     self.setup_command(c)
     self.changeThenFind()</t>
-<t tx="ekr.20051025071455">&lt;&lt; specify aspell directories &gt;&gt;
-
-@others</t>
+<t tx="ekr.20051025071455">@others
+</t>
 <t tx="ekr.20051025071455.1">class spellCommandsClass (baseEditCommandsClass):
     
     '''Commands to support the Spell Tab.'''
 
     @others</t>
-<t tx="ekr.20051025071455.3">if sys.platform == 'darwin':
-    aspell_dir = '/sw/lib'
-        # The top-level directory.
-    aspell_bin_dir = '/sw/lib/bin'
-        # NOT TESTED YET.
-else:
-    aspell_dir = r'c:\Aspell'
-        # The top-level directory.
-    aspell_bin_dir = r'c:\Aspell\bin'
-        # The directory continaing apell.pyd and aspell-15.dll</t>
 <t tx="ekr.20051025071455.6">class Aspell:
     
     """A wrapper class for Aspell spell checker"""
@@ -11526,34 +11642,28 @@ else:
 
 </t>
 <t tx="ekr.20051025071455.7"></t>
-<t tx="ekr.20051025071455.8">def __init__(self,c,local_dictionary_file,local_language_code):
-    
+<t tx="ekr.20051025071455.8">def __init__ (self,c,local_dictionary_file,local_language_code):
+
     """Ctor for the Aspell class."""
-    
+
     self.c = c
-    
+
+    self.aspell_dir = c.config.getString('aspell_dir')
+    self.aspell_bin_dir = c.config.getString('aspell_bin_dir')
+
     try:
         import aspell
     except ImportError:
         # Specify the path to the top-level Aspell directory.
-        if sys.platform == 'darwin':
-            aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-        else:
-            aspell = g.importFromPath(
-                "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
-            
+        theDir = g.choose(sys.platform=='darwin',self.aspell_dir,self.aspell_bin_dir)
+        aspell = g.importFromPath('aspell',theDir,pluginName=__name__,verbose=True)
+        
     self.aspell = aspell
-
-    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
-    # g.trace(self.sc)
-    
-    self.aspell_exe_loc = (c.config.getString('aspell_bin_dir') or aspell_bin_dir)
-    # g.trace(self.aspell_exe_loc)
-
-    self.local_language_code = local_language_code
-    self.local_dictionary_file = local_dictionary_file
-    self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
-    # g.trace(self.local_dictionary)</t>
+    if aspell:
+        self.sc = aspell.spell_checker(prefix=self.aspell_dir,lang=local_language_code)
+        self.local_language_code = local_language_code
+        self.local_dictionary_file = local_dictionary_file
+        self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file) [0]</t>
 <t tx="ekr.20051025071455.10">def processWord(self, word):
     """Pass a word to aspell and return the list of alternatives.
     OK: 
@@ -11580,7 +11690,7 @@ else:
         basename = os.path.splitext(self.local_dictionary)[0]
         cmd = (
             "%s --lang=%s create master %s.wl &lt; %s.txt" %
-            (self.aspell_exe_loc, self.local_language_code, basename,basename))
+            (self.aspell_bin_dir, self.local_language_code, basename,basename))
         os.popen(cmd)
         return True
 
@@ -11665,7 +11775,7 @@ self.wordLabel.configure(font=('verdana',10,'bold'))
 fpane = Tk.Frame(outer,bg=bg,bd=2)
 fpane.pack(side='top',expand=1,fill='both')
 
-self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
+self.listBox = Tk.Listbox(fpane,height=6,width=10,selectmode="single")
 self.listBox.pack(side='left',expand=1,fill='both')
 self.listBox.configure(font=('verdana',11,'normal'))
 
@@ -11793,11 +11903,11 @@ def onChangeThenFindButton(self,event=None):
             c.beginUpdate()
             c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
             c.endUpdate(True)
-            t.focus_set()
+            c.frame.widgetWantsFocus(t,later=False)
             return True
 
     # The focus must never leave the body pane.
-    t.focus_set()
+    c.frame.widgetWantsFocus(t,later=False)
     return False</t>
 <t tx="ekr.20051025071455.40">def find (self,event=None):
     """Find the next unknown word."""
@@ -11960,8 +12070,10 @@ def findNextWord(self,p):
 <t tx="ekr.20051025071455.50">def onSelectListBox(self, event=None):
     """Respond to a click in the selection listBox."""
     
+    c = self.c
     self.updateButtons()
-    self.body.bodyCtrl.focus_set()
+    # self.body.bodyCtrl.focus_set()
+    c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
 </t>
 <t tx="ekr.20051025071455.51">def update(self,show=True,fill=False):
     
@@ -11976,7 +12088,8 @@ def findNextWord(self,p):
 
     if show:
         self.bringToFront()
-        c.frame.body.bodyCtrl.focus_set()</t>
+        # c.frame.body.bodyCtrl.focus_set()
+        c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)</t>
 <t tx="ekr.20051025071455.52">def updateButtons (self):
 
     """Enable or disable buttons in the Check Spelling dialog."""
@@ -12086,12 +12199,14 @@ def ignore (self,event=None):
         return False
 
     self.aspell = Aspell(c,dictionaryFileName,self.local_language_code)
+    
     if not self.aspell.aspell:
         g.es_print('Can not open Aspell',color='red')
         return False
         
     self.dictionary = self.readDictionary(dictionaryFileName)
-    return True</t>
+    return True
+</t>
 <t tx="ekr.20051025120920">def createBindings (self):
     
     c = self.c ; k = c.keyHandler
@@ -12963,6 +13078,7 @@ Creating the background:
     ch = event and event.char
     w = event and event.widget
     name = w and hasattr(w,'_name') and w._name or ''
+    # g.trace(name)
 
     if name.startswith('body'):
         c.frame.body.updateBody(event,w,undoType='Typing')
@@ -12977,10 +13093,14 @@ Creating the background:
         return None</t>
 <t tx="ekr.20051026083544.2">def updateHead (self,event,w):
     
+    '''Update a headline from an event.
+    
+    The headline officially changes only when editing ends.'''
+    
     c = self.c ; p = c.currentPosition()
     ch = event and event.char or ''
     i,j = g.app.gui.getTextSelection(w)
-
+    
     if ch == '\b':
         if i != j:
             w.delete(i,j)
@@ -12993,22 +13113,22 @@ Creating the background:
         w.insert(i,ch)
 
     s = w.get('1.0','end')
-    
+    # g.trace(repr(ch),repr(s))
+
     if s.endswith('\n'):
         if len(s) &gt; 1: s = s[:-1]
         else:          s = ''
 
     if 0: # p does not *officially* change until onHeadChanged is called.
         p.initHeadString(s)
+
     w.configure(width=self.headWidth(s=s))
     
     # The granularity is the entire editing session,
     # starting at the revert point.
     if ch in ('\n','\r'):
-        g.trace(repr(s))
         self.endEditLabel()
-        self.onHeadChanged(p)
-        </t>
+        self.onHeadChanged(p)</t>
 <t tx="ekr.20051026083733"># This replaces idle_body_key.  It is never called at idle time.
 # Called only from k.handleDefaultChar and tkBody.onBodyChanged.
 
@@ -13045,7 +13165,9 @@ def updateBody (self,event,w,undoType,
     newText = w.get('1.0','end')
     &lt;&lt; remove extra Trailing newlines &gt;&gt; # Same logic as always.
     w.see(w.index('insert'))
-    if newText == oldText: return
+    if newText == oldText:
+        # g.trace('no change')
+        return
     c.undoer.setUndoTypingParams(p,undoType,
         orignalText or oldText,newText,oldSel,newSel,oldYview)
     p.v.setTnodeText(newText)
@@ -13287,26 +13409,6 @@ of entries in @shortcuts nodes will be expanded to allow entries like this:
 
     next-line = (body) [DnArrow,Ctrl-N]
 </t>
-<t tx="ekr.20051102122405">@nocolor
-
-** New utils for unit testing
-    - The idea is to avoid subclassing TestCase,
-      and to avoid the kind of helper code that is in leoTest.leo.
-    - data = g.saveSubtree()
-    - g.restoreSubtree(data)
-
-- g.simulateKeystrokes (keystrokes,p=None)
-    - keystrokes is a list of bindings to be 'executed' as if typed.
-        - This is an easy way of simulating user interaction.
-
-- unit calls k.simulateKeystrokes and then makes assertions about
-    - state
-    - Contents of label.
-    - ivars
-    - Contents of body text.
-    - what widget has focus.
-    - what the point, mark and selection are.
-    - etc.</t>
 <t tx="ekr.20051103091115"></t>
 <t tx="ekr.20051103091115.1">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3411067
@@ -13388,24 +13490,6 @@ In the plugin manager: enabling a plugin that places buttons in the buttonbar
 button bar.
 Easily worked around by restarting Leo.</t>
 <t tx="ekr.20051103092502"></t>
-<t tx="ekr.20051103092502.1">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3408579
-By: e
-
-the fix for rClick.py is
-change 'body' to 'body-pane'
-where it builds the menu
-
-and 1 or 2 places
-change onBodyWillChange to onBodyChanged
-
-in dynacommon.py 2 places
-change onBodyWillChange to onBodyChanged
-
-people who download updates of plugins 
-from cvs on less than Leo4.4 from plugin-manager
-will have to be aware to get earlier versions.</t>
 <t tx="ekr.20051103093034"></t>
 <t tx="ekr.20051103093034.1">@nocolor
 
@@ -13454,20 +13538,13 @@ Some details:
 
 I like this scheme.  It is simple, powerful, general and easy to use.  It will eliminate all the hard binding presently in the code.  It will support vim (plain-key) bindings and all the similar plain-key modes in emacs.  It will allow for unlimited experimentation with key bindings.</t>
 <t tx="ekr.20051103112558"></t>
-<t tx="ekr.20051103114520">def redraw (self):
+<t tx="ekr.20051103114520.1">def setFocusHelper (self):
     
-    k = self ; c = k.c ; frame = c.frame
-
-    if frame.requestRedraw:
-        g.trace(frame.requestRedraw)
-        frame.tree.redraw_now()</t>
-<t tx="ekr.20051103114520.1">def setFocus (self):
-    
-    k = self ; c = k.c ; frame = c.frame
+    c = self ; frame = c.frame
     
     if frame.wantedWidget:
         w = frame.wantedWidget
-        g.trace(hasattr(w,'_name') and w._name or '')
+        # g.trace(hasattr(w,'_name') and w._name or '')
         g.app.gui.set_focus(c,w)
         frame.wantedWidget = None
     else:
@@ -13484,37 +13561,13 @@ I like this scheme.  It is simple, powerful, general and easy to use.  It will e
             or isinstance(w,Tk.Entry)
             # or isinstance(w,Tk.Button)
         ):
-            g.trace('ok',hasattr(w,'_name') and w._name or '')
+            # g.trace('ok',hasattr(w,'_name') and w._name or '')
+            # g.app.gui.set_focus(c,w)
             return
         # Not a name created by Leo.
         g.trace('setting default focus',name)
-        c.frame.bodyWantsFocus()</t>
+        g.app.gui.set_focus(c,c.frame.body.bodyCtrl)</t>
 <t tx="ekr.20051103114520.2"></t>
-<t tx="ekr.20051103144316"></t>
-<t tx="ekr.20051103160025">ch  = g.app.gui.getTextFromClipboard()
-i,j = g.app.gui.getTextSelection(w)
-
-i = int(i.split('.')[1])
-j = int(j.split('.')[1])
-s = w.get('1.0','end')
-
-if s.endswith('\n'):
-    if len(s) &gt; 1: s = s[:-1]
-    else:          s = ''
-
-g.trace(i,j,repr(s),repr(ch))
-
-if i != j:
-    s = s[:i] + ch + s[j:]
-else:
-    i = w.index('insert')
-    i = int(i.split('.')[1])
-    s = s[:i] + ch + s[i:]
-
-w.delete('1.0','end')
-w.insert('1.0',s)
-w.configure(width=f.tree.headWidth(s=s))</t>
-<t tx="ekr.20051103161147"></t>
 <t tx="ekr.20051104051733">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3412640
 By: btheado
@@ -13525,20 +13578,7 @@ command mode.
 
 It would be nice if the &lt;FocusIn&gt; binding on the minibuffer widget were equivilent
 to Alt-x.</t>
-<t tx="ekr.20051104053655">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3412644
-By: btheado
-
-Executing the script
-
-    g.printList(dir(c))
-
-I can see that many of the minibuffer commands are available by using a simple
-transformation on the name.  For example, if I want to execute the 'expand-node'
-minibuffer command, then I can call c.expandNode().  However, the 'full-buffer'
-command doesn't seem to have a corresponding method in c.  Is there a centralized
-way to execute minibuffer commands in scripts?</t>
+<t tx="ekr.20051104053655"></t>
 <t tx="ekr.20051104094952">This makes leoProjects.txt much smaller and greatly speeds the Save command.</t>
 <t tx="ekr.20051104094952.1"></t>
 <t tx="ekr.20051104100657"></t>
@@ -13564,23 +13604,6 @@ For all tests, we must check that:
 a) p.headString() set properly.
 b) headline set properly.
 c) headline width is set properly.</t>
-<t tx="ekr.20051104105403"></t>
-<t tx="ekr.20051104111040"></t>
-<t tx="ekr.20051104131527">@nocolor
-
-cvs after a2
-
-not just paste to headline, 
-but paste from the
-edit menu to body doesn't stick.
-and rClick calls a few of those commands
-so pastes from there don't stick unless you also
-hit a space or some other key.
-
-editing under settings is a little whacky too.
-you can replace a whole line in a string dialog
-but try to just replace the last char and it won't stick.
-can't select headline text at all.</t>
 <t tx="ekr.20051104152338"></t>
 <t tx="ekr.20051104152338.1">@nocolor
 
@@ -13629,5 +13652,228 @@ turns to this:
 # if() {
 
 code just breaks.</t>
+<t tx="ekr.20051105073439.1"></t>
+<t tx="ekr.20051105073850"></t>
+<t tx="ekr.20051105085625">Changed the following plugins:
+
+cleo.py, footprints.py,__wx_gui.py, zodb.py</t>
+<t tx="ekr.20051105090649"># Body events can not cause the tree to be redrawn.
+</t>
+<t tx="ekr.20051105091102">def updateScreen (self):
+    
+    '''Update the screen after a command.'''
+    
+    c = self
+    
+    if g.app.quitting or not hasattr(c.frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    if c.frame.requestRedrawFlag:
+        c.frame.tree.redraw_now()
+        c.frame.requestRedrawFlag = False
+
+    c.frame.top.update_idletasks()
+    c.setFocusHelper()
+    
+    if c.frame.requestRecolorFlag:
+        c.frame.requestRecolorFlag = False
+        c.recolor()</t>
+<t tx="ekr.20051105100445">@nocolor
+
+Removed tree.redrawScheduled
+Removed tree.updateCount
+Removed tree.disableRedraw
+
+Three major complications are gone.
+</t>
+<t tx="ekr.20051105100804"></t>
+<t tx="ekr.20051105100804.1"></t>
+<t tx="ekr.20051105103233"></t>
+<t tx="ekr.20051105114841">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3414248
+By: yarkot
+
+I just had an interesting experience in Leo 4.4a2:
+
+Editing a node's content, let's say I had code in it like this:
+
+....
+somevar = array[findme][0];
+other = findme;
+.........
+
+The "FIND" tab had "findme" in it (which is how i got to this block of code);
+
+NOW:   I deleted the second line, then hit "find next" - the line
+re-appeared!!!!!
+
+Ok.
+
+I deleted the line again;  I saved the Leo file (the source file - @thin - was
+saved correctly - i checked in an external editor) --  I hit "find next" ---
+the deleted line reappeared!!!
+
+Ok.... I delete the line AGAIN;
+I saved the file (yup, it saved correct);  I re-load it (thru "File &gt; Read/Write
+&gt; Read @file nodes"
+
+try "find" again.... you guessed it.
+
+I had to exit Leo after the delete; re-start Leo, go back to the node, re-enter
+the find string to get to the next occurence in the project.</t>
+<t tx="ekr.20051105121438"></t>
+<t tx="ekr.20051105164153"></t>
+<t tx="ekr.20051106024223"></t>
+<t tx="ekr.20051106031029"></t>
+<t tx="ekr.20051106040126">def executeMinibufferCommand (self,commandName):
+    
+    c = self ; k = c.keyHandler
+    
+    func = c.commandsDict.get(commandName)
+    
+    if func:
+        event = stroke = None
+        k.masterCommand(event,func,stroke)
+        return k.funcReturn
+    else:
+        g.trace('no such command: %s' % (commandName),color='red')
+        return None</t>
+<t tx="ekr.20051106042124">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3412644
+By: btheado
+
+Executing the script
+
+    g.printList(dir(c))
+
+I can see that many of the minibuffer commands are available by using a simple
+transformation on the name.  For example, if I want to execute the 'expand-node'
+minibuffer command, then I can call c.expandNode().  However, the 'full-buffer'
+command doesn't seem to have a corresponding method in c.  Is there a centralized
+way to execute minibuffer commands in scripts?</t>
+<t tx="ekr.20051106102227">For now, I just set c.useTextMinibuffer = False,
+so Leo uses a Tk.Label rather than a Tk.Text widget.</t>
+<t tx="ekr.20051106103835"></t>
+<t tx="ekr.20051106105705">@nocolor
+
+This makes Paste from menu stick.</t>
+<t tx="ekr.20051106105705.1">@nocolor
+
+I'm not sure why this wasn't needed before.
+Almost any change could affect an icon, so we may as well always update the screen.
+Eliminated the u.redrawFlag.</t>
+<t tx="ekr.20051106152948">@nocolor
+
+The fix: call self.canvas.update_idletasks() before calling tree.scrollTo.
+Calling tree.scrollTo at idle time also works, but is slower.</t>
+<t tx="ekr.20051106172517">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3414639
+By: nobody
+
+I made the following changes in 4.4.a2 (and my
+4.3.3).   They help w/ Vim-from-Leo (coloring), and this is the way Perl files
+are named in the Perl world:
+
+@color
+
+self.language_extension_dict = {
+    "perl" : "pl",
+    "perlpod" : "pod",
+}
+
+# and for recognizing these the other way around too:
+
+self.extension_dict = {
+    "pl"    : "perl",
+    "pod"   : "perlod",
+}</t>
+<t tx="ekr.20051107052029"></t>
+<t tx="ekr.20051107054425"></t>
+<t tx="ekr.20051107102734">A Newer World Order?
+
+The New World Order is that redrawing typically happens at the end of event handlers as the result of earlier requests for redraws.  (It can also happen as the result of calls to c.redraw_now.) Today I realized that a further simplification is possible: there is now nothing to prevent commands from doing the redraw immediately.
+
+If I am not mistaken this is in line with LeoUser's earlier comment to the same effect re how jyLeo does redraws.
+
+Advantages:
+
+- It's always clear where redraws happen.
+
+- There is no need for specific redraw points in the event managers.  In particular, this simplifies script buttons: they can't call c.redraw_now because the redraw for the open command must be a redraw for the *new* commander.
+
+Disadvantages:
+
+- Commands should ensure that exactly one redraw happens.  This doesn't happen automatically anymore.  OTOH, this is not likely ever to be a big problem (or even a small problem, for that matter).
+
+So the entire queuing apparatus would disappear.  One further simplification: we could eliminate all calls to xWantsFocus calls by adding a focus arg in c.redraw_now.  A value of None would trigger the logic that moves focus out of limbo.
+
+We are getting close to the way it is written in "The Book".
+
+I'm not going to delay a3 for this.  There is still plenty of time for comments or objections.</t>
+<t tx="ekr.20051107105818"></t>
+<t tx="ekr.20051107112158">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3415021
+By: nobody
+
+when you get time:
+found a few typos for Spell tab:
+@settings--&gt;@page Spell tab--&gt;@string spell_local_language_code = 
+and
+spell_local_dictionary  = 
+should start with aspell_?
+
+in leoEditCommands.py, note the program flow:
+#defaults set
+aspell_dir = r'
+aspell_bin_dir = r'
+
+class Aspell
+....def  __init__
+....#defaults used
+....self.sc = aspell.spell_checker    
+....#config checked and defaults reset if necessary.
+
+in leoEditCommands.py,
+a few things should rearrranged in 
+class Aspell __init__
+so the @settings config is checked
+before the defaults are used for
+aspell_dir &amp; bin &amp; local_language_code.
+
+I could be wrong about the flow,
+I see init_aspell,
+but if I edit the paths in leoEditCommands.py
+aspell_dir &amp; aspell_bin_dir = r'where my apell is'
+Spell tab now works,
+its possibly that the config is consulted 
+in more than one place. but, by then the
+hard wired default has already been used.
+you don't notice, because either way the
+defaults are setup to work on your system
+I assume using the default aspell instalation path.
+its very close to working from @settings though.
+
+in the Spell tab:
+if the found words list box was made smaller
+and resizeable then you won't have to open
+the tab so far to see the bottom buttons.
+seems like 2 rows of 3 buttons would fit better.
+
+I think if not aspell: 'please install spellpyx.
+would be better than a traceback in __init__
+what you get on failure even to find the dictionary
+is traceback and an empty Spell tab that you can't delete.
+its a pretty good bet, most people will try the
+Spell checking button before installing the pyd/so
+or even aspell itself.
+
+going directly from "if not aspell:"
+to an installation using setuptools eggs
+would be possibly, but its only been released
+in the past few weeks. turbogears already uses it.
+something to watch for the future.
+it even installs itself!
+e</t>
 </tnodes>
 </leo_file>

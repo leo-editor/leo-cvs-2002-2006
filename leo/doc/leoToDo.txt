@@ -26,43 +26,58 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Rename c/tree.redraw to c.requestRedraw.
-
-** Screen not redrawn immediately after changing headline. (clones don't change)
-
-- Resize headline widget after pastes.
-
-- Remove most calls to update_idletasks ?
-    - update_idletasks should be benign.
-    - Warning: log code calls update_idletasks.
-
-Before a3:
-- Create a convenience method to execute minibuffer commands by name.
-- Fix all bugs: update plugins and fix problems applying settings.
-- Disable minibuffer when not in use.
+Unit test to cover recent change in event handler.
 #@nonl
+#@+node:ekr.20051103092502:Update screen shots
+#@-node:ekr.20051103092502:Update screen shots
+#@+node:ekr.20051016162724:before a4
+- Use focus-in event in minibuffer?
+
+- More clever way to analyze modules in autocomplete.
+    Use inspect module to import the text and get what is wanted.
+
+- Improve emacs-search commands
+
+- Improve handling of the mark.  The selection should be visible.
+
+- Improve kill/yank.
+
+- Improve spell tab:
+    - Try default fonts for spell buttons.
+    - Select the first entry.
+    - Support up/down arrows.
+
+- Complete Editor menu.
+
+- Put About dialog (all? dialogs) in tab.
+
+- Create minibuffer commands to close tabs by name.
+#@nonl
+#@+node:ekr.20051107102734:Implement Newer World Order
+A Newer World Order?
+
+The New World Order is that redrawing typically happens at the end of event handlers as the result of earlier requests for redraws.  (It can also happen as the result of calls to c.redraw_now.) Today I realized that a further simplification is possible: there is now nothing to prevent commands from doing the redraw immediately.
+
+If I am not mistaken this is in line with LeoUser's earlier comment to the same effect re how jyLeo does redraws.
+
+Advantages:
+
+- It's always clear where redraws happen.
+
+- There is no need for specific redraw points in the event managers.  In particular, this simplifies script buttons: they can't call c.redraw_now because the redraw for the open command must be a redraw for the *new* commander.
+
+Disadvantages:
+
+- Commands should ensure that exactly one redraw happens.  This doesn't happen automatically anymore.  OTOH, this is not likely ever to be a big problem (or even a small problem, for that matter).
+
+So the entire queuing apparatus would disappear.  One further simplification: we could eliminate all calls to xWantsFocus calls by adding a focus arg in c.redraw_now.  A value of None would trigger the logic that moves focus out of limbo.
+
+We are getting close to the way it is written in "The Book".
+
+I'm not going to delay a3 for this.  There is still plenty of time for comments or objections.
+#@nonl
+#@-node:ekr.20051107102734:Implement Newer World Order
 #@+node:ekr.20051103094005:Fix bugs
-#@+node:ekr.20051103092502.1:Update 'e's plugins
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3408579
-By: e
-
-the fix for rClick.py is
-change 'body' to 'body-pane'
-where it builds the menu
-
-and 1 or 2 places
-change onBodyWillChange to onBodyChanged
-
-in dynacommon.py 2 places
-change onBodyWillChange to onBodyChanged
-
-people who download updates of plugins 
-from cvs on less than Leo4.4 from plugin-manager
-will have to be aware to get earlier versions.
-#@nonl
-#@-node:ekr.20051103092502.1:Update 'e's plugins
 #@+node:ekr.20051103093034:Fix problems applying settings
 #@+node:ekr.20051103093034.1:Report
 @nocolor
@@ -140,66 +155,6 @@ code just breaks.
 #@-node:ekr.20051104152338.1:Report
 #@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
 #@-node:ekr.20051103094005:Fix bugs
-#@+node:ekr.20051104131527:From e
-@nocolor
-
-cvs after a2
-
-not just paste to headline, 
-but paste from the
-edit menu to body doesn't stick.
-and rClick calls a few of those commands
-so pastes from there don't stick unless you also
-hit a space or some other key.
-
-editing under settings is a little whacky too.
-you can replace a whole line in a string dialog
-but try to just replace the last char and it won't stick.
-can't select headline text at all.
-#@nonl
-#@-node:ekr.20051104131527:From e
-#@+node:ekr.20051104053655:Create a convenience method to execute minibuffer commands by name
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3412644
-By: btheado
-
-Executing the script
-
-    g.printList(dir(c))
-
-I can see that many of the minibuffer commands are available by using a simple
-transformation on the name.  For example, if I want to execute the 'expand-node'
-minibuffer command, then I can call c.expandNode().  However, the 'full-buffer'
-command doesn't seem to have a corresponding method in c.  Is there a centralized
-way to execute minibuffer commands in scripts?
-#@nonl
-#@-node:ekr.20051104053655:Create a convenience method to execute minibuffer commands by name
-#@+node:ekr.20051103092502:Update screen shots
-#@-node:ekr.20051103092502:Update screen shots
-#@+node:ekr.20051103144316:before a3
-#@-node:ekr.20051103144316:before a3
-#@+node:ekr.20051016162724:before a4
-- Use focus-in event in minibuffer?
-
-- More clever way to analyze modules in autocomplete.
-    Use inspect module to import the text and get what is wanted.
-
-- Improve emacs-search commands
-
-- Improve handling of the mark.  The selection should be visible.
-
-- Improve kill/yank.
-
-- Improve spell tab:
-    - Try default fonts for spell buttons.
-    - Select the first entry.
-    - Support up/down arrows.
-
-- Complete Editor menu.
-
-- Put About dialog (all? dialogs) in tab.
-#@nonl
 #@+node:ekr.20051104051733:Use focus-in binding?
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3412640
@@ -255,6 +210,7 @@ def __init__(self,c,parentFrame):
     # Init the base class...
     leoFind.leoFind.__init__(self,c,title='Find Tab')
     self.c = c
+    self.frame = self.outerFrame = self.top = None # To keep pychecker happy.
     
     << create the tkinter intVars >>
     
@@ -377,7 +333,8 @@ ftxt.pack(side="right", expand=1, fill="x")
 #@nonl
 #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
 def setFocus(w):
-    w.focus_set()
+    c = self.c
+    c.frame.widgetWantsFocus(w,later=False)
     g.app.gui.setSelectionRange(w,"1.0","1.0")
     return "break"
     
@@ -1464,23 +1421,7 @@ indicies. It's probably time to do this.
 @color
 #@nonl
 #@+node:ekr.20051025071455:Spell classes
-<< specify aspell directories >>
-
 @others
-#@nonl
-#@+node:ekr.20051025071455.3:<< specify aspell directories >>
-if sys.platform == 'darwin':
-    aspell_dir = '/sw/lib'
-        # The top-level directory.
-    aspell_bin_dir = '/sw/lib/bin'
-        # NOT TESTED YET.
-else:
-    aspell_dir = r'c:\Aspell'
-        # The top-level directory.
-    aspell_bin_dir = r'c:\Aspell\bin'
-        # The directory continaing apell.pyd and aspell-15.dll
-#@nonl
-#@-node:ekr.20051025071455.3:<< specify aspell directories >>
 #@+node:ekr.20051025071455.6:class Aspell
 class Aspell:
     
@@ -1490,34 +1431,28 @@ class Aspell:
 
 #@+node:ekr.20051025071455.7:Birth & death
 #@+node:ekr.20051025071455.8:__init__
-def __init__(self,c,local_dictionary_file,local_language_code):
-    
+def __init__ (self,c,local_dictionary_file,local_language_code):
+
     """Ctor for the Aspell class."""
-    
+
     self.c = c
-    
+
+    self.aspell_dir = c.config.getString('aspell_dir')
+    self.aspell_bin_dir = c.config.getString('aspell_bin_dir')
+
     try:
         import aspell
     except ImportError:
         # Specify the path to the top-level Aspell directory.
-        if sys.platform == 'darwin':
-            aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
-        else:
-            aspell = g.importFromPath(
-                "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
-            
+        theDir = g.choose(sys.platform=='darwin',self.aspell_dir,self.aspell_bin_dir)
+        aspell = g.importFromPath('aspell',theDir,pluginName=__name__,verbose=True)
+        
     self.aspell = aspell
-
-    self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
-    # g.trace(self.sc)
-    
-    self.aspell_exe_loc = (c.config.getString('aspell_bin_dir') or aspell_bin_dir)
-    # g.trace(self.aspell_exe_loc)
-
-    self.local_language_code = local_language_code
-    self.local_dictionary_file = local_dictionary_file
-    self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
-    # g.trace(self.local_dictionary)
+    if aspell:
+        self.sc = aspell.spell_checker(prefix=self.aspell_dir,lang=local_language_code)
+        self.local_language_code = local_language_code
+        self.local_dictionary_file = local_dictionary_file
+        self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file) [0]
 #@nonl
 #@-node:ekr.20051025071455.8:__init__
 #@-node:ekr.20051025071455.7:Birth & death
@@ -1551,7 +1486,7 @@ def updateDictionary(self):
         basename = os.path.splitext(self.local_dictionary)[0]
         cmd = (
             "%s --lang=%s create master %s.wl < %s.txt" %
-            (self.aspell_exe_loc, self.local_language_code, basename,basename))
+            (self.aspell_bin_dir, self.local_language_code, basename,basename))
         os.popen(cmd)
         return True
 
@@ -1700,13 +1635,13 @@ def init_aspell (self,c):
         return False
 
     self.aspell = Aspell(c,dictionaryFileName,self.local_language_code)
+    
     if not self.aspell.aspell:
         g.es_print('Can not open Aspell',color='red')
         return False
         
     self.dictionary = self.readDictionary(dictionaryFileName)
     return True
-#@nonl
 #@-node:ekr.20051025094004:init_aspell
 #@+node:ekr.20051025071455.22:createSpellTab
 def createSpellTab(self,parentFrame):
@@ -1741,7 +1676,7 @@ self.wordLabel.configure(font=('verdana',10,'bold'))
 fpane = Tk.Frame(outer,bg=bg,bd=2)
 fpane.pack(side='top',expand=1,fill='both')
 
-self.listBox = Tk.Listbox(fpane,height=10,width=10,selectmode="single")
+self.listBox = Tk.Listbox(fpane,height=6,width=10,selectmode="single")
 self.listBox.pack(side='left',expand=1,fill='both')
 self.listBox.configure(font=('verdana',11,'normal'))
 
@@ -1947,11 +1882,11 @@ def change(self,event=None):
             c.beginUpdate()
             c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
             c.endUpdate(True)
-            t.focus_set()
+            c.frame.widgetWantsFocus(t,later=False)
             return True
 
     # The focus must never leave the body pane.
-    t.focus_set()
+    c.frame.widgetWantsFocus(t,later=False)
     return False
 #@nonl
 #@-node:ekr.20051025071455.38:change
@@ -2154,8 +2089,10 @@ def onMap (self, event=None):
 def onSelectListBox(self, event=None):
     """Respond to a click in the selection listBox."""
     
+    c = self.c
     self.updateButtons()
-    self.body.bodyCtrl.focus_set()
+    # self.body.bodyCtrl.focus_set()
+    c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
 #@-node:ekr.20051025071455.50:onSelectListBox
 #@+node:ekr.20051025071455.51:update
 def update(self,show=True,fill=False):
@@ -2171,7 +2108,8 @@ def update(self,show=True,fill=False):
 
     if show:
         self.bringToFront()
-        c.frame.body.bodyCtrl.focus_set()
+        # c.frame.body.bodyCtrl.focus_set()
+        c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
 #@nonl
 #@-node:ekr.20051025071455.51:update
 #@+node:ekr.20051025071455.52:updateButtons
@@ -9498,8 +9436,10 @@ self.language_extension_dict = {
     "latex" : "tex", # 1/8/04
     "noweb" : "nw",
     "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
@@ -9525,7 +9465,9 @@ self.extension_dict = {
     "java"  : "java",
     "noweb" : "nw",
     "p"     : "pascal",
-    "perl"  : "perl",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -9535,6 +9477,7 @@ self.extension_dict = {
     "txt"   : "plain",
     "tcl"   : "tcltk",
     "w"     : "cweb" }
+#@nonl
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20031218072017.2404:<< define defaultsDict >>
@@ -11483,8 +11426,10 @@ self.language_extension_dict = {
     "latex" : "tex", # 1/8/04
     "noweb" : "nw",
     "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
@@ -11510,7 +11455,9 @@ self.extension_dict = {
     "java"  : "java",
     "noweb" : "nw",
     "p"     : "pascal",
-    "perl"  : "perl",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -11520,6 +11467,7 @@ self.extension_dict = {
     "txt"   : "plain",
     "tcl"   : "tcltk",
     "w"     : "cweb" }
+#@nonl
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20031218072017.2404:<< define defaultsDict >>
@@ -13985,8 +13933,10 @@ self.language_extension_dict = {
     "latex" : "tex", # 1/8/04
     "noweb" : "nw",
     "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
@@ -14012,7 +13962,9 @@ self.extension_dict = {
     "java"  : "java",
     "noweb" : "nw",
     "p"     : "pascal",
-    "perl"  : "perl",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -14022,6 +13974,7 @@ self.extension_dict = {
     "txt"   : "plain",
     "tcl"   : "tcltk",
     "w"     : "cweb" }
+#@nonl
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20031218072017.1264:getBaseDirectory
@@ -16157,6 +16110,8 @@ def cutText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
+    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
+    
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
     
@@ -16165,11 +16120,8 @@ def cutText (self,fromMinibuffer=False):
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
-        w.event_generate(g.virtual_event_name("Cut"))
-        if not fromMinibuffer:
-            f.tree.onHeadChanged(c.currentPosition(),'Cut')
+        # Do **not** call w.event_generate.
+        pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -16177,7 +16129,7 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; p = c.currentPosition()
+    f = self ; c = f.c
     w = f.getFocus()
     name = hasattr(w,'_name') and w._name or ''
     
@@ -16185,49 +16137,23 @@ def pasteText (self,fromMinibuffer=False):
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('body'):
         w.event_generate(g.virtual_event_name("Paste"))
+        c.requestRecolor()
     elif name.startswith('head'):
-        if 0:
-            s = g.app.gui.getTextFromClipboard()
-            i,j = g.app.gui.getTextSelection(w)
-            g.trace(i,j,repr(s),g.callers(6))
-        if 1:
-            << paste the text into w >>
-            # c.frame.tree.endEditLabel() # Emergency: works!
-            c.frame.tree.onHeadChanged(p)
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        s = s1 = g.app.gui.getTextFromClipboard()
+        while s and s[-1] in ('\n','\r'):
+            s = s[:-1]
+        if s != s1:
+            g.app.gui.replaceClipboardWith(s)
+        g.app.unitTestDict ['headWidth'] = True
+        w.configure(width=f.tree.headWidth(s=s))
     else: pass
-#@+node:ekr.20051103160025:<< paste the text into w >>
-ch  = g.app.gui.getTextFromClipboard()
-i,j = g.app.gui.getTextSelection(w)
-
-i = int(i.split('.')[1])
-j = int(j.split('.')[1])
-s = w.get('1.0','end')
-
-if s.endswith('\n'):
-    if len(s) > 1: s = s[:-1]
-    else:          s = ''
-
-if i != j:
-    s = s[:i] + ch + s[j:]
-else:
-    i = w.index('insert')
-    i = int(i.split('.')[1])
-    s = s[:i] + ch + s[i:]
-
-# g.trace(i,j,repr(s))
-c.frame.widgetWantsFocus(w,later=False)
-w.delete('1.0','end')
-w.insert('1.0',s)
-w.configure(width=f.tree.headWidth(s=s))
 #@nonl
-#@-node:ekr.20051103160025:<< paste the text into w >>
 #@-node:ekr.20051011072903.5:pasteText
 #@+node:ekr.20051011072903.1:OnCopyFromMenu
 def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -16260,13 +16186,23 @@ def OnPasteFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    w = self.getFocus()
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
     isBody = w == f.body.bodyCtrl
 
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
+        f.body.onBodyChanged(p,undoType='Typing')
+        c.updateScreen()
     else:
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        s = s1 = g.app.gui.getTextFromClipboard()
+        while s and s[-1] in ('\n','\r'):
+            s = s[:-1]
+        if s != s1:
+            g.app.gui.replaceClipboardWith(s)
+        g.app.unitTestDict ['headWidth'] = True
+        w.configure(width=f.tree.headWidth(s=s))
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
 #@nonl
@@ -19484,6 +19420,8 @@ def cutText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
+    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
+    
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
     
@@ -19492,11 +19430,8 @@ def cutText (self,fromMinibuffer=False):
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
-        # Old: Do **not** call w.event_generate.
-        # New: Do call w.event_generate.
-        w.event_generate(g.virtual_event_name("Cut"))
-        if not fromMinibuffer:
-            f.tree.onHeadChanged(c.currentPosition(),'Cut')
+        # Do **not** call w.event_generate.
+        pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -19504,7 +19439,7 @@ def pasteText (self,fromMinibuffer=False):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; p = c.currentPosition()
+    f = self ; c = f.c
     w = f.getFocus()
     name = hasattr(w,'_name') and w._name or ''
     
@@ -19512,49 +19447,23 @@ def pasteText (self,fromMinibuffer=False):
         w.event_generate(g.virtual_event_name("Paste"))
     elif name.startswith('body'):
         w.event_generate(g.virtual_event_name("Paste"))
+        c.requestRecolor()
     elif name.startswith('head'):
-        if 0:
-            s = g.app.gui.getTextFromClipboard()
-            i,j = g.app.gui.getTextSelection(w)
-            g.trace(i,j,repr(s),g.callers(6))
-        if 1:
-            << paste the text into w >>
-            # c.frame.tree.endEditLabel() # Emergency: works!
-            c.frame.tree.onHeadChanged(p)
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        s = s1 = g.app.gui.getTextFromClipboard()
+        while s and s[-1] in ('\n','\r'):
+            s = s[:-1]
+        if s != s1:
+            g.app.gui.replaceClipboardWith(s)
+        g.app.unitTestDict ['headWidth'] = True
+        w.configure(width=f.tree.headWidth(s=s))
     else: pass
-#@+node:ekr.20051103160025:<< paste the text into w >>
-ch  = g.app.gui.getTextFromClipboard()
-i,j = g.app.gui.getTextSelection(w)
-
-i = int(i.split('.')[1])
-j = int(j.split('.')[1])
-s = w.get('1.0','end')
-
-if s.endswith('\n'):
-    if len(s) > 1: s = s[:-1]
-    else:          s = ''
-
-if i != j:
-    s = s[:i] + ch + s[j:]
-else:
-    i = w.index('insert')
-    i = int(i.split('.')[1])
-    s = s[:i] + ch + s[i:]
-
-# g.trace(i,j,repr(s))
-c.frame.widgetWantsFocus(w,later=False)
-w.delete('1.0','end')
-w.insert('1.0',s)
-w.configure(width=f.tree.headWidth(s=s))
 #@nonl
-#@-node:ekr.20051103160025:<< paste the text into w >>
 #@-node:ekr.20051011072903.5:pasteText
 #@+node:ekr.20051011072903.1:OnCopyFromMenu
 def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -19587,13 +19496,23 @@ def OnPasteFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    w = self.getFocus()
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
     isBody = w == f.body.bodyCtrl
 
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
+        f.body.onBodyChanged(p,undoType='Typing')
+        c.updateScreen()
     else:
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        s = s1 = g.app.gui.getTextFromClipboard()
+        while s and s[-1] in ('\n','\r'):
+            s = s[:-1]
+        if s != s1:
+            g.app.gui.replaceClipboardWith(s)
+        g.app.unitTestDict ['headWidth'] = True
+        w.configure(width=f.tree.headWidth(s=s))
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
 #@nonl

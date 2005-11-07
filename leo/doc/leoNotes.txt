@@ -158,8 +158,10 @@ self.language_extension_dict = {
     "latex" : "tex", # 1/8/04
     "noweb" : "nw",
     "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
     "php" : "php",
     "plain" : "txt",
     "python" : "py",
@@ -185,7 +187,9 @@ self.extension_dict = {
     "java"  : "java",
     "noweb" : "nw",
     "p"     : "pascal",
-    "perl"  : "perl",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -195,6 +199,7 @@ self.extension_dict = {
     "txt"   : "plain",
     "tcl"   : "tcltk",
     "w"     : "cweb" }
+#@nonl
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@+node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
 # Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
@@ -3346,6 +3351,36 @@ def getAspellDirectory(self):
         return None
 #@nonl
 #@-node:ekr.20051025071455.9:getAspellDirectory (not used)
+#@+node:ekr.20051106101758:From pasteText
+# No longer needed in the New World Order.
+#@nonl
+#@+node:ekr.20051103160025:<< paste the text into w >>
+ch  = g.app.gui.getTextFromClipboard()
+i,j = g.app.gui.getTextSelection(w)
+
+i = int(i.split('.')[1])
+j = int(j.split('.')[1])
+s = w.get('1.0','end')
+
+if s.endswith('\n'):
+    if len(s) > 1: s = s[:-1]
+    else:          s = ''
+
+if i != j:
+    s = s[:i] + ch + s[j:]
+else:
+    i = w.index('insert')
+    i = int(i.split('.')[1])
+    s = s[:i] + ch + s[i:]
+
+# g.trace(i,j,repr(s))
+c.frame.widgetWantsFocus(w,later=False)
+w.delete('1.0','end')
+w.insert('1.0',s)
+w.configure(width=f.tree.headWidth(s=s))
+#@nonl
+#@-node:ekr.20051103160025:<< paste the text into w >>
+#@-node:ekr.20051106101758:From pasteText
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
