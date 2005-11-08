@@ -8977,7 +8977,10 @@ def showSuccess(self,pos,newpos):
     t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
     insert = g.choose(self.reverse,pos,newpos)
     gui.setInsertPoint(t,insert)
+    # New in 4.4a3: a much better way to ensure progress in backward searches.
     gui.setSelectionRange(t,pos,newpos)
+    if self.reverse:
+        gui.setInsertPoint(t,pos)
     gui.makeIndexVisible(t,insert)
     c.frame.widgetWantsFocus(t,later=False)
     if self.wrap and not self.wrapPosition:
@@ -9883,6 +9886,279 @@ self.extension_dict = {
 #@-node:ekr.20051106172517:Improved perl entries in language dicts
 #@+node:ekr.20051107122545:Don't redraw the screen when clicking in the body!
 #@-node:ekr.20051107122545:Don't redraw the screen when clicking in the body!
+#@+node:ekr.20051108045542:Fix newly reported bugs
+#@+node:ekr.20051108045542.2:Report 
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3417836
+By: btheado
+
+(fixed pasteOutline) Outline-->Paste Node menu pick: the pasted node doesn't appear until I
+collapse/expand the parent.
+
+(not a bug) While editing a headline, Home, End, Left and Right don't move the cursor within
+the headline (maybe that is intended?).
+#@-node:ekr.20051108045542.2:Report 
+#@-node:ekr.20051108045542:Fix newly reported bugs
+#@+node:ekr.20051108102650:Fixed bug in Find Backward
+#@+node:ekr.20051108102650.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3418304
+By: rogererens
+
+I create this outline with nodes a,b, and c from scratch:
+a
+ alfa
+b
+ beta
+c
+ gamma
+
+(alfa, beta, and gamma is body text). I select node 'a'. Then I hit CTRL-F to
+open the find tab, replace the pattern to find by 'a' without the quotes, turn
+off whole word searching and hit F3 until the first 'a' in gamma is highlighted.
+Then pressing F2 results in highlighting the _first_ 'a' in alfa. Pressing F2
+when the second 'a' in gamma is highlighted results in highlighting the first
+'a' in gamma: OK. Pressing F2 when 'a' in beta is highlighted, results
+in highlighting the first 'a' in alfa as well.
+
+This happens in Leo 4.3 as well.
+
+Also, see what happens when the body text of all three nodes is replaced by
+a simple 'x' character and trying to search backward: impossible for me.
+
+Is this of anymore help?
+
+Roger
+
+#@-node:ekr.20051108102650.1:Report
+#@+node:ekr.20031218072017.3074:findNext
+def findNext(self,initFlag=True):
+
+    c = self.c
+    if not self.checkArgs():
+        return
+
+    if initFlag:
+        self.initInHeadline()
+        data = self.save()
+        self.initInteractiveCommands()
+    else:
+        data = self.save()
+
+    c.beginUpdate()
+    try:
+        pos, newpos = self.findNextMatch()
+    finally:
+        c.endUpdate(False) # Inhibit redraws so that headline remains selected.
+
+    if pos:
+        self.showSuccess(pos,newpos)
+    else:
+        if self.wrapping:
+            g.es("end of wrapped search")
+        else:
+            g.es("not found: " + "'" + self.find_text + "'")
+        self.restore(data)
+#@nonl
+#@-node:ekr.20031218072017.3074:findNext
+#@+node:ekr.20031218072017.3075:findNextMatch
+# Resumes the search where it left off.
+# The caller must call set_first_incremental_search or set_first_batch_search.
+
+def findNextMatch(self):
+
+    c = self.c
+
+    if not self.search_headline and not self.search_body:
+        return None, None
+
+    if len(self.find_text) == 0:
+        return None, None
+
+    p = self.p
+    while p:
+        pos, newpos = self.search()
+        if pos:
+            if self.mark_finds:
+                p.setMarked()
+                c.frame.tree.drawIcon(p) # redraw only the icon.
+            return pos, newpos
+        elif self.errors:
+            return None,None # Abort the search.
+        elif self.node_only:
+            return None,None # We are only searching one node.
+        else:
+            p = self.p = self.selectNextPosition()
+    return None, None
+#@nonl
+#@-node:ekr.20031218072017.3075:findNextMatch
+#@+node:ekr.20031218072017.3081:selectNextPosition
+# Selects the next node to be searched.
+
+def selectNextPosition(self):
+
+    c = self.c ; p = self.p
+
+    if self.selection_only:
+        return None
+
+    # Start suboutline only searches.
+    if self.suboutline_only and not self.onlyPosition:
+        # p.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, p might be None, so p.copy() would be wrong!
+        self.onlyPosition = p 
+
+    # Start wrapped searches.
+    if self.wrapping and not self.wrapPosition:
+        assert(self.wrapPos != None)
+        # p.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, p might be None, so p.copy() would be wrong!
+        self.wrapPosition = p 
+
+    if self.in_headline and self.search_body:
+        # just switch to body pane.
+        self.in_headline = False
+        self.initNextText()
+        # g.trace('switching to body',g.callers(5))
+        return p
+
+    if self.reverse: p = p.threadBack()
+    else:            p = p.threadNext()
+    
+    # New in 4.3: restrict searches to hoisted area.
+    # End searches outside hoisted area.
+    if c.hoistStack:
+        if not p:
+            if self.wrapping:
+                g.es('Wrap disabled in hoisted outlines',color='blue')
+            return
+        bunch = c.hoistStack[-1]
+        if not bunch.p.isAncestorOf(p):
+            g.es('Found match outside of hoisted outline',color='blue')
+            return None
+
+    # Wrap if needed.
+    if not p and self.wrapping and not self.suboutline_only:
+        p = c.rootPosition()
+        if self.reverse:
+            # Set search_v to the last node of the tree.
+            while p and p.next():
+                p = p.next()
+            if p: p = p.lastNode()
+
+    # End wrapped searches.
+    if self.wrapping and p and p == self.wrapPosition:
+        # g.trace("ending wrapped search")
+        p = None ; self.resetWrap()
+
+    # End suboutline only searches.
+    if (self.suboutline_only and self.onlyPosition and p and
+        (p == self.onlyPosition or not self.onlyPosition.isAncestorOf(p))):
+        # g.trace("end outline-only")
+        p = None ; self.onlyPosition = None
+
+    # p.copy not needed because the find code never calls p.moveToX.
+    # Furthermore, p might be None, so p.copy() would be wrong!
+    self.p = p # used in initNextText().
+    if p: # select p and set the search point within p.
+        self.in_headline = self.search_headline
+        self.initNextText()
+    return p
+#@nonl
+#@-node:ekr.20031218072017.3081:selectNextPosition
+#@+node:ekr.20031218072017.3086:initInHeadline
+# Guesses which pane to start in for incremental searches and changes.
+# This must not alter the current "insert" or "sel" marks.
+
+def initInHeadline (self):
+
+    c = self.c ; p = self.p
+
+    # Do not change this without careful thought and extensive testing!
+    if self.search_headline and self.search_body:
+        # A temporary expedient.
+        if self.reverse:
+            self.in_headline = False
+        else:
+            # Search headline first.
+            self.in_headline = (
+                p == c.frame.tree.editPosition() and
+                g.app.gui.get_focus(c.frame) != c.frame.body.bodyCtrl)
+    else:
+        self.in_headline = self.search_headline
+#@nonl
+#@-node:ekr.20031218072017.3086:initInHeadline
+#@+node:ekr.20031218072017.3077:search
+def search (self):
+
+    """Searches the present headline or body text for self.find_text and returns True if found.
+
+    self.whole_word, self.ignore_case, and self.pattern_match control the search."""
+
+    c = self.c ; p = self.p ; t = self.s_ctrl ; gui = g.app.gui
+    assert(c and t and p)
+    if self.selection_only:
+        index,stopindex = self.selStart, self.selEnd
+        if index == stopindex:
+            return None, None
+    else:
+        index = firstIndex = gui.getInsertPoint(t)
+        stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
+    while 1:
+        try:
+            pos = self.gui_search(t,self.find_text,index,
+                stopindex=stopindex,backwards=self.reverse,
+                regexp=self.pattern_match,nocase=self.ignore_case)
+        except Exception:
+            g.es_exception(full=False)
+            self.errors += 1 ; break
+        if not pos: break
+        if self.find_text == '\n':
+            newpos = gui.moveIndexToNextLine(t,pos)
+        else:
+            newpos = gui.moveIndexForward(t,pos,len(self.find_text))
+        if newpos is None: break
+        << break if we are passed the wrap point >>
+        if self.whole_word:
+            index = t.index(g.choose(self.reverse,pos,newpos))
+            << continue if not whole word match >>
+        #g.trace("found:",pos,newpos,p)
+        gui.setTextSelection(t,pos,newpos)
+        return pos, newpos
+    # g.trace('not found',p.headString())
+    return None,None
+#@nonl
+#@+node:ekr.20031218072017.3079:<< break if we are passed the wrap point >>
+if self.wrapping and self.wrapPos and self.wrapPosition and self.p == self.wrapPosition:
+
+    if self.reverse and gui.compareIndices(t,pos, "<", self.wrapPos):
+        # g.trace("wrap done")
+        break
+
+    if not self.reverse and gui.compareIndices(t,newpos, ">", self.wrapPos):
+        break
+#@nonl
+#@-node:ekr.20031218072017.3079:<< break if we are passed the wrap point >>
+#@+node:ekr.20031218072017.3080:<< continue if not whole word match >>
+# Set pos to None if word characters preceed or follow the selection.
+before = gui.getCharBeforeIndex(t,pos)
+first  = gui.getCharAtIndex    (t,pos)
+last   = gui.getCharBeforeIndex(t,newpos)
+after  = gui.getCharAtIndex    (t,newpos)
+
+#g.trace("before,first",before,first,g.is_c_id(before),g.is_c_id(first))
+#g.trace("after,last",  after,last,  g.is_c_id(after), g.is_c_id(last))
+
+if g.is_c_id(before) and g.is_c_id(first):
+    continue
+
+if g.is_c_id(after) and g.is_c_id(last):
+    continue
+#@nonl
+#@-node:ekr.20031218072017.3080:<< continue if not whole word match >>
+#@-node:ekr.20031218072017.3077:search
+#@-node:ekr.20051108102650:Fixed bug in Find Backward
 #@-node:ekr.20051103112558:4.4a3 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

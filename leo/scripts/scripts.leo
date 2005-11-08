@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7801" clone_windows="0"/>
 <globals body_outline_ratio="0.540216086435">
-	<global_window_position top="65" left="223" height="833" width="872"/>
+	<global_window_position top="65" left="224" height="833" width="871"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -27,7 +27,7 @@
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
-<v t="ekr.20050911112310"><vh>@button save</vh></v>
+<v t="ekr.20050911112310"><vh>@button Save</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051011211253"><vh>Debugger canvas</vh>
@@ -187,7 +187,7 @@
 </v>
 <v t="ekr.20050824190822"><vh>Zope test</vh></v>
 </v>
-<v t="ekr.20051103074730" a="ETV"><vh>Scripts</vh>
+<v t="ekr.20051103074730" a="E"><vh>Scripts</vh>
 <v t="ekr.20040715105834"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
@@ -564,7 +564,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051104082026"><vh>Important</vh>
+<v t="ekr.20051104082026" a="TV"><vh>Important</vh>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -8069,16 +8069,17 @@ __str__ = __repr__</t>
 ) 
 
 data = (
-    'x6x3x2xxx',
-    '42x18xxxx',
-    'x19xx7xxx',
-    'x8xx3xxxx',
-    '2x6xxx5x7',
-    'xxxx2xx6x',
-    'xxx2xx17x',
-    'xxxx91x53',
-    'xxx5x4x2x',
-)</t>
+    '4xxxxxxxx',
+    '96xxx85xx',
+    'x374x6xx1',
+    '3x48xxx6x',
+    'xxxx1xxxx',
+    'x5xxx92x7',
+    '5xx1x267x',
+    'xx95xxx82',
+    'xxxxxxxx9',
+)
+</t>
 <t tx="ekr.20050805150320">import leoPlugins
 
 rst3 = leoPlugins.getPluginModule('rst3')
@@ -8509,7 +8510,8 @@ def removeConflicts (self):
 def trace (self,s):
     
     self.main.trace(s)</t>
-<t tx="ekr.20050911112310">c.save()</t>
+<t tx="ekr.20050911112310">c.save()
+c.redraw_now()</t>
 <t tx="ekr.20050911113403">def finishCreate(self):
     
     # g.trace(self)
@@ -8600,6 +8602,18 @@ data = ( # 8/10 1 star
     'xxxx27x6x',
     '47x5xxx8x')</t>
 <t tx="ekr.20050929065040">data = (
+    '4xxxxxxxx',
+    '96xxx85xx',
+    'x374x6xx1',
+    '3x48xxx6x',
+    'xxxx1xxxx',
+    'x5xxx92x7',
+    '5xx1x267x',
+    'xx95xxx82',
+    'xxxxxxxx9',
+)
+
+data = (
     'xxx395xxx',
     'xx5xx89x2',
     'xxxx2xxx5',

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8393" clone_windows="0"/>
-<globals body_outline_ratio="0.654261704682">
-	<global_window_position top="75" left="278" height="833" width="872"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8447" clone_windows="0"/>
+<globals body_outline_ratio="0.490396927017">
+	<global_window_position top="10" left="247" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20040712101754.2" a="TV"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1620,20 +1620,85 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231" a="E"><vh>Unit tests for Tkinter</vh>
+<v t="ekr.20051107115231"><vh>Unit tests for Tkinter</vh>
 <v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
 <v t="ekr.20051107115231.3"><vh>Reference</vh>
 <v t="ekr.20051107115231.4"><vh>manufactureKeyPressForCommandName</vh></v>
 <v t="ekr.20051107115231.5"><vh>simulateCommand</vh></v>
+<v t="ekr.20051108063458"><vh>app.gui.Tkinter.utils</vh>
+<v t="ekr.20051108063458.1"><vh>Clipboard (tkGui)</vh>
+<v t="ekr.20051108063458.2"><vh>replaceClipboardWith</vh></v>
+<v t="ekr.20051108063458.3"><vh>getTextFromClipboard</vh></v>
 </v>
-<v t="ekr.20051107115231.6" a="E"><vh>Tests that pass</vh>
+<v t="ekr.20051108063458.4"><vh>Dialog</vh>
+<v t="ekr.20051108063458.5"><vh>get_window_info</vh></v>
+<v t="ekr.20051108063458.6"><vh>center_dialog</vh></v>
+<v t="ekr.20051108063458.7"><vh>create_labeled_frame</vh></v>
+</v>
+<v t="ekr.20051108063458.8"><vh>Focus</vh>
+<v t="ekr.20051108063458.9"><vh>get_focus</vh></v>
+<v t="ekr.20051108063458.10"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20051108063458.11"><vh>widget_wants_focus (tk.gui)</vh></v>
+</v>
+<v t="ekr.20051108063458.12"><vh>Font</vh>
+<v t="ekr.20051108063458.13"><vh>tkGui.getFontFromParams</vh></v>
+</v>
+<v t="ekr.20051108063458.14"><vh>Icons</vh>
+<v t="ekr.20051108063458.15"><vh>attachLeoIcon &amp; createLeoIcon</vh>
+<v t="ekr.20051108063458.16"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+<v t="ekr.20051108063458.17"><vh>createLeoIcon</vh></v>
+</v>
+</v>
+<v t="ekr.20051108063458.18"><vh>Idle Time</vh>
+<v t="ekr.20051108063458.19"><vh>tkinterGui.setIdleTimeHook</vh></v>
+<v t="ekr.20051108063458.20"><vh>setIdleTimeHookAfterDelay</vh></v>
+</v>
+<v t="ekr.20051108063458.21"><vh>Indices (Tk)</vh>
+<v t="ekr.20051108063458.22"><vh>firstIndex</vh></v>
+<v t="ekr.20051108063458.23"><vh>lastIndex</vh></v>
+<v t="ekr.20051108063458.24"><vh>moveIndexBackward</vh></v>
+<v t="ekr.20051108063458.25"><vh>moveIndexForward &amp; moveIndexToNextLine</vh></v>
+<v t="ekr.20051108063458.26"><vh>compareIndices</vh></v>
+<v t="ekr.20051108063458.27"><vh>getindex</vh></v>
+</v>
+<v t="ekr.20051108063458.28"><vh>Insert Point</vh>
+<v t="ekr.20051108063458.29"><vh>getInsertPoint</vh></v>
+<v t="ekr.20051108063458.30"><vh>setInsertPoint</vh></v>
+</v>
+<v t="ekr.20051108063458.31"><vh>Selection</vh>
+<v t="ekr.20051108063458.32"><vh>getSelectionRange</vh></v>
+<v t="ekr.20051108063458.33"><vh>getTextSelection</vh></v>
+<v t="ekr.20051108063458.34"><vh>setSelectionRange</vh></v>
+<v t="ekr.20051108063458.35"><vh>setSelectionRangeWithLength</vh></v>
+<v t="ekr.20051108063458.36"><vh>setTextSelection</vh></v>
+</v>
+<v t="ekr.20051108063458.37"><vh>Text</vh>
+<v t="ekr.20051108063458.38"><vh>getAllText</vh></v>
+<v t="ekr.20051108063458.39"><vh>getCharAfterIndex</vh></v>
+<v t="ekr.20051108063458.40"><vh>getCharAtIndex</vh></v>
+<v t="ekr.20051108063458.41"><vh>getCharBeforeIndex</vh></v>
+<v t="ekr.20051108063458.42"><vh>getLineContainingIndex</vh></v>
+<v t="ekr.20051108063458.43"><vh>replaceSelectionRangeWithText (leoTkinterGui)</vh></v>
+</v>
+<v t="ekr.20051108063458.44"><vh>Visibility</vh>
+<v t="ekr.20051108063458.45"><vh>makeIndexVisible</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051107115231.6"><vh>Tests that pass</vh>
 <v t="ekr.20051107115231.7"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
-<v t="ekr.20051107115231.8" a="E"><vh>Redrawing after commands</vh>
+<v t="ekr.20051107115231.8"><vh>Commands tests</vh>
 <v t="ekr.20051107115231.9" a="E"><vh>@test Select a node when file is first loaded</vh></v>
-<v t="ekr.20051107115231.10" a="TV"><vh>@test Save command redraws the screen</vh></v>
+<v t="ekr.20051107115231.10"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
 <v t="ekr.20051107115231.12"><vh>@test openWithFileName draws the screen once</vh></v>
+<v t="ekr.20051108063253"><vh>@test openWithFileName draws the screen once</vh></v>
+<v t="ekr.20051108063032"><vh>@test pasteNode draws the screen once</vh>
+<v t="ekr.20051108063458.46"><vh>&lt;&lt; define s, the node to be pasted &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
+<v t="ekr.20051107115231.29" a="E"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
 <v t="ekr.20051107115231.13"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
@@ -1649,17 +1714,12 @@
 <v t="ekr.20051107115231.24"><vh>@test paste from menu to body recolors the body</vh></v>
 <v t="ekr.20051107115231.25"><vh>@test typing in headline recomputes width</vh></v>
 <v t="ekr.20051107115231.26"><vh>@test paste in headline recomputes width</vh></v>
-</v>
-</v>
-<v t="ekr.20051107115231.27"><vh>Not yet</vh>
 <v t="ekr.20051107115231.28"><vh>@test selecting new node retains paste in headline</vh></v>
-<v t="ekr.20051107115231.29" a="E"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
-<v t="ekr.20051107115231.30"><vh>@test Find keeps focus in headline &amp; shows selected text</vh></v>
-<v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
-<v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
-<v t="ekr.20051107115231.33"><vh>@test rclick paste</vh></v>
-<v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
 </v>
+</v>
+<v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
+<v t="ekr.20051107115231.30"><vh>@test Find keeps focus in headline &amp; shows selected text</vh></v>
+<v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -6928,7 +6988,8 @@ class eggs:
     """ A typical doc string """
     
     @others</t>
-<t tx="ekr.20050911112310">c.save()</t>
+<t tx="ekr.20050911112310">c.save()
+c.redraw_now()</t>
 <t tx="ekr.20051012104957"></t>
 <t tx="ekr.20051013162226"></t>
 <t tx="ekr.20051018071924">	</t>
@@ -7794,7 +7855,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14013,13 +14074,446 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.27"></t>
-<t tx="ekr.20051107115231.28"></t>
-<t tx="ekr.20051107115231.29"></t>
+<t tx="ekr.20051107115231.28">import leoTest ; u = leoTest.testUtils()
+k = c.keyHandler
+frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    g.app.gui.setSelectionRange(w,'end','end')
+    paste = 'ABC'
+    g.app.gui.replaceClipboardWith(paste)
+    g.app.gui.setSelectionRange(w,'end','end')
+    k.manufactureKeyPressForCommandName(w,'paste-text')
+    c.selectPosition(p.visBack())
+    assert p.headString() == h + paste
+    k.manufactureKeyPressForCommandName(w,'undo')
+    assert p.headString() == h
+finally:
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
+<t tx="ekr.20051107115231.29">import leoEditCommands
+s = 'foo' ; bodyCtrl = c.frame.body.bodyCtrl
+# Don't actually open the Find tab:
+# The blasted Pmw tab manager hogs the focus.
+if not c.searchCommands.findTabHandler:
+    leoEditCommands.findTab(c,c.frame.log.logCtrl)
+h = c.searchCommands.findTabHandler
+w = h.find_ctrl
+w.delete('1.0','end')
+w.insert('1.0',s)
+c.frame.bodyWantsFocus(later=False)
+g.app.gui.setInsertPoint(bodyCtrl,'1.0')
+c.searchCommands.findTabFindNext()
+w = g.app.gui.get_focus(c.frame)
+
+assert w == bodyCtrl, 'focus %s' % w</t>
 <t tx="ekr.20051107115231.30"></t>
 <t tx="ekr.20051107115231.31"></t>
-<t tx="ekr.20051107115231.32"></t>
-<t tx="ekr.20051107115231.33"></t>
+<t tx="ekr.20051107115231.32">if 0: # Not so easy to do.
+    import plugin_manager
+    n = g.app.dialogs
+    pm = plugin_manager.ManagerDialog()
+    try:
+        assert g.app.dialogs == n
+    finally:
+        if 1:
+            pass</t>
 <t tx="ekr.20051107115231.34"></t>
+<t tx="ekr.20051108063032">c.redraw_now() # To make node visible
+&lt;&lt; define s, the node to be pasted &gt;&gt;
+n = c.frame.tree.redrawCount
+g.app.gui.replaceClipboardWith(s)
+c.pasteOutline()
+try:
+    assert c.frame.tree.redrawCount == n + 1
+finally:
+    c.undoer.undo()
+    c.redraw_now()</t>
+<t tx="ekr.20051108063253">c.redraw_now() # To make node visible
+
+k = c.keyHandler
+fileName = g.os_path_join('..','scripts','scripts.leo')
+ok,frame2 = g.openWithFileName(fileName,c)
+try:
+    assert ok
+    assert frame2
+    assert frame2.tree.redrawCount == 1
+finally:
+    frame2.c.close()</t>
+<t tx="ekr.20051108063458"></t>
+<t tx="ekr.20051108063458.1">@
+
+The following are called only when g.app.gui.win32clipboard is not None, and
+presently that never happens.</t>
+<t tx="ekr.20051108063458.2">def replaceClipboardWith (self,s):
+
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            wcb.EmptyClipboard()
+            wcb.SetClipboardText(s)
+            wcb.CloseClipboard()
+        except:
+            g.es_exception()
+    else:
+        self.root.clipboard_clear()
+        self.root.clipboard_append(s)</t>
+<t tx="ekr.20051108063458.3">def getTextFromClipboard (self):
+    
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+    
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            data = wcb.GetClipboardData()
+            wcb.CloseClipboard()
+            # g.trace(data)
+            return data
+        except TypeError:
+            # g.trace(None)
+            return None
+        except:
+            g.es_exception()
+            return None
+    else:
+        try:
+            s = self.root.selection_get(selection="CLIPBOARD")
+            return s
+        except:
+            return None</t>
+<t tx="ekr.20051108063458.4"></t>
+<t tx="ekr.20051108063458.5"># WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
+
+def get_window_info (self,top):
+    
+    top.update_idletasks() # Required to get proper info.
+
+    # Get the information about top and the screen.
+    geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+    dim,x,y = string.split(geom,'+')
+    w,h = string.split(dim,'x')
+    w,h,x,y = int(w),int(h),int(x),int(y)
+    
+    return w,h,x,y</t>
+<t tx="ekr.20051108063458.6">def center_dialog(self,top):
+
+    """Center the dialog on the screen.
+
+    WARNING: Call this routine _after_ creating a dialog.
+    (This routine inhibits the grid and pack geometry managers.)"""
+
+    sw = top.winfo_screenwidth()
+    sh = top.winfo_screenheight()
+    w,h,x,y = self.get_window_info(top)
+    
+    # Set the new window coordinates, leaving w and h unchanged.
+    x = (sw - w)/2
+    y = (sh - h)/2
+    top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+    
+    return w,h,x,y</t>
+<t tx="ekr.20051108063458.7"># Returns frames w and f.
+# Typically the caller would pack w into other frames, and pack content into f.
+
+def create_labeled_frame (self,parent,
+    caption=None,relief="groove",bd=2,padx=0,pady=0):
+
+    # Create w, the master frame.
+    w = Tk.Frame(parent)
+    w.grid(sticky="news")
+    
+    # Configure w as a grid with 5 rows and columns.
+    # The middle of this grid will contain f, the expandable content area.
+    w.columnconfigure(1,minsize=bd)
+    w.columnconfigure(2,minsize=padx)
+    w.columnconfigure(3,weight=1)
+    w.columnconfigure(4,minsize=padx)
+    w.columnconfigure(5,minsize=bd)
+    
+    w.rowconfigure(1,minsize=bd)
+    w.rowconfigure(2,minsize=pady)
+    w.rowconfigure(3,weight=1)
+    w.rowconfigure(4,minsize=pady)
+    w.rowconfigure(5,minsize=bd)
+
+    # Create the border spanning all rows and columns.
+    border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
+    border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
+    
+    # Create the content frame, f, in the center of the grid.
+    f = Tk.Frame(w,bd=bd)
+    f.grid(row=3,column=3,sticky="news")
+    
+    # Add the caption.
+    if caption and len(caption) &gt; 0:
+        caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
+        caption.tkraise(w)
+        caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
+
+    return w,f</t>
+<t tx="ekr.20051108063458.8"></t>
+<t tx="ekr.20051108063458.9">def get_focus(self,frame):
+    
+    """Returns the widget that has focus, or body if None."""
+
+    return frame.top.focus_displayof()</t>
+<t tx="ekr.20051108063458.10">def set_focus(self,c,w):
+    
+    __pychecker__ = '--no-argsused' # c not used at present.
+    
+    """Put the focus on the widget."""
+    
+    if w:
+        if 0:
+            name = hasattr(w,'_name') and w._name or '&lt;no name&gt;'
+            g.trace('GUI',name,g.callers(8))
+        w.focus_set()</t>
+<t tx="ekr.20051108063458.11">def widget_wants_focus(self,c,widget):
+
+    """Indicate that a widget want to get focus."""
+    
+    if c:
+        c.frame.widgetWantsFocus(widget,True)
+        
+widgetWantsFocus = widget_wants_focus</t>
+<t tx="ekr.20051108063458.12"></t>
+<t tx="ekr.20051108063458.13">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
+    
+    __pychecker__ = '--no-argsused' # defaultSize not used.
+
+    family_name = family
+    
+    try:
+        font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+        # if g.app.trace: g.trace(font)
+        return font
+    except:
+        g.es("exception setting font from ",family_name)
+        g.es("family,size,slant,weight:",family,size,slant,weight)
+        # g.es_exception() # This just confuses people.
+        return g.app.config.defaultFont</t>
+<t tx="ekr.20051108063458.14"></t>
+<t tx="ekr.20051108063458.15">def attachLeoIcon (self,w):
+    
+    """Try to attach a Leo icon to the Leo Window.
+    
+    Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
+    Otherwise, try to use the Python Imaging Library and the tkIcon package."""
+
+    if self.bitmap != None:
+        # We don't need PIL or tkicon: this is tk 8.3.4 or greater.
+        try:
+            w.wm_iconbitmap(self.bitmap)
+        except:
+            self.bitmap = None
+    
+    if self.bitmap == None:
+        try:
+            &lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;
+        except:
+            # import traceback ; traceback.print_exc()
+            self.leoIcon = None</t>
+<t tx="ekr.20051108063458.16">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
+
+Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
+Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+
+Many thanks to Jonathan M. Gilligan for suggesting this code.
+@c
+
+import Image
+import tkIcon
+
+# Wait until the window has been drawn once before attaching the icon in OnVisiblity.
+def visibilityCallback(event,self=self,w=w):
+    __pychecker__ = '--no-argsused' # event not used.
+    try: self.leoIcon.attach(w.winfo_id())
+    except: pass
+w.bind("&lt;Visibility&gt;",visibilityCallback)
+if not self.leoIcon:
+    # Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
+    icon_file_name = g.os_path_join(g.app.loadDir,'..','Icons','LeoWin.gif')
+    icon_file_name = g.os_path_normpath(icon_file_name)
+    icon_image = Image.open(icon_file_name)
+    if 1: # Doesn't resize.
+        self.leoIcon = self.createLeoIcon(icon_image)
+    else: # Assumes 64x64
+        self.leoIcon = tkIcon.Icon(icon_image)</t>
+<t tx="ekr.20051108063458.17"># This code is adapted from tkIcon.__init__
+# Unlike the tkIcon code, this code does _not_ resize the icon file.
+
+def createLeoIcon (self,icon):
+    
+    try:
+        import Image,_tkicon
+        
+        i = icon ; m = None
+        # create transparency mask
+        if i.mode == "P":
+            try:
+                t = i.info["transparency"]
+                m = i.point(lambda i, t=t: i==t, "1")
+            except KeyError: pass
+        elif i.mode == "RGBA":
+            # get transparency layer
+            m = i.split()[3].point(lambda i: i == 0, "1")
+        if not m:
+            m = Image.new("1", i.size, 0) # opaque
+        # clear unused parts of the original image
+        i = i.convert("RGB")
+        i.paste((0, 0, 0), (0, 0), m)
+        # create icon
+        m = m.tostring("raw", ("1", 0, 1))
+        c = i.tostring("raw", ("BGRX", 0, -1))
+        return _tkicon.new(i.size, c, m)
+    except:
+        return None</t>
+<t tx="ekr.20051108063458.18"></t>
+<t tx="ekr.20051108063458.19">def setIdleTimeHook (self,idleTimeHookHandler):
+
+    if self.root:
+        self.root.after_idle(idleTimeHookHandler)</t>
+<t tx="ekr.20051108063458.20">def setIdleTimeHookAfterDelay (self,idleTimeHookHandler):
+    
+    if self.root:
+        g.app.root.after(g.app.idleTimeDelay,idleTimeHookHandler)</t>
+<t tx="ekr.20051108063458.21"></t>
+<t tx="ekr.20051108063458.22">def firstIndex (self):
+
+    return "1.0"</t>
+<t tx="ekr.20051108063458.23">def lastIndex (self):
+
+    return "end"</t>
+<t tx="ekr.20051108063458.24">def moveIndexBackward(self,index,n):
+
+    return "%s-%dc" % (index,n)
+</t>
+<t tx="ekr.20051108063458.25">def moveIndexForward(self,t,index,n):
+
+    newpos = t.index("%s+%dc" % (index,n))
+    
+    return g.choose(t.compare(newpos,"==","end"),None,newpos)
+    
+def moveIndexToNextLine(self,t,index):
+
+    newpos = t.index("%s linestart + 1lines" % (index))
+    
+    return g.choose(t.compare(newpos,"==","end"),None,newpos)</t>
+<t tx="ekr.20051108063458.26">def compareIndices (self,t,n1,rel,n2):
+    return t.compare(n1,rel,n2)</t>
+<t tx="ekr.20051108063458.27">def getindex(self,text,index):
+    
+    """Convert string index of the form line.col into a tuple of two ints."""
+    
+    return tuple(map(int,string.split(text.index(index), ".")))</t>
+<t tx="ekr.20051108063458.28"></t>
+<t tx="ekr.20051108063458.29">def getInsertPoint(self,t):
+
+    return t.index("insert")</t>
+<t tx="ekr.20051108063458.30">def setInsertPoint (self,t,pos):
+
+    return t.mark_set("insert",pos)</t>
+<t tx="ekr.20051108063458.31"></t>
+<t tx="ekr.20051108063458.32">def getSelectionRange (self,t):
+
+    return t.tag_ranges("sel")</t>
+<t tx="ekr.20051108063458.33">def getTextSelection (self,t):
+    
+    """Return a tuple representing the selected range of t, a Tk.Text widget.
+    
+    Return a tuple giving the insertion point if no range of text is selected."""
+
+    # To get the current selection
+    sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
+    if len(sel) == 2:
+        return sel
+    else:
+        # 7/1/03: Return the insertion point if there is no selected text.
+        insert = t.index("insert")
+        return insert,insert</t>
+<t tx="ekr.20051108063458.34">def setSelectionRange(self,t,n1,n2):
+
+    return g.app.gui.setTextSelection(t,n1,n2)</t>
+<t tx="ekr.20051108063458.35">def setSelectionRangeWithLength(self,t,start,length):
+    
+    return g.app.gui.setTextSelection(t,start,"%s+%dc" % (start,length))</t>
+<t tx="ekr.20051108063458.36">def setTextSelection (self,t,start,end):
+    
+    """tk gui: set the selection range in Tk.Text widget t."""
+
+    if not start or not end:
+        return
+
+    if t.compare(start, "&gt;", end):
+        start,end = end,start
+        
+    t.tag_remove("sel","1.0",start)
+    t.tag_add("sel",start,end)
+    t.tag_remove("sel",end,"end")
+    t.mark_set("insert",end)</t>
+<t tx="ekr.20051108063458.37"></t>
+<t tx="ekr.20051108063458.38">def getAllText (self,t):
+    
+    """Return all the text of Tk.Text t converted to unicode."""
+    
+    s = t.get("1.0","end")
+    if s is None:
+        return u""
+    else:
+        return g.toUnicode(s,g.app.tkEncoding)</t>
+<t tx="ekr.20051108063458.39">def getCharAfterIndex (self,t,index):
+    
+    if t.compare(index + "+1c","&gt;=","end"):
+        return None
+    else:
+        ch = t.get(index + "+1c")
+        return g.toUnicode(ch,g.app.tkEncoding)</t>
+<t tx="ekr.20051108063458.40">def getCharAtIndex (self,t,index):
+    ch = t.get(index)
+    return g.toUnicode(ch,g.app.tkEncoding)</t>
+<t tx="ekr.20051108063458.41">def getCharBeforeIndex (self,t,index):
+    
+    index = t.index(index)
+    if index == "1.0":
+        return None
+    else:
+        ch = t.get(index + "-1c")
+        return g.toUnicode(ch,g.app.tkEncoding)</t>
+<t tx="ekr.20051108063458.42">def getLineContainingIndex (self,t,index):
+
+    line = t.get(index + " linestart", index + " lineend")
+    return g.toUnicode(line,g.app.tkEncoding)</t>
+<t tx="ekr.20051108063458.43">def replaceSelectionRangeWithText (self,t,start,end,text):
+
+    t.delete(start,end)
+    t.insert(start,text)</t>
+<t tx="ekr.20051108063458.44"></t>
+<t tx="ekr.20051108063458.45">def makeIndexVisible(self,t,index):
+
+    return t.see(index)</t>
+<t tx="ekr.20051108063458.46">
+s = '''&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet ekr_stylesheet?&gt;
+&lt;leo_file&gt;
+&lt;leo_header file_format="1" tnodes="1" max_tnode_index="1"/&gt;
+&lt;vnodes&gt;
+&lt;v t="ekr.20051108063253.1" a="TV"&gt;&lt;vh&gt;pasted node&lt;/vh&gt;&lt;/v&gt;
+&lt;/vnodes&gt;
+&lt;tnodes&gt;
+&lt;t tx="ekr.20051108063253.1"&gt;&lt;/t&gt;
+&lt;/tnodes&gt;
+&lt;/leo_file&gt;'''</t>
 </tnodes>
 </leo_file>

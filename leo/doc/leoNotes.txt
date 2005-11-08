@@ -3381,6 +3381,22 @@ w.configure(width=f.tree.headWidth(s=s))
 #@nonl
 #@-node:ekr.20051103160025:<< paste the text into w >>
 #@-node:ekr.20051106101758:From pasteText
+#@+node:ekr.20051108110608:From leoFind.search
+#@+node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
+index = gui.moveIndexBackward(newpos,len(self.find_text))
+
+pos = self.gui_search(t,self.find_text,index,
+    stopindex=stopindex,backwards=self.reverse,
+    regexp=self.pattern_match,nocase=self.ignore_case)
+
+if not pos:
+    return None, None
+
+newpos = gui.moveIndexForward(t,pos,len(self.find_text))
+first = False
+#@nonl
+#@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
+#@-node:ekr.20051108110608:From leoFind.search
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
