@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8447" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8448" clone_windows="0"/>
 <globals body_outline_ratio="0.490396927017">
 	<global_window_position top="10" left="247" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -958,7 +958,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="TV"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20051108140810" a="E"><vh>All unit tests</vh>
+<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1620,7 +1621,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231"><vh>Unit tests for Tkinter</vh>
+<v t="ekr.20051107115231" a="E"><vh>Unit tests for Tkinter</vh>
 <v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
 <v t="ekr.20051107115231.3"><vh>Reference</vh>
@@ -1686,11 +1687,11 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231.6"><vh>Tests that pass</vh>
+<v t="ekr.20051107115231.6" a="E"><vh>Tests that pass</vh>
 <v t="ekr.20051107115231.7"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
-<v t="ekr.20051107115231.8"><vh>Commands tests</vh>
-<v t="ekr.20051107115231.9" a="E"><vh>@test Select a node when file is first loaded</vh></v>
-<v t="ekr.20051107115231.10"><vh>@test Save command redraws the screen</vh></v>
+<v t="ekr.20051107115231.8" a="E"><vh>Commands tests</vh>
+<v t="ekr.20051107115231.9"><vh>@test Select a node when file is first loaded</vh></v>
+<v t="ekr.20051107115231.10" a="TV"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
 <v t="ekr.20051107115231.12"><vh>@test openWithFileName draws the screen once</vh></v>
 <v t="ekr.20051108063253"><vh>@test openWithFileName draws the screen once</vh></v>
@@ -1698,28 +1699,31 @@
 <v t="ekr.20051108063458.46"><vh>&lt;&lt; define s, the node to be pasted &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
-<v t="ekr.20051107115231.29" a="E"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
 <v t="ekr.20051107115231.13"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
-<v t="ekr.20051107115231.15" a="E"><vh>@test editLabel selects entire headline</vh></v>
+<v t="ekr.20051107115231.15"><vh>@test editLabel selects entire headline</vh></v>
 <v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
-<v t="ekr.20051107115231.17" a="E"><vh>@test typing and undo in headline - at end</vh></v>
-<v t="ekr.20051107115231.18" a="E"><vh>@test paste and undo in headline - at end</vh></v>
+<v t="ekr.20051107115231.17"><vh>@test typing and undo in headline - at end</vh></v>
+<v t="ekr.20051107115231.18"><vh>@test paste and undo in headline - at end</vh></v>
 <v t="ekr.20051107115231.19"><vh>@test typing and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.20"><vh>@test paste and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.21"><vh>@test selecting new node retains typing in headline</vh></v>
-<v t="ekr.20051107115231.22" a="E"><vh>@test paste from menu into body sticks</vh></v>
-<v t="ekr.20051107115231.23" a="E"><vh>@test paste from menu into headline sticks</vh></v>
+<v t="ekr.20051107115231.22"><vh>@test paste from menu into body sticks</vh></v>
+<v t="ekr.20051107115231.23"><vh>@test paste from menu into headline sticks</vh></v>
 <v t="ekr.20051107115231.24"><vh>@test paste from menu to body recolors the body</vh></v>
 <v t="ekr.20051107115231.25"><vh>@test typing in headline recomputes width</vh></v>
 <v t="ekr.20051107115231.26"><vh>@test paste in headline recomputes width</vh></v>
 <v t="ekr.20051107115231.28"><vh>@test selecting new node retains paste in headline</vh></v>
 </v>
 </v>
+<v t="ekr.20051108141141"><vh>Not ready yet</vh>
+<v t="ekr.20051107115231.29"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
 <v t="ekr.20051107115231.30"><vh>@test Find keeps focus in headline &amp; shows selected text</vh></v>
 <v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -7855,7 +7859,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14098,22 +14102,23 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.29">import leoEditCommands
-s = 'foo' ; bodyCtrl = c.frame.body.bodyCtrl
-# Don't actually open the Find tab:
-# The blasted Pmw tab manager hogs the focus.
-if not c.searchCommands.findTabHandler:
-    leoEditCommands.findTab(c,c.frame.log.logCtrl)
-h = c.searchCommands.findTabHandler
-w = h.find_ctrl
-w.delete('1.0','end')
-w.insert('1.0',s)
-c.frame.bodyWantsFocus(later=False)
-g.app.gui.setInsertPoint(bodyCtrl,'1.0')
-c.searchCommands.findTabFindNext()
-w = g.app.gui.get_focus(c.frame)
-
-assert w == bodyCtrl, 'focus %s' % w</t>
+<t tx="ekr.20051107115231.29">if 0:
+    import leoEditCommands
+    s = 'foo' ; bodyCtrl = c.frame.body.bodyCtrl
+    # Don't actually open the Find tab:
+    # The blasted Pmw tab manager hogs the focus.
+    if not c.searchCommands.findTabHandler:
+        leoEditCommands.findTab(c,c.frame.log.logCtrl)
+    h = c.searchCommands.findTabHandler
+    w = h.find_ctrl
+    w.delete('1.0','end')
+    w.insert('1.0',s)
+    c.frame.bodyWantsFocus(later=False)
+    g.app.gui.setInsertPoint(bodyCtrl,'1.0')
+    c.searchCommands.findTabFindNext()
+    w = g.app.gui.get_focus(c.frame)
+    
+    assert w == bodyCtrl, 'focus %s' % w</t>
 <t tx="ekr.20051107115231.30"></t>
 <t tx="ekr.20051107115231.31"></t>
 <t tx="ekr.20051107115231.32">if 0: # Not so easy to do.
@@ -14515,5 +14520,7 @@ s = '''&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;t tx="ekr.20051108063253.1"&gt;&lt;/t&gt;
 &lt;/tnodes&gt;
 &lt;/leo_file&gt;'''</t>
+<t tx="ekr.20051108140810"></t>
+<t tx="ekr.20051108141141"></t>
 </tnodes>
 </leo_file>
