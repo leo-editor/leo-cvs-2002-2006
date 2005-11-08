@@ -700,14 +700,11 @@ class leoFind:
         """Searches the present headline or body text for self.find_text and returns True if found.
     
         self.whole_word, self.ignore_case, and self.pattern_match control the search."""
-        
-        __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
     
         c = self.c ; p = self.p ; t = self.s_ctrl ; gui = g.app.gui
         assert(c and t and p)
         if self.selection_only:
             index,stopindex = self.selStart, self.selEnd
-            # g.trace(index,stopindex,p)
             if index == stopindex:
                 return None, None
         else:
@@ -718,51 +715,27 @@ class leoFind:
                 pos = self.gui_search(t,self.find_text,index,
                     stopindex=stopindex,backwards=self.reverse,
                     regexp=self.pattern_match,nocase=self.ignore_case)
-            except:
+            except Exception:
                 g.es_exception(full=False)
-                self.errors += 1
-                return None, None
-            if not pos:
-                return None, None
+                self.errors += 1 ; break
+            if not pos: break
             if self.find_text == '\n':
-                # 2/3/04: A hack.  Time to get rid of gui indices!
                 newpos = gui.moveIndexToNextLine(t,pos)
-                # g.trace(pos,t.index(newpos))
             else:
                 newpos = gui.moveIndexForward(t,pos,len(self.find_text))
-            if newpos is None:
-                return None, None
-            if 0: # Hooray: this horrible kludge is no longer needed.
-                if self.reverse and gui.compareIndices(t,newpos,"==",firstIndex):
-                    g.trace('stuck')
-                    #@                << search again after getting stuck going backward >>
-                    #@+node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
-                    index = gui.moveIndexBackward(newpos,len(self.find_text))
-                    
-                    pos = self.gui_search(t,self.find_text,index,
-                        stopindex=stopindex,backwards=self.reverse,
-                        regexp=self.pattern_match,nocase=self.ignore_case)
-                    
-                    if not pos:
-                        return None, None
-                    
-                    newpos = gui.moveIndexForward(t,pos,len(self.find_text))
-                    first = False
-                    #@nonl
-                    #@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
-                    #@nl
-            #@        << return if we are passed the wrap point >>
-            #@+node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
+            if newpos is None: break
+            #@        << break if we are passed the wrap point >>
+            #@+node:ekr.20031218072017.3079:<< break if we are passed the wrap point >>
             if self.wrapping and self.wrapPos and self.wrapPosition and self.p == self.wrapPosition:
             
                 if self.reverse and gui.compareIndices(t,pos, "<", self.wrapPos):
                     # g.trace("wrap done")
-                    return None, None
+                    break
             
                 if not self.reverse and gui.compareIndices(t,newpos, ">", self.wrapPos):
-                    return None, None
+                    break
             #@nonl
-            #@-node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
+            #@-node:ekr.20031218072017.3079:<< break if we are passed the wrap point >>
             #@nl
             if self.whole_word:
                 index = t.index(g.choose(self.reverse,pos,newpos))
@@ -788,6 +761,8 @@ class leoFind:
             #g.trace("found:",pos,newpos,p)
             gui.setTextSelection(t,pos,newpos)
             return pos, newpos
+        # g.trace('not found',p.headString())
+        return None,None
     #@nonl
     #@-node:ekr.20031218072017.3077:search
     #@+node:ekr.20031218072017.3081:selectNextPosition
@@ -817,7 +792,7 @@ class leoFind:
             # just switch to body pane.
             self.in_headline = False
             self.initNextText()
-            # g.trace(p)
+            # g.trace('switching to body',g.callers(5))
             return p
     
         if self.reverse: p = p.threadBack()
@@ -929,9 +904,16 @@ class leoFind:
     
         c = self.c ; p = self.p
     
+        # Do not change this without careful thought and extensive testing!
         if self.search_headline and self.search_body:
-            # Do not change this line without careful thought and extensive testing!
-            self.in_headline = (p == c.frame.tree.editPosition())
+            # A temporary expedient.
+            if self.reverse:
+                self.in_headline = False
+            else:
+                # Search headline first.
+                self.in_headline = (
+                    p == c.frame.tree.editPosition() and
+                    g.app.gui.get_focus(c.frame) != c.frame.body.bodyCtrl)
         else:
             self.in_headline = self.search_headline
     #@nonl
