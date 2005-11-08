@@ -2919,24 +2919,19 @@ class baseCommands:
             #@nonl
             #@-node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
             #@nl
-        
         undoData = u.beforeInsertNode(current,
-            pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
-    
-        c.beginUpdate()
-        try: # inside update...
-            c.endEditing()
-            c.validateOutline()
-            c.selectPosition(pasted)
-            pasted.setDirty()
-            c.setChanged(True)
-            # paste as first child if back is expanded.
-            back = pasted.back()
-            if back and back.isExpanded():
-                pasted.moveToNthChildOf(back,0)
-            u.afterInsertNode(pasted,undoType,undoData)
-        finally:
-            c.endUpdate()
+        pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
+        c.endEditing()
+        c.validateOutline()
+        c.selectPosition(pasted)
+        pasted.setDirty()
+        c.setChanged(True)
+        # paste as first child if back is expanded.
+        back = pasted.back()
+        if back and back.isExpanded():
+            pasted.moveToNthChildOf(back,0)
+        u.afterInsertNode(pasted,undoType,undoData)
+        c.redraw_now()
         c.recolor()
     #@nonl
     #@-node:ekr.20031218072017.1551:pasteOutline
