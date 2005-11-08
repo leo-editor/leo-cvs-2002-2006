@@ -89,6 +89,7 @@ class leoFind:
         self.onlyPosition = None
         self.find_text = ""
         self.change_text = ""
+        self.unstick = False
         
         #@+at
         # New in 4.3:
@@ -710,7 +711,7 @@ class leoFind:
             if index == stopindex:
                 return None, None
         else:
-            index = gui.getInsertPoint(t)
+            index = firstIndex = gui.getInsertPoint(t)
             stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
         while 1:
             try:
@@ -731,22 +732,25 @@ class leoFind:
                 newpos = gui.moveIndexForward(t,pos,len(self.find_text))
             if newpos is None:
                 return None, None
-            if self.reverse and gui.compareIndices(t,newpos,"==",index):
-                #@            << search again after getting stuck going backward >>
-                #@+node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
-                index = gui.moveIndexBackward(newpos,len(self.find_text))
-                
-                pos = self.gui_search(t,self.find_text,index,
-                    stopindex=stopindex,backwards=self.reverse,
-                    regexp=self.pattern_match,nocase=self.ignore_case)
-                
-                if not pos:
-                    return None, None
-                
-                newpos = gui.moveIndexForward(t,pos,len(self.find_text))
-                #@nonl
-                #@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
-                #@nl
+            if 0: # Hooray: this horrible kludge is no longer needed.
+                if self.reverse and gui.compareIndices(t,newpos,"==",firstIndex):
+                    g.trace('stuck')
+                    #@                << search again after getting stuck going backward >>
+                    #@+node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
+                    index = gui.moveIndexBackward(newpos,len(self.find_text))
+                    
+                    pos = self.gui_search(t,self.find_text,index,
+                        stopindex=stopindex,backwards=self.reverse,
+                        regexp=self.pattern_match,nocase=self.ignore_case)
+                    
+                    if not pos:
+                        return None, None
+                    
+                    newpos = gui.moveIndexForward(t,pos,len(self.find_text))
+                    first = False
+                    #@nonl
+                    #@-node:ekr.20031218072017.3078:<< search again after getting stuck going backward >>
+                    #@nl
             #@        << return if we are passed the wrap point >>
             #@+node:ekr.20031218072017.3079:<< return if we are passed the wrap point >>
             if self.wrapping and self.wrapPos and self.wrapPosition and self.p == self.wrapPosition:
@@ -1037,7 +1041,10 @@ class leoFind:
         t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
         insert = g.choose(self.reverse,pos,newpos)
         gui.setInsertPoint(t,insert)
+        # New in 4.4a3: a much better way to ensure progress in backward searches.
         gui.setSelectionRange(t,pos,newpos)
+        if self.reverse:
+            gui.setInsertPoint(t,pos)
         gui.makeIndexVisible(t,insert)
         c.frame.widgetWantsFocus(t,later=False)
         if self.wrap and not self.wrapPosition:
