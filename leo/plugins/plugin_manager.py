@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.17"
+__version__ = "0.18"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -87,7 +87,9 @@ __plugin_group__ = "Core"
 #     - Complete code to dynamically enable plugins
 # 0.17 Paul Paterson:
 #     - Speeded up the getVersionHistory step of reading plugins
-#     - Allow specification of plugin load order
+#     - Allow specification of plugin load order.
+# 0.18 EKR:
+#     - Added g.app.dialogs hack to ensure dialog stays in front.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -934,12 +936,17 @@ class ManagerDialog:
         #@nl
         self.plugin_list.populateList("All")
         
+        g.app.dialogs += 1 # Make *sure* that the dialog stays in front.
+        
         if not standalone:
             top.grab_set() # Make the dialog a modal dialog.
             top.focus_force() # Get all keystrokes.
             root.wait_window(top)
         else:
             root.mainloop()
+    
+        g.app.dialogs -= 1 # Tell Leo that the dialog has closed.
+    #@nonl
     #@-node:pap.20041006215108.1:ManagerDialog._init__
     #@+node:pap.20041006224151:enablePlugin
     def enablePlugin(self):
