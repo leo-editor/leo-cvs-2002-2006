@@ -3,7 +3,7 @@
 """
 Creates new nodes containing parameterized section references.
 """
-__version__ = "1.3"
+__version__ = "1.4"
 #@<< version history >>
 #@+node:ekr.20040916091520:<< version history >>
 #@+at
@@ -16,6 +16,8 @@ __version__ = "1.3"
 #     - Removed all globals.
 # 1.3 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
+# 1.4 EKR:
+#     - Replaced tree.begin/endUpdate by c.beginEndUpdate.
 #@-at
 #@nonl
 #@-node:ekr.20040916091520:<< version history >>
@@ -94,14 +96,17 @@ class paramClass:
     
         bodys = node.bodyString()
         tn = tnode( bodys , sr )
-        tree.beginUpdate()
-        v = current.insertAsNthChild( 0 , tn )
-        for z in xrange( 0 , len( sections ) ):
-            head = g.angleBrackets(str( z + 1) + "$")
-            bod = sections[ z ]
-            t = tnode( bod , head )
-            v.insertAsNthChild( 0 , t )
-        tree.endUpdate()
+        c.beginUpdate()
+        try:
+            v = current.insertAsNthChild( 0 , tn )
+            for z in xrange( 0 , len( sections ) ):
+                head = g.angleBrackets(str( z + 1) + "$")
+                bod = sections[ z ]
+                t = tnode( bod , head )
+                v.insertAsNthChild( 0 , t )
+        finally:
+            c.endUpdate()
+    #@nonl
     #@-node:ekr.20040916084945.1:parameterize
     #@+node:ekr.20040916084945.2:findParameters
     def findParameters (self,v):
