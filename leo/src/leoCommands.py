@@ -5319,6 +5319,7 @@ class baseCommands:
     
         c = self
         if flag:
+            # c.requestRedraw()
             c.redraw_now()
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
