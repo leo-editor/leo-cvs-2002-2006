@@ -3386,6 +3386,7 @@ def endUpdate(self, flag=True):
 
     c = self
     if flag:
+        # c.requestRedraw()
         c.redraw_now()
 
 BeginUpdate = beginUpdate # Compatibility with old scripts
@@ -3632,7 +3633,7 @@ def redraw_now (self,scroll=True):
     c = self.c
     
     # An important trace.
-    # g.trace(self.redrawCount,g.callers(9))
+    g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -6966,6 +6967,7 @@ def endUpdate(self, flag=True):
 
     c = self
     if flag:
+        # c.requestRedraw()
         c.redraw_now()
 
 BeginUpdate = beginUpdate # Compatibility with old scripts
@@ -7270,7 +7272,7 @@ def redraw_now (self,scroll=True):
     c = self.c
     
     # An important trace.
-    # g.trace(self.redrawCount,g.callers(9))
+    g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -8148,6 +8150,7 @@ def endUpdate(self, flag=True):
 
     c = self
     if flag:
+        # c.requestRedraw()
         c.redraw_now()
 
 BeginUpdate = beginUpdate # Compatibility with old scripts
@@ -8394,7 +8397,7 @@ def redraw_now (self,scroll=True):
     c = self.c
     
     # An important trace.
-    # g.trace(self.redrawCount,g.callers(9))
+    g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
     self.redrawCount += 1
