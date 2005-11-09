@@ -40,7 +40,7 @@ class baseLeoImportCommands:
         self.encoding = g.app.tkEncoding # 2/25/03: was "utf-8"
     #@nonl
     #@-node:ekr.20031218072017.3207:import.__init__
-    #@+node:ekr.20031218072017.3209:Import TO DO
+    #@+node:ekr.20031218072017.3209:Import
     #@+node:ekr.20031218072017.3210:createOutline
     def createOutline (self,fileName,parent):
     
@@ -405,7 +405,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3223:stringIs/stringsAreValidMoreFile
     #@-node:ekr.20031218072017.3214:importFlattenedOutline & allies
-    #@+node:ekr.20031218072017.3224:importWebCommand & allies TO DO
+    #@+node:ekr.20031218072017.3224:importWebCommand & allies
     #@+node:ekr.20031218072017.3225:createOutlineFromWeb
     def createOutlineFromWeb (self,path,parent):
     
@@ -722,7 +722,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3240:cstLookup
     #@-node:ekr.20031218072017.3236:Symbol table
-    #@-node:ekr.20031218072017.3224:importWebCommand & allies TO DO
+    #@-node:ekr.20031218072017.3224:importWebCommand & allies
     #@+node:EKR.20040506075328.2:perfectImport
     def perfectImport (self,fileName,p,testing=False,verbose=False,convertBlankLines=True,verify=True):
         
@@ -2294,7 +2294,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
     #@-node:ekr.20031218072017.3241:Scanners for createOutline
-    #@-node:ekr.20031218072017.3209:Import TO DO
+    #@-node:ekr.20031218072017.3209:Import
     #@+node:ekr.20031218072017.3289:Export
     #@+node:ekr.20031218072017.3290:convertCodePartToWeb
     # Headlines not containing a section reference are ignored in noweb and generate index index in cweb.

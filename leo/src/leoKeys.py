@@ -1053,6 +1053,7 @@ class keyHandlerClass:
         All commands and keystrokes pass through here.'''
     
         k = self ; c = k.c
+        c.startRedrawCount = c.frame.tree.redrawCount
         k.stroke = stroke # Set this global for general use.
         keysym = event and event.keysym or ''
         ch = event and event.char or ''

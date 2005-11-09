@@ -204,34 +204,30 @@ class baseFileCommands:
     
         c = self.c
         current = c.currentPosition()
-        c.beginUpdate()
-        try:
-            if reassignIndices:
-                #@            << reassign tnode indices >>
-                #@+node:ekr.20031218072017.1558:<< reassign tnode indices >>
-                #@+at 
-                #@nonl
-                # putLeoOutline calls assignFileIndices (when copying nodes) 
-                # so that vnode can be associated with tnodes.
-                # However, we must _reassign_ the indices here so that no 
-                # "False clones" are created.
-                #@-at
-                #@@c
-                
-                current.clearVisitedInTree()
-                
-                for p in current.self_and_subtree_iter():
-                    t = p.v.t
-                    if not t.isVisited():
-                        t.setVisited()
-                        self.maxTnodeIndex += 1
-                        t.setFileIndex(self.maxTnodeIndex)
-                #@nonl
-                #@-node:ekr.20031218072017.1558:<< reassign tnode indices >>
-                #@nl
-            c.selectVnode(current)
-        finally:
-            c.endUpdate()
+        if reassignIndices:
+            #@        << reassign tnode indices >>
+            #@+node:ekr.20031218072017.1558:<< reassign tnode indices >>
+            #@+at 
+            #@nonl
+            # putLeoOutline calls assignFileIndices (when copying nodes) so 
+            # that vnode can be associated with tnodes.
+            # However, we must _reassign_ the indices here so that no "False 
+            # clones" are created.
+            #@-at
+            #@@c
+            
+            current.clearVisitedInTree()
+            
+            for p in current.self_and_subtree_iter():
+                t = p.v.t
+                if not t.isVisited():
+                    t.setVisited()
+                    self.maxTnodeIndex += 1
+                    t.setFileIndex(self.maxTnodeIndex)
+            #@nonl
+            #@-node:ekr.20031218072017.1558:<< reassign tnode indices >>
+            #@nl
+        c.selectPosition(current)
         return current
     #@nonl
     #@-node:ekr.20031218072017.1557:finishPaste
@@ -648,12 +644,10 @@ class baseFileCommands:
                 #@nl
             ok = False
     
-        ### c.frame.tree.redraw_now(scroll=False)
-        c.requestRedraw()
-        
-        # g.trace(readAtFileNodesFlag,c.mFileName)
-    
         if ok and readAtFileNodesFlag:
+            # Redraw before reading the @file nodes so the screen isn't blank.
+            # This is important for big files like LeoPy.leo.
+            c.redraw_now()
             c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
             
         # g.trace(c.currentPosition())
@@ -1313,7 +1307,7 @@ class baseFileCommands:
         c.frame.body.onBodyChanged(current,undoType=None)
     #@nonl
     #@-node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
-    #@+node:ekr.20031218072017.2297:open
+    #@+node:ekr.20031218072017.2297:open (leoFileCommands)
     def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
     
         c = self.c ; frame = c.frame
@@ -1339,23 +1333,19 @@ class baseFileCommands:
         #@-node:ekr.20031218072017.2298:<< Set the default directory >>
         #@nl
         self.topPosition = None
-        c.beginUpdate()
-        try:
-            ok, ratio = self.getLeoFile(
-                fileName,
-                readAtFileNodesFlag=readAtFileNodesFlag,
-                silent=silent)
-            frame.resizePanesToRatio(ratio,frame.secondary_ratio)
-            if 0: # 1/30/04: this is useless.
-                if self.topPosition: 
-                    c.setTopVnode(self.topPosition)
-        finally:
-            c.endUpdate()
+        ok, ratio = self.getLeoFile(
+            fileName,
+            readAtFileNodesFlag=readAtFileNodesFlag,
+            silent=silent)
+        frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+        if 0: # 1/30/04: this is useless.
+            if self.topPosition: 
+                c.setTopVnode(self.topPosition)
         # Delete the file buffer
         self.fileBuffer = ""
         return ok
     #@nonl
-    #@-node:ekr.20031218072017.2297:open
+    #@-node:ekr.20031218072017.2297:open (leoFileCommands)
     #@+node:ekr.20031218072017.3030:readOutlineOnly
     def readOutlineOnly (self,theFile,fileName):
     

@@ -1399,6 +1399,7 @@ class leoMenu:
             # KP_F1,KP_F2,KP_F3,KP_F4,
             # KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
             #@-at
+            #@nonl
             #@-node:ekr.20031218072017.2101:<< define dict of special names >>
             #@nl
             last2 = string.lower(last)

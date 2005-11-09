@@ -717,6 +717,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         if p:
             s = p.headString()
+        else:
+            s = s or ''
     
         return max(self.minimum_headline_width,5 + len(s))
         
@@ -841,7 +843,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c
         
         # An important trace.
-        # g.trace(self.redrawCount,g.callers(7))
+        # g.trace(self.redrawCount,g.callers(9))
             
         # Do the actual redraw.
         self.redrawCount += 1

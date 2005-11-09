@@ -266,7 +266,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.4 alpha 3, build %s, November 8, 2005" % c.getBuildNumber()
+        return "Leo 4.4 alpha 3, build %s, November 9, 2005" % c.getBuildNumber()
     #@nonl
     #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
@@ -940,6 +940,8 @@ class baseCommands:
         c.fileCommands.readAtFileNodes()
         
         u.afterChangeTree(p,'Read @file Nodes',undoData)
+        
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20031218072017.1839:readAtFileNodes (commands)
     #@+node:ekr.20031218072017.2840:4.0 Commands
@@ -2856,8 +2858,6 @@ class baseCommands:
         s = g.app.gui.getTextFromClipboard()
         pasteAsClone = not reassignIndices
         undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
-        
-        # g.trace(c.canPasteOutline(s))
     
         if not s or not c.canPasteOutline(s):
             return # This should never happen.
@@ -5311,14 +5311,15 @@ class baseCommands:
     #@+node:ekr.20031218072017.2950:c.begin/endUpdate
     def beginUpdate(self):
         
-        pass
+        c = self
         
     def endUpdate(self, flag=True):
         
-        '''Request a redraw if flag is True.'''
+        '''Redraw the screen if flag is True.'''
+    
         c = self
         if flag:
-            c.requestRedraw()
+            c.redraw_now()
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
     EndUpdate = endUpdate # Compatibility with old scripts
@@ -5348,15 +5349,12 @@ class baseCommands:
     def requestRedraw (self):
     
         c = self
-        # g.trace(g.callers(9))
     
         c.frame.requestRedrawFlag = True
         
     def redraw_now (self):
         
         c = self
-        # g.trace(g.callers(9))
-    
         c.frame.requestRedrawFlag = True
         c.updateScreen()
     
@@ -5392,6 +5390,8 @@ class baseCommands:
         
         if g.app.quitting or not hasattr(frame,'top'):
             return # nullFrame's do not have a top frame.
+            
+        # g.trace(g.callers(7))
         
         if frame.wantedWidget:
             w = frame.wantedWidget

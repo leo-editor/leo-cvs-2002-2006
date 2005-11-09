@@ -2187,26 +2187,21 @@ class position (object):
     #@nonl
     #@-node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
     #@+node:ekr.20040303163330:p.setDirty
-    # Ensures that all ancestor and descentent @file nodes are marked dirty.
-    # It is much safer to do it this way.
-    
     def setDirty (self,setDescendentsDirty=True):
+        
+        '''Mark a node and all ancestor @file nodes dirty.'''
     
         p = self ; c = p.c ; dirtyVnodeList = []
-        # g.trace(g.app.count) ; g.app.count += 1
     
-        c.beginUpdate()
-        try: # update...
-            if not p.v.t.isDirty():
-                p.v.t.setDirty()
-                dirtyVnodeList.append(p.v)
-            # N.B. This must be called even if p.v is already dirty.
-            # Typing can change the @ignore state!
-            dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty(setDescendentsDirty)
-            dirtyVnodeList.extend(dirtyVnodeList2)
-            changed = len(dirtyVnodeList) > 0
-        finally:
-            c.endUpdate(changed)
+        if not p.v.t.isDirty():
+            p.v.t.setDirty()
+            dirtyVnodeList.append(p.v)
+    
+        # Important: this must be called even if p.v is already dirty.
+        # Typing can change the @ignore state!
+        dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty(setDescendentsDirty)
+        dirtyVnodeList.extend(dirtyVnodeList2)
+       
         return dirtyVnodeList
     #@nonl
     #@-node:ekr.20040303163330:p.setDirty

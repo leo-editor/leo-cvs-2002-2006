@@ -708,7 +708,7 @@ class leoFind:
             if index == stopindex:
                 return None, None
         else:
-            index = firstIndex = gui.getInsertPoint(t)
+            index = gui.getInsertPoint(t)
             stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
         while 1:
             try:
