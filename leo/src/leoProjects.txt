@@ -3633,7 +3633,7 @@ def redraw_now (self,scroll=True):
     c = self.c
     
     # An important trace.
-    g.trace(self.redrawCount,g.callers(9))
+    # g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -7272,7 +7272,7 @@ def redraw_now (self,scroll=True):
     c = self.c
     
     # An important trace.
-    g.trace(self.redrawCount,g.callers(9))
+    # g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -8129,6 +8129,28 @@ def set_focus(self,c,w):
 
 - Eliminated multiple redraws with special-case code.
 #@nonl
+#@+node:ekr.20051107102734:About the Newer World Order
+@nocolor
+
+A Newer World Order?
+
+The New World Order is that redrawing typically happens at the end of event handlers as the result of earlier requests for redraws.  (It can also happen as the result of calls to c.redraw_now.) Today I realized that a further simplification is possible: there is now nothing to prevent commands from doing the redraw immediately.
+
+If I am not mistaken this is in line with LeoUser's earlier comment to the same effect re how jyLeo does redraws.
+
+Advantages:
+
+- It's always clear where redraws happen.
+
+- There is no need for specific redraw points in the event managers.  In particular, this simplifies script buttons: they can't call c.redraw_now because the redraw for the open command must be a redraw for the *new* commander.
+
+Disadvantages:
+
+- Commands should ensure that exactly one redraw happens.  This doesn't happen automatically anymore.  OTOH, this is not likely ever to be a big problem (or even a small problem, for that matter).
+
+So the entire queuing apparatus would disappear.  One further simplification: we could eliminate all calls to xWantsFocus calls by adding a focus arg in c.redraw_now.  A value of None would trigger the logic that moves focus out of limbo.
+#@nonl
+#@-node:ekr.20051107102734:About the Newer World Order
 #@+node:ekr.20051109094502:Detecting multiple redraw
 # This isn't so easy to initialize, so it's probably more work that is useful.
 n1 = c.startRedrawCount ; n2 = c.frame.tree.redrawCount
@@ -8397,7 +8419,7 @@ def redraw_now (self,scroll=True):
     c = self.c
     
     # An important trace.
-    g.trace(self.redrawCount,g.callers(9))
+    # g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
     self.redrawCount += 1

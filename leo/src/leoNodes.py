@@ -961,7 +961,9 @@ class baseVnode (object):
     #@+node:ekr.20031218072017.3422:v.moveToRoot
     def moveToRoot (self,oldRoot=None):
     
-        """Moves the receiver to the root position"""
+        '''Moves a vnode to the root position.
+        
+        Important: oldRoot must the previous root vnode if it exists.'''
     
         v = self
     
@@ -2674,7 +2676,9 @@ class position (object):
     #@+node:ekr.20040303175026.6:p.moveToRoot
     def moveToRoot (self,oldRoot=None):
     
-        """Moves a position to the root position."""
+        '''Moves a position to the root position.
+        
+        Important: oldRoot must the previous root position if it exists.'''
     
         p = self # Do NOT copy the position!
         p.unlink()

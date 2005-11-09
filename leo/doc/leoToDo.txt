@@ -26,12 +26,13 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- (done) Make sure no calls to f.begin/endUpdate in plugins or scripts.
-- Remove calls to c.redrawNow in Save buttons.  They should not be needed.
+Design of a debugger.
 #@nonl
 #@+node:ekr.20051103092502:Update screen shots
 #@-node:ekr.20051103092502:Update screen shots
 #@+node:ekr.20051016162724:before a4
+(Later) Revise docs for c.begin/endUpdate.
+
 - Use focus-in event in minibuffer?
 
 - More clever way to analyze modules in autocomplete.
@@ -54,30 +55,12 @@ Others
 
 - Create minibuffer commands to close tabs by name.
 #@nonl
-#@+node:ekr.20051107102734:Implement Newer World Order
-A Newer World Order?
-
-The New World Order is that redrawing typically happens at the end of event handlers as the result of earlier requests for redraws.  (It can also happen as the result of calls to c.redraw_now.) Today I realized that a further simplification is possible: there is now nothing to prevent commands from doing the redraw immediately.
-
-If I am not mistaken this is in line with LeoUser's earlier comment to the same effect re how jyLeo does redraws.
-
-Advantages:
-
-- It's always clear where redraws happen.
-
-- There is no need for specific redraw points in the event managers.  In particular, this simplifies script buttons: they can't call c.redraw_now because the redraw for the open command must be a redraw for the *new* commander.
-
-Disadvantages:
-
-- Commands should ensure that exactly one redraw happens.  This doesn't happen automatically anymore.  OTOH, this is not likely ever to be a big problem (or even a small problem, for that matter).
-
-So the entire queuing apparatus would disappear.  One further simplification: we could eliminate all calls to xWantsFocus calls by adding a focus arg in c.redraw_now.  A value of None would trigger the logic that moves focus out of limbo.
-
-We are getting close to the way it is written in "The Book".
-
-I'm not going to delay a3 for this.  There is still plenty of time for comments or objections.
+#@+node:ekr.20051109144908:Cleanup: remove c.requestRedraw calls and related logic
+#@-node:ekr.20051109144908:Cleanup: remove c.requestRedraw calls and related logic
+#@+node:ekr.20051109143331:Eliminate calls to xWantsFocus?
+It would be possible to add a focus argument to c.redraw_now.
 #@nonl
-#@-node:ekr.20051107102734:Implement Newer World Order
+#@-node:ekr.20051109143331:Eliminate calls to xWantsFocus?
 #@+node:ekr.20051103094005:Fix bugs
 #@+node:ekr.20051103093034:Fix problems applying settings
 #@+node:ekr.20051103093034.1:Report

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="19736" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="20074" clone_windows="0"/>
 <globals body_outline_ratio="0.518181818182">
-	<global_window_position top="11" left="412" height="915" width="808"/>
+	<global_window_position top="19" left="349" height="915" width="807"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050404094627" a="E"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Spell</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
 <v t="ekr.20050407144417"><vh>@settings</vh>
@@ -30,7 +30,7 @@
 <v t="ekr.20050812123002.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
 </v>
 </v>
-<v t="ekr.20050901054622" a="TV"><vh>@button Save</vh></v>
+<v t="ekr.20050901054622"><vh>@button Save</vh></v>
 <v t="ekr.20050901055150"><vh>@@button promote</vh></v>
 <v t="ekr.20050901060119"><vh>@@button def list</vh>
 <v t="ekr.20050901061220"><vh>createDefList</vh></v>
@@ -680,6 +680,7 @@
 </v>
 <v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
+<v t="ekr.20051109112939"><vh>4.4 alpha 2</vh></v>
 <v t="ekr.20051011141302"><vh>4.4 alpha 1</vh>
 <v t="ekr.20051014103845.3"><vh>Quick Start</vh></v>
 <v t="ekr.20051015141215"><vh>The 'key' features of 4.4</vh></v>
@@ -2174,7 +2175,7 @@
 </v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20051028051444" a="E"><vh>4.4 alpha 2</vh>
+<v t="ekr.20051028051444" a="TV"><vh>4.4 alpha 3</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -2218,6 +2219,28 @@
 </v>
 <v t="ekr.20051101163145"><vh>Many code-level improvements</vh></v>
 <v t="ekr.20051101163404"><vh>Fixed minor bugs</vh></v>
+</v>
+<v t="ekr.20051109112610"><vh>New in alpha 3</vh>
+<v t="ekr.20051109112826"><vh>The New and Newer World Orders</vh></v>
+<v t="ekr.20051109141223"><vh>Bugs fixed...</vh>
+<v t="ekr.20051109112826.217"><vh>Fix crasher in Open logic</vh></v>
+<v t="ekr.20051109112826.227"><vh>(Undo ends editing</vh></v>
+<v t="ekr.20051109112826.257"><vh>Disabled minibuffer when not in use</vh></v>
+<v t="ekr.20051109112826.315"><vh>Fixed bug in Find Backward</vh></v>
+<v t="ekr.20051109112826.265"><vh>Improved Spell tab</vh></v>
+</v>
+<v t="ekr.20051109141524"><vh>New features</vh>
+<v t="ekr.20051109112826.222"><vh>Created scripts.leo and unitTest.leo</vh></v>
+<v t="ekr.20051109112826.254"><vh>c.executeMinibufferCommand executes a minibuffer command by name</vh></v>
+<v t="ekr.20051109112826.310"><vh>Improved perl entries in language dicts</vh>
+<v t="ekr.20051109112826.311"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+</v>
+<v t="ekr.20051109141524.1"><vh>Code-level changes</vh>
+<v t="ekr.20051109112826.223"><vh>Changed  edit_text to edit_widget everywhere</vh></v>
+<v t="ekr.20051109112826.224"><vh>Removed tree ivars</vh></v>
+<v t="ekr.20051109142920"><vh>Removed frame.begin/endUpdate</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -10475,7 +10498,14 @@ c.doCommand catches all exceptions thrown by the command::
 
 You can also call command handlers directly so that hooks will not be called::
 
-    c.markHeadline()</t>
+    c.markHeadline()
+
+You can invoke minibuffer commands by name.  For example::
+
+    c.executeMinibufferCommand('open-outline')
+
+c.keyHandler.funcReturn contains the value returned from the command.
+In many cases, as above, this value is simply 'break'.</t>
 <t tx="ekr.20040403173920.19">Each commander maintains its own preferences.
 Your scripts can get the following ivars::
 
@@ -10603,7 +10633,8 @@ Moving nodes::
 
     p.moveAfter(v2)           # move p after v2
     p.moveToNthChildOf(v2,n)  # move p to the n'th child of v2
-    p.moveToRoot()            #  make p the root position
+    p.moveToRoot(oldRoot)     # make p the root position.
+                              # oldRoot must be the old root position if it exists.
 
 The "visited" bit may be used by commands or scripts for any purpose.
 Many commands use this bits for tree traversal, so these bits do not persist::
@@ -21626,9 +21657,9 @@ def f (event):
 
 k.registerCommand('print-hello','Alt-Ctrl-Shift-p',f)
 k.registerCommand('print-hello2',None,f)</t>
-<t tx="ekr.20051028051444">Leo 4.4 alpha 2                 November 2, 2005
+<t tx="ekr.20051028051444">Leo 4.4 alpha 3                 November 9, 2005
 
-Leo 4.4 a2 is a big step forward in meeting the following goals:
+Leo 4.4 a3 is a big step forward in meeting the following goals:
 
 - To allow Emacs and Vim users to retain their present 'finger habits'.
 - To support an emacs-like minibuffer, complete with typing completion.
@@ -21667,14 +21698,12 @@ immediately rather than queuing them for idle time.
 - Several fixes made to the 4.3 code base. In particular, Leo 4.4 continues
 after crashes much more reliably than in any previous version.
 
-Known bugs in Leo 4.4a2
------------------------
-- Typing in the minibuffer doesn't work if the focus is 'in limbo', that is, not
-in the outline, body or log panes. Leo usually forces the focus to the body pane
-in such cases, but the code doesn't always work and sometimes causes other
-problems. This *minor* annoyance will be fixed completely in Leo 4.4a3.
+- Leo now updates the screen immediately rather than waiting for idle time.
+This 'New World Order' simplifies the code and improves performance.
 
-- Several minibuffer commands do not work; many new features lack unit tests.
+Known bugs in Leo 4.4a3
+-----------------------
+- Several minibuffer commands do not work and lack unit tests.
 
 Coming in later releases of Leo 4.4:
 ------------------------------------
@@ -22075,5 +22104,150 @@ For example::
 
 - The @bool autocomplete-brackets setting controls whether Leo types a matching
 closing bracket immediately when you type '(', '[' or '{'.</t>
+<t tx="ekr.20051109112610"></t>
+<t tx="ekr.20051109112826">@nocolor
+
+The New World Order means that drawing happens immediately, not at idle time.
+
+The Newer World Order means that c.endUpdate is equivalent to c.redraw_now.</t>
+<t tx="ekr.20051109112826.217">http://sourceforge.net/forum/message.php?msg_id=3411030
+
+The fix was to add guards so the code does not assume w._name exists for all widgets w.</t>
+<t tx="ekr.20051109112826.222">Scripts.leo contains general-purpose scripts.
+
+unitTest.leo contains all of Leo's unit tests.
+
+test.leo is now for recent tests.  Its small size speeds up my workflow.</t>
+<t tx="ekr.20051109112826.223">Changed the following plugins:
+
+cleo.py, footprints.py,__wx_gui.py, zodb.py</t>
+<t tx="ekr.20051109112826.224">Removed tree.redrawScheduled, tree.updateCount and tree.disableRedraw
+
+Three major complications are gone.</t>
+<t tx="ekr.20051109112826.227"></t>
+<t tx="ekr.20051109112826.254">http://sourceforge.net/forum/message.php?msg_id=3412644
+
+You can invoke minibuffer commands by name.  For example:
+
+c.executeMinibufferCommand('open-outline')
+
+Note: c.keyHandler.funcReturn contains the value returned from the command. In
+many cases, as above, this value is simply 'break'.</t>
+<t tx="ekr.20051109112826.257">For now, I just set c.useTextMinibuffer = False,
+so Leo uses a Tk.Label rather than a Tk.Text widget.
+
+This will cause less confusion than always having the minibuffer enabled.</t>
+<t tx="ekr.20051109112826.265">http://sourceforge.net/forum/message.php?msg_id=3415021
+
+The code now uses the settings in @page Spell tab in leoSettings.leo.</t>
+<t tx="ekr.20051109112826.310">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3414639
+
+The entries for Perl and Perlpod are now as follows:
+
+@color
+
+self.language_extension_dict = {
+    "perl" : "pl",
+    "perlpod" : "pod",
+}
+
+self.extension_dict = {
+    "pl"    : "perl",
+    "pod"   : "perlod",
+}</t>
+<t tx="ekr.20051109112826.311"># Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @&gt;", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "&lt;!-- --&gt;",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlod", # 11/7/05
+    "php"   : "php",
+    "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }</t>
+<t tx="ekr.20051109112826.315">http://sourceforge.net/forum/message.php?msg_id=3418304
+
+Fixed an edge effect when backward searching for a match that occurs at the very
+end of body text. In the process I removed an ancient hack.</t>
+<t tx="ekr.20051109112939">Withdrawn.  See notes in 4.4a3.</t>
+<t tx="ekr.20051109141223"></t>
+<t tx="ekr.20051109141524"></t>
+<t tx="ekr.20051109141524.1"></t>
+<t tx="ekr.20051109142920">This code should never have existed.  It was used only in the macro plugin.</t>
 </tnodes>
 </leo_file>

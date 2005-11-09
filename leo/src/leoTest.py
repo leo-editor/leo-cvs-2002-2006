@@ -92,7 +92,9 @@ def doTests(all,verbosity=1):
     finally:
         c.endUpdate()
     c.setChanged(changed) # Restore changed state.
-    c.selectVnode(p1) # N.B. Restore the selected node.
+    # Restore the selected node unless overridden.
+    if g.app.unitTestDict.get('restoreSelectedNode',True):
+        c.selectVnode(p1)
 #@nonl
 #@+node:ekr.20051104075904.5:class generalTestCase
 class generalTestCase(unittest.TestCase):
