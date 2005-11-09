@@ -30,7 +30,6 @@ c.spellCommands.openSpellTab()
 #@-node:ekr.20041226080857:@button Spell
 #@+node:ekr.20051013103117:@button Save
 c.save()
-c.redraw_now() # Must be done here.
 #@nonl
 #@-node:ekr.20051013103117:@button Save
 #@-all

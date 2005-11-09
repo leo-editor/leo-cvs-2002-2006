@@ -25,6 +25,9 @@ Others
 #@-node:ekr.20051012053017.2:Schedule
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
+
+- (done) Make sure no calls to f.begin/endUpdate in plugins or scripts.
+- Remove calls to c.redrawNow in Save buttons.  They should not be needed.
 #@nonl
 #@+node:ekr.20051103092502:Update screen shots
 #@-node:ekr.20051103092502:Update screen shots
@@ -13599,7 +13602,7 @@ def search (self):
         if index == stopindex:
             return None, None
     else:
-        index = firstIndex = gui.getInsertPoint(t)
+        index = gui.getInsertPoint(t)
         stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
     while 1:
         try:
@@ -13695,7 +13698,7 @@ module to uncompress/compress the file, saving a lot of disk space.
 What do you think of this?
 #@nonl
 #@-node:ekr.20040226092546:Request 2
-#@+node:ekr.20031218072017.2297:open
+#@+node:ekr.20031218072017.2297:open (leoFileCommands)
 def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
 
     c = self.c ; frame = c.frame
@@ -13704,18 +13707,14 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
     self.fileIndex = 0
     << Set the default directory >>
     self.topPosition = None
-    c.beginUpdate()
-    try:
-        ok, ratio = self.getLeoFile(
-            fileName,
-            readAtFileNodesFlag=readAtFileNodesFlag,
-            silent=silent)
-        frame.resizePanesToRatio(ratio,frame.secondary_ratio)
-        if 0: # 1/30/04: this is useless.
-            if self.topPosition: 
-                c.setTopVnode(self.topPosition)
-    finally:
-        c.endUpdate()
+    ok, ratio = self.getLeoFile(
+        fileName,
+        readAtFileNodesFlag=readAtFileNodesFlag,
+        silent=silent)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
     # Delete the file buffer
     self.fileBuffer = ""
     return ok
@@ -13730,7 +13729,7 @@ if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >>
-#@-node:ekr.20031218072017.2297:open
+#@-node:ekr.20031218072017.2297:open (leoFileCommands)
 #@+node:ekr.20050428063105:newOpen (From chapters.py)
 oldOpen = leoFileCommands.fileCommands.open
 
@@ -20337,7 +20336,7 @@ if headString:
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-#@+node:ekr.20031218072017.2297:open
+#@+node:ekr.20031218072017.2297:open (leoFileCommands)
 def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
 
     c = self.c ; frame = c.frame
@@ -20346,18 +20345,14 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
     self.fileIndex = 0
     << Set the default directory >>
     self.topPosition = None
-    c.beginUpdate()
-    try:
-        ok, ratio = self.getLeoFile(
-            fileName,
-            readAtFileNodesFlag=readAtFileNodesFlag,
-            silent=silent)
-        frame.resizePanesToRatio(ratio,frame.secondary_ratio)
-        if 0: # 1/30/04: this is useless.
-            if self.topPosition: 
-                c.setTopVnode(self.topPosition)
-    finally:
-        c.endUpdate()
+    ok, ratio = self.getLeoFile(
+        fileName,
+        readAtFileNodesFlag=readAtFileNodesFlag,
+        silent=silent)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
     # Delete the file buffer
     self.fileBuffer = ""
     return ok
@@ -20372,7 +20367,7 @@ if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >>
-#@-node:ekr.20031218072017.2297:open
+#@-node:ekr.20031218072017.2297:open (leoFileCommands)
 #@+node:ekr.20031218072017.3030:readOutlineOnly
 def readOutlineOnly (self,theFile,fileName):
 

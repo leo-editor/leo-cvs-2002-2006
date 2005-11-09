@@ -1358,8 +1358,7 @@ KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
 KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
-<t tx="ekr.20051010093913">c.save()
-c.redraw_now()</t>
+<t tx="ekr.20051010093913">c.save()</t>
 <t tx="ekr.20051010112558">@color
 
 # Important: the print-commands and print-bindings show what bindings are in effect.

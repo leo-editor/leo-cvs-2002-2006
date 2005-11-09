@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8448" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8458" clone_windows="0"/>
 <globals body_outline_ratio="0.490396927017">
-	<global_window_position top="10" left="247" height="781" width="864"/>
+	<global_window_position top="77" left="331" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1621,9 +1621,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231" a="E"><vh>Unit tests for Tkinter</vh>
+<v t="ekr.20051107115231" a="E"><vh>Unit tests for Redraws</vh>
 <v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
+<v t="ekr.20051109034758"><vh>pasted node</vh></v>
 <v t="ekr.20051107115231.3"><vh>Reference</vh>
 <v t="ekr.20051107115231.4"><vh>manufactureKeyPressForCommandName</vh></v>
 <v t="ekr.20051107115231.5"><vh>simulateCommand</vh></v>
@@ -1693,12 +1694,10 @@
 <v t="ekr.20051107115231.9"><vh>@test Select a node when file is first loaded</vh></v>
 <v t="ekr.20051107115231.10" a="TV"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
-<v t="ekr.20051107115231.12"><vh>@test openWithFileName draws the screen once</vh></v>
-<v t="ekr.20051108063253"><vh>@test openWithFileName draws the screen once</vh></v>
-<v t="ekr.20051108063032"><vh>@test pasteNode draws the screen once</vh>
+<v t="ekr.20051108063253"><vh>@test openWithFileName draws the screen at least once</vh></v>
+<v t="ekr.20051108063032"><vh>@test pasteNode draws the screen exactly once</vh>
 <v t="ekr.20051108063458.46"><vh>&lt;&lt; define s, the node to be pasted &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
 </v>
 <v t="ekr.20051107115231.13"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
@@ -1715,9 +1714,14 @@
 <v t="ekr.20051107115231.25"><vh>@test typing in headline recomputes width</vh></v>
 <v t="ekr.20051107115231.26"><vh>@test paste in headline recomputes width</vh></v>
 <v t="ekr.20051107115231.28"><vh>@test selecting new node retains paste in headline</vh></v>
+<v t="ekr.20051109091152"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
+<v t="ekr.20051109091731"><vh>@test typing in non-empty body text does not redraw the screen</vh></v>
+<v t="ekr.20051109095247"><vh>@test writing to log leaves focus in the log</vh></v>
 </v>
 </v>
 <v t="ekr.20051108141141"><vh>Not ready yet</vh>
+<v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
+<v t="ekr.20051109091333"><vh>@test deleting the last body character text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051107115231.29"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
 <v t="ekr.20051107115231.30"><vh>@test Find keeps focus in headline &amp; shows selected text</vh></v>
@@ -7859,7 +7863,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13803,17 +13807,6 @@ try:
     assert c2.frame.tree.redrawCount &gt; 0
 finally:
     c2.close()</t>
-<t tx="ekr.20051107115231.12">c.redraw_now() # To make node visible
-
-k = c.keyHandler
-fileName = g.os_path_join('..','scripts','scripts.leo')
-ok,frame2 = g.openWithFileName(fileName,c)
-try:
-    assert ok
-    assert frame2
-    assert frame2.tree.redrawCount == 1
-finally:
-    frame2.c.close()</t>
 <t tx="ekr.20051107115231.13"></t>
 <t tx="ekr.20051107115231.14">import leoTest ; u = leoTest.testUtils()
 
@@ -13859,8 +13852,9 @@ try:
     w.event_generate('&lt;Return&gt;')
     assert p.headString() == h + paste
 finally:
-    p.initHeadString(h)
-    c.redraw_now()</t>
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
 <t tx="ekr.20051107115231.17">import leoTest ; u = leoTest.testUtils()
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
@@ -13881,8 +13875,9 @@ try:
     k.manufactureKeyPressForCommandName(w,'undo')
     assert p.headString() == h
 finally:
-    p.initHeadString(h)
-    c.redraw_now()</t>
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
 <t tx="ekr.20051107115231.18">import leoTest ; u = leoTest.testUtils()
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
@@ -13904,8 +13899,9 @@ try:
     k.manufactureKeyPressForCommandName(w,'undo')
     assert p.headString() == h
 finally:
-    p.initHeadString(h)
-    c.redraw_now()</t>
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
 <t tx="ekr.20051107115231.19">import leoTest ; u = leoTest.testUtils()
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
@@ -13926,8 +13922,9 @@ try:
     k.manufactureKeyPressForCommandName(w,'undo')
     assert p.headString() == h
 finally:
-    p.initHeadString(h)
-    c.redraw_now()</t>
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
 <t tx="ekr.20051107115231.20">import leoTest ; u = leoTest.testUtils()
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
@@ -13948,8 +13945,9 @@ try:
     k.manufactureKeyPressForCommandName(w,'undo')
     assert p.headString() == h
 finally:
-    p.initHeadString(h)
-    c.redraw_now()</t>
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
 <t tx="ekr.20051107115231.21">import leoTest ; u = leoTest.testUtils()
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
@@ -13970,8 +13968,9 @@ try:
     k.manufactureKeyPressForCommandName(w,'undo')
     assert p.headString() == h
 finally:
-    p.initHeadString(h)
-    c.redraw_now()</t>
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
 <t tx="ekr.20051107115231.22">import leoTest ; u = leoTest.testUtils()
 h = 'Test headline abc'
 p = u.findNodeAnywhere(c,h)
@@ -14102,7 +14101,8 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.29">if 0:
+<t tx="ekr.20051107115231.29">if 0: # There are problems with the focus in the find tab.
+    
     import leoEditCommands
     s = 'foo' ; bodyCtrl = c.frame.body.bodyCtrl
     # Don't actually open the Find tab:
@@ -14136,8 +14136,9 @@ finally:
 n = c.frame.tree.redrawCount
 g.app.gui.replaceClipboardWith(s)
 c.pasteOutline()
+n2 = c.frame.tree.redrawCount
 try:
-    assert c.frame.tree.redrawCount == n + 1
+    assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
 finally:
     c.undoer.undo()
     c.redraw_now()</t>
@@ -14149,7 +14150,7 @@ ok,frame2 = g.openWithFileName(fileName,c)
 try:
     assert ok
     assert frame2
-    assert frame2.tree.redrawCount == 1
+    assert frame2.tree.redrawCount &gt;= 1
 finally:
     frame2.c.close()</t>
 <t tx="ekr.20051108063458"></t>
@@ -14522,5 +14523,65 @@ s = '''&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;/leo_file&gt;'''</t>
 <t tx="ekr.20051108140810"></t>
 <t tx="ekr.20051108141141"></t>
+<t tx="ekr.20051109034758"></t>
+<t tx="ekr.20051109091152">import leoTest ; u = leoTest.testUtils()
+
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+n = c.frame.tree.redrawCount
+c.frame.bodyWantsFocus(later=False)
+try:
+    c.frame.body.bodyCtrl.event_generate('a')
+    n2 = c.frame.tree.redrawCount
+    assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()</t>
+<t tx="ekr.20051109091333">if 0: # Not ready yet: generating a backspace seems impossible!
+
+    import leoTest ; u = leoTest.testUtils()
+
+    h = 'Test headline abc'
+    p = u.findNodeAnywhere(c,h)
+    c.selectPosition(p)
+    p.setBodyString('a')
+    c.redraw_now() # To make node visible and to set the icon.
+    try:
+        c.frame.bodyWantsFocus(later=False)
+        n = c.frame.tree.redrawCount
+        w = c.frame.body.bodyCtrl
+        w.mark_set('insert','end')
+        w.event_generate('&lt;BackSpace&gt;')
+        w.update_idletasks()
+        n2 = c.frame.tree.redrawCount
+        assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
+    finally:
+        if 0:
+            p.setBodyString('')
+            c.redraw_now()</t>
+<t tx="ekr.20051109091731">import leoTest ; u = leoTest.testUtils()
+
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+p.setBodyString('a')
+c.redraw_now() # To make node visible
+n = c.frame.tree.redrawCount
+c.frame.bodyWantsFocus(later=False)
+try:
+    c.frame.body.bodyCtrl.event_generate('a')
+    n2 = c.frame.tree.redrawCount
+    assert n2 == n,'too many redraws: %d' % (n2-n)
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()</t>
+<t tx="ekr.20051109095247">g.es('test of write to log')
+c.updateScreen()
+w = g.app.gui.get_focus(c.frame)
+assert w._name.startswith('log'), 'bad name %s' % (w._name)</t>
 </tnodes>
 </leo_file>

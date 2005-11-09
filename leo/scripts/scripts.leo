@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons</vh>
+<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -27,7 +27,7 @@
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
-<v t="ekr.20050911112310"><vh>@button Save</vh></v>
+<v t="ekr.20050911112310" a="TV"><vh>@button Save</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051011211253"><vh>Debugger canvas</vh>
@@ -187,7 +187,7 @@
 </v>
 <v t="ekr.20050824190822"><vh>Zope test</vh></v>
 </v>
-<v t="ekr.20051103074730" a="E"><vh>Scripts</vh>
+<v t="ekr.20051103074730"><vh>Scripts</vh>
 <v t="ekr.20040715105834"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
@@ -564,7 +564,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051104082026" a="TV"><vh>Important</vh>
+<v t="ekr.20051104082026"><vh>Important</vh>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -641,13 +641,13 @@
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
 </v>
-<v t="ekr.20051104082605"><vh>Others</vh>
+<v t="ekr.20051104082605" a="E"><vh>Others</vh>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
 <v t="EKR.20040424091411"><vh>Compare ignoring newlines</vh></v>
-<v t="ekr.20040319111213"><vh>FilterHoist script</vh>
+<v t="ekr.20040319111213" a="E"><vh>FilterHoist script</vh>
 <v t="ekr.20040319111213.1"><vh>description</vh></v>
 <v t="ekr.20040319142708"><vh>filter</vh></v>
-<v t="ekr.20040319142202"><vh>old code</vh>
+<v t="ekr.20040319142202" a="E"><vh>old code</vh>
 <v t="ekr.20040319111213.2"><vh>filter</vh></v>
 <v t="ekr.20040319111213.3"><vh>search</vh></v>
 </v>
@@ -8510,8 +8510,7 @@ def removeConflicts (self):
 def trace (self,s):
     
     self.main.trace(s)</t>
-<t tx="ekr.20050911112310">c.save()
-c.redraw_now()</t>
+<t tx="ekr.20050911112310">c.save()</t>
 <t tx="ekr.20050911113403">def finishCreate(self):
     
     # g.trace(self)

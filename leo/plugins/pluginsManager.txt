@@ -45,6 +45,7 @@ rst3.py
 # zodb.py
 # testRegisterCommand.py
 rClick.py
+#TabWindow.py
 plugin_manager.py
 
 # Icon area: order is important.

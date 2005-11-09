@@ -2418,7 +2418,7 @@ d = {
 #@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
 #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
 #@-node:ekr.20051009120608:(ctors & finishCreate)
-#@+node:ekr.20051103114520.2:(Newer World Order)
+#@+node:ekr.20051103114520.2:(New World Order)
 #@+node:ekr.20051027135712:a2 Notes
 @nocolor
 
@@ -8121,7 +8121,7 @@ def set_focus(self,c,w):
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
 #@-node:ekr.20051105073439.1:Traces
-#@-node:ekr.20051103114520.2:(Newer World Order)
+#@-node:ekr.20051103114520.2:(New World Order)
 #@+node:ekr.20051109040029:(Moved to Newer World Order)
 @
 
@@ -9335,6 +9335,27 @@ def setDirty (self,setDescendentsDirty=True):
     return dirtyVnodeList
 #@nonl
 #@-node:ekr.20040303163330:p.setDirty
+#@+node:ekr.20051009045404:createFirstTreeNode
+def createFirstTreeNode (self):
+    
+    f = self ; c = f.c
+
+    t = leoNodes.tnode()
+    v = leoNodes.vnode(c,t)
+    p = leoNodes.position(v,[])
+    v.initHeadString("NewHeadline")
+    p.moveToRoot()
+
+    c.beginUpdate()
+    try:
+        c.selectVnode(p)
+        c.redraw()
+        c.frame.getFocus()
+        c.editPosition(p)
+    finally:
+        c.endUpdate(False)
+#@nonl
+#@-node:ekr.20051009045404:createFirstTreeNode
 #@-node:ekr.20051109090037:Special cases
 #@-node:ekr.20051109040029:(Moved to Newer World Order)
 #@+node:ekr.20051103112558:4.4a3 projects
