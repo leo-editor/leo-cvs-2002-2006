@@ -876,26 +876,6 @@ class leoTree:
     #@nonl
     #@-node:ekr.20031218072017.3713:Tree operations
     #@-node:ekr.20031218072017.3706: Must be defined in subclasses
-    #@+node:ekr.20031218072017.3714:beginUpdate
-    def beginUpdate (self):
-    
-        pass
-    #@nonl
-    #@-node:ekr.20031218072017.3714:beginUpdate
-    #@+node:ekr.20031218072017.3715:tree.endUpdate
-    def endUpdate (self,flag=True):
-        
-        '''Redraw the tree if this is the outermost endUpdate.
-        
-        Calls to g.es() will disable redraws, so calls to c.endUpdate
-        should follow all such writes to the log pane.'''
-        
-        c = self.c
-    
-        if flag:
-            c.requestRedraw()
-    #@nonl
-    #@-node:ekr.20031218072017.3715:tree.endUpdate
     #@+node:ekr.20031218072017.3716:Getters/Setters (tree)
     def getEditTextDict(self,v):
         # New in 4.2: the default is an empty list.
