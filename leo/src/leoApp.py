@@ -168,7 +168,7 @@ class LeoApp:
             "p"     : "pascal",
             # "perl"  : "perl",
             "pl"    : "perl",   # 11/7/05
-            "pod"   : "perlod", # 11/7/05
+            "pod"   : "perlpod", # 11/7/05
             "php"   : "php",
             "py"    : "python",
             "sql"   : "plsql", # qt02537 2005-05-27
