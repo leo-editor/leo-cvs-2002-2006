@@ -2112,15 +2112,7 @@ def createFirstTreeNode (self):
     p = leoNodes.position(v,[])
     v.initHeadString("NewHeadline")
     p.moveToRoot()
-
-    c.beginUpdate()
-    try:
-        c.selectVnode(p)
-        c.redraw()
-        c.frame.getFocus()
-        c.editPosition(p)
-    finally:
-        c.endUpdate(False)
+    c.editPosition(p)
 #@nonl
 #@-node:ekr.20051009045404:createFirstTreeNode
 #@+node:ekr.20050920094212:f.createMiniBufferWidget
@@ -3153,7 +3145,7 @@ def OnPasteFromMenu (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
         f.body.onBodyChanged(p,undoType='Typing')
-        c.updateScreen()
+        c.redraw_now()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -3165,6 +3157,7 @@ def OnPasteFromMenu (self):
         w.configure(width=f.tree.headWidth(s=s))
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
+        c.redraw_now()
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -3184,12 +3177,10 @@ def abortEditLabelCommand (self):
         # Revert the headline text.
         w.delete("1.0","end")
         w.insert("end",tree.revertHeadline)
-    
-        # Duplicate relevant logic from tree.onHeadChanged.
         p.initHeadString(tree.revertHeadline)
-        tree.endEditLabel()
-        c.redraw()
+        c.endEditing()
         c.selectPosition(c.currentPosition())
+        c.redraw_now()
 #@nonl
 #@-node:ekr.20031218072017.3981:abortEditLabelCommand
 #@+node:ekr.20031218072017.3982:endEditLabelCommand
@@ -3323,7 +3314,7 @@ def cycleFocus (self,event):
 #@-node:ekr.20051029065806:Commands
 #@+node:ekr.20051106103835:Drawing
 #@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
-#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 def beginUpdate(self):
     
     c = self
@@ -3339,7 +3330,7 @@ def endUpdate(self, flag=True):
 BeginUpdate = beginUpdate # Compatibility with old scripts
 EndUpdate = endUpdate # Compatibility with old scripts
 #@nonl
-#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 #@+node:ekr.20031218072017.2951:c.bringToFront
 def bringToFront(self):
 
@@ -3360,44 +3351,26 @@ def requestRecolor (self):
     c.frame.requestRecolorFlag = True
 #@nonl
 #@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
-#@+node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-def requestRedraw (self):
-
-    c = self
-
-    c.frame.requestRedrawFlag = True
-    
+#@+node:ekr.20031218072017.2954:c.redraw_now
 def redraw_now (self):
-    
-    c = self
-    c.frame.requestRedrawFlag = True
-    c.updateScreen()
-
-# Compatibility with old scripts
-redraw = Redraw = repaint = Repaint = requestRedraw
-#@nonl
-#@-node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-#@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-def updateScreen (self):
-    
-    '''Update the screen after a command.'''
     
     c = self
     
     if g.app.quitting or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
 
-    if c.frame.requestRedrawFlag:
-        c.frame.tree.redraw_now()
-        c.frame.requestRedrawFlag = False
-
+    c.frame.tree.redraw_now()
     c.frame.top.update_idletasks()
     c.setFocusHelper()
     
     if c.frame.requestRecolorFlag:
         c.frame.requestRecolorFlag = False
         c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now
 #@nonl
+#@-node:ekr.20031218072017.2954:c.redraw_now
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
@@ -3429,7 +3402,6 @@ def setFocusHelper (self):
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
             # g.app.gui.set_focus(c,w)
@@ -3439,7 +3411,6 @@ def setFocusHelper (self):
         g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
-#@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
 #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@+node:ekr.20051001050607:endCommand
 def endCommand (self,event,commandName):
@@ -3475,100 +3446,9 @@ def endCommand (self,event,commandName):
                 pass
         bodyCtrl.update_idletasks()
         c.frame.body.onBodyChanged(p,undoType='Typing')
-        
-    c.updateScreen()
 #@nonl
 #@-node:ekr.20051001050607:endCommand
-#@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-def updateScreen (self):
-    
-    '''Update the screen after a command.'''
-    
-    c = self
-    
-    if g.app.quitting or not hasattr(c.frame,'top'):
-        return # nullFrame's do not have a top frame.
-
-    if c.frame.requestRedrawFlag:
-        c.frame.tree.redraw_now()
-        c.frame.requestRedrawFlag = False
-
-    c.frame.top.update_idletasks()
-    c.setFocusHelper()
-    
-    if c.frame.requestRecolorFlag:
-        c.frame.requestRecolorFlag = False
-        c.recolor()
-#@nonl
-#@+node:ekr.20051103114520.1:c.setFocusHelper
-def setFocusHelper (self):
-    
-    c = self ; frame = c.frame
-    
-    if g.app.quitting or not hasattr(frame,'top'):
-        return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
-    
-    if frame.wantedWidget:
-        w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
-        # It is possible that w no longer exists.
-        try:
-            g.app.gui.set_focus(c,w)
-        except Exception:
-            g.app.gui.set_focus(c,frame.body.bodyCtrl)
-        frame.wantedWidget = None
-    else:
-        # Force the widget to some standard place.
-        w = g.app.gui.get_focus(frame)
-        if not w: return
-        # Allow clicks in enclosing window frame or in dialogs.
-        name = hasattr(w,'_name') and w._name or ''
-        if (
-            name and name[0] in string.letters # A known Leo frame.
-            or w == frame.top # The top of the Leo window
-            or g.app.dialogs > 0 # A dialog.
-            or isinstance(w,Tk.Text)
-            or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
-        ):
-            # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            # g.app.gui.set_focus(c,w)
-            return
-        # Not a name created by Leo.
-        g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,frame.body.bodyCtrl)
-#@nonl
-#@-node:ekr.20051103114520.1:c.setFocusHelper
-#@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-#@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
-def recolor(self):
-
-    c = self
-    c.frame.body.recolor(c.currentPosition())
-    
-def requestRecolor (self):
-    
-    c = self
-    c.frame.requestRecolorFlag = True
-#@nonl
-#@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
-#@+node:ekr.20040803072955.55:tree.redraw
-def redraw (self,event=None):
-    
-    '''Request a screen redraw when c.updateScreen is executed.'''
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    c = self.c
-    c.requestRedraw()
-    
-force_redraw = redraw # For compatibility
-redrawAfterException = redraw # For compatibility
-#@nonl
-#@-node:ekr.20040803072955.55:tree.redraw
 #@+node:ekr.20040803072955.58:redraw_now & helper
 # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
@@ -3587,9 +3467,6 @@ def redraw_now (self,scroll=True):
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
-    
-    # Cancel any pending drawing requests.
-    c.frame.requestRedrawFlag = False
 #@nonl
 #@+node:ekr.20040803072955.59:redrawHelper
 def redrawHelper (self,scroll=True):
@@ -4559,9 +4436,7 @@ def onClickBoxClick (self,event):
         if p.isExpanded(): p.contract()
         else:              p.expand()
         self.active = True
-        # New in 4.4a3: we can call select before redrawing: no problem.
         self.select(p)
-        c.requestRedraw()
         if c.frame.findPanel:
             c.frame.findPanel.handleUserClick(p)
         if self.stayInTree:
@@ -4569,7 +4444,7 @@ def onClickBoxClick (self,event):
         else:
             c.frame.bodyWantsFocus()
     g.doHook("boxclick2",c=c,p=p,v=p,event=event)
-    c.updateScreen()
+    c.redraw_now()
 #@nonl
 #@-node:ekr.20040803072955.79:onClickBoxClick
 #@-node:ekr.20040803072955.78:Click Box...
@@ -4968,7 +4843,7 @@ def onTreeClick (self,event=None):
     c = self.c
     
     self.frame.treeWantsFocus()
-    c.updateScreen()
+    c.redraw_now()
 
     return 'break'
 #@nonl
@@ -5016,7 +4891,6 @@ def onHeadlineClick (self,event):
     except:
         g.es_event_exception("headclick")
 
-    # c.updateScreen()
     return "continue"
 #@nonl
 #@-node:ekr.20040803072955.87:onHeadlineClick
@@ -5246,6 +5120,8 @@ def editLabel (self,p):
 # Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
 
 def select (self,p,updateBeadList=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
@@ -5898,69 +5774,6 @@ w.delete("insert -%dc" % (max(1,count)),"insert")
 #@-node:ekr.20031218072017.1320:body key handlers
 #@-node:ekr.20051105090649:Event handlers
 #@+node:ekr.20051022152427:Focus
-#@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-def updateScreen (self):
-    
-    '''Update the screen after a command.'''
-    
-    c = self
-    
-    if g.app.quitting or not hasattr(c.frame,'top'):
-        return # nullFrame's do not have a top frame.
-
-    if c.frame.requestRedrawFlag:
-        c.frame.tree.redraw_now()
-        c.frame.requestRedrawFlag = False
-
-    c.frame.top.update_idletasks()
-    c.setFocusHelper()
-    
-    if c.frame.requestRecolorFlag:
-        c.frame.requestRecolorFlag = False
-        c.recolor()
-#@nonl
-#@+node:ekr.20051103114520.1:c.setFocusHelper
-def setFocusHelper (self):
-    
-    c = self ; frame = c.frame
-    
-    if g.app.quitting or not hasattr(frame,'top'):
-        return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
-    
-    if frame.wantedWidget:
-        w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
-        # It is possible that w no longer exists.
-        try:
-            g.app.gui.set_focus(c,w)
-        except Exception:
-            g.app.gui.set_focus(c,frame.body.bodyCtrl)
-        frame.wantedWidget = None
-    else:
-        # Force the widget to some standard place.
-        w = g.app.gui.get_focus(frame)
-        if not w: return
-        # Allow clicks in enclosing window frame or in dialogs.
-        name = hasattr(w,'_name') and w._name or ''
-        if (
-            name and name[0] in string.letters # A known Leo frame.
-            or w == frame.top # The top of the Leo window
-            or g.app.dialogs > 0 # A dialog.
-            or isinstance(w,Tk.Text)
-            or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
-        ):
-            # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            # g.app.gui.set_focus(c,w)
-            return
-        # Not a name created by Leo.
-        g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,frame.body.bodyCtrl)
-#@nonl
-#@-node:ekr.20051103114520.1:c.setFocusHelper
-#@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
 #@+node:ekr.20050120083053:Delayed Focus (tkFrame)
 @ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
 
@@ -6069,7 +5882,6 @@ def setFocusHelper (self):
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
             # g.app.gui.set_focus(c,w)
@@ -6094,6 +5906,8 @@ selectVnode = selectPosition
 # Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
 
 def select (self,p,updateBeadList=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
@@ -6479,9 +6293,7 @@ def masterCommand (self,event,func,stroke):
     # We *must not* interfere with the global state in the macro class.
     if c.macroCommands.recordingMacro:
         done = c.macroCommands.startKbdMacro(event)
-        if done:
-            c.updateScreen()
-            return 'break'
+        if done: return 'break'
         
     # g.trace(stroke,k.abortAllModesKey)
 
@@ -6489,13 +6301,11 @@ def masterCommand (self,event,func,stroke):
         k.clearState()
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
-        c.updateScreen()
         return 'break'
 
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
-        c.updateScreen()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -6507,14 +6317,11 @@ def masterCommand (self,event,func,stroke):
             k.regXKey = keysym
             k.regx.iter.next() # EKR: next() may throw StopIteration.
         finally:
-            c.updateScreen()
             return 'break'
 
     if k.abbrevOn:
         expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded:
-            c.updateScreen()
-            return 'break'
+        if expanded: return 'break'
 
     if func: # Func is an argument.
         # g.trace('executing func',commandName)
@@ -6534,8 +6341,7 @@ def masterCommand (self,event,func,stroke):
     else:
         # Pass the stroke to one of Leo's event handlers.
         val = self.handleDefaultChar(event)
-        
-    c.updateScreen()
+
     # g.trace('returns %s' % repr(val))
     return val
 #@nonl
@@ -6648,8 +6454,6 @@ def endCommand (self,event,commandName):
                 pass
         bodyCtrl.update_idletasks()
         c.frame.body.onBodyChanged(p,undoType='Typing')
-        
-    c.updateScreen()
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@-node:ekr.20051104100657:keyHandler
@@ -6885,7 +6689,7 @@ def OnPasteFromMenu (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
         f.body.onBodyChanged(p,undoType='Typing')
-        c.updateScreen()
+        c.redraw_now()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -6897,13 +6701,14 @@ def OnPasteFromMenu (self):
         w.configure(width=f.tree.headWidth(s=s))
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
+        c.redraw_now()
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20051105121438:Pastes
 #@+node:ekr.20051105073439.1:Traces
 #@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
-#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 def beginUpdate(self):
     
     c = self
@@ -6919,7 +6724,7 @@ def endUpdate(self, flag=True):
 BeginUpdate = beginUpdate # Compatibility with old scripts
 EndUpdate = endUpdate # Compatibility with old scripts
 #@nonl
-#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 #@+node:ekr.20031218072017.2951:c.bringToFront
 def bringToFront(self):
 
@@ -6940,44 +6745,26 @@ def requestRecolor (self):
     c.frame.requestRecolorFlag = True
 #@nonl
 #@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
-#@+node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-def requestRedraw (self):
-
-    c = self
-
-    c.frame.requestRedrawFlag = True
-    
+#@+node:ekr.20031218072017.2954:c.redraw_now
 def redraw_now (self):
-    
-    c = self
-    c.frame.requestRedrawFlag = True
-    c.updateScreen()
-
-# Compatibility with old scripts
-redraw = Redraw = repaint = Repaint = requestRedraw
-#@nonl
-#@-node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-#@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-def updateScreen (self):
-    
-    '''Update the screen after a command.'''
     
     c = self
     
     if g.app.quitting or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
 
-    if c.frame.requestRedrawFlag:
-        c.frame.tree.redraw_now()
-        c.frame.requestRedrawFlag = False
-
+    c.frame.tree.redraw_now()
     c.frame.top.update_idletasks()
     c.setFocusHelper()
     
     if c.frame.requestRecolorFlag:
         c.frame.requestRecolorFlag = False
         c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now
 #@nonl
+#@-node:ekr.20031218072017.2954:c.redraw_now
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
@@ -7009,7 +6796,6 @@ def setFocusHelper (self):
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
             # g.app.gui.set_focus(c,w)
@@ -7019,7 +6805,6 @@ def setFocusHelper (self):
         g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
-#@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
 #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@+node:ekr.20051105100804:keyHandler
 #@+node:ekr.20050920085536.65: masterCommand & helpers
@@ -7055,9 +6840,7 @@ def masterCommand (self,event,func,stroke):
     # We *must not* interfere with the global state in the macro class.
     if c.macroCommands.recordingMacro:
         done = c.macroCommands.startKbdMacro(event)
-        if done:
-            c.updateScreen()
-            return 'break'
+        if done: return 'break'
         
     # g.trace(stroke,k.abortAllModesKey)
 
@@ -7065,13 +6848,11 @@ def masterCommand (self,event,func,stroke):
         k.clearState()
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
-        c.updateScreen()
         return 'break'
 
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
-        c.updateScreen()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -7083,14 +6864,11 @@ def masterCommand (self,event,func,stroke):
             k.regXKey = keysym
             k.regx.iter.next() # EKR: next() may throw StopIteration.
         finally:
-            c.updateScreen()
             return 'break'
 
     if k.abbrevOn:
         expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded:
-            c.updateScreen()
-            return 'break'
+        if expanded: return 'break'
 
     if func: # Func is an argument.
         # g.trace('executing func',commandName)
@@ -7110,8 +6888,7 @@ def masterCommand (self,event,func,stroke):
     else:
         # Pass the stroke to one of Leo's event handlers.
         val = self.handleDefaultChar(event)
-        
-    c.updateScreen()
+
     # g.trace('returns %s' % repr(val))
     return val
 #@nonl
@@ -7193,20 +6970,6 @@ def handleDefaultChar(self,event):
 #@-node:ekr.20051105100804:keyHandler
 #@+node:ekr.20051105100804.1:Tree
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
-#@+node:ekr.20040803072955.55:tree.redraw
-def redraw (self,event=None):
-    
-    '''Request a screen redraw when c.updateScreen is executed.'''
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    c = self.c
-    c.requestRedraw()
-    
-force_redraw = redraw # For compatibility
-redrawAfterException = redraw # For compatibility
-#@nonl
-#@-node:ekr.20040803072955.55:tree.redraw
 #@+node:ekr.20040803072955.58:redraw_now & helper
 # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
@@ -7225,9 +6988,6 @@ def redraw_now (self,scroll=True):
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
-    
-    # Cancel any pending drawing requests.
-    c.frame.requestRedrawFlag = False
 #@nonl
 #@+node:ekr.20040803072955.59:redrawHelper
 def redrawHelper (self,scroll=True):
@@ -8107,7 +7867,7 @@ if n2 > n1 + 1:
 #@-node:ekr.20051109094502:Detecting multiple redraw
 #@+node:ekr.20051106103835:Drawing
 #@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
-#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 def beginUpdate(self):
     
     c = self
@@ -8123,7 +7883,7 @@ def endUpdate(self, flag=True):
 BeginUpdate = beginUpdate # Compatibility with old scripts
 EndUpdate = endUpdate # Compatibility with old scripts
 #@nonl
-#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 #@+node:ekr.20031218072017.2951:c.bringToFront
 def bringToFront(self):
 
@@ -8144,44 +7904,26 @@ def requestRecolor (self):
     c.frame.requestRecolorFlag = True
 #@nonl
 #@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
-#@+node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-def requestRedraw (self):
-
-    c = self
-
-    c.frame.requestRedrawFlag = True
-    
+#@+node:ekr.20031218072017.2954:c.redraw_now
 def redraw_now (self):
-    
-    c = self
-    c.frame.requestRedrawFlag = True
-    c.updateScreen()
-
-# Compatibility with old scripts
-redraw = Redraw = repaint = Repaint = requestRedraw
-#@nonl
-#@-node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-#@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-def updateScreen (self):
-    
-    '''Update the screen after a command.'''
     
     c = self
     
     if g.app.quitting or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
 
-    if c.frame.requestRedrawFlag:
-        c.frame.tree.redraw_now()
-        c.frame.requestRedrawFlag = False
-
+    c.frame.tree.redraw_now()
     c.frame.top.update_idletasks()
     c.setFocusHelper()
     
     if c.frame.requestRecolorFlag:
         c.frame.requestRecolorFlag = False
         c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now
 #@nonl
+#@-node:ekr.20031218072017.2954:c.redraw_now
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
@@ -8213,7 +7955,6 @@ def setFocusHelper (self):
             or g.app.dialogs > 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
         ):
             # g.trace('ok',hasattr(w,'_name') and w._name or '')
             # g.app.gui.set_focus(c,w)
@@ -8223,7 +7964,6 @@ def setFocusHelper (self):
         g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
-#@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
 #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@+node:ekr.20051001050607:endCommand
 def endCommand (self,event,commandName):
@@ -8259,100 +7999,9 @@ def endCommand (self,event,commandName):
                 pass
         bodyCtrl.update_idletasks()
         c.frame.body.onBodyChanged(p,undoType='Typing')
-        
-    c.updateScreen()
 #@nonl
 #@-node:ekr.20051001050607:endCommand
-#@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-def updateScreen (self):
-    
-    '''Update the screen after a command.'''
-    
-    c = self
-    
-    if g.app.quitting or not hasattr(c.frame,'top'):
-        return # nullFrame's do not have a top frame.
-
-    if c.frame.requestRedrawFlag:
-        c.frame.tree.redraw_now()
-        c.frame.requestRedrawFlag = False
-
-    c.frame.top.update_idletasks()
-    c.setFocusHelper()
-    
-    if c.frame.requestRecolorFlag:
-        c.frame.requestRecolorFlag = False
-        c.recolor()
-#@nonl
-#@+node:ekr.20051103114520.1:c.setFocusHelper
-def setFocusHelper (self):
-    
-    c = self ; frame = c.frame
-    
-    if g.app.quitting or not hasattr(frame,'top'):
-        return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
-    
-    if frame.wantedWidget:
-        w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
-        # It is possible that w no longer exists.
-        try:
-            g.app.gui.set_focus(c,w)
-        except Exception:
-            g.app.gui.set_focus(c,frame.body.bodyCtrl)
-        frame.wantedWidget = None
-    else:
-        # Force the widget to some standard place.
-        w = g.app.gui.get_focus(frame)
-        if not w: return
-        # Allow clicks in enclosing window frame or in dialogs.
-        name = hasattr(w,'_name') and w._name or ''
-        if (
-            name and name[0] in string.letters # A known Leo frame.
-            or w == frame.top # The top of the Leo window
-            or g.app.dialogs > 0 # A dialog.
-            or isinstance(w,Tk.Text)
-            or isinstance(w,Tk.Entry)
-            # or isinstance(w,Tk.Button)
-        ):
-            # g.trace('ok',hasattr(w,'_name') and w._name or '')
-            # g.app.gui.set_focus(c,w)
-            return
-        # Not a name created by Leo.
-        g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,frame.body.bodyCtrl)
-#@nonl
-#@-node:ekr.20051103114520.1:c.setFocusHelper
-#@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-#@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
-def recolor(self):
-
-    c = self
-    c.frame.body.recolor(c.currentPosition())
-    
-def requestRecolor (self):
-    
-    c = self
-    c.frame.requestRecolorFlag = True
-#@nonl
-#@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
-#@+node:ekr.20040803072955.55:tree.redraw
-def redraw (self,event=None):
-    
-    '''Request a screen redraw when c.updateScreen is executed.'''
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    c = self.c
-    c.requestRedraw()
-    
-force_redraw = redraw # For compatibility
-redrawAfterException = redraw # For compatibility
-#@nonl
-#@-node:ekr.20040803072955.55:tree.redraw
 #@+node:ekr.20040803072955.58:redraw_now & helper
 # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
@@ -8371,9 +8020,6 @@ def redraw_now (self,scroll=True):
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
-    
-    # Cancel any pending drawing requests.
-    c.frame.requestRedrawFlag = False
 #@nonl
 #@+node:ekr.20040803072955.59:redrawHelper
 def redrawHelper (self,scroll=True):
@@ -9037,9 +8683,7 @@ def masterCommand (self,event,func,stroke):
     # We *must not* interfere with the global state in the macro class.
     if c.macroCommands.recordingMacro:
         done = c.macroCommands.startKbdMacro(event)
-        if done:
-            c.updateScreen()
-            return 'break'
+        if done: return 'break'
         
     # g.trace(stroke,k.abortAllModesKey)
 
@@ -9047,13 +8691,11 @@ def masterCommand (self,event,func,stroke):
         k.clearState()
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
-        c.updateScreen()
         return 'break'
 
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
-        c.updateScreen()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -9065,14 +8707,11 @@ def masterCommand (self,event,func,stroke):
             k.regXKey = keysym
             k.regx.iter.next() # EKR: next() may throw StopIteration.
         finally:
-            c.updateScreen()
             return 'break'
 
     if k.abbrevOn:
         expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded:
-            c.updateScreen()
-            return 'break'
+        if expanded: return 'break'
 
     if func: # Func is an argument.
         # g.trace('executing func',commandName)
@@ -9092,8 +8731,7 @@ def masterCommand (self,event,func,stroke):
     else:
         # Pass the stroke to one of Leo's event handlers.
         val = self.handleDefaultChar(event)
-        
-    c.updateScreen()
+
     # g.trace('returns %s' % repr(val))
     return val
 #@nonl
@@ -9312,20 +8950,14 @@ def createFirstTreeNode (self):
     p = leoNodes.position(v,[])
     v.initHeadString("NewHeadline")
     p.moveToRoot()
-
-    c.beginUpdate()
-    try:
-        c.selectVnode(p)
-        c.redraw()
-        c.frame.getFocus()
-        c.editPosition(p)
-    finally:
-        c.endUpdate(False)
+    c.editPosition(p)
 #@nonl
 #@-node:ekr.20051009045404:createFirstTreeNode
 #@-node:ekr.20051109090037:Special cases
 #@-node:ekr.20051109040029:(Moved to Newer World Order)
 #@+node:ekr.20051110101524:4.4a4 projects
+#@+node:ekr.20051110111821:Moved all scripts into scripts.leo
+#@-node:ekr.20051110111821:Moved all scripts into scripts.leo
 #@-node:ekr.20051110101524:4.4a4 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

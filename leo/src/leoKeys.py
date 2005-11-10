@@ -1096,9 +1096,7 @@ class keyHandlerClass:
         # We *must not* interfere with the global state in the macro class.
         if c.macroCommands.recordingMacro:
             done = c.macroCommands.startKbdMacro(event)
-            if done:
-                c.updateScreen()
-                return 'break'
+            if done: return 'break'
             
         # g.trace(stroke,k.abortAllModesKey)
     
@@ -1106,13 +1104,11 @@ class keyHandlerClass:
             k.clearState()
             k.keyboardQuit(event)
             k.endCommand(event,commandName)
-            c.updateScreen()
             return 'break'
     
         if k.inState():
             if not special: # Don't pass these on.
                 k.callStateFunction(event) # Calls end-command.
-            c.updateScreen()
             return 'break'
     
         # if k.keystrokeFunctionDict.has_key(stroke):
@@ -1124,14 +1120,11 @@ class keyHandlerClass:
                 k.regXKey = keysym
                 k.regx.iter.next() # EKR: next() may throw StopIteration.
             finally:
-                c.updateScreen()
                 return 'break'
     
         if k.abbrevOn:
             expanded = c.abbrevCommands.expandAbbrev(event)
-            if expanded:
-                c.updateScreen()
-                return 'break'
+            if expanded: return 'break'
     
         if func: # Func is an argument.
             # g.trace('executing func',commandName)
@@ -1151,8 +1144,7 @@ class keyHandlerClass:
         else:
             # Pass the stroke to one of Leo's event handlers.
             val = self.handleDefaultChar(event)
-            
-        c.updateScreen()
+    
         # g.trace('returns %s' % repr(val))
         return val
     #@nonl
@@ -1432,8 +1424,6 @@ class keyHandlerClass:
                     pass
             bodyCtrl.update_idletasks()
             c.frame.body.onBodyChanged(p,undoType='Typing')
-            
-        c.updateScreen()
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...

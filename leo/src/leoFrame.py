@@ -457,7 +457,6 @@ class leoFrame:
         self.es_newlines = 0 # newline count for this log stream
         self.openDirectory = ""
         self.requestRecolorFlag = False
-        self.requestRedrawFlag = False
         self.saved=False # True if ever saved
         self.splitVerticalFlag,self.ratio, self.secondary_ratio = True,0.5,0.5 # Set by initialRatios later.
         self.startupWindow=False # True if initially opened window
@@ -836,13 +835,8 @@ class leoTree:
     def drawIcon(self,v,x=None,y=None):
         self.oops()
     
-    def redraw(self,event=None): # May be bound to an event.
-        self.oops()
-    
     def redraw_now(self,scroll=True):
         self.oops()
-        
-    redrawAfterException = redraw
     #@nonl
     #@-node:ekr.20031218072017.3707:Drawing
     #@+node:ekr.20031218072017.3708:Edit label
@@ -1613,9 +1607,6 @@ class nullTree (leoTree):
         pass
     
     def drawIcon(self,v,x=None,y=None):
-        pass
-    
-    def redraw(self,event=None):
         pass
     
     def redraw_now(self,scroll=True):

@@ -1300,7 +1300,7 @@ class baseFileCommands:
     
         c = self.c ; current = c.currentPosition()
         c.atFileCommands.readAll(current,partialFlag=True)
-        c.redraw()
+        c.redraw_now()
         
         # Force an update of the body pane.
         current.setBodyStringOrPane(current.bodyString())
@@ -1383,7 +1383,7 @@ class baseFileCommands:
             # This should be done after the pane size has been set.
             if self.topPosition:
                 c.frame.tree.setTopPosition(self.topPosition)
-                c.redraw()
+                c.redraw_now()
         # delete the file buffer
         self.fileBuffer = ""
         return ok

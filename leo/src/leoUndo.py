@@ -1315,7 +1315,7 @@ class baseUndoer:
         # New in 4.4a3: Almost any change could change an icon,
         # So we always request a redraw.
         c.frame.bodyWantsFocus(later=True)
-        c.requestRedraw()
+        c.redraw_now()
         u.redoing = False
         u.bead += 1
         u.setUndoTypes()
@@ -1570,7 +1570,7 @@ class baseUndoer:
         # New in 4.4a3: Almost any change could change an icon,
         # So we always request a redraw.
         c.frame.bodyWantsFocus(later=True)
-        c.requestRedraw()
+        c.redraw_now()
         u.undoing = False
         u.bead -= 1
         u.setUndoTypes()

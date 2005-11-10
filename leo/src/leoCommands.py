@@ -246,7 +246,7 @@ class baseCommands:
                 print "exception executing command"
                 g.es_exception(c=c)
                 if c and hasattr(c,'frame'):
-                    c.frame.tree.redrawAfterException()
+                    c.redraw_now()
         
         c = g.top() # 6/17/04: The command can change the commander.
         if c:
@@ -1340,7 +1340,6 @@ class baseCommands:
                     #@nonl
                     #@-node:EKR.20040612215018:<< dump the lines near the error >>
                     #@nl
-                    c.frame.tree.redrawAfterException()
                     #@nonl
                     #@-node:ekr.20050505104140:<< handle an exception in the script >>
                     #@nl
@@ -1357,9 +1356,7 @@ class baseCommands:
             #@nonl
             #@-node:EKR.20040627100424:<< unredirect output >>
             #@nl
-    
-        # Force a redraw _after_ all messages have been output.
-        c.redraw()
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20031218072017.2140:c.executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
@@ -2952,7 +2949,7 @@ class baseCommands:
             bunch = c.hoistStack.pop()
             if bunch.expanded: p.expand()
             else:              p.contract()
-            c.redraw()
+            c.redraw_now()
             c.frame.clearStatusLine()
             if c.hoistStack:
                 bunch = c.hoistStack[-1]
@@ -2969,7 +2966,7 @@ class baseCommands:
             bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
             c.hoistStack.append(bunch)
             p.expand()
-            c.redraw()
+            c.redraw_now()
             c.frame.clearStatusLine()
             c.frame.putStatusLine("Hoist: " + p.headString())
             c.undoer.afterHoist(p,'Hoist')
@@ -4202,7 +4199,7 @@ class baseCommands:
         while v and v != last:
             v.expand()
             v = v.threadNext()
-        c.redraw()
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20031218072017.2911:expandSubtree
     #@+node:ekr.20031218072017.2912:expandToLevel (rewritten in 4.4)
@@ -5308,7 +5305,7 @@ class baseCommands:
     #@-node:ekr.20031218072017.2948:c.dragCloneAfter
     #@-node:ekr.20031218072017.2945:Dragging (commands)
     #@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
-    #@+node:ekr.20031218072017.2950:c.begin/endUpdate
+    #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
     def beginUpdate(self):
         
         c = self
@@ -5319,13 +5316,12 @@ class baseCommands:
     
         c = self
         if flag:
-            # c.requestRedraw()
             c.redraw_now()
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
     EndUpdate = endUpdate # Compatibility with old scripts
     #@nonl
-    #@-node:ekr.20031218072017.2950:c.begin/endUpdate
+    #@-node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
     #@+node:ekr.20031218072017.2951:c.bringToFront
     def bringToFront(self):
     
@@ -5346,44 +5342,26 @@ class baseCommands:
         c.frame.requestRecolorFlag = True
     #@nonl
     #@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
-    #@+node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-    def requestRedraw (self):
-    
-        c = self
-    
-        c.frame.requestRedrawFlag = True
-        
+    #@+node:ekr.20031218072017.2954:c.redraw_now
     def redraw_now (self):
-        
-        c = self
-        c.frame.requestRedrawFlag = True
-        c.updateScreen()
-    
-    # Compatibility with old scripts
-    redraw = Redraw = repaint = Repaint = requestRedraw
-    #@nonl
-    #@-node:ekr.20031218072017.2954:c.requestRedraw & c.redraw_now
-    #@+node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
-    def updateScreen (self):
-        
-        '''Update the screen after a command.'''
         
         c = self
         
         if g.app.quitting or not hasattr(c.frame,'top'):
             return # nullFrame's do not have a top frame.
     
-        if c.frame.requestRedrawFlag:
-            c.frame.tree.redraw_now()
-            c.frame.requestRedrawFlag = False
-    
+        c.frame.tree.redraw_now()
         c.frame.top.update_idletasks()
         c.setFocusHelper()
         
         if c.frame.requestRecolorFlag:
             c.frame.requestRecolorFlag = False
             c.recolor()
+    
+    # Compatibility with old scripts
+    redraw = force_redraw = redraw_now
     #@nonl
+    #@-node:ekr.20031218072017.2954:c.redraw_now
     #@+node:ekr.20051103114520.1:c.setFocusHelper
     def setFocusHelper (self):
         
@@ -5415,7 +5393,6 @@ class baseCommands:
                 or g.app.dialogs > 0 # A dialog.
                 or isinstance(w,Tk.Text)
                 or isinstance(w,Tk.Entry)
-                # or isinstance(w,Tk.Button)
             ):
                 # g.trace('ok',hasattr(w,'_name') and w._name or '')
                 # g.app.gui.set_focus(c,w)
@@ -5425,7 +5402,6 @@ class baseCommands:
             g.app.gui.set_focus(c,frame.body.bodyCtrl)
     #@nonl
     #@-node:ekr.20051103114520.1:c.setFocusHelper
-    #@-node:ekr.20051105091102:c.updateScreen & helper (new in 4.4a3)
     #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
     #@+node:ekr.20031218072017.2955:Enabling Menu Items
     #@+node:ekr.20040323172420:Slow routines: no longer used

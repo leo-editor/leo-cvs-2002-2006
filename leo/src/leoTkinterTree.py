@@ -14,17 +14,15 @@ The code is based on code found in Python's IDLE program."""
 #@+node:ekr.20040803072955.1:  << About drawing >>
 #@+at
 # 
-# Leo must update the outline pane with minimum flicker.  Leo assumes that all 
-# code that changes the outline pane will be enclosed in matching calls to the 
-# c.beginUpdate and c.endUpdate  methods of the Commands class. 
-# c.beginUpdate() inhibits drawing until the matching c.endUpdate().  These 
-# calls may be nested; only the outermost call to c.endUpdate() calls 
-# c.redraw() to force a redraw of the outline pane.  Calls to c.endUpdate may 
-# contain an optional flag argument.  Leo redraws the screen only if flag is 
-# True.  This allows code to suppress redrawing entirely when needed.  For an 
-# example, see updateBody.
+# New in Leo 4.4a3: The 'Newer World Order':
+# 1. c.redraw_now() redraws the screen immediately by calling 
+# c.frame.tree.redraw_now().
 # 
-# c.redraw and its allies in this class redraw all icons automatically.   
+# 2. There are no more requests for drawing at a later time.
+# 
+# 3. No drawing is done at idle time.
+# 
+# c.redraw_now and its helpers in this class redraw all icons automatically.   
 # v.computeIcon method tells what the icon should be.  The v.iconVal tells 
 # what the present icon is. The body key handler simply compares these two 
 # values and sets redraw_flag if they don't match.
@@ -240,7 +238,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.expandedVisibleArea = None
         
         if self.allocateOnlyVisibleNodes:
-            self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
+            self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw_now)
         #@nonl
         #@-node:ekr.20040803072955.18:<< old ivars >>
         #@nl
@@ -354,18 +352,12 @@ class leoTkinterTree (leoFrame.leoTree):
         def OnHyperLinkControlClick (self,event):
             
             """Callback injected into position class."""
-        
+            
+            p = self ; c = p.c
             try:
-                p = self ; c = p.c
                 if not g.doHook("hypercclick1",c=c,p=p,v=p,event=event):
-                    # New in recycled nodes code:
-                    # Call self.redraw to inhibit calls to setLabelState.
-                    c.frame.tree.redraw()
-                    c.beginUpdate()
-                    try:
-                        c.selectVnode(p)
-                    finally:
-                        c.endUpdate()
+                    c.selectPosition(p)
+                    c.redraw_now()
                     c.frame.bodyCtrl.mark_set("insert","1.0")
                 g.doHook("hypercclick2",c=c,p=p,v=p,event=event)
             except:
@@ -818,20 +810,6 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.34:traceIds (Not used)
     #@-node:ekr.20040803072955.31:Debugging...
     #@+node:ekr.20040803072955.35:Drawing... (tkTree)
-    #@+node:ekr.20040803072955.55:tree.redraw
-    def redraw (self,event=None):
-        
-        '''Request a screen redraw when c.updateScreen is executed.'''
-        
-        __pychecker__ = '--no-argsused' # event not used.
-        
-        c = self.c
-        c.requestRedraw()
-        
-    force_redraw = redraw # For compatibility
-    redrawAfterException = redraw # For compatibility
-    #@nonl
-    #@-node:ekr.20040803072955.55:tree.redraw
     #@+node:ekr.20040803072955.58:redraw_now & helper
     # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
     
@@ -850,9 +828,6 @@ class leoTkinterTree (leoFrame.leoTree):
         self.expandAllAncestors(c.currentPosition())
         self.redrawHelper(scroll=scroll)
         self.canvas.update_idletasks() # Important for unit tests.
-        
-        # Cancel any pending drawing requests.
-        c.frame.requestRedrawFlag = False
     #@nonl
     #@+node:ekr.20040803072955.59:redrawHelper
     def redrawHelper (self,scroll=True):
@@ -1688,9 +1663,7 @@ class leoTkinterTree (leoFrame.leoTree):
             if p.isExpanded(): p.contract()
             else:              p.expand()
             self.active = True
-            # New in 4.4a3: we can call select before redrawing: no problem.
             self.select(p)
-            c.requestRedraw()
             if c.frame.findPanel:
                 c.frame.findPanel.handleUserClick(p)
             if self.stayInTree:
@@ -1698,7 +1671,7 @@ class leoTkinterTree (leoFrame.leoTree):
             else:
                 c.frame.bodyWantsFocus()
         g.doHook("boxclick2",c=c,p=p,v=p,event=event)
-        c.updateScreen()
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20040803072955.79:onClickBoxClick
     #@-node:ekr.20040803072955.78:Click Box...
@@ -2102,7 +2075,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c
         
         self.frame.treeWantsFocus()
-        c.updateScreen()
+        c.redraw_now()
     
         return 'break'
     #@nonl
@@ -2150,7 +2123,6 @@ class leoTkinterTree (leoFrame.leoTree):
         except:
             g.es_event_exception("headclick")
     
-        # c.updateScreen()
         return "continue"
     #@nonl
     #@-node:ekr.20040803072955.87:onHeadlineClick
@@ -2511,6 +2483,8 @@ class leoTkinterTree (leoFrame.leoTree):
     # Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
     
     def select (self,p,updateBeadList=True):
+        
+        '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
         
         c = self.c ; frame = c.frame ; body = frame.bodyCtrl
         old_p = c.currentPosition()

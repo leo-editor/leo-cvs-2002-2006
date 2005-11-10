@@ -908,6 +908,7 @@ class configClass:
         return (
             type1 == None or type2 == None or
             type1.startswith('string') or
+            type1 == 'int' and type2 == 'size' or
             (type1 in shortcuts and type2 in shortcuts) or
             type1 == type2
         )
@@ -3080,7 +3081,7 @@ class settingsController:
                 
         self.writeChangedList(changedList)
     #@nonl
-    #@+node:ekr.20041225063637.66:updateConfig
+    #@+node:ekr.20041225063637.66:updateConfig (settingsController)
     def updateConfig(self,c,changes):
         
         """Update the core config settings from the changes list."""
@@ -3102,7 +3103,7 @@ class settingsController:
                     c2.frame.body.colorizer.setFontFromConfig()
                     c2.frame.log.setFontFromConfig()
                     c2.frame.tree.setFontFromConfig()
-                    c2.redraw()
+                    c2.redraw_now()
             elif munge(kind) == "color":
                 # g.trace("setting colors")
                 g.app.config.set(c,name,kind,val)
@@ -3114,7 +3115,7 @@ class settingsController:
                 # g.trace(name,kind,val)
                 g.app.config.set(c,name,kind,val)
     #@nonl
-    #@-node:ekr.20041225063637.66:updateConfig
+    #@-node:ekr.20041225063637.66:updateConfig (settingsController)
     #@+node:ekr.20041225063637.67:updateOneNode & helper
     def updateOneNode (self,c,data):
         
@@ -3247,7 +3248,7 @@ class settingsController:
             # Save the file corresponding to c.
             # Non-local files aren't open otherwise!
             c.fileCommands.save(c.fileName())
-            c.redraw() # This should work for non-local files too.
+            c.redraw_now() # This should work for non-local files too.
             self.tree.redraw()
         else:
             print "no settings saved.  local file not named."

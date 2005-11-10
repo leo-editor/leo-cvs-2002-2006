@@ -225,15 +225,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         p = leoNodes.position(v,[])
         v.initHeadString("NewHeadline")
         p.moveToRoot()
-    
-        c.beginUpdate()
-        try:
-            c.selectVnode(p)
-            c.redraw()
-            c.frame.getFocus()
-            c.editPosition(p)
-        finally:
-            c.endUpdate(False)
+        c.editPosition(p)
     #@nonl
     #@-node:ekr.20051009045404:createFirstTreeNode
     #@+node:ekr.20050920094212:f.createMiniBufferWidget
@@ -1449,7 +1441,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         frame.log.setFontFromConfig()
         frame.log.setColorFromConfig()
     
-        c.redraw()
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20031218072017.2246:reconfigureFromConfig
     #@+node:ekr.20031218072017.1625:setInitialWindowGeometry
@@ -1712,12 +1704,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
             # Revert the headline text.
             w.delete("1.0","end")
             w.insert("end",tree.revertHeadline)
-        
-            # Duplicate relevant logic from tree.onHeadChanged.
             p.initHeadString(tree.revertHeadline)
-            tree.endEditLabel()
-            c.redraw()
+            c.endEditing()
             c.selectPosition(c.currentPosition())
+            c.redraw_now()
     #@nonl
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
     #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -1820,7 +1810,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if isBody:
             w.event_generate(g.virtual_event_name("Paste"))
             f.body.onBodyChanged(p,undoType='Typing')
-            c.updateScreen()
+            c.redraw_now()
         else:
             # Strip trailing newlines so the truncation doesn't cause confusion.
             s = s1 = g.app.gui.getTextFromClipboard()
@@ -1832,6 +1822,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             w.configure(width=f.tree.headWidth(s=s))
             w.event_generate(g.virtual_event_name("Paste"))
             f.tree.onHeadChanged(c.currentPosition(),'Paste')
+            c.redraw_now()
     #@nonl
     #@-node:ekr.20051011072903.4:OnPasteFromMenu
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -1999,7 +1990,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         g.app.setLog(self.log)
         frame.log.restoreAllState(d)
         c.selectPosition(p)
-        c.redraw()
+        c.redraw_now()
     #@nonl
     #@-node:ekr.20041221122440.1:togglePmwSplitDirection
     #@+node:ekr.20041221122440.2:toggleTkSplitDirection
