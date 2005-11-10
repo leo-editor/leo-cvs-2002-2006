@@ -88,7 +88,7 @@ include plugins/*.txt
 include plugins/*.py
 
 include scripts/openLeoScript.sh
-include scripts/leoScripts.leo
+include scripts/scripts.leo
 include scripts/leoScripts.txt
 include scripts/*.py
 

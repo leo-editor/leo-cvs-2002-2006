@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a2.exe"
+OutFile "LeoSetup-4-4-a3.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -338,7 +338,7 @@ Section "Leo" SEC01
   SetOutPath "$INSTDIR\scripts"
   ;@  << install scripts >>
   ;@+node:ekr.20050118104901.13:<< install scripts >>
-  File "..\scripts\leoScripts.leo"
+  File "..\scripts\scripts.leo"
   File "..\scripts\leoScripts.txt"
   File "..\scripts\*.py"
   File "..\scripts\openLeoScript.sh"
@@ -615,7 +615,7 @@ Section Uninstall
   ;@nl
   ;@  << uninstall scripts >>
   ;@+node:ekr.20050118104901.14:<< uninstall scripts >>
-  Delete "$INSTDIR\scripts\leoScripts.leo"
+  Delete "$INSTDIR\scripts\scripts.leo"
   Delete "$INSTDIR\scripts\leoScripts.txt"
   Delete "$INSTDIR\scripts\*.p*"
   Delete "$INSTDIR\scripts\openLeoScript.sh"

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1121" clone_windows="0"/>
 <globals body_outline_ratio="0.557544757033">
-	<global_window_position top="51" left="349" height="782" width="840"/>
+	<global_window_position top="95" left="317" height="782" width="840"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -24,9 +24,9 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20051110084338" a="E"><vh>ANN: Leo 4.4a3</vh></v>
-<v t="ekr.20051101183219" a="E"><vh>ANN: Leo 4.4a2</vh></v>
-<v t="ekr.20051015171839" a="E"><vh>ANN: Leo 4.4a1</vh></v>
+<v t="ekr.20051110084338"><vh>ANN: Leo 4.4a3</vh></v>
+<v t="ekr.20051101183219"><vh>ANN: Leo 4.4a2</vh></v>
+<v t="ekr.20051015171839"><vh>ANN: Leo 4.4a1</vh></v>
 <v t="ekr.20050919101619"><vh>ANN: Leo 4.3.3</vh></v>
 <v t="ekr.20050916073410"><vh>ANN: Leo 4.3.2-final</vh></v>
 <v t="ekr.20050905095110"><vh>ANN: Leo 4.3.2-b1</vh></v>
@@ -103,7 +103,7 @@
 <v t="ekr.20050118125236"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh></v>
+<v t="EKR.20040519080201.1" a="TV"><vh>Distribution checklist</vh></v>
 <v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="ekr.20050910192724"><vh>Pychecker warnings</vh></v>
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
@@ -176,8 +176,7 @@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706"
-expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 <v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@asis ../doc/INSTALL.TXT</vh>
@@ -199,10 +198,10 @@ expanded="ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
-<v t="ekr.20050117032444" a="TV"><vh>@button Create Leo-4.x.zip</vh>
+<v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -238,7 +237,7 @@ Create and test leosetup.exe.
 	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
 	- Test created leosetup.exe file.
 	- test the files created in c:\program files\leo
-    ** Open test.leo: does it open without errors?
+    ** Open unitTest.leo: does it open without errors?
     ** Open leoPlugins.leo: does it open without errors?
 
 @color
@@ -254,8 +253,9 @@ Uploads
 	- Upload sbook.chm if it has been changed.
 Announcements
     - Update version number on web site.
-	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForge site.
+	- Announce to Leo's Open Forum.
+    (later)
+    - Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
 	- Announce to comp.lang.python
 	- Announce to comp.programming.literate
 	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
@@ -817,7 +817,7 @@ include plugins/*.txt
 include plugins/*.py
 
 include scripts/openLeoScript.sh
-include scripts/leoScripts.leo
+include scripts/scripts.leo
 include scripts/leoScripts.txt
 include scripts/*.py
 
@@ -833,8 +833,7 @@ include test/test.leo
 include test/unitTest.leo
 
 include test/unittest/batchTest.py
-include test/unittest/errorTest.py
-</t>
+include test/unittest/errorTest.py</t>
 <t tx="EKR.20040519091259">@pagewidth 70
 @killcolor</t>
 <t tx="EKR.20040519091259.1">4.2-final   setup: 1828 zip: 1508
@@ -3507,7 +3506,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a2.exe"
+OutFile "LeoSetup-4-4-a3.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3648,11 +3647,11 @@ Delete "$INSTDIR\src\__init__.p*"
 
 Delete "$INSTDIR\src\leo*.p*"</t>
 <t tx="ekr.20050118104901.12"></t>
-<t tx="ekr.20050118104901.13">File "..\scripts\leoScripts.leo"
+<t tx="ekr.20050118104901.13">File "..\scripts\scripts.leo"
 File "..\scripts\leoScripts.txt"
 File "..\scripts\*.py"
 File "..\scripts\openLeoScript.sh"</t>
-<t tx="ekr.20050118104901.14">Delete "$INSTDIR\scripts\leoScripts.leo"
+<t tx="ekr.20050118104901.14">Delete "$INSTDIR\scripts\scripts.leo"
 Delete "$INSTDIR\scripts\leoScripts.txt"
 Delete "$INSTDIR\scripts\*.p*"
 Delete "$INSTDIR\scripts\openLeoScript.sh"</t>
@@ -4598,7 +4597,10 @@ Edward K. Ream
 November 2, 2005</t>
 <t tx="ekr.20051110084338">[ANN: Leo 4.4a3 released]
 
-Leo 4.4 alpha 3                             November 10, 2005
+Leo 4.4 alpha 3 is now available at:
+http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
+
+To learn about Leo see http://webpages.charter.net/edreamleo/intro.html
 
 Leo 4.4 a3 is a big step forward in meeting the following goals:
 
@@ -4607,8 +4609,6 @@ Leo 4.4 a3 is a big step forward in meeting the following goals:
 - To make Leo usable without a mouse (mouseless Leo).
 
 This is an alpha release: there are minor bugs (see below). However, you should be able to use this version safely. In particular, the Leo 4.4 code base recovers from errors more reliably than all previous versions.
-
-To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
 The highlights of Leo 4.4:
 --------------------------

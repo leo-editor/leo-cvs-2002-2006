@@ -105,6 +105,7 @@ doc\html\outlines.html
 doc\html\plugins.html
 doc\html\rstplugin3.html
 doc\html\rstplugin4.html
+doc\html\scripting.html
 doc\html\silver_city.css
 doc\html\techReport.html
 doc\html\testimonials.html
@@ -349,6 +350,8 @@ plugins\FileActions.py
 plugins\LeoN.py
 plugins\Library.ini
 plugins\Library.py
+plugins\TabWindow.py
+plugins\Tknotebook.py
 plugins\UASearch.py
 plugins\UNL.py
 plugins\URLloader.py
@@ -444,8 +447,6 @@ plugins\scheduler.py
 plugins\script_io_to_body.py
 plugins\scripts_menu.py
 plugins\searchbox.py
-plugins\spellpyx.ini
-plugins\spellpyx.py
 plugins\spellpyx.txt
 plugins\startfile.py
 plugins\table.py
@@ -476,6 +477,7 @@ scripts\disStats.py
 scripts\leoFindScript.py
 scripts\leoScripts.txt
 scripts\openLeoScript.sh
+scripts\scripts.leo
 scripts\tangle_done.py
 scripts\untangle_done.py
 src\LeoPy.leo
@@ -514,5 +516,6 @@ src\leoUndo.py
 src\oldLeoProjects.leo
 test\__init__.py
 test\test.leo
+test\unitTest.leo
 test\unittest\batchTest.py
 test\unittest\errorTest.py
