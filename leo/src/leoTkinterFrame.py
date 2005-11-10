@@ -3264,7 +3264,8 @@ class leoTkinterLog (leoFrame.leoLog):
         self.nb = Pmw.NoteBook(parentFrame,
             borderwidth = 1, pagemargin = 0,
             raisecommand = self.raiseTab,
-            lowercommand = self.lowerTab
+            lowercommand = self.lowerTab,
+            arrownavigation = 0,
         )
     
         menu = self.makeTabMenu(tabName=None)
