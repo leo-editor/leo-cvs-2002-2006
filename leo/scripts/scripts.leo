@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7801" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7983" clone_windows="0"/>
 <globals body_outline_ratio="0.540216086435">
 	<global_window_position top="65" left="224" height="833" width="871"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -27,7 +27,7 @@
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
-<v t="ekr.20050911112310" a="TV"><vh>@button Save</vh></v>
+<v t="ekr.20050911112310"><vh>@button Save</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051011211253"><vh>Debugger canvas</vh>
@@ -187,7 +187,24 @@
 </v>
 <v t="ekr.20050824190822"><vh>Zope test</vh></v>
 </v>
-<v t="ekr.20051103074730"><vh>Scripts</vh>
+<v t="ekr.20051103074730" a="ETV"><vh>Scripts</vh>
+<v t="ekr.20051110105946"><vh>Find scripts</vh>
+<v t="ekr.20051110105027.159"><vh>Find and replace all functions in leoGlobals.py</vh>
+<v t="ekr.20051110105027.160"><vh>findFunctionsInTree</vh></v>
+<v t="ekr.20051110105027.161"><vh>findDefs</vh></v>
+<v t="ekr.20051110105027.162"><vh>prependNamesInTree</vh>
+<v t="ekr.20051110105027.163"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
+<v t="ekr.20051110105027.164"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051110105027.165"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051110105027.148"><vh>Find script to change OnX to x in body (didn't quite work :-)</vh></v>
+<v t="ekr.20051110105027.149"><vh>Find scripts to change OnX to x in headline</vh></v>
+<v t="ekr.20051110105027.150"><vh>findDosFile</vh></v>
+<v t="ekr.20041013101029"><vh>headfind</vh>
+<v t="ekr.20041013101029.1"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="ekr.20040715105834"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
@@ -565,6 +582,84 @@
 </v>
 </v>
 <v t="ekr.20051104082026"><vh>Important</vh>
+<v t="ekr.20051110105027.34"><vh>c2py  Convert C code to Python syntax</vh>
+<v t="ekr.20051110105027.35"><vh>&lt;&lt; what c2py does &gt;&gt;</vh></v>
+<v t="ekr.20051110105027.36"><vh>&lt;&lt; theory of operation &gt;&gt;</vh></v>
+<v t="ekr.20051110105027.37"><vh>&lt;&lt; specify user types &gt;&gt;</vh></v>
+<v t="ekr.20051110105027.38"><vh>&lt;&lt; define testData &gt;&gt;</vh></v>
+<v t="ekr.20051110105027.39"><vh>Documentation</vh></v>
+<v t="ekr.20051110105027.40"><vh>speedTest</vh></v>
+<v t="ekr.20051110105027.41"><vh>leo1to2</vh>
+<v t="ekr.20051110105027.42"><vh>leo1to2</vh></v>
+<v t="ekr.20051110105027.43"><vh>convertLeo1to2</vh></v>
+<v t="ekr.20051110105027.44"><vh>convertStringLeo1to2</vh></v>
+<v t="ekr.20051110105027.45"><vh>convertCodeList1to2</vh></v>
+</v>
+<v t="ekr.20051110105027.46"><vh>c2py entry points</vh>
+<v t="ekr.20051110105027.47"><vh>convertCurrentTree</vh></v>
+<v t="ekr.20051110105027.48"><vh>convertLeoTree</vh></v>
+<v t="ekr.20051110105027.49"><vh>convertCFileToPython</vh></v>
+</v>
+<v t="ekr.20051110105027.50"><vh>c2py Top Level</vh>
+<v t="ekr.20051110105027.51"><vh>convertCStringToPython</vh></v>
+<v t="ekr.20051110105027.52"><vh>convertCodeList</vh></v>
+<v t="ekr.20051110105027.53"><vh>convertDocList</vh></v>
+<v t="ekr.20051110105027.54"><vh>skipDocPart</vh></v>
+<v t="ekr.20051110105027.55"><vh>skipCodePart</vh></v>
+</v>
+<v t="ekr.20051110105027.56"><vh>removeSentinels</vh></v>
+<v t="ekr.20051110105027.57"><vh>Scanning &amp; Replacing</vh>
+<v t="ekr.20051110105027.58"><vh>convertLeadingBlanks</vh></v>
+<v t="ekr.20051110105027.59"><vh>findInList</vh></v>
+<v t="ekr.20051110105027.60"><vh>findInCode</vh></v>
+<v t="ekr.20051110105027.61"><vh>mungeAllFunctions</vh>
+<v t="ekr.20051110105027.62"><vh>handlePossibleFunctionHeader</vh></v>
+<v t="ekr.20051110105027.63"><vh>massageFunctionArgs</vh></v>
+<v t="ekr.20051110105027.64"><vh>massageFunctionHead (sets gClassName)</vh></v>
+<v t="ekr.20051110105027.65"><vh>massageFunctionBody</vh>
+<v t="ekr.20051110105027.66"><vh>massageIvars</vh></v>
+<v t="ekr.20051110105027.67"><vh>removeCasts</vh></v>
+<v t="ekr.20051110105027.68"><vh>removeTypeNames</vh></v>
+</v>
+</v>
+<v t="ekr.20051110105027.69"><vh>handleAllKeywords</vh>
+<v t="ekr.20051110105027.70"><vh>handleKeyword</vh></v>
+</v>
+<v t="ekr.20051110105027.71"><vh>isWs and isWOrNl</vh></v>
+<v t="ekr.20051110105027.72"><vh>isSectionDef</vh></v>
+<v t="ekr.20051110105027.73"><vh>isStringOrComment</vh></v>
+<v t="ekr.20051110105027.74"><vh>match</vh></v>
+<v t="ekr.20051110105027.75"><vh>matchWord</vh></v>
+<v t="ekr.20051110105027.76"><vh>prevNonWsChar and prevNonWsOrNlChar</vh></v>
+<v t="ekr.20051110105027.77"><vh>removeAllCComments</vh></v>
+<v t="ekr.20051110105027.78"><vh>removeAllCSentinels</vh></v>
+<v t="ekr.20051110105027.79"><vh>removeAllPythonComments</vh></v>
+<v t="ekr.20051110105027.80"><vh>removeAllPythonSentinels</vh></v>
+<v t="ekr.20051110105027.81"><vh>removeAtRoot</vh></v>
+<v t="ekr.20051110105027.82"><vh>removeBlankLines</vh></v>
+<v t="ekr.20051110105027.83"><vh>removeExcessWs</vh>
+<v t="ekr.20051110105027.84"><vh>removeExessWsFromLine</vh></v>
+</v>
+<v t="ekr.20051110105027.85"><vh>removeLeadingAtCode</vh></v>
+<v t="ekr.20051110105027.86"><vh>removeMatchingBrackets</vh></v>
+<v t="ekr.20051110105027.87"><vh>removeSemicolonsAtEndOfLines</vh></v>
+<v t="ekr.20051110105027.88"><vh>removeTrailingWs</vh></v>
+<v t="ekr.20051110105027.89"><vh>replace</vh></v>
+<v t="ekr.20051110105027.90"><vh>replaceComments</vh></v>
+<v t="ekr.20051110105027.91"><vh>replaceSectionDefs</vh></v>
+<v t="ekr.20051110105027.92"><vh>safeReplace</vh></v>
+<v t="ekr.20051110105027.93"><vh>skipCBlockComment</vh></v>
+<v t="ekr.20051110105027.94"><vh>skipPastLine</vh></v>
+<v t="ekr.20051110105027.95"><vh>skipPastWord</vh></v>
+<v t="ekr.20051110105027.96"><vh>skipString</vh></v>
+<v t="ekr.20051110105027.97"><vh>skipStringOrComment</vh></v>
+<v t="ekr.20051110105027.98"><vh>skipToMatchingBracket</vh></v>
+<v t="ekr.20051110105027.99"><vh>skipWs and skipWsAndNl</vh></v>
+<v t="ekr.20051110105027.100"><vh>stringToList</vh></v>
+<v t="ekr.20051110105027.101"><vh>listToString</vh></v>
+</v>
+</v>
+<v t="ekr.20051103072643"><vh>Export to treepad</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -575,8 +670,6 @@
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
-<v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="ekr.20050108110751"><vh>HTMLize scripts</vh>
 <v t="ekr.20041229163210"><vh>dyna htmlize</vh>
 <v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -599,16 +692,12 @@
 <v t="ekr.20050108110751.2"><vh>NewHeadline</vh></v>
 </v>
 </v>
-<v t="ekr.20040723065021"><vh>stripBlankLines</vh>
-<v t="ekr.20040723065047"><vh>Test</vh></v>
+<v t="ekr.20050210180034"><vh>jython script</vh></v>
+<v t="ekr.20051110105027.166"><vh>Recursive import script</vh>
+<v t="ekr.20051110105027.167"><vh>importFiles</vh></v>
+<v t="ekr.20051110105027.168"><vh>importDir</vh></v>
+<v t="ekr.20051110105027.169"><vh>createLastChildOf</vh></v>
 </v>
-<v t="ekr.20050219075759"><vh>Scripts demonstrating how to do anything with Leo menus</vh>
-<v t="ekr.20050219071503"><vh>Test of createMenuItemsFromTable</vh></v>
-<v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
-</v>
-<v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
-<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
-<v t="ekr.20051103072643"><vh>Export to treepad</vh></v>
 <v t="ekr.20051025070722.1"><vh>Runniung tcl scripts from the body pane</vh>
 <v t="ekr.20051024223801"><vh>run tcl </vh></v>
 <v t="ekr.20051024223801.1"><vh>My first tcl script</vh></v>
@@ -616,17 +705,81 @@
 <v t="ekr.20051025115413.1"><vh>the actual script</vh></v>
 </v>
 </v>
+<v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
+<v t="ekr.20050219075759"><vh>Scripts demonstrating how to do anything with Leo menus</vh>
+<v t="ekr.20050219071503"><vh>Test of createMenuItemsFromTable</vh></v>
+<v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
+</v>
+<v t="ekr.20040723065021"><vh>stripBlankLines</vh>
+<v t="ekr.20040723065047"><vh>Test</vh></v>
+</v>
 </v>
 <v t="ekr.20051104082151"><vh>Reports</vh>
 <v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
+<v t="ekr.20051110105027.104"><vh>Count separate nodes (tnodes)</vh></v>
+<v t="ekr.20051110105027.105"><vh>Count total, visible nodes</vh></v>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
 <v t="ekr.20050704172623"><vh>Print all headlines, properly indented</vh></v>
+<v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
+<v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
+<v t="ekr.20040717121014"><vh>Print gnx</vh></v>
 <v t="ekr.20041124144944"><vh>Print sys.path</vh></v>
+<v t="ekr.20040322120331"><vh>Print tnodeList's</vh></v>
 <v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
 <v t="EKR.20040613162717"><vh>Report newlines</vh></v>
-<v t="ekr.20040322120331"><vh>Print tnodeList's</vh></v>
+<v t="EKR.20040517074600.10"><vh>Show font</vh></v>
+<v t="EKR.20040517074600.11"><vh>Show settings</vh>
+<v t="EKR.20040517074600.12"><vh>getFontSettings</vh></v>
+</v>
+</v>
+<v t="ekr.20051110105027"><vh>Scripts used by commands</vh>
+<v t="ekr.20051110105027.178"><vh>@thin tangle_done.py</vh></v>
+<v t="ekr.20051110105027.182"><vh>@thin untangle_done.py</vh></v>
+<v t="ekr.20051110105027.3"><vh>Find/change scripts</vh>
+<v t="ekr.20051110105027.4"><vh>Routines that execute script-find and script-change</vh>
+<v t="ekr.20051110105027.5"><vh>doFind...Script</vh></v>
+<v t="ekr.20051110105027.6"><vh>doChange...Script</vh></v>
+</v>
+<v t="ekr.20051110105027.7"><vh>Find script to check for dubious leading whitespace</vh>
+<v t="ekr.20051110105027.8"><vh>Find script</vh></v>
+<v t="ekr.20051110105027.9"><vh>test</vh></v>
+</v>
+<v t="ekr.20051110105027.10"><vh>Find script to clean whitespace</vh>
+<v t="ekr.20051110105027.11"><vh>Find script</vh></v>
+<v t="ekr.20051110105027.12"><vh>Change script</vh></v>
+</v>
+<v t="ekr.20051110105027.13"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="ekr.20051110105027.14"><vh>Find script</vh></v>
+<v t="ekr.20051110105027.15"><vh>Change script</vh></v>
+<v t="ekr.20051110105027.16"><vh>re tests</vh></v>
+<v t="ekr.20051110105027.17"><vh>early find script</vh></v>
+</v>
+<v t="ekr.20051110105027.18"><vh>Other find scripts</vh>
+<v t="ekr.20051110105027.19"><vh>changeAll</vh></v>
+<v t="ekr.20051110105027.20"><vh>changeNext</vh></v>
+<v t="ekr.20051110105027.21"><vh>changePrev</vh></v>
+<v t="ekr.20051110105027.22"><vh>findAll</vh></v>
+<v t="ekr.20051110105027.23"><vh>findNext</vh></v>
+<v t="ekr.20051110105027.24"><vh>findPrev</vh></v>
+<v t="ekr.20051110105027.25"><vh>reChangeAll</vh></v>
+<v t="ekr.20051110105027.26"><vh>reChangeNext</vh></v>
+<v t="ekr.20051110105027.27"><vh>reChangePrev</vh></v>
+<v t="ekr.20051110105027.28"><vh>reFindAll</vh></v>
+<v t="ekr.20051110105027.29"><vh>reFindNext</vh></v>
+<v t="ekr.20051110105027.30"><vh>reFindPrev</vh></v>
+<v t="ekr.20051110105027.31"><vh>lineAtPos</vh></v>
+<v t="ekr.20051110105027.32"><vh>printFindList</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051110110853"><vh>Setters</vh>
+<v t="ekr.20040312021734.1"><vh>Clean unused tnodeLists</vh></v>
+<v t="ekr.20051110105027.171"><vh>Clean unused tnodeLists</vh></v>
+<v t="ekr.20051110105027.102"><vh>Clear all timestamps</vh></v>
+<v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 </v>
 <v t="ekr.20051104082103"><vh>Tests</vh>
+<v t="ekr.20051110105027.172"><vh>Check topology of all clones</vh></v>
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 <v t="ekr.20040804104924"><vh>Test of p.__hash__</vh>
 <v t="ekr.20040804105026"><vh>a</vh>
@@ -640,34 +793,19 @@
 </v>
 <v t="ekr.20050801070538"><vh>PrettyPrintTest</vh></v>
 <v t="ekr.20050801075332"><vh>PrettyPrintTest (copy)</vh></v>
+<v t="ekr.20051110105027.173"><vh>Scripts for checking clones</vh>
+<v t="ekr.20051110105027.174"><vh>checkForMismatchedJoinedNodes</vh></v>
+<v t="ekr.20051110105027.175"><vh>checkForPossiblyBrokenLinks</vh></v>
+<v t="ekr.20051110105027.176"><vh>checkTopologiesOfLinkedNodes</vh></v>
+<v t="ekr.20051110105027.177"><vh>checkLinksOfNodesWithSameTopologies (to do)</vh></v>
 </v>
-<v t="ekr.20051104082605" a="E"><vh>Others</vh>
+</v>
+<v t="ekr.20051104082605"><vh>Others</vh>
+<v t="ekr.20050310082013"><vh>AutoIt script from e</vh></v>
+<v t="ekr.20040330095252"><vh>Clear log frame</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
 <v t="EKR.20040424091411"><vh>Compare ignoring newlines</vh></v>
-<v t="ekr.20040319111213" a="E"><vh>FilterHoist script</vh>
-<v t="ekr.20040319111213.1"><vh>description</vh></v>
-<v t="ekr.20040319142708"><vh>filter</vh></v>
-<v t="ekr.20040319142202" a="E"><vh>old code</vh>
-<v t="ekr.20040319111213.2"><vh>filter</vh></v>
-<v t="ekr.20040319111213.3"><vh>search</vh></v>
-</v>
-<v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
-<v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
-</v>
-<v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
-<v t="EKR.20040517074600.9"><vh>Scripts to debug font problem</vh>
-<v t="EKR.20040517074600.10"><vh>Show font</vh></v>
-<v t="EKR.20040517074600.11"><vh>Show settings</vh>
-<v t="EKR.20040517074600.12"><vh>getFontSettings</vh></v>
-</v>
-<v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
-</v>
-<v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
-<v t="ekr.20041013101029"><vh>headfind</vh>
-<v t="ekr.20041013101029.1"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050210180034"><vh>jython script</vh></v>
-<v t="ekr.20050219054039"><vh>Scripts to convert ChoiceMail .ini file to .csv file</vh>
+<v t="ekr.20050219054039"><vh>Convert ChoiceMail .ini file to .csv file</vh>
 <v t="ekr.20050218174326.1"><vh>Scipt to remove rejected entries</vh>
 <v t="ekr.20050218170806.1"><vh>@killcolor</vh>
 <v t="ekr.20050218170806.2"><vh>address</vh></v>
@@ -683,8 +821,60 @@
 <v t="ekr.20050218184044.11"><vh>result</vh></v>
 </v>
 </v>
-<v t="ekr.20050310082013"><vh>AutoIt script from e</vh></v>
-<v t="ekr.20050225161940" annotate="7d71002e"><vh>Script to execute @test, @suite or file</vh>
+<v t="ekr.20051110105027.106"><vh>Create diagrams using Graphviz and pydot</vh>
+<v t="ekr.20051110105027.107"><vh>pydot notes by EKR</vh></v>
+<v t="ekr.20051110105027.108"><vh>pydot docs</vh>
+<v t="ekr.20051110105027.109"><vh>General note about attributes</vh></v>
+<v t="ekr.20051110105027.110"><vh>Cluster(Graph)</vh></v>
+<v t="ekr.20051110105027.111"><vh>Common</vh></v>
+<v t="ekr.20051110105027.112"><vh>Dot(Graph)</vh>
+<v t="ekr.20051110105027.113"><vh>create and create_xxx</vh></v>
+<v t="ekr.20051110105027.114"><vh>write and write_xxx</vh></v>
+</v>
+<v t="ekr.20051110105027.115"><vh>Edge</vh></v>
+<v t="ekr.20051110105027.116"><vh>Error</vh></v>
+<v t="ekr.20051110105027.117"><vh>Graph(Common)</vh>
+<v t="ekr.20051110105027.118"><vh>Graph.__init__</vh></v>
+<v t="ekr.20051110105027.119"><vh>add_edge</vh></v>
+<v t="ekr.20051110105027.120"><vh>add_node</vh></v>
+<v t="ekr.20051110105027.121"><vh>add_subgraph</vh></v>
+<v t="ekr.20051110105027.122"><vh>getters...</vh></v>
+<v t="ekr.20051110105027.123"><vh>setters...</vh></v>
+<v t="ekr.20051110105027.124"><vh>toString</vh></v>
+</v>
+<v t="ekr.20051110105027.125"><vh>Node(Common)</vh>
+<v t="ekr.20051110105027.126"><vh>Node.__init__</vh></v>
+<v t="ekr.20051110105027.127"><vh>get_name</vh></v>
+<v t="ekr.20051110105027.128"><vh>set, set_x and set_name</vh></v>
+<v t="ekr.20051110105027.129"><vh>toString</vh></v>
+</v>
+<v t="ekr.20051110105027.130"><vh>Subgraph(Graph)</vh></v>
+<v t="ekr.20051110105027.131"><vh>Functions</vh>
+<v t="ekr.20051110105027.132"><vh>find_graphviz</vh></v>
+<v t="ekr.20051110105027.133"><vh>graph_from_adjacency_matrix</vh></v>
+<v t="ekr.20051110105027.134"><vh>graph_from_edges</vh></v>
+<v t="ekr.20051110105027.135"><vh>graph_from_incidence_matrix</vh></v>
+</v>
+</v>
+<v t="ekr.20051110105027.136"><vh>@url http://www.research.att.com/sw/tools/graphviz/refs.html</vh></v>
+<v t="ekr.20051110105027.137"><vh>@url http://dkbza.org/pydot/pydot.html</vh></v>
+<v t="ekr.20051110105027.138"><vh>Write an outline using Graphviz</vh>
+<v t="ekr.20051110105027.139"><vh>&lt;&lt; code &gt;&gt;</vh>
+<v t="ekr.20051110105027.140"><vh>addLeoNodesToGraph</vh></v>
+<v t="ekr.20051110105027.141"><vh>tnode/vnodeLabel</vh></v>
+<v t="ekr.20051110105027.142"><vh>tnode/vnodeRepr</vh></v>
+</v>
+<v t="ekr.20051110105027.143"><vh>Root</vh>
+<v t="ekr.20051110105027.144"><vh>clone</vh>
+<v t="ekr.20051110105027.145"><vh>Child1</vh>
+<v t="ekr.20051110105027.146"><vh>GrandChild</vh></v>
+</v>
+<v t="ekr.20051110105027.147"><vh>Child2</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050225161940" annotate="7d71002e"><vh>Execute @test, @suite or file</vh>
 <v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
 <v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@@thin executeFileTest.py</vh></v>
 <v t="ekr.20050225161940.2" annotate="7d71002e"><vh>Exec File</vh>
@@ -694,6 +884,25 @@
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
+<v t="ekr.20040319111213"><vh>FilterHoist script</vh>
+<v t="ekr.20040319111213.1"><vh>description</vh></v>
+<v t="ekr.20040319142708"><vh>filter</vh></v>
+<v t="ekr.20040319142202"><vh>old code</vh>
+<v t="ekr.20040319111213.2"><vh>filter</vh></v>
+<v t="ekr.20040319111213.3"><vh>search</vh></v>
+</v>
+<v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
+<v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
+</v>
+<v t="ekr.20051110105027.151"><vh>Get statistics using dis module</vh>
+<v t="ekr.20051110105027.152"><vh>go</vh></v>
+<v t="ekr.20051110105027.153"><vh>getFiles</vh></v>
+<v t="ekr.20051110105027.154"><vh>getModules</vh></v>
+<v t="ekr.20051110105027.155"><vh>any</vh></v>
+<v t="ekr.20051110105027.156"><vh>code</vh></v>
+<v t="ekr.20051110105027.157"><vh>print_stats</vh></v>
+</v>
+<v t="ekr.20051110105027.158"><vh>Linux install script</vh></v>
 </v>
 </v>
 </vnodes>
@@ -741,7 +950,6 @@ for p in c.allNodes_iter():
 pages = ((nodes * 10) + lines) / 50
 s = "%d nodes,  %d lines, %d pages" % (nodes,lines,pages)
 print s ; g.es(s)</t>
-<t tx="EKR.20040517074600.9"></t>
 <t tx="EKR.20040517074600.10">config = g.app.config
 body = c.frame.body.bodyCtrl
 
@@ -1100,7 +1308,6 @@ for p in c.allNodes_iter():
     if hasattr(p.v.t,"tnodeList"):
         print p,p.v.t.tnodeList</t>
 <t tx="ekr.20040330095252">t = c.frame.log.logCtrl
-print t
 t.delete("1.0","end")</t>
 <t tx="ekr.20040706071823"># This works, and doesn't seem convenient for Leo's importers.
 try:
@@ -4457,15 +4664,12 @@ def gen_while(self,args):
     for arg in args:
         e.gen(arg)</t>
 <t tx="ekr.20040717121014">print "gnx", p.v.t.fileIndex, p.headString()</t>
-<t tx="ekr.20040721113934">import leoGlobals as g
-import profile
+<t tx="ekr.20040721113934">import profile
 import pstats
 
 # Note: the profiled code should do all needed imports.
 path = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','test','leoProfile.txt'))
 path = str(path)
-
-c = g.top() ; p = c.currentPosition()
 
 if p.bodyString().rstrip():
     s = p.bodyString().rstrip() + '\n'
@@ -4510,11 +4714,7 @@ c
   
 last
   </t>
-<t tx="ekr.20040804052804">import leoGlobals as g
-
-c = g.top()
-
-tracePositions = False
+<t tx="ekr.20040804052804">tracePositions = False
 traceDrawing = True
 
 # This trace catches leaks of positions.
@@ -4559,13 +4759,11 @@ Comments of the form #@count nnn set the repeat count.
 Comments of the form #@setup comment delimits the end of setup code.
 @c
 
-try: import timeit # Exists only in Python 2.3 and above.
+try:
+    import timeit # Exists only in Python 2.3 and above.
 except ImportError: 
     timeit = None
     print "Can not import timeit"
-import leoGlobals as g
-
-c = g.top() ; p = c.currentPosition()
 
 if timeit and p.bodyString().strip():
     s = p.bodyString().rstrip() + '\n'
@@ -4580,7 +4778,8 @@ if timeit and p.bodyString().strip():
         print "count: %d : %f %s" % (
             count, result, p.headString().strip())
     except:
-        t.print_exc()</t>
+        t.print_exc()
+</t>
 <t tx="ekr.20040901071028">lines = s.split('\n')
 
 for i in xrange(len(lines)):
@@ -4728,7 +4927,7 @@ def headfind():
                 sUseLogTrigger_srch="(^| )%s%s" % (s,sUseLogTrigger) #first just Log trigger re
                 if re.findall(sUseLogTrigger_srch,p.headString().lower()):
                     body2=p.bodyString()
-                    g.top().frame.log.logCtrl.delete("1.0","end"); # clear Log pane before message
+                    c.frame.log.logCtrl.delete("1.0","end"); # clear Log pane before message
                     # g.es(body2,color="orange")
                     return
                 else:
@@ -8799,5 +8998,2980 @@ except IOError:
 <t tx="ekr.20051104082103"></t>
 <t tx="ekr.20051104082151"></t>
 <t tx="ekr.20051104082605"></t>
+<t tx="ekr.20051110105027"></t>
+<t tx="ekr.20051110105027.3"># Note:  the initScriptFind script makes setting up Find/Change scripts very easy.</t>
+<t tx="ekr.20051110105027.4"></t>
+<t tx="ekr.20051110105027.5">def doFindScript (self):
+
+    g.app.searchDict["type"] = "find"
+    self.runFindScript()
+
+def doFindAllScript (self):
+
+    """The user has just pressed the Find All button with script-find radio button checked.
+
+    N.B. Only this code is executed."""
+
+    g.app.searchDict["type"] = "findAll"
+    while 1:
+        self.runFindScript()
+        if not g.app.searchDict.get("continue"):
+            break
+
+def runFindScript (self):
+
+    c = self.c
+    try:
+        exec c.find_text in {} # Use {} to get a pristine environment.
+    except:
+        g.es("exception executing find script")
+        g.es_exception(full=False)
+        g.app.searchDict["continue"] = False # 2/1/04
+</t>
+<t tx="ekr.20051110105027.6">def doChangeScript (self):
+
+    g.app.searchDict["type"] = "change"
+    self.runChangeScript()
+
+def doChangeAllScript (self):
+
+    """The user has just pressed the Change All button with script-change box checked.
+
+    N.B. Only this code is executed."""
+
+    g.app.searchDict["type"] = "changeAll"
+    while 1:
+        self.runChangeScript()
+        if not g.app.searchDict.get("continue"):
+            break
+
+def runChangeScript (self):
+
+    c = self.c
+    try:
+        assert(c.script_change_flag) # 2/1/04
+        exec c.change_text in {} # Use {} to get a pristine environment.
+    except:
+        g.es("exception executing change script")
+        g.es_exception(full=False)
+        g.app.searchDict["continue"] = False # 2/1/04</t>
+<t tx="ekr.20051110105027.7"># Initialize Leo's find panel using the named children of this node.
+g.app.searchDict = {} # Clear dict.get("v") logic.
+g.initScriptFind("Find script")
+
+c.selectVnode(c.rootPosition())
+c.redraw()</t>
+<t tx="ekr.20051110105027.8">v = c.currentVnode()
+last_v = g.app.searchDict.get("v")
+if last_v and v == last_v:
+    v = v.threadNext()
+found = False
+while v:
+    lines = v.bodyString().split('\n')
+    for s in lines:
+        i = g.skip_ws(s,0)
+        leading = s[0:i]
+        if leading:
+            blanks, tabs = 0,0
+            for ch in leading:
+                if ch == ' ':
+                    blanks += 1
+                if ch == '\t':
+                    tabs += 1 ; break
+            if blanks &gt; 0 and tabs &gt; 0:
+                # g.trace(leading)
+                g.es("blanks precede leading tab: " + v.headString())
+                found = True ; break
+    if found: break
+    v = v.threadNext()
+if found:
+    g.app.searchDict["v"] = v
+    c.selectVnode(v)
+    c.redraw()
+else:
+    g.es("done",color="blue")
+    g.app.searchDict["v"] = None
+g.app.searchDict["continue"] = False</t>
+<t tx="ekr.20051110105027.9">if 1:
+    dubious line</t>
+<t tx="ekr.20051110105027.10"># Initialize Leo's find panel using the named children of this node.
+
+g.app.searchDict = {} # Clear dict.get("v") logic.
+g.initScriptFind("Find script","Change script")
+
+c.selectVnode(c.rootPosition())
+c.redraw()</t>
+<t tx="ekr.20051110105027.11">v = c.currentVnode() ; d = g.app.searchDict
+findAll = d.get("type") == "findAll"
+
+if findAll and c.suboutline_only_flag:
+    after = v.nodeAfterTree()
+else:
+    after = None
+
+found = False ; count = 0
+while v and v != after and not found:
+    s = v.bodyString()
+    lines = s.split('\n')
+    for line in lines:
+        if line and not line.strip():
+            if findAll:
+                g.es(v.headString()) ; count += 1
+            else:
+                c.frame.tree.expandAllAncestors(v)
+                c.selectVnode(v)
+                c.redraw() # Necessary to make the new node visible.
+                if not findAll:
+                    g.es("found node with whitespace to clean")
+                found = True 
+            break
+    v = v.threadNext()
+
+if not found:
+    if findAll:
+        g.es("found %d nodes" % (count), color="blue")
+    else:
+        g.es("not found")
+</t>
+<t tx="ekr.20051110105027.12">d = g.app.searchDict
+changeAll = d.get("type") == "changeAll"
+count = d.get("count",0)
+if changeAll:
+    v = d.get("v")
+    if v:
+        v = v.threadNext()
+        after = d.get("after")
+        if v == after: v = None
+    else:
+        v = c.currentVnode()
+        d["count"] = 0
+        after = g.choose(c.suboutline_only_flag,v.nodeAfterTree(),None)
+        d["after"] = after
+    d["v"] = v ; d["continue"] = v != None
+else:
+    v = c.currentVnode()
+
+if v:
+    s = oldText = v.bodyString()
+    lines = s.split('\n')
+    lines = [line.rstrip() for line in lines]
+    s = '\n'.join(lines)
+    if s != oldText:
+        v.setBodyStringOrPane(s,encoding=g.app.tkEncoding)
+        if changeAll:
+            g.es(v.headString()) ; d["count"] = count + 1
+        else:
+            c.frame.body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
+            c.frame.body.setInsertPointToStartOfLine(0)
+else:
+    if changeAll:
+        g.es("found %d nodes" % (count), color="blue")
+    else:
+        g.es("done")</t>
+<t tx="ekr.20051110105027.13"># Initialize Leo's find panel using the named children of this node.
+
+g.app.searchDict = {} # Clear dict.get("v") logic.
+g.initScriptFind("Find script","Change script")
+
+# Start searching at the top.
+c.selectVnode(c.rootPosition())</t>
+<t tx="ekr.20051110105027.14">import re
+
+docPart = re.compile("""^(@$|@ |@doc)(.*)$
+^@c[ \t]*(.*?)$
+^(def[ \t]*.*?:.*?)$
+(.*)""", re.MULTILINE | re.DOTALL)
+
+d = g.app.searchDict
+v = c.currentVnode()
+# Move past previously matched node.
+last_v = d.get("v")
+if last_v:
+    if v == last_v: v = last_v.threadNext()
+    d["v"] = None
+d["m"] = None ; d["c"] = c
+while v:
+    m = docPart.match(v.bodyString())
+    if m:
+        d["m"] = m ; d["v"] = v
+        c.frame.tree.expandAllAncestors(v)
+        c.selectVnode(v)
+        c.redraw() # Necessary to make the new node visible.
+        break
+    v = v.threadNext()
+if not d.get("v"):
+    g.es("no @doc part found",color="blue")</t>
+<t tx="ekr.20051110105027.15">def replaceDocPart(m,body):
+    # Warning: m.group(0) is the _whole_ match.
+    directive = m.group(1)
+    doc = m.group(2)
+    blanks = m.group(3).strip()
+    if blanks: blanks += "\n\n"
+    else: blanks = ""
+    defLine = m.group(4)
+    rest = m.group(5)
+    docList = doc.split('\n')
+    doc = string.join(docList,"\n\t")
+    if body.hasTextSelection():  # If text is selected only that text becomes the doc part.
+        sel = body.getSelectedText()
+        i = doc.find(sel)
+        if i &gt; -1:
+            doc = doc[:i] + doc[i + len(sel):] # Remove selected text.
+            return directive + doc.rstrip() + "\n@c\n\n" + defLine + '\n\n\t"""' + sel + '"""\n' + rest
+        else:
+            g.es("selection should be in @doc part")
+            return None # This disables any replacement.
+    else:
+        return blanks + defLine + '\n\n\t"""' + doc.strip() + '"""\n' + rest
+        
+d = g.app.searchDict ; c = d.get("c") ; v = d.get("v") ; m = d.get("m")
+if c and v and m:
+    body = c.frame.body
+    oldText = v.bodyString()
+    s = replaceDocPart(m,body)
+    if s: # Don't make a replacement if there was an error.
+        v.setBodyStringOrPane(s,encoding=g.app.tkEncoding)
+        body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.</t>
+<t tx="ekr.20051110105027.16">import re
+
+s = """@doc line 0
+line 1d
+line 2
+@c
+
+# a comment
+
+def abc(self): xx
+
+after 1
+after 2"""
+
+pat = re.compile("""^(@$|@ |@doc)(.*?)$
+^@c[ \t]*(.*?)$
+^(def[ \t]*.*?:.*?)$
+(.*)""", re.MULTILINE | re.DOTALL)
+
+m = pat.match(s)
+print "---"
+if m:
+    print "doc:   ", m.group(2).strip()
+    print "blanks:", m.group(3).strip()
+    print "def:   ", m.group(4).strip()
+    print "rest:  ", m.group(5).strip()
+else:
+    print "no match"
+</t>
+<t tx="ekr.20051110105027.17"># This script was a breakthrough.
+# Executing this script initializes the Find text from the given script string.
+# To do: get the script from a named child of this node.
+
+script = """
+v = c.currentVnode()
+print v
+v = v.threadNext()
+c.selectVnode(v)"""
+
+g.app.searchDict = {} # Communication between search &amp; change scripts
+c.script_search_flag = True
+c.find_text = script
+c.frame.findPanel.init(c)
+c.frame.OnFindPanel()</t>
+<t tx="ekr.20051110105027.18"># This file contains functions for non-interactive searching.
+# You might find these useful while running other scripts.
+
+import leo, string, re
+
+@others</t>
+<t tx="ekr.20051110105027.19">def changeAll ( commander, findPat, changePat, bodyFlag = 1 ):
+    """
+    changeAll	make changes in an entire Leo outline.
+    
+    commander	Commands object for a Leo outline window.
+    findPat		the search string.
+    changePat	the replacement string.
+    bodyFlag	True: change body text.  False: change headline text.
+    """
+    n = len(changePat)
+    v = commander.rootVnode()
+    pos = 0
+    while v != None:
+        v, pos = changeNext(v, pos, findPat, changePat, bodyFlag)
+        pos = pos + n</t>
+<t tx="ekr.20051110105027.20">def changeNext ( v, pos, findPat, changePat, bodyFlag = 1 ):
+    """
+    changeNext:	use string.find() to change text in a Leo outline.
+    
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    findPat		the search string.
+    changePat	the replacement string.
+    bodyFlag	True: change body text.  False: change headline text.
+    
+    returns a tuple (v,pos) showing where the change occured.
+    returns (None,0) if no further match in the outline was found.
+
+    Note: if (v,pos) is a tuple returned previously from changeNext,
+    changeNext(v,pos+len(findPat),findPat,changePat)
+    changes the next matching string.
+    """
+    n = len(findPat)
+    v, pos = findNext(v, pos, findPat, bodyFlag)
+    if v == None:
+        return None, 0
+    if bodyFlag:
+        s = v.bodyString()
+        # s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setBodyStringOrPane(s)
+    else:
+        s = v.headString()
+        # s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setHeadStringOrHeadline(s)
+        print "setting head string: ", result
+    return v, pos</t>
+<t tx="ekr.20051110105027.21">def changePrev ( v, pos, findPat, changePat, bodyFlag = 1 ):
+    """
+    changePrev:	use string.rfind() to change text in a Leo outline.
+    
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    findPat		the search string.
+    changePat	the replacement string.
+    bodyFlag	True: change body text.  False: change headline text.
+    
+    returns a tuple (v,pos) showing where the change occured.
+    returns (None,0) if no further match in the outline was found.
+
+    Note: if (v,pos) is a tuple returned previously from changePrev,
+    changePrev(v,pos-len(findPat),findPat,changePat)
+    changes the next matching string.
+    """
+    n = len(findPat)
+    v, pos = findPrev(v, pos, findPat, bodyFlag)
+    if v == None:
+        return None, 0
+    if bodyFlag:
+        s = v.bodyString()
+        # s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setBodyStringOrPane(s)
+    else:
+        s = v.headString()
+        #s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setHeadStringOrHeadline(s)
+    return v, pos</t>
+<t tx="ekr.20051110105027.22">def findAll(c,pattern,bodyFlag=1):
+    """
+    findAll		search an entire Leo outline for a pattern.
+    
+    c        commander for a Leo outline window.
+    pattern		the search string.
+    bodyFlag	True: search body text. False: search headline text.
+    
+    returns a list of tuples (v,pos) showing where matches occured.
+    returns [] if no match were found.
+    """
+    v = c.rootVnode()
+    n = len(pattern)
+    result = [] ; pos = 0
+    while v != None:
+        v, pos = findNext(v,pos,pattern,bodyFlag)
+        if v:
+            result.append ((v, pos),)
+        pos = pos + n
+    return result</t>
+<t tx="ekr.20051110105027.23">def findNext ( v, pos, pattern, bodyFlag = 1 ):
+    """
+    findNext:	use string.find() to find a pattern in a Leo outline.
+    
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    pattern		the search string.
+    bodyFlag	True: search body text.  False: search headline text.
+    
+    returns a tuple (v,pos) showing where the match occured.
+    returns (None,0) if no further match in the outline was found.
+
+    Note: if (v,pos) is a tuple returned previously from findNext,
+    findNext(v,pos+len(pattern),pattern) finds the next match.
+    """
+    while v != None:
+        if bodyFlag:
+            s = v.bodyString()
+        else:
+            s = v.headString()
+        pos = s.find(pattern,pos )
+        if pos != -1:
+            return v, pos
+        v = v.threadNext()
+        pos = 0
+    return None, 0</t>
+<t tx="ekr.20051110105027.24">def findPrev ( v, pos, pattern, bodyFlag = 1 ):
+    """
+    findPrev:	use string.rfind() to find a pattern in a Leo outline.
+    
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    pattern		the search string
+    bodyFlag	True: search body text.  False: search headline text.
+    
+    returns a tuple (v,pos) showing where the match occured.
+    returns (None,0) if no further match in the outline was found.
+
+    Note: if (v,pos) is a tuple returned previously from findPrev,
+    findPrev(v,pos-len(pattern),pattern) finds the next match.
+    """
+    while v != None:
+        if bodyFlag:
+            s = v.bodyString()
+        else:
+            s = v.headString()
+        pos = s.rfind(pattern,0,pos)
+        if pos != -1:
+            return v, pos
+        v  = v.threadBack()
+        pos = -1
+    return None, 0</t>
+<t tx="ekr.20051110105027.25">def reChangeAll ( commander, findPat, changePat, bodyFlag, reFlags = None ):
+    """
+    reChangeAll: make changes in an entire Leo outline using re module.
+    
+    commander	Commands object for a Leo outline window.
+    findPat		the search string.
+    changePat	the replacement string.
+    bodyFlag	True: change body text.  False: change headline text.
+    reFlags		flags argument to re.search().
+    """
+    n = len(changePat)
+    v = commander.rootVnode()
+    pos = 0
+    while v != None:
+        v, mo, pos = reChangeNext(
+            v, pos, findPat, changePat, bodyFlag, reFlags)
+        pos = pos + n</t>
+<t tx="ekr.20051110105027.26">def reChangeNext ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
+    """
+    reChangeNext: use re.search() to change text in a Leo outline.
+    
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    findPat		the search string.
+    changePat	the replacement string.
+    bodyFlag	True: change body text.  False: change headline text.
+    reFlags		flags argument to re.search().
+    
+    returns a tuple (v,pos) showing where the change occured.
+    returns (None,0) if no further match in the outline was found.
+
+    Note: if (v,pos) is a tuple returned previously from reChangeNext,
+    reChangeNext(v,pos+len(findPat),findPat,changePat,bodyFlag)
+    changes the next matching string.
+    """
+    n = len(findPat)
+    v, mo, pos = reFindNext(v, pos, findPat, bodyFlag, reFlags)
+    if v == None:
+        return None, None, 0
+    if bodyFlag:
+        s = v.bodyString()
+        print s, findPat, changePat
+        # s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setBodyStringOrPane(s)
+    else:
+        s = v.headString()
+        # s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setHeadStringOrHeadline(s)
+    return v, mo, pos</t>
+<t tx="ekr.20051110105027.27">def reChangePrev ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
+    """
+    reChangePrev: use re.search() to change text in a Leo outline.
+    
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    findPat		the search string.
+    changePat	the replacement string.
+    bodyFlag	True: change body text.  False: change headline text.
+    reFlags		flags argument to re.search().
+    
+    returns a tuple (v,pos) showing where the change occured.
+    returns (None,0) if no further match in the outline was found.
+
+    Note: if (v,pos) is a tuple returned previously from reChangePrev,
+    reChangePrev(v,pos-len(findPat),findPat,changePat,bodyFlag)
+    changes the next matching string.
+    """
+    n = len(findPat)
+    v, mo, pos = reFindPrev(v, pos, findPat, bodyFlag, reFlags)
+    if v == None:
+        return None, None, 0
+    if bodyFlag:
+        s = v.bodyString()
+        # s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setBodyStringOrPane(s)
+    else:
+        s = v.headString()
+        # s[pos:pos+n] = changePat
+        s = s[:pos] + changePat + s[pos+n:]
+        v.setHeadStringOrHeadline(s)
+    return v, mo, pos</t>
+<t tx="ekr.20051110105027.28">def reFindAll(c,findPat,bodyFlag,reFlags=None):
+    """
+    reFindAll	search an entire Leo outline using re module.
+    
+    c	     commander for a Leo outline window.
+    pattern		the search string.
+    bodyFlag	True: search body text.  False: search headline text.
+    reFlags		flags argument to re.search().
+
+    returns a list of tuples (v,pos) showing where matches occured.
+    returns [] if no match were found.
+    """
+    v = c.rootVnode()
+    n = len(findPat)
+    result = [] ; pos = 0
+    while v != None:
+        v, mo, pos = reFindNext(v,pos,findPat,bodyFlag,reFlags)
+        if v != None:
+            result.append ( (v,mo,pos) )
+        pos = pos + n
+    return result</t>
+<t tx="ekr.20051110105027.29">def reFindNext ( v, pos, pattern, bodyFlag, reFlags = None ):
+    """
+    reFindNext:	use re.search() to find pattern in a Leo outline.
+    
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    pattern		the search string
+    bodyFlag	True: search body text.  False: search headline text.
+    reFlags		the flags argument to re.search()
+    
+    returns a tuple (v,mo,pos) showing where the match occured.
+    returns (None,None,0) if no further match in the outline was found.
+    mo is a "match object"
+
+    Note: if (v,pos) is a tuple returned previously from reFindNext,
+    reFindNext(v,pos+len(pattern),pattern) finds the next match.
+    """
+    while v != None:
+        if bodyFlag:
+            s = v.bodyString()
+        else:
+            s = v.headString()
+        if reFlags == None:
+            mo = re.search ( pattern, s[pos:] )
+        else:
+            mo = re.search ( pattern, s[pos:], reFlags )
+        if mo != None:
+            return v, mo, pos + mo.start()
+        v = v.threadNext()
+        pos = 0
+    return None, None, 0</t>
+<t tx="ekr.20051110105027.30">def reFindPrev ( v, pos, pattern, bodyFlag, reFlags = None ):
+    """
+    reFindPrev:	use re.search() to find pattern in a Leo outline.
+
+    v	 		the vnode to start the search.
+    pos			the position within the body text of v to start the search.
+    pattern		the search string
+    bodyFlag	True: search body text.  False: search headline text.
+    reFlags		the flags argument to re.search()
+    
+    returns a tuple (v,mo,pos) showing where the match occured.
+    returns (None,None,0) if no further match in the outline was found.
+    
+    Note 1: Searches vnodes in reverse (v.threadBack) direction.
+    Searches text of vnodes in _forward_ direction.
+    
+    Note 2: if (v,pos) is a tuple returned previously from reFindPrev,
+    reFindPrev(v,pos-len(pattern),pattern) finds the next match.
+    """
+    while v != None:
+        if bodyFlag:
+            s = v.bodyString()
+        else:
+            s = v.headString()
+        # Forward search through text...
+        if reFlags == None:
+            mo = re.search ( pattern, s[pos:] )
+        else:
+            mo = re.search ( pattern, s[pos:], reFlags )
+        if mo != None:
+            return v, mo, pos+mo.start()
+        # Reverse search through vnode.
+        v = v.threadBack()
+        pos = 0
+    return None, None, 0</t>
+<t tx="ekr.20051110105027.31">def lineAtPos ( s, pos ):
+    """
+    lineAtPos: return the line of a string containing the given index.
+    s		a string
+    pos		an index into s
+    """
+    # find the start of the line containing the match
+    if len(s) &lt; 1:
+        return ""
+    if pos &gt; len(s):
+        pos = len(s)-1
+        
+    while pos &gt; 0:
+        if s[pos] == '\n':
+            pos = pos + 1
+            break
+        else:
+            pos = pos - 1
+    # return the line containing the match
+    s = s[pos:]
+    list = s.split("\n")
+    return list[0]</t>
+<t tx="ekr.20051110105027.32">def printFindList( findList, bodyFlag = 1 ):
+    """
+    printFindList:	Print matching lines from the list.
+    
+    findList:		a list of (v,pos) tuples returned from findAll().
+    Only the line containing the match is printed.
+    Lines are printed once for each match found on the line.
+    """
+    for v,pos in findList:
+        if v != None:
+            if bodyFlag:
+                s = v.bodyString()
+            else:
+                s = v.headString()
+            print lineAtPos(s, pos)</t>
+<t tx="ekr.20051110105027.34">@first
+@language python
+@tabwidth -4
+
+import string
+
+@ When using c2py as a script to translate entire files, use convertCFileToPython().  When using c2py within Leo, use convertCurrentTree().
+
+Please set user data in the &lt;&lt; specifying user types &gt;&gt; section.
+@c
+
+&lt;&lt; what c2py does &gt;&gt;
+&lt;&lt; theory of operation &gt;&gt;
+&lt;&lt; specify user types &gt;&gt;
+tabWidth = 4 # how many blanks in a tab.
+printFlag = False
+doLeoTranslations = True ; dontDoLeoTranslations = False
+&lt;&lt; define testData &gt;&gt;
+@others
+
+gClassName = "" # The class name for the present function.  Used to modify ivars.
+gIvars = [] # List of ivars to be converted to self.ivar
+
+def test():
+    global printFlag ; printFlag = True
+    for s in testData:
+        convertCStringToPython(s, doLeoTranslations)
+        
+def go():
+    test()
+
+if __name__ == "__main__":
+    speedTest(2)</t>
+<t tx="ekr.20051110105027.35">@ c2py converts C or C++ text into python text.  The conversion is not complete.  Nevertheless, c2py eliminates much of the tedious text manipulation that would otherwise be required.
+
+The following is a list of the translations performed by c2py.  These transformations are controlled by convertCodeList().
+
+I.  Prepass
+
+These translations before removing all curly braces.
+
+Suppose we are translating:
+
+    aTypeSpec aClass::aMethod(t1 v1,...,tn vn)
+    {
+        body
+    }
+
+1. Translates the function prototype, i.e., translates:
+
+    aTypeSpec aClass::aMethod(t1 v1,...,tn vn)
+to:
+    def aMethod(v1,...vn):
+
+As a special case, c2py translates:
+
+    aTypeSpec aClass::aClass(t1 v1,...,tn vn)
+to:
+    aClass.__init__(t1 v1,...,tn vn)
+
+Yes, I know, aClass.__init__ isn't proper Python, but retaining the class name is useful.
+
+2. Let t denote any member of typeList or classList.
+
+    a) Removes all casts of the form (t) or (t*) or (t**), etc.
+    b) Converts t x, t *x, t **x, etc. to x.
+    c) Converts x = new t(...) to x = t(...)
+    d) For all i in ivarsDict[aClass] converts this -&gt; i to self.i
+    e) For all i in ivarsDict[aClass] converts i to self.i
+
+3. Converts &lt; &lt; x &gt; &gt; = to @c.  This Leo-specific translation is not done when translating files.
+
+II.  Main Pass
+
+This pass does the following simple translations everywhere except in comments and strings.
+
+Changes all -&gt; to .
+Changes all this.self to self (This corrects problems during the prepass.)
+Removes all curly braces
+Changes all #if to if
+Changes all else if to elif
+Changes all #else to else:
+Changes all else to else:
+Removes all #endif
+Changes all &amp;&amp; to and
+Changes all || to or
+Changes all TRUE to True
+Changes all FALSE to False
+Changes all NULL to None
+Changes all this to self
+Changes all @code to @c.  This Leo-specific translation is not done when translating files.
+
+III.  Complex Pass
+
+This pass attempts more complex translations.
+
+Converts if ( x ) to if x:
+Converts elif ( x ) to elif x:
+Converts while ( x ) to while x:
+Converts for ( x ; y ; z ) to for x SEMI y SEMI z:
+
+remove all semicolons.
+
+IV.  Final Pass
+
+This pass completes the translation.
+
+Removes all semicolons.
+Removes @c if it starts the text.  This Leo-specific translation is not done when translating files.
+Removes all blank lines.
+Removes excess whitespace from all lines, leaving leading whitespace unchanged.
+Replaces C/C++ comments by Python comments.
+Removes trailing whitespace from all lines.
+</t>
+<t tx="ekr.20051110105027.36">@ Strategy and Performance
+
+c2py is straightforward.  The speed of c2py is unimportant.  We don't care about the memory used because we translate only small pieces of text at a time.
+
+We can do body[i:j] = x, regardless of len(x).  We can also do del body[i:j] to delete characters.
+
+We scan repeatedly through the text.  Using many passes greatly simplifies the code and does not slow down c2py significantly.
+
+No scans are done within strings or comments.  The idiom to handle such scans is the following:
+
+def someScan(body):
+    i = 0
+    while i &lt; body(len):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif &lt;&lt; found what we are looking for ? &gt;&gt; :
+            &lt;&lt; convert what we are looking for, setting i &gt;&gt;
+        else: i += 1
+
+That's about all there is to it.  The code was remarkably easy to write and seems clear to me.
+</t>
+<t tx="ekr.20051110105027.37">@ Please change the following lists so they contain the types and classes used by your program.
+
+c2py removes all type definitions correctly; it converts
+    new aType(...)
+to
+    aType(...)
+@c
+
+classList = [
+    "vnode", "tnode", "Commands",
+    "wxString", "wxTreeCtrl", "wxTextCtrl", "wxSplitterWindow" ]
+    
+typeList = ["char", "void", "short", "long", "int", "double", "float"]
+
+@ Please change ivarsDict so it represents the instance variables (ivars) used by your program's classes.
+
+ivarsDict is a dictionary used to translate ivar i of class c to self.i.  It also translates this-&gt;i to self.i.
+@c
+    
+ivarsDict = {
+    "atFile": [ "mCommands", "mErrors", "mStructureErrors",
+        "mTargetFileName", "mOutputFileName", "mOutputStream",
+        "mStartSentinelComment", "mEndSentinelComment", "mRoot"],
+
+    "vnode": ["mCommands", "mJoinList", "mIconVal", "mTreeID", "mT", "mStatusBits"],
+
+    "tnode": ["mBodyString", "mBodyRTF", "mJoinHead", "mStatusBits", "mFileIndex",
+        "mSelectionStart", "mSelectionLength", "mCloneIndex"],
+        
+    "LeoFrame": ["mNextFrame", "mPrevFrame", "mCommands"],
+
+    "Commands": [
+        # public
+        "mCurrentVnode", "mLeoFrame", "mInhibitOnTreeChanged", "mMaxTnodeIndex",
+        "mTreeCtrl", "mBodyCtrl", "mFirstWindowAndNeverSaved",
+        #private
+        "mTabWidth", "mChanged", "mOutlineExpansionLevel", "mUsingClipboard",
+        "mFileName", "mMemoryInputStream", "mMemoryOutputStream", "mFileInputStream",
+        "mInputFile", "mFileOutputStream", "mFileSize", "mTopVnode", "mTagList",
+        "mMaxVnodeTag",
+        "mUndoType", "mUndoVnode", "mUndoParent", "mUndoBack", "mUndoN",
+        "mUndoDVnodes", "mUndoLastChild", "mUndoablyDeletedVnode" ]}</t>
+<t tx="ekr.20051110105027.38">testData = [ "\n@doc\n\
+This is a doc part: format, whilest, {};-&gt;.\n\
+&lt;&lt;\
+section def&gt;&gt;=\n\
+LeoFrame::LeoFrame(vnode *v, char *s, int i)\n\
+{\n\
+    // test ; {} /* */.\n\
+    #if 0 //comment\n\
+        if(gLeoFrameList)gLeoFrameList -&gt; mPrevFrame = this ;\n\
+        else\n\
+            this -&gt; mNextFrame = gLeoFrameList ;\n\
+    #else\n\
+        \n\
+        vnode *v = new vnode(a,b);\n\
+        Commands *commander = (Commands) NULL ; // after cast\n\
+        this -&gt; mPrevFrame = NULL ;\n\
+    #endif\n\
+    if (a==b)\n\
+        a = 2;\n\
+    else if (a ==c)\n\
+        a = 3;\n\
+    else return; \n\
+    /* Block comment test:\n\
+        if(2):while(1): end.*/\n\
+    for(int i = 1; i &lt; limit; ++i){\n\
+        mVisible = FALSE ;\n\
+        mOnTop = TRUE ;\n\
+    }\n\
+    // trailing ws.	 \n\
+    mCommands = new Commands(this, mTreeCtrl, mTextCtrl) ;\n\
+    gActiveFrame = this ;\n\
+}\n\
+    ", "&lt;&lt;" +
+"vnode methods &gt;&gt;=\n\
+\n\
+void vnode::OnCopyNode(wxCommandEvent&amp; WXUNUSED(event))\n\
+{\n\
+    mCommands -&gt; copyOutline();\n\
+}\n\
+\n@doc\n\
+another doc part if, then, else, -&gt; \n&lt;&lt;" +
+"vnode methods &gt;&gt;=\n\
+void vnode::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))\n\
+{\n\
+    mCommands -&gt; pasteOutline();\n\
+}\n" ]</t>
+<t tx="ekr.20051110105027.39"></t>
+<t tx="ekr.20051110105027.40">def speedTest(passes):
+
+    import time
+    file = r"c:\prog\LeoPy\LeoPy.leo"
+    f=open(file)
+    if not f:
+        print "not found: ", file
+        return
+    s=f.read()
+    f.close()
+    print "file:", file, " size:", len(s), " passes:", passes
+    print "speedTest start"
+    time1 = time.clock()
+    p = passes
+    while p &gt; 0:
+        n = len(s) ; i = 0 ; lines = 0
+        while -1 &lt; i &lt; n:
+            if s[i] == '\n':
+                lines += 1 ; i += 1
+            else:
+                i = s.find('\n',i) # _much_ faster than list-based-find.
+            continue
+            # match is about 9 times slower than simple test.
+            if s[i]=='\n': # match(s,i,'\n'): # 
+                i += 1
+            else:
+                i += 1
+        p -= 1
+    time2 = time.clock()
+    print "lines:", lines
+    print "speedTest done:"
+    print "elapsed time:", time2-time1
+    print "time/pass:", (time2-time1)/passes</t>
+<t tx="ekr.20051110105027.41"></t>
+<t tx="ekr.20051110105027.42">def leo1to2():
+
+    import leo
+    import leoGlobals
+    c=leoGlobals.top()
+    v=c.currentVnode()
+    convertLeo1to2(v,c)
+</t>
+<t tx="ekr.20051110105027.43">def convertLeo1to2(v,c):
+
+    after=v.nodeAfterTree()
+    while v and v != after:
+        s=v.bodyString()
+        print "converting:", v.headString()
+        s=convertStringLeo1to2(s)
+        v.setBodyStringOrPane(s)
+        v=v.threadNext()
+
+    c.Repaint() # for backward compatibility
+    print "end of leo1to2"</t>
+<t tx="ekr.20051110105027.44">def convertStringLeo1to2 (s):
+
+    # print "convertStringLeo1to2:start\n", s
+    codeList = stringToList(s) ; outputList = []
+    i = 0
+    while i &lt; len(codeList):
+        j = skipCodePart(codeList,i)
+        if j &gt; i:
+            code = codeList[i:j]
+            convertCodeList1to2(code)
+            i = j
+            #print "-----code:", listToString(code)
+            for item in code:
+                outputList.append(item)
+        j = skipDocPart(codeList,i)
+        if j &gt; i:
+            doc = codeList[i:j]
+            convertDocList(doc) # same as in c2py
+            #print "-----doc:", listToString(doc)
+            i = j
+            for item in doc:
+                outputList.append(item)
+    
+    result = listToString(outputList)
+    global printFlag
+    if printFlag: print "-----:\n", result
+    return result</t>
+<t tx="ekr.20051110105027.45">@ We do _not_ replace @root by @file or insert @others as needed.  Inserting @others can be done easily enough by hand, and may take more global knowledge than we can reasonably expect to have.
+@c
+
+def convertCodeList1to2(list):
+
+    if 0: # There isn't much reason to do this.
+        removeAtRoot(list)
+    safeReplace(list, "@code", "@c")
+    replaceSectionDefs(list)
+    removeLeadingAtCode(list)
+</t>
+<t tx="ekr.20051110105027.46">@ We separate the processing into two parts, 1) a leo-aware driver that iterates over @file trees and 2) a text-based part that processes one or more files or strings.
+</t>
+<t tx="ekr.20051110105027.47">def convertCurrentTree():
+
+    import c2py
+    import leo
+    import leoGlobals
+    c=leoGlobals.top()
+    v = c.currentVnode()
+    c2py.convertLeoTree(v,c)</t>
+<t tx="ekr.20051110105027.48">def convertLeoTree(v,c):
+
+    after=v.nodeAfterTree()
+    while v and v != after:
+        s=v.bodyString()
+        print "converting:", v.headString()
+        s=convertCStringToPython(s, doLeoTranslations )
+        v.setBodyStringOrPane(s)
+        v=v.threadNext()
+    c.Repaint() # for backward compatibility.
+    print "end of c2py"</t>
+<t tx="ekr.20051110105027.49">def convertCFileToPython(file):
+
+    f=open(file, 'r')
+    if not f: return
+    s = f.read()
+    f.close();
+    f=open(file + ".py", 'w')
+    if not f: return
+    s = convertCStringToPython(s, dontDoLeoTranslations )
+    f.write(s)
+    f.close()</t>
+<t tx="ekr.20051110105027.50"></t>
+<t tx="ekr.20051110105027.51">def convertCStringToPython(s, leoFlag):
+
+    # print "convertCStringToPython:start\n", s
+    firstPart = True
+    codeList = stringToList(s)
+    
+    if not leoFlag:
+        convertCodeList(codeList, firstPart, dontDoLeoTranslations)
+        return listToString(codeList)
+
+    outputList = []
+    i = 0
+    while i &lt; len(codeList):
+        j = skipCodePart(codeList,i)
+        if j &gt; i:
+            code = codeList[i:j]
+            convertCodeList(code, firstPart, doLeoTranslations)
+            i = j
+            #print "-----code:", listToString(code)
+            for item in code:
+                outputList.append(item)
+        firstPart = False # don't remove @c from here on.
+        j = skipDocPart(codeList,i)
+        if j &gt; i:
+            doc = codeList[i:j]
+            convertDocList(doc)
+            #print "-----doc:", listToString(doc)
+            i = j
+            for item in doc:
+                outputList.append(item)
+    
+    result = listToString(outputList)
+    global printFlag
+    if printFlag: print "-----:\n", result
+    return result</t>
+<t tx="ekr.20051110105027.52">def convertCodeList(list, firstPart, leoFlag):
+    #first
+    replace(list, "\r", None)
+    convertLeadingBlanks(list)
+    if leoFlag:
+        replaceSectionDefs(list)
+    mungeAllFunctions(list)
+    #next
+    safeReplace(list, " -&gt; ", '.')
+    safeReplace(list, "-&gt;", '.')
+    safeReplace(list, " . ", '.')
+    safeReplace(list, "this.self", "self")
+    safeReplace(list, "{", None)
+    safeReplace(list, "}", None)
+    safeReplace(list, "#if", "if")
+    safeReplace(list, "#else", "else")
+    safeReplace(list, "#endif", None)
+    safeReplace(list, "else if", "elif")
+    safeReplace(list, "else", "else:")
+    safeReplace(list, "&amp;&amp;", "and")
+    safeReplace(list, "||", "or")
+    safeReplace(list, "TRUE", "True")
+    safeReplace(list, "FALSE", "False")
+    safeReplace(list, "NULL", "None")
+    safeReplace(list, "this", "self")
+    safeReplace(list, "try", "try:")
+    safeReplace(list, "catch", "except:")
+    if leoFlag:
+        safeReplace(list, "@code", "@c")
+    #next
+    handleAllKeywords(list)
+    # after processing for keywords
+    removeSemicolonsAtEndOfLines(list)
+    #last
+    if firstPart and leoFlag: removeLeadingAtCode(list)
+    removeBlankLines(list)
+    removeExcessWs(list)
+    # your taste may vary: in Python I don't like extra whitespace
+    safeReplace(list, " :", ":") 
+    safeReplace(list, ", ", ",")
+    safeReplace(list, " ,", ",")
+    safeReplace(list, " (", "(")
+    safeReplace(list, "( ", "(")
+    safeReplace(list, " )", ")")
+    safeReplace(list, ") ", ")")
+    replaceComments(list) # should follow all calls to safeReplace
+    removeTrailingWs(list)
+    safeReplace(list, "\t ", "\t") # happens when deleting declarations.</t>
+<t tx="ekr.20051110105027.53">def convertDocList(docList):
+
+    # print "convertDocList:", docList
+    if matchWord(docList, 0, "@doc"):
+        i = skipWs(docList, 4)
+        if match(docList, i, "\n"):
+            i += 1
+        docList[0:i] = list("@ ")</t>
+<t tx="ekr.20051110105027.54">def skipDocPart(list, i):
+    
+    # print "skipDocPart", i
+    while i &lt; len(list):
+        if matchWord(list, i, "@code") or matchWord(list, i, "@c"):
+            break
+        elif isSectionDef(list,i):
+            break
+        else: i = skipPastLine(list, i)
+    return i</t>
+<t tx="ekr.20051110105027.55">def skipCodePart(codeList, i):
+    
+    # print "skipCodePart", i
+    if matchWord(codeList, i, "@doc") or matchWord(codeList, i, "@"):
+        return i
+    while i &lt; len(codeList):
+        if match(codeList, i, "//"):
+            i = skipPastLine(codeList,i)
+        elif match(codeList, i, "/*"):
+            i = skipCBlockComment(codeList,i)
+        elif match(codeList, i, '"') or match(codeList, i, "'"):
+            i = skipString(codeList,i)
+        elif match(codeList, i, "\n"):
+            i += 1
+            if matchWord(codeList, i, "@doc") or matchWord(codeList, i, "@"):
+                break
+        else: i += 1
+    return i</t>
+<t tx="ekr.20051110105027.56"></t>
+<t tx="ekr.20051110105027.57"></t>
+<t tx="ekr.20051110105027.58">def convertLeadingBlanks(list):
+
+    global tabWidth
+    if tabWidth &lt; 2: return
+    i = 0
+    while i &lt; len(list):
+        n = 0
+        while i &lt; len(list) and list[i] == ' ':
+            n += 1 ; i += 1
+            if n == tabWidth:
+                list[i-tabWidth:i] = ['\t']
+                i = i - tabWidth + 1
+                n = 0
+        i = skipPastLine(list, i)</t>
+<t tx="ekr.20051110105027.59">def findInList(list, i, findStringOrList):
+
+    findList = stringToList(findStringOrList)
+    
+    while i &lt; len(list):
+        if match(list, i, findList): return i
+        else: i += 1
+    return -1</t>
+<t tx="ekr.20051110105027.60">def findInCode(codeList, i, findStringOrList):
+
+    findList = stringToList(findStringOrList)
+    
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList, i, findList):
+            return i
+        else: i += 1
+    return -1</t>
+<t tx="ekr.20051110105027.61"># We scan for a '{' at the top level that is preceeded by ')'
+# @code and &lt; &lt; x &gt; &gt; = have been replaced by @c
+def mungeAllFunctions(codeList):
+
+    prevSemi = 0 # Previous semicolon: header contains all previous text
+    i = 0
+    firstOpen = None
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+            prevSemi = i
+        elif match(codeList, i, '('):
+            if not firstOpen:
+                firstOpen = i
+            i += 1
+        elif match(codeList, i, '#'):
+            i = skipPastLine(codeList, i)
+            prevSemi = i
+        elif match(codeList, i, ';'):
+            i += 1
+            prevSemi = i
+        elif matchWord(codeList, i, "@code"):
+            i += 5
+            prevSemi = i # restart the scan
+        elif matchWord(codeList, i, "@c"):
+            i += 2 ; prevSemi = i # restart the scan
+        elif match(codeList, i, "{"):
+            i = handlePossibleFunctionHeader(codeList,i,prevSemi,firstOpen)
+            prevSemi = i ; firstOpen = None # restart the scan
+        else: i += 1</t>
+<t tx="ekr.20051110105027.62"># converts function header lines from c++ format to python format.
+# That is, converts
+# x1..nn w::y ( t1 z1,..tn zn) {
+# to
+# def y (z1,..zn): {
+
+def handlePossibleFunctionHeader(codeList, i, prevSemi, firstOpen):
+
+    assert(match(codeList,i,"{"))
+    prevSemi = skipWsAndNl(codeList, prevSemi)
+    close = prevNonWsOrNlChar(codeList, i)
+    if close &lt; 0 or codeList[close] != ')':
+        return 1 + skipToMatchingBracket(codeList, i)
+    if not firstOpen:
+        return 1 + skipToMatchingBracket(codeList, i)
+    close2 = skipToMatchingBracket(codeList, firstOpen)
+    if close2 != close:
+        return 1 + skipToMatchingBracket(codeList, i)
+    open = firstOpen
+    assert(codeList[open]=='(')
+    head = codeList[prevSemi:open]
+    # do nothing if the head starts with "if", "for" or "while"
+    k = skipWs(head,0)
+    if k &gt;= len(head) or not head[k] in string.letters:
+        return 1 + skipToMatchingBracket(codeList, i)
+    kk = skipPastWord(head,k)
+    if kk &gt; k:
+        headString = listToString(head[k:kk])
+        # C keywords that might be followed by '{'
+        # print "headString:", headString
+        if headString in [ "class", "do", "for", "if", "struct", "switch", "while"]:
+            return 1 + skipToMatchingBracket(codeList, i)
+    args = codeList[open:close+1]
+    k = 1 + skipToMatchingBracket(codeList,i)
+    body = codeList[i:k]
+    #print "head:", listToString(head)
+    #print "args:", listToString(args)
+    #print "body:", listToString(body)
+    #print "tot: ", listToString(codeList[prevSemi:k])
+    head = massageFunctionHead(head)
+    args = massageFunctionArgs(args)
+    body = massageFunctionBody(body)
+    #print "head2:", listToString(head)
+    #print "args2:", listToString(args)
+    #print "body2:", listToString(body)
+    #print "tot2: ", listToString(codeList[prevSemi:k])
+    result = []
+    for item in head:
+        result.append(item)
+    for item in args:
+        result.append(item)
+    for item in body:
+        result.append(item)
+    codeList[prevSemi:k] = result
+    return k</t>
+<t tx="ekr.20051110105027.63">def massageFunctionArgs(args):
+    global gClassName
+    assert(args[0]=='(')
+    assert(args[-1]==')')
+
+    result = ['('] ; lastWord = []
+    if gClassName:
+        for item in list("self,"): result.append(item) #can put extra comma
+
+    i = 1
+    while i &lt; len(args):
+        i = skipWsAndNl(args, i)
+        c = args[i]
+        if c in string.letters:
+            j = skipPastWord(args,i)
+            lastWord = args[i:j]
+            i = j
+        elif c == ',' or c == ')':
+            for item in lastWord:
+                result.append(item)
+            if lastWord != [] and c == ',':
+                result.append(',')
+            lastWord = []
+            i += 1
+        else: i += 1
+    if result[-1] == ',':
+        del result[-1]
+    result.append(')')
+    result.append(':')
+    # print "new args:", listToString(result)
+    return result</t>
+<t tx="ekr.20051110105027.64">def massageFunctionHead(head):
+
+    # print "head:", listToString(head)
+    result = []
+    prevWord = []
+    global gClassName ; gClassName = []
+    i = 0
+    while i &lt; len(head):
+        i = skipWsAndNl(head, i)
+        if i &lt; len(head) and head[i] in string.letters:
+            result = []
+            j = skipPastWord(head,i)
+            prevWord = head[i:j]
+            i = j
+            # look for ::word2
+            i = skipWs(head,i)
+            if match(head,i,"::"):
+                # Set the global to the class name.
+                gClassName = listToString(prevWord)
+                # print "class name:", gClassName
+                i = skipWs(head, i+2)
+                if i &lt; len(head) and (head[i]=='~' or head[i] in string.letters):
+                    j = skipPastWord(head,i)
+                    if head[i:j] == prevWord:
+                        for item in list("__init__"): result.append(item)
+                    elif head[i]=='~' and head[i+1:j] == prevWord:
+                        for item in list("__del__"): result.append(item)
+                    else:
+                        # for item in "::": result.append(item)
+                        for item in head[i:j]: result.append(item)
+                    i = j
+            else:
+                for item in prevWord:result.append(item)
+        else: i += 1
+        
+    finalResult = list("def ")
+    for item in result: finalResult.append(item)
+    # print "new head:", listToString(finalResult)
+    return finalResult</t>
+<t tx="ekr.20051110105027.65">def massageFunctionBody(body):
+
+    body = massageIvars(body)
+    body = removeCasts(body)
+    body = removeTypeNames(body)
+    return body</t>
+<t tx="ekr.20051110105027.66">def massageIvars(body):
+
+    if gClassName and ivarsDict.has_key(gClassName):
+        ivars = ivarsDict [ gClassName ]
+    else:
+        ivars = []
+    # print "key:ivars=", gClassName, ':', `ivars`
+
+    i = 0
+    while i &lt; len(body):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif body[i] in string.letters:
+            j = skipPastWord(body,i)
+            word = listToString(body[i:j])
+            # print "looking up:", word
+            if word in ivars:
+                # replace word by self.word
+                # print "replacing", word, " by self.", word
+                word = "self." + word
+                word = list(word)
+                body[i:j] = word
+                delta = len(word)-(j-i)
+                i = j + delta
+            else: i = j
+        else: i += 1
+    return body</t>
+<t tx="ekr.20051110105027.67">def removeCasts(body):
+
+    i = 0
+    while i &lt; len(body):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif match(body, i, '('):
+            start = i
+            i = skipWs(body, i+1)
+            if body[i] in string.letters:
+                j = skipPastWord(body,i)
+                word = listToString(body[i:j])
+                i = j
+                if word in classList or word in typeList:
+                    i = skipWs(body, i)
+                    while match(body,i,'*'):
+                        i += 1
+                    i = skipWs(body, i)
+                    if match(body,i,')'):
+                        i += 1
+                        # print "removing cast:", listToString(body[start:i])
+                        del body[start:i]
+                        i = start
+        else: i += 1
+    return body</t>
+<t tx="ekr.20051110105027.68"># Do _not_ remove type names when preceeded by new.
+
+def removeTypeNames(body):
+
+    i = 0
+    while i &lt; len(body):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif matchWord(body, i, "new"):
+            i = skipPastWord(body,i)
+            i = skipWs(body,i)
+            # don't remove what follows new.
+            if body[i] in string.letters:
+                i = skipPastWord(body,i)
+        elif body[i] in string.letters:
+            j = skipPastWord(body,i)
+            word = listToString(body[i:j])
+            if word in classList or word in typeList:
+                k = skipWs(body, j)
+                while match(body,k,'*'):
+                    k += 1 ; j = k
+                # print "Deleting type name:", listToString(body[i:j])
+                del body[i:j]
+            else:
+                i = j
+        else: i += 1
+    return body</t>
+<t tx="ekr.20051110105027.69"># converts if ( x ) to if x:
+# converts while ( x ) to while x:
+def handleAllKeywords(codeList):
+
+    # print "handAllKeywords:", listToString(codeList)
+    i = 0
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif ( matchWord(codeList,i,"if") or
+            matchWord(codeList,i,"while") or
+            matchWord(codeList,i,"for") or
+            matchWord(codeList,i,"elif") ):
+            i = handleKeyword(codeList,i)
+        else:
+            i += 1
+    # print "handAllKeywords2:", listToString(codeList)</t>
+<t tx="ekr.20051110105027.70">def handleKeyword(codeList,i):
+
+    isFor = False
+    if (matchWord(codeList,i,"if")):
+        i += 2
+    elif (matchWord(codeList,i,"elif")):
+        i += 4
+    elif (matchWord(codeList,i,"while")):
+        i += 5
+    elif (matchWord(codeList,i,"for")):
+        i += 3
+        isFor = True
+    else: assert(0)
+    # Make sure one space follows the keyword
+    k = i
+    i = skipWs(codeList,i)
+    if k == i:
+        c = codeList[i]
+        codeList[i:i+1] = [ ' ', c ]
+        i += 1
+    # Remove '(' and matching ')' and add a ':'
+    if codeList[i] == "(":
+        j = removeMatchingBrackets(codeList,i)
+        if j &gt; i and j &lt; len(codeList):
+            c = codeList[j]
+            codeList[j:j+1] = [":", " ", c]
+            j = j + 2
+        return j
+    return i</t>
+<t tx="ekr.20051110105027.71">def isWs(c):
+    return c == ' ' or c == '\t'
+    
+def isWsOrNl(c):
+    return c == ' ' or c == '\t' or c == '\n'</t>
+<t tx="ekr.20051110105027.72"># returns the ending index if i points to &lt; &lt; x &gt; &gt; =
+def isSectionDef(list, i):
+
+    i = skipWs(list,i)
+    if not match(list,i,"&lt;&lt;"): return False
+    while i &lt; len(list) and list[i] != '\n':
+        if match(list,i,"&gt;&gt;="): return i+3
+        else: i += 1
+    return False</t>
+<t tx="ekr.20051110105027.73">def isStringOrComment(list, i):
+
+    return match(list,i,"'") or match(list,i,'"') or match(list,i,"//") or match(list,i,"/*")</t>
+<t tx="ekr.20051110105027.74"># returns True if findList matches starting at codeList[i]
+
+def match (codeList, i, findStringOrList):
+
+    findList = stringToList(findStringOrList)
+    n = len(findList)
+    j = 0
+    while i+j &lt; len(codeList) and j &lt; len(findList):
+        if codeList[i+j] != findList[j]:
+            return False
+        else:
+            j += 1
+            if j == n:
+                return i+j
+    return False</t>
+<t tx="ekr.20051110105027.75">def matchWord (codeList, i, findStringOrList):
+
+    j = match(codeList,i,findStringOrList)
+    if not j:
+        return False
+    elif j &gt;= len(codeList):
+        return True
+    else:
+        c = codeList[j]
+        return not (c in string.letters or c in string.digits or c == '_')</t>
+<t tx="ekr.20051110105027.76">def prevNonWsChar(list, i):
+
+    i -= 1
+    while i &gt;= 0 and isWs(list[i]):
+        i -= 1
+    return i
+
+def prevNonWsOrNlChar(list, i):
+
+    i -= 1
+    while i &gt;= 0 and isWsOrNl(list[i]):
+        i -= 1
+    return i</t>
+<t tx="ekr.20051110105027.77">def removeAllCComments(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            i = skipString(list,i)
+        elif match(list,i,"//"):
+            j = skipPastLine(list,i)
+            print "deleting single line comment:", listToString(list[i:j])
+            del list[i:j]
+        elif match(list,i,"/*"):
+            j = skipCBlockComment(list,i)
+            print "deleting block comment:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i += 1</t>
+<t tx="ekr.20051110105027.78">def removeAllCSentinels(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            # string starts a line.
+            i = skipString(list,i)
+            i = skipPastLine(list,i)
+        elif match(list,i,"/*"):
+            # block comment starts a line
+            i = skipCBlockComment(list,i)
+            i = skipPastLine(line,i)
+        elif match(list,i,"//@"):
+            j = skipPastLine(list,i)
+            print "deleting sentinel:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i = skipPastLine(list,i)</t>
+<t tx="ekr.20051110105027.79">def removeAllPythonComments(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            i = skipString(list,i)
+        elif match(list,i,"#"):
+            j = skipPastLine(list,i)
+            print "deleting comment:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i += 1</t>
+<t tx="ekr.20051110105027.80">def removeAllPythonSentinels(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            # string starts a line.
+            i = skipString(list,i)
+            i = skipPastLine(list,i)
+        elif match(list,i,"#@"):
+            j = skipPastLine(list,i)
+            print "deleting sentinel:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i = skipPastLine(list,i)</t>
+<t tx="ekr.20051110105027.81">def removeAtRoot (codeList):
+
+    i = skipWs(codeList, 0)
+    if matchWord(codeList,i,"@root"):
+        j = skipPastLine(codeList,i)
+        del codeList[i:j]
+
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList,i,"\n"):
+            i = skipWs(codeList, i+1)
+            if matchWord (codeList,i,"@root"):
+                j = skipPastLine(codeList,i)
+                del codeList[i:j]
+        else: i += 1
+</t>
+<t tx="ekr.20051110105027.82">def removeBlankLines(codeList):
+
+    i = 0
+    while i &lt; len(codeList):
+        j = i
+        while j &lt; len(codeList) and (codeList[j]==" " or codeList[j]=="\t"):
+            j += 1
+        if j== len(codeList) or codeList[j] == '\n':
+            del codeList[i:j+1]
+        else:
+            oldi = i
+            i = skipPastLine(codeList,i)</t>
+<t tx="ekr.20051110105027.83">def removeExcessWs(codeList):
+
+    i = 0
+    i = removeExcessWsFromLine(codeList,i)
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList,i,'\n'):
+            i += 1
+            i = removeExcessWsFromLine(codeList,i)
+        else: i += 1</t>
+<t tx="ekr.20051110105027.84">def removeExcessWsFromLine(codeList,i):
+
+    assert(i==0 or codeList[i-1] == '\n')
+    i = skipWs(codeList,i)
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i): break # safe
+        elif match(codeList, i, '\n'): break
+        elif match(codeList, i, ' ') or match(codeList, i, '\t'):
+            # Replace all whitespace by one blank.
+            k = i
+            i = skipWs(codeList,i)
+            codeList[k:i] = [' ']
+            i = k + 1 # make sure we don't go past a newline!
+        else: i += 1
+    return i</t>
+<t tx="ekr.20051110105027.85">def removeLeadingAtCode(codeList):
+
+    i = skipWsAndNl(codeList,0)
+    if matchWord(codeList,i,"@code"):
+        i = skipWsAndNl(codeList,5)
+        del codeList[0:i]
+    elif matchWord(codeList,i,"@c"):
+        i = skipWsAndNl(codeList,2)
+        del codeList[0:i]</t>
+<t tx="ekr.20051110105027.86">def removeMatchingBrackets(codeList, i):
+
+    j = skipToMatchingBracket(codeList, i)
+    if j &gt; i and j &lt; len(codeList):
+        # print "del brackets:", listToString(codeList[i:j+1])
+        c = codeList[j]
+        if c == ')' or c == ']' or c == '}':
+            del codeList[j:j+1]
+            del codeList[i:i+1]
+            # print "returning:", listToString(codeList[i:j])
+            return j - 1
+        else: return j + 1
+    else: return j</t>
+<t tx="ekr.20051110105027.87">def removeSemicolonsAtEndOfLines(list):
+
+    i = 0
+    while i &lt; len(list):
+        if isStringOrComment(list,i):
+            i = skipStringOrComment(list,i)
+        elif list[i] == ';':
+            j = skipWs(list,i+1)
+            if j &gt;= len(list) or match(list,j,'\n') or match(list,j,'#') or match(list,j,"//"):
+                del list[i]
+            else: i += 1
+        else: i += 1</t>
+<t tx="ekr.20051110105027.88">def removeTrailingWs(list):
+
+    i = 0
+    while i &lt; len(list):
+        if isWs(list[i]):
+            j = i
+            i = skipWs(list,i)
+            assert(j &lt; i)
+            if i &gt;= len(list) or list[i] == '\n':
+                # print "removing trailing ws:", `i-j`
+                del list[j:i]
+                i = j
+        else: i += 1</t>
+<t tx="ekr.20051110105027.89"># Replaces all occurances of findString by changeString.
+# Deletes all occurances if change is None
+def replace(codeList, findString, changeString):
+
+    if len(findString)==0: return
+    findList = stringToList(findString)
+    changeList = stringToList(changeString)
+
+    i = 0
+    while i &lt; len(codeList):
+        if match(codeList, i, findList):
+            codeList[i:i+len(findList)] = changeList
+            i += len(changeList)
+        else: i += 1</t>
+<t tx="ekr.20051110105027.90"># For Leo we expect few block comments; doc parts are much more common.
+
+def replaceComments(codeList):
+
+    i = 0
+    if match(codeList, i, "//"):
+        codeList[0:2] = ['#']
+    while i &lt; len(codeList):
+        if match(codeList, i, "//"):
+            codeList[i:i+2] = ['#']
+            i = skipPastLine(codeList,i)
+        elif match(codeList, i, "/*"):
+            j = skipCBlockComment(codeList,i)
+            del codeList[j-2:j]
+            codeList[i:i+2] = ['#']
+            j -= 2 ; k = i ; delta = -1
+            while k &lt; j + delta :
+                if codeList[k]=='\n':
+                    codeList[k:k+1] = ['\n', '#', ' ']
+                    delta += 2 ; k += 3 # progress!
+                else: k += 1
+            i = j + delta
+        elif match(codeList, i, '"') or match(codeList, i, "'"):
+            i = skipString(codeList,i)
+        else: i += 1</t>
+<t tx="ekr.20051110105027.91"># Replaces &lt; &lt; x &gt; &gt; = by @c (at the start of lines).
+def replaceSectionDefs(codeList):
+
+    i = 0
+    j = isSectionDef(codeList,i)
+    if j &gt; 0: codeList[i:j] = list("@c ")
+
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList,i,"\n"):
+            i += 1
+            j = isSectionDef(codeList,i)
+            if j &gt; i: codeList[i:j] = list("@c ")
+        else: i += 1</t>
+<t tx="ekr.20051110105027.92"># Replaces occurances of findString by changeString outside of C comments and strings.
+# Deletes all occurances if change is None.
+def safeReplace(codeList, findString, changeString):
+
+    if len(findString)==0: return
+    findList = stringToList(findString)
+    changeList = stringToList(changeString)
+    i = 0
+    if findList[0] in string.letters: #use matchWord
+        while i &lt; len(codeList):
+            if isStringOrComment(codeList,i):
+                i = skipStringOrComment(codeList,i)
+            elif matchWord(codeList, i, findList):
+                codeList[i:i+len(findList)] = changeList
+                i += len(changeList)
+            else: i += 1
+    else: #use match
+        while i &lt; len(codeList):
+            if match(codeList, i, findList):
+                codeList[i:i+len(findList)] = changeList
+                i += len(changeList)
+            else: i += 1</t>
+<t tx="ekr.20051110105027.93">def skipCBlockComment(codeList, i):
+
+    assert(match(codeList, i, "/*"))
+    i += 2
+
+    while i &lt; len(codeList):
+        if match(codeList, i, "*/"): return i + 2
+        else: i += 1
+    return i</t>
+<t tx="ekr.20051110105027.94">def skipPastLine(codeList, i):
+
+    while i &lt; len(codeList) and codeList[i] != '\n':
+        i += 1
+    if i &lt; len(codeList) and codeList[i] == '\n':
+        i += 1
+    return i</t>
+<t tx="ekr.20051110105027.95">def skipPastWord(list, i):
+
+    assert(list[i] in string.letters or list[i]=='~')
+    
+    # Kludge: this helps recognize dtors.
+    if list[i]=='~':
+        i += 1
+    
+    while i &lt; len(list) and (
+        list[i] in string.letters or
+        list[i] in string.digits or
+        list[i]=='_'):
+        i += 1
+    return i</t>
+<t tx="ekr.20051110105027.96">def skipString(codeList, i):
+
+    delim = codeList[i] # handle either single or double-quoted strings
+    assert(delim == '"' or delim == "'")
+    i += 1
+
+    while i &lt; len(codeList):
+        if codeList[i] == delim: return i + 1
+        elif codeList[i] == '\\': i += 2
+        else: i += 1
+    return i</t>
+<t tx="ekr.20051110105027.97">def skipStringOrComment(list,i):
+
+    if match(list,i,"'") or match(list,i,'"'):
+        return skipString(list,i)
+    if match(list, i, "//"):
+        return skipPastLine(list,i)
+    elif match(list, i, "/*"):
+        return skipCBlockComment(list,i)
+    else: assert(0)</t>
+<t tx="ekr.20051110105027.98">def skipToMatchingBracket(codeList, i):
+
+    c = codeList[i]
+    if   c == '(': delim = ')'
+    elif c == '{': delim = '}'
+    elif c == '[': delim = ']'
+    else: assert(0)
+
+    i += 1
+    while i &lt; len(codeList):
+        c = codeList[i]
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif c == delim:
+            return i
+        elif c == '(' or c == '[' or c == '{':
+            i = skipToMatchingBracket(codeList,i)
+            i += 1 # skip the closing bracket.
+        else: i += 1
+    return i</t>
+<t tx="ekr.20051110105027.99">def skipWs(list, i):
+
+    while i &lt; len(list):
+        c = list[i]
+        if c == ' ' or c == '\t':
+            i += 1
+        else: break
+    return i
+    
+def skipWsAndNl(list, i):
+
+    while i &lt; len(list):
+        c = list[i]
+        if c == ' ' or c == '\t' or c == '\n':
+            i += 1
+        else: break
+    return i</t>
+<t tx="ekr.20051110105027.100"># converts a string to a list containing one item per character of the list.
+# converts None to the empty string and leaves other types alone.
+
+# list(string) does not work on none.
+def stringToList(string):
+
+    if string:
+        return list(string)
+    else:
+        return []</t>
+<t tx="ekr.20051110105027.101">def listToString(list):
+
+    return string.join(list,"")</t>
+<t tx="ekr.20051110105027.102"># About the only time you should run this script is when:
+# - changing the format of timestamps in nodeIndices.setTimestamp or
+# - when making a retroactive change to leoID.txt.
+
+if 0: # This is usually a very bad idea.
+
+    v = c.rootVnode()
+    while v:
+        v.t.fileIndex = None
+        v = v.threadNext()
+        
+    g.es("all timestamps cleared")</t>
+<t tx="ekr.20051110105027.104"># p = g.findTopLevelNode("Code")
+
+tnodes = {} ; count = 0
+for p in p.self_and_subtree_iter():
+    tnodes[p.v.t]=p.v.t
+    count += 1
+    
+s = "%4s: %d vnodes, %d distinct" % ("Code",count,len(tnodes.keys()))
+g.es_print(s)
+
+tnodes = {} ; count = 0
+for p in c.allNodes_iter():
+    tnodes[p.v.t]=p.v.t
+    count += 1
+        
+s = "%4s: %d vnodes, %d distinct" % ("All",count,len(tnodes.keys()))
+g.es_print(s)</t>
+<t tx="ekr.20051110105027.105">total,visible = 0,0
+
+if 0: # old way:
+    v = c.rootVnode()
+    while v:
+        total += 1
+        v = v.threadNext()
+    
+    v = c.rootVnode()
+    while v:
+        visible += 1
+        v = v.visNext()
+else:
+    for p in c.allNodes_iter():
+        total += 1
+    
+    p = c.rootPosition()
+    while p:
+        visible += 1
+        p.moveToVisNext()
+    
+print "total,visible",total,visible</t>
+<t tx="ekr.20051110105027.106"></t>
+<t tx="ekr.20051110105027.107">@nocolor
+
+- I have found it easiest to create pydot objects rather than creating Graphviz strings.  It's the natural way, IMO.
+
+- The pydot documentation is poor.  When you cut through the blah-blah-blah all that is really going on is that you use ctors to create pydot objects.  Typically you specify attributes in the ctors, but there are also getters and setters (various silly redundant flavors) to do this.
+
+- It took me awhile to get the difference between names and labels.  Names are essentially object identifiers, and they are restricted to what are basically C identifiers.  Labels are what are shown in nodes.  The default label is the node's name.   It's a bit strange to use strings instead of Python object references, but it's no big deal.
+
+- The documentation for Graphviz is weak.  Very few examples.  It took me a long time to realize that by default Graphviz lays out nodes and edges independently of the order in which they were created.  The ordering="out" argument to the Dot ctor overrides some parts of the layout algorithm so that nodes are laid out in roughly the definition order.  If you want to place nodes yourself, you can specify their exact position.  This would be feasible to do in a script and I haven't done that yet.
+
+In short, Graphviz and pydot are very impressive tools.  The documentation could be improved, but once one gets the hang of things it is fairly easy to get real work done.</t>
+<t tx="ekr.20051110105027.108">@nocolor</t>
+<t tx="ekr.20051110105027.109">The original documentation repeats endlessly the same info about attributes.
+
+Attributes can be set in several ways:
+
+set("attributeName")
+
+set_[attribute name], i.e. set_color, set_fontname
+
+object.attributeName = val
+
+Similarly, you can get attribute values with corresponding getters.</t>
+<t tx="ekr.20051110105027.110">class Cluster(Graph) 
+ 
+Methods:
+
+__init__(self, graph_name='subG', suppress_disconnected=False, **attrs)
+
+graph_name:
+    the cluster's name (the string 'cluster' will be always prepended)
+
+suppress_disconnected:
+    False: remove from the cluster any disconnected nodes.
+
+
+Attributes:
+
+attributes = ['pencolor', 'bgcolor', 'labeljust', 'labelloc', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'lp', 'style', 'target', 'color', 'peripheries', 'fillcolor']</t>
+<t tx="ekr.20051110105027.111">class Common 
+    Common information to several classes.
+ 
+Should not be directly used, several classes are derived from this one.
+  
+char_range(self, a, b)
+Generate a list containing a range of characters.
+ 
+is_ID(self, s)
+Checks whether a string is an dot language ID.
+
+Data:
+
+chars_ID = None
+parent_graph = None 
+
+
+ 
+</t>
+<t tx="ekr.20051110105027.112">class Dot(Graph) 
+    A container for handling a dot language file.
+ 
+This class implements methods to write and process a dot language file.
+
+  
+Methods defined here:
+
+__init__(self, **args)
+
+
+Attributes:
+
+formats = ['ps', 'ps2', 'hpgl', 'pcl', 'mif', 'pic', 'gd', 'gd2', 'gif', 'jpg', 'jpeg', 'png', 'wbmp', 'ismap', 'imap', 'cmap', 'vrml', 'vtx', 'mp', 'fig', ...]
+progs = None</t>
+<t tx="ekr.20051110105027.113">create(self, prog='dot', format='ps')
+Creates and returns a Postscript representation of the graph.
+ 
+create will write the graph to a temporary dot file and process
+it with the program given by 'prog' (which defaults to 'twopi'),
+reading the Postscript output and returning it as a string is the
+operation is successful.
+On failure None is returned.
+ 
+There's also the preferred possibility of using:
+ 
+        create_'format'(prog='program')
+        
+which are automatically defined for all the supported formats.
+
+[create_ps(), create_gif(), create_dia(), ...]</t>
+<t tx="ekr.20051110105027.114">write(self, path, prog='dot', format='raw')
+Writes a graph to a file.
+ 
+Given a filename 'path' it will open/create and truncate
+such file and write on it a representation of the graph
+defined by the dot object and in the format specified by
+'format'.
+
+The format 'raw' is used to dump the string representation
+of the Dot object, without further processing.
+
+The output can be processed by any of graphviz tools, defined
+in 'prog', which defaults to 'dot'
+
+Returns True or False according to the success of the write operation.
+ 
+There's also the preferred possibility of using:
+ 
+        write_'format'(path, prog='program')
+        
+which are automatically defined for all the supported formats.
+[write_ps(), write_gif(), write_dia(), ...]</t>
+<t tx="ekr.20051110105027.115">class Edge(__builtin__.object, Common) 
+    A graph edge.
+ 
+This class represents a graph's edge with all its attributes.
+ 
+edge(src, dst, attribute=value, ...)
+ 
+src: source node's name
+dst: destination node's name
+ 
+
+--------------------------------------------------------------------------------
+Methods defined here:
+
+__eq__(self, edge)
+Compare two edges.
+ 
+If the parent graph is directed, arcs linking
+node A to B are considered equal and A-&gt;B != B-&gt;A
+ 
+If the parent graph is undirected, any edge
+connecting two nodes is equal to any other
+edge connecting the same nodes, A-&gt;B == B-&gt;A
+
+__init__(self, src, dst, **attrs)
+
+get_destination(self)
+Get the edge's destination node name.
+
+get_source(self)
+Get the edges source node name.
+
+parse_node_ref(self, node_str)
+
+set(self, name, value)
+Set an attribute value by name.
+ 
+Given an attribute 'name' it will set its value to 'value'.
+There's always the possibility of using the methods:
+        set_'name'(value)
+which are defined for all the existing attributes.
+to_string(self)
+Returns a string representation of the edge in dot language.
+
+--------------------------------------------------------------------------------
+Data and other attributes defined here:
+
+__dict__ = &lt;dictproxy object&gt;
+dictionary for instance variables (if defined)
+__weakref__ = &lt;attribute '__weakref__' of 'Edge' objects&gt;
+list of weak references to the object (if defined)
+attributes = ['style', 'target', 'pos', 'layer', 'tooltip', 'color', 'showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'lp', 'arrowhead', 'arrowsize', 'arrowtail', 'constraint', 'decorate', 'dir', ...]</t>
+<t tx="ekr.20051110105027.116">class Error(exceptions.Exception) 
+    General error handling class.
+  
+Methods defined here:
+
+__init__(self, value)
+__str__(self)</t>
+<t tx="ekr.20051110105027.117">class Graph(__builtin__.object, Common) 
+    Class representing a graph in Graphviz's dot language.
+ 
+This class implements the methods to work on a representation
+of a graph in Graphviz's dot language.
+ 
+
+Data and other attributes:
+
+__dict__ = &lt;dictproxy object&gt;
+dictionary for instance variables (if defined)
+
+__weakref__ = &lt;attribute '__weakref__' of 'Graph' objects&gt;
+list of weak references to the object (if defined)
+
+attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]</t>
+<t tx="ekr.20051110105027.118">__init__(self, graph_name='G', type='digraph', strict=False, suppress_disconnected=False, simplify=False, **attrs)
+
+ 
+graph_name: the graph's name
+
+type: 'graph' or 'digraph'
+
+suppress_disconnected:
+    defaults to False, which will remove from the graph any disconnected nodes.
+
+simplify:
+    if True it will avoid displaying equal edges, i.e. only one edge between two nodes. removing the duplicated ones.
+        
+All the attributes defined in the Graphviz dot language should be supported.
+ 
+Attributes can be set through the dynamically generated methods:
+ 
+set_[attribute name], i.e. set_size, set_fontname
+ 
+or using the instance's attributes:
+ 
+ Graph.[attribute name], i.e. graph_instance.label, graph_instance.fontname</t>
+<t tx="ekr.20051110105027.119">add_edge(self, graph_edge)
+
+Adds an edge object to the graph.</t>
+<t tx="ekr.20051110105027.120">add_node(self, graph_node)
+
+Adds a node object to the graph.</t>
+<t tx="ekr.20051110105027.121">add_subgraph(self, sgraph)
+
+Adds an edge object to the graph.
+</t>
+<t tx="ekr.20051110105027.122">get(self, name)
+Get an attribute value by name.
+
+get_'name'() is defined for all attributes.
+
+get_edge(self, src, dst)
+Retrieved an edge from the graph.
+Returns a list, a single Edge, or None
+
+get_edge_list(self)
+Returns the list of Edge instances composing the graph.
+
+get_name(self)
+Get the graph's name.
+
+get_node(self, name)
+Given a node's name the corresponding Node instance will be returned.
+Returns a list, a single Node or None.
+ 
+get_node_list(self)
+Returns the list of Node instances composing the graph.
+
+get_simplify(self)
+Get whether to simplify or not.
+
+get_strict(self, val)
+Get graph's 'strict' mode (True, False).
+This option is only valid for top level graphs.
+
+get_subgraph(self, name)
+Given a subgraph's name the corresponding Subgraph instance will be returned.
+Returns a list of Subgraphs, a single Subgraph or None.
+
+get_subgraph_list(self)
+Returns the list of Subgraph instances in the graph.
+
+get_suppress_disconnected(val)
+Get if suppress disconnected is set.
+
+get_type(self)
+Get the graph's type, 'graph' or 'digraph'.</t>
+<t tx="ekr.20051110105027.123">set(self, name, value)
+Set an attribute value by name.
+ 
+set_'name'(value) are defined for all the existing attributes.
+
+set_graph_parent(self, parent)
+Sets a graph and its elements to point the the parent.
+Any subgraph added to a parent graph receives a reference to the parent to access some common data.
+
+set_name(self, graph_name)
+Set the graph's name.
+
+set_simplify(self, simplify)
+Set whether to simplify or not.
+ If True it will avoid displaying equal edges.
+
+set_strict(self, val)
+Set graph to 'strict' mode.
+This option is only valid for top level graphs.
+
+set_suppress_disconnected(val)
+Suppress disconnected nodes in the output graph.
+ 
+set_type(self, graph_type)
+Set the graph's type, 'graph' or 'digraph'.
+
+</t>
+<t tx="ekr.20051110105027.124">to_string(self, indent='')
+Returns a string representation of the graph in dot language.</t>
+<t tx="ekr.20051110105027.125">class Node(__builtin__.object, Common) 
+    A graph node.
+ 
+This class represents a graph's node with all its attributes.
+ 
+
+Data and attributes:
+
+__dict__ = &lt;dictproxy object&gt;
+dictionary for instance variables (if defined)
+
+__weakref__ = &lt;attribute '__weakref__' of 'Node' objects&gt;
+list of weak references to the object (if defined)
+
+attributes = ['showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'root', 'toplabel', 'vertices', 'width', 'z', 'bottomlabel', 'distortion', 'fixedsize', 'group', 'height', 'orientation', 'pin', 'rects', ...]</t>
+<t tx="ekr.20051110105027.126">node(name, attribute=value, ...)
+ 
+name: node's name
+ 
+All the attributes defined in the Graphviz dot language should be supported.
+  
+__init__(self, name, **attrs)
+</t>
+<t tx="ekr.20051110105027.127">get_name(self)
+Get the node's name.</t>
+<t tx="ekr.20051110105027.128">set(self, name, value)
+Set an attribute value by name.
+ 
+Given an attribute 'name' it will set its value to 'value'.
+
+set_'name'(value) is defined for all the existing attributes.
+
+set_name(self, node_name)
+Set the node's name.</t>
+<t tx="ekr.20051110105027.129">to_string(self)
+Returns a string representation of the node in dot language.</t>
+<t tx="ekr.20051110105027.130">class Subgraph(Graph) 
+
+Methods:
+
+__init__(self, graph_name='subG', suppress_disconnected=False, **attrs)
+
+graph_name:
+    the subgraph's name
+
+suppress_disconnected:
+    False: removes from the subgraph any disconnected nodes.
+
+Attributes:
+
+attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]</t>
+<t tx="ekr.20051110105027.131"></t>
+<t tx="ekr.20051110105027.132">find_graphviz()
+
+Locate Graphviz's executables in the system.
+ 
+Attempts  to locate  graphviz's  executables in a Unix system.
+It will look for 'dot', 'twopi' and 'neato' in all the directories
+specified in the PATH environment variable.
+It will return a dictionary containing the program names as keys
+and their paths as values.</t>
+<t tx="ekr.20051110105027.133">graph_from_adjacency_matrix(matrix, node_prefix='', directed=False)
+
+Creates a basic graph out of an adjacency matrix.
+ 
+The matrix has to be a list of rows of values
+representing an adjacency matrix.
+The values can be anything: bool, int, float, as long
+as they can evaluate to True or False.</t>
+<t tx="ekr.20051110105027.134">graph_from_edges(edge_list, node_prefix='', directed=False)
+
+Creates a basic graph out of an edge list.
+ 
+The edge list has to be a list of tuples representing the nodes connected by the edge.
+
+The values can be anything: bool, int, float, str.
+ 
+If the graph is undirected by default, it is only
+calculated from one of the symmetric halves of the matrix.
+</t>
+<t tx="ekr.20051110105027.135">graph_from_incidence_matrix(matrix, node_prefix='', directed=False)
+
+Creates a basic graph out of an incidence matrix.
+ 
+The matrix has to be a list of rows of values
+representing an incidence matrix.
+The values can be anything: bool, int, float, as long
+as they can evaluate to True or False.</t>
+<t tx="ekr.20051110105027.136"></t>
+<t tx="ekr.20051110105027.137"></t>
+<t tx="ekr.20051110105027.138">import string
+
+try:
+    import pydot
+except:
+    s = "pydot must be installed"
+    print s ; es(s,color="red")
+    pydot = None
+
+&lt;&lt; code &gt;&gt;
+
+if pydot:
+    graph = pydot.Dot(simplify=True,ordering="out")
+    root = g.findNodeInTree(p,"Root")
+    addLeoNodesToGraph(root,graph,top=True)
+    graph.write_jpeg(r'c:\prog\test\pydotOut.jpg',prog='dot')
+</t>
+<t tx="ekr.20051110105027.139">@others</t>
+<t tx="ekr.20051110105027.140">def addLeoNodesToGraph(p,graph,top=False):
+
+    # Create p's vnode.
+    thisNode = pydot.Node(name=vnodeRepr(p.v),label=vnodeLabel(p.v))
+    graph.add_node(thisNode)
+    
+    if p.hasChildren():
+        child = p.firstChild()
+        childNode = addLeoNodesToGraph(child,graph)
+        graph.add_node(childNode)
+        edge2 = pydot.Edge(tnodeRepr(p.v.t),vnodeRepr(child.v))
+        graph.add_edge(edge2)
+        
+        while child.hasNext():
+            next = child.next()
+            edge = pydot.Edge(vnodeRepr(child.v),vnodeRepr(next.v),dir="both")
+            nextNode = addLeoNodesToGraph(next,graph)
+            graph.add_node(nextNode)
+            graph.add_edge(edge)
+            child = next
+            
+    tnode = pydot.Node(name=tnodeRepr(p.v.t),shape="box",label=tnodeLabel(p.v.t))
+    edge1 = pydot.Edge(vnodeRepr(p.v),tnodeRepr(p.v.t),arrowhead="none")
+    graph.add_edge(edge1)
+    graph.add_node(tnode)
+    
+    if 0: # Confusing.
+        if not top and p.v._parent:
+            edge = pydot.Edge(vnodeRepr(p.v),vnodeRepr(p.v._parent),
+                style="dotted",arrowhead="onormal")
+            graph.add_edge(edge)
+
+    if 0: # Marginally useful.
+        for v in p.v.t.vnodeList:
+            edge = pydot.Edge(tnodeRepr(p.v.t),vnodeRepr(v),
+                style="dotted",arrowhead="onormal")
+            graph.add_edge(edge)
+
+    return thisNode</t>
+<t tx="ekr.20051110105027.141">def tnodeLabel(t):
+    
+    return "t %d [%d]" % (id(t),len(t.vnodeList))
+    
+def vnodeLabel(v):
+    
+    return "v %d %s" % (id(v),v.t.headString)
+</t>
+<t tx="ekr.20051110105027.142">def dotId(s):
+    
+    """Convert s to a C id"""
+
+    s2 = [ch for ch in s if ch in (string.letters + string.digits + '_')]
+    return string.join(s2,'')
+
+def tnodeRepr(t):
+
+    return "t_%d" % id(t)
+    
+def vnodeRepr(v):
+    
+    return "v_%d_%s" % (id(v),dotId(v.headString()))</t>
+<t tx="ekr.20051110105027.143"></t>
+<t tx="ekr.20051110105027.144"></t>
+<t tx="ekr.20051110105027.145"></t>
+<t tx="ekr.20051110105027.146"></t>
+<t tx="ekr.20051110105027.147"></t>
+<t tx="ekr.20051110105027.148"># Script to change OnXXX to xxx in all body text.
+if 0:
+
+    v = c.currentVnode()
+    v = v.threadNext()
+    after = v.nodeAfterTree()
+    count = 0
+    while v and v != after:
+        while 1:
+            s = v.bodyString()
+            if not s: break
+            i = s.find("c.On")
+            if i == -1: break
+            c = s[i+4].lower()
+            s = s[:i] + 'c.' + c + s[i+5:]
+            v.setBodyStringOrPane(s)
+            count += 1
+        v = v.threadNext()
+    print count</t>
+<t tx="ekr.20051110105027.149">if 0: # Script to change OnXxx to xxx in all headlines
+    v = c.currentVnode()
+    after = v.nodeAfterTree()
+    while v and v != after:
+        h = v.headString()
+        if g.match(h,0,"On") and len(h) &gt; 2:
+            h = h[2].lower() + h[3:]
+            print h
+            v.setHeadString(h)
+        v = v.threadNext()
+        
+# Script to change OnXXX to xxx in all body text.
+if 0:
+    v = c.currentVnode()
+    after = v.nodeAfterTree()
+    while v and v != after:
+        s = v.bodyString()
+        if s:
+            i = s.find("def ")
+            if i &gt; -1:
+                c = s[i+6].lower()
+                s = s[:i] + "def " + c + s[i+7:]
+                print v.headString()
+                v.setBodyStringOrPane(s)
+        v = v.threadNext()</t>
+<t tx="ekr.20051110105027.150">import fnmatch, os
+
+def findDosFile(pattern, dirname):
+    
+    """Check for crlf in files"""
+
+    files = os.listdir(dirname)
+    names = fnmatch.filter(files, pattern)
+    for name in names:
+        path = g.os_path_join(dirname, name)
+        if g.os_path_isfile(path):
+            bytes = open(path, 'rb').read()
+            count = bytes.count('\r\n')
+            if '\0' not in bytes and count:
+                print "%4d %s" % (count,path)
+
+dir = "c:\prog\leoCvs\leo"
+print ; findDosFile("*",dir)</t>
+<t tx="ekr.20051110105027.151"># routines to gather static statistics about opcodes based on dis module.
+import compiler
+import dis
+import os
+import string
+import sys
+import types
+
+@others</t>
+<t tx="ekr.20051110105027.152">def go():
+    
+    dir = "c:/prog/leoCVS/leo/"
+    modules = getModules(dir)
+    stats = [0] * 256
+    try:
+        # Importing these might start leo itself and hang idle.
+        modules.remove("leo")
+        modules.remove("openLeo")
+        modules.remove("openEkr")
+        modules.remove("setup")
+    except: pass
+    # print modules
+    
+    for m in modules:
+        try:
+            print "module:", m
+            exec("import " + m)
+            a = eval(m)
+            any(a,stats)
+        except:
+            import traceback ; traceback.print_exc()
+            print "----- no matching class in", m
+            
+    g.print_stats(stats)</t>
+<t tx="ekr.20051110105027.153">def getFiles (dir):
+
+    # Generate the list of modules.
+    allFiles = os.listdir(dir)
+    files = []
+    for f in allFiles:
+        head,tail = g.os_path_split(f)
+        root,ext = g.os_path_splitext(tail)
+        if ext==".py":
+            files.append(g.os_path_join(dir,f))
+            
+    return files</t>
+<t tx="ekr.20051110105027.154">def getModules (dir):
+    
+    """Return the list of Python files in dir."""
+    
+    files = []
+    
+    try:
+        allFiles = os.listdir(dir)
+        for f in allFiles:
+            head,tail = g.os_path_split(f)
+            fn,ext = g.os_path_splitext(tail)
+            if ext==".py":
+                files.append(fn)
+    except: pass
+            
+    return files</t>
+<t tx="ekr.20051110105027.155">def any(x,stats,printName = 0):
+    # based on dis.dis()
+    """Gathers statistics for classes, methods, functions, or code."""
+    if not x:
+        return
+    if type(x) is types.InstanceType:
+        x = x.__class__
+    if hasattr(x, 'im_func'):
+        x = x.im_func
+    if hasattr(x, 'func_code'):
+        x = x.func_code
+    if hasattr(x, '__dict__'):
+        items = x.__dict__.items()
+        items.sort()
+        for name, x1 in items:
+            if type(x1) in (types.MethodType,
+                            types.FunctionType,
+                            types.CodeType):
+                if printName: print name
+                try:
+                    any(x1,stats)
+                except TypeError, msg:
+                    print "Sorry:", msg
+    elif hasattr(x, 'co_code'):
+        code(x,stats)
+    else:
+        raise TypeError, \
+              "don't know how to disassemble %s objects" % \
+              type(x).__name__</t>
+<t tx="ekr.20051110105027.156">def code (co, stats):
+    """Gather static count statistics for a code object."""
+
+    codeList = co.co_code
+    # Count the number of occurances of each opcode.
+    i = 0 ;  n = len(codeList)
+    while i &lt; n:
+        c = codeList[i]
+        op = ord(c)
+        stats[op] += 1
+        i = i+1
+        if op &gt;= dis.HAVE_ARGUMENT:
+            i = i+2</t>
+<t tx="ekr.20051110105027.157">def print_stats (stats):
+
+    stats2 = [] ; total = 0
+    for i in xrange(0,256):
+        if stats[i] &gt; 0:
+            stats2.append((stats[i],i))
+        total += stats[i]
+
+    stats2.sort()
+    stats2.reverse()
+    for stat,i in stats2:
+        print string.rjust(repr(stat),6), dis.opname[i]
+    print "total", total</t>
+<t tx="ekr.20051110105027.158">@first
+
+"""
+A simple script to install Leo on Linux.
+
+Contributed by David McNab &lt;david@rebirthing.co.nz&gt;
+"""
+
+import commands,os,sys # commands module is for Unix only.
+
+# We must be root to use this script.
+if os.getuid() != 0:
+    print "You need to run this install script as root"
+    sys.exit(1)
+
+# Create /usr/lib/leo and copy all files there.
+print "***** Installing Leo to /usr/lib/leo..."
+commands.getoutput("mkdir -p /usr/lib/leo")
+commands.getoutput("cp -rp * /usr/lib/leo")
+
+# Create user's 'leo' command script into /usr/bin/leo
+print "***** Creating Leo startup script -&gt; /usr/bin/leo"
+fd = open("/usr/bin/leo", "w")
+fd.write("""#!/usr/bin/python
+import commands,sys
+files = " ".join(sys.argv[1:])
+print commands.getoutput("python /usr/lib/leo/leo.py %s" % files)
+""")
+fd.close()
+commands.getoutput("chmod 755 /usr/bin/leo")
+print "***** Leo installed successfully - type 'leo filename.leo' to use it."</t>
+<t tx="ekr.20051110105027.159">import string
+
+@others
+
+if 1:
+    &lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;
+else:
+    p = g.findNodeAnywhere("@file leoGlobals.py")
+    nameList = findFunctionsInTree(p)
+
+    nameList.sort() ; g.enl()
+    for name in nameList: g.es("'%s'," % name)
+    
+    s = "%d functions in leoGlobals.py" % len(nameList)
+    g.es_print(s)
+
+if 0:
+    p = g.findTopLevelNode(c,"Code")
+    g.enl() ; g.enl()
+    count = prependNamesInTree(p,nameList,"g.",replace=True) # Just prints if replace==False.
+    s = "%d --- done --- " % count
+    g.es_print(s)</t>
+<t tx="ekr.20051110105027.160">def findFunctionsInTree(p):
+    
+    nameList = []
+    for p in p.self_and_subtree_iter():
+        names = findDefs(p.bodyString())
+        if names:
+            for name in names:
+                if name not in nameList:
+                    nameList.append(name)
+    return nameList</t>
+<t tx="ekr.20051110105027.161">def findDefs(body):
+    
+    lines = body.split('\n')
+    names = []
+    for s in lines:
+        i = g.skip_ws(s,0)
+        if g.match(s,i,"class"):
+            return [] # The classes are defined in a single node.
+        if g.match(s,i,"def"):
+            i = g.skip_ws(s,i+3)
+            j = g.skip_c_id(s,i)
+            if j &gt; i:
+                name = s[i:j]
+                if g.match(name,0,"__init__"): 
+                    return [] # Disallow other class methods.
+                names.append(name)
+    return names</t>
+<t tx="ekr.20051110105027.162">def prependNamesInTree(p,nameList,prefix,replace=False):
+    
+    c = p.c
+    
+    assert(len(prefix) &gt; 0)
+    ch1 = string.letters + '_'
+    ch2 = string.letters + string.digits + '_'
+    def_s = "def " ; def_n = len(def_s)
+    prefix_n = len(prefix)
+    total = 0
+    c.beginUpdate()
+    try:
+        for p in p.self_and_subtree_iter():
+            count = 0 ; s = p.bodyString()
+            printFlag = False
+            if s:
+                for name in nameList:
+                    i = 0 ; n = len(name)
+                    while 1:
+                        &lt;&lt; look for name followed by '(' &gt;&gt;
+                if count and replace:
+                    if 0:
+                        &lt;&lt; print before and after &gt;&gt;
+                    p.setBodyStringOrPane(s)
+                    p.setDirty()
+            g.es("%3d %s" % (count,p.headString()))
+            total += count
+    finally:
+        c.endUpdate()
+    return total</t>
+<t tx="ekr.20051110105027.163">i = s.find(name,i)
+if i == -1:
+    break
+elif g.match(s,i-1,'.'):
+    i += n # Already an attribute.
+elif g.match(s,i-prefix_n,prefix):
+    i += n # Already preceded by the prefix.
+elif g.match(s,i-def_n,def_s):
+    i += n # preceded by "def"
+elif i &gt; 0 and s[i-1] in ch1:
+    i += n # Not a word match.
+elif i+n &lt; len(s) and s[i+n] in ch2:
+    i += n # Not a word match.
+else:
+    j = i + n
+    j = g.skip_ws(s,j)
+    if j &gt;= len(s) or s[j] != '(':
+        i += n
+    else: # Replace name by prefix+name
+        s = s[:i] + prefix + name + s[i+n:]
+        i += n ; count += 1
+        # g.es('.',newline=False)
+        if 1:
+            if not printFlag:
+                printFlag = True
+                # print p.headString()
+            print g.get_line(s,i-n)</t>
+<t tx="ekr.20051110105027.164">print "-"*10,count,p.headString()
+print "before..."
+print p.bodyString()
+print "-"*10,"after..."
+print s</t>
+<t tx="ekr.20051110105027.165">nameList = (
+'alert',
+'angleBrackets',
+'appendToList',
+'callerName',
+'CheckVersion',
+'choose',
+'clearAllIvars',
+'clear_stats',
+'collectGarbage',
+'computeLeadingWhitespace',
+'computeWidth',
+'computeWindowTitle',
+'createTopologyList',
+'create_temp_name',
+'disableIdleTimeHook',
+'doHook',
+'dump',
+'ecnl',
+'ecnls',
+'enableIdleTimeHook',
+'enl',
+'ensure_extension',
+'es',
+'esDiffTime',
+'es_error',
+'es_event_exception',
+'es_exception',
+'escaped',
+'executeScript',
+'file_date',
+'findNodeAnywhere',
+'findTopLevelNode',
+'findNodeInTree',
+'findReference',
+'find_line_start',
+'find_on_line',
+'flattenList',
+'funcToMethod',
+'getBaseDirectory',
+'getOutputNewline',
+'getTime',
+'get_Sherlock_args',
+'get_directives_dict',
+'get_leading_ws',
+'get_line',
+'get_line_after',
+'getpreferredencoding',
+'idleTimeHookHandler',
+'importFromPath',
+'initScriptFind',
+'init_sherlock',
+'init_trace',
+'isUnicode',
+'isValidEncoding',
+'is_c_id',
+'is_nl',
+'is_special',
+'is_ws',
+'is_ws_or_nl',
+'joinLines',
+'listToString',
+'makeAllNonExistentDirectories',
+'makeDict',
+'match',
+'match_c_word',
+'match_ignoring_case',
+'match_word',
+'module_date',
+'openWithFileName',
+'optimizeLeadingWhitespace',
+'os_path_abspath',
+'os_path_basename',
+'os_path_dirname',
+'os_path_exists',
+'os_path_getmtime',
+'os_path_isabs',
+'os_path_isdir',
+'os_path_isfile',
+'os_path_join',
+'os_path_norm',
+'os_path_normcase',
+'os_path_normpath',
+'os_path_split',
+'os_path_splitext',
+'pause',
+'plugin_date',
+'plugin_signon',
+'printDiffTime',
+'printGc',
+'printGcRefs',
+'printGlobals',
+'printLeoModules',
+'print_bindings',
+'print_stats',
+'readlineForceUnixNewline',
+'redirectStderr',
+'redirectStdout',
+'removeLeadingWhitespace',
+'removeTrailingWs',
+'reportBadChars',
+'restoreStderr',
+'restoreStdout',
+'sanitize_filename',
+'scanAtEncodingDirective',
+'scanAtFileOptions',
+'scanAtLineendingDirective',
+'scanAtPagewidthDirective',
+'scanAtRootOptions',
+'scanAtTabwidthDirective',
+'scanDirectives',
+'scanError',
+'scanf',
+'set_delims_from_language',
+'set_delims_from_string',
+'set_language',
+'shortFileName',
+'skip_blank_lines',
+'skip_block_comment',
+'skip_braces',
+'skip_c_id',
+'skip_heredoc_string',
+'skip_leading_ws',
+'skip_leading_ws_with_indent',
+'skip_line',
+'skip_long',
+'skip_matching_delims',
+'skip_nl',
+'skip_non_ws',
+'skip_parens',
+'skip_pascal_begin_end',
+'skip_pascal_block_comment',
+'skip_pascal_braces',
+'skip_pascal_string',
+'skip_php_braces',
+'skip_pp_directive',
+'skip_pp_if',
+'skip_pp_part',
+'skip_python_string',
+'skip_string',
+'skip_to_char',
+'skip_to_end_of_line',
+'skip_to_semicolon',
+'skip_typedef',
+'skip_ws',
+'skip_ws_and_nl',
+'splitLines',
+'stat',
+'stdErrIsRedirected',
+'stdOutIsRedirected',
+'toEncodedString',
+'toUnicode',
+'toUnicodeFileEncoding',
+'top',
+'trace',
+'trace_tag',
+'update_file_if_changed',
+'utils_rename',
+'windows',
+'wrap_lines')</t>
+<t tx="ekr.20051110105027.166"># An example of running this script:
+
+@others
+
+types = (".py",) #,".c",".html",".txt")
+
+dir = "c:/Zope-2.6.2-src/lib/python"
+dir = "c:/Zope-2.6.2-src/lib/Components"
+
+importFiles(dir,types,recursive=True)
+
+g.es("done",color="blue")
+</t>
+<t tx="ekr.20051110105027.167">def importFiles (dir,type=None,kind="@file",recursive=False):
+    
+    v = c.currentVnode()
+
+    # Check the params.
+    if kind != "@file" and kind != "@root":
+        g.es("kind must be @file or @root: " + kind)
+        return
+
+    if not g.os_path_exists(dir):
+        g.es("directory does not exist: " + dir)
+        return
+    
+    c.beginUpdate()
+    try:
+        root = createLastChildOf(v,"imported files")
+        try:
+            importDir (dir,type,kind,recursive,root)
+            root.contract()
+        except:
+            g.es_exception()
+    finally:
+        c.endUpdate()</t>
+<t tx="ekr.20051110105027.168">def importDir (dir,types,kind,recursive,root):
+
+    g.es("dir: " + dir,color="blue")
+    
+    try:
+        files = os.listdir(dir)
+        files2 = [] ; dirs =[]
+        for f in files:
+            path = g.os_path_join(dir,f)
+            if g.os_path_isfile(path):
+                name, ext = g.os_path_splitext(f)
+                if not types or ext in types:
+                    files2.append(path)
+            elif recursive:
+                dirs.append(path)
+        if len(files2) &gt; 0 or len(dirs) &gt; 0:
+            child = createLastChildOf(root,dir)
+            c.selectVnode(child)
+        if len(files2) &gt; 0:
+            c.importCommands.importFilesCommand(files2,kind)
+        if len(dirs) &gt; 0:
+            dirs.sort()
+            for dir in dirs:
+                importDir(dir,types,kind,recursive,child)
+    except:
+        g.es("exception in importFiles script")
+        g.es_exception()
+</t>
+<t tx="ekr.20051110105027.169">def createLastChildOf (v,headline):
+    
+    child = v.insertAsLastChild()
+    child.initHeadString(headline)
+    return child
+</t>
+<t tx="ekr.20051110105027.171">v = c.rootVnode()
+while v:
+    # Empty tnodeLists are not errors because they never get written to the .leo file.
+    # New in 4.2: tnode list is in tnode.
+    if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
+        g.es("deleting tnodeList for ",v,color="blue")
+        delattr(v.t,"tnodeList")
+        c.setChanged(True)
+    v = v.threadNext()
+
+g.es("tnodeList script complete")</t>
+<t tx="ekr.20051110105027.172">g.checkTopologyOfAllClones()
+</t>
+<t tx="ekr.20051110105027.173">if 0:
+    checkForMismatchedJoinedNodes()
+    
+    print g.createTopologyList(c=c,root=c.currentVnode().parent(),useHeadlines=False)
+    
+    checkTopologiesOfLinkedNodes()
+    
+    checkForPossiblyBrokenLinks()</t>
+<t tx="ekr.20051110105027.174">def checkForMismatchedJoinedNodes (c=c):
+    
+    """Checks outline for possible broken join lists"""
+
+    d = {} # Keys are tnodes, values are headlines.
+    v = c.rootVnode()
+    while v:
+        aTuple = d.get(v.t)
+        if aTuple:
+            head,body = aTuple
+            if v.headString()!= head:
+                g.es("headline mismatch in joined nodes",v)
+            if v.bodyString()!= body:
+                g.es("body mismatch in joined nodes",v)
+        else:
+            d[v.t] = (v.headString(),v.bodyString())
+        v = v.threadNext()
+
+    g.es("end of checkForMismatchedJoinedNodes")
+</t>
+<t tx="ekr.20051110105027.175">def checkForPossiblyBrokenLinks (c=c):
+    
+    """Checks outline for possible broken join lists"""
+    
+    d = {} # Keys are headlines, values are (tnodes,parent) tuples
+    v = c.rootVnode()
+    while v:
+        h = v.headString()
+        parent = v.parent()
+        aTuple = d.get(h)
+        if aTuple:
+            t,p = aTuple
+            if (t != v.t and p and parent and p.t != parent.t and
+                p.headString() == parent.headString() and
+                len(h) &gt; 1 and h != "NewHeadline"):
+                g.es("different tnodes with same headline and parent headlines: " + v.headString())
+        else:
+            d[h] = (v.t,parent)
+        v = v.threadNext()
+</t>
+<t tx="ekr.20051110105027.176">def checkTopologiesOfLinkedNodes(c=c):
+
+    d = {} # Keys are tnodes, values are topology lists.
+    v = c.rootVnode()
+    count = 0
+    while v:
+        top1 = g.createTopologyList(c=c,root=v)
+        top2 = d.get(v.t)
+        if top2:
+            count += 1
+            if top1 != top1:
+                g.es("mismatched topologies for two vnodes with the same tnode!",v)
+        else:
+            d[v.t] = top1
+        v = v.threadNext()
+    g.es("end of checkTopologiesOfLinkedNodes. Checked %d nodes: " % count)</t>
+<t tx="ekr.20051110105027.177">@ Nodes with the same topologies should be joined PROVIDED:
+    - Topologies are non-trivial.
+    - Topologies include tnodes somehow.
+    - Topologies include headlines somehow.
+</t>
+<t tx="ekr.20051110105946"></t>
+<t tx="ekr.20051110110853"># Use these with caution.</t>
 </tnodes>
 </leo_file>

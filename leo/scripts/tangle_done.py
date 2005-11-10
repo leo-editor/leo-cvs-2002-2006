@@ -1,15 +1,13 @@
 #! /usr/bin/env python
 #@+leo-ver=4-thin
-#@+node:EKR.20040502194930:@thin ../scripts/tangle_done.py
+#@+node:ekr.20051110105027.178:@thin tangle_done.py
 #@@first
 
 # Example tangle_done.py file.
 # Leo catches all exceptions thrown here; there is no need for try:except blocks.
 
-import leoGlobals as g
-
 #@+others
-#@+node:EKR.20040502194930.1:run
+#@+node:ekr.20051110105027.179:run
 # Leo calls this routine if "Run tangle-done.py after Tangle" is checked in the Prefs panel.
 
 def run (root_list):
@@ -21,8 +19,8 @@ def run (root_list):
     if 0: # Run code contributed by Paul Paterson.
         convertRSTfilesToHTML(root_list)
 #@nonl
-#@-node:EKR.20040502194930.1:run
-#@+node:EKR.20040502194930.2:convertRSTfilesToHTML
+#@-node:ekr.20051110105027.179:run
+#@+node:ekr.20051110105027.180:convertRSTfilesToHTML
 # Adapted from code by Paul Paterson.
 
 def convertRSTfilesToHTML(root_list):
@@ -35,7 +33,7 @@ def convertRSTfilesToHTML(root_list):
         if ext == ".rst":
             file = g.os_path_join(base,name+".html")
             #@            << Convert root to corresponding .html file >>
-            #@+node:EKR.20040502194930.3:<< Convert root to corresponding .html file >>
+            #@+node:ekr.20051110105027.181:<< Convert root to corresponding .html file >>
             # Leo will report the execption if docutils is not installed.
             from docutils.core import Publisher 
             from docutils.io import FileInput,StringOutput,StringInput 
@@ -65,10 +63,10 @@ def convertRSTfilesToHTML(root_list):
             f.write(output)
             f.close()
             #@nonl
-            #@-node:EKR.20040502194930.3:<< Convert root to corresponding .html file >>
+            #@-node:ekr.20051110105027.181:<< Convert root to corresponding .html file >>
             #@nl
-#@-node:EKR.20040502194930.2:convertRSTfilesToHTML
+#@-node:ekr.20051110105027.180:convertRSTfilesToHTML
 #@-others
 #@nonl
-#@-node:EKR.20040502194930:@thin ../scripts/tangle_done.py
+#@-node:ekr.20051110105027.178:@thin tangle_done.py
 #@-leo

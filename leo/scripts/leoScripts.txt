@@ -1,11 +1,11 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040502195524:@thin ../scripts/leoScripts.txt
+#@+node:ekr.20051110105027.2:@thin leoScripts.txt
 #@+others
-#@+node:EKR.20040502195524.1:Fnd/change scripts
+#@+node:ekr.20051110105027.3:Fnd/change scripts
 # Note:  the initScriptFind script makes setting up Find/Change scripts very easy.
 #@nonl
-#@+node:EKR.20040502195524.2:Routines that execute script-find and script-change
-#@+node:EKR.20040502195524.3:doFind...Script
+#@+node:ekr.20051110105027.4:Routines that execute script-find and script-change
+#@+node:ekr.20051110105027.5:doFind...Script
 def doFindScript (self):
 
     g.app.searchDict["type"] = "find"
@@ -32,8 +32,8 @@ def runFindScript (self):
         g.es("exception executing find script")
         g.es_exception(full=False)
         g.app.searchDict["continue"] = False # 2/1/04
-#@-node:EKR.20040502195524.3:doFind...Script
-#@+node:EKR.20040502195524.4:doChange...Script
+#@-node:ekr.20051110105027.5:doFind...Script
+#@+node:ekr.20051110105027.6:doChange...Script
 def doChangeScript (self):
 
     g.app.searchDict["type"] = "change"
@@ -62,9 +62,9 @@ def runChangeScript (self):
         g.es_exception(full=False)
         g.app.searchDict["continue"] = False # 2/1/04
 #@nonl
-#@-node:EKR.20040502195524.4:doChange...Script
-#@-node:EKR.20040502195524.2:Routines that execute script-find and script-change
-#@+node:EKR.20040502195524.5:Find script to check for dubious leading whitespace
+#@-node:ekr.20051110105027.6:doChange...Script
+#@-node:ekr.20051110105027.4:Routines that execute script-find and script-change
+#@+node:ekr.20051110105027.7:Find script to check for dubious leading whitespace
 # Initialize Leo's find panel using the named children of this node.
 import leoGlobals as g
 
@@ -75,7 +75,7 @@ c = g.top()
 c.selectVnode(c.rootPosition())
 c.redraw()
 #@nonl
-#@+node:EKR.20040502195524.6:Find script
+#@+node:ekr.20051110105027.8:Find script
 import leoGlobals as g
 
 c = g.top() ; v = c.currentVnode()
@@ -110,14 +110,14 @@ else:
     g.app.searchDict["v"] = None
 g.app.searchDict["continue"] = False
 #@nonl
-#@-node:EKR.20040502195524.6:Find script
-#@+node:EKR.20040502195524.7:test
+#@-node:ekr.20051110105027.8:Find script
+#@+node:ekr.20051110105027.9:test
 if 1:
     dubious line
 #@nonl
-#@-node:EKR.20040502195524.7:test
-#@-node:EKR.20040502195524.5:Find script to check for dubious leading whitespace
-#@+node:EKR.20040502195524.8:Find script to clean whitespace
+#@-node:ekr.20051110105027.9:test
+#@-node:ekr.20051110105027.7:Find script to check for dubious leading whitespace
+#@+node:ekr.20051110105027.10:Find script to clean whitespace
 # Initialize Leo's find panel using the named children of this node.
 import leoGlobals as g
 
@@ -128,7 +128,7 @@ c = g.top()
 c.selectVnode(c.rootPosition())
 c.redraw()
 #@nonl
-#@+node:EKR.20040502195524.9:Find script
+#@+node:ekr.20051110105027.11:Find script
 import leoGlobals as g
 
 c = g.top() ; v = c.currentVnode() ; d = g.app.searchDict
@@ -162,8 +162,8 @@ if not found:
         g.es("found %d nodes" % (count), color="blue")
     else:
         g.es("not found")
-#@-node:EKR.20040502195524.9:Find script
-#@+node:EKR.20040502195524.10:Change script
+#@-node:ekr.20051110105027.11:Find script
+#@+node:ekr.20051110105027.12:Change script
 import leoGlobals as g
 
 c = g.top() ; d = g.app.searchDict
@@ -202,9 +202,9 @@ else:
     else:
         g.es("done")
 #@nonl
-#@-node:EKR.20040502195524.10:Change script
-#@-node:EKR.20040502195524.8:Find script to clean whitespace
-#@+node:EKR.20040502195524.11:Find scripts to convert @doc comments to doc strings
+#@-node:ekr.20051110105027.12:Change script
+#@-node:ekr.20051110105027.10:Find script to clean whitespace
+#@+node:ekr.20051110105027.13:Find scripts to convert @doc comments to doc strings
 # Initialize Leo's find panel using the named children of this node.
 import leoGlobals as g
 
@@ -215,7 +215,7 @@ g.initScriptFind("Find script","Change script")
 c = g.top()
 c.selectVnode(c.rootPosition())
 #@nonl
-#@+node:EKR.20040502195524.12:Find script
+#@+node:ekr.20051110105027.14:Find script
 import leoGlobals as g
 
 import re
@@ -245,8 +245,8 @@ while v:
 if not d.get("v"):
     g.es("no @doc part found",color="blue")
 #@nonl
-#@-node:EKR.20040502195524.12:Find script
-#@+node:EKR.20040502195524.13:Change script
+#@-node:ekr.20051110105027.14:Find script
+#@+node:ekr.20051110105027.15:Change script
 import leoGlobals as g
 
 def replaceDocPart(m,body):
@@ -281,8 +281,8 @@ if c and v and m:
         v.setBodyStringOrPane(s,encoding=g.app.tkEncoding)
         body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
 #@nonl
-#@-node:EKR.20040502195524.13:Change script
-#@+node:EKR.20040502195524.14:re tests
+#@-node:ekr.20051110105027.15:Change script
+#@+node:ekr.20051110105027.16:re tests
 import leoGlobals as g
 import re
 
@@ -312,8 +312,8 @@ if m:
     print "rest:  ", m.group(5).strip()
 else:
     print "no match"
-#@-node:EKR.20040502195524.14:re tests
-#@+node:EKR.20040502195524.15:early find script
+#@-node:ekr.20051110105027.16:re tests
+#@+node:ekr.20051110105027.17:early find script
 # This script was a breakthrough.
 # Executing this script initializes the Find text from the given script string.
 # To do: get the script from a named child of this node.
@@ -333,16 +333,16 @@ c.find_text = script
 c.frame.findPanel.init(c)
 c.frame.OnFindPanel()
 #@nonl
-#@-node:EKR.20040502195524.15:early find script
-#@-node:EKR.20040502195524.11:Find scripts to convert @doc comments to doc strings
-#@+node:EKR.20040502195118:Other find scripts
+#@-node:ekr.20051110105027.17:early find script
+#@-node:ekr.20051110105027.13:Find scripts to convert @doc comments to doc strings
+#@+node:ekr.20051110105027.18:Other find scripts
 # This file contains functions for non-interactive searching.
 # You might find these useful while running other scripts.
 
 import leo, string, re
 
 #@+others
-#@+node:EKR.20040502195118.1:changeAll
+#@+node:ekr.20051110105027.19:changeAll
 def changeAll ( commander, findPat, changePat, bodyFlag = 1 ):
     """
     changeAll	make changes in an entire Leo outline.
@@ -359,8 +359,8 @@ def changeAll ( commander, findPat, changePat, bodyFlag = 1 ):
         v, pos = changeNext(v, pos, findPat, changePat, bodyFlag)
         pos = pos + n
 #@nonl
-#@-node:EKR.20040502195118.1:changeAll
-#@+node:EKR.20040502195118.2:changeNext
+#@-node:ekr.20051110105027.19:changeAll
+#@+node:ekr.20051110105027.20:changeNext
 def changeNext ( v, pos, findPat, changePat, bodyFlag = 1 ):
     """
     changeNext:	use string.find() to change text in a Leo outline.
@@ -395,8 +395,8 @@ def changeNext ( v, pos, findPat, changePat, bodyFlag = 1 ):
         print "setting head string: ", result
     return v, pos
 #@nonl
-#@-node:EKR.20040502195118.2:changeNext
-#@+node:EKR.20040502195118.3:changePrev
+#@-node:ekr.20051110105027.20:changeNext
+#@+node:ekr.20051110105027.21:changePrev
 def changePrev ( v, pos, findPat, changePat, bodyFlag = 1 ):
     """
     changePrev:	use string.rfind() to change text in a Leo outline.
@@ -430,8 +430,8 @@ def changePrev ( v, pos, findPat, changePat, bodyFlag = 1 ):
         v.setHeadStringOrHeadline(s)
     return v, pos
 #@nonl
-#@-node:EKR.20040502195118.3:changePrev
-#@+node:EKR.20040502195118.4:findAll
+#@-node:ekr.20051110105027.21:changePrev
+#@+node:ekr.20051110105027.22:findAll
 def findAll(c,pattern,bodyFlag=1):
     """
     findAll		search an entire Leo outline for a pattern.
@@ -453,8 +453,8 @@ def findAll(c,pattern,bodyFlag=1):
         pos = pos + n
     return result
 #@nonl
-#@-node:EKR.20040502195118.4:findAll
-#@+node:EKR.20040502195118.5:findNext
+#@-node:ekr.20051110105027.22:findAll
+#@+node:ekr.20051110105027.23:findNext
 def findNext ( v, pos, pattern, bodyFlag = 1 ):
     """
     findNext:	use string.find() to find a pattern in a Leo outline.
@@ -482,8 +482,8 @@ def findNext ( v, pos, pattern, bodyFlag = 1 ):
         pos = 0
     return None, 0
 #@nonl
-#@-node:EKR.20040502195118.5:findNext
-#@+node:EKR.20040502195118.6:findPrev
+#@-node:ekr.20051110105027.23:findNext
+#@+node:ekr.20051110105027.24:findPrev
 def findPrev ( v, pos, pattern, bodyFlag = 1 ):
     """
     findPrev:	use string.rfind() to find a pattern in a Leo outline.
@@ -511,8 +511,8 @@ def findPrev ( v, pos, pattern, bodyFlag = 1 ):
         pos = -1
     return None, 0
 #@nonl
-#@-node:EKR.20040502195118.6:findPrev
-#@+node:EKR.20040502195118.7:reChangeAll
+#@-node:ekr.20051110105027.24:findPrev
+#@+node:ekr.20051110105027.25:reChangeAll
 def reChangeAll ( commander, findPat, changePat, bodyFlag, reFlags = None ):
     """
     reChangeAll: make changes in an entire Leo outline using re module.
@@ -531,8 +531,8 @@ def reChangeAll ( commander, findPat, changePat, bodyFlag, reFlags = None ):
             v, pos, findPat, changePat, bodyFlag, reFlags)
         pos = pos + n
 #@nonl
-#@-node:EKR.20040502195118.7:reChangeAll
-#@+node:EKR.20040502195118.8:reChangeNext
+#@-node:ekr.20051110105027.25:reChangeAll
+#@+node:ekr.20051110105027.26:reChangeNext
 def reChangeNext ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
     """
     reChangeNext: use re.search() to change text in a Leo outline.
@@ -568,8 +568,8 @@ def reChangeNext ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
         v.setHeadStringOrHeadline(s)
     return v, mo, pos
 #@nonl
-#@-node:EKR.20040502195118.8:reChangeNext
-#@+node:EKR.20040502195118.9:reChangePrev
+#@-node:ekr.20051110105027.26:reChangeNext
+#@+node:ekr.20051110105027.27:reChangePrev
 def reChangePrev ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
     """
     reChangePrev: use re.search() to change text in a Leo outline.
@@ -604,8 +604,8 @@ def reChangePrev ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
         v.setHeadStringOrHeadline(s)
     return v, mo, pos
 #@nonl
-#@-node:EKR.20040502195118.9:reChangePrev
-#@+node:EKR.20040502195118.10:reFindAll
+#@-node:ekr.20051110105027.27:reChangePrev
+#@+node:ekr.20051110105027.28:reFindAll
 def reFindAll(c,findPat,bodyFlag,reFlags=None):
     """
     reFindAll	search an entire Leo outline using re module.
@@ -628,8 +628,8 @@ def reFindAll(c,findPat,bodyFlag,reFlags=None):
         pos = pos + n
     return result
 #@nonl
-#@-node:EKR.20040502195118.10:reFindAll
-#@+node:EKR.20040502195118.11:reFindNext
+#@-node:ekr.20051110105027.28:reFindAll
+#@+node:ekr.20051110105027.29:reFindNext
 def reFindNext ( v, pos, pattern, bodyFlag, reFlags = None ):
     """
     reFindNext:	use re.search() to find pattern in a Leo outline.
@@ -662,8 +662,8 @@ def reFindNext ( v, pos, pattern, bodyFlag, reFlags = None ):
         pos = 0
     return None, None, 0
 #@nonl
-#@-node:EKR.20040502195118.11:reFindNext
-#@+node:EKR.20040502195118.12:reFindPrev
+#@-node:ekr.20051110105027.29:reFindNext
+#@+node:ekr.20051110105027.30:reFindPrev
 def reFindPrev ( v, pos, pattern, bodyFlag, reFlags = None ):
     """
     reFindPrev:	use re.search() to find pattern in a Leo outline.
@@ -700,8 +700,8 @@ def reFindPrev ( v, pos, pattern, bodyFlag, reFlags = None ):
         pos = 0
     return None, None, 0
 #@nonl
-#@-node:EKR.20040502195118.12:reFindPrev
-#@+node:EKR.20040502195118.13:lineAtPos
+#@-node:ekr.20051110105027.30:reFindPrev
+#@+node:ekr.20051110105027.31:lineAtPos
 def lineAtPos ( s, pos ):
     """
     lineAtPos: return the line of a string containing the given index.
@@ -725,8 +725,8 @@ def lineAtPos ( s, pos ):
     list = s.split("\n")
     return list[0]
 #@nonl
-#@-node:EKR.20040502195118.13:lineAtPos
-#@+node:EKR.20040502195118.14:printFindList
+#@-node:ekr.20051110105027.31:lineAtPos
+#@+node:ekr.20051110105027.32:printFindList
 def printFindList( findList, bodyFlag = 1 ):
     """
     printFindList:	Print matching lines from the list.
@@ -743,13 +743,13 @@ def printFindList( findList, bodyFlag = 1 ):
                 s = v.headString()
             print lineAtPos(s, pos)
 #@nonl
-#@-node:EKR.20040502195118.14:printFindList
+#@-node:ekr.20051110105027.32:printFindList
 #@-others
 #@nonl
-#@-node:EKR.20040502195118:Other find scripts
-#@-node:EKR.20040502195524.1:Fnd/change scripts
-#@+node:EKR.20040502195524.16:Other scripts
-#@+node:EKR.20040517142700:c2py  Convert C code to Python syntax
+#@-node:ekr.20051110105027.18:Other find scripts
+#@-node:ekr.20051110105027.3:Fnd/change scripts
+#@+node:ekr.20051110105027.33:Other scripts
+#@+node:ekr.20051110105027.34:c2py  Convert C code to Python syntax
 #@@first
 #@@language python
 #@@tabwidth -4
@@ -768,7 +768,7 @@ import string
 #@@c
 
 #@<< what c2py does >>
-#@+node:EKR.20040517142700.2:<< what c2py does >>
+#@+node:ekr.20051110105027.35:<< what c2py does >>
 #@+at 
 #@nonl
 # c2py converts C or C++ text into python text.  The conversion is not 
@@ -861,10 +861,10 @@ import string
 # Replaces C/C++ comments by Python comments.
 # Removes trailing whitespace from all lines.
 #@-at
-#@-node:EKR.20040517142700.2:<< what c2py does >>
+#@-node:ekr.20051110105027.35:<< what c2py does >>
 #@nl
 #@<< theory of operation >>
-#@+node:EKR.20040517142700.3:<< theory of operation >>
+#@+node:ekr.20051110105027.36:<< theory of operation >>
 #@+at 
 #@nonl
 # Strategy and Performance
@@ -894,10 +894,10 @@ import string
 # That's about all there is to it.  The code was remarkably easy to write and 
 # seems clear to me.
 #@-at
-#@-node:EKR.20040517142700.3:<< theory of operation >>
+#@-node:ekr.20051110105027.36:<< theory of operation >>
 #@nl
 #@<< specify user types >>
-#@+node:EKR.20040517142700.4:<< specify user types >>
+#@+node:ekr.20051110105027.37:<< specify user types >>
 #@+at 
 #@nonl
 # Please change the following lists so they contain the types and classes used 
@@ -950,13 +950,13 @@ ivarsDict = {
         "mUndoType", "mUndoVnode", "mUndoParent", "mUndoBack", "mUndoN",
         "mUndoDVnodes", "mUndoLastChild", "mUndoablyDeletedVnode" ]}
 #@nonl
-#@-node:EKR.20040517142700.4:<< specify user types >>
+#@-node:ekr.20051110105027.37:<< specify user types >>
 #@nl
 tabWidth = 4 # how many blanks in a tab.
 printFlag = False
 doLeoTranslations = True ; dontDoLeoTranslations = False
 #@<< define testData >>
-#@+node:EKR.20040517142700.5:<< define testData >>
+#@+node:ekr.20051110105027.38:<< define testData >>
 testData = [ "\n@doc\n\
 This is a doc part: format, whilest, {};->.\n\
 <<\
@@ -1004,12 +1004,12 @@ void vnode::OnPasteNode(wxCommandEvent& WXUNUSED(event))\n\
     mCommands -> pasteOutline();\n\
 }\n" ]
 #@nonl
-#@-node:EKR.20040517142700.5:<< define testData >>
+#@-node:ekr.20051110105027.38:<< define testData >>
 #@nl
 #@+others
-#@+node:EKR.20040517142700.1:Documentation
-#@-node:EKR.20040517142700.1:Documentation
-#@+node:EKR.20040517142700.6:speedTest
+#@+node:ekr.20051110105027.39:Documentation
+#@-node:ekr.20051110105027.39:Documentation
+#@+node:ekr.20051110105027.40:speedTest
 def speedTest(passes):
 
     import time
@@ -1044,9 +1044,9 @@ def speedTest(passes):
     print "elapsed time:", time2-time1
     print "time/pass:", (time2-time1)/passes
 #@nonl
-#@-node:EKR.20040517142700.6:speedTest
-#@+node:EKR.20040517142700.7:leo1to2
-#@+node:EKR.20040517142700.8:leo1to2
+#@-node:ekr.20051110105027.40:speedTest
+#@+node:ekr.20051110105027.41:leo1to2
+#@+node:ekr.20051110105027.42:leo1to2
 def leo1to2():
 
     import leo
@@ -1054,8 +1054,8 @@ def leo1to2():
     c=leoGlobals.top()
     v=c.currentVnode()
     convertLeo1to2(v,c)
-#@-node:EKR.20040517142700.8:leo1to2
-#@+node:EKR.20040517142700.9:convertLeo1to2
+#@-node:ekr.20051110105027.42:leo1to2
+#@+node:ekr.20051110105027.43:convertLeo1to2
 def convertLeo1to2(v,c):
 
     after=v.nodeAfterTree()
@@ -1069,8 +1069,8 @@ def convertLeo1to2(v,c):
     c.Repaint() # for backward compatibility
     print "end of leo1to2"
 #@nonl
-#@-node:EKR.20040517142700.9:convertLeo1to2
-#@+node:EKR.20040517142700.10:convertStringLeo1to2
+#@-node:ekr.20051110105027.43:convertLeo1to2
+#@+node:ekr.20051110105027.44:convertStringLeo1to2
 def convertStringLeo1to2 (s):
 
     # print "convertStringLeo1to2:start\n", s
@@ -1099,8 +1099,8 @@ def convertStringLeo1to2 (s):
     if printFlag: print "-----:\n", result
     return result
 #@nonl
-#@-node:EKR.20040517142700.10:convertStringLeo1to2
-#@+node:EKR.20040517142700.11:convertCodeList1to2
+#@-node:ekr.20051110105027.44:convertStringLeo1to2
+#@+node:ekr.20051110105027.45:convertCodeList1to2
 #@+at 
 #@nonl
 # We do _not_ replace @root by @file or insert @others as needed.  Inserting 
@@ -1116,16 +1116,16 @@ def convertCodeList1to2(list):
     safeReplace(list, "@code", "@c")
     replaceSectionDefs(list)
     removeLeadingAtCode(list)
-#@-node:EKR.20040517142700.11:convertCodeList1to2
-#@-node:EKR.20040517142700.7:leo1to2
-#@+node:EKR.20040517142700.12:c2py entry points
+#@-node:ekr.20051110105027.45:convertCodeList1to2
+#@-node:ekr.20051110105027.41:leo1to2
+#@+node:ekr.20051110105027.46:c2py entry points
 #@+at 
 #@nonl
 # We separate the processing into two parts, 1) a leo-aware driver that 
 # iterates over @file trees and 2) a text-based part that processes one or 
 # more files or strings.
 #@-at
-#@+node:EKR.20040517142700.13:convertCurrentTree
+#@+node:ekr.20051110105027.47:convertCurrentTree
 def convertCurrentTree():
 
     import c2py
@@ -1135,8 +1135,8 @@ def convertCurrentTree():
     v = c.currentVnode()
     c2py.convertLeoTree(v,c)
 #@nonl
-#@-node:EKR.20040517142700.13:convertCurrentTree
-#@+node:EKR.20040517142700.14:convertLeoTree
+#@-node:ekr.20051110105027.47:convertCurrentTree
+#@+node:ekr.20051110105027.48:convertLeoTree
 def convertLeoTree(v,c):
 
     after=v.nodeAfterTree()
@@ -1149,8 +1149,8 @@ def convertLeoTree(v,c):
     c.Repaint() # for backward compatibility.
     print "end of c2py"
 #@nonl
-#@-node:EKR.20040517142700.14:convertLeoTree
-#@+node:EKR.20040517142700.15:convertCFileToPython
+#@-node:ekr.20051110105027.48:convertLeoTree
+#@+node:ekr.20051110105027.49:convertCFileToPython
 def convertCFileToPython(file):
 
     f=open(file, 'r')
@@ -1163,10 +1163,10 @@ def convertCFileToPython(file):
     f.write(s)
     f.close()
 #@nonl
-#@-node:EKR.20040517142700.15:convertCFileToPython
-#@-node:EKR.20040517142700.12:c2py entry points
-#@+node:EKR.20040517142700.16:c2py Top Level
-#@+node:EKR.20040517142700.17:convertCStringToPython
+#@-node:ekr.20051110105027.49:convertCFileToPython
+#@-node:ekr.20051110105027.46:c2py entry points
+#@+node:ekr.20051110105027.50:c2py Top Level
+#@+node:ekr.20051110105027.51:convertCStringToPython
 def convertCStringToPython(s, leoFlag):
 
     # print "convertCStringToPython:start\n", s
@@ -1203,8 +1203,8 @@ def convertCStringToPython(s, leoFlag):
     if printFlag: print "-----:\n", result
     return result
 #@nonl
-#@-node:EKR.20040517142700.17:convertCStringToPython
-#@+node:EKR.20040517142700.18:convertCodeList
+#@-node:ekr.20051110105027.51:convertCStringToPython
+#@+node:ekr.20051110105027.52:convertCodeList
 def convertCodeList(list, firstPart, leoFlag):
     #first
     replace(list, "\r", None)
@@ -1254,8 +1254,8 @@ def convertCodeList(list, firstPart, leoFlag):
     removeTrailingWs(list)
     safeReplace(list, "\t ", "\t") # happens when deleting declarations.
 #@nonl
-#@-node:EKR.20040517142700.18:convertCodeList
-#@+node:EKR.20040517142700.19:convertDocList
+#@-node:ekr.20051110105027.52:convertCodeList
+#@+node:ekr.20051110105027.53:convertDocList
 def convertDocList(docList):
 
     # print "convertDocList:", docList
@@ -1265,8 +1265,8 @@ def convertDocList(docList):
             i += 1
         docList[0:i] = list("@ ")
 #@nonl
-#@-node:EKR.20040517142700.19:convertDocList
-#@+node:EKR.20040517142700.20:skipDocPart
+#@-node:ekr.20051110105027.53:convertDocList
+#@+node:ekr.20051110105027.54:skipDocPart
 def skipDocPart(list, i):
     
     # print "skipDocPart", i
@@ -1278,8 +1278,8 @@ def skipDocPart(list, i):
         else: i = skipPastLine(list, i)
     return i
 #@nonl
-#@-node:EKR.20040517142700.20:skipDocPart
-#@+node:EKR.20040517142700.21:skipCodePart
+#@-node:ekr.20051110105027.54:skipDocPart
+#@+node:ekr.20051110105027.55:skipCodePart
 def skipCodePart(codeList, i):
     
     # print "skipCodePart", i
@@ -1299,12 +1299,12 @@ def skipCodePart(codeList, i):
         else: i += 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.21:skipCodePart
-#@-node:EKR.20040517142700.16:c2py Top Level
-#@+node:EKR.20040517142700.22:removeSentinels
-#@-node:EKR.20040517142700.22:removeSentinels
-#@+node:EKR.20040517142700.23:Scanning & Replacing
-#@+node:EKR.20040517142700.24:convertLeadingBlanks
+#@-node:ekr.20051110105027.55:skipCodePart
+#@-node:ekr.20051110105027.50:c2py Top Level
+#@+node:ekr.20051110105027.56:removeSentinels
+#@-node:ekr.20051110105027.56:removeSentinels
+#@+node:ekr.20051110105027.57:Scanning & Replacing
+#@+node:ekr.20051110105027.58:convertLeadingBlanks
 def convertLeadingBlanks(list):
 
     global tabWidth
@@ -1320,8 +1320,8 @@ def convertLeadingBlanks(list):
                 n = 0
         i = skipPastLine(list, i)
 #@nonl
-#@-node:EKR.20040517142700.24:convertLeadingBlanks
-#@+node:EKR.20040517142700.25:findInList
+#@-node:ekr.20051110105027.58:convertLeadingBlanks
+#@+node:ekr.20051110105027.59:findInList
 def findInList(list, i, findStringOrList):
 
     findList = stringToList(findStringOrList)
@@ -1331,8 +1331,8 @@ def findInList(list, i, findStringOrList):
         else: i += 1
     return -1
 #@nonl
-#@-node:EKR.20040517142700.25:findInList
-#@+node:EKR.20040517142700.26:findInCode
+#@-node:ekr.20051110105027.59:findInList
+#@+node:ekr.20051110105027.60:findInCode
 def findInCode(codeList, i, findStringOrList):
 
     findList = stringToList(findStringOrList)
@@ -1345,8 +1345,8 @@ def findInCode(codeList, i, findStringOrList):
         else: i += 1
     return -1
 #@nonl
-#@-node:EKR.20040517142700.26:findInCode
-#@+node:EKR.20040517142700.27:mungeAllFunctions
+#@-node:ekr.20051110105027.60:findInCode
+#@+node:ekr.20051110105027.61:mungeAllFunctions
 # We scan for a '{' at the top level that is preceeded by ')'
 # @code and < < x > > = have been replaced by @c
 def mungeAllFunctions(codeList):
@@ -1378,7 +1378,7 @@ def mungeAllFunctions(codeList):
             prevSemi = i ; firstOpen = None # restart the scan
         else: i += 1
 #@nonl
-#@+node:EKR.20040517142700.28:handlePossibleFunctionHeader
+#@+node:ekr.20051110105027.62:handlePossibleFunctionHeader
 # converts function header lines from c++ format to python format.
 # That is, converts
 # x1..nn w::y ( t1 z1,..tn zn) {
@@ -1435,8 +1435,8 @@ def handlePossibleFunctionHeader(codeList, i, prevSemi, firstOpen):
     codeList[prevSemi:k] = result
     return k
 #@nonl
-#@-node:EKR.20040517142700.28:handlePossibleFunctionHeader
-#@+node:EKR.20040517142700.29:massageFunctionArgs
+#@-node:ekr.20051110105027.62:handlePossibleFunctionHeader
+#@+node:ekr.20051110105027.63:massageFunctionArgs
 def massageFunctionArgs(args):
     global gClassName
     assert(args[0]=='(')
@@ -1469,8 +1469,8 @@ def massageFunctionArgs(args):
     # print "new args:", listToString(result)
     return result
 #@nonl
-#@-node:EKR.20040517142700.29:massageFunctionArgs
-#@+node:EKR.20040517142700.30:massageFunctionHead (sets gClassName)
+#@-node:ekr.20051110105027.63:massageFunctionArgs
+#@+node:ekr.20051110105027.64:massageFunctionHead (sets gClassName)
 def massageFunctionHead(head):
 
     # print "head:", listToString(head)
@@ -1511,8 +1511,8 @@ def massageFunctionHead(head):
     # print "new head:", listToString(finalResult)
     return finalResult
 #@nonl
-#@-node:EKR.20040517142700.30:massageFunctionHead (sets gClassName)
-#@+node:EKR.20040517142700.31:massageFunctionBody
+#@-node:ekr.20051110105027.64:massageFunctionHead (sets gClassName)
+#@+node:ekr.20051110105027.65:massageFunctionBody
 def massageFunctionBody(body):
 
     body = massageIvars(body)
@@ -1520,7 +1520,7 @@ def massageFunctionBody(body):
     body = removeTypeNames(body)
     return body
 #@nonl
-#@+node:EKR.20040517142700.32:massageIvars
+#@+node:ekr.20051110105027.66:massageIvars
 def massageIvars(body):
 
     if gClassName and ivarsDict.has_key(gClassName):
@@ -1549,8 +1549,8 @@ def massageIvars(body):
         else: i += 1
     return body
 #@nonl
-#@-node:EKR.20040517142700.32:massageIvars
-#@+node:EKR.20040517142700.33:removeCasts
+#@-node:ekr.20051110105027.66:massageIvars
+#@+node:ekr.20051110105027.67:removeCasts
 def removeCasts(body):
 
     i = 0
@@ -1577,8 +1577,8 @@ def removeCasts(body):
         else: i += 1
     return body
 #@nonl
-#@-node:EKR.20040517142700.33:removeCasts
-#@+node:EKR.20040517142700.34:removeTypeNames
+#@-node:ekr.20051110105027.67:removeCasts
+#@+node:ekr.20051110105027.68:removeTypeNames
 # Do _not_ remove type names when preceeded by new.
 
 def removeTypeNames(body):
@@ -1607,10 +1607,10 @@ def removeTypeNames(body):
         else: i += 1
     return body
 #@nonl
-#@-node:EKR.20040517142700.34:removeTypeNames
-#@-node:EKR.20040517142700.31:massageFunctionBody
-#@-node:EKR.20040517142700.27:mungeAllFunctions
-#@+node:EKR.20040517142700.35:handleAllKeywords
+#@-node:ekr.20051110105027.68:removeTypeNames
+#@-node:ekr.20051110105027.65:massageFunctionBody
+#@-node:ekr.20051110105027.61:mungeAllFunctions
+#@+node:ekr.20051110105027.69:handleAllKeywords
 # converts if ( x ) to if x:
 # converts while ( x ) to while x:
 def handleAllKeywords(codeList):
@@ -1629,7 +1629,7 @@ def handleAllKeywords(codeList):
             i += 1
     # print "handAllKeywords2:", listToString(codeList)
 #@nonl
-#@+node:EKR.20040517142700.36:handleKeyword
+#@+node:ekr.20051110105027.70:handleKeyword
 def handleKeyword(codeList,i):
 
     isFor = False
@@ -1660,17 +1660,17 @@ def handleKeyword(codeList,i):
         return j
     return i
 #@nonl
-#@-node:EKR.20040517142700.36:handleKeyword
-#@-node:EKR.20040517142700.35:handleAllKeywords
-#@+node:EKR.20040517142700.37:isWs and isWOrNl
+#@-node:ekr.20051110105027.70:handleKeyword
+#@-node:ekr.20051110105027.69:handleAllKeywords
+#@+node:ekr.20051110105027.71:isWs and isWOrNl
 def isWs(c):
     return c == ' ' or c == '\t'
     
 def isWsOrNl(c):
     return c == ' ' or c == '\t' or c == '\n'
 #@nonl
-#@-node:EKR.20040517142700.37:isWs and isWOrNl
-#@+node:EKR.20040517142700.38:isSectionDef
+#@-node:ekr.20051110105027.71:isWs and isWOrNl
+#@+node:ekr.20051110105027.72:isSectionDef
 # returns the ending index if i points to < < x > > =
 def isSectionDef(list, i):
 
@@ -1681,14 +1681,14 @@ def isSectionDef(list, i):
         else: i += 1
     return False
 #@nonl
-#@-node:EKR.20040517142700.38:isSectionDef
-#@+node:EKR.20040517142700.39:isStringOrComment
+#@-node:ekr.20051110105027.72:isSectionDef
+#@+node:ekr.20051110105027.73:isStringOrComment
 def isStringOrComment(list, i):
 
     return match(list,i,"'") or match(list,i,'"') or match(list,i,"//") or match(list,i,"/*")
 #@nonl
-#@-node:EKR.20040517142700.39:isStringOrComment
-#@+node:EKR.20040517142700.40:match
+#@-node:ekr.20051110105027.73:isStringOrComment
+#@+node:ekr.20051110105027.74:match
 # returns True if findList matches starting at codeList[i]
 
 def match (codeList, i, findStringOrList):
@@ -1705,8 +1705,8 @@ def match (codeList, i, findStringOrList):
                 return i+j
     return False
 #@nonl
-#@-node:EKR.20040517142700.40:match
-#@+node:EKR.20040517142700.41:matchWord
+#@-node:ekr.20051110105027.74:match
+#@+node:ekr.20051110105027.75:matchWord
 def matchWord (codeList, i, findStringOrList):
 
     j = match(codeList,i,findStringOrList)
@@ -1718,8 +1718,8 @@ def matchWord (codeList, i, findStringOrList):
         c = codeList[j]
         return not (c in string.letters or c in string.digits or c == '_')
 #@nonl
-#@-node:EKR.20040517142700.41:matchWord
-#@+node:EKR.20040517142700.42:prevNonWsChar and prevNonWsOrNlChar
+#@-node:ekr.20051110105027.75:matchWord
+#@+node:ekr.20051110105027.76:prevNonWsChar and prevNonWsOrNlChar
 def prevNonWsChar(list, i):
 
     i -= 1
@@ -1734,8 +1734,8 @@ def prevNonWsOrNlChar(list, i):
         i -= 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.42:prevNonWsChar and prevNonWsOrNlChar
-#@+node:EKR.20040517142700.43:removeAllCComments
+#@-node:ekr.20051110105027.76:prevNonWsChar and prevNonWsOrNlChar
+#@+node:ekr.20051110105027.77:removeAllCComments
 def removeAllCComments(list, delim):
 
     i = 0
@@ -1753,8 +1753,8 @@ def removeAllCComments(list, delim):
         else:
             i += 1
 #@nonl
-#@-node:EKR.20040517142700.43:removeAllCComments
-#@+node:EKR.20040517142700.44:removeAllCSentinels
+#@-node:ekr.20051110105027.77:removeAllCComments
+#@+node:ekr.20051110105027.78:removeAllCSentinels
 def removeAllCSentinels(list, delim):
 
     i = 0
@@ -1774,8 +1774,8 @@ def removeAllCSentinels(list, delim):
         else:
             i = skipPastLine(list,i)
 #@nonl
-#@-node:EKR.20040517142700.44:removeAllCSentinels
-#@+node:EKR.20040517142700.45:removeAllPythonComments
+#@-node:ekr.20051110105027.78:removeAllCSentinels
+#@+node:ekr.20051110105027.79:removeAllPythonComments
 def removeAllPythonComments(list, delim):
 
     i = 0
@@ -1789,8 +1789,8 @@ def removeAllPythonComments(list, delim):
         else:
             i += 1
 #@nonl
-#@-node:EKR.20040517142700.45:removeAllPythonComments
-#@+node:EKR.20040517142700.46:removeAllPythonSentinels
+#@-node:ekr.20051110105027.79:removeAllPythonComments
+#@+node:ekr.20051110105027.80:removeAllPythonSentinels
 def removeAllPythonSentinels(list, delim):
 
     i = 0
@@ -1806,8 +1806,8 @@ def removeAllPythonSentinels(list, delim):
         else:
             i = skipPastLine(list,i)
 #@nonl
-#@-node:EKR.20040517142700.46:removeAllPythonSentinels
-#@+node:EKR.20040517142700.47:removeAtRoot
+#@-node:ekr.20051110105027.80:removeAllPythonSentinels
+#@+node:ekr.20051110105027.81:removeAtRoot
 def removeAtRoot (codeList):
 
     i = skipWs(codeList, 0)
@@ -1824,8 +1824,8 @@ def removeAtRoot (codeList):
                 j = skipPastLine(codeList,i)
                 del codeList[i:j]
         else: i += 1
-#@-node:EKR.20040517142700.47:removeAtRoot
-#@+node:EKR.20040517142700.48:removeBlankLines
+#@-node:ekr.20051110105027.81:removeAtRoot
+#@+node:ekr.20051110105027.82:removeBlankLines
 def removeBlankLines(codeList):
 
     i = 0
@@ -1839,8 +1839,8 @@ def removeBlankLines(codeList):
             oldi = i
             i = skipPastLine(codeList,i)
 #@nonl
-#@-node:EKR.20040517142700.48:removeBlankLines
-#@+node:EKR.20040517142700.49:removeExcessWs
+#@-node:ekr.20051110105027.82:removeBlankLines
+#@+node:ekr.20051110105027.83:removeExcessWs
 def removeExcessWs(codeList):
 
     i = 0
@@ -1853,7 +1853,7 @@ def removeExcessWs(codeList):
             i = removeExcessWsFromLine(codeList,i)
         else: i += 1
 #@nonl
-#@+node:EKR.20040517142700.50:removeExessWsFromLine
+#@+node:ekr.20051110105027.84:removeExessWsFromLine
 def removeExcessWsFromLine(codeList,i):
 
     assert(i==0 or codeList[i-1] == '\n')
@@ -1870,9 +1870,9 @@ def removeExcessWsFromLine(codeList,i):
         else: i += 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.50:removeExessWsFromLine
-#@-node:EKR.20040517142700.49:removeExcessWs
-#@+node:EKR.20040517142700.51:removeLeadingAtCode
+#@-node:ekr.20051110105027.84:removeExessWsFromLine
+#@-node:ekr.20051110105027.83:removeExcessWs
+#@+node:ekr.20051110105027.85:removeLeadingAtCode
 def removeLeadingAtCode(codeList):
 
     i = skipWsAndNl(codeList,0)
@@ -1883,8 +1883,8 @@ def removeLeadingAtCode(codeList):
         i = skipWsAndNl(codeList,2)
         del codeList[0:i]
 #@nonl
-#@-node:EKR.20040517142700.51:removeLeadingAtCode
-#@+node:EKR.20040517142700.52:removeMatchingBrackets
+#@-node:ekr.20051110105027.85:removeLeadingAtCode
+#@+node:ekr.20051110105027.86:removeMatchingBrackets
 def removeMatchingBrackets(codeList, i):
 
     j = skipToMatchingBracket(codeList, i)
@@ -1899,8 +1899,8 @@ def removeMatchingBrackets(codeList, i):
         else: return j + 1
     else: return j
 #@nonl
-#@-node:EKR.20040517142700.52:removeMatchingBrackets
-#@+node:EKR.20040517142700.53:removeSemicolonsAtEndOfLines
+#@-node:ekr.20051110105027.86:removeMatchingBrackets
+#@+node:ekr.20051110105027.87:removeSemicolonsAtEndOfLines
 def removeSemicolonsAtEndOfLines(list):
 
     i = 0
@@ -1914,8 +1914,8 @@ def removeSemicolonsAtEndOfLines(list):
             else: i += 1
         else: i += 1
 #@nonl
-#@-node:EKR.20040517142700.53:removeSemicolonsAtEndOfLines
-#@+node:EKR.20040517142700.54:removeTrailingWs
+#@-node:ekr.20051110105027.87:removeSemicolonsAtEndOfLines
+#@+node:ekr.20051110105027.88:removeTrailingWs
 def removeTrailingWs(list):
 
     i = 0
@@ -1930,8 +1930,8 @@ def removeTrailingWs(list):
                 i = j
         else: i += 1
 #@nonl
-#@-node:EKR.20040517142700.54:removeTrailingWs
-#@+node:EKR.20040517142700.55:replace
+#@-node:ekr.20051110105027.88:removeTrailingWs
+#@+node:ekr.20051110105027.89:replace
 # Replaces all occurances of findString by changeString.
 # Deletes all occurances if change is None
 def replace(codeList, findString, changeString):
@@ -1947,8 +1947,8 @@ def replace(codeList, findString, changeString):
             i += len(changeList)
         else: i += 1
 #@nonl
-#@-node:EKR.20040517142700.55:replace
-#@+node:EKR.20040517142700.56:replaceComments
+#@-node:ekr.20051110105027.89:replace
+#@+node:ekr.20051110105027.90:replaceComments
 # For Leo we expect few block comments; doc parts are much more common.
 
 def replaceComments(codeList):
@@ -1975,8 +1975,8 @@ def replaceComments(codeList):
             i = skipString(codeList,i)
         else: i += 1
 #@nonl
-#@-node:EKR.20040517142700.56:replaceComments
-#@+node:EKR.20040517142700.57:replaceSectionDefs
+#@-node:ekr.20051110105027.90:replaceComments
+#@+node:ekr.20051110105027.91:replaceSectionDefs
 # Replaces < < x > > = by @c (at the start of lines).
 def replaceSectionDefs(codeList):
 
@@ -1993,8 +1993,8 @@ def replaceSectionDefs(codeList):
             if j > i: codeList[i:j] = list("@c ")
         else: i += 1
 #@nonl
-#@-node:EKR.20040517142700.57:replaceSectionDefs
-#@+node:EKR.20040517142700.58:safeReplace
+#@-node:ekr.20051110105027.91:replaceSectionDefs
+#@+node:ekr.20051110105027.92:safeReplace
 # Replaces occurances of findString by changeString outside of C comments and strings.
 # Deletes all occurances if change is None.
 def safeReplace(codeList, findString, changeString):
@@ -2018,8 +2018,8 @@ def safeReplace(codeList, findString, changeString):
                 i += len(changeList)
             else: i += 1
 #@nonl
-#@-node:EKR.20040517142700.58:safeReplace
-#@+node:EKR.20040517142700.59:skipCBlockComment
+#@-node:ekr.20051110105027.92:safeReplace
+#@+node:ekr.20051110105027.93:skipCBlockComment
 def skipCBlockComment(codeList, i):
 
     assert(match(codeList, i, "/*"))
@@ -2030,8 +2030,8 @@ def skipCBlockComment(codeList, i):
         else: i += 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.59:skipCBlockComment
-#@+node:EKR.20040517142700.60:skipPastLine
+#@-node:ekr.20051110105027.93:skipCBlockComment
+#@+node:ekr.20051110105027.94:skipPastLine
 def skipPastLine(codeList, i):
 
     while i < len(codeList) and codeList[i] != '\n':
@@ -2040,8 +2040,8 @@ def skipPastLine(codeList, i):
         i += 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.60:skipPastLine
-#@+node:EKR.20040517142700.61:skipPastWord
+#@-node:ekr.20051110105027.94:skipPastLine
+#@+node:ekr.20051110105027.95:skipPastWord
 def skipPastWord(list, i):
 
     assert(list[i] in string.letters or list[i]=='~')
@@ -2057,8 +2057,8 @@ def skipPastWord(list, i):
         i += 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.61:skipPastWord
-#@+node:EKR.20040517142700.62:skipString
+#@-node:ekr.20051110105027.95:skipPastWord
+#@+node:ekr.20051110105027.96:skipString
 def skipString(codeList, i):
 
     delim = codeList[i] # handle either single or double-quoted strings
@@ -2071,8 +2071,8 @@ def skipString(codeList, i):
         else: i += 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.62:skipString
-#@+node:EKR.20040517142700.63:skipStringOrComment
+#@-node:ekr.20051110105027.96:skipString
+#@+node:ekr.20051110105027.97:skipStringOrComment
 def skipStringOrComment(list,i):
 
     if match(list,i,"'") or match(list,i,'"'):
@@ -2083,8 +2083,8 @@ def skipStringOrComment(list,i):
         return skipCBlockComment(list,i)
     else: assert(0)
 #@nonl
-#@-node:EKR.20040517142700.63:skipStringOrComment
-#@+node:EKR.20040517142700.64:skipToMatchingBracket
+#@-node:ekr.20051110105027.97:skipStringOrComment
+#@+node:ekr.20051110105027.98:skipToMatchingBracket
 def skipToMatchingBracket(codeList, i):
 
     c = codeList[i]
@@ -2106,8 +2106,8 @@ def skipToMatchingBracket(codeList, i):
         else: i += 1
     return i
 #@nonl
-#@-node:EKR.20040517142700.64:skipToMatchingBracket
-#@+node:EKR.20040517142700.65:skipWs and skipWsAndNl
+#@-node:ekr.20051110105027.98:skipToMatchingBracket
+#@+node:ekr.20051110105027.99:skipWs and skipWsAndNl
 def skipWs(list, i):
 
     while i < len(list):
@@ -2126,8 +2126,8 @@ def skipWsAndNl(list, i):
         else: break
     return i
 #@nonl
-#@-node:EKR.20040517142700.65:skipWs and skipWsAndNl
-#@+node:EKR.20040517142700.66:stringToList
+#@-node:ekr.20051110105027.99:skipWs and skipWsAndNl
+#@+node:ekr.20051110105027.100:stringToList
 # converts a string to a list containing one item per character of the list.
 # converts None to the empty string and leaves other types alone.
 
@@ -2139,14 +2139,14 @@ def stringToList(string):
     else:
         return []
 #@nonl
-#@-node:EKR.20040517142700.66:stringToList
-#@+node:EKR.20040517142700.67:listToString
+#@-node:ekr.20051110105027.100:stringToList
+#@+node:ekr.20051110105027.101:listToString
 def listToString(list):
 
     return string.join(list,"")
 #@nonl
-#@-node:EKR.20040517142700.67:listToString
-#@-node:EKR.20040517142700.23:Scanning & Replacing
+#@-node:ekr.20051110105027.101:listToString
+#@-node:ekr.20051110105027.57:Scanning & Replacing
 #@-others
 
 gClassName = "" # The class name for the present function.  Used to modify ivars.
@@ -2163,8 +2163,8 @@ def go():
 if __name__ == "__main__":
     speedTest(2)
 #@nonl
-#@-node:EKR.20040517142700:c2py  Convert C code to Python syntax
-#@+node:EKR.20040502195524.24:Clear all timestamps
+#@-node:ekr.20051110105027.34:c2py  Convert C code to Python syntax
+#@+node:ekr.20051110105027.102:Clear all timestamps
 # About the only time you should run this script is when:
 # - changing the format of timestamps in nodeIndices.setTimestamp or
 # - when making a retroactive change to leoID.txt.
@@ -2180,8 +2180,8 @@ if 0: # This is usually a very bad idea.
         
     g.es("all timestamps cleared")
 #@nonl
-#@-node:EKR.20040502195524.24:Clear all timestamps
-#@+node:EKR.20040502195524.30:Count pages
+#@-node:ekr.20051110105027.102:Clear all timestamps
+#@+node:ekr.20051110105027.103:Count pages
 import leoGlobals as g
 
 c = g.top()
@@ -2200,8 +2200,8 @@ pages = ((nodes * 10) + lines) / 50
 s = "%d files, %d nodes,  %d lines, %d pages" % (files,nodes,lines,pages)
 g.es_print(s)
 #@nonl
-#@-node:EKR.20040502195524.30:Count pages
-#@+node:EKR.20040502195524.31:Count separate nodes (tnodes)
+#@-node:ekr.20051110105027.103:Count pages
+#@+node:ekr.20051110105027.104:Count separate nodes (tnodes)
 import leoGlobals as g
 c = g.top()
 
@@ -2222,8 +2222,8 @@ for p in c.allNodes_iter():
 s = "%4s: %d vnodes, %d distinct" % ("All",count,len(tnodes.keys()))
 g.es_print(s)
 #@nonl
-#@-node:EKR.20040502195524.31:Count separate nodes (tnodes)
-#@+node:EKR.20040502195524.32:Count total, visible nodes
+#@-node:ekr.20051110105027.104:Count separate nodes (tnodes)
+#@+node:ekr.20051110105027.105:Count total, visible nodes
 import leoGlobals as g
 c = g.top()
 
@@ -2250,9 +2250,9 @@ else:
     
 print "total,visible",total,visible
 #@nonl
-#@-node:EKR.20040502195524.32:Count total, visible nodes
-#@+node:EKR.20040518104556:Create diagrams using Graphviz and pydot
-#@+node:EKR.20040518104556.1:pydot notes by EKR
+#@-node:ekr.20051110105027.105:Count total, visible nodes
+#@+node:ekr.20051110105027.106:Create diagrams using Graphviz and pydot
+#@+node:ekr.20051110105027.107:pydot notes by EKR
 #@@nocolor
 
 - I have found it easiest to create pydot objects rather than creating Graphviz strings.  It's the natural way, IMO.
@@ -2265,11 +2265,11 @@ print "total,visible",total,visible
 
 In short, Graphviz and pydot are very impressive tools.  The documentation could be improved, but once one gets the hang of things it is fairly easy to get real work done.
 #@nonl
-#@-node:EKR.20040518104556.1:pydot notes by EKR
-#@+node:EKR.20040518104556.2:pydot docs
+#@-node:ekr.20051110105027.107:pydot notes by EKR
+#@+node:ekr.20051110105027.108:pydot docs
 #@@nocolor
 #@nonl
-#@+node:EKR.20040518104556.3:General note about attributes
+#@+node:ekr.20051110105027.109:General note about attributes
 The original documentation repeats endlessly the same info about attributes.
 
 Attributes can be set in several ways:
@@ -2282,8 +2282,8 @@ object.attributeName = val
 
 Similarly, you can get attribute values with corresponding getters.
 #@nonl
-#@-node:EKR.20040518104556.3:General note about attributes
-#@+node:EKR.20040518104556.4:Cluster(Graph)
+#@-node:ekr.20051110105027.109:General note about attributes
+#@+node:ekr.20051110105027.110:Cluster(Graph)
 class Cluster(Graph) 
  
 Methods:
@@ -2301,8 +2301,8 @@ Attributes:
 
 attributes = ['pencolor', 'bgcolor', 'labeljust', 'labelloc', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'lp', 'style', 'target', 'color', 'peripheries', 'fillcolor']
 #@nonl
-#@-node:EKR.20040518104556.4:Cluster(Graph)
-#@+node:EKR.20040518104556.5:Common
+#@-node:ekr.20051110105027.110:Cluster(Graph)
+#@+node:ekr.20051110105027.111:Common
 class Common 
     Common information to several classes.
  
@@ -2321,8 +2321,8 @@ parent_graph = None
 
 
  
-#@-node:EKR.20040518104556.5:Common
-#@+node:EKR.20040518104556.6:Dot(Graph)
+#@-node:ekr.20051110105027.111:Common
+#@+node:ekr.20051110105027.112:Dot(Graph)
 class Dot(Graph) 
     A container for handling a dot language file.
  
@@ -2339,7 +2339,7 @@ Attributes:
 formats = ['ps', 'ps2', 'hpgl', 'pcl', 'mif', 'pic', 'gd', 'gd2', 'gif', 'jpg', 'jpeg', 'png', 'wbmp', 'ismap', 'imap', 'cmap', 'vrml', 'vtx', 'mp', 'fig', ...]
 progs = None
 #@nonl
-#@+node:EKR.20040518104556.7:create and create_xxx
+#@+node:ekr.20051110105027.113:create and create_xxx
 create(self, prog='dot', format='ps')
 Creates and returns a Postscript representation of the graph.
  
@@ -2357,8 +2357,8 @@ which are automatically defined for all the supported formats.
 
 [create_ps(), create_gif(), create_dia(), ...]
 #@nonl
-#@-node:EKR.20040518104556.7:create and create_xxx
-#@+node:EKR.20040518104556.8:write and write_xxx
+#@-node:ekr.20051110105027.113:create and create_xxx
+#@+node:ekr.20051110105027.114:write and write_xxx
 write(self, path, prog='dot', format='raw')
 Writes a graph to a file.
  
@@ -2382,9 +2382,9 @@ There's also the preferred possibility of using:
 which are automatically defined for all the supported formats.
 [write_ps(), write_gif(), write_dia(), ...]
 #@nonl
-#@-node:EKR.20040518104556.8:write and write_xxx
-#@-node:EKR.20040518104556.6:Dot(Graph)
-#@+node:EKR.20040518104556.9:Edge
+#@-node:ekr.20051110105027.114:write and write_xxx
+#@-node:ekr.20051110105027.112:Dot(Graph)
+#@+node:ekr.20051110105027.115:Edge
 class Edge(__builtin__.object, Common) 
     A graph edge.
  
@@ -2438,8 +2438,8 @@ __weakref__ = <attribute '__weakref__' of 'Edge' objects>
 list of weak references to the object (if defined)
 attributes = ['style', 'target', 'pos', 'layer', 'tooltip', 'color', 'showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'lp', 'arrowhead', 'arrowsize', 'arrowtail', 'constraint', 'decorate', 'dir', ...]
 #@nonl
-#@-node:EKR.20040518104556.9:Edge
-#@+node:EKR.20040518104556.10:Error
+#@-node:ekr.20051110105027.115:Edge
+#@+node:ekr.20051110105027.116:Error
 class Error(exceptions.Exception) 
     General error handling class.
   
@@ -2448,8 +2448,8 @@ Methods defined here:
 __init__(self, value)
 __str__(self)
 #@nonl
-#@-node:EKR.20040518104556.10:Error
-#@+node:EKR.20040518104556.11:Graph(Common)
+#@-node:ekr.20051110105027.116:Error
+#@+node:ekr.20051110105027.117:Graph(Common)
 class Graph(__builtin__.object, Common) 
     Class representing a graph in Graphviz's dot language.
  
@@ -2467,7 +2467,7 @@ list of weak references to the object (if defined)
 
 attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]
 #@nonl
-#@+node:EKR.20040518104556.12:Graph.__init__
+#@+node:ekr.20051110105027.118:Graph.__init__
 __init__(self, graph_name='G', type='digraph', strict=False, suppress_disconnected=False, simplify=False, **attrs)
 
  
@@ -2491,25 +2491,25 @@ or using the instance's attributes:
  
  Graph.[attribute name], i.e. graph_instance.label, graph_instance.fontname
 #@nonl
-#@-node:EKR.20040518104556.12:Graph.__init__
-#@+node:EKR.20040518104556.13:add_edge
+#@-node:ekr.20051110105027.118:Graph.__init__
+#@+node:ekr.20051110105027.119:add_edge
 add_edge(self, graph_edge)
 
 Adds an edge object to the graph.
 #@nonl
-#@-node:EKR.20040518104556.13:add_edge
-#@+node:EKR.20040518104556.14:add_node
+#@-node:ekr.20051110105027.119:add_edge
+#@+node:ekr.20051110105027.120:add_node
 add_node(self, graph_node)
 
 Adds a node object to the graph.
 #@nonl
-#@-node:EKR.20040518104556.14:add_node
-#@+node:EKR.20040518104556.15:add_subgraph
+#@-node:ekr.20051110105027.120:add_node
+#@+node:ekr.20051110105027.121:add_subgraph
 add_subgraph(self, sgraph)
 
 Adds an edge object to the graph.
-#@-node:EKR.20040518104556.15:add_subgraph
-#@+node:EKR.20040518104556.16:getters...
+#@-node:ekr.20051110105027.121:add_subgraph
+#@+node:ekr.20051110105027.122:getters...
 get(self, name)
 Get an attribute value by name.
 
@@ -2552,8 +2552,8 @@ Get if suppress disconnected is set.
 get_type(self)
 Get the graph's type, 'graph' or 'digraph'.
 #@nonl
-#@-node:EKR.20040518104556.16:getters...
-#@+node:EKR.20040518104556.17:setters...
+#@-node:ekr.20051110105027.122:getters...
+#@+node:ekr.20051110105027.123:setters...
 set(self, name, value)
 Set an attribute value by name.
  
@@ -2580,14 +2580,14 @@ Suppress disconnected nodes in the output graph.
 set_type(self, graph_type)
 Set the graph's type, 'graph' or 'digraph'.
 
-#@-node:EKR.20040518104556.17:setters...
-#@+node:EKR.20040518104556.18:toString
+#@-node:ekr.20051110105027.123:setters...
+#@+node:ekr.20051110105027.124:toString
 to_string(self, indent='')
 Returns a string representation of the graph in dot language.
 #@nonl
-#@-node:EKR.20040518104556.18:toString
-#@-node:EKR.20040518104556.11:Graph(Common)
-#@+node:EKR.20040518104556.19:Node(Common)
+#@-node:ekr.20051110105027.124:toString
+#@-node:ekr.20051110105027.117:Graph(Common)
+#@+node:ekr.20051110105027.125:Node(Common)
 class Node(__builtin__.object, Common) 
     A graph node.
  
@@ -2604,7 +2604,7 @@ list of weak references to the object (if defined)
 
 attributes = ['showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'root', 'toplabel', 'vertices', 'width', 'z', 'bottomlabel', 'distortion', 'fixedsize', 'group', 'height', 'orientation', 'pin', 'rects', ...]
 #@nonl
-#@+node:EKR.20040518104556.20:Node.__init__
+#@+node:ekr.20051110105027.126:Node.__init__
 node(name, attribute=value, ...)
  
 name: node's name
@@ -2612,13 +2612,13 @@ name: node's name
 All the attributes defined in the Graphviz dot language should be supported.
   
 __init__(self, name, **attrs)
-#@-node:EKR.20040518104556.20:Node.__init__
-#@+node:EKR.20040518104556.21:get_name
+#@-node:ekr.20051110105027.126:Node.__init__
+#@+node:ekr.20051110105027.127:get_name
 get_name(self)
 Get the node's name.
 #@nonl
-#@-node:EKR.20040518104556.21:get_name
-#@+node:EKR.20040518104556.22:set, set_x and set_name
+#@-node:ekr.20051110105027.127:get_name
+#@+node:ekr.20051110105027.128:set, set_x and set_name
 set(self, name, value)
 Set an attribute value by name.
  
@@ -2629,14 +2629,14 @@ set_'name'(value) is defined for all the existing attributes.
 set_name(self, node_name)
 Set the node's name.
 #@nonl
-#@-node:EKR.20040518104556.22:set, set_x and set_name
-#@+node:EKR.20040518104556.23:toString
+#@-node:ekr.20051110105027.128:set, set_x and set_name
+#@+node:ekr.20051110105027.129:toString
 to_string(self)
 Returns a string representation of the node in dot language.
 #@nonl
-#@-node:EKR.20040518104556.23:toString
-#@-node:EKR.20040518104556.19:Node(Common)
-#@+node:EKR.20040518104556.24:Subgraph(Graph)
+#@-node:ekr.20051110105027.129:toString
+#@-node:ekr.20051110105027.125:Node(Common)
+#@+node:ekr.20051110105027.130:Subgraph(Graph)
 class Subgraph(Graph) 
 
 Methods:
@@ -2653,9 +2653,9 @@ Attributes:
 
 attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]
 #@nonl
-#@-node:EKR.20040518104556.24:Subgraph(Graph)
-#@+node:EKR.20040518104556.25:Functions
-#@+node:EKR.20040518104556.26:find_graphviz
+#@-node:ekr.20051110105027.130:Subgraph(Graph)
+#@+node:ekr.20051110105027.131:Functions
+#@+node:ekr.20051110105027.132:find_graphviz
 find_graphviz()
 
 Locate Graphviz's executables in the system.
@@ -2666,8 +2666,8 @@ specified in the PATH environment variable.
 It will return a dictionary containing the program names as keys
 and their paths as values.
 #@nonl
-#@-node:EKR.20040518104556.26:find_graphviz
-#@+node:EKR.20040518104556.27:graph_from_adjacency_matrix
+#@-node:ekr.20051110105027.132:find_graphviz
+#@+node:ekr.20051110105027.133:graph_from_adjacency_matrix
 graph_from_adjacency_matrix(matrix, node_prefix='', directed=False)
 
 Creates a basic graph out of an adjacency matrix.
@@ -2677,8 +2677,8 @@ representing an adjacency matrix.
 The values can be anything: bool, int, float, as long
 as they can evaluate to True or False.
 #@nonl
-#@-node:EKR.20040518104556.27:graph_from_adjacency_matrix
-#@+node:EKR.20040518104556.28:graph_from_edges
+#@-node:ekr.20051110105027.133:graph_from_adjacency_matrix
+#@+node:ekr.20051110105027.134:graph_from_edges
 graph_from_edges(edge_list, node_prefix='', directed=False)
 
 Creates a basic graph out of an edge list.
@@ -2689,8 +2689,8 @@ The values can be anything: bool, int, float, str.
  
 If the graph is undirected by default, it is only
 calculated from one of the symmetric halves of the matrix.
-#@-node:EKR.20040518104556.28:graph_from_edges
-#@+node:EKR.20040518104556.29:graph_from_incidence_matrix
+#@-node:ekr.20051110105027.134:graph_from_edges
+#@+node:ekr.20051110105027.135:graph_from_incidence_matrix
 graph_from_incidence_matrix(matrix, node_prefix='', directed=False)
 
 Creates a basic graph out of an incidence matrix.
@@ -2700,14 +2700,14 @@ representing an incidence matrix.
 The values can be anything: bool, int, float, as long
 as they can evaluate to True or False.
 #@nonl
-#@-node:EKR.20040518104556.29:graph_from_incidence_matrix
-#@-node:EKR.20040518104556.25:Functions
-#@-node:EKR.20040518104556.2:pydot docs
-#@+node:EKR.20040518104556.30:@url http://www.research.att.com/sw/tools/graphviz/refs.html
-#@-node:EKR.20040518104556.30:@url http://www.research.att.com/sw/tools/graphviz/refs.html
-#@+node:EKR.20040518104556.31:@url http://dkbza.org/pydot/pydot.html
-#@-node:EKR.20040518104556.31:@url http://dkbza.org/pydot/pydot.html
-#@+node:EKR.20040518104556.33:Write an outline using Graphviz
+#@-node:ekr.20051110105027.135:graph_from_incidence_matrix
+#@-node:ekr.20051110105027.131:Functions
+#@-node:ekr.20051110105027.108:pydot docs
+#@+node:ekr.20051110105027.136:@url http://www.research.att.com/sw/tools/graphviz/refs.html
+#@-node:ekr.20051110105027.136:@url http://www.research.att.com/sw/tools/graphviz/refs.html
+#@+node:ekr.20051110105027.137:@url http://dkbza.org/pydot/pydot.html
+#@-node:ekr.20051110105027.137:@url http://dkbza.org/pydot/pydot.html
+#@+node:ekr.20051110105027.138:Write an outline using Graphviz
 import leoGlobals as g
 import string
 
@@ -2718,9 +2718,9 @@ except:
     pydot = None
 
 #@<< code >>
-#@+node:EKR.20040518104556.34:<< code >>
+#@+node:ekr.20051110105027.139:<< code >>
 #@+others
-#@+node:EKR.20040518104556.35:addLeoNodesToGraph
+#@+node:ekr.20051110105027.140:addLeoNodesToGraph
 def addLeoNodesToGraph(p,graph,top=False):
 
     # Create p's vnode.
@@ -2761,8 +2761,8 @@ def addLeoNodesToGraph(p,graph,top=False):
 
     return thisNode
 #@nonl
-#@-node:EKR.20040518104556.35:addLeoNodesToGraph
-#@+node:EKR.20040518104556.36:tnode/vnodeLabel
+#@-node:ekr.20051110105027.140:addLeoNodesToGraph
+#@+node:ekr.20051110105027.141:tnode/vnodeLabel
 def tnodeLabel(t):
     
     return "t %d [%d]" % (id(t),len(t.vnodeList))
@@ -2770,8 +2770,8 @@ def tnodeLabel(t):
 def vnodeLabel(v):
     
     return "v %d %s" % (id(v),v.t.headString)
-#@-node:EKR.20040518104556.36:tnode/vnodeLabel
-#@+node:EKR.20040518104556.37:tnode/vnodeRepr
+#@-node:ekr.20051110105027.141:tnode/vnodeLabel
+#@+node:ekr.20051110105027.142:tnode/vnodeRepr
 def dotId(s):
     
     """Convert s to a C id"""
@@ -2787,10 +2787,10 @@ def vnodeRepr(v):
     
     return "v_%d_%s" % (id(v),dotId(v.headString()))
 #@nonl
-#@-node:EKR.20040518104556.37:tnode/vnodeRepr
+#@-node:ekr.20051110105027.142:tnode/vnodeRepr
 #@-others
 #@nonl
-#@-node:EKR.20040518104556.34:<< code >>
+#@-node:ekr.20051110105027.139:<< code >>
 #@nl
 
 if pydot:
@@ -2800,19 +2800,19 @@ if pydot:
     addLeoNodesToGraph(root,graph,top=True)
     graph.write_jpeg(r'c:\prog\test\pydotOut.jpg',prog='dot')
 #@nonl
-#@+node:EKR.20040518104556.38:Root
-#@+node:EKR.20040518104556.39:clone
-#@+node:EKR.20040518104556.40:Child1
-#@+node:EKR.20040518104556.41:GrandChild
-#@-node:EKR.20040518104556.41:GrandChild
-#@-node:EKR.20040518104556.40:Child1
-#@+node:EKR.20040518104556.42:Child2
-#@-node:EKR.20040518104556.42:Child2
-#@-node:EKR.20040518104556.39:clone
-#@-node:EKR.20040518104556.38:Root
-#@-node:EKR.20040518104556.33:Write an outline using Graphviz
-#@-node:EKR.20040518104556:Create diagrams using Graphviz and pydot
-#@+node:EKR.20040502195524.33:Find script to change OnX to x in body (didn't quite work :-)
+#@+node:ekr.20051110105027.143:Root
+#@+node:ekr.20051110105027.144:clone
+#@+node:ekr.20051110105027.145:Child1
+#@+node:ekr.20051110105027.146:GrandChild
+#@-node:ekr.20051110105027.146:GrandChild
+#@-node:ekr.20051110105027.145:Child1
+#@+node:ekr.20051110105027.147:Child2
+#@-node:ekr.20051110105027.147:Child2
+#@-node:ekr.20051110105027.144:clone
+#@-node:ekr.20051110105027.143:Root
+#@-node:ekr.20051110105027.138:Write an outline using Graphviz
+#@-node:ekr.20051110105027.106:Create diagrams using Graphviz and pydot
+#@+node:ekr.20051110105027.148:Find script to change OnX to x in body (didn't quite work :-)
 # Script to change OnXXX to xxx in all body text.
 if 0:
     import leoGlobals as g
@@ -2834,8 +2834,8 @@ if 0:
         v = v.threadNext()
     print count
 #@nonl
-#@-node:EKR.20040502195524.33:Find script to change OnX to x in body (didn't quite work :-)
-#@+node:EKR.20040502195524.34:Find scripts to change OnX to x in headline
+#@-node:ekr.20051110105027.148:Find script to change OnX to x in body (didn't quite work :-)
+#@+node:ekr.20051110105027.149:Find scripts to change OnX to x in headline
 if 0: # Script to change OnXxx to xxx in all headlines
     import leoGlobals as g
 
@@ -2866,8 +2866,8 @@ if 0:
                 v.setBodyStringOrPane(s)
         v = v.threadNext()
 #@nonl
-#@-node:EKR.20040502195524.34:Find scripts to change OnX to x in headline
-#@+node:EKR.20040502195213.7:findDosFile
+#@-node:ekr.20051110105027.149:Find scripts to change OnX to x in headline
+#@+node:ekr.20051110105027.150:findDosFile
 import leoGlobals as g
 import fnmatch, os
 
@@ -2888,8 +2888,8 @@ def findDosFile(pattern, dirname):
 dir = "c:\prog\leoCvs\leo"
 print ; findDosFile("*",dir)
 #@nonl
-#@-node:EKR.20040502195213.7:findDosFile
-#@+node:EKR.20040502195213:Get statistics using dis module
+#@-node:ekr.20051110105027.150:findDosFile
+#@+node:ekr.20051110105027.151:Get statistics using dis module
 # routines to gather static statistics about opcodes based on dis module.
 import leoGlobals as g
 import compiler
@@ -2900,7 +2900,7 @@ import sys
 import types
 
 #@+others
-#@+node:EKR.20040502195213.1:go
+#@+node:ekr.20051110105027.152:go
 def go():
     
     dir = "c:/prog/leoCVS/leo/"
@@ -2927,8 +2927,8 @@ def go():
             
     g.print_stats(stats)
 #@nonl
-#@-node:EKR.20040502195213.1:go
-#@+node:EKR.20040502195213.2:getFiles
+#@-node:ekr.20051110105027.152:go
+#@+node:ekr.20051110105027.153:getFiles
 def getFiles (dir):
 
     # Generate the list of modules.
@@ -2942,8 +2942,8 @@ def getFiles (dir):
             
     return files
 #@nonl
-#@-node:EKR.20040502195213.2:getFiles
-#@+node:EKR.20040502195213.3:getModules
+#@-node:ekr.20051110105027.153:getFiles
+#@+node:ekr.20051110105027.154:getModules
 def getModules (dir):
     
     """Return the list of Python files in dir."""
@@ -2961,8 +2961,8 @@ def getModules (dir):
             
     return files
 #@nonl
-#@-node:EKR.20040502195213.3:getModules
-#@+node:EKR.20040502195213.4:any
+#@-node:ekr.20051110105027.154:getModules
+#@+node:ekr.20051110105027.155:any
 def any(x,stats,printName = 0):
     # based on dis.dis()
     """Gathers statistics for classes, methods, functions, or code."""
@@ -2993,8 +2993,8 @@ def any(x,stats,printName = 0):
               "don't know how to disassemble %s objects" % \
               type(x).__name__
 #@nonl
-#@-node:EKR.20040502195213.4:any
-#@+node:EKR.20040502195213.5:code
+#@-node:ekr.20051110105027.155:any
+#@+node:ekr.20051110105027.156:code
 def code (co, stats):
     """Gather static count statistics for a code object."""
 
@@ -3009,8 +3009,8 @@ def code (co, stats):
         if op >= dis.HAVE_ARGUMENT:
             i = i+2
 #@nonl
-#@-node:EKR.20040502195213.5:code
-#@+node:EKR.20040502195213.6:print_stats
+#@-node:ekr.20051110105027.156:code
+#@+node:ekr.20051110105027.157:print_stats
 def print_stats (stats):
 
     stats2 = [] ; total = 0
@@ -3025,11 +3025,11 @@ def print_stats (stats):
         print string.rjust(repr(stat),6), dis.opname[i]
     print "total", total
 #@nonl
-#@-node:EKR.20040502195213.6:print_stats
+#@-node:ekr.20051110105027.157:print_stats
 #@-others
 #@nonl
-#@-node:EKR.20040502195213:Get statistics using dis module
-#@+node:EKR.20040517143706:Linux install script
+#@-node:ekr.20051110105027.151:Get statistics using dis module
+#@+node:ekr.20051110105027.158:Linux install script
 #@@first
 
 """
@@ -3061,15 +3061,15 @@ print commands.getoutput("python /usr/lib/leo/leo.py %s" % files)
 fd.close()
 commands.getoutput("chmod 755 /usr/bin/leo")
 print "***** Leo installed successfully - type 'leo filename.leo' to use it."
-#@-node:EKR.20040517143706:Linux install script
-#@+node:EKR.20040502195524.17:Script to find and replace all functions in leoGlobals.py
+#@-node:ekr.20051110105027.158:Linux install script
+#@+node:ekr.20051110105027.159:Script to find and replace all functions in leoGlobals.py
 import leoGlobals as g
 import string
 
 c = g.top()
 
 #@+others
-#@+node:EKR.20040502195524.19:findFunctionsInTree
+#@+node:ekr.20051110105027.160:findFunctionsInTree
 def findFunctionsInTree(p):
     
     nameList = []
@@ -3081,8 +3081,8 @@ def findFunctionsInTree(p):
                     nameList.append(name)
     return nameList
 #@nonl
-#@-node:EKR.20040502195524.19:findFunctionsInTree
-#@+node:EKR.20040502195524.20:findDefs
+#@-node:ekr.20051110105027.160:findFunctionsInTree
+#@+node:ekr.20051110105027.161:findDefs
 def findDefs(body):
     
     lines = body.split('\n')
@@ -3101,8 +3101,8 @@ def findDefs(body):
                 names.append(name)
     return names
 #@nonl
-#@-node:EKR.20040502195524.20:findDefs
-#@+node:EKR.20040502195524.21:prependNamesInTree
+#@-node:ekr.20051110105027.161:findDefs
+#@+node:ekr.20051110105027.162:prependNamesInTree
 def prependNamesInTree(p,nameList,prefix,replace=False):
     
     c = p.c
@@ -3123,7 +3123,7 @@ def prependNamesInTree(p,nameList,prefix,replace=False):
                     i = 0 ; n = len(name)
                     while 1:
                         #@                        << look for name followed by '(' >>
-                        #@+node:EKR.20040502195524.22:<< look for name followed by '(' >>
+                        #@+node:ekr.20051110105027.163:<< look for name followed by '(' >>
                         i = s.find(name,i)
                         if i == -1:
                             break
@@ -3152,19 +3152,19 @@ def prependNamesInTree(p,nameList,prefix,replace=False):
                                         # print p.headString()
                                     print g.get_line(s,i-n)
                         #@nonl
-                        #@-node:EKR.20040502195524.22:<< look for name followed by '(' >>
+                        #@-node:ekr.20051110105027.163:<< look for name followed by '(' >>
                         #@nl
                 if count and replace:
                     if 0:
                         #@                        << print before and after >>
-                        #@+node:EKR.20040502195524.23:<< print before and after >>
+                        #@+node:ekr.20051110105027.164:<< print before and after >>
                         print "-"*10,count,p.headString()
                         print "before..."
                         print p.bodyString()
                         print "-"*10,"after..."
                         print s
                         #@nonl
-                        #@-node:EKR.20040502195524.23:<< print before and after >>
+                        #@-node:ekr.20051110105027.164:<< print before and after >>
                         #@nl
                     p.setBodyStringOrPane(s)
                     p.setDirty()
@@ -3174,12 +3174,12 @@ def prependNamesInTree(p,nameList,prefix,replace=False):
         c.endUpdate()
     return total
 #@nonl
-#@-node:EKR.20040502195524.21:prependNamesInTree
+#@-node:ekr.20051110105027.162:prependNamesInTree
 #@-others
 
 if 1:
     #@    << set nameList to the list of functions in leoGlobals.py >>
-    #@+node:EKR.20040502195524.18:<< set nameList to the list of functions in leoGlobals.py >>
+    #@+node:ekr.20051110105027.165:<< set nameList to the list of functions in leoGlobals.py >>
     nameList = (
     'alert',
     'angleBrackets',
@@ -3341,7 +3341,7 @@ if 1:
     'windows',
     'wrap_lines')
     #@nonl
-    #@-node:EKR.20040502195524.18:<< set nameList to the list of functions in leoGlobals.py >>
+    #@-node:ekr.20051110105027.165:<< set nameList to the list of functions in leoGlobals.py >>
     #@nl
 else:
     p = g.findNodeAnywhere("@file leoGlobals.py")
@@ -3360,14 +3360,14 @@ if 0:
     s = "%d --- done --- " % count
     g.es_print(s)
 #@nonl
-#@-node:EKR.20040502195524.17:Script to find and replace all functions in leoGlobals.py
-#@-node:EKR.20040502195524.16:Other scripts
-#@+node:EKR.20040502195524.35:Recursive import script
+#@-node:ekr.20051110105027.159:Script to find and replace all functions in leoGlobals.py
+#@-node:ekr.20051110105027.33:Other scripts
+#@+node:ekr.20051110105027.166:Recursive import script
 # An example of running this script:
 import leoGlobals as g
 
 #@+others
-#@+node:EKR.20040502195524.36:importFiles
+#@+node:ekr.20051110105027.167:importFiles
 def importFiles (dir,type=None,kind="@file",recursive=False):
     
     c = g.top() ; v = c.currentVnode()
@@ -3392,8 +3392,8 @@ def importFiles (dir,type=None,kind="@file",recursive=False):
     finally:
         c.endUpdate()
 #@nonl
-#@-node:EKR.20040502195524.36:importFiles
-#@+node:EKR.20040502195524.37:importDir
+#@-node:ekr.20051110105027.167:importFiles
+#@+node:ekr.20051110105027.168:importDir
 def importDir (dir,types,kind,recursive,root):
     
     c = g.top() # Get the commander.
@@ -3422,14 +3422,14 @@ def importDir (dir,types,kind,recursive,root):
     except:
         g.es("exception in importFiles script")
         g.es_exception()
-#@-node:EKR.20040502195524.37:importDir
-#@+node:EKR.20040502195524.38:createLastChildOf
+#@-node:ekr.20051110105027.168:importDir
+#@+node:ekr.20051110105027.169:createLastChildOf
 def createLastChildOf (v,headline):
     
     child = v.insertAsLastChild()
     child.initHeadString(headline)
     return child
-#@-node:EKR.20040502195524.38:createLastChildOf
+#@-node:ekr.20051110105027.169:createLastChildOf
 #@-others
 
 types = (".py",) #,".c",".html",".txt")
@@ -3440,9 +3440,9 @@ dir = "c:/Zope-2.6.2-src/lib/Components"
 importFiles(dir,types,recursive=True)
 
 g.es("done",color="blue")
-#@-node:EKR.20040502195524.35:Recursive import script
-#@+node:EKR.20040502195524.39:Testing scripts
-#@+node:EKR.20040502195524.40:Script to clean unused tnodeLists
+#@-node:ekr.20051110105027.166:Recursive import script
+#@+node:ekr.20051110105027.170:Testing scripts
+#@+node:ekr.20051110105027.171:Script to clean unused tnodeLists
 import leoGlobals as g
 
 c = g.top()
@@ -3456,13 +3456,13 @@ while v:
         c.setChanged(True)
     v = v.threadNext()
 g.es("tnodeList script complete")
-#@-node:EKR.20040502195524.40:Script to clean unused tnodeLists
-#@+node:EKR.20040502195524.41:Script to check topology of all clones
+#@-node:ekr.20051110105027.171:Script to clean unused tnodeLists
+#@+node:ekr.20051110105027.172:Script to check topology of all clones
 import leoGlobals as g
 
 g.checkTopologyOfAllClones()
-#@-node:EKR.20040502195524.41:Script to check topology of all clones
-#@+node:EKR.20040502195524.42:Scripts for checking clones
+#@-node:ekr.20051110105027.172:Script to check topology of all clones
+#@+node:ekr.20051110105027.173:Scripts for checking clones
 if 0:
     checkForMismatchedJoinedNodes()
     
@@ -3472,7 +3472,7 @@ if 0:
     
     checkForPossiblyBrokenLinks()
 #@nonl
-#@+node:EKR.20040502195524.43:checkForMismatchedJoinedNodes
+#@+node:ekr.20051110105027.174:checkForMismatchedJoinedNodes
 def checkForMismatchedJoinedNodes (c=None):
     
     """Checks outline for possible broken join lists"""
@@ -3493,8 +3493,8 @@ def checkForMismatchedJoinedNodes (c=None):
         v = v.threadNext()
 
     g.es("end of checkForMismatchedJoinedNodes")
-#@-node:EKR.20040502195524.43:checkForMismatchedJoinedNodes
-#@+node:EKR.20040502195524.44:checkForPossiblyBrokenLinks
+#@-node:ekr.20051110105027.174:checkForMismatchedJoinedNodes
+#@+node:ekr.20051110105027.175:checkForPossiblyBrokenLinks
 def checkForPossiblyBrokenLinks (c=None):
     
     """Checks outline for possible broken join lists"""
@@ -3515,8 +3515,8 @@ def checkForPossiblyBrokenLinks (c=None):
         else:
             d[h] = (v.t,parent)
         v = v.threadNext()
-#@-node:EKR.20040502195524.44:checkForPossiblyBrokenLinks
-#@+node:EKR.20040502195524.45:checkTopologiesOfLinkedNodes
+#@-node:ekr.20051110105027.175:checkForPossiblyBrokenLinks
+#@+node:ekr.20051110105027.176:checkTopologiesOfLinkedNodes
 def checkTopologiesOfLinkedNodes(c=None):
     
     if not c: c = g.top()
@@ -3535,8 +3535,8 @@ def checkTopologiesOfLinkedNodes(c=None):
         v = v.threadNext()
     g.es("end of checkTopologiesOfLinkedNodes. Checked %d nodes: " % count)
 #@nonl
-#@-node:EKR.20040502195524.45:checkTopologiesOfLinkedNodes
-#@+node:EKR.20040502195524.46:checkLinksOfNodesWithSameTopologies (to do)
+#@-node:ekr.20051110105027.176:checkTopologiesOfLinkedNodes
+#@+node:ekr.20051110105027.177:checkLinksOfNodesWithSameTopologies (to do)
 #@+at 
 #@nonl
 # Nodes with the same topologies should be joined PROVIDED:
@@ -3544,10 +3544,10 @@ def checkTopologiesOfLinkedNodes(c=None):
 #     - Topologies include tnodes somehow.
 #     - Topologies include headlines somehow.
 #@-at
-#@-node:EKR.20040502195524.46:checkLinksOfNodesWithSameTopologies (to do)
-#@-node:EKR.20040502195524.42:Scripts for checking clones
-#@-node:EKR.20040502195524.39:Testing scripts
+#@-node:ekr.20051110105027.177:checkLinksOfNodesWithSameTopologies (to do)
+#@-node:ekr.20051110105027.173:Scripts for checking clones
+#@-node:ekr.20051110105027.170:Testing scripts
 #@-others
 #@nonl
-#@-node:EKR.20040502195524:@thin ../scripts/leoScripts.txt
+#@-node:ekr.20051110105027.2:@thin leoScripts.txt
 #@-leo
