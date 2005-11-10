@@ -26,6 +26,8 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
+The text widget that gets the new tab name isn't alway visible.
+
 Design of a debugger.
 #@nonl
 #@+node:ekr.20051103092502:Update screen shots
@@ -9451,7 +9453,7 @@ self.extension_dict = {
     "p"     : "pascal",
     # "perl"  : "perl",
     "pl"    : "perl",   # 11/7/05
-    "pod"   : "perlod", # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -11441,7 +11443,7 @@ self.extension_dict = {
     "p"     : "pascal",
     # "perl"  : "perl",
     "pl"    : "perl",   # 11/7/05
-    "pod"   : "perlod", # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -13923,7 +13925,7 @@ self.extension_dict = {
     "p"     : "pascal",
     # "perl"  : "perl",
     "pl"    : "perl",   # 11/7/05
-    "pod"   : "perlod", # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27

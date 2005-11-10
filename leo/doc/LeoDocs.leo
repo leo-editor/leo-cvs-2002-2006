@@ -2174,8 +2174,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20051028051444" a="TV"><vh>4.4 alpha 3</vh>
+<v t="edream.110203163054.63" a="ETV"><vh>Latest versions</vh>
+<v t="ekr.20051028051444"><vh>4.4 alpha 3</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -2232,9 +2232,7 @@
 <v t="ekr.20051109141524"><vh>New features</vh>
 <v t="ekr.20051109112826.222"><vh>Created scripts.leo and unitTest.leo</vh></v>
 <v t="ekr.20051109112826.254"><vh>c.executeMinibufferCommand executes a minibuffer command by name</vh></v>
-<v t="ekr.20051109112826.310"><vh>Improved perl entries in language dicts</vh>
-<v t="ekr.20051109112826.311"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-</v>
+<v t="ekr.20051109112826.310"><vh>Improved perl entries in language dicts</vh></v>
 </v>
 <v t="ekr.20051109141524.1"><vh>Code-level changes</vh>
 <v t="ekr.20051109112826.223"><vh>Changed  edit_text to edit_widget everywhere</vh></v>
@@ -21657,7 +21655,7 @@ def f (event):
 
 k.registerCommand('print-hello','Alt-Ctrl-Shift-p',f)
 k.registerCommand('print-hello2',None,f)</t>
-<t tx="ekr.20051028051444">Leo 4.4 alpha 3                 November 9, 2005
+<t tx="ekr.20051028051444">Leo 4.4 alpha 3                                November 10, 2005
 
 Leo 4.4 a3 is a big step forward in meeting the following goals:
 
@@ -21665,7 +21663,7 @@ Leo 4.4 a3 is a big step forward in meeting the following goals:
 - To support an emacs-like minibuffer, complete with typing completion.
 - To make Leo usable without a mouse (mouseless Leo).
 
-This is an alpha release: there are known bugs (see below). However, you should
+This is an alpha release: there are minor bugs (see below). However, you should
 be able to use this version safely. In particular, the Leo 4.4 code base
 recovers from errors more reliably than all previous versions.
 
@@ -21678,7 +21676,7 @@ name. Support for tab completion.
 
 - A tabbed log pane. The Find and Spell Check commands now use tabs instead of
 dialogs, making those commands much easier to use. Plugins or scripts can easily
-create new tabs. The 'Completion' tab shows possible typing completions.
+create new tabs. The Completion tab shows possible typing completions.
 
 - Support for almost all commands in the Emacs Cmds menu, including cursor
 and screen movement, basic character, word and paragraph manipulation, and
@@ -21687,7 +21685,7 @@ commands to manipulate buffers, the kill ring, regions and rectangles.
 - Per-pane key bindings. You can bind shortcuts to multiple commands depending
 on which of Leo's panes presently has focus. For example, you can use arrow keys
 to move nodes in the outline pane, while retaining their defaults in Leo's body
-pane. Per-pane key binds are essential for mouseless Leo.
+pane. Per-pane key bindings are essential for mouseless Leo.
 
 - @command nodes create minibuffer commands. You can bind key shortcuts to
 @button and @command nodes.
@@ -22154,92 +22152,8 @@ self.language_extension_dict = {
 
 self.extension_dict = {
     "pl"    : "perl",
-    "pod"   : "perlod",
+    "pod"   : "perlpod",
 }</t>
-<t tx="ekr.20051109112826.311"># Internally, lower case is used for all language names.
-self.language_delims_dict = {
-    "ada" : "--",
-    "actionscript" : "// /* */", #jason 2003-07-03
-    "c" : "// /* */", # C, C++ or objective C.
-    "csharp" : "// /* */",	# C#
-    "css" : "/* */", # 4/1/04
-    "cweb" : "@q@ @&gt;", # Use the "cweb hack"
-    "elisp" : ";",
-    "forth" : "\\_ _(_ _)", # Use the "REM hack"
-    "fortran" : "C",
-    "fortran90" : "!",
-    "html" : "&lt;!-- --&gt;",
-    "java" : "// /* */",
-    "latex" : "%",
-    "pascal" : "// { }",
-    "perl" : "#",
-    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
-    "php" : "//",
-    "plain" : "#", # We must pick something.
-    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
-    "python" : "#",
-    "rapidq" : "'", # fil 2004-march-11
-    "rebol" : ";",  # jason 2003-07-03
-    "shell" : "#",  # shell scripts
-    "tcltk" : "#",
-    "unknown" : "#" } # Set when @comment is seen.
-
-self.language_extension_dict = {
-    "ada" : "ads",
-    "actionscript" : "as", #jason 2003-07-03
-    "c" : "c",
-    "css" : "css", # 4/1/04
-    "cweb" : "w",
-    "elisp" : "el",
-    "forth" : "forth",
-    "fortran" : "f",
-    "fortran90" : "f",
-    "html" : "html",
-    "java" : "java",
-    "latex" : "tex", # 1/8/04
-    "noweb" : "nw",
-    "pascal" : "p",
-    # "perl" : "perl",
-    # "perlpod" : "perl",
-    "perl" : "pl",      # 11/7/05
-    "perlpod" : "pod",  # 11/7/05
-    "php" : "php",
-    "plain" : "txt",
-    "python" : "py",
-    "plsql" : "sql", # qt02537 2005-05-27
-    "rapidq" : "bas", # fil 2004-march-11
-    "rebol" : "r",    # jason 2003-07-03
-    "shell" : "sh",   # DS 4/1/04
-    "tex" : "tex",
-    "tcltk" : "tcl",
-    "unknown" : "txt" } # Set when @comment is seen.
-    
-self.extension_dict = {
-    "ads"   : "ada",
-    "adb"   : "ada",
-    "as"    : "actionscript",
-    "bas"   : "rapidq",
-    "c"     : "c",
-    "css"   : "css",
-    "el"    : "elisp",
-    "forth" : "forth",
-    "f"     : "fortran90", # or fortran ?
-    "html"  : "html",
-    "java"  : "java",
-    "noweb" : "nw",
-    "p"     : "pascal",
-    # "perl"  : "perl",
-    "pl"    : "perl",   # 11/7/05
-    "pod"   : "perlod", # 11/7/05
-    "php"   : "php",
-    "py"    : "python",
-    "sql"   : "plsql", # qt02537 2005-05-27
-    "r"     : "rebol",
-    "sh"    : "shell",
-    "tex"   : "tex",
-    "txt"   : "plain",
-    "tcl"   : "tcltk",
-    "w"     : "cweb" }</t>
 <t tx="ekr.20051109112826.315">http://sourceforge.net/forum/message.php?msg_id=3418304
 
 Fixed an edge effect when backward searching for a match that occurs at the very

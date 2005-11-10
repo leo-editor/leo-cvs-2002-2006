@@ -348,6 +348,7 @@ abc
 accel
 actionscript
 activestate
+ada
 ada_language
 addMenu
 addTest
@@ -526,6 +527,7 @@ clearMark
 clearUndoState
 clearVisited
 clearWriteBit
+cleo
 cloneIndex
 clone_window
 clone_windows
@@ -661,6 +663,7 @@ directiveKind
 dired
 dirtyVnodeList
 dirtyVnodeList2
+disableRedraw
 disposableTokens
 distutils
 dll
@@ -823,6 +826,7 @@ frontMatter
 ftok
 func
 funcDict
+funcReturn
 funcToMethod
 funcall
 gApp
@@ -1551,6 +1555,7 @@ redirectClass
 redoBletch
 redoButton
 redoHelper
+redrawScheduled
 redraw_flag
 redraw_now
 refLinesCount

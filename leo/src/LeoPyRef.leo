@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8616" clone_windows="0"/>
-<globals body_outline_ratio="0.538461538462">
-	<global_window_position top="42" left="278" height="858" width="859"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8618" clone_windows="0"/>
+<globals body_outline_ratio="0.371794871795">
+	<global_window_position top="27" left="359" height="858" width="859"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,7 +14,7 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20051025071455,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20051025071455,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20050831131028"><vh>opml</vh>
@@ -28,6 +28,7 @@ marks="ekr.20051025071455,"><vh>@thin leoProjects.txt</vh></v>
 marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
+<v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20051010062551.1"><vh>(key dicts)</vh></v>
 <v t="ekr.20051009120608"><vh>(ctors &amp; finishCreate)</vh>
@@ -460,6 +461,85 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
 </v>
 </v>
+<v t="ekr.20051109040029"><vh>(Moved to Newer World Order)</vh>
+<v t="ekr.20051107102734"><vh>About the Newer World Order</vh></v>
+<v t="ekr.20051109094502"><vh>Detecting multiple redraw</vh></v>
+<v t="ekr.20051106103835"><vh>Drawing</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.requestRedraw &amp; c.redraw_now</vh></v>
+<v t="ekr.20051105091102"><vh>c.updateScreen &amp; helper (new in 4.4a3)</vh>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+<v t="ekr.20051105091102"><vh>c.updateScreen &amp; helper (new in 4.4a3)</vh>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
+<v t="ekr.20040803072955.55"><vh>tree.redraw</vh></v>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
+<v t="ekr.20051105073850"><vh>drawX...</vh>
+<v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
+<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
+<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.39"><vh>drawIcon</vh>
+<v t="ekr.20040803072955.40"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.41"><vh>drawLine</vh></v>
+<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20040803072955.44"><vh>drawText</vh>
+<v t="ekr.20040803072955.45"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.46"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040803072955.47"><vh>drawUserIcon</vh>
+<v t="ekr.20040803072955.48"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.49"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.50"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.51"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
+</v>
+<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
+<v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
+<v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
+<v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20051109090037"><vh>Special cases</vh>
+<v t="ekr.20031218072017.1551"><vh>pasteOutline</vh>
+<v t="ekr.20050418084539"><vh>&lt;&lt; remember all data for undo/redo Paste As Clone &gt;&gt;</vh></v>
+<v t="ekr.20050418084539.2"><vh>&lt;&lt; put only needed info in copiedBunchList &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1557"><vh>finishPaste</vh>
+<v t="ekr.20031218072017.1558"><vh>&lt;&lt; reassign tnode indices &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
+<v t="ekr.20051009045404"><vh>createFirstTreeNode</vh></v>
+</v>
+</v>
 <v t="ekr.20051103112558"><vh>4.4a3 projects</vh>
 <v t="ekr.20051103091115.2"><vh>(Fix crasher in Open logic)</vh>
 <v t="ekr.20051103091115.3"><vh>Report</vh></v>
@@ -579,12 +659,45 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051106172517"><vh>Improved perl entries in language dicts</vh>
 <v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
 </v>
+<v t="ekr.20051107122545"><vh>Don't redraw the screen when clicking in the body!</vh></v>
+<v t="ekr.20051108045542"><vh>Fix newly reported bugs</vh>
+<v t="ekr.20051108045542.2"><vh>Report </vh></v>
+</v>
+<v t="ekr.20051108102650"><vh>Fixed bug in Find Backward</vh>
+<v t="ekr.20051108102650.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.3074"><vh>findNext</vh></v>
+<v t="ekr.20031218072017.3075"><vh>findNextMatch</vh></v>
+<v t="ekr.20031218072017.3081"><vh>selectNextPosition</vh></v>
+<v t="ekr.20031218072017.3086"><vh>initInHeadline</vh></v>
+<v t="ekr.20031218072017.3077"><vh>search</vh>
+<v t="ekr.20031218072017.3079"><vh>&lt;&lt; break if we are passed the wrap point &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3080"><vh>&lt;&lt; continue if not whole word match &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051109034342"><vh>(Draw twice on open)</vh>
+<v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.1553"><vh>getLeoFile</vh>
+<v t="ekr.20031218072017.1554"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1555"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1556"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
+<v t="ekr.20040326054052"><vh>&lt;&lt; set current and top positions &gt;&gt;</vh></v>
+<v t="EKR.20040627120120"><vh>&lt;&lt; restore attributes in descendent tnodes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2297"><vh>open (leoFileCommands)</vh>
+<v t="ekr.20031218072017.2298"><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051109031136"><vh>Fixed crash in headwidth</vh>
+<v t="ekr.20051109034342.1"><vh>Traceback</vh></v>
+<v t="ekr.20040803072955.28"><vh>headWidth &amp; widthInPixels</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20050921094025"><vh>4.4 To do</vh>
 <v t="ekr.20051103092502"><vh>Update screen shots</vh></v>
 <v t="ekr.20051016162724"><vh>before a4</vh>
-<v t="ekr.20051107102734"><vh>Implement Newer World Order</vh></v>
+<v t="ekr.20051109144908"><vh>Cleanup: remove c.requestRedraw calls and related logic</vh></v>
+<v t="ekr.20051109143331"><vh>Eliminate calls to xWantsFocus?</vh></v>
 <v t="ekr.20051103094005"><vh>Fix bugs</vh>
 <v t="ekr.20051103093034"><vh>Fix problems applying settings</vh>
 <v t="ekr.20051103093034.1"><vh>Report</vh></v>
@@ -907,7 +1020,7 @@ marks="ekr.20051025071455,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="ETV"><vh>Code</vh>
 <v t="ekr.20031218072017.2415"><vh> Scripts</vh>
 <v t="ekr.20040327103735.2"><vh>Script Tools (leoGlobals.py)</vh>
 <v t="ekr.20031218072017.2418"><vh>g.initScriptFind (set up dialog)</vh></v>
@@ -1041,14 +1154,10 @@ def idleTimeHookHandler(*args,**keys):
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed: return
     
-    top = g.top() # Important: only fire k.onIdleTime for the top window.
     for w in g.app.windowList:
         c = w.c
         # Do NOT compute c.currentPosition.
         # This would be a MAJOR leak of positions.
-        # New in 4.4 a2: direct support for k.onIdleTime()
-        if 0:
-            c and c.keyHandler and c == top and c.keyHandler.onIdleTime()
         g.doHook("idle",c=c)
 
     # Requeue this routine after g.app.idleTimeDelay msec.
@@ -1059,6 +1168,33 @@ def idleTimeHookHandler(*args,**keys):
         g.app.afterHandler = g.idleTimeHookHandler
     else:
         g.app.afterHandler = None</t>
+<t tx="EKR.20040627120120">for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()</t>
 <t tx="ekr.20031218072017.368"># Internally, lower case is used for all language names.
 self.language_delims_dict = {
     "ada" : "--",
@@ -1133,7 +1269,7 @@ self.extension_dict = {
     "p"     : "pascal",
     # "perl"  : "perl",
     "pl"    : "perl",   # 11/7/05
-    "pod"   : "perlod", # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
     "php"   : "php",
     "py"    : "python",
     "sql"   : "plsql", # qt02537 2005-05-27
@@ -1383,6 +1519,150 @@ if textResult != result:
 <t tx="ekr.20031218072017.1497">print "undo mismatch"
 print "expected:",result
 print "actual  :",textResult</t>
+<t tx="ekr.20031218072017.1551"># To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
+
+def pasteOutline(self,reassignIndices=True):
+
+    c = self ; u = c.undoer ; current = c.currentPosition()
+    s = g.app.gui.getTextFromClipboard()
+    pasteAsClone = not reassignIndices
+    undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
+
+    if not s or not c.canPasteOutline(s):
+        return # This should never happen.
+
+    isLeo = g.match(s,0,g.app.prolog_prefix_string)
+    
+    tnodeInfoDict = {}
+    if pasteAsClone:
+        &lt;&lt; remember all data for undo/redo Paste As Clone &gt;&gt;
+
+    if isLeo:
+        pasted = c.fileCommands.getLeoOutline(s,reassignIndices)
+    else:
+        pasted = c.importCommands.convertMoreStringToOutlineAfter(s,current)
+    if not pasted: return
+    
+    copiedBunchList = []
+    if pasteAsClone:
+        &lt;&lt; put only needed info in copiedBunchList &gt;&gt;
+    undoData = u.beforeInsertNode(current,
+    pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
+    c.endEditing()
+    c.validateOutline()
+    c.selectPosition(pasted)
+    pasted.setDirty()
+    c.setChanged(True)
+    # paste as first child if back is expanded.
+    back = pasted.back()
+    if back and back.isExpanded():
+        pasted.moveToNthChildOf(back,0)
+    u.afterInsertNode(pasted,undoType,undoData)
+    c.redraw_now()
+    c.recolor()</t>
+<t tx="ekr.20031218072017.1553"># The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    &lt;&lt; warn on read-only files &gt;&gt;
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        &lt;&lt; scan all the xml elements &gt;&gt;
+    except BadLeoFile, message:
+        if not silent:
+            &lt;&lt; raise an alert &gt;&gt;
+        ok = False
+
+    if ok and readAtFileNodesFlag:
+        # Redraw before reading the @file nodes so the screen isn't blank.
+        # This is important for big files like LeoPy.leo.
+        c.redraw_now()
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+        
+    # g.trace(c.currentPosition())
+    
+    # New in 4.3.1: do this after reading derived files.
+    if not self.usingClipboard:
+        &lt;&lt; set current and top positions &gt;&gt;
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    &lt;&lt; restore attributes in descendent tnodes &gt;&gt;
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio</t>
+<t tx="ekr.20031218072017.1554"># os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+except UnicodeError:
+    self.read_only = False
+        
+if self.read_only:
+    g.es("read only: " + fileName,color="red")</t>
+<t tx="ekr.20031218072017.1555">self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+
+self.getTag("&lt;leo_file&gt;") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("&lt;/leo_file&gt;")</t>
+<t tx="ekr.20031218072017.1556"># All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))</t>
+<t tx="ekr.20031218072017.1557">def finishPaste(self,reassignIndices=True):
+    
+    """Finish pasting an outline from the clipboard.
+    
+    Retain clone links if reassignIndices is False."""
+
+    c = self.c
+    current = c.currentPosition()
+    if reassignIndices:
+        &lt;&lt; reassign tnode indices &gt;&gt;
+    c.selectPosition(current)
+    return current</t>
+<t tx="ekr.20031218072017.1558">@ putLeoOutline calls assignFileIndices (when copying nodes) so that vnode can be associated with tnodes.
+However, we must _reassign_ the indices here so that no "False clones" are created.
+@c
+
+current.clearVisitedInTree()
+
+for p in current.self_and_subtree_iter():
+    t = p.v.t
+    if not t.isVisited():
+        t.setVisited()
+        self.maxTnodeIndex += 1
+        t.setFileIndex(self.maxTnodeIndex)</t>
 <t tx="ekr.20031218072017.1623">def new (self):
 
     c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
@@ -1460,6 +1740,63 @@ def OnMouseWheel(self, event=None):
     u.undoing = False
     u.bead -= 1
     u.setUndoTypes()</t>
+<t tx="ekr.20031218072017.2052">def openWithFileName(fileName,old_c,
+    enableLog=True,readAtFileNodesFlag=True,readSettings=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full, normalized, Unicode path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    theList = app.windowList
+    for frame in theList:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.trace('Already open',fileName)
+            return True, frame
+    try:
+        # g.trace('Not open',fileName)
+        # Open the file in binary mode to allow 0x1a in bodies &amp; headlines.
+        theFile = open(fileName,'rb')
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        # Bug fix in 4.4.
+        frame.openDirectory = g.os_path_dirname(fileName)
+        if readSettings:
+            g.app.config.updateSettings(c,localFlag=True)
+        g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
+        frame.bodyWantsFocus()
+        c.redraw_now()
+        return True, frame
+    except IOError:
+        # Do not use string + here: it will fail for non-ascii strings!
+        if not g.app.unitTesting:
+            g.es("can not open: %s" % (fileName), color="blue")
+        return False, None
+    except Exception:
+        g.es("exceptions opening: %s" % (fileName),color="red")
+        g.es_exception()
+        return False, None</t>
 <t tx="ekr.20031218072017.2176">def finishCreate (self,c):
     
     f = self ; f.c = c
@@ -1517,6 +1854,32 @@ def OnDeactivateLeoEvent(self,event=None):
             g.app.setLog(None,"OnDeactivateLeoEvent")
         except:
             g.es_event_exception("deactivate Leo")</t>
+<t tx="ekr.20031218072017.2297">def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c ; frame = c.frame
+    # Read the entire file into the buffer
+    self.fileBuffer = theFile.read() ; theFile.close()
+    self.fileIndex = 0
+    &lt;&lt; Set the default directory &gt;&gt;
+    self.topPosition = None
+    ok, ratio = self.getLeoFile(
+        fileName,
+        readAtFileNodesFlag=readAtFileNodesFlag,
+        silent=silent)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
+    # Delete the file buffer
+    self.fileBuffer = ""
+    return ok</t>
+<t tx="ekr.20031218072017.2298">@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
+
+theDir = g.os_path_dirname(fileName)
+
+if len(theDir) &gt; 0:
+    c.openDirectory = theDir</t>
 <t tx="ekr.20031218072017.2373">def set_focus(self,c,w):
     
     __pychecker__ = '--no-argsused' # c not used at present.
@@ -1591,6 +1954,21 @@ For more documentation, see the node called "Overview of Leo's code" in LeoDocs.
     c.showFindPanel()</t>
 <t tx="ekr.20031218072017.2582"></t>
 <t tx="ekr.20031218072017.2604"></t>
+<t tx="ekr.20031218072017.2606">@color
+
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 0: # Set to 1 for lint-like testing.
+      # Use t23.bat: only on Python 2.3.
+
+    try:
+        import pychecker.checker
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
+        # print pychecker
+        print ; print "Warning (in leo.py): pychecker.checker running..." ; print
+    except:
+        print ; print 'Can not import pychecker' ; print</t>
 <t tx="ekr.20031218072017.2811"></t>
 <t tx="ekr.20031218072017.2812">def __init__(self,frame,fileName):
 
@@ -1679,14 +2057,16 @@ __str__ = __repr__
 <t tx="ekr.20031218072017.2949"></t>
 <t tx="ekr.20031218072017.2950">def beginUpdate(self):
     
-    pass
+    c = self
     
 def endUpdate(self, flag=True):
     
-    '''Request a redraw if flag is True.'''
+    '''Redraw the screen if flag is True.'''
+
     c = self
     if flag:
-        c.requestRedraw()
+        # c.requestRedraw()
+        c.redraw_now()
 
 BeginUpdate = beginUpdate # Compatibility with old scripts
 EndUpdate = endUpdate # Compatibility with old scripts</t>
@@ -1707,15 +2087,12 @@ def requestRecolor (self):
 <t tx="ekr.20031218072017.2954">def requestRedraw (self):
 
     c = self
-    # g.trace(g.callers(9))
 
     c.frame.requestRedrawFlag = True
     
 def redraw_now (self):
     
     c = self
-    # g.trace(g.callers(9))
-
     c.frame.requestRedrawFlag = True
     c.updateScreen()
 
@@ -1774,6 +2151,211 @@ def changeSelection(self):
     finally:
         c.endUpdate(False) # No redraws here: they would destroy the headline selection.
     return True</t>
+<t tx="ekr.20031218072017.3074">def findNext(self,initFlag=True):
+
+    c = self.c
+    if not self.checkArgs():
+        return
+
+    if initFlag:
+        self.initInHeadline()
+        data = self.save()
+        self.initInteractiveCommands()
+    else:
+        data = self.save()
+
+    c.beginUpdate()
+    try:
+        pos, newpos = self.findNextMatch()
+    finally:
+        c.endUpdate(False) # Inhibit redraws so that headline remains selected.
+
+    if pos:
+        self.showSuccess(pos,newpos)
+    else:
+        if self.wrapping:
+            g.es("end of wrapped search")
+        else:
+            g.es("not found: " + "'" + self.find_text + "'")
+        self.restore(data)</t>
+<t tx="ekr.20031218072017.3075"># Resumes the search where it left off.
+# The caller must call set_first_incremental_search or set_first_batch_search.
+
+def findNextMatch(self):
+
+    c = self.c
+
+    if not self.search_headline and not self.search_body:
+        return None, None
+
+    if len(self.find_text) == 0:
+        return None, None
+
+    p = self.p
+    while p:
+        pos, newpos = self.search()
+        if pos:
+            if self.mark_finds:
+                p.setMarked()
+                c.frame.tree.drawIcon(p) # redraw only the icon.
+            return pos, newpos
+        elif self.errors:
+            return None,None # Abort the search.
+        elif self.node_only:
+            return None,None # We are only searching one node.
+        else:
+            p = self.p = self.selectNextPosition()
+    return None, None</t>
+<t tx="ekr.20031218072017.3077">def search (self):
+
+    """Searches the present headline or body text for self.find_text and returns True if found.
+
+    self.whole_word, self.ignore_case, and self.pattern_match control the search."""
+
+    c = self.c ; p = self.p ; t = self.s_ctrl ; gui = g.app.gui
+    assert(c and t and p)
+    if self.selection_only:
+        index,stopindex = self.selStart, self.selEnd
+        if index == stopindex:
+            return None, None
+    else:
+        index = gui.getInsertPoint(t)
+        stopindex = g.choose(self.reverse,gui.firstIndex(),gui.lastIndex())
+    while 1:
+        try:
+            pos = self.gui_search(t,self.find_text,index,
+                stopindex=stopindex,backwards=self.reverse,
+                regexp=self.pattern_match,nocase=self.ignore_case)
+        except Exception:
+            g.es_exception(full=False)
+            self.errors += 1 ; break
+        if not pos: break
+        if self.find_text == '\n':
+            newpos = gui.moveIndexToNextLine(t,pos)
+        else:
+            newpos = gui.moveIndexForward(t,pos,len(self.find_text))
+        if newpos is None: break
+        &lt;&lt; break if we are passed the wrap point &gt;&gt;
+        if self.whole_word:
+            index = t.index(g.choose(self.reverse,pos,newpos))
+            &lt;&lt; continue if not whole word match &gt;&gt;
+        #g.trace("found:",pos,newpos,p)
+        gui.setTextSelection(t,pos,newpos)
+        return pos, newpos
+    # g.trace('not found',p.headString())
+    return None,None</t>
+<t tx="ekr.20031218072017.3079">if self.wrapping and self.wrapPos and self.wrapPosition and self.p == self.wrapPosition:
+
+    if self.reverse and gui.compareIndices(t,pos, "&lt;", self.wrapPos):
+        # g.trace("wrap done")
+        break
+
+    if not self.reverse and gui.compareIndices(t,newpos, "&gt;", self.wrapPos):
+        break</t>
+<t tx="ekr.20031218072017.3080"># Set pos to None if word characters preceed or follow the selection.
+before = gui.getCharBeforeIndex(t,pos)
+first  = gui.getCharAtIndex    (t,pos)
+last   = gui.getCharBeforeIndex(t,newpos)
+after  = gui.getCharAtIndex    (t,newpos)
+
+#g.trace("before,first",before,first,g.is_c_id(before),g.is_c_id(first))
+#g.trace("after,last",  after,last,  g.is_c_id(after), g.is_c_id(last))
+
+if g.is_c_id(before) and g.is_c_id(first):
+    continue
+
+if g.is_c_id(after) and g.is_c_id(last):
+    continue</t>
+<t tx="ekr.20031218072017.3081"># Selects the next node to be searched.
+
+def selectNextPosition(self):
+
+    c = self.c ; p = self.p
+
+    if self.selection_only:
+        return None
+
+    # Start suboutline only searches.
+    if self.suboutline_only and not self.onlyPosition:
+        # p.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, p might be None, so p.copy() would be wrong!
+        self.onlyPosition = p 
+
+    # Start wrapped searches.
+    if self.wrapping and not self.wrapPosition:
+        assert(self.wrapPos != None)
+        # p.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, p might be None, so p.copy() would be wrong!
+        self.wrapPosition = p 
+
+    if self.in_headline and self.search_body:
+        # just switch to body pane.
+        self.in_headline = False
+        self.initNextText()
+        # g.trace('switching to body',g.callers(5))
+        return p
+
+    if self.reverse: p = p.threadBack()
+    else:            p = p.threadNext()
+    
+    # New in 4.3: restrict searches to hoisted area.
+    # End searches outside hoisted area.
+    if c.hoistStack:
+        if not p:
+            if self.wrapping:
+                g.es('Wrap disabled in hoisted outlines',color='blue')
+            return
+        bunch = c.hoistStack[-1]
+        if not bunch.p.isAncestorOf(p):
+            g.es('Found match outside of hoisted outline',color='blue')
+            return None
+
+    # Wrap if needed.
+    if not p and self.wrapping and not self.suboutline_only:
+        p = c.rootPosition()
+        if self.reverse:
+            # Set search_v to the last node of the tree.
+            while p and p.next():
+                p = p.next()
+            if p: p = p.lastNode()
+
+    # End wrapped searches.
+    if self.wrapping and p and p == self.wrapPosition:
+        # g.trace("ending wrapped search")
+        p = None ; self.resetWrap()
+
+    # End suboutline only searches.
+    if (self.suboutline_only and self.onlyPosition and p and
+        (p == self.onlyPosition or not self.onlyPosition.isAncestorOf(p))):
+        # g.trace("end outline-only")
+        p = None ; self.onlyPosition = None
+
+    # p.copy not needed because the find code never calls p.moveToX.
+    # Furthermore, p might be None, so p.copy() would be wrong!
+    self.p = p # used in initNextText().
+    if p: # select p and set the search point within p.
+        self.in_headline = self.search_headline
+        self.initNextText()
+    return p</t>
+<t tx="ekr.20031218072017.3086"># Guesses which pane to start in for incremental searches and changes.
+# This must not alter the current "insert" or "sel" marks.
+
+def initInHeadline (self):
+
+    c = self.c ; p = self.p
+
+    # Do not change this without careful thought and extensive testing!
+    if self.search_headline and self.search_body:
+        # A temporary expedient.
+        if self.reverse:
+            self.in_headline = False
+        else:
+            # Search headline first.
+            self.in_headline = (
+                p == c.frame.tree.editPosition() and
+                g.app.gui.get_focus(c.frame) != c.frame.body.bodyCtrl)
+    else:
+        self.in_headline = self.search_headline</t>
 <t tx="ekr.20031218072017.3091">def showSuccess(self,pos,newpos):
 
     """Displays the final result.
@@ -1792,7 +2374,10 @@ def changeSelection(self):
     t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
     insert = g.choose(self.reverse,pos,newpos)
     gui.setInsertPoint(t,insert)
+    # New in 4.4a3: a much better way to ensure progress in backward searches.
     gui.setSelectionRange(t,pos,newpos)
+    if self.reverse:
+        gui.setInsertPoint(t,pos)
     gui.makeIndexVisible(t,insert)
     c.frame.widgetWantsFocus(t,later=False)
     if self.wrap and not self.wrapPosition:
@@ -1823,7 +2408,7 @@ def OnControlKeyUp (self,event=None):
 
     try:
         frame = self ; gui = g.app.gui
-        frame.tree.onHeadChanged(frame.c.currentPosition())
+        # frame.tree.onHeadChanged(frame.c.currentPosition())
         g.app.setLog(frame.log,"OnActivateBody")
         w = gui.get_focus(frame)
         if w != frame.body.bodyCtrl:
@@ -2215,6 +2800,22 @@ def moveIndexToNextLine(self,t,index):
 <t tx="ekr.20031218072017.4098">def makeIndexVisible(self,t,index):
 
     return t.see(index)</t>
+<t tx="ekr.20040303163330">def setDirty (self,setDescendentsDirty=True):
+    
+    '''Mark a node and all ancestor @file nodes dirty.'''
+
+    p = self ; c = p.c ; dirtyVnodeList = []
+
+    if not p.v.t.isDirty():
+        p.v.t.setDirty()
+        dirtyVnodeList.append(p.v)
+
+    # Important: this must be called even if p.v is already dirty.
+    # Typing can change the @ignore state!
+    dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty(setDescendentsDirty)
+    dirtyVnodeList.extend(dirtyVnodeList2)
+   
+    return dirtyVnodeList</t>
 <t tx="ekr.20040321065415">def findNodeInTree(p,headline):
 
     """Search for a node in v's tree matching the given headline."""
@@ -2240,16 +2841,29 @@ def findTopLevelNode(headline):
         if p.headString().strip() == headline.strip():
             return p.copy()
     return c.nullPosition()</t>
+<t tx="ekr.20040326054052">current = self.convertStackToPosition(self.currentVnodeStack)
+if current:
+    # g.trace('using convertStackToPosition',current)
+    c.setCurrentPosition(current)
+else:
+    # g.trace(self.currentVnodeStack)
+    c.setCurrentPosition(c.rootPosition())
+    
+# At present this is useless: the drawing code doesn't set the top position properly.
+if 0:
+    top = self.convertStackToPosition(self.topVnodeStack)
+    if top:
+        c.setTopPosition(top)</t>
 <t tx="ekr.20040327103735.2"></t>
 <t tx="ekr.20040629121554">def getBuildNumber(self):
     c = self
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.4 alpha 2, build %s, November 2, 2005" % c.getBuildNumber()</t>
+    return "Leo 4.4 alpha 3, build %s, November 10, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.324 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.331 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -2279,6 +2893,24 @@ def findTopLevelNode(headline):
     &lt;&lt; initialize ivars &gt;&gt;
     self.config = configSettings(c)
     g.app.config.setIvarsFromSettings(c)</t>
+<t tx="ekr.20040803072955.28">def headWidth(self,p=None,s=''):
+
+    """Returns the proper width of the entry widget for the headline."""
+    
+    if p:
+        s = p.headString()
+    else:
+        s = s or ''
+
+    return max(self.minimum_headline_width,5 + len(s))
+    
+def widthInPixels(self,s):
+
+    s = g.toEncodedString(s,g.app.tkEncoding)
+    
+    width = self.font.measure(s)
+    
+    return width</t>
 <t tx="ekr.20040803072955.35"></t>
 <t tx="ekr.20040803072955.36">def drawBox (self,p,x,y):
 
@@ -2683,7 +3315,7 @@ def redraw_now (self,scroll=True):
     c = self.c
     
     # An important trace.
-    # g.trace(self.redrawCount,g.callers(7))
+    # g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -4057,6 +4689,36 @@ def undoDehoistNode (self):
             # g.trace(t,bunch.head,bunch.body)
 
     c.selectPosition(u.p)</t>
+<t tx="ekr.20050418084539">@
+
+We don't know yet which nodes will be affected by the paste, so we remember
+everything. This is expensive, but foolproof.
+
+The alternative is to try to remember the 'before' values of tnodes in the
+fileCommands read logic. Several experiments failed, and the code is very ugly.
+In short, it seems wise to do things the foolproof way.
+
+@c
+
+for p in c.allNodes_iter():
+    t = p.v.t
+    if t not in tnodeInfoDict.keys():
+        tnodeInfoDict[t] = g.Bunch(
+            t=t,head=p.headString(),body=p.bodyString())</t>
+<t tx="ekr.20050418084539.2"># Create a dict containing only copied tnodes.
+copiedTnodeDict = {}
+for p in pasted.self_and_subtree_iter():
+    if p.v.t not in copiedTnodeDict:
+        copiedTnodeDict[p.v.t] = p.v.t
+        
+# g.trace(copiedTnodeDict.keys())
+
+for t in tnodeInfoDict.keys():
+    bunch = tnodeInfoDict.get(t)
+    if copiedTnodeDict.get(t):
+        copiedBunchList.append(bunch)
+
+# g.trace('copiedBunchList',copiedBunchList)</t>
 <t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
@@ -7069,6 +7731,7 @@ def reSearchForward (self,event):
     All commands and keystrokes pass through here.'''
 
     k = self ; c = k.c
+    c.startRedrawCount = c.frame.tree.redrawCount
     k.stroke = stroke # Set this global for general use.
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
@@ -7243,7 +7906,9 @@ if 0: # traces
         changeKeyStrokes(k,f.bodyCtrl)</t>
 <t tx="ekr.20050921094025">@nocolor
 
-- Rerun pychecker.</t>
+The text widget that gets the new tab name isn't alway visible.
+
+Design of a debugger.</t>
 <t tx="ekr.20050921094025.254">@killcolor
 </t>
 <t tx="ekr.20050921094025.255">Buffer-menu-1-window
@@ -10679,6 +11344,8 @@ k.bindingsDict:
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
+    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
+    
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
     
@@ -10687,17 +11354,11 @@ k.bindingsDict:
     if isBody:
         w.event_generate(g.virtual_event_name("Cut"))
     else:
-        if 0:
-            # Old: Do **not** call w.event_generate.
-            # New: Do call w.event_generate.
-            w.event_generate(g.virtual_event_name("Cut"))
-            if not fromMinibuffer:
-                f.tree.onHeadChanged(c.currentPosition(),'Cut')</t>
+        # Do **not** call w.event_generate.
+        pass</t>
 <t tx="ekr.20051011072903.1">def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    #g.trace()
     
     f = self ; c = f.c ; w = f.getFocus()
     isBody = w == f.body.bodyCtrl
@@ -10742,10 +11403,9 @@ k.bindingsDict:
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; p = c.currentPosition()
+    f = self ; c = f.c
     w = f.getFocus()
     name = hasattr(w,'_name') and w._name or ''
-    # g.trace(name)
     
     if fromMinibuffer:
         w.event_generate(g.virtual_event_name("Paste"))
@@ -10881,7 +11541,9 @@ Still, I am wondering whether Leo might treat one plugin, say options.py, just a
 bit differently from other options, say by loading it first (or last) or
 possibly looking somewhere besides the leo/plugins folder, or maybe having it
 always be enabled.</t>
-<t tx="ekr.20051016162724">- Use focus-in event in minibuffer?
+<t tx="ekr.20051016162724">(Later) Revise docs for c.begin/endUpdate.
+
+- Use focus-in event in minibuffer?
 
 - More clever way to analyze modules in autocomplete.
     Use inspect module to import the text and get what is wanted.
@@ -11154,6 +11816,7 @@ def buttonCallback (self, event=None):
     # Init the base class...
     leoFind.leoFind.__init__(self,c,title='Find Tab')
     self.c = c
+    self.frame = self.outerFrame = self.top = None # To keep pychecker happy.
     
     &lt;&lt; create the tkinter intVars &gt;&gt;
     
@@ -13542,20 +14205,29 @@ I like this scheme.  It is simple, powerful, general and easy to use.  It will e
     
     c = self ; frame = c.frame
     
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+        
+    # g.trace(g.callers(7))
+    
     if frame.wantedWidget:
         w = frame.wantedWidget
         # g.trace(hasattr(w,'_name') and w._name or '')
-        g.app.gui.set_focus(c,w)
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
-        w = g.app.gui.get_focus(c.frame)
+        w = g.app.gui.get_focus(frame)
         if not w: return
         # Allow clicks in enclosing window frame or in dialogs.
         name = hasattr(w,'_name') and w._name or ''
         if (
             name and name[0] in string.letters # A known Leo frame.
-            or w == c.frame.top # The top of the Leo window
+            or w == frame.top # The top of the Leo window
             or g.app.dialogs &gt; 0 # A dialog.
             or isinstance(w,Tk.Text)
             or isinstance(w,Tk.Entry)
@@ -13566,7 +14238,7 @@ I like this scheme.  It is simple, powerful, general and easy to use.  It will e
             return
         # Not a name created by Leo.
         g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,c.frame.body.bodyCtrl)</t>
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)</t>
 <t tx="ekr.20051103114520.2"></t>
 <t tx="ekr.20051104051733">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3412640
@@ -13790,7 +14462,9 @@ self.extension_dict = {
 }</t>
 <t tx="ekr.20051107052029"></t>
 <t tx="ekr.20051107054425"></t>
-<t tx="ekr.20051107102734">A Newer World Order?
+<t tx="ekr.20051107102734">@nocolor
+
+A Newer World Order?
 
 The New World Order is that redrawing typically happens at the end of event handlers as the result of earlier requests for redraws.  (It can also happen as the result of calls to c.redraw_now.) Today I realized that a further simplification is possible: there is now nothing to prevent commands from doing the redraw immediately.
 
@@ -13806,11 +14480,7 @@ Disadvantages:
 
 - Commands should ensure that exactly one redraw happens.  This doesn't happen automatically anymore.  OTOH, this is not likely ever to be a big problem (or even a small problem, for that matter).
 
-So the entire queuing apparatus would disappear.  One further simplification: we could eliminate all calls to xWantsFocus calls by adding a focus arg in c.redraw_now.  A value of None would trigger the logic that moves focus out of limbo.
-
-We are getting close to the way it is written in "The Book".
-
-I'm not going to delay a3 for this.  There is still plenty of time for comments or objections.</t>
+So the entire queuing apparatus would disappear.  One further simplification: we could eliminate all calls to xWantsFocus calls by adding a focus arg in c.redraw_now.  A value of None would trigger the logic that moves focus out of limbo.</t>
 <t tx="ekr.20051107105818"></t>
 <t tx="ekr.20051107112158">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3415021
@@ -13875,5 +14545,76 @@ in the past few weeks. turbogears already uses it.
 something to watch for the future.
 it even installs itself!
 e</t>
+<t tx="ekr.20051107122545"></t>
+<t tx="ekr.20051108045542"></t>
+<t tx="ekr.20051108045542.2">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3417836
+By: btheado
+
+(fixed pasteOutline) Outline--&gt;Paste Node menu pick: the pasted node doesn't appear until I
+collapse/expand the parent.
+
+(not a bug) While editing a headline, Home, End, Left and Right don't move the cursor within
+the headline (maybe that is intended?).
+</t>
+<t tx="ekr.20051108102650"></t>
+<t tx="ekr.20051108102650.1">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3418304
+By: rogererens
+
+I create this outline with nodes a,b, and c from scratch:
+a
+ alfa
+b
+ beta
+c
+ gamma
+
+(alfa, beta, and gamma is body text). I select node 'a'. Then I hit CTRL-F to
+open the find tab, replace the pattern to find by 'a' without the quotes, turn
+off whole word searching and hit F3 until the first 'a' in gamma is highlighted.
+Then pressing F2 results in highlighting the _first_ 'a' in alfa. Pressing F2
+when the second 'a' in gamma is highlighted results in highlighting the first
+'a' in gamma: OK. Pressing F2 when 'a' in beta is highlighted, results
+in highlighting the first 'a' in alfa as well.
+
+This happens in Leo 4.3 as well.
+
+Also, see what happens when the body text of all three nodes is replaced by
+a simple 'x' character and trying to search backward: impossible for me.
+
+Is this of anymore help?
+
+Roger
+
+</t>
+<t tx="ekr.20051109031136"></t>
+<t tx="ekr.20051109034342">@
+
+- leoFileCommands.open no longer redraws.
+- getLeoFile *does* redraw before reading @file nodes.
+  It must do that so the outline isn't blank while reading @file nodes.</t>
+<t tx="ekr.20051109034342.1">Traceback (most recent call last):
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 240, in doCommand
+    val = command()
+  File "c:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 1776, in pasteText
+    w.configure(width=f.tree.headWidth(s=s))
+  File "c:\prog\leoCVS\leo\src\leoTkinterTree.py", line 721, in headWidth
+    return max(self.minimum_headline_width,5 + len(s))
+TypeError: len() of unsized object</t>
+<t tx="ekr.20051109040029">@
+
+- begin/endUpdate did, in fact, suppress redraws.
+
+- Eliminated multiple redraws with special-case code.</t>
+<t tx="ekr.20051109090037"></t>
+<t tx="ekr.20051109094502"># This isn't so easy to initialize, so it's probably more work that is useful.
+n1 = c.startRedrawCount ; n2 = c.frame.tree.redrawCount
+if n2 &gt; n1 + 1:
+    g.trace('Warning: multiple redraws %d %d' % (n2,n1))
+    c.startRedrawCount = c.frame.tree.redrawCount # Suppress further warnings.</t>
+<t tx="ekr.20051109143331">It would be possible to add a focus argument to c.redraw_now.</t>
+<t tx="ekr.20051109144908"></t>
 </tnodes>
 </leo_file>

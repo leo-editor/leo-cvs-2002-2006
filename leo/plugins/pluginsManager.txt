@@ -20,7 +20,7 @@
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
 #__jEdit_colorizer__.py
-word_export.py
+#word_export.py
 #open_shell.py
 #at_view.py
 #fastGotoNode.py
@@ -44,7 +44,7 @@ word_export.py
 rst3.py
 # zodb.py
 # testRegisterCommand.py
-rClick.py
+#rClick.py
 #TabWindow.py
 plugin_manager.py
 

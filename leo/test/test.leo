@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7817" clone_windows="0"/>
-<globals body_outline_ratio="0.432172869148">
-	<global_window_position top="47" left="379" height="833" width="872"/>
+<globals body_outline_ratio="0.399759903962">
+	<global_window_position top="79" left="199" height="833" width="871"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -28,13 +28,13 @@
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
 </v>
-<v t="ekr.20051104081824" a="E"><vh>Tests</vh>
-<v t="ekr.20051017093427" a="E"><vh>Test of remove-blank-lines</vh></v>
+<v t="ekr.20051104081824" a="TV"><vh>Tests</vh>
+<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 <v t="ekr.20051103112555"><vh>Test of event_generate</vh></v>
 <v t="ekr.20051104052708"><vh>Test of executing a function by name</vh></v>
 <v t="ekr.20051107115327"><vh>Move to root</vh></v>
 <v t="ekr.20051109023647"><vh>New tabbed log</vh></v>
-<v t="ekr.20051108102719" a="TV"><vh>Test backward search</vh>
+<v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
 <v t="ekr.20051108102719.3"><vh>c</vh></v>
