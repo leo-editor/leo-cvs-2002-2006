@@ -26,43 +26,263 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-The text widget that gets the new tab name isn't alway visible.
+- Remove aliases for drawing methods.
+    - Make sure to clean leoPlugins.leo and scripts.leo.
 
-Design of a debugger.
+- Revise docs for c.begin/endUpdate.
 #@nonl
 #@+node:ekr.20051103092502:Update screen shots
 #@-node:ekr.20051103092502:Update screen shots
-#@+node:ekr.20051016162724:before a4
-(Later) Revise docs for c.begin/endUpdate.
-
-- Use focus-in event in minibuffer?
-
-- More clever way to analyze modules in autocomplete.
-    Use inspect module to import the text and get what is wanted.
-
-- Improve emacs-search commands
-
+#@+node:ekr.20051110155735:First
 - Improve handling of the mark.  The selection should be visible.
 
 - Improve kill/yank.
 
-- Improve spell tab:
-    - Try default fonts for spell buttons.
-    - Select the first entry.
-    - Support up/down arrows.
+- Add Cmds  menu.
 
-- Complete Editor menu.
-
-- Put About dialog (all? dialogs) in tab.
-
-- Create minibuffer commands to close tabs by name.
+- The text widget that gets tab names isn't alway visible.
 #@nonl
-#@+node:ekr.20051109144908:Cleanup: remove c.requestRedraw calls and related logic
-#@-node:ekr.20051109144908:Cleanup: remove c.requestRedraw calls and related logic
-#@+node:ekr.20051109143331:Eliminate calls to xWantsFocus?
-It would be possible to add a focus argument to c.redraw_now.
+#@+node:ekr.20051103091115:Cleanup: Improve find tab
+- Add tab shortcuts.
+
+- Improve docs.
+
+- Make find tab scrollable.
 #@nonl
-#@-node:ekr.20051109143331:Eliminate calls to xWantsFocus?
+#@+node:ekr.20051103091115.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3411067
+By: rogererens
+
+I forgot to mention that I seem to be unable to scroll in the Find Tab, so I
+need to resize the pane to press the Find button.
+
+Also, in the settings of Find/Change, I would choose for grouping the settings
+node_only, search_body, search_headline, wrap (and possibly the whole_word option
+also) together under search extent radio buttons. Although this organizational
+mode mentions radio buttons, check boxes are used for selection_only and
+suboutline_only, which I can enable both at the same time.
+It's also not (yet?) very clear to me how selection_only, suboutline_only, node_only
+(should) interact...
+
+Finally, the comment on the batch settings tells me it's really the "Show Context"
+option. However, the meaning of "Show Context" is not explained by the comment.
+
+Regards,
+Roger
+#@-node:ekr.20051103091115.1:Report
+#@-node:ekr.20051103091115:Cleanup: Improve find tab
+#@+node:ekr.20051017111216:Fix bugs in commands
+It is unlikely that any of the following commands work:
+
+    removeBlankLines,backToIndentation,indentRelative,
+    moveWordHelper,findNextMatch.
+
+- If possibly, eliminate update_idletasks and w.event_generate('<Key>') in the following:
+    removeBlankLines,backToIndentation,indentRelative,
+    moveWordHelper,findNextMatch.
+
+- baseEditCommandsClass helpers:
+    These would be similar to g.app.gui methods, but maybe simpler to use.
+    head,sel,tail = getSelectedLines()
+    hasSelection, setSelection, etc.
+#@nonl
+#@+node:ekr.20050920084036.141:removeBlankLines
+def removeBlankLines (self,event):
+    
+    w = event.widget
+    i = w.index('insert')
+    i1, i2 = i.split('.')
+    i1 = int(i1) ; dindex = []
+    if w.get('insert linestart','insert lineend').strip() == '':
+        while str(i1) + '.0' != '1.0':
+            i1 -= 1
+            g.trace('loop1',i1)
+            s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
+            if not s:
+                dindex.append('%s.0' % i1)
+                dindex.append('%s.0 lineend' % i1)
+            elif dindex:
+                w.delete('%s-1c' % dindex[-2],dindex[1])
+                w.event_generate('<Key>')
+                w.update_idletasks() # Needed to continue the loop.
+                break
+            else:
+                break
+    i = w.index('insert')
+    i1, i2 = i.split('.')
+    i1 = int(i1) ; dindex = []
+    while w.index('%s.0 lineend' % i1) != w.index('end'):
+        i1 += 1
+        g.trace('loop1',i1)
+        s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
+        if not s:
+            dindex.append('%s.0' % i1)
+            dindex.append('%s.0 lineend' % i1)
+        elif dindex:
+            w.delete('%s-1c' % dindex[0],dindex[-1])
+            w.event_generate('<Key>')
+            w.update_idletasks() # Needed to continue the loop.
+            break
+        else:
+            break
+#@nonl
+#@-node:ekr.20050920084036.141:removeBlankLines
+#@+node:ekr.20050920084036.75:backToIndentation
+def backToIndentation (self,event):
+
+    w = event.widget
+
+    i = w.index('insert linestart')
+    i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+    w.mark_set('insert',i2)
+    ### w.update_idletasks()
+#@nonl
+#@-node:ekr.20050920084036.75:backToIndentation
+#@+node:ekr.20050920084036.78:indentRelative
+def indentRelative (self,event):
+
+    k = self.k ; w = event.widget
+
+    i = w.index('insert')
+    l, c = i.split('.')
+    c2 = int(c)
+    l2 = int(l) -1
+    if l2 < 1: return
+    txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
+    if len(txt) <= len(w.get('insert','insert lineend')):
+        w.insert('insert','\t')
+    else:
+        reg = re.compile('(\s+)')
+        ntxt = reg.split(txt)
+        replace_word = re.compile('\w')
+        for z in ntxt:
+            if z.isspace():
+                w.insert('insert',z)
+                break
+            else:
+                z = replace_word.subn(' ',z)
+                w.insert('insert',z[0])
+                ###w.update_idletasks()
+#@nonl
+#@-node:ekr.20050920084036.78:indentRelative
+#@+node:ekr.20050920084036.149:back/forwardWord & helper
+def moveWordHelper (self,event,forward=True):
+
+    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+
+    c = self.c ; w = event.widget
+    
+    if forward:
+         ind = w.search('\w','insert',stopindex='end',regexp=True)
+         if ind: nind = '%s wordend' % ind
+         else:   nind = 'end'
+    else:
+         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
+         if ind: nind = '%s wordstart' % ind
+         else:   nind = '1.0'
+
+    w.mark_set('insert',nind)
+    w.see('insert')
+    c.frame.widgetWantsFocus(w)
+
+def backwardWord (self,event):
+    self.moveWordHelper(event,forward=False)
+
+def forwardWord (self,event):
+    self.moveWordHelper(event,forward=True)
+#@nonl
+#@-node:ekr.20050920084036.149:back/forwardWord & helper
+#@+node:ekr.20050920084036.107:indentRegion
+def indentRegion (self,event):
+    w = event.widget
+    mrk = 'sel'
+    trange = w.tag_ranges(mrk)
+    if len(trange) != 0:
+        ind = w.search('\w','%s linestart' % trange[0],stopindex='end',regexp=True)
+        if not ind: return
+        text = w.get('%s linestart' % ind,'%s lineend' % ind)
+        sstring = text.lstrip()
+        sstring = sstring [0]
+        ws = text.split(sstring)
+        if len(ws) > 1:
+            ws = ws [0]
+        else:
+            ws = ''
+        s, s1 = trange [0].split('.')
+        e, e1 = trange [ -1].split('.')
+        s = int(s)
+        s = s + 1
+        e = int(e) + 1
+        for z in xrange(s,e):
+            t2 = w.get('%s.0' % z,'%s.0 lineend' % z)
+            t2 = t2.lstrip()
+            t2 = ws + t2
+            w.delete('%s.0' % z,'%s.0 lineend' % z)
+            w.insert('%s.0' % z,t2)
+        ### w.event_generate('<Key>')
+        ### w.update_idletasks()
+    self.removeRKeys(w)
+#@nonl
+#@-node:ekr.20050920084036.107:indentRegion
+#@+node:ekr.20050920084036.219:findNextMatch
+def findNextMatch (self,event):
+    
+    '''Find the next match and select it.
+    Return True if a match was found.
+    Otherwise, call quitSearch and return False.'''
+
+    k = self.k ; w = event.widget
+    
+    w.tag_delete('qR')
+
+    if self.regexp:
+        << handle regexp >>
+    else:
+        << handle plain search >>
+#@nonl
+#@+node:ekr.20051005155611:<< handle regexp >>
+try:
+    regex = re.compile(self.qQ)
+except:
+    self.quitSearch(event,'Illegal regular expression')
+    return False
+
+txt = w.get('insert','end')
+match = regex.search(txt)
+
+if match:
+    start = match.start()
+    end = match.end()
+    length = end - start
+    w.mark_set('insert','insert +%sc' % start)
+    ### w.update_idletasks()
+    w.tag_add('qR','insert','insert +%sc' % length)
+    w.tag_config('qR',background='lightblue')
+    txt = w.get('insert','insert +%sc' % length)
+    return True
+else:
+    self.quitSearch(event)
+    return False
+#@nonl
+#@-node:ekr.20051005155611:<< handle regexp >>
+#@+node:ekr.20051005160923:<< handle plain search >>
+i = w.search(self.qQ,'insert',stopindex='end')
+if i:
+    w.mark_set('insert',i)
+    ###w.update_idletasks()
+    w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
+    w.tag_config('qR',background='lightblue')
+    return True
+else:
+    self.quitSearch(event)
+    return False
+#@nonl
+#@-node:ekr.20051005160923:<< handle plain search >>
+#@-node:ekr.20050920084036.219:findNextMatch
+#@-node:ekr.20051017111216:Fix bugs in commands
+#@-node:ekr.20051110155735:First
+#@+node:ekr.20051016162724:before a4
 #@+node:ekr.20051103094005:Fix bugs
 #@+node:ekr.20051103093034:Fix problems applying settings
 #@+node:ekr.20051103093034.1:Report
@@ -140,47 +360,59 @@ code just breaks.
 #@nonl
 #@-node:ekr.20051104152338.1:Report
 #@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
-#@-node:ekr.20051103094005:Fix bugs
-#@+node:ekr.20051104051733:Use focus-in binding?
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3412640
-By: btheado
+#@+node:ekr.20051014152256:Fix long-standing bug in import code
+Improve import code so it handles stufff like this from Ipyton/iplib
 
-Currently clicking on the minibuffer and typing text has no effect.  Kinda confusing
-until the Alt-x binding I discovered that Alt-x is the way to access the minibuffer
-command mode.
+### This should *not* terminate the function!
 
-It would be nice if the <FocusIn> binding on the minibuffer widget were equivilent
-to Alt-x.
+    self.LOGHEAD = Itpl(
+"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
+#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
+#log# opts = $self.rc.opts
+#log# args = $self.rc.args
+#log# It is safe to make manual edits below here.
+#log#-----------------------------------------------------------------------
+""")
+
+- Handle blanks better in imports:
+    - Add tab_width keyword arg to import command.
+    - Convert tabs to blanks if tab width < 0.
+- Ignore position of blank lines wrt sentinels.
+- Ignore (optionally?) underindented blank lines.
+- Use pyclbr to parse Python imports?
 #@nonl
-#@-node:ekr.20051104051733:Use focus-in binding?
-#@+node:ekr.20051103091115:Update docs for find tab
-#@+node:ekr.20051103091115.1:Report
+#@+node:ekr.20040930075711:Handle underindented lines
 @nocolor
-http://sourceforge.net/forum/message.php?msg_id=3411067
-By: rogererens
 
-I forgot to mention that I seem to be unable to scroll in the Find Tab, so I
-need to resize the pane to press the Find button.
+Leo can't represent some files using nodes!
 
-Also, in the settings of Find/Change, I would choose for grouping the settings
-node_only, search_body, search_headline, wrap (and possibly the whole_word option
-also) together under search extent radio buttons. Although this organizational
-mode mentions radio buttons, check boxes are used for selection_only and
-suboutline_only, which I can enable both at the same time.
-It's also not (yet?) very clear to me how selection_only, suboutline_only, node_only
-(should) interact...
+I call this the "underindented blank line" problem.
 
-Finally, the comment on the batch settings tells me it's really the "Show Context"
-option. However, the meaning of "Show Context" is not explained by the comment.
+Example:
 
-Regards,
-Roger
-#@-node:ekr.20051103091115.1:Report
-#@-node:ekr.20051103091115:Update docs for find tab
-#@+node:ekr.20051103100302:Make find tab scrollable
-#@-node:ekr.20051103100302:Make find tab scrollable
-#@+node:ekr.20051028061611.1:Unify all search commands
+@color
+
+class aClass:
+    def spam(): pass
+# comment line
+    def eggs(): pass
+    
+@nocolor
+
+Leo's import code can't handle this:
+    
+- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
+
+- Having the comment line stop the scanning of aClass is even worse.
+
+- This usually shows up with an unindented blank line instead of the comment line.
+#@nonl
+#@-node:ekr.20040930075711:Handle underindented lines
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20051014152256:Fix long-standing bug in import code
+#@-node:ekr.20051103094005:Fix bugs
+#@+node:ekr.20051028061611.1:** Unify all search commands
 #@+node:ekr.20051023094009:Search classes
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
 class findTab (leoFind.leoFind):
@@ -1085,8 +1317,6 @@ def reSearchHelper (self,event,pattern,forward):
 #@-node:ekr.20050920084036.267:non-incremental search...
 #@-node:ekr.20050920084036.257:class searchCommandsClass
 #@-node:ekr.20051023094009:Search classes
-#@-node:ekr.20051028061611.1:Unify all search commands
-#@+node:ekr.20051018104223:Improve minibuffer commands
 #@+node:ekr.20051012053017.4:Search improvements
 ** Important: search headline option.
     
@@ -1114,251 +1344,7 @@ set-change-script
 Apply incremental search commands to headlines.  This might be fast, but is it useful if nodes aren't visible?
 #@nonl
 #@-node:ekr.20051012053017.4:Search improvements
-#@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
-<Delete>     delete the character just before the cursor
-C-d   	     delete the next character after the cursor
-
-M-<Delete>   kill the word immediately before the cursor
-M-d	     kill the next word after the cursor
-
-C-k	     kill from the cursor position to end of line
-M-k	     kill to the end of the current sentence
-
-** (I changed this: I should change it back)
-Note that a single C-k kills the contents of the line, and a second
-C-k kills the line itself...
-
-C-k treats a numeric argument specially: it kills that many lines AND
-their contents.  This is not mere repetition.  C-u 2 C-k kills two
-lines and their newlines; typing C-k twice would not do that.
-
-The set-mark-command command sets the mark to the point.
-Bound to Alt-@, Ctrl--, Ctrl-space
-#@nonl
-#@-node:ekr.20051014122218:kill/yank from the xemacs tutorial
-#@+node:ekr.20051017111216:Commands to fix
-- Removed update_idletasks and event_generate from minibuffer commands...
-
-It is unlikely that any of the following commands work:
-
-    removeBlankLines,backToIndentation,indentRelative,
-    moveWordHelper,findNextMatch.
-
-- If possibly, eliminate update_idletasks and w.event_generate('<Key>') in the following:
-    removeBlankLines,backToIndentation,indentRelative,
-    moveWordHelper,findNextMatch.
-
-- baseEditCommandsClass helpers:
-    These would be similar to g.app.gui methods, but maybe simpler to use.
-    head,sel,tail = getSelectedLines()
-    hasSelection, setSelection, etc.
-#@nonl
-#@+node:ekr.20050920084036.141:removeBlankLines
-def removeBlankLines (self,event):
-    
-    w = event.widget
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    i1 = int(i1) ; dindex = []
-    if w.get('insert linestart','insert lineend').strip() == '':
-        while str(i1) + '.0' != '1.0':
-            i1 -= 1
-            g.trace('loop1',i1)
-            s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
-            if not s:
-                dindex.append('%s.0' % i1)
-                dindex.append('%s.0 lineend' % i1)
-            elif dindex:
-                w.delete('%s-1c' % dindex[-2],dindex[1])
-                w.event_generate('<Key>')
-                w.update_idletasks() # Needed to continue the loop.
-                break
-            else:
-                break
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    i1 = int(i1) ; dindex = []
-    while w.index('%s.0 lineend' % i1) != w.index('end'):
-        i1 += 1
-        g.trace('loop1',i1)
-        s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
-        if not s:
-            dindex.append('%s.0' % i1)
-            dindex.append('%s.0 lineend' % i1)
-        elif dindex:
-            w.delete('%s-1c' % dindex[0],dindex[-1])
-            w.event_generate('<Key>')
-            w.update_idletasks() # Needed to continue the loop.
-            break
-        else:
-            break
-#@nonl
-#@-node:ekr.20050920084036.141:removeBlankLines
-#@+node:ekr.20050920084036.75:backToIndentation
-def backToIndentation (self,event):
-
-    w = event.widget
-
-    i = w.index('insert linestart')
-    i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-    w.mark_set('insert',i2)
-    ### w.update_idletasks()
-#@nonl
-#@-node:ekr.20050920084036.75:backToIndentation
-#@+node:ekr.20050920084036.78:indentRelative
-def indentRelative (self,event):
-
-    k = self.k ; w = event.widget
-
-    i = w.index('insert')
-    l, c = i.split('.')
-    c2 = int(c)
-    l2 = int(l) -1
-    if l2 < 1: return
-    txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
-    if len(txt) <= len(w.get('insert','insert lineend')):
-        w.insert('insert','\t')
-    else:
-        reg = re.compile('(\s+)')
-        ntxt = reg.split(txt)
-        replace_word = re.compile('\w')
-        for z in ntxt:
-            if z.isspace():
-                w.insert('insert',z)
-                break
-            else:
-                z = replace_word.subn(' ',z)
-                w.insert('insert',z[0])
-                ###w.update_idletasks()
-#@nonl
-#@-node:ekr.20050920084036.78:indentRelative
-#@+node:ekr.20050920084036.149:back/forwardWord & helper
-def moveWordHelper (self,event,forward=True):
-
-    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
-
-    c = self.c ; w = event.widget
-    
-    if forward:
-         ind = w.search('\w','insert',stopindex='end',regexp=True)
-         if ind: nind = '%s wordend' % ind
-         else:   nind = 'end'
-    else:
-         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
-         if ind: nind = '%s wordstart' % ind
-         else:   nind = '1.0'
-
-    w.mark_set('insert',nind)
-    w.see('insert')
-    c.frame.widgetWantsFocus(w)
-
-def backwardWord (self,event):
-    self.moveWordHelper(event,forward=False)
-
-def forwardWord (self,event):
-    self.moveWordHelper(event,forward=True)
-#@nonl
-#@-node:ekr.20050920084036.149:back/forwardWord & helper
-#@+node:ekr.20050920084036.107:indentRegion
-def indentRegion (self,event):
-    w = event.widget
-    mrk = 'sel'
-    trange = w.tag_ranges(mrk)
-    if len(trange) != 0:
-        ind = w.search('\w','%s linestart' % trange[0],stopindex='end',regexp=True)
-        if not ind: return
-        text = w.get('%s linestart' % ind,'%s lineend' % ind)
-        sstring = text.lstrip()
-        sstring = sstring [0]
-        ws = text.split(sstring)
-        if len(ws) > 1:
-            ws = ws [0]
-        else:
-            ws = ''
-        s, s1 = trange [0].split('.')
-        e, e1 = trange [ -1].split('.')
-        s = int(s)
-        s = s + 1
-        e = int(e) + 1
-        for z in xrange(s,e):
-            t2 = w.get('%s.0' % z,'%s.0 lineend' % z)
-            t2 = t2.lstrip()
-            t2 = ws + t2
-            w.delete('%s.0' % z,'%s.0 lineend' % z)
-            w.insert('%s.0' % z,t2)
-        ### w.event_generate('<Key>')
-        ### w.update_idletasks()
-    self.removeRKeys(w)
-#@nonl
-#@-node:ekr.20050920084036.107:indentRegion
-#@+node:ekr.20050920084036.219:findNextMatch
-def findNextMatch (self,event):
-    
-    '''Find the next match and select it.
-    Return True if a match was found.
-    Otherwise, call quitSearch and return False.'''
-
-    k = self.k ; w = event.widget
-    
-    w.tag_delete('qR')
-
-    if self.regexp:
-        << handle regexp >>
-    else:
-        << handle plain search >>
-#@nonl
-#@+node:ekr.20051005155611:<< handle regexp >>
-try:
-    regex = re.compile(self.qQ)
-except:
-    self.quitSearch(event,'Illegal regular expression')
-    return False
-
-txt = w.get('insert','end')
-match = regex.search(txt)
-
-if match:
-    start = match.start()
-    end = match.end()
-    length = end - start
-    w.mark_set('insert','insert +%sc' % start)
-    ### w.update_idletasks()
-    w.tag_add('qR','insert','insert +%sc' % length)
-    w.tag_config('qR',background='lightblue')
-    txt = w.get('insert','insert +%sc' % length)
-    return True
-else:
-    self.quitSearch(event)
-    return False
-#@nonl
-#@-node:ekr.20051005155611:<< handle regexp >>
-#@+node:ekr.20051005160923:<< handle plain search >>
-i = w.search(self.qQ,'insert',stopindex='end')
-if i:
-    w.mark_set('insert',i)
-    ###w.update_idletasks()
-    w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
-    w.tag_config('qR',background='lightblue')
-    return True
-else:
-    self.quitSearch(event)
-    return False
-#@nonl
-#@-node:ekr.20051005160923:<< handle plain search >>
-#@-node:ekr.20050920084036.219:findNextMatch
-#@-node:ekr.20051017111216:Commands to fix
-#@-node:ekr.20051018104223:Improve minibuffer commands
-#@+node:ekr.20051012054228:Vim mode (k.vimMode)
-- k.vimMode controls whether full-command keeps mini-buffer open after a command complete.
-
-- k.fullCommand sets k.sets k.vimMode = c.config.getBool('vim-mode') on entry.
-
-- Commands (like vim-insert-mode) clear k.vimMode to return to the body pane.
-
-- control-g does not alter k.vimMode.
-
-- Shift-control-g clears k.vimMode.
-#@-node:ekr.20051012054228:Vim mode (k.vimMode)
+#@-node:ekr.20051028061611.1:** Unify all search commands
 #@+node:ekr.20050928144501:Expand commands to handle Leo environment
 * Traditional Emacs commands must be generalized to handle the more complex
 envirnoment Leo offers. For example, search commands must be told whether to
@@ -1398,6 +1384,17 @@ indicies. It's probably time to do this.
 
 - Make sure there is some way of executing script find/changes.
 #@nonl
+#@+node:ekr.20051012054228:Vim mode (k.vimMode)
+- k.vimMode controls whether full-command keeps mini-buffer open after a command complete.
+
+- k.fullCommand sets k.sets k.vimMode = c.config.getBool('vim-mode') on entry.
+
+- Commands (like vim-insert-mode) clear k.vimMode to return to the body pane.
+
+- control-g does not alter k.vimMode.
+
+- Shift-control-g clears k.vimMode.
+#@-node:ekr.20051012054228:Vim mode (k.vimMode)
 #@+node:ekr.20051028061546:Improve spell tab
 @nocolor
 
@@ -3031,57 +3028,6 @@ def onOpenWindow ():
 #@-node:ekr.20051025144611.4:autocompleter.py
 #@-node:ekr.20051025144611:Autocompleter (Do not delete)
 #@-node:ekr.20051028061802:Use tab for autocompleter
-#@+node:ekr.20051014152256:Fix long-standing bug in import code
-Improve import code so it handles stufff like this from Ipyton/iplib
-
-### This should *not* terminate the function!
-
-    self.LOGHEAD = Itpl(
-"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
-#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
-#log# opts = $self.rc.opts
-#log# args = $self.rc.args
-#log# It is safe to make manual edits below here.
-#log#-----------------------------------------------------------------------
-""")
-
-- Handle blanks better in imports:
-    - Add tab_width keyword arg to import command.
-    - Convert tabs to blanks if tab width < 0.
-- Ignore position of blank lines wrt sentinels.
-- Ignore (optionally?) underindented blank lines.
-- Use pyclbr to parse Python imports?
-#@nonl
-#@+node:ekr.20040930075711:Handle underindented lines
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "underindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
-#@nonl
-#@-node:ekr.20040930075711:Handle underindented lines
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20051014152256:Fix long-standing bug in import code
 #@+node:ekr.20051014104337.1:Crash in undo
 exception executing command
 Traceback (most recent call last):
@@ -5481,8 +5427,17 @@ I like this scheme.  It is simple, powerful, general and easy to use.  It will e
 #@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
 #@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
 #@-node:ekr.20051014161015:Full input modes
+#@+node:ekr.20051110155235:Autocompleter in tab
+- More clever way to analyze modules in autocomplete.
+    Use inspect module to import the text and get what is wanted.
+#@nonl
+#@-node:ekr.20051110155235:Autocompleter in tab
 #@-node:ekr.20050925105522:Big
 #@+node:ekr.20051012062458.1:Minor
+- Put About dialog (all? dialogs) in tab.
+
+- Create minibuffer commands to close tabs by name.
+
 - the cycle-focus command should cycle through all log tabs.
 
 - Something cool that can be bound to alt-tab.
@@ -5492,7 +5447,14 @@ I like this scheme.  It is simple, powerful, general and easy to use.  It will e
 -  Allow multiple selectors:  ! all,find =
 
 - Specify & for most menu items.
-
+#@nonl
+#@+node:ekr.20051110155735.1:Improve Spell tab
+- Improve spell tab:
+    - Try default fonts for spell buttons.
+    - Select the first entry.
+    - Support up/down arrows.
+#@nonl
+#@-node:ekr.20051110155735.1:Improve Spell tab
 #@+node:ekr.20050713105353:Add configuration setting to set menu fonts
 #@+node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
 @nocolor
@@ -5556,121 +5518,43 @@ of entries in @shortcuts nodes will be expanded to allow entries like this:
     
 - The colerer is calling c.config too much?
 #@nonl
+#@+node:ekr.20051104051733:Use focus-in binding?
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3412640
+By: btheado
+
+Currently clicking on the minibuffer and typing text has no effect.  Kinda confusing
+until the Alt-x binding I discovered that Alt-x is the way to access the minibuffer
+command mode.
+
+It would be nice if the <FocusIn> binding on the minibuffer widget were equivilent
+to Alt-x.
+#@nonl
+#@-node:ekr.20051104051733:Use focus-in binding?
 #@-node:ekr.20051023192433:Maybe...
-#@+node:ekr.20051015123432:(Methods with pychecker problems)
-# None of the following warnings are correct.
-#@nonl
-#@+node:ekr.20051015113252:Pychecker report
-# None of the following are correct.
-
-leoGlobals.py:1417: Setting aList to itself has no effect
-
-leoGlobals.py:1433: Setting aList to itself has no effect
-
-leoKeys.py:803: Redefining attribute (keyCallback) original line (792)
-
-leoKeys.py:1315: No module attribute (initAllEditCommanders) found
-#@nonl
-#@-node:ekr.20051015113252:Pychecker report
-#@+node:ekr.20041126060136:print_list & listToString
-def print_list(aList,tag=None,sort=False,indent=''):
-    
-    if not aList:
-        if tag: print '%s...{}' % tag
-        else:   print '{}'
-        return
-    if sort:
-        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
-        aList.sort()
-    if tag: print '%s...[' % tag
-    else:   print '['
-    for e in aList:
-        print '%s%s' % (indent,repr(e).strip())
-    print ']'
-
-printList = print_list
-
-def listToString(aList,tag=None,sort=False,indent=''):
-
-    if not aList:
-        if tag: return '%s...{}' % tag
-        else:   return '{}'
-    if sort:
-        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
-        aList.sort()
-    lines = ["%s%s" % (indent,repr(e).strip()) for e in aList]
-    s = '\n'.join(lines)
-    if tag:
-        return '[%s...\n%s\n]' % (tag,s)
-    else:
-        return '[%s]' % s
-#@nonl
-#@-node:ekr.20041126060136:print_list & listToString
-#@+node:ekr.20051006125633.1:bindShortcut
-def bindShortcut (self,pane,shortcut,command,commandName):
-    
-    '''Bind one shortcut from a menu table.'''
-    
-    k = self ; shortcut = str(shortcut)
-
-    if command.__name__ == 'leoCallback':
-        # Get the function wrapped by *this* leoCallback function.
-        func = k.leoCallbackDict.get(command)
-        commandName = k.inverseCommandsDict.get(func.__name__)
-        
-        # No need for a second layer of callback.
-        def keyCallback (event,func=command,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-    else:
-        def menuFuncCallback (event,command=command):
-            return command(event)
-
-        def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-        
-    return k.bindKey(pane,shortcut,keyCallback,commandName)
-#@nonl
-#@-node:ekr.20051006125633.1:bindShortcut
-#@+node:ekr.20051001050607:endCommand
-def endCommand (self,event,commandName):
-
-    '''Make sure Leo updates the widget following a command.
-    
-    Never changes the minibuffer label: individual commands must do that.
-    '''
-
-    k = self ; c = k.c
-    if g.app.quitting: return
-    
-    # The command may have closed the window, so this may fail.
-    try:
-        p = c.currentPosition()
-    except AttributeError:
-        return
-
-    # Set the best possible undoType: prefer explicit commandName to k.commandName.
-    commandName = commandName or k.commandName or ''
-    k.commandName = k.commandName or commandName or ''
-    if commandName:
-        bodyCtrl = c.frame.body.bodyCtrl
-        if not k.inState():
-            __pychecker__ = '--no-classattr --no-objattrs'
-                # initAllEditCommanders *does* exist.
-            k.commandName = None
-            leoEditCommands.initAllEditCommanders(c)
-            try:
-                bodyCtrl.tag_delete('color')
-                bodyCtrl.tag_delete('color1')
-            except Exception:
-                pass
-        bodyCtrl.update_idletasks()
-        c.frame.body.onBodyChanged(p,undoType='Typing')
-        
-    c.updateScreen()
-#@nonl
-#@-node:ekr.20051001050607:endCommand
-#@-node:ekr.20051015123432:(Methods with pychecker problems)
 #@+node:ekr.20051028165515:Reference
+#@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
+<Delete>     delete the character just before the cursor
+C-d   	     delete the next character after the cursor
+
+M-<Delete>   kill the word immediately before the cursor
+M-d	     kill the next word after the cursor
+
+C-k	     kill from the cursor position to end of line
+M-k	     kill to the end of the current sentence
+
+** (I changed this: I should change it back)
+Note that a single C-k kills the contents of the line, and a second
+C-k kills the line itself...
+
+C-k treats a numeric argument specially: it kills that many lines AND
+their contents.  This is not mere repetition.  C-u 2 C-k kills two
+lines and their newlines; typing C-k twice would not do that.
+
+The set-mark-command command sets the mark to the point.
+Bound to Alt-@, Ctrl--, Ctrl-space
+#@nonl
+#@-node:ekr.20051014122218:kill/yank from the xemacs tutorial
 #@+node:ekr.20050930083044:@url 'http://www.sas.upenn.edu/computing/help/Unix/emacs.html'   (Basic Emacs commands)
 @killcolor
 
@@ -16154,7 +16038,7 @@ def OnPasteFromMenu (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
         f.body.onBodyChanged(p,undoType='Typing')
-        c.updateScreen()
+        c.redraw_now()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -16166,6 +16050,7 @@ def OnPasteFromMenu (self):
         w.configure(width=f.tree.headWidth(s=s))
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
+        c.redraw_now()
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -19464,7 +19349,7 @@ def OnPasteFromMenu (self):
     if isBody:
         w.event_generate(g.virtual_event_name("Paste"))
         f.body.onBodyChanged(p,undoType='Typing')
-        c.updateScreen()
+        c.redraw_now()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -19476,6 +19361,7 @@ def OnPasteFromMenu (self):
         w.configure(width=f.tree.headWidth(s=s))
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
+        c.redraw_now()
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -20373,7 +20259,7 @@ def readOutlineOnly (self,theFile,fileName):
         # This should be done after the pane size has been set.
         if self.topPosition:
             c.frame.tree.setTopPosition(self.topPosition)
-            c.redraw()
+            c.redraw_now()
     # delete the file buffer
     self.fileBuffer = ""
     return ok

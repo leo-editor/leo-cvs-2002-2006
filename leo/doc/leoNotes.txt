@@ -3420,6 +3420,23 @@ def endUpdate (self,flag=True):
 #@nonl
 #@-node:ekr.20031218072017.3715:tree.endUpdate
 #@-node:ekr.20051109105635:frame.begin/endUpdate
+#@+node:ekr.20040803072955.55:tree.redraw
+def redraw (self,event=None):
+    
+    '''Request a screen redraw when c.updateScreen is executed.'''
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    c = self.c
+    c.requestRedraw()
+#@nonl
+#@-node:ekr.20040803072955.55:tree.redraw
+#@+node:ekr.20051110150707:c.requestRedraw
+def requestRedraw (self):
+    c = self
+    c.frame.requestRedrawFlag = True
+#@nonl
+#@-node:ekr.20051110150707:c.requestRedraw
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

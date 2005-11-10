@@ -1683,13 +1683,13 @@ if 0: # Set to 1 for lint-like testing.
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@+node:ekr.20051029070945:Pychecker report
-# Bugs fixed
-    
-leoEditCommands.py:5912: No global (local_dictionary) found [changed to fileName].
-leoKeys.py:1369: Parameter (forceFocus) not used [added call to bodyWantsFocus as end of k.endCommand.]
+# None of the following are correct.
 
-# Can't suppress
-leoEditCommands.py:5996: Overridden method (change) doesn't match signature in class (leoFind.leoFind)
+leoGlobals.py:1417: Setting aList to itself has no effect
+leoGlobals.py:1433: Setting aList to itself has no effect
+
+leoKeys.py:803:  Redefining attribute (keyCallback) original line (792)
+leoKeys.py:1315: No module attribute (initAllEditCommanders) found
 #@nonl
 #@-node:ekr.20051029070945:Pychecker report
 #@+node:ekr.20051010062551.1:(key dicts)
@@ -2410,7 +2410,8 @@ d = {
 #@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
 #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
 #@-node:ekr.20051009120608:(ctors & finishCreate)
-#@+node:ekr.20051103114520.2:(New World Order)
+#@+node:ekr.20051110101524:4.4a4 projects
+#@+node:ekr.20051103114520.2:(The New World Order)
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
 
@@ -7827,8 +7828,8 @@ def set_focus(self,c,w):
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
 #@-node:ekr.20051105073439.1:Traces
-#@-node:ekr.20051103114520.2:(New World Order)
-#@+node:ekr.20051109040029:(Moved to Newer World Order)
+#@-node:ekr.20051103114520.2:(The New World Order)
+#@+node:ekr.20051109040029:(The Newer World Order)
 @
 
 - begin/endUpdate did, in fact, suppress redraws.
@@ -8954,8 +8955,1874 @@ def createFirstTreeNode (self):
 #@nonl
 #@-node:ekr.20051009045404:createFirstTreeNode
 #@-node:ekr.20051109090037:Special cases
-#@-node:ekr.20051109040029:(Moved to Newer World Order)
-#@+node:ekr.20051110101524:4.4a4 projects
+#@-node:ekr.20051109040029:(The Newer World Order)
+#@+node:ekr.20051110104922:(Completed transition to Newer World Order)
+#@+node:ekr.20051110145620:What I did
+@nocolor
+
+- Changed c.redraw to c.redraw_now.
+- Changed c.force_redraw to c.redraw_now
+- Changed c.redrawAfterException to c.redraw_now.
+- Remove requestRedrawFlag
+- Changed c.updateScreen to c.redraw_now or removed the call entirely.
+
+To do
+
+- remove draw_icon?
+- remove Redraw = repaint = Repaint
+#@nonl
+#@-node:ekr.20051110145620:What I did
+#@+node:ekr.20051110104922.1:Notes
+@nocolor
+
+This will complete the transition to the Newer World Order.
+
+There are very few calls to c.reqestRedraw. Eliminate them, make tests, and the rest is just removing the no-longer-used code.
+
+**Important**: tree.redraw also calls requestRedraw, so we must investigate those calls too.
+
+**Note**: c.redraw = c.Redraw = c.repaint = c.Repaint are all presently equivalent to c.requestRedraw.
+#@nonl
+#@-node:ekr.20051110104922.1:Notes
+#@+node:ekr.20051106103835:Drawing
+#@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
+def beginUpdate(self):
+    
+    c = self
+    
+def endUpdate(self, flag=True):
+    
+    '''Redraw the screen if flag is True.'''
+
+    c = self
+    if flag:
+        c.redraw_now()
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts
+#@nonl
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
+#@+node:ekr.20031218072017.2951:c.bringToFront
+def bringToFront(self):
+
+    self.frame.deiconify()
+
+BringToFront = bringToFront # Compatibility with old scripts
+#@nonl
+#@-node:ekr.20031218072017.2951:c.bringToFront
+#@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
+def recolor(self):
+
+    c = self
+    c.frame.body.recolor(c.currentPosition())
+    
+def requestRecolor (self):
+    
+    c = self
+    c.frame.requestRecolorFlag = True
+#@nonl
+#@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
+#@+node:ekr.20031218072017.2954:c.redraw_now
+def redraw_now (self):
+    
+    c = self
+    
+    if g.app.quitting or not hasattr(c.frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    c.frame.tree.redraw_now()
+    c.frame.top.update_idletasks()
+    c.setFocusHelper()
+    
+    if c.frame.requestRecolorFlag:
+        c.frame.requestRecolorFlag = False
+        c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now
+#@nonl
+#@-node:ekr.20031218072017.2954:c.redraw_now
+#@+node:ekr.20051103114520.1:c.setFocusHelper
+def setFocusHelper (self):
+    
+    c = self ; frame = c.frame
+    
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+        
+    # g.trace(g.callers(7))
+    
+    if frame.wantedWidget:
+        w = frame.wantedWidget
+        # g.trace(hasattr(w,'_name') and w._name or '')
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        frame.wantedWidget = None
+    else:
+        # Force the widget to some standard place.
+        w = g.app.gui.get_focus(frame)
+        if not w: return
+        # Allow clicks in enclosing window frame or in dialogs.
+        name = hasattr(w,'_name') and w._name or ''
+        if (
+            name and name[0] in string.letters # A known Leo frame.
+            or w == frame.top # The top of the Leo window
+            or g.app.dialogs > 0 # A dialog.
+            or isinstance(w,Tk.Text)
+            or isinstance(w,Tk.Entry)
+        ):
+            # g.trace('ok',hasattr(w,'_name') and w._name or '')
+            # g.app.gui.set_focus(c,w)
+            return
+        # Not a name created by Leo.
+        g.trace('setting default focus',name)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
+#@nonl
+#@-node:ekr.20051103114520.1:c.setFocusHelper
+#@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
+#@+node:ekr.20051001050607:endCommand
+def endCommand (self,event,commandName):
+
+    '''Make sure Leo updates the widget following a command.
+    
+    Never changes the minibuffer label: individual commands must do that.
+    '''
+
+    k = self ; c = k.c
+    if g.app.quitting: return
+    
+    # The command may have closed the window, so this may fail.
+    try:
+        p = c.currentPosition()
+    except AttributeError:
+        return
+
+    # Set the best possible undoType: prefer explicit commandName to k.commandName.
+    commandName = commandName or k.commandName or ''
+    k.commandName = k.commandName or commandName or ''
+    if commandName:
+        bodyCtrl = c.frame.body.bodyCtrl
+        if not k.inState():
+            __pychecker__ = '--no-classattr --no-objattrs'
+                # initAllEditCommanders *does* exist.
+            k.commandName = None
+            leoEditCommands.initAllEditCommanders(c)
+            try:
+                bodyCtrl.tag_delete('color')
+                bodyCtrl.tag_delete('color1')
+            except Exception:
+                pass
+        bodyCtrl.update_idletasks()
+        c.frame.body.onBodyChanged(p,undoType='Typing')
+#@nonl
+#@-node:ekr.20051001050607:endCommand
+#@+node:ekr.20040803072955.35:Drawing... (tkTree)
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+def redraw_now (self,scroll=True):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c
+    
+    # An important trace.
+    # g.trace(self.redrawCount,g.callers(9))
+        
+    # Do the actual redraw.
+    self.redrawCount += 1
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@+node:ekr.20040803072955.61:idle_second_redraw
+def idle_second_redraw (self):
+    
+    c = self.c
+        
+    # Erase and redraw the entire tree the SECOND time.
+    # This ensures that all visible nodes are allocated.
+    c.setTopVnode(None)
+    args = self.canvas.yview()
+    self.setVisibleArea(args)
+    
+    if 0:
+        self.deleteBindings()
+        self.canvas.delete("all")
+
+    self.drawTopTree()
+    
+    if self.trace:
+        print "idle_second_redraw allocated:",self.redrawCount
+#@nonl
+#@-node:ekr.20040803072955.61:idle_second_redraw
+#@+node:ekr.20051105073850:drawX...
+#@+node:ekr.20040803072955.36:drawBox
+def drawBox (self,p,x,y):
+
+    tree = self ; c = self.c
+    y += 7 # draw the box at x, y+7
+    
+    theId = g.doHook("draw-outline-box",tree=tree,c=c,p=p,v=p,x=x,y=y)
+        
+    if theId is None:
+        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+        image = self.getIconImage(iconname)
+        theId = self.newBox(p,x,y+self.lineyoffset,image)
+        return theId
+    else:
+        return theId
+#@nonl
+#@-node:ekr.20040803072955.36:drawBox
+#@+node:ekr.20040803072955.37:drawClickBox
+def drawClickBox (self,p,y):
+
+    h = self.line_height
+    
+    # Define a slighly larger rect to catch clicks.
+    if self.expanded_click_area:
+        self.newClickBox(p,0,y,1000,y+h-2)
+        
+        if 0: # A major change to the user interface.
+            << change the appearance of headlines >>
+#@nonl
+#@+node:ekr.20040803072955.38:<< change the appearance of headlines >>
+
+# Define a slighly smaller rect to colorize.
+color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+
+# Color the click box or the headline
+def enterRect(event,id=color_rect,p=p,t=self.lastText):
+    if 1: # Color or underline the headline
+        t2 = self.lastColoredText
+        if t2: # decolor the old headline.
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # decolor
+                t2.configure(background="white")
+        if t and p != self.editPosition():
+            if 1: # underline
+                t.tag_add('underline','1.0','end')
+                t.tag_configure('underline',underline=True)
+            else: # color
+                t.configure(background="LightSteelBlue1")
+            self.lastColoredText = t
+        else: self.lastColoredText = None
+    else: # Color the click box.
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+
+bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040803072955.38:<< change the appearance of headlines >>
+#@-node:ekr.20040803072955.37:drawClickBox
+#@+node:ekr.20040803072955.39:drawIcon
+def drawIcon(self,p,x=None,y=None):
+    
+    """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
+
+    c = self.c
+    << compute x,y and iconVal >>
+
+    if not g.doHook("draw-outline-icon",tree=self,c=c,p=p,v=p,x=x,y=y):
+
+        # Get the image.
+        imagename = "box%02d.GIF" % val
+        image = self.getIconImage(imagename)
+        self.newIcon(p,x,y+self.lineyoffset,image)
+        
+    return 0,self.icon_width # dummy icon height,width
+#@nonl
+#@+node:ekr.20040803072955.40:<< compute x,y and iconVal >>
+v = p.v
+
+if x is None and y is None:
+    try:
+        x,y = v.iconx, v.icony
+    except:
+        # Inject the ivars.
+        x,y = v.iconx, v.icony = 0,0
+else:
+    # Inject the ivars.
+    v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:ekr.20040803072955.40:<< compute x,y and iconVal >>
+#@-node:ekr.20040803072955.39:drawIcon
+#@+node:ekr.20040803072955.41:drawLine
+def drawLine (self,p,x1,y1,x2,y2):
+    
+    theId = self.newLine(p,x1,y1,x2,y2)
+    
+    return theId
+#@-node:ekr.20040803072955.41:drawLine
+#@+node:ekr.20040803072955.42:drawNode & force_draw_node (good trace)
+def drawNode(self,p,x,y):
+    
+    c = self.c
+    
+    data = g.doHook("draw-outline-node",tree=self,c=c,p=p,v=p,x=x,y=y)
+    if data is not None: return data
+    
+    if self.trace and self.verbose:
+        print # Helps format traces
+
+    if 1:
+        self.lineyoffset = 0
+    else:
+        if hasattr(p.v.t,"unknownAttributes"):
+            self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
+        else:
+            self.lineyoffset = 0
+    
+    # Draw the horizontal line.
+    self.drawLine(p,
+        x,y+7+self.lineyoffset,
+        x+self.box_width,y+7+self.lineyoffset)
+    
+    if self.inVisibleArea(y):
+        return self.force_draw_node(p,x,y)
+    else:
+        return self.line_height,0
+#@nonl
+#@+node:ekr.20040803072955.43:force_draw_node
+def force_draw_node(self,p,x,y):
+
+    h = 0 # The total height of the line.
+    indent = 0 # The amount to indent this line.
+    
+    h2,w2 = self.drawUserIcons(p,"beforeBox",x,y)
+    h = max(h,h2) ; x += w2 ; indent += w2
+
+    if p.hasChildren():
+        self.drawBox(p,x,y)
+
+    indent += self.box_width
+    x += self.box_width # even if box isn't drawn.
+
+    h2,w2 = self.drawUserIcons(p,"beforeIcon",x,y)
+    h = max(h,h2) ; x += w2 ; indent += w2
+
+    h2,w2 = self.drawIcon(p,x,y)
+    h = max(h,h2) ; x += w2 ; indent += w2/2
+    
+    # Nothing after here affects indentation.
+    h2,w2 = self.drawUserIcons(p,"beforeHeadline",x,y)
+    h = max(h,h2) ; x += w2
+
+    h2 = self.drawText(p,x,y)
+    h = max(h,h2)
+    x += self.widthInPixels(p.headString())
+
+    h2,w2 = self.drawUserIcons(p,"afterHeadline",x,y)
+    h = max(h,h2)
+    
+    self.drawClickBox(p,y)
+
+    return h,indent
+#@nonl
+#@-node:ekr.20040803072955.43:force_draw_node
+#@-node:ekr.20040803072955.42:drawNode & force_draw_node (good trace)
+#@+node:ekr.20040803072955.44:drawText
+def drawText(self,p,x,y):
+    
+    """draw text for position p at nominal coordinates x,y."""
+    
+    assert(p)
+
+    c = self.c
+    x += self.text_indent
+    
+    data = g.doHook("draw-outline-text-box",tree=self,c=c,p=p,v=p,x=x,y=y)
+    if data is not None: return data
+    
+    self.newText(p,x,y+self.lineyoffset)
+
+    if 0: # old, experimental code.
+        << highlight text widget on enter events >>
+   
+    self.configureTextState(p)
+
+    return self.line_height
+#@nonl
+#@+node:ekr.20040803072955.45:<< highlight text widget on enter events >>
+# t is the widget returned by self.newText.
+
+canvas = self.canvas
+h = self.line_height
+
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 0: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040803072955.45:<< highlight text widget on enter events >>
+#@-node:ekr.20040803072955.44:drawText
+#@+node:ekr.20040803072955.46:drawUserIcons
+def drawUserIcons(self,p,where,x,y):
+    
+    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+    
+    h,w = 0,0 ; t = p.v.t
+    
+    if not hasattr(t,"unknownAttributes"):
+        return h,w
+    
+    iconsList = t.unknownAttributes.get("icons")
+    if not iconsList:
+        return h,w
+    
+    try:
+        for theDict in iconsList:
+            h2,w2 = self.drawUserIcon(p,where,x,y,w,theDict)
+            h = max(h,h2) ; w += w2
+    except:
+        g.es_exception()
+        
+    # g.trace(where,h,w)
+
+    return h,w
+#@nonl
+#@-node:ekr.20040803072955.46:drawUserIcons
+#@+node:ekr.20040803072955.47:drawUserIcon
+def drawUserIcon (self,p,where,x,y,w2,theDict):
+    
+    h,w = 0,0
+
+    if where != theDict.get("where","beforeHeadline"):
+        return h,w
+
+    # g.trace(where,x,y,theDict)
+    
+    << set offsets and pads >>
+    theType = theDict.get("type")
+    if theType == "icon":
+        if 0: # not ready yet.
+            s = theDict.get("icon")
+            << draw the icon in string s >>
+    elif theType == "file":
+        theFile = theDict.get("file")
+        << draw the icon at file >>
+    elif theType == "url":
+        ## url = theDict.get("url")
+        << draw the icon at url >>
+        
+    # Allow user to specify height, width explicitly.
+    h = theDict.get("height",h)
+    w = theDict.get("width",w)
+
+    return h,w
+#@nonl
+#@+node:ekr.20040803072955.48:<< set offsets and pads >>
+xoffset = theDict.get("xoffset")
+try:    xoffset = int(xoffset)
+except: xoffset = 0
+
+yoffset = theDict.get("yoffset")
+try:    yoffset = int(yoffset)
+except: yoffset = 0
+
+xpad = theDict.get("xpad")
+try:    xpad = int(xpad)
+except: xpad = 0
+
+ypad = theDict.get("ypad")
+try:    ypad = int(ypad)
+except: ypad = 0
+#@nonl
+#@-node:ekr.20040803072955.48:<< set offsets and pads >>
+#@+node:ekr.20040803072955.49:<< draw the icon in string s >>
+pass
+#@nonl
+#@-node:ekr.20040803072955.49:<< draw the icon in string s >>
+#@+node:ekr.20040803072955.50:<< draw the icon at file >>
+try:
+    image = self.iconimages[theFile]
+    # Get the image from the cache if possible.
+except KeyError:
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",theFile)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
+        self.iconimages[fullname] = image
+    except:
+        #g.es("Exception loading: " + fullname)
+        #g.es_exception()
+        image = None
+        
+if image:
+    theId = self.canvas.create_image(
+        x+xoffset+w2,y+yoffset,
+        anchor="nw",image=image,tag="userIcon")
+    self.ids[theId] = p
+
+    assert(theId not in self.visibleIcons)
+    self.visibleUserIcons.append(theId)
+
+    h = image.height() + yoffset + ypad
+    w = image.width()  + xoffset + xpad
+
+#@-node:ekr.20040803072955.50:<< draw the icon at file >>
+#@+node:ekr.20040803072955.51:<< draw the icon at url >>
+pass
+#@nonl
+#@-node:ekr.20040803072955.51:<< draw the icon at url >>
+#@-node:ekr.20040803072955.47:drawUserIcon
+#@+node:ekr.20040803072955.52:drawTopTree
+def drawTopTree (self):
+    
+    """Draws the top-level tree, taking into account the hoist state."""
+    
+    c = self.c ; canvas = self.canvas
+    
+    if 0:
+        self.redrawCount += 1
+        g.trace(self.redrawCount,g.callers(5))
+
+    self.redrawing = True
+    
+    # Recycle all widgets.
+    self.recycleWidgets()
+    # Clear all ids so invisible id's don't confuse eventToPosition & findPositionWithIconId
+    self.ids = {}
+    self.iconIds = {}
+    self.generation += 1
+    self.drag_p = None # Disable drags across redraws.
+    self.dragging = False
+    if self.trace:
+        if self.verbose:
+            print ; print
+        delta = g.app.positions - self.prevPositions
+        g.trace("**** gen: %3d positions: %5d +%4d" % (
+            self.generation,g.app.positions,delta))
+    self.prevPositions = g.app.positions
+
+    if c.hoistStack:
+        bunch = c.hoistStack[-1]
+        self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
+    else:
+        self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
+    
+    canvas.lower("lines")  # Lowest.
+    canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
+    canvas.lift("userIcon")
+    canvas.lift("plusBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox") # Higest.
+
+    self.redrawing = False
+#@nonl
+#@-node:ekr.20040803072955.52:drawTopTree
+#@+node:ekr.20040803072955.53:drawTree
+def drawTree(self,p,x,y,h,level,hoistFlag=False):
+
+    tree = self ; c = self.c
+    yfirst = ylast = y
+    h1 = None
+    
+    data = g.doHook("draw-sub-outline",tree=tree,
+        c=c,p=p,v=p,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+    if data is not None: return data
+    
+    while p: # Do not use iterator.
+        # N.B. This is the ONLY copy of p that needs to be made.
+        # No other drawing routine calls any p.moveTo method.
+        const_p = p.copy()
+        h,indent = self.drawNode(const_p,x,y)
+        if h1 is None: h1 = h
+        y += h ; ylast = y
+        if p.isExpanded() and p.hasFirstChild():
+            # Must make an additional copy here by calling firstChild.
+            y = self.drawTree(p.firstChild(),x+indent,y,h,level+1)
+        if hoistFlag: break
+        else:         p = p.next()
+        # g.trace(p)
+        
+    # Draw the vertical line.
+    if level==0: # Special case to get exposed first line exactly right.
+        self.drawLine(None,x,yfirst+(h1-1)/2,x,ylast+self.hline_y-h)
+    else:
+        self.drawLine(None,x,yfirst-h1/2-1,x,ylast+self.hline_y-h)
+    return y
+#@nonl
+#@-node:ekr.20040803072955.53:drawTree
+#@-node:ekr.20051105073850:drawX...
+#@+node:ekr.20040803072955.62:Helpers...
+#@+node:ekr.20040803072955.63:inVisibleArea & inExpandedVisibleArea
+def inVisibleArea (self,y1):
+    
+    if self.allocateOnlyVisibleNodes:
+        if self.visibleArea:
+            vis1,vis2 = self.visibleArea
+            y2 = y1 + self.line_height
+            return y2 >= vis1 and y1 <= vis2
+        else: return False
+    else:
+        return True # This forces all nodes to be allocated on all redraws.
+        
+def inExpandedVisibleArea (self,y1):
+    
+    if self.expandedVisibleArea:
+        vis1,vis2 = self.expandedVisibleArea
+        y2 = y1 + self.line_height
+        return y2 >= vis1 and y1 <= vis2
+    else:
+        return False
+#@nonl
+#@-node:ekr.20040803072955.63:inVisibleArea & inExpandedVisibleArea
+#@+node:ekr.20040803072955.64:getIconImage
+def getIconImage (self, name):
+
+    # Return the image from the cache if possible.
+    if self.iconimages.has_key(name):
+        return self.iconimages[name]
+        
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
+        self.iconimages[name] = image
+        return image
+    except:
+        g.es("Exception loading: " + fullname)
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20040803072955.64:getIconImage
+#@+node:ekr.20040803072955.65:scrollTo
+def scrollTo(self,p=None):
+
+    """Scrolls the canvas so that p is in view."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    c = self.c ; frame = c.frame
+    if not p or not p.exists(c):
+        p = c.currentPosition()
+    if not p or not p.exists(c):
+        # g.trace('current p does not exist',p)
+        p = c.rootPosition()
+    if not p or not p.exists(c):
+        # g.trace('no position')
+        return
+    try:
+        last = p.lastVisible()
+        nextToLast = last.visBack()
+        h1 = self.yoffset(p)
+        h2 = self.yoffset(last)
+        << compute approximate line height >>
+        << Compute the fractions to scroll down/up >>
+        if frac <= lo:
+            if self.prevMoveToFrac != frac:
+                self.prevMoveToFrac = frac
+                self.canvas.yview("moveto",frac)
+        elif frac2 + (hi - lo) >= hi:
+            if self.prevMoveToFrac != frac2:
+                self.prevMoveToFrac = frac2
+                self.canvas.yview("moveto",frac2)
+
+        if self.allocateOnlyVisibleNodes:
+            self.canvas.after_idle(self.idle_second_redraw)
+            
+        c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
+        # g.trace("%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi))
+    except:
+        g.es_exception()
+        
+idle_scrollTo = scrollTo # For compatibility.
+#@nonl
+#@+node:ekr.20040803072955.66:<< compute approximate line height >>
+if nextToLast: # 2/2/03: compute approximate line height.
+    lineHeight = h2 - self.yoffset(nextToLast)
+else:
+    lineHeight = 20 # A reasonable default.
+#@nonl
+#@-node:ekr.20040803072955.66:<< compute approximate line height >>
+#@+node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+data = frame.treeBar.get()
+try: lo, hi = data
+except: lo,hi = 0.0,1.0
+if h2 > 0.1:
+    frac = float(h1)/float(h2) # For scrolling down.
+    frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
+    frac2 = frac2 - (hi - lo)
+else:
+    frac = frac2 = 0.0 # probably any value would work here.
+    
+frac =  max(min(frac,1.0),0.0)
+frac2 = max(min(frac2,1.0),0.0)
+#@nonl
+#@-node:ekr.20040803072955.67:<< Compute the fractions to scroll down/up >>
+#@-node:ekr.20040803072955.65:scrollTo
+#@+node:ekr.20040803072955.68:numberOfVisibleNodes
+def numberOfVisibleNodes(self):
+    
+    n = 0 ; p = self.c.rootPosition()
+    while p:
+        n += 1
+        p.moveToVisNext()
+    return n
+#@nonl
+#@-node:ekr.20040803072955.68:numberOfVisibleNodes
+#@+node:ekr.20040803072955.70:yoffset
+@ We can't just return icony because the tree hasn't been redrawn yet.
+For the same reason we can't rely on any TK canvas methods here.
+@c
+
+def yoffset(self,p1):
+    # if not p1.isVisible(): print "yoffset not visible:",p1
+    root = self.c.rootPosition()
+    h,flag = self.yoffsetTree(root,p1)
+    # flag can be False during initialization.
+    # if not flag: print "yoffset fails:",h,v1
+    return h
+
+def yoffsetTree(self,p,p1):
+    h = 0
+    if not p.exists(self.c): return h,False # An extra precaution.
+    p = p.copy()
+    for p2 in p.siblings_iter():
+        # print "yoffsetTree:", p2
+        if p2 == p1:
+            return h, True
+        h += self.line_height
+        if p2.isExpanded() and p2.hasChildren():
+            child = p2.firstChild()
+            h2, flag = self.yoffsetTree(child,p1)
+            h += h2
+            if flag: return h, True
+    return h, False
+#@nonl
+#@-node:ekr.20040803072955.70:yoffset
+#@-node:ekr.20040803072955.62:Helpers...
+#@-node:ekr.20040803072955.35:Drawing... (tkTree)
+#@-node:ekr.20051106103835:Drawing
+#@+node:ekr.20051110104922.2:Calls to c.requestRedraw
+#@+node:ekr.20031218072017.2030:redo & helpers...
+def redo (self):
+
+    u = self ; c = u.c
+    if not u.canRedo():
+        # g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
+        return
+    if not u.getBead(u.bead+1):
+        # g.trace('no bead')
+        return
+    if not c.currentPosition():
+        g.trace('no current position')
+        return
+        
+    # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
+    u.redoing = True 
+    u.groupCount = 0
+    if u.redoHelper:
+        u.redoHelper()
+    else:
+        g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
+        
+    # New in 4.4a3: Almost any change could change an icon,
+    # So we always request a redraw.
+    c.frame.bodyWantsFocus(later=True)
+    c.redraw_now()
+    u.redoing = False
+    u.bead += 1
+    u.setUndoTypes()
+#@nonl
+#@+node:ekr.20050424170219:redoClearRecentFiles
+def redoClearRecentFiles (self):
+    
+    u = self ; c = u.c
+
+    g.app.recentFiles = u.newRecentFiles[:]
+    c.recentFiles = u.newRecentFiles[:]
+    
+    c.frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20050424170219:redoClearRecentFiles
+#@+node:ekr.20050412083057:redoCloneNode
+def redoCloneNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+
+    c.selectPosition(u.newP)
+#@nonl
+#@-node:ekr.20050412083057:redoCloneNode
+#@+node:EKR.20040526072519.2:redoDeleteNode
+def redoDeleteNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p)
+    c.deleteOutline()
+    c.selectPosition(u.newP)
+#@nonl
+#@-node:EKR.20040526072519.2:redoDeleteNode
+#@+node:ekr.20050412084532:redoInsertNode
+def redoInsertNode (self):
+
+    u = self ; c = u.c
+    
+    # g.trace('p',u.newP.v,'parent',u.newParent.v)
+
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+
+    # assert(u.newP.exists(c))
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.newP.restoreLinksInTree()
+    
+    if u.pasteAsClone:
+        for bunch in u.afterTree:
+            t = bunch.t
+            if u.newP.v.t == t:
+                u.newP.setBodyStringOrPane(bunch.body)
+                u.newP.setHeadString(bunch.head)
+            else:
+                t.setTnodeText(bunch.body)
+                t.setHeadString(bunch.head)
+            # g.trace(t,bunch.head,bunch.body)
+
+    c.selectPosition(u.newP)
+#@nonl
+#@-node:ekr.20050412084532:redoInsertNode
+#@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
+def redoHoistNode (self):
+    
+    u = self ; c = u.c
+    
+    c.selectPosition(u.p)
+    c.hoist()
+    
+def redoDehoistNode (self):
+    
+    u = self ; c = u.c
+    
+    c.selectPosition(u.p)
+    c.dehoist()
+#@nonl
+#@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
+#@+node:ekr.20050318085432.6:redoGroup
+def redoGroup (self):
+    
+    '''Process beads until the matching 'afterGroup' bead is seen.'''
+    
+    u = self ; c = u.c ; count = 0
+    u.groupCount += 1
+    while 1:
+        u.bead += 1
+        d = u.getBead(u.bead+1) # sets ivars, including u.p.
+        if not d:
+            s = "Undo stack overrun for %s" % u.undoType
+            g.es_trace(s, color="red")
+            break
+        elif u.kind == 'afterGroup':
+            break
+        elif u.redoHelper:
+            count += 1
+            u.redoHelper()
+        else:
+            s = "No group redo helper for %s" % u.undoType
+            g.es_trace(s,color="red")
+    u.groupCount -= 1
+    
+    if u.dirtyVnodeList: # May be None instead of [].
+        for v in u.dirtyVnodeList:
+            v.t.setDirty()
+
+    if u.reportFlag:
+        g.es("redo %d instances" % count)
+        
+    c.selectPosition(u.p)
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+#@nonl
+#@-node:ekr.20050318085432.6:redoGroup
+#@+node:ekr.20050318085432.7:redoNodeContents
+def redoNodeContents (self):
+    
+    u = self
+    
+    u.p.setTnodeText(u.newBody)
+    u.p.initHeadString(u.newHead)
+    
+    if u.groupCount == 0 and u.newSel:
+        u.c.frame.body.setTextSelection(u.newSel)
+    
+    u.updateMarks('new')
+    
+    for v in u.dirtyVnodeList:
+        v.t.setDirty()
+#@nonl
+#@-node:ekr.20050318085432.7:redoNodeContents
+#@+node:ekr.20050526125801:redoMark
+def redoMark (self):
+    
+    u = self ; c = u.c
+
+    u.updateMarks('new')
+    
+    for v in u.dirtyVnodeList:
+        v.t.setDirty()
+    
+    # Selecting can scroll the tree which causes flash.
+    if u.groupCount == 0:
+        c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050526125801:redoMark
+#@+node:ekr.20050411111847:redoMove
+def redoMove (self):
+    
+    u = self ; c = u.c
+
+    # g.trace(u.p)
+
+    if u.newParent:
+        u.p.moveToNthChildOf(u.newParent,u.newN)
+    elif u.newBack:
+        u.p.moveAfter(u.newBack)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.moveToRoot(oldRoot)
+        
+    u.updateMarks('new')
+
+    for v in u.dirtyVnodeList:
+        v.t.setDirty()
+        
+    # Selecting can scroll the tree which causes flash.
+    if u.groupCount == 0:
+        c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050411111847:redoMove
+#@+node:ekr.20050318085432.8:redoTree
+def redoTree (self):
+    
+    '''Redo replacement of an entire tree.'''
+    
+    u = self ; c = u.c
+
+    u.p = self.undoRedoTree(u.p,u.oldTree,u.newTree)
+    c.selectPosition(u.p) # Does full recolor.
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+#@nonl
+#@-node:ekr.20050318085432.8:redoTree
+#@+node:EKR.20040526075238.5:redoTyping
+def redoTyping (self):
+
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ('Cut','Paste','Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=u.undoType)
+    
+    if u.newSel:
+        c.frame.bodyWantsFocus(later=False)
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.frame.bodyWantsFocus(later=False)
+        c.frame.body.setYScrollPosition(u.yview)
+#@nonl
+#@-node:EKR.20040526075238.5:redoTyping
+#@-node:ekr.20031218072017.2030:redo & helpers...
+#@+node:ekr.20031218072017.2039:undo & helpers...
+def undo (self):
+
+    """Undo the operation described by the undo parmaters."""
+    
+    u = self ; c = u.c
+    # g.trace(g.callers(7))
+    c.endEditing() # Capture the headline *before* checking for undo.
+    
+    if not u.canUndo():
+        # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+        return
+    if not u.getBead(u.bead):
+        # g.trace('no bead')
+        return # Sets ivars.
+    if not c.currentPosition():
+        g.trace('no current position')
+        return
+
+    # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
+    u.undoing = True
+    u.groupCount = 0
+
+    if u.undoHelper:
+        u.undoHelper()
+    else:
+        g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
+
+    # New in 4.4a3: Almost any change could change an icon,
+    # So we always request a redraw.
+    c.frame.bodyWantsFocus(later=True)
+    c.redraw_now()
+    u.undoing = False
+    u.bead -= 1
+    u.setUndoTypes()
+#@nonl
+#@+node:ekr.20050424170219.1:undoClearRecentFiles
+def undoClearRecentFiles (self):
+    
+    u = self ; c = u.c
+    
+    g.app.recentFiles = u.oldRecentFiles[:]
+    c.recentFiles = u.oldRecentFiles[:]
+
+    c.frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20050424170219.1:undoClearRecentFiles
+#@+node:ekr.20050412083057.1:undoCloneNode
+def undoCloneNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP)
+    c.deleteOutline()
+    c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050412083057.1:undoCloneNode
+#@+node:ekr.20050412084055:undoDeleteNode
+def undoDeleteNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.oldBack:
+        u.p.linkAfter(u.oldBack)
+    elif u.oldParent:
+        u.p.linkAsNthChild(u.oldParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+
+    c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050412084055:undoDeleteNode
+#@+node:ekr.20050318085713:undoGroup
+def undoGroup (self):
+    
+    '''Process beads until the matching 'beforeGroup' bead is seen.'''
+
+    u = self ; c = u.c ; count = 0
+    reportFlag = u.reportFlag
+    u.groupCount += 1
+
+    while 1:
+        u.bead -= 1
+        d = u.getBead(u.bead) # sets ivars, including u.p.
+        if not d:
+            s = "Undo stack underrun for %s" % u.undoType
+            g.es_trace(s,color="red")
+            break
+        elif u.kind == 'beforeGroup':
+            break
+        elif u.undoHelper:
+            count += 1
+            u.undoHelper()
+        else:
+            s = "No group undo helper for %s" % u.undoType
+            g.es_trace(s, color="red")
+           
+    if u.dirtyVnodeList: # May be None instead of [].
+        for v in u.dirtyVnodeList:
+            v.t.clearDirty()
+
+    u.groupCount -= 1
+    if reportFlag:
+        g.es("undo %d instances" % count)
+        
+    c.selectPosition(u.p)
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+#@nonl
+#@-node:ekr.20050318085713:undoGroup
+#@+node:ekr.20050412083244:undoHoistNode & undoDehoistNode
+def undoHoistNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p)
+    c.dehoist()
+    
+def undoDehoistNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p)
+    c.hoist()
+#@nonl
+#@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode
+#@+node:ekr.20050412085112:undoInsertNode
+def undoInsertNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP)
+    c.deleteOutline()
+    
+    if u.pasteAsClone:
+        for bunch in u.beforeTree:
+            t = bunch.t
+            if u.p.v.t == t:
+                u.p.setBodyStringOrPane(bunch.body)
+                u.p.setHeadString(bunch.head)
+            else:
+                t.setTnodeText(bunch.body)
+                t.setHeadString(bunch.head)
+            # g.trace(t,bunch.head,bunch.body)
+
+    c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050412085112:undoInsertNode
+#@+node:ekr.20050526124906:undoMark
+def undoMark (self):
+    
+    u = self ; c = u.c
+
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+    
+    # Selecting can scroll the tree which causes flash.
+    if u.groupCount == 0:
+        c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050526124906:undoMark
+#@+node:ekr.20050411112033:undoMove
+def undoMove (self):
+    
+    u = self ; c = u.c
+
+    # g.trace(u.p,u.oldParent,u.oldN)
+
+    if u.oldParent:
+        u.p.moveToNthChildOf(u.oldParent,u.oldN)
+    elif u.oldBack:
+        u.p.moveAfter(u.oldBack)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.moveToRoot(oldRoot)
+
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+
+    # Selecting can scroll the tree which causes flash.
+    if u.groupCount == 0:
+        c.selectPosition(u.p)
+#@nonl
+#@-node:ekr.20050411112033:undoMove
+#@+node:ekr.20050318085713.1:undoNodeContents
+def undoNodeContents (self):
+    
+    '''Undo all changes to the contents of a node,
+    including headline and body text, and dirty and marked bits.
+    '''
+    
+    u = self
+    
+    u.p.setTnodeText(u.oldBody)
+    u.p.initHeadString(u.oldHead)
+
+    if u.groupCount == 0 and u.oldSel:
+        u.c.frame.body.setTextSelection(u.oldSel)
+    
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+#@nonl
+#@-node:ekr.20050318085713.1:undoNodeContents
+#@+node:ekr.20050318085713.2:undoTree
+def undoTree (self):
+    
+    '''Redo replacement of an entire tree.'''
+    
+    u = self ; c = u.c
+
+    u.p = self.undoRedoTree(u.p,u.newTree,u.oldTree)
+    c.selectPosition(u.p) # Does full recolor.
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+#@nonl
+#@-node:ekr.20050318085713.2:undoTree
+#@+node:ekr.20050408100042:undoRedoTree
+def undoRedoTree (self,p,new_data,old_data):
+    
+    '''Replace p and its subtree using old_data during undo.'''
+    
+    # Same as undoReplace except uses g.Bunch.
+
+    u = self
+    
+    if new_data == None:
+        # This is the first time we have undone the operation.
+        # Put the new data in the bead.
+        bunch = u.beads[u.bead]
+        bunch.newTree = u.saveTree(p.copy())
+        u.beads[u.bead] = bunch
+    
+    # Replace data in tree with old data.
+    u.restoreTree(old_data)
+    p.setBodyStringOrPane(p.bodyString())
+    
+    return p # Nothing really changes.
+#@nonl
+#@-node:ekr.20050408100042:undoRedoTree
+#@+node:EKR.20040526090701.4:undoTyping
+def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+
+    if u.oldSel:
+        c.frame.bodyWantsFocus(later=False)
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.frame.bodyWantsFocus(later=False)
+        c.frame.body.setYScrollPosition(u.yview)
+#@nonl
+#@-node:EKR.20040526090701.4:undoTyping
+#@+node:ekr.20031218072017.1493:undoRedoText
+# Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading & trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+        
+    __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
+
+    u = self ; c = u.c
+    # assert p == c.currentPosition(),'not current position'+repr(p)
+
+    << Incrementally update the Tk.Text widget >>
+    << Compute the result using p's body text >>
+    # g.trace(undoType)
+    p.setTnodeText(result)
+    << Get textResult from the Tk.Text widget >>
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            << print mismatch trace >>
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)
+#@nonl
+#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+# Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading > 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len > 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading > 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i >= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+# g.trace(newlines,oldNewlines)
+while newlines > oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines > newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+#@nonl
+#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+#@+node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+# Recreate the text using the present body text.
+body = p.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading > 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) > 0:
+    s.extend(oldMidLines)
+if trailing > 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) > 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines > 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result
+#@nonl
+#@-node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+textResult = c.frame.body.getAllText()
+
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) > 0 and textResult[:-1] == result:
+        textResult = result
+#@nonl
+#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
+print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult
+#@nonl
+#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
+#@-node:ekr.20031218072017.1493:undoRedoText
+#@-node:ekr.20031218072017.2039:undo & helpers...
+#@+node:ekr.20040803072955.79:onClickBoxClick
+def onClickBoxClick (self,event):
+    
+    c = self.c ; p = self.eventToPosition(event)
+
+    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+        if p.isExpanded(): p.contract()
+        else:              p.expand()
+        self.active = True
+        self.select(p)
+        if c.frame.findPanel:
+            c.frame.findPanel.handleUserClick(p)
+        if self.stayInTree:
+            c.frame.treeWantsFocus()
+        else:
+            c.frame.bodyWantsFocus()
+    g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+    c.redraw_now()
+#@nonl
+#@-node:ekr.20040803072955.79:onClickBoxClick
+#@-node:ekr.20051110104922.2:Calls to c.requestRedraw
+#@+node:ekr.20051110104922.3:Calls to c/tree.redraw
+Changed all the following methods
+#@nonl
+#@+node:ekr.20031218072017.3030:readOutlineOnly
+def readOutlineOnly (self,theFile,fileName):
+
+    c = self.c
+    # Read the entire file into the buffer
+    self.fileBuffer = theFile.read() ; theFile.close()
+    self.fileIndex = 0
+    << Set the default directory >>
+    c.beginUpdate()
+    try:
+        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
+    finally:
+        c.endUpdate()
+    c.frame.deiconify()
+    vflag,junk,secondary_ratio = self.frame.initialRatios()
+    c.frame.resizePanesToRatio(ratio,secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        # This should be done after the pane size has been set.
+        if self.topPosition:
+            c.frame.tree.setTopPosition(self.topPosition)
+            c.redraw_now()
+    # delete the file buffer
+    self.fileBuffer = ""
+    return ok
+#@nonl
+#@+node:ekr.20031218072017.2298:<< Set the default directory >>
+@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
+
+theDir = g.os_path_dirname(fileName)
+
+if len(theDir) > 0:
+    c.openDirectory = theDir
+#@nonl
+#@-node:ekr.20031218072017.2298:<< Set the default directory >>
+#@-node:ekr.20031218072017.3030:readOutlineOnly
+#@+node:ekr.20031218072017.2028:Hoist & dehoist
+def dehoist(self):
+
+    c = self ; p = c.currentPosition()
+    if p and c.canDehoist():
+        bunch = c.hoistStack.pop()
+        if bunch.expanded: p.expand()
+        else:              p.contract()
+        c.redraw_now()
+        c.frame.clearStatusLine()
+        if c.hoistStack:
+            bunch = c.hoistStack[-1]
+            c.frame.putStatusLine("Hoist: " + bunch.p.headString())
+        else:
+            c.frame.putStatusLine("No hoist")
+        c.undoer.afterDehoist(p,'DeHoist')
+
+def hoist(self):
+
+    c = self ; p = c.currentPosition()
+    if p and c.canHoist():
+        # Remember the expansion state.
+        bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
+        c.hoistStack.append(bunch)
+        p.expand()
+        c.redraw_now()
+        c.frame.clearStatusLine()
+        c.frame.putStatusLine("Hoist: " + p.headString())
+        c.undoer.afterHoist(p,'Hoist')
+#@nonl
+#@-node:ekr.20031218072017.2028:Hoist & dehoist
+#@+node:ekr.20031218072017.2911:expandSubtree
+def expandSubtree (self,v):
+
+    c = self
+    last = v.lastNode()
+    while v and v != last:
+        v.expand()
+        v = v.threadNext()
+    c.redraw_now()
+#@nonl
+#@-node:ekr.20031218072017.2911:expandSubtree
+#@+node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
+def readAtFileNodes (self):
+
+    c = self.c ; current = c.currentPosition()
+    c.atFileCommands.readAll(current,partialFlag=True)
+    c.redraw_now()
+    
+    # Force an update of the body pane.
+    current.setBodyStringOrPane(current.bodyString())
+    c.frame.body.onBodyChanged(current,undoType=None)
+#@nonl
+#@-node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,
+    useSelectedText=True,define_g=True,define_name='',silent=False):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; script1 = script
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    try:
+        if script.strip():
+            sys.path.insert(0,c.frame.openDirectory)
+            script += '\n' # Make sure we end the script properly.
+            try:
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                if define_name: d['__name__'] = define_name
+                # g.trace(script)
+                exec script in d
+                if not script1 and not silent:
+                    g.es("end of script",color="purple")
+            except Exception:
+                << handle an exception in the script >>
+            del sys.path[0]
+        else:
+            g.es("no script selected",color="blue")
+    finally: # New in 4.3 beta 2: unredirect output last.
+        << unredirect output >>
+    c.redraw_now()
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:ekr.20050505104140:<< handle an exception in the script >>
+g.es("exception executing script",color='blue')
+
+if 0:
+    print 'script...'
+    for line in g.splitLines(script):
+        print repr(line)
+
+fileName,n = g.es_exception(full=True,c=c)
+if p and not script1 and fileName == "<string>":
+    c.goToScriptLineNumber(p,script,n)
+
+<< dump the lines near the error >>
+#@nonl
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+g.es_print(s)
+
+if 0:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        g.es(s,newline=False)
+else: # Print surrounding lines.
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20050505104140:<< handle an exception in the script >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20041221122440.1:togglePmwSplitDirection
+@ Alas, there seems to be is no way to
+a) change the orientation of a Pmw.PanedWidget, or
+b) change the parent of a widget.
+Therefore, we must recreate all widgets to toggle the orientation!
+@c
+
+def togglePmwSplitDirection (self,verticalFlag):
+    
+    __pychecker__ = '--no-argsused' # verticalFlag not used.
+    
+    frame = self ; c = self.c ; p = c.currentPosition()
+    
+    for name in ('splitter1','splitter2'):
+        splitter = self.component(name).getObject()
+        splitter.pack_forget()
+
+    # Remember the contents of the log, including most tags.
+    d = self.log.saveAllState()
+
+    # Recreate everything: similar to code in finishCreate.
+    self.createLeoSplitters(self.outerFrame)
+    frame.canvas = self.createCanvas(self.split2Pane1) # Also packs canvas
+    frame.tree  = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+    frame.log   = leoTkinterLog(frame,self.split2Pane2)
+    frame.body  = leoTkinterBody(frame,self.split1Pane2)
+    
+    # A kludge: reset this "official" ivar.
+    frame.bodyCtrl = frame.body.bodyCtrl
+
+    # Configure: similar to code in finishCreate.
+    frame.setTabWidth(c.tab_width)
+    frame.tree.setColorFromConfig()
+    self.reconfigurePanes()
+    self.body.setFontFromConfig()
+    self.body.setColorFromConfig()
+
+    # Restore everything.
+    g.app.setLog(self.log)
+    frame.log.restoreAllState(d)
+    c.selectPosition(p)
+    c.redraw_now()
+#@nonl
+#@-node:ekr.20041221122440.1:togglePmwSplitDirection
+#@+node:ekr.20051009045404:createFirstTreeNode
+def createFirstTreeNode (self):
+    
+    f = self ; c = f.c
+
+    t = leoNodes.tnode()
+    v = leoNodes.vnode(c,t)
+    p = leoNodes.position(v,[])
+    v.initHeadString("NewHeadline")
+    p.moveToRoot()
+    c.editPosition(p)
+#@nonl
+#@-node:ekr.20051009045404:createFirstTreeNode
+#@+node:ekr.20040803072955.23:OnHyperLinkControlClick
+def OnHyperLinkControlClick (self,event):
+    
+    """Callback injected into position class."""
+    
+    p = self ; c = p.c
+    try:
+        if not g.doHook("hypercclick1",c=c,p=p,v=p,event=event):
+            c.selectPosition(p)
+            c.redraw_now()
+            c.frame.bodyCtrl.mark_set("insert","1.0")
+        g.doHook("hypercclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("hypercclick")
+#@nonl
+#@-node:ekr.20040803072955.23:OnHyperLinkControlClick
+#@+node:ekr.20041225063637.71:writeChangesToFile
+def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+        
+    # Copy the expansion state of the dialog to the file.
+    for d in self.filesInfoDict.values():
+        c2 = d.get('c')
+        if c2 and c2 == c:
+            p2 = d.get('p')
+            p = g.app.config.settingsRoot(c)
+            # g.trace(c,p)
+            if p and p2:
+                p = p.copy() ; p2 = p2.copy()
+                # Defensive programming: don't assume p and p2 are in synch.
+                while p and p2:
+                    if p2.isExpanded(): p.expand()
+                    else: p.contract()
+                    p.moveToThreadNext()
+                    p2.moveToThreadNext()
+            break
+
+    if c.fileName():
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.fileName())
+        c.redraw_now() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."
+#@nonl
+#@-node:ekr.20041225063637.71:writeChangesToFile
+#@+node:ekr.20031218072017.3981:abortEditLabelCommand
+def abortEditLabelCommand (self):
+    
+    frame = self ; c = frame.c ; tree = frame.tree
+    p = c.currentPosition() ; w = p.edit_widget()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Abort Edit Headline")
+        return
+        
+    # g.trace(p == tree.editPosition(),repr(tree.revertHeadline))
+        
+    if w and p == tree.editPosition():
+        # Revert the headline text.
+        w.delete("1.0","end")
+        w.insert("end",tree.revertHeadline)
+        p.initHeadString(tree.revertHeadline)
+        c.endEditing()
+        c.selectPosition(c.currentPosition())
+        c.redraw_now()
+#@nonl
+#@-node:ekr.20031218072017.3981:abortEditLabelCommand
+#@+node:ekr.20031218072017.2246:reconfigureFromConfig
+def reconfigureFromConfig (self):
+    
+    frame = self ; c = frame.c
+    
+    frame.tree.setFontFromConfig()
+    frame.tree.setColorFromConfig()
+    
+    frame.configureBarsFromConfig()
+    
+    frame.body.setFontFromConfig()
+    frame.body.setColorFromConfigt()
+    
+    frame.setTabWidth(c.tab_width)
+    frame.log.setFontFromConfig()
+    frame.log.setColorFromConfig()
+
+    c.redraw_now()
+#@nonl
+#@-node:ekr.20031218072017.2246:reconfigureFromConfig
+#@+node:ekr.20041225063637.66:updateConfig (settingsController)
+def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw_now()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        else:
+            # g.trace(name,kind,val)
+            g.app.config.set(c,name,kind,val)
+#@nonl
+#@-node:ekr.20041225063637.66:updateConfig (settingsController)
+#@-node:ekr.20051110104922.3:Calls to c/tree.redraw
+#@+node:ekr.20051110153307:Calls to updateScreen
+#@+node:ekr.20051011072903.4:OnPasteFromMenu
+def OnPasteFromMenu (self):
+    
+    ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    isBody = w == f.body.bodyCtrl
+
+    if isBody:
+        w.event_generate(g.virtual_event_name("Paste"))
+        f.body.onBodyChanged(p,undoType='Typing')
+        c.redraw_now()
+    else:
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        s = s1 = g.app.gui.getTextFromClipboard()
+        while s and s[-1] in ('\n','\r'):
+            s = s[:-1]
+        if s != s1:
+            g.app.gui.replaceClipboardWith(s)
+        g.app.unitTestDict ['headWidth'] = True
+        w.configure(width=f.tree.headWidth(s=s))
+        w.event_generate(g.virtual_event_name("Paste"))
+        f.tree.onHeadChanged(c.currentPosition(),'Paste')
+        c.redraw_now()
+#@nonl
+#@-node:ekr.20051011072903.4:OnPasteFromMenu
+#@-node:ekr.20051110153307:Calls to updateScreen
+#@-node:ekr.20051110104922:(Completed transition to Newer World Order)
 #@+node:ekr.20051110111821:Moved all scripts into scripts.leo
 #@-node:ekr.20051110111821:Moved all scripts into scripts.leo
 #@-node:ekr.20051110101524:4.4a4 projects

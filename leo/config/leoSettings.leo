@@ -34,9 +34,9 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20051010093913" a="TV"><vh>@button Save</vh></v>
+<v t="ekr.20051010093913"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -138,7 +138,7 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20051025084017" a="E"><vh>@page Spell tab</vh>
+<v t="ekr.20051025084017"><vh>@page Spell tab</vh>
 <v t="ekr.20051025084017.1"><vh>@string aspell_local_language_code = en</vh></v>
 <v t="ekr.20051025084017.2"><vh>@string aspell_local_dictionary = None</vh></v>
 <v t="ekr.20051025085144"><vh>@string aspell_dir = c:\aspell</vh></v>
