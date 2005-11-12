@@ -13975,7 +13975,7 @@ p = u.findNodeAnywhere(c,h)
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
 c.selectPosition(p)
-c.frame.bodyWantsFocus(later=False)
+c.frame.bodyWantsFocus()
 paste = 'ABC'
 g.app.gui.replaceClipboardWith(paste)
 menu.invoke(i)
@@ -14020,7 +14020,7 @@ p = u.findNodeAnywhere(c,h)
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
 c.selectPosition(p)
-c.frame.bodyWantsFocus(later=False)
+c.frame.bodyWantsFocus()
 paste = '# Should be a comment'
 g.app.gui.replaceClipboardWith(paste)
 n = c.frame.body.colorizer.count
@@ -14106,7 +14106,7 @@ h = c.searchCommands.findTabHandler
 w = h.find_ctrl
 w.delete('1.0','end')
 w.insert('1.0',s)
-c.frame.bodyWantsFocus(later=False)
+c.frame.bodyWantsFocus()
 g.app.gui.setInsertPoint(bodyCtrl,'1.0')
 c.searchCommands.findTabFindNext()
 w = g.app.gui.get_focus(c.frame)
@@ -14523,7 +14523,7 @@ p = u.findNodeAnywhere(c,h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 n = c.frame.tree.redrawCount
-c.frame.bodyWantsFocus(later=False)
+c.frame.bodyWantsFocus()
 try:
     c.frame.body.bodyCtrl.event_generate('a')
     n2 = c.frame.tree.redrawCount
@@ -14542,7 +14542,7 @@ finally:
     p.setBodyString('a')
     c.redraw_now() # To make node visible and to set the icon.
     try:
-        c.frame.bodyWantsFocus(later=False)
+        c.frame.bodyWantsFocus()
         n = c.frame.tree.redrawCount
         w = c.frame.body.bodyCtrl
         w.mark_set('insert','end')
@@ -14562,7 +14562,7 @@ c.selectPosition(p)
 p.setBodyString('a')
 c.redraw_now() # To make node visible
 n = c.frame.tree.redrawCount
-c.frame.bodyWantsFocus(later=False)
+c.frame.bodyWantsFocus()
 try:
     c.frame.body.bodyCtrl.event_generate('a')
     n2 = c.frame.tree.redrawCount

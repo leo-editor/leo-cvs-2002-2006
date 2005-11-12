@@ -907,7 +907,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c = self.c ; t = self.textWidget
             if t:
                 t.configure(state="normal",background=background)
-                c.frame.widgetWantsFocus(t,later=False)
+                c.frame.widgetWantsFocus(t)
             self.enabled = True
                 
         def isEnabled(self):
@@ -1874,9 +1874,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         # Toggle the focus immediately.
         if g.app.gui.get_focus(self) == frame.bodyCtrl:
-            frame.treeWantsFocus(later=False)
+            frame.treeWantsFocus()
         else:
-            frame.bodyWantsFocus(later=False)
+            frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3985:toggleActivePane
     #@+node:ekr.20031218072017.3986:cascade
@@ -2105,47 +2105,38 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-at
     #@nonl
     #@+node:ekr.20050120092028:xWantsFocus (tkFrame)
-    #@+at 
-    #@nonl
-    # All these do the same thing, but separate names are good for tracing and
-    # makes the intent of the code clearer.
-    #@-at
-    #@@c 
-    
-    def bodyWantsFocus(self,later=True):
-        if self.body and self.body.bodyCtrl:
-            self.set_focus(self.body.bodyCtrl,later=later)
+    def bodyWantsFocus(self):
+        w = self.body and self.body.bodyCtrl
+        self.set_focus(w)
             
-    def headlineWantsFocus(self,p,later=True):
+    def headlineWantsFocus(self,p):
         w = p and p.edit_widget()
-        if w:
-            self.set_focus(w,later=later)
+        self.set_focus(w)
         
-    def logWantsFocus(self,later=True):
-        if self.log and self.log.logCtrl:
-            self.set_focus(self.log.logCtrl,later=later)
+    def logWantsFocus(self):
+        w = self.log and self.log.logCtrl
+        self.set_focus(w)
     
-    def minibufferWantsFocus(self,later=True):
+    def minibufferWantsFocus(self):
         # Important! We must preserve body selection!
         if 1:
-            self.bodyWantsFocus(later=later)
+            self.bodyWantsFocus()
         else:
-            if self.c.miniBufferWidget:
-                self.set_focus(self.c.miniBufferWidget,later=later)
+            w = self.c.miniBufferWidget
+            self.set_focus(w)
     
-    def treeWantsFocus(self,later=True):
-        if self.tree and self.tree.canvas:
-            self.set_focus(self.tree.canvas,later=later)
+    def treeWantsFocus(self):
+        w = self.tree and self.tree.canvas
+        self.set_focus(w)
         
-    def widgetWantsFocus(self,widget,later=True):
-        if widget:
-            self.set_focus(widget,later=later)
+    def widgetWantsFocus(self,w):
+        self.set_focus(w)
     #@nonl
     #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
     #@+node:ekr.20050120092028.1:set_focus (tkFrame)
     # New in Leo 4.4a3: nothing happens at idle time.
     
-    def set_focus(self,w,later=False):
+    def set_focus(self,w):
         
         '''Set the focus to the widget specified in the xWantsFocus methods.'''
     
@@ -2153,14 +2144,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if 0: # A *very* effective trace.
             name = w and hasattr(w,'_name') and w._name or '<no name>'
-            when = g.choose(later,'   ','NOW')
-            g.trace(when,name,g.callers(7)) 
+            g.trace(name,g.callers(7)) 
     
         if w:
             self.wantedWidget = w
-                # Set this even if we call g.app.gui.set_focus.
-            if not later:
-                g.app.gui.set_focus(c,w)
+            g.app.gui.set_focus(c,w)
     #@nonl
     #@-node:ekr.20050120092028.1:set_focus (tkFrame)
     #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -2742,7 +2730,7 @@ class leoTkinterBody (leoFrame.leoBody):
         
     def setFocus (self):
         
-        self.frame.widgetWantsFocus(self.bodyCtrl,later=False)
+        self.frame.widgetWantsFocus(self.bodyCtrl)
     #@nonl
     #@-node:ekr.20031218072017.4003:Focus (tkBody)
     #@+node:ekr.20031218072017.4004:Height & width
@@ -3462,6 +3450,7 @@ class leoTkinterLog (leoFrame.leoLog):
                 print g.toEncodedString(s,'utf-8')
         else:
             self.logCtrl.update_idletasks()
+            # self.nbCanvas.update_idletasks()
     #@nonl
     #@-node:ekr.20050208133438:forceLogUpdate
     #@-node:ekr.20051016095907.2:Focus & update (tkLog)
@@ -3648,7 +3637,9 @@ class leoTkinterLog (leoFrame.leoLog):
             b = self.nb.tab(tabName) # b is a Tk.Button.
             b.config(bg='LightSteelBlue1')
             logCtrl = self.textDict.get(tabName)
-            self.c.frame.widgetWantsFocus(logCtrl)
+            if logCtrl:
+                self.c.frame.widgetWantsFocus(logCtrl)
+                logCtrl.update_idletasks()
     #@nonl
     #@-node:ekr.20051018061932.1:lower/raiseTab
     #@+node:ekr.20051019170806:renameTab
@@ -3677,8 +3668,7 @@ class leoTkinterLog (leoFrame.leoLog):
         # Update the status vars.
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
-        # g.trace(tabName,self.logCtrl._name)
-        c.frame.widgetWantsFocus(self.logCtrl,later=True)
+        c.frame.widgetWantsFocus(self.logCtrl)
         self.tabFrame = self.frameDict.get(tabName)
         return tabFrame
     #@nonl
@@ -3732,28 +3722,45 @@ class leoTkinterLog (leoFrame.leoLog):
             g.es('can not rename %s tab' % (tabName),color='blue')
         else:
             parentFrame = self.frameDict.get(tabName)
-            self.getTabName(parentFrame,self.renameTab)
+            
+            def renameTabCallback (newName):
+                self.renameTab(tabName,newName)
+    
+            self.getTabName(parentFrame,renameTabCallback)
     #@nonl
     #@-node:ekr.20051019165401:renameTabFromMenu
     #@+node:ekr.20051019172811:getTabName
     def getTabName (self,parentFrame,exitCallback):
+        
+        canvas = self.nb.component('hull')
     
-        f = Tk.Frame(parentFrame)
-        f.pack(side='bottom',fill='x',expand=1)
+        # Overlay what is there!
+        f = Tk.Frame(canvas)
+        f.pack(side='top',fill='both',expand=1)
+        
+        row1 = Tk.Frame(f)
+        row1.pack(side='top',expand=0,fill='x',pady=10)
+        row2 = Tk.Frame(f)
+        row2.pack(side='top',expand=0,fill='x')
     
-        Tk.Label(f,text='Tab name').pack(side='left')
+        Tk.Label(row1,text='Tab name').pack(side='left')
     
-        e = Tk.Entry(f,background='white')
+        e = Tk.Entry(row1,background='white')
         e.pack(side='left')
     
         def getNameCallback (event=None):
             s = e.get().strip()
             f.pack_forget()
             if s: exitCallback(s)
+            
+        def closeTabNameCallback (event=None):
+            f.pack_forget()
+            
+        b = Tk.Button(row2,text='Ok',width=6,command=getNameCallback)
+        b.pack(side='left',padx=10)
         
-        if 0:
-            b = Tk.Button(row,text="Close",command=getNameCallback)
-            b.pack(side='left')
+        b = Tk.Button(row2,text='Cancel',width=6,command=closeTabNameCallback)
+        b.pack(side='left')
     
         e.focus_force()
         e.bind('<Return>',getNameCallback)

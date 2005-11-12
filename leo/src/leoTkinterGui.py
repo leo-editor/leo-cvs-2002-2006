@@ -424,7 +424,14 @@ class tkinterGui(leoGui.leoGui):
         if w:
             if 0:
                 name = hasattr(w,'_name') and w._name or '<no name>'
-                g.trace('GUI',name,g.callers(8))
+                g.trace('GUI',name,g.callers(9))
+                
+            if 0:
+                w2 = c.frame.outerFrame.focus_get()
+                name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
+                w2 and g.trace(name2)
+    
+            w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
             w.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -433,8 +440,7 @@ class tkinterGui(leoGui.leoGui):
     
         """Indicate that a widget want to get focus."""
         
-        if c:
-            c.frame.widgetWantsFocus(widget,True)
+        c and c.frame.widgetWantsFocus(widget)
             
     widgetWantsFocus = widget_wants_focus
     #@nonl

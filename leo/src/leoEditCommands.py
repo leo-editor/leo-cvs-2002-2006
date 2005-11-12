@@ -1672,19 +1672,19 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
     def focusToBody (self,event):
         
-        self.c.frame.bodyWantsFocus(later=True)
+        self.c.frame.bodyWantsFocus()
     
     def focusToLog (self,event):
     
-        self.c.frame.logWantsFocus(later=True)
+        self.c.frame.logWantsFocus()
         
     def focusToMinibuffer (self,event):
         
-        self.c.frame.minibufferWantsFocus(later=True)
+        self.c.frame.minibufferWantsFocus()
     
     def focusToTree (self,event):
         
-        self.c.frame.treeWantsFocus(later=True)
+        self.c.frame.treeWantsFocus()
     #@nonl
     #@-node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
     #@+node:ekr.20051022144825.1:cycleFocus
@@ -1711,7 +1711,7 @@ class editCommandsClass (baseEditCommandsClass):
             pane = body
             
         # g.trace(pane)
-        frame.set_focus(pane,later=True)
+        frame.set_focus(pane)
     #@nonl
     #@-node:ekr.20051022144825.1:cycleFocus
     #@-node:ekr.20051022142249:focus (editCommandsClass)
@@ -4736,7 +4736,7 @@ class findTab (leoFind.leoFind):
         #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
         def setFocus(w):
             c = self.c
-            c.frame.widgetWantsFocus(w,later=False)
+            c.frame.widgetWantsFocus(w)
             g.app.gui.setSelectionRange(w,"1.0","1.0")
             return "break"
             
@@ -5038,7 +5038,7 @@ class findTab (leoFind.leoFind):
         c = self.c ; t = self.find_ctrl
             
         # The widget must have focus before we can adjust the text.
-        c.frame.widgetWantsFocus(t,later=False)
+        c.frame.widgetWantsFocus(t)
         
         # Delete one trailing newline.
         s = t.get('1.0','end')
@@ -5049,7 +5049,7 @@ class findTab (leoFind.leoFind):
         g.app.gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
         
         # This is also needed.
-        c.frame.widgetWantsFocus(t,later=True)
+        c.frame.widgetWantsFocus(t)
     #@nonl
     #@-node:ekr.20051020120306.26:bringToFront
     #@+node:ekr.20051020120306.27:selectAllFindText
@@ -6000,11 +6000,11 @@ class spellTab(leoFind.leoFind):
                 c.beginUpdate()
                 c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
                 c.endUpdate(True)
-                c.frame.widgetWantsFocus(t,later=False)
+                c.frame.widgetWantsFocus(t)
                 return True
     
         # The focus must never leave the body pane.
-        c.frame.widgetWantsFocus(t,later=False)
+        c.frame.widgetWantsFocus(t)
         return False
     #@nonl
     #@-node:ekr.20051025071455.38:change
@@ -6028,7 +6028,7 @@ class spellTab(leoFind.leoFind):
     
         if alts:
             self.fillbox(alts,word)
-            c.frame.bodyWantsFocus(later=False)
+            c.frame.bodyWantsFocus()
             # Copy the working selection range to the body pane
             start, end = g.app.gui.getTextSelection(self.workCtrl)
             g.app.gui.setTextSelection(bodyCtrl,start,end)
@@ -6219,8 +6219,7 @@ class spellTab(leoFind.leoFind):
         
         c = self.c
         self.updateButtons()
-        # self.body.bodyCtrl.focus_set()
-        c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
+        c.frame.bodyWantsFocus()
     #@-node:ekr.20051025071455.50:onSelectListBox
     #@+node:ekr.20051025071455.51:update
     def update(self,show=True,fill=False):
@@ -6236,8 +6235,7 @@ class spellTab(leoFind.leoFind):
     
         if show:
             self.bringToFront()
-            # c.frame.body.bodyCtrl.focus_set()
-            c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
+            c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051025071455.51:update
     #@+node:ekr.20051025071455.52:updateButtons

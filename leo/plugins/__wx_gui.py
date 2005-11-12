@@ -2852,7 +2852,7 @@ class wxLeoTree (leoFrame.leoTree):
         
         
         if 0: ### Not ready yet.
-            frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+            frame.bodyWantsFocus()
         #@nonl
         #@-node:ekr.20050719120304.5:<< set the current node >>
         #@nl
@@ -2885,7 +2885,7 @@ class wxLeoTree (leoFrame.leoTree):
             # force a redraw of joined and ancestor headlines.
             self.force_redraw() 
     
-        frame.bodyWantsFocus(frame.bodyCtrl,tag='endEditLabel')
+        frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050719121701.2:endEditLabel
     #@+node:ekr.20050719121701.3:editLabel
@@ -2925,7 +2925,7 @@ class wxLeoTree (leoFrame.leoTree):
             p.edit_widget().tag_remove("sel","1.0","end")
             p.edit_widget().tag_add("sel","1.0","end")
             # Set the focus immediately
-            self.frame.treeWantsFocus(p.edit_widget(),later=False,tag='setNormalLabelState')
+            self.frame.widgetWantsFocus(p.edit_widget())
     #@nonl
     #@-node:ekr.20050719121701.11:setNormalLabelState
     #@+node:ekr.20050719121701.12:setDisabledLabelState

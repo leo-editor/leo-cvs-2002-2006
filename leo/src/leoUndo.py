@@ -1314,7 +1314,7 @@ class baseUndoer:
             
         # New in 4.4a3: Almost any change could change an icon,
         # So we always request a redraw.
-        c.frame.bodyWantsFocus(later=True)
+        c.frame.bodyWantsFocus()
         c.redraw_now()
         u.redoing = False
         u.bead += 1
@@ -1531,10 +1531,10 @@ class baseUndoer:
             tag="redo",undoType=u.undoType)
         
         if u.newSel:
-            c.frame.bodyWantsFocus(later=False)
+            c.frame.bodyWantsFocus()
             c.frame.body.setTextSelection(u.newSel)
         if u.yview:
-            c.frame.bodyWantsFocus(later=False)
+            c.frame.bodyWantsFocus()
             c.frame.body.setYScrollPosition(u.yview)
     #@nonl
     #@-node:EKR.20040526075238.5:redoTyping
@@ -1569,7 +1569,7 @@ class baseUndoer:
     
         # New in 4.4a3: Almost any change could change an icon,
         # So we always request a redraw.
-        c.frame.bodyWantsFocus(later=True)
+        c.frame.bodyWantsFocus()
         c.redraw_now()
         u.undoing = False
         u.bead -= 1
@@ -1806,10 +1806,10 @@ class baseUndoer:
             tag="undo",undoType=u.undoType)
     
         if u.oldSel:
-            c.frame.bodyWantsFocus(later=False)
+            c.frame.bodyWantsFocus()
             c.frame.body.setTextSelection(u.oldSel)
         if u.yview:
-            c.frame.bodyWantsFocus(later=False)
+            c.frame.bodyWantsFocus()
             c.frame.body.setYScrollPosition(u.yview)
     #@nonl
     #@-node:EKR.20040526090701.4:undoTyping

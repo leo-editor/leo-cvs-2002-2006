@@ -2044,7 +2044,7 @@ class leoTkinterTree (leoFrame.leoTree):
                     self.editLabel(p)
                 else:
                     # Set the focus immediately.  This is essential for proper editing.
-                    c.frame.treeWantsFocus(later=False)
+                    c.frame.treeWantsFocus()
             else:
                 # g.trace("not current")
                 self.select(p)
@@ -2327,7 +2327,7 @@ class leoTkinterTree (leoFrame.leoTree):
         menu.post(event.x_root, event.y_root)
     
         # Set the focus immediately so we know when we lose it.
-        c.frame.widgetWantsFocus(menu,later=False)
+        c.frame.widgetWantsFocus(menu)
     #@nonl
     #@-node:ekr.20040803072955.116:showPopupMenu
     #@-node:ekr.20040803072955.110:tree.OnPopup & allies
@@ -2606,7 +2606,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; w = p.edit_widget()
     
         if p and w:
-            c.frame.widgetWantsFocus(w,later=False) ## 4.4b2
+            c.frame.widgetWantsFocus(w)
             self.setEditHeadlineColors(p)
             w.tag_remove("sel","1.0","end")
             w.tag_add("sel","1.0","end")

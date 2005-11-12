@@ -2729,7 +2729,14 @@ def set_focus(self,c,w):
     if w:
         if 0:
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(8))
+            g.trace('GUI',name,g.callers(9))
+            
+        if 0:
+            w2 = c.frame.outerFrame.focus_get()
+            name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
+            w2 and g.trace(name2)
+
+        w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -2738,8 +2745,7 @@ def widget_wants_focus(self,c,widget):
 
     """Indicate that a widget want to get focus."""
     
-    if c:
-        c.frame.widgetWantsFocus(widget,True)
+    c and c.frame.widgetWantsFocus(widget)
         
 widgetWantsFocus = widget_wants_focus
 #@nonl
@@ -3224,7 +3230,7 @@ def changeSelection(self):
     # Update the selection for the next match.
     gui.setSelectionRangeWithLength(t,start,len(self.change_text))
     newSel = gui.getTextSelection(t)
-    c.frame.widgetWantsFocus(t,later=False)
+    c.frame.widgetWantsFocus(t)
 
     c.beginUpdate()
     try:
@@ -3269,19 +3275,19 @@ def insertHeadlineTime (self):
 #@+node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
 def focusToBody (self,event):
     
-    self.c.frame.bodyWantsFocus(later=True)
+    self.c.frame.bodyWantsFocus()
 
 def focusToLog (self,event):
 
-    self.c.frame.logWantsFocus(later=True)
+    self.c.frame.logWantsFocus()
     
 def focusToMinibuffer (self,event):
     
-    self.c.frame.minibufferWantsFocus(later=True)
+    self.c.frame.minibufferWantsFocus()
 
 def focusToTree (self,event):
     
-    self.c.frame.treeWantsFocus(later=True)
+    self.c.frame.treeWantsFocus()
 #@nonl
 #@-node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
 #@+node:ekr.20051022144825.1:cycleFocus
@@ -3308,7 +3314,7 @@ def cycleFocus (self,event):
         pane = body
         
     # g.trace(pane)
-    frame.set_focus(pane,later=True)
+    frame.set_focus(pane)
 #@nonl
 #@-node:ekr.20051022144825.1:cycleFocus
 #@-node:ekr.20051022142249:focus (editCommandsClass)
@@ -3379,17 +3385,19 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
     
     if frame.wantedWidget:
         w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
+        name = hasattr(w,'_name') and w._name or ''
+        w2 = g.app.gui.get_focus(frame)
+        name2 = hasattr(w2,'_name') and w2._name or ''
+        # if name != name2: g.trace(name2,'->',name,g.callers(7))
         # It is possible that w no longer exists.
         try:
             g.app.gui.set_focus(c,w)
         except Exception:
             g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        # Essential: otherwise only calls to xWantsWidget would be honored.
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
@@ -4817,7 +4825,7 @@ if p == c.currentPosition():
         self.editLabel(p)
     else:
         # Set the focus immediately.  This is essential for proper editing.
-        c.frame.treeWantsFocus(later=False)
+        c.frame.treeWantsFocus()
 else:
     # g.trace("not current")
     self.select(p)
@@ -5084,7 +5092,7 @@ def showPopupMenu (self,event):
     menu.post(event.x_root, event.y_root)
 
     # Set the focus immediately so we know when we lose it.
-    c.frame.widgetWantsFocus(menu,later=False)
+    c.frame.widgetWantsFocus(menu)
 #@nonl
 #@-node:ekr.20040803072955.116:showPopupMenu
 #@-node:ekr.20040803072955.110:tree.OnPopup & allies
@@ -5239,7 +5247,7 @@ def setEditLabelState (self,p): # selected, editing
     c = self.c ; w = p.edit_widget()
 
     if p and w:
-        c.frame.widgetWantsFocus(w,later=False) ## 4.4b2
+        c.frame.widgetWantsFocus(w)
         self.setEditHeadlineColors(p)
         w.tag_remove("sel","1.0","end")
         w.tag_add("sel","1.0","end")
@@ -5775,83 +5783,7 @@ w.delete("insert -%dc" % (max(1,count)),"insert")
 #@-node:ekr.20031218072017.1320:body key handlers
 #@-node:ekr.20051105090649:Event handlers
 #@+node:ekr.20051022152427:Focus
-#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
-@ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
-
-Important: This code never calls select, so there can be no race condition here
-that alters text improperly.
-#@nonl
-#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
-@ All these do the same thing, but separate names are good for tracing and
-makes the intent of the code clearer.
-@c 
-
-def bodyWantsFocus(self,later=True):
-    if self.body and self.body.bodyCtrl:
-        self.set_focus(self.body.bodyCtrl,later=later)
-        
-def headlineWantsFocus(self,p,later=True):
-    w = p and p.edit_widget()
-    if w:
-        self.set_focus(w,later=later)
-    
-def logWantsFocus(self,later=True):
-    if self.log and self.log.logCtrl:
-        self.set_focus(self.log.logCtrl,later=later)
-
-def minibufferWantsFocus(self,later=True):
-    # Important! We must preserve body selection!
-    if 1:
-        self.bodyWantsFocus(later=later)
-    else:
-        if self.c.miniBufferWidget:
-            self.set_focus(self.c.miniBufferWidget,later=later)
-
-def treeWantsFocus(self,later=True):
-    if self.tree and self.tree.canvas:
-        self.set_focus(self.tree.canvas,later=later)
-    
-def widgetWantsFocus(self,widget,later=True):
-    if widget:
-        self.set_focus(widget,later=later)
-#@nonl
-#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
-#@+node:ekr.20050120092028.1:set_focus (tkFrame)
-# New in Leo 4.4a3: nothing happens at idle time.
-
-def set_focus(self,w,later=False):
-    
-    '''Set the focus to the widget specified in the xWantsFocus methods.'''
-
-    c = self.c
-
-    if 0: # A *very* effective trace.
-        name = w and hasattr(w,'_name') and w._name or '<no name>'
-        when = g.choose(later,'   ','NOW')
-        g.trace(when,name,g.callers(7)) 
-
-    if w:
-        self.wantedWidget = w
-            # Set this even if we call g.app.gui.set_focus.
-        if not later:
-            g.app.gui.set_focus(c,w)
-#@nonl
-#@-node:ekr.20050120092028.1:set_focus (tkFrame)
-#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
-#@+node:ekr.20031218072017.2373:set_focus (app.gui)
-def set_focus(self,c,w):
-    
-    __pychecker__ = '--no-argsused' # c not used at present.
-    
-    """Put the focus on the widget."""
-    
-    if w:
-        if 0:
-            name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(8))
-        w.focus_set()
-#@nonl
-#@-node:ekr.20031218072017.2373:set_focus (app.gui)
+#@clone 2
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
@@ -5859,17 +5791,19 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
     
     if frame.wantedWidget:
         w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
+        name = hasattr(w,'_name') and w._name or ''
+        w2 = g.app.gui.get_focus(frame)
+        name2 = hasattr(w2,'_name') and w2._name or ''
+        # if name != name2: g.trace(name2,'->',name,g.callers(7))
         # It is possible that w no longer exists.
         try:
             g.app.gui.set_focus(c,w)
         except Exception:
             g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        # Essential: otherwise only calls to xWantsWidget would be honored.
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
@@ -5892,132 +5826,81 @@ def setFocusHelper (self):
         g.app.gui.set_focus(c,frame.body.bodyCtrl)
 #@nonl
 #@-node:ekr.20051103114520.1:c.setFocusHelper
-#@+node:ekr.20031218072017.2997:c.selectPosition
-def selectPosition(self,p,updateBeadList=True):
-    
-    """Select a new position."""
+#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+@ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
 
-    c = self
-    c.frame.tree.select(p,updateBeadList)
-
-selectVnode = selectPosition
+Important: This code never calls select, so there can be no race condition here
+that alters text improperly.
 #@nonl
-#@-node:ekr.20031218072017.2997:c.selectPosition
-#@+node:ekr.20040803072955.128:tree.select
-# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
-
-def select (self,p,updateBeadList=True):
-    
-    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
-    
-    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
-    old_p = c.currentPosition()
-    if not p or not p.exists(c): return # Not an error.
-
-    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        << unselect the old node >>
-
-    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        << select the new node >>
-        if p and p != old_p: # Suppress duplicate call.
-            try: # may fail during initialization.
-                # p is NOT c.currentPosition() here!
-                self.canvas.update_idletasks() # Essential.
-                self.scrollTo(p)
-            except Exception: pass
-        << update c.beadList or c.beadPointer >>
-        << update c.visitedList >>
-
-    << set the current node >>
-    
-    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-#@nonl
-#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
-# Remember the position of the scrollbar before making any changes.
-if old_p:
-
-    yview=body.yview()
-    insertSpot = c.frame.body.getInsertionPoint()
-    
-    if old_p != p:
-        self.endEditLabel() # sets editPosition = None
-        self.setUnselectedLabelState(old_p)
-    
-    if old_p.edit_widget():
-        old_p.v.t.scrollBarSpot = yview
-        old_p.v.t.insertSpot = insertSpot
-#@nonl
-#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
-#@+node:ekr.20040803072955.130:<< select the new node >>
-# Bug fix: we must always set this, even if we never edit the node.
-self.revertHeadline = p.headString()
-
-frame.setWrap(p)
-
-# Always do this.  Otherwise there can be problems with trailing hewlines.
-s = g.toUnicode(p.v.t.bodyString,"utf-8")
-self.setText(body,s)
-
-# We must do a full recoloring: we may be changing context!
-self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
-
-if p.v and p.v.t.scrollBarSpot != None:
-    first,last = p.v.t.scrollBarSpot
-    body.yview("moveto",first)
-
-if p.v and p.v.t.insertSpot != None:
-    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-    c.frame.bodyCtrl.see(p.v.t.insertSpot)
-else:
-    c.frame.bodyCtrl.mark_set("insert","1.0")
-    
-# g.trace("select:",p.headString())
-#@nonl
-#@-node:ekr.20040803072955.130:<< select the new node >>
-#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
-if updateBeadList:
-    
-    if c.beadPointer > -1:
-        present_p = c.beadList[c.beadPointer]
-    else:
-        present_p = c.nullPosition()
-    
-    if p != present_p:
-        # Replace the tail of c.beadList by c and make c the present node.
-        # print "updating c.beadList"
-        c.beadPointer += 1
-        c.beadList[c.beadPointer:] = []
-        c.beadList.append(p.copy())
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
+def bodyWantsFocus(self):
+    w = self.body and self.body.bodyCtrl
+    self.set_focus(w)
         
-    # g.trace(c.beadPointer,p,present_p)
+def headlineWantsFocus(self,p):
+    w = p and p.edit_widget()
+    self.set_focus(w)
+    
+def logWantsFocus(self):
+    w = self.log and self.log.logCtrl
+    self.set_focus(w)
+
+def minibufferWantsFocus(self):
+    # Important! We must preserve body selection!
+    if 1:
+        self.bodyWantsFocus()
+    else:
+        w = self.c.miniBufferWidget
+        self.set_focus(w)
+
+def treeWantsFocus(self):
+    w = self.tree and self.tree.canvas
+    self.set_focus(w)
+    
+def widgetWantsFocus(self,w):
+    self.set_focus(w)
 #@nonl
-#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
-#@+node:ekr.20040803072955.132:<< update c.visitedList >>
-# Make p the most recently visited position on the list.
-if p in c.visitedList:
-    c.visitedList.remove(p)
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+# New in Leo 4.4a3: nothing happens at idle time.
 
-c.visitedList.insert(0,p.copy())
+def set_focus(self,w):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+
+    if 0: # A *very* effective trace.
+        name = w and hasattr(w,'_name') and w._name or '<no name>'
+        g.trace(name,g.callers(7)) 
+
+    if w:
+        self.wantedWidget = w
+        g.app.gui.set_focus(c,w)
 #@nonl
-#@-node:ekr.20040803072955.132:<< update c.visitedList >>
-#@+node:ekr.20040803072955.133:<< set the current node >>
-c.setCurrentPosition(p)
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
+#@+node:ekr.20031218072017.2373:set_focus (app.gui)
+def set_focus(self,c,w):
+    
+    __pychecker__ = '--no-argsused' # c not used at present.
+    
+    """Put the focus on the widget."""
+    
+    if w:
+        if 0:
+            name = hasattr(w,'_name') and w._name or '<no name>'
+            g.trace('GUI',name,g.callers(9))
+            
+        if 0:
+            w2 = c.frame.outerFrame.focus_get()
+            name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
+            w2 and g.trace(name2)
 
-if p != old_p:
-    self.setSelectedLabelState(p)
-
-frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
-
-if self.stayInTree:
-    c.frame.treeWantsFocus()
-else:
-    frame.bodyWantsFocus()
+        w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+        w.focus_set()
 #@nonl
-#@-node:ekr.20040803072955.133:<< set the current node >>
-#@-node:ekr.20040803072955.128:tree.select
+#@-node:ekr.20031218072017.2373:set_focus (app.gui)
 #@-node:ekr.20051022152427:Focus
 #@+node:ekr.20051104100739:Idle Time
 #@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
@@ -6089,44 +5972,38 @@ Important: This code never calls select, so there can be no race condition here
 that alters text improperly.
 #@nonl
 #@+node:ekr.20050120092028:xWantsFocus (tkFrame)
-@ All these do the same thing, but separate names are good for tracing and
-makes the intent of the code clearer.
-@c 
-
-def bodyWantsFocus(self,later=True):
-    if self.body and self.body.bodyCtrl:
-        self.set_focus(self.body.bodyCtrl,later=later)
+def bodyWantsFocus(self):
+    w = self.body and self.body.bodyCtrl
+    self.set_focus(w)
         
-def headlineWantsFocus(self,p,later=True):
+def headlineWantsFocus(self,p):
     w = p and p.edit_widget()
-    if w:
-        self.set_focus(w,later=later)
+    self.set_focus(w)
     
-def logWantsFocus(self,later=True):
-    if self.log and self.log.logCtrl:
-        self.set_focus(self.log.logCtrl,later=later)
+def logWantsFocus(self):
+    w = self.log and self.log.logCtrl
+    self.set_focus(w)
 
-def minibufferWantsFocus(self,later=True):
+def minibufferWantsFocus(self):
     # Important! We must preserve body selection!
     if 1:
-        self.bodyWantsFocus(later=later)
+        self.bodyWantsFocus()
     else:
-        if self.c.miniBufferWidget:
-            self.set_focus(self.c.miniBufferWidget,later=later)
+        w = self.c.miniBufferWidget
+        self.set_focus(w)
 
-def treeWantsFocus(self,later=True):
-    if self.tree and self.tree.canvas:
-        self.set_focus(self.tree.canvas,later=later)
+def treeWantsFocus(self):
+    w = self.tree and self.tree.canvas
+    self.set_focus(w)
     
-def widgetWantsFocus(self,widget,later=True):
-    if widget:
-        self.set_focus(widget,later=later)
+def widgetWantsFocus(self,w):
+    self.set_focus(w)
 #@nonl
 #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
 #@+node:ekr.20050120092028.1:set_focus (tkFrame)
 # New in Leo 4.4a3: nothing happens at idle time.
 
-def set_focus(self,w,later=False):
+def set_focus(self,w):
     
     '''Set the focus to the widget specified in the xWantsFocus methods.'''
 
@@ -6134,14 +6011,11 @@ def set_focus(self,w,later=False):
 
     if 0: # A *very* effective trace.
         name = w and hasattr(w,'_name') and w._name or '<no name>'
-        when = g.choose(later,'   ','NOW')
-        g.trace(when,name,g.callers(7)) 
+        g.trace(name,g.callers(7)) 
 
     if w:
         self.wantedWidget = w
-            # Set this even if we call g.app.gui.set_focus.
-        if not later:
-            g.app.gui.set_focus(c,w)
+        g.app.gui.set_focus(c,w)
 #@nonl
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
 #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -6307,6 +6181,7 @@ def masterCommand (self,event,func,stroke):
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
+            c.setFocusHelper()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -6331,6 +6206,7 @@ def masterCommand (self,event,func,stroke):
         val = func(event)
         k.funcReturn = k.funcReturn or val # For unit tests.
         k.endCommand(event,commandName)
+        c.setFocusHelper()
         # g.trace('funcReturn',k.funcReturn)
         return 'break'
         
@@ -6344,6 +6220,7 @@ def masterCommand (self,event,func,stroke):
         val = self.handleDefaultChar(event)
 
     # g.trace('returns %s' % repr(val))
+    c.setFocusHelper()
     return val
 #@nonl
 #@+node:ekr.20050920085536.67:<< add character to history >>
@@ -6773,17 +6650,19 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
     
     if frame.wantedWidget:
         w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
+        name = hasattr(w,'_name') and w._name or ''
+        w2 = g.app.gui.get_focus(frame)
+        name2 = hasattr(w2,'_name') and w2._name or ''
+        # if name != name2: g.trace(name2,'->',name,g.callers(7))
         # It is possible that w no longer exists.
         try:
             g.app.gui.set_focus(c,w)
         except Exception:
             g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        # Essential: otherwise only calls to xWantsWidget would be honored.
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
@@ -6854,6 +6733,7 @@ def masterCommand (self,event,func,stroke):
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
+            c.setFocusHelper()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -6878,6 +6758,7 @@ def masterCommand (self,event,func,stroke):
         val = func(event)
         k.funcReturn = k.funcReturn or val # For unit tests.
         k.endCommand(event,commandName)
+        c.setFocusHelper()
         # g.trace('funcReturn',k.funcReturn)
         return 'break'
         
@@ -6891,6 +6772,7 @@ def masterCommand (self,event,func,stroke):
         val = self.handleDefaultChar(event)
 
     # g.trace('returns %s' % repr(val))
+    c.setFocusHelper()
     return val
 #@nonl
 #@+node:ekr.20050920085536.67:<< add character to history >>
@@ -7795,7 +7677,7 @@ s = g.toUnicode(s or '',g.app.tkEncoding)
 #@+node:ekr.20050120092028.1:set_focus (tkFrame)
 # New in Leo 4.4a3: nothing happens at idle time.
 
-def set_focus(self,w,later=False):
+def set_focus(self,w):
     
     '''Set the focus to the widget specified in the xWantsFocus methods.'''
 
@@ -7803,14 +7685,11 @@ def set_focus(self,w,later=False):
 
     if 0: # A *very* effective trace.
         name = w and hasattr(w,'_name') and w._name or '<no name>'
-        when = g.choose(later,'   ','NOW')
-        g.trace(when,name,g.callers(7)) 
+        g.trace(name,g.callers(7)) 
 
     if w:
         self.wantedWidget = w
-            # Set this even if we call g.app.gui.set_focus.
-        if not later:
-            g.app.gui.set_focus(c,w)
+        g.app.gui.set_focus(c,w)
 #@nonl
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
 #@+node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -7823,7 +7702,14 @@ def set_focus(self,c,w):
     if w:
         if 0:
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(8))
+            g.trace('GUI',name,g.callers(9))
+            
+        if 0:
+            w2 = c.frame.outerFrame.focus_get()
+            name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
+            w2 and g.trace(name2)
+
+        w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -7932,17 +7818,19 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
     
     if frame.wantedWidget:
         w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
+        name = hasattr(w,'_name') and w._name or ''
+        w2 = g.app.gui.get_focus(frame)
+        name2 = hasattr(w2,'_name') and w2._name or ''
+        # if name != name2: g.trace(name2,'->',name,g.callers(7))
         # It is possible that w no longer exists.
         try:
             g.app.gui.set_focus(c,w)
         except Exception:
             g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        # Essential: otherwise only calls to xWantsWidget would be honored.
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
@@ -8697,6 +8585,7 @@ def masterCommand (self,event,func,stroke):
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
+            c.setFocusHelper()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -8721,6 +8610,7 @@ def masterCommand (self,event,func,stroke):
         val = func(event)
         k.funcReturn = k.funcReturn or val # For unit tests.
         k.endCommand(event,commandName)
+        c.setFocusHelper()
         # g.trace('funcReturn',k.funcReturn)
         return 'break'
         
@@ -8734,6 +8624,7 @@ def masterCommand (self,event,func,stroke):
         val = self.handleDefaultChar(event)
 
     # g.trace('returns %s' % repr(val))
+    c.setFocusHelper()
     return val
 #@nonl
 #@+node:ekr.20050920085536.67:<< add character to history >>
@@ -9050,17 +8941,19 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-        
-    # g.trace(g.callers(7))
     
     if frame.wantedWidget:
         w = frame.wantedWidget
-        # g.trace(hasattr(w,'_name') and w._name or '')
+        name = hasattr(w,'_name') and w._name or ''
+        w2 = g.app.gui.get_focus(frame)
+        name2 = hasattr(w2,'_name') and w2._name or ''
+        # if name != name2: g.trace(name2,'->',name,g.callers(7))
         # It is possible that w no longer exists.
         try:
             g.app.gui.set_focus(c,w)
         except Exception:
             g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        # Essential: otherwise only calls to xWantsWidget would be honored.
         frame.wantedWidget = None
     else:
         # Force the widget to some standard place.
@@ -9794,7 +9687,7 @@ def redo (self):
         
     # New in 4.4a3: Almost any change could change an icon,
     # So we always request a redraw.
-    c.frame.bodyWantsFocus(later=True)
+    c.frame.bodyWantsFocus()
     c.redraw_now()
     u.redoing = False
     u.bead += 1
@@ -10011,10 +9904,10 @@ def redoTyping (self):
         tag="redo",undoType=u.undoType)
     
     if u.newSel:
-        c.frame.bodyWantsFocus(later=False)
+        c.frame.bodyWantsFocus()
         c.frame.body.setTextSelection(u.newSel)
     if u.yview:
-        c.frame.bodyWantsFocus(later=False)
+        c.frame.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)
 #@nonl
 #@-node:EKR.20040526075238.5:redoTyping
@@ -10049,7 +9942,7 @@ def undo (self):
 
     # New in 4.4a3: Almost any change could change an icon,
     # So we always request a redraw.
-    c.frame.bodyWantsFocus(later=True)
+    c.frame.bodyWantsFocus()
     c.redraw_now()
     u.undoing = False
     u.bead -= 1
@@ -10286,10 +10179,10 @@ def undoTyping (self):
         tag="undo",undoType=u.undoType)
 
     if u.oldSel:
-        c.frame.bodyWantsFocus(later=False)
+        c.frame.bodyWantsFocus()
         c.frame.body.setTextSelection(u.oldSel)
     if u.yview:
-        c.frame.bodyWantsFocus(later=False)
+        c.frame.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)
 #@nonl
 #@-node:EKR.20040526090701.4:undoTyping

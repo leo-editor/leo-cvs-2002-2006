@@ -20,6 +20,14 @@ if not ok:
     g.es("not found: %s" % name)
 #@nonl
 #@-node:ekr.20050130152155:@button plugins.leo
+#@+node:ekr.20051111075012:@button scripts.leo
+name = "scripts.leo"
+fileName = g.os_path_join(g.app.loadDir,"..","scripts",name)
+ok,frame = g.openWithFileName(fileName,c)
+if not ok:
+    g.es("not found: %s" % name)
+#@nonl
+#@-node:ekr.20051111075012:@button scripts.leo
 #@+node:ekr.20051025070441:@button Beautify
 c.prettyPrintPythonNode()
 #@nonl

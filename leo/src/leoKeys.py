@@ -1109,6 +1109,7 @@ class keyHandlerClass:
         if k.inState():
             if not special: # Don't pass these on.
                 k.callStateFunction(event) # Calls end-command.
+                c.setFocusHelper()
             return 'break'
     
         # if k.keystrokeFunctionDict.has_key(stroke):
@@ -1133,6 +1134,7 @@ class keyHandlerClass:
             val = func(event)
             k.funcReturn = k.funcReturn or val # For unit tests.
             k.endCommand(event,commandName)
+            c.setFocusHelper()
             # g.trace('funcReturn',k.funcReturn)
             return 'break'
             
@@ -1146,6 +1148,7 @@ class keyHandlerClass:
             val = self.handleDefaultChar(event)
     
         # g.trace('returns %s' % repr(val))
+        c.setFocusHelper()
         return val
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction
@@ -1238,10 +1241,10 @@ class keyHandlerClass:
             k.mb_tabList = []
             k.updateLabel(event)
             k.mb_tabListPrefix = k.getLabel()
-            c.frame.minibufferWantsFocus(later=True)
+            c.frame.minibufferWantsFocus()
             # g.trace('new prefix',k.mb_tabListPrefix)
         if keysym != 'Return':
-            c.frame.minibufferWantsFocus(later=True)
+            c.frame.minibufferWantsFocus()
         return 'break'
     #@+node:ekr.20050920085536.45:callAltXFunction
     def callAltXFunction (self,event):
@@ -2019,7 +2022,7 @@ class keyHandlerClass:
     
         if self.useTextWidget:
             if w:
-                k.c.frame.minibufferWantsFocus(later=False)
+                k.c.frame.minibufferWantsFocus()
                 w.update_idletasks()
                 w.delete('1.0','end') ; w.insert('1.0',s)
         else:
@@ -2160,9 +2163,7 @@ class keyHandlerClass:
     def forceFocusToBody (self):
         
         k = self ; c = k.c
-        
-        # Later=False does not always work.
-        c.frame.bodyWantsFocus(later=True)
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051012092847:forceFocusToBody
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name

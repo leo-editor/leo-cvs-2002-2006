@@ -515,7 +515,7 @@ class leoFind:
         # Update the selection for the next match.
         gui.setSelectionRangeWithLength(t,start,len(self.change_text))
         newSel = gui.getTextSelection(t)
-        c.frame.widgetWantsFocus(t,later=False)
+        c.frame.widgetWantsFocus(t)
     
         c.beginUpdate()
         try:
@@ -638,11 +638,7 @@ class leoFind:
         else:
             data = self.save()
     
-        c.beginUpdate()
-        try:
-            pos, newpos = self.findNextMatch()
-        finally:
-            c.endUpdate(False) # Inhibit redraws so that headline remains selected.
+        pos, newpos = self.findNextMatch()
     
         if pos:
             self.showSuccess(pos,newpos)
@@ -935,7 +931,7 @@ class leoFind:
             sel = gui.getTextSelection(t)
         pos = gui.getInsertPoint(t)
         st = self.initNextText()
-        c.frame.widgetWantsFocus(t,later=False)
+        c.frame.widgetWantsFocus(t)
         gui.setInsertPoint(st,pos)
         if sel:
             self.selStart,self.selEnd = sel
@@ -977,14 +973,11 @@ class leoFind:
         c.frame.bringToFront() # Needed on the Mac
     
         # Don't try to reedit headline.
-        c.selectVnode(p)
+        c.selectPosition(p)
         if not in_headline:
     
-            if 0: # Looks bad.
-                gui.setSelectionRange(t,start,end)
-            else: # Looks good and provides clear indication of failure or termination.
-                gui.setSelectionRange(t,insert,insert)
-    
+            # Looks good and provides clear indication of failure or termination.
+            gui.setSelectionRange(t,insert,insert)
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
             c.frame.widgetWantsFocus(t)
@@ -1028,7 +1021,7 @@ class leoFind:
         if self.reverse:
             gui.setInsertPoint(t,pos)
         gui.makeIndexVisible(t,insert)
-        c.frame.widgetWantsFocus(t,later=False)
+        c.frame.widgetWantsFocus(t)
         if self.wrap and not self.wrapPosition:
             self.wrapPosition = self.p
     #@nonl

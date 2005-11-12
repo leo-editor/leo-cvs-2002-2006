@@ -1631,7 +1631,7 @@ class baseCommands:
             c.frame.body.setInsertionPointToEnd()
             g.es("%d lines" % len(lines), color="blue")
         
-        c.frame.bodyWantsFocus(later=False)
+        c.frame.bodyWantsFocus()
         c.frame.body.makeInsertPointVisible()
         #@nonl
         #@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
@@ -5369,17 +5369,19 @@ class baseCommands:
         
         if g.app.quitting or not hasattr(frame,'top'):
             return # nullFrame's do not have a top frame.
-            
-        # g.trace(g.callers(7))
         
         if frame.wantedWidget:
             w = frame.wantedWidget
-            # g.trace(hasattr(w,'_name') and w._name or '')
+            name = hasattr(w,'_name') and w._name or ''
+            w2 = g.app.gui.get_focus(frame)
+            name2 = hasattr(w2,'_name') and w2._name or ''
+            # if name != name2: g.trace(name2,'->',name,g.callers(7))
             # It is possible that w no longer exists.
             try:
                 g.app.gui.set_focus(c,w)
             except Exception:
                 g.app.gui.set_focus(c,frame.body.bodyCtrl)
+            # Essential: otherwise only calls to xWantsWidget would be honored.
             frame.wantedWidget = None
         else:
             # Force the widget to some standard place.

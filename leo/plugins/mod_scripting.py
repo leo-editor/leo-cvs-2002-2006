@@ -445,7 +445,7 @@ class scriptingController:
         else:
             g.es("disabled @script: %s" % (name),color="blue")
     
-        c.frame.bodyWantsFocus(later=True)
+        c.frame.bodyWantsFocus()
         if 0:
             # Do not assume the script will want to remain in this commander.
             c.updateScreen()

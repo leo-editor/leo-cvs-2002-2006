@@ -26,10 +26,15 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
+- Clean up xWantsFocus.
+    - Remove later arg.
+
 - Remove aliases for drawing methods.
     - Make sure to clean leoPlugins.leo and scripts.leo.
 
 - Revise docs for c.begin/endUpdate.
+
+- Test search with Mark Find checked.
 #@nonl
 #@+node:ekr.20051103092502:Update screen shots
 #@-node:ekr.20051103092502:Update screen shots
@@ -552,7 +557,7 @@ ftxt.pack(side="right", expand=1, fill="x")
 #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
 def setFocus(w):
     c = self.c
-    c.frame.widgetWantsFocus(w,later=False)
+    c.frame.widgetWantsFocus(w)
     g.app.gui.setSelectionRange(w,"1.0","1.0")
     return "break"
     
@@ -826,7 +831,7 @@ def bringToFront (self):
     c = self.c ; t = self.find_ctrl
         
     # The widget must have focus before we can adjust the text.
-    c.frame.widgetWantsFocus(t,later=False)
+    c.frame.widgetWantsFocus(t)
     
     # Delete one trailing newline.
     s = t.get('1.0','end')
@@ -837,7 +842,7 @@ def bringToFront (self):
     g.app.gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
     
     # This is also needed.
-    c.frame.widgetWantsFocus(t,later=True)
+    c.frame.widgetWantsFocus(t)
 #@nonl
 #@-node:ekr.20051020120306.26:bringToFront
 #@+node:ekr.20051020120306.27:selectAllFindText
@@ -1865,11 +1870,11 @@ def change(self,event=None):
             c.beginUpdate()
             c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
             c.endUpdate(True)
-            c.frame.widgetWantsFocus(t,later=False)
+            c.frame.widgetWantsFocus(t)
             return True
 
     # The focus must never leave the body pane.
-    c.frame.widgetWantsFocus(t,later=False)
+    c.frame.widgetWantsFocus(t)
     return False
 #@nonl
 #@-node:ekr.20051025071455.38:change
@@ -1893,7 +1898,7 @@ def find (self,event=None):
 
     if alts:
         self.fillbox(alts,word)
-        c.frame.bodyWantsFocus(later=False)
+        c.frame.bodyWantsFocus()
         # Copy the working selection range to the body pane
         start, end = g.app.gui.getTextSelection(self.workCtrl)
         g.app.gui.setTextSelection(bodyCtrl,start,end)
@@ -2074,8 +2079,7 @@ def onSelectListBox(self, event=None):
     
     c = self.c
     self.updateButtons()
-    # self.body.bodyCtrl.focus_set()
-    c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
+    c.frame.bodyWantsFocus()
 #@-node:ekr.20051025071455.50:onSelectListBox
 #@+node:ekr.20051025071455.51:update
 def update(self,show=True,fill=False):
@@ -2091,8 +2095,7 @@ def update(self,show=True,fill=False):
 
     if show:
         self.bringToFront()
-        # c.frame.body.bodyCtrl.focus_set()
-        c.frame.widgetWantsFocus(self.body.bodyCtrl,later=False)
+        c.frame.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051025071455.51:update
 #@+node:ekr.20051025071455.52:updateButtons

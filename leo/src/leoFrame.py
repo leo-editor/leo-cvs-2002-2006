@@ -514,22 +514,22 @@ class leoFrame:
         self.oops()
     #@-node:ekr.20031218072017.3682:bringToFront, deiconify, lift & update
     #@+node:ekr.20051105170852:delayedFocus
-    def bodyWantsFocus(self,later=True):
+    def bodyWantsFocus(self):
         self.oops()
             
-    def headlineWantsFocus(self,p,later=True):
+    def headlineWantsFocus(self,p):
         self.oops()
         
-    def logWantsFocus(self,later=True):
+    def logWantsFocus(self):
         self.oops()
     
-    def minibufferWantsFocus(self,later=True):
+    def minibufferWantsFocus(self):
         self.oops()
     
-    def treeWantsFocus(self,later=True):
+    def treeWantsFocus(self):
         self.oops()
         
-    def widgetWantsFocus(self,widget,later=True):
+    def widgetWantsFocus(self,widget):
         self.oops()
     #@nonl
     #@-node:ekr.20051105170852:delayedFocus
@@ -1450,22 +1450,22 @@ class nullFrame (leoFrame):
     #@nonl
     #@-node:ekr.20041130065921:deiconfy, lift, update
     #@+node:ekr.20051105170808:delayedFocus
-    def bodyWantsFocus(self,later=True):
+    def bodyWantsFocus(self):
         pass
             
-    def headlineWantsFocus(self,p,later=True):
+    def headlineWantsFocus(self,p):
         pass
         
-    def logWantsFocus(self,later=True):
+    def logWantsFocus(self):
         pass
     
-    def minibufferWantsFocus(self,later=True):
+    def minibufferWantsFocus(self):
         pass
     
-    def treeWantsFocus(self,later=True):
+    def treeWantsFocus(self):
         pass
         
-    def widgetWantsFocus(self,widget,later=True):
+    def widgetWantsFocus(self,widget):
         pass
     #@nonl
     #@-node:ekr.20051105170808:delayedFocus

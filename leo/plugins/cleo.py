@@ -458,7 +458,7 @@ class cleoController:
             w = p.edit_widget()
             
             if p and w:
-                self.frame.widgetWantsFocus(w,later=False)
+                self.frame.widgetWantsFocus(w)
                 self.setEditHeadlineColors(p)
                 w.tag_remove("sel","1.0","end")
                 w.tag_add("sel","1.0","end")
