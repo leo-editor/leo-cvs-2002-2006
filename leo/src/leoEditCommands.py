@@ -4659,7 +4659,7 @@ class findTab (leoFind.leoFind):
         self.init(c) # New in 4.3: init only once.
     #@nonl
     #@-node:ekr.20051020120306.11:__init__
-    #@+node:ekr.20051023181449:find.createBindings (findTab)
+    #@+node:ekr.20051023181449:createBindings (findTab)
     def createBindings (self):
         
         c = self.c ; k = c.keyHandler
@@ -4686,8 +4686,8 @@ class findTab (leoFind.leoFind):
             w.bind("<Key-Return>", self.findButtonCallback)
             w.bind("<Key-Escape>", self.hideTab)
     #@nonl
-    #@-node:ekr.20051023181449:find.createBindings (findTab)
-    #@+node:ekr.20051020120306.13:find.createFrame
+    #@-node:ekr.20051023181449:createBindings (findTab)
+    #@+node:ekr.20051020120306.13:createFrame (findTab)
     def createFrame (self,parentFrame):
         
         c = self.c
@@ -4700,14 +4700,17 @@ class findTab (leoFind.leoFind):
         parentFrame.configure(background=bg)
         
         self.top = Tk.Frame(parentFrame,background=bg)
-        self.frame = Tk.Frame(self.top,background=bg)
-        self.outerFrame = outer = Tk.Frame(self.frame,background=bg)
-        
-        self.top.pack   (side='top',expand=0,fill='x',pady=5)
+        self.top.pack(side='top',expand=0,fill='both',pady=5)
             # Don't expand, so the frame goes to the top.
         
-        self.frame.pack (side="top",expand=1,fill='x')
-        outer.pack      (side='top',expand=1,fill='x',padx=2,pady=2,)
+        self.outerScrolledFrame = Pmw.ScrolledFrame(
+            parentFrame,usehullsize = 1)
+        
+        self.outerFrame = outer = self.outerScrolledFrame.component('frame')
+        self.outerFrame.configure(background=bg)
+        
+        for z in ('borderframe','clipper','frame','hull'):
+            self.outerScrolledFrame.component(z).configure(relief='flat',background=bg)
         #@nonl
         #@-node:ekr.20051020120306.14:<< Create the outer frames >>
         #@nl
@@ -4736,7 +4739,7 @@ class findTab (leoFind.leoFind):
         #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
         def setFocus(w):
             c = self.c
-            c.frame.widgetWantsFocus(w)
+            c.outerFrame.widgetWantsFocus(w)
             g.app.gui.setSelectionRange(w,"1.0","1.0")
             return "break"
             
@@ -4880,11 +4883,14 @@ class findTab (leoFind.leoFind):
         #@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
         #@nl
         
+        # Pack this last so buttons don't get squashed when frame is resized.
+        self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
+    
         for w in buttons:
             w.bindHotKey(ftxt)
             w.bindHotKey(ctxt)
     #@nonl
-    #@-node:ekr.20051020120306.13:find.createFrame
+    #@-node:ekr.20051020120306.13:createFrame (findTab)
     #@+node:ekr.20051020120306.19:find.init
     def init (self,c):
     
