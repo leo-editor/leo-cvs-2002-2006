@@ -65,7 +65,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.17"
+__version__ = "0.18"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -110,6 +110,9 @@ __version__ = "0.17"
 #     - Set silent=True in the Run Script callback.
 # 0.17 EKR:
 #     - Added calls to c.updateScreen.
+# 0.18 EKR:
+#     - Removed calls to c.updateScreen and c.frame.bodyWantsFocus.
+#       These calls would shift focus improperly when opening a new window.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -328,10 +331,11 @@ class scriptingController:
         
             c = self.c
             c.executeScript(c.currentPosition(),useSelectedText=True,silent=True)
-            c.frame.bodyWantsFocus()
+            
             if 0:
                 # Do not assume the script will want to remain in this commander.
-                c.updateScreen()
+                c.frame.bodyWantsFocus()
+        #@nonl
         #@-node:EKR.20040618091543.1:<< define runScriptCommand >>
         #@nl
         #@    << define addScriptButtonCommand >>
@@ -445,10 +449,9 @@ class scriptingController:
         else:
             g.es("disabled @script: %s" % (name),color="blue")
     
-        c.frame.bodyWantsFocus()
         if 0:
             # Do not assume the script will want to remain in this commander.
-            c.updateScreen()
+            c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20041001203145:executeScriptNode
     #@+node:ekr.20041001202905:loadPlugin
@@ -511,11 +514,9 @@ class scriptingController:
             if g.app.scriptDict.get('removeMe'):
                 g.es("Removing '%s' button at its request" % buttonText)
                 b.pack_forget()
-                
-        c.frame.bodyWantsFocus()
-        if 0:
-            # Do not assume the script will want to remain in this commander.
-            c.updateScreen()
+              
+        if 0: # Do not assume the script will want to remain in this commander.
+            c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051016210846:executeScriptFromCallback
     #@-others
