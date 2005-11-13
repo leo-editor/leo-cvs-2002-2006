@@ -3257,6 +3257,7 @@ class leoTkinterLog (leoFrame.leoLog):
         self.nb.pack(fill='both',expand=1)
         self.selectTab('Log') # create the tab and make it the active tab.
         return self.logCtrl
+    #@nonl
     #@-node:ekr.20031218072017.4042:tkLog.createControl
     #@+node:ekr.20051016103459:tkLog.createTextWidget
     def createTextWidget (self,parentFrame):

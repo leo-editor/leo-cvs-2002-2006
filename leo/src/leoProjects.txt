@@ -3324,7 +3324,7 @@ def cycleFocus (self,event):
 #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 def beginUpdate(self):
     
-    c = self
+    pass
     
 def endUpdate(self, flag=True):
     
@@ -3385,7 +3385,7 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-    
+
     if frame.wantedWidget:
         w = frame.wantedWidget
         name = hasattr(w,'_name') and w._name or ''
@@ -5791,7 +5791,7 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-    
+
     if frame.wantedWidget:
         w = frame.wantedWidget
         name = hasattr(w,'_name') and w._name or ''
@@ -6589,7 +6589,7 @@ def OnPasteFromMenu (self):
 #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 def beginUpdate(self):
     
-    c = self
+    pass
     
 def endUpdate(self, flag=True):
     
@@ -6650,7 +6650,7 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-    
+
     if frame.wantedWidget:
         w = frame.wantedWidget
         name = hasattr(w,'_name') and w._name or ''
@@ -7757,7 +7757,7 @@ if n2 > n1 + 1:
 #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 def beginUpdate(self):
     
-    c = self
+    pass
     
 def endUpdate(self, flag=True):
     
@@ -7818,7 +7818,7 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-    
+
     if frame.wantedWidget:
         w = frame.wantedWidget
         name = hasattr(w,'_name') and w._name or ''
@@ -8880,7 +8880,7 @@ There are very few calls to c.reqestRedraw. Eliminate them, make tests, and the 
 #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
 def beginUpdate(self):
     
-    c = self
+    pass
     
 def endUpdate(self, flag=True):
     
@@ -8941,7 +8941,7 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-    
+
     if frame.wantedWidget:
         w = frame.wantedWidget
         name = hasattr(w,'_name') and w._name or ''
@@ -10717,6 +10717,48 @@ def OnPasteFromMenu (self):
 #@-node:ekr.20051110153307:Calls to updateScreen
 #@-node:ekr.20051110104922:(Completed transition to Newer World Order)
 #@+node:ekr.20051111065016:(Moving focus out of limbo)
+#@+node:ekr.20051103114520.1:c.setFocusHelper
+def setFocusHelper (self):
+    
+    c = self ; frame = c.frame
+    
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    if frame.wantedWidget:
+        w = frame.wantedWidget
+        name = hasattr(w,'_name') and w._name or ''
+        w2 = g.app.gui.get_focus(frame)
+        name2 = hasattr(w2,'_name') and w2._name or ''
+        # if name != name2: g.trace(name2,'->',name,g.callers(7))
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        # Essential: otherwise only calls to xWantsWidget would be honored.
+        frame.wantedWidget = None
+    else:
+        # Force the widget to some standard place.
+        w = g.app.gui.get_focus(frame)
+        if not w: return
+        # Allow clicks in enclosing window frame or in dialogs.
+        name = hasattr(w,'_name') and w._name or ''
+        if (
+            name and name[0] in string.letters # A known Leo frame.
+            or w == frame.top # The top of the Leo window
+            or g.app.dialogs > 0 # A dialog.
+            or isinstance(w,Tk.Text)
+            or isinstance(w,Tk.Entry)
+        ):
+            # g.trace('ok',hasattr(w,'_name') and w._name or '')
+            # g.app.gui.set_focus(c,w)
+            return
+        # Not a name created by Leo.
+        g.trace('setting default focus',name)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
+#@nonl
+#@-node:ekr.20051103114520.1:c.setFocusHelper
 #@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke):
 
@@ -10889,7 +10931,7 @@ def setFocusHelper (self):
     
     if g.app.quitting or not hasattr(frame,'top'):
         return # nullFrame's do not have a top frame.
-    
+
     if frame.wantedWidget:
         w = frame.wantedWidget
         name = hasattr(w,'_name') and w._name or ''
@@ -11000,6 +11042,7 @@ def set_focus(self,c,w):
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
 #@-node:ekr.20051022152427:Focus
+#@+node:ekr.20051113080509:Find methods
 #@+node:ekr.20031218072017.3089:restore
 # Restores the screen after a search fails
 
@@ -11050,6 +11093,7 @@ def showSuccess(self,pos,newpos):
         self.wrapPosition = self.p
 #@nonl
 #@-node:ekr.20031218072017.3091:showSuccess
+#@-node:ekr.20051113080509:Find methods
 #@+node:ekr.20031218072017.4039:class leoTkinterLog
 class leoTkinterLog (leoFrame.leoLog):
     
@@ -11111,6 +11155,7 @@ def createControl (self,parentFrame):
     self.nb.pack(fill='both',expand=1)
     self.selectTab('Log') # create the tab and make it the active tab.
     return self.logCtrl
+#@nonl
 #@-node:ekr.20031218072017.4042:tkLog.createControl
 #@+node:ekr.20051016103459:tkLog.createTextWidget
 def createTextWidget (self,parentFrame):
@@ -11624,6 +11669,69 @@ def getTabName (self,parentFrame,exitCallback):
 The plugin can not call bodyWantsFocus.
 #@nonl
 #@-node:ekr.20051112081213:Changed scripting plugin so files opened with buttons stay in front
+#@+node:ekr.20051113061206:(Added Clone-find)
+#@+node:ekr.20051113061206.1:Patch
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3425070
+By: rogererens
+
+These changes will have the effect that every time you press the "Find All"
+button in the Find tab, a new root node called Found: <your search pattern>
+is created holding clones of the nodes that contain the search pattern.
+It is your own responsibility to navigate to this Found: node and cleaning it
+up when it's no longer needed.
+#@nonl
+#@-node:ekr.20051113061206.1:Patch
+#@+node:ekr.20031218072017.3073:findAll
+def findAll(self):
+
+    c = self.c ; t = self.s_ctrl ; gui = g.app.gui
+    if not self.checkArgs():
+        return
+    self.initInHeadline()
+    data = self.save()
+    
+    cloneMove = True # To do: should be a checkbox.
+    if cloneMove:
+        clones = []
+        oldRoot = c.rootPosition()
+        found = oldRoot.insertAfter()
+        found.moveToRoot(oldRoot)
+        found.setHeadString('Found: ' + self.find_text)
+
+    self.initBatchCommands()
+    count = 0
+    while 1:
+        pos, newpos = self.findNextMatch()
+        if not pos: break
+        count += 1
+        line = gui.getLineContainingIndex(t,pos)
+        self.printLine(line,allFlag=True)
+        if cloneMove and self.p.v.t not in clones:
+            clones.append(self.p.v.t)
+            q = self.p.clone(self.p)
+            q.moveToLastChildOf(found)
+                
+    c.redraw()
+    g.es("found: %d matches" % (count))
+    self.restore(data)
+   
+#@nonl
+#@-node:ekr.20031218072017.3073:findAll
+#@-node:ekr.20051113061206:(Added Clone-find)
+#@+node:ekr.20051113080509.1:Removed later arg from c.frame.xWantsFocus
+@nocolor
+
+Later may never come in the Newer World Order, so everything must happen immediately.
+#@nonl
+#@-node:ekr.20051113080509.1:Removed later arg from c.frame.xWantsFocus
+#@+node:ekr.20051113082305:Replace log with text widget when getting tab name
+@nocolor
+
+This ensures that the widget is always visible.
+#@nonl
+#@-node:ekr.20051113082305:Replace log with text widget when getting tab name
 #@-node:ekr.20051110101524:4.4a4 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

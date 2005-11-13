@@ -5308,7 +5308,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
     def beginUpdate(self):
         
-        c = self
+        pass
         
     def endUpdate(self, flag=True):
         
@@ -5369,7 +5369,7 @@ class baseCommands:
         
         if g.app.quitting or not hasattr(frame,'top'):
             return # nullFrame's do not have a top frame.
-        
+    
         if frame.wantedWidget:
             w = frame.wantedWidget
             name = hasattr(w,'_name') and w._name or ''
