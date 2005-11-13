@@ -429,7 +429,7 @@ class tkinterGui(leoGui.leoGui):
             if 0:
                 w2 = c.frame.outerFrame.focus_get()
                 name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
-                w2 and g.trace(name2)
+                w2 and g.trace(name2,c)
     
             w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
             w.focus_set()
