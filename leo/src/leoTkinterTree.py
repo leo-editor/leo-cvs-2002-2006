@@ -828,6 +828,8 @@ class leoTkinterTree (leoFrame.leoTree):
         self.expandAllAncestors(c.currentPosition())
         self.redrawHelper(scroll=scroll)
         self.canvas.update_idletasks() # Important for unit tests.
+        
+    redraw = redraw_now # Compatibility
     #@nonl
     #@+node:ekr.20040803072955.59:redrawHelper
     def redrawHelper (self,scroll=True):
@@ -2482,20 +2484,21 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.128:tree.select
     # Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
     
-    def select (self,p,updateBeadList=True):
+    def select (self,p,updateBeadList=True,redraw_flag=True):
         
         '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
         
         c = self.c ; frame = c.frame ; body = frame.bodyCtrl
         old_p = c.currentPosition()
         if not p or not p.exists(c): return # Not an error.
+        
+        # g.trace(redraw_flag,g.callers(7))
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-            #@        << unselect the old node >>
-            #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
-            # Remember the position of the scrollbar before making any changes.
-            if old_p:
-            
+            if old_p and redraw_flag:
+                #@            << unselect the old node >>
+                #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+                # Remember the position of the scrollbar before making any changes.
                 yview=body.yview()
                 insertSpot = c.frame.body.getInsertionPoint()
                 
@@ -2506,94 +2509,95 @@ class leoTkinterTree (leoFrame.leoTree):
                 if old_p.edit_widget():
                     old_p.v.t.scrollBarSpot = yview
                     old_p.v.t.insertSpot = insertSpot
-            #@nonl
-            #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
-            #@nl
+                #@nonl
+                #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+                #@nl
     
         g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
         
         if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-            #@        << select the new node >>
-            #@+node:ekr.20040803072955.130:<< select the new node >>
-            # Bug fix: we must always set this, even if we never edit the node.
-            self.revertHeadline = p.headString()
-            
-            frame.setWrap(p)
-            
-            # Always do this.  Otherwise there can be problems with trailing hewlines.
-            s = g.toUnicode(p.v.t.bodyString,"utf-8")
-            self.setText(body,s)
-            
-            # We must do a full recoloring: we may be changing context!
-            self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
-            
-            if p.v and p.v.t.scrollBarSpot != None:
-                first,last = p.v.t.scrollBarSpot
-                body.yview("moveto",first)
-            
-            if p.v and p.v.t.insertSpot != None:
-                c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-                c.frame.bodyCtrl.see(p.v.t.insertSpot)
-            else:
-                c.frame.bodyCtrl.mark_set("insert","1.0")
+            if redraw_flag:
+                #@            << select the new node >>
+                #@+node:ekr.20040803072955.130:<< select the new node >>
+                # Bug fix: we must always set this, even if we never edit the node.
+                self.revertHeadline = p.headString()
                 
-            # g.trace("select:",p.headString())
-            #@nonl
-            #@-node:ekr.20040803072955.130:<< select the new node >>
-            #@nl
-            if p and p != old_p: # Suppress duplicate call.
-                try: # may fail during initialization.
-                    # p is NOT c.currentPosition() here!
-                    self.canvas.update_idletasks() # Essential.
-                    self.scrollTo(p)
-                except Exception: pass
-            #@        << update c.beadList or c.beadPointer >>
-            #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
-            if updateBeadList:
-                
-                if c.beadPointer > -1:
-                    present_p = c.beadList[c.beadPointer]
-                else:
-                    present_p = c.nullPosition()
-                
-                if p != present_p:
-                    # Replace the tail of c.beadList by c and make c the present node.
-                    # print "updating c.beadList"
-                    c.beadPointer += 1
-                    c.beadList[c.beadPointer:] = []
-                    c.beadList.append(p.copy())
+                frame.setWrap(p)
                     
-                # g.trace(c.beadPointer,p,present_p)
-            #@nonl
-            #@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
-            #@nl
-            #@        << update c.visitedList >>
-            #@+node:ekr.20040803072955.132:<< update c.visitedList >>
-            # Make p the most recently visited position on the list.
-            if p in c.visitedList:
-                c.visitedList.remove(p)
-            
-            c.visitedList.insert(0,p.copy())
-            #@nonl
-            #@-node:ekr.20040803072955.132:<< update c.visitedList >>
-            #@nl
+                # Always do this.  Otherwise there can be problems with trailing hewlines.
+                s = g.toUnicode(p.v.t.bodyString,"utf-8")
+                self.setText(body,s)
+                
+                # We must do a full recoloring: we may be changing context!
+                self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+                
+                if p.v and p.v.t.scrollBarSpot != None:
+                    first,last = p.v.t.scrollBarSpot
+                    body.yview("moveto",first)
+                
+                if p.v and p.v.t.insertSpot != None:
+                    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+                    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+                else:
+                    c.frame.bodyCtrl.mark_set("insert","1.0")
+                    
+                # g.trace("select:",p.headString())
+                #@nonl
+                #@-node:ekr.20040803072955.130:<< select the new node >>
+                #@nl
+                if p and p != old_p: # Suppress duplicate call.
+                    try: # may fail during initialization.
+                        # p is NOT c.currentPosition() here!
+                        self.canvas.update_idletasks() # Essential.
+                        self.scrollTo(p)
+                    except Exception: pass
+                #@            << update c.beadList or c.beadPointer >>
+                #@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+                if updateBeadList:
+                    
+                    if c.beadPointer > -1:
+                        present_p = c.beadList[c.beadPointer]
+                    else:
+                        present_p = c.nullPosition()
+                    
+                    if p != present_p:
+                        # Replace the tail of c.beadList by c and make c the present node.
+                        # print "updating c.beadList"
+                        c.beadPointer += 1
+                        c.beadList[c.beadPointer:] = []
+                        c.beadList.append(p.copy())
+                        
+                    # g.trace(c.beadPointer,p,present_p)
+                #@nonl
+                #@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+                #@nl
+                #@            << update c.visitedList >>
+                #@+node:ekr.20040803072955.132:<< update c.visitedList >>
+                # Make p the most recently visited position on the list.
+                if p in c.visitedList:
+                    c.visitedList.remove(p)
+                
+                c.visitedList.insert(0,p.copy())
+                #@nonl
+                #@-node:ekr.20040803072955.132:<< update c.visitedList >>
+                #@nl
     
-        #@    << set the current node >>
-        #@+node:ekr.20040803072955.133:<< set the current node >>
         c.setCurrentPosition(p)
-        
-        if p != old_p:
-            self.setSelectedLabelState(p)
-        
-        frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
-        
-        if self.stayInTree:
-            c.frame.treeWantsFocus()
-        else:
-            frame.bodyWantsFocus()
-        #@nonl
-        #@-node:ekr.20040803072955.133:<< set the current node >>
-        #@nl
+        if redraw_flag:
+            #@        << set the current node >>
+            #@+node:ekr.20040803072955.133:<< set the current node >>
+            if p != old_p and redraw_flag:
+                self.setSelectedLabelState(p)
+            
+            frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+            
+            if self.stayInTree:
+                c.frame.treeWantsFocus()
+            else:
+                frame.bodyWantsFocus()
+            #@nonl
+            #@-node:ekr.20040803072955.133:<< set the current node >>
+            #@nl
         
         g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
         g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
