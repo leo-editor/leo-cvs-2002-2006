@@ -2599,22 +2599,17 @@ class position (object):
     #@-at
     #@@c
     
-    def doDelete (self,newPosition):
+    def doDelete (self):
     
         """Deletes position p from the outline.  May be undone.
     
         Returns newPosition."""
     
         p = self ; c = p.c
-    
-        assert(newPosition != p)
         p.setDirty() # Mark @file nodes dirty!
         p.unlink()
         p.deleteLinksInTree()
-        c.selectVnode(newPosition)
-        
-        return newPosition
-    
+    #@nonl
     #@-node:ekr.20040303175026.2:p.doDelete
     #@+node:ekr.20040303175026.3:p.insertAfter
     def insertAfter (self,t=None):
