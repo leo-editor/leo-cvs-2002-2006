@@ -126,7 +126,7 @@ class leoFind:
         #@nl
         
         self.intKeys = [
-            "batch", "ignore_case", "node_only",
+            "batch", "clone_find_all","ignore_case", "node_only",
             "pattern_match", "search_headline", "search_body",
             "suboutline_only", "mark_changes", "mark_finds", "reverse",
             "script_search","script_change","selection_only",
@@ -601,37 +601,50 @@ class leoFind:
     #@+node:ekr.20031218072017.3073:findAll
     def findAll(self):
     
-        c = self.c ; t = self.s_ctrl ; gui = g.app.gui
+        c = self.c ; t = self.s_ctrl ; u = c.undoer
+        gui = g.app.gui ; undoType = 'Clone Find All'
         if not self.checkArgs():
             return
         self.initInHeadline()
         data = self.save()
-        
-        cloneMove = True # To do: should be a checkbox.
-        if cloneMove:
-            clones = []
-            oldRoot = c.rootPosition()
-            found = oldRoot.insertAfter()
-            found.moveToRoot(oldRoot)
-            found.setHeadString('Found: ' + self.find_text)
-    
         self.initBatchCommands()
-        count = 0
+        count = 0 ; clones = []
         while 1:
             pos, newpos = self.findNextMatch()
             if not pos: break
             count += 1
             line = gui.getLineContainingIndex(t,pos)
             self.printLine(line,allFlag=True)
-            if cloneMove and self.p.v.t not in clones:
+            if self.clone_find_all and self.p.v.t not in clones:
+                if not clones:
+                    #@                << create the found node and begin the undo group >>
+                    #@+node:ekr.20051113110735:<< create the found node and begin the undo group >>
+                    u.beforeChangeGroup(c.currentPosition(),undoType)
+                    undoData = u.beforeInsertNode(c.currentPosition())
+                    oldRoot = c.rootPosition()
+                    found = oldRoot.insertAfter()
+                    found.moveToRoot(oldRoot)
+                    found.setHeadString('Found: ' + self.find_text)
+                    u.afterInsertNode(found,undoType,undoData,dirtyVnodeList=[])
+                    #@nonl
+                    #@-node:ekr.20051113110735:<< create the found node and begin the undo group >>
+                    #@nl
+                #@            << create a clone of p under the find node >>
+                #@+node:ekr.20051113110851:<< create a clone of p under the find node >>
                 clones.append(self.p.v.t)
+                undoData = u.beforeCloneNode(self.p)
                 q = self.p.clone(self.p)
                 q.moveToLastChildOf(found)
-                    
+                u.afterCloneNode(q,undoType,undoData,dirtyVnodeList=[])
+                #@nonl
+                #@-node:ekr.20051113110851:<< create a clone of p under the find node >>
+                #@nl
+        if self.clone_find_all and clones:
+            c.setChanged(True)
+            u.afterChangeGroup(c.currentPosition(),undoType,reportFlag=True)   
         c.redraw()
         g.es("found: %d matches" % (count))
         self.restore(data)
-       
     #@nonl
     #@-node:ekr.20031218072017.3073:findAll
     #@+node:ekr.20031218072017.3074:findNext
