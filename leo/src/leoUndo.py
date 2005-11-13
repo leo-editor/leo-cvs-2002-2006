@@ -1343,8 +1343,8 @@ class baseUndoer:
         else:
             oldRoot = c.rootPosition()
             u.newP.linkAsRoot(oldRoot)
-    
-        c.selectPosition(u.newP)
+            
+        c.selectPosition(u.newP,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050412083057:redoCloneNode
     #@+node:EKR.20040526072519.2:redoDeleteNode
@@ -1352,9 +1352,9 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.p)
-        c.deleteOutline()
-        c.selectPosition(u.newP)
+        c.selectPosition(u.p,redraw_flag=False)
+        c.deleteOutline(redraw_flag=False)
+        c.selectPosition(u.newP,redraw_flag=False)
     #@nonl
     #@-node:EKR.20040526072519.2:redoDeleteNode
     #@+node:ekr.20050412084532:redoInsertNode
@@ -1387,8 +1387,8 @@ class baseUndoer:
                     t.setTnodeText(bunch.body)
                     t.setHeadString(bunch.head)
                 # g.trace(t,bunch.head,bunch.body)
-    
-        c.selectPosition(u.newP)
+                
+        c.selectPosition(u.newP,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050412084532:redoInsertNode
     #@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
@@ -1396,14 +1396,14 @@ class baseUndoer:
         
         u = self ; c = u.c
         
-        c.selectPosition(u.p)
+        c.selectPosition(u.p,redraw_flag=False)
         c.hoist()
         
     def redoDehoistNode (self):
         
         u = self ; c = u.c
         
-        c.selectPosition(u.p)
+        c.selectPosition(u.p,redraw_flag=False)
         c.dehoist()
     #@nonl
     #@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
@@ -1470,9 +1470,7 @@ class baseUndoer:
         for v in u.dirtyVnodeList:
             v.t.setDirty()
         
-        # Selecting can scroll the tree which causes flash.
-        if u.groupCount == 0:
-            c.selectPosition(u.p)
+        c.selectPosition(u.p,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050526125801:redoMark
     #@+node:ekr.20050411111847:redoMove
@@ -1495,9 +1493,7 @@ class baseUndoer:
         for v in u.dirtyVnodeList:
             v.t.setDirty()
             
-        # Selecting can scroll the tree which causes flash.
-        if u.groupCount == 0:
-            c.selectPosition(u.p)
+        c.selectPosition(u.p,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050411111847:redoMove
     #@+node:ekr.20050318085432.8:redoTree
@@ -1591,9 +1587,9 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.newP)
-        c.deleteOutline()
-        c.selectPosition(u.p)
+        c.selectPosition(u.newP,redraw_flag=False)
+        c.deleteOutline(redraw_flag=False)
+        c.selectPosition(u.p,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050412083057.1:undoCloneNode
     #@+node:ekr.20050412084055:undoDeleteNode
@@ -1611,8 +1607,8 @@ class baseUndoer:
             
         # Restore all vnodeLists (and thus all clone marks).
         u.p.restoreLinksInTree()
-    
-        c.selectPosition(u.p)
+        
+        c.selectPosition(u.p,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050412084055:undoDeleteNode
     #@+node:ekr.20050318085713:undoGroup
@@ -1647,8 +1643,7 @@ class baseUndoer:
         u.groupCount -= 1
         if reportFlag:
             g.es("undo %d instances" % count)
-            
-        c.selectPosition(u.p)
+    
         if u.oldSel:
             c.frame.body.setTextSelection(u.oldSel)
     #@nonl
@@ -1658,14 +1653,14 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.p)
+        c.selectPosition(u.p,redraw_flag=False)
         c.dehoist()
         
     def undoDehoistNode (self):
         
         u = self ; c = u.c
     
-        c.selectPosition(u.p)
+        c.selectPosition(u.p,redraw_flag=False)
         c.hoist()
     #@nonl
     #@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode
@@ -1674,8 +1669,8 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.newP)
-        c.deleteOutline()
+        c.selectPosition(u.newP,redraw_flag=False)
+        c.deleteOutline(redraw_flag=False)
         
         if u.pasteAsClone:
             for bunch in u.beforeTree:
@@ -1686,9 +1681,9 @@ class baseUndoer:
                 else:
                     t.setTnodeText(bunch.body)
                     t.setHeadString(bunch.head)
-                # g.trace(t,bunch.head,bunch.body)
-    
-        c.selectPosition(u.p)
+                # g.trace(t,bunch.head,bunch.body
+                
+        c.selectPosition(u.p,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050412085112:undoInsertNode
     #@+node:ekr.20050526124906:undoMark
@@ -1700,10 +1695,8 @@ class baseUndoer:
         
         for v in u.dirtyVnodeList:
             v.t.clearDirty()
-        
-        # Selecting can scroll the tree which causes flash.
-        if u.groupCount == 0:
-            c.selectPosition(u.p)
+            
+        c.selectPosition(u.p,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050526124906:undoMark
     #@+node:ekr.20050411112033:undoMove
@@ -1725,10 +1718,8 @@ class baseUndoer:
         
         for v in u.dirtyVnodeList:
             v.t.clearDirty()
-    
-        # Selecting can scroll the tree which causes flash.
-        if u.groupCount == 0:
-            c.selectPosition(u.p)
+            
+        c.selectPosition(u.p,redraw_flag=False)
     #@nonl
     #@-node:ekr.20050411112033:undoMove
     #@+node:ekr.20050318085713.1:undoNodeContents
