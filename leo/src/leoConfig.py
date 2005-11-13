@@ -1613,7 +1613,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
     #@nonl
     #@-node:ekr.20041225063637.82:editLabel
     #@+node:ekr.20041225063637.83:tree.select (config tree)
-    def select (self,p,updateBeadList=True):
+    def select (self,p,updateBeadList=True,redraw_flag=True):
         
         __pychecker__ = '--no-argsused' # updateBeadList required for compatibility.
     
