@@ -606,22 +606,32 @@ class leoFind:
             return
         self.initInHeadline()
         data = self.save()
+        
+        cloneMove = True # To do: should be a checkbox.
+        if cloneMove:
+            clones = []
+            oldRoot = c.rootPosition()
+            found = oldRoot.insertAfter()
+            found.moveToRoot(oldRoot)
+            found.setHeadString('Found: ' + self.find_text)
+    
         self.initBatchCommands()
         count = 0
-        c.beginUpdate()
-        try:
-            while 1:
-                pos, newpos = self.findNextMatch()
-                if pos:
-                    # g.trace(pos,newpos,self.p.headString())
-                    count += 1
-                    line = gui.getLineContainingIndex(t,pos)
-                    self.printLine(line,allFlag=True)
-                else: break
-        finally:
-            c.endUpdate()
+        while 1:
+            pos, newpos = self.findNextMatch()
+            if not pos: break
+            count += 1
+            line = gui.getLineContainingIndex(t,pos)
+            self.printLine(line,allFlag=True)
+            if cloneMove and self.p.v.t not in clones:
+                clones.append(self.p.v.t)
+                q = self.p.clone(self.p)
+                q.moveToLastChildOf(found)
+                    
+        c.redraw()
         g.es("found: %d matches" % (count))
         self.restore(data)
+       
     #@nonl
     #@-node:ekr.20031218072017.3073:findAll
     #@+node:ekr.20031218072017.3074:findNext
