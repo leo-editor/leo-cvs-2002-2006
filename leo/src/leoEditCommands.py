@@ -825,7 +825,8 @@ class bufferCommandsClass (baseEditCommandsClass):
             if self.positions.has_key(name):
                 pos = self.positions [name]
                 cpos = c.currentPosition()
-                pos.doDelete(cpos)
+                pos.doDelete()
+                c.selectPosition(cpos)
         finally:
             c.endUpdate()
     #@nonl
@@ -4739,7 +4740,7 @@ class findTab (leoFind.leoFind):
         #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
         def setFocus(w):
             c = self.c
-            c.outerFrame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             g.app.gui.setSelectionRange(w,"1.0","1.0")
             return "break"
             
@@ -4807,7 +4808,7 @@ class findTab (leoFind.leoFind):
             # ("Scrip&t Change",self.dict["script_change"]),
             ("Whole Word",      self.dict["whole_word"]),
             ("Ignore Case",     self.dict["ignore_case"]),
-            ("Wrap Around",     self.dict["wrap"]),
+            ("Wrap &Around",     self.dict["wrap"]),
             ("Reverse",         self.dict["reverse"]),
             ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
             ("Search Headline", self.dict["search_headline"]),
@@ -4815,16 +4816,17 @@ class findTab (leoFind.leoFind):
         ]
         
         radioLists[1] = [
-            (self.dict["radio-search-scope"],"&Entire Outline","entire-outine"),
-            (self.dict["radio-search-scope"],"Suboutline &Only","suboutline-only"),  
-            (self.dict["radio-search-scope"],"&Node Only","node-only"),
+            (self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
+            (self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
+            (self.dict["radio-search-scope"],"Node Only","node-only"),
             # I don't know what selection-only is supposed to do.
             (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
         ]
         checkLists[1] = [
-            ("&Mark Finds",           self.dict["mark_finds"]),
-            ("Mark &Changes",         self.dict["mark_changes"]),
-            ('Show Context',          self.dict['batch']),
+            ('Clone Find All',  self.dict['clone_find_all']),
+            ("Mark Finds",      self.dict["mark_finds"]),
+            ("Mark &Changes",   self.dict["mark_changes"]),
+            ('Show Context',    self.dict['batch']),
         ]
         
         for i in xrange(numberOfColumns):
@@ -5775,10 +5777,20 @@ class spellTab(leoFind.leoFind):
         # Set the common background color.
         bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
         
-        # Create the outer frame.
-        self.outerFrame = outer = Tk.Frame(parentFrame,bd=2,bg=bg)
-        outer.pack(expand=1,fill='both',padx=2,pady=2)
+        #@    << Create the outer frames >>
+        #@+node:ekr.20051113090322:<< Create the outer frames >>
+        self.outerScrolledFrame = Pmw.ScrolledFrame(
+            parentFrame,usehullsize = 1)
         
+        self.outerFrame = outer = self.outerScrolledFrame.component('frame')
+        self.outerFrame.configure(background=bg)
+        
+        for z in ('borderframe','clipper','frame','hull'):
+            self.outerScrolledFrame.component(z).configure(
+                relief='flat',background=bg)
+        #@nonl
+        #@-node:ekr.20051113090322:<< Create the outer frames >>
+        #@nl
         #@    << Create the text and suggestion panes >>
         #@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
         f2 = Tk.Frame(outer,bg=bg)
@@ -5833,6 +5845,9 @@ class spellTab(leoFind.leoFind):
         #@nonl
         #@-node:ekr.20051025071455.24:<< Create the spelling buttons >>
         #@nl
+        
+        # Pack last so buttons don't get squished.
+        self.outerScrolledFrame.pack(expand=1,fill='both',padx=2,pady=2)
         
         self.fillbox([])
         self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
