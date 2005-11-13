@@ -26,58 +26,19 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Clean up xWantsFocus.
-    - Remove later arg.
+- Add tab shortcuts to Find checkboxes.
 
-- Remove aliases for drawing methods.
-    - Make sure to clean leoPlugins.leo and scripts.leo.
+- Add Cmds menu.
 
-- Revise docs for c.begin/endUpdate.
+- Update screen shots
 
-- Test search with Mark Find checked.
+- Improve docs of show context find option.
 #@nonl
-#@+node:ekr.20051103092502:Update screen shots
-#@-node:ekr.20051103092502:Update screen shots
-#@+node:ekr.20051110155735:First
+#@+node:ekr.20051017111216:Fix bugs in commands
 - Improve handling of the mark.  The selection should be visible.
 
 - Improve kill/yank.
 
-- Add Cmds  menu.
-
-- The text widget that gets tab names isn't alway visible.
-#@nonl
-#@+node:ekr.20051103091115:Cleanup: Improve find tab
-- Add tab shortcuts.
-
-- Improve docs.
-
-- Make find tab scrollable.
-#@nonl
-#@+node:ekr.20051103091115.1:Report
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3411067
-By: rogererens
-
-I forgot to mention that I seem to be unable to scroll in the Find Tab, so I
-need to resize the pane to press the Find button.
-
-Also, in the settings of Find/Change, I would choose for grouping the settings
-node_only, search_body, search_headline, wrap (and possibly the whole_word option
-also) together under search extent radio buttons. Although this organizational
-mode mentions radio buttons, check boxes are used for selection_only and
-suboutline_only, which I can enable both at the same time.
-It's also not (yet?) very clear to me how selection_only, suboutline_only, node_only
-(should) interact...
-
-Finally, the comment on the batch settings tells me it's really the "Show Context"
-option. However, the meaning of "Show Context" is not explained by the comment.
-
-Regards,
-Roger
-#@-node:ekr.20051103091115.1:Report
-#@-node:ekr.20051103091115:Cleanup: Improve find tab
-#@+node:ekr.20051017111216:Fix bugs in commands
 It is unlikely that any of the following commands work:
 
     removeBlankLines,backToIndentation,indentRelative,
@@ -92,6 +53,50 @@ It is unlikely that any of the following commands work:
     head,sel,tail = getSelectedLines()
     hasSelection, setSelection, etc.
 #@nonl
+#@+node:ekr.20051113075509:Yank crashes
+reading settings in C:\prog\leoCVS\leo\config\leoSettings.leo
+reading settings in C:\prog\leoCVS\leo\src\LeoPy.leo
+rst3 plugin: SilverCity not loaded
+TclError Exception in Tk callback
+  Function: <function keyCallback at 0x016B47B0> (type: <type 'function'>)
+  Args: (<Tkinter.Event instance at 0x02E5ECD8>,)
+  Event type: KeyPress (type num: 2)
+Traceback (innermost last):
+  File "C:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1748, in __call__
+    return apply(self.func, args)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 812, in keyCallback
+    return k.masterCommand(event,func,stroke)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1134, in masterCommand
+    val = func(event)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 809, in menuFuncCallback
+    return command(event)
+  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 3402, in yank
+    i = w.index('insert')
+  File "c:\python24\lib\lib-tk\Tkinter.py", line 2179, in index
+    return getint(self.tk.call((self._w, 'index') + args))
+TclError: wrong # args: should be ".19576672.23445672.23446032.23446112.23446472.23446552.canvas index tagOrId string"
+
+================================================
+  Event contents:
+    char: ↓
+    delta: 89
+    height: ??
+    keycode: 89
+    keysym: y
+    keysym_num: 121
+    num: ??
+    serial: 2029
+    state: 4
+    time: 12006494
+    type: 2
+    widget: .19576672.23445672.23446032.23446112.23446472.23446552.canvas
+    width: ??
+    x: 214
+    x_root: 516
+    y: 128
+    y_root: 212
+#@nonl
+#@-node:ekr.20051113075509:Yank crashes
 #@+node:ekr.20050920084036.141:removeBlankLines
 def removeBlankLines (self,event):
     
@@ -286,7 +291,6 @@ else:
 #@-node:ekr.20051005160923:<< handle plain search >>
 #@-node:ekr.20050920084036.219:findNextMatch
 #@-node:ekr.20051017111216:Fix bugs in commands
-#@-node:ekr.20051110155735:First
 #@+node:ekr.20051016162724:before a4
 #@+node:ekr.20051103094005:Fix bugs
 #@+node:ekr.20051103093034:Fix problems applying settings
@@ -416,6 +420,19 @@ Leo's import code can't handle this:
 #@+node:ekr.20040722132104:Write script to report underindented lines
 #@-node:ekr.20040722132104:Write script to report underindented lines
 #@-node:ekr.20051014152256:Fix long-standing bug in import code
+#@+node:ekr.20051112080017:Problem removing script buttons on the mac
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3423121
+By: nobody
+
+Hi! I need help removing script buttons. It says I should right click the ofending
+button. I have a mac and Ctl-click, Command-click, etc doesn't work. What should
+I do?
+
+EKR: This is on the list of unfixable bugs, but I have a hard time believing there is no workaround.
+#@nonl
+#@-node:ekr.20051112080017:Problem removing script buttons on the mac
 #@-node:ekr.20051103094005:Fix bugs
 #@+node:ekr.20051028061611.1:** Unify all search commands
 #@+node:ekr.20051023094009:Search classes
@@ -459,7 +476,7 @@ self.s_ctrl = Tk.Text() # Used by find.search()
 #@nonl
 #@-node:ekr.20051020120306.12:<< create the tkinter intVars >>
 #@-node:ekr.20051020120306.11:__init__
-#@+node:ekr.20051023181449:find.createBindings (findTab)
+#@+node:ekr.20051023181449:createBindings (findTab)
 def createBindings (self):
     
     c = self.c ; k = c.keyHandler
@@ -486,8 +503,8 @@ def createBindings (self):
         w.bind("<Key-Return>", self.findButtonCallback)
         w.bind("<Key-Escape>", self.hideTab)
 #@nonl
-#@-node:ekr.20051023181449:find.createBindings (findTab)
-#@+node:ekr.20051020120306.13:find.createFrame
+#@-node:ekr.20051023181449:createBindings (findTab)
+#@+node:ekr.20051020120306.13:createFrame (findTab)
 def createFrame (self,parentFrame):
     
     c = self.c
@@ -497,6 +514,9 @@ def createFrame (self,parentFrame):
     << Create two columns of radio and checkboxes >>
     << Create two columns of buttons >>
     
+    # Pack this last so buttons don't get squashed when frame is resized.
+    self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
+
     for w in buttons:
         w.bindHotKey(ftxt)
         w.bindHotKey(ctxt)
@@ -508,14 +528,17 @@ bg = c.config.getColor(configName) or 'MistyRose1'
 parentFrame.configure(background=bg)
 
 self.top = Tk.Frame(parentFrame,background=bg)
-self.frame = Tk.Frame(self.top,background=bg)
-self.outerFrame = outer = Tk.Frame(self.frame,background=bg)
-
-self.top.pack   (side='top',expand=0,fill='x',pady=5)
+self.top.pack(side='top',expand=0,fill='both',pady=5)
     # Don't expand, so the frame goes to the top.
 
-self.frame.pack (side="top",expand=1,fill='x')
-outer.pack      (side='top',expand=1,fill='x',padx=2,pady=2,)
+self.outerScrolledFrame = Pmw.ScrolledFrame(
+    parentFrame,usehullsize = 1)
+
+self.outerFrame = outer = self.outerScrolledFrame.component('frame')
+self.outerFrame.configure(background=bg)
+
+for z in ('borderframe','clipper','frame','hull'):
+    self.outerScrolledFrame.component(z).configure(relief='flat',background=bg)
 #@nonl
 #@-node:ekr.20051020120306.14:<< Create the outer frames >>
 #@+node:ekr.20051020120306.15:<< Create the Find and Change panes >>
@@ -607,7 +630,7 @@ checkLists[0] = [
     # ("Scrip&t Change",self.dict["script_change"]),
     ("Whole Word",      self.dict["whole_word"]),
     ("Ignore Case",     self.dict["ignore_case"]),
-    ("Wrap Around",     self.dict["wrap"]),
+    ("Wrap &Around",     self.dict["wrap"]),
     ("Reverse",         self.dict["reverse"]),
     ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
     ("Search Headline", self.dict["search_headline"]),
@@ -615,16 +638,17 @@ checkLists[0] = [
 ]
 
 radioLists[1] = [
-    (self.dict["radio-search-scope"],"&Entire Outline","entire-outine"),
-    (self.dict["radio-search-scope"],"Suboutline &Only","suboutline-only"),  
-    (self.dict["radio-search-scope"],"&Node Only","node-only"),
+    (self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
+    (self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
+    (self.dict["radio-search-scope"],"Node Only","node-only"),
     # I don't know what selection-only is supposed to do.
     (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
 ]
 checkLists[1] = [
-    ("&Mark Finds",           self.dict["mark_finds"]),
-    ("Mark &Changes",         self.dict["mark_changes"]),
-    ('Show Context',          self.dict['batch']),
+    ('Clone Find All',  self.dict['clone_find_all']),
+    ("Mark Finds",      self.dict["mark_finds"]),
+    ("Mark &Changes",   self.dict["mark_changes"]),
+    ('Show Context',    self.dict['batch']),
 ]
 
 for i in xrange(numberOfColumns):
@@ -679,7 +703,7 @@ for text,boxKind,frame,callback in (
     w.button.pack(side='top',anchor='w',pady=2,padx=2)
 #@nonl
 #@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
-#@-node:ekr.20051020120306.13:find.createFrame
+#@-node:ekr.20051020120306.13:createFrame (findTab)
 #@+node:ekr.20051020120306.19:find.init
 def init (self,c):
 
@@ -1382,6 +1406,22 @@ outline.
 #@-node:ekr.20050928144501:Expand commands to handle Leo environment
 #@+node:ekr.20051021074728:Space completion
 #@-node:ekr.20051021074728:Space completion
+#@+node:ekr.20051112075511:Idea for improving search command code
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3424153
+By: rogererens
+
+Perhaps you've got this already lurking, but let me offer one other suggestion:
+
+When reverting the search direction, it would be better to place the cursor
+'on the other side' of the current hit, and then proceed to find the next occurrence
+of <pattern>. At the current state of affairs, searching in the reverse direction
+first finds the current occurrence _again_, just placing the cursor on the other
+side of the higlighted selection.
+
+This suggestion is based on the way searching in Vim works.
+#@-node:ekr.20051112075511:Idea for improving search command code
 #@-node:ekr.20051016162724:before a4
 #@+node:ekr.20051027105304:before b1
 - Review the posting about making positions permanent, or recording vnode
@@ -1641,18 +1681,30 @@ def createSpellTab(self,parentFrame):
     # Set the common background color.
     bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
     
-    # Create the outer frame.
-    self.outerFrame = outer = Tk.Frame(parentFrame,bd=2,bg=bg)
-    outer.pack(expand=1,fill='both',padx=2,pady=2)
-    
+    << Create the outer frames >>
     << Create the text and suggestion panes >>
     << Create the spelling buttons >>
+    
+    # Pack last so buttons don't get squished.
+    self.outerScrolledFrame.pack(expand=1,fill='both',padx=2,pady=2)
     
     self.fillbox([])
     self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
     self.listBox.bind("<Button-1>",self.onSelectListBox)
     self.listBox.bind("<Map>",self.onMap)
 #@nonl
+#@+node:ekr.20051113090322:<< Create the outer frames >>
+self.outerScrolledFrame = Pmw.ScrolledFrame(
+    parentFrame,usehullsize = 1)
+
+self.outerFrame = outer = self.outerScrolledFrame.component('frame')
+self.outerFrame.configure(background=bg)
+
+for z in ('borderframe','clipper','frame','hull'):
+    self.outerScrolledFrame.component(z).configure(
+        relief='flat',background=bg)
+#@nonl
+#@-node:ekr.20051113090322:<< Create the outer frames >>
 #@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
 f2 = Tk.Frame(outer,bg=bg)
 f2.pack(side='top',expand=0,fill='x')
@@ -5534,6 +5586,20 @@ It would be nice if the <FocusIn> binding on the minibuffer widget were equivile
 to Alt-x.
 #@nonl
 #@-node:ekr.20051104051733:Use focus-in binding?
+#@+node:ekr.20051103091115.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3411067
+By: rogererens
+
+Also, in the settings of Find/Change, I would choose for grouping the settings
+node_only, search_body, search_headline, wrap (and possibly the whole_word option
+also) together under search extent radio buttons. Although this organizational
+mode mentions radio buttons, check boxes are used for selection_only and
+suboutline_only, which I can enable both at the same time.
+It's also not (yet?) very clear to me how selection_only, suboutline_only, node_only
+(should) interact...
+#@nonl
+#@-node:ekr.20051103091115.1:Report
 #@-node:ekr.20051023192433:Maybe...
 #@+node:ekr.20051028165515:Reference
 #@+node:ekr.20051014122218:kill/yank from the xemacs tutorial
@@ -18054,7 +18120,7 @@ def moreBody (self):
 @ This is the main delete routine.  It deletes the receiver's entire tree from the screen.  Because of the undo command we never actually delete vnodes or tnodes.
 @c
 
-def doDelete (self,newPosition):
+def doDelete (self):
 
     """Deletes position p from the outline.  May be undone.
 
@@ -18062,14 +18128,10 @@ def doDelete (self,newPosition):
 
     p = self ; c = p.c
 
-    assert(newPosition != p)
     p.setDirty() # Mark @file nodes dirty!
     p.unlink()
     p.deleteLinksInTree()
-    c.selectVnode(newPosition)
-    
-    return newPosition
-
+#@nonl
 #@-node:ekr.20040812154341.83:p.doDelete
 #@+node:ekr.20040812154341.84:p.insertAfter
 def insertAfter (self,t=None):

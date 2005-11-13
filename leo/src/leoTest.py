@@ -552,12 +552,14 @@ class testUtils:
     
         retaining the headline of outline1."""
     
+        c = self.c
         h = outline1.headString()
         copy = outline2.copyTreeAfter()
         copy.initHeadString(h)
         copy.unlink()
         copy.linkAfter(outline1)
-        outline1.doDelete(copy)
+        outline1.doDelete()
+        c.selectPosition(copy)
     #@nonl
     #@-node:ekr.20051104075904.35:replaceOutline
     #@+node:ekr.20051104075904.36:testUtils.writeNode/sToNode
@@ -811,7 +813,7 @@ class reformatParagraphTest:
     
         # Delete all children of temp node.
         while tempNode.firstChild():
-            tempNode.firstChild().doDelete(tempNode)
+            tempNode.firstChild().doDelete()
     
         # Copy the before node text to the temp node.
         text = self.before.bodyString()
@@ -887,7 +889,7 @@ class reformatParagraphTest:
     
         # Delete all children of temp node.
         while tempNode.firstChild():
-            tempNode.firstChild().doDelete(tempNode)
+            tempNode.firstChild().doDelete()
             
         c.undoer.rollbackToMark(self.undoMark)
     #@nonl
@@ -1148,7 +1150,7 @@ class editBodyTestCase(unittest.TestCase):
     
         # Delete all children of temp node.
         while tempNode.firstChild():
-            tempNode.firstChild().doDelete(tempNode)
+            tempNode.firstChild().doDelete()
     
         text = self.before.bodyString()
     
@@ -1182,7 +1184,7 @@ class editBodyTestCase(unittest.TestCase):
     
         # Delete all children of temp node.
         while tempNode.firstChild():
-            tempNode.firstChild().doDelete(tempNode)
+            tempNode.firstChild().doDelete()
             
         tempNode.clearDirty()
         
@@ -1346,7 +1348,7 @@ class importExportTestCase(unittest.TestCase):
     
         if 1: # Delete all children of temp node.
             while temp_v.firstChild():
-                temp_v.firstChild().doDelete(temp_v)
+                temp_v.firstChild().doDelete()
                 
         g.app.gui = self.oldGui
     

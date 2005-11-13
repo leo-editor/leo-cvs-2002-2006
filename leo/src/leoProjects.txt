@@ -2737,6 +2737,7 @@ def set_focus(self,c,w):
             w2 and g.trace(name2,c)
 
         w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+    
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -3476,6 +3477,8 @@ def redraw_now (self,scroll=True):
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
 #@nonl
 #@+node:ekr.20040803072955.59:redrawHelper
 def redrawHelper (self,scroll=True):
@@ -5128,49 +5131,53 @@ def editLabel (self,p):
 #@+node:ekr.20040803072955.128:tree.select
 # Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
 
-def select (self,p,updateBeadList=True):
+def select (self,p,updateBeadList=True,redraw_flag=True):
     
     '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
     if not p or not p.exists(c): return # Not an error.
+    
+    # g.trace(redraw_flag,g.callers(7))
 
     if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        << unselect the old node >>
+        if old_p and redraw_flag:
+            << unselect the old node >>
 
     g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     
     if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        << select the new node >>
-        if p and p != old_p: # Suppress duplicate call.
-            try: # may fail during initialization.
-                # p is NOT c.currentPosition() here!
-                self.canvas.update_idletasks() # Essential.
-                self.scrollTo(p)
-            except Exception: pass
-        << update c.beadList or c.beadPointer >>
-        << update c.visitedList >>
+        if redraw_flag:
+            << select the new node >>
+            if p and p != old_p: # Suppress duplicate call.
+                try: # may fail during initialization.
+                    # p is NOT c.currentPosition() here!
+                    self.canvas.update_idletasks() # Essential.
+                    self.scrollTo(p)
+                except Exception: pass
+            << update c.beadList or c.beadPointer >>
+            << update c.visitedList >>
 
-    << set the current node >>
+    c.setCurrentPosition(p)
+    if redraw_flag:
+        << set the current node >>
     
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 #@nonl
 #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 # Remember the position of the scrollbar before making any changes.
-if old_p:
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
 
-    yview=body.yview()
-    insertSpot = c.frame.body.getInsertionPoint()
-    
-    if old_p != p:
-        self.endEditLabel() # sets editPosition = None
-        self.setUnselectedLabelState(old_p)
-    
-    if old_p.edit_widget():
-        old_p.v.t.scrollBarSpot = yview
-        old_p.v.t.insertSpot = insertSpot
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p)
+
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
 #@nonl
 #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
 #@+node:ekr.20040803072955.130:<< select the new node >>
@@ -5178,7 +5185,7 @@ if old_p:
 self.revertHeadline = p.headString()
 
 frame.setWrap(p)
-
+    
 # Always do this.  Otherwise there can be problems with trailing hewlines.
 s = g.toUnicode(p.v.t.bodyString,"utf-8")
 self.setText(body,s)
@@ -5226,9 +5233,7 @@ c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20040803072955.132:<< update c.visitedList >>
 #@+node:ekr.20040803072955.133:<< set the current node >>
-c.setCurrentPosition(p)
-
-if p != old_p:
+if p != old_p and redraw_flag:
     self.setSelectedLabelState(p)
 
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
@@ -5898,6 +5903,7 @@ def set_focus(self,c,w):
             w2 and g.trace(name2,c)
 
         w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+    
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -6871,6 +6877,8 @@ def redraw_now (self,scroll=True):
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
 #@nonl
 #@+node:ekr.20040803072955.59:redrawHelper
 def redrawHelper (self,scroll=True):
@@ -7710,6 +7718,7 @@ def set_focus(self,c,w):
             w2 and g.trace(name2,c)
 
         w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+    
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -7909,6 +7918,8 @@ def redraw_now (self,scroll=True):
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
 #@nonl
 #@+node:ekr.20040803072955.59:redrawHelper
 def redrawHelper (self,scroll=True):
@@ -9032,6 +9043,8 @@ def redraw_now (self,scroll=True):
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
 #@nonl
 #@+node:ekr.20040803072955.59:redrawHelper
 def redrawHelper (self,scroll=True):
@@ -9716,8 +9729,8 @@ def redoCloneNode (self):
     else:
         oldRoot = c.rootPosition()
         u.newP.linkAsRoot(oldRoot)
-
-    c.selectPosition(u.newP)
+        
+    c.selectPosition(u.newP,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050412083057:redoCloneNode
 #@+node:EKR.20040526072519.2:redoDeleteNode
@@ -9725,9 +9738,9 @@ def redoDeleteNode (self):
     
     u = self ; c = u.c
 
-    c.selectPosition(u.p)
-    c.deleteOutline()
-    c.selectPosition(u.newP)
+    c.selectPosition(u.p,redraw_flag=False)
+    c.deleteOutline(redraw_flag=False)
+    c.selectPosition(u.newP,redraw_flag=False)
 #@nonl
 #@-node:EKR.20040526072519.2:redoDeleteNode
 #@+node:ekr.20050412084532:redoInsertNode
@@ -9760,8 +9773,8 @@ def redoInsertNode (self):
                 t.setTnodeText(bunch.body)
                 t.setHeadString(bunch.head)
             # g.trace(t,bunch.head,bunch.body)
-
-    c.selectPosition(u.newP)
+            
+    c.selectPosition(u.newP,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050412084532:redoInsertNode
 #@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
@@ -9769,14 +9782,14 @@ def redoHoistNode (self):
     
     u = self ; c = u.c
     
-    c.selectPosition(u.p)
+    c.selectPosition(u.p,redraw_flag=False)
     c.hoist()
     
 def redoDehoistNode (self):
     
     u = self ; c = u.c
     
-    c.selectPosition(u.p)
+    c.selectPosition(u.p,redraw_flag=False)
     c.dehoist()
 #@nonl
 #@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
@@ -9843,9 +9856,7 @@ def redoMark (self):
     for v in u.dirtyVnodeList:
         v.t.setDirty()
     
-    # Selecting can scroll the tree which causes flash.
-    if u.groupCount == 0:
-        c.selectPosition(u.p)
+    c.selectPosition(u.p,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050526125801:redoMark
 #@+node:ekr.20050411111847:redoMove
@@ -9868,9 +9879,7 @@ def redoMove (self):
     for v in u.dirtyVnodeList:
         v.t.setDirty()
         
-    # Selecting can scroll the tree which causes flash.
-    if u.groupCount == 0:
-        c.selectPosition(u.p)
+    c.selectPosition(u.p,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050411111847:redoMove
 #@+node:ekr.20050318085432.8:redoTree
@@ -9964,9 +9973,9 @@ def undoCloneNode (self):
     
     u = self ; c = u.c
 
-    c.selectPosition(u.newP)
-    c.deleteOutline()
-    c.selectPosition(u.p)
+    c.selectPosition(u.newP,redraw_flag=False)
+    c.deleteOutline(redraw_flag=False)
+    c.selectPosition(u.p,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050412083057.1:undoCloneNode
 #@+node:ekr.20050412084055:undoDeleteNode
@@ -9984,8 +9993,8 @@ def undoDeleteNode (self):
         
     # Restore all vnodeLists (and thus all clone marks).
     u.p.restoreLinksInTree()
-
-    c.selectPosition(u.p)
+    
+    c.selectPosition(u.p,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050412084055:undoDeleteNode
 #@+node:ekr.20050318085713:undoGroup
@@ -10020,8 +10029,7 @@ def undoGroup (self):
     u.groupCount -= 1
     if reportFlag:
         g.es("undo %d instances" % count)
-        
-    c.selectPosition(u.p)
+
     if u.oldSel:
         c.frame.body.setTextSelection(u.oldSel)
 #@nonl
@@ -10031,14 +10039,14 @@ def undoHoistNode (self):
     
     u = self ; c = u.c
 
-    c.selectPosition(u.p)
+    c.selectPosition(u.p,redraw_flag=False)
     c.dehoist()
     
 def undoDehoistNode (self):
     
     u = self ; c = u.c
 
-    c.selectPosition(u.p)
+    c.selectPosition(u.p,redraw_flag=False)
     c.hoist()
 #@nonl
 #@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode
@@ -10047,8 +10055,8 @@ def undoInsertNode (self):
     
     u = self ; c = u.c
 
-    c.selectPosition(u.newP)
-    c.deleteOutline()
+    c.selectPosition(u.newP,redraw_flag=False)
+    c.deleteOutline(redraw_flag=False)
     
     if u.pasteAsClone:
         for bunch in u.beforeTree:
@@ -10059,9 +10067,9 @@ def undoInsertNode (self):
             else:
                 t.setTnodeText(bunch.body)
                 t.setHeadString(bunch.head)
-            # g.trace(t,bunch.head,bunch.body)
-
-    c.selectPosition(u.p)
+            # g.trace(t,bunch.head,bunch.body
+            
+    c.selectPosition(u.p,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050412085112:undoInsertNode
 #@+node:ekr.20050526124906:undoMark
@@ -10073,10 +10081,8 @@ def undoMark (self):
     
     for v in u.dirtyVnodeList:
         v.t.clearDirty()
-    
-    # Selecting can scroll the tree which causes flash.
-    if u.groupCount == 0:
-        c.selectPosition(u.p)
+        
+    c.selectPosition(u.p,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050526124906:undoMark
 #@+node:ekr.20050411112033:undoMove
@@ -10098,10 +10104,8 @@ def undoMove (self):
     
     for v in u.dirtyVnodeList:
         v.t.clearDirty()
-
-    # Selecting can scroll the tree which causes flash.
-    if u.groupCount == 0:
-        c.selectPosition(u.p)
+        
+    c.selectPosition(u.p,redraw_flag=False)
 #@nonl
 #@-node:ekr.20050411112033:undoMove
 #@+node:ekr.20050318085713.1:undoNodeContents
@@ -11038,6 +11042,7 @@ def set_focus(self,c,w):
             w2 and g.trace(name2,c)
 
         w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+    
         w.focus_set()
 #@nonl
 #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -11669,57 +11674,6 @@ def getTabName (self,parentFrame,exitCallback):
 The plugin can not call bodyWantsFocus.
 #@nonl
 #@-node:ekr.20051112081213:Changed scripting plugin so files opened with buttons stay in front
-#@+node:ekr.20051113061206:(Added Clone-find)
-#@+node:ekr.20051113061206.1:Patch
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3425070
-By: rogererens
-
-These changes will have the effect that every time you press the "Find All"
-button in the Find tab, a new root node called Found: <your search pattern>
-is created holding clones of the nodes that contain the search pattern.
-It is your own responsibility to navigate to this Found: node and cleaning it
-up when it's no longer needed.
-#@nonl
-#@-node:ekr.20051113061206.1:Patch
-#@+node:ekr.20031218072017.3073:findAll
-def findAll(self):
-
-    c = self.c ; t = self.s_ctrl ; gui = g.app.gui
-    if not self.checkArgs():
-        return
-    self.initInHeadline()
-    data = self.save()
-    
-    cloneMove = True # To do: should be a checkbox.
-    if cloneMove:
-        clones = []
-        oldRoot = c.rootPosition()
-        found = oldRoot.insertAfter()
-        found.moveToRoot(oldRoot)
-        found.setHeadString('Found: ' + self.find_text)
-
-    self.initBatchCommands()
-    count = 0
-    while 1:
-        pos, newpos = self.findNextMatch()
-        if not pos: break
-        count += 1
-        line = gui.getLineContainingIndex(t,pos)
-        self.printLine(line,allFlag=True)
-        if cloneMove and self.p.v.t not in clones:
-            clones.append(self.p.v.t)
-            q = self.p.clone(self.p)
-            q.moveToLastChildOf(found)
-                
-    c.redraw()
-    g.es("found: %d matches" % (count))
-    self.restore(data)
-   
-#@nonl
-#@-node:ekr.20031218072017.3073:findAll
-#@-node:ekr.20051113061206:(Added Clone-find)
 #@+node:ekr.20051113080509.1:Removed later arg from c.frame.xWantsFocus
 @nocolor
 
@@ -11732,6 +11686,93 @@ Later may never come in the Newer World Order, so everything must happen immedia
 This ensures that the widget is always visible.
 #@nonl
 #@-node:ekr.20051113082305:Replace log with text widget when getting tab name
+#@+node:ekr.20051113090322.1:(Improved spell tab)
+#@+node:ekr.20051025071455.22:createSpellTab
+def createSpellTab(self,parentFrame):
+
+    """Create the Spell tab."""
+    
+    c = self.c
+    
+    # Set the common background color.
+    bg = c.config.getColor('log_pane_Spell_tab_background_color') or 'LightSteelBlue2'
+    
+    << Create the outer frames >>
+    << Create the text and suggestion panes >>
+    << Create the spelling buttons >>
+    
+    # Pack last so buttons don't get squished.
+    self.outerScrolledFrame.pack(expand=1,fill='both',padx=2,pady=2)
+    
+    self.fillbox([])
+    self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
+    self.listBox.bind("<Button-1>",self.onSelectListBox)
+    self.listBox.bind("<Map>",self.onMap)
+#@nonl
+#@+node:ekr.20051113090322:<< Create the outer frames >>
+self.outerScrolledFrame = Pmw.ScrolledFrame(
+    parentFrame,usehullsize = 1)
+
+self.outerFrame = outer = self.outerScrolledFrame.component('frame')
+self.outerFrame.configure(background=bg)
+
+for z in ('borderframe','clipper','frame','hull'):
+    self.outerScrolledFrame.component(z).configure(
+        relief='flat',background=bg)
+#@nonl
+#@-node:ekr.20051113090322:<< Create the outer frames >>
+#@+node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
+f2 = Tk.Frame(outer,bg=bg)
+f2.pack(side='top',expand=0,fill='x')
+
+self.wordLabel = Tk.Label(f2,text="Suggestions for:")
+self.wordLabel.pack(side='left')
+self.wordLabel.configure(font=('verdana',10,'bold'))
+
+fpane = Tk.Frame(outer,bg=bg,bd=2)
+fpane.pack(side='top',expand=1,fill='both')
+
+self.listBox = Tk.Listbox(fpane,height=6,width=10,selectmode="single")
+self.listBox.pack(side='left',expand=1,fill='both')
+self.listBox.configure(font=('verdana',11,'normal'))
+
+listBoxBar = Tk.Scrollbar(fpane,name='listBoxBar')
+
+bar, txt = listBoxBar, self.listBox
+txt ['yscrollcommand'] = bar.set
+bar ['command'] = txt.yview
+bar.pack(side='right',fill='y')
+#@nonl
+#@-node:ekr.20051025071455.23:<< Create the text and suggestion panes >>
+#@+node:ekr.20051025071455.24:<< Create the spelling buttons >>
+# Create the alignment panes
+buttons1 = Tk.Frame(outer,bd=1,bg=bg)
+buttons2 = Tk.Frame(outer,bd=1,bg=bg)
+buttons3 = Tk.Frame(outer,bd=1,bg=bg)
+for w in (buttons1,buttons2,buttons3):
+    w.pack(side='top',expand=0,fill='x')
+
+buttonList = [] ; font = ('verdana',9,'normal') ; width = 12
+for frame, text, command in (
+    (buttons1,"Find",self.onFindButton),
+    (buttons1,"Add",self.onAddButton),
+    (buttons2,"Change",self.onChangeButton),
+    (buttons2,"Change, Find",self.onChangeThenFindButton),
+    (buttons3,"Ignore",self.onIgnoreButton),
+    (buttons3,"Hide",self.onHideButton),
+):
+    b = Tk.Button(frame,font=font,width=width,text=text,command=command)
+    b.pack(side='left',expand=0,fill='none')
+    buttonList.append(b)
+
+# Used to enable or disable buttons.
+(self.findButton,self.addButton,
+ self.changeButton, self.changeFindButton,
+ self.ignoreButton, self.hideButton) = buttonList
+#@nonl
+#@-node:ekr.20051025071455.24:<< Create the spelling buttons >>
+#@-node:ekr.20051025071455.22:createSpellTab
+#@-node:ekr.20051113090322.1:(Improved spell tab)
 #@-node:ekr.20051110101524:4.4a4 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

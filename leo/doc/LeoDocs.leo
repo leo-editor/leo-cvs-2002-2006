@@ -2174,8 +2174,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="ETV"><vh>Latest versions</vh>
-<v t="ekr.20051028051444"><vh>4.4 alpha 3</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20051028051444" a="TV"><vh>4.4 alpha 3</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -10462,32 +10462,20 @@ The p.self_and_subtree_iter iterator returns a list of all positions in ``p``'s 
     for p in parent.subtree_iter():
         g.es(p.headString())
 </t>
-<t tx="ekr.20040403173920.17">Leo's commands use ``c.beginUpdate`` and ``c.endUpdate`` to reduce flicker.
-``c.beginUpdate`` suppresses all drawing in the outline pane until the matching
-``c.endUpdate`` is seen. These methods can be nested; each ``c.beginUpdate``
-must have a corresponding ``c.endUpdate``. ``c.endUpdate`` takes an optional
-parameter. No redrawing is done if this parameter is ``False``. This can
-sometimes be useful; inner code can tell other code whether redrawing is
-actually required. ``c.redraw`` forces an update of the entire screen::
+<t tx="ekr.20040403173920.17">Use ``c.redraw_now`` to redraw the entire screen immediately::
 
-    # Force a screen redraw
-    c.redraw()
+    c.redraw_now()
 
-    # Typical way to redraw the screen:
-    c.beginUpdate()   
-    try:
-        ...code that alters the screen...
-    finally:
-        c.endUpdate()
+**New in Leo 4.4**:
+Redrawing the screen with ``c.beginUpdate`` and ``c.endUpdate`` is deprecated.
+These methods are now defined as follows::
 
-    # Typical way to conditionally redraw the screen:
-    c.beginUpdate()
-    try:
-        ...code sets flag if the screen needs redrawing.
-        flag = True
-    finally:
-        c.endUpdate(flag)
-    </t>
+    def beginUpdate(self):
+        pass
+        
+    def endUpdate(self, flag=True):
+        if flag:
+            self.redraw_now()</t>
 <t tx="ekr.20040403173920.18">Leo dispatches commands using c.doCommand,
 which calls the "command1" and "command2" hook routines for the given label.
 c.doCommand catches all exceptions thrown by the command::

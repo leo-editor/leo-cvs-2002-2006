@@ -1841,6 +1841,7 @@ tempfile
 test1
 test2
 testData
+testDir
 testFindCommand
 testHonorLeadingWS
 testPlugin

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="8463" clone_windows="0"/>
 <globals body_outline_ratio="0.490396927017">
-	<global_window_position top="77" left="205" height="781" width="864"/>
+	<global_window_position top="96" left="225" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="E"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="ETV"><vh>All unit tests</vh>
 <v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -1621,7 +1621,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231" a="E"><vh>Unit tests for Redraws</vh>
+<v t="ekr.20051107115231"><vh>Unit tests for Redraws</vh>
 <v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
 <v t="ekr.20051109034758"><vh>pasted node</vh></v>
@@ -1689,9 +1689,9 @@
 </v>
 </v>
 <v t="ekr.20051107115231.7"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
-<v t="ekr.20051107115231.8" a="E"><vh>Commands tests</vh>
+<v t="ekr.20051107115231.8"><vh>Commands tests</vh>
 <v t="ekr.20051107115231.9"><vh>@test Select a node when file is first loaded</vh></v>
-<v t="ekr.20051107115231.10" a="TV"><vh>@test Save command redraws the screen</vh></v>
+<v t="ekr.20051107115231.10"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
 <v t="ekr.20051108063253"><vh>@test openWithFileName draws the screen at least once</vh></v>
 <v t="ekr.20051108063032"><vh>@test pasteNode draws the screen exactly once</vh>
@@ -1724,7 +1724,7 @@
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
 <v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
 </v>
-<v t="ekr.20051109143831"><vh>@test restore the screen (Make this the last test)</vh></v>
+<v t="ekr.20051109143831"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
 </v>
 </v>
 </vnodes>
@@ -4288,7 +4288,7 @@ if 0: # This causes p to be written, thereby clearing the tnodeList.
 if 0: # This actually saves this file, so it is a bit dangerous.
     g.app.unitTesting = True
     g.app.unitTestDict = {}
-    c.save()
+    ### c.save()
     ok = g.app.unitTestDict.get("warning")
     assert ok, "putVnode failed to give warning"
     g.app.unitTesting = False</t>
@@ -14585,6 +14585,7 @@ h = 'All unit tests'
 p = u.findNodeAnywhere(c,h)
 p.expand()
 g.app.unitTestDict['restoreSelectedNode']=False
-c.selectPosition(p)</t>
+c.selectPosition(p)
+c.save()</t>
 </tnodes>
 </leo_file>

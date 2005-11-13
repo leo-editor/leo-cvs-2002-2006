@@ -432,6 +432,7 @@ class tkinterGui(leoGui.leoGui):
                 w2 and g.trace(name2,c)
     
             w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+        
             w.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
