@@ -3000,7 +3000,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.1760:c.checkMoveWithParentWithWarning
     #@+node:ekr.20031218072017.1193:c.deleteOutline
-    def deleteOutline (self,op_name="Delete Node"):
+    def deleteOutline (self,op_name="Delete Node",redraw_flag=True):
         
         """Deletes the current position.
         
@@ -3013,21 +3013,24 @@ class baseCommands:
         else: newNode = p.next() # _not_ p.visNext(): we are at the top level.
         if not newNode: return
     
-        c.beginUpdate()
-        try: # In update...
+        if redraw_flag:
             c.endEditing() # Make sure we capture the headline for Undo.
             undoData = u.beforeDeleteNode(p)
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-            p.doDelete(newNode)
+            
+        p.doDelete()
+        c.selectPosition(newNode,redraw_flag=redraw_flag)
+        
+        if redraw_flag:
             c.setChanged(True)
             u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-        finally:
-            c.endUpdate()
+            c.redraw_now()
+    
         c.validateOutline()
     #@nonl
     #@-node:ekr.20031218072017.1193:c.deleteOutline
     #@+node:ekr.20031218072017.1761:c.insertHeadline
-    def insertHeadline (self,op_name="Insert Node"):
+    def insertHeadline (self,op_name="Insert Node",redraw_flag=True):
         
         '''Insert a node after the presently selected node.'''
     
@@ -3036,23 +3039,23 @@ class baseCommands:
         
         if not current: return
     
-        c.beginUpdate()
-        try: # In update...
-            undoData = c.undoer.beforeInsertNode(current)
-            # Make sure the new node is visible when hoisting.
-            if ((current.hasChildren() and current.isExpanded()) or
-                (c.hoistStack and current == c.hoistStack[-1].p)):
-                p = current.insertAsNthChild(0)
-            else:
-                p = current.insertAfter()
-            dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-            c.setChanged(True)
-            u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-            c.editPosition(p) # Do this after before the redraw first.
-            c.selectPosition(p)
-        finally:
-            c.endUpdate()
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].p)):
+            p = current.insertAsNthChild(0)
+        else:
+            p = current.insertAfter()
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.editPosition(p) # Do this after before the redraw first.
+        c.selectPosition(p)
+       
+        if redraw_flag:
+            c.redraw_now()
             c.editPosition(p) # Do this again after the redraw so p.edit_widget() will succeed.
+            
         return p # for mod_labels plugin.
     #@nonl
     #@-node:ekr.20031218072017.1761:c.insertHeadline
@@ -5217,7 +5220,8 @@ class baseCommands:
             # g.trace("p,parent,n:",p.headString(),parent.headString(),n)
             clone = p.clone(p) # Creates clone & dependents, does not set undo.
             if not c.checkMoveWithParentWithWarning(clone,parent,True):
-                clone.doDelete(p) # Destroys clone and makes p the current node.
+                clone.doDelete() # Destroys clone and makes p the current node.
+                c.selectPosition(p)
                 c.endUpdate(False) # Nothing has changed.
                 return
             c.endEditing()
@@ -5280,7 +5284,8 @@ class baseCommands:
             # g.trace("p,after:",p.headString(),after.headString())
             if not c.checkMoveWithParentWithWarning(clone,after.parent(),True):
                 # g.trace("invalid clone drag")
-                clone.doDelete(p) # Destroys clone & dependents. Makes p the current node.
+                clone.doDelete()
+                c.selectPosition(p)
                 c.endUpdate(False) # Nothing has changed.
                 return
             inAtIgnoreRange = clone.inAtIgnoreRange()
@@ -6052,12 +6057,12 @@ class baseCommands:
         self.frame.tree.endEditLabel()
     #@-node:ekr.20031218072017.2992:endEditing (calls tree.endEditLabel)
     #@+node:ekr.20031218072017.2997:c.selectPosition
-    def selectPosition(self,p,updateBeadList=True):
+    def selectPosition(self,p,updateBeadList=True,redraw_flag=True):
         
         """Select a new position."""
     
         c = self
-        c.frame.tree.select(p,updateBeadList)
+        c.frame.tree.select(p,updateBeadList,redraw_flag=redraw_flag)
     
     selectVnode = selectPosition
     #@nonl
