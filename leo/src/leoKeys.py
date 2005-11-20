@@ -1402,13 +1402,8 @@ class keyHandlerClass:
         '''
     
         k = self ; c = k.c
-        if g.app.quitting: return
-        
-        # The command may have closed the window, so this may fail.
-        try:
-            p = c.currentPosition()
-        except AttributeError:
-            return
+        # The command may have closed the window.
+        if g.app.quitting or not hasattr(c,'currentPosition'): return
     
         # Set the best possible undoType: prefer explicit commandName to k.commandName.
         commandName = commandName or k.commandName or ''

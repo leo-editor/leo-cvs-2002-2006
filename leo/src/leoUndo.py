@@ -1373,7 +1373,7 @@ class baseUndoer:
     
         u = self ; c = u.c
         
-        g.trace('p',u.newP.v,'parent',u.newParent.v)
+        # g.trace('p',u.newP.v,'parent',u.newParent.v)
     
         if u.newBack:
             u.newP.linkAfter(u.newBack)

@@ -552,7 +552,7 @@ class testUtils:
     
         retaining the headline of outline1."""
     
-        c = self.c
+        c = outline1.c
         h = outline1.headString()
         copy = outline2.copyTreeAfter()
         copy.initHeadString(h)

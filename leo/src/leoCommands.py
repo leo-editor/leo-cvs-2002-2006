@@ -5378,9 +5378,10 @@ class baseCommands:
         if frame.wantedWidget:
             w = frame.wantedWidget
             name = hasattr(w,'_name') and w._name or ''
-            w2 = g.app.gui.get_focus(frame)
-            name2 = hasattr(w2,'_name') and w2._name or ''
-            # if name != name2: g.trace(name2,'->',name,g.callers(7))
+            if 0:
+                w2 = g.app.gui.get_focus(frame)
+                name2 = hasattr(w2,'_name') and w2._name or ''
+                if name != name2: g.trace(name2,'->',name,g.callers(7))
             # It is possible that w no longer exists.
             try:
                 g.app.gui.set_focus(c,w)

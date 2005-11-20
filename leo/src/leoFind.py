@@ -107,6 +107,7 @@ class leoFind:
         #@+node:ekr.20050123164539:<< do dummy initialization to keep Pychecker happy >>
         if 1:
             self.batch = None
+            self.clone_find_all = None
             self.ignore_case = None
             self.node_only = None
             self.pattern_match = None

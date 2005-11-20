@@ -4653,6 +4653,7 @@ class findTab (leoFind.leoFind):
         # These are created later.
         self.find_ctrl = None
         self.change_ctrl = None 
+        self.outerScrolledFrame = None
     
         self.createFrame(parentFrame)
         self.createBindings()
@@ -5734,6 +5735,7 @@ class spellTab(leoFind.leoFind):
         self.currentWord = None
         self.suggestions = []
         self.messages = [] # List of message to be displayed when hiding the tab.
+        self.outerScrolledFrame = None
         self.workCtrl = Tk.Text(None) # A text widget for scanning.
         
         self.loaded = self.init_aspell(c)

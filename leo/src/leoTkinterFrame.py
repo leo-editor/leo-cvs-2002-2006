@@ -1799,13 +1799,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
             oldSel = g.app.gui.getTextSelection(w)
             oldText = w.get('1.0','end')
             w.event_generate(g.virtual_event_name("Cut"))
-            c.frame.body.onBodyChanged(
-                c.currentPosition(),undoType='Cut',oldSel=oldSel,oldText=oldText)
+            c.frame.body.onBodyChanged(p,'Cut',oldSel=oldSel,oldText=oldText)
             c.requestRecolor()
         else:
             # Necessary
             w.event_generate(g.virtual_event_name("Cut"))
-            f.tree.onHeadChanged(c.currentPosition(),'Cut')
+            f.tree.onHeadChanged(p,'Cut')
     
     #@-node:ekr.20051011072049.1:OnCutFromMenu
     #@+node:ekr.20051011072903.4:OnPasteFromMenu
@@ -1821,8 +1820,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             oldSel = g.app.gui.getTextSelection(w)
             oldText = w.get('1.0','end')
             w.event_generate(g.virtual_event_name("Paste"))
-            c.frame.body.onBodyChanged(
-                p,'Paste',oldSel=oldSel,oldText=oldText)
+            c.frame.body.onBodyChanged(p,'Paste',oldSel=oldSel,oldText=oldText)
             c.requestRecolor()
         else:
             # Strip trailing newlines so the truncation doesn't cause confusion.
@@ -1836,6 +1834,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             w.event_generate(g.virtual_event_name("Paste"))
             f.tree.onHeadChanged(c.currentPosition(),'Paste')
             c.redraw_now()
+    #@nonl
     #@-node:ekr.20051011072903.4:OnPasteFromMenu
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
@@ -3723,13 +3722,12 @@ class leoTkinterLog (leoFrame.leoLog):
     def newTabFromMenu (self,tabName='Log'):
     
         self.selectTab(tabName)
-        parentFrame = self.frameDict.get(tabName)
         
         # This is called by getTabName.
         def selectTabCallback (newName):
             self.selectTab(newName)
     
-        self.getTabName(parentFrame,selectTabCallback)
+        self.getTabName(selectTabCallback)
     #@nonl
     #@-node:ekr.20051019140004.1:newTabFromMenu
     #@+node:ekr.20051019165401:renameTabFromMenu
@@ -3738,16 +3736,14 @@ class leoTkinterLog (leoFrame.leoLog):
         if tabName in ('Log','Completions'):
             g.es('can not rename %s tab' % (tabName),color='blue')
         else:
-            parentFrame = self.frameDict.get(tabName)
-            
             def renameTabCallback (newName):
                 self.renameTab(tabName,newName)
     
-            self.getTabName(parentFrame,renameTabCallback)
+            self.getTabName(renameTabCallback)
     #@nonl
     #@-node:ekr.20051019165401:renameTabFromMenu
     #@+node:ekr.20051019172811:getTabName
-    def getTabName (self,parentFrame,exitCallback):
+    def getTabName (self,exitCallback):
         
         canvas = self.nb.component('hull')
     
