@@ -1761,12 +1761,12 @@ def test_g_create_temp_file():
 def ensure_extension (name, ext):
 
     theFile, old_ext = g.os_path_splitext(name)
-    if len(name) == 0:
+    if not name:
         return name # don't add to an empty name.
     elif old_ext and old_ext == ext:
         return name
     else:
-        return theFile + ext
+        return name + ext
 #@nonl
 #@-node:ekr.20031218072017.3118:ensure_extension
 #@+node:EKR.20040504154039:g.is_sentinel
