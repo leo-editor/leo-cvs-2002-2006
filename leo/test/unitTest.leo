@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8463" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8471" clone_windows="0"/>
 <globals body_outline_ratio="0.490396927017">
 	<global_window_position top="96" left="225" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1717,7 +1717,10 @@
 <v t="ekr.20051109091152"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051109091731"><vh>@test typing in non-empty body text does not redraw the screen</vh></v>
 <v t="ekr.20051109095247"><vh>@test writing to log leaves focus in the log</vh></v>
+<v t="ekr.20051120110335"><vh>@test inserting a new node can be undone and redone</vh></v>
+<v t="ekr.20051120115046"><vh>@test undoing insert node restores previous node's body text</vh></v>
 </v>
+<v t="ekr.20051120110536"><vh>@test paste into body sticks</vh></v>
 <v t="ekr.20051108141141"><vh>Not ready yet</vh>
 <v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
 <v t="ekr.20051109091333"><vh>@test deleting the last body character text redraws the screen (and icon)</vh></v>
@@ -13869,7 +13872,9 @@ try:
     w.event_generate('Z')
     w.event_generate('&lt;Return&gt;')
     assert p.headString() == h + 'XYZ'
+    assert c.undoer.undoMenuLabel == 'Undo Typing'
     k.manufactureKeyPressForCommandName(w,'undo')
+    assert c.undoer.redoMenuLabel == 'Redo Typing'
     assert p.headString() == h
 finally:
     if 1:
@@ -14048,7 +14053,7 @@ try:
     w.event_generate('Y')
     w.event_generate('Z')
     n2 = w.cget('width')
-    assert n2 &gt; n, '%s %s' % (n2,n1)
+    assert n2 &gt; n, '%s %s' % (n2,n)
     # g.trace(n,n2)
 finally:
     if 1:
@@ -14575,7 +14580,7 @@ finally:
 g.es('test of write to log')
 c.redraw_now() # To change focus.
 w = g.app.gui.get_focus(c.frame)
-assert w._name.startswith('log'), 'bad name %s' % (w._name)</t>
+assert w._name.startswith('log'), 'bad name %s' % (w and w._name or '')</t>
 <t tx="ekr.20051109143831"># This is **not** a real unit test.
 # It simply restores the screen to a more convenient state.
 import leoTest ; u = leoTest.testUtils()
@@ -14587,5 +14592,26 @@ p.expand()
 g.app.unitTestDict['restoreSelectedNode']=False
 c.selectPosition(p)
 c.save()</t>
+<t tx="ekr.20051120110335">c.insertHeadline()
+assert c.undoer.undoMenuLabel == 'Undo Insert Node'
+c.undoer.undo()
+assert c.undoer.redoMenuLabel == 'Redo Insert Node'</t>
+<t tx="ekr.20051120110536">assert c.undoer.undoMenuLabel == 'Undo Typing'
+
+</t>
+<t tx="ekr.20051120115046">import leoTest ; u = leoTest.testUtils()
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+body = 'This is a test'
+p.setBodyString(body)
+
+try:
+    assert p.bodyString() == body
+    c.insertHeadline()
+    c.undoer.undo()
+    assert p.bodyString() == body
+finally:
+    p.setBodyString('')</t>
 </tnodes>
 </leo_file>
