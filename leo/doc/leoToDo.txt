@@ -5449,6 +5449,217 @@ xwem-worklog-tasks-description
 #@-node:ekr.20050712092501.1:xemacs variables
 #@-node:ekr.20050928144501.1:Mouseless Leo
 #@+node:ekr.20051014161015:Full input modes
+#@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
+class editCommands:
+
+    @others
+#@nonl
+#@+node:ekr.20050723064110.1:ctor
+def __init__ (self,c):
+    
+    self.c = c
+
+    self.mode = 'default'
+    self.modeStack = []
+    
+    self.defaultWordChars1, self.defaultWordChars2 = self.setDefaultWordChars()
+    self.wordChars1 = self.defaultWordChars1
+    self.wordChars2 = self.defaultWordChars2
+
+    self.setDefaultOptions()
+#@nonl
+#@-node:ekr.20050723064110.1:ctor
+#@+node:ekr.20050723064110.3:Options...
+#@+node:ekr.20050723064110.4:setDefaultOptions
+def setDefaultOptions(self):
+    
+    self.options = {
+        'extendMovesForward':   True,  # True: moving forward may cross node boundaries.
+        'extendMovesBack':      True,  # True: moving back may cross node boundaries.
+        'extendFindsForward':   True,   # True: find forward may cross node boundaries.
+        'extendFindsBack':      True,   # True: find back may cross node boundaries.
+    }
+#@nonl
+#@-node:ekr.20050723064110.4:setDefaultOptions
+#@+node:ekr.20050723064110.5:getOption
+def getOption (self,optionName):
+    
+    # This may change when modes get put in.
+    return self.options.get(optionName)
+#@nonl
+#@-node:ekr.20050723064110.5:getOption
+#@-node:ekr.20050723064110.3:Options...
+#@+node:ekr.20050723064110.6:Word stuff...
+#@+node:ekr.20050723064110.7:findWordStart
+def findWordStart(self,s,i):
+    
+    while i < len(s):
+        if s[i] in self.wordChars1:
+            return i
+        else:
+            i += 1
+    return i
+#@nonl
+#@-node:ekr.20050723064110.7:findWordStart
+#@+node:ekr.20050723064110.8:insideWord
+def insideWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        0 < i < len(s) and
+        s[i] in self.wordChars2 and
+        s[i-1] in self.wordChars2
+    )
+#@nonl
+#@-node:ekr.20050723064110.8:insideWord
+#@+node:ekr.20050723064110.9:skipWord
+def skipWord(self,s,i):
+    
+    while i < len(s) and s[i] in self.wordChars2:
+        i += 1
+    return i
+#@nonl
+#@-node:ekr.20050723064110.9:skipWord
+#@+node:ekr.20050723064110.10:startsWord
+def startsWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        i < len(s) and 
+        s[i] in self.wordChars1 and
+        (i == 0 or s[i-1] not in self.wordChars1)
+    )
+#@nonl
+#@-node:ekr.20050723064110.10:startsWord
+#@+node:ekr.20050723064110.11:setDefaultWordChars
+def setDefaultWordChars (self):
+    
+    chars1 = '_' + string.letters
+    chars2 = '_' + string.letters + string.digits
+    return chars1, chars2
+#@nonl
+#@-node:ekr.20050723064110.11:setDefaultWordChars
+#@-node:ekr.20050723064110.6:Word stuff...
+#@+node:ekr.20050723064110.12:Cursor movement
+#@+node:ekr.20050723064110.13:moveBackwardChar
+def moveBackwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i -= 1
+    if i >= 0:
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            s = p.bodyString()
+            if len(s) > 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(len(s)-1)
+                return True
+            else:
+                p.moveToThreadBack()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.13:moveBackwardChar
+#@+node:ekr.20050723064110.14:moveBackwardWord (Finish)
+def moveBackwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.findWordStart(s,i)
+    i = self.findWordStart(s,i) ###
+    if self.startsWord(s,i): ###
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            c.selectPosition(p)
+            if self.moveBackwardWord(0):
+                return True
+            p.moveToThreadBack()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.14:moveBackwardWord (Finish)
+#@+node:ekr.20050723064110.15:moveForwardChar
+def moveForwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i += 1
+    if i < len(s):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            if len(p.bodyString()) > 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(0)
+                return True
+            else:
+                p.moveToThreadNext()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.15:moveForwardChar
+#@+node:ekr.20050723064110.16:moveForwardWord
+def moveForwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.skipWord(s,i)
+    i = self.findWordStart(s,i)
+    if self.startsWord(s,i):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            c.selectPosition(p)
+            if self.moveForwardWord(0):
+                return True
+            p.moveToThreadNext()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.16:moveForwardWord
+#@+node:ekr.20050723064110.17:selectWord
+#@-node:ekr.20050723064110.17:selectWord
+#@+node:ekr.20050723064110.18:selectForwordWord
+def selectForwardWord (self):
+    
+    c = self ; b = c.frame.body ; s = b.getAllText()
+
+    i = i1 = b.getPythonInsertionPoint()
+    
+    if i < len(s) and g.is_c_id(s[i]):
+        i = g.skip_c_id(s,i+1)
+    
+    while i < len(s) and not g.is_c_id(s[i]):
+        i += 1
+        
+    if i < len(s) and g.is_c_id(s[i]):
+        # b.setPythonTextSelection(i1,i)
+        pass ### TODO
+#@nonl
+#@-node:ekr.20050723064110.18:selectForwordWord
+#@-node:ekr.20050723064110.12:Cursor movement
+#@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
 #@+node:ekr.20051103100302.1:Posting: @input-mode coming
 Leo will support both vim and xemacs by implementing @input-mode nodes in @settings trees.  For example, the xemacs <ctrl-c> mode will be implemented entirely as an input mode, with no special support from Leo.
 
@@ -16009,54 +16220,59 @@ def getTextFromClipboard (self):
 #@-node:ekr.20031218072017.844:Clipboard (tkGui)
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20051011072903.2:copyText
-def copyText (self,fromMinibuffer=False):
+def copyText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
     f = self ; c = f.c ; w = f.getFocus()
     
-    if not fromMinibuffer:
-        w.event_generate(g.virtual_event_name("Copy"))
+    w.event_generate(g.virtual_event_name("Copy"))
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
-def cutText (self,fromMinibuffer=False):
+def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(p,'Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
+        # Important: cut from headline is *not* undoable.
+        # Only the entire edit is undoable.
         # Do **not** call w.event_generate.
         pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
-def pasteText (self,fromMinibuffer=False):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus()
-    name = hasattr(w,'_name') and w._name or ''
-    
-    if fromMinibuffer:
+def pasteText (self):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-    elif name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Paste"))
+        c.frame.body.onBodyChanged(p,'Paste',oldSel=oldSel,oldText=oldText)
         c.requestRecolor()
-    elif name.startswith('head'):
-        # Strip trailing newlines so the truncation doesn't cause confusion.
+    if name.startswith('head'):
+        # Important: this paste is not undoable!
+        # Only the entire edit is undoable.
         s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
         if s != s1:
             g.app.gui.replaceClipboardWith(s)
         g.app.unitTestDict ['headWidth'] = True
@@ -16069,31 +16285,36 @@ def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
         w.event_generate(g.virtual_event_name("Copy"))
     else:
         # Necessary when not using shortcut keys.
         w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
 #@-node:ekr.20051011072903.1:OnCopyFromMenu
 #@+node:ekr.20051011072049.1:OnCutFromMenu
 def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
 
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(
+            c.currentPosition(),undoType='Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(c.currentPosition(),'Cut')
-#@nonl
+
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
@@ -16101,13 +16322,16 @@ def OnPasteFromMenu (self):
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
     f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-        f.body.onBodyChanged(p,undoType='Typing')
-        c.redraw_now()
+        c.frame.body.onBodyChanged(
+            p,'Paste',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -16120,7 +16344,6 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
         c.redraw_now()
-#@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20031218072017.838:tkBody.createBindings
@@ -19316,54 +19539,59 @@ def defineEditMenuTopTable (self):
 #@-node:ekr.20031218072017.839:defineEditMenuTopTable
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20051011072903.2:copyText
-def copyText (self,fromMinibuffer=False):
+def copyText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
     f = self ; c = f.c ; w = f.getFocus()
     
-    if not fromMinibuffer:
-        w.event_generate(g.virtual_event_name("Copy"))
+    w.event_generate(g.virtual_event_name("Copy"))
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
-def cutText (self,fromMinibuffer=False):
+def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(p,'Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
+        # Important: cut from headline is *not* undoable.
+        # Only the entire edit is undoable.
         # Do **not** call w.event_generate.
         pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
-def pasteText (self,fromMinibuffer=False):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus()
-    name = hasattr(w,'_name') and w._name or ''
-    
-    if fromMinibuffer:
+def pasteText (self):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-    elif name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Paste"))
+        c.frame.body.onBodyChanged(p,'Paste',oldSel=oldSel,oldText=oldText)
         c.requestRecolor()
-    elif name.startswith('head'):
-        # Strip trailing newlines so the truncation doesn't cause confusion.
+    if name.startswith('head'):
+        # Important: this paste is not undoable!
+        # Only the entire edit is undoable.
         s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
         if s != s1:
             g.app.gui.replaceClipboardWith(s)
         g.app.unitTestDict ['headWidth'] = True
@@ -19376,31 +19604,36 @@ def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
         w.event_generate(g.virtual_event_name("Copy"))
     else:
         # Necessary when not using shortcut keys.
         w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
 #@-node:ekr.20051011072903.1:OnCopyFromMenu
 #@+node:ekr.20051011072049.1:OnCutFromMenu
 def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
 
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(
+            c.currentPosition(),undoType='Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(c.currentPosition(),'Cut')
-#@nonl
+
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
@@ -19408,13 +19641,16 @@ def OnPasteFromMenu (self):
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
     f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-        f.body.onBodyChanged(p,undoType='Typing')
-        c.redraw_now()
+        c.frame.body.onBodyChanged(
+            p,'Paste',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -19427,7 +19663,6 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
         c.redraw_now()
-#@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20031218072017.844:Clipboard (tkGui)
