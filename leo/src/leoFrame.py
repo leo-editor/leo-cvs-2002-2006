@@ -475,9 +475,9 @@ class leoFrame:
     def OnCopyFromMenu (self):     self.oops()
     def OnPasteFromMenu (self):    self.oops()
     
-    def copyText  (self,fromMinibuffer=False): self.oops()
-    def cutText   (self,fromMinibuffer=False): self.oops()
-    def pasteText (self,fromMinibuffer=False): self.oops()
+    def copyText  (self): self.oops()
+    def cutText   (self): self.oops()
+    def pasteText (self): self.oops()
     
     def abortEditLabelCommand (self): self.oops()
     def endEditLabelCommand (self):   self.oops()

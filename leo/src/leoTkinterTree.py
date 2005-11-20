@@ -2482,7 +2482,16 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.127:editLabel
     #@+node:ekr.20040803072955.128:tree.select
-    # Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+    #@+at 
+    #@nonl
+    # Warnings:
+    # 1. Do **not** try to "optimize" this by returning if 
+    # p==tree.currentPosition.
+    # 2. Client code must ensure that at lease one call to select with 
+    # redraw_flag=True
+    #    follows calls with redraw_flag = False.
+    #@-at
+    #@@c
     
     def select (self,p,updateBeadList=True,redraw_flag=True):
         

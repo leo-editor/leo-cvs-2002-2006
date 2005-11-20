@@ -1235,7 +1235,7 @@ class keyHandlerClass:
         elif ch not in string.printable:
             if specialStroke:
                 g.trace(specialStroke)
-                specialFunc(fromMinibuffer=True)
+                specialFunc()
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
@@ -1425,8 +1425,8 @@ class keyHandlerClass:
                     bodyCtrl.tag_delete('color1')
                 except Exception:
                     pass
-            bodyCtrl.update_idletasks()
-            c.frame.body.onBodyChanged(p,undoType='Typing')
+            if 0: # Do *not* call this by default.  It interferes with undo.
+                c.frame.body.onBodyChanged(p,undoType='Typing')
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...

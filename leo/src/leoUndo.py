@@ -219,6 +219,7 @@ class baseUndoer:
     #@+node:ekr.20031218072017.3614:setRedoType, setUndoType
     # These routines update both the ivar and the menu label.
     def setRedoType (self,theType):
+        # g.trace(theType,g.callers(7))
         u = self ; frame = u.c.frame
         menu = frame.menu.getMenu("Edit")
         name = u.redoMenuName(theType)
@@ -235,6 +236,7 @@ class baseUndoer:
             u.realRedoMenuLabel = realLabel
     
     def setUndoType (self,theType):
+        # g.trace(theType,g.callers(7))
         u = self ; frame = u.c.frame
         menu = frame.menu.getMenu("Edit")
         name = u.undoMenuName(theType)
@@ -256,6 +258,8 @@ class baseUndoer:
     def setUndoTypes (self):
         
         u = self
+        
+        # g.trace(g.callers(7))
     
         # Set the undo type and undo menu label.
         bunch = u.peekBead(u.bead)
@@ -1015,7 +1019,7 @@ class baseUndoer:
         #@nonl
         #@-node:ekr.20040324061854:<< return if there is nothing to do >>
         #@nl
-        # g.trace(undo_type)
+        # g.trace(undo_type,g.callers(7))
         #@    << init the undo params >>
         #@+node:ekr.20040324061854.1:<< init the undo params >>
         # Clear all optional params.
@@ -1294,15 +1298,19 @@ class baseUndoer:
     def redo (self):
     
         u = self ; c = u.c
+        # g.trace(g.callers(7))
+    
         if not u.canRedo():
-            # g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
+            g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead+1):
-            # g.trace('no bead')
+            g.trace('no bead')
             return
         if not c.currentPosition():
             g.trace('no current position')
             return
+            
+        # g.trace(u.undoType)
             
         # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
         u.redoing = True 
@@ -1311,10 +1319,13 @@ class baseUndoer:
             u.redoHelper()
         else:
             g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
-            
+    
+        # Make sure we select the position with redraw_flag=True.
+        # This is necessary to update the body text!
+        c.selectPosition(c.currentPosition())
+        c.frame.bodyWantsFocus()
         # New in 4.4a3: Almost any change could change an icon,
         # So we always request a redraw.
-        c.frame.bodyWantsFocus()
         c.redraw_now()
         u.redoing = False
         u.bead += 1
@@ -1362,7 +1373,7 @@ class baseUndoer:
     
         u = self ; c = u.c
         
-        # g.trace('p',u.newP.v,'parent',u.newParent.v)
+        g.trace('p',u.newP.v,'parent',u.newParent.v)
     
         if u.newBack:
             u.newP.linkAfter(u.newBack)
@@ -1542,17 +1553,20 @@ class baseUndoer:
         
         u = self ; c = u.c
         # g.trace(g.callers(7))
+    
         c.endEditing() # Capture the headline *before* checking for undo.
         
         if not u.canUndo():
-            # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+            g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead):
-            # g.trace('no bead')
+            g.trace('no bead')
             return # Sets ivars.
         if not c.currentPosition():
             g.trace('no current position')
             return
+            
+        # g.trace(u.undoType)
     
         # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
         u.undoing = True
@@ -1563,9 +1577,12 @@ class baseUndoer:
         else:
             g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
     
+        # Make sure we select the position with redraw_flag=True.
+        # This is necessary to update the body text!
+        c.selectPosition(c.currentPosition())
+        c.frame.bodyWantsFocus()
         # New in 4.4a3: Almost any change could change an icon,
         # So we always request a redraw.
-        c.frame.bodyWantsFocus()
         c.redraw_now()
         u.undoing = False
         u.bead -= 1
@@ -1681,7 +1698,6 @@ class baseUndoer:
                 else:
                     t.setTnodeText(bunch.body)
                     t.setHeadString(bunch.head)
-                # g.trace(t,bunch.head,bunch.body
                 
         c.selectPosition(u.p,redraw_flag=False)
     #@nonl

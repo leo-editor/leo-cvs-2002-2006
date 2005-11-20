@@ -3055,54 +3055,59 @@ def makeIndexVisible(self,t,index):
 #@+node:ekr.20051029065806:Commands
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20051011072903.2:copyText
-def copyText (self,fromMinibuffer=False):
+def copyText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
     f = self ; c = f.c ; w = f.getFocus()
     
-    if not fromMinibuffer:
-        w.event_generate(g.virtual_event_name("Copy"))
+    w.event_generate(g.virtual_event_name("Copy"))
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
-def cutText (self,fromMinibuffer=False):
+def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(p,'Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
+        # Important: cut from headline is *not* undoable.
+        # Only the entire edit is undoable.
         # Do **not** call w.event_generate.
         pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
-def pasteText (self,fromMinibuffer=False):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus()
-    name = hasattr(w,'_name') and w._name or ''
-    
-    if fromMinibuffer:
+def pasteText (self):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-    elif name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Paste"))
+        c.frame.body.onBodyChanged(p,'Paste',oldSel=oldSel,oldText=oldText)
         c.requestRecolor()
-    elif name.startswith('head'):
-        # Strip trailing newlines so the truncation doesn't cause confusion.
+    if name.startswith('head'):
+        # Important: this paste is not undoable!
+        # Only the entire edit is undoable.
         s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
         if s != s1:
             g.app.gui.replaceClipboardWith(s)
         g.app.unitTestDict ['headWidth'] = True
@@ -3115,31 +3120,36 @@ def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
         w.event_generate(g.virtual_event_name("Copy"))
     else:
         # Necessary when not using shortcut keys.
         w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
 #@-node:ekr.20051011072903.1:OnCopyFromMenu
 #@+node:ekr.20051011072049.1:OnCutFromMenu
 def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
 
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(
+            c.currentPosition(),undoType='Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(c.currentPosition(),'Cut')
-#@nonl
+
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
@@ -3147,13 +3157,16 @@ def OnPasteFromMenu (self):
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
     f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-        f.body.onBodyChanged(p,undoType='Typing')
-        c.redraw_now()
+        c.frame.body.onBodyChanged(
+            p,'Paste',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -3166,7 +3179,6 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
         c.redraw_now()
-#@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20031218072017.3981:abortEditLabelCommand
@@ -3454,8 +3466,8 @@ def endCommand (self,event,commandName):
                 bodyCtrl.tag_delete('color1')
             except Exception:
                 pass
-        bodyCtrl.update_idletasks()
-        c.frame.body.onBodyChanged(p,undoType='Typing')
+        if 0: # Do *not* call this by default.  It interferes with undo.
+            c.frame.body.onBodyChanged(p,undoType='Typing')
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
@@ -5129,7 +5141,12 @@ def editLabel (self,p):
 #@nonl
 #@-node:ekr.20040803072955.127:editLabel
 #@+node:ekr.20040803072955.128:tree.select
-# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+@ Warnings:
+    
+1. Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+2. Client code must ensure that at lease one call to select with redraw_flag=True
+   follows calls with redraw_flag = False.
+@c
 
 def select (self,p,updateBeadList=True,redraw_flag=True):
     
@@ -5517,6 +5534,8 @@ def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText
 
     This is a public convenience method: a thin wrapper for updateBody.'''
     
+    # g.trace(g.callers(7))
+    
     c = self.c
     if not p:
         g.trace("can't happen: no p")
@@ -5542,6 +5561,8 @@ def updateBody (self,event,w,undoType,
     oldSel=None,oldYview=None,newSel=None,oldText=None):
 
     '''Update Leo after the body have been changed.'''
+    
+    # g.trace(g.callers(7))
     
     c = self.c ; p = c.currentPosition()
     ch = event and event.char or ''
@@ -6336,8 +6357,8 @@ def endCommand (self,event,commandName):
                 bodyCtrl.tag_delete('color1')
             except Exception:
                 pass
-        bodyCtrl.update_idletasks()
-        c.frame.body.onBodyChanged(p,undoType='Typing')
+        if 0: # Do *not* call this by default.  It interferes with undo.
+            c.frame.body.onBodyChanged(p,undoType='Typing')
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@-node:ekr.20051104100657:keyHandler
@@ -6475,54 +6496,59 @@ s = g.toUnicode(s or '',g.app.tkEncoding)
 #@-node:ekr.20040803072955.90:head key handlers
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20051011072903.2:copyText
-def copyText (self,fromMinibuffer=False):
+def copyText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
     f = self ; c = f.c ; w = f.getFocus()
     
-    if not fromMinibuffer:
-        w.event_generate(g.virtual_event_name("Copy"))
+    w.event_generate(g.virtual_event_name("Copy"))
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
-def cutText (self,fromMinibuffer=False):
+def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    __pychecker__ = '--no-argsused' # fromMinibuffer not used.
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
-    
-    # g.trace(w,w._name) # _name and widgetName are tkinter additions to Tk.
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(p,'Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
+        # Important: cut from headline is *not* undoable.
+        # Only the entire edit is undoable.
         # Do **not** call w.event_generate.
         pass
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
-def pasteText (self,fromMinibuffer=False):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus()
-    name = hasattr(w,'_name') and w._name or ''
-    
-    if fromMinibuffer:
+def pasteText (self):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-    elif name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Paste"))
+        c.frame.body.onBodyChanged(p,'Paste',oldSel=oldSel,oldText=oldText)
         c.requestRecolor()
-    elif name.startswith('head'):
-        # Strip trailing newlines so the truncation doesn't cause confusion.
+    if name.startswith('head'):
+        # Important: this paste is not undoable!
+        # Only the entire edit is undoable.
         s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
         if s != s1:
             g.app.gui.replaceClipboardWith(s)
         g.app.unitTestDict ['headWidth'] = True
@@ -6535,31 +6561,36 @@ def OnCopyFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
         w.event_generate(g.virtual_event_name("Copy"))
     else:
         # Necessary when not using shortcut keys.
         w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
 #@-node:ekr.20051011072903.1:OnCopyFromMenu
 #@+node:ekr.20051011072049.1:OnCutFromMenu
 def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
 
-    f = self ; c = f.c ; w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the cut!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Cut"))
+        c.frame.body.onBodyChanged(
+            c.currentPosition(),undoType='Cut',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(c.currentPosition(),'Cut')
-#@nonl
+
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
@@ -6567,13 +6598,16 @@ def OnPasteFromMenu (self):
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
     f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-        f.body.onBodyChanged(p,undoType='Typing')
-        c.redraw_now()
+        c.frame.body.onBodyChanged(
+            p,'Paste',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -6586,7 +6620,6 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
         c.redraw_now()
-#@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20051105121438:Pastes
@@ -7895,8 +7928,8 @@ def endCommand (self,event,commandName):
                 bodyCtrl.tag_delete('color1')
             except Exception:
                 pass
-        bodyCtrl.update_idletasks()
-        c.frame.body.onBodyChanged(p,undoType='Typing')
+        if 0: # Do *not* call this by default.  It interferes with undo.
+            c.frame.body.onBodyChanged(p,undoType='Typing')
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
@@ -9020,8 +9053,8 @@ def endCommand (self,event,commandName):
                 bodyCtrl.tag_delete('color1')
             except Exception:
                 pass
-        bodyCtrl.update_idletasks()
-        c.frame.body.onBodyChanged(p,undoType='Typing')
+        if 0: # Do *not* call this by default.  It interferes with undo.
+            c.frame.body.onBodyChanged(p,undoType='Typing')
 #@nonl
 #@-node:ekr.20051001050607:endCommand
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
@@ -9680,15 +9713,19 @@ def yoffsetTree(self,p,p1):
 def redo (self):
 
     u = self ; c = u.c
+    # g.trace(g.callers(7))
+
     if not u.canRedo():
-        # g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
+        g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
         return
     if not u.getBead(u.bead+1):
-        # g.trace('no bead')
+        g.trace('no bead')
         return
     if not c.currentPosition():
         g.trace('no current position')
         return
+        
+    # g.trace(u.undoType)
         
     # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
     u.redoing = True 
@@ -9697,10 +9734,13 @@ def redo (self):
         u.redoHelper()
     else:
         g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
-        
+
+    # Make sure we select the position with redraw_flag=True.
+    # This is necessary to update the body text!
+    c.selectPosition(c.currentPosition())
+    c.frame.bodyWantsFocus()
     # New in 4.4a3: Almost any change could change an icon,
     # So we always request a redraw.
-    c.frame.bodyWantsFocus()
     c.redraw_now()
     u.redoing = False
     u.bead += 1
@@ -9748,7 +9788,7 @@ def redoInsertNode (self):
 
     u = self ; c = u.c
     
-    # g.trace('p',u.newP.v,'parent',u.newParent.v)
+    g.trace('p',u.newP.v,'parent',u.newParent.v)
 
     if u.newBack:
         u.newP.linkAfter(u.newBack)
@@ -9928,17 +9968,20 @@ def undo (self):
     
     u = self ; c = u.c
     # g.trace(g.callers(7))
+
     c.endEditing() # Capture the headline *before* checking for undo.
     
     if not u.canUndo():
-        # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+        g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
         return
     if not u.getBead(u.bead):
-        # g.trace('no bead')
+        g.trace('no bead')
         return # Sets ivars.
     if not c.currentPosition():
         g.trace('no current position')
         return
+        
+    # g.trace(u.undoType)
 
     # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
     u.undoing = True
@@ -9949,9 +9992,12 @@ def undo (self):
     else:
         g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
 
+    # Make sure we select the position with redraw_flag=True.
+    # This is necessary to update the body text!
+    c.selectPosition(c.currentPosition())
+    c.frame.bodyWantsFocus()
     # New in 4.4a3: Almost any change could change an icon,
     # So we always request a redraw.
-    c.frame.bodyWantsFocus()
     c.redraw_now()
     u.undoing = False
     u.bead -= 1
@@ -10067,7 +10113,6 @@ def undoInsertNode (self):
             else:
                 t.setTnodeText(bunch.body)
                 t.setHeadString(bunch.head)
-            # g.trace(t,bunch.head,bunch.body
             
     c.selectPosition(u.p,redraw_flag=False)
 #@nonl
@@ -10697,13 +10742,16 @@ def OnPasteFromMenu (self):
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
     f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus()
-    isBody = w == f.body.bodyCtrl
+    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
-    if isBody:
+    if name.startswith('body'):
+        # Let body key handler do the paste!
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
         w.event_generate(g.virtual_event_name("Paste"))
-        f.body.onBodyChanged(p,undoType='Typing')
-        c.redraw_now()
+        c.frame.body.onBodyChanged(
+            p,'Paste',oldSel=oldSel,oldText=oldText)
+        c.requestRecolor()
     else:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         s = s1 = g.app.gui.getTextFromClipboard()
@@ -10716,7 +10764,6 @@ def OnPasteFromMenu (self):
         w.event_generate(g.virtual_event_name("Paste"))
         f.tree.onHeadChanged(c.currentPosition(),'Paste')
         c.redraw_now()
-#@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20051110153307:Calls to updateScreen
 #@-node:ekr.20051110104922:(Completed transition to Newer World Order)
@@ -11774,6 +11821,1305 @@ for frame, text, command in (
 #@-node:ekr.20051025071455.22:createSpellTab
 #@-node:ekr.20051113090322.1:(Improved spell tab)
 #@-node:ekr.20051110101524:4.4a4 projects
+#@+node:ekr.20051113061206:(Added Clone-find)
+#@+node:ekr.20051022152427:Focus
+#@clone 2
+#@+node:ekr.20051103114520.1:c.setFocusHelper
+def setFocusHelper (self):
+    
+    c = self ; frame = c.frame
+    
+    if g.app.quitting or not hasattr(frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    if frame.wantedWidget:
+        w = frame.wantedWidget
+        name = hasattr(w,'_name') and w._name or ''
+        w2 = g.app.gui.get_focus(frame)
+        name2 = hasattr(w2,'_name') and w2._name or ''
+        # if name != name2: g.trace(name2,'->',name,g.callers(7))
+        # It is possible that w no longer exists.
+        try:
+            g.app.gui.set_focus(c,w)
+        except Exception:
+            g.app.gui.set_focus(c,frame.body.bodyCtrl)
+        # Essential: otherwise only calls to xWantsWidget would be honored.
+        frame.wantedWidget = None
+    else:
+        # Force the widget to some standard place.
+        w = g.app.gui.get_focus(frame)
+        if not w: return
+        # Allow clicks in enclosing window frame or in dialogs.
+        name = hasattr(w,'_name') and w._name or ''
+        if (
+            name and name[0] in string.letters # A known Leo frame.
+            or w == frame.top # The top of the Leo window
+            or g.app.dialogs > 0 # A dialog.
+            or isinstance(w,Tk.Text)
+            or isinstance(w,Tk.Entry)
+        ):
+            # g.trace('ok',hasattr(w,'_name') and w._name or '')
+            # g.app.gui.set_focus(c,w)
+            return
+        # Not a name created by Leo.
+        g.trace('setting default focus',name)
+        g.app.gui.set_focus(c,frame.body.bodyCtrl)
+#@nonl
+#@-node:ekr.20051103114520.1:c.setFocusHelper
+#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+@ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
+
+Important: This code never calls select, so there can be no race condition here
+that alters text improperly.
+#@nonl
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
+def bodyWantsFocus(self):
+    w = self.body and self.body.bodyCtrl
+    self.set_focus(w)
+        
+def headlineWantsFocus(self,p):
+    w = p and p.edit_widget()
+    self.set_focus(w)
+    
+def logWantsFocus(self):
+    w = self.log and self.log.logCtrl
+    self.set_focus(w)
+
+def minibufferWantsFocus(self):
+    # Important! We must preserve body selection!
+    if 1:
+        self.bodyWantsFocus()
+    else:
+        w = self.c.miniBufferWidget
+        self.set_focus(w)
+
+def treeWantsFocus(self):
+    w = self.tree and self.tree.canvas
+    self.set_focus(w)
+    
+def widgetWantsFocus(self,w):
+    self.set_focus(w)
+#@nonl
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+# New in Leo 4.4a3: nothing happens at idle time.
+
+def set_focus(self,w):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+
+    if 0: # A *very* effective trace.
+        name = w and hasattr(w,'_name') and w._name or '<no name>'
+        g.trace(name,g.callers(7)) 
+
+    if w:
+        self.wantedWidget = w
+        g.app.gui.set_focus(c,w)
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
+#@+node:ekr.20031218072017.2373:set_focus (app.gui)
+def set_focus(self,c,w):
+    
+    __pychecker__ = '--no-argsused' # c not used at present.
+    
+    """Put the focus on the widget."""
+    
+    if w:
+        if 0:
+            name = hasattr(w,'_name') and w._name or '<no name>'
+            g.trace('GUI',name,g.callers(9))
+            
+        if 0:
+            w2 = c.frame.outerFrame.focus_get()
+            name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
+            w2 and g.trace(name2,c)
+
+        w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+    
+        w.focus_set()
+#@nonl
+#@-node:ekr.20031218072017.2373:set_focus (app.gui)
+#@-node:ekr.20051022152427:Focus
+#@+node:ekr.20051113061206.1:Patch
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3425070
+By: rogererens
+
+These changes will have the effect that every time you press the "Find All"
+button in the Find tab, a new root node called Found: <your search pattern>
+is created holding clones of the nodes that contain the search pattern.
+It is your own responsibility to navigate to this Found: node and cleaning it
+up when it's no longer needed.
+#@nonl
+#@-node:ekr.20051113061206.1:Patch
+#@+node:ekr.20031218072017.1762:c.clone
+def clone (self):
+
+    c = self ; u = c.undoer ; p = c.currentPosition()
+    if not p: return
+    
+    c.beginUpdate()
+    try: # In update...
+        undoData = c.undoer.beforeCloneNode(p)
+        clone = p.clone(p)
+        dirtyVnodeList = clone.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        if c.validateOutline():
+            u.afterCloneNode(clone,'Clone Node',undoData,dirtyVnodeList=dirtyVnodeList)
+            c.selectPosition(clone)
+    finally:
+        c.endUpdate()
+
+    return clone # For mod_labels plugin.
+#@nonl
+#@-node:ekr.20031218072017.1762:c.clone
+#@+node:ekr.20031218072017.3073:findAll
+def findAll(self):
+
+    c = self.c ; t = self.s_ctrl ; u = c.undoer
+    gui = g.app.gui ; undoType = 'Clone Find All'
+    if not self.checkArgs():
+        return
+    self.initInHeadline()
+    data = self.save()
+    self.initBatchCommands()
+    count = 0 ; clones = []
+    while 1:
+        pos, newpos = self.findNextMatch()
+        if not pos: break
+        count += 1
+        line = gui.getLineContainingIndex(t,pos)
+        self.printLine(line,allFlag=True)
+        if self.clone_find_all and self.p.v.t not in clones:
+            if not clones:
+                << create the found node and begin the undo group >>
+            << create a clone of p under the find node >>
+    if self.clone_find_all and clones:
+        c.setChanged(True)
+        u.afterChangeGroup(c.currentPosition(),undoType,reportFlag=True)   
+    c.redraw()
+    g.es("found: %d matches" % (count))
+    self.restore(data)
+#@nonl
+#@+node:ekr.20051113110735:<< create the found node and begin the undo group >>
+u.beforeChangeGroup(c.currentPosition(),undoType)
+undoData = u.beforeInsertNode(c.currentPosition())
+oldRoot = c.rootPosition()
+found = oldRoot.insertAfter()
+found.moveToRoot(oldRoot)
+found.setHeadString('Found: ' + self.find_text)
+u.afterInsertNode(found,undoType,undoData,dirtyVnodeList=[])
+#@nonl
+#@-node:ekr.20051113110735:<< create the found node and begin the undo group >>
+#@+node:ekr.20051113110851:<< create a clone of p under the find node >>
+clones.append(self.p.v.t)
+undoData = u.beforeCloneNode(self.p)
+q = self.p.clone(self.p)
+q.moveToLastChildOf(found)
+u.afterCloneNode(q,undoType,undoData,dirtyVnodeList=[])
+#@nonl
+#@-node:ekr.20051113110851:<< create a clone of p under the find node >>
+#@-node:ekr.20031218072017.3073:findAll
+#@+node:ekr.20031218072017.1193:c.deleteOutline
+def deleteOutline (self,op_name="Delete Node",redraw_flag=True):
+    
+    """Deletes the current position.
+    
+    Does nothing if the outline would become empty."""
+
+    c = self ; u = c.undoer ; p = c.currentPosition()
+    if not p: return
+
+    if p.hasVisBack(): newNode = p.visBack()
+    else: newNode = p.next() # _not_ p.visNext(): we are at the top level.
+    if not newNode: return
+
+    if redraw_flag:
+        c.endEditing() # Make sure we capture the headline for Undo.
+        undoData = u.beforeDeleteNode(p)
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        
+    p.doDelete()
+    c.selectPosition(newNode,redraw_flag=redraw_flag)
+    
+    if redraw_flag:
+        c.setChanged(True)
+        u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.redraw_now()
+
+    c.validateOutline()
+#@nonl
+#@-node:ekr.20031218072017.1193:c.deleteOutline
+#@+node:ekr.20031218072017.1761:c.insertHeadline
+def insertHeadline (self,op_name="Insert Node",redraw_flag=True):
+    
+    '''Insert a node after the presently selected node.'''
+
+    c = self ; u = c.undoer
+    current = c.currentPosition()
+    
+    if not current: return
+
+    undoData = c.undoer.beforeInsertNode(current)
+    # Make sure the new node is visible when hoisting.
+    if ((current.hasChildren() and current.isExpanded()) or
+        (c.hoistStack and current == c.hoistStack[-1].p)):
+        p = current.insertAsNthChild(0)
+    else:
+        p = current.insertAfter()
+    dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+    c.setChanged(True)
+    u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+    c.editPosition(p) # Do this after before the redraw first.
+    c.selectPosition(p)
+   
+    if redraw_flag:
+        c.redraw_now()
+        c.editPosition(p) # Do this again after the redraw so p.edit_widget() will succeed.
+        
+    return p # for mod_labels plugin.
+#@nonl
+#@-node:ekr.20031218072017.1761:c.insertHeadline
+#@+node:ekr.20031218072017.2997:c.selectPosition
+def selectPosition(self,p,updateBeadList=True,redraw_flag=True):
+    
+    """Select a new position."""
+
+    c = self
+    c.frame.tree.select(p,updateBeadList,redraw_flag=redraw_flag)
+
+selectVnode = selectPosition
+#@nonl
+#@-node:ekr.20031218072017.2997:c.selectPosition
+#@+node:ekr.20040803072955.128:tree.select
+@ Warnings:
+    
+1. Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+2. Client code must ensure that at lease one call to select with redraw_flag=True
+   follows calls with redraw_flag = False.
+@c
+
+def select (self,p,updateBeadList=True,redraw_flag=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    if not p or not p.exists(c): return # Not an error.
+    
+    # g.trace(redraw_flag,g.callers(7))
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        if old_p and redraw_flag:
+            << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        if redraw_flag:
+            << select the new node >>
+            if p and p != old_p: # Suppress duplicate call.
+                try: # may fail during initialization.
+                    # p is NOT c.currentPosition() here!
+                    self.canvas.update_idletasks() # Essential.
+                    self.scrollTo(p)
+                except Exception: pass
+            << update c.beadList or c.beadPointer >>
+            << update c.visitedList >>
+
+    c.setCurrentPosition(p)
+    if redraw_flag:
+        << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p)
+
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
+frame.setWrap(p)
+    
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+if p != old_p and redraw_flag:
+    self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.frame.treeWantsFocus()
+else:
+    frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20031218072017.2030:redo & helpers...
+def redo (self):
+
+    u = self ; c = u.c
+    # g.trace(g.callers(7))
+
+    if not u.canRedo():
+        g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
+        return
+    if not u.getBead(u.bead+1):
+        g.trace('no bead')
+        return
+    if not c.currentPosition():
+        g.trace('no current position')
+        return
+        
+    # g.trace(u.undoType)
+        
+    # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
+    u.redoing = True 
+    u.groupCount = 0
+    if u.redoHelper:
+        u.redoHelper()
+    else:
+        g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
+
+    # Make sure we select the position with redraw_flag=True.
+    # This is necessary to update the body text!
+    c.selectPosition(c.currentPosition())
+    c.frame.bodyWantsFocus()
+    # New in 4.4a3: Almost any change could change an icon,
+    # So we always request a redraw.
+    c.redraw_now()
+    u.redoing = False
+    u.bead += 1
+    u.setUndoTypes()
+#@nonl
+#@+node:ekr.20050424170219:redoClearRecentFiles
+def redoClearRecentFiles (self):
+    
+    u = self ; c = u.c
+
+    g.app.recentFiles = u.newRecentFiles[:]
+    c.recentFiles = u.newRecentFiles[:]
+    
+    c.frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20050424170219:redoClearRecentFiles
+#@+node:ekr.20050412083057:redoCloneNode
+def redoCloneNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+        
+    c.selectPosition(u.newP,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050412083057:redoCloneNode
+#@+node:EKR.20040526072519.2:redoDeleteNode
+def redoDeleteNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p,redraw_flag=False)
+    c.deleteOutline(redraw_flag=False)
+    c.selectPosition(u.newP,redraw_flag=False)
+#@nonl
+#@-node:EKR.20040526072519.2:redoDeleteNode
+#@+node:ekr.20050412084532:redoInsertNode
+def redoInsertNode (self):
+
+    u = self ; c = u.c
+    
+    g.trace('p',u.newP.v,'parent',u.newParent.v)
+
+    if u.newBack:
+        u.newP.linkAfter(u.newBack)
+    elif u.newParent:
+        u.newP.linkAsNthChild(u.newParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.newP.linkAsRoot(oldRoot)
+
+    # assert(u.newP.exists(c))
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.newP.restoreLinksInTree()
+    
+    if u.pasteAsClone:
+        for bunch in u.afterTree:
+            t = bunch.t
+            if u.newP.v.t == t:
+                u.newP.setBodyStringOrPane(bunch.body)
+                u.newP.setHeadString(bunch.head)
+            else:
+                t.setTnodeText(bunch.body)
+                t.setHeadString(bunch.head)
+            # g.trace(t,bunch.head,bunch.body)
+            
+    c.selectPosition(u.newP,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050412084532:redoInsertNode
+#@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
+def redoHoistNode (self):
+    
+    u = self ; c = u.c
+    
+    c.selectPosition(u.p,redraw_flag=False)
+    c.hoist()
+    
+def redoDehoistNode (self):
+    
+    u = self ; c = u.c
+    
+    c.selectPosition(u.p,redraw_flag=False)
+    c.dehoist()
+#@nonl
+#@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
+#@+node:ekr.20050318085432.6:redoGroup
+def redoGroup (self):
+    
+    '''Process beads until the matching 'afterGroup' bead is seen.'''
+    
+    u = self ; c = u.c ; count = 0
+    u.groupCount += 1
+    while 1:
+        u.bead += 1
+        d = u.getBead(u.bead+1) # sets ivars, including u.p.
+        if not d:
+            s = "Undo stack overrun for %s" % u.undoType
+            g.es_trace(s, color="red")
+            break
+        elif u.kind == 'afterGroup':
+            break
+        elif u.redoHelper:
+            count += 1
+            u.redoHelper()
+        else:
+            s = "No group redo helper for %s" % u.undoType
+            g.es_trace(s,color="red")
+    u.groupCount -= 1
+    
+    if u.dirtyVnodeList: # May be None instead of [].
+        for v in u.dirtyVnodeList:
+            v.t.setDirty()
+
+    if u.reportFlag:
+        g.es("redo %d instances" % count)
+        
+    c.selectPosition(u.p)
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+#@nonl
+#@-node:ekr.20050318085432.6:redoGroup
+#@+node:ekr.20050318085432.7:redoNodeContents
+def redoNodeContents (self):
+    
+    u = self
+    
+    u.p.setTnodeText(u.newBody)
+    u.p.initHeadString(u.newHead)
+    
+    if u.groupCount == 0 and u.newSel:
+        u.c.frame.body.setTextSelection(u.newSel)
+    
+    u.updateMarks('new')
+    
+    for v in u.dirtyVnodeList:
+        v.t.setDirty()
+#@nonl
+#@-node:ekr.20050318085432.7:redoNodeContents
+#@+node:ekr.20050526125801:redoMark
+def redoMark (self):
+    
+    u = self ; c = u.c
+
+    u.updateMarks('new')
+    
+    for v in u.dirtyVnodeList:
+        v.t.setDirty()
+    
+    c.selectPosition(u.p,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050526125801:redoMark
+#@+node:ekr.20050411111847:redoMove
+def redoMove (self):
+    
+    u = self ; c = u.c
+
+    # g.trace(u.p)
+
+    if u.newParent:
+        u.p.moveToNthChildOf(u.newParent,u.newN)
+    elif u.newBack:
+        u.p.moveAfter(u.newBack)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.moveToRoot(oldRoot)
+        
+    u.updateMarks('new')
+
+    for v in u.dirtyVnodeList:
+        v.t.setDirty()
+        
+    c.selectPosition(u.p,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050411111847:redoMove
+#@+node:ekr.20050318085432.8:redoTree
+def redoTree (self):
+    
+    '''Redo replacement of an entire tree.'''
+    
+    u = self ; c = u.c
+
+    u.p = self.undoRedoTree(u.p,u.oldTree,u.newTree)
+    c.selectPosition(u.p) # Does full recolor.
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+#@nonl
+#@-node:ekr.20050318085432.8:redoTree
+#@+node:EKR.20040526075238.5:redoTyping
+def redoTyping (self):
+
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ('Cut','Paste','Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=u.undoType)
+    
+    if u.newSel:
+        c.frame.bodyWantsFocus()
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.frame.bodyWantsFocus()
+        c.frame.body.setYScrollPosition(u.yview)
+#@nonl
+#@-node:EKR.20040526075238.5:redoTyping
+#@-node:ekr.20031218072017.2030:redo & helpers...
+#@+node:ekr.20031218072017.2039:undo & helpers...
+def undo (self):
+
+    """Undo the operation described by the undo parmaters."""
+    
+    u = self ; c = u.c
+    # g.trace(g.callers(7))
+
+    c.endEditing() # Capture the headline *before* checking for undo.
+    
+    if not u.canUndo():
+        g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+        return
+    if not u.getBead(u.bead):
+        g.trace('no bead')
+        return # Sets ivars.
+    if not c.currentPosition():
+        g.trace('no current position')
+        return
+        
+    # g.trace(u.undoType)
+
+    # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
+    u.undoing = True
+    u.groupCount = 0
+
+    if u.undoHelper:
+        u.undoHelper()
+    else:
+        g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
+
+    # Make sure we select the position with redraw_flag=True.
+    # This is necessary to update the body text!
+    c.selectPosition(c.currentPosition())
+    c.frame.bodyWantsFocus()
+    # New in 4.4a3: Almost any change could change an icon,
+    # So we always request a redraw.
+    c.redraw_now()
+    u.undoing = False
+    u.bead -= 1
+    u.setUndoTypes()
+#@nonl
+#@+node:ekr.20050424170219.1:undoClearRecentFiles
+def undoClearRecentFiles (self):
+    
+    u = self ; c = u.c
+    
+    g.app.recentFiles = u.oldRecentFiles[:]
+    c.recentFiles = u.oldRecentFiles[:]
+
+    c.frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20050424170219.1:undoClearRecentFiles
+#@+node:ekr.20050412083057.1:undoCloneNode
+def undoCloneNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP,redraw_flag=False)
+    c.deleteOutline(redraw_flag=False)
+    c.selectPosition(u.p,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050412083057.1:undoCloneNode
+#@+node:ekr.20050412084055:undoDeleteNode
+def undoDeleteNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.oldBack:
+        u.p.linkAfter(u.oldBack)
+    elif u.oldParent:
+        u.p.linkAsNthChild(u.oldParent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+    
+    c.selectPosition(u.p,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050412084055:undoDeleteNode
+#@+node:ekr.20050318085713:undoGroup
+def undoGroup (self):
+    
+    '''Process beads until the matching 'beforeGroup' bead is seen.'''
+
+    u = self ; c = u.c ; count = 0
+    reportFlag = u.reportFlag
+    u.groupCount += 1
+
+    while 1:
+        u.bead -= 1
+        d = u.getBead(u.bead) # sets ivars, including u.p.
+        if not d:
+            s = "Undo stack underrun for %s" % u.undoType
+            g.es_trace(s,color="red")
+            break
+        elif u.kind == 'beforeGroup':
+            break
+        elif u.undoHelper:
+            count += 1
+            u.undoHelper()
+        else:
+            s = "No group undo helper for %s" % u.undoType
+            g.es_trace(s, color="red")
+           
+    if u.dirtyVnodeList: # May be None instead of [].
+        for v in u.dirtyVnodeList:
+            v.t.clearDirty()
+
+    u.groupCount -= 1
+    if reportFlag:
+        g.es("undo %d instances" % count)
+
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+#@nonl
+#@-node:ekr.20050318085713:undoGroup
+#@+node:ekr.20050412083244:undoHoistNode & undoDehoistNode
+def undoHoistNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p,redraw_flag=False)
+    c.dehoist()
+    
+def undoDehoistNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.p,redraw_flag=False)
+    c.hoist()
+#@nonl
+#@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode
+#@+node:ekr.20050412085112:undoInsertNode
+def undoInsertNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectPosition(u.newP,redraw_flag=False)
+    c.deleteOutline(redraw_flag=False)
+    
+    if u.pasteAsClone:
+        for bunch in u.beforeTree:
+            t = bunch.t
+            if u.p.v.t == t:
+                u.p.setBodyStringOrPane(bunch.body)
+                u.p.setHeadString(bunch.head)
+            else:
+                t.setTnodeText(bunch.body)
+                t.setHeadString(bunch.head)
+            
+    c.selectPosition(u.p,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050412085112:undoInsertNode
+#@+node:ekr.20050526124906:undoMark
+def undoMark (self):
+    
+    u = self ; c = u.c
+
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+        
+    c.selectPosition(u.p,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050526124906:undoMark
+#@+node:ekr.20050411112033:undoMove
+def undoMove (self):
+    
+    u = self ; c = u.c
+
+    # g.trace(u.p,u.oldParent,u.oldN)
+
+    if u.oldParent:
+        u.p.moveToNthChildOf(u.oldParent,u.oldN)
+    elif u.oldBack:
+        u.p.moveAfter(u.oldBack)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.moveToRoot(oldRoot)
+
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+        
+    c.selectPosition(u.p,redraw_flag=False)
+#@nonl
+#@-node:ekr.20050411112033:undoMove
+#@+node:ekr.20050318085713.1:undoNodeContents
+def undoNodeContents (self):
+    
+    '''Undo all changes to the contents of a node,
+    including headline and body text, and dirty and marked bits.
+    '''
+    
+    u = self
+    
+    u.p.setTnodeText(u.oldBody)
+    u.p.initHeadString(u.oldHead)
+
+    if u.groupCount == 0 and u.oldSel:
+        u.c.frame.body.setTextSelection(u.oldSel)
+    
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+#@nonl
+#@-node:ekr.20050318085713.1:undoNodeContents
+#@+node:ekr.20050318085713.2:undoTree
+def undoTree (self):
+    
+    '''Redo replacement of an entire tree.'''
+    
+    u = self ; c = u.c
+
+    u.p = self.undoRedoTree(u.p,u.newTree,u.oldTree)
+    c.selectPosition(u.p) # Does full recolor.
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+#@nonl
+#@-node:ekr.20050318085713.2:undoTree
+#@+node:ekr.20050408100042:undoRedoTree
+def undoRedoTree (self,p,new_data,old_data):
+    
+    '''Replace p and its subtree using old_data during undo.'''
+    
+    # Same as undoReplace except uses g.Bunch.
+
+    u = self
+    
+    if new_data == None:
+        # This is the first time we have undone the operation.
+        # Put the new data in the bead.
+        bunch = u.beads[u.bead]
+        bunch.newTree = u.saveTree(p.copy())
+        u.beads[u.bead] = bunch
+    
+    # Replace data in tree with old data.
+    u.restoreTree(old_data)
+    p.setBodyStringOrPane(p.bodyString())
+    
+    return p # Nothing really changes.
+#@nonl
+#@-node:ekr.20050408100042:undoRedoTree
+#@+node:EKR.20040526090701.4:undoTyping
+def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectPosition causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectPosition(u.p)
+    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+
+    if u.oldSel:
+        c.frame.bodyWantsFocus()
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.frame.bodyWantsFocus()
+        c.frame.body.setYScrollPosition(u.yview)
+#@nonl
+#@-node:EKR.20040526090701.4:undoTyping
+#@+node:ekr.20031218072017.1493:undoRedoText
+# Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading & trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+        
+    __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
+
+    u = self ; c = u.c
+    # assert p == c.currentPosition(),'not current position'+repr(p)
+
+    << Incrementally update the Tk.Text widget >>
+    << Compute the result using p's body text >>
+    # g.trace(undoType)
+    p.setTnodeText(result)
+    << Get textResult from the Tk.Text widget >>
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            << print mismatch trace >>
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)
+#@nonl
+#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+# Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading > 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len > 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading > 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i >= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+# g.trace(newlines,oldNewlines)
+while newlines > oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines > newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+#@nonl
+#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+#@+node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+# Recreate the text using the present body text.
+body = p.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading > 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) > 0:
+    s.extend(oldMidLines)
+if trailing > 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) > 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines > 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result
+#@nonl
+#@-node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
+#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+textResult = c.frame.body.getAllText()
+
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) > 0 and textResult[:-1] == result:
+        textResult = result
+#@nonl
+#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
+print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult
+#@nonl
+#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
+#@-node:ekr.20031218072017.1493:undoRedoText
+#@-node:ekr.20031218072017.2039:undo & helpers...
+#@-node:ekr.20051113061206:(Added Clone-find)
+#@+node:ekr.20051113082305.1:(Improved find tab)
+#@+node:ekr.20051020120306.13:createFrame (findTab)
+def createFrame (self,parentFrame):
+    
+    c = self.c
+    
+    << Create the outer frames >>
+    << Create the Find and Change panes >>
+    << Create two columns of radio and checkboxes >>
+    << Create two columns of buttons >>
+    
+    # Pack this last so buttons don't get squashed when frame is resized.
+    self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
+
+    for w in buttons:
+        w.bindHotKey(ftxt)
+        w.bindHotKey(ctxt)
+#@nonl
+#@+node:ekr.20051020120306.14:<< Create the outer frames >>
+configName = 'log_pane_Find_tab_background_color'
+bg = c.config.getColor(configName) or 'MistyRose1'
+
+parentFrame.configure(background=bg)
+
+self.top = Tk.Frame(parentFrame,background=bg)
+self.top.pack(side='top',expand=0,fill='both',pady=5)
+    # Don't expand, so the frame goes to the top.
+
+self.outerScrolledFrame = Pmw.ScrolledFrame(
+    parentFrame,usehullsize = 1)
+
+self.outerFrame = outer = self.outerScrolledFrame.component('frame')
+self.outerFrame.configure(background=bg)
+
+for z in ('borderframe','clipper','frame','hull'):
+    self.outerScrolledFrame.component(z).configure(relief='flat',background=bg)
+#@nonl
+#@-node:ekr.20051020120306.14:<< Create the outer frames >>
+#@+node:ekr.20051020120306.15:<< Create the Find and Change panes >>
+fc = Tk.Frame(outer, bd="1m",background=bg)
+fc.pack(anchor="n", fill="x", expand=1)
+
+# Removed unused height/width params: using fractions causes problems in some locales!
+fpane = Tk.Frame(fc, bd=1,background=bg)
+cpane = Tk.Frame(fc, bd=1,background=bg)
+
+fpane.pack(anchor="n", expand=1, fill="x")
+cpane.pack(anchor="s", expand=1, fill="x")
+
+# Create the labels and text fields...
+flab = Tk.Label(fpane, width=8, text="Find:",background=bg)
+clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
+
+# Use bigger boxes for scripts.
+self.find_ctrl = ftxt = Tk.Text(
+    fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
+self.change_ctrl = ctxt = Tk.Text(
+    cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
+<< Bind Tab and control-tab >>
+
+if 0: # Add scrollbars.
+    fBar = Tk.Scrollbar(fpane,name='findBar')
+    cBar = Tk.Scrollbar(cpane,name='changeBar')
+    
+    for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
+        txt['yscrollcommand'] = bar.set
+        bar['command'] = txt.yview
+        bar.pack(side="right", fill="y")
+
+flab.pack(side="left")
+clab.pack(side="left")
+ctxt.pack(side="right", expand=1, fill="x") 
+ftxt.pack(side="right", expand=1, fill="x")
+#@nonl
+#@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
+def setFocus(w):
+    c = self.c
+    c.frame.widgetWantsFocus(w)
+    g.app.gui.setSelectionRange(w,"1.0","1.0")
+    return "break"
+    
+def toFind(event,w=ftxt): return setFocus(w)
+def toChange(event,w=ctxt): return setFocus(w)
+    
+def insertTab(w):
+    data = g.app.gui.getSelectionRange(w)
+    if data: start,end = data
+    else: start = end = g.app.gui.getInsertPoint(w)
+    g.app.gui.replaceSelectionRangeWithText(w,start,end,"\t")
+    return "break"
+
+def insertFindTab(event,w=ftxt): return insertTab(w)
+def insertChangeTab(event,w=ctxt): return insertTab(w)
+
+ftxt.bind("<Tab>",toChange)
+ctxt.bind("<Tab>",toFind)
+ftxt.bind("<Control-Tab>",insertFindTab)
+ctxt.bind("<Control-Tab>",insertChangeTab)
+#@nonl
+#@-node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
+#@-node:ekr.20051020120306.15:<< Create the Find and Change panes >>
+#@+node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
+columnsFrame = Tk.Frame(outer,relief="groove",bd=2,background=bg)
+
+columnsFrame.pack(expand=0,padx="7p",pady="2p")
+
+numberOfColumns = 2 # Number of columns
+columns = [] ; radioLists = [] ; checkLists = []
+for i in xrange(numberOfColumns):
+    columns.append(Tk.Frame(columnsFrame,bd=1))
+    radioLists.append([])
+    checkLists.append([])
+
+for i in xrange(numberOfColumns):
+    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
+    
+# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
+
+radioLists[0] = [
+    #(self.dict["radio-find-type"],"P&Lain Search","plain-search"),  
+    #(self.dict["radio-find-type"],"&Pattern Match Search","pattern-search"),
+    # (self.dict["radio-find-type"],"&Script Search","script-search"),
+]
+checkLists[0] = [
+    # ("Scrip&t Change",self.dict["script_change"]),
+    ("Whole Word",      self.dict["whole_word"]),
+    ("Ignore Case",     self.dict["ignore_case"]),
+    ("Wrap &Around",     self.dict["wrap"]),
+    ("Reverse",         self.dict["reverse"]),
+    ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
+    ("Search Headline", self.dict["search_headline"]),
+    ("Search Body",     self.dict["search_body"]),
+]
+
+radioLists[1] = [
+    (self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
+    (self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
+    (self.dict["radio-search-scope"],"Node Only","node-only"),
+    # I don't know what selection-only is supposed to do.
+    (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
+]
+checkLists[1] = [
+    ('Clone Find All',  self.dict['clone_find_all']),
+    ("Mark Finds",      self.dict["mark_finds"]),
+    ("Mark &Changes",   self.dict["mark_changes"]),
+    ('Show Context',    self.dict['batch']),
+]
+
+for i in xrange(numberOfColumns):
+    for var,name,val in radioLists[i]:
+        box = self.underlinedTkButton(
+            "radio",columns[i],anchor="w",text=name,variable=var,value=val,background=bg)
+        box.button.pack(fill="x")
+        box.button.bind("<1>", self.resetWrap)
+        if val == None: box.button.configure(state="disabled")
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+    for name,var in checkLists[i]:
+        box = self.underlinedTkButton(
+            "check",columns[i],anchor="w",text=name,variable=var,background=bg)
+        box.button.pack(fill="x")
+        box.button.bind("<1>", self.resetWrap)
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+        if var is None: box.button.configure(state="disabled")
+#@nonl
+#@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
+#@+node:ekr.20051020120306.18:<< Create two columns of buttons >>
+# Create the alignment panes.
+buttons  = Tk.Frame(outer,background=bg)
+buttons1 = Tk.Frame(buttons,bd=1,background=bg)
+buttons2 = Tk.Frame(buttons,bd=1,background=bg)
+buttons.pack(side='top',expand=1)
+buttons1.pack(side='left')
+buttons2.pack(side='right')
+
+width = 15 ; defaultText = 'Find' ; buttons = []
+
+for text,boxKind,frame,callback in (
+    # Column 1...
+    ('Find','button',buttons1,self.findButtonCallback),
+    ('Incremental','check', buttons1,None),
+        ## variable=self.dict['incremental'])
+        ## May affect the file format.
+    ('Find All','button',buttons1,self.findAllButton),
+    # Column 2...
+    ('Change','button',buttons2,self.changeButton),
+    ('Change, Then Find','button',buttons2,self.changeThenFindButton),
+    ('Change All','button',buttons2,self.changeAllButton),
+):
+    w = self.underlinedTkButton(boxKind,frame,
+        text=text,command=callback)
+    buttons.append(w)
+    if text == defaultText:
+        w.button.configure(width=width-1,bd=4)
+    elif boxKind != 'check':
+        w.button.configure(width=width)
+    w.button.pack(side='top',anchor='w',pady=2,padx=2)
+#@nonl
+#@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
+#@-node:ekr.20051020120306.13:createFrame (findTab)
+#@+node:ekr.20051020120306.1:class underlinedTkButton
+class underlinedTkButton:
+    
+    @others
+#@nonl
+#@+node:ekr.20051020120306.2:__init__
+def __init__(self,buttonType,parent_widget,**keywords):
+
+    self.buttonType = buttonType
+    self.parent_widget = parent_widget
+    self.hotKey = None
+    text = keywords['text']
+
+    << set self.hotKey if '&' is in the string >>
+
+    # Create the button...
+    if self.hotKey:
+        keywords['text'] = text
+        keywords['underline'] = index
+
+    if buttonType.lower() == "button":
+        self.button = Tk.Button(parent_widget,keywords)
+    elif buttonType.lower() == "check":
+        self.button = Tk.Checkbutton(parent_widget,keywords)
+    elif buttonType.lower() == "radio":
+        self.button = Tk.Radiobutton(parent_widget,keywords)
+    else:
+        g.trace("bad buttonType")
+    
+    self.text = text # for traces
+#@nonl
+#@+node:ekr.20051020120306.3:<< set self.hotKey if '&' is in the string >>
+index = text.find('&')
+
+if index > -1:
+
+    if index == len(text)-1:
+        # The word ends in an ampersand.  Ignore it; there is no hot key.
+        text = text[:-1]
+    else:
+        self.hotKey = text [index + 1]
+        text = text[:index] + text[index+1:]
+#@nonl
+#@-node:ekr.20051020120306.3:<< set self.hotKey if '&' is in the string >>
+#@-node:ekr.20051020120306.2:__init__
+#@+node:ekr.20051020120306.4:bindHotKey
+def bindHotKey (self,widget):
+    
+    if self.hotKey:
+        for key in (self.hotKey.lower(),self.hotKey.upper()):
+            widget.bind("<Alt-%s>" % key,self.buttonCallback)
+#@-node:ekr.20051020120306.4:bindHotKey
+#@+node:ekr.20051020120306.5:buttonCallback
+# The hot key has been hit.  Call the button's command.
+
+def buttonCallback (self, event=None):
+    
+    __pychecker__ = '--no-argsused' # the event param must be present.
+
+    # g.trace(self.text)
+
+    self.button.invoke ()
+    
+    # See if this helps.
+    return 'break'
+#@-node:ekr.20051020120306.5:buttonCallback
+#@-node:ekr.20051020120306.1:class underlinedTkButton
+#@-node:ekr.20051113082305.1:(Improved find tab)
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl
