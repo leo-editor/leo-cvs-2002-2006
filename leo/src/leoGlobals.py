@@ -2563,7 +2563,7 @@ def os_path_abspath(path,encoding=None):
 #@+node:ekr.20031218072017.2147:os_path_basename
 def os_path_basename(path,encoding=None):
     
-    """Normalize the path and convert it to an absolute path."""
+    """Return the second half of the pair returned by split(path)."""
 
     path = g.toUnicodeFileEncoding(path,encoding)
 
@@ -2577,7 +2577,7 @@ def os_path_basename(path,encoding=None):
 #@+node:ekr.20031218072017.2148:os_path_dirname
 def os_path_dirname(path,encoding=None):
     
-    """Normalize the path and convert it to an absolute path."""
+    """Return the first half of the pair returned by split(path)."""
 
     path = g.toUnicodeFileEncoding(path,encoding)
 
