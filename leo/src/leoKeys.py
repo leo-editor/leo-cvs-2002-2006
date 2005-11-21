@@ -1130,7 +1130,7 @@ class keyHandlerClass:
         if func: # Func is an argument.
             # g.trace('executing func',commandName)
             forceFocus = func.__name__ != 'leoCallback'
-            if forceFocus: k.forceFocusToBody()
+            if forceFocus: c.frame.bodyWantsFocus()
             val = func(event)
             k.funcReturn = k.funcReturn or val # For unit tests.
             k.endCommand(event,commandName)
@@ -1220,6 +1220,7 @@ class keyHandlerClass:
         ch = (event and event.char) or ''
         # g.trace('state',state,keysym)
         if state == 0:
+            k.completionFocusWidget = g.app.gui.get_focus(c.frame)
             k.setState('altx',1,handler=k.fullCommand) 
             k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
             # Init mb_ ivars. This prevents problems with an initial backspace.
@@ -1227,6 +1228,7 @@ class keyHandlerClass:
             k.mb_tabList = [] ; k.mb_tabListIndex = -1
         elif keysym == 'Return':
             c.frame.log.deleteTab('Completion')
+            c.frame.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
             k.callAltXFunction(event)
         elif keysym == 'Tab':
             k.doTabCompletion(c.commandsDict.keys())
@@ -2101,7 +2103,7 @@ class keyHandlerClass:
                 shortcut = inverseBindingDict.get(commandName,'')
                 g.es('%s %s' % (commandName,shortcut),tabName='Completion')
     
-        k.forceFocusToBody()
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051017212452:computeCompletionList
     #@+node:ekr.20051018070524:computeInverseBindingDict
@@ -2154,13 +2156,6 @@ class keyHandlerClass:
             k.computeCompletionList(defaultTabList,backspace=False)
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
-    #@+node:ekr.20051012092847:forceFocusToBody
-    def forceFocusToBody (self):
-        
-        k = self ; c = k.c
-        c.frame.bodyWantsFocus()
-    #@nonl
-    #@-node:ekr.20051012092847:forceFocusToBody
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name
     def getShortcutForCommandName (self,commandName):
         
