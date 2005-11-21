@@ -231,6 +231,7 @@ except ImportError:
 #@nonl
 #@-node:ekr.20050812092209:v 0.011
 #@-node:ekr.20050813103025:v 0.0x
+#@+node:ekr.20051121103358:v 0.x
 #@+node:ekr.20050813100922:v 0.1
 #@+at
 # 
@@ -360,6 +361,7 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:ekr.20050903211210:v 0.9
+#@-node:ekr.20051121103358:v 0.x
 #@+node:ekr.20050908120111:v 1.x
 #@+at
 # 
@@ -638,7 +640,6 @@ class rstClass:
         c = self.c ; editMenu = c.frame.menu.getMenu('Edit')
     
         def rst3PluginCallback ():
-            # self.processTree(c.currentPosition())
             self.processTopTree(c.currentPosition())
     
         table = (
