@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7876" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
 <globals body_outline_ratio="0.593037214886">
-	<global_window_position top="61" left="252" height="833" width="1057"/>
+	<global_window_position top="18" left="371" height="833" width="783"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -22,26 +22,30 @@
 </v>
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
 </v>
-<v t="ekr.20041001194357"><vh>@button Unit Test</vh></v>
+<v t="ekr.20041001194357"><vh>@@button Unit Test</vh></v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
 </v>
 <v t="ekr.20051104081824"><vh>Tests</vh>
-<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-<v t="ekr.20051103112555"><vh>Test of event_generate</vh></v>
-<v t="ekr.20051104052708"><vh>Test of executing a function by name</vh></v>
-<v t="ekr.20051107115327"><vh>Move to root</vh></v>
-<v t="ekr.20051109023647"><vh>New tabbed log</vh></v>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
 <v t="ekr.20051108102719.3"><vh>c</vh></v>
 <v t="ekr.20051108111341"><vh>test</vh></v>
 </v>
+<v t="ekr.20051113055640"><vh>Find bug</vh>
+<v t="ekr.20051113055640.1"><vh>Report</vh></v>
+<v t="ekr.20051113055640.2"><vh>This is a sample node</vh></v>
+<v t="ekr.20051113055640.3" a="E"><vh>@thin findBug.txt</vh></v>
 </v>
-<v t="ekr.20051111114555"><vh>Subprocess tests</vh>
+<v t="ekr.20051120173510"><vh>@@button remove-blank-lines</vh></v>
+<v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
+<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
+</v>
+<v t="ekr.20051120173230"><vh>Prototypes</vh>
+<v t="ekr.20051111114555" a="E"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
 <v t="ekr.20051112134206.3"><vh>&lt;&lt;imports &gt;&gt;</vh></v>
@@ -83,7 +87,7 @@
 <v t="ekr.20051111143349.20"><vh>hideTab</vh></v>
 </v>
 <v t="ekr.20051111114555.1"><vh>@thin leoDebugger.py</vh></v>
-<v t="ekr.20051111114555.2"><vh>@button dbProc</vh>
+<v t="ekr.20051111114555.2"><vh>@@button dbProc</vh>
 <v t="ekr.20051111145211.1"><vh>openDebugTab</vh></v>
 <v t="ekr.20051111143349.1" a="E"><vh>class debugTab</vh>
 <v t="ekr.20051111143349.2"><vh>Birth &amp; death</vh>
@@ -104,26 +108,17 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051113055640"><vh>Find bug</vh>
-<v t="ekr.20051113055640.1"><vh>Report</vh></v>
-<v t="ekr.20051113055640.2"><vh>This is a sample node</vh></v>
-<v t="ekr.20051113055640.3" a="E"><vh>@thin findBug.txt</vh></v>
-</v>
-<v t="ekr.20051115125802"><vh>Runniung tcl scripts from the body pane</vh>
-<v t="ekr.20051115125802.1"><vh>run tcl </vh></v>
-<v t="ekr.20051115125802.2"><vh>My first tcl script</vh></v>
-<v t="ekr.20051115125802.3"><vh>My second tcl scrip, organized with noweb markup</vh>
-<v t="ekr.20051115125802.4"><vh>the actual script</vh></v>
-</v>
-</v>
+<v t="ekr.20051120173230.1"><vh>Server stuff</vh>
 <v t="ekr.20051116122352"><vh>@thin c:\AppServ\www\php-test.php</vh></v>
 <v t="ekr.20051116133640"><vh>@thin c:\AppServ\www\form.html</vh></v>
 <v t="ekr.20051116133640.1" a="E"><vh>@thin c:\AppServ\www\welcome.php</vh></v>
+</v>
+<v t="ekr.20051120173230.2"><vh>Diff stuff</vh>
 <v t="ekr.20051116222849"><vh>Tools/Scripts/diff.py</vh>
 <v t="ekr.20051116222849.1"><vh>&lt;&lt; diff declarations &gt;&gt;</vh></v>
 <v t="ekr.20051116222849.2"><vh>main</vh></v>
 </v>
-<v t="ekr.20051116222016.1" a="E"><vh>difflib.py</vh>
+<v t="ekr.20051116222016.1"><vh>difflib.py</vh>
 <v t="ekr.20051116222016.2"><vh>&lt;&lt; difflib declarations &gt;&gt;</vh></v>
 <v t="ekr.20051116222016.3"><vh>_calculate_ratio</vh></v>
 <v t="ekr.20051116222016.4" a="M"><vh>class SequenceMatcher</vh>
@@ -175,9 +170,29 @@
 <v t="ekr.20051116222016.47"><vh>restore</vh></v>
 <v t="ekr.20051116222016.48"><vh>_test</vh></v>
 </v>
-<v t="ekr.20051117095207" a="ETV"><vh>diff children</vh>
+<v t="ekr.20051117095207"><vh>diff children</vh>
 <v t="ekr.20051117095207.1"><vh>a</vh></v>
 <v t="ekr.20051117095207.2"><vh>b</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051121143951" a="TV"><vh>Test of long lines</vh>
+<v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
+<v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
+<v t="ekr.20051121144452.3"><vh>computeWidth</vh></v>
+<v t="ekr.20051121144452.5" a="M"><vh>optimizeLeadingWhitespace</vh></v>
+<v t="ekr.20051121144452.6" a="E"><vh>regularizeTrailingNewlines</vh></v>
+<v t="ekr.20051121144452.7"><vh>removeLeadingWhitespace</vh></v>
+<v t="ekr.20051121144452.8"><vh>g.removeExtraLws &amp; tests</vh>
+<v t="ekr.20051121144452.9"><vh>test_g_removeExtraLws</vh></v>
+</v>
+<v t="ekr.20051121144452.10"><vh>removeTrailingWs</vh></v>
+<v t="ekr.20051121144452.11" a="M"><vh>skip_leading_ws</vh></v>
+<v t="ekr.20051121144452.12"><vh>skip_leading_ws_with_indent</vh></v>
+<v t="ekr.20051121144452.13"><vh>stripBlankLines</vh></v>
+</v>
+<v t="ekr.20051121143509" a="E"><vh>@button shorten-lines</vh>
+<v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -307,44 +322,23 @@ d
 
 e
 
-This is a test of navigation.</t>
+This is a test of navigation.
+</t>
 <t tx="ekr.20051020124457"></t>
 <t tx="ekr.20051025070722">c.prettyPrintPythonNode()</t>
 <t tx="ekr.20051025091355">c.spellCommands.openSpellTab()
 </t>
-<t tx="ekr.20051103112555">#w = event and event.widget
-k = c.keyHandler
-
-commandName = 'open-find-tab'
-w = c.frame.body.bodyCtrl
-    
-shortcut = k.getShortcutForCommandName(commandName)
-bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
-
-g.trace(repr(shortcut),repr(bind_shortcut))
-    
-# w.event_generate('&lt;Key&gt;',keysym=bind_shortcut)</t>
-<t tx="ekr.20051104052708">c.executeMinibufferCommand('open-outline')</t>
 <t tx="ekr.20051104081824"></t>
 <t tx="ekr.20051105114247">name = "scripts.leo"
 fileName = g.os_path_join(g.app.loadDir,"..","scripts",name)
 ok,frame = g.openWithFileName(fileName,c)
 if not ok:
     g.es("not found: %s" % name)</t>
-<t tx="ekr.20051107115327">root = c.rootPosition()
-if p != root:
-    p.moveToRoot(root)
-    c.redraw_now()</t>
 <t tx="ekr.20051108102719"></t>
 <t tx="ekr.20051108102719.1">alpha</t>
 <t tx="ekr.20051108102719.2">beta</t>
 <t tx="ekr.20051108102719.3">gamma</t>
 <t tx="ekr.20051108111341">test a test</t>
-<t tx="ekr.20051109023647"># import TabWindow as TabbedLog
-# tw = TabbedLog.getPane('abc', c)
-
-import Tknotebook
-Tknotebook.test()</t>
 <t tx="ekr.20051111114555"></t>
 <t tx="ekr.20051111114555.2"># Simulation of debugger process
 
@@ -1752,23 +1746,6 @@ computer).
 
 Both are windows XP machines.</t>
 <t tx="ekr.20051113055640.2"></t>
-<t tx="ekr.20051115125802">@language tcltk</t>
-<t tx="ekr.20051115125802.1"># To use this script, you must make this a script button, either with the
-# 'Script Button' button or by making this an @button node.
-
-# Executes body text of selected node as a tcl script.
-# For more information, see http://wiki.tcl.tk/6878
-
-# This statement allows you to organize your scripts using noweb markup.
-s = g.getScript(c,p,forcePythonSentinels=False)
-g.es(g.app.root.tk.eval(s))</t>
-<t tx="ekr.20051115125802.2"># This is a comment
-set x 50
-return [expr $x*10]</t>
-<t tx="ekr.20051115125802.3">@others</t>
-<t tx="ekr.20051115125802.4"># This is a comment
-set x 50 +
-return [expr $x*10]</t>
 <t tx="ekr.20051116222016.1">@language python
 @tabwidth -4
 &lt;&lt; difflib declarations &gt;&gt;
@@ -3829,28 +3806,16 @@ import sys, os, time, difflib, optparse
     sys.stdout.writelines(diff)
 </t>
 <t tx="ekr.20051117095207">import difflib
-import sys
 
+d = difflib.Differ()
 p1 = p.firstChild()
 p2 = p1.next()
 p1Lines = g.splitLines(p1.bodyString())
 p2Lines = g.splitLines(p2.bodyString())
 
+# d.compare returns an iterator
 print ; print '*' * 60
-d = difflib.Differ() # d.compare returns an iterator
-print ''.join(list(d.compare(p1Lines,p2Lines)))
-
-if 0: # unreadable.
-    p1Lines = g.splitLines(p1.bodyString())
-    p2Lines = g.splitLines(p2.bodyString())
-    for f in (
-        difflib.unified_diff,
-        difflib.ndiff,
-        difflib.context_diff,
-    ):
-        print ; print '*' * 60
-        diff = f(p1Lines,p2Lines)
-        sys.stdout.writelines(diff)</t>
+print ''.join(list(d.compare(p1Lines,p2Lines)))</t>
 <t tx="ekr.20051117095207.1">1. Beautiful is better than ugly.
 2. Explicit is better than implicit.
 3. Simple is better than complex.
@@ -3860,6 +3825,225 @@ if 0: # unreadable.
 3.   Simple is better than complex.
 4. Complicated is better than complex.
 5. Flat is better than nested.
+</t>
+<t tx="ekr.20051120173230"></t>
+<t tx="ekr.20051120173230.1"></t>
+<t tx="ekr.20051120173230.2"></t>
+<t tx="ekr.20051120173510">c.executeMinibufferCommand('remove-blank-lines')</t>
+<t tx="ekr.20051121064026">c.executeMinibufferCommand('indent-relative')</t>
+<t tx="ekr.20051121143509">@others
+
+d = g.scanDirectives(c,p)
+w = d.get('pagewidth',100)
+tab_width = d.get('tabwidth',4)
+
+print '*' * 60
+
+result = []
+for line in g.splitlines(p.bodyString()):
+    i,junk = g.skip_leading_ws_with_indent(line,0,tab_width)
+    lws = line[:i]
+    # g.trace('lws',repr(lws))
+    result.extend(splitLongLine(line,lws,w,tab_width))
+
+print ''.join(result)</t>
+<t tx="ekr.20051121143951">@pagewidth 30</t>
+<t tx="ekr.20051121143951.1">def splitLongLine(s,lws,w,tab_width):
+    
+    # g.trace(repr(s))
+    
+    if not s or g.computeWidth (s,tab_width) &lt; w:
+        return [s]
+    
+    i = s.find('(') # j = s.find('[')
+    if i &gt; 0:
+        tab = g.choose(tab_width &lt; 0,' ' * abs(tab_width),'\t')
+        list1 = [s[:i+1]]
+        list2 = splitLongLine(s[i+1:],lws+tab,w,tab_width)
+        list1.append('\n%s%s' % (lws,tab))
+        list1.extend(list2)
+        return list1
+    else:
+        return [s] # Not yet: split the line somewhere else.</t>
+<t tx="ekr.20051121144452.1">def adjustTripleString (s,tab_width):
+    
+    '''Remove leading indentation from a triple-quoted string.
+    
+    This works around the fact that Leo nodes can't represent underindented strings.
+    '''
+    
+    # Compute the minimum leading whitespace of all non-blank lines.
+    lines = g.splitLines(s)
+    w = -1
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w2 = g.computeWidth(lws,tab_width)
+            if w &lt; 0: w = w2
+            else:     w = min(w,w2)
+            # g.trace('w',w)
+    if w &lt;= 0: return s
+
+    # Remove the leading whitespace.
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+
+    return result</t>
+<t tx="ekr.20051121144452.2"># Returns optimized whitespace corresponding to width with the indicated tab_width.
+
+def computeLeadingWhitespace (width, tab_width):
+
+    if width &lt;= 0:
+        return ""
+    if tab_width &gt; 1:
+        tabs   = width / tab_width
+        blanks = width % tab_width
+        return ('\t' * tabs) + (' ' * blanks)
+    else: # 7/3/02: negative tab width always gets converted to blanks.
+        return (' ' * width)</t>
+<t tx="ekr.20051121144452.3"># Returns the width of s, assuming s starts a line, with indicated tab_width.
+
+def computeWidth (s, tab_width):
+        
+    w = 0
+    for ch in s:
+        if ch == '\t':
+            w += (abs(tab_width) - (w % abs(tab_width)))
+        else:
+            w += 1
+    return w</t>
+<t tx="ekr.20051121144452.5"># Optimize leading whitespace in s with the given tab_width.
+
+def optimizeLeadingWhitespace (line,tab_width):
+
+    i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+    s = g.computeLeadingWhitespace(width,tab_width) + line[i:]
+    return s</t>
+<t tx="ekr.20051121144452.6">@
+
+The caller should call g.stripBlankLines before calling this routine if desired.
+
+This routine does _not_ simply call rstrip(): that would delete all trailing whitespace-only lines, and in some cases that would change the meaning of program or data.
+
+@c
+
+def regularizeTrailingNewlines(s,kind):
+    
+    """Kind is 'asis', 'zero' or 'one'."""
+    
+    pass</t>
+<t tx="ekr.20051121144452.7"># Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
+
+def removeLeadingWhitespace (s,first_ws,tab_width):
+
+    j = 0 ; ws = 0
+    for ch in s:
+        if ws &gt;= first_ws:
+            break
+        elif ch == ' ':
+            j += 1 ; ws += 1
+        elif ch == '\t':
+            j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
+        else: break
+    if j &gt; 0:
+        s = s[j:]
+    return s</t>
+<t tx="ekr.20051121144452.8">def removeExtraLws (s,tab_width):
+    
+    '''Remove extra indentation from one or more lines.
+    
+    Warning: used by getScript.  This is *not* the same as g.adjustTripleString.'''
+    
+    lines = g.splitLines(s)
+
+    # Find the first non-blank line and compute w, the width of its leading whitespace.
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w = g.computeWidth(lws,tab_width)
+            # g.trace('w',w)
+            break
+    else: return s
+    
+    # Remove the leading whitespace.
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+    
+    if 0:
+        g.trace('lines...')
+        for line in g.splitLines(result):
+            print repr(line)
+
+    return result</t>
+<t tx="ekr.20051121144452.9">def test_g_removeExtraLws():
+    
+    for s,expected in (
+        (' a\n b\n c', 'a\nb\nc'),
+        (' \n  A\n    B\n  C\n', '\nA\n  B\nC\n'),
+    ):
+        result = g.removeExtraLws(s,c.tab_width)
+        assert result == expected, '\ns: %s\nexpected: %s\nresult:   %s' % (
+            repr(s),repr(expected),repr(result))</t>
+<t tx="ekr.20051121144452.10"># Warning: string.rstrip also removes newlines!
+
+def removeTrailingWs(s):
+
+    j = len(s)-1
+    while j &gt;= 0 and (s[j] == ' ' or s[j] == '\t'):
+        j -= 1
+    return s[:j+1]
+</t>
+<t tx="ekr.20051121144452.11"># Skips leading up to width leading whitespace.
+
+def skip_leading_ws(s,i,ws,tab_width):
+
+    count = 0
+    while count &lt; ws and i &lt; len(s):
+        ch = s[i]
+        if ch == ' ':
+            count += 1
+            i += 1
+        elif ch == '\t':
+            count += (abs(tab_width) - (count % abs(tab_width)))
+            i += 1
+        else: break
+
+    return i</t>
+<t tx="ekr.20051121144452.12">def skip_leading_ws_with_indent(s,i,tab_width):
+
+    """Skips leading whitespace and returns (i, indent), 
+    
+    - i points after the whitespace
+    - indent is the width of the whitespace, assuming tab_width wide tabs."""
+
+    count = 0 ; n = len(s)
+    while i &lt; n:
+        ch = s[i]
+        if ch == ' ':
+            count += 1
+            i += 1
+        elif ch == '\t':
+            count += (abs(tab_width) - (count % abs(tab_width)))
+            i += 1
+        else: break
+
+    return i, count</t>
+<t tx="ekr.20051121144452.13">def stripBlankLines(s):
+    
+    lines = g.splitLines(s)
+
+    for i in xrange(len(lines)):
+
+        line = lines[i]
+        j = g.skip_ws(line,0)
+        if j &gt;= len(line):
+            lines[i] = ''
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+        elif line[j] == '\n':
+            lines[i] = '\n'
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+            
+    return ''.join(lines)
 </t>
 </tnodes>
 </leo_file>
