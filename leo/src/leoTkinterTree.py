@@ -1946,7 +1946,6 @@ class leoTkinterTree (leoFrame.leoTree):
         oldRevert = self.revertHeadline
         self.revertHeadline = s
         p.initHeadString(s)
-        # g.trace(repr(s),g.callers(7))
             
         if changed:
             # g.trace('undo to:',repr(oldRevert))
