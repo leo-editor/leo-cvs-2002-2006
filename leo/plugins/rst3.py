@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -376,10 +376,16 @@ except ImportError:
 # 
 # Make sure code doesn't crash if docutils can not be imported.
 # 
-# 1.3 ER:
+# 1.3 EKR:
 # 
 # Make the stylesheet path relative to the directory containing the output 
 # file.
+# 
+# 1.4 EKR:
+# 
+# - Allow relative paths.
+# - Added processTopTree.  This has the same functionality as found in 
+# previous @button rst3 nodes.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -632,7 +638,8 @@ class rstClass:
         c = self.c ; editMenu = c.frame.menu.getMenu('Edit')
     
         def rst3PluginCallback ():
-            self.processTree(c.currentPosition())
+            # self.processTree(c.currentPosition())
+            self.processTopTree(c.currentPosition())
     
         table = (
             ("-",None,None),
@@ -1059,6 +1066,21 @@ class rstClass:
         self.outputFile.close()
     #@nonl
     #@-node:ekr.20050809080925:writeNormalTree
+    #@+node:ekr.20051121102358:processTopTree
+    def processTopTree (self,p):
+        
+        c = self.c ; current = p.copy()
+        
+        for p in current.self_and_parents_iter():
+            if p.headString().startswith('@rst '):
+                self.processTree(p)
+                break
+        else:
+            self.processTree(current)
+    
+        g.es_print('done',color='blue')
+    #@nonl
+    #@-node:ekr.20051121102358:processTopTree
     #@+node:ekr.20050805162550.17:processTree
     def processTree(self,p):
         
@@ -1194,18 +1216,21 @@ class rstClass:
         # If no such alias exists, docutils tries to import the actual name give.
         pub.set_writer(writer)
     
-    
         # Make the stylesheet path relative to the directory containing the output file.
-        stylesheet_path = self.getOption('stylesheet_path')
-        if not stylesheet_path:
-            stylesheet_path,junk = g.os_path_split(self.outputFileName)
-        stylesheet_path = g.os_path_abspath(
-            g.os_path_join(openDirectory,stylesheet_path))
+        stylesheet_path = (
+            self.getOption('stylesheet_path') or g.os_path_dirname(self.outputFileName))
+        
+        if 1: # New in 4.4a4: allow relative paths.
+            path = g.os_path_join(
+                stylesheet_path,self.getOption('stylesheet_name'))
     
-        path = g.os_path_abspath(
-            g.os_path_join(
-                stylesheet_path,
-                self.getOption('stylesheet_name')))
+            stylesheet_path = g.os_path_join(openDirectory,stylesheet_path)
+        else: # Old code: convert everything to absolute paths.
+            path = g.os_path_abspath(g.os_path_join(
+                stylesheet_path,self.getOption('stylesheet_name')))
+                
+            stylesheet_path = g.os_path_abspath(
+                g.os_path_join(openDirectory,stylesheet_path))
         
         if g.os_path_exists(path):
             if self.ext == '.pdf':
