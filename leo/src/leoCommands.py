@@ -359,7 +359,8 @@ class baseCommands:
         func = c.commandsDict.get(commandName)
         
         if func:
-            event = stroke = None
+            event = g.Bunch(char='',keysym=None,widget=c.frame.body.bodyCtrl)
+            stroke = None
             k.masterCommand(event,func,stroke)
             return k.funcReturn
         else:
@@ -2398,8 +2399,13 @@ class baseCommands:
     #@-node:ekr.20031218072017.1829:getBodyLines
     #@+node:ekr.20031218072017.1830:indentBody
     def indentBody (self):
+        
+        '''The indent-region command indents each line of the selected body text,
+        or each line of a node if there is no selected text. The @tabwidth directive
+        in effect determines amount of indentation. (not yet) A numeric argument
+        specifies the column to indent to.'''
     
-        c = self ; undoType = 'Indent' ; current = c.currentPosition()
+        c = self ; undoType = 'Indent Region' ; current = c.currentPosition()
         
         if g.app.batchMode:
             c.notValidInBatchMode(undoType)
