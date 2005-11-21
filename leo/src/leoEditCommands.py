@@ -1038,7 +1038,8 @@ class editCommandsClass (baseEditCommandsClass):
             'goto-char':            self.gotoCharacter,
             'goto-line':            self.gotoLine,
             'how-many':             self.howMany,
-            'indent-region':        self.indentRegion,
+            # Use indentBody in leoCommands.py
+            #'indent-region':        self.indentRegion,
             'indent-relative':      self.indentRelative,
             'indent-rigidly':       self.tabIndentRegion,
             'indent-to-comment-column': self.indentToCommentColumn,
@@ -1481,42 +1482,33 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.141:removeBlankLines
     def removeBlankLines (self,event):
         
-        w = event.widget
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        i1 = int(i1) ; dindex = []
-        if w.get('insert linestart','insert lineend').strip() == '':
-            while str(i1) + '.0' != '1.0':
-                i1 -= 1
-                g.trace('loop1',i1)
-                s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
-                if not s:
-                    dindex.append('%s.0' % i1)
-                    dindex.append('%s.0 lineend' % i1)
-                elif dindex:
-                    w.delete('%s-1c' % dindex[-2],dindex[1])
-                    w.event_generate('<Key>')
-                    w.update_idletasks() # Needed to continue the loop.
-                    break
-                else:
-                    break
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        i1 = int(i1) ; dindex = []
-        while w.index('%s.0 lineend' % i1) != w.index('end'):
-            i1 += 1
-            g.trace('loop1',i1)
-            s = w.get('%s.0' % i1,'%s.0 lineend' % i1).strip()
-            if not s:
-                dindex.append('%s.0' % i1)
-                dindex.append('%s.0 lineend' % i1)
-            elif dindex:
-                w.delete('%s-1c' % dindex[0],dindex[-1])
-                w.event_generate('<Key>')
-                w.update_idletasks() # Needed to continue the loop.
-                break
-            else:
-                break
+        '''The remove-blank-lines command removes lines containing nothing but
+        whitespace. If there is a text selection, only lines within the selected
+        text are affected; otherwise all blank lines in the selected node are
+        affected.'''
+        
+        c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
+        result = []
+        body = p.bodyString()
+        hasSelection = c.frame.body.hasTextSelection()
+        
+        if hasSelection:
+            head,lines,tail,oldSel,oldYview = c.getBodyLines()
+            joinChar = '\n'
+        else:
+            head = tail = oldYview = None
+            lines = g.splitLines(body)
+            oldSel = ('1.0','1.0')
+            joinChar = ''
+    
+        for line in lines:
+            if line.strip():
+                result.append(line)
+    
+        result = joinChar.join(result)
+        
+        if result != body:
+            c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.141:removeBlankLines
     #@-node:ekr.20050920084036.85:delete...
@@ -1870,13 +1862,14 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.74:indent...
     #@+node:ekr.20050920084036.75:backToIndentation
     def backToIndentation (self,event):
+        
+        '''The back-to-indentation command, given anywhere on a line,
+        positions the point at the first non-blank character on the line.'''
     
         w = event.widget
-    
         i = w.index('insert linestart')
         i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
         w.mark_set('insert',i2)
-        ### w.update_idletasks()
     #@nonl
     #@-node:ekr.20050920084036.75:backToIndentation
     #@+node:ekr.20050920084036.76:deleteIndentation
@@ -1905,13 +1898,26 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.77:insertNewLineIndent
     #@+node:ekr.20050920084036.78:indentRelative
     def indentRelative (self,event):
-    
+        
+        '''The indent-relative command indents at the point based on the previous
+        line (actually, the last non-empty line.) It inserts whitespace at the
+        point, moving point, until it is underneath an indentation point in the
+        previous line.
+        
+        An indentation point is the end of a sequence of whitespace or the end of
+        the line. If the point is farther right than any indentation point in the
+        previous line, the whitespace before point is deleted and the first
+        indentation point then applicable is used. If no indentation point is
+        applicable even then whitespace equivalent to a single tab is inserted.'''
+        
+        c = self.c ; undoType = 'Indent Relative' ; p = c.currentPosition()
+        
         k = self.k ; w = event.widget
-    
         i = w.index('insert')
-        l, c = i.split('.')
-        c2 = int(c)
-        l2 = int(l) -1
+        oldSel = (i,i)
+        line, col = i.split('.')
+        c2 = int(col)
+        l2 = int(line) -1
         if l2 < 1: return
         txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
         if len(txt) <= len(w.get('insert','insert lineend')):
@@ -1927,7 +1933,13 @@ class editCommandsClass (baseEditCommandsClass):
                 else:
                     z = replace_word.subn(' ',z)
                     w.insert('insert',z[0])
-                    ###w.update_idletasks()
+                    
+        i = w.index('insert')
+        result = w.get('1.0','end')
+        head = tail = oldYview = None
+        c.updateBodyPane(head,result,tail,undoType,
+            oldSel=oldSel,oldYview=oldYview)
+        w.mark_set('insert',i)
     #@nonl
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent...
@@ -3570,7 +3582,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'import-derived-file':      c.importDerivedFile,
             'import-flattened-outline': c.importFlattenedOutline,
             'import-noweb-files':       c.importNowebFiles,
-            'indent':                   c.indentBody,
+            'indent-region':            c.indentBody,
             'insert-node':              c.insertHeadline,
             'insert-body-time':         c.insertBodyTime,
             'insert-headline-time':     f.insertHeadlineTime,
