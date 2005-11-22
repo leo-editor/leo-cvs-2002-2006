@@ -1536,7 +1536,7 @@ class keyHandlerClass:
         c.frame.log.clearTab('Command')
         for key in keys:
             b = k.bindingsDict.get(key)
-            g.es('[%s]' % b.pane,key,b.commandName,tabName='Command')
+            g.es('[%s]' % b.pane,k.prettyPrintKey(key),b.commandName,tabName='Command')
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
@@ -1553,7 +1553,7 @@ class keyHandlerClass:
     
         for commandName in commandNames:
             shortcut = inverseBindingDict.get(commandName,'')
-            g.es('%s %s' % (commandName,shortcut),tabName='Command')
+            g.es('%s %s' % (commandName,k.prettyPrintKey(shortcut)),tabName='Command')
     #@nonl
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
@@ -2154,6 +2154,9 @@ class keyHandlerClass:
             k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
         else:
             k.computeCompletionList(defaultTabList,backspace=False)
+            
+        self.widget.update() # Complete all log drawing so we can change focus.
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name
@@ -2184,6 +2187,22 @@ class keyHandlerClass:
         return ''
     #@nonl
     #@-node:ekr.20051014170754.1:getShortcutForCommand/Name
+    #@+node:ekr.20051122104219:prettyPrintKey
+    def prettyPrintKey (self,key):
+        
+        '''Convert whatever-Z to whatever-Shift-Z'''
+        
+        if not key:
+            return ''
+            
+        ch = key[-2]
+    
+        if ch in string.ascii_uppercase:
+            return '%sShift-%s>' % (key[:-2],ch.lower())
+        else:
+            return key
+    #@nonl
+    #@-node:ekr.20051122104219:prettyPrintKey
     #@+node:ekr.20051010063452:ultimateFuncName
     def ultimateFuncName (self,func):
         
