@@ -125,6 +125,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c.signOnWithVersion()
         f.miniBufferWidget = f.createMiniBufferWidget()
         f.body.createBindings(f)
+        # f.enableTclTraces()
     #@nonl
     #@+node:ekr.20051009044751:createOuterFrames
     def createOuterFrames (self):
@@ -254,6 +255,41 @@ class leoTkinterFrame (leoFrame.leoFrame):
         return label
     #@nonl
     #@-node:ekr.20050920094212:f.createMiniBufferWidget
+    #@+node:ekr.20051121092320:f.enableTclTraces
+    def enableTclTraces (self):
+        
+        c = self.c
+    
+        def tracewidget(event):
+            g.trace('enabling widget trace')
+            Pmw.tracetk(event.widget, 1)
+        
+        def untracewidget(event):
+            g.trace('disabling widget trace')
+            Pmw.tracetk(event.widget,0)
+            
+        def focusIn (event):
+            print("Focus in  %s (%s)" % (
+                event.widget,event.widget.winfo_class()))
+            
+        def focusOut (event):
+            print("Focus out %s (%s)" % (
+                event.widget,event.widget.winfo_class()))
+    
+        # Put this in unit tests before the assert:
+        # c.frame.bar1.unbind_all("<FocusIn>")
+        # c.frame.bar1.unbind_all("<FocusOut>")
+    
+        # Any widget would do:
+        w = c.frame.bar1
+        if 1:
+            w.bind_all("<FocusIn>", focusIn)
+            w.bind_all("<FocusOut>", focusOut)
+        else:
+            w.bind_all("<Control-1>", tracewidget)
+            w.bind_all("<Control-Shift-1>", untracewidget)
+    #@nonl
+    #@-node:ekr.20051121092320:f.enableTclTraces
     #@-node:ekr.20031218072017.2176:f.finishCreate & helpers
     #@+node:ekr.20031218072017.3944:f.createCanvas & helpers
     def createCanvas (self,parentFrame,pack=True):
@@ -3578,12 +3614,14 @@ class leoTkinterLog (leoFrame.leoLog):
             
         def tabMenuClickCallback(event):
             self.onClick(event,tabName)
+            
+        def tabMenuFocusInCallback(event):
+            g.trace(tabName)
         
         tab.bind('<Button-1>',tabMenuClickCallback)
         tab.bind('<Button-3>',tabMenuRightClickCallback)
         
-        # tab.bind('<ButtonRelease-1>',tabMenuClickCallback)
-        # tab.bind('<ButtonRelease-3>',tabMenuRightClickCallback)
+        # tab.bind('<FocusIn>',tabMenuFocusInCallback)
         #@nonl
         #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
         #@nl
@@ -3684,7 +3722,7 @@ class leoTkinterLog (leoFrame.leoLog):
         # Update the status vars.
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
-        c.frame.widgetWantsFocus(self.logCtrl)
+        # c.frame.widgetWantsFocus(self.logCtrl)
         self.tabFrame = self.frameDict.get(tabName)
         return tabFrame
     #@nonl
