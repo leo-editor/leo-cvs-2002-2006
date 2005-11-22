@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
 <globals body_outline_ratio="0.593037214886">
-	<global_window_position top="18" left="371" height="833" width="783"/>
+	<global_window_position top="62" left="423" height="662" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -176,7 +176,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051121143951" a="TV"><vh>Test of long lines</vh>
+<v t="ekr.20051121143951"><vh>Test of long lines</vh>
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
 <v t="ekr.20051121144452.3"><vh>computeWidth</vh></v>
@@ -191,9 +191,10 @@
 <v t="ekr.20051121144452.12"><vh>skip_leading_ws_with_indent</vh></v>
 <v t="ekr.20051121144452.13"><vh>stripBlankLines</vh></v>
 </v>
-<v t="ekr.20051121143509" a="E"><vh>@button shorten-lines</vh>
+<v t="ekr.20051121143509"><vh>@button shorten-lines</vh>
 <v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
 </v>
+<v t="ekr.20051122103633" a="TV"><vh>Test of &lt;Delete&gt; character</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4045,5 +4046,8 @@ def skip_leading_ws(s,i,ws,tab_width):
             
     return ''.join(lines)
 </t>
+<t tx="ekr.20051122103633">text
+
+text</t>
 </tnodes>
 </leo_file>

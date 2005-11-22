@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8471" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8477" clone_windows="0"/>
 <globals body_outline_ratio="0.490396927017">
-	<global_window_position top="96" left="225" height="781" width="864"/>
+	<global_window_position top="71" left="319" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1622,6 +1622,7 @@
 </v>
 </v>
 <v t="ekr.20051107115231"><vh>Unit tests for Redraws</vh>
+<v t="ekr.20051122095426"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
 <v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
 <v t="ekr.20051109034758"><vh>pasted node</vh></v>
@@ -14613,5 +14614,7 @@ try:
     assert p.bodyString() == body
 finally:
     p.setBodyString('')</t>
+<t tx="ekr.20051122095426">c.frame.bringToFront()
+c.frame.body.bodyCtrl.update()</t>
 </tnodes>
 </leo_file>
