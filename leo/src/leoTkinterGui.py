@@ -431,7 +431,11 @@ class tkinterGui(leoGui.leoGui):
                 name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
                 w2 and g.trace(name2,c)
     
-            w.update() # Hooray: the fix to the cursed problems with Pmw.Notebook.
+            if 0:
+                # A fix to the cursed problems with Pmw.Notebook.
+                # But it slows down unit tests and is generally undesirable.
+                # Rather than calling update here, we shall call update only when essential.
+                w.update() 
         
             w.focus_set()
     #@nonl
