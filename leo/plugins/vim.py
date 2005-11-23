@@ -14,8 +14,7 @@ interfere's with Leo's dragging logic.
 
 To install this plugin do the following:
     
-1. Set the variable _vim_cmd at the top level of the plugin to the path to vim
-or gvim.
+1. Set the vim_cmd and vim_exe settings to the path to vim or gvim as shown in leoSettings.leo.
 
 2. If you are using Python 2.4 or above, that's all you need to do. Jim
 Sizelove's new code will start vim automatically using Python's subprocess
@@ -48,7 +47,7 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.9"
+__version__ = "1.10"
 #@<< version history >>
 #@+node:ekr.20050226184411.1:<< version history >>
 #@@killcolor
@@ -82,6 +81,9 @@ __version__ = "1.9"
 #     - Document how install subproces, and use g.importExtension to import 
 # subprocess.
 #     - Import subprocess with g.importExtension.
+# 1.10 EKR:
+#     - Support 'vim_cmd' and 'vim_exe' settings.
+#     - These override the default _vim_cmd and _vim_exe settings.
 #@-at
 #@nonl
 #@-node:ekr.20050226184411.1:<< version history >>
@@ -187,6 +189,10 @@ useDoubleClick = True # True: double-click opens VIM.  False: single-click opens
 # This command is used to communicate with the vim server. If you use gvim
 # you can leave the command as is, you do not need to change it to "gvim ..."
 
+# New in version 1.10 of these plugin: these are emergency defaults only.
+# They are typically overridden by the corresponding 'vim_cmd' and 'vim_exe' settings in
+# leoSettings.leo or individual .leo files.
+
 if sys.platform == 'win32':
     # Works on XP with vim in the folder indicated.
     _vim_cmd = r"c:\vim\vim63\gvim --servername LEO"
@@ -227,6 +233,9 @@ def open_in_vim (tag,keywords,val=None):
     if not c or not p: return
     v = p.v
     
+    vim_cmd = c.config.getString('vim_cmd') or _vim_cmd
+    vim_exe = c.config.getString('vim_exe') or _vim_exe
+    
     # Search g.app.openWithFiles for a file corresponding to v.
     for d in g.app.openWithFiles:
         if d.get('v') == id(v):
@@ -245,20 +254,20 @@ def open_in_vim (tag,keywords,val=None):
             # Remove the old file and the entry in g.app.openWithFiles.
             os.remove(path)
             g.app.openWithFiles = [d for d in g.app.openWithFiles if d.get('path') != path]
-            os.system(_vim_cmd+"--remote-send '<C-\\><C-N>:bd! "+path+"<CR>'")
+            os.system(vim_cmd+"--remote-send '<C-\\><C-N>:bd! "+path+"<CR>'")
         v.OpenWithOldBody=v.bodyString() # Remember the previous contents.
         if subprocess:
             # New code by Jim Sizemore.
             c.openWith(
                 ("subprocess.Popen",
-                [_vim_exe, "--servername", "LEO", "--remote-silent"], None),)
+                [vim_exe, "--servername", "LEO", "--remote-silent"], None),)
         else:
             # Works, but gives weird error message on first open of Vim.
             # note the space after --remote.
-            c.openWith(("os.spawnv", [_vim_exe,"--servername LEO ","--remote "], None),)
+            c.openWith(("os.spawnv", [vim_exe,"--servername LEO ","--remote "], None),)
     else:
         # Reopen the old temp file.
-        os.system(_vim_cmd+"--remote-send '<C-\\><C-N>:e "+path+"<CR>'")
+        os.system(vim_cmd+"--remote-send '<C-\\><C-N>:e "+path+"<CR>'")
         
     return val
 #@nonl
