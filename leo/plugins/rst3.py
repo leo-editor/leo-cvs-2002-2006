@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.4'
+__version__ = '1.5'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -388,6 +388,10 @@ except ImportError:
 # - Allow relative paths.
 # - Added processTopTree.  This has the same functionality as found in 
 # previous @button rst3 nodes.
+# 
+# - 1.5 EKR:
+# 
+# Removed used recomputation of sytlesheet_path
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -1225,13 +1229,9 @@ class rstClass:
             path = g.os_path_join(
                 stylesheet_path,self.getOption('stylesheet_name'))
     
-            stylesheet_path = g.os_path_join(openDirectory,stylesheet_path)
         else: # Old code: convert everything to absolute paths.
             path = g.os_path_abspath(g.os_path_join(
                 stylesheet_path,self.getOption('stylesheet_name')))
-                
-            stylesheet_path = g.os_path_abspath(
-                g.os_path_join(openDirectory,stylesheet_path))
         
         if g.os_path_exists(path):
             if self.ext == '.pdf':
