@@ -47,7 +47,7 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.10"
+__version__ = "1.11"
 #@<< version history >>
 #@+node:ekr.20050226184411.1:<< version history >>
 #@@killcolor
@@ -84,6 +84,9 @@ __version__ = "1.10"
 # 1.10 EKR:
 #     - Support 'vim_cmd' and 'vim_exe' settings.
 #     - These override the default _vim_cmd and _vim_exe settings.
+# 1.11 EKR:
+#     - Emergency default for window is now the default location: c:\Program 
+# Files\vim\vim63
 #@-at
 #@nonl
 #@-node:ekr.20050226184411.1:<< version history >>
@@ -195,8 +198,8 @@ useDoubleClick = True # True: double-click opens VIM.  False: single-click opens
 
 if sys.platform == 'win32':
     # Works on XP with vim in the folder indicated.
-    _vim_cmd = r"c:\vim\vim63\gvim --servername LEO"
-    _vim_exe = r"c:\vim\vim63\gvim"
+    _vim_cmd = r"c:\Program Files\vim\vim63\gvim --servername LEO"
+    _vim_exe = r"c:\Program Files\vim\vim63\gvim"
 else: 
     _vim_cmd = "vim --servername LEO"
     _vim_exe = "vim"
