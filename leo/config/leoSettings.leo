@@ -127,10 +127,10 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20051123100536"><vh>@page Plugins settings</vh>
-<v t="ekr.20051123100536.1"><vh>vim plugin</vh>
-<v t="ekr.20051123100536.2"><vh>@string vim_cmd = c:\vim\vim63\gvim --servername LEO</vh></v>
-<v t="ekr.20051123100536.3"><vh>@string vim_exe = c:\vim\vim63\gvim</vh></v>
+<v t="ekr.20051123100536" a="E"><vh>@page Plugins settings</vh>
+<v t="ekr.20051123100536.1" a="E"><vh>vim plugin</vh>
+<v t="ekr.20051123100536.2" a="TV"><vh>@string vim_cmd = c:\Program Files\vim\vim63\gvim --servername LEO</vh></v>
+<v t="ekr.20051123100536.3"><vh>@string vim_exe = c:\Program Files\vim\vim63\gvim</vh></v>
 </v>
 </v>
 <v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
@@ -236,7 +236,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -1838,8 +1838,6 @@ See "About shortcut specifiers" for a full discussion of what may appear in the 
 vim_cmd = c:\Program Files\vim\vim64\gvim --servername LEO
     _vim_exe = r"c:\Program Files\vim\vim64\gvim"</t>
 <t tx="ekr.20051123100536.2"></t>
-<t tx="ekr.20051123100536.3">A common alternative is:
-
-@string vim_exe = c:\Program Files\vim\vim64\gvim</t>
+<t tx="ekr.20051123100536.3"></t>
 </tnodes>
 </leo_file>
