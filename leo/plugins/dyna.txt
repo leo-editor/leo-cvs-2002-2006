@@ -241,11 +241,10 @@ def insertAhome(wch= 'i'): #i/r
 
     if 'i' in wch:
         c = g.top()
-        p = c.currentPosition()
         Tx = c.frame.body
         Tx.setInsertionPoint(1.0)
         Tx.insertAtInsertPoint('#@path %s\n'%(home,))
-        Tx.onBodyChanged(p, "Typing")  
+        Tx.onBodyChanged("Typing")  
 
     #return home
 #@+node:ekr.20050421093045.139:windefs

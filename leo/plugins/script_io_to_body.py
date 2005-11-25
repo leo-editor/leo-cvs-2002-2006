@@ -86,8 +86,7 @@ def newPut (self,s):
     if bodyCtrl:
         bodyCtrl.insert("end",s)
         # bodyCtrl.see("end")
-        v = c.currentVnode()
-        self.frame.tree.onBodyChanged(v,"Typing")
+        self.frame.tree.onBodyChanged("Typing")
     else: print s,
 
 # Same as frame.putnl exceptsends output to the end of the body text.

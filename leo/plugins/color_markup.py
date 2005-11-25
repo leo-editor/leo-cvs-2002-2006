@@ -431,7 +431,7 @@ def insertWikiMarkup(c,v,leftTag,rightTag):
         g.app.gui.setTextSelection(body.bodyCtrl, start + "-" + `len(leftTag)`  + "c",
                                  end + "+" + `len(rightTag)` + "c")
         newSel = body.getTextSelection()
-        c.frame.onBodyChanged(v,"Change",oldSel=oldSel)
+        c.frame.onBodyChanged("Change",oldSel=oldSel)
         #@-node:edream.110403140857.27:<< apply markup to selection >>
         #@nl
     else:
@@ -452,7 +452,7 @@ def insertWikiMarkup(c,v,leftTag,rightTag):
             newPos = "%s+%dc" % (oldSel[0],len(leftTag))
         body.setTextSelection(newPos, newPos)
         newSel = body.getTextSelection()
-        c.frame.onBodyChanged(v,"Typing",oldSel=oldSel)
+        c.frame.onBodyChanged("Typing",oldSel=oldSel)
         #@-node:edream.110403140857.28:<< handle no selection >>
         #@nl
 

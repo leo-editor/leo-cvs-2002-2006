@@ -78,12 +78,11 @@ def rc_help():
 #@+node:ekr.20040422072343.2:rc_dbody
 def rc_dbody():
 
-    c = g.top() ; p = c.currentPosition()
+    c = g.top()
 
     if c.frame.body.hasTextSelection():
-
         c.frame.body.deleteTextSelection()
-        c.frame.body.onBodyChanged(v,"Delete")
+        c.frame.body.onBodyChanged("Delete")
 #@nonl
 #@-node:ekr.20040422072343.2:rc_dbody
 #@+node:ekr.20040422072343.3:rc_nl
@@ -94,7 +93,7 @@ def rc_nl():
     c = g.top()
 
     c.frame.body.insertAtInsertPoint('\n')
-    c.frame.body.onBodyChanged(c.currentPosition(),"Typing")
+    c.frame.body.onBodyChanged("Typing")
 #@nonl
 #@-node:ekr.20040422072343.3:rc_nl
 #@+node:ekr.20040422072343.4:rc_selectAll

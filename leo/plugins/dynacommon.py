@@ -1084,18 +1084,13 @@ def dynaput(c, slst):
             elif 'paste' == cg.dynapasteFlag.get() and \
                     Tx.hasTextSelection():
                 #g.es('overwrite\n', str(Tx.getTextRange(Tst, Ten)) )
-
-                v = c.currentVnode() #should this be positions in 4.2?
         
                 #btw, Tk insert doesnt disturb the selection.
                 Tx.deleteTextSelection()
-                #Tx.onBodyChanged(v, "Delete")
-        
                 Tx.setInsertionPoint(Tst)
-        
                 #print '%r', ux
                 Tx.insertAtInsertPoint(ux)
-                Tx.onBodyChanged(v, "Typing")
+                Tx.onBodyChanged("Typing")
         
                 #selection may wander depending on the final size
                 Tx.setTextSelection(Tst,  Ten)
@@ -1105,6 +1100,7 @@ def dynaput(c, slst):
                          cg.dynapasteFlag.get() )
 
     else: g.es("no text selected", color= 'orangered' )
+#@nonl
 #@-node:ekr.20050421093045.130:dynaput
 #@+node:ekr.20050421093045.131:python -O
 #make part of a larger basic python sanity check

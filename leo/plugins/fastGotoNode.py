@@ -500,14 +500,14 @@ def insertHeadline( directive , c ):
     c.endUpdate()
 #@-node:mork.20041018091414.15:insertHeadline
 #@+node:mork.20041018091414.16:paster
-def paster( directive , c ,  end = ' ' ):
+def paster (directive,c,end=' '):
     bdy = c.frame.body
     c.beginUpdate()
-    bdy.insertAtInsertPoint( directive + end)
-    bdy.onBodyChanged( c.currentVnode() , None ) 
-    bdy.bodyCtrl.focus_set()  
-    bdy.bodyCtrl.update_idletasks() 
-    c.endUpdate()                        
+    bdy.insertAtInsertPoint(directive+end)
+    bdy.onBodyChanged(undoType=None)
+    bdy.bodyCtrl.focus_set()
+    bdy.bodyCtrl.update_idletasks()
+    c.endUpdate()
     bdy.bodyCtrl.focus_set()
 #@nonl
 #@-node:mork.20041018091414.16:paster
