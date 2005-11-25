@@ -820,8 +820,8 @@ class leoTkinterTree (leoFrame.leoTree):
             
         c = self.c
         
-        # An important trace.
-        # g.trace(self.redrawCount,g.callers(9))
+        if 0: # An important trace.
+            g.trace(self.redrawCount,g.callers(9))
             
         # Do the actual redraw.
         self.redrawCount += 1
@@ -2076,7 +2076,6 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c
         
         self.frame.treeWantsFocus()
-        c.redraw_now()
     
         return 'break'
     #@nonl

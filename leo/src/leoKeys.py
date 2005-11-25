@@ -1064,8 +1064,7 @@ class keyHandlerClass:
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func or stroke != '<Key>'
         
-        #g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
-            # stroke,k.inState(),k.getStateKind())
+        # g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
@@ -1129,34 +1128,24 @@ class keyHandlerClass:
     
         if func: # Func is an argument.
             # g.trace('executing func',commandName)
-            forceFocus = func.__name__ != 'leoCallback'
-            if forceFocus: c.frame.bodyWantsFocus()
+            # forceFocus = func.__name__ != 'leoCallback'
+            # if forceFocus: c.frame.bodyWantsFocus()
             val = func(event)
             k.funcReturn = k.funcReturn or val # For unit tests.
             k.endCommand(event,commandName)
             c.setFocusHelper()
-            # g.trace('funcReturn',k.funcReturn)
             return 'break'
-            
-        # New logic in 4.4:
-        if stroke == '<Key>' and not ch:
-            # Let Tk handle the char.  Example: default bindings for arrow keys.
-            # g.trace('to tk:','stroke',stroke,'ch',repr(ch))
-            val = None
         else:
-            # Pass the stroke to one of Leo's event handlers.
-            val = self.handleDefaultChar(event)
-    
-        # g.trace('returns %s' % repr(val))
-        c.setFocusHelper()
-        return val
+            val = c.editCommands.selfInsertCommand(event)
+            c.setFocusHelper()
+            return val #  Temp:  eventually, should always return'break
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,event):
         
         k = self ; val = None
         
-        # g.trace(k.stateKind,k.state)
+        g.trace(k.stateKind,k.state)
         
         if k.state.kind:
             if k.state.handler:
@@ -1187,28 +1176,6 @@ class keyHandlerClass:
         return func
     #@nonl
     #@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
-    #@+node:ekr.20051026083544:handleDefaultChar
-    def handleDefaultChar(self,event):
-        
-        c = self.c
-        ch = event and event.char
-        w = event and event.widget
-        name = w and hasattr(w,'_name') and w._name or ''
-        # g.trace(name)
-    
-        if name.startswith('body'):
-            c.frame.body.updateBody(event,w,undoType='Typing')
-            return 'break'
-        elif name.startswith('head'):
-            g.trace("can't happen: %s" % (name),color='red')
-            c.frame.tree.updateHead(event,w)
-            return 'break'
-        else:
-            # Let tkinter handle the event.
-            # g.trace('to tk:',name,repr(ch))
-            return None
-    #@nonl
-    #@-node:ekr.20051026083544:handleDefaultChar
     #@-node:ekr.20050920085536.65: masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
     def fullCommand (self,event,specialStroke=None,specialFunc=None):
@@ -1423,7 +1390,7 @@ class keyHandlerClass:
                 except Exception:
                     pass
             if 0: # Do *not* call this by default.  It interferes with undo.
-                c.frame.body.onBodyChanged(p,undoType='Typing')
+                c.frame.body.onBodyChanged(undoType='Typing')
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...

@@ -1799,6 +1799,8 @@ class baseUndoer:
     def undoTyping (self):
         
         u = self ; c = u.c ; current = c.currentPosition()
+        
+        # g.trace('oldSel',u.oldSel)
     
         # selectPosition causes recoloring, so don't do this unless needed.
         if current != u.p:
@@ -1833,9 +1835,7 @@ class baseUndoer:
             
         __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
     
-        u = self ; c = u.c
-        # assert p == c.currentPosition(),'not current position'+repr(p)
-    
+        u = self ; c = u.c ; body = c.frame.body
         #@    << Incrementally update the Tk.Text widget >>
         #@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
         # Only update the changed lines.
@@ -1890,13 +1890,13 @@ class baseUndoer:
         if oldNewlines > 0:
             s = s + '\n' * oldNewlines
         result = s
+        
         if u.debug_print:
             print "body:  ",body
             print "result:",result
         #@nonl
         #@-node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
         #@nl
-        # g.trace(undoType)
         p.setTnodeText(result)
         #@    << Get textResult from the Tk.Text widget >>
         #@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
@@ -1910,14 +1910,9 @@ class baseUndoer:
         #@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
         #@nl
         if textResult == result:
-            if undoType in ("Cut","Paste"):
-                # g.trace("non-incremental undo")
-                c.frame.body.recolor(p,incremental=False)
-            else:
-                # g.trace("incremental undo:",leading,trailing)
-                c.frame.body.recolor_range(p,leading,trailing)
-        else: # 11/19/02: # Rewrite the pane and do a full recolor.
-            if u.debug_print:
+            c.frame.body.recolor(p,incremental=False)
+        else: # Rewrite the pane and do a full recolor.
+            if 0:
                 #@            << print mismatch trace >>
                 #@+node:ekr.20031218072017.1497:<< print mismatch trace >>
                 print "undo mismatch"
@@ -1926,9 +1921,7 @@ class baseUndoer:
                 #@nonl
                 #@-node:ekr.20031218072017.1497:<< print mismatch trace >>
                 #@nl
-            # g.trace("non-incremental undo")
             p.setBodyStringOrPane(result)
-    #@nonl
     #@-node:ekr.20031218072017.1493:undoRedoText
     #@-node:ekr.20031218072017.2039:undo & helpers...
     #@-others

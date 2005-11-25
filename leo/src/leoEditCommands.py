@@ -1059,6 +1059,7 @@ class editCommandsClass (baseEditCommandsClass):
             'scroll-down':          self.scrollDown,
             'scroll-up':            self.scrollUp,
             'select-paragraph':     self.selectParagraph,
+            'self-insert-command':  self.selfInsertCommand,
             'set-comment-column':   self.setCommentColumn,
             'set-fill-column':      self.setFillColumn,
             'set-fill-prefix':      self.setFillPrefix,
@@ -1444,74 +1445,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.134:indentToCommentColumn
     #@-node:ekr.20050920084036.132:comment column...
-    #@+node:ekr.20050920084036.85:delete...
-    #@+node:ekr.20050929163010:backwardDeleteCharacter
-    def backwardDeleteCharacter (self,event):
-    
-        try:
-            w = event.widget
-            i = w.index('insert')
-            w.delete('%s-1c' % (i), '%s' % (i))
-        except Exception:
-            pass #  w might not be a text widget.
-    #@nonl
-    #@-node:ekr.20050929163010:backwardDeleteCharacter
-    #@+node:ekr.20050920084036.87:deleteNextChar
-    def deleteNextChar (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.index('insert')
-        w.delete(i,'%s +1c' % i)
-    #@nonl
-    #@-node:ekr.20050920084036.87:deleteNextChar
-    #@+node:ekr.20050920084036.135:deleteSpaces
-    def deleteSpaces (self,event,insertspace=False):
-    
-        k = self.k ; w = event.widget
-        char = w.get('insert','insert + 1c ')
-        if not char.isspace(): return
-        
-        i = w.index('insert')
-        wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-        wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
-        if '' in (wf,wb): return
-        w.delete('%s +1c' % wb,wf)
-        if insertspace: w.insert('insert',' ')
-    #@nonl
-    #@-node:ekr.20050920084036.135:deleteSpaces
-    #@+node:ekr.20050920084036.141:removeBlankLines
-    def removeBlankLines (self,event):
-        
-        '''The remove-blank-lines command removes lines containing nothing but
-        whitespace. If there is a text selection, only lines within the selected
-        text are affected; otherwise all blank lines in the selected node are
-        affected.'''
-        
-        c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
-        result = []
-        body = p.bodyString()
-        hasSelection = c.frame.body.hasTextSelection()
-        
-        if hasSelection:
-            head,lines,tail,oldSel,oldYview = c.getBodyLines()
-            joinChar = '\n'
-        else:
-            head = tail = oldYview = None
-            lines = g.splitLines(body)
-            oldSel = ('1.0','1.0')
-            joinChar = ''
-    
-        for line in lines:
-            if line.strip():
-                result.append(line)
-    
-        result = joinChar.join(result)
-        
-        if result != body:
-            c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-    #@nonl
-    #@-node:ekr.20050920084036.141:removeBlankLines
-    #@-node:ekr.20050920084036.85:delete...
     #@+node:ekr.20050920084036.58:dynamic abbreviation...
     #@+node:ekr.20050920084036.59:dynamicExpansion
     def dynamicExpansion (self,event): #, store = {'rlist': [], 'stext': ''} ):
@@ -1943,6 +1876,283 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent...
+    #@+node:ekr.20050920084036.85:insert & delete...
+    #@+node:ekr.20051125080855:selfInsertCommand
+    def selfInsertCommand(self,event):
+        
+        c = self.c ; p = c.currentPosition()
+        ch = event and event.char or ''
+        w = event and event.widget
+        name = w and hasattr(w,'_name') and w._name or ''
+        
+        if name.startswith('head'):
+            g.trace("can't happen: %s" % (name),color='red')
+            c.frame.tree.updateHead(event,w)
+            return 'break'
+        elif not name.startswith('body'):
+            # Let tkinter handle the event.
+            # g.trace('to tk:',name,repr(ch))
+            return None
+            
+        oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
+        oldText = name.startswith('body') and p.bodyString()
+        removeTrailing = None # A signal to compute it later.
+        undoType = 'Typing'
+            
+        if ch == '\t':
+            removeTrailing = self.updateTab(p,w)
+        elif ch == '\b':
+            # This is correct: we only come here if there no bindngs for these keys. 
+            self.backwardDeleteCharacter(event)
+        elif ch in ('\r','\n'):
+            ch = '\n'
+            #@        << handle newline >>
+            #@+node:ekr.20051026171121:<< handle newline >>
+            i,j = oldSel
+            
+            if i != j:
+                # No auto-indent if there is selected text.
+                w.delete(i,j)
+                w.insert(i,ch)
+            else:
+                w.insert(i,ch)
+                if c.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+                    # No auto-indent if in @nocolor mode or after a Change command.
+                    removeTrailing = self.updateAutoIndent(p)
+            #@nonl
+            #@-node:ekr.20051026171121:<< handle newline >>
+            #@nl
+        elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+            self.updateAutomatchBracket(p,w,ch,oldSel)
+        elif ch: # Null chars must not delete the selection.
+            i,j = oldSel
+            if i != j: w.delete(i,j)
+            w.insert(i,ch)
+        else:
+            return 'break'
+    
+        # Update the text and handle undo.
+        newText = w.get('1.0','end')
+        w.see(w.index('insert'))
+        if newText == oldText:
+            # g.trace('no change')
+            return 'break'
+        else:
+            # g.trace(repr(newText))
+            c.frame.body.onBodyChanged(undoType=undoType,
+                oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
+        return 'break'
+    #@nonl
+    #@+node:ekr.20051027172949:updateAutomatchBracket
+    def updateAutomatchBracket (self,p,w,ch,oldSel):
+        
+        # assert ch in ('(',')','[',']','{','}')
+        
+        c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+        language = d.get('language')
+        
+        if ch in ('(','[','{',):
+            automatch = language not in ('plain',)
+            if automatch:
+                ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+            if automatch:
+                w.mark_set('insert','insert-1c')
+        else:
+            ch2 = w.get('insert')
+            if ch2 in (')',']','}'):
+                w.mark_set('insert','insert+1c')
+            else:
+                if i != j:
+                    w.delete(i,j)
+                w.insert(i,ch)
+    #@nonl
+    #@-node:ekr.20051027172949:updateAutomatchBracket
+    #@+node:ekr.20051026171121.1:udpateAutoIndent
+    # By David McNab:
+    def updateAutoIndent (self,p):
+    
+        c = self.c ; d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+        s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+        # Add the leading whitespace to the present line.
+        junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+        if s and len(s) > 0 and s [ -1] == ':':
+            # For Python: increase auto-indent after colons.
+            if c.frame.body.colorizer.scanColorDirectives(p) == "python":
+                width += abs(tab_width)
+        if c.config.getBool("smart_auto_indent"):
+            # Determine if prev line has unclosed parens/brackets/braces
+            brackets = [width] ; tabex = 0
+            for i in range(0,len(s)):
+                if s [i] == '\t':
+                    tabex += tab_width-1
+                if s [i] in '([{':
+                    brackets.append(i+tabex+1)
+                elif s [i] in '}])' and len(brackets) > 1:
+                    brackets.pop()
+            width = brackets.pop()
+        ws = g.computeLeadingWhitespace(width,tab_width)
+        if ws:
+            c.frame.bodyCtrl.insert("insert",ws)
+            removeTrailing = False
+        else:
+            removeTrailing = None
+        return removeTrailing
+    #@nonl
+    #@-node:ekr.20051026171121.1:udpateAutoIndent
+    #@+node:ekr.20051026092433:updateTab
+    def updateTab (self,p,w):
+    
+        c = self.c ; d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width)
+        
+        i,j = g.app.gui.getTextSelection(w)
+        if i != j:
+            w.delete(i,j)
+        if tab_width > 0:
+            w.insert("insert",'\t')
+        else:
+            # Get the preceeding characters.
+            s = w.get("insert linestart","insert")
+        
+            # Compute n, the number of spaces to insert.
+            width = g.computeWidth(s,tab_width)
+            n = abs(tab_width) - (width % abs(tab_width))
+            w.insert("insert",' ' * n)
+    #@nonl
+    #@-node:ekr.20051026092433:updateTab
+    #@-node:ekr.20051125080855:selfInsertCommand
+    #@+node:ekr.20051026092433.1:backwardDeleteCharacter
+    # Was updateBackspace
+    
+    def backwardDeleteCharacter (self,event=None):
+        
+        c = self.c ; p = c.currentPosition()
+        w = event and event.widget or g.app.gui.get_focus(c.frame)
+        name = w and hasattr(w,'_name') and w._name or ''
+        oldText = w.get('1.0','end')
+        i,j = oldSel = g.app.gui.getTextSelection(w)
+        undoType = 'Typing'
+      
+        if name.startswith('body'):
+            d = g.scanDirectives(c,p)
+            tab_width = d.get("tabwidth",c.tab_width)
+            if i != j:
+                w.delete(i,j)
+            elif tab_width > 0:
+                w.delete('insert-1c')
+            else:
+                g.trace('neg tab width')
+                #@            << backspace with negative tab_width >>
+                #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+                s = prev = w.get("insert linestart","insert")
+                n = len(prev)
+                abs_width = abs(tab_width)
+                
+                # Delete up to this many spaces.
+                n2 = (n % abs_width) or abs_width
+                n2 = min(n,n2) ; count = 0
+                
+                while n2 > 0:
+                    n2 -= 1
+                    ch = prev[n-count-1]
+                    if ch != ' ': break
+                    else: count += 1
+                
+                # Make sure we actually delete something.
+                w.delete("insert -%dc" % (max(1,count)),"insert")
+                #@nonl
+                #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+                #@nl
+            newText = w.get('1.0','end')
+            newSel = w.index('insert')
+            c.frame.body.onBodyChanged(undoType=undoType,
+                oldSel=oldSel,oldText=oldText,oldYview=None)
+        else:
+            try: # w may not be a text widget:
+                if i != j:
+                    w.delete(i,j)
+                else:
+                    w.delete('insert-1c')
+            except Exception: pass
+    #@nonl
+    #@-node:ekr.20051026092433.1:backwardDeleteCharacter
+    #@+node:ekr.20050920084036.87:deleteNextChar
+    def deleteNextChar (self,event):
+        
+        g.trace()
+    
+        c = self.c ; body = c.frame.body ; p = c.currentPosition()
+        w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
+        oldText = w.get('1.0','end')
+        
+        if body.hasTextSelection():
+            oldSel = body.getTextSelection()
+            body.deleteTextSelection()
+        else:
+            i = w.index('insert')
+            oldSel = (i,i)
+            g.trace(i)
+            w.delete(i,'%s +1c' % i)
+        
+        # Don't assume the body has focus.
+        if name.startswith('body'):
+            body.onBodyChanged("Delete",oldSel=oldSel,oldText=oldText)
+        elif name.startswith('head'):
+            c.frame.tree.onHeadChanged(p,'Delete')
+    #@nonl
+    #@-node:ekr.20050920084036.87:deleteNextChar
+    #@+node:ekr.20050920084036.135:deleteSpaces
+    def deleteSpaces (self,event,insertspace=False):
+    
+        k = self.k ; w = event.widget
+        char = w.get('insert','insert + 1c ')
+        if not char.isspace(): return
+        
+        i = w.index('insert')
+        wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+        wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+        if '' in (wf,wb): return
+        w.delete('%s +1c' % wb,wf)
+        if insertspace: w.insert('insert',' ')
+    #@nonl
+    #@-node:ekr.20050920084036.135:deleteSpaces
+    #@+node:ekr.20050920084036.141:removeBlankLines
+    def removeBlankLines (self,event):
+        
+        '''The remove-blank-lines command removes lines containing nothing but
+        whitespace. If there is a text selection, only lines within the selected
+        text are affected; otherwise all blank lines in the selected node are
+        affected.'''
+        
+        c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
+        result = []
+        body = p.bodyString()
+        hasSelection = c.frame.body.hasTextSelection()
+        
+        if hasSelection:
+            head,lines,tail,oldSel,oldYview = c.getBodyLines()
+            joinChar = '\n'
+        else:
+            head = tail = oldYview = None
+            lines = g.splitLines(body)
+            oldSel = ('1.0','1.0')
+            joinChar = ''
+    
+        for line in lines:
+            if line.strip():
+                result.append(line)
+    
+        result = joinChar.join(result)
+        
+        if result != body:
+            c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+    #@nonl
+    #@-node:ekr.20050920084036.141:removeBlankLines
+    #@-node:ekr.20050920084036.85:insert & delete...
     #@+node:ekr.20050920084036.79:info...
     #@+node:ekr.20050920084036.80:howMany
     def howMany (self,event):
@@ -3521,10 +3731,8 @@ class leoCommandsClass (baseEditCommandsClass):
             'cut-node':             c.cutOutline,
             'cut-text':             f.cutText,
             'de-hoist':             c.dehoist,
-            'delete':               c.delete,
             'delete-comments':      c.deleteComments,
             'delete-node':          c.deleteOutline,
-            'delete-text':          c.delete,
             'demote':               c.demote,
             'dump-outline':         c.dumpOutline,
             'edit-headline':        c.editHeadline,
@@ -6017,8 +6225,7 @@ class spellTab(leoFind.leoFind):
         __pychecker__ = '--no-override --no-argsused'
              # event param is not used, required, and different from base class.
     
-        c = self.c ; current = c.currentPosition()
-        body = self.body ; t = body.bodyCtrl
+        c = self.c ; body = self.body ; t = body.bodyCtrl
         
         selection = self.getSuggestion()
         if selection:
@@ -6029,12 +6236,7 @@ class spellTab(leoFind.leoFind):
                 t.delete(start,end)
                 t.insert(start,selection)
                 g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
-                newSel = g.app.gui.getTextSelection(t)
-    
-                # update node, undo status, dirty flag, changed mark & recolor
-                c.beginUpdate()
-                c.frame.body.onBodyChanged(current,"Change",oldSel=oldSel,newSel=newSel)
-                c.endUpdate(True)
+                c.frame.body.onBodyChanged("Change",oldSel=oldSel)
                 c.frame.widgetWantsFocus(t)
                 return True
     

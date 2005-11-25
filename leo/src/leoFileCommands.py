@@ -1298,13 +1298,13 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
     def readAtFileNodes (self):
     
-        c = self.c ; current = c.currentPosition()
-        c.atFileCommands.readAll(current,partialFlag=True)
+        c = self.c ; p = c.currentPosition()
+        c.atFileCommands.readAll(p,partialFlag=True)
         c.redraw_now()
         
         # Force an update of the body pane.
-        current.setBodyStringOrPane(current.bodyString())
-        c.frame.body.onBodyChanged(current,undoType=None)
+        p.setBodyStringOrPane(p.bodyString())
+        c.frame.body.onBodyChanged(undoType=None)
     #@nonl
     #@-node:ekr.20031218072017.3029:readAtFileNodes (leoAtFile)
     #@+node:ekr.20031218072017.2297:open (leoFileCommands)

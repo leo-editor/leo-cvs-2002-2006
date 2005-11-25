@@ -1762,7 +1762,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        f = self ; c = f.c ; p = c.currentPosition()
+        f = self ; c = f.c
         w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
     
         if name.startswith('body'):
@@ -1770,8 +1770,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             oldSel = g.app.gui.getTextSelection(w)
             oldText = w.get('1.0','end')
             w.event_generate(g.virtual_event_name("Cut"))
-            c.frame.body.onBodyChanged(p,'Cut',oldSel=oldSel,oldText=oldText)
-            c.requestRecolor()
+            c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
         else:
             # Important: cut from headline is *not* undoable.
             # Only the entire edit is undoable.
@@ -1784,7 +1783,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         '''Paste the clipboard into a widget.'''
     
-        f = self ; c = f.c ; p = c.currentPosition()
+        f = self ; c = f.c
         w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
     
         if name.startswith('body'):
@@ -1792,8 +1791,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             oldSel = g.app.gui.getTextSelection(w)
             oldText = w.get('1.0','end')
             w.event_generate(g.virtual_event_name("Paste"))
-            c.frame.body.onBodyChanged(p,'Paste',oldSel=oldSel,oldText=oldText)
-            c.requestRecolor()
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
         if name.startswith('head'):
             # Important: this paste is not undoable!
             # Only the entire edit is undoable.
@@ -1818,16 +1816,20 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if name.startswith('body'):
             w.event_generate(g.virtual_event_name("Copy"))
+            w.update()
+            f.body.onBodyChanged('Copy')
         else:
             # Necessary when not using shortcut keys.
             w.event_generate(g.virtual_event_name("Copy"))
+        
+    #@nonl
     #@-node:ekr.20051011072903.1:OnCopyFromMenu
     #@+node:ekr.20051011072049.1:OnCutFromMenu
     def OnCutFromMenu (self):
         
         ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-        f = self ; c = f.c ; p = c.currentPosition()
+        f = self ; c = f.c
         w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
     
         if name.startswith('body'):
@@ -1835,7 +1837,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             oldSel = g.app.gui.getTextSelection(w)
             oldText = w.get('1.0','end')
             w.event_generate(g.virtual_event_name("Cut"))
-            c.frame.body.onBodyChanged(p,'Cut',oldSel=oldSel,oldText=oldText)
+            c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
             c.requestRecolor()
         else:
             # Necessary
@@ -1848,7 +1850,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         ''' Called **only** when invoked using the menu instead of a shortcut.'''
         
-        f = self ; c = f.c ; p = c.currentPosition()
+        f = self ; c = f.c
         w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
     
         if name.startswith('body'):
@@ -1856,7 +1858,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             oldSel = g.app.gui.getTextSelection(w)
             oldText = w.get('1.0','end')
             w.event_generate(g.virtual_event_name("Paste"))
-            c.frame.body.onBodyChanged(p,'Paste',oldSel=oldSel,oldText=oldText)
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
             c.requestRecolor()
         else:
             # Strip trailing newlines so the truncation doesn't cause confusion.
@@ -2382,174 +2384,32 @@ class leoTkinterBody (leoFrame.leoBody):
         # g.trace("BODY",body.cget("font"),font.cget("family"),font.cget("weight"))
     #@nonl
     #@-node:ekr.20031218072017.2183:tkBody.setFontFromConfig
-    #@+node:ekr.20031218072017.1320:body key handlers
-    #@+at 
-    #@nonl
-    # The <Key> event generates the event before the body text is changed(!), 
-    # so we register an idle-event handler to do the work later.
-    # 
-    # 1/17/02: Rather than trying to figure out whether the control or alt 
-    # keys are down, we always schedule the idle_handler.  The idle_handler 
-    # sees if any change has, in fact, been made to the body text, and sets 
-    # the changed and dirty bits only if so.  This is the clean and safe way.
-    # 
-    # 2/19/02: We must distinguish between commands like "Find, Then Change", 
-    # that call onBodyChanged, and commands like "Cut" and "Paste" that call 
-    # onBodyWillChange.  The former commands have already changed the body 
-    # text, and that change must be captured immediately.  The latter commands 
-    # have not changed the body text, and that change may only be captured at 
-    # idle time.
-    #@-at
-    #@@c
-    
-    #@+others
-    #@+node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-    # Called by command handlers that may have already changed the text.
-    
-    def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+    #@+node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
+    # This is the only key handler for the body pane.
+    def onBodyChanged (self,undoType,oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
         
-        '''Update Leo after the body *may* have been changed.
-    
-        This is a public convenience method: a thin wrapper for updateBody.'''
+        '''Update Leo after the body has been changed.'''
         
-        # g.trace(g.callers(7))
-        
-        c = self.c
-        if not p:
-            g.trace("can't happen: no p")
-            return
-    
-        if p != c.currentPosition():
-            g.trace("can't happen: not current position p")
-            return
-    
-        self.c.frame.body.colorizer.interrupt()
-    
-        event = None ; w = c.frame.body.bodyCtrl
-    
-        self.updateBody(event,w,undoType,
-            oldSel=oldSel,oldYview=oldYview,newSel=newSel,oldText=oldText)
-    #@nonl
-    #@-node:ekr.20031218072017.1329:onBodyChanged (tkTree)
-    #@+node:ekr.20051026083733:updateBody (new in 4.4a2)
-    # This replaces idle_body_key.  It is never called at idle time.
-    # Called only from k.handleDefaultChar and tkBody.onBodyChanged.
-    
-    def updateBody (self,event,w,undoType,
-        oldSel=None,oldYview=None,newSel=None,oldText=None):
-    
-        '''Update Leo after the body have been changed.'''
-        
-        # g.trace(g.callers(7))
-        
-        c = self.c ; p = c.currentPosition()
-        ch = event and event.char or ''
-        orignalText = oldText # for use by undo.
-        removeTrailing = None # A signal to compute it later.
-        # g.trace(repr(ch))
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = p.bodyString()
-        if ch == '\t':
-            self.updateTab(p,w)
-        elif ch == '\b': ## chr(8):
-            # Not strictly correct: we should test for present delete binding...
-            self.updateBackspace(p,w)
-        elif ch in ('\r','\n'):
-            ch = '\n'
-            #@        << handle newline >>
-            #@+node:ekr.20051026171121:<< handle newline >>
-            i,j = oldSel
-            
-            if i != j:
-                # No auto-indent if there is selected text.
-                w.delete(i,j)
-                w.insert(i,ch)
-            else:
-                w.insert(i,ch)
-                if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-                    # No auto-indent if in @nocolor mode or after a Change command.
-                    removeTrailing = self.updateAutoIndent(p)
-            #@nonl
-            #@-node:ekr.20051026171121:<< handle newline >>
-            #@nl
-        elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
-            self.updateAutomatchBracket(p,w,ch,oldSel)
-        elif ch: # Null chars must not delete the selection.
-            i,j = oldSel
-            if i != j: w.delete(i,j)
-            w.insert(i,ch)
-        if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-            return # The hook claims to have handled the event.
-        # Update the text and handle undo.
-        if not newSel: newSel = g.app.gui.getTextSelection(w)
-        newText = w.get('1.0','end')
-        #@    << remove extra Trailing newlines >>
-        #@+node:ekr.20051026143009:<< remove extra Trailing newlines >>
-        #@+at 
-        #@nonl
-        # Tk will add a newline only if:
-        # 1. A real change has been made to the Tk.Text widget, and
-        # 2. the change did _not_ result in the widget already containing a 
-        # newline.
-        # 
-        # It's not possible to tell, given the information available, what Tk 
-        # has actually done. We need only make a reasonable guess here.   
-        # setUndoTypingParams stores the number of trailing newlines in each 
-        # undo bead, so whatever we do here can be faithfully undone and 
-        # redone.
-        #@-at
-        #@@c
-        new = newText ; old = oldText
-        
-        if removeTrailing != None:
-            pass # Use the value returned from updateAutoIndent.
-        elif len(new) == 0 or new[-1] != '\n':
-            # There is no newline to remove.  Probably will never happen.
-            removeTrailing = False
-        elif len(old) == 0:
-            # Ambigous case.  Formerly always returned False.
-            if new == "\n\n":
-                removeTrailing = True # Handle a very strange special case.
-            else:
-                removeTrailing = ch not in ('\r','\n')
-        elif old == new[:-1]:
-            # A single trailing character has been added.
-            removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
-        else:
-            # The text didn't have a newline, and now it does.
-            # Moveover, some other change has been made to the text,
-            # So at worst we have misrepresented the user's intentions slightly.
-            removeTrailing = True
-            
-        if removeTrailing:
-            if len(newText) > 1: newText = newText[:-1]
-            else: newText = ''
-            
-        if 0:
-            if removeTrailing:
-                g.trace('removeTrailing')
-                # g.trace(repr(oldText))
-            # g.trace(repr(newText))
-        #@nonl
-        #@-node:ekr.20051026143009:<< remove extra Trailing newlines >>
-        #@afterref
- # Same logic as always.
-        w.see(w.index('insert'))
-        if newText == oldText:
-            # g.trace('no change')
-            return
+        body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
+        p = c.currentPosition()
+        ch = bodyCtrl.get('insert-1c')
+        newText = bodyCtrl.get('1.0','end')
+        newSel = g.app.gui.getTextSelection(bodyCtrl)
+        if oldText is None: oldText = p.bodyString()
+        if removeTrailing is None:
+            removeTrailing = self.removeTrailingNewlines(oldText,newText,ch)
+        if removeTrailing and newText:
+            newText = newText[:-1]
+        # g.trace(removeTrailing,repr(ch),repr(newText))
         c.undoer.setUndoTypingParams(p,undoType,
-            orignalText or oldText,newText,oldSel,newSel,oldYview)
+            oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)
         p.v.setTnodeText(newText)
-        p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+        p.v.t.insertSpot = body.getInsertionPoint()
         #@    << recolor the body >>
         #@+node:ekr.20051026083733.6:<< recolor the body >>
-        self.frame.scanForTabWidth(p)
-        
-        # incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-        
-        incremental = not self.forceFullRecolorFlag
-        self.frame.body.recolor_now(p,incremental=incremental)
+        body.colorizer.interrupt()
+        c.frame.scanForTabWidth(p)
+        body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
         self.forceFullRecolorFlag = False
         #@nonl
         #@-node:ekr.20051026083733.6:<< recolor the body >>
@@ -2558,149 +2418,66 @@ class leoTkinterBody (leoFrame.leoBody):
         #@    << redraw the screen if necessary >>
         #@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
         redraw_flag = False
-        c.beginUpdate()
-        try:
-            # Update dirty bits.
-            # p.setDirty() sets all cloned and @file dirty bits.
-            if not p.isDirty() and p.setDirty():
-                redraw_flag = True
-                
-            # Update icons.  p.v.iconVal may not exist during unit tests.
-            val = p.computeIcon()
-            if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-                p.v.iconVal = val
-                redraw_flag = True
-        finally:
-            # Redraw only if necessary.
-            c.endUpdate(redraw_flag) 
+        
+        # Update dirty bits.
+        # p.setDirty() sets all cloned and @file dirty bits.
+        if not p.isDirty() and p.setDirty():
+            redraw_flag = True
+            
+        # Update icons. p.v.iconVal may not exist during unit tests.
+        val = p.computeIcon()
+        if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+            p.v.iconVal = val
+            redraw_flag = True
+        
+        if redraw_flag:
+            c.redraw_now()
         #@nonl
         #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
         #@nl
-        g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     #@nonl
-    #@+node:ekr.20051027172949:updateAutomatchBracket
-    def updateAutomatchBracket (self,p,w,ch,oldSel):
-        
-        # assert ch in ('(',')','[',']','{','}')
-        
-        c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
-        language = d.get('language')
-        
-        if ch in ('(','[','{',):
-            automatch = language not in ('plain',)
-            if automatch:
-                ch = ch + {'(':')','[':']','{':'}'}.get(ch)
-            if i != j:
-                w.delete(i,j)
-            w.insert(i,ch)
-            if automatch:
-                w.mark_set('insert','insert-1c')
-        else:
-            ch2 = w.get('insert')
-            if ch2 in (')',']','}'):
-                w.mark_set('insert','insert+1c')
+    #@+node:ekr.20051026143009:removeTrailingNewlines
+    #@+at 
+    #@nonl
+    # Tk will add a newline only if:
+    # 1. A real change has been made to the Tk.Text widget, and
+    # 2. the change did _not_ result in the widget already containing a 
+    # newline.
+    # 
+    # It's not possible to tell, given the information available, what Tk has 
+    # actually
+    # done. We need only make a reasonable guess here. setUndoTypingParams 
+    # stores the
+    # number of trailing newlines in each undo bead, so whatever we do here 
+    # can be
+    # faithfully undone and redone.
+    #@-at
+    #@@c
+    
+    def removeTrailingNewlines (self,old,new,ch):
+    
+        '''Return True if a Tk has erroneously added a trailing newline.'''
+    
+        if not new.endswith('\n'):
+            # There is no newline to remove.  Probably will never happen.
+            return False
+        elif not old:
+            # Ambigous case.  Formerly always returned False.
+            if new == "\n\n":
+                return True # Handle a very strange special case.
             else:
-                if i != j:
-                    w.delete(i,j)
-                w.insert(i,ch)
-    #@nonl
-    #@-node:ekr.20051027172949:updateAutomatchBracket
-    #@+node:ekr.20051026171121.1:udpateAutoIndent
-    # By David McNab:
-    def updateAutoIndent (self,p):
-    
-        c = self.c
-        d = g.scanDirectives(c,p)
-        tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
-        s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-        # Add the leading whitespace to the present line.
-        junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
-        if s and len(s) > 0 and s [ -1] == ':':
-            # For Python: increase auto-indent after colons.
-            if self.colorizer.scanColorDirectives(p) == "python":
-                width += abs(tab_width)
-        if c.config.getBool("smart_auto_indent"):
-            # Determine if prev line has unclosed parens/brackets/braces
-            brackets = [width] ; tabex = 0
-            for i in range(0,len(s)):
-                if s [i] == '\t':
-                    tabex += tab_width-1
-                if s [i] in '([{':
-                    brackets.append(i+tabex+1)
-                elif s [i] in '}])' and len(brackets) > 1:
-                    brackets.pop()
-            width = brackets.pop()
-        ws = g.computeLeadingWhitespace(width,tab_width)
-        if ws:
-            c.frame.bodyCtrl.insert("insert",ws)
-            removeTrailing = False
+                return ch not in ('\r','\n')
+        elif old == new[:-1]:
+            # A single trailing character has been added.
+            return ch not in ('\r','\n') # Was False.
         else:
-            removeTrailing = None
-        return removeTrailing
+            # The text didn't have a newline, and now it does.
+            # Moveover, some other change has been made to the text,
+            # So at worst we have misrepresented the user's intentions slightly.
+            return True
     #@nonl
-    #@-node:ekr.20051026171121.1:udpateAutoIndent
-    #@+node:ekr.20051026092433:updateTab
-    def updateTab (self,p,w):
-    
-        c = self.c
-        d = g.scanDirectives(c,p)
-        tab_width = d.get("tabwidth",c.tab_width)
-        
-        i,j = g.app.gui.getTextSelection(w)
-        if i != j:
-            w.delete(i,j)
-        if tab_width > 0:
-            w.insert("insert",'\t')
-        else:
-            # Get the preceeding characters.
-            s = w.get("insert linestart","insert")
-        
-            # Compute n, the number of spaces to insert.
-            width = g.computeWidth(s,tab_width)
-            n = abs(tab_width) - (width % abs(tab_width))
-            w.insert("insert",' ' * n)
-    #@nonl
-    #@-node:ekr.20051026092433:updateTab
-    #@+node:ekr.20051026092433.1:updateBackspace
-    def updateBackspace (self,p,w):
-        
-        c = self.c
-        d = g.scanDirectives(c,p)
-        tab_width = d.get("tabwidth",c.tab_width)
-        
-        i,j = g.app.gui.getTextSelection(w)
-        if i != j:
-            w.delete(i,j)
-        elif tab_width > 0:
-            w.delete('insert-1c')
-        else:
-            #@        << backspace with negative tab_width >>
-            #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
-            s = prev = w.get("insert linestart","insert")
-            n = len(prev)
-            abs_width = abs(tab_width)
-            
-            # Delete up to this many spaces.
-            n2 = (n % abs_width) or abs_width
-            n2 = min(n,n2) ; count = 0
-            
-            while n2 > 0:
-                n2 -= 1
-                ch = prev[n-count-1]
-                if ch != ' ': break
-                else: count += 1
-            
-            # Make sure we actually delete something.
-            w.delete("insert -%dc" % (max(1,count)),"insert")
-            #@nonl
-            #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
-            #@nl
-    #@nonl
-    #@-node:ekr.20051026092433.1:updateBackspace
-    #@-node:ekr.20051026083733:updateBody (new in 4.4a2)
-    #@-others
-    #@nonl
-    #@-node:ekr.20031218072017.1320:body key handlers
+    #@-node:ekr.20051026143009:removeTrailingNewlines
+    #@-node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
     #@+node:ekr.20031218072017.3999:forceRecolor
     def forceFullRecolor (self):
         

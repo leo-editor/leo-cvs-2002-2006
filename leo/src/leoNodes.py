@@ -280,12 +280,16 @@ class baseTnode (object):
         return self.bodyString
     #@nonl
     #@-node:EKR.20040625161602:getBody
-    #@+node:ekr.20031218072017.3326:hasBody
+    #@+node:ekr.20031218072017.3326:t.hasBody
     def hasBody (self):
+        
+        '''Return True if this tnode contains body text.'''
     
-        return self.bodyString and len(self.bodyString) > 0
+        s = self.bodyString
+    
+        return s and len(s) > 0
     #@nonl
-    #@-node:ekr.20031218072017.3326:hasBody
+    #@-node:ekr.20031218072017.3326:t.hasBody
     #@+node:ekr.20031218072017.3327:Status bits
     #@+node:ekr.20031218072017.3328:isDirty
     def isDirty (self):

@@ -515,7 +515,7 @@ class leoFind:
     
         # Update the selection for the next match.
         gui.setSelectionRangeWithLength(t,start,len(self.change_text))
-        newSel = gui.getTextSelection(t)
+        ## newSel = gui.getTextSelection(t)
         c.frame.widgetWantsFocus(t)
     
         c.beginUpdate()
@@ -525,7 +525,7 @@ class leoFind:
             if self.in_headline:
                 c.frame.tree.onHeadChanged(p,'Change')
             else:
-                c.frame.body.onBodyChanged(p,'Change',oldSel=oldSel,newSel=newSel)
+                c.frame.body.onBodyChanged('Change',oldSel=oldSel)
             c.frame.tree.drawIcon(p) # redraw only the icon.
         finally:
             c.endUpdate(False) # No redraws here: they would destroy the headline selection.

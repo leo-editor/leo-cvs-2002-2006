@@ -601,7 +601,7 @@ class leoMenu:
             ("Cu&t",f.OnCutFromMenu), 
             ("Cop&y",f.OnCopyFromMenu),
             ("&Paste",f.OnPasteFromMenu),
-            ("&Delete",c.delete),
+            ("&Delete",c.editCommands.backwardDeleteCharacter),
             ("Select &All",f.body.selectAllText),
             ("-",None),
         ]

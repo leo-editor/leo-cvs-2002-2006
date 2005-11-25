@@ -1243,26 +1243,6 @@ class baseCommands:
     #@-node:ekr.20031218072017.2819:File Menu
     #@+node:ekr.20031218072017.2861:Edit Menu...
     #@+node:ekr.20031218072017.2862:Edit top level
-    #@+node:ekr.20031218072017.2863:delete
-    def delete(self):
-    
-        c = self ; p = c.currentPosition()
-        body = c.frame.body
-        w = body.bodyCtrl.focus_get()
-        
-        # Don't assume the body has focus.
-        if w == body.bodyCtrl:
-            oldSel = body.getTextSelection()
-            body.deleteTextSelection()
-            body.onBodyChanged(p,"Delete",oldSel=oldSel)
-        else:
-            # Assume we are changing a headline...
-            # This works even if the assumption is incorrect.
-            start,end=g.app.gui.getTextSelection(w)
-            g.app.gui.replaceSelectionRangeWithText(w,start,end,'')
-            c.frame.tree.onHeadChanged(p,'Delete')
-    #@nonl
-    #@-node:ekr.20031218072017.2863:delete
     #@+node:ekr.20031218072017.2140:c.executeScript
     def executeScript(self,p=None,script=None,
         useSelectedText=True,define_g=True,define_name='',silent=False):
@@ -2431,7 +2411,6 @@ class baseCommands:
     def insertBodyTime (self):
         
         c = self ; undoType = 'Insert Body Time'
-        p = c.currentPosition()
         
         if g.app.batchMode:
             c.notValidInBatchMode(undoType)
@@ -2442,7 +2421,7 @@ class baseCommands:
         s = self.getTime(body=True)
     
         c.frame.body.insertAtInsertPoint(s)
-        c.frame.body.onBodyChanged(p,undoType,oldSel=oldSel)
+        c.frame.body.onBodyChanged(undoType,oldSel=oldSel)
     #@nonl
     #@+node:ekr.20031218072017.1832:getTime
     def getTime (self,body=True):
@@ -2581,7 +2560,7 @@ class baseCommands:
     starting with "@". Paragraph is selected by position of current insertion
     cursor."""
     
-        c = self ; body = c.frame.body ; p = c.currentPosition()
+        c = self ; body = c.frame.body
         
         if g.app.batchMode:
             c.notValidInBatchMode("xxx")
@@ -2658,7 +2637,7 @@ class baseCommands:
             
             changed = original != head + result + tail
             undoType = g.choose(changed,"Reformat Paragraph",None)
-            body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
+            body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
             
             # Advance the selection to the next paragraph.
             newSel = sel_end, sel_end
@@ -2685,7 +2664,7 @@ class baseCommands:
             body.setTextSelection(oldSel)
     
         # This handles the undo.
-        body.onBodyChanged(p,undoType,oldSel=oldSel,oldYview=oldYview)
+        body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
     
         # Update the changed mark and icon.
         c.beginUpdate()
@@ -3055,12 +3034,13 @@ class baseCommands:
         dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
         c.setChanged(True)
         u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-        c.editPosition(p) # Do this after before the redraw first.
-        c.selectPosition(p)
+        if 0:
+            c.editPosition(p)
+            c.selectPosition(p)
        
         if redraw_flag:
             c.redraw_now()
-            c.editPosition(p) # Do this again after the redraw so p.edit_widget() will succeed.
+            c.editPosition(p)
             
         return p # for mod_labels plugin.
     #@nonl
