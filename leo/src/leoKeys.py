@@ -1136,9 +1136,9 @@ class keyHandlerClass:
             c.setFocusHelper()
             return 'break'
         else:
-            val = c.editCommands.selfInsertCommand(event)
+            val = k.handleDefaultChar(event)
             c.setFocusHelper()
-            return val #  Temp:  eventually, should always return'break
+            return val
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction
     def callStateFunction (self,event):
@@ -1176,6 +1176,28 @@ class keyHandlerClass:
         return func
     #@nonl
     #@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+    #@+node:ekr.20051026083544:handleDefaultChar
+    def handleDefaultChar(self,event):
+        
+        c = self.c
+        ch = event and event.char
+        w = event and event.widget
+        name = w and hasattr(w,'_name') and w._name or ''
+       
+        if name.startswith('body'):
+            # For Leo 4.4a4: allow Tk defaults.
+            # But this is dangerous, and should be removed.
+            return c.editCommands.selfInsertCommand(event)
+        elif name.startswith('head'):
+            g.trace("can't happen: %s" % (name),color='red')
+            c.frame.tree.updateHead(event,w)
+            return 'break'
+        else:
+            # Let tkinter handle the event.
+            # g.trace('to tk:',name,repr(ch))
+            return None
+    #@nonl
+    #@-node:ekr.20051026083544:handleDefaultChar
     #@-node:ekr.20050920085536.65: masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
     def fullCommand (self,event,specialStroke=None,specialFunc=None):

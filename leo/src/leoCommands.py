@@ -3034,10 +3034,6 @@ class baseCommands:
         dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
         c.setChanged(True)
         u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-        if 0:
-            c.editPosition(p)
-            c.selectPosition(p)
-       
         if redraw_flag:
             c.redraw_now()
             c.editPosition(p)

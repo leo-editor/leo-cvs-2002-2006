@@ -1880,29 +1880,23 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20051125080855:selfInsertCommand
     def selfInsertCommand(self,event):
         
+        '''Insert a character in the body pane.'''
+        
         c = self.c ; p = c.currentPosition()
         ch = event and event.char or ''
         w = event and event.widget
         name = w and hasattr(w,'_name') and w._name or ''
-        
-        if name.startswith('head'):
-            g.trace("can't happen: %s" % (name),color='red')
-            c.frame.tree.updateHead(event,w)
-            return 'break'
-        elif not name.startswith('body'):
-            # Let tkinter handle the event.
-            # g.trace('to tk:',name,repr(ch))
-            return None
-            
         oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
         oldText = name.startswith('body') and p.bodyString()
         removeTrailing = None # A signal to compute it later.
         undoType = 'Typing'
+        
+        g.trace(repr(ch))
             
         if ch == '\t':
             removeTrailing = self.updateTab(p,w)
         elif ch == '\b':
-            # This is correct: we only come here if there no bindngs for these keys. 
+            # This is correct: we only come here if there no bindngs for this key. 
             self.backwardDeleteCharacter(event)
         elif ch in ('\r','\n'):
             ch = '\n'
@@ -1929,16 +1923,12 @@ class editCommandsClass (baseEditCommandsClass):
             if i != j: w.delete(i,j)
             w.insert(i,ch)
         else:
-            return 'break'
+            return None 
     
         # Update the text and handle undo.
         newText = w.get('1.0','end')
         w.see(w.index('insert'))
-        if newText == oldText:
-            # g.trace('no change')
-            return 'break'
-        else:
-            # g.trace(repr(newText))
+        if newText != oldText:
             c.frame.body.onBodyChanged(undoType=undoType,
                 oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
         return 'break'
@@ -2026,8 +2016,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051026092433:updateTab
     #@-node:ekr.20051125080855:selfInsertCommand
     #@+node:ekr.20051026092433.1:backwardDeleteCharacter
-    # Was updateBackspace
-    
     def backwardDeleteCharacter (self,event=None):
         
         c = self.c ; p = c.currentPosition()
@@ -2045,7 +2033,6 @@ class editCommandsClass (baseEditCommandsClass):
             elif tab_width > 0:
                 w.delete('insert-1c')
             else:
-                g.trace('neg tab width')
                 #@            << backspace with negative tab_width >>
                 #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
                 s = prev = w.get("insert linestart","insert")
@@ -2082,8 +2069,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051026092433.1:backwardDeleteCharacter
     #@+node:ekr.20050920084036.87:deleteNextChar
     def deleteNextChar (self,event):
-        
-        g.trace()
     
         c = self.c ; body = c.frame.body ; p = c.currentPosition()
         w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
