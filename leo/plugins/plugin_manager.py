@@ -145,9 +145,11 @@ except ImportError:
 ok = g is not None
 if ok:
     try:
-        Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-        Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-        sets = g.importExtension('sets',  pluginName=__name__,verbose=True)
+        Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True,required=True)
+        Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True,required=True)
+        sets = g.importExtension('sets',  pluginName=__name__,verbose=True,required=True)
+    except SystemExit:
+        raise
     except Exception:
         import sys
         s = 'plugins_manager.py: %s: %s' % (sys.exc_type,sys.exc_value)

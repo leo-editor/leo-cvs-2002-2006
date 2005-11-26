@@ -63,8 +63,8 @@ import string
 import threading
 import weakref
 
-Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True,required=True)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True,required=True)
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl

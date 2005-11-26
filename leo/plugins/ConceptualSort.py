@@ -93,8 +93,8 @@ __version__ = "0.4"
 import leoGlobals as g
 import leoPlugins
 
-Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True,required=True)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True,required=True)
 
 import weakref
 #@nonl

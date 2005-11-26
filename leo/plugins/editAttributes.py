@@ -21,9 +21,8 @@ import leoPlugins
 import leoGlobals as g
 import leoTkinterFrame    
 
-Pmw = g.importExtension('Pmw',    pluginName=__name__,verbose=True)
-
-
+Pmw = g.importExtension('Pmw',pluginName=__name__,verbose=True,required=True)
+#@nonl
 #@-node:mork.20041018162155.2:<< imports >>
 #@nl
 
