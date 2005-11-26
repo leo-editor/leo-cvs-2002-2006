@@ -26,159 +26,16 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 
-- Run Pychecker
+Before a4:
 
-- Backspace is deleting too much in the Find panel.
-
+- Update screen shots
+- Improve docs of show context find option.
 - unit test for <Delete> key.
 - Unit tests for arrow keys.
-#@+node:ekr.20051123055200:Allow multiple bindings to the same command
-#@-node:ekr.20051123055200:Allow multiple bindings to the same command
+#@nonl
 #@+node:ekr.20051121070436:before a5
-#@+node:ekr.20051121070552:Add Cmds menu
-#@-node:ekr.20051121070552:Add Cmds menu
-#@+node:ekr.20051103094005:Fix bugs
-#@+node:ekr.20051103093034:Fix problems applying settings
-#@+node:ekr.20051103093034.1:Report
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3389810
-By: vpe
-
-There is still a problem with applying in-file settings when opening outline
-with a @settings from another outline.
-These file specific settings are not applied when the outline is opened from
-another outline for the first time. They are now applied when the file is opened
-2nd time from the same outline.
-
-The settings I tested are:
-@language target_language = plain
-@color body_text_background_color = pink
-
-Leo 4.4 alpha 1, build  1.303 , October 15, 2005
-Python 2.4.2, Tk 8.4.7, win32
-#@nonl
-#@-node:ekr.20051103093034.1:Report
-#@-node:ekr.20051103093034:Fix problems applying settings
-#@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
-#@+node:ekr.20051104152338.1:Report
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3413805
-By: nobody
-
-I thought this might be for 4.4a2, but I see the same effect w/ 
-Leo 4.3.3, build  1.282 , September 17, 2005
-Python 2.3.5, Tk 8.4.7, win32
-
-I haven't used Leo for code, but just started to try to re-organize some Perl
-I inherited.
-
-Leo apears to remove sentinels, AND preceding newlines, so the effect is something
-like this:
-
-.... some code....
-
-   next line;
-}
-#@verbatim
-#@ leo sentinel here...
-#
-
-    If  ( something ) {
-      more code;
-......
-
-becomes:
-
-.... some code....
-
-   next line;
-} If  ( something ) {
-      more code;
-......
-
-Now, that may be annoying, but mildly so - it still runs.
-When this:
-
-#
-#@verbatim
-#@ sentinel
-if () {
-
-turns to this:
-
-# if() {
-
-code just breaks.
-#@nonl
-#@-node:ekr.20051104152338.1:Report
-#@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
-#@+node:ekr.20051014152256:Fix long-standing bug in import code
-Improve import code so it handles stufff like this from Ipyton/iplib
-
-### This should *not* terminate the function!
-
-    self.LOGHEAD = Itpl(
-"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
-#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
-#log# opts = $self.rc.opts
-#log# args = $self.rc.args
-#log# It is safe to make manual edits below here.
-#log#-----------------------------------------------------------------------
-""")
-
-- Handle blanks better in imports:
-    - Add tab_width keyword arg to import command.
-    - Convert tabs to blanks if tab width < 0.
-- Ignore position of blank lines wrt sentinels.
-- Ignore (optionally?) underindented blank lines.
-- Use pyclbr to parse Python imports?
-#@nonl
-#@+node:ekr.20040930075711:Handle underindented lines
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "underindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
-#@nonl
-#@-node:ekr.20040930075711:Handle underindented lines
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20051014152256:Fix long-standing bug in import code
-#@+node:ekr.20051112080017:Problem removing script buttons on the mac
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3423121
-By: nobody
-
-Hi! I need help removing script buttons. It says I should right click the ofending
-button. I have a mac and Ctl-click, Command-click, etc doesn't work. What should
-I do?
-
-EKR: This is on the list of unfixable bugs, but I have a hard time believing there is no workaround.
-#@nonl
-#@-node:ekr.20051112080017:Problem removing script buttons on the mac
-#@-node:ekr.20051103094005:Fix bugs
+#@+node:ekr.20051123055200:*** Allow multiple bindings to the same command
+#@-node:ekr.20051123055200:*** Allow multiple bindings to the same command
 #@+node:ekr.20051017111216:Fix bugs in commands
 #@+node:ekr.20051120181015:To do
 @nocolor
@@ -314,7 +171,7 @@ def indentRelative (self,event):
     indentation point then applicable is used. If no indentation point is
     applicable even then whitespace equivalent to a single tab is inserted.'''
     
-    c = self.c ; undoType = 'Indent Relative' ; p = c.currentPosition()
+    c = self.c ; undoType = 'Indent Relative'
     
     k = self.k ; w = event.widget
     i = w.index('insert')
@@ -1297,6 +1154,189 @@ else:
 #@-node:ekr.20051005160923:<< handle plain search >>
 #@-node:ekr.20050920084036.219:findNextMatch
 #@-node:ekr.20051017111216:Fix bugs in commands
+#@+node:ekr.20050928144501:Expand commands to handle Leo environment
+* Traditional Emacs commands must be generalized to handle the more complex
+envirnoment Leo offers. For example, search commands must be told whether to
+limit the search a single node, or a node or and its descendents, or the entire
+outline.
+
+    - Expand 'point' so it indicates node as well as text location.
+    - Allow Leo options (e.g. search options) in Emacs commands.
+    - (Maybe) a default-search-command.
+    - Implement set-variable command that sets a (Python) variable using an emacs-style variable name.
+    
+* At present, there are two versions of some operations, the traditional Leo way and the Emacs way.  Some simplification is needed.
+
+* Many more commands are needed to support 'mouseless-Leo'.
+    - The user must be able to set Emacs and Leo options from the keyboard.
+    - The user must be able to drive all dialogs from the keyboard,
+      **or to get the same effect without using a dialog at all**.
+
+- Expand names for some Leo commands  new -> new-outline, etc.
+
+- Emacs search commands are limited to a single node.
+
+- There should be a method for the 'check-spelling' command. (use button code)
+
+- cycle-active-pane and cycle-active-widget (in a single pane) commands.
+
+- create-tab, clear-tab commands, etc.
+    These might get the tab name from the minibuffer...
+#@nonl
+#@-node:ekr.20050928144501:Expand commands to handle Leo environment
+#@+node:ekr.20051021074728:Space completion
+#@-node:ekr.20051021074728:Space completion
+#@-node:ekr.20051121070436:before a5
+#@+node:ekr.20051027105304:before b1
+- Review the posting about making positions permanent, or recording vnode
+indicies. It's probably time to do this.
+
+- Make sure there is some way of executing script find/changes.
+#@nonl
+#@+node:ekr.20051121070552:Add Cmds menu
+#@-node:ekr.20051121070552:Add Cmds menu
+#@+node:ekr.20051103094005:Fix bugs
+#@+node:ekr.20051103093034:Fix problems applying settings
+#@+node:ekr.20051103093034.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3389810
+By: vpe
+
+There is still a problem with applying in-file settings when opening outline
+with a @settings from another outline.
+These file specific settings are not applied when the outline is opened from
+another outline for the first time. They are now applied when the file is opened
+2nd time from the same outline.
+
+The settings I tested are:
+@language target_language = plain
+@color body_text_background_color = pink
+
+Leo 4.4 alpha 1, build  1.303 , October 15, 2005
+Python 2.4.2, Tk 8.4.7, win32
+#@nonl
+#@-node:ekr.20051103093034.1:Report
+#@-node:ekr.20051103093034:Fix problems applying settings
+#@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@+node:ekr.20051104152338.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3413805
+By: nobody
+
+I thought this might be for 4.4a2, but I see the same effect w/ 
+Leo 4.3.3, build  1.282 , September 17, 2005
+Python 2.3.5, Tk 8.4.7, win32
+
+I haven't used Leo for code, but just started to try to re-organize some Perl
+I inherited.
+
+Leo apears to remove sentinels, AND preceding newlines, so the effect is something
+like this:
+
+.... some code....
+
+   next line;
+}
+#@verbatim
+#@ leo sentinel here...
+#
+
+    If  ( something ) {
+      more code;
+......
+
+becomes:
+
+.... some code....
+
+   next line;
+} If  ( something ) {
+      more code;
+......
+
+Now, that may be annoying, but mildly so - it still runs.
+When this:
+
+#
+#@verbatim
+#@ sentinel
+if () {
+
+turns to this:
+
+# if() {
+
+code just breaks.
+#@nonl
+#@-node:ekr.20051104152338.1:Report
+#@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@+node:ekr.20051014152256:Fix long-standing bug in import code
+Improve import code so it handles stufff like this from Ipyton/iplib
+
+### This should *not* terminate the function!
+
+    self.LOGHEAD = Itpl(
+"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
+#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
+#log# opts = $self.rc.opts
+#log# args = $self.rc.args
+#log# It is safe to make manual edits below here.
+#log#-----------------------------------------------------------------------
+""")
+
+- Handle blanks better in imports:
+    - Add tab_width keyword arg to import command.
+    - Convert tabs to blanks if tab width < 0.
+- Ignore position of blank lines wrt sentinels.
+- Ignore (optionally?) underindented blank lines.
+- Use pyclbr to parse Python imports?
+#@nonl
+#@+node:ekr.20040930075711:Handle underindented lines
+@nocolor
+
+Leo can't represent some files using nodes!
+
+I call this the "underindented blank line" problem.
+
+Example:
+
+@color
+
+class aClass:
+    def spam(): pass
+# comment line
+    def eggs(): pass
+    
+@nocolor
+
+Leo's import code can't handle this:
+    
+- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
+
+- Having the comment line stop the scanning of aClass is even worse.
+
+- This usually shows up with an unindented blank line instead of the comment line.
+#@nonl
+#@-node:ekr.20040930075711:Handle underindented lines
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20051014152256:Fix long-standing bug in import code
+#@+node:ekr.20051112080017:Problem removing script buttons on the mac
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3423121
+By: nobody
+
+Hi! I need help removing script buttons. It says I should right click the ofending
+button. I have a mac and Ctl-click, Command-click, etc doesn't work. What should
+I do?
+
+EKR: This is on the list of unfixable bugs, but I have a hard time believing there is no workaround.
+#@nonl
+#@-node:ekr.20051112080017:Problem removing script buttons on the mac
+#@-node:ekr.20051103094005:Fix bugs
 #@+node:ekr.20051028061611.1:** Unify all search commands
 #@+node:ekr.20051112075511:Idea for improving search command code
 @nocolor
@@ -2254,45 +2294,6 @@ Apply incremental search commands to headlines.  This might be fast, but is it u
 #@nonl
 #@-node:ekr.20051012053017.4:Search improvements
 #@-node:ekr.20051028061611.1:** Unify all search commands
-#@+node:ekr.20050928144501:Expand commands to handle Leo environment
-* Traditional Emacs commands must be generalized to handle the more complex
-envirnoment Leo offers. For example, search commands must be told whether to
-limit the search a single node, or a node or and its descendents, or the entire
-outline.
-
-    - Expand 'point' so it indicates node as well as text location.
-    - Allow Leo options (e.g. search options) in Emacs commands.
-    - (Maybe) a default-search-command.
-    - Implement set-variable command that sets a (Python) variable using an emacs-style variable name.
-    
-* At present, there are two versions of some operations, the traditional Leo way and the Emacs way.  Some simplification is needed.
-
-* Many more commands are needed to support 'mouseless-Leo'.
-    - The user must be able to set Emacs and Leo options from the keyboard.
-    - The user must be able to drive all dialogs from the keyboard,
-      **or to get the same effect without using a dialog at all**.
-
-- Expand names for some Leo commands  new -> new-outline, etc.
-
-- Emacs search commands are limited to a single node.
-
-- There should be a method for the 'check-spelling' command. (use button code)
-
-- cycle-active-pane and cycle-active-widget (in a single pane) commands.
-
-- create-tab, clear-tab commands, etc.
-    These might get the tab name from the minibuffer...
-#@nonl
-#@-node:ekr.20050928144501:Expand commands to handle Leo environment
-#@+node:ekr.20051021074728:Space completion
-#@-node:ekr.20051021074728:Space completion
-#@-node:ekr.20051121070436:before a5
-#@+node:ekr.20051027105304:before b1
-- Review the posting about making positions permanent, or recording vnode
-indicies. It's probably time to do this.
-
-- Make sure there is some way of executing script find/changes.
-#@nonl
 #@+node:ekr.20051012054228:Vim mode (k.vimMode)
 - k.vimMode controls whether full-command keeps mini-buffer open after a command complete.
 
@@ -17164,7 +17165,7 @@ def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
 
-    f = self ; c = f.c
+    f = self ; c = f.c ; p = c.currentPosition()
     w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
     if name.startswith('body'):
@@ -17178,7 +17179,7 @@ def OnCutFromMenu (self):
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(p,'Cut')
-
+#@nonl
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
@@ -20484,7 +20485,7 @@ def OnCutFromMenu (self):
     
     ''' Called **only** when invoked using the menu instead of a shortcut.'''
 
-    f = self ; c = f.c
+    f = self ; c = f.c ; p = c.currentPosition()
     w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
 
     if name.startswith('body'):
@@ -20498,7 +20499,7 @@ def OnCutFromMenu (self):
         # Necessary
         w.event_generate(g.virtual_event_name("Cut"))
         f.tree.onHeadChanged(p,'Cut')
-
+#@nonl
 #@-node:ekr.20051011072049.1:OnCutFromMenu
 #@+node:ekr.20051011072903.4:OnPasteFromMenu
 def OnPasteFromMenu (self):
