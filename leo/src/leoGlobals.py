@@ -898,7 +898,7 @@ def alert(message):
     tkMessageBox.showwarning("Alert", message)
 #@-node:ekr.20031218072017.3105:alert
 #@+node:ekr.20051023083258:callers
-def callers (n=3,excludeCaller=True):
+def callers (n=None,excludeCaller=True):
     
     '''Return a list containing the callers of the function that called g.callerList.
     
@@ -906,6 +906,9 @@ def callers (n=3,excludeCaller=True):
     which is what is wanted when using g.trace.'''
     
     result = []
+    
+    if n is None:
+        n = g.top().config.getInt('default_callers_level') or 3
     
     while n > 0:
         s = g.callerName(n)
