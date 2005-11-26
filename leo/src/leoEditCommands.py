@@ -1059,7 +1059,8 @@ class editCommandsClass (baseEditCommandsClass):
             'scroll-down':          self.scrollDown,
             'scroll-up':            self.scrollUp,
             'select-paragraph':     self.selectParagraph,
-            'self-insert-command':  self.selfInsertCommand,
+            # Exists, but can not be executed via the minibuffer.
+            # 'self-insert-command':  self.selfInsertCommand,
             'set-comment-column':   self.setCommentColumn,
             'set-fill-column':      self.setFillColumn,
             'set-fill-prefix':      self.setFillPrefix,
@@ -1880,7 +1881,9 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20051125080855:selfInsertCommand
     def selfInsertCommand(self,event):
         
-        '''Insert a character in the body pane.'''
+        '''Insert a character in the body pane.
+        
+        This is the default binding for all keys in the body pane.'''
         
         c = self.c ; p = c.currentPosition()
         ch = event and event.char or ''
@@ -1890,8 +1893,6 @@ class editCommandsClass (baseEditCommandsClass):
         oldText = name.startswith('body') and p.bodyString()
         removeTrailing = None # A signal to compute it later.
         undoType = 'Typing'
-        
-        g.trace(repr(ch))
             
         if ch == '\t':
             removeTrailing = self.updateTab(p,w)
@@ -2023,7 +2024,6 @@ class editCommandsClass (baseEditCommandsClass):
         name = w and hasattr(w,'_name') and w._name or ''
         oldText = w.get('1.0','end')
         i,j = oldSel = g.app.gui.getTextSelection(w)
-        undoType = 'Typing'
       
         if name.startswith('body'):
             d = g.scanDirectives(c,p)
@@ -2056,15 +2056,10 @@ class editCommandsClass (baseEditCommandsClass):
                 #@nl
             newText = w.get('1.0','end')
             newSel = w.index('insert')
-            c.frame.body.onBodyChanged(undoType=undoType,
+            c.frame.body.onBodyChanged(undoType='Typing',
                 oldSel=oldSel,oldText=oldText,oldYview=None)
         else:
-            try: # w may not be a text widget:
-                if i != j:
-                    w.delete(i,j)
-                else:
-                    w.delete('insert-1c')
-            except Exception: pass
+            pass # Let Tk handle it
     #@nonl
     #@-node:ekr.20051026092433.1:backwardDeleteCharacter
     #@+node:ekr.20050920084036.87:deleteNextChar
@@ -2073,36 +2068,41 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; body = c.frame.body ; p = c.currentPosition()
         w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
         oldText = w.get('1.0','end')
-        
-        if body.hasTextSelection():
-            oldSel = body.getTextSelection()
-            body.deleteTextSelection()
-        else:
-            i = w.index('insert')
-            oldSel = (i,i)
-            g.trace(i)
-            w.delete(i,'%s +1c' % i)
-        
-        # Don't assume the body has focus.
+    
         if name.startswith('body'):
-            body.onBodyChanged("Delete",oldSel=oldSel,oldText=oldText)
-        elif name.startswith('head'):
-            c.frame.tree.onHeadChanged(p,'Delete')
+            if body.hasTextSelection():
+                oldSel = body.getTextSelection()
+                body.deleteTextSelection()
+            else:
+                i = w.index('insert')
+                oldSel = (i,i)
+                w.delete(i,'%s +1c' % i)
+            body.onBodyChanged('Typing',oldSel=oldSel,oldText=oldText)
+        else:
+            pass # Let Tk deal with it.
     #@nonl
     #@-node:ekr.20050920084036.87:deleteNextChar
     #@+node:ekr.20050920084036.135:deleteSpaces
     def deleteSpaces (self,event,insertspace=False):
     
-        k = self.k ; w = event.widget
+        c = self.c
+        w = event and event.widget or g.app.gui.get_focus(c.frame)
+        name = w and hasattr(w,'_name') and w._name or ''
         char = w.get('insert','insert + 1c ')
         if not char.isspace(): return
         
-        i = w.index('insert')
-        wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-        wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
-        if '' in (wf,wb): return
-        w.delete('%s +1c' % wb,wf)
-        if insertspace: w.insert('insert',' ')
+        if name.startswith('body'):
+            oldText = w.get('1.0','end')
+            oldSel = g.app.gui.getTextSelection(w)
+            i = w.index('insert')
+            wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+            wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
+            if '' in (wf,wb): return
+            w.delete('%s +1c' % wb,wf)
+            if insertspace: w.insert('insert',' ')
+            
+            c.frame.body.onBodyChanged(undoType='delete-spaces',
+                oldSel=oldSel,oldText=oldText,oldYview=None)
     #@nonl
     #@-node:ekr.20050920084036.135:deleteSpaces
     #@+node:ekr.20050920084036.141:removeBlankLines
