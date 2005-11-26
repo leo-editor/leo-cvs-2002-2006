@@ -2896,6 +2896,102 @@ def pasteIntoWidget (self,s,w):
    
 #@nonl
 #@-node:ekr.20051120091258:pasteIntoWidget
+#@+node:ekr.20051125081431.1:No longer used re key handling
+#@+node:ekr.20051026083733:updateBody (no longer used)
+def updateBody (self,event,w,undoType,
+    oldSel=None,oldYview=None,newSel=None,oldText=None):
+
+    '''Update Leo after the body have been changed.'''
+    
+    # g.trace(g.callers(7))
+    
+    c = self.c ; p = c.currentPosition()
+    ch = event and event.char or ''
+    orignalText = oldText # for use by undo.
+    removeTrailing = None # A signal to compute it later.
+    # g.trace(repr(ch))
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = p.bodyString()
+    if ch == '\t':
+        self.updateTab(p,w)
+    # elif ch == '\b':
+        # # Not strictly correct: we should test for present delete binding...
+        # self.updateBackspace(p,w)
+    elif ch in ('\r','\n'):
+        ch = '\n'
+        << handle newline >>
+    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+        self.updateAutomatchBracket(p,w,ch,oldSel)
+    elif ch: # Null chars must not delete the selection.
+        i,j = oldSel
+        if i != j: w.delete(i,j)
+        w.insert(i,ch)
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return # The hook claims to have handled the event.
+    # Update the text and handle undo.
+    if not newSel: newSel = g.app.gui.getTextSelection(w)
+    newText = w.get('1.0','end')
+    << remove extra Trailing newlines >> # Same logic as always.
+    w.see(w.index('insert'))
+    if newText == oldText:
+        g.trace('no change')
+        return
+    c.undoer.setUndoTypingParams(p,undoType,
+        orignalText or oldText,newText,oldSel,newSel,oldYview)
+    p.v.setTnodeText(newText)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed: c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+#@nonl
+#@-node:ekr.20051026083733:updateBody (no longer used)
+#@+node:ekr.20050929163010:backwardDeleteCharacter
+def backwardDeleteCharacter (self,event=None):
+
+    c = self.c ; body = c.frame.body ; p = c.currentPosition()
+    
+    w = event and event.widget or g.app.gui.get_focus(c.frame)
+    name = w and hasattr(w,'_name') and w._name or ''
+    oldText = w.get('1.0','end')
+    
+    if body.hasTextSelection():
+        oldSel = body.getTextSelection()
+        body.deleteTextSelection()
+    else:
+        i = w.index('insert')
+        g.trace(i)
+        oldSel = (i,i)
+        w.delete('%s-1c' % (i), '%s' % (i))
+    
+    # Don't assume the body has focus.
+    if name.startswith('body'):
+        body.onBodyChanged(p,"Delete",oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        c.frame.tree.onHeadChanged(p,'Delete')
+#@nonl
+#@-node:ekr.20050929163010:backwardDeleteCharacter
+#@+node:ekr.20031218072017.2863:c.delete
+def delete(self):
+
+    c = self ; p = c.currentPosition()
+    body = c.frame.body
+    w = body.bodyCtrl.focus_get()
+    
+    # Don't assume the body has focus.
+    if w == body.bodyCtrl:
+        oldSel = body.getTextSelection()
+        body.deleteTextSelection()
+        body.onBodyChanged(p,"Delete",oldSel=oldSel)
+    else:
+        # Assume we are changing a headline...
+        # This works even if the assumption is incorrect.
+        start,end=g.app.gui.getTextSelection(w)
+        g.app.gui.replaceSelectionRangeWithText(w,start,end,'')
+        c.frame.tree.onHeadChanged(p,'Delete')
+#@nonl
+#@-node:ekr.20031218072017.2863:c.delete
+#@-node:ekr.20051125081431.1:No longer used re key handling
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

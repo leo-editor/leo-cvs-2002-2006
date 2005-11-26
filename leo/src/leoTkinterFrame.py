@@ -2191,7 +2191,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         c = self.c
     
-        if 0: # A *very* effective trace.
+        if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
             name = w and hasattr(w,'_name') and w._name or '<no name>'
             g.trace(name,g.callers(7)) 
     

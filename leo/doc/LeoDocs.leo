@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20050404094627" a="TV"><vh>Settings and buttons</vh>
+<v t="ekr.20050404094627"><vh>Settings and buttons</vh>
 <v t="ekr.20041226081019"><vh>@button Spell</vh></v>
 <v t="ekr.20050812090111"><vh>@button rst3</vh></v>
 <v t="ekr.20050407144417"><vh>@settings</vh>
@@ -1606,7 +1606,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -4657,7 +4657,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -10306,7 +10306,7 @@ show_doc_parts_as_paragraphs = True
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -10737,7 +10737,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -10789,7 +10789,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -10801,6 +10801,7 @@ Front Matter
 ############
 
 .. contents::
+
 </t>
 <t tx="ekr.20040414172218.2">Leo_ has thousands of users_. Like me, many of them would never willingly be without Leo again.
 Here are Leo's essential features:
@@ -13405,7 +13406,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = True
 verbose=True
 @c
@@ -13854,16 +13855,14 @@ You can change these to make them shorter or to avoid conflicts with headlines i
 `rst_prefix`: '\@rst'
 
 `show_headline_prefix`: '\@rst-head'</t>
-<t tx="ekr.20050816073412">.. August 30, 2005
-
-@ @rst-options
+<t tx="ekr.20050816073412">@ @rst-options
 code_mode=False
 generate_rst=True
 http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -14002,7 +14001,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -14913,7 +14912,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -15896,7 +15895,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = True
 verbose=True
 @c
@@ -16806,7 +16805,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -17161,7 +17160,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -17853,7 +17852,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -17922,7 +17921,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -18474,7 +18473,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -18602,7 +18601,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -18643,7 +18642,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -18664,7 +18663,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -18685,7 +18684,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -18711,7 +18710,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -18733,7 +18732,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -19974,7 +19973,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c
@@ -20894,7 +20893,7 @@ http_server_support = False
 show_organizer_nodes=True
 show_headlines=True
 show_leo_directives=True
-.. ..stylesheet_path=c:\prog\leoCVS\leo\doc
+stylesheet_path=..\doc
 write_intermediate_file = False
 verbose=True
 @c

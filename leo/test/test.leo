@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
 <globals body_outline_ratio="0.593037214886">
-	<global_window_position top="62" left="423" height="662" width="842"/>
+	<global_window_position top="53" left="211" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -180,7 +180,7 @@
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
 <v t="ekr.20051121144452.3"><vh>computeWidth</vh></v>
-<v t="ekr.20051121144452.5" a="M"><vh>optimizeLeadingWhitespace</vh></v>
+<v t="ekr.20051121144452.5" a="EM"><vh>optimizeLeadingWhitespace</vh></v>
 <v t="ekr.20051121144452.6" a="E"><vh>regularizeTrailingNewlines</vh></v>
 <v t="ekr.20051121144452.7"><vh>removeLeadingWhitespace</vh></v>
 <v t="ekr.20051121144452.8"><vh>g.removeExtraLws &amp; tests</vh>
@@ -190,11 +190,19 @@
 <v t="ekr.20051121144452.11" a="M"><vh>skip_leading_ws</vh></v>
 <v t="ekr.20051121144452.12"><vh>skip_leading_ws_with_indent</vh></v>
 <v t="ekr.20051121144452.13"><vh>stripBlankLines</vh></v>
+<v t="ekr.20051124071232" a="E"><vh>test brackets</vh></v>
+<v t="ekr.20051124083045"><vh>test no ( or [</vh></v>
+<v t="ekr.20051124082107" a="E"><vh>test long string</vh></v>
+<v t="ekr.20051124094428" a="E"><vh>test long comment</vh></v>
+<v t="ekr.20051124090208"><vh>test not python</vh></v>
 </v>
 <v t="ekr.20051121143509"><vh>@button shorten-lines</vh>
+<v t="ekr.20051124065932"><vh>to do</vh></v>
 <v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
+<v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
 </v>
-<v t="ekr.20051122103633" a="TV"><vh>Test of &lt;Delete&gt; character</vh></v>
+<v t="ekr.20051124133103"><vh>NewHeadline</vh></v>
+<v t="ekr.20051125114421" a="TV"><vh>Print body string</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -3840,32 +3848,36 @@ tab_width = d.get('tabwidth',4)
 
 print '*' * 60
 
-result = []
-for line in g.splitlines(p.bodyString()):
-    i,junk = g.skip_leading_ws_with_indent(line,0,tab_width)
-    lws = line[:i]
-    # g.trace('lws',repr(lws))
-    result.extend(splitLongLine(line,lws,w,tab_width))
+if d.get('language','').lower() == 'python':
+    result = [] ; inComment = False ; inString = False
+    for line in g.splitlines(p.bodyString()):
+        i,junk = g.skip_leading_ws_with_indent(line,0,tab_width)
+        lws = line[:i]
+        # g.trace('lws',repr(lws))
+        result.extend(splitLongLine(line,lws,w,tab_width,inComment,inString))
+    
+    print ''.join(result)
+else:
+    print 'Not Python code'</t>
+<t tx="ekr.20051121143951">@pagewidth 40</t>
+<t tx="ekr.20051121143951.1">def splitLongLine(s,lws,w,tab_width,inComment,inString):
 
-print ''.join(result)</t>
-<t tx="ekr.20051121143951">@pagewidth 30</t>
-<t tx="ekr.20051121143951.1">def splitLongLine(s,lws,w,tab_width):
-    
-    # g.trace(repr(s))
-    
     if not s or g.computeWidth (s,tab_width) &lt; w:
         return [s]
-    
-    i = s.find('(') # j = s.find('[')
-    if i &gt; 0:
-        tab = g.choose(tab_width &lt; 0,' ' * abs(tab_width),'\t')
-        list1 = [s[:i+1]]
-        list2 = splitLongLine(s[i+1:],lws+tab,w,tab_width)
-        list1.append('\n%s%s' % (lws,tab))
-        list1.extend(list2)
-        return list1
+        
+    i,inComment,inString,backslash = chooseBreakPoint(s,w,tab_width,inComment,inString)
+    if i is None: return [s]
+
+    if inComment:
+        tab = ''
     else:
-        return [s] # Not yet: split the line somewhere else.</t>
+        tab = g.choose(tab_width &lt; 0,' ' * abs(tab_width),'\t')
+    comment = g.choose(inComment,'# ','')
+    list1 = [s[:i+1]]
+    list2 = splitLongLine(s[i+1:],lws+tab,w,tab_width,inComment,inString)
+    list1.append('%s\n%s%s%s' % (backslash,lws,comment,tab))
+    list1.extend(list2)
+    return list1</t>
 <t tx="ekr.20051121144452.1">def adjustTripleString (s,tab_width):
     
     '''Remove leading indentation from a triple-quoted string.
@@ -3918,7 +3930,7 @@ def computeWidth (s, tab_width):
 def optimizeLeadingWhitespace (line,tab_width):
 
     i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-    s = g.computeLeadingWhitespace(width,tab_width) + line[i:]
+    s = g.computeLeadingWhitespace(width,tab_width) + line[i:])
     return s</t>
 <t tx="ekr.20051121144452.6">@
 
@@ -4046,8 +4058,70 @@ def skip_leading_ws(s,i,ws,tab_width):
             
     return ''.join(lines)
 </t>
-<t tx="ekr.20051122103633">text
+<t tx="ekr.20051124065932">@
 
-text</t>
+Bug: can't split after opening quote.
+* Handle-triple-quote strings properly.
+** Skip @doc parts.
+- Handle tabs properly when splitting.</t>
+<t tx="ekr.20051124071232">    a = aaaaa [ bbbb ]
+    a = aaaaa ( bbbb )
+    a = aaaaaa(bbbbbb)
+    a = f ( aaa [j] )
+    a = f ( aaa [j ])</t>
+<t tx="ekr.20051124080305">def chooseBreakPoint (s,w,tab_width,inComment,inString):
+    
+    '''Return (i,inComment,inString,backSlash) where::
+    - i is the index at which to break the line.
+    - inComment is True if we are in a comment.
+    - inString is True if we are in a string.
+    - backslash is '\\' if the broken line must end in a backslash'''
+
+    i, i2 = -1,-1 # The index of the rightmost valid breakpoint.
+    for k in xrange(len(s)):
+        ch = s[k]
+        if k &gt;= w and i &gt; -1:
+            break
+        elif inComment:
+            if ch in (' ','\t'): i = k
+        elif ch in ('"',"'"):
+            inString = not inString
+            if not inString:
+                i = max(0,k-1) ; i2 = -1
+        elif inString:
+            if ch in (' ','\t'): i = k
+        else:
+            if ch in ('(','[')  and g.skip_ws(s,k+1) &gt; abs(tab_width):
+                i = k ;  g.trace(k,repr(ch),repr(s))
+            if ch in (' ','\t') and g.skip_ws(s,k) &gt; abs(tab_width):
+                i2 = k ;  g.trace(k,repr(ch),repr(s))
+            if ch == '#':
+                inComment = True ; inString = False; i = k ; i2 = -1
+
+    if i == -1 and i2 == -1:
+        return None,inComment,inString,'' # No break is possible.
+    elif i == -1:
+        # Break at a blank.
+        i2 = max(i2,g.skip_ws(s,i2)-1)
+        return i2,inComment,inString,'\\'
+    elif inComment:
+        i = max(i,g.skip_ws(s,i)-1)
+        return i,True,False,''
+    elif inString:
+        i = max(i,g.skip_ws(s,i)-1)
+        return i,False,True,'\\'
+    else:
+        # Break at a bracket.
+        i = max(i,g.skip_ws(s,i+1)-1)
+        return i,False,False,''</t>
+<t tx="ekr.20051124082107">a = "a long string: b f()"</t>
+<t tx="ekr.20051124083045">    a = bbbb + ccc + ddd + eee</t>
+<t tx="ekr.20051124090208">@language c
+</t>
+<t tx="ekr.20051124094428">    # This is an extremely very very long comment.
+    a = b</t>
+<t tx="ekr.20051124133103">
+</t>
+<t tx="ekr.20051125114421">print repr(p.bodyString())</t>
 </tnodes>
 </leo_file>

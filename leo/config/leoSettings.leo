@@ -72,6 +72,12 @@
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
 </v>
 </v>
+<v t="ekr.20051126062243" a="E"><vh>@page Debugging options</vh>
+<v t="ekr.20051126062243.1" a="TV"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20051126063209"><vh>@int default_callers_level = 7</vh></v>
+</v>
 <v t="ekr.20041119034357.20"><vh>@page Find/Change panel options</vh>
 <v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
 <v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
@@ -127,9 +133,9 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20051123100536" a="E"><vh>@page Plugins settings</vh>
+<v t="ekr.20051123100536"><vh>@page Plugins settings</vh>
 <v t="ekr.20051123100536.1" a="E"><vh>vim plugin</vh>
-<v t="ekr.20051123100536.2" a="TV"><vh>@string vim_cmd = c:\Program Files\vim\vim63\gvim --servername LEO</vh></v>
+<v t="ekr.20051123100536.2"><vh>@string vim_cmd = c:\Program Files\vim\vim63\gvim --servername LEO</vh></v>
 <v t="ekr.20051123100536.3"><vh>@string vim_exe = c:\Program Files\vim\vim63\gvim</vh></v>
 </v>
 </v>
@@ -1385,7 +1391,7 @@ append-to-register          = None
 back-sentence               ! text = Alt-a  # No conflict
 back-to-indentation         = None
 backward-char               ! text = Ctrl-b # No conflict
-backward-delete-char        = None
+backward-delete-char        = BackSpace
 backward-kill-paragraph     = None
 backward-kill-sentence      = None
 backward-kill-word          = Alt-Delete
@@ -1428,15 +1434,13 @@ cycle-focus                 = Alt-Shift-f
 dabbrev-completion          = None
 dabbrev-expands             = None
 de-hoist                    = None
-delete                      = None          # What does this do?
-delete-char                 = None          # Use BackSpace: Too big a conflict with Control-d
+delete-char                 = Delete
 delete-comments             = Ctrl-)
 delete-file                 = None
 delete-indentation          = None
 delete-node                 = Shift-Ctrl-BkSp
 delete-rectangle            = None
 delete-spaces               = Alt-backslash
-delete-text                 = None
 demote                      = Ctrl-}
 diff                        = None
 digit-argument              = None
@@ -1657,6 +1661,7 @@ search-backward             = None
 search-forward              = None
 select-all                  = Shift-Ctrl-A  # Ctrl-A conflicts with beginning-of-line.
 select-paragraph            = None
+self-insert-command         = None      # The default binding for all visible keys.
 set-colors                  = None
 set-comment-column          = None
 set-fill-column             = None
@@ -1839,5 +1844,10 @@ vim_cmd = c:\Program Files\vim\vim64\gvim --servername LEO
     _vim_exe = r"c:\Program Files\vim\vim64\gvim"</t>
 <t tx="ekr.20051123100536.2"></t>
 <t tx="ekr.20051123100536.3"></t>
+<t tx="ekr.20051126062243"></t>
+<t tx="ekr.20051126062243.1"></t>
+<t tx="ekr.20051126062525"></t>
+<t tx="ekr.20051126062830"></t>
+<t tx="ekr.20051126063209"></t>
 </tnodes>
 </leo_file>

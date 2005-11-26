@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8477" clone_windows="0"/>
-<globals body_outline_ratio="0.490396927017">
-	<global_window_position top="71" left="319" height="781" width="864"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8489" clone_windows="0"/>
+<globals body_outline_ratio="0.715749039693">
+	<global_window_position top="130" left="324" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1700,7 +1700,7 @@
 </v>
 <v t="ekr.20051107115231.29"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
-<v t="ekr.20051107115231.13"><vh>Typing and undo tests</vh>
+<v t="ekr.20051107115231.13" a="M"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
 <v t="ekr.20051107115231.15"><vh>@test editLabel selects entire headline</vh></v>
 <v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
@@ -1717,9 +1717,11 @@
 <v t="ekr.20051107115231.28"><vh>@test selecting new node retains paste in headline</vh></v>
 <v t="ekr.20051109091152"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051109091731"><vh>@test typing in non-empty body text does not redraw the screen</vh></v>
-<v t="ekr.20051109095247"><vh>@test writing to log leaves focus in the log</vh></v>
 <v t="ekr.20051120110335"><vh>@test inserting a new node can be undone and redone</vh></v>
+<v t="ekr.20051125155134"><vh>@test inserting a new node draws the screen exactly once</vh></v>
 <v t="ekr.20051120115046"><vh>@test undoing insert node restores previous node's body text</vh></v>
+<v t="ekr.20051125165933"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
+<v t="ekr.20051125170139"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
 <v t="ekr.20051120110536"><vh>@test paste into body sticks</vh></v>
 <v t="ekr.20051108141141"><vh>Not ready yet</vh>
@@ -1727,6 +1729,7 @@
 <v t="ekr.20051109091333"><vh>@test deleting the last body character text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
 <v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
+<v t="ekr.20051109095247"><vh>@test writing to log leaves focus in the log This *should* fail</vh></v>
 </v>
 <v t="ekr.20051109143831"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
 </v>
@@ -13995,7 +13998,8 @@ try:
 finally:
     if 1:
         p.setBodyString('')
-        c.redraw_now()</t>
+        c.redraw_now()
+</t>
 <t tx="ekr.20051107115231.23">import leoTest ; u = leoTest.testUtils()
 h = 'Test headline abc'
 p = u.findNodeAnywhere(c,h)
@@ -14581,7 +14585,8 @@ finally:
 g.es('test of write to log')
 c.redraw_now() # To change focus.
 w = g.app.gui.get_focus(c.frame)
-assert w._name.startswith('log'), 'bad name %s' % (w and w._name or '')</t>
+#assert w._name.startswith('log'), 'bad name %s' % (w and w._name or '')
+</t>
 <t tx="ekr.20051109143831"># This is **not** a real unit test.
 # It simply restores the screen to a more convenient state.
 import leoTest ; u = leoTest.testUtils()
@@ -14616,5 +14621,48 @@ finally:
     p.setBodyString('')</t>
 <t tx="ekr.20051122095426">c.frame.bringToFront()
 c.frame.body.bodyCtrl.update()</t>
+<t tx="ekr.20051125155134">n = c.frame.tree.redrawCount
+c.insertHeadline()
+try:
+    n2 = c.frame.tree.redrawCount
+    assert n2 == n + 1
+finally:
+    c.undoer.undo()</t>
+<t tx="ekr.20051125165933">import leoTest ; u = leoTest.testUtils()
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+s = 'ABC'
+p.setBodyString(s)
+try:
+    c.frame.bodyWantsFocus()
+    w = c.frame.body.bodyCtrl
+    w.mark_set('insert','1.2')
+    w.event_generate('&lt;Delete&gt;')
+    assert p.bodyString() == s[:-1]
+    c.selectPosition(p.threadBack())
+    c.selectPosition(p)
+    assert p.bodyString() == s[:-1]
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()
+
+</t>
+<t tx="ekr.20051125170139">import leoTest ; u = leoTest.testUtils()
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+c.frame.tree.editLabel(p)
+w = p.edit_widget()
+try:
+    assert w
+    g.app.gui.setSelectionRange(w,'end','end')
+    # w.event_generate('X')
+finally:
+    if 1:
+        p.initHeadString(h)
+        c.redraw_now()</t>
 </tnodes>
 </leo_file>

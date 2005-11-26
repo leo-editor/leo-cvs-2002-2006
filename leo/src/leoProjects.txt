@@ -2760,9 +2760,9 @@ def set_focus(self,c,w):
     """Put the focus on the widget."""
     
     if w:
-        if 0:
+        if c.config.getBool('trace_g.app.gui.set_focus'):
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(9))
+            g.trace('GUI',name,g.callers())
             
         if 0:
             w2 = c.frame.outerFrame.focus_get()
@@ -3515,7 +3515,7 @@ def redraw_now (self,scroll=True):
         
     c = self.c
     
-    if 0: # An important trace.
+    if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
@@ -5720,7 +5720,7 @@ def set_focus(self,w):
 
     c = self.c
 
-    if 0: # A *very* effective trace.
+    if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
         name = w and hasattr(w,'_name') and w._name or '<no name>'
         g.trace(name,g.callers(7)) 
 
@@ -5738,9 +5738,9 @@ def set_focus(self,c,w):
     """Put the focus on the widget."""
     
     if w:
-        if 0:
+        if c.config.getBool('trace_g.app.gui.set_focus'):
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(9))
+            g.trace('GUI',name,g.callers())
             
         if 0:
             w2 = c.frame.outerFrame.focus_get()
@@ -5864,7 +5864,7 @@ def set_focus(self,w):
 
     c = self.c
 
-    if 0: # A *very* effective trace.
+    if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
         name = w and hasattr(w,'_name') and w._name or '<no name>'
         g.trace(name,g.callers(7)) 
 
@@ -6008,7 +6008,8 @@ def masterCommand (self,event,func,stroke):
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func or stroke != '<Key>'
     
-    # g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+    if c.config.getBool('trace_masterCommand'):
+        g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
 
@@ -6088,7 +6089,7 @@ def callStateFunction (self,event):
     
     k = self ; val = None
     
-    g.trace(k.stateKind,k.state)
+    # g.trace(k.state.kind,k.state)
     
     if k.state.kind:
         if k.state.handler:
@@ -6296,7 +6297,8 @@ def masterCommand (self,event,func,stroke):
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func or stroke != '<Key>'
     
-    # g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+    if c.config.getBool('trace_masterCommand'):
+        g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
 
@@ -6376,7 +6378,7 @@ def callStateFunction (self,event):
     
     k = self ; val = None
     
-    g.trace(k.stateKind,k.state)
+    # g.trace(k.state.kind,k.state)
     
     if k.state.kind:
         if k.state.handler:
@@ -6443,7 +6445,7 @@ def redraw_now (self,scroll=True):
         
     c = self.c
     
-    if 0: # An important trace.
+    if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
@@ -7264,7 +7266,7 @@ def set_focus(self,w):
 
     c = self.c
 
-    if 0: # A *very* effective trace.
+    if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
         name = w and hasattr(w,'_name') and w._name or '<no name>'
         g.trace(name,g.callers(7)) 
 
@@ -7281,9 +7283,9 @@ def set_focus(self,c,w):
     """Put the focus on the widget."""
     
     if w:
-        if 0:
+        if c.config.getBool('trace_g.app.gui.set_focus'):
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(9))
+            g.trace('GUI',name,g.callers())
             
         if 0:
             w2 = c.frame.outerFrame.focus_get()
@@ -7483,7 +7485,7 @@ def redraw_now (self,scroll=True):
         
     c = self.c
     
-    if 0: # An important trace.
+    if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
@@ -8141,7 +8143,8 @@ def masterCommand (self,event,func,stroke):
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func or stroke != '<Key>'
     
-    # g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+    if c.config.getBool('trace_masterCommand'):
+        g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
 
@@ -8221,7 +8224,7 @@ def callStateFunction (self,event):
     
     k = self ; val = None
     
-    g.trace(k.stateKind,k.state)
+    # g.trace(k.state.kind,k.state)
     
     if k.state.kind:
         if k.state.handler:
@@ -8594,7 +8597,7 @@ def redraw_now (self,scroll=True):
         
     c = self.c
     
-    if 0: # An important trace.
+    if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers(9))
         
     # Do the actual redraw.
@@ -10348,7 +10351,8 @@ def masterCommand (self,event,func,stroke):
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func or stroke != '<Key>'
     
-    # g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+    if c.config.getBool('trace_masterCommand'):
+        g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
 
@@ -10428,7 +10432,7 @@ def callStateFunction (self,event):
     
     k = self ; val = None
     
-    g.trace(k.stateKind,k.state)
+    # g.trace(k.state.kind,k.state)
     
     if k.state.kind:
         if k.state.handler:
@@ -10571,7 +10575,7 @@ def set_focus(self,w):
 
     c = self.c
 
-    if 0: # A *very* effective trace.
+    if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
         name = w and hasattr(w,'_name') and w._name or '<no name>'
         g.trace(name,g.callers(7)) 
 
@@ -10589,9 +10593,9 @@ def set_focus(self,c,w):
     """Put the focus on the widget."""
     
     if w:
-        if 0:
+        if c.config.getBool('trace_g.app.gui.set_focus'):
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(9))
+            g.trace('GUI',name,g.callers())
             
         if 0:
             w2 = c.frame.outerFrame.focus_get()
@@ -11423,7 +11427,7 @@ def set_focus(self,w):
 
     c = self.c
 
-    if 0: # A *very* effective trace.
+    if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
         name = w and hasattr(w,'_name') and w._name or '<no name>'
         g.trace(name,g.callers(7)) 
 
@@ -11441,9 +11445,9 @@ def set_focus(self,c,w):
     """Put the focus on the widget."""
     
     if w:
-        if 0:
+        if c.config.getBool('trace_g.app.gui.set_focus'):
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(9))
+            g.trace('GUI',name,g.callers())
             
         if 0:
             w2 = c.frame.outerFrame.focus_get()
@@ -13929,9 +13933,9 @@ def set_focus(self,c,w):
     """Put the focus on the widget."""
     
     if w:
-        if 0:
+        if c.config.getBool('trace_g.app.gui.set_focus'):
             name = hasattr(w,'_name') and w._name or '<no name>'
-            g.trace('GUI',name,g.callers(9))
+            g.trace('GUI',name,g.callers())
             
         if 0:
             w2 = c.frame.outerFrame.focus_get()
@@ -14015,1005 +14019,6 @@ If this is consistent w/ what other's are experiencing, could we get it updated
 in CVS too?
 #@nonl
 #@-node:ekr.20051123083338:Added setting for vim plugin
-#@+node:ekr.20051125110301:(Refactored key handling)
-#@+node:ekr.20051122133732: Report
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3436900
-By: nobody
-
->'Undo delete char'
-another can of worms.
-select a char, hit del key.
-same with shift del
-it deletes, but no undo.
-^X puts Undo Cut as the event.
-Edit->delete puts undo delete
-I said undo delete char to make it clearer.
-
-I realize the granularity and exact method
-some of which don't generate an undo event
-all interact to make things hard to reproduce.
-I have the default granularity as delivered.
-
-too much flexibility is sometimes a curse.
-redo delete should not still be available
-after you click on it.
-it seems then to be rewinding past the last event.
-I didn't verify ^Z acts correctly in all cases.
-
-e
-#@nonl
-#@-node:ekr.20051122133732: Report
-#@+node:ekr.20051001051355:Dispatching...
-#@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
-
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
-
-    k = self ; c = k.c
-    c.startRedrawCount = c.frame.tree.redrawCount
-    k.stroke = stroke # Set this global for general use.
-    keysym = event and event.keysym or ''
-    ch = event and event.char or ''
-    k.func = func
-    k.funcReturn = None # For unit testing.
-    commandName = k.ultimateFuncName(func)
-    special = keysym in (
-        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '<Key>'
-    
-    # g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
-
-    # if interesting: g.trace(stroke,commandName,k.getStateKind())
-
-    inserted = not special or (
-        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
-
-    if inserted:
-        # g.trace(stroke,keysym)
-        << add character to history >>
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
-
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName)
-        return 'break'
-
-    if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-            c.setFocusHelper()
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
-
-    if k.regx.iter:
-        try:
-            k.regXKey = keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
-
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
-
-    if func: # Func is an argument.
-        # g.trace('executing func',commandName)
-        # forceFocus = func.__name__ != 'leoCallback'
-        # if forceFocus: c.frame.bodyWantsFocus()
-        val = func(event)
-        k.funcReturn = k.funcReturn or val # For unit tests.
-        k.endCommand(event,commandName)
-        c.setFocusHelper()
-        return 'break'
-    else:
-        val = k.handleDefaultChar(event)
-        c.setFocusHelper()
-        return val
-#@nonl
-#@+node:ekr.20050920085536.67:<< add character to history >>
-# Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,keysym)
-
-if len(ch) > 0:
-    if len(keyHandlerClass.lossage) > 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,ch)
-
-if 0: # traces
-    g.trace(keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)
-#@nonl
-#@-node:ekr.20050920085536.67:<< add character to history >>
-#@+node:ekr.20050923172809.1:callStateFunction
-def callStateFunction (self,event):
-    
-    k = self ; val = None
-    
-    g.trace(k.stateKind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            val = k.state.handler(event)
-            if val != 'continue':
-                k.endCommand(event,k.commandName)
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')
-            
-    return val
-#@nonl
-#@-node:ekr.20050923172809.1:callStateFunction
-#@+node:ekr.20050923174229.3:callKeystrokeFunction (not used)
-def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName)
-    
-    return func
-#@nonl
-#@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
-#@+node:ekr.20051026083544:handleDefaultChar
-def handleDefaultChar(self,event):
-    
-    c = self.c
-    ch = event and event.char
-    w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
-   
-    if name.startswith('body'):
-        # For Leo 4.4a4: allow Tk defaults.
-        # But this is dangerous, and should be removed.
-        return c.editCommands.selfInsertCommand(event)
-    elif name.startswith('head'):
-        g.trace("can't happen: %s" % (name),color='red')
-        c.frame.tree.updateHead(event,w)
-        return 'break'
-    else:
-        # Let tkinter handle the event.
-        # g.trace('to tk:',name,repr(ch))
-        return None
-#@nonl
-#@-node:ekr.20051026083544:handleDefaultChar
-#@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
-def fullCommand (self,event,specialStroke=None,specialFunc=None):
-    
-    '''Handle 'full-command' (alt-x) mode.'''
-
-    k = self ; c = k.c ; state = k.getState('altx')
-    keysym = (event and event.keysym) or ''
-    ch = (event and event.char) or ''
-    # g.trace('state',state,keysym)
-    if state == 0:
-        k.completionFocusWidget = g.app.gui.get_focus(c.frame)
-        k.setState('altx',1,handler=k.fullCommand) 
-        k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
-        # Init mb_ ivars. This prevents problems with an initial backspace.
-        k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
-        k.mb_tabList = [] ; k.mb_tabListIndex = -1
-    elif keysym == 'Return':
-        c.frame.log.deleteTab('Completion')
-        c.frame.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
-        k.callAltXFunction(event)
-    elif keysym == 'Tab':
-        k.doTabCompletion(c.commandsDict.keys())
-    elif keysym == 'BackSpace':
-        k.doBackSpace(c.commandsDict.keys())
-    elif ch not in string.printable:
-        if specialStroke:
-            g.trace(specialStroke)
-            specialFunc()
-    else:
-        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
-        k.mb_tabList = []
-        k.updateLabel(event)
-        k.mb_tabListPrefix = k.getLabel()
-        c.frame.minibufferWantsFocus()
-        # g.trace('new prefix',k.mb_tabListPrefix)
-    if keysym != 'Return':
-        c.frame.minibufferWantsFocus()
-    return 'break'
-#@+node:ekr.20050920085536.45:callAltXFunction
-def callAltXFunction (self,event):
-    
-    k = self ; c = k.c ; s = k.getLabel()
-    k.mb_tabList = []
-    commandName = s[len(k.mb_prefix):].strip()
-    func = c.commandsDict.get(commandName)
-
-    # These must be done *after* getting the command.
-    k.clearState()
-    k.resetLabel()
-
-    if func:
-        if commandName != 'repeat-complex-command':
-            k.mb_history.insert(0,commandName)
-        # if command in k.x_hasNumeric: func(event,aX)
-        func(event)
-        k.endCommand(event,commandName)
-    else:
-        k.setLabel('Command does not exist: %s' % commandName)
-#@nonl
-#@-node:ekr.20050920085536.45:callAltXFunction
-#@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
-#@+node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
-def quickCommand (self,event):
-    
-    '''Handle 'quick-command' (control-c) mode.'''
-    
-    k = self ; stroke = k.stroke ; state = k.getState('quick-command')
-    
-    if state == 0:
-        k.setState('quick-command',1,handler=k.quickCommand)
-        k.setLabelBlue('quick command: ',protect=True)
-    else:
-        k.previous.insert(0,event.keysym)
-        if len(k.previous) > 10: k.previous.pop()
-        
-        # g.trace('stroke',stroke,event.keysym)
-        if stroke == '<Key>' and event.keysym == 'r':
-            k.rCommand(event)
-        elif stroke in ('<Key>','<Escape>'):
-            if k.processKey(event): # Weird command-specific stuff.
-                k.clearState()
-        elif stroke in k.xcommands:
-            k.clearState()
-            k.xcommands [stroke](event)
-
-        k.endCommand(event,stroke)
-        
-    return 'break'
-#@nonl
-#@+node:ekr.20051004102314:rCommand
-def rCommand (self,event):
-    
-    k = self ; state = k.getState('r-command') ; ch = event.keysym
-    if state == 0:
-        k.setLabel ('quick-command r: ',protect=True)
-        k.setState('r-command',1,k.rCommand)
-    elif ch in ('Control_L','Alt_L','Shift_L'):
-        return
-    else:
-        k.clearState()
-        
-        # g.trace(repr(ch))
-        func = k.rCommandDict.get(ch)
-        if func:
-            k.commandName = 'quick-command r: '
-            k.resetLabel()
-            func(event)
-        else:
-            k.setLabelGrey('Unknown r command: %s' % repr(ch))
-#@nonl
-#@-node:ekr.20051004102314:rCommand
-#@+node:ekr.20050923183943.4:processKey
-def processKey (self,event):
-    
-    '''Handle special keys in quickCommand mode.
-    Return True if we should exit quickCommand mode.'''
-
-    k = self ; c = k.c ; previous = k.previous
-    
-    if event.keysym in ('Shift_L','Shift_R'): return False
-    # g.trace(event.keysym)
-
-    func = k.variety_commands.get(event.keysym)
-    if func:
-        k.keyboardQuit(event)
-        func(event)
-        return True
-
-    if event.keysym in ('a','i','e'):
-        if k.processAbbreviation(event):
-            return False # 'a e' or 'a i e' typed.
-        
-    if event.keysym == 'g': # Execute the abbreviation in the minibuffer.
-        s = k.getLabel(ignorePrompt=True)
-        if k.abbreviationFuncDict.has_key(s):
-            k.clearState()
-            k.keyboardQuit(event)
-            k.abbreviationFuncDict [s](event)
-            return True
-    
-    if event.keysym == 'e': # Execute the last macro.
-        k.keyboardQuit(event)
-        c.macroCommands.callLastKeyboardMacro(event)
-        return True
-
-    if event.keysym == 'x' and previous [1] not in ('Control_L','Control_R'):
-        event.keysym = 's'
-        k.setState('quick-command',1)
-        c.registerCommands.setNextRegister(event)
-        return True
-
-    if event.keysym == 'Escape' and len(previous) > 1 and previous [1] == 'Escape':
-        k.repeatComplexCommand(event)
-        return True
-        
-    else:
-        return False
-#@nonl
-#@+node:ekr.20050923183943.6:processAbbreviation
-def processAbbreviation (self,event):
-    
-    '''Handle a e or a i e.
-    Return True when the 'e' has been seen.'''
-    
-    k = self ; char = event.char
-
-    if k.getLabel() != 'a' and event.keysym == 'a':
-        k.setLabel('a')
-        return False
-
-    elif k.getLabel() == 'a':
-
-        if char == 'i':
-            k.setLabel('a i')
-            return False
-        elif char == 'e':
-            event.char = ''
-            k.expandAbbrev(event)
-            return True
-            
-    return False
-#@nonl
-#@-node:ekr.20050923183943.6:processAbbreviation
-#@-node:ekr.20050923183943.4:processKey
-#@-node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
-#@+node:ekr.20051001050607:endCommand
-def endCommand (self,event,commandName):
-
-    '''Make sure Leo updates the widget following a command.
-    
-    Never changes the minibuffer label: individual commands must do that.
-    '''
-
-    k = self ; c = k.c
-    # The command may have closed the window.
-    if g.app.quitting or not hasattr(c,'currentPosition'): return
-
-    # Set the best possible undoType: prefer explicit commandName to k.commandName.
-    commandName = commandName or k.commandName or ''
-    k.commandName = k.commandName or commandName or ''
-    if commandName:
-        bodyCtrl = c.frame.body.bodyCtrl
-        if not k.inState():
-            __pychecker__ = '--no-classattr --no-objattrs'
-                # initAllEditCommanders *does* exist.
-            k.commandName = None
-            leoEditCommands.initAllEditCommanders(c)
-            try:
-                bodyCtrl.tag_delete('color')
-                bodyCtrl.tag_delete('color1')
-            except Exception:
-                pass
-        if 0: # Do *not* call this by default.  It interferes with undo.
-            c.frame.body.onBodyChanged(undoType='Typing')
-#@nonl
-#@-node:ekr.20051001050607:endCommand
-#@-node:ekr.20051001051355:Dispatching...
-#@+node:EKR.20040526090701.4:undoTyping
-def undoTyping (self):
-    
-    u = self ; c = u.c ; current = c.currentPosition()
-    
-    # g.trace('oldSel',u.oldSel)
-
-    # selectPosition causes recoloring, so don't do this unless needed.
-    if current != u.p:
-        c.selectPosition(u.p)
-    elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
-        c.frame.body.forceFullRecolor()
-
-    self.undoRedoText(
-        u.p,u.leading,u.trailing,
-        u.oldMiddleLines,u.newMiddleLines,
-        u.oldNewlines,u.newNewlines,
-        tag="undo",undoType=u.undoType)
-
-    if u.oldSel:
-        c.frame.bodyWantsFocus()
-        c.frame.body.setTextSelection(u.oldSel)
-    if u.yview:
-        c.frame.bodyWantsFocus()
-        c.frame.body.setYScrollPosition(u.yview)
-#@nonl
-#@-node:EKR.20040526090701.4:undoTyping
-#@+node:ekr.20031218072017.1493:undoRedoText
-# Handle text undo and redo.
-# The terminology is for undo: converts _new_ text into _old_ text.
-
-def undoRedoText (self,p,
-    leading,trailing, # Number of matching leading & trailing lines.
-    oldMidLines,newMidLines, # Lists of unmatched lines.
-    oldNewlines,newNewlines, # Number of trailing newlines.
-    tag="undo", # "undo" or "redo"
-    undoType=None):
-        
-    __pychecker__ = '--no-argsused' # newNewlines is unused, but it has symmetry.
-
-    u = self ; c = u.c ; body = c.frame.body
-    << Incrementally update the Tk.Text widget >>
-    << Compute the result using p's body text >>
-    p.setTnodeText(result)
-    << Get textResult from the Tk.Text widget >>
-    if textResult == result:
-        c.frame.body.recolor(p,incremental=False)
-    else: # Rewrite the pane and do a full recolor.
-        if 0:
-            << print mismatch trace >>
-        p.setBodyStringOrPane(result)
-#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-# Only update the changed lines.
-mid_text = string.join(oldMidLines,'\n')
-new_mid_len = len(newMidLines)
-# Maybe this could be simplified, and it is good to treat the "end" with care.
-if trailing == 0:
-    c.frame.body.deleteLine(leading)
-    if leading > 0:
-        c.frame.body.insertAtEnd('\n')
-    c.frame.body.insertAtEnd(mid_text)
-else:
-    if new_mid_len > 0:
-        c.frame.body.deleteLines(leading,new_mid_len)
-    elif leading > 0:
-        c.frame.body.insertAtStartOfLine(leading,'\n')
-    c.frame.body.insertAtStartOfLine(leading,mid_text)
-# Try to end the Tk.Text widget with oldNewlines newlines.
-# This may be off by one, and we don't care because
-# we never use body text to compute undo results!
-s = c.frame.body.getAllText()
-newlines = 0 ; i = len(s) - 1
-while i >= 0 and s[i] == '\n':
-    newlines += 1 ; i -= 1
-# g.trace(newlines,oldNewlines)
-while newlines > oldNewlines:
-    c.frame.body.deleteLastChar()
-    newlines -= 1
-if oldNewlines > newlines:
-    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
-#@nonl
-#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-#@+node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
-# Recreate the text using the present body text.
-body = p.bodyString()
-body = g.toUnicode(body,"utf-8")
-body_lines = body.split('\n')
-s = []
-if leading > 0:
-    s.extend(body_lines[:leading])
-if len(oldMidLines) > 0:
-    s.extend(oldMidLines)
-if trailing > 0:
-    s.extend(body_lines[-trailing:])
-s = string.join(s,'\n')
-# Remove trailing newlines in s.
-while len(s) > 0 and s[-1] == '\n':
-    s = s[:-1]
-# Add oldNewlines newlines.
-if oldNewlines > 0:
-    s = s + '\n' * oldNewlines
-result = s
-
-if u.debug_print:
-    print "body:  ",body
-    print "result:",result
-#@nonl
-#@-node:ekr.20031218072017.1495:<< Compute the result using p's body text >>
-#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-textResult = c.frame.body.getAllText()
-
-if textResult != result:
-    # Remove the newline from textResult if that is the only difference.
-    if len(textResult) > 0 and textResult[:-1] == result:
-        textResult = result
-#@nonl
-#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
-print "undo mismatch"
-print "expected:",result
-print "actual  :",textResult
-#@nonl
-#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
-#@-node:ekr.20031218072017.1493:undoRedoText
-#@+node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
-# This is the only key handler for the body pane.
-def onBodyChanged (self,undoType,oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
-    
-    '''Update Leo after the body has been changed.'''
-    
-    body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
-    p = c.currentPosition()
-    ch = bodyCtrl.get('insert-1c')
-    newText = bodyCtrl.get('1.0','end')
-    newSel = g.app.gui.getTextSelection(bodyCtrl)
-    if oldText is None: oldText = p.bodyString()
-    if removeTrailing is None:
-        removeTrailing = self.removeTrailingNewlines(oldText,newText,ch)
-    if removeTrailing and newText:
-        newText = newText[:-1]
-    # g.trace(removeTrailing,repr(ch),repr(newText))
-    c.undoer.setUndoTypingParams(p,undoType,
-        oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)
-    p.v.setTnodeText(newText)
-    p.v.t.insertSpot = body.getInsertionPoint()
-    << recolor the body >>
-    if not c.changed: c.setChanged(True)
-    << redraw the screen if necessary >>
-#@nonl
-#@+node:ekr.20051026083733.6:<< recolor the body >>
-body.colorizer.interrupt()
-c.frame.scanForTabWidth(p)
-body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
-self.forceFullRecolorFlag = False
-#@nonl
-#@-node:ekr.20051026083733.6:<< recolor the body >>
-#@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-redraw_flag = False
-
-# Update dirty bits.
-# p.setDirty() sets all cloned and @file dirty bits.
-if not p.isDirty() and p.setDirty():
-    redraw_flag = True
-    
-# Update icons. p.v.iconVal may not exist during unit tests.
-val = p.computeIcon()
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-if redraw_flag:
-    c.redraw_now()
-#@nonl
-#@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-#@+node:ekr.20051026143009:removeTrailingNewlines
-@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
-
-It's not possible to tell, given the information available, what Tk has actually
-done. We need only make a reasonable guess here. setUndoTypingParams stores the
-number of trailing newlines in each undo bead, so whatever we do here can be
-faithfully undone and redone.
-@c
-
-def removeTrailingNewlines (self,old,new,ch):
-
-    '''Return True if a Tk has erroneously added a trailing newline.'''
-
-    if not new.endswith('\n'):
-        # There is no newline to remove.  Probably will never happen.
-        return False
-    elif not old:
-        # Ambigous case.  Formerly always returned False.
-        if new == "\n\n":
-            return True # Handle a very strange special case.
-        else:
-            return ch not in ('\r','\n')
-    elif old == new[:-1]:
-        # A single trailing character has been added.
-        return ch not in ('\r','\n') # Was False.
-    else:
-        # The text didn't have a newline, and now it does.
-        # Moveover, some other change has been made to the text,
-        # So at worst we have misrepresented the user's intentions slightly.
-        return True
-#@nonl
-#@-node:ekr.20051026143009:removeTrailingNewlines
-#@-node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
-#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
-#@+node:ekr.20051011072903.2:copyText
-def copyText (self):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c ; w = f.getFocus()
-    
-    w.event_generate(g.virtual_event_name("Copy"))
-#@nonl
-#@-node:ekr.20051011072903.2:copyText
-#@+node:ekr.20051011072049.2:cutText
-def cutText (self):
-    
-    '''Invoked from the mini-buffer and from shortcuts.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
-        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-    else:
-        # Important: cut from headline is *not* undoable.
-        # Only the entire edit is undoable.
-        # Do **not** call w.event_generate.
-        pass
-#@nonl
-#@-node:ekr.20051011072049.2:cutText
-#@+node:ekr.20051011072903.5:pasteText
-def pasteText (self):
-
-    '''Paste the clipboard into a widget.'''
-
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    if name.startswith('head'):
-        # Important: this paste is not undoable!
-        # Only the entire edit is undoable.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        while s and s [ -1] in ('\n','\r'):
-            s = s [: -1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-    else: pass
-#@nonl
-#@-node:ekr.20051011072903.5:pasteText
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Copy"))
-        w.update()
-        f.body.onBodyChanged('Copy')
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-    
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
-        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(p,'Cut')
-
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition(),'Paste')
-        c.redraw_now()
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
-#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
-#@+node:ekr.20050920084036.85:insert & delete...
-#@+node:ekr.20051125080855:selfInsertCommand
-def selfInsertCommand(self,event):
-    
-    '''Insert a character in the body pane.'''
-    
-    c = self.c ; p = c.currentPosition()
-    ch = event and event.char or ''
-    w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
-    oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
-    oldText = name.startswith('body') and p.bodyString()
-    removeTrailing = None # A signal to compute it later.
-    undoType = 'Typing'
-    
-    g.trace(repr(ch))
-        
-    if ch == '\t':
-        removeTrailing = self.updateTab(p,w)
-    elif ch == '\b':
-        # This is correct: we only come here if there no bindngs for this key. 
-        self.backwardDeleteCharacter(event)
-    elif ch in ('\r','\n'):
-        ch = '\n'
-        << handle newline >>
-    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
-        self.updateAutomatchBracket(p,w,ch,oldSel)
-    elif ch: # Null chars must not delete the selection.
-        i,j = oldSel
-        if i != j: w.delete(i,j)
-        w.insert(i,ch)
-    else:
-        return None 
-
-    # Update the text and handle undo.
-    newText = w.get('1.0','end')
-    w.see(w.index('insert'))
-    if newText != oldText:
-        c.frame.body.onBodyChanged(undoType=undoType,
-            oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
-    return 'break'
-#@nonl
-#@+node:ekr.20051026171121:<< handle newline >>
-i,j = oldSel
-
-if i != j:
-    # No auto-indent if there is selected text.
-    w.delete(i,j)
-    w.insert(i,ch)
-else:
-    w.insert(i,ch)
-    if c.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-        # No auto-indent if in @nocolor mode or after a Change command.
-        removeTrailing = self.updateAutoIndent(p)
-#@nonl
-#@-node:ekr.20051026171121:<< handle newline >>
-#@+node:ekr.20051027172949:updateAutomatchBracket
-def updateAutomatchBracket (self,p,w,ch,oldSel):
-    
-    # assert ch in ('(',')','[',']','{','}')
-    
-    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
-    language = d.get('language')
-    
-    if ch in ('(','[','{',):
-        automatch = language not in ('plain',)
-        if automatch:
-            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
-        if i != j:
-            w.delete(i,j)
-        w.insert(i,ch)
-        if automatch:
-            w.mark_set('insert','insert-1c')
-    else:
-        ch2 = w.get('insert')
-        if ch2 in (')',']','}'):
-            w.mark_set('insert','insert+1c')
-        else:
-            if i != j:
-                w.delete(i,j)
-            w.insert(i,ch)
-#@nonl
-#@-node:ekr.20051027172949:updateAutomatchBracket
-#@+node:ekr.20051026171121.1:udpateAutoIndent
-# By David McNab:
-def updateAutoIndent (self,p):
-
-    c = self.c ; d = g.scanDirectives(c,p)
-    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
-    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # Add the leading whitespace to the present line.
-    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) > 0 and s [ -1] == ':':
-        # For Python: increase auto-indent after colons.
-        if c.frame.body.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if c.config.getBool("smart_auto_indent"):
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width] ; tabex = 0
-        for i in range(0,len(s)):
-            if s [i] == '\t':
-                tabex += tab_width-1
-            if s [i] in '([{':
-                brackets.append(i+tabex+1)
-            elif s [i] in '}])' and len(brackets) > 1:
-                brackets.pop()
-        width = brackets.pop()
-    ws = g.computeLeadingWhitespace(width,tab_width)
-    if ws:
-        c.frame.bodyCtrl.insert("insert",ws)
-        removeTrailing = False
-    else:
-        removeTrailing = None
-    return removeTrailing
-#@nonl
-#@-node:ekr.20051026171121.1:udpateAutoIndent
-#@+node:ekr.20051026092433:updateTab
-def updateTab (self,p,w):
-
-    c = self.c ; d = g.scanDirectives(c,p)
-    tab_width = d.get("tabwidth",c.tab_width)
-    
-    i,j = g.app.gui.getTextSelection(w)
-    if i != j:
-        w.delete(i,j)
-    if tab_width > 0:
-        w.insert("insert",'\t')
-    else:
-        # Get the preceeding characters.
-        s = w.get("insert linestart","insert")
-    
-        # Compute n, the number of spaces to insert.
-        width = g.computeWidth(s,tab_width)
-        n = abs(tab_width) - (width % abs(tab_width))
-        w.insert("insert",' ' * n)
-#@nonl
-#@-node:ekr.20051026092433:updateTab
-#@-node:ekr.20051125080855:selfInsertCommand
-#@+node:ekr.20051026092433.1:backwardDeleteCharacter
-def backwardDeleteCharacter (self,event=None):
-    
-    c = self.c ; p = c.currentPosition()
-    w = event and event.widget or g.app.gui.get_focus(c.frame)
-    name = w and hasattr(w,'_name') and w._name or ''
-    oldText = w.get('1.0','end')
-    i,j = oldSel = g.app.gui.getTextSelection(w)
-    undoType = 'Typing'
-  
-    if name.startswith('body'):
-        d = g.scanDirectives(c,p)
-        tab_width = d.get("tabwidth",c.tab_width)
-        if i != j:
-            w.delete(i,j)
-        elif tab_width > 0:
-            w.delete('insert-1c')
-        else:
-            << backspace with negative tab_width >>
-        newText = w.get('1.0','end')
-        newSel = w.index('insert')
-        c.frame.body.onBodyChanged(undoType=undoType,
-            oldSel=oldSel,oldText=oldText,oldYview=None)
-    else:
-        try: # w may not be a text widget:
-            if i != j:
-                w.delete(i,j)
-            else:
-                w.delete('insert-1c')
-        except Exception: pass
-#@nonl
-#@+node:ekr.20051026092746:<< backspace with negative tab_width >>
-s = prev = w.get("insert linestart","insert")
-n = len(prev)
-abs_width = abs(tab_width)
-
-# Delete up to this many spaces.
-n2 = (n % abs_width) or abs_width
-n2 = min(n,n2) ; count = 0
-
-while n2 > 0:
-    n2 -= 1
-    ch = prev[n-count-1]
-    if ch != ' ': break
-    else: count += 1
-
-# Make sure we actually delete something.
-w.delete("insert -%dc" % (max(1,count)),"insert")
-#@nonl
-#@-node:ekr.20051026092746:<< backspace with negative tab_width >>
-#@-node:ekr.20051026092433.1:backwardDeleteCharacter
-#@+node:ekr.20050920084036.87:deleteNextChar
-def deleteNextChar (self,event):
-
-    c = self.c ; body = c.frame.body ; p = c.currentPosition()
-    w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
-    oldText = w.get('1.0','end')
-    
-    if body.hasTextSelection():
-        oldSel = body.getTextSelection()
-        body.deleteTextSelection()
-    else:
-        i = w.index('insert')
-        oldSel = (i,i)
-        g.trace(i)
-        w.delete(i,'%s +1c' % i)
-    
-    # Don't assume the body has focus.
-    if name.startswith('body'):
-        body.onBodyChanged("Delete",oldSel=oldSel,oldText=oldText)
-    elif name.startswith('head'):
-        c.frame.tree.onHeadChanged(p,'Delete')
-#@nonl
-#@-node:ekr.20050920084036.87:deleteNextChar
-#@+node:ekr.20050920084036.135:deleteSpaces
-def deleteSpaces (self,event,insertspace=False):
-
-    k = self.k ; w = event.widget
-    char = w.get('insert','insert + 1c ')
-    if not char.isspace(): return
-    
-    i = w.index('insert')
-    wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-    wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
-    if '' in (wf,wb): return
-    w.delete('%s +1c' % wb,wf)
-    if insertspace: w.insert('insert',' ')
-#@nonl
-#@-node:ekr.20050920084036.135:deleteSpaces
-#@+node:ekr.20050920084036.141:removeBlankLines
-def removeBlankLines (self,event):
-    
-    '''The remove-blank-lines command removes lines containing nothing but
-    whitespace. If there is a text selection, only lines within the selected
-    text are affected; otherwise all blank lines in the selected node are
-    affected.'''
-    
-    c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
-    result = []
-    body = p.bodyString()
-    hasSelection = c.frame.body.hasTextSelection()
-    
-    if hasSelection:
-        head,lines,tail,oldSel,oldYview = c.getBodyLines()
-        joinChar = '\n'
-    else:
-        head = tail = oldYview = None
-        lines = g.splitLines(body)
-        oldSel = ('1.0','1.0')
-        joinChar = ''
-
-    for line in lines:
-        if line.strip():
-            result.append(line)
-
-    result = joinChar.join(result)
-    
-    if result != body:
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-#@nonl
-#@-node:ekr.20050920084036.141:removeBlankLines
-#@-node:ekr.20050920084036.85:insert & delete...
-#@-node:ekr.20051125110301:(Refactored key handling)
 #@-node:ekr.20051110101524:4.4a4 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
