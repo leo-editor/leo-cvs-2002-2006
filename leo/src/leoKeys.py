@@ -802,14 +802,18 @@ class keyHandlerClass:
             commandName = k.inverseCommandsDict.get(func.__name__)
             
             # No need for a second layer of callback.
-            def keyCallback (event,func=command,stroke=shortcut):
+            def keyCallback1 (event,func=command,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
+                
+            keyCallback = keyCallback1
         else:
             def menuFuncCallback (event,command=command):
                 return command(event)
     
-            def keyCallback (event,func=menuFuncCallback,stroke=shortcut):
+            def keyCallback2 (event,func=menuFuncCallback,stroke=shortcut):
                 return k.masterCommand(event,func,stroke)
+                
+            keyCallback = keyCallback2
             
         return k.bindKey(pane,shortcut,keyCallback,commandName)
     #@nonl
@@ -881,8 +885,9 @@ class keyHandlerClass:
                 def textBindingsRedirectionCallback(event,
                     func=func,widget=widget,commandName=commandName):
                     event.widget = widget
-                    # g.trace(commandName,widget)
+                    # g.trace(commandName,func)
                     func(event)
+                    return None # Allow Tk to handle the event too.
     
                 widget.bind(shortcut,textBindingsRedirectionCallback)
     #@nonl
@@ -1064,7 +1069,8 @@ class keyHandlerClass:
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func or stroke != '<Key>'
         
-        # g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+        if c.config.getBool('trace_masterCommand'):
+            g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
@@ -1145,7 +1151,7 @@ class keyHandlerClass:
         
         k = self ; val = None
         
-        g.trace(k.stateKind,k.state)
+        # g.trace(k.state.kind,k.state)
         
         if k.state.kind:
             if k.state.handler:
