@@ -1844,7 +1844,7 @@ class editCommandsClass (baseEditCommandsClass):
         indentation point then applicable is used. If no indentation point is
         applicable even then whitespace equivalent to a single tab is inserted.'''
         
-        c = self.c ; undoType = 'Indent Relative' ; p = c.currentPosition()
+        c = self.c ; undoType = 'Indent Relative'
         
         k = self.k ; w = event.widget
         i = w.index('insert')
@@ -2054,8 +2054,6 @@ class editCommandsClass (baseEditCommandsClass):
                 #@nonl
                 #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
                 #@nl
-            newText = w.get('1.0','end')
-            newSel = w.index('insert')
             c.frame.body.onBodyChanged(undoType='Typing',
                 oldSel=oldSel,oldText=oldText,oldYview=None)
         else:
@@ -2065,7 +2063,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.87:deleteNextChar
     def deleteNextChar (self,event):
     
-        c = self.c ; body = c.frame.body ; p = c.currentPosition()
+        c = self.c ; body = c.frame.body
         w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
         oldText = w.get('1.0','end')
     

@@ -1829,7 +1829,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         ''' Called **only** when invoked using the menu instead of a shortcut.'''
     
-        f = self ; c = f.c
+        f = self ; c = f.c ; p = c.currentPosition()
         w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
     
         if name.startswith('body'):
@@ -1843,7 +1843,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             # Necessary
             w.event_generate(g.virtual_event_name("Cut"))
             f.tree.onHeadChanged(p,'Cut')
-    
+    #@nonl
     #@-node:ekr.20051011072049.1:OnCutFromMenu
     #@+node:ekr.20051011072903.4:OnPasteFromMenu
     def OnPasteFromMenu (self):
@@ -3391,14 +3391,9 @@ class leoTkinterLog (leoFrame.leoLog):
             
         def tabMenuClickCallback(event):
             self.onClick(event,tabName)
-            
-        def tabMenuFocusInCallback(event):
-            g.trace(tabName)
         
         tab.bind('<Button-1>',tabMenuClickCallback)
         tab.bind('<Button-3>',tabMenuRightClickCallback)
-        
-        # tab.bind('<FocusIn>',tabMenuFocusInCallback)
         #@nonl
         #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
         #@nl

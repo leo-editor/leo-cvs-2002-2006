@@ -1851,7 +1851,7 @@ class leoTkinterTree (leoFrame.leoTree):
         '''Handle a key event in a headline.'''
     
         w = event and event.widget or None
-        ch = event and event.char
+        ch = event and event.char or ''
     
         # Testing for ch here prevents flashing in the headline
         # when the control key is held down.
@@ -1888,8 +1888,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # g.trace(repr(ch),repr(s))
     
         if s.endswith('\n'):
-            if len(s) > 1: s = s[:-1]
-            else:          s = ''
+            s = s[:-1]
     
         if 0: # p does not *officially* change until onHeadChanged is called.
             p.initHeadString(s)

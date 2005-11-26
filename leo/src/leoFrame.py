@@ -167,7 +167,7 @@ class leoBody:
     def initialRatios (self):
         self.oops()
         
-    def onBodyChanged (self,undoType,oldSel=None,oldText=None,oldYview=None):
+    def onBodyChanged (self,undoType,oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
         self.oops()
         
     def setBodyFontFromConfig (self):
@@ -1070,7 +1070,7 @@ class nullBody (leoBody):
     def initialRatios (self):
         self.oops()
         
-    def onBodyChanged (self,undoType,oldSel=None,oldText=None,oldYview=None):
+    def onBodyChanged (self,undoType,oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
         self.oops()
         
     def setBodyFontFromConfig (self):

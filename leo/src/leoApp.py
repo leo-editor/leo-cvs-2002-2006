@@ -236,7 +236,8 @@ class LeoApp:
         g.app.gui = leoTkinterGui.tkinterGui()
         g.app.root = g.app.gui.createRootWindow()
         
-        Pmw = g.importExtension("Pmw",pluginName="Leo's core",verbose=False,required=True)
+        # Show a dialog and exit immediately if Pmw can not be imported.
+        g.importExtension("Pmw",pluginName="Leo's core",verbose=False,required=True)
         g.app.gui.finishCreate()
         
         if 0:
