@@ -422,9 +422,9 @@ class tkinterGui(leoGui.leoGui):
         """Put the focus on the widget."""
         
         if w:
-            if 0:
+            if c.config.getBool('trace_g.app.gui.set_focus'):
                 name = hasattr(w,'_name') and w._name or '<no name>'
-                g.trace('GUI',name,g.callers(9))
+                g.trace('GUI',name,g.callers())
                 
             if 0:
                 w2 = c.frame.outerFrame.focus_get()
