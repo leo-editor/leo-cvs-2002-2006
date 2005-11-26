@@ -72,8 +72,8 @@
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
 </v>
 </v>
-<v t="ekr.20051126062243" a="E"><vh>@page Debugging options</vh>
-<v t="ekr.20051126062243.1" a="TV"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20051126062243"><vh>@page Debugging options</vh>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20051126063209"><vh>@int default_callers_level = 7</vh></v>
@@ -242,7 +242,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -250,7 +250,7 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1379,7 +1379,7 @@ KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 # selectall = Alt-Shift-Ctrl-A
 
 abbrev-mode                 = None
-abort-edit-headline         = Shift-Esc
+abort-edit-headline         ! tree = Esc
 about-leo                   = None
 add-comments                = Ctrl-(
 add-global-abbrev           = None
@@ -1448,7 +1448,7 @@ downcase-region             = None
 downcase-word               = None
 dump-outline                = None
 edit-headline               = Ctrl-H
-end-edit-headline           = Esc
+end-edit-headline           ! tree = Return # Esc is also possible.
 end-kbd-macro               = None
 end-of-buffer               = Alt-greater
 end-of-line                 ! text = Ctrl-e # Ctrl-e Conflicts with execute-script
