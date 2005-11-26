@@ -4994,7 +4994,7 @@ def importModule (moduleName,pluginName=None,verbose=False):
 #@nonl
 #@-node:ekr.20041219095213.1:g.importModule
 #@+node:ekr.20041219071407:g.importExtension
-def importExtension (moduleName,pluginName=None,verbose=False):
+def importExtension (moduleName,pluginName=None,verbose=False,required=False):
 
     '''Try to import a module.  If that fails,
     try to import the module from Leo's extensions directory.
@@ -5008,6 +5008,32 @@ def importExtension (moduleName,pluginName=None,verbose=False):
     if not module:
         module = g.importFromPath(moduleName,g.app.extensionsDir,
             pluginName=pluginName,verbose=verbose)
+            
+        if not module and required:
+            #@            << put up a dialog and exit immediately >>
+            #@+node:ekr.20051126094757:<< put up a dialog and exit immediately >>
+            # g.trace(moduleName,pluginName,g.callers())
+            
+            import leoTkinterDialog
+            message = '''
+            %s requires the %s module.
+            Official distributions contain this module in Leo's extensions folder,
+            but this module may be missing if you get Leo from cvs.
+            ''' % (pluginName,moduleName)
+            
+            d = leoTkinterDialog.tkinterAskOk(
+                c=None,title='Can not import %s' %(moduleName),
+                message=message)
+            d.run(modal=True)
+            
+            # Exit immeditely without raising SystemExit.
+            try:
+                import os ; os._exit(1) # May not be available on all platforms.
+            except Exception:
+                import sys ; sys.exit(1)
+            #@nonl
+            #@-node:ekr.20051126094757:<< put up a dialog and exit immediately >>
+            #@nl
 
     return module
 #@nonl
@@ -5033,7 +5059,7 @@ def importFromPath (name,path,pluginName=None,verbose=False):
             except ImportError:
                 pass
             except Exception:
-                g.es("unexpected exception in g.importFromPath",color='blue')
+                g.es_print("unexpected exception in g.importFromPath",color='blue')
                 g.es_exception()
         # Put no return statements before here!
         finally: 

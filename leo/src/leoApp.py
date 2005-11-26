@@ -235,11 +235,16 @@ class LeoApp:
     
         g.app.gui = leoTkinterGui.tkinterGui()
         g.app.root = g.app.gui.createRootWindow()
+        
+        Pmw = g.importExtension("Pmw",pluginName="Leo's core",verbose=False,required=True)
         g.app.gui.finishCreate()
         
         if 0:
             if fileName:
                 print "Tk gui created in", g.shortFileName(fileName)
+    
+    
+    
     #@-node:ekr.20031218072017.2610:app.createTkGui
     #@+node:ekr.20031218072017.2612:app.destroyAllOpenWithFiles
     def destroyAllOpenWithFiles (self):
