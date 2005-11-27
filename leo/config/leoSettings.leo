@@ -1388,6 +1388,7 @@ append-next-kill            = None      # Control-Alt-w
 # apply settings            = None      # Does not exist yet.
 append-to-buffer            = None
 append-to-register          = None
+auto-complete               = Ctrl-Tab
 back-sentence               ! text = Alt-a  # No conflict
 back-to-indentation         = None
 backward-char               ! text = Ctrl-b # No conflict
