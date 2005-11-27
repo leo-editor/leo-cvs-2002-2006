@@ -646,6 +646,20 @@ class tkinterGui(leoGui.leoGui):
         return t.tag_ranges("sel")
     #@nonl
     #@-node:ekr.20031218072017.4085:getSelectionRange
+    #@+node:ekr.20051126125950:getSelectedText
+    def getSelectedText (self,t):
+    
+        start, end = self.getTextSelection(t)
+        if start and end and start != end:
+            s = t.get(start,end)
+            if s is None:
+                return u""
+            else:
+                return g.toUnicode(s,g.app.tkEncoding)
+        else:
+            return None
+    #@nonl
+    #@-node:ekr.20051126125950:getSelectedText
     #@+node:ekr.20031218072017.4086:getTextSelection
     def getTextSelection (self,t):
         
@@ -663,6 +677,13 @@ class tkinterGui(leoGui.leoGui):
             return insert,insert
     #@nonl
     #@-node:ekr.20031218072017.4086:getTextSelection
+    #@+node:ekr.20051126171929:hasSelection
+    def hasSelection (self,widget):
+        
+        i,j = self.getTextSelection(widget)
+        return i and j and i != j
+    #@nonl
+    #@-node:ekr.20051126171929:hasSelection
     #@+node:ekr.20031218072017.4087:setSelectionRange
     def setSelectionRange(self,t,n1,n2):
     

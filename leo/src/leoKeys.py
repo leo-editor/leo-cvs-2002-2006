@@ -2085,7 +2085,7 @@ class keyHandlerClass:
     
         k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
     
-        c.frame.log.clearTab('Completion')
+        c.frame.log.clearTab('Completion') # Creates the tab if necessary.
     
         if k.mb_tabList:
             k.mb_tabListIndex = -1 # The next item will be item 0.

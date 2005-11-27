@@ -294,6 +294,199 @@ class Tracker:
     #@-others
 #@nonl
 #@-node:ekr.20050920085536.84:class  Tracker (an iterator)
+#@+node:ekr.20051126123249:class autoCompleterClass
+class autoCompleterCommandsClass (baseEditCommandsClass):
+    
+    '''Similar to typing completion in the minibuffer,
+    but the presently selected completion is shown in the widget itself.'''
+
+    #@    @+others
+    #@+node:ekr.20051126123759: birth
+    #@+node:ekr.20051126123759.1: ctor
+    def __init__ (self,c):
+    
+        baseEditCommandsClass.__init__(self,c) # init the base class.
+        
+        self.c = c
+        self.k = c.keyHandler
+        self.membersList = None
+        self.prefix = None
+        self.tabList = []
+        self.tabListIndex = -1
+        self.text = None # For Escape.
+        self.widget = None
+    #@nonl
+    #@-node:ekr.20051126123759.1: ctor
+    #@+node:ekr.20051126123759.2: getPublicCommands (autoCommandsClass)
+    def getPublicCommands (self):
+    
+        k = self.k
+    
+        return {
+            'auto-complete':    self.autoComplete,
+        }
+    #@nonl
+    #@-node:ekr.20051126123759.2: getPublicCommands (autoCommandsClass)
+    #@-node:ekr.20051126123759: birth
+    #@+node:ekr.20051127105431:abort
+    def abort (self):
+        
+        c = self.c ; w = self.widget ; gui = g.app.gui
+        
+        w.update()
+        c.frame.widgetWantsFocus(w)
+    
+        w.delete('1.0','end')
+        w.insert('1.0',self.text)
+        gui.setTextSelection(w,'1.0','1.0')
+    #@nonl
+    #@-node:ekr.20051127105431:abort
+    #@+node:ekr.20051126122952.1:autoComplete
+    def autoComplete (self,event):
+    
+        c = self.c ; k = self.k ; gui = g.app.gui
+        self.widget = w = event and event.widget 
+        self.prefix = gui.getSelectedText(w) or ''
+        self.text = gui.getAllText(w)
+    
+        c.frame.log.clearTab('Completion') # Creates the tab if necessary.
+        self.membersList = c.commandsDict.keys() ## Testing only.
+        k.setState('auto-completer',1,handler=self.stateHandler)
+        self.computeCompletionList()
+    #@nonl
+    #@-node:ekr.20051126122952.1:autoComplete
+    #@+node:ekr.20051126123149:computeCompletionList (autoCompleter)
+    def computeCompletionList (self):
+        
+        c = self.c ; gui = g.app.gui ; w = self.widget
+        w.update() # Complete all log drawing so we can change focus.
+        c.frame.widgetWantsFocus(w)
+    
+        s = gui.getSelectedText(w)
+        if s:
+            self.tabList,common_prefix = g.itemsMatchingPrefixInList(s,self.membersList)
+            c.frame.log.clearTab('Completion') # Creates the tab if necessary.
+            if self.tabList:
+                self.tabListIndex = -1 # The next item will be item 0.
+                self.setSelection(common_prefix)
+            for name in self.tabList:
+                g.es('%s' % (name),tabName='Completion')
+    #@nonl
+    #@-node:ekr.20051126123149:computeCompletionList (autoCompleter)
+    #@+node:ekr.20051126131103:doBackSpace
+    def doBackSpace (self):
+    
+        '''Cut back to previous prefix.'''
+    
+        w = self.widget ; gui = g.app.gui
+        self.prefix = self.prefix[:-1]
+        #g.trace('prefix',repr(self.prefix))
+        self.setSelection(self.prefix)
+        self.computeCompletionList()
+    #@nonl
+    #@-node:ekr.20051126131103:doBackSpace
+    #@+node:ekr.20051126123249.1:doTabCompletion (autoCompleter)
+    def doTabCompletion (self):
+        
+        '''Handle tab completion when the user hits a tab.'''
+        
+        c = self.c ; gui = g.app.gui ; w = self.widget
+        s = gui.getSelectedText(w)
+    
+        if s.startswith(self.prefix) and self.tabList:
+            # g.trace('cycle','prefix',repr(self.prefix),len(self.tabList),repr(s))
+            # Set the label to the next item on the tab list.
+            self.tabListIndex +=1
+            if self.tabListIndex >= len(self.tabList):
+               self.tabListIndex = 0
+            self.setSelection(self.tabList[self.tabListIndex])
+        else:
+            self.computeCompletionList(defaultTabList,backspace=False)
+    
+        c.frame.bodyWantsFocus()
+    #@nonl
+    #@-node:ekr.20051126123249.1:doTabCompletion (autoCompleter)
+    #@+node:ekr.20051127065601:extendSelection
+    def extendSelection (self,s):
+        
+        c = self.c ; w = self.widget ; gui = g.app.gui
+        
+        w.update()
+        c.frame.widgetWantsFocus(w)
+        
+        if gui.hasSelection(w):
+            i,j = gui.getSelectionRange(w)
+        else:
+            i = j = gui.getInsertPoint(w)
+        
+        w.insert(j,s)
+        j = w.index('%s + 1c' % (j))
+        gui.setSelectionRange(w,i,j)
+    #@nonl
+    #@-node:ekr.20051127065601:extendSelection
+    #@+node:ekr.20051127105102:finish
+    def finish (self):
+        
+        c = self.c ; w = self.widget ; gui = g.app.gui
+        
+        w.update()
+        c.frame.widgetWantsFocus(w)
+        
+        i,j = gui.getTextSelection(w)
+        if i != j:
+            gui.setTextSelection(w,j,j)
+    #@nonl
+    #@-node:ekr.20051127105102:finish
+    #@+node:ekr.20051127070018:setSelection
+    def setSelection (self,s):
+        
+        c = self.c ; w = self.widget ; gui = g.app.gui
+        
+        w.update()
+        c.frame.widgetWantsFocus(w)
+        
+        if gui.hasSelection(w):
+            i,j = gui.getSelectionRange(w)
+            w.delete(i,j)
+        else:
+            i = gui.getInsertPoint(w)
+        
+        w.insert(i,s)
+        j = w.index('%s + %dc' % (i,len(s)))
+        gui.setSelectionRange(w,i,j)
+    #@nonl
+    #@-node:ekr.20051127070018:setSelection
+    #@+node:ekr.20051126124705:stateHandler (autoCompleter)
+    def stateHandler (self,event):
+        
+        c = self.c ; k = self.k ; gui = g.app.gui ; w = self.widget
+        keysym = event and event.keysym
+        ch = event and event.char or ''
+        # g.trace(repr(ch),repr(keysym))
+        if keysym == 'Return':
+            c.frame.log.deleteTab('Completion')
+            k.clearState()
+            self.finish()
+        elif keysym == 'Escape':
+            c.frame.log.deleteTab('Completion')
+            k.clearState()
+            self.abort()
+        elif keysym == 'Tab':
+            self.doTabCompletion()
+        elif keysym == 'BackSpace':
+            self.doBackSpace()
+        elif ch in string.printable:
+            self.extendSelection(ch)
+            s = gui.getSelectedText(w)
+            if s.startswith(self.prefix):
+                self.prefix = self.prefix + ch
+                # g.trace('prefix',self.prefix)
+            self.computeCompletionList()
+    #@nonl
+    #@-node:ekr.20051126124705:stateHandler (autoCompleter)
+    #@-others
+#@nonl
+#@-node:ekr.20051126123249:class autoCompleterClass
 #@+node:ekr.20050920084036.13:class abbrevCommandsClass
 #@+at
 # 
@@ -2135,6 +2328,36 @@ class editCommandsClass (baseEditCommandsClass):
             c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.141:removeBlankLines
+    #@+node:ekr.20050920084036.138:insertNewLine
+    def insertNewLine (self,event):
+    
+        k = self.k ; w = event.widget
+        i = w.index('insert')
+        w.insert('insert','\n')
+        w.mark_set('insert',i)
+    
+    insertNewline = insertNewLine
+    #@-node:ekr.20050920084036.138:insertNewLine
+    #@+node:ekr.20050920084036.86:insertNewLineAndTab
+    def insertNewLineAndTab (self,event):
+    
+        '''Insert a newline and tab'''
+    
+        k = self.k ; w = event.widget
+        self.insertNewLine(event)
+        i = w.index('insert +1c')
+        w.insert(i,'\t')
+        w.mark_set('insert','%s lineend' % i)
+    #@nonl
+    #@-node:ekr.20050920084036.86:insertNewLineAndTab
+    #@+node:ekr.20050920084036.139:insertParentheses
+    def insertParentheses (self,event):
+    
+        k = self.k ; w = event.widget
+        w.insert('insert','()')
+        w.mark_set('insert','insert -1c')
+    #@nonl
+    #@-node:ekr.20050920084036.139:insertParentheses
     #@-node:ekr.20050920084036.85:insert & delete...
     #@+node:ekr.20050920084036.79:info...
     #@+node:ekr.20050920084036.80:howMany
@@ -2187,38 +2410,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.84:whatLine
     #@-node:ekr.20050920084036.79:info...
-    #@+node:ekr.20050930102304:insert...
-    #@+node:ekr.20050920084036.138:insertNewLine
-    def insertNewLine (self,event):
-    
-        k = self.k ; w = event.widget
-        i = w.index('insert')
-        w.insert('insert','\n')
-        w.mark_set('insert',i)
-    
-    insertNewline = insertNewLine
-    #@-node:ekr.20050920084036.138:insertNewLine
-    #@+node:ekr.20050920084036.86:insertNewLineAndTab
-    def insertNewLineAndTab (self,event):
-    
-        '''Insert a newline and tab'''
-    
-        k = self.k ; w = event.widget
-        self.insertNewLine(event)
-        i = w.index('insert +1c')
-        w.insert(i,'\t')
-        w.mark_set('insert','%s lineend' % i)
-    #@nonl
-    #@-node:ekr.20050920084036.86:insertNewLineAndTab
-    #@+node:ekr.20050920084036.139:insertParentheses
-    def insertParentheses (self,event):
-    
-        k = self.k ; w = event.widget
-        w.insert('insert','()')
-        w.mark_set('insert','insert -1c')
-    #@nonl
-    #@-node:ekr.20050920084036.139:insertParentheses
-    #@-node:ekr.20050930102304:insert...
     #@+node:ekr.20050920084036.88:line...
     #@+node:ekr.20050920084036.90:flushLines
     def flushLines (self,event):
@@ -6492,6 +6683,7 @@ class spellTab(leoFind.leoFind):
 #@+node:ekr.20050922104213:<< define classesList >>
 classesList = [
     ('abbrevCommands',      abbrevCommandsClass),
+    ('autoCompleter',       autoCompleterCommandsClass),
     ('bufferCommands',      bufferCommandsClass),
     ('editCommands',        editCommandsClass),
     ('controlCommands',     controlCommandsClass),

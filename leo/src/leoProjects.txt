@@ -2978,6 +2978,20 @@ def getSelectionRange (self,t):
     return t.tag_ranges("sel")
 #@nonl
 #@-node:ekr.20031218072017.4085:getSelectionRange
+#@+node:ekr.20051126125950:getSelectedText
+def getSelectedText (self,t):
+
+    start, end = self.getTextSelection(t)
+    if start and end and start != end:
+        s = t.get(start,end)
+        if s is None:
+            return u""
+        else:
+            return g.toUnicode(s,g.app.tkEncoding)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20051126125950:getSelectedText
 #@+node:ekr.20031218072017.4086:getTextSelection
 def getTextSelection (self,t):
     
@@ -2995,6 +3009,13 @@ def getTextSelection (self,t):
         return insert,insert
 #@nonl
 #@-node:ekr.20031218072017.4086:getTextSelection
+#@+node:ekr.20051126171929:hasSelection
+def hasSelection (self,widget):
+    
+    i,j = self.getTextSelection(widget)
+    return i and j and i != j
+#@nonl
+#@-node:ekr.20051126171929:hasSelection
 #@+node:ekr.20031218072017.4087:setSelectionRange
 def setSelectionRange(self,t,n1,n2):
 
@@ -9467,6 +9488,36 @@ def removeBlankLines (self,event):
         c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
 #@nonl
 #@-node:ekr.20050920084036.141:removeBlankLines
+#@+node:ekr.20050920084036.138:insertNewLine
+def insertNewLine (self,event):
+
+    k = self.k ; w = event.widget
+    i = w.index('insert')
+    w.insert('insert','\n')
+    w.mark_set('insert',i)
+
+insertNewline = insertNewLine
+#@-node:ekr.20050920084036.138:insertNewLine
+#@+node:ekr.20050920084036.86:insertNewLineAndTab
+def insertNewLineAndTab (self,event):
+
+    '''Insert a newline and tab'''
+
+    k = self.k ; w = event.widget
+    self.insertNewLine(event)
+    i = w.index('insert +1c')
+    w.insert(i,'\t')
+    w.mark_set('insert','%s lineend' % i)
+#@nonl
+#@-node:ekr.20050920084036.86:insertNewLineAndTab
+#@+node:ekr.20050920084036.139:insertParentheses
+def insertParentheses (self,event):
+
+    k = self.k ; w = event.widget
+    w.insert('insert','()')
+    w.mark_set('insert','insert -1c')
+#@nonl
+#@-node:ekr.20050920084036.139:insertParentheses
 #@-node:ekr.20050920084036.85:insert & delete...
 #@-node:ekr.20051125110301:(Refactored key handling)
 #@+node:ekr.20051110101524:4.4a4 projects
