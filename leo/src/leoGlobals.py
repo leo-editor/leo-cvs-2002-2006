@@ -69,11 +69,13 @@ def createStandAloneApp(pluginName=''):
     '''Create a version of the g.app object for 'stand-alone' plugins.'''
     
     if not g.app:
-        Tk = g.importExtension('Tkinter',pluginName=pluginName,verbose=True)
-        if Tk:
+        Tk  = g.importExtension('Tkinter',pluginName=pluginName,verbose=True)
+        Pmw = g.importExtension('Pmw',pluginName=pluginName,verbose=True)
+        if Tk and Pmw:
             import leoApp, leoGui
             g.app = leoApp.LeoApp()
             g.app.root = Tk.Tk()
+            Pmw.initialise(g.app.root)
             g.app.gui = leoGui.nullGui('<stand-alone app gui>')
             g.computeStandardDirectories()
     return g.app

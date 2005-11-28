@@ -18,10 +18,12 @@ import leoTkinterDialog
 import leoTkinterFind
 import leoTkinterFrame
 import tkFont
-import Tkinter as Tk
 import tkFileDialog
 import string
 import sys
+
+Tk  = g.importExtension('Tkinter',pluginName='leoTkinterGui',verbose=True)
+Pmw = g.importExtension('Pmw',    pluginName='leoTkinterGui',verbose=True)
 #@nonl
 #@-node:ekr.20041228050845:<< imports >>
 #@nl
@@ -75,7 +77,9 @@ class tkinterGui(leoGui.leoGui):
             #@-node:ekr.20041125050302:<< fix problems with menus (XP) >>
             #@nl
         else: # Use Tkinter.
+            # g.trace('Pmw.init')
             self.root = root = Tk.Tk()
+            Pmw.initialise(self.root)
     
         root.title("Leo Main Window")
         root.withdraw()
