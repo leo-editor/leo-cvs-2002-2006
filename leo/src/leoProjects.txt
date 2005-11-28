@@ -15438,6 +15438,264 @@ My hope was to associate the command 'end-edit-headline' with the keystroke
 #@nonl
 #@-node:ekr.20051126095411:Request
 #@-node:ekr.20051121135652:Bound <Return> to end-edit-headline
+#@+node:ekr.20051127135301:(Fixed problem with Plugins Manager plugin)
+@nocolor
+
+This was not, in fact, a problem with the plugins manager plugin at all.
+
+- Always init Pmw in Leo's core when Tk.Tk created.
+  This removes the necessity for Plugins to do this.
+
+- The bug was in << put up a dialog requiring a valid id >> in app.setLeoID.
+  For unknown reasons after the call to runAskLeoIDDialog the code set g.app.gui = None (!!!)
+
+@color
+#@nonl
+#@+node:ekr.20051127140029:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3442064
+By: yarkot
+
+Deleting the line in .leoID.txt (leaving an empty file) results in prompt to
+enter leoID;
+After this startup, going right to the plugin manager again results in this
+(cvs snapshot current as of today).   Any suggestions on what else I can do
+to help trace this down?  (Run / trace this in Komodo?)
+
+Regards,
+Yarko
+--------------------
+
+Leo Log Window...
+Leo 4.4 alpha 3, build  1.338 , November 10, 2005
+Python 2.4.2, Tk 8.4.7
+Windows 5, 1, 2600, 2, Service Pack 1
+
+empty .leoID.txt (in C:\Workspace\Leo\leo\config)
+leoID = 'abc'
+.leoID.txt created in C:\Workspace\Leo\leo\config
+global config dir: C:\Workspace\Leo\leo\config
+home dir: None
+reading settings in C:\Workspace\Leo\leo\config\leoSettings.leo
+7 plugins loaded
+exception executing command
+Traceback (most recent call last):
+  File "C:\Workspace\Leo\leo\src\leoCommands.py", line 240, in doCommand
+    val = command()
+  File "C:\Workspace\Leo\leo\plugins\plugins_menu.py", line 548, in callback
+    p.hastoplevel()
+  File "C:\Workspace\Leo\leo\plugins\plugin_manager.py", line 227,
+in topLevelMenu
+    dlg = ManagerDialog(True)
+  File "C:\Workspace\Leo\leo\plugins\plugin_manager.py", line 847, in __init__
+    self.plugin_view = PluginView(self.upper, self.file_text)
+  File "C:\Workspace\Leo\leo\plugins\plugin_manager.py", line 345, in __init__
+    label_text = 'Name:',
+  File "C:\Python24\lib\site-packages\Pmw\Pmw_1_2\lib\PmwEntryField.py", line
+73, in __init__
+    sequences = root.bind_class(tag)
+  File "C:\Python24\lib\lib-tk\Tkinter.py", line 958, in bind_class
+    return self._bind(('bind', className), sequence, func, add, 0)
+  File "C:\Python24\lib\lib-tk\Tkinter.py", line 893, in _bind
+    return self.tk.splitlist(self.tk.call(what))
+TclError: bad window path name
+".33481312.33579536.33579496.33579416.33579576.33599816.33599896"
+#@nonl
+#@-node:ekr.20051127140029:Report
+#@+node:ekr.20031218072017.1978:app.setLeoID
+def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+
+    << return if we can set self.leoID from sys.leoID >>
+    << return if we can set self.leoID from "leoID.txt" >>
+
+    << put up a dialog requiring a valid id >>
+    << attempt to create leoID.txt >>
+#@nonl
+#@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+# This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose:
+        g.es("leoID = " + g.app.leoID, color="orange")
+    return
+else:
+    g.app.leoID = None
+#@nonl
+#@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+#@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'r')
+            s = f.readline()
+            f.close()
+            if s and len(s) > 0:
+                g.app.leoID = s
+                if verbose:
+                    g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                return
+            elif verbose:
+                g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+        except IOError:
+            g.app.leoID = None
+            # g.es("%s not found in %s" % (tag,theDir),color="red")
+        except Exception:
+            g.app.leoID = None
+            g.es('Unexpected exception in app.setLeoID',color='red')
+            g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+#@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+# New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+
+# g.trace(g.app.leoID)
+g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
+#@nonl
+#@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+#@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        cant = "can not create %s in %s" % (tag,theDir)
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'w')
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                s = "%s created in %s" % (tag,theDir)
+                g.es_print(s, color="red")
+                return
+            else:
+                g.es(cant,color='red')
+        except IOError:
+            g.es(cant,color='red')
+#@nonl
+#@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+#@-node:ekr.20031218072017.1978:app.setLeoID
+#@+node:ekr.20051128101558:Always init Pmw
+#@+node:ekr.20050328133058:g.createStandAloneApp
+def createStandAloneApp(pluginName=''):
+    
+    '''Create a version of the g.app object for 'stand-alone' plugins.'''
+    
+    if not g.app:
+        Tk  = g.importExtension('Tkinter',pluginName=pluginName,verbose=True)
+        Pmw = g.importExtension('Pmw',pluginName=pluginName,verbose=True)
+        if Tk and Pmw:
+            import leoApp, leoGui
+            g.app = leoApp.LeoApp()
+            g.app.root = Tk.Tk()
+            Pmw.initialise(g.app.root)
+            g.app.gui = leoGui.nullGui('<stand-alone app gui>')
+            g.computeStandardDirectories()
+    return g.app
+#@nonl
+#@-node:ekr.20050328133058:g.createStandAloneApp
+#@+node:ekr.20031218072017.4049:createRootWindow & allies
+def createRootWindow(self):
+
+    """Create a hidden Tk root window."""
+
+    if 0: # Use Tix.
+        import Tix
+        self.root = root = Tix.Tk()
+        << fix problems with menus (XP) >>
+    else: # Use Tkinter.
+        # g.trace('Pmw.init')
+        self.root = root = Tk.Tk()
+        Pmw.initialise(self.root)
+
+    root.title("Leo Main Window")
+    root.withdraw()
+    
+    self.setDefaultIcon()
+    if g.app.config:
+        self.getDefaultConfigFont(g.app.config)
+        
+    root.withdraw()
+
+    return root
+#@nonl
+#@+node:ekr.20041125050302:<< fix problems with menus (XP) >>
+try:
+    import WmDefault
+    WmDefault.setup(root)
+    d = {'activebackground':'DarkBlue','activeforeground':'white'} # works
+    # d = {'activebackground':'','activeforeground':''} # doesn't work
+    WmDefault.addoptions(root,d)
+except ImportError:
+    g.trace("can not import WMDefault")
+#@nonl
+#@-node:ekr.20041125050302:<< fix problems with menus (XP) >>
+#@+node:ekr.20031218072017.1856:setDefaultIcon
+def setDefaultIcon(self):
+    
+    """Set the icon to be used in all Leo windows.
+    
+    This code does nothing for Tk versions before 8.4.3."""
+    
+    gui = self
+
+    try:
+        version = gui.root.getvar("tk_patchLevel")
+        if g.CheckVersion(version,"8.4.3") and sys.platform == "win32": # 12/2/03
+            # tk 8.4.3 or greater: load a 16 by 16 icon.
+            path = g.os_path_join(g.app.loadDir,"..","Icons")
+            if g.os_path_exists(path):
+                theFile = g.os_path_join(path,"LeoApp16.ico")
+                if g.os_path_exists(path):
+                    self.bitmap = Tk.BitmapImage(theFile)
+                else:
+                    g.es("LeoApp16.ico not in Icons directory", color="red")
+            else:
+                g.es("Icons directory not found: "+path, color="red")
+    except:
+        print "exception setting bitmap"
+        import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20031218072017.1856:setDefaultIcon
+#@+node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
+def getDefaultConfigFont(self,config):
+    
+    """Get the default font from a new text widget."""
+
+    if not self.defaultFontFamily:
+        # WARNING: retain NO references to widgets or fonts here!
+        t = Tk.Text()
+        fn = t.cget("font")
+        font = tkFont.Font(font=fn) 
+        family = font.cget("family")
+        self.defaultFontFamily = family[:]
+        # print '***** getDefaultConfigFont',repr(family)
+
+    config.defaultFont = None
+    config.defaultFontFamily = self.defaultFontFamily
+#@nonl
+#@-node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
+#@-node:ekr.20031218072017.4049:createRootWindow & allies
+#@-node:ekr.20051128101558:Always init Pmw
+#@-node:ekr.20051127135301:(Fixed problem with Plugins Manager plugin)
 #@-node:ekr.20051110101524:4.4a4 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

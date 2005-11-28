@@ -6,7 +6,9 @@
 
 import leoGlobals as g
 import string
-import Tkinter as Tk
+
+Tk  = g.importExtension("Tkinter",pluginName='LeoTkinterDialog',verbose=True,required=True)
+Pmw = g.importExtension("Pmw",    pluginName='LeoTkinterDialog',verbose=True,required=True)
 
 #@+others
 #@+node:ekr.20031218072017.3859: class leoTkinterDialog
@@ -116,11 +118,12 @@ class leoTkinterDialog:
         
         """Create the Tk.Toplevel widget for a leoTkinterDialog."""
         
-        # g.trace("leoTkinterDialog")
+        
         
         if g.app.unitTesting: return
         
         self.root = g.app.root
+        # g.trace("leoTkinterDialog",'root',self.root)
     
         self.top = Tk.Toplevel(self.root)
         self.top.title(self.title)
@@ -318,7 +321,7 @@ class tkinterAskLeoID (leoTkinterDialog):
     def __init__(self,c=None):
         
         """Create the Leo Id dialog."""
-        
+    
         # Initialize the base class: prevent clicks in the close box from closing.
         leoTkinterDialog.__init__(self,c,"Enter unique id",resizeable=False,canClose=False)
         
@@ -343,7 +346,6 @@ class tkinterAskLeoID (leoTkinterDialog):
         buttonList = self.createButtons(buttons)
         self.ok_button = buttonList[0]
         self.ok_button.configure(state="disabled")
-    #@nonl
     #@-node:ekr.20031218072017.1984:tkinterAskLeoID.__init__
     #@+node:ekr.20031218072017.1985:tkinterAskLeoID.createFrame
     def createFrame(self,message):
@@ -371,7 +373,9 @@ class tkinterAskLeoID (leoTkinterDialog):
             return
     
         self.answer = g.app.leoID = s
+        
         self.top.destroy() # terminates wait_window
+        self.top = None
     #@nonl
     #@-node:ekr.20031218072017.1987:tkinterAskLeoID.onButton
     #@+node:ekr.20031218072017.1988:tkinterAskLeoID.onKey

@@ -28,7 +28,6 @@ Others
 
 Before a4:
 
-- Update screen shots
 - Improve docs of show context find option.
 - unit test for <Delete> key.
 - Unit tests for arrow keys.
