@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.18"
+__version__ = "0.19"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -90,6 +90,9 @@ __plugin_group__ = "Core"
 #     - Allow specification of plugin load order.
 # 0.18 EKR:
 #     - Added g.app.dialogs hack to ensure dialog stays in front.
+# 0.19 EKR:
+#     - Removed call to Pmw.initialise [sic].
+#       This is now done in Leo's core.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -204,7 +207,6 @@ def init():
     # Ok for unit testing: adds menu.
     if ok:
         # Bug fix 9-17-05: init Pmw.
-        Pmw.initialise(g.app.root)
         g.plugin_signon(__name__)
         leoPlugins.registerHandler("new", grabCommander)
 
@@ -254,84 +256,18 @@ def inColumns(data, columnwidths):
     #
     return format % data
 #@-node:pap.20050305144720:inColumns
-#@+node:pap.20050317185409:Standalone Operation (no longer used)
-if 0:
-    #@    @+others
-    #@+node:pap.20050317185716:class NameSpace
-    class NameSpace:
-        """Just an object to dump properties in"""
-        
-        #@    @+others
-        #@+node:pap.20050317190909:__init__
-        def __init__(self, **kw):
-            self.__dict__.update(kw)
-        #@nonl
-        #@-node:pap.20050317190909:__init__
-        #@-others
-    #@nonl
-    #@-node:pap.20050317185716:class NameSpace
-    #@+node:pap.20050317190014:class BlackHole
-    class BlackHole:
-        """Try to call a method on this and it will just dissapear into the void!"""
-        
-        #@    @+others
-        #@+node:pap.20050317190014.1:__getattr__
-        def __getattr__(self, name):
-            """Return a black hole!"""
-            return BlackHole()
-        #@nonl
-        #@-node:pap.20050317190014.1:__getattr__
-        #@+node:pap.20050317190014.2:__call__
-        def __call__(self, *args, **kw):
-            """Call this .... """
-            return None
-        #@nonl
-        #@-node:pap.20050317190014.2:__call__
-        #@-others
-    #@nonl
-    #@-node:pap.20050317190014:class BlackHole
-    #@+node:pap.20050317185409.1:class FakeLeoGlobals
-    class FakeLeoGlobals:
-        """A class to represent leoGlobals when were are running in standalone mode"""
-        
-        #@    @+others
-        #@+node:pap.20050317185716.1:__init__
-        def __init__(self):
-            """Initialize the fake object"""
-            self.app = NameSpace()
-            self.app.root = Tk.Tk()
-            self.app.gui = BlackHole()  
-            self.app.loadDir = os.path.join(os.path.split(__file__)[0], "..", "src")
-        
-            self.Bunch = NameSpace
-            
-            for name in dir(os.path):
-                setattr(self, "os_path_%s" % name, getattr(os.path, name))
-            
-        #@nonl
-        #@-node:pap.20050317185716.1:__init__
-        #@+node:pap.20050317191929:choose
-        def choose(self, cond, a, b): # warning: evaluates all arguments
-        
-            if cond: return a
-            else: return b
-        #@nonl
-        #@-node:pap.20050317191929:choose
-        #@-others
-    #@nonl
-    #@-node:pap.20050317185409.1:class FakeLeoGlobals
-    #@-others
-#@nonl
-#@-node:pap.20050317185409:Standalone Operation (no longer used)
 #@+node:pap.20041009140132:UI
 #@+node:pap.20041008224318:class PluginView
 class PluginView(Tk.Frame):
+    
     """Frame to display a plugin's information"""
     
     #@    @+others
     #@+node:pap.20041008224318.1:PluginView.__init__
     def __init__(self, parent, file_text, *args, **kw):
+        
         """Initialize the view"""
+    
         Tk.Frame.__init__(self, parent, *args, **kw)
     
         self.file_text = file_text
@@ -339,22 +275,20 @@ class PluginView(Tk.Frame):
         self.top.pack(side="top", fill="both", expand=1)
         self.bottom = Tk.Frame(self)
         self.bottom.pack(side="top", fill="both")
-        
+    
         #@    @+others
         #@+node:pap.20041008230728:Name
+        g.trace('PluginView','self.top',str(self.top))
+        
         self.name = Pmw.EntryField(self.top,
-                labelpos = 'w',
-                label_text = 'Name:',
-        )
+            labelpos = 'w',label_text = 'Name:')
         
         self.name.pack(side="top", fill="x", expand=0)
         #@nonl
         #@-node:pap.20041008230728:Name
         #@+node:pap.20041008230728.2:Version
         self.version = Pmw.EntryField(self.top,
-                labelpos = 'w',
-                label_text = 'Version:',
-        )
+                labelpos = 'w',label_text = 'Version:')
         
         self.version.pack(side="top", fill="x", expand=0)
         #@-node:pap.20041008230728.2:Version
@@ -368,9 +302,7 @@ class PluginView(Tk.Frame):
         #@-node:pap.20041008231028:Status
         #@+node:pap.20050305151106:Group
         self.group = Pmw.EntryField(self.top,
-                labelpos = 'w',
-                label_text = 'Group:',
-        )
+                labelpos = 'w',label_text = 'Group:')
         
         self.group.pack(side="top", fill="x", expand=0)
         #@-node:pap.20050305151106:Group
@@ -507,7 +439,6 @@ class PluginView(Tk.Frame):
                 self.name, self.version, self.status, self.group,
                 self.filename, self.has_ini, self.has_toplevel,
             ])
-    #@nonl
     #@-node:pap.20041008224318.1:PluginView.__init__
     #@+node:pap.20041008224625:showPlugin
     def showPlugin(self, plugin):
@@ -533,6 +464,7 @@ class PluginView(Tk.Frame):
     #@nonl
     #@-node:pap.20041008224625:showPlugin
     #@-others
+#@nonl
 #@-node:pap.20041008224318:class PluginView
 #@+node:pap.20041008225226:class PluginList
 class PluginList(Tk.Frame):
@@ -813,22 +745,20 @@ class ManagerDialog:
         """Initialise the dialog"""
         self.setPaths()
         #@    << create top level window >>
-        #@+node:ekr.20041010110321:<< create top level window >>
+        #@+node:ekr.20041010110321:<< create top level window >> ManagerDialog
         root = g.app.root
         
-        # As weird as this appears, it appears to be essential.
         if standalone:
             # Use the hidden root.
             self.top = top = root
         else:
+            # Create a new toplevel.
             self.top = top = Tk.Toplevel(root)
         
-        # g.trace('root',root)
-        
-        g.app.gui.attachLeoIcon(self.top)
+        g.app.gui.attachLeoIcon(top)
         top.title(self.dialog_caption)
         #@nonl
-        #@-node:ekr.20041010110321:<< create top level window >>
+        #@-node:ekr.20041010110321:<< create top level window >> ManagerDialog
         #@nl
         self.initLocalCollection()
         #@    << create frames >>
@@ -847,6 +777,7 @@ class ManagerDialog:
         #@    << create pluginView >>
         #@+node:pap.20041006223915.1:<< create pluginView >>
         self.plugin_view = PluginView(self.upper, self.file_text)
+        
         self.plugin_view.pack(side="right", fill='both', expand=1, padx=5, pady=5)
         #@nonl
         #@-node:pap.20041006223915.1:<< create pluginView >>
