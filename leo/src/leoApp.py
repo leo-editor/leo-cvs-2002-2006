@@ -465,7 +465,6 @@ class LeoApp:
         
         # Bug fix: 2/6/05: put result in g.app.leoID.
         g.app.leoID = g.app.gui.runAskLeoIDDialog()
-        g.app.gui = None
         
         # g.trace(g.app.leoID)
         g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
