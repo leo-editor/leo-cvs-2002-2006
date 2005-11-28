@@ -278,8 +278,6 @@ class PluginView(Tk.Frame):
     
         #@    @+others
         #@+node:pap.20041008230728:Name
-        g.trace('PluginView','self.top',str(self.top))
-        
         self.name = Pmw.EntryField(self.top,
             labelpos = 'w',label_text = 'Name:')
         
