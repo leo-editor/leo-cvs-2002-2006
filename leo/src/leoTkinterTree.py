@@ -1900,6 +1900,8 @@ class leoTkinterTree (leoFrame.leoTree):
         if ch in ('\n','\r'):
             self.endEditLabel()
             self.onHeadChanged(p)
+            
+        if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
     #@nonl
     #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
     #@+node:ekr.20040803072955.91:onHeadChanged
@@ -1945,6 +1947,7 @@ class leoTkinterTree (leoFrame.leoTree):
         oldRevert = self.revertHeadline
         self.revertHeadline = s
         p.initHeadString(s)
+        # g.trace(repr(s),g.callers())
             
         if changed:
             # g.trace('undo to:',repr(oldRevert))
@@ -2451,7 +2454,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.124:tree.updateTree
     #@-node:ekr.20040803072955.118:Incremental drawing...
     #@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
-    #@+node:ekr.20040803072955.126:c.endEditLabel
+    #@+node:ekr.20040803072955.126:tree.endEditLabel
     def endEditLabel (self):
         
         """End editing for self.editText."""
@@ -2460,7 +2463,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         self.onHeadChanged(p)
     #@nonl
-    #@-node:ekr.20040803072955.126:c.endEditLabel
+    #@-node:ekr.20040803072955.126:tree.endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
     def editLabel (self,p):
         

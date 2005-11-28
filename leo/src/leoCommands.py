@@ -3035,6 +3035,7 @@ class baseCommands:
         c.setChanged(True)
         u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
         if redraw_flag:
+            c.endEditing() # Bug fix: 11/28/05.
             c.redraw_now()
             c.editPosition(p)
             

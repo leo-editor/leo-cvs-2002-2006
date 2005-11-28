@@ -4832,6 +4832,8 @@ def updateHead (self,event,w):
     if ch in ('\n','\r'):
         self.endEditLabel()
         self.onHeadChanged(p)
+        
+    if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
 #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
 #@+node:ekr.20040803072955.91:onHeadChanged
@@ -4854,6 +4856,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     oldRevert = self.revertHeadline
     self.revertHeadline = s
     p.initHeadString(s)
+    # g.trace(repr(s),g.callers())
         
     if changed:
         # g.trace('undo to:',repr(oldRevert))
@@ -5250,7 +5253,7 @@ def showPopupMenu (self,event):
 #@-node:ekr.20040803072955.110:tree.OnPopup & allies
 #@-node:ekr.20040803072955.71:Event handlers (tkTree)
 #@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
-#@+node:ekr.20040803072955.126:c.endEditLabel
+#@+node:ekr.20040803072955.126:tree.endEditLabel
 def endEditLabel (self):
     
     """End editing for self.editText."""
@@ -5259,7 +5262,7 @@ def endEditLabel (self):
 
     self.onHeadChanged(p)
 #@nonl
-#@-node:ekr.20040803072955.126:c.endEditLabel
+#@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.127:editLabel
 def editLabel (self,p):
     
@@ -5586,6 +5589,8 @@ def updateHead (self,event,w):
     if ch in ('\n','\r'):
         self.endEditLabel()
         self.onHeadChanged(p)
+        
+    if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
 #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
 #@+node:ekr.20040803072955.91:onHeadChanged
@@ -5608,6 +5613,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     oldRevert = self.revertHeadline
     self.revertHeadline = s
     p.initHeadString(s)
+    # g.trace(repr(s),g.callers())
         
     if changed:
         # g.trace('undo to:',repr(oldRevert))
@@ -7145,7 +7151,7 @@ def editLabel (self,p):
         self.frame.headlineWantsFocus(p) # Make sure the focus sticks.
 #@nonl
 #@-node:ekr.20040803072955.127:editLabel
-#@+node:ekr.20040803072955.126:c.endEditLabel
+#@+node:ekr.20040803072955.126:tree.endEditLabel
 def endEditLabel (self):
     
     """End editing for self.editText."""
@@ -7154,7 +7160,7 @@ def endEditLabel (self):
 
     self.onHeadChanged(p)
 #@nonl
-#@-node:ekr.20040803072955.126:c.endEditLabel
+#@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.90:head key handlers
 #@+node:ekr.20040803072955.88:onHeadlineKey
 def onHeadlineKey (self,event):
@@ -7211,6 +7217,8 @@ def updateHead (self,event,w):
     if ch in ('\n','\r'):
         self.endEditLabel()
         self.onHeadChanged(p)
+        
+    if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
 #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
 #@+node:ekr.20040803072955.91:onHeadChanged
@@ -7233,6 +7241,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     oldRevert = self.revertHeadline
     self.revertHeadline = s
     p.initHeadString(s)
+    # g.trace(repr(s),g.callers())
         
     if changed:
         # g.trace('undo to:',repr(oldRevert))
@@ -12688,6 +12697,7 @@ def insertHeadline (self,op_name="Insert Node",redraw_flag=True):
     c.setChanged(True)
     u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
     if redraw_flag:
+        c.endEditing() # Bug fix: 11/28/05.
         c.redraw_now()
         c.editPosition(p)
         
@@ -15696,6 +15706,95 @@ def getDefaultConfigFont(self,config):
 #@-node:ekr.20031218072017.4049:createRootWindow & allies
 #@-node:ekr.20051128101558:Always init Pmw
 #@-node:ekr.20051127135301:(Fixed problem with Plugins Manager plugin)
+#@+node:ekr.20051128140833:(Fixed 2 outline editing bugs)
+#@+node:ekr.20051128140833.1:1: Outline not marked dirty during editing
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3447570
+By: ktenney
+
+Current CVS, W2k
+
+After editing headline text, the file is not 
+marked as changed until focus leaves the headline.
+
+If you only edit a headline and exit, the change
+will be lost.
+#@nonl
+#@-node:ekr.20051128140833.1:1: Outline not marked dirty during editing
+#@+node:ekr.20051128140833.2:2: Inserting a headline didn't save previous edits of headlines
+#@-node:ekr.20051128140833.2:2: Inserting a headline didn't save previous edits of headlines
+#@+node:ekr.20031218072017.1761:c.insertHeadline
+def insertHeadline (self,op_name="Insert Node",redraw_flag=True):
+    
+    '''Insert a node after the presently selected node.'''
+
+    c = self ; u = c.undoer
+    current = c.currentPosition()
+    
+    if not current: return
+
+    undoData = c.undoer.beforeInsertNode(current)
+    # Make sure the new node is visible when hoisting.
+    if ((current.hasChildren() and current.isExpanded()) or
+        (c.hoistStack and current == c.hoistStack[-1].p)):
+        p = current.insertAsNthChild(0)
+    else:
+        p = current.insertAfter()
+    dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+    c.setChanged(True)
+    u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+    if redraw_flag:
+        c.endEditing() # Bug fix: 11/28/05.
+        c.redraw_now()
+        c.editPosition(p)
+        
+    return p # for mod_labels plugin.
+#@nonl
+#@-node:ekr.20031218072017.1761:c.insertHeadline
+#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+def updateHead (self,event,w):
+    
+    '''Update a headline from an event.
+    
+    The headline officially changes only when editing ends.'''
+    
+    c = self.c ; p = c.currentPosition()
+    ch = event and event.char or ''
+    i,j = g.app.gui.getTextSelection(w)
+    
+    if ch == '\b':
+        if i != j:
+            w.delete(i,j)
+        else:
+            w.delete('insert-1c')
+    elif ch and ch not in ('\n','\r'):
+        if i != j:
+            w.delete(i,j)
+        i = w.index('insert')
+        w.insert(i,ch)
+
+    s = w.get('1.0','end')
+    # g.trace(repr(ch),repr(s))
+
+    if s.endswith('\n'):
+        s = s[:-1]
+
+    if 0: # p does not *officially* change until onHeadChanged is called.
+        p.initHeadString(s)
+
+    w.configure(width=self.headWidth(s=s))
+    
+    # The granularity is the entire editing session,
+    # starting at the revert point.
+    if ch in ('\n','\r'):
+        self.endEditLabel()
+        self.onHeadChanged(p)
+        
+    if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
+#@nonl
+#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@-node:ekr.20051128140833:(Fixed 2 outline editing bugs)
 #@-node:ekr.20051110101524:4.4a4 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
