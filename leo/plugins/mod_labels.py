@@ -56,7 +56,7 @@ import pickle
 #@nonl
 #@-node:ekr.20050301095332.2:<<imports>>
 #@nl
-__version__ = "1.3"
+__version__ = "1.4"
 #@<< version history >>
 #@+node:ekr.20050301103957:<< version history >>
 #@@killcolor
@@ -88,6 +88,9 @@ __version__ = "1.3"
 #     - Renamed current_node_and_labels to current_position_and_labels.
 #     - Renamed get_labellist_for_node to get_labellist_for_current_position.
 #     - Replaced self.iterator by self.c.allNodes_iter
+# 
+# 1.4 EKR:
+#     - Removed call to Pmw.initialise.  This is now done in Leo's core.
 #@-at
 #@nonl
 #@-node:ekr.20050301103957:<< version history >>
@@ -100,7 +103,6 @@ def init ():
     ok = Pmw and Tk
     
     if ok:
-        Pmw.initialise(g.app.root)
         leoPlugins.registerHandler('before-create-leo-frame',onCreate)
         g.plugin_signon(__name__)
 
