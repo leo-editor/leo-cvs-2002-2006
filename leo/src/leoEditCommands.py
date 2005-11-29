@@ -2258,9 +2258,9 @@ class editCommandsClass (baseEditCommandsClass):
     
         c = self.c ; body = c.frame.body
         w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
-        oldText = w.get('1.0','end')
     
         if name.startswith('body'):
+            oldText = w.get('1.0','end')
             if body.hasTextSelection():
                 oldSel = body.getTextSelection()
                 body.deleteTextSelection()
