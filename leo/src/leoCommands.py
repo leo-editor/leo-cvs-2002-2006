@@ -34,7 +34,7 @@ import os
 import parser # needed only for weird Python 2.2 parser errors.
 import string
 
-# Bug fix: 9-16-05
+Pmw        = g.importExtension("Pmw",pluginName=None,verbose=False)
 subprocess = g.importExtension('subprocess',None,verbose=False)
 
 import sys
@@ -275,7 +275,7 @@ class baseCommands:
         c.ver = "$Revision$" # CVS updates this.
     #@nonl
     #@-node:ekr.20040629121554.2:initVersion
-    #@+node:ekr.20040629121554.3:signOnWithVersion
+    #@+node:ekr.20040629121554.3:c.signOnWithVersion
     def signOnWithVersion (self):
     
         c = self
@@ -296,10 +296,10 @@ class baseCommands:
         
         g.es("Leo Log Window...",color=color)
         g.es(signon)
-        g.es("Python %d.%d.%d, Tk %s\n%s" % (n1,n2,n3,tkLevel,version))
+        g.es("Python %d.%d.%d, Tk %s, Pmw %s\n%s" % (n1,n2,n3,tkLevel,Pmw.version(),version))
         g.enl()
     #@nonl
-    #@-node:ekr.20040629121554.3:signOnWithVersion
+    #@-node:ekr.20040629121554.3:c.signOnWithVersion
     #@-node:ekr.20031218072017.2582: version & signon stuff
     #@+node:ekr.20040312090934:c.iterators
     #@+node:EKR.20040529091232:c.all_positions_iter == allNodes_iter

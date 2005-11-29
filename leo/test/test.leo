@@ -196,13 +196,11 @@
 <v t="ekr.20051124094428" a="E"><vh>test long comment</vh></v>
 <v t="ekr.20051124090208"><vh>test not python</vh></v>
 </v>
-<v t="ekr.20051121143509"><vh>@button shorten-lines</vh>
+<v t="ekr.20051121143509" a="TV"><vh>@button shorten-lines</vh>
 <v t="ekr.20051124065932"><vh>to do</vh></v>
 <v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
 <v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
 </v>
-<v t="ekr.20051124133103"><vh>NewHeadline</vh></v>
-<v t="ekr.20051125114421" a="TV"><vh>Print body string</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4120,8 +4118,5 @@ Bug: can't split after opening quote.
 </t>
 <t tx="ekr.20051124094428">    # This is an extremely very very long comment.
     a = b</t>
-<t tx="ekr.20051124133103">
-</t>
-<t tx="ekr.20051125114421">print repr(p.bodyString())</t>
 </tnodes>
 </leo_file>

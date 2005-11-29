@@ -28,7 +28,10 @@ Others
 
 Before a4:
 
-- Improve docs of show context find option.
+- Document clone-find checkbox
+- Make sure no calls to Pmw.initialise remain in plugins.
+
+- Unit test for edit headline, then insert node.
 - unit test for <Delete> key.
 - Unit tests for arrow keys.
 #@nonl

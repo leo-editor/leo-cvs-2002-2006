@@ -9,7 +9,6 @@
 
 #@<< imports >>
 #@+node:ekr.20041221070525:<< imports >>
-
 import leoGlobals as g
 
 import leoColor,leoFrame,leoNodes

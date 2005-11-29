@@ -974,12 +974,12 @@ class leoFind:
         context = self.batch # "batch" now indicates context
     
         if allFlag and both and context:
-            g.es(self.p)
+            g.es('-' * 20,self.p.headString())
             theType = g.choose(self.in_headline,"head: ","body: ")
             g.es(theType + line)
         elif allFlag and context and not self.p.isVisited():
             # We only need to print the context once.
-            g.es(self.p)
+            g.es('-' * 20,self.p.headString())
             g.es(line)
             self.p.setVisited()
         else:
