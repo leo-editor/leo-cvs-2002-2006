@@ -1981,6 +1981,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
             if event:
                 self.onDrag(event)
+            tree.endEditLabel() # Bug fix: 11/30/05
             tree.select(p)
             if c.frame.findPanel:
                 c.frame.findPanel.handleUserClick(p)
@@ -2023,6 +2024,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         try:
             if not g.doHook("icondclick1",c=c,p=p,v=p,event=event):
+                self.endEditLabel() # Bug fix: 11/30/05
                 self.OnIconDoubleClick(p) # Call the method in the base class.
             g.doHook("icondclick2",c=c,p=p,v=p,event=event)
         except:
