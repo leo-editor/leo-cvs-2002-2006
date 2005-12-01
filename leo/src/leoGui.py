@@ -95,58 +95,6 @@ class leoGui:
         self.isNullGui = False
     #@nonl
     #@-node:ekr.20031218072017.3722: leoGui.__init__
-    #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
-    def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
-        
-        """Create a commander and its view frame for the Leo main window."""
-        
-        gui = self
-        
-        import leoCommands
-        
-        if not fileName: fileName = ""
-        #@    << compute the window title >>
-        #@+node:ekr.20031218072017.2189:<< compute the window title >>
-        # Set the window title and fileName
-        if fileName:
-            title = g.computeWindowTitle(fileName)
-        else:
-            s = "untitled"
-            n = g.app.numberOfWindows
-            if n > 0:
-                s += str(n)
-            title = g.computeWindowTitle(s)
-            g.app.numberOfWindows = n+1
-        
-        #@-node:ekr.20031218072017.2189:<< compute the window title >>
-        #@nl
-    
-        # Create an unfinished frame to pass to the commanders.
-        frame = gui.createLeoFrame(title)
-        
-        # Create the commander and its subcommanders.
-        c = leoCommands.Commands(frame,fileName)
-        
-        if not g.app.initing:
-            g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
-        
-        frame.finishCreate(c)
-        c.finishCreate() # New in 4.4.
-        
-        # Finish initing the subcommanders.
-        c.undoer.clearUndoState() # Menus must exist at this point.
-        
-        if updateRecentFiles:
-            c.updateRecentFiles(fileName)
-        
-        if not g.app.initing:
-            g.doHook("after-create-leo-frame",c=c)
-            
-        # g.trace(c,frame)
-    
-        return c,frame
-    #@nonl
-    #@-node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
     #@+node:ekr.20031218072017.3723:stubs
     #@+node:ekr.20031218072017.3724:createRootWindow
     def createRootWindow(self):

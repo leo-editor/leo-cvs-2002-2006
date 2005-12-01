@@ -528,6 +528,58 @@ class LeoApp:
             print 'writeWaitingLog: still no log!'
     #@nonl
     #@-node:ekr.20031218072017.2619:app.writeWaitingLog
+    #@+node:ekr.20031218072017.2188:app.newLeoCommanderAndFrame
+    def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
+        
+        """Create a commander and its view frame for the Leo main window."""
+        
+        app = self
+        
+        import leoCommands
+        
+        if not fileName: fileName = ""
+        #@    << compute the window title >>
+        #@+node:ekr.20031218072017.2189:<< compute the window title >>
+        # Set the window title and fileName
+        if fileName:
+            title = g.computeWindowTitle(fileName)
+        else:
+            s = "untitled"
+            n = g.app.numberOfWindows
+            if n > 0:
+                s += str(n)
+            title = g.computeWindowTitle(s)
+            g.app.numberOfWindows = n+1
+        
+        #@-node:ekr.20031218072017.2189:<< compute the window title >>
+        #@nl
+    
+        # Create an unfinished frame to pass to the commanders.
+        frame = app.gui.createLeoFrame(title)
+        
+        # Create the commander and its subcommanders.
+        c = leoCommands.Commands(frame,fileName)
+        
+        if not app.initing:
+            g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
+            
+        frame.finishCreate(c)
+        c.finishCreate()
+        
+        # Finish initing the subcommanders.
+        c.undoer.clearUndoState() # Menus must exist at this point.
+        
+        if updateRecentFiles:
+            c.updateRecentFiles(fileName)
+        
+        if not g.app.initing:
+            g.doHook("after-create-leo-frame",c=c)
+            
+        # g.trace(c,frame)
+    
+        return c,frame
+    #@nonl
+    #@-node:ekr.20031218072017.2188:app.newLeoCommanderAndFrame
     #@-others
 #@-node:ekr.20031218072017.2608:@thin leoApp.py
 #@-leo

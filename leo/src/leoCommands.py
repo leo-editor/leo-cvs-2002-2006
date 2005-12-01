@@ -176,26 +176,24 @@ class baseCommands:
         
         c = self ; p = c.currentPosition()
         c.miniBufferWidget = c.frame.miniBufferWidget
-        # g.trace('Commands')
+        # g.trace('Commands',c.fileName()) # g.callers())
         
         # Create a keyHandler even if there is no miniBuffer.
         c.keyHandler = leoKeys.keyHandlerClass(c,
             useGlobalKillbuffer=True,
             useGlobalRegisters=True)
     
-        # There is no miniBufferWidget created for leoSettings.leo files.
-        if c.miniBufferWidget:
+        if g.app.config and g.app.config.inited:
+            # A 'real' .leo file.
             c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-            # c.printCommandsDict()
+            c.keyHandler.finishCreate()
         else:
+            # A leoSettings.leo file.
             c.commandsDict = {}
-    
-        c.keyHandler.finishCreate()
     
         # Create the menu last so that we can use the key handler for shortcuts.
         if not g.doHook("menu1",c=c,p=p,v=p):
             c.frame.menu.createMenuBar(c.frame)
-    #@nonl
     #@+node:ekr.20051007143620:printCommandsDict
     def printCommandsDict (self):
         
@@ -374,7 +372,8 @@ class baseCommands:
     #@+node:ekr.20031218072017.1623:new
     def new (self):
     
-        c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
+        c,frame = g.app.newLeoCommanderAndFrame(fileName=None)
+        
         # Needed for plugins.
         g.doHook("new",old_c=self,c=c,new_c=c)
         # Use the config params to set the size and location of the window.
@@ -922,7 +921,7 @@ class baseCommands:
     
         try:
             theFile = open(fileName,'r')
-            c,frame = g.app.gui.newLeoCommanderAndFrame(fileName)
+            c,frame = g.app.newLeoCommanderAndFrame(fileName)
             frame.deiconify()
             frame.lift()
             g.app.root.update() # Force a screen redraw immediately.

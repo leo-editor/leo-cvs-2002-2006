@@ -500,6 +500,7 @@ class parserBaseClass:
         
         p = g.app.config.settingsRoot(c)
         if not p:
+            # g.trace('no settings tree for %s' % c)
             return None
     
         self.settingsDict = {}
@@ -1114,6 +1115,8 @@ class configClass:
     #@-node:ekr.20041117062717.17:setCommandsIvars
     #@+node:ekr.20041120074536:settingsRoot
     def settingsRoot (self,c):
+        
+        # g.trace(c,c.rootPosition())
     
         for p in c.allNodes_iter():
             if p.headString().rstrip() == "@settings":
@@ -1222,7 +1225,7 @@ class configClass:
         # Changing g.app.gui here is a major hack.
         oldGui = g.app.gui
         g.app.gui = leoGui.nullGui("nullGui")
-        c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
+        c,frame = g.app.newLeoCommanderAndFrame(path,updateRecentFiles=False)
         frame.log.enable(False)
         g.app.setLog(frame.log,"openWithFileName")
         g.app.lockLog()
@@ -1232,7 +1235,6 @@ class configClass:
         frame.openDirectory = g.os_path_dirname(path)
         g.app.gui = oldGui
         return ok and c
-    #@nonl
     #@-node:ekr.20041117085625:g.app.config.openSettingsFile
     #@+node:ekr.20041120064303:g.app.config.readSettingsFiles
     def readSettingsFiles (self,fileName,verbose=True):
@@ -1294,7 +1296,7 @@ class configClass:
         if 0: # Good trace.
             if localFlag:
                 g.trace(c.fileName())
-                g.printDict(d)
+                g.trace(d and d.keys())
     #@nonl
     #@-node:ekr.20051013161232:g.app.config.updateSettings
     #@-node:ekr.20041117093246:Scanning @settings (g.app.config)
