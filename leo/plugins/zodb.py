@@ -14,7 +14,7 @@ that access the zodb database.
 # WARNING: highly experimental code:  USE AT YOUR OWN RISK.
 # WARNING:
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 #@<< imports >>
 #@+node:ekr.20050825154553.1:<< imports >>
@@ -42,9 +42,11 @@ except ImportError:
 # 0.0.1: Initial version.
 # 
 # - Experimented with replacing tnode class from this plugin.
-#     - Apparently,
+# 
+# 0.0.2: Replaced g.app.gui.newLeoCommanderAndFrame with 
+# g.app.newLeoCommanderAndFrame.
+# 
 #@-at
-#@nonl
 #@-node:ekr.20050825154553.2:<< change log >>
 #@nl
 #@<< to do >>
@@ -371,7 +373,7 @@ if 0:
             # g.trace('Not open',fileName)
             # Open the file in binary mode to allow 0x1a in bodies & headlines.
             theFile = open(fileName,'rb')
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+            c,frame = app.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
             g.app.writeWaitingLog() # New in 4.3: write queued log first.
             if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
@@ -443,7 +445,7 @@ def zodb_openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True
         # g.trace('Not open',fileName)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        c,frame = app.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
         if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
