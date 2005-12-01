@@ -752,7 +752,7 @@ def scanDirectives(c,p=None):
 #@-node:ekr.20031218072017.1380:Directive utils...
 #@+node:ekr.20031218072017.2052:g.openWithFileName
 def openWithFileName(fileName,old_c,
-    enableLog=True,readAtFileNodesFlag=True,readSettings=True):
+    enableLog=True,readAtFileNodesFlag=True):
     
     """Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -775,10 +775,15 @@ def openWithFileName(fileName,old_c,
             # g.trace('Already open',fileName)
             return True, frame
     try:
-        # g.trace('Not open',fileName)
+        if old_c:
+            # New in 4.4: We must read the file *twice*.
+            # The first time sets settings for the later call to c.finishCreate.
+            # g.trace('***** prereading',fileName)
+            c2 = g.app.config.openSettingsFile(fileName)
+            if c2: g.app.config.updateSettings(c2,localFlag=True)
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        c,frame = app.newLeoCommanderAndFrame(fileName)
         frame.log.enable(enableLog)
         g.app.writeWaitingLog() # New in 4.3: write queued log first.
         if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
@@ -793,8 +798,6 @@ def openWithFileName(fileName,old_c,
                 frame.c.config.setRecentFiles(g.app.config.recentFiles)
         # Bug fix in 4.4.
         frame.openDirectory = g.os_path_dirname(fileName)
-        if readSettings:
-            g.app.config.updateSettings(c,localFlag=True)
         g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         frame.bodyWantsFocus()
         c.redraw_now()
@@ -808,7 +811,6 @@ def openWithFileName(fileName,old_c,
         g.es("exceptions opening: %s" % (fileName),color="red")
         g.es_exception()
         return False, None
-#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.3100:wrap_lines
 #@+at 
@@ -910,7 +912,8 @@ def callers (n=None,excludeCaller=True):
     result = []
     
     if n is None:
-        n = g.top().config.getInt('default_callers_level') or 3
+        c = g.top()
+        n = c and c.config.getInt('default_callers_level') or 3
     
     while n > 0:
         s = g.callerName(n)
