@@ -262,6 +262,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.revertHeadline = None # Previous headline text for abortEditLabel.
         self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
             # New in 4.4: We should stay in the tree to use per-pane bindings.
+        self.textBindings = [] # Set in setBindings.
         self.textNumber = 0 # To make names unique.
         self.trace = False
         self.useBindtags = True

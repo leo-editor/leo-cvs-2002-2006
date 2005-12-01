@@ -153,6 +153,8 @@ class tkinterGui(leoGui.leoGui):
         
         pass
         
+        # g.trace('g.app.gui')
+        
     #@-node:ekr.20031218072017.4052:finishCreate (not used: must be present)
     #@+node:ekr.20031218072017.4053:killGui (not used)
     def killGui(self,exitFlag=True):
