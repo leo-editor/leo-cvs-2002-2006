@@ -2,8 +2,6 @@
 #@+node:ekr.20031218072017.329:@thin ../doc/leoNotes.txt
 #@@nocolor
 
-This contains my notes for the Leo project.
-
 #@+all
 #@+node:ekr.20050123161408:ExamDiff files
 0 leo.py
@@ -1315,6 +1313,18 @@ On Me you set the registry somehow.
 No information on XP.
 #@nonl
 #@-node:ekr.20031218072017.385:How to Increase environment space
+#@+node:ekr.20051129084430:How to install jython
+@nocolor
+
+- Download jython_Release_2_2alpha1.jar and put it anywhere (say on the desktop)
+- Double-click the file.  This brings up an installer.  Follow the direction.
+  (I installed to c:\jython-2.2a1
+- Using the Control Panel, System, Advanced tab, environment variables,
+  add c:\jython-2.2a1 to CLASSPATH (in user variables)
+#@nonl
+#@+node:ekr.20051129084430.1:@url http://www.jython.org/install.html
+#@-node:ekr.20051129084430.1:@url http://www.jython.org/install.html
+#@-node:ekr.20051129084430:How to install jython
 #@+node:ekr.20050316092232:How to install jyLeo
 - Unpack the .zip file, placing the result in c:\prog.
 
@@ -1369,7 +1379,7 @@ I didn't have Java/Jython installed so for others in the same boat here's what I
 http://java.sun.com/j2se/1.5.0/download.jsp 
  
 2. Install Jython 
-http://www.jython.org/jython22a0.zip 
+http://www.jython.org/jython22a1.zip 
  
 3. Edit Jython.bat file - the part that calls Java.exe to ... 
 "C:\Program Files\Java\jdk1.5.0_02\jre\bin\java" -cp "C:\Program Files\Java\jdk1.5.0_02\jre\lib";"c:\Apps\Python23\Jython";"C:\Apps\jLeo\j-leo-MAR15\Icons";"C:\Apps\jLeo\j-leo-MAR15\skins";"C:\Apps\jLeo\j-leo-MAR15\src";"C:\Apps\jLeo\j-leo-MAR15\skinimages" -Dpython.home="c:\Apps\Python23\Jython" -jar jython.jar %ARGS% 
@@ -2992,6 +3002,14 @@ def delete(self):
 #@nonl
 #@-node:ekr.20031218072017.2863:c.delete
 #@-node:ekr.20051125081431.1:No longer used re key handling
+#@+node:ekr.20051201111822:app.finishCreateCommanderAndFrame (not used)
+def finishCreateCommanderAndFrame (self,c):
+    
+    '''Update all settings after possibly reading the @settings node.'''
+    
+    pass
+#@nonl
+#@-node:ekr.20051201111822:app.finishCreateCommanderAndFrame (not used)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

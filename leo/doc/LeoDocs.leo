@@ -2149,8 +2149,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="TV"><vh>Latest versions</vh>
-<v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20051028051444" a="TV"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -2218,11 +2218,11 @@
 <v t="ekr.20051128181229"><vh>New in alpha 4</vh>
 <v t="ekr.20051128181351"><vh>Bugs fixed</vh>
 <v t="ekr.20051128181302.148"><vh>Changed scripting plugin so files opened with buttons stay in front</vh></v>
-<v t="ekr.20051128181302.183" a="E"><vh>Fixed undo/redo bugs</vh></v>
+<v t="ekr.20051128181302.183"><vh>Fixed undo/redo bugs</vh></v>
 <v t="ekr.20051128181302.192"><vh>Fixed focus problem with tab completion</vh></v>
-<v t="ekr.20051128181302.193" a="E"><vh>Fixed minor Save bug</vh></v>
-<v t="ekr.20051128181302.204" a="E"><vh>Fixed two bugs in rst3</vh></v>
-<v t="ekr.20051128181302.231" a="E"><vh>Fixed long-standing problem with Plugins Manager plugin</vh></v>
+<v t="ekr.20051128181302.193"><vh>Fixed minor Save bug</vh></v>
+<v t="ekr.20051128181302.204"><vh>Fixed two bugs in rst3</vh></v>
+<v t="ekr.20051128181302.231"><vh>Fixed long-standing problem with Plugins Manager plugin</vh></v>
 <v t="ekr.20051128181302.244"><vh>(Fixed 2 outline editing bugs)</vh>
 <v t="ekr.20051128181302.245"><vh>1: Outline not marked dirty during editing</vh></v>
 <v t="ekr.20051128181302.246"><vh>2: Inserting a headline didn't save previous edits of headlines</vh></v>
@@ -2232,19 +2232,19 @@
 </v>
 <v t="ekr.20051128181651"><vh>Code changes</vh>
 <v t="ekr.20051128181302.149"><vh>Removed later arg from c.frame.xWantsFocus</vh></v>
-<v t="ekr.20051128181302.196" a="E"><vh>Created enableTclTraces</vh></v>
+<v t="ekr.20051128181302.196"><vh>Created enableTclTraces</vh></v>
 <v t="ekr.20051128181302.208"><vh>Eliminated w.update in g.app.gui.set_focus</vh></v>
 </v>
 <v t="ekr.20051128181651.1"><vh>New &amp; improved features and files</vh>
 <v t="ekr.20051128181302.147"><vh>Moved all scripts into scripts.leo</vh></v>
-<v t="ekr.20051128181302.150" a="E"><vh>Improved how the New Tab and Rename Tab commands work in the log pane</vh></v>
-<v t="ekr.20051128181302.151" a="E"><vh>Improved the appearance of the Spell tab</vh></v>
-<v t="ekr.20051128181302.156" a="E"><vh>Added Clone-find checkbox to the Find tab</vh></v>
-<v t="ekr.20051128181302.171" a="E"><vh>Improved find tab</vh></v>
-<v t="ekr.20051128181302.211" a="E"><vh>Improved formatting of shortcuts in print-commands and print-bindings</vh></v>
+<v t="ekr.20051128181302.150"><vh>Improved how the New Tab and Rename Tab commands work in the log pane</vh></v>
+<v t="ekr.20051128181302.151"><vh>Improved the appearance of the Spell tab</vh></v>
+<v t="ekr.20051128181302.156"><vh>Added Clone-find checkbox to the Find tab</vh></v>
+<v t="ekr.20051128181302.171"><vh>Improved find tab</vh></v>
+<v t="ekr.20051128181302.211"><vh>Improved formatting of shortcuts in print-commands and print-bindings</vh></v>
 <v t="ekr.20051128181302.213"><vh>Added settings for vim plugin</vh></v>
-<v t="ekr.20051128181302.214" a="E"><vh>Put up a dialog if can't import Pmw</vh></v>
-<v t="ekr.20051128181302.229" a="E"><vh>Bound &lt;Return&gt; to end-edit-headline</vh></v>
+<v t="ekr.20051128181302.214"><vh>Put up a dialog if can't import Pmw</vh></v>
+<v t="ekr.20051128181302.229"><vh>Bound &lt;Return&gt; to end-edit-headline</vh></v>
 </v>
 </v>
 </v>
@@ -2802,8 +2802,11 @@ to the value of the script after preprocessing. Scripts may examine and change
 app.scriptDict as they please.</t>
 <t tx="EKR.20040524104904.118">The following check boxes options appear in the search dialog and control the operations of the find and change commands.
 
-Show Context
-    When checked, the ``Find All`` command shows additional context information when printing matches.
+Clone Find All
+    When checked, the the Find All command creates a new root node called ``Found:`` *&lt;your search pattern&gt;*.
+    This node contains clones of the nodes found by the Find All command.
+    It is your responsibility to navigate to this new node and to clean it up when it's no longer needed.
+
 Ignore Case
     When checked, the ``Find and Change`` commands ignore the case of alphabetic characters when determining matches.
 
@@ -2836,6 +2839,9 @@ Search Body Text
 
 Search Headline Text
     When checked, the ``Find and Change`` commands search headline text.
+
+Show Context
+    When checked, the ``Find All`` command shows additional context information when printing matches.
 
 Suboutline Only
     When checked, the ``Find and Change`` commands search only the currently selected headline and its offspring.
@@ -21363,17 +21369,8 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 Leo 4.4 a4 introduces the 'Newer World Order' for redrawing the screen,
 corrects numerous bugs in the 4.4 code base, and introduces several new features.
 
-The goals of Leo 4.4 are as follows:
-
-- To allow Emacs and Vim users to retain their present 'finger habits'.
-- To support an emacs-like minibuffer, complete with typing completion.
-- To make Leo usable without a mouse (mouseless Leo).
-- To recover from errors more reliably than all previous versions.
-
-Leo 4.4 a4 meets these goals in most respects.
-
-This is an alpha release: there are minor bugs (see below). However, you should
-be able to use this version safely.
+This is an alpha release: a few minor bugs remain. However, you should be able
+to use this version safely. All the major features of 4.4 are in place.
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -21401,18 +21398,19 @@ pane. Per-pane key bindings are essential for mouseless Leo.
 - A rewrite of Leo's keystroke handling. In particular, Leo handles key events
 immediately rather than queuing them for idle time.
 
-- Several fixes made to the 4.3 code base. In particular, Leo 4.4 continues
-after crashes much more reliably than in any previous version.
+- Leo recovers from crashes much more reliably than in any prevsios version.
 
-- Leo now updates the screen immediately rather than waiting for idle time.
+- Leo updates the screen immediately rather than waiting for idle time.
 This 'Newer World Order' simplifies the code and improves performance.
 
-Known bugs in Leo 4.4a3
+Known bugs in Leo 4.4a4
 -----------------------
-- Several minibuffer commands do not work and lack unit tests.
+- Several minibuffer commands do not work.
 
 Coming in later releases of Leo 4.4:
 ------------------------------------
+- An auto-complete command that shows class members in the Completion tab.
+
 - More support for mouseless Leo. There will be commands to manipulate all
 aspects of Leo using commands, so your fingers will never have to leave the
 keyboard.

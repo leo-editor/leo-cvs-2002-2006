@@ -3,13 +3,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
 <globals body_outline_ratio="0.593037214886">
-	<global_window_position top="53" left="211" height="837" width="836"/>
+	<global_window_position top="35" left="366" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -27,6 +27,9 @@
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
+<v t="ekr.20051201090822" a="E"><vh>@settings</vh>
+<v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
+</v>
 </v>
 <v t="ekr.20051104081824"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
@@ -176,6 +179,11 @@
 </v>
 </v>
 </v>
+<v t="ekr.20051121143509"><vh>@button shorten-lines</vh>
+<v t="ekr.20051124065932"><vh>to do</vh></v>
+<v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
+<v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
+</v>
 <v t="ekr.20051121143951"><vh>Test of long lines</vh>
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
@@ -196,11 +204,13 @@
 <v t="ekr.20051124094428" a="E"><vh>test long comment</vh></v>
 <v t="ekr.20051124090208"><vh>test not python</vh></v>
 </v>
-<v t="ekr.20051121143509" a="TV"><vh>@button shorten-lines</vh>
-<v t="ekr.20051124065932"><vh>to do</vh></v>
-<v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
-<v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
+<v t="ekr.20051130182536" a="E"><vh>IronPython stuff</vh>
+<v t="ekr.20051130182536.1"><vh>batch file</vh>
+<v t="ekr.20051130182412" tnodeList="ekr.20051130182412"><vh>@file ironPythonTest.bat</vh></v>
 </v>
+<v t="ekr.20051130181738" a="M" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
+</v>
+<v t="ekr.20051201153400" a="TV"><vh>Print Hi</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4118,5 +4128,28 @@ Bug: can't split after opening quote.
 </t>
 <t tx="ekr.20051124094428">    # This is an extremely very very long comment.
     a = b</t>
+<t tx="ekr.20051130181738">print 'Hello Iron Pyton!!'
+
+import winforms
+
+if 1:
+    while 1: pass
+    
+else:
+    import winforms
+    from System.Windows.Forms import *
+    from System.Drawing import *
+    
+    f = Form()
+    f.Show()</t>
+<t tx="ekr.20051130182412">REM -i option crashes, so this test program had better be a winforms program.
+
+c:\prog\IronPython-0.9.5\bin\IronPythonConsole c:\prog\leoCVS\leo\test\ironPythonTest.py
+</t>
+<t tx="ekr.20051130182536"></t>
+<t tx="ekr.20051130182536.1">@comment REM_</t>
+<t tx="ekr.20051201063427.1">execute-script = Ctrl-e # Ctrl-e conflicts with end-of-line</t>
+<t tx="ekr.20051201090822"></t>
+<t tx="ekr.20051201153400">print 'hi'</t>
 </tnodes>
 </leo_file>

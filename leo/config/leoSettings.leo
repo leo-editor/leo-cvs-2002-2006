@@ -134,7 +134,7 @@
 </v>
 </v>
 <v t="ekr.20051123100536"><vh>@page Plugins settings</vh>
-<v t="ekr.20051123100536.1" a="E"><vh>vim plugin</vh>
+<v t="ekr.20051123100536.1"><vh>vim plugin</vh>
 <v t="ekr.20051123100536.2"><vh>@string vim_cmd = c:\Program Files\vim\vim63\gvim --servername LEO</vh></v>
 <v t="ekr.20051123100536.3"><vh>@string vim_exe = c:\Program Files\vim\vim63\gvim</vh></v>
 </v>
@@ -1587,7 +1587,7 @@ move-outline-up             = Ctrl-U
 move-past-close             = Alt-parenright
 name-last-kbd-macro         = None
 negative-argument           = None      # Alt-minus conflicts with contract-all.
-new                         = None      # Ctrl-n conflicts with next-line.
+new                         = Shift-Control-O   # Ctrl-n conflicts with next-line.
 newline-and-indent:         = Control-j
 next-line                   = Ctrl-n    # Conflicts with new.
 number-command              = None

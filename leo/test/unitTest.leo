@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8494" clone_windows="0"/>
-<globals body_outline_ratio="0.715749039693">
-	<global_window_position top="130" left="324" height="781" width="864"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8497" clone_windows="0"/>
+<globals body_outline_ratio="0.478873239437">
+	<global_window_position top="61" left="316" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1723,13 +1723,13 @@
 <v t="ekr.20051125165933"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
 <v t="ekr.20051125170139"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
-<v t="ekr.20051120110536"><vh>@test paste into body sticks</vh></v>
 <v t="ekr.20051108141141"><vh>Not ready yet</vh>
 <v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
 <v t="ekr.20051109091333"><vh>@test deleting the last body character text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
 <v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
-<v t="ekr.20051109095247"><vh>@test writing to log leaves focus in the log This *should* fail</vh></v>
+<v t="ekr.20051130080047"><vh>@test head changes stick after click in icon box</vh></v>
+<v t="ekr.20051120110536"><vh>@test paste into body sticks</vh></v>
 </v>
 <v t="ekr.20051109143831"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
 </v>
@@ -7868,7 +7868,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14581,12 +14581,6 @@ finally:
     if 1:
         p.setBodyString('')
         c.redraw_now()</t>
-<t tx="ekr.20051109095247">c.redraw_now() # To make node visible.
-g.es('test of write to log')
-c.redraw_now() # To change focus.
-w = g.app.gui.get_focus(c.frame)
-#assert w._name.startswith('log'), 'bad name %s' % (w and w._name or '')
-</t>
 <t tx="ekr.20051109143831"># This is **not** a real unit test.
 # It simply restores the screen to a more convenient state.
 import leoTest ; u = leoTest.testUtils()
@@ -14602,9 +14596,7 @@ c.save()</t>
 assert c.undoer.undoMenuLabel == 'Undo Insert Node'
 c.undoer.undo()
 assert c.undoer.redoMenuLabel == 'Redo Insert Node'</t>
-<t tx="ekr.20051120110536">assert c.undoer.undoMenuLabel == 'Undo Typing'
-
-</t>
+<t tx="ekr.20051120110536"></t>
 <t tx="ekr.20051120115046">import leoTest ; u = leoTest.testUtils()
 h = 'Test headline abc'
 p = u.findNodeAnywhere(c,h)
@@ -14664,5 +14656,6 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
+<t tx="ekr.20051130080047"></t>
 </tnodes>
 </leo_file>
