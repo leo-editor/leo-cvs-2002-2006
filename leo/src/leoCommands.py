@@ -1244,7 +1244,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.2862:Edit top level
     #@+node:ekr.20031218072017.2140:c.executeScript
     def executeScript(self,p=None,script=None,
-        useSelectedText=True,define_g=True,define_name='',silent=False):
+        useSelectedText=True,define_g=True,define_name='__main__',silent=False):
     
         """This executes body text as a Python script.
         
