@@ -1815,8 +1815,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if name.startswith('body'):
             w.event_generate(g.virtual_event_name("Copy"))
-            w.update()
-            f.body.onBodyChanged('Copy')
         else:
             # Necessary when not using shortcut keys.
             w.event_generate(g.virtual_event_name("Copy"))
