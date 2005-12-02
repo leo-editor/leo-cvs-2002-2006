@@ -830,7 +830,7 @@ class bufferCommandsClass (baseEditCommandsClass):
         k.commandName = 'Kill buffer: %s' % name
     #@nonl
     #@-node:ekr.20050920084036.38:killBuffer/Finisher  (not ready yet)
-    #@+node:ekr.20050920084036.42:listBuffers/Finisher (not ready yet)
+    #@+node:ekr.20050920084036.42:listBuffers
     def listBuffers (self,event):
         
         k = self.k ; c = k.c
@@ -842,11 +842,13 @@ class bufferCommandsClass (baseEditCommandsClass):
         buffers = names.keys()
         buffers.sort()
         
-        if 0: # This would be too much data for now...
+        if 1: # This would be too much data for now...
             data = '\n'.join(buffers)
-            k.setLabelGrey(data)
+            # k.setLabelGrey(data)
+            g.es('Buffers...')
+            g.es(data)
     #@nonl
-    #@-node:ekr.20050920084036.42:listBuffers/Finisher (not ready yet)
+    #@-node:ekr.20050920084036.42:listBuffers
     #@+node:ekr.20050920084036.39:prependToBuffer/Finisher
     def prependToBuffer (self,event):
         
@@ -1058,7 +1060,7 @@ class controlCommandsClass (baseEditCommandsClass):
     
         return {
             'advertised-undo':              self.advertizedUndo,
-            'iconfify-or-deiconify-frame':  self.iconifyOrDeiconifyFrame,
+            'iconify-frame':                self.iconifyFrame, # Same as suspend.
             'keyboard-quit':                self.keyboardQuit,
             'save-buffers-kill-leo':        self.saveBuffersKillLeo,
             'shell-command':                self.shellCommand,
@@ -1153,7 +1155,7 @@ class controlCommandsClass (baseEditCommandsClass):
         w = event.widget
         w.winfo_toplevel().iconify()
         
-    iconifyOrDeiconifyFrame = suspend
+    iconifyFrame = suspend
     #@nonl
     #@-node:ekr.20050920084036.153:suspend & iconifyOrDeiconifyFrame
     #@-others
