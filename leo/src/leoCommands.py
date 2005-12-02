@@ -5352,10 +5352,12 @@ class baseCommands:
     #@+node:ekr.20051103114520.1:c.setFocusHelper
     def setFocusHelper (self):
         
-        c = self ; frame = c.frame
+        c = self
         
-        if g.app.quitting or not hasattr(frame,'top'):
+        if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
             return # nullFrame's do not have a top frame.
+            
+        frame = c.frame
     
         if frame.wantedWidget:
             w = frame.wantedWidget
