@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.5'
+__version__ = '1.6'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -366,32 +366,30 @@ except ImportError:
 #@+at
 # 
 # 1.0 EKR:
-# 
 # Write output files to the directory containing the .leo file by default.
 # This is c.frame.openDirectory, *not* g.app.loadDir.
 # 
 # 1.1 EKR:
-# 
 # By default, look for stylesheet in output directory.
 # 
 # 1.2 EKR:
-# 
 # Make sure code doesn't crash if docutils can not be imported.
 # 
 # 1.3 EKR:
-# 
 # Make the stylesheet path relative to the directory containing the output 
 # file.
 # 
 # 1.4 EKR:
-# 
 # - Allow relative paths.
 # - Added processTopTree.  This has the same functionality as found in 
 # previous @button rst3 nodes.
 # 
-# - 1.5 EKR:
-# 
+# 1.5 EKR:
 # Removed used recomputation of sytlesheet_path
+# 
+# 1.6 EKR:
+# - Added support for default_path
+# - Removed duplicate messages about Silver City.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -583,19 +581,6 @@ class rstClass:
         global SilverCity
         
         self.c = c
-        #@    << init debugging ivars >>
-        #@+node:ekr.20050810090137:<< init debugging ivars >>
-        if 0:
-            self.debug_anchors = False
-            self.debug_before_and_after_replacement = False
-            self.debug_handle_endtag = False
-            self.debug_handle_starttag = False
-            self.debug_node_html_1 = False
-            self.debug_show_unknownattributes = False
-            self.debug_store_lines = False
-        #@nonl
-        #@-node:ekr.20050810090137:<< init debugging ivars >>
-        #@nl
         #@    << init ivars >>
         #@+node:ekr.20050805162550.11:<< init ivars >>
         if 0: # Non-inheritable options...
@@ -603,6 +588,8 @@ class rstClass:
             self.ignore_this_node = False
             self.ignore_this_tree = False
             self.show_this_headline = False
+            
+        self.silverCityWarningGiven = False
         
         # The options dictionary.
         self.optionsDict = {}
@@ -622,6 +609,7 @@ class rstClass:
         
         # For writing.
         self.defaultEncoding = 'utf-8'
+        self.default_path = ''
         self.leoDirectivesList = leoColor.leoKeywords
         self.encoding = self.defaultEncoding
         self.ext = None # The file extension.
@@ -716,6 +704,7 @@ class rstClass:
             'rst3_http_attributename':      'rst_http_attribute',
             'rst3_node_begin_marker':       'http-node-marker-',
             # Path options...
+            'rst3_default_path':'', # New in Leo 4.4a4.
             'rst3_stylesheet_name': 'default.css',
             'rst3_stylesheet_path': '',
             # Global options...
@@ -1060,12 +1049,7 @@ class rstClass:
         self.initWrite(p)
         
         # Write the file to the directory containing the .leo file.
-        openDirectory = self.c.frame.openDirectory
-        if openDirectory:
-            self.outputFileName = g.os_path_join(openDirectory,self.outputFileName)
-        else:
-            self.outputFileName = self.outputFileName
-    
+        self.outputFileName = self.computeOutputFileName(self.outputFileName)
         self.outputFile = file(self.outputFileName,'w')
         self.writeTree(p)
         self.outputFile.close()
@@ -1152,7 +1136,9 @@ class rstClass:
         
         isHtml = self.ext in ('.html','.htm')
         if isHtml and not SilverCity:
-            g.es('SilverCity not present so no syntax highlighting')
+            if not self.silverCityWarningGiven:
+                self.silverCityWarningGiven = True
+                g.es('SilverCity not present so no syntax highlighting')
         
         self.initWrite(p,encoding=g.choose(isHtml,'utf-8','iso-8859-1'))
         self.outputFile = StringIO.StringIO()
@@ -1177,12 +1163,7 @@ class rstClass:
             
         if ok:
             # Write the file to the directory containing the .leo file.
-            openDirectory = self.c.frame.openDirectory
-            if openDirectory:
-                self.outputFileName = g.os_path_join(openDirectory,self.outputFileName)
-            else:
-                self.outputFileName = self.outputFileName
-    
+            self.outputFileName = self.computeOutputFileName(self.outputFileName)
             f = file(self.outputFileName,'w')
             f.write(output)
             f.close()
@@ -1565,6 +1546,21 @@ class rstClass:
     #@-node:ekr.20050811102607:skip_literal_block
     #@-node:ekr.20050809074827:write methods
     #@+node:ekr.20050810083314:Utils
+    #@+node:ekr.20051202070028:computeOutputFileName
+    def computeOutputFileName (self,fileName):
+        
+        openDirectory = self.c.frame.openDirectory
+    
+        if self.default_path:
+            path = g.os_path_join(self.default_path,fileName)
+        elif openDirectory:
+            path = g.os_path_join(openDirectory,fileName)
+        else:
+            path = fileName
+            
+        return path
+    #@nonl
+    #@-node:ekr.20051202070028:computeOutputFileName
     #@+node:ekr.20050805162550.16:encode
     def encode (self,s):
     
