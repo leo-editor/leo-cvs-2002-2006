@@ -378,9 +378,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     
         '''Cut back to previous prefix.'''
     
-        w = self.widget ; gui = g.app.gui
         self.prefix = self.prefix[:-1]
-        #g.trace('prefix',repr(self.prefix))
         self.setSelection(self.prefix)
         self.computeCompletionList()
     #@nonl
@@ -401,7 +399,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
                self.tabListIndex = 0
             self.setSelection(self.tabList[self.tabListIndex])
         else:
-            self.computeCompletionList(defaultTabList,backspace=False)
+            self.computeCompletionList()
     
         c.frame.bodyWantsFocus()
     #@nonl
