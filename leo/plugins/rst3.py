@@ -583,12 +583,6 @@ class rstClass:
         self.c = c
         #@    << init ivars >>
         #@+node:ekr.20050805162550.11:<< init ivars >>
-        if 0: # Non-inheritable options...
-            self.ignore_this_headline = False
-            self.ignore_this_node = False
-            self.ignore_this_tree = False
-            self.show_this_headline = False
-            
         self.silverCityWarningGiven = False
         
         # The options dictionary.
@@ -609,7 +603,6 @@ class rstClass:
         
         # For writing.
         self.defaultEncoding = 'utf-8'
-        self.default_path = ''
         self.leoDirectivesList = leoColor.leoKeywords
         self.encoding = self.defaultEncoding
         self.ext = None # The file extension.
@@ -649,6 +642,7 @@ class rstClass:
     
         self.headlineCommands = [
             self.getOption('code_prefix'),
+            self.getOption('default_path_prefix'),
             self.getOption('rst_prefix'),
             self.getOption('ignore_headline_prefix'),
             self.getOption('ignore_headlines_prefix'),
@@ -838,7 +832,8 @@ class rstClass:
             word = h[0:i]
             
             for prefix,ivar,val in (
-                ('code_prefix','code_mode',True), # '@rst-code' 
+                ('code_prefix','code_mode',True), # '@rst-code'
+                ('default_path_prefix','default_prefix',''), # '@rst-default-path'
                 ('rst_prefix','code_mode',False), # '@rst'    
                 ('ignore_headline_prefix','ignore_this_headline',True), # '@rst-no-head'
                 ('show_headline_prefix','show_this_headline',True), # '@rst-head'  
@@ -992,26 +987,15 @@ class rstClass:
     #@+node:ekr.20050811135526:setOption
     def setOption (self,name,val,tag):
         
-        if 1:
-            ivar = self.munge(name)
-                 
-            if 0: 
-                if not self.optionsDict.has_key(ivar):
-                    g.trace('init %24s %20s %s' % (ivar,val,tag))
-                elif self.optionsDict.get(ivar) != val:
-                    g.trace('set  %24s %20s %s' % (ivar,val,tag))
-        
-            self.optionsDict [ivar] = val
-        else:
-            ivar = self.munge(name)
-                 
-            if 0: 
-                if not hasattr(self,ivar):
-                    g.trace('init %24s %20s %s' % (ivar,val,tag))
-                elif getattr(self,ivar) != val:
-                    g.trace('set  %24s %20s %s' % (ivar,val,tag))
-            
-            setattr(self,ivar,val)
+        ivar = self.munge(name)
+             
+        if 0: 
+            if not self.optionsDict.has_key(ivar):
+                g.trace('init %24s %20s %s' % (ivar,val,tag))
+            elif self.optionsDict.get(ivar) != val:
+                g.trace('set  %24s %20s %s' % (ivar,val,tag))
+    
+        self.optionsDict [ivar] = val
     #@nonl
     #@-node:ekr.20050811135526:setOption
     #@+node:ekr.20050814134351:getOption
@@ -1550,9 +1534,10 @@ class rstClass:
     def computeOutputFileName (self,fileName):
         
         openDirectory = self.c.frame.openDirectory
+        default_path = self.getOption('default_path')
     
-        if self.default_path:
-            path = g.os_path_join(self.default_path,fileName)
+        if default_path:
+            path = g.os_path_join(default_path,fileName)
         elif openDirectory:
             path = g.os_path_join(openDirectory,fileName)
         else:
