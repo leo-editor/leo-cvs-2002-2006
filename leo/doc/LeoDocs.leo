@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="20322" clone_windows="0"/>
-<globals body_outline_ratio="0.626229508197">
-	<global_window_position top="13" left="294" height="915" width="965"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="20340" clone_windows="0"/>
+<globals body_outline_ratio="0.613114754098">
+	<global_window_position top="14" left="245" height="915" width="965"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -28,6 +28,7 @@
 <v t="ekr.20050812123002.6"><vh>@bool rst3_massage_body = False</vh></v>
 <v t="ekr.20050812123002.7"><vh>@bool rst3_format_headlines = True</vh></v>
 <v t="ekr.20050812123002.8"><vh>@bool rst3_write_intermediate_file = True</vh></v>
+<v t="ekr.20051202072010"><vh>@string rst3_default_path =</vh></v>
 </v>
 </v>
 <v t="ekr.20050901054622"><vh>@button Save</vh></v>
@@ -41,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -586,6 +587,67 @@
 </v>
 </v>
 </v>
+<v t="ekr.20051203084745"><vh>JythonShell help</vh>
+<v t="ekr.20051203085709"><vh>original</vh></v>
+<v t="ekr.20051203084850"><vh>@rst html\jythonShell.html</vh>
+<v t="ekr.20051203084850.1"><vh>@rst-no-head links</vh></v>
+<v t="ekr.20051203085709.1"><vh>Autocompleter Actions</vh></v>
+<v t="ekr.20051203085709.2"><vh>Keystrokes</vh></v>
+<v t="ekr.20051203085709.3"><vh>Alt Slash: Dynamic Abbreviations</vh></v>
+<v t="ekr.20051203085709.4"><vh>Object Introspection</vh></v>
+<v t="ekr.20051203090220"><vh>System access</vh></v>
+<v t="ekr.20051203090220.1"><vh>Magic Commands</vh>
+<v t="ekr.20051203094826"><vh>%alias anAlias</vh></v>
+<v t="ekr.20051203094826.1"><vh>%autocall</vh></v>
+<v t="ekr.20051203094826.2"><vh>%autoindent</vh></v>
+<v t="ekr.20051203095113"><vh>%bg</vh></v>
+<v t="ekr.20051203095113.1"><vh>%cd</vh></v>
+<v t="ekr.20051203095113.2"><vh>%clean</vh></v>
+<v t="ekr.20051203095113.3"><vh>%clear</vh></v>
+<v t="ekr.20051203095113.4"><vh>%cwd</vh></v>
+<v t="ekr.20051203095113.5"><vh>%cwd aReference</vh></v>
+<v t="ekr.20051203095437"><vh>%deserialize aReference</vh></v>
+<v t="ekr.20051203095437.1"><vh>%ed</vh></v>
+<v t="ekr.20051203095437.2"><vh>%edit [options] [args]</vh></v>
+<v t="ekr.20051203095437.3"><vh>%env</vh></v>
+<v t="ekr.20051203095437.4"><vh>%hist [-n] [n1] [n2]</vh></v>
+<v t="ekr.20051203095437.5"><vh>%kill n</vh></v>
+<v t="ekr.20051203095437.6"><vh>%ls</vh></v>
+<v t="ekr.20051203095437.7"><vh>%ls aReference</vh></v>
+<v t="ekr.20051203100230"><vh>%lsmagic</vh></v>
+<v t="ekr.20051203100230.1"><vh>%macro aMacro</vh></v>
+<v t="ekr.20051203100230.2"><vh>%magic</vh></v>
+<v t="ekr.20051203100230.3"><vh>%p</vh></v>
+<v t="ekr.20051203100230.4"><vh>%pdb</vh></v>
+<v t="ekr.20051203100230.5"><vh>%pdoc anObject</vh></v>
+<v t="ekr.20051203100230.6"><vh>%pfile obj</vh></v>
+<v t="ekr.20051203100230.7"><vh>%pinfo aReference</vh></v>
+<v t="ekr.20051203100230.8"><vh>%prun statement</vh></v>
+<v t="ekr.20051203100230.9"><vh>%ps</vh></v>
+<v t="ekr.20051203100230.10"><vh>%r</vh></v>
+<v t="ekr.20051203100930.1"><vh>%rehash and %rehashx</vh></v>
+<v t="ekr.20051203100930.2"><vh>%reset</vh></v>
+<v t="ekr.20051203100930.3"><vh>%run [-n -i -t [-N n] -d [-b n] -p [profile options]] file [args]</vh></v>
+<v t="ekr.20051203100930.4"><vh>%save filename n1:n2 n3:n4 ... n5 .. n6 ...</vh></v>
+<v t="ekr.20051203100930.6"><vh>%sc [options] varname=command</vh></v>
+<v t="ekr.20051203100930.7"><vh>%see</vh></v>
+<v t="ekr.20051203101658"><vh>%send n aReference</vh></v>
+<v t="ekr.20051203101658.1"><vh>%serialize aReference</vh></v>
+<v t="ekr.20051203101658.2"><vh>%swing aReference</vh></v>
+<v t="ekr.20051203101658.3"><vh>%sx aCommand</vh></v>
+<v t="ekr.20051203101828"><vh>%threads</vh></v>
+<v t="ekr.20051203101828.1"><vh>%unalias anAlias</vh></v>
+<v t="ekr.20051203101828.2"><vh>%url ref aUrl</vh></v>
+<v t="ekr.20051203101828.3"><vh>%wait n</vh></v>
+<v t="ekr.20051203101828.4"><vh>%who</vh></v>
+<v t="ekr.20051203101828.5"><vh>%who_ls</vh></v>
+<v t="ekr.20051203101828.6"><vh>%whos</vh></v>
+<v t="ekr.20051203101828.7"><vh>%xslt ref1 ref2 ref3</vh></v>
+</v>
+<v t="ekr.20051203090220.2"><vh>A Note on JPIDs and the CWD</vh></v>
+<v t="ekr.20051203084850.16"><vh>@rst-no-head end-of-page stuff</vh></v>
+</v>
+</v>
 <v t="ekr.20050914132220"><vh>Other docs</vh>
 <v t="ekr.20050916184158"><vh>Leo Tech report</vh>
 <v t="ekr.20050916184158.1"><vh>@rst html\techReport.html</vh>
@@ -678,7 +740,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050917092557"><vh>4.3.3 final</vh>
 <v t="ekr.20050917105646"><vh>Fixes made in 4.3.3</vh></v>
@@ -2149,8 +2211,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20051028051444" a="TV"><vh>4.4 alpha 4</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -14008,6 +14070,7 @@ You should see Leo's main window, something like this:
 
 @ @rst-options
 code_mode=False
+default_path =
 generate_rst=True
 http_server_support = False
 show_organizer_nodes=True
@@ -14022,7 +14085,8 @@ verbose=True
 |leo| Using the rst3 plugin
 ###########################
 
-.. contents::</t>
+.. contents::
+</t>
 <t tx="ekr.20050818163826.1">.. rST links used in this document...
 
 .. External links...
@@ -22022,5 +22086,349 @@ will be lost.</t>
 <t tx="ekr.20051128181351"></t>
 <t tx="ekr.20051128181651">Leo 4.4a4 completes the transition to the 'Newer World Order'.</t>
 <t tx="ekr.20051128181651.1"></t>
+<t tx="ekr.20051202072010"></t>
+<t tx="ekr.20051203084745"></t>
+<t tx="ekr.20051203084850">.. December 3, 2005
+
+@ @rst-options
+code_mode=False
+default_path =
+generate_rst=True
+http_server_support = False
+show_organizer_nodes=True
+show_headlines=True
+show_leo_directives=True
+stylesheet_path=..\doc
+write_intermediate_file = False
+verbose=True
+@c
+
+###########################
+|leo| Using JythonShell
+###########################
+
+This chapter describes how to use the Jython Shell created by LeoUser.
+
+.. contents::</t>
+<t tx="ekr.20051203084850.1">.. rST links used in this document...
+
+.. External links...
+
+.. Hard links to Leo's web site...
+
+.. WARNING: image targets may not have upper case letters!
+
+.. _front:  front.html
+.. _home:   front.html
+
+.. |blank| image:: blank.gif
+.. |leo|   image:: leo.gif
+    :target: front_
+</t>
+<t tx="ekr.20051203084850.16">-------------
+
+|leo|</t>
+<t tx="ekr.20051203085709">
+
+
+
+</t>
+<t tx="ekr.20051203085709.1">- Up-Down Arrow moves the selection up or down.
+- Tab inserts the current selection.
+
+The completion list shows the best prefix entered after the '.'
+Any other key withdraws the autocompleter.</t>
+<t tx="ekr.20051203085709.2">Enter
+    Processes the current line from the prompt to the end,
+    regardless of where the cursor is.
+
+Ctrl Enter
+    This keystroke has two meanings:
+
+    1. process the current line with a ':' appended to the end of it,
+       regardless of where the cursor is.
+       This is the behavior if there is character data on the line.
+
+    2. If the line is pure whitespace, then the line is interpreted as a '' string with a length of 0.</t>
+<t tx="ekr.20051203085709.3">Executing will dynamically expand a prefix to matching
+words already entered within the interpreter.  For example:
+cactus
+cac( keystroke ) will expand cac to cactus.
+This will cycle through all matches to cac within the buffer upon repeated execution.
+
+Ctrl A 
+    Moves current position to the end of the prompt.
+
+Ctrl E
+    Moves current position to the end of the line.
+
+Ctrl K
+    Removes all text from current position to end of the line.
+
+Ctrl N
+    Start typing, and then use this keystroke to search downwards only through
+    the history items that match what you ve typed so far. If you use this
+    keystroke at a blank prompt, they just behave like normal arrow keys.
+
+Ctrl P
+    Start typing, and then use this keystroke to search upwards through only the
+    history items that match what you ve typed so far. If you use this keystroke
+    at a blank prompt, they just behave like normal arrow keys.
+
+Ctrl R
+    Opens a search prompt. Begin typing and the system searches your history for
+    lines that contain what you ve typed so far, completing as much as it can.
+
+Ctrl T
+    Places triple quotes around the text on the current line.
+
+Ctrl Z
+    Suppresses the current output for the duration of the execution statement.
+    This is useful in cases where there is a tremendous amount of output
+    occuring and the user decides that he no longer wishes to see all of it. For
+    gigantic outputs, this can be a shell saver.
+
+Delete
+    Removes all text from the prompt to the end of the line.
+
+Down
+    Moves the current line down one item in the history.
+    By moving, this means the current line is replaced with history item.
+
+Up
+    Moves the current line up one item in the history
+    By moving, this means the current line is replaced with history item.</t>
+<t tx="ekr.20051203085709.4">Typing a reference name followed by a ? will create a object view which gives
+the user a variety of information about the Object in question. Example::
+
+    a = 'meoooowwww'
+    a? # Upon Enter, a panel will appear below showing Object information.</t>
+<t tx="ekr.20051203090220">Typing ! at the command prompt followed by the system command you wish to
+execute will start the command as a process and return a JPID for the process
+that can be manipulated by the magic command set.</t>
+<t tx="ekr.20051203090220.1">Entering one of the following commands will cause its
+corresponding command to execute:</t>
+<t tx="ekr.20051203090220.2">JPIDs are not PIDs of the OS. They are a system by which the JythonShell can
+keep track of Processes created by it, and means by which the user can
+manipulate those Processes.
+
+The CWD does not indicate what the process is working in. It is intended to
+function with the Magic Commands. This system does not interoperate with
+java.io.File or Jython open. To achieve interopability the user should use the
+magic command of the form::
+
+    %cwd reference
+
+This will place a java.io.File in the reference. The File instance is a copy of
+the CWD File and will allow the user to open, write, create, close streams and
+such in the JythonShell's CWD</t>
+<t tx="ekr.20051203094826">``%alias`` *anAlias* defines alias name as an alias for cmd.
+Afterwards, typing alias name params will execute the system command cmd params (from your
+underlying operating system).
+Aliases have lower precedence than magic functions and Python normal variables,
+so if foo is both a Python variable and an alias, the alias can not be executed until you remove the Python using ``del foo``.</t>
+<t tx="ekr.20051203094826.1">Toggles autocalling off and on.
+Autocalling is the ability to do something like::
+
+    dir a
+
+instead of dir( a ).</t>
+<t tx="ekr.20051203094826.2">Toggles autoindenting off and on.</t>
+<t tx="ekr.20051203095113">Runs a method/function in a background thread.
+For example::
+
+    %bg doit()
+
+This executes doit in a thread.
+The status of the operation can be seen by looking at the jobs object::
+
+    jobs.status()  #Prints the status of the jobs.
+
+Alternatively you can access the status like so::
+
+    jobs[jobnumber].result
+
+jobnumber is printed out when the method/function is about to execute.
+The result will be the return value of the method/function or it will tell you the job isn't finished yet.</t>
+<t tx="ekr.20051203095113.1">Changes the current working directory of the Jython Shell.
+``..`` signifies the parent directory.
+Absolute and relative paths are allowed.</t>
+<t tx="ekr.20051203095113.2">Destroys all JPIDs.</t>
+<t tx="ekr.20051203095113.3">Clears the shell of all text and starts over with a fresh prompt.</t>
+<t tx="ekr.20051203095113.4">Shows the current working directory of the Jython Shell.</t>
+<t tx="ekr.20051203095113.5">Sets the reference to a java.io.File instance representing the current directory.</t>
+<t tx="ekr.20051203095437">Deserialize an Object stored on disk into the reference.</t>
+<t tx="ekr.20051203095437.1">Same as %edit.
+
+</t>
+<t tx="ekr.20051203095437.2">Brings up the Jython Shell editor and executes the resulting code.
+
+This command allows you to conveniently edit multi-line code right in your JythonShell session.
+If called without arguments,
+``%edit`` opens up an empty editor with a temporary file and will execute the contents of this file when you close it
+(don t forget to save it!).
+Options:
+
+-p
+    Calls the editor with the same data as the previous time it was used,
+    regardless of how long ago (in your current session) it was.
+
+-x
+    Suppresses execution of the edited code upon exit.
+    This is mainly useful if you are editing programs which need to be called with command line arguments,
+    which you can then do using %run.
+
+If args are given, the following possibilites exist:
+
+- The arguments are numbers or pairs of colon-separated numbers, e.g., ``1 4:8 9``.
+  These are interpreted as lines of previous input to be loaded into the editor.
+  The syntax is the same of the %macro command.
+
+- If the argument doesn't start with a number,
+  it is evaluated as a variable and its contents loaded into the editor.
+  You can thus edit any string which contains python code (including the result of previous edits).</t>
+<t tx="ekr.20051203095437.3">Prints all environment variables.</t>
+<t tx="ekr.20051203095437.4">Prints all or part of the history.
+If given, the ``-n`` argument signifies that line numbers should not be printed out.
+
+%hist [ -n ] 
+    Prints the total history or the last 40 items in it.
+
+%hist [ -n ] n1
+    Prints the last n1 items in the history.
+
+%hist [ -n ] n1 n2
+    Prints the items from index n1 to index n2.</t>
+<t tx="ekr.20051203095437.5">Destroys JPID n.</t>
+<t tx="ekr.20051203095437.6">Shows the contents of the current working directory.</t>
+<t tx="ekr.20051203095437.7">Shows a java array of File instances.  For example::
+
+    %ls a # a now holds a java array of File instances</t>
+<t tx="ekr.20051203100230">Returns the current available set of magic commands.</t>
+<t tx="ekr.20051203100230.1">Defines a macro that can be executed by using the name given.  For example::
+
+    %macro macex 9:10 11 12:13 4
+
+creates a macro called macex and puts line 9-10, 11 12-13 and 4 from the history into it
+Hence entering macex and typing enter will cause those lines to rexecute.
+
+To see the contents of the macro type: ``print macroname``.
+To remove a macro type: ``del macroname``.</t>
+<t tx="ekr.20051203100230.2">%magic
+    Prints out the description of the magic commands.
+
+%magic %magiccommandname
+    Prints the usuage/description of the given magic command.</t>
+<t tx="ekr.20051203100230.3">Same as 'print'.</t>
+<t tx="ekr.20051203100230.4">%pdb
+    Starts the Pdb debugger.
+
+%pdb filename
+
+    Runs the file under Pdb in the shell.
+
+%pdb [on|1|off|0 ]
+    Toggles automatic startup of Pdb on an exception.  Examples::
+
+        %pdb on  --&gt; now on
+        %pdb off --&gt; now off
+        %pdb 1 --&gt; now on
+        %pdb 0 --&gt; now off</t>
+<t tx="ekr.20051203100230.5">Prints out the doc string of the passed in object if one can be found, otherwise does nothing.
+
+The object may be a module, a method, an object, etc.</t>
+<t tx="ekr.20051203100230.6">Attempts to locate the source file of the passed in object
+and displays the contents of the source in the shell.</t>
+<t tx="ekr.20051203100230.7">An alias for the ? object viewer syntax.
+If the references is valid, a widget containing info on the reference will appear.</t>
+<t tx="ekr.20051203100230.8">Executes a statement entered on the same line in the profile module.</t>
+<t tx="ekr.20051203100230.9">%ps
+    Prints out all JPID's the JythonShell has collected.
+
+%ps aReference
+    Puts a java Set of Processes in the reference.  For exampe:
+
+        %ps a #a now holds a Set of Processes.</t>
+<t tx="ekr.20051203100230.10">Repeats the last input.</t>
+<t tx="ekr.20051203100930.1">%rehash
+    Updates the alias table with all entries in $PATH.
+    This command does **not** check execute permissions or whether the contents of $PATH are truly files
+    (instead of directories or something else).
+
+%rehashx
+    Updates the alias table with all executable files in $PATH.
+    This command **does** explicitly check that every entry in $PATH is a file, so it is slower than %rehash.</t>
+<t tx="ekr.20051203100930.2">Resets the namespace by removing all names defined by the user.
+Input/Output history remain in case you need them.</t>
+<t tx="ekr.20051203100930.3">Runs the named file inside IPython as a program. Options:
+
+-n:
+    Suppresses setting ``__name__`` to ``__main__``.
+    Instead, sets ``__name__`` to the file's name without
+    extension (as Python does under import).
+
+    This allows running scripts and reloading the definitions in them without calling code protected by::
+
+        if __name__ == __main__:
+
+-i:
+    Runs the file in JythonShell's namespace instead of an empty one.
+    This is useful if you are experimenting with code written in a text editor which
+    depends on variables defined interactively.
+
+-t:
+    Prints timing information at the end of the run.
+
+-N n:
+    If -t is given this option indicates how many times you want the script to run.
+    ``n`` must be an integer.
+    The final timing report will include total and per run results.</t>
+<t tx="ekr.20051203100930.4">This command uses the same syntax as %macro for line extraction, but instead
+of creating a macro it saves the resulting string to file whose name is
+given. It ensures the filename ends with a .py extension, and it asks for
+confirmation before overwriting existing files.</t>
+<t tx="ekr.20051203100930.6">Runs the given command using ``command.getoutput()``
+and updates the user's interactive namespace with a variable called varname
+containing the value of the call.
+Your command can contain shell wildcards, pipes, etc.
+The ``=`` is mandatory, and the variable name must be a valid Python identifier.
+Options:
+
+-l:
+    List output. Splits the output on newlines into a list before
+    assigning it to the given variable. By default the output is stored as a
+    single string.
+
+-v:
+    Verbose. Prints the contents of the variable.</t>
+<t tx="ekr.20051203100930.7">%see n
+    Shows any output JPID n has collected.
+
+%see n aReference
+    Places any output JPID n has collected in the reference.</t>
+<t tx="ekr.20051203101658">Sends the reference as input to JPID n.</t>
+<t tx="ekr.20051203101658.1">Saves the object referenced by reference as a serialized Object.</t>
+<t tx="ekr.20051203101658.2">Places the reference into the editor if the reference is a JComponent subclass.
+Useful for quick gazing of what a Swing component looks like.</t>
+<t tx="ekr.20051203101658.3">Runs the given command using commands.getoutput(), and returns the result formatted as a list (split on).
+The output is stored in ipython's regular output cache Out[N] and in the N automatic variables.</t>
+<t tx="ekr.20051203101828">Shows the threads running and the state they are in.
+Selecting a thread shows the thread's stack.</t>
+<t tx="ekr.20051203101828.1">Removes the given alias.</t>
+<t tx="ekr.20051203101828.2">Loads data from a url into a reference.  For example::
+
+    %url a http://python.org
+
+take the data at ``http://python.org`` and places it in ref.</t>
+<t tx="ekr.20051203101828.3">Suspends the JythonShell until JPID n has finished.</t>
+<t tx="ekr.20051203101828.4">Prints the list of identifiers that have been defined interactively.</t>
+<t tx="ekr.20051203101828.5">Returns a sorted list of all interactive variables.
+If arguments are given, only variables of types matching these arguments are returned.
+Examples::
+
+    %who_ls
+    %who_ls str int  #this prints out variables whose type is str and int</t>
+<t tx="ekr.20051203101828.6">Prints a table of identifiers that have been defined interactively.</t>
+<t tx="ekr.20051203101828.7">Transforms reference ref2 with the stylesheet in ref1 putting the result in ref3.</t>
 </tnodes>
 </leo_file>
