@@ -33,9 +33,6 @@ class leoTkinterDialog:
         self.top = None # The toplevel Tk widget.
         self.focus_widget = None # The widget to get the first focus.
         self.canClose = canClose
-        
-        # New in 4.4 a2: g.app.dialogs is a count of the open dialogs.
-        g.app.dialogs += 1
     #@nonl
     #@-node:ekr.20031218072017.3860:__init__ (tkDialog)
     #@+node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
@@ -117,9 +114,7 @@ class leoTkinterDialog:
     def createTopFrame(self):
         
         """Create the Tk.Toplevel widget for a leoTkinterDialog."""
-        
-        
-        
+    
         if g.app.unitTesting: return
         
         self.root = g.app.root
@@ -164,15 +159,19 @@ class leoTkinterDialog:
         self.center() # Do this after all packing complete.
         self.top.lift()
     
+        # Get all keystrokes.
         if self.modal:
             self.top.grab_set() # Make the dialog a modal dialog.
             
         if self.focus_widget == None:
             self.focus_widget = self.top
             
-        # Get all keystrokes.
-        if c:
-            c.frame.widgetWantsFocus(self.focus_widget)
+        # New in 4.4 a2: g.app.dialogs is a count of the open dialogs.
+        g.app.dialogs += 1
+            
+        if 0: # Somehow this interferes with lift().
+            if c:
+                c.frame.widgetWantsFocus(self.focus_widget)
            
         self.root.wait_window(self.top)
         

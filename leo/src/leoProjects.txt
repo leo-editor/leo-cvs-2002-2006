@@ -3177,8 +3177,6 @@ def OnCopyFromMenu (self):
 
     if name.startswith('body'):
         w.event_generate(g.virtual_event_name("Copy"))
-        w.update()
-        f.body.onBodyChanged('Copy')
     else:
         # Necessary when not using shortcut keys.
         w.event_generate(g.virtual_event_name("Copy"))
@@ -3449,10 +3447,12 @@ redraw = force_redraw = redraw_now
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -5659,10 +5659,12 @@ s = g.toUnicode(s or '',g.app.tkEncoding)
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -6260,10 +6262,12 @@ redraw = force_redraw = redraw_now
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -7427,10 +7431,12 @@ redraw = force_redraw = redraw_now
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -9180,8 +9186,6 @@ def OnCopyFromMenu (self):
 
     if name.startswith('body'):
         w.event_generate(g.virtual_event_name("Copy"))
-        w.update()
-        f.body.onBodyChanged('Copy')
     else:
         # Necessary when not using shortcut keys.
         w.event_generate(g.virtual_event_name("Copy"))
@@ -9618,10 +9622,12 @@ redraw = force_redraw = redraw_now
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -11397,10 +11403,12 @@ def OnPasteFromMenu (self):
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -11595,10 +11603,12 @@ def handleDefaultChar(self,event):
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -12442,10 +12452,12 @@ for frame, text, command in (
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -13842,8 +13854,6 @@ def OnCopyFromMenu (self):
 
     if name.startswith('body'):
         w.event_generate(g.virtual_event_name("Copy"))
-        w.update()
-        f.body.onBodyChanged('Copy')
     else:
         # Necessary when not using shortcut keys.
         w.event_generate(g.virtual_event_name("Copy"))
@@ -14233,10 +14243,12 @@ seem needed now.
 #@+node:ekr.20051103114520.1:c.setFocusHelper
 def setFocusHelper (self):
     
-    c = self ; frame = c.frame
+    c = self
     
-    if g.app.quitting or not hasattr(frame,'top'):
+    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
         return # nullFrame's do not have a top frame.
+        
+    frame = c.frame
 
     if frame.wantedWidget:
         w = frame.wantedWidget
@@ -16500,6 +16512,47 @@ def openSettingsFile (self,path):
 #@-node:ekr.20041117085625:g.app.config.openSettingsFile
 #@-node:ekr.20051201111822.2:Calls to newLeoCommanderAndFrame
 #@-node:ekr.20051103093034:Fix problems applying settings
+#@+node:ekr.20051204093712:Fixed bugs in rst3 plugin
+#@+node:ekr.20051204075330:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3456419
+
+V1.6 report:
+
+my options are:
+@ @rst-options
+default_path=C:\tmp
+stylesheet_path=C:\Program Files\key\stuff\rststylesheet_name=html4css1.css
+write_intermediate_file=True
+generate_rst = True
+@c
+
+IF this doc part is in the body of the 
+@rst test-rst.html
+node, the log pane shows;
+wrote: C:\Documents and Settings\ktenney\Desktop\test-rst.html.txt
+wrote: C:\tmp\test-rst.html
+done
+
+IE: the default_path works for the html file,
+the intermediate file goes to my desktop (?)
+
+If the options are in a parent node of the 
+@rst test-rst.html
+node, the log pane shows;
+stylesheet does not exist: default.css
+wrote: C:\Program Files\key\stuff\test-rst.html
+done
+
+IE: the options are not getting picked up.
+
+According to the 'Setting Defaults' section of
+http://webpages.charter.net/edreamleo/rstplugin3.html
+it seems they should work if put in an ancestor node.
+
+#@-node:ekr.20051204075330:Report
+#@-node:ekr.20051204093712:Fixed bugs in rst3 plugin
 #@-node:ekr.20051110101524:4.4a4 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

@@ -106,8 +106,10 @@ class baseEditCommandsClass:
     #@+node:ekr.20050929161635:Helpers
     #@+node:ekr.20050920084036.249:_chckSel
     def _chckSel (self,event,warning=''):
+    
+        c = self.c ; k = self.k
         
-        k = self.k ; w = event.widget
+        w = event and event.widget or c.frame.body.bodyCtrl
     
         val = 'sel' in w.tag_names() and w.tag_ranges('sel')
         
@@ -146,12 +148,17 @@ class baseEditCommandsClass:
     #@-node:ekr.20050920084036.10:contRanges
     #@+node:ekr.20050920084036.233:getRectanglePoints
     def getRectanglePoints (self,event):
+        
+        __pychecker__ = '--no-argsused' # event not used.
     
-        w = event.widget
-        i = w.index('sel.first')
+        c = self.c
+        w = c.frame.body.bodyCtrl
+        c.frame.bodyWantsFocus()
+        i  = w.index('sel.first')
         i2 = w.index('sel.last')
         r1, r2 = i.split('.')
         r3, r4 = i2.split('.')
+    
         return int(r1), int(r2), int(r3), int(r4)
     #@nonl
     #@-node:ekr.20050920084036.233:getRectanglePoints
@@ -1041,7 +1048,7 @@ class bufferCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.31:class bufferCommandsClass
-#@+node:ekr.20050920084036.150:class controlCommandsClass
+#@+node:ekr.20050920084036.150:class controlCommandsClass (ok)
 class controlCommandsClass (baseEditCommandsClass):
     
     #@    @+others
@@ -1160,7 +1167,7 @@ class controlCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.153:suspend & iconifyOrDeiconifyFrame
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.150:class controlCommandsClass
+#@-node:ekr.20050920084036.150:class controlCommandsClass (ok)
 #@+node:ekr.20050920084036.53:class editCommandsClass
 class editCommandsClass (baseEditCommandsClass):
     
@@ -4625,9 +4632,9 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.230:openRectangle
     #@+node:ekr.20050920084036.229:yankRectangle
-    def yankRectangle (self,event,killRect=None):
+    def yankRectangle (self,killRect=None):
         
-        k = self.k ; w = event.widget
+        c = self.c ; k = self.k ; w = c.frame.body.bodyCtrl
         
         if not killRect: killRect = self.theKillRectangle
     
@@ -4677,7 +4684,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.221:class rectangleCommandsClass
-#@+node:ekr.20050920084036.234:class registerCommandsClass
+#@+node:ekr.20050920084036.234:class registerCommandsClass (ok)
 class registerCommandsClass (baseEditCommandsClass):
 
     '''A class to represent registers a-z and the corresponding Emacs commands.'''
@@ -4717,7 +4724,7 @@ class registerCommandsClass (baseEditCommandsClass):
             'increment-register':           self.incrementRegister,
             'insert-register':              self.insertRegister,
             'jump-to-register':             self.jumpToRegister,
-            'number-to-register':           self.numberToRegister,
+            # 'number-to-register':           self.numberToRegister,
             'point-to-register':            self.pointToRegister,
             'prepend-to-register':          self.prependToRegister,
             'view-register':                self.viewRegister,
@@ -4733,7 +4740,7 @@ class registerCommandsClass (baseEditCommandsClass):
             'a':        self.appendToRegister,
             'i':        self.insertRegister,
             'j':        self.jumpToRegister,
-            'n':        self.numberToRegister,
+            # 'n':        self.numberToRegister,
             'p':        self.prependToRegister,
             'r':        self.copyRectangleToRegister,
             's':        self.copyToRegister,
@@ -4757,74 +4764,82 @@ class registerCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.252:addRegisterItems (Not used!)
     #@-node:ekr.20051004095209:Birth
-    #@+node:ekr.20051004123217:check
-    def check (self,event,warning='No text selected'):
-    
-        return self._chckSel(event,warning)
+    #@+node:ekr.20051004123217:checkBodySelection
+    def checkBodySelection (self,warning='No text selected'):
+        
+        return self._chckSel(event=None,warning=warning)
     #@nonl
-    #@-node:ekr.20051004123217:check
+    #@-node:ekr.20051004123217:checkBodySelection
     #@+node:ekr.20050920084036.236:Entries...
     #@+node:ekr.20050920084036.238:appendToRegister
     def appendToRegister (self,event):
     
-        k = self.k ; state = k.getState('append-to-reg')
+        c = self.c ; k = self.k ; state = k.getState('append-to-reg')
         
         if state == 0:
             k.setLabelBlue('Append to register: ',protect=True)
             k.setState('append-to-reg',1,self.appendToRegister)
         else:
             k.clearState()
-            if event.keysym in string.letters:
-                w = event.widget
-                key = event.keysym.lower()
-                val = self.registers.get(key,'')
-                try:
-                    val = val + w.get('sel.first','sel.last')
-                except Exception:
-                    pass
-                self.registers[key] = val
-                k.setLabelGrey('Register %s = %s' % (key,repr(val)))
-            else:
-                k.setLabelGrey('Register must be a letter')
+            if self.checkBodySelection():
+                if event.keysym in string.letters:
+                    w = c.frame.body.bodyCtrl
+                    c.frame.bodyWantsFocus()
+                    key = event.keysym.lower()
+                    val = self.registers.get(key,'')
+                    try:
+                        val = val + w.get('sel.first','sel.last')
+                    except Exception:
+                        pass
+                    self.registers[key] = val
+                    k.setLabelGrey('Register %s = %s' % (key,repr(val)))
+                else:
+                    k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.238:appendToRegister
     #@+node:ekr.20050920084036.237:prependToRegister
     def prependToRegister (self,event):
         
-        k = self.k ; state = k.getState('prepend-to-reg')
+        c = self.c ; k = self.k ; state = k.getState('prepend-to-reg')
         
         if state == 0:
             k.setLabelBlue('Prepend to register: ',protect=True)
             k.setState('prepend-to-reg',1,self.prependToRegister)
         else:
             k.clearState()
-            if event.keysym in string.letters:
-                w = event.widget
-                key = event.keysym.lower()
-                val = self.registers.get(key,'')
-                try:
-                    val = w.get('sel.first','sel.last') + val
-                except Exception:
-                    pass
-                self.registers[key] = val
-                k.setLabelGrey('Register %s = %s' % (key,repr(val)))
-            else:
-                k.setLabelGrey('Register must be a letter')
+            if self.checkBodySelection():
+                if event.keysym in string.letters:
+                    w = c.frame.body.bodyCtrl
+                    c.frame.bodyWantsFocus()
+                    key = event.keysym.lower()
+                    val = self.registers.get(key,'')
+                    try:
+                        val = w.get('sel.first','sel.last') + val
+                    except Exception:
+                        pass
+                    self.registers[key] = val
+                    k.setLabelGrey('Register %s = %s' % (key,repr(val)))
+                else:
+                    k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.237:prependToRegister
     #@+node:ekr.20050920084036.239:copyRectangleToRegister
     def copyRectangleToRegister (self,event):
     
-        k = self.k ; state = k.getState('copy-rect-to-reg')
+        c = self.c ; k = self.k ; state = k.getState('copy-rect-to-reg')
     
         if state == 0:
             k.commandName = 'copy-rectangle-to-register'
             k.setLabelBlue('Copy Rectangle To Register: ',protect=True)
             k.setState('copy-rect-to-reg',1,self.copyRectangleToRegister)
-        elif self.check(event,'No rectangle selected'):
+        elif self.checkBodySelection('No rectangle selected'):
             k.clearState()
             if event.keysym in string.letters:
-                key = event.keysym.lower() ; w = event.widget
+                key = event.keysym.lower()
+                w = c.frame.body.bodyCtrl
+                c.frame.bodyWantsFocus()
                 r1, r2, r3, r4 = self.getRectanglePoints(event)
                 rect = []
                 while r1 <= r3:
@@ -4835,14 +4850,13 @@ class registerCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Register %s = %s' % (key,repr(rect)))
             else:
                 k.setLabelGrey('Register must be a letter')
-        else:
-            k.clearState()
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.239:copyRectangleToRegister
     #@+node:ekr.20050920084036.240:copyToRegister
     def copyToRegister (self,event):
         
-        k = self.k ; state = k.getState('copy-to-reg')
+        c = self.c ; k = self.k ; state = k.getState('copy-to-reg')
         
         if state == 0:
             k.commandName = 'copy-to-register'
@@ -4850,24 +4864,27 @@ class registerCommandsClass (baseEditCommandsClass):
             k.setState('copy-to-reg',1,self.copyToRegister)
         else:
             k.clearState()
-            if self.check(event):
+            if self.checkBodySelection():
                 if event.keysym in string.letters:
                     key = event.keysym.lower()
-                    w = event.widget
+                    w = c.frame.body.bodyCtrl
+                    c.frame.bodyWantsFocus()
                     try:
                         val = w.get('sel.first','sel.last')
                     except Exception:
+                        g.es_exception()
                         val = ''
                     self.registers[key] = val
                     k.setLabelGrey('Register %s = %s' % (key,repr(val)))
                 else:
                     k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.240:copyToRegister
     #@+node:ekr.20050920084036.241:incrementRegister
     def incrementRegister (self,event):
         
-        k = self.k ; state = k.getState('increment-reg')
+        c = self.c ; k = self.k ; state = k.getState('increment-reg')
         
         if state == 0:
             k.setLabelBlue('Increment register: ',protect=True)
@@ -4875,7 +4892,7 @@ class registerCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             if self._checkIfRectangle(event):
-                k.resetLabel()
+                pass # Error message is in the label.
             elif event.keysym in string.letters:
                 key = event.keysym.lower()
                 val = self.registers.get(key,0)
@@ -4887,11 +4904,12 @@ class registerCommandsClass (baseEditCommandsClass):
                     k.setLabelGrey("Can't increment register %s = %s" % (key,val))
             else:
                 k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@-node:ekr.20050920084036.241:incrementRegister
     #@+node:ekr.20050920084036.242:insertRegister
     def insertRegister (self,event):
         
-        k = self.k ; c = k.c ; state = k.getState('insert-reg')
+        c = self.c ; k = self.k ; state = k.getState('insert-reg')
         
         if state == 0:
             k.commandName = 'insert-register'
@@ -4900,24 +4918,27 @@ class registerCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             if event.keysym in string.letters:
-                w = event.widget
+                w = c.frame.body.bodyCtrl
+                c.frame.bodyWantsFocus()
                 key = event.keysym.lower()
                 val = self.registers.get(key)
                 if val:
                     if type(val)==type([]):
-                        c.rectangleCommands.yankRectangle(event,val)
+                        c.rectangleCommands.yankRectangle(val)
                     else:
                         w.insert('insert',val)
+                    k.setLabelGrey('Inserted register %s' % key)
                 else:
                     k.setLabelGrey('Register %s is empty' % key)
             else:
                 k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.242:insertRegister
     #@+node:ekr.20050920084036.243:jumpToRegister
     def jumpToRegister (self,event):
     
-        k = self.k ; state = k.getState('jump-to-reg')
+        c = self.c ; k = self.k ; state = k.getState('jump-to-reg')
     
         if state == 0:
             k.setLabelBlue('Jump to register: ',protect=True)
@@ -4928,28 +4949,27 @@ class registerCommandsClass (baseEditCommandsClass):
                 if self._checkIfRectangle(event): return
                 key = event.keysym.lower()
                 val = self.registers.get(key)
+                w = c.frame.body.bodyCtrl
+                c.frame.bodyWantsFocus()
                 if val:
                     try:
-                        event.widget.mark_set('insert',val)
-                        # event.widget.mark_set('insert.end',val)
+                        w.mark_set('insert',val)
                         k.setLabelGrey('At %s' % repr(val))
                     except Exception:
                         k.setLabelGrey('Register %s is not a valid location' % key)
                 else:
                     k.setLabelGrey('Register %s is empty' % key)
-            else:
-                k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.243:jumpToRegister
-    #@+node:ekr.20050920084036.244:numberToRegister (not ready yet)
+    #@+node:ekr.20050920084036.244:numberToRegister (not used)
     #@+at
     # C-u number C-x r n reg
     #     Store number into register reg (number-to-register).
     # C-u number C-x r + reg
-    #     Increment the number in register reg by number (increment-register). 
+    #     Increment the number in register reg by number (increment-register).
     # C-x r g reg
     #     Insert the number from register reg into the buffer.
-    # 
     #@-at
     #@@c
     
@@ -4968,11 +4988,11 @@ class registerCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('number-to-register not ready yet.')
             else:
                 k.setLabelGrey('Register must be a letter')
-    #@-node:ekr.20050920084036.244:numberToRegister (not ready yet)
+    #@-node:ekr.20050920084036.244:numberToRegister (not used)
     #@+node:ekr.20050920084036.245:pointToRegister
     def pointToRegister (self,event):
         
-        k = self.k ; state = k.getState('point-to-reg')
+        c = self.c ; k = self.k ; state = k.getState('point-to-reg')
         
         if state == 0:
             k.commandName = 'point-to-register'
@@ -4981,19 +5001,21 @@ class registerCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             if event.keysym in string.letters:
-                w = event.widget
+                w = c.frame.body.bodyCtrl
+                c.frame.bodyWantsFocus()
                 key = event.keysym.lower()
                 val = w.index('insert')
                 self.registers[key] = val
                 k.setLabelGrey('Register %s = %s' % (key,repr(val)))
             else:
                 k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.245:pointToRegister
     #@+node:ekr.20050920084036.246:viewRegister
     def viewRegister (self,event):
     
-        k = self.k ; state = k.getState('view-reg')
+        c = self.c ; k = self.k ; state = k.getState('view-reg')
         
         if state == 0:
             k.commandName = 'view-register'
@@ -5007,12 +5029,13 @@ class registerCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Register %s = %s' % (key,repr(val)))
             else:
                 k.setLabelGrey('Register must be a letter')
+        c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.246:viewRegister
     #@-node:ekr.20050920084036.236:Entries...
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.234:class registerCommandsClass
+#@-node:ekr.20050920084036.234:class registerCommandsClass (ok)
 #@+node:ekr.20051023094009:Search classes
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
 class findTab (leoFind.leoFind):

@@ -205,12 +205,12 @@
 <v t="ekr.20051124090208"><vh>test not python</vh></v>
 </v>
 <v t="ekr.20051130182536" a="E"><vh>IronPython stuff</vh>
-<v t="ekr.20051130182536.1"><vh>batch file</vh>
+<v t="ekr.20051130182536.1" a="E"><vh>batch file</vh>
 <v t="ekr.20051130182412" tnodeList="ekr.20051130182412"><vh>@file ironPythonTest.bat</vh></v>
 </v>
-<v t="ekr.20051130181738" a="M" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
+<v t="ekr.20051130181738" a="MTV" tnodeList="ekr.20051130181738"><vh>@file c:\prog\IronPython-0.9.5\ironPythonTest.py</vh></v>
 </v>
-<v t="ekr.20051201153400" a="TV"><vh>Print Hi</vh></v>
+<v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4128,12 +4128,12 @@ Bug: can't split after opening quote.
 </t>
 <t tx="ekr.20051124094428">    # This is an extremely very very long comment.
     a = b</t>
-<t tx="ekr.20051130181738">print 'Hello Iron Pyton!!'
+<t tx="ekr.20051130181738">print 'Hello Iron Python!!'
 
 import winforms
 
 if 1:
-    while 1: pass
+    pass
     
 else:
     import winforms
@@ -4144,12 +4144,17 @@ else:
     f.Show()</t>
 <t tx="ekr.20051130182412">REM -i option crashes, so this test program had better be a winforms program.
 
-c:\prog\IronPython-0.9.5\bin\IronPythonConsole c:\prog\leoCVS\leo\test\ironPythonTest.py
+cd c:\prog\IronPython-0.9.5
+
+bin\IronPythonConsole c:\prog\leoCVS\leo\test\ironPythonTest.py
 </t>
 <t tx="ekr.20051130182536"></t>
 <t tx="ekr.20051130182536.1">@comment REM_</t>
 <t tx="ekr.20051201063427.1">execute-script = Ctrl-e # Ctrl-e conflicts with end-of-line</t>
 <t tx="ekr.20051201090822"></t>
-<t tx="ekr.20051201153400">print 'hi'</t>
+<t tx="ekr.20051201153400">print 'hi'
+print 'there'
+
+23</t>
 </tnodes>
 </leo_file>

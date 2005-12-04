@@ -1313,18 +1313,43 @@ On Me you set the registry somehow.
 No information on XP.
 #@nonl
 #@-node:ekr.20031218072017.385:How to Increase environment space
+#@+node:ekr.20051203084725:How to expand java .jar files
+- Put whatever.jar in c:\prog
+- cd: c:\prog
+- jar xvf whatever.jar
+#@nonl
+#@-node:ekr.20051203084725:How to expand java .jar files
 #@+node:ekr.20051129084430:How to install jython
 @nocolor
 
 - Download jython_Release_2_2alpha1.jar and put it anywhere (say on the desktop)
+
 - Double-click the file.  This brings up an installer.  Follow the direction.
   (I installed to c:\jython-2.2a1
+
 - Using the Control Panel, System, Advanced tab, environment variables,
-  add c:\jython-2.2a1 to CLASSPATH (in user variables)
+  add c:\jython-2.2a1\jython.jar to CLASSPATH (in user variables)
 #@nonl
 #@+node:ekr.20051129084430.1:@url http://www.jython.org/install.html
 #@-node:ekr.20051129084430.1:@url http://www.jython.org/install.html
 #@-node:ekr.20051129084430:How to install jython
+#@+node:ekr.20051203084725.1:How to install and run jythonShell
+Install:
+
+Put JythonShellEA.jar in c:\prog\JythonShell
+
+(optional) Expand the jar so you can see the code:
+
+jar xvf JythonShellEA.jar
+
+Run:
+
+Here is the contents of jythonShell.bat:
+
+cd c:\prog\jythonShell
+java -cp c:\jython-2.2a1\jython.jar;c:\prog\jythonShell\JythonShellEA.jar org.leo.shell.JythonShell
+#@nonl
+#@-node:ekr.20051203084725.1:How to install and run jythonShell
 #@+node:ekr.20050316092232:How to install jyLeo
 - Unpack the .zip file, placing the result in c:\prog.
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8497" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8499" clone_windows="0"/>
 <globals body_outline_ratio="0.478873239437">
 	<global_window_position top="61" left="316" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="ETV"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="E"><vh>All unit tests</vh>
 <v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -1621,7 +1621,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231"><vh>Unit tests for Redraws</vh>
+<v t="ekr.20051107115231" a="E"><vh>Unit tests for Redraws</vh>
 <v t="ekr.20051122095426"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
 <v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
@@ -1723,13 +1723,16 @@
 <v t="ekr.20051125165933"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
 <v t="ekr.20051125170139"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
-<v t="ekr.20051108141141"><vh>Not ready yet</vh>
+<v t="ekr.20051108141141" a="TV"><vh>Not ready yet</vh>
 <v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
 <v t="ekr.20051109091333"><vh>@test deleting the last body character text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
 <v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
 <v t="ekr.20051130080047"><vh>@test head changes stick after click in icon box</vh></v>
 <v t="ekr.20051120110536"><vh>@test paste into body sticks</vh></v>
+<v t="ekr.20051202100844"><vh>@test edit headline, then insert node</vh></v>
+<v t="ekr.20051202100844.1"><vh>@test &lt;Delete&gt; key</vh></v>
+<v t="ekr.20051202100844.2"><vh>@test arrow keys</vh></v>
 </v>
 <v t="ekr.20051109143831"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
 </v>
@@ -14657,5 +14660,8 @@ finally:
         p.initHeadString(h)
         c.redraw_now()</t>
 <t tx="ekr.20051130080047"></t>
+<t tx="ekr.20051202100844"></t>
+<t tx="ekr.20051202100844.1"></t>
+<t tx="ekr.20051202100844.2"></t>
 </tnodes>
 </leo_file>

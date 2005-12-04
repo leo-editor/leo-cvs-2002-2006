@@ -3299,11 +3299,7 @@ weren't where I expected them to be.
 **Leo shows that traditional literate programming encourages a too creative approach to programming.**
 A dictionary is a better model for programs than a novel. Leo's outlines provide
 a more regular organization, while providing space for the most lengthy
-discussions when those discussions are required. In short, Leo shows that the
-phrase "literate programming" is a misnomer:
-
--   Sections have little to do with literature.
--   Outlines eliminate the need for narrative bridge comments.</t>
+discussions when those discussions are required.</t>
 <t tx="EKR.20040524104904.211"></t>
 <t tx="EKR.20040524104904.224">Naively using plugins can expose you and your .leo files to malicious attacks.
 The fundamental principles are::
