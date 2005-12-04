@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.6'
+__version__ = '1.7'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -390,6 +390,11 @@ except ImportError:
 # 1.6 EKR:
 # - Added support for default_path
 # - Removed duplicate messages about Silver City.
+# 
+# 1.7 EKR:
+# - Fixed bug: preprocess ancestors as well as descendants in preprocessTree.
+# - Fixed bug: use the same path for the intermediate file as for the output 
+# file.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -613,7 +618,7 @@ class rstClass:
         #@nl
     
         self.createDefaultOptionsDict()
-        self.initOptionsFromSettings() # Make sure all associated ivars exist.
+        self.initOptionsFromSettings() # Still needed.
         self.initHeadlineCommands() # Only needs to be done once.
         self.initSingleNodeOptions()
         self.addMenu()
@@ -698,9 +703,9 @@ class rstClass:
             'rst3_http_attributename':      'rst_http_attribute',
             'rst3_node_begin_marker':       'http-node-marker-',
             # Path options...
-            'rst3_default_path':'', # New in Leo 4.4a4.
+            'rst3_default_path': None, # New in Leo 4.4a4 # Bug fix: must be None, not ''.
             'rst3_stylesheet_name': 'default.css',
-            'rst3_stylesheet_path': '',
+            'rst3_stylesheet_path': None, # Bug fix: must be None, not ''.
             # Global options...
             'rst3_number_code_lines': True,
             'rst3_underline_characters': '''#=+*^~"'`-:><_''',
@@ -732,7 +737,7 @@ class rstClass:
         }
     #@nonl
     #@-node:ekr.20050808064245:createDefaultOptionsDict
-    #@+node:ekr.20050812120933:dumpSettings (not used)
+    #@+node:ekr.20050812120933:dumpSettings (debugging)
     def dumpSettings (self):
         
         d = self.optionsDict
@@ -742,22 +747,34 @@ class rstClass:
         for key in keys:
             print '%20s %s' % (key,d.get(key))
     #@nonl
-    #@-node:ekr.20050812120933:dumpSettings (not used)
+    #@-node:ekr.20050812120933:dumpSettings (debugging)
     #@+node:ekr.20050807120331.1:preprocessTree & helpers
     def preprocessTree (self,root):
         
         self.tnodeOptionDict = {}
         
+        # Bug fix 12/4/05: must preprocess parents too.
+        for p in root.parents_iter():
+            self.preprocessNode(p)
+        
         for p in root.self_and_subtree_iter():
-            d = self.tnodeOptionDict.get(p.v.t)
-            if not d:
-                d = self.scanNodeForOptions(p)
-                if d:
-                    self.tnodeOptionDict [p.v.t] = d
+            self.preprocessNode(p)
+    
         if 0:
             g.trace(root.headString())
-            g.printDict(self.tnodeOptionDict)
+            for key in self.tnodeOptionDict.keys():
+                g.trace(key)
+                g.printDict(self.tnodeOptionDict.get(key))
     #@nonl
+    #@+node:ekr.20051204070141:preprocessNode
+    def preprocessNode (self,p):
+        
+        d = self.tnodeOptionDict.get(p.v.t)
+        if d is None:
+            d = self.scanNodeForOptions(p)
+            self.tnodeOptionDict [p.v.t] = d
+    #@nonl
+    #@-node:ekr.20051204070141:preprocessNode
     #@+node:ekr.20050808072943.1:parseOptionLine
     def parseOptionLine (self,s):
     
@@ -854,6 +871,7 @@ class rstClass:
                     return d
                     
             if h.startswith('@rst'):
+                g.trace('word',word,'rst_prefix',self.getOption('rst_prefix'))
                 g.trace('unknown kind of @rst headline',p.headString())
                     
             return {}
@@ -936,7 +954,7 @@ class rstClass:
         seen = self.singleNodeOptions[:] # Suppress inheritance of single-node options.
         # g.trace('-'*20)
         for p in p.self_and_parents_iter():
-            d = self.tnodeOptionDict.get(p.v.t, {})
+            d = self.tnodeOptionDict.get(p.v.t,{})
             # g.trace(p.headString(),d)
             for key in d.keys():
                 ivar = self.munge(key)
@@ -944,6 +962,7 @@ class rstClass:
                     seen.append(ivar)
                     val = d.get(key)
                     self.setOption(key,val,p.headString())
+        # self.dumpSettings()
     #@nonl
     #@+node:ekr.20050805162550.13:initOptionsFromSettings
     def initOptionsFromSettings (self):
@@ -1015,8 +1034,7 @@ class rstClass:
         d = g.scanDirectives(c=self.c,p=p)
         self.encoding = encoding or d.get('encoding') or self.defaultEncoding
     
-        # Make sure all ivars are defined.  Also called by scanAllOptions.
-        self.initOptionsFromSettings()
+        self.initOptionsFromSettings() # Still needed.
         
         language = d.get('language','').lower()
         syntax = SilverCity is not None
@@ -1059,7 +1077,6 @@ class rstClass:
         
         '''Process all @rst nodes in a tree.'''
     
-        self.toplevel = p.level()
         self.preprocessTree(p)
         found = False
         p = p.copy() ; after= p.nodeAfterTree()
@@ -1100,6 +1117,8 @@ class rstClass:
                     if not ignore:
                         # g.trace(p.headString())
                         found = True
+                        # Bug fix 12/4/05: define toplevel separately for each rst file.
+                        self.toplevel = p.level()
                         self.ext = ext = g.os_path_splitext(self.outputFileName)[1].lower()
                         if ext in ('.htm','.html','.tex','.pdf'):
                             ok = self.writeSpecialTree(p)
@@ -1129,6 +1148,9 @@ class rstClass:
         self.writeTree(p)
         source = self.outputFile.getvalue()
         self.outputFile = None
+        
+        # Bug fix 12/4/05: Compute this here for use by intermediate file.
+        self.outputFileName = self.computeOutputFileName(self.outputFileName)
     
         if self.getOption('write_intermediate_file'):
             name = self.outputFileName + '.txt'
@@ -1147,7 +1169,6 @@ class rstClass:
             
         if ok:
             # Write the file to the directory containing the .leo file.
-            self.outputFileName = self.computeOutputFileName(self.outputFileName)
             f = file(self.outputFileName,'w')
             f.write(output)
             f.close()
