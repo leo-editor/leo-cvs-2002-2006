@@ -3,6 +3,61 @@
 # We use this file to make it easier to use cvs.
 
 #@+all
+#@+node:Text editing scripts
+#@+node:delete from ':' to end (script)
+@color
+
+s = p.bodyString()
+
+result = []
+lines = g.splitLines(s)
+for line in lines:
+    i = line.find(':')
+    if i > -1:
+        result.append(line[:i])
+        if line and line[-1] == '\n':
+            result.append('\n')
+    else:
+        result.append(line)
+
+s = ''.join(result)
+p.setBodyString(s)
+#@nonl
+#@-node:delete from ':' to end (script)
+#@+node:stripBlankLines
+print '-' * 60
+
+# Tag the start of the command.
+c.undoer.setUndoParams("Change All",c.currentPosition())
+
+n = 0 ; total = 0
+for p in c.currentPosition().self_and_subtree_iter():
+    total += 1
+    body = p.bodyString()
+    s = g.stripBlankLines(body)
+    if s != body:
+        n += 1
+        p.setBodyStringOrPane(s,g.app.tkEncoding)
+        c.undoer.setUndoParams("Change",p,
+            oldText=body,newText=s,oldSel=None, newSel=None)
+
+# Tag the end of the command.
+c.undoer.setUndoParams("Change All",c.currentPosition()) 
+
+print "%d nodes changed (%d total)" % (n,total)
+#@+node:Test
+@ignore
+a
+  b
+  
+c  
+  
+last
+  
+#@nonl
+#@-node:Test
+#@-node:stripBlankLines
+#@-node:Text editing scripts
 #@+node:Find scripts
 #@+node:Find and replace all functions in leoGlobals.py
 import string
@@ -7980,39 +8035,6 @@ fileMenu.insert(3,'command',label='Test',command=callback)
 #@nonl
 #@-node:Add a menu item after Open With
 #@-node:Scripts demonstrating how to do anything with Leo menus
-#@+node:stripBlankLines
-print '-' * 60
-
-# Tag the start of the command.
-c.undoer.setUndoParams("Change All",c.currentPosition())
-
-n = 0 ; total = 0
-for p in c.currentPosition().self_and_subtree_iter():
-    total += 1
-    body = p.bodyString()
-    s = g.stripBlankLines(body)
-    if s != body:
-        n += 1
-        p.setBodyStringOrPane(s,g.app.tkEncoding)
-        c.undoer.setUndoParams("Change",p,
-            oldText=body,newText=s,oldSel=None, newSel=None)
-
-# Tag the end of the command.
-c.undoer.setUndoParams("Change All",c.currentPosition()) 
-
-print "%d nodes changed (%d total)" % (n,total)
-#@+node:Test
-@ignore
-a
-  b
-  
-c  
-  
-last
-  
-#@nonl
-#@-node:Test
-#@-node:stripBlankLines
 #@-node:Important
 #@+node:Prototypes
 #@+node:Debugger canvas

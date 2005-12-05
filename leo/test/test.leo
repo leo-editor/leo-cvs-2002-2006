@@ -208,9 +208,9 @@
 <v t="ekr.20051130182536.1" a="E"><vh>batch file</vh>
 <v t="ekr.20051130182412" tnodeList="ekr.20051130182412"><vh>@file ironPythonTest.bat</vh></v>
 </v>
-<v t="ekr.20051130181738" a="MTV" tnodeList="ekr.20051130181738"><vh>@file c:\prog\IronPython-0.9.5\ironPythonTest.py</vh></v>
+<v t="ekr.20051130181738" a="M" tnodeList="ekr.20051130181738"><vh>@file c:\prog\IronPython-0.9.5\ironPythonTest.py</vh></v>
 </v>
-<v t="ekr.20051201153400"><vh>Print Hi</vh></v>
+<v t="ekr.20051201153400" a="TV"><vh>Print Hi</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4152,9 +4152,11 @@ bin\IronPythonConsole c:\prog\leoCVS\leo\test\ironPythonTest.py
 <t tx="ekr.20051130182536.1">@comment REM_</t>
 <t tx="ekr.20051201063427.1">execute-script = Ctrl-e # Ctrl-e conflicts with end-of-line</t>
 <t tx="ekr.20051201090822"></t>
-<t tx="ekr.20051201153400">print 'hi'
-print 'there'
+<t tx="ekr.20051201153400">before
 
-23</t>
+print    'hi'
+print    'there'
+
+after</t>
 </tnodes>
 </leo_file>

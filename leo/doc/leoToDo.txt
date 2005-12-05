@@ -25,15 +25,248 @@ Others
 #@-node:ekr.20051012053017.2:Schedule
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
-
-Before a4:
-
-- Review all minibuffer commands.
-    - Put buggy commands on to-do list.
-    - Document all problems in a4 release notes.
-
-* (done) Run pychecker.
 #@nonl
+#@+node:ekr.20051202102337:Minibuffer commands notes
+@nocolor
+#@nonl
+#@+node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
+auto-complete command is merely a prototype.
+#@nonl
+#@-node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
+#@+node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
+ok:
+
+list-buffers
+
+Not ready yet:
+
+append-to-buffer
+copy-to-buffer
+insert-to-buffer
+kill-buffer
+prepend-to-buffer
+rename-buffer       probably should change headline too
+switch-to-buffer    use typing completion to get node name (headline)
+#@nonl
+#@-node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
+#@+node:ekr.20051202102337.3:controlCommandsClass (ok)
+advertised-undo
+keyboard-quit
+iconify-frame
+save-buffers-kill-leo
+shell-command
+shell-command-on-region
+suspend
+#@nonl
+#@-node:ekr.20051202102337.3:controlCommandsClass (ok)
+#@+node:ekr.20051202102337.4:editCommandsClass
+back-sentence
+back-to-indentation
+backward-char
+backward-delete-char
+backward-kill-paragraph
+backward-paragraph
+backward-word
+beginning-of-buffer
+beginning-of-line
+capitalize-word
+center-line
+center-region
+count-region
+cycle-focus
+dabbrev-completion
+dabbrev-expands
+delete-char
+delete-indentation
+delete-spaces
+downcase-region
+downcase-word
+end-of-buffer
+end-of-line
+escape
+eval-expression
+exchange-point-mark
+fill-paragraph
+fill-region
+fill-region-as-paragraph
+flush-lines
+focus-to-body
+focus-to-log
+focus-to-minibuffer
+focus-to-tree
+forward-char
+forward-paragraph
+forward-sentence
+forward-word
+goto-char
+goto-line
+how-many
+# Use indentBody in leoCommands.py
+#indent-region
+indent-relative
+indent-rigidly
+indent-to-comment-column
+insert-newline
+insert-parentheses
+keep-lines
+kill-paragraph
+line-number
+move-past-close
+newline-and-indent
+next-line
+previous-line
+remove-blank-lines
+replace-regex
+replace-string
+reverse-region
+scroll-down
+scroll-up
+select-paragraph
+# Exists, but can not be executed via the minibuffer.
+# self-insert-command
+set-comment-column
+set-fill-column
+set-fill-prefix
+set-mark-command
+show-colors
+show-fonts
+# save-buffer
+sort-columns
+sort-fields
+sort-lines
+split-line
+tabify
+transpose-chars
+transpose-lines
+transpose-words
+untabify
+upcase-region
+upcase-word
+view-lossage
+what-line
+#@nonl
+#@-node:ekr.20051202102337.4:editCommandsClass
+#@+node:ekr.20051202102337.6:editFileCommandsClass
+delete-file
+diff
+insert-file
+make-directory
+remove-directory
+save-file
+#@nonl
+#@-node:ekr.20051202102337.6:editFileCommandsClass
+#@+node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
+digit-argument
+help
+hide-mini-buffer
+negative-argument
+number-command
+number-command-0
+number-command-1
+number-command-2
+number-command-3
+number-command-4
+number-command-5
+number-command-6
+number-command-7
+number-command-8
+number-command-9
+print-bindings
+print-commands
+repeat-complex-command
+show-mini-buffer
+toggle-mini-buffer
+universal-argument
+#@nonl
+#@-node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
+#@+node:ekr.20051202102752.2:killBufferCommandsClass
+backward-kill-sentence
+backward-kill-word
+kill-line
+kill-word
+kill-sentence
+kill-region
+kill-region-save
+yank
+yank-pop
+zap-to-character
+#@nonl
+#@-node:ekr.20051202102752.2:killBufferCommandsClass
+#@+node:ekr.20051202102752.3:macroCommandsClass
+call-last-keyboard-macro
+end-kbd-macro
+name-last-kbd-macro
+load-file
+insert-keyboard-macro 
+start-kbd-macro
+#@nonl
+#@-node:ekr.20051202102752.3:macroCommandsClass
+#@+node:ekr.20051202102752.4:queryReplaceCommandsClass
+query-replace
+query-replace-regex
+#@nonl
+#@-node:ekr.20051202102752.4:queryReplaceCommandsClass
+#@+node:ekr.20051202102752.5:rectangleCommandsClass (ok)
+clear-rectangle
+close-rectangle
+delete-rectangle
+kill-rectangle
+open-rectangle
+string-rectangle
+yank-rectangle
+#@nonl
+#@-node:ekr.20051202102752.5:rectangleCommandsClass (ok)
+#@+node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
+append-to-register
+copy-rectangle-to-register
+copy-to-register
+increment-register
+insert-register
+jump-to-register
+number-to-register not used: used copy-to-register insead.
+point-to-register
+prepend-to-register
+view-register
+
+To do:
+
+point-to-register should write an 'expanded point' so inter-node jumps are possible.
+#@nonl
+#@-node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
+#@+node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
+hide-find-tab
+open-find-tab
+find-tab-find
+find-tab-find-prev
+find-tab-change
+find-tab-change-then-find
+
+isearch-forward
+isearch-backward
+isearch-forward-regexp
+isearch-backward-regexp
+
+re-search-forward
+re-search-backward
+
+search-forward
+search-backward
+word-search-forward
+word-search-backward
+#@nonl
+#@-node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
+#@+node:ekr.20051202102752.8:spellCommandsClass (ok)
+ok:
+
+hide-spell-tab
+open-spell-tab
+spell-find
+spell-change
+spell-change-then-find
+spell-ignore
+#@nonl
+#@-node:ekr.20051202102752.8:spellCommandsClass (ok)
+#@-node:ekr.20051202102337:Minibuffer commands notes
 #@+node:ekr.20051126122638:Autocompletion tab
 - Use typing completion to select desired word.
 - No auto-scan: use database instead.
@@ -2212,6 +2445,11 @@ def __init__ (self,c):
     # For replace-string and replace-regexp
     self._sString = ''
     self._rpString = ''
+    
+    try:
+        self.w = c.frame.body.bodyCtrl
+    except AttributeError:
+        self.w = None
 #@nonl
 #@-node:ekr.20050920084036.258: ctor
 #@+node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
@@ -2318,7 +2556,7 @@ def isearchBackwardRegexp (self,event):
 #@+node:ekr.20050920084036.262:startIncremental
 def startIncremental (self,event,forward,regexp):
 
-    k = self.k
+    c = self.c ; k = self.k
     
     self.forward = forward
     self.regexp = regexp
@@ -2331,8 +2569,10 @@ def startIncremental (self,event,forward,regexp):
 
 def iSearchStateHandler (self,event):
 
-    k = self.k ; w = event.widget ; keysym = event.keysym
+    c = self.c ; k = self.k ; w = self.w ; keysym = event.keysym
     if keysym == 'Control_L': return
+    
+    c.frame.bodyWantsFocus()
     
     # g.trace('keysym',keysym,'stroke',k.stroke)
     
@@ -2378,9 +2618,9 @@ def iSearchHelper (self,event,forward,regexp):
 
     '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
     
-    k = self.k ; w = event.widget
+    k = self.k ; w = self.w
     s = k.getLabel(ignorePrompt=True)
-    g.trace(forward,repr(s))
+    # g.trace(forward,repr(s))
     if s:
         try:
             if forward:
@@ -2405,7 +2645,7 @@ def iSearchHelper (self,event,forward,regexp):
 #@+node:ekr.20050920084036.265:scolorizer
 def scolorizer (self,event):
 
-    k = self.k ; w = event.widget
+    k = self.k ; w = self.w
 
     stext = k.getLabel(ignorePrompt=True)
     w.tag_delete('color')
@@ -2457,7 +2697,7 @@ def searchForward (self,event):
 #@+node:ekr.20050920084036.268:plainSearchHelper
 def plainSearchHelper (self,event,pattern,forward):
 
-    k = self.k ; w = event.widget ; i = w.index('insert')
+    k = self.k ; w = self.w ; i = w.index('insert')
 
     try:
         if forward:
@@ -2499,7 +2739,7 @@ def wordSearchForward (self,event):
 #@+node:ekr.20050920084036.272:wordSearchHelper
 def wordSearchHelper (self,event,pattern,forward):
 
-    k = self.k ; w = event.widget ; i = w.index('insert')
+    k = self.k ; w = self.w ; i = w.index('insert')
     words = pattern.split()
     sep = '[%s%s]+' % (string.punctuation,string.whitespace)
     pattern = sep.join(words)
@@ -2548,7 +2788,7 @@ def reSearchForward (self,event):
 #@+node:ekr.20050920084036.275:reSearchHelper
 def reSearchHelper (self,event,pattern,forward):
 
-    k = self.k ; w = event.widget
+    k = self.k ; w = self.w
     cpattern = re.compile(pattern)
 
     if forward:
@@ -2740,8 +2980,7 @@ def indentRelative (self,event):
     i = w.index('insert')
     result = w.get('1.0','end')
     head = tail = oldYview = None
-    c.updateBodyPane(head,result,tail,undoType,
-        oldSel=oldSel,oldYview=oldYview)
+    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
     w.mark_set('insert',i)
 #@nonl
 #@-node:ekr.20050920084036.78:indentRelative
@@ -3722,8 +3961,6 @@ else:
 #@-node:ekr.20051017111216:Fix bugs in commands
 #@+node:ekr.20051123055200:*** Allow multiple bindings to the same command
 #@-node:ekr.20051123055200:*** Allow multiple bindings to the same command
-#@+node:ekr.20051121070552:Add Cmds menu
-#@-node:ekr.20051121070552:Add Cmds menu
 #@+node:ekr.20051103094005:Fix bugs
 #@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
 #@+node:ekr.20051104152338.1:Report
@@ -3846,6 +4083,8 @@ EKR: This is on the list of unfixable bugs, but I have a hard time believing the
 #@-node:ekr.20051103094005:Fix bugs
 #@-node:ekr.20051027105304:Next release: b1
 #@+node:ekr.20051129095023:Before 4.4 final
+#@+node:ekr.20051121070552:Add Cmds menu
+#@-node:ekr.20051121070552:Add Cmds menu
 #@+node:ekr.20051202095626:Add help-command
 Use docstrings as the help message.
 #@nonl
