@@ -4484,7 +4484,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.207:class queryReplaceCommandsClass
-#@+node:ekr.20050920084036.221:class rectangleCommandsClass
+#@+node:ekr.20050920084036.221:class rectangleCommandsClass (ok)
 class rectangleCommandsClass (baseEditCommandsClass):
 
     #@    @+others
@@ -4570,8 +4570,8 @@ class rectangleCommandsClass (baseEditCommandsClass):
         r1, r2, r3, r4 = self.getRectanglePoints()
         s = ' ' * (r4-r2)
         for r in xrange(r1,r3+1):
-            w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
-            w.insert('%s.%s' % (r1,r2),s)
+            w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
+            w.insert('%s.%s' % (r,r2),s)
     
         result = w.get('1.0','end')
         c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
@@ -4736,7 +4736,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.224:Entries
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.221:class rectangleCommandsClass
+#@-node:ekr.20050920084036.221:class rectangleCommandsClass (ok)
 #@+node:ekr.20050920084036.234:class registerCommandsClass (ok)
 class registerCommandsClass (baseEditCommandsClass):
 
