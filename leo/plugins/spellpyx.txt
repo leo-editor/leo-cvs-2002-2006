@@ -66,6 +66,7 @@ EditAttributes
 Elza
 Engleberg
 EqualSizedPanes
+Erens
 Esc
 F16
 F18
@@ -267,6 +268,7 @@ Takita
 Tarvin
 TclTkAqua
 Terminate_Server
+Test4
 TestCase
 TestSuite
 TextTestRunner
@@ -334,6 +336,7 @@ Zvi
 a1
 a2
 a3
+a4
 aClass
 aColor
 aDirectory
@@ -808,6 +811,7 @@ flattenOutline
 fmerenda
 fn
 fname
+focusIn
 focus_set
 font_size
 footnote_backrefs
@@ -1674,6 +1678,7 @@ setDefaultLoc
 setDirty
 setHeadString
 setInsertPoint
+setLeoID
 setLog
 setMarked
 setRevertVars
@@ -1998,6 +2003,8 @@ versioning
 vh
 vhash
 vids
+vim_cmd
+vim_exe
 visitedBit
 vn
 vnode

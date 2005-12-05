@@ -275,6 +275,14 @@ spell-ignore
 - @strings autocompleter-info
 list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
   (Autocompleter may already do this)
+#@+node:ekr.20051205093049:Use dir for auto-complete ?
+@nocolor
+
+Working throught the IronPython tutorial just now I saw how useful the dir function could be, especially dir(object)
+
+I'm thinking that Leo might use dir(object) to discover members for the auto-complete command.  It's not clear if or how this can be made to work, but it might be slick.
+#@nonl
+#@-node:ekr.20051205093049:Use dir for auto-complete ?
 #@+node:ekr.20051025144611:Reference (Do not delete)
 #@+node:ekr.20051025144611.1:Configuration
 @nocolor

@@ -2212,7 +2212,7 @@
 </v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20051028051444" a="E"><vh>4.4 alpha 4</vh>
+<v t="ekr.20051028051444" a="ETV"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -2221,7 +2221,7 @@
 <v t="ekr.20051101161405.3"><vh>EKR shortcuts</vh></v>
 <v t="ekr.20051101162123"><vh>Leo now ignores key bindings in menu tables</vh></v>
 </v>
-<v t="ekr.20051205091625" a="E"><vh>Status of minibuffer commands</vh></v>
+<v t="ekr.20051205091625"><vh>Status of minibuffer commands</vh></v>
 <v t="ekr.20051028051616"><vh>New in alpha 1...</vh>
 <v t="ekr.20051028051444.4"><vh>New options</vh>
 <v t="ekr.20051028051444.5"><vh>The @bool useMinibuffer option</vh></v>
@@ -2277,17 +2277,17 @@
 <v t="ekr.20051109142920"><vh>Removed frame.begin/endUpdate</vh></v>
 </v>
 </v>
-<v t="ekr.20051128181229" a="TV"><vh>New in alpha 4</vh>
+<v t="ekr.20051128181229"><vh>New in alpha 4</vh>
 <v t="ekr.20051128181351"><vh>Bugs fixed</vh>
 <v t="ekr.20051128181302.148"><vh>Changed scripting plugin so files opened with buttons stay in front</vh></v>
 <v t="ekr.20051128181302.183"><vh>Fixed undo/redo bugs</vh></v>
 <v t="ekr.20051128181302.192"><vh>Fixed focus problem with tab completion</vh></v>
 <v t="ekr.20051128181302.193"><vh>Fixed minor Save bug</vh></v>
 <v t="ekr.20051128181302.231"><vh>Fixed long-standing problem with Plugins Manager plugin</vh></v>
-<v t="ekr.20051128181302.244" a="E"><vh>Fixed 2 outline editing bugs</vh></v>
-<v t="ekr.20051205090923.13" a="E"><vh>Fixed crasher in deleteNextChar</vh></v>
-<v t="ekr.20051205090923.16" a="E"><vh>Fixed new headline bug</vh></v>
-<v t="ekr.20051205090923.22" a="E"><vh>Fix problems applying settings</vh></v>
+<v t="ekr.20051128181302.244"><vh>Fixed 2 outline editing bugs</vh></v>
+<v t="ekr.20051205090923.13"><vh>Fixed crasher in deleteNextChar</vh></v>
+<v t="ekr.20051205090923.16"><vh>Fixed new headline bug</vh></v>
+<v t="ekr.20051205090923.22"><vh>Fix problems applying settings</vh></v>
 <v t="ekr.20051128181302.204"><vh>Fixed several bugs in rst3 plugin</vh></v>
 </v>
 <v t="ekr.20051128181651"><vh>Code changes</vh>
@@ -21422,13 +21422,14 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 <t tx="ekr.20050917105646">- Fixed bug that caused the Open With command to crash if the subprocess module was not installed.
 
 - Fixed problems in the niceNocent and fastGotoNode plugins.</t>
-<t tx="ekr.20051028051444">Leo 4.4 alpha 4                                December 2, 2005
+<t tx="ekr.20051028051444">Leo 4.4 alpha 4                                         December 5, 2005
 
 Leo 4.4 a4 introduces the 'Newer World Order' for redrawing the screen,
 corrects numerous bugs in the 4.4 code base, and introduces several new features.
 
-This is an alpha release: a few minor bugs remain. However, you should be able
-to use this version safely. All the major features of 4.4 are in place.
+You should be able to use this version safely. There are no known serious bugs,
+but several minibuffer commands are not ready for primve time. All the major
+features of 4.4 are in place.
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -21463,7 +21464,7 @@ This 'Newer World Order' simplifies the code and improves performance.
 
 Known bugs in Leo 4.4a4
 -----------------------
-- Several minibuffer commands do not work.
+- Several minibuffer commands do not work.  See the release notes for details.
 
 Coming in later releases of Leo 4.4:
 ------------------------------------
