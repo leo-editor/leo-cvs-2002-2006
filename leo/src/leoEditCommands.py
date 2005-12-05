@@ -51,6 +51,10 @@ class baseEditCommandsClass:
     
         # Class delegators.
         self.k = self.keyHandler = self.c.keyHandler
+        try:
+            self.w = self.c.frame.body.bodyCtrl # New in 4.4a4.
+        except AttributeError:
+            self.w = None
         
     def init (self):
         
@@ -147,13 +151,11 @@ class baseEditCommandsClass:
         return t1 == t2
     #@-node:ekr.20050920084036.10:contRanges
     #@+node:ekr.20050920084036.233:getRectanglePoints
-    def getRectanglePoints (self,event):
-        
-        __pychecker__ = '--no-argsused' # event not used.
+    def getRectanglePoints (self):
     
-        c = self.c
-        w = c.frame.body.bodyCtrl
+        c = self.c ; w = self.w
         c.frame.bodyWantsFocus()
+    
         i  = w.index('sel.first')
         i2 = w.index('sel.last')
         r1, r2 = i.split('.')
@@ -2071,8 +2073,7 @@ class editCommandsClass (baseEditCommandsClass):
         i = w.index('insert')
         result = w.get('1.0','end')
         head = tail = oldYview = None
-        c.updateBodyPane(head,result,tail,undoType,
-            oldSel=oldSel,oldYview=oldYview)
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
         w.mark_set('insert',i)
     #@nonl
     #@-node:ekr.20050920084036.78:indentRelative
@@ -4493,6 +4494,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
         self.theKillRectangle = [] # Do not re-init this!
+        self.stringRect = None
         
     def finishCreate(self):
         
@@ -4557,63 +4559,91 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.225:clearRectangle
     def clearRectangle (self,event):
     
-        if self.check(event):
-            k = self.k ; w = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints(event)
-            lth = ' ' * (r4-r2)
-            while r1 <= r3:
-                w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
-                w.insert('%s.%s' % (r1,r2),lth)
-                r1 = r1 + 1
+        if not self.check(event): return
+        
+        # Prepare for undo.
+        c = self.c ; k = self.k ; w = self.w
+        undoType = 'clear-rectangle'
+        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+    
+        # Change the text.
+        r1, r2, r3, r4 = self.getRectanglePoints()
+        s = ' ' * (r4-r2)
+        for r in xrange(r1,r3+1):
+            w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
+            w.insert('%s.%s' % (r1,r2),s)
+    
+        result = w.get('1.0','end')
+        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.225:clearRectangle
     #@+node:ekr.20050920084036.226:closeRectangle
     def closeRectangle (self,event):
         
-        '''Delete all whitespace following a specified column in each line.'''
+        '''Delete the rectangle if it contains nothing but whitespace..'''
     
-        if self.check(event):
-            k = self.k ; w = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints(event)
-            ar1 = r1
-            txt = []
-            while ar1 <= r3:
-                txt.append(w.get('%s.%s' % (ar1,r2),'%s.%s' % (ar1,r4)))
-                ar1 = ar1 + 1
-            # for z in txt:
-                # if z.strip():
-                    # return
-            while r1 <= r3:
-                w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
-                r1 = r1 + 1
+        if not self.check(event): return
+    
+        # Prepare for undo.
+        c = self.c ; k = self.k ; w = self.w
+        undoType = 'close-rectangle'
+        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+      
+        # Return if any part of the selection contains something other than whitespace.
+        r1, r2, r3, r4 = self.getRectanglePoints()
+        for r in xrange(r1,r3+1):
+            s = w.get('%s.%s' % (r,r2),'%s.%s' % (r,r4))
+            if s.strip(): return
+        # Change the text.
+        for r in xrange(r1,r3+1):
+            w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
+            
+        result = w.get('1.0','end')
+        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.226:closeRectangle
     #@+node:ekr.20050920084036.227:deleteRectangle
     def deleteRectangle (self,event):
     
-        if self.check(event):
-            k = self.k ; w = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints(event)
-            while r1 <= r3:
-                w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
-                r1 = r1 + 1
+        if not self.check(event): return
+     
+        # Prepare for undo.
+        c = self.c ; k = self.k ; w = self.w
+        undoType = 'delete-rectangle'
+        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        
+        # Change the text.
+        r1, r2, r3, r4 = self.getRectanglePoints()
+        for r in xrange(r1,r3+1):
+            w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
+            
+        result = w.get('1.0','end')
+        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.227:deleteRectangle
     #@+node:ekr.20050920084036.228:killRectangle
     def killRectangle (self,event):
     
-        if self.check(event):
-            k = self.k ; w = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints(event)
-            self.theKillRectangle = []
-            while r1 <= r3:
-                s = w.get('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
-                self.theKillRectangle.append(s)
-                w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
-                r1 = r1 + 1
-            if self.theKillRectangle:
-                w.mark_set('sel.start','insert')
-                w.mark_set('sel.end','insert')
+        if not self.check(event): return
+        
+        # Prepare for undo.
+        c = self.c ; k = self.k ; w = self.w
+        undoType = 'kill-rectangle'
+        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        
+        # Change the text.
+        r1, r2, r3, r4 = self.getRectanglePoints()
+        self.theKillRectangle = []
+        for r in xrange(r1,r3+1):
+            s = w.get('%s.%s' % (r,r2),'%s.%s' % (r,r4))
+            self.theKillRectangle.append(s)
+            w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
+    
+        if self.theKillRectangle:
+            w.mark_set('sel.start','insert')
+            w.mark_set('sel.end','insert')
+            result = w.get('1.0','end')
+            c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.228:killRectangle
     #@+node:ekr.20050920084036.230:openRectangle
@@ -4622,62 +4652,85 @@ class rectangleCommandsClass (baseEditCommandsClass):
         '''Insert blank space to fill the space of the region-rectangle.
         This pushes the previous contents of the region-rectangle rightward. '''
     
-        if self.check(event):
-            k = self.k ; w = event.widget
-            r1, r2, r3, r4 = self.getRectanglePoints(event)
-            lth = ' ' * (r4-r2)
-            while r1 <= r3:
-                w.insert('%s.%s' % (r1,r2),lth)
-                r1 = r1 + 1
+        if not self.check(event): return
+        
+        # Prepare for undo.
+        c = self.c ; k = self.k ; w = self.w
+        undoType = 'open-rectangle'
+        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        
+        # Change the text.
+        r1, r2, r3, r4 = self.getRectanglePoints()
+        s = ' ' * (r4-r2)
+        for r in xrange(r1,r3+1):
+            w.insert('%s.%s' % (r,r2),s)
+            
+        result = w.get('1.0','end')
+        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.230:openRectangle
     #@+node:ekr.20050920084036.229:yankRectangle
-    def yankRectangle (self,killRect=None):
+    def yankRectangle (self,event,killRect=None):
         
-        c = self.c ; k = self.k ; w = c.frame.body.bodyCtrl
-        
-        if not killRect: killRect = self.theKillRectangle
+        c = self.c ; k = self.k ; w = self.w
     
-        if killRect:
-            txt = w.get('insert linestart','insert')
-            txt = self.getWSString(txt)
-            i = w.index('insert')
-            i1, i2 = i.split('.')
-            i1 = int(i1)
-            for z in killRect:
-                txt2 = w.get('%s.0 linestart' % i1,'%s.%s' % (i1,i2))
-                if len(txt2) != len(txt):
-                    amount = len(txt) - len(txt2)
-                    z = txt [ -amount:] + z
-                w.insert('%s.%s' % (i1,i2),z)
-                if w.index('%s.0 lineend +1c' % i1) == w.index('end'):
-                    w.insert('%s.0 lineend' % i1,'\n')
-                i1 = i1 + 1
-        else:
+        killRect = killRect or self.theKillRectangle
+        if not killRect:
             k.setLabelGrey('No kill rect')
+            return
+    
+        undoType = 'yank-rectangle'
+        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        
+        # Change the text.
+        txt = w.get('insert linestart','insert')
+        txt = self.getWSString(txt)
+        i = w.index('insert')
+        i1, i2 = i.split('.')
+        i1 = int(i1)
+        for z in killRect:
+            txt2 = w.get('%s.0 linestart' % i1,'%s.%s' % (i1,i2))
+            if len(txt2) != len(txt):
+                amount = len(txt) - len(txt2)
+                z = txt [-amount:] + z
+            w.insert('%s.%s' % (i1,i2),z)
+            if w.index('%s.0 lineend +1c' % i1) == w.index('end'):
+                w.insert('%s.0 lineend' % i1,'\n')
+            i1 += 1
+    
+        result = w.get('1.0','end')
+        c.updateBodyPane('',result,'',undoType,oldSel,oldYview) # Handles undo
     #@nonl
     #@-node:ekr.20050920084036.229:yankRectangle
     #@+node:ekr.20050920084036.232:stringRectangle
     def stringRectangle (self,event):
         
-        '''Replace the contents of a region-rectangle with a string on each line.'''
+        '''Replace the contents of a rectangle with a string on each line.'''
     
-        k = self.k ; state = k.getState('string-rect') ; 
-        
+        c = self.c ; k = self.k ; w = self.w
+        state = k.getState('string-rect')
         if state == 0:
-            self.sRect = 1
+            if not self.check(event): return
+            self.stringRect = self.getRectanglePoints()
             k.setLabelBlue('String rectangle: ',protect=True)
-            k.getArg(event,'string-rect',1,k.stringRectangle)
+            k.getArg(event,'string-rect',1,self.stringRectangle)
         else:
             k.clearState()
             k.resetLabel()
-            if self.check(event):
-                w = event.widget
-                r1, r2, r3, r4 = self.getRectanglePoints(event)
-                while r1 <= r3:
-                    w.delete('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
-                    w.insert('%s.%s' % (r1,r2),k.arg)
-                    r1 = r1 + 1
+            # Prepare for undo.
+            undoType = 'string-rectangle'
+            head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+            # Restore the selection.
+            r1, r2, r3, r4 = self.stringRect
+            w.mark_set('sel.start','%d.%d' % (r1,r2))
+            w.mark_set('sel.end',  '%d.%d' % (r3,r4))
+            c.frame.bodyWantsFocus()
+            # Change the text.
+            for r in xrange(r1,r3+1):
+                w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
+                w.insert('%s.%s' % (r,r2),k.arg)
+            result = w.get('1.0','end')
+            c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
     #@nonl
     #@-node:ekr.20050920084036.232:stringRectangle
     #@-node:ekr.20050920084036.224:Entries
@@ -4840,7 +4893,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 key = event.keysym.lower()
                 w = c.frame.body.bodyCtrl
                 c.frame.bodyWantsFocus()
-                r1, r2, r3, r4 = self.getRectanglePoints(event)
+                r1, r2, r3, r4 = self.getRectanglePoints()
                 rect = []
                 while r1 <= r3:
                     txt = w.get('%s.%s' % (r1,r2),'%s.%s' % (r1,r4))
