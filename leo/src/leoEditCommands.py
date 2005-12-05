@@ -5649,6 +5649,11 @@ class searchCommandsClass (baseEditCommandsClass):
         # For replace-string and replace-regexp
         self._sString = ''
         self._rpString = ''
+        
+        try:
+            self.w = c.frame.body.bodyCtrl
+        except AttributeError:
+            self.w = None
     #@nonl
     #@-node:ekr.20050920084036.258: ctor
     #@+node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
@@ -5755,7 +5760,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.262:startIncremental
     def startIncremental (self,event,forward,regexp):
     
-        k = self.k
+        c = self.c ; k = self.k
         
         self.forward = forward
         self.regexp = regexp
@@ -5768,8 +5773,10 @@ class searchCommandsClass (baseEditCommandsClass):
     
     def iSearchStateHandler (self,event):
     
-        k = self.k ; w = event.widget ; keysym = event.keysym
+        c = self.c ; k = self.k ; w = self.w ; keysym = event.keysym
         if keysym == 'Control_L': return
+        
+        c.frame.bodyWantsFocus()
         
         # g.trace('keysym',keysym,'stroke',k.stroke)
         
@@ -5816,9 +5823,9 @@ class searchCommandsClass (baseEditCommandsClass):
     
         '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
         
-        k = self.k ; w = event.widget
+        k = self.k ; w = self.w
         s = k.getLabel(ignorePrompt=True)
-        g.trace(forward,repr(s))
+        # g.trace(forward,repr(s))
         if s:
             try:
                 if forward:
@@ -5843,7 +5850,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.265:scolorizer
     def scolorizer (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; w = self.w
     
         stext = k.getLabel(ignorePrompt=True)
         w.tag_delete('color')
@@ -5895,7 +5902,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.268:plainSearchHelper
     def plainSearchHelper (self,event,pattern,forward):
     
-        k = self.k ; w = event.widget ; i = w.index('insert')
+        k = self.k ; w = self.w ; i = w.index('insert')
     
         try:
             if forward:
@@ -5937,7 +5944,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.272:wordSearchHelper
     def wordSearchHelper (self,event,pattern,forward):
     
-        k = self.k ; w = event.widget ; i = w.index('insert')
+        k = self.k ; w = self.w ; i = w.index('insert')
         words = pattern.split()
         sep = '[%s%s]+' % (string.punctuation,string.whitespace)
         pattern = sep.join(words)
@@ -5986,7 +5993,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.275:reSearchHelper
     def reSearchHelper (self,event,pattern,forward):
     
-        k = self.k ; w = event.widget
+        k = self.k ; w = self.w
         cpattern = re.compile(pattern)
     
         if forward:
