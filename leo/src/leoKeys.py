@@ -1854,6 +1854,7 @@ class keyHandlerClass:
             #@-node:ekr.20050928092516:<< init altX vars >>
             #@nl
             # Set the states.
+            k.afterGetArgState=returnKind,returnState,handler
             k.setState('getArg',1,k.getArg)
             k.afterArgWidget = event.widget
         elif keysym == 'Return':
