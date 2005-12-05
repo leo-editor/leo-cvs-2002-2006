@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="20340" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="20405" clone_windows="0"/>
 <globals body_outline_ratio="0.613114754098">
 	<global_window_position top="14" left="245" height="915" width="965"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -740,7 +740,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20050917092557"><vh>4.3.3 final</vh>
 <v t="ekr.20050917105646"><vh>Fixes made in 4.3.3</vh></v>
@@ -2211,8 +2211,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20051028051444" a="E"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -2221,7 +2221,7 @@
 <v t="ekr.20051101161405.3"><vh>EKR shortcuts</vh></v>
 <v t="ekr.20051101162123"><vh>Leo now ignores key bindings in menu tables</vh></v>
 </v>
-<v t="ekr.20051028051444.3"><vh>Known problems with minibuffer commands</vh></v>
+<v t="ekr.20051205091625" a="E"><vh>Status of minibuffer commands</vh></v>
 <v t="ekr.20051028051616"><vh>New in alpha 1...</vh>
 <v t="ekr.20051028051444.4"><vh>New options</vh>
 <v t="ekr.20051028051444.5"><vh>The @bool useMinibuffer option</vh></v>
@@ -2277,20 +2277,18 @@
 <v t="ekr.20051109142920"><vh>Removed frame.begin/endUpdate</vh></v>
 </v>
 </v>
-<v t="ekr.20051128181229"><vh>New in alpha 4</vh>
+<v t="ekr.20051128181229" a="TV"><vh>New in alpha 4</vh>
 <v t="ekr.20051128181351"><vh>Bugs fixed</vh>
 <v t="ekr.20051128181302.148"><vh>Changed scripting plugin so files opened with buttons stay in front</vh></v>
 <v t="ekr.20051128181302.183"><vh>Fixed undo/redo bugs</vh></v>
 <v t="ekr.20051128181302.192"><vh>Fixed focus problem with tab completion</vh></v>
 <v t="ekr.20051128181302.193"><vh>Fixed minor Save bug</vh></v>
-<v t="ekr.20051128181302.204"><vh>Fixed two bugs in rst3</vh></v>
 <v t="ekr.20051128181302.231"><vh>Fixed long-standing problem with Plugins Manager plugin</vh></v>
-<v t="ekr.20051128181302.244"><vh>(Fixed 2 outline editing bugs)</vh>
-<v t="ekr.20051128181302.245"><vh>1: Outline not marked dirty during editing</vh></v>
-<v t="ekr.20051128181302.246"><vh>2: Inserting a headline didn't save previous edits of headlines</vh></v>
-<v t="ekr.20051128181302.163"><vh>c.insertHeadline</vh></v>
-<v t="ekr.20051128181302.247"><vh>updateHead (new in 4.4a2)</vh></v>
-</v>
+<v t="ekr.20051128181302.244" a="E"><vh>Fixed 2 outline editing bugs</vh></v>
+<v t="ekr.20051205090923.13" a="E"><vh>Fixed crasher in deleteNextChar</vh></v>
+<v t="ekr.20051205090923.16" a="E"><vh>Fixed new headline bug</vh></v>
+<v t="ekr.20051205090923.22" a="E"><vh>Fix problems applying settings</vh></v>
+<v t="ekr.20051128181302.204"><vh>Fixed several bugs in rst3 plugin</vh></v>
 </v>
 <v t="ekr.20051128181651"><vh>Code changes</vh>
 <v t="ekr.20051128181302.149"><vh>Removed later arg from c.frame.xWantsFocus</vh></v>
@@ -21503,33 +21501,6 @@ See the children of this node for details.
 
 
 </t>
-<t tx="ekr.20051028051444.3">Not all minibuffer commands have even been tested. Here are some areas that need work:
-
-- repeat-complex-command does not work. It is likely that none of the buffer
-commands work at present.
-
-- Moving the cursor when the 'mark' has been defined does not expand the visibly
-selected text.
-
-- Yanking and killing have not been well tested.
-
-- C-u 5 &lt;return&gt; works but is not undone properly. Also, the kill-line command
-does not work as in Emacs.
-
-- Many new commands must be generalized to handle the more complex environment
-Leo offers. For example, search commands must be told whether to limit the
-search a single node, or a node or and its descendants, or the entire outline.
-We need a set-variable command that sets a (Python) variable using an
-emacs-style variable name.
-
-- The notion of the 'point' must be expanded so it indicates a node as well as
-text location.
-    
-- New commands are needed to support 'mouseless-Leo'. The user must be able to
-drive all dialogs from the keyboard, or to get the same effect without using a
-dialog at all. Examples: dismiss-top-dialog, scroll-outline-up/down. We also
-need commands to change focus and to manage menus. Examples: focus-in-body,
-focus-in-tree, etc, activate-edit-menu, etc.</t>
 <t tx="ekr.20051028051444.4"></t>
 <t tx="ekr.20051028051444.5">1. The minibuffer exists regardless of this setting, but will not be shown
    initially if it is False.
@@ -21944,31 +21915,6 @@ root node called Found: &lt;your search pattern&gt;
 This node contains clones of the nodes found by the Find All command. It is your
 own responsibility to navigate to this new node and to clean it up when it's no
 longer needed.</t>
-<t tx="ekr.20051128181302.163">def insertHeadline (self,op_name="Insert Node",redraw_flag=True):
-    
-    '''Insert a node after the presently selected node.'''
-
-    c = self ; u = c.undoer
-    current = c.currentPosition()
-    
-    if not current: return
-
-    undoData = c.undoer.beforeInsertNode(current)
-    # Make sure the new node is visible when hoisting.
-    if ((current.hasChildren() and current.isExpanded()) or
-        (c.hoistStack and current == c.hoistStack[-1].p)):
-        p = current.insertAsNthChild(0)
-    else:
-        p = current.insertAfter()
-    dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-    c.setChanged(True)
-    u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-    if redraw_flag:
-        c.endEditing() # Bug fix: 11/28/05.
-        c.redraw_now()
-        c.editPosition(p)
-        
-    return p # for mod_labels plugin.</t>
 <t tx="ekr.20051128181302.171">The tab now scrolls properly.</t>
 <t tx="ekr.20051128181302.183">http://sourceforge.net/forum/message.php?msg_id=3434727
 
@@ -21988,7 +21934,13 @@ Allowed relative path to stylesheets.
 
 http://sourceforge.net/forum/message.php?msg_id=3433717
 
-The rst3 plugin now traverses the tree as was done previously in the @button rst3 nodes.</t>
+The rst3 plugin now traverses the tree as was done previously in the @button rst3 nodes.
+
+http://sourceforge.net/forum/message.php?msg_id=3456419
+
+The rst3 plugin now looks up and down the tree for settings doc parts.
+
+The rst3 plugin now supports the default_path option.</t>
 <t tx="ekr.20051128181302.208">@nocolor
 
 - The focusIn/Out trace is a great tool.
@@ -22026,59 +21978,11 @@ The code set g.app.gui to None after calling g.app.gui.runAskLeoIDDialog the cod
 
 While I was at it, Leo's core now always inits Pmw when creating Tk.Tk. This
 removes the necessity for Plugins to do this.</t>
-<t tx="ekr.20051128181302.244"></t>
-<t tx="ekr.20051128181302.245">@nocolor
+<t tx="ekr.20051128181302.244">1: Outline not marked dirty during editing
 
 https://sourceforge.net/forum/message.php?msg_id=3447570
-By: ktenney
 
-Current CVS, W2k
-
-After editing headline text, the file is not 
-marked as changed until focus leaves the headline.
-
-If you only edit a headline and exit, the change
-will be lost.</t>
-<t tx="ekr.20051128181302.246"></t>
-<t tx="ekr.20051128181302.247">def updateHead (self,event,w):
-    
-    '''Update a headline from an event.
-    
-    The headline officially changes only when editing ends.'''
-    
-    c = self.c ; p = c.currentPosition()
-    ch = event and event.char or ''
-    i,j = g.app.gui.getTextSelection(w)
-    
-    if ch == '\b':
-        if i != j:
-            w.delete(i,j)
-        else:
-            w.delete('insert-1c')
-    elif ch and ch not in ('\n','\r'):
-        if i != j:
-            w.delete(i,j)
-        i = w.index('insert')
-        w.insert(i,ch)
-
-    s = w.get('1.0','end')
-    # g.trace(repr(ch),repr(s))
-
-    if s.endswith('\n'):
-        s = s[:-1]
-
-    if 0: # p does not *officially* change until onHeadChanged is called.
-        p.initHeadString(s)
-
-    w.configure(width=self.headWidth(s=s))
-    
-    # The granularity is the entire editing session,
-    # starting at the revert point.
-    if ch in ('\n','\r'):
-        self.endEditLabel()
-        self.onHeadChanged(p)
-        
-    if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.</t>
+2: Inserting a headline didn't save previous edits of headlines</t>
 <t tx="ekr.20051128181351"></t>
 <t tx="ekr.20051128181651">Leo 4.4a4 completes the transition to the 'Newer World Order'.</t>
 <t tx="ekr.20051128181651.1"></t>
@@ -22426,5 +22330,34 @@ Examples::
     %who_ls str int  #this prints out variables whose type is str and int</t>
 <t tx="ekr.20051203101828.6">Prints a table of identifiers that have been defined interactively.</t>
 <t tx="ekr.20051203101828.7">Transforms reference ref2 with the stylesheet in ref1 putting the result in ref3.</t>
+<t tx="ekr.20051205090923.13"></t>
+<t tx="ekr.20051205090923.16">http://sourceforge.net/forum/message.php?msg_id=3450435</t>
+<t tx="ekr.20051205090923.22">http://sourceforge.net/forum/message.php?msg_id=3389810</t>
+<t tx="ekr.20051205091625">- The abbreviation and buffer commands are not ready yet.
+
+- repeat-complex-command does not work.
+
+- Moving the cursor when the 'mark' has been defined does not expand the visibly
+selected text.
+
+- Yanking and killing have not been well tested.
+
+- C-u 5 &lt;return&gt; works but is not undone properly. Also, the kill-line command
+does not work as in Emacs.
+
+- Many new commands must be generalized to handle the more complex environment
+Leo offers. For example, search commands must be told whether to limit the
+search a single node, or a node or and its descendants, or the entire outline.
+We need a set-variable command that sets a (Python) variable using an
+emacs-style variable name.
+
+- The notion of the 'point' must be expanded so it indicates a node as well as
+text location.
+    
+- New commands are needed to support 'mouseless-Leo'. The user must be able to
+drive all dialogs from the keyboard, or to get the same effect without using a
+dialog at all. Examples: dismiss-top-dialog, scroll-outline-up/down. We also
+need commands to change focus and to manage menus. Examples: focus-in-body,
+focus-in-tree, etc, activate-edit-menu, etc.</t>
 </tnodes>
 </leo_file>
