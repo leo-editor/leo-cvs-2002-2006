@@ -783,6 +783,12 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4098:makeIndexVisible
     #@-node:ekr.20031218072017.4097:Visibility
+    #@+node:ekr.20051206103652:widget_name
+    def widget_name (self,w):
+        
+        return w and hasattr(w,'_name') and w._name or repr(w)
+    #@nonl
+    #@-node:ekr.20051206103652:widget_name
     #@-node:ekr.20031218072017.4059:app.gui.Tkinter.utils
     #@-others
 #@nonl

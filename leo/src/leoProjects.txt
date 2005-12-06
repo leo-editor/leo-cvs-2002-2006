@@ -2440,6 +2440,7 @@ d = {
 #@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
 #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
 #@-node:ekr.20051009120608:(ctors & finishCreate)
+#@+node:ekr.20051110101524:4.4a4 projects
 #@+node:ekr.20051103114520.2:(The New World Order)
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
@@ -3105,6 +3106,12 @@ def makeIndexVisible(self,t,index):
 #@nonl
 #@-node:ekr.20031218072017.4098:makeIndexVisible
 #@-node:ekr.20031218072017.4097:Visibility
+#@+node:ekr.20051206103652:widget_name
+def widget_name (self,w):
+    
+    return w and hasattr(w,'_name') and w._name or repr(w)
+#@nonl
+#@-node:ekr.20051206103652:widget_name
 #@-node:ekr.20031218072017.4059:app.gui.Tkinter.utils
 #@+node:ekr.20051029065806:Commands
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -9531,7 +9538,6 @@ def insertParentheses (self,event):
 #@-node:ekr.20050920084036.139:insertParentheses
 #@-node:ekr.20050920084036.85:insert & delete...
 #@-node:ekr.20051125110301:(Refactored key handling)
-#@+node:ekr.20051110101524:4.4a4 projects
 #@+node:ekr.20051110104922:(Completed transition to Newer World Order)
 #@+node:ekr.20051110145620:What I did
 @nocolor
@@ -12033,7 +12039,6 @@ def forceLogUpdate (self,s):
             print g.toEncodedString(s,'utf-8')
     else:
         self.logCtrl.update_idletasks()
-        # self.nbCanvas.update_idletasks()
 #@nonl
 #@-node:ekr.20050208133438:forceLogUpdate
 #@-node:ekr.20051016095907.2:Focus & update (tkLog)
@@ -12066,8 +12071,15 @@ if 0:
     # Doing this here messes up the display in the log pane.
     if type(s) == type(u""):
         s = g.toEncodedString(s,g.app.TkEncoding)
-        
-# g.trace(repr(self.logCtrl))
+
+# New in 4.4b1: Restore the focus to a standard place.
+frame = self.c.frame
+focus_widget = g.app.gui.get_focus(frame)
+name = g.app.gui.widget_name(focus_widget)
+for kind in ('body','head','canvas'):
+    if name.startswith(kind): break
+else:
+    focus_widget = frame.body.bodyCtrl
 
 if color:
     if color not in self.colorTags:
@@ -12080,9 +12092,8 @@ else:
     self.logCtrl.insert("end",s)
 
 self.logCtrl.see("end")
-    
 self.forceLogUpdate(s)
-#@nonl
+frame.widgetWantsFocus(focus_widget)
 #@-node:EKR.20040423082910:<< put s to log control >>
 #@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
 g.app.logWaiting.append((s,color),)
@@ -14540,7 +14551,6 @@ def forceLogUpdate (self,s):
             print g.toEncodedString(s,'utf-8')
     else:
         self.logCtrl.update_idletasks()
-        # self.nbCanvas.update_idletasks()
 #@nonl
 #@-node:ekr.20050208133438:forceLogUpdate
 #@-node:ekr.20051016095907.2:Focus & update (tkLog)
@@ -14573,8 +14583,15 @@ if 0:
     # Doing this here messes up the display in the log pane.
     if type(s) == type(u""):
         s = g.toEncodedString(s,g.app.TkEncoding)
-        
-# g.trace(repr(self.logCtrl))
+
+# New in 4.4b1: Restore the focus to a standard place.
+frame = self.c.frame
+focus_widget = g.app.gui.get_focus(frame)
+name = g.app.gui.widget_name(focus_widget)
+for kind in ('body','head','canvas'):
+    if name.startswith(kind): break
+else:
+    focus_widget = frame.body.bodyCtrl
 
 if color:
     if color not in self.colorTags:
@@ -14587,9 +14604,8 @@ else:
     self.logCtrl.insert("end",s)
 
 self.logCtrl.see("end")
-    
 self.forceLogUpdate(s)
-#@nonl
+frame.widgetWantsFocus(focus_widget)
 #@-node:EKR.20040423082910:<< put s to log control >>
 #@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
 g.app.logWaiting.append((s,color),)
@@ -16554,6 +16570,68 @@ it seems they should work if put in an ancestor node.
 #@-node:ekr.20051204075330:Report
 #@-node:ekr.20051204093712:Fixed bugs in rst3 plugin
 #@-node:ekr.20051110101524:4.4a4 projects
+#@+node:ekr.20051206111317:4.4b1 projects
+#@+node:ekr.20051206082343:Made sure focus doesn't go to log during tab completion or after writes to log
+#@+node:ekr.20031218072017.1473:put
+# All output to the log stream eventually comes here.
+def put (self,s,color=None,tabName='Log'):
+    
+    # print 'tkLog.put',self.c.shortFileName(),s,
+
+    if g.app.quitting:
+        return
+
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
+        << put s to log control >>
+    else:
+        << put s to logWaiting and print s >>
+#@nonl
+#@+node:EKR.20040423082910:<< put s to log control >>
+if 0:
+    # Doing this here messes up the display in the log pane.
+    if type(s) == type(u""):
+        s = g.toEncodedString(s,g.app.TkEncoding)
+
+# New in 4.4b1: Restore the focus to a standard place.
+frame = self.c.frame
+focus_widget = g.app.gui.get_focus(frame)
+name = g.app.gui.widget_name(focus_widget)
+for kind in ('body','head','canvas'):
+    if name.startswith(kind): break
+else:
+    focus_widget = frame.body.bodyCtrl
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+self.forceLogUpdate(s)
+frame.widgetWantsFocus(focus_widget)
+#@-node:EKR.20040423082910:<< put s to log control >>
+#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+
+if type(s) == type(u""):
+    s = g.toEncodedString(s,"ascii")
+
+print s
+#@nonl
+#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+#@-node:ekr.20031218072017.1473:put
+#@-node:ekr.20051206082343:Made sure focus doesn't go to log during tab completion or after writes to log
+#@-node:ekr.20051206111317:4.4b1 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

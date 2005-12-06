@@ -3276,7 +3276,6 @@ class leoTkinterLog (leoFrame.leoLog):
                 print g.toEncodedString(s,'utf-8')
         else:
             self.logCtrl.update_idletasks()
-            # self.nbCanvas.update_idletasks()
     #@nonl
     #@-node:ekr.20050208133438:forceLogUpdate
     #@-node:ekr.20051016095907.2:Focus & update (tkLog)
@@ -3310,8 +3309,15 @@ class leoTkinterLog (leoFrame.leoLog):
                 # Doing this here messes up the display in the log pane.
                 if type(s) == type(u""):
                     s = g.toEncodedString(s,g.app.TkEncoding)
-                    
-            # g.trace(repr(self.logCtrl))
+            
+            # New in 4.4b1: Restore the focus to a standard place.
+            frame = self.c.frame
+            focus_widget = g.app.gui.get_focus(frame)
+            name = g.app.gui.widget_name(focus_widget)
+            for kind in ('body','head','canvas'):
+                if name.startswith(kind): break
+            else:
+                focus_widget = frame.body.bodyCtrl
             
             if color:
                 if color not in self.colorTags:
@@ -3324,9 +3330,8 @@ class leoTkinterLog (leoFrame.leoLog):
                 self.logCtrl.insert("end",s)
             
             self.logCtrl.see("end")
-                
             self.forceLogUpdate(s)
-            #@nonl
+            frame.widgetWantsFocus(focus_widget)
             #@-node:EKR.20040423082910:<< put s to log control >>
             #@nl
         else:
