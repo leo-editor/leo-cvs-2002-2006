@@ -3,13 +3,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
 <globals body_outline_ratio="0.593037214886">
-	<global_window_position top="35" left="366" height="837" width="836"/>
+	<global_window_position top="61" left="290" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -205,12 +205,12 @@
 <v t="ekr.20051124090208"><vh>test not python</vh></v>
 </v>
 <v t="ekr.20051130182536" a="E"><vh>IronPython stuff</vh>
-<v t="ekr.20051130182536.1" a="E"><vh>batch file</vh>
+<v t="ekr.20051130182536.1"><vh>batch file</vh>
 <v t="ekr.20051130182412" tnodeList="ekr.20051130182412"><vh>@file ironPythonTest.bat</vh></v>
 </v>
-<v t="ekr.20051130181738" a="M" tnodeList="ekr.20051130181738"><vh>@file c:\prog\IronPython-0.9.5\ironPythonTest.py</vh></v>
+<v t="ekr.20051130181738" a="EM" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
 </v>
-<v t="ekr.20051201153400" a="TV"><vh>Print Hi</vh></v>
+<v t="ekr.20051201153400" a="E"><vh>Print Hi</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4128,20 +4128,27 @@ Bug: can't split after opening quote.
 </t>
 <t tx="ekr.20051124094428">    # This is an extremely very very long comment.
     a = b</t>
-<t tx="ekr.20051130181738">print 'Hello Iron Python!!'
+<t tx="ekr.20051130181738">print 'Let the wild rumpus start!'
 
-import winforms
+import sys
+import System
+sys.LoadAssemblyByName("System.Windows.Forms")
 
-if 1:
-    pass
+if 0: # Works
+    def click(*args):
+        print args ; System.Windows.Forms.Application.Exit()
+    f = System.Windows.Forms.Form()
+    f.Click += click
+    f.Show()
+    System.Windows.Forms.Application.Run()
+
+else: # Works: automatically exits, so I like it better.
+    def click(*args): print args
+    f = System.Windows.Forms.Form()
+    f.Click += click
+    System.Windows.Forms.Application.Run(f)
     
-else:
-    import winforms
-    from System.Windows.Forms import *
-    from System.Drawing import *
-    
-    f = Form()
-    f.Show()</t>
+print 'done'</t>
 <t tx="ekr.20051130182412">REM -i option crashes, so this test program had better be a winforms program.
 
 cd c:\prog\IronPython-0.9.5
