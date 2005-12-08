@@ -507,6 +507,8 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
         
         self.number_entry = t = Tk.Entry(f,width=20)
         t.pack(side="left")
+        
+        g.app.gui.set_focus(self.c,t)
     #@nonl
     #@-node:ekr.20031218072017.3878:tkinterAskOKCancelNumber.createFrame
     #@+node:ekr.20031218072017.3879:tkinterAskOKCancelNumber.okButton, cancelButton
