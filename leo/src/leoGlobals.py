@@ -4881,7 +4881,9 @@ def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
     if not p:
         p = c.currentPosition()
     try:
-        if p == c.currentPosition():
+        if g.app.batchMode:
+            s = p.bodyString()
+        elif p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
                 s = c.frame.body.getSelectedText()
             else:
