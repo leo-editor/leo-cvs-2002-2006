@@ -58,7 +58,7 @@ AddRawTemplate
 #@nl
 
 __name__ = "New Buttons"
-__version__ = "0.5"
+__version__ = "0.6"
 
 USE_FIXED_SIZES = 1
 
@@ -67,11 +67,12 @@ USE_FIXED_SIZES = 1
 #@@killcolor
 #@+at
 # 
-# # 0.1 Paul Paterson: First version
-# # 0.2 EKR: Converted to @file-noref
-# # 0.3 EKR: Added 6 new plugin templates.  Added init function.
-# # 0.4 EKR: Added importLeoGlobals function.
-# # 0.5 Paul Paterson: Rewrite from scratch
+# 0.1 Paul Paterson: First version
+# 0.2 EKR: Converted to @file-noref
+# 0.3 EKR: Added 6 new plugin templates.  Added init function.
+# 0.4 EKR: Added importLeoGlobals function.
+# 0.5 Paul Paterson: Rewrite from scratch
+# 0.6 EKR: Added support for template_path setting.
 #@-at
 #@nonl
 #@-node:pap.20051010170720.2:<< version history >>
@@ -523,14 +524,24 @@ class Template:
     #@-node:pap.20051010184315:addNodes
     #@+node:pap.20051010182048:save
     def save(self):
+        
         """Save this template"""
-        filename = g.os_path_join(g.app.loadDir,"..","plugins", "templates", 
-                    "%s.tpl" % self.name)
+        
+        template_path = g.app.config.getString(g.top(), 'template_path')
+    
+        if template_path:
+            filename = g.os_path_join(template_path, "%s.tpl" % self.name)
+        else:
+            filename = g.os_path_join(
+                g.app.loadDir,"..","plugins", "templates", "%s.tpl" % self.name)
+            
         f = file(filename, "w")
+    
         try:
             f.write(repr(self))
         finally:
             f.close()
+    #@nonl
     #@-node:pap.20051010182048:save
     #@+node:pap.20051010181808:repr
     def __repr__(self):
