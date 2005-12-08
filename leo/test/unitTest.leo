@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="ETV"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="E"><vh>All unit tests</vh>
 <v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -970,7 +970,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests</vh>
+<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>Unit tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1002,9 +1002,9 @@
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>General Unit Tests...</vh>
-<v t="ekr.20041130092210"><vh>Batch mode tests...</vh>
-<v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
+<v t="ekr.20040712101754" a="E"><vh>General Unit Tests...</vh>
+<v t="ekr.20041130092210" a="E"><vh>Batch mode tests...</vh>
+<v t="ekr.20040327114250" a="TV"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
@@ -1614,7 +1614,7 @@
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
 <v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
-<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
+<v t="ekr.20050120095423.7" a="E"><vh>class parseFileTestCase</vh>
 <v t="ekr.20050120095423.8"><vh>__init__</vh></v>
 <v t="ekr.20050120095423.9"><vh>runTest</vh></v>
 <v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
@@ -1690,7 +1690,7 @@
 </v>
 </v>
 <v t="ekr.20051107115231.7"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
-<v t="ekr.20051107115231.8"><vh>Commands tests</vh>
+<v t="ekr.20051107115231.8" a="E"><vh>Commands tests</vh>
 <v t="ekr.20051107115231.9"><vh>@test Select a node when file is first loaded</vh></v>
 <v t="ekr.20051107115231.10"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
@@ -1700,7 +1700,7 @@
 </v>
 <v t="ekr.20051107115231.29"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
-<v t="ekr.20051107115231.13" a="M"><vh>Typing and undo tests</vh>
+<v t="ekr.20051107115231.13" a="EM"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
 <v t="ekr.20051107115231.15"><vh>@test editLabel selects entire headline</vh></v>
 <v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
@@ -7871,7 +7871,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
