@@ -7545,6 +7545,22 @@ It's also not (yet?) very clear to me how selection_only, suboutline_only, node_
 (should) interact...
 #@nonl
 #@-node:ekr.20051103091115.1:Report
+#@+node:ekr.20051207130144:Investigate Tk DnD
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3460955
+By: nobody
+
+I found this link:
+http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html
+TkinterDnD
+
+so if Edward is interested in adding drag and drop support for regular leo,
+this might be a path to do so.  It looks like an active project.
+
+leouser
+#@+node:ekr.20051207130144.1:@url http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html
+#@-node:ekr.20051207130144.1:@url http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html
+#@-node:ekr.20051207130144:Investigate Tk DnD
 #@-node:ekr.20051023192433:Maybe...
 #@-node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20050707081822:Top priorities (4.5 and beyond)

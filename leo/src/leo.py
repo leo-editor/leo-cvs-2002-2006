@@ -254,7 +254,7 @@ def getBatchScript ():
             script = f.read()
             # g.trace("script",script)
         except IOError:
-            g.es("can not open script file: " + name, color="red")
+            g.es_print("can not open script file: " + name, color="red")
             script = None
     finally:
         if f: f.close()

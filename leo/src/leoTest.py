@@ -64,9 +64,10 @@ def isTestNode (p):
 #@nonl
 #@-node:ekr.20051104075904.3:isSuiteNode and isTestNode
 #@+node:ekr.20051104075904.4:doTests...
-def doTests(all,verbosity=1):
+def doTests(all,verbosity=1,c=None):
 
-    c = g.top() ; p = c.currentPosition() ; p1 = p.copy()
+    if c is None: c = g.top()
+    p = c.currentPosition() ; p1 = p.copy()
 
     g.app.unitTestDict["fail"] = False
 
@@ -86,15 +87,11 @@ def doTests(all,verbosity=1):
             if test: suite.addTest(test)
 
     # Verbosity: 1: print just dots.
-    c.beginUpdate()
-    try:
-        unittest.TextTestRunner(verbosity=verbosity).run(suite)
-    finally:
-        c.endUpdate()
+    unittest.TextTestRunner(verbosity=verbosity).run(suite)
     c.setChanged(changed) # Restore changed state.
     # Restore the selected node unless overridden.
     if g.app.unitTestDict.get('restoreSelectedNode',True):
-        c.selectVnode(p1)
+        c.selectPosition(p1)
 #@nonl
 #@+node:ekr.20051104075904.5:class generalTestCase
 class generalTestCase(unittest.TestCase):

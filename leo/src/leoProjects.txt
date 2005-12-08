@@ -15371,7 +15371,7 @@ def getBatchScript ():
             script = f.read()
             # g.trace("script",script)
         except IOError:
-            g.es("can not open script file: " + name, color="red")
+            g.es_print("can not open script file: " + name, color="red")
             script = None
     finally:
         if f: f.close()
@@ -16631,6 +16631,55 @@ print s
 #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
 #@-node:ekr.20031218072017.1473:put
 #@-node:ekr.20051206082343:Made sure focus doesn't go to log during tab completion or after writes to log
+#@+node:ekr.20051208091305:Fixed problem with getScript in batch mode
+#@+node:EKR.20040614071102.1:g.getScript & tests
+def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
+    
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
+    try:
+        if g.app.batchMode:
+            s = p.bodyString()
+        elif p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
+            script = script.replace("\r\n","\n") # Use brute force.
+            g.app.scriptDict["script2"]=script
+        else: script = ''
+    except Exception:
+        s = "unexpected exception in g.getScript"
+        g.es_print(s)
+        g.es_exception()
+        script = ''
+
+    return script
+#@nonl
+#@+node:ekr.20050211100535:test_g_getScript_strips_crlf
+def test_g_getScript_strips_crlf():
+
+    script = g.getScript(c,p) # This will get the text of this node.
+    assert script.find('\r\n') == -1, repr(script)
+#@nonl
+#@-node:ekr.20050211100535:test_g_getScript_strips_crlf
+#@-node:EKR.20040614071102.1:g.getScript & tests
+#@-node:ekr.20051208091305:Fixed problem with getScript in batch mode
+#@+node:ekr.20051208091816:created ut.leo, ut.py and ut.bat
+#@-node:ekr.20051208091816:created ut.leo, ut.py and ut.bat
 #@-node:ekr.20051206111317:4.4b1 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
