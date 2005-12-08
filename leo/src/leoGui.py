@@ -309,6 +309,12 @@ class leoGui:
             return "invalid gui name"
     #@nonl
     #@-node:ekr.20031218072017.3740:guiName
+    #@+node:ekr.20051206103652:widget_name
+    def widget_name (self,w):
+        
+        return w and hasattr(w,'_name') and w._name or repr(w)
+    #@nonl
+    #@-node:ekr.20051206103652:widget_name
     #@+node:ekr.20031218072017.3741:oops
     def oops (self):
         
