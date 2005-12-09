@@ -1612,7 +1612,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1921,15 +1921,15 @@
 <v t="ekr.20050901102400.3"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4"><vh>@rst html\customizing.html</vh>
+<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050901101608.4" a="E"><vh>@rst html\customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
 <v t="ekr.20050903161843"><vh>Creating script buttons</vh></v>
 <v t="ekr.20050907101918"><vh>@test and @suite nodes</vh></v>
 <v t="EKR.20040524104904.224"><vh>Important security warnings</vh></v>
 <v t="ekr.20050903074833"><vh>Writing plugins and hooks</vh></v>
-<v t="ekr.20050903074833.1"><vh>Summary of hooks</vh></v>
+<v t="ekr.20050903074833.1" a="TV"><vh>Summary of hooks</vh></v>
 <v t="EKR.20040524104904.231"><vh>Convenience routines for plugins</vh></v>
 <v t="EKR.20040524104904.240"><vh>Support for unit testing</vh></v>
 <v t="ekr.20050306090601"><vh>Adding extensible attributes to nodes and .leo files</vh></v>
@@ -19556,8 +19556,8 @@ Hook name (tag argument)      Stop?    When called                         Keys 
 'headclick2'                           after  normal click in headline     c,p,v,event
 'headrclick1'                  yes     before right click in headline      c,p,v,event
 'headrclick2'                          after  right click in headline      c,p,v,event
-'headkey1'                     yes     before headline keystrokes          c,p,v,ch
-'headkey2'                             after  headline keystrokes          c,p,v,ch
+'headkey1'                     yes     before headline keystrokes          c,p,v,ch (note 13)
+'headkey2'                             after  headline keystrokes          c,p,v,ch (note 13)
 'hypercclick1'                 yes     before control click in hyperlink   c,p,v,event
 'hypercclick2'                         after  control click in hyperlink   c,p,v,event
 'hyperenter1'                  yes     before entering hyperlink           c,p,v,event
@@ -19663,7 +19663,10 @@ Hook name (tag argument)      Stop?    When called                         Keys 
     from ``app.windowList`` to prevent ``g.app.closeLeoWindow`` from destroying the window.
 
 12. ``g.app.destroyAllGlobalWindows`` calls the 'destroy-all-global-windows' hook.
-    This hook gives plugins the chance to clean up after themselves when Leo shuts down.</t>
+    This hook gives plugins the chance to clean up after themselves when Leo shuts down.
+
+13. New in Leo 4.4: Leo calls the 'headkey1' and 'headkey2' hooks only when the user completes
+    the editing of a headling, and ch is always '\r', regardless of platform.</t>
 <t tx="ekr.20050903075144">A **plugin** is a Python file that appears in Leo's plugin directory. Plugins
 are a powerful way of enhancing and customizing Leo. The file
 ``pluginsManager.txt`` in the plugins directory controls tells which plugins are
