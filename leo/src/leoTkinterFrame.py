@@ -2390,6 +2390,7 @@ class leoTkinterBody (leoFrame.leoBody):
         body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
         p = c.currentPosition()
         ch = bodyCtrl.get('insert-1c')
+    
         newText = bodyCtrl.get('1.0','end')
         newSel = g.app.gui.getTextSelection(bodyCtrl)
         if oldText is None: oldText = p.bodyString()

@@ -14,7 +14,7 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.128,ekr.20040803072955.128,ekr.20031218072017.2052,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.128,ekr.20050208133438,EKR.20040423082910,ekr.20040803072955.128,ekr.20050208133438,EKR.20040423082910,ekr.20031218072017.1939,ekr.20031218072017.2052,ekr.20040803072955.128,EKR.20040423082910,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20050831131028"><vh>opml</vh>
@@ -701,11 +701,11 @@ marks="ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.200510
 <v t="ekr.20051016095907.2"><vh>Focus &amp; update (tkLog)</vh>
 <v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
 <v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
-<v t="ekr.20050208133438"><vh>forceLogUpdate</vh></v>
+<v t="ekr.20050208133438" a="M"><vh>forceLogUpdate</vh></v>
 </v>
 <v t="ekr.20051016101927"><vh>put &amp; putnl (tkLog)</vh>
 <v t="ekr.20031218072017.1473"><vh>put</vh>
-<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910" a="M"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
 <v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20051016101927.1"><vh>putnl</vh></v>
@@ -872,11 +872,11 @@ marks="ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.200510
 <v t="ekr.20051016095907.2"><vh>Focus &amp; update (tkLog)</vh>
 <v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
 <v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
-<v t="ekr.20050208133438"><vh>forceLogUpdate</vh></v>
+<v t="ekr.20050208133438" a="M"><vh>forceLogUpdate</vh></v>
 </v>
 <v t="ekr.20051016101927"><vh>put &amp; putnl (tkLog)</vh>
 <v t="ekr.20031218072017.1473"><vh>put</vh>
-<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910" a="M"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
 <v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20051016101927.1"><vh>putnl</vh></v>
@@ -928,7 +928,7 @@ marks="ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.200510
 <v t="ekr.20041124083125"><vh>completeFileName (leo.py)</vh></v>
 <v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
 <v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
-<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
+<v t="ekr.20031218072017.1939" a="M"><vh>getBatchScript</vh></v>
 <v t="ekr.20041130093254"><vh>reportDirectories</vh></v>
 </v>
 <v t="ekr.20031218072017.2610"><vh>app.createTkGui</vh></v>
@@ -1013,6 +1013,506 @@ marks="ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.200510
 </v>
 <v t="ekr.20051204093712"><vh>Fixed bugs in rst3 plugin</vh>
 <v t="ekr.20051204075330"><vh>Report</vh></v>
+</v>
+<v t="ekr.20051103114520.2"><vh>(The New World Order)</vh>
+<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
+<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+<v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
+<v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
+<v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
+<v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
+</v>
+<v t="ekr.20031218072017.4060"><vh>Dialog</vh>
+<v t="ekr.20031218072017.4061"><vh>get_window_info</vh></v>
+<v t="ekr.20031218072017.4062"><vh>center_dialog</vh></v>
+<v t="ekr.20031218072017.4063"><vh>create_labeled_frame</vh></v>
+</v>
+<v t="ekr.20031218072017.4064"><vh>Focus</vh>
+<v t="ekr.20031218072017.4065"><vh>get_focus</vh></v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20050210082320"><vh>widget_wants_focus (tk.gui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4066"><vh>Font</vh>
+<v t="ekr.20031218072017.2187"><vh>tkGui.getFontFromParams</vh></v>
+</v>
+<v t="ekr.20031218072017.4067"><vh>Icons</vh>
+<v t="ekr.20031218072017.4068"><vh>attachLeoIcon &amp; createLeoIcon</vh>
+<v t="ekr.20031218072017.4069"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.4070"><vh>createLeoIcon</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.4071"><vh>Idle Time</vh>
+<v t="ekr.20031218072017.4072"><vh>tkinterGui.setIdleTimeHook</vh></v>
+<v t="ekr.20031218072017.4073"><vh>setIdleTimeHookAfterDelay</vh></v>
+</v>
+<v t="ekr.20031218072017.4074"><vh>Indices (Tk)</vh>
+<v t="ekr.20031218072017.4075"><vh>firstIndex</vh></v>
+<v t="ekr.20031218072017.4076"><vh>lastIndex</vh></v>
+<v t="ekr.20031218072017.4077"><vh>moveIndexBackward</vh></v>
+<v t="ekr.20031218072017.4078"><vh>moveIndexForward &amp; moveIndexToNextLine</vh></v>
+<v t="ekr.20031218072017.4079"><vh>compareIndices</vh></v>
+<v t="ekr.20031218072017.4080"><vh>getindex</vh></v>
+</v>
+<v t="ekr.20031218072017.4081"><vh>Insert Point</vh>
+<v t="ekr.20031218072017.4082"><vh>getInsertPoint</vh></v>
+<v t="ekr.20031218072017.4083"><vh>setInsertPoint</vh></v>
+</v>
+<v t="ekr.20031218072017.4084"><vh>Selection</vh>
+<v t="ekr.20031218072017.4085"><vh>getSelectionRange</vh></v>
+<v t="ekr.20051126125950"><vh>getSelectedText</vh></v>
+<v t="ekr.20031218072017.4086"><vh>getTextSelection</vh></v>
+<v t="ekr.20051126171929"><vh>hasSelection</vh></v>
+<v t="ekr.20031218072017.4087"><vh>setSelectionRange</vh></v>
+<v t="ekr.20031218072017.4088"><vh>setSelectionRangeWithLength</vh></v>
+<v t="ekr.20031218072017.4089"><vh>setTextSelection</vh></v>
+</v>
+<v t="ekr.20031218072017.4090"><vh>Text</vh>
+<v t="ekr.20031218072017.4091"><vh>getAllText</vh></v>
+<v t="ekr.20031218072017.4092"><vh>getCharAfterIndex</vh></v>
+<v t="ekr.20031218072017.4093"><vh>getCharAtIndex</vh></v>
+<v t="ekr.20031218072017.4094"><vh>getCharBeforeIndex</vh></v>
+<v t="ekr.20031218072017.4095"><vh>getLineContainingIndex</vh></v>
+<v t="ekr.20031218072017.4096"><vh>replaceSelectionRangeWithText (leoTkinterGui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4097"><vh>Visibility</vh>
+<v t="ekr.20031218072017.4098"><vh>makeIndexVisible</vh></v>
+</v>
+</v>
+<v t="ekr.20051029065806"><vh>Commands</vh>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+<v t="ekr.20051011072903.1"><vh>OnCopyFromMenu</vh></v>
+<v t="ekr.20051011072049.1"><vh>OnCutFromMenu</vh></v>
+<v t="ekr.20051011072903.4"><vh>OnPasteFromMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.3070"><vh>changeSelection</vh></v>
+<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
+<v t="ekr.20051022142249"><vh>focus (editCommandsClass)</vh>
+<v t="ekr.20051022144825"><vh>focusToBody/Log/Tree/Minibuffer</vh></v>
+<v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
+</v>
+</v>
+<v t="ekr.20051106103835"><vh>Drawing</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate (vestigial)</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
+<v t="ekr.20051105073850"><vh>drawX...</vh>
+<v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
+<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
+<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.39"><vh>drawIcon</vh>
+<v t="ekr.20040803072955.40"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.41"><vh>drawLine</vh></v>
+<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20040803072955.44"><vh>drawText</vh>
+<v t="ekr.20040803072955.45"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.46"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040803072955.47"><vh>drawUserIcon</vh>
+<v t="ekr.20040803072955.48"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.49"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.50"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.51"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
+</v>
+<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
+<v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
+<v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
+<v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051105090649"><vh>Event handlers</vh>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+</v>
+<v t="ekr.20031218072017.3971"><vh>Event handlers (tkFrame)</vh>
+<v t="ekr.20031218072017.3972"><vh>frame.OnCloseLeoEvent</vh></v>
+<v t="ekr.20031218072017.3973"><vh>frame.OnControlKeyUp/Down</vh></v>
+<v t="ekr.20031218072017.3975"><vh>OnActivateBody (tkFrame)</vh></v>
+<v t="ekr.20031218072017.2253"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
+<v t="ekr.20031218072017.3976"><vh>OnActivateTree</vh></v>
+<v t="ekr.20031218072017.3977"><vh>OnBodyClick, OnBodyRClick (Events)</vh></v>
+<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events)</vh></v>
+<v t="ekr.20031218072017.1803"><vh>OnMouseWheel (Tomaz Ficko)</vh></v>
+</v>
+<v t="ekr.20040803072955.71"><vh>Event handlers (tkTree)</vh>
+<v t="ekr.20051105103233"><vh>Helpers</vh>
+<v t="ekr.20040803072955.72"><vh>checkWidgetList</vh></v>
+<v t="ekr.20040803072955.73"><vh>dumpWidgetList</vh></v>
+<v t="ekr.20040803072955.75"><vh>edit_widget</vh></v>
+<v t="ekr.20040803072955.74"><vh>eventToPosition</vh></v>
+<v t="ekr.20040803072955.76"><vh>findEditWidget</vh></v>
+<v t="ekr.20040803072955.109"><vh>findVnodeWithIconId</vh></v>
+<v t="ekr.20040803072955.117"><vh>tree.moveUpDown (not used)</vh></v>
+</v>
+<v t="ekr.20040803072955.78"><vh>Click Box...</vh>
+<v t="ekr.20040803072955.79"><vh>onClickBoxClick</vh></v>
+</v>
+<v t="ekr.20040803072955.99"><vh>Dragging</vh>
+<v t="ekr.20041111115908"><vh>endDrag</vh>
+<v t="ekr.20040803072955.104"><vh>&lt;&lt; set vdrag, childFlag &gt;&gt;</vh></v>
+<v t="ekr.20041111114148"><vh>&lt;&lt; drag p to vdrag &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041111114944"><vh>startDrag</vh></v>
+<v t="ekr.20040803072955.100"><vh>onContinueDrag</vh>
+<v t="ekr.20040803072955.101"><vh>&lt;&lt; scroll the canvas as needed &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.102"><vh>onDrag</vh></v>
+<v t="ekr.20040803072955.103"><vh>onEndDrag</vh></v>
+</v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040803072955.80"><vh>Icon Box...</vh>
+<v t="ekr.20040803072955.81"><vh>onIconBoxClick</vh></v>
+<v t="ekr.20040803072955.89"><vh>onIconBoxRightClick</vh></v>
+<v t="ekr.20040803072955.82"><vh>onIconBoxDoubleClick</vh></v>
+</v>
+<v t="ekr.20040803072955.105"><vh>OnActivateHeadline (tkTree)</vh>
+<v t="ekr.20040803072955.106"><vh>&lt;&lt; activate this window &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051022141020"><vh>onTreeClick</vh></v>
+<v t="ekr.20040803072955.84"><vh>Text Box...</vh>
+<v t="ekr.20040803072955.85"><vh>configureTextState</vh></v>
+<v t="ekr.20040803072955.86"><vh>onCtontrolT</vh></v>
+<v t="ekr.20040803072955.87"><vh>onHeadlineClick</vh></v>
+<v t="ekr.20040803072955.83"><vh>onHeadlineRightClick</vh></v>
+</v>
+<v t="ekr.20040803072955.108"><vh>tree.OnDeactivate (caused double-click problem)</vh></v>
+<v t="ekr.20040803072955.110"><vh>tree.OnPopup &amp; allies</vh>
+<v t="ekr.20040803072955.111"><vh>OnPopupFocusLost</vh></v>
+<v t="ekr.20040803072955.112"><vh>createPopupMenu</vh>
+<v t="ekr.20040803072955.113"><vh>&lt;&lt; Create the menu table &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.114"><vh>enablePopupMenuItems</vh>
+<v t="ekr.20040803072955.115"><vh>&lt;&lt; set isAtRoot and isAtFile if v's tree contains @root or @file nodes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.116"><vh>showPopupMenu</vh></v>
+</v>
+</v>
+<v t="ekr.20040803072955.125"><vh>Selecting &amp; editing... (tkTree)</vh>
+<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
+<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
+<v t="ekr.20040803072955.128" a="M"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.134"><vh>tree.set...LabelState</vh>
+<v t="ekr.20040803072955.135"><vh>setEditLabelState</vh></v>
+<v t="ekr.20040803072955.136"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20040803072955.138"><vh>setUnselectedLabelState</vh></v>
+<v t="ekr.20040803072955.139"><vh>setDisabledHeadlineColors</vh></v>
+<v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
+<v t="ekr.20040803072955.141"><vh>setUnselectedHeadlineColors</vh></v>
+</v>
+<v t="ekr.20040803072955.142"><vh>dimEditLabel, undimEditLabel</vh></v>
+<v t="ekr.20040803072955.143"><vh>tree.expandAllAncestors</vh></v>
+</v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051022152427"><vh>Focus</vh>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+<v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
+<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
+<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
+</v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+<v t="ekr.20051104100739"><vh>Idle Time</vh>
+<v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
+<v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
+</v>
+<v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
+<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
+<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
+</v>
+<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
+<v t="ekr.20051025150224"><vh>onIdleTime</vh></v>
+</v>
+<v t="ekr.20051104100657"><vh>keyHandler</vh>
+<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+</v>
+<v t="ekr.20051105073439.1"><vh>Traces</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate (vestigial)</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+<v t="ekr.20051105100804"><vh>keyHandler</vh>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+</v>
+<v t="ekr.20051105100804.1"><vh>Tree</vh>
+<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
+<v t="ekr.20051105073850"><vh>drawX...</vh>
+<v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
+<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
+<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.39"><vh>drawIcon</vh>
+<v t="ekr.20040803072955.40"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.41"><vh>drawLine</vh></v>
+<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20040803072955.44"><vh>drawText</vh>
+<v t="ekr.20040803072955.45"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.46"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040803072955.47"><vh>drawUserIcon</vh>
+<v t="ekr.20040803072955.48"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.49"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.50"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.51"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
+</v>
+<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
+<v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
+<v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
+<v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2253"><vh>OnActivateLeoEvent, OnDeactivateLeoEvent</vh></v>
+<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
+<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead (new in 4.4a2)</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+</v>
+</v>
+<v t="ekr.20051109040029"><vh>(The Newer World Order)</vh>
+<v t="ekr.20051107102734"><vh>About the Newer World Order</vh></v>
+<v t="ekr.20051109094502"><vh>Detecting multiple redraw</vh></v>
+<v t="ekr.20051106103835"><vh>Drawing</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate (vestigial)</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
+<v t="ekr.20051103114520.1"><vh>c.setFocusHelper</vh></v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
+<v t="ekr.20051105073850"><vh>drawX...</vh>
+<v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
+<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
+<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.39"><vh>drawIcon</vh>
+<v t="ekr.20040803072955.40"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.41"><vh>drawLine</vh></v>
+<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20040803072955.44"><vh>drawText</vh>
+<v t="ekr.20040803072955.45"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.46"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040803072955.47"><vh>drawUserIcon</vh>
+<v t="ekr.20040803072955.48"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.49"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.50"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.51"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
+</v>
+<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
+<v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
+<v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
+<v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20051109090037"><vh>Special cases</vh>
+<v t="ekr.20031218072017.1551"><vh>pasteOutline</vh>
+<v t="ekr.20050418084539"><vh>&lt;&lt; remember all data for undo/redo Paste As Clone &gt;&gt;</vh></v>
+<v t="ekr.20050418084539.2"><vh>&lt;&lt; put only needed info in copiedBunchList &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1557"><vh>finishPaste</vh>
+<v t="ekr.20031218072017.1558"><vh>&lt;&lt; reassign tnode indices &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
+<v t="ekr.20051009045404"><vh>createFirstTreeNode</vh></v>
+</v>
+</v>
+<v t="ekr.20051125110301"><vh>(Refactored key handling)</vh>
+<v t="ekr.20051122133732"><vh> Report</vh></v>
+<v t="ekr.20051023182326"><vh>copyBindingsToWidget</vh></v>
+<v t="ekr.20051001051355"><vh>Dispatching...</vh>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+</v>
+<v t="ekr.20050920085536.58"><vh>quickCommand  (ctrl-c) &amp; helpers</vh>
+<v t="ekr.20051004102314"><vh>rCommand</vh></v>
+<v t="ekr.20050923183943.4"><vh>processKey</vh>
+<v t="ekr.20050923183943.6"><vh>processAbbreviation</vh></v>
+</v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+</v>
+<v t="EKR.20040526090701.4"><vh>undoTyping</vh></v>
+<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
+<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using p's body text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
+<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
+</v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+<v t="ekr.20051011072903.1"><vh>OnCopyFromMenu</vh></v>
+<v t="ekr.20051011072049.1"><vh>OnCutFromMenu</vh></v>
+<v t="ekr.20051011072903.4"><vh>OnPasteFromMenu</vh></v>
+</v>
+<v t="ekr.20050920084036.85"><vh>insert &amp; delete...</vh>
+<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
+<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
+<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
+<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
+<v t="ekr.20051026092433"><vh>updateTab</vh></v>
+</v>
+<v t="ekr.20051026092433.1"><vh>backwardDeleteCharacter</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050920084036.87"><vh>deleteNextChar</vh></v>
+<v t="ekr.20050920084036.135"><vh>deleteSpaces</vh></v>
+<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
+<v t="ekr.20050920084036.138"><vh>insertNewLine</vh></v>
+<v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
+<v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051206111317"><vh>4.4b1 projects</vh>
+<v t="ekr.20051208102436"><vh>Bugs fixed</vh>
+<v t="ekr.20051206082343"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh>
+<v t="ekr.20031218072017.1473"><vh>put</vh>
+<v t="EKR.20040423082910" a="M"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051208091305"><vh>Fixed problem with getScript in batch mode</vh>
+<v t="EKR.20040614071102.1"><vh>g.getScript &amp; tests</vh>
+<v t="ekr.20050211100535"><vh>test_g_getScript_strips_crlf</vh></v>
+</v>
+</v>
+<v t="ekr.20051207180807"><vh>Select text box in goto-line-number command</vh>
+<v t="ekr.20051208102107"><vh>Report</vh></v>
+<v t="ekr.20031218072017.3878"><vh>tkinterAskOKCancelNumber.createFrame</vh></v>
+</v>
+</v>
+<v t="ekr.20051208102436.1"><vh>New features</vh>
+<v t="ekr.20051208091816"><vh>created ut.leo, ut.py and ut.bat</vh></v>
+<v t="ekr.20051207120838.1"><vh>Added modes/*.xml to distribution</vh></v>
 </v>
 </v>
 </v>
@@ -1159,6 +1659,7 @@ marks="ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.200510
 <v t="ekr.20051127070018"><vh>setSelection</vh></v>
 <v t="ekr.20051126124705"><vh>stateHandler (autoCompleter)</vh></v>
 </v>
+<v t="ekr.20051205093049"><vh>Use dir for auto-complete ?</vh></v>
 </v>
 <v t="ekr.20051202094427"><vh>Prototype for resolve cvs conflicts</vh></v>
 <v t="ekr.20051028061611.1"><vh>Unify all search commands</vh>
@@ -1452,6 +1953,19 @@ marks="ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.200510
 <v t="ekr.20051023192433"><vh>Maybe...</vh>
 <v t="ekr.20051104051733"><vh>Use focus-in binding?</vh></v>
 <v t="ekr.20051103091115.1"><vh>Report</vh></v>
+<v t="ekr.20051207130144"><vh>Investigate Tk DnD</vh>
+<v t="ekr.20051207130144.1"><vh>@url http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html</vh></v>
+</v>
+</v>
+<v t="ekr.20051208100903"><vh>Install fix for Import Derived files</vh>
+<v t="ekr.20031218072017.1810"><vh>importDerivedFiles (new)</vh>
+<v t="ekr.20040930135204"><vh>&lt;&lt; set isThin if fileName is a thin derived file &gt;&gt;</vh></v>
+<v t="ekr.20051208100903.1"><vh>forceGnxOnPosition</vh></v>
+</v>
+<v t="ekr.20031218072017.1810"><vh>importDerivedFiles (new)</vh>
+<v t="ekr.20040930135204"><vh>&lt;&lt; set isThin if fileName is a thin derived file &gt;&gt;</vh></v>
+<v t="ekr.20051208100903.1"><vh>forceGnxOnPosition</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -1471,7 +1985,8 @@ marks="ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.200510
 </v>
 </v>
 <v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
-<v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
+<v t="ekr.20031218072017.2605"
+marks="ekr.20031218072017.1939,"><vh>@thin leo.py </vh></v>
 <v t="ekr.20031218072017.2608"
 marks="ekr.20031218072017.2619,"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
@@ -1506,7 +2021,8 @@ marks="ekr.20031218072017.2410,"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.3939"
+marks="ekr.20050208133438,EKR.20040423082910,"><vh>@thin leoTkinterFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
@@ -1520,8 +2036,15 @@ marks="ekr.20040803072955.128,"><vh>@thin leoTkinterTree.py</vh></v>
     # Doing this here messes up the display in the log pane.
     if type(s) == type(u""):
         s = g.toEncodedString(s,g.app.TkEncoding)
-        
-# g.trace(repr(self.logCtrl))
+
+# New in 4.4b1: Restore the focus to a standard place.
+frame = self.c.frame
+focus_widget = g.app.gui.get_focus(frame)
+name = g.app.gui.widget_name(focus_widget)
+for kind in ('body','head','canvas'):
+    if name.startswith(kind): break
+else:
+    focus_widget = frame.body.bodyCtrl
 
 if color:
     if color not in self.colorTags:
@@ -1534,8 +2057,9 @@ else:
     self.logCtrl.insert("end",s)
 
 self.logCtrl.see("end")
-    
-self.forceLogUpdate(s)</t>
+self.forceLogUpdate(s)
+frame.widgetWantsFocus(focus_widget)
+</t>
 <t tx="EKR.20040423082910.1">g.app.logWaiting.append((s,color),)
 
 print "Null tkinter log"
@@ -1678,6 +2202,41 @@ else: # Print surrounding lines.
         s = "%s line %d: %s" % (ch,i+1,lines[i])
         g.es(s,newline=False)
         i += 1</t>
+<t tx="EKR.20040614071102.1">def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
+    
+    '''Return the expansion of the selected text of node p.
+    Return the expansion of all of node p's body text if there
+    is p is not the current node or if there is no text selection.'''
+
+    at = c.atFileCommands
+    if not p:
+        p = c.currentPosition()
+    try:
+        if g.app.batchMode:
+            s = p.bodyString()
+        elif p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                s = c.frame.body.getSelectedText()
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+        # Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            script = at.writeFromString(p.copy(),s,
+                forcePythonSentinels=forcePythonSentinels)
+            script = script.replace("\r\n","\n") # Use brute force.
+            g.app.scriptDict["script2"]=script
+        else: script = ''
+    except Exception:
+        s = "unexpected exception in g.getScript"
+        g.es_print(s)
+        g.es_exception()
+        script = ''
+
+    return script</t>
 <t tx="EKR.20040627100424">if c.config.redirect_execute_script_output_to_log_pane:
 
     g.restoreStderr()
@@ -2418,6 +2977,30 @@ def OnMouseWheel(self, event=None):
         g.es_event_exception("scroll wheel")
 
     return "break"</t>
+<t tx="ekr.20031218072017.1810">def importDerivedFiles (self,parent,paths):
+    
+    c = self.c ; u = c.undoer
+    at = c.atFileCommands ; current = c.currentPosition()
+    self.tab_width = self.getTabWidth()
+    if not paths: return
+    command = 'Import'
+    u.beforeChangeGroup(current,command)
+    for fileName in paths:
+        &lt;&lt; set isThin if fileName is a thin derived file &gt;&gt;
+        undoData = u.beforeInsertNode(parent)
+        p = parent.insertAfter()
+        if isThin:
+            p.initHeadString("@thin " + fileName)
+            at.read(p,thinFile=True)
+        else:
+            p.initHeadString("Imported @file " + fileName)
+            at.read(p,importFileName=fileName)
+        p.contract()
+        u.afterInsertNode(p,command,undoData)
+    current.expand()
+    c.selectPosition(current)
+    u.afterChangeGroup(p,command)
+    </t>
 <t tx="ekr.20031218072017.1821">def convertBlanks (self):
 
     c = self ; undoType = 'Convert Blanks'
@@ -2982,7 +3565,7 @@ You may download Python from http://python.org/download/
             script = f.read()
             # g.trace("script",script)
         except IOError:
-            g.es("can not open script file: " + name, color="red")
+            g.es_print("can not open script file: " + name, color="red")
             script = None
     finally:
         if f: f.close()
@@ -3824,6 +4407,21 @@ def restore (self,data):
         return name + ext</t>
 <t tx="ekr.20031218072017.3625">&lt;&lt; about gui classes and gui plugins &gt;&gt;</t>
 <t tx="ekr.20031218072017.3821"></t>
+<t tx="ekr.20031218072017.3878">def createFrame (self,message):
+    
+    """Create the frame for a number dialog."""
+    
+    if g.app.unitTesting: return
+    
+    f = self.frame
+    
+    lab = Tk.Label(f,text=message)
+    lab.pack(pady=10,side="left")
+    
+    self.number_entry = t = Tk.Entry(f,width=20)
+    t.pack(side="left")
+    
+    g.app.gui.set_focus(self.c,t)</t>
 <t tx="ekr.20031218072017.3971"></t>
 <t tx="ekr.20031218072017.3972"># Called from quit logic and when user closes the window.
 # Returns True if the close happened.
@@ -4404,7 +5002,7 @@ def moveIndexToNextLine(self,t,index):
     return "Leo 4.4 alpha 4, build %s, December 5, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.345 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.346 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -5882,6 +6480,14 @@ Leo's import code can't handle this:
 - Having the comment line stop the scanning of aClass is even worse.
 
 - This usually shows up with an unindented blank line instead of the comment line.</t>
+<t tx="ekr.20040930135204">fileName = g.os_path_normpath(fileName)
+
+try:
+    theFile = open(fileName,'rb')
+    isThin = at.scanHeaderForThin(theFile,fileName)
+    theFile.close()
+except IOError:
+    isThin = False</t>
 <t tx="ekr.20041111114148"># g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
 
 if self.controlDrag: # Clone p and move the clone.
@@ -6349,8 +6955,7 @@ def set_focus(self,w):
             # g.app may not be inited during scripts!
             print g.toEncodedString(s,'utf-8')
     else:
-        self.logCtrl.update_idletasks()
-        # self.nbCanvas.update_idletasks()</t>
+        self.logCtrl.update_idletasks()</t>
 <t tx="ekr.20050210082320">def widget_wants_focus(self,c,widget):
 
     """Indicate that a widget want to get focus."""
@@ -6358,6 +6963,10 @@ def set_focus(self,w):
     c and c.frame.widgetWantsFocus(widget)
         
 widgetWantsFocus = widget_wants_focus</t>
+<t tx="ekr.20050211100535">def test_g_getScript_strips_crlf():
+
+    script = g.getScript(c,p) # This will get the text of this node.
+    assert script.find('\r\n') == -1, repr(script)</t>
 <t tx="ekr.20050312114529"></t>
 <t tx="ekr.20050312114529.1">def addComments (self):
 
@@ -14670,5 +15279,44 @@ it seems they should work if put in an ancestor node.
 
 </t>
 <t tx="ekr.20051204093712"></t>
+<t tx="ekr.20051205093049">@nocolor
+
+Working throught the IronPython tutorial just now I saw how useful the dir function could be, especially dir(object)
+
+I'm thinking that Leo might use dir(object) to discover members for the auto-complete command.  It's not clear if or how this can be made to work, but it might be slick.</t>
+<t tx="ekr.20051206082343"></t>
+<t tx="ekr.20051206111317"></t>
+<t tx="ekr.20051207120838.1"></t>
+<t tx="ekr.20051207130144">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3460955
+By: nobody
+
+I found this link:
+http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html
+TkinterDnD
+
+so if Edward is interested in adding drag and drop support for regular leo,
+this might be a path to do so.  It looks like an active project.
+
+leouser
+</t>
+<t tx="ekr.20051207130144.1"></t>
+<t tx="ekr.20051207180807"></t>
+<t tx="ekr.20051208091305"></t>
+<t tx="ekr.20051208091816"></t>
+<t tx="ekr.20051208100903"></t>
+<t tx="ekr.20051208100903.1">def forceGnxOnPosition (self,p):
+
+    self._forcedGnxPositionList.append(p.v)</t>
+<t tx="ekr.20051208102107">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3464874
+By: davidmcnab
+
+* The 'goto line number' dialog pops up without the text field active, so I'm
+forced into a Compulsory Mouse Click to activate the field before I can type
+in the line number (I'm one who regards unnecessary Compulsory Mouse Clicks as bugs).</t>
+<t tx="ekr.20051208102436"></t>
+<t tx="ekr.20051208102436.1"></t>
 </tnodes>
 </leo_file>

@@ -26,6 +26,53 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
+#@+node:ekr.20051208100903:Install fix for Import Derived files
+#@clone 2
+#@+node:ekr.20031218072017.1810:importDerivedFiles (new)
+def importDerivedFiles (self,parent,paths):
+    
+    c = self.c ; u = c.undoer
+    at = c.atFileCommands ; current = c.currentPosition()
+    self.tab_width = self.getTabWidth()
+    if not paths: return
+    command = 'Import'
+    u.beforeChangeGroup(current,command)
+    for fileName in paths:
+        << set isThin if fileName is a thin derived file >>
+        undoData = u.beforeInsertNode(parent)
+        p = parent.insertAfter()
+        if isThin:
+            p.initHeadString("@thin " + fileName)
+            at.read(p,thinFile=True)
+        else:
+            p.initHeadString("Imported @file " + fileName)
+            at.read(p,importFileName=fileName)
+        p.contract()
+        u.afterInsertNode(p,command,undoData)
+    current.expand()
+    c.selectPosition(current)
+    u.afterChangeGroup(p,command)
+    
+#@nonl
+#@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+fileName = g.os_path_normpath(fileName)
+
+try:
+    theFile = open(fileName,'rb')
+    isThin = at.scanHeaderForThin(theFile,fileName)
+    theFile.close()
+except IOError:
+    isThin = False
+#@nonl
+#@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+#@+node:ekr.20051208100903.1:forceGnxOnPosition
+def forceGnxOnPosition (self,p):
+
+    self._forcedGnxPositionList.append(p.v)
+#@nonl
+#@-node:ekr.20051208100903.1:forceGnxOnPosition
+#@-node:ekr.20031218072017.1810:importDerivedFiles (new)
+#@-node:ekr.20051208100903:Install fix for Import Derived files
 #@+node:ekr.20051202102337:Minibuffer commands notes
 @nocolor
 #@nonl
@@ -1682,12 +1729,6 @@ def makeIndexVisible(self,t,index):
 #@nonl
 #@-node:ekr.20031218072017.4098:makeIndexVisible
 #@-node:ekr.20031218072017.4097:Visibility
-#@+node:ekr.20051206103652:widget_name
-def widget_name (self,w):
-    
-    return w and hasattr(w,'_name') and w._name or repr(w)
-#@nonl
-#@-node:ekr.20051206103652:widget_name
 #@-node:ekr.20031218072017.4059:app.gui.Tkinter.utils
 #@+node:ekr.20051126123249:class autoCompleterClass
 class autoCompleterCommandsClass (baseEditCommandsClass):
