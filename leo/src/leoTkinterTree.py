@@ -1916,6 +1916,10 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; frame = c.frame ; u = c.undoer
         w = self.edit_widget(p)
         if not w: return
+        
+        ch = '\r' # New in 4.4: we only report the final keystroke.
+        if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
+            return # The hook claims to have handled the event.
     
         s = w.get('1.0','end')
         #@    << truncate s if it has multiple lines >>
@@ -1965,6 +1969,7 @@ class leoTkinterTree (leoFrame.leoTree):
             frame.bodyWantsFocus()
         c.redraw_now() # Ensure a complete redraw immediately.
        
+        g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
     #@nonl
     #@-node:ekr.20040803072955.91:onHeadChanged
     #@-node:ekr.20040803072955.90:head key handlers
