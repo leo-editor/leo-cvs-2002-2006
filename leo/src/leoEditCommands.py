@@ -2094,6 +2094,9 @@ class editCommandsClass (baseEditCommandsClass):
         oldText = name.startswith('body') and p.bodyString()
         removeTrailing = None # A signal to compute it later.
         undoType = 'Typing'
+        
+        if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+            return "break" # The hook claims to have handled the event.
             
         if ch == '\t':
             removeTrailing = self.updateTab(p,w)
@@ -2133,6 +2136,8 @@ class editCommandsClass (baseEditCommandsClass):
         if newText != oldText:
             c.frame.body.onBodyChanged(undoType=undoType,
                 oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
+                
+        g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
         return 'break'
     #@nonl
     #@+node:ekr.20051027172949:updateAutomatchBracket
