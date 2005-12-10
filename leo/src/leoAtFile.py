@@ -435,7 +435,7 @@ class atFile:
             g.trace('2',p,p.v._parent,p.v._parent and p.v._parent.t.vnodeList)
         at.inputFile.close()
         root.clearDirty() # May be set dirty below.
-        if not at.thinFile:
+        if at.errors == 0 and not at.thinFile:
             #@        << warn about non-empty unvisited nodes >>
             #@+node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
             for p in root.self_and_subtree_iter():
@@ -1494,7 +1494,7 @@ class atFile:
         at.indent = 0 # Changed only for sentinels.
         at.lastLines = [] # The lines after @-leo
         at.leadingWs = ""
-        at.root = p
+        at.root = p.copy() # Bug fix: 12/10/05
         at.rootSeen = False
         at.updateWarningGiven = False
         
@@ -2587,8 +2587,13 @@ class atFile:
         # This is useful now that we don't print the actual messages.
         if self.errors == 0:
             self.printError("----- error reading @file: %s" % self.targetFileName)
+            
+        # g.trace(self.root,g.callers())
         
         self.error(message)
+        
+        # Bug fix: 12/10/05: Delete all of root's tree.
+        self.root.v.t._firstChild = None
         
         self.root.setOrphan()
         self.root.setDirty()
@@ -4595,6 +4600,9 @@ class atFile:
             self.printError(message)
     
         self.errors += 1
+    
+        # g.trace('errors',self.errors)
+    #@nonl
     #@-node:ekr.20041005105605.220:atFile.error
     #@+node:ekr.20050206085258:atFile.printError & test
     def printError (self,message):
