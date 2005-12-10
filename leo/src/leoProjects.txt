@@ -53,7 +53,7 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False,force
     """
     
     __pychecker__ = '--maxlines=400'
-    g.stat()
+    # g.stat()
 
     c = self.c
     << Set ivars >>
@@ -2441,6 +2441,498 @@ d = {
 #@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
 #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
 #@-node:ekr.20051009120608:(ctors & finishCreate)
+#@+node:ekr.20051210070744:Statistics
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.dialogs = 0 # Count of open dialogs.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
+    self.trace = False # True: enable debugging traces.
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.user_xresources_path = None # Resource file for Tk/tcl.
+    self.wantedCommander = None # Used by tkFrame.set_focus.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
+    "php"   : "php",
+    "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@nonl
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@+node:ekr.20031218072017.3133:Statistics
+#@+node:ekr.20031218072017.3134:clear_stats
+def clear_stats():
+    
+    g.trace()
+    
+    g.app.statsDict = {}
+
+clearStats = clear_stats
+#@-node:ekr.20031218072017.3134:clear_stats
+#@+node:ekr.20031218072017.3135:print_stats
+def print_stats (name=None):
+
+    if name:
+        if type(name) != type(""):
+            name = repr(name)
+    else:
+        name = g.callerName(n=2) # Get caller name 2 levels back.
+
+    g.printDict(g.app.statsDict,tag='statistics at %s' % name)
+
+printStats = print_stats
+#@nonl
+#@-node:ekr.20031218072017.3135:print_stats
+#@+node:ekr.20031218072017.3136:stat
+def stat (name=None):
+
+    """Increments the statistic for name in g.app.statsDict
+    The caller's name is used by default.
+    """
+    
+    d = g.app.statsDict
+    
+    if name:
+        if type(name) != type(""):
+            name = repr(name)
+    else:
+        name = g.callerName(n=2) # Get caller name 2 levels back.
+        
+    # g.trace(name)
+
+    d [name] = 1 + d.get(name,0)
+#@nonl
+#@-node:ekr.20031218072017.3136:stat
+#@-node:ekr.20031218072017.3133:Statistics
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+def redraw_now (self,scroll=True):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c
+    
+    if c.config.getBool('trace_redraw_now'):
+        g.trace(self.redrawCount,g.callers())
+        # g.print_stats()
+        # g.clear_stats()
+        
+    # Do the actual redraw.
+    self.redrawCount += 1
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@+node:ekr.20031218072017.3195:splitLines & joinLines
+def splitLines (s):
+    
+    """Split s into lines, preserving the number of lines and the ending of the last line."""
+
+    # g.stat()
+    
+    if s:
+        return s.splitlines(True) # This is a Python string function!
+    else:
+        return []
+
+splitlines = splitLines
+
+def joinLines (aList):
+    
+    return ''.join(aList)
+    
+joinlines = joinLines
+#@nonl
+#@-node:ekr.20031218072017.3195:splitLines & joinLines
+#@+node:ekr.20041005105605.222:atFile.scanAllDirectives
+@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
+
+This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
+@c
+
+def scanAllDirectives(self,p,scripting=False,importing=False,reading=False,forcePythonSentinels=False):
+    
+    """Scan position p and p's ancestors looking for directives,
+    setting corresponding atFile ivars.
+    """
+    
+    __pychecker__ = '--maxlines=400'
+    # g.stat()
+
+    c = self.c
+    << Set ivars >>
+    << Set path from @file node >>
+    old = {}
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        theDict = g.get_directives_dict(s)
+        << Test for @path >>
+        << Test for @encoding >>
+        << Test for @comment and @language >>
+        << Test for @header and @noheader >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @tabwidth >>
+        old.update(theDict)
+    << Set current directory >>
+    if not importing and not reading:
+        # 5/19/04: don't override comment delims when reading!
+        << Set comment strings from delims >>
+#@nonl
+#@+node:ekr.20041005105605.223:<< Set ivars >>
+self.page_width = self.c.page_width
+self.tab_width  = self.c.tab_width
+
+self.default_directory = None # 8/2: will be set later.
+
+if c.target_language:
+    c.target_language = c.target_language.lower() # 6/20/05
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+self.language = c.target_language
+
+self.encoding = c.config.default_derived_file_encoding
+self.output_newline = g.getOutputNewline(c=self.c) # Init from config settings.
+#@nonl
+#@-node:ekr.20041005105605.223:<< Set ivars >>
+#@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+
+theDir = g.choose(name,g.os_path_dirname(name),None)
+
+if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        self.default_directory = theDir
+    else: # 9/25/02
+        self.default_directory = g.makeAllNonExistentDirectories(theDir)
+        if not self.default_directory:
+            self.error("Directory \"%s\" does not exist" % theDir)
+#@nonl
+#@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+#@+node:ekr.20041005105605.225:<< Test for @path >>
+# We set the current director to a path so future writes will go to that directory.
+
+if not self.default_directory and not old.has_key("path") and theDict.has_key("path"):
+
+    k = theDict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory(c=c) # returns "" on error.
+        path = g.os_path_join(base,path)
+        if g.os_path_isabs(path):
+            << handle absolute path >>
+        else:
+            self.error("ignoring bad @path: %s" % path)
+    else:
+        self.error("ignoring empty @path")
+#@nonl
+#@+node:ekr.20041005105605.226:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+path = path.strip()
+
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(g.app.loadDir,path)
+#@nonl
+#@-node:ekr.20041005105605.226:<< compute relative path from s[k:] >>
+#@+node:ekr.20041005105605.227:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+    self.default_directory = path
+else: # 9/25/02
+    self.default_directory = g.makeAllNonExistentDirectories(path)
+    if not self.default_directory:
+        self.error("invalid @path: %s" % path)
+#@-node:ekr.20041005105605.227:<< handle absolute path >>
+#@-node:ekr.20041005105605.225:<< Test for @path >>
+#@+node:ekr.20041005105605.228:<< Test for @encoding >>
+if not old.has_key("encoding") and theDict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,theDict)
+    if e:
+        self.encoding = e
+#@nonl
+#@-node:ekr.20041005105605.228:<< Test for @encoding >>
+#@+node:ekr.20041005105605.229:<< Test for @comment and @language >>
+# 10/17/02: @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+# 1/23/05: Any previous @language or @comment prevents processing up the tree.
+# This code is now like the code in tangle.scanAlldirectives.
+
+if old.has_key("comment") or old.has_key("language"):
+     pass # Do nothing more.
+
+elif theDict.has_key("comment"):
+    k = theDict["comment"]
+    delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
+
+elif theDict.has_key("language"):
+    k = theDict["language"]
+    self.language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20041005105605.229:<< Test for @comment and @language >>
+#@+node:ekr.20041005105605.230:<< Test for @header and @noheader >>
+# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+if theDict.has_key("header") and theDict.has_key("noheader"):
+    g.es("conflicting @header and @noheader directives")
+#@nonl
+#@-node:ekr.20041005105605.230:<< Test for @header and @noheader >>
+#@+node:ekr.20041005105605.231:<< Test for @lineending >>
+if not old.has_key("lineending") and theDict.has_key("lineending"):
+    
+    lineending = g.scanAtLineendingDirective(s,theDict)
+    if lineending:
+        self.explicitLineEnding = True
+        self.output_newline = lineending
+#@-node:ekr.20041005105605.231:<< Test for @lineending >>
+#@+node:ekr.20041005105605.232:<< Test for @pagewidth >>
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag=True)
+    if w and w > 0:
+        self.page_width = w
+#@nonl
+#@-node:ekr.20041005105605.232:<< Test for @pagewidth >>
+#@+node:ekr.20041005105605.233:<< Test for @tabwidth >>
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=True)
+    if w and w != 0:
+        self.tab_width = w
+
+#@-node:ekr.20041005105605.233:<< Test for @tabwidth >>
+#@+node:ekr.20041005105605.234:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+if c.frame and not self.default_directory:
+    base = g.getBaseDirectory(c=c) # returns "" on error.
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    self.default_directory = theDir ; break
+                else: # 9/25/02
+                    self.default_directory = g.makeAllNonExistentDirectories(theDir)
+
+if not self.default_directory and not scripting and not importing:
+    # This should never happen: c.openDirectory should be a good last resort.
+    g.trace()
+    self.error("No absolute directory specified anywhere.")
+    self.default_directory = ""
+#@-node:ekr.20041005105605.234:<< Set current directory >>
+#@+node:ekr.20041005105605.235:<< Set comment strings from delims >>
+if forcePythonSentinels:
+    # Force Python language.
+    delim1,delim2,delim3 = g.set_delims_from_language("python")
+    self.language = "python"
+    
+# Use single-line comments if we have a choice.
+# delim1,delim2,delim3 now correspond to line,start,end
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else: # Emergency!
+    # assert(0)
+    g.es("Unknown language: using Python comment delimiters")
+    g.es("c.target_language:",c.target_language)
+    g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+    self.startSentinelComment = "#" # This should never happen!
+    self.endSentinelComment = ""
+    
+# g.trace(repr(self.startSentinelComment),repr(self.endSentinelComment))
+#@nonl
+#@-node:ekr.20041005105605.235:<< Set comment strings from delims >>
+#@-node:ekr.20041005105605.222:atFile.scanAllDirectives
+#@-node:ekr.20051210070744:Statistics
 #@+node:ekr.20051110101524:4.4a4 projects
 #@+node:ekr.20051103114520.2:(The New World Order)
 #@+node:ekr.20031218072017.1416:app.__init__
@@ -2489,7 +2981,7 @@ def __init__(self):
     self.root = None # The hidden main window. Set later.
     self.searchDict = {} # For communication between find/change scripts.
     self.scriptDict = {} # For communication between Execute Script command and scripts.
-    self.stats = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
     self.trace = False # True: enable debugging traces.
     self.tracePositions = False
     self.trace_list = [] # "Sherlock" argument list for tracing().
@@ -3536,8 +4028,8 @@ def redraw_now (self,scroll=True):
     
     if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
-        g.print_stats()
-        g.clear_stats()
+        # g.print_stats()
+        # g.clear_stats()
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -6489,8 +6981,8 @@ def redraw_now (self,scroll=True):
     
     if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
-        g.print_stats()
-        g.clear_stats()
+        # g.print_stats()
+        # g.clear_stats()
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -7540,8 +8032,8 @@ def redraw_now (self,scroll=True):
     
     if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
-        g.print_stats()
-        g.clear_stats()
+        # g.print_stats()
+        # g.clear_stats()
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -9738,8 +10230,8 @@ def redraw_now (self,scroll=True):
     
     if c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
-        g.print_stats()
-        g.clear_stats()
+        # g.print_stats()
+        # g.clear_stats()
         
     # Do the actual redraw.
     self.redrawCount += 1

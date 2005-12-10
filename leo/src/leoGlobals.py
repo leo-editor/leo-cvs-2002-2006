@@ -1660,7 +1660,7 @@ def clear_stats():
     
     g.trace()
     
-    app.stats = {}
+    g.app.statsDict = {}
 
 clearStats = clear_stats
 #@-node:ekr.20031218072017.3134:clear_stats
@@ -1673,7 +1673,7 @@ def print_stats (name=None):
     else:
         name = g.callerName(n=2) # Get caller name 2 levels back.
 
-    g.printDict(g.app.stats,tag='statistics at %s' % name)
+    g.printDict(g.app.statsDict,tag='statistics at %s' % name)
 
 printStats = print_stats
 #@nonl
@@ -1681,11 +1681,11 @@ printStats = print_stats
 #@+node:ekr.20031218072017.3136:stat
 def stat (name=None):
 
-    """Increments the statistic for name in app.stats
+    """Increments the statistic for name in g.app.statsDict
     The caller's name is used by default.
     """
     
-    d = g.app.stats
+    d = g.app.statsDict
     
     if name:
         if type(name) != type(""):
@@ -3541,7 +3541,7 @@ def splitLines (s):
         return s.splitlines(True) # This is a Python string function!
     else:
         return []
-        
+
 splitlines = splitLines
 
 def joinLines (aList):

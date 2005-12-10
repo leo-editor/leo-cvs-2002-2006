@@ -64,7 +64,7 @@ class LeoApp:
         self.root = None # The hidden main window. Set later.
         self.searchDict = {} # For communication between find/change scripts.
         self.scriptDict = {} # For communication between Execute Script command and scripts.
-        self.stats = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
+        self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
         self.trace = False # True: enable debugging traces.
         self.tracePositions = False
         self.trace_list = [] # "Sherlock" argument list for tracing().
