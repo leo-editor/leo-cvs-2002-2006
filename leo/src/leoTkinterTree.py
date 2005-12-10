@@ -822,7 +822,9 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c
         
         if c.config.getBool('trace_redraw_now'):
-            g.trace(self.redrawCount,g.callers(9))
+            g.trace(self.redrawCount,g.callers())
+            # g.print_stats()
+            # g.clear_stats()
             
         # Do the actual redraw.
         self.redrawCount += 1

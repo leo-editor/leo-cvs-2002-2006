@@ -3535,7 +3535,7 @@ def splitLines (s):
     
     """Split s into lines, preserving the number of lines and the ending of the last line."""
 
-    g.stat()
+    # g.stat()
     
     if s:
         return s.splitlines(True) # This is a Python string function!

@@ -4644,6 +4644,7 @@ class atFile:
         """
         
         __pychecker__ = '--maxlines=400'
+        # g.stat()
     
         c = self.c
         #@    << Set ivars >>
