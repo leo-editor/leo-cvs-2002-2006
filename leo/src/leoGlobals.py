@@ -1658,30 +1658,25 @@ def trace_tag (name, *args):
 #@+node:ekr.20031218072017.3134:clear_stats
 def clear_stats():
     
+    g.trace()
+    
     app.stats = {}
+
+clearStats = clear_stats
 #@-node:ekr.20031218072017.3134:clear_stats
 #@+node:ekr.20031218072017.3135:print_stats
 def print_stats (name=None):
-    
+
     if name:
         if type(name) != type(""):
             name = repr(name)
     else:
         name = g.callerName(n=2) # Get caller name 2 levels back.
-    
-    try:
-        stats = app.stats
-    except:
-        print ; print "no statistics at", name ; print
-        return
-        
-    items = stats.items()
-    items.sort()
-    print ; print "statistics at",name ; print
-    for key,value in items:
-        print key,value
-        
-    g.clear_stats()
+
+    g.printDict(g.app.stats,tag='statistics at %s' % name)
+
+printStats = print_stats
+#@nonl
 #@-node:ekr.20031218072017.3135:print_stats
 #@+node:ekr.20031218072017.3136:stat
 def stat (name=None):
@@ -1690,18 +1685,18 @@ def stat (name=None):
     The caller's name is used by default.
     """
     
+    d = g.app.stats
+    
     if name:
         if type(name) != type(""):
             name = repr(name)
     else:
         name = g.callerName(n=2) # Get caller name 2 levels back.
+        
+    # g.trace(name)
 
-    try:
-        stats = app.stats
-    except:
-        app.stats = stats = {}
-
-    stats[name] = 1 + stats.get(name,0)
+    d [name] = 1 + d.get(name,0)
+#@nonl
 #@-node:ekr.20031218072017.3136:stat
 #@-node:ekr.20031218072017.3133:Statistics
 #@+node:ekr.20031218072017.3137:Timing
@@ -3539,6 +3534,8 @@ def skip_ws_and_nl(s,i):
 def splitLines (s):
     
     """Split s into lines, preserving the number of lines and the ending of the last line."""
+
+    g.stat()
     
     if s:
         return s.splitlines(True) # This is a Python string function!

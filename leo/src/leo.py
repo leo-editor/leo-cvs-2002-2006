@@ -106,7 +106,6 @@ def run(fileName=None,*args,**keywords):
         g.app.createTkGui() # Creates global windows.
     # Initialize tracing and statistics.
     g.init_sherlock(args)
-    g.clear_stats()
     #@    << start psycho >>
     #@+node:ekr.20040411081633:<< start psycho >>
     if g.app and g.app.use_psyco:
