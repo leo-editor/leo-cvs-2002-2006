@@ -114,7 +114,7 @@ class baseLeoImportCommands:
             return self.c.tab_width
     #@nonl
     #@-node:ekr.20041126042730:getTabWidth
-    #@+node:ekr.20031218072017.1810:importDerivedFiles
+    #@+node:ekr.20031218072017.1810:importDerivedFiles (new)
     def importDerivedFiles (self,parent,paths):
         
         c = self.c ; u = c.undoer
@@ -122,41 +122,43 @@ class baseLeoImportCommands:
         self.tab_width = self.getTabWidth()
         if not paths: return
         command = 'Import'
-    
-        c.beginUpdate()
-        try: # In update...
-            u.beforeChangeGroup(current,command)
-            for fileName in paths:
-                #@            << set isThin if fileName is a thin derived file >>
-                #@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-                fileName = g.os_path_normpath(fileName)
-                
-                try:
-                    theFile = open(fileName,'rb')
-                    isThin = at.scanHeaderForThin(theFile,fileName)
-                    theFile.close()
-                except IOError:
-                    isThin = False
-                #@nonl
-                #@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-                #@nl
-                undoData = u.beforeInsertNode(parent)
-                p = parent.insertAfter()
-                if isThin:
-                    p.initHeadString("@thin " + fileName)
-                    at.read(p,thinFile=True)
-                else:
-                    p.initHeadString("Imported @file " + fileName)
-                    at.read(p,importFileName=fileName)
-                p.contract()
-                u.afterInsertNode(p,command,undoData)
-            current.expand()
-            c.selectPosition(current)
-            u.afterChangeGroup(p,command)
-        finally:
-            c.endUpdate()
+        u.beforeChangeGroup(current,command)
+        for fileName in paths:
+            #@        << set isThin if fileName is a thin derived file >>
+            #@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+            fileName = g.os_path_normpath(fileName)
+            
+            try:
+                theFile = open(fileName,'rb')
+                isThin = at.scanHeaderForThin(theFile,fileName)
+                theFile.close()
+            except IOError:
+                isThin = False
+            #@nonl
+            #@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+            #@nl
+            undoData = u.beforeInsertNode(parent)
+            p = parent.insertAfter()
+            if isThin:
+                p.initHeadString("@thin " + fileName)
+                at.read(p,thinFile=True)
+            else:
+                p.initHeadString("Imported @file " + fileName)
+                at.read(p,importFileName=fileName)
+            p.contract()
+            u.afterInsertNode(p,command,undoData)
+        current.expand()
+        c.selectPosition(current)
+        u.afterChangeGroup(p,command)
+        
     #@nonl
-    #@-node:ekr.20031218072017.1810:importDerivedFiles
+    #@+node:ekr.20051208100903.1:forceGnxOnPosition
+    def forceGnxOnPosition (self,p):
+    
+        self._forcedGnxPositionList.append(p.v)
+    #@nonl
+    #@-node:ekr.20051208100903.1:forceGnxOnPosition
+    #@-node:ekr.20031218072017.1810:importDerivedFiles (new)
     #@+node:ekr.20031218072017.3212:importFilesCommand
     def importFilesCommand (self,files,treeType,
         perfectImport=True,testing=False,verbose=False):

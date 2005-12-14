@@ -3489,12 +3489,15 @@ def getTextSelection (self,t):
     
     Return a tuple giving the insertion point if no range of text is selected."""
 
-    # To get the current selection
+    # To get the current selection.
     sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
     if len(sel) == 2:
-        return sel
+        i,j = sel
+        if t.compare(i, ">", j):
+            i,j = j,i
+        return i,j
     else:
-        # 7/1/03: Return the insertion point if there is no selected text.
+        # Return the insertion point if there is no selected text.
         insert = t.index("insert")
         return insert,insert
 #@nonl
@@ -3532,7 +3535,7 @@ def setTextSelection (self,t,start,end):
     t.tag_remove("sel","1.0",start)
     t.tag_add("sel",start,end)
     t.tag_remove("sel",end,"end")
-    t.mark_set("insert",end)
+    ### t.mark_set("insert",end)
 #@nonl
 #@-node:ekr.20031218072017.4089:setTextSelection
 #@-node:ekr.20031218072017.4084:Selection
@@ -3605,11 +3608,18 @@ def makeIndexVisible(self,t,index):
 #@+node:ekr.20051011072903.2:copyText
 def copyText (self):
     
-    '''Invoked from the mini-buffer and from shortcuts.'''
+    '''Copy the selected text from the widget to the clipboard.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    
-    w.event_generate(g.virtual_event_name("Copy"))
+    if not w: return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -3617,20 +3627,27 @@ def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return 'break'
+    name = hasattr(w,'_name') and w._name or ''
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
 
     if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
         c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-    else:
-        # Important: cut from headline is *not* undoable.
-        # Only the entire edit is undoable.
-        # Do **not** call w.event_generate.
-        pass
+    elif name.startswith('head'):
+        c.frame.tree.onHeadChanged(p)
+    else: pass
+
+OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -3638,95 +3655,38 @@ def pasteText (self):
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
     if name.startswith('head'):
-        # Important: this paste is not undoable!
-        # Only the entire edit is undoable.
-        s = s1 = g.app.gui.getTextFromClipboard()
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        p.initHeadString(s)
         w.configure(width=f.tree.headWidth(s=s))
     else: pass
+    
+OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-    
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-
-    f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
-        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(p,'Cut')
-#@nonl
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition(),'Paste')
-        c.redraw_now()
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20031218072017.3981:abortEditLabelCommand
 def abortEditLabelCommand (self):
@@ -5287,7 +5247,7 @@ def onHeadlineKey (self,event):
     return 'break' # Required
 #@nonl
 #@-node:ekr.20040803072955.88:onHeadlineKey
-#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20051026083544.2:updateHead
 def updateHead (self,event,w):
     
     '''Update a headline from an event.
@@ -5315,9 +5275,8 @@ def updateHead (self,event,w):
     if s.endswith('\n'):
         s = s[:-1]
 
-    if 0: # p does not *officially* change until onHeadChanged is called.
-        p.initHeadString(s)
-
+    # Always update this.
+    p.initHeadString(s)
     w.configure(width=self.headWidth(s=s))
     
     # The granularity is the entire editing session,
@@ -5328,7 +5287,7 @@ def updateHead (self,event,w):
         
     if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
-#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
 
@@ -5347,10 +5306,10 @@ def onHeadChanged (self,p,undoType='Typing'):
 
     s = w.get('1.0','end')
     << truncate s if it has multiple lines >>
-    changed = s != p.headString()
     
     # Make the change official, but undo to the *old* revert point.
     oldRevert = self.revertHeadline
+    changed = s != oldRevert
     self.revertHeadline = s
     p.initHeadString(s)
     # g.trace(repr(s),g.callers())
@@ -5756,11 +5715,14 @@ def showPopupMenu (self,event):
 #@+node:ekr.20040803072955.126:tree.endEditLabel
 def endEditLabel (self):
     
-    """End editing for self.editText."""
+    '''End editing for self.editText.
+    
+    *Important*: the key handlers always keep the headline text up-to-date.'''
 
-    c = self.c ; p = self.editPosition()
+    c = self.c
 
-    self.onHeadChanged(p)
+    self.setUnselectedLabelState(c.currentPosition())
+    self.setEditPosition(None) # That is, self._editPosition = None
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.127:editLabel
@@ -5795,7 +5757,7 @@ def select (self,p,updateBeadList=True,redraw_flag=True):
     old_p = c.currentPosition()
     if not p or not p.exists(c): return # Not an error.
     
-    # g.trace(redraw_flag,g.callers(7))
+    # g.trace('redraw_flag',redraw_flag)
 
     if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
         if old_p and redraw_flag:
@@ -5829,7 +5791,6 @@ insertSpot = c.frame.body.getInsertionPoint()
 
 if old_p != p:
     self.endEditLabel() # sets editPosition = None
-    self.setUnselectedLabelState(old_p)
 
 if old_p.edit_widget():
     old_p.v.t.scrollBarSpot = yview
@@ -5889,8 +5850,7 @@ c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20040803072955.132:<< update c.visitedList >>
 #@+node:ekr.20040803072955.133:<< set the current node >>
-if p != old_p and redraw_flag:
-    self.setSelectedLabelState(p)
+self.setSelectedLabelState(p)
 
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 
@@ -6051,7 +6011,7 @@ def onHeadlineKey (self,event):
     return 'break' # Required
 #@nonl
 #@-node:ekr.20040803072955.88:onHeadlineKey
-#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20051026083544.2:updateHead
 def updateHead (self,event,w):
     
     '''Update a headline from an event.
@@ -6079,9 +6039,8 @@ def updateHead (self,event,w):
     if s.endswith('\n'):
         s = s[:-1]
 
-    if 0: # p does not *officially* change until onHeadChanged is called.
-        p.initHeadString(s)
-
+    # Always update this.
+    p.initHeadString(s)
     w.configure(width=self.headWidth(s=s))
     
     # The granularity is the entire editing session,
@@ -6092,7 +6051,7 @@ def updateHead (self,event,w):
         
     if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
-#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
 
@@ -6111,10 +6070,10 @@ def onHeadChanged (self,p,undoType='Typing'):
 
     s = w.get('1.0','end')
     << truncate s if it has multiple lines >>
-    changed = s != p.headString()
     
     # Make the change official, but undo to the *old* revert point.
     oldRevert = self.revertHeadline
+    changed = s != oldRevert
     self.revertHeadline = s
     p.initHeadString(s)
     # g.trace(repr(s),g.callers())
@@ -6658,7 +6617,7 @@ def handleDefaultChar(self,event):
     c = self.c
     ch = event and event.char
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
    
     if name.startswith('body'):
         # For Leo 4.4a4: allow Tk defaults.
@@ -6949,7 +6908,7 @@ def handleDefaultChar(self,event):
     c = self.c
     ch = event and event.char
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
    
     if name.startswith('body'):
         # For Leo 4.4a4: allow Tk defaults.
@@ -7665,11 +7624,14 @@ def editLabel (self,p):
 #@+node:ekr.20040803072955.126:tree.endEditLabel
 def endEditLabel (self):
     
-    """End editing for self.editText."""
+    '''End editing for self.editText.
+    
+    *Important*: the key handlers always keep the headline text up-to-date.'''
 
-    c = self.c ; p = self.editPosition()
+    c = self.c
 
-    self.onHeadChanged(p)
+    self.setUnselectedLabelState(c.currentPosition())
+    self.setEditPosition(None) # That is, self._editPosition = None
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.90:head key handlers
@@ -7690,7 +7652,7 @@ def onHeadlineKey (self,event):
     return 'break' # Required
 #@nonl
 #@-node:ekr.20040803072955.88:onHeadlineKey
-#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20051026083544.2:updateHead
 def updateHead (self,event,w):
     
     '''Update a headline from an event.
@@ -7718,9 +7680,8 @@ def updateHead (self,event,w):
     if s.endswith('\n'):
         s = s[:-1]
 
-    if 0: # p does not *officially* change until onHeadChanged is called.
-        p.initHeadString(s)
-
+    # Always update this.
+    p.initHeadString(s)
     w.configure(width=self.headWidth(s=s))
     
     # The granularity is the entire editing session,
@@ -7731,7 +7692,7 @@ def updateHead (self,event,w):
         
     if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
-#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
 
@@ -7750,10 +7711,10 @@ def onHeadChanged (self,p,undoType='Typing'):
 
     s = w.get('1.0','end')
     << truncate s if it has multiple lines >>
-    changed = s != p.headString()
     
     # Make the change official, but undo to the *old* revert point.
     oldRevert = self.revertHeadline
+    changed = s != oldRevert
     self.revertHeadline = s
     p.initHeadString(s)
     # g.trace(repr(s),g.callers())
@@ -8808,7 +8769,7 @@ def handleDefaultChar(self,event):
     c = self.c
     ch = event and event.char
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
    
     if name.startswith('body'):
         # For Leo 4.4a4: allow Tk defaults.
@@ -9000,7 +8961,7 @@ I didn't verify ^Z acts correctly in all cases.
 e
 #@nonl
 #@-node:ekr.20051122133732: Report
-#@+node:ekr.20051023182326:copyBindingsToWidget
+#@+node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
 def copyBindingsToWidget (self,paneOrPanes,widget):
     
     '''Copy all bindings for the given panes to widget.
@@ -9044,14 +9005,17 @@ def copyBindingsToWidget (self,paneOrPanes,widget):
             # This callback executes the command in the given widget.
             def textBindingsRedirectionCallback(event,
                 func=func,widget=widget,commandName=commandName):
-                event.widget = widget
-                # g.trace(commandName,func)
+                # g.trace(commandName,func,g.app.gui.widget_name(widget)) ##,g.callers())
                 func(event)
-                return None # Allow Tk to handle the event too.
+                return 'break'
 
             widget.bind(shortcut,textBindingsRedirectionCallback)
+            
+    # New in 4.4a5: create the all-purpose binding.
+    # This allows Leo always to return 'break' in key handlers.
+    widget.bind('<Key>',k.onTextWidgetKey)
 #@nonl
-#@-node:ekr.20051023182326:copyBindingsToWidget
+#@-node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
 #@+node:ekr.20051001051355:Dispatching...
 #@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke):
@@ -9189,7 +9153,7 @@ def handleDefaultChar(self,event):
     c = self.c
     ch = event and event.char
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
    
     if name.startswith('body'):
         # For Leo 4.4a4: allow Tk defaults.
@@ -9637,11 +9601,18 @@ def removeTrailingNewlines (self,old,new,ch):
 #@+node:ekr.20051011072903.2:copyText
 def copyText (self):
     
-    '''Invoked from the mini-buffer and from shortcuts.'''
+    '''Copy the selected text from the widget to the clipboard.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    
-    w.event_generate(g.virtual_event_name("Copy"))
+    if not w: return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -9649,20 +9620,27 @@ def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return 'break'
+    name = hasattr(w,'_name') and w._name or ''
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
 
     if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
         c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-    else:
-        # Important: cut from headline is *not* undoable.
-        # Only the entire edit is undoable.
-        # Do **not** call w.event_generate.
-        pass
+    elif name.startswith('head'):
+        c.frame.tree.onHeadChanged(p)
+    else: pass
+
+OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -9670,95 +9648,38 @@ def pasteText (self):
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
     if name.startswith('head'):
-        # Important: this paste is not undoable!
-        # Only the entire edit is undoable.
-        s = s1 = g.app.gui.getTextFromClipboard()
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        p.initHeadString(s)
         w.configure(width=f.tree.headWidth(s=s))
     else: pass
+    
+OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-    
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-
-    f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
-        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(p,'Cut')
-#@nonl
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition(),'Paste')
-        c.redraw_now()
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20050920084036.85:insert & delete...
 #@+node:ekr.20051125080855:selfInsertCommand
@@ -9771,7 +9692,7 @@ def selfInsertCommand(self,event):
     c = self.c ; p = c.currentPosition()
     ch = event and event.char or ''
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
     oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
     oldText = name.startswith('body') and p.bodyString()
     removeTrailing = None # A signal to compute it later.
@@ -9795,7 +9716,7 @@ def selfInsertCommand(self,event):
         if i != j: w.delete(i,j)
         w.insert(i,ch)
     else:
-        return None 
+        return 'break' # New in 4.4a5: this method *always* returns 'break'
 
     # Update the text and handle undo.
     newText = w.get('1.0','end')
@@ -9903,12 +9824,12 @@ def updateTab (self,p,w):
 #@nonl
 #@-node:ekr.20051026092433:updateTab
 #@-node:ekr.20051125080855:selfInsertCommand
-#@+node:ekr.20051026092433.1:backwardDeleteCharacter
+#@+node:ekr.20051026092433.1:backwardDeleteCharacter (ok)
 def backwardDeleteCharacter (self,event=None):
     
     c = self.c ; p = c.currentPosition()
     w = event and event.widget or g.app.gui.get_focus(c.frame)
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
     oldText = w.get('1.0','end')
     i,j = oldSel = g.app.gui.getTextSelection(w)
   
@@ -9924,7 +9845,10 @@ def backwardDeleteCharacter (self,event=None):
         c.frame.body.onBodyChanged(undoType='Typing',
             oldSel=oldSel,oldText=oldText,oldYview=None)
     else:
-        pass # Let Tk handle it
+        if i != j:
+            w.delete(i,j)
+        else:
+            w.delete('insert-1c')
 #@nonl
 #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
 s = prev = w.get("insert linestart","insert")
@@ -9945,33 +9869,32 @@ while n2 > 0:
 w.delete("insert -%dc" % (max(1,count)),"insert")
 #@nonl
 #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
-#@-node:ekr.20051026092433.1:backwardDeleteCharacter
-#@+node:ekr.20050920084036.87:deleteNextChar
+#@-node:ekr.20051026092433.1:backwardDeleteCharacter (ok)
+#@+node:ekr.20050920084036.87:deleteNextChar (ok)
 def deleteNextChar (self,event):
 
-    c = self.c ; body = c.frame.body
-    w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
+    c = self.c ; w = event.widget
 
-    if name.startswith('body'):
-        oldText = w.get('1.0','end')
-        if body.hasTextSelection():
-            oldSel = body.getTextSelection()
-            body.deleteTextSelection()
-        else:
-            i = w.index('insert')
-            oldSel = (i,i)
-            w.delete(i,'%s +1c' % i)
-        body.onBodyChanged('Typing',oldSel=oldSel,oldText=oldText)
+    g.trace(g.app.gui.widget_name(w))
+    
+    self.beginCommand(event)
+    
+    i,j = g.app.gui.getTextSelection(w)
+
+    if i != j:
+        w.delete(i,j)
     else:
-        pass # Let Tk deal with it.
+        w.delete(i)
+        
+    self.endCommand()
 #@nonl
-#@-node:ekr.20050920084036.87:deleteNextChar
+#@-node:ekr.20050920084036.87:deleteNextChar (ok)
 #@+node:ekr.20050920084036.135:deleteSpaces
 def deleteSpaces (self,event,insertspace=False):
 
     c = self.c
     w = event and event.widget or g.app.gui.get_focus(c.frame)
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
     char = w.get('insert','insert + 1c ')
     if not char.isspace(): return
     
@@ -10021,7 +9944,7 @@ def removeBlankLines (self,event):
         c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
 #@nonl
 #@-node:ekr.20050920084036.141:removeBlankLines
-#@+node:ekr.20050920084036.138:insertNewLine
+#@+node:ekr.20050920084036.138:insertNewLine (not undoable)
 def insertNewLine (self,event):
 
     k = self.k ; w = event.widget
@@ -10030,7 +9953,7 @@ def insertNewLine (self,event):
     w.mark_set('insert',i)
 
 insertNewline = insertNewLine
-#@-node:ekr.20050920084036.138:insertNewLine
+#@-node:ekr.20050920084036.138:insertNewLine (not undoable)
 #@+node:ekr.20050920084036.86:insertNewLineAndTab
 def insertNewLineAndTab (self,event):
 
@@ -11890,37 +11813,6 @@ def updateConfig(self,c,changes):
 #@nonl
 #@-node:ekr.20041225063637.66:updateConfig (settingsController)
 #@-node:ekr.20051110104922.3:Calls to c/tree.redraw
-#@+node:ekr.20051110153307:Calls to updateScreen
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition(),'Paste')
-        c.redraw_now()
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
-#@-node:ekr.20051110153307:Calls to updateScreen
 #@-node:ekr.20051110104922:(Completed transition to Newer World Order)
 #@+node:ekr.20051111065016:(Moving focus out of limbo)
 #@+node:ekr.20051103114520.1:c.setFocusHelper
@@ -12104,7 +11996,7 @@ def handleDefaultChar(self,event):
     c = self.c
     ch = event and event.char
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
    
     if name.startswith('body'):
         # For Leo 4.4a4: allow Tk defaults.
@@ -13268,7 +13160,7 @@ def select (self,p,updateBeadList=True,redraw_flag=True):
     old_p = c.currentPosition()
     if not p or not p.exists(c): return # Not an error.
     
-    # g.trace(redraw_flag,g.callers(7))
+    # g.trace('redraw_flag',redraw_flag)
 
     if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
         if old_p and redraw_flag:
@@ -13302,7 +13194,6 @@ insertSpot = c.frame.body.getInsertionPoint()
 
 if old_p != p:
     self.endEditLabel() # sets editPosition = None
-    self.setUnselectedLabelState(old_p)
 
 if old_p.edit_widget():
     old_p.v.t.scrollBarSpot = yview
@@ -13362,8 +13253,7 @@ c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20040803072955.132:<< update c.visitedList >>
 #@+node:ekr.20040803072955.133:<< set the current node >>
-if p != old_p and redraw_flag:
-    self.setSelectedLabelState(p)
+self.setSelectedLabelState(p)
 
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 
@@ -14316,11 +14206,18 @@ e
 #@+node:ekr.20051011072903.2:copyText
 def copyText (self):
     
-    '''Invoked from the mini-buffer and from shortcuts.'''
+    '''Copy the selected text from the widget to the clipboard.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    
-    w.event_generate(g.virtual_event_name("Copy"))
+    if not w: return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -14328,20 +14225,27 @@ def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return 'break'
+    name = hasattr(w,'_name') and w._name or ''
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
 
     if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
         c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-    else:
-        # Important: cut from headline is *not* undoable.
-        # Only the entire edit is undoable.
-        # Do **not** call w.event_generate.
-        pass
+    elif name.startswith('head'):
+        c.frame.tree.onHeadChanged(p)
+    else: pass
+
+OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -14349,95 +14253,38 @@ def pasteText (self):
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
     if name.startswith('head'):
-        # Important: this paste is not undoable!
-        # Only the entire edit is undoable.
-        s = s1 = g.app.gui.getTextFromClipboard()
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        p.initHeadString(s)
         w.configure(width=f.tree.headWidth(s=s))
     else: pass
+    
+OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-    
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-
-    f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
-        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(p,'Cut')
-#@nonl
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition(),'Paste')
-        c.redraw_now()
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20051119113109:(Fixed undo/redo bugs)
 #@+node:ekr.20051120085459:(Fixed focus problem with tab completion)
@@ -16293,7 +16140,7 @@ def insertHeadline (self,op_name="Insert Node",redraw_flag=True):
     return p # for mod_labels plugin.
 #@nonl
 #@-node:ekr.20031218072017.1761:c.insertHeadline
-#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20051026083544.2:updateHead
 def updateHead (self,event,w):
     
     '''Update a headline from an event.
@@ -16321,9 +16168,8 @@ def updateHead (self,event,w):
     if s.endswith('\n'):
         s = s[:-1]
 
-    if 0: # p does not *officially* change until onHeadChanged is called.
-        p.initHeadString(s)
-
+    # Always update this.
+    p.initHeadString(s)
     w.configure(width=self.headWidth(s=s))
     
     # The granularity is the entire editing session,
@@ -16334,7 +16180,7 @@ def updateHead (self,event,w):
         
     if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
-#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@-node:ekr.20051026083544.2:updateHead
 #@-node:ekr.20051128140833:(Fixed 2 outline editing bugs)
 #@+node:ekr.20051129063549:Fixed crasher in deleteNextChar
 #@+node:ekr.20051129063549.1:Report
@@ -16391,26 +16237,25 @@ Cheers,
  
 Yarko 
 #@-node:ekr.20051129063549.1:Report
-#@+node:ekr.20050920084036.87:deleteNextChar
+#@+node:ekr.20050920084036.87:deleteNextChar (ok)
 def deleteNextChar (self,event):
 
-    c = self.c ; body = c.frame.body
-    w = event.widget ; name = w and hasattr(w,'_name') and w._name or ''
+    c = self.c ; w = event.widget
 
-    if name.startswith('body'):
-        oldText = w.get('1.0','end')
-        if body.hasTextSelection():
-            oldSel = body.getTextSelection()
-            body.deleteTextSelection()
-        else:
-            i = w.index('insert')
-            oldSel = (i,i)
-            w.delete(i,'%s +1c' % i)
-        body.onBodyChanged('Typing',oldSel=oldSel,oldText=oldText)
+    g.trace(g.app.gui.widget_name(w))
+    
+    self.beginCommand(event)
+    
+    i,j = g.app.gui.getTextSelection(w)
+
+    if i != j:
+        w.delete(i,j)
     else:
-        pass # Let Tk deal with it.
+        w.delete(i)
+        
+    self.endCommand()
 #@nonl
-#@-node:ekr.20050920084036.87:deleteNextChar
+#@-node:ekr.20050920084036.87:deleteNextChar (ok)
 #@-node:ekr.20051129063549:Fixed crasher in deleteNextChar
 #@+node:ekr.20051130075337:Fixed new headline bug
 #@+node:ekr.20051130075337.1:Report
@@ -17277,7 +17122,7 @@ def onHeadlineKey (self,event):
     return 'break' # Required
 #@nonl
 #@-node:ekr.20040803072955.88:onHeadlineKey
-#@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@+node:ekr.20051026083544.2:updateHead
 def updateHead (self,event,w):
     
     '''Update a headline from an event.
@@ -17305,9 +17150,8 @@ def updateHead (self,event,w):
     if s.endswith('\n'):
         s = s[:-1]
 
-    if 0: # p does not *officially* change until onHeadChanged is called.
-        p.initHeadString(s)
-
+    # Always update this.
+    p.initHeadString(s)
     w.configure(width=self.headWidth(s=s))
     
     # The granularity is the entire editing session,
@@ -17318,7 +17162,7 @@ def updateHead (self,event,w):
         
     if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
 #@nonl
-#@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+#@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
 
@@ -17337,10 +17181,10 @@ def onHeadChanged (self,p,undoType='Typing'):
 
     s = w.get('1.0','end')
     << truncate s if it has multiple lines >>
-    changed = s != p.headString()
     
     # Make the change official, but undo to the *old* revert point.
     oldRevert = self.revertHeadline
+    changed = s != oldRevert
     self.revertHeadline = s
     p.initHeadString(s)
     # g.trace(repr(s),g.callers())
@@ -17406,7 +17250,7 @@ def handleDefaultChar(self,event):
     c = self.c
     ch = event and event.char
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
    
     if name.startswith('body'):
         # For Leo 4.4a4: allow Tk defaults.
@@ -17432,7 +17276,7 @@ def selfInsertCommand(self,event):
     c = self.c ; p = c.currentPosition()
     ch = event and event.char or ''
     w = event and event.widget
-    name = w and hasattr(w,'_name') and w._name or ''
+    name = g.app.gui.widget_name(w)
     oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
     oldText = name.startswith('body') and p.bodyString()
     removeTrailing = None # A signal to compute it later.
@@ -17456,7 +17300,7 @@ def selfInsertCommand(self,event):
         if i != j: w.delete(i,j)
         w.insert(i,ch)
     else:
-        return None 
+        return 'break' # New in 4.4a5: this method *always* returns 'break'
 
     # Update the text and handle undo.
     newText = w.get('1.0','end')
@@ -18465,6 +18309,121 @@ def setDirty (self,setDescendentsDirty=True):
 #@nonl
 #@-node:ekr.20040303163330:p.setDirty
 #@-node:ekr.20051209081445:Fixed ancient bug in read error logic that hung Leo
+#@+node:ekr.20051213060647.1:Fixed minor headline problems
+#@+node:ekr.20051206082304.1:Report
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3461068
+By: vpe
+
+1) Strange behaviour after pasting in headlines:
+Start editing a headline in outline pane. Let's say it's 'Settings and
+buttons'.
+Select all text and copy (ctrl+c).
+Place cursor at the end and paste (ctrl+v). What I see is 'Settings and
+buttonsSetti'. That is text area does not expand to accomodate new text length.
+And I cannot move beyond that point.
+If I move to another headline I see that pasting was done correctly. 
+
+2) (done) I always make these changes without any problems:
+Code-->Gui Tkinter classes-->@thin leoTkinterTree.py-->Config
+& Measuring...-->headWidth & widthInPixels
+return max(self.minimum_headline_width,5 + len(s))  ##change to 1
+
+Code-->Gui Tkinter classes-->@thin leoTkinterTree.py--> Birth...
+(tkTree)-->__init__--><< define drawing constants >>
+self.minimum_headline_width = 20 # In characters. ##change to 2
+
+
+Leo 4.4 alpha 4, build  1.346 , December 5, 2005
+Python 2.4.2, Tk 8.4.7, Pmw 1.2
+Windows 5, 0, 2195, 2, Service Pack 4    <--- nice!
+#@-node:ekr.20051206082304.1:Report
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20051011072903.2:copyText
+def copyText (self):
+    
+    '''Copy the selected text from the widget to the clipboard.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    if not w: return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
+#@nonl
+#@-node:ekr.20051011072903.2:copyText
+#@+node:ekr.20051011072049.2:cutText
+def cutText (self):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return 'break'
+    name = hasattr(w,'_name') and w._name or ''
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        c.frame.tree.onHeadChanged(p)
+    else: pass
+
+OnCutFromMenu = cutText
+#@nonl
+#@-node:ekr.20051011072049.2:cutText
+#@+node:ekr.20051011072903.5:pasteText
+def pasteText (self):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
+    if name.startswith('head'):
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        p.initHeadString(s)
+        w.configure(width=f.tree.headWidth(s=s))
+    else: pass
+    
+OnPasteFromMenu = pasteText
+#@nonl
+#@-node:ekr.20051011072903.5:pasteText
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@-node:ekr.20051213060647.1:Fixed minor headline problems
 #@-node:ekr.20051208102436:Bugs fixed
 #@+node:ekr.20051208102436.1:New features
 #@+node:ekr.20051208091816:created ut.leo, ut.py and ut.bat

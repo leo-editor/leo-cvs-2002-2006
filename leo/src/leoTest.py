@@ -883,10 +883,11 @@ class reformatParagraphTest:
         # clear the temp node and mark it unchanged
         tempNode.setTnodeText("",g.app.tkEncoding)
         tempNode.clearDirty()
-    
-        # Delete all children of temp node.
-        while tempNode.firstChild():
-            tempNode.firstChild().doDelete()
+        
+        if 1: # Disabling this is good for debugging.
+            # Delete all children of temp node.
+            while tempNode.firstChild():
+                tempNode.firstChild().doDelete()
             
         c.undoer.rollbackToMark(self.undoMark)
     #@nonl

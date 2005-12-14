@@ -1749,11 +1749,18 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20051011072903.2:copyText
     def copyText (self):
         
-        '''Invoked from the mini-buffer and from shortcuts.'''
+        '''Copy the selected text from the widget to the clipboard.'''
         
         f = self ; c = f.c ; w = f.getFocus()
-        
-        w.event_generate(g.virtual_event_name("Copy"))
+        if not w: return
+    
+        # Set the clipboard text.
+        i,j = g.app.gui.getTextSelection(w)
+        if i != j:
+            s = w.get(i,j)
+            g.app.gui.replaceClipboardWith(s)
+            
+    OnCopyFromMenu = copyText
     #@nonl
     #@-node:ekr.20051011072903.2:copyText
     #@+node:ekr.20051011072049.2:cutText
@@ -1761,20 +1768,27 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        f = self ; c = f.c
-        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+        f = self ; c = f.c ; p = c.currentPosition()
+        w = f.getFocus()
+        if not w: return 'break'
+        name = hasattr(w,'_name') and w._name or ''
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
+        i,j = g.app.gui.getTextSelection(w)
+        
+        # Update the widget and set the clipboard text.
+        if i != j:
+            s = w.get(i,j)
+            w.delete(i,j)
+            g.app.gui.replaceClipboardWith(s)
     
         if name.startswith('body'):
-            # Let body key handler do the cut!
-            oldSel = g.app.gui.getTextSelection(w)
-            oldText = w.get('1.0','end')
-            w.event_generate(g.virtual_event_name("Cut"))
             c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-        else:
-            # Important: cut from headline is *not* undoable.
-            # Only the entire edit is undoable.
-            # Do **not** call w.event_generate.
-            pass
+        elif name.startswith('head'):
+            c.frame.tree.onHeadChanged(p)
+        else: pass
+    
+    OnCutFromMenu = cutText
     #@nonl
     #@-node:ekr.20051011072049.2:cutText
     #@+node:ekr.20051011072903.5:pasteText
@@ -1782,95 +1796,38 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         '''Paste the clipboard into a widget.'''
     
-        f = self ; c = f.c
-        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-    
-        if name.startswith('body'):
-            # Let body key handler do the paste!
-            oldSel = g.app.gui.getTextSelection(w)
-            oldText = w.get('1.0','end')
-            w.event_generate(g.virtual_event_name("Paste"))
-            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        f = self ; c = f.c ; p = c.currentPosition()
+        w = f.getFocus()
+        if not w: return
+        name = g.app.gui.widget_name(w)
+        oldSel = g.app.gui.getTextSelection(w)
+        oldText = w.get('1.0','end')
+        i,j = g.app.gui.getTextSelection(w)
+        s = s1 = g.app.gui.getTextFromClipboard()
+        
         if name.startswith('head'):
-            # Important: this paste is not undoable!
-            # Only the entire edit is undoable.
-            s = s1 = g.app.gui.getTextFromClipboard()
             # Strip trailing newlines so the truncation doesn't cause confusion.
             while s and s [ -1] in ('\n','\r'):
                 s = s [: -1]
-            if s != s1:
-                g.app.gui.replaceClipboardWith(s)
-            g.app.unitTestDict ['headWidth'] = True
+        
+        # Update the widget.
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,s)
+    
+        if name.startswith('body'):
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        elif name.startswith('head'):
+            s = w.get('1.0','end')
+            while s and s [ -1] in ('\n','\r'):
+                s = s [: -1]
+            p.initHeadString(s)
             w.configure(width=f.tree.headWidth(s=s))
         else: pass
+        
+    OnPasteFromMenu = pasteText
     #@nonl
     #@-node:ekr.20051011072903.5:pasteText
-    #@+node:ekr.20051011072903.1:OnCopyFromMenu
-    def OnCopyFromMenu (self):
-        
-        ''' Called **only** when invoked using the menu instead of a shortcut.'''
-        
-        f = self ; c = f.c
-        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-    
-        if name.startswith('body'):
-            w.event_generate(g.virtual_event_name("Copy"))
-        else:
-            # Necessary when not using shortcut keys.
-            w.event_generate(g.virtual_event_name("Copy"))
-        
-    #@nonl
-    #@-node:ekr.20051011072903.1:OnCopyFromMenu
-    #@+node:ekr.20051011072049.1:OnCutFromMenu
-    def OnCutFromMenu (self):
-        
-        ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-        f = self ; c = f.c ; p = c.currentPosition()
-        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-    
-        if name.startswith('body'):
-            # Let body key handler do the cut!
-            oldSel = g.app.gui.getTextSelection(w)
-            oldText = w.get('1.0','end')
-            w.event_generate(g.virtual_event_name("Cut"))
-            c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-            c.requestRecolor()
-        else:
-            # Necessary
-            w.event_generate(g.virtual_event_name("Cut"))
-            f.tree.onHeadChanged(p,'Cut')
-    #@nonl
-    #@-node:ekr.20051011072049.1:OnCutFromMenu
-    #@+node:ekr.20051011072903.4:OnPasteFromMenu
-    def OnPasteFromMenu (self):
-        
-        ''' Called **only** when invoked using the menu instead of a shortcut.'''
-        
-        f = self ; c = f.c
-        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-    
-        if name.startswith('body'):
-            # Let body key handler do the paste!
-            oldSel = g.app.gui.getTextSelection(w)
-            oldText = w.get('1.0','end')
-            w.event_generate(g.virtual_event_name("Paste"))
-            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-            c.requestRecolor()
-        else:
-            # Strip trailing newlines so the truncation doesn't cause confusion.
-            s = s1 = g.app.gui.getTextFromClipboard()
-            while s and s[-1] in ('\n','\r'):
-                s = s[:-1]
-            if s != s1:
-                g.app.gui.replaceClipboardWith(s)
-            g.app.unitTestDict ['headWidth'] = True
-            w.configure(width=f.tree.headWidth(s=s))
-            w.event_generate(g.virtual_event_name("Paste"))
-            f.tree.onHeadChanged(c.currentPosition(),'Paste')
-            c.redraw_now()
-    #@nonl
-    #@-node:ekr.20051011072903.4:OnPasteFromMenu
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
     def endEditLabelCommand (self):

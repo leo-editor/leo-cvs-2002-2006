@@ -206,7 +206,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.default_line_height = 17 + 2 # default if can't set line_height from font.
         self.line_height = self.default_line_height
         
-        self.minimum_headline_width = 20 # In characters.
+        self.minimum_headline_width = 2 # In characters.
         #@nonl
         #@-node:ekr.20040803072955.17:<< define drawing constants >>
         #@nl
@@ -713,7 +713,7 @@ class leoTkinterTree (leoFrame.leoTree):
         else:
             s = s or ''
     
-        return max(self.minimum_headline_width,5 + len(s))
+        return max(self.minimum_headline_width,1 + len(s))
         
     def widthInPixels(self,s):
     
@@ -1865,7 +1865,7 @@ class leoTkinterTree (leoFrame.leoTree):
         return 'break' # Required
     #@nonl
     #@-node:ekr.20040803072955.88:onHeadlineKey
-    #@+node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+    #@+node:ekr.20051026083544.2:updateHead
     def updateHead (self,event,w):
         
         '''Update a headline from an event.
@@ -1893,9 +1893,8 @@ class leoTkinterTree (leoFrame.leoTree):
         if s.endswith('\n'):
             s = s[:-1]
     
-        if 0: # p does not *officially* change until onHeadChanged is called.
-            p.initHeadString(s)
-    
+        # Always update this.
+        p.initHeadString(s)
         w.configure(width=self.headWidth(s=s))
         
         # The granularity is the entire editing session,
@@ -1906,7 +1905,7 @@ class leoTkinterTree (leoFrame.leoTree):
             
         if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
     #@nonl
-    #@-node:ekr.20051026083544.2:updateHead (new in 4.4a2)
+    #@-node:ekr.20051026083544.2:updateHead
     #@+node:ekr.20040803072955.91:onHeadChanged
     # Tricky code: do not change without careful thought and testing.
     
@@ -1948,10 +1947,10 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nonl
         #@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
         #@nl
-        changed = s != p.headString()
         
         # Make the change official, but undo to the *old* revert point.
         oldRevert = self.revertHeadline
+        changed = s != oldRevert
         self.revertHeadline = s
         p.initHeadString(s)
         # g.trace(repr(s),g.callers())
@@ -2467,11 +2466,14 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.126:tree.endEditLabel
     def endEditLabel (self):
         
-        """End editing for self.editText."""
+        '''End editing for self.editText.
+        
+        *Important*: the key handlers always keep the headline text up-to-date.'''
     
-        c = self.c ; p = self.editPosition()
+        c = self.c
     
-        self.onHeadChanged(p)
+        self.setUnselectedLabelState(c.currentPosition())
+        self.setEditPosition(None) # That is, self._editPosition = None
     #@nonl
     #@-node:ekr.20040803072955.126:tree.endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
@@ -2511,7 +2513,7 @@ class leoTkinterTree (leoFrame.leoTree):
         old_p = c.currentPosition()
         if not p or not p.exists(c): return # Not an error.
         
-        # g.trace(redraw_flag,g.callers(7))
+        # g.trace('redraw_flag',redraw_flag)
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             if old_p and redraw_flag:
@@ -2523,7 +2525,6 @@ class leoTkinterTree (leoFrame.leoTree):
                 
                 if old_p != p:
                     self.endEditLabel() # sets editPosition = None
-                    self.setUnselectedLabelState(old_p)
                 
                 if old_p.edit_widget():
                     old_p.v.t.scrollBarSpot = yview
@@ -2605,8 +2606,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if redraw_flag:
             #@        << set the current node >>
             #@+node:ekr.20040803072955.133:<< set the current node >>
-            if p != old_p and redraw_flag:
-                self.setSelectedLabelState(p)
+            self.setSelectedLabelState(p)
             
             frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
             

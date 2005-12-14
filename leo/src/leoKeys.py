@@ -840,7 +840,7 @@ class keyHandlerClass:
                     g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
-    #@+node:ekr.20051023182326:copyBindingsToWidget
+    #@+node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
     def copyBindingsToWidget (self,paneOrPanes,widget):
         
         '''Copy all bindings for the given panes to widget.
@@ -884,14 +884,17 @@ class keyHandlerClass:
                 # This callback executes the command in the given widget.
                 def textBindingsRedirectionCallback(event,
                     func=func,widget=widget,commandName=commandName):
-                    event.widget = widget
-                    # g.trace(commandName,func)
+                    # g.trace(commandName,func,g.app.gui.widget_name(widget)) ##,g.callers())
                     func(event)
-                    return None # Allow Tk to handle the event too.
+                    return 'break'
     
                 widget.bind(shortcut,textBindingsRedirectionCallback)
+                
+        # New in 4.4a5: create the all-purpose binding.
+        # This allows Leo always to return 'break' in key handlers.
+        widget.bind('<Key>',k.onTextWidgetKey)
     #@nonl
-    #@-node:ekr.20051023182326:copyBindingsToWidget
+    #@-node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
     #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         
@@ -1188,7 +1191,7 @@ class keyHandlerClass:
         c = self.c
         ch = event and event.char
         w = event and event.widget
-        name = w and hasattr(w,'_name') and w._name or ''
+        name = g.app.gui.widget_name(w)
        
         if name.startswith('body'):
             # For Leo 4.4a4: allow Tk defaults.
@@ -2272,6 +2275,27 @@ class keyHandlerClass:
             k.clearState()
     #@-node:ekr.20050923172814.4:setState
     #@-node:ekr.20050923172809:State...
+    #@+node:ekr.20051214113546.1:k.onTextWidgetKey & insertString
+    def onTextWidgetKey (self,event):
+        
+        '''This is the default key handler for all text widgets.
+        It should never be called for keys bound to any command.'''
+    
+        ch = event and event.char or ''
+        w = event and event.widget
+        name = g.app.gui.widget_name(w) 
+        
+        # g.trace(name,repr(ch))
+            
+        if w and ch:
+            i,j = g.app.gui.getTextSelection(w)
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+    
+        return 'break'
+    #@nonl
+    #@-node:ekr.20051214113546.1:k.onTextWidgetKey & insertString
     #@-others
 #@nonl
 #@-node:ekr.20051006121539:class keyHandlerClass
