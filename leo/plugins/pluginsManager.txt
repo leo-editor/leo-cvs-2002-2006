@@ -22,7 +22,7 @@ plugins_menu.py
 #__jEdit_colorizer__.py
 #word_export.py
 #open_shell.py
-#at_view.py
+at_view.py
 #fastGotoNode.py
 # vim.py
 #newButtons.py
@@ -77,7 +77,7 @@ open_with.py
 #nodebar.py
 #UASearch.py
 #URLloader.py
-#read_only_nodes.py
+# read_only_nodes.py
 #color_markup.py
 #import_cisco_config.py
 #table.py

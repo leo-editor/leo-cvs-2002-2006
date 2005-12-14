@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button Spell</vh></v>
 <v t="ekr.20051015172713"><vh>@button Save</vh></v>
 </v>
-<v t="EKR.20040519091259" a="TV"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -129,7 +129,7 @@
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
 <v t="ekr.20051205102401"><vh>Note: do search replace to update version numbers</vh></v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer  (update for each release)</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.x installer  (update for each release)</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
@@ -154,6 +154,10 @@
 <v t="ekr.20050118104901.3"><vh>icons</vh>
 <v t="ekr.20050118104901.4"><vh>&lt;&lt; install icons &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.5"><vh>&lt;&lt; uninstall icons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051208100413"><vh>modes</vh>
+<v t="ekr.20051208095832"><vh>&lt;&lt; install modes &gt;&gt;</vh></v>
+<v t="ekr.20051208100413.1"><vh>&lt;&lt; uninstall modes &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050118104901.6"><vh>plugins</vh>
 <v t="ekr.20050118104901.7"><vh>&lt;&lt; install plugins &gt;&gt;</vh></v>
@@ -200,7 +204,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
@@ -482,7 +486,7 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-4-a4", # No spaces here!
+version="4-4-b1", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -810,6 +814,8 @@ exclude extensions/Pmw/Pmw_1_2/lib/*.pyo
 exclude extensions/Pmw/Pmw_1_2/tests/*.pyo
 
 include Icons/*.*
+
+include modes/*.xml
 
 include plugins/leoPlugins.leo
 include plugins/*.ini
@@ -3506,7 +3512,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a4.exe"
+OutFile "LeoSetup-4-4-b1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -4689,5 +4695,8 @@ Coming in later releases of Leo 4.4:
 
 - Support for Vim and other 'plain-key' input modes.</t>
 <t tx="ekr.20051205102401"></t>
+<t tx="ekr.20051208095832">File "..\modes\*.xml"</t>
+<t tx="ekr.20051208100413"></t>
+<t tx="ekr.20051208100413.1">Delete "$INSTDIR\modes\*.xml"</t>
 </tnodes>
 </leo_file>

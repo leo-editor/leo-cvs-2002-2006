@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a4.exe"
+OutFile "LeoSetup-4-4-b1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -322,6 +322,13 @@ Section "Leo" SEC01
   File "..\Icons\*.*"
   ;@nonl
   ;@-node:ekr.20050118104901.4:<< install icons >>
+  ;@nl
+  SetOutPath "$INSTDIR\modes"
+  ;@  << install modes >>
+  ;@+node:ekr.20051208095832:<< install modes >>
+  File "..\modes\*.xml"
+  ;@nonl
+  ;@-node:ekr.20051208095832:<< install modes >>
   ;@nl
   SetOutPath "$INSTDIR\plugins"
   ;@  << install plugins >>
@@ -603,6 +610,12 @@ Section Uninstall
   ;@nonl
   ;@-node:ekr.20050118104901.5:<< uninstall icons >>
   ;@nl
+  ;@  << uninstall modes >>
+  ;@+node:ekr.20051208100413.1:<< uninstall modes >>
+  Delete "$INSTDIR\modes\*.xml"
+  ;@nonl
+  ;@-node:ekr.20051208100413.1:<< uninstall modes >>
+  ;@nl
   ;@  << uninstall plugins >>
   ;@+node:ekr.20050118104901.8:<< uninstall plugins >>
   Delete "$INSTDIR\plugins\leoPlugins.leo"
@@ -678,16 +691,15 @@ Section Uninstall
   RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\doc"
   RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\lib"
   RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\tests"
-  
   RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2"
   RMDir "$INSTDIR\extensions\Pmw"
-  
   RMDir "$INSTDIR\extensions"
   
   RMDir "$INSTDIR\icons"
-  RMDir "$INSTDIR\src"
-  RMDir "$INSTDIR\scripts"
+  RMDir "$INSTDIR\modes"
   RMDir "$INSTDIR\plugins"
+  RMDir "$INSTDIR\scripts"
+  RMDir "$INSTDIR\src"
   RMDir "$INSTDIR\test\unittest"
   RMDir "$INSTDIR\test"
   

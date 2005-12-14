@@ -26,8 +26,92 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20051208100903:Install fix for Import Derived files
-#@clone 2
+#@+node:ekr.20051202094427:Prototype for resolve cvs conflicts
+#@-node:ekr.20051202094427:Prototype for resolve cvs conflicts
+#@+node:ekr.20051027105304:Next release: a5
+#@+node:ekr.20051207130701:Fix newly reported problems
+#@+node:ekr.20051207125933.3:Keys not sticking
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3458482
+By: nobody
+
+The assert isn't tripped except for the first time. after I run a few other unit
+tests from the @button unit test this one has no error.
+
+If I executeScript, the assert is always hit and fails.  This matches my
+experiance of delete not sticking in the body.
+
+Setting a list of usual keys for delete,
+^x, Del, whatever emacs binding uses,
+and running the test in a loop
+and adding a reload of testLeo might
+finally expose the problem.
+I am not sure off hand how to change
+the binding programatically in a loop.
+
+I see similar problems with paste not sticking sometimes.
+#@nonl
+#@+node:ekr.20051207125933.4:Post 2
+@nocolor
+ 
+http://sourceforge.net/forum/message.php?msg_id=3458548
+By: nobody
+
+  File "C:\C\PY\PYTHON22\lib\lib-tk\Tkinter.py", line 897, in bind
+    return self._bind(('bind', self._w), sequence, func, add)
+  File "C:\C\PY\PYTHON22\lib\lib-tk\Tkinter.py", line 852, in _bind
+    self.tk.call(what + (sequence, cmd))
+TclError: bad event type or keysym "Del"
+
+seems py2.2 using Tk8.3 or py2.4 using Tk8.4
+doesn't have some keysyms
+Del and Ins has to be Delete and Insert for starters.
+this could have been contributing factor, although
+the keys still do what I expected because default
+binding from Tk are passed though.
+I haven't tested if this fixes the problem yet.
+
+these errors were getting masked/missed in py2.4
+but generate failure to start Leo Tk errors in py2.2
+this could be a problem, if the only way you have to fix
+errors in bindings is editing a leo and you can't start Leo!
+
+error, ignoring duplicate @shortcuts entry: cut-text
+would be helpful if the keys getting ignored was also printed
+
+for py2.2, leoEditCommands.py needs:
+from __future__ import generators
+
+trace_tags plugin isn't really detailed enough
+to help track down what is happening here.
+trace_keys isn't working at all.
+I'm going to try to add output overwrite to file.
+printing everything slows Leo down too much.
+
+e
+#@-node:ekr.20051207125933.4:Post 2
+#@-node:ekr.20051207125933.3:Keys not sticking
+#@+node:ekr.20051208081641:Fix undo problems
+#@+node:ekr.20051208081641.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3465251
+By: e
+
+after a save, undo last typing event
+doesn't mark leo changed.
+you can go up and down the undo redo list
+and still the leo is not marked changed.
+the changes in the body do stick.
+didn't try other undo like insert node.
+
+I had a weird undo that I wasn't able to repeat
+after a reboot, when I had 2 leos open and
+and the undo after a save in one would display
+the last undo in a node body from the other leo.
+#@nonl
+#@-node:ekr.20051208081641.1:Report
+#@-node:ekr.20051208081641:Fix undo problems
+#@+node:ekr.20051208100903:Install Brian's patch for Import Derived files
 #@+node:ekr.20031218072017.1810:importDerivedFiles (new)
 def importDerivedFiles (self,parent,paths):
     
@@ -72,7 +156,8 @@ def forceGnxOnPosition (self,p):
 #@nonl
 #@-node:ekr.20051208100903.1:forceGnxOnPosition
 #@-node:ekr.20031218072017.1810:importDerivedFiles (new)
-#@-node:ekr.20051208100903:Install fix for Import Derived files
+#@-node:ekr.20051208100903:Install Brian's patch for Import Derived files
+#@-node:ekr.20051207130701:Fix newly reported problems
 #@+node:ekr.20051202102337:Minibuffer commands notes
 @nocolor
 #@nonl
@@ -314,6 +399,1334 @@ spell-ignore
 #@nonl
 #@-node:ekr.20051202102752.8:spellCommandsClass (ok)
 #@-node:ekr.20051202102337:Minibuffer commands notes
+#@+node:ekr.20051207093612.1:Add commands to extend selections
+#@+node:ekr.20051210111021:Report 1
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3463523
+
+I can't figure out how to select text within lines in the body pane.  I would
+have expected shifted movement keys to do selection but shifted left, right,
+home and end just move the cursor.  Shift up and down work as expected.
+Am I missing some bindings?
+
+Foneo
+#@nonl
+#@-node:ekr.20051210111021:Report 1
+#@+node:ekr.20051207125933.1:Report 2
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3462294
+By: nobody
+
+with an @setting @bool trace_masterCommand=True
+I see now that control+shift+arrows aren't given 
+special status. is this why selection isn't happening?
+[all], <Left>, backward-char
+[all], <Right>, forward-char
+[text], <Control-Left>, backward-word
+[text], <Control-Right>, forward-word
+
+masterCommand: <Key> ch '' keysym 'Control_L'
+masterCommand: <Control-Left> ch '' keysym 'Left'
+masterCommand: <Key> ch '' keysym 'Control_L'
+masterCommand: <Key> ch '' keysym 'Shift_L'
+masterCommand: <Control-Right> ch '' keysym 'Right'
+
+ctrl+arrow is collected together and special cased. 
+even though keys individually pass through masterCommand,
+that should have been a Ctrl-Shift-Right
+
+masterCommand: <Key> ch '' keysym 'Delete'
+is caught, does the right thing, 
+but doesn't stick.
+strangely, the cursor stays at the correct place
+if you switch nodes then back, maybe that's a clue.
+I have delete-text                 = Delete 
+but it doesn't show up in the print-bindings display.
+that may be why it doesn't stick for me.
+
+[all], <BackSpace>, backward-delete-char
+BAckspace does the right thing and does stick.
+[all], <Shift-Delete>, cut-text  sticks
+masterCommand: <Key> ch '' keysym 'Shift_L'
+masterCommand: <Shift-Delete> ch '' keysym 'Delete'
+
+alt-shift-1 generates this display
+masterCommand: <Key> ch '' keysym 'Alt_L'
+masterCommand: <Key> ch '' keysym 'Shift_L'
+masterCommand: <Key> ch '!' keysym 'exclam'
+
+alt-1 does the right thing.
+masterCommand: <Key> ch '' keysym 'Alt_L'
+masterCommand: <Alt-Key-1> ch '1' keysym '1'
+
+undo/redo
+masterCommand: <Key> ch '' keysym 'Control_L'
+masterCommand: <Control-z> ch '\x1a' keysym 'z'
+masterCommand: <Key> ch '' keysym 'Alt_L'
+masterCommand: <Key> ch '' keysym 'Control_L'
+masterCommand: <Alt-z> ch '' keysym 'z'
+
+doesn't redo because it is seen as alt-z
+instead of ctrl-alt-z
+same if hit crtl first
+masterCommand: <Key> ch '' keysym 'Control_L'
+masterCommand: <Key> ch '' keysym 'Alt_L'
+masterCommand: <Alt-z> ch '' keysym 'z'
+
+alt-shift-v
+masterCommand: <Key> ch '' keysym 'Alt_L'
+masterCommand: <Key> ch '' keysym 'Shift_L'
+masterCommand: <Alt-V> ch 'V' keysym 'V'
+
+ctrl-alt-o
+masterCommand: <Key> ch '' keysym 'Alt_L'
+masterCommand: <Key> ch '' keysym 'Control_L'
+masterCommand: <Alt-Control-o> ch '' keysym 'o'
+
+both work, so this is about all I can do armchair debugging.
+no doubt this is already part of an active investigation.
+I look forward to the betas.
+
+e
+
+#@-node:ekr.20051207125933.1:Report 2
+#@-node:ekr.20051207093612.1:Add commands to extend selections
+#@+node:ekr.20051017111216:Fix bugs in commands
+#@+node:ekr.20051120181015:To do
+@nocolor
+
+Make minibuffer commands undoable.
+    - kill/yank ?
+
+
+
+- Improve handling of the mark.  The selection should be visible.
+#@nonl
+#@-node:ekr.20051120181015:To do
+#@+node:ekr.20051120180644:What I did
+- Rewrote removeBlankLines.
+#@nonl
+#@-node:ekr.20051120180644:What I did
+#@+node:ekr.20051120180644.1:Rewritten/revised commands
+#@+node:ekr.20031218072017.1830:indentBody
+def indentBody (self):
+    
+    '''The indent-region command indents each line of the selected body text,
+    or each line of a node if there is no selected text. The @tabwidth directive
+    in effect determines amount of indentation. (not yet) A numeric argument
+    specifies the column to indent to.'''
+
+    c = self ; undoType = 'Indent Region' ; current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+
+    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
+    tab_width = d.get("tabwidth",c.tab_width)
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+
+    result = [] ; changed = False
+    for line in lines:
+        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+        s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1830:indentBody
+#@+node:ekr.20050920084036.141:removeBlankLines
+def removeBlankLines (self,event):
+    
+    '''The remove-blank-lines command removes lines containing nothing but
+    whitespace. If there is a text selection, only lines within the selected
+    text are affected; otherwise all blank lines in the selected node are
+    affected.'''
+    
+    c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
+    result = []
+    body = p.bodyString()
+    hasSelection = c.frame.body.hasTextSelection()
+    
+    if hasSelection:
+        head,lines,tail,oldSel,oldYview = c.getBodyLines()
+        joinChar = '\n'
+    else:
+        head = tail = oldYview = None
+        lines = g.splitLines(body)
+        oldSel = ('1.0','1.0')
+        joinChar = ''
+
+    for line in lines:
+        if line.strip():
+            result.append(line)
+
+    result = joinChar.join(result)
+    
+    if result != body:
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050920084036.141:removeBlankLines
+#@+node:ekr.20050920084036.75:backToIndentation
+def backToIndentation (self,event):
+    
+    '''The back-to-indentation command, given anywhere on a line,
+    positions the point at the first non-blank character on the line.'''
+
+    w = event.widget
+    i = w.index('insert linestart')
+    i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
+    w.mark_set('insert',i2)
+#@nonl
+#@-node:ekr.20050920084036.75:backToIndentation
+#@+node:ekr.20050920084036.78:indentRelative
+def indentRelative (self,event):
+    
+    '''The indent-relative command indents at the point based on the previous
+    line (actually, the last non-empty line.) It inserts whitespace at the
+    point, moving point, until it is underneath an indentation point in the
+    previous line.
+    
+    An indentation point is the end of a sequence of whitespace or the end of
+    the line. If the point is farther right than any indentation point in the
+    previous line, the whitespace before point is deleted and the first
+    indentation point then applicable is used. If no indentation point is
+    applicable even then whitespace equivalent to a single tab is inserted.'''
+    
+    c = self.c ; undoType = 'Indent Relative'
+    
+    k = self.k ; w = event.widget
+    i = w.index('insert')
+    oldSel = (i,i)
+    line, col = i.split('.')
+    c2 = int(col)
+    l2 = int(line) -1
+    if l2 < 1: return
+    txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
+    if len(txt) <= len(w.get('insert','insert lineend')):
+        w.insert('insert','\t')
+    else:
+        reg = re.compile('(\s+)')
+        ntxt = reg.split(txt)
+        replace_word = re.compile('\w')
+        for z in ntxt:
+            if z.isspace():
+                w.insert('insert',z)
+                break
+            else:
+                z = replace_word.subn(' ',z)
+                w.insert('insert',z[0])
+                
+    i = w.index('insert')
+    result = w.get('1.0','end')
+    head = tail = oldYview = None
+    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+    w.mark_set('insert',i)
+#@nonl
+#@-node:ekr.20050920084036.78:indentRelative
+#@-node:ekr.20051120180644.1:Rewritten/revised commands
+#@+node:ekr.20051120180644.2:Reference
+#@+node:ekr.20051106040126:c.executeMinibufferCommand
+def executeMinibufferCommand (self,commandName):
+    
+    c = self ; k = c.keyHandler
+    
+    func = c.commandsDict.get(commandName)
+    
+    if func:
+        event = g.Bunch(char='',keysym=None,widget=c.frame.body.bodyCtrl)
+        stroke = None
+        k.masterCommand(event,func,stroke)
+        return k.funcReturn
+    else:
+        g.trace('no such command: %s' % (commandName),color='red')
+        return None
+#@nonl
+#@-node:ekr.20051106040126:c.executeMinibufferCommand
+#@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
+    
+    c = self ; body = c.frame.body ; p = c.currentPosition()
+    
+    # g.trace(undoType)
+
+    # Update the text and notify the event handler.
+    body.setSelectionAreas(head,middle,tail)
+
+    if setSel and oldSel:
+        body.setTextSelection(oldSel)
+
+    # This handles the undo.
+    body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
+
+    # Update the changed mark and icon.
+    c.beginUpdate()
+    try: # In update...
+        c.setChanged(True)
+        if p.isDirty():
+            dirtyVnodeList = []
+        else:
+            dirtyVnodeList = p.setDirty()
+    finally:
+        c.endUpdate()
+
+    # Scroll as necessary.
+    if oldYview:
+        body.setYScrollPosition(oldYview)
+    else:
+        body.makeInsertPointVisible()
+
+    body.setFocus()
+    c.recolor()
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+#@+node:ekr.20031218072017.2884:Edit Body submenu
+#@+node:ekr.20031218072017.1704:convertAllBlanks
+def convertAllBlanks (self):
+    
+    c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    d = g.scanDirectives(c)
+    tabWidth  = d.get("tabwidth")
+    c.beginUpdate()
+    try: # In update...
+        count = 0 ; dirtyVnodeList = []
+        u.beforeChangeGroup(current,undoType)
+        for p in current.self_and_subtree_iter():
+            # g.trace(p.headString(),tabWidth)
+            innerUndoData = u.beforeChangeNodeContents(p)
+            if p == current:
+                changed,dirtyVnodeList2 = c.convertBlanks()
+                if changed:
+                    count += 1
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+            else:
+                changed = False ; result = []
+                text = p.t.bodyString
+                assert(g.isUnicode(text))
+                lines = string.split(text, '\n')
+                for line in lines:
+                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                    s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
+                    if s != line: changed = True
+                    result.append(s)
+                if changed:
+                    count += 1
+                    dirtyVnodeList2 = p.setDirty()
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+                    result = string.join(result,'\n')
+                    p.setTnodeText(result)
+                    u.afterChangeNodeContents(p,undoType,innerUndoData)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
+    finally:
+        c.endUpdate(count > 0)
+#@nonl
+#@-node:ekr.20031218072017.1704:convertAllBlanks
+#@+node:ekr.20031218072017.1705:convertAllTabs
+def convertAllTabs (self):
+
+    c = self ; u = c.undoer ; undoType = 'Convert All Tabs'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    c.beginUpdate()
+    try: # In update:
+        count = 0 ; dirtyVnodeList = []
+        u.beforeChangeGroup(current,undoType)
+        for p in current.self_and_subtree_iter():
+            undoData = u.beforeChangeNodeContents(p)
+            if p == current:
+                changed,dirtyVnodeList2 = self.convertTabs()
+                if changed:
+                    count += 1
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+            else:
+                result = [] ; changed = False
+                text = p.t.bodyString
+                assert(g.isUnicode(text))
+                lines = string.split(text, '\n')
+                for line in lines:
+                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                    s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+                    if s != line: changed = True
+                    result.append(s)
+                if changed:
+                    count += 1
+                    dirtyVnodeList2 = p.setDirty()
+                    dirtyVnodeList.extend(dirtyVnodeList2)
+                    result = string.join(result,'\n')
+                    p.setTnodeText(result)
+                    u.afterChangeNodeContents(p,undoType,undoData)
+        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
+        g.es("tabs converted to blanks in %d nodes" % count)
+    finally:
+        c.endUpdate(count > 0)
+#@nonl
+#@-node:ekr.20031218072017.1705:convertAllTabs
+#@+node:ekr.20031218072017.1821:convertBlanks
+def convertBlanks (self):
+
+    c = self ; undoType = 'Convert Blanks'
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return False
+
+    head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=True)
+    result = [] ; changed = False
+
+    # Use the relative @tabwidth, not the global one.
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    if not tabWidth: return False
+
+    for line in lines:
+        s = g.optimizeLeadingWhitespace(line,abs(tabWidth)) # Use positive width.
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+    else:
+        dirtyVnodeList = []
+
+    return changed,dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1821:convertBlanks
+#@+node:ekr.20031218072017.1822:convertTabs
+def convertTabs (self):
+
+    c = self ; undoType = 'Convert Tabs'
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return False
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines(expandSelection=True)
+    result = [] ; changed = False
+    
+    # Use the relative @tabwidth, not the global one.
+    theDict = g.scanDirectives(c)
+    tabWidth  = theDict.get("tabwidth")
+    if not tabWidth: return False
+
+    for line in lines:
+        i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+        s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+    else:
+        dirtyVnodeList = []
+        
+    return changed,dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1822:convertTabs
+#@+node:ekr.20031218072017.1823:createLastChildNode
+def createLastChildNode (self,parent,headline,body):
+    
+    '''A helper function for the three extract commands.'''
+    
+    c = self
+    
+    if body and len(body) > 0:
+        body = string.rstrip(body)
+    if not body or len(body) == 0:
+        body = ""
+
+    p = parent.insertAsLastChild()
+    p.initHeadString(headline)
+    p.setTnodeText(body)
+    p.setDirty()
+    c.validateOutline()
+    return p
+#@nonl
+#@-node:ekr.20031218072017.1823:createLastChildNode
+#@+node:ekr.20031218072017.1824:dedentBody
+def dedentBody (self):
+    
+    c = self ; undoType = 'Unindent' ; current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+
+    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
+    tab_width = d.get("tabwidth",c.tab_width)
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    
+    result = [] ; changed = False
+    for line in lines:
+        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+        s = g.computeLeadingWhitespace(width-abs(tab_width),tab_width) + line[i:]
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1824:dedentBody
+#@+node:ekr.20031218072017.1706:extract
+def extract(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract'
+    current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+    headline = lines[0].strip() ; del lines[0]
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    try: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    finally:
+        c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.1706:extract
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section'
+    current = c.currentPosition()
+
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    line1 = '\n' + lines[0]
+    headline = lines[0].strip() ; del lines[0]
+    << Set headline for extractSection >>
+    
+    if not lines:
+        g.es("Nothing follows section name",color="blue")
+        return
+    
+    # Remove leading whitespace from all body lines.
+    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
+    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
+        for line in lines]
+    newBody = string.join(strippedLines,'\n')
+    if head: head = head.rstrip()
+
+    c.beginUpdate()
+    try: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            undoData = u.beforeInsertNode(current)
+            p = c.createLastChildNode(current,headline,newBody)
+            u.afterInsertNode(p,undoType,undoData)
+            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
+        u.afterChangeGroup(current,undoType)
+    finally:
+        c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if len(headline) < 5:
+    oops = True
+else:
+    head1 = headline[0:2] == '<<'
+    head2 = headline[0:2] == '@<'
+    tail1 = headline[-2:] == '>>'
+    tail2 = headline[-2:] == '@>'
+    oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+    g.es("Selected text should start with a section name",color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20031218072017.1710:extractSectionNames
+def extractSectionNames(self):
+
+    c = self ; u = c.undoer ; undoType = 'Extract Section Names'
+    body = c.frame.body ; current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    if not lines: return
+
+    c.beginUpdate()
+    try: # In update...
+        u.beforeChangeGroup(current,undoType)
+        if 1: # In group...
+            found = False
+            for s in lines:
+                << Find the next section name >>
+                if name:
+                    undoData = u.beforeInsertNode(current)
+                    p = self.createLastChildNode(current,name,None)
+                    u.afterInsertNode(p,undoType,undoData)
+                    found = True
+            c.selectPosition(current)
+            c.validateOutline()
+            if not found:
+                g.es("Selected text should contain one or more section names",color="blue")
+        u.afterChangeGroup(current,undoType)
+    finally:
+        c.endUpdate()
+
+    # Restore the selection.
+    body.setTextSelection(oldSel)
+    body.setFocus()
+#@nonl
+#@+node:ekr.20031218072017.1711:<< Find the next section name >>
+head1 = string.find(s,"<<")
+if head1 > -1:
+    head2 = string.find(s,">>",head1)
+else:
+    head1 = string.find(s,"@<")
+    if head1 > -1:
+        head2 = string.find(s,"@>",head1)
+        
+if head1 == -1 or head2 == -1 or head1 > head2:
+    name = None
+else:
+    name = s[head1:head2+2]
+#@nonl
+#@-node:ekr.20031218072017.1711:<< Find the next section name >>
+#@-node:ekr.20031218072017.1710:extractSectionNames
+#@+node:ekr.20031218072017.1825:findBoundParagraph
+def findBoundParagraph (self):
+    
+    c = self
+    head,ins,tail = c.frame.body.getInsertLines()
+
+    if not ins or ins.isspace() or ins[0] == '@':
+        return None,None,None,None # DTHEIN 18-JAN-2004
+        
+    head_lines = g.splitLines(head)
+    tail_lines = g.splitLines(tail)
+
+    if 0:
+        << trace head_lines, ins, tail_lines >>
+
+    # Scan backwards.
+    i = len(head_lines)
+    while i > 0:
+        i -= 1
+        line = head_lines[i]
+        if len(line) == 0 or line.isspace() or line[0] == '@':
+            i += 1 ; break
+
+    pre_para_lines = head_lines[:i]
+    para_head_lines = head_lines[i:]
+
+    # Scan forwards.
+    i = 0
+    trailingNL = False # DTHEIN 18-JAN-2004: properly capture terminating NL
+    while i < len(tail_lines):
+        line = tail_lines[i]
+        if len(line) == 0 or line.isspace() or line[0] == '@':
+            trailingNL = line.endswith(u'\n') or line.startswith(u'@') # DTHEIN 21-JAN-2004
+            break
+        i += 1
+        
+#	para_tail_lines = tail_lines[:i]
+    para_tail_lines = tail_lines[:i]
+    post_para_lines = tail_lines[i:]
+    
+    head = g.joinLines(pre_para_lines)
+    result = para_head_lines 
+    result.extend([ins])
+    result.extend(para_tail_lines)
+    tail = g.joinLines(post_para_lines)
+
+    # DTHEIN 18-JAN-2004: added trailingNL to return value list
+    return head,result,tail,trailingNL # string, list, string, bool
+#@nonl
+#@+node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
+if 0:
+    print ; print "head_lines"
+    for line in head_lines: print line
+    print ; print "ins", ins
+    print ; print "tail_lines"
+    for line in tail_lines: print line
+else:
+    g.es("head_lines: ",head_lines)
+    g.es("ins: ",ins)
+    g.es("tail_lines: ",tail_lines)
+#@nonl
+#@-node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
+#@-node:ekr.20031218072017.1825:findBoundParagraph
+#@+node:ekr.20031218072017.1827:findMatchingBracket
+def findMatchingBracket (self):
+    
+    c = self ; body = c.frame.body
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Match Brackets")
+        return
+
+    brackets = "()[]{}<>"
+    ch1 = body.getCharBeforeInsertPoint()
+    ch2 = body.getCharAtInsertPoint()
+
+    # Prefer to match the character to the left of the cursor.
+    if ch1 in brackets:
+        ch = ch1 ; index = body.getBeforeInsertionPoint()
+    elif ch2 in brackets:
+        ch = ch2 ; index = body.getInsertionPoint()
+    else:
+        return
+    
+    index2 = self.findSingleMatchingBracket(ch,index)
+    if index2:
+        if body.compareIndices(index,"<=",index2):
+            adj_index = body.adjustIndex(index2,1)
+            body.setTextSelection(index,adj_index)
+        else:
+            adj_index = body.adjustIndex(index,1)
+            body.setTextSelection(index2,adj_index)
+        adj_index = body.adjustIndex(index2,1)
+        body.setInsertionPoint(adj_index)
+        body.makeIndexVisible(adj_index)
+    else:
+        g.es("unmatched '%s'",ch)
+#@nonl
+#@+node:ekr.20031218072017.1828:findMatchingBracket
+# To do: replace comments with blanks before scanning.
+# Test  unmatched())
+def findSingleMatchingBracket(self,ch,index):
+    
+    c = self ; body = c.frame.body
+    open_brackets  = "([{<" ; close_brackets = ")]}>"
+    brackets = open_brackets + close_brackets
+    matching_brackets = close_brackets + open_brackets
+    forward = ch in open_brackets
+    # Find the character matching the initial bracket.
+    for n in xrange(len(brackets)):
+        if ch == brackets[n]:
+            match_ch = matching_brackets[n]
+            break
+    level = 0
+    while 1:
+        if forward and body.compareIndices(index,">=","end"):
+            # g.trace("not found")
+            return None
+        ch2 = body.getCharAtIndex(index)
+        if ch2 == ch:
+            level += 1 #; g.trace(level,index)
+        if ch2 == match_ch:
+            level -= 1 #; g.trace(level,index)
+            if level <= 0:
+                return index
+        if not forward and body.compareIndices(index,"<=","1.0"):
+            # g.trace("not found")
+            return None
+        adj = g.choose(forward,1,-1)
+        index = body.adjustIndex(index,adj)
+    return 0 # unreachable: keeps pychecker happy.
+# Test  (
+# ([(x){y}]))
+# Test  ((x)(unmatched
+#@nonl
+#@-node:ekr.20031218072017.1828:findMatchingBracket
+#@-node:ekr.20031218072017.1827:findMatchingBracket
+#@+node:ekr.20031218072017.1829:getBodyLines
+def getBodyLines (self,expandSelection=False):
+
+    c = self ; body = c.frame.body
+    oldVview = body.getYScrollPosition()
+    oldSel   = body.getTextSelection()
+
+    if expandSelection: # 12/3/03
+        lines = body.getAllText()
+        head = tail = None
+    else:
+        # Note: lines is the entire line containing the insert point if no selection.
+        head,lines,tail = body.getSelectionLines()
+
+    lines = string.split(lines,'\n') # It would be better to use splitLines.
+
+    return head,lines,tail,oldSel,oldVview
+#@nonl
+#@-node:ekr.20031218072017.1829:getBodyLines
+#@+node:ekr.20031218072017.1830:indentBody
+def indentBody (self):
+    
+    '''The indent-region command indents each line of the selected body text,
+    or each line of a node if there is no selected text. The @tabwidth directive
+    in effect determines amount of indentation. (not yet) A numeric argument
+    specifies the column to indent to.'''
+
+    c = self ; undoType = 'Indent Region' ; current = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+
+    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
+    tab_width = d.get("tabwidth",c.tab_width)
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+
+    result = [] ; changed = False
+    for line in lines:
+        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+        s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
+        if s != line: changed = True
+        result.append(s)
+
+    if changed:
+        result = string.join(result,'\n')
+        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1830:indentBody
+#@+node:ekr.20031218072017.1831:insertBodyTime & allies
+def insertBodyTime (self):
+    
+    c = self ; undoType = 'Insert Body Time'
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode(undoType)
+        return
+    
+    oldSel = c.frame.body.getTextSelection()
+    c.frame.body.deleteTextSelection() # Works if nothing is selected.
+    s = self.getTime(body=True)
+
+    c.frame.body.insertAtInsertPoint(s)
+    c.frame.body.onBodyChanged(undoType,oldSel=oldSel)
+#@nonl
+#@+node:ekr.20031218072017.1832:getTime
+def getTime (self,body=True):
+
+    c = self
+    default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+    
+    # Try to get the format string from leoConfig.txt.
+    if body:
+        format = c.config.getString("body_time_format_string")
+        gmt    = c.config.getString("body_gmt_time")
+    else:
+        format = c.config.getString("headline_time_format_string")
+        gmt     = c.config.getString("headline_gmt_time")
+
+    if format == None:
+        format = default_format
+
+    try:
+        import time
+        if gmt:
+            s = time.strftime(format,time.gmtime())
+        else:
+            s = time.strftime(format,time.localtime())
+    except (ImportError, NameError):
+        g.es("time.strftime not available on this platform",color="blue")
+        return ""
+    except:
+        g.es_exception() # Probably a bad format string in leoConfig.txt.
+        s = time.strftime(default_format,time.gmtime())
+    return s
+#@-node:ekr.20031218072017.1832:getTime
+#@-node:ekr.20031218072017.1831:insertBodyTime & allies
+#@+node:ekr.20050312114529:insert/removeComments
+#@+node:ekr.20050312114529.1:addComments
+def addComments (self):
+
+    c = self ; undoType = 'Add Comments' ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            result.append('%s%s %s' % (line[0:i],d1,line[i:]))
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                result.append('%s%s %s' % (line[0:j],d2,line[j:]))
+            if i == n-1:
+                j = len(line.rstrip())
+                result.append('%s %s' % (line[0:j],d3))
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.1:addComments
+#@+node:ekr.20050312114529.2:deleteComments
+def deleteComments (self):
+
+    c = self ; undoType = 'Delete Comments' ; p = c.currentPosition()
+    
+    d = g.scanDirectives(c,p)
+    # d1 is the line delim.
+    d1,d2,d3 = d.get('delims')
+
+    head,lines,tail,oldSel,oldYview = self.getBodyLines()
+    result = []
+    if not lines:
+        g.es('No text selected',color='blue')
+        return
+    
+    if d1:
+        # Append the single-line comment delim in front of each line
+        for line in lines:
+            i = g.skip_ws(line,0)
+            if g.match(line,i,d1):
+                j = g.skip_ws(line,i + len(d1))
+                result.append(line[0:i] + line[j:])
+            else:
+                result.append(line)
+    else:
+        n = len(lines)
+        for i in xrange(n):
+            line = lines[i]
+            if i not in (0,n-1):
+                result.append(line)
+            if i == 0:
+                j = g.skip_ws(line,0)
+                if g.match(line,j,d2):
+                    k = g.skip_ws(line,j + len(d2))
+                    result.append(line[0:j] + line[k:])
+                else:
+                    g.es("'%s' not found" % (d2),color='blue')
+                    return
+            if i == n-1:
+                if i == 0:
+                    line = result[0] ; result = []
+                s = line.rstrip()
+                if s.endswith(d3):
+                    result.append(s[:-len(d3)].rstrip())
+                else:
+                    g.es("'%s' not found" % (d3),color='blue')
+                    return
+
+    result = string.join(result,'\n')
+    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
+#@nonl
+#@-node:ekr.20050312114529.2:deleteComments
+#@-node:ekr.20050312114529:insert/removeComments
+#@+node:ekr.20031218072017.1833:reformatParagraph
+def reformatParagraph(self):
+
+    """Reformat a text paragraph in a Tk.Text widget
+
+Wraps the concatenated text to present page width setting. Leading tabs are
+sized to present tab width setting. First and second line of original text is
+used to determine leading whitespace in reformatted text. Hanging indentation
+is honored.
+
+Paragraph is bound by start of body, end of body, blank lines, and lines
+starting with "@". Paragraph is selected by position of current insertion
+cursor."""
+
+    c = self ; body = c.frame.body
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("xxx")
+        return
+
+    if body.hasTextSelection():
+        g.es("Text selection inhibits Reformat Paragraph",color="blue")
+        return
+
+    << compute vars for reformatParagraph >>
+    if lines:
+        << compute the leading whitespace >>
+        << compute the result of wrapping all lines >>
+        << update the body, selection & undo state >>
+#@nonl
+#@+node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
+theDict = g.scanDirectives(c)
+pageWidth = theDict.get("pagewidth")
+tabWidth  = theDict.get("tabwidth")
+
+original = body.getAllText()
+oldSel   = body.getTextSelection()
+oldYview = body.getYScrollPosition()
+head,lines,tail,trailingNL = c.findBoundParagraph() # DTHEIN 18-JAN-2004: add trailingNL
+#@nonl
+#@-node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
+#@+node:ekr.20031218072017.1835:<< compute the leading whitespace >>
+indents = [0,0] ; leading_ws = ["",""]
+
+for i in (0,1):
+    if i < len(lines):
+        # Use the original, non-optimized leading whitespace.
+        leading_ws[i] = ws = g.get_leading_ws(lines[i])
+        indents[i] = g.computeWidth(ws,tabWidth)
+        
+indents[1] = max(indents)
+if len(lines) == 1:
+    leading_ws[1] = leading_ws[0]
+#@-node:ekr.20031218072017.1835:<< compute the leading whitespace >>
+#@+node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
+# Remember whether the last line ended with a newline.
+lastLine = lines[-1]
+if 0: # DTHEIN 18-JAN-2004: removed because findBoundParagraph now gives trailingNL
+    trailingNL = lastLine and lastLine[-1] == '\n'
+
+# Remove any trailing newlines for wraplines.
+lines = [line[:-1] for line in lines[:-1]]
+if lastLine and not trailingNL:
+    lastLine = lastLine[:-1]
+lines.extend([lastLine])
+
+# Wrap the lines, decreasing the page width by indent.
+result = g.wrap_lines(lines,
+    pageWidth-indents[1],
+    pageWidth-indents[0])
+
+# DTHEIN 	18-JAN-2004
+# prefix with the leading whitespace, if any
+paddedResult = []
+paddedResult.append(leading_ws[0] + result[0])
+for line in result[1:]:
+    paddedResult.append(leading_ws[1] + line)
+
+# Convert the result to a string.
+result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
+if 0: # DTHEIN 18-JAN-2004:  No need to do this.
+    if trailingNL:
+        result += '\n'
+#@-node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
+#@+node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
+sel_start, sel_end = body.setSelectionAreas(head,result,tail)
+
+changed = original != head + result + tail
+undoType = g.choose(changed,"Reformat Paragraph",None)
+body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
+
+# Advance the selection to the next paragraph.
+newSel = sel_end, sel_end
+body.setTextSelection(newSel)
+body.makeIndexVisible(sel_end)
+
+c.recolor()
+#@nonl
+#@-node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
+#@-node:ekr.20031218072017.1833:reformatParagraph
+#@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
+    
+    c = self ; body = c.frame.body ; p = c.currentPosition()
+    
+    # g.trace(undoType)
+
+    # Update the text and notify the event handler.
+    body.setSelectionAreas(head,middle,tail)
+
+    if setSel and oldSel:
+        body.setTextSelection(oldSel)
+
+    # This handles the undo.
+    body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
+
+    # Update the changed mark and icon.
+    c.beginUpdate()
+    try: # In update...
+        c.setChanged(True)
+        if p.isDirty():
+            dirtyVnodeList = []
+        else:
+            dirtyVnodeList = p.setDirty()
+    finally:
+        c.endUpdate()
+
+    # Scroll as necessary.
+    if oldYview:
+        body.setYScrollPosition(oldYview)
+    else:
+        body.makeInsertPointVisible()
+
+    body.setFocus()
+    c.recolor()
+    return dirtyVnodeList
+#@nonl
+#@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
+#@-node:ekr.20031218072017.2884:Edit Body submenu
+#@+node:ekr.20051121060445:Indent help
+@nocolor
+
+   `C-M-o' (`split-line') moves the text from point to the end of the
+line vertically down, so that the current line becomes two lines.
+`C-M-o' first moves point forward over any spaces and tabs.  Then it
+inserts after point a newline and enough indentation to reach the same
+column point is on.  Point remains before the inserted newline; in this
+regard, `C-M-o' resembles `C-o'.
+
+   To join two lines cleanly, use the `Meta-^' (`delete-indentation')
+command to delete the indentation at the front of the current line, and
+the line boundary as well.  Empty spaces are replaced by a single
+space, or by no space if at the beginning of a line, before a close
+parenthesis, or after an open parenthesis.  To delete just the
+indentation of a line, go to the beginning of the line and use `Meta-\'
+(`delete-horizontal-space'), which deletes all spaces and tabs around
+the cursor.
+
+`indent-rigidly' moves all the lines in the region right by its
+argument (left, for negative arguments).  The whole group of lines moves
+rigidly sideways, which is how the command gets its name.
+
+#@-node:ekr.20051121060445:Indent help
+#@-node:ekr.20051120180644.2:Reference
+#@+node:ekr.20050920084036.149:back/forwardWord & helper
+def moveWordHelper (self,event,forward=True):
+
+    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+
+    c = self.c ; w = event.widget
+    
+    if forward:
+         ind = w.search('\w','insert',stopindex='end',regexp=True)
+         if ind: nind = '%s wordend' % ind
+         else:   nind = 'end'
+    else:
+         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
+         if ind: nind = '%s wordstart' % ind
+         else:   nind = '1.0'
+
+    w.mark_set('insert',nind)
+    w.see('insert')
+    c.frame.widgetWantsFocus(w)
+
+def backwardWord (self,event):
+    self.moveWordHelper(event,forward=False)
+
+def forwardWord (self,event):
+    self.moveWordHelper(event,forward=True)
+#@nonl
+#@-node:ekr.20050920084036.149:back/forwardWord & helper
+#@+node:ekr.20050920084036.219:findNextMatch
+def findNextMatch (self,event):
+    
+    '''Find the next match and select it.
+    Return True if a match was found.
+    Otherwise, call quitSearch and return False.'''
+
+    k = self.k ; w = event.widget
+    
+    w.tag_delete('qR')
+
+    if self.regexp:
+        << handle regexp >>
+    else:
+        << handle plain search >>
+#@nonl
+#@+node:ekr.20051005155611:<< handle regexp >>
+try:
+    regex = re.compile(self.qQ)
+except:
+    self.quitSearch(event,'Illegal regular expression')
+    return False
+
+txt = w.get('insert','end')
+match = regex.search(txt)
+
+if match:
+    start = match.start()
+    end = match.end()
+    length = end - start
+    w.mark_set('insert','insert +%sc' % start)
+    ### w.update_idletasks()
+    w.tag_add('qR','insert','insert +%sc' % length)
+    w.tag_config('qR',background='lightblue')
+    txt = w.get('insert','insert +%sc' % length)
+    return True
+else:
+    self.quitSearch(event)
+    return False
+#@nonl
+#@-node:ekr.20051005155611:<< handle regexp >>
+#@+node:ekr.20051005160923:<< handle plain search >>
+i = w.search(self.qQ,'insert',stopindex='end')
+if i:
+    w.mark_set('insert',i)
+    ###w.update_idletasks()
+    w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
+    w.tag_config('qR',background='lightblue')
+    return True
+else:
+    self.quitSearch(event)
+    return False
+#@nonl
+#@-node:ekr.20051005160923:<< handle plain search >>
+#@-node:ekr.20050920084036.219:findNextMatch
+#@-node:ekr.20051017111216:Fix bugs in commands
+#@+node:ekr.20051123055200:*** Allow multiple bindings to the same command
+#@-node:ekr.20051123055200:*** Allow multiple bindings to the same command
+#@+node:ekr.20051103094005:Fix bugs
+#@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@+node:ekr.20051104152338.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3413805
+By: nobody
+
+I thought this might be for 4.4a2, but I see the same effect w/ 
+Leo 4.3.3, build  1.282 , September 17, 2005
+Python 2.3.5, Tk 8.4.7, win32
+
+I haven't used Leo for code, but just started to try to re-organize some Perl
+I inherited.
+
+Leo apears to remove sentinels, AND preceding newlines, so the effect is something
+like this:
+
+.... some code....
+
+   next line;
+}
+#@verbatim
+#@ leo sentinel here...
+#
+
+    If  ( something ) {
+      more code;
+......
+
+becomes:
+
+.... some code....
+
+   next line;
+} If  ( something ) {
+      more code;
+......
+
+Now, that may be annoying, but mildly so - it still runs.
+When this:
+
+#
+#@verbatim
+#@ sentinel
+if () {
+
+turns to this:
+
+# if() {
+
+code just breaks.
+#@nonl
+#@-node:ekr.20051104152338.1:Report
+#@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@+node:ekr.20051014152256:Fix long-standing bug in import code
+Improve import code so it handles stufff like this from Ipyton/iplib
+
+### This should *not* terminate the function!
+
+    self.LOGHEAD = Itpl(
+"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
+#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
+#log# opts = $self.rc.opts
+#log# args = $self.rc.args
+#log# It is safe to make manual edits below here.
+#log#-----------------------------------------------------------------------
+""")
+
+- Handle blanks better in imports:
+    - Add tab_width keyword arg to import command.
+    - Convert tabs to blanks if tab width < 0.
+- Ignore position of blank lines wrt sentinels.
+- Ignore (optionally?) underindented blank lines.
+- Use pyclbr to parse Python imports?
+#@nonl
+#@+node:ekr.20040930075711:Handle underindented lines
+@nocolor
+
+Leo can't represent some files using nodes!
+
+I call this the "underindented blank line" problem.
+
+Example:
+
+@color
+
+class aClass:
+    def spam(): pass
+# comment line
+    def eggs(): pass
+    
+@nocolor
+
+Leo's import code can't handle this:
+    
+- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
+
+- Having the comment line stop the scanning of aClass is even worse.
+
+- This usually shows up with an unindented blank line instead of the comment line.
+#@nonl
+#@-node:ekr.20040930075711:Handle underindented lines
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20051014152256:Fix long-standing bug in import code
+#@+node:ekr.20051112080017:Problem removing script buttons on the mac
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3423121
+By: nobody
+
+Hi! I need help removing script buttons. It says I should right click the ofending
+button. I have a mac and Ctl-click, Command-click, etc doesn't work. What should
+I do?
+
+EKR: This is on the list of unfixable bugs, but I have a hard time believing there is no workaround.
+#@nonl
+#@-node:ekr.20051112080017:Problem removing script buttons on the mac
+#@-node:ekr.20051103094005:Fix bugs
+#@-node:ekr.20051027105304:Next release: a5
+#@+node:ekr.20051210111121:Before b1
 #@+node:ekr.20051126122638:Autocompletion tab
 - Use typing completion to select desired word.
 - No auto-scan: use database instead.
@@ -1619,12 +3032,15 @@ def getTextSelection (self,t):
     
     Return a tuple giving the insertion point if no range of text is selected."""
 
-    # To get the current selection
+    # To get the current selection.
     sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
     if len(sel) == 2:
-        return sel
+        i,j = sel
+        if t.compare(i, ">", j):
+            i,j = j,i
+        return i,j
     else:
-        # 7/1/03: Return the insertion point if there is no selected text.
+        # Return the insertion point if there is no selected text.
         insert = t.index("insert")
         return insert,insert
 #@nonl
@@ -1662,7 +3078,7 @@ def setTextSelection (self,t,start,end):
     t.tag_remove("sel","1.0",start)
     t.tag_add("sel",start,end)
     t.tag_remove("sel",end,"end")
-    t.mark_set("insert",end)
+    ### t.mark_set("insert",end)
 #@nonl
 #@-node:ekr.20031218072017.4089:setTextSelection
 #@-node:ekr.20031218072017.4084:Selection
@@ -1921,8 +3337,6 @@ def stateHandler (self,event):
 #@-node:ekr.20051126124705:stateHandler (autoCompleter)
 #@-node:ekr.20051126123249:class autoCompleterClass
 #@-node:ekr.20051126122638:Autocompletion tab
-#@+node:ekr.20051202094427:Prototype for resolve cvs conflicts
-#@-node:ekr.20051202094427:Prototype for resolve cvs conflicts
 #@+node:ekr.20051028061611.1:Unify all search commands
 Revise:
     moveWordHelper
@@ -2897,1246 +4311,14 @@ Apply incremental search commands to headlines.  This might be fast, but is it u
 #@nonl
 #@-node:ekr.20051012053017.4:Search improvements
 #@-node:ekr.20051028061611.1:Unify all search commands
-#@+node:ekr.20051027105304:Next release: b1
+#@+node:ekr.20051210111121.1:NewHeaddline
 - Review the posting about making positions permanent, or recording vnode
 indicies. It's probably time to do this.
 
 - Make sure there is some way of executing script find/changes.
 #@nonl
-#@+node:ekr.20051017111216:Fix bugs in commands
-#@+node:ekr.20051120181015:To do
-@nocolor
-
-Make minibuffer commands undoable.
-    - kill/yank ?
-
-
-
-- Improve handling of the mark.  The selection should be visible.
-#@nonl
-#@-node:ekr.20051120181015:To do
-#@+node:ekr.20051120180644:What I did
-- Rewrote removeBlankLines.
-#@nonl
-#@-node:ekr.20051120180644:What I did
-#@+node:ekr.20051120180644.1:Rewritten/revised commands
-#@+node:ekr.20031218072017.1830:indentBody
-def indentBody (self):
-    
-    '''The indent-region command indents each line of the selected body text,
-    or each line of a node if there is no selected text. The @tabwidth directive
-    in effect determines amount of indentation. (not yet) A numeric argument
-    specifies the column to indent to.'''
-
-    c = self ; undoType = 'Indent Region' ; current = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-
-    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
-    tab_width = d.get("tabwidth",c.tab_width)
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-
-    result = [] ; changed = False
-    for line in lines:
-        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-        s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1830:indentBody
-#@+node:ekr.20050920084036.141:removeBlankLines
-def removeBlankLines (self,event):
-    
-    '''The remove-blank-lines command removes lines containing nothing but
-    whitespace. If there is a text selection, only lines within the selected
-    text are affected; otherwise all blank lines in the selected node are
-    affected.'''
-    
-    c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
-    result = []
-    body = p.bodyString()
-    hasSelection = c.frame.body.hasTextSelection()
-    
-    if hasSelection:
-        head,lines,tail,oldSel,oldYview = c.getBodyLines()
-        joinChar = '\n'
-    else:
-        head = tail = oldYview = None
-        lines = g.splitLines(body)
-        oldSel = ('1.0','1.0')
-        joinChar = ''
-
-    for line in lines:
-        if line.strip():
-            result.append(line)
-
-    result = joinChar.join(result)
-    
-    if result != body:
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-#@nonl
-#@-node:ekr.20050920084036.141:removeBlankLines
-#@+node:ekr.20050920084036.75:backToIndentation
-def backToIndentation (self,event):
-    
-    '''The back-to-indentation command, given anywhere on a line,
-    positions the point at the first non-blank character on the line.'''
-
-    w = event.widget
-    i = w.index('insert linestart')
-    i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-    w.mark_set('insert',i2)
-#@nonl
-#@-node:ekr.20050920084036.75:backToIndentation
-#@+node:ekr.20050920084036.78:indentRelative
-def indentRelative (self,event):
-    
-    '''The indent-relative command indents at the point based on the previous
-    line (actually, the last non-empty line.) It inserts whitespace at the
-    point, moving point, until it is underneath an indentation point in the
-    previous line.
-    
-    An indentation point is the end of a sequence of whitespace or the end of
-    the line. If the point is farther right than any indentation point in the
-    previous line, the whitespace before point is deleted and the first
-    indentation point then applicable is used. If no indentation point is
-    applicable even then whitespace equivalent to a single tab is inserted.'''
-    
-    c = self.c ; undoType = 'Indent Relative'
-    
-    k = self.k ; w = event.widget
-    i = w.index('insert')
-    oldSel = (i,i)
-    line, col = i.split('.')
-    c2 = int(col)
-    l2 = int(line) -1
-    if l2 < 1: return
-    txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
-    if len(txt) <= len(w.get('insert','insert lineend')):
-        w.insert('insert','\t')
-    else:
-        reg = re.compile('(\s+)')
-        ntxt = reg.split(txt)
-        replace_word = re.compile('\w')
-        for z in ntxt:
-            if z.isspace():
-                w.insert('insert',z)
-                break
-            else:
-                z = replace_word.subn(' ',z)
-                w.insert('insert',z[0])
-                
-    i = w.index('insert')
-    result = w.get('1.0','end')
-    head = tail = oldYview = None
-    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-    w.mark_set('insert',i)
-#@nonl
-#@-node:ekr.20050920084036.78:indentRelative
-#@-node:ekr.20051120180644.1:Rewritten/revised commands
-#@+node:ekr.20051120180644.2:Reference
-#@+node:ekr.20051106040126:c.executeMinibufferCommand
-def executeMinibufferCommand (self,commandName):
-    
-    c = self ; k = c.keyHandler
-    
-    func = c.commandsDict.get(commandName)
-    
-    if func:
-        event = g.Bunch(char='',keysym=None,widget=c.frame.body.bodyCtrl)
-        stroke = None
-        k.masterCommand(event,func,stroke)
-        return k.funcReturn
-    else:
-        g.trace('no such command: %s' % (commandName),color='red')
-        return None
-#@nonl
-#@-node:ekr.20051106040126:c.executeMinibufferCommand
-#@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
-def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
-    
-    c = self ; body = c.frame.body ; p = c.currentPosition()
-    
-    # g.trace(undoType)
-
-    # Update the text and notify the event handler.
-    body.setSelectionAreas(head,middle,tail)
-
-    if setSel and oldSel:
-        body.setTextSelection(oldSel)
-
-    # This handles the undo.
-    body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
-
-    # Update the changed mark and icon.
-    c.beginUpdate()
-    try: # In update...
-        c.setChanged(True)
-        if p.isDirty():
-            dirtyVnodeList = []
-        else:
-            dirtyVnodeList = p.setDirty()
-    finally:
-        c.endUpdate()
-
-    # Scroll as necessary.
-    if oldYview:
-        body.setYScrollPosition(oldYview)
-    else:
-        body.makeInsertPointVisible()
-
-    body.setFocus()
-    c.recolor()
-    return dirtyVnodeList
-#@nonl
-#@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
-#@+node:ekr.20031218072017.2884:Edit Body submenu
-#@+node:ekr.20031218072017.1704:convertAllBlanks
-def convertAllBlanks (self):
-    
-    c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
-    current = c.currentPosition()
-
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    
-    d = g.scanDirectives(c)
-    tabWidth  = d.get("tabwidth")
-    c.beginUpdate()
-    try: # In update...
-        count = 0 ; dirtyVnodeList = []
-        u.beforeChangeGroup(current,undoType)
-        for p in current.self_and_subtree_iter():
-            # g.trace(p.headString(),tabWidth)
-            innerUndoData = u.beforeChangeNodeContents(p)
-            if p == current:
-                changed,dirtyVnodeList2 = c.convertBlanks()
-                if changed:
-                    count += 1
-                    dirtyVnodeList.extend(dirtyVnodeList2)
-            else:
-                changed = False ; result = []
-                text = p.t.bodyString
-                assert(g.isUnicode(text))
-                lines = string.split(text, '\n')
-                for line in lines:
-                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-                    s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
-                    if s != line: changed = True
-                    result.append(s)
-                if changed:
-                    count += 1
-                    dirtyVnodeList2 = p.setDirty()
-                    dirtyVnodeList.extend(dirtyVnodeList2)
-                    result = string.join(result,'\n')
-                    p.setTnodeText(result)
-                    u.afterChangeNodeContents(p,undoType,innerUndoData)
-        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-        g.es("blanks converted to tabs in %d nodes" % count) # Must come before c.endUpdate().
-    finally:
-        c.endUpdate(count > 0)
-#@nonl
-#@-node:ekr.20031218072017.1704:convertAllBlanks
-#@+node:ekr.20031218072017.1705:convertAllTabs
-def convertAllTabs (self):
-
-    c = self ; u = c.undoer ; undoType = 'Convert All Tabs'
-    current = c.currentPosition()
-
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
-    c.beginUpdate()
-    try: # In update:
-        count = 0 ; dirtyVnodeList = []
-        u.beforeChangeGroup(current,undoType)
-        for p in current.self_and_subtree_iter():
-            undoData = u.beforeChangeNodeContents(p)
-            if p == current:
-                changed,dirtyVnodeList2 = self.convertTabs()
-                if changed:
-                    count += 1
-                    dirtyVnodeList.extend(dirtyVnodeList2)
-            else:
-                result = [] ; changed = False
-                text = p.t.bodyString
-                assert(g.isUnicode(text))
-                lines = string.split(text, '\n')
-                for line in lines:
-                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-                    s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
-                    if s != line: changed = True
-                    result.append(s)
-                if changed:
-                    count += 1
-                    dirtyVnodeList2 = p.setDirty()
-                    dirtyVnodeList.extend(dirtyVnodeList2)
-                    result = string.join(result,'\n')
-                    p.setTnodeText(result)
-                    u.afterChangeNodeContents(p,undoType,undoData)
-        u.afterChangeGroup(current,undoType,dirtyVnodeList=dirtyVnodeList)
-        g.es("tabs converted to blanks in %d nodes" % count)
-    finally:
-        c.endUpdate(count > 0)
-#@nonl
-#@-node:ekr.20031218072017.1705:convertAllTabs
-#@+node:ekr.20031218072017.1821:convertBlanks
-def convertBlanks (self):
-
-    c = self ; undoType = 'Convert Blanks'
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return False
-
-    head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=True)
-    result = [] ; changed = False
-
-    # Use the relative @tabwidth, not the global one.
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
-    if not tabWidth: return False
-
-    for line in lines:
-        s = g.optimizeLeadingWhitespace(line,abs(tabWidth)) # Use positive width.
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-    else:
-        dirtyVnodeList = []
-
-    return changed,dirtyVnodeList
-#@nonl
-#@-node:ekr.20031218072017.1821:convertBlanks
-#@+node:ekr.20031218072017.1822:convertTabs
-def convertTabs (self):
-
-    c = self ; undoType = 'Convert Tabs'
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return False
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines(expandSelection=True)
-    result = [] ; changed = False
-    
-    # Use the relative @tabwidth, not the global one.
-    theDict = g.scanDirectives(c)
-    tabWidth  = theDict.get("tabwidth")
-    if not tabWidth: return False
-
-    for line in lines:
-        i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
-        s = g.computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        dirtyVnodeList = c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-    else:
-        dirtyVnodeList = []
-        
-    return changed,dirtyVnodeList
-#@nonl
-#@-node:ekr.20031218072017.1822:convertTabs
-#@+node:ekr.20031218072017.1823:createLastChildNode
-def createLastChildNode (self,parent,headline,body):
-    
-    '''A helper function for the three extract commands.'''
-    
-    c = self
-    
-    if body and len(body) > 0:
-        body = string.rstrip(body)
-    if not body or len(body) == 0:
-        body = ""
-
-    p = parent.insertAsLastChild()
-    p.initHeadString(headline)
-    p.setTnodeText(body)
-    p.setDirty()
-    c.validateOutline()
-    return p
-#@nonl
-#@-node:ekr.20031218072017.1823:createLastChildNode
-#@+node:ekr.20031218072017.1824:dedentBody
-def dedentBody (self):
-    
-    c = self ; undoType = 'Unindent' ; current = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-
-    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
-    tab_width = d.get("tabwidth",c.tab_width)
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    
-    result = [] ; changed = False
-    for line in lines:
-        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-        s = g.computeLeadingWhitespace(width-abs(tab_width),tab_width) + line[i:]
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1824:dedentBody
-#@+node:ekr.20031218072017.1706:extract
-def extract(self):
-
-    c = self ; u = c.undoer ; undoType = 'Extract'
-    current = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-    headline = lines[0].strip() ; del lines[0]
-    
-    if not lines:
-        g.es("Nothing follows section name",color="blue")
-        return
-
-    # Remove leading whitespace from all body lines.
-    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
-    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
-        for line in lines]
-    newBody = string.join(strippedLines,'\n')
-    if head: head = head.rstrip()
-
-    c.beginUpdate()
-    try: # In update...
-        u.beforeChangeGroup(current,undoType)
-        if 1: # In group...
-            undoData = u.beforeInsertNode(current)
-            p = c.createLastChildNode(current,headline,newBody)
-            u.afterInsertNode(p,undoType,undoData)
-            c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=False)
-        u.afterChangeGroup(current,undoType)
-    finally:
-        c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.1706:extract
-#@+node:ekr.20031218072017.1708:extractSection
-def extractSection(self):
-
-    c = self ; u = c.undoer ; undoType = 'Extract Section'
-    current = c.currentPosition()
-
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-
-    line1 = '\n' + lines[0]
-    headline = lines[0].strip() ; del lines[0]
-    << Set headline for extractSection >>
-    
-    if not lines:
-        g.es("Nothing follows section name",color="blue")
-        return
-    
-    # Remove leading whitespace from all body lines.
-    junk, ws = g.skip_leading_ws_with_indent(lines[0],0,c.tab_width)
-    strippedLines = [g.removeLeadingWhitespace(line,ws,c.tab_width)
-        for line in lines]
-    newBody = string.join(strippedLines,'\n')
-    if head: head = head.rstrip()
-
-    c.beginUpdate()
-    try: # In update...
-        u.beforeChangeGroup(current,undoType)
-        if 1: # In group...
-            undoData = u.beforeInsertNode(current)
-            p = c.createLastChildNode(current,headline,newBody)
-            u.afterInsertNode(p,undoType,undoData)
-            c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=False)
-        u.afterChangeGroup(current,undoType)
-    finally:
-        c.endUpdate()
-#@nonl
-#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-if len(headline) < 5:
-    oops = True
-else:
-    head1 = headline[0:2] == '<<'
-    head2 = headline[0:2] == '@<'
-    tail1 = headline[-2:] == '>>'
-    tail2 = headline[-2:] == '@>'
-    oops = not (head1 and tail1) and not (head2 and tail2)
-
-if oops:
-    g.es("Selected text should start with a section name",color="blue")
-    return
-#@nonl
-#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
-#@-node:ekr.20031218072017.1708:extractSection
-#@+node:ekr.20031218072017.1710:extractSectionNames
-def extractSectionNames(self):
-
-    c = self ; u = c.undoer ; undoType = 'Extract Section Names'
-    body = c.frame.body ; current = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    if not lines: return
-
-    c.beginUpdate()
-    try: # In update...
-        u.beforeChangeGroup(current,undoType)
-        if 1: # In group...
-            found = False
-            for s in lines:
-                << Find the next section name >>
-                if name:
-                    undoData = u.beforeInsertNode(current)
-                    p = self.createLastChildNode(current,name,None)
-                    u.afterInsertNode(p,undoType,undoData)
-                    found = True
-            c.selectPosition(current)
-            c.validateOutline()
-            if not found:
-                g.es("Selected text should contain one or more section names",color="blue")
-        u.afterChangeGroup(current,undoType)
-    finally:
-        c.endUpdate()
-
-    # Restore the selection.
-    body.setTextSelection(oldSel)
-    body.setFocus()
-#@nonl
-#@+node:ekr.20031218072017.1711:<< Find the next section name >>
-head1 = string.find(s,"<<")
-if head1 > -1:
-    head2 = string.find(s,">>",head1)
-else:
-    head1 = string.find(s,"@<")
-    if head1 > -1:
-        head2 = string.find(s,"@>",head1)
-        
-if head1 == -1 or head2 == -1 or head1 > head2:
-    name = None
-else:
-    name = s[head1:head2+2]
-#@nonl
-#@-node:ekr.20031218072017.1711:<< Find the next section name >>
-#@-node:ekr.20031218072017.1710:extractSectionNames
-#@+node:ekr.20031218072017.1825:findBoundParagraph
-def findBoundParagraph (self):
-    
-    c = self
-    head,ins,tail = c.frame.body.getInsertLines()
-
-    if not ins or ins.isspace() or ins[0] == '@':
-        return None,None,None,None # DTHEIN 18-JAN-2004
-        
-    head_lines = g.splitLines(head)
-    tail_lines = g.splitLines(tail)
-
-    if 0:
-        << trace head_lines, ins, tail_lines >>
-
-    # Scan backwards.
-    i = len(head_lines)
-    while i > 0:
-        i -= 1
-        line = head_lines[i]
-        if len(line) == 0 or line.isspace() or line[0] == '@':
-            i += 1 ; break
-
-    pre_para_lines = head_lines[:i]
-    para_head_lines = head_lines[i:]
-
-    # Scan forwards.
-    i = 0
-    trailingNL = False # DTHEIN 18-JAN-2004: properly capture terminating NL
-    while i < len(tail_lines):
-        line = tail_lines[i]
-        if len(line) == 0 or line.isspace() or line[0] == '@':
-            trailingNL = line.endswith(u'\n') or line.startswith(u'@') # DTHEIN 21-JAN-2004
-            break
-        i += 1
-        
-#	para_tail_lines = tail_lines[:i]
-    para_tail_lines = tail_lines[:i]
-    post_para_lines = tail_lines[i:]
-    
-    head = g.joinLines(pre_para_lines)
-    result = para_head_lines 
-    result.extend([ins])
-    result.extend(para_tail_lines)
-    tail = g.joinLines(post_para_lines)
-
-    # DTHEIN 18-JAN-2004: added trailingNL to return value list
-    return head,result,tail,trailingNL # string, list, string, bool
-#@nonl
-#@+node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
-if 0:
-    print ; print "head_lines"
-    for line in head_lines: print line
-    print ; print "ins", ins
-    print ; print "tail_lines"
-    for line in tail_lines: print line
-else:
-    g.es("head_lines: ",head_lines)
-    g.es("ins: ",ins)
-    g.es("tail_lines: ",tail_lines)
-#@nonl
-#@-node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
-#@-node:ekr.20031218072017.1825:findBoundParagraph
-#@+node:ekr.20031218072017.1827:findMatchingBracket
-def findMatchingBracket (self):
-    
-    c = self ; body = c.frame.body
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Match Brackets")
-        return
-
-    brackets = "()[]{}<>"
-    ch1 = body.getCharBeforeInsertPoint()
-    ch2 = body.getCharAtInsertPoint()
-
-    # Prefer to match the character to the left of the cursor.
-    if ch1 in brackets:
-        ch = ch1 ; index = body.getBeforeInsertionPoint()
-    elif ch2 in brackets:
-        ch = ch2 ; index = body.getInsertionPoint()
-    else:
-        return
-    
-    index2 = self.findSingleMatchingBracket(ch,index)
-    if index2:
-        if body.compareIndices(index,"<=",index2):
-            adj_index = body.adjustIndex(index2,1)
-            body.setTextSelection(index,adj_index)
-        else:
-            adj_index = body.adjustIndex(index,1)
-            body.setTextSelection(index2,adj_index)
-        adj_index = body.adjustIndex(index2,1)
-        body.setInsertionPoint(adj_index)
-        body.makeIndexVisible(adj_index)
-    else:
-        g.es("unmatched '%s'",ch)
-#@nonl
-#@+node:ekr.20031218072017.1828:findMatchingBracket
-# To do: replace comments with blanks before scanning.
-# Test  unmatched())
-def findSingleMatchingBracket(self,ch,index):
-    
-    c = self ; body = c.frame.body
-    open_brackets  = "([{<" ; close_brackets = ")]}>"
-    brackets = open_brackets + close_brackets
-    matching_brackets = close_brackets + open_brackets
-    forward = ch in open_brackets
-    # Find the character matching the initial bracket.
-    for n in xrange(len(brackets)):
-        if ch == brackets[n]:
-            match_ch = matching_brackets[n]
-            break
-    level = 0
-    while 1:
-        if forward and body.compareIndices(index,">=","end"):
-            # g.trace("not found")
-            return None
-        ch2 = body.getCharAtIndex(index)
-        if ch2 == ch:
-            level += 1 #; g.trace(level,index)
-        if ch2 == match_ch:
-            level -= 1 #; g.trace(level,index)
-            if level <= 0:
-                return index
-        if not forward and body.compareIndices(index,"<=","1.0"):
-            # g.trace("not found")
-            return None
-        adj = g.choose(forward,1,-1)
-        index = body.adjustIndex(index,adj)
-    return 0 # unreachable: keeps pychecker happy.
-# Test  (
-# ([(x){y}]))
-# Test  ((x)(unmatched
-#@nonl
-#@-node:ekr.20031218072017.1828:findMatchingBracket
-#@-node:ekr.20031218072017.1827:findMatchingBracket
-#@+node:ekr.20031218072017.1829:getBodyLines
-def getBodyLines (self,expandSelection=False):
-
-    c = self ; body = c.frame.body
-    oldVview = body.getYScrollPosition()
-    oldSel   = body.getTextSelection()
-
-    if expandSelection: # 12/3/03
-        lines = body.getAllText()
-        head = tail = None
-    else:
-        # Note: lines is the entire line containing the insert point if no selection.
-        head,lines,tail = body.getSelectionLines()
-
-    lines = string.split(lines,'\n') # It would be better to use splitLines.
-
-    return head,lines,tail,oldSel,oldVview
-#@nonl
-#@-node:ekr.20031218072017.1829:getBodyLines
-#@+node:ekr.20031218072017.1830:indentBody
-def indentBody (self):
-    
-    '''The indent-region command indents each line of the selected body text,
-    or each line of a node if there is no selected text. The @tabwidth directive
-    in effect determines amount of indentation. (not yet) A numeric argument
-    specifies the column to indent to.'''
-
-    c = self ; undoType = 'Indent Region' ; current = c.currentPosition()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-
-    d = g.scanDirectives(c,current) # Support @tab_width directive properly.
-    tab_width = d.get("tabwidth",c.tab_width)
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-
-    result = [] ; changed = False
-    for line in lines:
-        i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-        s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
-        if s != line: changed = True
-        result.append(s)
-
-    if changed:
-        result = string.join(result,'\n')
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1830:indentBody
-#@+node:ekr.20031218072017.1831:insertBodyTime & allies
-def insertBodyTime (self):
-    
-    c = self ; undoType = 'Insert Body Time'
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode(undoType)
-        return
-    
-    oldSel = c.frame.body.getTextSelection()
-    c.frame.body.deleteTextSelection() # Works if nothing is selected.
-    s = self.getTime(body=True)
-
-    c.frame.body.insertAtInsertPoint(s)
-    c.frame.body.onBodyChanged(undoType,oldSel=oldSel)
-#@nonl
-#@+node:ekr.20031218072017.1832:getTime
-def getTime (self,body=True):
-
-    c = self
-    default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
-    
-    # Try to get the format string from leoConfig.txt.
-    if body:
-        format = c.config.getString("body_time_format_string")
-        gmt    = c.config.getString("body_gmt_time")
-    else:
-        format = c.config.getString("headline_time_format_string")
-        gmt     = c.config.getString("headline_gmt_time")
-
-    if format == None:
-        format = default_format
-
-    try:
-        import time
-        if gmt:
-            s = time.strftime(format,time.gmtime())
-        else:
-            s = time.strftime(format,time.localtime())
-    except (ImportError, NameError):
-        g.es("time.strftime not available on this platform",color="blue")
-        return ""
-    except:
-        g.es_exception() # Probably a bad format string in leoConfig.txt.
-        s = time.strftime(default_format,time.gmtime())
-    return s
-#@-node:ekr.20031218072017.1832:getTime
-#@-node:ekr.20031218072017.1831:insertBodyTime & allies
-#@+node:ekr.20050312114529:insert/removeComments
-#@+node:ekr.20050312114529.1:addComments
-def addComments (self):
-
-    c = self ; undoType = 'Add Comments' ; p = c.currentPosition()
-    
-    d = g.scanDirectives(c,p)
-    # d1 is the line delim.
-    d1,d2,d3 = d.get('delims')
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    result = []
-    if not lines:
-        g.es('No text selected',color='blue')
-        return
-    
-    if d1:
-        # Append the single-line comment delim in front of each line
-        for line in lines:
-            i = g.skip_ws(line,0)
-            result.append('%s%s %s' % (line[0:i],d1,line[i:]))
-    else:
-        n = len(lines)
-        for i in xrange(n):
-            line = lines[i]
-            if i not in (0,n-1):
-                result.append(line)
-            if i == 0:
-                j = g.skip_ws(line,0)
-                result.append('%s%s %s' % (line[0:j],d2,line[j:]))
-            if i == n-1:
-                j = len(line.rstrip())
-                result.append('%s %s' % (line[0:j],d3))
-
-    result = string.join(result,'\n')
-    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-#@nonl
-#@-node:ekr.20050312114529.1:addComments
-#@+node:ekr.20050312114529.2:deleteComments
-def deleteComments (self):
-
-    c = self ; undoType = 'Delete Comments' ; p = c.currentPosition()
-    
-    d = g.scanDirectives(c,p)
-    # d1 is the line delim.
-    d1,d2,d3 = d.get('delims')
-
-    head,lines,tail,oldSel,oldYview = self.getBodyLines()
-    result = []
-    if not lines:
-        g.es('No text selected',color='blue')
-        return
-    
-    if d1:
-        # Append the single-line comment delim in front of each line
-        for line in lines:
-            i = g.skip_ws(line,0)
-            if g.match(line,i,d1):
-                j = g.skip_ws(line,i + len(d1))
-                result.append(line[0:i] + line[j:])
-            else:
-                result.append(line)
-    else:
-        n = len(lines)
-        for i in xrange(n):
-            line = lines[i]
-            if i not in (0,n-1):
-                result.append(line)
-            if i == 0:
-                j = g.skip_ws(line,0)
-                if g.match(line,j,d2):
-                    k = g.skip_ws(line,j + len(d2))
-                    result.append(line[0:j] + line[k:])
-                else:
-                    g.es("'%s' not found" % (d2),color='blue')
-                    return
-            if i == n-1:
-                if i == 0:
-                    line = result[0] ; result = []
-                s = line.rstrip()
-                if s.endswith(d3):
-                    result.append(s[:-len(d3)].rstrip())
-                else:
-                    g.es("'%s' not found" % (d3),color='blue')
-                    return
-
-    result = string.join(result,'\n')
-    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-#@nonl
-#@-node:ekr.20050312114529.2:deleteComments
-#@-node:ekr.20050312114529:insert/removeComments
-#@+node:ekr.20031218072017.1833:reformatParagraph
-def reformatParagraph(self):
-
-    """Reformat a text paragraph in a Tk.Text widget
-
-Wraps the concatenated text to present page width setting. Leading tabs are
-sized to present tab width setting. First and second line of original text is
-used to determine leading whitespace in reformatted text. Hanging indentation
-is honored.
-
-Paragraph is bound by start of body, end of body, blank lines, and lines
-starting with "@". Paragraph is selected by position of current insertion
-cursor."""
-
-    c = self ; body = c.frame.body
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("xxx")
-        return
-
-    if body.hasTextSelection():
-        g.es("Text selection inhibits Reformat Paragraph",color="blue")
-        return
-
-    << compute vars for reformatParagraph >>
-    if lines:
-        << compute the leading whitespace >>
-        << compute the result of wrapping all lines >>
-        << update the body, selection & undo state >>
-#@nonl
-#@+node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
-theDict = g.scanDirectives(c)
-pageWidth = theDict.get("pagewidth")
-tabWidth  = theDict.get("tabwidth")
-
-original = body.getAllText()
-oldSel   = body.getTextSelection()
-oldYview = body.getYScrollPosition()
-head,lines,tail,trailingNL = c.findBoundParagraph() # DTHEIN 18-JAN-2004: add trailingNL
-#@nonl
-#@-node:ekr.20031218072017.1834:<< compute vars for reformatParagraph >>
-#@+node:ekr.20031218072017.1835:<< compute the leading whitespace >>
-indents = [0,0] ; leading_ws = ["",""]
-
-for i in (0,1):
-    if i < len(lines):
-        # Use the original, non-optimized leading whitespace.
-        leading_ws[i] = ws = g.get_leading_ws(lines[i])
-        indents[i] = g.computeWidth(ws,tabWidth)
-        
-indents[1] = max(indents)
-if len(lines) == 1:
-    leading_ws[1] = leading_ws[0]
-#@-node:ekr.20031218072017.1835:<< compute the leading whitespace >>
-#@+node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
-# Remember whether the last line ended with a newline.
-lastLine = lines[-1]
-if 0: # DTHEIN 18-JAN-2004: removed because findBoundParagraph now gives trailingNL
-    trailingNL = lastLine and lastLine[-1] == '\n'
-
-# Remove any trailing newlines for wraplines.
-lines = [line[:-1] for line in lines[:-1]]
-if lastLine and not trailingNL:
-    lastLine = lastLine[:-1]
-lines.extend([lastLine])
-
-# Wrap the lines, decreasing the page width by indent.
-result = g.wrap_lines(lines,
-    pageWidth-indents[1],
-    pageWidth-indents[0])
-
-# DTHEIN 	18-JAN-2004
-# prefix with the leading whitespace, if any
-paddedResult = []
-paddedResult.append(leading_ws[0] + result[0])
-for line in result[1:]:
-    paddedResult.append(leading_ws[1] + line)
-
-# Convert the result to a string.
-result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
-if 0: # DTHEIN 18-JAN-2004:  No need to do this.
-    if trailingNL:
-        result += '\n'
-#@-node:ekr.20031218072017.1836:<< compute the result of wrapping all lines >>
-#@+node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
-sel_start, sel_end = body.setSelectionAreas(head,result,tail)
-
-changed = original != head + result + tail
-undoType = g.choose(changed,"Reformat Paragraph",None)
-body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
-
-# Advance the selection to the next paragraph.
-newSel = sel_end, sel_end
-body.setTextSelection(newSel)
-body.makeIndexVisible(sel_end)
-
-c.recolor()
-#@nonl
-#@-node:ekr.20031218072017.1837:<< update the body, selection & undo state >>
-#@-node:ekr.20031218072017.1833:reformatParagraph
-#@+node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
-def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=True):
-    
-    c = self ; body = c.frame.body ; p = c.currentPosition()
-    
-    # g.trace(undoType)
-
-    # Update the text and notify the event handler.
-    body.setSelectionAreas(head,middle,tail)
-
-    if setSel and oldSel:
-        body.setTextSelection(oldSel)
-
-    # This handles the undo.
-    body.onBodyChanged(undoType,oldSel=oldSel,oldYview=oldYview)
-
-    # Update the changed mark and icon.
-    c.beginUpdate()
-    try: # In update...
-        c.setChanged(True)
-        if p.isDirty():
-            dirtyVnodeList = []
-        else:
-            dirtyVnodeList = p.setDirty()
-    finally:
-        c.endUpdate()
-
-    # Scroll as necessary.
-    if oldYview:
-        body.setYScrollPosition(oldYview)
-    else:
-        body.makeInsertPointVisible()
-
-    body.setFocus()
-    c.recolor()
-    return dirtyVnodeList
-#@nonl
-#@-node:ekr.20031218072017.1838:updateBodyPane (handles changeNodeContents)
-#@-node:ekr.20031218072017.2884:Edit Body submenu
-#@+node:ekr.20051121060445:Indent help
-@nocolor
-
-   `C-M-o' (`split-line') moves the text from point to the end of the
-line vertically down, so that the current line becomes two lines.
-`C-M-o' first moves point forward over any spaces and tabs.  Then it
-inserts after point a newline and enough indentation to reach the same
-column point is on.  Point remains before the inserted newline; in this
-regard, `C-M-o' resembles `C-o'.
-
-   To join two lines cleanly, use the `Meta-^' (`delete-indentation')
-command to delete the indentation at the front of the current line, and
-the line boundary as well.  Empty spaces are replaced by a single
-space, or by no space if at the beginning of a line, before a close
-parenthesis, or after an open parenthesis.  To delete just the
-indentation of a line, go to the beginning of the line and use `Meta-\'
-(`delete-horizontal-space'), which deletes all spaces and tabs around
-the cursor.
-
-`indent-rigidly' moves all the lines in the region right by its
-argument (left, for negative arguments).  The whole group of lines moves
-rigidly sideways, which is how the command gets its name.
-
-#@-node:ekr.20051121060445:Indent help
-#@-node:ekr.20051120180644.2:Reference
-#@+node:ekr.20050920084036.149:back/forwardWord & helper
-def moveWordHelper (self,event,forward=True):
-
-    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
-
-    c = self.c ; w = event.widget
-    
-    if forward:
-         ind = w.search('\w','insert',stopindex='end',regexp=True)
-         if ind: nind = '%s wordend' % ind
-         else:   nind = 'end'
-    else:
-         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
-         if ind: nind = '%s wordstart' % ind
-         else:   nind = '1.0'
-
-    w.mark_set('insert',nind)
-    w.see('insert')
-    c.frame.widgetWantsFocus(w)
-
-def backwardWord (self,event):
-    self.moveWordHelper(event,forward=False)
-
-def forwardWord (self,event):
-    self.moveWordHelper(event,forward=True)
-#@nonl
-#@-node:ekr.20050920084036.149:back/forwardWord & helper
-#@+node:ekr.20050920084036.219:findNextMatch
-def findNextMatch (self,event):
-    
-    '''Find the next match and select it.
-    Return True if a match was found.
-    Otherwise, call quitSearch and return False.'''
-
-    k = self.k ; w = event.widget
-    
-    w.tag_delete('qR')
-
-    if self.regexp:
-        << handle regexp >>
-    else:
-        << handle plain search >>
-#@nonl
-#@+node:ekr.20051005155611:<< handle regexp >>
-try:
-    regex = re.compile(self.qQ)
-except:
-    self.quitSearch(event,'Illegal regular expression')
-    return False
-
-txt = w.get('insert','end')
-match = regex.search(txt)
-
-if match:
-    start = match.start()
-    end = match.end()
-    length = end - start
-    w.mark_set('insert','insert +%sc' % start)
-    ### w.update_idletasks()
-    w.tag_add('qR','insert','insert +%sc' % length)
-    w.tag_config('qR',background='lightblue')
-    txt = w.get('insert','insert +%sc' % length)
-    return True
-else:
-    self.quitSearch(event)
-    return False
-#@nonl
-#@-node:ekr.20051005155611:<< handle regexp >>
-#@+node:ekr.20051005160923:<< handle plain search >>
-i = w.search(self.qQ,'insert',stopindex='end')
-if i:
-    w.mark_set('insert',i)
-    ###w.update_idletasks()
-    w.tag_add('qR','insert','insert +%sc' % len(self.qQ))
-    w.tag_config('qR',background='lightblue')
-    return True
-else:
-    self.quitSearch(event)
-    return False
-#@nonl
-#@-node:ekr.20051005160923:<< handle plain search >>
-#@-node:ekr.20050920084036.219:findNextMatch
-#@-node:ekr.20051017111216:Fix bugs in commands
-#@+node:ekr.20051123055200:*** Allow multiple bindings to the same command
-#@-node:ekr.20051123055200:*** Allow multiple bindings to the same command
-#@+node:ekr.20051103094005:Fix bugs
-#@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
-#@+node:ekr.20051104152338.1:Report
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3413805
-By: nobody
-
-I thought this might be for 4.4a2, but I see the same effect w/ 
-Leo 4.3.3, build  1.282 , September 17, 2005
-Python 2.3.5, Tk 8.4.7, win32
-
-I haven't used Leo for code, but just started to try to re-organize some Perl
-I inherited.
-
-Leo apears to remove sentinels, AND preceding newlines, so the effect is something
-like this:
-
-.... some code....
-
-   next line;
-}
-#@verbatim
-#@ leo sentinel here...
-#
-
-    If  ( something ) {
-      more code;
-......
-
-becomes:
-
-.... some code....
-
-   next line;
-} If  ( something ) {
-      more code;
-......
-
-Now, that may be annoying, but mildly so - it still runs.
-When this:
-
-#
-#@verbatim
-#@ sentinel
-if () {
-
-turns to this:
-
-# if() {
-
-code just breaks.
-#@nonl
-#@-node:ekr.20051104152338.1:Report
-#@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
-#@+node:ekr.20051014152256:Fix long-standing bug in import code
-Improve import code so it handles stufff like this from Ipyton/iplib
-
-### This should *not* terminate the function!
-
-    self.LOGHEAD = Itpl(
-"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
-#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
-#log# opts = $self.rc.opts
-#log# args = $self.rc.args
-#log# It is safe to make manual edits below here.
-#log#-----------------------------------------------------------------------
-""")
-
-- Handle blanks better in imports:
-    - Add tab_width keyword arg to import command.
-    - Convert tabs to blanks if tab width < 0.
-- Ignore position of blank lines wrt sentinels.
-- Ignore (optionally?) underindented blank lines.
-- Use pyclbr to parse Python imports?
-#@nonl
-#@+node:ekr.20040930075711:Handle underindented lines
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "underindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
-#@nonl
-#@-node:ekr.20040930075711:Handle underindented lines
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20051014152256:Fix long-standing bug in import code
-#@+node:ekr.20051112080017:Problem removing script buttons on the mac
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3423121
-By: nobody
-
-Hi! I need help removing script buttons. It says I should right click the ofending
-button. I have a mac and Ctl-click, Command-click, etc doesn't work. What should
-I do?
-
-EKR: This is on the list of unfixable bugs, but I have a hard time believing there is no workaround.
-#@nonl
-#@-node:ekr.20051112080017:Problem removing script buttons on the mac
-#@-node:ekr.20051103094005:Fix bugs
-#@-node:ekr.20051027105304:Next release: b1
+#@-node:ekr.20051210111121.1:NewHeaddline
+#@-node:ekr.20051210111121:Before b1
 #@+node:ekr.20051129095023:Before 4.4 final
 #@+node:ekr.20051121070552:Add Cmds menu
 #@-node:ekr.20051121070552:Add Cmds menu
@@ -8003,7 +8185,6 @@ def __init__(self):
     self.logIsLocked = False # True: no changes to log are allowed.
     self.logWaiting = [] # List of messages waiting to go to a log.
     self.menuWarningsGiven = False # True: supress warnings in menu code.
-    self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
     self.nodeIndices = None # Singleton node indices instance.
     self.numberOfWindows = 0 # Number of opened windows.
     self.openWithFiles = [] # List of data used by Open With command.
@@ -8015,6 +8196,7 @@ def __init__(self):
     self.root = None # The hidden main window. Set later.
     self.searchDict = {} # For communication between find/change scripts.
     self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
     self.trace = False # True: enable debugging traces.
     self.tracePositions = False
     self.trace_list = [] # "Sherlock" argument list for tracing().
@@ -9993,7 +10175,6 @@ def __init__(self):
     self.logIsLocked = False # True: no changes to log are allowed.
     self.logWaiting = [] # List of messages waiting to go to a log.
     self.menuWarningsGiven = False # True: supress warnings in menu code.
-    self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
     self.nodeIndices = None # Singleton node indices instance.
     self.numberOfWindows = 0 # Number of opened windows.
     self.openWithFiles = [] # List of data used by Open With command.
@@ -10005,6 +10186,7 @@ def __init__(self):
     self.root = None # The hidden main window. Set later.
     self.searchDict = {} # For communication between find/change scripts.
     self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
     self.trace = False # True: enable debugging traces.
     self.tracePositions = False
     self.trace_list = [] # "Sherlock" argument list for tracing().
@@ -12479,7 +12661,6 @@ def __init__(self):
     self.logIsLocked = False # True: no changes to log are allowed.
     self.logWaiting = [] # List of messages waiting to go to a log.
     self.menuWarningsGiven = False # True: supress warnings in menu code.
-    self.newWorldOrder = True # True: redraw and shift focus at end of k.masterCommand
     self.nodeIndices = None # Singleton node indices instance.
     self.numberOfWindows = 0 # Number of opened windows.
     self.openWithFiles = [] # List of data used by Open With command.
@@ -12491,6 +12672,7 @@ def __init__(self):
     self.root = None # The hidden main window. Set later.
     self.searchDict = {} # For communication between find/change scripts.
     self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
     self.trace = False # True: enable debugging traces.
     self.tracePositions = False
     self.trace_list = [] # "Sherlock" argument list for tracing().
@@ -14727,11 +14909,18 @@ def getTextFromClipboard (self):
 #@+node:ekr.20051011072903.2:copyText
 def copyText (self):
     
-    '''Invoked from the mini-buffer and from shortcuts.'''
+    '''Copy the selected text from the widget to the clipboard.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    
-    w.event_generate(g.virtual_event_name("Copy"))
+    if not w: return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -14739,20 +14928,27 @@ def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return 'break'
+    name = hasattr(w,'_name') and w._name or ''
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
 
     if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
         c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-    else:
-        # Important: cut from headline is *not* undoable.
-        # Only the entire edit is undoable.
-        # Do **not** call w.event_generate.
-        pass
+    elif name.startswith('head'):
+        c.frame.tree.onHeadChanged(p)
+    else: pass
+
+OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -14760,95 +14956,38 @@ def pasteText (self):
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
     if name.startswith('head'):
-        # Important: this paste is not undoable!
-        # Only the entire edit is undoable.
-        s = s1 = g.app.gui.getTextFromClipboard()
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        p.initHeadString(s)
         w.configure(width=f.tree.headWidth(s=s))
     else: pass
+    
+OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-    
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-
-    f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
-        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(p,'Cut')
-#@nonl
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition(),'Paste')
-        c.redraw_now()
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20031218072017.838:tkBody.createBindings
 def createBindings (self,frame):
@@ -18045,11 +18184,18 @@ def defineEditMenuTopTable (self):
 #@+node:ekr.20051011072903.2:copyText
 def copyText (self):
     
-    '''Invoked from the mini-buffer and from shortcuts.'''
+    '''Copy the selected text from the widget to the clipboard.'''
     
     f = self ; c = f.c ; w = f.getFocus()
-    
-    w.event_generate(g.virtual_event_name("Copy"))
+    if not w: return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
@@ -18057,20 +18203,27 @@ def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return 'break'
+    name = hasattr(w,'_name') and w._name or ''
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
 
     if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
         c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-    else:
-        # Important: cut from headline is *not* undoable.
-        # Only the entire edit is undoable.
-        # Do **not** call w.event_generate.
-        pass
+    elif name.startswith('head'):
+        c.frame.tree.onHeadChanged(p)
+    else: pass
+
+OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
@@ -18078,95 +18231,38 @@ def pasteText (self):
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    f = self ; c = f.c ; p = c.currentPosition()
+    w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
     if name.startswith('head'):
-        # Important: this paste is not undoable!
-        # Only the entire edit is undoable.
-        s = s1 = g.app.gui.getTextFromClipboard()
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        p.initHeadString(s)
         w.configure(width=f.tree.headWidth(s=s))
     else: pass
+    
+OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
-#@+node:ekr.20051011072903.1:OnCopyFromMenu
-def OnCopyFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        w.event_generate(g.virtual_event_name("Copy"))
-    else:
-        # Necessary when not using shortcut keys.
-        w.event_generate(g.virtual_event_name("Copy"))
-    
-#@nonl
-#@-node:ekr.20051011072903.1:OnCopyFromMenu
-#@+node:ekr.20051011072049.1:OnCutFromMenu
-def OnCutFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-
-    f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the cut!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Cut"))
-        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Necessary
-        w.event_generate(g.virtual_event_name("Cut"))
-        f.tree.onHeadChanged(p,'Cut')
-#@nonl
-#@-node:ekr.20051011072049.1:OnCutFromMenu
-#@+node:ekr.20051011072903.4:OnPasteFromMenu
-def OnPasteFromMenu (self):
-    
-    ''' Called **only** when invoked using the menu instead of a shortcut.'''
-    
-    f = self ; c = f.c
-    w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
-
-    if name.startswith('body'):
-        # Let body key handler do the paste!
-        oldSel = g.app.gui.getTextSelection(w)
-        oldText = w.get('1.0','end')
-        w.event_generate(g.virtual_event_name("Paste"))
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        c.requestRecolor()
-    else:
-        # Strip trailing newlines so the truncation doesn't cause confusion.
-        s = s1 = g.app.gui.getTextFromClipboard()
-        while s and s[-1] in ('\n','\r'):
-            s = s[:-1]
-        if s != s1:
-            g.app.gui.replaceClipboardWith(s)
-        g.app.unitTestDict ['headWidth'] = True
-        w.configure(width=f.tree.headWidth(s=s))
-        w.event_generate(g.virtual_event_name("Paste"))
-        f.tree.onHeadChanged(c.currentPosition(),'Paste')
-        c.redraw_now()
-#@nonl
-#@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20031218072017.844:Clipboard (tkGui)
 @

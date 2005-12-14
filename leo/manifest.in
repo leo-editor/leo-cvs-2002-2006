@@ -82,6 +82,8 @@ exclude extensions/Pmw/Pmw_1_2/tests/*.pyo
 
 include Icons/*.*
 
+include modes/*.xml
+
 include plugins/leoPlugins.leo
 include plugins/*.ini
 include plugins/*.txt

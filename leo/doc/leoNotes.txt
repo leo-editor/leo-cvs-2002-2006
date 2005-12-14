@@ -3035,6 +3035,82 @@ def finishCreateCommanderAndFrame (self,c):
     pass
 #@nonl
 #@-node:ekr.20051201111822:app.finishCreateCommanderAndFrame (not used)
+#@+node:ekr.20051214130017:OnXXXFromMenu
+#@+node:ekr.20051011072903.1:OnCopyFromMenu
+if 0:
+    def OnCopyFromMenu (self):
+    
+        ''' Called **only** when invoked using the menu instead of a shortcut.'''
+        
+        f = self ; c = f.c
+        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    
+        if name.startswith('body'):
+            w.event_generate(g.virtual_event_name("Copy"))
+        else:
+            # Necessary when not using shortcut keys.
+            w.event_generate(g.virtual_event_name("Copy"))
+            
+OnCopyFromMenu = copyText
+#@nonl
+#@-node:ekr.20051011072903.1:OnCopyFromMenu
+#@+node:ekr.20051011072049.1:OnCutFromMenu
+if 0:
+    def OnCutFromMenu (self):
+    
+        ''' Called **only** when invoked using the menu instead of a shortcut.'''
+    
+        f = self ; c = f.c ; p = c.currentPosition()
+        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    
+        if name.startswith('body'):
+            # Let body key handler do the cut!
+            oldSel = g.app.gui.getTextSelection(w)
+            oldText = w.get('1.0','end')
+            w.event_generate(g.virtual_event_name("Cut"))
+            c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
+            c.requestRecolor()
+        else:
+            # Necessary
+            w.event_generate(g.virtual_event_name("Cut"))
+            f.tree.onHeadChanged(p,'Cut')
+            
+OnCutFromMenu = cutText
+#@nonl
+#@-node:ekr.20051011072049.1:OnCutFromMenu
+#@+node:ekr.20051011072903.4:OnPasteFromMenu
+if 0:
+    def OnPasteFromMenu (self):
+        
+        ''' Called **only** when invoked using the menu instead of a shortcut.'''
+        
+        f = self ; c = f.c
+        w = f.getFocus() ; name = hasattr(w,'_name') and w._name or ''
+    
+        if name.startswith('body'):
+            # Let body key handler do the paste!
+            oldSel = g.app.gui.getTextSelection(w)
+            oldText = w.get('1.0','end')
+            w.event_generate(g.virtual_event_name("Paste"))
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+            c.requestRecolor()
+        else:
+            # Strip trailing newlines so the truncation doesn't cause confusion.
+            s = s1 = g.app.gui.getTextFromClipboard()
+            while s and s[-1] in ('\n','\r'):
+                s = s[:-1]
+            if s != s1:
+                g.app.gui.replaceClipboardWith(s)
+            g.app.unitTestDict ['headWidth'] = True
+            w.configure(width=f.tree.headWidth(s=s))
+            w.event_generate(g.virtual_event_name("Paste"))
+            f.tree.onHeadChanged(c.currentPosition(),'Paste')
+            c.redraw_now()
+            
+OnPasteFromMenu = pasteText
+#@nonl
+#@-node:ekr.20051011072903.4:OnPasteFromMenu
+#@-node:ekr.20051214130017:OnXXXFromMenu
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

@@ -344,7 +344,7 @@ def insert_read_only_node (c,v,name):
             file = urllib.urlopen(name)  # HTTP URL
         else:
             file = open(name,"r")  # local file
-        # g.es("..." + name)
+        g.es("..." + name)
         new = file.read()
         file.close()
     except IOError,msg:
@@ -417,6 +417,8 @@ def on_open (tag,keywords):
 # override the body key handler if we are in an @read-only node.
 
 def on_bodykey1 (tag,keywords):
+    
+    g.trace()
 
     c = keywords.get("c")
     v = keywords.get("v")
@@ -442,6 +444,9 @@ def on_headkey2 (tag,keywords):
     v = keywords.get("v")
     h = v.headString()
     ch = keywords.get("ch")
+    
+    g.trace(repr(ch))
+
     if ch == '\r' and g.match_word(h,0,"@read-only"):
         # on-the-fly update of @read-only directives
         changed = insert_read_only_node(c,v,h[11:])

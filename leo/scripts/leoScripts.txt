@@ -57,6 +57,43 @@ last
 #@nonl
 #@-node:Test
 #@-node:stripBlankLines
+#@+node:add tab before each =
+@color
+
+s = p.bodyString()
+
+result = []
+lines = g.splitLines(s)
+for line in lines:
+    i = line.find('=')
+    if i > -1:
+        result.append(line[:i] + ' '*4 + line[i:])
+    else:
+        result.append(line)
+
+s = ''.join(result)
+g.trace(s)
+# p.setBodyString(s)
+#@nonl
+#@-node:add tab before each =
+#@+node:add tab after each :
+@color
+
+s = p.bodyString()
+
+result = []
+lines = g.splitLines(s)
+for line in lines:
+    i = line.find(':')
+    if i > -1:
+        result.append(line[:i+1] + ' '*4 + line[i+1:])
+    else:
+        result.append(line)
+
+s = ''.join(result)
+g.trace(s)
+p.setBodyString(s)
+#@-node:add tab after each :
 #@-node:Text editing scripts
 #@+node:Find scripts
 #@+node:Find and replace all functions in leoGlobals.py

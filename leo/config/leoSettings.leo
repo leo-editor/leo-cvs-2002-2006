@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="121" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="24" left="264" height="873" width="915"/>
+	<global_window_position top="10" left="239" height="873" width="915"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -218,8 +218,8 @@
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 </v>
-<v t="ekr.20041119034357.56"><vh>@page Options for new windows</vh>
-<v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
+<v t="ekr.20041119034357.56" a="E"><vh>@page Options for new windows</vh>
+<v t="ekr.20041119034357.57" a="E"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.59"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
 <v t="ekr.20041119034357.60"><vh>@ratio initial_vertical_ratio = 0.5</vh></v>
@@ -1390,8 +1390,11 @@ append-to-buffer            = None
 append-to-register          = None
 auto-complete               = Ctrl-Tab
 back-sentence               ! text = Alt-a  # No conflict
+back-sentence-extend-selection = None
 back-to-indentation         = None
-backward-char               ! text = Ctrl-b # No conflict
+# backward-char               ! text = Ctrl-b # No conflict
+backward-char               = LtArrow
+backward-char-extend-selection = Shift-LtArrow
 backward-delete-char        = BackSpace
 backward-kill-paragraph     = None
 backward-kill-sentence      = None
@@ -1418,7 +1421,8 @@ close-window                = None
 contract-all                = Alt--
 contract-node               = Alt-[
 contract-or-go-left         = None
-contract-parent             ! tree = LtArrow # Was Alt-0, but this seems more consistent.
+# contract-parent             ! tree = LtArrow # Was Alt-0, but this seems more consistent.
+contract-parent             = None
 convert-all-blanks          = None
 convert-all-tabs            = None
 convert-blanks              = Shift-Ctrl-B
@@ -1461,7 +1465,8 @@ execute-script              = None      # Ctrl-e conflicts with end-of-line
 exit-leo                    = Ctrl-Q
 expand-abbrev               = None
 expand-all                  = None      # Alt-9: not useful enough.
-expand-and-go-right         ! tree = RtArrow # It would make sense to bind Alt-RtArrow to this too.
+# expand-and-go-right         ! tree = RtArrow # It would make sense to bind Alt-RtArrow to this too.
+expand-and-go-right         = None
 expand-next-level           = Alt-=
 expand-node                 = Alt-]
 expand-or-go-right          = None
@@ -1499,9 +1504,12 @@ focus-to-body               = None
 focus-to-log                = None
 focus-to-minibuffer         = None
 focus-to-tree               = None
-forward-char                ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with find-panel
-forward-paragraph           = Alt-braceright
-forward-sentence            ! text = Alt-e          # No conflict
+# forward-char                      ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with find-panel
+forward-char                        = RtArrow
+forward-char-extend-selection       = Shift-RtArrow
+forward-paragraph                   = Alt-braceright
+forward-sentence                    ! text = Alt-e          # No conflict
+forward-sentence-extend-selection   ! text = Alt-Shift-e
 forward-word                ! text = Alt-f          # No conflict with bindings, but usually opens file menu.
 full-command                = Alt-x                 # No conflict.
 go-back                     ! tree = None
@@ -1590,6 +1598,7 @@ negative-argument           = None      # Alt-minus conflicts with contract-all.
 new                         = Shift-Control-O   # Ctrl-n conflicts with next-line.
 newline-and-indent:         = Control-j
 next-line                   = Ctrl-n    # Conflicts with new.
+next-line-extend-selection  = Shift-DnArrow
 number-command              = None
 number-command-0            = None
 number-command-1            = None
@@ -1627,6 +1636,7 @@ prepend-to-register         = None
 pretty-print-all-python-code= None
 pretty-print-python-code    = None
 previous-line               = Ctrl-p
+previous-line-extend-selection = Shift-UpArrow
 print-bindings              = None
 print-commands              = None
 promote                     = Ctrl-{            

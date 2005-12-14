@@ -215,7 +215,7 @@
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
 </v>
-<v t="ekr.20051214093711" a="ETV"><vh>redemo</vh>
+<v t="ekr.20051214093711" a="TV"><vh>redemo</vh>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </vnodes>

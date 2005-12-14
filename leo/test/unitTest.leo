@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8501" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8506" clone_windows="0"/>
 <globals body_outline_ratio="0.478873239437">
 	<global_window_position top="61" left="316" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1003,8 +1003,8 @@
 </v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754" a="E"><vh>General Unit Tests...</vh>
-<v t="ekr.20041130092210" a="E"><vh>Batch mode tests...</vh>
-<v t="ekr.20040327114250" a="TV"><vh>@thin ../test/unittest/batchTest.py</vh></v>
+<v t="ekr.20041130092210"><vh>Batch mode tests...</vh>
+<v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
@@ -1333,7 +1333,7 @@
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
-<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20050408084135" a="E"><vh>Undo/Redo Tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20050518070540"><vh>extract test2</vh>
@@ -1412,7 +1412,7 @@
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 </v>
 </v>
-<v t="ekr.20050417102057"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20050417102057" a="E"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
 <v t="ekr.20050417104821"><vh>data</vh>
 <v t="ekr.20050417124704"><vh>tempNode</vh></v>
@@ -1483,7 +1483,7 @@
 <v t="ekr.20050417095124.33"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417120312.1" a="ETV"><vh>@test multiParagraphTest</vh>
 <v t="ekr.20050417095124.34"><vh>data</vh>
 <v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.35"><vh>before</vh></v>
@@ -1614,7 +1614,7 @@
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
 <v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
-<v t="ekr.20050120095423.7" a="E"><vh>class parseFileTestCase</vh>
+<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
 <v t="ekr.20050120095423.8"><vh>__init__</vh></v>
 <v t="ekr.20050120095423.9"><vh>runTest</vh></v>
 <v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
@@ -1690,7 +1690,7 @@
 </v>
 </v>
 <v t="ekr.20051107115231.7"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
-<v t="ekr.20051107115231.8" a="E"><vh>Commands tests</vh>
+<v t="ekr.20051107115231.8"><vh>Commands tests</vh>
 <v t="ekr.20051107115231.9"><vh>@test Select a node when file is first loaded</vh></v>
 <v t="ekr.20051107115231.10"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
@@ -1700,7 +1700,7 @@
 </v>
 <v t="ekr.20051107115231.29"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
-<v t="ekr.20051107115231.13" a="EM"><vh>Typing and undo tests</vh>
+<v t="ekr.20051107115231.13" a="M"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
 <v t="ekr.20051107115231.15"><vh>@test editLabel selects entire headline</vh></v>
 <v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
