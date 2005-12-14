@@ -2,14 +2,14 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
-<globals body_outline_ratio="0.593037214886">
+<globals body_outline_ratio="0.433691756272">
 	<global_window_position top="61" left="290" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -48,7 +48,7 @@
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 </v>
 <v t="ekr.20051120173230"><vh>Prototypes</vh>
-<v t="ekr.20051111114555" a="E"><vh>Subprocess tests</vh>
+<v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
 <v t="ekr.20051112134206.3"><vh>&lt;&lt;imports &gt;&gt;</vh></v>
@@ -178,7 +178,14 @@
 <v t="ekr.20051117095207.2"><vh>b</vh></v>
 </v>
 </v>
+<v t="ekr.20051130182536"><vh>IronPython stuff</vh>
+<v t="ekr.20051130182536.1"><vh>batch file</vh>
+<v t="ekr.20051130182412" tnodeList="ekr.20051130182412"><vh>@file ironPythonTest.bat</vh></v>
 </v>
+<v t="ekr.20051130181738" a="EM" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
+</v>
+</v>
+<v t="ekr.20051214100048"><vh>Recent tests</vh>
 <v t="ekr.20051121143509"><vh>@button shorten-lines</vh>
 <v t="ekr.20051124065932"><vh>to do</vh></v>
 <v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
@@ -204,13 +211,13 @@
 <v t="ekr.20051124094428" a="E"><vh>test long comment</vh></v>
 <v t="ekr.20051124090208"><vh>test not python</vh></v>
 </v>
-<v t="ekr.20051130182536" a="E"><vh>IronPython stuff</vh>
-<v t="ekr.20051130182536.1"><vh>batch file</vh>
-<v t="ekr.20051130182412" tnodeList="ekr.20051130182412"><vh>@file ironPythonTest.bat</vh></v>
-</v>
-<v t="ekr.20051130181738" a="EM" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
-</v>
 <v t="ekr.20051201153400" a="E"><vh>Print Hi</vh></v>
+<v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
+<v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
+</v>
+<v t="ekr.20051214093711" a="ETV"><vh>redemo</vh>
+<v t="ekr.20051214094526"><vh>createFrame</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -1252,7 +1259,7 @@ def call(*args, **kwargs):
     #
     # Example 3: Connecting several subprocesses
     #
-    print "Looking for 'hda'..."
+    print "Looking for 'hda'    "
     p1 = Popen(["dmesg"], stdout=PIPE)
     p2 = Popen(["grep", "hda"], stdin=p1.stdout, stdout=PIPE)
     print repr(p2.communicate()[0])
@@ -1261,12 +1268,12 @@ def call(*args, **kwargs):
     # Example 4: Catch execution error
     #
     print
-    print "Trying a weird file..."
+    print "Trying a weird file    "
     try:
         print Popen(["/this/path/does/not/exist"]).communicate()
     except OSError, e:
         if e.errno == errno.ENOENT:
-            print "The file didn't exist.  I thought so..."
+            print "The file didn't exist.  I thought so    "
             print "Child traceback:"
             print e.child_traceback
         else:
@@ -1278,7 +1285,7 @@ def call(*args, **kwargs):
     #
     # Example 1: Connecting several subprocesses
     #
-    print "Looking for 'PROMPT' in set output..."
+    print "Looking for 'PROMPT' in set output    "
     p1 = Popen("set", stdout=PIPE, shell=True)
     p2 = Popen('find "PROMPT"', stdin=p1.stdout, stdout=PIPE)
     print repr(p2.communicate()[0])
@@ -1286,7 +1293,7 @@ def call(*args, **kwargs):
     #
     # Example 2: Simple execution of program
     #
-    print "Executing calc..."
+    print "Executing calc    "
     p = Popen("calc")
     p.wait()
 </t>
@@ -1840,8 +1847,8 @@ import heapq</t>
     Example, comparing two strings, and considering blanks to be "junk":
 
     &gt;&gt;&gt; s = SequenceMatcher(lambda x: x == " ",
-    ...                     "private Thread currentThread;",
-    ...                     "private volatile Thread currentThread;")
+                             "private Thread currentThread;",
+                             "private volatile Thread currentThread;")
     &gt;&gt;&gt;
 
     .ratio() returns a float in [0, 1], measuring the "similarity" of the
@@ -1856,7 +1863,7 @@ import heapq</t>
     .get_matching_blocks() is handy:
 
     &gt;&gt;&gt; for block in s.get_matching_blocks():
-    ...     print "a[%d] and b[%d] match for %d elements" % block
+             print "a[%d] and b[%d] match for %d elements" % block
     a[0] and b[0] match for 8 elements
     a[8] and b[17] match for 6 elements
     a[14] and b[23] match for 15 elements
@@ -1870,7 +1877,7 @@ import heapq</t>
     use .get_opcodes():
 
     &gt;&gt;&gt; for opcode in s.get_opcodes():
-    ...     print "%6s a[%d:%d] b[%d:%d]" % opcode
+             print "%6s a[%d:%d] b[%d:%d]" % opcode
      equal a[0:8] b[0:8]
     insert a[8:8] b[8:17]
      equal a[8:14] b[17:23]
@@ -2056,17 +2063,17 @@ import heapq</t>
 </t>
 <t tx="ekr.20051116222016.9"># For each element x in b, set b2j[x] to a list of the indices in
 # b where x appears; the indices are in increasing order; note that
-# the number of times x appears in b is len(b2j[x]) ...
+# the number of times x appears in b is len(b2j[x])     
 # when self.isjunk is defined, junk elements don't show up in this
 # map at all, which stops the central find_longest_match method
-# from starting any matching block at a junk element ...
-# also creates the fast isbjunk function ...
+# from starting any matching block at a junk element     
+# also creates the fast isbjunk function     
 # b2j also does not contain entries for "popular" elements, meaning
 # elements that account for more than 1% of the total elements, and
 # when the sequence is reasonably large (&gt;= 200 elements); this can
 # be viewed as an adaptive notion of semi-junk, and yields an enormous
 # speedup when, e.g., comparing program files with hundreds of
-# instances of "return NULL;" ...
+# instances of "return NULL;"     
 # note that this is only called when b changes; so for cross-product
 # kinds of matches, it's best to call set_seq2 once, then set_seq1
 # repeatedly
@@ -2290,8 +2297,8 @@ def __helper(self, alo, ahi, blo, bhi, answer):
     &gt;&gt;&gt; b = "abycdf"
     &gt;&gt;&gt; s = SequenceMatcher(None, a, b)
     &gt;&gt;&gt; for tag, i1, i2, j1, j2 in s.get_opcodes():
-    ...    print ("%7s a[%d:%d] (%s) b[%d:%d] (%s)" %
-    ...           (tag, i1, i2, a[i1:i2], j1, j2, b[j1:j2]))
+            print ("%7s a[%d:%d] (%s) b[%d:%d] (%s)" %
+                   (tag, i1, i2, a[i1:i2], j1, j2, b[j1:j2]))
      delete a[0:1] (q) b[0:0] ()
       equal a[1:3] (ab) b[0:2] (ab)
     replace a[3:4] (x) b[2:3] (y)
@@ -2416,7 +2423,7 @@ def __helper(self, alo, ahi, blo, bhi, answer):
             fullbcount[elt] = fullbcount.get(elt, 0) + 1
     fullbcount = self.fullbcount
     # avail[x] is the number of times x appears in 'b' less the
-    # number of times we've seen it in 'a' so far ... kinda
+    # number of times we've seen it in 'a' so far      kinda
     avail = {}
     availhas, matches = avail.has_key, 0
     for elt in self.a:
@@ -2538,19 +2545,19 @@ ending with newlines (such sequences can also be obtained from the
 `readlines()` method of file-like objects):
 
 &gt;&gt;&gt; text1 = '''  1. Beautiful is better than ugly.
-...   2. Explicit is better than implicit.
-...   3. Simple is better than complex.
-...   4. Complex is better than complicated.
-... '''.splitlines(1)
+       2. Explicit is better than implicit.
+       3. Simple is better than complex.
+       4. Complex is better than complicated.
+     '''.splitlines(1)
 &gt;&gt;&gt; len(text1)
 4
 &gt;&gt;&gt; text1[0][-1]
 '\n'
 &gt;&gt;&gt; text2 = '''  1. Beautiful is better than ugly.
-...   3.   Simple is better than complex.
-...   4. Complicated is better than complex.
-...   5. Flat is better than nested.
-... '''.splitlines(1)
+       3.   Simple is better than complex.
+       4. Complicated is better than complex.
+       5. Flat is better than nested.
+     '''.splitlines(1)
 
 Next we instantiate a Differ object:
 
@@ -2637,7 +2644,7 @@ compare(a, b)
     Example:
 
     &gt;&gt;&gt; print ''.join(Differ().compare('one\ntwo\nthree\n'.splitlines(1),
-    ...                                'ore\ntree\nemu\n'.splitlines(1))),
+                                        'ore\ntree\nemu\n'.splitlines(1))),
     - one
     ?  ^
     + ore
@@ -2696,7 +2703,7 @@ compare(a, b)
 
     &gt;&gt;&gt; d = Differ()
     &gt;&gt;&gt; results = d._fancy_replace(['abcDefghiJkl\n'], 0, 1,
-    ...                            ['abcdefGhijkl\n'], 0, 1)
+                                    ['abcdefGhijkl\n'], 0, 1)
     &gt;&gt;&gt; print ''.join(results),
     - abcDefghiJkl
     ?    ^  ^  ^
@@ -2804,9 +2811,9 @@ compare(a, b)
 
     &gt;&gt;&gt; d = Differ()
     &gt;&gt;&gt; results = d._qformat('\tabcDefghiJkl\n', '\t\tabcdefGhijkl\n',
-    ...                      '  ^ ^  ^      ', '+  ^ ^  ^      ')
+                              '  ^ ^  ^      ', '+  ^ ^  ^      ')
     &gt;&gt;&gt; for line in results: print repr(line)
-    ...
+        
     '- \tabcDefghiJkl\n'
     '? \t ^ ^  ^\n'
     '+ \t\tabcdefGhijkl\n'
@@ -2908,10 +2915,10 @@ def IS_LINE_JUNK(line, pat=re.compile(r"\s*#?\s*$").match):
     Example:
 
     &gt;&gt;&gt; for line in unified_diff('one two three four'.split(),
-    ...             'zero one tree four'.split(), 'Original', 'Current',
-    ...             'Sat Jan 26 23:30:50 1991', 'Fri Jun 06 10:20:52 2003',
-    ...             lineterm=''):
-    ...     print line
+                     'zero one tree four'.split(), 'Original', 'Current',
+                     'Sat Jan 26 23:30:50 1991', 'Fri Jun 06 10:20:52 2003',
+                     lineterm=''):
+             print line
     --- Original Sat Jan 26 23:30:50 1991
     +++ Current Fri Jun 06 10:20:52 2003
     @@ -1,4 +1,4 @@
@@ -2971,8 +2978,8 @@ def context_diff(a, b, fromfile='', tofile='',
     Example:
 
     &gt;&gt;&gt; print ''.join(context_diff('one\ntwo\nthree\nfour\n'.splitlines(1),
-    ...       'zero\none\ntree\nfour\n'.splitlines(1), 'Original', 'Current',
-    ...       'Sat Jan 26 23:30:50 1991', 'Fri Jun 06 10:22:46 2003')),
+               'zero\none\ntree\nfour\n'.splitlines(1), 'Original', 'Current',
+               'Sat Jan 26 23:30:50 1991', 'Fri Jun 06 10:22:46 2003')),
     *** Original Sat Jan 26 23:30:50 1991
     --- Current Fri Jun 06 10:22:46 2003
     ***************
@@ -3041,7 +3048,7 @@ def context_diff(a, b, fromfile='', tofile='',
     Example:
 
     &gt;&gt;&gt; diff = ndiff('one\ntwo\nthree\n'.splitlines(1),
-    ...              'ore\ntree\nemu\n'.splitlines(1))
+                      'ore\ntree\nemu\n'.splitlines(1))
     &gt;&gt;&gt; print ''.join(diff),
     - one
     ?  ^
@@ -3740,7 +3747,7 @@ _default_prefix = 0
     Examples:
 
     &gt;&gt;&gt; diff = ndiff('one\ntwo\nthree\n'.splitlines(1),
-    ...              'ore\ntree\nemu\n'.splitlines(1))
+                      'ore\ntree\nemu\n'.splitlines(1))
     &gt;&gt;&gt; diff = list(diff)
     &gt;&gt;&gt; print ''.join(restore(diff, 1)),
     one
@@ -3991,7 +3998,7 @@ def removeLeadingWhitespace (s,first_ws,tab_width):
     result = ''.join(result)
     
     if 0:
-        g.trace('lines...')
+        g.trace('lines    ')
         for line in g.splitLines(result):
             print repr(line)
 
@@ -4161,9 +4168,51 @@ bin\IronPythonConsole c:\prog\leoCVS\leo\test\ironPythonTest.py
 <t tx="ekr.20051201090822"></t>
 <t tx="ekr.20051201153400">before
 
-print    'hi'
-print    'there'
+print    'hi'.
+print    'there'.
 
 after</t>
+<t tx="ekr.20051209074151"></t>
+<t tx="ekr.20051209084028"></t>
+<t tx="ekr.20051214093711">import sys
+import Tkinter as Tk
+
+@others
+
+log = c.frame.log; tabName = 'redemo'
+pypath = g.os_path_split(sys.executable )[0]
+pyScripts = g.os_path_join(pypath, 'Tools/Scripts')
+redemo = g.importFromPath('redemo', pyScripts)
+
+f = log.frameDict.get(tabName)
+if f:
+    log.selectTab(tabName)
+else:
+    log.selectTab(tabName)
+    t = log.textDict.get(tabName)
+    t.pack_forget()
+    f = log.frameDict.get(tabName)
+    createFrame(f)</t>
+<t tx="ekr.20051214094526">def createFrame (f):
+
+    root = f #use this for tab
+    #root = Tk.Tk(f)  #uncomment this for popup
+    
+    demo = redemo.ReDemo(root)
+    demo.promptdisplay.pack_forget()
+    demo.labeldisplay.pack_forget()
+    demo.regexdisplay.pack(fill = 'y', expand = 0)
+
+    demo.regexdisplay.focus_set()
+
+    regexconfig = {
+        'font': ('verdana',11,'bold'), 'bg': 'AntiqueWhite',
+        'insertontime': 400, 'insertofftime': 650,
+        #'width':40,
+    }
+
+    demo.regexdisplay.configure(regexconfig)
+    return root</t>
+<t tx="ekr.20051214100048"></t>
 </tnodes>
 </leo_file>
