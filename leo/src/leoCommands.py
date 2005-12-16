@@ -2709,6 +2709,8 @@ class baseCommands:
         if g.app.batchMode:
             c.notValidInBatchMode("Toggle Angle Brackets")
             return
+            
+        c.endEditing()
     
         s = v.headString().strip()
         if (s[0:2] == "<<"
@@ -5361,11 +5363,11 @@ class baseCommands:
     
         if frame.wantedWidget:
             w = frame.wantedWidget
-            name = hasattr(w,'_name') and w._name or ''
+            name = g.app.gui.widget_name(w)
             if 0:
                 w2 = g.app.gui.get_focus(frame)
-                name2 = hasattr(w2,'_name') and w2._name or ''
-                if name != name2: g.trace(name2,'->',name,g.callers(7))
+                name2 = g.app.gui.widget_name(w2)
+                if name != name2: g.trace(name2,'->',name,g.callers())
             # It is possible that w no longer exists.
             try:
                 g.app.gui.set_focus(c,w)
@@ -5378,7 +5380,7 @@ class baseCommands:
             w = g.app.gui.get_focus(frame)
             if not w: return
             # Allow clicks in enclosing window frame or in dialogs.
-            name = hasattr(w,'_name') and w._name or ''
+            name = g.app.gui.widget_name(w)
             if (
                 name and name[0] in string.letters # A known Leo frame.
                 or w == frame.top # The top of the Leo window
@@ -5386,8 +5388,8 @@ class baseCommands:
                 or isinstance(w,Tk.Text)
                 or isinstance(w,Tk.Entry)
             ):
-                # g.trace('ok',hasattr(w,'_name') and w._name or '')
-                # g.app.gui.set_focus(c,w)
+                #g.trace('ok',g.app.gui.widget_name(w))
+                #g.app.gui.set_focus(c,w)
                 return
             # Not a name created by Leo.
             g.trace('setting default focus',name)
@@ -6034,19 +6036,20 @@ class baseCommands:
             c.frame.tree.editLabel(p)
     #@nonl
     #@-node:ekr.20031218072017.2991:c.editPosition
-    #@+node:ekr.20031218072017.2992:endEditing (calls tree.endEditLabel)
+    #@+node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     # Ends the editing in the outline.
     
     def endEditing(self):
     
         self.frame.tree.endEditLabel()
-    #@-node:ekr.20031218072017.2992:endEditing (calls tree.endEditLabel)
+    #@-node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     #@+node:ekr.20031218072017.2997:c.selectPosition
     def selectPosition(self,p,updateBeadList=True,redraw_flag=True):
         
         """Select a new position."""
     
         c = self
+    
         c.frame.tree.select(p,updateBeadList,redraw_flag=redraw_flag)
     
     selectVnode = selectPosition

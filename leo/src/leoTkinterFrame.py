@@ -1608,13 +1608,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
         __pychecker__ = '--no-argsused' # event not used.
     
         try:
-            frame = self ; gui = g.app.gui
-            # frame.tree.onHeadChanged(frame.c.currentPosition())
+            frame = self ; c = frame.c
+            c.endEditing() # Required.
             g.app.setLog(frame.log,"OnActivateBody")
-            w = gui.get_focus(frame)
+            w = g.app.gui.get_focus(frame)
             if w != frame.body.bodyCtrl:
-                self.tree.OnDeactivate()
-            self.bodyWantsFocus()
+                frame.tree.OnDeactivate()
+            frame.bodyWantsFocus()
         except:
             g.es_event_exception("activate body")
             
@@ -1785,7 +1785,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if name.startswith('body'):
             c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
         elif name.startswith('head'):
-            c.frame.tree.onHeadChanged(p)
+            # The headline is not officially changed yet.
+            # p.initHeadString(s)
+            w.configure(width=f.tree.headWidth(s=s))
         else: pass
     
     OnCutFromMenu = cutText
@@ -1821,7 +1823,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             s = w.get('1.0','end')
             while s and s [ -1] in ('\n','\r'):
                 s = s [: -1]
-            p.initHeadString(s)
+            # The headline is not officially changed yet.
+            # p.initHeadString(s)
             w.configure(width=f.tree.headWidth(s=s))
         else: pass
         
@@ -1838,9 +1841,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.notValidInBatchMode("End Edit Headline")
         else:
             p = c.currentPosition()
-            c.frame.tree.onHeadChanged(p)
-            c.selectPosition(p)
-            c.frame.bodyWantsFocus()
+            c.endEditing()
+            
+            if 1: # This command always moves into the body pane.
+                c.frame.bodyWantsFocus()
+            else:
+                if c.frame.tree.stayInTree:
+                    c.frame.treeWantsFocus()
+                else:
+                    c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3982:endEditLabelCommand
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
@@ -2123,6 +2132,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def minibufferWantsFocus(self):
         # Important! We must preserve body selection!
         if 1:
+            # Do an update to force the focus to the body pane.
+            self.c.frame.body.bodyCtrl.update()
             self.bodyWantsFocus()
         else:
             w = self.c.miniBufferWidget
@@ -2134,7 +2145,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
     def widgetWantsFocus(self,w):
         self.set_focus(w)
-    #@nonl
     #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
     #@+node:ekr.20050120092028.1:set_focus (tkFrame)
     # New in Leo 4.4a3: nothing happens at idle time.
@@ -2340,7 +2350,9 @@ class leoTkinterBody (leoFrame.leoBody):
     #@-node:ekr.20031218072017.2183:tkBody.setFontFromConfig
     #@+node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
     # This is the only key handler for the body pane.
-    def onBodyChanged (self,undoType,oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
+    def onBodyChanged (self,undoType,
+        oldSel=None,oldText=None,oldYview=None,
+        removeTrailing=None,redraw_flag=True):
         
         '''Update Leo after the body has been changed.'''
         
@@ -2372,25 +2384,29 @@ class leoTkinterBody (leoFrame.leoBody):
         if not c.changed: c.setChanged(True)
         #@    << redraw the screen if necessary >>
         #@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-        redraw_flag = False
+        if redraw_flag: # An arg to this method.
         
-        # Update dirty bits.
-        # p.setDirty() sets all cloned and @file dirty bits.
-        if not p.isDirty() and p.setDirty():
-            redraw_flag = True
+            redraw = False # local arg.
             
-        # Update icons. p.v.iconVal may not exist during unit tests.
-        val = p.computeIcon()
-        if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-            p.v.iconVal = val
-            redraw_flag = True
-        
-        if redraw_flag:
-            c.redraw_now()
+            # Update dirty bits.
+            # p.setDirty() sets all cloned and @file dirty bits.
+            if not p.isDirty() and p.setDirty():
+                redraw = True
+                
+            # Update icons. p.v.iconVal may not exist during unit tests.
+            val = p.computeIcon()
+            if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+                p.v.iconVal = val
+                redraw = True
+            
+            if redraw:
+                c.redraw_now()
+                
+        elif not p.isDirty():
+            p.setDirty()
         #@nonl
         #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
         #@nl
-    #@nonl
     #@+node:ekr.20051026143009:removeTrailingNewlines
     #@+at 
     #@nonl
@@ -2742,7 +2758,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.4023:selectAllText
     #@+node:ekr.20031218072017.4024:setTextSelection (tkinterBody)
-    def setTextSelection (self,i,j=None):
+    def setTextSelection (self,i,j=None,insert='sel.end'):
         
         # Allow the user to pass either a 2-tuple or two separate args.
         if i is None:
@@ -2750,7 +2766,7 @@ class leoTkinterBody (leoFrame.leoBody):
         elif len(i) == 2:
             i,j = i
     
-        g.app.gui.setTextSelection(self.bodyCtrl,i,j)
+        g.app.gui.setTextSelection(self.bodyCtrl,i,j,insert)
     #@nonl
     #@-node:ekr.20031218072017.4024:setTextSelection (tkinterBody)
     #@-node:ekr.20031218072017.4018:Selection
@@ -3425,7 +3441,6 @@ class leoTkinterLog (leoFrame.leoLog):
             logCtrl = self.textDict.get(tabName)
             if logCtrl:
                 self.c.frame.widgetWantsFocus(logCtrl)
-                logCtrl.update_idletasks()
     #@nonl
     #@-node:ekr.20051018061932.1:lower/raiseTab
     #@+node:ekr.20051019170806:renameTab

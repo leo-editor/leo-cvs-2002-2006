@@ -421,7 +421,7 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4065:get_focus
     #@+node:ekr.20031218072017.2373:set_focus (app.gui)
-    def set_focus(self,c,w):
+    def set_focus(self,c,w,force=False):
         
         __pychecker__ = '--no-argsused' # c not used at present.
         
@@ -429,20 +429,18 @@ class tkinterGui(leoGui.leoGui):
         
         if w:
             if c.config.getBool('trace_g.app.gui.set_focus'):
-                name = hasattr(w,'_name') and w._name or '<no name>'
-                g.trace('GUI',name,g.callers())
+                g.trace('GUI',g.app.gui.widget_name(w),g.callers())
                 
             if 0:
                 w2 = c.frame.outerFrame.focus_get()
-                name2 = w2 and hasattr(w2,'_name') and w2._name or '<no name>'
-                w2 and g.trace(name2,c)
+                w2 and g.trace(g.app.gui.widget_name(name2),c)
     
             if 0:
                 # A fix to the cursed problems with Pmw.Notebook.
                 # But it slows down unit tests and is generally undesirable.
                 # Rather than calling update here, we shall call update only when essential.
                 w.update() 
-        
+    
             w.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -646,12 +644,12 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4083:setInsertPoint
     #@-node:ekr.20031218072017.4081:Insert Point
     #@+node:ekr.20031218072017.4084:Selection
-    #@+node:ekr.20031218072017.4085:getSelectionRange
+    #@+node:ekr.20031218072017.4085:getSelectionRange (to be deleted?)
     def getSelectionRange (self,t):
     
         return t.tag_ranges("sel")
     #@nonl
-    #@-node:ekr.20031218072017.4085:getSelectionRange
+    #@-node:ekr.20031218072017.4085:getSelectionRange (to be deleted?)
     #@+node:ekr.20051126125950:getSelectedText
     def getSelectedText (self,t):
     
@@ -693,20 +691,14 @@ class tkinterGui(leoGui.leoGui):
         return i and j and i != j
     #@nonl
     #@-node:ekr.20051126171929:hasSelection
-    #@+node:ekr.20031218072017.4087:setSelectionRange
-    def setSelectionRange(self,t,n1,n2):
-    
-        return g.app.gui.setTextSelection(t,n1,n2)
-    #@nonl
-    #@-node:ekr.20031218072017.4087:setSelectionRange
     #@+node:ekr.20031218072017.4088:setSelectionRangeWithLength
     def setSelectionRangeWithLength(self,t,start,length):
         
         return g.app.gui.setTextSelection(t,start,"%s+%dc" % (start,length))
     #@nonl
     #@-node:ekr.20031218072017.4088:setSelectionRangeWithLength
-    #@+node:ekr.20031218072017.4089:setTextSelection
-    def setTextSelection (self,t,start,end):
+    #@+node:ekr.20031218072017.4089:setTextSelection & setSelectionRange
+    def setTextSelection (self,t,start,end,insert='sel.end'):
         
         """tk gui: set the selection range in Tk.Text widget t."""
     
@@ -719,9 +711,16 @@ class tkinterGui(leoGui.leoGui):
         t.tag_remove("sel","1.0",start)
         t.tag_add("sel",start,end)
         t.tag_remove("sel",end,"end")
-        ### t.mark_set("insert",end)
+        
+        # New in 4.4a5: this logic ensures compatibility with previous code.
+        if insert == 'sel.end':
+            g.app.gui.setInsertPoint(t,end)
+        elif insert is not None:
+            g.app.gui.setInsertPoint(t,insert)
+        
+    setSelectionRange = setTextSelection
     #@nonl
-    #@-node:ekr.20031218072017.4089:setTextSelection
+    #@-node:ekr.20031218072017.4089:setTextSelection & setSelectionRange
     #@-node:ekr.20031218072017.4084:Selection
     #@+node:ekr.20031218072017.4090:Text
     #@+node:ekr.20031218072017.4091:getAllText

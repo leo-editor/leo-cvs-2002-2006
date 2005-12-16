@@ -306,7 +306,7 @@ class leoBody:
     def selectAllText (self):
         self.oops()
         
-    def setTextSelection (self,i,j=None):
+    def setTextSelection (self,i,j=None,insert='sel.end'):
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3670:Selection
@@ -1207,7 +1207,7 @@ class nullBody (leoBody):
     def selectAllText (self):
         self.selection = 0,len(self.s)
         
-    def setTextSelection (self,i,j=None):
+    def setTextSelection (self,i,j=None,insert='sel.end'):
         if i is None:
             self.selection = 0,0
         elif j is None:

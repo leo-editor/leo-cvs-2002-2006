@@ -1213,7 +1213,7 @@ class keyHandlerClass:
         
         '''Handle 'full-command' (alt-x) mode.'''
     
-        k = self ; c = k.c ; state = k.getState('altx')
+        k = self ; c = k.c ; f = c.frame ; state = k.getState('altx')
         keysym = (event and event.keysym) or ''
         ch = (event and event.char) or ''
         # g.trace('state',state,keysym)
@@ -1224,28 +1224,32 @@ class keyHandlerClass:
             # Init mb_ ivars. This prevents problems with an initial backspace.
             k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
             k.mb_tabList = [] ; k.mb_tabListIndex = -1
+            f.minibufferWantsFocus()
         elif keysym == 'Return':
             c.frame.log.deleteTab('Completion')
             c.frame.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
             k.callAltXFunction(event)
         elif keysym == 'Tab':
             k.doTabCompletion(c.commandsDict.keys())
+            f.minibufferWantsFocus()
         elif keysym == 'BackSpace':
             k.doBackSpace(c.commandsDict.keys())
+            f.minibufferWantsFocus()
         elif ch not in string.printable:
             if specialStroke:
                 g.trace(specialStroke)
                 specialFunc()
+            f.minibufferWantsFocus()
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
             k.updateLabel(event)
             k.mb_tabListPrefix = k.getLabel()
-            c.frame.minibufferWantsFocus()
+            f.minibufferWantsFocus()
             # g.trace('new prefix',k.mb_tabListPrefix)
-        if keysym != 'Return':
-            c.frame.minibufferWantsFocus()
+    
         return 'break'
+    
     #@+node:ekr.20050920085536.45:callAltXFunction
     def callAltXFunction (self,event):
         
@@ -1857,18 +1861,22 @@ class keyHandlerClass:
             #@-node:ekr.20050928092516:<< init altX vars >>
             #@nl
             # Set the states.
+            bodyCtrl = c.frame.body.bodyCtrl
+            bodyCtrl.update() # Essential to move focus out of the log pane.
+            c.frame.widgetWantsFocus(bodyCtrl)
             k.afterGetArgState=returnKind,returnState,handler
             k.setState('getArg',1,k.getArg)
-            k.afterArgWidget = event.widget
+            k.afterArgWidget = event and event.widget or c.frame.body.bodyCtrl
         elif keysym == 'Return':
             k.arg = k.getLabel(ignorePrompt=True)
             kind,n,handler = k.afterGetArgState
             if kind: k.setState(kind,n,handler)
             if handler: handler(event)
+            c.frame.widgetWantsFocus(k.afterArgWidget)
         elif keysym == 'Tab':
             k.doTabCompletion(k.argTabList)
         elif keysym == 'BackSpace':
-            k.doBackSpace()
+            k.doBackSpace(k.argTabList)
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []

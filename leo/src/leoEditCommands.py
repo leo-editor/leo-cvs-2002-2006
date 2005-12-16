@@ -46,6 +46,7 @@ class baseEditCommandsClass:
         self.c = c
         self.k = self.keyHandler = None
         self.registers = {} # To keep pychecker happy.
+        self.undoData = None
         
     def finishCreate(self):
     
@@ -64,28 +65,40 @@ class baseEditCommandsClass:
     #@nonl
     #@-node:ekr.20050920084036.2: ctor, finishCreate, init (baseEditCommandsClass)
     #@+node:ekr.20051214132256:begin/endCommand
-    #@+node:ekr.20051214133130:beginCommand
-    def beginCommand (self,event,undoType='Typing'):
+    #@+node:ekr.20051214133130:beginCommand  & beginCommandWithEvent
+    def beginCommand (self,undoType='Typing'):
+        
+        '''Do the common processing at the start of each command.'''
+    
+        return self.beginCommandHelper(ch='',undoType=undoType,w=self.w)
+    
+    def beginCommandWithEvent (self,event,undoType='Typing'):
         
         '''Do the common processing at the start of each command.'''
         
-        c = self.c ; p = c.currentPosition()
-        ch = event and event.char or ''
-        w = event and event.widget
+        return self.beginCommandHelper(ch=event.char,undoType=undoType,w=event.widget)
+    #@nonl
+    #@+node:ekr.20051215102349:beingCommandHelper
+    def beginCommandHelper (self,ch,undoType,w):
+    
+        p = self.c.currentPosition()
         name = g.app.gui.widget_name(w)
         oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
         oldText = name.startswith('body') and p.bodyString()
+    
         self.undoData = g.Bunch(
-            ch=ch,event=event,name=name,
-            oldSel=oldSel,oldText=oldText,w=w,undoType=undoType)
-        
-    #@-node:ekr.20051214133130:beginCommand
+            ch=ch,name=name,oldSel=oldSel,oldText=oldText,w=w,undoType=undoType)
+            
+        return w
+    #@nonl
+    #@-node:ekr.20051215102349:beingCommandHelper
+    #@-node:ekr.20051214133130:beginCommand  & beginCommandWithEvent
     #@+node:ekr.20051214133130.1:endCommand
-    def endCommand(self):
+    def endCommand(self,label=None):
         
         '''Do the common processing at the end of each command.'''
         
-        c = self.c ; b = self.undoData
+        c = self.c ; b = self.undoData ; k = self.k
     
         if b:
             name = b.name ; p = c.currentPosition()
@@ -93,13 +106,14 @@ class baseEditCommandsClass:
                 c.frame.body.onBodyChanged(undoType=b.undoType,
                     oldSel=b.oldSel,oldText=b.oldText,oldYview=None)
             elif name.startswith('head'):
-                s = w.get('1.0','end')
-                p.initHeadString(s)
-                w.configure(width=self.headWidth(s=s))
+                g.trace('Should not happen: endCommand does not support undo in headlines')
             else: pass
+    
+        k.clearState()
+        if label:
+            k.setLabelGrey(label)
         else:
-            g.trace("Can't happen: no undo data")
-    #@nonl
+            k.resetLabel()
     #@-node:ekr.20051214133130.1:endCommand
     #@-node:ekr.20051214132256:begin/endCommand
     #@+node:ekr.20050920084036.5:getPublicCommands & getStateCommands
@@ -781,310 +795,261 @@ class bufferCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
         self.fromName = '' # Saved name from getBufferName.
-        self.bufferDict = {}
-        self.positions = {}
-        self.tnodes = {}
+        self.nameList = [] # [n: <headline>]
+        self.names = {}
+        tnodes = {} # Keys are n: <headline>, values are tnodes.
+        
+        try:
+            self.w = c.frame.body.bodyCtrl
+        except AttributeError:
+            self.w = None
     #@nonl
     #@-node:ekr.20050920084036.32: ctor (bufferCommandsClass)
     #@+node:ekr.20050920084036.33: getPublicCommands
     def getPublicCommands (self):
     
         return {
-            'append-to-buffer':     self.appendToBuffer,
-            'copy-to-buffer':       self.copyToBuffer,
-            'insert-to-buffer':     self.insertToBuffer,
-            'kill-buffer' :         self.killBuffer,
-            'list-buffers' :        self.listBuffers,
-            'prepend-to-buffer':    self.prependToBuffer,
-            'rename-buffer':        self.renameBuffer,
-            'switch-to-buffer':     self.switchToBuffer,
+        
+            # These do not seem useful.
+                # 'copy-to-buffer':               self.copyToBuffer,
+                # 'insert-to-buffer':             self.insertToBuffer,
+           
+            'append-to-buffer':             self.appendToBuffer,
+            'kill-buffer' :                 self.killBuffer,
+            'list-buffers' :                self.listBuffers,
+            'list-buffers-alphabetically':  self.listBuffersAlphabetically,
+            'prepend-to-buffer':            self.prependToBuffer,
+            'rename-buffer':                self.renameBuffer,
+            'switch-to-buffer':             self.switchToBuffer,
         }
     #@nonl
     #@-node:ekr.20050920084036.33: getPublicCommands
     #@+node:ekr.20050920084036.34:Entry points
-    #@+node:ekr.20050920084036.35:appendToBuffer/Finisher
+    #@+node:ekr.20050920084036.35:appendToBuffer
     def appendToBuffer (self,event):
     
-        k = self.k
-        k.setLabelBlue('Append to buffer: ')
-        self.getBufferName(event,self.appendToBufferFinisher)
+        self.k.setLabelBlue('Append to buffer: ')
+        self.getBufferName(self.appendToBufferFinisher)
     
-    def appendToBufferFinisher (self,event,name):
+    def appendToBufferFinisher (self,name):
     
-        k = self.k ; w = event.widget
-        txt = w.get('sel.first','sel.last')
-        try:
-            bdata = self.bufferDict [name]
-            bdata = '%s%s' % (bdata,txt)
-            self.setBufferData(event,name,bdata)
-            k.commandName = 'Append to buffer: %s' % name
-        except Exception:
-            pass
+        c = self.c ; k = self.k ; w = self.w
+        s = g.app.gui.getSelectedText(w)
+        p = self.findBuffer(name)
+        if s and p:
+            c.selectPosition(p)
+            c.redraw_now()
+            self.beginCommand('append-to-buffer: %s' % p.headString())
+            w.insert('end',s)
+            w.mark_set('insert','end')
+            w.see('end')
+            self.endCommand()
     #@nonl
-    #@-node:ekr.20050920084036.35:appendToBuffer/Finisher
-    #@+node:ekr.20050920084036.36:copyToBuffer/Finisher
-    def copyToBuffer (self,event):
-    
-        k = self.k
-        k.setLabelBlue('Copy to buffer: ')
-        self.getBufferName(event,self.copyToBufferFinisher)
-    
-    def copyToBufferFinisher (self,event,name):
-    
-        k = self.k ; w = event.widget
-        try:
-            txt = w.get('sel.first','sel.last')
-            self.setBufferData(event,name,txt)
-            k.commandName = 'Copy to buffer: %s' % name
-        except Exception:
-            pass
-    #@nonl
-    #@-node:ekr.20050920084036.36:copyToBuffer/Finisher
-    #@+node:ekr.20050920084036.37:insertToBuffer/Finisher
-    def insertToBuffer (self,event):
-    
-        k = self.k
-        k.setLabelBlue('Insert to buffer: ')
-        self.getBufferName(event,self.insertToBufferFinisher)
-    
-    def insertToBufferFinisher (self,event,name):
-        
-        k = self.k ; w = event.widget
-        try:
-            bdata = self.bufferDict [name]
-            w.insert('insert',bdata)
-            k.commandName = 'Insert to buffer: %s' % name
-        except Exception:
-            pass
-    #@nonl
-    #@-node:ekr.20050920084036.37:insertToBuffer/Finisher
-    #@+node:ekr.20050920084036.38:killBuffer/Finisher  (not ready yet)
+    #@-node:ekr.20050920084036.35:appendToBuffer
+    #@+node:ekr.20050920084036.38:killBuffer
     def killBuffer (self,event):
     
-        k = self.k
-        k.setLabelBlue('Kill buffer: ')
-        self.getBufferName(event,self.killBufferFinisher)
+        self.k.setLabelBlue('Kill buffer: ')
+        self.getBufferName(self.killBufferFinisher)
     
-    def killBufferFinisher (self,event,name):
-        
-        k = self.k
-        
-        # w = event.widget
-        # method = self.bufferDeletes[w]
-        # method(name)
+    def killBufferFinisher (self,name):
     
-        pass ### Not ready yet.
-        
-        k.commandName = 'Kill buffer: %s' % name
+        c = self.c ; p = self.findBuffer(name)
+        if p:
+            h = p.headString()
+            current = c.currentPosition()
+            c.selectPosition(p)
+            c.deleteOutline (op_name='kill-buffer: %s' % h)
+            c.selectPosition(current)
+            self.k.setLabelBlue('Killed buffer: %s' % h)
     #@nonl
-    #@-node:ekr.20050920084036.38:killBuffer/Finisher  (not ready yet)
-    #@+node:ekr.20050920084036.42:listBuffers
+    #@-node:ekr.20050920084036.38:killBuffer
+    #@+node:ekr.20050920084036.42:listBuffers & listBuffersAlphabetically
     def listBuffers (self,event):
         
-        k = self.k ; c = k.c
+        self.computeData()
         
-        names = {}
-        for p in c.allNodes_iter():
-            names [p.headString()] = None
-    
-        buffers = names.keys()
-        buffers.sort()
+        g.es('Buffers...')
+        for name in self.nameList:
+            g.es(name)
+            
+    def listBuffersAlphabetically (self,event):
         
-        if 1: # This would be too much data for now...
-            data = '\n'.join(buffers)
-            # k.setLabelGrey(data)
-            g.es('Buffers...')
-            g.es(data)
+        self.computeData()
+        names = self.nameList[:] ; names.sort()
+        
+        g.es('Buffers...')
+        for name in names:
+            g.es(name)
     #@nonl
-    #@-node:ekr.20050920084036.42:listBuffers
-    #@+node:ekr.20050920084036.39:prependToBuffer/Finisher
+    #@-node:ekr.20050920084036.42:listBuffers & listBuffersAlphabetically
+    #@+node:ekr.20050920084036.39:prependToBuffer (test)
     def prependToBuffer (self,event):
-        
-        k = self.k
-        k.setLabelBlue('Prepend to buffer: ')
-        self.getBufferName(event,self.prependToBufferFinisher)
+    
+        self.k.setLabelBlue('Prepend to buffer: ')
+        self.getBufferName(self.prependToBufferFinisher)
         
     def prependToBufferFinisher (self,event,name):
         
-        k = self.k ; w = event.widget
-        
-        try:
-            txt = w.get('sel.first','sel.last')
-            bdata = self.bufferDict[name]
-            bdata = '%s%s'%(txt,bdata)
-            self.setBufferData(event,name,bdata)
-            k.commandName = 'Prepend to buffer: %s' % name
-        except Exception:
-            pass
+        c = self.c ; k = self.k ; w = self.w
+        s = g.app.gui.getSelectedText(w)
+        p = self.findBuffer(name)
+        if s and p:
+            c.selectPosition(p)
+            c.redraw_now()
+            self.beginCommand('prepend-to-buffer: %s' % p.headString())
+            w.insert('1.0',s)
+            w.mark_set('insert','1.0')
+            w.see('1.0')
+            self.endCommand()
     #@nonl
-    #@-node:ekr.20050920084036.39:prependToBuffer/Finisher
-    #@+node:ekr.20050920084036.43:renameBuffer (not ready yet)
+    #@-node:ekr.20050920084036.39:prependToBuffer (test)
+    #@+node:ekr.20050920084036.43:renameBuffer
     def renameBuffer (self,event):
         
-        k = self.k
-        k.setLabelBlue('Rename buffer from: ')
-        self.getBufferName(event,self.renameBufferFinisher1)
+        self.k.setLabelBlue('Rename buffer from: ')
+        self.getBufferName(self.renameBufferFinisher1)
         
-    def renameBufferFinisher1 (self,event,name):
+    def renameBufferFinisher1 (self,name):
         
-        k = self.k
-        k.setLabelBlue('Rename buffer from: %s to: ' % (name))
         self.fromName = name
-        self.getBufferName(event,self.renameBufferFinisher2)
+        self.k.setLabelBlue('Rename buffer from: %s to: ' % (name))
+        self.getBufferName(self.renameBufferFinisher2)
         
-    def renameBufferFinisher2 (self,event,name):
-    
-        k = self.k
+    def renameBufferFinisher2 (self,name):
         
-        # w = event.widget
-        # self.renameBuffers[w](name)
-    
-        k.setLabelGrey('Renamed buffer %s to %s' % (self.fromName,name))
+        c = self.c ; p = self.findBuffer(self.fromName)
+        if p:
+            c.frame.tree.editLabel(p)
+            w = p.edit_widget()
+            if w:
+                w.delete("1.0","end")
+                w.insert("1.0",name)
+                c.endEditing()
+                ### c.frame.tree.onHeadChanged(p,'rename-buffer %s' % p.headString())
     #@nonl
-    #@-node:ekr.20050920084036.43:renameBuffer (not ready yet)
-    #@+node:ekr.20050920084036.40:switchToBuffer (not ready yet)
+    #@-node:ekr.20050920084036.43:renameBuffer
+    #@+node:ekr.20050920084036.40:switchToBuffer
     def switchToBuffer (self,event):
+    
+        self.k.setLabelBlue('Switch to buffer: ')
+        self.getBufferName(self.switchToBufferFinisher)
         
-        k = self.k
-        k.setLabelBlue('Switch to buffer: ')
-        self.getBufferName(event,self.switchToBufferFinisher)
+    def switchToBufferFinisher (self,name):
         
-    def switchToBufferFinisher (self,event,name):
-        
-        k = self.k
-        
-        ### To be removed.
-        __pychecker__ = '--no-argsused' # name not used yet.
-        
-        # w = event.widget
-        # method = self.bufferGotos[event.widget]
-        # k.keyboardQuit(event)
-        # method(name)
-        
-        pass ### Not ready yet.
+        c = self.c ; p = self.findBuffer(name)
+        if p:
+            c.selectPosition(p)
+            c.redraw_now()
     #@nonl
-    #@-node:ekr.20050920084036.40:switchToBuffer (not ready yet)
+    #@-node:ekr.20050920084036.40:switchToBuffer
+    #@+node:ekr.20051216080913:Not ready, and not very useful
+    # These commands are disabled in getPublicCommands.
+    #@nonl
+    #@+node:ekr.20050920084036.36:copyToBuffer (what should this do?)
+    def copyToBuffer (self,event):
+    
+        self.k.setLabelBlue('Copy to buffer: ')
+        self.getBufferName(self.copyToBufferFinisher)
+    
+    def copyToBufferFinisher (self,event,name):
+    
+        c = self.c ; k = self.k ; w = self.w
+        s = g.app.gui.getSelectedText(w)
+        p = self.findBuffer(name)
+        if s and p:
+            c.selectPosition(p)
+            c.redraw_now()
+            self.beginCommand('copy-to-buffer: %s' % p.headString())
+            w.insert('end',s)
+            w.mark_set('insert','end')
+            w.see('end')
+            self.endCommand()
+    #@nonl
+    #@-node:ekr.20050920084036.36:copyToBuffer (what should this do?)
+    #@+node:ekr.20050920084036.37:insertToBuffer (test)
+    def insertToBuffer (self,event):
+    
+        self.k.setLabelBlue('Insert to buffer: ')
+        self.getBufferName(self.insertToBufferFinisher)
+    
+    def insertToBufferFinisher (self,event,name):
+        
+        c = self.c ; k = self.k ; w = self.w
+        s = g.app.gui.getSelectedText(w)
+        p = self.findBuffer(name)
+        if s and p:
+            c.selectPosition(p)
+            c.redraw_now()
+            self.beginCommand('insert-to-buffer: %s' % p.headString())
+            w.insert('insert',s)
+            w.see('insert')
+            self.endCommand()
+    #@nonl
+    #@-node:ekr.20050920084036.37:insertToBuffer (test)
+    #@-node:ekr.20051216080913:Not ready, and not very useful
     #@-node:ekr.20050920084036.34:Entry points
+    #@+node:ekr.20050927102133.1:Utils
+    #@+node:ekr.20051215121416:computeData
+    def computeData (self):
+        
+        counts = {} ; self.nameList = []
+        self.names = {} ; self.tnodes = {}
+       
+        for p in self.c.allNodes_iter():
+            h = p.headString().strip()
+            t = p.v.t
+            n = counts.get(t,0) + 1
+            counts[t] = n
+            if n == 1: # Only make one entry per set of clones.
+                nameList = self.names.get(h,[])
+                if nameList:
+                    if p.parent():
+                        key = '%s, parent: %s' % (h,p.parent().headString())
+                    else:
+                        key = '%s, child index: %d' % (h,p.childIndex())
+                else:
+                    key = h
+                self.nameList.append(key)
+                self.tnodes[key] = t
+                nameList.append(key)
+                self.names[h] = nameList
+    #@nonl
+    #@-node:ekr.20051215121416:computeData
+    #@+node:ekr.20051215164823:findBuffer
+    def findBuffer (self,name):
+        
+        t = self.tnodes.get(name)
+    
+        for p in self.c.allNodes_iter():
+            if p.v.t == t:
+                return p
+               
+        g.trace("Can't happen",name)
+        return None
+    #@nonl
+    #@-node:ekr.20051215164823:findBuffer
     #@+node:ekr.20050927093851:getBufferName
-    def getBufferName (self,event,func=None):
+    def getBufferName (self,finisher):
         
         '''Get a buffer name into k.arg and call k.setState(kind,n,handler).'''
         
         k = self.k ; c = k.c ; state = k.getState('getBufferName')
         
         if state == 0:
-            # Creating a helper dict is much faster than creating the list directly.
-            names = {}
-            for p in c.allNodes_iter():
-                names [p.headString()] = None
-            tabList = names.keys()
-            self.getBufferNameFinisher = func
-            prefix = k.getLabel()
-            k.getArg(event,'getBufferName',1,self.getBufferName,prefix=prefix,tabList=tabList)
+            self.computeData()
+            self.getBufferNameFinisher = finisher
+            prefix = k.getLabel() ; event = None
+            k.getArg(event,'getBufferName',1,self.getBufferName,
+                prefix=prefix,tabList=self.nameList)
         else:
             k.resetLabel()
             k.clearState()
-            # g.trace(repr(k.arg))
-            func = self.getBufferNameFinisher
+            finisher = self.getBufferNameFinisher
             self.getBufferNameFinisher = None
-            if func:
-                func(event,k.arg)
+            finisher(k.arg)
     #@nonl
     #@-node:ekr.20050927093851:getBufferName
-    #@+node:ekr.20050927102133.1:Utils
-    #@+node:ekr.20050927101829.3:setBufferData
-    def setBufferData (self,event,name,data):
-    
-        c = self.c
-        data = unicode(data)
-        d = self.tnodes [c]
-        if d.has_key(name):
-            d [name].bodyString = data
-    #@nonl
-    #@-node:ekr.20050927101829.3:setBufferData
-    #@+node:ekr.20050927101829.4:gotoNode (not used!)
-    def gotoNode (self,name):
-        
-        c = self.c
-        c.beginUpdate()
-        try:
-            if self.positions.has_key(name):
-                posis = self.positions [name]
-                if len(posis) > 1:
-                    tl = Tk.Toplevel()
-                    #tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 ))
-                    tl.title("Select node by numeric position")
-                    fr = Tk.Frame(tl)
-                    fr.pack()
-                    header = Tk.Label(fr,text='select position')
-                    header.pack()
-                    lbox = Tk.Listbox(fr,background='white',foreground='blue')
-                    lbox.pack()
-                    for z in xrange(len(posis)):
-                        lbox.insert(z,z+1)
-                    lbox.selection_set(0)
-                    def setPos (event):
-                        cpos = int(lbox.nearest(event.y))
-                        tl.withdraw()
-                        tl.destroy()
-                        if cpos != None:
-                            self.gotoPosition(c,posis[cpos])
-                    lbox.bind('<Button-1>',setPos)
-                    geometry = tl.geometry()
-                    geometry = geometry.split('+')
-                    geometry = geometry [0]
-                    width = tl.winfo_screenwidth() / 3
-                    height = tl.winfo_screenheight() / 3
-                    geometry = '+%s+%s' % (width,height)
-                    tl.geometry(geometry)
-                else:
-                    pos = posis [0]
-                    self.gotoPosition(c,pos)
-            else:
-                pos2 = c.currentPosition()
-                tnd = leoNodes.tnode('',name)
-                pos = pos2.insertAfter(tnd)
-                self.gotoPosition(c,pos)
-        finally:
-            c.endUpdate()
-    #@nonl
-    #@-node:ekr.20050927101829.4:gotoNode (not used!)
-    #@+node:ekr.20050927101829.5:gotoPosition
-    def gotoPosition (self,c,pos):
-    
-        c.frame.tree.expandAllAncestors(pos)
-        c.selectPosition(pos)
-    #@nonl
-    #@-node:ekr.20050927101829.5:gotoPosition
-    #@+node:ekr.20050927101829.6:deleteNode (not used?)
-    def deleteNode (self,name):
-        
-        c = self.c
-    
-        c.beginUpdate()
-        try:
-            if self.positions.has_key(name):
-                pos = self.positions [name]
-                cpos = c.currentPosition()
-                pos.doDelete()
-                c.selectPosition(cpos)
-        finally:
-            c.endUpdate()
-    #@nonl
-    #@-node:ekr.20050927101829.6:deleteNode (not used?)
-    #@+node:ekr.20050927101829.7:renameNode (not used?)
-    def renameNode (self,name):
-        
-        c = self.c
-    
-        c.beginUpdate()
-        try:
-            pos = c.currentPosition()
-            pos.setHeadString(name)
-        finally:
-            c.endUpdate()
-    #@nonl
-    #@-node:ekr.20050927101829.7:renameNode (not used?)
     #@-node:ekr.20050927102133.1:Utils
     #@-others
 #@nonl
@@ -2321,7 +2286,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         g.trace(g.app.gui.widget_name(w))
         
-        self.beginCommand(event)
+        self.beginCommand('delete-char')
         
         i,j = g.app.gui.getTextSelection(w)
     
@@ -4646,7 +4611,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.207:class queryReplaceCommandsClass
-#@+node:ekr.20050920084036.221:class rectangleCommandsClass (ok)
+#@+node:ekr.20050920084036.221:class rectangleCommandsClass (ok,simplified)
 class rectangleCommandsClass (baseEditCommandsClass):
 
     #@    @+others
@@ -4674,7 +4639,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
         }
     #@-node:ekr.20050920084036.222: ctor & finishCreate
     #@+node:ekr.20051004112630:check
-    def check (self,event,warning='No rectangle selected'):
+    def check (self,event=None,warning='No rectangle selected'):
         
         '''Return True if there is a selection.
         Otherwise, return False and issue a warning.'''
@@ -4696,6 +4661,26 @@ class rectangleCommandsClass (baseEditCommandsClass):
         }
     #@nonl
     #@-node:ekr.20050920084036.223:getPublicCommands
+    #@+node:ekr.20051215103053:beginCommand & beginCommandWithEvent (rectangle)
+    def beginCommand (self,undoType='Typing'):
+    
+        w = baseEditCommandsClass.beginCommand(self,undoType)
+    
+        r1, r2, r3, r4 = self.getRectanglePoints()
+    
+        return w, r1, r2, r3, r4
+        
+    def beginCommandWithEvent (self,event,undoType='Typing'):
+        
+        '''Do the common processing at the start of each command.'''
+        
+        w = baseEditCommandsClass.beginCommandWithEvent(self,event,undoType)
+        
+        r1, r2, r3, r4 = self.getRectanglePoints()
+    
+        return w, r1, r2, r3, r4
+    #@nonl
+    #@-node:ekr.20051215103053:beginCommand & beginCommandWithEvent (rectangle)
     #@+node:ekr.20050920084036.224:Entries
     #@+node:ekr.20050920084036.231: enterRectangleState
     def enterRectangleState (self,event):
@@ -4721,22 +4706,18 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.225:clearRectangle
     def clearRectangle (self,event):
     
-        if not self.check(event): return
+        if not self.check(): return
         
-        # Prepare for undo.
-        c = self.c ; k = self.k ; w = self.w
-        undoType = 'clear-rectangle'
-        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        w,r1,r2,r3,r4 = self.beginCommand('clear-rectangle')
     
         # Change the text.
-        r1, r2, r3, r4 = self.getRectanglePoints()
+        
         s = ' ' * (r4-r2)
         for r in xrange(r1,r3+1):
             w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
             w.insert('%s.%s' % (r,r2),s)
-    
-        result = w.get('1.0','end')
-        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
+            
+        self.endCommand()
     #@nonl
     #@-node:ekr.20050920084036.225:clearRectangle
     #@+node:ekr.20050920084036.226:closeRectangle
@@ -4744,43 +4725,33 @@ class rectangleCommandsClass (baseEditCommandsClass):
         
         '''Delete the rectangle if it contains nothing but whitespace..'''
     
-        if not self.check(event): return
+        if not self.check(): return
     
-        # Prepare for undo.
-        c = self.c ; k = self.k ; w = self.w
-        undoType = 'close-rectangle'
-        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        w,r1,r2,r3,r4 = self.beginCommand('close-rectangle')
       
         # Return if any part of the selection contains something other than whitespace.
-        r1, r2, r3, r4 = self.getRectanglePoints()
         for r in xrange(r1,r3+1):
             s = w.get('%s.%s' % (r,r2),'%s.%s' % (r,r4))
             if s.strip(): return
+    
         # Change the text.
         for r in xrange(r1,r3+1):
             w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
             
-        result = w.get('1.0','end')
-        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
+        self.endCommand()
     #@nonl
     #@-node:ekr.20050920084036.226:closeRectangle
     #@+node:ekr.20050920084036.227:deleteRectangle
     def deleteRectangle (self,event):
     
-        if not self.check(event): return
-     
-        # Prepare for undo.
-        c = self.c ; k = self.k ; w = self.w
-        undoType = 'delete-rectangle'
-        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        if not self.check(): return
         
-        # Change the text.
-        r1, r2, r3, r4 = self.getRectanglePoints()
+        w,r1,r2,r3,r4 = self.beginCommand('delete-rectangle')
+    
         for r in xrange(r1,r3+1):
             w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
             
-        result = w.get('1.0','end')
-        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
+        self.endCommand()
     #@nonl
     #@-node:ekr.20050920084036.227:deleteRectangle
     #@+node:ekr.20050920084036.228:killRectangle
@@ -4788,13 +4759,8 @@ class rectangleCommandsClass (baseEditCommandsClass):
     
         if not self.check(event): return
         
-        # Prepare for undo.
-        c = self.c ; k = self.k ; w = self.w
-        undoType = 'kill-rectangle'
-        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
-        
-        # Change the text.
-        r1, r2, r3, r4 = self.getRectanglePoints()
+        w,r1,r2,r3,r4 = self.beginCommand('kill-rectangle')
+    
         self.theKillRectangle = []
         for r in xrange(r1,r3+1):
             s = w.get('%s.%s' % (r,r2),'%s.%s' % (r,r4))
@@ -4804,8 +4770,8 @@ class rectangleCommandsClass (baseEditCommandsClass):
         if self.theKillRectangle:
             w.mark_set('sel.start','insert')
             w.mark_set('sel.end','insert')
-            result = w.get('1.0','end')
-            c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
+            
+        self.endCommand()
     #@nonl
     #@-node:ekr.20050920084036.228:killRectangle
     #@+node:ekr.20050920084036.230:openRectangle
@@ -4816,19 +4782,13 @@ class rectangleCommandsClass (baseEditCommandsClass):
     
         if not self.check(event): return
         
-        # Prepare for undo.
-        c = self.c ; k = self.k ; w = self.w
-        undoType = 'open-rectangle'
-        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+        w,r1,r2,r3,r4 = self.beginCommand('open-rectangle')
         
-        # Change the text.
-        r1, r2, r3, r4 = self.getRectanglePoints()
         s = ' ' * (r4-r2)
         for r in xrange(r1,r3+1):
             w.insert('%s.%s' % (r,r2),s)
             
-        result = w.get('1.0','end')
-        c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
+        self.endCommand()
     #@nonl
     #@-node:ekr.20050920084036.230:openRectangle
     #@+node:ekr.20050920084036.229:yankRectangle
@@ -4840,9 +4800,8 @@ class rectangleCommandsClass (baseEditCommandsClass):
         if not killRect:
             k.setLabelGrey('No kill rect')
             return
-    
-        undoType = 'yank-rectangle'
-        head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
+            
+        w,r1,r2,r3,r4 = self.beginCommand('yank-rectangle')
         
         # Change the text.
         txt = w.get('insert linestart','insert')
@@ -4860,8 +4819,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
                 w.insert('%s.0 lineend' % i1,'\n')
             i1 += 1
     
-        result = w.get('1.0','end')
-        c.updateBodyPane('',result,'',undoType,oldSel,oldYview) # Handles undo
+        self.endCommand()
     #@nonl
     #@-node:ekr.20050920084036.229:yankRectangle
     #@+node:ekr.20050920084036.232:stringRectangle
@@ -4872,33 +4830,27 @@ class rectangleCommandsClass (baseEditCommandsClass):
         c = self.c ; k = self.k ; w = self.w
         state = k.getState('string-rect')
         if state == 0:
-            if not self.check(event): return
+            if not self.check(): return
             self.stringRect = self.getRectanglePoints()
             k.setLabelBlue('String rectangle: ',protect=True)
             k.getArg(event,'string-rect',1,self.stringRectangle)
         else:
             k.clearState()
             k.resetLabel()
-            # Prepare for undo.
-            undoType = 'string-rectangle'
-            head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=False)
-            # Restore the selection.
+            self.beginCommand('string-rectangle')
             r1, r2, r3, r4 = self.stringRect
             w.mark_set('sel.start','%d.%d' % (r1,r2))
             w.mark_set('sel.end',  '%d.%d' % (r3,r4))
             c.frame.bodyWantsFocus()
-            # Change the text.
             for r in xrange(r1,r3+1):
                 w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
                 w.insert('%s.%s' % (r,r2),k.arg)
-            result = w.get('1.0','end')
-            c.updateBodyPane('',result,'',undoType,oldSel,oldYview)
-    #@nonl
+            self.endCommand()
     #@-node:ekr.20050920084036.232:stringRectangle
     #@-node:ekr.20050920084036.224:Entries
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.221:class rectangleCommandsClass (ok)
+#@-node:ekr.20050920084036.221:class rectangleCommandsClass (ok,simplified)
 #@+node:ekr.20050920084036.234:class registerCommandsClass (ok)
 class registerCommandsClass (baseEditCommandsClass):
 
@@ -6183,7 +6135,7 @@ class searchCommandsClass (baseEditCommandsClass):
 #@nonl
 #@-node:ekr.20050920084036.257:class searchCommandsClass
 #@-node:ekr.20051023094009:Search classes
-#@+node:ekr.20051025071455:Spell classes
+#@+node:ekr.20051025071455:Spell classes (ok)
 #@+others
 #@+node:ekr.20051025071455.6:class Aspell
 class Aspell:
@@ -6921,7 +6873,7 @@ class spellTab(leoFind.leoFind):
 #@nonl
 #@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
 #@-others
-#@-node:ekr.20051025071455:Spell classes
+#@-node:ekr.20051025071455:Spell classes (ok)
 #@-others
 
 #@<< define classesList >>

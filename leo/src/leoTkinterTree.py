@@ -821,7 +821,7 @@ class leoTkinterTree (leoFrame.leoTree):
             
         c = self.c
         
-        if c.config.getBool('trace_redraw_now'):
+        if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
             g.trace(self.redrawCount,g.callers())
             # g.print_stats()
             # g.clear_stats()
@@ -1859,11 +1859,10 @@ class leoTkinterTree (leoFrame.leoTree):
         # Testing for ch here prevents flashing in the headline
         # when the control key is held down.
         if ch:
-            # g.trace(repr(ch),g.callers(7))
+            g.trace(repr(ch),g.callers())
             self.updateHead(event,w)
     
         return 'break' # Required
-    #@nonl
     #@-node:ekr.20040803072955.88:onHeadlineKey
     #@+node:ekr.20051026083544.2:updateHead
     def updateHead (self,event,w):
@@ -1893,15 +1892,15 @@ class leoTkinterTree (leoFrame.leoTree):
         if s.endswith('\n'):
             s = s[:-1]
     
-        # Always update this.
-        p.initHeadString(s)
+        if 0: # This would not be valid.
+            # Because of clones we must redraw the screen after making any change official.
+            p.initHeadString(s)
         w.configure(width=self.headWidth(s=s))
         
         # The granularity is the entire editing session,
         # starting at the revert point.
         if ch in ('\n','\r'):
-            self.endEditLabel()
-            self.onHeadChanged(p)
+            self.endEditLabel() # Now calls self.onHeadChanged.
             
         if not c.changed: c.setChanged(True) # Bug fix: 11/28/05.
     #@nonl
@@ -1909,7 +1908,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.91:onHeadChanged
     # Tricky code: do not change without careful thought and testing.
     
-    def onHeadChanged (self,p,undoType='Typing'):
+    def onHeadChanged (self,p,undoType='Typing',redraw_flag=True):
         
         '''Officially change a headline.
         Set the old undo text to the previous revert point.'''
@@ -1956,19 +1955,23 @@ class leoTkinterTree (leoFrame.leoTree):
         # g.trace(repr(s),g.callers())
             
         if changed:
-            # g.trace('undo to:',repr(oldRevert))
+            g.trace('changed: old',repr(oldRevert),'new',repr(s))
             undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
             if not c.changed: c.setChanged(True)
             dirtyVnodeList = p.setDirty()
             u.afterChangeNodeContents(p,undoType,undoData,
                 dirtyVnodeList=dirtyVnodeList)
-    
-        self.setEditPosition(None) # Will end the ending when the redraw happens.
-        if self.stayInTree:
-            frame.treeWantsFocus()
         else:
-            frame.bodyWantsFocus()
-        c.redraw_now() # Ensure a complete redraw immediately.
+            pass
+            # g.trace('not changed')
+    
+        ### self.setEditPosition(None) # Will end the ending when the redraw happens.
+        if redraw_flag:
+            if self.stayInTree:
+                frame.treeWantsFocus()
+            else:
+                frame.bodyWantsFocus()
+            c.redraw_now() # Ensure a complete redraw immediately.
        
         g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
     #@nonl
@@ -2466,13 +2469,14 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.126:tree.endEditLabel
     def endEditLabel (self):
         
-        '''End editing for self.editText.
+        '''End editing of a headline and update p.headString().'''
+    
+        c = self.c ; p = c.currentPosition()
+    
+        self.onHeadChanged(p,redraw_flag=False)
         
-        *Important*: the key handlers always keep the headline text up-to-date.'''
-    
-        c = self.c
-    
-        self.setUnselectedLabelState(c.currentPosition())
+        self.setUnselectedLabelState(p)
+        
         self.setEditPosition(None) # That is, self._editPosition = None
     #@nonl
     #@-node:ekr.20040803072955.126:tree.endEditLabel
@@ -2513,7 +2517,7 @@ class leoTkinterTree (leoFrame.leoTree):
         old_p = c.currentPosition()
         if not p or not p.exists(c): return # Not an error.
         
-        # g.trace('redraw_flag',redraw_flag)
+        # if g.app.unitTesting: g.trace('redraw_flag',redraw_flag,p)
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             if old_p and redraw_flag:
