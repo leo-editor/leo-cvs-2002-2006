@@ -218,6 +218,8 @@
 <v t="ekr.20051214093711" a="TV"><vh>redemo</vh>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
+<v t="ekr.20051215124024.1"><vh>ab ab ab</vh></v>
+<v t="ekr.20051215124024.1"><vh>ab ab ab</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4214,5 +4216,6 @@ else:
     demo.regexdisplay.configure(regexconfig)
     return root</t>
 <t tx="ekr.20051214100048"></t>
+<t tx="ekr.20051215124024.1">ab ab</t>
 </tnodes>
 </leo_file>

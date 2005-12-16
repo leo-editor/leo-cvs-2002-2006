@@ -3111,6 +3111,91 @@ OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.4:OnPasteFromMenu
 #@-node:ekr.20051214130017:OnXXXFromMenu
+#@+node:ekr.20051215170055:From bufferCommandsClass
+#@+node:ekr.20050927101829.4:gotoNode (not used!)
+def gotoNode (self,name):
+    
+    c = self.c
+    c.beginUpdate()
+    try:
+        if self.positions.has_key(name):
+            posis = self.positions [name]
+            if len(posis) > 1:
+                tl = Tk.Toplevel()
+                #tl.geometry( '%sx%s+0+0' % ( ( ms[ 0 ]/3 ) *2 , ms[ 1 ]/2 ))
+                tl.title("Select node by numeric position")
+                fr = Tk.Frame(tl)
+                fr.pack()
+                header = Tk.Label(fr,text='select position')
+                header.pack()
+                lbox = Tk.Listbox(fr,background='white',foreground='blue')
+                lbox.pack()
+                for z in xrange(len(posis)):
+                    lbox.insert(z,z+1)
+                lbox.selection_set(0)
+                def setPos (event):
+                    cpos = int(lbox.nearest(event.y))
+                    tl.withdraw()
+                    tl.destroy()
+                    if cpos != None:
+                        self.gotoPosition(c,posis[cpos])
+                lbox.bind('<Button-1>',setPos)
+                geometry = tl.geometry()
+                geometry = geometry.split('+')
+                geometry = geometry [0]
+                width = tl.winfo_screenwidth() / 3
+                height = tl.winfo_screenheight() / 3
+                geometry = '+%s+%s' % (width,height)
+                tl.geometry(geometry)
+            else:
+                pos = posis [0]
+                self.gotoPosition(c,pos)
+        else:
+            pos2 = c.currentPosition()
+            tnd = leoNodes.tnode('',name)
+            pos = pos2.insertAfter(tnd)
+            self.gotoPosition(c,pos)
+    finally:
+        c.endUpdate()
+#@nonl
+#@-node:ekr.20050927101829.4:gotoNode (not used!)
+#@+node:ekr.20050927101829.5:gotoPosition
+def gotoPosition (self,c,pos):
+
+    c.frame.tree.expandAllAncestors(pos)
+    c.selectPosition(pos)
+#@nonl
+#@-node:ekr.20050927101829.5:gotoPosition
+#@+node:ekr.20050927101829.6:deleteNode (not used?)
+def deleteNode (self,name):
+    
+    c = self.c
+
+    c.beginUpdate()
+    try:
+        if self.positions.has_key(name):
+            pos = self.positions [name]
+            cpos = c.currentPosition()
+            pos.doDelete()
+            c.selectPosition(cpos)
+    finally:
+        c.endUpdate()
+#@nonl
+#@-node:ekr.20050927101829.6:deleteNode (not used?)
+#@+node:ekr.20050927101829.7:renameNode (not used?)
+def renameNode (self,name):
+    
+    c = self.c
+
+    c.beginUpdate()
+    try:
+        pos = c.currentPosition()
+        pos.setHeadString(name)
+    finally:
+        c.endUpdate()
+#@nonl
+#@-node:ekr.20050927101829.7:renameNode (not used?)
+#@-node:ekr.20051215170055:From bufferCommandsClass
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8506" clone_windows="0"/>
-<globals body_outline_ratio="0.478873239437">
+<leo_header file_format="2" tnodes="0" max_tnode_index="8511" clone_windows="0"/>
+<globals body_outline_ratio="0.581306017926">
 	<global_window_position top="61" left="316" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="E"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="ETV"><vh>All unit tests</vh>
 <v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -970,7 +970,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>Unit tests</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1002,7 +1002,7 @@
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>General Unit Tests...</vh>
+<v t="ekr.20040712101754"><vh>General Unit Tests...</vh>
 <v t="ekr.20041130092210"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
@@ -1333,7 +1333,7 @@
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
-<v t="ekr.20050408084135" a="E"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20050518070540"><vh>extract test2</vh>
@@ -1412,7 +1412,7 @@
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 </v>
 </v>
-<v t="ekr.20050417102057" a="E"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20050417102057"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
 <v t="ekr.20050417104821"><vh>data</vh>
 <v t="ekr.20050417124704"><vh>tempNode</vh></v>
@@ -1483,7 +1483,7 @@
 <v t="ekr.20050417095124.33"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417120312.1" a="ETV"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
 <v t="ekr.20050417095124.34"><vh>data</vh>
 <v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.35"><vh>before</vh></v>
@@ -1706,14 +1706,13 @@
 <v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
 <v t="ekr.20051107115231.17"><vh>@test typing and undo in headline - at end</vh></v>
 <v t="ekr.20051107115231.18"><vh>@test paste and undo in headline - at end</vh></v>
-<v t="ekr.20051107115231.19"><vh>@test typing and undo in headline - with selection</vh></v>
+<v t="ekr.20051107115231.19" a="M"><vh>@test typing and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.20"><vh>@test paste and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.21"><vh>@test selecting new node retains typing in headline</vh></v>
 <v t="ekr.20051107115231.22"><vh>@test paste from menu into body sticks</vh></v>
 <v t="ekr.20051107115231.23"><vh>@test paste from menu into headline sticks</vh></v>
 <v t="ekr.20051107115231.24"><vh>@test paste from menu to body recolors the body</vh></v>
 <v t="ekr.20051107115231.25"><vh>@test typing in headline recomputes width</vh></v>
-<v t="ekr.20051107115231.26"><vh>@test paste in headline recomputes width</vh></v>
 <v t="ekr.20051107115231.28"><vh>@test selecting new node retains paste in headline</vh></v>
 <v t="ekr.20051109091152"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051109091731"><vh>@test typing in non-empty body text does not redraw the screen</vh></v>
@@ -1724,8 +1723,8 @@
 <v t="ekr.20051125170139"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
 <v t="ekr.20051108141141"><vh>Not ready yet</vh>
-<v t="ekr.20051107115231.32"><vh>@test plugins manager stays in front</vh></v>
-<v t="ekr.20051109091333"><vh>@test deleting the last body character text redraws the screen (and icon)</vh></v>
+<v t="ekr.20051107115231.32"><vh>@@test plugins manager stays in front</vh></v>
+<v t="ekr.20051109091333"><vh>@@test deleting the last body character text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
 <v t="ekr.20051107115231.34"><vh>@test scrolling at bottom of window</vh></v>
 <v t="ekr.20051130080047"><vh>@test head changes stick after click in icon box</vh></v>
@@ -1733,6 +1732,7 @@
 <v t="ekr.20051202100844"><vh>@test edit headline, then insert node</vh></v>
 <v t="ekr.20051202100844.1"><vh>@test &lt;Delete&gt; key</vh></v>
 <v t="ekr.20051202100844.2"><vh>@test arrow keys</vh></v>
+<v t="ekr.20051107115231.26"><vh>@@test paste in headline recomputes width</vh></v>
 </v>
 <v t="ekr.20051109143831"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
 </v>
@@ -7871,7 +7871,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13918,22 +13918,33 @@ h = 'Test headline abc'
 p = u.findNodeAnywhere(c,h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
-tree.editLabel(p)
+print 'begin edit'
+tree.editLabel(p) # Sets focus.
 w = p.edit_widget()
+# print g.app.gui.widget_name(w)
 try:
     assert w
-    g.app.gui.setSelectionRange(w,'1.1','1.2')
+    w.update()
+    g.app.gui.setSelectionRange(w,'1.1','1.2',insert='1.1')
+    # w.mark_set('insert','1.1') # New in 4.4a4: we must also set the insert point!
+    #print 'sel',repr(w.tag_ranges('sel'))
+    #print 'ins',repr(w.index('insert'))
     w.event_generate('X')
     w.event_generate('Y')
     w.event_generate('Z')
     w.event_generate('&lt;Return&gt;')
-    assert p.headString() == h[0] + 'XYZ' + h[2:]
+    print 'after',repr(w.get('1.0','end'))
+    print 'end edit'
+    expected = h[0] + 'XYZ' + h[2:]
+    assert p.headString() == expected,'fail 1: expected "%s" got "%s"' % (
+        expected,repr(p.headString()))
     k.manufactureKeyPressForCommandName(w,'undo')
-    assert p.headString() == h
+    assert p.headString() == h,'fail 2'
 finally:
     if 1:
         p.initHeadString(h)
-        c.redraw_now()</t>
+        c.redraw_now()
+</t>
 <t tx="ekr.20051107115231.20">import leoTest ; u = leoTest.testUtils()
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
@@ -14126,15 +14137,15 @@ w = g.app.gui.get_focus(c.frame)
 
 assert w == bodyCtrl, 'focus %s' % w</t>
 <t tx="ekr.20051107115231.31"></t>
-<t tx="ekr.20051107115231.32">if 0: # Not so easy to do.
-    import plugin_manager
-    n = g.app.dialogs
-    pm = plugin_manager.ManagerDialog()
-    try:
-        assert g.app.dialogs == n
-    finally:
-        if 1:
-            pass</t>
+<t tx="ekr.20051107115231.32"># Not so easy to do.
+import plugin_manager
+n = g.app.dialogs
+pm = plugin_manager.ManagerDialog()
+try:
+    assert g.app.dialogs == n
+finally:
+    if 1:
+        pass</t>
 <t tx="ekr.20051107115231.34"></t>
 <t tx="ekr.20051108063032">c.redraw_now() # To make node visible
 &lt;&lt; define s, the node to be pasted &gt;&gt;
@@ -14545,28 +14556,28 @@ finally:
     if 1:
         p.setBodyString('')
         c.redraw_now()</t>
-<t tx="ekr.20051109091333">if 0: # Not ready yet: generating a backspace seems impossible!
+<t tx="ekr.20051109091333"># Not ready yet: generating a backspace seems impossible!
 
-    import leoTest ; u = leoTest.testUtils()
+import leoTest ; u = leoTest.testUtils()
 
-    h = 'Test headline abc'
-    p = u.findNodeAnywhere(c,h)
-    c.selectPosition(p)
-    p.setBodyString('a')
-    c.redraw_now() # To make node visible and to set the icon.
-    try:
-        c.frame.bodyWantsFocus()
-        n = c.frame.tree.redrawCount
-        w = c.frame.body.bodyCtrl
-        w.mark_set('insert','end')
-        w.event_generate('&lt;BackSpace&gt;')
-        w.update_idletasks()
-        n2 = c.frame.tree.redrawCount
-        assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
-    finally:
-        if 0:
-            p.setBodyString('')
-            c.redraw_now()</t>
+h = 'Test headline abc'
+p = u.findNodeAnywhere(c,h)
+c.selectPosition(p)
+p.setBodyString('a')
+c.redraw_now() # To make node visible and to set the icon.
+try:
+    c.frame.bodyWantsFocus()
+    n = c.frame.tree.redrawCount
+    w = c.frame.body.bodyCtrl
+    w.mark_set('insert','end')
+    w.event_generate('&lt;BackSpace&gt;')
+    w.update_idletasks()
+    n2 = c.frame.tree.redrawCount
+    assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
+finally:
+    if 0:
+        p.setBodyString('')
+        c.redraw_now()</t>
 <t tx="ekr.20051109091731">import leoTest ; u = leoTest.testUtils()
 
 h = 'Test headline abc'
