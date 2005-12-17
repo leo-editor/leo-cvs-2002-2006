@@ -72,8 +72,8 @@
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
 </v>
 </v>
-<v t="ekr.20051126062243" a="E"><vh>@page Debugging options</vh>
-<v t="ekr.20051126062243.1" a="TV"><vh>@bool trace_redraw_now = True</vh></v>
+<v t="ekr.20051126062243"><vh>@page Debugging options</vh>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = True</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20051126063209"><vh>@int default_callers_level = 7</vh></v>
@@ -242,7 +242,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -1410,6 +1410,7 @@ center-region               = None
 check-all-python-code       = None
 check-outline               = None
 check-python-code           = None
+clear-kill-ring             = None
 clear-recent-files          = None
 clear-rectangle             = None
 clone-node                  = Ctrl-`

@@ -2786,7 +2786,7 @@ def get_focus(self,frame):
 #@nonl
 #@-node:ekr.20031218072017.4065:get_focus
 #@+node:ekr.20031218072017.2373:set_focus (app.gui)
-def set_focus(self,c,w,force=False):
+def set_focus(self,c,w):
     
     __pychecker__ = '--no-argsused' # c not used at present.
     
@@ -14927,10 +14927,10 @@ def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; p = c.currentPosition()
+    f = self ; c = f.c
     w = f.getFocus()
-    if not w: return 'break'
-    name = hasattr(w,'_name') and w._name or ''
+    if not w: return
+    name = g.app.gui.widget_name(w)
     oldSel = g.app.gui.getTextSelection(w)
     oldText = w.get('1.0','end')
     i,j = g.app.gui.getTextSelection(w)
@@ -14957,8 +14957,7 @@ def pasteText (self):
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus()
+    f = self ; c = f.c ; w = f.getFocus()
     if not w: return
     name = g.app.gui.widget_name(w)
     oldSel = g.app.gui.getTextSelection(w)
@@ -18205,10 +18204,10 @@ def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; p = c.currentPosition()
+    f = self ; c = f.c
     w = f.getFocus()
-    if not w: return 'break'
-    name = hasattr(w,'_name') and w._name or ''
+    if not w: return
+    name = g.app.gui.widget_name(w)
     oldSel = g.app.gui.getTextSelection(w)
     oldText = w.get('1.0','end')
     i,j = g.app.gui.getTextSelection(w)
@@ -18235,8 +18234,7 @@ def pasteText (self):
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c ; p = c.currentPosition()
-    w = f.getFocus()
+    f = self ; c = f.c ; w = f.getFocus()
     if not w: return
     name = g.app.gui.widget_name(w)
     oldSel = g.app.gui.getTextSelection(w)
