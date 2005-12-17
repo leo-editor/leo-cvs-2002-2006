@@ -1921,7 +1921,6 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if ch in ('\n','\r'):
             self.endEditLabel() # Now calls self.onHeadChanged.
-    #@nonl
     #@-node:ekr.20051026083544.2:updateHead
     #@+node:ekr.20040803072955.91:onHeadChanged
     # Tricky code: do not change without careful thought and testing.
@@ -2489,13 +2488,11 @@ class leoTkinterTree (leoFrame.leoTree):
         '''End editing of a headline and update p.headString().'''
     
         c = self.c ; p = c.currentPosition()
+    
+        self.setEditPosition(None) # That is, self._editPosition = None
         
         # Important: this will redraw if necessary.
         self.onHeadChanged(p)
-        
-        self.setSelectedLabelState(p)
-        
-        self.setEditPosition(None) # That is, self._editPosition = None
     #@nonl
     #@-node:ekr.20040803072955.126:tree.endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
@@ -2535,19 +2532,20 @@ class leoTkinterTree (leoFrame.leoTree):
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             if old_p:
                 #@            << unselect the old node >>
-                #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+                #@+node:ekr.20040803072955.129:<< unselect the old node >>
                 # Remember the position of the scrollbar before making any changes.
                 yview=body.yview()
                 insertSpot = c.frame.body.getInsertionPoint()
                 
                 if old_p != p:
                     self.endEditLabel() # sets editPosition = None
+                    self.setUnselectedLabelState(old_p) # 12/17/04
                 
                 if old_p.edit_widget():
                     old_p.v.t.scrollBarSpot = yview
                     old_p.v.t.insertSpot = insertSpot
                 #@nonl
-                #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+                #@-node:ekr.20040803072955.129:<< unselect the old node >>
                 #@nl
     
         g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
