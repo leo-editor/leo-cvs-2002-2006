@@ -5308,8 +5308,30 @@ class baseCommands:
     #@-node:ekr.20031218072017.2948:c.dragCloneAfter
     #@-node:ekr.20031218072017.2945:Dragging (commands)
     #@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
-    #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
+    #@+node:ekr.20031218072017.2950:c.begin/endUpdate
+    #@+at
+    # **Important** These methods ensure that exactly zero or one (depending 
+    # on the
+    # argument to endUpdate) redraws exist within the section of code bounded 
+    # by
+    # c.beginUpdate and c.endUpdate. This greatly simplifies and clarifies the 
+    # code.
+    # 
+    # Callers should ensure that every beginUpdate is matched with an 
+    # endUpdate by
+    # using the following pattern:
+    #     c.beginUpdate()
+    #     try:
+    #         << whatever >>
+    #     finally:
+    #         c.endUpdate()
+    #@-at
+    #@@c
+    
     def beginUpdate(self):
+        
+        '''Suppress redraws of the tree (except for explict calls to c.redraw_now)
+        until the matching call to endUpdate.'''
         
         c = self
         c.frame.tree.beginUpdate()
@@ -5323,8 +5345,7 @@ class baseCommands:
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
     EndUpdate = endUpdate # Compatibility with old scripts
-    #@nonl
-    #@-node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
+    #@-node:ekr.20031218072017.2950:c.begin/endUpdate
     #@+node:ekr.20031218072017.2951:c.bringToFront
     def bringToFront(self):
     
