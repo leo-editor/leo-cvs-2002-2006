@@ -68,30 +68,35 @@ def doTests(all,verbosity=1,c=None):
 
     if c is None: c = g.top()
     p = c.currentPosition() ; p1 = p.copy()
-
-    g.app.unitTestDict["fail"] = False
-
-    if all: theIter = c.all_positions_iter()
-    else:   theIter = p.self_and_subtree_iter()
     
-    # c.undoer.clearUndoState() # New in 4.3.1.
-    changed = c.isChanged()
-    suite = unittest.makeSuite(unittest.TestCase)
-
-    for p in theIter:
-        if isTestNode(p):
-            test = makeTestCase(c,p)
-            if test: suite.addTest(test)
-        elif isSuiteNode(p):
-            test = makeTestSuite(c,p)
-            if test: suite.addTest(test)
-
-    # Verbosity: 1: print just dots.
-    unittest.TextTestRunner(verbosity=verbosity).run(suite)
-    c.setChanged(changed) # Restore changed state.
-    # Restore the selected node unless overridden.
-    if g.app.unitTestDict.get('restoreSelectedNode',True):
-        c.selectPosition(p1)
+    g.app.unitTesting = True
+    try:
+        g.app.unitTestDict["fail"] = False
+    
+        if all: theIter = c.all_positions_iter()
+        else:   theIter = p.self_and_subtree_iter()
+        
+        # c.undoer.clearUndoState() # New in 4.3.1.
+        changed = c.isChanged()
+        suite = unittest.makeSuite(unittest.TestCase)
+    
+        for p in theIter:
+            if isTestNode(p):
+                test = makeTestCase(c,p)
+                if test: suite.addTest(test)
+            elif isSuiteNode(p):
+                test = makeTestSuite(c,p)
+                if test: suite.addTest(test)
+    
+        # Verbosity: 1: print just dots.
+        unittest.TextTestRunner(verbosity=verbosity).run(suite)
+        c.setChanged(changed) # Restore changed state.
+        # Restore the selected node unless overridden.
+        if g.app.unitTestDict.get('restoreSelectedNode',True):
+            c.selectPosition(p1)
+    finally:
+        g.app.unitTesting = False
+        
 #@nonl
 #@+node:ekr.20051104075904.5:class generalTestCase
 class generalTestCase(unittest.TestCase):
@@ -126,14 +131,13 @@ class generalTestCase(unittest.TestCase):
     
         c = self.c ; p = self.p
     
-        g.app.unitTesting = True
         c.selectPosition(p)
     #@nonl
     #@-node:ekr.20051104075904.8:setUp
     #@+node:ekr.20051104075904.9:tearDown
     def tearDown (self):
     
-        g.app.unitTesting = False
+        pass
     
         # To do: restore the outline.
     #@nonl
@@ -682,8 +686,8 @@ def runLeoTest(path,verbose=False,full=False):
         g.app.gui = old_gui
         if frame and frame.c != c:
             g.app.closeLeoWindow(frame.c.frame)
-        g.app.unitTesting = False
         c.frame.top.update()
+        g.app.unitTesting = True
 
     if not ok: raise
 #@nonl
@@ -1315,7 +1319,6 @@ class importExportTestCase(unittest.TestCase):
         else:
             theDict = {name: fileName}
     
-        g.app.unitTesting = True
         self.oldGui = g.app.gui
         self.gui = leoGui.unitTestGui(theDict,trace=False)
     #@nonl
@@ -1349,9 +1352,7 @@ class importExportTestCase(unittest.TestCase):
                 temp_v.firstChild().doDelete()
                 
         g.app.gui = self.oldGui
-    
         c.selectVnode(self.old_v)
-        g.app.unitTesting = False
     #@nonl
     #@-node:ekr.20051104075904.86:tearDown
     #@-others
@@ -1467,23 +1468,16 @@ def oldTestPlugin (fileName,verbose=False):
         
     path = g.os_path_join(g.app.loadDir,"..","plugins")
     path = g.os_path_abspath(path)
-    
-    g.app.unitTesting = True
-    
-    try:
 
-        module = g.importFromPath(fileName,path)
-        assert module, "Can not import %s" % path
-        
-        # Run any unit tests in the module itself.
-        if hasattr(module,"unitTest"):
-            if verbose:
-                g.trace("Executing unitTest in plugins/%s..." % fileName)
+    module = g.importFromPath(fileName,path)
+    assert module, "Can not import %s" % path
     
-            module.unitTest(verbose=verbose)
-            
-    finally:
-        g.app.unitTesting = False
+    # Run any unit tests in the module itself.
+    if hasattr(module,"unitTest"):
+        if verbose:
+            g.trace("Executing unitTest in plugins/%s..." % fileName)
+
+        module.unitTest(verbose=verbose)
 #@nonl
 #@-node:ekr.20051104075904.92:testPlugin (no longer used)
 #@+node:ekr.20051104075904.93:checkFileSyntax
