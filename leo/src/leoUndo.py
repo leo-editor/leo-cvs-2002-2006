@@ -1301,7 +1301,7 @@ class baseUndoer:
         # g.trace(g.callers(7))
     
         if not u.canRedo():
-            g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
+            # g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead+1):
             g.trace('no bead')
@@ -1558,7 +1558,7 @@ class baseUndoer:
         c.endEditing() # Capture the headline *before* checking for undo.
         
         if not u.canUndo():
-            g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
+            # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead):
             g.trace('no bead')
