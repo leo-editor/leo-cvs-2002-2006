@@ -2490,17 +2490,12 @@ class leoTkinterTree (leoFrame.leoTree):
     
         c = self.c ; p = c.currentPosition()
         
-        # Important: this will do the redraw if necessary.
+        # Important: this will redraw if necessary.
         self.onHeadChanged(p)
-    
-        c.beginUpdate()
-        try:
-            self.setEditPosition(None) # That is, self._editPosition = None
-            self.select(p)
-        finally:
-            c.endUpdate(False)
-            
-        self.setUnselectedLabelState(p)
+        
+        self.setSelectedLabelState(p)
+        
+        self.setEditPosition(None) # That is, self._editPosition = None
     #@nonl
     #@-node:ekr.20040803072955.126:tree.endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
