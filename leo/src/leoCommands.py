@@ -1338,7 +1338,6 @@ class baseCommands:
             #@nonl
             #@-node:EKR.20040627100424:<< unredirect output >>
             #@nl
-        c.redraw_now()
     #@nonl
     #@-node:ekr.20031218072017.2140:c.executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
