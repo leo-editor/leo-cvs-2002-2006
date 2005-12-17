@@ -5748,12 +5748,18 @@ def endEditLabel (self):
     '''End editing of a headline and update p.headString().'''
 
     c = self.c ; p = c.currentPosition()
-
+    
+    # Important: this will do the redraw if necessary.
     self.onHeadChanged(p)
-    
+
+    c.beginUpdate()
+    try:
+        self.setEditPosition(None) # That is, self._editPosition = None
+        self.select(p)
+    finally:
+        c.endUpdate(False)
+        
     self.setUnselectedLabelState(p)
-    
-    self.setEditPosition(None) # That is, self._editPosition = None
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.127:editLabel
@@ -7674,12 +7680,18 @@ def endEditLabel (self):
     '''End editing of a headline and update p.headString().'''
 
     c = self.c ; p = c.currentPosition()
-
+    
+    # Important: this will do the redraw if necessary.
     self.onHeadChanged(p)
-    
+
+    c.beginUpdate()
+    try:
+        self.setEditPosition(None) # That is, self._editPosition = None
+        self.select(p)
+    finally:
+        c.endUpdate(False)
+        
     self.setUnselectedLabelState(p)
-    
-    self.setEditPosition(None) # That is, self._editPosition = None
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.90:head key handlers
@@ -11678,7 +11690,6 @@ def executeScript(self,p=None,script=None,
             g.es("no script selected",color="blue")
     finally: # New in 4.3 beta 2: unredirect output last.
         << unredirect output >>
-    c.redraw_now()
 #@nonl
 #@+node:ekr.20031218072017.2143:<< redirect output >>
 if c.config.redirect_execute_script_output_to_log_pane:
@@ -16968,8 +16979,8 @@ def openWithFileName(fileName,old_c,
             frame.openDirectory = g.os_path_dirname(fileName)
             g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         finally:
-            c.endUpdate()
             frame.bodyWantsFocus()
+            c.endUpdate()
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -18687,12 +18698,18 @@ def endEditLabel (self):
     '''End editing of a headline and update p.headString().'''
 
     c = self.c ; p = c.currentPosition()
-
+    
+    # Important: this will do the redraw if necessary.
     self.onHeadChanged(p)
-    
+
+    c.beginUpdate()
+    try:
+        self.setEditPosition(None) # That is, self._editPosition = None
+        self.select(p)
+    finally:
+        c.endUpdate(False)
+        
     self.setUnselectedLabelState(p)
-    
-    self.setEditPosition(None) # That is, self._editPosition = None
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.127:editLabel

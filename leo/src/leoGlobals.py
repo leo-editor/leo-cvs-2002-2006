@@ -802,8 +802,8 @@ def openWithFileName(fileName,old_c,
             frame.openDirectory = g.os_path_dirname(fileName)
             g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         finally:
-            c.endUpdate()
             frame.bodyWantsFocus()
+            c.endUpdate()
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
