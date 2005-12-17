@@ -5313,7 +5313,6 @@ def updateHead (self,event,w):
 
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
-#@nonl
 #@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
@@ -5748,18 +5747,11 @@ def endEditLabel (self):
     '''End editing of a headline and update p.headString().'''
 
     c = self.c ; p = c.currentPosition()
-    
-    # Important: this will do the redraw if necessary.
-    self.onHeadChanged(p)
 
-    c.beginUpdate()
-    try:
-        self.setEditPosition(None) # That is, self._editPosition = None
-        self.select(p)
-    finally:
-        c.endUpdate(False)
-        
-    self.setUnselectedLabelState(p)
+    self.setEditPosition(None) # That is, self._editPosition = None
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.127:editLabel
@@ -5815,19 +5807,20 @@ def select (self,p,updateBeadList=True):
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 #@nonl
-#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.129:<< unselect the old node >>
 # Remember the position of the scrollbar before making any changes.
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
 if old_p != p:
     self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
 
 if old_p.edit_widget():
     old_p.v.t.scrollBarSpot = yview
     old_p.v.t.insertSpot = insertSpot
 #@nonl
-#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@-node:ekr.20040803072955.129:<< unselect the old node >>
 #@+node:ekr.20040803072955.130:<< select the new node >>
 # Bug fix: we must always set this, even if we never edit the node.
 self.revertHeadline = p.headString()
@@ -6077,7 +6070,6 @@ def updateHead (self,event,w):
 
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
-#@nonl
 #@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
@@ -7680,18 +7672,11 @@ def endEditLabel (self):
     '''End editing of a headline and update p.headString().'''
 
     c = self.c ; p = c.currentPosition()
-    
-    # Important: this will do the redraw if necessary.
-    self.onHeadChanged(p)
 
-    c.beginUpdate()
-    try:
-        self.setEditPosition(None) # That is, self._editPosition = None
-        self.select(p)
-    finally:
-        c.endUpdate(False)
-        
-    self.setUnselectedLabelState(p)
+    self.setEditPosition(None) # That is, self._editPosition = None
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.90:head key handlers
@@ -7739,7 +7724,6 @@ def updateHead (self,event,w):
 
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
-#@nonl
 #@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
@@ -13319,19 +13303,20 @@ def select (self,p,updateBeadList=True):
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 #@nonl
-#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.129:<< unselect the old node >>
 # Remember the position of the scrollbar before making any changes.
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
 if old_p != p:
     self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
 
 if old_p.edit_widget():
     old_p.v.t.scrollBarSpot = yview
     old_p.v.t.insertSpot = insertSpot
 #@nonl
-#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@-node:ekr.20040803072955.129:<< unselect the old node >>
 #@+node:ekr.20040803072955.130:<< select the new node >>
 # Bug fix: we must always set this, even if we never edit the node.
 self.revertHeadline = p.headString()
@@ -16304,7 +16289,6 @@ def updateHead (self,event,w):
 
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
-#@nonl
 #@-node:ekr.20051026083544.2:updateHead
 #@-node:ekr.20051128140833:(Fixed 2 outline editing bugs)
 #@+node:ekr.20051129063549:Fixed crasher in deleteNextChar
@@ -17280,7 +17264,6 @@ def updateHead (self,event,w):
 
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
-#@nonl
 #@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
@@ -18698,18 +18681,11 @@ def endEditLabel (self):
     '''End editing of a headline and update p.headString().'''
 
     c = self.c ; p = c.currentPosition()
-    
-    # Important: this will do the redraw if necessary.
-    self.onHeadChanged(p)
 
-    c.beginUpdate()
-    try:
-        self.setEditPosition(None) # That is, self._editPosition = None
-        self.select(p)
-    finally:
-        c.endUpdate(False)
-        
-    self.setUnselectedLabelState(p)
+    self.setEditPosition(None) # That is, self._editPosition = None
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@+node:ekr.20040803072955.127:editLabel
@@ -18765,19 +18741,20 @@ def select (self,p,updateBeadList=True):
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 #@nonl
-#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.129:<< unselect the old node >>
 # Remember the position of the scrollbar before making any changes.
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
 
 if old_p != p:
     self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
 
 if old_p.edit_widget():
     old_p.v.t.scrollBarSpot = yview
     old_p.v.t.insertSpot = insertSpot
 #@nonl
-#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@-node:ekr.20040803072955.129:<< unselect the old node >>
 #@+node:ekr.20040803072955.130:<< select the new node >>
 # Bug fix: we must always set this, even if we never edit the node.
 self.revertHeadline = p.headString()
@@ -19027,7 +19004,6 @@ def updateHead (self,event,w):
 
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
-#@nonl
 #@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.91:onHeadChanged
 # Tricky code: do not change without careful thought and testing.
