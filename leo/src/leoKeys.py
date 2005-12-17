@@ -884,7 +884,8 @@ class keyHandlerClass:
                 # This callback executes the command in the given widget.
                 def textBindingsRedirectionCallback(event,
                     func=func,widget=widget,commandName=commandName):
-                    # g.trace(commandName,func,g.app.gui.widget_name(widget)) ##,g.callers())
+                    __pychecker__ = '--no-argsused' # widget and commandName.
+                    # g.trace(commandName,func,g.app.gui.widget_name(widget))
                     func(event)
                     return 'break'
     
@@ -2290,11 +2291,8 @@ class keyHandlerClass:
         It should never be called for keys bound to any command.'''
     
         ch = event and event.char or ''
-        w = event and event.widget
-        name = g.app.gui.widget_name(w) 
-        
-        # g.trace(name,repr(ch))
-            
+        w  = event and event.widget
+    
         if w and ch:
             i,j = g.app.gui.getTextSelection(w)
             if i != j:

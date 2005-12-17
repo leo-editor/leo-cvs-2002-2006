@@ -518,13 +518,17 @@ class leoFind:
         c.frame.widgetWantsFocus(t)
     
         # No redraws here: they would destroy the headline selection.
-        if self.mark_changes:
-            p.setMarked()
-        if self.in_headline:
-            c.frame.tree.onHeadChanged(p,'Change',redraw_flag=False)
-        else:
-            c.frame.body.onBodyChanged('Change',oldSel=oldSel,redraw_flag=False)
-        c.frame.tree.drawIcon(p) # redraw only the icon.
+        c.beginUpdate()
+        try:
+    	    if self.mark_changes:
+    	        p.setMarked()
+    	    if self.in_headline:
+    	        c.frame.tree.onHeadChanged(p,'Change')
+    	    else:
+    	        c.frame.body.onBodyChanged('Change',oldSel=oldSel)
+        finally:
+            c.endUpdate(False)
+            c.frame.tree.drawIcon(p) # redraw only the icon.
          
         return True
     #@-node:ekr.20031218072017.3070:changeSelection
@@ -1028,8 +1032,11 @@ class leoFind:
         c = self.c ; p = self.p ; gui = g.app.gui
         
         c.frame.bringToFront() # Needed on the Mac
-        c.selectPosition(p)
-        c.redraw_now()
+        c.beginUpdate()
+        try:
+    	    c.selectPosition(p)
+        finally:
+            c.endUpdate()
         if self.in_headline:
             c.editPosition(p)
         # Set the focus and selection after the redraw.

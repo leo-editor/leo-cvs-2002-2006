@@ -1740,9 +1740,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
             w.delete("1.0","end")
             w.insert("end",tree.revertHeadline)
             p.initHeadString(tree.revertHeadline)
-            c.endEditing()
-            c.selectPosition(c.currentPosition())
-            c.redraw_now()
+            c.beginUpdate()
+            try:
+    	        c.endEditing()
+    	        c.selectPosition(p)
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
     #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
@@ -1768,10 +1771,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        f = self ; c = f.c ; p = c.currentPosition()
+        f = self ; c = f.c
         w = f.getFocus()
-        if not w: return 'break'
-        name = hasattr(w,'_name') and w._name or ''
+        if not w: return
+        name = g.app.gui.widget_name(w)
         oldSel = g.app.gui.getTextSelection(w)
         oldText = w.get('1.0','end')
         i,j = g.app.gui.getTextSelection(w)
@@ -1798,8 +1801,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         '''Paste the clipboard into a widget.'''
     
-        f = self ; c = f.c ; p = c.currentPosition()
-        w = f.getFocus()
+        f = self ; c = f.c ; w = f.getFocus()
         if not w: return
         name = g.app.gui.widget_name(w)
         oldSel = g.app.gui.getTextSelection(w)
@@ -1840,7 +1842,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if g.app.batchMode:
             c.notValidInBatchMode("End Edit Headline")
         else:
-            p = c.currentPosition()
             c.endEditing()
             
             if 1: # This command always moves into the body pane.
@@ -2001,8 +2002,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # Restore everything.
         g.app.setLog(self.log)
         frame.log.restoreAllState(d)
-        c.selectPosition(p)
-        c.redraw_now()
+        c.beginUpdate()
+        try:
+    	    c.selectPosition(p)
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20041221122440.1:togglePmwSplitDirection
     #@+node:ekr.20041221122440.2:toggleTkSplitDirection
@@ -2351,15 +2355,13 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
     # This is the only key handler for the body pane.
     def onBodyChanged (self,undoType,
-        oldSel=None,oldText=None,oldYview=None,
-        removeTrailing=None,redraw_flag=True):
+        oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
         
         '''Update Leo after the body has been changed.'''
         
         body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
         p = c.currentPosition()
         ch = bodyCtrl.get('insert-1c')
-    
         newText = bodyCtrl.get('1.0','end')
         newSel = g.app.gui.getTextSelection(bodyCtrl)
         if oldText is None: oldText = p.bodyString()
@@ -2384,26 +2386,21 @@ class leoTkinterBody (leoFrame.leoBody):
         if not c.changed: c.setChanged(True)
         #@    << redraw the screen if necessary >>
         #@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-        if redraw_flag: # An arg to this method.
-        
-            redraw = False # local arg.
-            
+        c.beginUpdate()
+        try:
+            redraw_flag = False
             # Update dirty bits.
             # p.setDirty() sets all cloned and @file dirty bits.
             if not p.isDirty() and p.setDirty():
-                redraw = True
+                redraw_flag = True
                 
             # Update icons. p.v.iconVal may not exist during unit tests.
             val = p.computeIcon()
             if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
                 p.v.iconVal = val
-                redraw = True
-            
-            if redraw:
-                c.redraw_now()
-                
-        elif not p.isDirty():
-            p.setDirty()
+                redraw_flag = True
+        finally:
+            c.endUpdate(redraw_flag)
         #@nonl
         #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
         #@nl

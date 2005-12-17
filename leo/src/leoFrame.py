@@ -858,7 +858,7 @@ class leoTree:
     #@nonl
     #@-node:ekr.20031218072017.3711:Scrolling
     #@+node:ekr.20031218072017.3712:Selecting
-    def select(self,p,updateBeadList=True,redraw_flag=True):
+    def select(self,p,updateBeadList=True):
         
         self.oops()
     #@nonl
@@ -1666,7 +1666,7 @@ class nullTree (leoTree):
     #@nonl
     #@-node:ekr.20041217135735:setColorFromConfig & setFontFromConfig
     #@+node:ekr.20031218072017.2242:select
-    def select(self,p,updateBeadList=True,redraw_flag=True):
+    def select(self,p,updateBeadList=True):
         
         self.c.setCurrentPosition(p)
     

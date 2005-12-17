@@ -1615,7 +1615,7 @@ class settingsTree (leoTkinterTree.leoTkinterTree):
     #@nonl
     #@-node:ekr.20041225063637.82:editLabel
     #@+node:ekr.20041225063637.83:tree.select (config tree)
-    def select (self,p,updateBeadList=True,redraw_flag=True):
+    def select (self,p,updateBeadList=True):
         
         __pychecker__ = '--no-argsused' # updateBeadList required for compatibility.
     
@@ -3249,8 +3249,11 @@ class settingsController:
             self.es("writing " + g.shortFilename(path))
             # Save the file corresponding to c.
             # Non-local files aren't open otherwise!
-            c.fileCommands.save(c.fileName())
-            c.redraw_now() # This should work for non-local files too.
+            c.beginUpdate()
+            try:
+                c.fileCommands.save(c.fileName())
+            finally:
+                c.endUpdate()
             self.tree.redraw()
         else:
             print "no settings saved.  local file not named."

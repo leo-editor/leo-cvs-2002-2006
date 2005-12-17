@@ -1311,22 +1311,23 @@ class baseUndoer:
             return
             
         # g.trace(u.undoType)
-            
         # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
         u.redoing = True 
         u.groupCount = 0
-        if u.redoHelper:
-            u.redoHelper()
-        else:
-            g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
     
-        # Make sure we select the position with redraw_flag=True.
-        # This is necessary to update the body text!
-        c.selectPosition(c.currentPosition())
-        c.frame.bodyWantsFocus()
-        # New in 4.4a3: Almost any change could change an icon,
-        # So we always request a redraw.
-        c.redraw_now()
+        c.beginUpdate()
+        try:
+    	    if u.redoHelper:
+    	        u.redoHelper()
+    	    else:
+    	        g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
+    	    c.selectPosition(c.currentPosition())
+        finally:
+            # New in 4.4a3: Almost any change could change an icon,
+    	    # So we always request a redraw.
+            c.endUpdate()
+            c.recolor_now()
+            c.frame.bodyWantsFocus()
         u.redoing = False
         u.bead += 1
         u.setUndoTypes()
@@ -1355,7 +1356,7 @@ class baseUndoer:
             oldRoot = c.rootPosition()
             u.newP.linkAsRoot(oldRoot)
             
-        c.selectPosition(u.newP,redraw_flag=False)
+        c.selectPosition(u.newP)
     #@nonl
     #@-node:ekr.20050412083057:redoCloneNode
     #@+node:EKR.20040526072519.2:redoDeleteNode
@@ -1363,9 +1364,9 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.p,redraw_flag=False)
-        c.deleteOutline(redraw_flag=False)
-        c.selectPosition(u.newP,redraw_flag=False)
+        c.selectPosition(u.p)
+        c.deleteOutline()
+        c.selectPosition(u.newP)
     #@nonl
     #@-node:EKR.20040526072519.2:redoDeleteNode
     #@+node:ekr.20050412084532:redoInsertNode
@@ -1399,7 +1400,7 @@ class baseUndoer:
                     t.setHeadString(bunch.head)
                 # g.trace(t,bunch.head,bunch.body)
                 
-        c.selectPosition(u.newP,redraw_flag=False)
+        c.selectPosition(u.newP)
     #@nonl
     #@-node:ekr.20050412084532:redoInsertNode
     #@+node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
@@ -1407,14 +1408,14 @@ class baseUndoer:
         
         u = self ; c = u.c
         
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
         c.hoist()
         
     def redoDehoistNode (self):
         
         u = self ; c = u.c
         
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
         c.dehoist()
     #@nonl
     #@-node:ekr.20050412085138.1:redoHoistNode & redoDehoistNode
@@ -1481,7 +1482,7 @@ class baseUndoer:
         for v in u.dirtyVnodeList:
             v.t.setDirty()
         
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050526125801:redoMark
     #@+node:ekr.20050411111847:redoMove
@@ -1504,7 +1505,7 @@ class baseUndoer:
         for v in u.dirtyVnodeList:
             v.t.setDirty()
             
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050411111847:redoMove
     #@+node:ekr.20050318085432.8:redoTree
@@ -1572,18 +1573,20 @@ class baseUndoer:
         u.undoing = True
         u.groupCount = 0
     
-        if u.undoHelper:
-            u.undoHelper()
-        else:
-            g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
+        c.beginUpdate()
+        try:
+    	    if u.undoHelper:
+    	        u.undoHelper()
+    	    else:
+    	        g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
+    	    c.selectPosition(c.currentPosition())
+        finally:
+            # New in 4.4a3: Almost any change could change an icon,
+    	    # So we always request a redraw.
+            c.endUpdate()
+            c.recolor_now()
+            c.frame.bodyWantsFocus()
     
-        # Make sure we select the position with redraw_flag=True.
-        # This is necessary to update the body text!
-        c.selectPosition(c.currentPosition())
-        c.frame.bodyWantsFocus()
-        # New in 4.4a3: Almost any change could change an icon,
-        # So we always request a redraw.
-        c.redraw_now()
         u.undoing = False
         u.bead -= 1
         u.setUndoTypes()
@@ -1604,9 +1607,9 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.newP,redraw_flag=False)
-        c.deleteOutline(redraw_flag=False)
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.newP)
+    	c.deleteOutline()
+    	c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412083057.1:undoCloneNode
     #@+node:ekr.20050412084055:undoDeleteNode
@@ -1625,7 +1628,7 @@ class baseUndoer:
         # Restore all vnodeLists (and thus all clone marks).
         u.p.restoreLinksInTree()
         
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412084055:undoDeleteNode
     #@+node:ekr.20050318085713:undoGroup
@@ -1670,14 +1673,14 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
         c.dehoist()
         
     def undoDehoistNode (self):
         
         u = self ; c = u.c
     
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
         c.hoist()
     #@nonl
     #@-node:ekr.20050412083244:undoHoistNode & undoDehoistNode
@@ -1686,8 +1689,8 @@ class baseUndoer:
         
         u = self ; c = u.c
     
-        c.selectPosition(u.newP,redraw_flag=False)
-        c.deleteOutline(redraw_flag=False)
+        c.selectPosition(u.newP)
+        c.deleteOutline()
         
         if u.pasteAsClone:
             for bunch in u.beforeTree:
@@ -1699,7 +1702,7 @@ class baseUndoer:
                     t.setTnodeText(bunch.body)
                     t.setHeadString(bunch.head)
                 
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412085112:undoInsertNode
     #@+node:ekr.20050526124906:undoMark
@@ -1712,7 +1715,7 @@ class baseUndoer:
         for v in u.dirtyVnodeList:
             v.t.clearDirty()
             
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050526124906:undoMark
     #@+node:ekr.20050411112033:undoMove
@@ -1735,7 +1738,7 @@ class baseUndoer:
         for v in u.dirtyVnodeList:
             v.t.clearDirty()
             
-        c.selectPosition(u.p,redraw_flag=False)
+        c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050411112033:undoMove
     #@+node:ekr.20050318085713.1:undoNodeContents

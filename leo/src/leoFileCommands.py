@@ -1299,8 +1299,12 @@ class baseFileCommands:
     def readAtFileNodes (self):
     
         c = self.c ; p = c.currentPosition()
-        c.atFileCommands.readAll(p,partialFlag=True)
-        c.redraw_now()
+        
+        c.beginUpdate()
+        try:
+    	    c.atFileCommands.readAll(p,partialFlag=True)
+        finally:
+            c.endUpdate()
         
         # Force an update of the body pane.
         p.setBodyStringOrPane(p.bodyString())

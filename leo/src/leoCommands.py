@@ -377,19 +377,21 @@ class baseCommands:
         # Needed for plugins.
         g.doHook("new",old_c=self,c=c,new_c=c)
         # Use the config params to set the size and location of the window.
-        frame.setInitialWindowGeometry()
-        frame.deiconify()
-        frame.lift()
-        frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
-        t = leoNodes.tnode()
-        v = leoNodes.vnode(c,t)
-        p = leoNodes.position(v,[])
-        v.initHeadString("NewHeadline")
-        v.moveToRoot()
-        c.editPosition(p)
-        c.redraw_now() # Leo 4.4: Must be done here. c is not known outside this method.
-        frame.body.setFocus()
-        # g.trace('*'*10,c.frame,g.callers(7))
+        c.beginUpdate()
+        try:
+    	    frame.setInitialWindowGeometry()
+    	    frame.deiconify()
+    	    frame.lift()
+    	    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+    	    t = leoNodes.tnode()
+    	    v = leoNodes.vnode(c,t)
+    	    p = leoNodes.position(v,[])
+    	    v.initHeadString("NewHeadline")
+    	    v.moveToRoot()
+    	    c.editPosition(p)
+        finally:
+            c.endUpdate()
+            frame.body.setFocus()
         return c # For unit test.
     #@nonl
     #@-node:ekr.20031218072017.1623:new
@@ -935,13 +937,13 @@ class baseCommands:
     
         c = self ; u = c.undoer ; p = c.currentPosition()
     
-        undoData = u.beforeChangeTree(p)
-        
-        c.fileCommands.readAtFileNodes()
-        
-        u.afterChangeTree(p,'Read @file Nodes',undoData)
-        
-        c.redraw_now()
+        c.beginUpdate()
+        try:
+    	    undoData = u.beforeChangeTree(p)
+    	    c.fileCommands.readAtFileNodes()
+    	    u.afterChangeTree(p,'Read @file Nodes',undoData)
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.1839:readAtFileNodes (commands)
     #@+node:ekr.20031218072017.2840:4.0 Commands
@@ -2846,7 +2848,6 @@ class baseCommands:
             return # This should never happen.
     
         isLeo = g.match(s,0,g.app.prolog_prefix_string)
-        
         tnodeInfoDict = {}
         if pasteAsClone:
             #@        << remember all data for undo/redo Paste As Clone >>
@@ -2881,41 +2882,44 @@ class baseCommands:
             pasted = c.importCommands.convertMoreStringToOutlineAfter(s,current)
         if not pasted: return
         
-        copiedBunchList = []
-        if pasteAsClone:
-            #@        << put only needed info in copiedBunchList >>
-            #@+node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
-            # Create a dict containing only copied tnodes.
-            copiedTnodeDict = {}
-            for p in pasted.self_and_subtree_iter():
-                if p.v.t not in copiedTnodeDict:
-                    copiedTnodeDict[p.v.t] = p.v.t
-                    
-            # g.trace(copiedTnodeDict.keys())
-            
-            for t in tnodeInfoDict.keys():
-                bunch = tnodeInfoDict.get(t)
-                if copiedTnodeDict.get(t):
-                    copiedBunchList.append(bunch)
-            
-            # g.trace('copiedBunchList',copiedBunchList)
-            #@nonl
-            #@-node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
-            #@nl
-        undoData = u.beforeInsertNode(current,
-        pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
-        c.endEditing()
-        c.validateOutline()
-        c.selectPosition(pasted)
-        pasted.setDirty()
-        c.setChanged(True)
-        # paste as first child if back is expanded.
-        back = pasted.back()
-        if back and back.isExpanded():
-            pasted.moveToNthChildOf(back,0)
-        u.afterInsertNode(pasted,undoType,undoData)
-        c.redraw_now()
-        c.recolor()
+        c.beginUpdate()
+        try:
+    	    copiedBunchList = []
+    	    if pasteAsClone:
+                #@	        << put only needed info in copiedBunchList >>
+                #@+node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
+                # Create a dict containing only copied tnodes.
+                copiedTnodeDict = {}
+                for p in pasted.self_and_subtree_iter():
+                    if p.v.t not in copiedTnodeDict:
+                        copiedTnodeDict[p.v.t] = p.v.t
+                        
+                # g.trace(copiedTnodeDict.keys())
+                
+                for t in tnodeInfoDict.keys():
+                    bunch = tnodeInfoDict.get(t)
+                    if copiedTnodeDict.get(t):
+                        copiedBunchList.append(bunch)
+                
+                # g.trace('copiedBunchList',copiedBunchList)
+                #@nonl
+                #@-node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
+                #@nl
+    	    undoData = u.beforeInsertNode(current,
+    	    pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
+    	    c.endEditing()
+    	    c.validateOutline()
+    	    c.selectPosition(pasted)
+    	    pasted.setDirty()
+    	    c.setChanged(True)
+    	    # paste as first child if back is expanded.
+    	    back = pasted.back()
+    	    if back and back.isExpanded():
+    	        pasted.moveToNthChildOf(back,0)
+    	    u.afterInsertNode(pasted,undoType,undoData)
+        finally:
+            c.endUpdate()
+            c.recolor()
     #@nonl
     #@-node:ekr.20031218072017.1551:pasteOutline
     #@+node:EKR.20040610130943:pasteOutlineRetainingClones
@@ -2933,9 +2937,12 @@ class baseCommands:
         c = self ; p = c.currentPosition()
         if p and c.canDehoist():
             bunch = c.hoistStack.pop()
-            if bunch.expanded: p.expand()
-            else:              p.contract()
-            c.redraw_now()
+            c.beginUpdate()
+            try:
+                if bunch.expanded: p.expand()
+                else:              p.contract()
+            finally:
+                c.endUpdate()
             c.frame.clearStatusLine()
             if c.hoistStack:
                 bunch = c.hoistStack[-1]
@@ -2951,8 +2958,11 @@ class baseCommands:
             # Remember the expansion state.
             bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
             c.hoistStack.append(bunch)
-            p.expand()
-            c.redraw_now()
+            c.beginUpdate()
+            try:
+    	        p.expand()
+            finally:
+                c.endUpdate()
             c.frame.clearStatusLine()
             c.frame.putStatusLine("Hoist: " + p.headString())
             c.undoer.afterHoist(p,'Hoist')
@@ -2986,7 +2996,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.1760:c.checkMoveWithParentWithWarning
     #@+node:ekr.20031218072017.1193:c.deleteOutline
-    def deleteOutline (self,op_name="Delete Node",redraw_flag=True):
+    def deleteOutline (self,op_name="Delete Node"):
         
         """Deletes the current position.
         
@@ -2999,24 +3009,23 @@ class baseCommands:
         else: newNode = p.next() # _not_ p.visNext(): we are at the top level.
         if not newNode: return
     
-        if redraw_flag:
-            c.endEditing() # Make sure we capture the headline for Undo.
-            undoData = u.beforeDeleteNode(p)
-            dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-            
-        p.doDelete()
-        c.selectPosition(newNode,redraw_flag=redraw_flag)
-        
-        if redraw_flag:
-            c.setChanged(True)
-            u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-            c.redraw_now()
+        c.beginUpdate()
+        try:
+    	   c.endEditing() # Make sure we capture the headline for Undo.
+    	   undoData = u.beforeDeleteNode(p)
+    	   dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+    	   p.doDelete()
+    	   c.selectPosition(newNode)
+    	   c.setChanged(True)
+    	   u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+        finally:
+            c.endUpdate()
     
         c.validateOutline()
     #@nonl
     #@-node:ekr.20031218072017.1193:c.deleteOutline
     #@+node:ekr.20031218072017.1761:c.insertHeadline
-    def insertHeadline (self,op_name="Insert Node",redraw_flag=True):
+    def insertHeadline (self,op_name="Insert Node"):
         
         '''Insert a node after the presently selected node.'''
     
@@ -3025,21 +3034,23 @@ class baseCommands:
         
         if not current: return
     
-        undoData = c.undoer.beforeInsertNode(current)
-        # Make sure the new node is visible when hoisting.
-        if ((current.hasChildren() and current.isExpanded()) or
-            (c.hoistStack and current == c.hoistStack[-1].p)):
-            p = current.insertAsNthChild(0)
-        else:
-            p = current.insertAfter()
-        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-        c.setChanged(True)
-        u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-        if redraw_flag:
-            c.endEditing() # Bug fix: 11/28/05.
-            c.redraw_now()
+        c.beginUpdate()
+        try:
+    	    undoData = c.undoer.beforeInsertNode(current)
+    	    # Make sure the new node is visible when hoisting.
+    	    if ((current.hasChildren() and current.isExpanded()) or
+    	        (c.hoistStack and current == c.hoistStack[-1].p)):
+    	        p = current.insertAsNthChild(0)
+    	    else:
+    	        p = current.insertAfter()
+    	    dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+    	    c.setChanged(True)
+    	    u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+    	    c.endEditing() # Bug fix: 11/28/05.
             c.editPosition(p)
-            
+        finally:
+            c.endUpdate()
+    
         return p # for mod_labels plugin.
     #@nonl
     #@-node:ekr.20031218072017.1761:c.insertHeadline
@@ -4183,10 +4194,14 @@ class baseCommands:
     
         c = self
         last = v.lastNode()
-        while v and v != last:
-            v.expand()
-            v = v.threadNext()
-        c.redraw_now()
+    
+        c.beginUpdate()
+        try:
+    	    while v and v != last:
+    	        v.expand()
+    	        v = v.threadNext()
+        finally:
+            c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.2911:expandSubtree
     #@+node:ekr.20031218072017.2912:expandToLevel (rewritten in 4.4)
@@ -5297,15 +5312,15 @@ class baseCommands:
     #@+node:ekr.20031218072017.2950:c.begin/endUpdate (vestigial)
     def beginUpdate(self):
         
-        pass
+        c = self
+        c.frame.tree.beginUpdate()
         
     def endUpdate(self, flag=True):
         
         '''Redraw the screen if flag is True.'''
     
         c = self
-        if flag:
-            c.redraw_now()
+        c.frame.tree.endUpdate(flag)
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
     EndUpdate = endUpdate # Compatibility with old scripts
@@ -5331,6 +5346,16 @@ class baseCommands:
         c.frame.requestRecolorFlag = True
     #@nonl
     #@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
+    #@+node:ekr.20051216171520:c.recolor_now
+    def recolor_now(self,p=None,incremental=False):
+    
+        c = self
+        if p is None:
+            p = c.currentPosition()
+    
+        c.frame.body.colorizer.colorize(p,incremental)
+    #@nonl
+    #@-node:ekr.20051216171520:c.recolor_now
     #@+node:ekr.20031218072017.2954:c.redraw_now
     def redraw_now (self):
         
@@ -6044,13 +6069,13 @@ class baseCommands:
         self.frame.tree.endEditLabel()
     #@-node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     #@+node:ekr.20031218072017.2997:c.selectPosition
-    def selectPosition(self,p,updateBeadList=True,redraw_flag=True):
+    def selectPosition(self,p,updateBeadList=True):
         
         """Select a new position."""
     
         c = self
     
-        c.frame.tree.select(p,updateBeadList,redraw_flag=redraw_flag)
+        c.frame.tree.select(p,updateBeadList)
     
     selectVnode = selectPosition
     #@nonl

@@ -421,7 +421,7 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4065:get_focus
     #@+node:ekr.20031218072017.2373:set_focus (app.gui)
-    def set_focus(self,c,w,force=False):
+    def set_focus(self,c,w):
         
         __pychecker__ = '--no-argsused' # c not used at present.
         

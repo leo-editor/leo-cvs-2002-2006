@@ -472,6 +472,9 @@ class unitTestGui(leoGui):
     #@+node:ekr.20031218072017.3745:dummy routines
     def getindex(self,body,index):
         return 0,0
+        
+    def get_focus(self,frame):
+        pass
     
     def set_focus(self,c,widget):
         pass

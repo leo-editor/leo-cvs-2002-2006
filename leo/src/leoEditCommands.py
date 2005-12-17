@@ -101,7 +101,7 @@ class baseEditCommandsClass:
         c = self.c ; b = self.undoData ; k = self.k
     
         if b:
-            name = b.name ; p = c.currentPosition()
+            name = b.name
             if name.startswith('body'):
                 c.frame.body.onBodyChanged(undoType=b.undoType,
                     oldSel=b.oldSel,oldText=b.oldText,oldYview=None)
@@ -797,7 +797,7 @@ class bufferCommandsClass (baseEditCommandsClass):
         self.fromName = '' # Saved name from getBufferName.
         self.nameList = [] # [n: <headline>]
         self.names = {}
-        tnodes = {} # Keys are n: <headline>, values are tnodes.
+        self.tnodes = {} # Keys are n: <headline>, values are tnodes.
         
         try:
             self.w = c.frame.body.bodyCtrl
@@ -837,13 +837,17 @@ class bufferCommandsClass (baseEditCommandsClass):
         s = g.app.gui.getSelectedText(w)
         p = self.findBuffer(name)
         if s and p:
-            c.selectPosition(p)
-            c.redraw_now()
-            self.beginCommand('append-to-buffer: %s' % p.headString())
-            w.insert('end',s)
-            w.mark_set('insert','end')
-            w.see('end')
-            self.endCommand()
+            c.beginUpdate()
+            try:
+    	        c.selectPosition(p)
+    	        self.beginCommand('append-to-buffer: %s' % p.headString())
+    	        w.insert('end',s)
+    	        w.mark_set('insert','end')
+    	        w.see('end')
+    	        self.endCommand()
+            finally:
+                c.endUpdate()
+                c.recolor_now()
     #@nonl
     #@-node:ekr.20050920084036.35:appendToBuffer
     #@+node:ekr.20050920084036.38:killBuffer
@@ -895,13 +899,17 @@ class bufferCommandsClass (baseEditCommandsClass):
         s = g.app.gui.getSelectedText(w)
         p = self.findBuffer(name)
         if s and p:
-            c.selectPosition(p)
-            c.redraw_now()
-            self.beginCommand('prepend-to-buffer: %s' % p.headString())
-            w.insert('1.0',s)
-            w.mark_set('insert','1.0')
-            w.see('1.0')
-            self.endCommand()
+            c.beginUpdate()
+            try:
+    	        c.selectPosition(p)
+    	        self.beginCommand('prepend-to-buffer: %s' % p.headString())
+    	        w.insert('1.0',s)
+    	        w.mark_set('insert','1.0')
+    	        w.see('1.0')
+    	        self.endCommand()
+            finally:
+                c.endUpdate()
+                c.recolor_now()
     #@nonl
     #@-node:ekr.20050920084036.39:prependToBuffer (test)
     #@+node:ekr.20050920084036.43:renameBuffer
@@ -939,8 +947,11 @@ class bufferCommandsClass (baseEditCommandsClass):
         
         c = self.c ; p = self.findBuffer(name)
         if p:
-            c.selectPosition(p)
-            c.redraw_now()
+            c.beginUpdate()
+            try:
+    	        c.selectPosition(p)
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20050920084036.40:switchToBuffer
     #@+node:ekr.20051216080913:Not ready, and not very useful
@@ -958,13 +969,17 @@ class bufferCommandsClass (baseEditCommandsClass):
         s = g.app.gui.getSelectedText(w)
         p = self.findBuffer(name)
         if s and p:
-            c.selectPosition(p)
-            c.redraw_now()
-            self.beginCommand('copy-to-buffer: %s' % p.headString())
-            w.insert('end',s)
-            w.mark_set('insert','end')
-            w.see('end')
-            self.endCommand()
+            c.beginUpdate()
+            try:
+    	        c.selectPosition(p)
+    	        self.beginCommand('copy-to-buffer: %s' % p.headString())
+    	        w.insert('end',s)
+    	        w.mark_set('insert','end')
+    	        w.see('end')
+    	        self.endCommand()
+            finally:
+                c.endUpdate()
+                c.recolor_now()
     #@nonl
     #@-node:ekr.20050920084036.36:copyToBuffer (what should this do?)
     #@+node:ekr.20050920084036.37:insertToBuffer (test)
@@ -979,12 +994,15 @@ class bufferCommandsClass (baseEditCommandsClass):
         s = g.app.gui.getSelectedText(w)
         p = self.findBuffer(name)
         if s and p:
-            c.selectPosition(p)
-            c.redraw_now()
-            self.beginCommand('insert-to-buffer: %s' % p.headString())
-            w.insert('insert',s)
-            w.see('insert')
-            self.endCommand()
+            c.beginUpdate()
+            try:
+    	        c.selectPosition(p)
+    	        self.beginCommand('insert-to-buffer: %s' % p.headString())
+    	        w.insert('insert',s)
+    	        w.see('insert')
+    	        self.endCommand()
+            finally:
+                c.endUpdate()
     #@nonl
     #@-node:ekr.20050920084036.37:insertToBuffer (test)
     #@-node:ekr.20051216080913:Not ready, and not very useful
@@ -2672,10 +2690,8 @@ class editCommandsClass (baseEditCommandsClass):
         self.backSentenceHelper(event,extend=True)
     #@nonl
     #@+node:ekr.20051213094517:backSentenceHelper
-    def backSentenceHelper (event,extend):
-        
-        g.trace(extend)
-        
+    def backSentenceHelper (self,event,extend):
+    
         try:
             c = self.c ; w = event.widget
             g.app.gui.set_focus(c,w)
@@ -2703,8 +2719,6 @@ class editCommandsClass (baseEditCommandsClass):
         except Exception:
             g.es_exception()
             pass
-        
-    #@nonl
     #@-node:ekr.20051213094517:backSentenceHelper
     #@-node:ekr.20050920084036.131:backSentence/ExtendSelection & helper
     #@+node:ekr.20051213094849:forwardSentence/ExtendSelection & helper
@@ -3763,7 +3777,11 @@ class killBufferCommandsClass (baseEditCommandsClass):
         self.killBuffer = [] # May be changed in finishCreate.
         self.kbiterator = self.iterateKillBuffer()
         self.last_clipboard = None # For interacting with system clipboard.
-        self.reset = False 
+        self.reset = False
+        try:
+            self.widget = c.frame.body.bodyCtrl
+        except AttributeError:
+            self.widget = None
     
     def finishCreate (self):
         
@@ -3781,6 +3799,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
         return {
             'backward-kill-sentence':   self.backwardKillSentence,
             'backward-kill-word':       self.backwardKillWord,
+            'clear-kill-ring':          self.clearKillRing,
             'kill-line':                self.killLine,
             'kill-word':                self.killWord,
             'kill-sentence':            self.killSentence,
@@ -3833,6 +3852,12 @@ class killBufferCommandsClass (baseEditCommandsClass):
         c.editCommands.backwardWord(event)
     #@nonl
     #@-node:ekr.20050920084036.180:backwardKillWord
+    #@+node:ekr.20051216151811:clearKillRing
+    def clearKillRing (self):
+        
+        self.killBuffer = []
+    #@nonl
+    #@-node:ekr.20051216151811:clearKillRing
     #@+node:ekr.20050920084036.185:getClipboard
     def getClipboard (self,w):
     
@@ -3930,14 +3955,13 @@ class killBufferCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050930091642.1:yank
     def yank (self,event):
     
-        k = self.k ; w = event.widget
+        k = self.k ; w = self.w
         i = w.index('insert')
         clip_text = self.getClipboard(w)
     
         if self.killBuffer or clip_text:
             self.reset = True
-            if clip_text:   s = clip_text
-            else:           s = self.kbiterator.next()
+            s = clip_text or self.kbiterator.next()
             w.tag_delete('kb')
             w.insert('insert',s,('kb'))
             w.mark_set('insert',i)
