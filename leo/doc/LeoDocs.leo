@@ -1513,8 +1513,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20051028051444" a="E"><vh>4.4 alpha 4</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
 <v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
@@ -1612,7 +1612,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -1921,15 +1921,15 @@
 <v t="ekr.20050901102400.3"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050901101608.4" a="E"><vh>@rst html\customizing.html</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050901101608.4"><vh>@rst html\customizing.html</vh>
 <v t="ekr.20050901102055"><vh>@rst-no-head links</vh></v>
 <v t="ekr.20050903075144"><vh>Overview</vh></v>
 <v t="ekr.20050903161843"><vh>Creating script buttons</vh></v>
 <v t="ekr.20050907101918"><vh>@test and @suite nodes</vh></v>
 <v t="EKR.20040524104904.224"><vh>Important security warnings</vh></v>
 <v t="ekr.20050903074833"><vh>Writing plugins and hooks</vh></v>
-<v t="ekr.20050903074833.1" a="TV"><vh>Summary of hooks</vh></v>
+<v t="ekr.20050903074833.1"><vh>Summary of hooks</vh></v>
 <v t="EKR.20040524104904.231"><vh>Convenience routines for plugins</vh></v>
 <v t="EKR.20040524104904.240"><vh>Support for unit testing</vh></v>
 <v t="ekr.20050306090601"><vh>Adding extensible attributes to nodes and .leo files</vh></v>
@@ -10530,20 +10530,27 @@ The p.self_and_subtree_iter iterator returns a list of all positions in ``p``'s 
     for p in parent.subtree_iter():
         g.es(p.headString())
 </t>
-<t tx="ekr.20040403173920.17">Use ``c.redraw_now`` to redraw the entire screen immediately::
+<t tx="ekr.20040403173920.17">You can use ``c.redraw_now`` to redraw the entire screen immediately::
 
     c.redraw_now()
 
-**New in Leo 4.4**:
-Redrawing the screen with ``c.beginUpdate`` and ``c.endUpdate`` is deprecated.
-These methods are now defined as follows::
+However, Leo's code redraws the screen using the following pattern::
+    
+    c.beginUpdate()
+    try:
+        &lt;&lt; whatever &gt;&gt;
+    finally:
+        c.endUpdate()
 
-    def beginUpdate(self):
-        pass
-        
-    def endUpdate(self, flag=True):
-        if flag:
-            self.redraw_now()</t>
+This suppresses redraws inside &lt;&lt;whatever&gt;&gt; that would otherwise be caused by
+``c.endUpdate``. ``c.endUpdate`` takes an optional argument::
+
+    c.endUpdate(flag)
+
+redraws the screen only if flag is True. This is an important pattern. Leo uses
+``c.beginUpdate`` and ``c.endUpdate`` almost everywhere to redraw the screen, so
+provided that &lt;&lt; whatever &gt;&gt; contains no calls to ``c.redraw_now`` this pattern
+insures that at most one redraw occurs.</t>
 <t tx="ekr.20040403173920.18">Leo dispatches commands using c.doCommand,
 which calls the "command1" and "command2" hook routines for the given label.
 c.doCommand catches all exceptions thrown by the command::
