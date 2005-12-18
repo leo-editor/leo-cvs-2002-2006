@@ -131,14 +131,18 @@ class atFile:
     #@+node:ekr.20041005105605.7:Birth & init
     #@+node:ekr.20041005105605.8:atFile.__init__ & initIvars
     def __init__(self,c):
+    
+        # Note: Pychecker complains if we assign to at.x instead of self.x.
         
-        # Note: Pychecker complains if about module attributes if we assign at.x instead of self.x.
-        
+        # **Warning**: all these ivars must **also** be inited in initCommonIvars.
         self.c = c
         self.debug = False
         self.fileCommands = c.fileCommands
-        self.testing = True # True: enable additional checks.
+        self.testing = False # True: enable additional checks.
         self.errors = 0 # Make sure at.error() works even when not inited.
+        # New in Leo 4.4a5: For createThinChild4 (LeoUser).
+        self._forcedGnxPositionList = []
+            # Must be here, putting it in initReadIvars doesn't work.
     
         #@    << define the dispatch dictionary used by scanText4 >>
         #@+node:ekr.20041005105605.9:<< define the dispatch dictionary used by scanText4 >>
@@ -195,6 +199,7 @@ class atFile:
             # Save "permanent" ivars
             fileCommands = self.fileCommands
             dispatch_dict = self.dispatch_dict
+            _forcedGnxPositionList = self._forcedGnxPositionList
             # Clear all ivars.
             g.clearAllIvars(self)
             # Restore permanent ivars
@@ -202,6 +207,7 @@ class atFile:
             self.c = c
             self.fileCommands = fileCommands
             self.dispatch_dict = dispatch_dict
+            self._forcedGnxPositionList = _forcedGnxPositionList
     
         #@    << set defaults for arguments and options >>
         #@+node:ekr.20041005105605.11:<< set defaults for arguments and options >>
@@ -1395,6 +1401,11 @@ class atFile:
         last = at.lastThinNode ; lastIndex = last.t.fileIndex
         gnx = indices.scanGnx(gnxString,0)
         
+        # New in Leo 4.4a5: Solve Read @file nodes problem (by LeoUser)
+        if self._forcedGnxPositionList and last in self._forcedGnxPositionList:
+            last.fileIndex = lastIndex=  gnx
+            self._forcedGnxPositionList.remove(last)
+    
         if 0:
             g.trace("last",last,last.t.fileIndex)
             g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
