@@ -4615,6 +4615,12 @@ class atFile:
         # g.trace('errors',self.errors)
     #@nonl
     #@-node:ekr.20041005105605.220:atFile.error
+    #@+node:ekr.20051219122720:atFile.forceGnxOnPosition
+    def forceGnxOnPosition (self,p):
+        
+        self._forcedGnxPositionList.append(p.v)
+    #@nonl
+    #@-node:ekr.20051219122720:atFile.forceGnxOnPosition
     #@+node:ekr.20050206085258:atFile.printError & test
     def printError (self,message):
     
