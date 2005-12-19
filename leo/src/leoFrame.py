@@ -297,7 +297,7 @@ class leoBody:
     def getSelectedText (self):
         self.oops()
         
-    def getTextSelection (self):
+    def getTextSelection (self,sort=True):
         self.oops()
         
     def hasTextSelection (self):
@@ -1196,7 +1196,7 @@ class nullBody (leoBody):
         g.trace(self.s[i:j])
         return self.s[i:j]
         
-    def getTextSelection (self):
+    def getTextSelection (self,sort=True):
         g.trace(self.selection)
         return self.selection
         

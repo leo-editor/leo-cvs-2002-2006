@@ -1345,7 +1345,7 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k ; stroke = k.stroke ; w = event.widget
         i = w.index('insert')
     
-        self.moveWordHelper(event,-1)
+        self.moveWordHelper(event,extend=False,forward=False)
     
         if stroke == '<Alt-c>':
             self.capitalizeWord(event)
