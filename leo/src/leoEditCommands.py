@@ -356,7 +356,7 @@ class Tracker:
     #@-others
 #@nonl
 #@-node:ekr.20050920085536.84:class  Tracker (an iterator)
-#@+node:ekr.20051126123249:class autoCompleterClass
+#@+node:ekr.20051126123249:class autoCompleterClass (prototype)
 class autoCompleterCommandsClass (baseEditCommandsClass):
     
     '''Similar to typing completion in the minibuffer,
@@ -546,8 +546,8 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051126124705:stateHandler (autoCompleter)
     #@-others
 #@nonl
-#@-node:ekr.20051126123249:class autoCompleterClass
-#@+node:ekr.20050920084036.13:class abbrevCommandsClass
+#@-node:ekr.20051126123249:class autoCompleterClass (prototype)
+#@+node:ekr.20050920084036.13:class abbrevCommandsClass (test)
 #@+at
 # 
 # type some text, set its abbreviation with Control-x a i g, type the text for 
@@ -774,7 +774,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.24:writeAbbreviations
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.13:class abbrevCommandsClass
+#@-node:ekr.20050920084036.13:class abbrevCommandsClass (test)
 #@+node:ekr.20050920084036.31:class bufferCommandsClass (ok)
 #@+at 
 #@nonl
@@ -2556,7 +2556,7 @@ class editCommandsClass (baseEditCommandsClass):
         return watch, top, bottom
     #@nonl
     #@-node:ekr.20050920084036.147:measure
-    #@+node:ekr.20050929114218:move... (leoEditCommands)
+    #@+node:ekr.20050929114218:move... (leoEditCommands) (ok)
     #@+node:ekr.20051218170358: helpers
     #@+node:ekr.20051218122116:moveToHelper
     def moveToHelper (self,event,spot,extend):
@@ -2886,7 +2886,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         self.moveWordHelper(event,extend=True,forward=True)
     #@-node:ekr.20050920084036.149:words
-    #@-node:ekr.20050929114218:move... (leoEditCommands)
+    #@-node:ekr.20050929114218:move... (leoEditCommands) (ok)
     #@+node:ekr.20050920084036.95:paragraph...
     #@+others
     #@+node:ekr.20050920084036.99:backwardKillParagraph
@@ -3611,7 +3611,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.53:class editCommandsClass
-#@+node:ekr.20050920084036.161:class editFileCommandsClass
+#@+node:ekr.20050920084036.161:class editFileCommandsClass (test)
 class editFileCommandsClass (baseEditCommandsClass):
     
     '''A class to load files into buffers and save buffers to files.'''
@@ -3755,8 +3755,8 @@ class editFileCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.170:saveFile
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.161:class editFileCommandsClass
-#@+node:ekr.20050920084036.171:class keyHandlerCommandsClass
+#@-node:ekr.20050920084036.161:class editFileCommandsClass (test)
+#@+node:ekr.20050920084036.171:class keyHandlerCommandsClass (test)
 class keyHandlerCommandsClass (baseEditCommandsClass):
     
     '''User commands to access the keyHandler class.'''
@@ -3800,8 +3800,8 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.171:class keyHandlerCommandsClass
-#@+node:ekr.20050920084036.174:class killBufferCommandsClass
+#@-node:ekr.20050920084036.171:class keyHandlerCommandsClass (test)
+#@+node:ekr.20050920084036.174:class killBufferCommandsClass (test)
 class killBufferCommandsClass (baseEditCommandsClass):
     
     '''A class to manage the kill buffer.'''
@@ -3842,7 +3842,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
             'kill-word':                self.killWord,
             'kill-sentence':            self.killSentence,
             'kill-region':              self.killRegion,
-            'kill-region-save':         self.killRegionSave, # Should this be kill-ring-save?
+            'kill-region-save':         self.killRegionSave,
             'yank':                     self.yank,
             'yank-pop':                 self.yankPop,
             'zap-to-character':         self.zapToCharacter,
@@ -4049,8 +4049,8 @@ class killBufferCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.128:zapToCharacter
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.174:class killBufferCommandsClass
-#@+node:ekr.20050920084036.186:class leoCommandsClass
+#@-node:ekr.20050920084036.174:class killBufferCommandsClass (test)
+#@+node:ekr.20050920084036.186:class leoCommandsClass (ok)
 class leoCommandsClass (baseEditCommandsClass):
     
     #@    @+others
@@ -4254,7 +4254,7 @@ class leoCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands (sets inversCommandDict & leoCallbackDict)
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.186:class leoCommandsClass
+#@-node:ekr.20050920084036.186:class leoCommandsClass (ok)
 #@+node:ekr.20050920084036.190:class macroCommandsClass
 class macroCommandsClass (baseEditCommandsClass):
 
@@ -4277,12 +4277,12 @@ class macroCommandsClass (baseEditCommandsClass):
     def getPublicCommands (self):
     
         return {
-            'call-last-keyboard-macro': self.callLastKeyboardMacro,
-            'end-kbd-macro':            self.endKbdMacro,
-            'name-last-kbd-macro':      self.nameLastKbdMacro,
-            'load-file':                self.loadFile,
-            'insert-keyboard-macro' :   self.insertKeyboardMacro,
-            'start-kbd-macro':          self.startKbdMacro,
+            # 'call-last-keyboard-macro': self.callLastKeyboardMacro,
+            # 'end-kbd-macro':            self.endKbdMacro,
+            # 'name-last-kbd-macro':      self.nameLastKbdMacro,
+            # 'load-file':                self.loadFile,
+            # 'insert-keyboard-macro' :   self.insertKeyboardMacro,
+            # 'start-kbd-macro':          self.startKbdMacro,
         }
     #@nonl
     #@-node:ekr.20050920084036.192: getPublicCommands
@@ -4493,7 +4493,7 @@ class macroCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.190:class macroCommandsClass
-#@+node:ekr.20050920084036.207:class queryReplaceCommandsClass
+#@+node:ekr.20050920084036.207:class queryReplaceCommandsClass (limited to single node)
 class queryReplaceCommandsClass (baseEditCommandsClass):
     
     '''A class to handle query replace commands.'''
@@ -4672,7 +4672,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051005151838:Helpers
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.207:class queryReplaceCommandsClass
+#@-node:ekr.20050920084036.207:class queryReplaceCommandsClass (limited to single node)
 #@+node:ekr.20050920084036.221:class rectangleCommandsClass (ok,simplified)
 class rectangleCommandsClass (baseEditCommandsClass):
 
@@ -5265,7 +5265,7 @@ class registerCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.234:class registerCommandsClass (ok)
-#@+node:ekr.20051023094009:Search classes
+#@+node:ekr.20051023094009:Search classes (ok, i-search is limited)
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
 class findTab (leoFind.leoFind):
 
@@ -5942,6 +5942,7 @@ class searchCommandsClass (baseEditCommandsClass):
         self.regexp = regexp
         k.setLabelBlue('isearch: ',protect=True)
         k.setState('isearch',1,handler=self.iSearchStateHandler)
+        c.frame.minibufferWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.262:startIncremental
     #@+node:ekr.20050920084036.264:iSearchStateHandler & helper
@@ -6196,7 +6197,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.257:class searchCommandsClass
-#@-node:ekr.20051023094009:Search classes
+#@-node:ekr.20051023094009:Search classes (ok, i-search is limited)
 #@+node:ekr.20051025071455:Spell classes (ok)
 #@+others
 #@+node:ekr.20051025071455.6:class Aspell
