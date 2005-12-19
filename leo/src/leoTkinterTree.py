@@ -1690,6 +1690,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c.beginUpdate()
         try:
     	    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+                c.endEditing() # Bug fix: 12/19/05
     	        if p.isExpanded(): p.contract()
     	        else:              p.expand()
     	        self.active = True
