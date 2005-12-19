@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="124" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="132" clone_windows="0"/>
 <globals body_outline_ratio="0.539518900344">
-	<global_window_position top="34" left="367" height="873" width="914"/>
+	<global_window_position top="11" left="544" height="873" width="640"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -2344,7 +2344,7 @@ clone-node                              = Ctrl-`
 close                                   = None
 close-find-dialog                       = None
 close-rectangle                         = None
-close-window                            = None
+close-window                            = Ctrl-W
 contract-all                            = Alt--
 contract-node                           = Alt-[
 contract-parent                         = Alt-0
@@ -2390,15 +2390,15 @@ equal-sized-panes                       = Alt-Shift-E
 escape                                  = None
 eval-expression                         = None
 exchange-point-mark                     = None
-execute-script                          = Ctrl-e
+execute-script                          = Ctrl-E
 exit-leo                                = Ctrl-Q
 expand-abbrev                           = None
 expand-all                              = Alt-9
 expand-and-go-right                     = None
-expand-next-level                       = None
+expand-next-level                       = Alt+=
 expand-node                             = Alt-]
 expand-or-go-right                      = Alt-RtArrow
-expand-prev-level                       = None
+expand-prev-level                       = Alt+.
 expand-region-abbrevs                   = None
 expand-to-level-1                       = Alt-1
 expand-to-level-2                       = Alt-2
@@ -2556,7 +2556,7 @@ open-online-tutorial                    = None
 open-outline                            = Ctrl-O
 open-python-window                      = Alt-P
 open-rectangle                          = None
-open-spell-tab                          = None
+open-spell-tab                          = Alt+Shift+A
 open-with                               = None
 outline-to-CWEB                         = None
 outline-to-noweb                        = None
@@ -2667,7 +2667,7 @@ word-search-backward                    = None
 word-search-forward                     = None
 write-abbrev-file                       = None
 write-at-file-nodes                     = Shift-Ctrl-W
-write-dirty-at-file-nodes               = None
+write-dirty-at-file-nodes               = Shift+Ctrl+Q
 write-missing-at-file-nodes             = None
 write-outline-only                      = None
 yank                                    = None
