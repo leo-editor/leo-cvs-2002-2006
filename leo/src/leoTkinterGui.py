@@ -665,7 +665,7 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20051126125950:getSelectedText
     #@+node:ekr.20031218072017.4086:getTextSelection
-    def getTextSelection (self,t):
+    def getTextSelection (self,t,sort=True):
         
         """Return a tuple representing the selected range of t, a Tk.Text widget.
         
@@ -675,8 +675,9 @@ class tkinterGui(leoGui.leoGui):
         sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
         if len(sel) == 2:
             i,j = sel
-            if t.compare(i, ">", j):
-                i,j = j,i
+            if sort:
+                if t.compare(i, ">", j):
+                    i,j = j,i
             return i,j
         else:
             # Return the insertion point if there is no selected text.

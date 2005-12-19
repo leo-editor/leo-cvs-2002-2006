@@ -493,7 +493,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3946:resizePanesToRatio
     def resizePanesToRatio(self,ratio,ratio2):
         
-        # g.trace(ratio,ratio2)
+        # g.trace(ratio,ratio2,g.callers())
         
         if use_Pmw and Pmw:
             #@        << resize the Pmw panes >>
@@ -2684,20 +2684,25 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.4020:getSelectedText
     #@+node:ekr.20031218072017.4021:getTextSelection
-    def getTextSelection (self):
+    def getTextSelection (self,sort=True):
         
         """Return a tuple representing the selected range of body text.
         
         Return a tuple giving the insertion point if no range of text is selected."""
     
-        bodyCtrl = self.bodyCtrl
-        sel = bodyCtrl.tag_ranges("sel")
+        w = self.bodyCtrl
+        sel = w.tag_ranges("sel")
     
         if len(sel) == 2:
+            # New in 4.4a5: match behavior of g.app.gui.getTextSelection.
+            if sort:
+                i,j = sel
+                if w.compare(i, ">", j):
+                    i,j = j,i
             return sel
         else:
             # Return the insertion point if there is no selected text.
-            insert = bodyCtrl.index("insert")
+            insert = w.index("insert")
             return insert,insert
     #@nonl
     #@-node:ekr.20031218072017.4021:getTextSelection
