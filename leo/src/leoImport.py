@@ -38,6 +38,7 @@ class baseLeoImportCommands:
         # Used by Importers.
         self.web_st = []
         self.encoding = g.app.tkEncoding # 2/25/03: was "utf-8"
+        self._forcedGnxPositionList = []
     #@nonl
     #@-node:ekr.20031218072017.3207:import.__init__
     #@+node:ekr.20031218072017.3209:Import
