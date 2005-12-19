@@ -435,10 +435,10 @@ class tkinterGui(leoGui.leoGui):
                 w2 = c.frame.outerFrame.focus_get()
                 w2 and g.trace(g.app.gui.widget_name(name2),c)
     
-            if 0:
+            if 1:
                 # A fix to the cursed problems with Pmw.Notebook.
-                # But it slows down unit tests and is generally undesirable.
-                # Rather than calling update here, we shall call update only when essential.
+                # I am not happy with this, but it seems preferable to trying to figure out
+                # All the places the code must call update()
                 w.update() 
     
             w.focus_set()
