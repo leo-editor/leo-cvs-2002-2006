@@ -118,31 +118,35 @@ the last undo in a node body from the other leo.
 #@-node:ekr.20051208081641.1:Report
 #@-node:ekr.20051208081641:Fix undo problems
 #@+node:ekr.20051208100903:Install Brian's patch for Import Derived files
-#@+node:ekr.20031218072017.1810:importDerivedFiles (new)
+#@+node:ekr.20031218072017.1810:importDerivedFiles
 def importDerivedFiles (self,parent,paths):
     
-    c = self.c ; u = c.undoer
+    c = self.c ; u = c.undoer ; command = 'Import'
     at = c.atFileCommands ; current = c.currentPosition()
     self.tab_width = self.getTabWidth()
     if not paths: return
-    command = 'Import'
-    u.beforeChangeGroup(current,command)
-    for fileName in paths:
-        << set isThin if fileName is a thin derived file >>
-        undoData = u.beforeInsertNode(parent)
-        p = parent.insertAfter()
-        if isThin:
-            p.initHeadString("@thin " + fileName)
-            at.read(p,thinFile=True)
-        else:
-            p.initHeadString("Imported @file " + fileName)
-            at.read(p,importFileName=fileName)
-        p.contract()
-        u.afterInsertNode(p,command,undoData)
-    current.expand()
-    c.selectPosition(current)
-    u.afterChangeGroup(p,command)
-    
+    c.beginUpdate()
+    try:
+        u.beforeChangeGroup(current,command)
+        for fileName in paths:
+            << set isThin if fileName is a thin derived file >>
+            undoData = u.beforeInsertNode(parent)
+            p = parent.insertAfter()
+            if isThin:
+                at.forceGnxOnPosition(p)
+                p.initHeadString("@thin " + fileName)
+                at.read(p,thinFile=True)
+            else:
+                p.initHeadString("Imported @file " + fileName)
+                at.read(p,importFileName=fileName)
+            p.contract()
+            u.afterInsertNode(p,command,undoData)
+        current.expand()
+        c.selectPosition(current)
+        c.setChanged(True)
+        u.afterChangeGroup(p,command)
+    finally:
+        c.endUpdate()
 #@nonl
 #@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
 fileName = g.os_path_normpath(fileName)
@@ -161,7 +165,7 @@ def forceGnxOnPosition (self,p):
     self._forcedGnxPositionList.append(p.v)
 #@nonl
 #@-node:ekr.20051208100903.1:forceGnxOnPosition
-#@-node:ekr.20031218072017.1810:importDerivedFiles (new)
+#@-node:ekr.20031218072017.1810:importDerivedFiles
 #@-node:ekr.20051208100903:Install Brian's patch for Import Derived files
 #@-node:ekr.20051207130701:Fix newly reported problems
 #@+node:ekr.20051202102337:Minibuffer commands notes

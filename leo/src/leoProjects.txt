@@ -18914,6 +18914,69 @@ def onClickBoxClick (self,event):
 #@nonl
 #@-node:ekr.20040803072955.79:onClickBoxClick
 #@-node:ekr.20051219090231:Fixed bug: clicking in the expand/contract box didn't save the headline
+#@+node:ekr.20051218110553:Installed LeoUser's patch for Read derived files
+@
+
+This handles the root node properly so that Leo draws no duplicate node. The
+code is from LeoUser; thanks Brian.
+
+I also fixed a recent bugs: the screen was not being redrawn afterwards.
+#@nonl
+#@+node:ekr.20051219122720:atFile.forceGnxOnPosition
+def forceGnxOnPosition (self,p):
+    
+    self._forcedGnxPositionList.append(p.v)
+#@nonl
+#@-node:ekr.20051219122720:atFile.forceGnxOnPosition
+#@+node:ekr.20031218072017.1810:importDerivedFiles
+def importDerivedFiles (self,parent,paths):
+    
+    c = self.c ; u = c.undoer ; command = 'Import'
+    at = c.atFileCommands ; current = c.currentPosition()
+    self.tab_width = self.getTabWidth()
+    if not paths: return
+    c.beginUpdate()
+    try:
+        u.beforeChangeGroup(current,command)
+        for fileName in paths:
+            << set isThin if fileName is a thin derived file >>
+            undoData = u.beforeInsertNode(parent)
+            p = parent.insertAfter()
+            if isThin:
+                at.forceGnxOnPosition(p)
+                p.initHeadString("@thin " + fileName)
+                at.read(p,thinFile=True)
+            else:
+                p.initHeadString("Imported @file " + fileName)
+                at.read(p,importFileName=fileName)
+            p.contract()
+            u.afterInsertNode(p,command,undoData)
+        current.expand()
+        c.selectPosition(current)
+        c.setChanged(True)
+        u.afterChangeGroup(p,command)
+    finally:
+        c.endUpdate()
+#@nonl
+#@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+fileName = g.os_path_normpath(fileName)
+
+try:
+    theFile = open(fileName,'rb')
+    isThin = at.scanHeaderForThin(theFile,fileName)
+    theFile.close()
+except IOError:
+    isThin = False
+#@nonl
+#@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+#@+node:ekr.20051208100903.1:forceGnxOnPosition
+def forceGnxOnPosition (self,p):
+
+    self._forcedGnxPositionList.append(p.v)
+#@nonl
+#@-node:ekr.20051208100903.1:forceGnxOnPosition
+#@-node:ekr.20031218072017.1810:importDerivedFiles
+#@-node:ekr.20051218110553:Installed LeoUser's patch for Read derived files
 #@-node:ekr.20051208102436:Bugs fixed
 #@+node:ekr.20051208102436.1:New features
 #@+node:ekr.20051208091816:created ut.leo, ut.py and ut.bat
