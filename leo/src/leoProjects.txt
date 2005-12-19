@@ -5104,6 +5104,7 @@ def onClickBoxClick (self,event):
     c.beginUpdate()
     try:
 	    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+            c.endEditing() # Bug fix: 12/19/05
 	        if p.isExpanded(): p.contract()
 	        else:              p.expand()
 	        self.active = True
@@ -11587,6 +11588,7 @@ def onClickBoxClick (self,event):
     c.beginUpdate()
     try:
 	    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+            c.endEditing() # Bug fix: 12/19/05
 	        if p.isExpanded(): p.contract()
 	        else:              p.expand()
 	        self.active = True
@@ -18886,6 +18888,32 @@ def createThinChild4 (self,gnxString,headline):
 #@nonl
 #@-node:ekr.20051218100605.3:createThinChild4 NEW
 #@-node:ekr.20051216170531:Installed LeoUsers patch for the Read @file Nodes command
+#@+node:ekr.20051219090231:Fixed bug: clicking in the expand/contract box didn't save the headline
+#@+node:ekr.20040803072955.79:onClickBoxClick
+def onClickBoxClick (self,event):
+    
+    c = self.c ; p = self.eventToPosition(event)
+
+    c.beginUpdate()
+    try:
+	    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+            c.endEditing() # Bug fix: 12/19/05
+	        if p.isExpanded(): p.contract()
+	        else:              p.expand()
+	        self.active = True
+	        self.select(p)
+	        if c.frame.findPanel:
+	            c.frame.findPanel.handleUserClick(p)
+	        if self.stayInTree:
+	            c.frame.treeWantsFocus()
+	        else:
+	            c.frame.bodyWantsFocus()
+	    g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+    finally:
+        c.endUpdate()
+#@nonl
+#@-node:ekr.20040803072955.79:onClickBoxClick
+#@-node:ekr.20051219090231:Fixed bug: clicking in the expand/contract box didn't save the headline
 #@-node:ekr.20051208102436:Bugs fixed
 #@+node:ekr.20051208102436.1:New features
 #@+node:ekr.20051208091816:created ut.leo, ut.py and ut.bat
@@ -19034,7 +19062,7 @@ def getPublicCommands (self):
         'what-line':                            self.whatLine,
     }
 #@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
-#@+node:ekr.20050929114218:move... (leoEditCommands)
+#@+node:ekr.20050929114218:move... (leoEditCommands) (ok)
 #@+node:ekr.20051218170358: helpers
 #@+node:ekr.20051218122116:moveToHelper
 def moveToHelper (self,event,spot,extend):
@@ -19364,7 +19392,7 @@ def forwardWordExtendSelection (self,event):
     
     self.moveWordHelper(event,extend=True,forward=True)
 #@-node:ekr.20050920084036.149:words
-#@-node:ekr.20050929114218:move... (leoEditCommands)
+#@-node:ekr.20050929114218:move... (leoEditCommands) (ok)
 #@-node:ekr.20051217135340:(Revised cursor movement commands and added selection-extension commands)
 #@-node:ekr.20051208102436.1:New features
 #@+node:ekr.20051217102943:Code changes
@@ -23086,7 +23114,7 @@ def measure (self,w):
     return watch, top, bottom
 #@nonl
 #@-node:ekr.20050920084036.147:measure
-#@+node:ekr.20050929114218:move... (leoEditCommands)
+#@+node:ekr.20050929114218:move... (leoEditCommands) (ok)
 #@+node:ekr.20051218170358: helpers
 #@+node:ekr.20051218122116:moveToHelper
 def moveToHelper (self,event,spot,extend):
@@ -23416,7 +23444,7 @@ def forwardWordExtendSelection (self,event):
     
     self.moveWordHelper(event,extend=True,forward=True)
 #@-node:ekr.20050920084036.149:words
-#@-node:ekr.20050929114218:move... (leoEditCommands)
+#@-node:ekr.20050929114218:move... (leoEditCommands) (ok)
 #@+node:ekr.20050920084036.95:paragraph...
 @others
 #@nonl
@@ -24135,7 +24163,7 @@ def tabifyHelper (self,event,which):
 #@nonl
 #@-node:ekr.20050920084036.126:tabify & untabify
 #@-node:ekr.20050920084036.53:class editCommandsClass
-#@+node:ekr.20050929114218:move... (leoEditCommands)
+#@+node:ekr.20050929114218:move... (leoEditCommands) (ok)
 #@+node:ekr.20051218170358: helpers
 #@+node:ekr.20051218122116:moveToHelper
 def moveToHelper (self,event,spot,extend):
@@ -24465,7 +24493,7 @@ def forwardWordExtendSelection (self,event):
     
     self.moveWordHelper(event,extend=True,forward=True)
 #@-node:ekr.20050920084036.149:words
-#@-node:ekr.20050929114218:move... (leoEditCommands)
+#@-node:ekr.20050929114218:move... (leoEditCommands) (ok)
 #@+node:ekr.20050920084036.85:insert & delete...
 #@+node:ekr.20051125080855:selfInsertCommand
 def selfInsertCommand(self,event):

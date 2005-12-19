@@ -3125,7 +3125,7 @@ def makeIndexVisible(self,t,index):
 #@-node:ekr.20031218072017.4098:makeIndexVisible
 #@-node:ekr.20031218072017.4097:Visibility
 #@-node:ekr.20031218072017.4059:app.gui.Tkinter.utils
-#@+node:ekr.20051126123249:class autoCompleterClass
+#@+node:ekr.20051126123249:class autoCompleterClass (prototype)
 class autoCompleterCommandsClass (baseEditCommandsClass):
     
     '''Similar to typing completion in the minibuffer,
@@ -3314,7 +3314,7 @@ def stateHandler (self,event):
         self.computeCompletionList()
 #@nonl
 #@-node:ekr.20051126124705:stateHandler (autoCompleter)
-#@-node:ekr.20051126123249:class autoCompleterClass
+#@-node:ekr.20051126123249:class autoCompleterClass (prototype)
 #@-node:ekr.20051126122638:Autocompletion tab
 #@+node:ekr.20051028061611.1:Unify all search commands
 Revise:
@@ -3343,7 +3343,7 @@ side of the higlighted selection.
 
 This suggestion is based on the way searching in Vim works.
 #@-node:ekr.20051112075511:Idea for improving search command code
-#@+node:ekr.20051023094009:Search classes
+#@+node:ekr.20051023094009:Search classes (ok, i-search is limited)
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
 class findTab (leoFind.leoFind):
 
@@ -4010,6 +4010,7 @@ def startIncremental (self,event,forward,regexp):
     self.regexp = regexp
     k.setLabelBlue('isearch: ',protect=True)
     k.setState('isearch',1,handler=self.iSearchStateHandler)
+    c.frame.minibufferWantsFocus()
 #@nonl
 #@-node:ekr.20050920084036.262:startIncremental
 #@+node:ekr.20050920084036.264:iSearchStateHandler & helper
@@ -4261,7 +4262,7 @@ def reSearchHelper (self,event,pattern,forward):
 #@-node:ekr.20050920084036.274:reSearchBackward/Forward & helper
 #@-node:ekr.20050920084036.267:non-incremental search...
 #@-node:ekr.20050920084036.257:class searchCommandsClass
-#@-node:ekr.20051023094009:Search classes
+#@-node:ekr.20051023094009:Search classes (ok, i-search is limited)
 #@+node:ekr.20051012053017.4:Search improvements
 ** Important: search headline option.
     
