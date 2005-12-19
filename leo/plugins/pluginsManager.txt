@@ -22,7 +22,7 @@ plugins_menu.py
 #__jEdit_colorizer__.py
 #word_export.py
 #open_shell.py
-at_view.py
+#at_view.py
 #fastGotoNode.py
 # vim.py
 #newButtons.py

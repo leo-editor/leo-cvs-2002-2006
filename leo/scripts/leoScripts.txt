@@ -94,6 +94,37 @@ s = ''.join(result)
 g.trace(s)
 p.setBodyString(s)
 #@-node:add tab after each :
+#@+node:insert begin/endUpdate
+u = c.undoer ; w = c.frame.body.bodyCtrl
+
+s1 = '''\
+    c.beginUpdate()
+    try:'''
+s2 = '''\
+    finally:
+        c.endUpdate()'''
+
+b = u.beforeChangeNodeContents(p)
+
+i, j = g.app.gui.getTextSelection(w)
+if i != j:
+    s = w.get(i,j)
+    s = ''.join(['\t'+line for line in g.splitLines(s)])
+    w.delete(i,j)
+    w.insert(i,s1+'\n'+s+'\n'+s2)
+else:
+    w.insert(i,s1+'\n\t\t\n'+s2)
+
+u.afterChangeNodeContents(p,'add-begin/endUpdate',b)
+#@nonl
+#@+node:Test
+
+
+    line one
+    line two
+#@nonl
+#@-node:Test
+#@-node:insert begin/endUpdate
 #@-node:Text editing scripts
 #@+node:Find scripts
 #@+node:Find and replace all functions in leoGlobals.py

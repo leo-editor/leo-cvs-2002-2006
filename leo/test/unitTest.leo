@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8511" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8526" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
-	<global_window_position top="61" left="316" height="781" width="864"/>
+	<global_window_position top="59" left="295" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -977,8 +977,6 @@
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>
 <v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
 <v t="ekr.20050106094854.5"><vh>runTest</vh></v>
 <v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
 </v>
@@ -989,8 +987,6 @@
 <v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050106080318.2"><vh>__init__</vh></v>
 <v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
 <v t="ekr.20050106080318.6"><vh>runTest</vh></v>
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
@@ -1589,8 +1585,6 @@
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
 <v t="ekr.20050218015346.13"><vh> fail</vh></v>
-<v t="ekr.20050218015346.14"><vh>setUp</vh></v>
-<v t="ekr.20050218015346.15"><vh>tearDown</vh></v>
 <v t="ekr.20050218015346.16"><vh>runTest</vh></v>
 <v t="ekr.20050218015346.17"><vh>shortDescription</vh></v>
 </v>
@@ -1609,7 +1603,6 @@
 <v t="ekr.20050120095423.16"><vh>runTest</vh></v>
 <v t="ekr.20050120095423.17"><vh>setUp</vh></v>
 <v t="ekr.20050120095423.18"><vh>shortDescription</vh></v>
-<v t="ekr.20050120095423.19"><vh>tearDown</vh></v>
 </v>
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
@@ -1624,7 +1617,7 @@
 <v t="ekr.20051107115231"><vh>Unit tests for Redraws</vh>
 <v t="ekr.20051122095426"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
 <v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
-<v t="ekr.20051107115231.2"><vh>Test headline abc</vh></v>
+<v t="ekr.20051216171321"><vh>Test headline abc</vh></v>
 <v t="ekr.20051109034758"><vh>pasted node</vh></v>
 <v t="ekr.20051107115231.3"><vh>Reference</vh>
 <v t="ekr.20051107115231.4"><vh>manufactureKeyPressForCommandName</vh></v>
@@ -1698,6 +1691,7 @@
 <v t="ekr.20051108063032"><vh>@test pasteNode draws the screen exactly once</vh>
 <v t="ekr.20051108063458.46"><vh>&lt;&lt; define s, the node to be pasted &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20051216171321.1"><vh>pasted node</vh></v>
 <v t="ekr.20051107115231.29"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
 <v t="ekr.20051107115231.13" a="M"><vh>Typing and undo tests</vh>
@@ -1706,7 +1700,6 @@
 <v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
 <v t="ekr.20051107115231.17"><vh>@test typing and undo in headline - at end</vh></v>
 <v t="ekr.20051107115231.18"><vh>@test paste and undo in headline - at end</vh></v>
-<v t="ekr.20051107115231.19" a="M"><vh>@test typing and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.20"><vh>@test paste and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.21"><vh>@test selecting new node retains typing in headline</vh></v>
 <v t="ekr.20051107115231.22"><vh>@test paste from menu into body sticks</vh></v>
@@ -1723,6 +1716,7 @@
 <v t="ekr.20051125170139"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
 <v t="ekr.20051108141141"><vh>Not ready yet</vh>
+<v t="ekr.20051107115231.19" a="M"><vh>@@test typing and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.32"><vh>@@test plugins manager stays in front</vh></v>
 <v t="ekr.20051109091333"><vh>@@test deleting the last body character text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
@@ -4296,12 +4290,11 @@ if 0: # This causes p to be written, thereby clearing the tnodeList.
     p.setDirty()
     
 if 0: # This actually saves this file, so it is a bit dangerous.
-    g.app.unitTesting = True
+
     g.app.unitTestDict = {}
     ### c.save()
     ok = g.app.unitTestDict.get("warning")
-    assert ok, "putVnode failed to give warning"
-    g.app.unitTesting = False</t>
+    assert ok, "putVnode failed to give warning"</t>
 <t tx="ekr.20040831095833"></t>
 <t tx="ekr.20040831095833.1">openFileDialog
 src\\leo.py</t>
@@ -4904,12 +4897,6 @@ else: # For script button nodes.  Good for testing.
     """Mark a unit test as having failed."""
     
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
-<t tx="ekr.20050106080318.4">def setUp (self):
-
-    g.app.unitTesting = True</t>
-<t tx="ekr.20050106080318.5">def tearDown (self):
-
-    g.app.unitTesting = False</t>
 <t tx="ekr.20050106080318.6">def runTest (self):
     
     f = self.f ; name = f.__name__ ; theClass = self.theClass
@@ -5043,12 +5030,6 @@ else: # For script button nodes.  Good for testing.
 
     
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
-<t tx="ekr.20050106094854.3">def setUp (self):
-
-    g.app.unitTesting = True</t>
-<t tx="ekr.20050106094854.4">def tearDown (self):
-
-    g.app.unitTesting = False</t>
 <t tx="ekr.20050106094854.5">def runTest (self):
 
     # Try to run the function.
@@ -5269,14 +5250,10 @@ g.app.scriptDict['suite'] = suite</t>
         assert module, 'can not import %s' % moduleName</t>
 <t tx="ekr.20050120095423.17">def setUp(self):
 
-    g.app.unitTesting = True
     g.app.unitTestDict = {}</t>
 <t tx="ekr.20050120095423.18">def shortDescription (self):
 
     return "pluginTestCase: %s" % g.shortFileName(self.path)</t>
-<t tx="ekr.20050120095423.19">def tearDown (self):
-
-    g.app.unitTesting = False</t>
 <t tx="ekr.20050120095423.20">class lastTestCase(unittest.TestCase):
 
     '''A test case to print a message at the end of plugin tests.'''
@@ -5502,12 +5479,6 @@ if 1:
     """Mark a unit test as having failed."""
 
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
-<t tx="ekr.20050218015346.14">def setUp (self):
-
-    g.app.unitTesting = True</t>
-<t tx="ekr.20050218015346.15">def tearDown (self):
-
-    g.app.unitTesting = False</t>
 <t tx="ekr.20050218015346.16">def runTest (self):
     
     f = self.f ; name = f.__name__ ; theClass = self.theClass
@@ -5556,7 +5527,6 @@ if 1:
     
     path = g.os_path_abspath(g.os_path_join(g.app.loadDir,"..","plugins"))
     
-    g.app.unitTesting = True # Disable imports of dangerous modules.
     plugin = g.importFromPath(pluginName,path,verbose=True)
     if not plugin:
         return len([])
@@ -7871,7 +7841,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13764,7 +13734,6 @@ ab</t>
 <t tx="ekr.20051107115231"></t>
 <t tx="ekr.20051107115231.1">g.es_print('Test of @command')
 g.app.unitTestDict ['unit-test-command1'] = True</t>
-<t tx="ekr.20051107115231.2"></t>
 <t tx="ekr.20051107115231.3"></t>
 <t tx="ekr.20051107115231.4">def manufactureKeyPressForCommandName (self,w,commandName):
     
@@ -13911,24 +13880,21 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.19">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.19"># Totally weird.
+
+import leoTest ; u = leoTest.testUtils()
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
 p = u.findNodeAnywhere(c,h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
-print 'begin edit'
 tree.editLabel(p) # Sets focus.
 w = p.edit_widget()
-# print g.app.gui.widget_name(w)
 try:
     assert w
     w.update()
     g.app.gui.setSelectionRange(w,'1.1','1.2',insert='1.1')
-    # w.mark_set('insert','1.1') # New in 4.4a4: we must also set the insert point!
-    #print 'sel',repr(w.tag_ranges('sel'))
-    #print 'ins',repr(w.index('insert'))
     w.event_generate('X')
     w.event_generate('Y')
     w.event_generate('Z')
@@ -14037,7 +14003,8 @@ finally:
     if 1:
         p.setHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.24">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.24"># Should be a comment
+import leoTest ; u = leoTest.testUtils()
 h = 'Test headline abc'
 p = u.findNodeAnywhere(c,h)
 # Post by hand.
@@ -14674,5 +14641,7 @@ finally:
 <t tx="ekr.20051202100844"></t>
 <t tx="ekr.20051202100844.1"></t>
 <t tx="ekr.20051202100844.2"></t>
+<t tx="ekr.20051216171321"></t>
+<t tx="ekr.20051216171321.1"></t>
 </tnodes>
 </leo_file>

@@ -2,14 +2,14 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
-<globals body_outline_ratio="0.433691756272">
+<globals body_outline_ratio="0.438470728793">
 	<global_window_position top="61" left="290" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -4166,7 +4166,7 @@ bin\IronPythonConsole c:\prog\leoCVS\leo\test\ironPythonTest.py
 </t>
 <t tx="ekr.20051130182536"></t>
 <t tx="ekr.20051130182536.1">@comment REM_</t>
-<t tx="ekr.20051201063427.1">execute-script = Ctrl-e # Ctrl-e conflicts with end-of-line</t>
+<t tx="ekr.20051201063427.1">### execute-script = Ctrl-e # Ctrl-e conflicts with end-of-line</t>
 <t tx="ekr.20051201090822"></t>
 <t tx="ekr.20051201153400">before
 

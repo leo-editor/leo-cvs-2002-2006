@@ -26,6 +26,10 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
+#@+node:ekr.20051217175058:Get chapters plugin working
+Use the zip file stuff initially.  We can add support for chapters to Leo's core later.
+#@nonl
+#@-node:ekr.20051217175058:Get chapters plugin working
 #@+node:ekr.20051202094427:Prototype for resolve cvs conflicts
 #@-node:ekr.20051202094427:Prototype for resolve cvs conflicts
 #@+node:ekr.20051027105304:Next release: a5
@@ -1520,33 +1524,6 @@ rigidly sideways, which is how the command gets its name.
 
 #@-node:ekr.20051121060445:Indent help
 #@-node:ekr.20051120180644.2:Reference
-#@+node:ekr.20050920084036.149:back/forwardWord & helper
-def moveWordHelper (self,event,forward=True):
-
-    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
-
-    c = self.c ; w = event.widget
-    
-    if forward:
-         ind = w.search('\w','insert',stopindex='end',regexp=True)
-         if ind: nind = '%s wordend' % ind
-         else:   nind = 'end'
-    else:
-         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
-         if ind: nind = '%s wordstart' % ind
-         else:   nind = '1.0'
-
-    w.mark_set('insert',nind)
-    w.see('insert')
-    c.frame.widgetWantsFocus(w)
-
-def backwardWord (self,event):
-    self.moveWordHelper(event,forward=False)
-
-def forwardWord (self,event):
-    self.moveWordHelper(event,forward=True)
-#@nonl
-#@-node:ekr.20050920084036.149:back/forwardWord & helper
 #@+node:ekr.20050920084036.219:findNextMatch
 def findNextMatch (self,event):
     
@@ -3024,7 +3001,7 @@ def getSelectedText (self,t):
 #@nonl
 #@-node:ekr.20051126125950:getSelectedText
 #@+node:ekr.20031218072017.4086:getTextSelection
-def getTextSelection (self,t):
+def getTextSelection (self,t,sort=True):
     
     """Return a tuple representing the selected range of t, a Tk.Text widget.
     
@@ -3034,8 +3011,9 @@ def getTextSelection (self,t):
     sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
     if len(sel) == 2:
         i,j = sel
-        if t.compare(i, ">", j):
-            i,j = j,i
+        if sort:
+            if t.compare(i, ">", j):
+                i,j = j,i
         return i,j
     else:
         # Return the insertion point if there is no selected text.

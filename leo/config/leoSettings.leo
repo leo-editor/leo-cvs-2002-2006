@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="121" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="10" left="239" height="873" width="915"/>
+	<global_window_position top="17" left="279" height="873" width="915"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -207,7 +207,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954"><vh>Window options</vh>
+<v t="ekr.20041213105954" a="E"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -219,9 +219,9 @@
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 </v>
 <v t="ekr.20041119034357.56" a="E"><vh>@page Options for new windows</vh>
-<v t="ekr.20041119034357.57" a="E"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
-<v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.59"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
+<v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.4</vh></v>
+<v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.8</vh></v>
 <v t="ekr.20041119034357.60"><vh>@ratio initial_vertical_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.61"><vh>@ratio initial_vertical_secondary_ratio = 0.7</vh></v>
 <v t="ekr.20041119034357.62"><vh>@int initial_window_height = 600</vh></v>
@@ -242,7 +242,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -250,7 +250,7 @@
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="TV"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -382,27 +382,69 @@ body_text_font_weight = None
 
 Valid values: 0.0 to 1.0.
 
-</t>
+**Important**: Leo **does** save this ratio when saving a .leo file, so Leo
+always uses this ratio only when creating a new outline.</t>
 <t tx="ekr.20041119034357.58">The ratio of outline (tree) pane size to log pane size when splitting the primary panes horizontally.
 
 Valid values: 0.0 to 1.0.
 
-</t>
+**Important**: Leo does not save this ratio when saving a .leo file, so Leo
+always uses this ratio when opening a file that is being split horizontally.</t>
 <t tx="ekr.20041119034357.59">Defines the primary splitter orientation.
 
 The primary panes are the body pane and the secondary pane.
 The secondary pane contains the outline and log panes.
 
 vertical: body pane below outline and log panes.
-horizontal: body pane to left of outline and log panes.</t>
+horizontal: body pane to left of outline and log panes.
+
+The so-called 'primary' ratio is the ratio between the body pane and the pane
+containing the other two panes. The so-called secondary ratio is the ratio
+between sizes of the log pane and the outline pane.
+
+The thing to keep in mind is that Leo saves *only* the primary ratio in .leo
+files. Leo does not save the so-called 'secondary' ratio in .leo files, because
+doing so would change Leo's file format.
+
+Because Leo **does** save the primary ratio in .leo files, Leo will open a file
+with the same primary ratio that you had when you last saved the file.
+
+Because Leo does **not** save the secondary ratio in the .leo file Leo
+determines the relative sizes of the log and outline panes from settings in
+leoSettings.leo. One of the two settings is used:
+
+- initial_horizontal_secondary_ratio or
+
+- initial_vertical_secondary_ratio
+
+Which one is used depends on the initial_splitter_orientation setting.
+
+**Important** If you change these settings you must restart Leo for them to take effect.
+
+Here are some further notes adapted from comments from Paul Paterson:
+
+Leo also doesn't save the split direction. This can be confusing, because if you
+save a horizontal split file but your default split is vertical, then when you
+reload and correct the split Leo has forgotten the ratio!  To restate:
+
+- if you change the split direction (window .. toggle split) Leo resets the
+split ratios.
+
+- if you save a Leo file with a split other than the default (in settings) Leo
+won't remember that.
+</t>
 <t tx="ekr.20041119034357.60">The ratio of tree pane size to body pane size when splitting primary panes vertically.
 
 Valid values: 0.0 to 1.0.
 
-</t>
+**Important**: Leo **does** save this ratio when saving a .leo file, so Leo
+always uses this ratio only when creating a new outline.</t>
 <t tx="ekr.20041119034357.61">The ratio of outline (tree) pane size to body pane size when splitting the primary panes vertically.
 
-Valid values: 0.0 to 1.0.</t>
+Valid values: 0.0 to 1.0.
+
+**Important**: Leo does not save this ratio when saving a .leo file, so Leo
+always uses this ratio when opening a file that is being split vertically.</t>
 <t tx="ekr.20041119034357.62">Height of window in pixels.
     
 </t>
@@ -1388,20 +1430,24 @@ append-next-kill            = None      # Control-Alt-w
 append-to-buffer            = None
 append-to-register          = None
 auto-complete               = Ctrl-Tab
-back-sentence               ! text = Alt-a  # No conflict
-back-sentence-extend-selection = None
-back-to-indentation         = None
-# backward-char               ! text = Ctrl-b # No conflict
-backward-char               = LtArrow
-backward-char-extend-selection = Shift-LtArrow
+# back-char                     ! text = Ctrl-b # No conflict
+back-char                       ! text = LtArrow
+back-char-extend-selection      ! text = Shift-LtArrow
+back-paragraph                  ! text = Alt-braceleft 
+back-paragraph-extend-selection ! text = Alt-Shift-braceleft
+back-sentence                   ! text = Alt-a  # No conflict
+back-sentence-extend-selection  = None
+back-to-indentation             = None
+back-word                       ! text = Alt-b  # No conflict   
+back-word-extend-selection      ! text = Alt-Shift-b  # No conflict
 backward-delete-char        = BackSpace
 backward-kill-paragraph     = None
 backward-kill-sentence      = None
 backward-kill-word          = Alt-Delete
-backward-paragraph          = Alt-braceleft # Conflicts with
-backward-word               ! text = Alt-b  # No conflict   
-beginning-of-buffer         = Alt-less
-beginning-of-line           ! text = Ctrl-a # Ctrl-a Conflicts with select-all 
+beginning-of-buffer                     ! text = Alt-less # Note: same as Alt-Shift-less
+beginning-of-buffer-extend-selection    = None
+beginning-of-line                       ! text = Ctrl-a         # Ctrl-a Conflicts with select-all 
+beginning-of-line-extend-selection      = None  # Ctrl-Shift-a conflicts with select-all 
 call-last-keyboard-macro    = None
 capitalize-word             = None
 cascade-windows             = None
@@ -1410,6 +1456,7 @@ center-region               = None
 check-all-python-code       = None
 check-outline               = None
 check-python-code           = None
+clear-extend-mode           = None
 clear-kill-ring             = None
 clear-recent-files          = None
 clear-rectangle             = None
@@ -1455,8 +1502,10 @@ dump-outline                = None
 edit-headline               = Ctrl-H
 end-edit-headline           ! tree = Return # Esc is also possible.
 end-kbd-macro               = None
-end-of-buffer               = Alt-greater
-end-of-line                 ! text = Ctrl-e # Ctrl-e Conflicts with execute-script
+end-of-buffer                   ! text = Alt-greater # Note: same as Alt-Shift-greater
+end-of-buffer-extend-selection  ! None
+end-of-line                     ! text = Ctrl-e             # Ctrl-e conflicts with execute-script
+end-of-line-extend-selection    ! text = Ctrl-Shift-e       # Ctrl-Shift-e conflicts with extract-section-names.
 equal-sized-panes           = Alt-Shift-E
 escape                      = None
 eval-expression             = None
@@ -1482,9 +1531,9 @@ expand-to-level-7           = None
 expand-to-level-8           = None
 expand-to-level-9           = None
 export-headlines            = None
-extract                     = Shift-Ctrl-D
-extract-names               = Shift-Ctrl-N
-extract-section             = Shift-Ctrl-E
+extract                     = Shift-Ctrl-d
+extract-names               = Shift-Ctrl-n
+extract-section             = Shift-Ctrl-e
 fill-paragraph              = None
 fill-region                 = None
 fill-region-as-paragraph    = None
@@ -1505,12 +1554,14 @@ focus-to-log                = None
 focus-to-minibuffer         = None
 focus-to-tree               = None
 # forward-char                      ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with find-panel
-forward-char                        = RtArrow
-forward-char-extend-selection       = Shift-RtArrow
-forward-paragraph                   = Alt-braceright
+forward-char                        ! text = RtArrow
+forward-char-extend-selection       ! text = Shift-RtArrow
+forward-paragraph                   ! text = Alt-braceright
+forward-paragraph-extend-selection  ! text = Alt-Shift-braceright
 forward-sentence                    ! text = Alt-e          # No conflict
 forward-sentence-extend-selection   ! text = Alt-Shift-e
-forward-word                ! text = Alt-f          # No conflict with bindings, but usually opens file menu.
+forward-word                        ! text = Alt-f          # No conflict with bindings, but usually opens file menu.
+forward-word-extend-selection       ! text = Alt-Shift-f
 full-command                = Alt-x                 # No conflict.
 go-back                     ! tree = None
 go-forward                  ! tree = None
@@ -1593,13 +1644,14 @@ move-outline-down           = Ctrl-D
 move-outline-left           = Ctrl-L
 move-outline-right          = Ctrl-R
 move-outline-up             = Ctrl-U
-move-past-close             = Alt-parenright
+move-past-close                     = Alt-parenright # Same as Alt-shift-parenright
+move-past-close-extend-selection    = None
 name-last-kbd-macro         = None
 negative-argument           = None      # Alt-minus conflicts with contract-all.
-new                         = Shift-Control-O   # Ctrl-n conflicts with next-line.
+new                         = Ctrl-n    # Ctrl-n conflicts with next-line.
 newline-and-indent:         = Control-j
-next-line                   = Ctrl-n    # Conflicts with new.
-next-line-extend-selection  = Shift-DnArrow
+next-line                   ! text = DnArrow
+next-line-extend-selection  ! text = Shift-DnArrow
 number-command              = None
 number-command-0            = None
 number-command-1            = None
@@ -1636,8 +1688,8 @@ prepend-to-buffer           = None
 prepend-to-register         = None
 pretty-print-all-python-code= None
 pretty-print-python-code    = None
-previous-line               = Ctrl-p
-previous-line-extend-selection = Shift-UpArrow
+previous-line                   ! text = Uparrow
+previous-line-extend-selection  ! text = Shift-UpArrow
 print-bindings              = None
 print-commands              = None
 promote                     = Ctrl-{            
@@ -1671,11 +1723,12 @@ scroll-down                 = PageDn    # Ctrl-v conflicts with paste-text.
 scroll-up                   = PageUp    # Alt-v conflicts with view-all-characters.
 search-backward             = None
 search-forward              = None
-select-all                  = Shift-Ctrl-A  # Ctrl-A conflicts with beginning-of-line.
+select-all                  = Shift-Ctrl-A # Ctrl-Shift-a conflicts with beginning-of-line-extend-selection.
 select-paragraph            = None
 self-insert-command         = None      # The default binding for all visible keys.
 set-colors                  = None
 set-comment-column          = None
+set-extend-mode             = None
 set-fill-column             = None
 set-fill-prefix             = None
 set-font                    = None
@@ -1707,6 +1760,7 @@ tangle-all                  = None      # Removed Shift-Ctrl-A: not useful enoug
 tangle-marked               = None      # Removed Shift-Ctrl-M: not useful enough.
 toggle-active-pane          = Ctrl-T
 toggle-angle-brackets       = None
+toggle-extend-mode          = None
 toggle-mini-buffer          = None
     # It **is** possible to use &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
     # This had better be defined if you intend ever to hide the minibuffer.
@@ -1739,7 +1793,8 @@ write-outline-only          = None
 yank                        = Control-y
 yank-pop                    = Alt-y
 yank-rectangle              = None
-zap-to-character            = Alt-z</t>
+zap-to-character            = Alt-z
+</t>
 <t tx="ekr.20051010112903">Reserved  Alt-E  (Opens Edit Menu)
 Reserved  Alt-F  (Opens File Menu)
 Reserved  Alt-H  (Opens Help Menu)
