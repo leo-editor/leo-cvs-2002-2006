@@ -775,7 +775,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.13:class abbrevCommandsClass
-#@+node:ekr.20050920084036.31:class bufferCommandsClass
+#@+node:ekr.20050920084036.31:class bufferCommandsClass (ok)
 #@+at 
 #@nonl
 # An Emacs instance does not have knowledge of what is considered a buffer in 
@@ -1071,7 +1071,7 @@ class bufferCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050927102133.1:Utils
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.31:class bufferCommandsClass
+#@-node:ekr.20050920084036.31:class bufferCommandsClass (ok)
 #@+node:ekr.20050920084036.150:class controlCommandsClass (ok)
 class controlCommandsClass (baseEditCommandsClass):
     
@@ -1207,6 +1207,7 @@ class editCommandsClass (baseEditCommandsClass):
         self.ccolumn = '0'   # For comment column functions.
         self.dynaregex = re.compile(r'[%s%s\-_]+'%(string.ascii_letters,string.digits))
             # For dynamic abbreviations
+        self.extendMode = False # True: all cursor move commands extend the selection.
         self.fillPrefix = '' # For fill prefix functions.
         self.fillColumn = 70 # For line centering.
         self.store ={'rlist':[], 'stext':''} # For dynamic expansion.
@@ -1221,98 +1222,109 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k
     
         return {
-            'back-sentence':                self.backSentence,
-            'back-sentence-extend-selection': self.backSentenceExtendSelection,
-            'back-to-indentation':          self.backToIndentation,
-            'backward-char':                self.backCharacter,
-            'backward-char-extend-selection':self.backCharacterExtendSelection,
-            'backward-delete-char':         self.backwardDeleteCharacter,
-            'backward-kill-paragraph':      self.backwardKillParagraph,
-            'backward-paragraph':           self.backwardParagraph,
-            'backward-word':                self.backwardWord,
-            'beginning-of-buffer':          self.beginningOfBuffer,
-            'beginning-of-line':            self.beginningOfLine,
-            'capitalize-word':              self.capitalizeWord,
-            'center-line':                  self.centerLine,
-            'center-region':                self.centerRegion,
-            'count-region':                 self.countRegion,
-            'cycle-focus':                  self.cycleFocus,
-            'dabbrev-completion':           self.dynamicExpansion2,
-            'dabbrev-expands':              self.dynamicExpansion,
-            'delete-char':                  self.deleteNextChar,
-            'delete-indentation':           self.deleteIndentation,
-            'delete-spaces':                self.deleteSpaces,
-            'downcase-region':              self.downCaseRegion,
-            'downcase-word':                self.downCaseWord,
-            'end-of-buffer':                self.endOfBuffer,
-            'end-of-line':                  self.endOfLine,
-            'escape':                       self.watchEscape,
-            'eval-expression':              self.evalExpression,
-            'exchange-point-mark':          self.exchangePointMark,
-            'fill-paragraph':               self.fillParagraph,
-            'fill-region':                  self.fillRegion,
-            'fill-region-as-paragraph':     self.fillRegionAsParagraph,
-            'flush-lines':                  self.flushLines,
-            'focus-to-body':                self.focusToBody,
-            'focus-to-log':                 self.focusToLog,
-            'focus-to-minibuffer':          self.focusToMinibuffer,
-            'focus-to-tree':                self.focusToTree,
-            'forward-char':                 self.forwardCharacter,
-            'forward-char-extend-selection':self.forwardCharacterExtendSelection,
-            'forward-paragraph':            self.forwardParagraph,
+            'back-to-indentation':                  self.backToIndentation,
+            'back-char':                            self.backCharacter,
+            'back-char-extend-selection':           self.backCharacterExtendSelection,
+            'back-paragraph':                       self.backwardParagraph,
+            'back-paragraph-extend-selection':      self.backwardParagraphExtendSelection,
+            'back-sentence':                        self.backSentence,
+            'back-sentence-extend-selection':       self.backSentenceExtendSelection,
+            'back-word':                            self.backwardWord,
+            'back-word-extend-selection':           self.backwardWordExtendSelection,
+            'backward-delete-char':                 self.backwardDeleteCharacter,
+            'backward-kill-paragraph':              self.backwardKillParagraph,
+            'beginning-of-buffer':                  self.beginningOfBuffer,
+            'beginning-of-buffer-extend-selection': self.beginningOfBufferExtendSelection,
+            'beginning-of-line':                    self.beginningOfLine,
+            'beginning-of-line-extend-selection':   self.beginningOfLineExtendSelection,
+            'capitalize-word':                      self.capitalizeWord,
+            'center-line':                          self.centerLine,
+            'center-region':                        self.centerRegion,
+            'clear-extend-mode':                    self.clearExtendMode,
+            'count-region':                         self.countRegion,
+            'cycle-focus':                          self.cycleFocus,
+            'dabbrev-completion':                   self.dynamicExpansion2,
+            'dabbrev-expands':                      self.dynamicExpansion,
+            'delete-char':                          self.deleteNextChar,
+            'delete-indentation':                   self.deleteIndentation,
+            'delete-spaces':                        self.deleteSpaces,
+            'downcase-region':                      self.downCaseRegion,
+            'downcase-word':                        self.downCaseWord,
+            'end-of-buffer':                        self.endOfBuffer,
+            'end-of-buffer-extend-selection':       self.endOfBufferExtendSelection,
+            'end-of-line':                          self.endOfLine,
+            'end-of-line-extend-selection':         self.endOfLineExtendSelection,
+            'escape':                               self.watchEscape,
+            'eval-expression':                      self.evalExpression,
+            'exchange-point-mark':                  self.exchangePointMark,
+            'fill-paragraph':                       self.fillParagraph,
+            'fill-region':                          self.fillRegion,
+            'fill-region-as-paragraph':             self.fillRegionAsParagraph,
+            'flush-lines':                          self.flushLines,
+            'focus-to-body':                        self.focusToBody,
+            'focus-to-log':                         self.focusToLog,
+            'focus-to-minibuffer':                  self.focusToMinibuffer,
+            'focus-to-tree':                        self.focusToTree,
+            'forward-char':                         self.forwardCharacter,
+            'forward-char-extend-selection':        self.forwardCharacterExtendSelection,
+            'forward-paragraph':                    self.forwardParagraph,
+            'forward-paragraph-extend-selection':   self.forwardParagraphExtendSelection,
             'forward-sentence':                     self.forwardSentence,
             'forward-sentence-extend-selection':    self.forwardSentenceExtendSelection,
-            'forward-word':                 self.forwardWord,
-            'goto-char':                    self.gotoCharacter,
-            'goto-line':                    self.gotoLine,
-            'how-many':                     self.howMany,
+            'forward-word':                         self.forwardWord,
+            'forward-word-extend-selection':        self.forwardWordExtendSelection,
+            'goto-char':                            self.gotoCharacter,
+            'goto-line':                            self.gotoLine,
+            'how-many':                             self.howMany,
             # Use indentBody in leoCommands.py
-            #'indent-region':                self.indentRegion,
-            'indent-relative':              self.indentRelative,
-            'indent-rigidly':               self.tabIndentRegion,
-            'indent-to-comment-column':     self.indentToCommentColumn,
-            'insert-newline':               self.insertNewline,
-            'insert-parentheses':           self.insertParentheses,
-            'keep-lines':                   self.keepLines,
-            'kill-paragraph':               self.killParagraph,
-            'line-number':                  self.lineNumber,
-            'move-past-close':              self.movePastClose,
-            'newline-and-indent':           self.insertNewLineAndTab,
-            'next-line':                    self.nextLine,
-            'next-line-extend-selection':   self.nextLineExtendSelection,
-            'previous-line':                self.prevLine,
-            'previous-line-extend-selection':   self.prevLineExtendSelection,
-            'remove-blank-lines':           self.removeBlankLines,
-            'replace-regex':                self.activateReplaceRegex,
-            'replace-string':               self.replaceString,
-            'reverse-region':               self.reverseRegion,
-            'scroll-down':                  self.scrollDown,
-            'scroll-up':                    self.scrollUp,
-            'select-paragraph':             self.selectParagraph,
+            #'indent-region':                       self.indentRegion,
+            'indent-relative':                      self.indentRelative,
+            'indent-rigidly':                       self.tabIndentRegion,
+            'indent-to-comment-column':             self.indentToCommentColumn,
+            'insert-newline':                       self.insertNewline,
+            'insert-parentheses':                   self.insertParentheses,
+            'keep-lines':                           self.keepLines,
+            'kill-paragraph':                       self.killParagraph,
+            'line-number':                          self.lineNumber,
+            'move-past-close':                      self.movePastClose,
+            'move-past-close-extend-selection':     self.movePastCloseExtendSelection,
+            'newline-and-indent':                   self.insertNewLineAndTab,
+            'next-line':                            self.nextLine,
+            'next-line-extend-selection':           self.nextLineExtendSelection,
+            'previous-line':                        self.prevLine,
+            'previous-line-extend-selection':       self.prevLineExtendSelection,
+            'remove-blank-lines':                   self.removeBlankLines,
+            'replace-regex':                        self.activateReplaceRegex,
+            'replace-string':                       self.replaceString,
+            'reverse-region':                       self.reverseRegion,
+            'scroll-down':                          self.scrollDown,
+            'scroll-up':                            self.scrollUp,
+            'select-paragraph':                     self.selectParagraph,
             # Exists, but can not be executed via the minibuffer.
-            # 'self-insert-command':          self.selfInsertCommand,
-            'set-comment-column':           self.setCommentColumn,
-            'set-fill-column':              self.setFillColumn,
-            'set-fill-prefix':              self.setFillPrefix,
-            'set-mark-command':             self.setRegion,
-            'show-colors':                  self.showColors,
-            'show-fonts':                   self.showFonts,
-            # 'save-buffer':                self.saveFile,
-            'sort-columns':                 self.sortColumns,
-            'sort-fields':                  self.sortFields,
-            'sort-lines':                   self.sortLines,
-            'split-line':                   self.insertNewLineIndent,
-            'tabify':                       self.tabify,
-            'transpose-chars':              self.transposeCharacters,
-            'transpose-lines':              self.transposeLines,
-            'transpose-words':              self.transposeWords,
-            'untabify':                     self.untabify,
-            'upcase-region':                self.upCaseRegion,
-            'upcase-word':                  self.upCaseWord,
-            'view-lossage':                 self.viewLossage,
-            'what-line':                    self.whatLine,
+            # 'self-insert-command':                self.selfInsertCommand,
+            'set-comment-column':                   self.setCommentColumn,
+            'set-extend-mode':                      self.setExtendMode,
+            'set-fill-column':                      self.setFillColumn,
+            'set-fill-prefix':                      self.setFillPrefix,
+            'set-mark-command':                     self.setRegion,
+            'show-colors':                          self.showColors,
+            'show-fonts':                           self.showFonts,
+            # 'save-buffer':                        self.saveFile,
+            'sort-columns':                         self.sortColumns,
+            'sort-fields':                          self.sortFields,
+            'sort-lines':                           self.sortLines,
+            'split-line':                           self.insertNewLineIndent,
+            'tabify':                               self.tabify,
+            'toggle-extend-mode':                   self.toggleExtendMode,
+            'transpose-chars':                      self.transposeCharacters,
+            'transpose-lines':                      self.transposeLines,
+            'transpose-words':                      self.transposeWords,
+            'untabify':                             self.untabify,
+            'upcase-region':                        self.upCaseRegion,
+            'upcase-word':                          self.upCaseWord,
+            'view-lossage':                         self.viewLossage,
+            'what-line':                            self.whatLine,
         }
-    #@nonl
     #@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
     #@-node:ekr.20050929155208: birth
     #@+node:ekr.20050920084036.57:capitalization & case
@@ -1813,18 +1825,6 @@ class editCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Invalid Expression: %s' % e)
     #@nonl
     #@-node:ekr.20050920084036.65:evalExpression
-    #@+node:ekr.20050920084036.136:exchangePointMark
-    def exchangePointMark (self,event):
-    
-        if not self._chckSel(event): return
-    
-        k = self.k ; w = event.widget
-        s1 = w.index('sel.first')
-        s2 = w.index('sel.last')
-        i = w.index('insert')
-        w.mark_set('insert',g.choose(i==s1,s2,s1))
-    #@nonl
-    #@-node:ekr.20050920084036.136:exchangePointMark
     #@+node:ekr.20051022142249:focus (editCommandsClass)
     #@+node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
     def focusToBody (self,event):
@@ -2556,131 +2556,304 @@ class editCommandsClass (baseEditCommandsClass):
         return watch, top, bottom
     #@nonl
     #@-node:ekr.20050920084036.147:measure
-    #@+node:ekr.20050929114218:move...
-    #@+node:ekr.20050920084036.140:movePastClose
-    def movePastClose (self,event):
-    
-        k = self.k ; w = event.widget
-    
-        i = w.search('(','insert',backwards=True,stopindex='1.0')
-        if '' == i: return
-    
-        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
-        if icheck:
-            ic = w.compare(i,'<',icheck)
-            if ic: return
-    
-        i2 = w.search(')','insert',stopindex='end')
-        if '' == i2: return
-    
-        i2check = w.search('(','insert',stopindex='end')
-        if i2check:
-            ic2 = w.compare(i2,'>',i2check)
-            if ic2: return
-    
-        ib = w.index('insert')
-        w.mark_set('insert','%s lineend +1c' % i2)
-        if w.index('insert') == w.index('%s lineend' % ib):
-            w.insert('insert','\n')
-    #@nonl
-    #@-node:ekr.20050920084036.140:movePastClose
-    #@+node:ekr.20051213080533:backCharacter/ExtendSelection (ok)
-    def backCharacter (self,event):
-    
-        try:
-            w = event.widget
-            w.mark_set('insert','insert-1c')
-        except Exception:
-            pass #  w might not be a text widget.
-    
-    def backCharacterExtendSelection (self,event):
+    #@+node:ekr.20050929114218:move... (leoEditCommands)
+    #@+node:ekr.20051218170358: helpers
+    #@+node:ekr.20051218122116:moveToHelper
+    def moveToHelper (self,event,spot,extend):
+        
+        '''Common helper method for commands the move the cursor
+        in a way that can be described by a Tk Text expression.'''
         
         try:
-            w = event.widget
-            i,j = g.app.gui.getTextSelection(w)
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+            i,j = g.app.gui.getTextSelection(w,sort=True)
+            spot = w.index(spot) # Capture initial value.
             ins = w.index('insert')
-            w.mark_set('insert','insert-1c')
-            if w.compare(ins,'<=',i):
-                g.app.gui.setTextSelection (w,'insert',j)
-            else:
-                g.app.gui.setTextSelection (w,i,'insert')
+            w.mark_set('insert',spot)
+            if extend or self.extendMode:
+                if w.compare(spot,'<=',i):
+                    g.app.gui.setTextSelection (w,spot,j,insert=None)
+                else:
+                    g.app.gui.setTextSelection (w,i,spot,insert=None)
+            w.see(spot)
         except Exception:
             pass #  w might not be a text widget.
-    #@-node:ekr.20051213080533:backCharacter/ExtendSelection (ok)
-    #@+node:ekr.20050929115226.1:forwardCharacter/ExtendSelection (ok)
-    def forwardCharacter (self,event):
-    
-        try:
-            w = event.widget
-            i = w.index('insert')
-            w.mark_set('insert','insert+1c')
-        except Exception:
-            pass #  w might not be a text widget.
-    
-    def forwardCharacterExtendSelection (self,event):
-    
-        try:
-            w = event.widget
-            i,j = g.app.gui.getTextSelection(w)
-            ins = w.index('insert')
-            w.mark_set('insert','insert+1c')
-            if w.compare(ins,'<=',i):
-                g.app.gui.setTextSelection (w,'insert',j)
-            else:
-                g.app.gui.setTextSelection (w,i,'insert')
-        except Exception:
-            pass #  w might not be a text widget.
-    
-    #@-node:ekr.20050929115226.1:forwardCharacter/ExtendSelection (ok)
-    #@+node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
-    def moveTo (self,event,spot):
-        c = self.c
-        w = event.widget
-        w.mark_set('insert',spot)
-        w.see(spot)
-        c.frame.widgetWantsFocus(w)
-    
-    def beginningOfBuffer (self,event):
-        self.moveTo(event,'1.0')
-    
-    def beginningOfLine (self,event):
-        self.moveTo(event,'insert linestart')
-    
-    def endOfBuffer (self,event):
-        self.moveTo(event,'end')
-    
-    def endOfLine (self,event):
-        self.moveTo(event,'insert lineend')
     #@nonl
-    #@-node:ekr.20050920084036.148:moveTo, beginnning/endOfBuffer/Line
-    #@+node:ekr.20050920084036.149:back/forwardWord & helper
-    def moveWordHelper (self,event,forward=True):
+    #@-node:ekr.20051218122116:moveToHelper
+    #@+node:ekr.20051218121447:moveWordHelper
+    def moveWordHelper (self,event,extend,forward):
     
         '''This function moves the cursor to the next word, direction dependent on the way parameter'''
     
-        c = self.c ; w = event.widget
-        
-        if forward:
-             ind = w.search('\w','insert',stopindex='end',regexp=True)
-             if ind: nind = '%s wordend' % ind
-             else:   nind = 'end'
-        else:
-             ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
-             if ind: nind = '%s wordstart' % ind
-             else:   nind = '1.0'
-    
-        w.mark_set('insert',nind)
-        w.see('insert')
-        c.frame.widgetWantsFocus(w)
-    
-    def backwardWord (self,event):
-        self.moveWordHelper(event,forward=False)
-    
-    def forwardWord (self,event):
-        self.moveWordHelper(event,forward=True)
+        try:
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+            if forward:
+                 ind = w.search('\w','insert',stopindex='end',regexp=True)
+                 if ind: nind = '%s wordend' % ind
+                 else:   nind = 'end'
+            else:
+                 ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
+                 if ind: nind = '%s wordstart' % ind
+                 else:   nind = '1.0'
+            self.moveToHelper(event,nind,extend)
+        except Exception:
+            pass # w might not be a text widget.
     #@nonl
-    #@-node:ekr.20050920084036.149:back/forwardWord & helper
-    #@+node:ekr.20050920084036.131:backSentence/ExtendSelection & helper
+    #@-node:ekr.20051218121447:moveWordHelper
+    #@+node:ekr.20051218171457:movePastCloseHelper
+    def movePastCloseHelper (self,event,extend):
+    
+        try:
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+            i = w.search('(','insert',backwards=True,stopindex='1.0')
+            if '' == i: return
+        
+            icheck = w.search(')','insert',backwards=True,stopindex='1.0')
+            if icheck:
+                ic = w.compare(i,'<',icheck)
+                if ic: return
+        
+            i2 = w.search(')','insert',stopindex='end')
+            if '' == i2: return
+        
+            i2check = w.search('(','insert',stopindex='end')
+            if i2check:
+                ic2 = w.compare(i2,'>',i2check)
+                if ic2: return
+            
+            ins = '%s+1c' % i2
+            g.trace(ins)
+            self.moveToHelper(event,ins,extend)
+        except Exception:
+            pass # w may not be a text widget.
+    #@nonl
+    #@-node:ekr.20051218171457:movePastCloseHelper
+    #@+node:ekr.20051213094517:backSentenceHelper
+    def backSentenceHelper (self,event,extend):
+    
+        try:
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+        
+            i = w.search('.','insert',backwards=True,stopindex='1.0')
+            if i:
+                i2 = w.search('.',i,backwards=True,stopindex='1.0')
+                if i2:
+                    ins = w.search('\w',i2,stopindex=i,regexp=True) or i2
+                else:
+                    ins = '1.0'
+            else:
+                ins = '1.0'
+            if ins:
+                self.moveToHelper(event,ins,extend)
+        except Exception:
+            pass  #  w might not be a text widget.
+    #@nonl
+    #@-node:ekr.20051213094517:backSentenceHelper
+    #@+node:ekr.20050920084036.137:forwardSentenceHelper
+    def forwardSentenceHelper (self,event,extend):
+    
+        try:
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+            ins = w.index('insert')
+            sel_i,sel_j = g.app.gui.getTextSelection(w)
+            i = w.search('.','insert',stopindex='end')
+            ins = i and '%s +1c' % i or 'end'
+            self.moveToHelper(event,ins,extend)
+        except Exception:
+            pass  #  w might not be a text widget.
+    #@nonl
+    #@-node:ekr.20050920084036.137:forwardSentenceHelper
+    #@+node:ekr.20051218133207.1:forwardParagraphHelper
+    def forwardParagraphHelper (self,event,extend):
+        
+        try:
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+            i = w.index('insert')
+            while 1:
+                txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
+                if txt:
+                    i = w.index('%s + 1 lines' % i)
+                    if w.index('%s linestart' % i) == w.index('end'):
+                        i = w.search(r'\w','end',backwards=True,regexp=True,stopindex='1.0')
+                        i = '%s + 1c' % i
+                        break
+                else:
+                    i = w.search(r'\w',i,regexp=True,stopindex='end')
+                    i = '%s' % i
+                    break
+            if i:
+                self.moveToHelper(event,i,extend)
+        except Exception:
+            pass  #  w might not be a text widget.
+    #@nonl
+    #@-node:ekr.20051218133207.1:forwardParagraphHelper
+    #@+node:ekr.20051218133207:backwardParagraphHelper
+    def backwardParagraphHelper (self,event,extend):
+        
+        try:
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+            i = w.index('insert')
+            while 1:
+                s = w.get('%s linestart' % i,'%s lineend' % i).strip()
+                if s:
+                    i = w.index('%s - 1 lines' % i)
+                    if w.index('%s linestart' % i) == '1.0':
+                        i = w.search(r'\w','1.0',regexp=True,stopindex='end')
+                        break
+                else:
+                    i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
+                    i = '%s +1c' % i
+                    break
+            if i:
+                self.moveToHelper(event,i,extend)
+        except Exception:
+            pass  #  w might not be a text widget.
+    #@nonl
+    #@-node:ekr.20051218133207:backwardParagraphHelper
+    #@-node:ekr.20051218170358: helpers
+    #@+node:ekr.20050920084036.136:exchangePointMark
+    def exchangePointMark (self,event):
+        
+        try:
+            c = self.c ; w = event.widget
+            w.update() ; c.frame.widgetWantsFocus(w)
+            i,j = g.app.gui.getTextSelection(w,sort=False)
+            if i != j:
+                ins = w.index('insert')
+                ins = g.choose(ins==i,j,i)
+                g.app.gui.setInsertPoint(w,ins)
+                g.app.gui.setTextSelection(w,i,j,insert=None)
+        except Exception:
+            pass # w may not be a text widget.
+    #@nonl
+    #@-node:ekr.20050920084036.136:exchangePointMark
+    #@+node:ekr.20051218174113:extendMode
+    def clearExtendMode (self,event):
+        
+        self.extendMode = False
+        
+        c = self.c ; w = event.widget
+        w.update() ; c.frame.widgetWantsFocus(w)
+    
+    def setExtendMode (self,event):
+        
+        self.extendMode = True
+        
+        c = self.c ; w = event.widget
+        w.update() ; c.frame.widgetWantsFocus(w)
+        
+    def toggleExtendMode (self,event):
+        
+        self.extendMode = not self.extendMode
+        
+        c = self.c ; w = event.widget
+        w.update() ; c.frame.widgetWantsFocus(w)
+    #@nonl
+    #@-node:ekr.20051218174113:extendMode
+    #@+node:ekr.20050920084036.148:buffers
+    def beginningOfBuffer (self,event):
+        
+        self.moveToHelper(event,'1.0',extend=False)
+        
+    def beginningOfBufferExtendSelection (self,event):
+        
+        self.moveToHelper(event,'1.0',extend=True)
+    
+    def endOfBuffer (self,event):
+        
+        self.moveToHelper(event,'end',extend=False)
+        
+    def endOfBufferExtendSelection (self,event):
+        
+        self.moveToHelper(event,'end',extend=True)
+    #@-node:ekr.20050920084036.148:buffers
+    #@+node:ekr.20051213080533:characters
+    def backCharacter (self,event):
+        
+        self.moveToHelper(event,'insert-1c',extend=False)
+        
+    def backCharacterExtendSelection (self,event):
+        
+        self.moveToHelper(event,'insert-1c',extend=True)
+        
+    def forwardCharacter (self,event):
+        
+        self.moveToHelper (event,'insert+1c',extend=False)
+        
+    def forwardCharacterExtendSelection (self,event):
+        
+        self.moveToHelper (event,'insert+1c',extend=True)
+    #@-node:ekr.20051213080533:characters
+    #@+node:ekr.20051218141237:lines
+    def beginningOfLine (self,event):
+        
+        self.moveToHelper(event,'insert linestart',extend=False)
+        
+    def beginningOfLineExtendSelection (self,event):
+        
+        self.moveToHelper(event,'insert linestart',extend=True)
+        
+    def endOfLine (self,event):
+        
+        self.moveToHelper(event,'insert lineend',extend=False)
+        
+    def endOfLineExtendSelection (self,event):
+        
+        self.moveToHelper(event,'insert lineend',extend=True)
+    
+    def nextLine (self,event):
+        
+        self.moveToHelper(event,'insert + 1line',extend=False)
+        
+    def nextLineExtendSelection (self,event):
+        
+        self.moveToHelper(event,'insert + 1line',extend=True)
+        
+    def prevLine (self,event):
+        
+        self.moveToHelper(event,'insert - 1line',extend=False)
+        
+    def prevLineExtendSelection (self,event):
+        
+        self.moveToHelper(event,'insert - 1line',extend=True)
+    #@nonl
+    #@-node:ekr.20051218141237:lines
+    #@+node:ekr.20050920084036.140:movePastClose (test)
+    def movePastClose (self,event):
+        
+        self.movePastCloseHelper(event,extend=False)
+        
+    def movePastCloseExtendSelection (self,event):
+        
+        self.movePastCloseHelper(event,extend=True)
+    #@nonl
+    #@-node:ekr.20050920084036.140:movePastClose (test)
+    #@+node:ekr.20050920084036.102:paragraphs
+    def backwardParagraph (self,event):
+        
+        self.backwardParagraphHelper (event,extend=False)
+        
+    def backwardParagraphExtendSelection (self,event):
+        
+        self.backwardParagraphHelper (event,extend=True)
+        
+    def forwardParagraph (self,event):
+    
+        self.forwardParagraphHelper(event,extend=False)
+        
+    def forwardParagraphExtendSelection (self,event):
+        
+        self.forwardParagraphHelper(event,extend=True)
+    #@nonl
+    #@-node:ekr.20050920084036.102:paragraphs
+    #@+node:ekr.20050920084036.131:sentences
     def backSentence (self,event):
         
         self.backSentenceHelper(event,extend=False)
@@ -2688,40 +2861,7 @@ class editCommandsClass (baseEditCommandsClass):
     def backSentenceExtendSelection (self,event):
         
         self.backSentenceHelper(event,extend=True)
-    #@nonl
-    #@+node:ekr.20051213094517:backSentenceHelper
-    def backSentenceHelper (self,event,extend):
-    
-        try:
-            c = self.c ; w = event.widget
-            g.app.gui.set_focus(c,w)
-            ins = w.index('insert')
-            sel_i,sel_j = g.app.gui.getTextSelection(w)
-            i = w.search('.','insert',backwards=True,stopindex='1.0')
-            if i:
-                i2 = w.search('.',i,backwards=True,stopindex='1.0')
-                if not i2:
-                    i2 = '1.0'
-                if i2:
-                    i3 = w.search('\w',i2,stopindex=i,regexp=True)
-                    if i3:
-                        w.mark_set('insert',i3)
-            else:
-                w.mark_set('insert','1.0')
-                
-            if extend:
-                if w.compare(ins,'<=',sel_i):
-                    g.app.gui.setTextSelection (w,'insert',sel_j)
-                else:
-                    g.app.gui.setTextSelection (w,sel_i,'insert')
-            else:
-                g.app.gui.setTextSelection(w,'insert','insert')
-        except Exception:
-            g.es_exception()
-            pass
-    #@-node:ekr.20051213094517:backSentenceHelper
-    #@-node:ekr.20050920084036.131:backSentence/ExtendSelection & helper
-    #@+node:ekr.20051213094849:forwardSentence/ExtendSelection & helper
+        
     def forwardSentence (self,event):
         
         self.forwardSentenceHelper(event,extend=False)
@@ -2730,84 +2870,25 @@ class editCommandsClass (baseEditCommandsClass):
         
         self.forwardSentenceHelper(event,extend=True)
     #@nonl
-    #@+node:ekr.20050920084036.137:forwardSentenceHelper
-    def forwardSentenceHelper (self,event,extend):
+    #@-node:ekr.20050920084036.131:sentences
+    #@+node:ekr.20050920084036.149:words
+    def backwardWord (self,event):
+        
+        self.moveWordHelper(event,extend=False,forward=False)
+        
+    def backwardWordExtendSelection (self,event):
+        
+        self.moveWordHelper(event,extend=True,forward=False)
     
-        try:
-            c = self.c ; w = event.widget
-            g.app.gui.set_focus(c,w)
-            ins = w.index('insert')
-            sel_i,sel_j = g.app.gui.getTextSelection(w)
-            i = w.search('.','insert',stopindex='end')
-            if i:
-                w.mark_set('insert','%s +1c' % i)
-            else:
-                w.mark_set('insert','end')
-                
-            g.trace(extend,g.app.gui.widget_name(w),w.index('insert'))
-    
-            if extend:
-                if w.compare(ins,'<=',sel_i):
-                    g.app.gui.setTextSelection (w,'insert',sel_j)
-                else:
-                    g.app.gui.setTextSelection (w,sel_i,'insert')
-            else:
-                g.app.gui.setTextSelection(w,'insert','insert')
-                
-        except Exception:
-            g.es_exception()
-            pass
-    #@-node:ekr.20050920084036.137:forwardSentenceHelper
-    #@-node:ekr.20051213094849:forwardSentence/ExtendSelection & helper
-    #@+node:ekr.20050929163210:nextLine/ExtendSelection (ok)
-    def nextLine (self,event):
-    
-        try:
-            w = event.widget
-            w.mark_set('insert','insert + 1line') 
-        except Exception:
-            pass #  w might not be a text widget.
-    
-    def nextLineExtendSelection (self,event):
-    
-        try:
-            w = event.widget
-            i,j = g.app.gui.getTextSelection(w)
-            k = w.index('insert')
-            w.mark_set('insert','insert + 1line')
-            if w.compare(k,'<=',i):
-                g.app.gui.setTextSelection (w,'insert',j)
-            else:
-                g.app.gui.setTextSelection (w,i,'insert')
-        except Exception:
-            pass #  w might not be a text widget.
-    #@nonl
-    #@-node:ekr.20050929163210:nextLine/ExtendSelection (ok)
-    #@+node:ekr.20051213091124:prevLine/ExtendSelection (ok)
-    def prevLine (self,event):
-    
-        try:
-            w = event.widget
-            w.mark_set('insert','insert - 1line')
-        except Exception:
-            pass #  w might not be a text widget.
-    
-    def prevLineExtendSelection (self,event):
-    
-        try:
-            w = event.widget
-            i,j = g.app.gui.getTextSelection(w)
-            k = w.index('insert')
-            w.mark_set('insert','insert - 1line')
-            if w.compare(k,'<=',i):
-                g.app.gui.setTextSelection (w,'insert',j)
-            else:
-                g.app.gui.setTextSelection (w,i,'insert')
-        except Exception:
-            pass #  w might not be a text widget
-    #@nonl
-    #@-node:ekr.20051213091124:prevLine/ExtendSelection (ok)
-    #@-node:ekr.20050929114218:move...
+    def forwardWord (self,event):
+        
+        self.moveWordHelper(event,extend=False,forward=True)
+        
+    def forwardWordExtendSelection (self,event):
+        
+        self.moveWordHelper(event,extend=True,forward=True)
+    #@-node:ekr.20050920084036.149:words
+    #@-node:ekr.20050929114218:move... (leoEditCommands)
     #@+node:ekr.20050920084036.95:paragraph...
     #@+others
     #@+node:ekr.20050920084036.99:backwardKillParagraph
@@ -2827,26 +2908,6 @@ class editCommandsClass (baseEditCommandsClass):
         w.selection_clear()
     #@nonl
     #@-node:ekr.20050920084036.99:backwardKillParagraph
-    #@+node:ekr.20050920084036.102:backwardParagraph
-    def backwardParagraph (self,event):
-    
-        k = self.k ; w = event.widget ; i = w.index('insert')
-    
-        while 1:
-            s = w.get('%s linestart' % i,'%s lineend' % i).strip()
-            if s:
-                i = w.index('%s - 1 lines' % i)
-                if w.index('%s linestart' % i) == '1.0':
-                    i = w.search(r'\w','1.0',regexp=True,stopindex='end')
-                    break
-            else:
-                i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
-                i = '%s +1c' % i
-                break
-        if i:
-            w.mark_set('insert',i)
-            w.see('insert')
-    #@-node:ekr.20050920084036.102:backwardParagraph
     #@+node:ekr.20050920084036.103:fillParagraph
     def fillParagraph( self, event ):
         k = self.k ; w = event.widget
@@ -2914,27 +2975,6 @@ class editCommandsClass (baseEditCommandsClass):
         w.insert(i1,txt)
     #@nonl
     #@-node:ekr.20050920084036.104:fillRegionAsParagraph
-    #@+node:ekr.20051002100905:forwardParagraph
-    def forwardParagraph (self,event):
-        
-        k = self.k ; w = event.widget ; i = w.index('insert')
-    
-        while 1:
-            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
-            if txt:
-                i = w.index('%s + 1 lines' % i)
-                if w.index('%s linestart' % i) == w.index('end'):
-                    i = w.search(r'\w','end',backwards=True,regexp=True,stopindex='1.0')
-                    i = '%s + 1c' % i
-                    break
-            else:
-                i = w.search(r'\w',i,regexp=True,stopindex='end')
-                i = '%s' % i
-                break
-        if i:
-            w.mark_set('insert',i) ; w.see('insert')
-    #@nonl
-    #@-node:ekr.20051002100905:forwardParagraph
     #@+node:ekr.20050920084036.98:killParagraph (Test)
     def killParagraph (self,event):
     
