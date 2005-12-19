@@ -569,7 +569,7 @@ class baseFileCommands:
     
             self.getTag("</globals>")
     
-        # 7/15/02: Redraw the window before writing into it.
+        # Redraw the window before writing into it.
         self.frame.setTopGeometry(w,h,x,y)
         self.frame.deiconify()
         self.frame.lift()
