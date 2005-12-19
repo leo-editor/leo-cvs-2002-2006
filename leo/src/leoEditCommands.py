@@ -2625,7 +2625,6 @@ class editCommandsClass (baseEditCommandsClass):
                 if ic2: return
             
             ins = '%s+1c' % i2
-            g.trace(ins)
             self.moveToHelper(event,ins,extend)
         except Exception:
             pass # w may not be a text widget.
@@ -2637,7 +2636,6 @@ class editCommandsClass (baseEditCommandsClass):
         try:
             c = self.c ; w = event.widget
             w.update() ; c.frame.widgetWantsFocus(w)
-        
             i = w.search('.','insert',backwards=True,stopindex='1.0')
             if i:
                 i2 = w.search('.',i,backwards=True,stopindex='1.0')

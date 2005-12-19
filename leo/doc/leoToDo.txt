@@ -26,6 +26,8 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
+#@+node:ekr.20051217135340.2:Create find-options panel
+#@-node:ekr.20051217135340.2:Create find-options panel
 #@+node:ekr.20051217175058:Get chapters plugin working
 Use the zip file stuff initially.  We can add support for chapters to Leo's core later.
 #@nonl

@@ -73,7 +73,7 @@
 </v>
 </v>
 <v t="ekr.20051126062243"><vh>@page Debugging options</vh>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = True</vh></v>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20051126063209"><vh>@int default_callers_level = 7</vh></v>
@@ -207,7 +207,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954" a="E"><vh>Window options</vh>
+<v t="ekr.20041213105954"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -218,7 +218,7 @@
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 </v>
-<v t="ekr.20041119034357.56" a="E"><vh>@page Options for new windows</vh>
+<v t="ekr.20041119034357.56"><vh>@page Options for new windows</vh>
 <v t="ekr.20041119034357.59"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.4</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.8</vh></v>
