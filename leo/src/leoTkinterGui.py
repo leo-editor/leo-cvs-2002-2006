@@ -438,7 +438,7 @@ class tkinterGui(leoGui.leoGui):
             if 1:
                 # A fix to the cursed problems with Pmw.Notebook.
                 # I am not happy with this, but it seems preferable to trying to figure out
-                # All the places the code must call update()
+                # all the places where the code must call update()
                 w.update() 
     
             w.focus_set()

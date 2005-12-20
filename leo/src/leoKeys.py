@@ -1863,7 +1863,6 @@ class keyHandlerClass:
             #@nl
             # Set the states.
             bodyCtrl = c.frame.body.bodyCtrl
-            bodyCtrl.update() # Essential to move focus out of the log pane.
             c.frame.widgetWantsFocus(bodyCtrl)
             k.afterGetArgState=returnKind,returnState,handler
             k.setState('getArg',1,k.getArg)
@@ -2162,8 +2161,7 @@ class keyHandlerClass:
             k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
         else:
             k.computeCompletionList(defaultTabList,backspace=False)
-            
-        self.widget.update() # Complete all log drawing so we can change focus.
+    
         c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion

@@ -395,7 +395,6 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
         
-        w.update()
         c.frame.widgetWantsFocus(w)
     
         w.delete('1.0','end')
@@ -421,9 +420,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     def computeCompletionList (self):
         
         c = self.c ; gui = g.app.gui ; w = self.widget
-        w.update() # Complete all log drawing so we can change focus.
         c.frame.widgetWantsFocus(w)
-    
         s = gui.getSelectedText(w)
         if s:
             self.tabList,common_prefix = g.itemsMatchingPrefixInList(s,self.membersList)
@@ -470,8 +467,6 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     def extendSelection (self,s):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
-        
-        w.update()
         c.frame.widgetWantsFocus(w)
         
         if gui.hasSelection(w):
@@ -488,8 +483,6 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     def finish (self):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
-        
-        w.update()
         c.frame.widgetWantsFocus(w)
         
         i,j = gui.getTextSelection(w)
@@ -501,8 +494,6 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     def setSelection (self,s):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
-        
-        w.update()
         c.frame.widgetWantsFocus(w)
         
         if gui.hasSelection(w):
@@ -2566,7 +2557,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             i,j = g.app.gui.getTextSelection(w,sort=True)
             spot = w.index(spot) # Capture initial value.
             ins = w.index('insert')
@@ -2588,7 +2579,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             if forward:
                  ind = w.search('\w','insert',stopindex='end',regexp=True)
                  if ind: nind = '%s wordend' % ind
@@ -2607,7 +2598,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             i = w.search('(','insert',backwards=True,stopindex='1.0')
             if '' == i: return
         
@@ -2635,7 +2626,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             i = w.search('.','insert',backwards=True,stopindex='1.0')
             if i:
                 i2 = w.search('.',i,backwards=True,stopindex='1.0')
@@ -2656,7 +2647,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             ins = w.index('insert')
             sel_i,sel_j = g.app.gui.getTextSelection(w)
             i = w.search('.','insert',stopindex='end')
@@ -2671,7 +2662,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             i = w.index('insert')
             while 1:
                 txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
@@ -2696,7 +2687,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             i = w.index('insert')
             while 1:
                 s = w.get('%s linestart' % i,'%s lineend' % i).strip()
@@ -2721,7 +2712,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         try:
             c = self.c ; w = event.widget
-            w.update() ; c.frame.widgetWantsFocus(w)
+            c.frame.widgetWantsFocus(w)
             i,j = g.app.gui.getTextSelection(w,sort=False)
             if i != j:
                 ins = w.index('insert')
@@ -2738,21 +2729,21 @@ class editCommandsClass (baseEditCommandsClass):
         self.extendMode = False
         
         c = self.c ; w = event.widget
-        w.update() ; c.frame.widgetWantsFocus(w)
+        c.frame.widgetWantsFocus(w)
     
     def setExtendMode (self,event):
         
         self.extendMode = True
         
         c = self.c ; w = event.widget
-        w.update() ; c.frame.widgetWantsFocus(w)
+        c.frame.widgetWantsFocus(w)
         
     def toggleExtendMode (self,event):
         
         self.extendMode = not self.extendMode
         
         c = self.c ; w = event.widget
-        w.update() ; c.frame.widgetWantsFocus(w)
+        c.frame.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20051218174113:extendMode
     #@+node:ekr.20050920084036.148:buffers

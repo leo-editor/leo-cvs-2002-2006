@@ -2136,8 +2136,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def minibufferWantsFocus(self):
         # Important! We must preserve body selection!
         if 1:
-            # Do an update to force the focus to the body pane.
-            self.c.frame.body.bodyCtrl.update()
             self.bodyWantsFocus()
         else:
             w = self.c.miniBufferWidget
