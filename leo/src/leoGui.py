@@ -299,6 +299,14 @@ class leoGui:
         # print 'leoGui:setIdleTimeHookAfterDelay'
         pass # Not an error.
     #@-node:ekr.20031218072017.3739:Idle time
+    #@+node:ekr.20051220144306:isTextWidget
+    def isTextWidget (self,w):
+        
+        '''Return True if w is a Text widget suitable for text-oriented commands.'''
+        
+        self.oops()
+    #@nonl
+    #@-node:ekr.20051220144306:isTextWidget
     #@-node:ekr.20031218072017.3733:app.gui utils
     #@+node:ekr.20031218072017.3740:guiName
     def guiName(self):

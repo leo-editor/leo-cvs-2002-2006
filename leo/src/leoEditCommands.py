@@ -1616,7 +1616,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         try:
             return tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-        except:
+        except Exception:
             g.es("exception setting font")
             g.es("family,size,slant,weight:",family,size,slant,weight)
             # g.es_exception() # This just confuses people.
@@ -2246,50 +2246,48 @@ class editCommandsClass (baseEditCommandsClass):
         
         c = self.c ; p = c.currentPosition()
         w = event and event.widget or g.app.gui.get_focus(c.frame)
-        name = g.app.gui.widget_name(w)
+        if not g.app.gui.isTextWidget(w): return
         
-        try:
-            oldText = w.get('1.0','end')
-            i,j = oldSel = g.app.gui.getTextSelection(w)
-          
-            if name.startswith('body'):
-                d = g.scanDirectives(c,p)
-                tab_width = d.get("tabwidth",c.tab_width)
-                if i != j:
-                    w.delete(i,j)
-                elif tab_width > 0:
-                    w.delete('insert-1c')
-                else:
-                    #@                << backspace with negative tab_width >>
-                    #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
-                    s = prev = w.get("insert linestart","insert")
-                    n = len(prev)
-                    abs_width = abs(tab_width)
-                    
-                    # Delete up to this many spaces.
-                    n2 = (n % abs_width) or abs_width
-                    n2 = min(n,n2) ; count = 0
-                    
-                    while n2 > 0:
-                        n2 -= 1
-                        ch = prev[n-count-1]
-                        if ch != ' ': break
-                        else: count += 1
-                    
-                    # Make sure we actually delete something.
-                    w.delete("insert -%dc" % (max(1,count)),"insert")
-                    #@nonl
-                    #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
-                    #@nl
-                c.frame.body.onBodyChanged(undoType='Typing',
-                    oldSel=oldSel,oldText=oldText,oldYview=None)
+        name = g.app.gui.widget_name(w)
+        oldText = w.get('1.0','end')
+        i,j = oldSel = g.app.gui.getTextSelection(w)
+      
+        if name.startswith('body'):
+            d = g.scanDirectives(c,p)
+            tab_width = d.get("tabwidth",c.tab_width)
+            if i != j:
+                w.delete(i,j)
+            elif tab_width > 0:
+                w.delete('insert-1c')
             else:
-                if i != j:
-                    w.delete(i,j)
-                else:
-                    w.delete('insert-1c')
-        except Exception:
-            pass # w may not be a text widget.
+                #@            << backspace with negative tab_width >>
+                #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+                s = prev = w.get("insert linestart","insert")
+                n = len(prev)
+                abs_width = abs(tab_width)
+                
+                # Delete up to this many spaces.
+                n2 = (n % abs_width) or abs_width
+                n2 = min(n,n2) ; count = 0
+                
+                while n2 > 0:
+                    n2 -= 1
+                    ch = prev[n-count-1]
+                    if ch != ' ': break
+                    else: count += 1
+                
+                # Make sure we actually delete something.
+                w.delete("insert -%dc" % (max(1,count)),"insert")
+                #@nonl
+                #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+                #@nl
+            c.frame.body.onBodyChanged(undoType='Typing',
+                oldSel=oldSel,oldText=oldText,oldYview=None)
+        else:
+            if i != j:
+                w.delete(i,j)
+            else:
+                w.delete('insert-1c')
     #@nonl
     #@-node:ekr.20051026092433.1:backwardDeleteCharacter (ok)
     #@+node:ekr.20050920084036.87:deleteNextChar (ok)
@@ -2559,21 +2557,20 @@ class editCommandsClass (baseEditCommandsClass):
         '''Common helper method for commands the move the cursor
         in a way that can be described by a Tk Text expression.'''
         
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            i,j = g.app.gui.getTextSelection(w,sort=True)
-            spot = w.index(spot) # Capture initial value.
-            ins = w.index('insert')
-            w.mark_set('insert',spot)
-            if extend or self.extendMode:
-                if w.compare(spot,'<=',i):
-                    g.app.gui.setTextSelection (w,spot,j,insert=None)
-                else:
-                    g.app.gui.setTextSelection (w,i,spot,insert=None)
-            w.see(spot)
-        except Exception:
-            pass #  w might not be a text widget.
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(): return
+    
+        c.frame.widgetWantsFocus(w)
+        i,j = g.app.gui.getTextSelection(w,sort=True)
+        spot = w.index(spot) # Capture initial value.
+        ins = w.index('insert')
+        w.mark_set('insert',spot)
+        if extend or self.extendMode:
+            if w.compare(spot,'<=',i):
+                g.app.gui.setTextSelection (w,spot,j,insert=None)
+            else:
+                g.app.gui.setTextSelection (w,i,spot,insert=None)
+        w.see(spot)
     #@nonl
     #@-node:ekr.20051218122116:moveToHelper
     #@+node:ekr.20051218121447:moveWordHelper
@@ -2581,150 +2578,143 @@ class editCommandsClass (baseEditCommandsClass):
     
         '''This function moves the cursor to the next word, direction dependent on the way parameter'''
     
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            if forward:
-                 ind = w.search('\w','insert',stopindex='end',regexp=True)
-                 if ind: nind = '%s wordend' % ind
-                 else:   nind = 'end'
-            else:
-                 ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
-                 if ind: nind = '%s wordstart' % ind
-                 else:   nind = '1.0'
-            self.moveToHelper(event,nind,extend)
-        except Exception:
-            pass # w might not be a text widget.
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+        
+        c.frame.widgetWantsFocus(w)
+        if forward:
+             ind = w.search('\w','insert',stopindex='end',regexp=True)
+             if ind: nind = '%s wordend' % ind
+             else:   nind = 'end'
+        else:
+             ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
+             if ind: nind = '%s wordstart' % ind
+             else:   nind = '1.0'
+        self.moveToHelper(event,nind,extend)
     #@nonl
     #@-node:ekr.20051218121447:moveWordHelper
     #@+node:ekr.20051218171457:movePastCloseHelper
     def movePastCloseHelper (self,event,extend):
     
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            i = w.search('(','insert',backwards=True,stopindex='1.0')
-            if '' == i: return
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
+        c.frame.widgetWantsFocus(w)
+        i = w.search('(','insert',backwards=True,stopindex='1.0')
+        if '' == i: return
+    
+        icheck = w.search(')','insert',backwards=True,stopindex='1.0')
+        if icheck:
+            ic = w.compare(i,'<',icheck)
+            if ic: return
+    
+        i2 = w.search(')','insert',stopindex='end')
+        if '' == i2: return
+    
+        i2check = w.search('(','insert',stopindex='end')
+        if i2check:
+            ic2 = w.compare(i2,'>',i2check)
+            if ic2: return
         
-            icheck = w.search(')','insert',backwards=True,stopindex='1.0')
-            if icheck:
-                ic = w.compare(i,'<',icheck)
-                if ic: return
-        
-            i2 = w.search(')','insert',stopindex='end')
-            if '' == i2: return
-        
-            i2check = w.search('(','insert',stopindex='end')
-            if i2check:
-                ic2 = w.compare(i2,'>',i2check)
-                if ic2: return
-            
-            ins = '%s+1c' % i2
-            self.moveToHelper(event,ins,extend)
-        except Exception:
-            pass # w may not be a text widget.
+        ins = '%s+1c' % i2
+        self.moveToHelper(event,ins,extend)
     #@nonl
     #@-node:ekr.20051218171457:movePastCloseHelper
     #@+node:ekr.20051213094517:backSentenceHelper
     def backSentenceHelper (self,event,extend):
     
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            i = w.search('.','insert',backwards=True,stopindex='1.0')
-            if i:
-                i2 = w.search('.',i,backwards=True,stopindex='1.0')
-                if i2:
-                    ins = w.search('\w',i2,stopindex=i,regexp=True) or i2
-                else:
-                    ins = '1.0'
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
+        c.frame.widgetWantsFocus(w)
+        i = w.search('.','insert',backwards=True,stopindex='1.0')
+        if i:
+            i2 = w.search('.',i,backwards=True,stopindex='1.0')
+            if i2:
+                ins = w.search('\w',i2,stopindex=i,regexp=True) or i2
             else:
                 ins = '1.0'
-            if ins:
-                self.moveToHelper(event,ins,extend)
-        except Exception:
-            pass  #  w might not be a text widget.
+        else:
+            ins = '1.0'
+        if ins:
+            self.moveToHelper(event,ins,extend)
     #@nonl
     #@-node:ekr.20051213094517:backSentenceHelper
     #@+node:ekr.20050920084036.137:forwardSentenceHelper
     def forwardSentenceHelper (self,event,extend):
     
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            ins = w.index('insert')
-            sel_i,sel_j = g.app.gui.getTextSelection(w)
-            i = w.search('.','insert',stopindex='end')
-            ins = i and '%s +1c' % i or 'end'
-            self.moveToHelper(event,ins,extend)
-        except Exception:
-            pass  #  w might not be a text widget.
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
+        c.frame.widgetWantsFocus(w)
+        ins = w.index('insert')
+        sel_i,sel_j = g.app.gui.getTextSelection(w)
+        i = w.search('.','insert',stopindex='end')
+        ins = i and '%s +1c' % i or 'end'
+        self.moveToHelper(event,ins,extend)
     #@nonl
     #@-node:ekr.20050920084036.137:forwardSentenceHelper
     #@+node:ekr.20051218133207.1:forwardParagraphHelper
     def forwardParagraphHelper (self,event,extend):
         
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            i = w.index('insert')
-            while 1:
-                txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
-                if txt:
-                    i = w.index('%s + 1 lines' % i)
-                    if w.index('%s linestart' % i) == w.index('end'):
-                        i = w.search(r'\w','end',backwards=True,regexp=True,stopindex='1.0')
-                        i = '%s + 1c' % i
-                        break
-                else:
-                    i = w.search(r'\w',i,regexp=True,stopindex='end')
-                    i = '%s' % i
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
+        c.frame.widgetWantsFocus(w)
+        i = w.index('insert')
+        while 1:
+            txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
+            if txt:
+                i = w.index('%s + 1 lines' % i)
+                if w.index('%s linestart' % i) == w.index('end'):
+                    i = w.search(r'\w','end',backwards=True,regexp=True,stopindex='1.0')
+                    i = '%s + 1c' % i
                     break
-            if i:
-                self.moveToHelper(event,i,extend)
-        except Exception:
-            pass  #  w might not be a text widget.
+            else:
+                i = w.search(r'\w',i,regexp=True,stopindex='end')
+                i = '%s' % i
+                break
+        if i:
+            self.moveToHelper(event,i,extend)
     #@nonl
     #@-node:ekr.20051218133207.1:forwardParagraphHelper
     #@+node:ekr.20051218133207:backwardParagraphHelper
     def backwardParagraphHelper (self,event,extend):
         
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            i = w.index('insert')
-            while 1:
-                s = w.get('%s linestart' % i,'%s lineend' % i).strip()
-                if s:
-                    i = w.index('%s - 1 lines' % i)
-                    if w.index('%s linestart' % i) == '1.0':
-                        i = w.search(r'\w','1.0',regexp=True,stopindex='end')
-                        break
-                else:
-                    i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
-                    i = '%s +1c' % i
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
+        c.frame.widgetWantsFocus(w)
+        i = w.index('insert')
+        while 1:
+            s = w.get('%s linestart' % i,'%s lineend' % i).strip()
+            if s:
+                i = w.index('%s - 1 lines' % i)
+                if w.index('%s linestart' % i) == '1.0':
+                    i = w.search(r'\w','1.0',regexp=True,stopindex='end')
                     break
-            if i:
-                self.moveToHelper(event,i,extend)
-        except Exception:
-            pass  #  w might not be a text widget.
+            else:
+                i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
+                i = '%s +1c' % i
+                break
+        if i:
+            self.moveToHelper(event,i,extend)
     #@nonl
     #@-node:ekr.20051218133207:backwardParagraphHelper
     #@-node:ekr.20051218170358: helpers
     #@+node:ekr.20050920084036.136:exchangePointMark
     def exchangePointMark (self,event):
         
-        try:
-            c = self.c ; w = event.widget
-            c.frame.widgetWantsFocus(w)
-            i,j = g.app.gui.getTextSelection(w,sort=False)
-            if i != j:
-                ins = w.index('insert')
-                ins = g.choose(ins==i,j,i)
-                g.app.gui.setInsertPoint(w,ins)
-                g.app.gui.setTextSelection(w,i,j,insert=None)
-        except Exception:
-            pass # w may not be a text widget.
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
+        c.frame.widgetWantsFocus(w)
+        i,j = g.app.gui.getTextSelection(w,sort=False)
+        if i != j:
+            ins = w.index('insert')
+            ins = g.choose(ins==i,j,i)
+            g.app.gui.setInsertPoint(w,ins)
+            g.app.gui.setTextSelection(w,i,j,insert=None)
     #@nonl
     #@-node:ekr.20050920084036.136:exchangePointMark
     #@+node:ekr.20051218174113:extendMode
@@ -5713,14 +5703,13 @@ class findTab (leoFind.leoFind):
     #@+node:ekr.20051020120306.27:selectAllFindText
     def selectAllFindText (self,event=None):
         
-        __pychecker__ = '--no-argsused' # the event param must be present.
+        __pychecker__ = '--no-argsused' # event
     
-        try:
-            w = self.frame.focus_get()
+        w = self.frame.focus_get()
+        if g.app.gui.isTextWidget(w):
             g.app.gui.setTextSelection(w,"1.0","end")
-            return "break"
-        except:
-            return None # To keep pychecker happy.
+    
+        return "break"
     #@nonl
     #@-node:ekr.20051020120306.27:selectAllFindText
     #@+node:ekr.20051020120306.28:Tkinter wrappers (leoTkinterFind)

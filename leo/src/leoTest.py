@@ -213,8 +213,10 @@ def makeTestCase (c,p):
 #@nonl
 #@-node:ekr.20051104075904.13:makeTestCase
 #@-node:ekr.20051104075904.4:doTests...
-#@+node:ekr.20051104075904.14:runProfileOnNode Not used
-def runProfileOnNode (p,outputPath,):
+#@+node:ekr.20051104075904.14:runProfileOnNode
+# A utility for use by script buttons.
+
+def runProfileOnNode (p,outputPath):
 
     s = p.bodyString().rstrip() + '\n'
 
@@ -225,8 +227,10 @@ def runProfileOnNode (p,outputPath,):
     stats.sort_stats('cum','file','name')
     stats.print_stats()
 #@nonl
-#@-node:ekr.20051104075904.14:runProfileOnNode Not used
-#@+node:ekr.20051104075904.15:runTimerOnNode Not used
+#@-node:ekr.20051104075904.14:runProfileOnNode
+#@+node:ekr.20051104075904.15:runTimerOnNode
+# A utility for use by script buttons.
+
 def runTimerOnNode (p,count):
 
     s = p.bodyString().rstrip() + '\n'
@@ -244,7 +248,7 @@ def runTimerOnNode (p,count):
     except:
         t.print_exc()
 #@nonl
-#@-node:ekr.20051104075904.15:runTimerOnNode Not used
+#@-node:ekr.20051104075904.15:runTimerOnNode
 #@-node:ekr.20051104075904.2:Support @profile, @suite, @test, @timer
 #@+node:ekr.20051104075904.16:run gc
 #@+node:ekr.20051104075904.17:runGC

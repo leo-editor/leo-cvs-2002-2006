@@ -786,6 +786,14 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4098:makeIndexVisible
     #@-node:ekr.20031218072017.4097:Visibility
+    #@+node:ekr.20051220144507:isTextWidget
+    def isTextWidget (self,w):
+        
+        '''Return True if w is a Text widget suitable for text-oriented commands.'''
+        
+        return w and isinstance(w,Tk.Text) 
+    #@nonl
+    #@-node:ekr.20051220144507:isTextWidget
     #@-node:ekr.20031218072017.4059:app.gui.Tkinter.utils
     #@-others
 #@nonl
