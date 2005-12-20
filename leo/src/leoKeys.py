@@ -700,6 +700,7 @@ class keyHandlerClass:
         k = self ; c = k.c 
     
         if not shortcut: g.trace('No shortcut for %s' % commandName)
+        ## if shortcut == '<None>': return
         bunch = k.bindingsDict.get(shortcut)
         if bunch and bunch.pane == pane:
             # g.trace('Not bound',shortcut)
@@ -760,7 +761,7 @@ class keyHandlerClass:
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
                 g.es_print('Exception binding %s to %s' % (shortcut,commandName))
-                # g.es_exception()
+                g.es_exception()
                 # g.printStack()
                 g.app.menuWarningsGiven = True
     
@@ -1002,35 +1003,55 @@ class keyHandlerClass:
             ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
         ):
             # Get the user shortcut *before* creating the callbacks.
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = (bunch and bunch.val) or stroke
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            # g.trace(stroke,accel,shortcut,func.__name__)
-            if pane == 'mini' and func != k.keyboardQuit:
-                # Call a strange callback that bypasses k.masterCommand.
-                def minibufferKeyCallback(event,func=func,shortcut=shortcut):
-                    k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
-    
-                k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+            if 1:
+                junk, bunchList = c.config.getShortcut(commandName)
+                if bunchList:
+                    for bunch in bunchList:
+                        accel = (bunch and bunch.val)
+                        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                        self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
+                else:
+                    accel = stroke
+                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
             else:
-                # Create two-levels of callbacks.
-                def specialCallback (event,func=func):
-                    return func(event)
+                junk, bunch = c.config.getShortcut(commandName)
+                accel = (bunch and bunch.val) or stroke
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
     
-                def keyCallback (event,func=specialCallback,stroke=shortcut):
-                    return k.masterCommand(event,func,stroke)
-    
-                k.bindKey(pane,shortcut,keyCallback,commandName)
-    
-            if ivar:
-                setattr(k,ivar,shortcut)
-            
         # Add a binding for <Key> events, so all key events go through masterCommand.
         def allKeysCallback (event):
             return k.masterCommand(event,func=None,stroke='<Key>')
     
         k.bindKey('all','<Key>',allKeysCallback,'master-command')
     #@nonl
+    #@+node:ekr.20051220083410:makeSpecialBinding
+    def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
+        
+        k = self
+        
+        # g.trace(stroke,accel,shortcut,func.__name__)
+        if pane == 'mini' and func != k.keyboardQuit:
+            # Call a strange callback that bypasses k.masterCommand.
+            def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
+    
+            k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+        else:
+            # Create two-levels of callbacks.
+            def specialCallback (event,func=func):
+                return func(event)
+    
+            def keyCallback (event,func=specialCallback,stroke=shortcut):
+                return k.masterCommand(event,func,stroke)
+    
+            k.bindKey(pane,shortcut,keyCallback,commandName)
+    
+        if ivar:
+            setattr(k,ivar,shortcut)
+    #@nonl
+    #@-node:ekr.20051220083410:makeSpecialBinding
     #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
     #@+node:ekr.20051008134059:makeBindingsFromCommandsDict
     def makeBindingsFromCommandsDict (self):
@@ -1042,15 +1063,25 @@ class keyHandlerClass:
     
         for commandName in keys:
             command = c.commandsDict.get(commandName)
-            key, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
-            if accel:
-                bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-            
-            if 0:
-                if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                else:     g.trace(commandName)
+            if 1:
+                key, bunchList = c.config.getShortcut(commandName)
+                for bunch in bunchList:
+                    accel = bunch.val
+                    if accel:
+                        bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
+                        k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
+                        if 0:
+                            if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                            else:     g.trace(commandName)
+            else:
+                key, bunch = c.config.getShortcut(commandName)
+                accel = bunch and bunch.val
+                if accel:
+                    bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
+                    k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
+                if 0:
+                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                    else:     g.trace(commandName)
     #@nonl
     #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)

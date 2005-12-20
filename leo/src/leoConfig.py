@@ -55,6 +55,8 @@ class parserBaseClass:
         
         self.c = c
         self.recentFiles = [] # List of recent files.
+        self.shortcutsDict = {}
+            # Keys are cononicalized shortcut names, values are bunches.
         
         # Keys are canonicalized names.
         self.dispatchDict = {
@@ -258,34 +260,44 @@ class parserBaseClass:
     #@-node:ekr.20041121125741:doRatio
     #@+node:ekr.20041120113848:doShortcut
     def doShortcut(self,p,kind,name,val):
+        
+        # Note:  kind,name,val are as returned from self.parseHeadline(p.headString())
     
         self.set(p,kind,name,val)
         self.setShortcut(name,val)
     #@nonl
     #@-node:ekr.20041120113848:doShortcut
-    #@+node:ekr.20041120105609:doShortcuts
+    #@+node:ekr.20041120105609:doShortcuts (ParserBaseClass)
     def doShortcuts(self,p,kind,name,val):
         
         __pychecker__ = '--no-argsused' # kind,val not used.
         
-        d = {} # To detect duplicates.
+        d = self.shortcutsDict ### {} # To detect duplicates.
         s = p.bodyString()
         lines = g.splitLines(s)
         for line in lines:
             line = line.strip()
             if line and not g.match(line,0,'#'):
                 name,bunch = self.parseShortcutLine(line)
+                
                 # g.trace(name,bunch)
                 if bunch is not None:
-                    if d.get(name):
-                        g.es('ignoring duplicate @shortcuts entry: %s' % (
-                            name), color='blue')
-                    else:
-                        d [name] = bunch
-                        self.set(p,"shortcut",name,bunch)
-                        self.setShortcut(name,bunch)
+                    if 1: # New in 4.4a5:
+                        bunchList = d.get(name,[])
+                        bunchList.append(bunch)
+                        d [name] = bunchList
+                        self.set(p,"shortcut",name,bunchList)
+                        self.setShortcut(name,bunchList)
+                    else: # The old way.
+                        if d.get(name):
+                            g.es('ignoring duplicate @shortcuts entry: %s' % (
+                                name), color='blue')
+                        else:
+                            d [name] = bunch
+                            self.set(p,"shortcut",name,bunch)
+                            self.setShortcut(name,bunch)
     #@nonl
-    #@-node:ekr.20041120105609:doShortcuts
+    #@-node:ekr.20041120105609:doShortcuts (ParserBaseClass)
     #@+node:ekr.20041217132028:doString
     def doString (self,p,kind,name,val):
         
@@ -504,6 +516,7 @@ class parserBaseClass:
             return None
     
         self.settingsDict = {}
+        self.shortcutsDict = {}
         after = p.nodeAfterTree()
         while p and p != after:
             result = self.visitNode(p)
@@ -1066,16 +1079,25 @@ class configClass:
         
         key = c.frame.menu.canonicalizeMenuName(shortcutName)
         key = key.replace('&','') # Allow '&' in names.
-    
-        bunch = self.get(c,key,"shortcut")
-        if bunch and bunch.val:
-            # g.trace(bunch.pane,key,repr(bunch.val))
-            if bunch.val.lower() == 'none':
-                return key,None
+        
+        if 1:
+            bunchList = self.get(c,key,"shortcut")
+            if bunchList:
+                bunchList = [bunch for bunch in bunchList
+                    if bunch.val and bunch.val.lower() != 'none']
+                return key,bunchList
             else:
-                return key,bunch
+                return key,[]
         else:
-            return key,None
+            bunch = self.get(c,key,"shortcut")
+            if bunch and bunch.val:
+                # g.trace(bunch.pane,key,repr(bunch.val))
+                if bunch.val.lower() == 'none':
+                    return key,None
+                else:
+                    return key,bunch
+            else:
+                return key,None
     #@nonl
     #@-node:ekr.20041117062717.14:getShortcut (config)
     #@+node:ekr.20041117081009.4:getString

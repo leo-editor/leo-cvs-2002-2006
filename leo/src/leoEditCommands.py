@@ -2247,45 +2247,49 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; p = c.currentPosition()
         w = event and event.widget or g.app.gui.get_focus(c.frame)
         name = g.app.gui.widget_name(w)
-        oldText = w.get('1.0','end')
-        i,j = oldSel = g.app.gui.getTextSelection(w)
-      
-        if name.startswith('body'):
-            d = g.scanDirectives(c,p)
-            tab_width = d.get("tabwidth",c.tab_width)
-            if i != j:
-                w.delete(i,j)
-            elif tab_width > 0:
-                w.delete('insert-1c')
+        
+        try:
+            oldText = w.get('1.0','end')
+            i,j = oldSel = g.app.gui.getTextSelection(w)
+          
+            if name.startswith('body'):
+                d = g.scanDirectives(c,p)
+                tab_width = d.get("tabwidth",c.tab_width)
+                if i != j:
+                    w.delete(i,j)
+                elif tab_width > 0:
+                    w.delete('insert-1c')
+                else:
+                    #@                << backspace with negative tab_width >>
+                    #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
+                    s = prev = w.get("insert linestart","insert")
+                    n = len(prev)
+                    abs_width = abs(tab_width)
+                    
+                    # Delete up to this many spaces.
+                    n2 = (n % abs_width) or abs_width
+                    n2 = min(n,n2) ; count = 0
+                    
+                    while n2 > 0:
+                        n2 -= 1
+                        ch = prev[n-count-1]
+                        if ch != ' ': break
+                        else: count += 1
+                    
+                    # Make sure we actually delete something.
+                    w.delete("insert -%dc" % (max(1,count)),"insert")
+                    #@nonl
+                    #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
+                    #@nl
+                c.frame.body.onBodyChanged(undoType='Typing',
+                    oldSel=oldSel,oldText=oldText,oldYview=None)
             else:
-                #@            << backspace with negative tab_width >>
-                #@+node:ekr.20051026092746:<< backspace with negative tab_width >>
-                s = prev = w.get("insert linestart","insert")
-                n = len(prev)
-                abs_width = abs(tab_width)
-                
-                # Delete up to this many spaces.
-                n2 = (n % abs_width) or abs_width
-                n2 = min(n,n2) ; count = 0
-                
-                while n2 > 0:
-                    n2 -= 1
-                    ch = prev[n-count-1]
-                    if ch != ' ': break
-                    else: count += 1
-                
-                # Make sure we actually delete something.
-                w.delete("insert -%dc" % (max(1,count)),"insert")
-                #@nonl
-                #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
-                #@nl
-            c.frame.body.onBodyChanged(undoType='Typing',
-                oldSel=oldSel,oldText=oldText,oldYview=None)
-        else:
-            if i != j:
-                w.delete(i,j)
-            else:
-                w.delete('insert-1c')
+                if i != j:
+                    w.delete(i,j)
+                else:
+                    w.delete('insert-1c')
+        except Exception:
+            pass # w may not be a text widget.
     #@nonl
     #@-node:ekr.20051026092433.1:backwardDeleteCharacter (ok)
     #@+node:ekr.20050920084036.87:deleteNextChar (ok)
@@ -5312,19 +5316,27 @@ class findTab (leoFind.leoFind):
                 ('find-tab-change',     self.changeCommand),
                 ('find-tab-change-find',self.changeThenFindCommand),
             ):
-                junk, bunch = c.config.getShortcut(commandName)
-                accel = bunch and bunch.val
-                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                if shortcut:
-                    # g.trace(shortcut,commandName)
-                    w.bind(shortcut,func)
+                if 1:
+                    junk, bunchList = c.config.getShortcut(commandName)
+                    for bunch in bunchList:
+                        accel = bunch.val
+                        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                        if shortcut:
+                            # g.trace(shortcut,commandName)
+                            w.bind(shortcut,func)
+                else:
+                    junk, bunch = c.config.getShortcut(commandName)
+                    accel = bunch and bunch.val
+                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    if shortcut:
+                        # g.trace(shortcut,commandName)
+                        w.bind(shortcut,func)
             w.bind ("<1>",  self.resetWrap,'+')
             w.bind("<Key>", self.resetWrap,'+')
     
         for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
             w.bind("<Key-Return>", self.findButtonCallback)
             w.bind("<Key-Escape>", self.hideTab)
-    #@nonl
     #@-node:ekr.20051023181449:createBindings (findTab)
     #@+node:ekr.20051020120306.13:createFrame (findTab)
     def createFrame (self,parentFrame):
@@ -6502,7 +6514,7 @@ class spellTab(leoFind.leoFind):
         self.listBox.bind("<Map>",self.onMap)
     #@nonl
     #@-node:ekr.20051025071455.22:createSpellTab
-    #@+node:ekr.20051025120920:createBindings
+    #@+node:ekr.20051025120920:createBindings (spellTab)
     def createBindings (self):
         
         c = self.c ; k = c.keyHandler
@@ -6519,14 +6531,25 @@ class spellTab(leoFind.leoFind):
                 ('spell-ignore',            self.ignore),
                 ('spell-change-then-find',  self.changeThenFind),
             ):
-                junk, bunch = c.config.getShortcut(commandName)
-                accel = bunch and bunch.val
-                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                if shortcut:
-                    # g.trace(shortcut,commandName)
-                    w.bind(shortcut,func)
+                if 1:
+                    junk, bunchList = c.config.getShortcut(commandName)
+                    for bunch in bunchList:
+                        accel = bunch.val
+                        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                        if shortcut:
+                            # g.trace(shortcut,commandName)
+                            w.bind(shortcut,func)
+                else:
+                    junk, bunch = c.config.getShortcut(commandName)
+                    accel = bunch and bunch.val
+                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    if shortcut:
+                        # g.trace(shortcut,commandName)
+                        w.bind(shortcut,func)
+                        
+                    
     #@nonl
-    #@-node:ekr.20051025120920:createBindings
+    #@-node:ekr.20051025120920:createBindings (spellTab)
     #@+node:ekr.20051025071455.16:readDictionary
     def readDictionary (self,fileName):
     
