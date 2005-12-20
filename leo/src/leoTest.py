@@ -230,13 +230,17 @@ def runProfileOnNode (p,outputPath,):
 def runTimerOnNode (p,count):
 
     s = p.bodyString().rstrip() + '\n'
-    t = timeit.Timer(s)
+    
+    # This looks like the best we can do.
+    setup = 'import leoGlobals as g; c = g.top(); p = c.currentPosition()'
+
+    t = timeit.Timer(s,setup)
 
     try:
         if count is None:
             count = 1000000
         result = t.timeit(count)
-        print "count: %d time: %f %s" % (count,result,p.headString())
+        print "count: %d time/count: %f %s" % (count,result/count,p.headString())
     except:
         t.print_exc()
 #@nonl
