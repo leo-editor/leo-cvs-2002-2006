@@ -27,9 +27,10 @@
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
-<v t="ekr.20051201090822" a="E"><vh>@settings</vh>
+<v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
 </v>
+<v t="ekr.20051219184032"><vh>@button run timer</vh></v>
 </v>
 <v t="ekr.20051104081824"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
@@ -215,11 +216,12 @@
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
 </v>
-<v t="ekr.20051214093711" a="TV"><vh>redemo</vh>
+<v t="ekr.20051214093711"><vh>redemo</vh>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 <v t="ekr.20051215124024.1"><vh>ab ab ab</vh></v>
 <v t="ekr.20051215124024.1"><vh>ab ab ab</vh></v>
+<v t="ekr.20051219194224" a="TV"><vh>time w.update</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4217,5 +4219,9 @@ else:
     return root</t>
 <t tx="ekr.20051214100048"></t>
 <t tx="ekr.20051215124024.1">ab ab</t>
+<t tx="ekr.20051219184032">import leoTest
+leoTest.runTimerOnNode(p,count=1000)</t>
+<t tx="ekr.20051219194224">c.frame.bodyWantsFocus()
+# c.frame.treeWantsFocus()</t>
 </tnodes>
 </leo_file>

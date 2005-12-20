@@ -26,498 +26,20 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20051217135340.2:Create find-options panel
-#@-node:ekr.20051217135340.2:Create find-options panel
+#@+node:ekr.20051219151756:Next
+#@+node:ekr.20051220091742.2:create g.app.gui.isTextWidget
+This will be much better than protecting minibuffer commands with a try/except block.
+#@nonl
+#@-node:ekr.20051220091742.2:create g.app.gui.isTextWidget
+#@+node:ekr.20051220070321:Remove the settings dialog
+#@-node:ekr.20051220070321:Remove the settings dialog
+#@+node:ekr.20051219125559:About Leo doesn't come to front, no matter how it is invoked
+#@-node:ekr.20051219125559:About Leo doesn't come to front, no matter how it is invoked
 #@+node:ekr.20051217175058:Get chapters plugin working
 Use the zip file stuff initially.  We can add support for chapters to Leo's core later.
 #@nonl
 #@-node:ekr.20051217175058:Get chapters plugin working
-#@+node:ekr.20051202094427:Prototype for resolve cvs conflicts
-#@-node:ekr.20051202094427:Prototype for resolve cvs conflicts
-#@+node:ekr.20051027105304:Next release: a5
-#@+node:ekr.20051207130701:Fix newly reported problems
-#@+node:ekr.20051207125933.3:Keys not sticking
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3458482
-By: nobody
-
-The assert isn't tripped except for the first time. after I run a few other unit
-tests from the @button unit test this one has no error.
-
-If I executeScript, the assert is always hit and fails.  This matches my
-experiance of delete not sticking in the body.
-
-Setting a list of usual keys for delete,
-^x, Del, whatever emacs binding uses,
-and running the test in a loop
-and adding a reload of testLeo might
-finally expose the problem.
-I am not sure off hand how to change
-the binding programatically in a loop.
-
-I see similar problems with paste not sticking sometimes.
-#@nonl
-#@+node:ekr.20051207125933.4:Post 2
-@nocolor
- 
-http://sourceforge.net/forum/message.php?msg_id=3458548
-By: nobody
-
-  File "C:\C\PY\PYTHON22\lib\lib-tk\Tkinter.py", line 897, in bind
-    return self._bind(('bind', self._w), sequence, func, add)
-  File "C:\C\PY\PYTHON22\lib\lib-tk\Tkinter.py", line 852, in _bind
-    self.tk.call(what + (sequence, cmd))
-TclError: bad event type or keysym "Del"
-
-seems py2.2 using Tk8.3 or py2.4 using Tk8.4
-doesn't have some keysyms
-Del and Ins has to be Delete and Insert for starters.
-this could have been contributing factor, although
-the keys still do what I expected because default
-binding from Tk are passed though.
-I haven't tested if this fixes the problem yet.
-
-these errors were getting masked/missed in py2.4
-but generate failure to start Leo Tk errors in py2.2
-this could be a problem, if the only way you have to fix
-errors in bindings is editing a leo and you can't start Leo!
-
-error, ignoring duplicate @shortcuts entry: cut-text
-would be helpful if the keys getting ignored was also printed
-
-for py2.2, leoEditCommands.py needs:
-from __future__ import generators
-
-trace_tags plugin isn't really detailed enough
-to help track down what is happening here.
-trace_keys isn't working at all.
-I'm going to try to add output overwrite to file.
-printing everything slows Leo down too much.
-
-e
-#@-node:ekr.20051207125933.4:Post 2
-#@-node:ekr.20051207125933.3:Keys not sticking
-#@+node:ekr.20051208081641:Fix undo problems
-#@+node:ekr.20051208081641.1:Report
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3465251
-By: e
-
-after a save, undo last typing event
-doesn't mark leo changed.
-you can go up and down the undo redo list
-and still the leo is not marked changed.
-the changes in the body do stick.
-didn't try other undo like insert node.
-
-I had a weird undo that I wasn't able to repeat
-after a reboot, when I had 2 leos open and
-and the undo after a save in one would display
-the last undo in a node body from the other leo.
-#@nonl
-#@-node:ekr.20051208081641.1:Report
-#@-node:ekr.20051208081641:Fix undo problems
-#@+node:ekr.20051208100903:Install Brian's patch for Import Derived files
-#@+node:ekr.20031218072017.1810:importDerivedFiles
-def importDerivedFiles (self,parent,paths):
-    
-    c = self.c ; u = c.undoer ; command = 'Import'
-    at = c.atFileCommands ; current = c.currentPosition()
-    self.tab_width = self.getTabWidth()
-    if not paths: return
-    c.beginUpdate()
-    try:
-        u.beforeChangeGroup(current,command)
-        for fileName in paths:
-            << set isThin if fileName is a thin derived file >>
-            undoData = u.beforeInsertNode(parent)
-            p = parent.insertAfter()
-            if isThin:
-                at.forceGnxOnPosition(p)
-                p.initHeadString("@thin " + fileName)
-                at.read(p,thinFile=True)
-            else:
-                p.initHeadString("Imported @file " + fileName)
-                at.read(p,importFileName=fileName)
-            p.contract()
-            u.afterInsertNode(p,command,undoData)
-        current.expand()
-        c.selectPosition(current)
-        c.setChanged(True)
-        u.afterChangeGroup(p,command)
-    finally:
-        c.endUpdate()
-#@nonl
-#@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-fileName = g.os_path_normpath(fileName)
-
-try:
-    theFile = open(fileName,'rb')
-    isThin = at.scanHeaderForThin(theFile,fileName)
-    theFile.close()
-except IOError:
-    isThin = False
-#@nonl
-#@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-#@+node:ekr.20051208100903.1:forceGnxOnPosition
-def forceGnxOnPosition (self,p):
-
-    self._forcedGnxPositionList.append(p.v)
-#@nonl
-#@-node:ekr.20051208100903.1:forceGnxOnPosition
-#@-node:ekr.20031218072017.1810:importDerivedFiles
-#@-node:ekr.20051208100903:Install Brian's patch for Import Derived files
-#@-node:ekr.20051207130701:Fix newly reported problems
-#@+node:ekr.20051202102337:Minibuffer commands notes
-@nocolor
-#@nonl
-#@+node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
-auto-complete command is merely a prototype.
-#@nonl
-#@-node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
-#@+node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
-ok:
-
-list-buffers
-
-Not ready yet:
-
-append-to-buffer
-copy-to-buffer
-insert-to-buffer
-kill-buffer
-prepend-to-buffer
-rename-buffer       probably should change headline too
-switch-to-buffer    use typing completion to get node name (headline)
-#@nonl
-#@-node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
-#@+node:ekr.20051202102337.3:controlCommandsClass (ok)
-advertised-undo
-keyboard-quit
-iconify-frame
-save-buffers-kill-leo
-shell-command
-shell-command-on-region
-suspend
-#@nonl
-#@-node:ekr.20051202102337.3:controlCommandsClass (ok)
-#@+node:ekr.20051202102337.4:editCommandsClass
-back-sentence
-back-to-indentation
-backward-char
-backward-delete-char
-backward-kill-paragraph
-backward-paragraph
-backward-word
-beginning-of-buffer
-beginning-of-line
-capitalize-word
-center-line
-center-region
-count-region
-cycle-focus
-dabbrev-completion
-dabbrev-expands
-delete-char
-delete-indentation
-delete-spaces
-downcase-region
-downcase-word
-end-of-buffer
-end-of-line
-escape
-eval-expression
-exchange-point-mark
-fill-paragraph
-fill-region
-fill-region-as-paragraph
-flush-lines
-focus-to-body
-focus-to-log
-focus-to-minibuffer
-focus-to-tree
-forward-char
-forward-paragraph
-forward-sentence
-forward-word
-goto-char
-goto-line
-how-many
-# Use indentBody in leoCommands.py
-#indent-region
-indent-relative
-indent-rigidly
-indent-to-comment-column
-insert-newline
-insert-parentheses
-keep-lines
-kill-paragraph
-line-number
-move-past-close
-newline-and-indent
-next-line
-previous-line
-remove-blank-lines
-replace-regex
-replace-string
-reverse-region
-scroll-down
-scroll-up
-select-paragraph
-# Exists, but can not be executed via the minibuffer.
-# self-insert-command
-set-comment-column
-set-fill-column
-set-fill-prefix
-set-mark-command
-show-colors
-show-fonts
-# save-buffer
-sort-columns
-sort-fields
-sort-lines
-split-line
-tabify
-transpose-chars
-transpose-lines
-transpose-words
-untabify
-upcase-region
-upcase-word
-view-lossage
-what-line
-#@nonl
-#@-node:ekr.20051202102337.4:editCommandsClass
-#@+node:ekr.20051202102337.6:editFileCommandsClass
-delete-file
-diff
-insert-file
-make-directory
-remove-directory
-save-file
-#@nonl
-#@-node:ekr.20051202102337.6:editFileCommandsClass
-#@+node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
-digit-argument
-help
-hide-mini-buffer
-negative-argument
-number-command
-number-command-0
-number-command-1
-number-command-2
-number-command-3
-number-command-4
-number-command-5
-number-command-6
-number-command-7
-number-command-8
-number-command-9
-print-bindings
-print-commands
-repeat-complex-command
-show-mini-buffer
-toggle-mini-buffer
-universal-argument
-#@nonl
-#@-node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
-#@+node:ekr.20051202102752.2:killBufferCommandsClass
-backward-kill-sentence
-backward-kill-word
-kill-line
-kill-word
-kill-sentence
-kill-region
-kill-region-save
-yank
-yank-pop
-zap-to-character
-#@nonl
-#@-node:ekr.20051202102752.2:killBufferCommandsClass
-#@+node:ekr.20051202102752.3:macroCommandsClass
-call-last-keyboard-macro
-end-kbd-macro
-name-last-kbd-macro
-load-file
-insert-keyboard-macro 
-start-kbd-macro
-#@nonl
-#@-node:ekr.20051202102752.3:macroCommandsClass
-#@+node:ekr.20051202102752.4:queryReplaceCommandsClass
-query-replace
-query-replace-regex
-#@nonl
-#@-node:ekr.20051202102752.4:queryReplaceCommandsClass
-#@+node:ekr.20051202102752.5:rectangleCommandsClass (ok)
-clear-rectangle
-close-rectangle
-delete-rectangle
-kill-rectangle
-open-rectangle
-string-rectangle
-yank-rectangle
-#@nonl
-#@-node:ekr.20051202102752.5:rectangleCommandsClass (ok)
-#@+node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
-append-to-register
-copy-rectangle-to-register
-copy-to-register
-increment-register
-insert-register
-jump-to-register
-number-to-register not used: used copy-to-register insead.
-point-to-register
-prepend-to-register
-view-register
-
-To do:
-
-point-to-register should write an 'expanded point' so inter-node jumps are possible.
-#@nonl
-#@-node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
-#@+node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
-hide-find-tab
-open-find-tab
-find-tab-find
-find-tab-find-prev
-find-tab-change
-find-tab-change-then-find
-
-isearch-forward
-isearch-backward
-isearch-forward-regexp
-isearch-backward-regexp
-
-re-search-forward
-re-search-backward
-
-search-forward
-search-backward
-word-search-forward
-word-search-backward
-#@nonl
-#@-node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
-#@+node:ekr.20051202102752.8:spellCommandsClass (ok)
-ok:
-
-hide-spell-tab
-open-spell-tab
-spell-find
-spell-change
-spell-change-then-find
-spell-ignore
-#@nonl
-#@-node:ekr.20051202102752.8:spellCommandsClass (ok)
-#@-node:ekr.20051202102337:Minibuffer commands notes
-#@+node:ekr.20051207093612.1:Add commands to extend selections
-#@+node:ekr.20051210111021:Report 1
-@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=3463523
-
-I can't figure out how to select text within lines in the body pane.  I would
-have expected shifted movement keys to do selection but shifted left, right,
-home and end just move the cursor.  Shift up and down work as expected.
-Am I missing some bindings?
-
-Foneo
-#@nonl
-#@-node:ekr.20051210111021:Report 1
-#@+node:ekr.20051207125933.1:Report 2
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3462294
-By: nobody
-
-with an @setting @bool trace_masterCommand=True
-I see now that control+shift+arrows aren't given 
-special status. is this why selection isn't happening?
-[all], <Left>, backward-char
-[all], <Right>, forward-char
-[text], <Control-Left>, backward-word
-[text], <Control-Right>, forward-word
-
-masterCommand: <Key> ch '' keysym 'Control_L'
-masterCommand: <Control-Left> ch '' keysym 'Left'
-masterCommand: <Key> ch '' keysym 'Control_L'
-masterCommand: <Key> ch '' keysym 'Shift_L'
-masterCommand: <Control-Right> ch '' keysym 'Right'
-
-ctrl+arrow is collected together and special cased. 
-even though keys individually pass through masterCommand,
-that should have been a Ctrl-Shift-Right
-
-masterCommand: <Key> ch '' keysym 'Delete'
-is caught, does the right thing, 
-but doesn't stick.
-strangely, the cursor stays at the correct place
-if you switch nodes then back, maybe that's a clue.
-I have delete-text                 = Delete 
-but it doesn't show up in the print-bindings display.
-that may be why it doesn't stick for me.
-
-[all], <BackSpace>, backward-delete-char
-BAckspace does the right thing and does stick.
-[all], <Shift-Delete>, cut-text  sticks
-masterCommand: <Key> ch '' keysym 'Shift_L'
-masterCommand: <Shift-Delete> ch '' keysym 'Delete'
-
-alt-shift-1 generates this display
-masterCommand: <Key> ch '' keysym 'Alt_L'
-masterCommand: <Key> ch '' keysym 'Shift_L'
-masterCommand: <Key> ch '!' keysym 'exclam'
-
-alt-1 does the right thing.
-masterCommand: <Key> ch '' keysym 'Alt_L'
-masterCommand: <Alt-Key-1> ch '1' keysym '1'
-
-undo/redo
-masterCommand: <Key> ch '' keysym 'Control_L'
-masterCommand: <Control-z> ch '\x1a' keysym 'z'
-masterCommand: <Key> ch '' keysym 'Alt_L'
-masterCommand: <Key> ch '' keysym 'Control_L'
-masterCommand: <Alt-z> ch '' keysym 'z'
-
-doesn't redo because it is seen as alt-z
-instead of ctrl-alt-z
-same if hit crtl first
-masterCommand: <Key> ch '' keysym 'Control_L'
-masterCommand: <Key> ch '' keysym 'Alt_L'
-masterCommand: <Alt-z> ch '' keysym 'z'
-
-alt-shift-v
-masterCommand: <Key> ch '' keysym 'Alt_L'
-masterCommand: <Key> ch '' keysym 'Shift_L'
-masterCommand: <Alt-V> ch 'V' keysym 'V'
-
-ctrl-alt-o
-masterCommand: <Key> ch '' keysym 'Alt_L'
-masterCommand: <Key> ch '' keysym 'Control_L'
-masterCommand: <Alt-Control-o> ch '' keysym 'o'
-
-both work, so this is about all I can do armchair debugging.
-no doubt this is already part of an active investigation.
-I look forward to the betas.
-
-e
-
-#@-node:ekr.20051207125933.1:Report 2
-#@-node:ekr.20051207093612.1:Add commands to extend selections
 #@+node:ekr.20051017111216:Fix bugs in commands
-#@+node:ekr.20051120181015:To do
-@nocolor
-
-Make minibuffer commands undoable.
-    - kill/yank ?
-
-
-
-- Improve handling of the mark.  The selection should be visible.
-#@nonl
-#@-node:ekr.20051120181015:To do
-#@+node:ekr.20051120180644:What I did
-- Rewrote removeBlankLines.
-#@nonl
-#@-node:ekr.20051120180644:What I did
 #@+node:ekr.20051120180644.1:Rewritten/revised commands
 #@+node:ekr.20031218072017.1830:indentBody
 def indentBody (self):
@@ -1586,9 +1108,10 @@ else:
 #@-node:ekr.20051005160923:<< handle plain search >>
 #@-node:ekr.20050920084036.219:findNextMatch
 #@-node:ekr.20051017111216:Fix bugs in commands
-#@+node:ekr.20051123055200:*** Allow multiple bindings to the same command
-#@-node:ekr.20051123055200:*** Allow multiple bindings to the same command
-#@+node:ekr.20051103094005:Fix bugs
+#@+node:ekr.20051121070552:Add Cmds menu
+#@-node:ekr.20051121070552:Add Cmds menu
+#@-node:ekr.20051219151756:Next
+#@+node:ekr.20051103094005:Bugs
 #@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
 #@+node:ekr.20051104152338.1:Report
 @nocolor
@@ -1707,9 +1230,91 @@ I do?
 EKR: This is on the list of unfixable bugs, but I have a hard time believing there is no workaround.
 #@nonl
 #@-node:ekr.20051112080017:Problem removing script buttons on the mac
-#@-node:ekr.20051103094005:Fix bugs
-#@-node:ekr.20051027105304:Next release: a5
-#@+node:ekr.20051210111121:Before b1
+#@+node:ekr.20051207130701:Fix newly reported problems
+#@+node:ekr.20051207125933.3:Keys not sticking
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3458482
+By: nobody
+
+The assert isn't tripped except for the first time. after I run a few other unit
+tests from the @button unit test this one has no error.
+
+If I executeScript, the assert is always hit and fails.  This matches my
+experiance of delete not sticking in the body.
+
+Setting a list of usual keys for delete,
+^x, Del, whatever emacs binding uses,
+and running the test in a loop
+and adding a reload of testLeo might
+finally expose the problem.
+I am not sure off hand how to change
+the binding programatically in a loop.
+
+I see similar problems with paste not sticking sometimes.
+#@nonl
+#@+node:ekr.20051207125933.4:Post 2
+@nocolor
+ 
+http://sourceforge.net/forum/message.php?msg_id=3458548
+By: nobody
+
+  File "C:\C\PY\PYTHON22\lib\lib-tk\Tkinter.py", line 897, in bind
+    return self._bind(('bind', self._w), sequence, func, add)
+  File "C:\C\PY\PYTHON22\lib\lib-tk\Tkinter.py", line 852, in _bind
+    self.tk.call(what + (sequence, cmd))
+TclError: bad event type or keysym "Del"
+
+seems py2.2 using Tk8.3 or py2.4 using Tk8.4
+doesn't have some keysyms
+Del and Ins has to be Delete and Insert for starters.
+this could have been contributing factor, although
+the keys still do what I expected because default
+binding from Tk are passed though.
+I haven't tested if this fixes the problem yet.
+
+these errors were getting masked/missed in py2.4
+but generate failure to start Leo Tk errors in py2.2
+this could be a problem, if the only way you have to fix
+errors in bindings is editing a leo and you can't start Leo!
+
+error, ignoring duplicate @shortcuts entry: cut-text
+would be helpful if the keys getting ignored was also printed
+
+for py2.2, leoEditCommands.py needs:
+from __future__ import generators
+
+trace_tags plugin isn't really detailed enough
+to help track down what is happening here.
+trace_keys isn't working at all.
+I'm going to try to add output overwrite to file.
+printing everything slows Leo down too much.
+
+e
+#@-node:ekr.20051207125933.4:Post 2
+#@-node:ekr.20051207125933.3:Keys not sticking
+#@+node:ekr.20051208081641:Fix undo problems
+#@+node:ekr.20051208081641.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3465251
+By: e
+
+after a save, undo last typing event
+doesn't mark leo changed.
+you can go up and down the undo redo list
+and still the leo is not marked changed.
+the changes in the body do stick.
+didn't try other undo like insert node.
+
+I had a weird undo that I wasn't able to repeat
+after a reboot, when I had 2 leos open and
+and the undo after a save in one would display
+the last undo in a node body from the other leo.
+#@nonl
+#@-node:ekr.20051208081641.1:Report
+#@-node:ekr.20051208081641:Fix undo problems
+#@-node:ekr.20051207130701:Fix newly reported problems
+#@-node:ekr.20051103094005:Bugs
+#@+node:ekr.20051210111121:Important new functionality
 #@+node:ekr.20051126122638:Autocompletion tab
 - Use typing completion to select desired word.
 - No auto-scan: use database instead.
@@ -2786,7 +2391,7 @@ def set_focus(self,c,w):
         if 1:
             # A fix to the cursed problems with Pmw.Notebook.
             # I am not happy with this, but it seems preferable to trying to figure out
-            # All the places the code must call update()
+            # all the places where the code must call update()
             w.update() 
 
         w.focus_set()
@@ -3169,7 +2774,6 @@ def abort (self):
     
     c = self.c ; w = self.widget ; gui = g.app.gui
     
-    w.update()
     c.frame.widgetWantsFocus(w)
 
     w.delete('1.0','end')
@@ -3195,9 +2799,7 @@ def autoComplete (self,event):
 def computeCompletionList (self):
     
     c = self.c ; gui = g.app.gui ; w = self.widget
-    w.update() # Complete all log drawing so we can change focus.
     c.frame.widgetWantsFocus(w)
-
     s = gui.getSelectedText(w)
     if s:
         self.tabList,common_prefix = g.itemsMatchingPrefixInList(s,self.membersList)
@@ -3244,8 +2846,6 @@ def doTabCompletion (self):
 def extendSelection (self,s):
     
     c = self.c ; w = self.widget ; gui = g.app.gui
-    
-    w.update()
     c.frame.widgetWantsFocus(w)
     
     if gui.hasSelection(w):
@@ -3262,8 +2862,6 @@ def extendSelection (self,s):
 def finish (self):
     
     c = self.c ; w = self.widget ; gui = g.app.gui
-    
-    w.update()
     c.frame.widgetWantsFocus(w)
     
     i,j = gui.getTextSelection(w)
@@ -3275,8 +2873,6 @@ def finish (self):
 def setSelection (self,s):
     
     c = self.c ; w = self.widget ; gui = g.app.gui
-    
-    w.update()
     c.frame.widgetWantsFocus(w)
     
     if gui.hasSelection(w):
@@ -3320,6 +2916,8 @@ def stateHandler (self,event):
 #@-node:ekr.20051126124705:stateHandler (autoCompleter)
 #@-node:ekr.20051126123249:class autoCompleterClass (prototype)
 #@-node:ekr.20051126122638:Autocompletion tab
+#@+node:ekr.20051217135340.2:Create find-options panel
+#@-node:ekr.20051217135340.2:Create find-options panel
 #@+node:ekr.20051028061611.1:Unify all search commands
 Revise:
     moveWordHelper
@@ -3403,19 +3001,27 @@ def createBindings (self):
             ('find-tab-change',     self.changeCommand),
             ('find-tab-change-find',self.changeThenFindCommand),
         ):
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            if shortcut:
-                # g.trace(shortcut,commandName)
-                w.bind(shortcut,func)
+            if 1:
+                junk, bunchList = c.config.getShortcut(commandName)
+                for bunch in bunchList:
+                    accel = bunch.val
+                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    if shortcut:
+                        # g.trace(shortcut,commandName)
+                        w.bind(shortcut,func)
+            else:
+                junk, bunch = c.config.getShortcut(commandName)
+                accel = bunch and bunch.val
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
         w.bind ("<1>",  self.resetWrap,'+')
         w.bind("<Key>", self.resetWrap,'+')
 
     for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
         w.bind("<Key-Return>", self.findButtonCallback)
         w.bind("<Key-Escape>", self.hideTab)
-#@nonl
 #@-node:ekr.20051023181449:createBindings (findTab)
 #@+node:ekr.20051020120306.13:createFrame (findTab)
 def createFrame (self,parentFrame):
@@ -4295,21 +3901,255 @@ Apply incremental search commands to headlines.  This might be fast, but is it u
 #@nonl
 #@-node:ekr.20051012053017.4:Search improvements
 #@-node:ekr.20051028061611.1:Unify all search commands
-#@+node:ekr.20051210111121.1:NewHeaddline
-- Review the posting about making positions permanent, or recording vnode
-indicies. It's probably time to do this.
-
-- Make sure there is some way of executing script find/changes.
-#@nonl
-#@-node:ekr.20051210111121.1:NewHeaddline
-#@-node:ekr.20051210111121:Before b1
-#@+node:ekr.20051129095023:Before 4.4 final
-#@+node:ekr.20051121070552:Add Cmds menu
-#@-node:ekr.20051121070552:Add Cmds menu
 #@+node:ekr.20051202095626:Add help-command
 Use docstrings as the help message.
 #@nonl
 #@-node:ekr.20051202095626:Add help-command
+#@+node:ekr.20051014161015:Full input modes
+#@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
+class editCommands:
+
+    @others
+#@nonl
+#@+node:ekr.20050723064110.1:ctor
+def __init__ (self,c):
+    
+    self.c = c
+
+    self.mode = 'default'
+    self.modeStack = []
+    
+    self.defaultWordChars1, self.defaultWordChars2 = self.setDefaultWordChars()
+    self.wordChars1 = self.defaultWordChars1
+    self.wordChars2 = self.defaultWordChars2
+
+    self.setDefaultOptions()
+#@nonl
+#@-node:ekr.20050723064110.1:ctor
+#@+node:ekr.20050723064110.3:Options...
+#@+node:ekr.20050723064110.4:setDefaultOptions
+def setDefaultOptions(self):
+    
+    self.options = {
+        'extendMovesForward':   True,  # True: moving forward may cross node boundaries.
+        'extendMovesBack':      True,  # True: moving back may cross node boundaries.
+        'extendFindsForward':   True,   # True: find forward may cross node boundaries.
+        'extendFindsBack':      True,   # True: find back may cross node boundaries.
+    }
+#@nonl
+#@-node:ekr.20050723064110.4:setDefaultOptions
+#@+node:ekr.20050723064110.5:getOption
+def getOption (self,optionName):
+    
+    # This may change when modes get put in.
+    return self.options.get(optionName)
+#@nonl
+#@-node:ekr.20050723064110.5:getOption
+#@-node:ekr.20050723064110.3:Options...
+#@+node:ekr.20050723064110.6:Word stuff...
+#@+node:ekr.20050723064110.7:findWordStart
+def findWordStart(self,s,i):
+    
+    while i < len(s):
+        if s[i] in self.wordChars1:
+            return i
+        else:
+            i += 1
+    return i
+#@nonl
+#@-node:ekr.20050723064110.7:findWordStart
+#@+node:ekr.20050723064110.8:insideWord
+def insideWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        0 < i < len(s) and
+        s[i] in self.wordChars2 and
+        s[i-1] in self.wordChars2
+    )
+#@nonl
+#@-node:ekr.20050723064110.8:insideWord
+#@+node:ekr.20050723064110.9:skipWord
+def skipWord(self,s,i):
+    
+    while i < len(s) and s[i] in self.wordChars2:
+        i += 1
+    return i
+#@nonl
+#@-node:ekr.20050723064110.9:skipWord
+#@+node:ekr.20050723064110.10:startsWord
+def startsWord (self,s,i):
+    
+    '''Return True if the char at s[i] is inside a word but does not start the word.'''
+    
+    return (
+        i < len(s) and 
+        s[i] in self.wordChars1 and
+        (i == 0 or s[i-1] not in self.wordChars1)
+    )
+#@nonl
+#@-node:ekr.20050723064110.10:startsWord
+#@+node:ekr.20050723064110.11:setDefaultWordChars
+def setDefaultWordChars (self):
+    
+    chars1 = '_' + string.letters
+    chars2 = '_' + string.letters + string.digits
+    return chars1, chars2
+#@nonl
+#@-node:ekr.20050723064110.11:setDefaultWordChars
+#@-node:ekr.20050723064110.6:Word stuff...
+#@+node:ekr.20050723064110.12:Cursor movement
+#@+node:ekr.20050723064110.13:moveBackwardChar
+def moveBackwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i -= 1
+    if i >= 0:
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            s = p.bodyString()
+            if len(s) > 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(len(s)-1)
+                return True
+            else:
+                p.moveToThreadBack()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.13:moveBackwardChar
+#@+node:ekr.20050723064110.14:moveBackwardWord (Finish)
+def moveBackwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.findWordStart(s,i)
+    i = self.findWordStart(s,i) ###
+    if self.startsWord(s,i): ###
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
+        p = c.currentPosition().moveToThreadBack()
+        while p:
+            c.selectPosition(p)
+            if self.moveBackwardWord(0):
+                return True
+            p.moveToThreadBack()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.14:moveBackwardWord (Finish)
+#@+node:ekr.20050723064110.15:moveForwardChar
+def moveForwardChar (self):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    i = b.getPythonInsertionPoint(s=s)
+    i += 1
+    if i < len(s):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            if len(p.bodyString()) > 0:
+                c.selectPosition(p)
+                b.setPythonInsertionPoint(0)
+                return True
+            else:
+                p.moveToThreadNext()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.15:moveForwardChar
+#@+node:ekr.20050723064110.16:moveForwardWord
+def moveForwardWord (self,i=None):
+    
+    c = self.c ; b = c.frame.body ; s = b.getAllText()
+    if i is None: i = b.getPythonInsertionPoint(s=s)
+
+    if self.startsWord(s,i) or self.insideWord(s,i):
+        i = self.skipWord(s,i)
+    i = self.findWordStart(s,i)
+    if self.startsWord(s,i):
+        b.setPythonInsertionPoint(i)
+        return True
+    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
+        p = c.currentPosition().moveToThreadNext()
+        while p:
+            c.selectPosition(p)
+            if self.moveForwardWord(0):
+                return True
+            p.moveToThreadNext()
+        return False
+    else:
+        return False
+#@nonl
+#@-node:ekr.20050723064110.16:moveForwardWord
+#@+node:ekr.20050723064110.17:selectWord
+#@-node:ekr.20050723064110.17:selectWord
+#@+node:ekr.20050723064110.18:selectForwordWord
+def selectForwardWord (self):
+    
+    c = self ; b = c.frame.body ; s = b.getAllText()
+
+    i = i1 = b.getPythonInsertionPoint()
+    
+    if i < len(s) and g.is_c_id(s[i]):
+        i = g.skip_c_id(s,i+1)
+    
+    while i < len(s) and not g.is_c_id(s[i]):
+        i += 1
+        
+    if i < len(s) and g.is_c_id(s[i]):
+        # b.setPythonTextSelection(i1,i)
+        pass ### TODO
+#@nonl
+#@-node:ekr.20050723064110.18:selectForwordWord
+#@-node:ekr.20050723064110.12:Cursor movement
+#@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
+#@+node:ekr.20051103100302.1:Posting: @input-mode coming
+Leo will support both vim and xemacs by implementing @input-mode nodes in @settings trees.  For example, the xemacs <ctrl-c> mode will be implemented entirely as an input mode, with no special support from Leo.
+
+The headline of  @input-mode nodes will be:
+
+@input-mode mode-name
+
+This creates a new minibuffer command called enter-mode-mode-name. The body text of the @input-mode node will contain key bindings for that input mode.  *Only* those key bindings will be in effect in the input mode.
+
+To define standard emacs control-c mode we simply do the following:
+
+1. Put the following in the main @shortcuts node:
+
+enter-mode-quick-command = ctrl-c
+
+2. Create the @input-mode quick-command node with the desired bindings in its body text.
+
+That's all!
+
+Some details:
+
+- We'll probably want a way to copy bindings from one input mode to another.
+
+- I don't plan to implement a stack of input modes, but it would be easy to do so: just have an input mode define a minibuffer command called push-mode-mode-name as well as enter-mode-mode-name.  You can fill in the details...
+
+- It will probably be a good idea not to allow rebinding of ctrl-g (keyboard-quit) in an input mode.  That way there is always at least one way out :-)
+
+I like this scheme.  It is simple, powerful, general and easy to use.  It will eliminate all the hard binding presently in the code.  It will support vim (plain-key) bindings and all the similar plain-key modes in emacs.  It will allow for unlimited experimentation with key bindings.
+#@nonl
+#@-node:ekr.20051103100302.1:Posting: @input-mode coming
+#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
+#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
+#@-node:ekr.20051014161015:Full input modes
 #@+node:ekr.20051012054228:Vim mode (k.vimMode)
 - k.vimMode controls whether full-command keeps mini-buffer open after a command complete.
 
@@ -4325,21 +4165,6 @@ Use docstrings as the help message.
 #@-node:ekr.20051021074728:Space completion
 #@+node:ekr.20051202100658:Filename completion
 #@-node:ekr.20051202100658:Filename completion
-#@+node:ekr.20050925105522:Big
-- (1-2 days) Complete generalization of code.
-    - Allow state-oriented shortcuts (C-x C-x, for example)
-    - Create new kinds of commands dispatchers: vim, tree, etc.
-        - Single-key mode == vim mode??
-
-- (1-2 hours) Tab completion for file commands.
-
-- (1-2 days) Emacs-style help: appropos, etc.
-    - printLongCommandName (like Emacs Ctrl-H Ctrl-K) command prints long name of any keystroke command.
-
-* @link-unl/url/etc.
-
-- Open .leo file in new process: alternative to test.leo!
-#@nonl
 #@+node:ekr.20050928144501.1:Mouseless Leo
 Needed to support 'mouseless-Leo':
 
@@ -6666,253 +6491,21 @@ xwem-worklog-tasks-description
 #@-node:ekr.20050712094115.7:xwem
 #@-node:ekr.20050712092501.1:xemacs variables
 #@-node:ekr.20050928144501.1:Mouseless Leo
-#@+node:ekr.20051014161015:Full input modes
-#@+node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
-class editCommands:
-
-    @others
+#@+node:ekr.20051220062654:Open .leo file in new process
+An alternative to test.leo!
 #@nonl
-#@+node:ekr.20050723064110.1:ctor
-def __init__ (self,c):
-    
-    self.c = c
+#@-node:ekr.20051220062654:Open .leo file in new process
+#@+node:ekr.20051202094427:Prototype for resolve cvs conflicts
+#@-node:ekr.20051202094427:Prototype for resolve cvs conflicts
+#@-node:ekr.20051210111121:Important new functionality
+#@+node:ekr.20051210111121.1:Other/minor
+- Review the posting about making positions permanent, or recording vnode
+indicies. It's probably time to do this.
 
-    self.mode = 'default'
-    self.modeStack = []
-    
-    self.defaultWordChars1, self.defaultWordChars2 = self.setDefaultWordChars()
-    self.wordChars1 = self.defaultWordChars1
-    self.wordChars2 = self.defaultWordChars2
+- Make sure there is some way of executing script find/changes.
 
-    self.setDefaultOptions()
-#@nonl
-#@-node:ekr.20050723064110.1:ctor
-#@+node:ekr.20050723064110.3:Options...
-#@+node:ekr.20050723064110.4:setDefaultOptions
-def setDefaultOptions(self):
-    
-    self.options = {
-        'extendMovesForward':   True,  # True: moving forward may cross node boundaries.
-        'extendMovesBack':      True,  # True: moving back may cross node boundaries.
-        'extendFindsForward':   True,   # True: find forward may cross node boundaries.
-        'extendFindsBack':      True,   # True: find back may cross node boundaries.
-    }
-#@nonl
-#@-node:ekr.20050723064110.4:setDefaultOptions
-#@+node:ekr.20050723064110.5:getOption
-def getOption (self,optionName):
-    
-    # This may change when modes get put in.
-    return self.options.get(optionName)
-#@nonl
-#@-node:ekr.20050723064110.5:getOption
-#@-node:ekr.20050723064110.3:Options...
-#@+node:ekr.20050723064110.6:Word stuff...
-#@+node:ekr.20050723064110.7:findWordStart
-def findWordStart(self,s,i):
-    
-    while i < len(s):
-        if s[i] in self.wordChars1:
-            return i
-        else:
-            i += 1
-    return i
-#@nonl
-#@-node:ekr.20050723064110.7:findWordStart
-#@+node:ekr.20050723064110.8:insideWord
-def insideWord (self,s,i):
-    
-    '''Return True if the char at s[i] is inside a word but does not start the word.'''
-    
-    return (
-        0 < i < len(s) and
-        s[i] in self.wordChars2 and
-        s[i-1] in self.wordChars2
-    )
-#@nonl
-#@-node:ekr.20050723064110.8:insideWord
-#@+node:ekr.20050723064110.9:skipWord
-def skipWord(self,s,i):
-    
-    while i < len(s) and s[i] in self.wordChars2:
-        i += 1
-    return i
-#@nonl
-#@-node:ekr.20050723064110.9:skipWord
-#@+node:ekr.20050723064110.10:startsWord
-def startsWord (self,s,i):
-    
-    '''Return True if the char at s[i] is inside a word but does not start the word.'''
-    
-    return (
-        i < len(s) and 
-        s[i] in self.wordChars1 and
-        (i == 0 or s[i-1] not in self.wordChars1)
-    )
-#@nonl
-#@-node:ekr.20050723064110.10:startsWord
-#@+node:ekr.20050723064110.11:setDefaultWordChars
-def setDefaultWordChars (self):
-    
-    chars1 = '_' + string.letters
-    chars2 = '_' + string.letters + string.digits
-    return chars1, chars2
-#@nonl
-#@-node:ekr.20050723064110.11:setDefaultWordChars
-#@-node:ekr.20050723064110.6:Word stuff...
-#@+node:ekr.20050723064110.12:Cursor movement
-#@+node:ekr.20050723064110.13:moveBackwardChar
-def moveBackwardChar (self):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    i = b.getPythonInsertionPoint(s=s)
-    i -= 1
-    if i >= 0:
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
-        p = c.currentPosition().moveToThreadBack()
-        while p:
-            s = p.bodyString()
-            if len(s) > 0:
-                c.selectPosition(p)
-                b.setPythonInsertionPoint(len(s)-1)
-                return True
-            else:
-                p.moveToThreadBack()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.13:moveBackwardChar
-#@+node:ekr.20050723064110.14:moveBackwardWord (Finish)
-def moveBackwardWord (self,i=None):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    if i is None: i = b.getPythonInsertionPoint(s=s)
+-@link-unl/url/etc.
 
-    if self.startsWord(s,i) or self.insideWord(s,i):
-        i = self.findWordStart(s,i)
-    i = self.findWordStart(s,i) ###
-    if self.startsWord(s,i): ###
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesBackward'): # Recursively look for words in previous nodes.
-        p = c.currentPosition().moveToThreadBack()
-        while p:
-            c.selectPosition(p)
-            if self.moveBackwardWord(0):
-                return True
-            p.moveToThreadBack()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.14:moveBackwardWord (Finish)
-#@+node:ekr.20050723064110.15:moveForwardChar
-def moveForwardChar (self):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    i = b.getPythonInsertionPoint(s=s)
-    i += 1
-    if i < len(s):
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
-        p = c.currentPosition().moveToThreadNext()
-        while p:
-            if len(p.bodyString()) > 0:
-                c.selectPosition(p)
-                b.setPythonInsertionPoint(0)
-                return True
-            else:
-                p.moveToThreadNext()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.15:moveForwardChar
-#@+node:ekr.20050723064110.16:moveForwardWord
-def moveForwardWord (self,i=None):
-    
-    c = self.c ; b = c.frame.body ; s = b.getAllText()
-    if i is None: i = b.getPythonInsertionPoint(s=s)
-
-    if self.startsWord(s,i) or self.insideWord(s,i):
-        i = self.skipWord(s,i)
-    i = self.findWordStart(s,i)
-    if self.startsWord(s,i):
-        b.setPythonInsertionPoint(i)
-        return True
-    elif self.getOption('extendMovesForward'): # Recursively look for words in following nodes.
-        p = c.currentPosition().moveToThreadNext()
-        while p:
-            c.selectPosition(p)
-            if self.moveForwardWord(0):
-                return True
-            p.moveToThreadNext()
-        return False
-    else:
-        return False
-#@nonl
-#@-node:ekr.20050723064110.16:moveForwardWord
-#@+node:ekr.20050723064110.17:selectWord
-#@-node:ekr.20050723064110.17:selectWord
-#@+node:ekr.20050723064110.18:selectForwordWord
-def selectForwardWord (self):
-    
-    c = self ; b = c.frame.body ; s = b.getAllText()
-
-    i = i1 = b.getPythonInsertionPoint()
-    
-    if i < len(s) and g.is_c_id(s[i]):
-        i = g.skip_c_id(s,i+1)
-    
-    while i < len(s) and not g.is_c_id(s[i]):
-        i += 1
-        
-    if i < len(s) and g.is_c_id(s[i]):
-        # b.setPythonTextSelection(i1,i)
-        pass ### TODO
-#@nonl
-#@-node:ekr.20050723064110.18:selectForwordWord
-#@-node:ekr.20050723064110.12:Cursor movement
-#@-node:ekr.20050723064110:class generalizedEditCommands (Do not delete)
-#@+node:ekr.20051103100302.1:Posting: @input-mode coming
-Leo will support both vim and xemacs by implementing @input-mode nodes in @settings trees.  For example, the xemacs <ctrl-c> mode will be implemented entirely as an input mode, with no special support from Leo.
-
-The headline of  @input-mode nodes will be:
-
-@input-mode mode-name
-
-This creates a new minibuffer command called enter-mode-mode-name. The body text of the @input-mode node will contain key bindings for that input mode.  *Only* those key bindings will be in effect in the input mode.
-
-To define standard emacs control-c mode we simply do the following:
-
-1. Put the following in the main @shortcuts node:
-
-enter-mode-quick-command = ctrl-c
-
-2. Create the @input-mode quick-command node with the desired bindings in its body text.
-
-That's all!
-
-Some details:
-
-- We'll probably want a way to copy bindings from one input mode to another.
-
-- I don't plan to implement a stack of input modes, but it would be easy to do so: just have an input mode define a minibuffer command called push-mode-mode-name as well as enter-mode-mode-name.  You can fill in the details...
-
-- It will probably be a good idea not to allow rebinding of ctrl-g (keyboard-quit) in an input mode.  That way there is always at least one way out :-)
-
-I like this scheme.  It is simple, powerful, general and easy to use.  It will eliminate all the hard binding presently in the code.  It will support vim (plain-key) bindings and all the similar plain-key modes in emacs.  It will allow for unlimited experimentation with key bindings.
-#@nonl
-#@-node:ekr.20051103100302.1:Posting: @input-mode coming
-#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
-#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html (vim must do all these)
-#@-node:ekr.20051014161015:Full input modes
-#@-node:ekr.20050925105522:Big
-#@+node:ekr.20051012062458.1:Minor
 - Put About dialog (all? dialogs) in tab.
 
 - Create minibuffer commands to close tabs by name.
@@ -6923,10 +6516,27 @@ I like this scheme.  It is simple, powerful, general and easy to use.  It will e
 
 - Strip quotes from color, font settings.
 
--  Allow multiple selectors:  ! all,find =
-
 - Specify & for most menu items.
 #@nonl
+#@+node:ekr.20050713105353:Add configuration setting to set menu fonts
+#@+node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
+@nocolor
+
+I have looked into leo's code and managed to figure out how to change 
+some fonts. Here's what I did to change the menu fonts for example.
+
+Fonts for the menu can be set in Code->Gui Tkinter classes->@thin 
+leoTkinterMenu.py->Tkinter menu bindings->Routines with Tk 
+spellings->new_menu
+
+so to use the system font (linux) I changed the return statement to:
+
+return Tk.Menu(parent,tearoff=tearoff, font=("System",11))
+
+I'll try using .leo_xresources file and see if that works as well.
+#@nonl
+#@-node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
+#@-node:ekr.20050713105353:Add configuration setting to set menu fonts
 #@+node:ekr.20051110155735.1:Improve Spell tab
 @nocolor
 
@@ -7247,7 +6857,7 @@ for frame, text, command in (
 #@nonl
 #@-node:ekr.20051025071455.24:<< Create the spelling buttons >>
 #@-node:ekr.20051025071455.22:createSpellTab
-#@+node:ekr.20051025120920:createBindings
+#@+node:ekr.20051025120920:createBindings (spellTab)
 def createBindings (self):
     
     c = self.c ; k = c.keyHandler
@@ -7264,14 +6874,25 @@ def createBindings (self):
             ('spell-ignore',            self.ignore),
             ('spell-change-then-find',  self.changeThenFind),
         ):
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-            if shortcut:
-                # g.trace(shortcut,commandName)
-                w.bind(shortcut,func)
+            if 1:
+                junk, bunchList = c.config.getShortcut(commandName)
+                for bunch in bunchList:
+                    accel = bunch.val
+                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    if shortcut:
+                        # g.trace(shortcut,commandName)
+                        w.bind(shortcut,func)
+            else:
+                junk, bunch = c.config.getShortcut(commandName)
+                accel = bunch and bunch.val
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
+                    
+                
 #@nonl
-#@-node:ekr.20051025120920:createBindings
+#@-node:ekr.20051025120920:createBindings (spellTab)
 #@+node:ekr.20051025071455.16:readDictionary
 def readDictionary (self,fileName):
 
@@ -7661,61 +7282,7 @@ def updateButtons (self):
 #@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
 #@-node:ekr.20051025071455:Spell classes (ok)
 #@-node:ekr.20051110155735.1:Improve Spell tab
-#@+node:ekr.20050713105353:Add configuration setting to set menu fonts
-#@+node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
-@nocolor
-
-I have looked into leo's code and managed to figure out how to change 
-some fonts. Here's what I did to change the menu fonts for example.
-
-Fonts for the menu can be set in Code->Gui Tkinter classes->@thin 
-leoTkinterMenu.py->Tkinter menu bindings->Routines with Tk 
-spellings->new_menu
-
-so to use the system font (linux) I changed the return statement to:
-
-return Tk.Menu(parent,tearoff=tearoff, font=("System",11))
-
-I'll try using .leo_xresources file and see if that works as well.
-#@nonl
-#@-node:ekr.20050713105353.1:Email from Martin Moncrieffe <mcm35@cam.ac.uk>
-#@-node:ekr.20050713105353:Add configuration setting to set menu fonts
-#@+node:ekr.20050512031131:Use global_log_window_position to specify outline/log ratio?
-@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=3147054
-By: niccl
-
-In the CVS leo from 12 May, yet another minor but mildly irritating bug: the
-split ratio between log and outline windows isn't restored on re-opening a .leo
-file. The  split between body and the others is, however.
-#@nonl
-#@-node:ekr.20050512031131:Use global_log_window_position to specify outline/log ratio?
-#@+node:ekr.20050916180203:Make more commands undoable
-@nocolor
-
-Make Alt-arrow commands undoable.
-    Example:  Alt-left Alt-right is not the same, in general, as Alt-left, Undo.
-    
-Make Expand/Contract undoable?
-#@-node:ekr.20050916180203:Make more commands undoable
-#@+node:ekr.20051016155819:treat plugins/options.py  differently?
-Any plugin could be considered an options file such as Emacs loads on startup.
-Indeed, any plugin can specify options and change any part of Leo's operation.
-Still, I am wondering whether Leo might treat one plugin, say options.py, just a
-bit differently from other options, say by loading it first (or last) or
-possibly looking somewhere besides the leo/plugins folder, or maybe having it
-always be enabled.
-#@nonl
-#@-node:ekr.20051016155819:treat plugins/options.py  differently?
-#@+node:ekr.20051101161545:Allow multiple bindings for the same minibuffer command
-The standard Emacs bindings assigns several keys to the same command. The syntax
-of entries in @shortcuts nodes will be expanded to allow entries like this:
-
-    next-line = (body) [DnArrow,Ctrl-N]
-#@-node:ekr.20051101161545:Allow multiple bindings for the same minibuffer command
-#@-node:ekr.20051012062458.1:Minor
-#@-node:ekr.20051129095023:Before 4.4 final
+#@-node:ekr.20051210111121.1:Other/minor
 #@+node:ekr.20051023192433:Maybe...
 - Convert Emacs-Style Names to Menu Style Names when creating undo name.
 
@@ -7769,6 +7336,249 @@ leouser
 #@-node:ekr.20051207130144.1:@url http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html
 #@-node:ekr.20051207130144:Investigate Tk DnD
 #@-node:ekr.20051023192433:Maybe...
+#@+node:ekr.20051220063217:Docs
+#@+node:ekr.20051202102337:Minibuffer commands notes
+@nocolor
+#@nonl
+#@+node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
+auto-complete command is merely a prototype.
+#@nonl
+#@-node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
+#@+node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
+ok:
+
+list-buffers
+
+Not ready yet:
+
+append-to-buffer
+copy-to-buffer
+insert-to-buffer
+kill-buffer
+prepend-to-buffer
+rename-buffer       probably should change headline too
+switch-to-buffer    use typing completion to get node name (headline)
+#@nonl
+#@-node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
+#@+node:ekr.20051202102337.3:controlCommandsClass (ok)
+advertised-undo
+keyboard-quit
+iconify-frame
+save-buffers-kill-leo
+shell-command
+shell-command-on-region
+suspend
+#@nonl
+#@-node:ekr.20051202102337.3:controlCommandsClass (ok)
+#@+node:ekr.20051202102337.4:editCommandsClass
+back-sentence
+back-to-indentation
+backward-char
+backward-delete-char
+backward-kill-paragraph
+backward-paragraph
+backward-word
+beginning-of-buffer
+beginning-of-line
+capitalize-word
+center-line
+center-region
+count-region
+cycle-focus
+dabbrev-completion
+dabbrev-expands
+delete-char
+delete-indentation
+delete-spaces
+downcase-region
+downcase-word
+end-of-buffer
+end-of-line
+escape
+eval-expression
+exchange-point-mark
+fill-paragraph
+fill-region
+fill-region-as-paragraph
+flush-lines
+focus-to-body
+focus-to-log
+focus-to-minibuffer
+focus-to-tree
+forward-char
+forward-paragraph
+forward-sentence
+forward-word
+goto-char
+goto-line
+how-many
+# Use indentBody in leoCommands.py
+#indent-region
+indent-relative
+indent-rigidly
+indent-to-comment-column
+insert-newline
+insert-parentheses
+keep-lines
+kill-paragraph
+line-number
+move-past-close
+newline-and-indent
+next-line
+previous-line
+remove-blank-lines
+replace-regex
+replace-string
+reverse-region
+scroll-down
+scroll-up
+select-paragraph
+# Exists, but can not be executed via the minibuffer.
+# self-insert-command
+set-comment-column
+set-fill-column
+set-fill-prefix
+set-mark-command
+show-colors
+show-fonts
+# save-buffer
+sort-columns
+sort-fields
+sort-lines
+split-line
+tabify
+transpose-chars
+transpose-lines
+transpose-words
+untabify
+upcase-region
+upcase-word
+view-lossage
+what-line
+#@nonl
+#@-node:ekr.20051202102337.4:editCommandsClass
+#@+node:ekr.20051202102337.6:editFileCommandsClass
+delete-file
+diff
+insert-file
+make-directory
+remove-directory
+save-file
+#@nonl
+#@-node:ekr.20051202102337.6:editFileCommandsClass
+#@+node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
+digit-argument
+help
+hide-mini-buffer
+negative-argument
+number-command
+number-command-0
+number-command-1
+number-command-2
+number-command-3
+number-command-4
+number-command-5
+number-command-6
+number-command-7
+number-command-8
+number-command-9
+print-bindings
+print-commands
+repeat-complex-command
+show-mini-buffer
+toggle-mini-buffer
+universal-argument
+#@nonl
+#@-node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
+#@+node:ekr.20051202102752.2:killBufferCommandsClass
+backward-kill-sentence
+backward-kill-word
+kill-line
+kill-word
+kill-sentence
+kill-region
+kill-region-save
+yank
+yank-pop
+zap-to-character
+#@nonl
+#@-node:ekr.20051202102752.2:killBufferCommandsClass
+#@+node:ekr.20051202102752.3:macroCommandsClass
+call-last-keyboard-macro
+end-kbd-macro
+name-last-kbd-macro
+load-file
+insert-keyboard-macro 
+start-kbd-macro
+#@nonl
+#@-node:ekr.20051202102752.3:macroCommandsClass
+#@+node:ekr.20051202102752.4:queryReplaceCommandsClass
+query-replace
+query-replace-regex
+#@nonl
+#@-node:ekr.20051202102752.4:queryReplaceCommandsClass
+#@+node:ekr.20051202102752.5:rectangleCommandsClass (ok)
+clear-rectangle
+close-rectangle
+delete-rectangle
+kill-rectangle
+open-rectangle
+string-rectangle
+yank-rectangle
+#@nonl
+#@-node:ekr.20051202102752.5:rectangleCommandsClass (ok)
+#@+node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
+append-to-register
+copy-rectangle-to-register
+copy-to-register
+increment-register
+insert-register
+jump-to-register
+number-to-register not used: used copy-to-register insead.
+point-to-register
+prepend-to-register
+view-register
+
+To do:
+
+point-to-register should write an 'expanded point' so inter-node jumps are possible.
+#@nonl
+#@-node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
+#@+node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
+hide-find-tab
+open-find-tab
+find-tab-find
+find-tab-find-prev
+find-tab-change
+find-tab-change-then-find
+
+isearch-forward
+isearch-backward
+isearch-forward-regexp
+isearch-backward-regexp
+
+re-search-forward
+re-search-backward
+
+search-forward
+search-backward
+word-search-forward
+word-search-backward
+#@nonl
+#@-node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
+#@+node:ekr.20051202102752.8:spellCommandsClass (ok)
+ok:
+
+hide-spell-tab
+open-spell-tab
+spell-find
+spell-change
+spell-change-then-find
+spell-ignore
+#@nonl
+#@-node:ekr.20051202102752.8:spellCommandsClass (ok)
+#@-node:ekr.20051202102337:Minibuffer commands notes
+#@-node:ekr.20051220063217:Docs
 #@-node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20050707081822:Top priorities (4.5 and beyond)
 #@+node:ekr.20050831131028:opml

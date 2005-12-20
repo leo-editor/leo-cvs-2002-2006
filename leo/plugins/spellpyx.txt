@@ -151,6 +151,7 @@ Liechti
 Litt
 Locators
 Loewis
+LtArrow
 Lundh
 Lundh's
 M2C
@@ -234,6 +235,7 @@ Rebecca
 Ries
 RodrigoB's
 Rossum
+RtArrow
 SProvide
 SQL
 STL
@@ -299,6 +301,7 @@ UnicodeError
 Unindent
 UniversalScrolling
 Unmark
+UpArrow
 Url's
 Userland's
 Vadim
@@ -465,6 +468,8 @@ boxclick
 boxclick1
 boxclick2
 br
+braceleft
+braceright
 bringToFront
 browsers'
 bruceb
@@ -1544,6 +1549,7 @@ reST
 readAll
 readDirective
 readEndNode
+readError
 readLinesClass
 read_only
 readline

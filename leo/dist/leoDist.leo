@@ -204,8 +204,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
-<v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
+<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="EKR.20040519082027.28" a="TV"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
@@ -486,7 +486,7 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-4-b1", # No spaces here!
+version="4-4-a5-cvs-snapshot-1", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -678,14 +678,14 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.4 alpha 4                                         December 5, 2005
+<t tx="EKR.20040519090846.9">Leo 4.4 alpha 5, cvs-snapshot 1                         December 19, 2005
 
-Leo 4.4 a4 introduces the 'Newer World Order' for redrawing the screen,
-corrects numerous bugs in the 4.4 code base, and introduces several new features.
+This release is a cvs snapshot release.  It is not the full alpha 5 release.
 
-You should be able to use this version safely. There are no known serious bugs,
-but several minibuffer commands are not ready for prime time. All the major
-features of 4.4 are in place.
+You should be able to use this version safely; there are no known serious bugs.
+
+All the major features of 4.4 are in place, but but several minibuffer commands
+are not ready for prime time. 
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -717,10 +717,6 @@ immediately rather than queuing them for idle time.
 
 - Leo updates the screen immediately rather than waiting for idle time.
 This 'Newer World Order' simplifies the code and improves performance.
-
-Known bugs in Leo 4.4 a4
------------------------
-- Several minibuffer commands do not work.  See the release notes for details.
 
 Coming in later releases of Leo 4.4:
 ------------------------------------
@@ -3512,7 +3508,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-b1.exe"
+OutFile "LeoSetup-4-4-a5-cvs-snapshot-1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3722,7 +3718,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 Delete "$INSTDIR\test\test.leo"
 Delete "$INSTDIR\test\unitTest.leo"
 </t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-alpha-2"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-alpha-5-cvs-snapshot-1"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/

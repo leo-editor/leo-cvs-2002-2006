@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="132" clone_windows="0"/>
 <globals body_outline_ratio="0.539518900344">
-	<global_window_position top="11" left="544" height="873" width="640"/>
+	<global_window_position top="10" left="288" height="873" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -251,8 +251,8 @@
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
 <v t="ekr.20051218202206"><vh>@@shortcuts no bindings</vh></v>
-<v t="ekr.20051218203646" a="TV"><vh>@@shortcuts traditional Leo bindings</vh></v>
-<v t="ekr.20051010112558"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
+<v t="ekr.20051218203646"><vh>@@shortcuts traditional Leo bindings</vh></v>
+<v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1432,7 +1432,7 @@ append-next-kill                        = None      # Control-Alt-w
 append-to-buffer                        = None
 append-to-register                      = None
 auto-complete                           = Ctrl-Tab
-# back-char                             ! text = Ctrl-b # No conflict
+back-char                               ! text = Ctrl-b # No conflict
 back-char                               ! text = LtArrow
 back-char-extend-selection              ! text = Shift-LtArrow
 back-paragraph                          ! text = Alt-braceleft 
@@ -1555,7 +1555,7 @@ focus-to-body                           = None
 focus-to-log                            = None
 focus-to-minibuffer                     = None
 focus-to-tree                           = None
-# forward-char                          ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with find-panel
+forward-char                            ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with Find panel.
 forward-char                            ! text = RtArrow
 forward-char-extend-selection           ! text = Shift-RtArrow
 forward-paragraph                       ! text = Alt-braceright

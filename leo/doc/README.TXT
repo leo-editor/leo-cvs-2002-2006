@@ -1,11 +1,11 @@
-Leo 4.4 alpha 4                                         December 5, 2005
+Leo 4.4 alpha 5, cvs-snapshot 1                         December 19, 2005
 
-Leo 4.4 a4 introduces the 'Newer World Order' for redrawing the screen,
-corrects numerous bugs in the 4.4 code base, and introduces several new features.
+This release is a cvs snapshot release.  It is not the full alpha 5 release.
 
-You should be able to use this version safely. There are no known serious bugs,
-but several minibuffer commands are not ready for prime time. All the major
-features of 4.4 are in place.
+You should be able to use this version safely; there are no known serious bugs.
+
+All the major features of 4.4 are in place, but but several minibuffer commands
+are not ready for prime time. 
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -37,10 +37,6 @@ immediately rather than queuing them for idle time.
 
 - Leo updates the screen immediately rather than waiting for idle time.
 This 'Newer World Order' simplifies the code and improves performance.
-
-Known bugs in Leo 4.4 a4
------------------------
-- Several minibuffer commands do not work.  See the release notes for details.
 
 Coming in later releases of Leo 4.4:
 ------------------------------------
