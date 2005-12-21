@@ -1962,7 +1962,7 @@ class keyHandlerClass:
         if verbose:
             if shortcut and ok:
                 g.es_print('Registered %s bound to %s' % (
-                    commandName,shortcut),color='blue')
+                    commandName,k.prettyPrintKey(shortcut)),color='blue')
             else:
                 g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
