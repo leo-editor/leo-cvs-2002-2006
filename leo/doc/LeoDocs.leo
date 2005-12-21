@@ -292,7 +292,9 @@
 <v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
 <v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140"><vh>Specifying settings</vh></v>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
+<v t="ekr.20051221074605"><vh>@rst-ignore old writing about settings dialog</vh></v>
+</v>
 </v>
 <v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
 <v t="EKR.20040524104904.144"><vh> Checking outlines</vh></v>
@@ -740,7 +742,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
@@ -2307,22 +2309,22 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20051219150602" a="ETV"><vh>4.4 alpha 5, cvs-snapshot 1</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20051219150602"><vh>4.4 alpha 5, cvs-snapshot 1</vh>
 <v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
-<v t="ekr.20051219150602.3" a="E"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
-<v t="ekr.20051219150602.7" a="E"><vh>Fixed problem with getScript in batch mode</vh></v>
-<v t="ekr.20051219150602.10" a="E"><vh>Text box is now selected in goto-line-number command</vh></v>
-<v t="ekr.20051219150602.13" a="E"><vh>Restored headkey  &amp; bodykey hooks</vh></v>
-<v t="ekr.20051219150602.28" a="E"><vh>Fixed ancient bug in read error logic that hung Leo</vh></v>
-<v t="ekr.20051219150602.75" a="E"><vh>Fixed many headline problems</vh></v>
+<v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
+<v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
+<v t="ekr.20051219150602.10"><vh>Text box is now selected in goto-line-number command</vh></v>
+<v t="ekr.20051219150602.13"><vh>Restored headkey  &amp; bodykey hooks</vh></v>
+<v t="ekr.20051219150602.28"><vh>Fixed ancient bug in read error logic that hung Leo</vh></v>
+<v t="ekr.20051219150602.75"><vh>Fixed many headline problems</vh></v>
 <v t="ekr.20051219150602.81"><vh>Fixed problem in reformatParagraph</vh></v>
-<v t="ekr.20051219150602.85" a="E"><vh>Installed LeoUsers patch </vh></v>
+<v t="ekr.20051219150602.85"><vh>Installed LeoUsers patch </vh></v>
 </v>
 <v t="ekr.20051219150602.100"><vh>New features</vh>
 <v t="ekr.20051219150602.101"><vh>created ut.leo, ut.py and ut.bat</vh></v>
 <v t="ekr.20051219150602.102"><vh>Added modes/*.xml to distribution</vh></v>
-<v t="ekr.20051219150602.105" a="E"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
+<v t="ekr.20051219150602.105"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
 <v t="ekr.20051219151926"><vh>Added classic key bindings in leoSettings.leo</vh></v>
 </v>
 </v>
@@ -2989,12 +2991,7 @@ arbitrarily complex user options with ``@settings`` trees. Leo settings outlines
 are, in fact, much more flexible and powerful than any scheme based on
 flat text.
 
-The ``Settings`` command temporarily replaces the outline pane with an outline
-showing all the ``@settings`` trees in effect. The Settings command also
-replaces the body pane with a "settings pane". This settings pane allows you to
-change the settings selected in the outline pane using standard gui widgets. The
-settings pane is dynamically created from nodes in the settings tree; it is as
-extensible as the ``@settings`` tree itself.
+The ``Settings`` command opens the file leoSettings.leo.
 
 Leo stores options in ``@settings`` trees, that is, parts of Leo outlines whose root
 node has the headline ``@settings``. When opening a .leo file, Leo looks for
@@ -3007,12 +3004,6 @@ node has the headline ``@settings``. When opening a .leo file, Leo looks for
 Settings that appear later in the above list override settings found earlier. For
 example, any setting specified in an ``@settings`` tree in the file being loaded
 overrides any setting seen in any ``leoSettings.leo`` file.
-
-The Settings command temporarily replaces the outline pane with an outline
-showing all the ``@settings`` trees in effect. The Settings command also replaces
-the body pane with a "settings dialog" pane. This settings dialog pane allows
-you to change the settings selected in the outline pane using standard gui
-widgets.
 
 The format of nodes in ``@settings`` trees are as follows:
 
@@ -3047,6 +3038,8 @@ set the value of ``name`` to ``val``, with the indicated type.
 - http://www.tcl.tk/man/tcl8.4/TkCmd/colors.htm
 - http://www.tcl.tk/man/tcl8.4/TkLib/GetColor.htm
 
+**Important**: you can use the show-colors minibuffer command to guide you in making these settings.
+
 2. "Complex settings nodes" have headlines of the form::
 
     @&lt;type&gt; description
@@ -3061,6 +3054,8 @@ The body text contains a list of settings for a font.  For example::
     body_text_font_size = None
     body_text_font_slant = None
     body_text_font_weight = None
+
+**Important**: you can use the show-fonts minibuffer command to guide you in making these settings.
 
 - ``@recentfiles``
 
@@ -22516,5 +22511,11 @@ cursor-movement commands exist. These commands should work in any text widget.</
 This node contains the 'classic' Leo key bindings that appeared in Leo 4.3. I
 have proofed these settings carefully, but some errors may remain. Please report
 any errors or any other suggestions for these settings.</t>
+<t tx="ekr.20051221074605">The ``Settings`` command temporarily replaces the outline pane with an outline
+showing all the ``@settings`` trees in effect. The Settings command also
+replaces the body pane with a "settings pane". This settings pane allows you to
+change the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the ``@settings`` tree itself.</t>
 </tnodes>
 </leo_file>
