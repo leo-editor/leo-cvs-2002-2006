@@ -242,7 +242,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="TV"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -252,7 +252,7 @@
 <v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
 <v t="ekr.20051218202206"><vh>@@shortcuts no bindings</vh></v>
 <v t="ekr.20051218203646"><vh>@@shortcuts traditional Leo bindings</vh></v>
-<v t="ekr.20051010112558" a="ETV"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
+<v t="ekr.20051010112558" a="E"><vh>@shortcuts traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1669,9 +1669,9 @@ number-to-register                      = None
 open-compare-window                     = None
 open-find-dialog                        = None  # Deprecated. The find tab is much better.
 open-find-tab                           = Ctrl-f
-open-leoconfig-leo                      = None
-open-leodocs-leo                        = None
-open-leoplugins-leo                     = None
+open-leoDocs-leo                        = None
+open-leoPlugins-leo                     = None
+open-leoSettings-leo                    = None
 open-offline-tutorial                   = None
 open-online-home                        = None
 open-online-tutorial                    = None

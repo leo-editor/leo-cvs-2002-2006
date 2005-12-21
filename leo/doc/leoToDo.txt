@@ -27,18 +27,25 @@ Others
 @nocolor
 #@nonl
 #@+node:ekr.20051219151756:Next
-#@+node:ekr.20051220091742.2:create g.app.gui.isTextWidget
-This will be much better than protecting minibuffer commands with a try/except block.
-#@nonl
-#@-node:ekr.20051220091742.2:create g.app.gui.isTextWidget
-#@+node:ekr.20051220070321:Remove the settings dialog
-#@-node:ekr.20051220070321:Remove the settings dialog
-#@+node:ekr.20051219125559:About Leo doesn't come to front, no matter how it is invoked
-#@-node:ekr.20051219125559:About Leo doesn't come to front, no matter how it is invoked
 #@+node:ekr.20051217175058:Get chapters plugin working
 Use the zip file stuff initially.  We can add support for chapters to Leo's core later.
 #@nonl
 #@-node:ekr.20051217175058:Get chapters plugin working
+#@+node:ekr.20051221101851:Add commands to simulate clicks
+#@+node:ekr.20051221101851.1:Request
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3487424
+By: p_michalczyk
+
+Does anybody know how to double-click headline in outline panel using only keyboard
+(that is how to simulate double-click through keyboard shortcut) ?
+I need it to execute @run nodes from keyboard.
+
+EKR: This can be done with @command nodes, but Leo should have official commands to do this too.
+#@nonl
+#@-node:ekr.20051221101851.1:Request
+#@-node:ekr.20051221101851:Add commands to simulate clicks
 #@+node:ekr.20051017111216:Fix bugs in commands
 #@+node:ekr.20051120180644.1:Rewritten/revised commands
 #@+node:ekr.20031218072017.1830:indentBody
@@ -2733,6 +2740,14 @@ def makeIndexVisible(self,t,index):
 #@nonl
 #@-node:ekr.20031218072017.4098:makeIndexVisible
 #@-node:ekr.20031218072017.4097:Visibility
+#@+node:ekr.20051220144507:isTextWidget
+def isTextWidget (self,w):
+    
+    '''Return True if w is a Text widget suitable for text-oriented commands.'''
+    
+    return w and isinstance(w,Tk.Text) 
+#@nonl
+#@-node:ekr.20051220144507:isTextWidget
 #@-node:ekr.20031218072017.4059:app.gui.Tkinter.utils
 #@+node:ekr.20051126123249:class autoCompleterClass (prototype)
 class autoCompleterCommandsClass (baseEditCommandsClass):
@@ -3391,14 +3406,13 @@ def bringToFront (self):
 #@+node:ekr.20051020120306.27:selectAllFindText
 def selectAllFindText (self,event=None):
     
-    __pychecker__ = '--no-argsused' # the event param must be present.
+    __pychecker__ = '--no-argsused' # event
 
-    try:
-        w = self.frame.focus_get()
+    w = self.frame.focus_get()
+    if g.app.gui.isTextWidget(w):
         g.app.gui.setTextSelection(w,"1.0","end")
-        return "break"
-    except:
-        return None # To keep pychecker happy.
+
+    return "break"
 #@nonl
 #@-node:ekr.20051020120306.27:selectAllFindText
 #@+node:ekr.20051020120306.28:Tkinter wrappers (leoTkinterFind)
