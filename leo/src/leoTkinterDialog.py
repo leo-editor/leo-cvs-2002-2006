@@ -169,9 +169,7 @@ class leoTkinterDialog:
         # New in 4.4 a2: g.app.dialogs is a count of the open dialogs.
         g.app.dialogs += 1
             
-        if 0: # Somehow this interferes with lift().
-            if c:
-                c.frame.widgetWantsFocus(self.focus_widget)
+        c and c.frame.widgetWantsFocus(self.focus_widget)
            
         self.root.wait_window(self.top)
         
