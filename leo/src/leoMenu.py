@@ -1264,12 +1264,13 @@ class leoMenu:
     #@+at 
     #@nonl
     # This code "canonicalizes" both the shortcuts that appear in menus and 
-    # the arguments to bind, mostly ignoring case and the order in which 
-    # special keys are specified in leoConfig.txt.
+    # the
+    # arguments to bind, mostly ignoring case and the order in which special 
+    # keys are
+    # specified.
     # 
-    # For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may 
-    # appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and 
-    # Control+A as the argument to bind.
+    # For example, Ctrl+Shift+a is the same as Shift+Control+A. Each generates
+    # Shift+Ctrl-A in the menu and Control+A as the argument to bind.
     # 
     # Returns (bind_shortcut, menu_shortcut)
     #@-at

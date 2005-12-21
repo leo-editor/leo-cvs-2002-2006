@@ -1854,11 +1854,15 @@ class baseCommands:
     #@+node:ekr.20031218072017.2086:preferences
     def preferences(self):
         
-        '''Replace the body pane by the preferences setters.'''
+        '''Handle the preferences command.'''
         
         c = self
+    
+        if 1: # New in Leo 4.4a5: just open leoSettings.leo.
+            c.openLeoSettings()
         
-        if 1: # New code
+        elif 1: # Previous.
+            # Replace the body pane by the preferences setters.
             leoConfig.settingsController(c,replaceBody=True)
     
         else: # Old code...
