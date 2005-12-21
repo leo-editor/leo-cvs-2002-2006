@@ -721,7 +721,8 @@ class leoTkinterTree (leoFrame.leoTree):
         else:
             s = s or ''
     
-        return max(self.minimum_headline_width,1 + len(s))
+        # The 20 is a kludge: len(s) doesn't work well for uppercase or wide characters.
+        return max(self.minimum_headline_width,20 + len(s))
         
     def widthInPixels(self,s):
     
