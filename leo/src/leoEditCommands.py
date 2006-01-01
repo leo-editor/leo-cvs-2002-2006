@@ -2558,7 +2558,7 @@ class editCommandsClass (baseEditCommandsClass):
         in a way that can be described by a Tk Text expression.'''
         
         c = self.c ; w = event.widget
-        if not g.app.gui.isTextWidget(): return
+        if not g.app.gui.isTextWidget(w): return
     
         c.frame.widgetWantsFocus(w)
         i,j = g.app.gui.getTextSelection(w,sort=True)
