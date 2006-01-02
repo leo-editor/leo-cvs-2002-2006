@@ -1603,6 +1603,12 @@ class nullTree (leoTree):
     #@-node:ekr.20031218072017.2235:oops
     #@+node:ekr.20031218072017.2236:Dummy operations...
     #@+node:ekr.20031218072017.2237:Drawing
+    def beginUpdate (self):
+        pass
+        
+    def endUpdate (self,flag):
+        pass
+    
     def enableDrawingAfterException (self):
         pass
     
