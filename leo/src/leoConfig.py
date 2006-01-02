@@ -40,7 +40,7 @@ class parserBaseClass:
         'float','path','ratio','shortcut','string','strings']
     
     control_types = [
-        'font','if','ifgui','ifplatform','ignore','page',
+        'font','if','ifgui','ifplatform','ignore','mode','page',
         'settings','shortcuts']
     
     # Keys are settings names, values are (type,value) tuples.
@@ -71,6 +71,7 @@ class parserBaseClass:
             'int':          self.doInt,
             'ints':         self.doInts,
             'float':        self.doFloat,
+            'mode':         self.doMode, # New in 4.4b1.
             'path':         self.doPath,
             'page':         self.doPage,
             'ratio':        self.doRatio,
@@ -81,6 +82,22 @@ class parserBaseClass:
         }
     #@nonl
     #@-node:ekr.20041119204700: ctor (parserBaseClass)
+    #@+node:ekr.20060102103625:createModeCommand
+    def createModeCommand (self,name,d):
+        
+        c = self.c ; k = c.keyHandler
+        commandName = 'enter-' + name
+        
+        b = d.get(commandName)
+        g.trace(commandName,b)
+        
+        if b:
+            shortcut = b.shortcut or None
+            pane = b.pane or 'all'
+            func = None
+            k.registerCommand (commandName,shortcut,func,pane,verbose=True)
+    #@nonl
+    #@-node:ekr.20060102103625:createModeCommand
     #@+node:ekr.20041120103012:error
     def error (self,s):
     
@@ -239,6 +256,37 @@ class parserBaseClass:
             self.set(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041217132253:doInts
+    #@+node:ekr.20060102103625.1:doMode
+    def doMode(self,p,kind,name,val):
+        
+        '''Parse an @mode node and create the enter-<name>-mode command.'''
+        
+        c = self.c ; k = c.keyHandler
+        
+        # Compute the mode name.
+        name = name.strip().lower()
+        if name.endswith('mode'):
+            name = name[:-4].strip()
+        if name.endswith('-'):
+            name = name[:-1]
+        name = name + '-mode'
+        g.trace(name)
+        
+        # Call doShortcuts with a temp dict.
+        d = self.shortcutsDict
+        self.shortcutsDict = {}
+        self.doShortcuts(p,kind,name,val)
+        d2 = self.shortcutsDict
+        self.shortcutsDict = d
+        
+        g.trace(d2.keys()) # g.printDict(d2))
+        
+        if k.inputModesDict.get(name):
+            g.trace('Ignoring duplicate @mode setting: %s' % name)
+        else:
+             self.createModeCommand(name,d2)
+    #@nonl
+    #@-node:ekr.20060102103625.1:doMode
     #@+node:ekr.20041120104215.2:doPage
     def doPage(self,p,kind,name,val):
     
@@ -267,37 +315,28 @@ class parserBaseClass:
         self.setShortcut(name,val)
     #@nonl
     #@-node:ekr.20041120113848:doShortcut
-    #@+node:ekr.20041120105609:doShortcuts (ParserBaseClass)
+    #@+node:ekr.20041120105609:doShortcuts
     def doShortcuts(self,p,kind,name,val):
         
         __pychecker__ = '--no-argsused' # kind,val not used.
         
-        d = self.shortcutsDict ### {} # To detect duplicates.
+        d = self.shortcutsDict # To detect duplicates.
         s = p.bodyString()
         lines = g.splitLines(s)
         for line in lines:
             line = line.strip()
             if line and not g.match(line,0,'#'):
                 name,bunch = self.parseShortcutLine(line)
-                
                 # g.trace(name,bunch)
                 if bunch is not None:
-                    if 1: # New in 4.4a5:
-                        bunchList = d.get(name,[])
-                        bunchList.append(bunch)
-                        d [name] = bunchList
-                        self.set(p,"shortcut",name,bunchList)
-                        self.setShortcut(name,bunchList)
-                    else: # The old way.
-                        if d.get(name):
-                            g.es('ignoring duplicate @shortcuts entry: %s' % (
-                                name), color='blue')
-                        else:
-                            d [name] = bunch
-                            self.set(p,"shortcut",name,bunch)
-                            self.setShortcut(name,bunch)
+                    # New in 4.4a5:
+                    bunchList = d.get(name,[])
+                    bunchList.append(bunch)
+                    d [name] = bunchList
+                    self.set(p,"shortcut",name,bunchList)
+                    self.setShortcut(name,bunchList)
     #@nonl
-    #@-node:ekr.20041120105609:doShortcuts (ParserBaseClass)
+    #@-node:ekr.20041120105609:doShortcuts
     #@+node:ekr.20041217132028:doString
     def doString (self,p,kind,name,val):
         

@@ -19,7 +19,7 @@ import string
 #@nl
 
 #@+others
-#@+node:ekr.20051006121222:inputMode classes
+#@+node:ekr.20051006121222:inputMode classes (delete???)
 #@<< baseInputMode class >>
 #@+node:ekr.20051006121222.8: << baseInputMode class >>
 class baseInputMode:
@@ -443,7 +443,7 @@ class textInputMode (baseInputMode):
 #@-node:ekr.20051006121222.28:class textInputMode (baseInputMode):
 #@-others
 #@nonl
-#@-node:ekr.20051006121222:inputMode classes
+#@-node:ekr.20051006121222:inputMode classes (delete???)
 #@+node:ekr.20051006121539:class keyHandlerClass
 class keyHandlerClass:
     
@@ -508,6 +508,9 @@ class keyHandlerClass:
         self.arg = '' # The value returned by k.getArg.
         self.commandName = None
         self.funcReturn = None # For k.simulateCommand
+        self.inputModeBindings = {}
+        self.inputModesDict = {}
+            # Keys are mode names, values are bindings dicts.
         self.inverseCommandsDict = {}
             # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
         self.leoCallbackDict = {}
@@ -517,7 +520,7 @@ class keyHandlerClass:
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
         self.state = g.bunch(kind=None,n=None,handler=None)
-        
+        #@nonl
         #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
         #@nl
         #@    << define internal ivars >>
@@ -1936,7 +1939,7 @@ class keyHandlerClass:
         c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
-    #@+node:ekr.20051015110547:registerCommand
+    #@+node:ekr.20051015110547:k.registerCommand
     def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
         
         '''Make the function available as a minibuffer command,
@@ -1966,7 +1969,7 @@ class keyHandlerClass:
             else:
                 g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
-    #@-node:ekr.20051015110547:registerCommand
+    #@-node:ekr.20051015110547:k.registerCommand
     #@+node:ekr.20051025150224:onIdleTime
     def onIdleTime (self):
         
