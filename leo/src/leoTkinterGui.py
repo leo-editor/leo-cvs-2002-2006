@@ -435,10 +435,12 @@ class tkinterGui(leoGui.leoGui):
                 w2 = c.frame.outerFrame.focus_get()
                 w2 and g.trace(g.app.gui.widget_name(name2),c)
     
-            if 1:
+            if 0:
                 # A fix to the cursed problems with Pmw.Notebook.
                 # I am not happy with this, but it seems preferable to trying to figure out
                 # all the places where the code must call update()
+                
+                # New in 4.4b1: the place to call update is *after* log pane operations.
                 w.update() 
     
             w.focus_set()

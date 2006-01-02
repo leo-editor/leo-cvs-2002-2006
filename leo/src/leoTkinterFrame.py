@@ -3399,25 +3399,30 @@ class leoTkinterLog (leoFrame.leoLog):
         #@-node:ekr.20051018072306:<< Create the tab's text widget >>
         #@nl
         self.setTabBindings(tabName)
+        
+        # New in 4.4b1: call update explicitly.
+        textWidget and textWidget.update()
     #@nonl
     #@-node:ekr.20051024173701:createTab
     #@+node:ekr.20051018102027:deleteTab
     def deleteTab (self,tabName):
         
         if tabName == 'Log':
-            return
+            pass
     
-        if tabName in ('Find','Spell'):
+        elif tabName in ('Find','Spell'):
             self.selectTab('Log')
-            return
         
-        if tabName in self.nb.pagenames():
+        elif tabName in self.nb.pagenames():
             self.nb.delete(tabName)
             self.colorTagsDict [tabName] = []
             self.textDict [tabName] = None
             self.frameDict [tabName] = None
             self.tabName = None
             self.selectTab('Log')
+            
+        # New in Leo 4.4b1.
+        self.c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051018102027:deleteTab
     #@+node:ekr.20051027114433:getSelectedTab
@@ -3426,23 +3431,31 @@ class leoTkinterLog (leoFrame.leoLog):
         return self.tabName
     #@nonl
     #@-node:ekr.20051027114433:getSelectedTab
-    #@+node:ekr.20051018061932.1:lower/raiseTab
+    #@+node:ekr.20051018061932.1:lower/raiseTab (calls update)
     def lowerTab (self,tabName):
         
         if tabName:
             b = self.nb.tab(tabName) # b is a Tk.Button.
             b.config(bg='grey80')
-        
+            
+            # New in 4.4b1: call update explicitly.
+            logCtrl = self.textDict.get(tabName)
+            logCtrl and logCtrl.update()
+            self.c.frame.bodyWantsFocus()
+    
     def raiseTab (self,tabName):
     
         if tabName:
             b = self.nb.tab(tabName) # b is a Tk.Button.
             b.config(bg='LightSteelBlue1')
+            
+            # New in 4.4b1: call update explicitly.
             logCtrl = self.textDict.get(tabName)
             if logCtrl:
+                logCtrl.update()
                 self.c.frame.widgetWantsFocus(logCtrl)
     #@nonl
-    #@-node:ekr.20051018061932.1:lower/raiseTab
+    #@-node:ekr.20051018061932.1:lower/raiseTab (calls update)
     #@+node:ekr.20051019170806:renameTab
     def renameTab (self,oldName,newName):
         
@@ -3471,6 +3484,10 @@ class leoTkinterLog (leoFrame.leoLog):
         self.logCtrl = self.textDict.get(tabName)
         # c.frame.widgetWantsFocus(self.logCtrl)
         self.tabFrame = self.frameDict.get(tabName)
+        
+        # New in 4.4b1: call update *after* creating the tab.
+        tabFrame and tabFrame.update()
+    
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:selectTab

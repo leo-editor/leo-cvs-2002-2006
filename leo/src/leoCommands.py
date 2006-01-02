@@ -5403,6 +5403,8 @@ class baseCommands:
     #@+node:ekr.20051103114520.1:c.setFocusHelper
     def setFocusHelper (self):
         
+        return ### Try to do without this entirely.
+        
         c = self
         
         if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
