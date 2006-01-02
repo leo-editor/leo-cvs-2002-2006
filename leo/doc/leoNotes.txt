@@ -5107,6 +5107,34 @@ def doShortcuts(self,p,kind,name,val):
 #@-node:ekr.20041225063637.100:kind handlers (settingsDialogParserClass)
 #@-node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
 #@-node:ekr.20051221073339:Settings dialog classes
+#@+node:ekr.20051025150224:k.onIdleTime
+def onIdleTime (self):
+    
+    '''Set the focus to the body pane if the focus is in limbo.
+    
+    We must allow dialogs and the outer window frame to retain focus.'''
+    
+    k = self ; c = k.c
+    if g.app.quitting: return # Essential.
+    
+    w = g.app.gui.get_focus(c.frame)
+    if w:
+        # Allow clicks in enclosing window frame or in dialogs.
+        name = hasattr(w,'_name') and w._name or ''
+        ok = (
+            name and name[0] in string.letters # A known Leo frame.
+            or w == c.frame.top # The top of the Leo window
+            or g.app.dialogs > 0 # A dialog.
+            or isinstance(w,Tk.Text)
+            or isinstance(w,Tk.Entry)
+            # or isinstance(w,Tk.Button)
+        )
+        if not ok:
+            # Not a name created by Leo.
+             g.trace(self.idleCount,name,w)
+             c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051025150224:k.onIdleTime
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

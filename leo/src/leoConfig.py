@@ -83,19 +83,17 @@ class parserBaseClass:
     #@nonl
     #@-node:ekr.20041119204700: ctor (parserBaseClass)
     #@+node:ekr.20060102103625:createModeCommand
-    def createModeCommand (self,name,d):
-        
+    def createModeCommand (self,name):
+    
         c = self.c ; k = c.keyHandler
         commandName = 'enter-' + name
-        
-        b = d.get(commandName)
-        g.trace(commandName,b)
-        
-        if b:
-            shortcut = b.shortcut or None
-            pane = b.pane or 'all'
-            func = None
-            k.registerCommand (commandName,shortcut,func,pane,verbose=True)
+    
+        def enterModeCallback (name=name):
+            k.enterInputMode(name)
+    
+        # Create only the command.  Shortcuts can be bound at any time.
+        k.registerCommand(commandName,shortcut=None,
+            func=enterModeCallback,pane=None,verbose=True)
     #@nonl
     #@-node:ekr.20060102103625:createModeCommand
     #@+node:ekr.20041120103012:error
@@ -270,22 +268,28 @@ class parserBaseClass:
         if name.endswith('-'):
             name = name[:-1]
         name = name + '-mode'
-        g.trace(name)
+        # g.trace(name)
+        
+        # Check for duplicate mode names.
+        if k.inputModesDict.get(name):
+            g.trace('Ignoring duplicate @mode setting: %s' % name)
+            return
         
         # Call doShortcuts with a temp dict.
         d = self.shortcutsDict
         self.shortcutsDict = {}
         self.doShortcuts(p,kind,name,val)
+        
+        # Remember the mode dict.
         d2 = self.shortcutsDict
+        # g.trace(d2.keys())
+        k.inputModesDict [name] = d2
+        
+        # Restore the global dict.
         self.shortcutsDict = d
         
-        g.trace(d2.keys()) # g.printDict(d2))
-        
-        if k.inputModesDict.get(name):
-            g.trace('Ignoring duplicate @mode setting: %s' % name)
-        else:
-             self.createModeCommand(name,d2)
-    #@nonl
+        # Create the command, but not any bindings to it.
+        self.createModeCommand(name)
     #@-node:ekr.20060102103625.1:doMode
     #@+node:ekr.20041120104215.2:doPage
     def doPage(self,p,kind,name,val):

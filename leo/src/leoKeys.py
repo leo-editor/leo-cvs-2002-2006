@@ -1970,34 +1970,37 @@ class keyHandlerClass:
                 g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
     #@-node:ekr.20051015110547:k.registerCommand
-    #@+node:ekr.20051025150224:onIdleTime
-    def onIdleTime (self):
+    #@+node:ekr.20060102135349:k.addModeBindings
+    def addModeBindings (self,d):
         
-        '''Set the focus to the body pane if the focus is in limbo.
-        
-        We must allow dialogs and the outer window frame to retain focus.'''
-        
-        k = self ; c = k.c
-        if g.app.quitting: return # Essential.
-        
-        w = g.app.gui.get_focus(c.frame)
-        if w:
-            # Allow clicks in enclosing window frame or in dialogs.
-            name = hasattr(w,'_name') and w._name or ''
-            ok = (
-                name and name[0] in string.letters # A known Leo frame.
-                or w == c.frame.top # The top of the Leo window
-                or g.app.dialogs > 0 # A dialog.
-                or isinstance(w,Tk.Text)
-                or isinstance(w,Tk.Entry)
-                # or isinstance(w,Tk.Button)
-            )
-            if not ok:
-                # Not a name created by Leo.
-                 g.trace(self.idleCount,name,w)
-                 c.frame.bodyWantsFocus()
+        g.trace(d)
     #@nonl
-    #@-node:ekr.20051025150224:onIdleTime
+    #@-node:ekr.20060102135349:k.addModeBindings
+    #@+node:ekr.20060102135349.1:k.deleteModeBindings
+    def deleteModeBindings (self,d):
+        
+        g.trace(d)
+    #@nonl
+    #@-node:ekr.20060102135349.1:k.deleteModeBindings
+    #@+node:ekr.20060102135349.2:k.enterInputMode
+    def enterInputMode (self,name):
+        
+        k = self
+        
+        d = k.inputModesDict.get(name)
+        if d:
+            
+            # Delete previous node bindings.
+            d2 = k.inputModeBindings
+            if d2:
+                k.deleteModeBindings(d2)
+                k.inputModeBindings = {}
+                
+            # Add new node bindings.
+            k.addModeBindings(d)
+            k.inputModeBindings = d
+    #@nonl
+    #@-node:ekr.20060102135349.2:k.enterInputMode
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
     #@+at 

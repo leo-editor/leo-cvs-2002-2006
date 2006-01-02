@@ -3431,7 +3431,7 @@ class leoTkinterLog (leoFrame.leoLog):
         return self.tabName
     #@nonl
     #@-node:ekr.20051027114433:getSelectedTab
-    #@+node:ekr.20051018061932.1:lower/raiseTab (calls update)
+    #@+node:ekr.20051018061932.1:lower/raiseTab
     def lowerTab (self,tabName):
         
         if tabName:
@@ -3455,7 +3455,7 @@ class leoTkinterLog (leoFrame.leoLog):
                 logCtrl.update()
                 self.c.frame.widgetWantsFocus(logCtrl)
     #@nonl
-    #@-node:ekr.20051018061932.1:lower/raiseTab (calls update)
+    #@-node:ekr.20051018061932.1:lower/raiseTab
     #@+node:ekr.20051019170806:renameTab
     def renameTab (self,oldName,newName):
         

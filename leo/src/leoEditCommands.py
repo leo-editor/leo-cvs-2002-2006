@@ -6503,7 +6503,7 @@ class spellTab(leoFind.leoFind):
         self.listBox.bind("<Map>",self.onMap)
     #@nonl
     #@-node:ekr.20051025071455.22:createSpellTab
-    #@+node:ekr.20051025120920:createBindings (spellTab)
+    #@+node:ekr.20051025120920:createBindings
     def createBindings (self):
         
         c = self.c ; k = c.keyHandler
@@ -6538,7 +6538,7 @@ class spellTab(leoFind.leoFind):
                         
                     
     #@nonl
-    #@-node:ekr.20051025120920:createBindings (spellTab)
+    #@-node:ekr.20051025120920:createBindings
     #@+node:ekr.20051025071455.16:readDictionary
     def readDictionary (self,fileName):
     

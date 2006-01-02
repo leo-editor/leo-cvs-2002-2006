@@ -9,8 +9,8 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
-<v t="ekr.20051020124457" a="E"><vh>Disabled buttons</vh>
+<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
 <v t="ekr.20050704170739"><vh>@@button Ipython</vh></v>
@@ -21,7 +21,7 @@
 <v t="ekr.20050821081021.1" a="M"><vh>moveLinesDown</vh></v>
 </v>
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
-<v t="ekr.20051221091553" a="ETV"><vh>@command dbl-click @key = Alt-Shift-C</vh></v>
+<v t="ekr.20051221091553" a="E"><vh>@command dbl-click @key = Alt-Shift-C</vh></v>
 </v>
 <v t="ekr.20041001194357"><vh>@@button Unit Test</vh></v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
@@ -31,7 +31,12 @@
 <v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
 </v>
-<v t="ekr.20051219184032"><vh>@button run timer</vh></v>
+<v t="ekr.20051219184032"><vh>@@button run timer</vh></v>
+<v t="ekr.20051121143509"><vh>@@button shorten-lines</vh>
+<v t="ekr.20051124065932"><vh>to do</vh></v>
+<v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
+<v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
+</v>
 </v>
 <v t="ekr.20051104081824"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
@@ -191,11 +196,6 @@
 </v>
 </v>
 <v t="ekr.20051214100048"><vh>Recent tests</vh>
-<v t="ekr.20051121143509"><vh>@button shorten-lines</vh>
-<v t="ekr.20051124065932"><vh>to do</vh></v>
-<v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
-<v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
-</v>
 <v t="ekr.20051121143951"><vh>Test of long lines</vh>
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
