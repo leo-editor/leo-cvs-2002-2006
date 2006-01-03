@@ -1152,7 +1152,6 @@ class keyHandlerClass:
         if k.inState():
             if not special: # Don't pass these on.
                 k.callStateFunction(event) # Calls end-command.
-                c.setFocusHelper()
             return 'break'
     
         # if k.keystrokeFunctionDict.has_key(stroke):
@@ -1177,11 +1176,9 @@ class keyHandlerClass:
             val = func(event)
             k.funcReturn = k.funcReturn or val # For unit tests.
             k.endCommand(event,commandName)
-            c.setFocusHelper()
             return 'break'
         else:
             val = k.handleDefaultChar(event)
-            c.setFocusHelper()
             return val
     #@nonl
     #@+node:ekr.20050923172809.1:callStateFunction

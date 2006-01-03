@@ -1633,7 +1633,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             g.app.setLog(self.log,"OnActivateLeoEvent")
-            c.setFocusHelper() # Try to guess the best possible focus.
         except:
             g.es_event_exception("activate Leo")
     

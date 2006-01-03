@@ -5390,7 +5390,6 @@ class baseCommands:
     
         c.frame.tree.redraw_now()
         c.frame.top.update_idletasks()
-        c.setFocusHelper()
         
         if c.frame.requestRecolorFlag:
             c.frame.requestRecolorFlag = False
@@ -5400,53 +5399,6 @@ class baseCommands:
     redraw = force_redraw = redraw_now
     #@nonl
     #@-node:ekr.20031218072017.2954:c.redraw_now
-    #@+node:ekr.20051103114520.1:c.setFocusHelper
-    def setFocusHelper (self):
-        
-        return ### Try to do without this entirely.
-        
-        c = self
-        
-        if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
-            return # nullFrame's do not have a top frame.
-            
-        frame = c.frame
-    
-        if frame.wantedWidget:
-            w = frame.wantedWidget
-            name = g.app.gui.widget_name(w)
-            if 0:
-                w2 = g.app.gui.get_focus(frame)
-                name2 = g.app.gui.widget_name(w2)
-                if name != name2: g.trace(name2,'->',name,g.callers())
-            # It is possible that w no longer exists.
-            try:
-                g.app.gui.set_focus(c,w)
-            except Exception:
-                g.app.gui.set_focus(c,frame.body.bodyCtrl)
-            # Essential: otherwise only calls to xWantsWidget would be honored.
-            frame.wantedWidget = None
-        else:
-            # Force the widget to some standard place.
-            w = g.app.gui.get_focus(frame)
-            if not w: return
-            # Allow clicks in enclosing window frame or in dialogs.
-            name = g.app.gui.widget_name(w)
-            if (
-                name and name[0] in string.letters # A known Leo frame.
-                or w == frame.top # The top of the Leo window
-                or g.app.dialogs > 0 # A dialog.
-                or isinstance(w,Tk.Text)
-                or isinstance(w,Tk.Entry)
-            ):
-                #g.trace('ok',g.app.gui.widget_name(w))
-                #g.app.gui.set_focus(c,w)
-                return
-            # Not a name created by Leo.
-            g.trace('setting default focus',name)
-            g.app.gui.set_focus(c,frame.body.bodyCtrl)
-    #@nonl
-    #@-node:ekr.20051103114520.1:c.setFocusHelper
     #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
     #@+node:ekr.20031218072017.2955:Enabling Menu Items
     #@+node:ekr.20040323172420:Slow routines: no longer used
