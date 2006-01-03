@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="8647" clone_windows="0"/>
-<globals body_outline_ratio="0.552688172043">
-	<global_window_position top="10" left="378" height="930" width="761"/>
+<globals body_outline_ratio="0.370967741935">
+	<global_window_position top="10" left="370" height="930" width="756"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,7 +14,8 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20051006092617.1,ekr.20050920084036.189,ekr.20031218072017.2373,ekr.20031218072017.2950,ekr.20051103114520.1,ekr.20040803072955.128,ekr.20051103114520.1,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051103114520.1,ekr.20050120092028,ekr.20031218072017.2950,ekr.20051103114520.1,ekr.20031218072017.2373,ekr.20031218072017.2950,ekr.20051103114520.1,ekr.20051125080855,ekr.20051026092433.1,ekr.20031218072017.2950,ekr.20051103114520.1,ekr.20051103114520.1,ekr.20051103114520.1,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051103114520.1,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20051103114520.1,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051103114520.1,ekr.20040803072955.128,ekr.20051103114520.1,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20031218072017.2373,ekr.20041119204700.1,ekr.20031218072017.2052,ekr.20051103114520.1,ekr.20051103114520.1,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051103114520.1,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20051125080855,ekr.20031218072017.1810,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20040803072955.128,ekr.20031218072017.2950,ekr.20051103114520.1,ekr.20031218072017.2373,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051125080855,ekr.20051026092433.1,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051125080855,ekr.20051026092433.1,ekr.20051125080855,ekr.20050120092028,ekr.20050920085536.62,ekr.20051103114520.1,ekr.20031218072017.2373,ekr.20040803072955.128,ekr.20051125080855,ekr.20031218072017.1810,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20040803072955.128,ekr.20031218072017.2950,ekr.20051103114520.1,ekr.20031218072017.2373,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051125080855,ekr.20051026092433.1,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051125080855,ekr.20051026092433.1,ekr.20051125080855,ekr.20050120092028,ekr.20050920085536.62,ekr.20051103114520.1,ekr.20031218072017.2373,ekr.20040803072955.128,ekr.20051023181449,ekr.20051025120920,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20051006092617.1,ekr.20050920084036.189,ekr.20031218072017.2373,ekr.20031218072017.2950,ekr.20040803072955.128,ekr.20050120092028,ekr.20031218072017.2373,ekr.20050120092028,ekr.20031218072017.2950,ekr.20031218072017.2373,ekr.20031218072017.2950,ekr.20051125080855,ekr.20051026092433.1,ekr.20031218072017.2950,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20050120092028,ekr.20031218072017.2373,ekr.20040803072955.128,ekr.20041119204700.1,ekr.20031218072017.2052,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20051125080855,ekr.20031218072017.1810,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20040803072955.128,ekr.20031218072017.2950,ekr.20031218072017.2373,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051125080855,ekr.20051026092433.1,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051125080855,ekr.20051026092433.1,ekr.20051125080855,ekr.20040803072955.128,ekr.20051125080855,ekr.20031218072017.1810,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20040803072955.128,ekr.20031218072017.2950,ekr.20031218072017.2373,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051125080855,ekr.20051026092433.1,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051125080855,ekr.20051026092433.1,ekr.20051125080855,ekr.20040803072955.128,ekr.20051023181449,ekr.20051025120920,"
+expanded="ekr.20050920085536.65,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20050831131028"><vh>opml</vh>
@@ -25,7 +26,7 @@ marks="ekr.20051006092617.1,ekr.20050920084036.189,ekr.20031218072017.2373,ekr.2
 <v t="ekr.20050915062404"><vh>My post</vh></v>
 </v>
 <v t="ekr.20040117181936"
-marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.20051023181449,ekr.20051025120920,ekr.20031218072017.1810,ekr.20031218072017.2373,ekr.20051127105431,ekr.20051126123149,ekr.20051127065601,ekr.20051127105102,ekr.20051127070018,ekr.20051023181449,ekr.20051020120306.27,ekr.20051025071455,ekr.20051025120920,ekr.20051025071455,ekr.20051025120920,ekr.20031218072017.1810,ekr.20051210111121.1,ekr.20051025071455,ekr.20051025120920,ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+marks="ekr.20031218072017.1810,ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,ekr.20051023181449,ekr.20051025120920,ekr.20031218072017.1810,ekr.20031218072017.2373,ekr.20051127105431,ekr.20051126123149,ekr.20051127065601,ekr.20051127105102,ekr.20051127070018,ekr.20051023181449,ekr.20051020120306.27,ekr.20051210111121.1,ekr.20051025071455,ekr.20051025120920,ekr.20051025071455,ekr.20051025120920,ekr.20031218072017.1810,ekr.20051210111121.1,ekr.20051025071455,ekr.20051025120920,ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -188,7 +189,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
 <v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
 <v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
@@ -339,13 +339,11 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 </v>
 </v>
 <v t="ekr.20051022152427"><vh>Focus</vh>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 <v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
 <v t="ekr.20050120092028" a="M"><vh>xWantsFocus (tkFrame)</vh></v>
 <v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
 </v>
 <v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051104100739"><vh>Idle Time</vh>
 <v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
@@ -378,7 +376,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
 <v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051105100804"><vh>keyHandler</vh>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
@@ -468,7 +465,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
 <v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
 <v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
@@ -536,7 +532,7 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20051122133732"><vh> Report</vh></v>
 <v t="ekr.20051023182326"><vh>copyBindingsToWidget &amp; textBindingsRedirectionCallback</vh></v>
 <v t="ekr.20051001051355"><vh>Dispatching...</vh>
-<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.65" a="E"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
 <v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
 <v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
@@ -598,7 +594,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
 <v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
 <v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
@@ -704,7 +699,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 </v>
 </v>
 <v t="ekr.20051111065016"><vh>(Moving focus out of limbo)</vh>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
 <v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
@@ -712,13 +706,11 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
 </v>
 <v t="ekr.20051022152427"><vh>Focus</vh>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 <v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
 <v t="ekr.20050120092028" a="M"><vh>xWantsFocus (tkFrame)</vh></v>
 <v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
 </v>
 <v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051113080509"><vh>Find methods</vh>
 <v t="ekr.20031218072017.3089"><vh>restore</vh></v>
@@ -785,13 +777,11 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 </v>
 <v t="ekr.20051113061206"><vh>(Added Clone-find)</vh>
 <v t="ekr.20051022152427"><vh>Focus</vh>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 <v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
 <v t="ekr.20050120092028" a="M"><vh>xWantsFocus (tkFrame)</vh></v>
 <v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
 </v>
 <v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051113061206.1"><vh>Patch</vh></v>
 <v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
@@ -888,68 +878,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20051121103830"><vh>Fixed bugs in rst3</vh>
 <v t="ekr.20051121103830.1"><vh>Report</vh></v>
 <v t="ekr.20051121103830.2"><vh>Report2</vh></v>
-</v>
-<v t="ekr.20051122084756"><vh>(Eliminated w.update in g.app.gui.set_focus)</vh>
-<v t="ekr.20051122094909"><vh>Notes</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
-<v t="ekr.20031218072017.4039"><vh>class leoTkinterLog</vh>
-<v t="ekr.20051016095907"><vh>tkLog Birth</vh>
-<v t="ekr.20031218072017.4040"><vh>tkLog.__init__</vh></v>
-<v t="ekr.20031218072017.4042"><vh>tkLog.createControl</vh></v>
-<v t="ekr.20051016103459"><vh>tkLog.createTextWidget</vh></v>
-<v t="ekr.20051019134106.1"><vh>tkLog.makeTabMenu</vh></v>
-</v>
-<v t="ekr.20051016095907.1"><vh>Config &amp; get/saveState</vh>
-<v t="ekr.20031218072017.4041"><vh>tkLog.configureBorder &amp; configureFont</vh></v>
-<v t="ekr.20031218072017.4043"><vh>tkLog.getFontConfig</vh></v>
-<v t="ekr.20041222043017"><vh>tkLog.restoreAllState</vh></v>
-<v t="ekr.20041222043017.1"><vh>tkLog.saveAllState</vh></v>
-<v t="ekr.20041217135735.2"><vh>tkLog.setColorFromConfig</vh></v>
-<v t="ekr.20031218072017.4046"><vh>tkLog.setFontFromConfig</vh></v>
-</v>
-<v t="ekr.20051016095907.2"><vh>Focus &amp; update (tkLog)</vh>
-<v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
-<v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
-<v t="ekr.20050208133438"><vh>forceLogUpdate</vh></v>
-</v>
-<v t="ekr.20051016101927"><vh>put &amp; putnl (tkLog)</vh>
-<v t="ekr.20031218072017.1473"><vh>put</vh>
-<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
-<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051016101927.1"><vh>putnl</vh></v>
-</v>
-<v t="ekr.20051018061932"><vh>Tab (TkLog)</vh>
-<v t="ekr.20051017212057"><vh>clearTab</vh></v>
-<v t="ekr.20051024173701" a="M"><vh>createTab</vh>
-<v t="ekr.20051020075416"><vh>&lt;&lt; bind a tab-specific pop-up menu to the tab &gt;&gt;</vh></v>
-<v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051018102027" a="M"><vh>deleteTab</vh></v>
-<v t="ekr.20051027114433"><vh>getSelectedTab</vh></v>
-<v t="ekr.20051018061932.1" a="M"><vh>lower/raiseTab</vh></v>
-<v t="ekr.20051019170806"><vh>renameTab</vh></v>
-<v t="ekr.20051016101724.1" a="M"><vh>selectTab</vh></v>
-<v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
-<v t="ekr.20051019134106"><vh>Tab menu callbacks &amp; helpers</vh>
-<v t="ekr.20051019134422"><vh>onRightClick &amp; onClick</vh></v>
-<v t="ekr.20051019140004.1"><vh>newTabFromMenu</vh></v>
-<v t="ekr.20051019165401"><vh>renameTabFromMenu</vh></v>
-<v t="ekr.20051019172811"><vh>getTabName</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20031218072017.2176"><vh>f.finishCreate &amp; helpers</vh>
-<v t="ekr.20051009044751"><vh>createOuterFrames</vh></v>
-<v t="ekr.20051009044920"><vh>createIconBarComponents</vh></v>
-<v t="ekr.20051009045208"><vh>createSplitterComponents</vh></v>
-<v t="ekr.20051009045300"><vh>createStatusLineComponents</vh></v>
-<v t="ekr.20051009045404"><vh>createFirstTreeNode</vh></v>
-<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
-<v t="ekr.20051121092320"><vh>f.enableTclTraces</vh></v>
-</v>
-<v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-<v t="ekr.20050920085536.44"><vh>doTabCompletion</vh></v>
 </v>
 <v t="ekr.20051122132238"><vh>Removed call to w.update in g.app.gui.set_focus</vh></v>
 <v t="ekr.20051122104941"><vh>Improved formatting of shortcuts in print-commands and print-bindings</vh>
@@ -1053,9 +981,8 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20051204075330"><vh>Report</vh></v>
 </v>
 </v>
-<v t="ekr.20051206111317"><vh>4.4b1 projects</vh>
+<v t="ekr.20051206111317"><vh>4.4a5 projects</vh>
 <v t="ekr.20051111065016"><vh>(Moving focus out of limbo)</vh>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
 <v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
@@ -1063,13 +990,11 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
 </v>
 <v t="ekr.20051022152427"><vh>Focus</vh>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 <v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
 <v t="ekr.20050120092028" a="M"><vh>xWantsFocus (tkFrame)</vh></v>
 <v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
 </v>
 <v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20051113080509"><vh>Find methods</vh>
 <v t="ekr.20031218072017.3089"><vh>restore</vh></v>
@@ -1359,7 +1284,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
 <v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
 <v t="ekr.20051216155728"><vh>tree.begin/endUpdate</vh></v>
@@ -1685,17 +1609,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20051026092433"><vh>updateTab</vh></v>
 </v>
 <v t="ekr.20051214113546.1"><vh>k.onTextWidgetKey &amp; insertString</vh></v>
-</v>
-<v t="ekr.20051215111121"><vh>(fixed focus problems, again)</vh>
-<v t="ekr.20050120092028" a="M"><vh>xWantsFocus (tkFrame)</vh></v>
-<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
-<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
-</v>
-<v t="ekr.20050920085536.62" a="M"><vh>getArg</vh>
-<v t="ekr.20050928092516"><vh>&lt;&lt; init altX vars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
-<v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
 </v>
 <v t="ekr.20051217074031"><vh>(Moved headline coloring code out of endEditLabel and into select)</vh>
 <v t="ekr.20051217082130"><vh>What I did</vh></v>
@@ -1947,7 +1860,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
 <v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
 </v>
 <v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
 <v t="ekr.20051216155728"><vh>tree.begin/endUpdate</vh></v>
@@ -2274,17 +2186,6 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 </v>
 <v t="ekr.20051214113546.1"><vh>k.onTextWidgetKey &amp; insertString</vh></v>
 </v>
-<v t="ekr.20051215111121"><vh>(fixed focus problems, again)</vh>
-<v t="ekr.20050120092028" a="M"><vh>xWantsFocus (tkFrame)</vh></v>
-<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
-<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
-</v>
-<v t="ekr.20050920085536.62" a="M"><vh>getArg</vh>
-<v t="ekr.20050928092516"><vh>&lt;&lt; init altX vars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051103114520.1" a="M"><vh>c.setFocusHelper</vh></v>
-<v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-</v>
 <v t="ekr.20051217074031"><vh>(Moved headline coloring code out of endEditLabel and into select)</vh>
 <v t="ekr.20051217082130"><vh>What I did</vh></v>
 <v t="ekr.20040803072955.128" a="M"><vh>tree.select</vh>
@@ -2373,36 +2274,12 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 </v>
 </v>
 </v>
-<v t="ekr.20050921094025"><vh>4.4 To do</vh>
+<v t="ekr.20050921094025" a="TV"><vh>4.4 To do</vh>
+<v t="ekr.20060103102115"><vh>Improve word-export plugin</vh></v>
 <v t="ekr.20051217135340.2"><vh>Create find-options panel</vh></v>
 <v t="ekr.20051217175058"><vh>Get chapters plugin working</vh></v>
 <v t="ekr.20051202094427"><vh>Prototype for resolve cvs conflicts</vh></v>
-<v t="ekr.20051027105304"><vh>Next release: b1</vh>
-<v t="ekr.20051014161015"><vh>Full input modes</vh>
-<v t="ekr.20060102134206"><vh>Notes</vh>
-<v t="ekr.20051017140811.1"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html</vh></v>
-</v>
-<v t="ekr.20060102134206.1"><vh>From leoConfig.py</vh>
-<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
-<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
-<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
-<v t="ekr.20060102103625.1"><vh>doMode</vh></v>
-</v>
-<v t="ekr.20060102134206.2"><vh>From leoKeys.py</vh>
-<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
-<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
-<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
-<v t="ekr.20060102135349"><vh>k.addModeBindings</vh></v>
-<v t="ekr.20060102135349.1"><vh>k.deleteModeBindings</vh></v>
-<v t="ekr.20060102135349.2"><vh>k.enterInputMode</vh></v>
-</v>
-</v>
+<v t="ekr.20051027105304"><vh>Next release: a5</vh>
 <v t="ekr.20051207130701"><vh>Fix newly reported problems</vh>
 <v t="ekr.20051207125933.3"><vh>Keys not sticking</vh>
 <v t="ekr.20051207125933.4"><vh>Post 2</vh></v>
@@ -2769,7 +2646,7 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 </v>
 <v t="ekr.20051012053017.4"><vh>Search improvements</vh></v>
 </v>
-<v t="ekr.20051210111121.1"><vh>Other</vh>
+<v t="ekr.20051210111121.1" a="M"><vh>Other</vh>
 <v t="ekr.20050713105353"><vh>Add configuration setting to set menu fonts</vh>
 <v t="ekr.20050713105353.1"><vh>Email from Martin Moncrieffe &lt;mcm35@cam.ac.uk&gt;</vh></v>
 </v>
@@ -3016,6 +2893,7 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20051207130144.1"><vh>@url http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html</vh></v>
 </v>
 <v t="ekr.20060102092148.2"><vh>auto-install docutils?</vh></v>
+<v t="ekr.20060103101524"><vh>Improve command-line handling</vh></v>
 </v>
 <v t="ekr.20051219151756"><vh>Next</vh>
 <v t="ekr.20051217175058"><vh>Get chapters plugin working</vh></v>
@@ -3170,6 +3048,7 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 <v t="ekr.20060102092148.1"><vh>--safe option</vh></v>
 </v>
 <v t="ekr.20051220063217"><vh>Docs</vh>
+<v t="ekr.20060103100430"><vh>Documentation for installing aspell plugin</vh></v>
 <v t="ekr.20051202102337"><vh>Minibuffer commands notes</vh>
 <v t="ekr.20051202102337.1"><vh>abbrevCommandsClass (not ready yet)</vh></v>
 <v t="ekr.20051202102337.2"><vh>bufferCommandsClass Inot ready yet)</vh></v>
@@ -3187,7 +3066,7 @@ marks="ekr.20051006092617.1,ekr.20051006092617.1,ekr.20031218072017.1810,ekr.200
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -3210,7 +3089,7 @@ marks="ekr.20031218072017.2619,"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,ekr.20031218072017.2950,ekr.20051103114520.1,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,ekr.20031218072017.2950,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"
 marks="ekr.20041119204700.1,"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20050710142719"
@@ -3220,8 +3099,6 @@ marks="ekr.20051127105431,ekr.20051126123149,ekr.20051127065601,ekr.200511271051
 marks="ekr.20031218072017.2052,ekr.20050503112513.7,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"
 marks="ekr.20031218072017.1810,"><vh>@thin leoImport.py</vh></v>
-<v t="ekr.20031218072017.3748"
-marks="ekr.20051006092617.1,ekr.20050920085536.62,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
@@ -3250,6 +3127,54 @@ marks="ekr.20031218072017.2373,"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20040803072955"
 marks="ekr.20040803072955.128,"><vh>@thin leoTkinterTree.py</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3748"
+marks="ekr.20051006092617.1,ekr.20050920085536.62,"
+expanded="ekr.20050920085536.65,"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20051014161015"><vh>Full input modes</vh>
+<v t="ekr.20060103104509"><vh>To do</vh></v>
+<v t="ekr.20060102134206"><vh>Notes</vh>
+<v t="ekr.20051017140811.1"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html</vh></v>
+</v>
+<v t="ekr.20060102134206.1"><vh>From leoConfig.py</vh>
+<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
+<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
+<v t="ekr.20060102103625.1"><vh>doMode</vh></v>
+</v>
+<v t="ekr.20060102134206.2"><vh>From leoKeys.py</vh>
+<v t="ekr.20051001051355" a="E"><vh>Dispatching...</vh>
+<v t="ekr.20050920085536.65" a="E"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+</v>
+<v t="ekr.20050920085536.58"><vh>quickCommand  (ctrl-c) &amp; helpers</vh>
+<v t="ekr.20051004102314"><vh>rCommand</vh></v>
+<v t="ekr.20050923183943.4"><vh>processKey</vh>
+<v t="ekr.20050923183943.6"><vh>processAbbreviation</vh></v>
+</v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+</v>
+<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
+<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
+<v t="ekr.20060102135349"><vh>k.addModeBindings</vh></v>
+<v t="ekr.20060102135349.1"><vh>k.deleteModeBindings</vh></v>
+<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
+<v t="ekr.20060103111643"><vh>enterDefault/Ignore/Insert/ReplaceMode</vh></v>
 </v>
 </v>
 </vnodes>
@@ -5439,7 +5364,6 @@ else:
 
     try:
         g.app.setLog(self.log,"OnActivateLeoEvent")
-        c.setFocusHelper() # Try to guess the best possible focus.
     except:
         g.es_event_exception("activate Leo")
 
@@ -5755,7 +5679,6 @@ def requestRecolor (self):
 
     c.frame.tree.redraw_now()
     c.frame.top.update_idletasks()
-    c.setFocusHelper()
     
     if c.frame.requestRecolorFlag:
         c.frame.requestRecolorFlag = False
@@ -14548,25 +14471,6 @@ def reSearchForward (self,event):
     return 'break'
 
 </t>
-<t tx="ekr.20050920085536.44"># Used by getArg and fullCommand.
-
-def doTabCompletion (self,defaultTabList):
-    
-    '''Handle tab completion when the user hits a tab.'''
-    
-    k = self ; c = k.c ; s = k.getLabel().strip()
-    
-    if k.mb_tabList and s.startswith(k.mb_tabListPrefix):
-        # g.trace('cycle',repr(s))
-        # Set the label to the next item on the tab list.
-        k.mb_tabListIndex +=1
-        if k.mb_tabListIndex &gt;= len(k.mb_tabList):
-            k.mb_tabListIndex = 0
-        k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
-    else:
-        k.computeCompletionList(defaultTabList,backspace=False)
-
-    c.frame.bodyWantsFocus()</t>
 <t tx="ekr.20050920085536.45">def callAltXFunction (self,event):
     
     k = self ; c = k.c ; s = k.getLabel()
@@ -14612,45 +14516,6 @@ def doTabCompletion (self,defaultTabList):
         k.endCommand(event,stroke)
         
     return 'break'</t>
-<t tx="ekr.20050920085536.62">def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
-    
-    '''Accumulate an argument until the user hits return (or control-g).
-    Enter the given return state when done.
-    The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
-    '''
-
-    k = self ; c = k.c ; state = k.getState('getArg')
-    keysym = (event and event.keysym) or ''
-    # g.trace('state',state,'keysym',keysym)
-    if state == 0:
-        k.arg = ''
-        if tabList: k.argTabList = tabList[:]
-        else:       k.argTabList = []
-        &lt;&lt; init altX vars &gt;&gt;
-        # Set the states.
-        bodyCtrl = c.frame.body.bodyCtrl
-        c.frame.widgetWantsFocus(bodyCtrl)
-        k.afterGetArgState=returnKind,returnState,handler
-        k.setState('getArg',1,k.getArg)
-        k.afterArgWidget = event and event.widget or c.frame.body.bodyCtrl
-    elif keysym == 'Return':
-        k.arg = k.getLabel(ignorePrompt=True)
-        kind,n,handler = k.afterGetArgState
-        if kind: k.setState(kind,n,handler)
-        if handler: handler(event)
-        c.frame.widgetWantsFocus(k.afterArgWidget)
-    elif keysym == 'Tab':
-        k.doTabCompletion(k.argTabList)
-    elif keysym == 'BackSpace':
-        k.doBackSpace(k.argTabList)
-    else:
-        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
-        k.mb_tabList = []
-        k.updateLabel(event)
-        k.mb_tabListPrefix = k.getLabel()
-
-    return 'break'
-</t>
 <t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke):
 
     '''This is the central dispatching method.
@@ -14696,7 +14561,6 @@ def doTabCompletion (self,defaultTabList):
     if k.inState():
         if not special: # Don't pass these on.
             k.callStateFunction(event) # Calls end-command.
-            c.setFocusHelper()
         return 'break'
 
     # if k.keystrokeFunctionDict.has_key(stroke):
@@ -14715,17 +14579,12 @@ def doTabCompletion (self,defaultTabList):
         if expanded: return 'break'
 
     if func: # Func is an argument.
-        # g.trace('executing func',commandName)
-        # forceFocus = func.__name__ != 'leoCallback'
-        # if forceFocus: c.frame.bodyWantsFocus()
         val = func(event)
         k.funcReturn = k.funcReturn or val # For unit tests.
         k.endCommand(event,commandName)
-        c.setFocusHelper()
         return 'break'
     else:
         val = k.handleDefaultChar(event)
-        c.setFocusHelper()
         return val</t>
 <t tx="ekr.20050920085536.67"># Don't add multiple special characters to history.
 
@@ -15010,16 +14869,6 @@ self.argTabList = []
 self.idleCount = 0</t>
 <t tx="ekr.20050924073836"></t>
 <t tx="ekr.20050925105522"></t>
-<t tx="ekr.20050928092516"># Clear the list, any other character besides tab indicates that a new prefix is in effect.
-k.mb_tabList = []
-
-if prefix:
-    k.mb_tabListPrefix = prefix
-    k.mb_prefix = prefix
-    k.mb_prompt = prefix
-else:
-    k.mb_tabListPrefix = k.mb_prefix = k.getLabel()
-    k.mb_prompt = ''</t>
 <t tx="ekr.20050928144501.1">Needed to support 'mouseless-Leo':
 
 - Set options from the keyboard.
@@ -15261,7 +15110,14 @@ else:
 <t tx="ekr.20051006092617.1">self.abbrevOn = False # True: abbreviations are on.
 self.arg = '' # The value returned by k.getArg.
 self.commandName = None
+defaultMode = c.config.getString('initial_unbound_key_binding') or 'insert'
+defaultMode.lower()
+if defaultMode in ('insert','replace','ignore'):
+    self.defaultInputMode = defaultMode
+else:
+    g.trace('ignoring initial_unbound_key_binding setting: %s' % defaultMode)
 self.funcReturn = None # For k.simulateCommand
+
 self.inputModeBindings = {}
 self.inputModesDict = {}
     # Keys are mode names, values are bindings dicts.
@@ -15273,7 +15129,8 @@ self.leoCallbackDict = {}
 self.negativeArg = False
 self.regx = g.bunch(iter=None,key=None)
 self.repeatCount = None
-self.state = g.bunch(kind=None,n=None,handler=None)</t>
+self.state = g.bunch(kind=None,n=None,handler=None)
+self.unboundKeyAction = self.defaultInputMode</t>
 <t tx="ekr.20051006125633"></t>
 <t tx="ekr.20051006125633.1">def bindShortcut (self,pane,shortcut,command,commandName):
     
@@ -15409,20 +15266,14 @@ self.state = g.bunch(kind=None,n=None,handler=None)</t>
         ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
     ):
         # Get the user shortcut *before* creating the callbacks.
-        if 1:
-            junk, bunchList = c.config.getShortcut(commandName)
-            if bunchList:
-                for bunch in bunchList:
-                    accel = (bunch and bunch.val)
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                    self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
-            else:
-                accel = stroke
+        junk, bunchList = c.config.getShortcut(commandName)
+        if bunchList:
+            for bunch in bunchList:
+                accel = (bunch and bunch.val)
                 shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                 self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
         else:
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = (bunch and bunch.val) or stroke
+            accel = stroke
             shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
             self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
 
@@ -18663,50 +18514,6 @@ The settings I tested are:
 Leo 4.4 alpha 1, build  1.303 , October 15, 2005
 Python 2.4.2, Tk 8.4.7, win32</t>
 <t tx="ekr.20051103094005"></t>
-<t tx="ekr.20051103114520.1">def setFocusHelper (self):
-    
-    return ### Try to do without this entirely.
-    
-    c = self
-    
-    if g.app.quitting or not hasattr(c,'frame') or not hasattr(c.frame,'top'):
-        return # nullFrame's do not have a top frame.
-        
-    frame = c.frame
-
-    if frame.wantedWidget:
-        w = frame.wantedWidget
-        name = g.app.gui.widget_name(w)
-        if 0:
-            w2 = g.app.gui.get_focus(frame)
-            name2 = g.app.gui.widget_name(w2)
-            if name != name2: g.trace(name2,'-&gt;',name,g.callers())
-        # It is possible that w no longer exists.
-        try:
-            g.app.gui.set_focus(c,w)
-        except Exception:
-            g.app.gui.set_focus(c,frame.body.bodyCtrl)
-        # Essential: otherwise only calls to xWantsWidget would be honored.
-        frame.wantedWidget = None
-    else:
-        # Force the widget to some standard place.
-        w = g.app.gui.get_focus(frame)
-        if not w: return
-        # Allow clicks in enclosing window frame or in dialogs.
-        name = g.app.gui.widget_name(w)
-        if (
-            name and name[0] in string.letters # A known Leo frame.
-            or w == frame.top # The top of the Leo window
-            or g.app.dialogs &gt; 0 # A dialog.
-            or isinstance(w,Tk.Text)
-            or isinstance(w,Tk.Entry)
-        ):
-            #g.trace('ok',g.app.gui.widget_name(w))
-            #g.app.gui.set_focus(c,w)
-            return
-        # Not a name created by Leo.
-        g.trace('setting default focus',name)
-        g.app.gui.set_focus(c,frame.body.bodyCtrl)</t>
 <t tx="ekr.20051103114520.2"></t>
 <t tx="ekr.20051104051733">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3412640
@@ -19106,8 +18913,6 @@ Kent
 
 </t>
 <t tx="ekr.20051121135652"></t>
-<t tx="ekr.20051122084756"></t>
-<t tx="ekr.20051122094909"></t>
 <t tx="ekr.20051122104219">def prettyPrintKey (self,key):
     
     '''Convert whatever-Z to whatever-Shift-Z'''
@@ -20140,7 +19945,6 @@ the headline as opposed to when traversing the tree with the arrow keys.</t>
 
 - tree.onHeadChanged sets changed = s != oldRevert.  This is more reliable than previously.</t>
 <t tx="ekr.20051214125834"></t>
-<t tx="ekr.20051215111121">@ c.frame.minibufferWantsFocus now does c.frame.body.bodyCtrl.update to force the focus to the body pane.</t>
 <t tx="ekr.20051216080913.1"></t>
 <t tx="ekr.20051216081742"></t>
 <t tx="ekr.20051216083932"></t>
@@ -20651,22 +20455,17 @@ e
 </t>
 <t tx="ekr.20060102092148.2">docutils installs it if it isn't available.
 </t>
-<t tx="ekr.20060102103625">def createModeCommand (self,name,d):
-    
+<t tx="ekr.20060102103625">def createModeCommand (self,name):
+
     c = self.c ; k = c.keyHandler
     commandName = 'enter-' + name
-    
-    b = d.get(commandName)
-    # g.trace(commandName,b)
 
-    shortcut = b and b.shortcut or None
-    pane = b and b.pane or 'all'
-    
     def enterModeCallback (name=name):
-        k.enterInputMode(name)
+        k.enterNamedMode(name)
 
-    k.registerCommand (commandName,shortcut,
-        func=enterModeCallback,pane=pane,verbose=True)</t>
+    # Create only the command.  Shortcuts can be bound at any time.
+    k.registerCommand(commandName,shortcut=None,
+        func=enterModeCallback,pane=None,verbose=True)</t>
 <t tx="ekr.20060102103625.1">def doMode(self,p,kind,name,val):
     
     '''Parse an @mode node and create the enter-&lt;name&gt;-mode command.'''
@@ -20682,19 +20481,27 @@ e
     name = name + '-mode'
     # g.trace(name)
     
+    # Check for duplicate mode names.
+    if k.inputModesDict.get(name):
+        g.trace('Ignoring duplicate @mode setting: %s' % name)
+        return
+    
     # Call doShortcuts with a temp dict.
     d = self.shortcutsDict
     self.shortcutsDict = {}
     self.doShortcuts(p,kind,name,val)
+    
+    # Remember the mode dict.
     d2 = self.shortcutsDict
+    # g.trace(d2.keys())
+    k.inputModesDict [name] = d2
+    
+    # Restore the global dict.
     self.shortcutsDict = d
     
-    # g.trace(d2.keys()) # g.printDict(d2))
-    
-    if k.inputModesDict.get(name):
-        g.trace('Ignoring duplicate @mode setting: %s' % name)
-    else:
-         self.createModeCommand(name,d2)</t>
+    # Create the command, but not any bindings to it.
+    self.createModeCommand(name)
+</t>
 <t tx="ekr.20060102134206">@nocolor
 
 - @mode *creates* enter-&lt;mode-name&gt;-mode command.
@@ -20710,7 +20517,7 @@ e
 <t tx="ekr.20060102135349.1">def deleteModeBindings (self,d):
     
     g.trace(d)</t>
-<t tx="ekr.20060102135349.2">def enterInputMode (self,name):
+<t tx="ekr.20060102135349.2">def enterNamedMode (self,name):
     
     k = self
     
@@ -20726,5 +20533,100 @@ e
         # Add new node bindings.
         k.addModeBindings(d)
         k.inputModeBindings = d</t>
+<t tx="ekr.20060103100430"></t>
+<t tx="ekr.20060103101524">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3501995
+By: nobody
+
+::But I don't understand why it's difficult to edit leoSettings.leo
+
+--safe would use default settings,
+maybe you set all body fg/bg to the same color
+by mistake and you don't have a backup leoSettings to use. as a dumb example.
+
+another nice option would be to override a setting
+--set something=whatever
+this could breakdown easy and on (older?) windows.
+there is a limit to how many chars on a command line.
+this would add another layer of choice
+yet another chicken egg problem, 
+parsing settings before settings can be parsed.
+
+what about override @settings file, its a standard thing.
+many people will expect this is possible 
+and try it
+or even leo.py -? 
+help you get for free w/optparse.
+--keys emacs anyone? 
+especially the first time
+untill you can get a chance to edit leoSettings.leo
+
+I have already started enabling optparse
+for leo.py so I can try various profile options.
+I will post it when it works.
+
+have to check how it handles filenames with spaces
+seems that is all Leo is currently doing 
+with multiple args, if there is no problem.
+and later checking for -batch -script etc.
+
+not to minimize how much work this would be.
+parsing options is probably the least difficult part.
+
+e
+</t>
+<t tx="ekr.20060103102115">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3495741
+By: stano_paska
+
+Hi.
+
+In plugin word_export encoding is defined:
+
+encoding = dict.get("encoding",None)
+if encoding == None:
+    encoding = c.config.default_derived_file_encoding
+
+I have default_derived_file_encoding set to UTF-8 but when exporting to word
+some national characters are not encoded correctly (Slovak).
+
+I think it is better get encoding for word from somewhere else.
+
+In Slovak environment word uses cp1250.
+
+When I used:
+
+import sys
+encoding = sys.getdefaultencoding() # 'cp1250'
+
+everything goes fine.</t>
+<t tx="ekr.20060103104509">@nocolor
+
+- (done) Removed c.setFocusHelper
+
+- (done) Read initial_unbound_key_binding when creating keyHandler class.
+
+- (done) Implement mode-changing commands:
+
+    enter-default-mode
+    enter-ignore-mode
+    enter-insert-mode
+    enter-replace-mode
+
+    These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
+    (enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.
+
+- handleDefaultChar must look at k.unboundKeyAction</t>
+<t tx="ekr.20060103111643">def enterDefaultMode (self,event):
+    self.unboundKeyAction = self.defaultInputMode
+
+def enterIgnoreMode (self,event):
+    self.unboundKeyAction = 'ignore'
+
+def enterInsertMode (self,event):
+    self.unboundKeyAction = 'insert'
+
+def enterReplaceMode (self,event):
+    self.unboundKeyAction = 'replace'</t>
 </tnodes>
 </leo_file>

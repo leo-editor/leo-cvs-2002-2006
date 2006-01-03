@@ -89,7 +89,7 @@ class parserBaseClass:
         commandName = 'enter-' + name
     
         def enterModeCallback (name=name):
-            k.enterInputMode(name)
+            k.enterNamedMode(name)
     
         # Create only the command.  Shortcuts can be bound at any time.
         k.registerCommand(commandName,shortcut=None,

@@ -18,433 +18,6 @@ import string
 #@-node:ekr.20050920094258:<< imports >>
 #@nl
 
-#@+others
-#@+node:ekr.20051006121222:inputMode classes (delete???)
-#@<< baseInputMode class >>
-#@+node:ekr.20051006121222.8: << baseInputMode class >>
-class baseInputMode:
-    
-    """A class to represent an input mode in the status line and all related commands."""
-    
-    #@    @+others
-    #@+node:ekr.20051006121222.9:ctor
-    def __init__ (self,c,statusLine):
-        
-        self.c = c
-        
-        self.statusLine = statusLine
-        self.signon = None
-        self.name = "baseMode"
-        self.clear = True
-        self.keys = []
-    #@nonl
-    #@-node:ekr.20051006121222.9:ctor
-    #@+node:ekr.20051006121222.10:doNothing
-    def doNothing(self,event=None):
-        
-        return "break"
-    #@nonl
-    #@-node:ekr.20051006121222.10:doNothing
-    #@+node:ekr.20051006121222.11:enterMode
-    def enterMode (self,event=None):
-        
-        # g.trace(self.name)
-            
-        self.initBindings()
-        
-        if self.clear:
-            self.clearStatusLine()
-    
-        if self.signon:
-            self.putStatusLine(self.signon,color="red")
-            
-        self.originalLine = self.getStatusLine()
-        if self.originalLine and self.originalLine[-1] == '\n':
-            self.originalLine = self.originalLine[:-1]
-    
-        # g.trace(repr(self.originalLine))
-    
-        self.enableStatusLine()
-        self.setFocusStatusLine()
-        
-        return "break"
-    #@nonl
-    #@-node:ekr.20051006121222.11:enterMode
-    #@+node:ekr.20051006121222.12:exitMode
-    def exitMode (self,event=None,nextMode=None):
-        
-        """Remove all key bindings for this mode."""
-        
-        # g.trace(self.name)
-        
-        self.unbindAll()
-    
-        if nextMode:
-            nextMode.enterMode()
-        else:
-            self.clearStatusLine()
-            self.disableStatusLine()
-            self.c.frame.body.setFocus()
-            self.c.frame.body.bodyCtrl.bind(
-                "<Key-Escape>",self.statusLine.topMode.enterMode)
-    
-        return "break"
-    #@nonl
-    #@-node:ekr.20051006121222.12:exitMode
-    #@+node:ekr.20051006121222.13:initBindings
-    def initBindings (self):
-        
-        """Create key bindings for this mode using modeTable."""
-        
-        t = self.c.frame.statusText
-        
-        self.unbindAll()
-    
-        t.bind("<Key-Escape>",self.exitMode)
-    #@nonl
-    #@-node:ekr.20051006121222.13:initBindings
-    #@+node:ekr.20051006121222.14:statusLine proxies
-    def clearStatusLine (self):
-        self.c.frame.clearStatusLine()
-    
-    def disableStatusLine (self):
-        # g.trace()
-        self.c.frame.disableStatusLine()
-    
-    def enableStatusLine (self):
-        # g.trace()
-        self.c.frame.enableStatusLine()
-        
-    def getStatusLine (self):
-        return self.c.frame.getStatusLine()
-    
-    def putStatusLine(self,s,color="black"):
-        self.c.frame.putStatusLine(s,color=color)
-        
-    def setFocusStatusLine(self):
-        # g.trace()
-        self.c.frame.setFocusStatusLine()
-        
-    def statusLineIsEnabled(self):
-        return self.c.frame.statusLineIsEnabled()
-    #@nonl
-    #@-node:ekr.20051006121222.14:statusLine proxies
-    #@+node:ekr.20051006121222.15:unbindAll
-    def unbindAll (self):
-        
-        t = self.c.frame.statusText
-        
-        for b in t.bind():
-            t.unbind(b)
-    #@nonl
-    #@-node:ekr.20051006121222.15:unbindAll
-    #@-others
-#@nonl
-#@-node:ekr.20051006121222.8: << baseInputMode class >>
-#@nl
-
-#@+others
-#@+node:ekr.20051006121222.16:class topInputMode (baseInputMode)
-class topInputMode (baseInputMode):
-    
-    """A class to represent the top-level input mode in the status line."""
-    
-    #@    @+others
-    #@+node:ekr.20051006121222.17:ctor
-    def __init__(self,c,statusLineClass):
-        
-        baseInputMode.__init__(self,c,statusLineClass)
-    
-        self.name = "topInputMode"
-        
-        
-    #@nonl
-    #@-node:ekr.20051006121222.17:ctor
-    #@+node:ekr.20051006121222.18:finishCreate
-    def finishCreate(self):
-        
-        s = self.statusLine
-        
-        self.bindings = (
-            ('c','Change',s.findChangeMode),
-            ('e','Edit',None),
-            ('f','Find',s.findMode),
-            ('h','Help',None),
-            ('o','Outline',None),
-            ('p','oPtions',s.optionsMode),
-        )
-    
-        signon = ["%s: " % (text) for ch,text,f in self.bindings]
-        self.signon = ''.join(signon)
-    #@nonl
-    #@-node:ekr.20051006121222.18:finishCreate
-    #@+node:ekr.20051006121222.19:initBindings
-    def initBindings (self):
-        
-        """Create key bindings for this mode using modeTable."""
-        
-        t = self.c.frame.statusText
-    
-        self.unbindAll()
-        
-        t.bind("<Key>",self.doNothing)
-        t.bind("<Key-Escape>",self.exitMode)
-        
-        for ch,text,f in self.bindings:
-    
-            def inputModeCallback(event,self=self,ch=ch,text=text,f=f):
-                return self.doKey(ch,text,f)
-    
-            t.bind("<Key-%s>" % ch, inputModeCallback)
-    #@nonl
-    #@-node:ekr.20051006121222.19:initBindings
-    #@+node:ekr.20051006121222.20:doKey
-    def doKey (self,ch,text,f):
-        
-        ch = ch.lower()
-        
-        if f is not None:
-            self.exitMode(nextMode=f)
-        else:
-             g.trace(text)
-             
-        return "break"
-        
-        if ch == 'c':
-            self.exitMode(nextMode=self.statusLine.findChangeMode)
-        elif ch == 'f':
-            self.exitMode(nextMode=self.statusLine.findMode)
-        elif ch == 'p':
-            self.exitMode(nextMode=self.statusLine.optionsMode)
-        else:
-            g.trace(text)
-            # self.putStatusLine(text + ": ")
-    
-        return "break"
-    #@nonl
-    #@-node:ekr.20051006121222.20:doKey
-    #@-others
-#@nonl
-#@-node:ekr.20051006121222.16:class topInputMode (baseInputMode)
-#@+node:ekr.20051006121222.21:class optionsInputMode (baseInputMode)
-class optionsInputMode (baseInputMode):
-    
-    """An input mode to set find/change options."""
-    
-    #@    @+others
-    #@+node:ekr.20051006121222.22:ctor
-    def __init__(self,c,statusLineClass):
-        
-        baseInputMode.__init__(self,c,statusLineClass)
-        
-        self.name = "optionsMode"
-        self.clear = True
-        self.findFrame = g.app.findFrame
-        
-        self.bindings = (
-            ('a','Around','wrap'),
-            ('b','Body','search_body'),
-            ('e','Entire',None),
-            ('h','Head','search_headline'),
-            ('i','Ignore','ignore_case'),
-            ('n','Node','node_only'),
-            ('r','Reverse','reverse'),
-            ('s','Suboutline','suboutline_only'),
-            ('w','Word','whole_word'),
-        )
-        
-        signon = ["%s " % (text) for ch,text,ivar in self.bindings]
-        self.signon = ''.join(signon)
-    #@nonl
-    #@-node:ekr.20051006121222.22:ctor
-    #@+node:ekr.20051006121222.23:enterMode
-    def enterMode (self,event=None):
-        
-        baseInputMode.enterMode(self,event)
-        
-        # self.findFrame.top.withdraw()
-        
-        self.findFrame.bringToFront()
-        
-        # We need a setting that will cause the row/col update not to mess with the focus.
-        # Or maybe we can just disable the row-col update.
-        
-        ### self.disableStatusLine()
-    
-        return "break"
-    #@nonl
-    #@-node:ekr.20051006121222.23:enterMode
-    #@+node:ekr.20051006121222.24:initBindings
-    def initBindings (self):
-        
-        """Create key bindings for this mode using modeTable."""
-        
-        t = self.c.frame.statusText
-    
-        self.unbindAll()
-        
-        t.bind("<Key>",self.doNothing)
-        t.bind("<Key-Escape>",self.doEsc)
-        t.bind("<Return>",self.doFindChange)
-        t.bind("<Linefeed>",self.doFindChange)
-    
-        for ch,text,ivar in self.bindings:
-    
-            def initBindingsCallback(event,self=self,ch=ch,text=text,ivar=ivar):
-                return self.doKey(ch,text,ivar)
-    
-            t.bind("<Key-%s>" % ch, initBindingsCallback)
-    #@nonl
-    #@-node:ekr.20051006121222.24:initBindings
-    #@+node:ekr.20051006121222.25:doFindChange
-    def doFindChange (self,event=None):
-        
-        g.trace(self.name)
-    
-        self.exitMode(nextMode=self.statusLine.topMode)
-    
-        return "break"
-    #@nonl
-    #@-node:ekr.20051006121222.25:doFindChange
-    #@+node:ekr.20051006121222.26:doEsc
-    def doEsc (self,event=None):
-        
-        # g.trace(self.name)
-    
-        self.exitMode(nextMode=self.statusLine.topMode)
-    
-        return "break"
-    #@-node:ekr.20051006121222.26:doEsc
-    #@+node:ekr.20051006121222.27:doKey
-    def doKey (self,ch,text,ivar):
-        
-        if ivar:
-            intVar = self.findFrame.dict.get(ivar)
-            if intVar:
-                val = intVar.get()
-                g.trace(text,val)
-                # Toggle the value.
-                intVar.set(g.choose(val,0,1))
-                
-            # self.findFrame.bringToFront()
-    
-        return "break"
-    #@nonl
-    #@-node:ekr.20051006121222.27:doKey
-    #@-others
-#@nonl
-#@-node:ekr.20051006121222.21:class optionsInputMode (baseInputMode)
-#@+node:ekr.20051006121222.28:class textInputMode (baseInputMode):
-class textInputMode (baseInputMode):
-    
-    """An input mode to set the find/change string."""
-    
-    #@    @+others
-    #@+node:ekr.20051006121222.29:ctor
-    def __init__(self,c,statusLineClass,change=False,willChange=False):
-        
-        baseInputMode.__init__(self,c,statusLineClass)
-        
-        if willChange:
-            self.name = "findChangeTextMode"
-            self.signon = "Replace: "
-            self.clear = True
-        elif change:
-            self.name = "changeTextMode"
-            self.signon = " By: "
-            self.clear = False
-        else:
-            self.name = "findTextMode"
-            self.signon = "Find: "
-            self.clear = True
-    
-        self.change = change
-        self.willChange = willChange
-    #@-node:ekr.20051006121222.29:ctor
-    #@+node:ekr.20051006121222.30:doFindChange
-    def doFindChange (self,event=None):
-        
-        c = self.c
-        
-        # g.trace(self.name)
-        
-        s = self.getStatusLine()
-        newText = s[len(self.originalLine):]
-        if newText and newText[-1] == '\n':
-            newText = newText [:-1]
-        
-        if self.change:
-            self.statusLine.changeText = newText
-        else:
-            self.statusLine.findText = newText
-    
-        if self.willChange:
-            nextMode = self.statusLine.changeMode
-        elif self.change:
-            g.trace("CHANGE",repr(self.statusLine.findText),"TO",repr(self.statusLine.changeText))
-            nextMode = None
-        else:
-            f = g.app.findFrame
-            g.trace("FIND",repr(self.statusLine.findText))
-            if 0:
-                f.setFindText(findText)
-            else:
-                f.find_text.delete("1.0","end")
-                f.find_text.insert("end",self.statusLine.findText)
-            f.findNextCommand(self.c)
-            nextMode = None
-    
-        self.exitMode(nextMode=nextMode)
-    
-        return "break"
-    #@-node:ekr.20051006121222.30:doFindChange
-    #@+node:ekr.20051006121222.31:initBindings
-    def initBindings (self):
-        
-        """Create key bindings for this mode using modeTable."""
-        
-        t = self.c.frame.statusText
-        
-        self.unbindAll()
-    
-        t.bind("<Key-Return>",self.doFindChange)
-        t.bind("<Key-Linefeed>",self.doFindChange)
-        t.bind("<Key-Escape>",self.doEsc)
-        t.bind("<Key>",self.doKey)
-    #@nonl
-    #@-node:ekr.20051006121222.31:initBindings
-    #@+node:ekr.20051006121222.32:doEsc
-    def doEsc (self,event=None):
-        
-        # g.trace(self.name)
-    
-        self.exitMode(nextMode=self.statusLine.topMode)
-    
-        return "break"
-    #@-node:ekr.20051006121222.32:doEsc
-    #@+node:ekr.20051006121222.33:doKey
-    def doKey (self,event=None):
-        
-        if event and event.keysym == "BackSpace":
-            
-            # t = self.c.frame.statusText
-            s = self.getStatusLine()
-            
-            # This won't work if we click in the frame.
-            # Maybe we can disable the widget??
-            if len(s) <= len(self.originalLine):
-                return "break"
-        
-        return "continue"
-    #@nonl
-    #@-node:ekr.20051006121222.33:doKey
-    #@-others
-#@nonl
-#@-node:ekr.20051006121222.28:class textInputMode (baseInputMode):
-#@-others
-#@nonl
-#@-node:ekr.20051006121222:inputMode classes (delete???)
-#@+node:ekr.20051006121539:class keyHandlerClass
 class keyHandlerClass:
     
     '''A class to support emacs-style commands.'''
@@ -507,7 +80,14 @@ class keyHandlerClass:
         self.abbrevOn = False # True: abbreviations are on.
         self.arg = '' # The value returned by k.getArg.
         self.commandName = None
+        defaultMode = c.config.getString('initial_unbound_key_binding') or 'insert'
+        defaultMode.lower()
+        if defaultMode in ('insert','replace','ignore'):
+            self.defaultInputMode = defaultMode
+        else:
+            g.trace('ignoring initial_unbound_key_binding setting: %s' % defaultMode)
         self.funcReturn = None # For k.simulateCommand
+        
         self.inputModeBindings = {}
         self.inputModesDict = {}
             # Keys are mode names, values are bindings dicts.
@@ -520,6 +100,7 @@ class keyHandlerClass:
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
         self.state = g.bunch(kind=None,n=None,handler=None)
+        self.unboundKeyAction = self.defaultInputMode
         #@nonl
         #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
         #@nl
@@ -1006,20 +587,14 @@ class keyHandlerClass:
             ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
         ):
             # Get the user shortcut *before* creating the callbacks.
-            if 1:
-                junk, bunchList = c.config.getShortcut(commandName)
-                if bunchList:
-                    for bunch in bunchList:
-                        accel = (bunch and bunch.val)
-                        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                        self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
-                else:
-                    accel = stroke
+            junk, bunchList = c.config.getShortcut(commandName)
+            if bunchList:
+                for bunch in bunchList:
+                    accel = (bunch and bunch.val)
                     shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                     self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
             else:
-                junk, bunch = c.config.getShortcut(commandName)
-                accel = (bunch and bunch.val) or stroke
+                accel = stroke
                 shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                 self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
     
@@ -1170,9 +745,6 @@ class keyHandlerClass:
             if expanded: return 'break'
     
         if func: # Func is an argument.
-            # g.trace('executing func',commandName)
-            # forceFocus = func.__name__ != 'leoCallback'
-            # if forceFocus: c.frame.bodyWantsFocus()
             val = func(event)
             k.funcReturn = k.funcReturn or val # For unit tests.
             k.endCommand(event,commandName)
@@ -1478,6 +1050,38 @@ class keyHandlerClass:
         k.universalDispatcher(event)
     #@nonl
     #@-node:ekr.20050930080419:digitArgument & universalArgument
+    #@+node:ekr.20060103111643:enterXXXMode
+    def enterDefaultMode (self,event):
+        self.unboundKeyAction = self.defaultInputMode
+    
+    def enterIgnoreMode (self,event):
+        self.unboundKeyAction = 'ignore'
+    
+    def enterInsertMode (self,event):
+        self.unboundKeyAction = 'insert'
+    
+    def enterReplaceMode (self,event):
+        self.unboundKeyAction = 'replace'
+    #@nonl
+    #@-node:ekr.20060103111643:enterXXXMode
+    #@+node:ekr.20060102135349.2:enterNamedMode
+    def enterNamedMode (self,name):
+        
+        k = self
+        
+        d = k.inputModesDict.get(name)
+        if d:
+            # Delete previous node bindings.
+            d2 = k.inputModeBindings
+            if d2:
+                k.deleteModeBindings(d2)
+                k.inputModeBindings = {}
+                
+            # Add new node bindings.
+            k.addModeBindings(d)
+            k.inputModeBindings = d
+    #@nonl
+    #@-node:ekr.20060102135349.2:enterNamedMode
     #@+node:ekr.20051014170754:k.help
     def help (self,event):
         
@@ -1519,6 +1123,37 @@ class keyHandlerClass:
         g.es_print(s)
     #@nonl
     #@-node:ekr.20051014170754:k.help
+    #@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
+    def hideMinibuffer (self,event):
+        
+        k = self ; c = k.c
+        
+        c.frame.hideMinibuffer()
+        
+        g.es('Minibuffer hidden',color='red')
+    
+        for commandName in ('show-mini-buffer','toggle-mini-buffer'):
+            shortcut = k.getShortcutForCommandName(commandName)
+            if shortcut:
+                g.es('%s is bound to: %s' % (commandName,shortcut))
+        
+        
+    def showMinibuffer (self,event):
+        
+        k = self ; c = k.c
+        
+        c.frame.showMinibuffer()
+        
+    def toggleMinibuffer (self,event):
+        
+        k = self ; c = k.c
+        
+        if c.frame.minibufferVisible:
+            k.hideMinibuffer(event)
+        else:
+            k.showMinibuffer(event)
+    #@nonl
+    #@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
     #@+node:ekr.20050920085536.68:negativeArgument (redo?)
     def negativeArgument (self,event):
     
@@ -1612,37 +1247,6 @@ class keyHandlerClass:
             return k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
-    #@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
-    def hideMinibuffer (self,event):
-        
-        k = self ; c = k.c
-        
-        c.frame.hideMinibuffer()
-        
-        g.es('Minibuffer hidden',color='red')
-    
-        for commandName in ('show-mini-buffer','toggle-mini-buffer'):
-            shortcut = k.getShortcutForCommandName(commandName)
-            if shortcut:
-                g.es('%s is bound to: %s' % (commandName,shortcut))
-        
-        
-    def showMinibuffer (self,event):
-        
-        k = self ; c = k.c
-        
-        c.frame.showMinibuffer()
-        
-    def toggleMinibuffer (self,event):
-        
-        k = self ; c = k.c
-        
-        if c.frame.minibufferVisible:
-            k.hideMinibuffer(event)
-        else:
-            k.showMinibuffer(event)
-    #@nonl
-    #@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
     #@-node:ekr.20050920085536.32:Externally visible commands
     #@+node:ekr.20050920085536.73:universalDispatcher & helpers
     def universalDispatcher (self,event):
@@ -1979,25 +1583,6 @@ class keyHandlerClass:
         g.trace(d)
     #@nonl
     #@-node:ekr.20060102135349.1:k.deleteModeBindings
-    #@+node:ekr.20060102135349.2:k.enterInputMode
-    def enterInputMode (self,name):
-        
-        k = self
-        
-        d = k.inputModesDict.get(name)
-        if d:
-            
-            # Delete previous node bindings.
-            d2 = k.inputModeBindings
-            if d2:
-                k.deleteModeBindings(d2)
-                k.inputModeBindings = {}
-                
-            # Add new node bindings.
-            k.addModeBindings(d)
-            k.inputModeBindings = d
-    #@nonl
-    #@-node:ekr.20060102135349.2:k.enterInputMode
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
     #@+at 
@@ -2335,8 +1920,5 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051214113546.1:k.onTextWidgetKey & insertString
     #@-others
-#@nonl
-#@-node:ekr.20051006121539:class keyHandlerClass
-#@-others
 #@-node:ekr.20031218072017.3748:@thin leoKeys.py
 #@-leo

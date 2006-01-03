@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="TV" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -54,7 +54,7 @@
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 </v>
-<v t="ekr.20051120173230"><vh>Prototypes</vh>
+<v t="ekr.20051120173230" a="E"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
@@ -191,7 +191,8 @@
 </v>
 <v t="ekr.20051130181738" a="EM" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
 </v>
-<v t="ekr.20051214093711"><vh>redemo</vh>
+<v t="ekr.20051214093711" a="E"><vh>redemo</vh>
+<v t="ekr.20060103102234" a="TV"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
@@ -4220,5 +4221,61 @@ else:
 leoTest.runTimerOnNode(p,count=1000)</t>
 <t tx="ekr.20051221091553">c.frame.tree.OnIconDoubleClick(p)
 </t>
+<t tx="ekr.20060103102234">@nocolor
+@
+http://sourceforge.net/forum/message.php?msg_id=3494187
+By: nobody
+
+Ed's version shows how to properly initialize the tab.
+new version, choice of popup or in tab.
+gota believe theres a few still too frightened of 4.4
+as popup will probably work on earlier Leo ok.
+
+you do have to delete 'redemo' tab to rerun the script.
+attaching the logs scroll not working yet.
+I found the scroll widget, but its not cooperating.
+scroll isn't really that useful, you need to have
+enough room to see all the fields.
+sorry if you're on a phone or other limited screen...
+
+swapping the sample data and results fields might help.
+will probably have to duplicate the reDemo.__init__
+made the entry a text 3 line widget to make verbose possible
+edit height or scroll or drag around to input more lines.
+
+added Checkbutton UNICODE, (not well tested)
+who knows if this is fixed in py2.5+ this redemo may break
+this is probably the limit of working without editing redemo.py,
+gets more fragile as you depend on more methods and structures.
+yet it is only possible because of the way the code is written.
+little things like saving the list of frames etc.
+a tradition I am probably not living up to.
+
+added button to output re.compile line to use w/flags
+and it does an eval to verify it will compile ok.
+
+added help button to display sre.__doc__ to log pane.
+        
+sourceforge forums now is htmlizing some entities
+like gt, lt and quotes. what are they afraid of?
+do they know we post code here?
+has anyone posted one and do they read bug reports?
+they sure don't make it easy to give feedback.
+do they even try the forums after they mangle them?
+are they mangling everyones forums?
+
+redemo script now has its own page
+[http://rclick.netfirms.com/redemoleo.htm]  
+
+start of more extensive object introspecter than dir(obj)
+adds itself to the Leo g. namespace for later use.
+[http://rclick.netfirms.com/dir_obj.htm]    
+
+for regex inverse button you must download:
+[http://www.uselesspython.com/jpetkau1.py]
+save as reinv.py in the python path or leo/extensions 
+
+there may be another version if I can fix the scroll.
+e</t>
 </tnodes>
 </leo_file>

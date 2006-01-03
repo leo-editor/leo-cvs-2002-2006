@@ -26,6 +26,34 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
+#@+node:ekr.20060103102115:Improve word-export plugin
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3495741
+By: stano_paska
+
+Hi.
+
+In plugin word_export encoding is defined:
+
+encoding = dict.get("encoding",None)
+if encoding == None:
+    encoding = c.config.default_derived_file_encoding
+
+I have default_derived_file_encoding set to UTF-8 but when exporting to word
+some national characters are not encoded correctly (Slovak).
+
+I think it is better get encoding for word from somewhere else.
+
+In Slovak environment word uses cp1250.
+
+When I used:
+
+import sys
+encoding = sys.getdefaultencoding() # 'cp1250'
+
+everything goes fine.
+#@nonl
+#@-node:ekr.20060103102115:Improve word-export plugin
 #@+node:ekr.20051217135340.2:Create find-options panel
 #@-node:ekr.20051217135340.2:Create find-options panel
 #@+node:ekr.20051217175058:Get chapters plugin working
@@ -36,310 +64,7 @@ Use the zip file stuff initially.  We can add support for chapters to Leo's core
 Investigate meld:  http://meld.sourceforge.net/
 #@nonl
 #@-node:ekr.20051202094427:Prototype for resolve cvs conflicts
-#@+node:ekr.20051027105304:Next release: b1
-#@+node:ekr.20051014161015:Full input modes
-#@+node:ekr.20060102134206:Notes
-@nocolor
-
-- @mode *creates* enter-<mode-name>-mode command.
-- Predefine standard modes: default-mode, vim-input-mode, vim-replace-mode, vim-default-mode.
-
-** Hopefully all mode-specific bindings can be specified in @mode nodes.
-#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
-#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
-#@-node:ekr.20060102134206:Notes
-#@+node:ekr.20060102134206.1:From leoConfig.py
-#@+node:ekr.20050920085536.2: ctor (keyHandler)
-def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
-    
-    '''Create a key handler for c.
-    c.frame.miniBufferWidget is a Tk.Label.
-    
-    useGlobalRegisters and useGlobalKillbuffer indicate whether to use
-    global (class vars) or per-instance (ivars) for kill buffers and registers.'''
-    
-    self.c = c
-    self.widget = c.frame.miniBufferWidget
-    self.useTextWidget = c.useTextMinibuffer
-        # A Tk Label or Text widget.
-        # Exists even if c.showMinibuffer is False.
-    self.useGlobalKillbuffer = useGlobalKillbuffer
-    self.useGlobalRegisters = useGlobalRegisters
-
-    # Generalize...
-    self.x_hasNumeric = ['sort-lines','sort-fields']
-
-    self.altX_prompt = 'full-command: '
-    << define Tk ivars >>
-    << define externally visible ivars >>
-    << define internal ivars >>
-#@nonl
-#@+node:ekr.20051006092617:<< define Tk ivars >>
-if self.useTextWidget:
-    self.svar = None
-else:
-    if self.widget:
-        self.svar = Tk.StringVar()
-        self.widget.configure(textvariable=self.svar)
-        
-    else:
-        self.svar = None
-#@nonl
-#@-node:ekr.20051006092617:<< define Tk ivars >>
-#@+node:ekr.20051006092617.1:<< define externally visible ivars >>
-self.abbrevOn = False # True: abbreviations are on.
-self.arg = '' # The value returned by k.getArg.
-self.commandName = None
-self.funcReturn = None # For k.simulateCommand
-self.inputModeBindings = {}
-self.inputModesDict = {}
-    # Keys are mode names, values are bindings dicts.
-self.inverseCommandsDict = {}
-    # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
-self.leoCallbackDict = {}
-    # Completed in leoCommands.getPublicCommands.
-    # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
-self.negativeArg = False
-self.regx = g.bunch(iter=None,key=None)
-self.repeatCount = None
-self.state = g.bunch(kind=None,n=None,handler=None)
-#@nonl
-#@-node:ekr.20051006092617.1:<< define externally visible ivars >>
-#@+node:ekr.20050923213858:<< define internal ivars >>
-# Previously defined bindings.
-self.bindingsDict = {}
-    # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-
-# Special bindings for k.fullCommand.
-self.mb_copyKey = None
-self.mb_pasteKey = None
-self.mb_cutKey = None
-
-# Keepting track of the characters in the mini-buffer.
-self.mb_history = []
-self.mb_prefix = ''
-self.mb_tabListPrefix = ''
-self.mb_tabList = []
-self.mb_tabListIndex = -1
-self.mb_prompt = ''
-
-self.func = None
-self.keysymHistory = []
-self.previous = []
-
-# For getArg...
-self.afterGetArgState = None
-self.argTabList = []
-
-# For onIdleTime
-self.idleCount = 0
-#@nonl
-#@-node:ekr.20050923213858:<< define internal ivars >>
-#@-node:ekr.20050920085536.2: ctor (keyHandler)
-#@+node:ekr.20060102103625:createModeCommand
-def createModeCommand (self,name):
-
-    c = self.c ; k = c.keyHandler
-    commandName = 'enter-' + name
-
-    def enterModeCallback (name=name):
-        k.enterInputMode(name)
-
-    # Create only the command.  Shortcuts can be bound at any time.
-    k.registerCommand(commandName,shortcut=None,
-        func=enterModeCallback,pane=None,verbose=True)
-#@nonl
-#@-node:ekr.20060102103625:createModeCommand
-#@+node:ekr.20060102103625.1:doMode
-def doMode(self,p,kind,name,val):
-    
-    '''Parse an @mode node and create the enter-<name>-mode command.'''
-    
-    c = self.c ; k = c.keyHandler
-    
-    # Compute the mode name.
-    name = name.strip().lower()
-    if name.endswith('mode'):
-        name = name[:-4].strip()
-    if name.endswith('-'):
-        name = name[:-1]
-    name = name + '-mode'
-    # g.trace(name)
-    
-    # Check for duplicate mode names.
-    if k.inputModesDict.get(name):
-        g.trace('Ignoring duplicate @mode setting: %s' % name)
-        return
-    
-    # Call doShortcuts with a temp dict.
-    d = self.shortcutsDict
-    self.shortcutsDict = {}
-    self.doShortcuts(p,kind,name,val)
-    
-    # Remember the mode dict.
-    d2 = self.shortcutsDict
-    # g.trace(d2.keys())
-    k.inputModesDict [name] = d2
-    
-    # Restore the global dict.
-    self.shortcutsDict = d
-    
-    # Create the command, but not any bindings to it.
-    self.createModeCommand(name)
-#@-node:ekr.20060102103625.1:doMode
-#@-node:ekr.20060102134206.1:From leoConfig.py
-#@+node:ekr.20060102134206.2:From leoKeys.py
-#@+node:ekr.20050920085536.2: ctor (keyHandler)
-def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
-    
-    '''Create a key handler for c.
-    c.frame.miniBufferWidget is a Tk.Label.
-    
-    useGlobalRegisters and useGlobalKillbuffer indicate whether to use
-    global (class vars) or per-instance (ivars) for kill buffers and registers.'''
-    
-    self.c = c
-    self.widget = c.frame.miniBufferWidget
-    self.useTextWidget = c.useTextMinibuffer
-        # A Tk Label or Text widget.
-        # Exists even if c.showMinibuffer is False.
-    self.useGlobalKillbuffer = useGlobalKillbuffer
-    self.useGlobalRegisters = useGlobalRegisters
-
-    # Generalize...
-    self.x_hasNumeric = ['sort-lines','sort-fields']
-
-    self.altX_prompt = 'full-command: '
-    << define Tk ivars >>
-    << define externally visible ivars >>
-    << define internal ivars >>
-#@nonl
-#@+node:ekr.20051006092617:<< define Tk ivars >>
-if self.useTextWidget:
-    self.svar = None
-else:
-    if self.widget:
-        self.svar = Tk.StringVar()
-        self.widget.configure(textvariable=self.svar)
-        
-    else:
-        self.svar = None
-#@nonl
-#@-node:ekr.20051006092617:<< define Tk ivars >>
-#@+node:ekr.20051006092617.1:<< define externally visible ivars >>
-self.abbrevOn = False # True: abbreviations are on.
-self.arg = '' # The value returned by k.getArg.
-self.commandName = None
-self.funcReturn = None # For k.simulateCommand
-self.inputModeBindings = {}
-self.inputModesDict = {}
-    # Keys are mode names, values are bindings dicts.
-self.inverseCommandsDict = {}
-    # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
-self.leoCallbackDict = {}
-    # Completed in leoCommands.getPublicCommands.
-    # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
-self.negativeArg = False
-self.regx = g.bunch(iter=None,key=None)
-self.repeatCount = None
-self.state = g.bunch(kind=None,n=None,handler=None)
-#@nonl
-#@-node:ekr.20051006092617.1:<< define externally visible ivars >>
-#@+node:ekr.20050923213858:<< define internal ivars >>
-# Previously defined bindings.
-self.bindingsDict = {}
-    # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-
-# Special bindings for k.fullCommand.
-self.mb_copyKey = None
-self.mb_pasteKey = None
-self.mb_cutKey = None
-
-# Keepting track of the characters in the mini-buffer.
-self.mb_history = []
-self.mb_prefix = ''
-self.mb_tabListPrefix = ''
-self.mb_tabList = []
-self.mb_tabListIndex = -1
-self.mb_prompt = ''
-
-self.func = None
-self.keysymHistory = []
-self.previous = []
-
-# For getArg...
-self.afterGetArgState = None
-self.argTabList = []
-
-# For onIdleTime
-self.idleCount = 0
-#@nonl
-#@-node:ekr.20050923213858:<< define internal ivars >>
-#@-node:ekr.20050920085536.2: ctor (keyHandler)
-#@+node:ekr.20051015110547:k.registerCommand
-def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
-    
-    '''Make the function available as a minibuffer command,
-    and optionally attempt to bind a shortcut.
-    
-    You can wrap any method in a callback function, so the
-    restriction to functions is not significant.'''
-    
-    k = self ; c = k.c
-    
-    f = c.commandsDict.get(commandName)
-    if f:
-        g.es_trace('Redefining %s' % (commandName), color='red')
-        
-    c.commandsDict [commandName] = func
-    k.inverseCommandsDict [func.__name__] = commandName
-    
-    if shortcut:
-        # Retain the original spelling of the shortcut for the message.
-        shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
-        ok = k.bindShortcut (pane,shortcut,func,commandName)
-            
-    if verbose:
-        if shortcut and ok:
-            g.es_print('Registered %s bound to %s' % (
-                commandName,k.prettyPrintKey(shortcut)),color='blue')
-        else:
-            g.es_print('Registered %s' % (commandName), color='blue')
-#@nonl
-#@-node:ekr.20051015110547:k.registerCommand
-#@+node:ekr.20060102135349:k.addModeBindings
-def addModeBindings (self,d):
-    
-    g.trace(d)
-#@nonl
-#@-node:ekr.20060102135349:k.addModeBindings
-#@+node:ekr.20060102135349.1:k.deleteModeBindings
-def deleteModeBindings (self,d):
-    
-    g.trace(d)
-#@nonl
-#@-node:ekr.20060102135349.1:k.deleteModeBindings
-#@+node:ekr.20060102135349.2:k.enterInputMode
-def enterInputMode (self,name):
-    
-    k = self
-    
-    d = k.inputModesDict.get(name)
-    if d:
-        
-        # Delete previous node bindings.
-        d2 = k.inputModeBindings
-        if d2:
-            k.deleteModeBindings(d2)
-            k.inputModeBindings = {}
-            
-        # Add new node bindings.
-        k.addModeBindings(d)
-        k.inputModeBindings = d
-#@nonl
-#@-node:ekr.20060102135349.2:k.enterInputMode
-#@-node:ekr.20060102134206.2:From leoKeys.py
-#@-node:ekr.20051014161015:Full input modes
+#@+node:ekr.20051027105304:Next release: a5
 #@+node:ekr.20051207130701:Fix newly reported problems
 #@+node:ekr.20051207125933.3:Keys not sticking
 @nocolor
@@ -2334,20 +2059,14 @@ def makeSpecialBindings (self):
         ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
     ):
         # Get the user shortcut *before* creating the callbacks.
-        if 1:
-            junk, bunchList = c.config.getShortcut(commandName)
-            if bunchList:
-                for bunch in bunchList:
-                    accel = (bunch and bunch.val)
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                    self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
-            else:
-                accel = stroke
+        junk, bunchList = c.config.getShortcut(commandName)
+        if bunchList:
+            for bunch in bunchList:
+                accel = (bunch and bunch.val)
                 shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                 self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
         else:
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = (bunch and bunch.val) or stroke
+            accel = stroke
             shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
             self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
 
@@ -2683,20 +2402,14 @@ def makeSpecialBindings (self):
         ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
     ):
         # Get the user shortcut *before* creating the callbacks.
-        if 1:
-            junk, bunchList = c.config.getShortcut(commandName)
-            if bunchList:
-                for bunch in bunchList:
-                    accel = (bunch and bunch.val)
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                    self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
-            else:
-                accel = stroke
+        junk, bunchList = c.config.getShortcut(commandName)
+        if bunchList:
+            for bunch in bunchList:
+                accel = (bunch and bunch.val)
                 shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                 self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
         else:
-            junk, bunch = c.config.getShortcut(commandName)
-            accel = (bunch and bunch.val) or stroke
+            accel = stroke
             shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
             self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
 
@@ -3119,7 +2832,7 @@ def forceGnxOnPosition (self,p):
 #@-node:ekr.20051208100903:Install Brian's patch for Import Derived files
 #@-node:ekr.20051207130701:Fix newly reported problems
 #@-node:ekr.20051103094005:Fix bugs
-#@-node:ekr.20051027105304:Next release: b1
+#@-node:ekr.20051027105304:Next release: a5
 #@+node:ekr.20051210111121:Before b1
 #@+node:ekr.20051126122638:Autocompletion tab
 - Use typing completion to select desired word.
@@ -12061,6 +11774,48 @@ leouser
 #@+node:ekr.20060102092148.2:auto-install docutils?
 docutils installs it if it isn't available.
 #@-node:ekr.20060102092148.2:auto-install docutils?
+#@+node:ekr.20060103101524:Improve command-line handling
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3501995
+By: nobody
+
+::But I don't understand why it's difficult to edit leoSettings.leo
+
+--safe would use default settings,
+maybe you set all body fg/bg to the same color
+by mistake and you don't have a backup leoSettings to use. as a dumb example.
+
+another nice option would be to override a setting
+--set something=whatever
+this could breakdown easy and on (older?) windows.
+there is a limit to how many chars on a command line.
+this would add another layer of choice
+yet another chicken egg problem, 
+parsing settings before settings can be parsed.
+
+what about override @settings file, its a standard thing.
+many people will expect this is possible 
+and try it
+or even leo.py -? 
+help you get for free w/optparse.
+--keys emacs anyone? 
+especially the first time
+untill you can get a chance to edit leoSettings.leo
+
+I have already started enabling optparse
+for leo.py so I can try various profile options.
+I will post it when it works.
+
+have to check how it handles filenames with spaces
+seems that is all Leo is currently doing 
+with multiple args, if there is no problem.
+and later checking for -batch -script etc.
+
+not to minimize how much work this would be.
+parsing options is probably the least difficult part.
+
+e
+#@-node:ekr.20060103101524:Improve command-line handling
 #@-node:ekr.20051023192433:Maybe...
 #@+node:ekr.20051219151756:Next
 #@+node:ekr.20051217175058:Get chapters plugin working
@@ -14227,6 +13982,8 @@ e
 #@-node:ekr.20060102092148.1:--safe option
 #@-node:ekr.20051210111121.1:Other
 #@+node:ekr.20051220063217:Docs
+#@+node:ekr.20060103100430:Documentation for installing aspell plugin
+#@-node:ekr.20060103100430:Documentation for installing aspell plugin
 #@+node:ekr.20051202102337:Minibuffer commands notes
 @nocolor
 #@nonl
