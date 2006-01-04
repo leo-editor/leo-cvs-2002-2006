@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -292,7 +292,7 @@
 <v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
 <v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
+<v t="EKR.20040524104904.140" a="E"><vh>Specifying settings</vh>
 <v t="ekr.20051221074605"><vh>@rst-ignore old writing about settings dialog</vh></v>
 </v>
 </v>
@@ -742,7 +742,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
@@ -3007,7 +3007,9 @@ overrides any setting seen in any ``leoSettings.leo`` file.
 
 The format of nodes in ``@settings`` trees are as follows:
 
-1. "Simple settings nodes" have headlines of the form::
+1. Leo ignores any subtree of an ``@settings`` tree whose headline starts with ``@ignore``.
+
+2. "Simple settings nodes" have headlines of the form::
 
     @&lt;type&gt; name = val
 
@@ -3040,7 +3042,7 @@ set the value of ``name`` to ``val``, with the indicated type.
 
 **Important**: you can use the show-colors minibuffer command to guide you in making these settings.
 
-2. "Complex settings nodes" have headlines of the form::
+3. "Complex settings nodes" have headlines of the form::
 
     @&lt;type&gt; description
 
