@@ -277,8 +277,8 @@
 <v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
 <v t="ekr.20051010112558" a="E"><vh>traditional Leo shortcuts with important emacs bindings</vh>
-<v t="ekr.20060102113259"><vh>@mode file mode</vh></v>
-<v t="ekr.20060103103812.1" a="TV"><vh>@shortcuts mode-changing commands</vh></v>
+<v t="ekr.20060102113259" a="TV"><vh>@mode file mode</vh></v>
+<v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
 <v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>
 <v t="ekr.20060102102958.1"><vh>@shortcuts M-Z</vh></v>
 </v>
@@ -2706,15 +2706,16 @@ yank                                    = Control-y
 yank-pop                                = Alt-y
 yank-rectangle                          = None
 zap-to-character                        = Alt-z</t>
-<t tx="ekr.20060102113259">enter-vim-input-mode    = Key-i
-enter-vim-normal-mode   = Ctrl-c
+<t tx="ekr.20060102113259">enter-input-mode    = Key-i
+enter-default-mode  = Ctrl-c
+enter-default-mode  = BackSpace
 
-exit-leo                = Key-q
-new                     = Key-n
-open-outline            = Key-o
-save-file               = Key-s
-save-file-as            = None
-save-file-to            = None</t>
+exit-leo            = Key-q
+new                 = n
+open-outline        = Key-o
+save-file           = Key-s
+save-file-as        = None
+save-file-to        = None</t>
 <t tx="ekr.20060103103415">@nocolor
 
 This setting determines the initial binding for otherwise-unbound keystrokes.

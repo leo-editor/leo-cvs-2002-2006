@@ -1645,6 +1645,8 @@ def doShortcuts(self,p,kind,name,val):
     
     __pychecker__ = '--no-argsused' # kind,val not used.
     
+    # g.trace(self.c.fileName(),p.headString(),g.callers())
+    
     d = self.shortcutsDict # To detect duplicates.
     s = p.bodyString()
     lines = g.splitLines(s)
@@ -2002,9 +2004,27 @@ def makeAllBindings (self):
     k.makeSpecialBindings()
     k.makeBindingsFromCommandsDict()
     k.add_ekr_altx_commands()
+    k.addModeCommands()
     k.checkBindings()
 #@nonl
 #@-node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20060104154937:addModeCommands
+def addModeCommands (self):
+    
+    '''Add commands created by @mode settings..'''
+
+    k = self ; c = k.c
+    d = g.app.config.modeCommandsDict
+    
+    for key in d.keys():
+
+        def enterModeCallback (event=None,name=key):
+            k.enterNamedMode(event,name)
+
+        c.commandsDict[key] = f = enterModeCallback
+        k.inverseCommandsDict [f.__name__] = key
+#@nonl
+#@-node:ekr.20060104154937:addModeCommands
 #@+node:ekr.20050923174229.1:makeHardBindings
 def makeHardBindings (self):
     
@@ -2152,25 +2172,15 @@ def makeBindingsFromCommandsDict (self):
 
     for commandName in keys:
         command = c.commandsDict.get(commandName)
-        if 1:
-            key, bunchList = c.config.getShortcut(commandName)
-            for bunch in bunchList:
-                accel = bunch.val
-                if accel:
-                    bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                    k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-                    if 0:
-                        if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                        else:     g.trace(commandName)
-        else:
-            key, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                 k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-            if 0:
-                if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                else:     g.trace(commandName)
+                if 0:
+                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                    else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
 #@-node:ekr.20051006125633:Binding (keyHandler)
@@ -2495,25 +2505,15 @@ def makeBindingsFromCommandsDict (self):
 
     for commandName in keys:
         command = c.commandsDict.get(commandName)
-        if 1:
-            key, bunchList = c.config.getShortcut(commandName)
-            for bunch in bunchList:
-                accel = bunch.val
-                if accel:
-                    bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                    k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-                    if 0:
-                        if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                        else:     g.trace(commandName)
-        else:
-            key, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                 k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-            if 0:
-                if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                else:     g.trace(commandName)
+                if 0:
+                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                    else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
 #@+node:ekr.20031218072017.1723:createMenuEntries
@@ -2563,12 +2563,8 @@ if ok and label in (None,'-'):
 #@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
 # First, get the old-style name.
 commandName = self.computeOldStyleShortcutKey(label)
-if 1:
-    rawKey,bunchList = c.config.getShortcut(commandName)
-    bunch = bunchList and bunchList[0]
-else:
-    rawKey,bunch = c.config.getShortcut(commandName)
-
+rawKey,bunchList = c.config.getShortcut(commandName)
+bunch = bunchList and bunchList[0]
 accel = bunch and bunch.val
 
 # Second, get new-style name.
@@ -2577,11 +2573,8 @@ if not accel:
         # Contains the not-so-horrible kludge.
     if emacs_name:
         commandName = emacs_name
-        if 1:
-            rawKey,bunchList = c.config.getShortcut(emacs_name)
-            bunch = bunchList and bunchList[0]
-        else:
-            rawKey,bunch = c.config.getShortcut(emacs_name)
+        rawKey,bunchList = c.config.getShortcut(emacs_name)
+        bunch = bunchList and bunchList[0]
         accel = bunch and bunch.val
     elif not dynamicMenu:
         g.trace('No inverse for %s' % commandName)

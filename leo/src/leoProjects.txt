@@ -10317,7 +10317,7 @@ def copyBindingsToWidget (self,paneOrPanes,widget):
     widget.bind('<Key>',k.onTextWidgetKey)
 #@nonl
 #@-node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
-#@+node:ekr.20051007080058:k.makeAllBindings
+#@+node:ekr.20051007080058:makeAllBindings
 def makeAllBindings (self):
     
     k = self ; c = k.c
@@ -10327,9 +10327,18 @@ def makeAllBindings (self):
     k.makeSpecialBindings()
     k.makeBindingsFromCommandsDict()
     k.add_ekr_altx_commands()
+    k.addModeCommands()
+    k.checkBindings()
+#@nonl
+#@-node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20060104154937:addModeCommands
+def addModeCommands (self):
     
-    # New in Leo 4.4a5: add commands created by @mode settings.
+    '''Add commands created by @mode settings..'''
+
+    k = self ; c = k.c
     d = g.app.config.modeCommandsDict
+    
     for key in d.keys():
 
         def enterModeCallback (event=None,name=key):
@@ -10337,10 +10346,8 @@ def makeAllBindings (self):
 
         c.commandsDict[key] = f = enterModeCallback
         k.inverseCommandsDict [f.__name__] = key
-
-    k.checkBindings()
 #@nonl
-#@-node:ekr.20051007080058:k.makeAllBindings
+#@-node:ekr.20060104154937:addModeCommands
 #@+node:ekr.20050923174229.1:makeHardBindings
 def makeHardBindings (self):
     
@@ -11708,19 +11715,34 @@ def getTabName (self,exitCallback):
 #@+node:ekr.20060103104509:To do
 @nocolor
 
-** (done) Create general mode handler code.
-    - It uses the existing state machinery.
-    - It only honors the mode bindings, plus perhaps a few universal bindings.
-    - It restores focus by default (can be overridden by focus-shifting commands).
-    - It leaves existing bindings alone (because it is called from masterCommand).
-    - It supports typing completion: a list of valid keystrokes in the mode.
-
-- look at k.unboundKeyAction in handleDefaultChar.
+* Add support for comments in @mode nodes.
+* look at k.unboundKeyAction in handleDefaultChar.
     - Create method to handle replace mode.
+* Make sure present widget is restored after mode.
+    (change focus commands should clear ivar.)
+- Complete vim mode.
+
+Cleanup
+- Default modes should set the label.
+- Create show-mode-help command.
+- Generalize prettyPrintKey.
+- Clean up ivars.
+- Create tkinterKeyHandler.
+
+Docs
+- Document @mode and how to use it.
+- Move most settings docs to Customizing chapter.
+- Posting: Aha: minimal default actions in modes. (Everything is working!)
+- Slashdot posting?: Yes, Leo support in other editors would be good.
+
+Tests
+- Test cursor commands in Find panel.
 #@nonl
-#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
-#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
 #@-node:ekr.20060103104509:To do
+#@+node:ekr.20060104154253:Ahas
+- User can bind <Backspace> to an enter-mode command.
+- User can bind <Tab> to show-mode-help command.
+#@-node:ekr.20060104154253:Ahas
 #@+node:ekr.20060103133740:Prototypes
 - Create prototype of ekr-vim mode
     - initial_unbound_key_binding = ignore
@@ -11736,6 +11758,8 @@ def getTabName (self,exitCallback):
         -all normal vim commands.
         -all vim temporary modes.
 #@nonl
+#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
+#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
 #@-node:ekr.20060103133740:Prototypes
 #@+node:ekr.20060103113002:What I did
 @nocolor
@@ -11755,127 +11779,15 @@ def getTabName (self,exitCallback):
 
 These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
 enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.
+
+Created general mode handler code.
+- It uses the existing state machinery.
+- It only honors the mode bindings, plus perhaps a few universal bindings.
+- It restores focus by default (can be overridden by focus-shifting commands).
+- It leaves existing bindings alone (because it is called from masterCommand).
+- It supports typing completion: a list of valid keystrokes in the mode.
 #@nonl
 #@-node:ekr.20060103113002:What I did
-#@+node:ekr.20060104101411:x.finishCreate
-#@+node:ekr.20051007080058:k.makeAllBindings
-def makeAllBindings (self):
-    
-    k = self ; c = k.c
-    
-    k.bindingsDict = {}
-    k.makeHardBindings()
-    k.makeSpecialBindings()
-    k.makeBindingsFromCommandsDict()
-    k.add_ekr_altx_commands()
-    
-    # New in Leo 4.4a5: add commands created by @mode settings.
-    d = g.app.config.modeCommandsDict
-    for key in d.keys():
-
-        def enterModeCallback (event=None,name=key):
-            k.enterNamedMode(event,name)
-
-        c.commandsDict[key] = f = enterModeCallback
-        k.inverseCommandsDict [f.__name__] = key
-
-    k.checkBindings()
-#@nonl
-#@-node:ekr.20051007080058:k.makeAllBindings
-#@+node:ekr.20050920094633:k.finishCreate & helpers
-def finishCreate (self):
-    
-    '''Complete the construction of the keyHandler class.
-    c.commandsDict has been created when this is called.'''
-    
-    k = self ; c = k.c
-   
-    k.createInverseCommandsDict()
-    
-    if not c.miniBufferWidget:
-        # Does not exist for leoSettings.leo files.
-        return
-        
-    # g.trace('keyHandler')
-
-    # Important: bindings exist even if c.showMiniBuffer is False.
-    k.makeAllBindings()
-    
-    c.frame.log.setTabBindings('Log')
-    c.frame.tree.setBindings()
-    if 0: # Hurray.  This was a massive kludge.
-        g.enableIdleTimeHook(250)
-    
-    if 0:
-        addTemacsExtensions(k)
-        addTemacsAbbreviations(k)
-        changeKeyStrokes(k,f.bodyCtrl)
-#@nonl
-#@+node:ekr.20051008082929:createInverseCommandsDict
-def createInverseCommandsDict (self):
-    
-    '''Add entries to k.inverseCommandsDict using c.commandDict,
-    except when c.commandDict.get(key) refers to the leoCallback function.
-    leoCommands.getPublicCommands has already added an entry in this case.
-    
-    In c.commandsDict        keys are command names, values are funcions f.
-    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
-    '''
-
-    k = self ; c = k.c
-
-    for name in c.commandsDict.keys():
-        f = c.commandsDict.get(name)
-        
-        # 'leoCallback' callback created by leoCommands.getPublicCommands.
-        if f.__name__ != 'leoCallback':
-            k.inverseCommandsDict [f.__name__] = name
-            # g.trace('%24s = %s' % (f.__name__,name))
-#@nonl
-#@-node:ekr.20051008082929:createInverseCommandsDict
-#@-node:ekr.20050920094633:k.finishCreate & helpers
-#@+node:ekr.20050920093543:c.finishCreate & helper
-def finishCreate (self):  # New in 4.4.
-    
-    '''Finish creating the commander after frame.finishCreate.'''
-    
-    c = self ; p = c.currentPosition()
-    c.miniBufferWidget = c.frame.miniBufferWidget
-    # g.trace('Commands',c.fileName()) # g.callers())
-    
-    # Create a keyHandler even if there is no miniBuffer.
-    c.keyHandler = k = leoKeys.keyHandlerClass(c,
-        useGlobalKillbuffer=True,
-        useGlobalRegisters=True)
-
-    if g.app.config and g.app.config.inited:
-        # A 'real' .leo file.
-        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-        k.finishCreate()
-    else:
-        # A leoSettings.leo file.
-        c.commandsDict = {}
-
-    # Create the menu last so that we can use the key handler for shortcuts.
-    if not g.doHook("menu1",c=c,p=p,v=p):
-        c.frame.menu.createMenuBar(c.frame)
-#@nonl
-#@+node:ekr.20051007143620:printCommandsDict
-def printCommandsDict (self):
-    
-    c = self
-    
-    print 'Commands...'
-    keys = c.commandsDict.keys()
-    keys.sort()
-    for key in keys:
-        command = c.commandsDict.get(key)
-        print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
-    print
-#@nonl
-#@-node:ekr.20051007143620:printCommandsDict
-#@-node:ekr.20050920093543:c.finishCreate & helper
-#@-node:ekr.20060104101411:x.finishCreate
 #@+node:ekr.20060102134206.1:From leoConfig.py
 #@+node:ekr.20050920085536.2: ctor (keyHandler)
 def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
@@ -12001,8 +11913,7 @@ def doMode(self,p,kind,name,val):
     if name.endswith('-'):
         name = name[:-1]
     name = name + '-mode'
-    
-    g.trace(name)
+    # g.trace(name)
     
     # Check for duplicate mode names.
     if g.app.config.modeCommandsDict.get(name):
@@ -12145,6 +12056,89 @@ self.idleCount = 0
 #@nonl
 #@-node:ekr.20050923213858:<< define internal ivars >>
 #@-node:ekr.20050920085536.2: ctor (keyHandler)
+#@+node:ekr.20050920094633:finishCreate (keyHandler) & helpers
+def finishCreate (self):
+    
+    '''Complete the construction of the keyHandler class.
+    c.commandsDict has been created when this is called.'''
+    
+    k = self ; c = k.c
+   
+    k.createInverseCommandsDict()
+    
+    if not c.miniBufferWidget:
+        # Does not exist for leoSettings.leo files.
+        return
+        
+    # g.trace('keyHandler')
+
+    # Important: bindings exist even if c.showMiniBuffer is False.
+    k.makeAllBindings()
+    
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
+    if 0: # Hurray.  This was a massive kludge.
+        g.enableIdleTimeHook(250)
+    
+    if 0:
+        addTemacsExtensions(k)
+        addTemacsAbbreviations(k)
+        changeKeyStrokes(k,f.bodyCtrl)
+#@nonl
+#@+node:ekr.20051008082929:createInverseCommandsDict
+def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict,
+    except when c.commandDict.get(key) refers to the leoCallback function.
+    leoCommands.getPublicCommands has already added an entry in this case.
+    
+    In c.commandsDict        keys are command names, values are funcions f.
+    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        
+        # 'leoCallback' callback created by leoCommands.getPublicCommands.
+        if f.__name__ != 'leoCallback':
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+#@nonl
+#@-node:ekr.20051008082929:createInverseCommandsDict
+#@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
+#@+node:ekr.20051007080058:makeAllBindings
+def makeAllBindings (self):
+    
+    k = self ; c = k.c
+    
+    k.bindingsDict = {}
+    k.makeHardBindings()
+    k.makeSpecialBindings()
+    k.makeBindingsFromCommandsDict()
+    k.add_ekr_altx_commands()
+    k.addModeCommands()
+    k.checkBindings()
+#@nonl
+#@-node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20060104154937:addModeCommands
+def addModeCommands (self):
+    
+    '''Add commands created by @mode settings..'''
+
+    k = self ; c = k.c
+    d = g.app.config.modeCommandsDict
+    
+    for key in d.keys():
+
+        def enterModeCallback (event=None,name=key):
+            k.enterNamedMode(event,name)
+
+        c.commandsDict[key] = f = enterModeCallback
+        k.inverseCommandsDict [f.__name__] = key
+#@nonl
+#@-node:ekr.20060104154937:addModeCommands
 #@+node:ekr.20051001051355:Dispatching...
 #@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke):
@@ -12519,10 +12513,25 @@ def matchKeys (self,event,shortcut):
     
     '''Return true if a binding matches the key specified by the event.'''
     
-    #stroke = k.stroke ; keysym = event.keysym
-    #g.trace('stroke',stroke,'keysym',keysym)
+    k = self ; c = k.c
     
-    return False
+    if not k.stroke or not event: return False
+    
+    stroke = k.stroke ; keysym = event.keysym
+    shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+    
+    if stroke == '<Key>':
+        val = shortcut == keysym or shortcut.startswith('Key-') and shortcut.endswith(keysym)
+    else:
+        val = stroke == shortcut2
+        
+    if 0:
+        g.trace('returns',val,
+            'stroke',stroke,'keysym',keysym,
+            'shortcut',shortcut,'shortcuts',shortcut2)
+        
+    return val
+#@nonl
 #@-node:ekr.20060104120602:matchKeys
 #@+node:ekr.20060102135349.2:enterNamedMode &helpers
 def enterNamedMode (self,event,commandName):
@@ -12541,7 +12550,7 @@ def generalModeHandler (self,event,name=None):
     commandName = 'enter-' + modeName
     state = k.getState(modeName)
     keysym = event and event.keysym or ''
-    # g.trace(modeName,'state',state)
+    g.trace(modeName,'state',state)
     
     d = g.app.config.modeCommandsDict.get(commandName)
     if not d:
@@ -12553,24 +12562,22 @@ def generalModeHandler (self,event,name=None):
         k.setLabelBlue(name,protect=True)
         ## To do: add comments.
         k.modeCompletionList = d.keys()
-    elif keysym == 'Tab':
-        k.showModeHelp(d)
-        f.minibufferWantsFocus()
     else:
         for key in d.keys():
-            shortcut = d.get(key)
-            if k.matchKeys(event,shortcut):
-                func = c.commandsDict.get(key)
-                g.trace('calling',func)
-                k.clearState()
-                k.resetLabel()
-                # func(event)
-                k.endCommand(event,k.stroke)
-                c.frame.widgetWantsFocus(k.modeWidget)
-                break
-        else:
-            k.showModeHelp(d)
-            f.minibufferWantsFocus()
+            bunchList = d.get(key)
+            for bunch in bunchList:
+                if k.matchKeys(event,bunch.val):
+                    func = c.commandsDict.get(key)
+                    g.trace('calling',func)
+                    k.clearState()
+                    k.resetLabel()
+                    # func(event)
+                    k.endCommand(event,k.stroke)
+                    c.frame.log.deleteTab('Mode')
+                    c.frame.widgetWantsFocus(k.modeWidget)
+                    return 'break'
+        k.showModeHelp(d)
+        f.minibufferWantsFocus()
         
     return 'break'
 #@nonl

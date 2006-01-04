@@ -138,7 +138,7 @@ class keyHandlerClass:
         #@nl
     #@nonl
     #@-node:ekr.20050920085536.2: ctor (keyHandler)
-    #@+node:ekr.20050920094633:k.finishCreate & helpers
+    #@+node:ekr.20050920094633:finishCreate (keyHandler) & helpers
     def finishCreate (self):
         
         '''Complete the construction of the keyHandler class.
@@ -189,7 +189,7 @@ class keyHandlerClass:
                 # g.trace('%24s = %s' % (f.__name__,name))
     #@nonl
     #@-node:ekr.20051008082929:createInverseCommandsDict
-    #@-node:ekr.20050920094633:k.finishCreate & helpers
+    #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20050920085536.11:add_ekr_altx_commands
@@ -481,7 +481,7 @@ class keyHandlerClass:
         widget.bind('<Key>',k.onTextWidgetKey)
     #@nonl
     #@-node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
-    #@+node:ekr.20051007080058:k.makeAllBindings
+    #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         
         k = self ; c = k.c
@@ -491,9 +491,18 @@ class keyHandlerClass:
         k.makeSpecialBindings()
         k.makeBindingsFromCommandsDict()
         k.add_ekr_altx_commands()
+        k.addModeCommands()
+        k.checkBindings()
+    #@nonl
+    #@-node:ekr.20051007080058:makeAllBindings
+    #@+node:ekr.20060104154937:addModeCommands
+    def addModeCommands (self):
         
-        # New in Leo 4.4a5: add commands created by @mode settings.
+        '''Add commands created by @mode settings..'''
+    
+        k = self ; c = k.c
         d = g.app.config.modeCommandsDict
+        
         for key in d.keys():
     
             def enterModeCallback (event=None,name=key):
@@ -501,10 +510,8 @@ class keyHandlerClass:
     
             c.commandsDict[key] = f = enterModeCallback
             k.inverseCommandsDict [f.__name__] = key
-    
-        k.checkBindings()
     #@nonl
-    #@-node:ekr.20051007080058:k.makeAllBindings
+    #@-node:ekr.20060104154937:addModeCommands
     #@+node:ekr.20050923174229.1:makeHardBindings
     def makeHardBindings (self):
         
@@ -1082,7 +1089,7 @@ class keyHandlerClass:
         commandName = 'enter-' + modeName
         state = k.getState(modeName)
         keysym = event and event.keysym or ''
-        # g.trace(modeName,'state',state)
+        g.trace(modeName,'state',state)
         
         d = g.app.config.modeCommandsDict.get(commandName)
         if not d:
@@ -1094,24 +1101,22 @@ class keyHandlerClass:
             k.setLabelBlue(name,protect=True)
             ## To do: add comments.
             k.modeCompletionList = d.keys()
-        elif keysym == 'Tab':
-            k.showModeHelp(d)
-            f.minibufferWantsFocus()
         else:
             for key in d.keys():
-                shortcut = d.get(key)
-                if k.matchKeys(event,shortcut):
-                    func = c.commandsDict.get(key)
-                    g.trace('calling',func)
-                    k.clearState()
-                    k.resetLabel()
-                    # func(event)
-                    k.endCommand(event,k.stroke)
-                    c.frame.widgetWantsFocus(k.modeWidget)
-                    break
-            else:
-                k.showModeHelp(d)
-                f.minibufferWantsFocus()
+                bunchList = d.get(key)
+                for bunch in bunchList:
+                    if k.matchKeys(event,bunch.val):
+                        func = c.commandsDict.get(key)
+                        g.trace('calling',func)
+                        k.clearState()
+                        k.resetLabel()
+                        # func(event)
+                        k.endCommand(event,k.stroke)
+                        c.frame.log.deleteTab('Mode')
+                        c.frame.widgetWantsFocus(k.modeWidget)
+                        return 'break'
+            k.showModeHelp(d)
+            f.minibufferWantsFocus()
             
         return 'break'
     #@nonl
@@ -1875,10 +1880,25 @@ class keyHandlerClass:
         
         '''Return true if a binding matches the key specified by the event.'''
         
-        #stroke = k.stroke ; keysym = event.keysym
-        #g.trace('stroke',stroke,'keysym',keysym)
+        k = self ; c = k.c
         
-        return False
+        if not k.stroke or not event: return False
+        
+        stroke = k.stroke ; keysym = event.keysym
+        shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+        
+        if stroke == '<Key>':
+            val = shortcut == keysym or shortcut.startswith('Key-') and shortcut.endswith(keysym)
+        else:
+            val = stroke == shortcut2
+            
+        if 0:
+            g.trace('returns',val,
+                'stroke',stroke,'keysym',keysym,
+                'shortcut',shortcut,'shortcuts',shortcut2)
+            
+        return val
+    #@nonl
     #@-node:ekr.20060104120602:matchKeys
     #@+node:ekr.20051122104219:prettyPrintKey
     def prettyPrintKey (self,key):
