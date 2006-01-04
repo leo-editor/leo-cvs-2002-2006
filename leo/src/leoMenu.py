@@ -1168,12 +1168,8 @@ class leoMenu:
             #@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             # First, get the old-style name.
             commandName = self.computeOldStyleShortcutKey(label)
-            if 1:
-                rawKey,bunchList = c.config.getShortcut(commandName)
-                bunch = bunchList and bunchList[0]
-            else:
-                rawKey,bunch = c.config.getShortcut(commandName)
-            
+            rawKey,bunchList = c.config.getShortcut(commandName)
+            bunch = bunchList and bunchList[0]
             accel = bunch and bunch.val
             
             # Second, get new-style name.
@@ -1207,11 +1203,8 @@ class leoMenu:
                     # Contains the not-so-horrible kludge.
                 if emacs_name:
                     commandName = emacs_name
-                    if 1:
-                        rawKey,bunchList = c.config.getShortcut(emacs_name)
-                        bunch = bunchList and bunchList[0]
-                    else:
-                        rawKey,bunch = c.config.getShortcut(emacs_name)
+                    rawKey,bunchList = c.config.getShortcut(emacs_name)
+                    bunch = bunchList and bunchList[0]
                     accel = bunch and bunch.val
                 elif not dynamicMenu:
                     g.trace('No inverse for %s' % commandName)

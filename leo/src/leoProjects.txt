@@ -9855,12 +9855,11 @@ def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
         # Retain the original spelling of the shortcut for the message.
         shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
         ok = k.bindShortcut (pane,shortcut,func,commandName)
-            
-    if verbose:
-        if shortcut and ok:
-            g.es_print('Registered %s bound to %s' % (
+        if verbose and ok:
+             g.es_print('Registered %s bound to %s' % (
                 commandName,k.prettyPrintKey(shortcut)),color='blue')
-        else:
+    else:
+        if verbose:
             g.es_print('Registered %s' % (commandName), color='blue')
 #@nonl
 #@-node:ekr.20051015110547:k.registerCommand
@@ -9968,6 +9967,8 @@ def doShortcut(self,p,kind,name,val):
 def doShortcuts(self,p,kind,name,val):
     
     __pychecker__ = '--no-argsused' # kind,val not used.
+    
+    # g.trace(self.c.fileName(),p.headString(),g.callers())
     
     d = self.shortcutsDict # To detect duplicates.
     s = p.bodyString()
@@ -10316,7 +10317,7 @@ def copyBindingsToWidget (self,paneOrPanes,widget):
     widget.bind('<Key>',k.onTextWidgetKey)
 #@nonl
 #@-node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
-#@+node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20051007080058:k.makeAllBindings
 def makeAllBindings (self):
     
     k = self ; c = k.c
@@ -10326,9 +10327,17 @@ def makeAllBindings (self):
     k.makeSpecialBindings()
     k.makeBindingsFromCommandsDict()
     k.add_ekr_altx_commands()
+    
+    # New in Leo 4.4a5: add commands created by @mode settings.
+    d = g.app.config.modeCommandsDict
+    for key in d.keys():
+        f = d.get(key)
+        c.commandsDict[key] = f
+        k.inverseCommandsDict [f.__name__] = key
+
     k.checkBindings()
 #@nonl
-#@-node:ekr.20051007080058:makeAllBindings
+#@-node:ekr.20051007080058:k.makeAllBindings
 #@+node:ekr.20050923174229.1:makeHardBindings
 def makeHardBindings (self):
     
@@ -10476,25 +10485,15 @@ def makeBindingsFromCommandsDict (self):
 
     for commandName in keys:
         command = c.commandsDict.get(commandName)
-        if 1:
-            key, bunchList = c.config.getShortcut(commandName)
-            for bunch in bunchList:
-                accel = bunch.val
-                if accel:
-                    bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                    k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-                    if 0:
-                        if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                        else:     g.trace(commandName)
-        else:
-            key, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                 k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-            if 0:
-                if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                else:     g.trace(commandName)
+                if 0:
+                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                    else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
 #@-node:ekr.20051006125633:Binding (keyHandler)
@@ -10819,25 +10818,15 @@ def makeBindingsFromCommandsDict (self):
 
     for commandName in keys:
         command = c.commandsDict.get(commandName)
-        if 1:
-            key, bunchList = c.config.getShortcut(commandName)
-            for bunch in bunchList:
-                accel = bunch.val
-                if accel:
-                    bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                    k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-                    if 0:
-                        if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                        else:     g.trace(commandName)
-        else:
-            key, bunch = c.config.getShortcut(commandName)
-            accel = bunch and bunch.val
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val
             if accel:
                 bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                 k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-            if 0:
-                if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                else:     g.trace(commandName)
+                if 0:
+                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                    else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
 #@+node:ekr.20031218072017.1723:createMenuEntries
@@ -10887,12 +10876,8 @@ if ok and label in (None,'-'):
 #@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
 # First, get the old-style name.
 commandName = self.computeOldStyleShortcutKey(label)
-if 1:
-    rawKey,bunchList = c.config.getShortcut(commandName)
-    bunch = bunchList and bunchList[0]
-else:
-    rawKey,bunch = c.config.getShortcut(commandName)
-
+rawKey,bunchList = c.config.getShortcut(commandName)
+bunch = bunchList and bunchList[0]
 accel = bunch and bunch.val
 
 # Second, get new-style name.
@@ -10901,11 +10886,8 @@ if not accel:
         # Contains the not-so-horrible kludge.
     if emacs_name:
         commandName = emacs_name
-        if 1:
-            rawKey,bunchList = c.config.getShortcut(emacs_name)
-            bunch = bunchList and bunchList[0]
-        else:
-            rawKey,bunch = c.config.getShortcut(emacs_name)
+        rawKey,bunchList = c.config.getShortcut(emacs_name)
+        bunch = bunchList and bunchList[0]
         accel = bunch and bunch.val
     elif not dynamicMenu:
         g.trace('No inverse for %s' % commandName)
@@ -11772,6 +11754,122 @@ These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
 enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.
 #@nonl
 #@-node:ekr.20060103113002:What I did
+#@+node:ekr.20060104101411:Birth
+#@+node:ekr.20051007080058:k.makeAllBindings
+def makeAllBindings (self):
+    
+    k = self ; c = k.c
+    
+    k.bindingsDict = {}
+    k.makeHardBindings()
+    k.makeSpecialBindings()
+    k.makeBindingsFromCommandsDict()
+    k.add_ekr_altx_commands()
+    
+    # New in Leo 4.4a5: add commands created by @mode settings.
+    d = g.app.config.modeCommandsDict
+    for key in d.keys():
+        f = d.get(key)
+        c.commandsDict[key] = f
+        k.inverseCommandsDict [f.__name__] = key
+
+    k.checkBindings()
+#@nonl
+#@-node:ekr.20051007080058:k.makeAllBindings
+#@+node:ekr.20050920094633:k.finishCreate & helpers
+def finishCreate (self):
+    
+    '''Complete the construction of the keyHandler class.
+    c.commandsDict has been created when this is called.'''
+    
+    k = self ; c = k.c
+   
+    k.createInverseCommandsDict()
+    
+    if not c.miniBufferWidget:
+        # Does not exist for leoSettings.leo files.
+        return
+        
+    # g.trace('keyHandler')
+
+    # Important: bindings exist even if c.showMiniBuffer is False.
+    k.makeAllBindings()
+    
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
+    if 0: # Hurray.  This was a massive kludge.
+        g.enableIdleTimeHook(250)
+    
+    if 0:
+        addTemacsExtensions(k)
+        addTemacsAbbreviations(k)
+        changeKeyStrokes(k,f.bodyCtrl)
+#@nonl
+#@+node:ekr.20051008082929:createInverseCommandsDict
+def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict,
+    except when c.commandDict.get(key) refers to the leoCallback function.
+    leoCommands.getPublicCommands has already added an entry in this case.
+    
+    In c.commandsDict        keys are command names, values are funcions f.
+    In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        
+        # 'leoCallback' callback created by leoCommands.getPublicCommands.
+        if f.__name__ != 'leoCallback':
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+#@nonl
+#@-node:ekr.20051008082929:createInverseCommandsDict
+#@-node:ekr.20050920094633:k.finishCreate & helpers
+#@+node:ekr.20050920093543:c.finishCreate & helper
+def finishCreate (self):  # New in 4.4.
+    
+    '''Finish creating the commander after frame.finishCreate.'''
+    
+    c = self ; p = c.currentPosition()
+    c.miniBufferWidget = c.frame.miniBufferWidget
+    # g.trace('Commands',c.fileName()) # g.callers())
+    
+    # Create a keyHandler even if there is no miniBuffer.
+    c.keyHandler = k = leoKeys.keyHandlerClass(c,
+        useGlobalKillbuffer=True,
+        useGlobalRegisters=True)
+
+    if g.app.config and g.app.config.inited:
+        # A 'real' .leo file.
+        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
+        k.finishCreate()
+    else:
+        # A leoSettings.leo file.
+        c.commandsDict = {}
+
+    # Create the menu last so that we can use the key handler for shortcuts.
+    if not g.doHook("menu1",c=c,p=p,v=p):
+        c.frame.menu.createMenuBar(c.frame)
+#@nonl
+#@+node:ekr.20051007143620:printCommandsDict
+def printCommandsDict (self):
+    
+    c = self
+    
+    print 'Commands...'
+    keys = c.commandsDict.keys()
+    keys.sort()
+    for key in keys:
+        command = c.commandsDict.get(key)
+        print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
+    print
+#@nonl
+#@-node:ekr.20051007143620:printCommandsDict
+#@-node:ekr.20050920093543:c.finishCreate & helper
+#@-node:ekr.20060104101411:Birth
 #@+node:ekr.20060102134206.1:From leoConfig.py
 #@+node:ekr.20050920085536.2: ctor (keyHandler)
 def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
@@ -11873,13 +11971,21 @@ def createModeCommand (self,name):
 
     c = self.c ; k = c.keyHandler
     commandName = 'enter-' + name
+    
+    # g.trace(c,commandName)
 
-    def enterModeCallback (name=name):
+    def enterModeCallback (event=None,name=name):
+        g.trace(name)
         k.enterNamedMode(name)
-
-    # Create only the command.  Shortcuts can be bound at any time.
-    k.registerCommand(commandName,shortcut=None,
-        func=enterModeCallback,pane=None,verbose=True)
+        
+    # Save the info for k.finishCreate and k.makeAllBindings.
+    d = g.app.config.modeCommandsDict
+    if d.get(name):
+        g.trace('Ignoring duplicate mode: %s' % commandName)
+    else:
+        d [commandName] = enterModeCallback
+        
+    
 #@nonl
 #@-node:ekr.20060102103625:createModeCommand
 #@+node:ekr.20060102103625.1:doMode
@@ -11888,7 +11994,7 @@ def doMode(self,p,kind,name,val):
     '''Parse an @mode node and create the enter-<name>-mode command.'''
     
     c = self.c ; k = c.keyHandler
-    
+
     # Compute the mode name.
     name = name.strip().lower()
     if name.endswith('mode'):
@@ -11896,7 +12002,6 @@ def doMode(self,p,kind,name,val):
     if name.endswith('-'):
         name = name[:-1]
     name = name + '-mode'
-    # g.trace(name)
     
     # Check for duplicate mode names.
     if k.inputModesDict.get(name):
@@ -11918,7 +12023,32 @@ def doMode(self,p,kind,name,val):
     
     # Create the command, but not any bindings to it.
     self.createModeCommand(name)
+#@nonl
 #@-node:ekr.20060102103625.1:doMode
+#@+node:ekr.20041120105609:doShortcuts
+def doShortcuts(self,p,kind,name,val):
+    
+    __pychecker__ = '--no-argsused' # kind,val not used.
+    
+    # g.trace(self.c.fileName(),p.headString(),g.callers())
+    
+    d = self.shortcutsDict # To detect duplicates.
+    s = p.bodyString()
+    lines = g.splitLines(s)
+    for line in lines:
+        line = line.strip()
+        if line and not g.match(line,0,'#'):
+            name,bunch = self.parseShortcutLine(line)
+            # g.trace(name,bunch)
+            if bunch is not None:
+                # New in 4.4a5:
+                bunchList = d.get(name,[])
+                bunchList.append(bunch)
+                d [name] = bunchList
+                self.set(p,"shortcut",name,bunchList)
+                self.setShortcut(name,bunchList)
+#@nonl
+#@-node:ekr.20041120105609:doShortcuts
 #@-node:ekr.20060102134206.1:From leoConfig.py
 #@+node:ekr.20060102134206.2:From leoKeys.py
 #@+node:ekr.20050920085536.2: ctor (keyHandler)
@@ -12205,7 +12335,7 @@ def fullCommand (self,event,specialStroke=None,specialFunc=None):
         # g.trace('new prefix',k.mb_tabListPrefix)
 
     return 'break'
-
+#@nonl
 #@+node:ekr.20050920085536.45:callAltXFunction
 def callAltXFunction (self,event):
     
@@ -12407,19 +12537,18 @@ def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
         # Retain the original spelling of the shortcut for the message.
         shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
         ok = k.bindShortcut (pane,shortcut,func,commandName)
-            
-    if verbose:
-        if shortcut and ok:
-            g.es_print('Registered %s bound to %s' % (
+        if verbose and ok:
+             g.es_print('Registered %s bound to %s' % (
                 commandName,k.prettyPrintKey(shortcut)),color='blue')
-        else:
+    else:
+        if verbose:
             g.es_print('Registered %s' % (commandName), color='blue')
 #@nonl
 #@-node:ekr.20051015110547:k.registerCommand
 #@+node:ekr.20060102135349:k.addModeBindings
 def addModeBindings (self,d):
     
-    g.trace(d)
+    g.trace(d.keys())
 #@nonl
 #@-node:ekr.20060102135349:k.addModeBindings
 #@+node:ekr.20060102135349.1:k.deleteModeBindings

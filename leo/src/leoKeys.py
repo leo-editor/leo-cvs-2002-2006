@@ -481,7 +481,7 @@ class keyHandlerClass:
         widget.bind('<Key>',k.onTextWidgetKey)
     #@nonl
     #@-node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
-    #@+node:ekr.20051007080058:makeAllBindings
+    #@+node:ekr.20051007080058:k.makeAllBindings
     def makeAllBindings (self):
         
         k = self ; c = k.c
@@ -491,9 +491,17 @@ class keyHandlerClass:
         k.makeSpecialBindings()
         k.makeBindingsFromCommandsDict()
         k.add_ekr_altx_commands()
+        
+        # New in Leo 4.4a5: add commands created by @mode settings.
+        d = g.app.config.modeCommandsDict
+        for key in d.keys():
+            f = d.get(key)
+            c.commandsDict[key] = f
+            k.inverseCommandsDict [f.__name__] = key
+    
         k.checkBindings()
     #@nonl
-    #@-node:ekr.20051007080058:makeAllBindings
+    #@-node:ekr.20051007080058:k.makeAllBindings
     #@+node:ekr.20050923174229.1:makeHardBindings
     def makeHardBindings (self):
         
@@ -641,25 +649,15 @@ class keyHandlerClass:
     
         for commandName in keys:
             command = c.commandsDict.get(commandName)
-            if 1:
-                key, bunchList = c.config.getShortcut(commandName)
-                for bunch in bunchList:
-                    accel = bunch.val
-                    if accel:
-                        bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
-                        k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-                        if 0:
-                            if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                            else:     g.trace(commandName)
-            else:
-                key, bunch = c.config.getShortcut(commandName)
-                accel = bunch and bunch.val
+            key, bunchList = c.config.getShortcut(commandName)
+            for bunch in bunchList:
+                accel = bunch.val
                 if accel:
                     bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
                     k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-                if 0:
-                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                    else:     g.trace(commandName)
+                    if 0:
+                        if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                        else:     g.trace(commandName)
     #@nonl
     #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
     #@-node:ekr.20051006125633:Binding (keyHandler)
@@ -853,7 +851,7 @@ class keyHandlerClass:
             # g.trace('new prefix',k.mb_tabListPrefix)
     
         return 'break'
-    
+    #@nonl
     #@+node:ekr.20050920085536.45:callAltXFunction
     def callAltXFunction (self,event):
         
@@ -1562,19 +1560,18 @@ class keyHandlerClass:
             # Retain the original spelling of the shortcut for the message.
             shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
             ok = k.bindShortcut (pane,shortcut,func,commandName)
-                
-        if verbose:
-            if shortcut and ok:
-                g.es_print('Registered %s bound to %s' % (
+            if verbose and ok:
+                 g.es_print('Registered %s bound to %s' % (
                     commandName,k.prettyPrintKey(shortcut)),color='blue')
-            else:
+        else:
+            if verbose:
                 g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
     #@-node:ekr.20051015110547:k.registerCommand
     #@+node:ekr.20060102135349:k.addModeBindings
     def addModeBindings (self,d):
         
-        g.trace(d)
+        g.trace(d.keys())
     #@nonl
     #@-node:ekr.20060102135349:k.addModeBindings
     #@+node:ekr.20060102135349.1:k.deleteModeBindings

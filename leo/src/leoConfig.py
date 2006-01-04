@@ -87,13 +87,21 @@ class parserBaseClass:
     
         c = self.c ; k = c.keyHandler
         commandName = 'enter-' + name
+        
+        # g.trace(c,commandName)
     
-        def enterModeCallback (name=name):
+        def enterModeCallback (event=None,name=name):
+            g.trace(name)
             k.enterNamedMode(name)
-    
-        # Create only the command.  Shortcuts can be bound at any time.
-        k.registerCommand(commandName,shortcut=None,
-            func=enterModeCallback,pane=None,verbose=True)
+            
+        # Save the info for k.finishCreate and k.makeAllBindings.
+        d = g.app.config.modeCommandsDict
+        if d.get(name):
+            g.trace('Ignoring duplicate mode: %s' % commandName)
+        else:
+            d [commandName] = enterModeCallback
+            
+        
     #@nonl
     #@-node:ekr.20060102103625:createModeCommand
     #@+node:ekr.20041120103012:error
@@ -260,7 +268,7 @@ class parserBaseClass:
         '''Parse an @mode node and create the enter-<name>-mode command.'''
         
         c = self.c ; k = c.keyHandler
-        
+    
         # Compute the mode name.
         name = name.strip().lower()
         if name.endswith('mode'):
@@ -268,7 +276,6 @@ class parserBaseClass:
         if name.endswith('-'):
             name = name[:-1]
         name = name + '-mode'
-        # g.trace(name)
         
         # Check for duplicate mode names.
         if k.inputModesDict.get(name):
@@ -290,6 +297,7 @@ class parserBaseClass:
         
         # Create the command, but not any bindings to it.
         self.createModeCommand(name)
+    #@nonl
     #@-node:ekr.20060102103625.1:doMode
     #@+node:ekr.20041120104215.2:doPage
     def doPage(self,p,kind,name,val):
@@ -323,6 +331,8 @@ class parserBaseClass:
     def doShortcuts(self,p,kind,name,val):
         
         __pychecker__ = '--no-argsused' # kind,val not used.
+        
+        # g.trace(self.c.fileName(),p.headString(),g.callers())
         
         d = self.shortcutsDict # To detect duplicates.
         s = p.bodyString()
@@ -565,8 +575,9 @@ class parserBaseClass:
             result = self.visitNode(p)
             # g.trace(result,p.headString())
             if result == "skip":
-                s = 'skipping settings in %s' % p.headString()
-                g.es_print(s,color='blue')
+                if 0:
+                    s = 'skipping settings in %s' % p.headString()
+                    g.es_print(s,color='blue')
                 p.moveToNodeAfterTree()
             else:
                 p.moveToThreadNext()
@@ -741,6 +752,7 @@ class configClass:
         self.globalConfigFile = None # Set in initSettingsFiles
         self.homeFile = None # Set in initSettingsFiles
         self.inited = False
+        self.modeCommandsDict = {} # For use by @mode logic.
         self.recentFilesFiles = [] # List of g.Bunches describing .leoRecentFiles.txt files.
         
         # Inited later...
