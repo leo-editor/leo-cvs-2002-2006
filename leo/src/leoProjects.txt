@@ -11723,8 +11723,20 @@ def getTabName (self,exitCallback):
 #@+node:ekr.20060103104509:To do
 @nocolor
 
-- look at k.unboundKeyAction in handleDefaultChar.
+** Create general mode handler code.
+    - It uses the existing state machinery.
+    - It only honors the mode bindings, plus perhaps a few universal bindings.
+    - It restores focus by default (can be overridden by focus-shifting commands).
+    - It leaves existing bindings alone (because it is called from masterCommand).
+    - It supports typing completion: a list of valid keystrokes in the mode.
 
+- look at k.unboundKeyAction in handleDefaultChar.
+    - Create method to handle replace mode.
+#@nonl
+#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
+#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
+#@-node:ekr.20060103104509:To do
+#@+node:ekr.20060103133740:Prototypes
 - Create prototype of ekr-vim mode
     - initial_unbound_key_binding = ignore
     - plain key bindings for:
@@ -11739,7 +11751,7 @@ def getTabName (self,exitCallback):
         -all normal vim commands.
         -all vim temporary modes.
 #@nonl
-#@-node:ekr.20060103104509:To do
+#@-node:ekr.20060103133740:Prototypes
 #@+node:ekr.20060103113002:What I did
 @nocolor
 
@@ -11760,8 +11772,6 @@ These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
 enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.
 #@nonl
 #@-node:ekr.20060103113002:What I did
-#@+node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
-#@-node:ekr.20051017140811.1:@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html
 #@+node:ekr.20060102134206.1:From leoConfig.py
 #@+node:ekr.20050920085536.2: ctor (keyHandler)
 def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
