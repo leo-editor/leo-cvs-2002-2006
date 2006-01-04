@@ -250,17 +250,11 @@
 </v>
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
-<v t="ekr.20051007193321"><vh>@@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
-<v t="ekr.20051218202206"><vh>@@shortcuts no bindings</vh></v>
-<v t="ekr.20051218203646"><vh>@@shortcuts traditional Leo bindings</vh></v>
-<v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
-<v t="ekr.20051010112558"><vh>traditional Leo shortcuts with important emacs bindings</vh>
-<v t="ekr.20060102113259"><vh>@mode vim-file mode</vh></v>
-<v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
-<v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>
-<v t="ekr.20060102102958.1"><vh>@shortcuts M-Z</vh></v>
-</v>
-<v t="ekr.20060103135341" a="TV"><vh>vim-like bindings</vh>
+<v t="ekr.20060104093101" a="TV"><vh>@ignore unused key bindings</vh>
+<v t="ekr.20051007193321"><vh>@shortcuts default Emacs shortcuts with all Leo commands</vh></v>
+<v t="ekr.20051218202206"><vh>@shortcuts no bindings</vh></v>
+<v t="ekr.20051218203646"><vh>@shortcuts traditional Leo bindings</vh></v>
+<v t="ekr.20060103135341"><vh>vim-like bindings</vh>
 <v t="ekr.20060103135341.1"><vh>@@mode file</vh></v>
 <v t="ekr.20060103135341.2"><vh>@@mode find</vh></v>
 <v t="ekr.20060103135341.3"><vh>@@mode help</vh></v>
@@ -279,6 +273,14 @@
 <v t="ekr.20060103135341.15"><vh>@@shortcuts delete/kill/yank</vh></v>
 <v t="ekr.20060103135341.16"><vh>@@shortcuts focus</vh></v>
 <v t="ekr.20060103135341.17"><vh>@@shortcuts scroll</vh></v>
+</v>
+<v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
+</v>
+<v t="ekr.20051010112558" a="E"><vh>traditional Leo shortcuts with important emacs bindings</vh>
+<v t="ekr.20060102113259"><vh>@mode file mode</vh></v>
+<v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
+<v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>
+<v t="ekr.20060102102958.1"><vh>@shortcuts M-Z</vh></v>
 </v>
 </v>
 </v>
@@ -3518,5 +3520,6 @@ focus-to-tree                           = None</t>
 <t tx="ekr.20060103135341.17">equal-sized-panes                       = Alt-Shift-E
 scroll-down                             = PageDn    # Ctrl-v conflicts with paste-text.
 scroll-up                               = PageUp    # Alt-v conflicts with view-all-characters.</t>
+<t tx="ekr.20060104093101"></t>
 </tnodes>
 </leo_file>
