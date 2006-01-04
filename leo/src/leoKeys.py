@@ -89,8 +89,7 @@ class keyHandlerClass:
         self.funcReturn = None # For k.simulateCommand
         
         self.inputModeBindings = {}
-        self.inputModesDict = {}
-            # Keys are mode names, values are bindings dicts.
+        self.inputModeName = ''
         self.inverseCommandsDict = {}
             # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
         self.leoCallbackDict = {}
@@ -126,6 +125,7 @@ class keyHandlerClass:
         self.func = None
         self.keysymHistory = []
         self.previous = []
+        self.stroke = None
         
         # For getArg...
         self.afterGetArgState = None
@@ -495,8 +495,11 @@ class keyHandlerClass:
         # New in Leo 4.4a5: add commands created by @mode settings.
         d = g.app.config.modeCommandsDict
         for key in d.keys():
-            f = d.get(key)
-            c.commandsDict[key] = f
+    
+            def enterModeCallback (event=None,name=key):
+                k.enterNamedMode(event,name)
+    
+            c.commandsDict[key] = f = enterModeCallback
             k.inverseCommandsDict [f.__name__] = key
     
         k.checkBindings()
@@ -1062,24 +1065,81 @@ class keyHandlerClass:
         self.unboundKeyAction = 'replace'
     #@nonl
     #@-node:ekr.20060103111643:enterXXXMode
-    #@+node:ekr.20060102135349.2:enterNamedMode
-    def enterNamedMode (self,name):
+    #@+node:ekr.20060102135349.2:enterNamedMode &helpers
+    def enterNamedMode (self,event,commandName):
         
-        k = self
+        k = self ; c = k.c
+        modeName = commandName[6:]
         
-        d = k.inputModesDict.get(name)
-        if d:
-            # Delete previous node bindings.
-            d2 = k.inputModeBindings
-            if d2:
-                k.deleteModeBindings(d2)
-                k.inputModeBindings = {}
-                
-            # Add new node bindings.
-            k.addModeBindings(d)
-            k.inputModeBindings = d
+        k.generalModeHandler(event,modeName)
+    #@+node:ekr.20060104110233:generalModeHandler
+    def generalModeHandler (self,event,name=None):
+        
+        '''Handle a mode defined by an @mode node in leoSettings.leo.'''
+    
+        k = self ; c = k.c ; f = c.frame
+        modeName = name or k.inputModeName
+        commandName = 'enter-' + modeName
+        state = k.getState(modeName)
+        keysym = event and event.keysym or ''
+        # g.trace(modeName,'state',state)
+        
+        d = g.app.config.modeCommandsDict.get(commandName)
+        if not d:
+            g.trace("can't happen")
+        elif state == 0:
+            k.inputModeName = modeName
+            k.modeWidget = event and event.widget
+            k.setState(name,1,handler=k.generalModeHandler)
+            k.setLabelBlue(name,protect=True)
+            ## To do: add comments.
+            k.modeCompletionList = d.keys()
+        elif keysym == 'Tab':
+            k.showModeHelp(d)
+            f.minibufferWantsFocus()
+        else:
+            for key in d.keys():
+                shortcut = d.get(key)
+                if k.matchKeys(event,shortcut):
+                    func = c.commandsDict.get(key)
+                    g.trace('calling',func)
+                    k.clearState()
+                    k.resetLabel()
+                    # func(event)
+                    k.endCommand(event,k.stroke)
+                    c.frame.widgetWantsFocus(k.modeWidget)
+                    break
+            else:
+                k.showModeHelp(d)
+                f.minibufferWantsFocus()
+            
+        return 'break'
     #@nonl
-    #@-node:ekr.20060102135349.2:enterNamedMode
+    #@-node:ekr.20060104110233:generalModeHandler
+    #@+node:ekr.20060104125946:showModeHelp
+    def showModeHelp (self,d):
+        
+        k = self ; c = k.c
+        
+        c.frame.log.clearTab('Mode')
+        
+        for key in d.keys():
+            comment = ''
+            bunchList = d.get(key)
+            bunch = bunchList and bunchList[0]
+            shortcut = bunch.val
+            
+            if shortcut not in (None,'None'):
+                if shortcut.startswith('Key-'):
+                    shortcut = shortcut[4:]
+                    if len(shortcut) == 1:
+                        ch = shortcut[0]
+                        if ch in string.ascii_uppercase:
+                            shortcut = 'Shift-%s' % ch.lower()
+                g.es('%s\t%s %s' % (shortcut,key,comment),tabName='Mode')
+    #@nonl
+    #@-node:ekr.20060104125946:showModeHelp
+    #@-node:ekr.20060102135349.2:enterNamedMode &helpers
     #@+node:ekr.20051014170754:k.help
     def help (self,event):
         
@@ -1510,6 +1570,7 @@ class keyHandlerClass:
             k.doTabCompletion(k.argTabList)
         elif keysym == 'BackSpace':
             k.doBackSpace(k.argTabList)
+            c.frame.minibufferWantsFocus()
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
@@ -1531,6 +1592,7 @@ class keyHandlerClass:
             return
             
         c.frame.log.deleteTab('Completion')
+        c.frame.log.deleteTab('Mode')
             
         k.clearState()
         k.resetLabel()
@@ -1749,7 +1811,7 @@ class keyHandlerClass:
     
         '''Cut back to previous prefix and update prefix.'''
     
-        k = self
+        k = self ; c = k.c
     
         if len(k.mb_tabListPrefix) > len(k.mb_prefix):
     
@@ -1757,7 +1819,6 @@ class keyHandlerClass:
             k.setLabel(k.mb_tabListPrefix)
     
         k.computeCompletionList(defaultCompletionList,backspace=True)
-    #@nonl
     #@-node:ekr.20050920085536.46:doBackSpace
     #@+node:ekr.20050920085536.44:doTabCompletion
     # Used by getArg and fullCommand.
@@ -1809,6 +1870,16 @@ class keyHandlerClass:
         return ''
     #@nonl
     #@-node:ekr.20051014170754.1:getShortcutForCommand/Name
+    #@+node:ekr.20060104120602:matchKeys
+    def matchKeys (self,event,shortcut):
+        
+        '''Return true if a binding matches the key specified by the event.'''
+        
+        #stroke = k.stroke ; keysym = event.keysym
+        #g.trace('stroke',stroke,'keysym',keysym)
+        
+        return False
+    #@-node:ekr.20060104120602:matchKeys
     #@+node:ekr.20051122104219:prettyPrintKey
     def prettyPrintKey (self,key):
         

@@ -83,25 +83,18 @@ class parserBaseClass:
     #@nonl
     #@-node:ekr.20041119204700: ctor (parserBaseClass)
     #@+node:ekr.20060102103625:createModeCommand
-    def createModeCommand (self,name):
+    def createModeCommand (self,name,modeDict):
     
-        c = self.c ; k = c.keyHandler
+        # c = self.c ; k = c.keyHandler
         commandName = 'enter-' + name
-        
-        # g.trace(c,commandName)
-    
-        def enterModeCallback (event=None,name=name):
-            g.trace(name)
-            k.enterNamedMode(name)
             
         # Save the info for k.finishCreate and k.makeAllBindings.
         d = g.app.config.modeCommandsDict
+    
         if d.get(name):
             g.trace('Ignoring duplicate mode: %s' % commandName)
         else:
-            d [commandName] = enterModeCallback
-            
-        
+            d [commandName] = modeDict
     #@nonl
     #@-node:ekr.20060102103625:createModeCommand
     #@+node:ekr.20041120103012:error
@@ -277,8 +270,10 @@ class parserBaseClass:
             name = name[:-1]
         name = name + '-mode'
         
+        g.trace(name)
+        
         # Check for duplicate mode names.
-        if k.inputModesDict.get(name):
+        if g.app.config.modeCommandsDict.get(name):
             g.trace('Ignoring duplicate @mode setting: %s' % name)
             return
         
@@ -289,14 +284,12 @@ class parserBaseClass:
         
         # Remember the mode dict.
         d2 = self.shortcutsDict
-        # g.trace(d2.keys())
-        k.inputModesDict [name] = d2
         
         # Restore the global dict.
         self.shortcutsDict = d
         
         # Create the command, but not any bindings to it.
-        self.createModeCommand(name)
+        self.createModeCommand(name,d2)
     #@nonl
     #@-node:ekr.20060102103625.1:doMode
     #@+node:ekr.20041120104215.2:doPage
