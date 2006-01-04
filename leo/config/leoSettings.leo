@@ -2552,6 +2552,7 @@ mark-clones                             = None      # Alt-K: not useful enough.
 mark-subheads                           = None      # Alt-S: not useful enough.
 match-bracket                           = Ctrl-K    # Conflicts with kill-line
 minimize-all                            = None
+mode-help                               = None
 move-outline-down                       = Ctrl-D
 move-outline-left                       = Ctrl-L
 move-outline-right                      = Ctrl-R
@@ -2706,14 +2707,17 @@ yank                                    = Control-y
 yank-pop                                = Alt-y
 yank-rectangle                          = None
 zap-to-character                        = Alt-z</t>
-<t tx="ekr.20060102113259">enter-input-mode    = Key-i
+<t tx="ekr.20060102113259">enter-input-mode    = Key-i     # The i is the same as Key-i
 enter-default-mode  = Ctrl-c
 enter-default-mode  = BackSpace
+mode-help           = Tab
 
-exit-leo            = Key-q
+exit-leo            = q
 new                 = n
-open-outline        = Key-o
-save-file           = Key-s
+open-outline        = o
+save-file           = s
+
+# Bindings to None have no effect.  They can be used as documentation.
 save-file-as        = None
 save-file-to        = None</t>
 <t tx="ekr.20060103103415">@nocolor

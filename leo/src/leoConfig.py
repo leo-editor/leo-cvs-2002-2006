@@ -503,10 +503,12 @@ class parserBaseClass:
             val = s[i:]
                
         # New in 4.4: Allow comments after the shortcut.
-        # Comments must be preceded by whitespace. 
+        # Comments must be preceded by whitespace.
+        comment = ''
         if val:
             i = val.find('#')
             if i > 0 and val[i-1] in (' ','\t'):
+                # comment = val[i:].strip()
                 val = val[:i].strip()
     
         # g.trace(pane,name,val,s)

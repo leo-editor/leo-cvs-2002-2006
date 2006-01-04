@@ -3768,6 +3768,7 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'enter-replace-mode':       k.enterReplaceMode,
             'help':                     k.help,
             'hide-mini-buffer':         k.hideMinibuffer,
+            'mode-help':                k.modeHelp,
             'negative-argument':        k.negativeArgument,
             'number-command':           k.numberCommand,
             'number-command-0':         k.numberCommand0,

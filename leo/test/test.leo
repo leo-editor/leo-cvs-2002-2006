@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
 <globals body_outline_ratio="0.438470728793">
-	<global_window_position top="61" left="290" height="837" width="836"/>
+	<global_window_position top="75" left="255" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -21,21 +21,21 @@
 <v t="ekr.20050821081021.1" a="M"><vh>moveLinesDown</vh></v>
 </v>
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
-<v t="ekr.20051221091553" a="E"><vh>@command dbl-click @key = Alt-Shift-C</vh></v>
-</v>
 <v t="ekr.20041001194357"><vh>@@button Unit Test</vh></v>
+<v t="ekr.20051221091553"><vh>@@command dbl-click @key = Alt-Shift-C</vh></v>
+<v t="ekr.20051219184032"><vh>@@button run timer</vh></v>
+<v t="ekr.20051121143509"><vh>@@button shorten-lines</vh>
+<v t="ekr.20051124065932"><vh>to do</vh></v>
+<v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
+<v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
+</v>
+</v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
 <v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
-</v>
-<v t="ekr.20051219184032"><vh>@@button run timer</vh></v>
-<v t="ekr.20051121143509"><vh>@@button shorten-lines</vh>
-<v t="ekr.20051124065932"><vh>to do</vh></v>
-<v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
-<v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
 </v>
 </v>
 <v t="ekr.20051104081824"><vh>Tests</vh>
@@ -48,13 +48,13 @@
 <v t="ekr.20051113055640"><vh>Find bug</vh>
 <v t="ekr.20051113055640.1"><vh>Report</vh></v>
 <v t="ekr.20051113055640.2"><vh>This is a sample node</vh></v>
-<v t="ekr.20051113055640.3" a="E"><vh>@thin findBug.txt</vh></v>
+<v t="ekr.20051113055640.3"><vh>@thin findBug.txt</vh></v>
 </v>
 <v t="ekr.20051120173510"><vh>@@button remove-blank-lines</vh></v>
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 </v>
-<v t="ekr.20051120173230" a="E"><vh>Prototypes</vh>
+<v t="ekr.20051120173230"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
@@ -66,7 +66,7 @@
 <v t="ekr.20051112134206.11"><vh>class Popen</vh>
 <v t="ekr.20051112134206.12"><vh>__init__</vh></v>
 <v t="ekr.20051112134206.13"><vh>_translate_newlines</vh></v>
-<v t="ekr.20051112135040.2" a="E"><vh>&lt;&lt; Windows methods &gt;&gt;</vh>
+<v t="ekr.20051112135040.2"><vh>&lt;&lt; Windows methods &gt;&gt;</vh>
 <v t="ekr.20051112134206.14"><vh>_get_handles</vh></v>
 <v t="ekr.20051112135040.3"><vh>_make_inheritable</vh></v>
 <v t="ekr.20051112135040.4"><vh>_find_w9xpopen</vh></v>
@@ -99,14 +99,14 @@
 <v t="ekr.20051111114555.1"><vh>@thin leoDebugger.py</vh></v>
 <v t="ekr.20051111114555.2"><vh>@@button dbProc</vh>
 <v t="ekr.20051111145211.1"><vh>openDebugTab</vh></v>
-<v t="ekr.20051111143349.1" a="E"><vh>class debugTab</vh>
+<v t="ekr.20051111143349.1"><vh>class debugTab</vh>
 <v t="ekr.20051111143349.2"><vh>Birth &amp; death</vh>
-<v t="ekr.20051111143349.3" a="E"><vh>__init__</vh>
+<v t="ekr.20051111143349.3"><vh>__init__</vh>
 <v t="ekr.20051111143349.7"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
 <v t="ekr.20051111143922"><vh>&lt;&lt; create buttons &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20051111143349.16" a="E"><vh>callbacks</vh>
+<v t="ekr.20051111143349.16"><vh>callbacks</vh>
 <v t="ekr.20051111145134"><vh>askButtonCallback</vh></v>
 <v t="ekr.20051111145134.1"><vh>killButtonCallback</vh></v>
 <v t="ekr.20051111145134.2"><vh>runButtonCallback</vh></v>
@@ -121,7 +121,7 @@
 <v t="ekr.20051120173230.1"><vh>Server stuff</vh>
 <v t="ekr.20051116122352"><vh>@thin c:\AppServ\www\php-test.php</vh></v>
 <v t="ekr.20051116133640"><vh>@thin c:\AppServ\www\form.html</vh></v>
-<v t="ekr.20051116133640.1" a="E"><vh>@thin c:\AppServ\www\welcome.php</vh></v>
+<v t="ekr.20051116133640.1"><vh>@thin c:\AppServ\www\welcome.php</vh></v>
 </v>
 <v t="ekr.20051120173230.2"><vh>Diff stuff</vh>
 <v t="ekr.20051116222849"><vh>Tools/Scripts/diff.py</vh>
@@ -141,7 +141,7 @@
 <v t="ekr.20051116222016.11"><vh>get_matching_blocks</vh></v>
 <v t="ekr.20051116222016.12"><vh>__helper</vh></v>
 <v t="ekr.20051116222016.13"><vh>get_opcodes</vh></v>
-<v t="ekr.20051116222016.14" a="E"><vh>get_grouped_opcodes</vh></v>
+<v t="ekr.20051116222016.14"><vh>get_grouped_opcodes</vh></v>
 <v t="ekr.20051116222016.15"><vh>ratio</vh></v>
 <v t="ekr.20051116222016.16"><vh>quick_ratio</vh></v>
 <v t="ekr.20051116222016.17"><vh>real_quick_ratio</vh></v>
@@ -149,7 +149,7 @@
 <v t="ekr.20051116222016.18"><vh>get_close_matches</vh></v>
 <v t="ekr.20051116222016.19"><vh>_count_leading</vh></v>
 <v t="ekr.20051116222016.20" a="M"><vh>class Differ</vh>
-<v t="ekr.20051116222016.21" a="E"><vh>&lt;&lt; class Differ declarations &gt;&gt;</vh></v>
+<v t="ekr.20051116222016.21"><vh>&lt;&lt; class Differ declarations &gt;&gt;</vh></v>
 <v t="ekr.20051116222016.22"><vh>__init__</vh></v>
 <v t="ekr.20051116222016.23"><vh>compare</vh></v>
 <v t="ekr.20051116222016.24"><vh>_dump</vh></v>
@@ -174,7 +174,7 @@
 <v t="ekr.20051116222016.42"><vh>_collect_lines</vh></v>
 <v t="ekr.20051116222016.43"><vh>_format_line</vh></v>
 <v t="ekr.20051116222016.44"><vh>_make_prefix</vh></v>
-<v t="ekr.20051116222016.45" a="E"><vh>_convert_flags</vh></v>
+<v t="ekr.20051116222016.45"><vh>_convert_flags</vh></v>
 <v t="ekr.20051116222016.46"><vh>make_table</vh></v>
 </v>
 <v t="ekr.20051116222016.47"><vh>restore</vh></v>
@@ -189,10 +189,10 @@
 <v t="ekr.20051130182536.1"><vh>batch file</vh>
 <v t="ekr.20051130182412" tnodeList="ekr.20051130182412"><vh>@file ironPythonTest.bat</vh></v>
 </v>
-<v t="ekr.20051130181738" a="EM" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
+<v t="ekr.20051130181738" a="M" tnodeList="ekr.20051130181738"><vh>@file ironPythonTest.py</vh></v>
 </v>
-<v t="ekr.20051214093711" a="E"><vh>redemo</vh>
-<v t="ekr.20060103102234" a="TV"><vh>notes</vh></v>
+<v t="ekr.20051214093711"><vh>redemo</vh>
+<v t="ekr.20060103102234"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
@@ -201,8 +201,8 @@
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
 <v t="ekr.20051121144452.3"><vh>computeWidth</vh></v>
-<v t="ekr.20051121144452.5" a="EM"><vh>optimizeLeadingWhitespace</vh></v>
-<v t="ekr.20051121144452.6" a="E"><vh>regularizeTrailingNewlines</vh></v>
+<v t="ekr.20051121144452.5" a="M"><vh>optimizeLeadingWhitespace</vh></v>
+<v t="ekr.20051121144452.6"><vh>regularizeTrailingNewlines</vh></v>
 <v t="ekr.20051121144452.7"><vh>removeLeadingWhitespace</vh></v>
 <v t="ekr.20051121144452.8"><vh>g.removeExtraLws &amp; tests</vh>
 <v t="ekr.20051121144452.9"><vh>test_g_removeExtraLws</vh></v>
@@ -211,16 +211,17 @@
 <v t="ekr.20051121144452.11" a="M"><vh>skip_leading_ws</vh></v>
 <v t="ekr.20051121144452.12"><vh>skip_leading_ws_with_indent</vh></v>
 <v t="ekr.20051121144452.13"><vh>stripBlankLines</vh></v>
-<v t="ekr.20051124071232" a="E"><vh>test brackets</vh></v>
+<v t="ekr.20051124071232"><vh>test brackets</vh></v>
 <v t="ekr.20051124083045"><vh>test no ( or [</vh></v>
-<v t="ekr.20051124082107" a="E"><vh>test long string</vh></v>
-<v t="ekr.20051124094428" a="E"><vh>test long comment</vh></v>
+<v t="ekr.20051124082107"><vh>test long string</vh></v>
+<v t="ekr.20051124094428"><vh>test long comment</vh></v>
 <v t="ekr.20051124090208"><vh>test not python</vh></v>
 </v>
-<v t="ekr.20051201153400" a="E"><vh>Print Hi</vh></v>
+<v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
 </v>
+<v t="ekr.20060104162223" a="TV"><vh>@button file-mode</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4277,5 +4278,6 @@ save as reinv.py in the python path or leo/extensions
 
 there may be another version if I can fix the scroll.
 e</t>
+<t tx="ekr.20060104162223">c.keyHandler.simulateCommand('enter-file-mode')</t>
 </tnodes>
 </leo_file>

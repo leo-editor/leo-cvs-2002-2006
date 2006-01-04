@@ -9944,10 +9944,12 @@ def parseShortcutLine (self,s):
         val = s[i:]
            
     # New in 4.4: Allow comments after the shortcut.
-    # Comments must be preceded by whitespace. 
+    # Comments must be preceded by whitespace.
+    comment = ''
     if val:
         i = val.find('#')
         if i > 0 and val[i-1] in (' ','\t'):
+            # comment = val[i:].strip()
             val = val[:i].strip()
 
     # g.trace(pane,name,val,s)
@@ -11715,17 +11717,12 @@ def getTabName (self,exitCallback):
 #@+node:ekr.20060103104509:To do
 @nocolor
 
-* Add support for comments in @mode nodes.
 * look at k.unboundKeyAction in handleDefaultChar.
     - Create method to handle replace mode.
-* Make sure present widget is restored after mode.
-    (change focus commands should clear ivar.)
 - Complete vim mode.
 
 Cleanup
 - Default modes should set the label.
-- Create show-mode-help command.
-- Generalize prettyPrintKey.
 - Clean up ivars.
 - Create tkinterKeyHandler.
 
@@ -11771,14 +11768,10 @@ Tests
 - Read initial_unbound_key_binding when creating keyHandler class.
 
 - Implemented mode-changing commands:
+    enter-default-mode,enter-ignore-mode,enter-insert-mode,enter-replace-mode
 
-    enter-default-mode
-    enter-ignore-mode
-    enter-insert-mode
-    enter-replace-mode
-
-These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
-enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.
+    These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
+    enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.
 
 Created general mode handler code.
 - It uses the existing state machinery.
@@ -11786,6 +11779,8 @@ Created general mode handler code.
 - It restores focus by default (can be overridden by focus-shifting commands).
 - It leaves existing bindings alone (because it is called from masterCommand).
 - It supports typing completion: a list of valid keystrokes in the mode.
+
+Created mode-help command.
 #@nonl
 #@-node:ekr.20060103113002:What I did
 #@+node:ekr.20060102134206.1:From leoConfig.py
@@ -12108,6 +12103,28 @@ def createInverseCommandsDict (self):
 #@nonl
 #@-node:ekr.20051008082929:createInverseCommandsDict
 #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
+#@+node:ekr.20050920085536.63:keyboardQuit
+def keyboardQuit (self,event):
+
+    '''This method clears the state and the minibuffer label.
+    
+    k.endCommand handles all other end-of-command chores.'''
+    
+    k = self ; c = k.c
+
+    if g.app.quitting:
+        return
+        
+    c.frame.log.deleteTab('Completion')
+    c.frame.log.deleteTab('Mode')
+    k.inputModeName = None
+        
+    k.clearState()
+    k.resetLabel()
+    
+    c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20050920085536.63:keyboardQuit
 #@+node:ekr.20051007080058:makeAllBindings
 def makeAllBindings (self):
     
@@ -12550,7 +12567,7 @@ def generalModeHandler (self,event,name=None):
     commandName = 'enter-' + modeName
     state = k.getState(modeName)
     keysym = event and event.keysym or ''
-    g.trace(modeName,'state',state)
+    # g.trace(modeName,'state',state)
     
     d = g.app.config.modeCommandsDict.get(commandName)
     if not d:
@@ -12560,7 +12577,6 @@ def generalModeHandler (self,event,name=None):
         k.modeWidget = event and event.widget
         k.setState(name,1,handler=k.generalModeHandler)
         k.setLabelBlue(name,protect=True)
-        ## To do: add comments.
         k.modeCompletionList = d.keys()
     else:
         for key in d.keys():
@@ -12568,33 +12584,55 @@ def generalModeHandler (self,event,name=None):
             for bunch in bunchList:
                 if k.matchKeys(event,bunch.val):
                     func = c.commandsDict.get(key)
-                    g.trace('calling',func)
-                    k.clearState()
-                    k.resetLabel()
-                    # func(event)
-                    k.endCommand(event,k.stroke)
-                    c.frame.log.deleteTab('Mode')
-                    c.frame.widgetWantsFocus(k.modeWidget)
+                    # g.trace('calling',func)
+                    if key != 'mode-help':
+                        # This must be done first because commands can change windows.
+                        k.clearState()
+                        k.resetLabel()
+                        k.endCommand(event,k.stroke)
+                        k.inputModeName = None
+                        c.frame.log.deleteTab('Mode')
+                        c.frame.widgetWantsFocus(k.modeWidget)
+                    func(event)
                     return 'break'
-        k.showModeHelp(d)
+        k.modeHelpHelper(d)
         f.minibufferWantsFocus()
         
     return 'break'
 #@nonl
 #@-node:ekr.20060104110233:generalModeHandler
-#@+node:ekr.20060104125946:showModeHelp
-def showModeHelp (self,d):
+#@+node:ekr.20060104164523:modeHelp/Helper
+def modeHelp (self,event):
+
+    '''The mode-help command.
+    
+    A possible convention would be to bind <Tab> to this command in most modes,
+    by analogy with tab completion.'''
+    
+    k = self
+
+    if k.inputModeName:
+        commandName = 'enter-' + k.inputModeName
+        d = g.app.config.modeCommandsDict.get(commandName)
+        k.modeHelpHelper(d)
+    else:
+        g.es('Not in any mode')
+
+
+
+
+
+#@+node:ekr.20060104125946:modeHelpHelper
+def modeHelpHelper (self,d):
     
     k = self ; c = k.c
     
     c.frame.log.clearTab('Mode')
     
     for key in d.keys():
-        comment = ''
         bunchList = d.get(key)
         bunch = bunchList and bunchList[0]
         shortcut = bunch.val
-        
         if shortcut not in (None,'None'):
             if shortcut.startswith('Key-'):
                 shortcut = shortcut[4:]
@@ -12602,9 +12640,10 @@ def showModeHelp (self,d):
                     ch = shortcut[0]
                     if ch in string.ascii_uppercase:
                         shortcut = 'Shift-%s' % ch.lower()
-            g.es('%s\t%s %s' % (shortcut,key,comment),tabName='Mode')
+            g.es('%s\t%s' % (shortcut,key),tabName='Mode')
 #@nonl
-#@-node:ekr.20060104125946:showModeHelp
+#@-node:ekr.20060104125946:modeHelpHelper
+#@-node:ekr.20060104164523:modeHelp/Helper
 #@-node:ekr.20060102135349.2:enterNamedMode &helpers
 #@-node:ekr.20060102134206.2:From leoKeys.py
 #@-node:ekr.20051014161015:Full input modes

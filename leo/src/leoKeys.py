@@ -1089,7 +1089,7 @@ class keyHandlerClass:
         commandName = 'enter-' + modeName
         state = k.getState(modeName)
         keysym = event and event.keysym or ''
-        g.trace(modeName,'state',state)
+        # g.trace(modeName,'state',state)
         
         d = g.app.config.modeCommandsDict.get(commandName)
         if not d:
@@ -1099,7 +1099,6 @@ class keyHandlerClass:
             k.modeWidget = event and event.widget
             k.setState(name,1,handler=k.generalModeHandler)
             k.setLabelBlue(name,protect=True)
-            ## To do: add comments.
             k.modeCompletionList = d.keys()
         else:
             for key in d.keys():
@@ -1107,33 +1106,55 @@ class keyHandlerClass:
                 for bunch in bunchList:
                     if k.matchKeys(event,bunch.val):
                         func = c.commandsDict.get(key)
-                        g.trace('calling',func)
-                        k.clearState()
-                        k.resetLabel()
-                        # func(event)
-                        k.endCommand(event,k.stroke)
-                        c.frame.log.deleteTab('Mode')
-                        c.frame.widgetWantsFocus(k.modeWidget)
+                        # g.trace('calling',func)
+                        if key != 'mode-help':
+                            # This must be done first because commands can change windows.
+                            k.clearState()
+                            k.resetLabel()
+                            k.endCommand(event,k.stroke)
+                            k.inputModeName = None
+                            c.frame.log.deleteTab('Mode')
+                            c.frame.widgetWantsFocus(k.modeWidget)
+                        func(event)
                         return 'break'
-            k.showModeHelp(d)
+            k.modeHelpHelper(d)
             f.minibufferWantsFocus()
             
         return 'break'
     #@nonl
     #@-node:ekr.20060104110233:generalModeHandler
-    #@+node:ekr.20060104125946:showModeHelp
-    def showModeHelp (self,d):
+    #@+node:ekr.20060104164523:modeHelp/Helper
+    def modeHelp (self,event):
+    
+        '''The mode-help command.
+        
+        A possible convention would be to bind <Tab> to this command in most modes,
+        by analogy with tab completion.'''
+        
+        k = self
+    
+        if k.inputModeName:
+            commandName = 'enter-' + k.inputModeName
+            d = g.app.config.modeCommandsDict.get(commandName)
+            k.modeHelpHelper(d)
+        else:
+            g.es('Not in any mode')
+    
+    
+    
+    
+    
+    #@+node:ekr.20060104125946:modeHelpHelper
+    def modeHelpHelper (self,d):
         
         k = self ; c = k.c
         
         c.frame.log.clearTab('Mode')
         
         for key in d.keys():
-            comment = ''
             bunchList = d.get(key)
             bunch = bunchList and bunchList[0]
             shortcut = bunch.val
-            
             if shortcut not in (None,'None'):
                 if shortcut.startswith('Key-'):
                     shortcut = shortcut[4:]
@@ -1141,9 +1162,10 @@ class keyHandlerClass:
                         ch = shortcut[0]
                         if ch in string.ascii_uppercase:
                             shortcut = 'Shift-%s' % ch.lower()
-                g.es('%s\t%s %s' % (shortcut,key,comment),tabName='Mode')
+                g.es('%s\t%s' % (shortcut,key),tabName='Mode')
     #@nonl
-    #@-node:ekr.20060104125946:showModeHelp
+    #@-node:ekr.20060104125946:modeHelpHelper
+    #@-node:ekr.20060104164523:modeHelp/Helper
     #@-node:ekr.20060102135349.2:enterNamedMode &helpers
     #@+node:ekr.20051014170754:k.help
     def help (self,event):
@@ -1598,6 +1620,7 @@ class keyHandlerClass:
             
         c.frame.log.deleteTab('Completion')
         c.frame.log.deleteTab('Mode')
+        k.inputModeName = None
             
         k.clearState()
         k.resetLabel()
