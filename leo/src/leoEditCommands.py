@@ -2096,149 +2096,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent... (To do: undo)
     #@+node:ekr.20050920084036.85:insert & delete...
-    #@+node:ekr.20051125080855:selfInsertCommand
-    def selfInsertCommand(self,event):
-        
-        '''Insert a character in the body pane.
-        
-        This is the default binding for all keys in the body pane.'''
-        
-        c = self.c ; p = c.currentPosition()
-        ch = event and event.char or ''
-        w = event and event.widget
-        name = g.app.gui.widget_name(w)
-        oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
-        oldText = name.startswith('body') and p.bodyString()
-        removeTrailing = None # A signal to compute it later.
-        undoType = 'Typing'
-        
-        if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-            return "break" # The hook claims to have handled the event.
-            
-        if ch == '\t':
-            removeTrailing = self.updateTab(p,w)
-        elif ch == '\b':
-            # This is correct: we only come here if there no bindngs for this key. 
-            self.backwardDeleteCharacter(event)
-        elif ch in ('\r','\n'):
-            ch = '\n'
-            #@        << handle newline >>
-            #@+node:ekr.20051026171121:<< handle newline >>
-            i,j = oldSel
-            
-            if i != j:
-                # No auto-indent if there is selected text.
-                w.delete(i,j)
-                w.insert(i,ch)
-            else:
-                w.insert(i,ch)
-                if c.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-                    # No auto-indent if in @nocolor mode or after a Change command.
-                    removeTrailing = self.updateAutoIndent(p)
-            #@nonl
-            #@-node:ekr.20051026171121:<< handle newline >>
-            #@nl
-        elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
-            self.updateAutomatchBracket(p,w,ch,oldSel)
-        elif ch: # Null chars must not delete the selection.
-            i,j = oldSel
-            if i != j: w.delete(i,j)
-            w.insert(i,ch)
-        else:
-            return 'break' # New in 4.4a5: this method *always* returns 'break'
-    
-        # Update the text and handle undo.
-        newText = w.get('1.0','end')
-        w.see(w.index('insert'))
-        if newText != oldText:
-            c.frame.body.onBodyChanged(undoType=undoType,
-                oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
-                
-        g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-        return 'break'
-    #@nonl
-    #@+node:ekr.20051027172949:updateAutomatchBracket
-    def updateAutomatchBracket (self,p,w,ch,oldSel):
-        
-        # assert ch in ('(',')','[',']','{','}')
-        
-        c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
-        language = d.get('language')
-        
-        if ch in ('(','[','{',):
-            automatch = language not in ('plain',)
-            if automatch:
-                ch = ch + {'(':')','[':']','{':'}'}.get(ch)
-            if i != j:
-                w.delete(i,j)
-            w.insert(i,ch)
-            if automatch:
-                w.mark_set('insert','insert-1c')
-        else:
-            ch2 = w.get('insert')
-            if ch2 in (')',']','}'):
-                w.mark_set('insert','insert+1c')
-            else:
-                if i != j:
-                    w.delete(i,j)
-                w.insert(i,ch)
-    #@nonl
-    #@-node:ekr.20051027172949:updateAutomatchBracket
-    #@+node:ekr.20051026171121.1:udpateAutoIndent
-    # By David McNab:
-    def updateAutoIndent (self,p):
-    
-        c = self.c ; d = g.scanDirectives(c,p)
-        tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
-        s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-        # Add the leading whitespace to the present line.
-        junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
-        if s and len(s) > 0 and s [ -1] == ':':
-            # For Python: increase auto-indent after colons.
-            if c.frame.body.colorizer.scanColorDirectives(p) == "python":
-                width += abs(tab_width)
-        if c.config.getBool("smart_auto_indent"):
-            # Determine if prev line has unclosed parens/brackets/braces
-            brackets = [width] ; tabex = 0
-            for i in range(0,len(s)):
-                if s [i] == '\t':
-                    tabex += tab_width-1
-                if s [i] in '([{':
-                    brackets.append(i+tabex+1)
-                elif s [i] in '}])' and len(brackets) > 1:
-                    brackets.pop()
-            width = brackets.pop()
-        ws = g.computeLeadingWhitespace(width,tab_width)
-        if ws:
-            c.frame.bodyCtrl.insert("insert",ws)
-            removeTrailing = False
-        else:
-            removeTrailing = None
-        return removeTrailing
-    #@nonl
-    #@-node:ekr.20051026171121.1:udpateAutoIndent
-    #@+node:ekr.20051026092433:updateTab
-    def updateTab (self,p,w):
-    
-        c = self.c ; d = g.scanDirectives(c,p)
-        tab_width = d.get("tabwidth",c.tab_width)
-        
-        i,j = g.app.gui.getTextSelection(w)
-        if i != j:
-            w.delete(i,j)
-        if tab_width > 0:
-            w.insert("insert",'\t')
-        else:
-            # Get the preceeding characters.
-            s = w.get("insert linestart","insert")
-        
-            # Compute n, the number of spaces to insert.
-            width = g.computeWidth(s,tab_width)
-            n = abs(tab_width) - (width % abs(tab_width))
-            w.insert("insert",' ' * n)
-    #@nonl
-    #@-node:ekr.20051026092433:updateTab
-    #@-node:ekr.20051125080855:selfInsertCommand
     #@+node:ekr.20051026092433.1:backwardDeleteCharacter (ok)
     def backwardDeleteCharacter (self,event=None):
         
@@ -2392,6 +2249,150 @@ class editCommandsClass (baseEditCommandsClass):
         w.mark_set('insert','insert -1c')
     #@nonl
     #@-node:ekr.20050920084036.139:insertParentheses
+    #@+node:ekr.20051125080855:selfInsertCommand
+    def selfInsertCommand(self,event,action='insert'):
+        
+        '''Insert a character in the body pane.
+        
+        This is the default binding for all keys in the body pane.'''
+        
+        c = self.c ; p = c.currentPosition()
+        ch = event and event.char or ''
+        w = event and event.widget
+        name = g.app.gui.widget_name(w)
+        oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
+        oldText = name.startswith('body') and p.bodyString()
+        removeTrailing = None # A signal to compute it later.
+        undoType = 'Typing'
+        
+        if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+            return "break" # The hook claims to have handled the event.
+            
+        if ch == '\t':
+            removeTrailing = self.updateTab(p,w)
+        elif ch == '\b':
+            # This is correct: we only come here if there no bindngs for this key. 
+            self.backwardDeleteCharacter(event)
+        elif ch in ('\r','\n'):
+            ch = '\n'
+            #@        << handle newline >>
+            #@+node:ekr.20051026171121:<< handle newline >>
+            i,j = oldSel
+            
+            if i != j:
+                # No auto-indent if there is selected text.
+                w.delete(i,j)
+                w.insert(i,ch)
+            else:
+                w.insert(i,ch)
+                if c.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+                    # No auto-indent if in @nocolor mode or after a Change command.
+                    removeTrailing = self.updateAutoIndent(p)
+            #@nonl
+            #@-node:ekr.20051026171121:<< handle newline >>
+            #@nl
+        elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
+            self.updateAutomatchBracket(p,w,ch,oldSel)
+        elif ch: # Null chars must not delete the selection.
+            i,j = oldSel
+            if i != j:                  w.delete(i,j)
+            elif action == 'replace':   w.delete(i,'%s+1c' % i)
+            w.insert(i,ch)                     
+        else:
+            return 'break' # New in 4.4a5: this method *always* returns 'break'
+    
+        # Update the text and handle undo.
+        newText = w.get('1.0','end')
+        w.see(w.index('insert'))
+        if newText != oldText:
+            c.frame.body.onBodyChanged(undoType=undoType,
+                oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
+                
+        g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+        return 'break'
+    #@nonl
+    #@+node:ekr.20051027172949:updateAutomatchBracket
+    def updateAutomatchBracket (self,p,w,ch,oldSel):
+        
+        # assert ch in ('(',')','[',']','{','}')
+        
+        c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
+        language = d.get('language')
+        
+        if ch in ('(','[','{',):
+            automatch = language not in ('plain',)
+            if automatch:
+                ch = ch + {'(':')','[':']','{':'}'}.get(ch)
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,ch)
+            if automatch:
+                w.mark_set('insert','insert-1c')
+        else:
+            ch2 = w.get('insert')
+            if ch2 in (')',']','}'):
+                w.mark_set('insert','insert+1c')
+            else:
+                if i != j:
+                    w.delete(i,j)
+                w.insert(i,ch)
+    #@nonl
+    #@-node:ekr.20051027172949:updateAutomatchBracket
+    #@+node:ekr.20051026171121.1:udpateAutoIndent
+    # By David McNab:
+    def updateAutoIndent (self,p):
+    
+        c = self.c ; d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
+        s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+        # Add the leading whitespace to the present line.
+        junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
+        if s and len(s) > 0 and s [ -1] == ':':
+            # For Python: increase auto-indent after colons.
+            if c.frame.body.colorizer.scanColorDirectives(p) == "python":
+                width += abs(tab_width)
+        if c.config.getBool("smart_auto_indent"):
+            # Determine if prev line has unclosed parens/brackets/braces
+            brackets = [width] ; tabex = 0
+            for i in range(0,len(s)):
+                if s [i] == '\t':
+                    tabex += tab_width-1
+                if s [i] in '([{':
+                    brackets.append(i+tabex+1)
+                elif s [i] in '}])' and len(brackets) > 1:
+                    brackets.pop()
+            width = brackets.pop()
+        ws = g.computeLeadingWhitespace(width,tab_width)
+        if ws:
+            c.frame.bodyCtrl.insert("insert",ws)
+            removeTrailing = False
+        else:
+            removeTrailing = None
+        return removeTrailing
+    #@nonl
+    #@-node:ekr.20051026171121.1:udpateAutoIndent
+    #@+node:ekr.20051026092433:updateTab
+    def updateTab (self,p,w):
+    
+        c = self.c ; d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width)
+        
+        i,j = g.app.gui.getTextSelection(w)
+        if i != j:
+            w.delete(i,j)
+        if tab_width > 0:
+            w.insert("insert",'\t')
+        else:
+            # Get the preceeding characters.
+            s = w.get("insert linestart","insert")
+        
+            # Compute n, the number of spaces to insert.
+            width = g.computeWidth(s,tab_width)
+            n = abs(tab_width) - (width % abs(tab_width))
+            w.insert("insert",' ' * n)
+    #@nonl
+    #@-node:ekr.20051026092433:updateTab
+    #@-node:ekr.20051125080855:selfInsertCommand
     #@-node:ekr.20050920084036.85:insert & delete...
     #@+node:ekr.20050920084036.79:info...
     #@+node:ekr.20050920084036.80:howMany
@@ -3778,6 +3779,9 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'print-bindings':           k.printBindings,
             'print-commands':           k.printCommands,
             'repeat-complex-command':   k.repeatComplexCommand,
+            'set-ignore-mode':          k.setIgnoreMode,
+            'set-insert-mode':          k.setInsertMode,
+            'set-overwrite-mode':       k.setOverwriteMode,
             'show-mini-buffer':         k.showMinibuffer,
             'toggle-mini-buffer':       k.toggleMinibuffer,
             'universal-argument':       k.universalArgument,

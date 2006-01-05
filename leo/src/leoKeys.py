@@ -805,21 +805,23 @@ class keyHandlerClass:
     def handleDefaultChar(self,event):
         
         c = self.c
-        ch = event and event.char
         w = event and event.widget
         name = g.app.gui.widget_name(w)
-       
+    
         if name.startswith('body'):
             # For Leo 4.4a4: allow Tk defaults.
             # But this is dangerous, and should be removed.
-            return c.editCommands.selfInsertCommand(event)
+            action = self.unboundKeyAction
+            if action in ('insert','replace'):
+                c.editCommands.selfInsertCommand(event,action=action)
+            return 'break'
         elif name.startswith('head'):
             g.trace("can't happen: %s" % (name),color='red')
             c.frame.tree.updateHead(event,w)
             return 'break'
         else:
             # Let tkinter handle the event.
-            # g.trace('to tk:',name,repr(ch))
+            # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
             return None
     #@nonl
     #@-node:ekr.20051026083544:handleDefaultChar
@@ -1322,6 +1324,20 @@ class keyHandlerClass:
             return k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
+    #@+node:ekr.20060105132013:set(ignore, insert, overwrite)Mode
+    def setIgnoreMode (self,event):
+        
+        self.unboundKeyAction = 'ignore'
+    
+    def setInsertMode (self,event):
+        
+        self.unboundKeyAction = 'insert'
+        
+    def setOverwriteMode (self,event):
+        
+        self.unboundKeyAction = 'replace'
+    #@nonl
+    #@-node:ekr.20060105132013:set(ignore, insert, overwrite)Mode
     #@-node:ekr.20050920085536.32:Externally visible commands
     #@+node:ekr.20050920085536.73:universalDispatcher & helpers
     def universalDispatcher (self,event):
