@@ -26,270 +26,14 @@ Others
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20051220063217:Docs
 #@+node:ekr.20060103100430:Documentation for installing aspell plugin
 #@-node:ekr.20060103100430:Documentation for installing aspell plugin
-#@+node:ekr.20051202102337:Minibuffer commands notes
-@nocolor
-#@nonl
-#@+node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
-auto-complete command is merely a prototype.
-#@nonl
-#@-node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
-#@+node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
-ok:
-
-list-buffers
-
-Not ready yet:
-
-append-to-buffer
-copy-to-buffer
-insert-to-buffer
-kill-buffer
-prepend-to-buffer
-rename-buffer       probably should change headline too
-switch-to-buffer    use typing completion to get node name (headline)
-#@nonl
-#@-node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
-#@+node:ekr.20051202102337.3:controlCommandsClass (ok)
-advertised-undo
-keyboard-quit
-iconify-frame
-save-buffers-kill-leo
-shell-command
-shell-command-on-region
-suspend
-#@nonl
-#@-node:ekr.20051202102337.3:controlCommandsClass (ok)
-#@+node:ekr.20051202102337.4:editCommandsClass
-back-sentence
-back-to-indentation
-backward-char
-backward-delete-char
-backward-kill-paragraph
-backward-paragraph
-backward-word
-beginning-of-buffer
-beginning-of-line
-capitalize-word
-center-line
-center-region
-count-region
-cycle-focus
-dabbrev-completion
-dabbrev-expands
-delete-char
-delete-indentation
-delete-spaces
-downcase-region
-downcase-word
-end-of-buffer
-end-of-line
-escape
-eval-expression
-exchange-point-mark
-fill-paragraph
-fill-region
-fill-region-as-paragraph
-flush-lines
-focus-to-body
-focus-to-log
-focus-to-minibuffer
-focus-to-tree
-forward-char
-forward-paragraph
-forward-sentence
-forward-word
-goto-char
-goto-line
-how-many
-# Use indentBody in leoCommands.py
-#indent-region
-indent-relative
-indent-rigidly
-indent-to-comment-column
-insert-newline
-insert-parentheses
-keep-lines
-kill-paragraph
-line-number
-move-past-close
-newline-and-indent
-next-line
-previous-line
-remove-blank-lines
-replace-regex
-replace-string
-reverse-region
-scroll-down
-scroll-up
-select-paragraph
-# Exists, but can not be executed via the minibuffer.
-# self-insert-command
-set-comment-column
-set-fill-column
-set-fill-prefix
-set-mark-command
-show-colors
-show-fonts
-# save-buffer
-sort-columns
-sort-fields
-sort-lines
-split-line
-tabify
-transpose-chars
-transpose-lines
-transpose-words
-untabify
-upcase-region
-upcase-word
-view-lossage
-what-line
-#@nonl
-#@-node:ekr.20051202102337.4:editCommandsClass
-#@+node:ekr.20051202102337.6:editFileCommandsClass
-delete-file
-diff
-insert-file
-make-directory
-remove-directory
-save-file
-#@nonl
-#@-node:ekr.20051202102337.6:editFileCommandsClass
-#@+node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
-digit-argument
-help
-hide-mini-buffer
-negative-argument
-number-command
-number-command-0
-number-command-1
-number-command-2
-number-command-3
-number-command-4
-number-command-5
-number-command-6
-number-command-7
-number-command-8
-number-command-9
-print-bindings
-print-commands
-repeat-complex-command
-show-mini-buffer
-toggle-mini-buffer
-universal-argument
-#@nonl
-#@-node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
-#@+node:ekr.20051202102752.2:killBufferCommandsClass
-backward-kill-sentence
-backward-kill-word
-kill-line
-kill-word
-kill-sentence
-kill-region
-kill-region-save
-yank
-yank-pop
-zap-to-character
-#@nonl
-#@-node:ekr.20051202102752.2:killBufferCommandsClass
-#@+node:ekr.20051202102752.3:macroCommandsClass
-call-last-keyboard-macro
-end-kbd-macro
-name-last-kbd-macro
-load-file
-insert-keyboard-macro 
-start-kbd-macro
-#@nonl
-#@-node:ekr.20051202102752.3:macroCommandsClass
-#@+node:ekr.20051202102752.4:queryReplaceCommandsClass
-query-replace
-query-replace-regex
-#@nonl
-#@-node:ekr.20051202102752.4:queryReplaceCommandsClass
-#@+node:ekr.20051202102752.5:rectangleCommandsClass (ok)
-clear-rectangle
-close-rectangle
-delete-rectangle
-kill-rectangle
-open-rectangle
-string-rectangle
-yank-rectangle
-#@nonl
-#@-node:ekr.20051202102752.5:rectangleCommandsClass (ok)
-#@+node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
-append-to-register
-copy-rectangle-to-register
-copy-to-register
-increment-register
-insert-register
-jump-to-register
-number-to-register not used: used copy-to-register insead.
-point-to-register
-prepend-to-register
-view-register
-
-To do:
-
-point-to-register should write an 'expanded point' so inter-node jumps are possible.
-#@nonl
-#@-node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
-#@+node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
-hide-find-tab
-open-find-tab
-find-tab-find
-find-tab-find-prev
-find-tab-change
-find-tab-change-then-find
-
-isearch-forward
-isearch-backward
-isearch-forward-regexp
-isearch-backward-regexp
-
-re-search-forward
-re-search-backward
-
-search-forward
-search-backward
-word-search-forward
-word-search-backward
-#@nonl
-#@-node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
-#@+node:ekr.20051202102752.8:spellCommandsClass (ok)
-ok:
-
-hide-spell-tab
-open-spell-tab
-spell-find
-spell-change
-spell-change-then-find
-spell-ignore
-#@nonl
-#@-node:ekr.20051202102752.8:spellCommandsClass (ok)
-#@-node:ekr.20051202102337:Minibuffer commands notes
-#@-node:ekr.20051220063217:Docs
 #@+node:ekr.20060105130546:Distribution
 - (done) put optparse.py in leo/extensions
 - Add optparse.py to distribution lists.
 #@nonl
 #@-node:ekr.20060105130546:Distribution
 #@+node:ekr.20060105130519:Urgent
-#@+node:ekr.20051104051733:Make Focus-in in minibuffer widget equivalent to Alt-x
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3412640
-By: btheado
-
-Currently clicking on the minibuffer and typing text has no effect.  Kinda confusing
-until the Alt-x binding I discovered that Alt-x is the way to access the minibuffer
-command mode.
-
-It would be nice if the <FocusIn> binding on the minibuffer widget were equivilent
-to Alt-x.
-#@nonl
-#@-node:ekr.20051104051733:Make Focus-in in minibuffer widget equivalent to Alt-x
 #@+node:ekr.20050928144501.1:Mouseless Leo
 Needed to support 'mouseless-Leo':
 
@@ -3995,6 +3739,247 @@ indicies. It's probably time to do this.
 
 - Specify & for most menu items.
 #@nonl
+#@+node:ekr.20051202102337:Minibuffer commands notes
+@nocolor
+#@nonl
+#@+node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
+auto-complete command is merely a prototype.
+#@nonl
+#@-node:ekr.20051202102337.1:abbrevCommandsClass (not ready yet)
+#@+node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
+ok:
+
+list-buffers
+
+Not ready yet:
+
+append-to-buffer
+copy-to-buffer
+insert-to-buffer
+kill-buffer
+prepend-to-buffer
+rename-buffer       probably should change headline too
+switch-to-buffer    use typing completion to get node name (headline)
+#@nonl
+#@-node:ekr.20051202102337.2:bufferCommandsClass Inot ready yet)
+#@+node:ekr.20051202102337.3:controlCommandsClass (ok)
+advertised-undo
+keyboard-quit
+iconify-frame
+save-buffers-kill-leo
+shell-command
+shell-command-on-region
+suspend
+#@nonl
+#@-node:ekr.20051202102337.3:controlCommandsClass (ok)
+#@+node:ekr.20051202102337.4:editCommandsClass
+back-sentence
+back-to-indentation
+backward-char
+backward-delete-char
+backward-kill-paragraph
+backward-paragraph
+backward-word
+beginning-of-buffer
+beginning-of-line
+capitalize-word
+center-line
+center-region
+count-region
+cycle-focus
+dabbrev-completion
+dabbrev-expands
+delete-char
+delete-indentation
+delete-spaces
+downcase-region
+downcase-word
+end-of-buffer
+end-of-line
+escape
+eval-expression
+exchange-point-mark
+fill-paragraph
+fill-region
+fill-region-as-paragraph
+flush-lines
+focus-to-body
+focus-to-log
+focus-to-minibuffer
+focus-to-tree
+forward-char
+forward-paragraph
+forward-sentence
+forward-word
+goto-char
+goto-line
+how-many
+# Use indentBody in leoCommands.py
+#indent-region
+indent-relative
+indent-rigidly
+indent-to-comment-column
+insert-newline
+insert-parentheses
+keep-lines
+kill-paragraph
+line-number
+move-past-close
+newline-and-indent
+next-line
+previous-line
+remove-blank-lines
+replace-regex
+replace-string
+reverse-region
+scroll-down
+scroll-up
+select-paragraph
+# Exists, but can not be executed via the minibuffer.
+# self-insert-command
+set-comment-column
+set-fill-column
+set-fill-prefix
+set-mark-command
+show-colors
+show-fonts
+# save-buffer
+sort-columns
+sort-fields
+sort-lines
+split-line
+tabify
+transpose-chars
+transpose-lines
+transpose-words
+untabify
+upcase-region
+upcase-word
+view-lossage
+what-line
+#@nonl
+#@-node:ekr.20051202102337.4:editCommandsClass
+#@+node:ekr.20051202102337.6:editFileCommandsClass
+delete-file
+diff
+insert-file
+make-directory
+remove-directory
+save-file
+#@nonl
+#@-node:ekr.20051202102337.6:editFileCommandsClass
+#@+node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
+digit-argument
+help
+hide-mini-buffer
+negative-argument
+number-command
+number-command-0
+number-command-1
+number-command-2
+number-command-3
+number-command-4
+number-command-5
+number-command-6
+number-command-7
+number-command-8
+number-command-9
+print-bindings
+print-commands
+repeat-complex-command
+show-mini-buffer
+toggle-mini-buffer
+universal-argument
+#@nonl
+#@-node:ekr.20051202102752.1:keyHandlerCommandsClass (not ready yet)
+#@+node:ekr.20051202102752.2:killBufferCommandsClass
+backward-kill-sentence
+backward-kill-word
+kill-line
+kill-word
+kill-sentence
+kill-region
+kill-region-save
+yank
+yank-pop
+zap-to-character
+#@nonl
+#@-node:ekr.20051202102752.2:killBufferCommandsClass
+#@+node:ekr.20051202102752.3:macroCommandsClass
+call-last-keyboard-macro
+end-kbd-macro
+name-last-kbd-macro
+load-file
+insert-keyboard-macro 
+start-kbd-macro
+#@nonl
+#@-node:ekr.20051202102752.3:macroCommandsClass
+#@+node:ekr.20051202102752.4:queryReplaceCommandsClass
+query-replace
+query-replace-regex
+#@nonl
+#@-node:ekr.20051202102752.4:queryReplaceCommandsClass
+#@+node:ekr.20051202102752.5:rectangleCommandsClass (ok)
+clear-rectangle
+close-rectangle
+delete-rectangle
+kill-rectangle
+open-rectangle
+string-rectangle
+yank-rectangle
+#@nonl
+#@-node:ekr.20051202102752.5:rectangleCommandsClass (ok)
+#@+node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
+append-to-register
+copy-rectangle-to-register
+copy-to-register
+increment-register
+insert-register
+jump-to-register
+number-to-register not used: used copy-to-register insead.
+point-to-register
+prepend-to-register
+view-register
+
+To do:
+
+point-to-register should write an 'expanded point' so inter-node jumps are possible.
+#@nonl
+#@-node:ekr.20051202102752.6:registerCommandsClass (ok, but could be expanded)
+#@+node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
+hide-find-tab
+open-find-tab
+find-tab-find
+find-tab-find-prev
+find-tab-change
+find-tab-change-then-find
+
+isearch-forward
+isearch-backward
+isearch-forward-regexp
+isearch-backward-regexp
+
+re-search-forward
+re-search-backward
+
+search-forward
+search-backward
+word-search-forward
+word-search-backward
+#@nonl
+#@-node:ekr.20051202102752.7:searchCommandsClass (ok, but could be expanded)
+#@+node:ekr.20051202102752.8:spellCommandsClass (ok)
+ok:
+
+hide-spell-tab
+open-spell-tab
+spell-find
+spell-change
+spell-change-then-find
+spell-ignore
+#@nonl
+#@-node:ekr.20051202102752.8:spellCommandsClass (ok)
+#@-node:ekr.20051202102337:Minibuffer commands notes
 #@+node:ekr.20060103101524:Improve command-line handling
 @nocolor
 https://sourceforge.net/forum/message.php?msg_id=3501995
@@ -4167,6 +4152,20 @@ leouser
 #@+node:ekr.20060102092148.2:auto-install docutils?
 docutils installs it if it isn't available.
 #@-node:ekr.20060102092148.2:auto-install docutils?
+#@+node:ekr.20051104051733:Make Focus-in in minibuffer widget equivalent to Alt-x
+FocusIn does nothing for Label widgets.
+
+http://sourceforge.net/forum/message.php?msg_id=3412640
+By: btheado
+
+Currently clicking on the minibuffer and typing text has no effect.  Kinda confusing
+until the Alt-x binding I discovered that Alt-x is the way to access the minibuffer
+command mode.
+
+It would be nice if the <FocusIn> binding on the minibuffer widget were equivilent
+to Alt-x.
+#@nonl
+#@-node:ekr.20051104051733:Make Focus-in in minibuffer widget equivalent to Alt-x
 #@-node:ekr.20051023192433:Maybe or never
 #@-node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20050707081822:Top priorities (4.5 and beyond)

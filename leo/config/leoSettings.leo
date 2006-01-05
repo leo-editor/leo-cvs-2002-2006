@@ -243,7 +243,7 @@
 </v>
 </v>
 <v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20060103103415"><vh>@strings  [insert, replace, ignore] initial_unbound_key_binding = insert</vh></v>
+<v t="ekr.20060103103415"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -277,10 +277,10 @@
 <v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
 <v t="ekr.20051010112558" a="E"><vh>traditional Leo shortcuts with important emacs bindings</vh>
-<v t="ekr.20060102113259" a="TV"><vh>@mode file mode</vh></v>
+<v t="ekr.20060102113259"><vh>@mode file mode</vh></v>
 <v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
 <v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>
-<v t="ekr.20060102102958.1"><vh>@shortcuts M-Z</vh></v>
+<v t="ekr.20060102102958.1" a="TV"><vh>@shortcuts M-Z</vh></v>
 </v>
 </v>
 </v>
@@ -2642,10 +2642,13 @@ self-insert-command                     = None      # The default binding for al
 set-colors                              = None
 set-comment-column                      = None
 set-extend-mode                         = None
+set-ignore-mode                         = None
+set-insert-mode                         = None
 set-fill-column                         = None
 set-fill-prefix                         = None
 set-font                                = None
 set-mark-command                        = Ctrl-space    # Also Ctrl-Shift-at
+set-overwrite-mode                      = None
 settings                                = None          # Ctrl-Y conflicts with yank.
 shell-command                           = None
 shell-command-on-region                 = None
@@ -2707,35 +2710,32 @@ yank                                    = Control-y
 yank-pop                                = Alt-y
 yank-rectangle                          = None
 zap-to-character                        = Alt-z</t>
-<t tx="ekr.20060102113259">enter-input-mode    = Key-i     # The i is the same as Key-i
-enter-default-mode  = Ctrl-c
-enter-default-mode  = BackSpace
-mode-help           = Tab
+<t tx="ekr.20060102113259"># Boilerplate for most nodes.
+keyboard-quit   = Return
+mode-help       = Tab
 
-exit-leo            = q
-new                 = n
-open-outline        = o
-save-file           = s
+# The key bindings for this node.
+# Plain keys can be specied as 'Key-x' or just 'x'.
+exit-leo        = q
+new             = n
+open-outline    = o
+save-file       = s
 
-# Bindings to None have no effect.  They can be used as documentation.
-save-file-as        = None
-save-file-to        = None</t>
+# Bindings to None have no effect.
+# They can be used as documentation here.
+save-file-as    = None
+save-file-to    = None</t>
 <t tx="ekr.20060103103415">@nocolor
 
-This setting determines the initial binding for otherwise-unbound keystrokes.
+This setting determines the initial binding for otherwise-unbound keystrokes
+when no mode is in effect.  Note: the keyboard-quit command exits all modes.
+
 The valid values are::
 
-    insert:  the key is inserted at the cursor.
-    replace: the key replaces the character at the cursor.
-    ignore:  the key is completely ignored.
-
-    'insert' would be a good default for Emacs-like operation.
-    'ignore' would be a good default for Vim-like operation.
-
-This setting determines what Leo does initially and after the enter-default-mode
-command has been executed. You can change the binding for unbound keystrokes at
-any time with the enter-insert-mode, enter-replace-mode and enter-ignore-mode
-commands.</t>
+insert:  Leo inserts the key at the cursor (like Emacs)
+replace: Leo replaces the character at the cursor.
+ignore:  Leo ignores the key (like Vim).
+</t>
 <t tx="ekr.20060103103812">@color
 
 # Important: the print-commands and print-bindings show what bindings are in effect.
@@ -3120,14 +3120,8 @@ yank-rectangle                          = None
 zap-to-character                        = Alt-z
 
 </t>
-<t tx="ekr.20060103103812.1"># The initial_unbound_key_binding setting determines which mode is in effect when Leo starts.
+<t tx="ekr.20060103103812.1"># Defined by @mode nodes: needed to suppress warnings.
 
-enter-default-mode  = None
-enter-ignore-mode   = None
-enter-insert-mode   = None
-enter-replace-mode  = None
-
-# Defined by @mode nodes: needed to suppress warnings.
 enter-file-mode     = None</t>
 <t tx="ekr.20060103135341">@color</t>
 <t tx="ekr.20060103135341.1">enter-input-mode        = i
