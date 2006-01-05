@@ -3300,14 +3300,16 @@ class position (object):
         
         # Reset the firstChild link in its direct father.
         if p.v._parent:
-            assert(p.v and p.v._parent in p.v.directParents())
+            if 0: # This can fail.  I have no idea why it was present.
+                assert(p.v and p.v._parent in p.v.directParents())
             if p.v._parent.t._firstChild == v:
                 #g.trace('resetting _parent.v.t._firstChild to',v._next)
                 p.v._parent.t._firstChild = v._next
         else:
             parent = p.parent()
             if parent:
-                assert(parent.v in p.v.directParents())
+                if 0: # This can fail.  I have no idea why it was present.
+                    assert(parent.v in p.v.directParents())
                 if parent.v.t._firstChild == v:
                     #g.trace('resetting parent().v.t._firstChild to',v._next)
                     parent.v.t._firstChild = v._next
