@@ -1858,22 +1858,7 @@ class baseCommands:
         '''Handle the preferences command.'''
         
         c = self
-    
-        if 1: # New in Leo 4.4a5: just open leoSettings.leo.
-            c.openLeoSettings()
-        
-        elif 1: # Previous.
-            # Replace the body pane by the preferences setters.
-            leoConfig.settingsController(c,replaceBody=True)
-    
-        else: # Old code...
-            # Show the Preferences Panel, creating it if necessary.
-            frame = c.frame
-        
-            if not frame.prefsPanel:
-                frame.prefsPanel = g.app.gui.createPrefsPanel(c)
-                
-            frame.prefsPanel.bringToFront()
+        c.openLeoSettings()
     #@nonl
     #@-node:ekr.20031218072017.2086:preferences
     #@-node:ekr.20031218072017.2862:Edit top level

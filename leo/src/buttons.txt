@@ -2,14 +2,8 @@
 #@+node:ekr.20051027111215:@thin buttons.txt
 #@+all
 #@+node:ekr.20050123202520.1:@button settings.leo
-if 1:
-    # Open leoSettings.leo
-    c.openLeoSettings()
-
-else:
-    # Open the settings dialog.
-    import leoConfig
-    leoConfig.settingsController(c,replaceBody=True)
+# Open leoSettings.leo
+c.openLeoSettings()
 #@nonl
 #@-node:ekr.20050123202520.1:@button settings.leo
 #@+node:ekr.20050130152155:@button plugins.leo

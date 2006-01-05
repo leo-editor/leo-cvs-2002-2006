@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8647" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8651" clone_windows="0"/>
 <globals body_outline_ratio="0.593548387097">
-	<global_window_position top="10" left="370" height="930" width="756"/>
+	<global_window_position top="10" left="380" height="930" width="880"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,8 +14,7 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20051125080855,ekr.20031218072017.1810,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20040803072955.128,ekr.20031218072017.2950,ekr.20031218072017.2373,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051125080855,ekr.20051026092433.1,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051125080855,ekr.20051026092433.1,ekr.20051125080855,ekr.20040803072955.128,ekr.20051023181449,ekr.20051025120920,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20051006092617.1,ekr.20051006092617.1,ekr.20051015110547,"
-expanded="ekr.20060104101411,ekr.20060102134206.1,ekr.20060102134206.2,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20051125080855,ekr.20031218072017.1810,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20040803072955.128,ekr.20031218072017.2950,ekr.20031218072017.2373,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051125080855,ekr.20051026092433.1,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051125080855,ekr.20051026092433.1,ekr.20051125080855,ekr.20040803072955.128,ekr.20051023181449,ekr.20051025120920,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20051006092617.1,ekr.20051006092617.1,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20050831131028"><vh>opml</vh>
@@ -646,7 +645,8 @@ marks="ekr.20031218072017.1810,ekr.20051202102752.2,ekr.20051202102752.3,ekr.200
 <v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
 <v t="ekr.20051023182326"><vh>copyBindingsToWidget &amp; textBindingsRedirectionCallback</vh></v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
 <v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
 <v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
@@ -743,36 +743,38 @@ marks="ekr.20031218072017.1810,ekr.20051202102752.2,ekr.20051202102752.3,ekr.200
 </v>
 </v>
 <v t="ekr.20051014161015"><vh>Full input modes</vh>
-<v t="ekr.20060103104509"><vh>To do</vh>
+<v t="ekr.20060103104509"><vh>To do</vh></v>
+<v t="ekr.20060104154253"><vh>Ahas</vh></v>
+<v t="ekr.20060103133740"><vh>Prototypes</vh>
 <v t="ekr.20051017140811.1"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html</vh></v>
 </v>
-<v t="ekr.20060103133740"><vh>Prototypes</vh></v>
 <v t="ekr.20060103113002"><vh>What I did</vh></v>
-<v t="ekr.20060104101411" a="E"><vh>Birth</vh>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
-<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
-<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
-</v>
-<v t="ekr.20050920093543"><vh>c.finishCreate &amp; helper</vh>
-<v t="ekr.20051007143620"><vh>printCommandsDict</vh></v>
-</v>
-</v>
-<v t="ekr.20060102134206.1" a="E"><vh>From leoConfig.py</vh>
+<v t="ekr.20060102134206.1"><vh>From leoConfig.py</vh>
 <v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
+<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
 <v t="ekr.20060102103625.1"><vh>doMode</vh></v>
 <v t="ekr.20041120105609"><vh>doShortcuts</vh></v>
 </v>
-<v t="ekr.20060102134206.2" a="E"><vh>From leoKeys.py</vh>
+<v t="ekr.20060102134206.2"><vh>From leoKeys.py</vh>
 <v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
+<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20050920094633"><vh>finishCreate (keyHandler) &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+<v t="ekr.20050920085536.63"><vh>keyboardQuit</vh></v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20051001051355"><vh>Dispatching...</vh>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
@@ -791,11 +793,13 @@ marks="ekr.20031218072017.1810,ekr.20051202102752.2,ekr.20051202102752.3,ekr.200
 </v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
 </v>
-<v t="ekr.20051015110547" a="M"><vh>k.registerCommand</vh></v>
-<v t="ekr.20060102135349"><vh>k.addModeBindings</vh></v>
-<v t="ekr.20060102135349.1"><vh>k.deleteModeBindings</vh></v>
-<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
-<v t="ekr.20060103111643"><vh>enterXXXMode</vh></v>
+<v t="ekr.20060104120602"><vh>matchKeys</vh></v>
+<v t="ekr.20060102135349.2"><vh>enterNamedMode &amp;helpers</vh>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060104164523"><vh>modeHelp/Helper</vh>
+<v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
+</v>
+</v>
 </v>
 </v>
 </v>
@@ -917,7 +921,8 @@ marks="ekr.20031218072017.1810,ekr.20051202102752.2,ekr.20051202102752.3,ekr.200
 <v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
 <v t="ekr.20051023182326"><vh>copyBindingsToWidget &amp; textBindingsRedirectionCallback</vh></v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
 <v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
 <v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
@@ -1552,6 +1557,10 @@ marks="ekr.20031218072017.1810,ekr.20051202102752.2,ekr.20051202102752.3,ekr.200
 marks="ekr.20031218072017.2619,"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
+<v t="ekr.20031218072017.2810"
+marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,ekr.20031218072017.2950,"><vh>@thin leoCommands.py</vh></v>
+<v t="ekr.20041117062700"
+marks="ekr.20041119203941.2,ekr.20041119204700.1,"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051127105431,ekr.20051126123149,ekr.20051127065601,ekr.20051127105102,ekr.20051127070018,ekr.20050920084036.39,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051125080855,ekr.20051026092433.1,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20050920084036.189,ekr.20051023181449,ekr.20051020120306.27,ekr.20051025071455,ekr.20051025120920,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
@@ -1559,6 +1568,8 @@ marks="ekr.20051127105431,ekr.20051126123149,ekr.20051127065601,ekr.200511271051
 marks="ekr.20031218072017.2052,ekr.20050503112513.7,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"
 marks="ekr.20031218072017.1810,"><vh>@thin leoImport.py</vh></v>
+<v t="ekr.20031218072017.3748"
+marks="ekr.20051006092617.1,ekr.20050920085536.62,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
@@ -1573,6 +1584,7 @@ marks="ekr.20051104075904.12,"><vh>@thin leoTest.py</vh></v>
 <v t="ekr.20031218072017.3655"
 marks="ekr.20031218072017.2410,"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
+<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
@@ -1588,44 +1600,39 @@ marks="ekr.20031218072017.2373,"><vh>@thin leoTkinterGui.py</vh></v>
 marks="ekr.20040803072955.128,"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2810"
-marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,ekr.20031218072017.2950,"><vh>@thin leoCommands.py</vh></v>
-<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
-<v t="ekr.20041117062700"
-marks="ekr.20041119203941.2,ekr.20041119204700.1,"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20031218072017.3748"
-marks="ekr.20051006092617.1,ekr.20050920085536.62,"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20051014161015" a="TV"><vh>Full input modes</vh>
-<v t="ekr.20060103104509"><vh>To do</vh>
+<v t="ekr.20051014161015" a="E"><vh>Full input modes</vh>
+<v t="ekr.20060103104509" a="TV"><vh>To do</vh></v>
+<v t="ekr.20060104154253"><vh>Ahas</vh></v>
+<v t="ekr.20060103133740"><vh>Prototypes</vh>
 <v t="ekr.20051017140811.1"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html</vh></v>
 </v>
-<v t="ekr.20060103133740"><vh>Prototypes</vh></v>
 <v t="ekr.20060103113002"><vh>What I did</vh></v>
-<v t="ekr.20060104101411" a="E"><vh>Birth</vh>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
-<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
-<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
-</v>
-<v t="ekr.20050920093543"><vh>c.finishCreate &amp; helper</vh>
-<v t="ekr.20051007143620"><vh>printCommandsDict</vh></v>
-</v>
-</v>
-<v t="ekr.20060102134206.1" a="E"><vh>From leoConfig.py</vh>
+<v t="ekr.20060102134206.1"><vh>From leoConfig.py</vh>
 <v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
+<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
 <v t="ekr.20060102103625.1"><vh>doMode</vh></v>
 <v t="ekr.20041120105609"><vh>doShortcuts</vh></v>
 </v>
-<v t="ekr.20060102134206.2" a="E"><vh>From leoKeys.py</vh>
+<v t="ekr.20060102134206.2"><vh>From leoKeys.py</vh>
 <v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
+<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20050920094633"><vh>finishCreate (keyHandler) &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+<v t="ekr.20050920085536.63"><vh>keyboardQuit</vh></v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20051001051355"><vh>Dispatching...</vh>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
@@ -1644,11 +1651,13 @@ marks="ekr.20051006092617.1,ekr.20050920085536.62,"><vh>@thin leoKeys.py</vh></v
 </v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
 </v>
-<v t="ekr.20051015110547" a="M"><vh>k.registerCommand</vh></v>
-<v t="ekr.20060102135349"><vh>k.addModeBindings</vh></v>
-<v t="ekr.20060102135349.1"><vh>k.deleteModeBindings</vh></v>
-<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
-<v t="ekr.20060103111643"><vh>enterXXXMode</vh></v>
+<v t="ekr.20060104120602"><vh>matchKeys</vh></v>
+<v t="ekr.20060102135349.2"><vh>enterNamedMode &amp;helpers</vh>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060104164523"><vh>modeHelp/Helper</vh>
+<v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
+</v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -3488,7 +3497,7 @@ setSelectionRange = setTextSelection</t>
     return "Leo 4.4 alpha 5 cvs-snapshot 1, build %s, December 5, 2005" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.355 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.356 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -5457,10 +5466,12 @@ Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files
         val = s[i:]
            
     # New in 4.4: Allow comments after the shortcut.
-    # Comments must be preceded by whitespace. 
+    # Comments must be preceded by whitespace.
+    comment = ''
     if val:
         i = val.find('#')
         if i &gt; 0 and val[i-1] in (' ','\t'):
+            # comment = val[i:].strip()
             val = val[:i].strip()
 
     # g.trace(pane,name,val,s)
@@ -9851,6 +9862,25 @@ def reSearchForward (self,event):
         k.endCommand(event,stroke)
         
     return 'break'</t>
+<t tx="ekr.20050920085536.63">def keyboardQuit (self,event):
+
+    '''This method clears the state and the minibuffer label.
+    
+    k.endCommand handles all other end-of-command chores.'''
+    
+    k = self ; c = k.c
+
+    if g.app.quitting:
+        return
+        
+    c.frame.log.deleteTab('Completion')
+    c.frame.log.deleteTab('Mode')
+    k.inputModeName = None
+        
+    k.clearState()
+    k.resetLabel()
+    
+    c.frame.bodyWantsFocus()</t>
 <t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke):
 
     '''This is the central dispatching method.
@@ -9934,30 +9964,6 @@ if 0: # traces
     g.trace(keysym,stroke)
     g.trace(k.keysymHistory)
     g.trace(keyHandlerClass.lossage)</t>
-<t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
-    
-    '''Finish creating the commander after frame.finishCreate.'''
-    
-    c = self ; p = c.currentPosition()
-    c.miniBufferWidget = c.frame.miniBufferWidget
-    # g.trace('Commands',c.fileName()) # g.callers())
-    
-    # Create a keyHandler even if there is no miniBuffer.
-    c.keyHandler = k = leoKeys.keyHandlerClass(c,
-        useGlobalKillbuffer=True,
-        useGlobalRegisters=True)
-
-    if g.app.config and g.app.config.inited:
-        # A 'real' .leo file.
-        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
-        k.finishCreate()
-    else:
-        # A leoSettings.leo file.
-        c.commandsDict = {}
-
-    # Create the menu last so that we can use the key handler for shortcuts.
-    if not g.doHook("menu1",c=c,p=p,v=p):
-        c.frame.menu.createMenuBar(c.frame)</t>
 <t tx="ekr.20050920094633">def finishCreate (self):
     
     '''Complete the construction of the keyHandler class.
@@ -10171,6 +10177,7 @@ self.mb_prompt = ''
 self.func = None
 self.keysymHistory = []
 self.previous = []
+self.stroke = None
 
 # For getArg...
 self.afterGetArgState = None
@@ -10420,18 +10427,10 @@ else:
         self.svar = None</t>
 <t tx="ekr.20051006092617.1">self.abbrevOn = False # True: abbreviations are on.
 self.arg = '' # The value returned by k.getArg.
-self.commandName = None
-defaultMode = c.config.getString('initial_unbound_key_binding') or 'insert'
-defaultMode.lower()
-if defaultMode in ('insert','replace','ignore'):
-    self.defaultInputMode = defaultMode
-else:
-    g.trace('ignoring initial_unbound_key_binding setting: %s' % defaultMode)
+self.commandName = None # The name of the command being executed.
 self.funcReturn = None # For k.simulateCommand
-
 self.inputModeBindings = {}
-self.inputModesDict = {}
-    # Keys are mode names, values are bindings dicts.
+self.inputModeName = '' # The name of the input mode, or None.
 self.inverseCommandsDict = {}
     # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
 self.leoCallbackDict = {}
@@ -10441,7 +10440,7 @@ self.negativeArg = False
 self.regx = g.bunch(iter=None,key=None)
 self.repeatCount = None
 self.state = g.bunch(kind=None,n=None,handler=None)
-self.unboundKeyAction = self.defaultInputMode</t>
+&lt;&lt; set self.unboundKeyAction &gt;&gt;</t>
 <t tx="ekr.20051006125633"></t>
 <t tx="ekr.20051006125633.1">def bindShortcut (self,pane,shortcut,command,commandName):
     
@@ -10478,26 +10477,8 @@ self.unboundKeyAction = self.defaultInputMode</t>
     k.makeSpecialBindings()
     k.makeBindingsFromCommandsDict()
     k.add_ekr_altx_commands()
-    
-    # New in Leo 4.4a5: add commands created by @mode settings.
-    d = g.app.config.modeCommandsDict
-    for key in d.keys():
-        f = d.get(key)
-        c.commandsDict[key] = f
-        k.inverseCommandsDict [f.__name__] = key
-
+    k.addModeCommands()
     k.checkBindings()</t>
-<t tx="ekr.20051007143620">def printCommandsDict (self):
-    
-    c = self
-    
-    print 'Commands...'
-    keys = c.commandsDict.keys()
-    keys.sort()
-    for key in keys:
-        command = c.commandsDict.get(key)
-        print '%30s = %s' % (key,g.choose(command,command.__name__,'&lt;None&gt;'))
-    print</t>
 <t tx="ekr.20051008082929">def createInverseCommandsDict (self):
     
     '''Add entries to k.inverseCommandsDict using c.commandDict,
@@ -15107,25 +15088,18 @@ e
 </t>
 <t tx="ekr.20060102092148.2">docutils installs it if it isn't available.
 </t>
-<t tx="ekr.20060102103625">def createModeCommand (self,name):
+<t tx="ekr.20060102103625">def createModeCommand (self,name,modeDict):
 
-    c = self.c ; k = c.keyHandler
+    # c = self.c ; k = c.keyHandler
     commandName = 'enter-' + name
-    
-    # g.trace(c,commandName)
-
-    def enterModeCallback (event=None,name=name):
-        g.trace(name)
-        k.enterNamedMode(name)
         
     # Save the info for k.finishCreate and k.makeAllBindings.
     d = g.app.config.modeCommandsDict
+
     if d.get(name):
         g.trace('Ignoring duplicate mode: %s' % commandName)
     else:
-        d [commandName] = enterModeCallback
-        
-    </t>
+        d [commandName] = modeDict</t>
 <t tx="ekr.20060102103625.1">def doMode(self,p,kind,name,val):
     
     '''Parse an @mode node and create the enter-&lt;name&gt;-mode command.'''
@@ -15139,9 +15113,10 @@ e
     if name.endswith('-'):
         name = name[:-1]
     name = name + '-mode'
+    # g.trace(name)
     
     # Check for duplicate mode names.
-    if k.inputModesDict.get(name):
+    if g.app.config.modeCommandsDict.get(name):
         g.trace('Ignoring duplicate @mode setting: %s' % name)
         return
     
@@ -15152,37 +15127,21 @@ e
     
     # Remember the mode dict.
     d2 = self.shortcutsDict
-    # g.trace(d2.keys())
-    k.inputModesDict [name] = d2
     
     # Restore the global dict.
     self.shortcutsDict = d
     
     # Create the command, but not any bindings to it.
-    self.createModeCommand(name)</t>
+    self.createModeCommand(name,d2)</t>
 <t tx="ekr.20060102134206.1"></t>
 <t tx="ekr.20060102134206.2"></t>
-<t tx="ekr.20060102135349">def addModeBindings (self,d):
+<t tx="ekr.20060102135349.2">def enterNamedMode (self,event,commandName):
     
-    g.trace(d.keys())</t>
-<t tx="ekr.20060102135349.1">def deleteModeBindings (self,d):
+    k = self ; c = k.c
+    modeName = commandName[6:]
     
-    g.trace(d)</t>
-<t tx="ekr.20060102135349.2">def enterNamedMode (self,name):
-    
-    k = self
-    
-    d = k.inputModesDict.get(name)
-    if d:
-        # Delete previous node bindings.
-        d2 = k.inputModeBindings
-        if d2:
-            k.deleteModeBindings(d2)
-            k.inputModeBindings = {}
-            
-        # Add new node bindings.
-        k.addModeBindings(d)
-        k.inputModeBindings = d</t>
+    k.generalModeHandler(event,modeName)
+</t>
 <t tx="ekr.20060103100430"></t>
 <t tx="ekr.20060103101524">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=3501995
@@ -15252,26 +15211,23 @@ encoding = sys.getdefaultencoding() # 'cp1250'
 everything goes fine.</t>
 <t tx="ekr.20060103104509">@nocolor
 
-** Create general mode handler code.
-    - It uses the existing state machinery.
-    - It only honors the mode bindings, plus perhaps a few universal bindings.
-    - It restores focus by default (can be overridden by focus-shifting commands).
-    - It leaves existing bindings alone (because it is called from masterCommand).
-    - It supports typing completion: a list of valid keystrokes in the mode.
+* Run pychecker.
+- Fancier mode-help.
+- Use tabs in print-commands &amp; print-bindings.
 
-- look at k.unboundKeyAction in handleDefaultChar.
-    - Create method to handle replace mode.</t>
-<t tx="ekr.20060103111643">def enterDefaultMode (self,event):
-    self.unboundKeyAction = self.defaultInputMode
+* Handle k.unboundKeyAction in handleDefaultChar.
+- Complete vim emulation
 
-def enterIgnoreMode (self,event):
-    self.unboundKeyAction = 'ignore'
+Cleanup
+- Default modes should set the label.
+- Create tkinterKeyHandler.
 
-def enterInsertMode (self,event):
-    self.unboundKeyAction = 'insert'
+Docs
+- Document @mode and how to use it.
+- Move most settings docs to Customizing chapter.
 
-def enterReplaceMode (self,event):
-    self.unboundKeyAction = 'replace'</t>
+Tests
+- Test cursor commands in Find panel.</t>
 <t tx="ekr.20060103113002">@nocolor
 
 - Created enter-xxx-mode command in c.config.createModeCommand.
@@ -15281,14 +15237,17 @@ def enterReplaceMode (self,event):
 - Read initial_unbound_key_binding when creating keyHandler class.
 
 - Implemented mode-changing commands:
+    enter-ignore-mode,enter-insert-mode,enter-replace-mode
+    These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
 
-    enter-default-mode
-    enter-ignore-mode
-    enter-insert-mode
-    enter-replace-mode
+Created general mode handler code.
+- It uses the existing state machinery.
+- It only honors the mode bindings, plus perhaps a few universal bindings.
+- It restores focus by default (can be overridden by focus-shifting commands).
+- It leaves existing bindings alone (because it is called from masterCommand).
+- It supports typing completion: a list of valid keystrokes in the mode.
 
-These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
-enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.</t>
+Created mode-help command.</t>
 <t tx="ekr.20060103133740">- Create prototype of ekr-vim mode
     - initial_unbound_key_binding = ignore
     - plain key bindings for:
@@ -15366,6 +15325,131 @@ set width [expr int(ceil(double($strpixels) / $zeropixels))]
 Summary of code: Set the width to be the pixel size of the text widget string
 divided by the pixel size of the '0' char.
 </t>
-<t tx="ekr.20060104101411"></t>
+<t tx="ekr.20060104110233">def generalModeHandler (self,event,name=None):
+    
+    '''Handle a mode defined by an @mode node in leoSettings.leo.'''
+
+    k = self ; c = k.c ; f = c.frame
+    modeName = name or k.inputModeName
+    commandName = 'enter-' + modeName
+    state = k.getState(modeName)
+    keysym = event and event.keysym or ''
+    # g.trace(modeName,'state',state)
+    
+    d = g.app.config.modeCommandsDict.get(commandName)
+    if not d:
+        g.trace("can't happen")
+    elif state == 0:
+        k.inputModeName = modeName
+        k.modeWidget = event and event.widget
+        k.setState(name,1,handler=k.generalModeHandler)
+        k.setLabelBlue(name,protect=True)
+        k.modeCompletionList = d.keys()
+    else:
+        for key in d.keys():
+            bunchList = d.get(key)
+            for bunch in bunchList:
+                if k.matchKeys(event,bunch.val):
+                    func = c.commandsDict.get(key)
+                    # g.trace('calling',func)
+                    if key != 'mode-help':
+                        # This must be done first because commands can change windows.
+                        k.clearState()
+                        k.resetLabel()
+                        k.endCommand(event,k.stroke)
+                        k.inputModeName = None
+                        c.frame.log.deleteTab('Mode')
+                        c.frame.widgetWantsFocus(k.modeWidget)
+                    func(event)
+                    return 'break'
+        k.modeHelpHelper(d)
+        f.minibufferWantsFocus()
+        
+    return 'break'</t>
+<t tx="ekr.20060104120602">def matchKeys (self,event,shortcut):
+    
+    '''Return true if a binding matches the key specified by the event.'''
+    
+    k = self ; c = k.c
+    
+    if not k.stroke or not event: return False
+    
+    stroke = k.stroke ; keysym = event.keysym
+    shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+    
+    if stroke == '&lt;Key&gt;':
+        val = shortcut == keysym or shortcut.startswith('Key-') and shortcut.endswith(keysym)
+    else:
+        val = stroke == shortcut2
+        
+    if 0:
+        g.trace('returns',val,
+            'stroke',stroke,'keysym',keysym,
+            'shortcut',shortcut,'shortcuts',shortcut2)
+        
+    return val</t>
+<t tx="ekr.20060104125946">def modeHelpHelper (self,d):
+    
+    k = self ; c = k.c
+    
+    c.frame.log.clearTab('Mode')
+    
+    for key in d.keys():
+        bunchList = d.get(key)
+        bunch = bunchList and bunchList[0]
+        shortcut = bunch.val
+        if shortcut not in (None,'None'):
+            if shortcut.startswith('Key-'):
+                shortcut = shortcut[4:]
+                if len(shortcut) == 1:
+                    ch = shortcut[0]
+                    if ch in string.ascii_uppercase:
+                        shortcut = 'Shift-%s' % ch.lower()
+            g.es('%s\t%s' % (shortcut,key),tabName='Mode')</t>
+<t tx="ekr.20060104154253">- User can bind &lt;Backspace&gt; to an enter-mode command.
+- User can bind &lt;Tab&gt; to show-mode-help command.
+</t>
+<t tx="ekr.20060104154937">def addModeCommands (self):
+    
+    '''Add commands created by @mode settings..'''
+
+    k = self ; c = k.c
+    d = g.app.config.modeCommandsDict
+    
+    for key in d.keys():
+
+        def enterModeCallback (event=None,name=key):
+            k.enterNamedMode(event,name)
+
+        c.commandsDict[key] = f = enterModeCallback
+        k.inverseCommandsDict [f.__name__] = key</t>
+<t tx="ekr.20060104164523">def modeHelp (self,event):
+
+    '''The mode-help command.
+    
+    A possible convention would be to bind &lt;Tab&gt; to this command in most modes,
+    by analogy with tab completion.'''
+    
+    k = self
+
+    if k.inputModeName:
+        commandName = 'enter-' + k.inputModeName
+        d = g.app.config.modeCommandsDict.get(commandName)
+        k.modeHelpHelper(d)
+    else:
+        g.es('Not in any mode')
+
+
+
+
+
+</t>
+<t tx="ekr.20060105085031">defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+defaultAction.lower()
+if defaultAction in ('insert','replace','ignore'):
+    self.unboundKeyAction = defaultAction
+else:
+    g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultMode)
+    self.unboundKeyAction = 'insert'</t>
 </tnodes>
 </leo_file>

@@ -79,17 +79,10 @@ class keyHandlerClass:
         #@+node:ekr.20051006092617.1:<< define externally visible ivars >>
         self.abbrevOn = False # True: abbreviations are on.
         self.arg = '' # The value returned by k.getArg.
-        self.commandName = None
-        defaultMode = c.config.getString('initial_unbound_key_binding') or 'insert'
-        defaultMode.lower()
-        if defaultMode in ('insert','replace','ignore'):
-            self.defaultInputMode = defaultMode
-        else:
-            g.trace('ignoring initial_unbound_key_binding setting: %s' % defaultMode)
+        self.commandName = None # The name of the command being executed.
         self.funcReturn = None # For k.simulateCommand
-        
         self.inputModeBindings = {}
-        self.inputModeName = ''
+        self.inputModeName = '' # The name of the input mode, or None.
         self.inverseCommandsDict = {}
             # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
         self.leoCallbackDict = {}
@@ -99,7 +92,18 @@ class keyHandlerClass:
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
         self.state = g.bunch(kind=None,n=None,handler=None)
-        self.unboundKeyAction = self.defaultInputMode
+        #@<< set self.unboundKeyAction >>
+        #@+node:ekr.20060105085031:<< set self.unboundKeyAction >>
+        defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+        defaultAction.lower()
+        if defaultAction in ('insert','replace','ignore'):
+            self.unboundKeyAction = defaultAction
+        else:
+            g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
+            self.unboundKeyAction = 'insert'
+        #@nonl
+        #@-node:ekr.20060105085031:<< set self.unboundKeyAction >>
+        #@nl
         #@nonl
         #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
         #@nl
@@ -1058,20 +1062,6 @@ class keyHandlerClass:
         k.universalDispatcher(event)
     #@nonl
     #@-node:ekr.20050930080419:digitArgument & universalArgument
-    #@+node:ekr.20060103111643:enterXXXMode
-    def enterDefaultMode (self,event):
-        self.unboundKeyAction = self.defaultInputMode
-    
-    def enterIgnoreMode (self,event):
-        self.unboundKeyAction = 'ignore'
-    
-    def enterInsertMode (self,event):
-        self.unboundKeyAction = 'insert'
-    
-    def enterReplaceMode (self,event):
-        self.unboundKeyAction = 'replace'
-    #@nonl
-    #@-node:ekr.20060103111643:enterXXXMode
     #@+node:ekr.20060102135349.2:enterNamedMode &helpers
     def enterNamedMode (self,event,commandName):
         

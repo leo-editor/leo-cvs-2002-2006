@@ -11,10 +11,8 @@ Modelled after Emacs and Vim commands.'''
 #@+node:ekr.20050710151017:<< imports >>
 import leoGlobals as g
 
-import leoColor # For autocompleter.
 import leoFind
 import leoKeys
-import leoNodes
 
 import cPickle
 import difflib
@@ -3760,12 +3758,8 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
         
         return {
             'digit-argument':           k.digitArgument,
-            'enter-default-mode':       k.enterDefaultMode,
-            'enter-ignore-mode':        k.enterIgnoreMode,
-            'enter-insert-mode':        k.enterInsertMode,
             # @mode settings create enter-xxx-mode commands.
             # 'enter-named-mode':         k.enterNamedMode,
-            'enter-replace-mode':       k.enterReplaceMode,
             'help':                     k.help,
             'hide-mini-buffer':         k.hideMinibuffer,
             'mode-help':                k.modeHelp,

@@ -10970,22 +10970,7 @@ def preferences(self):
     '''Handle the preferences command.'''
     
     c = self
-
-    if 1: # New in Leo 4.4a5: just open leoSettings.leo.
-        c.openLeoSettings()
-    
-    elif 1: # Previous.
-        # Replace the body pane by the preferences setters.
-        leoConfig.settingsController(c,replaceBody=True)
-
-    else: # Old code...
-        # Show the Preferences Panel, creating it if necessary.
-        frame = c.frame
-    
-        if not frame.prefsPanel:
-            frame.prefsPanel = g.app.gui.createPrefsPanel(c)
-            
-        frame.prefsPanel.bringToFront()
+    c.openLeoSettings()
 #@nonl
 #@-node:ekr.20031218072017.2086:preferences
 #@-node:ekr.20051220070321:Settings command is now the same as open-leoettings-leo
@@ -11721,20 +11706,16 @@ def getTabName (self,exitCallback):
 - Fancier mode-help.
 - Use tabs in print-commands & print-bindings.
 
-* look at k.unboundKeyAction in handleDefaultChar.
-    - Create method to handle replace mode.
-- Complete vim mode.
+* Handle k.unboundKeyAction in handleDefaultChar.
+- Complete vim emulation
 
 Cleanup
 - Default modes should set the label.
-- Clean up ivars.
 - Create tkinterKeyHandler.
 
 Docs
 - Document @mode and how to use it.
 - Move most settings docs to Customizing chapter.
-- Posting: Aha: minimal default actions in modes. (Everything is working!)
-- Slashdot posting?: Yes, Leo support in other editors would be good.
 
 Tests
 - Test cursor commands in Find panel.
@@ -11770,12 +11751,6 @@ Tests
 - Removed c.setFocusHelper
 
 - Read initial_unbound_key_binding when creating keyHandler class.
-
-- Implemented mode-changing commands:
-    enter-default-mode,enter-ignore-mode,enter-insert-mode,enter-replace-mode
-
-    These simply set k.unboundKeyAction to 'ignore','insert' or 'replace'.
-    enter-default-input-mode sets k.unboundKeyAction to k.defaultInputMode.
 
 Created general mode handler code.
 - It uses the existing state machinery.
@@ -11828,17 +11803,10 @@ else:
 #@+node:ekr.20051006092617.1:<< define externally visible ivars >>
 self.abbrevOn = False # True: abbreviations are on.
 self.arg = '' # The value returned by k.getArg.
-self.commandName = None
-defaultMode = c.config.getString('initial_unbound_key_binding') or 'insert'
-defaultMode.lower()
-if defaultMode in ('insert','replace','ignore'):
-    self.defaultInputMode = defaultMode
-else:
-    g.trace('ignoring initial_unbound_key_binding setting: %s' % defaultMode)
+self.commandName = None # The name of the command being executed.
 self.funcReturn = None # For k.simulateCommand
-
 self.inputModeBindings = {}
-self.inputModeName = ''
+self.inputModeName = '' # The name of the input mode, or None.
 self.inverseCommandsDict = {}
     # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
 self.leoCallbackDict = {}
@@ -11848,8 +11816,18 @@ self.negativeArg = False
 self.regx = g.bunch(iter=None,key=None)
 self.repeatCount = None
 self.state = g.bunch(kind=None,n=None,handler=None)
-self.unboundKeyAction = self.defaultInputMode
+<< set self.unboundKeyAction >>
 #@nonl
+#@+node:ekr.20060105085031:<< set self.unboundKeyAction >>
+defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+defaultAction.lower()
+if defaultAction in ('insert','replace','ignore'):
+    self.unboundKeyAction = defaultAction
+else:
+    g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
+    self.unboundKeyAction = 'insert'
+#@nonl
+#@-node:ekr.20060105085031:<< set self.unboundKeyAction >>
 #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
 #@+node:ekr.20050923213858:<< define internal ivars >>
 # Previously defined bindings.
@@ -12000,17 +11978,10 @@ else:
 #@+node:ekr.20051006092617.1:<< define externally visible ivars >>
 self.abbrevOn = False # True: abbreviations are on.
 self.arg = '' # The value returned by k.getArg.
-self.commandName = None
-defaultMode = c.config.getString('initial_unbound_key_binding') or 'insert'
-defaultMode.lower()
-if defaultMode in ('insert','replace','ignore'):
-    self.defaultInputMode = defaultMode
-else:
-    g.trace('ignoring initial_unbound_key_binding setting: %s' % defaultMode)
+self.commandName = None # The name of the command being executed.
 self.funcReturn = None # For k.simulateCommand
-
 self.inputModeBindings = {}
-self.inputModeName = ''
+self.inputModeName = '' # The name of the input mode, or None.
 self.inverseCommandsDict = {}
     # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
 self.leoCallbackDict = {}
@@ -12020,8 +11991,18 @@ self.negativeArg = False
 self.regx = g.bunch(iter=None,key=None)
 self.repeatCount = None
 self.state = g.bunch(kind=None,n=None,handler=None)
-self.unboundKeyAction = self.defaultInputMode
+<< set self.unboundKeyAction >>
 #@nonl
+#@+node:ekr.20060105085031:<< set self.unboundKeyAction >>
+defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+defaultAction.lower()
+if defaultAction in ('insert','replace','ignore'):
+    self.unboundKeyAction = defaultAction
+else:
+    g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
+    self.unboundKeyAction = 'insert'
+#@nonl
+#@-node:ekr.20060105085031:<< set self.unboundKeyAction >>
 #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
 #@+node:ekr.20050923213858:<< define internal ivars >>
 # Previously defined bindings.
