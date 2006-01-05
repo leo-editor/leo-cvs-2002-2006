@@ -11717,6 +11717,10 @@ def getTabName (self,exitCallback):
 #@+node:ekr.20060103104509:To do
 @nocolor
 
+* Run pychecker.
+- Fancier mode-help.
+- Use tabs in print-commands & print-bindings.
+
 * look at k.unboundKeyAction in handleDefaultChar.
     - Create method to handle replace mode.
 - Complete vim mode.
