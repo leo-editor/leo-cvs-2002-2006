@@ -2110,8 +2110,7 @@ class editCommandsClass (baseEditCommandsClass):
         if not g.app.gui.isTextWidget(w): return
         
         name = g.app.gui.widget_name(w)
-        oldText = w.get('1.0','end')
-        i,j = oldSel = g.app.gui.getTextSelection(w)
+        i,j = g.app.gui.getTextSelection(w)
         # g.trace(i,j)
     
         if name.startswith('body'):
@@ -2166,8 +2165,7 @@ class editCommandsClass (baseEditCommandsClass):
         if not g.app.gui.isTextWidget(w): return
     
         name = g.app.gui.widget_name(w)
-        oldText = w.get('1.0','end')
-        i,j = oldSel = g.app.gui.getTextSelection(w)
+        i,j = g.app.gui.getTextSelection(w)
         end = w.index('end-1c')
         # g.trace(i,j,'end',w.index('end-1c'))
         

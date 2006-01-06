@@ -1495,6 +1495,8 @@ class position (object):
     def __init__ (self,c,v,stack,trace=True):
     
         """Create a new position."""
+        
+        __pychecker__ = '--no-argsused' # trace not used.
     
         self.c = c
         self.v = v
