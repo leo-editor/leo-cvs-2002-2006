@@ -1325,6 +1325,7 @@ class baseUndoer:
         finally:
             # New in 4.4a3: Almost any change could change an icon,
     	    # So we always request a redraw.
+            c.setChanged(True)
             c.endUpdate()
             c.recolor_now()
             c.frame.bodyWantsFocus()
@@ -1583,6 +1584,7 @@ class baseUndoer:
         finally:
             # New in 4.4a3: Almost any change could change an icon,
     	    # So we always request a redraw.
+            c.setChanged(True)
             c.endUpdate()
             c.recolor_now()
             c.frame.bodyWantsFocus()
