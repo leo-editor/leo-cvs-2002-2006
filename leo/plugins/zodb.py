@@ -14,7 +14,7 @@ that access the zodb database.
 # WARNING: highly experimental code:  USE AT YOUR OWN RISK.
 # WARNING:
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 #@<< imports >>
 #@+node:ekr.20050825154553.1:<< imports >>
@@ -45,6 +45,8 @@ except ImportError:
 # 
 # 0.0.2: Replaced g.app.gui.newLeoCommanderAndFrame with 
 # g.app.newLeoCommanderAndFrame.
+# 
+# - Update to reflect new c argument to position.__init__.
 # 
 #@-at
 #@-node:ekr.20050825154553.2:<< change log >>
@@ -1345,7 +1347,7 @@ def buildVnodeClass (controller=None):
             # we want to start with a pristine tree.
             if oldRoot: oldRoot._back = v
         
-            newRoot = position(v,[])
+            newRoot = position(c,v,[])
             c.setRootPosition(newRoot)
         #@nonl
         #@-node:ekr.20050826134701.50:v.linkAsRoot
@@ -1374,7 +1376,7 @@ def buildVnodeClass (controller=None):
             # Special case the root.
             if v == c.rootPosition().v: # 3/11/04
                 assert(v._next)
-                newRoot = position(v._next,[])
+                newRoot = position(c,v._next,[])
                 c.setRootPosition(newRoot)
         
             # Clear the links in other nodes.
@@ -1743,12 +1745,11 @@ def buildPositionClass (controller=None):
         #@nonl
         #@-node:ekr.20050826134701.81:p.__getattr__  ON:  must be ON if use_plugins
         #@+node:ekr.20050826134701.82:p.__init__
-        def __init__ (self,v,stack,trace=True):
+        def __init__ (self,c,v,stack,trace=True):
         
             """Create a new position."""
             
-            if v: self.c = v.c
-            else: self.c = g.top()
+            self.c = c
             self.v = v
             assert(v is None or v.t)
             self.stack = stack[:] # Creating a copy here is safest and best.
@@ -1803,7 +1804,7 @@ def buildPositionClass (controller=None):
                 g.trace("%-25s %-25s %s" % (
                     g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
         
-            return position(self.v,self.stack,trace=False)
+            return position(self.c,self.v,self.stack,trace=False)
         #@nonl
         #@-node:ekr.20050826134701.85:p.copy
         #@+node:ekr.20050826134701.86:p.dump & p.vnodeListIds

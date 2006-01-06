@@ -156,7 +156,7 @@ class Chapter:
         if hasattr( c, 'cChapter' ):
             tn = leoNodes.tnode( '', 'New Headline' )
             vn = leoNodes.vnode( c, tn )
-            pos = leoNodes.position( vn, [] )
+            pos = leoNodes.position(c, vn, [] )
             self.cp = pos.copy()
             self.rp = pos.copy()
             self.tp = pos.copy()
@@ -1378,7 +1378,7 @@ def regexClone( c , name ):
         chapter.setVariables()
         stnode = leoNodes.tnode( '', txt )
         snode = leoNodes.vnode( c, stnode)
-        snode = leoNodes.position( snode, [] )
+        snode = leoNodes.position(c, snode, [] )
         snode.moveAfter( rt )
         ignorelist = [ snode ]
         it = walkChapters( c , ignorelist = ignorelist)
