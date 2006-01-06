@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8547" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8554" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
 	<global_window_position top="59" left="295" height="781" width="864"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1803,22 +1803,22 @@ last line 1: no newline</t>
 <t tx="ekr.20040712101754.3">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","test.leo")
-leoTest.runLeoTest(path,verbose=False,full=True)
+leoTest.runLeoTest(c,path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040712101754.4">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","src","LeoPy.leo")
-leoTest.runLeoTest(path)
+leoTest.runLeoTest(c,path)
 </t>
 <t tx="ekr.20040712101754.5">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","plugins","leoPlugins.leo")
-leoTest.runLeoTest(path)
+leoTest.runLeoTest(c,path)
 </t>
 <t tx="ekr.20040712101754.6">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","doc","LeoDocs.leo")
-leoTest.runLeoTest(path)
+leoTest.runLeoTest(c,path)
 </t>
 <t tx="ekr.20040712101754.7">@language python
 @tabwidth -4</t>
@@ -1829,7 +1829,7 @@ import leoTest
 
 @others
 
-suite = leoTest.makeImportExportSuite("importTests",doImport=True)
+suite = leoTest.makeImportExportSuite(c,"importTests",doImport=True)
 
 g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.9"># Create unit tests in g.app.scriptDict["suite"]
@@ -1840,7 +1840,7 @@ import leoTest
 
 @others
 
-suite = leoTest.makeImportExportSuite("exportTests",doImport=False)
+suite = leoTest.makeImportExportSuite(c,"exportTests",doImport=False)
 
 g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.10">@language plain</t>
@@ -1887,7 +1887,7 @@ import leoTest
 
 g.app.enableUnitTest = True
 
-suite = leoTest.makeEditBodySuite()
+suite = leoTest.makeEditBodySuite(c)
 
 g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.38">@language plain
@@ -3575,7 +3575,7 @@ c.redraw()</t>
 <t tx="ekr.20040712101754.220"></t>
 <t tx="ekr.20040712101754.221">import leoTest
 
-u = leoTest.testUtils()
+u = leoTest.testUtils(c)
 outline1 = p.firstChild()
 outline2 = outline1.next()
 assert(outline1.headString()=="outline1")
@@ -3610,17 +3610,17 @@ import leoTest
 suite = makeOutlineSuite("outlineTests")
 
 g.app.scriptDict['suite'] = suite</t>
-<t tx="ekr.20040712101754.228">def makeOutlineSuite(parentHeadline):
+<t tx="ekr.20040712101754.228">def makeOutlineSuite(c,parentHeadline):
     
     """Create an outline test for every descendant of testParentHeadline.."""
 
     v = c.currentVnode()
-    u = leoTest.testUtils()
+    u = leoTest.testUtils(c)
 
     # Create the suite and add all test cases.
     suite = unittest.makeSuite(unittest.TestCase)
     
-    parent = u.findNodeAnywhere(c,parentHeadline)
+    parent = u.findNodeAnywhere(parentHeadline)
     
     for child in parent.children_iter(copy=True):
         before = u.findNodeInTree(child,"before")
@@ -3642,7 +3642,7 @@ g.app.scriptDict['suite'] = suite</t>
     # Init the base class.
     unittest.TestCase.__init__(self)
     
-    self.u = leoTest.testUtils()
+    self.u = leoTest.testUtils(c)
 
     self.c = c
     self.parent = parent
@@ -3733,9 +3733,9 @@ g.app.scriptDict['suite'] = suite</t>
     @others</t>
 <t tx="ekr.20040712101754.256">def setUp(self):
     
-    self.u = u = leoTest.testUtils()
-    self.c = c # = g.top()
-    self.find_p = u.findNodeAnywhere(c,"findTests")
+    self.c = c
+    self.u = u = leoTest.testUtils(c)
+    self.find_p = u.findNodeAnywhere("findTests")
     
     assert(self.find_p)
 </t>
@@ -3783,7 +3783,7 @@ assert result=="ok", "checkPythonCode returns: %s" % result</t>
 
 import leoTest
 
-u = leoTest.testUtils()
+u = leoTest.testUtils(c)
 dump = False 
 all = False 
 
@@ -3984,7 +3984,7 @@ This should be the last line (no newline following!)
 
 import leoTest
 
-u = leoTest.testUtils()
+u = leoTest.testUtils(c)
 
 assert leoTest.runPerfectImportTest(c,p,testing=False,verbose=False)
 </t>
@@ -4099,7 +4099,7 @@ Line 0
 
 import leoTest
 
-u = leoTest.testUtils()
+u = leoTest.testUtils(c)
 
 ignoreSentinelsInCompare = True # Fails when False
 
@@ -4225,12 +4225,12 @@ node 2: line 2
 <t tx="ekr.20040730181601">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile.leo")
-leoTest.runLeoTest(path,verbose=False,full=True)
+leoTest.runLeoTest(c,path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040730181610">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile2.leo")
-leoTest.runLeoTest(path,verbose=False,full=True)
+leoTest.runLeoTest(c,path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040802065214"># Make sure that changing this headline marks descendant @thin nodes dirty.
 h = p.headString()
@@ -4274,13 +4274,13 @@ finally:
 <t tx="ekr.20040803090901">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","dist","leoDist.leo")
-leoTest.runLeoTest(path,verbose=False,full=True)
+leoTest.runLeoTest(c,path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040803091512">import leoTest
 
-u = leoTest.testUtils()
+u = leoTest.testUtils(c)
 name = "@thin ../src/leoTest.py"
-p = u.findNodeAnywhere(c,name)
+p = u.findNodeAnywhere(name)
 
 assert p, "Can't find %s" % name
 
@@ -4319,7 +4319,7 @@ for file in ("install","uninstall"):
 <t tx="ekr.20040831104758">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile3.leo")
-leoTest.runLeoTest(path,verbose=False,full=True)
+leoTest.runLeoTest(c,path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040903102217"></t>
 <t tx="ekr.20040917062206">assert(g.cantImport("xyzzy","during unit testing") is None)</t>
@@ -4351,7 +4351,7 @@ leoTest.runLeoTest(path,verbose=False,full=True)
 
 import leoTest
 
-leoTest.doTests(all=False)</t>
+leoTest.doTests(c,all=False)</t>
 <t tx="ekr.20041001211817"></t>
 <t tx="ekr.20041004093917">@color
 @language python
@@ -6753,7 +6753,7 @@ We'll see the use of this added button soon, but before that, read up on the 'as
 import leoTest
 
 print "\nStart of Do @test"
-leoTest.doTests(all=False)
+leoTest.doTests(c,all=False)
 print "End of Do @test"</t>
 <t tx="ekr.20050618061835.5">The first child node of the node you're reading right now, contains the simplest succeeding test possible.
 Select it, and press the button 'Do @test'.
@@ -7651,7 +7651,7 @@ for p in c.allNodes_iter():
 print "done"</t>
 <t tx="ekr.20051104081502.146">import leoTest
 
-u = leoTest.testUtils()
+u = leoTest.testUtils(c)
 
 print "children", '-' * 20
 children = u.findChildrenOf(p)
@@ -13784,10 +13784,10 @@ try:
 finally:
     c2.close()</t>
 <t tx="ekr.20051107115231.13"></t>
-<t tx="ekr.20051107115231.14">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.14">import leoTest ; u = leoTest.testUtils(c)
 
 h = '@test return ends editing of headline'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 c.frame.tree.editLabel(p)
@@ -13796,12 +13796,12 @@ w2 = g.app.gui.get_focus(c.frame)
 assert w == w2, 'oops1 %s != %s' % (w,w2)
 w.event_generate('&lt;Return&gt;')
 assert w != g.app.gui.get_focus(c.frame),'oops2'</t>
-<t tx="ekr.20051107115231.15">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.15">import leoTest ; u = leoTest.testUtils(c)
 
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = '@test editLabel selects entire headline'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p)
@@ -13810,11 +13810,11 @@ assert w
 i,j = g.app.gui.getSelectionRange(w)
 assert i == '1.0'
 assert j == w.index('end')</t>
-<t tx="ekr.20051107115231.16">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.16">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p)
@@ -13831,11 +13831,11 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.17">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.17">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p)
@@ -13856,11 +13856,11 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.18">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.18">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p)
@@ -13882,11 +13882,11 @@ finally:
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.19"># Totally weird.
 
-import leoTest ; u = leoTest.testUtils()
+import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p) # Sets focus.
@@ -13911,11 +13911,11 @@ finally:
         p.initHeadString(h)
         c.redraw_now()
 </t>
-<t tx="ekr.20051107115231.20">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.20">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p)
@@ -13934,11 +13934,11 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.21">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.21">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p)
@@ -13957,9 +13957,9 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.22">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.22">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 # Post by hand.
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
@@ -13980,9 +13980,9 @@ finally:
         p.setBodyString('')
         c.redraw_now()
 </t>
-<t tx="ekr.20051107115231.23">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.23">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 # Post by hand.
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
@@ -14004,9 +14004,9 @@ finally:
         p.setHeadString(h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.24"># Should be a comment
-import leoTest ; u = leoTest.testUtils()
+import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 # Post by hand.
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
@@ -14023,10 +14023,10 @@ finally:
     if 1:
         p.setBodyString('')
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.25">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.25">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 c.frame.tree.editLabel(p)
@@ -14045,10 +14045,10 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.26">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.26">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 c.frame.tree.editLabel(p)
@@ -14065,11 +14065,11 @@ finally:
     if 1:
         p.initHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.28">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051107115231.28">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 tree.editLabel(p)
@@ -14507,10 +14507,10 @@ s = '''&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 <t tx="ekr.20051108140810"></t>
 <t tx="ekr.20051108141141"></t>
 <t tx="ekr.20051109034758"></t>
-<t tx="ekr.20051109091152">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051109091152">import leoTest ; u = leoTest.testUtils(c)
 
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 n = c.frame.tree.redrawCount
@@ -14525,10 +14525,10 @@ finally:
         c.redraw_now()</t>
 <t tx="ekr.20051109091333"># Not ready yet: generating a backspace seems impossible!
 
-import leoTest ; u = leoTest.testUtils()
+import leoTest ; u = leoTest.testUtils(c)
 
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 p.setBodyString('a')
 c.redraw_now() # To make node visible and to set the icon.
@@ -14545,10 +14545,10 @@ finally:
     if 0:
         p.setBodyString('')
         c.redraw_now()</t>
-<t tx="ekr.20051109091731">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051109091731">import leoTest ; u = leoTest.testUtils(c)
 
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 p.setBodyString('a')
 c.redraw_now() # To make node visible
@@ -14564,11 +14564,11 @@ finally:
         c.redraw_now()</t>
 <t tx="ekr.20051109143831"># This is **not** a real unit test.
 # It simply restores the screen to a more convenient state.
-import leoTest ; u = leoTest.testUtils()
+import leoTest ; u = leoTest.testUtils(c)
 
 c.contractAllHeadlines()
 h = 'All unit tests'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 p.expand()
 g.app.unitTestDict['restoreSelectedNode']=False
 c.selectPosition(p)
@@ -14578,9 +14578,9 @@ assert c.undoer.undoMenuLabel == 'Undo Insert Node'
 c.undoer.undo()
 assert c.undoer.redoMenuLabel == 'Redo Insert Node'</t>
 <t tx="ekr.20051120110536"></t>
-<t tx="ekr.20051120115046">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051120115046">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 body = 'This is a test'
 p.setBodyString(body)
@@ -14601,9 +14601,9 @@ try:
     assert n2 == n + 1
 finally:
     c.undoer.undo()</t>
-<t tx="ekr.20051125165933">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051125165933">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 s = 'ABC'
 p.setBodyString(s)
@@ -14622,9 +14622,9 @@ finally:
         c.redraw_now()
 
 </t>
-<t tx="ekr.20051125170139">import leoTest ; u = leoTest.testUtils()
+<t tx="ekr.20051125170139">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
-p = u.findNodeAnywhere(c,h)
+p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 c.frame.tree.editLabel(p)

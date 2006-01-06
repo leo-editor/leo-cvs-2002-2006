@@ -36,7 +36,7 @@
 </v>
 <v t="ekr.20051010093913"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608"><vh>@@button align to col</vh></v>
-<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -76,7 +76,6 @@
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
-<v t="ekr.20051126063209"><vh>@int default_callers_level = 7</vh></v>
 </v>
 <v t="ekr.20041119034357.20"><vh>@page Find/Change panel options</vh>
 <v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
@@ -242,7 +241,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -276,7 +275,7 @@
 </v>
 <v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
-<v t="ekr.20051010112558" a="ETV"><vh>traditional Leo shortcuts with important emacs bindings</vh>
+<v t="ekr.20051010112558" a="E"><vh>traditional Leo shortcuts with important emacs bindings</vh>
 <v t="ekr.20060102113259"><vh>@mode file mode</vh></v>
 <v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
 <v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>
@@ -1574,7 +1573,6 @@ vim_cmd = c:\Program Files\vim\vim64\gvim --servername LEO
 <t tx="ekr.20051126062243.1"></t>
 <t tx="ekr.20051126062525"></t>
 <t tx="ekr.20051126062830"></t>
-<t tx="ekr.20051126063209"></t>
 <t tx="ekr.20051218202206">@color
 
 # Important: the print-commands and print-bindings show what bindings are in effect.
