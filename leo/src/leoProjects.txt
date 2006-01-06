@@ -2737,7 +2737,7 @@ def scanError(s):
 
     """Bump the error count in the tangle command."""
     
-    # New in Leo 4.4b1: set this global instead of calling g.top.
+    # New in Leo 4.4b1: set this global instead of calling g.top().
     g.app.scanErrors +=1
     g.es(s)
 #@nonl

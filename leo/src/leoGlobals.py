@@ -2351,7 +2351,7 @@ def idleTimeHookHandler(*args,**keys):
 # exception.
 # 
 # We look for a hook routine in three places:
-# 1. g.top().hookFunction
+# 1. c.hookFunction
 # 2. app.hookFunction
 # 3. leoPlugins.doPlugins()
 # We set app.hookError on all exceptions.  Scripts may reset app.hookError to 
@@ -2525,15 +2525,18 @@ def test_g_es_trace():
 #@-at
 #@@c
 
-def top():
-    
-    """Return the commander of the topmost window"""
-    
-    # Warning: may be called during startup or shutdown when nothing exists.
-    try:
-        return app.log.c
-    except:
-        return None
+if 1: # An extremely dangerous function.
+    def top():
+        
+        """Return the commander of the topmost window"""
+        
+        g.trace("warning: g.top is strongly deprecated!",g.callers())
+        
+        # Warning: may be called during startup or shutdown when nothing exists.
+        try:
+            return app.log.c
+        except:
+            return None
 #@nonl
 #@-node:ekr.20031218072017.3148:top
 #@+node:ekr.20031218072017.3149:trace is defined below
@@ -2879,7 +2882,7 @@ def scanError(s):
 
     """Bump the error count in the tangle command."""
     
-    # New in Leo 4.4b1: set this global instead of calling g.top.
+    # New in Leo 4.4b1: set this global instead of calling g.top().
     g.app.scanErrors +=1
     g.es(s)
 #@nonl

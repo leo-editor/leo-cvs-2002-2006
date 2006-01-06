@@ -58,7 +58,7 @@ open_with.py
 #nav_buttons.py
 #base64Packager.py
 #EditAttributes.py
-groupOperations.py
+#groupOperations.py
 #multifile.py
 #xsltWithNodes.py
 #cleo.py

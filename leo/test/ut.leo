@@ -9,8 +9,8 @@
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20051208082927" a="E"><vh>ut.leo</vh>
-<v t="ekr.20051208083135" a="TV"><vh>@asis ut.bat</vh></v>
-<v t="ekr.20051208084010"><vh>@thin ut.py</vh></v>
+<v t="ekr.20051208083135"><vh>@asis ut.bat</vh></v>
+<v t="ekr.20051208084010" a="TV"><vh>@thin ut.py</vh></v>
 </v>
 <v t="ekr.20051208082927.1" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20051208085841"><vh>@test 1</vh></v>
