@@ -17,6 +17,28 @@ import string
 #@nonl
 #@-node:ekr.20050920094258:<< imports >>
 #@nl
+#@<< about key dicts >>
+#@+node:ekr.20051010062551.1:<< about key dicts >>
+#@@nocolor
+#@+at
+# 
+# c.commandsDict:
+#     keys are emacs command names, values are functions f.
+# 
+# k.inverseCommandsDict:
+#     keys are f.__name__, values are emacs command names.
+# inverseBindingsDict (computed by computeInverseBindingDict)
+#     keys are emacs command names, values are shortcuts.
+# 
+# k.leoCallbackDict:
+#     keys are leoCallback functions, values are called functions.
+# 
+# k.bindingsDict:
+#     keys are shortcuts, values are g.bunch(func,name,warningGiven)
+#@-at
+#@nonl
+#@-node:ekr.20051010062551.1:<< about key dicts >>
+#@nl
 
 class keyHandlerClass:
     

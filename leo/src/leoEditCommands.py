@@ -81,18 +81,20 @@ class baseEditCommandsClass:
     
         p = self.c.currentPosition()
         name = g.app.gui.widget_name(w)
-        oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
-        oldText = name.startswith('body') and p.bodyString()
-    
-        self.undoData = g.Bunch(
-            ch=ch,name=name,oldSel=oldSel,oldText=oldText,w=w,undoType=undoType)
+        
+        # Bug fix 1/6/06 (after a5 released): don't do this in headlines!
+        if name.startswith('body'):
+            oldSel =  g.app.gui.getTextSelection(w)
+            oldText = p.bodyString()
+            self.undoData = g.Bunch(
+                ch=ch,name=name,oldSel=oldSel,oldText=oldText,w=w,undoType=undoType)
             
         return w
     #@nonl
     #@-node:ekr.20051215102349:beingCommandHelper
     #@-node:ekr.20051214133130:beginCommand  & beginCommandWithEvent
     #@+node:ekr.20051214133130.1:endCommand
-    def endCommand(self,label=None):
+    def endCommand(self,label=None,changed=True):
         
         '''Do the common processing at the end of each command.'''
         
@@ -101,17 +103,21 @@ class baseEditCommandsClass:
         if b:
             name = b.name
             if name.startswith('body'):
-                c.frame.body.onBodyChanged(undoType=b.undoType,
-                    oldSel=b.oldSel,oldText=b.oldText,oldYview=None)
+                if changed:
+                    c.frame.body.onBodyChanged(undoType=b.undoType,
+                        oldSel=b.oldSel,oldText=b.oldText,oldYview=None)
             elif name.startswith('head'):
                 g.trace('Should not happen: endCommand does not support undo in headlines')
             else: pass
+            
+        self.undoData = None # Bug fix: 1/6/06 (after a5 released).
     
         k.clearState()
         if label:
             k.setLabelGrey(label)
         else:
             k.resetLabel()
+    #@nonl
     #@-node:ekr.20051214133130.1:endCommand
     #@-node:ekr.20051214132256:begin/endCommand
     #@+node:ekr.20050920084036.5:getPublicCommands & getStateCommands
@@ -2096,7 +2102,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent... (To do: undo)
     #@+node:ekr.20050920084036.85:insert & delete...
-    #@+node:ekr.20051026092433.1:backwardDeleteCharacter (ok)
+    #@+node:ekr.20051026092433.1:backwardDeleteCharacter
     def backwardDeleteCharacter (self,event=None):
         
         c = self.c ; p = c.currentPosition()
@@ -2106,12 +2112,17 @@ class editCommandsClass (baseEditCommandsClass):
         name = g.app.gui.widget_name(w)
         oldText = w.get('1.0','end')
         i,j = oldSel = g.app.gui.getTextSelection(w)
-      
+        # g.trace(i,j)
+    
         if name.startswith('body'):
+            self.beginCommand()
             d = g.scanDirectives(c,p)
             tab_width = d.get("tabwidth",c.tab_width)
+            changed = True
             if i != j:
                 w.delete(i,j)
+            elif i == '1.0':
+                changed = False # Bug fix: 1/6/06 (after a5 released).
             elif tab_width > 0:
                 w.delete('insert-1c')
             else:
@@ -2136,34 +2147,45 @@ class editCommandsClass (baseEditCommandsClass):
                 #@nonl
                 #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
                 #@nl
-            c.frame.body.onBodyChanged(undoType='Typing',
-                oldSel=oldSel,oldText=oldText,oldYview=None)
+            self.endCommand(changed=changed)
         else:
+            # No undo in this widget.
             if i != j:
                 w.delete(i,j)
-            else:
+            elif i != '1.0':
+                # Bug fix: 1/6/06 (after a5 released).
+                # Do nothing at the start of the headline.
                 w.delete('insert-1c')
     #@nonl
-    #@-node:ekr.20051026092433.1:backwardDeleteCharacter (ok)
-    #@+node:ekr.20050920084036.87:deleteNextChar (ok)
+    #@-node:ekr.20051026092433.1:backwardDeleteCharacter
+    #@+node:ekr.20050920084036.87:deleteNextChar
     def deleteNextChar (self,event):
     
-        c = self.c ; w = event.widget
+        c = self.c
+        w = event and event.widget or g.app.gui.get_focus(c.frame)
+        if not g.app.gui.isTextWidget(w): return
     
-        g.trace(g.app.gui.widget_name(w))
+        name = g.app.gui.widget_name(w)
+        oldText = w.get('1.0','end')
+        i,j = oldSel = g.app.gui.getTextSelection(w)
+        end = w.index('end-1c')
+        # g.trace(i,j,'end',w.index('end-1c'))
         
-        self.beginCommand('delete-char')
-        
-        i,j = g.app.gui.getTextSelection(w)
+        if name.startswith('body'):
+            self.beginCommand()
     
+        changed = True
         if i != j:
             w.delete(i,j)
-        else:
+        elif j != end:
             w.delete(i)
+        else:
+            changed = False
             
-        self.endCommand()
+        if name.startswith('body'):
+            self.endCommand(changed=changed)
     #@nonl
-    #@-node:ekr.20050920084036.87:deleteNextChar (ok)
+    #@-node:ekr.20050920084036.87:deleteNextChar
     #@+node:ekr.20050920084036.135:deleteSpaces
     def deleteSpaces (self,event,insertspace=False):
     
