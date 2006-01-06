@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button Spell</vh></v>
 <v t="ekr.20051015172713"><vh>@button Save</vh></v>
 </v>
-<v t="EKR.20040519091259" a="TV"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -106,9 +106,9 @@
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
 <v t="EKR.20040519080201.1"><vh>Distribution checklist</vh></v>
-<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
 <v t="ekr.20050910192724"><vh>Pychecker warnings</vh></v>
-<v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="EKR.20040519080201.2" a="TV" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
 <v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
 <v t="ekr.20050212143754.1"><vh>What I did</vh></v>
@@ -418,7 +418,9 @@ unusedNames = [
 # list of strings: ignore warnings generated from these modules
 blacklist = [
 	'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
-	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
+	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', 
+    'mod_http',
+]
 
 # list of strings: ignore global variables not used if name is one of
 variablesToIgnore = [ '__all__', '__version__', '__copyright__', ]
@@ -4724,9 +4726,7 @@ The highlights of Leo 4.4:
 
 - @command nodes create minibuffer commands. You can bind key shortcuts to @button and @command nodes.
 
-- Leo handles key events and updates the screen immediately rather than queuing them for idle time.
-
-- Leo updates the screen immediately rather than waiting for idle time. This improves response.
+- Leo handles key events and updates the screen immediately rather than waiting for idle time.
 
 Links:
 ------
