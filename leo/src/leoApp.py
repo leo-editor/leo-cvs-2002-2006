@@ -63,6 +63,7 @@ class LeoApp:
         self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
         self.root = None # The hidden main window. Set later.
         self.searchDict = {} # For communication between find/change scripts.
+        self.scanErrors = 0 # The number of errors seen by g.scanError.
         self.scriptDict = {} # For communication between Execute Script command and scripts.
         self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
         self.trace = False # True: enable debugging traces.

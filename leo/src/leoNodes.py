@@ -958,7 +958,7 @@ class baseVnode (object):
         # we want to start with a pristine tree.
         if oldRoot: oldRoot._back = v
     
-        newRoot = position(v,[])
+        newRoot = position(c,v,[])
         c.setRootPosition(newRoot)
     #@nonl
     #@-node:ekr.20031218072017.3426:v.linkAsRoot
@@ -989,7 +989,7 @@ class baseVnode (object):
         # Special case the root.
         if v == c.rootPosition().v: # 3/11/04
             assert(v._next)
-            newRoot = position(v._next,[])
+            newRoot = position(c,v._next,[])
             c.setRootPosition(newRoot)
     
         # Clear the links in other nodes.
@@ -1492,23 +1492,22 @@ class position (object):
     #@nonl
     #@-node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
     #@+node:ekr.20031218072017.892:p.__init__
-    def __init__ (self,v,stack,trace=True):
+    def __init__ (self,c,v,stack,trace=True):
     
         """Create a new position."""
-        
-        if v: self.c = v.c
-        else: self.c = g.top()
-        self.v = v
-        assert(v is None or v.t)
-        self.stack = stack[:] # Creating a copy here is safest and best.
     
+        self.c = c
+        self.v = v
+        # assert(v is None or v.t)
+        self.stack = stack[:] # Creating a copy here is safest and best.
         g.app.positions += 1
         
-        if g.app.tracePositions and trace:
-            g.trace("%-25s %-25s %s" % (
-                g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+        # if g.app.tracePositions and trace:
+            # g.trace("%-25s %-25s %s" % (
+                # g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
         
         # Note: __getattr__ implements p.t.
+    #@nonl
     #@-node:ekr.20031218072017.892:p.__init__
     #@+node:ekr.20040117173448:p.__nonzero__
     #@+at
@@ -1548,11 +1547,11 @@ class position (object):
         
         """"Return an independent copy of a position."""
         
-        if g.app.tracePositions:
-            g.trace("%-25s %-25s %s" % (
-                g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+        # if g.app.tracePositions:
+            # g.trace("%-25s %-25s %s" % (
+                # g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
     
-        return position(self.v,self.stack,trace=False)
+        return position(self.c,self.v,self.stack,trace=False)
     #@nonl
     #@-node:ekr.20040117171654:p.copy
     #@+node:ekr.20040310153624:p.dump & p.vnodeListIds

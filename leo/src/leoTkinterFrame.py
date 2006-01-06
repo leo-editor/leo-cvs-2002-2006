@@ -222,7 +222,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         t = leoNodes.tnode()
         v = leoNodes.vnode(c,t)
-        p = leoNodes.position(v,[])
+        p = leoNodes.position(c,v,[])
         v.initHeadString("NewHeadline")
         p.moveToRoot()
         c.editPosition(p)

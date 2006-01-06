@@ -64,9 +64,8 @@ def isTestNode (p):
 #@nonl
 #@-node:ekr.20051104075904.3:isSuiteNode and isTestNode
 #@+node:ekr.20051104075904.4:doTests...
-def doTests(all,verbosity=1,c=None):
+def doTests(c,all,verbosity=1):
 
-    if c is None: c = g.top()
     p = c.currentPosition() ; p1 = p.copy()
     
     g.app.unitTesting = True
@@ -231,12 +230,15 @@ def runProfileOnNode (p,outputPath):
 #@+node:ekr.20051104075904.15:runTimerOnNode
 # A utility for use by script buttons.
 
-def runTimerOnNode (p,count):
+def runTimerOnNode (c,p,count):
 
     s = p.bodyString().rstrip() + '\n'
     
+    # A kludge so we the statement below can get c and p.
+    g.app.unitTestDict = {'c':c,'p':p}
+    
     # This looks like the best we can do.
-    setup = 'import leoGlobals as g; c = g.top(); p = c.currentPosition()'
+    setup = 'import leoGlobals as g; c = g.app.unitTestDict.get("c"); p = g.app.unitTestDict.get("p")'
 
     t = timeit.Timer(s,setup)
 
@@ -408,6 +410,12 @@ class testUtils:
     """Common utility routines used by unit tests."""
 
     #@    @+others
+    #@+node:ekr.20060106114716.1:ctor (testUtils)
+    def __init__ (self,c):
+        
+        self.c = c
+    #@nonl
+    #@-node:ekr.20060106114716.1:ctor (testUtils)
     #@+node:ekr.20051104075904.25:compareOutlines
     def compareOutlines (self,root1,root2,compareHeadlines=True,tag='',report=True):
     
@@ -497,8 +505,9 @@ class testUtils:
     #@nonl
     #@-node:ekr.20051104075904.30:findNodeInTree
     #@+node:ekr.20051104075904.31:findNodeAnywhere
-    def findNodeAnywhere(self,c,headline):
-    
+    def findNodeAnywhere(self,headline):
+        
+        c = self.c
         for p in c.allNodes_iter():
             h = headline.strip().lower()
             if p.headString().strip().lower() == h:
@@ -506,38 +515,13 @@ class testUtils:
         return c.nullPosition()
     #@nonl
     #@-node:ekr.20051104075904.31:findNodeAnywhere
-    #@+node:ekr.20051104075904.32:findUnitTestNode (To Be Deleted)
-    def findUnitTestNode (self,unitTestName):
-    
-        c = g.top() ; root = c.rootPosition()
-    
-        for p in root.self_and_siblings_iter():
-            h = p.headString().lower()
-            if g.match(h,0,"unit testing"):
-                break
-    
-        if p:
-            for p in p.children_iter():
-                h = p.headString()
-                if g.match(h,0,"Unit test scripts"):
-                    break
-    
-        if p:
-            for p in p.children_iter():
-                h = p.headString()
-                if g.match(h,0,unitTestName):
-                    return p
-    
-        return c.nullPosition()
-    #@nonl
-    #@-node:ekr.20051104075904.32:findUnitTestNode (To Be Deleted)
     #@-node:ekr.20051104075904.26:Finding nodes...
     #@+node:ekr.20051104075904.33:numberOfClonesInOutline
     def numberOfClonesInOutline (self):
     
         """Returns the number of cloned nodes in an outline"""
     
-        c = g.top() ; n = 0
+        c = self.c ; n = 0
         for p in c.allNodes_iter():
             if p.isCloned():
                 n += 1
@@ -549,9 +533,7 @@ class testUtils:
     
         """Returns the total number of nodes in an outline"""
     
-        c = g.top()
-        
-        return len([p for p in c.allNodes_iter()])
+        return len([p for p in self.c.allNodes_iter()])
     #@nonl
     #@-node:ekr.20051104075904.34:numberOfNodesInOutline
     #@+node:ekr.20051104075904.35:replaceOutline
@@ -678,10 +660,9 @@ def fail ():
 #@nonl
 #@-node:ekr.20051104075904.41: fail
 #@+node:ekr.20051104075904.42:leoTest.runLeoTest
-def runLeoTest(path,verbose=False,full=False):
+def runLeoTest(c,path,verbose=False,full=False):
 
-    c = g.top() ; frame = None ; ok = False
-    old_gui = g.app.gui
+    frame = None ; ok = False ; old_gui = g.app.gui
 
     try:
         g.app.unitTesting = True
@@ -871,7 +852,7 @@ class reformatParagraphTest:
     def setUp(self):
         
         c = self.c ; p = self.p
-        u = self.u = testUtils()
+        u = self.u = testUtils(c)
         
         self.undoMark = c.undoer.getMark()
     
@@ -1043,12 +1024,12 @@ class directiveBreaksParagraphTest (reformatParagraphTest):
 #@-node:ekr.20051104075904.46:Reformat Paragraph test code (leoTest.py)
 #@+node:ekr.20051104075904.68:Edit Body test code (leoTest.py)
 #@+node:ekr.20051104075904.69: makeEditBodySuite
-def makeEditBodySuite():
+def makeEditBodySuite(c):
 
     """Create an Edit Body test for every descendant of testParentHeadline.."""
 
-    c = g.top() ; p = c.currentPosition()
-    u = testUtils()
+    p = c.currentPosition()
+    u = testUtils(c)
     assert p.exists(c)
     data_p = u.findNodeInTree(p,"editBodyTests")
     assert(data_p)
@@ -1085,8 +1066,7 @@ class editBodyTestCase(unittest.TestCase):
         # Init the base class.
         unittest.TestCase.__init__(self)
     
-        self.u = testUtils()
-    
+        self.u = testUtils(c)
         self.c = c
         self.parent = parent.copy()
         self.before = before.copy()
@@ -1207,13 +1187,12 @@ class editBodyTestCase(unittest.TestCase):
 #@-node:ekr.20051104075904.68:Edit Body test code (leoTest.py)
 #@+node:ekr.20051104075904.77:Import/Export test code (leoTest.py)
 #@+node:ekr.20051104075904.78:makeImportExportSuite
-def makeImportExportSuite(parentHeadline,doImport):
+def makeImportExportSuite(c,parentHeadline,doImport):
 
     """Create an Import/Export test for every descendant of testParentHeadline.."""
 
-    c = g.top() ; u = testUtils()
-
-    parent = u.findNodeAnywhere(c,parentHeadline)
+    u = testUtils(c)
+    parent = u.findNodeAnywhere(parentHeadline)
     assert(parent)
     temp = u.findNodeInTree(parent,"tempNode")
     assert(temp)
@@ -1406,9 +1385,8 @@ def runPerfectImportTest(c,p,
 
     # The contents of the "-input" and "-input-after" nodes define the changes.
 
-    c = g.top() ; p = c.currentPosition()
-    u = testUtils()
-
+    p = c.currentPosition()
+    u = testUtils(c)
     input           = u.findNodeInTree(p,"-input")              # i file: before the change.
     input_ins       = u.findNodeInTree(p,"-input-after")        # j file: after the change.
     output_sent     = u.findNodeInTree(p,"-output-sent")        # fat file -> i file.

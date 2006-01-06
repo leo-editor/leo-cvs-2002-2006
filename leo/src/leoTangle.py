@@ -375,6 +375,7 @@ class baseTangleCommands:
     def init_ivars(self):
     
         c = self.c
+        g.app.scanErrors = 0
         #@    << init tangle ivars >>
         #@+node:ekr.20031218072017.1357:<< init tangle ivars >>
         # Various flags and counts...
@@ -535,7 +536,7 @@ class baseTangleCommands:
     
     def cleanup (self):
         
-        if self.errors == 0:
+        if self.errors + g.app.scanErrors == 0:
             #@        << call tangle_done.run() or untangle_done.run() >>
             #@+node:ekr.20031218072017.3469:<< call tangle_done.run() or untangle_done.run() >>
             # Create a list of root names:
@@ -614,6 +615,7 @@ class baseTangleCommands:
             self.tangleTree(p,report_errors)
         
         g.es("tangle complete")
+    #@nonl
     #@-node:ekr.20031218072017.3472:tangle
     #@+node:ekr.20031218072017.3473:tangleAll
     def tangleAll(self):
@@ -627,6 +629,8 @@ class baseTangleCommands:
             if ok: has_roots = True
             if self.path_warning_given:
                 break # Fatal error.
+                
+        self.errors += g.app.scanErrors
     
         if not has_roots:
             self.warning("----- The outline contains no roots")
@@ -655,6 +659,8 @@ class baseTangleCommands:
                     break # Fatal error.
                 p.moveToNodeAfterTree()
             else: p.moveToThreadNext()
+            
+        self.errors += g.app.scanErrors
     
         if not any_marked:
             self.warning("----- The outline contains no marked roots")
@@ -688,7 +694,7 @@ class baseTangleCommands:
             self.skip_headline(p)
             self.skip_body(p)
             p.moveToThreadNext()
-            if self.errors >= max_errors:
+            if self.errors + g.app.scanErrors >= max_errors:
                 self.warning("----- Halting Tangle: too many errors")
                 break
     
@@ -703,6 +709,8 @@ class baseTangleCommands:
     def tanglePass2(self):
     
         self.p = None # self.p is not valid in pass 2.
+        
+        self.errors += g.app.scanErrors
     
         if self.errors > 0:
             self.warning("----- No file written because of errors")
@@ -780,6 +788,8 @@ class baseTangleCommands:
                 if ok: has_roots = True
         finally:
             c.endUpdate()
+            
+        self.errors += g.app.scanErrors
     
         if not has_roots:
             self.warning("----- The outline contains no roots")
@@ -802,12 +812,14 @@ class baseTangleCommands:
                 if p.isMarked():
                     ok = self.untangleTree(p,dont_report_errors)
                     if ok: marked_flag = True
-                    if self.errors > 0: break
+                    if self.errors + g.app.scanErrors > 0: break
                     p.moveToNodeAfterTree()
                 else:
                     p.moveToThreadNext()
         finally:
             c.endUpdate()
+            
+        self.errors += g.app.scanErrors
     
         if not marked_flag:
             self.warning("----- The outline contains no marked roots")
@@ -887,7 +899,7 @@ class baseTangleCommands:
         # Pass 1: Scan the C file, creating the UST
         self.scan_derived_file(file_buf)
         # g.trace(self.ust_dump())
-        if self.errors == 0:
+        if self.errors + g.app.scanErrors == 0:
             #@        << Pass 2: Untangle the outline using the UST and a newly-created TST >>
             #@+node:ekr.20031218072017.3485:<< Pass 2:  Untangle the outline using the UST and a newly-created TST >>
             #@+at 
@@ -901,7 +913,7 @@ class baseTangleCommands:
             p = begin
             while p and p != end: # Don't use iterator.
                 self.tanglePass1(p)
-                if self.errors != 0:
+                if self.errors + g.app.scanErrors != 0:
                     break
                 p.moveToNodeAfterTree()
             
@@ -910,7 +922,6 @@ class baseTangleCommands:
             #@-node:ekr.20031218072017.3485:<< Pass 2:  Untangle the outline using the UST and a newly-created TST >>
             #@nl
         self.cleanup()
-    #@nonl
     #@-node:ekr.20031218072017.3481:untangleRoot (calls cleanup)
     #@+node:ekr.20031218072017.3486:untangleTree
     # This funtion is called when the user selects any "Untangle" command.
@@ -923,10 +934,10 @@ class baseTangleCommands:
         afterEntireTree = p.nodeAfterTree()
         # Initialize these globals here: they can't be cleared later.
         self.head_root = None
-        self.errors = 0
+        self.errors = 0 ; g.app.scanErrors = 0
         c.clearAllVisited() # Used by untangle code.
     
-        while p and p != afterEntireTree and self.errors == 0:
+        while p and p != afterEntireTree and self.errors + g.app.scanErrors == 0:
             self.setRootFromHeadline(p)
             theDict = g.get_directives_dict(p.bodyString(),[self.head_root])
             ignore = theDict.has_key("ignore")
@@ -939,7 +950,7 @@ class baseTangleCommands:
                 unitNode = p   # 9/27/99
                 afterUnit = p.nodeAfterTree()
                 p.moveToThreadNext()
-                while p and p != afterUnit and self.errors == 0:
+                while p and p != afterUnit and self.errors + g.app.scanErrors== 0:
                     self.setRootFromHeadline(p)
                     theDict = g.get_directives_dict(p.bodyString(),[self.head_root])
                     root = theDict.has_key("root")
@@ -980,6 +991,9 @@ class baseTangleCommands:
                 p = afterRoot.copy()
             else:
                 p.moveToThreadNext()
+                
+        self.errors += g.app.scanErrors
+    
         if report_flag:
             if not any_root_flag:
                 self.warning("----- The outline contains no roots")
@@ -1473,7 +1487,7 @@ class baseTangleCommands:
             self.onl() # Make sure the file ends with a cr/lf
             self.output_file.close()
             self.output_file = None
-            if self.errors == 0:
+            if self.errors + g.app.scanErrors == 0:
                 g.update_file_if_changed(file_name,temp_name)
             else:
                 g.es("unchanged:  " + file_name)

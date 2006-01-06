@@ -178,7 +178,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
             self.makeWhitespaceVisibleVar.set(b)
     #@nonl
     #@-node:ekr.20031218072017.3842:finishCreate (tkComparePanel)
-    #@+node:ekr.20031218072017.3843:createFrame
+    #@+node:ekr.20031218072017.3843:createFrame (tkComparePanel)
     def createFrame (self):
     
         gui = g.app.gui ; top = self.top
@@ -322,7 +322,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
         self.finishCreate()
         top.protocol("WM_DELETE_WINDOW", self.onClose)
     #@nonl
-    #@-node:ekr.20031218072017.3843:createFrame
+    #@-node:ekr.20031218072017.3843:createFrame (tkComparePanel)
     #@+node:ekr.20031218072017.3850:setIvarsFromWidgets
     def setIvarsFromWidgets (self):
     

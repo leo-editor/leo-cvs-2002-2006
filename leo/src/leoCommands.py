@@ -246,9 +246,9 @@ class baseCommands:
                 g.es_exception(c=c)
                 if c and hasattr(c,'frame'):
                     c.redraw_now()
-        
-        c = g.top() # 6/17/04: The command can change the commander.
-        if c:
+    
+        # Be careful there: the command could destroy c.
+        if c and hasattr(c,'keyHandler'):
             p = c.currentPosition()
             g.doHook("command2",c=c,p=p,v=p,label=label)
                 
@@ -386,7 +386,7 @@ class baseCommands:
     	    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
     	    t = leoNodes.tnode()
     	    v = leoNodes.vnode(c,t)
-    	    p = leoNodes.position(v,[])
+    	    p = leoNodes.position(c,v,[])
     	    v.initHeadString("NewHeadline")
     	    v.moveToRoot()
     	    c.editPosition(p)
@@ -2001,7 +2001,7 @@ class baseCommands:
         # Use the relative @tabwidth, not the global one.
         theDict = g.scanDirectives(c)
         tabWidth  = theDict.get("tabwidth")
-        if not tabWidth: return False
+        if not tabWidth: return False,None
     
         for line in lines:
             i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
@@ -5918,7 +5918,8 @@ class baseCommands:
     #@+node:ekr.20040311094927:c.nullPosition
     def nullPosition (self):
         
-        return leoNodes.position(None,[])
+        c = self ; v = None
+        return leoNodes.position(c,v,[])
     #@nonl
     #@-node:ekr.20040311094927:c.nullPosition
     #@+node:ekr.20031218072017.2988:c.rootPosition & c.setRootPosition

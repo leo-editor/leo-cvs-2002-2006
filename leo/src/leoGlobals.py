@@ -83,12 +83,11 @@ def createStandAloneApp(pluginName=''):
 #@-node:ekr.20050328133058:g.createStandAloneApp
 #@+node:ekr.20031218072017.3095:Checking Leo Files...
 #@+node:ekr.20031218072017.822:createTopologyList
-def createTopologyList (c=None,root=None,useHeadlines=False):
+def createTopologyList (c,root=None,useHeadlines=False):
     
     """Creates a list describing a node and all its descendents"""
-    
-    if not c: c = g.top()
-    if not root: root = c.rootVnode()
+
+    if not root: root = c.rootPosition()
     v = root
     if useHeadlines:
         aList = [(v.numberOfChildren(),v.headString()),]
@@ -546,7 +545,7 @@ def scanForAtIgnore(c,p):
     
     """Scan position p and its ancestors looking for @ignore directives."""
 
-    if c is None or g.top() is None:
+    if g.app.unitTesting:
         return False # For unit tests.
 
     for p in p.self_and_parents_iter():
@@ -593,7 +592,7 @@ def scanForAtLanguage(c,p):
     return c.target_language
 #@nonl
 #@-node:ekr.20040712084911.1:scanForAtLanguage
-#@+node:ekr.20031218072017.1391:scanDirectives (utils)
+#@+node:ekr.20031218072017.1391:g.scanDirectives
 #@+at 
 #@nonl
 # Perhaps this routine should be the basis of atFile.scanAllDirectives and 
@@ -609,8 +608,6 @@ def scanDirectives(c,p=None):
 
     Returns a dict containing the results, including defaults."""
 
-    if c == None or g.top() == None:
-        return {} # For unit tests.
     if p is None:
         p = c.currentPosition()
 
@@ -748,7 +745,7 @@ def scanDirectives(c,p=None):
         "pluginsList": pluginsList,
         "wrap"      : wrap }
 #@nonl
-#@-node:ekr.20031218072017.1391:scanDirectives (utils)
+#@-node:ekr.20031218072017.1391:g.scanDirectives
 #@-node:ekr.20031218072017.1380:Directive utils...
 #@+node:ekr.20031218072017.2052:g.openWithFileName
 def openWithFileName(fileName,old_c,
@@ -906,7 +903,14 @@ def alert(message):
     tkMessageBox.showwarning("Alert", message)
 #@-node:ekr.20031218072017.3105:alert
 #@+node:ekr.20051023083258:callers
-def callers (n=None,excludeCaller=True):
+#@+at 
+#@nonl
+# New in 4.4b1: we can't access the 'default_callers_level' setting
+# because that would require a call to the deprecated g.top() function.
+#@-at
+#@@c
+
+def callers (n=5,excludeCaller=True):
     
     '''Return a list containing the callers of the function that called g.callerList.
     
@@ -914,11 +918,6 @@ def callers (n=None,excludeCaller=True):
     which is what is wanted when using g.trace.'''
     
     result = []
-    
-    if n is None:
-        c = g.top()
-        n = c and c.config.getInt('default_callers_level') or 3
-    
     while n > 0:
         s = g.callerName(n)
         if s == 'callers':
@@ -930,7 +929,6 @@ def callers (n=None,excludeCaller=True):
         n -= 1
         
     return ','.join(result)
-#@nonl
 #@-node:ekr.20051023083258:callers
 #@+node:ekr.20031218072017.3107:callerName
 def callerName (n=1):
@@ -2875,14 +2873,14 @@ def scanAtRootOptions (s,i,err_flag=False):
 #@nonl
 #@-node:ekr.20031218072017.3154:scanAtRootOptions
 #@+node:ekr.20031218072017.3156:scanError
-# It seems dubious to bump the Tangle error count here.  OTOH, it really doesn't hurt.
+# It is dubious to bump the Tangle error count here, but it really doesn't hurt.
 
 def scanError(s):
 
     """Bump the error count in the tangle command."""
-
-    g.top().tangleCommands.errors += 1
-
+    
+    # New in Leo 4.4b1: set this global instead of calling g.top.
+    g.app.scanErrors +=1
     g.es(s)
 #@nonl
 #@-node:ekr.20031218072017.3156:scanError
@@ -3558,7 +3556,7 @@ joinlines = joinLines
 #@-node:ekr.20031218072017.3151:Scanning... (leoGlobals.py)
 #@+node:ekr.20040327103735.2:Script Tools (leoGlobals.py)
 #@+node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)
-def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
+def initScriptFind(c,findHeadline,changeHeadline=None,firstNode=None,
     script_search=True,script_change=True):
         
     __pychecker__ = '--no-argsused' # firstNode is not used.
@@ -3567,8 +3565,8 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
     import leoGlobals as g
 
     # Find the scripts.
-    c = g.top() ; p = c.currentPosition()
-    u = leoTest.testUtils()
+    p = c.currentPosition()
+    u = leoTest.testUtils(c)
     find_p = u.findNodeInTree(p,findHeadline)
     if find_p:
         find_text = find_p.bodyString()
@@ -3601,27 +3599,24 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
 #@nonl
 #@-node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)
 #@+node:ekr.20040321065415:g.findNodeInTree, findNodeAnywhere, findTopLevelNode
-def findNodeInTree(p,headline):
+def findNodeInTree(c,p,headline):
 
     """Search for a node in v's tree matching the given headline."""
     
-    c = p.c
     for p in p.subtree_iter():
         if p.headString().strip() == headline.strip():
             return p.copy()
     return c.nullPosition()
 
-def findNodeAnywhere(headline):
+def findNodeAnywhere(c,headline):
     
-    c = g.top()
     for p in c.allNodes_iter():
         if p.headString().strip() == headline.strip():
             return p.copy()
     return c.nullPosition()
     
-def findTopLevelNode(headline):
+def findTopLevelNode(c,headline):
     
-    c = g.top()
     for p in c.rootPosition().self_and_siblings_iter():
         if p.headString().strip() == headline.strip():
             return p.copy()
