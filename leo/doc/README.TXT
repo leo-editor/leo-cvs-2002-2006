@@ -1,11 +1,13 @@
-Leo 4.4 alpha 5, cvs-snapshot 1                         December 19, 2005
+Leo 4.4 alpha 5                                             January 6, 2006
 
-This release is a cvs snapshot release.  It is not the full alpha 5 release.
+This release completes the last major feature of Leo 4.4:
 
-You should be able to use this version safely; there are no known serious bugs.
+- User-specified key-binding modes.
+- Support for multiple key-bindings for individual minibuffer commands.
 
-All the major features of 4.4 are in place, but but several minibuffer commands
-are not ready for prime time. 
+This will be the last alpha version of Leo 4.4. Beta 1 is coming in about a
+week. You should be able to use this version safely; there are no known serious
+bugs.
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -38,12 +40,5 @@ immediately rather than queuing them for idle time.
 - Leo updates the screen immediately rather than waiting for idle time.
 This 'Newer World Order' simplifies the code and improves performance.
 
-Coming in later releases of Leo 4.4:
-------------------------------------
-- An auto-complete command that shows class members in the Completion tab.
-
-- More support for mouseless Leo. There will be commands to manipulate all
-aspects of Leo using commands, so your fingers will never have to leave the
-keyboard.
-
-- Support for Vim and other 'plain-key' input modes.
+- User-specified key-binding modes. This feature makes it possible to emulate all
+aspects of Emacs and Vim as far as key bindings are concerned.

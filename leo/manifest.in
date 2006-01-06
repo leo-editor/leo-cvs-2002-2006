@@ -49,6 +49,7 @@ include doc\html\*.*
 
 include extensions/aspell23.pyd
 include extensions/aspell24.pyd
+include extensions/optparse.py
 include extensions/path.py
 include extensions/sets.py
 include extensions/subprocess.py

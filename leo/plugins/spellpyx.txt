@@ -147,6 +147,7 @@ LeoPostings
 LeoPy
 LeoPyRef
 LeoTemp
+LeoUser
 Liechti
 Litt
 Locators
@@ -404,6 +405,7 @@ atFile
 atFileCommands
 atPluginNodes
 ato
+author_email
 auto_save
 autocomplete
 autocompleter

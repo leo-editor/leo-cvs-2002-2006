@@ -115,6 +115,7 @@ doc\html\whitepapers.html
 extensions\__init__.py
 extensions\aspell23.pyd
 extensions\aspell24.pyd
+extensions\optparse.py
 extensions\path.py
 extensions\sets.py
 extensions\subprocess.py

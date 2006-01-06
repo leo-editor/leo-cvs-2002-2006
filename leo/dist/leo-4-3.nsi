@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a5-cvs-snapshot-1.exe"
+OutFile "LeoSetup-4-4-a5.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -286,6 +286,7 @@ Section "Leo" SEC01
   File "..\extensions\aspell24.pyd"
   
   File "..\extensions\__init__.py"
+  File "..\extensions\optparse.py"
   File "..\extensions\path.py"
   File "..\extensions\sets.py"
   File "..\extensions\subprocess.py"
@@ -587,6 +588,7 @@ Section Uninstall
   
   Delete "$INSTDIR\extensions\__init__.p*"
   
+  Delete "$INSTDIR\extensions\optparse.py"
   Delete "$INSTDIR\extensions\path.p*"
   Delete "$INSTDIR\extensions\sets.p*"
   Delete "$INSTDIR\extensions\subprocess.p*"

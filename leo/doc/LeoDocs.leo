@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="21290" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
-	<global_window_position top="14" left="245" height="796" width="817"/>
+	<global_window_position top="14" left="245" height="857" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -2311,8 +2311,8 @@
 </v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20051219150602" a="ETV"><vh>4.4 alpha 5</vh>
-<v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
+<v t="ekr.20051219150602" a="TV"><vh>4.4 alpha 5</vh>
+<v t="ekr.20051219150602.2" a="E"><vh>Fixed bugs</vh>
 <v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
 <v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
 <v t="ekr.20051219150602.10"><vh>Text box is now selected in goto-line-number command</vh></v>
@@ -2327,7 +2327,7 @@
 <v t="ekr.20060105182648.379"><vh>Made sure shortcuts are printed clearly by k.registerCommand</vh></v>
 <v t="ekr.20060105182648.382"><vh>Suppressed crash undoing a clone followed by a drag</vh></v>
 </v>
-<v t="ekr.20051219150602.100"><vh>New features</vh>
+<v t="ekr.20051219150602.100" a="E"><vh>New features</vh>
 <v t="ekr.20051219150602.101"><vh>created ut.leo, ut.py and ut.bat</vh></v>
 <v t="ekr.20051219150602.102"><vh>Added modes/*.xml to distribution</vh></v>
 <v t="ekr.20051219150602.105"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
@@ -22404,7 +22404,7 @@ need commands to change focus and to manage menus. Examples: focus-in-body,
 focus-in-tree, etc, activate-edit-menu, etc.</t>
 <t tx="ekr.20051219150602">Leo 4.4 alpha 5                                             January 6, 2006
 
-This release completes the last major feature of Leo 4.4:
+This release completes the last major features of Leo 4.4:
 
 - User-specified key-binding modes.
 - Support for multiple key-bindings for individual minibuffer commands.
@@ -22431,21 +22431,18 @@ commands to manipulate buffers, the kill ring, regions and rectangles.
 - Per-pane key bindings. You can bind shortcuts to multiple commands depending
 on which of Leo's panes presently has focus. For example, you can use arrow keys
 to move nodes in the outline pane, while retaining their defaults in Leo's body
-pane. Per-pane key bindings are essential for mouseless Leo.
+pane.
+
+- User-specified key-binding modes. This feature makes it possible to emulate all
+aspects of Emacs and Vim as far as key bindings are concerned.
 
 - @command nodes create minibuffer commands. You can bind key shortcuts to
 @button and @command nodes.
 
-- A rewrite of Leo's keystroke handling. In particular, Leo handles key events
-immediately rather than queuing them for idle time.
-
 - Leo recovers from crashes much more reliably than in any previous version.
 
-- Leo updates the screen immediately rather than waiting for idle time.
-This 'Newer World Order' simplifies the code and improves performance.
-
-- User-specied key-binding modes. This feature makes it possible to emulate all
-aspects of Emacs and Vim as far as key bindings are concerned.</t>
+- Leo handles keystrokes and updates the screen immediately rather than waiting
+for idle time.</t>
 <t tx="ekr.20051219150602.2"></t>
 <t tx="ekr.20051219150602.3"></t>
 <t tx="ekr.20051219150602.7"></t>
@@ -22548,7 +22545,7 @@ The code is due to LeoUser.</t>
 
 Important: you can use the show-colors and show-fonts commands to help set
 colors and fonts in leoSettings.leo.</t>
-<t tx="ekr.20060105214753">Leo now allws you to specify input modes. You enter mode ``x`` with the
+<t tx="ekr.20060105214753">Leo now allows you to specify input modes. You enter mode ``x`` with the
 ``enter-x-mode`` command. The purpose of a mode is to create different bindings
 for keys within a mode. Often plain keys are useful in input modes.
 
@@ -22562,7 +22559,7 @@ Notes:
   **only** binding that is automatically created in each mode. All other bindings
   must be specified in the ``@mode`` node. In particular, the bindings specified in
   @shortcut nodes are **not** in effect in mode (again, except for the
-  keyboar-quit binding).
+  keyboard-quit binding).
 
 - Leo supports something akin to tab completion within modes: if you type a key
   that isn't bound in a mode a 'Mode' tab will appear in the log pane. This tab
@@ -22575,7 +22572,7 @@ Notes:
 
 - The ``top_level_unbound_key_action`` setting determines what happens to
   unbound keys in the top-level mode. Leo ignores unbound keys in all other modes.
-  The possiblilies are 'insert', 'replace' and 'ignore'.
+  The possibilities are 'insert', 'replace' and 'ignore'.
 
 - The ``set-insert-mode``, ``set-overwrite-mode`` and ``set-ignore-mode``
   commands alter what happens to unbound keys in the top-level mode.

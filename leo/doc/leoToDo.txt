@@ -6,15 +6,6 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20060105145500:Update release notes
-- Document @mode nodes and modes generally.
-#@nonl
-#@-node:ekr.20060105145500:Update release notes
-#@+node:ekr.20060105130546:Distribution
-- (done) put optparse.py in leo/extensions
-- Add optparse.py to distribution lists.
-#@nonl
-#@-node:ekr.20060105130546:Distribution
 #@+node:ekr.20060105130519:Urgent
 #@+node:ekr.20050928144501.1:Mouseless Leo
 Needed to support 'mouseless-Leo':
@@ -194,6 +185,10 @@ the last undo in a node body from the other leo.
 #@nonl
 #@-node:ekr.20051208081641.1:Report
 #@-node:ekr.20051208081641:Fix undo problems
+#@+node:ekr.20060106064618:Fix minor headline problem
+A 'backward' delete at the start of a headline deletes the first character.
+#@nonl
+#@-node:ekr.20060106064618:Fix minor headline problem
 #@-node:ekr.20060105130519:Urgent
 #@+node:ekr.20060105133043:Important
 #@+node:ekr.20051217175058:Get chapters plugin working
