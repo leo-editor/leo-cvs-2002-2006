@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="20785" clone_windows="0"/>
-<globals body_outline_ratio="0.613114754098">
+<leo_header file_format="2" tnodes="0" max_tnode_index="21290" clone_windows="0"/>
+<globals body_outline_ratio="0.60175879397">
 	<global_window_position top="14" left="245" height="796" width="817"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -168,6 +168,7 @@
 <v t="edream.110203163054.60"><vh>How to associate Leo with .leo files on Windows</vh></v>
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="ekr.20050901174937"><vh>Running Leo</vh></v>
+<v t="ekr.20060105145125"><vh>How to install the Aspell spell checker</vh></v>
 <v t="ekr.20050906105335"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
@@ -292,8 +293,8 @@
 <v t="EKR.20040524104904.136"><vh>Inserting the date and time</vh></v>
 <v t="EKR.20040524104904.137"><vh>Reformatting paragraphs in body text</vh></v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140" a="E"><vh>Specifying settings</vh>
-<v t="ekr.20051221074605"><vh>@rst-ignore old writing about settings dialog</vh></v>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
+<v t="ekr.20060105214753"><vh>Input modes</vh></v>
 </v>
 </v>
 <v t="EKR.20040524104904.143"><vh> The Outline Menu</vh>
@@ -742,7 +743,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
@@ -2309,8 +2310,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20051219150602"><vh>4.4 alpha 5, cvs-snapshot 1</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20051219150602" a="ETV"><vh>4.4 alpha 5</vh>
 <v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
 <v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
 <v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
@@ -2320,12 +2321,20 @@
 <v t="ekr.20051219150602.75"><vh>Fixed many headline problems</vh></v>
 <v t="ekr.20051219150602.81"><vh>Fixed problem in reformatParagraph</vh></v>
 <v t="ekr.20051219150602.85"><vh>Installed LeoUsers patch </vh></v>
+<v t="ekr.20060105182648.376"><vh>Improved Import Derived Files command.</vh></v>
+<v t="ekr.20060105182648.377"><vh>Fixed crasher in backwardDeleteCharacter</vh></v>
+<v t="ekr.20060105182648.378"><vh>Fixed recent bug: dialogs now get focus properly when first opened.</vh></v>
+<v t="ekr.20060105182648.379"><vh>Made sure shortcuts are printed clearly by k.registerCommand</vh></v>
+<v t="ekr.20060105182648.382"><vh>Suppressed crash undoing a clone followed by a drag</vh></v>
 </v>
 <v t="ekr.20051219150602.100"><vh>New features</vh>
 <v t="ekr.20051219150602.101"><vh>created ut.leo, ut.py and ut.bat</vh></v>
 <v t="ekr.20051219150602.102"><vh>Added modes/*.xml to distribution</vh></v>
 <v t="ekr.20051219150602.105"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
 <v t="ekr.20051219151926"><vh>Added classic key bindings in leoSettings.leo</vh></v>
+<v t="ekr.20060105182648.432"><vh>Allow multiple key bindings to the same command</vh></v>
+<v t="ekr.20060105182648.469"><vh>Settings command now opens leoSettings.leo</vh></v>
+<v t="ekr.20060105214753"><vh>Input modes</vh></v>
 </v>
 </v>
 </v>
@@ -3046,7 +3055,7 @@ set the value of ``name`` to ``val``, with the indicated type.
 
     @&lt;type&gt; description
 
-The actual settings are specified in the body text.  At present, there are two such kinds of complex settings nodes:
+The actual settings are specified in the body text.  At present, there are four such kinds of complex settings nodes:
 
 - ``@font``
 
@@ -3059,11 +3068,19 @@ The body text contains a list of settings for a font.  For example::
 
 **Important**: you can use the show-fonts minibuffer command to guide you in making these settings.
 
+- ``@mode`` *&lt;mode name&gt;*
+
+The body text contains a list of shortcut specifiers.  ``@mode`` nodes work just like ``@shortcuts`` nodes, but in addition they have the side effect of creating the ``enter-&lt;mode name&gt;-mode`` command.
+
 - ``@recentfiles``
 
 The body text contains a list of paths of recently opened files, one path per line.
 Leo writes the list of recent files to ``.leoRecentFiles.txt`` in Leo's ``config`` directory,
-again one file per line.</t>
+again one file per line.
+
+- ``@shortcuts``
+
+The body text contains a list of shortcut specifiers.</t>
 <t tx="EKR.20040524104904.143"></t>
 <t tx="EKR.20040524104904.144">-   The ``Check Outline`` command checks the outline for consistency.
 
@@ -10931,7 +10948,7 @@ to be the same as the Python license, namely that Leo is absolutely free, even
 for commercial use, including resale. There is no GNU-like "copyleft"
 restriction. This license is compatible with the GPL.
 	
-Copyright 1997-2005 by Edward K. Ream. All Rights Reserved. Permission to use,
+Copyright 1997-2006 by Edward K. Ream. All Rights Reserved. Permission to use,
 copy, modify, and distribute this software and its documentation for any purpose
 and without fee is hereby granted, provided that the above copyright notice
 appears in all copies and that both that copyright notice and this permission
@@ -22385,14 +22402,16 @@ drive all dialogs from the keyboard, or to get the same effect without using a
 dialog at all. Examples: dismiss-top-dialog, scroll-outline-up/down. We also
 need commands to change focus and to manage menus. Examples: focus-in-body,
 focus-in-tree, etc, activate-edit-menu, etc.</t>
-<t tx="ekr.20051219150602">Leo 4.4 alpha 5, cvs-snapshot 1                         December 19, 2005
+<t tx="ekr.20051219150602">Leo 4.4 alpha 5                                             January 6, 2006
 
-This release is a cvs snapshot release.  It is not the full alpha 5 release.
+This release completes the last major feature of Leo 4.4:
 
-You should be able to use this version safely; there are no known serious bugs.
+- User-specified key-binding modes.
+- Support for multiple key-bindings for individual minibuffer commands.
 
-All the major features of 4.4 are in place, but but several minibuffer commands
-are not ready for prime time. 
+This will be the last alpha version of Leo 4.4. Beta 1 is coming in about a
+week. You should be able to use this version safely; there are no known serious
+bugs.
 
 To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
 
@@ -22425,15 +22444,8 @@ immediately rather than queuing them for idle time.
 - Leo updates the screen immediately rather than waiting for idle time.
 This 'Newer World Order' simplifies the code and improves performance.
 
-Coming in later releases of Leo 4.4:
-------------------------------------
-- An auto-complete command that shows class members in the Completion tab.
-
-- More support for mouseless Leo. There will be commands to manipulate all
-aspects of Leo using commands, so your fingers will never have to leave the
-keyboard.
-
-- Support for Vim and other 'plain-key' input modes.</t>
+- User-specied key-binding modes. This feature makes it possible to emulate all
+aspects of Emacs and Vim as far as key bindings are concerned.</t>
 <t tx="ekr.20051219150602.2"></t>
 <t tx="ekr.20051219150602.3"></t>
 <t tx="ekr.20051219150602.7"></t>
@@ -22513,11 +22525,61 @@ cursor-movement commands exist. These commands should work in any text widget.</
 This node contains the 'classic' Leo key bindings that appeared in Leo 4.3. I
 have proofed these settings carefully, but some errors may remain. Please report
 any errors or any other suggestions for these settings.</t>
-<t tx="ekr.20051221074605">The ``Settings`` command temporarily replaces the outline pane with an outline
-showing all the ``@settings`` trees in effect. The Settings command also
-replaces the body pane with a "settings pane". This settings pane allows you to
-change the settings selected in the outline pane using standard gui widgets. The
-settings pane is dynamically created from nodes in the settings tree; it is as
-extensible as the ``@settings`` tree itself.</t>
+<t tx="ekr.20060105145125">You must install the Aspell package if you want to use Leo's Spell tab.
+
+1.  Download and install the Aspell package from http://aspell.sourceforge.net/
+
+Typically this will create a directory called Aspell/bin
+
+2.  Leo's extensions folder comes with two dll's: aspell23.pyd and aspell24.pyd, for Python 2.3 and 2.4 respectively.  Make a copy of the appropriate dll, and **rename it** to be aspell.pyd.
+
+3. Copy aspell.pyd to aspell\bin.
+
+4. Specify the aspell_dir and aspell_bin_dir settings in leoSettings.leo.</t>
+<t tx="ekr.20060105182648.376">Leo no longer creates a duplicate root node when importing derived files.
+
+The code is due to LeoUser.</t>
+<t tx="ekr.20060105182648.377"></t>
+<t tx="ekr.20060105182648.378"></t>
+<t tx="ekr.20060105182648.379"></t>
+<t tx="ekr.20060105182648.382">The reason for this assert is unclear.</t>
+<t tx="ekr.20060105182648.432"></t>
+<t tx="ekr.20060105182648.469">This is the end of the ill-fated settings dialog.
+
+Important: you can use the show-colors and show-fonts commands to help set
+colors and fonts in leoSettings.leo.</t>
+<t tx="ekr.20060105214753">Leo now allws you to specify input modes. You enter mode ``x`` with the
+``enter-x-mode`` command. The purpose of a mode is to create different bindings
+for keys within a mode. Often plain keys are useful in input modes.
+
+You can specify modes with ``@mode`` nodes in leoSettings.leo. ``@mode`` nodes work
+just like ``@shortcuts`` nodes, but in addition they have the side effect of
+creating the ``enter-&lt;mode name&gt;-mode`` command.
+
+Notes:
+
+- You can exit any mode using the ``keyboard-quit`` (Control-g) command. This is the
+  **only** binding that is automatically created in each mode. All other bindings
+  must be specified in the ``@mode`` node. In particular, the bindings specified in
+  @shortcut nodes are **not** in effect in mode (again, except for the
+  keyboar-quit binding).
+
+- Leo supports something akin to tab completion within modes: if you type a key
+  that isn't bound in a mode a 'Mode' tab will appear in the log pane. This tab
+  shows all the keys that you can type and the commands to which they are bound.
+  The mode-help command does the same thing.
+
+- ``@shortcuts`` nodes specify the bindings for what might be called the 'top-level'
+  mode. These are the bindings in effect when no internal state is present, for
+  example, just after executing the keyboard-quit command.
+
+- The ``top_level_unbound_key_action`` setting determines what happens to
+  unbound keys in the top-level mode. Leo ignores unbound keys in all other modes.
+  The possiblilies are 'insert', 'replace' and 'ignore'.
+
+- The ``set-insert-mode``, ``set-overwrite-mode`` and ``set-ignore-mode``
+  commands alter what happens to unbound keys in the top-level mode.
+
+With all these options it should be possible to emulate the keyboard behavior of any other editor.</t>
 </tnodes>
 </leo_file>

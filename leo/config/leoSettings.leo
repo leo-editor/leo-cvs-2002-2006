@@ -242,7 +242,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="ETV"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20060103103415"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
@@ -276,11 +276,11 @@
 </v>
 <v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
-<v t="ekr.20051010112558" a="E"><vh>traditional Leo shortcuts with important emacs bindings</vh>
+<v t="ekr.20051010112558"><vh>traditional Leo shortcuts with important emacs bindings</vh>
 <v t="ekr.20060102113259"><vh>@mode file mode</vh></v>
 <v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
 <v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>
-<v t="ekr.20060102102958.1" a="TV"><vh>@shortcuts M-Z</vh></v>
+<v t="ekr.20060102102958.1"><vh>@shortcuts M-Z</vh></v>
 </v>
 </v>
 </v>
@@ -1486,7 +1486,17 @@ False: Selecting an outline node transfers focus to the body pane.
 #d2cad0
 #c6d3d7
 #ffffec # Same as outline.</t>
-<t tx="ekr.20051025084017"></t>
+<t tx="ekr.20051025084017">How to install the Aspell spell checker for the Spell tab
+
+1.  Download and install the Aspell package from http://aspell.sourceforge.net/
+
+Typically this will create a directory called Aspell/bin
+
+2.  Leo's extensions folder comes with two dll's: aspell23.pyd and aspell24.pyd, for Python 2.3 and 2.4 respectively.  Make a copy of the appropriate dll, and **rename it** to be aspell.pyd.
+
+3. Copy aspell.pyd to aspell\bin.
+
+4. Specify the aspell_dir and aspell_bin_dir settings.</t>
 <t tx="ekr.20051025084017.1"></t>
 <t tx="ekr.20051025084017.2">The full path to the spelling dictionary.</t>
 <t tx="ekr.20051025085144">@color

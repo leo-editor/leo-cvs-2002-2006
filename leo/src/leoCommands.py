@@ -265,7 +265,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.4 alpha 5 cvs-snapshot 1, build %s, December 5, 2005" % c.getBuildNumber()
+        return "Leo 4.4 alpha 5, build %s, January 5, 2006" % c.getBuildNumber()
     #@nonl
     #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
@@ -5084,7 +5084,7 @@ class baseCommands:
         # Doing so would add unwanted leading tabs.
         version = c.getSignOnLine() + "\n\n"
         theCopyright = (
-            "Copyright 1999-2005 by Edward K. Ream\n" +
+            "Copyright 1999-2006 by Edward K. Ream\n" +
             "All Rights Reserved\n" +
             "Leo is distributed under the Python License")
         url = "http://webpages.charter.net/edreamleo/front.html"
