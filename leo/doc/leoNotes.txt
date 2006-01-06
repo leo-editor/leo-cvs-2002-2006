@@ -1815,24 +1815,6 @@ in subfolders.
 #@-node:ekr.20040104162835.8:Linux/Mac notes: Dan Winkler
 #@-node:ekr.20050214055018:Mac Notes
 #@+node:ekr.20031218072017.392:Python Notes...
-#@+node:ekr.20031218072017.393:What's new for each version:
-New in 2.2 (Do not use)
-
-- Iterators/Generators
-- Nested Scopes
-- New Classes
-
-The what's new for each version:
-
-http://www.amk.ca/python/2.0/
-http://www.amk.ca/python/2.1/
-#@+node:ekr.20031218072017.394:@url http://www.python.org/2.3/highlights.html
-#@-node:ekr.20031218072017.394:@url http://www.python.org/2.3/highlights.html
-#@+node:ekr.20031218072017.395:@url http://www.amk.ca/python/2.1/
-#@-node:ekr.20031218072017.395:@url http://www.amk.ca/python/2.1/
-#@+node:ekr.20031218072017.396:@url http://www.amk.ca/python/2.0/
-#@-node:ekr.20031218072017.396:@url http://www.amk.ca/python/2.0/
-#@-node:ekr.20031218072017.393:What's new for each version:
 #@+node:ekr.20031218072017.397:Default values & keyword arguments
 @nocolor
 
@@ -2008,6 +1990,11 @@ http://gnosis.cx/download/Gnosis_Utils-current.tar.gz
 #@-node:ekr.20050228095252.2:@url http://gnosis.cx
 #@-node:ekr.20050228095252:xml tools mentioned in posts
 #@-node:ekr.20031218072017.392:Python Notes...
+#@+node:ekr.20060106082440:Statistics
+4.4-a4-snapshot1
+    5376 downloads of .exe file
+#@nonl
+#@-node:ekr.20060106082440:Statistics
 #@+node:ekr.20050306070535:Tk Notes
 @killcolor
 #@nonl

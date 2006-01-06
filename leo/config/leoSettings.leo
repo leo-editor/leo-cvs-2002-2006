@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="137" clone_windows="0"/>
 <globals body_outline_ratio="0.539518900344">
-	<global_window_position top="10" left="288" height="873" width="913"/>
+	<global_window_position top="17" left="333" height="873" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -242,12 +242,12 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="ETV"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20060103103415"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20051007200824" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
+<v t="ekr.20060103103415"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20050921105316.2"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20050921105316.1"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20060104093101"><vh>@ignore unused key bindings</vh>
@@ -276,7 +276,7 @@
 </v>
 <v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
-<v t="ekr.20051010112558"><vh>traditional Leo shortcuts with important emacs bindings</vh>
+<v t="ekr.20051010112558" a="ETV"><vh>traditional Leo shortcuts with important emacs bindings</vh>
 <v t="ekr.20060102113259"><vh>@mode file mode</vh></v>
 <v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
 <v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>

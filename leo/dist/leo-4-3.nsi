@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.4-alpha-5-cvs-snapshot-1"
+!define PRODUCT_VERSION "4.4-a5"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl

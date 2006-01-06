@@ -22424,9 +22424,9 @@ name. Support for tab completion.
 dialogs, making those commands much easier to use. Plugins or scripts can easily
 create new tabs. The Completion tab shows possible typing completions.
 
-- Support for almost all commands in the Emacs Cmds menu, including cursor
-and screen movement, basic character, word and paragraph manipulation, and
-commands to manipulate buffers, the kill ring, regions and rectangles.
+- Support for most commands in the Emacs Cmds menu, including cursor and screen
+movement, basic character, word and paragraph manipulation, and commands to
+manipulate buffers, the kill ring, regions and rectangles.
 
 - Per-pane key bindings. You can bind shortcuts to multiple commands depending
 on which of Leo's panes presently has focus. For example, you can use arrow keys

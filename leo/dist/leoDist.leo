@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1122" clone_windows="0"/>
 <globals body_outline_ratio="0.475703324808">
-	<global_window_position top="83" left="248" height="782" width="822"/>
+	<global_window_position top="55" left="143" height="782" width="822"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -261,7 +261,6 @@ Uploads
 Announcements
     - Update version number on web site.
 	- Announce to Leo's Open Forum.
-    (later)
     - Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
 	- Announce to comp.lang.python
 	- Announce to comp.programming.literate
@@ -660,7 +659,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.4a4
+Version: 4.4-a5
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -3717,7 +3716,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 Delete "$INSTDIR\test\test.leo"
 Delete "$INSTDIR\test\unitTest.leo"
 </t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-alpha-5-cvs-snapshot-1"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-a5"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
@@ -4738,7 +4737,7 @@ CVS:      http://sourceforge.net/cvs/?group_id=3458
 Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 
 Edward K. Ream
-January 7, 2006
+January 6, 2006
 </t>
 </tnodes>
 </leo_file>
