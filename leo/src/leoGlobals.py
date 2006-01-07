@@ -2508,13 +2508,10 @@ def test_g_es_trace():
 #@-node:ekr.20050707065530:es_trace & test
 #@+node:ekr.20031218072017.3148:top
 if 1: # An extremely dangerous function.
+
     def top():
         
         """Return the commander of the topmost window"""
-        
-        # Can causes unit test to fail.
-        if not g.app.unitTesting:
-            g.trace("warning: g.top is strongly deprecated!",g.callers(5))
         
         # Warning: may be called during startup or shutdown when nothing exists.
         try:
