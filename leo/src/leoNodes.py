@@ -1582,18 +1582,9 @@ class position (object):
         Use this method when the speed comparisons is crucial
         
         N.B. Unlike __cmp__, p2 must not be None.
-        
-        >>> c = g.top() ; p = c.currentPosition() ; root = c.rootPosition()
-        >>> n = g.app.positions
-        >>> assert p.equal(p.copy()) is True
-        >>> assert p.equal(root) is False
-        >>> assert g.app.positions == n + 1
-        >>> 
         """
     
         p1 = self
-        
-        # if g.app.trace: "equal",p1.v,p2.v
     
         # Check entire stack quickly.
         # The stack contains vnodes, so this does not call p.__cmp__.
@@ -1603,6 +1594,7 @@ class position (object):
             p1.childIndex() == p2.childIndex())
             
     isEqual = equal
+    #@nonl
     #@-node:ekr.20040325142015:p.equal & isEqual
     #@-node:ekr.20040228094013: ctor & other special methods...
     #@+node:ekr.20040306212636:Getters

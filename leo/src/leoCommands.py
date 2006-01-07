@@ -5877,15 +5877,6 @@ class baseCommands:
     #@+node:ekr.20040803112450:c.isCurrentPosition
     def isCurrentPosition (self,p):
         
-        """
-        >>> c = g.top() ; p = c.currentPosition()
-        >>> n = g.app.positions
-        >>> assert c.isCurrentPosition(None) is False
-        >>> assert c.isCurrentPosition(p) is True
-        >>> assert g.app.positions == n
-        >>> 
-        """
-        
         c = self
         
         if p is None or c._currentPosition is None:
@@ -5896,15 +5887,6 @@ class baseCommands:
     #@-node:ekr.20040803112450:c.isCurrentPosition
     #@+node:ekr.20040803112450.1:c.isRootPosition
     def isRootPosition (self,p):
-        
-        """
-        >>> c = g.top() ; p = c.rootPosition()
-        >>> n = g.app.positions
-        >>> assert c.isRootPosition(None) is False
-        >>> assert c.isRootPosition(p) is True
-        >>> assert g.app.positions == n
-        >>> 
-        """
         
         c = self
         

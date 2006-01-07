@@ -903,13 +903,6 @@ def alert(message):
     tkMessageBox.showwarning("Alert", message)
 #@-node:ekr.20031218072017.3105:alert
 #@+node:ekr.20051023083258:callers
-#@+at 
-#@nonl
-# New in 4.4b1: we can't access the 'default_callers_level' setting
-# because that would require a call to the deprecated g.top() function.
-#@-at
-#@@c
-
 def callers (n=5,excludeCaller=True):
     
     '''Return a list containing the callers of the function that called g.callerList.
@@ -2514,17 +2507,6 @@ def test_g_es_trace():
 #@nonl
 #@-node:ekr.20050707065530:es_trace & test
 #@+node:ekr.20031218072017.3148:top
-#@+at 
-#@nonl
-# c.doCommand and frame.OnMenuClick now set app.log, so g.top() will be 
-# reliable after any command is executed.
-# 
-# Note 1: The value of g.top() may change during a new or open command, which 
-# may change the routine used to execute the "command1" and "command2" hooks.  
-# This is not a bug, and hook routines must be aware of this fact.
-#@-at
-#@@c
-
 if 1: # An extremely dangerous function.
     def top():
         
@@ -2884,7 +2866,7 @@ def scanError(s):
 
     """Bump the error count in the tangle command."""
     
-    # New in Leo 4.4b1: set this global instead of calling g.top().
+    # New in Leo 4.4b1: just set this global.
     g.app.scanErrors +=1
     g.es(s)
 #@nonl
