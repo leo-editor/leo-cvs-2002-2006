@@ -2530,7 +2530,9 @@ if 1: # An extremely dangerous function.
         
         """Return the commander of the topmost window"""
         
-        g.trace("warning: g.top is strongly deprecated!",g.callers())
+        # Can causes unit test to fail.
+        if not g.app.unitTesting:
+            g.trace("warning: g.top is strongly deprecated!",g.callers(5))
         
         # Warning: may be called during startup or shutdown when nothing exists.
         try:
