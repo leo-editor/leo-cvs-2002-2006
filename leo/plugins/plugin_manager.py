@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.19"
+__version__ = "0.20"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -93,6 +93,13 @@ __plugin_group__ = "Core"
 # 0.19 EKR:
 #     - Removed call to Pmw.initialise [sic].
 #       This is now done in Leo's core.
+# 0.20 EKR: (removed g.top)
+#     - Init registers no hooks.
+#     - Added new 'c' arg to topLevelMenu.
+#     - ManagerDialog now remembers c (c will be None if called standalone).
+#     - Added ctor to LocalPluginCollection.
+#     - LocalPluginCollection uses self.c rather than g.top>
+#     - Can't enable plugins dynamically when called stand-alone.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -201,36 +208,30 @@ Done
 USE_PRIORITY = False # True: show non-functional priority field.
 
 #@+others
+#@+node:ekr.20060107092833:Module-level Functions
 #@+node:ekr.20050213122944:init
 def init():
     
     # Ok for unit testing: adds menu.
     if ok:
-        # Bug fix 9-17-05: init Pmw.
         g.plugin_signon(__name__)
-        leoPlugins.registerHandler("new", grabCommander)
 
     return ok
 #@nonl
 #@-node:ekr.20050213122944:init
-#@+node:pap.20051007193021:grabCommander
-def grabCommander(tag, keywords):
-    """Grab the commander to use when starting plugins dynamically"""
-    # FIXME: there has to be a better way!
-    global KEYWORDS
-    KEYWORDS = keywords
-#@nonl
-#@-node:pap.20051007193021:grabCommander
 #@+node:ekr.20041231134702:topLevelMenu
 # This is called from plugins_menu plugin.
+
 # It should only be defined if the extension has been registered.
 
-def topLevelMenu():
+def topLevelMenu(c):
     
     """Manage the plugins"""
-    dlg = ManagerDialog(True)
+
+    dlg = ManagerDialog(c,True)
 #@nonl
 #@-node:ekr.20041231134702:topLevelMenu
+#@-node:ekr.20060107092833:Module-level Functions
 #@+node:pap.20041006193459:Error Classes
 class InvalidPlugin(Exception):
     """The plugin is invalid"""
@@ -242,7 +243,6 @@ class InvalidManager(Exception):
     """The enable manager is invalid"""
 #@-node:pap.20041006193459:Error Classes
 #@+node:pap.20050305144720:inColumns
-
 def inColumns(data, columnwidths):
     """Return the items of data with the specified column widths
     
@@ -739,8 +739,10 @@ class ManagerDialog:
     install_text = "Install"   
     #@    @+others
     #@+node:pap.20041006215108.1:ManagerDialog._init__
-    def __init__(self, show_order=False):
+    def __init__(self,c,show_order=False):
         """Initialise the dialog"""
+        
+        self.c = c # New in version 0.20 of this plugin.
         self.setPaths()
         #@    << create top level window >>
         #@+node:ekr.20041010110321:<< create top level window >> ManagerDialog
@@ -910,7 +912,7 @@ class ManagerDialog:
         """Initialize the local plugin collection"""
     
         # Get the local plugins information
-        self.local = LocalPluginCollection()
+        self.local = LocalPluginCollection(self.c)
         self.local.initFrom(self.local_path)
     
         # Get the active status of the plugins
@@ -1028,7 +1030,7 @@ class ManagerDialog:
     #@nonl
     #@-node:pap.20041009025708:checkConflicts
     #@-others
-
+#@nonl
 #@-node:pap.20041006215108:class ManagerDialog
 #@+node:pap.20041009233937:class ListReportDialog
 class ListReportDialog:
@@ -1835,6 +1837,14 @@ class LocalPluginCollection(PluginCollection):
     plugin_class = LocalPlugin
     
     #@    @+others
+    #@+node:ekr.20060107092833.1:ctor
+    # New in version 0.20
+    
+    def __init__ (self,c):
+        
+        self.c = c
+    #@nonl
+    #@-node:ekr.20060107092833.1:ctor
     #@+node:pap.20041006191803:getFilesMatching
     def getFilesMatching(self, location):
     
@@ -1866,7 +1876,13 @@ class LocalPluginCollection(PluginCollection):
         the leoPlugins module.
         
         """
+    
         super(LocalPluginCollection, self).enablePlugin(plugin, enabler)
+        
+        if not self.c:
+            g.es("Can not enable plugins dynaically when running stand-alone",
+                color="blue")
+            return
         
         if leoPlugins:
             try:
@@ -1913,17 +1929,16 @@ class LocalPluginCollection(PluginCollection):
                 #@+node:pap.20051002004135:<< Send hooks >>
                 # In order to simulate the startup process we need
                 # to send a series of hooks to the plugin
-                #import pdb; pdb.set_trace()
+                
+                keys = {'c':self.c, 'new_c':self.c}
+                
                 for hook in hook_list:
                     bunch = leoPlugins.handlers.get(hook, [])
                     for item in bunch:
                         if item.moduleName == plugin.name:
                             g.es("Sending '%s' to '%s'" % (hook, plugin.name), color="green")
-                            # This is pretty ugly!
-                            global KEYWORDS
-                            KEYWORDS["c"] = KEYWORDS["new_c"] = g.top()
-                            item.fn(hook, KEYWORDS)
-                        
+                            item.fn(hook,keys)
+                #@nonl
                 #@-node:pap.20051002004135:<< Send hooks >>
                 #@nl
                 #@            << Add plugin menu >>
@@ -1932,7 +1947,7 @@ class LocalPluginCollection(PluginCollection):
                 import plugins_menu
                 filename = plugins_menu.PluginDatabase.all_plugins[plugin.name]
                 new_plugin = plugins_menu.PlugIn(filename)
-                plugins_menu.addPluginMenuItem(new_plugin, KEYWORDS["c"])
+                plugins_menu.addPluginMenuItem(new_plugin,self.c)
                 #@nonl
                 #@-node:pap.20051008005923:<< Add plugin menu >>
                 #@nl
@@ -2190,7 +2205,7 @@ class EnableManager:
 if __name__ == "__main__":
     if ok:
         g.createStandAloneApp(pluginName=__name__)
-        topLevelMenu()
+        topLevelMenu(c=None)
 #@nonl
 #@-node:pap.20041006184225:@thin plugin_manager.py
 #@-leo
