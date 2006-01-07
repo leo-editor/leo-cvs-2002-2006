@@ -224,6 +224,7 @@ class baseCommands:
     
         # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
         g.app.setLog(c.frame.log,"doCommand")
+        g.app.commandCommander = self # support for plugins mangager cmd_ commands.
         
         # The presence of this message disables all commands.
         if c.disableCommandsMessage:
