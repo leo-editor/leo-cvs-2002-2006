@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8554" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8558" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
-	<global_window_position top="59" left="295" height="781" width="864"/>
+	<global_window_position top="59" left="354" height="781" width="805"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1282,6 +1282,8 @@
 <v t="ekr.20040712101754.198"><vh>&lt;&lt; print nodes returned by iterators &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040712101754.199"><vh>@test p.comparisons</vh></v>
+<v t="ekr.20060106211922"><vh>@test p.isCurrentPosition</vh></v>
+<v t="ekr.20060106211922.1"><vh>@test p.isRootPosition</vh></v>
 <v t="ekr.20040712101754.200"><vh>@test that clones share subtrees</vh></v>
 <v t="ekr.20040712101754.201"><vh>@test consistency of c.allNodes_iter() and p.ThreadNext()</vh></v>
 <v t="ekr.20040712101754.202"><vh>@test consistency of firstChild &amp; children_iter()</vh></v>
@@ -3417,7 +3419,11 @@ if 0: # child1's tree.  child2 should not be included.
     for v in child.vnodes_iter(): print v
     for t in child.tnodes_iter(): print t</t>
 <t tx="ekr.20040712101754.199">assert(p == p.copy())
-assert(p != p.threadNext())</t>
+assert(p != p.threadNext())
+
+root = c.rootPosition()
+assert p.equal(p.copy()) is True
+assert p.equal(root) is False</t>
 <t tx="ekr.20040712101754.200">for p in c.allNodes_iter():
     if p.isCloned() and p.hasChildren():
         childv = p.firstChild().v
@@ -7841,7 +7847,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14643,5 +14649,13 @@ finally:
 <t tx="ekr.20051202100844.2"></t>
 <t tx="ekr.20051216171321"></t>
 <t tx="ekr.20051216171321.1"></t>
+<t tx="ekr.20060106211922">n = g.app.positions
+assert c.isCurrentPosition(None) is False
+assert c.isCurrentPosition(p) is True
+assert g.app.positions == n</t>
+<t tx="ekr.20060106211922.1">n = g.app.positions
+assert c.isRootPosition(None) is False
+assert c.isRootPosition(p) is False
+assert g.app.positions == n</t>
 </tnodes>
 </leo_file>

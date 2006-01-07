@@ -1955,7 +1955,7 @@ s = g.toUnicode(s or '',g.app.tkEncoding)
 #@-node:ekr.20040803072955.90:head key handlers
 #@-node:ekr.20060106064618:Fixed minor headline problems
 #@+node:ekr.20060106112159:Removed all calls to g.top() from Leo's core
-# Every call to g.top was a potential bug.
+# Every call was a potential bug.
 #@nonl
 #@+node:ekr.20060106112915:Changed
 #@+node:ekr.20031218072017.3843:createFrame (tkComparePanel)
@@ -2099,10 +2099,6 @@ for text,command in (
 #@-node:ekr.20031218072017.3843:createFrame (tkComparePanel)
 #@+node:ekr.20060106125608:From leoGlobals.py
 #@+node:ekr.20051023083258:callers
-@ New in 4.4b1: we can't access the 'default_callers_level' setting
-because that would require a call to the deprecated g.top() function.
-@c
-
 def callers (n=5,excludeCaller=True):
     
     '''Return a list containing the callers of the function that called g.callerList.
@@ -2737,7 +2733,7 @@ def scanError(s):
 
     """Bump the error count in the tangle command."""
     
-    # New in Leo 4.4b1: set this global instead of calling g.top().
+    # New in Leo 4.4b1: just set this global.
     g.app.scanErrors +=1
     g.es(s)
 #@nonl

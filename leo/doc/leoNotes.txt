@@ -34,12 +34,10 @@
 27 leoUndo.py
 #@nonl
 #@+node:ekr.20050123160215.1:Put all files in alpha order in ExamDiff
-import leoGlobals as g
-
 print '-' * 20
 d = []
 
-for p in g.top().allNodes_iter():
+for p in c.allNodes_iter():
     s = p.headString()
     if s.startswith('@thin'):
         d.append(s[5:].strip())

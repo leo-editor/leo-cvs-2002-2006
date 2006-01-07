@@ -6,7 +6,7 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20060105130519:Urgent
+#@+node:ekr.20060105130519:Urgent 2 days
 #@+node:ekr.20060106131142:goto next changed doesn't expand ancestors!
 #@-node:ekr.20060106131142:goto next changed doesn't expand ancestors!
 #@+node:ekr.20060106172320:Install patch for headline width
@@ -216,8 +216,40 @@ EKR: This can be done with @command nodes, but Leo should have official commands
 #@-node:ekr.20051221101851.1:Request
 #@-node:ekr.20051221101851:Add commands to simulate clicks
 #@-node:ekr.20050928144501.1:Mouseless Leo
-#@-node:ekr.20060105130519:Urgent
-#@+node:ekr.20060105133043:Important
+#@+node:ekr.20060106212914:Remove g.top from all plugins
+#@-node:ekr.20060106212914:Remove g.top from all plugins
+#@+node:ekr.20060103102115:Improve word-export plugin
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3495741
+By: stano_paska
+
+Hi.
+
+In plugin word_export encoding is defined:
+
+encoding = dict.get("encoding",None)
+if encoding == None:
+    encoding = c.config.default_derived_file_encoding
+
+I have default_derived_file_encoding set to UTF-8 but when exporting to word
+some national characters are not encoded correctly (Slovak).
+
+I think it is better get encoding for word from somewhere else.
+
+In Slovak environment word uses cp1250.
+
+When I used:
+
+import sys
+encoding = sys.getdefaultencoding() # 'cp1250'
+
+everything goes fine.
+#@nonl
+#@-node:ekr.20060103102115:Improve word-export plugin
+#@+node:ekr.20051217135340.2:Create find-options panel
+#@-node:ekr.20051217135340.2:Create find-options panel
+#@-node:ekr.20060105130519:Urgent 2 days
+#@+node:ekr.20060105133043:Important 5 days
 #@+node:ekr.20051217175058:Get chapters plugin working
 Use the zip file stuff initially.  We can add support for chapters to Leo's core later.
 #@nonl
@@ -3273,42 +3305,12 @@ def stateHandler (self,event):
 #@-node:ekr.20051126124705:stateHandler (autoCompleter)
 #@-node:ekr.20051126123249:class autoCompleterClass (prototype)
 #@-node:ekr.20051126122638:Autocompletion tab
-#@+node:ekr.20060103102115:Improve word-export plugin
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=3495741
-By: stano_paska
-
-Hi.
-
-In plugin word_export encoding is defined:
-
-encoding = dict.get("encoding",None)
-if encoding == None:
-    encoding = c.config.default_derived_file_encoding
-
-I have default_derived_file_encoding set to UTF-8 but when exporting to word
-some national characters are not encoded correctly (Slovak).
-
-I think it is better get encoding for word from somewhere else.
-
-In Slovak environment word uses cp1250.
-
-When I used:
-
-import sys
-encoding = sys.getdefaultencoding() # 'cp1250'
-
-everything goes fine.
-#@nonl
-#@-node:ekr.20060103102115:Improve word-export plugin
-#@+node:ekr.20051217135340.2:Create find-options panel
-#@-node:ekr.20051217135340.2:Create find-options panel
 #@+node:ekr.20051021074728:Space completion
 #@-node:ekr.20051021074728:Space completion
 #@+node:ekr.20051202100658:Filename completion
 #@-node:ekr.20051202100658:Filename completion
-#@-node:ekr.20060105133043:Important
-#@+node:ekr.20051129095023:Medium
+#@-node:ekr.20060105133043:Important 5 days
+#@+node:ekr.20051129095023:Medium 3 days
 #@+node:ekr.20051121070552:Add Cmds menu
 #@-node:ekr.20051121070552:Add Cmds menu
 #@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
@@ -3433,6 +3435,27 @@ EKR: This is on the list of unfixable bugs, but I have a hard time believing the
 Use docstrings as the help message.
 #@nonl
 #@-node:ekr.20051202095626:Add help-command
+#@-node:ekr.20051129095023:Medium 3 days
+#@+node:ekr.20051012062458.1:Minor
+- Review the posting about making positions permanent, or recording vnode
+indicies. It's probably time to do this.
+
+- Make sure there is some way of executing script find/changes.
+
+-@link-unl/url/etc.
+
+- Put About dialog (all? dialogs) in tab.
+
+- Create minibuffer commands to close tabs by name.
+
+- the cycle-focus command should cycle through all log tabs.
+
+- Something cool that can be bound to alt-tab.
+
+- Strip quotes from color, font settings.
+
+- Specify & for most menu items.
+#@nonl
 #@+node:ekr.20051110155735.1:Improve Spell tab
 @nocolor
 
@@ -4176,27 +4199,6 @@ def updateButtons (self):
 #@-node:ekr.20051025071455.18:class spellTab (leoFind.leoFind)
 #@-node:ekr.20051025071455:Spell classes (ok)
 #@-node:ekr.20051110155735.1:Improve Spell tab
-#@-node:ekr.20051129095023:Medium
-#@+node:ekr.20051012062458.1:Minor
-- Review the posting about making positions permanent, or recording vnode
-indicies. It's probably time to do this.
-
-- Make sure there is some way of executing script find/changes.
-
--@link-unl/url/etc.
-
-- Put About dialog (all? dialogs) in tab.
-
-- Create minibuffer commands to close tabs by name.
-
-- the cycle-focus command should cycle through all log tabs.
-
-- Something cool that can be bound to alt-tab.
-
-- Strip quotes from color, font settings.
-
-- Specify & for most menu items.
-#@nonl
 #@+node:ekr.20051202102337:Minibuffer commands notes
 @nocolor
 #@nonl
@@ -10674,21 +10676,16 @@ def __getattr__ (self,attr):
 #@nonl
 #@-node:ekr.20040812154341.4:p.__getattr__  ON:  must be ON if use_plugins
 #@+node:ekr.20040812154341.5:p.__init__
-def __init__ (self,v,stack,trace=True):
+def __init__ (self,c,v,stack,trace=True):
 
     """Create a new position."""
     
-    if v: self.c = v.c
-    else: self.c = g.top()
+    self.c = c
     self.v = v
-    assert(v is None or v.t)
+    # assert(v is None or v.t)
     self.stack = stack[:] # Creating a copy here is safest and best.
 
     g.app.positions = g.app.positions + 1
-    
-    if g.app.tracePositions and trace:
-        g.trace("%-25s %-25s %s" % (
-            g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
     
     # Note: __getattr__ implements p.t.
 #@nonl
@@ -10766,13 +10763,6 @@ def equal(self,p2):
     Use this method when the speed comparisons is crucial
     
     N.B. Unlike __cmp__, p2 must not be None.
-    
-    >>> c = g.top() ; p = c.currentPosition() ; root = c.rootPosition()
-    >>> n = g.app.positions
-    >>> assert p.equal(p.copy()) is True
-    >>> assert p.equal(root) is False
-    >>> assert g.app.positions == n + 1
-    >>> 
     """
 
     p1 = self
