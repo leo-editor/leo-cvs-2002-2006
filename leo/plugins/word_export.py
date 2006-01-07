@@ -8,7 +8,7 @@ the selected outline to a Word document, starting Word if necessary.
 #@@tabwidth -4
 
 __name__ = "Word Export"
-__version__ = "0.4"
+__version__ = "0.6"
 
 #@<< version history >>
 #@+node:ekr.20040909110753:<< version history >>
@@ -19,14 +19,17 @@ __version__ = "0.4"
 #     - Changed os.path.x to g.os_path_x for better handling of unicode 
 # filenames.
 #     - Better error messages.
-# 
 # 0.4 EKR:
 #     - Added autostart code per 
 # http://sourceforge.net/forum/message.php?msg_id=2842589
-# 
 # 0.5 EKR:
 #     - Added init function so that a proper message is given if win32com can 
 # not be imported.
+# 0.6 EKR: (eliminated g.top)
+#     - Get the commander for cmd_Export from g.app.commandCommander.
+#     - Add c arg to writeNodeAndTree.
+#     - Set encoding to sys.getdefaultencoding() if there is no @encoding 
+# directive in effect.
 #@-at
 #@nonl
 #@-node:ekr.20040909110753:<< version history >>
@@ -44,6 +47,7 @@ except ImportError:
     client = g.cantImport('win32com.client')
 
 import ConfigParser
+import sys
 #@nonl
 #@-node:ekr.20040909105522:<< imports >>
 #@nl
@@ -106,38 +110,46 @@ def doPara(word, text, style=None):
 #@nonl
 #@-node:EKR.20040517075715.17:doPara
 #@+node:EKR.20040517075715.18:writeNodeAndTree
-def writeNodeAndTree(word, header_style, level, maxlevel=3, usesections=1, sectionhead="", vnode=None):
-    
+def writeNodeAndTree (c, word, header_style, level,
+    maxlevel = 3,
+    usesections = 1,
+    sectionhead = "",
+    vnode = None):
+
     """Write a node and its children to Word"""
 
-    c = g.top()
     if vnode is None:
         vnode = g.top().currentVnode()
     #
     dict = g.scanDirectives(c,p=vnode)
     encoding = dict.get("encoding",None)
     if encoding == None:
-        encoding = c.config.default_derived_file_encoding
+        # encoding = c.config.default_derived_file_encoding
+        encoding = sys.getdefaultencoding()
     # 
     s = vnode.bodyString()
     s = g.toEncodedString(s,encoding,reportErrors=True)
-    doPara(word, s)
+    doPara(word,s)
     #
     for i in range(vnode.numberOfChildren()):
         if usesections:
-            thishead = "%s%d." % (sectionhead, i+1)
+            thishead = "%s%d." % (sectionhead,i+1)
         else:
             thishead = ""
         child = vnode.nthChild(i)
         h = child.headString()
-        h = g.toEncodedString(h, encoding, reportErrors=True)
-        doPara(word, "%s %s" % (thishead, h), "%s %d" % (header_style, min(level, maxlevel)))
-        writeNodeAndTree(word, header_style, level+1, maxlevel, usesections, thishead, child)
+        h = g.toEncodedString(h,encoding,reportErrors=True)
+        doPara(word,"%s %s" % (thishead,h),"%s %d" % (header_style,min(level,maxlevel)))
+        writeNodeAndTree(c,word,header_style,level+1,maxlevel,usesections,thishead,child)
+#@nonl
 #@-node:EKR.20040517075715.18:writeNodeAndTree
 #@+node:EKR.20040517075715.19:cmd_Export
 def cmd_Export(event=None):
 
     """Export the current node to Word"""
+    
+    # New in Leo 4.4b1: c.doCommand sets this global.
+    c = g.app.commandCommander
 
     try:
         word = getWordConnection()
@@ -146,7 +158,7 @@ def cmd_Export(event=None):
             # Based on the rst plugin
             g.es("Writing tree to Word",color="blue")
             config = getConfiguration()
-            writeNodeAndTree(word,
+            writeNodeAndTree(c,word,
                 config.get("Main", "header_style").strip(),
                 1,
                 int(config.get("Main", "max_headings")),
