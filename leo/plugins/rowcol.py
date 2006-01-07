@@ -6,7 +6,7 @@
 #@@tabwidth -4
 
 __name__ = "Row/Column indicators"
-__version__ = "0.2"
+__version__ = "0.3"
 
 #@<< imports >>
 #@+node:ekr.20040908094021.2:<< imports >>
@@ -25,8 +25,11 @@ Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 # 0.1 Initial version.
 # 
 # 0.2 EKR:
-# 
 # Make sure this works properly with multiple windows.
+# 
+# 0.3 EKR:
+# Removed call to g.top.  We now test whether c is valid using 
+# hasattr(c,'frame')
 #@-at
 #@nonl
 #@-node:ekr.20041120114651:<< version history >>
@@ -82,7 +85,7 @@ class rowColClass:
         c = self.c
     
         # This is called at idle-time, and there can be problems when closing the window.
-        if g.app.killed or not c or c != g.top():
+        if g.app.killed or not c or not hasattr(c,'frame'):
             return
     
         body = c.frame.body.bodyCtrl ; gui = g.app.gui

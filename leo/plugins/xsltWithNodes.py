@@ -74,7 +74,7 @@ import cStringIO
 #@nonl
 #@-node:mork.20041025101943:<<future directions>>
 #@nl
-__version__ = '0.5'
+__version__ = '0.6'
 #@<< version history >>
 #@+node:mork.20041025113211:<< version history >>
 #@@killcolor
@@ -94,6 +94,8 @@ __version__ = '0.5'
 # 0.5 EKR:
 #     - Remove 'start2' hook & haveseen dict.
 #     - Use keywords.get('c') instead of g.top().
+# 0.6 EKR:
+#     - Removed g.top from example code.
 #@-at
 #@nonl
 #@-node:mork.20041025113211:<< version history >>
@@ -414,7 +416,7 @@ import Pmw
 </t>
 <t tx="mork.20041015144717.3">haveseen = weakref.WeakKeyDictionary()
 def addMenu( tag, keywords ):
-    c = g.top()
+    c = keywords.get('c') or keywords.get('new_c')
     if haveseen.has_key( c ):
         return
     haveseen[ c ] = None
