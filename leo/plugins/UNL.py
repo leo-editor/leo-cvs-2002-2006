@@ -187,9 +187,6 @@ def onUrl1 (tag,keywords):
             if ok:
                 #@                << go to the node>>
                 #@+node:rogererens.20041125015212.1:<<go to the node>>
-                # Never use g.top() in these situations:
-                # it depends on what Tk thinks is the top window, and that is time dependent.
-                # c2 = g.top()
                 c2 = frame.c
                 
                 if urlTuple[4]: # we have a UNL!

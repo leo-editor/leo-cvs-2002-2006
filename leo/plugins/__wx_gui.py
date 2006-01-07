@@ -3454,7 +3454,7 @@ class wxFindFrame (wx.wxFrame,leoFind.leoFind):
     def bringToFront (self):
         
         g.app.gui.bringToFront(self)
-        self.c = g.top()
+        ### self.c = g.top()
         self.init(self.c)
         self.findPanel.findText.SetFocus()
         self.findPanel.findText.SetSelection(-1,-1)

@@ -173,7 +173,7 @@ class Library(object):
     #@+node:ekr.20050328092641.12:delete
     def delete(cls):
         
-        c = cls.c #g.top() 
+        c = cls.c
         item = cls.lbox.getvalue()
         if len( item ) == 0: return
         item = item[ 0 ]
@@ -185,7 +185,7 @@ class Library(object):
     #@+node:ekr.20050328092641.13:addCurrentNode
     def addCurrentNode(cls):
         
-        c = cls.c #g.top() 
+        c = cls.c
         p = c.currentPosition()
         hs = str( p.headString())
         s =  c.fileCommands.putLeoOutline()
