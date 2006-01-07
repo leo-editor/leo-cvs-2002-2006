@@ -97,6 +97,89 @@ __plugin_priority__ = -100
 __plugin_group__ = "Core"
 
 #@+others
+#@+node:ekr.20060107091318:Functions
+#@+node:EKR.20040517080555.24:addPluginMenuItem
+def addPluginMenuItem (p,c):
+    if p.hastoplevel:
+        # Check at runtime to see if the plugin has actually been loaded.
+        # This prevents us from calling hasTopLevel() on unloaded plugins.
+        def callback (p=p):
+            path, name = g.os_path_split(p.filename)
+            name, ext = g.os_path_splitext(name)
+            # g.trace(name,g.app.loadedPlugins)
+            if name in g.app.loadedPlugins:
+                p.hastoplevel(c)
+            else:
+                p.about()
+        table = ((p.name,None,callback),)
+        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
+    elif p.hasconfig or p.othercmds:
+        #@        << Get menu location >>
+        #@+node:pap.20050305153147:<< Get menu location >>
+        if p.group:
+            menu_location = p.group
+        else:
+            menu_location = "&Plugins"
+        #@-node:pap.20050305153147:<< Get menu location >>
+        #@nl
+        m = c.frame.menu.createNewMenu(p.name,menu_location)
+        table = [("About...",None,p.about)]
+        if p.hasconfig:
+            table.append(("Properties...",None,p.properties))
+        if p.othercmds:
+            table.append(("-",None,None))
+            items = [(cmd,None,fn) for cmd, fn in p.othercmds.iteritems()]
+            items.sort()
+            table.extend(items)
+        c.frame.menu.createMenuEntries(m,table,dynamicMenu=True)
+    else:
+        table = ((p.name,None,p.about),)
+        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
+#@nonl
+#@-node:EKR.20040517080555.24:addPluginMenuItem
+#@+node:EKR.20040517080555.23:createPluginsMenu
+def createPluginsMenu (tag,keywords):
+
+    c = keywords.get("c")
+    if not c: return
+
+    old_path = sys.path[:] # Make a _copy_ of the path.
+
+    path = os.path.join(g.app.loadDir,"..","plugins")
+    sys.path = path
+        
+    if os.path.exists(path):
+        # Create a list of all active plugins.
+        files = glob.glob(os.path.join(path,"*.py"))
+        files.sort()
+        plugins = [PlugIn(file) for file in files]
+        PluginDatabase.storeAllPlugins(files)
+        items = [(p.name,p) for p in plugins if p.version]
+        if items:
+            #@            << Sort items >>
+            #@+node:pap.20041009133925:<< sort items >>
+            dec = [(item[1].priority, item) for item in items]
+            dec.sort()
+            dec.reverse()
+            items = [item[1] for item in dec]
+            #@nonl
+            #@-node:pap.20041009133925:<< sort items >>
+            #@nl
+            c.pluginsMenu = pluginMenu = c.frame.menu.createNewMenu("&Plugins")
+            PluginDatabase.setMenu("Default", pluginMenu)
+            #@            << Add group menus >>
+            #@+node:pap.20050305152223:<< Add group menus >>
+            for group_name in PluginDatabase.getGroups():
+                PluginDatabase.setMenu(group_name, c.frame.menu.createNewMenu(group_name, "&Plugins"))
+            #@-node:pap.20050305152223:<< Add group menus >>
+            #@nl
+            for name,p in items:
+                addPluginMenuItem(p, c)
+            
+    sys.path = old_path
+#@nonl
+#@-node:EKR.20040517080555.23:createPluginsMenu
+#@-node:ekr.20060107091318:Functions
 #@+node:pap.20050305152751:class PluginDatabase
 class _PluginDatabase:
     """Stores information on Plugins"""
@@ -493,87 +576,6 @@ class PluginAbout:
     #@-node:EKR.20040517080555.20:__init__
     #@-others
 #@-node:EKR.20040517080555.19:class PluginAbout
-#@+node:EKR.20040517080555.23:createPluginsMenu
-def createPluginsMenu (tag,keywords):
-
-    c = keywords.get("c")
-    if not c: return
-
-    old_path = sys.path[:] # Make a _copy_ of the path.
-
-    path = os.path.join(g.app.loadDir,"..","plugins")
-    sys.path = path
-        
-    if os.path.exists(path):
-        # Create a list of all active plugins.
-        files = glob.glob(os.path.join(path,"*.py"))
-        files.sort()
-        plugins = [PlugIn(file) for file in files]
-        PluginDatabase.storeAllPlugins(files)
-        items = [(p.name,p) for p in plugins if p.version]
-        if items:
-            #@            << Sort items >>
-            #@+node:pap.20041009133925:<< sort items >>
-            dec = [(item[1].priority, item) for item in items]
-            dec.sort()
-            dec.reverse()
-            items = [item[1] for item in dec]
-            #@nonl
-            #@-node:pap.20041009133925:<< sort items >>
-            #@nl
-            c.pluginsMenu = pluginMenu = c.frame.menu.createNewMenu("&Plugins")
-            PluginDatabase.setMenu("Default", pluginMenu)
-            #@            << Add group menus >>
-            #@+node:pap.20050305152223:<< Add group menus >>
-            for group_name in PluginDatabase.getGroups():
-                PluginDatabase.setMenu(group_name, c.frame.menu.createNewMenu(group_name, "&Plugins"))
-            #@-node:pap.20050305152223:<< Add group menus >>
-            #@nl
-            for name,p in items:
-                addPluginMenuItem(p, c)
-            
-    sys.path = old_path
-#@nonl
-#@-node:EKR.20040517080555.23:createPluginsMenu
-#@+node:EKR.20040517080555.24:addPluginMenuItem
-def addPluginMenuItem (p,c):
-    if p.hastoplevel:
-        # Check at runtime to see if the plugin has actually been loaded.
-        # This prevents us from calling hasTopLevel() on unloaded plugins.
-        def callback (p=p):
-            path, name = g.os_path_split(p.filename)
-            name, ext = g.os_path_splitext(name)
-            # g.trace(name,g.app.loadedPlugins)
-            if name in g.app.loadedPlugins:
-                p.hastoplevel()
-            else:
-                p.about()
-        table = ((p.name,None,callback),)
-        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
-    elif p.hasconfig or p.othercmds:
-        #@        << Get menu location >>
-        #@+node:pap.20050305153147:<< Get menu location >>
-        if p.group:
-            menu_location = p.group
-        else:
-            menu_location = "&Plugins"
-        #@-node:pap.20050305153147:<< Get menu location >>
-        #@nl
-        m = c.frame.menu.createNewMenu(p.name,menu_location)
-        table = [("About...",None,p.about)]
-        if p.hasconfig:
-            table.append(("Properties...",None,p.properties))
-        if p.othercmds:
-            table.append(("-",None,None))
-            items = [(cmd,None,fn) for cmd, fn in p.othercmds.iteritems()]
-            items.sort()
-            table.extend(items)
-        c.frame.menu.createMenuEntries(m,table,dynamicMenu=True)
-    else:
-        table = ((p.name,None,p.about),)
-        c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p),table,dynamicMenu=True)
-#@nonl
-#@-node:EKR.20040517080555.24:addPluginMenuItem
 #@-others
 
 if Tk and not g.app.unitTesting: # Register the handlers...

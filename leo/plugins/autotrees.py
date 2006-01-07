@@ -91,6 +91,8 @@ sets = g.importExtension('sets',pluginName=__name__,verbose=True)
 # 0.2 EKR:
 #     - Set ok in init function.
 #     - use g.importExtension to import sets.
+# 0.3 EKR:
+#     - Add c argument to topLevelMenu function and showManagerDialog ctor.
 #@-at
 #@nonl
 #@-node:ekr.20050329082101.118:<< version history >>
@@ -162,10 +164,10 @@ def onCreate (tag, keys):
 #@+node:ekr.20050329082101.123:topLevelMenu
 # This is called from plugins_menu plugin.
 
-def topLevelMenu():   
+def topLevelMenu(c):   
     """Manage the tree handlers"""
     global thePluginController    
-    thePluginController.showManagerDialog()
+    thePluginController.showManagerDialog(c)
 #@nonl
 #@-node:ekr.20050329082101.123:topLevelMenu
 #@+node:ekr.20050329082101.124:class TreeNode
@@ -384,7 +386,7 @@ class pluginController:
     #@nonl
     #@-node:ekr.20050329082101.141:handleEvent
     #@+node:ekr.20050329082101.142:showManagerDialog
-    def showManagerDialog(self):
+    def showManagerDialog(self,c):
         """Show the tree handler manager dialog"""
         if not self.plugin_manager:
             g.es("Plugin manager could not be loaded", color="red")
@@ -401,8 +403,15 @@ class pluginController:
                 dialog_caption = "AutoTree Handler Manager"
             
                 #@    @+others
+                #@+node:ekr.20060107092231:ctor
+                def __init__ (self,c):
+                    
+                    self.c = c
+                #@nonl
+                #@-node:ekr.20060107092231:ctor
                 #@+node:ekr.20050329082101.144:setPaths
                 def setPaths(self):
+                
                     """Set paths to the plugin locations"""
                     self.local_path = g.os_path_join(g.app.loadDir,"..","plugins","trees")
                     self.remote_path = r"cvs.sourceforge.net/viewcvs.py/leo/leo/plugins/trees"
@@ -412,7 +421,7 @@ class pluginController:
             #@nonl
             #@-node:ekr.20050329082101.143:<< class HandlerDialog >>
             #@nl
-            dlg = HandlerDialog()    
+            dlg = HandlerDialog(c)    
     #@-node:ekr.20050329082101.142:showManagerDialog
     #@-others
 #@nonl
