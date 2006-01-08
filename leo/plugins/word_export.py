@@ -8,7 +8,7 @@ the selected outline to a Word document, starting Word if necessary.
 #@@tabwidth -4
 
 __name__ = "Word Export"
-__version__ = "0.6"
+__version__ = "0.7"
 
 #@<< version history >>
 #@+node:ekr.20040909110753:<< version history >>
@@ -26,10 +26,10 @@ __version__ = "0.6"
 #     - Added init function so that a proper message is given if win32com can 
 # not be imported.
 # 0.6 EKR: (eliminated g.top)
-#     - Get the commander for cmd_Export from g.app.commandCommander.
 #     - Add c arg to writeNodeAndTree.
 #     - Set encoding to sys.getdefaultencoding() if there is no @encoding 
 # directive in effect.
+# 0.7 EKR: cmd_ functions now get c arg.
 #@-at
 #@nonl
 #@-node:ekr.20040909110753:<< version history >>
@@ -144,12 +144,9 @@ def writeNodeAndTree (c, word, header_style, level,
 #@nonl
 #@-node:EKR.20040517075715.18:writeNodeAndTree
 #@+node:EKR.20040517075715.19:cmd_Export
-def cmd_Export(event=None):
+def cmd_Export(c):
 
     """Export the current node to Word"""
-    
-    # New in Leo 4.4b1: c.doCommand sets this global.
-    c = g.app.commandCommander
 
     try:
         word = getWordConnection()

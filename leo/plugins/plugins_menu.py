@@ -128,7 +128,11 @@ def addPluginMenuItem (p,c):
             table.append(("Properties...",None,p.properties))
         if p.othercmds:
             table.append(("-",None,None))
-            items = [(cmd,None,fn) for cmd, fn in p.othercmds.iteritems()]
+            items = []
+            for cmd, fn in p.othercmds.iteritems():
+                def cmd_callback (c=c,fn=fn):
+                    fn(c)
+                items.append((cmd,None,cmd_callback),)
             items.sort()
             table.extend(items)
         c.frame.menu.createMenuEntries(m,table,dynamicMenu=True)

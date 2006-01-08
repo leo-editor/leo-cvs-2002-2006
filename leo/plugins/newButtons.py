@@ -58,7 +58,7 @@ AddRawTemplate
 #@nl
 
 __name__ = "New Buttons"
-__version__ = "0.7"
+__version__ = "0.8"
 
 USE_FIXED_SIZES = 1
 
@@ -73,8 +73,7 @@ USE_FIXED_SIZES = 1
 # 0.4 EKR: Added importLeoGlobals function.
 # 0.5 Paul Paterson: Rewrite from scratch
 # 0.6 EKR: Added support for template_path setting.
-# 0.7 ERK: removed g.top and improved the code.
-# - Use g.app.commandCommander in cmd_ functions
+# 0.7 EKR: removed g.top and improved the code.
 # - Added c args to most classes, but **not** to the Template class.
 # - Changed global helper to helpers: now a dict (keys are commanders, values 
 # are UIHelpers).
@@ -83,6 +82,9 @@ USE_FIXED_SIZES = 1
 # - Changed helper.commander to helper.c for consistency and clarity.
 # - Added templates and templateNames ivars to TemplateCollection class.
 # - Added add and remove methods to TemplateCollection class.
+# 0.8 EKR:
+# - cmd_ functions now get c arg.
+# - Added message when deleting template file.
 #@-at
 #@nonl
 #@-node:pap.20051010170720.2:<< version history >>
@@ -146,38 +148,34 @@ def onCreate (tag, keywords):
 #@-node:pap.20051010170720.5:onCreate
 #@+node:pap.20051011221702:Commands exposed as menus
 #@+node:pap.20051010172840:cmd_MakeTemplateFrom
-def cmd_MakeTemplateFrom():
+def cmd_MakeTemplateFrom(c):
     """Make a template from a node"""
-    c = g.app.commandCommander
     helper = helpers.get(c)
     if helper:
         helper.makeTemplate()
 #@nonl
 #@-node:pap.20051010172840:cmd_MakeTemplateFrom
 #@+node:pap.20051011153949:cmd_UpdateTemplateFrom
-def cmd_UpdateTemplateFrom():
+def cmd_UpdateTemplateFrom(c):
     """Update a template from a node"""
-    
-    c = g.app.commandCommander
+
     helper = helpers.get(c)
     if helper:
         helper.updateTemplate()
 #@nonl
 #@-node:pap.20051011153949:cmd_UpdateTemplateFrom
 #@+node:pap.20051011155514:cmd_DeleteTemplate
-def cmd_DeleteTemplate():
+def cmd_DeleteTemplate(c):
     """Delete a template"""
-    c = g.app.commandCommander
     helper = helpers.get(c)
     if helper:
         helper.deleteTemplate()
 #@nonl
 #@-node:pap.20051011155514:cmd_DeleteTemplate
 #@+node:pap.20051011160100:cmd_AddRawTemplate
-def cmd_AddRawTemplate():
+def cmd_AddRawTemplate(c):
 
     """Add a raw template"""
-    c = g.app.commandCommander
     helper = helpers.get(c)
     if helper:
         helper.addRawTemplate()
@@ -345,9 +343,13 @@ class UIHelperClass:
                 # Remove old one
                 tc = self.templateCollection
                 tc.remove(tc.find(result))
-                os.remove(g.os_path_join(self.folder, "%s.tpl" % result))
+                filename = "%s.tpl" % result
+                folder = g.os_path_abspath(self.folder)
+                os.remove(g.os_path_join(folder, filename))
+                g.es('deleted template %s from %s' % (filename,folder),color='blue')
                          
         form = SelectTemplateForm(self,deleteit, "Delete template")
+    #@nonl
     #@-node:pap.20051011155642:deleteTemplate
     #@+node:pap.20051010172432:_getSizer
     def _getSizer(self, parent, height, width, pack="left"):
