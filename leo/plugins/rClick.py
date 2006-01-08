@@ -30,6 +30,9 @@
 #     - Use g.importExtension to import Tk.
 # 0.7 EKR:
 #     - Use e.widget._name.startswith('body') to test for the body pane.
+# 0.8 EKR:
+# - Added init function.
+# - Eliminated g.top.
 #@-at
 #@nonl
 #@-node:ekr.20040422081253:<< version history >>
@@ -45,73 +48,32 @@ import re
 import sys
 #@-node:ekr.20050101090207.2:<< imports >>
 #@nl
+__version__ = "0.8"
 
 #@+others
-#@+node:ekr.20040422072343.1:rc_help
-def rc_help():
+#@+node:ekr.20060108122501:Module-level
+#@+node:ekr.20060108122501.1:init
+def init ():
     
-    """Highlight txt then rclick for python help() builtin."""
-
-    c = g.top()
+    if Tk: # OK for unit tests.
     
-    if c.frame.body.hasTextSelection():
-
-        newSel = c.frame.body.getSelectedText()
-
-        # EKR: nothing bad happens if the status line does not exist.
-        c.frame.clearStatusLine()
-        c.frame.putStatusLine(' Help for '+newSel) 
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
     
-        # Redirect stdout to a "file like object".
-        sys.stdout = fo = g.fileLikeObject()
-    
-        # Python's builtin help function writes to stdout.
-        help(str(newSel))
-        
-        # Restore original stdout.
-        sys.stdout = sys.__stdout__
-
-        # Print what was written to fo.
-        s = fo.get() ; g.es(s) ; print s
+        if g.app.gui.guiName() == "tkinter":
+            leoPlugins.registerHandler("after-create-leo-frame",rClickbinder)
+            leoPlugins.registerHandler("bodyrclick1",rClicker)
+            g.plugin_signon(__name__)
+            
+    return Tk is not None
 #@nonl
-#@-node:ekr.20040422072343.1:rc_help
-#@+node:ekr.20040422072343.2:rc_dbody
-def rc_dbody():
-
-    c = g.top()
-
-    if c.frame.body.hasTextSelection():
-        c.frame.body.deleteTextSelection()
-        c.frame.body.onBodyChanged("Delete")
-#@nonl
-#@-node:ekr.20040422072343.2:rc_dbody
-#@+node:ekr.20040422072343.3:rc_nl
-def rc_nl():
-    
-    """Insert a newline at the current curser position."""
-
-    c = g.top()
-
-    c.frame.body.insertAtInsertPoint('\n')
-    c.frame.body.onBodyChanged("Typing")
-#@nonl
-#@-node:ekr.20040422072343.3:rc_nl
-#@+node:ekr.20040422072343.4:rc_selectAll
-def rc_selectAll():
-    
-    """Select the entire log pane."""
-
-    c = g.top()
-    
-    g.app.gui.setTextSelection(c.frame.log.logCtrl,"1.0","end")
-#@nonl
-#@-node:ekr.20040422072343.4:rc_selectAll
+#@-node:ekr.20060108122501.1:init
 #@+node:ekr.20040422072343.5:rClickbinder
 def rClickbinder(tag,keywords):
 
-    c = g.top() # c may be None during startup.
+    c = keywords.get('c')
     
-    if c:
+    if c and c.exists:
         c.frame.log.logCtrl.bind  ('<Button-3>',c.frame.OnBodyRClick)
         # c.frame.body.bodyCtrl.bind('<Button-3>',c.frame.OnBodyRClick)
 #@nonl
@@ -121,9 +83,9 @@ def rClickbinder(tag,keywords):
 
 def rClicker(tag,keywords):
     
-    c = g.top() #c = keywords.get("c")  #"commands"
+    c = keywords.get("c")
     e = keywords.get("event")
-    if not c or not e: return
+    if not c or not c.exists or not e: return
 
     e.widget.focus()
 
@@ -224,16 +186,16 @@ def rClicker(tag,keywords):
         #@+node:ekr.20040422072343.14:<< add entry for jump to section >>
         scan_jump_re="<"+"<[^<>]+>"+">"
         
-        v=c.currentVnode()
+        p=c.currentPosition()
         for match in re.finditer(scan_jump_re,text):
             name=match.group()
-            ref=g.findReference(name,v)
+            ref=g.findReference(name,p)
             if ref:
-                def jump_command(*k,**kk):
-                    #the callback is invoked later, so we better get commander again from globals
-                    c=g.top()
+                # Bug fix 1/8/06: bind c here.
+                # This is safe because we only get called from the proper commander.
+                def jump_command(c=c,*k,**kk):
                     c.beginUpdate()
-                    c.selectVnode(ref)
+                    c.selectPosition(ref)
                     c.endUpdate()
                 menu_item=( 'Jump to: '+crop(name,30), jump_command)
                 contextCommands.append( menu_item )
@@ -293,6 +255,66 @@ def rClicker(tag,keywords):
     rmenu.tk_popup(e.x_root-23,e.y_root+13)
 #@nonl
 #@-node:ekr.20040422072343.6:rClicker
+#@-node:ekr.20060108122501:Module-level
+#@+node:ekr.20040422072343.1:rc_help
+def rc_help():
+    
+    """Highlight txt then rclick for python help() builtin."""
+
+    c = g.top()
+    
+    if c.frame.body.hasTextSelection():
+
+        newSel = c.frame.body.getSelectedText()
+
+        # EKR: nothing bad happens if the status line does not exist.
+        c.frame.clearStatusLine()
+        c.frame.putStatusLine(' Help for '+newSel) 
+    
+        # Redirect stdout to a "file like object".
+        sys.stdout = fo = g.fileLikeObject()
+    
+        # Python's builtin help function writes to stdout.
+        help(str(newSel))
+        
+        # Restore original stdout.
+        sys.stdout = sys.__stdout__
+
+        # Print what was written to fo.
+        s = fo.get() ; g.es(s) ; print s
+#@nonl
+#@-node:ekr.20040422072343.1:rc_help
+#@+node:ekr.20040422072343.2:rc_dbody
+def rc_dbody():
+
+    c = g.top()
+
+    if c.frame.body.hasTextSelection():
+        c.frame.body.deleteTextSelection()
+        c.frame.body.onBodyChanged("Delete")
+#@nonl
+#@-node:ekr.20040422072343.2:rc_dbody
+#@+node:ekr.20040422072343.3:rc_nl
+def rc_nl():
+    
+    """Insert a newline at the current curser position."""
+
+    c = g.top()
+
+    c.frame.body.insertAtInsertPoint('\n')
+    c.frame.body.onBodyChanged("Typing")
+#@nonl
+#@-node:ekr.20040422072343.3:rc_nl
+#@+node:ekr.20040422072343.4:rc_selectAll
+def rc_selectAll():
+    
+    """Select the entire log pane."""
+
+    c = g.top()
+    
+    g.app.gui.setTextSelection(c.frame.log.logCtrl,"1.0","end")
+#@nonl
+#@-node:ekr.20040422072343.4:rc_selectAll
 #@+node:ekr.20040422072343.9:Utils for context sensitive commands
 #@+node:ekr.20040422072343.10:crop
 def crop(s,n=20,end="..."):
@@ -348,18 +370,6 @@ def getdoc(thing, title='Help on %s', forceload=0):
 #@-node:ekr.20040422072343.12:getdoc
 #@-node:ekr.20040422072343.9:Utils for context sensitive commands
 #@-others
-
-__version__ = "0.7"
-
-if Tk: # OK for unit tests.
-    
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-        leoPlugins.registerHandler("after-create-leo-frame",rClickbinder)
-        leoPlugins.registerHandler("bodyrclick1",rClicker)
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040422072343:@thin rClick.py
 #@-leo
