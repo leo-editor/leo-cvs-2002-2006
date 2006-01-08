@@ -2685,7 +2685,7 @@ class leoTkinterBody (leoFrame.leoBody):
             else:
                 return g.toUnicode(s,g.app.tkEncoding)
         else:
-            return None
+            return '' # Bug fix: 1/8/06
     #@nonl
     #@-node:ekr.20031218072017.4020:getSelectedText
     #@+node:ekr.20031218072017.4021:getTextSelection
