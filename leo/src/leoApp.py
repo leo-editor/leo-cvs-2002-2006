@@ -24,7 +24,6 @@ class LeoApp:
         # These ivars are the global vars of this program.
         self.afterHandler = None
         self.batchMode = False # True: run in batch mode.
-        self.commandCommander = None # The commander of the command being run by doCommand.
         self.commandName = None # The name of the command being executed.
         self.config = None # The leoConfig instance.
         self.count = 0 # General purpose debugging count.
