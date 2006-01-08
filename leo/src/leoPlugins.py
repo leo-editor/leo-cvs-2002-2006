@@ -37,9 +37,10 @@ def callTagHandler (bunch,tag,keywords):
         for key in ('c','new_c'):
             c = keywords.get(key)
             if c:
-                if not hasattr(c,'frame'): return None
-                if c.frame not in g.app.windowList:
-                    return None # c has (or will be) destroyed.
+                # Make sure c exists and has a frame.
+                if not c.exists or not hasattr(c,'frame'):
+                    print 'skipping tag: c does not exists or does not have a frame.'
+                    return None
 
     # Calls to registerHandler from inside the handler belong to moduleName.
     global loadingModuleNameStack

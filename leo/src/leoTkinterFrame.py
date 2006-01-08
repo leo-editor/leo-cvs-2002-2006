@@ -806,18 +806,26 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 panel.top.destroy()
     #@nonl
     #@-node:ekr.20031218072017.3965:destroyAllPanels
-    #@+node:ekr.20031218072017.1974:destroySelf
+    #@+node:ekr.20031218072017.1974:destroySelf (tkFrame)
     def destroySelf (self):
         
-        top = self.top # Remember this: we are about to destroy all of our ivars!
+        # Remember these: we are about to destroy all of our ivars!
+        top = self.top 
+        c = self.c
+        
+        # Indicate that the commander is no longer valid.
+        c.exists = False 
         
         # g.trace(self)
     
+        # Important: this destroys all the object of the commander too.
         self.destroyAllObjects()
+        
+        c.exists = False # Make sure this one ivar has not been destroyed.
     
         top.destroy()
     #@nonl
-    #@-node:ekr.20031218072017.1974:destroySelf
+    #@-node:ekr.20031218072017.1974:destroySelf (tkFrame)
     #@-node:ekr.20031218072017.3964:Destroying the frame
     #@-node:ekr.20031218072017.3941: Birth & Death (tkFrame)
     #@+node:ekr.20041223095751:class componentClass (componentBaseClass)

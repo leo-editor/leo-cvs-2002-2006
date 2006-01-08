@@ -3272,6 +3272,7 @@ def doCommand (self,command,label):
 
     # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
     g.app.setLog(c.frame.log,"doCommand")
+    g.app.commandCommander = self # support for plugins mangager cmd_ commands.
     
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
@@ -3286,17 +3287,17 @@ def doCommand (self,command,label):
         try:
             val = command()
             # Be careful: the command could destroy c.
-            if c and hasattr(c,'keyHandler'):
+            if c and c.exists:
                 c.keyHandler.funcReturn = val
         except:
             g.es("exception executing command")
             print "exception executing command"
             g.es_exception(c=c)
-            if c and hasattr(c,'frame'):
+            if c and c.exists and hasattr(c,'frame'):
                 c.redraw_now()
 
     # Be careful there: the command could destroy c.
-    if c and hasattr(c,'keyHandler'):
+    if c and c.exists:
         p = c.currentPosition()
         g.doHook("command2",c=c,p=p,v=p,label=label)
             
@@ -3304,7 +3305,318 @@ def doCommand (self,command,label):
 #@nonl
 #@-node:ekr.20031218072017.2817: doCommand
 #@-node:ekr.20051208081641:Fixed undo problems
+#@+node:ekr.20060103102115:Improved word-export plugin
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3495741
+By: stano_paska
+
+Hi.
+
+In plugin word_export encoding is defined:
+
+encoding = dict.get("encoding",None)
+if encoding == None:
+    encoding = c.config.default_derived_file_encoding
+
+I have default_derived_file_encoding set to UTF-8 but when exporting to word
+some national characters are not encoded correctly (Slovak).
+
+I think it is better get encoding for word from somewhere else.
+
+In Slovak environment word uses cp1250.
+
+When I used:
+
+import sys
+encoding = sys.getdefaultencoding() # 'cp1250'
+
+everything goes fine.
+#@nonl
+#@-node:ekr.20060103102115:Improved word-export plugin
 #@-node:ekr.20060106091831.1:Fixed bugs
+#@+node:ekr.20060107104019:Code level
+#@+node:ekr.20060107103157:Added support for plugin menu commands
+# c.doCommand now sets g.app.commandCommander for use by cmd_ functions.
+#@nonl
+#@+node:ekr.20031218072017.4117:defineMenuCallback
+def defineMenuCallback(self,command,name):
+    
+    # The first parameter must be event, and it must default to None.
+    def menuCallback(event=None,self=self,command=command,label=name):
+        __pychecker__ = '--no-argsused' # event not used, and must be present.
+        
+        c = self.c
+        return c.doCommand(command,label)
+
+    return menuCallback
+#@nonl
+#@-node:ekr.20031218072017.4117:defineMenuCallback
+#@+node:ekr.20031218072017.2817: doCommand
+def doCommand (self,command,label):
+
+    """Execute the given command, invoking hooks and catching exceptions.
+    
+    The code assumes that the "command1" hook has completely handled the command if
+    g.doHook("command1") returns False.
+    This provides a simple mechanism for overriding commands."""
+    
+    c = self ; p = c.currentPosition()
+
+    # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
+    g.app.setLog(c.frame.log,"doCommand")
+    g.app.commandCommander = self # support for plugins mangager cmd_ commands.
+    
+    # The presence of this message disables all commands.
+    if c.disableCommandsMessage:
+        g.es(c.disableCommandsMessage,color='blue')
+        return 'break' # Inhibit all other handlers.
+
+    if label == "cantredo": label = "redo"
+    if label == "cantundo": label = "undo"
+    g.app.commandName = label
+
+    if not g.doHook("command1",c=c,p=p,v=p,label=label):
+        try:
+            val = command()
+            # Be careful: the command could destroy c.
+            if c and c.exists:
+                c.keyHandler.funcReturn = val
+        except:
+            g.es("exception executing command")
+            print "exception executing command"
+            g.es_exception(c=c)
+            if c and c.exists and hasattr(c,'frame'):
+                c.redraw_now()
+
+    # Be careful there: the command could destroy c.
+    if c and c.exists:
+        p = c.currentPosition()
+        g.doHook("command2",c=c,p=p,v=p,label=label)
+            
+    return "break" # Inhibit all other handlers.
+#@nonl
+#@-node:ekr.20031218072017.2817: doCommand
+#@-node:ekr.20060107103157:Added support for plugin menu commands
+#@+node:ekr.20060106212914:Removed g.top from all plugins
+#@-node:ekr.20060106212914:Removed g.top from all plugins
+#@+node:ekr.20060107224249.1:Created c.exists ivar and related logic
+#@+node:ekr.20031218072017.2811: c.Birth & death
+#@+node:ekr.20031218072017.2812:c.__init__
+def __init__(self,frame,fileName):
+
+    c = self
+    
+    # g.trace('Commands')
+    
+    c.exists = True # Indicate that this class exists and has not been destroyed.
+        # Do this early in the startup process so we can call hooks.
+    
+    # Init ivars with self.x instead of c.x to keep Pychecker happy
+    self.frame = frame
+    self.mFileName = fileName
+        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
+
+    # g.trace(c) # Do this after setting c.mFileName.
+    c.initIvars()
+
+    self.useTextMinibuffer = False
+    self.showMinibuffer = c.config.getBool('useMinibuffer')
+
+    # initialize the sub-commanders.
+    # c.finishCreate creates the sub-commanders for edit commands.
+    self.fileCommands   = leoFileCommands.fileCommands(c)
+    self.atFileCommands = leoAtFile.atFile(c)
+    self.importCommands = leoImport.leoImportCommands(c)
+    self.tangleCommands = leoTangle.tangleCommands(c)
+    leoEditCommands.createEditCommanders(c)
+
+    if 0 and g.debugGC:
+        print ; print "*** using Null undoer ***" ; print
+        self.undoer = leoUndo.nullUndoer(self)
+    else:
+        self.undoer = leoUndo.undoer(self)
+#@nonl
+#@-node:ekr.20031218072017.2812:c.__init__
+#@+node:ekr.20040731071037:c.initIvars
+def initIvars(self):
+
+    c = self
+    << initialize ivars >>
+    self.config = configSettings(c)
+    g.app.config.setIvarsFromSettings(c)
+#@nonl
+#@+node:ekr.20031218072017.2813:<< initialize ivars >>
+self._currentPosition = self.nullPosition()
+self._rootPosition    = self.nullPosition()
+self._topPosition     = self.nullPosition()
+
+# For emacs/vim key handling.
+self.commandsDict = None
+self.keyHandler = None
+self.miniBufferWidget = None
+
+# per-document info...
+self.disableCommandsMessage = ''
+    # The presence of this message disables all commands.
+self.hookFunction = None
+self.openDirectory = None
+
+self.expansionLevel = 0  # The expansion level of this outline.
+self.expansionNode = None # The last node we expanded or contracted.
+self.changed = False # True if any data has been changed since the last save.
+self.loading = False # True if we are loading a file: disables c.setChanged()
+self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
+self.promptingForClose = False # To lock out additional closing dialogs.
+
+# For tangle/untangle
+self.tangle_errors = 0
+
+# Global options
+self.page_width = 132
+self.tab_width = -4
+self.tangle_batch_flag = False
+self.untangle_batch_flag = False
+# Default Tangle options
+self.tangle_directory = ""
+self.use_header_flag = False
+self.output_doc_flag = False
+# Default Target Language
+self.target_language = "python" # Required if leoConfig.txt does not exist.
+
+# These are defined here, and updated by the tree.select()
+self.beadList = [] # list of vnodes for the Back and Forward commands.
+self.beadPointer = -1 # present item in the list.
+self.visitedList = [] # list of positions for the Nodes dialog.
+
+# For hoist/dehoist commands.
+self.hoistStack = []
+    # Stack of nodes to be root of drawn tree.
+    # Affects drawing routines and find commands.
+self.recentFiles = [] # List of recent files
+#@nonl
+#@-node:ekr.20031218072017.2813:<< initialize ivars >>
+#@-node:ekr.20040731071037:c.initIvars
+#@+node:ekr.20031218072017.2814:c.__repr__ & __str__
+def __repr__ (self):
+    
+    return "Commander %d: %s" % (id(self),repr(self.mFileName))
+        
+__str__ = __repr__
+
+#@-node:ekr.20031218072017.2814:c.__repr__ & __str__
+#@+node:ekr.20041130173135:c.hash
+def hash (self):
+
+    c = self
+    if c.mFileName:
+        return g.os_path_abspath(c.mFileName).lower()
+    else:
+        return 0
+#@nonl
+#@-node:ekr.20041130173135:c.hash
+#@+node:ekr.20050920093543:c.finishCreate & helper
+def finishCreate (self):  # New in 4.4.
+    
+    '''Finish creating the commander after frame.finishCreate.'''
+    
+    c = self ; p = c.currentPosition()
+    c.miniBufferWidget = c.frame.miniBufferWidget
+    # g.trace('Commands',c.fileName()) # g.callers())
+    
+    # Create a keyHandler even if there is no miniBuffer.
+    c.keyHandler = k = leoKeys.keyHandlerClass(c,
+        useGlobalKillbuffer=True,
+        useGlobalRegisters=True)
+
+    if g.app.config and g.app.config.inited:
+        # A 'real' .leo file.
+        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
+        k.finishCreate()
+    else:
+        # A leoSettings.leo file.
+        c.commandsDict = {}
+
+    # Create the menu last so that we can use the key handler for shortcuts.
+    if not g.doHook("menu1",c=c,p=p,v=p):
+        c.frame.menu.createMenuBar(c.frame)
+#@nonl
+#@+node:ekr.20051007143620:printCommandsDict
+def printCommandsDict (self):
+    
+    c = self
+    
+    print 'Commands...'
+    keys = c.commandsDict.keys()
+    keys.sort()
+    for key in keys:
+        command = c.commandsDict.get(key)
+        print '%30s = %s' % (key,g.choose(command,command.__name__,'<None>'))
+    print
+#@nonl
+#@-node:ekr.20051007143620:printCommandsDict
+#@-node:ekr.20050920093543:c.finishCreate & helper
+#@-node:ekr.20031218072017.2811: c.Birth & death
+#@+node:ekr.20031218072017.1974:destroySelf (tkFrame)
+def destroySelf (self):
+    
+    # Remember these: we are about to destroy all of our ivars!
+    top = self.top 
+    c = self.c
+    
+    # Indicate that the commander is no longer valid.
+    c.exists = False 
+    
+    # g.trace(self)
+
+    # Important: this destroys all the object of the commander too.
+    self.destroyAllObjects()
+    
+    c.exists = False # Make sure this one ivar has not been destroyed.
+
+    top.destroy()
+#@nonl
+#@-node:ekr.20031218072017.1974:destroySelf (tkFrame)
+#@+node:ekr.20031218072017.2615:app.destroyWindow
+def destroyWindow (self,frame):
+    
+    # g.trace(frame in g.app.windowList,frame)
+        
+    g.app.destroyOpenWithFilesForFrame(frame)
+
+    if frame in g.app.windowList:
+        g.app.windowList.remove(frame)
+        # g.trace(g.app.windowList)
+
+    # force the window to go away now.
+    # Important: this also destroys all the objects of the commander.
+    frame.destroySelf()
+#@nonl
+#@-node:ekr.20031218072017.2615:app.destroyWindow
+#@+node:ekr.20050102094729:callTagHandler
+def callTagHandler (bunch,tag,keywords):
+    
+    handler = bunch.fn ; moduleName = bunch.moduleName
+
+    # Make sure the new commander exists.
+    if tag == 'idle':
+        for key in ('c','new_c'):
+            c = keywords.get(key)
+            if c:
+                # Make sure c exists and has a frame.
+                if not c.exists or not hasattr(c,'frame'):
+                    print 'skipping tag: c does not exists or does not have a frame.'
+                    return None
+
+    # Calls to registerHandler from inside the handler belong to moduleName.
+    global loadingModuleNameStack
+    loadingModuleNameStack.append(moduleName)
+    result = handler(tag,keywords)
+    loadingModuleNameStack.pop()
+    return result
+#@nonl
+#@-node:ekr.20050102094729:callTagHandler
+#@-node:ekr.20060107224249.1:Created c.exists ivar and related logic
+#@-node:ekr.20060107104019:Code level
 #@+node:ekr.20060106104654:New features
 #@-node:ekr.20060106104654:New features
 #@-node:ekr.20060106091831:4.4b1 projects

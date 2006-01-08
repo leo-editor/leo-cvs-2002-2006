@@ -1047,7 +1047,7 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         # The command may have closed the window.
-        if g.app.quitting or not hasattr(c,'currentPosition'): return
+        if g.app.quitting or not c.exists: return
     
         # Set the best possible undoType: prefer explicit commandName to k.commandName.
         commandName = commandName or k.commandName or ''

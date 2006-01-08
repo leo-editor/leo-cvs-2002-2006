@@ -65,6 +65,9 @@ class baseCommands:
         
         # g.trace('Commands')
         
+        c.exists = True # Indicate that this class exists and has not been destroyed.
+            # Do this early in the startup process so we can call hooks.
+        
         # Init ivars with self.x instead of c.x to keep Pychecker happy
         self.frame = frame
         self.mFileName = fileName
@@ -239,17 +242,17 @@ class baseCommands:
             try:
                 val = command()
                 # Be careful: the command could destroy c.
-                if c and hasattr(c,'keyHandler'):
+                if c and c.exists:
                     c.keyHandler.funcReturn = val
             except:
                 g.es("exception executing command")
                 print "exception executing command"
                 g.es_exception(c=c)
-                if c and hasattr(c,'frame'):
+                if c and c.exists and hasattr(c,'frame'):
                     c.redraw_now()
     
         # Be careful there: the command could destroy c.
-        if c and hasattr(c,'keyHandler'):
+        if c and c.exists:
             p = c.currentPosition()
             g.doHook("command2",c=c,p=p,v=p,label=label)
                 
@@ -5372,7 +5375,7 @@ class baseCommands:
         
         c = self
         
-        if g.app.quitting or not hasattr(c.frame,'top'):
+        if g.app.quitting or not c.exists or not hasattr(c.frame,'top'):
             return # nullFrame's do not have a top frame.
     
         c.frame.tree.redraw_now()

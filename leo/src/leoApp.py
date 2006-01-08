@@ -305,6 +305,7 @@ class LeoApp:
             # g.trace(g.app.windowList)
     
         # force the window to go away now.
+        # Important: this also destroys all the objects of the commander.
         frame.destroySelf()
     #@nonl
     #@-node:ekr.20031218072017.2615:app.destroyWindow
