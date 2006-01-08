@@ -8,7 +8,7 @@ plugin:
 
 -   Mark Node: marks a node for further operations such as copying, cloning and moving.
 
--   Mark Spot: marks a node as the place where group operations are to target.
+-   Mark Target: marks a node as the place where group operations are to target.
 
 -   Operate On Marked: moves lassoed nodes to the spot where the roundup node is
     placed. Clones are maintained.
@@ -153,28 +153,30 @@ transferFromPI = Tkinter.PhotoImage( data = transferFrom )
 #@-node:mork.20041021094915:<< images >>
 #@nl
 
-__version__ = ".3"
+__version__ = ".4"
 #@<<version history>>
 #@+node:mork.20041021120027:<<version history>>
 #@@killcolor
-
 #@+at 
-#  .1 -- We have started almost from scratch from the previous group Move 
-# operations.  Many things are easier.  We have a new
-#   way of marking things for moving.  Instead of marking all nodes and 
-# thugishly moving them as clones or copies, the user can specify
-#   what type of operation he wants on the node.
-#   This apparently works with Chapters, but I havent tested it enough to 
-# verify there aren't bugs involved.  Marks across chapters do
-#   not apparently move very well to another window.  Will work on for next 
-# version.
+# .1 -- We have started almost from scratch from the previous group Move
+# operations. Many things are easier. We have a new way of marking things for
+# moving. Instead of marking all nodes and thugishly moving them as clones or
+# copies, the user can specify what type of operation he wants on the node. 
+# This
+# apparently works with Chapters, but I havent tested it enough to verify 
+# there
+# aren't bugs involved. Marks across chapters do not apparently move very well 
+# to
+# another window. Will work on for next version.
 # 
 # .2 EKR:
-#     - Use g.importExtension to import Pmw and sets.
-#     - Added init function.
+# - Use g.importExtension to import Pmw and sets.
+# - Added init function.
 # .3 EKR:
-#     - Removed start2 hook.
-#     - Use keywords to get c, not g.top().
+# - Removed start2 hook.
+# - Use keywords to get c, not g.top().
+# .4 EKR
+# - Removed all calls to g.top().
 #@-at
 #@nonl
 #@-node:mork.20041021120027:<<version history>>
@@ -183,10 +185,10 @@ __version__ = ".3"
 #@+others
 #@+node:ekr.20050226114442:init
 def init ():
-    
+
     ok = Tkinter and sets
     if ok:
-        leoPlugins.registerHandler( ('open2', "new"),addMenu ) 
+        leoPlugins.registerHandler(('open2',"new"),addMenu)
         g.plugin_signon(__name__)
     return ok
 #@nonl
@@ -392,9 +394,9 @@ class Lassoer(object):
 #@-node:mork.20041018131258.5:class Lassoer
 #@+node:mork.20041018131258.15:placeInsertNode
 movers = {}
-def placeInsertNode():
+
+def placeInsertNode(c):
     '''inserts the insert node under, not as a child, the currently selected node'''
-    c = g.top()
     lassoer = movers[ c ]
     pos = c.currentPosition()
     if pos == lassoer.moveNode: lassoer.moveNode = None
@@ -404,10 +406,9 @@ def placeInsertNode():
     return None
 #@-node:mork.20041018131258.15:placeInsertNode
 #@+node:mork.20041018131258.16:markForMoving
-def markForMoving( which ):
+def markForMoving(c, which ):
     '''marks a node for moving. The insert node cannot be marked, nor any ancestor of the insert node.'''
     global movers
-    c = g.top()
     lassoer = movers[ c ]
     mvdict = { 'moving': lassoer.addForMove, 
                'copying': lassoer.addForCopy,
@@ -494,40 +495,46 @@ def drawArrowImages( pos , image, canvas ):
 #@nonl
 #@-node:mork.20041018131258.35:drawArrowImages
 #@+node:mork.20041018131258.36:addMenu
-def addMenu( tag , keywords):
+def addMenu (tag,keywords):
     global movers
     c = keywords.get('c')
-    if not c or c in movers.keys(): return
-    las = Lassoer( c )
-    movers[ c ] = las
-    table = (( "Mark RoundUp Spot" , None , placeInsertNode ) , )
+    if not c or not c.exists or c in movers.keys(): return
+    las = Lassoer(c)
+    movers [c] = las
+    def placeInsertNodeCallback(c=c):
+        placeInsertNode(c)
+    table = (("Mark RoundUp Spot",None,placeInsertNodeCallback),)
     men = c.frame.menu
     tp = c.frame.top
-    mname = tp[ 'menu' ].split( '.' )[ -1 ]
-    men = tp.children[ mname ]
-    nrumenu = Tkinter.Menu( men, tearoff = 0 )
-    men.add_cascade( menu = nrumenu, image = groupOpPI )
-    nrumenu.add_command( image = markSpotPI, command = placeInsertNode )
-    mmenu = Tkinter.Menu( nrumenu, tearoff = 0 )
-    nrumenu.add_cascade( menu = mmenu, image = markForPI )
-    commands = getMoveCommands()
+    mname = tp ['menu'].split('.') [ -1]
+    men = tp.children [mname]
+    nrumenu = Tkinter.Menu(men,tearoff=0)
+    men.add_cascade(menu=nrumenu,image=groupOpPI)
+    nrumenu.add_command(image=markSpotPI,command=placeInsertNodeCallback)
+    mmenu = Tkinter.Menu(nrumenu,tearoff=0)
+    nrumenu.add_cascade(menu=mmenu,image=markForPI)
+    commands = getMoveCommands(c)
     for z in commands:
-        mmenu.add_command( label = z[ 0 ], command = z[ 1 ], image = z[ 2 ] )
-    nrumenu.add_command( command = lambda l = las: setupChange( l ), image = operateOnMarkedPI )
-    nrumenu.add_command( command = lambda l = las: reset( l ), image = clearMarksPI )
-    imenu = Tkinter.Menu( nrumenu, tearoff = 0 )
-    nrumenu.add_cascade( menu = imenu, image = transferFromPI )
-    imenu.config( postcommand = lambda nm = imenu : listTops( nm ) ) 
+        mmenu.add_command(label=z[0],command=z[1],image=z[2])
+    nrumenu.add_command(command=lambda l=las: setupChange(l),image=operateOnMarkedPI)
+    nrumenu.add_command(command=lambda l=las: reset(l),image=clearMarksPI)
+    imenu = Tkinter.Menu(nrumenu,tearoff=0)
+    nrumenu.add_cascade(menu=imenu,image=transferFromPI)
+    imenu.config(postcommand=lambda nm=imenu: listTops(nm))
     imenu.lassoer = las
-    leoPlugins.registerHandler(  "after-redraw-outline", drawImages )         
+    leoPlugins.registerHandler("after-redraw-outline",drawImages)
     return
 #@nonl
 #@-node:mork.20041018131258.36:addMenu
 #@+node:mork.20041019171725:getMoveCommands
-def getMoveCommands():
-    commands =( ( "Moving", lambda a = 'moving': markForMoving( a ), move_arrowPI),
-               ( "Copying", lambda a = 'copying':  markForMoving( a ), copy_arrowPI),
-               ( "Cloning" ,lambda a = 'cloning':  markForMoving( a ), clone_arrowPI ) )
+def getMoveCommands (c):
+
+    commands = (
+        ("Moving", lambda c=c,a='moving':  markForMoving(c,a),move_arrowPI),
+        ("Copying",lambda c=c,a='copying': markForMoving(c,a),copy_arrowPI),
+        ("Cloning",lambda c=c,a='cloning': markForMoving(c,a),clone_arrowPI),
+    )
+
     return commands
 #@nonl
 #@-node:mork.20041019171725:getMoveCommands
