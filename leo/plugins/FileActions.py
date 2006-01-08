@@ -2,14 +2,13 @@
 #@+node:ekr.20040915105758.13:@thin FileActions.py
 #@<< docstring >>
 #@+node:ekr.20050912180106:<< docstring >>
-"""
-Leo plugin that permits the definition of actions for double-clicking on file nodes.
-Written by Konrad Hinsen <konrad.hinsen@laposte.net>
-Distributed under the same licence as Leo.
+""" A Leo plugin that permits the definition of actions for double-clicking on
+file nodes. Written by Konrad Hinsen <konrad.hinsen@laposte.net> Distributed
+under the same licence as Leo.
 
-Double-clicking in a @file node writes out the file if changes
-have been made since the last save, and then runs a script on
-it, which is retrieved from the outline.
+Double-clicking in a @file node writes out the file if changes have been made
+since the last save, and then runs a script on it, which is retrieved from the
+outline.
 
 Scripts are located in a node whose headline is FileActions. This node can be
 anywhere in the outline. If there is more than one such node, the first one in
@@ -22,19 +21,20 @@ selected. If the filename is a path, only the last item is matched.
 
 Execution of the scripts is similar to the "Execute Script"
 command in Leo. The main difference is that the namespace
-in which the scripts are run contains two elements:
+in which the scripts are run contains these elements:
+    
+- 'c' and 'g' and 'p': as in the regular execute script command.
 
--   "filename", which contains the filename from the @file directive.
+- 'filename': the filename from the @file directive.
 
--   "shellScriptInWindow", a utility function that runs
-    a shell script in an external windows, thus permitting
-    programs to be called that require user interaction
+- 'shellScriptInWindow', a utility function that runs a shell script in an
+   external windows, thus permitting programs to be called that require user
+   interaction
 
-File actions are implemented for @file nodes and all its variants
-(@file-nosent, @thin, etc.). There is also a new node type
-@file-ref for referring to files purely for the purpose of
-file actions, Leo does not do anything with or to such files.
-
+File actions are implemented for @file nodes and all its variants (@file-nosent,
+@thin, etc.). There is also a new node type @file-ref for referring to files
+purely for the purpose of file actions, Leo does not do anything with or to such
+files.
 """
 #@nonl
 #@-node:ekr.20050912180106:<< docstring >>
@@ -43,14 +43,23 @@ file actions, Leo does not do anything with or to such files.
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.2"
+__version__ = "0.3"
 #@<< version history >>
 #@+node:ekr.20040915110738:<< version history >>
+#@@nocolor
 #@+at
 # 
 # 0.2 EKR:
-#     - Convert to a typical outline.
+# - Convert to a typical outline.
+# 0.3 EKR:
+# - Removed all calls to g.top()
+# - Simplified definition of shellScriptInWindow.
+# - Added c arg to shellScriptInWindow.
+#   This may change existing scripts.
+# - Added c arg to g.findNodeAnywhere.
+# - Execute scripts with 'c' and 'g' predefined.
 #@-at
+#@nonl
 #@-node:ekr.20040915110738:<< version history >>
 #@nl
 #@<< imports >>
@@ -89,6 +98,16 @@ file_directives = [
 #@nl
 
 #@+others
+#@+node:ekr.20060108162524:init
+def init():
+    
+    ok = not g.app.unitTesting # Dangerous for unit testing.
+    if ok:
+        leoPlugins.registerHandler("icondclick1", onIconDoubleClick)
+        g.plugin_signon(__name__)
+    return ok
+#@nonl
+#@-node:ekr.20060108162524:init
 #@+node:ekr.20040915105758.14:onIconDoubleClick
 def onIconDoubleClick(tag, keywords):
 
@@ -117,7 +136,7 @@ def onIconDoubleClick(tag, keywords):
 #@+node:ekr.20040915105758.15:doFileAction
 def doFileAction(filename, c):
 
-    p = g.findNodeAnywhere("FileActions")
+    p = g.findNodeAnywhere(c,"FileActions")
     if p:
         done = False
         name = os.path.split(filename)[1]
@@ -139,7 +158,7 @@ def applyFileAction(p, filename, c):
     script = g.getScript(c, p)
     if script:
         working_directory = os.getcwd()
-        file_directory = g.top().frame.openDirectory
+        file_directory = c.frame.openDirectory
         os.chdir(file_directory)
         script += '\n'
         #@        << redirect output >>
@@ -153,6 +172,7 @@ def applyFileAction(p, filename, c):
         #@nl
         try:
             namespace = {
+                'c':c, 'g':g,
                 'filename': filename,
                 'shellScriptInWindow': shellScriptInWindow }
             exec script in namespace
@@ -182,59 +202,41 @@ def applyFileAction(p, filename, c):
 #@nonl
 #@-node:ekr.20040915105758.16:applyFileAction
 #@+node:ekr.20040915105758.20:shellScriptInWindow
-if sys.platform == 'darwin':
-    #@    << shellScriptInWindow for MacOS >>
-    #@+node:ekr.20040915105758.21:<< shellScriptInWindow for MacOS >>
-    def shellScriptInWindow(script):
-        #@    << write script to temporary MacOS file >>
+def shellScriptInWindow(c,script):
+
+    if sys.platform == 'darwin':
+        #@        << write script to temporary MacOS file >>
         #@+node:ekr.20040915105758.22:<< write script to temporary MacOS file >>
         handle, path = tempfile.mkstemp(text=True)
-        directory = g.top().frame.openDirectory
+        directory = c.frame.openDirectory
         script = ("cd %s\n" % directory) + script + '\n' + ("rm -f %s\n" % path)
         os.write(handle, script)
         os.close(handle)
         os.chmod(path, 0700)
+        #@nonl
         #@-node:ekr.20040915105758.22:<< write script to temporary MacOS file >>
         #@nl
-        os.system("open -a /Applications/Utilities/Terminal.app "
-                  + path)
-    
-    
-    #@-node:ekr.20040915105758.21:<< shellScriptInWindow for MacOS >>
-    #@nl
-elif sys.platform == 'win32':
-    #@    << shellScriptInWindow for Windows >>
-    #@+node:ekr.20040915105758.23:<< shellScriptInWindow for Windows >>
-    def shellScriptInWindow(script):
-        g.es("Function shellScriptInWindow not yet written for Windows", color='red')
-    #@-node:ekr.20040915105758.23:<< shellScriptInWindow for Windows >>
-    #@nl
-else:
-    #@    << shellScriptInWindow for Unix >>
-    #@+node:ekr.20040915105758.24:<< shellScriptInWindow for Unix >>
-    def shellScriptInWindow(script):
-        #@    << write script to temporary Unix file >>
+        os.system("open -a /Applications/Utilities/Terminal.app " + path)
+
+    elif sys.platform == 'win32':
+        g.es("shellScriptInWindow not ready for Windows",color='red')
+
+    else:
+        #@        << write script to temporary Unix file >>
         #@+node:ekr.20040915105758.25:<< write script to temporary Unix file >>
         handle, path = tempfile.mkstemp(text=True)
-        directory = g.top().frame.openDirectory
+        directory = c.frame.openDirectory
         script = ("cd %s\n" % directory) + script + '\n' + ("rm -f %s\n" % path)
         os.write(handle, script)
         os.close(handle)
         os.chmod(path, 0700)
+        #@nonl
         #@-node:ekr.20040915105758.25:<< write script to temporary Unix file >>
         #@nl
         os.system("xterm -e sh  " + path)
-    
-    
-    
-    #@-node:ekr.20040915105758.24:<< shellScriptInWindow for Unix >>
-    #@nl
+#@nonl
 #@-node:ekr.20040915105758.20:shellScriptInWindow
 #@-others
-
-if not g.app.unitTesting: # Dangerous for unit testing.
-    leoPlugins.registerHandler("icondclick1", onIconDoubleClick)
-    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040915105758.13:@thin FileActions.py
 #@-leo
