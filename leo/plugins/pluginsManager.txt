@@ -28,7 +28,7 @@ plugins_menu.py
 #newButtons.py
 #UniversalScrolling.py
 #mod_http.py
-# niceNosent.py
+#niceNosent.py
 #chapters.py
 #bibtex.py
 #autotrees.py
