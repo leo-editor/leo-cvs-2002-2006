@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -743,7 +743,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
@@ -2265,8 +2265,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20051219150602" a="TV"><vh>4.4 alpha 5</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20051219150602"><vh>4.4 alpha 5</vh>
 <v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
 <v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
 <v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
@@ -20049,7 +20049,13 @@ will be recognized and read in. Note, this language needs to be recognizable to
 Leo. Used correctly an .ato file is a mechanism by which a user can carry
 autocompletion and calltip information between .leo files/sessions.</t>
 <t tx="ekr.20050912125735.942">Handle coloring for markup in doc parts and Python triple-double-quoted strings.
-This plugin requires that the ``add_directives`` plugin is enabled.
+
+**Important**:
+
+- This plugin requires that the ``add_directives`` plugin is enabled.
+
+- To color a text with wiki markup the text must be in the range of an ``@markup wiki`` directive.
+
 The currently supported markups are::
 
     ''text''                    # write text in italics
