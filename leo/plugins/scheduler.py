@@ -57,21 +57,21 @@ __version__ = "0.4"
 #@<< version history >>
 #@+node:ekr.20050311090939:<< version history >>
 #@@killcolor
-
 #@+at
 # 
 # 0.1: Original version by ?
-# 
 # 0.2: EKR:
-#     - converted to 4.2 code standards.
-# 
+# - converted to 4.2 code standards.
 # 0.3 EKR:
-#     - Changed 'new_c' logic to 'c' logic.
-# 
+# - Changed 'new_c' logic to 'c' logic.
 # 0.4 EKR:
-#     - Added init function.
-#     - Use only 'new' and 'open2' hooks.
-#     - Changed 'lambda c=g.top():' to 'lambda c=c:' in addScheduleMenu.
+# - Added init function.
+# - Use only 'new' and 'open2' hooks.
+# - Changed 'lambda c=g.top():' to 'lambda c=c:' in addScheduleMenu.
+# 0.5 EKR:
+# - Removed call to g.top by creating doCommandCallback in startRecord.
+#   Note: Scheduling messages works, scheduling recordings does not seem to 
+# work.
 #@-at
 #@nonl
 #@-node:ekr.20050311090939:<< version history >>
@@ -169,24 +169,28 @@ def popupMessage(message):
 
     '''Pops up a message when the time comes'''
 
-    dialog = Tk.Toplevel()
-    dialog.title("You've Got a Message!")
-    #@    << define close callback >>
-    #@+node:ekr.20040331155341:<< define close callback >>
-    def close(dialog=dialog):
-    
-        dialog.withdraw()
-        dialog.destroy()
-    #@nonl
-    #@-node:ekr.20040331155341:<< define close callback >>
-    #@nl
-    l = Tk.Label(dialog,text=message,background='white')
-    l.pack()
-    b = Tk.Button(dialog,text='Close',command=close)
-    b.pack()
-    sh = dialog.winfo_screenheight()/4
-    sw = dialog.winfo_screenwidth()/4
-    dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
+    if 0: # Hangs.  Not sure why.
+        g.es("You've Got a Message",color='blue')
+        g.es(message)
+    else:
+        dialog = Tk.Toplevel()
+        dialog.title("You've Got a Message!")
+        #@        << define close callback >>
+        #@+node:ekr.20040331155341:<< define close callback >>
+        def close(dialog=dialog):
+        
+            dialog.withdraw()
+            dialog.destroy()
+        #@nonl
+        #@-node:ekr.20040331155341:<< define close callback >>
+        #@nl
+        l = Tk.Label(dialog,text=message,background='white')
+        l.pack()
+        b = Tk.Button(dialog,text='Close',command=close)
+        b.pack()
+        sh = dialog.winfo_screenheight()/4
+        sw = dialog.winfo_screenwidth()/4
+        dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
 #@nonl
 #@-node:ekr.20040331153923.6:popupMessage
 #@+node:ekr.20040331153923.7:createMessage
@@ -209,11 +213,13 @@ def createMessage():
         lk.acquire()
         lt = time.localtime()
         p = ts.get().split(':')
-        nt = (lt[0],lt [1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
-        sse = time.mktime(nt)
-        sc.enterabs(sse,1,popupMessage,tuple([tv.get('1.0',"end")]))
-        lk.notify()
-        lk.release()
+        if p and len(p) >= 2:
+            # Compute the desired time: ignoring the seconds field.
+            nt = (lt[0],lt [1],lt[2],int(p[0]),int(p[1]),0,lt[6],lt[7],lt[8])
+            sse = time.mktime(nt)
+            sc.enterabs(sse,1,popupMessage,tuple([tv.get('1.0',"end")]))
+            lk.notify()
+            lk.release()
         dialog.destroy()
     #@nonl
     #@-node:ekr.20040331155341.1:<< define schedule callback >>
@@ -234,7 +240,11 @@ def startRecord(c):
     global record
 
     cmds[c] = c.doCommand
-    c.doCommand = doCommand
+
+    def doCommandCallback(command,label,c=c):
+        doCommand(command,label,c=c)
+
+    c.doCommand = doCommandCallback
     record = True
 #@nonl
 #@-node:ekr.20040331153923.8:startRecord
@@ -253,12 +263,12 @@ def setTime():
         z = commands[i]
         tm = svs[i].get()
         p = tm.split(':')
-        g.trace(p)
-        nt = (lt[0],lt[1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
-        sse = time.mktime(nt)
-        sc.enterabs(sse,priority,prepareCom,z)
-        priority += 1
-
+        if p and len(p) >= 2:
+            # Compute the desired time: ignoring the seconds field.
+            nt = (lt[0],lt[1],lt[2],int(p[0]),int(p[1]),0,lt[6],lt[7],lt[8])
+            sse = time.mktime(nt)
+            sc.enterabs(sse,priority,prepareCom,z)
+            priority += 1
     commands = []
     lk.notify()
     lk.release()
@@ -335,19 +345,20 @@ def prepareCom(p,c,command,label):
 #@nonl
 #@-node:ekr.20040331153923.11:prepareCom
 #@+node:ekr.20040331153923.12:doCommand
-def doCommand (command,label,event=None):
+def doCommand (command,label,event=None,c=None):
     
     ''' a swap method.  When Leo is recording, most methods pass through here,
 we record them'''
 
+    global commands
+    if not c or not c.exists: return
     if label == 'exit': shutdown(None,None)
     if record:
         if label == 'endrecording':
             command()
             return None
         lk.acquire()
-        c = g.top()
-        commands.append((c.currentVnode(),c,command,label))
+        commands.append((c.currentPosition(),c,command,label))
         lk.release()
         return True
     else:
@@ -374,7 +385,7 @@ def addScheduleMenu(tag,keywords):
         ('Schedule Message',None,createMessage),
         ('View Queue',None,viewQueue))
 
-    men.createMenuItemsFromTable(name,table)
+    men.createMenuItemsFromTable(name,table,dynamicMenu=True)
 #@nonl
 #@-node:ekr.20040331153923.13:addScheduleMenu
 #@-others
