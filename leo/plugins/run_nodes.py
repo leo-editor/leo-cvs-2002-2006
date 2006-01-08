@@ -6,19 +6,32 @@
 Double clicking the icon box whose headlines are @run 'cmd args' will execute
 the command. There are several other features, including @arg and @input nodes.
 
-The run_nodes.py plugin introduce two new nodes that transform leo into a terminal.
-It was mostly intended to run compilers and debuggers while having the possibility to send messages to the program.
+The run_nodes.py plugin introduce two new nodes that transform leo into a
+terminal. It was mostly intended to run compilers and debuggers while having the
+possibility to send messages to the program.
 
-- Double clicking on the icon of an node whose headline is @run <command> <args> will launch <command> with the given arguments.  It will also mark the node.  # Terminates the argument list.  @run # <comment> is also valid.
+Double clicking on the icon of an node whose headline is @run <command> <args>
+will launch <command> with the given arguments. It will also mark the node. #
+Terminates the argument list. @run # <comment> is also valid.
 
-- @in nodes are used to send input to the running process.  Double clicking on the icon of an @in <message> node will append a "\n" to <message> and write it to the program, no matter where the node is placed. If no @run node is active, nothing happens.
+@in nodes are used to send input to the running process. Double clicking on
+the icon of an @in <message> node will append a "\n" to <message> and write it
+to the program, no matter where the node is placed. If no @run node is active,
+nothing happens.
 
-- The body text of every child, in which the headlines do not begin with '@run' or '@in', will be appended to <command>,  allowing you to add an infinite number of arguments to <command>.
+The body text of every child, in which the headlines do not begin with '@run'
+or '@in', will be appended to <command>, allowing you to add an unlimited number
+of arguments to <command>.
 
-- The output of the program is written in the log pane (Error outputed in red). When the program exit the node is set unmarked and the return value is displayed... When the enter key is pressed in the body pane of an active @run node the content of it body pane is written to the program and then emptied ready for another line of input. If the node have @run nodes in its descendance, they will be launched successivelly. (Unless one returned an exit code other than 0, then it will stop there)
+The output of the program is written in the log pane (Error outputed in red).
+When the program exit the node is set unmarked and the return value is
+displayed... When the enter key is pressed in the body pane of an active @run
+node the content of it body pane is written to the program and then emptied
+ready for another line of input. If the node have @run nodes in its descendance,
+they will be launched successivelly. (Unless one returned an exit code other
+than 0, then it will stop there)
 
-- Please send comments to the Leo forums.
-- by Alexis Gendron Paquette
+By Alexis Gendron Paquette. Please send comments to the Leo forums.
 '''
 #@nonl
 #@-node:ekr.20050912181956:<< docstring >>
@@ -27,20 +40,24 @@ It was mostly intended to run compilers and debuggers while having the possibili
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.13"
+__version__ = "0.14"
 
 #@<< version history >>
 #@+node:ekr.20040910070811.3:<< version history >>
+#@@nocolor
 #@+at
 # 
 # 0.13 EKR:
-#     - use import leoGlobals and import leoPlugins rather from x import *
-#     - Made positions explicit and use position iterators.
-#     - Support @arg nodes.
-#     - Support @run # comment (or #comment)
-#     - Support @run command args # comment (or #comment)
-#     - Allow @input as well as @in.
-#     - Simpler log messages.
+# - use import leoGlobals and import leoPlugins rather from x import *
+# - Made positions explicit and use position iterators.
+# - Support @arg nodes.
+# - Support @run # comment (or #comment)
+# - Support @run command args # comment (or #comment)
+# - Allow @input as well as @in.
+# - Simpler log messages.
+# 0.14 EKR:
+# - Removed call to g.top()
+# - Added init function.
 #@-at
 #@nonl
 #@-node:ekr.20040910070811.3:<< version history >>
@@ -85,6 +102,129 @@ OwnIdleHook = False
 #@nl
 
 #@+others
+#@+node:ekr.20060108160737:init
+def init ():
+    
+    if 1: # Ok for unit testing.
+        leoPlugins.registerHandler("bodykey2",OnBodyKey)
+        leoPlugins.registerHandler("icondclick2",OnIconDoubleClick)
+        leoPlugins.registerHandler("end1",OnQuit)
+        leoPlugins.registerHandler("idle",OnIdle)
+        g.plugin_signon(__name__)
+
+    return True
+#@nonl
+#@-node:ekr.20060108160737:init
+#@+node:ekr.20060108160737.1:Hooks
+#@+node:ekr.20040910070811.12:OnBodyKey
+def OnBodyKey(tag,keywords):
+    
+    global RunNode,In
+
+    c=keywords.get('c')
+    if not c or not c.exists: return
+    p=c.currentPosition()
+    h=p.headString()
+    ch=keywords.get("ch")
+
+    # handle the @run "\r" body key	
+    if ch == "\r" and g.match_word(h,0,"@run") and RunNode != None and RunNode==p:
+        try:
+            In.write(p.bodyString().encode(Encoding))
+            In.flush()
+            g.es(p.bodyString())
+        except IOError,ioerr:
+            g.es("[@run] IOError: "+str(ioerr),color="red")
+            return
+        p.setBodyTextOrPane("")
+#@nonl
+#@-node:ekr.20040910070811.12:OnBodyKey
+#@+node:ekr.20040910070811.13:OnIconDoubleClick
+def OnIconDoubleClick(tag,keywords):
+    
+    global RunNode,RunList,OwnIdleHook,ExitCode
+    
+    c=keywords.get('c')
+    if not c or not c.exists: return
+    p = c.currentPosition()
+
+    h = p.headString()
+    if g.match_word(h,0,"@run"):
+        if RunNode or RunList:
+            g.es("@run already running!",color="red")
+        else:
+            #@            << handle double click in @run icon >>
+            #@+node:ekr.20040910102554:<< handle double click in @run icon >>
+            RunList = []
+            
+            for p2 in p.self_and_subtree_iter(copy=True):
+                if g.match_word(p2.headString(),0,"@run"):
+                    # g.trace(p2)
+                    RunList.append(p2)	
+            
+            ExitCode = None
+            OwnIdleHook = True
+            g.enableIdleTimeHook(idleTimeDelay=100)
+            #@nonl
+            #@-node:ekr.20040910102554:<< handle double click in @run icon >>
+            #@nl
+    elif g.match_word(h,0,"@in"):
+        if RunNode:
+            #@            << handle double click in @in icon >>
+            #@+node:ekr.20040910102554.1:<< handle double click in @in icon >>
+            b = p.bodyString()
+            
+            try:
+                In.write(b.encode(Encoding)+"\n")
+                In.flush()
+                g.es(b)
+            except IOError,ioerr:
+                g.es("@run IOError: "+str(ioerr),color="red")
+            #@nonl
+            #@-node:ekr.20040910102554.1:<< handle double click in @in icon >>
+            #@nl
+#@-node:ekr.20040910070811.13:OnIconDoubleClick
+#@+node:ekr.20040910070811.14:OnIdle
+def OnIdle(tag,keywords):
+
+    global RunNode,RunList
+    global ErrThread,OutThread
+    global ExitCode,OwnIdleHook
+    
+    c=keywords.get('c')
+    if not c or not c.exists: return
+
+    if not OwnIdleHook: return
+        
+    if RunNode:
+        o = UpdateText(OutThread)
+        e = UpdateText(ErrThread,"red")
+        if not o and not e:
+            CloseProcess(c)	
+    elif RunList:
+        fn = RunList[0]
+        del RunList[0]
+        if fn and ExitCode is None:
+            OpenProcess(fn)					
+    else:
+        OwnIdleHook = False
+        g.disableIdleTimeHook()
+#@nonl
+#@-node:ekr.20040910070811.14:OnIdle
+#@+node:ekr.20040910070811.15:OnQuit
+def OnQuit(tag,keywords=None):
+
+    global RunNode,RunList
+
+    if RunList:
+        RunList = None
+        g.disableIdleTimeHook()
+        if RunNode:
+            CloseProcess()
+        g.es("@run: forced quit!",color="red")
+#@nonl
+#@-node:ekr.20040910070811.15:OnQuit
+#@-node:ekr.20060108160737.1:Hooks
 #@+node:ekr.20040910070811.6:class readingThread
 class readingThread(threading.Thread):
 
@@ -115,7 +255,7 @@ class readingThread(threading.Thread):
 #@nonl
 #@-node:ekr.20040910070811.6:class readingThread
 #@+node:ekr.20040910070811.8:CloseProcess
-def CloseProcess():
+def CloseProcess(c):
 
     global RunNode,ExitCode,WorkDir
     global In,OutThread,ErrThread
@@ -141,7 +281,7 @@ def CloseProcess():
         g.es("@run exits with code: %s" % (str(ExitCode)),color="red")	
 
     # Redraw.
-    g.top().redraw()
+    c.redraw()
 #@nonl
 #@-node:ekr.20040910070811.8:CloseProcess
 #@+node:ekr.20040910070811.9:FindRunChildren (no longer used)
@@ -254,117 +394,7 @@ def UpdateText(t,wcolor="black"):
     return True
 #@nonl
 #@-node:ekr.20040910070811.11:UpdateText
-#@+node:ekr.20040910070811.12:OnBodyKey
-def OnBodyKey(tag,keywords):
-    
-    global RunNode,In
-
-    c=g.top()
-    p=c.currentPosition()
-    h=p.headString()
-    ch=keywords.get("ch")
-
-    # handle the @run "\r" body key	
-    if ch == "\r" and g.match_word(h,0,"@run") and RunNode != None and RunNode==p:
-        try:
-            In.write(p.bodyString().encode(Encoding))
-            In.flush()
-            g.es(p.bodyString())
-        except IOError,ioerr:
-            g.es("[@run] IOError: "+str(ioerr),color="red")
-            return
-        p.setBodyTextOrPane("")
-#@-node:ekr.20040910070811.12:OnBodyKey
-#@+node:ekr.20040910070811.13:OnIconDoubleClick
-def OnIconDoubleClick(tag,keywords):
-    
-    global RunNode,RunList,OwnIdleHook,ExitCode
-    
-    c=g.top() ; p = c.currentPosition()
-    
-    # g.trace(c)
-
-    h = p.headString()
-    if g.match_word(h,0,"@run"):
-        if RunNode or RunList:
-            g.es("@run already running!",color="red")
-        else:
-            #@            << handle double click in @run icon >>
-            #@+node:ekr.20040910102554:<< handle double click in @run icon >>
-            RunList = []
-            
-            for p2 in p.self_and_subtree_iter(copy=True):
-                if g.match_word(p2.headString(),0,"@run"):
-                    # g.trace(p2)
-                    RunList.append(p2)	
-            
-            ExitCode = None
-            OwnIdleHook = True
-            g.enableIdleTimeHook(idleTimeDelay=100)
-            #@nonl
-            #@-node:ekr.20040910102554:<< handle double click in @run icon >>
-            #@nl
-    elif g.match_word(h,0,"@in"):
-        if RunNode:
-            #@            << handle double click in @in icon >>
-            #@+node:ekr.20040910102554.1:<< handle double click in @in icon >>
-            b = p.bodyString()
-            
-            try:
-                In.write(b.encode(Encoding)+"\n")
-                In.flush()
-                g.es(b)
-            except IOError,ioerr:
-                g.es("@run IOError: "+str(ioerr),color="red")
-            #@nonl
-            #@-node:ekr.20040910102554.1:<< handle double click in @in icon >>
-            #@nl
-#@-node:ekr.20040910070811.13:OnIconDoubleClick
-#@+node:ekr.20040910070811.14:OnIdle
-def OnIdle(tag,keywords):
-
-    global RunNode,RunList
-    global ErrThread,OutThread
-    global ExitCode,OwnIdleHook
-
-    if not OwnIdleHook: return
-        
-    if RunNode:
-        o = UpdateText(OutThread)
-        e = UpdateText(ErrThread,"red")
-        if not o and not e:
-            CloseProcess()	
-    elif RunList:
-        fn = RunList[0]
-        del RunList[0]
-        if fn and ExitCode is None:
-            OpenProcess(fn)					
-    else:
-        OwnIdleHook = False
-        g.disableIdleTimeHook()
-#@nonl
-#@-node:ekr.20040910070811.14:OnIdle
-#@+node:ekr.20040910070811.15:OnQuit
-def OnQuit(tag,keywords=None):
-
-    global RunNode,RunList
-
-    if RunList:
-        RunList = None
-        g.disableIdleTimeHook()
-        if RunNode:
-            CloseProcess()
-        g.es("@run: forced quit!",color="red")
-#@nonl
-#@-node:ekr.20040910070811.15:OnQuit
 #@-others
-
-if 1: # Ok for unit testing.
-    leoPlugins.registerHandler("bodykey2",OnBodyKey)
-    leoPlugins.registerHandler("icondclick2",OnIconDoubleClick)
-    leoPlugins.registerHandler("end1",OnQuit)
-    leoPlugins.registerHandler("idle",OnIdle)
-    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040910070811.1:@thin run_nodes.py
 #@-leo
