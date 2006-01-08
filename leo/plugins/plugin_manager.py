@@ -100,6 +100,7 @@ __plugin_group__ = "Core"
 #     - Added ctor to LocalPluginCollection.
 #     - LocalPluginCollection uses self.c rather than g.top>
 #     - Can't enable plugins dynamically when called stand-alone.
+#     - Removed KEYWORDS hack.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>

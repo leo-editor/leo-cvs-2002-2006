@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6180" clone_windows="0"/>
-<globals body_outline_ratio="0.434543454345">
-	<global_window_position top="10" left="343" height="909" width="841"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6183" clone_windows="0"/>
+<globals body_outline_ratio="0.600997506234">
+	<global_window_position top="58" left="376" height="802" width="865"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -40,7 +40,7 @@
 <v t="ekr.20050819055746"><vh>@button Save</vh></v>
 <v t="ekr.20050722075812"><vh>Remove blank trailing lines</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -50,7 +50,6 @@
 <v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
 <v t="ekr.20041114103913.1"><vh>About defining functions in separate nodes</vh></v>
 <v t="ekr.20041114102139.2"><vh>About the &lt;&lt; imports &gt;&gt; section</vh></v>
-<v t="ekr.20041114103913.2"><vh>About accessing commanders</vh></v>
 <v t="ekr.20050306072156"><vh>About exceptions</vh></v>
 </v>
 <v t="ekr.20050306071629"><vh>Template for plugin that overrides commander methods</vh>
@@ -375,8 +374,7 @@
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
 <v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
-<v t="ekr.20041017043622"
-marks="ekr.20041017043622.23,"><vh>@thin autocompleter.py</vh></v>
+<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
 </v>
 <v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
 <v t="edream.110403140857.1"><vh>Plugin documentation</vh>
@@ -459,9 +457,9 @@ marks="ekr.20041017043622.23,"><vh>@thin autocompleter.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
 <v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
-<v t="ekr.20040915075530" a="M"><vh>@thin UASearch.py</vh></v>
+<v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
 <v t="ekr.20040831122004"><vh>@thin UniversalScrolling.py</vh></v>
-<v t="ekr.20040831115238" a="M"><vh>@thin URLloader.py</vh></v>
+<v t="ekr.20040831115238"><vh>@thin URLloader.py</vh></v>
 </v>
 <v t="ekr.20040722141148"><vh>Example code</vh>
 <v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
@@ -469,8 +467,7 @@ marks="ekr.20041017043622.23,"><vh>@thin autocompleter.py</vh></v>
 <v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
 </v>
 <v t="ekr.20040722134535"><vh>Experimental/unfinished</vh>
-<v t="ekr.20050915064008"
-marks="ekr.20050915090544.4,ekr.20050915084416.10,ekr.20050915084416.14,"><vh>@thin __vnx__.py</vh></v>
+<v t="ekr.20050915064008"><vh>@thin __vnx__.py</vh></v>
 <v t="ekr.20050612074047"><vh>New colorizer</vh>
 <v t="ekr.20050529180421"><vh>jEdit docs...</vh>
 <v t="ekr.20050530065723"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
@@ -829,6 +826,10 @@ marks="ekr.20050915090544.4,ekr.20050915084416.10,ekr.20050915084416.14,"><vh>@t
 <v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
 </v>
 <v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
+</v>
+<v t="ekr.20051109021852"><vh>Tk Notebook</vh>
+<v t="leo4u.20040924131405.1"><vh>@thin Tknotebook.py</vh></v>
+<v t="leo4u.20040924130601.1"><vh>@thin TabWindow.py</vh></v>
 </v>
 </v>
 <v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
@@ -1573,6 +1574,33 @@ marks="ekr.20050915090544.4,ekr.20050915084416.10,ekr.20050915084416.14,"><vh>@t
 <v t="ekr.20050830091910"><vh>Zodb</vh>
 <v t="ekr.20050825154553"><vh>@thin zodb.py</vh></v>
 </v>
+</v>
+<v t="ekr.20060107100005"><vh>Fixed</vh>
+<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
+<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
+<v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
+<v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
+<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
+<v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
+</v>
+<v t="ekr.20060107084945" a="ETV"><vh>Plugins calling g.top</vh>
+<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
+<v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
+<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
+<v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
+<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
+<v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
+<v t="ekr.20050421093045"><vh> dyna plugin 139i</vh>
+<v t="ekr.20050421093045.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.2"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20050421093045.103"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20050421093045.133" tnodeList="ekr.20050421093045.133"><vh>@nosent dyna_menu.ini</vh></v>
+<v t="ekr.20050421093045.134"><vh>@thin dyna.txt</vh></v>
+</v>
+<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
+<v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
+<v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
+<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4439,7 +4467,7 @@ if Tk and not g.app.unitTesting: # Not (yet) for unit testing.
     c.frame.body.setInsertionPoint('0.0')
     c.frame.body.insertAtInsertPoint(stamp)
     c.frame.body.setInsertionPoint(newip)
-    c.frame.body.onBodyChanged(v,"Typing")</t>
+    c.frame.body.onBodyChanged("Typing")</t>
 <t tx="ekr.20040205071616.6">def is_subnodesOK(v):
 
     if not v.hasChildren():
@@ -4482,7 +4510,7 @@ if Tk and not g.app.unitTesting: # Not (yet) for unit testing.
     s = mnstamp()
     
     c.frame.body.insertAtInsertPoint(s)
-    c.frame.body.onBodyChanged(v,"Typing",oldSel=oldSel)</t>
+    c.frame.body.onBodyChanged("Typing",oldSel=oldSel)</t>
 <t tx="ekr.20040205071616.10">def create_UserMenu (tag,keywords):
 
     c = keywords.get("c")
@@ -8731,8 +8759,6 @@ your plugin.</t>
 <t tx="ekr.20041114103913.1">PLEASE define each function or method in a separate node! To make this work,
 just put @others in the root of your plugin as shown. Note that @others may be
 nested, as shown in class myClass.</t>
-<t tx="ekr.20041114103913.2">It is almost always a bad idea to use g.top() to get the commander of the presently selected frame.
-Instead, use the onCreate function and class myClass as shown to create a class that binds self.c.</t>
 <t tx="ekr.20041211035618"></t>
 <t tx="ekr.20041215103252"></t>
 <t tx="ekr.20050101090717">"""
@@ -9045,8 +9071,8 @@ Put notes about each version here.</t>
 <t tx="ekr.20050303051035.5">import leoGlobals as g
 import leoPlugins
 
-Pmw = g.importExtension('Pmw',    pluginName=__name__,verbose=True)
-Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Pmw = g.importExtension('Pmw',    pluginName=__name__,verbose=True,required=True)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True,required=True)
 
 # Whatever other imports your plugins uses.</t>
 <t tx="ekr.20050303051101">def init ():
@@ -10657,11 +10683,10 @@ insertAplug()
 
     if 'i' in wch:
         c = g.top()
-        p = c.currentPosition()
         Tx = c.frame.body
         Tx.setInsertionPoint(1.0)
         Tx.insertAtInsertPoint('#@path %s\n'%(path,))
-        Tx.onBodyChanged(p, "Typing")  
+        Tx.onBodyChanged("Typing")  
 </t>
 <t tx="ekr.20050421093045.133">;ini may be shortlived in favor of @settings when thats feasible
 ;leave nosent so it isn't updated on leo open and all comments lost
@@ -12915,8 +12940,7 @@ bunch = Bunch</t>
 <t tx="ekr.20050818105023"></t>
 <t tx="ekr.20050818105023.1"></t>
 <t tx="ekr.20050818130249"></t>
-<t tx="ekr.20050819055746">c.save()
-c.redraw_now()</t>
+<t tx="ekr.20050819055746">c.save()</t>
 <t tx="ekr.20050819055746.1">@
 
 - Added dummyPDFTranslator class.
@@ -13180,6 +13204,9 @@ Edward K. Ream:  Aug 22, 2005.</t>
 - Added init function that always returns False.  This helps Leo's unit tests.</t>
 <t tx="ekr.20050830091910"></t>
 <t tx="ekr.20051025144116">c.spellCommands.openSpellTab()</t>
+<t tx="ekr.20051109021852">@ Not ready for prime time yet.</t>
+<t tx="ekr.20060107084945"></t>
+<t tx="ekr.20060107100005">dddd</t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO

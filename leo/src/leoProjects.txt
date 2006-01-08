@@ -3333,6 +3333,10 @@ encoding = sys.getdefaultencoding() # 'cp1250'
 everything goes fine.
 #@nonl
 #@-node:ekr.20060103102115:Improved word-export plugin
+#@+node:ekr.20060107231542:Removed a bad use of g.app.log in the find panel
+This could have been the source of weird find behavior.
+#@nonl
+#@-node:ekr.20060107231542:Removed a bad use of g.app.log in the find panel
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands

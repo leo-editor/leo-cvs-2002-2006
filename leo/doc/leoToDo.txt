@@ -6,7 +6,37 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20060105130519:Urgent 2 days
+#@+node:ekr.20060105130519:Urgent
+#@+node:ekr.20060107222329:Clean up code
+@nocolor
+
+The general principle is that all globals must be limited and harmless!
+
+** run pychecker!
+
+- Eliminate g.app.commandCommander.
+    - Create a wrapper instead.
+    - This is almost as bad as using g.app.log.
+
+- Eliminate g.scanErrors
+    How???
+    Wrappers for scan functions in tangle classes?
+
+- (Maybe) Generate calls to 'command1/2' hooks in all command callbacks.
+
+- (Maybe) Create a generalWrapperClass.
+#@nonl
+#@+node:ekr.20060107232924:Won't do
+The following would be major changes, with little benefit.
+
+- Make leoGlobals a subclass of the commander.
+    - There are many calls to to g.es in leoGlobals.py.
+
+- Eliminate g.app.log.
+    - It is dangerous, but g.es requires it.
+#@nonl
+#@-node:ekr.20060107232924:Won't do
+#@-node:ekr.20060107222329:Clean up code
 #@+node:ekr.20060106131142:goto next changed doesn't expand ancestors!
 #@-node:ekr.20060106131142:goto next changed doesn't expand ancestors!
 #@+node:ekr.20060106172320:Install patch for headline width
@@ -58,7 +88,7 @@ it was ok.
 
 #@-node:ekr.20060106172320.1:Report
 #@-node:ekr.20060106172320:Install patch for headline width
-#@+node:ekr.20050928144501.1:Mouseless Leo
+#@+node:ekr.20050928144501.1:Commands for mouseless Leo
 Needed to support 'mouseless-Leo':
 
 - Set options from the keyboard.
@@ -215,41 +245,11 @@ EKR: This can be done with @command nodes, but Leo should have official commands
 #@nonl
 #@-node:ekr.20051221101851.1:Request
 #@-node:ekr.20051221101851:Add commands to simulate clicks
-#@-node:ekr.20050928144501.1:Mouseless Leo
-#@+node:ekr.20060106212914:Remove g.top from all plugins
-#@-node:ekr.20060106212914:Remove g.top from all plugins
-#@+node:ekr.20060103102115:Improve word-export plugin
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=3495741
-By: stano_paska
-
-Hi.
-
-In plugin word_export encoding is defined:
-
-encoding = dict.get("encoding",None)
-if encoding == None:
-    encoding = c.config.default_derived_file_encoding
-
-I have default_derived_file_encoding set to UTF-8 but when exporting to word
-some national characters are not encoded correctly (Slovak).
-
-I think it is better get encoding for word from somewhere else.
-
-In Slovak environment word uses cp1250.
-
-When I used:
-
-import sys
-encoding = sys.getdefaultencoding() # 'cp1250'
-
-everything goes fine.
-#@nonl
-#@-node:ekr.20060103102115:Improve word-export plugin
+#@-node:ekr.20050928144501.1:Commands for mouseless Leo
+#@-node:ekr.20060105130519:Urgent
+#@+node:ekr.20060105133043:Important 5 days
 #@+node:ekr.20051217135340.2:Create find-options panel
 #@-node:ekr.20051217135340.2:Create find-options panel
-#@-node:ekr.20060105130519:Urgent 2 days
-#@+node:ekr.20060105133043:Important 5 days
 #@+node:ekr.20051217175058:Get chapters plugin working
 Use the zip file stuff initially.  We can add support for chapters to Leo's core later.
 #@nonl
@@ -3311,6 +3311,39 @@ def stateHandler (self,event):
 #@-node:ekr.20051202100658:Filename completion
 #@-node:ekr.20060105133043:Important 5 days
 #@+node:ekr.20051129095023:Medium 3 days
+#@+node:ekr.20060107082929:Fix problem reporting indentation errors
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3510448
+By: ktenney
+
+Howdy,
+
+I'm executing a script in a Leo node which has
+an indentation error. I get the following report,
+which doesn't help locate the error.
+
+Pardon me if this is well known issue, I don't
+remember discussion of it.
+
+Thanks,
+Kent
+
+################################################
+exception executing script
+Traceback (most recent call last):
+  File "C:\python24\lib\site-packages\leo\src\leoCommands.py", line 1277, in
+executeScript
+    exec script in d
+IndentationError: unindent does not match any outer indentation level (line
+103)
+--------------------
+  line 1276:                     # g.trace(script)
+* line 1277:                     exec script in d
+  line 1278:                     if not script1 and not silent:
+  line 1279:                         g.es("end of script",color="purple")
+
+#@-node:ekr.20060107082929:Fix problem reporting indentation errors
 #@+node:ekr.20051121070552:Add Cmds menu
 #@-node:ekr.20051121070552:Add Cmds menu
 #@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
@@ -4994,6 +5027,7 @@ def __init__(self):
     # These ivars are the global vars of this program.
     self.afterHandler = None
     self.batchMode = False # True: run in batch mode.
+    self.commandCommander = None # The commander of the command being run by doCommand.
     self.commandName = None # The name of the command being executed.
     self.config = None # The leoConfig instance.
     self.count = 0 # General purpose debugging count.
@@ -7913,6 +7947,7 @@ def __init__(self):
     # These ivars are the global vars of this program.
     self.afterHandler = None
     self.batchMode = False # True: run in batch mode.
+    self.commandCommander = None # The commander of the command being run by doCommand.
     self.commandName = None # The name of the command being executed.
     self.config = None # The leoConfig instance.
     self.count = 0 # General purpose debugging count.

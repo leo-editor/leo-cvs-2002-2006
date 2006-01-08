@@ -171,7 +171,8 @@ class leoFind:
     
     def changeAllButton(self):
     
-        c = self.setup_button()
+        c = self.c
+        self.setup_button()
         c.clearAllVisited() # Clear visited for context reporting.
     
         if self.script_change:
@@ -253,7 +254,8 @@ class leoFind:
     
     def findAllButton(self):
     
-        c = self.setup_button()
+        c = self.c
+        self.setup_button()
         c.clearAllVisited() # Clear visited for context reporting.
     
         if self.script_search:
@@ -323,8 +325,8 @@ class leoFind:
     # Initializes a search when a button is pressed in the Find panel.
     
     def setup_button(self):
-    
-        self.c = c = g.app.log.c
+        
+        c = self.c
         self.p = c.currentPosition()
     
         c.bringToFront()
@@ -333,8 +335,6 @@ class leoFind:
     
         self.update_ivars()
         self.adjust_ivars()
-    
-        return c
     #@nonl
     #@-node:ekr.20031218072017.3065:setup_button
     #@+node:ekr.20031218072017.3066:setup_command

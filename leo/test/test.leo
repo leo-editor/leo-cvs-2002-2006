@@ -29,6 +29,7 @@
 <v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
 <v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
 </v>
+<v t="ekr.20060104162223"><vh>@@button file-mode</vh></v>
 </v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
@@ -196,7 +197,7 @@
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
-<v t="ekr.20051214100048"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" a="TV"><vh>Recent tests</vh>
 <v t="ekr.20051121143951"><vh>Test of long lines</vh>
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
@@ -220,8 +221,10 @@
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
+<v t="ekr.20060107082808"><vh>Error test</vh>
+<v t="ekr.20060107082808.1"><vh>child</vh></v>
 </v>
-<v t="ekr.20060104162223" a="TV"><vh>@button file-mode</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4279,5 +4282,13 @@ save as reinv.py in the python path or leo/extensions
 there may be another version if I can fix the scroll.
 e</t>
 <t tx="ekr.20060104162223">c.keyHandler.simulateCommand('enter-file-mode')</t>
+<t tx="ekr.20060107082808">print 'here'
+
+@others</t>
+<t tx="ekr.20060107082808.1">print 'there'
+if 1:
+    print 'everywhere'
+  print 'bad'
+print 'done'</t>
 </tnodes>
 </leo_file>

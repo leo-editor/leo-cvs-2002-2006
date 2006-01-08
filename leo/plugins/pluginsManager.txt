@@ -24,7 +24,7 @@ plugins_menu.py
 #open_shell.py
 #at_view.py
 #fastGotoNode.py
-# vim.py
+#vim.py
 #newButtons.py
 #UniversalScrolling.py
 #mod_http.py
@@ -33,19 +33,16 @@ plugins_menu.py
 #bibtex.py
 #autotrees.py
 #mod_autosave.py
-#golf.py
 #image.py
 #pie_menus.py
-#Tiddly.py
-
 #leoupdate.py
 #__wx_gui.py
 #pretty_print.py
 rst3.py
 # zodb.py
-# testRegisterCommand.py
 #rClick.py
 #TabWindow.py
+#rowcol.py
 plugin_manager.py
 
 # Icon area: order is important.
