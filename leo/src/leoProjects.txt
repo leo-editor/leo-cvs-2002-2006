@@ -3336,6 +3336,52 @@ everything goes fine.
 This could have been the source of weird find behavior.
 #@nonl
 #@-node:ekr.20060107231542:Removed a bad use of g.app.log in the find panel
+#@+node:ekr.20060108115434:Fix crash: tab in minibuffer
+The fix was to have x.getSelectedText return '' instead of None.
+#@nonl
+#@+node:ekr.20060108115434.1:traceback
+
+AttributeError Exception in Tk callback
+  Function: <function allKeysCallback at 0x03463730> (type: <type 'function'>)
+  Args: (<Tkinter.Event instance at 0x046801C0>,)
+  Event type: KeyPress (type num: 2)
+Traceback (innermost last):
+  File "C:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1748, in __call__
+    return apply(self.func, args)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 647, in allKeysCallback
+    return k.masterCommand(event,func=None,stroke='<Key>')
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 763, in masterCommand
+    k.callStateFunction(event) # Calls end-command.
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 799, in callStateFunction
+    val = k.state.handler(event)
+  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 530, in stateHandler
+    self.doTabCompletion()
+  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 457, in doTabCompletion
+    if s.startswith(self.prefix) and self.tabList:
+AttributeError: 'NoneType' object has no attribute 'startswith'
+
+================================================
+  Event contents:
+    char:
+    delta: 9
+    height: ??
+    keycode: 9
+    keysym: Tab
+    keysym_num: 65289
+    num: ??
+    serial: 197812
+    state: 8
+    time: 7154627
+    type: 2
+    widget: .62497976.62497136.17871136.17871376.body-pane
+    width: ??
+    x: 307
+    x_root: 688
+    y: 58
+    y_root: 624
+#@nonl
+#@-node:ekr.20060108115434.1:traceback
+#@-node:ekr.20060108115434:Fix crash: tab in minibuffer
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands

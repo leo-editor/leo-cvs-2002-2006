@@ -2961,7 +2961,7 @@ def getSelectedText (self,t):
         else:
             return g.toUnicode(s,g.app.tkEncoding)
     else:
-        return None
+        return '' # Bug fix: 1/8/06
 #@nonl
 #@-node:ekr.20051126125950:getSelectedText
 #@+node:ekr.20031218072017.4086:getTextSelection
