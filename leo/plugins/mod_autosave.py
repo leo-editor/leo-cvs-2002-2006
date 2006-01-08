@@ -1,20 +1,65 @@
 #@+leo-ver=4-thin
 #@+node:edream.110203113231.724:@thin mod_autosave.py
+#@<< docstring >>
+#@+node:ekr.20060108123253:<< docstring >>
 """Autosave the Leo document every so often.
+
 The time between saves is given in seconds in autosave.ini."""
+#@nonl
+#@-node:ekr.20060108123253:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 
-# By Paul Paterson.
+#@<< imports >>
+#@+node:ekr.20060108123141:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
 import ConfigParser
 import os
 import time
+#@nonl
+#@-node:ekr.20060108123141:<< imports >>
+#@nl
+#@<< version history >>
+#@+node:ekr.20060108123141.1:<< version history >>
+#@@nocolor
+#@+at
+# 
+# 0.1, 0.2 By Paul Paterson.
+# 0.3 EKR:
+# - Removed calls to g.top.
+# - Added init function.
+#@-at
+#@nonl
+#@-node:ekr.20060108123141.1:<< version history >>
+#@nl
+
+__version__ = "0.3"
 
 #@+others
+#@+node:ekr.20060108123141.2:init
+def init ():
+    
+    ok = not g.app.unitTesting # Don't want autosave after unit testing.
+    if ok:
+        # Register the handlers...
+        global LAST_AUTOSAVE, ACTIVE, AUTOSAVE_INTERVAL
+
+        AUTOSAVE_INTERVAL = 600
+        ACTIVE = "Yes"
+        LAST_AUTOSAVE = time.time()
+        applyConfiguration()
+
+        # Register the handlers...
+        leoPlugins.registerHandler("idle", autosave)
+        g.es("auto save enabled",color="orange")
+        
+    return ok
+#@nonl
+#@-node:ekr.20060108123141.2:init
 #@+node:edream.110203113231.725:applyConfiguration
 def applyConfiguration(config=None):
     
@@ -38,11 +83,12 @@ def autosave(tag, keywords):
 
     global LAST_AUTOSAVE
     
-    if g.app.killed: return # Work around a Tk bug.
+    c = keywords.get('c')
+    
+    if g.app.killed or not c or not c.exists: return
 
     if ACTIVE == "Yes":
         if time.time() - LAST_AUTOSAVE > AUTOSAVE_INTERVAL:
-            c = g.top()
             if c.mFileName and c.changed:
                 g.es("Autosave: %s" % time.ctime(),color="orange")
                 c.fileCommands.save(c.mFileName)
@@ -50,20 +96,6 @@ def autosave(tag, keywords):
 #@nonl
 #@-node:edream.110203113231.726:autosave
 #@-others
-
-if not g.app.unitTesting: # Don't want autosave after unit testing.
-
-    # Register the handlers...
-    AUTOSAVE_INTERVAL = 600
-    ACTIVE = "Yes"
-    LAST_AUTOSAVE = time.time()
-    applyConfiguration()
-    
-    # Register the handlers...
-    leoPlugins.registerHandler("idle", autosave)
-    
-    __version__ = "0.2"
-    g.es("auto save enabled",color="orange")
 #@nonl
 #@-node:edream.110203113231.724:@thin mod_autosave.py
 #@-leo
