@@ -92,6 +92,11 @@ def rClicker(tag,keywords):
     if e.widget._name.startswith('body'):
         #@        << define commandList for body >>
         #@+node:ekr.20040422072343.7:<< define commandList for body >>
+        def rc_helpCallback(c=c):       rc_help(c)
+        def rc_dbodyCallback(c=c):      rc_dbody(c)
+        def rc_nlCallback(c=c):         rc_nl(c)
+        def rc_selectAllCallback(c=c):  rc_selectAll(c)
+        
         commandList = [
             #('-||-|-||-',None),   #
             #('U',c.undoer.undo),  #no c.undoer
@@ -100,17 +105,17 @@ def rClicker(tag,keywords):
             ('Cut', c.frame.OnCutFromMenu), 
             ('Copy',c.frame.OnCopyFromMenu),
             ('Paste', c.frame.OnPasteFromMenu),
-            ('Delete',rc_dbody),
+            ('Delete',rc_dbodyCallback),
             ('-',None),
             ('SelectAll',c.frame.body.selectAllText),
             ('Indent',c.indentBody),
             ('Dedent',c.dedentBody),  
             ('Find Bracket',c.findMatchingBracket),
-            ('Insert newline', rc_nl),
+            ('Insert newline', rc_nlCallback),
             
             # this option seems not working, at least in win32
             # replaced with context-sensitive "pydoc help"  --Maxim Krikun
-            # ('Help(txt)',rc_help),   #how to highlight 'txt' in the menu?
+            # ('Help(txt)',rc_helpCallback),   #how to highlight 'txt' in the menu?
             
             ('Execute Script',c.executeScript)
             # ('-||-|-||-',None),   # 1st & last needed because of freaky sticky finger
@@ -240,7 +245,7 @@ def rClicker(tag,keywords):
             ('Cut', c.frame.OnCutFromMenu), 
             ('Copy',c.frame.OnCopyFromMenu),
             ('Paste', c.frame.OnPasteFromMenu),
-            ('Select All', rc_selectAll)]
+            ('Select All', rc_selectAllCallback)]
         #@nonl
         #@-node:ekr.20040422072343.16:<< define commandList for log pane >>
         #@nl
@@ -257,11 +262,9 @@ def rClicker(tag,keywords):
 #@-node:ekr.20040422072343.6:rClicker
 #@-node:ekr.20060108122501:Module-level
 #@+node:ekr.20040422072343.1:rc_help
-def rc_help():
+def rc_help(c):
     
     """Highlight txt then rclick for python help() builtin."""
-
-    c = g.top()
     
     if c.frame.body.hasTextSelection():
 
@@ -285,9 +288,7 @@ def rc_help():
 #@nonl
 #@-node:ekr.20040422072343.1:rc_help
 #@+node:ekr.20040422072343.2:rc_dbody
-def rc_dbody():
-
-    c = g.top()
+def rc_dbody(c):
 
     if c.frame.body.hasTextSelection():
         c.frame.body.deleteTextSelection()
@@ -295,22 +296,18 @@ def rc_dbody():
 #@nonl
 #@-node:ekr.20040422072343.2:rc_dbody
 #@+node:ekr.20040422072343.3:rc_nl
-def rc_nl():
+def rc_nl(c):
     
     """Insert a newline at the current curser position."""
-
-    c = g.top()
 
     c.frame.body.insertAtInsertPoint('\n')
     c.frame.body.onBodyChanged("Typing")
 #@nonl
 #@-node:ekr.20040422072343.3:rc_nl
 #@+node:ekr.20040422072343.4:rc_selectAll
-def rc_selectAll():
+def rc_selectAll(c):
     
     """Select the entire log pane."""
-
-    c = g.top()
     
     g.app.gui.setTextSelection(c.frame.log.logCtrl,"1.0","end")
 #@nonl
