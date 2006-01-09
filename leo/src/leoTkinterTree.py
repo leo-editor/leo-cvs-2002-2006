@@ -1679,7 +1679,9 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.79:onClickBoxClick
     def onClickBoxClick (self,event):
         
-        c = self.c ; p = self.eventToPosition(event)
+        c = self.c
+        c.setLog()
+        p = self.eventToPosition(event)
     
         c.beginUpdate()
         try:
@@ -1708,6 +1710,7 @@ class leoTkinterTree (leoFrame.leoTree):
         """The official helper of the onEndDrag event handler."""
     
         c = self.c ; p = self.drag_p
+        c.setLog()
         canvas = self.canvas
         if not event: return
     
@@ -1771,6 +1774,7 @@ class leoTkinterTree (leoFrame.leoTree):
         """The official helper of the onDrag event handler."""
         
         c = self.c ; canvas = self.canvas
+        c.setLog()
         assert(not self.drag_p)
         x = canvas.canvasx(event.x)
         y = canvas.canvasy(event.y)
@@ -1844,6 +1848,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c ; p = self.drag_p
         if not event: return
+    
+        c.setLog()
         
         if not self.dragging:
             if not g.doHook("drag1",c=c,p=p,v=p,event=event):
@@ -1860,10 +1866,10 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Tree end-of-drag handler called from vnode event handler."""
         
-        # g.trace(self.drag_p)
-        
         c = self.c ; p = self.drag_p
         if not p: return
+    
+        c.setLog()
         
         if not g.doHook("enddrag1",c=c,p=p,v=p,event=event):
             self.endDrag(event)
@@ -1995,6 +2001,8 @@ class leoTkinterTree (leoFrame.leoTree):
         p = self.eventToPosition(event)
         if not p: return
         
+        c.setLog()
+        
         if self.trace and self.verbose: g.trace()
         
         if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
@@ -2018,6 +2026,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         p = self.eventToPosition(event)
         if not p: return
+        
+        c.setLog()
     
         try:
             if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
@@ -2038,6 +2048,8 @@ class leoTkinterTree (leoFrame.leoTree):
     
         p = self.eventToPosition(event)
         if not p: return
+        
+        c.setLog()
         
         if self.trace and self.verbose: g.trace()
         
@@ -2060,6 +2072,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         try:
             c = self.c
+            c.setLog()
             #@        << activate this window >>
             #@+node:ekr.20040803072955.106:<< activate this window >>
             if p == c.currentPosition():
@@ -2098,6 +2111,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c
         
+        c.setLog()
         self.frame.treeWantsFocus()
     
         return 'break'
@@ -2139,6 +2153,8 @@ class leoTkinterTree (leoFrame.leoTree):
             
         # g.trace(p.headString())
         
+        c.setLog()
+        
         try:
             if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
                 self.OnActivateHeadline(p)
@@ -2160,6 +2176,8 @@ class leoTkinterTree (leoFrame.leoTree):
             p = w.leo_position
         except AttributeError:
             return "continue"
+            
+        c.setLog()
     
         try:
             if not g.doHook("headrclick1",c=c,p=p,v=p,event=event):
@@ -2203,6 +2221,8 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if event != None:
             c = self.c
+            c.setLog()
+    
             if not g.doHook("create-popup-menu",c=c,p=p,v=p,event=event):
                 self.createPopupMenu(event)
             if not g.doHook("enable-popup-menu-items",c=c,p=p,v=p,event=event):

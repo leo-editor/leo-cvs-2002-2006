@@ -768,8 +768,7 @@ def openWithFileName(fileName,old_c,
     for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
-            app.setLog(frame.log,"openWithFileName")
-            # g.trace('Already open',fileName)
+            frame.c.setLog()
             return True, frame
     try:
         if old_c:
@@ -786,7 +785,7 @@ def openWithFileName(fileName,old_c,
         c.beginUpdate()
         try:
             if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
+                c.setLog()
                 app.lockLog()
                 frame.c.fileCommands.open(
                     theFile,fileName,

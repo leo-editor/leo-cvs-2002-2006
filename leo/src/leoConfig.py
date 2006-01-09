@@ -1298,7 +1298,7 @@ class configClass:
         g.app.gui = leoGui.nullGui("nullGui")
         c,frame = g.app.newLeoCommanderAndFrame(path,updateRecentFiles=False)
         frame.log.enable(False)
-        g.app.setLog(frame.log,"openWithFileName")
+        c.setLog()
         g.app.lockLog()
         ok = frame.c.fileCommands.open(
             theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.

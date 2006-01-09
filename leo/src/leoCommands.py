@@ -223,10 +223,9 @@ class baseCommands:
         g.doHook("command1") returns False.
         This provides a simple mechanism for overriding commands."""
         
-        c = self ; p = c.currentPosition()
-    
-        # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
-        g.app.setLog(c.frame.log,"doCommand")
+        c = self
+        c.setLog()
+        p = c.currentPosition()
         
         # The presence of this message disables all commands.
         if c.disableCommandsMessage:
@@ -877,8 +876,8 @@ class baseCommands:
             ok, frame = g.openWithFileName(fileName,c)
             if ok and closeFlag:
                 g.app.destroyWindow(c.frame) # 12/12/03
-                g.app.setLog(frame.log,"openRecentFile") # Sets the log stream for g.es()
-                c = frame.c # 6/10/04: Switch to the new commander so the "recentfiles2" hook doesn't crash.
+                c = frame.c # Switch to the new commander so the "recentfiles2" hook doesn't crash.
+                c.setLog() # Sets the log stream for g.es()
     
         g.doHook("recentfiles2",c=c,p=v,v=v,fileName=fileName,closeFlag=closeFlag)
     #@-node:ekr.20031218072017.2081:openRecentFile
@@ -5969,6 +5968,19 @@ class baseCommands:
                 if s[0:2]=="* ": c.frame.setTitle(s[2:])
     #@nonl
     #@-node:ekr.20031218072017.2989:c.setChanged
+    #@+node:ekr.20060109164136:c.setLog
+    def setLog (self):
+        
+        c = self
+    
+        if c.exists:
+            try:
+                # c.frame or c.frame.log may not exist.
+                g.app.setLog(c.frame.log)
+            except AttributeError:
+                pass
+    #@nonl
+    #@-node:ekr.20060109164136:c.setLog
     #@+node:ekr.20040311173238:c.topPosition & c.setTopPosition
     def topPosition(self):
         

@@ -217,7 +217,7 @@ class LeoApp:
             w = g.app.windowList[0]
             w.deiconify()
             w.lift()
-            g.app.setLog(w.log)
+            w.c.setLog()
         else:
             g.app.finishQuit()
     
@@ -498,10 +498,9 @@ class LeoApp:
     #@nonl
     #@-node:ekr.20031218072017.1978:app.setLeoID
     #@+node:ekr.20031218072017.1847:app.setLog, lockLog, unlocklog
-    def setLog (self,log,tag=""):
+    def setLog (self,log):
+    
         """set the frame to which log messages will go"""
-        
-        __pychecker__ = '--no-argsused' # tag used for debugging.
         
         # print "setLog:",tag,"locked:",self.logIsLocked,log
         if not self.logIsLocked:

@@ -771,10 +771,7 @@ class leoLog:
     #@+node:ekr.20031218072017.3702:leoLog.onActivateLog
     def onActivateLog (self,event=None):
     
-        try:
-            g.app.setLog(self,"OnActivateLog")
-        except:
-            g.es_event_exception("activate log")
+        self.c.setLog()
     #@nonl
     #@-node:ekr.20031218072017.3702:leoLog.onActivateLog
     #@+node:ekr.20031218072017.3703:leoLog.put & putnl

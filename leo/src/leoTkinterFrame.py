@@ -118,7 +118,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         f.createFirstTreeNode()
         f.menu = leoTkinterMenu.leoTkinterMenu(f)
             # c.finishCreate calls f.createMenuBar later.
-        g.app.setLog(f.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+        c.setLog()
         g.app.windowList.append(f)
         c.initVersion()
         c.signOnWithVersion()
@@ -1617,8 +1617,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             frame = self ; c = frame.c
+            c.setLog()
             c.endEditing() # Required.
-            g.app.setLog(frame.log,"OnActivateBody")
             w = g.app.gui.get_focus(frame)
             if w != frame.body.bodyCtrl:
                 frame.tree.OnDeactivate()
@@ -1634,23 +1634,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Handle a click anywhere in the Leo window.'''
         
-        __pychecker__ = '--no-argsused' # event not used.
+        __pychecker__ = '--no-argsused' # event.
     
-        c = self.c
-        # g.trace(g.callers(5))
-    
-        try:
-            g.app.setLog(self.log,"OnActivateLeoEvent")
-        except:
-            g.es_event_exception("activate Leo")
+        self.c.setLog()
     
     def OnDeactivateLeoEvent(self,event=None):
         
-        if 0: # This causes problems on the Mac.
-            try:
-                g.app.setLog(None,"OnDeactivateLeoEvent")
-            except:
-                g.es_event_exception("deactivate Leo")
+        pass # This causes problems on the Mac.
     #@nonl
     #@-node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
     #@+node:ekr.20031218072017.3976:OnActivateTree
@@ -1660,13 +1650,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             frame = self
-            g.app.setLog(frame.log,"OnActivateTree")
+            frame.c.setLog()
             if 0: # Do NOT do this here!
                 # OnActivateTree can get called when the tree gets DE-activated!!
                 frame.bodyWantsFocus()
                 
         except:
             g.es_event_exception("activate tree")
+    #@nonl
     #@-node:ekr.20031218072017.3976:OnActivateTree
     #@+node:ekr.20031218072017.3977:OnBodyClick, OnBodyRClick (Events)
     def OnBodyClick (self,event=None):
@@ -2007,7 +1998,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.body.setColorFromConfig()
     
         # Restore everything.
-        g.app.setLog(self.log)
+        c.setLog()
         frame.log.restoreAllState(d)
         c.beginUpdate()
         try:
@@ -2685,7 +2676,7 @@ class leoTkinterBody (leoFrame.leoBody):
             else:
                 return g.toUnicode(s,g.app.tkEncoding)
         else:
-            return '' # Bug fix: 1/8/06
+            return u'' # Bug fix: 1/8/06
     #@nonl
     #@-node:ekr.20031218072017.4020:getSelectedText
     #@+node:ekr.20031218072017.4021:getTextSelection
@@ -3233,7 +3224,7 @@ class leoTkinterLog (leoFrame.leoLog):
         __pychecker__ = '--no-argsused' # event not used.
     
         try:
-            g.app.setLog(self,"OnActivateLog")
+            self.c.setLog()
             self.frame.tree.OnDeactivate()
             self.frame.logWantsFocus()
         except:

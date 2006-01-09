@@ -663,7 +663,7 @@ class tkinterGui(leoGui.leoGui):
             else:
                 return g.toUnicode(s,g.app.tkEncoding)
         else:
-            return None
+            return u""
     #@nonl
     #@-node:ekr.20051126125950:getSelectedText
     #@+node:ekr.20031218072017.4086:getTextSelection

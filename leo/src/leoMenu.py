@@ -50,14 +50,13 @@ class leoMenu:
         """The Tk "postcommand" callback called when a click happens in any menu.
         
         Updates (enables or disables) all menu items."""
-        
-        # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
-        g.app.setLog(self.frame.log,"updateAllMenus")
-        
-        # Allow the user first crack at updating menus.
-        c = self.c ; v = c.currentVnode()
     
-        if not g.doHook("menu2",c=c,p=v,v=v):
+        # Allow the user first crack at updating menus.
+        c = self.c
+        c.setLog()
+        p = c.currentPosition()
+    
+        if not g.doHook("menu2",c=c,p=p,v=p):
             self.updateFileMenu()
             self.updateEditMenu()
             self.updateOutlineMenu()
