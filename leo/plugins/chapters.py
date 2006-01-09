@@ -138,6 +138,40 @@ import string
 string.atoi = int
 
 #@+others
+#@+node:ekr.20060109063941:init
+def init ():
+
+    if Pmw and not g.app.unitTesting: # Not for unit testing:  modifies core classes.
+        if g.app.gui is None: 
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            #@            << override various methods >>
+            #@+node:ekr.20041103054545:<< override various methods >>
+            leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
+            leoTkinterFrame.leoTkinterBody.createControl = newCreateControl
+            
+            leoTkinterTree.leoTkinterTree.select = newselect
+            leoTkinterTree.leoTkinterTree.endEditLabel = newendEditLabel
+            leoTkinterTree.leoTkinterTree.__init__ = newTreeinit
+            
+            g.os_path_dirname = new_os_path_dirname
+            
+            leoFileCommands.fileCommands.write_LEO_file = newWrite_LEO_file
+            leoFileCommands.fileCommands.write_Leo_file = newWrite_LEO_file
+            leoFileCommands.fileCommands.getLeoFile = newGetLeoFile
+            leoFileCommands.fileCommands.open = newOpen
+            
+            if hasattr( leoNodes.vnode, 'doDelete' ):
+                leoNodes.vnode.doDelete = newTrashDelete
+            else:
+                leoNodes.position.doDelete = newTrashDelete
+            #@nonl
+            #@-node:ekr.20041103054545:<< override various methods >>
+            #@nl
+            g.plugin_signon( __name__ )
+#@nonl
+#@-node:ekr.20060109063941:init
 #@+node:mork.20040927092626:class Chapter
 class Chapter:
     '''The fundamental abstraction in the Chapters plugin.
@@ -234,7 +268,7 @@ def newCreateControl( self, frame, parentFrame  ):
     if frame not in twidgets:
         twidgets[ frame ] = []
     twidgets[ frame ].append( frame.body )
-    l.configure( textvariable = getSV( notebook.getcurselection(), c ) )
+    l.configure( textvariable = getSV(c, notebook.getcurselection()) )
     return ctrl
 #@-node:mork.20040926105355.21:newCreateControl
 #@+node:mork.20040929110556:createPanedWidget
@@ -305,15 +339,16 @@ def createBalloon( tab, sv ):
 #@nonl
 #@-node:mork.20040929120442:createBalloon
 #@+node:mork.20040929102107:createNoteBook
-def createNoteBook( c, parentFrame ):
+def createNoteBook (c,parentFrame):
+
     #constructs a NoteBook widget for a frame
-    notebooks[ c ] = notebook = Pmw.NoteBook( parentFrame, borderwidth = 1, pagemargin = 0)
-    hull = notebook.component( 'hull' ) 
-    makeTabMenu( hull, notebook, c )
-    notebook.configure( raisecommand = lambda name, notebook = notebook : setTree( name , notebook ) )
-    notebook.configure( lowercommand = lambda name, notebook = notebook: lowerPage( name, notebook ) )
-    notebook.pack( fill = 'both' , expand = 1)
-    notebook.nameMaker = getNameMaker( notebook )
+    notebooks [c] = notebook = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
+    hull = notebook.component('hull')
+    makeTabMenu(hull,notebook,c)
+    notebook.configure(raisecommand=lambda name,notebook=notebook: setTree(c,name,notebook))
+    notebook.configure(lowercommand=lambda name,notebook=notebook: lowerPage(name,notebook))
+    notebook.pack(fill='both',expand=1)
+    notebook.nameMaker = getNameMaker(notebook)
     return notebook
 #@nonl
 #@-node:mork.20040929102107:createNoteBook
@@ -335,7 +370,7 @@ def newTreeinit( self, c,frame,canvas, oinit = leoTkinterTree.leoTkinterTree.__i
     
     # g.trace(canvas)
 
-    sv = getSV( canvas.name, c )
+    sv = getSV(c, canvas.name)
     oinit( self, c, frame, canvas )
     self.chapter = chapters[ sv ] = Chapter( c, self , frame, canvas )
 #@-node:mork.20040926105355.24:newTreeinit
@@ -375,22 +410,22 @@ def addPage( c , name = None ):
     return page
 #@-node:mork.20040926105355.26:addPage
 #@+node:mork.20040926105355.35:newEditor
-def newEditor( c ):
-    
+def newEditor (c):
+
     notebook = notebooks.get(c)
     if not notebook: return # For unit testing
-    frame = frames[ c ]
-    pbody = pbodies[ c ]
-    zpane = newEditorPane( c )
-    af = leoTkinterBody( frame, zpane )
+    frame = frames [c]
+    pbody = pbodies [c]
+    zpane = newEditorPane(c)
+    af = leoTkinterBody(frame,zpane)
     c.frame.bodyCtrl = af.bodyCtrl
     af.setFontFromConfig()
-    af.createBindings( frame )
+    af.createBindings(frame)
     af.bodyCtrl.focus_set()
     cname = notebook.getcurselection()
-    af.l.configure( textvariable = getSV(cname , c ) )
-    af.r.configure( text = c.currentVnode().headString() )
-
+    af.l.configure(textvariable=getSV(c,cname))
+    af.r.configure(text=c.currentVnode().headString())
+#@nonl
 #@-node:mork.20040926105355.35:newEditor
 #@-others
 #@nonl
@@ -415,7 +450,7 @@ def makeTabMenu( widget, notebook, c ):
     remove = getRemove( notebook, c, rmenu )
     rmenu.configure( postcommand = remove )        
     tmenu.add_cascade( menu = rmenu, label = "Remove Chapter" )
-    rename = getRename( notebook )
+    rename = getRename(c, notebook )
     tmenu.add_command( label = "Add/Change Title" , command = rename )
     opmenu = Tk.Menu( tmenu, tearoff = 0 )
     tmenu.add_cascade( menu = opmenu , label = 'Node-Chapter Ops' )
@@ -498,7 +533,7 @@ def getRemove( notebook, c , rmenu ):
             i = i + 1
             def rmz( name = z):
                 if len( notebook.pagenames() ) == 1: return
-                sv = getSV( name )
+                sv = getSV(c, name )
                 chapter = chapters[ sv ]
                 tree = chapter.tree
                 vnd = chapter.rp
@@ -530,12 +565,12 @@ def getRemove( notebook, c , rmenu ):
     return remove
 #@-node:mork.20040928223221:getRemove
 #@+node:mork.20040928223738:getRename
-def getRename( notebook ):
+def getRename(c, notebook ):
     #a function that makes a function to rename chapters
     def rename( rnframes = {} ):
         name = notebook.getcurselection()
         frame = notebook.page( notebook.index( name ) )
-        fr = frames[ g.top() ]
+        fr = frames[c]
         if not rnframes.has_key( frame ):
             f = rnframes[ frame ] = Tk.Frame( frame )
             e = Tk.Entry( f , background = 'white', textvariable = frame.sv )
@@ -556,18 +591,18 @@ def getRename( notebook ):
 #@nonl
 #@-node:mork.20040928223738:getRename
 #@+node:mork.20040928224049:getMakeTrash
-def getMakeTrash( notebook ):
+def getMakeTrash (notebook):
     #a function that makes a function to add a trash chapters
-    def mkTrash( c ):
+    def mkTrash (c):
         notebook = notebooks.get(c)
         if not notebook: return # For unit testing
-        addPage( c, 'Trash' )
+        addPage(c,'Trash')
         pnames = notebook.pagenames()
-        sv = getSV( pnames[ - 1 ], c )
-        sv.set( 'Trash' )
-        renumber( notebook )
-    
-    return mkTrash    
+        sv = getSV(c,pnames[-1])
+        sv.set('Trash')
+        renumber(notebook)
+
+    return mkTrash
 #@-node:mork.20040928224049:getMakeTrash
 #@+node:mork.20040928224621:getSetupMenu
 def getSetupMenu( c, notebook ):
@@ -728,7 +763,7 @@ def buildIndex( nodes , c , can, tl, bal, tags):
         if parent: parent = parent.headString()
         else:
             parent = 'No Parent'
-        sv = getSV( z[ 2 ] )
+        sv = getSV(c, z[ 2 ] )
         if sv.get(): sv = ' - ' + sv.get()
         else: sv = ''
         
@@ -762,31 +797,33 @@ def buildIndex( nodes , c , can, tl, bal, tags):
         can.tag_bind( tg, '<Leave>', colorBl, '+' )    
 #@-node:mork.20040929121409:buildIndex
 #@+node:mork.20040926105355.4:regexViewIndex
-def regexViewIndex( c ):
-    
-    def regexWalk( result, entry, widget ):
+def regexViewIndex (c):
+
+    def regexWalk (result,entry,widget):
         txt = entry.get()
-        widget.deactivate()        
+        widget.deactivate()
         widget.destroy()
         if result == 'Cancel': return None
-        nodes = [ x for x in walkChapters( c, chapname = True ) ]
+        nodes = [x for x in walkChapters(c,chapname=True)]
         import re
-        regex = re.compile( txt )
-        def search( nd, regex = regex ):
-            return regex.search( nd[ 0 ].bodyString() )
-        nodes = filter( search , nodes )
-        viewIndex( c, nodes , 'Regex( %s )'%txt )
+        regex = re.compile(txt)
+        def search (nd,regex=regex):
+            return regex.search(nd[0].bodyString())
+        nodes = filter(search,nodes)
+        viewIndex(c,nodes,'Regex( %s )' % txt)
         return
 
-    sd = Pmw.PromptDialog( c.frame.top,
-    title = 'Regex Index',
-    buttons = ( 'Search', 'Cancel' ),
-    command =regexWalk )
-    entry = sd.component( 'entry' )
-    sd.configure( command = 
+    sd = Pmw.PromptDialog(c.frame.top,
+        title = 'Regex Index',
+        buttons = ('Search','Cancel'),
+        command = regexWalk,
+    )
+    entry = sd.component('entry')
+    sd.configure(command=
         lambda result, entry = entry, widget = sd:
-            regexWalk( result, entry, widget ) )      
-    sd.activate(  geometry = 'centerscreenalways' )   
+            regexWalk(result,entry,widget))
+    sd.activate(geometry='centerscreenalways')
+#@nonl
 #@-node:mork.20040926105355.4:regexViewIndex
 #@-others
 #@-node:mork.20040930090547:Indexing
@@ -829,21 +866,20 @@ def checkChapterValidity( name , c):
     return name
 #@-node:mork.20040926105355.7:checkChapterValidity
 #@+node:mork.20040926105355.20:getSV
-def getSV( name, c = None ):
-    #returns a Tk StrinVar that is a primary identifier
-    if not c : c = g.top()
+def getSV (c,name):
+
+    '''return a Tk StrinVar that is a primary identifier.'''
+
     notebook = notebooks.get(c)
     if not notebook: return # For unit testing
-    index = notebook.index( name )
-    page = notebook.page( index )
+    index = notebook.index(name)
+    page = notebook.page(index)
     return page.sv
 #@-node:mork.20040926105355.20:getSV
 #@+node:mork.20040926105355.27:setTree
-def setTree( name , notebook , c = None ):
-
-    if not c: 
-        c = g.top()
-        if not c: return None
+def setTree(c, name , notebook):
+    
+    if not c or not c.exists: return None
     pindex = notebook.index( name )
     page = notebook.page( pindex )
     if not hasattr( page, 'sv' ) : return None
@@ -867,14 +903,14 @@ def lowerPage( name, notebook):
 #@nonl
 #@-node:mork.20040929084846:lowerPage
 #@+node:mork.20040926105355.40:walkChapters
-def walkChapters( c = None, ignorelist = [], chapname = False):
+def walkChapters( c , ignorelist = [], chapname = False):
     # a generator that allows one to walk the chapters as one big tree
-    if c == None : c = g.top()
+    if not c or not c.exists: return
     notebook = notebooks.get(c)
     if not notebook: return # For unit testing
     pagenames = notebook.pagenames()
     for z in pagenames:
-        sv = getSV( z , c)
+        sv = getSV(c, z)
         chapter = chapters[ sv ]
         v = chapter.rp
         while v:
@@ -898,20 +934,23 @@ def walkChapters( c = None, ignorelist = [], chapname = False):
 #@+node:mork.20040930091035.1:opening
 #@+others
 #@+node:mork.20040926105355.28:newGetLeoFile
-oldGetLeoFile =  leoFileCommands.fileCommands.getLeoFile
+old_getLeoFile = leoFileCommands.fileCommands.getLeoFile
 
-def newGetLeoFile(self, fileName,readAtFileNodesFlag=True,silent=False):
+def newGetLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    global iscStringIO
+
     if iscStringIO:
-        def dontSetReadOnly( self, name, value ):
-            if name == 'read_only': return
-            elif name == 'tnodesDict': return
-            else:
-                self.__dict__[ name ] = value
+        def dontSetReadOnly (self,name,value):
+            if name not in ('read_only','tnodesDict'):
+                self.__dict__ [name] = value
         self.read_only = False
         self.__class__.__setattr__ = dontSetReadOnly
-    rt = oldGetLeoFile(self,fileName,readAtFileNodesFlag,silent)
+
+    rt = old_getLeoFile(self,fileName,readAtFileNodesFlag,silent)
     if iscStringIO:
-        del self.__class__.__setattr__       
+        del self.__class__.__setattr__
+
     return rt
 #@nonl
 #@-node:mork.20040926105355.28:newGetLeoFile
@@ -920,11 +959,12 @@ oldOpen = leoFileCommands.fileCommands.open
 
 def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
 
-    global iscStringIO
+    global iscStringIO,stringIOCommander
     c = self.c
     
     if zipfile.is_zipfile( fileName ):
         iscStringIO = True
+        stringIOCommander = c
         chapters = openChaptersFile( fileName )
         g.es( str( len( chapters ) ) + " Chapters To Read", color = 'blue' )
         insertChapters( chapters, c.frame, c )
@@ -954,26 +994,26 @@ def openChaptersFile( fileName ):
     return csfiles
 #@-node:mork.20040926105355.9:openChaptersFile
 #@+node:mork.20040926105355.8:insertChapters
-def insertChapters( chapters, frame, c ):
+def insertChapters (chapters,frame,c):
      notebook = notebooks.get(c)
      if not notebook: return # For unit testing
      pagenames = notebook.pagenames()
-     for num, tup  in enumerate( chapters ):
+     for num, tup in enumerate(chapters):
             x, y = tup
             if num > 0:
-                sv = addPage( c, x ).sv
+                sv = addPage(c,x).sv
                 notebook.nextpage()
                 cselection = notebook.getcurselection()
             else:
                 cselection = notebook.getcurselection()
-                sv = getSV( cselection , c )
-            sv.set( x )
+                sv = getSV(c,cselection)
+            sv.set(x)
             next = cselection
-            setTree( next , notebook, c )
-            frame.c.fileCommands.open( y, sv.get() )
+            setTree(c,next,notebook)
+            frame.c.fileCommands.open(y,sv.get())
             if num == 0:
                 flipto = cselection
-     setTree( flipto, notebook, c )
+     setTree(flipto,notebook,c)
      c.frame.canvas.update_idletasks()
 #@nonl
 #@-node:mork.20040926105355.8:insertChapters
@@ -1025,7 +1065,7 @@ def getMakeStringIO( chapList ):
 def writeChapters( self, fileName, pagenames, c , outlineOnlyFlag):
     #goes over Chapters and puts info in StringIO instances
     for z in pagenames:
-        sv = getSV( z, c )
+        sv = getSV(c,z )
         chapter = chapters[ sv ]
         chapter.setVariables()
         rv = olWrite_LEO_file( self, fileName, outlineOnlyFlag )    
@@ -1038,7 +1078,7 @@ def zipChapters( fileName, pagenames, c, chapList ):
     #takes list of StringIO instances and zips them to a file
     zf = zipfile.ZipFile( fileName, 'w',  zipfile.ZIP_DEFLATED )
     for x ,fname in enumerate( pagenames ):
-        sv = getSV( fname, c )
+        sv = getSV(c, fname )
         zif = zipfile.ZipInfo( str( x ) )
         zif.comment = sv.get()
         zif.compress_type = zipfile.ZIP_DEFLATED
@@ -1062,70 +1102,78 @@ def zipChapters( fileName, pagenames, c, chapList ):
 #@-at
 #@@c
 #@+others
-#@+node:mork.20040926105355.34:newos_path_dirname
-olos_pat_dirname  = g.os_path_dirname
+#@+node:mork.20040926105355.34:new_os_path_dirname
+old_os_pat_dirname = g.os_path_dirname
 
-def newos_path_dirname( path, encoding = None ):
-    if iscStringIO:
-        c = g.top()
-        return os.path.dirname( c.mFileName )
-    else:
-        return olos_pat_dirname( path, encoding )
-#@-node:mork.20040926105355.34:newos_path_dirname
-#@+node:mork.20040926105355.45:newendEditLabel
-olEditLabel = leoTkinterTree.leoTkinterTree.endEditLabel
-
-def newendEditLabel( self ):
+def new_os_path_dirname (path,encoding=None):
     
+    global iscStringIO,stringIOCommander
+
+    if iscStringIO:
+        c = stringIOCommander
+        return os.path.dirname(c.mFileName)
+    else:
+        return old_os_pat_dirname(path,encoding)
+#@nonl
+#@-node:mork.20040926105355.34:new_os_path_dirname
+#@+node:mork.20040926105355.45:newendEditLabel
+old_editLabel = leoTkinterTree.leoTkinterTree.endEditLabel
+
+def newendEditLabel (self):
+
     c = self.c
-    rv = olEditLabel( self )
+    rv = old_editLabel(self)
     v = c.currentPosition()
-    if v and hasattr( c.frame.body, 'r'): 
+    if v and hasattr(c.frame.body,'r'):
         hS = v.headString()
         if hS:
-            c.frame.body.r.configure( text = v.headString() )
+            c.frame.body.r.configure(text=v.headString())
     return rv
+#@nonl
 #@-node:mork.20040926105355.45:newendEditLabel
 #@+node:mork.20040926105355.52:newselect
-def newselect (self, v , updateBeadList = True):
-    
+old_select = leoTkinterTree.leoTkinterTree.select
+
+def newselect (self,v,updateBeadList=True):
+
     self.frame.body.lastNode = v
     notebook = notebooks.get(v.c)
     if not notebook: return # For unit testing
     self.frame.body.lastChapter = notebook.getcurselection()
-    rv = ol_select( self , v, updateBeadList )
-    if hasattr( v.c.frame.body, 'r' ):
-        v.c.frame.body.r.configure( text = v.headString() )
+    rv = old_select(self,v,updateBeadList)
+    if hasattr(v.c.frame.body,'r'):
+        v.c.frame.body.r.configure(text=v.headString())
     return rv
 #@nonl
 #@-node:mork.20040926105355.52:newselect
 #@+node:mork.20040926105355.49:newTrashDelete
-if hasattr( leoNodes.vnode, 'doDelete' ):
+if hasattr(leoNodes.vnode,'doDelete'):
     olDelete = leoNodes.vnode.doDelete
 else:
     olDelete = leoNodes.position.doDelete
 
-def newTrashDelete(  self, newVnode):
+def newTrashDelete (self,newVnode):
     c = self.c
     notebook = notebooks.get(c)
     if not notebook: return # For unit testing
     pagenames = notebook.pagenames()
-    pagenames = [ getSV( x, c ).get().upper() for x in pagenames ]
+    pagenames = [getSV(c,x).get().upper() for x in pagenames]
     nbnam = notebook.getcurselection()
     if nbnam != None:
-        name = getSV( notebook.getcurselection() , c ).get().upper()
+        name = getSV(c,notebook.getcurselection()).get().upper()
     else: name = 'TRASH'
     tsh = 'TRASH'
     if name != tsh and tsh in pagenames:
-        index = pagenames.index( tsh )
-        trchapter = chapters[ getSV( index, c ) ]
+        index = pagenames.index(tsh)
+        trchapter = chapters [getSV(c,index)]
         trashnode = trchapter.rp
         trchapter.setVariables()
-        self.moveAfter( trashnode )
+        self.moveAfter(trashnode)
         c.cChapter.setVariables()
-        c.selectVnode( newVnode )        
+        c.selectVnode(newVnode)
         return self
-    olDelete( self, newVnode )
+    olDelete(self,newVnode)
+#@nonl
 #@-node:mork.20040926105355.49:newTrashDelete
 #@-others
 #@nonl
@@ -1315,8 +1363,8 @@ def swapChapters( c, name ):
     tab2 = notebook.tab( name )
     tval1 = tab1.cget( 'text' )
     tval2 = tab2.cget( 'text' )
-    tv1 = getSV( cselection, c )
-    tv2 = getSV( name, c )
+    tv1 = getSV(c, cselection)
+    tv2 = getSV(c, name)
     chap1 = c.cChapter
     chap2 = chapters[ tv2 ]
     rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
@@ -1339,7 +1387,7 @@ def swapChapters( c, name ):
 #@+node:mork.20040926105355.50:emptyTrash
 def emptyTrash( notebook  , c):
     pagenames = notebook.pagenames()
-    pagenames = [ getSV( x, c ) for x in pagenames ]
+    pagenames = [ getSV(c, x) for x in pagenames ]
     for z in pagenames:
         if z.get().upper() == 'TRASH':
             trChapter = chapters[ z ]
@@ -1360,52 +1408,54 @@ def emptyTrash( notebook  , c):
             return
 #@-node:mork.20040926105355.50:emptyTrash
 #@+node:mork.20040926105355.51:regexClone
-def regexClone( c , name ):
-    if c == None: c = g.top()
+def regexClone (c,name):
+    if not c or not c.exists: return
     notebook = notebooks.get(c)
     if not notebook: return # For unit testing
-    sv = getSV( name, c )
-    chapter = chapters[ sv ]
-    
-    def cloneWalk( result , entry, widget, c = c):
+    sv = getSV(c,name)
+    chapter = chapters [sv]
+
+    def cloneWalk (result,entry,widget,c=c):
         txt = entry.get()
-        widget.deactivate()        
+        widget.deactivate()
         widget.destroy()
         if result == 'Cancel': return None
         import re
-        regex = re.compile( txt )
+        regex = re.compile(txt)
         rt = chapter.cp
         chapter.setVariables()
-        stnode = leoNodes.tnode( '', txt )
-        snode = leoNodes.vnode( c, stnode)
-        snode = leoNodes.position(c, snode, [] )
-        snode.moveAfter( rt )
-        ignorelist = [ snode ]
-        it = walkChapters( c , ignorelist = ignorelist)
+        stnode = leoNodes.tnode('',txt)
+        snode = leoNodes.vnode(c,stnode)
+        snode = leoNodes.position(c,snode,[])
+        snode.moveAfter(rt)
+        ignorelist = [snode]
+        it = walkChapters(c,ignorelist=ignorelist)
         for z in it:
-            f = regex.search( z.bodyString() )
+            f = regex.search(z.bodyString())
             if f:
-                clone = z.clone( z )
+                clone = z.clone(z)
                 i = snode.numberOfChildren()
-                clone.moveToNthChildOf( snode, i)
-                ignorelist.append( clone )
-                
+                clone.moveToNthChildOf(snode,i)
+                ignorelist.append(clone)
+
         c.cChapter.setVariables()
-        notebook.selectpage( name )
-        c.selectVnode( snode )
+        notebook.selectpage(name)
+        c.selectVnode(snode)
         snode.expand()
         c.beginUpdate()
         c.endUpdate()
-                
-    sd = Pmw.PromptDialog( c.frame.top,
-    title = 'Search and Clone',
-    buttons = ( 'Search', 'Cancel' ),
-    command =cloneWalk )
-    entry = sd.component( 'entry' )
-    sd.configure( command = 
+
+    sd = Pmw.PromptDialog(c.frame.top,
+        title = 'Search and Clone',
+        buttons = ('Search','Cancel'),
+        command = cloneWalk,
+    )
+    entry = sd.component('entry')
+    sd.configure(command=
         lambda result, entry = entry, widget = sd:
-            cloneWalk( result, entry, widget ) )      
-    sd.activate(  geometry = 'centerscreenalways' ) 
+            cloneWalk(result,entry,widget))
+    sd.activate(geometry='centerscreenalways')
+#@nonl
 #@-node:mork.20040926105355.51:regexClone
 #@-others
 #@nonl
@@ -1437,7 +1487,7 @@ def doPDFConversion( c ):
     for n,z in enumerate( pagenames ):
         
         n = n + 1
-        sv = getSV( z , c)
+        sv = getSV(c, z)
         chapter = chapters[ sv ]
         chapter.setVariables()
         p = chapter.rp
@@ -1514,38 +1564,5 @@ def _changeTreeToPDF( name, num, p, c, Story, styles , maxlen):
 #@nonl
 #@-node:mork.20040930091624.1:PDF
 #@-others
-    
-ol_select = leoTkinterTree.leoTkinterTree.select
-
-if Pmw and not g.app.unitTesting: # Not for unit testing:  modifies core classes.
-    if g.app.gui is None: 
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-        #@        << override various methods >>
-        #@+node:ekr.20041103054545:<< override various methods >>
-        leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
-        leoTkinterFrame.leoTkinterBody.createControl = newCreateControl
-        
-        leoTkinterTree.leoTkinterTree.select = newselect
-        leoTkinterTree.leoTkinterTree.endEditLabel = newendEditLabel
-        leoTkinterTree.leoTkinterTree.__init__ = newTreeinit
-        
-        g.os_path_dirname = newos_path_dirname
-        
-        leoFileCommands.fileCommands.write_LEO_file = newWrite_LEO_file
-        leoFileCommands.fileCommands.write_Leo_file = newWrite_LEO_file
-        leoFileCommands.fileCommands.getLeoFile = newGetLeoFile
-        leoFileCommands.fileCommands.open = newOpen
-        
-        if hasattr( leoNodes.vnode, 'doDelete' ):
-            leoNodes.vnode.doDelete = newTrashDelete
-        else:
-            leoNodes.position.doDelete = newTrashDelete
-        #@nonl
-        #@-node:ekr.20041103054545:<< override various methods >>
-        #@nl
-        g.plugin_signon( __name__ )
-#@nonl
 #@-node:mork.20040926105355.1:@thin chapters.py
 #@-leo
