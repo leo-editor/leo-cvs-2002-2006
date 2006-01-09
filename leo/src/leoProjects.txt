@@ -3518,6 +3518,56 @@ def widthInPixels(self,s):
 #@nonl
 #@-node:ekr.20040803072955.28:headWidth & widthInPixels
 #@-node:ekr.20060106172320:Installed patch for headline width
+#@+node:ekr.20060106131142:Redraw screen properly after Move To Next Dirty
+#@+node:ekr.20031218072017.2917:goToNextDirtyHeadline
+def goToNextDirtyHeadline (self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    p.moveToThreadNext()
+    while p and not p.isDirty():
+        p.moveToThreadNext()
+
+    if not p:
+        # Wrap around.
+        p = c.rootPosition()
+        while p and not p.isDirty():
+            p.moveToThreadNext()
+
+    if p:
+        c.beginUpdate()
+        try:
+            c.endEditing()
+            c.selectPosition(p)
+        finally:
+            c.endUpdate()
+    else:
+        g.es("done",color="blue")
+#@nonl
+#@-node:ekr.20031218072017.2917:goToNextDirtyHeadline
+#@+node:ekr.20031218072017.2918:goToNextMarkedHeadline
+def goToNextMarkedHeadline(self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    p.moveToThreadNext()
+    while p and not p.isMarked():
+        p.moveToThreadNext()
+
+    if p:
+        c.beginUpdate()
+        try:
+            c.endEditing()
+            c.selectPosition(p)
+        finally:
+            c.endUpdate()
+    else:
+        g.es("done",color="blue")
+#@nonl
+#@-node:ekr.20031218072017.2918:goToNextMarkedHeadline
+#@-node:ekr.20060106131142:Redraw screen properly after Move To Next Dirty
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands

@@ -4362,21 +4362,26 @@ class baseCommands:
     #@+node:ekr.20031218072017.2917:goToNextDirtyHeadline
     def goToNextDirtyHeadline (self):
     
-        c = self ; current = c.currentVnode()
-        if not current: return
+        c = self ; p = c.currentPosition()
+        if not p: return
     
-        v = current.threadNext()
-        while v and not v.isDirty():
-            v = v.threadNext()
+        p.moveToThreadNext()
+        while p and not p.isDirty():
+            p.moveToThreadNext()
     
-        if not v:
+        if not p:
             # Wrap around.
-            v = c.rootVnode()
-            while v and not v.isDirty():
-                v = v.threadNext()
+            p = c.rootPosition()
+            while p and not p.isDirty():
+                p.moveToThreadNext()
     
-        if v:
-            c.selectVnode(v)
+        if p:
+            c.beginUpdate()
+            try:
+                c.endEditing()
+                c.selectPosition(p)
+            finally:
+                c.endUpdate()
         else:
             g.es("done",color="blue")
     #@nonl
@@ -4384,18 +4389,18 @@ class baseCommands:
     #@+node:ekr.20031218072017.2918:goToNextMarkedHeadline
     def goToNextMarkedHeadline(self):
     
-        c = self ; current = c.currentVnode()
-        if not current: return
+        c = self ; p = c.currentPosition()
+        if not p: return
     
-        v = current.threadNext()
-        while v and not v.isMarked():
-            v = v.threadNext()
+        p.moveToThreadNext()
+        while p and not p.isMarked():
+            p.moveToThreadNext()
     
-        if v:
+        if p:
             c.beginUpdate()
             try:
                 c.endEditing()
-                c.selectVnode(v)
+                c.selectPosition(p)
             finally:
                 c.endUpdate()
         else:
