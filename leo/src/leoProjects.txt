@@ -3382,6 +3382,144 @@ AttributeError: 'NoneType' object has no attribute 'startswith'
 #@nonl
 #@-node:ekr.20060108115434.1:traceback
 #@-node:ekr.20060108115434:Fix crash: tab in minibuffer
+#@+node:ekr.20060106172320:Installed patch for headline width
+#@+node:ekr.20060109060505:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3510983
+By: vpe
+
+I realized it's not necessary to do int-float-int conversion to calculate width.
+The result will be the same. So it's really simple:
+
+width = font.measure(p.headString())/font.measure('0')+1
+
+If font is not fixed-width, trailing space in headlines will vary between 0
+pixels and width of char '0'.
+#@nonl
+#@-node:ekr.20060109060505:Report
+#@+node:ekr.20040803072955.16:__init__
+def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
+
+    # Objects associated with this tree.
+    self.canvas = canvas
+    
+    << define drawing constants >>
+    << old ivars >>
+    << inject callbacks into the position class >>
+    
+    self.dragging = False
+    self.expanded_click_area = c.config.getBool("expanded_click_area")
+    self.generation = 0
+    self.prevPositions = 0
+    self.redrawing = False # Used only to disable traces.
+    self.redrawCount = 0 # Count for debugging.
+    self.revertHeadline = None # Previous headline text for abortEditLabel.
+    self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
+        # New in 4.4: We should stay in the tree to use per-pane bindings.
+    self.textBindings = [] # Set in setBindings.
+    self.textNumber = 0 # To make names unique.
+    self.trace = False
+    self.updateCount = 0 # Drawing is enabled only if self.updateCount <= 0
+    self.useBindtags = True
+    self.verbose = True
+    
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are unchanging positions...
+    self.ids = {}
+    self.iconIds = {}
+
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {} # Keys are vnodes, values are Tk.Text widgets
+    self.visibleUserIcons = []
+
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+    self.freeUserIcons = []
+#@nonl
+#@+node:ekr.20040803072955.17:<< define drawing constants >>
+self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
+
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height
+#@nonl
+#@-node:ekr.20040803072955.17:<< define drawing constants >>
+#@+node:ekr.20040803072955.18:<< old ivars >>
+# Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+self.setColorFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw_now)
+#@nonl
+#@-node:ekr.20040803072955.18:<< old ivars >>
+#@+node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+# The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()
+#@nonl
+#@-node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+#@-node:ekr.20040803072955.16:__init__
+#@+node:ekr.20040803072955.28:headWidth & widthInPixels
+def headWidth(self,p=None,s=''):
+
+    """Returns the proper width of the entry widget for the headline."""
+    
+    if p: s = p.headString()
+
+    return self.font.measure(s)/self.font.measure('0')+1
+
+    
+def widthInPixels(self,s):
+
+    s = g.toEncodedString(s,g.app.tkEncoding)
+    
+    return self.font.measure(s)
+#@nonl
+#@-node:ekr.20040803072955.28:headWidth & widthInPixels
+#@-node:ekr.20060106172320:Installed patch for headline width
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands

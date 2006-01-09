@@ -209,8 +209,6 @@ class leoTkinterTree (leoFrame.leoTree):
         
         self.default_line_height = 17 + 2 # default if can't set line_height from font.
         self.line_height = self.default_line_height
-        
-        self.minimum_headline_width = 2 # In characters.
         #@nonl
         #@-node:ekr.20040803072955.17:<< define drawing constants >>
         #@nl
@@ -716,21 +714,16 @@ class leoTkinterTree (leoFrame.leoTree):
     
         """Returns the proper width of the entry widget for the headline."""
         
-        if p:
-            s = p.headString()
-        else:
-            s = s or ''
+        if p: s = p.headString()
     
-        # The 20 is a kludge: len(s) doesn't work well for uppercase or wide characters.
-        return max(self.minimum_headline_width,20 + len(s))
+        return self.font.measure(s)/self.font.measure('0')+1
+    
         
     def widthInPixels(self,s):
     
         s = g.toEncodedString(s,g.app.tkEncoding)
         
-        width = self.font.measure(s)
-        
-        return width
+        return self.font.measure(s)
     #@nonl
     #@-node:ekr.20040803072955.28:headWidth & widthInPixels
     #@+node:ekr.20040803072955.29:setLineHeight
