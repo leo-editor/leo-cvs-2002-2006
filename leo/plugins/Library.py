@@ -33,12 +33,6 @@ Closes the database.
 
 __version__ = ".5"
 
-# To do:
-# Use c.config to get options. (Eliminate libconfig.)
-# Better Show Status command.
-# Test changelibs.
-# Recreate dialog after closing db.
-
 #@<< version history >>
 #@+node:ekr.20050328092641.6:<< version history >>
 #@@color
@@ -129,15 +123,8 @@ zlib = g.importExtension("zlib",   pluginName=__name__,verbose=True)
 #@-node:ekr.20050328092641.7:<< imports >>
 #@nl
 
-libraries = {} # Keys are commanders, values are Library objects.
-dbs = {} # Keys are full paths.  values are databases.
-
-libconfig = g.Bunch(
-    lib = 'default',
-    lib0 = 'default/library.dbm',
-    verbose = 0,
-)
-
+libraries = {}  # Keys are commanders, values are Library objects.
+dbs = {}        # Keys are full paths.  values are databases.
 validlibs = ['lib0', 'lib1', 'lib2', 'lib3', 'lib4', 'lib5',]
 
 #@+others
@@ -224,63 +211,18 @@ class Library(object):
     
         self.c = c
         self.db = None
+        self.lib = c.config.getString('library_lib') or 'default'
         self.path = None
         self.dialog = None
-        self.verbose = True
+        self.verbose = c.config.getBool('library_verbose')
         
         # Create the db.
         self.startup()
         if self.db is not None:
-            self.config()
             self.createDialog()
     #@nonl
     #@-node:ekr.20050328092641.9:__init__
     #@+node:ekr.20060108184110.2:config
-    def config (self):
-        
-        c = self.c
-        pass
-        
-        # if libconfig.lib == 'default': #set to actual path on read ini
-            # try:
-                # applyConfiguration(getConfiguration())
-                # for x in validlibs:
-                    # if hasattr(libconfig,x):
-                        # libconfig.lib = getattr(libconfig,x)
-                        # break
-            # except Exception, er:
-                # #obviously will need to catch the actual error
-                # g.es('error in plugin/Library.ini ',er,color='red')
-       
-    #@+at         
-    # ;default/ is leo/plugins  ~/ is your $HOME env var as seen by leo
-    # ; if there is an @setting Library_lib* somewhere it will override the 
-    # ini
-    # ;there are no provisions yet to change the @setting but hitting 
-    # Preferences apply
-    # ; from the plugin_menu will reread the ini and the @setting
-    # ; you could even change the setting by script then hit apply for now.
-    # ; delete or comment out the ones you won't be using.
-    # 
-    # ; verbosity can be true, True, 1 on, False 0 , turns on extra internal 
-    # feedback
-    # 
-    # [Main]
-    # verbosity=0
-    # ;lib* = eventually, don't use lib=  it is to be the current lib
-    # ; only impliemented lib0..5 for now. lib0 is the opening lib
-    # 
-    # ;lib0 = default/library.dbm
-    # lib1 = default/library1.dbm
-    # ;lib2 = default/library22.dbm
-    # ;lib3 = default/library23.dbm
-    # ;lib4 = default/library24.dbm
-    # 
-    # ;lib5 = ~/libraryMy.dbm
-    # ;libLa = C:\c\leo\libraryL.dbm
-    # ;libLb = C:/c/leo/libraryL.dbm
-    #@-at
-    #@nonl
     #@-node:ekr.20060108184110.2:config
     #@+node:ekr.20060108185916:createDialog
     def createDialog (self):
@@ -298,12 +240,12 @@ class Library(object):
         hull.geometry(str(325)+"x"+str(325)+"+"+str(sw)+"+"+str(sh))
         frame = Tk.Frame(hull)
         frame.pack(fill='both',expand=1)
-    
-        words = [(xf,getattr(libconfig,xf)[-63:])
-                    for xf in libconfig.ivars()
-                        if xf in validlibs]
-        words += [('lib',libconfig.lib[-63:])]
-        words.sort(lambda xf,yf: cmp(xf[0],yf[0]))
+        words = [('lib',self.lib),]
+        for s in validlibs:
+            setting = 'library_%s' % s
+            word = c.config.getString(setting)
+            if word: words.append((s,word),)
+        words.sort(lambda x,y: cmp(x[0],y[0]))
     
         self.dropdown = Pmw.ComboBox(frame,
             selectioncommand = self.changeLibs,
@@ -326,6 +268,14 @@ class Library(object):
     #@nonl
     #@-node:ekr.20060108174201:destroySelf
     #@-node:ekr.20060108184110:Birth & death
+    #@+node:ekr.20060109122217:self.trace
+    def trace(self,*args,**keys):
+        
+        if self.verbose:
+            keys ['color'] = 'blue'
+            g.es(*args,**keys)
+    #@nonl
+    #@-node:ekr.20060109122217:self.trace
     #@+node:ekr.20050328092641.10:buttons
     #@+node:ekr.20050328092641.11:insert
     def insert (self):
@@ -390,16 +340,13 @@ class Library(object):
         add.pack()
     #@nonl
     #@-node:ekr.20050328092641.17:addList
-    #@+node:ekr.20050328092641.19:changeLibs
+    #@+node:ekr.20050328092641.19:changeLibs & helper
     def changeLibs (self,event):
         """whatevr is selected currently a tupple (libN, path)
          user can edit it in and screw it up probably
         """
-        if self.verbose: g.trace(event)
     
-        if event and len(event) == 2 and event [0] in validlibs:
-            pass
-        else:
+        if not (event and len(event) == 2 and event [0] in validlibs):
             g.es('non usable libN in libN {path}',color='red')
             return
     
@@ -409,15 +356,34 @@ class Library(object):
             g.es('non usable path in libN {path}',color='red')
             return
     
-        if self.verbose: g.trace('newlib=%s' % lib)
+        self.trace('Library: newlib=%s' % lib)
         self.shutdown()
-        libconfig.lib = lib
+        self.lib = lib
         if self.dialog:
             self.dialog.destroy()
             self.dialog = self.createDialog()
         self.showDialog()
     #@nonl
-    #@-node:ekr.20050328092641.19:changeLibs
+    #@+node:ekr.20050328092641.25:fixdefault
+    def fixdefault (self,libN,libname):
+    
+        if libname == 'default': libname = 'default/library.dbm'
+    
+        if libname.find('default') != -1:
+            pluginspath = g.os_path_join(g.app.loadDir,'../',"plugins")
+            libname = g.os_path_normpath(g.os_path_abspath(
+                libname.replace('default',pluginspath,1)))
+            # setattr(libconfig,libN,libname)
+    
+        elif libname.find('~') != -1:
+            libname = g.os_path_normpath(g.os_path_abspath(
+                libname.replace('~',g.app.homeDir,1)))
+            # setattr(libconfig,libN,libname)
+    
+        return libname
+    #@nonl
+    #@-node:ekr.20050328092641.25:fixdefault
+    #@-node:ekr.20050328092641.19:changeLibs & helper
     #@+node:ekr.20050328092641.18:setListContents
     def setListContents (self):
     
@@ -431,26 +397,26 @@ class Library(object):
     
         c = self.c
     
-        if c and c.exists and self.db is not None and self.dialog:
+        if c and c.exists and self.db is not None:
+            if not self.dialog:
+                self.createDialog()
             self.dialog.deiconify()
     #@nonl
     #@-node:ekr.20050328092641.16:showDialog
     #@+node:ekr.20060108174432:showStatus
     def showStatus (self):
-        
-        g.es(libconfig)
     
         try:
             w = whichdb.whichdb(self.path) 
         except Exception:
             w = None
     
-        g.es('whichdb is [%s] at\n %s \nor %s'%(w, self.path, libconfig.lib))
+        g.es('whichdb is %s at %s'%(w, self.path))
     #@nonl
     #@-node:ekr.20060108174432:showStatus
     #@-node:ekr.20050328092641.15:GUI
     #@+node:ekr.20050328092641.20:db
-    #@+node:ekr.20050328092641.22:add (unicode)
+    #@+node:ekr.20050328092641.22:add
     def add (self,name,data):
     
         data = g.toEncodedString(data,"utf-8",reportErrors=True)
@@ -458,32 +424,7 @@ class Library(object):
         self.db [name] = data
         self.db.sync()
     #@nonl
-    #@-node:ekr.20050328092641.22:add (unicode)
-    #@+node:ekr.20050328092641.25:fixdefault
-    def fixdefault (self,libN,libname):
-        """
-        can't check isfile yet, anydbm might have to create it
-        dido if the directory doesn't exist, up to the user.
-        and in the process user gets to possibly trash good libconfig slot
-        might the default also add the users leoID to the database name?
-        """
-    
-        if libname == 'default': libname = 'default/library.dbm'
-    
-        if libname.find('default') != -1:
-            pluginspath = g.os_path_join(g.app.loadDir,'../',"plugins")
-            libname = g.os_path_normpath(g.os_path_abspath(
-                libname.replace('default',pluginspath,1)))
-            setattr(libconfig,libN,libname)
-    
-        elif libname.find('~') != -1:
-            libname = g.os_path_normpath(g.os_path_abspath(
-                libname.replace('~',g.app.homeDir,1)))
-            setattr(libconfig,libN,libname)
-    
-        return libname
-    #@nonl
-    #@-node:ekr.20050328092641.25:fixdefault
+    #@-node:ekr.20050328092641.22:add
     #@+node:ekr.20050328092641.24:names
     def names (self):
     
@@ -523,36 +464,32 @@ class Library(object):
     #@+node:ekr.20050328092641.27:startup
     def startup (self):
     
-        path = libconfig.lib ; verbose = self.verbose
-    
-        global dbs, libraries
+        path = self.lib ; global dbs, libraries
     
         try:
             # 'r' and 'w' fail if the database doesn't exist.
             # 'c' creates it only if it doesn't exist.
             # 'n' always creates a new database.
-            if self.verbose: g.trace('Library path:',path)
-    
             if dbs.has_key(path):
                 self.db = dbs [path]
-                if verbose: g.trace('reusing db on',path)
+                self.trace('Library reusing: %s' % path)
             elif g.os_path_exists(path):
                 self.db = anydbm.open(path,"rw")
-                if verbose: g.trace('reopening db ',path)
+                self.trace('Library reopening: %s' % path)
                 dbs [path] = self.db
             else:
-                if verbose: g.trace('creating db ',path)
+                self.trace('Library creating: %s' % path)
                 self.db = anydbm.open(path,"c")
             self.path = path
         except Exception, err:
-            g.es('Exception creating Library database %s' % (err,))
+            g.es('Library: Exception creating database: %s' % (err,))
     
         ok = (self.path and self.db and
             hasattr(self.db,'isOpen') and self.db.isOpen() and hasattr(self.db,'sync'))
         if ok:
             dbs [path] = self.db
         else:
-            g.es('problem starting Library\n %s' % (path,))
+            g.es('problem starting Library: %s' % (path))
         return ok
     #@nonl
     #@-node:ekr.20050328092641.27:startup
