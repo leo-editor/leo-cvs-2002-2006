@@ -463,7 +463,9 @@ def listTops( menu ):
 #@+node:mork.20041018131258.34:drawImages
 def drawImages( tag, keywords ):
     ''' draws a little yellow box on the node image to indicate selection'''
-    c = g.top()
+    
+    c = keywords.get('c')
+    if not c or not c.exists: return
     canvas = c.frame.tree.canvas
     if not movers.has_key( c ): return
     lassoer = movers[ c ]
