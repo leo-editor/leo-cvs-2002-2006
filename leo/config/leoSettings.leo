@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="137" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="138" clone_windows="0"/>
 <globals body_outline_ratio="0.539518900344">
 	<global_window_position top="17" left="333" height="873" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -133,6 +133,12 @@
 </v>
 </v>
 <v t="ekr.20051123100536"><vh>@page Plugins settings</vh>
+<v t="ekr.20060109115046"><vh>library plugin</vh>
+<v t="ekr.20060109115046.1"><vh>@bool library_verbose = True</vh></v>
+<v t="ekr.20060109115046.2"><vh>@string library_lib = default</vh></v>
+<v t="ekr.20060109115046.3"><vh>@string library_lib0 = default/library.dbm</vh></v>
+<v t="ekr.20060109121753"><vh>@string library_lib1 = default/libraryS.dbm</vh></v>
+</v>
 <v t="ekr.20051123100536.1"><vh>vim plugin</vh>
 <v t="ekr.20051123100536.2"><vh>@string vim_cmd = c:\Program Files\vim\vim63\gvim --servername LEO</vh></v>
 <v t="ekr.20051123100536.3"><vh>@string vim_exe = c:\Program Files\vim\vim63\gvim</vh></v>
@@ -217,7 +223,7 @@
 <v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 </v>
-<v t="ekr.20041119034357.56" a="E"><vh>@page Options for new windows</vh>
+<v t="ekr.20041119034357.56"><vh>@page Options for new windows</vh>
 <v t="ekr.20041119034357.59"><vh>@strings[vertical,horizontal] initial_splitter_orientation = vertical</vh></v>
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.4</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.8</vh></v>
@@ -265,7 +271,7 @@
 </v>
 <v t="ekr.20060103135341.9"><vh>@@mode text</vh></v>
 <v t="ekr.20060103135341.10"><vh>@@shortcuts mode-changing commands</vh></v>
-<v t="ekr.20060103135341.11" a="E"><vh>@@shortcuts A-L</vh></v>
+<v t="ekr.20060103135341.11"><vh>@@shortcuts A-L</vh></v>
 <v t="ekr.20060103135341.12"><vh>@@shortcuts M-Z</vh></v>
 <v t="ekr.20060103135341.13"><vh>@@shortcuts cursor</vh></v>
 <v t="ekr.20060103135341.14"><vh>@@shortcuts insert</vh></v>
@@ -275,7 +281,7 @@
 </v>
 <v t="ekr.20060103103812"><vh>(original) traditional Leo shortcuts with important emacs bindings</vh></v>
 </v>
-<v t="ekr.20051010112558" a="E"><vh>traditional Leo shortcuts with important emacs bindings</vh>
+<v t="ekr.20051010112558"><vh>traditional Leo shortcuts with important emacs bindings</vh>
 <v t="ekr.20060102113259"><vh>@mode file mode</vh></v>
 <v t="ekr.20060103103812.1"><vh>@shortcuts mode-changing commands</vh></v>
 <v t="ekr.20060102102958"><vh>@shortcuts A-L</vh></v>
@@ -3531,5 +3537,10 @@ focus-to-tree                           = None</t>
 scroll-down                             = PageDn    # Ctrl-v conflicts with paste-text.
 scroll-up                               = PageUp    # Alt-v conflicts with view-all-characters.</t>
 <t tx="ekr.20060104093101"></t>
+<t tx="ekr.20060109115046"></t>
+<t tx="ekr.20060109115046.1">True: turns on extra feedback</t>
+<t tx="ekr.20060109115046.2"></t>
+<t tx="ekr.20060109115046.3"></t>
+<t tx="ekr.20060109121753"></t>
 </tnodes>
 </leo_file>

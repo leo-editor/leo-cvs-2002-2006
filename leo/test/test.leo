@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
 <globals body_outline_ratio="0.438470728793">
-	<global_window_position top="75" left="255" height="837" width="836"/>
+	<global_window_position top="61" left="347" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -224,8 +224,18 @@
 <v t="ekr.20060107082808"><vh>Error test</vh>
 <v t="ekr.20060107082808.1"><vh>child</vh></v>
 </v>
+<v t="ekr.20060108113440"><vh>test of wiki markup</vh></v>
+<v t="ekr.20060108160837"><vh>@run dir</vh></v>
+<v t="ekr.20060108163923"><vh>For the fileactions plugin</vh>
+<v t="ekr.20060108163323"><vh>FileActions</vh>
+<v t="ekr.20060108163323.1"><vh>*</vh></v>
 </v>
-<v t="ekr.20060108113440" a="TV"><vh>test of wiki markup</vh></v>
+<v t="ekr.20060108163117"><vh>@file-ref c:\prog\leoCVS\leo\test\ironPythonTest.bat</vh></v>
+</v>
+</v>
+<v t="ekr.20060108195804" a="E"><vh>Test of unicode chars in Library</vh>
+<v t="ekr.20060108195804.1" a="TV"><vh>headline: Ő</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4296,5 +4306,14 @@ print 'done'</t>
 @
 
 __bold__</t>
+<t tx="ekr.20060108160837"></t>
+<t tx="ekr.20060108163117"></t>
+<t tx="ekr.20060108163323"></t>
+<t tx="ekr.20060108163323.1">print 'filename',filename
+p = c.currentPosition()
+print 'body:',repr(p.bodyString())</t>
+<t tx="ekr.20060108163923"></t>
+<t tx="ekr.20060108195804">Body text: Ő</t>
+<t tx="ekr.20060108195804.1"></t>
 </tnodes>
 </leo_file>

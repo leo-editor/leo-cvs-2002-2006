@@ -238,7 +238,7 @@ class leoMenu:
     #@+node:ekr.20031218072017.3781:Gui-independent menu routines
     #@+node:ekr.20051022053758: Top level
     #@+node:ekr.20031218072017.3784:createMenuItemsFromTable
-    def createMenuItemsFromTable (self,menuName,table):
+    def createMenuItemsFromTable (self,menuName,table,dynamicMenu=False):
         
         try:
             menu = self.getMenu(menuName)
@@ -246,7 +246,7 @@ class leoMenu:
                 print "menu does not exist: ",menuName
                 g.es("menu does not exist: ",menuName)
                 return
-            self.createMenuEntries(menu,table)
+            self.createMenuEntries(menu,table,dynamicMenu=dynamicMenu)
         except:
             s = "exception creating items for %s menu" % menuName
             g.es_print(s)

@@ -40,7 +40,7 @@ plugins_menu.py
 #pretty_print.py
 rst3.py
 # zodb.py
-rClick.py
+#rClick.py
 #TabWindow.py
 #rowcol.py
 #add_directives.py
@@ -79,7 +79,7 @@ open_with.py
 #URLloader.py
 # read_only_nodes.py
 #color_markup.py
-import_cisco_config.py
+#import_cisco_config.py
 #table.py
 UNL.py
 #@nonl

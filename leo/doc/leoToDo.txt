@@ -7,10 +7,6 @@
 @nocolor
 #@nonl
 #@+node:ekr.20060105130519:Urgent
-#@+node:ekr.20060108105607:Generate calls to 'command1/2' hooks in k.masterCommand
-#@-node:ekr.20060108105607:Generate calls to 'command1/2' hooks in k.masterCommand
-#@+node:ekr.20060106131142:goto next changed doesn't expand ancestors!
-#@-node:ekr.20060106131142:goto next changed doesn't expand ancestors!
 #@+node:ekr.20060106172320:Install patch for headline width
 #@+node:ekr.20060106172320.1:Report
 @nocolor
@@ -59,7 +55,30 @@ Tested briefly with Lucida Console and Verdana as headline fonts, win 2k, and
 it was ok.
 
 #@-node:ekr.20060106172320.1:Report
+#@+node:ekr.20060109060505:Report 2 (much simpler)
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3510983
+By: vpe
+
+I realized it's not necessary to do int-float-int conversion to calculate width.
+The result will be the same. So it's really simple:
+
+width = font.measure(p.headString())/font.measure('0')+1
+
+If font is not fixed-width, trailing space in headlines will vary between 0
+pixels and width of char '0'.
+#@nonl
+#@-node:ekr.20060109060505:Report 2 (much simpler)
 #@-node:ekr.20060106172320:Install patch for headline width
+#@+node:ekr.20060108151437:Make sure g.app.log is set in all event handlers (and idle-time dispatcher)
+Also, the idle-time dispatcher would do well to check c.exists.
+#@nonl
+#@-node:ekr.20060108151437:Make sure g.app.log is set in all event handlers (and idle-time dispatcher)
+#@+node:ekr.20060108105607:Generate calls to 'command1/2' hooks in k.masterCommand
+#@-node:ekr.20060108105607:Generate calls to 'command1/2' hooks in k.masterCommand
+#@+node:ekr.20060106131142:goto next changed doesn't expand ancestors!
+#@-node:ekr.20060106131142:goto next changed doesn't expand ancestors!
 #@+node:ekr.20050928144501.1:Commands for mouseless Leo
 Needed to support 'mouseless-Leo':
 
@@ -218,6 +237,10 @@ EKR: This can be done with @command nodes, but Leo should have official commands
 #@-node:ekr.20051221101851.1:Request
 #@-node:ekr.20051221101851:Add commands to simulate clicks
 #@-node:ekr.20050928144501.1:Commands for mouseless Leo
+#@+node:ekr.20060108120501:Add @find node to scripting plugin
+This is the easy way to do script finds!
+#@nonl
+#@-node:ekr.20060108120501:Add @find node to scripting plugin
 #@-node:ekr.20060105130519:Urgent
 #@+node:ekr.20060105133043:Important 5 days
 #@+node:ekr.20051217135340.2:Create find-options panel
@@ -2961,7 +2984,7 @@ def getSelectedText (self,t):
         else:
             return g.toUnicode(s,g.app.tkEncoding)
     else:
-        return '' # Bug fix: 1/8/06
+        return None
 #@nonl
 #@-node:ekr.20051126125950:getSelectedText
 #@+node:ekr.20031218072017.4086:getTextSelection
