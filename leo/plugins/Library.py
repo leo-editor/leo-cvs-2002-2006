@@ -37,6 +37,7 @@ __version__ = ".5"
 # Use c.config to get options. (Eliminate libconfig.)
 # Better Show Status command.
 # Test changelibs.
+# Recreate dialog after closing db.
 
 #@<< version history >>
 #@+node:ekr.20050328092641.6:<< version history >>
@@ -186,7 +187,7 @@ def onCloseFrame (tag,keywords):
 def cmd_Close_Database(c): 
     
     lib = libraries.get(c)
-    lib and lib.destorySelf()
+    lib and lib.destroySelf()
 #@nonl
 #@-node:ekr.20050328092641.30:cmd_Close_Database
 #@+node:ekr.20060108191608:cmd_Show_Dialog
@@ -347,10 +348,10 @@ class Library(object):
     
         c = self.c
         item = self.lbox.getvalue()
-        if not item: return
-        item = item [0]
-        self.remove(item)
-        self.setListContents()
+        if item:
+            item = item [0]
+            self.remove(item)
+            self.setListContents()
     #@nonl
     #@-node:ekr.20050328092641.12:delete
     #@+node:ekr.20050328092641.13:addCurrentNode
@@ -363,29 +364,6 @@ class Library(object):
         self.setListContents()
     #@nonl
     #@-node:ekr.20050328092641.13:addCurrentNode
-    #@+node:ekr.20050328092641.14:sort time
-    #@+at
-    # add button to call htmlize on a node fallback to implicit @others and 
-    # text
-    # 
-    # not sure self consistant or dangling named nodes could be displayed 
-    # properly
-    # what if clones are involved will they become copies?
-    # language and other directives active at the time of add or insert could 
-    # matter
-    # 
-    # add buttons to sort the nodes displayed
-    # by time inserted,
-    # by filename of leo
-    # attributes for internal use to be added at some future time
-    # 
-    # 
-    # sort by path and last access for the dropdown
-    # without redoing the whole dialog
-    # 
-    # en/decrypted nodes on insert/add
-    #@-at
-    #@-node:ekr.20050328092641.14:sort time
     #@-node:ekr.20050328092641.10:buttons
     #@+node:ekr.20050328092641.15:GUI
     #@+node:ekr.20050328092641.17:addList
@@ -453,7 +431,7 @@ class Library(object):
     
         c = self.c
     
-        if c and c.exists and self.db is not None:
+        if c and c.exists and self.db is not None and self.dialog:
             self.dialog.deiconify()
     #@nonl
     #@-node:ekr.20050328092641.16:showDialog
@@ -507,7 +485,7 @@ class Library(object):
     #@nonl
     #@-node:ekr.20050328092641.25:fixdefault
     #@+node:ekr.20050328092641.24:names
-    def names(self):
+    def names (self):
     
         return self.db.keys()
     #@nonl
@@ -519,20 +497,20 @@ class Library(object):
         self.db.sync()
     #@nonl
     #@-node:ekr.20050328092641.21:remove
-    #@+node:ekr.20050328092641.23:retrieve (unicode)
+    #@+node:ekr.20050328092641.23:retrieve
     def retrieve (self,name):
     
         data = self.db [name]
         data = zlib.decompress(data)
         return g.toUnicode(data,"utf-8",reportErrors=True)
     #@nonl
-    #@-node:ekr.20050328092641.23:retrieve (unicode)
+    #@-node:ekr.20050328092641.23:retrieve
     #@+node:ekr.20050328092641.26:shutdown
-    def shutdown(self):
+    def shutdown (self):
         '''Close self.db.'''
-        
+    
         db = self.db
-        
+    
         if db is None: return
     
         if hasattr(db,'isOpen') and db.isOpen():
@@ -544,10 +522,10 @@ class Library(object):
     #@-node:ekr.20050328092641.26:shutdown
     #@+node:ekr.20050328092641.27:startup
     def startup (self):
-        
+    
         path = libconfig.lib ; verbose = self.verbose
-        
-        global dbs,libraries
+    
+        global dbs, libraries
     
         try:
             # 'r' and 'w' fail if the database doesn't exist.
