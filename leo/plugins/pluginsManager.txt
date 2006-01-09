@@ -40,9 +40,12 @@ plugins_menu.py
 #pretty_print.py
 rst3.py
 # zodb.py
-#rClick.py
+rClick.py
 #TabWindow.py
 #rowcol.py
+#add_directives.py
+#run_nodes.py
+#FileActions.py
 plugin_manager.py
 
 # Icon area: order is important.
@@ -63,7 +66,7 @@ open_with.py
 #footprints.py
 #mod_labels.py
 #trace_tags.py
-# Library.py
+#Library.py
 #ConceptualSort.py
 #macros.py
 #scheduler.py
@@ -76,7 +79,7 @@ open_with.py
 #URLloader.py
 # read_only_nodes.py
 #color_markup.py
-#import_cisco_config.py
+import_cisco_config.py
 #table.py
 UNL.py
 #@nonl

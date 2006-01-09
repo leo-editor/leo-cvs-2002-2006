@@ -40,807 +40,327 @@
 <v t="ekr.20050819055746"><vh>@button Save</vh></v>
 <v t="ekr.20050722075812"><vh>Remove blank trailing lines</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
-<v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
-<v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
-</v>
-<v t="ekr.20050303051035"><vh> Templates: these show recommended ways of defining plugins.</vh>
-<v t="ekr.20041114102139"><vh>Notes</vh>
-<v t="ekr.20041114103913"><vh>About comments in the style guide</vh></v>
-<v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
-<v t="ekr.20041114103913.1"><vh>About defining functions in separate nodes</vh></v>
-<v t="ekr.20041114102139.2"><vh>About the &lt;&lt; imports &gt;&gt; section</vh></v>
-<v t="ekr.20050306072156"><vh>About exceptions</vh></v>
-</v>
-<v t="ekr.20050306071629"><vh>Template for plugin that overrides commander methods</vh>
-<v t="ekr.20050306071629.1"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050306071629.2"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-<v t="ekr.20050306071629.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20050306071629.4"><vh>init</vh></v>
-<v t="ekr.20050306071540"><vh>onStart2</vh></v>
-</v>
-<v t="ekr.20050303051035.2"><vh>Template for Tk plugin with per-commander controller class</vh>
-<v t="ekr.20050303051035.3"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050303051035.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-<v t="ekr.20050303051035.5"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20050303051101"><vh>init</vh></v>
-<v t="ekr.20050303051150"><vh>onCreate</vh></v>
-<v t="ekr.20050303051222"><vh>class pluginController</vh>
-<v t="ekr.20050303051222.1"><vh>__init__</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
-<v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
-<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
-<v t="edream.110203113231.677"><vh> Example of an imported config</vh>
-<v t="edream.110203113231.678"><vh>plain configuration</vh></v>
-<v t="edream.110203113231.679"><vh>cisco config: C:/Davide/Leo/CVS Version/example_conf.txt</vh>
-<v t="edream.110203113231.680"><vh>&lt;&lt;access-list&gt;&gt;</vh></v>
-<v t="edream.110203113231.681"><vh>&lt;&lt;boot&gt;&gt;</vh></v>
-<v t="edream.110203113231.682"><vh>&lt;&lt;controller&gt;&gt;</vh>
-<v t="edream.110203113231.683"><vh>controller E1 5/0/0</vh></v>
-<v t="edream.110203113231.684"><vh>controller E1 5/0/1</vh></v>
-<v t="edream.110203113231.685"><vh>controller SONET 1/0/0</vh></v>
-</v>
-<v t="edream.110203113231.686"><vh>&lt;&lt;interface&gt;&gt;</vh>
-<v t="edream.110203113231.687"><vh>interface Async1</vh></v>
-<v t="edream.110203113231.688"><vh>interface Dialer0</vh></v>
-<v t="edream.110203113231.689"><vh>interface FastEthernet0/0/0</vh></v>
-<v t="edream.110203113231.690"><vh>interface FastEthernet0/0/1</vh></v>
-<v t="edream.110203113231.691"><vh>interface FastEthernet0/0/1.1</vh></v>
-<v t="edream.110203113231.692"><vh>interface FastEthernet0/0/1.2</vh></v>
-<v t="edream.110203113231.693"><vh>interface FastEthernet0/0/1.3</vh></v>
-<v t="edream.110203113231.694"><vh>interface FastEthernet0/0/1.5</vh></v>
-<v t="edream.110203113231.695"><vh>interface FastEthernet0/0/1.50</vh></v>
-<v t="edream.110203113231.696"><vh>interface Loopback0</vh></v>
-<v t="edream.110203113231.697"><vh>interface POS4/1/0</vh></v>
-<v t="edream.110203113231.698"><vh>interface Serial5/0/0:1</vh></v>
-<v t="edream.110203113231.699"><vh>interface Serial5/0/0:2</vh></v>
-<v t="edream.110203113231.700"><vh>interface Serial5/0/1:0</vh></v>
-<v t="edream.110203113231.701"><vh>interface Serial5/1/0</vh></v>
-<v t="edream.110203113231.702"><vh>interface Serial5/1/1</vh></v>
-</v>
-<v t="edream.110203113231.703"><vh>&lt;&lt;ip community-list&gt;&gt;</vh></v>
-<v t="edream.110203113231.704"><vh>&lt;&lt;ip route&gt;&gt;</vh></v>
-<v t="edream.110203113231.705"><vh>&lt;&lt;line&gt;&gt;</vh>
-<v t="edream.110203113231.706"><vh>line aux 0</vh></v>
-<v t="edream.110203113231.707"><vh>line vty 0 4</vh></v>
-</v>
-<v t="edream.110203113231.708"><vh>&lt;&lt;logging&gt;&gt;</vh></v>
-<v t="edream.110203113231.709"><vh>&lt;&lt;ntp&gt;&gt;</vh></v>
-<v t="edream.110203113231.710"><vh>&lt;&lt;route-map&gt;&gt;</vh>
-<v t="edream.110203113231.711"><vh>route-map only permit 2</vh></v>
-<v t="edream.110203113231.712"><vh>route-map only1 permit 10</vh></v>
-<v t="edream.110203113231.713"><vh>route-map only3 permit 10</vh></v>
-<v t="edream.110203113231.714"><vh>route-map tag_com permit 10</vh></v>
-<v t="edream.110203113231.715"><vh>route-map tag_com permit 20</vh></v>
-</v>
-<v t="edream.110203113231.716"><vh>&lt;&lt;router&gt;&gt;</vh>
-<v t="edream.110203113231.717"><vh>router bgp 65001</vh></v>
-<v t="edream.110203113231.718"><vh>router ospf 1</vh></v>
-</v>
-<v t="edream.110203113231.719"><vh>&lt;&lt;service&gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.741"><vh>@thin add_directives.py</vh></v>
-<v t="timo.20050213160555"><vh>@thin bibtex.py</vh></v>
-<v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
-<v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
-<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
-<v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
-<v t="ekr.20050301083306"><vh>@thin mod_read_dir_outline.py</vh></v>
-<v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
-<v t="edream.110203113231.720"><vh>@thin outline_export.py</vh></v>
-<v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
-<v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
-<v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
-<v t="ekr.20041215103252"><vh>datenodes</vh>
-<v t="gfunch.20041207100416"><vh>@thin datenodes.py</vh></v>
-<v t="gfunch.20041209063345.1"><vh>@thin datenodes.ini</vh></v>
-</v>
-<v t="ekr.20050328092641"><vh>Library</vh>
-<v t="ekr.20050328092641.1"><vh>db</vh></v>
-<v t="ekr.20050328092641.2" tnodeList="ekr.20050328092641.2"><vh>@nosent Library.ini</vh></v>
-<v t="ekr.20050328092641.3"><vh>@string Library_lib1 = default/libraryS.dbm</vh></v>
-<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
-</v>
-<v t="edream.110203113231.722"><vh>mod_autosave</vh>
-<v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
-<v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
-</v>
-<v t="ekr.20041110104350"><vh>table plugin: requires tktable</vh>
-<v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.729"><vh>Debugging &amp;  testing</vh>
-<v t="edream.110203113231.730"><vh>@thin dump_globals.py</vh></v>
-<v t="edream.110203113231.732"><vh>@thin enable_gc.py</vh></v>
-<v t="ekr.20050130120433"><vh>@thin failed_import.py</vh></v>
-<v t="edream.110203113231.734"><vh>@thin quit_leo.py</vh></v>
-<v t="ekr.20051016160700"><vh>@thin testRegisterCommand.py</vh></v>
-<v t="edream.110203113231.735"><vh>@thin trace_gc.py</vh></v>
-<v t="edream.110203113231.736"><vh>@thin trace_keys.py</vh></v>
-<v t="edream.110203113231.738"><vh>@thin trace_tags.py</vh></v>
-<v t="ekr.20040205071616"><vh>mnplugins.py</vh>
-<v t="ekr.20050101090717"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050101090717.1"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
-<v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
-<v t="ekr.20040205071616.3"><vh>onStart</vh></v>
-<v t="ekr.20040205071616.4"><vh>setHeadOK</vh></v>
-<v t="ekr.20040205071616.5"><vh>insertBodystamp</vh></v>
-<v t="ekr.20040205071616.6"><vh>is_subnodesOK</vh></v>
-<v t="ekr.20040205071616.7"><vh>onRclick</vh></v>
-<v t="ekr.20040205071616.8"><vh>insertOKcmd</vh></v>
-<v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
-<v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
-</v>
-</v>
-<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
-<v t="ekr.20050421093045"><vh> dyna plugin 139i</vh>
-<v t="ekr.20050421093045.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20050421093045.2"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20050421093045.103"><vh>@thin dynacommon.py</vh></v>
-<v t="ekr.20050421093045.133" tnodeList="ekr.20050421093045.133"><vh>@nosent dyna_menu.ini</vh></v>
-<v t="ekr.20050421093045.134"><vh>@thin dyna.txt</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
-<v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
-<v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
-<v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
-<v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
-<v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
-<v t="ekr.20050301095332"><vh>@thin mod_labels.py</vh></v>
-<v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
-<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
-<v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
-<v t="ekr.20050329082101"><vh>AutoTrees</vh>
-<v t="ekr.20050329082101.1"><vh>AutoTrees plugin</vh>
-<v t="ekr.20050329082101.2"><vh>Introduction</vh></v>
-<v t="ekr.20050329082101.3"><vh>Why use this?</vh></v>
-<v t="ekr.20050329082101.4"><vh>Details</vh></v>
-<v t="ekr.20050329082101.5"><vh>How do I create my own handlers?</vh></v>
-</v>
-<v t="ekr.20050329082101.6" annotate="7d71002e"><vh>Example handlers</vh>
-<v t="ekr.20050329082101.7"><vh>Testing</vh>
-<v t="ekr.20050329082101.8" annotate="7d71002e"><vh>@auto-test something</vh>
-<v t="ekr.20050329082101.9"><vh>one</vh></v>
-<v t="ekr.20050329082101.10"><vh>two</vh></v>
-<v t="ekr.20050329082101.11"><vh>three</vh>
-<v t="ekr.20050329082101.12"><vh>three-one</vh></v>
-<v t="ekr.20050329082101.13"><vh>three-two</vh></v>
-<v t="ekr.20050329082101.14"><vh>three-three</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050329082101.15"><vh>RSS</vh>
-<v t="ekr.20050329082101.16"><vh>@auto-rss http://news.bbc.co.uk/rss/newsonline_uk_edition/world/rss091.xml</vh>
-<v t="ekr.20050329092553"><vh>Hundreds die in Indonesia quake</vh></v>
-<v t="ekr.20050329092553.1"><vh>Ousted Kyrgyz president defiant</vh></v>
-<v t="ekr.20050329092553.2"><vh>Hair 'good source of stem cells'</vh></v>
-<v t="ekr.20050329092553.3"><vh>Ashdown sacks top Bosnian Croat</vh></v>
-<v t="ekr.20050329092553.4"><vh>Splits paralyse Iraqi parliament</vh></v>
-<v t="ekr.20050329092553.5"><vh>Mongolians protest for new poll</vh></v>
-<v t="ekr.20050329092553.6"><vh>Libya's Bulgarian medics appeal</vh></v>
-<v t="ekr.20050329092553.7"><vh>Schiavo rivals 'agree to autopsy'</vh></v>
-<v t="ekr.20050329092553.8"><vh>Would-be sex tourist, 87, jailed</vh></v>
-<v t="ekr.20050329092553.9"><vh>Golf: Funk claims Players title</vh></v>
-<v t="ekr.20050329092553.10"><vh>Cricket: Series win for Aussies</vh></v>
-<v t="ekr.20050329092553.11"><vh>Angola says virus 'under control'</vh></v>
-<v t="ekr.20050329092553.12"><vh>Mugabe criticises MDC 'traitors'</vh></v>
-<v t="ekr.20050329092553.13"><vh>Ex-US diplomats round on Bolton</vh></v>
-<v t="ekr.20050329092553.14"><vh>Brazil quits loan accord with IMF</vh></v>
-<v t="ekr.20050329092553.15"><vh>Japanese economy hit by weak data</vh></v>
-<v t="ekr.20050329092553.16"><vh>Donors pledge $40m for KR trials</vh></v>
-<v t="ekr.20050329092553.17"><vh>Three Romanians missing in Iraq</vh></v>
-<v t="ekr.20050329092553.18"><vh>Wolfowitz 'to meet EU officials'</vh></v>
-<v t="ekr.20050329092553.19"><vh>Knesset rejects Gaza referendum</vh></v>
-<v t="ekr.20050329092553.20"><vh>Militants to attend PLO meeting</vh></v>
-<v t="ekr.20050329092553.21"><vh>South Asia cancels tsunami alerts</vh></v>
-<v t="ekr.20050329092553.22"><vh>Devastation as Afghan dam bursts</vh></v>
-<v t="ekr.20050329092553.23"><vh>Kyrgyzstan's friendly revolution</vh></v>
-</v>
-<v t="ekr.20050329082101.40" annotate="7d71002e"><vh>@auto-rss http://slashdot.org/index.rss</vh>
-<v t="ekr.20050329092553.24"><vh>Followup on MS and Brazil in NY Times</vh></v>
-<v t="ekr.20050329092553.25"><vh>A9.com with Syndicated Search</vh></v>
-<v t="ekr.20050329092553.26"><vh>What's Next At Apple</vh></v>
-<v t="ekr.20050329092553.27"><vh>Berkeley Grads' Identity Data Stolen</vh></v>
-<v t="ekr.20050329092553.28"><vh>South Korean Gov't. Advocates Linux</vh></v>
-<v t="ekr.20050329092553.29"><vh>MS, EU Agree on Name for Windows Sans Media Player</vh></v>
-<v t="ekr.20050329092553.30"><vh>Blackbox (Finally) Updated</vh></v>
-<v t="ekr.20050329092553.31"><vh>Your Face On the Big Screen</vh></v>
-<v t="ekr.20050329092553.32"><vh>Ars Technica Builds Make Magazine's Steadicam</vh></v>
-<v t="ekr.20050329092553.33"><vh>New Photovoltaics Made with Titanium Foil</vh></v>
-</v>
-<v t="ekr.20050329082101.51"><vh>@auto-rss http://www.python.org/channews.rdf</vh>
-<v t="ekr.20050329082101.52"><vh>Python 2.4.1 (release candidate 1)</vh></v>
-<v t="ekr.20050329082101.53"><vh>Greg Stein, of Google and Apache Software Foundation, to deliver keynote at PyCon</vh></v>
-<v t="ekr.20050329082101.54"><vh>New RSS feed for python-dev summaries</vh></v>
-<v t="ekr.20050329082101.55"><vh>Guido van Rossum speaking in Palo Alto</vh></v>
-<v t="ekr.20050329082101.56"><vh>Python 2.3.5 (final)</vh></v>
-<v t="ekr.20050329082101.57"><vh>Security advisory for SimpleXMLRPCServer.py.</vh></v>
-<v t="ekr.20050329082101.58"><vh>Deadline for OSCON proposals</vh></v>
-<v t="ekr.20050329082101.59"><vh>PyCon abstracts now available</vh></v>
-<v t="ekr.20050329082101.60"><vh>PyCon preliminary schedule now available</vh></v>
-<v t="ekr.20050329082101.61"><vh>PSF has awarded three grants</vh></v>
-<v t="ekr.20050329082101.62"><vh>Python for Nokia Series 60 now available</vh></v>
-<v t="ekr.20050329082101.63"><vh>Python 2.4 (final)</vh></v>
-<v t="ekr.20050329082101.64"><vh>PyZine issue 7</vh></v>
-<v t="ekr.20050329082101.65"><vh>PyCon 2005 Call for Proposals</vh></v>
-<v t="ekr.20050329082101.66"><vh>Cameron Laird receives the Frank Willison Award</vh></v>
-</v>
-</v>
-<v t="ekr.20050329082101.67"><vh>Remote</vh>
-<v t="ekr.20050329082101.68"><vh>@auto-remote http://www.bbc.co.uk/news.html</vh></v>
-</v>
-<v t="ekr.20050329082101.69"><vh>Documentation</vh>
-<v t="ekr.20050329082101.70"><vh>@auto-doc docutils.core</vh>
-<v t="ekr.20050329082101.71"><vh>Component</vh>
-<v t="ekr.20050329082101.72"><vh>component_type</vh></v>
-<v t="ekr.20050329082101.73"><vh>default_transforms</vh></v>
-<v t="ekr.20050329082101.74"><vh>supports</vh></v>
-</v>
-<v t="ekr.20050329082101.75"><vh>ConfigParser</vh>
-<v t="ekr.20050329082101.76"><vh>OPTCRE</vh></v>
-<v t="ekr.20050329082101.77"><vh>SECTCRE</vh></v>
-<v t="ekr.20050329082101.78"><vh>add_section</vh></v>
-<v t="ekr.20050329082101.79"><vh>standard_config_files</vh></v>
-<v t="ekr.20050329082101.80"><vh>validation</vh></v>
-</v>
-<v t="ekr.20050329082101.81"><vh>OptionParser</vh>
-<v t="ekr.20050329082101.82"><vh>default_error_encoding_error_handler</vh></v>
-<v t="ekr.20050329082101.83"><vh>relative_path_settings</vh></v>
-<v t="ekr.20050329082101.84"><vh>settings_defaults</vh></v>
-<v t="ekr.20050329082101.85"><vh>settings_spec</vh></v>
-<v t="ekr.20050329082101.86"><vh>standard_option_list</vh></v>
-<v t="ekr.20050329082101.87"><vh>threshold_choices</vh></v>
-<v t="ekr.20050329082101.88"><vh>thresholds</vh></v>
-<v t="ekr.20050329082101.89"><vh>version_template</vh></v>
-</v>
-<v t="ekr.20050329082101.90"><vh>Publisher</vh></v>
-<v t="ekr.20050329082101.91"><vh>default_description</vh></v>
-<v t="ekr.20050329082101.92"><vh>default_usage</vh></v>
-<v t="ekr.20050329082101.93"><vh>frontend</vh></v>
-<v t="ekr.20050329082101.94"><vh>io</vh></v>
-<v t="ekr.20050329082101.95"><vh>parsers</vh></v>
-<v t="ekr.20050329082101.96"><vh>publish_cmdline</vh></v>
-<v t="ekr.20050329082101.97"><vh>publish_file</vh></v>
-<v t="ekr.20050329082101.98"><vh>publish_string</vh></v>
-<v t="ekr.20050329082101.99"><vh>readers</vh></v>
-<v t="ekr.20050329082101.100"><vh>sys</vh></v>
-<v t="ekr.20050329082101.101"><vh>writers</vh></v>
-</v>
-</v>
-<v t="ekr.20050329082101.102"><vh>News Reader</vh>
-<v t="ekr.20050329082101.103"><vh>@auto-news news-server.houston.rr.com/comp.lang.python</vh>
-<v t="ekr.20050329082101.104"><vh>@auto-newsitem 356970 - Easy way to check modules for python version compatibility?</vh></v>
-<v t="ekr.20050329082101.105"><vh>@auto-newsitem 356972 - Q: Module Shared Data</vh></v>
-<v t="ekr.20050329082101.106"><vh>@auto-newsitem 356978 - Re: __contains__ inconsistencies between Python 2.2 and 2.3</vh></v>
-<v t="ekr.20050329082101.107"><vh>@auto-newsitem 356979 - Re: [Numeric] column vector faster than row vector in mat multiply?</vh></v>
-<v t="ekr.20050329082101.108"><vh>@auto-newsitem 356986 - Python 2.4 removes None data type?</vh></v>
-<v t="ekr.20050329082101.109"><vh>@auto-newsitem 356987 - Re: Integer From A Float List?!?</vh></v>
-<v t="ekr.20050329082101.110"><vh>@auto-newsitem 356988 - Suspicious header</vh></v>
-<v t="ekr.20050329082101.111"><vh>@auto-newsitem 356991 - Re: Suspicious header</vh></v>
-<v t="ekr.20050329082101.112"><vh>@auto-newsitem 356992 - survey</vh></v>
-<v t="ekr.20050329082101.113"><vh>@auto-newsitem 356993 - Re: Python 2.4 removes None data type?</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050329082101.114"><vh>AutoTrees Code</vh>
-<v t="ekr.20050329082101.115"><vh>@thin autotrees.py</vh></v>
-<v t="ekr.20050329082101.145"><vh>@--thin trees\pluginsManager.txt</vh></v>
-<v t="ekr.20050329082101.146"><vh>Example tree handlers</vh>
-<v t="ekr.20050329082101.147"><vh>@--thin trees\test.py</vh>
-<v t="ekr.20050329082101.148"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050329082101.149"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050329082101.150"><vh>@--thin trees\rss.py</vh>
-<v t="ekr.20050329082101.151"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050329082101.152"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050329082101.153"><vh>@--thin trees\news.py</vh>
-<v t="ekr.20050329082101.154"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050329082101.155"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-<v t="ekr.20050329082101.156"><vh>Error Classes</vh></v>
-<v t="ekr.20050329082101.157"><vh>getConnection</vh></v>
-<v t="ekr.20050329082101.158"><vh>class News</vh>
-<v t="ekr.20050329082101.159"><vh>initFrom</vh></v>
-</v>
-<v t="ekr.20050329082101.160"><vh>class NewsItem</vh>
-<v t="ekr.20050329082101.161"><vh>initFrom</vh></v>
-</v>
-</v>
-<v t="ekr.20050329082101.162"><vh>@--thin trees\remote.py</vh>
-<v t="ekr.20050329082101.163"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050329082101.164"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050329082101.165"><vh>@--thin trees\doc.py</vh>
-<v t="ekr.20050329082101.166"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20050329082101.167"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
-<v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
-<v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
-<v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
-<v t="EKR.20040605181725"><vh>Autocompleter</vh>
-<v t="EKR.20040605181725.1"><vh>Configuration</vh>
-<v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
-<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
-</v>
-<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
-</v>
-<v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
-<v t="edream.110403140857.1"><vh>Plugin documentation</vh>
-<v t="edream.110403140857.2"><vh>Installation</vh></v>
-<v t="edream.110403140857.3"><vh>Use</vh>
-<v t="edream.110403140857.4"><vh>Supported markups</vh></v>
-<v t="edream.110403140857.5"><vh>Example</vh>
-<v t="edream.110403140857.6"><vh>a subnode</vh></v>
-</v>
-</v>
-<v t="edream.110403140857.7"><vh>Release notes</vh></v>
-</v>
-<v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
-</v>
-<v t="edream.110203113231.925"><vh>@thin script_io_to_body.py</vh></v>
-</v>
-<v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
-<v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
-<v t="pap.20051010170720"><vh>@thin newButtons.py</vh></v>
-<v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
-<v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
-<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
-<v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
-<v t="rogererens.20041013082304"><vh>@thin UNL.py</vh></v>
-</v>
-<v t="ekr.20040915073259"><vh>Enhancing windows</vh>
-<v t="ekr.20050227071948" annotate="5404010000376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303734363635363137343735373236353731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh> cleo</vh>
-<v t="ekr.20050227072121"><vh>Notes</vh>
-<v t="ekr.20050227071948.1" annotate="7d71002e"><vh>TODO</vh>
-<v t="ekr.20050227071948.2" annotate="7d71002e"><vh>pixmap icons</vh></v>
-<v t="ekr.20050227071948.3" annotate="7d71002e"><vh>colour selector</vh></v>
-<v t="ekr.20050227071948.4" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>popup location</vh></v>
-<v t="ekr.20050227071948.5" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>EKR's intentions on @thin nodes</vh>
-<v t="ekr.20050227071948.6" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>No attributes for @thin nodes</vh></v>
-</v>
-<v t="ekr.20050227071948.7" annotate="7d71002e"><vh>group annotations</vh></v>
-<v t="ekr.20050227071948.8" annotate="7d71002e"><vh>archetype based search,navigation</vh></v>
-<v t="ekr.20050227071948.9" annotate="7d71002e"><vh>sort by type</vh></v>
-<v t="ekr.20050227071948.10" annotate="7d71002e"><vh>fonts</vh></v>
-<v t="ekr.20050227071948.11" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346230323632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>question marks</vh></v>
-</v>
-<v t="ekr.20050227071948.12" annotate="54000100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334623634363235353034366536663634363537313035323836383032366637313036353530303731303736323535303236323637373130383238363830323666373130393535303635303735373237303663363537313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638303736323535303236363637373130643238363830323666373130653638303736323735326571002e"><vh>Done</vh>
-<v t="ekr.20050227071948.13" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>Clear All markings</vh></v>
-<v t="ekr.20050227071948.14" annotate="54120100003764373130303238353530343665366636343635373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033353530303731303536323535303236323637373130363238363830323666373130373638303536323535303936313734373436353665373436393666366537313038343933303331306135353038373037323639366637323639373437393731303932383638303236663731306134623634363235353032363636373731306232383638303236663731306336383035363235353039363137323633363836353734373937303635373130643238363830323666373130653638303536323735326571002e"><vh>autoleo node colouring</vh></v>
-<v t="ekr.20050227071948.15" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462363436323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>arbitary colouring</vh></v>
-<v t="ekr.20050227071948.16" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>rename to cleo</vh></v>
-<v t="ekr.20050227071948.17" annotate="7d71002e"><vh>headline colours</vh></v>
-<v t="ekr.20050227071948.18" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>priority colouring</vh></v>
-<v t="ekr.20050227071948.19" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>archtetype colouring</vh></v>
-</v>
-<v t="ekr.20050227071948.20" annotate="7d71002e"><vh>Problems</vh>
-<v t="ekr.20050227071948.6" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>No attributes for @thin nodes</vh></v>
-<v t="ekr.20050227071948.21" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303236323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>features are not orthogonal</vh></v>
-<v t="ekr.20050227071948.22" annotate="7d71002e"><vh>Too many colours !!</vh></v>
-</v>
-<v t="ekr.20050227071948.23" annotate="5404010000376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303734363635363137343735373236353731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh>BUGS</vh>
-<v t="ekr.20050227071948.24" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>popup location</vh></v>
-</v>
-<v t="ekr.20050227071948.27" annotate="7d71002e"><vh>colour table</vh></v>
-<v t="ekr.20050227071948.28" annotate="54060100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353038343336663664366436353665373437333731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh>Notes</vh>
-<v t="ekr.20050227071948.29" annotate="7d71002e"><vh>drawing hooks</vh></v>
-</v>
-</v>
-<v t="ekr.20050227071948.33" annotate="540c0100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353034363636393663363537313037363235353032363236373731303832383638303236663731303935353030373130613632353530393631373236333638363537343739373036353731306232383638303236663731306335353035346637343638363537323731306436323535303236363637373130653238363830323666373130663638306136323735326571002e"><vh>@thin cleo.py</vh></v>
-</v>
-<v t="ekr.20050303080042"><vh> footprints</vh>
-<v t="ekr.20050303080236"><vh>To do</vh></v>
-<v t="ekr.20050303080042.1" tnodeList="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
-<v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
-</v>
+<v t="ekr.20060109105601"><vh>Abandoned plugins</vh>
 <v t="ekr.20050523073009"><vh> chapters</vh>
 <v t="ekr.20050427102121"><vh>Calls to zipfile module in chapters.py</vh>
 <v t="mork.20040926105355.29"><vh>newOpen</vh></v>
 <v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
 <v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
 </v>
-<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
-</v>
-<v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
-<v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
-<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
-<v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
-<v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
-<v t="ekr.20040831122004"><vh>@thin UniversalScrolling.py</vh></v>
-<v t="ekr.20040831115238"><vh>@thin URLloader.py</vh></v>
-</v>
-<v t="ekr.20040722141148"><vh>Example code</vh>
-<v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
-<v t="edream.110203113231.919"><vh>@thin override_commands.py</vh></v>
-<v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
-</v>
-<v t="ekr.20040722134535"><vh>Experimental/unfinished</vh>
-<v t="ekr.20050915064008"><vh>@thin __vnx__.py</vh></v>
-<v t="ekr.20050612074047"><vh>New colorizer</vh>
-<v t="ekr.20050529180421"><vh>jEdit docs...</vh>
-<v t="ekr.20050530065723"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
-<v t="ekr.20050529180421.1"><vh>Rule ordering</vh></v>
-<v t="ekr.20050529180421.2"><vh>Attributes</vh>
-<v t="ekr.20050529180421.3"><vh> Documentation of attributes</vh>
-<v t="ekr.20050529180421.4"><vh> For 'seq', 'span', 'begin', 'end'</vh>
-<v t="ekr.20050529180421.5"><vh>AT_LINE_START (bool)</vh></v>
-<v t="ekr.20050529180421.6"><vh>AT_WHITESPACE_END (bool)</vh></v>
-<v t="ekr.20050529180421.7"><vh>AT_WORD_START (bool)</vh></v>
-</v>
-<v t="ekr.20050529180421.8"><vh> For 'span' only</vh>
-<v t="ekr.20050529180421.9"><vh>NO_WORD_BREAK (bool)</vh></v>
-<v t="ekr.20050529180421.10"><vh>NO_LINE_BREAK (bool)</vh></v>
-<v t="ekr.20050529180421.11"><vh>NO_ESCAPE (bool)</vh></v>
-<v t="ekr.20050529180421.12"><vh>EXCLUDE_MATCH (bool)</vh></v>
-</v>
-<v t="ekr.20050529180421.13"><vh> For 'rules' only</vh>
-<v t="ekr.20050529180421.14"><vh>DEFAULT</vh></v>
-<v t="ekr.20050529180421.15"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
-<v t="ekr.20050529180421.16"><vh>IGNORE_CASE (bool)</vh></v>
-<v t="ekr.20050529180421.17"><vh>SET</vh></v>
-<v t="ekr.20050529180421.18"><vh>NO_WORD_SEP</vh></v>
-</v>
-<v t="ekr.20050529180421.19"><vh>AT_CHAR (int) for 'terminate'</vh></v>
-<v t="ekr.20050529180421.20"><vh>DELEGATE: for 'import', 'span' &amp; 'seq'</vh></v>
-<v t="ekr.20050529180421.21"><vh>HASH_CHAR (char) For 'regx'</vh></v>
-<v t="ekr.20050529180421.22"><vh>TYPE (Token Types)</vh></v>
-</v>
-<v t="ekr.20050529180421.23"><vh>Attributes for 'begin' &amp; 'end'</vh></v>
-<v t="ekr.20050529180421.24"><vh>Attributes for 'import': delegate</vh></v>
-<v t="ekr.20050529180421.25"><vh>Attributes for 'mark' </vh></v>
-<v t="ekr.20050529180421.26"><vh>Attributes for 'property': name, value</vh></v>
-<v t="ekr.20050529180421.27"><vh>Attributes for 'rules'</vh></v>
-<v t="ekr.20050529180421.28"><vh>Attributes for 'span'</vh></v>
-<v t="ekr.20050529180421.29"><vh>Attributes for 'seq' </vh></v>
-</v>
-<v t="ekr.20050529180421.30"><vh>Elements</vh>
-<v t="ekr.20050529220821"><vh>Spans and seqs...</vh>
-<v t="ekr.20050529180421.31"><vh>eol_span</vh></v>
-<v t="ekr.20050529180421.32"><vh>eol_span_regexp</vh></v>
-<v t="ekr.20050529180421.35"><vh>mark_following</vh></v>
-<v t="ekr.20050529180421.36"><vh>mark_previous</vh></v>
-<v t="ekr.20050529180421.40"><vh>seq</vh></v>
-<v t="ekr.20050529180421.41"><vh>seq_regexp</vh></v>
-<v t="ekr.20050529180421.42"><vh>span</vh></v>
-<v t="ekr.20050529180421.43"><vh>span_regexp</vh></v>
-</v>
-<v t="ekr.20050529220821.1"><vh>All others...</vh>
-<v t="ekr.20050529180421.33"><vh>import</vh></v>
-<v t="ekr.20050529180421.34"><vh>keywords</vh></v>
-<v t="ekr.20050529180421.37"><vh>mode</vh></v>
-<v t="ekr.20050529180421.38"><vh>props &amp; property  (for auto-indent)</vh></v>
-<v t="ekr.20050529180421.39"><vh>rules</vh></v>
-<v t="ekr.20050529180421.44"><vh>terminate</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050529142847"><vh>@thin __jEdit_colorizer__.py</vh></v>
-<v t="ekr.20050606214954"><vh>(state methods)</vh>
-<v t="ekr.20050529143413.30"><vh>colorize (Main entry point)</vh></v>
-<v t="ekr.20050529143413.31"><vh>colorizeAnyLanguage</vh></v>
-<v t="ekr.20050602205810.4"><vh>colorRangeWithTag</vh></v>
-</v>
-<v t="ekr.20050606221357"><vh>(init)</vh>
-<v t="ekr.20050602150619"><vh>init_mode</vh></v>
-<v t="ekr.20050602152743"><vh>init_keywords</vh>
-<v t="ekr.20050607073917"><vh>&lt;&lt; compute extra_word_chars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050530065723.47"><vh>parse_jEdit_file</vh></v>
-</v>
-<v t="ekr.20050607220512"><vh>(delegate)</vh>
-<v t="ekr.20050601105358"><vh>colorOneChunk</vh>
-<v t="ekr.20050605130806"><vh>&lt;&lt; queue up this method the first time &gt;&gt;</vh></v>
-<v t="ekr.20050601162452.1"><vh>&lt;&lt; queue up this method &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050607212958"><vh>colorByDelegate</vh></v>
-<v t="ekr.20050602205810.4"><vh>colorRangeWithTag</vh></v>
-</v>
-</v>
-<v t="ekr.20040717133342"><vh>Shadow files plugin</vh>
-<v t="ekr.20050126104457"><vh>Notes</vh></v>
-<v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
-</v>
-<v t="ekr.20040918165427"><vh>To do</vh>
-<v t="EKR.20040611044600"><vh>Mulder undo</vh>
-<v t="bwmulder.20040601212737"><vh>basic_undo.py</vh>
-<v t="bwmulder.20040601212737.1"><vh>class passthrough</vh>
-<v t="bwmulder.20040601212737.2"><vh>__init__</vh></v>
-<v t="bwmulder.20040601212737.3"><vh>__set__</vh></v>
-<v t="bwmulder.20040601212737.4"><vh>__get__</vh></v>
-</v>
-<v t="bwmulder.20040601212737.5"><vh>class scalar_monitor</vh>
-<v t="bwmulder.20040601212737.6"><vh>__init__</vh></v>
-<v t="bwmulder.20040601212737.7"><vh>__set__</vh></v>
-<v t="bwmulder.20040601212737.8"><vh>__get__</vh></v>
-</v>
-<v t="bwmulder.20040601212737.9"><vh>class list_monitor</vh>
-<v t="bwmulder.20040605231305"><vh>__init__</vh></v>
-<v t="bwmulder.20040601212737.10"><vh>set_monitor_object</vh></v>
-<v t="bwmulder.20040601212737.11"><vh>__setitem__</vh></v>
-<v t="bwmulder.20040601212737.12"><vh>__delitem__</vh></v>
-<v t="bwmulder.20040601212737.13"><vh>append</vh></v>
-<v t="bwmulder.20040602152548"><vh>pop</vh></v>
-</v>
-<v t="bwmulder.20040601212737.14"><vh>class list_monitor_in_instance</vh>
-<v t="bwmulder.20040601212737.15"><vh>__init__</vh></v>
-<v t="bwmulder.20040601212737.16"><vh>__set__</vh></v>
-<v t="bwmulder.20040601212737.17"><vh>__get__</vh></v>
-</v>
-<v t="bwmulder.20040602153618"><vh>class dict_monitor</vh>
-<v t="bwmulder.20040605231401"><vh>__init__</vh></v>
-<v t="bwmulder.20040602153642"><vh>set_monitor_object</vh></v>
-<v t="bwmulder.20040602153723"><vh>__setitem__</vh></v>
-<v t="bwmulder.20040602153835"><vh>__delitem__</vh></v>
-</v>
-<v t="bwmulder.20040602154259"><vh>class  dict_monitor_in_instance</vh>
-<v t="bwmulder.20040602154259.1"><vh>__init__</vh></v>
-<v t="bwmulder.20040602154259.2"><vh>__set__</vh></v>
-<v t="bwmulder.20040602154259.3"><vh>__get__</vh></v>
-</v>
-<v t="bwmulder.20040601212737.18"><vh>class monitor</vh>
-<v t="bwmulder.20040601212737.19"><vh>__init__</vh></v>
-<v t="bwmulder.20040601214251"><vh>scalars</vh>
-<v t="bwmulder.20040601212737.20"><vh>monitor_scalar</vh></v>
-<v t="bwmulder.20040601212737.24"><vh>scalar_set</vh></v>
-<v t="bwmulder.20040601212737.25"><vh>scalar_modify</vh></v>
-</v>
-<v t="bwmulder.20040601215339"><vh>lists</vh>
-<v t="bwmulder.20040601212737.21"><vh>monitor_list_attribute_in_class</vh></v>
-<v t="bwmulder.20040601212737.26"><vh>list_create</vh></v>
-<v t="bwmulder.20040601212737.27"><vh>list_set</vh></v>
-<v t="bwmulder.20040601212737.28"><vh>list_del</vh></v>
-<v t="bwmulder.20040601212737.29"><vh>list_append</vh></v>
-</v>
-<v t="bwmulder.20040602165344"><vh>dicts</vh>
-<v t="bwmulder.20040602165402"><vh>monitor_dict_attribute_in_class</vh></v>
-<v t="bwmulder.20040602165506"><vh>dict_create</vh></v>
-<v t="bwmulder.20040602165513"><vh>dict_set</vh></v>
-<v t="bwmulder.20040602165553"><vh>dict_del</vh></v>
-</v>
-<v t="bwmulder.20040601215339.1"><vh>switching on and off</vh>
-<v t="bwmulder.20040601212737.22"><vh>enable</vh></v>
-<v t="bwmulder.20040602164627"><vh>enable_put_in_removed_functions</vh></v>
-<v t="bwmulder.20040602154259.4"><vh>enable_category</vh></v>
-<v t="bwmulder.20040602161525"><vh>disable_category</vh></v>
-<v t="bwmulder.20040601212737.23"><vh>disable</vh></v>
-<v t="bwmulder.20040603081718"><vh>remove_overrides_in_list_and_dict_monitor</vh></v>
-</v>
-</v>
-<v t="bwmulder.20040601222230"><vh>class basic_undomechanism</vh>
-<v t="bwmulder.20040601222230.1"><vh>__init__</vh></v>
-<v t="bwmulder.20040602171606"><vh>reset</vh></v>
-<v t="bwmulder.20040601222230.2"><vh>scalars</vh>
-<v t="bwmulder.20040601222230.3"><vh>scalar_set</vh></v>
-<v t="bwmulder.20040601222230.4"><vh>scalar_set_undo</vh></v>
-<v t="bwmulder.20040601222230.5"><vh>scalar_set_redo</vh></v>
-<v t="bwmulder.20040601222230.6"><vh>scalar_modify</vh></v>
-<v t="bwmulder.20040601222431"><vh>scalar_modify_undo</vh></v>
-</v>
-<v t="bwmulder.20040602075341"><vh>lists</vh>
-<v t="bwmulder.20040602084701.1"><vh>creation</vh>
-<v t="bwmulder.20040602175523"><vh>list_assignment_replace</vh></v>
-<v t="bwmulder.20040602175523.1"><vh>list_assignment_replace_undo</vh></v>
-<v t="bwmulder.20040602175740"><vh>list_assignment_replace_redo</vh></v>
-<v t="bwmulder.20040602183806"><vh>list_assignment_new</vh></v>
-<v t="bwmulder.20040602183814"><vh>list_assignment_new_undo</vh></v>
-<v t="bwmulder.20040602183911"><vh>list_assignment_new_redo</vh></v>
-<v t="bwmulder.20040602075341.1"><vh>list_create</vh></v>
-<v t="bwmulder.20040602084701.2"><vh>list_create_undo</vh></v>
-<v t="bwmulder.20040602084701.3"><vh>list_create_redo</vh></v>
-</v>
-<v t="bwmulder.20040602084701.4"><vh>setting</vh>
-<v t="bwmulder.20040602085955"><vh>list_set</vh></v>
-<v t="bwmulder.20040602085955.1"><vh>list_set_undo</vh></v>
-</v>
-<v t="bwmulder.20040602085955.2"><vh>deletion</vh>
-<v t="bwmulder.20040602085955.3"><vh>list_del</vh></v>
-<v t="bwmulder.20040602085955.4"><vh>list_del_undo</vh></v>
-<v t="bwmulder.20040602085955.5"><vh>list_del_redo</vh></v>
-</v>
-<v t="bwmulder.20040602151709"><vh>append</vh>
-<v t="bwmulder.20040602152051"><vh>list_append</vh></v>
-<v t="bwmulder.20040602152051.1"><vh>list_append_undo</vh></v>
-<v t="bwmulder.20040602152051.2"><vh>list_append_redo</vh></v>
-</v>
-<v t="bwmulder.20040602152548.1"><vh>pop</vh>
-<v t="bwmulder.20040602152548.2"><vh>list_pop</vh></v>
-</v>
-</v>
-<v t="bwmulder.20040602171032"><vh>dictionaries</vh>
-<v t="bwmulder.20040602171032.1"><vh>creation</vh>
-<v t="bwmulder.20040602175801"><vh>dictionary creation</vh></v>
-<v t="bwmulder.20040602171032.2"><vh>dict_create</vh></v>
-<v t="bwmulder.20040602171032.3"><vh>dict_create_undo</vh></v>
-<v t="bwmulder.20040602171032.4"><vh>dict_create_redo</vh></v>
-</v>
-<v t="bwmulder.20040602171032.5"><vh>setting</vh>
-<v t="bwmulder.20040602171032.6"><vh>dict_set</vh></v>
-<v t="bwmulder.20040602171032.7"><vh>dict_set_undo</vh></v>
-</v>
-<v t="bwmulder.20040602171032.8"><vh>deletion</vh>
-<v t="bwmulder.20040602171032.9"><vh>dict_del</vh></v>
-<v t="bwmulder.20040602171032.10"><vh>dict_del_undo</vh></v>
-<v t="bwmulder.20040602171032.11"><vh>dict_del_redo</vh></v>
-</v>
-</v>
-<v t="bwmulder.20040601224447"><vh>the undo machinery</vh>
-<v t="bwmulder.20040603211921"><vh>queries</vh>
-<v t="bwmulder.20040601224447.5"><vh>canUndo</vh></v>
-<v t="bwmulder.20040601224447.6"><vh>canRedo</vh></v>
-<v t="bwmulder.20040603212552"><vh>commands</vh></v>
-<v t="bwmulder.20040603212612"><vh>commands_to_undo</vh></v>
-<v t="bwmulder.20040603212713"><vh>commands_to_redo</vh></v>
-<v t="bwmulder.20040604165011"><vh>steps_stored</vh></v>
-<v t="bwmulder.20040605220919"><vh>print_commands</vh></v>
-</v>
-<v t="bwmulder.20040601224447.2"><vh>mark</vh></v>
-<v t="bwmulder.20040601224447.3"><vh>undo</vh></v>
-<v t="bwmulder.20040601224447.4"><vh>redo</vh></v>
-<v t="bwmulder.20040603212934"><vh>rollback</vh></v>
-<v t="bwmulder.20040601222649"><vh>run_commands</vh></v>
-</v>
-</v>
-</v>
-<v t="bwmulder.20040602221559"><vh>basic_undo_test.py</vh>
-<v t="bwmulder.20040602223236"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="bwmulder.20040602223236.1"><vh>class tracer</vh>
-<v t="bwmulder.20040602223236.2"><vh>__getattr__</vh></v>
-<v t="bwmulder.20040602223906"><vh>catchall</vh></v>
-</v>
-<v t="bwmulder.20040602224231"><vh>class delegator</vh>
-<v t="bwmulder.20040602224413"><vh>__init__</vh></v>
-<v t="bwmulder.20040602224332"><vh>__getattr__</vh></v>
-<v t="bwmulder.20040602231914"><vh>catchall</vh></v>
-<v t="bwmulder.20040602231934"><vh>enable_category</vh></v>
-</v>
-<v t="bwmulder.20040602225640"><vh>class basic_scalar_test</vh>
-<v t="bwmulder.20040602230124"><vh>test_scalar_basic</vh></v>
-<v t="bwmulder.20040604184443"><vh>test_linked_list</vh></v>
-</v>
-<v t="bwmulder.20040605104941"><vh>class basic_list_test</vh>
-<v t="bwmulder.20040605105746"><vh>test_lists_basic</vh></v>
-<v t="bwmulder.20040605174728"><vh>test_lists_replace</vh></v>
-</v>
-<v t="bwmulder.20040605180204"><vh>class basic_dict_test</vh>
-<v t="bwmulder.20040605180225"><vh>test_dicts_basic</vh></v>
-<v t="bwmulder.20040605180245"><vh>test_dicts_replace</vh></v>
-</v>
-<v t="bwmulder.20040602230426"><vh>test_main</vh></v>
-</v>
-</v>
-<v t="ekr.20040918165144.9"><vh>Write script to find args to g.es()</vh></v>
-<v t="ekr.20040918165427.4"><vh>Autocompletion dictionary files</vh></v>
-<v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
-</v>
-<v t="edream.110203113231.233"><vh>wxPython plugin (pre-alpha quality)</vh>
-<v t="edream.110203113231.234"><vh> wx Diary</vh>
-<v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
-<v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
-<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
-<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
-<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
-<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
-</v>
-<v t="edream.111503111350"><vh>To do</vh>
-<v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
-<v t="edream.111303103141.3"><vh>delete_range</vh></v>
-</v>
-<v t="edream.111303100039"><vh>Gui-dependent commands (to do)</vh>
-<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
-<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
-<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
-<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="edream.111303100039.7"><vh>Window Menu</vh>
-<v t="edream.111303100039.8"><vh>cascade</vh></v>
-<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
-<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
-<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
-<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
-<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
-</v>
-<v t="edream.111703103908"><vh>Help Menu...</vh>
-<v t="edream.111703103908.2"><vh>leoHelp</vh>
-<v t="edream.111703103908.3"><vh>showProgressBar</vh>
-<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20050718142601"><vh>(Changes made 7/05)</vh>
-<v t="ekr.20050718142601.1"><vh>Notes</vh></v>
-<v t="edream.110203113231.347"><vh>OnInit  (wxLeoApp)</vh></v>
-<v t="ekr.20050718151826"><vh>(wxGui Stuff)</vh>
-<v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
-<v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
-<v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
-<v t="edream.110203113231.309"><vh>setDefaultIcon CONTAINS TK CODE</vh></v>
-<v t="edream.110203113231.310"><vh>setEncoding</vh></v>
-<v t="edream.110203113231.311"><vh>getDefaultConfigFont CONTAINS TK CODE</vh></v>
-<v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
-</v>
-<v t="edream.111303085447.1"><vh>destroySelf</vh></v>
-<v t="edream.110203113231.317"><vh>runMainLoop</vh></v>
-<v t="edream.110203113231.306"><vh>stubs</vh>
-<v t="edream.110203113231.314"><vh>finishCreate</vh></v>
-<v t="edream.110203113231.315"><vh>killGui</vh></v>
-<v t="edream.110203113231.316"><vh>recreateRootWindow</vh></v>
-</v>
-</v>
-<v t="edream.111303092328.4"><vh>createLeoFrame (wxGui panels)</vh></v>
-</v>
-<v t="edream.110203113231.350"><vh>Birth &amp; death (wxLeoFrame)</vh>
-<v t="edream.110203113231.266"><vh>__init__</vh></v>
-<v t="edream.110203113231.351"><vh>__repr__</vh></v>
-<v t="edream.110203113231.260"><vh>finishCreate (wxLeoFrame)</vh>
-<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
-<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
-<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
-</v>
-<v t="edream.111403141810"><vh>initialRatios</vh></v>
-<v t="edream.111503105816"><vh>injectCallbacks</vh></v>
-<v t="edream.111303141147"><vh>signOnWithVersion</vh></v>
-<v t="edream.111503213533"><vh>destroySelf</vh></v>
-</v>
-<v t="edream.110203113231.540"><vh>Birth &amp; death (wxLeoBody)</vh>
-<v t="edream.110203113231.541"><vh>wxLeoBody.__init__</vh></v>
-<v t="edream.110203113231.542"><vh>wxLeoBody.createControl</vh></v>
-</v>
-</v>
-<v t="edream.111403093253.1"><vh>Projects</vh>
-<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
-<v t="edream.111303204025"><vh>Indices</vh>
-<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
-<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
-<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
-<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
-<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
-<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
-</v>
-<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
-<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
-<v t="edream.111303205611"><vh>tag_add</vh></v>
-<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
-<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
-<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
-<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.242"><vh>Unused code</vh>
-<v t="ekr.20050718142601.3"><vh>From wxLeoApp.OnInit</vh></v>
-<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
-<v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
-</v>
-<v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
-</v>
-<v t="ekr.20051109021852"><vh>Tk Notebook</vh>
-<v t="leo4u.20040924131405.1"><vh>@thin Tknotebook.py</vh></v>
-<v t="leo4u.20040924130601.1"><vh>@thin TabWindow.py</vh></v>
-</v>
-</v>
-<v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
-<v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
-<v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
-<v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
-<v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
-<v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
-<v t="EKR.20040517075715.13"><vh>Word export</vh>
-<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
-<v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
+<v t="mork.20040926105355.1"><vh>chapters.py</vh>
+<v t="ekr.20041109123143"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
+<v t="ekr.20041103051117"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20041103050629"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="mork.20040926105355.2"><vh>&lt;&lt; globals &gt;&gt;</vh></v>
+<v t="ekr.20060109063941"><vh>init</vh>
+<v t="ekr.20041103054545"><vh>&lt;&lt; override various methods &gt;&gt;</vh></v>
+</v>
+<v t="mork.20040927092626"><vh>class Chapter</vh>
+<v t="ekr.20041103051228"><vh>__init__</vh></v>
+<v t="ekr.20041103051228.1"><vh>_saveInfo</vh></v>
+<v t="ekr.20041103051228.2"><vh>setVariables</vh></v>
+<v t="ekr.20041103051228.3"><vh>makeCurrent</vh></v>
+</v>
+<v t="mork.20040930090735"><vh>Creating widgets...</vh>
+<v t="mork.20040926105355.21"><vh>newCreateControl</vh></v>
+<v t="mork.20040929110556"><vh>createPanedWidget</vh></v>
+<v t="mork.20040926105355.22"><vh>newEditorPane</vh></v>
+<v t="mork.20040926105355.23"><vh>newCreateCanvas</vh></v>
+<v t="mork.20040929120442"><vh>createBalloon</vh></v>
+<v t="mork.20040929102107"><vh>createNoteBook</vh></v>
+<v t="mork.20040929093051"><vh>getNameMaker</vh></v>
+<v t="mork.20040926105355.24"><vh>newTreeinit</vh></v>
+<v t="mork.20040926105355.25"><vh>constructTree</vh></v>
+<v t="mork.20040926105355.26"><vh>addPage</vh></v>
+<v t="mork.20040926105355.35"><vh>newEditor</vh></v>
+</v>
+<v t="mork.20040930091319"><vh>tab menu stuff</vh>
+<v t="mork.20040926105355.41"><vh>makeTabMenu</vh></v>
+<v t="mork.20040930091319.1"><vh>function factories</vh>
+<v t="mork.20040928224349"><vh>getAddChapter</vh></v>
+<v t="mork.20040928223221"><vh>getRemove</vh></v>
+<v t="mork.20040928223738"><vh>getRename</vh></v>
+<v t="mork.20040928224049"><vh>getMakeTrash</vh></v>
+<v t="mork.20040928224621"><vh>getSetupMenu</vh></v>
+</v>
+</v>
+<v t="mork.20040930092346"><vh>Multi-Editor stuff</vh>
+<v t="mork.20040929104527"><vh>selectNodeForEditor</vh></v>
+<v t="mork.20040929105638"><vh>activateEditor</vh></v>
+<v t="mork.20040926105355.36"><vh>removeEditor</vh></v>
+<v t="mork.20040926105355.44"><vh>addHeading</vh></v>
+</v>
+<v t="mork.20040930090547"><vh>Indexing</vh>
+<v t="mork.20040926105355.3"><vh>viewIndex</vh></v>
+<v t="mork.20040929121409"><vh>buildIndex</vh></v>
+<v t="mork.20040926105355.4"><vh>regexViewIndex</vh></v>
+</v>
+<v t="mork.20040930094729"><vh>Chapter-Notebook ops</vh>
+<v t="mork.20040926105355.5"><vh>renumber</vh></v>
+<v t="mork.20040926105355.6"><vh>getGoodPage</vh></v>
+<v t="mork.20040926105355.7"><vh>checkChapterValidity</vh></v>
+<v t="mork.20040926105355.20"><vh>getSV</vh></v>
+<v t="mork.20040926105355.27"><vh>setTree</vh></v>
+<v t="mork.20040929084846"><vh>lowerPage</vh></v>
+<v t="mork.20040926105355.40"><vh>walkChapters</vh></v>
+</v>
+<v t="mork.20040930091035"><vh>opening and closing (to be moved into Leo's core?)</vh>
+<v t="mork.20040930091035.1"><vh>opening</vh>
+<v t="mork.20040926105355.28"><vh>newGetLeoFile</vh></v>
+<v t="mork.20040926105355.29"><vh>newOpen</vh></v>
+<v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
+<v t="mork.20040926105355.8" a="M"><vh>insertChapters</vh></v>
+</v>
+<v t="mork.20040930091035.2"><vh>closing</vh>
+<v t="mork.20040926105355.30"><vh>newWrite_LEO_file</vh></v>
+<v t="mork.20040929092231"><vh>getMakeStringIO</vh></v>
+<v t="mork.20040929090525"><vh>writeChapters</vh></v>
+<v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
+</v>
+</v>
+<v t="mork.20040930091624"><vh>decorated Leo functions</vh>
+<v t="mork.20040926105355.34"><vh>new_os_path_dirname</vh></v>
+<v t="mork.20040926105355.45"><vh>newendEditLabel</vh></v>
+<v t="mork.20040926105355.52"><vh>newselect</vh></v>
+<v t="mork.20040926105355.49"><vh>newTrashDelete</vh></v>
+</v>
+<v t="mork.20040930091759"><vh>operation( node ) to Chapter</vh>
+<v t="mork.20040926105355.31"><vh>cloneToChapter</vh></v>
+<v t="mork.20040926105355.32"><vh>moveToChapter</vh></v>
+<v t="mork.20040926105355.33"><vh>copyToChapter</vh></v>
+<v t="mork.20040926105355.39"><vh>makeNodeIntoChapter</vh></v>
+</v>
+<v t="mork.20040930092027"><vh>conversions</vh>
+<v t="mork.20040926105355.37"><vh>conversionToSimple</vh></v>
+<v t="mork.20040926105355.38"><vh>conversionToChapters</vh></v>
+</v>
+<v t="mork.20040930092027.1"><vh>import/export</vh>
+<v t="mork.20040926105355.47"><vh>importLeoFile</vh></v>
+<v t="mork.20040926105355.48"><vh>exportLeoFile</vh></v>
+</v>
+<v t="mork.20040930092207"><vh>functions without classification</vh>
+<v t="mork.20040926105355.46"><vh>swapChapters</vh></v>
+<v t="mork.20040926105355.50"><vh>emptyTrash</vh></v>
+<v t="mork.20040926105355.51"><vh>regexClone</vh></v>
+</v>
+<v t="mork.20040930091624.1"><vh>PDF</vh>
+<v t="mork.20040926105355.42"><vh>doPDFConversion</vh>
+<v t="ekr.20041109120739"><vh>&lt;&lt; define otherPages callback &gt;&gt;</vh></v>
+</v>
+<v t="mork.20040926105355.43"><vh>_changeTreeToPDF</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
+<v t="ekr.20050421093045"><vh> dyna plugin (modified from 139i)</vh>
+<v t="ekr.20060109001152"><vh>&lt;&lt; modifications by EKR from 139i &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.2"><vh>@@thin dyna_menu.py</vh>
+<v t="ekr.20050421093045.3"><vh>&lt;&lt; doc &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.4"><vh>&lt;&lt; initilize &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.5"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.6"><vh>macros</vh>
+<v t="ekr.20050421093045.7"><vh>info macros</vh>
+<v t="ekr.20050421093045.8"><vh> Clip_dtef</vh></v>
+<v t="ekr.20050421093045.9"><vh>HELP!</vh>
+<v t="ekr.20050421093045.10"><vh>&lt;&lt; stdredirect n &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.11"><vh>&lt;&lt; happydoc &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.12"><vh>&lt;&lt; stdredirect f &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.13"><vh>Graphviz node</vh>
+<v t="ekr.20050421093045.14"><vh>&lt;&lt; code &gt;&gt;</vh>
+<v t="ekr.20050421093045.15"><vh>addLeoNodesToGraph</vh></v>
+<v t="ekr.20050421093045.16"><vh>tnode/vnodeLabel</vh></v>
+<v t="ekr.20050421093045.17"><vh>tnode/vnodeRepr</vh></v>
+</v>
+</v>
+<v t="ekr.20050421093045.18"><vh>linenumber</vh></v>
+<v t="ekr.20050421093045.19"><vh>nflatten</vh></v>
+<v t="ekr.20050421093045.20"><vh>fileinfo</vh>
+<v t="ekr.20050421093045.21"><vh>print perms</vh></v>
+</v>
+</v>
+<v t="ekr.20050421093045.22"><vh>text macros</vh>
+<v t="ekr.20050421093045.23"><vh>geturls</vh></v>
+<v t="ekr.20050421093045.24"><vh>swaper</vh></v>
+<v t="ekr.20050421093045.25"><vh>flipper</vh></v>
+<v t="ekr.20050421093045.26"><vh>dupe</vh></v>
+<v t="ekr.20050421093045.27"><vh>clipappend</vh></v>
+<v t="ekr.20050421093045.28"><vh>everycase</vh></v>
+<v t="ekr.20050421093045.29"><vh>dyna_regexTk</vh></v>
+<v t="ekr.20050421093045.30"><vh>wraper</vh></v>
+<v t="ekr.20050421093045.31"><vh>+rsortnumb</vh></v>
+<v t="ekr.20050421093045.32"><vh>+sortnumb</vh></v>
+<v t="ekr.20050421093045.33"><vh>del_last_char</vh></v>
+</v>
+<v t="ekr.20050421093045.34"><vh>codeing macros</vh>
+<v t="ekr.20050421093045.35"><vh>importnode</vh>
+<v t="ekr.20050421093045.36"><vh>&lt;&lt; checkFileSyntax &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.37"><vh>disa</vh></v>
+<v t="ekr.20050421093045.38"><vh>c2py</vh></v>
+<v t="ekr.20050421093045.39"><vh>+dynaHexdump</vh></v>
+<v t="ekr.20050421093045.40"><vh>_sfdots</vh></v>
+<v t="ekr.20050421093045.41"><vh>+call_evaluator</vh></v>
+<v t="ekr.20050421093045.42"><vh>astyle</vh>
+<v t="ekr.20050421093045.43"><vh>&lt;&lt;tidy&gt;&gt;</vh></v>
+<v t="ekr.20050421093045.44"><vh>&lt;&lt; runastyle &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.45"><vh>pylint</vh></v>
+<v t="ekr.20050421093045.46"><vh>makatemp</vh></v>
+<v t="ekr.20050421093045.47"><vh>tim_one_crunch</vh>
+<v t="ekr.20050421093045.48"><vh>Bugfixcrunch</vh>
+<v t="ekr.20050421093045.49"><vh>&lt;&lt; bfcrunch &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050421093045.50"><vh>pre/post macros</vh>
+<v t="ekr.20050421093045.51"><vh>du_test-str</vh>
+<v t="ekr.20050421093045.52"><vh>&lt;&lt; Classes &gt;&gt;</vh>
+<v t="ekr.20050421093045.53"><vh>ExitError</vh></v>
+<v t="ekr.20050421093045.54"><vh>importCode</vh></v>
+</v>
+<v t="ekr.20050421093045.55"><vh>guts</vh>
+<v t="ekr.20050421093045.56"><vh>&lt;&lt; n_redirect &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.57"><vh>&lt;&lt; DocTest &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.58"><vh>&lt;&lt; f_redirect &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050421093045.59"><vh> htmlize</vh>
+<v t="ekr.20050421093045.60"><vh>&lt;&lt;more doc&gt;&gt;</vh></v>
+<v t="ekr.20050421093045.61"><vh>&lt;&lt; initilize &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.62"><vh>class Parser</vh>
+<v t="ekr.20050421093045.63"><vh>__init__</vh></v>
+<v t="ekr.20050421093045.64"><vh>format</vh></v>
+<v t="ekr.20050421093045.65"><vh>__call__</vh></v>
+</v>
+<v t="ekr.20050421093045.66"><vh>&lt;&lt;hopts&gt;&gt;</vh></v>
+<v t="ekr.20050421093045.67"><vh>&lt;&lt;header plain footer&gt;&gt;</vh></v>
+<v t="ekr.20050421093045.68"><vh>&lt;&lt; plain or rst &gt;&gt;</vh>
+<v t="ekr.20050421093045.69"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.70"><vh>&lt;&lt; docutil out &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.71"><vh>&lt;&lt; src-highlight &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.72"><vh>&lt;&lt; silvercity &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.73"><vh>restoreStd</vh></v>
+<v t="ekr.20050421093045.74"><vh>del first n char</vh></v>
+</v>
+<v t="ekr.20050421093045.75"><vh>cascade actions</vh>
+<v t="ekr.20050421093045.76"><vh>+DQ3</vh>
+<v t="ekr.20050421093045.77"><vh>&lt;&lt;doctest&gt;&gt;</vh></v>
+<v t="ekr.20050421093045.78"><vh>&lt;&lt; tripleline &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.79"><vh>_actions</vh>
+<v t="ekr.20050421093045.80"><vh>&lt;&lt;doctest&gt;&gt;</vh></v>
+<v t="ekr.20050421093045.81"><vh>&lt;&lt; codecs.lookup &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.82"><vh>_backslashs</vh></v>
+</v>
+</v>
+<v t="ekr.20050421093045.83"><vh>config</vh>
+<v t="ekr.20050421093045.84"><vh>flipvers</vh>
+<v t="ekr.20050421093045.85"><vh>cmd_flipverbosity</vh></v>
+<v t="ekr.20050421093045.86"><vh>cmd_flipLeo_debug</vh></v>
+<v t="ekr.20050421093045.87"><vh>cmd_flipjustPyChecker</vh></v>
+<v t="ekr.20050421093045.88"><vh>flip_onoff_c_gotoline</vh></v>
+</v>
+<v t="ekr.20050421093045.89"><vh>cmd_SetAsDefault</vh></v>
+<v t="ekr.20050421093045.90"><vh>cmd_ShowDefaults</vh></v>
+<v t="ekr.20050421093045.91"><vh>@ test _Configuration</vh>
+<v t="ekr.20050421093045.92"><vh>getConfiguration</vh></v>
+<v t="ekr.20050421093045.93"><vh>applyConfiguration</vh>
+<v t="ekr.20050421093045.94"><vh>&lt;&lt; anint(x) &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050421093045.95"><vh>load_menu</vh>
+<v t="ekr.20050421093045.96"><vh>&lt;&lt; togprpa &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.97"><vh>&lt;&lt; add items &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.98"><vh>&lt;&lt; action &gt;&gt;</vh>
+<v t="ekr.20050421093045.99"><vh>actions</vh></v>
+<v t="ekr.20050421093045.100"><vh>_backslashs</vh></v>
+<v t="ekr.20050421093045.101"><vh>show clip</vh></v>
+</v>
+</v>
+<v t="ekr.20050421093045.102"><vh>init</vh></v>
+</v>
+<v t="ekr.20050421093045.103"><vh>@@thin dynacommon.py</vh>
+<v t="ekr.20050421093045.104"><vh>others</vh>
+<v t="ekr.20050421093045.105"><vh>_caller_symbols</vh></v>
+</v>
+<v t="ekr.20050421093045.106"><vh>functs w/doctest</vh>
+<v t="ekr.20050421093045.107"><vh>deangle</vh></v>
+<v t="ekr.20050421093045.108"><vh>commafy</vh></v>
+<v t="ekr.20050421093045.109"><vh>stripSentinels</vh>
+<v t="ekr.20050421093045.110"><vh>&lt;&lt; essential doctesting &gt;&gt;</vh></v>
+<v t="ekr.20050421093045.111"><vh>&lt;&lt; linematch &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.112"><vh>sanitize_</vh>
+<v t="ekr.20050421093045.113"><vh>&lt;&lt; chk sanitize &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.114"><vh>leotmp</vh></v>
+</v>
+<v t="ekr.20050421093045.115"><vh>dynastuff</vh>
+<v t="ekr.20050421093045.116"><vh>fixbody</vh></v>
+<v t="ekr.20050421093045.117"><vh>selecbody</vh></v>
+<v t="ekr.20050421093045.118"><vh>AskYesNo</vh></v>
+<v t="ekr.20050421093045.119"><vh>dynaBunch</vh></v>
+<v t="ekr.20050421093045.120"><vh>names and colors</vh></v>
+<v t="ekr.20050421093045.121"><vh>dynaerrout</vh></v>
+<v t="ekr.20050421093045.122"><vh>dynaerrline</vh></v>
+<v t="ekr.20050421093045.123"><vh>getsubnodes</vh></v>
+<v t="ekr.20050421093045.124"><vh>captureStd</vh></v>
+<v t="ekr.20050421093045.125"><vh>runcmd</vh>
+<v t="ekr.20050421093045.126"><vh>&lt;&lt; subproc &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.127"><vh>dynadoc</vh>
+<v t="ekr.20050421093045.128"><vh>&lt;&lt; formdoc &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.129"><vh>quiet warnings</vh></v>
+</v>
+<v t="ekr.20050421093045.130"><vh>dynaput</vh></v>
+<v t="ekr.20050421093045.131"><vh>python -O</vh></v>
+<v t="ekr.20050421093045.132"><vh>&lt;&lt; set filenames &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050421093045.133" tnodeList="ekr.20050421093045.133"><vh>@nosent dyna_menu.ini</vh></v>
+<v t="ekr.20050421093045.134"><vh>@@thin dyna.txt</vh>
+<v t="ekr.20050421093045.135"><vh>you need</vh>
+<v t="ekr.20050421093045.136"><vh>get the pylint rc</vh></v>
+</v>
+<v t="ekr.20050421093045.137"><vh>rc</vh>
+<v t="ekr.20050421093045.138"><vh>&lt;&lt; @home &gt;&gt;</vh>
+<v t="ekr.20050421093045.139"><vh>windefs</vh></v>
+<v t="ekr.20050421093045.140"><vh>macdefs</vh></v>
+</v>
+<v t="ekr.20050421093045.141"><vh>@test onetest</vh></v>
+<v t="ekr.20050421093045.142"><vh>urls</vh>
+<v t="ekr.20050421093045.143"><vh>@url http://www.logilab.org/projects/pylint</vh></v>
+<v t="ekr.20050421093045.144"><vh>@url http://www.logilab.org/projects/common</vh></v>
+<v t="ekr.20050421093045.145"><vh>@url http://pychecker.sourceforge.net/</vh></v>
+</v>
+<v t="ekr.20050421093045.146"><vh>@file-nosent .pdbrc</vh></v>
+<v t="ekr.20050421093045.147"><vh>@file-nosent .pythonrc.py</vh></v>
+<v t="ekr.20050421093045.148"><vh>@file-nosent .pycheckrc</vh></v>
+<v t="ekr.20050421093045.149"><vh>@file-nosent .pylintrc</vh></v>
+<v t="ekr.20050421093045.150"><vh>@nosent tags.j2h</vh></v>
+</v>
+<v t="ekr.20050421093045.151"><vh>leo css</vh>
+<v t="ekr.20050421093045.152"><vh>@file default.css</vh>
+<v t="ekr.20050421093045.153"><vh>leo_rst1.css</vh></v>
+<v t="ekr.20050421093045.154"><vh>silver_city1.css</vh></v>
+</v>
+</v>
+<v t="ekr.20050421093045.155"><vh>rpdb</vh>
+<v t="ekr.20050421093045.156"><vh>@file-nosent rpdb.bat</vh></v>
+<v t="ekr.20050421093045.157"><vh>@url file:///c|/bIn/bat/rpdb.bat</vh></v>
+</v>
+<v t="ekr.20050421093045.158"><vh>au3</vh>
+<v t="ekr.20050421093045.159"><vh>@nosent leoopen1.au3</vh></v>
+<v t="ekr.20050421093045.160"><vh>@url c:/c/chall/osix_Geek/leoopen1.au3</vh></v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
 <v t="mork.20041013092542.1"><vh>usetemacs.py</vh>
@@ -1262,6 +782,788 @@
 </v>
 </v>
 </v>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
+<v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
+</v>
+<v t="ekr.20050303051035"><vh> Templates: these show recommended ways of defining plugins.</vh>
+<v t="ekr.20041114102139"><vh>Notes</vh>
+<v t="ekr.20041114103913"><vh>About comments in the style guide</vh></v>
+<v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
+<v t="ekr.20041114103913.1"><vh>About defining functions in separate nodes</vh></v>
+<v t="ekr.20041114102139.2"><vh>About the &lt;&lt; imports &gt;&gt; section</vh></v>
+<v t="ekr.20050306072156"><vh>About exceptions</vh></v>
+</v>
+<v t="ekr.20050306071629"><vh>Template for plugin that overrides commander methods</vh>
+<v t="ekr.20050306071629.1"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050306071629.2"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20050306071629.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050306071629.4"><vh>init</vh></v>
+<v t="ekr.20050306071540"><vh>onStart2</vh></v>
+</v>
+<v t="ekr.20050303051035.2"><vh>Template for Tk plugin with per-commander controller class</vh>
+<v t="ekr.20050303051035.3"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050303051035.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20050303051035.5"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050303051101"><vh>init</vh></v>
+<v t="ekr.20050303051150"><vh>onCreate</vh></v>
+<v t="ekr.20050303051222"><vh>class pluginController</vh>
+<v t="ekr.20050303051222.1"><vh>__init__</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
+<v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
+<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
+<v t="edream.110203113231.677"><vh> Example of an imported config</vh>
+<v t="edream.110203113231.678"><vh>plain configuration</vh></v>
+<v t="edream.110203113231.679"><vh>cisco config: C:/Davide/Leo/CVS Version/example_conf.txt</vh>
+<v t="edream.110203113231.680"><vh>&lt;&lt;access-list&gt;&gt;</vh></v>
+<v t="edream.110203113231.681"><vh>&lt;&lt;boot&gt;&gt;</vh></v>
+<v t="edream.110203113231.682"><vh>&lt;&lt;controller&gt;&gt;</vh>
+<v t="edream.110203113231.683"><vh>controller E1 5/0/0</vh></v>
+<v t="edream.110203113231.684"><vh>controller E1 5/0/1</vh></v>
+<v t="edream.110203113231.685"><vh>controller SONET 1/0/0</vh></v>
+</v>
+<v t="edream.110203113231.686"><vh>&lt;&lt;interface&gt;&gt;</vh>
+<v t="edream.110203113231.687"><vh>interface Async1</vh></v>
+<v t="edream.110203113231.688"><vh>interface Dialer0</vh></v>
+<v t="edream.110203113231.689"><vh>interface FastEthernet0/0/0</vh></v>
+<v t="edream.110203113231.690"><vh>interface FastEthernet0/0/1</vh></v>
+<v t="edream.110203113231.691"><vh>interface FastEthernet0/0/1.1</vh></v>
+<v t="edream.110203113231.692"><vh>interface FastEthernet0/0/1.2</vh></v>
+<v t="edream.110203113231.693"><vh>interface FastEthernet0/0/1.3</vh></v>
+<v t="edream.110203113231.694"><vh>interface FastEthernet0/0/1.5</vh></v>
+<v t="edream.110203113231.695"><vh>interface FastEthernet0/0/1.50</vh></v>
+<v t="edream.110203113231.696"><vh>interface Loopback0</vh></v>
+<v t="edream.110203113231.697"><vh>interface POS4/1/0</vh></v>
+<v t="edream.110203113231.698"><vh>interface Serial5/0/0:1</vh></v>
+<v t="edream.110203113231.699"><vh>interface Serial5/0/0:2</vh></v>
+<v t="edream.110203113231.700"><vh>interface Serial5/0/1:0</vh></v>
+<v t="edream.110203113231.701"><vh>interface Serial5/1/0</vh></v>
+<v t="edream.110203113231.702"><vh>interface Serial5/1/1</vh></v>
+</v>
+<v t="edream.110203113231.703"><vh>&lt;&lt;ip community-list&gt;&gt;</vh></v>
+<v t="edream.110203113231.704"><vh>&lt;&lt;ip route&gt;&gt;</vh></v>
+<v t="edream.110203113231.705"><vh>&lt;&lt;line&gt;&gt;</vh>
+<v t="edream.110203113231.706"><vh>line aux 0</vh></v>
+<v t="edream.110203113231.707"><vh>line vty 0 4</vh></v>
+</v>
+<v t="edream.110203113231.708"><vh>&lt;&lt;logging&gt;&gt;</vh></v>
+<v t="edream.110203113231.709"><vh>&lt;&lt;ntp&gt;&gt;</vh></v>
+<v t="edream.110203113231.710"><vh>&lt;&lt;route-map&gt;&gt;</vh>
+<v t="edream.110203113231.711"><vh>route-map only permit 2</vh></v>
+<v t="edream.110203113231.712"><vh>route-map only1 permit 10</vh></v>
+<v t="edream.110203113231.713"><vh>route-map only3 permit 10</vh></v>
+<v t="edream.110203113231.714"><vh>route-map tag_com permit 10</vh></v>
+<v t="edream.110203113231.715"><vh>route-map tag_com permit 20</vh></v>
+</v>
+<v t="edream.110203113231.716"><vh>&lt;&lt;router&gt;&gt;</vh>
+<v t="edream.110203113231.717"><vh>router bgp 65001</vh></v>
+<v t="edream.110203113231.718"><vh>router ospf 1</vh></v>
+</v>
+<v t="edream.110203113231.719"><vh>&lt;&lt;service&gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.741"><vh>@thin add_directives.py</vh></v>
+<v t="timo.20050213160555"><vh>@thin bibtex.py</vh></v>
+<v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
+<v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
+<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
+<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
+<v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
+<v t="ekr.20050301083306"><vh>@thin mod_read_dir_outline.py</vh></v>
+<v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
+<v t="edream.110203113231.720"><vh>@thin outline_export.py</vh></v>
+<v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
+<v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
+<v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
+<v t="ekr.20041215103252"><vh>datenodes</vh>
+<v t="gfunch.20041207100416"><vh>@thin datenodes.py</vh></v>
+<v t="gfunch.20041209063345.1"><vh>@thin datenodes.ini</vh></v>
+</v>
+<v t="edream.110203113231.722"><vh>mod_autosave</vh>
+<v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
+<v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
+</v>
+<v t="ekr.20041110104350"><vh>table plugin: requires tktable</vh>
+<v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.729"><vh>Debugging &amp;  testing</vh>
+<v t="edream.110203113231.730"><vh>@thin dump_globals.py</vh></v>
+<v t="edream.110203113231.732"><vh>@thin enable_gc.py</vh></v>
+<v t="ekr.20050130120433"><vh>@thin failed_import.py</vh></v>
+<v t="edream.110203113231.734"><vh>@thin quit_leo.py</vh></v>
+<v t="ekr.20051016160700"><vh>@thin testRegisterCommand.py</vh></v>
+<v t="edream.110203113231.735"><vh>@thin trace_gc.py</vh></v>
+<v t="edream.110203113231.736"><vh>@thin trace_keys.py</vh></v>
+<v t="edream.110203113231.738"><vh>@thin trace_tags.py</vh></v>
+<v t="ekr.20040205071616"><vh>mnplugins.py</vh>
+<v t="ekr.20050101090717"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050101090717.1"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
+<v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
+<v t="ekr.20040205071616.3"><vh>onStart</vh></v>
+<v t="ekr.20040205071616.4"><vh>setHeadOK</vh></v>
+<v t="ekr.20040205071616.5"><vh>insertBodystamp</vh></v>
+<v t="ekr.20040205071616.6"><vh>is_subnodesOK</vh></v>
+<v t="ekr.20040205071616.7"><vh>onRclick</vh></v>
+<v t="ekr.20040205071616.8"><vh>insertOKcmd</vh></v>
+<v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
+<v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
+<v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
+<v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
+<v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
+<v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
+<v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
+<v t="ekr.20050301095332"><vh>@thin mod_labels.py</vh></v>
+<v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
+<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
+<v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
+<v t="ekr.20050329082101"><vh>AutoTrees</vh>
+<v t="ekr.20050329082101.1"><vh>AutoTrees plugin</vh>
+<v t="ekr.20050329082101.2"><vh>Introduction</vh></v>
+<v t="ekr.20050329082101.3"><vh>Why use this?</vh></v>
+<v t="ekr.20050329082101.4"><vh>Details</vh></v>
+<v t="ekr.20050329082101.5"><vh>How do I create my own handlers?</vh></v>
+</v>
+<v t="ekr.20050329082101.6" annotate="7d71002e"><vh>Example handlers</vh>
+<v t="ekr.20050329082101.7"><vh>Testing</vh>
+<v t="ekr.20050329082101.8" annotate="7d71002e"><vh>@auto-test something</vh>
+<v t="ekr.20050329082101.9"><vh>one</vh></v>
+<v t="ekr.20050329082101.10"><vh>two</vh></v>
+<v t="ekr.20050329082101.11"><vh>three</vh>
+<v t="ekr.20050329082101.12"><vh>three-one</vh></v>
+<v t="ekr.20050329082101.13"><vh>three-two</vh></v>
+<v t="ekr.20050329082101.14"><vh>three-three</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050329082101.15"><vh>RSS</vh>
+<v t="ekr.20050329082101.16"><vh>@auto-rss http://news.bbc.co.uk/rss/newsonline_uk_edition/world/rss091.xml</vh>
+<v t="ekr.20050329092553"><vh>Hundreds die in Indonesia quake</vh></v>
+<v t="ekr.20050329092553.1"><vh>Ousted Kyrgyz president defiant</vh></v>
+<v t="ekr.20050329092553.2"><vh>Hair 'good source of stem cells'</vh></v>
+<v t="ekr.20050329092553.3"><vh>Ashdown sacks top Bosnian Croat</vh></v>
+<v t="ekr.20050329092553.4"><vh>Splits paralyse Iraqi parliament</vh></v>
+<v t="ekr.20050329092553.5"><vh>Mongolians protest for new poll</vh></v>
+<v t="ekr.20050329092553.6"><vh>Libya's Bulgarian medics appeal</vh></v>
+<v t="ekr.20050329092553.7"><vh>Schiavo rivals 'agree to autopsy'</vh></v>
+<v t="ekr.20050329092553.8"><vh>Would-be sex tourist, 87, jailed</vh></v>
+<v t="ekr.20050329092553.9"><vh>Golf: Funk claims Players title</vh></v>
+<v t="ekr.20050329092553.10"><vh>Cricket: Series win for Aussies</vh></v>
+<v t="ekr.20050329092553.11"><vh>Angola says virus 'under control'</vh></v>
+<v t="ekr.20050329092553.12"><vh>Mugabe criticises MDC 'traitors'</vh></v>
+<v t="ekr.20050329092553.13"><vh>Ex-US diplomats round on Bolton</vh></v>
+<v t="ekr.20050329092553.14"><vh>Brazil quits loan accord with IMF</vh></v>
+<v t="ekr.20050329092553.15"><vh>Japanese economy hit by weak data</vh></v>
+<v t="ekr.20050329092553.16"><vh>Donors pledge $40m for KR trials</vh></v>
+<v t="ekr.20050329092553.17"><vh>Three Romanians missing in Iraq</vh></v>
+<v t="ekr.20050329092553.18"><vh>Wolfowitz 'to meet EU officials'</vh></v>
+<v t="ekr.20050329092553.19"><vh>Knesset rejects Gaza referendum</vh></v>
+<v t="ekr.20050329092553.20"><vh>Militants to attend PLO meeting</vh></v>
+<v t="ekr.20050329092553.21"><vh>South Asia cancels tsunami alerts</vh></v>
+<v t="ekr.20050329092553.22"><vh>Devastation as Afghan dam bursts</vh></v>
+<v t="ekr.20050329092553.23"><vh>Kyrgyzstan's friendly revolution</vh></v>
+</v>
+<v t="ekr.20050329082101.40" annotate="7d71002e"><vh>@auto-rss http://slashdot.org/index.rss</vh>
+<v t="ekr.20050329092553.24"><vh>Followup on MS and Brazil in NY Times</vh></v>
+<v t="ekr.20050329092553.25"><vh>A9.com with Syndicated Search</vh></v>
+<v t="ekr.20050329092553.26"><vh>What's Next At Apple</vh></v>
+<v t="ekr.20050329092553.27"><vh>Berkeley Grads' Identity Data Stolen</vh></v>
+<v t="ekr.20050329092553.28"><vh>South Korean Gov't. Advocates Linux</vh></v>
+<v t="ekr.20050329092553.29"><vh>MS, EU Agree on Name for Windows Sans Media Player</vh></v>
+<v t="ekr.20050329092553.30"><vh>Blackbox (Finally) Updated</vh></v>
+<v t="ekr.20050329092553.31"><vh>Your Face On the Big Screen</vh></v>
+<v t="ekr.20050329092553.32"><vh>Ars Technica Builds Make Magazine's Steadicam</vh></v>
+<v t="ekr.20050329092553.33"><vh>New Photovoltaics Made with Titanium Foil</vh></v>
+</v>
+<v t="ekr.20050329082101.51"><vh>@auto-rss http://www.python.org/channews.rdf</vh>
+<v t="ekr.20050329082101.52"><vh>Python 2.4.1 (release candidate 1)</vh></v>
+<v t="ekr.20050329082101.53"><vh>Greg Stein, of Google and Apache Software Foundation, to deliver keynote at PyCon</vh></v>
+<v t="ekr.20050329082101.54"><vh>New RSS feed for python-dev summaries</vh></v>
+<v t="ekr.20050329082101.55"><vh>Guido van Rossum speaking in Palo Alto</vh></v>
+<v t="ekr.20050329082101.56"><vh>Python 2.3.5 (final)</vh></v>
+<v t="ekr.20050329082101.57"><vh>Security advisory for SimpleXMLRPCServer.py.</vh></v>
+<v t="ekr.20050329082101.58"><vh>Deadline for OSCON proposals</vh></v>
+<v t="ekr.20050329082101.59"><vh>PyCon abstracts now available</vh></v>
+<v t="ekr.20050329082101.60"><vh>PyCon preliminary schedule now available</vh></v>
+<v t="ekr.20050329082101.61"><vh>PSF has awarded three grants</vh></v>
+<v t="ekr.20050329082101.62"><vh>Python for Nokia Series 60 now available</vh></v>
+<v t="ekr.20050329082101.63"><vh>Python 2.4 (final)</vh></v>
+<v t="ekr.20050329082101.64"><vh>PyZine issue 7</vh></v>
+<v t="ekr.20050329082101.65"><vh>PyCon 2005 Call for Proposals</vh></v>
+<v t="ekr.20050329082101.66"><vh>Cameron Laird receives the Frank Willison Award</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.67"><vh>Remote</vh>
+<v t="ekr.20050329082101.68"><vh>@auto-remote http://www.bbc.co.uk/news.html</vh></v>
+</v>
+<v t="ekr.20050329082101.69"><vh>Documentation</vh>
+<v t="ekr.20050329082101.70"><vh>@auto-doc docutils.core</vh>
+<v t="ekr.20050329082101.71"><vh>Component</vh>
+<v t="ekr.20050329082101.72"><vh>component_type</vh></v>
+<v t="ekr.20050329082101.73"><vh>default_transforms</vh></v>
+<v t="ekr.20050329082101.74"><vh>supports</vh></v>
+</v>
+<v t="ekr.20050329082101.75"><vh>ConfigParser</vh>
+<v t="ekr.20050329082101.76"><vh>OPTCRE</vh></v>
+<v t="ekr.20050329082101.77"><vh>SECTCRE</vh></v>
+<v t="ekr.20050329082101.78"><vh>add_section</vh></v>
+<v t="ekr.20050329082101.79"><vh>standard_config_files</vh></v>
+<v t="ekr.20050329082101.80"><vh>validation</vh></v>
+</v>
+<v t="ekr.20050329082101.81"><vh>OptionParser</vh>
+<v t="ekr.20050329082101.82"><vh>default_error_encoding_error_handler</vh></v>
+<v t="ekr.20050329082101.83"><vh>relative_path_settings</vh></v>
+<v t="ekr.20050329082101.84"><vh>settings_defaults</vh></v>
+<v t="ekr.20050329082101.85"><vh>settings_spec</vh></v>
+<v t="ekr.20050329082101.86"><vh>standard_option_list</vh></v>
+<v t="ekr.20050329082101.87"><vh>threshold_choices</vh></v>
+<v t="ekr.20050329082101.88"><vh>thresholds</vh></v>
+<v t="ekr.20050329082101.89"><vh>version_template</vh></v>
+</v>
+<v t="ekr.20050329082101.90"><vh>Publisher</vh></v>
+<v t="ekr.20050329082101.91"><vh>default_description</vh></v>
+<v t="ekr.20050329082101.92"><vh>default_usage</vh></v>
+<v t="ekr.20050329082101.93"><vh>frontend</vh></v>
+<v t="ekr.20050329082101.94"><vh>io</vh></v>
+<v t="ekr.20050329082101.95"><vh>parsers</vh></v>
+<v t="ekr.20050329082101.96"><vh>publish_cmdline</vh></v>
+<v t="ekr.20050329082101.97"><vh>publish_file</vh></v>
+<v t="ekr.20050329082101.98"><vh>publish_string</vh></v>
+<v t="ekr.20050329082101.99"><vh>readers</vh></v>
+<v t="ekr.20050329082101.100"><vh>sys</vh></v>
+<v t="ekr.20050329082101.101"><vh>writers</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.102"><vh>News Reader</vh>
+<v t="ekr.20050329082101.103"><vh>@auto-news news-server.houston.rr.com/comp.lang.python</vh>
+<v t="ekr.20050329082101.104"><vh>@auto-newsitem 356970 - Easy way to check modules for python version compatibility?</vh></v>
+<v t="ekr.20050329082101.105"><vh>@auto-newsitem 356972 - Q: Module Shared Data</vh></v>
+<v t="ekr.20050329082101.106"><vh>@auto-newsitem 356978 - Re: __contains__ inconsistencies between Python 2.2 and 2.3</vh></v>
+<v t="ekr.20050329082101.107"><vh>@auto-newsitem 356979 - Re: [Numeric] column vector faster than row vector in mat multiply?</vh></v>
+<v t="ekr.20050329082101.108"><vh>@auto-newsitem 356986 - Python 2.4 removes None data type?</vh></v>
+<v t="ekr.20050329082101.109"><vh>@auto-newsitem 356987 - Re: Integer From A Float List?!?</vh></v>
+<v t="ekr.20050329082101.110"><vh>@auto-newsitem 356988 - Suspicious header</vh></v>
+<v t="ekr.20050329082101.111"><vh>@auto-newsitem 356991 - Re: Suspicious header</vh></v>
+<v t="ekr.20050329082101.112"><vh>@auto-newsitem 356992 - survey</vh></v>
+<v t="ekr.20050329082101.113"><vh>@auto-newsitem 356993 - Re: Python 2.4 removes None data type?</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050329082101.114"><vh>AutoTrees Code</vh>
+<v t="ekr.20050329082101.115"><vh>@thin autotrees.py</vh></v>
+<v t="ekr.20050329082101.145"><vh>@--thin trees\pluginsManager.txt</vh></v>
+<v t="ekr.20050329082101.146"><vh>Example tree handlers</vh>
+<v t="ekr.20050329082101.147"><vh>@--thin trees\test.py</vh>
+<v t="ekr.20050329082101.148"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.149"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050329082101.150"><vh>@--thin trees\rss.py</vh>
+<v t="ekr.20050329082101.151"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.152"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050329082101.153"><vh>@--thin trees\news.py</vh>
+<v t="ekr.20050329082101.154"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.155"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.156"><vh>Error Classes</vh></v>
+<v t="ekr.20050329082101.157"><vh>getConnection</vh></v>
+<v t="ekr.20050329082101.158"><vh>class News</vh>
+<v t="ekr.20050329082101.159"><vh>initFrom</vh></v>
+</v>
+<v t="ekr.20050329082101.160"><vh>class NewsItem</vh>
+<v t="ekr.20050329082101.161"><vh>initFrom</vh></v>
+</v>
+</v>
+<v t="ekr.20050329082101.162"><vh>@--thin trees\remote.py</vh>
+<v t="ekr.20050329082101.163"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.164"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050329082101.165"><vh>@--thin trees\doc.py</vh>
+<v t="ekr.20050329082101.166"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050329082101.167"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
+<v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
+<v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
+<v t="ekr.20040422072343"
+expanded="ekr.20060108122501,"><vh>@thin rClick.py</vh></v>
+<v t="EKR.20040605181725"><vh>Autocompleter</vh>
+<v t="EKR.20040605181725.1"><vh>Configuration</vh>
+<v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
+<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
+</v>
+<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
+</v>
+<v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
+<v t="edream.110403140857.1"><vh>Plugin documentation</vh>
+<v t="edream.110403140857.2"><vh>Installation</vh></v>
+<v t="edream.110403140857.3"><vh>Use</vh>
+<v t="edream.110403140857.4"><vh>Supported markups</vh></v>
+<v t="edream.110403140857.5"><vh>Example</vh>
+<v t="edream.110403140857.6"><vh>a subnode</vh></v>
+</v>
+</v>
+<v t="edream.110403140857.7"><vh>Release notes</vh></v>
+</v>
+<v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
+</v>
+<v t="edream.110203113231.925"><vh>@thin script_io_to_body.py</vh></v>
+</v>
+<v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
+<v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
+<v t="pap.20051010170720"><vh>@thin newButtons.py</vh></v>
+<v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
+<v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
+<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
+<v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
+<v t="rogererens.20041013082304"><vh>@thin UNL.py</vh></v>
+</v>
+<v t="ekr.20040915073259"><vh>Enhancing windows</vh>
+<v t="ekr.20050227071948" annotate="5404010000376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303734363635363137343735373236353731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh> cleo</vh>
+<v t="ekr.20050227072121"><vh>Notes</vh>
+<v t="ekr.20050227071948.1" annotate="7d71002e"><vh>TODO</vh>
+<v t="ekr.20050227071948.2" annotate="7d71002e"><vh>pixmap icons</vh></v>
+<v t="ekr.20050227071948.3" annotate="7d71002e"><vh>colour selector</vh></v>
+<v t="ekr.20050227071948.4" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>popup location</vh></v>
+<v t="ekr.20050227071948.5" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>EKR's intentions on @thin nodes</vh>
+<v t="ekr.20050227071948.6" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>No attributes for @thin nodes</vh></v>
+</v>
+<v t="ekr.20050227071948.7" annotate="7d71002e"><vh>group annotations</vh></v>
+<v t="ekr.20050227071948.8" annotate="7d71002e"><vh>archetype based search,navigation</vh></v>
+<v t="ekr.20050227071948.9" annotate="7d71002e"><vh>sort by type</vh></v>
+<v t="ekr.20050227071948.10" annotate="7d71002e"><vh>fonts</vh></v>
+<v t="ekr.20050227071948.11" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346230323632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>question marks</vh></v>
+</v>
+<v t="ekr.20050227071948.12" annotate="54000100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334623634363235353034366536663634363537313035323836383032366637313036353530303731303736323535303236323637373130383238363830323666373130393535303635303735373237303663363537313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638303736323535303236363637373130643238363830323666373130653638303736323735326571002e"><vh>Done</vh>
+<v t="ekr.20050227071948.13" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>Clear All markings</vh></v>
+<v t="ekr.20050227071948.14" annotate="54120100003764373130303238353530343665366636343635373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033353530303731303536323535303236323637373130363238363830323666373130373638303536323535303936313734373436353665373436393666366537313038343933303331306135353038373037323639366637323639373437393731303932383638303236663731306134623634363235353032363636373731306232383638303236663731306336383035363235353039363137323633363836353734373937303635373130643238363830323666373130653638303536323735326571002e"><vh>autoleo node colouring</vh></v>
+<v t="ekr.20050227071948.15" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462363436323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>arbitary colouring</vh></v>
+<v t="ekr.20050227071948.16" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>rename to cleo</vh></v>
+<v t="ekr.20050227071948.17" annotate="7d71002e"><vh>headline colours</vh></v>
+<v t="ekr.20050227071948.18" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>priority colouring</vh></v>
+<v t="ekr.20050227071948.19" annotate="7d71005509617474656e74696f6e71014930300a732e"><vh>archtetype colouring</vh></v>
+</v>
+<v t="ekr.20050227071948.20" annotate="7d71002e"><vh>Problems</vh>
+<v t="ekr.20050227071948.6" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303136323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>No attributes for @thin nodes</vh></v>
+<v t="ekr.20050227071948.21" annotate="5592376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333462303236323535303936313732363336383635373437393730363537313035323836383032366637313036353530303731303736323735326571002e"><vh>features are not orthogonal</vh></v>
+<v t="ekr.20050227071948.22" annotate="7d71002e"><vh>Too many colours !!</vh></v>
+</v>
+<v t="ekr.20050227071948.23" annotate="5404010000376437313030323835353038373037323639366637323639373437393731303132383633363136653665366637343631373436353061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303734363635363137343735373236353731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh>BUGS</vh>
+<v t="ekr.20050227071948.24" annotate="55f037643731303032383535303837303732363936663732363937343739373130313238363336313665366536663734363137343635306135343662353036393633366236633635353636313732306137313032366637313033346236343632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>popup location</vh></v>
+</v>
+<v t="ekr.20050227071948.27" annotate="7d71002e"><vh>colour table</vh></v>
+<v t="ekr.20050227071948.28" annotate="54060100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353038343336663664366436353665373437333731303736323535303236323637373130383238363830323666373130393535303037313061363235353039363137323633363836353734373937303635373130623238363830323666373130633638306136323535303236363637373130643238363830323666373130653638306136323735326571002e"><vh>Notes</vh>
+<v t="ekr.20050227071948.29" annotate="7d71002e"><vh>drawing hooks</vh></v>
+</v>
+</v>
+<v t="ekr.20050227071948.33" annotate="540c0100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353034363636393663363537313037363235353032363236373731303832383638303236663731303935353030373130613632353530393631373236333638363537343739373036353731306232383638303236663731306335353035346637343638363537323731306436323535303236363637373130653238363830323666373130663638306136323735326571002e"><vh>@thin cleo.py</vh></v>
+</v>
+<v t="ekr.20050303080042"><vh> footprints</vh>
+<v t="ekr.20050303080236"><vh>To do</vh></v>
+<v t="ekr.20050303080042.1" tnodeList="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
+<v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
+</v>
+<v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
+<v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
+<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
+<v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
+<v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
+<v t="ekr.20040831122004"><vh>@thin UniversalScrolling.py</vh></v>
+<v t="ekr.20040831115238"><vh>@thin URLloader.py</vh></v>
+</v>
+<v t="ekr.20040722141148"><vh>Example code</vh>
+<v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
+<v t="edream.110203113231.919"><vh>@thin override_commands.py</vh></v>
+<v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
+</v>
+<v t="ekr.20040722134535"><vh>Experimental/unfinished</vh>
+<v t="ekr.20050915064008"><vh>@thin __vnx__.py</vh></v>
+<v t="ekr.20050612074047"><vh>New colorizer</vh>
+<v t="ekr.20050529180421"><vh>jEdit docs...</vh>
+<v t="ekr.20050530065723"><vh>@url http://www.jedit.org/42docs/users-guide/writing-modes-part.html</vh></v>
+<v t="ekr.20050529180421.1"><vh>Rule ordering</vh></v>
+<v t="ekr.20050529180421.2"><vh>Attributes</vh>
+<v t="ekr.20050529180421.3"><vh> Documentation of attributes</vh>
+<v t="ekr.20050529180421.4"><vh> For 'seq', 'span', 'begin', 'end'</vh>
+<v t="ekr.20050529180421.5"><vh>AT_LINE_START (bool)</vh></v>
+<v t="ekr.20050529180421.6"><vh>AT_WHITESPACE_END (bool)</vh></v>
+<v t="ekr.20050529180421.7"><vh>AT_WORD_START (bool)</vh></v>
+</v>
+<v t="ekr.20050529180421.8"><vh> For 'span' only</vh>
+<v t="ekr.20050529180421.9"><vh>NO_WORD_BREAK (bool)</vh></v>
+<v t="ekr.20050529180421.10"><vh>NO_LINE_BREAK (bool)</vh></v>
+<v t="ekr.20050529180421.11"><vh>NO_ESCAPE (bool)</vh></v>
+<v t="ekr.20050529180421.12"><vh>EXCLUDE_MATCH (bool)</vh></v>
+</v>
+<v t="ekr.20050529180421.13"><vh> For 'rules' only</vh>
+<v t="ekr.20050529180421.14"><vh>DEFAULT</vh></v>
+<v t="ekr.20050529180421.15"><vh>DIGIT_RE (re) &amp; HIGHLIGHT_DIGITS  (bool)</vh></v>
+<v t="ekr.20050529180421.16"><vh>IGNORE_CASE (bool)</vh></v>
+<v t="ekr.20050529180421.17"><vh>SET</vh></v>
+<v t="ekr.20050529180421.18"><vh>NO_WORD_SEP</vh></v>
+</v>
+<v t="ekr.20050529180421.19"><vh>AT_CHAR (int) for 'terminate'</vh></v>
+<v t="ekr.20050529180421.20"><vh>DELEGATE: for 'import', 'span' &amp; 'seq'</vh></v>
+<v t="ekr.20050529180421.21"><vh>HASH_CHAR (char) For 'regx'</vh></v>
+<v t="ekr.20050529180421.22"><vh>TYPE (Token Types)</vh></v>
+</v>
+<v t="ekr.20050529180421.23"><vh>Attributes for 'begin' &amp; 'end'</vh></v>
+<v t="ekr.20050529180421.24"><vh>Attributes for 'import': delegate</vh></v>
+<v t="ekr.20050529180421.25"><vh>Attributes for 'mark' </vh></v>
+<v t="ekr.20050529180421.26"><vh>Attributes for 'property': name, value</vh></v>
+<v t="ekr.20050529180421.27"><vh>Attributes for 'rules'</vh></v>
+<v t="ekr.20050529180421.28"><vh>Attributes for 'span'</vh></v>
+<v t="ekr.20050529180421.29"><vh>Attributes for 'seq' </vh></v>
+</v>
+<v t="ekr.20050529180421.30"><vh>Elements</vh>
+<v t="ekr.20050529220821"><vh>Spans and seqs...</vh>
+<v t="ekr.20050529180421.31"><vh>eol_span</vh></v>
+<v t="ekr.20050529180421.32"><vh>eol_span_regexp</vh></v>
+<v t="ekr.20050529180421.35"><vh>mark_following</vh></v>
+<v t="ekr.20050529180421.36"><vh>mark_previous</vh></v>
+<v t="ekr.20050529180421.40"><vh>seq</vh></v>
+<v t="ekr.20050529180421.41"><vh>seq_regexp</vh></v>
+<v t="ekr.20050529180421.42"><vh>span</vh></v>
+<v t="ekr.20050529180421.43"><vh>span_regexp</vh></v>
+</v>
+<v t="ekr.20050529220821.1"><vh>All others...</vh>
+<v t="ekr.20050529180421.33"><vh>import</vh></v>
+<v t="ekr.20050529180421.34"><vh>keywords</vh></v>
+<v t="ekr.20050529180421.37"><vh>mode</vh></v>
+<v t="ekr.20050529180421.38"><vh>props &amp; property  (for auto-indent)</vh></v>
+<v t="ekr.20050529180421.39"><vh>rules</vh></v>
+<v t="ekr.20050529180421.44"><vh>terminate</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050529142847"><vh>@thin __jEdit_colorizer__.py</vh></v>
+<v t="ekr.20050606214954"><vh>(state methods)</vh>
+<v t="ekr.20050529143413.30"><vh>colorize (Main entry point)</vh></v>
+<v t="ekr.20050529143413.31"><vh>colorizeAnyLanguage</vh></v>
+<v t="ekr.20050602205810.4"><vh>colorRangeWithTag</vh></v>
+</v>
+<v t="ekr.20050606221357"><vh>(init)</vh>
+<v t="ekr.20050602150619"><vh>init_mode</vh></v>
+<v t="ekr.20050602152743"><vh>init_keywords</vh>
+<v t="ekr.20050607073917"><vh>&lt;&lt; compute extra_word_chars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050530065723.47"><vh>parse_jEdit_file</vh></v>
+</v>
+<v t="ekr.20050607220512"><vh>(delegate)</vh>
+<v t="ekr.20050601105358"><vh>colorOneChunk</vh>
+<v t="ekr.20050605130806"><vh>&lt;&lt; queue up this method the first time &gt;&gt;</vh></v>
+<v t="ekr.20050601162452.1"><vh>&lt;&lt; queue up this method &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050607212958"><vh>colorByDelegate</vh></v>
+<v t="ekr.20050602205810.4"><vh>colorRangeWithTag</vh></v>
+</v>
+</v>
+<v t="ekr.20040717133342"><vh>Shadow files plugin</vh>
+<v t="ekr.20050126104457"><vh>Notes</vh></v>
+<v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
+</v>
+<v t="ekr.20040918165427"><vh>To do</vh>
+<v t="EKR.20040611044600"><vh>Mulder undo</vh>
+<v t="bwmulder.20040601212737"><vh>basic_undo.py</vh>
+<v t="bwmulder.20040601212737.1"><vh>class passthrough</vh>
+<v t="bwmulder.20040601212737.2"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.3"><vh>__set__</vh></v>
+<v t="bwmulder.20040601212737.4"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040601212737.5"><vh>class scalar_monitor</vh>
+<v t="bwmulder.20040601212737.6"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.7"><vh>__set__</vh></v>
+<v t="bwmulder.20040601212737.8"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040601212737.9"><vh>class list_monitor</vh>
+<v t="bwmulder.20040605231305"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.10"><vh>set_monitor_object</vh></v>
+<v t="bwmulder.20040601212737.11"><vh>__setitem__</vh></v>
+<v t="bwmulder.20040601212737.12"><vh>__delitem__</vh></v>
+<v t="bwmulder.20040601212737.13"><vh>append</vh></v>
+<v t="bwmulder.20040602152548"><vh>pop</vh></v>
+</v>
+<v t="bwmulder.20040601212737.14"><vh>class list_monitor_in_instance</vh>
+<v t="bwmulder.20040601212737.15"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.16"><vh>__set__</vh></v>
+<v t="bwmulder.20040601212737.17"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040602153618"><vh>class dict_monitor</vh>
+<v t="bwmulder.20040605231401"><vh>__init__</vh></v>
+<v t="bwmulder.20040602153642"><vh>set_monitor_object</vh></v>
+<v t="bwmulder.20040602153723"><vh>__setitem__</vh></v>
+<v t="bwmulder.20040602153835"><vh>__delitem__</vh></v>
+</v>
+<v t="bwmulder.20040602154259"><vh>class  dict_monitor_in_instance</vh>
+<v t="bwmulder.20040602154259.1"><vh>__init__</vh></v>
+<v t="bwmulder.20040602154259.2"><vh>__set__</vh></v>
+<v t="bwmulder.20040602154259.3"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040601212737.18"><vh>class monitor</vh>
+<v t="bwmulder.20040601212737.19"><vh>__init__</vh></v>
+<v t="bwmulder.20040601214251"><vh>scalars</vh>
+<v t="bwmulder.20040601212737.20"><vh>monitor_scalar</vh></v>
+<v t="bwmulder.20040601212737.24"><vh>scalar_set</vh></v>
+<v t="bwmulder.20040601212737.25"><vh>scalar_modify</vh></v>
+</v>
+<v t="bwmulder.20040601215339"><vh>lists</vh>
+<v t="bwmulder.20040601212737.21"><vh>monitor_list_attribute_in_class</vh></v>
+<v t="bwmulder.20040601212737.26"><vh>list_create</vh></v>
+<v t="bwmulder.20040601212737.27"><vh>list_set</vh></v>
+<v t="bwmulder.20040601212737.28"><vh>list_del</vh></v>
+<v t="bwmulder.20040601212737.29"><vh>list_append</vh></v>
+</v>
+<v t="bwmulder.20040602165344"><vh>dicts</vh>
+<v t="bwmulder.20040602165402"><vh>monitor_dict_attribute_in_class</vh></v>
+<v t="bwmulder.20040602165506"><vh>dict_create</vh></v>
+<v t="bwmulder.20040602165513"><vh>dict_set</vh></v>
+<v t="bwmulder.20040602165553"><vh>dict_del</vh></v>
+</v>
+<v t="bwmulder.20040601215339.1"><vh>switching on and off</vh>
+<v t="bwmulder.20040601212737.22"><vh>enable</vh></v>
+<v t="bwmulder.20040602164627"><vh>enable_put_in_removed_functions</vh></v>
+<v t="bwmulder.20040602154259.4"><vh>enable_category</vh></v>
+<v t="bwmulder.20040602161525"><vh>disable_category</vh></v>
+<v t="bwmulder.20040601212737.23"><vh>disable</vh></v>
+<v t="bwmulder.20040603081718"><vh>remove_overrides_in_list_and_dict_monitor</vh></v>
+</v>
+</v>
+<v t="bwmulder.20040601222230"><vh>class basic_undomechanism</vh>
+<v t="bwmulder.20040601222230.1"><vh>__init__</vh></v>
+<v t="bwmulder.20040602171606"><vh>reset</vh></v>
+<v t="bwmulder.20040601222230.2"><vh>scalars</vh>
+<v t="bwmulder.20040601222230.3"><vh>scalar_set</vh></v>
+<v t="bwmulder.20040601222230.4"><vh>scalar_set_undo</vh></v>
+<v t="bwmulder.20040601222230.5"><vh>scalar_set_redo</vh></v>
+<v t="bwmulder.20040601222230.6"><vh>scalar_modify</vh></v>
+<v t="bwmulder.20040601222431"><vh>scalar_modify_undo</vh></v>
+</v>
+<v t="bwmulder.20040602075341"><vh>lists</vh>
+<v t="bwmulder.20040602084701.1"><vh>creation</vh>
+<v t="bwmulder.20040602175523"><vh>list_assignment_replace</vh></v>
+<v t="bwmulder.20040602175523.1"><vh>list_assignment_replace_undo</vh></v>
+<v t="bwmulder.20040602175740"><vh>list_assignment_replace_redo</vh></v>
+<v t="bwmulder.20040602183806"><vh>list_assignment_new</vh></v>
+<v t="bwmulder.20040602183814"><vh>list_assignment_new_undo</vh></v>
+<v t="bwmulder.20040602183911"><vh>list_assignment_new_redo</vh></v>
+<v t="bwmulder.20040602075341.1"><vh>list_create</vh></v>
+<v t="bwmulder.20040602084701.2"><vh>list_create_undo</vh></v>
+<v t="bwmulder.20040602084701.3"><vh>list_create_redo</vh></v>
+</v>
+<v t="bwmulder.20040602084701.4"><vh>setting</vh>
+<v t="bwmulder.20040602085955"><vh>list_set</vh></v>
+<v t="bwmulder.20040602085955.1"><vh>list_set_undo</vh></v>
+</v>
+<v t="bwmulder.20040602085955.2"><vh>deletion</vh>
+<v t="bwmulder.20040602085955.3"><vh>list_del</vh></v>
+<v t="bwmulder.20040602085955.4"><vh>list_del_undo</vh></v>
+<v t="bwmulder.20040602085955.5"><vh>list_del_redo</vh></v>
+</v>
+<v t="bwmulder.20040602151709"><vh>append</vh>
+<v t="bwmulder.20040602152051"><vh>list_append</vh></v>
+<v t="bwmulder.20040602152051.1"><vh>list_append_undo</vh></v>
+<v t="bwmulder.20040602152051.2"><vh>list_append_redo</vh></v>
+</v>
+<v t="bwmulder.20040602152548.1"><vh>pop</vh>
+<v t="bwmulder.20040602152548.2"><vh>list_pop</vh></v>
+</v>
+</v>
+<v t="bwmulder.20040602171032"><vh>dictionaries</vh>
+<v t="bwmulder.20040602171032.1"><vh>creation</vh>
+<v t="bwmulder.20040602175801"><vh>dictionary creation</vh></v>
+<v t="bwmulder.20040602171032.2"><vh>dict_create</vh></v>
+<v t="bwmulder.20040602171032.3"><vh>dict_create_undo</vh></v>
+<v t="bwmulder.20040602171032.4"><vh>dict_create_redo</vh></v>
+</v>
+<v t="bwmulder.20040602171032.5"><vh>setting</vh>
+<v t="bwmulder.20040602171032.6"><vh>dict_set</vh></v>
+<v t="bwmulder.20040602171032.7"><vh>dict_set_undo</vh></v>
+</v>
+<v t="bwmulder.20040602171032.8"><vh>deletion</vh>
+<v t="bwmulder.20040602171032.9"><vh>dict_del</vh></v>
+<v t="bwmulder.20040602171032.10"><vh>dict_del_undo</vh></v>
+<v t="bwmulder.20040602171032.11"><vh>dict_del_redo</vh></v>
+</v>
+</v>
+<v t="bwmulder.20040601224447"><vh>the undo machinery</vh>
+<v t="bwmulder.20040603211921"><vh>queries</vh>
+<v t="bwmulder.20040601224447.5"><vh>canUndo</vh></v>
+<v t="bwmulder.20040601224447.6"><vh>canRedo</vh></v>
+<v t="bwmulder.20040603212552"><vh>commands</vh></v>
+<v t="bwmulder.20040603212612"><vh>commands_to_undo</vh></v>
+<v t="bwmulder.20040603212713"><vh>commands_to_redo</vh></v>
+<v t="bwmulder.20040604165011"><vh>steps_stored</vh></v>
+<v t="bwmulder.20040605220919"><vh>print_commands</vh></v>
+</v>
+<v t="bwmulder.20040601224447.2"><vh>mark</vh></v>
+<v t="bwmulder.20040601224447.3"><vh>undo</vh></v>
+<v t="bwmulder.20040601224447.4"><vh>redo</vh></v>
+<v t="bwmulder.20040603212934"><vh>rollback</vh></v>
+<v t="bwmulder.20040601222649"><vh>run_commands</vh></v>
+</v>
+</v>
+</v>
+<v t="bwmulder.20040602221559"><vh>basic_undo_test.py</vh>
+<v t="bwmulder.20040602223236"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="bwmulder.20040602223236.1"><vh>class tracer</vh>
+<v t="bwmulder.20040602223236.2"><vh>__getattr__</vh></v>
+<v t="bwmulder.20040602223906"><vh>catchall</vh></v>
+</v>
+<v t="bwmulder.20040602224231"><vh>class delegator</vh>
+<v t="bwmulder.20040602224413"><vh>__init__</vh></v>
+<v t="bwmulder.20040602224332"><vh>__getattr__</vh></v>
+<v t="bwmulder.20040602231914"><vh>catchall</vh></v>
+<v t="bwmulder.20040602231934"><vh>enable_category</vh></v>
+</v>
+<v t="bwmulder.20040602225640"><vh>class basic_scalar_test</vh>
+<v t="bwmulder.20040602230124"><vh>test_scalar_basic</vh></v>
+<v t="bwmulder.20040604184443"><vh>test_linked_list</vh></v>
+</v>
+<v t="bwmulder.20040605104941"><vh>class basic_list_test</vh>
+<v t="bwmulder.20040605105746"><vh>test_lists_basic</vh></v>
+<v t="bwmulder.20040605174728"><vh>test_lists_replace</vh></v>
+</v>
+<v t="bwmulder.20040605180204"><vh>class basic_dict_test</vh>
+<v t="bwmulder.20040605180225"><vh>test_dicts_basic</vh></v>
+<v t="bwmulder.20040605180245"><vh>test_dicts_replace</vh></v>
+</v>
+<v t="bwmulder.20040602230426"><vh>test_main</vh></v>
+</v>
+</v>
+<v t="ekr.20040918165144.9"><vh>Write script to find args to g.es()</vh></v>
+<v t="ekr.20040918165427.4"><vh>Autocompletion dictionary files</vh></v>
+<v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
+</v>
+<v t="edream.110203113231.233"><vh>wxPython plugin (pre-alpha quality)</vh>
+<v t="edream.110203113231.234"><vh> wx Diary</vh>
+<v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
+<v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
+<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
+<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
+<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
+<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
+</v>
+<v t="edream.111503111350"><vh>To do</vh>
+<v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
+<v t="edream.111303103141.3"><vh>delete_range</vh></v>
+</v>
+<v t="edream.111303100039"><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
+<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
+<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
+<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="edream.111303100039.7"><vh>Window Menu</vh>
+<v t="edream.111303100039.8"><vh>cascade</vh></v>
+<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
+<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
+<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
+<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
+<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
+</v>
+<v t="edream.111703103908"><vh>Help Menu...</vh>
+<v t="edream.111703103908.2"><vh>leoHelp</vh>
+<v t="edream.111703103908.3"><vh>showProgressBar</vh>
+<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050718142601"><vh>(Changes made 7/05)</vh>
+<v t="ekr.20050718142601.1"><vh>Notes</vh></v>
+<v t="edream.110203113231.347"><vh>OnInit  (wxLeoApp)</vh></v>
+<v t="ekr.20050718151826"><vh>(wxGui Stuff)</vh>
+<v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
+<v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
+<v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
+<v t="edream.110203113231.309"><vh>setDefaultIcon CONTAINS TK CODE</vh></v>
+<v t="edream.110203113231.310"><vh>setEncoding</vh></v>
+<v t="edream.110203113231.311"><vh>getDefaultConfigFont CONTAINS TK CODE</vh></v>
+<v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
+</v>
+<v t="edream.111303085447.1"><vh>destroySelf</vh></v>
+<v t="edream.110203113231.317"><vh>runMainLoop</vh></v>
+<v t="edream.110203113231.306"><vh>stubs</vh>
+<v t="edream.110203113231.314"><vh>finishCreate</vh></v>
+<v t="edream.110203113231.315"><vh>killGui</vh></v>
+<v t="edream.110203113231.316"><vh>recreateRootWindow</vh></v>
+</v>
+</v>
+<v t="edream.111303092328.4"><vh>createLeoFrame (wxGui panels)</vh></v>
+</v>
+<v t="edream.110203113231.350"><vh>Birth &amp; death (wxLeoFrame)</vh>
+<v t="edream.110203113231.266"><vh>__init__</vh></v>
+<v t="edream.110203113231.351"><vh>__repr__</vh></v>
+<v t="edream.110203113231.260"><vh>finishCreate (wxLeoFrame)</vh>
+<v t="edream.110203113231.261"><vh>&lt;&lt; create the splitters &gt;&gt;</vh></v>
+<v t="edream.110203113231.265"><vh>&lt;&lt; set the window icon &gt;&gt;</vh></v>
+<v t="edream.110203113231.264"><vh>&lt;&lt; declare event handlers for frame &gt;&gt;</vh></v>
+</v>
+<v t="edream.111403141810"><vh>initialRatios</vh></v>
+<v t="edream.111503105816"><vh>injectCallbacks</vh></v>
+<v t="edream.111303141147"><vh>signOnWithVersion</vh></v>
+<v t="edream.111503213533"><vh>destroySelf</vh></v>
+</v>
+<v t="edream.110203113231.540"><vh>Birth &amp; death (wxLeoBody)</vh>
+<v t="edream.110203113231.541"><vh>wxLeoBody.__init__</vh></v>
+<v t="edream.110203113231.542"><vh>wxLeoBody.createControl</vh></v>
+</v>
+</v>
+<v t="edream.111403093253.1"><vh>Projects</vh>
+<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
+<v t="edream.111303204025"><vh>Indices</vh>
+<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
+<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
+<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
+<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
+</v>
+<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
+<v t="edream.111303205611"><vh>tag_add</vh></v>
+<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
+<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
+<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
+<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.242"><vh>Unused code</vh>
+<v t="ekr.20050718142601.3"><vh>From wxLeoApp.OnInit</vh></v>
+<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
+<v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
+</v>
+<v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
+</v>
+<v t="ekr.20051109021852"><vh>Tk Notebook</vh>
+<v t="leo4u.20040924131405.1"><vh>@thin Tknotebook.py</vh></v>
+<v t="leo4u.20040924130601.1"><vh>@thin TabWindow.py</vh></v>
+</v>
+</v>
+<v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
+<v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
+<v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
+<v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
+<v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
+<v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
+<v t="EKR.20040517075715.13"><vh>Word export</vh>
+<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
+<v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
+</v>
+</v>
 <v t="EKR.20040517080049"><vh>Files</vh>
 <v t="EKR.20040517080049.1"><vh>@thin empty_leo_file.py</vh></v>
 <v t="ekr.20040419105219"><vh>@thin lineNumbers.py</vh></v>
@@ -1582,26 +1884,28 @@
 <v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
 <v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
 <v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
-</v>
-<v t="ekr.20060107084945" a="ETV"><vh>Plugins calling g.top</vh>
-<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
-<v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
-<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
-<v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
-<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
-<v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
-<v t="ekr.20050421093045"><vh> dyna plugin 139i</vh>
-<v t="ekr.20050421093045.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20050421093045.2"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20050421093045.103"><vh>@thin dynacommon.py</vh></v>
-<v t="ekr.20050421093045.133" tnodeList="ekr.20050421093045.133"><vh>@nosent dyna_menu.ini</vh></v>
-<v t="ekr.20050421093045.134"><vh>@thin dyna.txt</vh></v>
-</v>
-<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
-<v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
+<v t="pap.20051010170720"><vh>@thin newButtons.py</vh></v>
 <v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
-<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
+<v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
+<v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
+<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
+<v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
+<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
+<v t="ekr.20040422072343"
+expanded="ekr.20060108122501,"><vh>@thin rClick.py</vh></v>
 </v>
+<v t="ekr.20060108193620" a="TV"><vh>Unused from Library.py</vh>
+<v t="ekr.20050328092641.2" tnodeList="ekr.20050328092641.2"><vh>@nosent Library.ini</vh></v>
+<v t="ekr.20060108171459"><vh>Configuration (Library.py)</vh>
+<v t="ekr.20050328092641.34"><vh>applyConfiguration</vh></v>
+<v t="ekr.20050328092641.33"><vh>getConfiguration</vh></v>
+</v>
+<v t="ekr.20050328092641.1"><vh>db</vh></v>
+<v t="ekr.20050328092641.35"><vh>@test _Configuration</vh></v>
+<v t="ekr.20050328092641.3"><vh>@string Library_lib1 = default/libraryS.dbm</vh></v>
+</v>
+<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
+<v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075110">"""Script to find and replace all functions in leoGlobals.py."""
@@ -1609,12 +1913,8 @@
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 import leoPlugins
-
 import string
-
-c = g.top() ; p = c.currentPosition()
 
 @others
 
@@ -4827,8 +5127,8 @@ write out the current one.
 
 @code
 
-def WriteTreeOfCurrentNode():
-    c = g.top() ; f = c.frame
+def WriteTreeOfCurrentNode(c):
+    f = c.frame
     vnode = c.currentVnode() # get the current vnode.
     while vnode:
         ascFileN = GetAscFilename(vnode)
@@ -4848,8 +5148,8 @@ The next function exports all Leo2AsciiDoc documents in the entire Leo
 outline, starting at the top and working through all nodes.
 
 @code
-def WriteAll():
-    c = g.top() ; f = c.frame
+def WriteAll(c):
+    f = c.frame
     v = c.rootVnode()
     while v:
         ascFileN = GetAscFilename(v)
@@ -4865,14 +5165,14 @@ code sub-trees in a Leo outline.  It prints the results in the log pane.
 
 @code
 
-def WriteAllRoots():
+def WriteAllRoots(c):
     "Writes @root directive and/or @ascfile directive to log pane."
 
     patternAscDirectiveFile = re.compile(r'^@ascfile')
     patternRoot = re.compile(r'^@root')
 
     g.es('Looking for @root or @ascfile.')
-    c = g.top() ; f = c.frame
+    f = c.frame
     vnode = c.rootVnode()
     while vnode:
         bodyString = vnode.bodyString()
@@ -5044,10 +5344,9 @@ class _ConfigOptions:
                     g.es(vnode.headString())
                     g.es("  No such config option: %s" % name)
 
-    def GetCurrentOptions(self, vnode):
+    def GetCurrentOptions(self,c,vnode):
         self.current.clear()
         self.current = self.default.copy()
-        c = g.top()
         v = c.rootVnode()
         self.__GetNodeOptions(v)             # root node
         self.__GetNodeOptions(vnode)         # current node
@@ -5099,10 +5398,9 @@ is given, the file will be created in the same directory as the Leo
 outline.
 
 @code
-def GetAscFilename(vnode):
+def GetAscFilename(c,vnode):
     'Checks a node for a filename directive.'
     # f is the Leo outline
-    c = g.top()
     ascFileName = None
     bodyString = vnode.bodyString()
     lines = bodyString.splitlines()
@@ -7170,7 +7468,7 @@ Here is where we insert the &lt; Call XEmacs &gt; code fragment defined above:
 #           else: # David McNab's table.
 #               table = ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
             
-            g.top().frame.menu.createOpenWithMenuFromTable(table)
+            c.frame.menu.createOpenWithMenuFromTable(table)
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)
@@ -7219,11 +7517,10 @@ have OpenTreeInXEmacs visibly traverse the tree.
 
 import leoPlugins
 
-def OpenTreeInXEmacs ():
+def OpenTreeInXEmacs (c):
     import leoCommands
     #XEmacsCommand = "/usr/bin/gnuclient -q "
     XEmacsCommand = "/mrc2/linux-bin/gnuclient-noshow "
-    c = g.top()
     vnode = c.currentVnode() # get the current vnode.
     stopHere = vnode.nodeAfterTree()
     v = vnode
@@ -7245,7 +7542,7 @@ def CreateOpenTreeMenu (tag,keywords):
         (tag=="start2") or
         (tag=="command2" and keywords.get("label")=="new")):
 
-        c = g.top()
+        c = keyword.get('c')
         exportMenu = c.frame.menu.getMenu('Open With')
         newEntries = (
             ("-",None,None),
@@ -8375,12 +8672,113 @@ I am enclosing this code as-is; use with reasonable caution.
 You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html
 
 11/7/05: Changed onBodyWillChange to onBodyChanged throughout.</t>
+<t tx="ekr.20041103050629">import leoGlobals as g
+
+import leoColor
+import leoCommands
+import leoFileCommands
+import leoFrame
+import leoNodes
+import leoPlugins
+import leoTkinterFrame
+import leoTkinterMenu
+import leoTkinterTree
+
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+   
+from leoTkinterFrame import leoTkinterLog
+from leoTkinterFrame import leoTkinterBody
+
+import os
+import string
+import sys
+import time
+import zipfile</t>
+<t tx="ekr.20041103051117">@killcolor
+@
+
+v .2
+
+1. Trash. If there is a Chapter in the Leo project called 'Trash' all deleted nodes are deposited there. Then when deleted in the 'Trash' chapter it is finally removed. There is an option to quickly add a Trash barrel in the menu.
+2. Menu moved from Outline to being summoned by right clicking on a chapter tab or in the area of the tabs.
+3. Swapping Chapters. Swap one Chapter for another one.
+4. Conversion ops. Take one Outline and turn each node into a Chapter. The convers operation is also there, take each top level node in each Chapter and add it to one Chapter.
+5. Import/Export. You are now able to load leo files as Chapters. This means, for example, that if you have 5 Outlines that you would like to bind together as one Leo file but keep their separateness you can now import those 5 Outlines into there own Chapters. You can also Export a single Chapter into it's own separate Leo file.
+6. Search and Clone. This functionality is very similar to the Filtered Hoist concept. You decide which Chapter you want your search results to appear in and a dialog will pop up. You can enter simple text or a more complex regular expression and the function will search all the outlines and create a node with the results as children.
+7. Editors now have headlines indicating what Chapters and what node are being worked on.
+
+v .6 EKR: Based on version .5 by Leo User.
+
+- Added g. before all functions in leoGlobals.py.
+- Right clicking on Chapter tab crashes.
+
+.61 fixed up a couple of spots.
+
+.62 EKR: Restored conditional call to g.app.createTkGui(__file__) in startup code.
+
+.63 EKR: Added long docstring.
+
+.64 fixed cloneWalk and PDF Convertor.
+
+.65 EKR: added new keyword args to newGetLeoFile and newOpen.
+    - This is needed because of changes to the corresponding method's in Leo's core.
+
+.66 EKR: use notebooks.get(c) throughout.
+    - c may not exist during unit testing.  Not a complete fix, not tested!
+
+.67 EKR:
+    - Added 'silent' keywords to newGetLeoFile and newOpen.
+.68 EKR:
+    - Use 'c._xPosition. or c.nullPosition()' to init so that c._xPosition is never None.</t>
+<t tx="ekr.20041103051228">def __init__( self, c, tree, frame, canvas ):
+        
+    self.c = c
+    self.tree = tree
+    self.frame = frame
+    self.canvas = canvas
+    self.treeBar = frame.treeBar
+
+    if hasattr( c, 'cChapter' ):
+        tn = leoNodes.tnode( '', 'New Headline' )
+        vn = leoNodes.vnode( c, tn )
+        pos = leoNodes.position(c, vn, [] )
+        self.cp = pos.copy()
+        self.rp = pos.copy()
+        self.tp = pos.copy()
+    else:
+        c.cChapter = self
+        self.cp = c._currentPosition or c.nullPosition()
+        self.tp = c._topPosition or c.nullPosition()
+        self.rp = c._rootPosition or c.nullPosition()</t>
+<t tx="ekr.20041103051228.1">def _saveInfo( self ):
+    
+    c = self.c
+
+    self.cp = c._currentPosition or c.nullPosition()
+    self.rp = c._rootPosition or c.nullPosition()
+    self.tp = c._topPosition or c.nullPosition()</t>
+<t tx="ekr.20041103051228.2">def setVariables( self ):
+    
+    c = self.c
+    frame = self.frame
+    frame.tree = self.tree
+    frame.canvas = self.canvas
+    frame.treeBar = self.treeBar
+    c._currentPosition = self.cp
+    c._rootPosition = self.rp
+    c._topPosition = self.tp</t>
+<t tx="ekr.20041103051228.3">def makeCurrent( self ):
+    
+    c = self.c
+    c.cChapter._saveInfo()
+    c.cChapter = self
+    self.setVariables()
+    c.redraw()
+    self.canvas.update_idletasks()</t>
 <t tx="ekr.20041103052443"># Execute this in a script button.
 
-import leoGlobals as g
 import string
-
-c = g.top()
 
 @others
 
@@ -8649,6 +9047,24 @@ print s</t>
 'utils_rename',
 'windows',
 'wrap_lines')</t>
+<t tx="ekr.20041103054545">leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
+leoTkinterFrame.leoTkinterBody.createControl = newCreateControl
+
+leoTkinterTree.leoTkinterTree.select = newselect
+leoTkinterTree.leoTkinterTree.endEditLabel = newendEditLabel
+leoTkinterTree.leoTkinterTree.__init__ = newTreeinit
+
+g.os_path_dirname = new_os_path_dirname
+
+leoFileCommands.fileCommands.write_LEO_file = newWrite_LEO_file
+leoFileCommands.fileCommands.write_Leo_file = newWrite_LEO_file
+leoFileCommands.fileCommands.getLeoFile = newGetLeoFile
+leoFileCommands.fileCommands.open = newOpen
+
+if hasattr( leoNodes.vnode, 'doDelete' ):
+    leoNodes.vnode.doDelete = newTrashDelete
+else:
+    leoNodes.position.doDelete = newTrashDelete</t>
 <t tx="ekr.20041106100326">import leoGlobals as g
 import leoNodes
 import leoPlugins
@@ -8716,6 +9132,33 @@ Tl.mainloop()</t>
 
 @others</t>
 <t tx="ekr.20041107165824"></t>
+<t tx="ekr.20041109120739">def otherPages( canvas, doc , pageinfo = pinfo):
+
+    canvas.saveState()
+    canvas.setFont('Times-Roman',9) 
+    canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo)) 
+    canvas.restoreState()</t>
+<t tx="ekr.20041109123143">'''This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
+
+**Warning**: This plugin must be considered **buggy** and **unsafe**.  Use with extreme caution.
+
+Requires Python Mega Widgets and Leo 4.2 or above.
+
+Numbered tabs at the top of the body pane represent each chapter.  Right clicking the tab will show a popup menu containing commands.  These commands allow you to:
+    
+- insert and delete chapters.
+- add names to chapters.
+- split the body pane to create multiple "editors".
+- create a "trash barrel that hold all deleted nodes.
+- import and export outlines and chapters.
+- create a pdf file from your chapters (requires reportlab toolkit at http://www.reportlab.org).
+- and more...
+ 
+Warnings:
+    
+- This plugin makes substantial changes to Leo's core.
+- Outlines containing multiple chapters are stored as a zipped file that can only be read when this plugin has been enabled.
+'''</t>
 <t tx="ekr.20041110104350"></t>
 <t tx="ekr.20041114102139">@nocolor</t>
 <t tx="ekr.20041114102139.1">- Several plugins show the docstring, so please take care to do a good job of
@@ -9181,44 +9624,6 @@ If a plugin catches exceptions during startup it should do one of the following:
             leoPlugins.registerHandler( ('open2', "new") , addMenu )
             
     return ok</t>
-<t tx="ekr.20050328092641">from Library.py for Leo4.3
-see forum &lt;http://sourceforge.net/forum/forum.php?thread_id=1244564&amp;forum_id=10226&gt;
-a better configparser would be nice.
-ability to add comments and not have them rearranged
- and to display them in the properties dialog.
-
-using @settings too, 
-
-also potential problems while testing 
-if you have this enabled from more than one python/Leo instance?
-seems to handle it ok, but might get deadlocked on multiple inserts.
-
-adding some room to catch exceptions
-seems to be using dbhash on win py2.4 might be nice to know.
-changes to ini thru properties doesn't take effect until you hit apply.
-just ok isn't enough to do it?
-
-working out details for multiple leos open, making the dialog follow.
-if you click Library again after switching leos, all is well.
-more to be done. spellchecker solves this by creating a global window
-but it is hooked on each node selection and updated when the body is changed.
-that seems a little heavy handed for this application.
-
-
-adding support for multiple libraries
-and or retaining open library handles.
-
-
-PMW windows don't have the Leo icon, maybe that can be fixed?
-
-thanks to origional author and EKR for working out the important details.
-adding config and startup &amp; shutdown trivial by comparason
-and of course Paul for plugins, menu and manager.
-e
-
-@language python
-@tabwidth -4
-@killcolor </t>
 <t tx="ekr.20050328092641.1">['__cmp__', '__contains__', '__del__', '__delitem__', '__doc__', '__getitem__', '__init__', '__iter__', '__len__', '__module__', '__repr__', '__setitem__', '_checkCursor', '_checkOpen', '_closeCursors', '_cursor_refs', '_gen_cref_cleaner', '_make_iter_cursor', 'clear', 'close', 'db', 'dbc', 'first', 'get', 'has_key', 'isOpen', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'last', 'next', 'pop', 'popitem', 'previous', 'saved_dbc_key', 'set_location', 'setdefault', 'sync', 'update', 'values']
 
 </t>
@@ -9262,6 +9667,155 @@ lib1 = default/library1.dbm
     """
 #can we just have the list here? like recentfiles and get a list of them back?
 lib1</t>
+<t tx="ekr.20050328092641.33">def getConfiguration(): 
+    """Return the config object
+    should this look in homeDir first then plugins?   
+    """ 
+    fileName = g.os_path_join(g.app.loadDir,"..","plugins","Library.ini") 
+    config = ConfigParser.ConfigParser() 
+    config.read(fileName) 
+    return config 
+</t>
+<t tx="ekr.20050328092641.34">def applyConfiguration(config):
+    """plugin menu calls this in Properties after ini edit
+    and override with any @settings and build libconfig
+    no way to tell where the ivar lives in for updating.
+    config/leoSettings.leo, $home or in the leo or ini(s).
+    """
+
+    if not config: return
+    if config.has_option('Main', 'verbosity'): 
+        xval = config.get('Main', 'verbosity')
+        if ('%s'%(xval, )).strip().lower() in ('false', '0', 'off', 'f', ''):
+            xval = 0
+        else:
+            xval = 1
+
+        libconfig.verbosity = xval
+
+    # lib1 thru libN, default/ or ~/whatever
+    # the backend might determin which db in the next version
+
+    for x in validlibs:
+        try:
+            xval = config.get("Main", x)
+            #g.es(x, xval)
+        except Exception:
+            xval = None
+
+        #this seems to be True even if option set to '' in ini
+        if xval and xval != '':
+            #g.es('ini setting %s %r'%( x, xval))
+            setattr(libconfig, x, xval)
+
+    #now check if there are any @settings
+    #it would be better if you could positively get all settings for @plugins
+    # and for @Library under @plugins, till then we guess a little
+    #again lib0..5 a little limited but ok for now
+    c = Library.c
+    for x in validlibs:
+        xval = c.config.getString('Library_'+x)
+        if xval and xval != '':
+            if libconfig.verbosity: 
+                g.es('using @setting %s %r'%( x, xval))
+            #Library.fixdefault(x, xval)
+            setattr(libconfig, x, xval)
+
+    #now veryify they have decent values
+    #lib extension = 'dbm',  might be database dependant
+    #should check is a valid file name and not something weird.
+    #probably should try to create any directories too. let user handle it.
+
+    for x in libconfig.ivars():
+        #print x
+        if x in validlibs:
+            if hasattr(libconfig, x):
+                attr = getattr(libconfig, x)
+                Library.fixdefault(x, attr) 
+    Library.fixdefault('lib', 'default') 
+            
+
+    #signal to redraw if its already open, should maybe do full cleanup?
+    #the open lib may be no longer one of the choices!
+    if Library.dialog: Library.dialog.destroy()
+    Library.dialog = None  </t>
+<t tx="ekr.20050328092641.35">#setup is getting to be more complicated than what is tested...
+#maybe plugins should define __all__ = ['ok to exports'.split()]
+@
+if __name__ == '__builtin__':
+    from Library import *
+    #g.es(validlibs)
+    import leoGlobals as g
+    import ConfigParser
+    g.app.unitTesting = True
+    __file__ = 'Library.py'
+@c
+
+if 0: # Fails unit test.
+
+    def test_Configuration(): 
+        """read the ini to save it or back it up
+         or pass a StringIO mockable to getConfiguration, 
+            write the ini with known values
+          test they can be read back in the config object
+            make sure if ini exists and is wrong
+            or if it doesn't exist, defaults will be preserved.
+        no mention of HOME for now
+        its not vary convienent to run this with all the dependancies scattered
+        likely similar with other more complicated tests
+        but do it anyway as part of a more expanded test than plugin import?
+        is False return enough or a raise Something? any print a failure?
+        
+        function name must be test_something but node can be @test something
+        and I think doctests can be in any part of the plugin if those tests run.
+        no claim yet this tests anything consequential.
+        
+        what might be useful is a options permutation generator:
+        compare all perms of each of the Bunch the ini the @setting
+         with valid and invalid possibly user [mis]edits of each and extras.
+        do we end up with a valid usable Bunch of paths and options?
+         are all the booleans boolable and all the ints and strings viable?
+         will it be the same if user edits or changes the ini or @settings
+        can we identify where each of the options comes from so on close/exit
+         we can offer to update the correct ini or @setting node or just print changes.
+        and investigate optparser for getting commandline options as well.
+        I think Leo will just pass them on and not mangle them and not be confused.
+        """ 
+        
+    
+        #libc = g.Bunch(libconfig) or g.Bunch(dict(libconfig)) shoulv'e worked
+        #print dir(libconfig)
+    
+        libc = libconfig.__dict__.copy()
+        #why does Bunch not a copy and intersection method?
+        #repr(l1) should be anough to reconstruct w/o additional parsing.
+        #sets would be handy to find which settings are global which are per leo,
+        #each setting should probably be a tupple of that kind of info. 
+        
+        #libc['libname'] = 'library00'
+        #g.es(libc)
+        #g.es(libconfig)
+    
+        fileName = g.os_path_join(
+                g.app.loadDir,"..","plugins", __file__[:-2]+"ini") 
+    
+        config = ConfigParser.ConfigParser() 
+        config.read(fileName) 
+        applyConfiguration(config)
+        
+        #compare this config with getconfig and do in try/except
+    
+        liba = libconfig.__dict__.copy()
+        g.es(libc)
+        g.es(liba)
+        
+        #does this need an element by element comparison?
+        return g.es(liba != libc)
+        
+    # comment this out to test with g.app.unitTesting
+    if __name__ == '__builtin__':
+    
+        test_Configuration() != False</t>
 <t tx="ekr.20050328101812"> 
         
         
@@ -10661,32 +11215,6144 @@ executeScript on this node to insert your plugin path
 if it looks ok remove the #comment
 @c
 
+&lt;&lt; modifications by EKR from 139i &gt;&gt;
+
 &lt;&lt; insertAplug &gt;&gt;
-insertAplug()
+insertAplug(c)
 
 @language python
 @color
-@tabwidth -4
-</t>
-<t tx="ekr.20050421093045.1">def insertAplug(wch= 'i'): #i/r
+@tabwidth -4</t>
+<t tx="ekr.20050421093045.1">def insertAplug (c,wch='i'): #i/r
     """use to insertAt 1.0 #@path plugindir
     """
     import leoGlobals as g
     import os, sys
 
-    k = g.os_path_split(g.app.loadDir)[0]
+    k = g.os_path_split(g.app.loadDir) [0]
     #this should fix the slashes and lower cases' it on win9x
-    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
+    path = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k,"plugins")))
 
     if not g.os_path_isdir(path):
-        print 'give up', path; raise NameError
+        print 'give up', path ; raise NameError
 
     if 'i' in wch:
-        c = g.top()
         Tx = c.frame.body
         Tx.setInsertionPoint(1.0)
-        Tx.insertAtInsertPoint('#@path %s\n'%(path,))
-        Tx.onBodyChanged("Typing")  
+        Tx.insertAtInsertPoint('#@path %s\n' % (path,))
+        Tx.onBodyChanged("Typing")
+</t>
+<t tx="ekr.20050421093045.2">#be sure and add dyna_menu.py to pluginsManager.txt
+#you don't need to enable dynacommon.py in pluginsManager.txt
+#you do need dynacommon.py in the plugins directory 
+# 
+
+&lt;&lt; doc &gt;&gt;
+__version__ = '0.0139i' #u05417a10:51
+__plugin_requires__ = ["dynacommon"]
+__plugin_files__ = ["dyna_menu.ini", "dynacommon.py", "dyna.txt"]
+#__plugin_group__ = "ex"
+ 
+#__plugin_optional__ = 'pyparsing csv pydot graphviz textwrap silviecity source-highlight docutils pylint pychecker pyrex mingw astyle elementtree'.split()
+
+&lt;&lt; initilize &gt;&gt;
+&lt;&lt; version history &gt;&gt;
+dynaMvar = None
+menudefault =-4  #help4, linenumber5
+@others
+
+#makeup an alias for importing and for keybindings
+#import dyna_menu; print dir(dyna_menu)
+#would be slicker if could use alais inside macros but they aren't defined yet
+htmlize = dynaZ_htmlize
+dtef = dynaB_Clip_dtef
+dupe = dynaM_dupe
+DQ3 = dynax_DQ3
+helps = dynaB_help
+
+#you can use a macro in other ways
+def timestamp(tag, keywords):
+    """stolen from the timestamp plugin
+    chged hook from command1 to save1
+    how to hook write @file so can timestamp that?
+    
+    add nag you if changed and not saved over 5 minutes
+    add nag if typing after sunset over 3 hours, yea right~
+    """
+    cmd = keywords.get('label', 'save')
+
+    if cmd.startswith("save") or cmd.startswith("tangle"):
+        c = keywords.get('c')
+        if c:
+            dynaB_Clip_dtef(c, ret= 'p')  #just print
+            g.es('at node:' + (c.currentVnode().headString().strip())[:128])
+
+
+</t>
+<t tx="ekr.20050421093045.3">"""this plugin creates a dyna menu of macro items.
+ Alt+y the dyna menu accelerator key.   
+ every time you save the leo one of the macros prints a timestamp.
+ macros perform any actions you could have with execute script,
+ with the added bonus, they work on the selected text or body text.
+ they work as well from the dynatester node or dynabutton, insuring
+ when they are included in the plugin, minimal time is lost debugging.
+see dyna_menu.ini for options you can set, even while Leo is running.
+and edit the paths in dynacommon.py to suit your system.
+as time goes by, this part will become smarter and require less editing.
+
+ add exS may re-install exS button on the toolbar.
+ set doc and hit DQ3 with nothing selected to see docstring of all macros.
+ toggle print/paste/doc on the menu. 
+ you click on print, paste or doc to enable that action.
+ the action refers to the output of the macro in most cases.
+ open another leo resets back to print 
+ because all dyna share an instance.
+
+ most output actions are to the log,
+ or using print redirected to log if you set that in config.
+ 'print' gets redirected to console if the macro is in the plugin.
+ you have to change the macro accordingly from print x to g.es(x) 
+ 
+some macros do need some non standard modules,
+will fallback to standard modules if possible.
+some are available from python cvs 
+or from later python versions.
+the only way to know is to try them or read the code.
+
+do post a bug report or feature request
+on my comment page from:
+ http://rclick.netfirms.com/rCpython.htm
+or sourceforge forum:
+&lt;http://sourceforge.net/forum/forum.php?thread_id=1255533&amp;forum_id=10226&gt;
+
+expect constant maintance and additions
+
+"""</t>
+<t tx="ekr.20050421093045.4">from __future__ import generators  # + enumerate for less than py2.3
+@
+from future has to be first...
+but to check py version you have to import sys
+isn't that some kind of catch 22?
+@c
+import sys
+
+import leoGlobals as g
+Tk   = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
+#at this point in Leo, code from plugins isn't importable. later it is.
+#replace w/importfromfile
+#or patch leo to add plugindir sooner rather than later...
+
+k = g.os_path_split(g.app.loadDir)[0]
+#this should fix the slashes and lower cases' it on win9x
+k = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
+
+#path being unicode can affect less than py2.3
+if sys.version_info[:2] &lt; (2, 3):
+    k = str(k)
+
+#might not be found in sys path on win9x, there is no unicode paths
+if k not in sys.path:
+    sys.path.append(k)
+del k
+
+#should this even be imported if batch mode or no Tk?
+try: 
+    #import dynacommon as dynacom
+    from dynacommon import *
+    dynacom = True
+except ImportError: 
+    dynacom = None
+    #no gui maybe print better here? should guard the error too?
+    g.es('you have to copy dynacommon.py to plugins')
+
+"""
+ to disable the timestamp thing, comment out this line below:
+   ...registerHandler("save1", timestamp) 
+
+for refrence, dynabutton and exS were other plugins from the URL below.
+
+with the dyna plugin loaded you can do things in your scripts like:
+    
+import sys
+#theres probably an easier way than this.
+sys.modules['dyna_menu'].dynaM_Clip_dtef(0, 'p')
+
+#another way
+import dyna_menu
+#print help(dyna_menu)
+#print dir(dyna_menu)  #dynaM_
+print dyna_menu.dynaHexdump('testing 123')
+
+
+lightly tested with py2.2 or Leo4.3a3,4+ from cvs
+tested Python 2.3, 2.4.1 win9x
+
+should not be a problem anywhere else.
+but don't quote me on that. make a bug report.
+
+"""</t>
+<t tx="ekr.20050421093045.5">@
+0.0138 few changes since forum post
+
+0.0139 e
+  - updates re Leo4.3 normpath and c for a few dialogs
+  - some config options for htmlize and du_test
+  - htmlize
+   - code folding: still in process
+   - improvements suggested by EKR &amp; Bill P. not fully implimented
+      change fonts to css as an option  no
+      add a plain or RST output option  no
+      hey I could use that myself quite  bit!
+      did add option to stripnodesents, and stripdirectives &amp; stripcomments now works
+ - use subprocess if available when calling external pychecker &amp; pylint
+ - made justPychecker an option not to print source after checking
+  - if you dont want to run pylint you have to edit the source.
+  - pylint is more configurable and doesn't fail on import errors now
+  - highly recomended. see dyna.txt for rc file and URLs'
+  - added a few more flippers from the plugin_menu
+    - for Leodebug, justPychecker and verbosity for @test and doctest
+  - added back a macro uses dynaplay to comment out a python selected text
+    many people asked for this, should get comment for whatever language is active.
+    Leo can do this natively now but dyna can also put arbitrary text if you like.
+  - cmd_flip_onoff_c_gotoline
+  - htmlze
+    -   switch on plain or rst, force @others and send to for docutils
+       and there if there are subnodes of @language preprocess them
+       somehow and this gets recursive and complicated...
+    -  option on hilighter or silvercity for the remaining languages
+  + fix evaluator to select between Leo perttyprint, evaluator and astyle?
+  + just add call to astyle for now for c &amp; java output to htmlize or log
+
+  work code in runcmd for commands that accept stdin
+  for source-highlight and astyle means no tempfile.
+
+-a,b,d leapahead to fix htmlize for plain and @rst as simple as possible
+e special bug fix release
+f this version history skips around a little from b and beyond.
+ did some cleanup in various fixbody calls, consolidated selectbody
+ not calls getScript and optionally stripSentinals
+ or comment them if in selected text as for disa.
+ playback broke somehow
+g - make htmlize callable for display of report from pylint
+  - after astyle now too so can see output syntax highlighted.
+h - subprocess.startupinfo from cookbook solves no dos window flash!
+  - still renames the console if its open on windows.
+  - renamed unittest testcase to g.tester instead of g.app._t
+  - added actions lower, upper etc reworked DQ3 and slashes too
+  began help to eventually parse python w/o import as pydoc does
+  pydoc fallback if not epydoc or docutils sandbox available
+i - began parser and reverser which isn't going terribly well.
+j - fixup pydent so it works in other @language and change the name
+
+
+ adding more tests, still a few that fail in DQ3 and htmlize
+ testing slightly different in py2.2 and 2.4 as well
+
+still todo
+remove more bare Exception.
+bribe someone to test it on mac and nix and give some feedback.
+
+</t>
+<t tx="ekr.20050421093045.6">@
+
+in theses macro nodes, copy or clone the macros
+you want to appear in dynamenu
+
+dynaM_ or dynaS_ for macro and system macro
+arbitrary to segment into cascading menus at build time
+see load_menu, dont use beyond Z as a macroname dynaZ_whatever
+change the letter to change the order the macros are created
+change the name of the macro to change the alphabetical order.
+
+not alot of error checking is done
+each macro must have the same name prefix, dyna*_
+and either take *a or c as argument
+dynaM_DQ3(c)  they appear in the menu in sorted order
+
+
+for other less used macros,
+use the dynabutton or the scriptButton
+
+some of these are calling function further in the file
+that only works becase all parsing is done before calling
+
+
+need new macro indexer of selected text or body
+simple words contained and count place found
+
+need to catagorize them all for print/paste
+and also which are to Log always and only
+or print and if redirect enabled will be to log
+and what about a file toggle would output to file? or to clipboard
+so can tag them in the in the menu as using print/paste.
+
+many don't care which,
+two are destructive no undo and there is a popup first.
+
+some are action orientated.</t>
+<t tx="ekr.20050421093045.7"></t>
+<t tx="ekr.20050421093045.8">def dynaB_Clip_dtef(c, ret= 'cp'):
+    """(c, ret= 'cp') clip, print, return
+    ret='cpr' decide if to add to clipboard, print or return 
+    time text 
+    
+    """
+    try:
+        if g.app.dynaMvar.bugimport: raise ImportError
+        #custom datetime format
+        import binaryfun as bf
+        dt = bf.dtef()
+    except ImportError:
+        if c:
+            #what Leo has for time in body
+            dt = c.getTime(body=True)
+        else:
+            import time
+            Leoconfigformat = '%m/%d/%Y %H:%M.%S'
+            dt = time.strftime(Leoconfigformat) 
+
+    if 'p' in ret: g.es('%s%s '%(EOLN, dt,) )
+    if 'c' in ret: g.app.gui.replaceClipboardWith(dt)
+    #ret = r necessary, if dont specify it clips &amp; prints by default
+    if 'r' in ret: return dt  
+</t>
+<t tx="ekr.20050421093045.9">def dynaB_help(c):
+    """(c)
+    call epydoc or pydoc on selected text display in webbrowser.
+    pydoc simple output doesn't have links to additional levels.
+
+    pydoc code posted awhile ago on Leo forums
+    trees plugin has something similar which creates subnodes
+    of the help but that is not too easy to navigate.
+    please suggest options for @language other than python.
+  ~EOT
+    this mirrors the dev rClick action of the same name
+    eventually will be one code for both or neither. maybe clone them?
+    need to get a master redirect to avoid this code duplication
+
+    doesn't trigger PMW popup like in rClick 
+    pydoc can takes quite awhile to produce output
+    eventually replace w/twisted happydoc or docutils sandbox code for python
+    and maybe call doxegen or something else for other @language
+    possibly a local indexer? and/or an 'I feel lucky' from google or yahoo
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+
+    try:
+        #works ok w/o this as well. but likely help is in ascii
+        newSel = g.toEncodedString(newSel, "ascii", reportErrors= True)
+    except Exception:
+        pass
+
+    #might make sense to distinguish simple from help on a module
+
+    try:
+        #import happydoclib  #Assignment to None error in py2.4
+        import epydoc
+        happydoc = True
+    except ImportError:
+        happydoc = None
+
+    #double layer of redirection seems necessary
+    g.redirectStdout(); g.redirectStderr()
+    &lt;&lt; stdredirect n&gt;&gt;
+    &lt;&lt; happydoc &gt;&gt;
+            
+    if happydoc is None:  #or module not found
+        import pydoc
+        #there may be better ways to call this to get other than text
+        #which would have links to sub modules
+        #BTW, this prints anyway somehow if not redirected well
+        H = pydoc.Helper(input= None, output= sys.stdout )
+        H.help(str(newSel))
+
+    &lt;&lt; stdredirect f&gt;&gt;
+    #redirect is now screwed untill return
+    g.restoreStdout(); g.restoreStderr()
+
+    if oo.strip()[:9] == 'no Python' or oo.strip()[:5] == 'Sorry':
+        g.es(oo + oe)
+    else:
+        htmlize(c, (oo + oe), 'report') </t>
+<t tx="ekr.20050421093045.10">sys.stdout = g.fileLikeObject() #'cato'
+sys.stderr = g.fileLikeObject() #'cate'
+
+#usually you dont want to do this,
+_sosav = sys.__stdout__
+sys.__stdout__ = sys.stdout
+_sesav = sys.__stderr__
+sys.__stderr__ = sys.stderr
+</t>
+<t tx="ekr.20050421093045.11">#actually epydoc which imports, docutils will work soon?
+#and it might require its own css?
+#another hopelessly unscriptable app
+
+if happydoc: 
+    from epydoc.html import HTMLFormatter
+    from epydoc.objdoc import DocMap, report_param_mismatches
+    from epydoc.imports import import_module, find_modules
+    from epydoc.objdoc import set_default_docformat
+
+    err = None
+    try: import_module(newSel)
+    except ImportError, err:
+        happydoc = None
+
+    if not err: 
+        options = {}
+        g.es('using epydoc')
+        set_default_docformat( 'plaintext')
+        htmldoc = HTMLFormatter(d, **options)
+        print htmldoc</t>
+<t tx="ekr.20050421093045.12">oo = sys.stdout.get()  #read get()
+oe = sys.stderr.get()  #get()
+sys.stdout.close()
+sys.stderr.close()
+
+#if you didnt do this it wouldent need to be reversed
+sys.__stdout__ = _sosav
+sys.__stderr__ = _sesav
+
+sys.stdout = sys.__stdout__
+sys.stderr = sys.__stderr__
+
+</t>
+<t tx="ekr.20050421093045.13">def dynaB_Graphviznode(c):
+    """(c= None) create jpg popup associated viewer
+    take the EKR Graphviz pydot demo
+    see the 4.2+ test.leo for the origional and other info
+    http://www.dkbza.org/pydot.html
+    http://www.research.att.com/sw/tools/graphviz/download.html
+    pydot, python setup.py install
+    install the full Graphviz in a subdir somewhere on  the path
+    pydot has a path walker that will find it.
+    works on win.
+
+    bring it back down to 4.1 standards and macroize it
+    put in a switch for &gt;4.1 use the origional calls
+    
+    works on any node now. best if there are not too many subnodes
+    the graph gets too dense and small
+  ~EOT  
+    the other demo graph node outline builder worked 4.1.
+    also have to refocus. the demo was to visualize 4.2 t\/v nodes
+    I dont need to see the numbers just the headlines
+    some things are compatable some not. 
+    need to dev a good list of what works
+    list of cvs commits would help here maybe if the docs dont keep up.
+    its not going to make a whole lot of sense in less than 4.2
+    untill I find out about the diferences
+    makes a nice looking graph though!
+
+ a dependancy graph of which modules a program uses might be doable.
+ more nodes for pieces in the module and other filesystem dependancies.
+ 
+ 
+    numberOfChildren() nthChild(n) lastChild()
+    """
+    import leoGlobals as g
+    import os
+    import string  #why?
+    try:
+        import pydot
+    except ImportError:
+        g.es('you need http://www.dkbza.org/pydot.html')
+        return
+
+    try:
+        import dynacommon as dy
+        #reload(dy)
+        fname = dy.leotmp('pydotOut.jpg')
+    except ImportError:
+        fname = 'pydotOut.jpg'
+
+    p = c.currentPosition()
+
+    &lt;&lt; code &gt;&gt;
+        
+    graph = pydot.Dot(simplify= True, ordering= "out")
+
+    root = p  #g.findNodeInTree(p, "Root") #another 4.2ism or in leotest
+
+    addLeoNodesToGraph(root, graph, top= True)
+    graph.write_jpeg(fname, prog= 'dot')
+
+    g.es('graph of outline written to \n' + fname)
+    import webbrowser
+    webbrowser.open(fname, new= 1)</t>
+<t tx="ekr.20050421093045.14">@others</t>
+<t tx="ekr.20050421093045.15">def addLeoNodesToGraph(p, graph, top= False):
+    """
+    p.v attribute is 4.2, this might be a dealbreaker for 4.1?
+    butchering it up just to get some output
+    the node ovals are too large
+    
+    """
+
+    # Create p's vnode.
+    if Leo &gt; 4.1:
+        n = vnodeRepr(p.v)
+        l = vnodeLabel(p.v)
+    else:
+        n = vnodeRepr(p)
+        l = vnodeLabel(p)
+
+    thisNode = pydot.Node(name= n, label= l)
+    graph.add_node(thisNode)
+
+    if p.hasChildren():
+        child = p.firstChild()
+        childNode = addLeoNodesToGraph(child, graph)
+        graph.add_node(childNode)
+
+        if Leo &gt; 4.1:
+            e1 = tnodeRepr(p.v.t)
+            e2 = vnodeRepr(child.v)
+        else:
+            e1 = tnodeRepr(p)
+            e2 = vnodeRepr(child)
+
+        edge2 = pydot.Edge(e1, e2)
+        graph.add_edge(edge2)
+
+        
+        #     child.next() could error?  hasattr(child, 'next()')?
+        while child.next():  #child.hasNext() 4.2
+            next = child.next()
+            
+            if Leo &gt; 4.1:
+                e1 = vnodeRepr(child.v)
+                e2 = vnodeRepr(next.v)
+            else:
+                e1 = vnodeRepr(child)
+                e2 = vnodeRepr(next)
+
+            edge =  pydot.Edge(e1, e2, dir="both")
+
+            nextNode = addLeoNodesToGraph(next, graph)
+            graph.add_node(nextNode)
+            graph.add_edge(edge)
+            child = next
+            
+    if 1:
+        if Leo &gt; 4.1:
+            n = tnodeRepr(p.v.t)
+            l = tnodeLabel(p.v.t)
+        else:
+            n = tnodeRepr(p)
+            l = tnodeLabel(p)
+
+        tnode = pydot.Node(name= n, shape="box", label= l)
+        
+        if Leo &gt; 4.1:
+            e1 = vnodeRepr(p.v)
+            e2 = tnodeRepr(p.v.t)
+        else:
+            e1 = vnodeRepr(p)
+            e2 = tnodeRepr(p)
+
+        edge1 = pydot.Edge(e1, e2, arrowhead= "none")
+        graph.add_edge(edge1)
+        graph.add_node(tnode)
+    
+    if 0: # Confusing.
+        if not top and p.v._parent:
+            edge = pydot.Edge(vnodeRepr(p.v),vnodeRepr(p.v._parent),
+                style="dotted",arrowhead="onormal")
+            graph.add_edge(edge)
+
+    if 0: # Marginally useful.
+        for v in p.v.t.vnodeList:
+            edge = pydot.Edge(tnodeRepr(p.v.t),vnodeRepr(v),
+                style="dotted",arrowhead="onormal")
+            graph.add_edge(edge)
+
+    return thisNode</t>
+<t tx="ekr.20050421093045.16">def tnodeLabel(t):
+
+    if Leo &gt; 4.1:
+        tl = len(t.vnodeList)
+    else:
+        tl = 0
+
+    return "t %d [%d]" % (id(t), tl)
+    
+def vnodeLabel(v):
+    
+    return "v %d %s" % (id(v),v.t.headString)
+</t>
+<t tx="ekr.20050421093045.17">def dotId(s):
+    """Convert s to a C id"""
+
+    s2 = [ch for ch in s if ch in (string.letters + string.digits + '_')]
+    return string.join(s2,'')
+
+def tnodeRepr(t):
+
+    return "t_%d" % id(t)
+    
+def vnodeRepr(v):
+    
+    return "v_%d_%s" % (id(v),dotId(v.headString()))</t>
+<t tx="ekr.20050421093045.18">def dynaB_linenumber(c):
+    """(c)  print w/sentinals
+   selected text or body as Leo sees it, 
+   numbering lines or if there is an integer in copybuffer,
+    show just +- a few lines around that number.
+   selected text doesn't show sentinalsm but exscript uses them
+   so lineenumber on selected text may not jive after an error.
+   (for more rambling debugging tips see my website)
+   syntax errors, indentation errors ,  missing closing paren
+   missing colon ':'  in def, if, class
+   the actual error can be ahead or behind of the reported error line.
+   often at the top of the block continuing the error.
+   it wouldn't hurt to examine the bottom and middle either.
+  ~EOT   further enhancement, keep track of last section ref node
+    last def last method of last class and output all the lines together
+    rather than one at a time which can tie up Leo on long programs.
+    should output current path and language and wrap to current wrap
+    -n +n could be under/over the abs(int) in copy buffer
+
+    could make it jump to linenumber based on env variable
+    that way you wouldn't have to remake the plugin to change behavior
+    several other macro also could use settable params at ex script time.
+    
+    """
+    #nothing selected will include sentinals
+    data = fixbody(c,dynaput(c, [])) 
+    datalines = data.splitlines()
+
+    pln = g.app.gui.getTextFromClipboard()
+    try:
+        pln = int(pln)
+        g.es('using line # %d'%(pln,), color= 'turquoise4')
+    except Exception, err:
+        g.es('no int in copy buffer', color= 'turquoise4')
+        pln = 0
+
+    if pln &gt; len(datalines) or pln &lt; 0:
+        #who would select zero to print the first line?
+        #maybe zero should be all lines as it would be if zero
+        g.es('int found is out of range', color= 'turquoise4')
+        #still possible to break and maybe too many messages
+        if pln &gt; len(datalines): pln = len(datalines) - 5
+        if pln &lt; 0: pln = 5
+
+    for i, x in enumerate(datalines):
+        if pln and i &lt; (pln - 5): continue
+        if pln and i &gt; (pln + 5): break
+
+        #would rather not go thru this every time thru the loop
+        if pln and i == pln:
+            colr = 'gray'
+        else: 
+            colr = 'slategray'
+
+        g.es('%- 3d '%(i,), newline= False, color= colr)
+
+        g.es('%s'%(x,))
+    g.es('There are %s lines in ? nodes size=%s'%(
+            len(datalines),
+             sum([len(x) for x in datalines]), 
+             ), color= 'turquoise4')</t>
+<t tx="ekr.20050421093045.19">def dynaB_nflatten(c):
+    """c= None  print
+    like flatten but in macro so can
+    print/paste or copy to buffer eventually. now out to log.
+    should limit the recursion to less than the normal limit
+    isn't following the more format of +-
+    chg to int, add index level, seperate out the recursive function
+    so can return body size and assmble totals
+    what is the meaning of the totals if index is one though?
+    obviously have to get all and total in here, next refactor for that.
+  ~EOT   show if there are subnodes even if dont enumerate.
+    dynacolors being a global when run from dyna_menu makes this
+    problematic when run from scriptButton now while debugging...
+    going to have to exS with dynacommon namespace or something
+    or import common if any macr needs them. more complications.
+    should just extend g and be done with it
+
+    uses dynacommon deangle, commafy 
+    an ini setting could select just @nodes or just @file
+    another could leave off the node counts and totals
+    
+    silly to create a newline connected string of rendered ints
+    then splitlines and int on the split string! 
+    better just return list of tupple?
+    will make no sense to anyone except if they've seen previous version
+    but is a major simplification, 
+    why it happened in the first place, is surely a mystry.
+    there may be a marginal tradeoff of computation for size of list
+    and in a recursive function this might matter, we'll see how it goes.
+    next will have to resolve why the total of all nodes != filesize
+    not even counting @thin etc
+    """    
+    import leoGlobals as g
+
+    tbytes = 0
+    oline = _nflatten(c, index= 1, sx= [])
+    g.es("headString, +nodes, bytes")
+    for st in oline:
+        try:
+            i, hs, sz, nz = st
+            g.es("%s%s, +%d, %s"%(
+                (' '*i), hs, nz, 
+                      g.choose(sz&lt;1024,
+                       '%s'%sz, '%sk'% commafy(sz, '.')) ),
+                     color= dycolors.gFuchsia)
+            tbytes += sz
+        except Exception:
+            g.es(" ", s, dynaerrline(), color= dycolors.gError)  #
+
+    if len(oline) &gt; 1:
+        g.es(" =%s"%(
+            g.choose(tbytes&lt;1024,'%s'%tbytes, '%sk'% commafy(tbytes, '.')),
+            ), color= dycolors.gFuchsia)
+        
+
+def _nflatten(c, current= None, indent= 0, index= 0, sx= None):
+    """may be trying to combine too many things
+     efficency out the window to boot.
+    """
+    if current is None:
+        current = c.currentPosition()
+        t = (indent, deangle(current.headString()[:50]),
+            len(current.bodyString()), len(list(current.children_iter())) )
+        #g.es(t, color="purple")
+        sx.append(t)
+        indent += 2
+
+    for p in current.children_iter():
+        t = ( indent, deangle(p.headString()[:50]),
+            len(p.bodyString()), len(list(p.children_iter()))  )
+        #g.es(t)
+        sx.append(t)
+        if p.hasChildren() and index &gt;0:
+            _nflatten(c, p, indent +2, index -1, sx)
+            continue
+
+    return sx</t>
+<t tx="ekr.20050421093045.20">@others
+def dynaB_fileinfo(c, fname= None):
+    """(c= None, fname= None)  print
+     show some basic file info size, create date etc.
+    try to get filename from selected text then copybuffer,
+    if none of these are valid filenames using os.isfile,
+    then will try to get current @file @rst path &amp; name,
+    then finally c.mFileName of current leo.
+    if more than one of these is True, 
+    then its up to you to move out of that node, select or whatever.
+    feel free to impliment the more stodgy browse to file name first idiom.
+  ~EOT  py22 fixed
+    AttributeError: 'module' object has no attribute 'getctime'
+    
+    might popup a dlg to set attributes in v9
+    should get user name also
+    winUserName = win32api.GetUserName()
+    macUserName = ?
+    nuxUserName = expand('~')?
+
+    add mode to walk from root and list all the @thin filenames
+    and sublist any @file @nosent contained
+    then all other @file for backup if you aren't careful with @thin
+    you might just backup the leo's and forget the derived files    
+    """
+    import leoGlobals as g
+    import os, time
+
+    drif = 0 #do report intermediate failures 
+
+    def normit(fn): 
+        #seems redundant till you get a weird join it fixes
+        return fn  #g.os_path_norm()
+
+    if fname is None:
+        fname = c.frame.body.getSelectedText()
+        if not g.os_path_isfile(normit(fname)):
+            if drif and fname: g.es("- ", fname[:53])
+            fname = g.app.gui.getTextFromClipboard()
+
+        #chg 1 to 0 or will never try for @file
+        if 0 and not g.os_path_isfile(normit(fname)):
+            if drif and fname: g.es("- ", fname[:53])
+            fname = 'python.txt' #testing default
+
+    if not g.os_path_isfile(normit(fname)):
+        if drif and fname: g.es("- ", fname[:53])
+        fname = 'the current @file'
+        p = c.currentPosition()
+        #leocommands has goto should be using an API call to get filename.
+        #coping some of the relevent code, its a jungle in there...
+        #seems ok on @nosent, goto should be fixed since it skips them
+
+        fileName = None
+        for p in p.self_and_parents_iter():
+            fileName = p.anyAtFileNodeName()
+            if fileName: 
+                break
+            if p.headString()[:4] == '@rst':
+                #this can fail if not the first @rst
+                fileName = p.headString()[4:]
+                #c:\c\leo\V42leos\ /c/leo/HTML/Colortest.html via join
+                break
+
+        if not fileName:
+            if drif: g.es("ancestor not @file node")
+        else:
+            root = p.copy()
+            d = g.scanDirectives(c)
+            path = d.get("path")
+            #need the directive length, thin, file-thin etc [1:] 
+
+            fname = root.headString()
+            fname = fname[fname.find(' ')+1:]
+            fname = g.os_path_join(path, normit(fname))
+            if not g.os_path_isfile(normit(fname)):
+                #will double the msg if drif, 
+                #but you might want to know
+                g.es("not exists", fname[:53])
+
+    if not g.os_path_isfile(normit(fname)):
+        if drif and fname: g.es("- ", fname[:53])
+        fname = c.mFileName #can fail if not saved
+
+    if not g.os_path_isfile(normit(fname)):
+        g.es("no valid filename found %s"% str(fname[:53]))
+        return 
+
+    #print g.file_date(fname, format=None)
+    #print os.path.getatime(fname)
+    fname = normit(fname)
+    try:
+        if not hasattr(os.path, 'getctime'): #py22
+            os.path.getctime = os.path.getmtime
+        h = "%s % 5dK  %s\n%- 18s c) %24s m) %24s"%(
+            perms(fname),
+            os.path.getsize(fname)/1024L,       #comafy
+            g.os_path_split(fname)[0],          #dirname
+            g.os_path_split(fname)[1],          #text
+            time.ctime(os.path.getctime(fname)), #is this locale?
+            time.ctime(os.path.getmtime(fname)),
+        )
+    except (OSError, Exception):
+        g.es_exception()
+        h = fname
+
+    g.es(h)</t>
+<t tx="ekr.20050421093045.21">def perms(name):
+    """
+    a=\xc3 Padraig Brady - http://www.pixelbeat.org
+     -rw-rw-rw- leo\src\..\config\leoConfig.txt
+    """
+    import sys
+    import stat
+    import os
+     
+    mode = stat.S_IMODE(os.lstat(name )[stat.ST_MODE ])
+    #print mode
+    perms = "-"
+    for who in "USR", "GRP", "OTH":
+        for what in "R", "W", "X":
+            if mode &amp; getattr(stat, "S_I" + what + who ):
+                perms = perms + what.lower()
+            else:
+                perms = perms + "-"
+    return perms
+ 
+</t>
+<t tx="ekr.20050421093045.22"></t>
+<t tx="ekr.20050421093045.23">def dynaM_geturls(c):
+    """(c) selected text print/paste
+    extract all urls from selected text. included som extra text.
+    doesnt span line endings. misses any number of other mal formed urls.
+    might use some ideas from the extend rclick post on sf.
+    not 100% reliable and not intended to be the last word in re use.
+    reconstruction of the found url is at this point just exploratory.
+
+    testing in redemo, modifyed to include rClickclass 
+    and multiline text for re's instead of single line entry.
+    kodos and redemo work too, but always seeems a little less reliable
+
+    some might want the ability to open the default browser with the url
+    thats best let to another plugin or macro or could optionally
+    add it to the clipboard.
+  ~EOT  
+    split out into a dev version.
+    add email harvester stage.
+    view partial source on a list of url links will add cvrt to &amp;amp;
+
+click enable for geturls, create a page on the fly with the urls
+pass it to IE so you can rclick on them
+create a numbered range creator 
+
+    added a sort step
+   does py2.2 urllib have unquote_plus? remove %20 %7E stuff
+
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    try:
+        data = str(newSel)
+    except (UnicodeEncodeError, Exception):
+        g.es_exception(full= False)
+        data = newSel
+
+
+    import re, urllib
+
+    #from leo
+    # A valid url is (according to D.T.Hein):
+    # 3 or more lowercase alphas, followed by,
+    # one ':', followed by,
+    # one or more of: (excludes !"#;&lt;&gt;[\]^`|)
+    #   $%&amp;'()*+,-./0-9:=?@A-Z_a-z{}~
+    # followed by one of: (same as above, except no minus sign or 
+    # comma).
+    #   $%&amp;'()*+/0-9:=?@A-Z_a-z}~
+    #thers problems with this, I forget what just now.
+    #
+    #http etc from rClick plugin extension idea posted to leo forum, works
+    #scan_url_re="(http|https|ftp)://([^/?#\s]*)([^?#\s]*)(\\?([^#\s]*))?(#(.*))?"
+    #re.sub(scan_url_re,new_url_caller,text)  #leaves out a few types
+    #
+    #r04422a05:03:35 mine still doesnt match everything, and doesnt submatch as well
+    #w04519p05:58:10 make a try at verbose,
+    #shold relax it from expecting perfect links
+    
+
+    #leaves out a few types wais
+    # excluding all invalid chars is always for security &amp; sanity
+    # worse than including all valid chars, there will be ommisions
+    scan_url = r"""
+   ([s]*http[s]*|ftp[s]*|[s]*news|gopher|telnet|prospero|link|mailto|file|ur[il])(://)
+    ([_0-9a-z%]+?
+    :?
+    [_0-9a-z%]+?@?)  #takeing some liberties
+    ([^/?#\s"']*)
+   ([^?#\s"']*)
+    (\?*[a-z0-9, %_.:+/-~=]*)
+    (\#*[a-z0-9, %_.:+/-~=]*)  #lookup exact name ref link standard
+     (&amp;*[a-z0-9, %_.:+/-~=]*)  #needs work
+     ([^"&lt;'&gt;\n[\]]*)  #catch the rest till learn repeat
+ #   (#|&amp;*[^&amp;?]*.*)
+    """
+    #(\?*[^&amp;#"'/&gt;\\]*[a-z0-9, %_-~]*?)
+    #(\?([^#\s]*?))  #this is doubling the params
+    #(&amp;(.*)*?)
+    #(#(.*)*?)  
+    #end game, this fails
+    #urllib.unquote_plus( urllib.quote(
+
+    scan_url_re = re.compile(scan_url, re.IGNORECASE | re.MULTILINE | re.VERBOSE)
+    ndata = scan_url_re.findall(data)  #leaves out :// and /
+    sx = []
+    if ndata:
+        g.es('just urls:')
+        for x in ndata:
+            if not x: continue
+            xfixed = list(x)
+            #print xfixed
+            # some cnet addresses use quot?
+            xfixed = [s.replace('&amp;amp;', '&amp;').replace('&amp;quot;', '"')\
+                            for s in xfixed]
+            try:
+                xfixed = [urllib.unquote_plus(s) for s in xfixed]
+            except Exception:
+                pass
+
+            sx.append( ''.join(xfixed) + '\n')
+            #note, this can totally screw things up...
+    else: g.es('no urls')  #, data
+
+    #sets another way to get uniq
+    #sx = [x for x in dict(sx)] #uniqs it, has problems
+    d = {}
+    for x in sx:
+        d[x] = 1
+    sx = [x for x in d.keys()]
+    sx.sort()
+    dynaput(c, sx)
+</t>
+<t tx="ekr.20050421093045.24">def dynaM_swaper(c):
+    """(c) selected text print/paste
+    swap selected and copybuffer. a common task is to cut
+    one word or sentance, paste in another place then repete
+    with the other word or sentance back to the first position.
+    you now can copy the one you want moved, select where you
+    want to replace it. and hit swapper. you will have the other
+    in the copy buffer and can now paste it over the first.
+    
+    much harder to describe than to do.
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    newSel = str(newSel)
+
+    sx = []
+
+    repchar = g.app.gui.getTextFromClipboard()
+    if repchar:
+        g.app.gui.replaceClipboardWith(newSel) 
+        sx.append(repchar)
+
+    if sx:        
+        dynaput(c, sx)
+</t>
+<t tx="ekr.20050421093045.25">def dynaM_flipper(c):
+    """(c) selected text print/paste
+    flip selected True to False, 1 to 0 or vice versa
+    add your favorite flippable words to the dict below.
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    newSel = str(newSel)
+
+    sx = []
+    
+    #only need one instance of each flip pair, updates w/reverse dict
+    flip = {'true':'false',
+            'True':'False', 
+            # 1/'1' not the same hash, but maybe interchangeable?
+             '1':'0',
+              1:0,   
+             'YES':'NO',
+             'yes':'no',
+             'right':'left',
+             'top':'bottom',
+             'up':'dn',
+             'n':'f',
+             'after':'before',
+             'or':'and',
+              }
+    #print flip
+
+    flip.update(dict([[v, k] for k, v in flip.items()]) )
+
+    #print flip
+
+    if newSel in flip.keys():
+        sx.append(flip[newSel])
+
+    if sx:        
+        dynaput(c, sx)</t>
+<t tx="ekr.20050421093045.26">def dynaM_dupe(c):
+    """(c) selected text print/paste
+    very often I want to copy a line or 2, but I only realize
+    after I already have something in the buffer to paste over.
+    this will duplicate the selected lines after the selected lines
+    takeing advantage of the insert point selected being before of after
+    pot luck asto which it will be before or after.
+  ~EOT  have to unselect first, also makes dependant on the body
+    was hopeing to keep those depandancys in dynaput
+    incase I allow changes to other widgets or the log
+    or even virtual bodys.
+    if unselect, or virtual event return to end select kluge
+    then dynaput complains nothing selected!
+    try just doubling the selected text
+    works for single line select anyway. 90% use case
+    maybe if nothing selected, copy &amp; paste the node?
+    you may need to swith node then back after undo a duped line
+    redraw isnt perfect
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+
+    sx = newSel.splitlines(True)
+    sx += newSel.splitlines(True)
+
+    dynaput(c, sx)</t>
+<t tx="ekr.20050421093045.27">def dynaM_clipappend(c):
+    """(c) selected text 
+    append selected to Clipboard
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+
+    Clip = g.app.gui.getTextFromClipboard()
+    Clip += newSel
+    g.app.gui.replaceClipboardWith(Clip)
+</t>
+<t tx="ekr.20050421093045.28">def dynaM_everycase(c):
+    """(c) selected text print
+    take the word or sentance and output in every case
+     you can then copy from the log pane which you want.
+     this seems easier than trying to consequetively 
+     flip through all th possibilities.
+     rClick dev version rightclick context menu has this.
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    s = str(newSel)
+
+    sx = []
+
+    for x in [
+        s.upper(), '  ',
+        s.lower(), '  ',
+        s.capitalize(), EOLN,
+        
+        s.swapcase(), '  ',
+        s.title(), '  ',
+        s.title().swapcase(), EOLN,
+
+        "'%s'"%s, '  ',
+        "(%s)"%s, '  ',
+        "('%s')"%s.lower(), EOLN,
+         ]:
+        sx.append(x)
+
+    #here wordwrap or otherwise format and relist it.
+    
+    if sx:        
+        dynaput(c, sx)
+</t>
+<t tx="ekr.20050421093045.29">def dynaM_regexTk(c):
+    """(c) selected text print
+    changing Tk pack options to dict's
+    match alphanumeric on either side of =: or space or coma delimited
+    build a dict or list from it. properly quote and verify numbers.
+    its only been 3 minutes and I have better results 
+    than in plex or pyparsing in more time than I care to admit.
+    maybe need re, space double in space delimited means cant ignore
+    avoided re for now. probably woulve been easiest
+
+    cuts after the decimal on floats. might want = as an option too
+  ~EOT 
+    reWhitespace = re.compile( r'[,\s\n]+', re.MULTILINE )
+    fields = reWhitespace.split( line )
+    
+    partially convert to EOLN, need to setup more tests first
+        
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    newSel = str(newSel)
+
+    g.es('text is', newSel)
+
+    sx = []
+
+    #premassage the data
+    newSel = newSel.replace(' ', ',').replace(',,', ',').replace(',,', ',')
+    #print 'newSel is %r'%(newSel,)
+
+    for x in newSel: 
+
+        if x in '\'"':
+            continue
+
+        if x in [' ', ',', EOLN]: #may fail in py2.2 w/\r\n
+            sx.append(EOLN)
+            continue
+
+        if x in '=:':
+            sx.append(':')
+            continue
+        
+        sx.append(x)
+
+
+    data = ''.join(sx)
+    data = data.replace('\n\n', '\n').replace('\n\n', '\n')
+    data = data.replace('\n,\n', ',').replace('\n:\n', ':').replace(',', '\n')
+    data = data.replace('\n:', ':').replace(':\n', ':').replace('::', ':')
+    #print 'data is %r'%(data,)
+
+    sx = []
+    sx.append('{')
+    for x in data.splitlines():
+        #print 'for x', x
+
+        if not x: 
+            continue
+
+        if x in [' ', ',', EOLN]: 
+            sx.append(", ")
+            continue
+
+        if x.find(':') != -1: 
+            x1 = x.split(':') 
+            for i, y in enumerate(x1):
+                #print 'for y', y
+
+                if i == 1: 
+                    sx.append(":")
+
+                try:
+                    #sx.append("%d"%int(y) )
+                    sx.append("%d"%float(y) )
+        
+                #maybe float and int will have different errors
+                #maybe if int it isnt coerced to float? works for me.
+                except Exception, e:
+                    #print 'exception', e.args
+        
+                    s = y.replace('Tk.', "").replace('Tkinter.', "")
+                    sx.append("'%s'"%(s.lower(),) )
+                #else: sx.append(":") else is only if except tripped
+
+        else: #no : seperator assume is a plain delimited list
+            sx.append("'%s':1"%(x,)) 
+        sx.append(", ")
+
+
+    sx.append("}")
+    dynaput(c, sx)</t>
+<t tx="ekr.20050421093045.30">def dynaM_wraper(c):
+    """(c) selected text print/paste
+    wrap selected to the len of the first line
+    uses the py2.3 textwrap or g.wrap_lines
+    http://cvs.sourceforge.net/viewcvs.py/python/
+    """
+    try:
+        if g.app.dynaMvar.bugimport: raise ImportError
+        import textwrap as tw
+    except ImportError:
+        tw = None
+        g.es('get textwrap from python cvs or py2.3')
+        #return
+
+    newSel = dynaput(c, [])
+    if not newSel: return
+
+    data = str(newSel)
+
+    datalines = data.splitlines(True)
+    if datalines: width = len(datalines[0])
+
+    width = width or 40
+    #get starting indent from first line too
+
+    if tw is None:
+        sx = g.wrap_lines(datalines, pageWidth= width, firstLineWidth= width)
+        
+    else:
+        sx = []
+    
+        t = tw.TextWrapper(
+             width= width,
+            initial_indent=' ',
+           subsequent_indent= ' ',
+           expand_tabs= True,
+          replace_whitespace= True,
+         fix_sentence_endings= False,
+        break_long_words= True )
+
+        st = t.fill(data)
+        sx.append(st)
+
+    if sx:
+        dynaput(c, sx)
+    g.es( "len= %d lines= %d len firstline= %d words= %d"%(
+        len(data), len(datalines), width, len(data.split())) )</t>
+<t tx="ekr.20050421093045.31">def dynaM_rsortnumb(c):
+    """(c) selected text print/paste
+    caller to dyna_sortnumb(c, d= 1 )
+    the reverse list will be called before output there
+    """
+    dynaM_sortnumb.direction = 1
+    dynaM_sortnumb(c)
+
+</t>
+<t tx="ekr.20050421093045.32">def dynaM_sortnumb(c):
+    """(c) selected text print/paste
+    do a numeric aware sort, add field selection later
+    maybe even a regex selection or other field specifyer
+    can sort a list by copying the seperator then selecting some words
+    default seperator is space, \n for multilines
+    I realize other options might sometimes be required
+    for those times, copy DQ3 and make something specilized.
+    checking for multiple lines could be less redundant, ok for now.
+    now how do I do a reverse sort?
+    have a little helper function to call this with d=1
+    need to preserve lineending if selected multiline,
+     splitlines(True) ok if body
+     how. each choice gets me deeper into trying to guess everything
+  ~EOT    keeping indented lines together would allow sorting headlines
+     and possibly functions. using a script in the copy buffer?
+
+    """    
+    nothingselected = False
+    data = dynaput(c, [])
+    g.es("selected ")
+    if not data:
+        nothingselected = True
+        g.es("...skip, dump the body")
+        v = c.currentVnode() # may chg in 4.2
+        data = v.bodyString()
+
+    #maybe use DQ3 thing of the copybuffer to select the splitchar
+    splitchar = g.app.gui.getTextFromClipboard()
+
+    multiline = ''
+    if not splitchar:
+        splitchar = ' '
+
+    
+    if 1 == len(data.splitlines(True)):
+        sx = [x + splitchar for x in data.split(splitchar)]
+    else: 
+        multiline = EOLN
+        sx = data.splitlines() #True
+        
+        
+    sx.sort(compnum)
+
+    try:
+        if dynaM_sortnumb.direction == 1:
+            sx.reverse()
+            dynaM_sortnumb.direction = 0
+
+    except AttributeError:
+        pass
+
+    #deal with nothing selected, must be sort of whole body as lines
+    if nothingselected:
+        #nothing selected so cant be paste over
+        for x in sx:
+            print x #might this double line?
+    else:
+        if multiline:
+            sx = [x + multiline for x in sx]
+        dynaput(c, sx)
+
+def compnum(x, y ):
+    """214202 Pretty_sorting_.htm
+    Submitter: Su'\xe9'bastien Keim
+    Last Updated: 2003/08/05 
+    Sorting strings whith embeded numbers.
+    #  sample
+    &gt;&gt;&gt; L1 = ["file~2%d.txt"%i for i in range(2, 50, 10)]
+    &gt;&gt;&gt; L2 = L1[:]
+
+    &gt;&gt;&gt; L1.sort()
+    &gt;&gt;&gt; L2.sort(compnum)
+    
+    &gt;&gt;&gt; for i,j in zip(L1, L2):
+    ...     print "%15s %15s" % (i,j)
+       file~212.txt     file~22.txt
+        file~22.txt    file~212.txt
+       file~222.txt    file~222.txt
+       file~232.txt    file~232.txt
+       file~242.txt    file~242.txt
+    """
+    import re
+    DIGITS = re.compile(r'[0-9]+')
+
+    nx = ny = 0
+    while True:
+        a = DIGITS.search(x, nx )
+        b = DIGITS.search(y, ny )
+        if None in (a, b ):
+            return cmp(x[nx:], y[ny:])
+        r = (cmp(x[nx:a.start()], y[ny:b.start()])or
+            cmp(int(x[a.start():a.end()]), int(y[b.start():b.end()])))
+        if r:
+            return r
+        nx, ny = a.end(), b.end()
+</t>
+<t tx="ekr.20050421093045.33">def dynaM_del_last_char(c):
+    """(c) selected text print/paste
+    like del first char in the line except
+    delete the last char in all the selected lines
+
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    
+    try:
+        newSel = str(newSel)
+    except (UnicodeEncodeError, Exception):
+        g.es_exception(full= False)
+
+
+    sx = []
+    for x in newSel.splitlines():
+        sx.append(x[:-1] + EOLN )
+
+    dynaput(c, sx)
+</t>
+<t tx="ekr.20050421093045.34"></t>
+<t tx="ekr.20050421093045.35">&lt;&lt; checkFileSyntax &gt;&gt;
+
+#was pyimportwithindent
+def dynaS_importnode(c):
+    """(c) selected text/body overwrites.
+   combines sfdots, and import to @file.
+    assumes code is all in one node. will undo properly,
+    but modifys the current node and will write to a temp file,
+    then create a subnode from that file.
+    @language whatever, you might have to tweek the file extension manually
+    if not python c or java, maybe a few others ok, css html.
+
+    will reindent  and syntax check and run evaluator if python.
+    for other @language might call astyle.
+
+    should be free of any obvious syntax error.
+    when done, you move left, delete the temp node,
+    set @path or whatever and fix the headline.
+  ~EOT    overwrite False, no sfdots or evaluator
+    do I need a pause or update between the selectall and an action?
+    added some sense of other lang than python, untested.
+    """
+    import dyna_menu as dy
+    select = g.app.gui.setTextSelection
+    overwrite = True
+
+    p = c.currentPosition()
+    lang = g.scanForAtLanguage(c, p)
+    lang = str(lang).lower()
+    tfile = dy.tmpfile
+
+    start = dy.dynaB_Clip_dtef(c, ret='rp')
+
+    if overwrite: 
+        #enable to overwrite else will print to log
+        dy.dynaMvar.dynapasteFlag.set('paste')
+        select(p.c.frame.bodyCtrl, '0.0', 'end')
+        dy.dynaS_sfdots(p.c, nodotreturn= True)
+
+
+    #getsctipy now and check syntax... before/after evaluator
+    #what about the undo? can I roll that back too?
+    s = g.getScript(c, p)
+    
+    if lang == 'python':
+        if checkFileSyntax(s): g.es(s, 'do undo twice'); return
+
+    #now reindent isn't overwrite and want to run evaluator first
+    #but I guess after is ok too.
+    #tim1 leaves reindented code in the tmp.py
+
+    if lang == 'python':
+        if overwrite: 
+            select(p.c.frame.bodyCtrl, '0.0', 'end')
+            dy.dynaS_evaluator(p.c)
+
+
+    if lang == 'python':
+        s = g.getScript(c, p)
+        if checkFileSyntax(s): g.es(s, 'do undo thrice'); return
+
+    if lang != 'python': #tempfile should already have py extension
+        tfile += '.lang' #and pray, there should be a cross ref somewhere
+        g.es('writing %s'%tfile)
+        fo = open(tfile, 'w')
+        fo.write(s+EOLN)
+        fo.close()
+    else:
+        #not sure this shouldn't be a user option instead of hardwired
+        dy.doreindent = 1
+
+        #this was depending on reindent being true and file getting written
+        select(p.c.frame.bodyCtrl, '0.0', 'end')
+        dy.dynaS_tim_one_crunch(p.c)
+
+
+    c.beginUpdate()
+    #might still have to remove a few sentinal lines start &amp; end
+    #can this return a sucess or fail? and the maybe the node pointer
+
+    try:
+        c.importCommands.importFilesCommand([tfile], '@file')
+    except Exception:
+        g.es_exception()
+
+    #else: is this if the exception? I can never remember
+    #p.selectVnode('after') or something...
+    #if headline == ('@file ' + dy.tmpfile):
+    #    p.setHeadline('@file some.py')
+    #   move before, then select node after, selectall &amp; delete
+    c.endUpdate()
+    c.redraw()  #update no, redraw seems to work
+
+    dy.dynaMvar.dynapasteFlag.set('print')
+    g.es('st:%s\n sp:%s\n may have to wait \nand click to see the new node'%(
+        start, dy.dynaB_Clip_dtef(c, ret='r')) )
+
+    #should select child and move left. what if it failed?</t>
+<t tx="ekr.20050421093045.36">#from leoTest params opposit from there
+def checkFileSyntax(s, fileName= 'Script'):
+    """too hard to get the traceback exact in full= False
+    &gt;&gt; checkFileSyntax(''' eros''')
+      File "&lt;string&gt;", line 1
+        eros
+        ^
+    SyntaxError: invalid syntax
+    True
+    &gt;&gt;&gt; checkFileSyntax('''\\n#ok''')
+    False
+    """
+    import leoGlobals as g
+    import compiler
+    try:
+        compiler.parse(s.replace('\r\n', '\n') + '\n')  
+        #,"&lt;string&gt;" parse(buf, mode='exec')
+        #compile( string, filename, kind[, flags[, dont_inherit]]) 
+
+    except SyntaxError:
+        g.es("Syntax error in: %s" % fileName, color= "blue")
+        g.es_exception(full= False, color= "orangered")
+        return True  #raise
+
+    return False</t>
+<t tx="ekr.20050421093045.37">def dynaS_pydisa(c):
+    """(c= None) selected text/body print
+    produce a dissasembly into python bytecodes
+    of selected text lines of code or the full script
+    sentinals are striped to avoid confusing the output
+    but of course in execute script they are there
+    as should be noted in any timeit type usage
+    """
+    import leoGlobals as g
+    import dis, sys
+
+    import dyna_menu as dy
+
+    p = c.currentPosition()
+
+    #get selected text if any or the whole script
+    newSel = dy.fixbody(c,dy.dynaput(c, []))
+
+    if not newSel or len(newSel) == 0:
+        return
+
+    newSel = stripSentinels(newSel)
+
+    g.es('dissasembly of: '+ p.headString()[:50])
+    g.es(newSel, color= 'MediumOrchid4')
+    nc = compile(newSel, '&lt;string&gt;', 'exec')
+
+    #have to find a way to encapsulate this better
+    o = g.fileLikeObject()
+    sys.stdout = o
+
+    dis.dis(nc)
+
+    s = o.get()
+    sys.stdout = sys.__stdout__
+
+    g.es(s.replace('   ', ' '), color= 'sienna3')
+</t>
+<t tx="ekr.20050421093045.38">def dynaS_c2py(c):
+    """(c) body+ subnodes overwrite, should backup node first.
+    call the fantastic first cut EKR c2py script
+    you still have to make it more pythonic but it does quite allot for you.
+    c2py doesn't generate an undo event so there is no turning back.    
+    @language c, works on other c like language too.
+
+    c2py causing a direct line by line translation of c, you would
+    often be served well to rethink some of the program flow.
+    dropping just the relevant algorithm translated to python
+    into a more generic pythonic wrapper can save allot of time.
+
+    please, be sure to attribute any snippets of code you convert and use.
+    I doubt c2py author intends this utility to make plagiarism easy.
+  ~EOT  still some things to work out. if the c file is in one node
+    it might be better to import it first as c, then let c2py convert it
+    using convertCurrentTree it converts in place.
+     that might be dangerous if it
+    fails or if you need to refer to it later
+    OTOH, from a tempfile you wouldn't be able to import
+    as there may be logic problems left over from the conversion.
+
+    on selected text or body written to tempfile.
+    previously found it easier to call c2py with a filename
+    then import the modified file. which did work well.
+    usually stick with what works. glad I didn't this time.
+    having dyna provide the currentvnode was the missing piece
+    and should allow the import as well without a filewrite.
+    
+    might still make  a backup to another node or to a derived file.
+    it also might make sense to run the c thru indent or astyle first
+    you definitely want the original to refer to.
+    need to run thru reindent or remove tabs maybe too before usage.
+    there are clues to give c2py which might help with some specific
+    conversions which I haven't examined.
+    in the case of declarations I would've left comments on the type
+    int x, becomes just x. might have been char or double who knows.
+# 
+# c2py removes all type definitions correctly; it converts
+# 	new aType(...)
+# to
+# 	aType(...)
+
+
+classList = [
+    "vnode", "tnode", "Commands",
+    "wxString", "wxTreeCtrl", "wxTextCtrl", "wxSplitterWindow" ]
+    
+typeList = ["char", "void", "short", "long", "int", "double", "float"]
+
+ Please change ivarsDict so it represents the instance variables (ivars) used  by your program's classes.
+ivarsDict is a dictionary used to translate ivar i of class c to self.i.  
+It  also translates this-&gt;i to self.i.
+
+    
+ivarsDict = {
+    "atFile": [ "mCommands", "mErrors", "mStructureErrors",
+        "mTargetFileName", "mOutputFileName", "mOutputStream",
+        "mStartSentinelComment", "mEndSentinelComment", "mRoot"],
+
+    "vnode": ["mCommands", "mJoinList", "mIconVal", "mTreeID", "mT", "mStatusBits"],
+
+    "tnode": ["mBodyString", "mBodyRTF", "mJoinHead", "mStatusBits", "mFileIndex",
+        "mSelectionStart", "mSelectionLength", "mCloneIndex"],
+        
+    "LeoFrame": ["mNextFrame", "mPrevFrame", "mCommands"],
+
+    "Commands": [
+        # public
+        "mCurrentVnode", "mLeoFrame", "mInhibitOnTreeChanged", "mMaxTnodeIndex",
+        "mTreeCtrl", "mBodyCtrl", "mFirstWindowAndNeverSaved",
+        #private
+        "mTabWidth", "mChanged", "mOutlineExpansionLevel", "mUsingClipboard",
+        "mFileName", "mMemoryInputStream", "mMemoryOutputStream", "mFileInputStream",
+        "mInputFile", "mFileOutputStream", "mFileSize", "mTopVnode", "mTagList",
+        "mMaxVnodeTag",
+        "mUndoType", "mUndoVnode", "mUndoParent", "mUndoBack", "mUndoN",
+        "mUndoDVnodes", "mUndoLastChild", "mUndoablyDeletedVnode" ]}  
+
+  maybe I can modify the list dynamically with user input cycle?
+  based on an xref of the code to be converted.
+  
+def convertCurrentTree(c):
+    import c2py
+    import leo
+    import leoGlobals
+    v = c.currentVnode()
+    c2py.convertLeoTree(v,c) 
+    
+    wouldn't this obviate any changes to ivars or other code?
+    might have to do the same setup w/o the fresh import
+    and where to get th custom info from if using M_c2py from plugin?
+
+
+    messages are going to console instead of log
+    converting: NewHeadline
+    end of c2py
+    might have to capture stdout/err
+    or more deviously add a runtime method to change its sys.stdout
+
+   x = {}  will have the {} removed. not sure why...
+   removeBlankLines never?
+    run tabs to spaces    y/n
+
+    py2.2 coulden't find c2py? try g.import
+    """
+    import sys
+    
+    #try g.import, may still fail on py2.2 win9x because
+    #uses g.toEncodedString(path,app.tkEncoding) which is utf8 default?
+    #it takes verbose as a param, default False, then ignores it on error!
+    c2py = g.importFromPath('c2py.py',
+        g.os_path_join(g.app.loadDir, '../scripts'))
+
+    if not c2py:
+        g.es("can't find the leo/scripts/c2py.py script")
+        return
+
+    mess = """\
+    the current node &amp; subnodes will be changed
+     and there is no undo
+     you may have to convert tabs to spaces when done.
+     syntax error free code will work the best.
+     click ok, then wait for a bit...
+     """
+    #g.alert(mess)  #g.app.gui
+    ans = runAskYesNoCancelDialog(c, "c2py",
+                 message= mess, yesMessage= 'ok')
+
+    if 'ok' != ans: g.es('c2py cancled'); return
+
+    #get selected or body... getbody language sensitive
+    #write the temp
+
+    #c2py.convertCurrentTree()  #reimports c2py but does work
+
+    #this might fail, but want to try and set some things
+    #if it reimports they might get lost...
+    c2py.convertLeoTree(c.currentVnode(), c)
+    
+    #convertLeoTree just node walks, might pass from fixbody
+    #then try and reimport to @file from that.
+    
+    #tmpfile should just be a basename you add extension to?
+    #temp = tmpfile[:-3] + '.c'
+
+    #c2py.convertCFileToPython(file) #another way to go
+    #cmd = py + c2py + temp
+    #out, err = runcmd(cmd)
+
+    c.redraw()  #update nor redraw seems to work every time
+    g.es('add an @language python\nand convert tabs to spaces')</t>
+<t tx="ekr.20050421093045.39">def dynaS_dump_body(c, ret= 'p'):
+    """(c, , ret= 'p') selected text/body print or ret= 'r' return
+      yadayada call dynaHexdump(src, length=8), on selected text or body
+      if you need an exact output, including any lineendings?
+      Leo translates to unicode first so that might be relevant
+
+need feedback from someone who cares about unicode.
+UnicodeDecodeError: 'ascii' codec can't decode byte 0x9f in position 1: ordinal not in range(128)
+since its not a char at a time, this is going to be hard to trap
+maybe will have to filter first. 
+    """
+
+    data = dynaput(c, [])
+    g.es("selected ")
+    if not data:
+        g.es("...skip, dump the body")
+        v = c.currentVnode() # may chg in 4.2
+        data = v.bodyString()
+
+    if data and len(data) &gt; 0:
+        #newdata = re.sub("\n", "\r\n", data)
+        newdata = dynaHexdump(data)
+        if newdata != data:
+            #v.setBodyStringOrPane(newdata)
+            if 'p' in ret: g.es(newdata)
+            if 'r' in ret: return newdata
+
+#had to unicode the FILTER for Leo plugin use
+FILTER= u''.join([(len(repr(chr(x)))==3) and chr(x) or '.' for x in range(256)])
+
+def dynaHexdump(src, length=8):
+    """
+    m02A14p6:31 ASPN Python Cookbook
+    Title: Hexdumper.py  Submitter: S?stien Keim  2002/08/05 Version no: 1.0
+    Hexadecimal display of a byte stream
+    later, output to logwindow of selected text add as a menu option
+    maybe can make it read from a file and output as hex
+    #r04408ap11:16 chg += to append &amp; join,  not that its particularly slow
+    &gt;&gt;&gt; dynaHexdump('ASPN Python Cook')
+    u'0000   41 53 50 4E 20 50 79 74    ASPN Pyt    0d\\n0008   68 6F 6E 20 43 6F 6F 6B    hon Cook    8d'
+    """
+    N = 0; result = []
+    while src:
+        s, src = src[:length], src[length:]
+        hexa = ' '.join(["%02X"%ord(x) for x in s] )
+        s = s.translate(FILTER)
+        result.append("%04X   %-*s   %s  % 3dd" % (N, length * 3, hexa, s, N) )
+        N += length
+    return '\n'.join(result)
+</t>
+<t tx="ekr.20050421093045.40">def dynaS_sfdots(c, nodotreturn= False, stripsentinals= True):
+    """(c, nodotreturn= False, stripsentinals= True) print/paste
+    process code from sourceforge forum
+    which replaces . for leading indentation which sourceforge eats.
+     the reverse too so posters can run their code thru first.
+    it would be nice if it could standardize to 4spaces per level
+    maybe replacing and rerunning or something to catch max indentation
+    run thru reindent and pychecker could be usefull
+    the UPL adds only 3 dots when you have 4 spaces and nothing else
+    that would probably be an error
+    if starts with dots, convert to space DNL
+    if all spaces or tabs then is UPL convert to dots
+    should check the users tab setting, might want one dot to equal one tab
+    other times 4 dots= one tab. you edit in what you want I guess.
+  ~EOT  t04323a12:31 optomizing for python indentation, adding use,is at first line
+    later make that selectable so can do anything, and or put thru reindent
+    and allow add or eat first n chars for command to add to rClick
+    using a section header to put the code into a subnode
+    precedence of i+1 % n slightly different than c, use (i+1)%n
+    messedup indentation this wont fix! shoulve saved a copy of the org...
+    this version adds indentation numbers and fails if i&gt;n as yet.
+    \n was interpreted from the section literlly as a newline in the output...
+    need a slick way to check or switch triple Sq/Dq
+    its not transforming 2space into 4spacem it eats \t also
+    maybe would be better to change dots to tabs then '\t\tfoo'.expandtabs(2)
+    sf eats long lines &amp; spaces ? in view source too. 
+    the wiki eats angle brackets and moost html and if you click edit it retranslates 
+    f04514a11:22:06 convert to dyna, some sillyness to handle inconsistant dots
+    you can run it thru reindent after tim1crunch, copy over then c2py
+    which defaults to using tabs. which I will change if I find out how.
+    I guess c2py doesnt fail if it finds only python, it tabs it up.
+    most of the time that should get standrd indenting no matter what.
+   
+  I think it still screws up \n literal in strings. not tested w/tabs or unicode
+  also will hit a limit on indentation if greater than typical for sf post
+  can look weird if printed to log w/non proportional font
+
+
+This means that the code would refer to Tk.widget instead of Tkinter.widget.  Also, please avoid the use of the completely useless Tk constants such as Tk.RIGHT, Tk.TOP.  Use "right" or "top" instead.  
+havent done any replace on the incomming or outgoing data.
+chg to fixbody except not sure paste makes sence if it isnt in one node  
+might send a download automatically thru reindent then evaluator
+
+allowing conversion of full body, if you try and paste over it will
+not follow nodes but probably just overwrite the selected node.
+
+add select leading char ini option 
+allow from/to of intrepreter &gt;&gt;&gt; ... for doctest prep
+ """
+    data = fixbody(c,dynaput(c, []))
+
+    if not data or len(data) == 0: return
+    import re
+    respc = re.compile(r'^[\s.]*$')
+
+    isdots = [x[:1] for x in data.splitlines() if x.startswith('.')]
+    #print 'isdotslist', isdots
+    isdots = len(isdots) &gt; 0
+
+    if nodotreturn and not isdots: return
+
+    #py &lt;2.3 YOYO isdots == True , works w/o 
+    direction=['UPL', 'DNL',][isdots]  
+
+    #doesnt python have a simpler way to swap varbs? 
+    #is this clearer to read though. a='.';b=' '; if UPL: a,b=b,a; 
+    #could you have '....' be the eat char in a perfect world?
+    
+    if direction == 'UPL':
+        eatchar=' '
+        repchar='.'
+    else:
+        eatchar='.'
+        repchar=' '
+    
+    if stripsentinals:
+        data = stripSentinels(data, stripnodesents=0 )
+
+    #4,3
+    lines = ('4,4\n' + str(data.expandtabs(4))).splitlines(True)
+    
+    #fixes dopy dots, starting off with 3 then continuing with 2
+    
+    
+    n, nm = lines[0].split(',')
+    n = int(n) or 4  #what one dot equals
+    nm = int(nm) or 3
+
+    #print 'len &amp; direction', len(data), len(lines), direction,
+    #print n, nm 
+
+    def chkout(t):
+        if respc.findall(t): #cut lines on ., ,\t,\f,\n
+            t = '\n'
+        return t
+
+    sx = []
+    for lt in lines[1:]:
+        i = 0
+        ix = 0
+        for o in lt:
+            if o == eatchar: 
+                i += 1
+                continue
+            break
+        #print i,
+        if i &gt; 0 and len(lt) &gt; 0:
+            #this should handle 2 4 or 3 on the first then 2 dots,
+            #it will get confused if starts and continues with 3
+            if nm == 4: ix = i
+            elif i==3 or i == 2: ix = n
+            elif i==5 or i == 4: ix = n*2
+            elif i==7 or i == 6: ix = n*3
+            elif i==9 or i == 8: ix = n*4
+            elif i==11 or i == 10: ix = n*5
+            elif i==13 or i == 12: ix = n*6
+            elif i==15 or i == 14: ix = n*7
+            elif i==17 or i == 16: ix = n*8
+            else: g.es('**bad ix',i)
+            #print (repchar*(ix))+lt[i:]
+            sx.append(chkout((repchar*(ix))+lt[i:]) )
+            continue
+        elif i &gt; 0:
+            g.es('')
+            continue
+        
+        #print lt
+        sx.append(chkout(lt))
+
+    #print sx
+    #reindent or evaluator would help too. before the dots obiously
+    dynaput(c, sx)    
+    
+</t>
+<t tx="ekr.20050421093045.41">def dynaS_evaluator(c):
+    """(c) selected text/body print/paste
+    calc_util.py and its unit tests and rClickclass 
+    ******* not available yet *********
+   from http://rclick.netfirms.com/rCpython.htm
+
+    parsing python programs perfectly presumes perfect programming.
+    its so close, I use it all the time to verify code.
+    but I know its limitations and I cant realease it yet,
+  ~EOT   does good job of reindenting, but still can make mistakes indenting after dedent or comment or before an indent
+   compare to origional code carefully!
+   
+    forgot to tell evaluator to skip to @c if it finds @ alone
+    output to log doesnt colorize so isnt immediatly obvious
+    the html mode should be reparsed to change to es color output
+    need to add an eval mode so can get expression outpt as well
+    have to trap stdout so can use to paste if thats selected
+    capture seems to be working now from plugin or button
+    fixbody takes care of commenting out @directives now.
+
+    if nothing selected, it seems to have nothing?
+    weird, its now going to the console again from the button
+    and from plugin nothing if nothing selected.
+    this is easily the 3rd time it was then wasnt working.
+    all the calls are same as pychecker2, it sometimes prints the data
+    inside the if. something is erroring and getting masked.
+    
+    """
+    try:
+        if g.app.dynaMvar.bugimport: raise ImportError
+        import calc_util ;#reload(calc_util) #if working on calc_util
+    except ImportError:
+        #can I use Leo prettyprinter instead?
+        g.es('you have to get the evaluator first')
+        return
+
+    data = fixbody(c,dynaput(c, []))
+
+    if data and len(data) &gt; 0:
+
+        #ta = g.stdOutIsRedirected()
+        #g.restoreStdout()
+            
+
+        #print repr(data)
+
+        o = captureStd()
+        o.captureStdout()
+
+        try:
+            #this has print on line by line as parsed
+            newdata = calc_util.file_test(data, q= 1,
+                 doEval= 0, formater= 'py2py',  #py2py raw html
+                    onlyPrintFails= 0, printAny= 0 )
+
+        except Exception, err:
+            dynaerrout(err,'evaluator ')
+
+        output = o.releaseStdout()
+        #if ta:
+        #    g.redirectStdout()
+            
+
+        dynaput(c, output.splitlines(True))
+
+    #elif len(data) &lt; 80: maybe check for newlines better?
+    #    eror, result, ppir = calc_util.evalcall(data)
+
+#
+</t>
+<t tx="ekr.20050421093045.42">def dynaS_astyle(c):
+    """(c) selected text/body popup browser
+      http://astyle.sourceforge.net/  
+    astyle.exe?--pad=oper --style=kr %
+    find some other options to try on their homepage.
+    A Free , Fast and Small Automatic Formatter
+    for C , C++ , C# , Java Source Codes
+
+    mx.Tidy for html
+
+    assumes its on program path.
+  ~EOT  possibly add --force  to highlighter or an @force htmlize
+    @force node creation &amp; import, many posibilities
+    """
+
+    p = c.currentPosition()
+
+    lang = g.scanForAtLanguage(c, p)
+    lang = str(lang).lower()
+    
+    #might be fragile with update of Leo @language
+    #and might want to force a mode
+    if lang in 'c cpp'.split():
+        mode ='c'
+    elif lang in 'java javascript jscript'.split():
+        mode ='java'
+    elif lang in 'html cml css'.split():
+        #send thru tidy gets more complicated
+        mode ='html'
+    else:
+        mode = None
+
+    if not mode in 'html c java'.split(): 
+        g.es('unsupported language')
+        return
+
+    bypass = 2
+    source = dynaput(c, [])
+    if source: bypass = 0
+
+    source = fixbody(c,source)
+    if not source or len(source) &lt;= 0: 
+        return
+
+    if bypass: 
+        #by pass the problem w/first 2 sentinals syntax errors
+        source = ''.join(source.splitlines(True)[bypass:])
+        source = stripSentinels(source)
+
+    if mode == 'html': 
+        &lt;&lt;tidy&gt;&gt;
+    else:
+        &lt;&lt; runastyle &gt;&gt;
+
+    if out:
+        htmlize(c, source= (out + err), lang= lang)
+
+    else:
+        for x in (out + err).splitlines():
+            g.es(x)</t>
+<t tx="ekr.20050421093045.43">try:
+    from mx.Tidy import tidy 
+except ImportError:
+    g.es('need to install mx.Tidy')
+    return
+
+(nerrors, nwarnings, out, err) = \
+   tidy(source,
+        uppercase_tags=1,
+        #alt_text="", 
+        char_encoding="utf8",  #raw, ascii, latin1, utf8 or iso2022 
+        quiet=0,
+        wrap=0,
+        indent="yes",  #no, yes or auto 
+        clean="yes",
+        drop_font_tags=1,
+        word_2000="yes", # yes, Tidy will strip out all the surplus stuff 
+        )</t>
+<t tx="ekr.20050421093045.44">astyle = ["astyle", "--pad=oper", 
+        "--style=kr", "-s4", '--mode=%s'%mode]
+g.es(lang, 'running astyle virtual', astyle)
+out, err = runcmd(astyle, source)</t>
+<t tx="ekr.20050421093045.45">def dynaS_pylint(c):
+    """(c) selected text/body popup browser
+    create a file and run it thru reindent if enabled then pylint
+     default to a tmp filename
+    pylint checks over your python code for good form and style
+  ~EOTmaybe pylint - options would be best in ini so can override
+ or have a dropdown of popular commands for a command
+ --generate-rcfile, --help
+
+--statistics=y_or_n 
+  Compute statistics on collected data. 
+--persistent=y_or_n 
+  Pickle collected data for later comparisons. 
+--comment=y_or_n 
+  Add a comment according to your evaluation note. 
+--parseable=y_or_n 
+  Use a parseable output format. 
+--html=y_or_n Use HTML as output format instead of text. 
+--enable-msg=msgids 
+  Enable the given messages. 
+--disable-msg=msgids 
+  Disable the given messages. 
+--enable-msg-cat=cats 
+  Enable all messages in the given categories. 
+--disable-msg-cat=cats 
+  
+getting no --statistics option error w/pylint 6
+not sure I like the html output but spool to log not great either
+set html=y, writehead=False and lang=ishtml otherwise
+set html=n, writehead=True and lang=report and dohtmlize = 1 for both
+
+    """
+    try: import logilab.pylint
+    except ImportError:
+        g.es('need to install pylint')
+        return
+
+    dohtmlize = 1 #show in browser instead of log.    
+
+    data = fixbody(c,dynaput(c, []))
+
+    if not data or len(data) == 0: 
+        return
+
+    import sys
+
+    #pylint has to be able to import the file on sys.path
+
+    #this could be trouble on nix or mac. YOYO
+    #might not even be necessary in the app, maybe some other
+    #if sys.platform[:3] == 'win':
+    oldpSath = sys.path[:]
+    if not g.os_path_normpath(g.os_path_abspath(
+             g.os_path_split(tmpfile)[0])) in sys.path:
+        sys.path.append(g.os_path_split(tmpfile)[0] )
+
+    g.es('writeing tmpfile', tmpfile )
+    fo = file(tmpfile,'w')
+    fo.writelines(data + "%s#e%s"%(EOLN, EOLN, ))
+    fo.close()
+    
+    if doreindent:
+        g.es('running reindent', py + reindent + tmpfile )
+        out, err = runcmd(py + reindent + tmpfile)
+        for x in (out + err).splitlines():
+            g.es(x)
+
+    if dohtmlize: html = '--html=n' #y
+    else: html = '--html=n'
+    
+    junk, pylname = g.os_path_split(tmpfile)
+    pylname, junk = g.os_path_splitext(pylname) #[:-3] #cut off .py
+    g.es('pylint module', pylname )
+    pylint = \
+    " -c \"import sys; from logilab.pylint import lint;\
+             lint.Run(['%s','%s', '%s', '%s', r'%s',])\" "%(
+      html, '--comment=n', '--persistent=n', '', pylname,) #--statistics=n
+
+    g.es('running pylint', py + pylint )
+    out, err = runcmd( py + pylint)
+    
+    #should be restored even if error. oh well
+    sys.path = oldpSath
+
+    if dohtmlize and out: 
+        #the plain text report gets doublespaced in htmlize
+        g.es(err)
+        htmlize(c, source= out.replace('\n\n', '\n'),
+         lang = 'report', writehead= True, show= True) 
+    else:
+        for x in (out + err).splitlines():
+            g.es(x)
+
+    if not g.app.dynaMvar.justpychecker:
+        g.es('#source for ', tmpfile, color='blue' ) 
+        TextFile = file(tmpfile)
+        Text = TextFile.read()
+        TextFile.close()
+        g.es(Text)
+
+    g.es('done ', color='blue' ) </t>
+<t tx="ekr.20050421093045.46">def dynaS_makatemp(c):
+    """(c) selected text/body print
+    create a file and lightly test it.
+     default to a tmp filename
+
+     write out the file and run it thru reindent then pychecker
+   then pylint
+  external pychecker still has a problem resolveing from import leo*
+  not sure how to resolve that. 
+  maybe import pythecker.pychecker in the macro?
+
+  using expandtabs(4)
+  ***************
+    warning, this makes asumptions about where python is, 
+    what and where reindent and pychecker is
+    at least you have to edit in your correct paths.
+    I could guess more but still wouldent be totally sure.
+    see the .rc file usefull for pychecker in leoPy.leo
+    pylint the same thing.
+    url's ...
+
+    I have no idea if pychecker is safe to run on insecure code
+    it will create a py and pyc or pyo and maybe a bak file in tmp
+    hold me harmless or delete this now.
+  ***************
+  all paths below are woefully hardwired, you must edit them all.
+  you may have to download pychecker and or pylint and install it too.
+  ~EOT  wpp[s, this whole thing is breaking down. I forgot one other thing
+  the import phase will cause the code to be run. this may or may not be a problem,
+  adding a name == main if one doesnt exist might be better
+  \nif __name__ == '__main__': pass
+  which wont help unless all the indentation on executable lines are indented
+  that is too much work I think.
+
+  checking selected text or filenames of generated modules still usefull
+  pylint still complaining it cant find the py in temp in sys modules
+  may have to dig deeper into that as well
+  adding tempdir where the file is doesnt seem to be enough for pylint
+    
+
+  for some reason only the @ is getting thru from exS in dynatest
+  the re isnt commenting them out either. I HATE re's
+  doh, comedy of errors again. forgot the * after .
+  was testing date instead of data, misnamed single use varb.
+  generated new macro idea to scan for those mistakes.
+
+  have to tell it to skip from @ to @c as well
+  
+  the name verifyer re isnt workring yet. not fully implimented
+     or maybe what is wanted is to take from the copy buffer
+     makeatemp and run it thru pychecker then create a subnode with it
+     usecsae, posting from c.l.py or from other artical
+     handling @directives,
+     if copy buffer has a valid path like name, use that
+     take the selected text or body (eventually @other &amp; section ref too)
+  
+
+  checking plugins would have to add import pychecker; pychecker.pychecker()?
+  
+    have to abstract the get path thing out to return a tuple of 
+    leo, python, scripts, site-packages
+    so all macros can find and user only has to change one place
+    
+
+  
+should   we insert # -*- coding: utf8 -*-
+ at the top of the file? or cp1252 or mbswhatever if on windows
+ should getscript have that option?
+ and dyna does this in several places, need to cosolidate them into one place
+    """
+    data = fixbody(c,dynaput(c, []))
+
+    if not data or len(data) == 0: 
+        return
+
+    tmpname = tmpfile #global or from copybuffer
+
+    import re, os, sys
+
+
+
+    #you might not have to fix leo/src either
+    #better to get basepath or something, look it up later
+    #one run and its in sys.path, sys.path is global for all leo's?
+    #another append will be twice in there
+    #Leo prepends its src dir but pychecker isnt finding it.
+
+    #this could be trouble on nix or mac. YOYO
+    #might not even be necessary in the app, maybe some other
+    #if sys.platform[:3] == 'win':
+        
+    oldpSath = sys.path[:]
+    #these changes will be compounded at every run of the script
+
+    if not leosrc in sys.path:
+        sys.path.append(leosrc)
+
+    if not g.os_path_split(tmpname)[0] in sys.path:
+        sys.path.append(g.os_path_split(tmpname)[0] )
+        
+    
+
+    g.es('writeing tmpname', tmpname )
+    fo = file(tmpname,'w')
+    fo.writelines(data + "%s#e%s"%(EOLN, EOLN, ))
+    fo.close()
+    
+    if doreindent:
+        g.es('running reindent', py + reindent + tmpname )
+        out, err = runcmd(py + reindent + tmpname)
+        for x in (out + err).splitlines():
+            g.es(x)
+        
+    g.es('running pychecker', py + pycheck + tmpname )
+    out, err = runcmd(py + pycheck + tmpname)
+    for x in (out + err).splitlines():
+        g.es(x)
+
+    if dopylint:
+        pylname = g.os_path_split(tmpname)[1][:-3] #cut off .py
+        g.es('pylint module', pylname )
+        pylint = \
+        " -c \"import sys; from logilab.pylint import lint;\
+                   lint.Run([r\'%s\',])\" "%(pylname,)
+
+        g.es('running pylint', py + pylint )
+        out, err = runcmd( py + pylint)
+        for x in (out + err).splitlines():
+            g.es(x)
+    
+    if not g.app.dynaMvar.justpychecker:
+        g.es('#source for ', tmpname, color='blue' ) 
+        TextFile = file(tmpname)
+        Text = TextFile.read()
+        TextFile.close()
+        g.es(Text)
+    
+    #should be restored even if error. oh well
+    sys.path = oldpSath  #Leo discards this?
+
+    g.es('done ', color='blue' ) </t>
+<t tx="ekr.20050421093045.47">def dynaS_tim_one_crunch(c):
+    """(c) selected text/body print
+    bit of old code from tim peters,
+    had to un-htmlify it, then uu.decode it. then un py1.5 it, quite a PITA.
+    checks for single use variable and module names. 
+    helps catch errors in python code
+
+    write a file only if reindent enabled.
+    it can generate alot of false positives.
+    
+   using the bugfix, slightly more complicated from a later post.
+   double check the name polution, uses regex and string too
+   woh, was not going to work or needs some updateing.
+   more info is better than not hwhen trouble starts.
+    its alot faster than you would think too.
+~EOT
+    might run the makatmp first to create the file and just parse it with this
+    rather than pulling in the reindent call. few more lines, what the hell
+    reindent doesnt fix to standard indentation. why do I keep thinking it does?
+    OTOH, reindent proves the thing has correct syntax so may as well keep it
+
+    have to wait till the last few bugs worked out of evaluator.
+    could use to test against known methods and modules in use by the code
+    could reduce the false positives.
+    if you make the same mistake twice, its no longer unique. is that caught?
+
+    try compile as a way to verify code will import? is it safe?
+
+   patched in import keyword
+   added dir(list,dict from the older version
+   commented out __modules__ __builtins__ for now
+   building a more complete keyword list is the holy grail
+   of autocomplete and debuggers and code evaluators of all kinds.
+
+----
+    Tim Peters tim_one+msn.com    Thu, 27 Feb 97 09:00:30 UT 
+    Attached is a Python program that reports identifiers used only once in a .py (text) file, except for keywords, builtins, and methods on dicts &amp; lists (&amp; the way to expand that set should be obvious). 
+    This is much dumber than the other approaches on the table, but has the clear advantage that it's written &lt;wink&gt;, and catches things like "bound but never used" (including-- and this is a mixed blessing! --functions &amp; classes defined but not referenced in their file). ----
+    """
+
+    data = fixbody(c,dynaput(c, []))
+
+    if not data or len(data) == 0: 
+        return
+
+    tmpname = tmpfile #global or from copybuffer?
+
+    if doreindent:
+        g.es('writeing tmpname', tmpname )
+        fo = file(tmpname,'w')
+        fo.writelines(data + "%s#e%s"%(EOLN, EOLN, ))
+        fo.close()
+    
+        g.es('running reindent', py + reindent + tmpname )
+        out, err = runcmd(py + reindent + tmpname)
+        for x in (out + err).splitlines():
+            g.es(x)
+
+        o = file(tmpname)
+        so = StringIO.StringIO(o.read())
+        o.close()
+    else:
+        so = StringIO.StringIO(data + "%s#e%s"%(EOLN, EOLN, ))
+
+    p = c.currentPosition(); 
+    #made a caller to hide some of the globals
+    Bugfixcrunch(so.readline, '%s '%p.headString()[:15])
+    
+    if not g.app.dynaMvar.justpychecker:
+
+        g.es('#source for ', tmpname, color='blue' ) 
+        
+        so.seek(0, 0)
+        #.read() and .readlines() doubled up because of \n\r on win
+        for x in so.getvalue().splitlines(True):
+            g.es(x, newline= false)
+    g.es('done ', color='blue' ) </t>
+<t tx="ekr.20050421093045.48">
+def Bugfixcrunch(getline, headline='Ex'):
+    """u04523p12:01:20  madifying use of globals with 
+    calling functions bfcrunch embeded
+    the origional crunch has alot of false positives
+    
+    &gt;Bugfix (RE: Patch to Tim Peters python lint)
+    
+     (that is, a quote followed by a backslash followed by
+     a newline) &lt;/I&gt;&lt;BR&gt;&gt;&lt;i&gt; seems to cause an infinite
+     loop... &lt;/I&gt;&lt;BR&gt;&lt;P&gt; More, *any* unclosed uni-quoted
+     string fell into that loop -- continued  uni-quoted
+     strings are a feature of Python I never used, so was
+     blind to the  possibility at first; then conveniently
+     convinced myself nobody else used that  misfeature
+     &lt;wink&gt; either so I could ignore it.  I lose! &lt;P&gt;
+     Attached version fixes that by treating uni-quoted
+     and triple-quoted strings  pretty much the same [...]
+    """
+
+    [NOTE, CAUTION, WARNING, ERROR] = range(4)
+    _level_msg = ['note', 'caution', 'warning', 'error']
+
+    # The function bound to module vrbl "format_msg" defaults to the
+    # following, and is used to generate all output; if you don't
+    # like this one, you know what to do &lt;wink&gt;.
+    
+    def _format_msg(
+          # the error msg, like "unique id"
+          msg,
+    
+          # sequence of details, passed thru str &amp; joined with
+          # space; if empty, not printed
+          details = (),
+    
+          # name of source file
+          filename = '???.py',
+    
+          # source file line number of offending line
+          lineno = 0,
+    
+          # the offending line, w/ trailing newline;
+          # or, if null string, not printed
+          line = '',
+    
+          # severity (NOTE, CAUTION, WARNING, ERROR)
+          level = CAUTION ):
+        try:
+            severity = _level_msg[level]
+        except:
+            raise ValueError, 'unknown error level ' + `level`
+
+        g.es('%(filename)s:%(lineno)d:[%(severity)s]' % locals() )
+        if details:
+            from string import join
+            g.es("%s:" % msg, join(map(str, details)) )
+        else:
+            g.es(msg)
+        if line:
+            g.es(line)
+    
+    format_msg = _format_msg
+    
+    # Create sets of 'safe' names.
+    import sys
+
+    _system_name = {}   # set of __xxx__ special names
+    for name in """\
+          abs add and
+          bases builtins
+          call class cmp coerce copy copyright
+          deepcopy del delattr delitem delslice
+              dict div divmod doc
+          file float
+          getattr getinitargs getitem getslice getstate
+          hash hex
+          init int invert
+          len long lshift
+          members methods mod mul
+          name neg nonzero
+          oct or
+          pos pow
+          radd rand rdiv rdivmod repr rlshift rmod rmul ror
+              rpow rrshift rshift rsub rxor
+          self setattr setitem setslice setstate str sub
+          version
+          xor""".strip().split():
+        _system_name['__' + name + '__'] = 1
+    _is_system_name = _system_name.has_key
+
+    import keyword
+    
+    _keyword = {}   # set of Python keywords
+    for name in keyword.kwlist + ['as', 'str'] + dir(__builtins__) + \
+            dir(list) + dir(dict):
+        _keyword[name] = 1
+
+    #builtins isnt the same from exec as from script outside Leo
+    #maybe import builtins? same with methods if it even exists
+
+    _builtin = {}   # set of builtin names
+    """for name in dir(__builtins__) + sys.builtin_module_names:
+        _builtin[name] = 1
+    """
+    _methods = {}   # set of common method names
+    """for name in [].__methods__ + {}.__methods__:
+        _methods[name] = 1"""
+    
+    _lotsa_names = {}   # the union of the preceding
+    for dct in (_system_name, _keyword, _builtin, _methods):
+        for name in dct.keys():
+            _lotsa_names[name] = 1
+    
+    #del sys, name  #, dct string,  dict
+
+
+    
+    # Compile helper regexps.
+    import regex
+    
+    # regexps to find the end of a triple quote, given that
+    # we know we're in one; use the "match" method; .regs[0][1]
+    # will be the index of the character following the final
+    # quote
+    _dquote3_finder = regex.compile(
+        '\([^\\\\"]\|'
+        '\\\\.\|'
+        '"[^\\\\"]\|'
+        '"\\\\.\|'
+        '""[^\\\\"]\|'
+        '""\\\\.\)*"""' )
+    _squote3_finder = regex.compile(
+        "\([^\\\\']\|"
+        "\\\\.\|"
+        "'[^\\\\']\|"
+        "'\\\\.\|"
+        "''[^\\\\']\|"
+        "''\\\\.\)*'''" )
+    
+    # regexps to find the end of a "uni"-quoted string, given that
+    # we know we're in one; use the "match" method; .regs[0][1]
+    # will be the index of the character following the final
+    # quote
+    _dquote1_finder = regex.compile( '\([^"\\\\]\|\\\\.\)*"' )
+    _squote1_finder = regex.compile( "\([^'\\\\]\|\\\\.\)*'" )
+    
+    # _is_junk matches pure comment or blank line
+    _is_junk = regex.compile( "^[ \t]*\(#\|$\)" ).match
+    
+    # find leftmost splat or quote
+    _has_nightmare = regex.compile( """["'#]""" ).search
+    
+    # find Python identifier; .regs[2] bounds the id found;
+    # &amp; it's a decent bet that the id is being used as an
+    # attribute if and only if .group(1) == '.'
+    _id_finder = regex.compile(
+        "\(^\|[^_A-Za-z0-9]\)"  # bol or not id char
+        "\([_A-Za-z][_A-Za-z0-9]*\)" ) # followed by id
+
+    #del regex, keyword
+    &lt;&lt; bfcrunch &gt;&gt;
+    bfcrunch(getline, filename= headline)
+</t>
+<t tx="ekr.20050421093045.49">def bfcrunch(getline, filename='???.py' ):
+    # for speed, give local names to compiled regexps
+    is_junk, has_nightmare, id_finder, is_system_name = \
+        _is_junk, _has_nightmare, _id_finder, _is_system_name
+
+    end_finder = { "'": { 1: _squote1_finder,
+                          3: _squote3_finder },
+                   '"': { 1: _dquote1_finder,
+                          3: _dquote3_finder }
+                 }
+
+    multitudinous = {}  # 'safe' names + names seen more than once
+    for name in _lotsa_names.keys():
+        multitudinous[name] = 1
+
+    trail = {}  # maps seen-once name to (lineno, line) pair
+    in_quote = last_quote_lineno = lineno = 0
+    while 1:
+        # eat one line
+        where = lineno, line = lineno + 1, getline()
+        if not line:
+            break
+        if in_quote:
+            if in_quote.match(line) &lt; 0:
+                # not out of the quote yet, in which case a uni-
+                # quoted string *must* end with a backslash
+                if quote_length == 3 or (len(line) &gt; 1 and
+                                         line[-2] == '\\'):
+                    continue
+                format_msg( "continued uni-quoted string must \
+end with backslash",  # making this line its own test case &lt;wink&gt;
+                            filename=filename,
+                            lineno=lineno,
+                            line=where[1],
+                            level=ERROR )
+                # the source code is so damaged that more
+                # msgs would probably be spurious, so just
+                # get out
+                return
+            # else the quote has ended; get rid of everything thru the
+            # end of the string &amp; continue
+            end = in_quote.regs[0][1]
+            line = line[end:]
+            in_quote = 0
+        # get rid of junk early, for speed
+        if is_junk(line) &gt;= 0:
+            continue
+        # awaken from the nightmares
+        while 1:
+            i = has_nightmare(line)
+            if i &lt; 0:
+                break
+            ch = line[i]    # splat or quote
+            if ch == '#':
+                # chop off comment; and there are no quotes
+                # remaining because splat was leftmost
+                line = line[:i]
+                break
+            else:
+                # a quote is leftmost
+                last_quote_lineno = lineno
+                quote_length = 1  # assume uni-quoted
+                if ch*3 == line[i:i+3]:
+                    quote_length = 3
+                in_quote = end_finder[ch][quote_length]
+                if in_quote.match(line, i + quote_length) &gt;= 0:
+                    # remove the string &amp; continue
+                    end = in_quote.regs[0][1]
+                    line = line[:i] + line[end:]
+                    in_quote = 0
+                else:
+                    # stuck in the quote, but anything
+                    # to its left remains fair game
+                    if quote_length == 1 and line[-2] != '\\':
+                        format_msg( 'continued uni-quoted string \
+must end with backslash',
+                                    filename=filename,
+                                    lineno=lineno,
+                                    line=where[1],
+                                    level=ERROR )
+                        # the source code is so damaged that more
+                        # msgs would probably be spurious, so just
+                        # get out
+                        return
+                    line = line[:i]
+                    break
+
+        # find the identifiers &amp; remember 'em
+        idi = 0     # index of identifier
+        while 1:
+            if id_finder.search(line, idi) &lt; 0:
+                break
+            start, idi = id_finder.regs[2]
+            word = line[start:idi]
+            if multitudinous.has_key(word):
+                continue
+            if trail.has_key(word):
+                # saw it before; don't want to see it again
+                del trail[word]
+                multitudinous[word] = 1
+            else:
+                trail[word] = where
+                if word[:2] == '__' == word[-2:] and \
+                   not is_system_name(word):
+                    format_msg( 'dubious reserved name',
+                                details=[word],
+                                filename=filename,
+                                lineno=where[0],
+                                line=where[1],
+                                level=WARNING )
+
+    if in_quote:
+        format_msg( 'still in string at EOF',
+                    details=['started on line', last_quote_lineno],
+                    filename=filename,
+                    lineno=lineno,
+                    level=ERROR)
+
+    inverted = {}
+    for oddball, where in trail.items():
+        if inverted.has_key(where):
+            inverted[where].append(oddball)
+        else:
+            inverted[where] = [oddball]
+    bad_lines = inverted.keys()
+    bad_lines.sort()    # i.e., sorted by line number
+    for where in bad_lines:
+        words = inverted[where]
+        format_msg( 'unique id' + 's'[:len(words)&gt;1],
+                    details=words,
+                    filename=filename,
+                    lineno=where[0],
+                    line=where[1],
+                    level=CAUTION )
+</t>
+<t tx="ekr.20050421093045.50">#show in the main menu</t>
+<t tx="ekr.20050421093045.51">""" if you runthis script on itself it can get infinate on you.
+not anymore, but if you do get some recursion in your script,
+  if you have a console hit ^C once. save your work often.
+  python -i leo your.leo is how to get the console
+ @test error reporting seems to go only to the console as yet.
+ 
+ also import of leo* files might be a problem. 
+ best used in named sections for functions, 
+ you can also put the doc under test in its own node.
+ you can also put the code in a named function in a subnode
+ inside triple quotes so that the code still has syntax highlighting.
+ care to include an extra &gt;&gt;&gt; #blank at the end if used this way.
+ there are a few examples in dynacommon, sanitizte_ , ??
+
+ fixed problem for py2.4, master removed from doctest __all__ 
+verbosity= fails if leoTest 4.3a1 or earlier
+
+can an option be the first time you click on a dyna item
+it becomes a button. 
+du_test, delfirstchar often you can't stop at just once.
+
+0 passed and 0 failed. shoud report even if verbosity 0
+"""
+@
+
+DO NOT LOAD leo*.py files with load_module it will crash Leo
+leoTest.py is ok, is more or less a standalone to provide @test
+
+Leo has a safeimport, once it stabalizes can use it for @file.
+you must not run python -OO to use doctest! we detect this
+-O is ok but note, this removes asserts, maybe counter productive!
+
+uses parts of Rollbackimporter and fileLikeObject
+many thanks to python cookbook providers and contributers
+@c
+
+import leoGlobals as g
+
+&lt;&lt; Classes &gt;&gt;
+
+def dynaZ_du_test(c):
+    """(c= None) selected text/body docstrings + exec any code, print
+    run a doctest unittest from a docstring in the script/selected 
+    or run @test, see test.leo and leoTest.py
+    or @suite all subnodes run.
+
+ _function single underscored ignored in doctest 
+ nested sub functions ignored in doctest,
+ note also you have to double backslashes or use r raw triple quote strings.
+
+    in your script you can use:
+    g.tester.assertTrue(1 == 2, 'help unittest for other compares')
+    you may have to import leoGlobals to use.
+    which isn't a much of a deal breaker.
+    
+   care required because the script under test is exec with any sideeffects.
+  if __name__ == 'mymod': will be run only under du_test doctest, not @test
+  if __name__ == '__main__': standard way to guard from execution
+  ~EOT  
+    is redirecting the unittest error to log properly. 
+    try append -v to argv, no luck.
+    need setting for verbose in leoTest instead of hardwired call
+    dyna_menu.ini verbosity=0/1/2
+
+    must be in leoText. run w/console python -i open to see
+    need version 2.3. convert a doctest into a unittest if use leoTest
+    du_test doesn't create temp files and doesn't require @file
+  seems I have developed a superstition about reload of sys and unittest. 
+  but dammed if @test nodes stoped redirecting, so reloads are back in again!
+  put all 3 back but one or the other might be enough. subject closed again.
+  flip verbose now flips 0 to 1, 1 to 2 and 2 to 0, default starts out at 0
+
+  is this wrongly bailing after the first failed test?
+  sometimes you fix one test of a multiple then another failed test shows up!
+    """
+    import doctest
+    import sys, os
+
+    #1 leo globals, 0 forcefull sys, 2 underlying file stdio nfg
+    use_Leo_redirect = 0 
+
+    p = c.currentPosition() 
+
+    #solve the doc/unittest infinate problem if run test on this node
+    if p.headString().startswith('du_test-str'): g.es('infinate'); return
+
+    c.frame.putStatusLine('testing '+ p.headString()[:25], color= 'blue')
+    #c.frame.statusText.configure(
+    #    state="disabled", background="AntiqueWhite1")
+
+
+    if pyO[0] == 'O':
+        g.es('assert disabled, use g.app._t.assert_()',
+            color= 'tomato')
+        #unreliable as yet...
+        if 0 and dynaZ_du_test.__doc__ is None:
+            g.es('YOU HAVE RUN python -OO \ndoctest fails, @test ok',
+                color= 'tomato')
+
+    s = '*'*10
+    g.es(win_version, time.strftime(
+        #why is this not available? 
+        #g.app.config.body_time_format_string or 
+        '%H:%M.%S %m/%d/%Y'
+    ))
+    
+
+    g.es('%s \ntesting in %s\n%s\n'%(
+        s, p.headString()[:25], s), color= 'DodgerBlue')
+
+    reload(sys)
+    #print sys.argv
+    #if not '-v' in sys.argv:
+    #    sys.argv.append('-v')
+    #    g.es(sys.argv)
+
+    &lt;&lt; n_redirect &gt;&gt;  #a bad named section is ignored when run
+    #import/reload after redirect fixes redirect to log from unittest
+    import leoTest
+    import unittest
+
+    reload(unittest)
+    reload(leoTest)
+    
+
+    if p.headString().startswith('@test ') or\
+         p.headString().startswith('@suite '):
+        leoTest.doTests(all= False,
+         verbosity= g.app.dynaMvar.verbosity) #
+
+    else:
+        &lt;&lt; DocTest &gt;&gt;
+
+    &lt;&lt; f_redirect &gt;&gt;
+
+    g.es('nonews is goodnews%s'%(g.choose(pyO[0] == 'O', ' +-O', ''),),
+        color= 'DodgerBlue')
+
+    #not sure why but this dissapears in a few seconds, 
+    #maybe script end clears it? add an idle 200ms
+    c.frame.putStatusLine(' fini ', color= 'DodgerBlue')
+    #bad color here causes too much traceback
+    #c.frame.statusText.configure(background="AntiqueWhite2")
+</t>
+<t tx="ekr.20050421093045.52">import os, sys, time
+
+import StringIO #will this be cStringIO from dynacommon?
+
+#__metaclass__ = type
+
+#is sys.platform in less than py2.3?
+if sys.platform[:3] == 'win':  
+    if sys.version_info[:2] &gt;= (2, 3):
+        win_version = {4: "NT", 5: "2K", 6: "XP",
+            }[os.sys.getwindowsversion()[0]]
+    else: win_version = 'NT' #os.name?
+else: win_version = 'NM'
+
+if sys.version_info[:2] &gt;= (2, 5): win_version += ' py&gt;24'
+elif sys.version_info[:2] &gt;= (2, 4): win_version += ' py&gt;23'
+elif sys.version_info[:2] &gt;= (2, 3): win_version += ' py&gt;22'
+elif sys.version_info[:2] &gt;= (2, 2): win_version += ' py&gt;21'
+elif sys.version_info[:3] == (1, 5, 2): win_version += ' py152'
+else: win_version += ' py&lt;21'
+
+#@suite unittestfromdoctest needs py2.3
+
+try:
+    g.tester
+except AttributeError:
+    import unittest
+    class tester(unittest.TestCase):
+        def runTest(self):
+            pass
+    g.tester = tester()  #now use g.tester in your script
+    del unittest
+
+#works exS but points to line 309 in unittest.py instead of here...
+#does display in cpmtext better when used in an @test node
+#g.tester.assertTrue(1 != 1, 'some message')
+
+@others</t>
+<t tx="ekr.20050421093045.53">class ExitError(Exception):
+    """
+    this is a cleaner way to exit a script
+    raise SystemExit or something else causes much traceback
+    so does this but maybe can solve that eventually
+    maybe del frames from sys.exception
+    also may be called after printing trace from real error
+    """
+    def __init__(self, value= 'Script decided to bail\n'):
+        self.value = value
+
+    def __str__(self):
+        return `self.value`
+</t>
+<t tx="ekr.20050421093045.54">"""aspncookbook/82234
+Importing a dynamically generated module
+by Anders Hammarquist
+Last update: 2001/10/17, Version: 1.0, Category: System
+This recipe will let you import a module from code that is dynamically
+generated. My original use for it was to import a module stored in a
+database, but it will work for modules from any source.
+had to add \n and chg name module and del if already in modules
+"""
+
+def importCode(c,code, name, add_to_sys_modules= 0):
+    """
+    Import dynamically generated code as a module. code is the
+    object containing the code (a string, a file handle or an
+    actual compiled code object, same types as accepted by an
+    exec statement). The name is the name to give to the module,
+    and the final argument says wheter to add it to sys.modules
+    or not. If it is added, a subsequent import statement using
+    name will return this module. If it is not added to sys.modules
+    import will try to load it in the normal fashion.
+
+    import foo
+
+    is equivalent to
+
+    foofile = open("/path/to/foo.py")
+    foo = importCode(c,foofile, "foo", 1)
+
+    Returns a newly generated module.
+
+    tried to inject a sample unittest sub class
+    just to get assert_ and maybe the other tests automatically
+    it is shown in the verbose though doctest can be told to ignore.
+    next problem, if the test class is injected first, 
+    the scripts first docstring is no longer the __doc__ of the module
+    if its injected last then _t is undefined...
+    do I exec it first to get the doc, then set mymod.__doc__ = doc?
+    cant have any code before the doc. might be an acceptable price to pay
+    but unittest also doesnt know it then the scripts cant do both
+    """
+    import sys, imp
+    try:
+        if hasattr(sys.modules, name):
+            del(sys.modules[name])
+    
+        modl = imp.new_module(name )  #was module
+
+        #problem if run du_test now on new Leo4.3 scripts w/o c,g,p defined
+        #shoulden't matter if its other than c,g,p then still errors?
+        #might not even be necessary. had a script that was a getscript on itself
+        try:
+            exec code + '\n' in modl.__dict__ #du_test
+        except AttributeError, e:
+            g.es('%s\npossibly no doc string defined?'%(e,))
+            g.g.es_exception(full= True)
+
+        except NameError:
+            p = c.currentPosition()
+            d = {'c':c, 'p':p, 'g':g}
+            g.es('*** defining c,g &amp; p ***')
+            modl.__dict__.update(d)
+            exec code + '\n' in modl.__dict__ #du_test w/c,g,p
+
+        if add_to_sys_modules:
+            sys.modules[name ] = modl
+
+    except Exception:  #probably not exactly correct
+        #g.es_exception()
+        raise # ImportError
+   
+    return modl
+
+if 0: # Example
+    code = """
+def testFunc():
+    print "spam!"
+
+class testClass:
+    def testMethod(self):
+        print "eggs!"
+
+import unittest
+class _t_(unittest.TestCase):
+    def runTest(self):
+        pass
+_t = _t_()
+"""
+
+    m = importCode(c,code, "test")
+    m.testFunc()
+    o = m.testClass()
+    t = m._t_()
+    o.testMethod()
+
+#</t>
+<t tx="ekr.20050421093045.55"></t>
+<t tx="ekr.20050421093045.56">#when run on @test print goes to console
+#this simple redirect isnt working
+#might need to set stdout/err more forcefully
+#have the same problem with evaluator 
+#and it screwsup log redirect after its done.
+if use_Leo_redirect == 1:
+    g.redirectStdout(); g.redirectStderr()
+
+elif use_Leo_redirect == 0:
+    sys.stdout = g.fileLikeObject() #'cato'
+    sys.stderr = g.fileLikeObject() #'cate'
+
+    #usually you dont want to do this,
+    _sosav = sys.__stdout__
+    sys.__stdout__ = sys.stdout
+    _sesav = sys.__stderr__
+    sys.__stderr__ = sys.stderr
+
+elif use_Leo_redirect == 2: #c.l.py suggested
+    #how ironic, I can remove the requirement for temp file
+    #for docutils, but not for redirecting IO? dup needs fileno
+    _sosav = sys.__stderr__
+    #_sesav = sys.stderr
+    def myfileno(self= None, *argy, **kews):
+        print 'fn', argy, kews
+        return 1
+    #g.funcToMethod(myfileno, g.fileLikeObject, 'fileno')
+    #g.funcToMethod(fileno, g.fileLikeObject)
+
+    #g.fileLikeObject.fileno = myfileno
+    f = g.fileLikeObject()
+    #f.fileno = 1  
+    f.fileno = myfileno  #()
+    #not callable, when it is callable it says not attribute!
+    #AttributeError: redirectClass instance has no attribute 'fileno'
+    #it goes deeper than I first thought, the redirecttolog is still there
+
+
+    #f = file('out.txt', 'a')
+    #os.dup2(1, sys.__stderr__.fileno())
+    os.dup2(f.fileno, sys.__stderr__.fileno())
+    #os.dup2(f.fileno(), sys.stderr.fileno())
+</t>
+<t tx="ekr.20050421093045.57">
+tmpimp = tmp = 'mymod' #name for the mock module
+
+#g.es('mock writeing ', tmpimp)  #
+fo = None
+
+try:
+    #could add a real/mock mode default mock, 
+    #need to simulate file open for write+ since read will fail
+
+    #fo = g.fileLikeObject(tmpimp) 
+    script = g.getScript(c, p) #.strip()
+    if not script: g.es('no script no test'); return
+
+    #fo.write(script + "\n#e\n")
+    #fo.seek(0, 0)  #rewind
+    #fo.geek()  #test unknown attribute
+
+except Exception:
+    g.es_exception(full= False)
+    raise ExitError  #be nice if this happened w/o extra exytax error
+
+mod = None
+try:
+
+    #mod = __import__(fo, {}, {}, ["*"])
+    mod = importCode(c,script, tmpimp, add_to_sys_modules= 1)
+
+#could be other errors the way this is setup isnt there yet.
+except ImportError, err:
+    g.es('error importing tmpimp\n', tmpimp, color='tomato')
+    g.es_exception()
+    #except needs a break or maybe the doctest goes in else?
+    #you cant mix except and finally...
+    #an exit w/o rais would belp too still need to close the file
+
+try:
+    if mod:
+        #need to tell it to ignore testing class t_
+
+        doctest.testmod(mod, verbose= g.app.dynaMvar.verbosity,
+             report= 1, globs=None, isprivate= doctest.is_private)
+        #doctest.master.summarize()
+        #ValueError: line 10 docstring xyz inconsistent leading whitespace: 
+        #could mean need to double the backslashes like \\n or raw the docstring
+
+        try:
+            #no longer exposed in py2.4
+            del doctest.master #bad idea if don't set to None
+            doctest.master = None
+        except Exception:
+            pass
+
+except Exception, err:
+    g.es('error doctest mod\n', mod, color='tomato')
+    g.es_exception()
+
+if fo: fo.close() </t>
+<t tx="ekr.20050421093045.58">#code below may cause problem if not run 
+#if except traps further up
+#needs its own try/finally
+#is the __ mangling causing sys.__std* not to work corectly?
+
+if use_Leo_redirect == 1:
+    g.restoreStdout(); g.restoreStderr()
+
+elif use_Leo_redirect == 0:
+    oo = sys.stdout.get()  #read get()
+    oe = sys.stderr.get()  #get()
+    sys.stdout.close()
+    sys.stderr.close()
+
+    #if you didnt do this it wouldent need to be reversed
+    sys.__stdout__ = _sosav
+    sys.__stderr__ = _sesav
+
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
+
+elif use_Leo_redirect == 2:
+    #if this works eliminate choice 0
+    oo = 'stderr'  #sys.stderr.read()  #read get()
+    #oe = sys.stderr.get()  #get()
+    oe =''
+    #sys.stderr.close()
+    #sys.stderr.close()
+    sys.__stderr__ = _sosav
+    #sys.__stderr__ = _sesav
+
+if use_Leo_redirect != 1:
+    for x in (oo + oe).splitlines():
+        g.es('%s'%x, color= 'chocolate')</t>
+<t tx="ekr.20050421093045.59">def dynaZ_htmlize(c, source= None, lang= 'plain', 
+        writehead= True, show= True):
+    r"""(c= None, source= None, lang= 'plain', 
+        writehead= True, show= True)
+        lang = report or ishtml or @language
+    htmlize a script, popup webbrowser if show is True.
+    if you set BROWSER env variable I think you can force
+    a particular browser otherwise it uses your default.
+    
+    grabed parser fromfrom the moinmoin for python code, 
+    default is to strip leo sentinal linesm leave node &amp; directives.
+
+    you must edit in browser &amp; filename, 
+       explorer c:\WINDOWS\TEMP\python.html
+       or use %tmp%/htmlfile.html defined in dynacommon
+    
+    wonder still about how to solve encoding?
+    rst/plain option not fully realized
+    source-highlite still wants to make verbose to stderr?
+    finish implementing EOLN and check in plain per body
+    for new directives of wrap and lineending and language
+    will any of this output survive various encoding
+    will it validate as error free html?
+ ~EOT
+    &lt;&lt;more doc&gt;&gt;
+
+    global EOLN had to import dynacommon
+    is somewhat in need of some flow refactoring 
+    and -quiet via verbosity
+    another dependancie.
+    and I'm checking for \n but using EOLN everywhere
+    and will fail in less than py2.4 docutils no BLANKLINE
+    if silvercity then will output fullhtml so far
+
+    &lt;BLANKLINE&gt; doesn't exist for doctest less than 2.4 maybe will fail?
+    not even sure its the proper result at this point either.
+    a test that has the wrong output at least shows htmlize is runnable.
+    
+    &gt;&gt;&gt; dynaZ_htmlize(c,None, '\n', lang= 'checker', writehead=0, show=0)
+    &lt;BLANKLINE&gt;
+    &lt;BLANKLINE&gt;
+    &lt;BLANKLINE&gt;
+    &gt;&gt;&gt; dynaZ_htmlize(c,None, '\n', 'c', writehead=0, show=0)
+    '&lt;pre&gt;&lt;tt&gt;\n\n&lt;/tt&gt;&lt;/pre&gt;\n'
+
+    that one is output instead of returned
+    the redirection of stdout shoulden't always happen if show=0
+
+    would be nice if there were a find for variable/keywords not just text
+    if source is one line and a URL maybe it should try to open it?
+    
+
+    adding a debugging switch to force ImportError fallback for testing
+    should extend it to raise any specific errors that might be caught.
+    going to have to rethink some of the testing under test.leo
+    what will the namespace be, will g.app.dynaMvar.verbosity be defined?
+    replace a few of the verboaity with if not source 
+    want to get output feedback unless under test
+    """
+    &lt;&lt; initilize &gt;&gt;
+
+    @others
+
+    p = c.currentPosition() 
+    fullhtml = err = out = None
+    
+    #to remind, really need to get keywords from Leo for some languages
+    #then could handle odd languages better w/same parser
+    #c.frame.body.colorizer.python_keywords.append("as")
+    &lt;&lt;hopts&gt;&gt;
+
+    if not source:
+        lang = g.scanForAtLanguage(c, p)
+    
+        #str only fails is there is no current encoding for a char.
+        #was erroniously thinking it always fails on Unicode.
+        lang = str(lang).lower()
+
+        #think this trips an assert if you pass a vnode    
+        #redundant if @rst or plain and fails if the first node is empty
+        #will have to redesign this flow
+        #think getscript Leo4.3a4 doesnt do selected text w/directives?
+    
+        source = g.getScript(c, p)  #.strip()
+
+    titl = "%s Leo %s script %s"%(
+            p.headString()[:75], lang, hopts['timestring'])
+
+    if hasattr(g.app.dynaMvar, 'htmlize_hilighter'):
+        htmlize_hilighter = g.app.dynaMvar.htmlize_hilighter
+    else: htmlize_hilighter = ''
+
+    #if no path set getScript will return empty script, bug &lt;4.3a4
+    #must get text other way and do another type of htmlize
+
+    _sysstdsav = sys.__stdout__
+    &lt;&lt;header plain footer&gt;&gt;
+    try:
+        if not source: raise ValueError
+
+        # write colorized version to "python.html"/filename
+        if show: 
+            sys.stdout = open(hopts['filename'], 'wb')  # wt, wb, w
+            g.es('output', p.headString())
+
+        if lang in ['checker', 'report', ]:
+            if writehead:
+                sys.stdout.write(outheader())
+            sys.stdout.write(plainout(source))
+
+        elif lang in ['ishtml', ]:
+            sys.stdout.write(source)
+            fullhtml = 'y'
+
+        elif lang in ['plain', 'rst', ] or \
+              c.currentPosition().headString().strip()[:4] == '@rst':
+            g.es('rst or %s , wait...'% lang)
+            if writehead:
+                sys.stdout.write(outheader())
+            &lt;&lt; plain or rst &gt;&gt;
+
+        elif lang == 'python':
+            #this may no longer be advantagouus 
+            #for every option to do first. and in the same order
+            if writehead:
+                sys.stdout.write(outheader())
+            pars = Parser(source)
+            pars.format(None, None)
+
+        else:
+            if g.app.dynaMvar.verbosity: g.es('hilight %s , wait...'% lang)
+            #should decide somehow if can do the language
+            #before commiting to a colorizer
+            #plain should always be the fallback instead of first
+            #this will get some reflow analisis
+
+            source = stripSentinels(source, **hopts)
+
+            if htmlize_hilighter and htmlize_hilighter != 'silvercity' :
+                if writehead:
+                    sys.stdout.write(outheader())
+                &lt;&lt; src-highlight &gt;&gt;
+
+            elif htmlize_hilighter == 'silvercity':
+                &lt;&lt; silvercity &gt;&gt;
+
+            else:
+                if writehead:
+                    sys.stdout.write(outheader())
+                out = plainout(source)
+        
+            if out and show:
+                sys.stdout.write(out)
+            if err and g.app.dynaMvar.verbosity: 
+                g.es(' ** '.join(err.splitlines()), color='tomato')
+
+        #getmetrics(source)
+        #tack on fileinfo as a comment
+        #generate linkable index of keywords
+
+        if fullhtml is None: #fix when can get it to do fragments
+            if writehead:
+                sys.stdout.write(outfooter())
+
+        if show:     
+            sys.stdout.close()
+            sys.stdout = _sysstdsav #missing from org cgi.
+    
+        # load HTML page into browser, py2.2?
+        if 0 and show:
+            #might want this if to use other than default browser
+            if os.name == "nt":
+                os.system(r'explorer %s'%hopts['filename'])
+            else:
+                os.system("netscape %s &amp;"%hopts['filename'])
+        elif 1 and show:
+            import webbrowser
+            webbrowser.open(hopts['filename'], new= 0) #
+
+    except ValueError:
+        g.es('no @path set, unsupported lang or empty script', 
+                color= 'tomato')
+        g.es(lang, p.headString())
+
+    except Exception:
+        g.es('htmlize malfunction?', color= 'tomato')
+        g.es_exception(full= True)
+
+    sys.stdout = _sysstdsav #twice is nice
+    return out</t>
+<t tx="ekr.20050421093045.60">you can tweek the title in the format and sanitize_ method
+edit in your favorite style bits there too.
+copy combined default.css silvercity.css where the filename will be
+
+uses psyco if available.
+
+script should be python, free from most syntax errors 
+but accepts other languages 
+and eveutually will use the keywords from that language
+for now call another parser, silvercity if it exists.
+sends @language css html perl c java and others to silvercity
+(not fully tested in all languages for all syntax)
+
+you can choose to colorize Names, Operators and Numbers seperately
+or not at all by editing the htmlize macro hopts dictionary. 
+Note: filesize larger if all 3 different than Text color.
+
+needs Leo4.2 but is easily revertable.
+
+could add linenumber and code metrics options.
+
+can make it capable of reading writing a file as well?
+wonder can I open browser and send it virtual html like in js?
+might mod for class &amp; span instead of pre &amp; font
+
+have to have path set for getScript to work. 
+in new leo it will traceback if not saved once?
+added some traps for empty script. 
+meaningfull errors messages can't really be determiate
+w/o some novice/expert clue from the system. 
+have a few depandancies on dyna otherwise could be scriptButton
+use python webbrowser.
+add experimental code folding on def &amp; class for python only
+ works in IE5 and firefox1 and shouldent affect others much
+ might just be an extra header above def and class
+ eventually will option it invisable for printing and copy&amp;paste
+ enable/disable in the htmlize options bunch as with other options
+ and there would be an ini option available too in the great beyond.
+its cutting the def/class name and not enclosing the body of it
+
+this guy took it to the next level, like the idea of color themes.
+http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
+
+more advanced stripSentinals suggested by EKR.
+getconfig for ini options in hopts
+need another option to looklikeLeo
+show directives but not commented out, 
+others w/o excess space, verbatim as it is etc
+then can almost use extract named section to recreate nodes
+
+if showdefaults, it doesn't take into account
+the override factor in the defaults in hopts
+complicated by Properties dialog not being able to handle them all
+need to have more than one ini seletable as well
+for various class or color schemes or some other way to select them
+which css to embed. maybe get it from parsing a parent node or ???
+
+seems to be taking little longer to popup browser in py2.4.1, not always.
+if not python should check for silvercity, then one of the others
+maybe need option default colorizer, otherwise there is too much guessing.
+if neither then output as text. as it is now, temfile is written first
+and only output as text if it is not one of silvercity languages
+the others have more or less languages supported. a config nightmare.
+check is @file and offer to produce file.xyz.html
+check is @rst and if option dorst then send plain to docutils?
+add option css/font and if css 
+then eliminate dups is mandatory, css triples filesize.
+
+option   silvercity or src-hilite for other than plain or rst or @rst
+sent plain or rst to docutils if if available 
+  else pre/pre w/wraping and headlines made of any node healines
+
+there should be an @language rst to help with REST syntax 
+possibly this would be a major pain just because.
+idea for further study though. @rst for now good enough
+and should not interfere with any rst* plugin
+
+    seems obvious now, but call the plain text output if
+    none of the colorizers can do it, just set silver!=didit &amp; break!
+    also explore calling leo colorizer, does it act or can  it be made
+    to return a pseudo body one can parse for Tk tags to get color info
+    dl jthon port and see how that handles colorizer for various languages
+    uses the combined default.css for rst and silvercity in dyna.txt
+
+    another thing would be to extract the essential html generation parts
+    so it could be called by rst for code-blocks using existing colorizer
+    rather than internally attempting to ifdef around the problem.
+
+       
+- sgbotsford
+What I want to do is print the outline showing 
+the indents, with all outlines expanded, and optionally: 
+*Don't print any of the body text. 
+*Print the first N lines of body text in each node 
+*Print all the body text. 
+ 
+Nice to have: 
+Outline and body text is in the respective fonts 
+chosen in preferences. 
+
+
+
+might have to define some lang options, 
+lang=ishtml will assume is complete escaped html
+ that will mean nothing can be controeled about the font or css?
+ mabe should mean we extract the body
+lang=checker
+</t>
+<t tx="ekr.20050421093045.61">#trick from aspn/299485
+#htmlize is really plenty fast even on &gt;100k source, 
+#but may as well see if this ever causes errors
+#forgot to get some base timeings before and after.
+#doesnt help the silvercity branch
+import os, sys
+
+base_class = object #is object in py2.2
+if 1:
+    try:
+        # If available use the psyco optimizing
+        #might psyco be enabled elsewhere and still work in here?
+        import psyco.classes
+        if sys.version_info[:2] &gt;= (2, 3):
+            base_class = psyco.classes.psyobj
+    except ImportError:
+        pass 
+
+import leoGlobals as g
+
+import cgi, StringIO, re
+import keyword, token, tokenize
+
+#so can test, idealy done only if __doctest__ or in some test
+from dynacommon import stripSentinels, sanitize_, runcmd, EOLN 
+
+
+#this well could be version dependant
+_KEYWORD = token.NT_OFFSET + 1
+_TEXT    = token.NT_OFFSET + 2
+
+_colors = {
+    token.NUMBER:     '#483D8B', #black/darkslateblue
+    token.OP:         '#000080', #black/navy
+    token.STRING:     '#00AA00', #green 00cc66
+    tokenize.COMMENT: '#DD0000', #red cc0033
+    token.NAME:       '#4B0082', #black/indigo
+    token.ERRORTOKEN: '#FF8080', #redred bare null does it
+    _KEYWORD:         '#0066ff', #blue
+    _TEXT:            '#000000', #black /is text fg color too
+    '_leodir':        '#228B22', #directive, forest comment
+    '_leosen':        '#BC8F8F', #sentinal, tan fade comment
+    'bg':             '#FFFAFA', #snow
+}</t>
+<t tx="ekr.20050421093045.62">
+class Parser(base_class):
+    """ prep the source for any language
+        parse and Send colored python source.
+    """
+	@others
+</t>
+<t tx="ekr.20050421093045.63">def __init__(self, raw):
+    """ Store the source text.
+    """
+    #self.raw = string.strip(string.expandtabs(raw) )
+    self.raw = raw.strip().expandtabs(4) 
+    #might normalize nl too
+    
+    #need to know delim
+    cmtdelim = '#'
+    if lang != 'python':
+        sdict = g.scanDirectives(c, p) 
+        #obviously for other language have to check is valid
+        #or need open/close comment. 
+        #misses the opening html cmt, [0] only for singles
+        #not sure I even know all the comment specifyers
+        # its @, // html, ' are there any that screwup regex?
+        cmtdelim = sdict.get('delims', ['#'])
+        cmtdelim = cmtdelim[0] or cmtdelim[1]
+    
+    self.posspan = 0 #keep pos for collapse links on def &amp; class
+    self.spancnt = 0
+    
+    self.fnd = re.compile(r"%s@\s*@+."%(cmtdelim,) )
+
+    #g.es('using delim=', cmtdelim)
+    
+    #if hopts['stripsentinals']: almost always do something
+    self.raw = stripSentinels(self.raw, **hopts)
+
+</t>
+<t tx="ekr.20050421093045.64">def format(self, formatter, form):
+    """ Parse and send the colored source.
+    """
+
+    # store line offsets in self.lines
+    self.lines = [0, 0]
+    pos = 0
+    while 1:
+        pos = self.raw.find(EOLN, pos) + 1
+        if not pos: break
+        self.lines.append(pos)
+    self.lines.append(len(self.raw))
+
+
+    self.pos = 0
+    text = StringIO.StringIO(self.raw)
+
+    #use of \n not sure if will follow users lineending, but it should
+    #anywhere htmlize adds it should use EOLN
+
+    # parse the source and write it
+    try:
+        tokenize.tokenize(text.readline, self)
+    except tokenize.TokenError, ex:
+        msg = ex[0]
+        line = ex[1][0]
+        print "&lt;h3&gt;ERROR: %s&lt;/h3&gt;%s" % (
+            msg, self.raw[self.lines[line]:])
+</t>
+<t tx="ekr.20050421093045.65">def __call__(self, toktype, toktext, (srow,scol), (erow,ecol), line):
+    """ Token handler.
+    """
+    if 0: print "type", toktype, token.tok_name[toktype], "text",\
+            toktext, "start", srow,scol, "end", erow,ecol, "&lt;br&gt;"
+
+
+    # calculate new positions
+    oldpos = self.pos
+    newpos = self.lines[srow] + scol
+    self.pos = newpos + len(toktext)
+
+    # handle newlines
+    if toktype in [token.NEWLINE, tokenize.NL]:
+        print
+        return
+
+    if hopts['codefold']: 
+        if self.posspan &gt;= self.pos:
+            dospan = False
+        else: dospan = True
+
+    style = ''
+    if toktype == tokenize.COMMENT:
+        #setrip comment a little more complicated than sentinals
+        #sentinals are always exactly one line, sometimes indented
+        #comments after code would need to do NL?
+        
+        if toktext.lstrip().startswith('#@'):
+            
+            #if hopts['stripsentinals']: return  #do in __init__
+                
+            if self.fnd.findall(toktext):
+                toktype = '_leodir'
+            else:
+                toktype = '_leosen'
+
+    # send the original whitespace, if needed
+    if newpos &gt; oldpos:
+        sys.stdout.write(self.raw[oldpos:newpos])
+
+    # skip indenting tokens
+    if toktype in [token.INDENT, token.DEDENT]:
+        self.pos = newpos
+        return
+
+    # map token type to a color group
+    if token.LPAR &lt;= toktype and toktype &lt;= token.OP:
+        toktype = token.OP
+
+    elif toktype == token.NAME and keyword.iskeyword(toktext):
+        toktype = _KEYWORD
+
+        if hopts['codefold'] and toktext in ['def', 'class',]:
+            dospan = True
+            self.posspan = self.pos
+            self.spancnt += 1
+            tag = '%s%s'%(cgi.escape(toktext), self.spancnt,)
+            sys.stdout.write("""\
+&lt;a onclick="toggle(%s)" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'"&gt;
+&lt;h5&gt;%s&lt;img src="rarrow.gif" width="14" height="14"&gt;&lt;/h5&gt;&lt;/a&gt;
+&lt;span ID=%s Style=Display:''&gt;
+"""%(tag, tag, tag,  # None, none turns it off by default
+    )) #need a 2pass to do this right, or look 1ahead to def/class name
+
+
+    #this could be a decorator if run on py2.4 code from &lt;py2.4
+    if toktype == token.ERRORTOKEN:
+        style = ' style="border: solid 1.5pt #FF0000;"'
+
+    #color = _colors.get(toktype, _colors[_TEXT])
+    #instead use try to bail if no key defaulting to body fg color
+
+    dofont = True
+    try:
+        color = _colors[toktype]
+        sys.stdout.write('&lt;font color="%s"%s&gt;' % (color, style))
+    except Exception:
+        dofont = False
+
+    sys.stdout.write(cgi.escape(toktext))
+    if dofont: sys.stdout.write('&lt;/font&gt;')
+
+    if hopts['codefold']: 
+        #this is going to need allot more work to be reliable
+        if dospan: #set when out of the def or class
+            self.posspan = 0
+            sys.stdout.write('&lt;/span&gt;')</t>
+<t tx="ekr.20050421093045.66">#dyna would have read the ini already into a global Bunch
+#that will be one of the options for htmlize
+#its probably still possible to screwup the ini and dyna won't import
+
+#need to use a getter in Bynch so nonesistant ivar returns None?
+#possibly could set it with a get and default if doesn't exist property?
+
+if not hasattr(g.app.dynaMvar, 'htmlize_filename') or\
+         g.app.dynaMvar.htmlize_filename == 'default':
+    filename = sys.modules['dyna_menu'].htmlfile
+else:
+    #and don't blame me or Leo if you make this a URI and get burned...
+    filename = g.app.dynaMvar.htmlize_filename
+
+if not hasattr(g.app.dynaMvar, 'htmlize_timestring') or\
+        g.app.dynaMvar.htmlize_timestring == 'default':
+    timestring = sys.modules['dyna_menu'].dynaB_Clip_dtef(c, ret= 'r')
+elif g.app.dynaMvar.htmlize_timestring == 'leodefault':
+    timestring = c.getTime(body=True)
+
+else:
+    #effectively a string because I'm not planning on using eval
+    timestring = g.app.dynaMvar.htmlize_timestring
+
+#decide which options to apply
+#strip sentinals, comments, syntaxcheck for only python?
+#then create alternate reality for c, c++, other language
+#assume text only nodes are language plain? respect killcolor?
+#to simplify the output 
+#set True for noNUMBER, noOP or noNAME 
+#to disable seperate colors for that entity.
+# the more colors the bigger the output html
+#have to switch to lowerrunoncase names, ini is not case sensitive for items
+#could make another run thru to use the proper cased attributes but life is too short
+#or make it a caseinsensitive Bunch subclass
+#why isnt this a Bunch already?
+hopts = {
+  'codefold':False, #experimental, can be more confusing
+  'stripcomments':False, #think this can still allow nodesents
+  'stripsentinals':True,   #you can have directives if no sentinals.
+  'stripnodesents': False, # False: leave node sentinels.
+  'stripdirectives':False,
+  #no color key, that item defaults to text color
+  'nonumber':False,
+  'noop':False,
+  'noname':True,  
+  'filename': filename,  #in dynacommon or ini
+  'timestring': timestring,
+   #path to silvercity css file, that might be too hard to debug.
+}
+
+#syncup ini with default hopts
+for k,v in hopts.items():
+    if k in ['filename', 'timestring', ]: continue
+    #g.trace(k, v)
+    if not hasattr(g.app.dynaMvar, 'htmlize_'+k.lower()): continue
+    #g.trace('has :', getattr(g.app.dynaMvar, 'htmlize_'+k.lower()))
+    #these should already be verified T/F
+    hopts[k] = getattr(g.app.dynaMvar, 'htmlize_'+k.lower())
+
+#much as I hate to admit it, the colors will have to be changable
+#and color might be different for each language
+#should allow external css or settable style options same way
+#the Properties dialog only can handle a dozzen options on a large screen
+
+#I know there is a way to do this inside the _color dict
+#it would involve setting hopts before calling initilize
+if hopts['nonumber']: del _colors[token.NUMBER]
+if hopts['noop']:     del _colors[token.OP]
+if hopts['noname']:  del _colors[token.NAME]</t>
+<t tx="ekr.20050421093045.67">def outheader(fontface= 'Lucida,Courier New'):
+    sx = []
+    #this will have to get actual encoding but its a start
+    meta = ['&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;']
+    #append anyo ther meta required
+    sx.append('&lt;html&gt;&lt;head&gt;%s%s&lt;title&gt;'%(EOLN, EOLN.join(meta),))
+    sx.append('%s &lt;/title&gt;%s'%(sanitize_(titl), EOLN))
+
+    #here would be a good spot for @noindent directive but skip a line
+    #or build the string in the outermost indentation
+    sx.append("""&lt;STYLE TYPE="text/css"&gt;&lt;!--
+pre, H1 {color:%s; FONT-SIZE: 80%%; FONT-WEIGHT: bold; }
+Text {background:%s;}
+--&gt;&lt;/STYLE&gt;
+&lt;SCRIPT LANGUAGE="JavaScript"&gt;&lt;!-- 
+//Serenity Right Mouse Click Customisation
+function toggle(e) 
+{  
+if (e.style.display == "none") 
+	{
+	e.style.display = "";
+	 } 
+else 
+	{     
+	e.style.display = "none";  
+	}
+}
+//--&gt;&lt;/SCRIPT&gt;"""%(
+       _colors[_TEXT], _colors['bg'])) #was both #cc9999
+
+    sx.append('&lt;/head&gt;&lt;body text="%s" bgColor="%s"&gt;'%(
+        _colors[_TEXT], _colors['bg']))
+    sx.append('&lt;H3&gt;# %s&lt;/H3&gt;%s'%(cgi.escape(titl), EOLN,))
+    sx.append('&lt;pre&gt;')  # style
+    sx.append('&lt;font face="%s, courier"&gt;'%(fontface, ))
+
+    return EOLN.join(sx)
+    
+def plainout(src):
+    #g.es('bad or no hilighter language or option=', htmlize_hilighter)
+    #return '%s%s%s'%(EOLN, cgi.escape(src), EOLN)
+    return '%s%s%s'%(EOLN, src, EOLN)
+
+def outfooter():
+    sx = []
+    sx.append('&lt;/font&gt;&lt;/pre&gt;')
+    sx.append('&lt;/body&gt;&lt;/html&gt;')
+    return EOLN.join(sx)
+</t>
+<t tx="ekr.20050421093045.68">
+#do a linear node crawl, 
+# htmlize @language nodes
+# append docutils or plain text wrapped output
+#can you want plain or rst and also not stripsentinals?
+#might have to add option or flipper to not follow subnodes
+#thats the theory anyway...  FIXME
+
+#codeblock and latex not supported
+#don't want to reimpliment rst2
+#individual bodys are not getting enough &lt;Br&gt;
+#collect all output and send to docutils once
+#otherwise indexes and content links can't work
+#have to insert some Rest at various points
+
+try:
+    import docutils
+except:
+    docutils = None
+else:
+    #have to investigate custom config files
+    #please evolve faster docutils.
+    import docutils.parsers.rst
+    from docutils.core import Publisher
+    from docutils.io import StringOutput, StringInput
+    pub = Publisher()
+    &lt;&lt; define code-block &gt;&gt;
+ 
+current = c.currentPosition()
+def outheadline(cur ):
+    ''' eventually supply Rest command as well for headline '''
+    hl = g.choose(cur.headString().startswith('@rst'), 5, 4)
+    return '&lt;H%d&gt;%s&lt;/H%d&gt;%s'%(hl, cur.headString(), hl, EOLN )
+
+sys.stdout.write(outheadline(current))
+
+sx = []
+for psib in current.self_and_subtree_iter():
+    #sys.stdout.write(outheadline(psib))
+    #need to add Rest directive for headline
+    sx.append(outheadline(psib))
+
+    s = psib.bodyString()
+    #.. code-block:: Python
+    #@ignore
+    #need to process some directives
+    #dynawrap defaults textwrap or will do Leo wrap
+    #have to fixit do it returns rather than prints though
+    #also check for @language &amp; few others and highlight
+    #so will have to functionalize the highliters eventually
+    #also might want some nodes line numbered, 
+    #using docutils css on some nodes and on other elements 
+    #H3 maybe should include a class=
+    #subnodes should be indented? that could cause Rest errors
+
+    sx.append(s)
+
+s = EOLN.join(sx)
+&lt;&lt; docutil out &gt;&gt;
+sys.stdout.write(output)</t>
+<t tx="ekr.20050421093045.69">#silvercity + fallback to code-block
+
+try:
+    import silvercity
+except ImportError:
+    silvercity = None
+
+def code_format(value):
+    html = '&lt;div class="code-block"&gt;\n%s\n&lt;/div&gt;\n'
+    raw = docutils.nodes.raw('',html%(value, ), format='html') 
+    #(self, rawsource='', text='', *children, **attributes):
+    return raw
+
+def code_block(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine):
+    
+    """Create a code-block directive for docutils.
+    lifted from rst2 and attempt to use 
+    in either src-hilite or silvercity while @language plain
+    or provide own generator if neither active
+    where is it listed which languages are supported?
+    """
+    
+    # See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/252170
+    language = arguments[0]
+    if silvercity:
+        module = getattr(SilverCity,language)
+    
+        generator = getattr(module,language+"HTMLGenerator")
+        io = StringIO.StringIO()
+        generator().generate_html(io, EOLN.join(content))
+        code_format(io.getvalue())
+    else:
+        #can I convert to another directive here?
+        raw = ['++ other-directive']
+        raw += [name, arguments, options,]
+        print `raw`
+        raw = code_format(EOLN.join(raw + content))
+
+    return [raw]
+    
+# These are documented at http://docutils.sourceforge.net/spec/howto/rst-directives.html.
+code_block.arguments = (
+    1, # Number of required arguments.
+    0, # Number of optional arguments.
+    0) # True if final argument may contain whitespace.
+
+# A mapping from option name to conversion function.
+code_block.options = {
+    'language' :
+    docutils.parsers.rst.directives.unchanged # Return the text argument, unchanged
+}
+
+code_block.content = 1 # True if content is allowed.
+ 
+# Register the directive with docutils.
+docutils.parsers.rst.directives.register_directive('code-block',code_block)</t>
+<t tx="ekr.20050421093045.70">#here let docutils have the body, but what about
+#previous Rest commands that might still be active?
+
+# This code snipet has been mangled from code in rst2
+#snipped from code contributed by Paul Paterson 2002-12-05.
+if docutils and s.strip():
+    pub.source = StringInput(source=s)
+
+    # need to set output so doesn't generate
+    #its own footers and headers on every other block
+    #nowhere does it mention other options! 
+    #docutils docs heal thyself.
+    writer='html' ; enc="utf-8"
+    #standalone, pep, python
+    pub.set_reader('standalone', None, 'restructuredtext')
+
+    pub.destination = StringOutput(pub.settings, encoding=enc)
+    pub.set_writer(writer)
+
+    
+    try:
+        output = pub.publish(argv=['--traceback']) #--traceback or ''
+    except Exception:
+        #docutils puts errors to stderr, not redirected
+        g.es('ERRORS Found in rstText', psib.headString())
+        output = s
+else:
+    #output = s.replace(' ', '&amp;nbsp').replace('\n', '&lt;Br&gt;\n')
+    output = s
+
+#till I get more docutil aware
+output = output.replace('&lt;body&gt;','').replace('&lt;html&gt;','')
+output = output.replace('&lt;/body&gt;','').replace('&lt;/html&gt;','')</t>
+<t tx="ekr.20050421093045.71">@
+does better job on java than silvercity and has more languages
+what no elisp in a gnu language?
+
+need to get the css option without the bloated size
+which might mean a post processing step.
+why can't I inject font color default on the command line?
+
+sourceforge.net/sourceforge/gnuwin32/src-highlite-1.11-bin.zip win32
+other systems will have to build or find their own
+
+source-highlight -s cpp -f html $*
+source-highlight -s java -f html $*
+java, javascript, cpp, prolog, perl, php3, python, ruby, flex, changelog, lua, caml, sml, log)
+       keyword blue b ;      for language keywords
+       type darkgreen ;      for basic types
+       string red ;          for strings and chars
+       comment brown i ;     for comments
+       number purple ;       for literal numbers
+       preproc darkblue b ;  for preproc directives (e.g. #include, import)
+       symbol darkred ;      for simbols (e.g. &lt;, &gt;, +)
+       function black b;     for function calls and declarations
+       cbracket red;         for block brackets (e.g. {, })
+much nicer than silvercity and it does more langs
+have to play w/the tags.j2h file for colors
+not sure about the css option yet from htmlize but the file will be huge!
+
+
+? -f html  --doc --tags-file="c:\UTIL\DLL\xtags.j2h" %N
+-v source-highlight 1.11 Trying with... tags.j2h c:/progra~1/Src-Highlite/share/source-highlight/tags.j2h C:\UTIL/share/source-highlight/tags.j2h No tags.j2h file, using defaults ...
+damm,. what ugly default colors source-highlight has
+putting tags in $HOME and why don't they check there?
+
+java and javascript are not equilevent
+there is no jscript or javascript in Leo yet.
+its turning into more and more of a rats nest.
+
+sml out put for html is in a frame unviewable.
+not sure what happens if there is no tags file
+@c
+
+if lang in [  #leo may not have all of these yet
+       'csharp', 'c', 'c++', 'cpp',
+        'css', 
+      'htm', 'html', #
+        'perlpod', 'perl', 
+        'ruby',
+        'sql',
+        'xml',
+        'xslt',
+        'yaml',
+        'elisp', 'php', 'java', 'rapidq', 'actionscript', 'css',
+    ]:
+    if lang in ['htm', 'html', 
+                    'actionscript', 'css', ]: lang = 'sml'
+
+    elif lang in ['java', 'rapidq',]: lang = 'javascript'
+    elif lang in ['jscript', 'javascript',]: lang = 'javascript'
+    elif lang in ['c', 'c++', 'cpp']: lang = 'cpp'
+    elif lang in ['php', ]: lang = 'php3'
+    elif lang in ['perlpod', 'perl',]: lang = 'perl'
+    elif lang in ['elisp',]: lang = 'perl'
+
+    #little foggy here, options for src-hilite might be different
+    #than any other unknown and so should use hilighter options
+    #but I have no other hilighter in mind yet, so punting.
+    cmd = htmlize_hilighter
+
+    #dont want it to create the file, send to stdout
+    #
+    #
+    #have to account for quoted path with space in them and no comma?
+    params = cmd.split(',')
+
+    if len(params) &lt; 2:  #must be source-highlight
+        params = ' -s %s -f html -T %s %s --tags-file=%s --no-doc '%( #-i %s
+           lang, sanitize_(titl),
+           g.choose(g.app.dynaMvar.verbosity != 0, '-v', ' '), #!''
+            g.os_path_join(g.app.homeDir,'tags.j2h'),
+            #tmpfile,  #source-highlight can accept stdin
+            )  
+    else:
+        #not the best way to handle shell commands, but ok YMMV.
+        params = ' '.join(params[1:])
+
+    if g.app.dynaMvar.verbosity: g.es('running %s \n'% (cmd + params,) )
+    out, err = runcmd(cmd + params, source + EOLN )
+
+else:
+    out = plainout(source)
+</t>
+<t tx="ekr.20050421093045.72">@
+have to do a multitute of things for this to work
+sc cant read script so have to write tmpfile
+can view or redirect and use our viewer caller
+
+default colors in silvercity.css need to be matched to Leo
+@c
+
+if lang in [  #leo may not have all of these yet
+       'csharp', 'c', 'c++', 'cpp', # (C and C++)
+        'css', # (Cascading Style Sheets)
+      'htm', 'html', # HTML/PHP w/ JavaScript, VBScript, Python
+        'perlpod', 'perl', # (Perl)
+        #'python', # (Python)
+        'ruby', # (Ruby)
+        'smart_python', # (Python with styled strings)
+        'sql', # (SQL)
+        'xml', # (XML)
+        'xslt', # (XSLT)
+        'yaml', # (YAML)
+        #basic &amp; java? missing. might send java as c?
+        'elisp', 'php', 'java', 'rapidq', 'actionscript', 'css',
+    ]:
+    if lang in ['htm', 'html', 'php', 'java', 'rapidq',
+                    'actionscript', 'css', ]: lang = 'html'
+    elif lang in ['c', 'c++', 'cpp']: lang = 'cpp'
+    elif lang in ['perlpod', 'perl',]: lang = 'perl'
+    elif lang in ['elisp',]: lang = 'perl'
+
+
+    #dont want it to create the file, send to stdin
+    #should btry
+    # won't complain if it isn't the right extension
+    g.es('writeing tmpname', tmpfile )
+    fo = file(tmpfile, 'w')
+    fo.writelines(source + "%s"%EOLN)
+    fo.close()
+    
+    cmd = g.os_path_join(pypath, 'Scripts', 'source2html.py')
+
+    #dont want it to create the file, send to stdout
+    #" --view %N  %N.html"
+    # --css=file copy silver_city.css where the filename will be
+    # source2html.py --list-generators
+    params = ' --generator=%s --title=%s --css=default.css %s'%(
+       lang, sanitize_(titl), tmpfile,)  
+
+    if not g.os_path_exists(cmd):
+        g.es('cant find source2html install silvercity')
+        print 'cant find source2html from silvercity'
+
+    else:
+
+        if g.app.dynaMvar.verbosity:
+            g.es('running silvercity \n', py + cmd + params )
+        out, err = runcmd(py + cmd + params )
+        fullhtml = 'FIXME'
+else:
+    out = plainout(source)
+
+</t>
+<t tx="ekr.20050421093045.73">def dynaZ_restoreStd(c):
+    """(c) 
+    every now and again run this if prints are blocked"""
+    import leoGlobals as g
+    print "stdout isRedirected:", g.stdOutIsRedirected()
+    print "stderr isRedirected:", g.stdErrIsRedirected()
+    g.redirectStderr()
+    g.redirectStdout()
+
+    g.restoreStdout()
+    g.restoreStderr()
+</t>
+<t tx="ekr.20050421093045.74">def dynaZ_del_first_char(c):
+    """(c) selected text print/paste
+    del first char in the line
+    abstracted everything get/insert related to dynaput
+    del_2nd_char would occasionally be usefuil
+
+    applying the logical reverse, what about an add first char?
+    might use that to comment out a section of code
+    always remembering to have something selected &amp; copyed could get to be a pain
+    decided best to have that in another macro, using dynaplayer
+    could defl 2 at a time, but make one at a time changes 
+    so you could undo one if you only want one. usually its 4 for me anyway.
+
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    
+    try:
+        newSel = str(newSel)
+    except (UnicodeEncodeError, Exception):
+        g.es_exception(full= False)
+
+
+    sx = []
+    for x in newSel.splitlines():
+        sx.append(x[1:] + EOLN )
+
+    dynaput(c, sx)
+</t>
+<t tx="ekr.20050421093045.75">#these get cascades and act on selected text and can print or paste
+#choice of action is sometimes from the copybuffer too
+
+#add one for Clip, to call a macro and tell it to work from the clipboard
+#print or paste to the clipboard</t>
+<t tx="ekr.20050421093045.76">def dynax_DQ3(c, repchar='Do', source= None):
+    r'''(c) selected text print/paste
+    has its own cascade in dyna menu and the choices act directly.
+    or you choose DQ3 to use what is in the clipboard as a pair.
+    
+    enclose the selected txt in  whatever is in the copy buffer 
+    gets put before and the matching after
+    if '(' is in the copy then (selected) is put/
+    (:) {:} [:] &lt;!--:--&gt; /*:*/  &lt;:&gt;
+    currently no match if space before or after pair, but hope to fix that.
+    
+    special pairs.
+    try/except  if/else &gt;&gt;&gt;/...
+
+     chose SQ, DQ DQ3 SQ3 SHow Pairs
+    is there a DQ2 SQ2?
+    used for commenting out sections of code or to create docstrings
+
+    have to have something selected to insert anything even an empty.
+    if nothing selected put a blank docstring.
+    its not easy to have an empty copy buffer with the present Tk,
+     copy or cut with nothing selected. no change takes place.
+  ~EOT  does 'is None' work in py2.2?
+
+    &gt;&gt;&gt; dynax_DQ3(None, repchar='/*', source='\\n ')
+    ['/*\\n */']
+    &gt;&gt;&gt; #
+    #Leo expands \n from inside name section . this makes \n in return tricky
+    #and rawstring makes it more counterintuitive but possible
+
+    &lt;&lt;doctest&gt;&gt;
+
+    might be usefull to backtrack to the previous line, insert enter
+    that will put the insertpoint on the right indent
+    maybe too much magic though
+    add reverse dict to allow selection of either start or end char
+    add try/except if/else
+    subfunction the replace so can add doctest to it. same elsewhere.
+    
+    need to allow any space before or after the typical repchars
+    and to use similar space before and then no extra space before the afterchar?
+    might even make sense to force space after and before double comments
+    added a Show pairs option
+
+   repchar = g.app.gui.getTextFromClipboard()
+ UnboundLocalError: local variable 'g' referenced before assignment
+ why didn't I need an import as g before?
+ could have a mode where only the begining or end of the line was added to.
+ could have a line by line for that mode and normal mode begin/end each line.
+
+    '''
+    import leoGlobals as g  #if __name__ == 'mymod': du_test
+
+    if source is None:
+        newSel = dynaput(c, [])
+    else:
+        newSel = source
+
+    #print '%r'%newSel
+    if not newSel: 
+        data = '\n'
+    else:
+        try:
+            data = str(newSel)
+        except Exception:
+            pass
+
+    repdict = {'(':')', '{':'}', '[':']', '&lt;!--':'--&gt;', '/*':'*/', '&lt;':'&gt;'}
+    #get cute and use a reverse dict if repchar in .values()
+    revdict = dict([[v, k] for k, v in repdict.items()])
+
+    #add some specialized sourounders, need to add to choice menu in putmenu
+    repdict.update({'try':'except', 'if':'else', '&gt;&gt;&gt;':'...',})
+    
+    #could also use a method if # or //, then put at front of every line
+    # could have a given repchar to signal get comment from @language dbl/sng
+    #what if 2 anglebrackets, should 2 reverse angles be trailing?
+    
+    if repchar == 'Show':
+        #import pprint
+        #g.es( pprint.pprint(repdict), color= 'sienna3') 
+        #pprint needs redirect, but how did doctest capture it?
+        g.es( 'DQ3 pairs\n', repdict, color= 'sienna3')
+        return
+
+
+    #need something to reselect wtith the newsel inserted in case it was empty
+    #in circular logic land
+
+    if repchar == 'Do': #was hard to pass in '' from DQ3 menu
+        repchar = g.app.gui.getTextFromClipboard()
+
+    if not repchar or not newSel:
+        repchar = '"""'
+
+    if repchar in repdict.keys():
+        rep2char = repdict[repchar]
+
+    elif repchar in revdict.keys():
+        #allow user to copy or either start or end char
+        #output will be in the correct order of the pair
+        repchar = revdict[repchar]
+        rep2char = repdict[repchar]
+
+    else: rep2char = repchar  #rep2char.reverse()?
+ 
+    &lt;&lt; tripleline &gt;&gt;
+    sx = []
+    #   these may messup because they don't force proper indent
+    #  for language another than python obviously you would need more
+    #potential to read pairs and code to impliment them from ini?
+    if repchar == 'try':
+        sx.append(tripleline(
+            repchar+':\n', data, rep2char+' Exception:\n',
+                '', 'g.es_exception(full= True)\n'))
+
+    elif repchar == 'if':
+        sx.append(tripleline(
+                repchar, data, rep2char+':\n',
+                 ' 1 == 1:\n', 'pass\n'))
+
+    elif repchar == '&gt;&gt;&gt;':
+        sx.append(tripleline(
+                repchar, data, '',
+                 '', rep2char+'\n'))
+    else:
+        sx.append('%s%s%s'%(repchar, data, rep2char))
+        
+    if source is None: 
+        dynaput(c, sx)
+        return
+    else:
+        return sx
+    if not newSel: g.es(''.join(sx) ) #life is too short</t>
+<t tx="ekr.20050421093045.77">&gt;&gt; dynax_DQ3(None, repchar='Do', source="#")  #w/nothing selected
+['#']
+
+&gt;&gt;&gt; dynax_DQ3(None, repchar='Show ', source='')  #rmv spc to retest Show
+['"""\n"""']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='/*', source="""\n """)  #Leo expands \n see in DQ3
+['/*\n */']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='&gt;', source='hey')
+['&lt;hey&gt;']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='--&gt;', source='hey')
+['&lt;!--hey--&gt;']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='&lt;!-- ', source='hey')  #make this work any +-spc+-
+['&lt;!-- hey&lt;!-- ']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='try', source='  goto 34')
+['\n  try:\n     goto 34\n  except Exception:\n   g.es_exception(full= True)\n']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='if', source='  goto 3\n  pass\n') #multiline
+['\n  if 1 == 1:\n     goto 3\n     pass\n\n  else:\n   pass\n']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='if', source='  goto 34') #space
+['\n  if 1 == 1:\n     goto 34\n  else:\n   pass\n']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='if', source='goto 34') #nospace
+['\n    if 1 == 1:\n        goto 34\n    else:\n        pass\n']
+&gt;&gt;&gt; dynax_DQ3(None, repchar='&gt;&gt;&gt;', source=' goto 34')
+['\n &gt;&gt;&gt;   goto 34\n   ...\n']
+&gt;&gt;&gt; #</t>
+<t tx="ekr.20050421093045.78">def tripleline(r1, s, r2, extra1='', extra2=''):
+    """
+    need to extract the leading space from data and match it
+    #will tabs get converted to space? probably not
+    #not ideal but should get you close enough
+    &gt;&gt;&gt; tripleline('r1', 's', 'r2', extra1='e1', extra2='e2')
+    '\\n    r1e1        s\\n    r2        e2'
+    """
+    spcs = g.skip_ws(s, 0)
+    if not spcs: 
+        spc = '    '
+        spcs = 1
+    else: 
+        spc = s[0]
+
+    sz = '\n%s%s%s'%(spcs*spc, r1, extra1, )
+
+    for xz in s.splitlines(True):
+        sz += '%s%s%s'%(spcs*spc, spc, xz,)
+
+    sz += '\n%s%s'%(spcs*spc, r2,)
+
+
+    sz += '%s%s'%(
+            spcs*spc+spc, extra2,)
+    
+    return sz</t>
+<t tx="ekr.20050421093045.79">def dynax_actions(c, act='lower', script= None):
+    r"""(c= None, action) select text print/paste
+    action def for macroless action on text or selected text 
+    current actions are lowercase uppercase caps and reverse all the lines
+    
+    caps could easily only cap only the first of a line or of a sentance.
+    I have no idea what reverse might be used for.
+    rot13 is insecure, b64 as well but its your data.
+    ~EOT   need dynatester for this one
+     make a few slight transparent changes so can doctest it
+     have to recheck in py2.2 because strings aren't iterable there
+     py2.3 complains about strict in b64 py2,2 has neither b64 or ror13?
+
+     why did I not see a tuple returned yesterday?
+     py2.4 you can just a = codex.encoder and it worked
+     going to have to reimpliment unokunebts si ut keaves off b64
+     untill I can get the syntax correct
+     have to use base64 module in less than py2.4
+     and rot13.py in less than py2.3
+     
+   &lt;&lt;doctest&gt;&gt;
+    
+    """
+    from dynacommon import EOLN
+    import leoGlobals as g
+    #this may cause trouble later pep245 
+    _impliments__ = 'reverse upper lower caps base64 rot13'
+
+    if script is None:
+        newSel = dynaput(c, [])
+    else: newSel = script
+    
+    if not newSel: return
+
+    if act == 'reverse':
+        sx = []
+        for x in newSel.splitlines(True):
+            x = list(iter(x))
+            x.reverse()
+            sx.append(''.join(x))
+        sx.reverse()
+    elif act == 'lower':
+        #lower or upper or some normal string operation
+        #x.act() isn't working like I hoped it would
+        #maybe need str.lower  print dir('')
+        sx = [x.lower() for x in newSel.splitlines(True)]
+
+    elif act == 'upper':
+        sx = [x.upper() for x in newSel.splitlines(True)]
+
+    elif act[1:] == 'md5':
+        import md5
+        if act[0] == '&gt;': #encode
+            sx = [md5.md5(x).hexdigest() for x in newSel.splitlines(True)]
+        else:
+            #you can supply your own algo for here...
+            pass
+    elif act[1:] in ['rot13', 'base64', 'hex']:
+        &lt;&lt; codecs.lookup &gt;&gt;
+    elif act == 'caps':
+        sx = [' '.join([y.capitalize() for y in x.split(' ')])\
+             for x in newSel.splitlines(True)]
+    else:
+        return script.splitlines(True)
+
+    if script is None:
+        dynaput(c, sx)
+    return sx</t>
+<t tx="ekr.20050421093045.80">&gt;&gt;&gt; dynax_actions(c,act='lower', script='testO@#\n45SIX')
+['testo@#\n', '45six']
+&gt;&gt;&gt; dynax_actions(c,act='uppeS', script='testO@#\n45SIX')
+['testO@#\n', '45SIX']
+&gt;&gt;&gt; dynax_actions(c,act='reverse', script='testO@#\n45SIX')
+['XIS54', '\n#@Otset']
+&gt;&gt;&gt; dynax_actions(c,act='caps', script='test !@#$ 123@#\nlist of things')
+['Test !@#$ 123@#\n', 'List Of Things']
+&gt;&gt;&gt; dynax_actions(c,act='&gt;base64', script='another-fun-toy\n\n')#-ly y'rs
+['YW5vdGhlci1mdW4tdG95Cgo=\n']
+&gt;&gt;&gt; dynax_actions(c,act='&lt;base64', script='YW5vdGhlci1mdW4tdG95\n\n')
+['another-fun-toy']
+&gt;&gt;&gt; dynax_actions(c,act='&gt;rot13', script="Hello World !\n")
+['Uryyb Jbeyq !\n']
+&gt;&gt;&gt; dynax_actions(c,act='&lt;rot13', script='Uryyb Jbeyq !\n\n')
+[u'Hello World !\n\n']
+&gt;&gt;&gt; dynax_actions(c,act='&gt;hex', script='test\n')
+['746573740a']
+&gt;&gt;&gt; dynax_actions(c,act='&lt;hex', script='746573740a')
+['test\n']
+&gt;&gt;&gt; dynax_actions(c,act='&gt;md5', script='neato')
+['9c53098eeab0c2457972453bae3248ff']
+&gt;&gt;&gt; #</t>
+<t tx="ekr.20050421093045.81">import codecs
+#could possibly say actor = '',decode?
+#should just import base64 for all
+ac = None
+
+if act[0] == '&gt;': #encode
+    try:
+        actor = codecs.lookup(act[1:])[0]
+        #actor = codecs.getencoder(act[1:])
+        #actor = g.toEncodedString
+    except LookupError:
+        if act[1:] == 'base64':
+            try:
+                ac = __import__(act[1:])
+                ac.encodestring
+            except (Exception, ImportError):
+                g.es_exception(full= True)
+                return
+        elif act[1:] == 'rot13':
+            try:
+                ac = __import__('rotor')
+                ac.encodestring
+                rt = ac.newrotor(s, 12) 
+                actor = rt.encrypt
+                ac = None
+            except (Exception, ImportError):
+                g.es_exception(full= True)
+                return
+        else:
+            return
+
+elif act[0] == '&lt;': #decoder
+    try:
+        if ac is None: #decoder
+            #actor = codecs.lookup(act[1:])[1]
+            #actor = g.toUnicode  #
+            actor = codecs.getdecoder(act[1:])
+        else:
+            actor = ac.decodestring
+
+    except (Exception, LookupError):
+    
+        if act == '&lt;rot13':
+            g.es('try import rotor')
+            return
+        g.es_exception(full= True)
+        return
+try:
+    if ac is None:
+        s = actor(newSel)
+    else:
+        s = actor(newSel, act[1:])
+    #can they possibily be serious sometimes returning tuple?
+    if isinstance(s, tuple):
+        #g.es('converted chars %s only %s'%(len(newSel), s[1]))
+        s = s[0]
+
+except (Exception, LookupError, AssertionError):
+    #g.es_exception(full= True)
+    return
+
+sx = [s]</t>
+<t tx="ekr.20050421093045.82">def dynax_slashs(c, repchar='Do'):
+    """(c) print/paste
+    create a file monicur out of a path for IE or NS4
+    it has its own cascade in dyna menu and the choices act directly.
+    @url file://some.bat will work, not sure with %20 can add params
+    or chg forward or backslash to the other. add "'s or %20 for spaces
+    r04212p7:05 whiped up out of my head in few mins
+    some editors can't handle path with forwardslashes, most can.
+    dblclick on @url might not open IE for some reason but doesn't error.
+    it might even be simpler to force a translation from one to the other
+    as is you might have to transition thru several stops to get there.
+    best use case is from \\ to /. or from either to file:/// so it is.
+  ~EOT
+    u04509p08:56 cvrt to dyna, somehow need to select which...
+    using copy buffer or just flip b\/f slashes
+    should add 8.3 to longfilename and back
+    dblbs isn't working, it want to flip bs/fs if they exist whatever else
+    should probably just output the path in every way possible
+    folowed by space delimited words make into valid get url
+    backslash doesn't seem to flip back from slash again
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    newSel = str(newSel)
+
+    if repchar == 'Do': #
+        repchar = g.app.gui.getTextFromClipboard()
+
+    if not repchar in ['/', '\\' '\\\\', ':', '|', ' ',]:
+        #if nothing in copy buffer flip the back/forward slashes
+        if newSel.find('/') != -1:
+            repchar = '\\'
+        elif newSel.find('\\') != -1:
+            repchar = '/'
+        elif newSel.find('~') != -1:  #could be 8.3 also
+            repchar = ':'
+        
+    sx = []
+    for x in newSel.splitlines(True):
+    
+        if x == '': continue
+    
+        #check is valid, starts with drive : and has no non printables
+    
+        if repchar == ':':
+            s =  x.replace('\\\\','\\').replace('\\','/').replace(':','|') 
+            s = s.replace(' ','%20')
+            sx.append('file:///' + s)
+        elif repchar == '|':
+            s = x.replace('file:///','').replace('|',':').replace('/','\\') 
+            s = s.replace('%20',' ')
+            sx.append(s)
+    
+        elif repchar == '\\\\':
+            sx.append(x.replace('/','\\').replace('\\','\\\\') )
+    
+        elif repchar == '\\':
+            sx.append(x.replace('/','\\') )
+    
+        elif repchar == '/':
+            sx.append(x.replace('\\\\','\\').replace('\\','/') )
+    
+        elif repchar == ' ':
+            sx.append(x.replace(' ','%20') )
+
+        else:
+            #sx.append(' " ",/,\\,:, %s'%(x,) )
+            g.es(' err', x)
+        
+        g.es(' repchar= %r x=%r'%(repchar,x) )
+        dynaput(c, sx)
+</t>
+<t tx="ekr.20050421093045.83">#for the plugin manager using the ini
+#some of these should be dyna menu items anyway in case no plugin_menu
+#calling them prototypes for now. so many switches so little time
+#maybe can have some to flip styles &amp; colors for htmlize
+#later add @settings compatible options 
+
+#would be nice to find out how to assign a keyboard shortcut to dupe
+#and a few others
+#at this point maybe I could try a default bind?
+#need a macro to look thru Leo config and see which key combos are free</t>
+<t tx="ekr.20050421093045.84"></t>
+<t tx="ekr.20050421093045.85">def cmd_flip_du_test_verbosity(): 
+    """in some macros overall feeback on some operations.
+    for @test nodes. 
+    you still get traceback on syntax and other errors with just dots ==1
+     ==2 is verbosity in unittest @test and @suite. slightly different
+     either 1 or 2 is verbose for doctest and 0 is nothing except errors reported.
+  ~EOT  requires change in leoTest, (added Leo4.3a2 no objections)
+    
+    validating config options hasn't been implimented yet either
+    can I call a more general flipper for other vars too?
+    can there be a cascade of flip vars in plugin_menu?
+    """
+    g.app.dynaMvar.verbosity += 1
+    # is 1 or 0? True or False not sure 2.2 even has this option too?
+    #this, like debug,  should increment in a connected range 0..3
+    g.app.dynaMvar.verbosity = g.choose(
+        g.app.dynaMvar.verbosity &gt;= 3, 0, g.app.dynaMvar.verbosity)
+    g.es('now is', g.app.dynaMvar.verbosity)</t>
+<t tx="ekr.20050421093045.86">def cmd_flip_Leo_debug(): 
+    """0,1,2,3 for Leo debug switch
+    careful, 3 starts pdb which has some unpredictable results
+    maybe it should start rpdb or the debugger of your choice
+    and in a seperate thread and in its own window.
+    with no console open on windows this could hang Leo?
+    no place even to type control C to signal a break.
+    """
+    g.app.debugSwitch += 1
+    g.app.debugSwitch = g.choose(
+        g.app.debugSwitch &gt;= 4, 0, g.app.debugSwitch)
+
+    g.es('debugSwitch now is', g.app.debugSwitch)
+    if g.app.debugSwitch &gt;= 2: g.es('pdb is now active on errors', color='tomato')</t>
+<t tx="ekr.20050421093045.87">def cmd_flip_justPyChecker(): 
+    """for tim1crunch makeatemp and pylint.
+    1 is don't print source after running the check.
+    """
+    g.app.dynaMvar.justpychecker = g.choose(
+        g.app.dynaMvar.justpychecker != 0, 0, 1)
+    g.es('now is', g.app.dynaMvar.justpychecker)</t>
+<t tx="ekr.20050421093045.88">def cmd_flip_onoff_c_gotoline(c): 
+    """this totally violates the goto feature in executeScript
+    presently broken if called from selected text.
+      unselects the text and goes to the line in the full script.
+    broken if error happens in another module
+    and you are working in a subnode from a scriptButton
+    you probably don't want to goto the top of the script.
+      you might not even want or need to see the error
+      by then its all too painful what the problem is
+      the traceback is just a reminder it isn't fixed yet.
+    this solves the one thing. 
+    
+    subsequent calls turn goto back on or off
+    for those vanishingly fewer and fewer times when goto is wrong.
+    mean time, take no prisoners. this works today.
+  ~EOT   no one wants to see the error wrongly reported ever.
+    the other thing is a problem with exec and python and tracebacks.
+    compiling the script first would get you a better filename than &lt;SCRIPT&gt;
+    but showing exec and leoCommands as part of the problem isn't helpful,
+    to old and new alike. grin and bear it I guess.
+    
+    and why do I need to know Leo knows this:  
+     'No ancestor @file node: using script line numbers'
+    when gotolinenumber from Edit menu? (no problem if flipped off)
+
+    no idea if c.goToLineNumber called from other scripts 
+    or parts of Leo or other leos' will be adversely impacted if off.
+    
+    of course a config setting or option to turn off goto,
+    option to turn off show error in context, would be better.
+    """
+
+    import leoGlobals as g
+    atribs = cmd_flip_onoff_c_gotoline
+
+    if hasattr(atribs, 'flip'):
+        atribs.flip = not atribs.flip
+    else:
+        atribs.gotolinesave = c.goToLineNumber
+        atribs.flip = True
+
+    if atribs.flip:
+        def dummygotoline(n, *a, **k):
+            'goto is fliped off'
+            pass
+        c.goToLineNumber = dummygotoline
+        g.es('turning off goToLineNumber', color= 'purple')
+    else:
+        c.goToLineNumber = atribs.gotolinesave
+        g.es('turning on goToLineNumber', color= 'purple')
+
+</t>
+<t tx="ekr.20050421093045.89">def cmd_SetAsDefault(): 
+    """
+    set default would be too hard, 
+    no interest in maintaing seperate per leo defaults.
+    """
+    #g.alert('no ini, check back in 5 minutes')
+    #getConfiguration(rw= 'w') #force write
+    g.es('no change at this time')
+    
+</t>
+<t tx="ekr.20050421093045.90">def cmd_ShowDefault(): 
+    """
+    no need to show all the defaults actually, just user configurables
+    shoud show hopts also and make a function so can have the intersection
+    with the ini overriding hardwired default values. maybe next time.
+    """
+    g.es(g.app.dynaMvar)
+</t>
+<t tx="ekr.20050421093045.91">#there may be a problem with @test and others, I forget why
+#that is annoying because I don't want to import to get access. may have to
+
+#  getConfiguration
+#  applyConfiguration
+# test_Configuration(): 
+import ConfigParser
+@others
+
+@
+if __name__ == '__builtin__':
+    #from dynacommon import *
+    print 'should only see this from test'
+    g.es('should only see this from test2')
+    import leoGlobals as g
+    import ConfigParser
+    g.app.unitTesting = True
+@c
+
+def atest_Configuration(): 
+    """ pack a config and see how apply applys it to a Mvar
+    not ready to test
+    just calling each macro would better check syntax errors 
+    """ 
+    
+    #why does Bunch not have a deepcopy method?
+    dynasve = g.app.dynaMvar.__dict__.copy()
+    
+    #otherwise you bork the current dyna
+    dyna = g.app.dynaMvar = g.Bunch(nothing=0)
+
+    try:
+        print dyna
+        print dynasve
+
+        if g.app.unitTesting: 
+            __file__ = 'dyna_menu.py'
+    
+        #permuter needed with all none and either section and use real defaults
+        #some have to be defaulted and make sure the ini can't override them
+        
+        #how to build a config compatible dictionary?
+        td = {'main':{'var1':1, 'var2':'2',}, 'htmlize':{}}
+        #config = ConfigParser.ConfigParser(td)  #
+
+        config = getConfiguration(
+            g.os_path_join(g.app.loadDir,"..","plugins", "dyna_menu.ini"))
+    
+        if hasattr(config, 'items'): #
+            #need something to iterate sections as well as items
+            print config.items('main')
+        
+        applyConfiguration(config)
+        
+        #compare this config with getconfig and do in try/except
+        #need to not screwup some existing dyba vars as well as add new ones
+        #create and initilize and @settings not and rerun etc etc
+        print dyna
+
+    finally:    
+        g.app.dynaMvar = dynasve.__dict__.copy()
+    g.es(g.app.dynaMvar)
+    
+    return
+    #does this need an element by element comparison?
+    return g.es(liba != libc)
+    
+@ comment this out to test with g.app.unitTesting
+if __name__ == '__builtin__':
+    #@test based on assert fails if python -O, -OO
+    assert test_Configuration() is not None</t>
+<t tx="ekr.20050421093045.92">def getConfiguration(fileName): 
+    """Return the config object
+    should this look in homeDir first then plugins?   
+    check __file__ works in py2.2 and under test.leo of plugin 
+
+     Default values can be specified by passing them into the
+     ConfigParser constructor as a dictionary. Additional
+     defaults may be passed into the get() method which will
+     override all others.
+
+    maybe any @settings starting with the plugin name
+    could be added to the config dictionary
+     g.os_path_split(__file__)[1][:-3]+".ini" fails on XP
+    """ 
+
+    #if ini doesn't exist, should we create it?
+
+    #g.trace(fileName)
+    config = ConfigParser.ConfigParser() 
+    config.read(fileName) 
+    return config </t>
+<t tx="ekr.20050421093045.93">def applyConfiguration(config):
+    """plugin menu calls this after ini edit 
+    and on first menu creation or first dyna click if I can swing it.
+    
+    True/False config saves as string? seems to work ok though
+    also if non existant will be error, have to trap
+    so default written in plugin can override if no attribute
+    or attribute contains nonsense or whole ini or section doesn't exist.
+    this addhockism has to go, 
+    the ini format is 20 years old an im winging it here again.
+    is it lowercasing items but not section names? what about values?
+    seems to preserve case now, but decided better if dumenu doesn't
+    this way lies maddness to debug otherwise. not everyone is a coder.
+
+    another way to look at it is:
+        if you don't want no errors, don't make any mistakes.
+    all required options are hardwired defaulted 
+    and should be ok if ini is wrong or missing
+    
+    """
+    if not config: 
+        config = getConfiguration(
+            g.os_path_join(g.app.loadDir,"..","plugins", "dyna_menu.ini"))
+    badini = ''
+    dyna = g.app.dynaMvar
+    &lt;&lt; anint(x) &gt;&gt;
+
+    #should warn if no section header found?
+    #not even sure all of these are properly guarded
+    #if not appearing in the ini.
+
+    sections = [] 
+    if config.has_section('main'):
+        sections += ['main'] 
+    if config.has_section('htmlize'):
+        sections += ['htmlize'] 
+
+    if not hasattr(config, 'items'): #py22
+        config.items = config.options
+
+    items = g.flattenList([config.items(x) for x in sections])
+    #g.es(items)
+
+    for x in items:
+        xl = x[0].lower()
+
+        #still needs a little something
+        #some of these would be better if anint defaulted 2 or 1 or 0
+        #some should be defined even if nothing in ini or @settings
+        if xl in ('tabstrip', 'verbosity', 'justpychecker', 'bugimport', ):
+            setattr(dyna, xl, anint(x[1]))
+
+        elif xl in ('filename', ):
+            setattr(dyna, xl, x[1])
+
+
+    if 'htmlize' not in sections: 
+        return
+
+    lx = """\
+        hilighter timestring
+        codefold stripcomments stripsentinals
+        stripnodesents stripdirectives 
+        noNAME noOP noNUMBER
+
+        token_NUMBER      token_OP
+        token_STRING      token_COMMENT
+        token_NAME        token_ERRORTOKEN
+        token_KEYWORD     token_TEXT
+        token_LeoDir      token_LeoSen
+        token_bg""".replace('\n',' ').split()
+
+    #g.es(lx)
+    for xini in [xl.strip().lower() for xl in lx]:
+        x = 'bad'
+
+        try:
+            #this actually needs another step to be caseinsensitive
+            #but well leave it to FIXME later as above was done
+            x = config.get('htmlize', xini).lower()
+
+        except (ConfigParser.NoOptionError, ConfigParser.NoSectionError, Exception):
+            #g.trace('not found', xini, x)
+            badini += '.'
+            continue
+
+        #no attribute or sometimes default means let dyna handle it
+        if not x or x == 'bad': 
+            #g.trace('not xImped', xini, x)
+            badini += '.'
+            continue
+
+        elif xini.startswith('token_') or\
+             xini in ('timestring', 'hilighter',): 
+            #maybe validate is proper hex and has # or good color name
+            #or whatever the user wants the user gets in this case
+            xval = x
+
+        #getboolean might work for these few
+        #do people say y for yes but never n for no while I use n=on and f=off
+        elif ('%s'%(x, )).strip().lower() in (
+                'true', '1', 'on', 'n', 't', 'y', 'yes'):
+            xval = True
+        elif ('%s'%(x, )).strip().lower() in (
+                'false', '0', 'off', 'f', '', 'no'): 
+            xval = False
+
+        else: 
+            #must be user mispelling
+            g.es('dyna ini not recognized', xini, x)
+            badini += '.'
+            continue
+
+        setattr(dyna, 'htmlize_'+xini, xval)
+
+    
+    #might want to write the unnamed options commented out?
+    #g.es(config.items('htmlize'))
+
+    #g.es('current dyna configized w/%s defaulted values'% len(badini))
+    #cmd_ShowDefault()</t>
+<t tx="ekr.20050421093045.94">def anint(x):
+    """
+    &gt;&gt;&gt; [anint(x) for x in ('t', 'False', 2, 4, '5', 'n', '/')]
+    [1, 0, 2, 4, 5, 1, 0]
+    """
+    try:  
+        i = int(x)
+    except ValueError:
+        if x.lower() in ['true', 't', 'on', 'n', 'y', 'yes',]:
+            i = 1
+        elif x.lower() in ['false', 'f', 'off', '', 'no',]:
+            i = 0
+        else:
+            i = 0
+    return i</t>
+<t tx="ekr.20050421093045.95">
+#no user code besides cascade names tuple
+
+def load_menu (tag,keywords):
+    global dynaMvar
+
+    c = keywords.get("c")
+    cf = c.frame
+
+    if dynaMvar is None:
+        dynaMvar = g.app.dynaMvar = init_dyna(c)
+
+        #maybe pospone ini read further, till first time dyna is clicked?
+        if not hasattr(g.app.dynaMvar,'htmlize_filename'):
+            dynaMvar.htmlize_filename = 'default'
+            #initfilenames()
+            applyConfiguration(None)
+            quietwarnings()
+
+    &lt;&lt; togprpa &gt;&gt;
+    casnamtup = (
+        'infos', #B   clipdtef, linenumber
+        'mod text', #M
+        'codeing', #S
+
+        'pre/post', #A:y restoreST, htmlize,
+        'zzzzz', #never gets here don't use past Z as a sentinal
+    )
+
+    table = [] #first table is built then some items use .add
+
+    #need to option the menu names and expose a list of all menu text
+    nu = dynaMvar.dynasMenu = c.frame.menu.createNewMenu("D&amp;yna","top")
+
+
+    #eventually build some entries outside submenus
+    #maybe the first and last letter save for this reason A:z
+    #then work from copy lst with those items subtracted
+    lst = dynaMvar.dynadeflst [:]
+    lst.reverse() #makes no sense but we do it anyway.
+
+    #you change the macro order you assume full responsinility
+    #this could be fragile if you use less macros than are standard
+    #know B_clipdtef is the first one add B_linenumber now B_help
+    #picks the one to appear on main menu from the infos cascade
+    #-4 currently is help sorted z..a
+    try:
+        table.append(
+            (lst[menudefault][6:],None,
+                lambda c = c, f = globals() [lst [menudefault]]: f(c)))
+    except Exception:
+        pass
+
+    &lt;&lt; add items &gt;&gt;
+
+    #nu.add_separator()  #gets out of synch w/table here
+    table.append(('-',None,None))
+
+    c.frame.menu.createMenuEntries(nu,table,dynamicMenu=True)
+
+    dynaMvar.dynapasteFlag.set('print')
+
+    nu.add_radiobutton(label='print',
+            variable = dynaMvar.dynapasteFlag,
+            command = togprpa(cf=cf))
+    nu.add_radiobutton(label='paste',
+            variable = dynaMvar.dynapasteFlag,
+            command = togprpa(cf=cf))
+    nu.add_radiobutton(label='doc',
+            variable = dynaMvar.dynapasteFlag,
+            command = togprpa(cf=cf))
+
+    &lt;&lt; action &gt;&gt;</t>
+<t tx="ekr.20050421093045.96">def togprpa(cf= cf, *a):
+    """called from the menu to set status and Flag
+    """
+    def doprpa(*a):
+        if 'print' == dynaMvar.dynapasteFlag.get():
+            dynaMvar.dynapasteFlag.set('print') 
+        elif 'paste' == dynaMvar.dynapasteFlag.get():
+            dynaMvar.dynapasteFlag.set('paste') 
+        elif 'doc' == dynaMvar.dynapasteFlag.get():
+            dynaMvar.dynapasteFlag.set('doc') 
+
+        cf.clearStatusLine()
+        cf.putStatusLine("dynamenu " + dynaMvar.dynapasteFlag.get())
+
+    return doprpa</t>
+<t tx="ekr.20050421093045.97">#there better be at least one macro in lst and one cas entry
+a = 0
+ch = dynaMvar.dynadeflst [0] [4]
+subtable = []
+sub = None
+#dynaMvar.dynadeflst.append('dynaz_') #add break sentinal
+
+#the way Leo menu add works is 
+#A. similar to Tk, B. incomprehensable C. it just "works"
+#and why is submenu text  smaller? and how can't I change it.
+#submenus seem to get sorted? forced to the top at some point.
+
+#add items till the 5th char changes, then get next subname
+#does not always degrade gracefully if you go out of bounds
+for s in dynaMvar.dynadeflst:
+
+    if s.startswith('dynax_'): continue
+
+    if s [4] != ch or sub is None:
+        #g.es('a=', a, 's=', s, `subtable`, color= 'orange')
+        if sub:
+            c.frame.menu.createMenuEntries(sub,subtable,dynamicMenu=True)
+            subtable = []
+            a += 1 #yada yada test end of cas
+            ch = s [4]
+        if s [4] &gt;= 'Z': break
+        sub = c.frame.menu.createNewMenu(casnamtup[a],"dyna") #nu
+
+    subtable.append(
+        (s[6:],None,lambda c=c,f=globals()[s]: f(c)))
+
+    lst.pop() #quick if not efficent
+
+#append z entries, see above and below above
+for s in lst:
+    if s.startswith('dynax_'): continue #actions get cascades
+    table.append(
+        (s[6:],None,lambda c=c,f=globals()[s]: f(c)))
+</t>
+<t tx="ekr.20050421093045.98">#create a cascade and act on the actions presented
+#why is the PMW error handler catching error in here
+# and not Leo redirected to log?
+
+@others</t>
+<t tx="ekr.20050421093045.99">dynai = Tk.Menu(None, tearoff= 0, takefocus= 0 )
+
+#for x in dynax_actions._impliments__.split(): dwim
+for x in 'lower upper reverse caps &lt;base64  &gt;base64 &lt;rot13 &gt;rot13 &gt;hex &lt;hex &gt;md5'.split():
+    dynai.add_command(label= x, 
+          command= lambda x= x, c= c: dynax_actions(c, x) ) 
+
+nu.add_cascade(menu= dynai, label= 'actions' )</t>
+<t tx="ekr.20050421093045.100">dynai = Tk.Menu(None, tearoff= 0, takefocus= 0 )
+for x in  'Do bs, : file, | !file, \\\\ Dbs'.split(', '):
+    dynai.add_command(label= x, 
+          command= lambda c= c, r= x.split()[0]:  dynax_slashs(c, r) ) 
+
+nu.add_cascade(menu= dynai, label= 'slashs' )</t>
+<t tx="ekr.20050421093045.101">#show whats in the clipboard, replace clipboard with left side of pair
+#this isn't dynamically updated each menu invocation in plugin
+#nu.add_command(label= "Clip=%r"%(
+#            g.app.gui.getTextFromClipboard()[:6],), )
+#changing to direct action instead of add choice to clipboard
+
+dynai = Tk.Menu(None, tearoff= 0, takefocus= 0 )
+for x in  'Do DQ3, \' Sq, " Dq, \'\'\' Sq3, """ Dq3, ( ), { }, [  ], /* */, &lt;!-- --&gt;, try /ex, if /else, &gt;&gt;&gt; /..., Show Pairs'.split(', '):
+    dynai.add_command(label= x, 
+          command= lambda c= c, r= x.split()[0]:  dynax_DQ3(c, r) ) 
+
+nu.add_cascade(menu= dynai, label= 'DQ3' )</t>
+<t tx="ekr.20050421093045.102">def init():
+    """this is one less than one too many ok's."""
+    ok = Tk and dynacom and not g.app.unitTesting
+    if ok:
+        if g.app.gui is None:
+            g.app.createTkGui(__file__ )
+    
+        ok = g.app.gui.guiName() == "tkinter"
+        if ok:
+            import leoPlugins
+            leoPlugins.registerHandler("create-optional-menus", load_menu)
+    
+            #no finer grained control than command1?
+            #seems like this would slow things down conciderable
+            #probably because wanted to catch tangle too
+            # save1 should be less overhead
+            leoPlugins.registerHandler("save1", timestamp)
+            
+            #plugin_signon reloads the plugin, can forgo that
+            #g.plugin_signon(__name__)  # + __version__
+
+            #have to lopkup how to enable these
+            #.bind('&lt;Alt-z&gt;', lambda c= c: htmlize(c))
+            #.bind('&lt;Alt-x&gt;', lambda c= c: dupe(c))
+
+    return ok</t>
+<t tx="ekr.20050421093045.103">"""not needed in pluginManager.txt
+generate this file to exist in the Leo plugins directory.
+you have to edit in your correct paths. &lt; set filenames &gt; section 
+
+helper code your macro can call from dyna_menu or other Leo script/plugin.
+
+check your sys.path that plugins is there before import
+from dynacommon import *
+was clone, is common to dynabutton, dynatester &amp; dyna_menu
+
+some things common like the dynaBunch &amp; init you probably wont call
+
+    rearrange things carelessly at your own peril
+
+have to lazy eval the filename creation till after leoID is defined"""
+
+#__all__ = 'tmpfile py pypath leosrc reindent pycheck2 pycheck  _caller_symbols deangle commafy stripSentinels sanitize_ leotmp scriptbody runAskYesNoCancelDialog init_dyna dycolors dynaBunch dynaerrout dynaerrline dyna_getsubnodes captureStd runcmd dynadoc dynaput dynaplayer pyO'.split()
+#this needs its own dictionary dopylint doreindent
+
+import sys, os
+import leoGlobals as g
+import Tkinter as Tk
+
+__not_a_plugin__ = True
+__version__ = '0.0139i' #u05417a10:51
+@others
+
+#depandance on sanitize_ and leoID
+&lt;&lt; set filenames &gt;&gt;
+#</t>
+<t tx="ekr.20050421093045.104">
+#possibly there are unicode anomalies in cStringIO?
+try:
+    import cStringIO as StringIO
+except ImportError:
+    import StringIO
+
+try:
+    True and False
+except NameError:
+    # match the 2.2 definition
+    (True, False) = (1==1), (1==0)
+    
+#needed in several macros. what if import htmlize from menu?
+try:
+    enumerate
+except NameError:
+    def enumerate(seq):
+        '''
+        &gt;&gt;&gt; enumerate('123') #does 2.2 enumerate a string ok?
+        [(0, '1'), (1, '2'), (2, '3')]
+        '''
+        import sys
+        return zip(xrange(sys.maxint), seq)
+    print 'now have enumerate'
+
+try:
+    sum #no sum in 2.2, not fully tested compatible
+except NameError:
+    from operator import add
+    def sum(seq, m=0, add=add):
+        '''
+        &gt;&gt;&gt; sum([1, 4, 5, 2], 0)
+        12
+        &gt;&gt;&gt; sum([len(x) for x in ['12','23','45']], 0)
+        6
+        
+        '''
+        return reduce(add, seq, m)
+    print 'now have sum'
+    del add
+
+
+</t>
+<t tx="ekr.20050421093045.105">def _caller_symbols():
+    """aspncookbook/52278
+    Print an expression and its value, 
+    along with filename and linenumber
+    by Itamar Shtull-Trauring
+
+    thanks I.! returns the callers callers globals and locals
+    """
+    try:
+        raise StandardError
+    except StandardError:
+        t = sys.exc_info()[2].tb_frame
+        return (t.f_back.f_back.f_globals, t.f_back.f_back.f_locals)
+</t>
+<t tx="ekr.20050421093045.106">@others
+@
+others not required except to enable du_test for all these subnodes
+candidates for adding to g. or g.app at least while dyna running
+have to weigh scripts and macros import common or just assume exists in g.
+comafy, sanitize_ actually more usefull in site-packages/myutils.py
+but I script and run nearly everything in Leo anyway.
+
+0 failed.
+all over htmlize and config isn't fully tested and the one test fails.
+with py2.2, 2 places Expected: True Got: 1 same w/False in dyna_menu
+but I don't think any code depends on True or False being 1 or 0
+except for doctest.
+</t>
+<t tx="ekr.20050421093045.107">def deangle(s, repl=  '+'):
+    """
+    use repl so output can be pasted w/o appearing as named nodes to leo
+    
+    &gt;&gt;&gt; deangle( '&lt;%s'%'&lt; whatever &gt;&gt;')
+    '&lt;+&lt; whatever &gt;&gt;'
+    &gt;&gt;&gt; deangle('&lt; whatever &gt;&gt;')
+    '&lt; whatever &gt;&gt;'
+    &gt;&gt;&gt; deangle('''|\\ /!@=\\#$%,^&amp;?:;."\'&lt;&gt;`~*+''')
+    \'|\\\\ /!@=\\\\#$%,^&amp;?:;."\\\'&lt;&gt;`~*+\'
+
+    """
+    if s.startswith('&lt;&lt;') and s.endswith('&gt;'+'&gt;'):
+        return '&lt;%s%s'%(repl, s[1:])
+    return s</t>
+<t tx="ekr.20050421093045.108">def commafy(val, sep= ','):
+    """Bengt , added sep
+    mod to use leading seperator if . maybe
+    also explore using locale instead. ok for now,
+    could using specifyer like k so under 1024 is leading zero?
+    &gt;&gt;&gt; commafy(2222)
+    '2,222'
+    &gt;&gt;&gt; commafy(2222, '.')
+    '2.222'
+    """
+    sign, val = '-'[:val&lt;0], str(abs(val))
+    val, dec =  (val.split('.')+[''])[:2]
+    if dec: dec = '.'+dec
+    rest = ''
+    while val: val, rest = val[:-3], '%s%s%s'%(val[-3:], sep, rest)
+    return '%s%s%s' %(sign, rest[:-1], dec)</t>
+<t tx="ekr.20050421093045.109">def stripSentinels(s, stripsentinals=1,
+           stripcomments=0, stripnodesents=1, stripdirectives=1, **ignored):
+    r""" r for doctest, ignored so can pass **hopts from htmlize
+
+    Strip sentinal lines from s. from EKR for test.leo htmlize.
+    called by htmlize, disa and sfdots. 
+
+    rewritten to save a few microseconds?, (in case anyone is still on a 486)
+      lstrip instead of strip, no excess strip.
+      save users newlines and join with '' instead of /n
+      break out early if not a comment and stripping everything anyway.
+      added raw/end_raw in addition to verbatim
+
+    and not create a superfluous lines list. wherever it is found.
+    OTOH, splitlines in the forloop still creates a list, so is a style point I guess.
+    
+    is startswith Unicode safe? is slice? slice over *with next up.
+
+  &lt;&lt; essential doctesting &gt;&gt;
+  not every possible corner case.
+
+    should also have option to strip only comments other than sentinals
+    should have option not to mangle node sentinals.
+    
+    possiblity of a python decorator comment out is very high
+    to be sure, will later have to either do this all in the parser
+    or get smarter about what is a directive and allow everything else
+    no matter the strip setting. or label/warn about the conflict.
+    if in &lt;py2.4 deco is a syntax error in the parser, thats fixable.
+    and if Leo adds user configurable leadin chars will have to hack it in.
+
+  Leo write logic adds verbatim, like right here.
+    #@@c looks strange without coresponding #@+at
+
+    first file opening and last closing node sentinals could probably be eliminated
+    the @others and named section &amp; nodesents should be enough.
+    skip namedsection,
+    going to be screwed if a lang uses @ for comments
+    
+    add forced delims check for c,perl,java, html &amp; python
+    if other @lang the first 2 are always #python, might have to fix that
+    luckily all the tests passed before thought of this hack
+    add @first/@last if simple on the same line 
+
+    add another option to mangle namesection refrences &lt;+&lt; xyz &gt;&gt;
+    to allow copy&amp;paste into a node without needing to edit them.
+
+    """
+    import leoGlobals as g
+    result = []
+    verbatim = 0
+    first = last = ''
+
+    cmts = ('//', '/*', ';', '&lt;!--')    
+    for line in s.splitlines(True):
+        s = line.lstrip()
+        
+        #much trickier if need to know @language &amp; delims
+        # otherwise need seperate strippers. 
+        #and gets especially screwy in mixed languages
+
+        for icmt, x in enumerate(cmts):
+            if not s.startswith(x):   continue
+            cmt = cmts[icmt]
+            break
+        else:
+            #print 'didnt find anything'
+            cmt = '#'
+
+        #should't hsve to recalc these each time
+        tag1 = cmt+'@+node:'
+        tag2 = cmt+'@-node:'
+        n = len(tag1)
+
+        &lt;&lt; linematch &gt;&gt;
+
+
+    return ''.join([first]+result+[last])  #user might have other ideas about \n</t>
+<t tx="ekr.20050421093045.110">&gt;&gt;&gt; s = '#@+leo=4\n#@+node:sent\nhay\n#@nonl\n#@-node: chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
+&gt;&gt;&gt; stripSentinels(s,0,0,0,0)
+'#@+leo=4\n#@+sent\nhay\n#@nonl\n#@- chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
+&gt;&gt;&gt; stripSentinels(s,1,0,1,1)
+'hay\n@deco\n#cmt'
+&gt;&gt;&gt; stripSentinels(s)
+'hay\n@deco\n#cmt'
+&gt;&gt;&gt; stripSentinels(s,1,0,0,1)
+'#@+sent\nhay\n#@- chk \n@deco\n#cmt'
+&gt;&gt;&gt; stripSentinels(s,1,0,1,0)
+'hay\n#@verbatim\n@deco\n#@  @others\n#cmt'
+&gt;&gt;&gt; stripSentinels(s,1,1,1,1)
+'hay\n@deco\n'
+&gt;&gt;&gt; stripSentinels(s,1,1,1,0)
+'hay\n#@verbatim\n@deco\n#@  @others\n'
+&gt;&gt;&gt; stripSentinels(s,1,1,0,0)
+'#@+sent\nhay\n#@- chk \n#@verbatim\n@deco\n#@  @others\n'
+&gt;&gt;&gt; stripSentinels('#@+node:&lt;&lt;sent&gt;+&gt;\nhay\n#@- chk \n##@cmt',1,0,0,0)
+'#@+&lt;+&lt;sent&gt;+&gt;\nhay\n##@cmt'
+&gt;&gt;&gt; stripSentinels('')
+''
+&gt;&gt;&gt; stripSentinels('\n##\n')
+'\n##\n'
+&gt;&gt;&gt; o = {'stripcomments':0, 'stripsentinals':0, 'stripnodesents':0, 'stripdirectives':0, 'invalidarg':3} 
+&gt;&gt;&gt; stripSentinels(s, **o)
+'#@+leo=4\n#@+sent\nhay\n#@nonl\n#@- chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
+&gt;&gt;&gt; #this should be fixed to allow commented decorators that look like sentinals
+&gt;&gt;&gt; stripSentinels(u'\r#@verb\r#cmt')
+u'\r#cmt'
+&gt;&gt;&gt; stripSentinels('#@@raw\nbetween raw\n#@@end_raw\n', 1,0,1,1)
+'between raw\n'
+&gt;&gt;&gt; stripSentinels('#@@raw\nbetween raw\n#@@end_raw\n', 1,0,1,0)
+'#@@raw\nbetween raw\n#@@end_raw\n'
+&gt;&gt;&gt; #mixed lang
+&gt;&gt;&gt; stripSentinels(';@@raw\nbetween raw\n;@@end_raw\n//cmt')#, 1,0,1,1
+'between raw\n//cmt'
+&gt;&gt;&gt; stripSentinels('be\n;@@first &lt;...&gt;\n')#, 1,0,1,1
+'&lt;...&gt;\nbe\n'
+&gt;&gt;&gt; #
+
+</t>
+<t tx="ekr.20050421093045.111">#we'll assume no one would use verbatim\n#@@end_raw!
+if verbatim &gt; 0 and not s.startswith(cmt+'@@end_raw'):
+    if verbatim == 1: verbatim = 0
+    result.append(line)
+    continue
+
+elif verbatim &gt; 0 and s.startswith(cmt+'@@end_raw'):
+    verbatim = 0
+    if not stripdirectives:
+        result.append(line)
+
+elif s.startswith(cmt+'@verbatim') or s.startswith(cmt+'@@raw'):
+    verbatim = g.choose(s.startswith(cmt+'@verbatim'), 1, 2)
+    if not stripdirectives:
+        result.append(line)
+
+elif not s.startswith(cmt+'@') and (not stripcomments and s.startswith(cmt)): 
+    result.append(line)
+    continue
+
+#need a regex here could be #@[ \t]@VALIDDIRECIVE 
+#\t unlikely to work in startswith, fix if you care about tabs
+#otherwise could strip valid comments, but whould a real Leo user do that?
+elif s.startswith(cmt+'@@') or s.startswith(cmt+'@ ') or\
+     s.startswith(cmt+'@\t') or s.startswith(cmt+'@&lt;&lt;'):
+
+    #actually might be a little more complicated first1 first2
+    #might stripsentinal allow too
+    if s.startswith(cmt+'@@first'):
+        first = line[s.find(' ')+1:]; continue
+    if s.startswith(cmt+'@@last'):
+        last = line[s.find(' ')+1:]; continue
+
+    #skip namedsection, could opt this in
+    if stripsentinals and s.find('&lt;&lt;') != -1 and\
+          s.find('&gt;&gt;') != -1: 
+        continue
+    if not stripdirectives:
+        result.append(line)
+
+elif s.startswith(tag1):
+    if not stripnodesents:
+        i = line.find(tag1)
+        result.append(
+          line[:i] + cmt+'@+' + line[i+n:].replace('&lt;&lt;','&lt;+&lt;'))
+
+elif s.startswith(tag2):
+    if not stripnodesents:
+        i = line.find(tag2)
+        result.append(
+          line[:i] + cmt+'@-' + line[i+n:].replace('&lt;&lt;','&lt;+&lt;')) #.strip() happy
+
+elif stripsentinals and s.startswith(cmt+'@'):
+    continue
+
+elif stripcomments and s.startswith(cmt):
+    continue
+
+else: #could this possibly be sentinals?
+    #print s
+    result.append(line)</t>
+<t tx="ekr.20050421093045.112">def sanitize_(s):
+    """ Leo's sanitize_filename is too aggressive and too lax
+    origional regex from away.js
+    this should make nobody happy equally.
+    strips most characters, space and replaces with underscore, len&lt;128
+    the doctest is in a subnode to allow syntax highlighting
+    &lt;&lt; chk sanitize &gt;&gt;
+    """
+    #if not s: return
+    import re
+
+    res = re.compile(r"""
+    [|\\ /!@=\#\$%,\x5E&amp;\x3F:;.\x22\x27&lt;&gt;`~\*\+\t\n\f\r\b\a]
+    """, re.IGNORECASE | re.VERBOSE);  
+    #  ^?"' \xnn,  [],(),{} ok, * not sure always ok
+
+    #should test for unicode before str()
+    return res.sub('_', s.strip()).replace('__','_')[:128]</t>
+<t tx="ekr.20050421093045.113">the best of both worlds, doctest with syntax highlighting!
+&gt;&gt;&gt; sanitize_("|\\ /!@=#$%,^&amp;?:;.\\"'&lt;&gt;`~*+")
+'_____________'
+&gt;&gt;&gt; sanitize_("")
+''
+&gt;&gt;&gt; sanitize_("@abc123[],(),{}")
+'_abc123[]_()_{}'
+&gt;&gt;&gt; #one comment line required when use subnode this way 
+&gt;&gt;&gt; #to avoid doctest seeing node sentinals. don't ask...</t>
+<t tx="ekr.20050421093045.114">def leotmp(name = None, tmp= None):
+    """ attempt to divine the user tmp dir add to input name
+    later prepend leoID unless no leoID flag or something
+    print os.path.realpath(tempfile.tempdir) simpler?
+
+    """
+    #factor out later into combined find @home thing + leoID
+    for x in ['tmp', 'temp', 'home']:
+        try:
+            tmp = os.environ[x]
+            break
+        except KeyError:
+            pass
+    else:
+        tmp = './'
+
+    if not g.os_path_isdir(tmp):
+        tmp = './'
+
+    if name is None:
+        return tmp
+    return g.os_path_join(tmp, name)
+
+</t>
+<t tx="ekr.20050421093045.115"></t>
+<t tx="ekr.20050421093045.116">#previouslky fixscript selectscript and a few other things
+#Leo always outputs sentinals now and follows subnodes
+#and stripSentinals has more options
+#and default is usually no tabs so expandtabs less critical
+
+def fixbody(c,data=None):
+    """ return script following subnodes and @others
+    strips all sentinals
+    if addscript its prepended to the output or something?
+    """
+
+    p = c.currentPosition()
+
+    if not data:
+        data = g.getScript(c, p)
+
+    else: #selected text, so comment out directives in the @language
+        data = selecbody(data, g.scanDirectives(c, p))
+
+    if not data:  
+        data = EOLN  #avoid error on empty script
+    else:
+        #could work the other way too if anyone wanted tabs.
+        if hasattr(g.app.dynaMvar, 'tabstrip'):
+            if g.app.dynaMvar.tabstrip: 
+                data = data.expandtabs(g.app.dynaMvar.tabstrip)
+    return data</t>
+<t tx="ekr.20050421093045.117">def selecbody(data, sdict):
+    r"""for commenting out directives in selected text.
+    should start by commenting out all lines that start with @
+    then strip sentinals. not going to follow @others?
+    multiline delims probably not currently handled well
+    have to add some tests 
+    and get back into understanding the full use case.
+    
+    if selected starts after @ it should be commented anyway?
+    
+    backslash inside string literal, always skips the next char 
+    \s might have to be \\s in raw?
+    
+    &gt;&gt;&gt; selecbody(None, {'language':'python'})
+    
+    &gt;&gt;&gt; selecbody('@language python\n#cmt', {'language':'python'})
+    '#@language python\n#cmt'
+    &gt;&gt;&gt; cdct = {'language':'java', 'delims': ('/*', '*/', '//')}
+    &gt;&gt;&gt; selecbody('@language python\n#cmt', cdct)
+    '/*@language python\n#cmt'
+
+    have to do some reserch and fix this
+    """
+    if not data: return
+    import leoGlobals as g
+
+    cmtdelim = '#'
+    if sdict['language'] != u'python':
+        #obviously for other language have to check is valid
+        # is more than one, then have to trail each line etc
+        #was delims[0] not sure where that came from
+        #coverage tool might have caught that so far untested
+        #think it needs to be 0+1 if [2] is None
+        #wouldv'e made more sense to always have the single in 0?
+        cmtdelim = sdict.get('delims', ['#'])[0]
+        
+    import re
+    datalines = data.splitlines(True)
+    #g.es('data is %r'%(datalines,))
+
+
+    #not sure why &lt;\&lt; works
+    #does \s work like s, apparently not. 
+    #though \s was only for rawstring w/o it misses indented @|&lt;
+    repATang = re.compile('\s*&lt;\&lt;.*?&gt;&gt;.*')  #^$ 
+    repATc = re.compile('\s*@.*', re.MULTILINE )
+    #could use it on the whole string, ok line by line too.
+
+
+    sx = []
+    inATc = False  #a comment, not @c. poor name choice here.
+    for x in datalines:
+        
+        if inATc:  #chances are Leo already does this somewhere
+            #what about the foolish @color inside already started comment?
+            #any @ is end of comment directive, 
+            if x.startswith('@c'): #@ but its not stopping till @x!
+                inATc = False
+            sx.append('%s%s'%(cmtdelim, x) )
+            continue
+
+        if repATc.match(x):  #is start of comment
+            if x == '@\n' or x.startswith('@ ') or \
+                x.startswith('@\t') or x.startswith('@doc'):
+                inATc = True
+            sx.append('%s%s'%(cmtdelim, x) )
+            continue
+
+        if repATang.match(x): #is sectionname
+            #would need to get more fancy here
+            sx.append('%s%s'%(cmtdelim, x) )
+            continue
+        
+        #if x == '\n': continue  #delete blank lines?
+
+        sx.append(x)
+
+    return ''.join(sx)
+</t>
+<t tx="ekr.20050421093045.118">#file leoTkinterGui.py
+#import tkFont,Tkinter,tkFileDialog leoTkinterDialog
+#class tkinterGui(leoGui.leoGui):
+#when it works add some way to up the damm fonts!
+
+def runAskYesNoCancelDialog(c,title,
+    message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+    """Create and run an askYesNoCancel dialog ."""
+    import leoTkinterDialog
+    d = leoTkinterDialog.tkinterAskYesNoCancel(c,
+        title,message,yesMessage,noMessage,defaultButton)
+    #d.configure(font=(("Lucida", "Console"), 12)) #nfg
+#AttributeError: tkinterAskYesNoCancel instance has no attribute 'configure'
+    #d.buttonsFrame.configure(font=(("Lucida", "Console"), 12)) #nfg
+    #tryed buttonsFrame, frame, top, root...
+
+    return d.run(modal=True)</t>
+<t tx="ekr.20050421093045.119">import operator
+
+def init_dyna(c, *a, **k):
+    """same for both button and menu
+    """    
+    caller_globals, caller_locals = _caller_symbols()
+
+    dynainst = dynaBunch(
+        dynadefaultFlag = Tk.IntVar(),
+        dynapastelst = ['print', 'paste', 'doc'],
+        dynapasteFlag = Tk.StringVar(),
+        #getsubnodes different in button &amp; menu, lst is a list of macros
+        dynadeflst = dyna_getsubnodes(c,  globs= caller_globals),
+        verbosity = 0, #0or1 just dots in @test from du_test
+        justpychecker =  1, #show source after running pychecker &amp; pylint
+        htmlize_hilighter = '',  #other language colorizer
+        bugimport =  0,  #test fallbacks on ImportError
+        )
+    
+    #print to start, paste over selection later
+
+    dynainst.dynapasteFlag.set(dynainst.dynapastelst[0] )
+    dynainst.dynadefaultFlag.set(0)
+    return dynainst
+
+
+class dynaBunch(object):
+    """tieing an instance of dynaBunch to c.frame is responsibility of caller
+    Bunch aspn python cookbook 52308
+    point = Bunch(datum=y, squared=y*y, coord=x)
+    if point.squared &gt; threshold:
+        point.isok = 1
+    in Leo From The Python Cookbook. used setattr &amp; getattr
+     not sure of the ivar stuff for now
+    repr lifted from c.l.py
+    clear might still use, need gc tests
+     http://www.norvig.com/python-iaq.html  (Struct class)
+
+    in the sprit of one obvious way to do it.
+    the idom appears to be to change the name of the class
+    and hype it as a way to turn a dict into a lot of instance vars
+    alot are taking credit for this idea through the years,
+
+        """
+    
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+
+    def __repr__(self):
+        return '%s(%s)' % (self.__class__.__name__, '\n'.join(
+            ['%s=%r' % keyval for keyval in self.__dict__.items()]))
+
+    def __clear(self):
+        g.es('attempting to clear')
+        for key in self.__dict__.keys():
+            g.es(';k=',key)
+            del key
+            g.es('deleted')
+        g.es('\ndone clear')
+
+    def set_ivars(self, c):
+        """Set the ivars for the find, from searchbox
+        might want to use this
+        """
+        # Modified from leoTkinterFind.set_ivars
+        #for key in self.intKeys:
+        #    setattr(c, key + "_flag", 0)  
+
+    def ivars(self):
+        return self.__dict__.keys()
+        
+    def __setitem__ (self,key,value):
+        #allows access like dyna['dynalst']?
+        return operator.setitem(self.__dict__,key,value)
+        
+    def __getitem__ (self,key):
+        return operator.getitem(self.__dict__,key)
+
+    """
+    def load(infile):
+        strng = infile.read()
+        exec( 'bag = Bag(\n' + strng + ')' )
+        return bag
+    load = staticmethod(load)
+
+    def save(self, outfile):"""</t>
+<t tx="ekr.20050421093045.120">#Leo log Tk names &amp; HTML names and colors
+dycolors = dynaBunch( 
+    gAqua = 'aquamarine3',
+    gBlack = 'black',
+    gBlue = 'blue',
+    gFuchsia = 'DeepPink3',
+    gGray = 'gray48',
+    gGreen = 'LimeGreen',
+    gLime = 'PaleGreen2',
+    gMaroon = 'maroon4',
+    gNavy = 'midnightblue',
+    gOlive = 'OliveDrab4',
+    gPurple = 'purple3',
+    gRed = 'red',
+    gSilver = 'SlateGray3',
+    gTeal = 'steelblue4',
+    gWhite = 'white',
+    gYellow = 'Yellow2',
+    gError = 'tomato',
+
+    hAqua = '#00FFFF',
+    hBlack = '#000000',
+    hBlue = '#0000FF',
+    hFuchsia = '#FF00FF',
+    hGray = '#808080',
+    hGreen = '#008000',
+    hLime = '#00FF00',
+    hMaroon = '#800000',
+    hNavy = '#000080',
+    hOlive = '#808000',
+    hPurple = '#800080',
+    hRed = '#FF0000',
+    hSilver = '#C0C0C0',
+    hTeal = '#008080',
+    hWhite = '#FFFFFF',
+    hYellow = '#FFFF00',
+    )
+#print dycolors.gYellow
+</t>
+<t tx="ekr.20050421093045.121">#maybe can turn on full exception reporting 
+#rather than rolling my own
+# es_event_exception (eventName,full=false):
+
+def what_line_am_i_on():
+    #from the snippits collection
+    import sys
+    try:
+        raise "Hack"
+    except:
+        return sys.exc_info()[2].tb_frame.f_back.f_lineno
+
+#    g.es('lineno= ' + what_line_am_i_on() )
+
+def dynaerrout(err, msg):
+    """from fuzzy cmd
+    previous Leo masked the errors 
+    making debuggin of some scripts more painful than not.
+    often enough you don't want to gotoline number either.
+    """
+    from traceback import print_exc
+
+    g.es(msg, color= dycolors.gError)
+    f = StringIO.StringIO()
+    print_exc(file= f)
+    a = f.getvalue().splitlines()
+    for line in a:
+        #c.goToLineNumber(n=int(newSel))
+        g.es(line, color= dycolors.gError)</t>
+<t tx="ekr.20050421093045.122">def dynaerrline():
+    """for debuggin, return just the error string on one line
+    call in an except after an error.
+
+    &gt;&gt;&gt; try:
+    ...    a = 1 / 0
+    ... except Exception:
+    ...    print dynaerrline()[:49]
+    ZeroDivisionError integer division or modulo by z
+    """
+    import sys
+    exctype, value, tb = sys.exc_info()
+
+    if type(exctype) == type(''):
+        exc_type_name = exctype
+    else: exc_type_name = exctype.__name__
+
+    el = ['%s = %s .'%(k, repr(v)) for k, v in vars(exctype).items()]
+
+    return '%s %s %s '%(exc_type_name, value, el)
+
+</t>
+<t tx="ekr.20050421093045.123">#code to operate dynamenu, no user code
+
+def dyna_getsubnodes(c, globs= {}):
+    """ changed API slightly, macros now need a common first 5 chars
+    if I can change it to dont care about the name I will.
+    
+    from the plugin, the old way of walking the node to find macros
+    is not going to work I just realized
+    there is no current node, this has to run before the plugin is made
+    and somehow encode the macros and decode them, 
+    and insert them into the plugins namespace. yikes
+    maybe if I put @others in a stratigic place, they will be included
+    all that would remain is to get their names from a __dict__
+    
+    glitch, they arent added in the order defined in macros node.
+    sorting
+    glitch when in dynacommon globals isnt the callers globals!
+    fails from test.leo
+    """
+    lst = []
+
+    try:
+        lst = [x for x in globs
+                if x.startswith('dyna')
+                if x[5] == '_'   #x[4] specifys type of macro
+                ]
+
+        #possibly decorate somehow to respect the order defined in the py
+        #maybe add a user char after _ to specify numeric position
+        
+    except Exception, e:
+        # d=rew  Leo caught syntax error, space
+        #Leo caught TypeError: ut() takes exactly 1 argument (2 given)
+        #d=rew might not have caught this, or not printed full traceback
+        dynaerrout(e, "initMdyna ")
+
+    lst.sort()
+    #es('dynamenu macros %s'%(lst,) )
+    return lst</t>
+<t tx="ekr.20050421093045.124">class captureStd(object):
+    """the typical redirect stdout
+    add stderr and stdin later
+    borrowing the class from PH testsuite for redirect stdout
+
+    leo also has filelike objects and its own redirect    
+    there isa config option and a plugin to redirect to log
+    and to append to body of captured output
+
+    another way
+    sys.displayhook = mydisplayhook
+
+    &gt;&gt; def mydisplayhook(a):
+    ...     if a is not None:
+    ...             sys.stdout.write("%r\n" % (a,))
+    ...
+    
+    only used in evaluator, why not in du_test
+    or if it doens't work there why does it work in evaluator w/calc_util?
+    maybe can replace now?
+        """
+    def captureStdout(self):
+        sys.stdout = StringIO.StringIO()
+
+    def releaseStdout(self):
+        captured = sys.stdout.getvalue()
+        sys.stdout = sys.__stdout__
+        return captured
+</t>
+<t tx="ekr.20050421093045.125">def runcmd(cmdlst, to_stdin= None):
+    """cmdlst is either a list or string for subprocess
+    think is string for popen
+    
+    for win9x this works better than other popen for me.
+    on *nix you can import commands or something else popen5 maybe
+    this does wait and leo is inactive so if there is a chance
+    the process will infinate loop, better use a spawner
+    you get the return output outerr stdout stderr
+
+    use subprocess if available and not on pythonw till that bug fixed
+    see forums for usage and download from effbot.org if &lt;py2.4
+    
+    py2.2 think prints 1 as True and so fails
+    &gt;&gt;&gt; 'pythonw.exe'[-5:].upper() == 'W.EXE'
+    True
+    
+    mostly used to run checkers on py file in site-packages
+    or wherever you set the defaults
+    if Leo or temacs core gets an executeFile we will use that if it works
+    shell=True still fails for me on win9x so fork still up in the air.
+    and so a flash if no console, latest test seem to deconfirm this.
+    
+    and a title change on the console if already open to the last command
+    seems to be a subprocess bug
+    
+    adding stdin driver to feed input to command and options
+    leave it up to caller to use the -- or no filename conventions
+
+    shell metacharacters?
+    
+    startupinfo
+    ASPN/Cookbook/Python/Recipe/409002
+
+    """
+    import os, sys
+
+    try: 
+        if g.app.dynaMvar.bugimport: raise ImportError
+        import subprocess
+    except ImportError:
+        #not going to concider name collision if you have an older
+        #python with one of the previous incarnations of subprocess
+        subprocess = None
+
+    outstd = outerr = ''
+    #think only windows pythonw fails stdout/stderr duplication
+    #if sys.executable[-5:].upper() == 'W.EXE': subprocess = None
+
+    if not subprocess:
+        #should try to get return code its &lt;&lt;128 or something on stderr
+        if to_stdin:
+            #just haven't programmed it in yet, but get subprocess anyway!
+            g.es('stdin redirection not avaiable \nw/o subprocess module')
+            return outstd, outerr
+
+        if isinstance(cmdlst, list):
+            cmdlst = ' '.join(cmdlst)
+
+        child_stdin, child_stdout, child_stderr = os.popen3(cmdlst)
+        #better to_stdin.replace('\n', os.lineterm())
+        #do I have to child_stdin.write(to_stdin) &amp; wait?
+        outstd = child_stdout.read()
+        outerr = child_stderr.read()
+    else:
+        &lt;&lt; subproc &gt;&gt;
+    #will probably add ret and force=0 if not subprocess
+    return outstd, outerr</t>
+<t tx="ekr.20050421093045.126">try:
+    if to_stdin: #could hang w/bad or insufficent data
+        if g.app.dynaMvar.verbosity: g.es('piping to stdin')  #, BLINK
+
+    startupinfo = subprocess.STARTUPINFO()
+
+    #depends on if pywin32 or _subprocess?
+    if hasattr(subprocess, 'STARTF_USESHOWWINDOW'):
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        
+    ps = subprocess.Popen(cmdlst, #cwd= fdir,
+        universal_newlines= True,
+        stdin= subprocess.PIPE,
+        stdout= subprocess.PIPE, stderr= subprocess.PIPE
+        #,close_fds=True
+        , startupinfo=startupinfo
+        )
+
+    (outstd, outerr) = ps.communicate(to_stdin)
+    ret = ps.wait()
+
+except ValueError:  #if Popen is called with invalid arguments. 
+    g.es('invalid args?\n', cmdlst)
+
+except Exception:
+    g.es_exception(full= True)
+    g.es(' args?\n', cmdlst)</t>
+<t tx="ekr.20050421093045.127">def dynadoc(c, sub= 'all', globs= {}):
+    """read dynadeflst and createdoc for them
+        was previously print, but that doesnt work well in plugin
+        add a simple wrap, which isn't appending dash in midword like expected
+        could set wrap on for the log. then off again, 
+        would probably unwrap  though
+
+    combined the call to all and removed else. works because
+    a list is made from sub, will preclude docing a macro named all
+
+    using now \python23\lib\textwrap.py, if available
+    too many amonalies in fordoc too little time.
+    made a wraper macro, don't really want another depency
+    would have to extract the relevant code and have the 
+    macro call it too. ok a little code duplication for now
+    
+    expand to show macro's internal __dict__
+    getting doc for fliper for ex, might be nice to know
+    add quit sentinal to docs to limit display
+    use Leo g.wrap and in dynawrapper or call dynawrapper
+    add some reST formatting to docs
+    could add some slight blurb on each ini option value.
+    a few in dynacommon like runcmd could be doced
+  """
+    import sys
+    try:
+        import textwrap as tw
+    except ImportError:
+        tw = None  #or overwrite formdoc
+        g.es('textwrap is going to produce better results.')
+        g.es('get it from the python cvs archive\n')
+        
+    #from pydoc import resolve, describe, inspect, text, plain
+    &lt;&lt; formdoc &gt;&gt;
+    lst = [sub ] 
+    if sub == 'all':
+        lst = g.app.dynaMvar.dynadeflst
+        lst += [x for x in globs if x.startswith('cmd_')]
+        lst.reverse()
+
+    #g.es(g.__dict__.keys()) {}
+    #g.es(g.app.__dict__.keys()) Leo ivars
+
+    for x in lst:
+        #need to get the callers globals
+        #f = g.app.dynaMvar.globals()[x]  nor globals()[x]
+        #f = g.app.__dict__[x]  #is this same as app.globals()[x]
+        try:
+            f = globs[x]  #
+        except Exception:
+            g.es('cant find', x)
+            continue
+        
+        #if no doc problems
+        #try to get len of unsized object or unscriptable object
+        #hasattr(f, '__doc__') always true for a function
+        elip = ''
+        if f.__doc__:
+
+            coln = f.__doc__.find('~EOT') 
+            if coln == -1: coln = 520
+
+            doc = f.__doc__[:coln]
+            if len(f.__doc__) &gt; coln: elip = ' ...'
+        else:
+            doc = ' no additional info '
+
+        if not tw:
+            st = formdoc(doc)
+        else:
+            t = tw.TextWrapper(
+                     width= 42,
+                    initial_indent=' ',
+                   subsequent_indent= ' ',
+                   expand_tabs= True,
+                  replace_whitespace= True,
+                 fix_sentence_endings= False,
+                break_long_words= True )
+
+            st = t.fill(doc)
+
+        g.es('\n' + x + '.__doc__\n' + st + elip)
+
+    #obj, name = resolve(x, 0)
+    #desc = describe(obj)
+    #g.es(text.docroutine(f, x))
+    </t>
+<t tx="ekr.20050421093045.128">def formdoc(doc, to= 50):
+    r"""    
+    &gt;&gt;&gt; formdoc('create a rough wraper to 40 charlines', 14)
+    '\n  create a rough\n    wraper to 40 charlines\n'
+
+    """
+    sx = doc.expandtabs(2).splitlines()
+    sl = []
+    for i, x in enumerate(sx):
+        if len(x) &lt; (to-8): sl.append('  ' + x.lstrip()); continue
+
+        if len(x) &gt; to: ax = to
+        else: ax = len(x) - 1
+
+        dash = '-'
+        while ax &gt; (to-8):
+            if x[ax] in ' .,(){}[]?\n': dash = ''; break
+            ax -= 1
+        #if ax w/in few char of len(x) may as well be one line
+        #check it isnt eating a char at ends
+        sl.append('  ' + x.lstrip()[:ax] + dash)
+        sl.append('   ' + x.lstrip()[ax:])
+
+    return '\n'.join(sl)</t>
+<t tx="ekr.20050421093045.129">def quietwarnings():
+    '''quiet warnings from pychecker and tim1 about regex
+    this should be part of init rather than module level'''
+    
+    import warnings
+    
+    warnings.filterwarnings("ignore",
+             r'the regex module is deprecated; please use the re module$',
+             DeprecationWarning, r'(&lt;string&gt;|%s)$' % __name__)
+    warnings.filterwarnings("ignore",
+             r' the regsub module is deprecated; please use re.sub\(\).$.$',
+             DeprecationWarning, r'(&lt;string&gt;|%s)$' % __name__)
+    
+    if sys.version_info &gt;= (2, 3): #py2.2 no simple
+        warnings.simplefilter("ignore", DeprecationWarning, append=0)
+    </t>
+<t tx="ekr.20050421093045.130">def dynaput(c, slst):
+    """return the text selection or put it if slst is not None
+    assumes slst is a list to be joined and print/paste as toggled
+     add other option, paste w/o delete
+    up to the caller to insert \n if required
+    eventially pass in event so can get text from any widget
+    for now, hardwired to use the Leo API to the Tk text widget   
+    **slight problem, wont insert something wth nothing selected
+ leoTkinterFrame
+
+  add another menu toggle for print to clipboard 
+    in addition to printing or instead of printing
+     and replace or append to clipboard.
+  bodyCtrl
+  allowing fixbody to be called so added test for paste &amp; no selected 
+  and selected or slst
+  if nothing selected and slst then 3rd choice. must be a full body
+  bad idea to past over the node because it wont follow nodes.
+  
+  problem since split into dynacommonm
+  g.top().frame.dynaMvar no longer reliable doe some reason
+  maybe that shouve always been based on c? isnt that already c? 
+  still havent got a handle on why its failing.
+  decide to spend another var. g. works but g.app better
+    """
+    cg = g.app.dynaMvar
+    #print cg
+
+    #this depends on the macro calling dynaput first as they mostly do now
+    #bound to be some sideffects untill I put it in the right place
+    #maybe the menu has to have a function caller instead of calling the function
+    if 'doc' == cg.dynapasteFlag.get():
+
+        #what about dynabutton
+        #g.es(sys.modules[dyna_menu].keys())
+        caller_globals, caller_locals = _caller_symbols()
+        #g.es("this_caller", caller_globals)
+
+        #in dynabutton they are all radio buttions 
+        #and its easy to see which was called. unlike in plugin
+        #dump all for now
+        dynadoc(c, globs= caller_globals)
+        return
+
+    Tx = c.frame.body
+    if Tx.hasTextSelection() or slst: #*
+        
+        #returns selection point if nothing selected
+        Tst,  Ten = Tx.getTextSelection()
+
+        if not slst: #**and Tx.hasTextSelection()
+            return Tx.getTextRange(Tst, Ten)
+
+        else:
+
+            #ux = g.toUnicode(x[1:] )  ?? need to know the encodeing!
+            # toUnicode(before,app.tkEncoding), hope Leo handles this
+            ux = ''.join(slst)
+    
+            if 'print' == cg.dynapasteFlag.get():
+                #print ux
+                g.es(ux)
+
+            elif 'paste' == cg.dynapasteFlag.get() and \
+                    Tx.hasTextSelection():
+                #g.es('overwrite\n', str(Tx.getTextRange(Tst, Ten)) )
+        
+                #btw, Tk insert doesnt disturb the selection.
+                Tx.deleteTextSelection()
+                Tx.setInsertionPoint(Tst)
+                #print '%r', ux
+                Tx.insertAtInsertPoint(ux)
+                Tx.onBodyChanged("Typing")
+        
+                #selection may wander depending on the final size
+                Tx.setTextSelection(Tst,  Ten)
+
+            else:
+                g.es('nothing selected',
+                         cg.dynapasteFlag.get() )
+
+    else: g.es("no text selected", color= 'orangered' )</t>
+<t tx="ekr.20050421093045.131">#make part of a larger basic python sanity check
+import leoGlobals as g
+
+#indented def's problem in doctest &lt; py2.4b2?
+def xt():
+    """__ """
+    pass
+
+try:
+    assert(1 == 0)
+    g.es('assert disabled, use g.app._t.assert_()',
+        color= 'tomato')
+
+    if __debug__: g.es('__debug__ is',__debug__, color= 'tomato')
+    #how to tell if also -OO? __debug__? prob only -O
+    #if hasattr(x,"__doc__") and x.__doc__:
+    #if not hasattr(dynaB_Clip_dtef, '__doc__'):  #
+    #if not len(dynaB_Clip_dtef.__doc__):
+        
+    #print dynaplay.__doc__  
+    #when printed is not None of -O, of not printed is None if -O!
+    #x()
+    print xt.__doc__, #will this fail on pyw?
+
+    #doc apparently is always defined, even if empty? just None if -OO
+    #further caviet, is None untill run regardless if -O due to late binding
+    #even if run is None, has to be specifically accessed! weird...
+    #if printed is totally unreliable the difference between -O and -OO
+    #back to the drawing board.
+    if xt.__doc__ is None:
+        pyO = 'OO'
+        g.es('YOU MAY HAVE RUN python -OO \ndoctest Will fail, @test ok',
+            color= 'tomato')
+    else:
+        pyO = 'O'
+        g.es('YOU HAVE RUN python -O',
+            color= 'tomato')
+
+except AssertionError: 
+    pyO = 'I'  #used in du_test
+    pass
+del xt</t>
+<t tx="ekr.20050421093045.132">#note, these changes are at the time the button or menu is created
+#to effect these changes you have to 
+#write the plugin and start a new python and leo. maybe reload
+#execute script on the dynaclick node for the dynabutton
+#they will take effect in dynatester imediatly
+#preserve the space after to allow for parameters
+#those that will be joined to pypath start with seperator \ or /
+#any other scripts should have their own full path, 
+
+#pypath = r'C:\c\py\Python233'         #nospace
+pypath = g.os_path_split(sys.executable)[0]
+
+#py =  pypath + '/python.exe -tOO '     #_space_
+py =  g.os_path_join(pypath, 'python') + ' -tO '
+
+#leosrc = r'c:\c\leo\leo4CVS233\src'
+leosrc = g.app.loadDir
+
+#reindent = g.os_path_join(pypath, '/Tools/Scripts/reindent.py ')  #space
+reindent = pypath +  '/Tools/Scripts/reindent.py '  #space
+
+#print pypath, py, leosrc
+
+#classic pychecker
+pycheck = pypath + '/Lib/site-packages/pychecker/checker.py '  #space
+#pychecker2, doesnt import, is alot slower and less details.
+# and leaves some temp files, I guess its still experimental.
+pycheck2 = pypath + '/Lib/site-packages/pychecker2/main.py '
+
+
+#
+#classic pychecker I think does import regex which causes a warning when called from plugin. maybe they fixed that in the latest version.
+#not sure why dont see it when run from dynabutton. output on stderr?
+#DeprecationWarning: the regsub module is deprecated; please use re.sub()
+# was caused by tim1crunch, I supress the warning now.
+
+#pylint is its own macro now, could delete if you don't run it
+#set to 1 to call pylint after pychecker ub makatemp
+dopylint = 0  #this call too complicated to code in here
+
+
+doreindent = 0 #to forgo reindent step in pylint &amp; makatemp macro
+
+
+@
+it might be preferable to generate a new tmpfile w/pid or something
+ ok for singleuser no security multiuser issues for now.
+YMMV, I set tmp and temp in autoexec,
+
+it seems pylint has to be able to import from site-packages
+look in makatemp trying to add tmp to syspath isnt easy from Leo
+add leoID, and sanitize, leoID may not exist at this point.
+why would it be None though?
+that seems odd since plugins should be able to call on it at creation
+should create an hname for htmlize also
+or maybe the macro should add the extension
+
+putting an html file in tmp could still be a huge secuity risk
+maybe should be in user HOME instead?
+also create in site-packages might not be enabled for everyone.
+have to check better for write access
+
+later generate the filenames inside a function
+and add them to a Bunch allong with the colors
+maybe a Bunch of Bunches class dynaMvar will overtake
+@c
+
+#print 'leoID=', g.app.leoID
+Id = g.choose(g.app.leoID, g.app.leoID, 'Leo')
+tname = sanitize_('tmptest' + Id )+ '.py'
+
+#use lower if on *nix. 
+#windos may set TEMP and TMP by default, case insensitive.
+#tmpfile = g.os_path_join(os.environ['tmp'],'tmptest.py')
+
+tmpfile = g.os_path_join(pypath, 'Lib/site-packages', tname)
+#
+tname = sanitize_('python' + Id )+ '.html'
+htmlfile = g.os_path_join(
+           os.getenv('tmp', default= g.os_path_abspath('./')), tname)
+
+
+del Id, tname
+
+#replace forwardslash to backslash if required
+#frd slash usually ok except for cd and sometimes openfile
+#with filename as parameter in windos frdslash might be taken as option
+if sys.platform[:3] == 'win':
+    #generally win doesn't care mixed slashes
+    #but you might pass py, pypath et al thru here too
+    tmpfile = g.os_path_abspath(tmpfile)  #.replace('/', '\\')
+    htmlfile = g.os_path_abspath(htmlfile)
+
+#enable the print if not sure its working to satisfaction.
+#print tmpfile, htmlfile, py, pypath
+
+#should check is valid and have access and create if doesn't exist...
+#may have to defer the creat w/properties so is created on first use
+#leoID doesnt exist when dyna imports common and shouldent import * either
+
+#should calculate from @lineending,  does python handle conversion?
+EOLN = '\n'  #have to try and use this everywhere, os.linesep()?
 </t>
 <t tx="ekr.20050421093045.133">;ini may be shortlived in favor of @settings when thats feasible
 ;leave nosent so it isn't updated on leo open and all comments lost
@@ -10756,6 +17422,2134 @@ token_bg         =  #FFFAFA  ;snow
 
 
 @language elisp
+</t>
+<t tx="ekr.20050421093045.134">@all
+ you need
+&lt; @home &gt;
+
+rc, urls to pychecker and pylint,
+    tags.j2h,
+     css,
+   rpdb,
+   au3,
+
+.astylerc for astyle reformater not included
+
+HappyDoc3-r3_0_a1 from happydoc.sourceforge.net or pydoc (in stdlib).
+need PYTHONDOCS env set and download the help from python.org
+for print help(whatever) type answers. think pydoc imports the module.
+
+happydoc doesn't import so is safe on untrusted code. but is proving
+to be quite out of date so will try something from docutils sandbox
+other apps like epydoc also possible. why does noone think of scriptability!
+everything is input file and output file and no mention of anything else.
+
+
+silvercity or source-highlight for syntax highlighted htmlize output
+
+
+#u05417a10:51
+@killcolor </t>
+<t tx="ekr.20050421093045.135">python code and style checkers, pylint and makeatemp macro
+to use you pylint need both.
+http://www.logilab.org/projects/pylint
+http://www.logilab.org/projects/common
+%HOME% .pylintrc
+see how to get the rc file below
+
+for pychecker
+http://pychecker.sourceforge.net/
+%HOME% .pycheckrc
+in test.leo I think there is a good rc file for pychecker
+
+http://www.python.org/peps/pep-0008.html
+http://www.python.org/doc/current/tut/tut.html
+
+
+astyle macro, reformat c, java/javascript code
+http://astyle.sourceforge.net/  
+can use  ~/.astylerc not included
+
+
+syntax highlight from htmlize
+docutils
+silvercity
+source-highlight
+
+
+for subprocess for python less than v2.4
+replaces popen and used to call various externals
+pychecker source-highlight and others
+http://effbot.org/download
+
+not sure it helps, might even slow things down
+but if its installed a few macros can enable it.
+http://psyco.sourceforge.net/ 
+
+
+
+
+set HOME=c:\sve\mii or whatever in your .rc or autoexec.bat
+or somehow set HOME or export in your env 
+or use the os default for home if there is one.
+many programs look in your home for .rc files
+
+it may also be possible to set which config on the command line
+for some of the chekers or source highlighters.
+
+   few macros expect python 2.3 or python 2.4 modules.
+   instruction how to get modules from cvs are on c.l.py
+ cvs.sourceforge.net/cgi-bin/viewcvs.cgi/python/python/nondist/sandbox/csv
+
+   some modules that have been left in compatible python source 
+   on cvs will work in py2.2 or less.
+   textwrap, csv, sets, iterators, datetime and the list is growing.
+
+    you may need generators and enumerate for some operations.
+    py2.2 you can uncomment from  __future__ import generators
+    enumerate you have to search a little. dyna_menu has enumerate.
+    or ask on IRC. (Internet Relay Chat)
+     
+type in: 
+/server irc.freenode.net 
+/join #Leo  
+from an IRC client sometime! 
+if you have Leo questions or answers. 
+    #python too. ask good questions get good answers.
+    and many open source projects have channels there.
+
+   c.l.py is the usenet comp.lang.python gated mailing list
+   source of all knowledge and misinformation about python.
+   time marches on, Leo backward compatibility is not perfect either.
+
+other dependencies are in the doc strings of the individual macro's 
+many of them are just shells that produce some typical output 
+to use as a template if the need arises. url's included
+or use http://www.python.org/pypi/ 
+or Vaults of Parnassus  http://www.vex.net/~x/parnassus/ 
+ or the archive of google site:python.org
+ help(module) 
+ help needs to installed python docs and PYTHONDOC env variable set.
+or run pydoc in gui mode 
+or search the index in the chm a python install should setup
+a shortcut for you and for other systems there are chm readers.
+
+aspn recipes refer to numbers add the number after this url
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/
+
+don't forget the dead tree version of information exchange
+for the python cookbook and many other titles.
+and the many link sites for python have links to articles
+or tutorials that should be read and tested more than once.
+
+ Daily Python-URL [http://www.pythonware.com/daily/]
+
+http://www.python.org/moin/PythonSpeed/PerformanceTips
+http://www.awaretek.com/ output.html
+
+http://www.speedygrl.com/p/44.html
+
+Tom Loredo's page is one of the first I ever saw about python.
+http://astrosun.tn.cornell.edu/staff/loredo/
+</t>
+<t tx="ekr.20050421093045.136">#howtto get the pylint rc file
+#@url file:///C|/C/PY/PYTHON~1/SCRIPTS/PYLINT.bat%20c:\sve\mi\.pylintrt
+#    os.startfile(url)
+#WindowsError: [Errno 2] The system cannot find the file specified: 
+#I thought maybe with %20 I could sneak in a parameter to pylint.bat
+#actually the command would be
+#C:\C\PY\PYTHON~1\SCRIPTS\PYLINT.bat &gt;c:\sve\mi\.pylintrc
+#but that even wont work because they dopily put the output on stderr
+#so I cameup with this script, run from a macro. I leave it up to you
+#you could copy the runcmd function and import os and exscript from here too
+#you need to edit the resultnant rc file because pylint is a style checker
+#it complains about alot of stuff. no space after coma, single char names
+#etc etc etc
+#if you have msys shell or other shell rather than a dos window
+#you can run pylint and redirect stderr or copy from the screen
+
+#not recently tested, runit in dynacommon
+it = r'C:\C\PY\PYTHON~1\SCRIPTS\PYLINT.bat'
+para = r' --generate-rcfile'
+outit = None  or r'c:\sve\mii\.pylintrc'
+output, outerr = runcmd(it + para )
+if outit:
+    fo = file(outit, 'w')
+    fo.writelines(output + "\n" + outerr )
+    fo.close()
+    print 'written to', outit
+
+
+
+@language python
+@color</t>
+<t tx="ekr.20050421093045.137">#@path ~home
+
+@  rc option files &amp; url's for pychecker and pylint
+
+1&gt; executeScript on this node will insert 
+the proper path to your home directory
+as the first line of this node.
+if it looks ok, remove the #comment to enable it.
+of course, you can just setup the path however you want
+no executescript is required, just another toy to play with.
+
+2&gt; remove ignore from at least pylint and pycheckrc
+check over details in the subnodes,
+although they both may work ok w/o rc files or with these as defaults.
+rc files are not one size fits all for every project and small script
+in some cases may have to specify an rc file on the command line.
+tags files is for source-highlite
+
+3&gt; if you already have rc files,
+before you save the leo do read @file first
+or don't remove the ignore on those you don't want to generate.
+
+4&gt;  write @file here to generate your
+pchecker and pylint rc files
+or save the leo as the case may be.
+nothing could be simpler...
+
+5&gt; this has not been tested on all systems.
+worst case if no suitable home can be found
+you must insert a proper path yourself.
+worst case than that, please post a traceback
+or some indication how it failed.
+
+6. as to pychecker and pylint being able to find
+the rc, if there are problems you may have to try
+to run them from the commandline to see whats what.
+you might try to set the env variable home=somewhere
+on nix systems this would probably never be necessary.
+although you cuold want to have the rc file accessable 
+for all users, I have no idea how to make that happen.
+
+7. with .name  files, there have been reports of some 
+problems on older windows. I've never had a problem.
+
+@c
+&lt;&lt; @home &gt;&gt;
+insertAhome(c)
+@language python
+@color
+</t>
+<t tx="ekr.20050421093045.138">@others
+def insertAhome(c,wch= 'i'): #i/r
+    """use to insertAt 1.0 #@path user.home
+   
+    incorperate fallbacks for win2k, XP, mac and nix 
+    still to be determined if spaces in path is a problem
+    not tested on a mac or nix or XP
+    """
+    import leoGlobals as g
+    import os, sys
+
+    home = None
+    #         ,nt/w2k?   xp  ,xp,   ,nix/mac 
+    l = 'USERPROFILE APPDATA home'.split()  #HOMEPATH HOMEDRIVE 
+    x = l.pop()
+    while x:
+        print x 
+        try:
+            home = os.environ[x]
+            if home.startswith('%') and home.endswith('%'):
+                home = os.environ[x[1:-1]]
+            break
+        except KeyError:
+            x = l.pop()
+    
+    if home is None:
+        if sys.platform == "win32": 
+            home = _APPDATA()
+    
+        elif sys.platform == "darwin": 
+            home =  getPrefsDir() 
+    
+        else:
+            home = os.path.expanduser("~")
+            if home == "~":
+                home = os.getenv("home", None)
+        
+    if home is None:
+        home = './' #use curent dir
+
+    home = g.os_path_normpath(g.os_path_abspath(home, encoding=None))
+
+    if sys.platform == "win32": 
+        home = GetLongPath(home)
+
+    if not g.os_path_isdir(home):
+        print 'give up', home; raise NameError
+
+    if 'i' in wch:
+        Tx = c.frame.body
+        Tx.setInsertionPoint(1.0)
+        Tx.insertAtInsertPoint('#@path %s\n'%(home,))
+        Tx.onBodyChanged("Typing")  
+
+    #return home
+</t>
+<t tx="ekr.20050421093045.139">
+def GetLongPath(shortname):
+    r"""
+    &gt;&gt;&gt; GetLongPath('c:\\Program Files')
+    'c:\\Program Files'
+    &gt;&gt;&gt; GetLongPath('c:\\progra~1')
+    'c:\\Program Files'
+    """
+    try:
+        from win32api import GetLongPathName
+        name = GetLongPathName(shortname)
+    except ImportError:
+        #not going to attempt to do this...
+        name = shortname
+    return name
+
+#shortpath = win32api.GetShortPathName(path)
+
+
+#maybe the Leo plugin dir belongs here? not sure on nix/mac
+def _APPDATA():
+    """
+     same code as above by changing CSIDL_APPDATA to
+CSIDL_LOCAL_APPDATA
+However, Win98/Me/NT4 do not support CSIDL_LOCAL_APPDATA, so you'll need to
+check for an error 
+    """
+    #check is win, if not there is major problem
+    print 'try for CSIDL_APPDATA'  # '%windir%/application data'
+    try:
+        from win32com.shell import shell, shellcon
+    except ImportError:
+        return None
+        
+    return shell.SHGetPathFromIDList (
+      shell.SHGetSpecialFolderLocation (0, shellcon.CSIDL_APPDATA)
+    )
+</t>
+<t tx="ekr.20050421093045.140">@
+from http://www.astro.washington.edu/rowen/ROPython.html
+
+@c
+
+
+def findFolder(domain, dirType, doCreate=False):
+    """Return a path to the specified standard directory or None if not found.
+    
+    The path is in unix notation for MacOS X native python
+    and Mac colon notation for Carbon python,
+    i.e. the form expected by the os.path module.
+    
+    Inputs:
+    - domain: one of the domain constants found in Carbon.Folders,
+        such as kUserDomain, kLocalDomain or kSystemDomain.
+    - dirType: one of the type constants found in Carbon.Folders,
+        such as kPreferencesFolderType or kTrashFolderType.
+    - doCreate: try to create the directory if it does not exist?
+    """
+    import Carbon.Folder, Carbon.Folders
+    import MacOS
+    try:
+        fsref = Carbon.Folder.FSFindFolder(domain, dirType, doCreate)
+        return fsref.as_pathname()
+    except MacOS.Error:
+        return None
+
+def getPrefsDir(doCreate = False):
+    """Return a path to the user's preferences folder.
+    
+    Inputs:
+    - doCreate	try to create the dir if it does not exist?
+
+    Returns None if the directory does not exist
+    (and could not be created if doCreate True).
+    """
+    import Carbon.Folder, Carbon.Folders
+    import MacOS
+    return findFolder(
+        domain = Carbon.Folders.kUserDomain,
+        dirType = Carbon.Folders.kPreferencesFolderType,
+        doCreate = doCreate,
+    )
+
+def getAppSuppDirs(doCreate = False):
+    """Return a list of paths to the user's and local (shared) application support folder.
+    
+    Inputs:
+    - doCreate	try to create each dir if it does not exist?
+    
+    If a folder does not exist (and could not be created if doCreate True),
+    it is omitted; hence returns [] if nothing found.
+    """
+    import Carbon.Folder, Carbon.Folders
+    import MacOS
+    retDirs = []
+    for domain in Carbon.Folders.kUserDomain, Carbon.Folders.kLocalDomain:
+        path = findFolder(
+            domain = domain,
+            dirType = Carbon.Folders.kApplicationSupportFolderType,
+            doCreate = doCreate,
+        )
+        if path != None:
+            retDirs.append(path)
+    return retDirs  
+</t>
+<t tx="ekr.20050421093045.141">#this should work even if python -O or -OO
+#http://rclick.netfirms.com/commonerrors.html
+if 1: #try:
+    assert(1 == 1)
+
+if 1: #finally:
+    import unittest
+    class t_(unittest.TestCase):
+        def runTest(self):
+            pass
+    t = t_()
+    t.assert_(1 == 1)
+</t>
+<t tx="ekr.20050421093045.142">urls to pychecker and pylint
+</t>
+<t tx="ekr.20050421093045.143">need common too
+run python setup.py install on both of them
+</t>
+<t tx="ekr.20050421093045.144"></t>
+<t tx="ekr.20050421093045.145">install pychecker python setup.py install
+then copy pychecker2 to site-packages
+and make mods mentioned in the pychecker2 macro if you want to try it.
+experimental and so far provides a minimal value on hard to debug scripts
+while pychecker is proven useful in more cases</t>
+<t tx="ekr.20050421093045.146">@ignore
+#Print instance variables (usage "pi classInst")
+alias pi for k in %1.__dict__.keys(): print "%1.",k,"=",%1.__dict__[k]
+#Print instance variables in self
+alias ps pi self
+
+</t>
+<t tx="ekr.20050421093045.147">@ignore
+#import user
+#sys.version 
+</t>
+<t tx="ekr.20050421093045.148">@ignore
+# Sample defaults file for PyChecker 0.8.13
+# This file should be called:  .pycheckrc
+# It should be placed in your home directory (value of $HOME).
+# If $HOME is not set, it will look in the current directory.
+
+# file = c:/prog/leoCVS/leo/src/leo.py
+
+# bool: warnings for Doc Strings
+noDocModule = 0
+noDocClass = 0
+noDocFunc = 0
+
+# bool: when checking if class data members (attributes) are set
+#       check all members or __init__() only
+onlyCheckInitForMembers = 0
+
+# bool: warn when all module variables are not used (including private vars)
+allVariablesUsed = 0
+
+# bool: produce warnings for each occurrence of a warning for global (xxx)
+reportAllGlobals = 0
+
+# bool: warn when private module variables are not used (_var)
+privateVariableUsed = 1
+
+# bool: warn when imports are not used
+importUsed = 1
+
+# bool: warn when import and from ... import are used for same module
+mixImport = 0 # EKR
+
+# bool: warn when imports are not used in __init__.py
+packageImportUsed = 1
+
+# bool: warn when a module reimports another module (import &amp; from/import)
+moduleImportErrors = 0 # EKR
+
+# bool: warn when modules import themselves
+reimportSelf = 0 # EKR
+
+# bool: warn when local variables are not used
+localVariablesUsed = 1
+
+# bool:  assume a, b, and c are used in this case:  a, b, c = func()
+unusedLocalTuple = 0
+
+# bool:  warn when class attributes (data members) are unused
+membersUsed = 0
+
+# bool: warn when Subclass.__init__ is not called in a subclass
+baseClassInitted = 1
+
+# bool: warn when Subclass needs to override methods that only throw exceptions
+abstractClasses = 1
+
+# bool: warn when __init__ is defined in a subclass
+initDefinedInSubclass = 0
+
+# bool: warn when __init__ returns None
+returnNoneFromInit = 1
+
+# bool: warn when code is not reachable
+unreachableCode = 0
+
+# bool: warn when a constant is used in a conditional statement (if '':)
+constantConditions = 1
+
+# bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
+constant1 = 0
+
+# bool: warn when iterating over a string in a for loop
+stringIteration = 1
+
+# bool: warn when setting a variable to different types
+inconsistentTypes = 0
+
+# bool: warn when setting a tuple of variables to a non-sequence (a, b = None)
+unpackNonSequence = 1
+
+# bool: warn when setting a tuple of variables to the wrong length (a, b = 1,)
+unpackLength = 1
+
+# bool: warn when using strings exceptions or 
+#       other classes not derived from Exception to raise/catch exceptions
+badExceptions = 1
+
+# bool: warn when statements appear to have no effect
+noEffect = 1
+
+# bool: warn when using (expr % 1), it has no effect on integers and strings
+modulo1 = 1
+
+# bool: warn if using (expr is const-literal), 
+# doesn't always work on integers and strings
+isLiteral = 0 # EKR
+
+# bool: warn when using a deprecated module or function
+deprecated = 1
+
+# bool: warn when the class attribute does not exist
+classAttrExists = 1
+
+# bool: warn when calling an attribute not a method
+callingAttribute = 0
+
+# bool: warn when using named arguments: func(a=1, b=2), where def func(a, b):
+#       def func2(a, b, **kw): doesn't generate a warning
+namedArgs = 0 # EKR
+
+# str: name of 'self' parameter
+methodArgName = 'self'
+
+# list of str: names of first parameter to classmethods
+## classmethodArgNames = ['cls', 'klass']
+
+# bool: warn when method/function arguments are unused
+argumentsUsed = 1
+
+# bool: ignore if self is unused in methods
+ignoreSelfUnused = 0
+
+# bool: warn if functions/classes/methods names are redefined in same scope
+redefiningFunction = 1
+
+# bool:  check if an overriden method has the same signature
+#	 as base class method (__init__() methods are not checked)
+checkOverridenMethods = 1
+
+# bool:  check if a special (reserved) method has the correct signature
+#	 and is known (these are methods that begin and end with __
+## checkSpecialMethods = 1
+
+# int: warnings for code complexity, max value before generating a warning
+maxLines = 2000
+maxBranches = 500
+maxReturns = 100
+maxArgs = 100
+maxLocals = 250
+maxReferences = 500
+
+# bool:  ignore all warnings from standard library components
+#	 (this includes anything under the standard library, eg, site-packages)
+ignoreStandardLibrary = 1 # EKR
+
+# list of strings: ignore unused locals/arguments if name is one of
+unusedNames = [
+    '_', 'empty', 'unused', 'dummy', 'event', 'commander',
+    'c', 'i', 'j', 'k', 's',
+    'tag', 'args', 'keys', 'keywords']
+
+# list of strings: ignore warnings generated from these modules
+blacklist = [
+    'leoGlobals',
+    'leoConfig',
+    'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
+    'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
+
+# list of strings: ignore global variables not used if name is one of
+variablesToIgnore = [ '__all__', '__version__', '__copyright__', ]
+
+# bool: print the PyChecker parse of modules, classes, etc.
+printParse = 0
+
+# bool: turn debugging of PyChecker on
+debug = 0
+
+# bool: check that attributes of objects exist
+checkObjectAttrs = 1
+
+# bool: various warnings about incorrect usage of __slots__
+slots = 1
+
+# bool: check if __slots__ is empty
+emptySlots = 1
+
+# bool: check for using properties in classic classes
+classicProperties = 1
+
+# bool: check for integer division (may be problem between Python versions)
+intDivide = 1
+
+# bool: check if local variables shadow a global variable with same name
+shadows = 0 # EKR
+
+# bool: check if input() is used, which is a security problem, use raw_input()
+usesInput = 1
+
+# bool: check if using a constant string to getattr()/setattr()
+# Doesn't exist.
+## constAttr = 1
+
+# bool: check for using +variable, since it is almost always has no effect
+unaryPositive = 1
+
+# bool: check for modifying a parameter with a default value
+#       (value must be: list, dict, instance)
+#       modifying the value may have undesirable/unexpected side-effects
+modifyDefaultValue = 1
+
+# bool: check if the exec statement is used (possible security problem)
+usesExec = 0
+
+# bool: check consistent return values
+checkReturnValues = 1
+
+# bool: check if using implict and explicit return values
+checkImplicitReturns = 1
+
+# dict: suppress warnings, key is module.class.method or module.function
+#	value is a string of command line arguments (can omit -- for long args)
+#       { 'module1': 'no-namedargs maxlines=0',
+#	  'module2.my_func': 'argsused',
+#	  'module3.my_class': 'no-initreturn', }
+if 1:
+    suppressions = {}
+else: # Doesn't work
+    suppressions = {
+        'leoFrame' : 'argumentsUsed=0',
+        'leoGui' : 'argumentsUsed=0' }
+
+# dict: suppress warnings where keys can be regular expressions
+suppressionRegexs = {}</t>
+<t tx="ekr.20050421093045.149">@ignore
+#t04413p12:07 lint Python modules using external checkers.
+    
+[MASTER]
+# Add &lt;file&gt; (may be a directory) to the black list. It should be a base name,
+# not a path. You may set this option multiple times.
+ignore=CVS
+
+# Pickle collected data for later comparisons.
+persistent=yes
+
+# Tells wether to display a full report or only the messages
+reports=yes
+
+# Python expression which should return a note less than 10 (10 is the highest
+# note).You have access to the variables errors, warnings, statements which
+# respectivly contain the number of errors / warnings messages and the total
+# number of statements analyzed. This is used by the global evaluation report
+# (R0004).
+evaluation='10.0 - ((float(5 * errors + warnings) / statements) * 10)'
+
+# Add a comment according to your evaluation note. This is used by the global
+# evaluation report (R0004).
+comment=no
+
+# Include message's id in output
+include-ids=no
+
+# checks for                                                              
+#    * external modules dependancies                                            
+#    * relative / wildcard imports                                                         
+#    * cyclic imports                                                           
+#    * uses of deprecated modules
+    
+[IMPORTS]
+# Enable / disable this checker
+enable-imports=yes
+
+# Deprecated modules which should not be used, separated by a comma
+deprecated-modules=regsub,string,TERMIOS,Bastion,rexec
+
+
+# checks for :                                                            
+#    * doc strings                                                              
+#    * modules / classes / functions / methods / arguments / variables name     
+#    * number of arguments, local variables, branchs, returns and statements infunctions, methods                                                       
+#    * required module attributes                                             
+#    * dangerous default values as arguments                                    
+#    * redefinition of function / method / class                                
+#    * uses of the global statement                                             
+    
+[BASIC]
+# Enable / disable this checker
+enable-basic=yes
+
+# Maximum number of arguments for function / method
+max-args=5
+
+# Maximum number of locals for function / method body
+max-locals=15
+
+# Maximum number of return / yield for function / method body
+max-returns=6
+
+# Maximum number of branch for function / method body
+max-branchs=12
+
+# Maximum number of statements in function / method body
+max-statements=50
+
+# Required attributes for module, separated by a comma
+required-attributes=__revision__
+
+# Regular expression which should only match functions which do not require a
+# docstring
+no-docstring-rgx=__.*__
+
+# Minimal length for module / class / function / method / argument / variable
+# names
+min-name-length=3
+
+# Regular expression which should only match correct module names
+module-rgx=([a-z_][a-z1-9_]*)|([A-Z][a-zA-Z]+)
+
+# Regular expression which should only match correct class names
+class-rgx=[A-Z][a-zA-Z1-9]+
+
+# Regular expression which should only match correct function names
+function-rgx=[a-z_][a-z1-9_]*
+
+# Regular expression which should only match correct argument names
+argument-rgx=[a-z_][a-z1-9_]*
+
+# Regular expression which should only match correct variable names
+variable-rgx=[a-z_][a-z1-9_]*
+
+# Good variable names which should always be accepted, separated by a comma
+good-names=i,j,k,ex
+
+# Bad variable names which should always be refused, separated by a comma
+bad-names=foo,bar,baz,toto,tutu,tata
+
+# List of builtins function names that should not be used, separated by a comma
+bad-functions=map,filter,apply,input
+
+# checks for                                                              
+#    * unused variables / imports                                               
+#    * undefined variables                                                      
+#    * redefinition of variable from builtins or from an outer scope            
+#    * use of variable before assigment                                         
+    
+[VARIABLES]
+# Enable / disable this checker
+enable-variables=yes
+
+# Tells wether we should check for unused import in __init__ files.
+init-import=no
+
+
+# checks for :                                                            
+#    * methods without self as first argument                                   
+#    * overriden methods signature                                              
+#    * access only to existant members via self                                 
+#    * attributes not defined in the __init__ method                            
+#    * supported interfaces implementation                                      
+#    * unreachable code                                                         
+    
+[CLASSES]
+# Enable / disable this checker
+enable-classes=yes
+
+# List of interface methods to ignore, separated by a comma. This is used for
+# instance to not check methods defines in Zope's Interface base class.
+ignore-iface-methods=isImplementedBy,deferred,extends,names,namesAndDescriptions,queryDescriptionFor,getBases,getDescriptionFor,getDoc,getName,getTaggedValue,getTaggedValueTags,isEqualOrExtendedBy,setTaggedValue,isImplementedByInstancesOf
+
+# Tells wether missing members accessed in mixin class should be ignored. A
+# mixin class is detected if its name ends with "mixin" (case insensitive).
+ignore-mixin-members=yes
+
+
+
+# checks for                                                              
+#    * excepts without exception filter                                         
+#    * string exceptions                                                        
+    
+[EXCEPTIONS]
+# Enable / disable this checker
+enable-exceptions=yes
+
+
+
+# does not check anything but gives some raw metrics :                    
+#    * total number of lines                                                    
+#    * total number of code lines                                               
+#    * total number of docstring lines                                          
+#    * total number of comments lines                                           
+#    * total number of empty lines                                              
+    
+[METRICS]
+# Enable / disable this checker
+enable-metrics=yes
+
+
+
+# checks for:                                                             
+#    * source code with non ascii characters but np encoding declaration ( 263)                                                                     
+#    * warning notes in the code like FIXME, XXX
+    
+[MISCELLANEOUS]
+# Enable / disable this checker
+enable-miscellaneous=yes
+
+# List of note tags to take in consideration, separated by a comma. Default to
+# FIXME, XXX, TODO
+notes=FIXME,XXX,TODO
+
+
+
+# checks for :                                                            
+#    * unauthorized constructions                                               
+#    * strict indentation                                                       
+#    * line length                                                              
+#    * use of &lt;&gt;
+    
+[FORMAT]
+# Enable / disable this checker
+enable-format=yes
+
+# Maximum number of characters on a single line.
+max-line-length=80
+
+# Maximum number of lines in a module
+max-module-lines=1000
+
+# String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1# tab). leave a tab here '	'
+indent-string='    '
+#this is a tab indent-string='	' 
+
+
+</t>
+<t tx="ekr.20050421093045.150">@ignore
+// generate to exist in your homeDir for source-highlite from htmlize
+keyword blue b ;
+type blue  ;
+string green ;
+comment red;
+number purple ;
+preproc darkblue b ;
+symbol brown ;
+function darkblue b;
+cbracket gray;
+
+// line numbers
+linenum black;
+
+// other elements for ChangeLog and Log files
+date blue b ;
+time darkblue b ;
+ip darkgreen ;
+file darkblue b ;
+name darkgreen ; </t>
+<t tx="ekr.20050421093045.151">@ignore 
+# css files for the rst plugin and htmlize macro
+
+#set @path to where the rst plugin and htmlize will output 
+path c:/windows/temp
+path c:/c/leo/HTML
+@language css
+
+
+fixed colors to be more Leo like
+uped the fonts a little. looks ok in IE 
+but firefox fonts are too small 
+and the @import url in the default doesn't work in firefox
+@color </t>
+<t tx="ekr.20050421093045.152">/*alternate default style sheet for the HTML output of Docutils.
+:Author: David Goodger, Ian Bicking 
+Blue Bars with Boxed Admonitions
+:version: $Revision$
+:copyright: This stylesheet has been placed in the public domain.
+ 
+
+preincluded leo and silvercity at the end, so firefox works better
+is not fully compatible yet. not sure why but @import url() failed.
+
+generate file rename to default.css where you will generate @rst nodes
+I guess htmlize should use this file as well.
+some kind of script to automatically change the font size and style
+to suite individulat taste would probably not be much work.
+some simplification is in order and some duplication is evident.
+
+
+there is also the problem of adding Rest directives on the fly
+and keeping the css up to date.
+code-block is one
+simple too small
+*/
+BODY {
+	FONT-FAMILY: Arial, sans-serif
+}
+EM {
+	FONT-FAMILY: Times New Roman, Times, serif
+}
+I {
+	FONT-FAMILY: Times New Roman, Times, serif
+}
+LI {
+	LIST-STYLE-TYPE: circle
+}
+A.target {
+	COLOR: blue
+}
+A.toc-backref {
+	COLOR: black; TEXT-DECORATION: none
+}
+A.toc-backref:hover {
+	
+}
+A:hover {
+	BACKGROUND-COLOR: #cccccc
+}
+CITE {
+	FONT-WEIGHT: bold; FONT-STYLE: normal; FONT-FAMILY: monospace
+}
+DD {
+	MARGIN-BOTTOM: 0.5em
+}
+DIV.abstract {
+	MARGIN: 2em 5em
+}
+DIV.abstract P.topic-title {
+	FONT-WEIGHT: bold; TEXT-ALIGN: center
+}
+DIV.attention {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.caution {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.danger {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.error {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.hint {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.important {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.note {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.tip {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.warning {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 3px; BORDER-TOP: outset; PADDING-LEFT: 3px; FLOAT: right; PADDING-BOTTOM: 3px; BORDER-LEFT: outset; WIDTH: 40%; PADDING-TOP: 3px; BORDER-BOTTOM: outset; BACKGROUND-COLOR: #cccccc
+}
+DIV.attention P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.caution P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.danger P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.error P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.warning P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; COLOR: #cc0000; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.hint P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.important P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.note P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.tip P.admonition-title {
+	DISPLAY: block; FONT-WEIGHT: bold; MARGIN: 0px; FONT-FAMILY: sans-serif; BACKGROUND-COLOR: #999999; TEXT-ALIGN: center
+}
+DIV.dedication {
+	MARGIN: 2em 5em; FONT-STYLE: italic; TEXT-ALIGN: center
+}
+DIV.dedication P.topic-title {
+	FONT-WEIGHT: bold; FONT-STYLE: normal
+}
+DIV.figure {
+	MARGIN-LEFT: 2em
+}
+DIV.footer {
+	FONT-SIZE: smaller
+}
+DIV.header {
+	FONT-SIZE: smaller
+}
+DIV.system-messages {
+	MARGIN: 5em
+}
+DIV.system-messages H1 {
+	COLOR: red
+}
+DIV.system-message {
+	BORDER-RIGHT: outset; PADDING-RIGHT: 1em; BORDER-TOP: outset; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; BORDER-LEFT: outset; PADDING-TOP: 1em; BORDER-BOTTOM: outset
+}
+DIV.system-message P.system-message-title {
+	FONT-WEIGHT: bold; COLOR: red
+}
+DIV.topic {
+	MARGIN: 2em
+}
+H1 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H2 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H3 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H4 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H5 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H6 {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 4px; BORDER-TOP: black thin solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black thin solid; PADDING-TOP: 4px; BORDER-BOTTOM: black thin solid; FONT-FAMILY: Helvetica, Arial, sans-serif; moz-border-radius: 8px
+}
+H1 {
+	BORDER-RIGHT: black solid; BORDER-TOP: black solid; BORDER-LEFT: black solid; COLOR: #ffffff; BORDER-BOTTOM: black solid; BACKGROUND-COLOR: #444499
+}
+H1 A.toc-backref {
+	COLOR: #ffffff
+}
+H2 A.toc-backref {
+	COLOR: #ffffff
+}
+H2 {
+	BORDER-RIGHT: black solid; BORDER-TOP: black solid; BORDER-LEFT: black solid; COLOR: #ffffff; BORDER-BOTTOM: black solid; BACKGROUND-COLOR: #666666
+}
+H3 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H4 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H5 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H6 {
+	COLOR: #000000; BACKGROUND-COLOR: #cccccc
+}
+H3 A.toc-backref {
+	COLOR: #000000
+}
+H4 A.toc-backref {
+	COLOR: #000000
+}
+H5 A.toc-backref {
+	COLOR: #000000
+}
+H6 A.toc-backref {
+	COLOR: #000000
+}
+H1.title {
+	BORDER-RIGHT: black thick solid; BORDER-TOP: black thick solid; BORDER-LEFT: black thick solid; COLOR: #eeeeee; BORDER-BOTTOM: black thick solid; BACKGROUND-COLOR: #444499; TEXT-ALIGN: center; moz-border-radius: 20px
+}
+H2.subtitle {
+	TEXT-ALIGN: center
+}
+HR {
+	WIDTH: 75%
+}
+OL.simple {
+	MARGIN-BOTTOM: 1em
+}
+UL.simple {
+	MARGIN-BOTTOM: 1em
+}
+OL.arabic {
+	LIST-STYLE-TYPE: decimal
+}
+OL.loweralpha {
+	LIST-STYLE-TYPE: lower-alpha
+}
+OL.upperalpha {
+	LIST-STYLE-TYPE: upper-alpha
+}
+OL.lowerroman {
+	LIST-STYLE-TYPE: lower-roman
+}
+OL.upperroman {
+	LIST-STYLE-TYPE: upper-roman
+}
+P.caption {
+	FONT-STYLE: italic
+}
+P.credits {
+	FONT-SIZE: smaller; FONT-STYLE: italic
+}
+P.first {
+	MARGIN-TOP: 0px
+}
+P.label {
+	WHITE-SPACE: nowrap
+}
+P.topic-title {
+	FONT-WEIGHT: bold
+}
+PRE.address {
+	MARGIN-TOP: 0px; FONT-SIZE: 100%; MARGIN-BOTTOM: 0px; FONT-FAMILY: serif
+}
+PRE.line-block {
+	FONT-SIZE: 100%; FONT-FAMILY: serif
+}
+PRE.literal-block {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 5px; BORDER-TOP: black thin solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN-LEFT: 2em; BORDER-LEFT: black thin solid; MARGIN-RIGHT: 2em; PADDING-TOP: 5px; BORDER-BOTTOM: black thin solid; BACKGROUND-COLOR: #eeeeee
+}
+PRE.doctest-block {
+	BORDER-RIGHT: black thin solid; PADDING-RIGHT: 5px; BORDER-TOP: black thin solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN-LEFT: 2em; BORDER-LEFT: black thin solid; MARGIN-RIGHT: 2em; PADDING-TOP: 5px; BORDER-BOTTOM: black thin solid; BACKGROUND-COLOR: #eeeeee
+}
+SPAN.classifier {
+	FONT-STYLE: oblique; FONT-FAMILY: sans-serif
+}
+SPAN.classifier-delimiter {
+	FONT-WEIGHT: bold; FONT-FAMILY: sans-serif
+}
+SPAN.interpreted {
+	FONT-FAMILY: sans-serif
+}
+SPAN.option-argument {
+	FONT-STYLE: italic
+}
+SPAN.pre {
+	WHITE-SPACE: pre
+}
+SPAN.problematic {
+	COLOR: red
+}
+TABLE {
+	MARGIN-TOP: 0.5em; MARGIN-BOTTOM: 0.5em
+}
+TABLE.citation {
+	PADDING-LEFT: 0.5ex; BORDER-LEFT: gray thin solid
+}
+TABLE.docinfo {
+	MARGIN: 2em 4em
+}
+TABLE.footnote {
+	PADDING-LEFT: 0.5ex; BORDER-LEFT: black thin solid
+}
+TD {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; VERTICAL-ALIGN: top
+}
+TH {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; VERTICAL-ALIGN: top
+}
+UNKNOWN {
+	MARGIN-TOP: 0em
+}
+TH.docinfo-name {
+	FONT-WEIGHT: bold; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+TH.field-name {
+	FONT-WEIGHT: bold; WHITE-SPACE: nowrap; TEXT-ALIGN: left
+}
+H1 TT {
+	FONT-SIZE: 100%
+}
+H2 TT {
+	FONT-SIZE: 100%
+}
+H3 TT {
+	FONT-SIZE: 100%
+}
+H4 TT {
+	FONT-SIZE: 100%
+}
+H5 TT {
+	FONT-SIZE: 100%
+}
+H6 TT {
+	FONT-SIZE: 100%
+}
+CODE {
+	COLOR: #000066
+}
+TT {
+	COLOR: #000066
+}
+UL.auto-toc {
+	LIST-STYLE-TYPE: none
+}
+
+@others</t>
+<t tx="ekr.20050421093045.153">/* Some of these styles taken from Gunnar Schwant's (g.schwant@gmx.de) DocFactory */
+
+/* tt is the class of the inline literal
+as 10pt
+*/
+
+tt { background-color: #ffffee } 
+
+.first {
+  font-size: 110% }
+
+.last {
+  font-size: 110% }
+
+a {
+  text-decoration: none }
+
+a.reference {
+  color: #00009F }
+
+a:hover {
+  background-color: #00009F ;
+  color: white }
+
+body {
+  font-family: arial,helvetica,univers ;
+  font-size: 110% ;
+  padding-top: 0.6cm ;
+  margin-left:0.5cm ;
+  margin-right:0.5cm ;
+  margin-bottom:0.5cm }
+
+/* dd appears to be the text of the definitions  padding-top: 0.1cm */
+dd {
+  font-size: 110% }
+  
+ dt {
+   font-style: italic }
+
+/* dt appears to be the word in a definition list line-height: 110%
+
+dt {
+  font-size: 110% ;
+  font-family: "Courier New", Courier;
+  }
+*/
+
+div.abstract {
+  font-size: 110% }
+
+div.abstract p.topic-title {
+  font-size: 110% }
+
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  font-size: 110% }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, div.hint p.admonition-title, 
+div.important p.admonition-title, div.note p.admonition-title, 
+div.tip p.admonition-title {
+  margin-top: 0em ;
+  font-size: 120% ;
+  font-family: arial,helvetica,univers }
+
+div.dedication {
+  font-size: 110% }
+
+div.dedication p.topic-title {
+  font-size: 110% }
+
+div.figure {
+  font-size: 110% }
+
+div.footer, div.header {
+  font-size: 9pt }
+
+div.system-messages {
+  font-size: 110% }
+
+div.system-messages h1 {
+  font-size: 120% }
+
+div.system-message {
+  font-size: 110% }
+
+div.system-message p.system-message-title {
+  font-size: 110% }
+
+div.topic {
+  font-size: 110% }
+
+h1, h2, h3, h4, h5, h6 {
+  padding-top: 0.5cm ;
+  page-break-after: avoid ;
+  font-family: arial,helvetica,univers }
+
+#content .subtitle {
+	font-size: .9em;
+}
+
+#content .title {
+	font-size: 1.6em;
+	font-weight: normal;
+}
+
+#content ul {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+	margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+
+h1 {
+	font-size: 1.4em;
+	border-bottom: .25pt solid #ccc;
+}
+
+h1.title {
+         font-size: 1.6em;
+         border-bottom:none}
+
+h2 {
+	font-size: 1.2em;
+}
+
+h3, h4, h5, h6 {
+	font-size: 1.0em;}
+
+hr {
+  width: 100%;
+  page-break-after: always }
+
+/* the following was creating too much space in the table of contents*/
+/*li {
+  padding-top: 1mm ;
+  padding-bottom: 1mm }*/
+  
+li {font-size: 10pt}
+
+ol.simple, ul.simple {
+  font-size: 110% }
+
+ol.arabic {
+  font-size: 110% }
+
+ol.loweralpha {
+  font-size: 110% }
+
+ol.upperalpha {
+  font-size: 110% }
+
+ol.lowerroman {
+  font-size: 110% }
+
+ol.upperroman {
+  font-size: 110% }
+
+p.caption {
+  font-size: 110% }
+
+p.credits {
+  font-style: italic ;
+  font-size: 8pt }
+
+p.label {
+  font-size: 110% }
+
+p.topic-title {
+  font-size: 110% }
+
+pre.address {
+  font-family: arial,helvetica,univers ;
+  font-size: 110% }
+
+pre.line-block {
+  background-color: #eeeeee ;
+  border-color: #999999 ;
+  border-width: 1pt ;
+  font-size: 10pt;
+  font-family: "Courier New", Courier }
+  
+  /*border: 1px dotted #999;*/
+
+pre.literal-block, pre.doctest-block {
+  border-width: 1pt ;
+  border-style: solid ;
+  border-color: #999999 ;
+  background-color: #ffffee ;
+  padding-left: 0.5ex ;
+  margin-left:0.5cm ;
+  font-size: 110% }
+  
+/*code class - this allows us to use literal-block for program code and make it gray with small text*/
+  pre.code {
+  background-color: #eeeeee ;
+  font-size: 10pt }
+
+span.classifier {
+  font-size: 110% ;
+  font-family: arial,helvetica,univers }
+
+span.classifier-delimiter {
+  font-size: 110% ;
+  font-family: arial,helvetica,univers }
+
+span.field-argument {
+  font-size: 110% }
+
+span.interpreted {
+  font-size: 110% ;
+  font-family: arial,helvetica,univers }
+
+span.option-argument {
+  font-size: 110% }
+
+span.problematic {
+  font-size: 110% }
+
+table {
+  font-size: 110% ;
+  border-collapse: collapse ;
+  border-width: 1.5pt ;
+  border-color: #003366 }
+
+table.citation {
+  font-size: 110% }
+
+table.docinfo {
+  font-size: 110% }
+
+table.footnote {
+  font-size: 8pt ;
+  text-align: left }
+
+/*table.table {
+  width: 100% } */
+
+th {
+  border-width: 1.5pt }
+
+td {
+  border-width: 1pt }
+
+td, th {
+  font-size: 9pt ;
+  border-style: thin ;
+  border-color: #003366 }
+
+td.docinfo-name, th.field-name {
+  font-size: 110% }
+
+h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+  font-size: 110% }
+  
+  /* SZ CHANGES*/
+  
+  div.system-messages {
+    margin: 5em }
+  
+  div.system-messages h1 {
+    color: red }
+  
+  div.system-message {
+    border: medium outset ;
+    padding: 1em }
+  
+  div.system-message p.system-message-title {
+    color: red ;
+  font-weight: bold }
+  
+  div.hint p.admonition-title, div.important p.admonition-title,
+  div.note p.admonition-title, div.tip p.admonition-title,
+  div.admonition p.admonition-title {
+  color: maroon }
+  
+  p.topic-title {
+  font-weight: bold }
+  
+  p.rubric {
+    text-align: left} ;
+    
+/* Following added for code-blocks if SilverCity is present*/
+    
+  div.code-block{
+    margin-left: 2em ;
+    margin-right: 2em ;
+    background-color: #eeeeee;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10pt;
+    white-space: nowrap;
+    }
+</t>
+<t tx="ekr.20050421093045.154">
+.code_default
+{
+    FONT-FAMILY: "Courier New", Courier, monospace;
+    FONT-SIZE: 110%;
+}
+
+.c_character
+{
+	color: olive;
+}
+
+.c_comment
+{
+	color: firebrick;
+	font-style: italic;
+}
+
+.c_commentdoc
+{
+	color: green;
+	font-style: italic;
+}
+
+.c_commentdockeyword
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.c_commentdockeyworderror
+{
+	color: red;
+	font-weight: bold;
+}
+
+.c_commentline
+{
+	color: green;
+	font-style: italic;
+}
+
+.c_commentlinedoc
+{
+	color: firebrick;
+	font-style: italic;
+}
+
+.c_default
+{
+}
+
+.c_identifier
+{
+	color: black;
+}
+
+.c_number
+{
+    color: #009999;
+}
+
+.c_operator
+{
+	color: black;
+}
+
+.c_preprocessor
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.c_regex
+{
+	color: #00aa00;
+}
+
+.c_string
+{
+	color: #00aa00;
+}
+
+.c_stringeol
+{
+	color: #00aa00;
+}
+
+.c_uuid
+{
+	color: olive;
+}
+
+.c_verbatim
+{
+	color: olive;
+}
+
+.c_word
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.c_word2
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.h_asp
+{
+    color: #ffff00;
+}
+
+.h_aspat
+{
+    color: #ffdf00;
+}
+
+.h_attribute
+{
+    color: #008080;
+}
+
+.h_attributeunknown
+{
+    color: #ff0000;
+}
+
+.h_cdata
+{
+    color: #ffdf00;
+}
+
+.h_comment
+{
+    color: #808000;
+}
+
+.h_default
+{
+}
+
+.h_doublestring
+{
+	color: olive;
+}
+
+.h_entity
+{
+    color: #800080;
+}
+
+.h_number
+{
+    color: #009999;
+}
+
+.h_other
+{
+    color: #800080;
+}
+
+.h_script
+{
+    color: #000080;
+}
+
+.h_singlestring
+{
+	color: olive;
+}
+
+.h_tag
+{
+    color: #000080;
+}
+
+.h_tagend
+{
+    color: #000080;
+}
+
+.h_tagunknown
+{
+    color: #ff0000;
+}
+
+.h_xmlend
+{
+    color: #0000ff;
+}
+
+.h_xmlstart
+{
+    color: #0000ff;
+}
+
+.pl_array
+{
+	color: black;
+}
+
+.pl_backticks
+{
+	color: olive;
+}
+
+.pl_character
+{
+	color: olive;
+}
+
+.pl_commentline
+{
+	color: green;
+	font-style: italic;
+}
+
+.pl_datasection
+{
+	color: olive;
+}
+
+.pl_default
+{
+}
+
+.pl_error
+{
+	color: red;
+	font-style: bold;
+}
+
+.pl_hash
+{
+	color: black;
+}
+
+.pl_here_delim
+{
+	color: olive;
+}
+
+.pl_here_q
+{
+	color: olive;
+}
+
+.pl_here_qq
+{
+	color: olive;
+}
+
+.pl_here_qx
+{
+	color: olive;
+}
+
+.pl_identifier
+{
+	color: black;
+}
+
+.pl_longquote
+{
+	color: olive;
+}
+
+.pl_number
+{
+    color: #009999;
+}
+
+.pl_operator
+{
+	color: black;
+}
+
+.pl_pod
+{
+	color: black;
+	font-style: italic;
+}
+
+.pl_preprocessor
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.pl_punctuation
+{
+	color: black;
+}
+
+.pl_regex
+{
+	color: olive;
+}
+
+.pl_regsubst
+{
+	color: olive;
+}
+
+.pl_scalar
+{
+	color: black;
+}
+
+.pl_string
+{
+	color: olive;
+}
+
+.pl_string_q
+{
+	color: olive;
+}
+
+.pl_string_qq
+{
+	color: olive;
+}
+
+.pl_string_qr
+{
+	color: olive;
+}
+
+.pl_string_qw
+{
+	color: olive;
+}
+
+.pl_string_qx
+{
+	color: olive;
+}
+
+.pl_symboltable
+{
+	color: black;
+}
+
+.pl_word
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.p_character
+{
+	color: 00aa00;
+}
+
+.p_classname
+{
+	color: blue;
+	font-weight: bold;
+}
+
+.p_commentblock
+{
+	color: firebrick;
+	font-style: italic;
+}
+
+.p_commentline
+{
+	color: firebrick;
+	font-style: italic;
+}
+
+.p_default
+{
+}
+
+.p_defname
+{
+    color: blue;
+	font-weight: bold;
+}
+
+.p_identifier
+{
+	color: black;
+}
+
+.p_number
+{
+    color: black;
+}
+
+.p_operator
+{
+	color: olive;
+}
+
+.p_string
+{
+	color: #00aa00;
+}
+
+.p_stringeol
+{
+	color: #00aa00;
+}
+
+.p_triple
+{
+	color: #00aa00;
+}
+
+.p_tripledouble
+{
+	color: #00aa00;
+}
+
+.p_word
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.yaml_comment
+{
+    color: #008800;
+	font-style: italic;
+}
+
+.yaml_default
+{
+}
+
+.yaml_document
+{
+    color: #808080;
+	font-style: italic;
+}
+
+.yaml_identifier
+{
+	color: navy;
+	font-weight: bold;
+}
+
+.yaml_keyword
+{
+    color: #880088;
+}
+
+.yaml_number
+{
+    color: #880000;
+}
+
+.yaml_reference
+{
+    color: #008888;
+}
+
+</t>
+<t tx="ekr.20050421093045.155">to debug a script that is run from an embedded interpreter,
+add 'rpdb.set_active()' in the beginning of your script.</t>
+<t tx="ekr.20050421093045.156">@path c:\bIn\bat\
+@lineending crlf
+set pydir=c:\c\py\Python233
+set rpdb=%pydir%\Lib\site-packages\rpdb.py
+
+%pydir%\python.exe %rpdb% --server %1 %2 %3 %4 %5 %6 %7 %8 %9
+
+
+exit
+#Started server on port 50009
+rpdb.py [-h] [-c [-aN] | -s] [-pM] script-name [script-args...]
+
+    Where the options above mean the following:
+    -h, --help     print extended help
+    -c, --client   start client side only (server will not spawn automatically)
+    -s, --server   start server side only (will wait for clients to connect)
+    -aN, --host=N  connect to server on host N
+    -pM, --port=M  connect to port M
+    
+   If you want to debug a script that is run from an embedded interpreter,
+        add 'rpdb.set_active()' in the beginning of your script. This will 
+        make the calls to 'rpdb.set_trace()' break into the debugger (they
+        will not be ignored). Don't forget to add an extra 'rpdb.set_trace()'
+        for your main thread. You also need to manually start rpdb.py in 
+        server mode before you run your script.
+
+#run the bat first to start rpdb in server mode
+#try debugging. at set trace control leo hangs and control is to rpdp
+#q will exit the console and return control to leo
+#probably there is a  continue
+Documented commands (type help &lt;topic&gt;):
+========================================
+EOF    bn     clear      debug    exit    jump  next  quit    step    unalias
+a      break  condition  disable  h       l     p     r       tbreak  up
+alias  bt     cont       down     help    list  pdb   return  tc      w
+args   c      continue   enable   ignore  load  pp    s       ts      whatis
+b      cl     d          exec     j       n     q     save    u       where
+
+* &gt; q
+Connection MainThread is not responsive.It may be running, blocked on system call, or doing non Pythonish code.
+
+
+
+import rpdb
+rpdb.set_active()
+try:
+    a = a
+except Exception:
+    rpdb.set_trace()
+    print 'caught a=a and set trace'
+
+
+#print help
+import os, sys
+runcmd = sys.modules['dyna_menu'].runcmd
+
+rpdb= r'c:\c\py\Python233\Lib\site-packages\rpdb.py'
+output, errout = runcmd('python.exe %s --help'%rpdb)
+
+print output, errout
+
+
+#e</t>
+<t tx="ekr.20050421093045.157">remote pdb. http://rpdb.digitalpeers.com/
+c:\bIn\bat\rpdb.bat
+</t>
+<t tx="ekr.20050421093045.158">&lt;http://www.hiddensoft.com/AutoIt&gt; 
+a way to automate open leo. 
+AutoIt3, windows only though. 
+
+
+http://www.autoitscript.com/autoit3/
+ 
+regsvr32 AutoItX3.dll
+</t>
+<t tx="ekr.20050421093045.159">@path c:\c\chall\osix_Geek\
+@language elisp
+;
+; AutoIt Version: 3.0
+;
+;   Opens Leo with no filename, then opens a new, closes it
+;  preliminary will eventually programatically create
+;    leoPlugins.txt and various leoSettings.leo
+;   and run commands in all permutations looking for failures
+; paths hardwired but later scripts will be created on the fly
+; not sure about reading back the error returns and and stderr tracebacks
+; maybe Leo can have a -trace mode to output to file a log of activities?
+
+; exit when CTRL+ALT+x is pressed
+HotKeySet("^!x", "MyExit")
+
+
+@color 
+
+Func MyExit()
+    Exit 
+EndFunc 
+
+;===============================================================================
+;
+; Description:      Executes a DOS command in a hidden command window.
+; Syntax:           _RunDOS( $sCommand )
+; Parameter(s):     $sCommand - Command to execute
+; Requirement(s):   None
+; Return Value(s):  On Success - Returns the exit code of the command
+;                   On Failure - Depends on RunErrorsFatal setting
+; Author(s):        Jeremy Landes &lt;jlandes@landeserve.com&gt;
+; Note(s):          None
+;
+;===============================================================================
+Func _RunDOS( $sCommand )
+  Return RunWait( @ComSpec &amp; " /C """ &amp; $sCommand &amp; """", "", @SW_HIDE )
+EndFunc
+
+
+Opt("SendKeyDelay", 1)
+Opt("WinWaitDelay", 80)
+
+
+; Send("cd \c\{ENTER}") ;need to cd somewhere?
+Run("python c:\c\leo\V43leos\leo\src\leo.py")
+Sleep(2700) 
+
+WinWaitActive("untitled")   
+
+Sleep(700) 
+Send("!Fn")  ;how to tell if there are errors?
+Sleep(2700) 
+
+
+Send("!Fx")
+Sleep(2700) 
+
+
+Send("!Fx")
+
+; Finished!</t>
+<t tx="ekr.20050421093045.160">
+c:/c/chall/osix_Geek/leoopen1.au3cd 
+
+
+
+have to learn the sendkeys better
+some of the output is to this node
+exiting Leo exits the python command window too
+
+x and %F went into the body of the untitled leo
+
+
+will need to change HOME on demand so don't use my settings etc
+rename leoSettings so test with builtin defaults and on and on
+
+
+AutoItSetOption().
+SendKeyDelay Alters the the length of the brief pause in between sent keystrokes.
+Time in milliseconds to pause (default=5). Sometimes a value of 0 does not work; use 1 instead. 
+WinWaitDelay Alters how long a script should briefly pause after a successful window-related operation.
+Time in milliseconds to pause (default=250). 
+Set oAutoIt = WScript.CreateObject("AutoItX3.Control")
+oldvalue = oAutoIt.Opt("SendAttachMode", 0)
+
+
+
+Run("c:\WINDOWS\Command.pif")
+WinWaitActive("MS-DOS Prompt")   
+
+
 </t>
 <t tx="ekr.20050427102121"></t>
 <t tx="ekr.20050513171201">'''usetemacs is a Leo plugin that patches the temacs modules Emacs emulation
@@ -13205,8 +21999,196 @@ Edward K. Ream:  Aug 22, 2005.</t>
 <t tx="ekr.20050830091910"></t>
 <t tx="ekr.20051025144116">c.spellCommands.openSpellTab()</t>
 <t tx="ekr.20051109021852">@ Not ready for prime time yet.</t>
-<t tx="ekr.20060107084945"></t>
-<t tx="ekr.20060107100005">dddd</t>
+<t tx="ekr.20060107100005"></t>
+<t tx="ekr.20060108171459">if 0: # Use settings instead of this.
+
+    @others</t>
+<t tx="ekr.20060108193620"></t>
+<t tx="ekr.20060109001152">@nocolor
+
+I do not pretend to understand this code. I have simply done some mechanical
+modifications to eliminate all call to g.top().
+
+- All functions or methods that used to call g.top() now have a *required* c parameter.
+
+- All calls to such functions now have that required c parameter.
+
+**Warning**: The c paramter in those modified calls might not exist. The changes
+are totally untested, except that I have made sure the dynaMenu plugin can load,
+i.e., there are no syntax errors.</t>
+<t tx="ekr.20060109063941">def init ():
+
+    if Pmw and not g.app.unitTesting: # Not for unit testing:  modifies core classes.
+        if g.app.gui is None: 
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            &lt;&lt; override various methods &gt;&gt;
+            g.plugin_signon( __name__ )</t>
+<t tx="ekr.20060109105601"></t>
+<t tx="mork.20040926105355.1">&lt;&lt;docstring&gt;&gt;
+
+# To do:  Find/Change does not appear to work.
+
+@language python
+@tabwidth -4
+
+__version__ = "0.68"
+&lt;&lt; version history &gt;&gt;
+&lt;&lt; imports &gt;&gt;
+&lt;&lt; globals &gt;&gt;
+
+# Solve problems with string.atoi...
+import string
+string.atoi = int
+
+@others
+</t>
+<t tx="mork.20040926105355.2">chapters = {}
+notebooks = {}
+frames = {}
+iscStringIO = False
+twidgets = {}
+pbodies = {}
+
+</t>
+<t tx="mork.20040926105355.3">def viewIndex( c , nodes = None, tle = '' ):
+    if nodes == None:
+        nodes = [ x for x in walkChapters( c, chapname = True ) ]
+    def aN( a ):
+        n = a[ 0 ].headString()
+        return n, a[ 0 ], a[ 1 ]
+    nodes = map( aN, nodes )
+    nodes.sort()
+    tl = Tk.Toplevel()
+    import time    
+    title = "%s Index of %s created at %s" % ( tle, c.frame.shortFileName(), time.ctime())
+    tl.title( title )
+    f = Tk.Frame( tl )
+    f.pack( side = 'bottom' )
+    l = Tk.Label( f, text = 'ScrollTo:' )
+    e = Tk.Entry( f , bg = 'white', fg = 'blue')
+    l.pack( side = 'left' )
+    e.pack( side ='left' )
+    b = Tk.Button( f, text = 'Close' )
+    b.pack( side = 'left' )
+    def rm( tl = tl ):
+        tl.withdraw()
+        tl.destroy()
+    b.configure( command = rm )
+    sve = Tk.StringVar()
+    e.configure( textvariable = sve )
+    ms = tl.maxsize()
+    tl.geometry( '%sx%s+0+0' % (ms[ 0 ], (ms[ 1 ]/4 )*3 ))
+    sc = Pmw.ScrolledCanvas( tl , vscrollmode = 'static', hscrollmode = 'static', 
+    usehullsize = 1, borderframe = 1, hull_width = ms[ 0 ], hull_height = (ms[ 1 ]/4 )*3 )
+    sc.pack()
+    can = sc.interior()
+    can.configure( background = 'white' )
+    bal = Pmw.Balloon( can )
+    
+    tags = {}
+    #ltag = None
+    buildIndex( nodes , c, can, tl, bal, tags)            
+    sc.resizescrollregion()
+    def scTo( event , nodes = nodes, sve = sve , can = can , tags = tags):
+        t = sve.get()
+        if event.keysym == 'BackSpace':
+            t = t[ : -1 ]
+        else:
+            t = t + event.char
+        if t == '': return
+        for z in nodes:
+            if z[ 0 ].startswith( t ) and tags.has_key( z[ 1 ] ):
+                tg = tags[ z[ 1 ] ]
+                eh = can.bbox( ltag )[ 1 ]
+                eh = (eh *1.0)/100
+                bh = can.bbox( tg )[ 1 ]
+                ncor = (bh/ eh) * .01 
+                can.yview( 'moveto' , ncor)
+                return
+
+    e.bind( '&lt;Key&gt;', scTo )
+    e.focus_set()
+</t>
+<t tx="mork.20040926105355.4">def regexViewIndex (c):
+
+    def regexWalk (result,entry,widget):
+        txt = entry.get()
+        widget.deactivate()
+        widget.destroy()
+        if result == 'Cancel': return None
+        nodes = [x for x in walkChapters(c,chapname=True)]
+        import re
+        regex = re.compile(txt)
+        def search (nd,regex=regex):
+            return regex.search(nd[0].bodyString())
+        nodes = filter(search,nodes)
+        viewIndex(c,nodes,'Regex( %s )' % txt)
+        return
+
+    sd = Pmw.PromptDialog(c.frame.top,
+        title = 'Regex Index',
+        buttons = ('Search','Cancel'),
+        command = regexWalk,
+    )
+    entry = sd.component('entry')
+    sd.configure(command=
+        lambda result, entry = entry, widget = sd:
+            regexWalk(result,entry,widget))
+    sd.activate(geometry='centerscreenalways')</t>
+<t tx="mork.20040926105355.5">def renumber( notebook ):
+    pagenames = notebook.pagenames()
+    for i , z in enumerate(pagenames):
+        i = i +1
+        tab = notebook.tab( z )
+        tab.configure( text = str( i ) )
+</t>
+<t tx="mork.20040926105355.6">def getGoodPage( event , body ):
+    global focusing
+    c = body.c 
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    body.frame.body = body
+    body.frame.bodyCtrl = body.bodyCtrl
+    if not hasattr( body, 'lastChapter' ):
+        body.lastChapter = notebook.getcurselection()
+    page = checkChapterValidity( body.lastChapter, c )
+    if page != notebook.getcurselection():
+        body.lastChapter = page
+        notebook.selectpage( page )
+    selectNodeForEditor( c, body )         
+    activateEditor( body )</t>
+<t tx="mork.20040926105355.7">def checkChapterValidity( name , c):
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    try:
+        notebook.index( name )
+    except:
+        return notebook.getcurselection()            
+    return name
+</t>
+<t tx="mork.20040926105355.8">def insertChapters (chapters,frame,c):
+     notebook = notebooks.get(c)
+     if not notebook: return # For unit testing
+     pagenames = notebook.pagenames()
+     for num, tup in enumerate(chapters):
+            x, y = tup
+            if num &gt; 0:
+                sv = addPage(c,x).sv
+                notebook.nextpage()
+                cselection = notebook.getcurselection()
+            else:
+                cselection = notebook.getcurselection()
+                sv = getSV(c,cselection)
+            sv.set(x)
+            next = cselection
+            setTree(c,next,notebook)
+            frame.c.fileCommands.open(y,sv.get())
+            if num == 0:
+                flipto = cselection
+     setTree(flipto,notebook,c)
+     c.frame.canvas.update_idletasks()</t>
 <t tx="mork.20040926105355.9">def openChaptersFile( fileName ):
     zf = zipfile.ZipFile( fileName )
     import cStringIO
@@ -13224,15 +22206,167 @@ Edward K. Ream:  Aug 22, 2005.</t>
     csfiles = zip( csfiles[ 0 ], csfiles[ 1 ] )
     return csfiles
 </t>
+<t tx="mork.20040926105355.20">def getSV (c,name):
+
+    '''return a Tk StrinVar that is a primary identifier.'''
+
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    index = notebook.index(name)
+    page = notebook.page(index)
+    return page.sv
+</t>
+<t tx="mork.20040926105355.21">cControl = leoTkinterFrame.leoTkinterBody.createControl
+
+def newCreateControl( self, frame, parentFrame  ):
+    c = self.c
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    if c not in pbodies:
+        parentFrame = createPanedWidget( parentFrame, c )
+    pbody = pbodies[ c ]
+    l, r =addHeading( parentFrame )
+    ctrl = cControl( self, frame , parentFrame ) 
+    ctrl.bind( "&lt;FocusIn&gt;", lambda event, body = frame.body : getGoodPage( event, body ), '+' )
+    i = 1.0 / len( pbody.panes() )
+    for z in pbody.panes():
+        pbody.configurepane( z , size = i )
+    pbody.updatelayout()
+    frame.body.l =l
+    frame.body.r =r 
+    frame.body.editorName = editorNames[ parentFrame ]
+    if frame not in twidgets:
+        twidgets[ frame ] = []
+    twidgets[ frame ].append( frame.body )
+    l.configure( textvariable = getSV(c, notebook.getcurselection()) )
+    return ctrl
+</t>
+<t tx="mork.20040926105355.22">editorNames = {}
+
+def newEditorPane( c ):
+    names = pbodies[ c ].panes()
+    if names:
+        name  = str( int(names[ -1 ]) + 1 )
+    else:
+        name = '1'
+    zpane = pbodies[ c ].add( name )
+    editorNames[ zpane ] = name
+    return zpane
+</t>
+<t tx="mork.20040926105355.23">def newCreateCanvas( self, parentFrame, createCanvas = leoTkinterFrame.leoTkinterFrame.createCanvas ):
+    c = self.c
+    
+    if c not in frames:
+        frames[ c ] = self
+        notebook = createNoteBook( c, parentFrame )
+    else:
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing
+        
+    pname = notebook.nameMaker.next()
+    page = notebook.add( pname )
+    indx = notebook.index( pname )
+    tab = notebook.tab( indx )
+    if indx == 0:
+        tab.configure( background = 'grey', foreground = 'white' )
+    canvas = createCanvas( self, page )
+    
+    hull = notebook.component( 'hull' )
+    tab.bind( '&lt;Button-3&gt;' , lambda event : hull.tmenu.post( event.x_root , event.y_root ) )
+    sv = Tk.StringVar()
+    page.sv = sv
+    createBalloon( tab, sv )
+    canvas.name = pname
+    
+    # g.trace(repr(canvas.name),canvas)
+
+    return canvas</t>
+<t tx="mork.20040926105355.24">def newTreeinit( self, c,frame,canvas, oinit = leoTkinterTree.leoTkinterTree.__init__ ):
+    
+    # g.trace(canvas)
+
+    sv = getSV(c, canvas.name)
+    oinit( self, c, frame, canvas )
+    self.chapter = chapters[ sv ] = Chapter( c, self , frame, canvas )
+</t>
+<t tx="mork.20040926105355.25">def constructTree( frame , notebook, name ):
+    
+    canvas = treeBar = tree = None
+    if frame.canvas:
+        canvas = frame.canvas
+        treeBar = frame.treeBar
+        tree = frame.tree
+    sv = Tk.StringVar()
+    sv.set( name )
+    canvas = frame.createCanvas( None )
+    frame.canvas =  canvas
+    frame.tree = leoTkinterTree.leoTkinterTree( frame.c ,frame, frame.canvas)
+    frame.tree.setColorFromConfig()
+    indx = notebook.index( notebook.pagenames()[ -1 ] )
+    tab = notebook.tab( indx )
+    tnum = str( len( notebook.pagenames() ) ) 
+    tab.configure( text = tnum )
+    hull = notebook.component( 'hull' )
+    tab.bind( '&lt;Button-3&gt;' , lambda event ,hull = hull: hull.tmenu.post( event.x_root , event.y_root ) )
+    return tree , notebook.page( notebook.pagenames()[ - 1 ] )
+</t>
+<t tx="mork.20040926105355.26">def addPage( c , name = None ):
+
+    frame = frames[ c ]
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    if name == None : name = str( len( notebook.pagenames() ) + 1 )
+    o_chapter = c.cChapter
+    otree, page  = constructTree( frame, notebook, name )
+    c.cChapter.makeCurrent()
+    o_chapter.makeCurrent()
+    return page
+</t>
+<t tx="mork.20040926105355.27">def setTree(c, name , notebook):
+    
+    if not c or not c.exists: return None
+    pindex = notebook.index( name )
+    page = notebook.page( pindex )
+    if not hasattr( page, 'sv' ) : return None
+    sv = page.sv
+    chapter = chapters[ sv ]
+    chapter.makeCurrent()
+    frame = c.frame
+    frame.body.lastChapter = name
+    frame.body.lastNode = chapter.cp
+    frame.body.l.configure( textvariable = sv )
+    tab = notebook.tab( pindex )
+    tab.configure( background = 'grey', foreground = 'white' )
+    activateEditor( frame.body )
+</t>
+<t tx="mork.20040926105355.28">old_getLeoFile = leoFileCommands.fileCommands.getLeoFile
+
+def newGetLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    global iscStringIO
+
+    if iscStringIO:
+        def dontSetReadOnly (self,name,value):
+            if name not in ('read_only','tnodesDict'):
+                self.__dict__ [name] = value
+        self.read_only = False
+        self.__class__.__setattr__ = dontSetReadOnly
+
+    rt = old_getLeoFile(self,fileName,readAtFileNodesFlag,silent)
+    if iscStringIO:
+        del self.__class__.__setattr__
+
+    return rt</t>
 <t tx="mork.20040926105355.29">oldOpen = leoFileCommands.fileCommands.open
 
 def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
 
-    global iscStringIO
+    global iscStringIO,stringIOCommander
     c = self.c
     
     if zipfile.is_zipfile( fileName ):
         iscStringIO = True
+        stringIOCommander = c
         chapters = openChaptersFile( fileName )
         g.es( str( len( chapters ) ) + " Chapters To Read", color = 'blue' )
         insertChapters( chapters, c.frame, c )
@@ -13241,17 +22375,815 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
         return True
 
     return oldOpen(self,file,fileName,readAtFileNodesFlag,silent)</t>
+<t tx="mork.20040926105355.30">def newWrite_LEO_file( self,fileName,outlineOnlyFlag, singleChapter = False):
+    
+    c = self.c
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    pagenames = notebook.pagenames()
+    at = c.atFileCommands
+    if len( pagenames ) &gt; 1 and not singleChapter:        
+        chapList = []
+        self.__class__.__setattr__ =  getMakeStringIO( chapList )
+        rv = writeChapters( self, fileName, pagenames, c , outlineOnlyFlag )
+        if rv:
+            zipChapters( fileName, pagenames, c, chapList )
+        del self.__class__.__setattr__         
+    else:
+        rv = olWrite_LEO_file( self, fileName, outlineOnlyFlag )
+
+    return rv</t>
+<t tx="mork.20040926105355.31">if hasattr( leoFileCommands.fileCommands, 'write_LEO_file' ):
+    olWrite_LEO_file = leoFileCommands.fileCommands.write_LEO_file
+else:
+    olWrite_LEO_file = leoFileCommands.fileCommands.write_Leo_file
+    
+
+def cloneToChapter( c , name ):
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    page = notebook.page( notebook.index( name ) )
+    c.beginUpdate()
+    vnd = c.currentPosition()
+    clo = vnd.clone( vnd )
+    clChapter = chapters[ page.sv ]
+    vndm = clChapter.cp
+    clo.unlink()
+    clo.linkAfter(vndm)
+    c.endUpdate()
+</t>
+<t tx="mork.20040926105355.32">def moveToChapter( c, name ):
+    
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    page = notebook.page( notebook.index( name ) )
+    mvChapter = chapters[ page.sv ]
+    c.beginUpdate()
+    vnd = c.currentVnode()
+    if  not vnd.parent() and not vnd.back() :
+        c.endUpdate()
+        return None
+    vndm = mvChapter.cp
+    vnd.unlink()
+    vnd.linkAfter(vndm)
+    c.endUpdate()
+    c.selectVnode( c.rootVnode() )
+
+</t>
+<t tx="mork.20040926105355.33">def copyToChapter( c, name ):
+    
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    page = notebook.page( notebook.index( name ) )
+    cpChapter = chapters[ page.sv ]
+    c.beginUpdate()
+    s = c.fileCommands.putLeoOutline()
+    v = c.fileCommands.getLeoOutline( s )
+    cpChapter.setVariables()
+    mvnd = cpChapter.cp
+    v.moveAfter( mvnd )
+    c.cChapter.setVariables()
+    c.endUpdate()
+
+</t>
+<t tx="mork.20040926105355.34">old_os_pat_dirname = g.os_path_dirname
+
+def new_os_path_dirname (path,encoding=None):
+    
+    global iscStringIO,stringIOCommander
+
+    if iscStringIO:
+        c = stringIOCommander
+        return os.path.dirname(c.mFileName)
+    else:
+        return old_os_pat_dirname(path,encoding)</t>
+<t tx="mork.20040926105355.35">def newEditor (c):
+
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    frame = frames [c]
+    pbody = pbodies [c]
+    zpane = newEditorPane(c)
+    af = leoTkinterBody(frame,zpane)
+    c.frame.bodyCtrl = af.bodyCtrl
+    af.setFontFromConfig()
+    af.createBindings(frame)
+    af.bodyCtrl.focus_set()
+    cname = notebook.getcurselection()
+    af.l.configure(textvariable=getSV(c,cname))
+    af.r.configure(text=c.currentVnode().headString())</t>
+<t tx="mork.20040926105355.36">def removeEditor( c ):
+    pbody = pbodies[ c ]
+    if len( pbody.panes() ) == 1: return None
+    body = c.frame.body
+    pbody.delete( body.editorName )
+    pbody.updatelayout()
+    panes = pbody.panes()
+    twidgets[ c.frame ].remove( body )
+    nBody = twidgets[ c.frame ][ 0 ] 
+    nBody.bodyCtrl.focus_set()
+    nBody.bodyCtrl.update_idletasks()
+</t>
+<t tx="mork.20040926105355.37">def conversionToSimple( c ):
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    vnd = c.rootPosition()
+    while 1:
+        n = vnd.next()
+        if n == None:
+            break
+        else:
+            vnd = n
+    pagenames = notebook.pagenames()
+    current = notebook.getcurselection()
+    pagenames.remove( current )
+    c.beginUpdate()
+    for z in pagenames:
+        index = notebook.index( z )
+        page = notebook.page( index )
+        chapter = chapters[ page.sv ]
+        rvNode = chapter.rp
+        while 1:
+            nxt = rvNode.next()
+            rvNode.moveAfter( vnd )
+            if nxt: rvNode = nxt
+            else:
+                vnd = rvNode 
+                break
+        notebook.delete( z )
+    c.endUpdate()
+    renumber( notebook )       
+</t>
+<t tx="mork.20040926105355.38">def conversionToChapters( c ):
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    vnd = c.rootPosition()
+    while 1:
+        nxt = vnd.next()
+        if nxt:
+            makeNodeIntoChapter(c , nxt )
+        else:
+            break
+    setTree( notebook.pagenames()[ 0 ], notebook , c )     
+</t>
+<t tx="mork.20040926105355.39">def makeNodeIntoChapter( c, vnd = None ):
+    renum = vnd
+    if vnd == None:
+        vnd = c.currentPosition()
+    if vnd == c.rootPosition() and vnd.next() == None:
+        return
+    nxt = vnd.next()
+    if nxt:
+        vnd.doDelete( nxt )
+        
+    page = addPage( c )
+    mnChapter = chapters[ page.sv ]
+    c.beginUpdate()
+    oChapter = c.cChapter
+    mnChapter.makeCurrent()
+    root = mnChapter.rp
+    vnd.moveAfter( root )
+    c.setRootPosition( vnd )
+    oChapter.makeCurrent()
+    c.endUpdate()
+    if not renum:
+        notebook = notebooks.get(c)
+        if notebook: # For unit testing
+            renumber(notebook)
+    c.selectPosition( oChapter.rp )
+</t>
+<t tx="mork.20040926105355.40">def walkChapters( c , ignorelist = [], chapname = False):
+    # a generator that allows one to walk the chapters as one big tree
+    if not c or not c.exists: return
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    pagenames = notebook.pagenames()
+    for z in pagenames:
+        sv = getSV(c, z)
+        chapter = chapters[ sv ]
+        v = chapter.rp
+        while v:
+            if chapname:
+                if v not in ignorelist: yield v, z
+            else:
+                if v not in ignorelist:  yield v
+            v = v.threadNext()
+</t>
+<t tx="mork.20040926105355.41">def makeTabMenu( widget, notebook, c ):
+    #creates the Menu that appears
+    tmenu = Tk.Menu( widget, tearoff = 0 )
+    widget.bind( '&lt;Button-3&gt;' , lambda event : tmenu.post( event.x_root , event.y_root ) )
+    widget.tmenu = tmenu
+    tmenu.add_command( command = tmenu.unpost )
+    tmenu.add_separator()
+    ac = getAddChapter( c, notebook )
+    tmenu.add_command( label = 'Add Chapter', command = ac )
+    rmenu = Tk.Menu( tmenu , tearoff = 0 )    
+    remove = getRemove( notebook, c, rmenu )
+    rmenu.configure( postcommand = remove )        
+    tmenu.add_cascade( menu = rmenu, label = "Remove Chapter" )
+    rename = getRename(c, notebook )
+    tmenu.add_command( label = "Add/Change Title" , command = rename )
+    opmenu = Tk.Menu( tmenu, tearoff = 0 )
+    tmenu.add_cascade( menu = opmenu , label = 'Node-Chapter Ops' )
+    cmenu = Tk.Menu( opmenu, tearoff = 0 )
+    movmenu = Tk.Menu( opmenu, tearoff = 0 )
+    copymenu = Tk.Menu( opmenu, tearoff = 0 )
+    swapmenu = Tk.Menu( opmenu, tearoff = 0 )
+    searchmenu = Tk.Menu( opmenu, tearoff = 0 )
+    opmenu.add_cascade( menu = cmenu, label = 'Clone To Chapter' )
+    opmenu.add_cascade( menu = movmenu, label = 'Move To Chapter' )
+    opmenu.add_cascade( menu = copymenu, label = 'Copy To Chapter' )
+    opmenu.add_cascade( menu = swapmenu, label = 'Swap With Chapter' )
+    opmenu.add_cascade( menu = searchmenu, label = 'Search and Clone To' )
+    opmenu.add_command( label ="Make Node Into Chapter", command = lambda c=c:  makeNodeIntoChapter( c ) )
+    mkTrash = getMakeTrash( notebook )
+    opmenu.add_command( label = "Add Trash Barrel", command =
+    lambda c = c : mkTrash( c ))
+    opmenu.add_command( label = 'Empty Trash Barrel', command =
+    lambda notebook = notebooks.get(c), c = c: emptyTrash( notebook, c ) )
+    setupMenu = getSetupMenu( c, notebook )
+    cmenu.configure(
+        postcommand = lambda menu = cmenu, command = cloneToChapter : setupMenu( menu, command ) )
+    movmenu.configure(
+        postcommand = lambda menu = movmenu, command = moveToChapter : setupMenu( menu, command ) )
+    copymenu.configure(
+        postcommand = lambda menu = copymenu, command = copyToChapter : setupMenu( menu, command ) ) 
+    swapmenu.configure( postcommand = 
+    lambda menu = swapmenu, command = swapChapters : setupMenu( menu, command ) )
+    searchmenu.configure( postcommand = lambda menu = searchmenu,
+    command = regexClone: setupMenu( menu, command, all = True ) )
+    edmenu = Tk.Menu( tmenu, tearoff = 0 )
+    tmenu.add_cascade( label = "Editor", menu = edmenu )
+    edmenu.add_command( label = "Add Editor" , command = lambda c =c : newEditor( c ) ) 
+    edmenu.add_command( label = "Remove Editor", command = lambda c = c : removeEditor( c ) )
+    conmenu = Tk.Menu( tmenu, tearoff = 0 )
+    tmenu.add_cascade( menu = conmenu, label = 'Conversion' )
+    conmenu.add_command(
+        label = "Convert To Simple Outline",
+        command = lambda c =c : conversionToSimple( c ) )
+    conmenu.add_command(
+        label = "Convert Simple Outline into Chapters",
+        command = lambda c= c : conversionToChapters( c ) )
+    iemenu = Tk.Menu( tmenu, tearoff = 0 )
+    tmenu.add_cascade(label = 'Import/Export', menu = iemenu )
+    iemenu.add_command( label = "Import Leo File ", command = lambda c = c: importLeoFile(c ) )
+    iemenu.add_command( label = "Export Chapter To Leo File", command = lambda c =c : exportLeoFile( c ) )
+    indmen = Tk.Menu( tmenu, tearoff = 0 )
+    tmenu.add_cascade( label = 'Index', menu = indmen )
+    indmen.add_command( label = 'Make Index', command = lambda c =c : viewIndex( c ) )
+    indmen.add_command( label = 'Make Regex Index', command = lambda c =c : regexViewIndex( c ) ) 
+    try:
+        import reportlab
+        tmenu.add_command( label = 'Convert To PDF', command = lambda c = c: doPDFConversion( c ) )
+    except Exception: 
+        g.es( "no reportlab" )</t>
+<t tx="mork.20040926105355.42">def doPDFConversion( c ):
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    import cStringIO
+    from reportlab.platypus import SimpleDocTemplate,  Paragraph , Spacer 
+    from reportlab.lib.styles import getSampleStyleSheet 
+    from reportlab.lib.units import inch
+    from reportlab.rl_config import defaultPageSize
+    PAGE_HEIGHT = defaultPageSize[ 1 ]
+    PAGE_WIDTH = defaultPageSize[ 0 ]
+    maxlen = 100
+    styles = getSampleStyleSheet()
+    pinfo = c.frame.shortFileName()
+    pinfo1 = pinfo.rstrip( '.leo' )
+    cs = cStringIO.StringIO()
+    doc = SimpleDocTemplate( cs , showBoundary = 1)
+    Story = [Spacer(1,2*inch)] 
+    pagenames = notebook.pagenames()   
+    cChapter = c.cChapter
+    for n,z in enumerate( pagenames ):
+        
+        n = n + 1
+        sv = getSV(c, z)
+        chapter = chapters[ sv ]
+        chapter.setVariables()
+        p = chapter.rp
+        if p:
+            _changeTreeToPDF( sv.get(), n, p , c, Story, styles, maxlen)
+    &lt;&lt; define otherPages callback &gt;&gt;
+    cChapter.setVariables()# This sets the nodes back to the cChapter, if we didnt the makeCurrent would point to the wrong positions
+    cChapter.makeCurrent()
+    doc.build(Story,  onLaterPages = otherPages)
+    f = open( '%s.pdf' % pinfo1, 'w' )
+    cs.seek( 0 )
+    f.write( cs.read() )
+    f.close()
+    cs.close()</t>
+<t tx="mork.20040926105355.43">def _changeTreeToPDF( name, num, p, c, Story, styles , maxlen):
+    
+    import copy
+    from reportlab.platypus import SimpleDocTemplate,  Paragraph , Spacer, PageBreak, XPreformatted
+    from reportlab.lib.units import inch
+    from reportlab.rl_config import defaultPageSize
+    enc = c.importCommands.encoding
+    hstyle = styles[ 'title' ]
+    Story.append( Paragraph( 'Chapter %s: %s' % ( num, name), hstyle ) )
+    style = styles[ 'Normal' ]
+    g.trace(p)
+    for v in p.allNodes_iter(): #self_and_subtree_iter doesn't seem to work here????  Switched to allNodes_iter
+    # while v:
+        head = v.moreHead( 0 )
+        head = g.toEncodedString(head,enc,reportErrors=True) 
+        s = head +'\n'
+        body = v.moreBody() # Inserts escapes.
+        if len(body) &gt; 0:
+            body = g.toEncodedString(body,enc, reportErrors=True)
+            s = s + body
+            s = s.split( '\n' )
+            s2 = []
+            for z in s:
+                if len( z ) &lt; maxlen:
+                    s2.append( z )
+                else:
+                    while 1:
+                        s2.append( z[ : maxlen ] )
+                        if len( z[ maxlen: ] ) &gt; maxlen:
+                            z = z[ maxlen: ]
+                        else:
+                            s2.append( z[ maxlen: ] )
+                            break
+            s = '\n'.join( s2 )
+            s = s.replace( '&amp;' ,'&amp;amp;' )
+            s = s.replace( '&lt;', '&amp;lt;' )
+            s = s.replace( '&gt;', '&amp;gt;' )
+            s = s.replace( '"', '&amp;quot;' )
+            s = s.replace( "`", '&amp;apos;' )
+            Story.append( XPreformatted( s, style ) )
+            Story.append( Spacer( 1, 0.2 * inch ) )
+        #v = v.threadNext() 
+    Story.append( PageBreak() )</t>
+<t tx="mork.20040926105355.44">def addHeading( pane ):
+    f = Tk.Frame( pane )
+    f.pack( side = 'top' )
+    l = Tk.Label( f )
+    l.pack( side = 'left' )
+    r = Tk.Label( f )
+    r.pack( side = 'right' )
+    return l , r
+</t>
+<t tx="mork.20040926105355.45">old_editLabel = leoTkinterTree.leoTkinterTree.endEditLabel
+
+def newendEditLabel (self):
+
+    c = self.c
+    rv = old_editLabel(self)
+    v = c.currentPosition()
+    if v and hasattr(c.frame.body,'r'):
+        hS = v.headString()
+        if hS:
+            c.frame.body.r.configure(text=v.headString())
+    return rv</t>
+<t tx="mork.20040926105355.46">def swapChapters( c, name ):
+
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    cselection = notebook.getcurselection()
+    tab1 = notebook.tab( cselection )
+    tab2 = notebook.tab( name )
+    tval1 = tab1.cget( 'text' )
+    tval2 = tab2.cget( 'text' )
+    tv1 = getSV(c, cselection)
+    tv2 = getSV(c, name)
+    chap1 = c.cChapter
+    chap2 = chapters[ tv2 ]
+    rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
+    chap2.rp, chap2.tp, chap2.cp = chap1.rp, chap1.tp, chap1.cp
+    chap1.rp, chap1.tp, chap1.cp = rp, tp, cp
+    chap1.setVariables()
+    c.redraw()
+    chap1.canvas.update_idletasks()
+  
+    val1 = tv1.get()
+    val2 = tv2.get()
+    if  val2.isdigit() :
+        tv1.set( notebook.index( cselection ) + 1 ) 
+    else: tv1.set( val2 )
+    if val1.isdigit() :
+        tv2.set( notebook.index( name ) + 1 )
+    else: tv2.set( val1 )
+
+</t>
+<t tx="mork.20040926105355.47">def importLeoFile( c ):
+    import tkFileDialog
+    name = tkFileDialog.askopenfilename()
+    if name:
+        page = addPage( c , name )
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing       
+        notebook.selectpage( notebook.pagenames()[ - 1 ] )
+        c.fileCommands.open( file( name, 'r' ), name )
+        c.cChapter.makeCurrent()
+        renumber( notebook )
+</t>
+<t tx="mork.20040926105355.48">def exportLeoFile( c ):
+    import tkFileDialog
+    name = tkFileDialog.asksaveasfilename()
+    if name:
+        if not name.endswith('.leo' ):
+            name += '.leo'
+        c.fileCommands.write_LEO_file( name, False, singleChapter = True )
+</t>
+<t tx="mork.20040926105355.49">if hasattr(leoNodes.vnode,'doDelete'):
+    olDelete = leoNodes.vnode.doDelete
+else:
+    olDelete = leoNodes.position.doDelete
+
+def newTrashDelete (self,newVnode):
+    c = self.c
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    pagenames = notebook.pagenames()
+    pagenames = [getSV(c,x).get().upper() for x in pagenames]
+    nbnam = notebook.getcurselection()
+    if nbnam != None:
+        name = getSV(c,notebook.getcurselection()).get().upper()
+    else: name = 'TRASH'
+    tsh = 'TRASH'
+    if name != tsh and tsh in pagenames:
+        index = pagenames.index(tsh)
+        trchapter = chapters [getSV(c,index)]
+        trashnode = trchapter.rp
+        trchapter.setVariables()
+        self.moveAfter(trashnode)
+        c.cChapter.setVariables()
+        c.selectVnode(newVnode)
+        return self
+    olDelete(self,newVnode)</t>
+<t tx="mork.20040926105355.50">def emptyTrash( notebook  , c):
+    pagenames = notebook.pagenames()
+    pagenames = [ getSV(c, x) for x in pagenames ]
+    for z in pagenames:
+        if z.get().upper() == 'TRASH':
+            trChapter = chapters[ z ]
+            rvND = trChapter.rp
+            c.beginUpdate()
+            trChapter.setVariables()
+            nRt = rvND.insertAfter()
+            nRt.moveToRoot()
+            trChapter.rp = c.rootPosition()
+            trChapter.cp = c.currentPosition()
+            trChapter.tp = c.topPosition()
+            c.cChapter.setVariables()
+            c.endUpdate( False )
+            if c.cChapter == trChapter:
+                c.selectPosition( nRt )
+                c.redraw()
+                trChapter.canvas.update_idletasks()
+            return
+</t>
+<t tx="mork.20040926105355.51">def regexClone (c,name):
+    if not c or not c.exists: return
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    sv = getSV(c,name)
+    chapter = chapters [sv]
+
+    def cloneWalk (result,entry,widget,c=c):
+        txt = entry.get()
+        widget.deactivate()
+        widget.destroy()
+        if result == 'Cancel': return None
+        import re
+        regex = re.compile(txt)
+        rt = chapter.cp
+        chapter.setVariables()
+        stnode = leoNodes.tnode('',txt)
+        snode = leoNodes.vnode(c,stnode)
+        snode = leoNodes.position(c,snode,[])
+        snode.moveAfter(rt)
+        ignorelist = [snode]
+        it = walkChapters(c,ignorelist=ignorelist)
+        for z in it:
+            f = regex.search(z.bodyString())
+            if f:
+                clone = z.clone(z)
+                i = snode.numberOfChildren()
+                clone.moveToNthChildOf(snode,i)
+                ignorelist.append(clone)
+
+        c.cChapter.setVariables()
+        notebook.selectpage(name)
+        c.selectVnode(snode)
+        snode.expand()
+        c.beginUpdate()
+        c.endUpdate()
+
+    sd = Pmw.PromptDialog(c.frame.top,
+        title = 'Search and Clone',
+        buttons = ('Search','Cancel'),
+        command = cloneWalk,
+    )
+    entry = sd.component('entry')
+    sd.configure(command=
+        lambda result, entry = entry, widget = sd:
+            cloneWalk(result,entry,widget))
+    sd.activate(geometry='centerscreenalways')</t>
+<t tx="mork.20040926105355.52">old_select = leoTkinterTree.leoTkinterTree.select
+
+def newselect (self,v,updateBeadList=True):
+
+    self.frame.body.lastNode = v
+    notebook = notebooks.get(v.c)
+    if not notebook: return # For unit testing
+    self.frame.body.lastChapter = notebook.getcurselection()
+    rv = old_select(self,v,updateBeadList)
+    if hasattr(v.c.frame.body,'r'):
+        v.c.frame.body.r.configure(text=v.headString())
+    return rv</t>
+<t tx="mork.20040927092626">class Chapter:
+    '''The fundamental abstraction in the Chapters plugin.
+       It enables the tracking of Chapters tree information.'''
+       
+    @others</t>
+<t tx="mork.20040928223221">def getRemove( notebook, c , rmenu ):
+    #a function that makes a function to remove chapters
+    def remove():
+        rmenu.delete( 0 , Tk.END )
+        pn = notebook.pagenames()
+        for i, z in enumerate( pn ):
+            i = i + 1
+            def rmz( name = z):
+                if len( notebook.pagenames() ) == 1: return
+                sv = getSV(c, name )
+                chapter = chapters[ sv ]
+                tree = chapter.tree
+                vnd = chapter.rp
+                cvnd = c.cChapter.cp
+                c.beginUpdate()
+                otree = c.cChapter.tree
+                c.frame.tree = tree
+                if vnd:
+                    v = vnd                    
+                    nnd = vnd.next()
+                    if nnd == None:
+                        nnd = vnd.insertAfter()
+                        vnd = None
+                    v.doDelete( nnd )
+                c.frame.tree = otree
+                c.endUpdate()
+                notebook.delete( name )
+                if tree != otree:
+                    c.selectPosition( cvnd )
+                if tree == otree:
+                    pnames = notebook.pagenames()
+                    notebook.selectpage( pnames[ 0 ] )
+                    c.selectPosition( c.currentPosition() )
+                    c.beginUpdate()
+                    c.endUpdate()
+                renumber( notebook )
+            rmenu.add_command( label = str( i ) , command = rmz )  
+              
+    return remove
+</t>
+<t tx="mork.20040928223738">def getRename(c, notebook ):
+    #a function that makes a function to rename chapters
+    def rename( rnframes = {} ):
+        name = notebook.getcurselection()
+        frame = notebook.page( notebook.index( name ) )
+        fr = frames[c]
+        if not rnframes.has_key( frame ):
+            f = rnframes[ frame ] = Tk.Frame( frame )
+            e = Tk.Entry( f , background = 'white', textvariable = frame.sv )
+            b = Tk.Button( f , text = "Close" ) 
+            e.pack( side = 'left' )
+            b.pack( side = 'right' )
+            def change():
+                f.pack_forget()
+            b.configure( command = change )
+        else:
+            f = rnframes[ frame ]
+            if f.winfo_viewable() : return None
+        fr.canvas.pack_forget()
+        f.pack( side = 'bottom' )
+        fr.canvas.pack( fill = 'both', expand = 1 )
+
+    return rename</t>
+<t tx="mork.20040928224049">def getMakeTrash (notebook):
+    #a function that makes a function to add a trash chapters
+    def mkTrash (c):
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing
+        addPage(c,'Trash')
+        pnames = notebook.pagenames()
+        sv = getSV(c,pnames[-1])
+        sv.set('Trash')
+        renumber(notebook)
+
+    return mkTrash
+</t>
+<t tx="mork.20040928224349">def getAddChapter( c , notebook ):
+    #a function that makes a function to add chapters  
+    def ac( c = c ):
+        notebook = notebooks.get(c)
+        if not notebook: return # For unit testing
+        cname = notebook.getcurselection()
+        addPage( c )        
+        renumber( notebook)
+    
+    return ac</t>
+<t tx="mork.20040928224621">def getSetupMenu( c, notebook ):
+    #a function that makes a function to populate a menu
+    def setupMenu( menu , command , all = False):
+        menu.delete( 0 , Tk.END )
+        current = notebook.getcurselection()
+        for i, z in  enumerate( notebook.pagenames() ):
+            i = i + 1
+            if z == current and not all: continue
+            menu.add_command( label = str( i ) , command = lambda c = c , name = z : command( c, name ) )
+            
+    return setupMenu</t>
+<t tx="mork.20040929084846">def lowerPage( name, notebook):
+    # a function that sets a lowered tabs color
+    pindex = notebook.index( name )
+    tab = notebook.tab( pindex )
+    tab.configure( background = 'lightgrey', foreground = 'black' )</t>
+<t tx="mork.20040929090525">def writeChapters( self, fileName, pagenames, c , outlineOnlyFlag):
+    #goes over Chapters and puts info in StringIO instances
+    for z in pagenames:
+        sv = getSV(c,z )
+        chapter = chapters[ sv ]
+        chapter.setVariables()
+        rv = olWrite_LEO_file( self, fileName, outlineOnlyFlag )    
+    c.cChapter.setVariables()
+    return rv</t>
 <t tx="mork.20040929090525.1">def zipChapters( fileName, pagenames, c, chapList ):
     #takes list of StringIO instances and zips them to a file
     zf = zipfile.ZipFile( fileName, 'w',  zipfile.ZIP_DEFLATED )
     for x ,fname in enumerate( pagenames ):
-        sv = getSV( fname, c )
+        sv = getSV(c, fname )
         zif = zipfile.ZipInfo( str( x ) )
         zif.comment = sv.get()
         zif.compress_type = zipfile.ZIP_DEFLATED
         chapList[ x ].seek( 0 )
         zf.writestr( zif ,chapList[ x ].read() )
     zf.close()</t>
+<t tx="mork.20040929092231">def getMakeStringIO( chapList ):
+    #insures data is put in a StringIO instance
+    def makeStringIO( self, name, value , cList = chapList):
+        if name == 'outputFile' and value != None:
+            import StringIO
+            cS = StringIO.StringIO()
+            cS.close = lambda : None
+            self.__dict__[ name ] = cS
+            cList.append( cS )
+        elif name == 'outputFile' and value == None:
+            self.__dict__[ name ] = None
+        else:
+            self.__dict__[ name ] = value 
+            
+    return makeStringIO</t>
+<t tx="mork.20040929093051">def getNameMaker( notebook ):
+    #creates a numbering mechanism for tabs
+    def nameMaker():
+        i = 0
+        while 1:
+            if len( notebook.pagenames() ) == 0: i = 0
+            i += 1
+            yield str( i )
+            
+    return nameMaker()</t>
+<t tx="mork.20040929102107">def createNoteBook (c,parentFrame):
+
+    #constructs a NoteBook widget for a frame
+    notebooks [c] = notebook = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
+    hull = notebook.component('hull')
+    makeTabMenu(hull,notebook,c)
+    notebook.configure(raisecommand=lambda name,notebook=notebook: setTree(c,name,notebook))
+    notebook.configure(lowercommand=lambda name,notebook=notebook: lowerPage(name,notebook))
+    notebook.pack(fill='both',expand=1)
+    notebook.nameMaker = getNameMaker(notebook)
+    return notebook</t>
+<t tx="mork.20040929104527">def selectNodeForEditor( c, body ):
+    #sets the node for the new editor
+    if not hasattr( body, 'lastNode' ):
+        body.lastNode = c.currentPosition()
+
+    if body.lastNode == c.currentPosition(): return    
+    elif body.lastNode.exists( c ):
+        c.selectPosition( body.lastNode )
+    else:
+        c.selectPosition( c.rootPosition() )
+
+    body.lastNode = c.currentPosition()    </t>
+<t tx="mork.20040929105638">def activateEditor( body ):
+    #performs functions that brings editor on line
+    body.r.configure( text = body.lastNode.headString() )
+    ip = body.lastNode.t.insertSpot
+    txt = body.lastNode.bodyString()
+    body.deleteAllText()
+    body.insertAtEnd( txt )
+    if ip : body.setInsertionPoint( ip )
+    body.colorizer.colorize( body.lastNode )
+    body.bodyCtrl.update_idletasks()</t>
+<t tx="mork.20040929110556">def createPanedWidget( parentFrame, c ):
+    #constructs a new panedwidget for a frame
+    pbody = Pmw.PanedWidget( parentFrame , orient = 'horizontal' )
+    pbody.pack( expand = 1 , fill = 'both')
+    pbodies[ c ] = pbody
+    parentFrame = newEditorPane( c )
+    return parentFrame</t>
+<t tx="mork.20040929120442">def createBalloon( tab, sv ):
+    #creates a balloon for a widget
+    balloon = Pmw.Balloon( tab , initwait = 100 )
+    balloon.bind( tab , '' )
+    hull = balloon.component( 'hull' )
+    def blockExpose( event ):
+        if sv.get() == '':
+             hull.withdraw()
+    hull.bind( '&lt;Expose&gt;', blockExpose, '+' )
+    balloon._label.configure( textvariable = sv )</t>
+<t tx="mork.20040929121409">def buildIndex( nodes , c , can, tl, bal, tags):
+
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+    import tkFont
+    f = tkFont.Font()
+    f.configure( size = -20 )
+    ltag = None
+    for i,z in enumerate(nodes):
+        tg = 'abc' + str( i ) 
+        parent = z[ 1 ].parent()
+        if parent: parent = parent.headString()
+        else:
+            parent = 'No Parent'
+        sv = getSV(c, z[ 2 ] )
+        if sv.get(): sv = ' - ' + sv.get()
+        else: sv = ''
+        
+        tab = notebook.tab( z[ 2 ] )
+        tv = tab.cget( 'text' )
+        isClone = z[ 1 ].isCloned()
+        if isClone:
+            clone = ' (Clone) '
+        else:
+            clone =''
+        txt = '%s  , parent: %s , chapter: %s%s%s' %( z[ 0 ], parent, tv, sv, clone)
+        ltag = tags[ z[1] ] = can.create_text( 20, i * 20 + 20, text = txt, fill = 'blue', font = f , anchor = Tk.W, tag = tg )
+        bs = z[ 1 ].bodyString()
+        if bs.strip() != '':
+            bal.tagbind( can, tg, bs)
+        def goto( event, z = z , c = c, tl = tl):
+            notebook = notebooks.get(c)
+            if not notebook: return # For unit testing
+            notebook.selectpage( z[ 2 ] )
+            c.selectVnode( z[ 1 ] )
+            c.frame.outerFrame.update_idletasks()
+            c.frame.outerFrame.event_generate( '&lt;Button-1&gt;' )
+            c.frame.bringToFront()
+            return 'break'
+        def colorRd( event , tg = ltag , can = can ):
+            can.itemconfig( tg, fill = 'red' )
+        def colorBl( event , tg = ltag , can = can ):
+            can.itemconfig( tg, fill = 'blue' )
+        can.tag_bind( tg, '&lt;Button-1&gt;', goto )
+        can.tag_bind( tg, '&lt;Enter&gt;', colorRd, '+' )
+        can.tag_bind( tg, '&lt;Leave&gt;', colorBl, '+' )    
+</t>
+<t tx="mork.20040930090547">@
+Indexing is complementary to find, it provides a gui Index of nodes.  In comparison to regular find which bounces you around the tree, you can preview the node before you go to it.
+@c
+@others
+</t>
+<t tx="mork.20040930090735">@
+This category deals with creating widgets and any support functions for doing so.
+@c
+@others</t>
+<t tx="mork.20040930091035">@
+This category is for opening and closing of Leo files.  We need to decorate and be tricky here, since a Chapters leo file is a zip file.  These functions are easy to break in my experience. :)
+@c
+@others</t>
+<t tx="mork.20040930091035.1">@others</t>
+<t tx="mork.20040930091035.2">@others</t>
+<t tx="mork.20040930091319">@
+Tab menu and factory functions for the tab menu creation process.
+@c
+@others</t>
+<t tx="mork.20040930091319.1">@others</t>
+<t tx="mork.20040930091624">@
+I prefer decorating Leo functions as opposed to patching them.  Patching them leads to long term incompatibilites with Leo and the plugin.  Though this happens anyway with code evolution/changes, this makes it worse.  Thats my experience with it. :)
+@c
+@others</t>
+<t tx="mork.20040930091624.1"># Requires reportlab toolkit at http://www.reportlab.org
+
+@others</t>
+<t tx="mork.20040930091759">@others</t>
+<t tx="mork.20040930092027">@others</t>
+<t tx="mork.20040930092027.1">@
+Import a Leo file as a Chapter(s).  Export a Chapter as a single Leo file.  Kinda handy.
+@c
+@others</t>
+<t tx="mork.20040930092207">@
+couldn't think of any parent node to group these under.
+@c
+@others</t>
+<t tx="mork.20040930092346">@others</t>
+<t tx="mork.20040930094729">@others</t>
 <t tx="mork.20041013092542.1">&lt;&lt; docstring &gt;&gt;
 
 @language python

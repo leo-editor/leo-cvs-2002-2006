@@ -119,7 +119,7 @@ def writeNodeAndTree (c, word, header_style, level,
     """Write a node and its children to Word"""
 
     if vnode is None:
-        vnode = g.top().currentVnode()
+        vnode = c.currentVnode()
     #
     dict = g.scanDirectives(c,p=vnode)
     encoding = dict.get("encoding",None)
