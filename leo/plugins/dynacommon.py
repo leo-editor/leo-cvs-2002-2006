@@ -396,13 +396,12 @@ def leotmp(name = None, tmp= None):
 #and stripSentinals has more options
 #and default is usually no tabs so expandtabs less critical
 
-def fixbody(data= None, c= None):
+def fixbody(c,data=None):
     """ return script following subnodes and @others
     strips all sentinals
     if addscript its prepended to the output or something?
     """
 
-    if c is None: c = g.top()
     p = c.currentPosition()
 
     if not data:
@@ -1043,7 +1042,7 @@ def dynaput(c, slst):
   still havent got a handle on why its failing.
   decide to spend another var. g. works but g.app better
     """
-    cg = g.app.dynaMvar #top().frame.
+    cg = g.app.dynaMvar
     #print cg
 
     #this depends on the macro calling dynaput first as they mostly do now

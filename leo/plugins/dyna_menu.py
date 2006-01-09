@@ -379,7 +379,7 @@ def dynaB_help(c):
 #@nonl
 #@-node:ekr.20050421093045.9:HELP!
 #@+node:ekr.20050421093045.13:Graphviz node
-def dynaB_Graphviznode(c= None):
+def dynaB_Graphviznode(c):
     """(c= None) create jpg popup associated viewer
     take the EKR Graphviz pydot demo
     see the 4.2+ test.leo for the origional and other info
@@ -427,25 +427,13 @@ def dynaB_Graphviznode(c= None):
         fname = dy.leotmp('pydotOut.jpg')
     except ImportError:
         fname = 'pydotOut.jpg'
-        
 
-    #there is a way to know this for sure
-    #you still might want to specify it
-    Leo = 4.2
-
-
-    if c is None: c = g.top()
-
-    if Leo > 4.1:
-        p = c.currentPosition()
-    else:
-        p = c.currentVnode()
+    p = c.currentPosition()
 
     #@    << code >>
     #@+node:ekr.20050421093045.14:<< code >>
     #@+others
     #@+node:ekr.20050421093045.15:addLeoNodesToGraph
-    
     def addLeoNodesToGraph(p, graph, top= False):
         """
         p.v attribute is 4.2, this might be a dealbreaker for 4.1?
@@ -465,7 +453,6 @@ def dynaB_Graphviznode(c= None):
         thisNode = pydot.Node(name= n, label= l)
         graph.add_node(thisNode)
     
-        
         if p.hasChildren():
             child = p.firstChild()
             childNode = addLeoNodesToGraph(child, graph)
@@ -537,7 +524,6 @@ def dynaB_Graphviznode(c= None):
     #@nonl
     #@-node:ekr.20050421093045.15:addLeoNodesToGraph
     #@+node:ekr.20050421093045.16:tnode/vnodeLabel
-    
     def tnodeLabel(t):
     
         if Leo > 4.1:
@@ -552,7 +538,6 @@ def dynaB_Graphviznode(c= None):
         return "v %d %s" % (id(v),v.t.headString)
     #@-node:ekr.20050421093045.16:tnode/vnodeLabel
     #@+node:ekr.20050421093045.17:tnode/vnodeRepr
-    
     def dotId(s):
         """Convert s to a C id"""
     
@@ -566,7 +551,7 @@ def dynaB_Graphviznode(c= None):
     def vnodeRepr(v):
         
         return "v_%d_%s" % (id(v),dotId(v.headString()))
-    
+    #@nonl
     #@-node:ekr.20050421093045.17:tnode/vnodeRepr
     #@-others
     #@nonl
@@ -583,10 +568,6 @@ def dynaB_Graphviznode(c= None):
     g.es('graph of outline written to \n' + fname)
     import webbrowser
     webbrowser.open(fname, new= 1)
-#@+at
-# if __name__ != 'dyna_menu':
-#     dynaB_Graphviznode(c= None)
-#@-at
 #@nonl
 #@-node:ekr.20050421093045.13:Graphviz node
 #@+node:ekr.20050421093045.18:linenumber
@@ -615,7 +596,7 @@ def dynaB_linenumber(c):
     
     """
     #nothing selected will include sentinals
-    data = fixbody(dynaput(c, []), c) 
+    data = fixbody(c,dynaput(c, [])) 
     datalines = data.splitlines()
 
     pln = g.app.gui.getTextFromClipboard()
@@ -654,7 +635,7 @@ def dynaB_linenumber(c):
 #@nonl
 #@-node:ekr.20050421093045.18:linenumber
 #@+node:ekr.20050421093045.19:nflatten
-def dynaB_nflatten(c= None):
+def dynaB_nflatten(c):
     """c= None  print
     like flatten but in macro so can
     print/paste or copy to buffer eventually. now out to log.
@@ -687,8 +668,6 @@ def dynaB_nflatten(c= None):
     not even counting @thin etc
     """    
     import leoGlobals as g
-    if c is None:
-        c = g.top()
 
     tbytes = 0
     oline = _nflatten(c, index= 1, sx= [])
@@ -711,7 +690,7 @@ def dynaB_nflatten(c= None):
             ), color= dycolors.gFuchsia)
         
 
-def _nflatten(c= None, current= None, indent= 0, index= 0, sx= None):
+def _nflatten(c, current= None, indent= 0, index= 0, sx= None):
     """may be trying to combine too many things
      efficency out the window to boot.
     """
@@ -733,15 +712,11 @@ def _nflatten(c= None, current= None, indent= 0, index= 0, sx= None):
             continue
 
     return sx
-
-#need dynatester to supply missing color definitions to doctest
-#dynaB_nflatten()
 #@nonl
 #@-node:ekr.20050421093045.19:nflatten
 #@+node:ekr.20050421093045.20:fileinfo
 #@+others
 #@+node:ekr.20050421093045.21:print perms
-
 def perms(name):
     """
     a=\xc3 Padraig Brady - http://www.pixelbeat.org
@@ -764,7 +739,7 @@ def perms(name):
  
 #@-node:ekr.20050421093045.21:print perms
 #@-others
-def dynaB_fileinfo(c= None, fname= None):
+def dynaB_fileinfo(c, fname= None):
     """(c= None, fname= None)  print
      show some basic file info size, create date etc.
     try to get filename from selected text then copybuffer,
@@ -792,8 +767,6 @@ def dynaB_fileinfo(c= None, fname= None):
     import os, time
 
     drif = 0 #do report intermediate failures 
-
-    if c is None: c = g.top()
 
     def normit(fn): 
         #seems redundant till you get a weird join it fixes
@@ -872,6 +845,7 @@ def dynaB_fileinfo(c= None, fname= None):
         h = fname
 
     g.es(h)
+#@nonl
 #@-node:ekr.20050421093045.20:fileinfo
 #@-node:ekr.20050421093045.7:info macros
 #@+node:ekr.20050421093045.22:text macros
@@ -1468,9 +1442,6 @@ def dynaS_importnode(c):
     lang = str(lang).lower()
     tfile = dy.tmpfile
 
-    if not c: c = g.top()
-    p = c.currentPosition()
-
     start = dy.dynaB_Clip_dtef(c, ret='rp')
 
     if overwrite: 
@@ -1541,7 +1512,7 @@ def dynaS_importnode(c):
 #@nonl
 #@-node:ekr.20050421093045.35:importnode
 #@+node:ekr.20050421093045.37:disa
-def dynaS_pydisa(c= None):
+def dynaS_pydisa(c):
     """(c= None) selected text/body print
     produce a dissasembly into python bytecodes
     of selected text lines of code or the full script
@@ -1554,11 +1525,10 @@ def dynaS_pydisa(c= None):
 
     import dyna_menu as dy
 
-    if not c: c = g.top()
     p = c.currentPosition()
 
     #get selected text if any or the whole script
-    newSel = dy.fixbody(dy.dynaput(c, []), c)
+    newSel = dy.fixbody(c,dy.dynaput(c, []))
 
     if not newSel or len(newSel) == 0:
         return
@@ -1663,11 +1633,10 @@ ivarsDict = {
   maybe I can modify the list dynamically with user input cycle?
   based on an xref of the code to be converted.
   
-def convertCurrentTree():
+def convertCurrentTree(c):
     import c2py
     import leo
     import leoGlobals
-    c=leoGlobals.top()
     v = c.currentVnode()
     c2py.convertLeoTree(v,c) 
     
@@ -1837,7 +1806,7 @@ not follow nodes but probably just overwrite the selected node.
 add select leading char ini option 
 allow from/to of intrepreter >>> ... for doctest prep
  """
-    data = fixbody(dynaput(c, []), c)
+    data = fixbody(c,dynaput(c, []))
 
     if not data or len(data) == 0: return
     import re
@@ -1959,7 +1928,7 @@ def dynaS_evaluator(c):
         g.es('you have to get the evaluator first')
         return
 
-    data = fixbody(dynaput(c, []), c)
+    data = fixbody(c,dynaput(c, []))
 
     if data and len(data) > 0:
 
@@ -2008,8 +1977,7 @@ def dynaS_astyle(c):
   ~EOT  possibly add --force  to highlighter or an @force htmlize
     @force node creation & import, many posibilities
     """
-    
-    if c is None: c = g.top()
+
     p = c.currentPosition()
 
     lang = g.scanForAtLanguage(c, p)
@@ -2035,7 +2003,7 @@ def dynaS_astyle(c):
     source = dynaput(c, [])
     if source: bypass = 0
 
-    source = fixbody(source, c)
+    source = fixbody(c,source)
     if not source or len(source) <= 0: 
         return
 
@@ -2127,7 +2095,7 @@ set html=n, writehead=True and lang=report and dohtmlize = 1 for both
 
     dohtmlize = 1 #show in browser instead of log.    
 
-    data = fixbody(dynaput(c, []), c)
+    data = fixbody(c,dynaput(c, []))
 
     if not data or len(data) == 0: 
         return
@@ -2262,7 +2230,7 @@ should   we insert # -*- coding: utf8 -*-
  should getscript have that option?
  and dyna does this in several places, need to cosolidate them into one place
     """
-    data = fixbody(dynaput(c, []), c)
+    data = fixbody(c,dynaput(c, []))
 
     if not data or len(data) == 0: 
         return
@@ -2376,7 +2344,7 @@ def dynaS_tim_one_crunch(c):
     This is much dumber than the other approaches on the table, but has the clear advantage that it's written <wink>, and catches things like "bound but never used" (including-- and this is a mixed blessing! --functions & classes defined but not referenced in their file). ----
     """
 
-    data = fixbody(dynaput(c, []), c)
+    data = fixbody(c,dynaput(c, []))
 
     if not data or len(data) == 0: 
         return
@@ -2827,7 +2795,7 @@ database, but it will work for modules from any source.
 had to add \n and chg name module and del if already in modules
 """
 
-def importCode(code, name, add_to_sys_modules= 0):
+def importCode(c,code, name, add_to_sys_modules= 0):
     """
     Import dynamically generated code as a module. code is the
     object containing the code (a string, a file handle or an
@@ -2843,7 +2811,7 @@ def importCode(code, name, add_to_sys_modules= 0):
     is equivalent to
 
     foofile = open("/path/to/foo.py")
-    foo = importCode(foofile, "foo", 1)
+    foo = importCode(c,foofile, "foo", 1)
 
     Returns a newly generated module.
 
@@ -2874,7 +2842,7 @@ def importCode(code, name, add_to_sys_modules= 0):
             g.g.es_exception(full= True)
 
         except NameError:
-            c = g.top(); p = c.currentPosition()
+            p = c.currentPosition()
             d = {'c':c, 'p':p, 'g':g}
             g.es('*** defining c,g & p ***')
             modl.__dict__.update(d)
@@ -2905,7 +2873,7 @@ class _t_(unittest.TestCase):
 _t = _t_()
 """
 
-    m = importCode(code, "test")
+    m = importCode(c,code, "test")
     m.testFunc()
     o = m.testClass()
     t = m._t_()
@@ -2919,7 +2887,7 @@ _t = _t_()
 #@-node:ekr.20050421093045.52:<< Classes >>
 #@nl
 
-def dynaZ_du_test(c= None):
+def dynaZ_du_test(c):
     """(c= None) selected text/body docstrings + exec any code, print
     run a doctest unittest from a docstring in the script/selected 
     or run @test, see test.leo and leoTest.py
@@ -2960,7 +2928,6 @@ def dynaZ_du_test(c= None):
     #1 leo globals, 0 forcefull sys, 2 underlying file stdio nfg
     use_Leo_redirect = 0 
 
-    if c is None: c = g.top()
     p = c.currentPosition() 
 
     #solve the doc/unittest infinate problem if run test on this node
@@ -3088,7 +3055,7 @@ def dynaZ_du_test(c= None):
         try:
         
             #mod = __import__(fo, {}, {}, ["*"])
-            mod = importCode(script, tmpimp, add_to_sys_modules= 1)
+            mod = importCode(c,script, tmpimp, add_to_sys_modules= 1)
         
         #could be other errors the way this is setup isnt there yet.
         except ImportError, err:
@@ -3179,7 +3146,7 @@ def dynaZ_du_test(c= None):
 #@-node:ekr.20050421093045.55:guts
 #@-node:ekr.20050421093045.51:du_test-str
 #@+node:ekr.20050421093045.59: htmlize
-def dynaZ_htmlize(c= None, source= None, lang= 'plain', 
+def dynaZ_htmlize(c, source= None, lang= 'plain', 
         writehead= True, show= True):
     r"""(c= None, source= None, lang= 'plain', 
         writehead= True, show= True)
@@ -3327,11 +3294,11 @@ def dynaZ_htmlize(c= None, source= None, lang= 'plain',
     not even sure its the proper result at this point either.
     a test that has the wrong output at least shows htmlize is runnable.
     
-    >>> dynaZ_htmlize(None, '\n', lang= 'checker', writehead=0, show=0)
+    >>> dynaZ_htmlize(c,None, '\n', lang= 'checker', writehead=0, show=0)
     <BLANKLINE>
     <BLANKLINE>
     <BLANKLINE>
-    >>> dynaZ_htmlize(None, '\n', 'c', writehead=0, show=0)
+    >>> dynaZ_htmlize(c,None, '\n', 'c', writehead=0, show=0)
     '<pre><tt>\n\n</tt></pre>\n'
 
     that one is output instead of returned
@@ -3407,7 +3374,6 @@ def dynaZ_htmlize(c= None, source= None, lang= 'plain',
         """
         #@	@+others
         #@+node:ekr.20050421093045.63:__init__
-        
         def __init__(self, raw):
             """ Store the source text.
             """
@@ -3439,7 +3405,6 @@ def dynaZ_htmlize(c= None, source= None, lang= 'plain',
         
         #@-node:ekr.20050421093045.63:__init__
         #@+node:ekr.20050421093045.64:format
-        
         def format(self, formatter, form):
             """ Parse and send the colored source.
             """
@@ -3470,7 +3435,6 @@ def dynaZ_htmlize(c= None, source= None, lang= 'plain',
                     msg, self.raw[self.lines[line]:])
         #@-node:ekr.20050421093045.64:format
         #@+node:ekr.20050421093045.65:__call__
-        
         def __call__(self, toktype, toktext, (srow,scol), (erow,ecol), line):
             """ Token handler.
             """
@@ -3565,7 +3529,6 @@ def dynaZ_htmlize(c= None, source= None, lang= 'plain',
     #@-node:ekr.20050421093045.62:class Parser
     #@-others
 
-    if c is None: c = g.top()
     p = c.currentPosition() 
     fullhtml = err = out = None
     
@@ -4397,7 +4360,7 @@ def dynax_DQ3(c, repchar='Do', source= None):
 #@nonl
 #@-node:ekr.20050421093045.76:+DQ3
 #@+node:ekr.20050421093045.79:_actions
-def dynax_actions(c= None, act='lower', script= None):
+def dynax_actions(c, act='lower', script= None):
     r"""(c= None, action) select text print/paste
     action def for macroless action on text or selected text 
     current actions are lowercase uppercase caps and reverse all the lines
@@ -4419,27 +4382,27 @@ def dynax_actions(c= None, act='lower', script= None):
      
    #@   <<doctest>>
    #@+node:ekr.20050421093045.80:<<doctest>>
-   >>> dynax_actions(act='lower', script='testO@#\n45SIX')
+   >>> dynax_actions(c,act='lower', script='testO@#\n45SIX')
    ['testo@#\n', '45six']
-   >>> dynax_actions(act='uppeS', script='testO@#\n45SIX')
+   >>> dynax_actions(c,act='uppeS', script='testO@#\n45SIX')
    ['testO@#\n', '45SIX']
-   >>> dynax_actions(act='reverse', script='testO@#\n45SIX')
+   >>> dynax_actions(c,act='reverse', script='testO@#\n45SIX')
    ['XIS54', '\n#@Otset']
-   >>> dynax_actions(act='caps', script='test !@#$ 123@#\nlist of things')
+   >>> dynax_actions(c,act='caps', script='test !@#$ 123@#\nlist of things')
    ['Test !@#$ 123@#\n', 'List Of Things']
-   >>> dynax_actions(act='>base64', script='another-fun-toy\n\n')#-ly y'rs
+   >>> dynax_actions(c,act='>base64', script='another-fun-toy\n\n')#-ly y'rs
    ['YW5vdGhlci1mdW4tdG95Cgo=\n']
-   >>> dynax_actions(act='<base64', script='YW5vdGhlci1mdW4tdG95\n\n')
+   >>> dynax_actions(c,act='<base64', script='YW5vdGhlci1mdW4tdG95\n\n')
    ['another-fun-toy']
-   >>> dynax_actions(act='>rot13', script="Hello World !\n")
+   >>> dynax_actions(c,act='>rot13', script="Hello World !\n")
    ['Uryyb Jbeyq !\n']
-   >>> dynax_actions(act='<rot13', script='Uryyb Jbeyq !\n\n')
+   >>> dynax_actions(c,act='<rot13', script='Uryyb Jbeyq !\n\n')
    [u'Hello World !\n\n']
-   >>> dynax_actions(act='>hex', script='test\n')
+   >>> dynax_actions(c,act='>hex', script='test\n')
    ['746573740a']
-   >>> dynax_actions(act='<hex', script='746573740a')
+   >>> dynax_actions(c,act='<hex', script='746573740a')
    ['test\n']
-   >>> dynax_actions(act='>md5', script='neato')
+   >>> dynax_actions(c,act='>md5', script='neato')
    ['9c53098eeab0c2457972453bae3248ff']
    >>> #
    #@nonl
@@ -4697,7 +4660,7 @@ def cmd_flip_justPyChecker():
 #@nonl
 #@-node:ekr.20050421093045.87:cmd_flipjustPyChecker
 #@+node:ekr.20050421093045.88:flip_onoff_c_gotoline
-def cmd_flip_onoff_c_gotoline(): 
+def cmd_flip_onoff_c_gotoline(c): 
     """this totally violates the goto feature in executeScript
     presently broken if called from selected text.
       unselects the text and goes to the line in the full script.
@@ -4730,7 +4693,6 @@ def cmd_flip_onoff_c_gotoline():
     """
 
     import leoGlobals as g
-    c = g.top()
     atribs = cmd_flip_onoff_c_gotoline
 
     if hasattr(atribs, 'flip'):
@@ -5251,9 +5213,10 @@ def timestamp(tag, keywords):
     cmd = keywords.get('label', 'save')
 
     if cmd.startswith("save") or cmd.startswith("tangle"):
-        c = keywords.get('c', g.top())
-        dynaB_Clip_dtef(c, ret= 'p')  #just print
-        g.es('at node:' + (c.currentVnode().headString().strip())[:128])
+        c = keywords.get('c')
+        if c:
+            dynaB_Clip_dtef(c, ret= 'p')  #just print
+            g.es('at node:' + (c.currentVnode().headString().strip())[:128])
 
 
 #@-node:ekr.20050421093045.2:@thin dyna_menu.py

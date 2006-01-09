@@ -187,12 +187,12 @@ problems on older windows. I've never had a problem.
 
 @c
 << @home >>
-insertAhome()
+insertAhome(c)
 @language python
 @color
 #@+node:ekr.20050421093045.138:<< @home >>
 @others
-def insertAhome(wch= 'i'): #i/r
+def insertAhome(c,wch= 'i'): #i/r
     """use to insertAt 1.0 #@path user.home
    
     incorperate fallbacks for win2k, XP, mac and nix 
@@ -240,7 +240,6 @@ def insertAhome(wch= 'i'): #i/r
         print 'give up', home; raise NameError
 
     if 'i' in wch:
-        c = g.top()
         Tx = c.frame.body
         Tx.setInsertionPoint(1.0)
         Tx.insertAtInsertPoint('#@path %s\n'%(home,))
