@@ -2,9 +2,11 @@
 #@+node:ekr.20050328092641.4:@thin Library.py
 #@<< docstring >>
 #@+node:ekr.20050912180445:<< docstring >>
+'''A plugin to store Leo trees in database files.
 
-'''A plugin to store Leo trees in anydbm files. Note: there isnt such a thing as an
-anydbm file: it's whatever the anydbm module uses.
+This plugin creates the following in the Plugins:Library menu:
+    
+- 
 
 Under Outline, there is an option called 'Library'. This will open an PMW
 dialog with a list of the trees that you have saved. You can insert trees stored
@@ -233,8 +235,6 @@ class Library(object):
     def config (self):
         
         c = self.c
-        self.verbose = c.config('
-        
         pass
         
         # if libconfig.lib == 'default': #set to actual path on read ini
@@ -538,9 +538,9 @@ class Library(object):
         
         if db is None: return
     
-        if hasattr(db, 'isOpen') and db.isOpen():
-            if hasattr(db,'synch': db.synch()
-            if hasattr(db,'close': db.close()
+        if hasattr(db,'isOpen') and db.isOpen():
+            if hasattr(db,'synch'): db.synch()
+            if hasattr(db,'close'): db.close()
     
         self.db = None
     #@nonl
@@ -575,7 +575,6 @@ class Library(object):
         ok = (self.path and self.db and
             hasattr(self.db,'isOpen') and self.db.isOpen() and hasattr(self.db,'sync'))
         if ok:
-            g.trace(self.db)
             self.openlibs [path] = self.db
         else:
             g.es('problem starting Library\n %s' % (path,))
