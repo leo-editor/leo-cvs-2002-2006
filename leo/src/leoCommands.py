@@ -104,6 +104,9 @@ class baseCommands:
         self._rootPosition    = self.nullPosition()
         self._topPosition     = self.nullPosition()
         
+        # For saving and restoring focus.
+        self.afterUpdateWidgetStack = []
+        
         # For emacs/vim key handling.
         self.commandsDict = None
         self.keyHandler = None
@@ -715,6 +718,8 @@ class baseCommands:
         if g.app.disableSave:
             g.es("Save commands disabled",color="purple")
             return
+            
+        w = g.app.gui.get_focus(c.frame)
         
         # Make sure we never pass None to the ctor.
         if not c.mFileName:
@@ -723,22 +728,22 @@ class baseCommands:
     
         if c.mFileName != "":
             # Calls c.setChanged(False) if no error.
-            c.fileCommands.save(c.mFileName) 
-            return
-    
-        fileName = g.app.gui.runSaveFileDialog(
-            initialfile = c.mFileName,
-            title="Save",
-            filetypes=[("Leo files", "*.leo")],
-            defaultextension=".leo")
-    
-        if fileName:
-            # 7/2/02: don't change mFileName until the dialog has suceeded.
-            c.mFileName = g.ensure_extension(fileName, ".leo")
-            c.frame.title = c.mFileName
-            c.frame.setTitle(g.computeWindowTitle(c.mFileName))
             c.fileCommands.save(c.mFileName)
-            c.updateRecentFiles(c.mFileName)
+        else:
+            fileName = g.app.gui.runSaveFileDialog(
+                initialfile = c.mFileName,
+                title="Save",
+                filetypes=[("Leo files", "*.leo")],
+                defaultextension=".leo")
+            if fileName:
+                # Don't change mFileName until the dialog has suceeded.
+                c.mFileName = g.ensure_extension(fileName, ".leo")
+                c.frame.title = c.mFileName
+                c.frame.setTitle(g.computeWindowTitle(c.mFileName))
+                c.fileCommands.save(c.mFileName)
+                c.updateRecentFiles(c.mFileName)
+                
+        ## c.frame.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20031218072017.2834:save
     #@+node:ekr.20031218072017.2835:saveAs
@@ -5331,6 +5336,9 @@ class baseCommands:
         until the matching call to endUpdate.'''
         
         c = self
+        w = g.app.gui.get_focus(c.frame)
+        c.afterUpdateWidgetStack.append(w)
+        # g.trace(g.app.gui.widget_name(w),g.callers(5))
         c.frame.tree.beginUpdate()
         
     def endUpdate(self, flag=True):
@@ -5339,6 +5347,10 @@ class baseCommands:
     
         c = self
         c.frame.tree.endUpdate(flag)
+        w = c.afterUpdateWidgetStack.pop()
+        if not c.afterUpdateWidgetStack:
+            # We are at the top-level endUpdate.
+            c.frame.widgetWantsFocus(w)
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
     EndUpdate = endUpdate # Compatibility with old scripts

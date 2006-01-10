@@ -3267,6 +3267,8 @@ class leoTkinterLog (leoFrame.leoLog):
     def put (self,s,color=None,tabName='Log'):
         
         # print 'tkLog.put',self.c.shortFileName(),s,
+        
+        c = self.c
     
         if g.app.quitting:
             return
