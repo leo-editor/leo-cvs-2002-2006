@@ -7,6 +7,17 @@
 @nocolor
 #@nonl
 #@+node:ekr.20060105130519:Urgent
+#@+node:ekr.20060110084745:Fix cut/paste problem
+#@+node:ekr.20060110084745.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3514816
+
+the cut&paste doesn't mark leo dirty.
+a cut then change of focus, does
+an undo cleans up the mark again?
+#@nonl
+#@-node:ekr.20060110084745.1:Report
+#@-node:ekr.20060110084745:Fix cut/paste problem
 #@+node:ekr.20060110084342:Fix problem with Mac enter key
 #@+node:ekr.20060110084342.1:Report
 @nocolor
