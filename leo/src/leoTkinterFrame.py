@@ -2687,6 +2687,7 @@ class leoTkinterBody (leoFrame.leoBody):
         Return a tuple giving the insertion point if no range of text is selected."""
     
         w = self.bodyCtrl
+        
         sel = w.tag_ranges("sel")
     
         if len(sel) == 2:
