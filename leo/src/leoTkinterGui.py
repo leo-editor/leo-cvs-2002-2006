@@ -674,7 +674,11 @@ class tkinterGui(leoGui.leoGui):
         Return a tuple giving the insertion point if no range of text is selected."""
     
         # To get the current selection.
-        sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
+        try:
+            sel = t.tag_ranges("sel")
+        except Exception:
+            return 0,0
+    
         if len(sel) == 2:
             i,j = sel
             if sort:
