@@ -33,6 +33,8 @@
 # 0.8 EKR:
 # - Added init function.
 # - Eliminated g.top.
+# 0.9 EKR:
+# - Define callbacks so that all are accessible.
 #@-at
 #@nonl
 #@-node:ekr.20040422081253:<< version history >>
@@ -48,7 +50,7 @@ import re
 import sys
 #@-node:ekr.20050101090207.2:<< imports >>
 #@nl
-__version__ = "0.8"
+__version__ = "0.9"
 
 #@+others
 #@+node:ekr.20060108122501:Module-level
@@ -89,14 +91,18 @@ def rClicker(tag,keywords):
 
     e.widget.focus()
 
+    #@    << define callbacks >>
+    #@+node:ekr.20060110123700:<< define callbacks >>
+    def rc_helpCallback(c=c):       rc_help(c)
+    def rc_dbodyCallback(c=c):      rc_dbody(c)
+    def rc_nlCallback(c=c):         rc_nl(c)
+    def rc_selectAllCallback(c=c):  rc_selectAll(c)
+    #@nonl
+    #@-node:ekr.20060110123700:<< define callbacks >>
+    #@nl
     if e.widget._name.startswith('body'):
         #@        << define commandList for body >>
         #@+node:ekr.20040422072343.7:<< define commandList for body >>
-        def rc_helpCallback(c=c):       rc_help(c)
-        def rc_dbodyCallback(c=c):      rc_dbody(c)
-        def rc_nlCallback(c=c):         rc_nl(c)
-        def rc_selectAllCallback(c=c):  rc_selectAll(c)
-        
         commandList = [
             #('-||-|-||-',None),   #
             #('U',c.undoer.undo),  #no c.undoer
