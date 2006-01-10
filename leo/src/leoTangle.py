@@ -769,9 +769,9 @@ class baseTangleCommands:
         c.beginUpdate()
         try:
             self.untangleTree(p,report_errors)
+            g.es("Untangle complete")
         finally:
             c.endUpdate()
-        g.es("Untangle complete")
     #@nonl
     #@-node:ekr.20031218072017.3478:untangle
     #@+node:ekr.20031218072017.3479:untangleAll
