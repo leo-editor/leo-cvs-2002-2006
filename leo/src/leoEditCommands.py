@@ -2589,6 +2589,8 @@ class editCommandsClass (baseEditCommandsClass):
                 g.app.gui.setTextSelection (w,spot,j,insert=None)
             else:
                 g.app.gui.setTextSelection (w,i,spot,insert=None)
+        else:
+            g.app.gui.setTextSelection(w,spot,spot,insert=None)
         w.see(spot)
     #@nonl
     #@-node:ekr.20051218122116:moveToHelper
