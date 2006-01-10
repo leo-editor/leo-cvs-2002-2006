@@ -234,7 +234,7 @@
 </v>
 </v>
 <v t="ekr.20060108195804" a="E"><vh>Test of unicode chars in Library</vh>
-<v t="ekr.20060108195804.1" a="TV"><vh>headline: Ő</vh></v>
+<v t="ekr.20060108195804.1" a="ETV"><vh>headline: Ő</vh></v>
 </v>
 </vnodes>
 <tnodes>

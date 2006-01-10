@@ -3570,6 +3570,64 @@ def goToNextMarkedHeadline(self):
 #@nonl
 #@-node:ekr.20031218072017.2918:goToNextMarkedHeadline
 #@-node:ekr.20060106131142:Redraw screen properly after Move To Next Dirty
+#@+node:ekr.20060110070304:Fixed focus bug
+#@+node:ekr.20060110070304.1:Report
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3514627
+By: nobody
+
+<quote>I suspect what you want is to elimate all the !text specifications in
+the @shortcuts nodes. (just the !text part, not the whole binding!)</quote>
+
+Not neccessarialy, I just want to hinder that the body pane looses the focus
+as soon as you press Ctrl-S for safe, or if you press ALT-DnArrow to skip to
+the next node in the tree pane.The focus should stay in the body pane without
+the need to explicitly give it back to it by mouse-click or Ctrl-T, but maybe
+in the case of Ctrl-s that is a bug ?
+Why should the body pane loose the focus by pressing Ctrl-S ?
+#@nonl
+#@-node:ekr.20060110070304.1:Report
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+@
+**Important** These methods ensure that exactly zero or one (depending on the
+argument to endUpdate) redraws exist within the section of code bounded by
+c.beginUpdate and c.endUpdate. This greatly simplifies and clarifies the code.
+
+Callers should ensure that every beginUpdate is matched with an endUpdate by
+using the following pattern:
+    c.beginUpdate()
+    try:
+        << whatever >>
+    finally:
+        c.endUpdate()
+@c
+
+def beginUpdate(self):
+    
+    '''Suppress redraws of the tree (except for explict calls to c.redraw_now)
+    until the matching call to endUpdate.'''
+    
+    c = self
+    w = g.app.gui.get_focus(c.frame)
+    c.afterUpdateWidgetStack.append(w)
+    # g.trace(g.app.gui.widget_name(w),g.callers(5))
+    c.frame.tree.beginUpdate()
+    
+def endUpdate(self, flag=True):
+    
+    '''Redraw the screen if flag is True.'''
+
+    c = self
+    c.frame.tree.endUpdate(flag)
+    w = c.afterUpdateWidgetStack.pop()
+    if not c.afterUpdateWidgetStack:
+        # We are at the top-level endUpdate.
+        c.frame.widgetWantsFocus(w)
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@-node:ekr.20060110070304:Fixed focus bug
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands

@@ -7,6 +7,36 @@
 @nocolor
 #@nonl
 #@+node:ekr.20060105130519:Urgent
+#@+node:ekr.20060110084342:Fix problem with Mac enter key
+#@+node:ekr.20060110084342.1:Report
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3514294
+By: sergio_101
+
+i just started using Leo toinght, but i am having problems with the enter key..
+
+unless i hit ctl-enter, i cannot get a lf/cr.. it seems almost like the enter
+key is not active at all unless i hit ctl..
+#@nonl
+#@-node:ekr.20060110084342.1:Report
+#@-node:ekr.20060110084342:Fix problem with Mac enter key
+#@+node:ekr.20060110084342.2:Fix problem with arrow key in headline
+#@+node:ekr.20060110084342.3:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3514755
+
+Leo Log Window...
+Leo 4.4 alpha 5, build  1.358 , January 5, 2006
+Python 2.3.4, Tk 8.4.3, Pmw 1.2
+Windows 5, 1, 2600, 2, Service Pack 1
+
+When I hit Ctrl-H to edit a headline, the entire headline is selected. Fine.
+However, when I use an arrow key to move the cursor, the headline is _still_
+selected. This is NOT Windows-standard action. What's happened?
+#@nonl
+#@-node:ekr.20060110084342.3:Report
+#@-node:ekr.20060110084342.2:Fix problem with arrow key in headline
 #@+node:ekr.20060108105607:Generate calls to 'command1/2' hooks in k.masterCommand
 #@+node:ekr.20050920085536.65: masterCommand & helpers
 def masterCommand (self,event,func,stroke):
@@ -360,8 +390,19 @@ EKR: This can be done with @command nodes, but Leo should have official commands
 #@-node:ekr.20051221101851.1:Request
 #@-node:ekr.20051221101851:Add commands to simulate clicks
 #@-node:ekr.20050928144501.1:Commands for mouseless Leo
+#@+node:ekr.20060109183500:Do vim emulation
+#@-node:ekr.20060109183500:Do vim emulation
 #@-node:ekr.20060105130519:Urgent
 #@+node:ekr.20060105133043:Important
+#@+node:ekr.20060109183500.1:Scripting improvements
+execute-named-script executes script in leo/scripts.
+
+
+
+does script_menu plugin exist? Yes!
+    Where does it get scripts?
+#@nonl
+#@-node:ekr.20060109183500.1:Scripting improvements
 #@+node:ekr.20060108120501:Add @find node to scripting plugin
 This is the easy way to do script finds!
 #@nonl
@@ -369,7 +410,10 @@ This is the easy way to do script finds!
 #@+node:ekr.20051217135340.2:Create find-options panel
 #@-node:ekr.20051217135340.2:Create find-options panel
 #@+node:ekr.20051217175058:Add support in Leo's core for chapters
-Use the zip file stuff initially.  We can add support for chapters to Leo's core later.
+show-chapters
+hide-chapters
+add-chapter
+delete-this-chapter
 #@nonl
 #@-node:ekr.20051217175058:Add support in Leo's core for chapters
 #@+node:ekr.20051028061611.1:Unify all search commands
