@@ -3613,14 +3613,14 @@ def beginUpdate(self):
     # g.trace(g.app.gui.widget_name(w),g.callers(5))
     c.frame.tree.beginUpdate()
     
-def endUpdate(self, flag=True):
+def endUpdate(self, flag=True,restoreFocus=True):
     
     '''Redraw the screen if flag is True.'''
 
     c = self
     c.frame.tree.endUpdate(flag)
     w = c.afterUpdateWidgetStack.pop()
-    if not c.afterUpdateWidgetStack:
+    if not c.afterUpdateWidgetStack and restoreFocus:
         # We are at the top-level endUpdate.
         c.frame.widgetWantsFocus(w)
 
@@ -3834,6 +3834,157 @@ OnPasteFromMenu = pasteText
 #@-node:ekr.20051011072903.5:pasteText
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@-node:ekr.20060110084745:Investigated cut/paste problem
+#@+node:ekr.20060110120907:Fixed several bugs
+@tabwidth 4
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=3515341
+By: nobody
+
+from latest cvs. post g.top disable.
+
+inconsistent use of tabs and spaces
+leo\src\leoUndo.py: 
+leo\src\leoCommands.py:
+leo\src\leoTkinterTree.py: 
+@tabwidth 4
+	
+Library creating: default
+problem starting Library: default
+not sure where this is comming from.
+I though Library did nothing untill first used.
+the 2nd run of Leo, the db is already created
+so no error reported. 
+ok if have an existing db in the default place.
+
+leo\plugins\rClick.py", line 244, in rClicker
+    commandList=[
+UnboundLocalError: local variable 'rc_selectAllCallback' referenced before
+assignment
+
+a lambda would work here.
+or the callback has to be moved
+outside the if startswith body
+
+leo\src\leoTkinterGui.py", line 677, in getTextSelection
+    sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine
+instead!!
+AttributeError: Entry instance has no attribute 'tag_ranges'
+when paste into Entry widget of search box or button.
+paste only understands Text widget?
+and then only from Edit-Paste
+keyboard paste is ok.
+
+in dyna_menu
+TypeError: cmd_flip_Leo_debug() takes no arguments (1 given)
+thanks for adding the callback in plugin_menu, 
+but now any plugin that has cmd_* functions 
+needs a c or dummy parameter in all of them.
+
+'help' in 139i should be copied from 
+my website version 139j from last year.
+this one fails on modules if you have epydoc,
+that should fix the only crasher 
+in the dyna version included with Leo.
+
+pylint call might need to have the import
+lines tweaked, depending on which version.
+they stupidly changed logilab directorys
+from version 6 to 7 and then again 7+.
+Im not going to try and guess which if
+any version of pylint someone has installed.
+if you want it, then you can edit it in.
+
+otherwise everything so far seems to work.
+with other noted anomalies omited for brevity.
+movement keys not  unselecting text the main one.
+
+alpha testers, remember if there is a
+traceback error in a plugin, although
+Leo recovers often other plugins will
+stop working 100% correctly in every case.
+exit Leo and python and restart 
+maybe with the offending plugin disabled,
+to be sure other problems are real problems.
+
+docutils 0.4 was released today.
+has a new html slideshow writer.
+
+e
+#@nonl
+#@-node:ekr.20060110120907:Fixed several bugs
+#@+node:ekr.20060110133007:Fixed recent bug: text in new headline was not selected
+#@+node:ekr.20031218072017.1761:c.insertHeadline
+def insertHeadline (self,op_name="Insert Node"):
+    
+    '''Insert a node after the presently selected node.'''
+
+    c = self ; u = c.undoer
+    current = c.currentPosition()
+    
+    if not current: return
+
+    c.beginUpdate()
+    try:
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].p)):
+            p = current.insertAsNthChild(0)
+        else:
+            p = current.insertAfter()
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.endEditing()
+        c.editPosition(p)
+    finally:
+        c.endUpdate(restoreFocus=False)
+
+    return p # for mod_labels plugin.
+#@nonl
+#@-node:ekr.20031218072017.1761:c.insertHeadline
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+@
+**Important** These methods ensure that exactly zero or one (depending on the
+argument to endUpdate) redraws exist within the section of code bounded by
+c.beginUpdate and c.endUpdate. This greatly simplifies and clarifies the code.
+
+Callers should ensure that every beginUpdate is matched with an endUpdate by
+using the following pattern:
+    c.beginUpdate()
+    try:
+        << whatever >>
+    finally:
+        c.endUpdate()
+@c
+
+def beginUpdate(self):
+    
+    '''Suppress redraws of the tree (except for explict calls to c.redraw_now)
+    until the matching call to endUpdate.'''
+    
+    c = self
+    w = g.app.gui.get_focus(c.frame)
+    c.afterUpdateWidgetStack.append(w)
+    # g.trace(g.app.gui.widget_name(w),g.callers(5))
+    c.frame.tree.beginUpdate()
+    
+def endUpdate(self, flag=True,restoreFocus=True):
+    
+    '''Redraw the screen if flag is True.'''
+
+    c = self
+    c.frame.tree.endUpdate(flag)
+    w = c.afterUpdateWidgetStack.pop()
+    if not c.afterUpdateWidgetStack and restoreFocus:
+        # We are at the top-level endUpdate.
+        c.frame.widgetWantsFocus(w)
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@-node:ekr.20060110133007:Fixed recent bug: text in new headline was not selected
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands

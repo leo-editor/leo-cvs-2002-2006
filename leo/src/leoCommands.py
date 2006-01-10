@@ -3042,10 +3042,10 @@ class baseCommands:
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
             u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-            c.endEditing() # Bug fix: 11/28/05.
+            c.endEditing()
             c.editPosition(p)
         finally:
-            c.endUpdate()
+            c.endUpdate(restoreFocus=False)
     
         return p # for mod_labels plugin.
     #@nonl
@@ -5341,14 +5341,14 @@ class baseCommands:
         # g.trace(g.app.gui.widget_name(w),g.callers(5))
         c.frame.tree.beginUpdate()
         
-    def endUpdate(self, flag=True):
+    def endUpdate(self, flag=True,restoreFocus=True):
         
         '''Redraw the screen if flag is True.'''
     
         c = self
         c.frame.tree.endUpdate(flag)
         w = c.afterUpdateWidgetStack.pop()
-        if not c.afterUpdateWidgetStack:
+        if not c.afterUpdateWidgetStack and restoreFocus:
             # We are at the top-level endUpdate.
             c.frame.widgetWantsFocus(w)
     
