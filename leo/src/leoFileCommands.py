@@ -1302,7 +1302,7 @@ class baseFileCommands:
         
         c.beginUpdate()
         try:
-    	    c.atFileCommands.readAll(p,partialFlag=True)
+            c.atFileCommands.readAll(p,partialFlag=True)
         finally:
             c.endUpdate()
         

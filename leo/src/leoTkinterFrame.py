@@ -678,15 +678,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if verticalFlag:
             # Panes arranged vertically; horizontal splitter bar
-            wRoot	= top.winfo_rooty()
+            wRoot = top.winfo_rooty()
             barRoot = bar.winfo_rooty()
-            wMax	= top.winfo_height()
+            wMax = top.winfo_height()
             offset = float(barRoot) + y - wRoot
         else:
             # Panes arranged horizontally; vertical splitter bar
-            wRoot	= top.winfo_rootx()
+            wRoot = top.winfo_rootx()
             barRoot = bar.winfo_rootx()
-            wMax	= top.winfo_width()
+            wMax = top.winfo_width()
             offset = float(barRoot) + x - wRoot
     
         # Adjust the pixels, not the frac.
@@ -1088,7 +1088,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
             if not imagefile and not image and not text: return
         
-            # First define n.	
+            # First define n.
             try:
                 g.app.iconWidgetCount += 1
                 n = g.app.iconWidgetCount
@@ -1740,8 +1740,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             p.initHeadString(tree.revertHeadline)
             c.beginUpdate()
             try:
-    	        c.endEditing()
-    	        c.selectPosition(p)
+                c.endEditing()
+                c.selectPosition(p)
             finally:
                 c.endUpdate()
     #@nonl
@@ -2002,7 +2002,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         frame.log.restoreAllState(d)
         c.beginUpdate()
         try:
-    	    c.selectPosition(p)
+            c.selectPosition(p)
         finally:
             c.endUpdate()
     #@nonl
@@ -2061,7 +2061,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if g.os_path_exists(theFile):
             os.startfile(theFile)
-        else:	
+        else:
             answer = g.app.gui.runAskYesNoDialog(c,
                 "Download Tutorial?",
                 "Download tutorial (sbooks.chm) from SourceForge?")

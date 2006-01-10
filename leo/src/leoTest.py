@@ -771,7 +771,7 @@ class reformatParagraphTest:
     
         row,col = self.getRowCol()
     
-        assert expCol == col,	"Got column %d.  Expected %d" % (col,expCol)
+        assert expCol == col, "Got column %d.  Expected %d" % (col,expCol)
     
         assert expRow == row, "Got row %d.  Expected %d" % (row,expRow)
     #@nonl
@@ -789,7 +789,7 @@ class reformatParagraphTest:
             assert newLines[i] == refLines[i], \
                 "Mismatch on line " + str(i) + "." \
                 + "\nExpected text: " + `refLines[i]` \
-                + "\n  Actual text: "	+ `newLines[i]`
+                + "\n  Actual text: " + `newLines[i]`
                 
         assert newLinesCount == refLinesCount, \
             "Expected " + str(refLinesCount) + " lines, but " \

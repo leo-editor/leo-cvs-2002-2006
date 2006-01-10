@@ -385,16 +385,16 @@ class baseCommands:
         # Use the config params to set the size and location of the window.
         c.beginUpdate()
         try:
-    	    frame.setInitialWindowGeometry()
-    	    frame.deiconify()
-    	    frame.lift()
-    	    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
-    	    t = leoNodes.tnode()
-    	    v = leoNodes.vnode(c,t)
-    	    p = leoNodes.position(c,v,[])
-    	    v.initHeadString("NewHeadline")
-    	    v.moveToRoot()
-    	    c.editPosition(p)
+            frame.setInitialWindowGeometry()
+            frame.deiconify()
+            frame.lift()
+            frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+            t = leoNodes.tnode()
+            v = leoNodes.vnode(c,t)
+            p = leoNodes.position(c,v,[])
+            v.initHeadString("NewHeadline")
+            v.moveToRoot()
+            c.editPosition(p)
         finally:
             c.endUpdate()
             frame.body.setFocus()
@@ -947,9 +947,9 @@ class baseCommands:
     
         c.beginUpdate()
         try:
-    	    undoData = u.beforeChangeTree(p)
-    	    c.fileCommands.readAtFileNodes()
-    	    u.afterChangeTree(p,'Read @file Nodes',undoData)
+            undoData = u.beforeChangeTree(p)
+            c.fileCommands.readAtFileNodes()
+            u.afterChangeTree(p,'Read @file Nodes',undoData)
         finally:
             c.endUpdate()
     #@nonl
@@ -2267,7 +2267,7 @@ class baseCommands:
                 break
             i += 1
             
-    #	para_tail_lines = tail_lines[:i]
+    #   para_tail_lines = tail_lines[:i]
         para_tail_lines = tail_lines[:i]
         post_para_lines = tail_lines[i:]
         
@@ -2614,7 +2614,7 @@ class baseCommands:
                 pageWidth-indents[1],
                 pageWidth-indents[0])
             
-            # DTHEIN 	18-JAN-2004
+            # DTHEIN 18-JAN-2004
             # prefix with the leading whitespace, if any
             paddedResult = []
             paddedResult.append(leading_ws[0] + result[0])
@@ -2622,7 +2622,7 @@ class baseCommands:
                 paddedResult.append(leading_ws[1] + line)
             
             # Convert the result to a string.
-            result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
+            result = '\n'.join(paddedResult) # DTHEIN 18-JAN-2004: use paddedResult
             if 0: # DTHEIN 18-JAN-2004:  No need to do this.
                 if trailingNL:
                     result += '\n'
@@ -2880,9 +2880,9 @@ class baseCommands:
         
         c.beginUpdate()
         try:
-    	    copiedBunchList = []
-    	    if pasteAsClone:
-                #@	        << put only needed info in copiedBunchList >>
+            copiedBunchList = []
+            if pasteAsClone:
+                #@            << put only needed info in copiedBunchList >>
                 #@+node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
                 # Create a dict containing only copied tnodes.
                 copiedTnodeDict = {}
@@ -2901,18 +2901,18 @@ class baseCommands:
                 #@nonl
                 #@-node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
                 #@nl
-    	    undoData = u.beforeInsertNode(current,
-    	    pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
-    	    c.endEditing()
-    	    c.validateOutline()
-    	    c.selectPosition(pasted)
-    	    pasted.setDirty()
-    	    c.setChanged(True)
-    	    # paste as first child if back is expanded.
-    	    back = pasted.back()
-    	    if back and back.isExpanded():
-    	        pasted.moveToNthChildOf(back,0)
-    	    u.afterInsertNode(pasted,undoType,undoData)
+            undoData = u.beforeInsertNode(current,
+            pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
+            c.endEditing()
+            c.validateOutline()
+            c.selectPosition(pasted)
+            pasted.setDirty()
+            c.setChanged(True)
+            # paste as first child if back is expanded.
+            back = pasted.back()
+            if back and back.isExpanded():
+                pasted.moveToNthChildOf(back,0)
+            u.afterInsertNode(pasted,undoType,undoData)
         finally:
             c.endUpdate()
             c.recolor()
@@ -2956,7 +2956,7 @@ class baseCommands:
             c.hoistStack.append(bunch)
             c.beginUpdate()
             try:
-    	        p.expand()
+                p.expand()
             finally:
                 c.endUpdate()
             c.frame.clearStatusLine()
@@ -3007,13 +3007,13 @@ class baseCommands:
     
         c.beginUpdate()
         try:
-    	   c.endEditing() # Make sure we capture the headline for Undo.
-    	   undoData = u.beforeDeleteNode(p)
-    	   dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-    	   p.doDelete()
-    	   c.selectPosition(newNode)
-    	   c.setChanged(True)
-    	   u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+           c.endEditing() # Make sure we capture the headline for Undo.
+           undoData = u.beforeDeleteNode(p)
+           dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+           p.doDelete()
+           c.selectPosition(newNode)
+           c.setChanged(True)
+           u.afterDeleteNode(newNode,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
         finally:
             c.endUpdate()
     
@@ -3032,17 +3032,17 @@ class baseCommands:
     
         c.beginUpdate()
         try:
-    	    undoData = c.undoer.beforeInsertNode(current)
-    	    # Make sure the new node is visible when hoisting.
-    	    if ((current.hasChildren() and current.isExpanded()) or
-    	        (c.hoistStack and current == c.hoistStack[-1].p)):
-    	        p = current.insertAsNthChild(0)
-    	    else:
-    	        p = current.insertAfter()
-    	    dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
-    	    c.setChanged(True)
-    	    u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-    	    c.endEditing() # Bug fix: 11/28/05.
+            undoData = c.undoer.beforeInsertNode(current)
+            # Make sure the new node is visible when hoisting.
+            if ((current.hasChildren() and current.isExpanded()) or
+                (c.hoistStack and current == c.hoistStack[-1].p)):
+                p = current.insertAsNthChild(0)
+            else:
+                p = current.insertAfter()
+            dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+            c.setChanged(True)
+            u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+            c.endEditing() # Bug fix: 11/28/05.
             c.editPosition(p)
         finally:
             c.endUpdate()
@@ -4193,9 +4193,9 @@ class baseCommands:
     
         c.beginUpdate()
         try:
-    	    while v and v != last:
-    	        v.expand()
-    	        v = v.threadNext()
+            while v and v != last:
+                v.expand()
+                v = v.threadNext()
         finally:
             c.endUpdate()
     #@nonl

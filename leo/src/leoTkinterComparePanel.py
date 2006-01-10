@@ -40,7 +40,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
         # No corresponding ivar in the leoCompare class.
         self.useOutputFileVar = Tk.IntVar()
         
-        # These all correspond to ivars in leoCompare	
+        # These all correspond to ivars in leoCompare
         self.appendOutputVar             = Tk.IntVar()
         
         self.ignoreBlankLinesVar         = Tk.IntVar()

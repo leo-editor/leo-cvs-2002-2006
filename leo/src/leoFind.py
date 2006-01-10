@@ -15,7 +15,7 @@ import leoGlobals as g
 # versions of Leo used an inferior scheme.  The following principles govern 
 # the leoFind class:
 # 
-# 1.	Find and Change commands initialize themselves using only the state of 
+# 1. Find and Change commands initialize themselves using only the state of 
 # the present Leo window. In particular, the Find class must not save internal 
 # state information from one invocation to the next. This means that when the 
 # user changes the nodes, or selects new text in headline or body text, those 
@@ -520,12 +520,12 @@ class leoFind:
         # No redraws here: they would destroy the headline selection.
         c.beginUpdate()
         try:
-    	    if self.mark_changes:
-    	        p.setMarked()
-    	    if self.in_headline:
-    	        c.frame.tree.onHeadChanged(p,'Change')
-    	    else:
-    	        c.frame.body.onBodyChanged('Change',oldSel=oldSel)
+            if self.mark_changes:
+                p.setMarked()
+            if self.in_headline:
+                c.frame.tree.onHeadChanged(p,'Change')
+            else:
+                c.frame.body.onBodyChanged('Change',oldSel=oldSel)
         finally:
             c.endUpdate(False)
             c.frame.tree.drawIcon(p) # redraw only the icon.
@@ -1034,7 +1034,7 @@ class leoFind:
         c.frame.bringToFront() # Needed on the Mac
         c.beginUpdate()
         try:
-    	    c.selectPosition(p)
+            c.selectPosition(p)
         finally:
             c.endUpdate()
         if self.in_headline:

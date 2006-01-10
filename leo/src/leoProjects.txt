@@ -1911,15 +1911,15 @@ def onHeadChanged (self,p,undoType='Typing'):
         self.revertHeadline = s
         p.initHeadString(s)
         # g.trace(repr(s),g.callers())
-	    if changed:
-	        # g.trace('changed: old',repr(oldRevert),'new',repr(s))
-	        undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
-	        if not c.changed: c.setChanged(True)
-	        dirtyVnodeList = p.setDirty()
-	        u.afterChangeNodeContents(p,undoType,undoData,
-	            dirtyVnodeList=dirtyVnodeList)
-	    else:
-	        pass # g.trace('not changed')
+        if changed:
+            # g.trace('changed: old',repr(oldRevert),'new',repr(s))
+            undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+            u.afterChangeNodeContents(p,undoType,undoData,
+                dirtyVnodeList=dirtyVnodeList)
+        else:
+            pass # g.trace('not changed')
     finally:
         c.endUpdate(changed)
         if self.stayInTree:
@@ -2771,16 +2771,16 @@ def new (self):
     # Use the config params to set the size and location of the window.
     c.beginUpdate()
     try:
-	    frame.setInitialWindowGeometry()
-	    frame.deiconify()
-	    frame.lift()
-	    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
-	    t = leoNodes.tnode()
-	    v = leoNodes.vnode(c,t)
-	    p = leoNodes.position(c,v,[])
-	    v.initHeadString("NewHeadline")
-	    v.moveToRoot()
-	    c.editPosition(p)
+        frame.setInitialWindowGeometry()
+        frame.deiconify()
+        frame.lift()
+        frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+        t = leoNodes.tnode()
+        v = leoNodes.vnode(c,t)
+        p = leoNodes.position(c,v,[])
+        v.initHeadString("NewHeadline")
+        v.moveToRoot()
+        c.editPosition(p)
     finally:
         c.endUpdate()
         frame.body.setFocus()
@@ -3246,8 +3246,8 @@ def openWithFileName(fileName,old_c,
             frame.openDirectory = g.os_path_dirname(fileName)
             g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         finally:
-            frame.bodyWantsFocus()
             c.endUpdate()
+            frame.bodyWantsFocus()
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -3628,6 +3628,212 @@ BeginUpdate = beginUpdate # Compatibility with old scripts
 EndUpdate = endUpdate # Compatibility with old scripts
 #@-node:ekr.20031218072017.2950:c.begin/endUpdate
 #@-node:ekr.20060110070304:Fixed focus bug
+#@+node:ekr.20060110113743:Made sure to bring proper window on top in settings.leo button
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,
+    enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full, normalized, Unicode path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    theList = app.windowList
+    for frame in theList:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            frame.c.setLog()
+            return True, frame
+    try:
+        if old_c:
+            # New in 4.4: We must read the file *twice*.
+            # The first time sets settings for the later call to c.finishCreate.
+            # g.trace('***** prereading',fileName)
+            c2 = g.app.config.openSettingsFile(fileName)
+            if c2: g.app.config.updateSettings(c2,localFlag=True)
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        c,frame = app.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        c.beginUpdate()
+        try:
+            if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
+                c.setLog()
+                app.lockLog()
+                frame.c.fileCommands.open(
+                    theFile,fileName,
+                    readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+                app.unlockLog()
+                for frame in g.app.windowList:
+                    # The recent files list has been updated by menu.updateRecentFiles.
+                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
+            # Bug fix in 4.4.
+            frame.openDirectory = g.os_path_dirname(fileName)
+            g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
+        finally:
+            c.endUpdate()
+            frame.bodyWantsFocus()
+        return True, frame
+    except IOError:
+        # Do not use string + here: it will fail for non-ascii strings!
+        if not g.app.unitTesting:
+            g.es("can not open: %s" % (fileName), color="blue")
+        return False, None
+    except Exception:
+        g.es("exceptions opening: %s" % (fileName),color="red")
+        g.es_exception()
+        return False, None
+#@nonl
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@-node:ekr.20060110113743:Made sure to bring proper window on top in settings.leo button
+#@+node:ekr.20060110084342.2:Fixed problem with arrow keys
+#@+node:ekr.20060110084342.3:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3514755
+
+Leo Log Window...
+Leo 4.4 alpha 5, build  1.358 , January 5, 2006
+Python 2.3.4, Tk 8.4.3, Pmw 1.2
+Windows 5, 1, 2600, 2, Service Pack 1
+
+When I hit Ctrl-H to edit a headline, the entire headline is selected. Fine.
+However, when I use an arrow key to move the cursor, the headline is _still_
+selected. This is NOT Windows-standard action. What's happened?
+#@nonl
+#@-node:ekr.20060110084342.3:Report
+#@+node:ekr.20051218122116:moveToHelper
+def moveToHelper (self,event,spot,extend):
+    
+    '''Common helper method for commands the move the cursor
+    in a way that can be described by a Tk Text expression.'''
+    
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.frame.widgetWantsFocus(w)
+    i,j = g.app.gui.getTextSelection(w,sort=True)
+    spot = w.index(spot) # Capture initial value.
+    ins = w.index('insert')
+    w.mark_set('insert',spot)
+    if extend or self.extendMode:
+        if w.compare(spot,'<=',i):
+            g.app.gui.setTextSelection (w,spot,j,insert=None)
+        else:
+            g.app.gui.setTextSelection (w,i,spot,insert=None)
+    else:
+        g.app.gui.setTextSelection(w,spot,spot,insert=None)
+    w.see(spot)
+#@nonl
+#@-node:ekr.20051218122116:moveToHelper
+#@-node:ekr.20060110084342.2:Fixed problem with arrow keys
+#@+node:ekr.20060110084745:Investigated cut/paste problem
+# The report was mistaken.
+#@nonl
+#@+node:ekr.20060110084745.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3514816
+
+the cut&paste doesn't mark leo dirty.
+a cut then change of focus, does
+an undo cleans up the mark again?
+#@nonl
+#@-node:ekr.20060110084745.1:Report
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@+node:ekr.20051011072903.2:copyText
+def copyText (self):
+    
+    '''Copy the selected text from the widget to the clipboard.'''
+    
+    f = self ; c = f.c ; w = f.getFocus()
+    if not w: return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText
+#@nonl
+#@-node:ekr.20051011072903.2:copyText
+#@+node:ekr.20051011072049.2:cutText
+def cutText (self):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c
+    w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        # The headline is not officially changed yet.
+        # p.initHeadString(s)
+        w.configure(width=f.tree.headWidth(s=s))
+    else: pass
+
+OnCutFromMenu = cutText
+#@nonl
+#@-node:ekr.20051011072049.2:cutText
+#@+node:ekr.20051011072903.5:pasteText
+def pasteText (self):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; w = f.getFocus()
+    if not w: return
+    name = g.app.gui.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
+    if name.startswith('head'):
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        # The headline is not officially changed yet.
+        # p.initHeadString(s)
+        w.configure(width=f.tree.headWidth(s=s))
+    else: pass
+    
+OnPasteFromMenu = pasteText
+#@nonl
+#@-node:ekr.20051011072903.5:pasteText
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
+#@-node:ekr.20060110084745:Investigated cut/paste problem
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands
@@ -4349,19 +4555,19 @@ def onClickBoxClick (self,event):
 
     c.beginUpdate()
     try:
-	    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+        if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
             c.endEditing() # Bug fix: 12/19/05
-	        if p.isExpanded(): p.contract()
-	        else:              p.expand()
-	        self.active = True
-	        self.select(p)
-	        if c.frame.findPanel:
-	            c.frame.findPanel.handleUserClick(p)
-	        if self.stayInTree:
-	            c.frame.treeWantsFocus()
-	        else:
-	            c.frame.bodyWantsFocus()
-	    g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+            if p.isExpanded(): p.contract()
+            else:              p.expand()
+            self.active = True
+            self.select(p)
+            if c.frame.findPanel:
+                c.frame.findPanel.handleUserClick(p)
+            if self.stayInTree:
+                c.frame.treeWantsFocus()
+            else:
+                c.frame.bodyWantsFocus()
+        g.doHook("boxclick2",c=c,p=p,v=p,event=event)
     finally:
         c.endUpdate()
 #@nonl
@@ -4380,20 +4586,20 @@ def endDrag (self,event):
 
     c.beginUpdate()
     try:
-	    << set vdrag, childFlag >>
-	    if c.config.getBool("allow_clone_drags"):
-	        if not c.config.getBool("look_for_control_drag_on_mouse_down"):
-	            self.controlDrag = c.frame.controlKeyIsDown
-	
-	    if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
-	        << drag p to vdrag >>
-	    elif self.trace and self.verbose:
-	        g.trace("Cancel drag")
-	    
-	    # Reset the old cursor by brute force.
-	    self.canvas['cursor'] = "arrow"
-	    self.dragging = False
-	    self.drag_p = None
+        << set vdrag, childFlag >>
+        if c.config.getBool("allow_clone_drags"):
+            if not c.config.getBool("look_for_control_drag_on_mouse_down"):
+                self.controlDrag = c.frame.controlKeyIsDown
+    
+        if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
+            << drag p to vdrag >>
+        elif self.trace and self.verbose:
+            g.trace("Cancel drag")
+        
+        # Reset the old cursor by brute force.
+        self.canvas['cursor'] = "arrow"
+        self.dragging = False
+        self.drag_p = None
     finally:
         # Must set self.drag_p = None first.
         c.endUpdate()
@@ -4610,15 +4816,15 @@ def onHeadChanged (self,p,undoType='Typing'):
         self.revertHeadline = s
         p.initHeadString(s)
         # g.trace(repr(s),g.callers())
-	    if changed:
-	        # g.trace('changed: old',repr(oldRevert),'new',repr(s))
-	        undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
-	        if not c.changed: c.setChanged(True)
-	        dirtyVnodeList = p.setDirty()
-	        u.afterChangeNodeContents(p,undoType,undoData,
-	            dirtyVnodeList=dirtyVnodeList)
-	    else:
-	        pass # g.trace('not changed')
+        if changed:
+            # g.trace('changed: old',repr(oldRevert),'new',repr(s))
+            undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+            u.afterChangeNodeContents(p,undoType,undoData,
+                dirtyVnodeList=dirtyVnodeList)
+        else:
+            pass # g.trace('not changed')
     finally:
         c.endUpdate(changed)
         if self.stayInTree:

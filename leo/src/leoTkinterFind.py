@@ -483,7 +483,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         return t.search(*args,**keys)
     
     def init_s_ctrl (self,s):
-        t = self.s_ctrl	
+        t = self.s_ctrl
         t.delete("1.0","end")
         t.insert("end",s)
         t.mark_set("insert",g.choose(self.reverse,"end","1.0"))

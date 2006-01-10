@@ -100,7 +100,7 @@ class LeoApp:
             "ada" : "--",
             "actionscript" : "// /* */", #jason 2003-07-03
             "c" : "// /* */", # C, C++ or objective C.
-            "csharp" : "// /* */",	# C#
+            "csharp" : "// /* */", # C#
             "css" : "/* */", # 4/1/04
             "cweb" : "@q@ @>", # Use the "cweb hack"
             "elisp" : ";",

@@ -834,12 +834,12 @@ class bufferCommandsClass (baseEditCommandsClass):
         if s and p:
             c.beginUpdate()
             try:
-    	        c.selectPosition(p)
-    	        self.beginCommand('append-to-buffer: %s' % p.headString())
-    	        w.insert('end',s)
-    	        w.mark_set('insert','end')
-    	        w.see('end')
-    	        self.endCommand()
+                c.selectPosition(p)
+                self.beginCommand('append-to-buffer: %s' % p.headString())
+                w.insert('end',s)
+                w.mark_set('insert','end')
+                w.see('end')
+                self.endCommand()
             finally:
                 c.endUpdate()
                 c.recolor_now()
@@ -896,12 +896,12 @@ class bufferCommandsClass (baseEditCommandsClass):
         if s and p:
             c.beginUpdate()
             try:
-    	        c.selectPosition(p)
-    	        self.beginCommand('prepend-to-buffer: %s' % p.headString())
-    	        w.insert('1.0',s)
-    	        w.mark_set('insert','1.0')
-    	        w.see('1.0')
-    	        self.endCommand()
+                c.selectPosition(p)
+                self.beginCommand('prepend-to-buffer: %s' % p.headString())
+                w.insert('1.0',s)
+                w.mark_set('insert','1.0')
+                w.see('1.0')
+                self.endCommand()
             finally:
                 c.endUpdate()
                 c.recolor_now()
@@ -944,7 +944,7 @@ class bufferCommandsClass (baseEditCommandsClass):
         if p:
             c.beginUpdate()
             try:
-    	        c.selectPosition(p)
+                c.selectPosition(p)
             finally:
                 c.endUpdate()
     #@nonl
@@ -966,12 +966,12 @@ class bufferCommandsClass (baseEditCommandsClass):
         if s and p:
             c.beginUpdate()
             try:
-    	        c.selectPosition(p)
-    	        self.beginCommand('copy-to-buffer: %s' % p.headString())
-    	        w.insert('end',s)
-    	        w.mark_set('insert','end')
-    	        w.see('end')
-    	        self.endCommand()
+                c.selectPosition(p)
+                self.beginCommand('copy-to-buffer: %s' % p.headString())
+                w.insert('end',s)
+                w.mark_set('insert','end')
+                w.see('end')
+                self.endCommand()
             finally:
                 c.endUpdate()
                 c.recolor_now()
@@ -991,11 +991,11 @@ class bufferCommandsClass (baseEditCommandsClass):
         if s and p:
             c.beginUpdate()
             try:
-    	        c.selectPosition(p)
-    	        self.beginCommand('insert-to-buffer: %s' % p.headString())
-    	        w.insert('insert',s)
-    	        w.see('insert')
-    	        self.endCommand()
+                c.selectPosition(p)
+                self.beginCommand('insert-to-buffer: %s' % p.headString())
+                w.insert('insert',s)
+                w.see('insert')
+                self.endCommand()
             finally:
                 c.endUpdate()
     #@nonl
@@ -5744,7 +5744,7 @@ class findTab (leoFind.leoFind):
         return t.search(*args,**keys)
     
     def init_s_ctrl (self,s):
-        t = self.s_ctrl	
+        t = self.s_ctrl
         t.delete("1.0","end")
         t.insert("end",s)
         t.mark_set("insert",g.choose(self.reverse,"end","1.0"))

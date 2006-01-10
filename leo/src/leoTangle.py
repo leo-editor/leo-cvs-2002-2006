@@ -132,21 +132,21 @@ if 1: # A single enum...
 
     # Used by token_type().
     plain_line = 1 # all other lines
-    at_at	     = 2 # double-at sign.
+    at_at      = 2 # double-at sign.
     at_chapter = 3 # @chapter
     # at_c       = 4 # @c in noweb mode
-    at_code	   = 5 # @code, or @c or @p in CWEB mode.
-    at_doc	    = 6 # @doc
+    at_code    = 5 # @code, or @c or @p in CWEB mode.
+    at_doc     = 6 # @doc
     at_other   = 7 # all other @directives
-    at_root	   = 8 # @root or noweb * sections
+    at_root    = 8 # @root or noweb * sections
     at_section = 9 # @section
     # at_space   = 10 # @space
-    at_web	    = 11 # any CWEB control code, except at_at.
+    at_web     = 11 # any CWEB control code, except at_at.
     
     # Returned by self.skip_section_name() and allies and used by token_type.
     bad_section_name = 12  # < < with no matching > >
-    section_ref	 = 13  # < < name > >
-    section_def	 = 14  # < < name > > =
+    section_ref  = 13  # < < name > >
+    section_def  = 14  # < < name > > =
     
     # Returned by is_sentinal_line.
     non_sentinel_line   = 15
@@ -344,8 +344,8 @@ class root_attributes:
     
         return ("root_attributes: language: " + self.language +
             ", single_comment_string: " + self.single_comment_string +
-            ", start_comment_string: " +	self.start_comment_string +
-            ", end_comment_string: " +	self.end_comment_string +
+            ", start_comment_string: " + self.start_comment_string +
+            ", end_comment_string: " + self.end_comment_string +
             ", use_header_flag: " + self.use_header_flag +
             ", print_mode: " + self.print_mode +
             ", path: " + self.path +
@@ -2040,7 +2040,7 @@ class baseTangleCommands:
         for name in keys:
             section = self.tst[name]
             if not section.referenced:
-                g.es(	' ' * 4 + "Warning: " +
+                g.es(' ' * 4 + "Warning: " +
                     g.choose(self.use_noweb_flag,"<< ","@< ") +
                     section.name +
                     g.choose(self.use_noweb_flag," >>"," @>") +

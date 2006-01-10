@@ -41,40 +41,40 @@ class atFile:
     # These constants must be global to this module because they are shared by several classes.
     
     # The kind of at_directives.
-    noDirective		   =  1 # not an at-directive.
+    noDirective     =  1 # not an at-directive.
     allDirective    =  2 # at-all (4.2)
-    docDirective	   =  3 # @doc.
-    atDirective		   =  4 # @<space> or @<newline>
-    codeDirective	  =  5 # @code
-    cDirective		    =  6 # @c<space> or @c<newline>
-    othersDirective	=  7 # at-others
-    miscDirective	  =  8 # All other directives
+    docDirective    =  3 # @doc.
+    atDirective     =  4 # @<space> or @<newline>
+    codeDirective   =  5 # @code
+    cDirective      =  6 # @c<space> or @c<newline>
+    othersDirective =  7 # at-others
+    miscDirective   =  8 # All other directives
     rawDirective    =  9 # @raw
     endRawDirective = 10 # @end_raw
     
     # The kind of sentinel line.
-    noSentinel		 = 20 # Not a sentinel
-    endAt			 = 21 # @-at
-    endBody			 = 22 # @-body
+    noSentinel   = 20 # Not a sentinel
+    endAt        = 21 # @-at
+    endBody      = 22 # @-body
     # not used   = 23
-    endDoc			 = 24 # @-doc
-    endLeo			 = 25 # @-leo
-    endNode			 = 26 # @-node
-    endOthers		  = 27 # @-others
+    endDoc       = 24 # @-doc
+    endLeo       = 25 # @-leo
+    endNode      = 26 # @-node
+    endOthers    = 27 # @-others
     
     # not used     = 40
-    startAt			   = 41 # @+at
-    startBody		    = 42 # @+body
-    startDoc		     = 43 # @+doc
-    startLeo		     = 44 # @+leo
-    startNode		    = 45 # @+node
-    startOthers		  = 46 # @+others
+    startAt        = 41 # @+at
+    startBody      = 42 # @+body
+    startDoc       = 43 # @+doc
+    startLeo       = 44 # @+leo
+    startNode      = 45 # @+node
+    startOthers    = 46 # @+others
     
     startComment   = 60 # @comment
-    startDelims		  = 61 # @delims
-    startDirective	= 62 # @@
-    startRef		     = 63 # @< < ... > >
-    startVerbatim	 = 64 # @verbatim
+    startDelims    = 61 # @delims
+    startDirective = 62 # @@
+    startRef       = 63 # @< < ... > >
+    startVerbatim  = 64 # @verbatim
     startVerbatimAfterRef = 65 # @verbatimAfterRef (3.0 only)
     
     # New in 4.x. Paired
@@ -738,7 +738,7 @@ class atFile:
     
     def readLinesToNextSentinel (self,theFile):
         
-        """	read lines following multiline sentinels"""
+        """read lines following multiline sentinels"""
         
         at = self
         lines = []
@@ -2035,7 +2035,7 @@ class atFile:
         if val == None:
             at.readError("Invalid count in @clone sentinel")
         else:
-            at.cloneSibCount	 = val
+            at.cloneSibCount = val
     #@nonl
     #@-node:ekr.20041005105605.103:readClone
     #@+node:ekr.20041005105605.104:readComment
@@ -2200,7 +2200,7 @@ class atFile:
                 at.out = [s[:-1]]
             else:
                 g.trace("out:",s)
-                at.readError("unexpected @nonl directive in code part")	
+                at.readError("unexpected @nonl directive in code part")
         else:
             s = ''.join(at.pending)
             if s:

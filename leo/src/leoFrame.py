@@ -642,7 +642,7 @@ class leoFrame:
             "Confirm",
             'Save changes to %s before %s' % (name,theType))
             
-        # print answer	
+        # print answer
         if answer == "cancel":
             return True # Veto.
         elif answer == "no":

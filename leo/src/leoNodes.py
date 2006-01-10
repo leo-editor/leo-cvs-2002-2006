@@ -236,9 +236,9 @@ class baseTnode (object):
     """The base class of the tnode class."""
     #@    << tnode constants >>
     #@+node:ekr.20031218072017.3322:<< tnode constants >>
-    dirtyBit    =		0x01
-    richTextBit =	0x02 # Determines whether we use <bt> or <btr> tags.
-    visitedBit  =	0x04
+    dirtyBit    = 0x01
+    richTextBit = 0x02 # Determines whether we use <bt> or <btr> tags.
+    visitedBit  = 0x04
     writeBit    = 0x08 # Set: write the tnode.
     #@nonl
     #@-node:ekr.20031218072017.3322:<< tnode constants >>
@@ -438,19 +438,19 @@ class baseVnode (object):
     # Define the meaning of status bits in new vnodes.
     
     # Archived...
-    clonedBit	  = 0x01 # True: vnode has clone mark.
+    clonedBit   = 0x01 # True: vnode has clone mark.
     
-    # not used	 = 0x02
+    # not used = 0x02
     expandedBit = 0x04 # True: vnode is expanded.
-    markedBit	  = 0x08 # True: vnode is marked
-    orphanBit	  = 0x10 # True: vnode saved in .leo file, not derived file.
+    markedBit   = 0x08 # True: vnode is marked
+    orphanBit   = 0x10 # True: vnode saved in .leo file, not derived file.
     selectedBit = 0x20 # True: vnode is current vnode.
-    topBit		    = 0x40 # True: vnode was top vnode when saved.
+    topBit      = 0x40 # True: vnode was top vnode when saved.
     
     # Not archived...
-    dirtyBit    =	0x060
-    richTextBit =	0x080 # Determines whether we use <bt> or <btr> tags.
-    visitedBit	 = 0x100
+    dirtyBit    = 0x060
+    richTextBit = 0x080 # Determines whether we use <bt> or <btr> tags.
+    visitedBit  = 0x100
     #@-node:ekr.20031218072017.951:<< vnode constants >>
     #@nl
     #@    @+others

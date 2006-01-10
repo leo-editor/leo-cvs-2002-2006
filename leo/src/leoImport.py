@@ -394,7 +394,7 @@ class baseLeoImportCommands:
         level1, plusFlag = self.moreHeadlineLevel(strings[0])
         if level1 == -1: return False
         # Check the level of all headlines.
-        i = 0 ; 	lastLevel = level1
+        i = 0 ; lastLevel = level1
         while i < len(strings):
             s = strings[i] ; i += 1
             level, newFlag = self.moreHeadlineLevel(s)
@@ -560,7 +560,7 @@ class baseLeoImportCommands:
     
         #@    << Create a symbol table of all section names >>
         #@+node:ekr.20031218072017.3232:<< Create a symbol table of all section names >>
-        i = 0 ; 	self.web_st = []
+        i = 0 ; self.web_st = []
         while i < len(s):
             i = g.skip_ws_and_nl(s,i)
             # line = g.get_line(s,i) ; g.trace(line)
@@ -2094,7 +2094,7 @@ class baseLeoImportCommands:
     # PHP uses both # and // as line comments, and /* */ as block comments
     
     def scanPHPText (self,s,parent):
-        
+    
         __pychecker__ = 'maxlines=500'
     
         """Creates a child of parent for each class and function definition seen."""
@@ -2145,7 +2145,7 @@ class baseLeoImportCommands:
         #@-node:ekr.20031218072017.3244:<< define scanPHPText vars >>
         #@nl
         # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
-        parent.appendStringToBody("@first ")	
+        parent.appendStringToBody("@first ")
         parent.appendStringToBody(s[:startOfCode])
         scan_start = i = startOfCode
         while i < endOfCode:
@@ -2296,7 +2296,7 @@ class baseLeoImportCommands:
         #@-node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
         #@nl
         # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
-        parent.appendStringToBody("@last ")	
+        parent.appendStringToBody("@last ")
         parent.appendStringToBody(s[endOfCode:])
     #@nonl
     #@-node:ekr.20031218072017.3242:scanPHPText (Dave Hein)

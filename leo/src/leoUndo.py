@@ -1317,14 +1317,14 @@ class baseUndoer:
     
         c.beginUpdate()
         try:
-    	    if u.redoHelper:
-    	        u.redoHelper()
-    	    else:
-    	        g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
-    	    c.selectPosition(c.currentPosition())
+            if u.redoHelper:
+                u.redoHelper()
+            else:
+                g.trace('no redo helper for %s %s' % (u.kind,u.undoType))
+            c.selectPosition(c.currentPosition())
         finally:
             # New in 4.4a3: Almost any change could change an icon,
-    	    # So we always request a redraw.
+            # So we always request a redraw.
             c.setChanged(True)
             c.endUpdate()
             c.recolor_now()
@@ -1576,14 +1576,14 @@ class baseUndoer:
     
         c.beginUpdate()
         try:
-    	    if u.undoHelper:
-    	        u.undoHelper()
-    	    else:
-    	        g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
-    	    c.selectPosition(c.currentPosition())
+            if u.undoHelper:
+                u.undoHelper()
+            else:
+                g.trace('no undo helper for %s %s' % (u.kind,u.undoType))
+            c.selectPosition(c.currentPosition())
         finally:
             # New in 4.4a3: Almost any change could change an icon,
-    	    # So we always request a redraw.
+            # So we always request a redraw.
             c.setChanged(True)
             c.endUpdate()
             c.recolor_now()
@@ -1610,8 +1610,8 @@ class baseUndoer:
         u = self ; c = u.c
     
         c.selectPosition(u.newP)
-    	c.deleteOutline()
-    	c.selectPosition(u.p)
+        c.deleteOutline()
+        c.selectPosition(u.p)
     #@nonl
     #@-node:ekr.20050412083057.1:undoCloneNode
     #@+node:ekr.20050412084055:undoDeleteNode
