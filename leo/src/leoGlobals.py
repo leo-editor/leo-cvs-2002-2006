@@ -2506,7 +2506,7 @@ def test_g_es_trace():
 #@nonl
 #@-node:ekr.20050707065530:es_trace & test
 #@+node:ekr.20031218072017.3148:top
-if 1: # An extremely dangerous function.
+if 0: # An extremely dangerous function.
 
     def top():
         
