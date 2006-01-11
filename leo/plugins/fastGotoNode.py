@@ -2,13 +2,17 @@
 #@+node:mork.20041018091414.1:@thin fastGotoNode.py
 #@<< docstring >>
 #@+node:ekr.20050226120947:<< docstring >>
-''' A Leo plugin that adds the fast-goto-node minibuffer command.
+'''A Leo plugin that adds the fast-goto-node minibuffer command that creates a
+popup menu. You can summon this menu in two ways, depending on the
+``fastgotonode_useKeyBinding`` setting:
+    
+- If this setting is True, the ``fastgotonode_binding`` setting should be a Key
+  specifier that does not conflict with any key binding in leoSettings.leo.
 
-You can summon this menu in two ways, depending on the useKeyBinding global. If
-useKeyBinding is True, the binding constant should be a Key specifier that does
-not conflict with any key binding in leoSettings.leo. Otherwise, if
-useKeyBinding is False, a right click will invoke this command. Naturally, you
-may also invoke the menu using Alt-x fast-goto-node.
+- If this setting is False, the ``fastgotonode_binding`` setting should be some
+  other event specifier, typically 'Button-3'.
+
+You may also invoke the popup menu using Alt-x fast-goto-node.
 
 This plugin offers 3 main feature sets:
     
@@ -43,7 +47,7 @@ import os
 #@nonl
 #@-node:mork.20041018091414.2:<< imports >>
 #@nl
-__version__ = ".104"
+__version__ = ".105"
 #@<< version history >>
 #@+node:ekr.20050226120947.1:<< version history >>
 #@@nocolor
@@ -65,16 +69,16 @@ __version__ = ".104"
 # - Changed the docstring accordingly.
 # - Corrected the imports to reflect standard usage.
 # - Removed some strange code in getWindowMenu.
+# .105 EKR:
+# - Specify options in leoSettings.leo.
+# - Fixed crasher: app -> g.app.
+# - Use g.app.windowList to init windows.  This should be done dynamically.
+# - Removed langdict stuff, but left the disabled code as a guide in case
+#   somebody wants to implement langdict settings in leoSettings.leo.
 #@-at
 #@nonl
 #@-node:ekr.20050226120947.1:<< version history >>
 #@nl
-
-useKeyBinding = True
-if useKeyBinding:
-    binder = 'Shift-space'
-else:
-    binder = '<Button-3>'
 
 #@+others
 #@+node:ekr.20050226120947.2:init & helpers
@@ -83,13 +87,14 @@ def init ():
     calculateMenuSize()
     leoPlugins.registerHandler(('open2','new'),registerPopupMenu)
     g.plugin_signon(__name__)
-
-    pth = os.path.split(g.app.loadDir)
-    lkpm = pth [0] + r"/plugins/fgn.fgn"
-
-    if os.path.exists(lkpm):
-        loadLanguages(lkpm)
-
+    
+    if 0: # We now use leoSettings.leo to get all settings.
+        pth = os.path.split(g.app.loadDir)
+        lkpm = pth [0] + r"/plugins/fgn.fgn"
+    
+        if os.path.exists(lkpm):
+            loadLanguages(lkpm)
+    
     return True
 #@nonl
 #@+node:mork.20041018091414.20:calculateMenuSize
@@ -107,18 +112,54 @@ def registerPopupMenu (tag,keywords):
     c = keywords.get('c')
     if not c: return
     
-    global useKeyBinding
+    useKeyBinding = c.config.getBool('fastgotonode_useKeyBinding')
+    binding = c.config.getString('fastgotonode_binding')
     
     def popper (event,c=c):
         pop(event,c)
     
     if useKeyBinding:
-        c.keyHandler.registerCommand ('fast-goto-node',binder,popper,pane='all',verbose=True)
+        if binding.startswith('<'): binding = binding[1:-1] # Stirp < and >
+        c.keyHandler.registerCommand ('fast-goto-node',binding,popper,pane='all',verbose=True)
     else:
+        if not binding.startswith('<'): binding = '<%s>' % binding # Add < and >
         c.keyHandler.registerCommand ('fast-goto-node',None,popper,pane='all',verbose=True)
-        c.frame.top.bind(binder,popper)
+        c.frame.top.bind(binding,popper)
 #@nonl
 #@-node:mork.20041018091414.19:registerPopupMenu
+#@+node:mork.20041018091414.21:loadLanguages (not used)
+if 0:
+
+    langdict = {}
+    
+    def loadLanguages (lkpm):
+        import ConfigParser
+        cp = ConfigParser.ConfigParser()
+        cp.read(lkpm)
+        which = ''
+        sec = cp.sections()
+        for z in sec:
+            if z.strip() == 'language':
+                which = z
+                break
+        if cp.has_section(which):
+            op = cp.options(which)
+            for z in op:
+                z2 = cp.get(which,z).split(',')
+                z2 = [x.strip() for x in z2]
+                langdict [z] = z2
+        for z in sec:
+            if z.strip() == 'fgnconfig':
+                which2 = z
+                break
+        if cp.has_section(which2):
+            op2 = cp.options(which2)
+            for z2 in op2:
+                if z2.strip() == 'binder':
+                    binder = cp.get(which2,z2)
+                    break
+#@nonl
+#@-node:mork.20041018091414.21:loadLanguages (not used)
 #@-node:ekr.20050226120947.2:init & helpers
 #@+node:mork.20041018091414.3:disappear
 smenu = Tkinter.Menu(tearoff=0,activeforeground='blue',activebackground='white')
@@ -219,24 +260,21 @@ def getSectionReferenceMenu (pmenu,c):
 #@-node:mork.20041018091414.5:getSectionReferenceMenu
 #@+node:mork.20041018091414.6:getWindowMenu
 def getWindowMenu (pmenu,c):
-    wl = [c.frame]
-    #wl = copy.copy(windows())
-    #wl.remove(c.frame)
-    winmenu = None
-    if 1: ## len(wl) != 0:
-        winmenu = Tkinter.Menu(pmenu,tearoff=0)
-        def bTF (frame):
-            frame.bringToFront()
-            app.setLog(frame.log)
-            frame.bodyCtrl.focus_set()
-            clear()
-        sb = shouldBreak()
-        for z in wl:
-            winmenu.add_command(
-                label = z.getTitle(),
-                command = lambda frame = z: bTF(frame),
-                columnbreak = sb.next())
+    wl = g.app.windowList
+    winmenu = Tkinter.Menu(pmenu,tearoff=0)
+    def bTF (frame):
+        frame.bringToFront()
+        g.app.setLog(frame.log)
+        frame.bodyCtrl.focus_set()
+        clear()
+    sb = shouldBreak()
+    for z in wl:
+        winmenu.add_command(
+            label = z.getTitle(),
+            command = lambda frame = z: bTF(frame),
+            columnbreak = sb.next())
     return winmenu
+#@nonl
 #@-node:mork.20041018091414.6:getWindowMenu
 #@+node:mork.20041018091414.7:getChildrenMenu
 def getChildrenMenu (pmenu,c):
@@ -336,33 +374,35 @@ def getAncestorList (p):
 #@+node:mork.20041018091414.10:addLanguageMenu
 def addLanguageMenu (pmenu,c,haveseen={}):
     colorizer = c.frame.body.getColorizer()
-    if colorizer.language:
-        if not haveseen.has_key(colorizer.language):
-            lk = colorizer.language + '_keywords'
-            # Bug fix: 9/17/05: x_keywords may not exist.
-            try:
-                kwords = getattr(colorizer,lk)
-            except AttributeError:
-                kwords = ()
-            kwords = list(kwords)
+    if not colorizer.language: return None, None
+    
+    if not haveseen.has_key(colorizer.language):
+        lk = colorizer.language + '_keywords'
+        try:
+            kwords = getattr(colorizer,lk)
+        except AttributeError:
+            kwords = ()
+        kwords = list(kwords)
+        if 0: # no longer used.
             if langdict.has_key(colorizer.language):
                 l = langdict [colorizer.language]
                 for z in l:
                     kwords.append(z)
                 kwords.sort()
-        else:
-            kwords = haveseen [colorizer.language]
-        lmenu = Tkinter.Menu(pmenu,tearoff=0)
-        sb = shouldBreak()
-        for z in kwords:
-            lmenu.add_command(
-                label = z,
-                command = lambda keyword = z, c = c:
-                paster(keyword,c),
-                columnbreak = sb.next())
+    else:
+        kwords = haveseen [colorizer.language]
 
-        return lmenu, colorizer.language
-    else: return None, None
+    lmenu = Tkinter.Menu(pmenu,tearoff=0)
+    sb = shouldBreak()
+    for z in kwords:
+        lmenu.add_command(
+            label = z,
+            command = lambda keyword = z, c = c:
+            paster(keyword,c),
+            columnbreak = sb.next())
+
+    return lmenu, colorizer.language
+#@nonl
 #@-node:mork.20041018091414.10:addLanguageMenu
 #@+node:mork.20041018120620:getMoveAMenu
 def getMoveAMenu (pmenu,c):
@@ -589,38 +629,6 @@ def jumpto (vnode,c):
         c.endUpdate()
 #@-node:mork.20041018091414.18:jumpto
 #@-node:ekr.20060110203946.2:Utilities
-#@+node:mork.20041018091414.21:loadLanguages
-langdict = {}
-
-def loadLanguages (lkpm):
-    global binder
-    import ConfigParser
-    cp = ConfigParser.ConfigParser()
-    cp.read(lkpm)
-    which = ''
-    sec = cp.sections()
-    for z in sec:
-        if z.strip() == 'language':
-            which = z
-            break
-    if cp.has_section(which):
-        op = cp.options(which)
-        for z in op:
-            z2 = cp.get(which,z).split(',')
-            z2 = [x.strip() for x in z2]
-            langdict [z] = z2
-    for z in sec:
-        if z.strip() == 'fgnconfig':
-            which2 = z
-            break
-    if cp.has_section(which2):
-        op2 = cp.options(which2)
-        for z2 in op2:
-            if z2.strip() == 'binder':
-                binder = cp.get(which2,z2)
-                break
-#@nonl
-#@-node:mork.20041018091414.21:loadLanguages
 #@-others
 #@nonl
 #@-node:mork.20041018091414.1:@thin fastGotoNode.py
