@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="163" clone_windows="0"/>
 <globals body_outline_ratio="0.539518900344">
-	<global_window_position top="17" left="333" height="873" width="913"/>
+	<global_window_position top="42" left="283" height="873" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -132,7 +132,11 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20051123100536" annotate="7d71002e"><vh>@page Plugins settings</vh>
+<v t="ekr.20051123100536" a="TV" annotate="7d71002e"><vh>@page Plugins settings</vh>
+<v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
+<v t="ekr.20060111091324.1" a="E"><vh>@bool fastgotonode_useKeyBinding = True</vh></v>
+<v t="ekr.20060111091324.2"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
+</v>
 <v t="ekr.20060109115046"><vh>library plugin</vh>
 <v t="ekr.20060109115046.1"><vh>@bool library_verbose = True</vh></v>
 <v t="ekr.20060109115046.2"><vh>@string library_lib = default</vh></v>
@@ -251,7 +255,7 @@
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
-<v t="ekr.20060104093101" a="TV" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts with all Leo commands</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
 <v t="ekr.20060111083044" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
@@ -3754,5 +3758,16 @@ ignore:  Leo ignores the key (like Vim).
 
        &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20060111083721">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
+<t tx="ekr.20060111091324"></t>
+<t tx="ekr.20060111091324.1">If this setting is True, the ``fastgotonode_binding`` setting should be a
+Keyspecifier that does not conflict with any key binding in leoSettings.leo.
+
+If this setting is False, the ``fastgotonode_binding`` setting should be some
+other event specifier, typically 'Button-3'.</t>
+<t tx="ekr.20060111091324.2"># The binding used to invoke the popup menu.
+# Some possibilities:
+
+Shift-space  # Control-space conflicts with an Emacs binding.
+Button-3</t>
 </tnodes>
 </leo_file>
