@@ -1349,14 +1349,21 @@ java -cp c:\jython-2.2a1\jython.jar;c:\prog\jythonShell\JythonShellEA2.1.jar org
 #@nonl
 #@-node:ekr.20051203084725.1:How to install and run jythonShell
 #@+node:ekr.20050316092232:How to install jyLeo
-- Unpack the .zip file, placing the result in c:\prog.
+- Unpack the .zip file, placing the result somewhere, say in c:\prog\jyleo-Jan-11-06
 
-- Edit jleo.bat:
+- Edit jleo.bat so it refers to jyleo-Jan-11-06.  For example:
 
 rem open jyLeo
-rem
-cd c:\prog\<path to jython>\src
-java -jar c:\jython22a0\jython.jar leo.py
+set ARGS= 
+:loop 
+if [%1] == [] goto end 
+set ARGS=%ARGS% %1 
+shift 
+goto loop 
+:end 
+
+cd c:\prog\jyleo-Jan-11-06
+java -jar c:\jython-2.2a1\jython.jar src\leo.py
 #@nonl
 #@+node:ekr.20050716104357:Old instructions
 @nocolor
