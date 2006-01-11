@@ -165,24 +165,11 @@ class cleoController:
     #@+node:ekr.20050227071948.68:install_drawing_overrides
     def install_drawing_overrides (self):
         
-        print "Installing overrides for",self.c.shortFileName()
+        print "Cleo plugin: installing overrides for",self.c.shortFileName()
     
         tree = self.c.frame.tree # NOT leoTkinterTree.leoTkinterTree
         
         g.funcToMethod(self.setUnselectedHeadlineColors,tree)
-        
-        if 0: # The original code.
-            # EKR: removed redundant third arg to g.funcToMethod.
-    
-            g.funcToMethod(setUnselectedLabelState,tree)
-        
-            # Why aren't the overrides being called ?
-            # EKR: because this code doesn't define them and because the overrides aren't defined!
-            if 0:
-                g.funcToMethod(setDisabledLabelState,tree)
-                # EKR: This is a duplicate.
-                # g.funcToMethod(setDisabledLabelState,tree)
-                g.funcToMethod(setUnselectedLabelState,tree)
     #@nonl
     #@-node:ekr.20050227071948.68:install_drawing_overrides
     #@-node:ekr.20050227085542.2: birth
@@ -317,19 +304,22 @@ class cleoController:
     #@-node:ekr.20050227071948.61:custom_colours
     #@-node:ekr.20050227071948.50:colours...
     #@+node:ekr.20050227100857:drawing...
-    #@+node:ekr.20050227071948.39:changed_redraw
-    def changed_redraw(self):
+    #@+node:ekr.20050227071948.39:redraw
+    def redraw(self):
         
-        c = self.c
+        c = self.c ; tree = c.frame.tree
         c.setChanged(True)
-        c.frame.tree.drawTopTree()
+        tree.recycleWidgets()
+        c.redraw_now()
     #@nonl
-    #@-node:ekr.20050227071948.39:changed_redraw
+    #@-node:ekr.20050227071948.39:redraw
     #@+node:ekr.20050227071948.37:clear_all
     def clear_all(self,v):
+        
+        g.trace(v)
     
         self.delUD(v)
-        self.changed_redraw()
+        self.redraw()
     #@nonl
     #@-node:ekr.20050227071948.37:clear_all
     #@+node:ekr.20050227071948.44:draw box area
@@ -339,8 +329,12 @@ class cleoController:
         ''' Redraws all the indicators for the markups of v '''
     
         v = key['p'].v
+    
         if not self.hasUD(v):
-            return 
+            # colour='white'
+            # self.draw_arrow(v,colour)
+            # self.draw_tick(v)
+            return None
     
         d = self.getUD(v)
         if d.get('priority'):
@@ -399,7 +393,7 @@ class cleoController:
         # print ">> Action"
         canvas = self.c.frame.tree.canvas 
         canvas.create_line(v.iconx-10,v.icony+8,v.iconx+5,v.icony+8,
-                           arrow="last",fill=colour,width=4)
+            arrow="last",fill=colour,width=4)
     #@nonl
     #@-node:ekr.20050227071948.47:draw_arrow
     #@+node:ekr.20050227071948.48:draw_tick
@@ -547,37 +541,16 @@ class cleoController:
         
         c = p.c ; config = g.app.config ; w = p.edit_widget()
         
-        if 0: # EKR: this is immediately changed!
-            fg = config.getColor(c,"headline_text_unselected_foreground_color")
-            bg = config.getColor(c,"headline_text_unselected_background_color")
-        
         fg,bg = self.custom_colours(p.v)
         fg = fg or 'black'
         bg = bg or 'white'
         
-        #print '> Unselected  %s (%s,%s)' % (p.v.headString(), fg, bg)
+        # print '> Unselected  %s (%s,%s)' % (p.v.headString(), fg, bg)
         
         try:
             w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
         except:
             g.es_exception()
-        
-        if 0: # original code from leoTkinterTree.
-        
-            c = self.c ; w = p.edit_widget()
-            
-            if self.trace and self.verbose:
-                if not self.redrawing:
-                    print "%10s %d %s" % ("unselect",id(w),p.headString())
-                    # import traceback ; traceback.print_stack(limit=6)
-            
-            fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
-            bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
-            
-            try:
-                w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-            except:
-                g.es_exception()
     #@nonl
     #@-node:ekr.20050227081640.8:setUnselectedHeadlineColors
     #@-node:ekr.20050227081640:tree.set...LabelState
@@ -603,7 +576,7 @@ class cleoController:
             ('Other','Other'),
         ):
             menu.add_radiobutton(label=label,
-                underline=0,command=self.changed_redraw,
+                underline=0,command=self.redraw,
                 variable=a,value=value)
         
         parent.add_cascade(label='Code Archetypes',underline=6,menu=menu)
@@ -631,7 +604,7 @@ class cleoController:
             for color in self.colours:
                 menu.add_radiobutton(label=color,
                     variable=var, value=color,
-                    command=self.changed_redraw)
+                    command=self.redraw)
             parent.add_cascade(label=label,underline=0,menu=menu)
                         
         def cleoColorsMenuCallback():
@@ -661,7 +634,7 @@ class cleoController:
             ('Other','Other'),
         ):
             menu.add_radiobutton(label=label,underline=0,
-                command=self.changed_redraw,variable=n,value=value)
+                command=self.redraw,variable=n,value=value)
     
         parent.add_cascade(label='Node types',underline=0,menu=menu)
     #@nonl
@@ -691,12 +664,12 @@ class cleoController:
             s = '%d %s' % (value,label)
             menu.add_radiobutton(
                 label=s,variable=pr,value=value,
-                command=self.changed_redraw,underline=0)
+                command=self.redraw,underline=0)
     
         menu.add_separator()
     
         menu.add_command(label='Clear',
-            command=lambda:self.priority_clear(p.v),underline=0)
+            command=lambda p=p:self.priority_clear(p.v),underline=0)
     
         return menu
     #@nonl
@@ -735,10 +708,12 @@ class cleoController:
     #@-node:ekr.20050227100643:menus...
     #@+node:ekr.20050227071948.43:priority_clear
     def priority_clear(self,v):
+        
+        g.trace(v)
     
         d = self.getUD(v)
         del d['priority']
-        self.changed_redraw()
+        self.redraw()
     #@nonl
     #@-node:ekr.20050227071948.43:priority_clear
     #@-others

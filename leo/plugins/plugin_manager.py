@@ -744,6 +744,9 @@ class ManagerDialog:
         """Initialise the dialog"""
         
         self.c = c # New in version 0.20 of this plugin.
+        
+        # This would be wrong: it would inhibit standalone operation!
+        # if not c or not c.exists: return
         self.setPaths()
         #@    << create top level window >>
         #@+node:ekr.20041010110321:<< create top level window >> ManagerDialog

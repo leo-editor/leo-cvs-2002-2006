@@ -103,7 +103,7 @@ def addPluginMenuItem (p,c):
     if p.hastoplevel:
         # Check at runtime to see if the plugin has actually been loaded.
         # This prevents us from calling hasTopLevel() on unloaded plugins.
-        def callback (p=p):
+        def callback (c=c,p=p):
             path, name = g.os_path_split(p.filename)
             name, ext = g.os_path_splitext(name)
             # g.trace(name,g.app.loadedPlugins)

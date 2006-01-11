@@ -3985,6 +3985,199 @@ BeginUpdate = beginUpdate # Compatibility with old scripts
 EndUpdate = endUpdate # Compatibility with old scripts
 #@-node:ekr.20031218072017.2950:c.begin/endUpdate
 #@-node:ekr.20060110133007:Fixed recent bug: text in new headline was not selected
+#@+node:ekr.20060110084342:Fixed problem with Mac enter key
+#@+node:ekr.20060110084342.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3514294
+By: sergio_101
+
+i just started using Leo toinght, but i am having problems with the enter key..
+
+unless i hit ctl-enter, i cannot get a lf/cr.. it seems almost like the enter
+key is not active at all unless i hit ctl..
+#@nonl
+#@-node:ekr.20060110084342.1:Report
+#@-node:ekr.20060110084342:Fixed problem with Mac enter key
+#@+node:ekr.20060110093631:Fixed problems with plugins
+#@+node:ekr.20060110093631.1:Report
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3509141
+By: rich_ries
+
+CLEO still does not remove markings. I set Priority -> High, then tried Priority
+-> Clear. Arrow is still showing. Tried Clear All. Arrow is still showing.
+
+FastGotoNode not working w/ ^SPC
+
+Group Operations NEEDS the old KEY-BASED version -- try tagging a dozen nodes,
+making a Mark, and cloning them using a mouse!!
+
+Need How-to for Labels:
+..Label to subnode
+..label to subnodes
+..labels to subnodes
+
+may be clear to the programmer, but not to anyone else.
+#@-node:ekr.20060110093631.1:Report
+#@+node:ekr.20060110113743.1:Report 2
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3515025
+By: nobody
+
+From: Rich
+
+>>  Rich, are you still having any problems with plugins? (except for problems
+with the initial dynamic enabling of plugins).
+ 
+I have a nimber of plugins turned on. Here are my findings:
+
+I've had troubles with the following:
+
+-  cleo.pyc
+....Markers are not cleared. 
+....Pressing Priority --> clear gives:
+---------------------------------------------------
+........Error: 1
+........AttributeError Exception in Tk callback
+........  Function: <function <lambda> at 0x0173BAB0> (type: <type 'function'>)
+........  Args: ()
+........Traceback (innermost last):
+........  File "C:\Language\Python\lib\site-packages\Pmw\Pmw_1_2\lib\PmwBase.py",
+line 1747, in __call__
+............return apply(self.func, args)
+........  File "C:\Software Engineering\Leo\Leo 4.4\plugins\cleo.py", line 700,
+in <lambda>
+............command=lambda:self.priority_clear(p.v),underline=0)
+........  File "C:\Software Engineering\Leo\Leo 4.4\plugins\cleo.py", line 742,
+in priority_clear
+............self.changed_redraw()
+........  File "C:\Software Engineering\Leo\Leo 4.4\plugins\cleo.py", line 325,
+in changed_redraw
+............c.setChanged(True)
+........  File "c:\softwa~1\leo\leo4~1.4\src\leoCommands.py", line 5966, in
+setChanged
+............if not c.frame: return
+........AttributeError: Commands instance has no attribute 'frame'
+---------------------------------------------------
+(FWIW, I like the error window that pops up.)
+
+...."Clear All" does NOT clear ALL(nodes) but restores the node colors to their
+default values
+
+....CLEO does not pick up Leo's colors. I use Antique White for the backgrounds,
+but until I changed CLEO's "White" to "Antique White" it was a nuisance. Newbies
+wouldn't want to / shouldn't need to go in and change the source code.
+
+
+-  fastGotoNode.pyc
+....Ctrl-Spc does not work to bring up the menu
+
+~  groupOperations.pyc
+....(Image) is not a very helpful name -- To me, 'image' has to do with graphics.
+"GrpOps" would be better.
+
+....I found using the old-time key combinations a LOT easier than mousing
+around:
+........Shift+Alt+M........Mark
+........Shift+Alt+V........moVe (Remember Turbo Pascal?)
+........Shift+Alt+C........Copy
+........Shift+Alt+`........clone
+........Shift+Alt+T........Tag
+........Shift+Alt+R........Remove tag
+
+....... and I'd rather have a multitude of operations (as above) than a multitude
+of markings (mark for Move|Copy|Clone).
+
+The following work as expected:
++  add_directives.pyc
++  color_markup.pyc
++  hoist.pyc
++  nav_buttons.pyc
++  open_with.pyc - even with my editor!
++  rClick.pyc
++  startfile.pyc
++  UniversalScrolling.pyc
+
+Untried-until-I-get-a-chance:
+?  ConceptualSort.pyc
+?  labels.pyc
+?  Scripts
+?  timestamp.pyc
+?  UNL.pyc
+
+HTH,
+--Rich
+#@-node:ekr.20060110113743.1:Report 2
+#@+node:ekr.20060110133007.1:Support for cleo
+#@+node:ekr.20040803072955.141:setUnselectedHeadlineColors
+def setUnselectedHeadlineColors (self,p):
+    
+    c = self.c ; w = p.edit_widget()
+    
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("unselect",id(w),p.headString())
+            # import traceback ; traceback.print_stack(limit=6)
+    
+    fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
+    bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
+    
+    try:
+        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+    except:
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040803072955.141:setUnselectedHeadlineColors
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+def redraw_now (self,scroll=True):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c
+    
+    if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
+        g.trace(self.redrawCount,g.callers())
+        # g.print_stats()
+        # g.clear_stats()
+        
+    # Do the actual redraw.
+    self.redrawCount += 1
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@-node:ekr.20060110133007.1:Support for cleo
+#@-node:ekr.20060110093631:Fixed problems with plugins
 #@-node:ekr.20060106091831.1:Fixed bugs
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands

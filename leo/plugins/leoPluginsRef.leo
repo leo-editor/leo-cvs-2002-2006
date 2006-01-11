@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6183" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6191" clone_windows="0"/>
 <globals body_outline_ratio="0.600997506234">
-	<global_window_position top="58" left="376" height="802" width="865"/>
+	<global_window_position top="11" left="364" height="802" width="865"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -35,123 +35,13 @@
 </v>
 <v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20060109114710"><vh>@button settings.leo</vh></v>
 <v t="ekr.20050724100334"><vh>@button Beautify</vh></v>
 <v t="ekr.20051025144116"><vh>@button Spell</vh></v>
 <v t="ekr.20050819055746"><vh>@button Save</vh></v>
 <v t="ekr.20050722075812"><vh>Remove blank trailing lines</vh></v>
 </v>
 <v t="ekr.20060109105601"><vh>Abandoned plugins</vh>
-<v t="ekr.20050523073009"><vh> chapters</vh>
-<v t="ekr.20050427102121"><vh>Calls to zipfile module in chapters.py</vh>
-<v t="mork.20040926105355.29"><vh>newOpen</vh></v>
-<v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
-<v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
-</v>
-<v t="mork.20040926105355.1"><vh>chapters.py</vh>
-<v t="ekr.20041109123143"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
-<v t="ekr.20041103051117"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-<v t="ekr.20041103050629"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="mork.20040926105355.2"><vh>&lt;&lt; globals &gt;&gt;</vh></v>
-<v t="ekr.20060109063941"><vh>init</vh>
-<v t="ekr.20041103054545"><vh>&lt;&lt; override various methods &gt;&gt;</vh></v>
-</v>
-<v t="mork.20040927092626"><vh>class Chapter</vh>
-<v t="ekr.20041103051228"><vh>__init__</vh></v>
-<v t="ekr.20041103051228.1"><vh>_saveInfo</vh></v>
-<v t="ekr.20041103051228.2"><vh>setVariables</vh></v>
-<v t="ekr.20041103051228.3"><vh>makeCurrent</vh></v>
-</v>
-<v t="mork.20040930090735"><vh>Creating widgets...</vh>
-<v t="mork.20040926105355.21"><vh>newCreateControl</vh></v>
-<v t="mork.20040929110556"><vh>createPanedWidget</vh></v>
-<v t="mork.20040926105355.22"><vh>newEditorPane</vh></v>
-<v t="mork.20040926105355.23"><vh>newCreateCanvas</vh></v>
-<v t="mork.20040929120442"><vh>createBalloon</vh></v>
-<v t="mork.20040929102107"><vh>createNoteBook</vh></v>
-<v t="mork.20040929093051"><vh>getNameMaker</vh></v>
-<v t="mork.20040926105355.24"><vh>newTreeinit</vh></v>
-<v t="mork.20040926105355.25"><vh>constructTree</vh></v>
-<v t="mork.20040926105355.26"><vh>addPage</vh></v>
-<v t="mork.20040926105355.35"><vh>newEditor</vh></v>
-</v>
-<v t="mork.20040930091319"><vh>tab menu stuff</vh>
-<v t="mork.20040926105355.41"><vh>makeTabMenu</vh></v>
-<v t="mork.20040930091319.1"><vh>function factories</vh>
-<v t="mork.20040928224349"><vh>getAddChapter</vh></v>
-<v t="mork.20040928223221"><vh>getRemove</vh></v>
-<v t="mork.20040928223738"><vh>getRename</vh></v>
-<v t="mork.20040928224049"><vh>getMakeTrash</vh></v>
-<v t="mork.20040928224621"><vh>getSetupMenu</vh></v>
-</v>
-</v>
-<v t="mork.20040930092346"><vh>Multi-Editor stuff</vh>
-<v t="mork.20040929104527"><vh>selectNodeForEditor</vh></v>
-<v t="mork.20040929105638"><vh>activateEditor</vh></v>
-<v t="mork.20040926105355.36"><vh>removeEditor</vh></v>
-<v t="mork.20040926105355.44"><vh>addHeading</vh></v>
-</v>
-<v t="mork.20040930090547"><vh>Indexing</vh>
-<v t="mork.20040926105355.3"><vh>viewIndex</vh></v>
-<v t="mork.20040929121409"><vh>buildIndex</vh></v>
-<v t="mork.20040926105355.4"><vh>regexViewIndex</vh></v>
-</v>
-<v t="mork.20040930094729"><vh>Chapter-Notebook ops</vh>
-<v t="mork.20040926105355.5"><vh>renumber</vh></v>
-<v t="mork.20040926105355.6"><vh>getGoodPage</vh></v>
-<v t="mork.20040926105355.7"><vh>checkChapterValidity</vh></v>
-<v t="mork.20040926105355.20"><vh>getSV</vh></v>
-<v t="mork.20040926105355.27"><vh>setTree</vh></v>
-<v t="mork.20040929084846"><vh>lowerPage</vh></v>
-<v t="mork.20040926105355.40"><vh>walkChapters</vh></v>
-</v>
-<v t="mork.20040930091035"><vh>opening and closing (to be moved into Leo's core?)</vh>
-<v t="mork.20040930091035.1"><vh>opening</vh>
-<v t="mork.20040926105355.28"><vh>newGetLeoFile</vh></v>
-<v t="mork.20040926105355.29"><vh>newOpen</vh></v>
-<v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
-<v t="mork.20040926105355.8" a="M"><vh>insertChapters</vh></v>
-</v>
-<v t="mork.20040930091035.2"><vh>closing</vh>
-<v t="mork.20040926105355.30"><vh>newWrite_LEO_file</vh></v>
-<v t="mork.20040929092231"><vh>getMakeStringIO</vh></v>
-<v t="mork.20040929090525"><vh>writeChapters</vh></v>
-<v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
-</v>
-</v>
-<v t="mork.20040930091624"><vh>decorated Leo functions</vh>
-<v t="mork.20040926105355.34"><vh>new_os_path_dirname</vh></v>
-<v t="mork.20040926105355.45"><vh>newendEditLabel</vh></v>
-<v t="mork.20040926105355.52"><vh>newselect</vh></v>
-<v t="mork.20040926105355.49"><vh>newTrashDelete</vh></v>
-</v>
-<v t="mork.20040930091759"><vh>operation( node ) to Chapter</vh>
-<v t="mork.20040926105355.31"><vh>cloneToChapter</vh></v>
-<v t="mork.20040926105355.32"><vh>moveToChapter</vh></v>
-<v t="mork.20040926105355.33"><vh>copyToChapter</vh></v>
-<v t="mork.20040926105355.39"><vh>makeNodeIntoChapter</vh></v>
-</v>
-<v t="mork.20040930092027"><vh>conversions</vh>
-<v t="mork.20040926105355.37"><vh>conversionToSimple</vh></v>
-<v t="mork.20040926105355.38"><vh>conversionToChapters</vh></v>
-</v>
-<v t="mork.20040930092027.1"><vh>import/export</vh>
-<v t="mork.20040926105355.47"><vh>importLeoFile</vh></v>
-<v t="mork.20040926105355.48"><vh>exportLeoFile</vh></v>
-</v>
-<v t="mork.20040930092207"><vh>functions without classification</vh>
-<v t="mork.20040926105355.46"><vh>swapChapters</vh></v>
-<v t="mork.20040926105355.50"><vh>emptyTrash</vh></v>
-<v t="mork.20040926105355.51"><vh>regexClone</vh></v>
-</v>
-<v t="mork.20040930091624.1"><vh>PDF</vh>
-<v t="mork.20040926105355.42"><vh>doPDFConversion</vh>
-<v t="ekr.20041109120739"><vh>&lt;&lt; define otherPages callback &gt;&gt;</vh></v>
-</v>
-<v t="mork.20040926105355.43"><vh>_changeTreeToPDF</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
 <v t="ekr.20050421093045"><vh> dyna plugin (modified from 139i)</vh>
 <v t="ekr.20060109001152"><vh>&lt;&lt; modifications by EKR from 139i &gt;&gt;</vh></v>
 <v t="ekr.20050421093045.1"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
@@ -359,6 +249,115 @@
 <v t="ekr.20050421093045.159"><vh>@nosent leoopen1.au3</vh></v>
 <v t="ekr.20050421093045.160"><vh>@url c:/c/chall/osix_Geek/leoopen1.au3</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20050523073009"><vh> chapters</vh>
+<v t="ekr.20050427102121"><vh>Calls to zipfile module in chapters.py</vh>
+<v t="mork.20040926105355.29"><vh>newOpen</vh></v>
+<v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
+<v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
+</v>
+<v t="mork.20040926105355.1"><vh>chapters.py</vh>
+<v t="ekr.20041109123143"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
+<v t="ekr.20041103051117"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20041103050629"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="mork.20040926105355.2"><vh>&lt;&lt; globals &gt;&gt;</vh></v>
+<v t="ekr.20060109063941"><vh>init</vh>
+<v t="ekr.20041103054545"><vh>&lt;&lt; override various methods &gt;&gt;</vh></v>
+</v>
+<v t="mork.20040927092626"><vh>class Chapter</vh>
+<v t="ekr.20041103051228"><vh>__init__</vh></v>
+<v t="ekr.20041103051228.1"><vh>_saveInfo</vh></v>
+<v t="ekr.20041103051228.2"><vh>setVariables</vh></v>
+<v t="ekr.20041103051228.3"><vh>makeCurrent</vh></v>
+</v>
+<v t="mork.20040930090735"><vh>Creating widgets...</vh>
+<v t="mork.20040926105355.21"><vh>newCreateControl</vh></v>
+<v t="mork.20040929110556"><vh>createPanedWidget</vh></v>
+<v t="mork.20040926105355.22"><vh>newEditorPane</vh></v>
+<v t="mork.20040926105355.23"><vh>newCreateCanvas</vh></v>
+<v t="mork.20040929120442"><vh>createBalloon</vh></v>
+<v t="mork.20040929102107"><vh>createNoteBook</vh></v>
+<v t="mork.20040929093051"><vh>getNameMaker</vh></v>
+<v t="mork.20040926105355.24"><vh>newTreeinit</vh></v>
+<v t="mork.20040926105355.25"><vh>constructTree</vh></v>
+<v t="mork.20040926105355.26"><vh>addPage</vh></v>
+<v t="mork.20040926105355.35"><vh>newEditor</vh></v>
+</v>
+<v t="mork.20040930091319"><vh>tab menu stuff</vh>
+<v t="mork.20040926105355.41"><vh>makeTabMenu</vh></v>
+<v t="mork.20040930091319.1"><vh>function factories</vh>
+<v t="mork.20040928224349"><vh>getAddChapter</vh></v>
+<v t="mork.20040928223221"><vh>getRemove</vh></v>
+<v t="mork.20040928223738"><vh>getRename</vh></v>
+<v t="mork.20040928224049"><vh>getMakeTrash</vh></v>
+<v t="mork.20040928224621"><vh>getSetupMenu</vh></v>
+</v>
+</v>
+<v t="mork.20040930092346"><vh>Multi-Editor stuff</vh>
+<v t="mork.20040929104527"><vh>selectNodeForEditor</vh></v>
+<v t="mork.20040929105638"><vh>activateEditor</vh></v>
+<v t="mork.20040926105355.36"><vh>removeEditor</vh></v>
+<v t="mork.20040926105355.44"><vh>addHeading</vh></v>
+</v>
+<v t="mork.20040930090547"><vh>Indexing</vh>
+<v t="mork.20040926105355.3"><vh>viewIndex</vh></v>
+<v t="mork.20040929121409"><vh>buildIndex</vh></v>
+<v t="mork.20040926105355.4"><vh>regexViewIndex</vh></v>
+</v>
+<v t="mork.20040930094729"><vh>Chapter-Notebook ops</vh>
+<v t="mork.20040926105355.5"><vh>renumber</vh></v>
+<v t="mork.20040926105355.6"><vh>getGoodPage</vh></v>
+<v t="mork.20040926105355.7"><vh>checkChapterValidity</vh></v>
+<v t="mork.20040926105355.20"><vh>getSV</vh></v>
+<v t="mork.20040926105355.27"><vh>setTree</vh></v>
+<v t="mork.20040929084846"><vh>lowerPage</vh></v>
+<v t="mork.20040926105355.40"><vh>walkChapters</vh></v>
+</v>
+<v t="mork.20040930091035"><vh>opening and closing (to be moved into Leo's core?)</vh>
+<v t="mork.20040930091035.1"><vh>opening</vh>
+<v t="mork.20040926105355.28"><vh>newGetLeoFile</vh></v>
+<v t="mork.20040926105355.29"><vh>newOpen</vh></v>
+<v t="mork.20040926105355.9"><vh>openChaptersFile</vh></v>
+<v t="mork.20040926105355.8" a="M"><vh>insertChapters</vh></v>
+</v>
+<v t="mork.20040930091035.2"><vh>closing</vh>
+<v t="mork.20040926105355.30"><vh>newWrite_LEO_file</vh></v>
+<v t="mork.20040929092231"><vh>getMakeStringIO</vh></v>
+<v t="mork.20040929090525"><vh>writeChapters</vh></v>
+<v t="mork.20040929090525.1"><vh>zipChapters</vh></v>
+</v>
+</v>
+<v t="mork.20040930091624"><vh>decorated Leo functions</vh>
+<v t="mork.20040926105355.34"><vh>new_os_path_dirname</vh></v>
+<v t="mork.20040926105355.45"><vh>newendEditLabel</vh></v>
+<v t="mork.20040926105355.52"><vh>newselect</vh></v>
+<v t="mork.20040926105355.49"><vh>newTrashDelete</vh></v>
+</v>
+<v t="mork.20040930091759"><vh>operation( node ) to Chapter</vh>
+<v t="mork.20040926105355.31"><vh>cloneToChapter</vh></v>
+<v t="mork.20040926105355.32"><vh>moveToChapter</vh></v>
+<v t="mork.20040926105355.33"><vh>copyToChapter</vh></v>
+<v t="mork.20040926105355.39"><vh>makeNodeIntoChapter</vh></v>
+</v>
+<v t="mork.20040930092027"><vh>conversions</vh>
+<v t="mork.20040926105355.37"><vh>conversionToSimple</vh></v>
+<v t="mork.20040926105355.38"><vh>conversionToChapters</vh></v>
+</v>
+<v t="mork.20040930092027.1"><vh>import/export</vh>
+<v t="mork.20040926105355.47"><vh>importLeoFile</vh></v>
+<v t="mork.20040926105355.48"><vh>exportLeoFile</vh></v>
+</v>
+<v t="mork.20040930092207"><vh>functions without classification</vh>
+<v t="mork.20040926105355.46"><vh>swapChapters</vh></v>
+<v t="mork.20040926105355.50"><vh>emptyTrash</vh></v>
+<v t="mork.20040926105355.51"><vh>regexClone</vh></v>
+</v>
+<v t="mork.20040930091624.1"><vh>PDF</vh>
+<v t="mork.20040926105355.42"><vh>doPDFConversion</vh>
+<v t="ekr.20041109120739"><vh>&lt;&lt; define otherPages callback &gt;&gt;</vh></v>
+</v>
+<v t="mork.20040926105355.43"><vh>_changeTreeToPDF</vh></v>
 </v>
 </v>
 </v>
@@ -915,6 +914,9 @@
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
 </v>
+<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
+<v t="ekr.20060110125615"><vh>@url http://rclick.netfirms.com/dyna_menu.py.html  (dyna plugin)</vh></v>
+</v>
 <v t="edream.110203113231.872"><vh>Enhanced nodes...</vh>
 <v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
 <v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
@@ -1096,8 +1098,7 @@
 <v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
 <v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
 <v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
-<v t="ekr.20040422072343"
-expanded="ekr.20060108122501,"><vh>@thin rClick.py</vh></v>
+<v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
 <v t="EKR.20040605181725"><vh>Autocompleter</vh>
 <v t="EKR.20040605181725.1"><vh>Configuration</vh>
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
@@ -1877,7 +1878,7 @@ expanded="ekr.20060108122501,"><vh>@thin rClick.py</vh></v>
 <v t="ekr.20050825154553"><vh>@thin zodb.py</vh></v>
 </v>
 </v>
-<v t="ekr.20060107100005"><vh>Fixed</vh>
+<v t="ekr.20060107100005" a="TV"><vh>Fixed</vh>
 <v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
@@ -1891,21 +1892,11 @@ expanded="ekr.20060108122501,"><vh>@thin rClick.py</vh></v>
 <v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
 <v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
 <v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
-<v t="ekr.20040422072343"
-expanded="ekr.20060108122501,"><vh>@thin rClick.py</vh></v>
-</v>
-<v t="ekr.20060108193620" a="TV"><vh>Unused from Library.py</vh>
-<v t="ekr.20050328092641.2" tnodeList="ekr.20050328092641.2"><vh>@nosent Library.ini</vh></v>
-<v t="ekr.20060108171459"><vh>Configuration (Library.py)</vh>
-<v t="ekr.20050328092641.34"><vh>applyConfiguration</vh></v>
-<v t="ekr.20050328092641.33"><vh>getConfiguration</vh></v>
-</v>
-<v t="ekr.20050328092641.1"><vh>db</vh></v>
-<v t="ekr.20050328092641.35"><vh>@test _Configuration</vh></v>
-<v t="ekr.20050328092641.3"><vh>@string Library_lib1 = default/libraryS.dbm</vh></v>
-</v>
-<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
+<v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
 <v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
+<v t="ekr.20050328092641.4"><vh>@thin Library.py</vh></v>
+<v t="mork.20041018091414.1"><vh>@thin fastGotoNode.py</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075110">"""Script to find and replace all functions in leoGlobals.py."""
@@ -8665,13 +8656,10 @@ That web site is produced from a Leo outline.
 <t tx="ekr.20041001210557"></t>
 <t tx="ekr.20041009112303"></t>
 <t tx="ekr.20041019072632"></t>
-<t tx="ekr.20041030092101">@ Notes by EKR:  The enclosed is a remarkable body of work by 'e'.  Have fun with it.
-
-I am enclosing this code as-is; use with reasonable caution.
+<t tx="ekr.20041030092101">@ Notes by EKR:  The dyna plugin is a remarkable body of work by 'e'.  Have fun with it.
 
 You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html
-
-11/7/05: Changed onBodyWillChange to onBodyChanged throughout.</t>
+</t>
 <t tx="ekr.20041103050629">import leoGlobals as g
 
 import leoColor
@@ -9624,198 +9612,6 @@ If a plugin catches exceptions during startup it should do one of the following:
             leoPlugins.registerHandler( ('open2', "new") , addMenu )
             
     return ok</t>
-<t tx="ekr.20050328092641.1">['__cmp__', '__contains__', '__del__', '__delitem__', '__doc__', '__getitem__', '__init__', '__iter__', '__len__', '__module__', '__repr__', '__setitem__', '_checkCursor', '_checkOpen', '_closeCursors', '_cursor_refs', '_gen_cref_cleaner', '_make_iter_cursor', 'clear', 'close', 'db', 'dbc', 'first', 'get', 'has_key', 'isOpen', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'last', 'next', 'pop', 'popitem', 'previous', 'saved_dbc_key', 'set_location', 'setdefault', 'sync', 'update', 'values']
-
-</t>
-<t tx="ekr.20050328092641.2">;default/ is leo/plugins  ~/ is your $HOME env var as seen by leo
-; if there is an @setting Library_lib* somewhere it will override the ini
-;there are no provisions yet to change the @setting but hitting Preferences apply
-; from the plugin_menu will reread the ini and the @setting
-; you could even change the setting by script then hit apply for now.
-; delete or comment out the ones you won't be using.
-
-; verbosity can be true, True, 1 on, False 0 , turns on extra internal feedback
-
-[Main]
-verbosity=0
-;lib* = eventually, don't use lib=  it is to be the current lib
-; only impliemented lib0..5 for now. lib0 is the opening lib
-
-;lib0 = default/library.dbm
-lib1 = default/library1.dbm
-;lib2 = default/library22.dbm
-;lib3 = default/library23.dbm
-;lib4 = default/library24.dbm
-
-;lib5 = ~/libraryMy.dbm
-;libLa = C:\c\leo\libraryL.dbm
-;libLb = C:/c/leo/libraryL.dbm</t>
-<t tx="ekr.20050328092641.3">    """@string Library_lib1 = default/libraryS.dbm
-    overrides the plugin and ini defaults
-    default/ replaced with leo/plugins dir
-    ~/ replaced with g.app.homeDir as Leo sees it.
-
-    put this in an @settings node in a leo or in leoSettings.leo
-    in config or your $HOME dir
-    
-    Note: for now, you still have to pullup the plugin_menu Properties
-    and hit apply if you change this after the first leo is on screen.
-    and you also before that have to enter settins and hit apply to reread settings.
-    later version will have more tools from Leo to handle this better.
-    the first library that will be opened is the default 
-    unless one or more of lib0 thru lib5 is defined somehow.
-    """
-#can we just have the list here? like recentfiles and get a list of them back?
-lib1</t>
-<t tx="ekr.20050328092641.33">def getConfiguration(): 
-    """Return the config object
-    should this look in homeDir first then plugins?   
-    """ 
-    fileName = g.os_path_join(g.app.loadDir,"..","plugins","Library.ini") 
-    config = ConfigParser.ConfigParser() 
-    config.read(fileName) 
-    return config 
-</t>
-<t tx="ekr.20050328092641.34">def applyConfiguration(config):
-    """plugin menu calls this in Properties after ini edit
-    and override with any @settings and build libconfig
-    no way to tell where the ivar lives in for updating.
-    config/leoSettings.leo, $home or in the leo or ini(s).
-    """
-
-    if not config: return
-    if config.has_option('Main', 'verbosity'): 
-        xval = config.get('Main', 'verbosity')
-        if ('%s'%(xval, )).strip().lower() in ('false', '0', 'off', 'f', ''):
-            xval = 0
-        else:
-            xval = 1
-
-        libconfig.verbosity = xval
-
-    # lib1 thru libN, default/ or ~/whatever
-    # the backend might determin which db in the next version
-
-    for x in validlibs:
-        try:
-            xval = config.get("Main", x)
-            #g.es(x, xval)
-        except Exception:
-            xval = None
-
-        #this seems to be True even if option set to '' in ini
-        if xval and xval != '':
-            #g.es('ini setting %s %r'%( x, xval))
-            setattr(libconfig, x, xval)
-
-    #now check if there are any @settings
-    #it would be better if you could positively get all settings for @plugins
-    # and for @Library under @plugins, till then we guess a little
-    #again lib0..5 a little limited but ok for now
-    c = Library.c
-    for x in validlibs:
-        xval = c.config.getString('Library_'+x)
-        if xval and xval != '':
-            if libconfig.verbosity: 
-                g.es('using @setting %s %r'%( x, xval))
-            #Library.fixdefault(x, xval)
-            setattr(libconfig, x, xval)
-
-    #now veryify they have decent values
-    #lib extension = 'dbm',  might be database dependant
-    #should check is a valid file name and not something weird.
-    #probably should try to create any directories too. let user handle it.
-
-    for x in libconfig.ivars():
-        #print x
-        if x in validlibs:
-            if hasattr(libconfig, x):
-                attr = getattr(libconfig, x)
-                Library.fixdefault(x, attr) 
-    Library.fixdefault('lib', 'default') 
-            
-
-    #signal to redraw if its already open, should maybe do full cleanup?
-    #the open lib may be no longer one of the choices!
-    if Library.dialog: Library.dialog.destroy()
-    Library.dialog = None  </t>
-<t tx="ekr.20050328092641.35">#setup is getting to be more complicated than what is tested...
-#maybe plugins should define __all__ = ['ok to exports'.split()]
-@
-if __name__ == '__builtin__':
-    from Library import *
-    #g.es(validlibs)
-    import leoGlobals as g
-    import ConfigParser
-    g.app.unitTesting = True
-    __file__ = 'Library.py'
-@c
-
-if 0: # Fails unit test.
-
-    def test_Configuration(): 
-        """read the ini to save it or back it up
-         or pass a StringIO mockable to getConfiguration, 
-            write the ini with known values
-          test they can be read back in the config object
-            make sure if ini exists and is wrong
-            or if it doesn't exist, defaults will be preserved.
-        no mention of HOME for now
-        its not vary convienent to run this with all the dependancies scattered
-        likely similar with other more complicated tests
-        but do it anyway as part of a more expanded test than plugin import?
-        is False return enough or a raise Something? any print a failure?
-        
-        function name must be test_something but node can be @test something
-        and I think doctests can be in any part of the plugin if those tests run.
-        no claim yet this tests anything consequential.
-        
-        what might be useful is a options permutation generator:
-        compare all perms of each of the Bunch the ini the @setting
-         with valid and invalid possibly user [mis]edits of each and extras.
-        do we end up with a valid usable Bunch of paths and options?
-         are all the booleans boolable and all the ints and strings viable?
-         will it be the same if user edits or changes the ini or @settings
-        can we identify where each of the options comes from so on close/exit
-         we can offer to update the correct ini or @setting node or just print changes.
-        and investigate optparser for getting commandline options as well.
-        I think Leo will just pass them on and not mangle them and not be confused.
-        """ 
-        
-    
-        #libc = g.Bunch(libconfig) or g.Bunch(dict(libconfig)) shoulv'e worked
-        #print dir(libconfig)
-    
-        libc = libconfig.__dict__.copy()
-        #why does Bunch not a copy and intersection method?
-        #repr(l1) should be anough to reconstruct w/o additional parsing.
-        #sets would be handy to find which settings are global which are per leo,
-        #each setting should probably be a tupple of that kind of info. 
-        
-        #libc['libname'] = 'library00'
-        #g.es(libc)
-        #g.es(libconfig)
-    
-        fileName = g.os_path_join(
-                g.app.loadDir,"..","plugins", __file__[:-2]+"ini") 
-    
-        config = ConfigParser.ConfigParser() 
-        config.read(fileName) 
-        applyConfiguration(config)
-        
-        #compare this config with getconfig and do in try/except
-    
-        liba = libconfig.__dict__.copy()
-        g.es(libc)
-        g.es(liba)
-        
-        #does this need an element by element comparison?
-        return g.es(liba != libc)
-        
-    # comment this out to test with g.app.unitTesting
-    if __name__ == '__builtin__':
-    
-        test_Configuration() != False</t>
 <t tx="ekr.20050328101812"> 
         
         
@@ -11201,6 +10997,8 @@ Todo
 
 </t>
 <t tx="ekr.20050421093045">@
+You may download the latest version at: http://rclick.netfirms.com/dyna_menu.py.html
+
 several plugins of the dyna variety and support files
 newer than the version included in Leo4.3 alpha 4, March 15, 2005
 exS all but retired, newer dynaclick not ready for distribution.
@@ -22000,10 +21798,6 @@ Edward K. Ream:  Aug 22, 2005.</t>
 <t tx="ekr.20051025144116">c.spellCommands.openSpellTab()</t>
 <t tx="ekr.20051109021852">@ Not ready for prime time yet.</t>
 <t tx="ekr.20060107100005"></t>
-<t tx="ekr.20060108171459">if 0: # Use settings instead of this.
-
-    @others</t>
-<t tx="ekr.20060108193620"></t>
 <t tx="ekr.20060109001152">@nocolor
 
 I do not pretend to understand this code. I have simply done some mechanical
@@ -22026,6 +21820,8 @@ i.e., there are no syntax errors.</t>
             &lt;&lt; override various methods &gt;&gt;
             g.plugin_signon( __name__ )</t>
 <t tx="ekr.20060109105601"></t>
+<t tx="ekr.20060109114710">c.openLeoSettings()</t>
+<t tx="ekr.20060110125615"></t>
 <t tx="mork.20040926105355.1">&lt;&lt;docstring&gt;&gt;
 
 # To do:  Find/Change does not appear to work.

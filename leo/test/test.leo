@@ -39,7 +39,7 @@
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
 </v>
 </v>
-<v t="ekr.20051104081824"><vh>Tests</vh>
+<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -55,7 +55,7 @@
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 </v>
-<v t="ekr.20051120173230"><vh>Prototypes</vh>
+<v t="ekr.20051120173230" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
@@ -197,7 +197,7 @@
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
-<v t="ekr.20051214100048"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051121143951"><vh>Test of long lines</vh>
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
@@ -233,8 +233,8 @@
 <v t="ekr.20060108163117"><vh>@file-ref c:\prog\leoCVS\leo\test\ironPythonTest.bat</vh></v>
 </v>
 </v>
-<v t="ekr.20060108195804" a="E"><vh>Test of unicode chars in Library</vh>
-<v t="ekr.20060108195804.1" a="ETV"><vh>headline: Ő</vh></v>
+<v t="ekr.20060108195804" a="ETV" annotate="7d71002855087072696f7269747971012863636c656f0a546b5069636b6c655661720a71026f71034d0f276255046e6f646571052868026f710655007107625502626771082868026f71096807625509617263686574797065710a2868026f710b68076255026667710c2868026f710d5505426c61636b710e62752e"><vh>Test of unicode chars in Library</vh>
+<v t="ekr.20060108195804.1" a="E" annotate="7d71002e"><vh>headline: Ő</vh></v>
 </v>
 </vnodes>
 <tnodes>
