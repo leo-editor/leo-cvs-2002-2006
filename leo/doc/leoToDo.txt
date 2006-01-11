@@ -7,201 +7,49 @@
 @nocolor
 #@nonl
 #@+node:ekr.20060105130519:Urgent
-#@+node:ekr.20060108105607:Generate calls to 'command1/2' hooks in k.masterCommand
-#@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
+#@+node:ekr.20060111112513:Update docs with warnings about deleting children of clones
+@nocolor
 
-    '''This is the central dispatching method.
-    All commands and keystrokes pass through here.'''
+[quote] The node was deleted in BOTH locations!!!  Apparently it's a clone, but NOT marked as such.
 
-    k = self ; c = k.c
-    c.setLog()
-    c.startRedrawCount = c.frame.tree.redrawCount
-    k.stroke = stroke # Set this global for general use.
-    keysym = event and event.keysym or ''
-    ch = event and event.char or ''
-    k.func = func
-    k.funcReturn = None # For unit testing.
-    commandName = k.ultimateFuncName(func)
-    special = keysym in (
-        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '<Key>'
-    
-    if c.config.getBool('trace_masterCommand'):
-        g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+No.  The nodes are **joined**, but they definitely are not clones.  Joined nodes change in synch.  All clones are joined, but not all joined nodes are clones.
 
-    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+The rule is: deleting a **child** of a cloned node deletes all copies of that information.  This is true whether the child is itself a clone or not.
 
-    inserted = not special or (
-        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
+Example: (x' denotes that x is a clone)
 
-    if inserted:
-        # g.trace(stroke,keysym)
-        << add character to history >>
-        
-    # We *must not* interfere with the global state in the macro class.
-    if c.macroCommands.recordingMacro:
-        done = c.macroCommands.startKbdMacro(event)
-        if done: return 'break'
-        
-    # g.trace(stroke,k.abortAllModesKey)
+- A'
+.. - B'
+....- C
+.. - B'
+....- C
 
-    if stroke == k.abortAllModesKey: # 'Control-g'
-        k.clearState()
-        k.keyboardQuit(event)
-        k.endCommand(event,commandName)
-        return 'break'
+We can say the following:
 
-    if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
+- Deleting C deletes all copies of C.  (They are all children of B')
 
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
+- Deleting B' deletes all copies of B' (They are all children of A')
 
-    if k.regx.iter:
-        try:
-            k.regXKey = keysym
-            k.regx.iter.next() # EKR: next() may throw StopIteration.
-        finally:
-            return 'break'
+- Deleting A does *not* delete all copies of A. (It's a child of no clone).
 
-    if k.abbrevOn:
-        expanded = c.abbrevCommands.expandAbbrev(event)
-        if expanded: return 'break'
+**Important**: deleting a child of a cloned node will not delete all copies of the child provided that:
 
-    if func: # Func is an argument.
-        val = func(event)
-        k.funcReturn = k.funcReturn or val # For unit tests.
-        k.endCommand(event,commandName)
-        return 'break'
-    else:
-        val = k.handleDefaultChar(event)
-        return val
+1.  The child is a clone and
+2.  A clone of the child exists outside the cloned ancestor.
+
+For example, suppose another clone of B' existed outside both A' trees.  Like this:
+
+- A'
+.. - B'
+....- C
+.. - B'
+....- C
+- B'
+..- C
+
+Then deleting B' inside one of the A' trees would delete both copies of B' inside the A' trees, but would leave the B' outside both A' trees. Notice that deleting C would still delete all copies of C. (It must, because C is **not** a clone.)
 #@nonl
-#@+node:ekr.20050920085536.67:<< add character to history >>
-# Don't add multiple special characters to history.
-
-k.keysymHistory.insert(0,keysym)
-
-if len(ch) > 0:
-    if len(keyHandlerClass.lossage) > 99:
-        keyHandlerClass.lossage.pop()
-    keyHandlerClass.lossage.insert(0,ch)
-
-if 0: # traces
-    g.trace(keysym,stroke)
-    g.trace(k.keysymHistory)
-    g.trace(keyHandlerClass.lossage)
-#@nonl
-#@-node:ekr.20050920085536.67:<< add character to history >>
-#@+node:ekr.20050923172809.1:callStateFunction
-def callStateFunction (self,event):
-    
-    k = self ; val = None
-    
-    # g.trace(k.state.kind,k.state)
-    
-    if k.state.kind:
-        if k.state.handler:
-            val = k.state.handler(event)
-            if val != 'continue':
-                k.endCommand(event,k.commandName)
-        else:
-            g.es_print('no state function for %s' % (k.state.kind),color='red')
-            
-    return val
-#@nonl
-#@-node:ekr.20050923172809.1:callStateFunction
-#@+node:ekr.20050923174229.3:callKeystrokeFunction (not used)
-def callKeystrokeFunction (self,event):
-    
-    '''Handle a quick keystroke function.
-    Return the function or None.'''
-    
-    k = self
-    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
-
-    if func:
-        func(event)
-        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
-        k.endCommand(event,commandName)
-    
-    return func
-#@nonl
-#@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
-#@+node:ekr.20051026083544:handleDefaultChar
-def handleDefaultChar(self,event):
-    
-    c = self.c
-    w = event and event.widget
-    name = g.app.gui.widget_name(w)
-
-    if name.startswith('body'):
-        # For Leo 4.4a4: allow Tk defaults.
-        # But this is dangerous, and should be removed.
-        action = self.unboundKeyAction
-        if action in ('insert','replace'):
-            c.editCommands.selfInsertCommand(event,action=action)
-        return 'break'
-    elif name.startswith('head'):
-        g.trace("can't happen: %s" % (name),color='red')
-        c.frame.tree.updateHead(event,w)
-        return 'break'
-    else:
-        # Let tkinter handle the event.
-        # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
-        return None
-#@nonl
-#@-node:ekr.20051026083544:handleDefaultChar
-#@-node:ekr.20050920085536.65: masterCommand & helpers
-#@+node:ekr.20031218072017.2817: doCommand
-def doCommand (self,command,label):
-
-    """Execute the given command, invoking hooks and catching exceptions.
-    
-    The code assumes that the "command1" hook has completely handled the command if
-    g.doHook("command1") returns False.
-    This provides a simple mechanism for overriding commands."""
-    
-    c = self
-    c.setLog()
-    p = c.currentPosition()
-    
-    # The presence of this message disables all commands.
-    if c.disableCommandsMessage:
-        g.es(c.disableCommandsMessage,color='blue')
-        return 'break' # Inhibit all other handlers.
-
-    if label == "cantredo": label = "redo"
-    if label == "cantundo": label = "undo"
-    g.app.commandName = label
-
-    if not g.doHook("command1",c=c,p=p,v=p,label=label):
-        try:
-            val = command()
-            # Be careful: the command could destroy c.
-            if c and c.exists:
-                c.keyHandler.funcReturn = val
-        except:
-            g.es("exception executing command")
-            print "exception executing command"
-            g.es_exception(c=c)
-            if c and c.exists and hasattr(c,'frame'):
-                c.redraw_now()
-
-    # Be careful there: the command could destroy c.
-    if c and c.exists:
-        p = c.currentPosition()
-        g.doHook("command2",c=c,p=p,v=p,label=label)
-            
-    return "break" # Inhibit all other handlers.
-#@nonl
-#@-node:ekr.20031218072017.2817: doCommand
-#@-node:ekr.20060108105607:Generate calls to 'command1/2' hooks in k.masterCommand
+#@-node:ekr.20060111112513:Update docs with warnings about deleting children of clones
 #@+node:ekr.20050928144501.1:Commands for mouseless Leo
 Needed to support 'mouseless-Leo':
 
@@ -403,49 +251,6 @@ commands, the arrows plugin could be permanently retired!
 #@-node:ekr.20060110131309.1:Request
 #@-node:ekr.20060110131309:Add visible-line-up/down commands
 #@-node:ekr.20050928144501.1:Commands for mouseless Leo
-#@+node:ekr.20060111112513:Update docs with warnings about deleting children of clones
-@nocolor
-
-[quote] The node was deleted in BOTH locations!!!  Apparently it's a clone, but NOT marked as such.
-
-No.  The nodes are **joined**, but they definitely are not clones.  Joined nodes change in synch.  All clones are joined, but not all joined nodes are clones.
-
-The rule is: deleting a **child** of a cloned node deletes all copies of that information.  This is true whether the child is itself a clone or not.
-
-Example: (x' denotes that x is a clone)
-
-- A'
-.. - B'
-....- C
-.. - B'
-....- C
-
-We can say the following:
-
-- Deleting C deletes all copies of C.  (They are all children of B')
-
-- Deleting B' deletes all copies of B' (They are all children of A')
-
-- Deleting A does *not* delete all copies of A. (It's a child of no clone).
-
-**Important**: deleting a child of a cloned node will not delete all copies of the child provided that:
-
-1.  The child is a clone and
-2.  A clone of the child exists outside the cloned ancestor.
-
-For example, suppose another clone of B' existed outside both A' trees.  Like this:
-
-- A'
-.. - B'
-....- C
-.. - B'
-....- C
-- B'
-..- C
-
-Then deleting B' inside one of the A' trees would delete both copies of B' inside the A' trees, but would leave the B' outside both A' trees. Notice that deleting C would still delete all copies of C. (It must, because C is **not** a clone.)
-#@nonl
-#@-node:ekr.20060111112513:Update docs with warnings about deleting children of clones
 #@+node:ekr.20060111112513.1:New jyLeo notes
 @nocolor
 https://sourceforge.net/forum/message.php?msg_id=3516227
@@ -591,6 +396,10 @@ Web www.pragmatis.de
 #@-node:ekr.20060111114001:Install new standard bindings
 #@-node:ekr.20060105130519:Urgent
 #@+node:ekr.20060110202455:Next
+#@+node:ekr.20060111152145:Improve scripts menu plugin
+#@-node:ekr.20060111152145:Improve scripts menu plugin
+#@+node:ekr.20060111152145.1:Examine jyLeo to see how to do chapters
+#@-node:ekr.20060111152145.1:Examine jyLeo to see how to do chapters
 #@+node:ekr.20060109183500:Do vim emulation
 #@-node:ekr.20060109183500:Do vim emulation
 #@+node:ekr.20060111103821:Fix weird crasher in Plugins Manager plugin
@@ -760,6 +569,8 @@ def leoPyShellMain(self):
 #@-node:ekr.20031218072017.2937:leoPyShellMain
 #@-node:ekr.20031218072017.2932:openPythonWindow (Dave Hein)
 #@-node:ekr.20060111134004:Run Idle in a separate process
+#@+node:ekr.20060111134901:Implement c.es etc.
+#@-node:ekr.20060111134901:Implement c.es etc.
 #@-node:ekr.20060110202455:Next
 #@+node:ekr.20060105133043:Important
 #@+node:ekr.20060109183500.1:Scripting improvements
