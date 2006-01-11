@@ -418,11 +418,11 @@ class keyHandlerClass:
                 
             keyCallback = keyCallback1
         else:
-            def menuFuncCallback (event,command=command):
+            def menuFuncCallback (event,command=command,commandName=commandName):
                 return command(event)
     
             def keyCallback2 (event,func=menuFuncCallback,stroke=shortcut):
-                return k.masterCommand(event,func,stroke)
+                return k.masterCommand(event,func,stroke,commandName=commandName)
                 
             keyCallback = keyCallback2
             
@@ -699,7 +699,7 @@ class keyHandlerClass:
     #@-node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20051001051355:Dispatching...
     #@+node:ekr.20050920085536.65: masterCommand & helpers
-    def masterCommand (self,event,func,stroke):
+    def masterCommand (self,event,func,stroke,commandName=None):
     
         '''This is the central dispatching method.
         All commands and keystrokes pass through here.'''
@@ -712,7 +712,8 @@ class keyHandlerClass:
         ch = event and event.char or ''
         k.func = func
         k.funcReturn = None # For unit testing.
-        commandName = k.ultimateFuncName(func)
+        if commandName is None:
+            commandName = k.ultimateFuncName(func)
         special = keysym in (
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func or stroke != '<Key>'

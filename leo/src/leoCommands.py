@@ -229,8 +229,7 @@ class baseCommands:
         c = self
         c.setLog()
         p = c.currentPosition()
-        
-        # g.trace(command.__name__,label)
+        #g.trace(command.__name__,label)
         
         # The presence of this message disables all commands.
         if c.disableCommandsMessage:

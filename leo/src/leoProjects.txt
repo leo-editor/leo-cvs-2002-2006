@@ -3272,8 +3272,7 @@ def doCommand (self,command,label,event=None):
     c = self
     c.setLog()
     p = c.currentPosition()
-    
-    # g.trace(command.__name__,label)
+    #g.trace(command.__name__,label)
     
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
@@ -4211,8 +4210,7 @@ def doCommand (self,command,label,event=None):
     c = self
     c.setLog()
     p = c.currentPosition()
-    
-    # g.trace(command.__name__,label)
+    #g.trace(command.__name__,label)
     
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
@@ -4534,8 +4532,7 @@ def doCommand (self,command,label,event=None):
     c = self
     c.setLog()
     p = c.currentPosition()
-    
-    # g.trace(command.__name__,label)
+    #g.trace(command.__name__,label)
     
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
@@ -4571,7 +4568,7 @@ def doCommand (self,command,label,event=None):
 #@nonl
 #@-node:ekr.20031218072017.2817: doCommand
 #@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
+def masterCommand (self,event,func,stroke,commandName=None):
 
     '''This is the central dispatching method.
     All commands and keystrokes pass through here.'''
@@ -4584,7 +4581,8 @@ def masterCommand (self,event,func,stroke):
     ch = event and event.char or ''
     k.func = func
     k.funcReturn = None # For unit testing.
-    commandName = k.ultimateFuncName(func)
+    if commandName is None:
+        commandName = k.ultimateFuncName(func)
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func or stroke != '<Key>'
@@ -5601,7 +5599,7 @@ def showPopupMenu (self,event):
 # In addition, the normal processing in doCommand catches errors, etc.
 #@nonl
 #@+node:ekr.20050920085536.65: masterCommand & helpers
-def masterCommand (self,event,func,stroke):
+def masterCommand (self,event,func,stroke,commandName=None):
 
     '''This is the central dispatching method.
     All commands and keystrokes pass through here.'''
@@ -5614,7 +5612,8 @@ def masterCommand (self,event,func,stroke):
     ch = event and event.char or ''
     k.func = func
     k.funcReturn = None # For unit testing.
-    commandName = k.ultimateFuncName(func)
+    if commandName is None:
+        commandName = k.ultimateFuncName(func)
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func or stroke != '<Key>'
@@ -5768,8 +5767,7 @@ def doCommand (self,command,label,event=None):
     c = self
     c.setLog()
     p = c.currentPosition()
-    
-    # g.trace(command.__name__,label)
+    #g.trace(command.__name__,label)
     
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
@@ -5996,6 +5994,35 @@ d = {
 #@nonl
 #@-node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>
 #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands
+#@+node:ekr.20051006125633.1:bindShortcut
+def bindShortcut (self,pane,shortcut,command,commandName):
+    
+    '''Bind one shortcut from a menu table.'''
+    
+    k = self ; shortcut = str(shortcut)
+
+    if command.__name__ == 'leoCallback':
+        # Get the function wrapped by *this* leoCallback function.
+        func = k.leoCallbackDict.get(command)
+        commandName = k.inverseCommandsDict.get(func.__name__)
+        
+        # No need for a second layer of callback.
+        def keyCallback1 (event,func=command,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+            
+        keyCallback = keyCallback1
+    else:
+        def menuFuncCallback (event,command=command,commandName=commandName):
+            return command(event)
+
+        def keyCallback2 (event,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke,commandName=commandName)
+            
+        keyCallback = keyCallback2
+        
+    return k.bindKey(pane,shortcut,keyCallback,commandName)
+#@nonl
+#@-node:ekr.20051006125633.1:bindShortcut
 #@-node:ekr.20060108105607:Generalized doCommand
 #@-node:ekr.20060107104019:Code level
 #@+node:ekr.20060106104654:New features
