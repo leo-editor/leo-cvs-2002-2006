@@ -218,7 +218,7 @@ class baseCommands:
     #@-node:ekr.20050920093543:c.finishCreate & helper
     #@-node:ekr.20031218072017.2811: c.Birth & death
     #@+node:ekr.20031218072017.2817: doCommand
-    def doCommand (self,command,label):
+    def doCommand (self,command,label,event=None):
     
         """Execute the given command, invoking hooks and catching exceptions.
         
@@ -230,21 +230,26 @@ class baseCommands:
         c.setLog()
         p = c.currentPosition()
         
+        # g.trace(command.__name__,label)
+        
         # The presence of this message disables all commands.
         if c.disableCommandsMessage:
             g.es(c.disableCommandsMessage,color='blue')
             return 'break' # Inhibit all other handlers.
     
-        if label == "cantredo": label = "redo"
-        if label == "cantundo": label = "undo"
-        g.app.commandName = label
+        if label and event is None: # Do this only for legacy commands.
+            if label == "cantredo": label = "redo"
+            if label == "cantundo": label = "undo"
+            g.app.commandName = label
     
         if not g.doHook("command1",c=c,p=p,v=p,label=label):
             try:
-                val = command()
-                # Be careful: the command could destroy c.
-                if c and c.exists:
-                    c.keyHandler.funcReturn = val
+                if event is None:
+                    val = command() # Call legacy command
+                    if c and c.exists: # Be careful: the command could destroy c.
+                        c.keyHandler.funcReturn = val
+                else:
+                    command(event) # Call minibuffer command.
             except:
                 g.es("exception executing command")
                 print "exception executing command"

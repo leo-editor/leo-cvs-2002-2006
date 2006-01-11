@@ -780,8 +780,14 @@ class keyHandlerClass:
             if expanded: return 'break'
     
         if func: # Func is an argument.
-            val = func(event)
-            k.funcReturn = k.funcReturn or val # For unit tests.
+            # Note: k.funcReturn is for k.simulateCommand.
+            if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+                # The callback function will call c.doCommand
+                val = func(event)
+                k.funcReturn = k.funcReturn or val # For unit tests.
+            else:
+                # Call c.doCommand directly
+                c.doCommand(func,commandName,event=event)
             k.endCommand(event,commandName)
             return 'break'
         else:
