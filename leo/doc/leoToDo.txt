@@ -513,6 +513,82 @@ anything, it probably is.
 
 leouser
 #@-node:ekr.20060111112513.1:New jyLeo notes
+#@+node:ekr.20060111113925:Install patch to cleo plugin
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3517080
+By: rich_ries
+
+Do I get the Super-Kludge of the Year Award, or what? I did the following in
+CLEO.PY:
+
+I added 
+5 : 'AntiqueWhite'
+to self.priority_colours
+
+To def draw_arrow I added
+if colour == 'AntiqueWhite':
+....canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,fill='Gray50',wi
+dth=1)
+at the end of the function.
+
+In def priority_menu
+I added 
+(5,'None',),
+to just before
+(self.donePriority,'Done'),
+
+"AntiqueWhite" is my background color.
+#@nonl
+#@-node:ekr.20060111113925:Install patch to cleo plugin
+#@+node:ekr.20060111114001:Install new standard bindings
+@nocolor
+
+> Please let me know if Leo needs some more editing commands to support 
+> the keystrokes you use.  This is presently close to the top priority 
+> in Leo.
+
+ I use SciTE, but these keystrokes are quite common.
+ http://www.scintilla.org/SciTE.html
+
+# move
+#
+beginning-of-text     ! text = Ctrl-Home
+end-of-text           ! text = Ctrl-End
+beginning-of-line     ! text = Home
+end-of-line           ! text = End
+backward-word         ! text = Ctrl-LtArrow
+forward-word          ! text = Ctrl-RtArrow
+scroll-down           ! text = PageDn
+scroll-up             ! text = PageUp
+#
+# selection
+#
+beginning-of-line-extend-selection    ! text = Shift-Home
+end-of-line-extend-selection          ! text = Shift-End
+backward-word-extend-selection        ! text = Ctrl-Shift-LtArrow
+forward-word-extend-selection         ! text = Ctrl-Shift-RtArrow
+end-of-text-extend-selection          ! text = Ctrl-Shift-End
+beginning-of-text-extend-selection    ! text = Ctrl-Shift-Home
+scroll-down-extend-selection          ! text = Shift-PageDn
+scroll-up-extend-selection            ! text = Shift-PageUp
+#
+# arrow movement keys should remove previous selection
+
+Have a nice day!
+Manfred
+++++++++++++++++++++
+Pragmatis GmbH
+Auf der Ruhr 18
+45772 Marl
+Fon +49 2365/21511
+Fax +49 2365/21521
+E-Mail marl@pragmatis.de
+Web www.pragmatis.de
+
+
+
+#@-node:ekr.20060111114001:Install new standard bindings
 #@-node:ekr.20060105130519:Urgent
 #@+node:ekr.20060110202455:Next
 #@+node:ekr.20060109183500:Do vim emulation
@@ -556,6 +632,134 @@ in __init__
 AttributeError: 'NoneType' object has no attribute 'bind_class'
 #@-node:ekr.20060111103821.1:Report
 #@-node:ekr.20060111103821:Fix weird crasher in Plugins Manager plugin
+#@+node:ekr.20060111131152:Eliminate 'command' hooks
+Use k.overrideCommand ?
+#@nonl
+#@-node:ekr.20060111131152:Eliminate 'command' hooks
+#@+node:ekr.20060111134004:Run Idle in a separate process
+#@+node:ekr.20060111134004.1:Posting
+Leo's Open Python Window command should take care to run Idle in a separate process.
+
+The present code is essentially:
+
+import idlelib.PyShell
+idlelib.PyShell.main()
+
+As the present problems with the Plugins manager show, this has the potential for mischief.  Indeed, idle is a Tkinter process, so Idle's shutdown code could interfere with Tkinter, Pmw, g.app or all three.
+
+It's no good blaming Pmw or Idle or whatever, there needs to be a solid way of avoiding problems, both now and in the future.  The obvious way is to use os.system or subprocess to keep Idle at arm's length.  If necessary we can use settings in leoSettings.leo to tell Leo exactly how to start Idle.
+#@nonl
+#@-node:ekr.20060111134004.1:Posting
+#@+node:ekr.20031218072017.2932:openPythonWindow (Dave Hein)
+def openPythonWindow(self):
+
+    if sys.platform == "linux2":
+        << open idle in Linux >>
+    else:
+        << open idle in Windows >>
+#@+node:ekr.20031218072017.2933:<< open idle in Linux >>
+# 09-SEP-2002 DHEIN: Open Python window under linux
+
+try:
+    pathToLeo = g.os_path_join(g.app.loadDir,"leo.py")
+    sys.argv = [pathToLeo]
+    from idlelib import idle
+    if g.app.idle_imported:
+        reload(idle)
+    g.app.idle_imported = True
+except:
+    try:
+        g.es("idlelib could not be imported.")
+        g.es("Probably IDLE is not installed.")
+        g.es("Run Tools/idle/setup.py to build idlelib.")
+        g.es("Can not import idle")
+        g.es_exception() # This can fail!!
+    except: pass
+#@-node:ekr.20031218072017.2933:<< open idle in Linux >>
+#@+node:ekr.20031218072017.2934:<< open idle in Windows >>
+# Initialize argv: the -t option sets the title of the Idle interp window.
+sys.argv = ["leo"] # ,"-t","Leo"]
+
+ok = False
+if g.CheckVersion(sys.version,"2.3"):
+    << Try to open idle in Python 2.3 systems >>
+else:
+    << Try to open idle in Python 2.2 systems >>
+
+if not ok:
+    g.es("Can not import idle")
+    if idle_dir and idle_dir not in sys.path:
+        g.es("Please add '%s' to sys.path" % idle_dir)
+#@nonl
+#@+node:ekr.20031218072017.2936:<< Try to open idle in Python 2.3 systems >>
+try:
+    idle_dir = None
+    
+    import idlelib.PyShell
+
+    if g.app.idle_imported:
+        reload(idle)
+        g.app.idle_imported = True
+        
+    idlelib.PyShell.main()
+    ok = True
+
+except:
+    ok = False
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2936:<< Try to open idle in Python 2.3 systems >>
+#@+node:ekr.20031218072017.2935:<< Try to open idle in Python 2.2 systems>>
+try:
+    executable_dir = g.os_path_dirname(sys.executable)
+    idle_dir = g.os_path_join(executable_dir,"Tools","idle")
+
+    # 1/29/04: sys.path doesn't handle unicode in 2.2.
+    idle_dir = str(idle_dir) # May throw an exception.
+
+    # 1/29/04: must add idle_dir to sys.path even when using importFromPath.
+    if idle_dir not in sys.path:
+        sys.path.insert(0,idle_dir)
+
+    if 1:
+        import PyShell
+    else: # Works, but is not better than import.
+        PyShell = g.importFromPath("PyShell",idle_dir)
+
+    if g.app.idle_imported:
+        reload(idle)
+        g.app.idle_imported = True
+        
+    if 1: # Mostly works, but causes problems when opening other .leo files.
+        PyShell.main()
+    else: # Doesn't work: destroys all of Leo when Idle closes.
+        self.leoPyShellMain()
+    ok = True
+except ImportError:
+    ok = False
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2935:<< Try to open idle in Python 2.2 systems>>
+#@-node:ekr.20031218072017.2934:<< open idle in Windows >>
+#@+node:ekr.20031218072017.2937:leoPyShellMain
+@ The key parts of Pyshell.main(), but using Leo's root window instead of a new Tk root window.
+
+This does _not_ work well.  Using Leo's root window means that Idle will shut down Leo without warning when the Idle window is closed!
+@c
+
+def leoPyShellMain(self):
+    
+    import PyShell
+    root = g.app.root
+    PyShell.fixwordbreaks(root)
+    flist = PyShell.PyShellFileList(root)
+    shell = PyShell.PyShell(flist)
+    flist.pyshell = shell
+    shell.begin()
+#@nonl
+#@-node:ekr.20031218072017.2937:leoPyShellMain
+#@-node:ekr.20031218072017.2932:openPythonWindow (Dave Hein)
+#@-node:ekr.20060111134004:Run Idle in a separate process
 #@-node:ekr.20060110202455:Next
 #@+node:ekr.20060105133043:Important
 #@+node:ekr.20060109183500.1:Scripting improvements

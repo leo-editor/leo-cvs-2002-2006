@@ -46,6 +46,7 @@ rst3.py
 #add_directives.py
 #run_nodes.py
 #FileActions.py
+#scripts_menu.py
 plugin_manager.py
 
 # Icon area: order is important.
