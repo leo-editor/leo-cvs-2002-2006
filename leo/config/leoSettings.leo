@@ -132,10 +132,10 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20051123100536" a="TV" annotate="7d71002e"><vh>@page Plugins settings</vh>
-<v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
+<v t="ekr.20051123100536" a="E" annotate="7d71002e"><vh>@page Plugins settings</vh>
+<v t="ekr.20060111091324" a="E"><vh>fastgotonode plugin</vh>
 <v t="ekr.20060111091324.1" a="E"><vh>@bool fastgotonode_useKeyBinding = True</vh></v>
-<v t="ekr.20060111091324.2"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
+<v t="ekr.20060111091324.2" a="TV"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
 </v>
 <v t="ekr.20060109115046"><vh>library plugin</vh>
 <v t="ekr.20060109115046.1"><vh>@bool library_verbose = True</vh></v>
@@ -3768,6 +3768,7 @@ other event specifier, typically 'Button-3'.</t>
 # Some possibilities:
 
 Shift-space  # Control-space conflicts with an Emacs binding.
-Button-3</t>
+Button-3
+Double-Button-3 # Useful if you also have the rClick plugin enabled.</t>
 </tnodes>
 </leo_file>
