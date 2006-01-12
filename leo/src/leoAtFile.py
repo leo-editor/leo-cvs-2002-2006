@@ -1966,16 +1966,20 @@ class atFile:
         else:
             at.readError("Missing start of doc part")
             return
+            
+        # Bug fix: Append any whitespace following the tag to tag.
+        while s and s[0] in (' ','\t'):
+            tag = tag + s[0] ; s = s[1:]
     
         if end:
-            # 9/3/04: Remove leading newline.
+            # Remove leading newline.
             if s[0] == '\n': s = s[1:]
             # Remove opening block delim.
             if g.match(s,0,start):
                 s = s[len(start):]
             else:
                 at.readError("Missing open block comment")
-                g.trace(s)
+                g.trace('tag',repr(tag),'start',repr(start),'s',repr(s))
                 return
             # Remove trailing newline.
             if s[-1] == '\n': s = s[:-1]
@@ -1991,7 +1995,6 @@ class atFile:
     
         at.out.append(tag + s)
         at.docOut = []
-        
     #@nonl
     #@-node:ekr.20041005105605.99:readLastDocLine
     #@-node:ekr.20041005105605.90:end sentinels
