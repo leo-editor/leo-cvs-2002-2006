@@ -132,10 +132,10 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20051123100536" a="E" annotate="7d71002e"><vh>@page Plugins settings</vh>
-<v t="ekr.20060111091324" a="E"><vh>fastgotonode plugin</vh>
+<v t="ekr.20051123100536" annotate="7d71002e"><vh>@page Plugins settings</vh>
+<v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
 <v t="ekr.20060111091324.1" a="E"><vh>@bool fastgotonode_useKeyBinding = True</vh></v>
-<v t="ekr.20060111091324.2" a="TV"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
+<v t="ekr.20060111091324.2"><vh>@string fastgotonode_binding =  Shift-space</vh></v>
 </v>
 <v t="ekr.20060109115046"><vh>library plugin</vh>
 <v t="ekr.20060109115046.1"><vh>@bool library_verbose = True</vh></v>
@@ -255,7 +255,7 @@
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
-<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts with all Leo commands</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
 <v t="ekr.20060111083044" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
@@ -270,7 +270,7 @@
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts legacsy Leo bindings</vh></v>
 <v t="ekr.20060111082632" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 </v>
-<v t="ekr.20060103103812" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060103103812" a="ETV" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060111082854" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = False</vh></v>
 <v t="ekr.20060111082848" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
 <v t="ekr.20060111082717" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
@@ -1473,7 +1473,13 @@ KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
-<t tx="ekr.20051010112558">@color</t>
+<t tx="ekr.20051010112558">@color
+
+
+
+
+
+</t>
 <t tx="ekr.20051010112903">Reserved  Alt-E  (Opens Edit Menu)
 Reserved  Alt-F  (Opens File Menu)
 Reserved  Alt-H  (Opens Help Menu)
@@ -2005,16 +2011,16 @@ back-paragraph-extend-selection         = None
 back-sentence                           = None
 back-sentence-extend-selection          = None
 back-to-indentation                     = None
-back-word                               = None
-back-word-extend-selection              = None
+back-word                               = Ctrl-LtArrow
+back-word-extend-selection              = Shift-Ctrl-LtArrow
 backward-delete-char                    = None
 backward-kill-paragraph                 = None
 backward-kill-sentence                  = None
 backward-kill-word                      = None
-beginning-of-buffer                     = None
-beginning-of-buffer-extend-selection    = None
-beginning-of-line                       = None
-beginning-of-line-extend-selection      = None
+beginning-of-buffer                     = Ctrl-Home
+beginning-of-buffer-extend-selection    = Shift-Ctrl-Home
+beginning-of-line                       = Home
+beginning-of-line-extend-selection      = Shift-Home
 call-last-keyboard-macro                = None
 capitalize-word                         = None
 cascade-windows                         = None
@@ -2053,7 +2059,7 @@ cycle-focus                             = None
 dabbrev-completion                      = None
 dabbrev-expands                         = None
 de-hoist                                = None
-delete-char                             = None
+delete-char                             = Delete
 delete-comments                         = Ctrl-)
 delete-file                             = None
 delete-indentation                      = None
@@ -2069,10 +2075,10 @@ dump-outline                            = None
 edit-headline                           = Ctrl-H
 end-edit-headline                       = Esc
 end-kbd-macro                           = None
-end-of-buffer                           = None
-end-of-buffer-extend-selection          = None
-end-of-line                             = None
-end-of-line-extend-selection            = None
+end-of-buffer                           = Ctrl-End
+end-of-buffer-extend-selection          = Shift-Ctrl-End
+end-of-line                             = End
+end-of-line-extend-selection            = Shift-End
 equal-sized-panes                       = Alt-Shift-E
 escape                                  = None
 eval-expression                         = None
@@ -2126,8 +2132,8 @@ forward-paragraph                       = None
 forward-paragraph-extend-selection      = None
 forward-sentence                        = None
 forward-sentence-extend-selection       = None
-forward-word                            = None
-forward-word-extend-selection           = None
+forward-word                            = Ctrl-RtArrow
+forward-word-extend-selection           = Shift-Ctrl-RtArrow
 full-command                            = None
 go-back                                 = None
 go-forward                              = None
@@ -2286,8 +2292,8 @@ save-buffers-kill-leo                   = None
 save-file                               = Ctrl-s
 save-file-as                            = Shift-Ctrl-S
 save-file-to                            = None
-scroll-down                             = None
-scroll-up                               = None
+scroll-down                             = PageDn
+scroll-up                               = PageUp
 search-backward                         = None
 search-forward                          = None
 select-all                              = Ctrl-A
@@ -2388,15 +2394,21 @@ back-sentence                           ! text = Alt-a  # No conflict
 back-sentence-extend-selection          = None
 back-to-indentation                     = None
 back-word                               ! text = Alt-b  # No conflict   
+back-word                               ! text = Ctrl-LtArrow
 back-word-extend-selection              ! text = Alt-Shift-b  # No conflict
+back-word-extend-selection              ! text = Ctrl-Shift-LtArrow
 backward-delete-char                    = BackSpace
 backward-kill-paragraph                 = None
 backward-kill-sentence                  = None
 backward-kill-word                      = Alt-Delete
 beginning-of-buffer                     ! text = Alt-less # Note: same as Alt-Shift-less
 beginning-of-buffer-extend-selection    = None
-beginning-of-line                       ! text = Ctrl-a         # Ctrl-a Conflicts with select-all 
-beginning-of-line-extend-selection      = None  # Ctrl-Shift-a conflicts with select-all 
+beginning-of-line                       ! text = Ctrl-a         # Ctrl-a Conflicts with select-all
+beginning-of-line                       ! text = Home
+beginning-of-line-extend-selection      = None  # Ctrl-Shift-a conflicts with select-all
+beginning-of-line-extend-selection      ! text = Shift-Home
+beginning-of-text                       ! text = Ctrl-Home
+beginning-of-text-extend-selection      ! text = Ctrl-Shift-Home
 call-last-keyboard-macro                = None
 capitalize-word                         = None
 cascade-windows                         = None
@@ -2454,7 +2466,11 @@ end-kbd-macro                           = None
 end-of-buffer                           ! text = Alt-greater # Note: same as Alt-Shift-greater
 end-of-buffer-extend-selection          ! None
 end-of-line                             ! text = Ctrl-e             # Ctrl-e conflicts with execute-script
+end-of-line                             ! text = End
 end-of-line-extend-selection            ! text = Ctrl-Shift-e       # Ctrl-Shift-e conflicts with extract-section-names.
+end-of-line-extend-selection            ! text = Shift-End
+end-of-text                             ! text = Ctrl-End
+end-of-text-extend-selection            ! text = Ctrl-Shift-End
 equal-sized-panes                       = Alt-Shift-E
 escape                                  = None
 eval-expression                         = None
@@ -2671,8 +2687,10 @@ save-buffers-kill-leo                   = None
 save-file                               = Ctrl-s    # Ctrl-s conflicts with search.
 save-file-as                            = Shift-Ctrl-S
 save-file-to                            = None
-scroll-down                             = PageDn    # Ctrl-v conflicts with paste-text.
-scroll-up                               = PageUp    # Alt-v conflicts with view-all-characters.
+scroll-down                             ! text = PageDn    # Ctrl-v conflicts with paste-text.
+scroll-up                               ! text = PageUp    # Alt-v conflicts with view-all-characters.
+scroll-down-extend-selection            ! text = Shift-PageDn
+scroll-up-extend-selection              ! text = Shift-PageUp
 search-backward                         = None
 search-forward                          = None
 select-all                              = Shift-Ctrl-A # Ctrl-Shift-a conflicts with beginning-of-line-extend-selection.
@@ -2748,7 +2766,8 @@ write-outline-only                      = None
 yank                                    = Control-y
 yank-pop                                = Alt-y
 yank-rectangle                          = None
-zap-to-character                        = Alt-z</t>
+zap-to-character                        = Alt-z
+</t>
 <t tx="ekr.20060102113259"># Boilerplate for most nodes.
 keyboard-quit   = Return
 mode-help       = Tab
