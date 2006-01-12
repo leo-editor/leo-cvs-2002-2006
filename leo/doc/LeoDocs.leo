@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -84,15 +84,15 @@
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.1" a="E"><vh>FAQ</vh>
-<v t="ekr.20050830115714" a="E"><vh>@rst html\FAQ.html</vh>
+<v t="ekr.20050831195331.1"><vh>FAQ</vh>
+<v t="ekr.20050830115714"><vh>@rst html\FAQ.html</vh>
 <v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
-<v t="ekr.20050830115714.1" a="E"><vh>Learning to use Leo</vh>
+<v t="ekr.20050830115714.1"><vh>Learning to use Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="ekr.20050830115714.4"><vh>Why should I use clones?</vh></v>
 <v t="ekr.20050830115714.5"><vh>Which should I use: @root trees or @file trees?</vh></v>
 <v t="ekr.20050830115714.7"><vh>When is using a section better than using a method?</vh></v>
-<v t="ekr.20060111192108" a="TV"><vh>When is deleting a node dangerous?</vh></v>
+<v t="ekr.20060111192108"><vh>When is deleting a node dangerous?</vh></v>
 </v>
 <v t="ekr.20050830115714.12"><vh>How should I use Leo with CVS?</vh></v>
 <v t="ekr.20050830115714.13"><vh>Using derived files</vh>

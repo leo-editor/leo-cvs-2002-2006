@@ -1819,6 +1819,69 @@ in subfolders.
 #@-node:ekr.20040104162835.15:Double clicking on Linux
 #@-node:ekr.20040104162835.8:Linux/Mac notes: Dan Winkler
 #@-node:ekr.20050214055018:Mac Notes
+#@+node:ekr.20060111112513.1:New jyLeo notes
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3516227
+By: nobody
+
+Some highlights:
+* simpler startup:
+jyleo leo.py
+should be sufficient to start it up.
+* new editor colorization
+* the JythonShell is much more powerful and cooler
+* new plugins
+* Chapters support
+* mod_script is in place.
+* dyna-menu was converted.  I guess 'e' will have to judge the conversion.
+* multi-language script support.
+* drag and drop
+* some powerful new editor commands.  Try keyword completing on the language
+in effect.  Say if it is python:
+se(Tab)
+becomes
+self
+
+Some warnings:
+1. Be careful about reading your regular leo files into jyleo and saving them.
+Its quite conceivable that jyleo will write it out to an XML format that regular
+leo can't handle.  Why?  Well jyleo is using an XML library to spit its XML
+out while leo uses a home grown method.  The library can handle leo's XML, but
+Ive seen regular leo not be able to handle jyleo's XML.  Its based around <tag/>
+I believe.
+
+2. If you move jyleo after executing it you will need to clear out your compiled
+py files as the __file__ attribute is hard compiled into the resulting objects.
+Not what we want.  We want it to be set at runtime.  Ive been waiting a long
+time for jython to release again and hopefully fix this, but Im not holding
+my breath anymore.
+
+----------
+Its hard to give this thing a number, I want to call it jyleo2, but jyleo is
+sufficient.  Dependent upon bug reports the next release could be much sooner
+than before, maybe even weeks.  I hope one thing, that the dreaded "I can't
+get it to start" problems are gone.  I took the snapshot and expanded it in
+Windows XP.  Went to the src directory and typed: jython leo.py
+and it started.  That's what I wanted to see.  I didn't have to mess with the
+CLASSPATH or anything.
+
+things needed:
+java 5
+a jython2.2a1 or beyond.  jython2.2a1 is the most recent snapshot.
+
+Beyond bug fixing, I will be planning to add more SwingMacs command as time
+goes along.  But I think most major features are in place.  Of course the 3D
+experiments in the future could change that... :D
+
+A NOTE ON STARTUP TIMES: In my experience it takes awhile for jyleo to start.
+It will take much longer the first time you execute it because the py files
+are being compiled.  Ive haven't been able to figure out what eats the time,
+it may just have a slow startup in the aggregate.  So don't think its not doing
+anything, it probably is.
+
+leouser
+#@nonl
+#@-node:ekr.20060111112513.1:New jyLeo notes
 #@+node:ekr.20031218072017.392:Python Notes...
 #@+node:ekr.20031218072017.397:Default values & keyword arguments
 @nocolor

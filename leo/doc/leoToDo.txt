@@ -7,49 +7,34 @@
 @nocolor
 #@nonl
 #@+node:ekr.20060105130519:Urgent
-#@+node:ekr.20060111112513:Update docs with warnings about deleting children of clones
+#@+node:ekr.20060111113925:Install patch to cleo plugin
 @nocolor
 
-[quote] The node was deleted in BOTH locations!!!  Apparently it's a clone, but NOT marked as such.
+http://sourceforge.net/forum/message.php?msg_id=3517080
+By: rich_ries
 
-No.  The nodes are **joined**, but they definitely are not clones.  Joined nodes change in synch.  All clones are joined, but not all joined nodes are clones.
+Do I get the Super-Kludge of the Year Award, or what? I did the following in
+CLEO.PY:
 
-The rule is: deleting a **child** of a cloned node deletes all copies of that information.  This is true whether the child is itself a clone or not.
+I added 
+5 : 'AntiqueWhite'
+to self.priority_colours
 
-Example: (x' denotes that x is a clone)
+To def draw_arrow I added
+if colour == 'AntiqueWhite':
+....canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,fill='Gray50',wi
+dth=1)
+at the end of the function.
 
-- A'
-.. - B'
-....- C
-.. - B'
-....- C
+In def priority_menu
+I added 
+(5,'None',),
+to just before
+(self.donePriority,'Done'),
 
-We can say the following:
-
-- Deleting C deletes all copies of C.  (They are all children of B')
-
-- Deleting B' deletes all copies of B' (They are all children of A')
-
-- Deleting A does *not* delete all copies of A. (It's a child of no clone).
-
-**Important**: deleting a child of a cloned node will not delete all copies of the child provided that:
-
-1.  The child is a clone and
-2.  A clone of the child exists outside the cloned ancestor.
-
-For example, suppose another clone of B' existed outside both A' trees.  Like this:
-
-- A'
-.. - B'
-....- C
-.. - B'
-....- C
-- B'
-..- C
-
-Then deleting B' inside one of the A' trees would delete both copies of B' inside the A' trees, but would leave the B' outside both A' trees. Notice that deleting C would still delete all copies of C. (It must, because C is **not** a clone.)
+"AntiqueWhite" is my background color.
 #@nonl
-#@-node:ekr.20060111112513:Update docs with warnings about deleting children of clones
+#@-node:ekr.20060111113925:Install patch to cleo plugin
 #@+node:ekr.20050928144501.1:Commands for mouseless Leo
 Needed to support 'mouseless-Leo':
 
@@ -251,101 +236,6 @@ commands, the arrows plugin could be permanently retired!
 #@-node:ekr.20060110131309.1:Request
 #@-node:ekr.20060110131309:Add visible-line-up/down commands
 #@-node:ekr.20050928144501.1:Commands for mouseless Leo
-#@+node:ekr.20060111112513.1:New jyLeo notes
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=3516227
-By: nobody
-
-howdy folks,
-
-I just sent Edward a snapshot of jyleo. Not sure when it will show up.
-
-Some highlights:
-* simpler startup:
-jyleo leo.py
-should be sufficient to start it up.
-* new editor colorization
-* the JythonShell is much more powerful and cooler
-* new plugins
-* Chapters support
-* mod_script is in place.
-* dyna-menu was converted.  I guess 'e' will have to judge the conversion.
-* multi-language script support.
-* drag and drop
-* some powerful new editor commands.  Try keyword completing on the language
-in effect.  Say if it is python:
-se(Tab)
-becomes
-self
-
-
-Some warnings:
-1. Be careful about reading your regular leo files into jyleo and saving them.
-Its quite conceivable that jyleo will write it out to an XML format that regular
-leo can't handle.  Why?  Well jyleo is using an XML library to spit its XML
-out while leo uses a home grown method.  The library can handle leo's XML, but
-Ive seen regular leo not be able to handle jyleo's XML.  Its based around <tag/>
-I believe.
-
-2. If you move jyleo after executing it you will need to clear out your compiled
-py files as the __file__ attribute is hard compiled into the resulting objects.
-Not what we want.  We want it to be set at runtime.  Ive been waiting a long
-time for jython to release again and hopefully fix this, but Im not holding
-my breath anymore.
-
-----------
-Its hard to give this thing a number, I want to call it jyleo2, but jyleo is
-sufficient.  Dependent upon bug reports the next release could be much sooner
-than before, maybe even weeks.  I hope one thing, that the dreaded "I can't
-get it to start" problems are gone.  I took the snapshot and expanded it in
-Windows XP.  Went to the src directory and typed: jython leo.py
-and it started.  That's what I wanted to see.  I didn't have to mess with the
-CLASSPATH or anything.
-
-things needed:
-java 5
-a jython2.2a1 or beyond.  jython2.2a1 is the most recent snapshot.
-
-Beyond bug fixing, I will be planning to add more SwingMacs command as time
-goes along.  But I think most major features are in place.  Of course the 3D
-experiments in the future could change that... :D
-
-A NOTE ON STARTUP TIMES: In my experience it takes awhile for jyleo to start.
-It will take much longer the first time you execute it because the py files
-are being compiled.  Ive haven't been able to figure out what eats the time,
-it may just have a slow startup in the aggregate.  So don't think its not doing
-anything, it probably is.
-
-leouser
-#@-node:ekr.20060111112513.1:New jyLeo notes
-#@+node:ekr.20060111113925:Install patch to cleo plugin
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3517080
-By: rich_ries
-
-Do I get the Super-Kludge of the Year Award, or what? I did the following in
-CLEO.PY:
-
-I added 
-5 : 'AntiqueWhite'
-to self.priority_colours
-
-To def draw_arrow I added
-if colour == 'AntiqueWhite':
-....canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,fill='Gray50',wi
-dth=1)
-at the end of the function.
-
-In def priority_menu
-I added 
-(5,'None',),
-to just before
-(self.donePriority,'Done'),
-
-"AntiqueWhite" is my background color.
-#@nonl
-#@-node:ekr.20060111113925:Install patch to cleo plugin
 #@+node:ekr.20060111114001:Install new standard bindings
 @nocolor
 
