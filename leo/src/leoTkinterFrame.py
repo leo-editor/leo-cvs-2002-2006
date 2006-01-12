@@ -3271,7 +3271,7 @@ class leoTkinterLog (leoFrame.leoLog):
         
         c = self.c
     
-        if g.app.quitting:
+        if g.app.quitting or not c or not c.exists:
             return
     
         if tabName:
