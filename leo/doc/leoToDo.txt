@@ -6,35 +6,7 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20060105130519:Urgent
-#@+node:ekr.20060111113925:Install patch to cleo plugin
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3517080
-By: rich_ries
-
-Do I get the Super-Kludge of the Year Award, or what? I did the following in
-CLEO.PY:
-
-I added 
-5 : 'AntiqueWhite'
-to self.priority_colours
-
-To def draw_arrow I added
-if colour == 'AntiqueWhite':
-....canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,fill='Gray50',wi
-dth=1)
-at the end of the function.
-
-In def priority_menu
-I added 
-(5,'None',),
-to just before
-(self.donePriority,'Done'),
-
-"AntiqueWhite" is my background color.
-#@nonl
-#@-node:ekr.20060111113925:Install patch to cleo plugin
+#@+node:ekr.20060105130519:Urgent 3
 #@+node:ekr.20050928144501.1:Commands for mouseless Leo
 Needed to support 'mouseless-Leo':
 
@@ -283,8 +255,67 @@ Web www.pragmatis.de
 
 
 
+#@+node:ekr.20060112045830:From Speed
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3518387
+By: dspeed
+
+Here are the changes I made to get back to my old Leo:
+
+scroll-up : PageUp
+scroll-down : PageDn
+beginning-of-line : Home
+end-of-line : End
+end-of-buffer : Ctrl-End
+beginning-of-buffer : Ctrl-Home
+end-of-buffer-extend-selection : Shift-Ctrl-End
+end-of-line-extend-selection : Shift-End
+beginning-of-line-extend-selection : Shift-Home
+delete-char : Delete
+back-word-extend-selection : Shift-Ctrl-LtArrow
+beginning-of-buffer-extend-selection : Shift-Ctrl-Home
+back-word : Ctrl-LtArrow
+forward-word : Ctrl-RtArrow
+forward-word-extend-selection : Shift-Ctrl-RtArrow
+#@nonl
+#@-node:ekr.20060112045830:From Speed
 #@-node:ekr.20060111114001:Install new standard bindings
-#@-node:ekr.20060105130519:Urgent
+#@+node:ekr.20060112062706:Investigate new file handling bug
+
+#@+node:ekr.20060112062706.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3518722
+By: nobody
+
+I'm using Leo 4.3.1, build  1.266 , June 20, 2005.
+
+To generate HTML file I entered the outline header "@file bbb.xml" under which
+I put the following body text:
+
+//////////////// beginning of excerpt
+@first <?xml version="1.0" encoding="windows-1250" ?>
+@language html
+@
+comment line
+@c
+@others
+//////////////// end of excerpt
+
+This works OK.
+But, if I put a space after the sole @ above "comment line",  save and close
+the .leo file and then open it, Leo protests in log pane on the right:
+
+//////////////// beginning of excerpt
+----- error reading @file: bbb.xml
+Missing open block comment
+//////////////// end of excerpt
+
+maks.romih@snt.si
+#@nonl
+#@-node:ekr.20060112062706.1:Report
+#@-node:ekr.20060112062706:Investigate new file handling bug
+#@-node:ekr.20060105130519:Urgent 3
 #@+node:ekr.20060110202455:Next
 #@+node:ekr.20060111152145:Improve scripts menu plugin
 #@-node:ekr.20060111152145:Improve scripts menu plugin

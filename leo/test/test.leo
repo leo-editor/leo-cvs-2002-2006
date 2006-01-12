@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7890" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7892" clone_windows="0"/>
 <globals body_outline_ratio="0.438470728793">
 	<global_window_position top="61" left="347" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -233,8 +233,8 @@
 <v t="ekr.20060108163117"><vh>@file-ref c:\prog\leoCVS\leo\test\ironPythonTest.bat</vh></v>
 </v>
 </v>
-<v t="ekr.20060108195804" a="ETV" annotate="7d71002855087072696f7269747971012863636c656f0a546b5069636b6c655661720a71026f71034d0f276255046e6f646571052868026f710655007107625502626771082868026f71096807625509617263686574797065710a2868026f710b68076255026667710c2868026f710d5505426c61636b710e62752e"><vh>Test of unicode chars in Library</vh>
-<v t="ekr.20060108195804.1" a="E" annotate="7d71002e"><vh>headline: Ő</vh></v>
+<v t="ekr.20060112062919" a="ETV" tnodeList="ekr.20060112062919,ekr.20060112062919.1"><vh>@file commentTest.xml</vh>
+<v t="ekr.20060112062919.1"><vh>Child node</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4313,7 +4313,14 @@ __bold__</t>
 p = c.currentPosition()
 print 'body:',repr(p.bodyString())</t>
 <t tx="ekr.20060108163923"></t>
-<t tx="ekr.20060108195804">Body text: Ő</t>
-<t tx="ekr.20060108195804.1"></t>
+<t tx="ekr.20060112062919">@first &lt;?xml version="1.0" encoding="windows-1250" ?&gt;
+@language html
+@ 
+comment line
+@c
+@others
+</t>
+<t tx="ekr.20060112062919.1">child node
+</t>
 </tnodes>
 </leo_file>

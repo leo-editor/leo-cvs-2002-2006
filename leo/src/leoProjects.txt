@@ -5963,78 +5963,14 @@ Untried-until-I-get-a-chance:
 HTH,
 --Rich
 #@-node:ekr.20060110113743.1:Report 2
-#@+node:ekr.20060110133007.1:Support for cleo
-#@+node:ekr.20040803072955.141:setUnselectedHeadlineColors
-def setUnselectedHeadlineColors (self,p):
-    
-    c = self.c ; w = p.edit_widget()
-    
-    if self.trace and self.verbose:
-        if not self.redrawing:
-            print "%10s %d %s" % ("unselect",id(w),p.headString())
-            # import traceback ; traceback.print_stack(limit=6)
-    
-    fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
-    bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
-    
-    try:
-        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-    except:
-        g.es_exception()
-#@nonl
-#@-node:ekr.20040803072955.141:setUnselectedHeadlineColors
-#@+node:ekr.20040803072955.58:redraw_now & helper
-# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
-
-def redraw_now (self,scroll=True):
-
-    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
-        return
-        
-    c = self.c
-    
-    if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
-        g.trace(self.redrawCount,g.callers())
-        # g.print_stats()
-        # g.clear_stats()
-        
-    # Do the actual redraw.
-    self.redrawCount += 1
-    self.expandAllAncestors(c.currentPosition())
-    self.redrawHelper(scroll=scroll)
-    self.canvas.update_idletasks() # Important for unit tests.
-    
-redraw = redraw_now # Compatibility
-#@nonl
-#@+node:ekr.20040803072955.59:redrawHelper
-def redrawHelper (self,scroll=True):
-    
-    c = self.c
-    oldcursor = self.canvas['cursor']
-    self.canvas['cursor'] = "watch"
-
-    if not g.doHook("redraw-entire-outline",c=c):
-        c.setTopVnode(None)
-        self.setVisibleAreaToFullCanvas()
-        self.drawTopTree()
-        # Set up the scroll region after the tree has been redrawn.
-        x0, y0, x1, y1 = self.canvas.bbox("all")
-        self.canvas.configure(scrollregion=(0, 0, x1, y1))
-        if scroll:
-            self.canvas.update_idletasks() # Essential.
-            self.scrollTo()
-            
-    g.doHook("after-redraw-outline",c=c)
-
-    self.canvas['cursor'] = oldcursor
-#@nonl
-#@-node:ekr.20040803072955.59:redrawHelper
-#@-node:ekr.20040803072955.58:redraw_now & helper
-#@-node:ekr.20060110133007.1:Support for cleo
 #@-node:ekr.20060110093631:Fixed problems with plugins
+#@+node:ekr.20060111113925:Installed patch to cleo plugin
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3517080
+#@nonl
+#@-node:ekr.20060111113925:Installed patch to cleo plugin
 #@-node:ekr.20060106091831.1:Fixed bugs
-#@+node:ekr.20060106104654:New features
-#@-node:ekr.20060106104654:New features
 #@-node:ekr.20060106091831:4.4b1 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8574" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8575" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
 	<global_window_position top="45" left="452" height="781" width="805"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20051104080236"><vh>Other</vh>
+<v t="ekr.20051104080236" annotate="7d71002e"><vh>Other</vh>
 <v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20050104095950"><vh>@shortcutsEqualSizedPanes</vh></v>
 <v t="ekr.20050328101834"><vh>@page http plugin</vh>
@@ -958,8 +958,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="ETV"><vh>All unit tests</vh>
-<v t="ekr.20040712101754.2"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20051108140810" a="ETV" annotate="7d71002e"><vh>All unit tests</vh>
+<v t="ekr.20040712101754.2" annotate="7d71002e"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -971,8 +971,8 @@
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
 <v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests</vh>
-<v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines (runs some tests twice!)</vh>
+<v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
+<v t="ekr.20050106080304" annotate="7d71002e"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>
@@ -997,15 +997,15 @@
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
-<v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>General Unit Tests...</vh>
-<v t="ekr.20041130092210"><vh>Batch mode tests...</vh>
+<v t="ekr.20041012101944" annotate="7d71002e"><vh>@thin ../test/unittest/errorTest.py</vh></v>
+<v t="ekr.20040712101754" annotate="7d71002e"><vh>General Unit Tests...</vh>
+<v t="ekr.20041130092210" annotate="7d71002e"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
 </v>
-<v t="ekr.20050512084850"><vh>Check outline tests...</vh>
+<v t="ekr.20050512084850" annotate="7d71002e"><vh>Check outline tests...</vh>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="ekr.20041019124050"><vh>@test pretty printing a docstring</vh>
 <v t="ekr.20041019124050.1"><vh>Original</vh></v>
@@ -1017,7 +1017,7 @@
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
+<v t="ekr.20040712101754.115" annotate="7d71002e"><vh>Colorizer tests...</vh>
 <v t="ekr.20040712101754.176"><vh>@test python keywords (new colorizer)</vh></v>
 <v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
 <v t="ekr.20040712101754.117"><vh>Test</vh></v>
@@ -1111,38 +1111,38 @@
 <v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
 </v>
 </v>
-<v t="ekr.20050210093857"><vh>Dialog tests...</vh>
+<v t="ekr.20050210093857" annotate="7d71002e"><vh>Dialog tests...</vh>
 <v t="ekr.20050210085211"><vh>@test ctors for all dialogs</vh></v>
 <v t="ekr.20050210092742"><vh>@test ctors for all panels</vh></v>
 </v>
-<v t="ekr.20040712101754.7"><vh>Import/Export tests...</vh>
-<v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
-<v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10"><vh>importTests</vh>
-<v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
+<v t="ekr.20040712101754.7" annotate="7d71002e"><vh>Import/Export tests...</vh>
+<v t="ekr.20040712101754.8" annotate="7d71002e"><vh>@suite Import tests</vh></v>
+<v t="ekr.20040712101754.9" annotate="7d71002e"><vh>@suite Export tests</vh></v>
+<v t="ekr.20040712101754.10" annotate="7d71002e"><vh>importTests</vh>
+<v t="ekr.20040712101754.11" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.12" annotate="7d71002e"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040831095833"><vh>importDerivedFile</vh>
+<v t="ekr.20040831095833" annotate="7d71002e"><vh>importDerivedFile</vh>
 <v t="ekr.20040831095833.1"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040712101754.16"><vh>importNowebFiles</vh>
+<v t="ekr.20040712101754.16" annotate="7d71002e"><vh>importNowebFiles</vh>
 <v t="ekr.20040712101754.17"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040712101754.18"><vh>importFlattenedOutline</vh>
+<v t="ekr.20040712101754.18" annotate="7d71002e"><vh>importFlattenedOutline</vh>
 <v t="ekr.20040712101754.19"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040712101754.20"><vh>importCWEBFiles</vh>
+<v t="ekr.20040712101754.20" annotate="7d71002e"><vh>importCWEBFiles</vh>
 <v t="ekr.20040712101754.21"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040712101754.22"><vh>removeSentinels</vh>
+<v t="ekr.20040712101754.22" annotate="7d71002e"><vh>removeSentinels</vh>
 <v t="ekr.20040712101754.23"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040712101754.14"><vh>importAtFile</vh>
+<v t="ekr.20040712101754.14" annotate="7d71002e"><vh>importAtFile</vh>
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.24"><vh>exportTests</vh>
+<v t="ekr.20040712101754.24" annotate="7d71002e"><vh>exportTests</vh>
 <v t="ekr.20040712101754.25"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.26"><vh>exportHeadlines</vh>
 <v t="ekr.20040712101754.27"><vh>dialog</vh></v>
@@ -1161,31 +1161,31 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050112095306.1"><vh>leoAtFile.py tests...</vh>
+<v t="ekr.20050112095306.1" annotate="7d71002e"><vh>leoAtFile.py tests...</vh>
 <v t="ekr.20050105093136"><vh>@test atFile.remove</vh></v>
 <v t="ekr.20050105093524"><vh>@test atFile.rename</vh></v>
 <v t="ekr.20050105094311"><vh>@test atFile.replaceTargetFileIfDifferent (different)</vh></v>
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
-<v t="ekr.20050512083700"><vh>Marking tests...</vh>
-<v t="ekr.20040802065214"><vh>@test changing headline marks descendent @thin nodes dirty</vh>
+<v t="ekr.20050512083700" annotate="7d71002e"><vh>Marking tests...</vh>
+<v t="ekr.20040802065214" annotate="7d71002e"><vh>@test changing headline marks descendent @thin nodes dirty</vh>
 <v t="ekr.20040802065214.1"><vh>bogus</vh></v>
 </v>
-<v t="ekr.20050512083700.1"><vh>@test markChangedHeadlines</vh></v>
-<v t="ekr.20050512083807"><vh>@test markChangedRoots</vh></v>
-<v t="ekr.20050512083807.1"><vh>@test markAllAtFileNodesDirty</vh></v>
-<v t="ekr.20050512083807.2"><vh>@test markAtFileNodesDirty</vh></v>
-<v t="ekr.20050512083816"><vh>@test markClones</vh></v>
-<v t="ekr.20050512083816"><vh>@test markClones</vh></v>
-<v t="ekr.20050512083822"><vh>@test markHeadline</vh></v>
-<v t="ekr.20050512083822.1"><vh>@test markSubheads</vh>
+<v t="ekr.20050512083700.1" annotate="7d71002e"><vh>@test markChangedHeadlines</vh></v>
+<v t="ekr.20050512083807" annotate="7d71002e"><vh>@test markChangedRoots</vh></v>
+<v t="ekr.20050512083807.1" annotate="7d71002e"><vh>@test markAllAtFileNodesDirty</vh></v>
+<v t="ekr.20050512083807.2" annotate="7d71002e"><vh>@test markAtFileNodesDirty</vh></v>
+<v t="ekr.20050512083816" annotate="7d71002e"><vh>@test markClones</vh></v>
+<v t="ekr.20050512083816" annotate="7d71002e"><vh>@test markClones</vh></v>
+<v t="ekr.20050512083822" annotate="7d71002e"><vh>@test markHeadline</vh></v>
+<v t="ekr.20050512083822.1" annotate="7d71002e"><vh>@test markSubheads</vh>
 <v t="ekr.20050512084850.1"><vh>child 1</vh></v>
 <v t="ekr.20050512084850.2"><vh>child 2</vh></v>
 </v>
-<v t="ekr.20050512083822.2"><vh>@test unmarkAll</vh></v>
+<v t="ekr.20050512083822.2" annotate="7d71002e"><vh>@test unmarkAll</vh></v>
 </v>
-<v t="ekr.20040712101754.36"><vh>Mini tests...</vh>
+<v t="ekr.20040712101754.36" annotate="7d71002e"><vh>Mini tests...</vh>
 <v t="ekr.20050112095306"><vh>g.utils tests...</vh>
 <v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
 <v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
@@ -1211,7 +1211,7 @@
 <v t="ekr.20040803091512"><vh>@@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
 <v t="ekr.20040917062206"><vh>@test g.cantImport returns None</vh></v>
 </v>
-<v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
+<v t="ekr.20040716144017" annotate="7d71002e"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
 <v t="ekr.20040716081019"><vh>-input-after</vh></v>
@@ -1255,15 +1255,15 @@
 <v t="ekr.20040716142121.7"><vh>-result</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.187"><vh>Position tests...</vh>
-<v t="ekr.20040712101754.99"><vh>@test c iters</vh>
+<v t="ekr.20040712101754.187" annotate="7d71002e"><vh>Position tests...</vh>
+<v t="ekr.20040712101754.99" annotate="7d71002e"><vh>@test c iters</vh>
 <v t="ekr.20040712101754.100"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
 <v t="ekr.20040712101754.101"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040802071519"><vh>@test p.setBodyStringOrPane</vh>
+<v t="ekr.20040802071519" annotate="7d71002e"><vh>@test p.setBodyStringOrPane</vh>
 <v t="ekr.20040802071519.1"><vh>child</vh></v>
 </v>
-<v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
+<v t="ekr.20040712101754.188" annotate="7d71002e"><vh>@test p.iters and v.iters</vh>
 <v t="ekr.20040712101754.189"><vh>child1</vh>
 <v t="ekr.20040712101754.190"><vh>a</vh>
 <v t="ekr.20040712101754.191"><vh>b</vh></v>
@@ -1281,26 +1281,26 @@
 <v t="ekr.20040712101754.197"><vh>&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;</vh></v>
 <v t="ekr.20040712101754.198"><vh>&lt;&lt; print nodes returned by iterators &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040712101754.199"><vh>@test p.comparisons</vh></v>
-<v t="ekr.20060106211922"><vh>@test p.isCurrentPosition</vh></v>
-<v t="ekr.20060106211922.1"><vh>@test p.isRootPosition</vh></v>
-<v t="ekr.20040712101754.200"><vh>@test that clones share subtrees</vh></v>
-<v t="ekr.20040712101754.201"><vh>@test consistency of c.allNodes_iter() and p.ThreadNext()</vh></v>
-<v t="ekr.20040712101754.202"><vh>@test consistency of firstChild &amp; children_iter()</vh></v>
-<v t="ekr.20040712101754.203"><vh>@test consistency of level</vh></v>
-<v t="ekr.20040712101754.204"><vh>@test consistency of back/next links</vh></v>
-<v t="ekr.20040712101754.205"><vh>@test consistency of parent &amp; parents_iter()</vh></v>
-<v t="ekr.20040712101754.206"><vh>@test consistency of parent/child links</vh></v>
-<v t="ekr.20040712101754.207"><vh>@test consistency of threadBack/Next links</vh></v>
-<v t="ekr.20040712101754.208"><vh>@test consistency of tnodeListAndParents</vh></v>
-<v t="ekr.20040712101754.209"><vh>@test hasNextBack</vh></v>
-<v t="ekr.20040712101754.210"><vh>@test hasParentChild</vh></v>
-<v t="ekr.20040712101754.211"><vh>@test hasThreadNextBack</vh></v>
-<v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
-<v t="ekr.20040722055040"><vh>@test isAncestorOf</vh></v>
-<v t="ekr.20041013062906"><vh>@test onHyperLinkControlClick</vh></v>
+<v t="ekr.20040712101754.199" annotate="7d71002e"><vh>@test p.comparisons</vh></v>
+<v t="ekr.20060106211922" annotate="7d71002e"><vh>@test p.isCurrentPosition</vh></v>
+<v t="ekr.20060106211922.1" annotate="7d71002e"><vh>@test p.isRootPosition</vh></v>
+<v t="ekr.20040712101754.200" annotate="7d71002e"><vh>@test that clones share subtrees</vh></v>
+<v t="ekr.20040712101754.201" annotate="7d71002e"><vh>@test consistency of c.allNodes_iter() and p.ThreadNext()</vh></v>
+<v t="ekr.20040712101754.202" annotate="7d71002e"><vh>@test consistency of firstChild &amp; children_iter()</vh></v>
+<v t="ekr.20040712101754.203" annotate="7d71002e"><vh>@test consistency of level</vh></v>
+<v t="ekr.20040712101754.204" annotate="7d71002e"><vh>@test consistency of back/next links</vh></v>
+<v t="ekr.20040712101754.205" annotate="7d71002e"><vh>@test consistency of parent &amp; parents_iter()</vh></v>
+<v t="ekr.20040712101754.206" annotate="7d71002e"><vh>@test consistency of parent/child links</vh></v>
+<v t="ekr.20040712101754.207" annotate="7d71002e"><vh>@test consistency of threadBack/Next links</vh></v>
+<v t="ekr.20040712101754.208" annotate="7d71002e"><vh>@test consistency of tnodeListAndParents</vh></v>
+<v t="ekr.20040712101754.209" annotate="7d71002e"><vh>@test hasNextBack</vh></v>
+<v t="ekr.20040712101754.210" annotate="7d71002e"><vh>@test hasParentChild</vh></v>
+<v t="ekr.20040712101754.211" annotate="7d71002e"><vh>@test hasThreadNextBack</vh></v>
+<v t="ekr.20040712101754.212" annotate="7d71002e"><vh>@test vnode list</vh></v>
+<v t="ekr.20040722055040" annotate="7d71002e"><vh>@test isAncestorOf</vh></v>
+<v t="ekr.20041013062906" annotate="7d71002e"><vh>@test onHyperLinkControlClick</vh></v>
 </v>
-<v t="ekr.20040723062819"><vh>Syntax Checks...</vh>
+<v t="ekr.20040723062819" annotate="7d71002e"><vh>Syntax Checks...</vh>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 </v>
@@ -1309,91 +1309,91 @@
 </v>
 <v t="ekr.20040712101813"><vh>@xx test checkAllPythonCode</vh></v>
 </v>
-<v t="ekr.20050216060307"><vh>Tangle/Untangle tests...</vh>
-<v t="ekr.20050216060736"><vh>@test tangle command</vh>
+<v t="ekr.20050216060307" annotate="7d71002e"><vh>Tangle/Untangle tests...</vh>
+<v t="ekr.20050216060736" annotate="7d71002e"><vh>@test tangle command</vh>
 <v t="ekr.20050216060736.1"><vh>Tangle Root</vh>
 <v t="ekr.20050216060736.2"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050216062636"><vh>@test untangle command</vh>
-<v t="ekr.20050216062636.4"><vh>Tangle Root</vh>
+<v t="ekr.20050216062636" annotate="7d71002e"><vh>@test untangle command</vh>
+<v t="ekr.20050216062636.4" annotate="7d71002e"><vh>Tangle Root</vh>
 <v t="ekr.20050216062636.5"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20050105080048"><vh>Test ivars...</vh>
+<v t="ekr.20050105080048" annotate="7d71002e"><vh>Test ivars...</vh>
 <v t="ekr.20050105080048.1"><vh>@test official frame ivars</vh></v>
 <v t="ekr.20050105082500"><vh>@test official commander ivars</vh></v>
 <v t="ekr.20050105084757"><vh>@test official g.app directories</vh></v>
 <v t="ekr.20050105090632"><vh>@test official g.app ivars</vh></v>
 </v>
-<v t="ekr.20050203084930"><vh>Test settings...</vh>
+<v t="ekr.20050203084930" annotate="7d71002e"><vh>Test settings...</vh>
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
-<v t="ekr.20050408084135"><vh>Undo/Redo Tests</vh>
-<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
-<v t="ekr.20050518070540"><vh>extract test2</vh>
+<v t="ekr.20050408084135" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37" annotate="7d71002e"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" annotate="7d71002e"><vh>editBodyTests</vh>
+<v t="ekr.20050518070540" annotate="7d71002e"><vh>extract test2</vh>
 <v t="ekr.20050518070540.1"><vh>before</vh></v>
 <v t="ekr.20050518070545"><vh>after</vh></v>
 <v t="ekr.20050518070540.4"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050518071251"><vh>extractSection test2</vh>
+<v t="ekr.20050518071251" annotate="7d71002e"><vh>extractSection test2</vh>
 <v t="ekr.20050518071251.1"><vh>before</vh></v>
 <v t="ekr.20050518071258"><vh>after</vh></v>
 <v t="ekr.20050518071251.4"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417202713"><vh>addComments</vh>
+<v t="ekr.20050417202713" annotate="7d71002e"><vh>addComments</vh>
 <v t="ekr.20050417202713.1"><vh>before</vh></v>
 <v t="ekr.20050417202713.2"><vh>after</vh></v>
 <v t="ekr.20050417202713.3"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417204940"><vh>convertAllBlanks</vh>
+<v t="ekr.20050417204940" annotate="7d71002e"><vh>convertAllBlanks</vh>
 <v t="ekr.20050417204940.1"><vh>before</vh></v>
 <v t="ekr.20050417204940.2"><vh>after</vh></v>
 <v t="ekr.20050417204940.3"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417205012"><vh>convertAllTabs</vh>
+<v t="ekr.20050417205012" annotate="7d71002e"><vh>convertAllTabs</vh>
 <v t="ekr.20050417205012.1"><vh>before</vh></v>
 <v t="ekr.20050417205012.2"><vh>after</vh></v>
 <v t="ekr.20050417205012.3"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417203114"><vh>convertBlanks</vh>
+<v t="ekr.20050417203114" annotate="7d71002e"><vh>convertBlanks</vh>
 <v t="ekr.20050417203310"><vh>before</vh></v>
 <v t="ekr.20050417203310.1"><vh>after</vh></v>
 <v t="ekr.20050417203336"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417203114.1"><vh>convertTabs</vh>
+<v t="ekr.20050417203114.1" annotate="7d71002e"><vh>convertTabs</vh>
 <v t="ekr.20050417204834"><vh>before</vh></v>
 <v t="ekr.20050417204830"><vh>after</vh></v>
 <v t="ekr.20050417204901"><vh>selection</vh></v>
 </v>
-<v t="ekr.20040712101754.49"><vh>dedentBody</vh>
+<v t="ekr.20040712101754.49" annotate="7d71002e"><vh>dedentBody</vh>
 <v t="ekr.20040712101754.50"><vh>before</vh></v>
 <v t="ekr.20040712101754.51"><vh>after</vh></v>
 <v t="ekr.20040712101754.52"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417202817"><vh>deleteComments</vh>
+<v t="ekr.20050417202817" annotate="7d71002e"><vh>deleteComments</vh>
 <v t="ekr.20050417202817.1"><vh>before</vh></v>
 <v t="ekr.20050417202817.2"><vh>after</vh></v>
 <v t="ekr.20050417202817.3"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417201845"><vh>extract test1</vh>
+<v t="ekr.20050417201845" annotate="7d71002e"><vh>extract test1</vh>
 <v t="ekr.20050417201845.1"><vh>before</vh></v>
 <v t="ekr.20050417201845.2"><vh>after</vh>
 <v t="ekr.20050417201845.3"><vh>&lt;&lt; section &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050417201845.4"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050518070927"><vh>extractSection test1</vh>
+<v t="ekr.20050518070927" annotate="7d71002e"><vh>extractSection test1</vh>
 <v t="ekr.20050518070927.1"><vh>before</vh></v>
 <v t="ekr.20050518070927.2"><vh>after</vh>
 <v t="ekr.20050518070927.3"><vh>&lt;&lt; section &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050518070927.4"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417202052"><vh>extractSectionNames</vh>
+<v t="ekr.20050417202052" annotate="7d71002e"><vh>extractSectionNames</vh>
 <v t="ekr.20050417202052.1"><vh>before</vh></v>
 <v t="ekr.20050417202112"><vh>after</vh>
 <v t="ekr.20050417202112.1"><vh>&lt;&lt; section 1&gt;&gt;</vh></v>
@@ -1402,116 +1402,116 @@
 </v>
 <v t="ekr.20050417202243"><vh>selection</vh></v>
 </v>
-<v t="ekr.20040712101754.45"><vh>indentBody</vh>
+<v t="ekr.20040712101754.45" annotate="7d71002e"><vh>indentBody</vh>
 <v t="ekr.20040712101754.46"><vh>before</vh></v>
 <v t="ekr.20040712101754.47"><vh>after</vh></v>
 <v t="ekr.20040712101754.48"><vh>selection</vh></v>
 </v>
-<v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.39" annotate="7d71002e"><vh>tempNode</vh></v>
 </v>
 </v>
-<v t="ekr.20050417102057"><vh>Reformat Paragraph tests</vh>
-<v t="ekr.20050417102114"><vh>@test noTrailingNewline</vh>
-<v t="ekr.20050417104821"><vh>data</vh>
-<v t="ekr.20050417124704"><vh>tempNode</vh></v>
-<v t="ekr.20050417102114.1"><vh>before</vh></v>
-<v t="ekr.20050417102114.2"><vh>after</vh></v>
+<v t="ekr.20050417102057" annotate="7d71002e"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20050417102114" annotate="7d71002e"><vh>@test noTrailingNewline</vh>
+<v t="ekr.20050417104821" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417124704" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417102114.1" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417102114.2" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417111144"><vh>@test trailingNewline</vh>
-<v t="ekr.20050417111144.1"><vh>data</vh>
-<v t="ekr.20050417111240"><vh>tempNode</vh></v>
-<v t="ekr.20050417111144.2"><vh>before</vh></v>
-<v t="ekr.20050417111144.3"><vh>after</vh></v>
+<v t="ekr.20050417111144" annotate="7d71002e"><vh>@test trailingNewline</vh>
+<v t="ekr.20050417111144.1" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417111240" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417111144.2" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417111144.3" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417113549"><vh>@test mixedLineLengths</vh>
-<v t="ekr.20050417113910"><vh>data</vh>
-<v t="ekr.20050417113921"><vh>tempNode</vh></v>
-<v t="ekr.20050417113910.1"><vh>before</vh></v>
-<v t="ekr.20050417113910.2"><vh>after</vh></v>
+<v t="ekr.20050417113549" annotate="7d71002e"><vh>@test mixedLineLengths</vh>
+<v t="ekr.20050417113910" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417113921" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417113910.1" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417113910.2" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417114153"><vh>@test mixedLinesWithLeadingWS</vh>
-<v t="ekr.20050417114221"><vh>data</vh>
-<v t="ekr.20050417114221.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417114221.2"><vh>before</vh></v>
-<v t="ekr.20050417114221.3"><vh>after</vh></v>
+<v t="ekr.20050417114153" annotate="7d71002e"><vh>@test mixedLinesWithLeadingWS</vh>
+<v t="ekr.20050417114221" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417114221.1" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417114221.2" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417114221.3" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417114836"><vh>@test noChangeRequired</vh>
-<v t="ekr.20050417095124.16"><vh>data</vh>
-<v t="ekr.20050417114914"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.17"><vh>before</vh></v>
-<v t="ekr.20050417095124.18"><vh>after</vh></v>
+<v t="ekr.20050417114836" annotate="7d71002e"><vh>@test noChangeRequired</vh>
+<v t="ekr.20050417095124.16" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417114914" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.17" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.18" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.11"><vh>@test honorLeadingWS</vh>
-<v t="ekr.20050417095124.19"><vh>data</vh>
-<v t="ekr.20050417115111"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.20"><vh>before</vh></v>
-<v t="ekr.20050417095124.21"><vh>after</vh></v>
+<v t="ekr.20050417095020.11" annotate="7d71002e"><vh>@test honorLeadingWS</vh>
+<v t="ekr.20050417095124.19" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115111" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.20" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.21" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.12"><vh>@test honorLeadingWSVar1</vh>
-<v t="ekr.20050417095124.22"><vh>data</vh>
-<v t="ekr.20050417115257"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.23"><vh>before</vh></v>
-<v t="ekr.20050417095124.24"><vh>after</vh></v>
+<v t="ekr.20050417095020.12" annotate="7d71002e"><vh>@test honorLeadingWSVar1</vh>
+<v t="ekr.20050417095124.22" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115257" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.23" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.24" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.13"><vh>@test simpleHangingIndent</vh>
-<v t="ekr.20050417095124.25"><vh>data</vh>
-<v t="ekr.20050417115414"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.26"><vh>before</vh></v>
-<v t="ekr.20050417095124.27"><vh>after</vh></v>
+<v t="ekr.20050417095020.13" annotate="7d71002e"><vh>@test simpleHangingIndent</vh>
+<v t="ekr.20050417095124.25" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115414" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.26" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.27" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.14"><vh>@test testSimpleHangingIndentVar1</vh>
-<v t="ekr.20050417095124.28"><vh>data</vh>
-<v t="ekr.20050417115559"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.29"><vh>before</vh></v>
-<v t="ekr.20050417095124.30"><vh>after</vh></v>
+<v t="ekr.20050417095020.14" annotate="7d71002e"><vh>@test testSimpleHangingIndentVar1</vh>
+<v t="ekr.20050417095124.28" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115559" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.29" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.30" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.15"><vh>@test simpleHangingIndentVar2</vh>
-<v t="ekr.20050417095124.31"><vh>data</vh>
-<v t="ekr.20050417115709"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.32"><vh>before</vh></v>
-<v t="ekr.20050417095124.33"><vh>after</vh></v>
+<v t="ekr.20050417095020.15" annotate="7d71002e"><vh>@test simpleHangingIndentVar2</vh>
+<v t="ekr.20050417095124.31" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115709" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.32" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.33" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417120312.1"><vh>@test multiParagraphTest</vh>
-<v t="ekr.20050417095124.34"><vh>data</vh>
-<v t="ekr.20050417120312.2"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.35"><vh>before</vh></v>
-<v t="ekr.20050417095124.36"><vh>after</vh></v>
+<v t="ekr.20050417120312.1" annotate="7d71002e"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417095124.34" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417120312.2" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.35" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.36" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417121448"><vh>@test multiParagraphWithListTest</vh>
-<v t="ekr.20050417095124.37"><vh>data</vh>
-<v t="ekr.20050417121448.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.38"><vh>before</vh></v>
-<v t="ekr.20050417095124.39"><vh>after</vh></v>
+<v t="ekr.20050417121448" annotate="7d71002e"><vh>@test multiParagraphWithListTest</vh>
+<v t="ekr.20050417095124.37" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417121448.1" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.38" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.39" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417121942"><vh>@test leadingWSOnEmptyLinesTest</vh>
-<v t="ekr.20050417095124.43"><vh>data</vh>
-<v t="ekr.20050417121942.1"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.44"><vh>before</vh></v>
-<v t="ekr.20050417095124.45"><vh>after</vh></v>
+<v t="ekr.20050417121942" annotate="7d71002e"><vh>@test leadingWSOnEmptyLinesTest</vh>
+<v t="ekr.20050417095124.43" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417121942.1" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.44" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.45" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417122215.1"><vh>@test directiveBreaksParagraphTest</vh>
-<v t="ekr.20050417095124.40"><vh>data</vh>
-<v t="ekr.20050417122215.2"><vh>tempNode</vh></v>
-<v t="ekr.20050417095124.41"><vh>before</vh></v>
-<v t="ekr.20050417095124.42"><vh>after</vh></v>
+<v t="ekr.20050417122215.1" annotate="7d71002e"><vh>@test directiveBreaksParagraphTest</vh>
+<v t="ekr.20050417095124.40" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417122215.2" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095124.41" annotate="7d71002e"><vh>before</vh></v>
+<v t="ekr.20050417095124.42" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20050208051418"><vh>Unicode tests...</vh>
+<v t="ekr.20050208051418" annotate="7d71002e"><vh>Unicode tests...</vh>
 <v t="ekr.20050206090416"><vh>@test open non-existent non-ascii directory</vh></v>
 <v t="ekr.20050208051418.1"><vh>@test can't open message in g.openWithFileName</vh></v>
 <v t="ekr.20050208051854"><vh>@test atFile.printError</vh></v>
@@ -1521,7 +1521,7 @@
 <v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.102"><vh>Tests of @file nodes...</vh>
+<v t="ekr.20040712101754.102" annotate="7d71002e"><vh>Tests of @file nodes...</vh>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
 <v t="ekr.20040712101754.104"><vh>#@file</vh></v>
 <v t="ekr.20040712101754.105"><vh>Output</vh></v>
@@ -1616,12 +1616,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231"><vh>Unit tests for Redraws</vh>
-<v t="ekr.20051122095426"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
-<v t="ekr.20051107115231.1"><vh>@command unit-test-command1</vh></v>
-<v t="ekr.20051216171321"><vh>Test headline abc</vh></v>
-<v t="ekr.20051109034758"><vh>pasted node</vh></v>
-<v t="ekr.20051107115231.3"><vh>Reference</vh>
+<v t="ekr.20051107115231" annotate="7d71002e"><vh>Unit tests for Redraws</vh>
+<v t="ekr.20051122095426" annotate="7d71002e"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
+<v t="ekr.20051107115231.1" annotate="7d71002e"><vh>@command unit-test-command1</vh></v>
+<v t="ekr.20051216171321" annotate="7d71002e"><vh>Test headline abc</vh></v>
+<v t="ekr.20051109034758" annotate="7d71002e"><vh>pasted node</vh></v>
+<v t="ekr.20051107115231.3" annotate="7d71002e"><vh>Reference</vh>
 <v t="ekr.20051107115231.4"><vh>manufactureKeyPressForCommandName</vh></v>
 <v t="ekr.20051107115231.5"><vh>simulateCommand</vh></v>
 <v t="ekr.20051108063458"><vh>app.gui.Tkinter.utils</vh>
@@ -1684,40 +1684,40 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051107115231.7"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
-<v t="ekr.20051107115231.8"><vh>Commands tests</vh>
-<v t="ekr.20051107115231.9"><vh>@test Select a node when file is first loaded</vh></v>
-<v t="ekr.20051107115231.10"><vh>@test Save command redraws the screen</vh></v>
-<v t="ekr.20051107115231.11"><vh>@test New command redraws the screen</vh></v>
-<v t="ekr.20051108063253"><vh>@test openWithFileName draws the screen at least once</vh></v>
-<v t="ekr.20051108063032"><vh>@test pasteNode draws the screen exactly once</vh>
+<v t="ekr.20051107115231.7" annotate="7d71002e"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
+<v t="ekr.20051107115231.8" annotate="7d71002e"><vh>Commands tests</vh>
+<v t="ekr.20051107115231.9" annotate="7d71002e"><vh>@test Select a node when file is first loaded</vh></v>
+<v t="ekr.20051107115231.10" annotate="7d71002e"><vh>@test Save command redraws the screen</vh></v>
+<v t="ekr.20051107115231.11" annotate="7d71002e"><vh>@test New command redraws the screen</vh></v>
+<v t="ekr.20051108063253" annotate="7d71002e"><vh>@test openWithFileName draws the screen at least once</vh></v>
+<v t="ekr.20051108063032" annotate="7d71002e"><vh>@test pasteNode draws the screen exactly once</vh>
 <v t="ekr.20051108063458.46"><vh>&lt;&lt; define s, the node to be pasted &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051216171321.1"><vh>pasted node</vh></v>
-<v t="ekr.20051107115231.29"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
+<v t="ekr.20051216171321.1" annotate="7d71002e"><vh>pasted node</vh></v>
+<v t="ekr.20051107115231.29" annotate="7d71002e"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
-<v t="ekr.20051107115231.13" a="M"><vh>Typing and undo tests</vh>
-<v t="ekr.20051107115231.14"><vh>@test return ends editing of headline</vh></v>
-<v t="ekr.20051107115231.15"><vh>@test editLabel selects entire headline</vh></v>
-<v t="ekr.20051107115231.16"><vh>@test paste at end of headline</vh></v>
-<v t="ekr.20051107115231.17"><vh>@test typing and undo in headline - at end</vh></v>
-<v t="ekr.20051107115231.18"><vh>@test paste and undo in headline - at end</vh></v>
-<v t="ekr.20051107115231.20"><vh>@test paste and undo in headline - with selection</vh></v>
-<v t="ekr.20051107115231.21"><vh>@test selecting new node retains typing in headline</vh></v>
-<v t="ekr.20051107115231.22"><vh>@test paste from menu into body sticks</vh></v>
-<v t="ekr.20051107115231.23"><vh>@test paste from menu into headline sticks</vh></v>
-<v t="ekr.20051107115231.24"><vh>@test paste from menu to body recolors the body</vh></v>
-<v t="ekr.20051107115231.25"><vh>@test typing in headline recomputes width</vh></v>
-<v t="ekr.20051107115231.28"><vh>@test selecting new node retains paste in headline</vh></v>
-<v t="ekr.20051109091152"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
-<v t="ekr.20051109091731"><vh>@test typing in non-empty body text does not redraw the screen</vh></v>
-<v t="ekr.20051120110335"><vh>@test inserting a new node can be undone and redone</vh></v>
-<v t="ekr.20051125155134"><vh>@test inserting a new node draws the screen exactly once</vh></v>
-<v t="ekr.20051120115046"><vh>@test undoing insert node restores previous node's body text</vh></v>
-<v t="ekr.20051125165933"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
-<v t="ekr.20051125170139"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
+<v t="ekr.20051107115231.13" a="M" annotate="7d71002e"><vh>Typing and undo tests</vh>
+<v t="ekr.20051107115231.14" annotate="7d71002e"><vh>@test return ends editing of headline</vh></v>
+<v t="ekr.20051107115231.15" annotate="7d71002e"><vh>@test editLabel selects entire headline</vh></v>
+<v t="ekr.20051107115231.16" annotate="7d71002e"><vh>@test paste at end of headline</vh></v>
+<v t="ekr.20051107115231.17" annotate="7d71002e"><vh>@test typing and undo in headline - at end</vh></v>
+<v t="ekr.20051107115231.18" annotate="7d71002e"><vh>@test paste and undo in headline - at end</vh></v>
+<v t="ekr.20051107115231.20" annotate="7d71002e"><vh>@test paste and undo in headline - with selection</vh></v>
+<v t="ekr.20051107115231.21" annotate="7d71002e"><vh>@test selecting new node retains typing in headline</vh></v>
+<v t="ekr.20051107115231.22" annotate="7d71002e"><vh>@test paste from menu into body sticks</vh></v>
+<v t="ekr.20051107115231.23" annotate="7d71002e"><vh>@test paste from menu into headline sticks</vh></v>
+<v t="ekr.20051107115231.24" annotate="7d71002e"><vh>@test paste from menu to body recolors the body</vh></v>
+<v t="ekr.20051107115231.25" annotate="7d71002e"><vh>@test typing in headline recomputes width</vh></v>
+<v t="ekr.20051107115231.28" annotate="7d71002e"><vh>@test selecting new node retains paste in headline</vh></v>
+<v t="ekr.20051109091152" annotate="7d71002e"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
+<v t="ekr.20051109091731" annotate="7d71002e"><vh>@test typing in non-empty body text does not redraw the screen</vh></v>
+<v t="ekr.20051120110335" annotate="7d71002e"><vh>@test inserting a new node can be undone and redone</vh></v>
+<v t="ekr.20051125155134" annotate="7d71002e"><vh>@test inserting a new node draws the screen exactly once</vh></v>
+<v t="ekr.20051120115046" annotate="7d71002e"><vh>@test undoing insert node restores previous node's body text</vh></v>
+<v t="ekr.20051125165933" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
+<v t="ekr.20051125170139" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
-<v t="ekr.20051108141141"><vh>Not ready yet</vh>
+<v t="ekr.20051108141141" annotate="7d71002e"><vh>Not ready yet</vh>
 <v t="ekr.20051107115231.19" a="M"><vh>@@test typing and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.32"><vh>@@test plugins manager stays in front</vh></v>
 <v t="ekr.20051109091333"><vh>@@test deleting the last body character text redraws the screen (and icon)</vh></v>
@@ -1730,7 +1730,7 @@
 <v t="ekr.20051202100844.2"><vh>@test arrow keys</vh></v>
 <v t="ekr.20051107115231.26"><vh>@@test paste in headline recomputes width</vh></v>
 </v>
-<v t="ekr.20051109143831"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
+<v t="ekr.20051109143831" annotate="7d71002e"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
 </v>
 </v>
 </vnodes>
@@ -7847,7 +7847,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
