@@ -30,7 +30,7 @@ import sys
 #@nonl
 #@-node:ekr.20050227071948.35:<< imports >>
 #@nl
-__version__ = "0.12"
+__version__ = "0.13"
 #@<< version history >>
 #@+node:ekr.20050227071948.36:<< version history >>
 #@@killcolor
@@ -49,20 +49,27 @@ __version__ = "0.12"
 # 0.8.2  Fixed unposting
 # 0.9  Automatically colour @file and @ignore nodes
 # 0.10 EKR:
-#     - Repackaged for leoPlugins.leo.
-#         - Define g.  Eliminate from x import *.
-#     - Made code work with 4.3 code base:
-#         - Override tree.setUnselectedHeadlineColors instead of 
+# - Repackaged for leoPlugins.leo.
+#     - Define g.  Eliminate from x import *.
+# - Made code work with 4.3 code base:
+#     - Override tree.setUnselectedHeadlineColors instead of 
 # tree.setUnselectedLabelState
-#     - Create per-commander instances of cleoController in onCreate.
-#     - Converted some c/java style to python style.
-#     - Replaced string.find(s,...) by s.find(...) & removed import string.
-#     - show_menu now returns 'break':  fixes the 'popup menu is not unposting 
+# - Create per-commander instances of cleoController in onCreate.
+# - Converted some c/java style to python style.
+# - Replaced string.find(s,...) by s.find(...) & removed import string.
+# - show_menu now returns 'break':  fixes the 'popup menu is not unposting 
 # bug)
 # 0.11 EKR:
-#     - hasUD and getUD now make sure that the dict is actually a dict.
+# - hasUD and getUD now make sure that the dict is actually a dict.
 # 0.12 EKR:
-#     - Changed 'new_c' logic to 'c' logic.
+# - Changed 'new_c' logic to 'c' logic.
+# 0.13 EKR:
+# - Installed patch roughly following code at 
+# http://sourceforge.net/forum/message.php?msg_id=3517080
+# - custom_colours now returns None for default.
+# - Added override of setDisabledHeadlineColors so that color changes in 
+# headlines happen immediately.
+# - Removed checkmark menu item because there is no easy way to clear it.
 #@-at
 #@nonl
 #@-node:ekr.20050227071948.36:<< version history >>
@@ -156,8 +163,11 @@ class cleoController:
             1 : 'red',
             2 : 'orange',
             3 : 'yellow',
-            4 : 'green'
+            4 : 'green',
+            5 : 'background-colour'
         }
+        
+        self.background_colour = c.frame.tree.canvas.cget('background')
         #@nonl
         #@-node:ekr.20050227085542.3:<< define colors >>
         #@nl
@@ -165,11 +175,12 @@ class cleoController:
     #@+node:ekr.20050227071948.68:install_drawing_overrides
     def install_drawing_overrides (self):
         
-        print "Cleo plugin: installing overrides for",self.c.shortFileName()
+        # print "Cleo plugin: installing overrides for",self.c.shortFileName()
     
         tree = self.c.frame.tree # NOT leoTkinterTree.leoTkinterTree
         
         g.funcToMethod(self.setUnselectedHeadlineColors,tree)
+        g.funcToMethod(self.setDisabledHeadlineColors,tree)
     #@nonl
     #@-node:ekr.20050227071948.68:install_drawing_overrides
     #@-node:ekr.20050227085542.2: birth
@@ -234,7 +245,7 @@ class cleoController:
         d = self.getUD(v)
         del d['fg']
         del d['bg']
-    
+        self.c.redraw()
     #@-node:ekr.20050227071948.60:remove_colours
     #@+node:ekr.20050227071948.61:custom_colours
     # use return values to set the colours so no need to muck around when loading up files.
@@ -243,7 +254,7 @@ class cleoController:
     
         ''' Returns the vnodes custom colours if it has them '''
         
-        fg = 'black' ; bg = 'white'
+        fg, bg = None, None
         d = self.getUD(v)
     
         # XXX This is ugly and inefficient !!
@@ -309,14 +320,11 @@ class cleoController:
         
         c = self.c ; tree = c.frame.tree
         c.setChanged(True)
-        tree.recycleWidgets()
         c.redraw_now()
     #@nonl
     #@-node:ekr.20050227071948.39:redraw
     #@+node:ekr.20050227071948.37:clear_all
     def clear_all(self,v):
-        
-        g.trace(v)
     
         self.delUD(v)
         self.redraw()
@@ -391,10 +399,19 @@ class cleoController:
     def draw_arrow (self,v,colour='darkgreen'):
     
         # print ">> Action"
-        canvas = self.c.frame.tree.canvas 
+        c = self.c ; tree = c.frame.tree ; canvas = tree.canvas
+        clear = colour == 'background-colour'
+        
+        if clear:
+            colour = self.background_colour
+    
         canvas.create_line(v.iconx-10,v.icony+8,v.iconx+5,v.icony+8,
             arrow="last",fill=colour,width=4)
-    #@nonl
+    
+        if clear:
+            canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,
+                fill = 'Gray50',width=1)
+    
     #@-node:ekr.20050227071948.47:draw_arrow
     #@+node:ekr.20050227071948.48:draw_tick
     def draw_tick (self,v,colour='salmon'):
@@ -438,122 +455,40 @@ class cleoController:
     #@nonl
     #@-node:ekr.20050227074440.4:draw_topT
     #@-node:ekr.20050227071948.44:draw box area
-    #@+node:ekr.20050227081640:tree.set...LabelState
-    #@+node:ekr.20050227081640.1:No change from 4.4 code base
-    if 0:
-        #@    @+others
-        #@+node:ekr.20050227081640.2:setEditLabelState
-        def setEditLabelState (self,p): # selected, editing
-        
-            # Do nothing if a redraw is already sheduled.
-            # This prevents race conditions.
-            if self.redrawScheduled: return
-            
-            w = p.edit_widget()
-            
-            if p and w:
-                self.frame.widgetWantsFocus(w)
-                self.setEditHeadlineColors(p)
-                w.tag_remove("sel","1.0","end")
-                w.tag_add("sel","1.0","end")
-        #@nonl
-        #@-node:ekr.20050227081640.2:setEditLabelState
-        #@+node:ekr.20050227081640.4:setSelectedLabelState
-        def setSelectedLabelState (self,p): # selected, not editing
-        
-            # Do nothing if a redraw is already sheduled.
-            # This prevents race conditions.
-            if self.redrawScheduled: return 
-        
-            # g.trace(p)
-            self.setDisabledLabelState(p)
-        
-        #@-node:ekr.20050227081640.4:setSelectedLabelState
-        #@+node:ekr.20050227081640.5:setUnselectedLabelState
-        def setUnselectedLabelState (self,p): # not selected.
-        
-            # Do nothing if a redraw is already sheduled.
-            # This prevents race conditions.
-            if self.redrawScheduled: return 
-        
-            if p and p.edit_widget():
-                self.setUnselectedHeadlineColors(p)
-        #@nonl
-        #@-node:ekr.20050227081640.5:setUnselectedLabelState
-        #@+node:ekr.20050227081640.6:setDisabledHeadlineColors
-        def setDisabledHeadlineColors (self,p):
-        
-            c = self.c ; w = p.edit_widget()
-        
-            if self.trace and self.verbose:
-                if not self.redrawing:
-                    print "%10s %d %s" % ("disabled",id(w),p.headString())
-                    # import traceback ; traceback.print_stack(limit=6)
-        
-            fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
-            bg = c.config.getColor("headline_text_selected_background_color") or 'grey80'
-            
-            try:
-                w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-            except:
-                g.es_exception()
-        #@nonl
-        #@-node:ekr.20050227081640.6:setDisabledHeadlineColors
-        #@+node:ekr.20050227081640.7:setEditHeadlineColors
-        def setEditHeadlineColors (self,p):
-        
-            c = self.c ; w = p.edit_widget()
-            
-            if self.trace and self.verbose:
-                if not self.redrawing:
-                    print "%10s %d %s" % ("edit",id(2),p.headString())
-            
-            fg    = c.config.getColor("headline_text_editing_foreground_color") or 'black'
-            bg    = c.config.getColor("headline_text_editing_background_color") or 'white'
-            selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
-            selbg = c.config.getColor("headline_text_editing_selection_background_color")
-            
-            try: # Use system defaults for selection foreground/background
-                if selfg and selbg:
-                    w.configure(
-                        selectforeground=selfg,selectbackground=selbg,
-                        state="normal",highlightthickness=1,fg=fg,bg=bg)
-                elif selfg and not selbg:
-                    w.configure(
-                        selectforeground=selfg,
-                        state="normal",highlightthickness=1,fg=fg,bg=bg)
-                elif selbg and not selfg:
-                    w.configure(
-                        selectbackground=selbg,
-                        state="normal",highlightthickness=1,fg=fg,bg=bg)
-                else:
-                    w.configure(
-                        state="normal",highlightthickness=1,fg=fg,bg=bg)
-            except:
-                g.es_exception()
-        #@nonl
-        #@-node:ekr.20050227081640.7:setEditHeadlineColors
-        #@-others
-    #@nonl
-    #@-node:ekr.20050227081640.1:No change from 4.4 code base
+    #@+node:ekr.20050227081640:overrides of leoTkinterTree methods
     #@+node:ekr.20050227081640.8:setUnselectedHeadlineColors
     def setUnselectedHeadlineColors (self,p):
-        
-        c = p.c ; config = g.app.config ; w = p.edit_widget()
-        
-        fg,bg = self.custom_colours(p.v)
-        fg = fg or 'black'
-        bg = bg or 'white'
-        
-        # print '> Unselected  %s (%s,%s)' % (p.v.headString(), fg, bg)
-        
+    
+        c = self.c ; w = p.edit_widget()
+    
+        fg, bg = self.custom_colours(p.v)
+    
+        fg = fg or c.config.getColor("headline_text_unselected_foreground_color") or 'black'
+        bg = bg or c.config.getColor("headline_text_unselected_background_color") or 'white'
+    
         try:
             w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
         except:
             g.es_exception()
     #@nonl
     #@-node:ekr.20050227081640.8:setUnselectedHeadlineColors
-    #@-node:ekr.20050227081640:tree.set...LabelState
+    #@+node:ekr.20060112060601:setDisabledHeadlineColors
+    def setDisabledHeadlineColors (self,p):
+    
+        c = self.c ; w = p.edit_widget()
+    
+        fg, bg = self.custom_colours(p.v)
+    
+        fg = fg or c.config.getColor("headline_text_selected_foreground_color") or 'black'
+        bg = bg or c.config.getColor("headline_text_selected_background_color") or 'grey80'
+    
+        try:
+            w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+        except:
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20060112060601:setDisabledHeadlineColors
+    #@-node:ekr.20050227081640:overrides of leoTkinterTree methods
     #@-node:ekr.20050227100857:drawing...
     #@+node:ekr.20050227100643:menus...
     #@+node:ekr.20050227071948.53:archetype_menu
@@ -659,7 +594,8 @@ class cleoController:
             (2,'High'),
             (3,'Medium'),
             (4,'Low',),
-            (self.donePriority,'Done'),
+            (5,'None',),
+            # (self.donePriority,'Done'),
         ):
             s = '%d %s' % (value,label)
             menu.add_radiobutton(
