@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -84,14 +84,15 @@
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.1"><vh>FAQ</vh>
-<v t="ekr.20050830115714"><vh>@rst html\FAQ.html</vh>
+<v t="ekr.20050831195331.1" a="E"><vh>FAQ</vh>
+<v t="ekr.20050830115714" a="E"><vh>@rst html\FAQ.html</vh>
 <v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
-<v t="ekr.20050830115714.1"><vh>Learning about Leo</vh>
+<v t="ekr.20050830115714.1" a="E"><vh>Learning to use Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="ekr.20050830115714.4"><vh>Why should I use clones?</vh></v>
 <v t="ekr.20050830115714.5"><vh>Which should I use: @root trees or @file trees?</vh></v>
 <v t="ekr.20050830115714.7"><vh>When is using a section better than using a method?</vh></v>
+<v t="ekr.20060111192108" a="TV"><vh>When is deleting a node dangerous?</vh></v>
 </v>
 <v t="ekr.20050830115714.12"><vh>How should I use Leo with CVS?</vh></v>
 <v t="ekr.20050830115714.13"><vh>Using derived files</vh>
@@ -22051,5 +22052,38 @@ Notes:
   commands alter what happens to unbound keys in the top-level mode.
 
 With all these options it should be possible to emulate the keyboard behavior of any other editor.</t>
+<t tx="ekr.20060111192108">A **dangerous** delete is a deletion of a node so that all the data in the node is deleted *everywhere* in an outline.  The data is gone, to be retrieved only via undo or via backups.  It may not be obvious which deletes are dangerous in an outline containing clones.  Happily, there is a very simple rule of thumb::
+
+    Deleting a non-cloned node is *always* dangerous.
+    Deleting a cloned node is *never* dangerous.
+
+We could also consider a delete to be dangerous **if it results in a node being omitted from a derived file.**  This can happen as follows.  Suppose we have the following outline (As usual, A' indicates that A is marked with a clone mark)::
+
+    - @thin spam.py
+        - A'
+            - B
+    - Projects
+        - A'
+            - B
+
+Now suppose we clone B, and move the clone so the tree looks like this::
+
+    - @thin spam.py
+        - A'
+            - B'
+    - Projects
+        - A'
+            - B'
+        - B'
+
+If (maybe much later), we eliminate B' as a child of A will get::
+
+    - @thin spam.py
+        - A'
+    - Projects
+        - A'
+        - B
+
+B has not been destroyed, but B is gone from @thin spam.py! So in this sense deleting a clone node can also be called dangerous.</t>
 </tnodes>
 </leo_file>
