@@ -34,19 +34,19 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20060112110750" a="E"><vh>Buttons</vh>
+<v t="ekr.20060112110750" a="TV"><vh>Buttons</vh>
 <v t="ekr.20051010093913" annotate="7d71002e"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608" annotate="7d71002e"><vh>@@button align to col</vh></v>
-<v t="ekr.20060112103537.17" a="E"><vh>@button Check Bindings</vh>
+<v t="ekr.20060112103537.17"><vh>@button Check Bindings</vh>
 <v t="ekr.20060112104119"><vh>&lt;&lt; define setNames &gt;&gt;</vh></v>
 <v t="ekr.20060112104333"><vh>doSet</vh></v>
-<v t="ekr.20060112105523" a="TV"><vh>doShortcuts</vh></v>
+<v t="ekr.20060112105523"><vh>doShortcuts</vh></v>
 <v t="ekr.20060112105829"><vh>parseShortcutLine</vh></v>
-<v t="ekr.20060112104333.1"><vh>checkSets</vh></v>
-<v t="ekr.20060112104823"><vh>main</vh></v>
+<v t="ekr.20060112104333.1" a="E"><vh>checkSets</vh></v>
+<v t="ekr.20060112104823" a="E"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -265,7 +265,7 @@
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
 </v>
-<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
@@ -273,11 +273,10 @@
 <v t="ekr.20060110142111"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083214" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 </v>
-<v t="ekr.20060112093001.1"><vh>Shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
-<v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
-</v>
+<v t="ekr.20060112090844.1" a="E"><vh>@shortcuts Emads: N-Z</vh></v>
+<v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
 <v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
 <v t="ekr.20060112093001.2"><vh>Options</vh>
@@ -289,6 +288,7 @@
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
+<v t="ekr.20060112112353"><vh>@shortcuts missing</vh></v>
 </v>
 <v t="ekr.20060103103812" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093001.4"><vh>Options</vh>
@@ -300,6 +300,7 @@
 <v t="ekr.20060111082632.1"><vh>@shortcuts Legacy+: A-E</vh></v>
 <v t="ekr.20060112085643"><vh>@shortcuts Legacy+: F-M</vh></v>
 <v t="ekr.20060112085643.1"><vh>@shortcuts Legacy+: N-Z</vh></v>
+<v t="ekr.20060112112536"><vh>@shortcuts missing</vh></v>
 </v>
 <v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20060112093227"><vh>Options</vh>
@@ -311,6 +312,7 @@
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
+<v t="ekr.20060112112914"><vh>@shortcuts missing</vh></v>
 </v>
 <v t="ekr.20060103135341" annotate="7d71002e"><vh>Vim bindings (unfinished)</vh>
 <v t="ekr.20060112093419"><vh>Options</vh>
@@ -340,10 +342,11 @@
 <v t="ekr.20060103135341.15" annotate="7d71002e"><vh>@shortcuts delete/kill/yank</vh></v>
 <v t="ekr.20060103135341.16" annotate="7d71002e"><vh>@shortcuts focus</vh></v>
 <v t="ekr.20060103135341.17" annotate="7d71002e"><vh>@shortcuts scroll</vh></v>
+<v t="ekr.20060112112914.1"><vh>@shortcuts missing</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20051010112558" a="E" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
 <v t="ekr.20060111082537" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
@@ -355,10 +358,10 @@
 <v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+<v t="ekr.20060112112146"><vh>@shortcuts EKR: missing</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20060112110750.1"><vh>Missing bindings</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041119034357.1">@nocolor</t>
@@ -3543,7 +3546,6 @@ yank-pop                                = None
 yank-rectangle                          = None
 zap-to-character                        = None</t>
 <t tx="ekr.20060112093001"></t>
-<t tx="ekr.20060112093001.1"></t>
 <t tx="ekr.20060112093001.2"></t>
 <t tx="ekr.20060112093001.4"></t>
 <t tx="ekr.20060112093227"></t>
@@ -3809,7 +3811,10 @@ yank-rectangle                      = None
 zap-to-character                    = None</t>
 <t tx="ekr.20060112093419"></t>
 <t tx="ekr.20060112093419.1"></t>
-<t tx="ekr.20060112103537.17">import leoTest
+<t tx="ekr.20060112103537.17">'''This script reports commands that exist in some but not all key- binding
+sets. setNames is a list of the roots of all such sets.'''
+
+import leoTest
 u = leoTest.testUtils(c)
 
 &lt;&lt; define setNames &gt;&gt;
@@ -3833,9 +3838,10 @@ setNames.sort()</t>
     
     for p in p.subtree_iter():
         if p.headString().startswith('@shortcuts'):
-            # g.trace(name,p.headString())
             doShortcuts(p,name)</t>
 <t tx="ekr.20060112104333.1">def checkSets():
+    
+    global setNames
     
     # Compute the union of all the command names.
     allNames = {}
@@ -3848,9 +3854,11 @@ setNames.sort()</t>
     # Warn about missing names.
     for setName in setNames:
         d = setsDict.get(setName)
-        for key in allNames.keys():
-            if key not in d.keys():
-                g.es('%s is missing %s' % (setName,key))</t>
+        keys = allNames.keys()
+        keys.sort()
+        for key in keys:
+            if key not in ('None',None) and key not in d.keys():
+                g.es('%s is missing %-35s = None' % (setName,key))</t>
 <t tx="ekr.20060112104823">def main ():
     
     global setNames
@@ -3862,7 +3870,8 @@ setNames.sort()</t>
             if p.headString().startswith(name):
                 doSet(p,name)
                 
-    checkSets()</t>
+    checkSets()
+    g.es('Check Bindings done')</t>
 <t tx="ekr.20060112105523">def doShortcuts(p,setName):
     
     global setsDict
@@ -3920,320 +3929,320 @@ setNames.sort()</t>
     # g.trace(pane,name,val,s)
     return name,g.bunch(pane=pane,val=val)</t>
 <t tx="ekr.20060112110750"></t>
-<t tx="ekr.20060112110750.1">@killcolor
-
-Default Emacs shortcuts is missing back-char
-Default Emacs shortcuts is missing forward-word-extend-selection
-Default Emacs shortcuts is missing previous-line-extend-selection
-Default Emacs shortcuts is missing print-commands
-Default Emacs shortcuts is missing end-of-line-extend-selection
-Default Emacs shortcuts is missing focus-to-tree
-Default Emacs shortcuts is missing end-of-text-extend-selection
-Default Emacs shortcuts is missing set-overwrite-mode
-Default Emacs shortcuts is missing forward-sentence-extend-selection
-Default Emacs shortcuts is missing find-tab-find-prev
-Default Emacs shortcuts is missing mode-help
-Default Emacs shortcuts is missing spell-ignore
-Default Emacs shortcuts is missing back-paragraph
-Default Emacs shortcuts is missing enter-default-mode
-Default Emacs shortcuts is missing open-leoDocs-leo
-Default Emacs shortcuts is missing find-dialog-change-all
-Default Emacs shortcuts is missing beginning-of-text
-Default Emacs shortcuts is missing find-dialog-find-next
-Default Emacs shortcuts is missing close-find-dialog
-Default Emacs shortcuts is missing auto-complete
-Default Emacs shortcuts is missing set-extend-mode
-Default Emacs shortcuts is missing clear-kill-ring
-Default Emacs shortcuts is missing forward-char-extend-selection
-Default Emacs shortcuts is missing set-insert-mode
-Default Emacs shortcuts is missing cycle-focus
-Default Emacs shortcuts is missing enter-file-mode
-Default Emacs shortcuts is missing scroll-down-extend-selection
-Default Emacs shortcuts is missing enter-insert-mode
-Default Emacs shortcuts is missing clear-extend-mode
-Default Emacs shortcuts is missing hide-find-tab
-Default Emacs shortcuts is missing back-paragraph-extend-selection
-Default Emacs shortcuts is missing beginning-of-line-extend-selection
-Default Emacs shortcuts is missing back-word
-Default Emacs shortcuts is missing focus-to-body
-Default Emacs shortcuts is missing find-tab-find
-Default Emacs shortcuts is missing expand-and-go-right
-Default Emacs shortcuts is missing find-dialog-change
-Default Emacs shortcuts is missing spell-find
-Default Emacs shortcuts is missing spell-change-then-find
-Default Emacs shortcuts is missing move-past-close-extend-selection
-Default Emacs shortcuts is missing None
-Default Emacs shortcuts is missing forward-paragraph-extend-selection
-Default Emacs shortcuts is missing end-of-buffer-extend-selection
-Default Emacs shortcuts is missing find-tab-change
-Default Emacs shortcuts is missing close
-Default Emacs shortcuts is missing iconify-frame
-Default Emacs shortcuts is missing self-insert-command
-Default Emacs shortcuts is missing find-dialog-change-then-find
-Default Emacs shortcuts is missing open-spell-tab
-Default Emacs shortcuts is missing focus-to-minibuffer
-Default Emacs shortcuts is missing open-leoSettings-leo
-Default Emacs shortcuts is missing find-tab-change-all
-Default Emacs shortcuts is missing focus-to-log
-Default Emacs shortcuts is missing goto-last-sibling
-Default Emacs shortcuts is missing goto-first-sibling
-Default Emacs shortcuts is missing back-sentence-extend-selection
-Default Emacs shortcuts is missing back-char-extend-selection
-Default Emacs shortcuts is missing open-find-dialog
-Default Emacs shortcuts is missing set-ignore-mode
-Default Emacs shortcuts is missing open-leoPlugins-leo
-Default Emacs shortcuts is missing beginning-of-text-extend-selection
-Default Emacs shortcuts is missing beginning-of-buffer-extend-selection
-Default Emacs shortcuts is missing end-of-text
-Default Emacs shortcuts is missing hide-spell-tab
-Default Emacs shortcuts is missing find-tab-change-then-find
-Default Emacs shortcuts is missing scroll-up-extend-selection
-Default Emacs shortcuts is missing append-next-kill
-Default Emacs shortcuts is missing toggle-extend-mode
-Default Emacs shortcuts is missing find-dialog-find-previous
-Default Emacs shortcuts is missing enter-replace-mode
-Default Emacs shortcuts is missing enter-ignore-mode
-Default Emacs shortcuts is missing spell-change
-Default Emacs shortcuts is missing back-word-extend-selection
-Default Emacs shortcuts is missing next-line-extend-selection
-EKR bindings: a mix is missing open-leodocs-leo
-EKR bindings: a mix is missing leo-find-panel
-EKR bindings: a mix is missing find-previous
-EKR bindings: a mix is missing backward-word
-EKR bindings: a mix is missing enter-default-mode
-EKR bindings: a mix is missing enter-insert-mode
-EKR bindings: a mix is missing indent
-EKR bindings: a mix is missing backward-char
-EKR bindings: a mix is missing None
-EKR bindings: a mix is missing backward-paragraph
-EKR bindings: a mix is missing delete-text
-EKR bindings: a mix is missing find-next
-EKR bindings: a mix is missing leo-find-previous
-EKR bindings: a mix is missing leo-change
-EKR bindings: a mix is missing open-leoplugins-leo
-EKR bindings: a mix is missing open-leoconfig-leo
-EKR bindings: a mix is missing iconfify-or-deiconify-frame
-EKR bindings: a mix is missing leo-find
-EKR bindings: a mix is missing find-panel
-EKR bindings: a mix is missing shell-command-on-regio
-EKR bindings: a mix is missing leo-change-then-find
-EKR bindings: a mix is missing leo-change-all
-EKR bindings: a mix is missing enter-replace-mode
-EKR bindings: a mix is missing enter-ignore-mode
-Legacy Leo bindings is missing leo-find-panel
-Legacy Leo bindings is missing end-of-text-extend-selection
-Legacy Leo bindings is missing set-overwrite-mode
-Legacy Leo bindings is missing find-previous
-Legacy Leo bindings is missing mode-help
-Legacy Leo bindings is missing backward-word
-Legacy Leo bindings is missing enter-default-mode
-Legacy Leo bindings is missing open-leoDocs-leo
-Legacy Leo bindings is missing beginning-of-text
-Legacy Leo bindings is missing set-insert-mode
-Legacy Leo bindings is missing enter-file-mode
-Legacy Leo bindings is missing scroll-down-extend-selection
-Legacy Leo bindings is missing enter-insert-mode
-Legacy Leo bindings is missing backward-char
-Legacy Leo bindings is missing backward-paragraph
-Legacy Leo bindings is missing delete-text
-Legacy Leo bindings is missing find-next
-Legacy Leo bindings is missing leo-find-previous
-Legacy Leo bindings is missing open-leoSettings-leo
-Legacy Leo bindings is missing leo-change
-Legacy Leo bindings is missing iconfify-or-deiconify-frame
-Legacy Leo bindings is missing leo-find
-Legacy Leo bindings is missing find-panel
-Legacy Leo bindings is missing set-ignore-mode
-Legacy Leo bindings is missing shell-command-on-regio
-Legacy Leo bindings is missing open-leoPlugins-leo
-Legacy Leo bindings is missing beginning-of-text-extend-selection
-Legacy Leo bindings is missing end-of-text
-Legacy Leo bindings is missing leo-change-then-find
-Legacy Leo bindings is missing scroll-up-extend-selection
-Legacy Leo bindings is missing leo-change-all
-Legacy Leo bindings is missing enter-replace-mode
-Legacy Leo bindings is missing enter-ignore-mode
-Legacy Leo shortcuts with important Emacs bindings is missing open-leodocs-leo
-Legacy Leo shortcuts with important Emacs bindings is missing leo-find-panel
-Legacy Leo shortcuts with important Emacs bindings is missing end-of-text-extend-selection
-Legacy Leo shortcuts with important Emacs bindings is missing set-overwrite-mode
-Legacy Leo shortcuts with important Emacs bindings is missing find-previous
-Legacy Leo shortcuts with important Emacs bindings is missing mode-help
-Legacy Leo shortcuts with important Emacs bindings is missing backward-word
-Legacy Leo shortcuts with important Emacs bindings is missing enter-default-mode
-Legacy Leo shortcuts with important Emacs bindings is missing beginning-of-text
-Legacy Leo shortcuts with important Emacs bindings is missing set-insert-mode
-Legacy Leo shortcuts with important Emacs bindings is missing enter-file-mode
-Legacy Leo shortcuts with important Emacs bindings is missing scroll-down-extend-selection
-Legacy Leo shortcuts with important Emacs bindings is missing enter-insert-mode
-Legacy Leo shortcuts with important Emacs bindings is missing indent
-Legacy Leo shortcuts with important Emacs bindings is missing backward-char
-Legacy Leo shortcuts with important Emacs bindings is missing backward-paragraph
-Legacy Leo shortcuts with important Emacs bindings is missing delete-text
-Legacy Leo shortcuts with important Emacs bindings is missing find-next
-Legacy Leo shortcuts with important Emacs bindings is missing leo-find-previous
-Legacy Leo shortcuts with important Emacs bindings is missing leo-change
-Legacy Leo shortcuts with important Emacs bindings is missing open-leoplugins-leo
-Legacy Leo shortcuts with important Emacs bindings is missing open-leoconfig-leo
-Legacy Leo shortcuts with important Emacs bindings is missing iconfify-or-deiconify-frame
-Legacy Leo shortcuts with important Emacs bindings is missing leo-find
-Legacy Leo shortcuts with important Emacs bindings is missing find-panel
-Legacy Leo shortcuts with important Emacs bindings is missing set-ignore-mode
-Legacy Leo shortcuts with important Emacs bindings is missing shell-command-on-regio
-Legacy Leo shortcuts with important Emacs bindings is missing beginning-of-text-extend-selection
-Legacy Leo shortcuts with important Emacs bindings is missing end-of-text
-Legacy Leo shortcuts with important Emacs bindings is missing leo-change-then-find
-Legacy Leo shortcuts with important Emacs bindings is missing scroll-up-extend-selection
-Legacy Leo shortcuts with important Emacs bindings is missing leo-change-all
-Legacy Leo shortcuts with important Emacs bindings is missing enter-replace-mode
-Legacy Leo shortcuts with important Emacs bindings is missing enter-ignore-mode
-No bindings is missing leo-find-panel
-No bindings is missing end-of-text-extend-selection
-No bindings is missing set-overwrite-mode
-No bindings is missing find-previous
-No bindings is missing mode-help
-No bindings is missing backward-word
-No bindings is missing enter-default-mode
-No bindings is missing open-leoDocs-leo
-No bindings is missing beginning-of-text
-No bindings is missing set-insert-mode
-No bindings is missing enter-file-mode
-No bindings is missing scroll-down-extend-selection
-No bindings is missing enter-insert-mode
-No bindings is missing indent
-No bindings is missing backward-char
-No bindings is missing None
-No bindings is missing backward-paragraph
-No bindings is missing delete-text
-No bindings is missing find-next
-No bindings is missing leo-find-previous
-No bindings is missing open-leoSettings-leo
-No bindings is missing leo-change
-No bindings is missing iconfify-or-deiconify-frame
-No bindings is missing leo-find
-No bindings is missing find-panel
-No bindings is missing set-ignore-mode
-No bindings is missing shell-command-on-regio
-No bindings is missing open-leoPlugins-leo
-No bindings is missing beginning-of-text-extend-selection
-No bindings is missing end-of-text
-No bindings is missing leo-change-then-find
-No bindings is missing scroll-up-extend-selection
-No bindings is missing leo-change-all
-No bindings is missing enter-replace-mode
-No bindings is missing enter-ignore-mode
-Vim bindings is missing open-leodocs-leo
-Vim bindings is missing expand-next-level
-Vim bindings is missing contract-all
-Vim bindings is missing copy-node
-Vim bindings is missing leo-find-panel
-Vim bindings is missing goto-next-changed
-Vim bindings is missing end-of-text-extend-selection
-Vim bindings is missing goto-prev-node
-Vim bindings is missing set-overwrite-mode
-Vim bindings is missing goto-next-marked
-Vim bindings is missing find-previous
-Vim bindings is missing find-tab-find-prev
-Vim bindings is missing goto-prev-visible
-Vim bindings is missing go-back
-Vim bindings is missing mode-help
-Vim bindings is missing replace
-Vim bindings is missing search-backward
-Vim bindings is missing backward-word
-Vim bindings is missing find-dialog-change-all
-Vim bindings is missing beginning-of-text
-Vim bindings is missing find-dialog-find-next
-Vim bindings is missing close-find-dialog
-Vim bindings is missing replace-string
-Vim bindings is missing cut-node
-Vim bindings is missing goto-prev-sibling
-Vim bindings is missing set-insert-mode
-Vim bindings is missing help
-Vim bindings is missing isearch-backward-regexp
-Vim bindings is missing isearch-forward-regexp
-Vim bindings is missing enter-file-mode
-Vim bindings is missing move-outline-down
-Vim bindings is missing exit-leo
-Vim bindings is missing scroll-down-extend-selection
-Vim bindings is missing goto-next-node
-Vim bindings is missing indent
-Vim bindings is missing backward-char
-Vim bindings is missing hide-find-tab
-Vim bindings is missing mark-changed-items
-Vim bindings is missing demote
-Vim bindings is missing insert-node
-Vim bindings is missing find-tab-find
-Vim bindings is missing expand-and-go-right
-Vim bindings is missing goto-next-clone
-Vim bindings is missing goto-parent
-Vim bindings is missing expand-prev-level
-Vim bindings is missing isearch-forward
-Vim bindings is missing go-forward
-Vim bindings is missing goto-first-node
-Vim bindings is missing move-outline-left
-Vim bindings is missing backward-paragraph
-Vim bindings is missing move-outline-up
-Vim bindings is missing delete-text
-Vim bindings is missing find-tab-change
-Vim bindings is missing mark-subheads
-Vim bindings is missing find-next
-Vim bindings is missing leo-find-previous
-Vim bindings is missing expand-to-level-1
-Vim bindings is missing expand-to-level-3
-Vim bindings is missing expand-to-level-2
-Vim bindings is missing expand-to-level-5
-Vim bindings is missing expand-to-level-4
-Vim bindings is missing expand-to-level-7
-Vim bindings is missing expand-to-level-6
-Vim bindings is missing expand-to-level-9
-Vim bindings is missing expand-to-level-8
-Vim bindings is missing find-dialog-change-then-find
-Vim bindings is missing expand-node
-Vim bindings is missing mark-clones
-Vim bindings is missing mark
-Vim bindings is missing goto-char
-Vim bindings is missing search-forward
-Vim bindings is missing hoist
-Vim bindings is missing find-tab-change-all
-Vim bindings is missing leo-change
-Vim bindings is missing paste-retaining-clones
-Vim bindings is missing open-leoplugins-leo
-Vim bindings is missing goto-last-visible
-Vim bindings is missing open-leoconfig-leo
-Vim bindings is missing goto-next-visible
-Vim bindings is missing iconfify-or-deiconify-frame
-Vim bindings is missing isearch-backward
-Vim bindings is missing goto-last-sibling
-Vim bindings is missing goto-first-sibling
-Vim bindings is missing query-replace-regex
-Vim bindings is missing leo-find
-Vim bindings is missing find-panel
-Vim bindings is missing contract-or-go-left
-Vim bindings is missing set-ignore-mode
-Vim bindings is missing shell-command-on-regio
-Vim bindings is missing unmark-all
-Vim bindings is missing paste-node
-Vim bindings is missing contract-parent
-Vim bindings is missing beginning-of-text-extend-selection
-Vim bindings is missing end-of-text
-Vim bindings is missing goto-next-sibling
-Vim bindings is missing hide-spell-tab
-Vim bindings is missing find-tab-change-then-find
-Vim bindings is missing move-outline-right
-Vim bindings is missing leo-change-then-find
-Vim bindings is missing replace-regex
-Vim bindings is missing scroll-up-extend-selection
-Vim bindings is missing goto-last-node
-Vim bindings is missing leo-change-all
-Vim bindings is missing replace-then-find
-Vim bindings is missing promote
-Vim bindings is missing contract-node
-Vim bindings is missing find-dialog-find-previous
-Vim bindings is missing query-replace
-Vim bindings is missing de-hoist
-Vim bindings is missing mark-changed-roots
-Vim bindings is missing expand-or-go-right
-Vim bindings is missing expand-all
-Vim bindings is missing load-file</t>
+<t tx="ekr.20060112112006">back-char                           = None
+forward-word-extend-selection       = None
+previous-line-extend-selection      = None
+print-commands                      = None
+end-of-line-extend-selection        = None
+focus-to-tree                       = None
+end-of-text-extend-selection        = None
+set-overwrite-mode                  = None
+forward-sentence-extend-selection   = None
+find-tab-find-prev                  = None
+mode-help                           = None
+spell-ignore                        = None
+back-paragraph                      = None
+enter-default-mode                  = None
+open-leoDocs-leo                    = None
+find-dialog-change-all              = None
+beginning-of-text                   = None
+find-dialog-find-next               = None
+close-find-dialog                   = None
+auto-complete                       = None
+set-extend-mode                     = None
+clear-kill-ring                     = None
+forward-char-extend-selection       = None
+set-insert-mode                     = None
+cycle-focus                         = None
+enter-file-mode                     = None
+scroll-down-extend-selection        = None
+enter-insert-mode                   = None
+clear-extend-mode                   = None
+hide-find-tab                       = None
+back-paragraph-extend-selection     = None
+beginning-of-line-extend-selection  = None
+back-word                           = None
+focus-to-body                       = None
+find-tab-find                       = None
+expand-and-go-right                 = None
+find-dialog-change                  = None
+spell-find                          = None
+spell-change-then-find              = None
+move-past-close-extend-selection    = None
+None                                = None
+forward-paragraph-extend-selection  = None
+end-of-buffer-extend-selection      = None
+find-tab-change                     = None
+close                               = None
+iconify-frame                       = None
+self-insert-command                 = None
+find-dialog-change-then-find        = None
+open-spell-tab                      = None
+focus-to-minibuffer                 = None
+open-leoSettings-leo                = None
+find-tab-change-all                 = None
+focus-to-log                        = None
+goto-last-sibling                   = None
+goto-first-sibling                  = None
+back-sentence-extend-selection      = None
+back-char-extend-selection          = None
+open-find-dialog                    = None
+set-ignore-mode                     = None
+open-leoPlugins-leo                 = None
+beginning-of-text-extend-selection  = None
+beginning-of-buffer-extend-selection = None
+end-of-text                         = None
+hide-spell-tab                      = None
+find-tab-change-then-find           = None
+scroll-up-extend-selection          = None
+append-next-kill                    = None
+toggle-extend-mode                  = None
+find-dialog-find-previous           = None
+enter-replace-mode                  = None
+enter-ignore-mode                   = None
+spell-change                        = None
+back-word-extend-selection          = None
+next-line-extend-selection          = None</t>
+<t tx="ekr.20060112112146">open-leodocs-leo                    = None
+leo-find-panel                      = None
+find-previous                       = None
+backward-word                       = None
+enter-default-mode                  = None
+enter-insert-mode                   = None
+indent                              = None
+backward-char                       = None
+None                                = None
+backward-paragraph                  = None
+delete-text                         = None
+find-next                           = None
+leo-find-previous                   = None
+leo-change                          = None
+open-leoplugins-leo                 = None
+open-leoconfig-leo                  = None
+iconfify-or-deiconify-frame         = None
+leo-find                            = None
+find-panel                          = None
+shell-command-on-regio              = None
+leo-change-then-find                = None
+leo-change-all                      = None
+enter-replace-mode                  = None
+enter-ignore-mode                   = None</t>
+<t tx="ekr.20060112112353">leo-find-panel                      = None
+end-of-text-extend-selection        = None
+find-previous                       = None
+mode-help                           = None
+enter-default-mode                  = None
+open-leoDocs-leo                    = None
+set-insert-mode                     = None
+None                                = None
+scroll-down-extend-selection        = None
+set-overwrite-mode                  = None
+backward-char                       = None
+backward-paragraph                  = None
+beginning-of-text                   = None
+delete-text                         = None
+find-next                           = None
+leo-find-previous                   = None
+backward-word                       = None
+open-leoSettings-leo                = None
+leo-change                          = None
+iconfify-or-deiconify-frame         = None
+leo-find                            = None
+find-panel                          = None
+set-ignore-mode                     = None
+shell-command-on-regio              = None
+open-leoPlugins-leo                 = None
+beginning-of-text-extend-selection  = None
+end-of-text                         = None
+leo-change-then-find                = None
+scroll-up-extend-selection          = None
+enter-insert-mode                   = None
+enter-file-mode                     = None
+leo-change-all                      = None
+enter-replace-mode                  = None
+enter-ignore-mode                   = None
+</t>
+<t tx="ekr.20060112112536">open-leodocs-leo                    = None
+leo-find-panel                      = None
+end-of-text-extend-selection        = None
+find-previous                       = None
+mode-help                           = None
+enter-default-mode                  = None
+set-insert-mode                     = None
+None                                = None
+scroll-down-extend-selection        = None
+set-overwrite-mode                  = None
+indent                              = None
+backward-char                       = None
+backward-paragraph                  = None
+beginning-of-text                   = None
+delete-text                         = None
+find-next                           = None
+leo-find-previous                   = None
+backward-word                       = None
+leo-change                          = None
+open-leoplugins-leo                 = None
+open-leoconfig-leo                  = None
+iconfify-or-deiconify-frame         = None
+leo-find                            = None
+find-panel                          = None
+set-ignore-mode                     = None
+shell-command-on-regio              = None
+beginning-of-text-extend-selection  = None
+end-of-text                         = None
+leo-change-then-find                = None
+scroll-up-extend-selection          = None
+enter-insert-mode                   = None
+enter-file-mode                     = None
+leo-change-all                      = None
+enter-replace-mode                  = None
+enter-ignore-mode                   = None</t>
+<t tx="ekr.20060112112914">backward-char                       = None
+backward-paragraph                  = None
+backward-word                       = None
+beginning-of-text                   = None
+beginning-of-text-extend-selection  = None
+delete-text                         = None
+end-of-text                         = None
+end-of-text-extend-selection        = None
+enter-default-mode                  = None
+enter-file-mode                     = None
+enter-ignore-mode                   = None
+enter-insert-mode                   = None
+enter-replace-mode                  = None
+find-next                           = None
+find-panel                          = None
+find-previous                       = None
+iconfify-or-deiconify-frame         = None
+indent                              = None
+leo-change                          = None
+leo-change-all                      = None
+leo-change-then-find                = None
+leo-find                            = None
+leo-find-panel                      = None
+leo-find-previous                   = None
+mode-help                           = None
+open-leoDocs-leo                    = None
+open-leoPlugins-leo                 = None
+open-leoSettings-leo                = None
+scroll-down-extend-selection        = None
+scroll-up-extend-selection          = None
+set-ignore-mode                     = None
+set-insert-mode                     = None
+set-overwrite-mode                  = None
+shell-command-on-regio              = None</t>
+<t tx="ekr.20060112112914.1">backward-char                       = None
+backward-paragraph                  = None
+backward-word                       = None
+beginning-of-text                   = None
+beginning-of-text-extend-selection  = None
+close-find-dialog                   = None
+contract-all                        = None
+contract-node                       = None
+contract-or-go-left                 = None
+contract-parent                     = None
+copy-node                           = None
+cut-node                            = None
+de-hoist                            = None
+delete-text                         = None
+demote                              = None
+end-of-text                         = None
+end-of-text-extend-selection        = None
+enter-file-mode                     = None
+exit-leo                            = None
+expand-all                          = None
+expand-and-go-right                 = None
+expand-next-level                   = None
+expand-node                         = None
+expand-or-go-right                  = None
+expand-prev-level                   = None
+expand-to-level-1                   = None
+expand-to-level-2                   = None
+expand-to-level-3                   = None
+expand-to-level-4                   = None
+expand-to-level-5                   = None
+expand-to-level-6                   = None
+expand-to-level-7                   = None
+expand-to-level-8                   = None
+expand-to-level-9                   = None
+find-dialog-change-all              = None
+find-dialog-change-then-find        = None
+find-dialog-find-next               = None
+find-dialog-find-previous           = None
+find-next                           = None
+find-panel                          = None
+find-previous                       = None
+find-tab-change                     = None
+find-tab-change-all                 = None
+find-tab-change-then-find           = None
+find-tab-find                       = None
+find-tab-find-prev                  = None
+go-back                             = None
+go-forward                          = None
+goto-char                           = None
+goto-first-node                     = None
+goto-first-sibling                  = None
+goto-last-node                      = None
+goto-last-sibling                   = None
+goto-last-visible                   = None
+goto-next-changed                   = None
+goto-next-clone                     = None
+goto-next-marked                    = None
+goto-next-node                      = None
+goto-next-sibling                   = None
+goto-next-visible                   = None
+goto-parent                         = None
+goto-prev-node                      = None
+goto-prev-sibling                   = None
+goto-prev-visible                   = None
+help                                = None
+hide-find-tab                       = None
+hide-spell-tab                      = None
+hoist                               = None
+iconfify-or-deiconify-frame         = None
+indent                              = None
+insert-node                         = None
+isearch-backward                    = None
+isearch-backward-regexp             = None
+isearch-forward                     = None
+isearch-forward-regexp              = None
+leo-change                          = None
+leo-change-all                      = None
+leo-change-then-find                = None
+leo-find                            = None
+leo-find-panel                      = None
+leo-find-previous                   = None
+load-file                           = None
+mark                                = None
+mark-changed-items                  = None
+mark-changed-roots                  = None
+mark-clones                         = None
+mark-subheads                       = None
+mode-help                           = None
+move-outline-down                   = None
+move-outline-left                   = None
+move-outline-right                  = None
+move-outline-up                     = None
+open-leoconfig-leo                  = None
+open-leodocs-leo                    = None
+open-leoplugins-leo                 = None
+paste-node                          = None
+paste-retaining-clones              = None
+promote                             = None
+query-replace                       = None
+query-replace-regex                 = None
+replace                             = None
+replace-regex                       = None
+replace-string                      = None
+replace-then-find                   = None
+scroll-down-extend-selection        = None
+scroll-up-extend-selection          = None
+search-backward                     = None
+search-forward                      = None
+set-ignore-mode                     = None
+set-insert-mode                     = None
+set-overwrite-mode                  = None
+shell-command-on-regio              = None
+unmark-all                          = None</t>
 </tnodes>
 </leo_file>
