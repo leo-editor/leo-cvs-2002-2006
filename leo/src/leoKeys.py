@@ -310,7 +310,6 @@ class keyHandlerClass:
         k = self ; c = k.c 
     
         if not shortcut: g.trace('No shortcut for %s' % commandName)
-        ## if shortcut == '<None>': return
         bunch = k.bindingsDict.get(shortcut)
         if bunch and bunch.pane == pane:
             # g.trace('Not bound',shortcut)
@@ -356,6 +355,7 @@ class keyHandlerClass:
                     w.bind(shortcut,callback,'+')
             else:
                 for w in widgets:
+                    # if shortcut == '<Return>': g.trace(g.app.gui.widget_name(w),shortcut,callback)
                     w.bind(shortcut,callback)
                 # Get rid of the default binding in the menu. (E.g., Alt-f)
                 menu.bind(shortcut,lambda e: 'break')
@@ -451,62 +451,52 @@ class keyHandlerClass:
                     g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
-    #@+node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
-    def copyBindingsToWidget (self,paneOrPanes,widget):
+    #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
+    def copyBindingsToWidget (self,paneOrPanes,w):
         
-        '''Copy all bindings for the given panes to widget.
+        '''Copy all bindings for the given panes to widget w.
         
-        paneOrPanes may be a single pane name or a list of pane names.'''
+        paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+        
+        # g.trace(paneOrPanes,g.app.gui.widget_name(w))
     
         k = self ; d = k.bindingsDict
+        bindings = {}
         keys = d.keys() ; keys.sort()
         if type(paneOrPanes) == type('abc'):
             panes = [paneOrPanes] # list(paneOrPanes) does not work.
         else:
             panes = paneOrPanes
     
-        # Keys are requests, values are list of panes that match.
-        matchingPanesDict = {
-            'all':  ['all','body','log','mini','text','tree'],
-            'body': ['all','body'],
-            'log':  ['all','log'],
-            # 'menu': [menu], # Not used.  Probably dubious.
-            'mini': ['all','mini'],                   
-            'text': ['all','body','log','text'],  # Text = body+log
-            'tree': ['all','tree'],
-        }
-    
-        matchingPanes = []
         for pane in panes:
-            matches = matchingPanesDict.get(pane,[])
-            for match in matches:
-                if match not in matchingPanes:
-                    matchingPanes.append(match)
+            for shortcut in keys:
+                if not bindings.get(shortcut):
+                    bunch = d.get(shortcut)
+                    if bunch and bunch.pane == pane:
+                        self.copyBindingsHelper(bunch,shortcut,w)
+                        d[shortcut] = bunch
+                                    
+        # Bind all other keys to k.masterCommand.
+        def generalTextKeyCallback (event,k=self):
+            k.masterCommand(event,func=None,stroke='<Key>',commandName=None)
     
-        # g.trace(widget._name,'matchingPanes',matchingPanes,g.callers(3))
-        
-        for shortcut in keys:
-            bunch = d.get(shortcut)
-            if bunch.pane in matchingPanes:
-                func = bunch.func
-                commandName = bunch.commandName
-                # g.trace('**binding',bunch.pane,shortcut,commandName,widget._name)
-                
-                # This callback executes the command in the given widget.
-                def textBindingsRedirectionCallback(event,
-                    func=func,widget=widget,commandName=commandName):
-                    __pychecker__ = '--no-argsused' # widget and commandName.
-                    # g.trace(commandName,func,g.app.gui.widget_name(widget))
-                    func(event)
-                    return 'break'
-    
-                widget.bind(shortcut,textBindingsRedirectionCallback)
-                
-        # New in 4.4a5: create the all-purpose binding.
-        # This allows Leo always to return 'break' in key handlers.
-        widget.bind('<Key>',k.onTextWidgetKey)
+        w.bind('<Key>',generalTextKeyCallback)
     #@nonl
-    #@-node:ekr.20051023182326:copyBindingsToWidget & textBindingsRedirectionCallback
+    #@+node:ekr.20060113062832.1:copyBindingsHelper
+    def copyBindingsHelper(self,bunch,shortcut,w):
+    
+        func = bunch.func
+        commandName = bunch.commandName
+        # g.trace('**binding',bunch.pane,shortcut,commandName,w._name)
+    
+        def textKeyCallback(event,func=func):
+            func(event)
+            return 'break'
+    
+        w.bind(shortcut,textKeyCallback)
+    #@nonl
+    #@-node:ekr.20060113062832.1:copyBindingsHelper
+    #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
     #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         
@@ -705,6 +695,7 @@ class keyHandlerClass:
         All commands and keystrokes pass through here.'''
     
         k = self ; c = k.c
+        trace = c.config.getBool('trace_masterCommand')
         c.setLog()
         c.startRedrawCount = c.frame.tree.redrawCount
         k.stroke = stroke # Set this global for general use.
@@ -716,10 +707,10 @@ class keyHandlerClass:
             commandName = k.ultimateFuncName(func)
         special = keysym in (
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-        interesting = func or stroke != '<Key>'
+        interesting = func is not None or ch != '' # or stroke != '<Key>'
         
-        if c.config.getBool('trace_masterCommand'):
-            g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+        if trace and interesting:
+            g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym),g.callers())
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
@@ -781,6 +772,7 @@ class keyHandlerClass:
             if expanded: return 'break'
     
         if func: # Func is an argument.
+            if trace: g.trace(commandName)
             # Note: k.funcReturn is for k.simulateCommand.
             if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
                 # The callback function will call c.doCommand
@@ -2048,24 +2040,6 @@ class keyHandlerClass:
             k.clearState()
     #@-node:ekr.20050923172814.4:setState
     #@-node:ekr.20050923172809:State...
-    #@+node:ekr.20051214113546.1:k.onTextWidgetKey & insertString
-    def onTextWidgetKey (self,event):
-        
-        '''This is the default key handler for all text widgets.
-        It should never be called for keys bound to any command.'''
-    
-        ch = event and event.char or ''
-        w  = event and event.widget
-    
-        if w and ch:
-            i,j = g.app.gui.getTextSelection(w)
-            if i != j:
-                w.delete(i,j)
-            w.insert(i,ch)
-    
-        return 'break'
-    #@nonl
-    #@-node:ekr.20051214113546.1:k.onTextWidgetKey & insertString
     #@-others
 #@-node:ekr.20031218072017.3748:@thin leoKeys.py
 #@-leo
