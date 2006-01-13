@@ -5970,7 +5970,207 @@ HTH,
 http://sourceforge.net/forum/message.php?msg_id=3517080
 #@nonl
 #@-node:ekr.20060111113925:Installed patch to cleo plugin
+#@+node:ekr.20060112062706:Fixed old file handling bug
+#@+node:ekr.20060112062706.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3518722
+By: nobody
+
+I'm using Leo 4.3.1, build  1.266 , June 20, 2005.
+
+To generate HTML file I entered the outline header "@file bbb.xml" under which
+I put the following body text:
+
+//////////////// beginning of excerpt
+@first <?xml version="1.0" encoding="windows-1250" ?>
+@language html
+@
+comment line
+@c
+@others
+//////////////// end of excerpt
+
+This works OK.
+But, if I put a space after the sole @ above "comment line",  save and close
+the .leo file and then open it, Leo protests in log pane on the right:
+
+//////////////// beginning of excerpt
+----- error reading @file: bbb.xml
+Missing open block comment
+//////////////// end of excerpt
+
+maks.romih@snt.si
+#@nonl
+#@-node:ekr.20060112062706.1:Report
+#@+node:ekr.20041005105605.99:readLastDocLine
+def readLastDocLine (self,tag):
+    
+    """Read the @c line that terminates the doc part.
+    tag is @doc or @."""
+    
+    at = self
+    end = at.endSentinelComment
+    start = at.startSentinelComment
+    s = ''.join(at.docOut)
+    
+    # Remove the @doc or @space.  We'll add it back at the end.
+    if g.match(s,0,tag):
+        s = s[len(tag):]
+    else:
+        at.readError("Missing start of doc part")
+        return
+        
+    # Bug fix: Append any whitespace following the tag to tag.
+    while s and s[0] in (' ','\t'):
+        tag = tag + s[0] ; s = s[1:]
+
+    if end:
+        # Remove leading newline.
+        if s[0] == '\n': s = s[1:]
+        # Remove opening block delim.
+        if g.match(s,0,start):
+            s = s[len(start):]
+        else:
+            at.readError("Missing open block comment")
+            g.trace('tag',repr(tag),'start',repr(start),'s',repr(s))
+            return
+        # Remove trailing newline.
+        if s[-1] == '\n': s = s[:-1]
+        # Remove closing block delim.
+        if s[-len(end):] == end:
+            s = s[:-len(end)]
+        else:
+            at.readError("Missing close block comment")
+            g.trace(s)
+            g.trace(end)
+            g.trace(start)
+            return
+
+    at.out.append(tag + s)
+    at.docOut = []
+#@nonl
+#@-node:ekr.20041005105605.99:readLastDocLine
+#@-node:ekr.20060112062706:Fixed old file handling bug
 #@-node:ekr.20060106091831.1:Fixed bugs
+#@+node:ekr.20060112094901:New features
+#@+node:ekr.20060111114001:Installed new standard bindings
+@nocolor
+#@nonl
+#@+node:ekr.20060112064517.1:From Manfred
+I use SciTE, but these keystrokes are quite common.
+http://www.scintilla.org/SciTE.html
+
+These now exist in 'EKR bindings: a mix...'
+
+back-word                               ! text = Ctrl-LtArrow
+back-word-extend-selection              ! text = Ctrl-Shift-LtArrow
+beginning-of-line                       ! text = Home
+beginning-of-line-extend-selection      ! text = Shift-Home
+end-of-line                             ! text = End
+end-of-line-extend-selection            ! text = Shift-End
+forward-word                            ! text = Ctrl-RtArrow
+forward-word-extend-selection           ! text = Ctrl-Shift-RtArrow
+scroll-down                             ! text = PageDn
+scroll-up                               ! text = PageUp
+
+I added these, but the commands don't exist yet:
+
+beginning-of-text                       ! text = Ctrl-Home
+beginning-of-text-extend-selection      ! text = Ctrl-Shift-Home
+end-of-text                             ! text = Ctrl-End
+end-of-text-extend-selection            ! text = Ctrl-Shift-End
+scroll-down-extend-selection            ! text = Shift-PageDn
+scroll-up-extend-selection              ! text = Shift-PageUp
+
+Manfred
+marl@pragmatis.de
+www.pragmatis.de
+#@nonl
+#@-node:ekr.20060112064517.1:From Manfred
+#@+node:ekr.20060112045830:From Speed
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3518387
+
+Here are the changes I made to get back to my old Leo:
+
+back-word                               = Ctrl-LtArrow
+back-word-extend-selection              = Shift-Ctrl-LtArrow
+beginning-of-buffer                     = Ctrl-Home
+beginning-of-buffer-extend-selection    = Shift-Ctrl-Home
+beginning-of-line                       = Home
+beginning-of-line-extend-selection      = Shift-Home
+delete-char                             = Delete
+end-of-buffer                           = Ctrl-End
+end-of-buffer-extend-selection          = Shift-Ctrl-End
+end-of-line                             = End
+end-of-line-extend-selection            = Shift-End
+forward-word                            = Ctrl-RtArrow
+forward-word-extend-selection           = Shift-Ctrl-RtArrow
+scroll-down                             = PageDn
+scroll-up                               = PageUp
+#@-node:ekr.20060112045830:From Speed
+#@-node:ekr.20060111114001:Installed new standard bindings
+#@+node:ekr.20060112064517:Added script check bindings in leoSettings.leo
+#@-node:ekr.20060112064517:Added script check bindings in leoSettings.leo
+#@+node:ekr.20060112065740:Scripts now maintain original focus
+#@+node:ekr.20060112191014:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3518792
+
+EKR: The change in focus happened in c.endEditing in at.writeFromString.
+
+I added a new restoreFocus keyword arg to c.endEditing.
+#@nonl
+#@-node:ekr.20060112191014:Report
+#@+node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
+# Ends the editing in the outline.
+
+def endEditing(self,restoreFocus=False):
+    
+    c = self ; tree = c.frame.tree
+    
+    if restoreFocus:
+        w = g.app.gui.get_focus(c.frame)
+        tree.endEditLabel()
+        c.frame.widgetWantsFocus(w)
+    else:
+        tree.endEditLabel()
+#@nonl
+#@-node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
+#@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+# This is at.write specialized for scripting.
+
+def writeFromString(self,root,s,forcePythonSentinels=True):
+    
+    """Write a 4.x derived file from a string.
+    
+    This is used by the scripting logic."""
+    
+    at = self ; c = at.c
+    c.endEditing(restoreFocus=True) # Capture the current headline, but don't change the focus!
+
+    at.initWriteIvars(root,"<string-file>",
+        nosentinels=False,thinFile=False,scriptWrite=True,toString=True,
+        forcePythonSentinels=forcePythonSentinels)
+
+    try:
+        at.openFileForWriting(root,at.targetFileName,toString=True)
+        # Simulate writing the entire file so error recovery works.
+        at.writeOpenFile(root,nosentinels=False,toString=True,fromString=s)
+        at.closeWriteFile()
+        # Major bug: failure to clear this wipes out headlines!
+        # Minor bug: sometimes this causes slight problems...
+        if root: root.v.t.tnodeList = [] 
+    except:
+        at.exception("exception preprocessing script")
+
+    return at.stringOutput
+#@nonl
+#@-node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+#@-node:ekr.20060112065740:Scripts now maintain original focus
+#@-node:ekr.20060112094901:New features
 #@-node:ekr.20060106091831:4.4b1 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

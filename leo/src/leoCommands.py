@@ -6047,9 +6047,17 @@ class baseCommands:
     #@+node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     # Ends the editing in the outline.
     
-    def endEditing(self):
-    
-        self.frame.tree.endEditLabel()
+    def endEditing(self,restoreFocus=False):
+        
+        c = self ; tree = c.frame.tree
+        
+        if restoreFocus:
+            w = g.app.gui.get_focus(c.frame)
+            tree.endEditLabel()
+            c.frame.widgetWantsFocus(w)
+        else:
+            tree.endEditLabel()
+    #@nonl
     #@-node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     #@+node:ekr.20031218072017.2997:c.selectPosition
     def selectPosition(self,p,updateBeadList=True):

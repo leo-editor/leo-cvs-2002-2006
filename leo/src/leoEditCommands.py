@@ -5332,6 +5332,7 @@ class findTab (leoFind.leoFind):
                 ('find-tab-find',       self.findNextCommand),
                 ('find-tab-find-prev',  self.findPrevCommand),
                 ('find-tab-change',     self.changeCommand),
+                ('find-tab-change-all', self.changeAllCommand),
                 ('find-tab-change-find',self.changeThenFindCommand),
             ):
                 if 1:
@@ -5689,6 +5690,11 @@ class findTab (leoFind.leoFind):
         self.setup_command(c)
         self.change()
         
+    def changeAllCommand (self,event=None):
+        c = self.c
+        self.setup_command(c)
+        self.changeAll()
+        
     def changeThenFindCommand(self,event=None):
         
         c = self.c
@@ -5862,6 +5868,7 @@ class searchCommandsClass (baseEditCommandsClass):
             'find-tab-find':            self.findTabFindNext,
             'find-tab-find-prev':       self.findTabFindPrev,
             'find-tab-change':          self.findTabChange,
+            'find-tab-change-all':      self.findTabChangeAll,
             'find-tab-change-then-find':self.findTabChangeThenFind,
     
             'isearch-forward':          self.isearchForward,
@@ -5905,15 +5912,20 @@ class searchCommandsClass (baseEditCommandsClass):
     def findTabChange(self,event=None):
     
         if self.findTabHandler:
-            #self.openFindTab()
             self.findTabHandler.changeCommand()
+        else:
+            self.openFindTab()
+            
+    def findTabChangeAll(self,event=None):
+    
+        if self.findTabHandler:
+            self.findTabHandler.changeAllCommand()
         else:
             self.openFindTab()
     
     def findTabChangeThenFind(self,event=None):
     
         if self.findTabHandler:
-            #self.openFindTab()
             self.findTabHandler.changeThenFindCommand()
         else:
             self.openFindTab()
@@ -5921,7 +5933,6 @@ class searchCommandsClass (baseEditCommandsClass):
     def findTabFindNext (self,event=None):
         
         if self.findTabHandler:
-            #self.openFindTab()
             self.findTabHandler.findNextCommand()
         else:
             self.openFindTab()
@@ -5929,7 +5940,6 @@ class searchCommandsClass (baseEditCommandsClass):
     def findTabFindPrev (self,event=None):
         
         if self.findTabHandler:
-            #self.openFindTab()
             self.findTabHandler.findPrevCommand()
         else:
             self.openFindTab()
@@ -6361,6 +6371,14 @@ class spellCommandsClass (baseEditCommandsClass):
         if self.handler:
             self.openSpellTab()
             self.handler.change()
+        else:
+            self.openSpellTab()
+            
+    def changeAll(self,event=None):
+    
+        if self.handler:
+            self.openSpellTab()
+            self.handler.changeAll()
         else:
             self.openSpellTab()
     
