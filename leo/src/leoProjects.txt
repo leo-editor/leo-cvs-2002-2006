@@ -2381,7 +2381,7 @@ def findPositionWithIconId (self,theId):
         
     
 #@-node:ekr.20040803072955.109:findVnodeWithIconId
-#@+node:ekr.20040803072955.117:tree.moveUpDown (not used)
+#@+node:ekr.20040803072955.117:tree.moveUpDown (used by arrows plugin)
 def OnUpKey   (self,event=None):
     __pychecker__ = '--no-argsused' # event not used.
     return self.moveUpDown("up")
@@ -2420,7 +2420,7 @@ def moveUpDown (self,upOrDown):
     # g.trace("insert:",body.index("insert"))
     return "break" # Inhibit further bindings.
 #@nonl
-#@-node:ekr.20040803072955.117:tree.moveUpDown (not used)
+#@-node:ekr.20040803072955.117:tree.moveUpDown (used by arrows plugin)
 #@-node:ekr.20051105103233:Helpers
 #@+node:ekr.20040803072955.78:Click Box...
 #@+node:ekr.20040803072955.79:onClickBoxClick
@@ -5578,17 +5578,16 @@ def moveToHelper (self,event,spot,extend):
     if not g.app.gui.isTextWidget(w): return
 
     c.frame.widgetWantsFocus(w)
-    i,j = g.app.gui.getTextSelection(w,sort=True)
-    spot = w.index(spot) # Capture initial value.
-    ins = w.index('insert')
+    
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+  
+    # Move to the spot.
     w.mark_set('insert',spot)
-    if extend or self.extendMode:
-        if w.compare(spot,'<=',i):
-            g.app.gui.setTextSelection (w,spot,j,insert=None)
-        else:
-            g.app.gui.setTextSelection (w,i,spot,insert=None)
-    else:
-        g.app.gui.setTextSelection(w,spot,spot,insert=None)
+    spot = w.index('insert')
+
+    # Handle the selection.
+    self.extendHelper(w,extend,ins1,spot)
     w.see(spot)
 #@nonl
 #@-node:ekr.20051218122116:moveToHelper
@@ -7186,6 +7185,193 @@ def writeFromString(self,root,s,forcePythonSentinels=True):
 #@nonl
 #@-node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
 #@-node:ekr.20060112065740:Scripts now maintain original focus
+#@+node:ekr.20060112070752:Added scroll-up/down-extend-selection commands
+#@+node:ekr.20060113081442.2:Notes
+@nocolor
+
+Later
+
+open-outline-by-name
+
+https://sourceforge.net/forum/message.php?msg_id=3519444
+
+write-rst
+execute-unit-tests
+#@nonl
+#@-node:ekr.20060113081442.2:Notes
+#@+node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
+def getPublicCommands (self):        
+
+    k = self.k
+
+    return {
+        'back-to-indentation':                  self.backToIndentation,
+        'back-char':                            self.backCharacter,
+        'back-char-extend-selection':           self.backCharacterExtendSelection,
+        'back-paragraph':                       self.backwardParagraph,
+        'back-paragraph-extend-selection':      self.backwardParagraphExtendSelection,
+        'back-sentence':                        self.backSentence,
+        'back-sentence-extend-selection':       self.backSentenceExtendSelection,
+        'back-word':                            self.backwardWord,
+        'back-word-extend-selection':           self.backwardWordExtendSelection,
+        'backward-delete-char':                 self.backwardDeleteCharacter,
+        'backward-kill-paragraph':              self.backwardKillParagraph,
+        'beginning-of-buffer':                  self.beginningOfBuffer,
+        'beginning-of-buffer-extend-selection': self.beginningOfBufferExtendSelection,
+        'beginning-of-line':                    self.beginningOfLine,
+        'beginning-of-line-extend-selection':   self.beginningOfLineExtendSelection,
+        'capitalize-word':                      self.capitalizeWord,
+        'center-line':                          self.centerLine,
+        'center-region':                        self.centerRegion,
+        'clear-extend-mode':                    self.clearExtendMode,
+        'count-region':                         self.countRegion,
+        'cycle-focus':                          self.cycleFocus,
+        'dabbrev-completion':                   self.dynamicExpansion2,
+        'dabbrev-expands':                      self.dynamicExpansion,
+        'delete-char':                          self.deleteNextChar,
+        'delete-indentation':                   self.deleteIndentation,
+        'delete-spaces':                        self.deleteSpaces,
+        'downcase-region':                      self.downCaseRegion,
+        'downcase-word':                        self.downCaseWord,
+        'end-of-buffer':                        self.endOfBuffer,
+        'end-of-buffer-extend-selection':       self.endOfBufferExtendSelection,
+        'end-of-line':                          self.endOfLine,
+        'end-of-line-extend-selection':         self.endOfLineExtendSelection,
+        'escape':                               self.watchEscape,
+        'eval-expression':                      self.evalExpression,
+        'exchange-point-mark':                  self.exchangePointMark,
+        'fill-paragraph':                       self.fillParagraph,
+        'fill-region':                          self.fillRegion,
+        'fill-region-as-paragraph':             self.fillRegionAsParagraph,
+        'flush-lines':                          self.flushLines,
+        'focus-to-body':                        self.focusToBody,
+        'focus-to-log':                         self.focusToLog,
+        'focus-to-minibuffer':                  self.focusToMinibuffer,
+        'focus-to-tree':                        self.focusToTree,
+        'forward-char':                         self.forwardCharacter,
+        'forward-char-extend-selection':        self.forwardCharacterExtendSelection,
+        'forward-paragraph':                    self.forwardParagraph,
+        'forward-paragraph-extend-selection':   self.forwardParagraphExtendSelection,
+        'forward-sentence':                     self.forwardSentence,
+        'forward-sentence-extend-selection':    self.forwardSentenceExtendSelection,
+        'forward-word':                         self.forwardWord,
+        'forward-word-extend-selection':        self.forwardWordExtendSelection,
+        'goto-char':                            self.gotoCharacter,
+        'goto-line':                            self.gotoLine,
+        'how-many':                             self.howMany,
+        # Use indentBody in leoCommands.py
+        #'indent-region':                       self.indentRegion,
+        'indent-relative':                      self.indentRelative,
+        'indent-rigidly':                       self.tabIndentRegion,
+        'indent-to-comment-column':             self.indentToCommentColumn,
+        'insert-newline':                       self.insertNewline,
+        'insert-parentheses':                   self.insertParentheses,
+        'keep-lines':                           self.keepLines,
+        'kill-paragraph':                       self.killParagraph,
+        'line-number':                          self.lineNumber,
+        'move-past-close':                      self.movePastClose,
+        'move-past-close-extend-selection':     self.movePastCloseExtendSelection,
+        'newline-and-indent':                   self.insertNewLineAndTab,
+        'next-line':                            self.nextLine,
+        'next-line-extend-selection':           self.nextLineExtendSelection,
+        'previous-line':                        self.prevLine,
+        'previous-line-extend-selection':       self.prevLineExtendSelection,
+        'remove-blank-lines':                   self.removeBlankLines,
+        'replace-regex':                        self.activateReplaceRegex,
+        'replace-string':                       self.replaceString,
+        'reverse-region':                       self.reverseRegion,
+        'scroll-down':                          self.scrollDown,
+        'scroll-down-extend-selection':         self.scrollDownExtendSelection,
+        'scroll-up':                            self.scrollUp,
+        'scroll-up-extend-selection':           self.scrollUpExtendSelection,
+        'select-paragraph':                     self.selectParagraph,
+        # Exists, but can not be executed via the minibuffer.
+        # 'self-insert-command':                self.selfInsertCommand,
+        'set-comment-column':                   self.setCommentColumn,
+        'set-extend-mode':                      self.setExtendMode,
+        'set-fill-column':                      self.setFillColumn,
+        'set-fill-prefix':                      self.setFillPrefix,
+        'set-mark-command':                     self.setRegion,
+        'show-colors':                          self.showColors,
+        'show-fonts':                           self.showFonts,
+        # 'save-buffer':                        self.saveFile,
+        'sort-columns':                         self.sortColumns,
+        'sort-fields':                          self.sortFields,
+        'sort-lines':                           self.sortLines,
+        'split-line':                           self.insertNewLineIndent,
+        'tabify':                               self.tabify,
+        'toggle-extend-mode':                   self.toggleExtendMode,
+        'transpose-chars':                      self.transposeCharacters,
+        'transpose-lines':                      self.transposeLines,
+        'transpose-words':                      self.transposeWords,
+        'untabify':                             self.untabify,
+        'upcase-region':                        self.upCaseRegion,
+        'upcase-word':                          self.upCaseWord,
+        'view-lossage':                         self.viewLossage,
+        'what-line':                            self.whatLine,
+    }
+#@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
+#@+node:ekr.20051218122116:moveToHelper
+def moveToHelper (self,event,spot,extend):
+    
+    '''Common helper method for commands the move the cursor
+    in a way that can be described by a Tk Text expression.'''
+    
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.frame.widgetWantsFocus(w)
+    
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+  
+    # Move to the spot.
+    w.mark_set('insert',spot)
+    spot = w.index('insert')
+
+    # Handle the selection.
+    self.extendHelper(w,extend,ins1,spot)
+    w.see(spot)
+#@nonl
+#@-node:ekr.20051218122116:moveToHelper
+#@+node:ekr.20050920084036.116:scrollUp/Down/extendSelection
+def scrollDown (self,event):
+    self.scrollHelper(event,'down',extend=False)
+
+def scrollDownExtendSelection (self,event):
+    self.scrollHelper(event,'down',extend=True)
+
+def scrollUp (self,event):
+    self.scrollHelper(event,'up',extend=False)
+
+def scrollUpExtendSelection (self,event):
+    self.scrollHelper(event,'up',extend=True)
+#@nonl
+#@+node:ekr.20060113082917:scrollHelper
+def scrollHelper (self,event,direction,extend):
+
+    k = self.k ; c = k.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.frame.widgetWantsFocus(w)
+
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+    row, col = ins1.split('.') ; row = int(row) ; col = int(col)
+
+    # Compute the spot.
+    chng = self.measure(w) ; delta = chng [0]
+    row1 = g.choose(direction=='down',row+delta,row-delta)
+    spot = w.index('%d.%d' % (row1,col))
+    w.mark_set('insert',spot)
+
+    # Handle the extension.
+    self.extendHelper(w,extend,ins1,spot)
+    w.see('insert')
+#@nonl
+#@-node:ekr.20060113082917:scrollHelper
+#@-node:ekr.20050920084036.116:scrollUp/Down/extendSelection
+#@-node:ekr.20060112070752:Added scroll-up/down-extend-selection commands
 #@-node:ekr.20060112094901:New features
 #@-node:ekr.20060106091831:4.4b1 projects
 #@-node:ekr.20050924073836:4.4 projects

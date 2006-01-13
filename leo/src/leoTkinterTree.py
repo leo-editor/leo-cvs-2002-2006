@@ -1634,7 +1634,7 @@ class leoTkinterTree (leoFrame.leoTree):
             
         
     #@-node:ekr.20040803072955.109:findVnodeWithIconId
-    #@+node:ekr.20040803072955.117:tree.moveUpDown (not used)
+    #@+node:ekr.20040803072955.117:tree.moveUpDown (used by arrows plugin)
     def OnUpKey   (self,event=None):
         __pychecker__ = '--no-argsused' # event not used.
         return self.moveUpDown("up")
@@ -1673,7 +1673,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # g.trace("insert:",body.index("insert"))
         return "break" # Inhibit further bindings.
     #@nonl
-    #@-node:ekr.20040803072955.117:tree.moveUpDown (not used)
+    #@-node:ekr.20040803072955.117:tree.moveUpDown (used by arrows plugin)
     #@-node:ekr.20051105103233:Helpers
     #@+node:ekr.20040803072955.78:Click Box...
     #@+node:ekr.20040803072955.79:onClickBoxClick
