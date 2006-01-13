@@ -722,8 +722,6 @@ class baseCommands:
         if g.app.disableSave:
             g.es("Save commands disabled",color="purple")
             return
-            
-        w = g.app.gui.get_focus(c.frame)
         
         # Make sure we never pass None to the ctor.
         if not c.mFileName:
@@ -746,8 +744,6 @@ class baseCommands:
                 c.frame.setTitle(g.computeWindowTitle(c.mFileName))
                 c.fileCommands.save(c.mFileName)
                 c.updateRecentFiles(c.mFileName)
-                
-        ## c.frame.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20031218072017.2834:save
     #@+node:ekr.20031218072017.2835:saveAs
