@@ -1293,7 +1293,9 @@ class editCommandsClass (baseEditCommandsClass):
             'replace-string':                       self.replaceString,
             'reverse-region':                       self.reverseRegion,
             'scroll-down':                          self.scrollDown,
+            'scroll-down-extend-selection':         self.scrollDownExtendSelection,
             'scroll-up':                            self.scrollUp,
+            'scroll-up-extend-selection':           self.scrollUpExtendSelection,
             'select-paragraph':                     self.selectParagraph,
             # Exists, but can not be executed via the minibuffer.
             # 'self-insert-command':                self.selfInsertCommand,
@@ -2568,7 +2570,7 @@ class editCommandsClass (baseEditCommandsClass):
         return watch, top, bottom
     #@nonl
     #@-node:ekr.20050920084036.147:measure
-    #@+node:ekr.20050929114218:move... (leoEditCommands) (ok)
+    #@+node:ekr.20050929114218:move... (leoEditCommands)
     #@+node:ekr.20051218170358: helpers
     #@+node:ekr.20051218122116:moveToHelper
     def moveToHelper (self,event,spot,extend):
@@ -2892,7 +2894,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         self.moveWordHelper(event,extend=True,forward=True)
     #@-node:ekr.20050920084036.149:words
-    #@-node:ekr.20050929114218:move... (leoEditCommands) (ok)
+    #@-node:ekr.20050929114218:move... (leoEditCommands)
     #@+node:ekr.20050920084036.95:paragraph...
     #@+others
     #@+node:ekr.20050920084036.99:backwardKillParagraph
@@ -3313,28 +3315,47 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.115:activateReplaceRegex
     #@-node:ekr.20050920084036.112:replace...
-    #@+node:ekr.20050920084036.116:scrollUp/Down
+    #@+node:ekr.20050920084036.116:scrollUp/Down/extendSelection
     def scrollDown (self,event):
+        self.scrollHelper(event,'down',extend=False)
     
-        k = self.k ; w = event.widget
-        chng = self.measure(w)
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        i1 = int(i1) + chng [0]
-        w.mark_set('insert','%s.%s' % (i1,i2))
-        w.see('insert')
+    def scrollDownExtendSelection (self,event):
+        self.scrollHelper(event,'down',extend=True)
     
     def scrollUp (self,event):
+        self.scrollHelper(event,'up',extend=False)
     
-        k = self.k ; w = event.widget
+    def scrollUpExtendSelection (self,event):
+        self.scrollHelper(event,'up',extend=True)
+    #@nonl
+    #@+node:ekr.20060113082917:scrollHelper
+    def scrollHelper (self,event,direction,extend):
+    
+        k = self.k ; c = k.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
+        c.frame.widgetWantsFocus(w)
+        sel_i, sel_j = g.app.gui.getTextSelection(w,sort=True)
         chng = self.measure(w)
         i = w.index('insert')
         i1, i2 = i.split('.')
-        i1 = int(i1) - chng [0]
-        w.mark_set('insert','%s.%s' % (i1,i2))
+        if direction == 'down':
+            spot1 = int(i1) + chng [0]
+        else:
+            spot1 = int(i1) - chng [0]
+        spot = w.index('%d.%s' % (spot1,i2))
+        w.mark_set('insert',spot)
+        if extend or self.extendMode:
+            if w.compare(spot,'<=',i):
+                g.app.gui.setTextSelection(w,spot,sel_i,insert=None)
+            else:
+                g.app.gui.setTextSelection(w,sel_i,spot,insert=None)
+        else:
+            g.app.gui.setTextSelection(w,spot,spot,insert=None)
         w.see('insert')
     #@nonl
-    #@-node:ekr.20050920084036.116:scrollUp/Down
+    #@-node:ekr.20060113082917:scrollHelper
+    #@-node:ekr.20050920084036.116:scrollUp/Down/extendSelection
     #@+node:ekr.20050920084036.117:sort...
     '''XEmacs provides several commands for sorting text in a buffer.  All
     operate on the contents of the region (the text between point and the
