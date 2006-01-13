@@ -1194,7 +1194,7 @@ class editCommandsClass (baseEditCommandsClass):
 
     #@    @+others
     #@+node:ekr.20050929155208: birth
-    #@+node:ekr.20050920084036.54: ctor
+    #@+node:ekr.20050920084036.54: ctor (editCommandsClass)
     def __init__ (self,c):
     
         baseEditCommandsClass.__init__(self,c) # init the base class.
@@ -1205,6 +1205,7 @@ class editCommandsClass (baseEditCommandsClass):
         self.extendMode = False # True: all cursor move commands extend the selection.
         self.fillPrefix = '' # For fill prefix functions.
         self.fillColumn = 70 # For line centering.
+        self.moveSpotNode = None # A tnode.
         self.moveSpot = None # For retaining preferred column when moving up or down.
         self.moveCol = None # For retaining preferred column when moving up or down.
         self.store ={'rlist':[], 'stext':''} # For dynamic expansion.
@@ -1212,7 +1213,7 @@ class editCommandsClass (baseEditCommandsClass):
         self._useRegex = False # For replace-string and replace-regex
         self.widget = None # For use by state handlers.
     #@nonl
-    #@-node:ekr.20050920084036.54: ctor
+    #@-node:ekr.20050920084036.54: ctor (editCommandsClass)
     #@+node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
     def getPublicCommands (self):        
     
@@ -2576,25 +2577,32 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20051218170358: helpers
     #@+node:ekr.20060113130510:extendHelper
     def extendHelper (self,w,extend,ins1,spot):
-        
+    
         '''Handle the details of extending the selection.
         
         extend: Clear the selection unless this is True.
         ins1:   The *previous* insert point.
         spot:   The *new* insert point.
         '''
+        c = self.c ; p = c.currentPosition()
         moveSpot = self.moveSpot
         if extend or self.extendMode:
-            if not self.moveSpot:
+            i, j = g.app.gui.getTextSelection(w)
+            if (
+                not moveSpot or p.v.t != self.moveSpotNode or
+                (not w.compare(moveSpot,'==',i) and
+                 not w.compare(moveSpot,'==',j))
+            ):
+                self.moveSpotNode = p.v.t
                 self.moveSpot = w.index(ins1)
                 self.moveCol = int(ins1.split('.')[1])
-                g.trace('moveSpot',self.moveSpot)
+                # g.trace('reset moveSpot',self.moveSpot)
             moveSpot = self.moveSpot
             # g.trace(spot,moveSpot)
             if w.compare(spot,'<',moveSpot):
-                g.app.gui.setTextSelection (w,spot,moveSpot,insert=None) 
+                g.app.gui.setTextSelection(w,spot,moveSpot,insert=None)
             else:
-                g.app.gui.setTextSelection (w,moveSpot,spot,insert=None)
+                g.app.gui.setTextSelection(w,moveSpot,spot,insert=None)
         else:
             self.moveSpot = spot
             self.moveCol = int(spot.split('.')[1])
