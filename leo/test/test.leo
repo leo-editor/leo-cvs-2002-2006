@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7892" clone_windows="0"/>
 <globals body_outline_ratio="0.438470728793">
-	<global_window_position top="69" left="275" height="837" width="836"/>
+	<global_window_position top="69" left="275" height="641" width="803"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -197,7 +197,7 @@
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
-<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" a="TV" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051121143951"><vh>Test of long lines</vh>
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
@@ -232,9 +232,9 @@
 </v>
 <v t="ekr.20060108163117"><vh>@file-ref c:\prog\leoCVS\leo\test\ironPythonTest.bat</vh></v>
 </v>
+<v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
+<v t="ekr.20060112062919" a="E"><vh>@@file commentTest.xml</vh></v>
 </v>
-<v t="ekr.20060112062919" a="E" tnodeList="ekr.20060112062919"><vh>@file commentTest.xml</vh></v>
-<v t="ekr.20060112190554" a="TV"><vh>Print 'hi'</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4319,6 +4319,110 @@ comment line
 @c
 @others
 </t>
-<t tx="ekr.20060112190554">print 'hi'</t>
+<t tx="ekr.20060113083051">import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &gt;&gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &gt;&gt; stdout, s, aaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb cccccccccccccccccccc ddddddddddddddddddddddddd eeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff
+        print &gt;&gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &gt;&gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &gt;&gt; stdout, s,
+        print &gt;&gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &gt;&gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &gt;&gt; stdout, s,
+        print &gt;&gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &gt;&gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &gt;&gt; stdout, s,
+        print &gt;&gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &gt;&gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &gt;&gt; stdout, s,
+        print &gt;&gt; stderr, s,
+print 'bye'</t>
 </tnodes>
 </leo_file>

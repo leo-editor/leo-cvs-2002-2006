@@ -6,45 +6,25 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20060112070752:Urgent commands for mouseless Leo
-@nocolor
-
-Define these immediately
-
-beginning-of-text                       ! text = Ctrl-Home
-beginning-of-text-extend-selection      ! text = Ctrl-Shift-Home
-end-of-text                             ! text = Ctrl-End
-end-of-text-extend-selection            ! text = Ctrl-Shift-End
-scroll-down-extend-selection            ! text = Shift-PageDn
-scroll-up-extend-selection              ! text = Shift-PageUp
-
-Later
-
-open-outline-by-name
-
-https://sourceforge.net/forum/message.php?msg_id=3519444
-
-write-rst
-execute-unit-tests
-#@nonl
-#@+node:ekr.20060110131309:Add visible-line-up/down commands
-#@+node:ekr.20060110131309.1:Request
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3515616
-
-Could we have a visible-line-up and visible-line-down command? (I.e. to move
-the cursor up or down by a visible rather than a logical line).  With these
-commands, the arrows plugin could be permanently retired!
-#@nonl
-#@-node:ekr.20060110131309.1:Request
-#@-node:ekr.20060110131309:Add visible-line-up/down commands
-#@-node:ekr.20060112070752:Urgent commands for mouseless Leo
-#@+node:ekr.20060112194227:Distribution
-#@+node:ekr.20060112102911:Document new minibuffer commands!
-#@-node:ekr.20060112102911:Document new minibuffer commands!
-#@-node:ekr.20060112194227:Distribution
+#@+node:ekr.20060113085710:First
+#@+node:ekr.20060113171750:Run pychecker
+#@-node:ekr.20060113171750:Run pychecker
+#@+node:ekr.20060112102911:Document minibuffer commands
+#@-node:ekr.20060112102911:Document minibuffer commands
+#@+node:ekr.20060113171831:Play with vim modes
+#@-node:ekr.20060113171831:Play with vim modes
+#@-node:ekr.20060113085710:First
 #@+node:ekr.20060110202455:Next
+#@+node:ekr.20060113170919.1:Think commands when designing workflow, and for chapters
+- create-chapter, destroy-chapter, select-chapter, etc.
+
+- find-character-on-line, find-word-on-line, etc.
+
+- extend-to-word, extend-to-paragraph, extend-to-sentence, etc.
+#@nonl
+#@-node:ekr.20060113170919.1:Think commands when designing workflow, and for chapters
+#@+node:ekr.20060113081442.1:sort-lines should recolor text
+#@-node:ekr.20060113081442.1:sort-lines should recolor text
 #@+node:ekr.20050928144501.1:Commands for mouseless Leo
 #@+node:ekr.20060112084446:Next
 @nocolor
@@ -58,7 +38,6 @@ Focus
     - activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
 
 - Drive all tabs/dialogs from the keyboard
-
 
 - Control all Leo commands & widgets using only key commands.
 
@@ -241,6 +220,8 @@ EKR: This can be done with @command nodes, but Leo should have official commands
 #@nonl
 #@-node:ekr.20051221101851.1:Request
 #@-node:ekr.20051221101851:Add commands to simulate clicks
+#@+node:ekr.20060113090042:open-outline-by-name
+#@-node:ekr.20060113090042:open-outline-by-name
 #@-node:ekr.20050928144501.1:Commands for mouseless Leo
 #@+node:ekr.20060111152145:Improve scripts menu plugin
 #@-node:ekr.20060111152145:Improve scripts menu plugin
