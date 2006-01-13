@@ -1205,6 +1205,8 @@ class editCommandsClass (baseEditCommandsClass):
         self.extendMode = False # True: all cursor move commands extend the selection.
         self.fillPrefix = '' # For fill prefix functions.
         self.fillColumn = 70 # For line centering.
+        self.moveSpot = None # For retaining preferred column when moving up or down.
+        self.moveCol = None # For retaining preferred column when moving up or down.
         self.store ={'rlist':[], 'stext':''} # For dynamic expansion.
         self.swapSpots = []
         self._useRegex = False # For replace-string and replace-regex
@@ -2572,6 +2574,78 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.147:measure
     #@+node:ekr.20050929114218:move... (leoEditCommands)
     #@+node:ekr.20051218170358: helpers
+    #@+node:ekr.20060113130510:extendHelper
+    def extendHelper (self,w,extend,ins1,spot):
+        
+        '''Handle the details of extending the selection.
+        
+        extend: Clear the selection unless this is True.
+        ins1:   The *previous* insert point.
+        spot:   The *new* insert point.
+        '''
+        moveSpot = self.moveSpot
+        if extend or self.extendMode:
+            if not self.moveSpot:
+                self.moveSpot = w.index(ins1)
+                self.moveCol = int(ins1.split('.')[1])
+                g.trace('moveSpot',self.moveSpot)
+            moveSpot = self.moveSpot
+            # g.trace(spot,moveSpot)
+            if w.compare(spot,'<',moveSpot):
+                g.app.gui.setTextSelection (w,spot,moveSpot,insert=None) 
+            else:
+                g.app.gui.setTextSelection (w,moveSpot,spot,insert=None)
+        else:
+            self.moveSpot = spot
+            self.moveCol = int(spot.split('.')[1])
+            g.app.gui.setTextSelection(w,spot,spot,insert=None)
+    #@nonl
+    #@-node:ekr.20060113130510:extendHelper
+    #@+node:ekr.20060113105246.1:moveUpOrDownHelper
+    def moveUpOrDownHelper (self,event,direction,extend):
+    
+        c = self.c ; w = event.widget
+        if not g.app.gui.isTextWidget(w): return
+        # Make the insertion cursor visible so bbox won't return an empty list.
+        w.see('insert')
+        # Remember the original insert point.  This may become the moveSpot.
+        ins1 = w.index('insert')
+        # Compute the new spot.
+        row1,col1 = ins1.split('.')
+        row1 = int(row1) ; col1 = int(col1)
+        # Find the coordinates of the cursor and set the new height.
+        # There may be roundoff errors because character postions may not match exactly.
+        x, y, junk, textH = w.bbox('insert')
+        bodyW, bodyH = w.winfo_width(), w.winfo_height()
+        junk, maxy, junk, junk = w.bbox("@%d,%d" % (bodyW,bodyH))
+        # Make sure y is within text boundaries.
+        if direction == "up":
+            if y <= textH:  w.yview("scroll",-1,"units")
+            else:           y = max(y-textH,0)
+        else:
+            if y >= maxy:   w.yview("scroll",1,"units")
+            else:           y = min(y+textH,maxy)
+        # Position the cursor on the proper side of the characters.
+        newx, newy, width, junk = w.bbox("@%d,%d" % (x,y))
+        if x > newx + width / 2: x = newx + width + 1
+        # Move to the new row.
+        spot = w.index("@%d,%d" % (x,y))
+        row,col = spot.split('.')
+        row = int(row) ; col = int(col)
+        w.mark_set('insert',spot)
+        # Adjust the column in the *new* row, but only if we have actually gone to a new row.
+        if self.moveSpot:
+            if col != self.moveCol and row != row1:
+                s = w.get('insert linestart','insert lineend')
+                col = min(len(s),self.moveCol)
+                if col >= 0:
+                    w.mark_set('insert','%d.%d' % (row,col))
+                    spot = w.index('insert')
+                    w.see('insert')
+        # Handle the extension.
+        self.extendHelper(w,extend,ins1,spot)
+    #@nonl
+    #@-node:ekr.20060113105246.1:moveUpOrDownHelper
     #@+node:ekr.20051218122116:moveToHelper
     def moveToHelper (self,event,spot,extend):
         
@@ -2582,17 +2656,16 @@ class editCommandsClass (baseEditCommandsClass):
         if not g.app.gui.isTextWidget(w): return
     
         c.frame.widgetWantsFocus(w)
-        i,j = g.app.gui.getTextSelection(w,sort=True)
-        spot = w.index(spot) # Capture initial value.
-        ins = w.index('insert')
+        
+        # Remember the original insert point.  This may become the moveSpot.
+        ins1 = w.index('insert')
+      
+        # Move to the spot.
         w.mark_set('insert',spot)
-        if extend or self.extendMode:
-            if w.compare(spot,'<=',i):
-                g.app.gui.setTextSelection (w,spot,j,insert=None)
-            else:
-                g.app.gui.setTextSelection (w,i,spot,insert=None)
-        else:
-            g.app.gui.setTextSelection(w,spot,spot,insert=None)
+        spot = w.index('insert')
+    
+        # Handle the selection.
+        self.extendHelper(w,extend,ins1,spot)
         w.see(spot)
     #@nonl
     #@-node:ekr.20051218122116:moveToHelper
@@ -2671,7 +2744,7 @@ class editCommandsClass (baseEditCommandsClass):
     
         c.frame.widgetWantsFocus(w)
         ins = w.index('insert')
-        sel_i,sel_j = g.app.gui.getTextSelection(w)
+        # sel_i,sel_j = g.app.gui.getTextSelection(w)
         i = w.search('.','insert',stopindex='end')
         ins = i and '%s +1c' % i or 'end'
         self.moveToHelper(event,ins,extend)
@@ -2816,19 +2889,23 @@ class editCommandsClass (baseEditCommandsClass):
     
     def nextLine (self,event):
         
-        self.moveToHelper(event,'insert + 1line',extend=False)
+        self.moveUpOrDownHelper(event,'down',extend=False)
+        # self.moveToHelper(event,'insert + 1line',extend=False)
         
     def nextLineExtendSelection (self,event):
         
-        self.moveToHelper(event,'insert + 1line',extend=True)
+        self.moveUpOrDownHelper(event,'down',extend=True)
+        #self.moveToHelper(event,'insert + 1line',extend=True)
         
     def prevLine (self,event):
         
-        self.moveToHelper(event,'insert - 1line',extend=False)
+        self.moveUpOrDownHelper(event,'up',extend=False)
+        #self.moveToHelper(event,'insert - 1line',extend=False)
         
     def prevLineExtendSelection (self,event):
         
-        self.moveToHelper(event,'insert - 1line',extend=True)
+        self.moveUpOrDownHelper(event,'up',extend=True)
+        #self.moveToHelper(event,'insert - 1line',extend=True)
     #@nonl
     #@-node:ekr.20051218141237:lines
     #@+node:ekr.20050920084036.140:movePastClose (test)
@@ -3335,23 +3412,19 @@ class editCommandsClass (baseEditCommandsClass):
         if not g.app.gui.isTextWidget(w): return
     
         c.frame.widgetWantsFocus(w)
-        sel_i, sel_j = g.app.gui.getTextSelection(w,sort=True)
-        chng = self.measure(w)
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        if direction == 'down':
-            spot1 = int(i1) + chng [0]
-        else:
-            spot1 = int(i1) - chng [0]
-        spot = w.index('%d.%s' % (spot1,i2))
+    
+        # Remember the original insert point.  This may become the moveSpot.
+        ins1 = w.index('insert')
+        row, col = ins1.split('.') ; row = int(row) ; col = int(col)
+    
+        # Compute the spot.
+        chng = self.measure(w) ; delta = chng [0]
+        row1 = g.choose(direction=='down',row+delta,row-delta)
+        spot = w.index('%d.%d' % (row1,col))
         w.mark_set('insert',spot)
-        if extend or self.extendMode:
-            if w.compare(spot,'<=',i):
-                g.app.gui.setTextSelection(w,spot,sel_i,insert=None)
-            else:
-                g.app.gui.setTextSelection(w,sel_i,spot,insert=None)
-        else:
-            g.app.gui.setTextSelection(w,spot,spot,insert=None)
+    
+        # Handle the extension.
+        self.extendHelper(w,extend,ins1,spot)
         w.see('insert')
     #@nonl
     #@-node:ekr.20060113082917:scrollHelper
