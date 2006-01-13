@@ -34,19 +34,18 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20060112110750"><vh>Buttons</vh>
+<v t="ekr.20060112110750" a="E"><vh>Buttons</vh>
 <v t="ekr.20051010093913" annotate="7d71002e"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608" annotate="7d71002e"><vh>@@button align to col</vh></v>
-<v t="ekr.20060112103537.17"><vh>@button Check Bindings</vh>
+<v t="ekr.20060112103537.17" a="E"><vh>@button Check Bindings</vh>
 <v t="ekr.20060112104119"><vh>&lt;&lt; define setNames &gt;&gt;</vh></v>
 <v t="ekr.20060112104333"><vh>doSet</vh></v>
-<v t="ekr.20060112105523"><vh>doShortcuts</vh></v>
-<v t="ekr.20060112105829"><vh>parseShortcutLine</vh></v>
+<v t="ekr.20060112105523" a="ETV"><vh>doShortcuts</vh></v>
 <v t="ekr.20060112104333.1"><vh>checkSets</vh></v>
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -260,7 +259,7 @@
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="ETV" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh>
 <v t="ekr.20051010112903"><vh>Reserved unused, etc.</vh></v>
@@ -3844,8 +3843,11 @@ zap-to-character                    = None</t>
 <t tx="ekr.20060112103537.17">'''This script reports commands that exist in some but not all key- binding
 sets. setNames is a list of the roots of all such sets.'''
 
+import leoConfig
 import leoTest
+
 u = leoTest.testUtils(c)
+parser = leoConfig.settingsTreeParser(c)
 
 &lt;&lt; define setNames &gt;&gt;
 
@@ -3921,16 +3923,15 @@ setNames.sort()</t>
     g.es('Check Bindings done')</t>
 <t tx="ekr.20060112105523">def doShortcuts(p,setName):
     
-    global setsDict
+    global parser,setsDict
     
     d = setsDict.get(setName,{})
-
     s = p.bodyString()
     lines = g.splitLines(s)
     for line in lines:
         line = line.strip()
         if line and not line.startswith('#'):
-            commandName,junk = parseShortcutLine(line)
+            commandName,junk = parser.parseShortcutLine(line)
             if d.get(commandName):
                 g.es('duplicate %s in set %s' % (commandName,setName))
             else:
@@ -3938,43 +3939,6 @@ setNames.sort()</t>
                 d[commandName] = None
                 
     setsDict[setName] = d</t>
-<t tx="ekr.20060112105829">def parseShortcutLine (s):
-    
-    '''Parse a shortcut line.  Valid forms:
-        
-    settingName = shortcut
-    settingName ! paneName = shortcut'''
-    
-    name = val = None
-    j = g.skip_ws(s,0)
-    i = g.skip_id(s,j,'-') # New in 4.4: allow Emacs-style shortcut names.
-    name = s[j:i]
-    if not name: return None,None
-        
-    i = g.skip_ws(s,i)
-    if g.match(s,i,'!'): # New in 4.4: allow pane-specific shortcuts.
-        j = g.skip_ws(s,i+1)
-        i = g.skip_id(s,j)
-        pane = s[j:i]
-        if not pane.strip(): pane = 'all'
-    else: pane = 'all'
-
-    i = g.skip_ws(s,i)
-    if g.match(s,i,'='):
-        i = g.skip_ws(s,i+1)
-        val = s[i:]
-           
-    # Allow comments after the shortcut.
-    # Comments must be preceded by whitespace.
-    comment = ''
-    if val:
-        i = val.find('#')
-        if i &gt; 0 and val[i-1] in (' ','\t'):
-            # comment = val[i:].strip()
-            val = val[:i].strip()
-
-    # g.trace(pane,name,val,s)
-    return name,g.bunch(pane=pane,val=val)</t>
 <t tx="ekr.20060112110750"></t>
 <t tx="ekr.20060112112006"></t>
 <t tx="ekr.20060112142718"># To be defined
