@@ -1634,46 +1634,6 @@ class leoTkinterTree (leoFrame.leoTree):
             
         
     #@-node:ekr.20040803072955.109:findVnodeWithIconId
-    #@+node:ekr.20040803072955.117:tree.moveUpDown (used by arrows plugin)
-    def OnUpKey   (self,event=None):
-        __pychecker__ = '--no-argsused' # event not used.
-        return self.moveUpDown("up")
-    def OnDownKey (self,event=None):
-        __pychecker__ = '--no-argsused' # event not used.
-        return self.moveUpDown("down")
-    
-    def moveUpDown (self,upOrDown):
-        c = self.c ; body = c.frame.bodyCtrl
-        # Make the insertion cursor visible so bbox won't return an empty list.
-        body.see("insert")
-        # Find the coordinates of the cursor and set the new height.
-        # There may be roundoff errors because character postions may not match exactly.
-        ins =  body.index("insert")
-        lines,char = g.scanf(ins,"%d.%d")
-        x,y,junk,textH = body.bbox("insert")
-        bodyW,bodyH = body.winfo_width(),body.winfo_height()
-        junk,maxy,junk,junk = body.bbox("@%d,%d" % (bodyW,bodyH))
-        # Make sure y is within text boundaries.
-        if upOrDown == "up":
-            if y <= textH:
-                body.yview("scroll",-1,"units")
-            else: y = max(y-textH,0)
-        else:
-            if y >= maxy:
-                body.yview("scroll",1,"units")
-            else: y = min(y+textH,maxy)
-        # Position the cursor on the proper side of the characters.
-        newx,newy,width,junk = body.bbox("@%d,%d" % (x,y))
-        if x > newx + width/2:
-            x = newx + width + 1
-        result = body.index("@%d,%d" % (x,y))
-        body.mark_set("insert",result)
-        # g.trace("entry:  %s.%s" % (lines,char))
-        # g.trace("result:",result)
-        # g.trace("insert:",body.index("insert"))
-        return "break" # Inhibit further bindings.
-    #@nonl
-    #@-node:ekr.20040803072955.117:tree.moveUpDown (used by arrows plugin)
     #@-node:ekr.20051105103233:Helpers
     #@+node:ekr.20040803072955.78:Click Box...
     #@+node:ekr.20040803072955.79:onClickBoxClick
