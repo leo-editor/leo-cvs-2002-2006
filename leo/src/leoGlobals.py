@@ -1916,31 +1916,25 @@ def utils_rename (src,dst,mode=None,verbose=True):
     if g.os_path_exists(dst):
         if not g.utils_remove(dst):
             return False
-
     try:
-        if 0: # Use rename in all cases: may not work on linux.
-            os.rename(src,dst)
-            if mode:
-                g.utils_chmod(dst,mode,verbose)
-            return True
-        else:
-            # New in Leo 4.4b1: try using shutil first.
-            try:
-                import shutil # shutil is new in Python 2.3
-                shutil.move(src,dst)
-                return True
-            except ImportError: pass
-
-            # This isn't a great solution: distutils.file_util may not exist.
+        # New in Leo 4.4b1: try using shutil first.
+        try:
+            import shutil # shutil is new in Python 2.3
+            shutil.move(src,dst)
+        except ImportError:
             if sys.platform == "win32":
                 os.rename(src,dst)
             else:
-                from distutils.file_util import move_file
-                move_file(src,dst)
-            if mode:
-                g.utils_chmod(dst,mode,verbose)
-            return True
-
+                try:
+                    # Alas, distutils.file_util may not exist.
+                    from distutils.file_util import move_file
+                    move_file(src,dst)
+                except ImportError:
+                    # Desparation: may give: 'Invalid cross-device link'
+                    os.rename(src,dst)
+        if mode:
+            g.utils_chmod(dst,mode,verbose)
+        return True
     except Exception:
         if verbose:
             g.es('Exception renaming %s to %s' % (src,dst),color='red')
