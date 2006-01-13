@@ -3350,7 +3350,10 @@ class leoTkinterLog (leoFrame.leoLog):
         
         self.selectTab(tabName)
         t = self.logCtrl
-        t.delete('1.0','end')
+        if t:
+            t.delete('1.0','end')
+            # Necessary to allow focus to move *out* of t.
+            t.update()
     #@nonl
     #@-node:ekr.20051017212057:clearTab
     #@+node:ekr.20051024173701:createTab
