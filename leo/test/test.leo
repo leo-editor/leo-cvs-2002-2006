@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7892" clone_windows="0"/>
 <globals body_outline_ratio="0.438470728793">
-	<global_window_position top="61" left="347" height="837" width="836"/>
+	<global_window_position top="69" left="275" height="837" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -233,9 +233,8 @@
 <v t="ekr.20060108163117"><vh>@file-ref c:\prog\leoCVS\leo\test\ironPythonTest.bat</vh></v>
 </v>
 </v>
-<v t="ekr.20060112062919" a="ETV" tnodeList="ekr.20060112062919,ekr.20060112062919.1"><vh>@file commentTest.xml</vh>
-<v t="ekr.20060112062919.1"><vh>Child node</vh></v>
-</v>
+<v t="ekr.20060112062919" a="E" tnodeList="ekr.20060112062919"><vh>@file commentTest.xml</vh></v>
+<v t="ekr.20060112190554" a="TV"><vh>Print 'hi'</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4320,7 +4319,6 @@ comment line
 @c
 @others
 </t>
-<t tx="ekr.20060112062919.1">child node
-</t>
+<t tx="ekr.20060112190554">print 'hi'</t>
 </tnodes>
 </leo_file>

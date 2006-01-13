@@ -6,21 +6,66 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20060105130519:Urgent 3
+#@+node:ekr.20060112070752:Urgent commands for mouseless Leo
+@nocolor
+
+Define these immediately
+
+beginning-of-text                       ! text = Ctrl-Home
+beginning-of-text-extend-selection      ! text = Ctrl-Shift-Home
+end-of-text                             ! text = Ctrl-End
+end-of-text-extend-selection            ! text = Ctrl-Shift-End
+scroll-down-extend-selection            ! text = Shift-PageDn
+scroll-up-extend-selection              ! text = Shift-PageUp
+
+Later
+
+open-outline-by-name
+
+https://sourceforge.net/forum/message.php?msg_id=3519444
+
+write-rst
+execute-unit-tests
+#@nonl
+#@+node:ekr.20060110131309:Add visible-line-up/down commands
+#@+node:ekr.20060110131309.1:Request
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3515616
+
+Could we have a visible-line-up and visible-line-down command? (I.e. to move
+the cursor up or down by a visible rather than a logical line).  With these
+commands, the arrows plugin could be permanently retired!
+#@nonl
+#@-node:ekr.20060110131309.1:Request
+#@-node:ekr.20060110131309:Add visible-line-up/down commands
+#@-node:ekr.20060112070752:Urgent commands for mouseless Leo
+#@+node:ekr.20060112194227:Distribution
+#@+node:ekr.20060112102911:Document new minibuffer commands!
+#@-node:ekr.20060112102911:Document new minibuffer commands!
+#@-node:ekr.20060112194227:Distribution
+#@+node:ekr.20060110202455:Next
 #@+node:ekr.20050928144501.1:Commands for mouseless Leo
-Needed to support 'mouseless-Leo':
+#@+node:ekr.20060112084446:Next
+@nocolor
 
 - Set options from the keyboard.
     - set-variable sets a (Python) variable using an minibuffer-style variable name.
-- Drive all tabs/dialogs from the keyboard,
-- Scroll outline pane up/down
+
+Focus
+    - focus-in-body/tree/log/dialog.
+    - cycle-active-pane and cycle-active-widget (in a single pane) commands.
+    - activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
+
+- Drive all tabs/dialogs from the keyboard
+
+
 - Control all Leo commands & widgets using only key commands.
-- focus-in-body/tree/log/dialog.
-- cycle-active-pane and cycle-active-widget (in a single pane) commands.
-- activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
+
 - create-tab, clear-tab commands, etc.
     These might get the tab name from the minibuffer...
 #@nonl
+#@-node:ekr.20060112084446:Next
 #@+node:ekr.20060110202238:Missing bindings/commands
 @nocolor
 https://sourceforge.net/forum/message.php?msg_id=3516262
@@ -51,6 +96,7 @@ two lines.
 
 This cursor column preservation isn't unique to Tk.  I've noticed that vim supports
 it as well.  I find it useful.
+#@nonl
 #@-node:ekr.20060110202238:Missing bindings/commands
 #@+node:ekr.20060104083551:New commands for mouseless Leo (LeoUser)
 @nocolor
@@ -195,128 +241,7 @@ EKR: This can be done with @command nodes, but Leo should have official commands
 #@nonl
 #@-node:ekr.20051221101851.1:Request
 #@-node:ekr.20051221101851:Add commands to simulate clicks
-#@+node:ekr.20060110131309:Add visible-line-up/down commands
-#@+node:ekr.20060110131309.1:Request
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3515616
-
-Could we have a visible-line-up and visible-line-down command? (I.e. to move
-the cursor up or down by a visible rather than a logical line).  With these
-commands, the arrows plugin could be permanently retired!
-#@nonl
-#@-node:ekr.20060110131309.1:Request
-#@-node:ekr.20060110131309:Add visible-line-up/down commands
 #@-node:ekr.20050928144501.1:Commands for mouseless Leo
-#@+node:ekr.20060111114001:Install new standard bindings
-@nocolor
-
-> Please let me know if Leo needs some more editing commands to support 
-> the keystrokes you use.  This is presently close to the top priority 
-> in Leo.
-
- I use SciTE, but these keystrokes are quite common.
- http://www.scintilla.org/SciTE.html
-
-# move
-#
-beginning-of-text     ! text = Ctrl-Home
-end-of-text           ! text = Ctrl-End
-beginning-of-line     ! text = Home
-end-of-line           ! text = End
-backward-word         ! text = Ctrl-LtArrow
-forward-word          ! text = Ctrl-RtArrow
-scroll-down           ! text = PageDn
-scroll-up             ! text = PageUp
-#
-# selection
-#
-beginning-of-line-extend-selection    ! text = Shift-Home
-end-of-line-extend-selection          ! text = Shift-End
-backward-word-extend-selection        ! text = Ctrl-Shift-LtArrow
-forward-word-extend-selection         ! text = Ctrl-Shift-RtArrow
-end-of-text-extend-selection          ! text = Ctrl-Shift-End
-beginning-of-text-extend-selection    ! text = Ctrl-Shift-Home
-scroll-down-extend-selection          ! text = Shift-PageDn
-scroll-up-extend-selection            ! text = Shift-PageUp
-#
-# arrow movement keys should remove previous selection
-
-Have a nice day!
-Manfred
-++++++++++++++++++++
-Pragmatis GmbH
-Auf der Ruhr 18
-45772 Marl
-Fon +49 2365/21511
-Fax +49 2365/21521
-E-Mail marl@pragmatis.de
-Web www.pragmatis.de
-
-
-
-#@+node:ekr.20060112045830:From Speed
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3518387
-By: dspeed
-
-Here are the changes I made to get back to my old Leo:
-
-scroll-up : PageUp
-scroll-down : PageDn
-beginning-of-line : Home
-end-of-line : End
-end-of-buffer : Ctrl-End
-beginning-of-buffer : Ctrl-Home
-end-of-buffer-extend-selection : Shift-Ctrl-End
-end-of-line-extend-selection : Shift-End
-beginning-of-line-extend-selection : Shift-Home
-delete-char : Delete
-back-word-extend-selection : Shift-Ctrl-LtArrow
-beginning-of-buffer-extend-selection : Shift-Ctrl-Home
-back-word : Ctrl-LtArrow
-forward-word : Ctrl-RtArrow
-forward-word-extend-selection : Shift-Ctrl-RtArrow
-#@nonl
-#@-node:ekr.20060112045830:From Speed
-#@-node:ekr.20060111114001:Install new standard bindings
-#@+node:ekr.20060112062706:Investigate new file handling bug
-
-#@+node:ekr.20060112062706.1:Report
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3518722
-By: nobody
-
-I'm using Leo 4.3.1, build  1.266 , June 20, 2005.
-
-To generate HTML file I entered the outline header "@file bbb.xml" under which
-I put the following body text:
-
-//////////////// beginning of excerpt
-@first <?xml version="1.0" encoding="windows-1250" ?>
-@language html
-@
-comment line
-@c
-@others
-//////////////// end of excerpt
-
-This works OK.
-But, if I put a space after the sole @ above "comment line",  save and close
-the .leo file and then open it, Leo protests in log pane on the right:
-
-//////////////// beginning of excerpt
------ error reading @file: bbb.xml
-Missing open block comment
-//////////////// end of excerpt
-
-maks.romih@snt.si
-#@nonl
-#@-node:ekr.20060112062706.1:Report
-#@-node:ekr.20060112062706:Investigate new file handling bug
-#@-node:ekr.20060105130519:Urgent 3
-#@+node:ekr.20060110202455:Next
 #@+node:ekr.20060111152145:Improve scripts menu plugin
 #@-node:ekr.20060111152145:Improve scripts menu plugin
 #@+node:ekr.20060111152145.1:Examine jyLeo to see how to do chapters
@@ -492,6 +417,8 @@ def leoPyShellMain(self):
 #@-node:ekr.20060111134004:Run Idle in a separate process
 #@+node:ekr.20060111134901:Implement c.es etc.
 #@-node:ekr.20060111134901:Implement c.es etc.
+#@+node:ekr.20060112170419:Sort lines does not stick? Or does not always work?
+#@-node:ekr.20060112170419:Sort lines does not stick? Or does not always work?
 #@-node:ekr.20060110202455:Next
 #@+node:ekr.20060105133043:Important
 #@+node:ekr.20060109183500.1:Scripting improvements
@@ -597,6 +524,7 @@ def createBindings (self):
             ('find-tab-find',       self.findNextCommand),
             ('find-tab-find-prev',  self.findPrevCommand),
             ('find-tab-change',     self.changeCommand),
+            ('find-tab-change-all', self.changeAllCommand),
             ('find-tab-change-find',self.changeThenFindCommand),
         ):
             if 1:
@@ -947,6 +875,11 @@ def changeCommand (self,event=None):
     self.setup_command(c)
     self.change()
     
+def changeAllCommand (self,event=None):
+    c = self.c
+    self.setup_command(c)
+    self.changeAll()
+    
 def changeThenFindCommand(self,event=None):
     
     c = self.c
@@ -1117,6 +1050,7 @@ def getPublicCommands (self):
         'find-tab-find':            self.findTabFindNext,
         'find-tab-find-prev':       self.findTabFindPrev,
         'find-tab-change':          self.findTabChange,
+        'find-tab-change-all':      self.findTabChangeAll,
         'find-tab-change-then-find':self.findTabChangeThenFind,
 
         'isearch-forward':          self.isearchForward,
@@ -1160,15 +1094,20 @@ def openFindTab (self,event=None):
 def findTabChange(self,event=None):
 
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.changeCommand()
+    else:
+        self.openFindTab()
+        
+def findTabChangeAll(self,event=None):
+
+    if self.findTabHandler:
+        self.findTabHandler.changeAllCommand()
     else:
         self.openFindTab()
 
 def findTabChangeThenFind(self,event=None):
 
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.changeThenFindCommand()
     else:
         self.openFindTab()
@@ -1176,7 +1115,6 @@ def findTabChangeThenFind(self,event=None):
 def findTabFindNext (self,event=None):
     
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.findNextCommand()
     else:
         self.openFindTab()
@@ -1184,7 +1122,6 @@ def findTabFindNext (self,event=None):
 def findTabFindPrev (self,event=None):
     
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.findPrevCommand()
     else:
         self.openFindTab()
@@ -4788,6 +4725,14 @@ def change(self,event=None):
     if self.handler:
         self.openSpellTab()
         self.handler.change()
+    else:
+        self.openSpellTab()
+        
+def changeAll(self,event=None):
+
+    if self.handler:
+        self.openSpellTab()
+        self.handler.changeAll()
     else:
         self.openSpellTab()
 
@@ -8769,35 +8714,36 @@ Tiziano Tissino <t.tissino@itaca.coopsoc.it>
 #@+node:ekr.20031218072017.1263:g.utils_rename & test
 << about os.rename >>
 
-def utils_rename(src,dst,mode=None,verbose=True):
+def utils_rename (src,dst,mode=None,verbose=True):
 
     '''Platform independent rename.'''
-    
-    head,tail=g.os_path_split(dst)
+
+    head, tail = g.os_path_split(dst)
     if head and len(head) > 0:
         g.makeAllNonExistentDirectories(head)
-        
+
     if g.os_path_exists(dst):
         if not g.utils_remove(dst):
             return False
-        
     try:
-        if 1: # Use rename in all cases.
-            os.rename(src,dst)
-            if mode:
-                g.utils_chmod(dst,mode,verbose)
-            return True
-        else:
-            # This isn't a great solution: distutils.file_util may not exist.
-            if sys.platform=="win32":
+        # New in Leo 4.4b1: try using shutil first.
+        try:
+            import shutil # shutil is new in Python 2.3
+            shutil.move(src,dst)
+        except ImportError:
+            if sys.platform == "win32":
                 os.rename(src,dst)
             else:
-                from distutils.file_util import move_file
-                move_file(src,dst)
-            if mode:
-                g.utils_chmod(dst,mode,verbose)
-            return True
-
+                try:
+                    # Alas, distutils.file_util may not exist.
+                    from distutils.file_util import move_file
+                    move_file(src,dst)
+                except ImportError:
+                    # Desperation: may give: 'Invalid cross-device link'
+                    os.rename(src,dst)
+        if mode:
+            g.utils_chmod(dst,mode,verbose)
+        return True
     except Exception:
         if verbose:
             g.es('Exception renaming %s to %s' % (src,dst),color='red')

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8575" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8583" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
-	<global_window_position top="45" left="452" height="781" width="805"/>
+	<global_window_position top="45" left="391" height="781" width="805"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>

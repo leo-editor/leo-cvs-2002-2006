@@ -4400,6 +4400,28 @@ def findUnitTestNode (self,unitTestName):
     return c.nullPosition()
 #@nonl
 #@-node:ekr.20051104075904.32:findUnitTestNode
+#@+node:ekr.20051214113546.1:k.onTextWidgetKey
+def onTextWidgetKey (self,event):
+    
+    '''This is the default key handler for all text widgets.
+    It should never be called for keys bound to any command.'''
+
+    ch = event and event.char or ''
+    keysym = event and event.keysym or ''
+    w  = event and event.widget
+    
+    # Kludge: (there must be a better way!)
+    if keysym == 'Return': ch = '\n'
+
+    if w and ch:
+        i,j = g.app.gui.getTextSelection(w)
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,ch)
+
+    return 'break'
+#@nonl
+#@-node:ekr.20051214113546.1:k.onTextWidgetKey
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

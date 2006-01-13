@@ -1930,7 +1930,7 @@ def utils_rename (src,dst,mode=None,verbose=True):
                     from distutils.file_util import move_file
                     move_file(src,dst)
                 except ImportError:
-                    # Desparation: may give: 'Invalid cross-device link'
+                    # Desperation: may give: 'Invalid cross-device link'
                     os.rename(src,dst)
         if mode:
             g.utils_chmod(dst,mode,verbose)

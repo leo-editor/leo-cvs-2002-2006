@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="180" clone_windows="0"/>
 <globals body_outline_ratio="0.479954180985">
-	<global_window_position top="20" left="251" height="873" width="843"/>
+	<global_window_position top="29" left="401" height="873" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -34,18 +34,18 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20060112110750" a="E"><vh>Buttons</vh>
+<v t="ekr.20060112110750"><vh>Buttons</vh>
 <v t="ekr.20051010093913" annotate="7d71002e"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608" annotate="7d71002e"><vh>@@button align to col</vh></v>
-<v t="ekr.20060112103537.17" a="E"><vh>@button Check Bindings</vh>
+<v t="ekr.20060112103537.17"><vh>@button Check Bindings</vh>
 <v t="ekr.20060112104119"><vh>&lt;&lt; define setNames &gt;&gt;</vh></v>
 <v t="ekr.20060112104333"><vh>doSet</vh></v>
-<v t="ekr.20060112105523" a="ETV"><vh>doShortcuts</vh></v>
+<v t="ekr.20060112105523"><vh>doShortcuts</vh></v>
 <v t="ekr.20060112104333.1"><vh>checkSets</vh></v>
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -81,9 +81,9 @@
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
 </v>
 </v>
-<v t="ekr.20051126062243" annotate="7d71002e"><vh>@page Debugging options</vh>
+<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>@page Debugging options</vh>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
+<v t="ekr.20051126062525" a="TV"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 </v>
 <v t="ekr.20041119034357.20" annotate="7d71002e"><vh>@page Find/Change panel options</vh>
@@ -350,7 +350,6 @@
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
-<v t="ekr.20060112142718"><vh>Undefined command names</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1254,13 +1253,7 @@ KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
-<t tx="ekr.20051010112558">@color
-
-
-
-
-
-</t>
+<t tx="ekr.20051010112558">@color</t>
 <t tx="ekr.20051010112903">Reserved  Alt-E  (Opens Edit Menu)
 Reserved  Alt-F  (Opens File Menu)
 Reserved  Alt-H  (Opens Help Menu)
@@ -2725,7 +2718,7 @@ insert-body-time                    = None      # Shift-Ctrl-G: not useful enoug
 insert-file                         = None
 insert-headline-time                = None      # Shift-Ctrl-H: not useful enough.
 # insert-keyboard-macro             = None
-insert-newline                      = None      # Ctrl-o conflicts with open.
+insert-newline                      = None # ! Text = Return      # Ctrl-o conflicts with open.
 insert-node                         = Ctrl-I
 insert-parentheses                  = None
 insert-register                     = None
@@ -3941,13 +3934,6 @@ setNames.sort()</t>
     setsDict[setName] = d</t>
 <t tx="ekr.20060112110750"></t>
 <t tx="ekr.20060112112006"></t>
-<t tx="ekr.20060112142718"># To be defined
-beginning-of-text
-beginning-of-text-extend-selection
-end-of-text
-end-of-text-extend-selection
-scroll-down-extend-selection
-scroll-up-extend-selection</t>
 <t tx="ekr.20060112165244"># insert-keyboard-macro                 = None
 # insert-to-buffer                      = None
 
