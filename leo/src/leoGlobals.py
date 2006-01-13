@@ -1905,27 +1905,34 @@ def test_g_utils_remove():
 #@-node:ekr.20050104123726.1:<< about os.rename >>
 #@nl
 
-def utils_rename(src,dst,mode=None,verbose=True):
+def utils_rename (src,dst,mode=None,verbose=True):
 
     '''Platform independent rename.'''
-    
-    head,tail=g.os_path_split(dst)
+
+    head, tail = g.os_path_split(dst)
     if head and len(head) > 0:
         g.makeAllNonExistentDirectories(head)
-        
+
     if g.os_path_exists(dst):
         if not g.utils_remove(dst):
             return False
-        
+
     try:
-        if 1: # Use rename in all cases.
+        if 0: # Use rename in all cases: may not work on linux.
             os.rename(src,dst)
             if mode:
                 g.utils_chmod(dst,mode,verbose)
             return True
         else:
+            # New in Leo 4.4b1: try using shutil first.
+            try:
+                import shutil # shutil is new in Python 2.3
+                shutil.move(src,dst)
+                return True
+            except ImportError: pass
+
             # This isn't a great solution: distutils.file_util may not exist.
-            if sys.platform=="win32":
+            if sys.platform == "win32":
                 os.rename(src,dst)
             else:
                 from distutils.file_util import move_file
