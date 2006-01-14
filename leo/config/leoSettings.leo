@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="180" clone_windows="0"/>
-<globals body_outline_ratio="0.479954180985">
+<globals body_outline_ratio="0.628865979381">
 	<global_window_position top="29" left="314" height="873" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -46,7 +46,10 @@
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20060114073238" a="ETV"><vh>@bool trace_bindings = False</vh></v>
+<v t="ekr.20060114082205"><vh>@string trace_bindings_filter = Control-c</vh></v>
+<v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter = </vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
@@ -265,7 +268,7 @@
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" a="E" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 </v>
-<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
@@ -311,20 +314,20 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060103135341" a="E" annotate="7d71002e"><vh>Vim bindings (experimental)</vh>
+<v t="ekr.20060103135341" annotate="7d71002e"><vh>Vim bindings (experimental)</vh>
 <v t="ekr.20060112093419"><vh>Options</vh>
 <v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = ignore</vh></v>
 </v>
-<v t="ekr.20060111083214.1" a="E"><vh>Modes</vh>
+<v t="ekr.20060111083214.1"><vh>Modes</vh>
+<v t="ekr.20060103135341.10" annotate="7d71002e"><vh>@shortcuts modes</vh></v>
 <v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode file</vh></v>
 <v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode search</vh></v>
 <v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode outline</vh></v>
 </v>
-<v t="ekr.20060111083537.1" a="E"><vh>Shortcuts (bindings for the top-level mode)</vh>
-<v t="ekr.20060103135341.10" annotate="7d71002e"><vh>@shortcuts modes</vh></v>
+<v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
 <v t="ekr.20060103135341.11" annotate="7d71002e"><vh>@shortcuts A-E</vh></v>
 <v t="ekr.20060112165244"><vh>@shortcuts F-M</vh></v>
 <v t="ekr.20060103135341.12" annotate="7d71002e"><vh>@shortcuts N-Z</vh></v>
@@ -333,7 +336,7 @@
 <v t="ekr.20060113174941"><vh>Settings bugs?</vh></v>
 </v>
 </v>
-<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20051010112558" a="E" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
 <v t="ekr.20060111082537" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
@@ -342,13 +345,12 @@
 </v>
 <v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode file</vh></v>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060102102958" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20060113163701" a="TV"><vh>Vim Notes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041119034357.1">@nocolor</t>
@@ -1596,13 +1598,11 @@ extract-names                       = Shift-Ctrl-N
 extract-section                     = Shift-Ctrl-E</t>
 <t tx="ekr.20060102102958"># Important: the print-commands and print-bindings show what bindings are in effect.
 
-# append-next-kill                  = None      # Control-Alt-w
-# apply settings                    = None      # Does not exist yet.
+# append-next-kill                  = None
+# apply settings                    = None
 # call-last-keyboard-macro          = None
-# contract-parent                   ! tree = LtArrow # Was Alt-0, but this seems more consistent.
 # copy-to-buffer                    = None
 # end-kbd-macro                     = None
-# expand-and-go-right               ! tree = RtArrow # It would make sense to bind Alt-RtArrow to this too.
 
 abbrev-mode                         = None
 abort-edit-headline                 ! tree = Esc
@@ -1613,17 +1613,17 @@ advertised-undo                     = None
 append-to-buffer                    = None
 append-to-register                  = None
 auto-complete                       = Ctrl-Tab
-back-char                           ! text = Ctrl-b # No conflict
+back-char                           ! text = Ctrl-b
 back-char                           ! text = LtArrow
 back-char-extend-selection          ! text = Shift-LtArrow
 back-paragraph                      ! text = Alt-braceleft 
 back-paragraph-extend-selection     ! text = Alt-Shift-braceleft
 back-sentence                       ! text = Alt-a  # No conflict
-back-sentence-extend-selection      = None # Should be Alt-Shift-a, but that conflicts with Sort Siblings.  Sigh.
+back-sentence-extend-selection      = None # **Must** be Alt-Shift-a, but that conflicts with Sort Siblings.  Sigh.
 back-to-indentation                 = None
-back-word                           ! text = Alt-b  # No conflict   
+back-word                           ! text = Alt-b  
 back-word                           ! text = Ctrl-LtArrow
-back-word-extend-selection          ! text = Alt-Shift-b  # No conflict
+back-word-extend-selection          ! text = Alt-Shift-b
 back-word-extend-selection          ! text = Ctrl-Shift-LtArrow
 backward-delete-char                = BackSpace
 backward-kill-paragraph             = None
@@ -1653,7 +1653,9 @@ close-rectangle                     = None
 close-window                        = None  # Ctrl-w conflicts with kill-region.
 contract-all                        = Alt--
 contract-node                       = Alt-[
-contract-or-go-left                 = None
+contract-or-go-left                 ! tree = LtArrow
+# contract-or-go-left               ! tree = Alt-LtArrow
+contract-or-go-left                 ! text = Alt-LtArrow
 contract-parent                     = None
 convert-all-blanks                  = None
 convert-all-tabs                    = None
@@ -1666,7 +1668,7 @@ copy-to-register                    = None
 count-region                        = None
 cut-node                            = Shift-Ctrl-X
 cut-text                            = Ctrl-x
-cycle-focus                         = Alt-Shift-f
+cycle-focus                         = None
 dabbrev-completion                  = None
 dabbrev-expands                     = None
 de-hoist                            = None
@@ -1684,29 +1686,31 @@ downcase-region                     = None
 downcase-word                       = None
 dump-outline                        = None
 edit-headline                       = Ctrl-H
-end-edit-headline                   ! tree = Return # Esc is also possible.
-end-of-buffer                       ! text = Alt-greater # Note: same as Alt-Shift-greater
+end-edit-headline                   ! tree = Return     # Esc is also possible.
+end-of-buffer                       ! text = Alt-greater # Same as Alt-Shift-greater
 end-of-buffer                       ! text = Ctrl-End
 end-of-buffer-extend-selection      ! text = Shift-Ctrl-End
-end-of-line                         ! text = Ctrl-e             # Ctrl-e conflicts with execute-script
+end-of-line                         ! text = Ctrl-e
 end-of-line                         ! text = End
-end-of-line-extend-selection        ! text = Ctrl-Shift-e       # Ctrl-Shift-e conflicts with extract-section-names.
+end-of-line-extend-selection        ! text = Ctrl-Shift-e
 end-of-line-extend-selection        ! text = Shift-End
-equal-sized-panes                   = Alt-Shift-E
+equal-sized-panes                   = None
 escape                              = None
 eval-expression                     = None
 exchange-point-mark                 = None      # Should be Ctrl-X Ctrl-X.
-execute-script                      = None      # Ctrl-e conflicts with end-of-line
+execute-script                      = None
 exit-leo                            = Ctrl-Q
 expand-abbrev                       = None
-expand-all                          = None      # Alt-9: not useful enough.
-expand-and-go-right                 = None
+expand-all                          = None  
+expand-and-go-right                 ! tree = RtArrow
+# expand-and-go-right               ! tree = Alt-RtArrow
+expand-and-go-right                 ! text = Alt-RtArrow
 expand-next-level                   = Alt-=
 expand-node                         = Alt-]
 expand-or-go-right                  = None
 expand-prev-level                   = Alt-.
 expand-region-abbrevs               = None
-expand-to-level-1                   = None      # Was Alt-1 through Alt-8...
+expand-to-level-1                   = None
 expand-to-level-2                   = None
 expand-to-level-3                   = None
 expand-to-level-4                   = None
@@ -1718,8 +1722,7 @@ expand-to-level-9                   = None
 export-headlines                    = None
 extract                             = Shift-Ctrl-d
 extract-names                       = Shift-Ctrl-n
-extract-section                     = Shift-Ctrl-e
-</t>
+extract-section                     = None # Was Shift-Ctrl-e</t>
 <t tx="ekr.20060102102958.1"># name-last-kbd-macro               = None
 negative-argument                   = None      # Alt-minus conflicts with contract-all.
 new                                 = Ctrl-n    # Ctrl-n conflicts with next-line.
@@ -1739,7 +1742,7 @@ number-command-8                    = None
 number-command-9                    = None
 # number-to-register                = None
 open-compare-window                 = None
-open-find-dialog                    = None  # Deprecated. The find tab is much better.
+open-find-dialog                    = None      # Deprecated.
 open-find-tab                       = Ctrl-f
 open-leoDocs-leo                    = None
 open-leoPlugins-leo                 = None
@@ -1748,7 +1751,7 @@ open-offline-tutorial               = None
 open-online-home                    = None
 open-online-tutorial                = None
 open-outline                        = Ctrl-O    # Ctrl-O conflicts with insert-newline
-open-python-window                  = None      # Alt-P: not useful enough.
+open-python-window                  = None  
 open-rectangle                      = None
 open-spell-tab                      = None
 open-with                           = None
@@ -1756,7 +1759,7 @@ outline-to-CWEB                     = None
 outline-to-noweb                    = None
 paste-node                          = Shift-Ctrl-V
 paste-retaining-clones              = None
-paste-text                          = Ctrl-v    # For testing only: Alt-Shift-Ctrl-v
+paste-text                          = Ctrl-v
 point-to-register                   = None
 prepend-to-buffer                   = None
 prepend-to-register                 = None
@@ -1774,7 +1777,7 @@ re-search-backward                  = None
 re-search-forward                   = None
 read-abbrev-file                    = None
 read-at-file-nodes                  = None
-read-outline-only                   = None      # Shift-Ctrl-R: not useful enough.
+read-outline-only                   = None
 redo                                = Shift-Ctrl-Z
 reformat-paragraph                  = Shift-Ctrl-P
 remove-blank-lines                  = None
@@ -1790,11 +1793,11 @@ resize-to-screen                    = None
 reverse-region                      = None
 revert                              = None
 save-buffers-kill-leo               = None
-save-file                           = Ctrl-s    # Ctrl-s conflicts with search.
+save-file                           = Ctrl-s
 save-file-as                        = Shift-Ctrl-S
 save-file-to                        = None
-scroll-down                         ! text = PageDn    # Ctrl-v conflicts with paste-text.
-scroll-up                           ! text = PageUp    # Alt-v conflicts with view-all-characters.
+scroll-down                         ! text = PageDn 
+scroll-up                           ! text = PageUp 
 scroll-down-extend-selection        ! text = Shift-PageDn
 scroll-up-extend-selection          ! text = Shift-PageUp
 search-backward                     = None
@@ -1811,12 +1814,12 @@ set-fill-prefix                     = None
 set-font                            = None
 set-mark-command                    = Ctrl-space    # Also Ctrl-Shift-at
 set-overwrite-mode                  = None
-settings                            = None          # Ctrl-Y conflicts with yank.
+settings                            = None          
 shell-command                       = None
 shell-command-on-region             = None
 show-colors                         = None
 show-fonts                          = None
-show-invisibles                     = Alt-Shift-v   # Alt-V conflicts with scroll-up .
+show-invisibles                     = Alt-Shift-v   
 show-mini-buffer                    = None
 sort-children                       = None
 sort-columns                        = None
@@ -1833,9 +1836,9 @@ string-rectangle                    = None
 suspend                             = None
 switch-to-buffer                    = None
 tabify                              = None
-tangle                              = None      # Removed Shift-Ctrl-T: not useful enough.
-tangle-all                          = None      # Removed Shift-Ctrl-A: not useful enough.
-tangle-marked                       = None      # Removed Shift-Ctrl-M: not useful enough.
+tangle                              = None      
+tangle-all                          = None      
+tangle-marked                       = None     
 toggle-active-pane                  = Ctrl-T
 toggle-angle-brackets               = None
 toggle-extend-mode                  = None
@@ -1852,7 +1855,7 @@ unindent                            = Ctrl-[
 universal-argument                  = Alt-u     # Usually Ctrl-u, conflicts with move-outline-up.
 unmark-all                          = None
 untabify                            = None
-untangle                            = None      # Removed Shift-Ctrl-U: not useful enough
+untangle                            = None  
 untangle-all                        = None
 untangle-marked                     = None
 upcase-region                       = None
@@ -1970,8 +1973,8 @@ promote                 = p
 # enter-ignore-mode   = None
 # enter-replace-mode  = None
 
-enter-file-mode             = Key-f
-enter-insert-mode           = Key-i
+enter-file-mode             = f
+enter-insert-mode           = i
 #enter-move-cursor-mode     = m
 enter-outline-mode          = Key-o
 enter-search-mode           = Key-s 
@@ -2033,7 +2036,9 @@ close-rectangle                         = None
 close-window                            = None # Ctrl-w conflicts with kill-region.
 contract-all                            = None
 contract-node                           = None
-contract-or-go-left                     = None
+contract-or-go-left                     ! tree = LtArrow
+# contract-or-go-left                   ! tree = Alt-LtArrow
+contract-or-go-left                     ! text = Alt-LtArrow
 contract-parent                         = None
 convert-all-blanks                      = None
 convert-all-tabs                        = None
@@ -2064,22 +2069,24 @@ downcase-region                         = None
 downcase-word                           = None
 dump-outline                            = None
 edit-headline                           = Ctrl-H
-end-edit-headline                       ! tree = Return # Esc is also possible.
-end-of-buffer                           ! text = Alt-greater # Note: same as Alt-Shift-greater
+end-edit-headline                       ! tree = Return     # Esc is also possible.
+end-of-buffer                           ! text = Alt-greater # Same as Alt-Shift-greater
 end-of-buffer                           ! text = Ctrl-End
 end-of-buffer-extend-selection          ! text = Ctrl-Shift-End
-end-of-line                             ! text = Ctrl-e         # Ctrl-e conflicts with execute-script
-end-of-line-extend-selection            ! text = Ctrl-Shift-e # Ctrl-Shift-e conflicts with extract-section-names.
+end-of-line                             ! text = Ctrl-e        
+end-of-line-extend-selection            ! text = Ctrl-Shift-e
 enter-file-mode                         = None
 equal-sized-panes                       = Alt-Shift-E
 escape                                  = None
 eval-expression                         = None
-exchange-point-mark                     = None      # Should be Ctrl-X Ctrl-X.
-execute-script                          = None      # Ctrl-e conflicts with end-of-line
+exchange-point-mark                     = None  # Should be Ctrl-X Ctrl-X.
+execute-script                          = None  
 exit-leo                                = None
 expand-abbrev                           = None
 expand-all                              = None
-expand-and-go-right                     = None
+expand-and-go-right                     ! tree = RtArrow
+#expand-and-go-right                    ! tree = Alt-RtArrow
+expand-and-go-right                     ! text = Alt-RtArrow
 expand-next-level                       = None
 expand-node                             = None
 expand-or-go-right                      = None
@@ -2118,7 +2125,7 @@ number-command-7                        = None
 number-command-8                        = None
 number-command-9                        = None
 open-compare-window                     = None
-open-find-dialog                        = None  # Deprecated. The find tab is much better.
+open-find-dialog                        = None  # Deprecated.
 open-find-tab                           = Ctrl-f
 open-leoDocs-leo                        = None
 open-leoPlugins-leo                     = None
@@ -2127,7 +2134,7 @@ open-offline-tutorial                   = None
 open-online-home                        = None
 open-online-tutorial                    = None
 open-outline                            = Ctrl-O    # Ctrl-O conflicts with insert-newline
-open-python-window                      = None      # Alt-P: not useful enough.
+open-python-window                      = None
 open-rectangle                          = None
 open-spell-tab                          = None
 open-with                               = None
@@ -2135,7 +2142,7 @@ outline-to-CWEB                         = None
 outline-to-noweb                        = None
 paste-node                              = None
 paste-retaining-clones                  = None
-paste-text                              = Ctrl-v    # For testing only: Alt-Shift-Ctrl-v
+paste-text                              = Ctrl-v
 point-to-register                       = None
 prepend-to-buffer                       = None
 prepend-to-register                     = None
@@ -2151,14 +2158,14 @@ re-search-backward                      = None
 re-search-forward                       = None
 read-abbrev-file                        = None
 read-at-file-nodes                      = None
-read-outline-only                       = None      # Shift-Ctrl-R: not useful enough.
+read-outline-only                       = None  
 redo                                    = Shift-Ctrl-Z
 reformat-paragraph                      = Shift-Ctrl-P
 remove-blank-lines                      = None
 remove-directory                        = None
 remove-sentinels                        = None
 rename-buffer                           = None
-repeat-complex-command                  = None      # Usually 'again', whatever that is.
+repeat-complex-command                  = None  # Usually 'again', whatever that is.
 replace                                 = None
 replace-regex                           = None
 replace-string                          = None
@@ -2167,17 +2174,16 @@ resize-to-screen                        = None
 reverse-region                          = None
 revert                                  = None
 save-buffers-kill-leo                   = None
-save-file                               = Ctrl-s    # Ctrl-s conflicts with search.
+save-file                               = Ctrl-s
 save-file-as                            = Shift-Ctrl-S
 save-file-to                            = None
-scroll-down                             = PageDn    # Ctrl-v conflicts with paste-text.
+scroll-down                             = PageDn
 scroll-down-extend-selection            = None
-scroll-up                               = PageUp    # Alt-v conflicts with view-all-characters.
+scroll-up                               = PageUp
 scroll-up-extend-selection              = None
 search-backward                         = None
 search-forward                          = None
-select-all                              = Shift-Ctrl-A
-    # Ctrl-Shift-a conflicts with beginning-of-line-extend-selection.
+select-all                              = Shift-Ctrl-A # Conflicts with beginning-of-line-extend-selection.
 select-paragraph                        = None
 set-colors                              = None
 set-comment-column                      = None
@@ -2189,7 +2195,7 @@ set-ignore-mode                         = None
 set-insert-mode                         = None
 set-mark-command                        = Ctrl-space    # Also Ctrl-Shift-at
 set-overwrite-mode                      = None
-settings                                = None          # Ctrl-Y conflicts with yank.
+settings                                = None
 shell-command                           = None
 shell-command-on-region                 = None
 show-colors                             = None
@@ -2210,9 +2216,9 @@ string-rectangle                        = None
 suspend                                 = None
 switch-to-buffer                        = None
 tabify                                  = None
-tangle                                  = None      # Removed Shift-Ctrl-T: not useful enough.
-tangle-all                              = None      # Removed Shift-Ctrl-A: not useful enough.
-tangle-marked                           = None      # Removed Shift-Ctrl-M: not useful enough.
+tangle                                  = None
+tangle-all                              = None  
+tangle-marked                           = None
 toggle-active-pane                      = Ctrl-T
 toggle-angle-brackets                   = None
 toggle-extend-mode                      = None
@@ -2228,7 +2234,7 @@ undo                                    = Ctrl-Z
 unindent                                = Ctrl-[
 universal-argument                      = Alt-u     # Usually Ctrl-u, conflicts with move-outline-up.
 untabify                                = None
-untangle                                = None      # Removed Shift-Ctrl-U: not useful enough
+untangle                                = None  
 untangle-all                            = None
 untangle-marked                         = None
 upcase-region                           = None
@@ -2616,44 +2622,56 @@ focus-to-body                       = None
 focus-to-log                        = None
 focus-to-minibuffer                 = None
 focus-to-tree                       = None
-forward-char                        ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with Find panel.
+# forward-char                      ! text = Ctrl-f   # Ctrl-f Conflicts with Find panel.
 forward-char                        ! text = RtArrow
 forward-char-extend-selection       ! text = Shift-RtArrow
 forward-paragraph                   ! text = Alt-braceright
 forward-paragraph-extend-selection  ! text = Alt-Shift-braceright
-forward-sentence                    ! text = Alt-e          # No conflict
+forward-sentence                    ! text = Alt-e
 forward-sentence-extend-selection   ! text = Alt-Shift-e
-forward-word                        ! text = Alt-f          # No conflict with bindings, but usually opens file menu.
+forward-word                        ! text = Alt-f          # Usually opens file menu.
 forward-word-extend-selection       ! text = Alt-Shift-f
-full-command                        = Alt-x                 # No conflict.
-go-back                             ! tree = None
-go-forward                          ! tree = None
+full-command                        = Alt-x     
+go-back                             = None
+go-forward                          = None
 goto-char                           = None
-goto-first-node                     ! tree = Alt-Home       # Was: Alt-Shift-G
-goto-first-sibling                  ! tree = Alt-Shift-Home
-goto-last-node                      ! tree = None           # Was: Alt-Shift-H
-goto-last-sibling                   ! tree = Alt-Shift-End
-goto-last-visible                   ! tree = Alt-End
-goto-line                           = None              # Usually Alt-g, but Leo's goto-line-number is better.
-goto-line-number                    = Alt-g             # The Leo equivalent.
-goto-next-changed                   ! tree = None       # Removed Alt-D: not useful enough.
+goto-first-node                     ! tree = Home
+# goto-first-node                   ! tree = Alt-Home
+goto-first-node                     ! text = Alt-Home
+goto-first-sibling                  = None
+goto-last-node                      = None
+goto-last-node                      = None
+goto-last-sibling                   = None
+goto-last-visible                   ! tree = End
+# goto-last-visible                 ! tree = Alt-End
+goto-last-visible                   ! text = Alt-End
+goto-next-visible                   ! tree = DnArrow
+# goto-next-visible                 ! tree = Alt-DnArrow
+goto-next-visible                   ! text = Alt-DnArrow
+goto-line                           = None  # Leo's goto-line-number is better.
+goto-line-number                    = Alt-g 
+goto-next-changed                   = None
 goto-next-clone                     ! tree = Alt-N
-goto-next-marked                    ! tree = None       # Removed Alt-M: not useful enough.
-goto-next-node                      ! tree = Alt-DnArrow
-goto-next-sibling                   ! tree = None
-goto-next-visible                   ! tree = DnArrow    # Alt-UpArrow conflicts with beginning-of-line.
-goto-parent                         ! tree = Alt-LtArrow
-goto-prev-node                      ! tree = Alt-UpArrow
-goto-prev-sibling                   ! tree = None       # Removed Alt-Shift-R: not useful enough.
+goto-next-marked                    = None
+goto-next-node                      = None
+goto-next-sibling                   = None
+goto-next-visible                   ! tree = DnArrow
+# goto-next-visible                 ! tree = Alt-DnArrow
+goto-next-visible                   ! text = Alt-DnArrow
+goto-parent                         = None
+goto-prev-node                      = None
+goto-prev-sibling                   = None
 goto-prev-visible                   ! tree = UpArrow
-help                                = None          # Ctrl-h conflicts with edit headline.
+# goto-prev-visible                 ! tree = Alt-UpArrow
+goto-prev-visible                   ! text = Alt-UpArrow
+help                                = None
 hide-find-tab                       = None
 hide-mini-buffer                    = None
 hide-spell-tab                      = None
 hoist                               = None
 how-many                            = None
-iconify-frame                       = None      # Same as suspend.
-import-at-file                      = None      # Removed Shift-Ctrl-F: not useful enough.
+iconify-frame                       = None  # Same as suspend.
+import-at-file                      = None
 import-at-root                      = None
 import-cweb-files                   = None
 import-derived-file                 = None
@@ -2664,11 +2682,11 @@ indent-region                       = Ctrl-]
 indent-relative                     = None
 indent-rigidly                      = None
 indent-to-comment-column            = None
-insert-body-time                    = None      # Shift-Ctrl-G: not useful enough.
+insert-body-time                    = None
 insert-file                         = None
-insert-headline-time                = None      # Shift-Ctrl-H: not useful enough.
+insert-headline-time                = None
 # insert-keyboard-macro             = None
-insert-newline                      = None # ! Text = Return      # Ctrl-o conflicts with open.
+insert-newline                      = None # Ctrl-o conflicts with open.
 insert-node                         = Ctrl-I
 insert-parentheses                  = None
 insert-register                     = None
@@ -2680,7 +2698,7 @@ isearch-forward                     = None
 isearch-forward-regexp              = None
 jump-to-register                    = None
 keep-lines                          = None
-keyboard-quit                       = Ctrl-g    # Emacs binding.
+keyboard-quit                       = Ctrl-g
 kill-all-abbrevs                    = None
 kill-buffer                         = None
 kill-line                           ! text = Shift-Ctrl-k  # Ctrl-K conflicts with match-braket.
@@ -2696,10 +2714,10 @@ list-buffers                        = None
 list-buffers-alphabetically         = None
 make-directory                      = None
 mark                                = Ctrl-M
-mark-changed-items                  = None      # Alt-C: now quick-command.
-mark-changed-roots                  = None      # Alt-R: not useful enough.
-mark-clones                         = None      # Alt-K: not useful enough.
-mark-subheads                       = None      # Alt-S: not useful enough.
+mark-changed-items                  = None
+mark-changed-roots                  = None 
+mark-clones                         = None
+mark-subheads                       = None  
 match-bracket                       = Ctrl-K    # Conflicts with kill-line
 minimize-all                        = None
 mode-help                           = None
@@ -3906,44 +3924,52 @@ focus-to-body                           = None
 focus-to-log                            = None
 focus-to-minibuffer                     = None
 focus-to-tree                           = None
+# forward-char                          ! text = Ctrl-f   # Ctrl-f Conflicts with Find panel.
 forward-char                            ! text = RtArrow
-forward-char                            ! text = Shift-Ctrl-f   # Ctrl-f Conflicts with Find panel.
 forward-char-extend-selection           ! text = Shift-RtArrow
 forward-paragraph                       ! text = Alt-braceright
 forward-paragraph-extend-selection      ! text = Alt-Shift-braceright
-forward-sentence                        ! text = Alt-e          # No conflict
+forward-sentence                        ! text = Alt-e      
 forward-sentence-extend-selection       ! text = Alt-Shift-e
-forward-word                            ! text = Alt-f          # No conflict with bindings, but usually opens file menu.
+forward-word                            ! text = Alt-f          # Usually opens file menu.
 forward-word-extend-selection           ! text = Alt-Shift-f
-full-command                            = Alt-x                 # No conflict.
+full-command                            = Alt-x
 go-back                                 = None
 go-forward                              = None
 goto-char                               = None
-goto-first-node                         = None
+goto-first-node                         ! tree = Home
+# goto-first-node                       ! tree = Alt-Home
+goto-first-node                         ! text = Alt-Home
 goto-first-sibling                      = None
 goto-last-node                          = None
 goto-last-sibling                       = None
-goto-last-visible                       = None
-goto-line                               = None              # Usually Alt-g, but Leo's goto-line-number is better.
-goto-line-number                        = Alt-g             # The Leo equivalent.
+# goto-last-visible                     ! tree = End
+goto-last-visible                       ! tree = Alt-End
+goto-last-visible                       ! text = Alt-End
+goto-line                               = None  # Leo's goto-line-number is better.
+goto-line-number                        = Alt-g 
 goto-next-changed                       = None
 goto-next-clone                         = None
 goto-next-marked                        = None
 goto-next-node                          = None
 goto-next-sibling                       = None
-goto-next-visible                       = None
+goto-next-visible                       ! tree = DnArrow
+# goto-next-visible                     ! tree = Alt-DnArrow
+goto-next-visible                       ! text = Alt-DnArrow
 goto-parent                             = None
 goto-prev-node                          = None
 goto-prev-sibling                       = None
-goto-prev-visible                       = None
+goto-prev-visible                       ! tree = UpArrow
+# goto-prev-visible                     ! tree = Alt-UpArrow
+goto-prev-visible                       ! text = Alt-UpArrow
 help                                    = None
 hide-find-tab                           = None
 hide-mini-buffer                        = None
 hide-spell-tab                          = None
 hoist                                   = None
 how-many                                = None
-iconify-frame                           = None      # Same as suspend.
-import-at-file                          = None      # Removed Shift-Ctrl-F: not useful enough.
+iconify-frame                           = None  # Same as suspend.
+import-at-file                          = None
 import-at-root                          = None
 import-cweb-files                       = None
 import-derived-file                     = None
@@ -3954,10 +3980,10 @@ indent-region                           = Ctrl-]
 indent-relative                         = None
 indent-rigidly                          = None
 indent-to-comment-column                = None
-insert-body-time                        = None      # Shift-Ctrl-G: not useful enough.
+insert-body-time                        = None      
 insert-file                             = None
-insert-headline-time                    = None      # Shift-Ctrl-H: not useful enough.
-insert-newline                          = None      # Ctrl-o conflicts with open.
+insert-headline-time                    = None
+insert-newline                          = None  # Ctrl-o conflicts with open.
 insert-node                             = None
 insert-parentheses                      = None
 insert-register                         = None
@@ -3968,7 +3994,7 @@ isearch-forward                         = None
 isearch-forward-regexp                  = None
 jump-to-register                        = None
 keep-lines                              = None
-keyboard-quit                           = Ctrl-g    # Emacs binding.
+keyboard-quit                           = Ctrl-g
 kill-all-abbrevs                        = None
 kill-buffer                             = None
 kill-line                               ! text = Shift-Ctrl-k  # Ctrl-K conflicts with match-braket.
@@ -4004,29 +4030,11 @@ previous-line-extend-selection          ! text = Shift-UpArrow
 </t>
 <t tx="ekr.20060113163701">@nocolor
 
-Bugs:
-
-** Must stay in mode until we leave explictly.
-** @mode must bind shortcuts.
-** Most commands must clear move point:  inserting a char would prabably work effectively.
-** Don't honor moveCol when not extending (honor starting column instead).
-
-To do:
-    
-- moving the cursor
-    find character, word,etc.
-
-- extending the cursor
-    Possibly the same as moves, except for being in extend mode.
-    
-- moving text around
-    - cut, copy, paste, kill, yank, etc.
-    - delete to x
-    
-- changing focus, invoking tabs, dialogs, menus, etc.
-
-- dismiss-about-dialog</t>
+</t>
 <t tx="ekr.20060113174941">what is replace-then-find??</t>
 <t tx="ekr.20060113182439"></t>
+<t tx="ekr.20060114073238"></t>
+<t tx="ekr.20060114082205"></t>
+<t tx="ekr.20060114083009"></t>
 </tnodes>
 </leo_file>
