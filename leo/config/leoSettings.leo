@@ -46,8 +46,8 @@
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>Debugging options</vh>
-<v t="ekr.20060114073238" a="ETV"><vh>@bool trace_bindings = False</vh></v>
+<v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = Control-c</vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter = </vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
@@ -266,7 +266,7 @@
 </v>
 <v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
-<v t="ekr.20051007200824.1" a="E" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
+<v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 </v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
@@ -337,6 +337,7 @@
 </v>
 </v>
 <v t="ekr.20051010112558" a="E" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060114133851" a="TV"><vh>Notes</vh></v>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
 <v t="ekr.20060111082537" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
@@ -345,7 +346,7 @@
 </v>
 <v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode file</vh></v>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060102102958" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
@@ -1250,7 +1251,9 @@ KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
-<t tx="ekr.20051010112558">@color</t>
+<t tx="ekr.20051010112558">@color
+
+</t>
 <t tx="ekr.20051011123608">n = len('insert-newline              ')
 
 s = p.bodyString()
@@ -1605,7 +1608,7 @@ extract-section                     = Shift-Ctrl-E</t>
 # end-kbd-macro                     = None
 
 abbrev-mode                         = None
-abort-edit-headline                 ! tree = Esc
+abort-edit-headline                 = Esc
 about-leo                           = None
 add-comments                        = Ctrl-(
 add-global-abbrev                   = None
@@ -1653,9 +1656,7 @@ close-rectangle                     = None
 close-window                        = None  # Ctrl-w conflicts with kill-region.
 contract-all                        = Alt--
 contract-node                       = Alt-[
-contract-or-go-left                 ! tree = LtArrow
-# contract-or-go-left               ! tree = Alt-LtArrow
-contract-or-go-left                 ! text = Alt-LtArrow
+contract-or-go-left                 = Alt-LtArrow
 contract-parent                     = None
 convert-all-blanks                  = None
 convert-all-tabs                    = None
@@ -1702,9 +1703,7 @@ execute-script                      = None
 exit-leo                            = Ctrl-Q
 expand-abbrev                       = None
 expand-all                          = None  
-expand-and-go-right                 ! tree = RtArrow
-# expand-and-go-right               ! tree = Alt-RtArrow
-expand-and-go-right                 ! text = Alt-RtArrow
+expand-and-go-right                 = Alt-RtArrow
 expand-next-level                   = Alt-=
 expand-node                         = Alt-]
 expand-or-go-right                  = None
@@ -2635,35 +2634,25 @@ full-command                        = Alt-x
 go-back                             = None
 go-forward                          = None
 goto-char                           = None
-goto-first-node                     ! tree = Home
-# goto-first-node                   ! tree = Alt-Home
-goto-first-node                     ! text = Alt-Home
+goto-first-node                     = Alt-Home
 goto-first-sibling                  = None
 goto-last-node                      = None
 goto-last-node                      = None
 goto-last-sibling                   = None
-goto-last-visible                   ! tree = End
-# goto-last-visible                 ! tree = Alt-End
-goto-last-visible                   ! text = Alt-End
-goto-next-visible                   ! tree = DnArrow
-# goto-next-visible                 ! tree = Alt-DnArrow
-goto-next-visible                   ! text = Alt-DnArrow
+goto-last-visible                   = Alt-End
+goto-next-visible                   = Alt-DnArrow
 goto-line                           = None  # Leo's goto-line-number is better.
 goto-line-number                    = Alt-g 
 goto-next-changed                   = None
-goto-next-clone                     ! tree = Alt-N
+goto-next-clone                     = Alt-N
 goto-next-marked                    = None
 goto-next-node                      = None
 goto-next-sibling                   = None
-goto-next-visible                   ! tree = DnArrow
-# goto-next-visible                 ! tree = Alt-DnArrow
-goto-next-visible                   ! text = Alt-DnArrow
+goto-next-visible                   = Alt-DnArrow
 goto-parent                         = None
 goto-prev-node                      = None
 goto-prev-sibling                   = None
-goto-prev-visible                   ! tree = UpArrow
-# goto-prev-visible                 ! tree = Alt-UpArrow
-goto-prev-visible                   ! text = Alt-UpArrow
+goto-prev-visible                   = Alt-UpArrow
 help                                = None
 hide-find-tab                       = None
 hide-mini-buffer                    = None
@@ -4033,8 +4022,38 @@ previous-line-extend-selection          ! text = Shift-UpArrow
 </t>
 <t tx="ekr.20060113174941">what is replace-then-find??</t>
 <t tx="ekr.20060113182439"></t>
-<t tx="ekr.20060114073238"></t>
-<t tx="ekr.20060114082205"></t>
-<t tx="ekr.20060114083009"></t>
+<t tx="ekr.20060114073238">If True, Leo will report to the console which bindings have been created.
+
+Thus, you must be running from a console window for this setting to be useful.</t>
+<t tx="ekr.20060114082205">If this setting is non-empty the trace_bindings setting will report only
+bindings that match the string. Important: case is significant.
+
+For this setting to be useful the following must be true:
+
+- you must be running from a console window.
+
+- @bool trace_bindings must be True.</t>
+<t tx="ekr.20060114083009">If this setting is non-empty the trace_bindings setting will report only bindings for matching panes.  For example, to see all ! text bindings, set this setting to text.
+
+For this setting to be useful the following must be true:
+
+- you must be running from a console window.
+
+- @bool trace_bindings must be True.</t>
+<t tx="ekr.20060114133851">@nocolor
+    
+Removed this old bindings:
+    
+extract-section         = Ctrl-Shift-e
+
+Added this binding:
+    
+end-of-line-extend-selection  ! text = Ctrl-Shift-e
+
+At present there is a major problem with !tree bindings: there are conflicts
+between what we want when editing a headline and what we want when the headline
+is merely selected. It may be possible to fix these problems, or not.
+
+The workaround is to eliminate all !tree bindings.  This was surprisingly easy to do.</t>
 </tnodes>
 </leo_file>
