@@ -27,14 +27,16 @@ import string
 # 
 # k.inverseCommandsDict:
 #     keys are f.__name__, values are emacs command names.
-# inverseBindingsDict (computed by computeInverseBindingDict)
-#     keys are emacs command names, values are shortcuts.
+# 
+# k.inverseBindingsDict (computed by computeInverseBindingDict)
+#     keys are emacs command names, values are *lists* of shortcuts.
 # 
 # k.leoCallbackDict:
 #     keys are leoCallback functions, values are called functions.
 # 
 # k.bindingsDict:
-#     keys are shortcuts, values are g.bunch(func,name,warningGiven)
+#     keys are shortcuts, values are *lists* of 
+# g.bunch(func,name,warningGiven)
 #@-at
 #@nonl
 #@-node:ekr.20051010062551.1:<< about key dicts >>
@@ -133,7 +135,7 @@ class keyHandlerClass:
         #@+node:ekr.20050923213858:<< define internal ivars >>
         # Previously defined bindings.
         self.bindingsDict = {}
-            # Keys are Tk key names, values are g.bunch(pane,func,commandName)
+            # Keys are Tk key names, values are lists of g.bunch(pane,func,commandName)
         
         # Special bindings for k.fullCommand.
         self.mb_copyKey = None
@@ -307,19 +309,39 @@ class keyHandlerClass:
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
         callback calls commandName (for error messages).'''
         
-        k = self ; c = k.c 
-    
-        if not shortcut: g.trace('No shortcut for %s' % commandName)
-        bunch = k.bindingsDict.get(shortcut)
-        if bunch and bunch.pane == pane:
-            # g.trace('Not bound',shortcut)
-            if commandName != bunch.commandName:
-                g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
-                    shortcut,bunch.commandName,commandName,pane),color='blue')
-            return
-            
+        k = self ; c = k.c
+        
         # g.trace(pane,shortcut,commandName)
     
+        if not shortcut: g.trace('No shortcut for %s' % commandName)
+        bunchList = k.bindingsDict.get(shortcut,[])
+        #@    << give warning and return if there is a serious redefinition >>
+        #@+node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
+        for bunch in bunchList:
+            if ( bunch and
+                (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
+                commandName != bunch.commandName
+            ):
+                g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+                    k.prettyPrintKey(shortcut),
+                    bunch.commandName,commandName,pane),
+                    color='blue')
+                return
+        #@nonl
+        #@-node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
+        #@nl
+        #@    << trace bindings if enabled in leoSettings.leo >>
+        #@+node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
+        if c.config.getBool('trace_bindings'):
+            filter = c.config.getString('trace_bindings_filter') or ''
+            # g.trace(repr(filter))
+            if not filter or shortcut.find(filter) != -1:
+                pane_filter = c.config.getString('trace_bindings_pane_filter')
+                if not pane_filter or pane_filter.lower() == pane:
+                    g.trace(pane,k.prettyPrintKey(shortcut),commandName)
+        #@nonl
+        #@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
+        #@nl
         try:
             #@        << bind callback to shortcut in pane >>
             #@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
@@ -362,17 +384,15 @@ class keyHandlerClass:
             #@nonl
             #@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
             #@nl
-    
-            k.bindingsDict [shortcut] = g.bunch(
-                pane=pane,func=callback,commandName=commandName)
-    
+            bunchList.append(
+                g.bunch(pane=pane,func=callback,commandName=commandName))
+            k.bindingsDict [shortcut] = bunchList
             return True
     
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
                 g.es_print('Exception binding %s to %s' % (shortcut,commandName))
                 g.es_exception()
-                # g.printStack()
                 g.app.menuWarningsGiven = True
     
             return False
@@ -470,11 +490,18 @@ class keyHandlerClass:
     
         for pane in panes:
             for shortcut in keys:
-                if not bindings.get(shortcut):
-                    bunch = d.get(shortcut)
-                    if bunch and bunch.pane == pane:
-                        self.copyBindingsHelper(bunch,shortcut,w)
-                        d[shortcut] = bunch
+                old_panes = bindings.get(shortcut,[])
+                assert(type(old_panes)==type([]))
+                if old_panes and pane in old_panes:
+                    # This should have been caught earlier, but another check doesn't hurt.
+                    g.trace('*** redefining %s in %s' % (shortcut,pane))
+                else:
+                    bunchList = d.get(shortcut,[])
+                    for bunch in bunchList:
+                        if bunch.pane == pane:
+                            self.copyBindingsHelper(bunch,shortcut,w)
+                            old_panes.append(pane)
+                            bindings [shortcut] = old_panes
                                     
         # Bind all other keys to k.masterCommand.
         def generalTextKeyCallback (event,k=self):
@@ -485,9 +512,16 @@ class keyHandlerClass:
     #@+node:ekr.20060113062832.1:copyBindingsHelper
     def copyBindingsHelper(self,bunch,shortcut,w):
     
+        k = self ; c = k.c
         func = bunch.func
         commandName = bunch.commandName
-        # g.trace('**binding',bunch.pane,shortcut,commandName,w._name)
+        
+        if c.config.getBool('trace_bindings'):
+            filter = c.config.getString('trace_bindings_filter') or ''
+            if not filter or shortcut.find(filter) != -1:
+                pane_filter = c.config.getString('trace_bindings_pane_filter')
+                if not pane_filter or pane_filter.lower() == bunch.pane:
+                    g.trace(bunch.pane,k.prettyPrintKey(shortcut),commandName,w._name)
     
         def textKeyCallback(event,func=func):
             func(event)
@@ -701,6 +735,7 @@ class keyHandlerClass:
         k.stroke = stroke # Set this global for general use.
         keysym = event and event.keysym or ''
         ch = event and event.char or ''
+        w = event and event.widget
         k.func = func
         k.funcReturn = None # For unit testing.
         if commandName is None:
@@ -710,7 +745,10 @@ class keyHandlerClass:
         interesting = func is not None or ch != '' # or stroke != '<Key>'
         
         if trace and interesting:
-            g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym),g.callers())
+            g.trace(
+                'stroke',stroke,'ch',repr(ch),'keysym',repr(keysym),
+                'widget',w and g.app.gui.widget_name(w),
+                g.callers())
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
@@ -772,7 +810,7 @@ class keyHandlerClass:
             if expanded: return 'break'
     
         if func: # Func is an argument.
-            if trace: g.trace(commandName)
+            if trace: g.trace('command',commandName)
             # Note: k.funcReturn is for k.simulateCommand.
             if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
                 # The callback function will call c.doCommand
@@ -1303,8 +1341,12 @@ class keyHandlerClass:
     
         c.frame.log.clearTab('Command')
         for key in keys:
-            b = k.bindingsDict.get(key)
-            g.es('[%s]' % b.pane,k.prettyPrintKey(key),b.commandName,tabName='Command')
+            bunchList = k.bindingsDict.get(key,[])
+            for b in bunchList:
+                pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
+                s = k.prettyPrintKey(key) + pane
+                g.es('%-30s\t%s' % (s,b.commandName),
+                    tabName='Command')
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
@@ -1320,8 +1362,10 @@ class keyHandlerClass:
         commandNames = c.commandsDict.keys() ; commandNames.sort()
     
         for commandName in commandNames:
-            shortcut = inverseBindingDict.get(commandName,'')
-            g.es('%s %s' % (commandName,k.prettyPrintKey(shortcut)),tabName='Command')
+            shortcutList = inverseBindingDict.get(commandName,[''])
+            for shortcut in shortcutList:
+                g.es('%-30s\t%s' % (commandName,k.prettyPrintKey(shortcut)),
+                    tabName='Command')
     #@nonl
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
@@ -1515,8 +1559,9 @@ class keyHandlerClass:
                 k.fullCommand()
         else:
             stroke = stroke.lstrip('<').rstrip('>')
-            b = k.bindingsDict.get(stroke)
-            if b:
+            bunchList = k.bindingsDict.get(stroke,[])
+            if bunchList:
+                b = bunchList[0]
                 g.trace('method',b.f)
                 for z in xrange(n):
                     if 1: # No need to do this: commands never alter events.
@@ -1841,8 +1886,9 @@ class keyHandlerClass:
                 
             inverseBindingDict = k.computeInverseBindingDict()
             for commandName in k.mb_tabList:
-                shortcut = inverseBindingDict.get(commandName,'')
-                g.es('%s %s' % (commandName,shortcut),tabName='Completion')
+                shortcutList = inverseBindingDict.get(commandName,[''])
+                for shortcut in shortcutList:
+                    g.es('%s %s' % (commandName,shortcut),tabName='Completion')
     
         c.frame.bodyWantsFocus()
     #@nonl
@@ -1854,8 +1900,17 @@ class keyHandlerClass:
         
         # keys are minibuffer command names, values are shortcuts.
         for shortcut in k.bindingsDict.keys():
-            b = k.bindingsDict.get(shortcut)
-            d [b.commandName] = shortcut
+            bunchList = k.bindingsDict.get(shortcut,[])
+            for b in bunchList:
+                shortcutList = d.get(b.commandName,[])
+                bunchList = k.bindingsDict.get(shortcut,[g.Bunch(pane='all')])
+                for b in bunchList:
+                    # g.trace(shortcut,repr(b.pane))
+                    pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
+                    s = '%s %s' % (shortcut,pane)
+                    if s not in shortcutList:
+                        shortcutList.append(s)
+                d [b.commandName] = shortcutList
     
         return d
     #@nonl
@@ -1898,7 +1953,7 @@ class keyHandlerClass:
         c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
-    #@+node:ekr.20051014170754.1:getShortcutForCommand/Name
+    #@+node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
     def getShortcutForCommandName (self,commandName):
         
         k = self ; c = k.c
@@ -1907,10 +1962,10 @@ class keyHandlerClass:
     
         if command:
             for key in k.bindingsDict:
-                b = k.bindingsDict.get(key)
-                if b.commandName == commandName:
-                    return key
-        
+                bunchList = k.bindingsDict.get(key,[])
+                for b in bunchList:
+                    if b.commandName == commandName:
+                        return key
         return ''
         
     def getShortcutForCommand (self,command):
@@ -1919,13 +1974,13 @@ class keyHandlerClass:
         
         if command:
             for key in k.bindingsDict:
-                b = k.bindingsDict.get(key)
-                if b.commandName == command.__name__:
-                    return key
-        
+                bunchList = k.bindingsDict.get(key,[])
+                for b in bunchList:
+                    if b.commandName == command.__name__:
+                        return key
         return ''
     #@nonl
-    #@-node:ekr.20051014170754.1:getShortcutForCommand/Name
+    #@-node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
     #@+node:ekr.20060104120602:matchKeys
     def matchKeys (self,event,shortcut):
         
@@ -1959,7 +2014,7 @@ class keyHandlerClass:
         if not key:
             return ''
             
-        ch = key[-2]
+        ch = len(key) > 2 and key[-2] or ''
     
         if ch in string.ascii_uppercase:
             return '%sShift-%s>' % (key[:-2],ch.lower())
