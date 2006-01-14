@@ -6,15 +6,98 @@
 #@+node:ekr.20050921094025:4.4 To do
 @nocolor
 #@nonl
-#@+node:ekr.20060113085710:First
-#@+node:ekr.20060113171750:Run pychecker
-#@-node:ekr.20060113171750:Run pychecker
+#@+node:ekr.20060114130017:Docs
+#@+node:ekr.20060114125325:Document new debugging settings
+#@-node:ekr.20060114125325:Document new debugging settings
+#@+node:ekr.20060113174041:Document priority of settings
+@nocolor
+
+We may want to do one or more of the following:
+
+- Allow the user to specify priority list.
+- Create a ! headline specifier.
+#@nonl
+#@-node:ekr.20060113174041:Document priority of settings
 #@+node:ekr.20060112102911:Document minibuffer commands
 #@-node:ekr.20060112102911:Document minibuffer commands
-#@+node:ekr.20060113171831:Play with vim modes
-#@-node:ekr.20060113171831:Play with vim modes
+#@+node:ekr.20060114062436:Document easy tree bindings
+@nocolor
+
+The idea:
+- Plain arrow keys work in tree pane.
+- Alt-arrow keys work anywhere.
+
+Oops: tree-arrow bindings conflict with text binding.  I'm not sure why.
+So at present we must comment out 'redundant' bindings.
+
+contract-or-go-left     ! tree = LtArrow
+# contract-or-go-left   ! tree = Alt-LtArrow
+contract-or-go-left     ! text = Alt-LtArrow
+
+expand-and-go-right     ! tree = RtArrow
+# expand-and-go-right   ! tree = Alt-RtArrow
+expand-and-go-right     ! text = Alt-RtArrow
+
+goto-first-node         ! tree = Home
+# goto-first-node       ! tree = Alt-Home
+goto-first-node         ! text = Alt-Home
+
+goto-last-visible       ! tree = End
+# goto-last-visible     ! tree = Alt-End
+goto-last-visible       ! text = Alt-End
+
+goto-next-visible       ! tree = DnArrow
+# goto-next-visible     ! tree = Alt-DnArrow
+goto-next-visible       ! text = Alt-DnArrow
+
+goto-prev-visible       ! tree = UpArrow
+# goto-prev-visible     ! tree = Alt-UpArrow
+goto-prev-visible       ! text = Alt-UpArrow
+#@nonl
+#@-node:ekr.20060114062436:Document easy tree bindings
+#@-node:ekr.20060114130017:Docs
+#@+node:ekr.20060113085710:First
+#@+node:ekr.20060114080203.1:Shift-Arrow keys should move nodes
+#@-node:ekr.20060114080203.1:Shift-Arrow keys should move nodes
+#@+node:ekr.20060114061826:Fix extend-selection problems
+@nocolor
+
+- Most commands must clear move point:  inserting a char would prabably work effectively.
+
+- Don't honor moveCol when not extending (honor starting column instead).
+
+- Shift-Ctrl-e must be bound to extend what Ctrl-e does.
+#@nonl
+#@-node:ekr.20060114061826:Fix extend-selection problems
 #@-node:ekr.20060113085710:First
 #@+node:ekr.20060110202455:Next
+#@+node:ekr.20060114055714:Improve modes
+#@+node:ekr.20060114060100:Notes
+@nocolor
+
+- enter-x-mode doesn't get shortcuts.  Try putting @mode nodes last?
+
+- Add @string active-keyset setting?
+
+- The mode tab should present commands first, bindings second.
+
+- Modes should persist, unless we have a mode binding like:
+
+command-name -> enter-x-mode = binding
+
+- Have bindings for top-level vim mode like this:
+
+show-completion-list = Tab
+show-completion-list = BackSpace
+
+Bugs:
+
+** Must stay in mode until we leave explictly.
+** @mode must bind shortcuts.
+#@-node:ekr.20060114060100:Notes
+#@+node:ekr.20060114052626:@alias nodes set minibuffer aliases
+#@-node:ekr.20060114052626:@alias nodes set minibuffer aliases
+#@-node:ekr.20060114055714:Improve modes
 #@+node:ekr.20060113170919.1:Think commands when designing workflow, and for chapters
 - create-chapter, destroy-chapter, select-chapter, etc.
 
@@ -23,9 +106,13 @@
 - extend-to-word, extend-to-paragraph, extend-to-sentence, etc.
 #@nonl
 #@-node:ekr.20060113170919.1:Think commands when designing workflow, and for chapters
-#@+node:ekr.20060113081442.1:sort-lines should recolor text
-#@-node:ekr.20060113081442.1:sort-lines should recolor text
 #@+node:ekr.20050928144501.1:Commands for mouseless Leo
+#@+node:ekr.20060114080424:Urgent commands needed for mouseless Leo
+@nocolor
+
+Scroll should work in body pane too.
+#@nonl
+#@-node:ekr.20060114080424:Urgent commands needed for mouseless Leo
 #@+node:ekr.20060112084446:Next
 @nocolor
 
@@ -43,6 +130,17 @@ Focus
 
 - create-tab, clear-tab commands, etc.
     These might get the tab name from the minibuffer...
+    
+- find character, word,etc.
+
+- extending the cursor
+    Possibly the same as moves, except for being in extend mode.
+    
+- moving text around
+    - cut, copy, paste, kill, yank, etc.
+    - delete to x
+
+- dismiss-about-dialog
 #@nonl
 #@-node:ekr.20060112084446:Next
 #@+node:ekr.20060110202238:Missing bindings/commands
@@ -225,11 +323,19 @@ EKR: This can be done with @command nodes, but Leo should have official commands
 #@-node:ekr.20050928144501.1:Commands for mouseless Leo
 #@+node:ekr.20060111152145:Improve scripts menu plugin
 #@-node:ekr.20060111152145:Improve scripts menu plugin
-#@+node:ekr.20060111152145.1:Examine jyLeo to see how to do chapters
-#@-node:ekr.20060111152145.1:Examine jyLeo to see how to do chapters
-#@+node:ekr.20060109183500:Do vim emulation
-#@-node:ekr.20060109183500:Do vim emulation
-#@+node:ekr.20060111103821:Fix weird crasher in Plugins Manager plugin
+#@+node:ekr.20060111152145.1:Study jyLeo's chapters code
+#@-node:ekr.20060111152145.1:Study jyLeo's chapters code
+#@+node:ekr.20060114055611:Fix sort-lines problems
+- It should recolor the text.
+- Does it not stick sometimes?
+#@nonl
+#@-node:ekr.20060114055611:Fix sort-lines problems
+#@+node:ekr.20060111134901:Implement c.es etc.
+#@-node:ekr.20060111134901:Implement c.es etc.
+#@-node:ekr.20060110202455:Next
+#@+node:ekr.20060105133043:Important
+#@+node:ekr.20060111134004:Run Idle in a separate process
+#@+node:ekr.20060111103821:This would fix weird crasher in Plugins Manager plugin
 #@+node:ekr.20060111103821.1:Report
 @nocolor
 
@@ -267,12 +373,7 @@ in __init__
     sequences = root.bind_class(tag)
 AttributeError: 'NoneType' object has no attribute 'bind_class'
 #@-node:ekr.20060111103821.1:Report
-#@-node:ekr.20060111103821:Fix weird crasher in Plugins Manager plugin
-#@+node:ekr.20060111131152:Eliminate 'command' hooks
-Use k.overrideCommand ?
-#@nonl
-#@-node:ekr.20060111131152:Eliminate 'command' hooks
-#@+node:ekr.20060111134004:Run Idle in a separate process
+#@-node:ekr.20060111103821:This would fix weird crasher in Plugins Manager plugin
 #@+node:ekr.20060111134004.1:Posting
 Leo's Open Python Window command should take care to run Idle in a separate process.
 
@@ -396,12 +497,6 @@ def leoPyShellMain(self):
 #@-node:ekr.20031218072017.2937:leoPyShellMain
 #@-node:ekr.20031218072017.2932:openPythonWindow (Dave Hein)
 #@-node:ekr.20060111134004:Run Idle in a separate process
-#@+node:ekr.20060111134901:Implement c.es etc.
-#@-node:ekr.20060111134901:Implement c.es etc.
-#@+node:ekr.20060112170419:Sort lines does not stick? Or does not always work?
-#@-node:ekr.20060112170419:Sort lines does not stick? Or does not always work?
-#@-node:ekr.20060110202455:Next
-#@+node:ekr.20060105133043:Important
 #@+node:ekr.20060109183500.1:Scripting improvements
 execute-named-script executes script in leo/scripts.
 
@@ -4887,7 +4982,7 @@ def createBindings (self):
     widgets = (self.listBox, self.outerFrame)
 
     for w in widgets:
-        k.copyBindingsToWidget('text',w)
+        k.copyBindingsToWidget(['text','all'],w)
         # Bind shortcuts for the following commands...
         for commandName,func in (
             ('full-command',            k.fullCommand),

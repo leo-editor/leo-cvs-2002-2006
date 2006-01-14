@@ -197,7 +197,7 @@
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
-<v t="ekr.20051214100048" a="TV" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051121143951"><vh>Test of long lines</vh>
 <v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
 <v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
@@ -235,6 +235,7 @@
 <v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
 <v t="ekr.20060112062919" a="E"><vh>@@file commentTest.xml</vh></v>
 </v>
+<v t="ekr.20060114113213" a="TV"><vh>test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4424,5 +4425,7 @@ while s != 'kill':
         print &gt;&gt; stdout, s,
         print &gt;&gt; stderr, s,
 print 'bye'</t>
+<t tx="ekr.20060114113213">copy test
+</t>
 </tnodes>
 </leo_file>

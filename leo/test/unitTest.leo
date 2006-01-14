@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8586" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8592" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
 	<global_window_position top="45" left="391" height="781" width="805"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1714,7 +1714,7 @@
 <v t="ekr.20051120110335" annotate="7d71002e"><vh>@test inserting a new node can be undone and redone</vh></v>
 <v t="ekr.20051125155134" annotate="7d71002e"><vh>@test inserting a new node draws the screen exactly once</vh></v>
 <v t="ekr.20051120115046" annotate="7d71002e"><vh>@test undoing insert node restores previous node's body text</vh></v>
-<v t="ekr.20051125165933" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
+<v t="ekr.20051125165933" a="M" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
 <v t="ekr.20051125170139" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
 <v t="ekr.20051108141141" annotate="7d71002e"><vh>Not ready yet</vh>
@@ -7847,7 +7847,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -14009,7 +14009,7 @@ finally:
     if 1:
         p.setHeadString(h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.24"># Should be a comment
+<t tx="ekr.20051107115231.24"># Should be a comment# Should be a comment
 import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
 p = u.findNodeAnywhere(h)
@@ -14548,7 +14548,7 @@ try:
     n2 = c.frame.tree.redrawCount
     assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
 finally:
-    if 0:
+    if 1:
         p.setBodyString('')
         c.redraw_now()</t>
 <t tx="ekr.20051109091731">import leoTest ; u = leoTest.testUtils(c)
@@ -14610,6 +14610,7 @@ finally:
 <t tx="ekr.20051125165933">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
 p = u.findNodeAnywhere(h)
+assert(p)
 c.selectPosition(p)
 s = 'ABC'
 p.setBodyString(s)
