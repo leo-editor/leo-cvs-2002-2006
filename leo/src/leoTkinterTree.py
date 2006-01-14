@@ -334,7 +334,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if self.useBindtags:
             # This _must_ be a Text widget attached to the canvas!
             self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
-            self.c.keyHandler.copyBindingsToWidget(['tree','text','all'],t)
+            self.c.keyHandler.copyBindingsToWidget(['text','all'],t) # 'tree' must *not be in the list!
     
             # newText() attaches these bindings to all headlines.
             self.textBindings = t.bindtags()
@@ -543,7 +543,7 @@ class leoTkinterTree (leoFrame.leoTree):
             if self.useBindtags:
                 t.bindtags(self.textBindings)
             else:
-                c.keyHandler.copyBindingsToWidget('all',t)
+                c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
                 t.bind("<Button-1>", self.onHeadlineClick)
                 t.bind("<Button-3>", self.onHeadlineRightClick)
                 t.bind("<Key>",      self.onHeadlineKey)
