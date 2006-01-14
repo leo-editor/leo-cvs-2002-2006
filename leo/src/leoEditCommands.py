@@ -4571,8 +4571,9 @@ class macroCommandsClass (baseEditCommandsClass):
                 w.event_generate('<Key>',keycode=z[0],keysym=z[1])
             else:
                 meth = z [0].lstrip('<').rstrip('>')
-                b = k.bindingsDict.get(meth)  ### Probably should not strip < and >
-                if b:
+                bunchList = k.bindingsDict.get(meth,[])  ### Probably should not strip < and >
+                if bunchList:
+                    b = bunchList[0]
                     ev = Tk.Event()
                     ev.widget = w
                     ev.keycode = z [1]
@@ -6658,7 +6659,7 @@ class spellTab(leoFind.leoFind):
         widgets = (self.listBox, self.outerFrame)
     
         for w in widgets:
-            k.copyBindingsToWidget('text',w)
+            k.copyBindingsToWidget(['text','all'],w)
             # Bind shortcuts for the following commands...
             for commandName,func in (
                 ('full-command',            k.fullCommand),
