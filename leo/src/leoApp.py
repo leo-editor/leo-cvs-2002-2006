@@ -218,6 +218,7 @@ class LeoApp:
             w.deiconify()
             w.lift()
             w.c.setLog()
+            w.bodyWantsFocus()
         else:
             g.app.finishQuit()
     
