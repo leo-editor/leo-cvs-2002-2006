@@ -344,10 +344,13 @@
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 </v>
-<v t="ekr.20060102113259" a="TV" annotate="7d71002e"><vh>@mode file</vh></v>
+<v t="ekr.20060102113259" a="TV" annotate="7d71002e"><vh>@mode File</vh></v>
+<v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
+<v t="ekr.20060115160004"><vh>@mode Register</vh></v>
+<v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060102102958" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060112085325" a="E"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
@@ -1776,7 +1779,7 @@ print-commands                      = None
 promote                             = Ctrl-{            
 query-replace                       = None
 query-replace-regex                 = None
-quick-command                       = Alt-c     # Usually Ctrl-c, conflicts with cut-text.
+quick-command                       = None # Now implemented with @mode
 re-search-backward                  = None
 re-search-forward                   = None
 read-abbrev-file                    = None
@@ -1879,7 +1882,9 @@ yank                                = Control-y
 yank-pop                            = Alt-y
 yank-rectangle                      = None
 zap-to-character                    = Alt-z</t>
-<t tx="ekr.20060102113259"># Boilerplate for most nodes.
+<t tx="ekr.20060102113259"># A silly mode illustrating vim-like operation.
+
+# Boilerplate for most modes.
 keyboard-quit   = Return
 mode-help       = Tab
 mode-help       = BackSpace
@@ -1900,7 +1905,10 @@ save-file-to    = None</t>
 <t tx="ekr.20060103103812">@color</t>
 <t tx="ekr.20060103103812.1"># Defined by @mode nodes: needed to suppress warnings.
 
-enter-file-mode     = F12</t>
+enter-file-mode             = F12
+enter-quick-command-mode    = Alt-C
+enter-rect-mode             = None
+enter-register-mode         = None</t>
 <t tx="ekr.20060103135341">@color</t>
 <t tx="ekr.20060103135341.1">enter-input-mode        = i
 enter-default-mode      = Alt-x
@@ -4069,5 +4077,45 @@ between what we want when editing a headline and what we want when the headline
 is merely selected. It may be possible to fix these problems, or not.
 
 The workaround is to eliminate all !tree bindings.  This was surprisingly easy to do.</t>
+<t tx="ekr.20060115153348"># Boilerplate for most modes.
+keyboard-quit       = Return
+mode-help           = Tab
+mode-help           = BackSpace
+enter-register-mode = Key-r
+
+backward-kill-sentence  = Delete
+downcase-region         = Ctrl-D
+exchange-point-mark     = Ctrl-X
+insert-file             = Ctrl-I
+kill-region             = Ctrl-Shift-at # This should just delete the selected text.
+list-buffers            = Ctrl-B
+remove-blank-lines      = Ctrl-O
+save-buffers-kill-leo   = Ctrl-C
+save-file               = Ctrl-S
+transpose-lines         = Ctrl-T
+upcase-region           = Ctrl-U
+</t>
+<t tx="ekr.20060115160004"># Boilerplate for most modes.
+keyboard-quit       = Return
+mode-help           = Tab
+mode-help           = BackSpace
+
+append-to-register  = a
+copy-to-register    = s
+enter-rect-mode     = r
+# increment-register= Key-+
+insert-register     = i
+jump-to-register    = j
+# number-to-register= n
+point-to-register   = Space
+prepend-to-register = p
+view-register       = v
+</t>
+<t tx="ekr.20060115160004.1"># Boilerplate for most modes.
+keyboard-quit       = Return
+mode-help           = Tab
+mode-help           = BackSpace
+
+# These should execute rectangle commands, as in Alt-X r r</t>
 </tnodes>
 </leo_file>
