@@ -487,9 +487,11 @@ class keyHandlerClass:
             panes = [paneOrPanes] # list(paneOrPanes) does not work.
         else:
             panes = paneOrPanes
+        # g.trace(panes)
     
-        for pane in panes:
-            for shortcut in keys:
+        for shortcut in keys:
+            shortcutsBunchList = []
+            for pane in panes:
                 old_panes = bindings.get(shortcut,[])
                 assert(type(old_panes)==type([]))
                 if old_panes and pane in old_panes:
@@ -499,9 +501,12 @@ class keyHandlerClass:
                     bunchList = d.get(shortcut,[])
                     for bunch in bunchList:
                         if bunch.pane == pane:
-                            self.copyBindingsHelper(bunch,shortcut,w)
+                            shortcutsBunchList.append(bunch)
                             old_panes.append(pane)
                             bindings [shortcut] = old_panes
+            # Create bindings for the shortcut in all panes.
+            if shortcutsBunchList:
+                self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
                                     
         # Bind all other keys to k.masterCommand.
         def generalTextKeyCallback (event,k=self):
@@ -510,24 +515,40 @@ class keyHandlerClass:
         w.bind('<Key>',generalTextKeyCallback)
     #@nonl
     #@+node:ekr.20060113062832.1:copyBindingsHelper
-    def copyBindingsHelper(self,bunch,shortcut,w):
+    def copyBindingsHelper(self,bunchList,shortcut,w):
     
         k = self ; c = k.c
-        func = bunch.func
-        commandName = bunch.commandName
-        
-        if c.config.getBool('trace_bindings'):
-            filter = c.config.getString('trace_bindings_filter') or ''
-            if not filter or shortcut.find(filter) != -1:
-                pane_filter = c.config.getString('trace_bindings_pane_filter')
-                if not pane_filter or pane_filter.lower() == bunch.pane:
-                    g.trace(bunch.pane,k.prettyPrintKey(shortcut),commandName,w._name)
     
-        def textKeyCallback(event,func=func):
-            func(event)
-            return 'break'
+        textBunch = treeBunch = None
+        for bunch in bunchList:
+            if bunch.pane == 'tree' and treeBunch is None:
+                treeBunch = bunch
+                k.traceBinding (bunch,shortcut,w)
+            elif bunch.pane != 'tree' and textBunch is None:
+                textBunch = bunch
+                k.traceBinding (bunch,shortcut,w)
+            elif c.config.getBool('trace_bindings'):
+                g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+                
+        if textBunch and treeBunch:
+            def textAndTreeKeyCallback(event,c=c,
+                textFunc=textBunch.func,treeFunc=treeBunch.func):
+                w = c.currentPosition().edit_widget()
+                if w and w.cget('state') == 'disabled':
+                    treeFunc(event)
+                else:
+                    textFunc(event)
+                return 'break'
     
-        w.bind(shortcut,textKeyCallback)
+            w.bind(shortcut,textAndTreeKeyCallback)
+            
+        elif textBunch or treeBunch:
+    
+            def textOrTreeKeyCallback(event,func=bunch.func):
+                func(event)
+                return 'break'
+    
+            w.bind(shortcut,textOrTreeKeyCallback)
     #@nonl
     #@-node:ekr.20060113062832.1:copyBindingsHelper
     #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
@@ -648,14 +669,15 @@ class keyHandlerClass:
             ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
             # These bindings for inside the minibuffer are strange beasts.
             # They are sent directly to k.fullcommand with a special callback.
-            ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
-            ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
-            ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
-            ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
-            ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
+            # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
+            # ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
+            # ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
+            # ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
+            # ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
         ):
             # Get the user shortcut *before* creating the callbacks.
             junk, bunchList = c.config.getShortcut(commandName)
+            # g.trace(commandName,bunchList)
             if bunchList:
                 for bunch in bunchList:
                     accel = (bunch and bunch.val)
@@ -677,23 +699,25 @@ class keyHandlerClass:
         
         k = self
         
-        # g.trace(stroke,accel,shortcut,func.__name__)
+        # g.trace(commandName,shortcut,stroke)
+        
         if pane == 'mini' and func != k.keyboardQuit:
-            # Call a strange callback that bypasses k.masterCommand.
-            def minibufferKeyCallback(event,func=func,shortcut=shortcut):
-                k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
-    
-            k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+            if 0:
+                # Call a strange callback that bypasses k.masterCommand.
+                def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                    k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
+        
+                k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
         else:
-            # Create two-levels of callbacks.
-            def specialCallback (event,func=func):
-                return func(event)
-    
-            def keyCallback (event,func=specialCallback,stroke=shortcut):
-                return k.masterCommand(event,func,stroke)
-    
-            k.bindKey(pane,shortcut,keyCallback,commandName)
-    
+                # Create two-levels of callbacks.
+                def specialCallback (event,func=func):
+                    return func(event)
+        
+                def keyCallback (event,func=specialCallback,stroke=shortcut):
+                    return k.masterCommand(event,func,stroke)
+        
+                k.bindKey(pane,shortcut,keyCallback,commandName)
+        
         if ivar:
             setattr(k,ivar,shortcut)
     #@nonl
@@ -746,8 +770,8 @@ class keyHandlerClass:
         
         if trace and interesting:
             g.trace(
-                'stroke',stroke,'ch',repr(ch),'keysym',repr(keysym),
-                'widget',w and g.app.gui.widget_name(w),
+                'stroke:',stroke,'ch:',repr(ch),'keysym:',repr(keysym),
+                'widget:',w and g.app.gui.widget_name(w),
                 g.callers())
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -2044,6 +2068,23 @@ class keyHandlerClass:
             return '<no leoCallback name>'
     #@nonl
     #@-node:ekr.20051010063452:ultimateFuncName
+    #@+node:ekr.20060114171910:traceBinding
+    def traceBinding (self,bunchList,shortcut,w):
+    
+        k = self ; c = k.c
+    
+        if not c.config.getBool('trace_bindings'): return
+        
+        filter = c.config.getString('trace_bindings_filter') or ''
+        if filter and shortcut.lower().find(filter.lower()) == -1: return
+        
+        pane_filter = c.config.getString('trace_bindings_pane_filter')
+        
+        for bunch in bunchList:
+            if not pane_filter or pane_filter.lower() == bunch.pane:
+                g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)
+    #@nonl
+    #@-node:ekr.20060114171910:traceBinding
     #@-node:ekr.20051002152108.1:Shared helpers
     #@+node:ekr.20050923172809:State...
     #@+node:ekr.20050923172814.1:clearState

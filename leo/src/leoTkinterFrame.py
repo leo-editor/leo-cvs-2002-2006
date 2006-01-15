@@ -3504,12 +3504,6 @@ class leoTkinterLog (leoFrame.leoLog):
     
         if k and w:
             k.copyBindingsToWidget(['log','text','all'],w)
-            
-            if 0:
-                # A wretched kludge: put the bindings in the tab!
-                # We can't seem to get focus away from it.
-                tab = self.nb.tab(tabName) # b is a Tk.Button.
-                k.copyBindingsToWidget(['log','text','all'],tab)
     #@nonl
     #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers

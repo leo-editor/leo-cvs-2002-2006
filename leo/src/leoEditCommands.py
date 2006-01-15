@@ -2590,6 +2590,7 @@ class editCommandsClass (baseEditCommandsClass):
             i, j = g.app.gui.getTextSelection(w)
             if (
                 not moveSpot or p.v.t != self.moveSpotNode or
+                i == j or # A cute trick
                 (not w.compare(moveSpot,'==',i) and
                  not w.compare(moveSpot,'==',j))
             ):
@@ -5429,7 +5430,7 @@ class findTab (leoFind.leoFind):
         c = self.c ; k = c.keyHandler
     
         for w in (self.find_ctrl, self.change_ctrl):
-            k.copyBindingsToWidget(['text','mini'],w)
+            k.copyBindingsToWidget(['text','mini','all'],w)
             # Bind shortcuts for the following commands...
             for commandName,func in (
                 ('find-tab-find',       self.findNextCommand),
@@ -5438,17 +5439,9 @@ class findTab (leoFind.leoFind):
                 ('find-tab-change-all', self.changeAllCommand),
                 ('find-tab-change-find',self.changeThenFindCommand),
             ):
-                if 1:
-                    junk, bunchList = c.config.getShortcut(commandName)
-                    for bunch in bunchList:
-                        accel = bunch.val
-                        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                        if shortcut:
-                            # g.trace(shortcut,commandName)
-                            w.bind(shortcut,func)
-                else:
-                    junk, bunch = c.config.getShortcut(commandName)
-                    accel = bunch and bunch.val
+                junk, bunchList = c.config.getShortcut(commandName)
+                for bunch in bunchList:
+                    accel = bunch.val
                     shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                     if shortcut:
                         # g.trace(shortcut,commandName)
@@ -5459,6 +5452,7 @@ class findTab (leoFind.leoFind):
         for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
             w.bind("<Key-Return>", self.findButtonCallback)
             w.bind("<Key-Escape>", self.hideTab)
+    #@nonl
     #@-node:ekr.20051023181449:createBindings (findTab)
     #@+node:ekr.20051020120306.13:createFrame (findTab)
     def createFrame (self,parentFrame):
@@ -6652,7 +6646,7 @@ class spellTab(leoFind.leoFind):
         self.listBox.bind("<Map>",self.onMap)
     #@nonl
     #@-node:ekr.20051025071455.22:createSpellTab
-    #@+node:ekr.20051025120920:createBindings
+    #@+node:ekr.20051025120920:createBindings (spellTab)
     def createBindings (self):
         
         c = self.c ; k = c.keyHandler
@@ -6669,25 +6663,16 @@ class spellTab(leoFind.leoFind):
                 ('spell-ignore',            self.ignore),
                 ('spell-change-then-find',  self.changeThenFind),
             ):
-                if 1:
-                    junk, bunchList = c.config.getShortcut(commandName)
-                    for bunch in bunchList:
-                        accel = bunch.val
-                        shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                        if shortcut:
-                            # g.trace(shortcut,commandName)
-                            w.bind(shortcut,func)
-                else:
-                    junk, bunch = c.config.getShortcut(commandName)
-                    accel = bunch and bunch.val
+                junk, bunchList = c.config.getShortcut(commandName)
+                for bunch in bunchList:
+                    accel = bunch.val
                     shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                     if shortcut:
                         # g.trace(shortcut,commandName)
                         w.bind(shortcut,func)
-                        
-                    
+               
     #@nonl
-    #@-node:ekr.20051025120920:createBindings
+    #@-node:ekr.20051025120920:createBindings (spellTab)
     #@+node:ekr.20051025071455.16:readDictionary
     def readDictionary (self,fileName):
     

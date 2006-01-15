@@ -4320,8 +4320,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
     
     if trace and interesting:
         g.trace(
-            'stroke',stroke,'ch',repr(ch),'keysym',repr(keysym),
-            'widget',w and g.app.gui.widget_name(w),
+            'stroke:',stroke,'ch:',repr(ch),'keysym:',repr(keysym),
+            'widget:',w and g.app.gui.widget_name(w),
             g.callers())
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -4944,9 +4944,11 @@ def copyBindingsToWidget (self,paneOrPanes,w):
         panes = [paneOrPanes] # list(paneOrPanes) does not work.
     else:
         panes = paneOrPanes
+    # g.trace(panes)
 
-    for pane in panes:
-        for shortcut in keys:
+    for shortcut in keys:
+        shortcutsBunchList = []
+        for pane in panes:
             old_panes = bindings.get(shortcut,[])
             assert(type(old_panes)==type([]))
             if old_panes and pane in old_panes:
@@ -4956,9 +4958,12 @@ def copyBindingsToWidget (self,paneOrPanes,w):
                 bunchList = d.get(shortcut,[])
                 for bunch in bunchList:
                     if bunch.pane == pane:
-                        self.copyBindingsHelper(bunch,shortcut,w)
+                        shortcutsBunchList.append(bunch)
                         old_panes.append(pane)
                         bindings [shortcut] = old_panes
+        # Create bindings for the shortcut in all panes.
+        if shortcutsBunchList:
+            self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
                                 
     # Bind all other keys to k.masterCommand.
     def generalTextKeyCallback (event,k=self):
@@ -4967,24 +4972,40 @@ def copyBindingsToWidget (self,paneOrPanes,w):
     w.bind('<Key>',generalTextKeyCallback)
 #@nonl
 #@+node:ekr.20060113062832.1:copyBindingsHelper
-def copyBindingsHelper(self,bunch,shortcut,w):
+def copyBindingsHelper(self,bunchList,shortcut,w):
 
     k = self ; c = k.c
-    func = bunch.func
-    commandName = bunch.commandName
-    
-    if c.config.getBool('trace_bindings'):
-        filter = c.config.getString('trace_bindings_filter') or ''
-        if not filter or shortcut.find(filter) != -1:
-            pane_filter = c.config.getString('trace_bindings_pane_filter')
-            if not pane_filter or pane_filter.lower() == bunch.pane:
-                g.trace(bunch.pane,k.prettyPrintKey(shortcut),commandName,w._name)
 
-    def textKeyCallback(event,func=func):
-        func(event)
-        return 'break'
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
 
-    w.bind(shortcut,textKeyCallback)
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
@@ -5105,14 +5126,15 @@ def makeSpecialBindings (self):
         ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
         # These bindings for inside the minibuffer are strange beasts.
         # They are sent directly to k.fullcommand with a special callback.
-        ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
-        ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
-        ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
-        ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
-        ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
+        # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
+        # ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
+        # ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
+        # ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
+        # ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
     ):
         # Get the user shortcut *before* creating the callbacks.
         junk, bunchList = c.config.getShortcut(commandName)
+        # g.trace(commandName,bunchList)
         if bunchList:
             for bunch in bunchList:
                 accel = (bunch and bunch.val)
@@ -5134,23 +5156,25 @@ def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
     
     k = self
     
-    # g.trace(stroke,accel,shortcut,func.__name__)
+    # g.trace(commandName,shortcut,stroke)
+    
     if pane == 'mini' and func != k.keyboardQuit:
-        # Call a strange callback that bypasses k.masterCommand.
-        def minibufferKeyCallback(event,func=func,shortcut=shortcut):
-            k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
-
-        k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+        if 0:
+            # Call a strange callback that bypasses k.masterCommand.
+            def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
+    
+            k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
     else:
-        # Create two-levels of callbacks.
-        def specialCallback (event,func=func):
-            return func(event)
-
-        def keyCallback (event,func=specialCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-
-        k.bindKey(pane,shortcut,keyCallback,commandName)
-
+            # Create two-levels of callbacks.
+            def specialCallback (event,func=func):
+                return func(event)
+    
+            def keyCallback (event,func=specialCallback,stroke=shortcut):
+                return k.masterCommand(event,func,stroke)
+    
+            k.bindKey(pane,shortcut,keyCallback,commandName)
+    
     if ivar:
         setattr(k,ivar,shortcut)
 #@nonl
@@ -5187,12 +5211,6 @@ def setTabBindings (self,tabName):
 
     if k and w:
         k.copyBindingsToWidget(['log','text','all'],w)
-        
-        if 0:
-            # A wretched kludge: put the bindings in the tab!
-            # We can't seem to get focus away from it.
-            tab = self.nb.tab(tabName) # b is a Tk.Button.
-            k.copyBindingsToWidget(['log','text','all'],tab)
 #@nonl
 #@-node:ekr.20051022162730:setTabBindings
 #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
@@ -5211,9 +5229,11 @@ def copyBindingsToWidget (self,paneOrPanes,w):
         panes = [paneOrPanes] # list(paneOrPanes) does not work.
     else:
         panes = paneOrPanes
+    # g.trace(panes)
 
-    for pane in panes:
-        for shortcut in keys:
+    for shortcut in keys:
+        shortcutsBunchList = []
+        for pane in panes:
             old_panes = bindings.get(shortcut,[])
             assert(type(old_panes)==type([]))
             if old_panes and pane in old_panes:
@@ -5223,9 +5243,12 @@ def copyBindingsToWidget (self,paneOrPanes,w):
                 bunchList = d.get(shortcut,[])
                 for bunch in bunchList:
                     if bunch.pane == pane:
-                        self.copyBindingsHelper(bunch,shortcut,w)
+                        shortcutsBunchList.append(bunch)
                         old_panes.append(pane)
                         bindings [shortcut] = old_panes
+        # Create bindings for the shortcut in all panes.
+        if shortcutsBunchList:
+            self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
                                 
     # Bind all other keys to k.masterCommand.
     def generalTextKeyCallback (event,k=self):
@@ -5234,24 +5257,40 @@ def copyBindingsToWidget (self,paneOrPanes,w):
     w.bind('<Key>',generalTextKeyCallback)
 #@nonl
 #@+node:ekr.20060113062832.1:copyBindingsHelper
-def copyBindingsHelper(self,bunch,shortcut,w):
+def copyBindingsHelper(self,bunchList,shortcut,w):
 
     k = self ; c = k.c
-    func = bunch.func
-    commandName = bunch.commandName
-    
-    if c.config.getBool('trace_bindings'):
-        filter = c.config.getString('trace_bindings_filter') or ''
-        if not filter or shortcut.find(filter) != -1:
-            pane_filter = c.config.getString('trace_bindings_pane_filter')
-            if not pane_filter or pane_filter.lower() == bunch.pane:
-                g.trace(bunch.pane,k.prettyPrintKey(shortcut),commandName,w._name)
 
-    def textKeyCallback(event,func=func):
-        func(event)
-        return 'break'
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
 
-    w.bind(shortcut,textKeyCallback)
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
@@ -5291,7 +5330,7 @@ def setBindings (self):
     if self.useBindtags:
         # This _must_ be a Text widget attached to the canvas!
         self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
-        self.c.keyHandler.copyBindingsToWidget(['text','all'],t) # 'tree' must *not be in the list!
+        self.c.keyHandler.copyBindingsToWidget(['text','tree','all'],t)
 
         # newText() attaches these bindings to all headlines.
         self.textBindings = t.bindtags()
@@ -5317,9 +5356,11 @@ def copyBindingsToWidget (self,paneOrPanes,w):
         panes = [paneOrPanes] # list(paneOrPanes) does not work.
     else:
         panes = paneOrPanes
+    # g.trace(panes)
 
-    for pane in panes:
-        for shortcut in keys:
+    for shortcut in keys:
+        shortcutsBunchList = []
+        for pane in panes:
             old_panes = bindings.get(shortcut,[])
             assert(type(old_panes)==type([]))
             if old_panes and pane in old_panes:
@@ -5329,9 +5370,12 @@ def copyBindingsToWidget (self,paneOrPanes,w):
                 bunchList = d.get(shortcut,[])
                 for bunch in bunchList:
                     if bunch.pane == pane:
-                        self.copyBindingsHelper(bunch,shortcut,w)
+                        shortcutsBunchList.append(bunch)
                         old_panes.append(pane)
                         bindings [shortcut] = old_panes
+        # Create bindings for the shortcut in all panes.
+        if shortcutsBunchList:
+            self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
                                 
     # Bind all other keys to k.masterCommand.
     def generalTextKeyCallback (event,k=self):
@@ -5340,24 +5384,40 @@ def copyBindingsToWidget (self,paneOrPanes,w):
     w.bind('<Key>',generalTextKeyCallback)
 #@nonl
 #@+node:ekr.20060113062832.1:copyBindingsHelper
-def copyBindingsHelper(self,bunch,shortcut,w):
+def copyBindingsHelper(self,bunchList,shortcut,w):
 
     k = self ; c = k.c
-    func = bunch.func
-    commandName = bunch.commandName
-    
-    if c.config.getBool('trace_bindings'):
-        filter = c.config.getString('trace_bindings_filter') or ''
-        if not filter or shortcut.find(filter) != -1:
-            pane_filter = c.config.getString('trace_bindings_pane_filter')
-            if not pane_filter or pane_filter.lower() == bunch.pane:
-                g.trace(bunch.pane,k.prettyPrintKey(shortcut),commandName,w._name)
 
-    def textKeyCallback(event,func=func):
-        func(event)
-        return 'break'
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
 
-    w.bind(shortcut,textKeyCallback)
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
@@ -6026,9 +6086,11 @@ def copyBindingsToWidget (self,paneOrPanes,w):
         panes = [paneOrPanes] # list(paneOrPanes) does not work.
     else:
         panes = paneOrPanes
+    # g.trace(panes)
 
-    for pane in panes:
-        for shortcut in keys:
+    for shortcut in keys:
+        shortcutsBunchList = []
+        for pane in panes:
             old_panes = bindings.get(shortcut,[])
             assert(type(old_panes)==type([]))
             if old_panes and pane in old_panes:
@@ -6038,9 +6100,12 @@ def copyBindingsToWidget (self,paneOrPanes,w):
                 bunchList = d.get(shortcut,[])
                 for bunch in bunchList:
                     if bunch.pane == pane:
-                        self.copyBindingsHelper(bunch,shortcut,w)
+                        shortcutsBunchList.append(bunch)
                         old_panes.append(pane)
                         bindings [shortcut] = old_panes
+        # Create bindings for the shortcut in all panes.
+        if shortcutsBunchList:
+            self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
                                 
     # Bind all other keys to k.masterCommand.
     def generalTextKeyCallback (event,k=self):
@@ -6049,24 +6114,40 @@ def copyBindingsToWidget (self,paneOrPanes,w):
     w.bind('<Key>',generalTextKeyCallback)
 #@nonl
 #@+node:ekr.20060113062832.1:copyBindingsHelper
-def copyBindingsHelper(self,bunch,shortcut,w):
+def copyBindingsHelper(self,bunchList,shortcut,w):
 
     k = self ; c = k.c
-    func = bunch.func
-    commandName = bunch.commandName
-    
-    if c.config.getBool('trace_bindings'):
-        filter = c.config.getString('trace_bindings_filter') or ''
-        if not filter or shortcut.find(filter) != -1:
-            pane_filter = c.config.getString('trace_bindings_pane_filter')
-            if not pane_filter or pane_filter.lower() == bunch.pane:
-                g.trace(bunch.pane,k.prettyPrintKey(shortcut),commandName,w._name)
 
-    def textKeyCallback(event,func=func):
-        func(event)
-        return 'break'
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
 
-    w.bind(shortcut,textKeyCallback)
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
@@ -6191,6 +6272,582 @@ def getShortcutForCommand (self,command):
 #@-node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
 #@-node:ekr.20060114091359:All uses of bindingsDict
 #@-node:ekr.20060114080203:Fixed many binding problems
+#@+node:ekr.20060114061826:Fixed extend-selection problems
+@nocolor
+
+The fix is easy: extensionHelper resets movePoint any time there is no selection.
+
+@color
+#@+node:ekr.20060113130510:extendHelper
+def extendHelper (self,w,extend,ins1,spot):
+
+    '''Handle the details of extending the selection.
+    
+    extend: Clear the selection unless this is True.
+    ins1:   The *previous* insert point.
+    spot:   The *new* insert point.
+    '''
+    c = self.c ; p = c.currentPosition()
+    moveSpot = self.moveSpot
+    if extend or self.extendMode:
+        i, j = g.app.gui.getTextSelection(w)
+        if (
+            not moveSpot or p.v.t != self.moveSpotNode or
+            i == j or # A cute trick
+            (not w.compare(moveSpot,'==',i) and
+             not w.compare(moveSpot,'==',j))
+        ):
+            self.moveSpotNode = p.v.t
+            self.moveSpot = w.index(ins1)
+            self.moveCol = int(ins1.split('.')[1])
+            # g.trace('reset moveSpot',self.moveSpot)
+        moveSpot = self.moveSpot
+        # g.trace(spot,moveSpot)
+        if w.compare(spot,'<',moveSpot):
+            g.app.gui.setTextSelection(w,spot,moveSpot,insert=None)
+        else:
+            g.app.gui.setTextSelection(w,moveSpot,spot,insert=None)
+    else:
+        self.moveSpot = spot
+        self.moveCol = int(spot.split('.')[1])
+        g.app.gui.setTextSelection(w,spot,spot,insert=None)
+#@nonl
+#@-node:ekr.20060113130510:extendHelper
+#@-node:ekr.20060114061826:Fixed extend-selection problems
+#@+node:ekr.20060114163130:Fixed per-pane bindings!
+#@+node:ekr.20050920085536.65: masterCommand & helpers
+def masterCommand (self,event,func,stroke,commandName=None):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    trace = c.config.getBool('trace_masterCommand')
+    c.setLog()
+    c.startRedrawCount = c.frame.tree.redrawCount
+    k.stroke = stroke # Set this global for general use.
+    keysym = event and event.keysym or ''
+    ch = event and event.char or ''
+    w = event and event.widget
+    k.func = func
+    k.funcReturn = None # For unit testing.
+    if commandName is None:
+        commandName = k.ultimateFuncName(func)
+    special = keysym in (
+        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func is not None or ch != '' # or stroke != '<Key>'
+    
+    if trace and interesting:
+        g.trace(
+            'stroke:',stroke,'ch:',repr(ch),'keysym:',repr(keysym),
+            'widget:',w and g.app.gui.widget_name(w),
+            g.callers())
+
+    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+
+    inserted = not special or (
+        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
+
+    if inserted:
+        # g.trace(stroke,keysym)
+        << add character to history >>
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if stroke == k.abortAllModesKey: # 'Control-g'
+        k.clearState()
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName)
+        return 'break'
+
+    if k.inState():
+        if not special: # Don't pass these on.
+            k.callStateFunction(event) # Calls end-command.
+        return 'break'
+
+    # if k.keystrokeFunctionDict.has_key(stroke):
+        # if k.callKeystrokeFunction(event): # Calls end-command
+            # return 'break'
+
+    if k.regx.iter:
+        try:
+            k.regXKey = keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        if trace: g.trace('command',commandName)
+        # Note: k.funcReturn is for k.simulateCommand.
+        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+            # The callback function will call c.doCommand
+            val = func(event)
+            k.funcReturn = k.funcReturn or val # For unit tests.
+        else:
+            # Call c.doCommand directly
+            c.doCommand(func,commandName,event=event)
+        k.endCommand(event,commandName)
+        return 'break'
+    else:
+        val = k.handleDefaultChar(event)
+        return val
+#@nonl
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+
+k.keysymHistory.insert(0,keysym)
+
+if len(ch) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,ch)
+
+if 0: # traces
+    g.trace(keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self ; val = None
+    
+    # g.trace(k.state.kind,k.state)
+    
+    if k.state.kind:
+        if k.state.handler:
+            val = k.state.handler(event)
+            if val != 'continue':
+                k.endCommand(event,k.commandName)
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+            
+    return val
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        # forceFocus = func.__name__ != 'leoCallback'
+        k.endCommand(event,commandName)
+    
+    return func
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+#@+node:ekr.20051026083544:handleDefaultChar
+def handleDefaultChar(self,event):
+    
+    c = self.c
+    w = event and event.widget
+    name = g.app.gui.widget_name(w)
+
+    if name.startswith('body'):
+        # For Leo 4.4a4: allow Tk defaults.
+        # But this is dangerous, and should be removed.
+        action = self.unboundKeyAction
+        if action in ('insert','replace'):
+            c.editCommands.selfInsertCommand(event,action=action)
+        return 'break'
+    elif name.startswith('head'):
+        g.trace("can't happen: %s" % (name),color='red')
+        c.frame.tree.updateHead(event,w)
+        return 'break'
+    else:
+        # Let tkinter handle the event.
+        # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
+        return None
+#@nonl
+#@-node:ekr.20051026083544:handleDefaultChar
+#@-node:ekr.20050920085536.65: masterCommand & helpers
+#@+node:ekr.20051024102724:tkTtree.setBindings
+# New in 4.4a2.
+
+def setBindings (self):
+    
+    '''Copy all bindings to headlines.'''
+    
+    if self.useBindtags:
+        # This _must_ be a Text widget attached to the canvas!
+        self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
+        self.c.keyHandler.copyBindingsToWidget(['text','tree','all'],t)
+
+        # newText() attaches these bindings to all headlines.
+        self.textBindings = t.bindtags()
+    else:
+        self.bindingWidget = None
+   
+    self.createPermanentBindings()
+#@nonl
+#@-node:ekr.20051024102724:tkTtree.setBindings
+#@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+def makeSpecialBindings (self):
+    
+    '''Make the bindings and set ivars for sepcial keystrokes.'''
+    
+    k = self ; c = k.c ; f = c.frame
+    
+    # These defaults may be overridden.
+    for pane,stroke,ivar,commandName,func in (
+        ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
+        ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+        ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
+        ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+        # These bindings for inside the minibuffer are strange beasts.
+        # They are sent directly to k.fullcommand with a special callback.
+        # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
+        # ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
+        # ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
+        # ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
+        # ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
+    ):
+        # Get the user shortcut *before* creating the callbacks.
+        junk, bunchList = c.config.getShortcut(commandName)
+        # g.trace(commandName,bunchList)
+        if bunchList:
+            for bunch in bunchList:
+                accel = (bunch and bunch.val)
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
+        else:
+            accel = stroke
+            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
+
+    # Add a binding for <Key> events, so all key events go through masterCommand.
+    def allKeysCallback (event):
+        return k.masterCommand(event,func=None,stroke='<Key>')
+
+    k.bindKey('all','<Key>',allKeysCallback,'master-command')
+#@nonl
+#@+node:ekr.20051220083410:makeSpecialBinding
+def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
+    
+    k = self
+    
+    # g.trace(commandName,shortcut,stroke)
+    
+    if pane == 'mini' and func != k.keyboardQuit:
+        if 0:
+            # Call a strange callback that bypasses k.masterCommand.
+            def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
+    
+            k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+    else:
+            # Create two-levels of callbacks.
+            def specialCallback (event,func=func):
+                return func(event)
+    
+            def keyCallback (event,func=specialCallback,stroke=shortcut):
+                return k.masterCommand(event,func,stroke)
+    
+            k.bindKey(pane,shortcut,keyCallback,commandName)
+    
+    if ivar:
+        setattr(k,ivar,shortcut)
+#@nonl
+#@-node:ekr.20051220083410:makeSpecialBinding
+#@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+#@+node:ekr.20060114171910:traceBinding
+def traceBinding (self,bunchList,shortcut,w):
+
+    k = self ; c = k.c
+
+    if not c.config.getBool('trace_bindings'): return
+    
+    filter = c.config.getString('trace_bindings_filter') or ''
+    if filter and shortcut.lower().find(filter.lower()) == -1: return
+    
+    pane_filter = c.config.getString('trace_bindings_pane_filter')
+    
+    for bunch in bunchList:
+        if not pane_filter or pane_filter.lower() == bunch.pane:
+            g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)
+#@nonl
+#@-node:ekr.20060114171910:traceBinding
+#@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
+def copyBindingsToWidget (self,paneOrPanes,w):
+    
+    '''Copy all bindings for the given panes to widget w.
+    
+    paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+    
+    # g.trace(paneOrPanes,g.app.gui.widget_name(w))
+
+    k = self ; d = k.bindingsDict
+    bindings = {}
+    keys = d.keys() ; keys.sort()
+    if type(paneOrPanes) == type('abc'):
+        panes = [paneOrPanes] # list(paneOrPanes) does not work.
+    else:
+        panes = paneOrPanes
+    # g.trace(panes)
+
+    for shortcut in keys:
+        shortcutsBunchList = []
+        for pane in panes:
+            old_panes = bindings.get(shortcut,[])
+            assert(type(old_panes)==type([]))
+            if old_panes and pane in old_panes:
+                # This should have been caught earlier, but another check doesn't hurt.
+                g.trace('*** redefining %s in %s' % (shortcut,pane))
+            else:
+                bunchList = d.get(shortcut,[])
+                for bunch in bunchList:
+                    if bunch.pane == pane:
+                        shortcutsBunchList.append(bunch)
+                        old_panes.append(pane)
+                        bindings [shortcut] = old_panes
+        # Create bindings for the shortcut in all panes.
+        if shortcutsBunchList:
+            self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
+                                
+    # Bind all other keys to k.masterCommand.
+    def generalTextKeyCallback (event,k=self):
+        k.masterCommand(event,func=None,stroke='<Key>',commandName=None)
+
+    w.bind('<Key>',generalTextKeyCallback)
+#@nonl
+#@+node:ekr.20060113062832.1:copyBindingsHelper
+def copyBindingsHelper(self,bunchList,shortcut,w):
+
+    k = self ; c = k.c
+
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
+
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)
+#@nonl
+#@-node:ekr.20060113062832.1:copyBindingsHelper
+#@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
+#@+node:ekr.20060114180908:All calls to copyBindingsToWidget
+#@+node:ekr.20051022162730:setTabBindings
+def setTabBindings (self,tabName):
+    
+    c = self.c ; k = c.keyHandler
+
+    w = self.textDict.get(tabName)
+
+    if k and w:
+        k.copyBindingsToWidget(['log','text','all'],w)
+#@nonl
+#@-node:ekr.20051022162730:setTabBindings
+#@+node:ekr.20051024102724:tkTtree.setBindings
+# New in 4.4a2.
+
+def setBindings (self):
+    
+    '''Copy all bindings to headlines.'''
+    
+    if self.useBindtags:
+        # This _must_ be a Text widget attached to the canvas!
+        self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
+        self.c.keyHandler.copyBindingsToWidget(['text','tree','all'],t)
+
+        # newText() attaches these bindings to all headlines.
+        self.textBindings = t.bindtags()
+    else:
+        self.bindingWidget = None
+   
+    self.createPermanentBindings()
+#@nonl
+#@-node:ekr.20051024102724:tkTtree.setBindings
+#@+node:ekr.20051023181449:createBindings (findTab)
+def createBindings (self):
+    
+    c = self.c ; k = c.keyHandler
+
+    for w in (self.find_ctrl, self.change_ctrl):
+        k.copyBindingsToWidget(['text','mini','all'],w)
+        # Bind shortcuts for the following commands...
+        for commandName,func in (
+            ('find-tab-find',       self.findNextCommand),
+            ('find-tab-find-prev',  self.findPrevCommand),
+            ('find-tab-change',     self.changeCommand),
+            ('find-tab-change-all', self.changeAllCommand),
+            ('find-tab-change-find',self.changeThenFindCommand),
+        ):
+            junk, bunchList = c.config.getShortcut(commandName)
+            for bunch in bunchList:
+                accel = bunch.val
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
+        w.bind ("<1>",  self.resetWrap,'+')
+        w.bind("<Key>", self.resetWrap,'+')
+
+    for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
+        w.bind("<Key-Return>", self.findButtonCallback)
+        w.bind("<Key-Escape>", self.hideTab)
+#@nonl
+#@-node:ekr.20051023181449:createBindings (findTab)
+#@+node:ekr.20051025120920:createBindings (spellTab)
+def createBindings (self):
+    
+    c = self.c ; k = c.keyHandler
+    widgets = (self.listBox, self.outerFrame)
+
+    for w in widgets:
+        k.copyBindingsToWidget(['text','all'],w)
+        # Bind shortcuts for the following commands...
+        for commandName,func in (
+            ('full-command',            k.fullCommand),
+            ('hide-spell-tab',          self.hide),
+            ('spell-add',               self.add),
+            ('spell-find',              self.find),
+            ('spell-ignore',            self.ignore),
+            ('spell-change-then-find',  self.changeThenFind),
+        ):
+            junk, bunchList = c.config.getShortcut(commandName)
+            for bunch in bunchList:
+                accel = bunch.val
+                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
+           
+#@nonl
+#@-node:ekr.20051025120920:createBindings (spellTab)
+#@+node:ekr.20040803072955.11:newText (leoTkinterTree)
+def newText (self,p,x,y):
+    
+    canvas = self.canvas ; tag = "textBox"
+    c = self.c ; d = self.freeText
+    key = p.v ; assert key
+    pList = d.get(key,[])
+    
+    # Return only Tk.Text widgets with an exact match with p.
+    found = False
+    for i in xrange(len(pList)):
+        p2,t,theId = pList[i]
+        if p2 == p:
+            del pList[i]
+            theId = t.leo_window_id
+            assert(theId)
+            assert(t.leo_position == p2)
+            canvas.coords(theId,x,y)
+            t.configure(font=self.font) # 12/17/04
+            found = True ; break
+            
+    if not found:
+        # Tags are not valid in Tk.Text widgets.
+        # The name is valid, but apparently it must be unique.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
+    
+        if self.useBindtags:
+            t.bindtags(self.textBindings)
+        else:
+            c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
+            t.bind("<Button-1>", self.onHeadlineClick)
+            t.bind("<Button-3>", self.onHeadlineRightClick)
+            t.bind("<Key>",      self.onHeadlineKey)
+
+        if 0: # As of 4.4 this does not appear necessary.
+            t.bind("<Control-t>",self.onControlT)
+
+        if 0: # Crashes on XP.
+            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+    
+        theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        t.leo_window_id = theId # Never changes.
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
+
+    # Common configuration.
+    # We must call setText even if p matches: p's text may have changed!
+    self.setText(t,p.headString())
+    t.configure(width=self.headWidth(p=p))
+    t.leo_position = p # Never changes.
+    t.leo_generation = self.generation
+
+    assert(theId == t.leo_window_id)
+    assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    
+    # Entries are pairs (p,t,theId) indexed by v.
+    key = p.v ; assert key
+    pList = self.visibleText.get(key,[])
+    pList.append((p,t,theId),)
+    self.visibleText[key] = pList
+    return t
+#@nonl
+#@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+def PropagateButton4(e):
+    canvas.event_generate("<Button-4>")
+    return "break"
+
+def PropagateButton5(e):
+    canvas.event_generate("<Button-5>")
+    return "break"
+
+def PropagateMouseWheel(e):
+    canvas.event_generate("<MouseWheel>")
+    return "break"
+
+if self.useBindtags:
+    instance_tag = t.bindtags()[0]
+    t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+    t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+    t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+else:
+    # UNTESTED CASE!!!
+    t.bind("<Button-4>", PropagateButton4)
+    t.bind("<Button-5>", PropagateButton5)
+    t.bind("<MouseWheel>", PropagateMouseWheel)
+
+#@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+#@-node:ekr.20040803072955.11:newText (leoTkinterTree)
+#@-node:ekr.20060114180908:All calls to copyBindingsToWidget
+#@-node:ekr.20060114163130:Fixed per-pane bindings!
 #@-node:ekr.20060106091831.1:Bugs fixed
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands
@@ -6600,8 +7257,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
     
     if trace and interesting:
         g.trace(
-            'stroke',stroke,'ch',repr(ch),'keysym',repr(keysym),
-            'widget',w and g.app.gui.widget_name(w),
+            'stroke:',stroke,'ch:',repr(ch),'keysym:',repr(keysym),
+            'widget:',w and g.app.gui.widget_name(w),
             g.callers())
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -7597,8 +8254,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
     
     if trace and interesting:
         g.trace(
-            'stroke',stroke,'ch',repr(ch),'keysym',repr(keysym),
-            'widget',w and g.app.gui.widget_name(w),
+            'stroke:',stroke,'ch:',repr(ch),'keysym:',repr(keysym),
+            'widget:',w and g.app.gui.widget_name(w),
             g.callers())
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -8407,6 +9064,7 @@ def extendHelper (self,w,extend,ins1,spot):
         i, j = g.app.gui.getTextSelection(w)
         if (
             not moveSpot or p.v.t != self.moveSpotNode or
+            i == j or # A cute trick
             (not w.compare(moveSpot,'==',i) and
              not w.compare(moveSpot,'==',j))
         ):
@@ -8941,6 +9599,7 @@ def extendHelper (self,w,extend,ins1,spot):
         i, j = g.app.gui.getTextSelection(w)
         if (
             not moveSpot or p.v.t != self.moveSpotNode or
+            i == j or # A cute trick
             (not w.compare(moveSpot,'==',i) and
              not w.compare(moveSpot,'==',j))
         ):
