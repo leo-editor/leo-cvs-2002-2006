@@ -340,9 +340,9 @@ class keyHandlerClass:
         #@    << trace bindings if enabled in leoSettings.leo >>
         #@+node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
         if c.config.getBool('trace_bindings'):
-            filter = c.config.getString('trace_bindings_filter') or ''
-            # g.trace(repr(filter))
-            if not filter or shortcut.find(filter) != -1:
+            theFilter = c.config.getString('trace_bindings_filter') or ''
+            # g.trace(repr(theFilter))
+            if not theFilter or shortcut.find(theFilter) != -1:
                 pane_filter = c.config.getString('trace_bindings_pane_filter')
                 if not pane_filter or pane_filter.lower() == pane:
                     g.trace(pane,k.prettyPrintKey(shortcut),commandName)
@@ -640,7 +640,7 @@ class keyHandlerClass:
         
         '''Make the bindings and set ivars for sepcial keystrokes.'''
         
-        k = self ; c = k.c ; f = c.frame
+        k = self ; c = k.c
         
         # These defaults may be overridden.
         for pane,stroke,ivar,commandName,func in (
@@ -1044,12 +1044,6 @@ class keyHandlerClass:
         return 'break'
     #@nonl
     #@-node:ekr.20060104110233:generalModeHandler
-    #@+node:ekr.20060102135349.1:k.deleteModeBindings
-    def deleteModeBindings (self,d):
-        
-        g.trace(d)
-    #@nonl
-    #@-node:ekr.20060102135349.1:k.deleteModeBindings
     #@+node:ekr.20060104164523:modeHelp & helper
     def modeHelp (self,event):
     
@@ -1620,12 +1614,6 @@ class keyHandlerClass:
                 g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
     #@-node:ekr.20051015110547:k.registerCommand
-    #@+node:ekr.20060102135349.1:k.deleteModeBindings
-    def deleteModeBindings (self,d):
-        
-        g.trace(d)
-    #@nonl
-    #@-node:ekr.20060102135349.1:k.deleteModeBindings
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
     #@+at 
@@ -1942,8 +1930,8 @@ class keyHandlerClass:
     
         if not c.config.getBool('trace_bindings'): return
         
-        filter = c.config.getString('trace_bindings_filter') or ''
-        if filter and shortcut.lower().find(filter.lower()) == -1: return
+        theFilter = c.config.getString('trace_bindings_filter') or ''
+        if theFilter and shortcut.lower().find(theFilter.lower()) == -1: return
         
         pane_filter = c.config.getString('trace_bindings_pane_filter')
         
