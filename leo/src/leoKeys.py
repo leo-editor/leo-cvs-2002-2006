@@ -1912,7 +1912,7 @@ class keyHandlerClass:
             for commandName in k.mb_tabList:
                 shortcutList = inverseBindingDict.get(commandName,[''])
                 for shortcut in shortcutList:
-                    g.es('%s %s' % (commandName,shortcut),tabName='Completion')
+                    g.es('%s %s' % (commandName,k.prettyPrintKey(shortcut)),tabName='Completion')
     
         c.frame.bodyWantsFocus()
     #@nonl
@@ -1931,7 +1931,7 @@ class keyHandlerClass:
                 for b in bunchList:
                     # g.trace(shortcut,repr(b.pane))
                     pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
-                    s = '%s %s' % (shortcut,pane)
+                    s = '%s %s' % (k.prettyPrintKey(shortcut),pane)
                     if s not in shortcutList:
                         shortcutList.append(s)
                 d [b.commandName] = shortcutList
