@@ -1921,7 +1921,7 @@ def onHeadChanged (self,p,undoType='Typing'):
         else:
             pass # g.trace('not changed')
     finally:
-        c.endUpdate(changed)
+        c.endUpdate()
         if self.stayInTree:
             frame.treeWantsFocus()
         else:
@@ -6036,7 +6036,7 @@ def computeCompletionList (self,defaultTabList,backspace):
         for commandName in k.mb_tabList:
             shortcutList = inverseBindingDict.get(commandName,[''])
             for shortcut in shortcutList:
-                g.es('%s %s' % (commandName,shortcut),tabName='Completion')
+                g.es('%s %s' % (commandName,k.prettyPrintKey(shortcut)),tabName='Completion')
 
     c.frame.bodyWantsFocus()
 #@nonl
@@ -6055,7 +6055,7 @@ def computeInverseBindingDict (self):
             for b in bunchList:
                 # g.trace(shortcut,repr(b.pane))
                 pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
-                s = '%s %s' % (shortcut,pane)
+                s = '%s %s' % (k.prettyPrintKey(shortcut),pane)
                 if s not in shortcutList:
                     shortcutList.append(s)
             d [b.commandName] = shortcutList
@@ -6234,7 +6234,7 @@ def computeInverseBindingDict (self):
             for b in bunchList:
                 # g.trace(shortcut,repr(b.pane))
                 pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
-                s = '%s %s' % (shortcut,pane)
+                s = '%s %s' % (k.prettyPrintKey(shortcut),pane)
                 if s not in shortcutList:
                     shortcutList.append(s)
             d [b.commandName] = shortcutList
@@ -6848,6 +6848,13 @@ else:
 #@-node:ekr.20040803072955.11:newText (leoTkinterTree)
 #@-node:ekr.20060114180908:All calls to copyBindingsToWidget
 #@-node:ekr.20060114163130:Fixed per-pane bindings!
+#@+node:ekr.20060114183604:Always redraw the screen after editing a label
+@nocolor
+
+The fix was simply to call endUpdate() rather than endUpdate(changed) in onHeadChanged.
+This should be safe: The change-all command could always enclose the code in begin/endUpdate.
+#@nonl
+#@-node:ekr.20060114183604:Always redraw the screen after editing a label
 #@-node:ekr.20060106091831.1:Bugs fixed
 #@+node:ekr.20060107104019:Code level
 #@+node:ekr.20060107103157:Added support for plugin menu commands
@@ -7821,7 +7828,7 @@ def onHeadChanged (self,p,undoType='Typing'):
         else:
             pass # g.trace('not changed')
     finally:
-        c.endUpdate(changed)
+        c.endUpdate()
         if self.stayInTree:
             frame.treeWantsFocus()
         else:
@@ -9624,6 +9631,8 @@ def extendHelper (self,w,extend,ins1,spot):
 The fix was to add the 'text' specifier to the call to copyBindingsToWidget in tree.setTabBindings.
 #@nonl
 #@-node:ekr.20060113163800:Made edit command keys work in headlines
+#@+node:ekr.20060115095641:Use pretty keys in tab completion tab
+#@-node:ekr.20060115095641:Use pretty keys in tab completion tab
 #@-node:ekr.20060112094901:New features
 #@-node:ekr.20060106091831:4.4b1 projects
 #@-node:ekr.20050924073836:4.4 projects

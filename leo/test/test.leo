@@ -198,26 +198,6 @@
 </v>
 </v>
 <v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
-<v t="ekr.20051121143951"><vh>Test of long lines</vh>
-<v t="ekr.20051121144452.1"><vh>g.adjustTripleString (same as removeExtraLws)</vh></v>
-<v t="ekr.20051121144452.2"><vh>computeLeadingWhitespace</vh></v>
-<v t="ekr.20051121144452.3"><vh>computeWidth</vh></v>
-<v t="ekr.20051121144452.5" a="M"><vh>optimizeLeadingWhitespace</vh></v>
-<v t="ekr.20051121144452.6"><vh>regularizeTrailingNewlines</vh></v>
-<v t="ekr.20051121144452.7"><vh>removeLeadingWhitespace</vh></v>
-<v t="ekr.20051121144452.8"><vh>g.removeExtraLws &amp; tests</vh>
-<v t="ekr.20051121144452.9"><vh>test_g_removeExtraLws</vh></v>
-</v>
-<v t="ekr.20051121144452.10"><vh>removeTrailingWs</vh></v>
-<v t="ekr.20051121144452.11" a="M"><vh>skip_leading_ws</vh></v>
-<v t="ekr.20051121144452.12"><vh>skip_leading_ws_with_indent</vh></v>
-<v t="ekr.20051121144452.13"><vh>stripBlankLines</vh></v>
-<v t="ekr.20051124071232"><vh>test brackets</vh></v>
-<v t="ekr.20051124083045"><vh>test no ( or [</vh></v>
-<v t="ekr.20051124082107"><vh>test long string</vh></v>
-<v t="ekr.20051124094428"><vh>test long comment</vh></v>
-<v t="ekr.20051124090208"><vh>test not python</vh></v>
-</v>
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
@@ -233,9 +213,10 @@
 <v t="ekr.20060108163117"><vh>@file-ref c:\prog\leoCVS\leo\test\ironPythonTest.bat</vh></v>
 </v>
 <v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
-<v t="ekr.20060112062919" a="E"><vh>@@file commentTest.xml</vh></v>
+<v t="ekr.20060112062919"><vh>@@file commentTest.xml</vh></v>
 </v>
-<v t="ekr.20060114113213" a="TV"><vh>test</vh></v>
+<v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
+<v t="ekr.20060114164015" a="TV"><vh>test editing state</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -3892,7 +3873,6 @@ if d.get('language','').lower() == 'python':
     print ''.join(result)
 else:
     print 'Not Python code'</t>
-<t tx="ekr.20051121143951">@pagewidth 40</t>
 <t tx="ekr.20051121143951.1">def splitLongLine(s,lws,w,tab_width,inComment,inString):
 
     if not s or g.computeWidth (s,tab_width) &lt; w:
@@ -3911,197 +3891,12 @@ else:
     list1.append('%s\n%s%s%s' % (backslash,lws,comment,tab))
     list1.extend(list2)
     return list1</t>
-<t tx="ekr.20051121144452.1">def adjustTripleString (s,tab_width):
-    
-    '''Remove leading indentation from a triple-quoted string.
-    
-    This works around the fact that Leo nodes can't represent underindented strings.
-    '''
-    
-    # Compute the minimum leading whitespace of all non-blank lines.
-    lines = g.splitLines(s)
-    w = -1
-    for s in lines:
-       if s.strip():
-            lws = g.get_leading_ws(s)
-            w2 = g.computeWidth(lws,tab_width)
-            if w &lt; 0: w = w2
-            else:     w = min(w,w2)
-            # g.trace('w',w)
-    if w &lt;= 0: return s
-
-    # Remove the leading whitespace.
-    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
-    result = ''.join(result)
-
-    return result</t>
-<t tx="ekr.20051121144452.2"># Returns optimized whitespace corresponding to width with the indicated tab_width.
-
-def computeLeadingWhitespace (width, tab_width):
-
-    if width &lt;= 0:
-        return ""
-    if tab_width &gt; 1:
-        tabs   = width / tab_width
-        blanks = width % tab_width
-        return ('\t' * tabs) + (' ' * blanks)
-    else: # 7/3/02: negative tab width always gets converted to blanks.
-        return (' ' * width)</t>
-<t tx="ekr.20051121144452.3"># Returns the width of s, assuming s starts a line, with indicated tab_width.
-
-def computeWidth (s, tab_width):
-        
-    w = 0
-    for ch in s:
-        if ch == '\t':
-            w += (abs(tab_width) - (w % abs(tab_width)))
-        else:
-            w += 1
-    return w</t>
-<t tx="ekr.20051121144452.5"># Optimize leading whitespace in s with the given tab_width.
-
-def optimizeLeadingWhitespace (line,tab_width):
-
-    i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
-    s = g.computeLeadingWhitespace(width,tab_width) + line[i:])
-    return s</t>
-<t tx="ekr.20051121144452.6">@
-
-The caller should call g.stripBlankLines before calling this routine if desired.
-
-This routine does _not_ simply call rstrip(): that would delete all trailing whitespace-only lines, and in some cases that would change the meaning of program or data.
-
-@c
-
-def regularizeTrailingNewlines(s,kind):
-    
-    """Kind is 'asis', 'zero' or 'one'."""
-    
-    pass</t>
-<t tx="ekr.20051121144452.7"># Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
-
-def removeLeadingWhitespace (s,first_ws,tab_width):
-
-    j = 0 ; ws = 0
-    for ch in s:
-        if ws &gt;= first_ws:
-            break
-        elif ch == ' ':
-            j += 1 ; ws += 1
-        elif ch == '\t':
-            j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
-        else: break
-    if j &gt; 0:
-        s = s[j:]
-    return s</t>
-<t tx="ekr.20051121144452.8">def removeExtraLws (s,tab_width):
-    
-    '''Remove extra indentation from one or more lines.
-    
-    Warning: used by getScript.  This is *not* the same as g.adjustTripleString.'''
-    
-    lines = g.splitLines(s)
-
-    # Find the first non-blank line and compute w, the width of its leading whitespace.
-    for s in lines:
-       if s.strip():
-            lws = g.get_leading_ws(s)
-            w = g.computeWidth(lws,tab_width)
-            # g.trace('w',w)
-            break
-    else: return s
-    
-    # Remove the leading whitespace.
-    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
-    result = ''.join(result)
-    
-    if 0:
-        g.trace('lines    ')
-        for line in g.splitLines(result):
-            print repr(line)
-
-    return result</t>
-<t tx="ekr.20051121144452.9">def test_g_removeExtraLws():
-    
-    for s,expected in (
-        (' a\n b\n c', 'a\nb\nc'),
-        (' \n  A\n    B\n  C\n', '\nA\n  B\nC\n'),
-    ):
-        result = g.removeExtraLws(s,c.tab_width)
-        assert result == expected, '\ns: %s\nexpected: %s\nresult:   %s' % (
-            repr(s),repr(expected),repr(result))</t>
-<t tx="ekr.20051121144452.10"># Warning: string.rstrip also removes newlines!
-
-def removeTrailingWs(s):
-
-    j = len(s)-1
-    while j &gt;= 0 and (s[j] == ' ' or s[j] == '\t'):
-        j -= 1
-    return s[:j+1]
-</t>
-<t tx="ekr.20051121144452.11"># Skips leading up to width leading whitespace.
-
-def skip_leading_ws(s,i,ws,tab_width):
-
-    count = 0
-    while count &lt; ws and i &lt; len(s):
-        ch = s[i]
-        if ch == ' ':
-            count += 1
-            i += 1
-        elif ch == '\t':
-            count += (abs(tab_width) - (count % abs(tab_width)))
-            i += 1
-        else: break
-
-    return i</t>
-<t tx="ekr.20051121144452.12">def skip_leading_ws_with_indent(s,i,tab_width):
-
-    """Skips leading whitespace and returns (i, indent), 
-    
-    - i points after the whitespace
-    - indent is the width of the whitespace, assuming tab_width wide tabs."""
-
-    count = 0 ; n = len(s)
-    while i &lt; n:
-        ch = s[i]
-        if ch == ' ':
-            count += 1
-            i += 1
-        elif ch == '\t':
-            count += (abs(tab_width) - (count % abs(tab_width)))
-            i += 1
-        else: break
-
-    return i, count</t>
-<t tx="ekr.20051121144452.13">def stripBlankLines(s):
-    
-    lines = g.splitLines(s)
-
-    for i in xrange(len(lines)):
-
-        line = lines[i]
-        j = g.skip_ws(line,0)
-        if j &gt;= len(line):
-            lines[i] = ''
-            # g.trace("%4d %s" % (i,repr(lines[i])))
-        elif line[j] == '\n':
-            lines[i] = '\n'
-            # g.trace("%4d %s" % (i,repr(lines[i])))
-            
-    return ''.join(lines)
-</t>
 <t tx="ekr.20051124065932">@
 
 Bug: can't split after opening quote.
 * Handle-triple-quote strings properly.
 ** Skip @doc parts.
 - Handle tabs properly when splitting.</t>
-<t tx="ekr.20051124071232">    a = aaaaa [ bbbb ]
-    a = aaaaa ( bbbb )
-    a = aaaaaa(bbbbbb)
-    a = f ( aaa [j] )
-    a = f ( aaa [j ])</t>
 <t tx="ekr.20051124080305">def chooseBreakPoint (s,w,tab_width,inComment,inString):
     
     '''Return (i,inComment,inString,backSlash) where::
@@ -4147,12 +3942,6 @@ Bug: can't split after opening quote.
         # Break at a bracket.
         i = max(i,g.skip_ws(s,i+1)-1)
         return i,False,False,''</t>
-<t tx="ekr.20051124082107">a = "a long string: b f()"</t>
-<t tx="ekr.20051124083045">    a = bbbb + ccc + ddd + eee</t>
-<t tx="ekr.20051124090208">@language c
-</t>
-<t tx="ekr.20051124094428">    # This is an extremely very very long comment.
-    a = b</t>
 <t tx="ekr.20051130181738">print 'Let the wild rumpus start!'
 
 import sys
@@ -4425,7 +4214,16 @@ while s != 'kill':
         print &gt;&gt; stdout, s,
         print &gt;&gt; stderr, s,
 print 'bye'</t>
-<t tx="ekr.20060114113213">copy test
-</t>
+<t tx="ekr.20060114164015">print '-' * 20
+name = g.app.gui.widget_name
+w = p.edit_widget()
+print name(w),w.cget('state')
+c.editPosition(p)
+w = p.edit_widget()
+print name(w),w.cget('state')
+c.endEditing()
+c.selectPosition(p)
+w = p.edit_widget()
+print name(w),w.cget('state')</t>
 </tnodes>
 </leo_file>
