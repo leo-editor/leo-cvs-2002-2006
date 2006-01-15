@@ -4861,27 +4861,6 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20051215103053:beginCommand & beginCommandWithEvent (rectangle)
     #@+node:ekr.20050920084036.224:Entries
-    #@+node:ekr.20050920084036.231: enterRectangleState
-    def enterRectangleState (self,event):
-    
-        k = self.k ; state = k.getState('rect-mode')
-    
-        if state == 0:
-            k.setLabelBlue('quick-command r r: ')
-            k.setState('rect-mode',1,self.enterRectangleState)
-        else:
-            ch = event.keysym
-            k.clearState()
-            k.resetLabel()
-            data = self.commandsDict.get(ch)
-            if data:
-                k.commandName,func = data
-                # g.trace(ch,func)
-                func(event)
-            else:
-                k.setLabelGrey('Unknown rectangle command: %s' % repr(k.arg))
-    #@nonl
-    #@-node:ekr.20050920084036.231: enterRectangleState
     #@+node:ekr.20050920084036.225:clearRectangle
     def clearRectangle (self,event):
     

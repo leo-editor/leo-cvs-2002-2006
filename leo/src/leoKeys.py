@@ -325,6 +325,7 @@ class keyHandlerClass:
         #@+node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
         for bunch in bunchList:
             if ( bunch and
+                # (not bunch.pane.endswith('-mode') and not pane.endswith('-mode')) and
                 (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
                 commandName != bunch.commandName
             ):
@@ -617,20 +618,7 @@ class keyHandlerClass:
             'a':    c.abbrevCommands.addAbbreviation,
             'a i':  c.abbrevCommands.addInverseAbbreviation,
         }
-        
-        self.rCommandDict = {
-            'space':    c.registerCommands.pointToRegister,
-            'a':        c.registerCommands.appendToRegister,
-            'i':        c.registerCommands.insertRegister,
-            'j':        c.registerCommands.jumpToRegister,
-            'n':        c.registerCommands.numberToRegister,
-            'p':        c.registerCommands.prependToRegister,
-            'r':        c.rectangleCommands.enterRectangleState,
-            's':        c.registerCommands.copyToRegister,
-            'v':        c.registerCommands.viewRegister,
-            'plus':     c.registerCommands.incrementRegister,
-        }
-        
+            
         self.variety_commands = {
             # Keys are Tk keysyms.
             'period':       c.editCommands.setFillPrefix,
@@ -644,20 +632,6 @@ class keyHandlerClass:
             'f':            c.editCommands.setFillColumn,
             'b':            c.bufferCommands.switchToBuffer,
             'k':            c.bufferCommands.killBuffer,
-        }
-        
-        self.xcommands = {
-            '<Control-t>':  c.editCommands.transposeLines,
-            '<Control-u>':  c.editCommands.upCaseRegion,
-            '<Control-l>':  c.editCommands.downCaseRegion,
-            '<Control-o>':  c.editCommands.removeBlankLines,
-            '<Control-i>':  c.editFileCommands.insertFile,
-            '<Control-s>':  c.editFileCommands.saveFile,
-            '<Control-x>':  c.editCommands.exchangePointMark,
-            '<Control-c>':  c.controlCommands.shutdown,
-            '<Control-b>':  c.bufferCommands.listBuffers,
-            '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
-            '<Delete>':     c.killBufferCommands.backwardKillSentence,
         }
     #@nonl
     #@-node:ekr.20050923174229.1:makeHardBindings
@@ -673,7 +647,7 @@ class keyHandlerClass:
             ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
             ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
             ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
-            ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+            #('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
             # These bindings for inside the minibuffer are strange beasts.
             # They are sent directly to k.fullcommand with a special callback.
             # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
@@ -982,130 +956,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.45:callAltXFunction
     #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
-    #@+node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
-    def quickCommand (self,event):
-        
-        '''Handle 'quick-command' (control-c) mode.'''
-        
-        k = self ; stroke = k.stroke ; state = k.getState('quick-command')
-        
-        if state == 0:
-            k.setState('quick-command',1,handler=k.quickCommand)
-            k.setLabelBlue('quick command: ',protect=True)
-        else:
-            k.previous.insert(0,event.keysym)
-            if len(k.previous) > 10: k.previous.pop()
-            
-            # g.trace('stroke',stroke,event.keysym)
-            if stroke == '<Key>' and event.keysym == 'r':
-                k.rCommand(event)
-            elif stroke in ('<Key>','<Escape>'):
-                if k.processKey(event): # Weird command-specific stuff.
-                    k.clearState()
-            elif stroke in k.xcommands:
-                k.clearState()
-                k.xcommands [stroke](event)
-    
-            k.endCommand(event,stroke)
-            
-        return 'break'
-    #@nonl
-    #@+node:ekr.20051004102314:rCommand
-    def rCommand (self,event):
-        
-        k = self ; state = k.getState('r-command') ; ch = event.keysym
-        if state == 0:
-            k.setLabel ('quick-command r: ',protect=True)
-            k.setState('r-command',1,k.rCommand)
-        elif ch in ('Control_L','Alt_L','Shift_L'):
-            return
-        else:
-            k.clearState()
-            
-            # g.trace(repr(ch))
-            func = k.rCommandDict.get(ch)
-            if func:
-                k.commandName = 'quick-command r: '
-                k.resetLabel()
-                func(event)
-            else:
-                k.setLabelGrey('Unknown r command: %s' % repr(ch))
-    #@nonl
-    #@-node:ekr.20051004102314:rCommand
-    #@+node:ekr.20050923183943.4:processKey
-    def processKey (self,event):
-        
-        '''Handle special keys in quickCommand mode.
-        Return True if we should exit quickCommand mode.'''
-    
-        k = self ; c = k.c ; previous = k.previous
-        
-        if event.keysym in ('Shift_L','Shift_R'): return False
-        # g.trace(event.keysym)
-    
-        func = k.variety_commands.get(event.keysym)
-        if func:
-            k.keyboardQuit(event)
-            func(event)
-            return True
-    
-        if event.keysym in ('a','i','e'):
-            if k.processAbbreviation(event):
-                return False # 'a e' or 'a i e' typed.
-            
-        if event.keysym == 'g': # Execute the abbreviation in the minibuffer.
-            s = k.getLabel(ignorePrompt=True)
-            if k.abbreviationFuncDict.has_key(s):
-                k.clearState()
-                k.keyboardQuit(event)
-                k.abbreviationFuncDict [s](event)
-                return True
-        
-        if event.keysym == 'e': # Execute the last macro.
-            k.keyboardQuit(event)
-            c.macroCommands.callLastKeyboardMacro(event)
-            return True
-    
-        if event.keysym == 'x' and previous [1] not in ('Control_L','Control_R'):
-            event.keysym = 's'
-            k.setState('quick-command',1)
-            c.registerCommands.setNextRegister(event)
-            return True
-    
-        if event.keysym == 'Escape' and len(previous) > 1 and previous [1] == 'Escape':
-            k.repeatComplexCommand(event)
-            return True
-            
-        else:
-            return False
-    #@nonl
-    #@+node:ekr.20050923183943.6:processAbbreviation
-    def processAbbreviation (self,event):
-        
-        '''Handle a e or a i e.
-        Return True when the 'e' has been seen.'''
-        
-        k = self ; char = event.char
-    
-        if k.getLabel() != 'a' and event.keysym == 'a':
-            k.setLabel('a')
-            return False
-    
-        elif k.getLabel() == 'a':
-    
-            if char == 'i':
-                k.setLabel('a i')
-                return False
-            elif char == 'e':
-                event.char = ''
-                k.expandAbbrev(event)
-                return True
-                
-        return False
-    #@nonl
-    #@-node:ekr.20050923183943.6:processAbbreviation
-    #@-node:ekr.20050923183943.4:processKey
-    #@-node:ekr.20050920085536.58:quickCommand  (ctrl-c) & helpers
     #@+node:ekr.20051001050607:endCommand
     def endCommand (self,event,commandName):
     
@@ -1157,16 +1007,18 @@ class keyHandlerClass:
         commandName = 'enter-' + modeName
         state = k.getState(modeName)
         keysym = event and event.keysym or ''
-        g.trace(modeName,'state',state)
+        # g.trace(modeName,'state',state)
         
         d = g.app.config.modeCommandsDict.get(commandName)
         if not d:
-            g.trace("can't happen; no entry in modeCommandsDict for %s" % commandName)
+            k.clearState()
+            if commandName.endswith('-mode'): commandName = commandName[:-5]
+            k.setLabelGrey('@mode %s is not defined (or is empty)' % commandName)
         elif state == 0:
             k.inputModeName = modeName
             k.modeWidget = event and event.widget
             k.setState(name,1,handler=k.generalModeHandler)
-            k.setLabelBlue(name,protect=True)
+            k.setLabelBlue(name+': ',protect=True)
             k.modeCompletionList = d.keys()
         else:
             for key in d.keys():
@@ -1231,7 +1083,7 @@ class keyHandlerClass:
             for bunch in bunchList:
                 shortcut = bunch.val
                 if shortcut not in (None,'None'):
-                    lines.append('%-20s\t%s' % (key,k.prettyPrintKey(shortcut)))
+                    lines.append('%-30s\t%s' % (key,k.prettyPrintKey(shortcut)))
         lines.sort()
         for line in lines:
             g.es(line,tabName='Mode')
@@ -2042,6 +1894,8 @@ class keyHandlerClass:
         
         '''Convert whatever-Z to whatever-Shift-Z'''
         
+        k = self ; c = k.c
+        
         if not key: return ''
         if len(key) == 1: return key
         if key.startswith('<'):
@@ -2050,6 +1904,8 @@ class keyHandlerClass:
             key = key[:-1]
         if not key: return ''
         ch = key[-1]
+        
+        ch,junk = c.frame.menu.canonicalizeShortcut(ch)
     
         if ch in string.ascii_uppercase:
             return '%sShift-%s>' % (key[:-2],ch.lower())

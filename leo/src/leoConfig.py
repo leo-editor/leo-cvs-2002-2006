@@ -87,6 +87,7 @@ class parserBaseClass:
     
         # c = self.c ; k = c.keyHandler
         commandName = 'enter-' + name
+        commandName = commandName.replace(' ','-')
             
         # Save the info for k.finishCreate and k.makeAllBindings.
         d = g.app.config.modeCommandsDict
@@ -271,7 +272,7 @@ class parserBaseClass:
         if name.endswith('-'):
             name = name[:-1]
         name = name + '-mode'
-        g.trace(name)
+        # g.trace(name)
         
         # Check for duplicate mode names.
         if g.app.config.modeCommandsDict.get(name):
@@ -288,6 +289,13 @@ class parserBaseClass:
         
         # Restore the global dict.
         self.shortcutsDict = d
+        
+        # Change the pane of all entries to 'mode-name'.
+        # This will disable warnings about duplicate bindings.
+        for key in d2.keys():
+            bunchList = d2.get(key,[])
+            for bunch in bunchList:
+                bunch.pane = name
         
         # Create the command, but not any bindings to it.
         self.createModeCommand(name,d2)
