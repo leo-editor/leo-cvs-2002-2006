@@ -46,12 +46,12 @@
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = True</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
-<v t="ekr.20060114082205"><vh>@string trace_bindings_filter = Control-c</vh></v>
+<v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter = </vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 </v>
 <v t="ekr.20060113182439"><vh>Other options</vh>
@@ -337,7 +337,7 @@
 </v>
 </v>
 <v t="ekr.20051010112558" a="E" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
-<v t="ekr.20060114133851" a="TV"><vh>Notes</vh></v>
+<v t="ekr.20060114133851"><vh>Notes</vh></v>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
 <v t="ekr.20060111082537" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
@@ -347,7 +347,7 @@
 <v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode file</vh></v>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060112085325" a="TV"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
@@ -1656,7 +1656,9 @@ close-rectangle                     = None
 close-window                        = None  # Ctrl-w conflicts with kill-region.
 contract-all                        = Alt--
 contract-node                       = Alt-[
-contract-or-go-left                 = Alt-LtArrow
+contract-or-go-left                 ! text = Alt-LtArrow
+contract-or-go-left                 ! tree = Alt-LtArrow
+contract-or-go-left                 ! tree = LtArrow
 contract-parent                     = None
 convert-all-blanks                  = None
 convert-all-tabs                    = None
@@ -1703,7 +1705,9 @@ execute-script                      = None
 exit-leo                            = Ctrl-Q
 expand-abbrev                       = None
 expand-all                          = None  
-expand-and-go-right                 = Alt-RtArrow
+expand-and-go-right                 ! text = Alt-RtArrow
+expand-and-go-right                 ! tree = Alt-RtArrow
+expand-and-go-right                 ! tree = RtArrow
 expand-next-level                   = Alt-=
 expand-node                         = Alt-]
 expand-or-go-right                  = None
@@ -2634,13 +2638,16 @@ full-command                        = Alt-x
 go-back                             = None
 go-forward                          = None
 goto-char                           = None
-goto-first-node                     = Alt-Home
+goto-first-node                     ! text = Alt-Home
+goto-first-node                     ! tree = Alt-Home
+goto-first-node                     ! tree = Home
 goto-first-sibling                  = None
 goto-last-node                      = None
 goto-last-node                      = None
 goto-last-sibling                   = None
-goto-last-visible                   = Alt-End
-goto-next-visible                   = Alt-DnArrow
+goto-last-visible                   ! text = Alt-End
+goto-last-visible                   ! tree = Alt-End
+goto-last-visible                   ! tree = End
 goto-line                           = None  # Leo's goto-line-number is better.
 goto-line-number                    = Alt-g 
 goto-next-changed                   = None
@@ -2648,12 +2655,16 @@ goto-next-clone                     = Alt-N
 goto-next-marked                    = None
 goto-next-node                      = None
 goto-next-sibling                   = None
-goto-next-visible                   = Alt-DnArrow
+goto-next-visible                   ! text = Alt-DnArrow
+goto-next-visible                   ! tree = Alt-DnArrow
+goto-next-visible                   ! tree = DnArrow
 goto-parent                         = None
 goto-prev-node                      = None
 goto-prev-sibling                   = None
-goto-prev-visible                   = Alt-UpArrow
-help                                = None
+goto-prev-visible                   ! text = Alt-UpArrow
+goto-prev-visible                   ! tree = Alt-UpArrow
+goto-prev-visible                   ! tree = UpArrow
+help                                = F1
 hide-find-tab                       = None
 hide-mini-buffer                    = None
 hide-spell-tab                      = None
@@ -4026,7 +4037,7 @@ previous-line-extend-selection          ! text = Shift-UpArrow
 
 Thus, you must be running from a console window for this setting to be useful.</t>
 <t tx="ekr.20060114082205">If this setting is non-empty the trace_bindings setting will report only
-bindings that match the string. Important: case is significant.
+bindings that match the string (ignoring case).
 
 For this setting to be useful the following must be true:
 
