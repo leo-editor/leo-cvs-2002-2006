@@ -1942,7 +1942,7 @@ class leoTkinterTree (leoFrame.leoTree):
             else:
                 pass # g.trace('not changed')
         finally:
-            c.endUpdate(changed)
+            c.endUpdate()
             if self.stayInTree:
                 frame.treeWantsFocus()
             else:
