@@ -22,14 +22,13 @@ import string
 #@@nocolor
 #@+at
 # 
+# ivars:
+# 
 # c.commandsDict:
 #     keys are emacs command names, values are functions f.
 # 
 # k.inverseCommandsDict:
 #     keys are f.__name__, values are emacs command names.
-# 
-# k.inverseBindingsDict (computed by computeInverseBindingDict)
-#     keys are emacs command names, values are *lists* of shortcuts.
 # 
 # k.leoCallbackDict:
 #     keys are leoCallback functions, values are called functions.
@@ -37,6 +36,11 @@ import string
 # k.bindingsDict:
 #     keys are shortcuts, values are *lists* of 
 # g.bunch(func,name,warningGiven)
+# 
+# not an ivar (computed by computeInverseBindingDict):
+# 
+# inverseBindingDict
+#     keys are emacs command names, values are *lists* of shortcuts.
 #@-at
 #@nonl
 #@-node:ekr.20051010062551.1:<< about key dicts >>
@@ -133,6 +137,8 @@ class keyHandlerClass:
         #@nl
         #@    << define internal ivars >>
         #@+node:ekr.20050923213858:<< define internal ivars >>
+        self.abbreviationsDict = {} # Abbreviations created by @alias nodes.
+        
         # Previously defined bindings.
         self.bindingsDict = {}
             # Keys are Tk key names, values are lists of g.bunch(pane,func,commandName)
@@ -310,7 +316,7 @@ class keyHandlerClass:
         callback calls commandName (for error messages).'''
         
         k = self ; c = k.c
-        
+    
         # g.trace(pane,shortcut,commandName)
     
         if not shortcut: g.trace('No shortcut for %s' % commandName)
@@ -556,24 +562,25 @@ class keyHandlerClass:
     def makeAllBindings (self):
         
         k = self ; c = k.c
-        
+    
         k.bindingsDict = {}
         k.makeHardBindings()
         k.makeSpecialBindings()
+        k.addModeCommands() 
         k.makeBindingsFromCommandsDict()
-        k.add_ekr_altx_commands()
-        k.addModeCommands()
+        # k.add_ekr_altx_commands()
         k.checkBindings()
     #@nonl
     #@-node:ekr.20051007080058:makeAllBindings
     #@+node:ekr.20060104154937:addModeCommands
     def addModeCommands (self):
         
-        '''Add commands created by @mode settings..'''
+        '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
     
         k = self ; c = k.c
         d = g.app.config.modeCommandsDict
         
+        # Create the callback functions and update c.commandsDict and k.inverseCommandsDict.
         for key in d.keys():
     
             def enterModeCallback (event=None,name=key):
@@ -1185,12 +1192,6 @@ class keyHandlerClass:
         return 'break'
     #@nonl
     #@-node:ekr.20060104110233:generalModeHandler
-    #@+node:ekr.20060102135349:k.addModeBindings
-    def addModeBindings (self,d):
-        
-        g.trace(d.keys())
-    #@nonl
-    #@-node:ekr.20060102135349:k.addModeBindings
     #@+node:ekr.20060102135349.1:k.deleteModeBindings
     def deleteModeBindings (self,d):
         
@@ -1767,12 +1768,6 @@ class keyHandlerClass:
                 g.es_print('Registered %s' % (commandName), color='blue')
     #@nonl
     #@-node:ekr.20051015110547:k.registerCommand
-    #@+node:ekr.20060102135349:k.addModeBindings
-    def addModeBindings (self,d):
-        
-        g.trace(d.keys())
-    #@nonl
-    #@-node:ekr.20060102135349:k.addModeBindings
     #@+node:ekr.20060102135349.1:k.deleteModeBindings
     def deleteModeBindings (self,d):
         
