@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
@@ -264,7 +264,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 </v>
@@ -336,24 +336,48 @@
 <v t="ekr.20060113174941"><vh>Settings bugs?</vh></v>
 </v>
 </v>
-<v t="ekr.20051010112558" a="E" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
-<v t="ekr.20060114133851"><vh>Notes</vh></v>
+<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
 <v t="ekr.20060111082537" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 </v>
-<v t="ekr.20060102113259" a="TV" annotate="7d71002e"><vh>@mode File</vh></v>
+<v t="ekr.20060115162748"><vh>Modes</vh>
+<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
 <v t="ekr.20060115160004"><vh>@mode Register</vh></v>
 <v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
+</v>
+<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060102102958" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060112085325" a="E"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
+</v>
+</v>
+<v t="ekr.20060103135341" a="TV"><vh>Vim bindings (experimental)</vh>
+<v t="ekr.20060112093419"><vh>Options</vh>
+<v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+<v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
+<v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = ignore</vh></v>
+</v>
+<v t="ekr.20060111083214.1"><vh>Modes</vh>
+<v t="ekr.20060103135341.10" annotate="7d71002e"><vh>@shortcuts modes</vh></v>
+<v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode file</vh></v>
+<v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode search</vh></v>
+<v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode outline</vh></v>
+</v>
+<v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
+<v t="ekr.20060103135341.11" annotate="7d71002e"><vh>@shortcuts A-E</vh></v>
+<v t="ekr.20060112165244"><vh>@shortcuts F-M</vh></v>
+<v t="ekr.20060103135341.12" annotate="7d71002e"><vh>@shortcuts N-Z</vh></v>
+</v>
+<v t="ekr.20060113163701"><vh>Vim Notes</vh></v>
+<v t="ekr.20060113174941"><vh>Settings bugs?</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1255,6 +1279,7 @@ KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
 <t tx="ekr.20051010112558">@color
+
 
 </t>
 <t tx="ekr.20051011123608">n = len('insert-newline              ')
@@ -4062,21 +4087,6 @@ For this setting to be useful the following must be true:
 - you must be running from a console window.
 
 - @bool trace_bindings must be True.</t>
-<t tx="ekr.20060114133851">@nocolor
-    
-Removed this old bindings:
-    
-extract-section         = Ctrl-Shift-e
-
-Added this binding:
-    
-end-of-line-extend-selection  ! text = Ctrl-Shift-e
-
-At present there is a major problem with !tree bindings: there are conflicts
-between what we want when editing a headline and what we want when the headline
-is merely selected. It may be possible to fix these problems, or not.
-
-The workaround is to eliminate all !tree bindings.  This was surprisingly easy to do.</t>
 <t tx="ekr.20060115153348"># Boilerplate for most modes.
 keyboard-quit       = Return
 mode-help           = Tab
@@ -4117,5 +4127,7 @@ mode-help           = Tab
 mode-help           = BackSpace
 
 # These should execute rectangle commands, as in Alt-X r r</t>
+<t tx="ekr.20060115162748"></t>
+<t tx="ekr.20060115162748.1"></t>
 </tnodes>
 </leo_file>

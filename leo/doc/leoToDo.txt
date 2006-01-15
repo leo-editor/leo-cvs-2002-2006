@@ -7,9 +7,11 @@
 @nocolor
 #@nonl
 #@+node:ekr.20060113085710:First
-#@+node:ekr.20060115102006.2:Run pychecker
-#@-node:ekr.20060115102006.2:Run pychecker
-#@+node:ekr.20060115091804.2:Make bindings for enter-x-mode commands
+#@+node:ekr.20060115102006.1:Test on Mac
+#@-node:ekr.20060115102006.1:Test on Mac
+#@-node:ekr.20060113085710:First
+#@+node:ekr.20060110202455:Next
+#@+node:ekr.20060115091804.2:Finish support for @mode nodes
 #@+node:ekr.20051010062551.1:<< about key dicts >>
 @nocolor
 @
@@ -30,7 +32,7 @@ k.bindingsDict:
 
 not an ivar (computed by computeInverseBindingDict):
 
-inverseBindingDict 
+inverseBindingDict
     keys are emacs command names, values are *lists* of shortcuts.
 #@nonl
 #@-node:ekr.20051010062551.1:<< about key dicts >>
@@ -40,6 +42,7 @@ def createModeCommand (self,name,modeDict):
 
     # c = self.c ; k = c.keyHandler
     commandName = 'enter-' + name
+    commandName = commandName.replace(' ','-')
         
     # Save the info for k.finishCreate and k.makeAllBindings.
     d = g.app.config.modeCommandsDict
@@ -52,6 +55,49 @@ def createModeCommand (self,name,modeDict):
         d [commandName] = modeDict
 #@nonl
 #@-node:ekr.20060102103625:createModeCommand
+#@+node:ekr.20060102103625.1:doMode
+def doMode(self,p,kind,name,val):
+    
+    '''Parse an @mode node and create the enter-<name>-mode command.'''
+    
+    c = self.c ; k = c.keyHandler
+
+    # Compute the mode name.
+    name = name.strip().lower()
+    if name.endswith('mode'):
+        name = name[:-4].strip()
+    if name.endswith('-'):
+        name = name[:-1]
+    name = name + '-mode'
+    # g.trace(name)
+    
+    # Check for duplicate mode names.
+    if g.app.config.modeCommandsDict.get(name):
+        g.trace('Ignoring duplicate @mode setting: %s' % name)
+        return
+    
+    # Call doShortcuts with a temp dict.
+    d = self.shortcutsDict
+    self.shortcutsDict = {}
+    self.doShortcuts(p,kind,name,val)
+    
+    # Remember the mode dict.
+    d2 = self.shortcutsDict
+    
+    # Restore the global dict.
+    self.shortcutsDict = d
+    
+    # Change the pane of all entries to 'mode-name'.
+    # This will disable warnings about duplicate bindings.
+    for key in d2.keys():
+        bunchList = d2.get(key,[])
+        for bunch in bunchList:
+            bunch.pane = name
+    
+    # Create the command, but not any bindings to it.
+    self.createModeCommand(name,d2)
+#@nonl
+#@-node:ekr.20060102103625.1:doMode
 #@-node:ekr.20060115134337:From leoConfig
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
@@ -71,107 +117,6 @@ def addModeCommands (self):
         k.inverseCommandsDict [f.__name__] = key
 #@nonl
 #@-node:ekr.20060104154937:addModeCommands
-#@+node:ekr.20060115103349:Modes
-#@+node:ekr.20060102135349.2:enterNamedMode
-def enterNamedMode (self,event,commandName):
-    
-    k = self ; c = k.c
-    modeName = commandName[6:]
-    
-    k.generalModeHandler(event,modeName)
-#@-node:ekr.20060102135349.2:enterNamedMode
-#@+node:ekr.20060104110233:generalModeHandler
-def generalModeHandler (self,event,name=None):
-    
-    '''Handle a mode defined by an @mode node in leoSettings.leo.'''
-
-    k = self ; c = k.c ; f = c.frame
-    modeName = name or k.inputModeName or '<no mode name>'
-    commandName = 'enter-' + modeName
-    state = k.getState(modeName)
-    keysym = event and event.keysym or ''
-    g.trace(modeName,'state',state)
-    
-    d = g.app.config.modeCommandsDict.get(commandName)
-    if not d:
-        g.trace("can't happen; no entry in modeCommandsDict for %s" % commandName)
-    elif state == 0:
-        k.inputModeName = modeName
-        k.modeWidget = event and event.widget
-        k.setState(name,1,handler=k.generalModeHandler)
-        k.setLabelBlue(name,protect=True)
-        k.modeCompletionList = d.keys()
-    else:
-        for key in d.keys():
-            bunchList = d.get(key)
-            for bunch in bunchList:
-                if k.matchKeys(event,bunch.val):
-                    func = c.commandsDict.get(key)
-                    # g.trace('calling',func)
-                    if key != 'mode-help':
-                        # This must be done first because commands can change windows.
-                        k.endCommand(event,k.stroke)
-                        k.inputModeName = None
-                        c.frame.log.deleteTab('Mode')
-                        k.clearState()
-                        k.resetLabel()
-                        # k.setLabelGrey('top-level mode')
-                        c.frame.widgetWantsFocus(k.modeWidget)
-                    func(event)
-                    return 'break'
-        k.modeHelpHelper(d)
-        f.minibufferWantsFocus()
-        
-    return 'break'
-#@nonl
-#@-node:ekr.20060104110233:generalModeHandler
-#@+node:ekr.20060102135349.1:k.deleteModeBindings
-def deleteModeBindings (self,d):
-    
-    g.trace(d)
-#@nonl
-#@-node:ekr.20060102135349.1:k.deleteModeBindings
-#@+node:ekr.20060104164523:modeHelp & helper
-def modeHelp (self,event):
-
-    '''The mode-help command.
-    
-    A possible convention would be to bind <Tab> to this command in most modes,
-    by analogy with tab completion.'''
-    
-    k = self
-
-    if k.inputModeName:
-        commandName = 'enter-' + k.inputModeName
-        d = g.app.config.modeCommandsDict.get(commandName)
-        k.modeHelpHelper(d)
-    else:
-        g.es('Not in any mode')
-
-
-
-
-
-#@+node:ekr.20060104125946:modeHelpHelper
-def modeHelpHelper (self,d):
-    
-    k = self ; c = k.c
-    
-    c.frame.log.clearTab('Mode')
-    lines = []
-    for key in d.keys():
-        bunchList = d.get(key)
-        for bunch in bunchList:
-            shortcut = bunch.val
-            if shortcut not in (None,'None'):
-                lines.append('%-20s\t%s' % (key,k.prettyPrintKey(shortcut)))
-    lines.sort()
-    for line in lines:
-        g.es(line,tabName='Mode')
-#@nonl
-#@-node:ekr.20060104125946:modeHelpHelper
-#@-node:ekr.20060104164523:modeHelp & helper
-#@-node:ekr.20060115103349:Modes
 #@+node:ekr.20051006125633:Binding (keyHandler)
 #@+node:ekr.20050920085536.11:add_ekr_altx_commands
 def add_ekr_altx_commands (self):
@@ -287,6 +232,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
 #@+node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
 for bunch in bunchList:
     if ( bunch and
+        # (not bunch.pane.endswith('-mode') and not pane.endswith('-mode')) and
         (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
         commandName != bunch.commandName
     ):
@@ -299,9 +245,9 @@ for bunch in bunchList:
 #@-node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
 #@+node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
 if c.config.getBool('trace_bindings'):
-    filter = c.config.getString('trace_bindings_filter') or ''
-    # g.trace(repr(filter))
-    if not filter or shortcut.find(filter) != -1:
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    # g.trace(repr(theFilter))
+    if not theFilter or shortcut.find(theFilter) != -1:
         pane_filter = c.config.getString('trace_bindings_pane_filter')
         if not pane_filter or pane_filter.lower() == pane:
             g.trace(pane,k.prettyPrintKey(shortcut),commandName)
@@ -560,20 +506,7 @@ def makeHardBindings (self):
         'a':    c.abbrevCommands.addAbbreviation,
         'a i':  c.abbrevCommands.addInverseAbbreviation,
     }
-    
-    self.rCommandDict = {
-        'space':    c.registerCommands.pointToRegister,
-        'a':        c.registerCommands.appendToRegister,
-        'i':        c.registerCommands.insertRegister,
-        'j':        c.registerCommands.jumpToRegister,
-        'n':        c.registerCommands.numberToRegister,
-        'p':        c.registerCommands.prependToRegister,
-        'r':        c.rectangleCommands.enterRectangleState,
-        's':        c.registerCommands.copyToRegister,
-        'v':        c.registerCommands.viewRegister,
-        'plus':     c.registerCommands.incrementRegister,
-    }
-    
+        
     self.variety_commands = {
         # Keys are Tk keysyms.
         'period':       c.editCommands.setFillPrefix,
@@ -588,20 +521,6 @@ def makeHardBindings (self):
         'b':            c.bufferCommands.switchToBuffer,
         'k':            c.bufferCommands.killBuffer,
     }
-    
-    self.xcommands = {
-        '<Control-t>':  c.editCommands.transposeLines,
-        '<Control-u>':  c.editCommands.upCaseRegion,
-        '<Control-l>':  c.editCommands.downCaseRegion,
-        '<Control-o>':  c.editCommands.removeBlankLines,
-        '<Control-i>':  c.editFileCommands.insertFile,
-        '<Control-s>':  c.editFileCommands.saveFile,
-        '<Control-x>':  c.editCommands.exchangePointMark,
-        '<Control-c>':  c.controlCommands.shutdown,
-        '<Control-b>':  c.bufferCommands.listBuffers,
-        '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
-        '<Delete>':     c.killBufferCommands.backwardKillSentence,
-    }
 #@nonl
 #@-node:ekr.20050923174229.1:makeHardBindings
 #@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
@@ -609,14 +528,14 @@ def makeSpecialBindings (self):
     
     '''Make the bindings and set ivars for sepcial keystrokes.'''
     
-    k = self ; c = k.c ; f = c.frame
+    k = self ; c = k.c
     
     # These defaults may be overridden.
     for pane,stroke,ivar,commandName,func in (
         ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
         ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
         ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
-        ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+        #('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
         # These bindings for inside the minibuffer are strange beasts.
         # They are sent directly to k.fullcommand with a special callback.
         # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
@@ -695,13 +614,113 @@ def makeBindingsFromCommandsDict (self):
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
 #@-node:ekr.20051006125633:Binding (keyHandler)
-#@-node:ekr.20060115091804.2:Make bindings for enter-x-mode commands
-#@+node:ekr.20060115102006.1:Test on Mac
-#@-node:ekr.20060115102006.1:Test on Mac
-#@+node:ekr.20060115104158:Cancelling an open dialog should put focus in body
-#@-node:ekr.20060115104158:Cancelling an open dialog should put focus in body
-#@-node:ekr.20060113085710:First
-#@+node:ekr.20060110202455:Next
+#@+node:ekr.20060115103349:Modes
+#@+node:ekr.20060102135349.2:enterNamedMode
+def enterNamedMode (self,event,commandName):
+    
+    k = self ; c = k.c
+    modeName = commandName[6:]
+    
+    k.generalModeHandler(event,modeName)
+#@-node:ekr.20060102135349.2:enterNamedMode
+#@+node:ekr.20060104110233:generalModeHandler
+def generalModeHandler (self,event,name=None):
+    
+    '''Handle a mode defined by an @mode node in leoSettings.leo.'''
+
+    k = self ; c = k.c ; f = c.frame
+    modeName = name or k.inputModeName or '<no mode name>'
+    commandName = 'enter-' + modeName
+    state = k.getState(modeName)
+    keysym = event and event.keysym or ''
+    # g.trace(modeName,'state',state)
+    
+    d = g.app.config.modeCommandsDict.get(commandName)
+    if not d:
+        k.clearState()
+        if commandName.endswith('-mode'): commandName = commandName[:-5]
+        k.setLabelGrey('@mode %s is not defined (or is empty)' % commandName)
+    elif state == 0:
+        k.inputModeName = modeName
+        k.modeWidget = event and event.widget
+        k.setState(name,1,handler=k.generalModeHandler)
+        k.setLabelBlue(name+': ',protect=True)
+        k.modeCompletionList = d.keys()
+    else:
+        for key in d.keys():
+            bunchList = d.get(key)
+            for bunch in bunchList:
+                if k.matchKeys(event,bunch.val):
+                    func = c.commandsDict.get(key)
+                    # g.trace('calling',func)
+                    if key != 'mode-help':
+                        # This must be done first because commands can change windows.
+                        k.endCommand(event,k.stroke)
+                        k.inputModeName = None
+                        c.frame.log.deleteTab('Mode')
+                        k.clearState()
+                        k.resetLabel()
+                        # k.setLabelGrey('top-level mode')
+                        c.frame.widgetWantsFocus(k.modeWidget)
+                    func(event)
+                    return 'break'
+        k.modeHelpHelper(d)
+        f.minibufferWantsFocus()
+        
+    return 'break'
+#@nonl
+#@-node:ekr.20060104110233:generalModeHandler
+#@+node:ekr.20060104164523:modeHelp & helper
+def modeHelp (self,event):
+
+    '''The mode-help command.
+    
+    A possible convention would be to bind <Tab> to this command in most modes,
+    by analogy with tab completion.'''
+    
+    k = self
+
+    if k.inputModeName:
+        commandName = 'enter-' + k.inputModeName
+        d = g.app.config.modeCommandsDict.get(commandName)
+        k.modeHelpHelper(d)
+    else:
+        g.es('Not in any mode')
+
+
+
+
+
+#@+node:ekr.20060104125946:modeHelpHelper
+def modeHelpHelper (self,d):
+    
+    k = self ; c = k.c
+    
+    c.frame.log.clearTab('Mode')
+    lines = []
+    for key in d.keys():
+        bunchList = d.get(key)
+        for bunch in bunchList:
+            shortcut = bunch.val
+            if shortcut not in (None,'None'):
+                lines.append('%-30s\t%s' % (key,k.prettyPrintKey(shortcut)))
+    lines.sort()
+    for line in lines:
+        g.es(line,tabName='Mode')
+#@nonl
+#@-node:ekr.20060104125946:modeHelpHelper
+#@-node:ekr.20060104164523:modeHelp & helper
+#@-node:ekr.20060115103349:Modes
+#@-node:ekr.20060115091804.2:Finish support for @mode nodes
+#@+node:ekr.20060115162515:Specify what mode to enter for each mode command
+To do: specify what mode to enter after each command:
+
+- command-name -> mode-name = binding
+
+will specify what mode to enter after each command.
+At present, all commands exit to the top-level mode.
+#@nonl
+#@-node:ekr.20060115162515:Specify what mode to enter for each mode command
 #@+node:ekr.20060114215112:Make sure all (or most) callbacks call masterCommand
 
 #@+node:ekr.20050920085536.65: masterCommand & helpers
@@ -984,14 +1003,14 @@ def makeSpecialBindings (self):
     
     '''Make the bindings and set ivars for sepcial keystrokes.'''
     
-    k = self ; c = k.c ; f = c.frame
+    k = self ; c = k.c
     
     # These defaults may be overridden.
     for pane,stroke,ivar,commandName,func in (
         ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
         ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
         ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
-        ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+        #('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
         # These bindings for inside the minibuffer are strange beasts.
         # They are sent directly to k.fullcommand with a special callback.
         # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
