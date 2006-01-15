@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8651" clone_windows="0"/>
-<globals body_outline_ratio="0.572043010753">
-	<global_window_position top="10" left="323" height="930" width="880"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8666" clone_windows="0"/>
+<globals body_outline_ratio="0.583965330444">
+	<global_window_position top="10" left="432" height="923" width="810"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,44 +13,27 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-marks="ekr.20051125080855,ekr.20031218072017.1810,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20040803072955.128,ekr.20031218072017.2950,ekr.20031218072017.2373,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051026092433.1,ekr.20051125080855,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20051026092433.1,ekr.20051125080855,ekr.20051125080855,ekr.20040803072955.128,ekr.20031218072017.1810,ekr.20050120092028,ekr.20031218072017.2373,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,ekr.20051023181449,ekr.20051025120920,ekr.20051006092617.1,ekr.20051006092617.1,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20050831131028"><vh>opml</vh>
-<v t="ekr.20050831131452"><vh>Original post</vh></v>
-<v t="ekr.20050831131452.1"><vh>opml attributes v elements</vh></v>
-<v t="ekr.20050912063133"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3273977</vh></v>
-<v t="ekr.20050912065811"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3279900 (summary)</vh></v>
-<v t="ekr.20050915062404"><vh>My post</vh></v>
-</v>
-<v t="ekr.20040117181936"
-marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.20051127105431,ekr.20051126123149,ekr.20051127065601,ekr.20051127105102,ekr.20051127070018,ekr.20051025120920,ekr.20051202102752.2,ekr.20051202102752.3,ekr.20051202102752.4,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
-<v t="ekr.20051010062551.1"><vh>(key dicts)</vh></v>
-<v t="ekr.20051206111317"><vh>4.4a5 projects</vh>
-<v t="ekr.20051219200934"><vh>cvs snapshot 1</vh>
-<v t="ekr.20051208102436"><vh>Bugs fixed</vh>
-<v t="ekr.20051206082343"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh>
-<v t="ekr.20031218072017.1473"><vh>put</vh>
-<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
-<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="ekr.20060106091831"><vh>4.4b1 projects</vh>
+<v t="ekr.20060106091831.1"><vh>Bugs fixed</vh>
+<v t="ekr.20060106064618"><vh>Fixed minor headline problems</vh>
+<v t="ekr.20051026092433.1"><vh>backwardDeleteCharacter</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20050920084036.87"><vh>deleteNextChar</vh></v>
+<v t="ekr.20051214132256"><vh>begin/endCommand</vh>
+<v t="ekr.20051214133130"><vh>beginCommand  &amp; beginCommandWithEvent</vh>
+<v t="ekr.20051215102349"><vh>beingCommandHelper</vh></v>
 </v>
-<v t="ekr.20051208091305"><vh>Fixed problem with getScript in batch mode</vh>
-<v t="EKR.20040614071102.1"><vh>g.getScript &amp; tests</vh>
-<v t="ekr.20050211100535"><vh>test_g_getScript_strips_crlf</vh></v>
+<v t="ekr.20051214133130.1"><vh>endCommand</vh></v>
 </v>
-</v>
-<v t="ekr.20051207180807"><vh>Select text box in goto-line-number command</vh>
-<v t="ekr.20051208102107"><vh>Report</vh></v>
-<v t="ekr.20031218072017.3878"><vh>tkinterAskOKCancelNumber.createFrame</vh></v>
-</v>
-<v t="ekr.20051209081445.2"><vh>Restored headkey hooks</vh>
-<v t="ekr.20051209083903"><vh>Report</vh></v>
 <v t="ekr.20040803072955.90"><vh>head key handlers</vh>
 <v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
 <v t="ekr.20051026083544.2"><vh>updateHead</vh></v>
@@ -59,734 +42,156 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 </v>
 </v>
 </v>
-<v t="ekr.20051209085227"><vh>Restored bodykey hooks</vh>
-<v t="ekr.20051209085227.1"><vh>Report</vh></v>
-<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
-<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
-<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
-<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
-<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
-<v t="ekr.20051026092433"><vh>updateTab</vh></v>
+<v t="ekr.20060106112159"><vh>Removed all calls to g.top() from Leo's core</vh>
+<v t="ekr.20060106112915"><vh>Changed</vh>
+<v t="ekr.20031218072017.3843"><vh>createFrame (tkComparePanel)</vh>
+<v t="ekr.20031218072017.3844"><vh>&lt;&lt; create the organizer frames &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3845"><vh>&lt;&lt; create the browser rows &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3846"><vh>&lt;&lt; create the extension row &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3847"><vh>&lt;&lt; create the whitespace options frame &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3848"><vh>&lt;&lt; create the print options frame &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3849"><vh>&lt;&lt; create the compare buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060106125608"><vh>From leoGlobals.py</vh>
+<v t="ekr.20051023083258"><vh>callers</vh></v>
+<v t="ekr.20031218072017.822"><vh>createTopologyList</vh></v>
+<v t="ekr.20040715155607"><vh>scanForAtIgnore</vh></v>
+<v t="ekr.20031218072017.1391"><vh>g.scanDirectives</vh>
+<v t="ekr.20031218072017.1392"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1393"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1394"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1395"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1396"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1397"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="ekr.20031218072017.1398"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1399"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1400"><vh>&lt;&lt; Test for @wrap and @nowrap &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2418"><vh>g.initScriptFind (set up dialog)</vh></v>
+<v t="ekr.20040321065415"><vh>g.findNodeInTree, findNodeAnywhere, findTopLevelNode</vh></v>
+</v>
+<v t="ekr.20060106114716"><vh>From leoTest.py</vh>
+<v t="ekr.20051104075904.4"><vh>doTests...</vh>
+<v t="ekr.20051104075904.5"><vh>class generalTestCase</vh>
+<v t="ekr.20051104075904.6"><vh>__init__</vh></v>
+<v t="ekr.20051104075904.7"><vh> fail</vh></v>
+<v t="ekr.20051104075904.8"><vh>setUp</vh></v>
+<v t="ekr.20051104075904.9"><vh>tearDown</vh></v>
+<v t="ekr.20051104075904.10"><vh>runTest</vh></v>
+<v t="ekr.20051104075904.11"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20051104075904.12"><vh>makeTestSuite</vh></v>
+<v t="ekr.20051104075904.13"><vh>makeTestCase</vh></v>
+</v>
+<v t="ekr.20051104075904.15"><vh>runTimerOnNode</vh></v>
+<v t="ekr.20051104075904.33"><vh>numberOfClonesInOutline</vh></v>
+<v t="ekr.20051104075904.34"><vh>numberOfNodesInOutline</vh></v>
+<v t="ekr.20051104075904.42"><vh>leoTest.runLeoTest</vh></v>
+<v t="ekr.20051104075904.69"><vh> makeEditBodySuite</vh></v>
+<v t="ekr.20051104075904.78"><vh>makeImportExportSuite</vh></v>
+<v t="ekr.20051104075904.89"><vh>runPerfectImportTest</vh></v>
+</v>
+<v t="ekr.20060106125608.1"><vh>From leoNodes.py</vh>
+<v t="ekr.20031218072017.892"><vh>p.__init__</vh></v>
+<v t="ekr.20040117171654"><vh>p.copy</vh></v>
+</v>
+<v t="ekr.20031218072017.3156"><vh>scanError</vh></v>
 </v>
 </v>
-<v t="ekr.20051209081445"><vh>Fixed ancient bug in read error logic that hung Leo</vh>
-<v t="ekr.20051209081445.1"><vh>Report &amp; what I did</vh></v>
-<v t="ekr.20041005105605.127"><vh>readError</vh></v>
-<v t="ekr.20041005105605.220"><vh>atFile.error</vh></v>
-<v t="ekr.20041005105605.27"><vh>readOpenFile</vh>
-<v t="ekr.20041005105605.28"><vh>&lt;&lt; handle first and last lines &gt;&gt;</vh></v>
+<v t="ekr.20051208081641"><vh>Fixed undo problems</vh>
+<v t="ekr.20051208081641.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.2820"><vh>top level</vh>
+<v t="ekr.20031218072017.1623"><vh>new</vh></v>
+<v t="ekr.20031218072017.2821"><vh>open</vh>
+<v t="ekr.20031218072017.2822"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041005105605.74"><vh>scanText4 &amp; allies</vh>
-<v t="ekr.20041005105605.75"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
-<v t="ekr.20041005105605.76"><vh>&lt;&lt; report unexpected end of text &gt;&gt;</vh></v>
-<v t="ekr.20041005105605.77"><vh>readNormalLine</vh>
-<v t="ekr.20041005105605.78"><vh>&lt;&lt; Skip the leading stuff &gt;&gt;</vh></v>
-<v t="ekr.20041005105605.79"><vh>&lt;&lt; Append s to docOut &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041005105605.80"><vh>start sentinels</vh>
-<v t="ekr.20041005105605.81"><vh>readStartAll (4.2)</vh></v>
-<v t="ekr.20041005105605.82"><vh>readStartAt &amp; readStartDoc</vh></v>
-<v t="ekr.20041005105605.83"><vh>readStartLeo</vh></v>
-<v t="ekr.20041005105605.84"><vh>readStartMiddle</vh></v>
-<v t="ekr.20041005105605.85"><vh>readStartNode (4.x)</vh>
-<v t="ekr.20041005105605.86"><vh>&lt;&lt; set gnx and bump i &gt;&gt;</vh></v>
-<v t="ekr.20041005105605.87"><vh>&lt;&lt; Set headline, undoing the CWEB hack &gt;&gt;</vh></v>
-<v t="ekr.20041005105605.88"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041005105605.89"><vh>readStartOthers</vh></v>
-</v>
-<v t="ekr.20041005105605.90"><vh>end sentinels</vh>
-<v t="ekr.20041005105605.91"><vh>readEndAll (4.2)</vh></v>
-<v t="ekr.20041005105605.92"><vh>readEndAt &amp; readEndDoc</vh></v>
-<v t="ekr.20041005105605.93"><vh>readEndLeo</vh></v>
-<v t="ekr.20041005105605.94"><vh>readEndMiddle</vh></v>
-<v t="ekr.20041005105605.95"><vh>readEndNode (4.x)</vh>
-<v t="ekr.20041005105605.96"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh>
-<v t="ekr.20041005105605.97"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2823"><vh>openWith and allies</vh>
+<v t="ekr.20031218072017.2824"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2825"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2826"><vh>&lt;&lt;set dict and path if a temp file already refers to p.v.t &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2827"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
+<v t="ekr.20031218072017.2828"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20041005105605.98"><vh>readEndOthers</vh></v>
+<v t="ekr.20031218072017.2829"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2830"><vh>createOpenWithTempFile</vh>
+<v t="ekr.20031218072017.2831"><vh>&lt;&lt; remove previous entry from app.openWithFiles if it exists &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2832"><vh>c.openWithTempFilePath</vh></v>
+</v>
+<v t="ekr.20031218072017.2833"><vh>close</vh></v>
+<v t="ekr.20031218072017.2834"><vh>save</vh></v>
+<v t="ekr.20031218072017.2835"><vh>saveAs</vh></v>
+<v t="ekr.20031218072017.2836"><vh>saveTo</vh></v>
+<v t="ekr.20031218072017.2837"><vh>revert</vh></v>
+</v>
+<v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
+</v>
+<v t="ekr.20060103102115"><vh>Improved word-export plugin</vh></v>
+<v t="ekr.20060107231542"><vh>Removed a bad use of g.app.log in the find panel</vh></v>
+<v t="ekr.20060108115434"><vh>Fix crash: tab in minibuffer</vh>
+<v t="ekr.20060108115434.1"><vh>traceback</vh></v>
+</v>
+<v t="ekr.20060106172320"><vh>Installed patch for headline width</vh>
+<v t="ekr.20060109060505"><vh>Report</vh></v>
+<v t="ekr.20040803072955.16"><vh>__init__</vh>
+<v t="ekr.20040803072955.17"><vh>&lt;&lt; define drawing constants &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.18"><vh>&lt;&lt; old ivars &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.19"><vh>&lt;&lt; inject callbacks into the position class &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.28"><vh>headWidth &amp; widthInPixels</vh></v>
+</v>
+<v t="ekr.20060106131142"><vh>Redraw screen properly after Move To Next Dirty</vh>
+<v t="ekr.20031218072017.2917"><vh>goToNextDirtyHeadline</vh></v>
+<v t="ekr.20031218072017.2918"><vh>goToNextMarkedHeadline</vh></v>
+</v>
+<v t="ekr.20060110070304"><vh>Fixed focus bug</vh>
+<v t="ekr.20060110070304.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+</v>
+<v t="ekr.20060110113743"><vh>Made sure to bring proper window on top in settings.leo button</vh>
+<v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
+</v>
+<v t="ekr.20060110084342.2"><vh>Fixed problem with arrow keys</vh>
+<v t="ekr.20060110084342.3"><vh>Report</vh></v>
+<v t="ekr.20051218122116"><vh>moveToHelper</vh></v>
+</v>
+<v t="ekr.20060110084745"><vh>Investigated cut/paste problem</vh>
+<v t="ekr.20060110084745.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+</v>
+</v>
+<v t="ekr.20060110120907"><vh>Fixed several bugs</vh></v>
+<v t="ekr.20060110133007"><vh>Fixed recent bug: text in new headline was not selected</vh>
+<v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+</v>
+<v t="ekr.20060110084342"><vh>Fixed problem with Mac enter key</vh>
+<v t="ekr.20060110084342.1"><vh>Report</vh></v>
+</v>
+<v t="ekr.20060110093631"><vh>Fixed problems with plugins</vh>
+<v t="ekr.20060110093631.1"><vh>Report</vh></v>
+<v t="ekr.20060110113743.1"><vh>Report 2</vh></v>
+</v>
+<v t="ekr.20060111113925"><vh>Installed patch to cleo plugin</vh></v>
+<v t="ekr.20060112062706"><vh>Fixed old file handling bug</vh>
+<v t="ekr.20060112062706.1"><vh>Report</vh></v>
 <v t="ekr.20041005105605.99"><vh>readLastDocLine</vh></v>
 </v>
-<v t="ekr.20041005105605.100"><vh>Unpaired sentinels</vh>
-<v t="ekr.20041005105605.101"><vh>ignoreOldSentinel</vh></v>
-<v t="ekr.20041005105605.102"><vh>readAfterRef</vh></v>
-<v t="ekr.20041005105605.103"><vh>readClone</vh></v>
-<v t="ekr.20041005105605.104"><vh>readComment</vh></v>
-<v t="ekr.20041005105605.105"><vh>readDelims</vh></v>
-<v t="ekr.20041005105605.106"><vh>readDirective (@@)</vh>
-<v t="ekr.20041005105605.107"><vh>&lt;&lt; handle @language &gt;&gt;</vh></v>
-<v t="ekr.20041005105605.108"><vh>&lt;&lt; handle @comment &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041005105605.109"><vh>readNl</vh></v>
-<v t="ekr.20041005105605.110"><vh>readNonl</vh></v>
-<v t="ekr.20041005105605.111"><vh>readRef</vh></v>
-<v t="ekr.20041005105605.112"><vh>readVerbatim</vh></v>
-</v>
-<v t="ekr.20041005105605.113"><vh>badEndSentinel, push/popSentinelStack</vh></v>
-</v>
-<v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
-</v>
-<v t="ekr.20051213060647.1"><vh>Fixed minor headline problems</vh>
-<v t="ekr.20051206082304.1"><vh>Report</vh></v>
-<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
-<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
-<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
-<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
-</v>
-</v>
-<v t="ekr.20051216114320"><vh>Fixed problem in reformatParagraph</vh></v>
-<v t="ekr.20051217091236"><vh>Investigated secondary ratio problems</vh>
-<v t="ekr.20051217112605"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3689"><vh>initialRatios</vh></v>
-</v>
-<v t="ekr.20051216170531"><vh>Installed LeoUsers patch for the Read @file Nodes command</vh>
-<v t="ekr.20051218102312"><vh>What I did</vh></v>
-<v t="ekr.20041005105605.8"><vh>atFile.__init__ &amp; initIvars</vh>
-<v t="ekr.20041005105605.9"><vh>&lt;&lt; define the dispatch dictionary used by scanText4 &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041005105605.72"><vh>createThinChild4</vh></v>
-<v t="ekr.20051218100605.1"><vh>atFile.__init__ and initIvars NEW</vh>
-<v t="ekr.20051218100605.2"><vh> define the dispatch dictionary used by scanText4</vh></v>
-</v>
-<v t="ekr.20051218100605.3"><vh>createThinChild4 NEW</vh></v>
-</v>
-<v t="ekr.20051219090231"><vh>Fixed bug: clicking in the expand/contract box didn't save the headline</vh>
-<v t="ekr.20040803072955.79"><vh>onClickBoxClick</vh></v>
-</v>
-<v t="ekr.20051218110553"><vh>Installed LeoUser's patch for Read derived files</vh>
-<v t="ekr.20051219122720"><vh>atFile.forceGnxOnPosition</vh></v>
-<v t="ekr.20031218072017.1810" a="M"><vh>importDerivedFiles</vh>
-<v t="ekr.20040930135204"><vh>&lt;&lt; set isThin if fileName is a thin derived file &gt;&gt;</vh></v>
-<v t="ekr.20051208100903.1"><vh>forceGnxOnPosition</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051208102436.1"><vh>New features</vh>
-<v t="ekr.20051208091816"><vh>created ut.leo, ut.py and ut.bat</vh></v>
-<v t="ekr.20051207120838.1"><vh>Added modes/*.xml to distribution</vh></v>
-<v t="ekr.20051216110817"><vh>Added 'insert' keyword to setTextSelection methods</vh>
-<v t="ekr.20031218072017.4089"><vh>setTextSelection &amp; setSelectionRange</vh></v>
-</v>
-<v t="ekr.20051217135340"><vh>(Revised cursor movement commands and added selection-extension commands)</vh>
-<v t="ekr.20050920084036.55"><vh> getPublicCommands (editCommandsClass)</vh></v>
-<v t="ekr.20050929114218"><vh>move... (leoEditCommands) (ok)</vh>
-<v t="ekr.20051218170358"><vh> helpers</vh>
-<v t="ekr.20051218122116" a="M"><vh>moveToHelper</vh></v>
-<v t="ekr.20051218121447" a="M"><vh>moveWordHelper</vh></v>
-<v t="ekr.20051218171457" a="M"><vh>movePastCloseHelper</vh></v>
-<v t="ekr.20051213094517" a="M"><vh>backSentenceHelper</vh></v>
-<v t="ekr.20050920084036.137" a="M"><vh>forwardSentenceHelper</vh></v>
-<v t="ekr.20051218133207.1" a="M"><vh>forwardParagraphHelper</vh></v>
-<v t="ekr.20051218133207" a="M"><vh>backwardParagraphHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.136" a="M"><vh>exchangePointMark</vh></v>
-<v t="ekr.20051218174113" a="M"><vh>extendMode</vh></v>
-<v t="ekr.20050920084036.148"><vh>buffers</vh></v>
-<v t="ekr.20051213080533"><vh>characters</vh></v>
-<v t="ekr.20051218141237"><vh>lines</vh></v>
-<v t="ekr.20050920084036.140"><vh>movePastClose (test)</vh></v>
-<v t="ekr.20050920084036.102"><vh>paragraphs</vh></v>
-<v t="ekr.20050920084036.131"><vh>sentences</vh></v>
-<v t="ekr.20050920084036.149"><vh>words</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051217102943"><vh>Code changes</vh>
-<v t="ekr.20051214125834"><vh>(Rewrote cut/copy/paste code)</vh>
-<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
-<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
-<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
-<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
-</v>
-</v>
-<v t="ekr.20051214113546.2"><vh>(Revised headline handlers)</vh>
-<v t="ekr.20051214125235"><vh> What I did</vh>
-<v t="ekr.20051216085517"><vh>Replaced calls to onHeadChanged by calls to c.endEditing</vh>
-<v t="ekr.20031218072017.3975"><vh>OnActivateBody (tkFrame)</vh></v>
-<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
-<v t="ekr.20050920084036.43"><vh>renameBuffer</vh></v>
-</v>
-</v>
-<v t="ekr.20051216084926"><vh>Notes</vh></v>
-<v t="ekr.20040803072955.125"><vh>Selecting &amp; editing... (tkTree)</vh>
-<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
-<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
-<v t="ekr.20040803072955.128" a="M"><vh>tree.select</vh>
-<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.134"><vh>tree.set...LabelState</vh>
-<v t="ekr.20040803072955.135"><vh>setEditLabelState</vh></v>
-<v t="ekr.20040803072955.136"><vh>setSelectedLabelState</vh></v>
-<v t="ekr.20040803072955.138"><vh>setUnselectedLabelState</vh></v>
-<v t="ekr.20040803072955.139"><vh>setDisabledHeadlineColors</vh></v>
-<v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
-<v t="ekr.20040803072955.141"><vh>setUnselectedHeadlineColors</vh></v>
-</v>
-<v t="ekr.20040803072955.142"><vh>dimEditLabel, undimEditLabel</vh></v>
-<v t="ekr.20040803072955.143"><vh>tree.expandAllAncestors</vh></v>
-</v>
-<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
-<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
-<v t="ekr.20051026083544.2"><vh>updateHead</vh></v>
-<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
-<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051216083932"><vh>Calls to tree.endEditLabel</vh>
-<v t="ekr.20031218072017.2992"><vh>c.endEditing (calls tree.endEditLabel)</vh></v>
-<v t="ekr.20051026083544.2"><vh>updateHead</vh></v>
-<v t="ekr.20040803072955.80"><vh>Icon Box...</vh>
-<v t="ekr.20040803072955.81"><vh>onIconBoxClick</vh></v>
-<v t="ekr.20040803072955.89"><vh>onIconBoxRightClick</vh></v>
-<v t="ekr.20040803072955.82"><vh>onIconBoxDoubleClick</vh></v>
-</v>
-<v t="ekr.20040803072955.83"><vh>onHeadlineRightClick</vh></v>
-</v>
-<v t="ekr.20051216080913.1"><vh>Calls to onHeadChanged</vh>
-<v t="ekr.20031218072017.2290"><vh>toggleAngleBrackets</vh></v>
-<v t="ekr.20031218072017.3070"><vh>changeSelection</vh></v>
-<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="ekr.20051216081742"><vh>Should *not* call onHeadChanged</vh>
-<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
-<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
-</v>
-<v t="ekr.20051216125001"><vh>(Restored c.begin/endUpdate)</vh>
-<v t="ekr.20051216160935"><vh>What I did</vh></v>
-<v t="ekr.20031218072017.1329"><vh>onBodyChanged (tkBody) &amp; removeTrailingNewlines</vh>
-<v t="ekr.20051026083733.6"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="ekr.20051026083733.7"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-<v t="ekr.20051026143009"><vh>removeTrailingNewlines</vh></v>
-</v>
-<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
-<v t="ekr.20031218072017.2950" a="M"><vh>c.begin/endUpdate</vh></v>
-<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
-<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
-<v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
-<v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
-</v>
-<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
-<v t="ekr.20051216155728"><vh>tree.begin/endUpdate</vh></v>
-<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
-<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
-</v>
-<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
-<v t="ekr.20051105073850"><vh>drawX...</vh>
-<v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
-<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
-<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.39"><vh>drawIcon</vh>
-<v t="ekr.20040803072955.40"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.41"><vh>drawLine</vh></v>
-<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
-</v>
-<v t="ekr.20040803072955.44"><vh>drawText</vh>
-<v t="ekr.20040803072955.45"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.46"><vh>drawUserIcons</vh></v>
-<v t="ekr.20040803072955.47"><vh>drawUserIcon</vh>
-<v t="ekr.20040803072955.48"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.49"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.50"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.51"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
-<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
-</v>
-<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
-<v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
-<v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
-<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
-<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
-<v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
-</v>
-</v>
-<v t="ekr.20051216155029"><vh>@@button insert begin/endUpdate</vh></v>
-</v>
-</v>
-<v t="ekr.20051212135654"><vh>(Revised key binding code)</vh>
-<v t="ekr.20051214082024"><vh>Notes</vh>
-<v t="ekr.20051213073224"><vh>Create commands for all Tk defaults key</vh></v>
-<v t="ekr.20051207140933"><vh>Create selection mode</vh>
-<v t="ekr.20051207140933.1"><vh>Posting</vh></v>
-</v>
-<v t="ekr.20051214075028"><vh>Problems</vh>
-<v t="ekr.20051213100651"><vh>forward-sentence-extend-selection doesn't work when invoked by long name</vh></v>
-<v t="ekr.20051213100651.1"><vh>Backspace  deletes 2 chars everywhere</vh></v>
-</v>
-<v t="ekr.20051214082024.1"><vh>Make arrow keys work properly both in the canvas and in headlines</vh></v>
-</v>
-<v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
-<v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
-<v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
-<v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
-</v>
-<v t="ekr.20031218072017.4060"><vh>Dialog</vh>
-<v t="ekr.20031218072017.4061"><vh>get_window_info</vh></v>
-<v t="ekr.20031218072017.4062"><vh>center_dialog</vh></v>
-<v t="ekr.20031218072017.4063"><vh>create_labeled_frame</vh></v>
-</v>
-<v t="ekr.20031218072017.4064"><vh>Focus</vh>
-<v t="ekr.20031218072017.4065"><vh>get_focus</vh></v>
-<v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-<v t="ekr.20050210082320"><vh>widget_wants_focus (tk.gui)</vh></v>
-</v>
-<v t="ekr.20031218072017.4066"><vh>Font</vh>
-<v t="ekr.20031218072017.2187"><vh>tkGui.getFontFromParams</vh></v>
-</v>
-<v t="ekr.20031218072017.4067"><vh>Icons</vh>
-<v t="ekr.20031218072017.4068"><vh>attachLeoIcon &amp; createLeoIcon</vh>
-<v t="ekr.20031218072017.4069"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.4070"><vh>createLeoIcon</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.4071"><vh>Idle Time</vh>
-<v t="ekr.20031218072017.4072"><vh>tkinterGui.setIdleTimeHook</vh></v>
-<v t="ekr.20031218072017.4073"><vh>setIdleTimeHookAfterDelay</vh></v>
-</v>
-<v t="ekr.20031218072017.4074"><vh>Indices (Tk)</vh>
-<v t="ekr.20031218072017.4075"><vh>firstIndex</vh></v>
-<v t="ekr.20031218072017.4076"><vh>lastIndex</vh></v>
-<v t="ekr.20031218072017.4077"><vh>moveIndexBackward</vh></v>
-<v t="ekr.20031218072017.4078"><vh>moveIndexForward &amp; moveIndexToNextLine</vh></v>
-<v t="ekr.20031218072017.4079"><vh>compareIndices</vh></v>
-<v t="ekr.20031218072017.4080"><vh>getindex</vh></v>
-</v>
-<v t="ekr.20031218072017.4081"><vh>Insert Point</vh>
-<v t="ekr.20031218072017.4082"><vh>getInsertPoint</vh></v>
-<v t="ekr.20031218072017.4083"><vh>setInsertPoint</vh></v>
-</v>
-<v t="ekr.20031218072017.4084"><vh>Selection</vh>
-<v t="ekr.20031218072017.4085"><vh>getSelectionRange (to be deleted?)</vh></v>
-<v t="ekr.20051126125950"><vh>getSelectedText</vh></v>
-<v t="ekr.20031218072017.4086"><vh>getTextSelection</vh></v>
-<v t="ekr.20051126171929"><vh>hasSelection</vh></v>
-<v t="ekr.20031218072017.4088"><vh>setSelectionRangeWithLength</vh></v>
-<v t="ekr.20031218072017.4089"><vh>setTextSelection &amp; setSelectionRange</vh></v>
-</v>
-<v t="ekr.20031218072017.4090"><vh>Text</vh>
-<v t="ekr.20031218072017.4091"><vh>getAllText</vh></v>
-<v t="ekr.20031218072017.4092"><vh>getCharAfterIndex</vh></v>
-<v t="ekr.20031218072017.4093"><vh>getCharAtIndex</vh></v>
-<v t="ekr.20031218072017.4094"><vh>getCharBeforeIndex</vh></v>
-<v t="ekr.20031218072017.4095"><vh>getLineContainingIndex</vh></v>
-<v t="ekr.20031218072017.4096"><vh>replaceSelectionRangeWithText (leoTkinterGui)</vh></v>
-</v>
-<v t="ekr.20031218072017.4097"><vh>Visibility</vh>
-<v t="ekr.20031218072017.4098"><vh>makeIndexVisible</vh></v>
-</v>
-<v t="ekr.20051220144507"><vh>isTextWidget</vh></v>
-</v>
-<v t="ekr.20050920084036.53"><vh>class editCommandsClass</vh>
-<v t="ekr.20050929155208"><vh> birth</vh>
-<v t="ekr.20050920084036.54"><vh> ctor</vh></v>
-<v t="ekr.20050920084036.55"><vh> getPublicCommands (editCommandsClass)</vh></v>
-</v>
-<v t="ekr.20050920084036.57"><vh>capitalization &amp; case</vh>
-<v t="ekr.20051015114221"><vh>capitalizeWord &amp; up/downCaseWord</vh></v>
-<v t="ekr.20050920084036.145" a="M"><vh>changePreviousWord</vh></v>
-<v t="ekr.20051015114221.1"><vh>capitalizeHelper</vh></v>
-</v>
-<v t="ekr.20051019183105"><vh>color &amp; font</vh>
-<v t="ekr.20051019183105.1"><vh>show-colors</vh>
-<v t="ekr.20051019183105.2"><vh>&lt;&lt; define colors &gt;&gt;</vh></v>
-<v t="ekr.20051019183105.3"><vh>createColorPicker</vh>
-<v t="ekr.20051019183105.4"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
-<v t="ekr.20051019183105.5"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051019201809"><vh>show-fonts &amp; helpers</vh>
-<v t="ekr.20051019201809.1"><vh>createFontPicker</vh>
-<v t="ekr.20051019202139"><vh>&lt;&lt; create the frames &gt;&gt;</vh></v>
-<v t="ekr.20051019201809.2"><vh>&lt;&lt; create the family combo box &gt;&gt;</vh></v>
-<v t="ekr.20051019201809.3"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20051019201809.4"><vh>&lt;&lt; create the weight combo box &gt;&gt;</vh></v>
-<v t="ekr.20051019201809.5"><vh>&lt;&lt; create the slant combo box&gt;&gt;</vh></v>
-<v t="ekr.20051019202139.1"><vh>&lt;&lt; create the sample text widget &gt;&gt;</vh></v>
-<v t="ekr.20051019202328"><vh>&lt;&lt; create and bind the callbacks &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051019201809.6" a="M"><vh>getFont</vh></v>
-<v t="ekr.20051019201809.7"><vh>setFont</vh></v>
-</v>
-</v>
-<v t="ekr.20050920084036.132"><vh>comment column...</vh>
-<v t="ekr.20050920084036.133"><vh>setCommentColumn</vh></v>
-<v t="ekr.20050920084036.134"><vh>indentToCommentColumn</vh></v>
-</v>
-<v t="ekr.20050920084036.58"><vh>dynamic abbreviation...</vh>
-<v t="ekr.20050920084036.59"><vh>dynamicExpansion</vh></v>
-<v t="ekr.20050920084036.60"><vh>dynamicExpansion2</vh></v>
-<v t="ekr.20050920084036.61"><vh>getDynamicList (helper)</vh></v>
-</v>
-<v t="ekr.20050920084036.62"><vh>esc methods for Python evaluation</vh>
-<v t="ekr.20050920084036.63"><vh>watchEscape (Revise)</vh></v>
-<v t="ekr.20050920084036.64"><vh>escEvaluate (Revise)</vh></v>
-</v>
-<v t="ekr.20050920084036.65"><vh>evalExpression</vh></v>
-<v t="ekr.20051022142249"><vh>focus (editCommandsClass)</vh>
-<v t="ekr.20051022144825"><vh>focusToBody/Log/Tree/Minibuffer</vh></v>
-<v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
-</v>
-<v t="ekr.20050920084036.66"><vh>fill column and centering</vh>
-<v t="ekr.20050920084036.67"><vh>centerLine</vh></v>
-<v t="ekr.20050920084036.68"><vh>setFillColumn</vh></v>
-<v t="ekr.20050920084036.69"><vh>centerRegion</vh></v>
-<v t="ekr.20050920084036.70"><vh>setFillPrefix</vh></v>
-<v t="ekr.20050920084036.71"><vh>_addPrefix</vh></v>
-</v>
-<v t="ekr.20050920084036.72"><vh>goto...</vh>
-<v t="ekr.20050929115226"><vh>gotoCharacter</vh></v>
-<v t="ekr.20050929124234"><vh>gotoLine</vh></v>
-</v>
-<v t="ekr.20050920084036.74"><vh>indent... (To do: undo)</vh>
-<v t="ekr.20050920084036.75"><vh>backToIndentation</vh></v>
-<v t="ekr.20050920084036.76"><vh>deleteIndentation</vh></v>
-<v t="ekr.20050920084036.77"><vh>insertNewLineIndent</vh></v>
-<v t="ekr.20050920084036.78"><vh>indentRelative</vh></v>
-</v>
-<v t="ekr.20050920084036.85"><vh>insert &amp; delete...</vh>
-<v t="ekr.20051026092433.1" a="M"><vh>backwardDeleteCharacter (ok)</vh>
-<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920084036.87"><vh>deleteNextChar (ok)</vh></v>
-<v t="ekr.20050920084036.135"><vh>deleteSpaces</vh></v>
-<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
-<v t="ekr.20050920084036.138"><vh>insertNewLine (not undoable)</vh></v>
-<v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
-<v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
-<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
-<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
-<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
-<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
-<v t="ekr.20051026092433"><vh>updateTab</vh></v>
-</v>
-</v>
-<v t="ekr.20050920084036.79"><vh>info...</vh>
-<v t="ekr.20050920084036.80"><vh>howMany</vh></v>
-<v t="ekr.20050920084036.81"><vh>lineNumber</vh></v>
-<v t="ekr.20050920084036.83"><vh>viewLossage</vh></v>
-<v t="ekr.20050920084036.84"><vh>whatLine</vh></v>
-</v>
-<v t="ekr.20050920084036.88"><vh>line...</vh>
-<v t="ekr.20050920084036.90"><vh>flushLines</vh></v>
-<v t="ekr.20051002095724"><vh>keepLines</vh></v>
-<v t="ekr.20050920084036.92"><vh>linesHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.147"><vh>measure</vh></v>
-<v t="ekr.20050929114218"><vh>move... (leoEditCommands) (ok)</vh>
-<v t="ekr.20051218170358"><vh> helpers</vh>
-<v t="ekr.20051218122116" a="M"><vh>moveToHelper</vh></v>
-<v t="ekr.20051218121447" a="M"><vh>moveWordHelper</vh></v>
-<v t="ekr.20051218171457" a="M"><vh>movePastCloseHelper</vh></v>
-<v t="ekr.20051213094517" a="M"><vh>backSentenceHelper</vh></v>
-<v t="ekr.20050920084036.137" a="M"><vh>forwardSentenceHelper</vh></v>
-<v t="ekr.20051218133207.1" a="M"><vh>forwardParagraphHelper</vh></v>
-<v t="ekr.20051218133207" a="M"><vh>backwardParagraphHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.136" a="M"><vh>exchangePointMark</vh></v>
-<v t="ekr.20051218174113" a="M"><vh>extendMode</vh></v>
-<v t="ekr.20050920084036.148"><vh>buffers</vh></v>
-<v t="ekr.20051213080533"><vh>characters</vh></v>
-<v t="ekr.20051218141237"><vh>lines</vh></v>
-<v t="ekr.20050920084036.140"><vh>movePastClose (test)</vh></v>
-<v t="ekr.20050920084036.102"><vh>paragraphs</vh></v>
-<v t="ekr.20050920084036.131"><vh>sentences</vh></v>
-<v t="ekr.20050920084036.149"><vh>words</vh></v>
-</v>
-<v t="ekr.20050920084036.95"><vh>paragraph...</vh>
-<v t="ekr.20050920084036.99"><vh>backwardKillParagraph</vh></v>
-<v t="ekr.20050920084036.103"><vh>fillParagraph</vh></v>
-<v t="ekr.20050920084036.100"><vh>fillRegion</vh></v>
-<v t="ekr.20050920084036.104"><vh>fillRegionAsParagraph</vh></v>
-<v t="ekr.20050920084036.98"><vh>killParagraph (Test)</vh></v>
-<v t="ekr.20050920084036.96"><vh>selectParagraph &amp; helper</vh>
-<v t="ekr.20050920084036.97"><vh>selectParagraphHelper</vh></v>
-</v>
-</v>
-<v t="ekr.20050920084036.105"><vh>region...</vh>
-<v t="ekr.20050920084036.106"><vh>setRegion</vh>
-<v t="ekr.20051002102410"><vh>down</vh></v>
-<v t="ekr.20051002102410.1"><vh>extend</vh></v>
-<v t="ekr.20051002102410.2"><vh>truncate</vh></v>
-<v t="ekr.20051002102410.3"><vh>up</vh></v>
-</v>
-<v t="ekr.20050920084036.107"><vh>indentRegion</vh></v>
-<v t="ekr.20050920084036.108"><vh>tabIndentRegion</vh></v>
-<v t="ekr.20050920084036.109"><vh>countRegion</vh></v>
-<v t="ekr.20050920084036.110"><vh>reverseRegion</vh></v>
-<v t="ekr.20050920084036.111"><vh>up/downCaseRegion &amp; helper</vh></v>
-</v>
-<v t="ekr.20050920084036.112"><vh>replace...</vh>
-<v t="ekr.20050920084036.113"><vh>replaceString</vh>
-<v t="ekr.20050920084036.114"><vh>&lt;&lt; do the replace &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920084036.115"><vh>activateReplaceRegex</vh></v>
-</v>
-<v t="ekr.20050920084036.116"><vh>scrollUp/Down</vh></v>
-<v t="ekr.20050920084036.117"><vh>sort...</vh>
-<v t="ekr.20050920084036.118"><vh>sortLines</vh></v>
-<v t="ekr.20050920084036.119"><vh>sortColumns</vh></v>
-<v t="ekr.20050920084036.120"><vh>sortFields</vh></v>
-</v>
-<v t="ekr.20050920084036.121"><vh>swap/transpose...</vh>
-<v t="ekr.20050920084036.122"><vh>transposeLines</vh></v>
-<v t="ekr.20050920084036.123"><vh>swapWords &amp; transposeWords</vh></v>
-<v t="ekr.20050920084036.124"><vh>swapCharacters &amp; transeposeCharacters</vh></v>
-</v>
-<v t="ekr.20050920084036.126"><vh>tabify &amp; untabify</vh></v>
-</v>
-<v t="ekr.20050929114218"><vh>move... (leoEditCommands) (ok)</vh>
-<v t="ekr.20051218170358"><vh> helpers</vh>
-<v t="ekr.20051218122116" a="M"><vh>moveToHelper</vh></v>
-<v t="ekr.20051218121447" a="M"><vh>moveWordHelper</vh></v>
-<v t="ekr.20051218171457" a="M"><vh>movePastCloseHelper</vh></v>
-<v t="ekr.20051213094517" a="M"><vh>backSentenceHelper</vh></v>
-<v t="ekr.20050920084036.137" a="M"><vh>forwardSentenceHelper</vh></v>
-<v t="ekr.20051218133207.1" a="M"><vh>forwardParagraphHelper</vh></v>
-<v t="ekr.20051218133207" a="M"><vh>backwardParagraphHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.136" a="M"><vh>exchangePointMark</vh></v>
-<v t="ekr.20051218174113" a="M"><vh>extendMode</vh></v>
-<v t="ekr.20050920084036.148"><vh>buffers</vh></v>
-<v t="ekr.20051213080533"><vh>characters</vh></v>
-<v t="ekr.20051218141237"><vh>lines</vh></v>
-<v t="ekr.20050920084036.140"><vh>movePastClose (test)</vh></v>
-<v t="ekr.20050920084036.102"><vh>paragraphs</vh></v>
-<v t="ekr.20050920084036.131"><vh>sentences</vh></v>
-<v t="ekr.20050920084036.149"><vh>words</vh></v>
-</v>
-<v t="ekr.20050920084036.85"><vh>insert &amp; delete...</vh>
-<v t="ekr.20051026092433.1" a="M"><vh>backwardDeleteCharacter (ok)</vh>
-<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920084036.87"><vh>deleteNextChar (ok)</vh></v>
-<v t="ekr.20050920084036.135"><vh>deleteSpaces</vh></v>
-<v t="ekr.20050920084036.141"><vh>removeBlankLines</vh></v>
-<v t="ekr.20050920084036.138"><vh>insertNewLine (not undoable)</vh></v>
-<v t="ekr.20050920084036.86"><vh>insertNewLineAndTab</vh></v>
-<v t="ekr.20050920084036.139"><vh>insertParentheses</vh></v>
-<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
-<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
-<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
-<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
-<v t="ekr.20051026092433"><vh>updateTab</vh></v>
-</v>
-</v>
-<v t="ekr.20051024102724"><vh>tkTtree.setBindings</vh></v>
-</v>
-<v t="ekr.20051214115158"><vh>(Revised general text widget handlers)</vh>
-<v t="ekr.20051023182326"><vh>copyBindingsToWidget &amp; textBindingsRedirectionCallback</vh></v>
-<v t="ekr.20051125080855" a="M"><vh>selfInsertCommand</vh>
-<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
-<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
-<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
-<v t="ekr.20051026092433"><vh>updateTab</vh></v>
-</v>
-<v t="ekr.20051214113546.1"><vh>k.onTextWidgetKey &amp; insertString</vh></v>
-</v>
-<v t="ekr.20051217074031"><vh>(Moved headline coloring code out of endEditLabel and into select)</vh>
-<v t="ekr.20051217082130"><vh>What I did</vh></v>
-<v t="ekr.20040803072955.128" a="M"><vh>tree.select</vh>
-<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
-<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
-<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051220091742"><vh>Bugs</vh>
-<v t="ekr.20051208100903"><vh>Installed Brian's patch for Import Derived files</vh>
-<v t="ekr.20031218072017.1810" a="M"><vh>importDerivedFiles</vh>
-<v t="ekr.20040930135204"><vh>&lt;&lt; set isThin if fileName is a thin derived file &gt;&gt;</vh></v>
-<v t="ekr.20051208100903.1"><vh>forceGnxOnPosition</vh></v>
-</v>
-</v>
-<v t="ekr.20051220090650"><vh>Fixed crasher in backwardDeleteCharacter</vh></v>
-<v t="ekr.20051219125559"><vh>Fixed recent bug: dialogs now get focus properly when first opened.</vh></v>
-<v t="ekr.20051221100114.1"><vh>Made sure shortcuts are printed clearly by k.registerCommand</vh>
-<v t="ekr.20051122104219"><vh>prettyPrintKey</vh></v>
-<v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
-</v>
-<v t="ekr.20060105123629"><vh>Suppressed crash undoing a clone followed by a drag</vh>
-<v t="ekr.20060105125102"><vh>trace</vh></v>
-<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
-</v>
-</v>
-<v t="ekr.20051220091742.1"><vh>Code level</vh>
-<v t="ekr.20051219124309"><vh>Removed calls to update followed by xWantsFocus</vh></v>
-<v t="ekr.20051220145225"><vh>Added g.app.gui.isTextWidget</vh>
-<v t="ekr.20051220144507"><vh>isTextWidget</vh></v>
-</v>
-<v t="ekr.20051111065016"><vh>(Moving focus out of limbo)</vh>
-<v t="ekr.20051022152427"><vh>Focus</vh>
-<v t="ekr.20050120083053"><vh>Delayed Focus (tkFrame)</vh>
-<v t="ekr.20050120092028" a="M"><vh>xWantsFocus (tkFrame)</vh></v>
-<v t="ekr.20050120092028.1"><vh>set_focus (tkFrame)</vh></v>
-</v>
-<v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
-</v>
-<v t="ekr.20051113080509"><vh>Find methods</vh>
-<v t="ekr.20031218072017.3089"><vh>restore</vh></v>
-<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
-</v>
-<v t="ekr.20031218072017.4039"><vh>class leoTkinterLog</vh>
-<v t="ekr.20051016095907"><vh>tkLog Birth</vh>
-<v t="ekr.20031218072017.4040"><vh>tkLog.__init__</vh></v>
-<v t="ekr.20031218072017.4042"><vh>tkLog.createControl</vh></v>
-<v t="ekr.20051016103459"><vh>tkLog.createTextWidget</vh></v>
-<v t="ekr.20051019134106.1"><vh>tkLog.makeTabMenu</vh></v>
-</v>
-<v t="ekr.20051016095907.1"><vh>Config &amp; get/saveState</vh>
-<v t="ekr.20031218072017.4041"><vh>tkLog.configureBorder &amp; configureFont</vh></v>
-<v t="ekr.20031218072017.4043"><vh>tkLog.getFontConfig</vh></v>
-<v t="ekr.20041222043017"><vh>tkLog.restoreAllState</vh></v>
-<v t="ekr.20041222043017.1"><vh>tkLog.saveAllState</vh></v>
-<v t="ekr.20041217135735.2"><vh>tkLog.setColorFromConfig</vh></v>
-<v t="ekr.20031218072017.4046"><vh>tkLog.setFontFromConfig</vh></v>
-</v>
-<v t="ekr.20051016095907.2"><vh>Focus &amp; update (tkLog)</vh>
-<v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
-<v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
-<v t="ekr.20050208133438"><vh>forceLogUpdate</vh></v>
-</v>
-<v t="ekr.20051016101927"><vh>put &amp; putnl (tkLog)</vh>
-<v t="ekr.20031218072017.1473"><vh>put</vh>
-<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
-<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051016101927.1"><vh>putnl</vh></v>
-</v>
-<v t="ekr.20051018061932"><vh>Tab (TkLog)</vh>
-<v t="ekr.20051017212057"><vh>clearTab</vh></v>
-<v t="ekr.20051024173701" a="M"><vh>createTab</vh>
-<v t="ekr.20051020075416"><vh>&lt;&lt; bind a tab-specific pop-up menu to the tab &gt;&gt;</vh></v>
-<v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051018102027" a="M"><vh>deleteTab</vh></v>
-<v t="ekr.20051027114433"><vh>getSelectedTab</vh></v>
-<v t="ekr.20051018061932.1" a="M"><vh>lower/raiseTab</vh></v>
-<v t="ekr.20051019170806"><vh>renameTab</vh></v>
-<v t="ekr.20051016101724.1" a="M"><vh>selectTab</vh></v>
-<v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
-<v t="ekr.20051019134106"><vh>Tab menu callbacks &amp; helpers</vh>
-<v t="ekr.20051019134422"><vh>onRightClick &amp; onClick</vh></v>
-<v t="ekr.20051019140004.1"><vh>newTabFromMenu</vh></v>
-<v t="ekr.20051019165401"><vh>renameTabFromMenu</vh></v>
-<v t="ekr.20051019172811"><vh>getTabName</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20051220093312"><vh>New features</vh>
-<v t="ekr.20051123055200"><vh>*** Allow multiple bindings to the same command</vh>
-<v t="ekr.20051220070321.1"><vh>To do</vh></v>
-<v t="ekr.20051220063601"><vh>From leoConfig.py</vh>
-<v t="ekr.20041119204700"><vh> ctor (parserBaseClass)</vh></v>
-<v t="ekr.20041120112043"><vh>parseShortcutLine (g.app.config)</vh></v>
-<v t="ekr.20041120113848"><vh>doShortcut</vh></v>
-<v t="ekr.20041120105609"><vh>doShortcuts</vh></v>
-<v t="ekr.20041227071423"><vh>setShortcut (ParserBaseClass)</vh></v>
-<v t="ekr.20041117062717.14"><vh>getShortcut (config)</vh></v>
-</v>
-<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
-<v t="ekr.20050920085536.11"><vh>add_ekr_altx_commands</vh>
-<v t="ekr.20050920085536.12"><vh>&lt;&lt; define dict d of abbreviations &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920085536.16"><vh>bindKey</vh>
-<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
-<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
-<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
-<v t="ekr.20051023182326"><vh>copyBindingsToWidget &amp; textBindingsRedirectionCallback</vh></v>
-<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
-<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
-<v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
-<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
-<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
-</v>
-<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
-</v>
-<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
-<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
-<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051220064128"><vh>Calls to getShortcut</vh>
-<v t="ekr.20051023181449" a="M"><vh>createBindings (findTab)</vh></v>
-<v t="ekr.20051025120920" a="M"><vh>createBindings</vh></v>
-<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
-<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
-</v>
-<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
-<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
-<v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
-<v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set amp_index using rawKey and realLabel &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051220070321"><vh>Settings command is now the same as open-leoettings-leo</vh>
-<v t="ekr.20031218072017.3757"><vh>defineEditMenuTop2Table</vh></v>
-<v t="ekr.20031218072017.2086"><vh>preferences</vh></v>
-</v>
-</v>
-<v t="ekr.20051014161015"><vh>Full input modes</vh>
-<v t="ekr.20060103104509"><vh>To do</vh></v>
-<v t="ekr.20051017140811.1"><vh>@url http://vimdoc.sourceforge.net/htmldoc/usr_03.html</vh></v>
-<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
-<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
-<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
-<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
-<v t="ekr.20051026092433"><vh>updateTab</vh></v>
-</v>
-<v t="ekr.20060102134206.1"><vh>From leoConfig.py</vh>
-<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
-<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
-<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
-<v t="ekr.20060102103625.1"><vh>doMode</vh></v>
-<v t="ekr.20041120105609"><vh>doShortcuts</vh></v>
-</v>
-<v t="ekr.20060102134206.2"><vh>From leoKeys.py</vh>
-<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
-<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1" a="M"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
-<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920094633"><vh>finishCreate (keyHandler) &amp; helpers</vh>
-<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
-</v>
-<v t="ekr.20050920085536.63"><vh>keyboardQuit</vh></v>
-<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
-<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20060113050914"><vh>Use shutil.move in g.utils_rename</vh>
+<v t="ekr.20060113060922"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1263"><vh>g.utils_rename &amp; test</vh>
+<v t="ekr.20050104123726.1"><vh>&lt;&lt; about os.rename &gt;&gt;</vh></v>
+<v t="ekr.20050107085710.1"><vh>test_g_utils_rename</vh></v>
+</v>
+</v>
+<v t="ekr.20060112112241"><vh>Simplified k.copyBindingsToWidget and eliminated k.onTextWidgetKey</vh>
+<v t="ekr.20060112202702"><vh>Notes</vh></v>
 <v t="ekr.20051001051355"><vh>Dispatching...</vh>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
@@ -797,45 +202,436 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 <v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
 <v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
 </v>
-<v t="ekr.20050920085536.58"><vh>quickCommand  (ctrl-c) &amp; helpers</vh>
-<v t="ekr.20051004102314"><vh>rCommand</vh></v>
-<v t="ekr.20050923183943.4"><vh>processKey</vh>
-<v t="ekr.20050923183943.6"><vh>processAbbreviation</vh></v>
-</v>
-</v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
 </v>
-<v t="ekr.20060104120602"><vh>matchKeys</vh></v>
-<v t="ekr.20060102135349.2"><vh>enterNamedMode &amp;helpers</vh>
+<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
+<v t="ekr.20050920085536.11"><vh>add_ekr_altx_commands</vh>
+<v t="ekr.20050920085536.12"><vh>&lt;&lt; define dict d of abbreviations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
+<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
+<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
+</v>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+</v>
+<v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+</v>
+<v t="ekr.20060113090732"><vh>Made sure that focus stays in body during tab completion</vh>
+<v t="ekr.20060113170919"><vh>Notes</vh></v>
+<v t="ekr.20051017212057"><vh>clearTab</vh></v>
+</v>
+<v t="ekr.20060114060100.1"><vh>Leo now puts focus in body pane after deleting a window</vh></v>
+<v t="ekr.20060114080203"><vh>Fixed many binding problems</vh>
+<v t="ekr.20051024102724"><vh>tkTtree.setBindings</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060114103244"><vh>All uses of prettyPrintKey</vh>
+<v t="ekr.20051012201831"><vh>printBindings</vh></v>
+<v t="ekr.20051014061332"><vh>printCommands</vh></v>
+<v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
+<v t="ekr.20051122104219"><vh>prettyPrintKey</vh></v>
+</v>
+<v t="ekr.20060114104119"><vh>All uses of inverseCommandsDict</vh>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20050920084036.188"><vh>leoCommands.getPublicCommands</vh>
+<v t="ekr.20050920084036.189"><vh>&lt;&lt; define dictionary d of names and Leo commands &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
+<v t="ekr.20051010062551.1"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
+<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+<v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
+</v>
+<v t="ekr.20060114104119.1"><vh>All uses of inverseBindingDict</vh>
+<v t="ekr.20051012201831"><vh>printBindings</vh></v>
+<v t="ekr.20051014061332"><vh>printCommands</vh></v>
+<v t="ekr.20051017212452"><vh>computeCompletionList</vh></v>
+<v t="ekr.20051018070524"><vh>computeInverseBindingDict</vh></v>
+</v>
+<v t="ekr.20060114091359"><vh>All uses of bindingsDict</vh>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20050920084036.203"><vh>_executeMacro (revise)</vh></v>
+<v t="ekr.20051012201831"><vh>printBindings</vh></v>
+<v t="ekr.20050920085536.75"><vh>executeNTimes</vh></v>
+<v t="ekr.20051018070524"><vh>computeInverseBindingDict</vh></v>
+<v t="ekr.20051014170754.1"><vh>getShortcutForCommand/Name (should return lists)</vh></v>
+</v>
+</v>
+<v t="ekr.20060114061826"><vh>Fixed extend-selection problems</vh>
+<v t="ekr.20060113130510"><vh>extendHelper</vh></v>
+</v>
+<v t="ekr.20060114163130"><vh>Fixed per-pane bindings!</vh>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20051024102724"><vh>tkTtree.setBindings</vh></v>
+<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
+<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
+</v>
+<v t="ekr.20060114171910"><vh>traceBinding</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20060114180908"><vh>All calls to copyBindingsToWidget</vh>
+<v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
+<v t="ekr.20051024102724"><vh>tkTtree.setBindings</vh></v>
+<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
+<v t="ekr.20051025120920"><vh>createBindings (spellTab)</vh></v>
+<v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
+<v t="ekr.20050618045715"><vh>&lt;&lt; patch by Maciej Kalisiak  to handle scroll-wheel events &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060114183604"><vh>Always redraw the screen after editing a label</vh></v>
+</v>
+<v t="ekr.20060107104019"><vh>Code level</vh>
+<v t="ekr.20060107103157"><vh>Added support for plugin menu commands</vh>
+<v t="ekr.20031218072017.4117"><vh>defineMenuCallback</vh></v>
+<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
+</v>
+<v t="ekr.20060106212914"><vh>Removed g.top from all plugins</vh></v>
+<v t="ekr.20060107224249.1"><vh>Created c.exists ivar and related logic</vh>
+<v t="ekr.20031218072017.2811"><vh> c.Birth &amp; death</vh>
+<v t="ekr.20031218072017.2812"><vh>c.__init__</vh></v>
+<v t="ekr.20040731071037"><vh>c.initIvars</vh>
+<v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2814"><vh>c.__repr__ &amp; __str__</vh></v>
+<v t="ekr.20041130173135"><vh>c.hash</vh></v>
+<v t="ekr.20050920093543"><vh>c.finishCreate &amp; helper</vh>
+<v t="ekr.20051007143620"><vh>printCommandsDict</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.1974"><vh>destroySelf (tkFrame)</vh></v>
+<v t="ekr.20031218072017.2615"><vh>app.destroyWindow</vh></v>
+<v t="ekr.20050102094729"><vh>callTagHandler</vh></v>
+</v>
+<v t="ekr.20060107222329"><vh>Cleaned up code</vh>
+<v t="ekr.20060107232924"><vh>Won't do</vh></v>
+</v>
+<v t="ekr.20060108151437"><vh>Call c.setLog in all entries into code</vh>
+<v t="ekr.20031218072017.1847"><vh>app.setLog, lockLog, unlocklog</vh></v>
+<v t="ekr.20060109164136"><vh>c.setLog</vh></v>
+<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20040803072955.71"><vh>Event handlers (tkTree)</vh>
+<v t="ekr.20051105103233"><vh>Helpers</vh>
+<v t="ekr.20040803072955.72"><vh>checkWidgetList</vh></v>
+<v t="ekr.20040803072955.73"><vh>dumpWidgetList</vh></v>
+<v t="ekr.20040803072955.75"><vh>edit_widget</vh></v>
+<v t="ekr.20040803072955.74"><vh>eventToPosition</vh></v>
+<v t="ekr.20040803072955.76"><vh>findEditWidget</vh></v>
+<v t="ekr.20040803072955.109"><vh>findVnodeWithIconId</vh></v>
+</v>
+<v t="ekr.20040803072955.78"><vh>Click Box...</vh>
+<v t="ekr.20040803072955.79"><vh>onClickBoxClick</vh></v>
+</v>
+<v t="ekr.20040803072955.99"><vh>Dragging</vh>
+<v t="ekr.20041111115908"><vh>endDrag</vh>
+<v t="ekr.20040803072955.104"><vh>&lt;&lt; set vdrag, childFlag &gt;&gt;</vh></v>
+<v t="ekr.20041111114148"><vh>&lt;&lt; drag p to vdrag &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041111114944"><vh>startDrag</vh></v>
+<v t="ekr.20040803072955.100"><vh>onContinueDrag</vh>
+<v t="ekr.20040803072955.101"><vh>&lt;&lt; scroll the canvas as needed &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.102"><vh>onDrag</vh></v>
+<v t="ekr.20040803072955.103"><vh>onEndDrag</vh></v>
+</v>
+<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
+<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20051026083544.2"><vh>updateHead</vh></v>
+<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040803072955.80"><vh>Icon Box...</vh>
+<v t="ekr.20040803072955.81"><vh>onIconBoxClick</vh></v>
+<v t="ekr.20040803072955.89"><vh>onIconBoxRightClick</vh></v>
+<v t="ekr.20040803072955.82"><vh>onIconBoxDoubleClick</vh></v>
+</v>
+<v t="ekr.20040803072955.105"><vh>OnActivateHeadline (tkTree)</vh>
+<v t="ekr.20040803072955.106"><vh>&lt;&lt; activate this window &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051022141020"><vh>onTreeClick</vh></v>
+<v t="ekr.20040803072955.84"><vh>Text Box...</vh>
+<v t="ekr.20040803072955.85"><vh>configureTextState</vh></v>
+<v t="ekr.20040803072955.86"><vh>onCtontrolT</vh></v>
+<v t="ekr.20040803072955.87"><vh>onHeadlineClick</vh></v>
+<v t="ekr.20040803072955.83"><vh>onHeadlineRightClick</vh></v>
+</v>
+<v t="ekr.20040803072955.108"><vh>tree.OnDeactivate (caused double-click problem)</vh></v>
+<v t="ekr.20040803072955.110"><vh>tree.OnPopup &amp; allies</vh>
+<v t="ekr.20040803072955.111"><vh>OnPopupFocusLost</vh></v>
+<v t="ekr.20040803072955.112"><vh>createPopupMenu</vh>
+<v t="ekr.20040803072955.113"><vh>&lt;&lt; Create the menu table &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.114"><vh>enablePopupMenuItems</vh>
+<v t="ekr.20040803072955.115"><vh>&lt;&lt; set isAtRoot and isAtFile if v's tree contains @root or @file nodes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.116"><vh>showPopupMenu</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060108105607"><vh>Generalized doCommand</vh>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
+<v t="ekr.20050920084036.188"><vh>leoCommands.getPublicCommands</vh>
+<v t="ekr.20050920084036.189"><vh>&lt;&lt; define dictionary d of names and Leo commands &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
+</v>
+</v>
+<v t="ekr.20060111193246"><vh>Documentation</vh>
+<v t="ekr.20060111112513"><vh>Updated docs with warnings about deleting children of clones</vh></v>
+</v>
+<v t="ekr.20060112094901"><vh>New features</vh>
+<v t="ekr.20060111114001"><vh>Installed new standard bindings</vh>
+<v t="ekr.20060112064517.1"><vh>From Manfred</vh></v>
+<v t="ekr.20060112045830"><vh>From Speed</vh></v>
+</v>
+<v t="ekr.20060112064517"><vh>Added script check bindings in leoSettings.leo</vh></v>
+<v t="ekr.20060112065740"><vh>Scripts now maintain original focus</vh>
+<v t="ekr.20060112191014"><vh>Report</vh></v>
+<v t="ekr.20031218072017.2992"><vh>c.endEditing (calls tree.endEditLabel)</vh></v>
+<v t="ekr.20050506084734"><vh>writeFromString (new in 4.3 beta2)</vh></v>
+</v>
+<v t="ekr.20060112070752"><vh>Added scroll-up/down-extend-selection commands</vh>
+<v t="ekr.20060113081442.2"><vh>Notes</vh></v>
+<v t="ekr.20050920084036.55"><vh> getPublicCommands (editCommandsClass)</vh></v>
+<v t="ekr.20051218122116"><vh>moveToHelper</vh></v>
+<v t="ekr.20050920084036.116"><vh>scrollUp/Down/extendSelection</vh>
+<v t="ekr.20060113082917"><vh>scrollHelper</vh></v>
+</v>
+</v>
+<v t="ekr.20060110131309"><vh>Improved cursor move/extend commands</vh>
+<v t="ekr.20060110131309.1"><vh>What I did</vh></v>
+<v t="ekr.20050920084036.54"><vh> ctor (editCommandsClass)</vh></v>
+<v t="ekr.20060113105246"><vh>tree.moveUpDown (Reference)</vh></v>
+<v t="ekr.20050929114218"><vh>move... (leoEditCommands)</vh>
+<v t="ekr.20051218170358"><vh> helpers</vh>
+<v t="ekr.20060113130510"><vh>extendHelper</vh></v>
+<v t="ekr.20060113105246.1"><vh>moveUpOrDownHelper</vh></v>
+<v t="ekr.20051218122116"><vh>moveToHelper</vh></v>
+<v t="ekr.20051218121447"><vh>moveWordHelper</vh></v>
+<v t="ekr.20051218171457"><vh>movePastCloseHelper</vh></v>
+<v t="ekr.20051213094517"><vh>backSentenceHelper</vh></v>
+<v t="ekr.20050920084036.137"><vh>forwardSentenceHelper</vh></v>
+<v t="ekr.20051218133207.1"><vh>forwardParagraphHelper</vh></v>
+<v t="ekr.20051218133207"><vh>backwardParagraphHelper</vh></v>
+</v>
+<v t="ekr.20050920084036.136"><vh>exchangePointMark</vh></v>
+<v t="ekr.20051218174113"><vh>extendMode</vh></v>
+<v t="ekr.20050920084036.148"><vh>buffers</vh></v>
+<v t="ekr.20051213080533"><vh>characters</vh></v>
+<v t="ekr.20051218141237"><vh>lines</vh></v>
+<v t="ekr.20050920084036.140"><vh>movePastClose (test)</vh></v>
+<v t="ekr.20050920084036.102"><vh>paragraphs</vh></v>
+<v t="ekr.20050920084036.131"><vh>sentences</vh></v>
+<v t="ekr.20050920084036.149"><vh>words</vh></v>
+</v>
+<v t="ekr.20051218141237"><vh>lines</vh></v>
+<v t="ekr.20051218122116"><vh>moveToHelper</vh></v>
+<v t="ekr.20060113105246.1"><vh>moveUpOrDownHelper</vh></v>
+<v t="ekr.20060113082917"><vh>scrollHelper</vh></v>
+<v t="ekr.20060113130510"><vh>extendHelper</vh></v>
+</v>
+<v t="ekr.20060113163800"><vh>Made edit command keys work in headlines</vh></v>
+<v t="ekr.20060115095641"><vh>Use pretty keys in tab completion tab</vh></v>
+<v t="ekr.20060115091804.2"><vh>Finish support for @mode nodes</vh>
+<v t="ekr.20051010062551.1"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
+<v t="ekr.20060115134337"><vh>From leoConfig</vh>
+<v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
+<v t="ekr.20060102103625.1"><vh>doMode</vh></v>
+</v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
+<v t="ekr.20050920085536.11"><vh>add_ekr_altx_commands</vh>
+<v t="ekr.20050920085536.12"><vh>&lt;&lt; define dict d of abbreviations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
+<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
+<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
+</v>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+</v>
+<v t="ekr.20060115103349"><vh>Modes</vh>
+<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
 <v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
-<v t="ekr.20060104164523"><vh>modeHelp/Helper</vh>
+<v t="ekr.20060104164523"><vh>modeHelp &amp; helper</vh>
 <v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
 </v>
 </v>
-<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
-<v t="ekr.20060105132013"><vh>set(ignore, insert, overwrite)Mode</vh></v>
 </v>
 </v>
 </v>
 </v>
 <v t="ekr.20050921094025"><vh>4.4 To do</vh>
-<v t="ekr.20060103100430"><vh>Documentation for installing aspell plugin</vh></v>
-<v t="ekr.20060105130546"><vh>Distribution</vh></v>
-<v t="ekr.20060105130519"><vh>Urgent</vh>
-<v t="ekr.20050928144501.1"><vh>Mouseless Leo</vh>
+<v t="ekr.20060113085710"><vh>First</vh>
+<v t="ekr.20060115102006.1"><vh>Test on Mac</vh></v>
+</v>
+<v t="ekr.20060110202455"><vh>Next</vh>
+<v t="ekr.20060115091804.2"><vh>Finish support for @mode nodes</vh>
+<v t="ekr.20051010062551.1"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
+<v t="ekr.20060115134337"><vh>From leoConfig</vh>
+<v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
+<v t="ekr.20060102103625.1"><vh>doMode</vh></v>
+</v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
+<v t="ekr.20050920085536.11"><vh>add_ekr_altx_commands</vh>
+<v t="ekr.20050920085536.12"><vh>&lt;&lt; define dict d of abbreviations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
+<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
+<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
+</v>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+</v>
+<v t="ekr.20060115103349"><vh>Modes</vh>
+<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060104164523"><vh>modeHelp &amp; helper</vh>
+<v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060115162515"><vh>Specify what mode to enter for each mode command</vh></v>
+<v t="ekr.20060114215112"><vh>Make sure all (or most) callbacks call masterCommand</vh>
+<v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20060115100407"><vh>Found: callback</vh>
+<v t="ekr.20060115100841"><vh>Do call masterCommand</vh>
+<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
+<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
+</v>
+<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
+</v>
+<v t="ekr.20060115100841.1"><vh>Don't (yet) call masterCommand</vh>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20031218072017.4117"><vh>defineMenuCallback</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060115091804.3"><vh>Use sandbox2 for experiments</vh></v>
+<v t="ekr.20060114055714"><vh>Improve modes</vh>
+<v t="ekr.20060114060100"><vh>Notes</vh></v>
+<v t="ekr.20060114052626"><vh>@alias nodes set minibuffer aliases</vh></v>
+</v>
+<v t="ekr.20060113170919.1"><vh>Think commands when designing workflow, and for chapters</vh></v>
+<v t="ekr.20050928144501.1"><vh>Commands for mouseless Leo</vh>
+<v t="ekr.20060114080424"><vh>Urgent commands needed for mouseless Leo</vh></v>
+<v t="ekr.20060112084446"><vh>Next</vh></v>
+<v t="ekr.20060110202238"><vh>Missing bindings/commands</vh></v>
 <v t="ekr.20060104083551"><vh>New commands for mouseless Leo (LeoUser)</vh></v>
 <v t="ekr.20050707085637"><vh>Suggestions from an emacs user</vh></v>
 <v t="ekr.20051221101851"><vh>Add commands to simulate clicks</vh>
 <v t="ekr.20051221101851.1"><vh>Request</vh></v>
 </v>
+<v t="ekr.20060113090042"><vh>open-outline-by-name</vh></v>
+<v t="ekr.20060115092257"><vh>Reference for function keys</vh></v>
 </v>
-<v t="ekr.20051208081641"><vh>Fix undo problems</vh>
-<v t="ekr.20051208081641.1"><vh>Report</vh></v>
-</v>
+<v t="ekr.20060111152145"><vh>Improve scripts menu plugin</vh></v>
+<v t="ekr.20060111152145.1"><vh>Study jyLeo's chapters code</vh></v>
+<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
+<v t="ekr.20060111134901"><vh>Implement c.es etc.</vh></v>
 </v>
 <v t="ekr.20060105133043"><vh>Important</vh>
-<v t="ekr.20051217175058"><vh>Get chapters plugin working</vh></v>
-<v t="ekr.20051202094427"><vh>Prototype for resolve cvs conflicts</vh></v>
+<v t="ekr.20060111134004"><vh>Run Idle in a separate process</vh>
+<v t="ekr.20060111103821"><vh>This would fix weird crasher in Plugins Manager plugin</vh>
+<v t="ekr.20060111103821.1"><vh>Report</vh></v>
+</v>
+<v t="ekr.20060111134004.1"><vh>Posting</vh></v>
+<v t="ekr.20031218072017.2932"><vh>openPythonWindow (Dave Hein)</vh>
+<v t="ekr.20031218072017.2933"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2934"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh>
+<v t="ekr.20031218072017.2936"><vh>&lt;&lt; Try to open idle in Python 2.3 systems &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2935"><vh>&lt;&lt; Try to open idle in Python 2.2 systems&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2937"><vh>leoPyShellMain</vh></v>
+</v>
+</v>
+<v t="ekr.20060109183500.1"><vh>Scripting improvements</vh></v>
+<v t="ekr.20060108120501"><vh>Add @find node to scripting plugin</vh></v>
+<v t="ekr.20051217135340.2"><vh>Create find-options panel</vh></v>
+<v t="ekr.20051217175058"><vh>Add support in Leo's core for chapters</vh></v>
 <v t="ekr.20051028061611.1"><vh>Unify all search commands</vh>
 <v t="ekr.20051112075511"><vh>Idea for improving search command code</vh></v>
 <v t="ekr.20051023094009"><vh>Search classes (ok, i-search is limited)</vh>
@@ -844,7 +640,7 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 <v t="ekr.20051020120306.11"><vh>__init__</vh>
 <v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051023181449" a="M"><vh>createBindings (findTab)</vh></v>
+<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
 <v t="ekr.20051020120306.13"><vh>createFrame (findTab)</vh>
 <v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
 <v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
@@ -866,7 +662,7 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 </v>
 <v t="ekr.20051020120306.25"><vh>hideTab</vh></v>
 <v t="ekr.20051020120306.26"><vh>bringToFront</vh></v>
-<v t="ekr.20051020120306.27" a="M"><vh>selectAllFindText</vh></v>
+<v t="ekr.20051020120306.27"><vh>selectAllFindText</vh></v>
 <v t="ekr.20051020120306.28"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
 <v t="ekr.20051020120306.1"><vh>class underlinedTkButton</vh>
 <v t="ekr.20051020120306.2"><vh>__init__</vh>
@@ -970,7 +766,7 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 </v>
 <v t="ekr.20031218072017.4064"><vh>Focus</vh>
 <v t="ekr.20031218072017.4065"><vh>get_focus</vh></v>
-<v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
 <v t="ekr.20050210082320"><vh>widget_wants_focus (tk.gui)</vh></v>
 </v>
 <v t="ekr.20031218072017.4066"><vh>Font</vh>
@@ -1024,23 +820,31 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 <v t="ekr.20051126123759.1"><vh> ctor</vh></v>
 <v t="ekr.20051126123759.2"><vh> getPublicCommands (autoCommandsClass)</vh></v>
 </v>
-<v t="ekr.20051127105431" a="M"><vh>abort</vh></v>
+<v t="ekr.20051127105431"><vh>abort</vh></v>
 <v t="ekr.20051126122952.1"><vh>autoComplete</vh></v>
-<v t="ekr.20051126123149" a="M"><vh>computeCompletionList (autoCompleter)</vh></v>
+<v t="ekr.20051126123149"><vh>computeCompletionList (autoCompleter)</vh></v>
 <v t="ekr.20051126131103"><vh>doBackSpace</vh></v>
 <v t="ekr.20051126123249.1"><vh>doTabCompletion (autoCompleter)</vh></v>
-<v t="ekr.20051127065601" a="M"><vh>extendSelection</vh></v>
-<v t="ekr.20051127105102" a="M"><vh>finish</vh></v>
-<v t="ekr.20051127070018" a="M"><vh>setSelection</vh></v>
+<v t="ekr.20051127065601"><vh>extendSelection</vh></v>
+<v t="ekr.20051127105102"><vh>finish</vh></v>
+<v t="ekr.20051127070018"><vh>setSelection</vh></v>
 <v t="ekr.20051126124705"><vh>stateHandler (autoCompleter)</vh></v>
 </v>
 </v>
-<v t="ekr.20060103102115"><vh>Improve word-export plugin</vh></v>
-<v t="ekr.20051217135340.2"><vh>Create find-options panel</vh></v>
+<v t="ekr.20051202094427"><vh>Resolve cvs conflicts</vh>
+<v t="ekr.20031218072017.658"><vh>Resolve CVS Conflicts command (Stepen Schaefer)</vh>
+<v t="ekr.20050501111900"><vh>Stephen Schaefer</vh></v>
+<v t="ekr.20031218072017.659"><vh>Jonathon 1</vh></v>
+<v t="ekr.20031218072017.660"><vh>Jonathan 2</vh></v>
+<v t="ekr.20031218072017.661"><vh>Gil 1</vh></v>
+<v t="ekr.20031218072017.662"><vh>Gil 2</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051129095023"><vh>Medium 3 days</vh>
 <v t="ekr.20051021074728"><vh>Space completion</vh></v>
 <v t="ekr.20051202100658"><vh>Filename completion</vh></v>
-</v>
-<v t="ekr.20051129095023"><vh>Medium</vh>
+<v t="ekr.20060107082929"><vh>Fix problem reporting indentation errors</vh></v>
 <v t="ekr.20051121070552"><vh>Add Cmds menu</vh></v>
 <v t="ekr.20051104152338"><vh>Fix bug in Remove Sentinels command</vh>
 <v t="ekr.20051104152338.1"><vh>Report</vh></v>
@@ -1051,6 +855,23 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 </v>
 <v t="ekr.20051112080017"><vh>Problem removing script buttons on the mac</vh></v>
 <v t="ekr.20051202095626"><vh>Add help-command</vh></v>
+<v t="ekr.20060110102039"><vh>--script option</vh>
+<v t="ekr.20060110102239.1"><vh>leomain.py</vh>
+<v t="ekr.20060110102239.2"><vh>def profile</vh></v>
+<v t="ekr.20060110102239.3"><vh>def parseopts(argv)</vh></v>
+<v t="ekr.20060110102239.4"><vh>concatate(sys.argv)</vh></v>
+<v t="ekr.20060110102239.5"><vh>test run manual</vh></v>
+<v t="ekr.20060110102239.6"><vh>notes</vh></v>
+</v>
+<v t="ekr.20060110102239.7"><vh>Leo hprof script</vh>
+<v t="ekr.20060110102239.8"><vh>try: psyco</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051012062458.1"><vh>Minor</vh>
+<v t="ekr.20060111103821.2"><vh>Fix problems with universalScrolling pluing</vh>
+<v t="ekr.20060111103821.3"><vh>Report</vh></v>
+</v>
 <v t="ekr.20051110155735.1"><vh>Improve Spell tab</vh>
 <v t="ekr.20051025071455"><vh>Spell classes (ok)</vh>
 <v t="ekr.20051025071455.6"><vh>class Aspell</vh>
@@ -1075,7 +896,7 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 <v t="ekr.20051025071455.23"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
 <v t="ekr.20051025071455.24"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051025120920" a="M"><vh>createBindings</vh></v>
+<v t="ekr.20051025120920"><vh>createBindings (spellTab)</vh></v>
 <v t="ekr.20051025071455.16"><vh>readDictionary</vh></v>
 </v>
 <v t="ekr.20051025071455.29"><vh>Buttons</vh>
@@ -1108,8 +929,6 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20051012062458.1"><vh>Minor</vh>
 <v t="ekr.20051202102337"><vh>Minibuffer commands notes</vh>
 <v t="ekr.20051202102337.1"><vh>abbrevCommandsClass (not ready yet)</vh></v>
 <v t="ekr.20051202102337.2"><vh>bufferCommandsClass Inot ready yet)</vh></v>
@@ -1117,9 +936,9 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 <v t="ekr.20051202102337.4"><vh>editCommandsClass</vh></v>
 <v t="ekr.20051202102337.6"><vh>editFileCommandsClass</vh></v>
 <v t="ekr.20051202102752.1"><vh>keyHandlerCommandsClass (not ready yet)</vh></v>
-<v t="ekr.20051202102752.2" a="M"><vh>killBufferCommandsClass</vh></v>
-<v t="ekr.20051202102752.3" a="M"><vh>macroCommandsClass</vh></v>
-<v t="ekr.20051202102752.4" a="M"><vh>queryReplaceCommandsClass</vh></v>
+<v t="ekr.20051202102752.2"><vh>killBufferCommandsClass</vh></v>
+<v t="ekr.20051202102752.3"><vh>macroCommandsClass</vh></v>
+<v t="ekr.20051202102752.4"><vh>queryReplaceCommandsClass</vh></v>
 <v t="ekr.20051202102752.5"><vh>rectangleCommandsClass (ok)</vh></v>
 <v t="ekr.20051202102752.6"><vh>registerCommandsClass (ok, but could be expanded)</vh></v>
 <v t="ekr.20051202102752.7"><vh>searchCommandsClass (ok, but could be expanded)</vh></v>
@@ -1135,8 +954,10 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 <v t="ekr.20051101161545"><vh>Allow multiple bindings for the same minibuffer command</vh></v>
 <v t="ekr.20060102092148.1"><vh>--safe option</vh></v>
 <v t="ekr.20060104083736"><vh>Improve how headline widtth gets computed</vh></v>
+<v t="ekr.20060105143454.1"><vh>The colerer is calling c.config too much?</vh></v>
 </v>
 <v t="ekr.20051023192433"><vh>Maybe or never</vh>
+<v t="ekr.20060105143454.2"><vh>Convert Emacs-Style Names to Menu Style Names when creating undo name</vh></v>
 <v t="ekr.20051220062654"><vh>Open .leo file in new process</vh></v>
 <v t="ekr.20051103091115.1"><vh>Report</vh></v>
 <v t="ekr.20051207130144"><vh>Investigate Tk DnD</vh>
@@ -1150,7 +971,7 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
-<v t="ekr.20040629121554.1" a="M"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
+<v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
 <v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
 <v t="ekr.20040629121554.3"><vh>c.signOnWithVersion</vh></v>
 </v>
@@ -1164,36 +985,29 @@ marks="ekr.20051023181449,ekr.20051020120306.27,ekr.20031218072017.2373,ekr.2005
 </v>
 <v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
-<v t="ekr.20031218072017.2608"
-marks="ekr.20031218072017.2619,"><vh>@thin leoApp.py</vh></v>
+<v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20031218072017.2817,ekr.20040629121554.1,ekr.20040629121554.2,ekr.20040711135244.11,ekr.20031218072017.2950,"><vh>@thin leoCommands.py</vh></v>
-<v t="ekr.20041117062700"
-marks="ekr.20041119203941.2,ekr.20041119204700.1,"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20050710142719"
-marks="ekr.20051127105431,ekr.20051126123149,ekr.20051127065601,ekr.20051127105102,ekr.20051127070018,ekr.20050920084036.39,ekr.20050920084036.145,ekr.20051019201809.6,ekr.20051026092433.1,ekr.20051125080855,ekr.20051218122116,ekr.20051218121447,ekr.20051218171457,ekr.20051213094517,ekr.20050920084036.137,ekr.20051218133207.1,ekr.20051218133207,ekr.20050920084036.136,ekr.20051218174113,ekr.20050920084036.189,ekr.20051023181449,ekr.20051020120306.27,ekr.20051025071455,ekr.20051025120920,"><vh>@thin leoEditCommands.py</vh></v>
+marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
+<v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
+<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
-<v t="ekr.20031218072017.3093"
-marks="ekr.20031218072017.2052,ekr.20050503112513.7,"><vh>@thin leoGlobals.py</vh></v>
-<v t="ekr.20031218072017.3206"
-marks="ekr.20031218072017.1810,"><vh>@thin leoImport.py</vh></v>
+<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
+<v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
 <v t="ekr.20031218072017.3748"
-marks="ekr.20051006092617.1,ekr.20050920085536.62,"><vh>@thin leoKeys.py</vh></v>
+marks="ekr.20051010062551.1,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
-<v t="ekr.20051104075904" annotate="7d71002e"
-marks="ekr.20051104075904.12,"><vh>@thin leoTest.py</vh></v>
+<v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
 <v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
 <v t="ekr.20050721093241"><vh>&lt;&lt; about gui classes and gui plugins &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3630"><vh>@thin leoCompare.py</vh></v>
 <v t="ekr.20031218072017.3052"><vh>@thin leoFind.py</vh></v>
-<v t="ekr.20031218072017.3655"
-marks="ekr.20031218072017.2410,"><vh>@thin leoFrame.py</vh></v>
+<v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
 <v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
 </v>
@@ -1201,92 +1015,306 @@ marks="ekr.20031218072017.2410,"><vh>@thin leoFrame.py</vh></v>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"
-marks="ekr.20050120092028,ekr.20051024173701,ekr.20051018102027,ekr.20051018061932.1,ekr.20051016101724.1,"><vh>@thin leoTkinterFrame.py</vh></v>
-<v t="ekr.20031218072017.4047"
-marks="ekr.20031218072017.2373,"><vh>@thin leoTkinterGui.py</vh></v>
+<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-<v t="ekr.20040803072955"
-marks="ekr.20040803072955.128,"><vh>@thin leoTkinterTree.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 </v>
 </vnodes>
 <tnodes>
-<t tx="EKR.20040423082910">if 0:
-    # Doing this here messes up the display in the log pane.
-    if type(s) == type(u""):
-        s = g.toEncodedString(s,g.app.TkEncoding)
-
-# New in 4.4b1: Restore the focus to a standard place.
-frame = self.c.frame
-focus_widget = g.app.gui.get_focus(frame)
-name = g.app.gui.widget_name(focus_widget)
-for kind in ('body','head','canvas'):
-    if name.startswith(kind): break
-else:
-    focus_widget = frame.body.bodyCtrl
-
-if color:
-    if color not in self.colorTags:
-        self.colorTags.append(color)
-        self.logCtrl.tag_config(color,foreground=color)
-    self.logCtrl.insert("end",s)
-    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-    self.logCtrl.tag_add("black","end")
-else:
-    self.logCtrl.insert("end",s)
-
-self.logCtrl.see("end")
-self.forceLogUpdate(s)
-frame.widgetWantsFocus(focus_widget)
-</t>
-<t tx="EKR.20040423082910.1">g.app.logWaiting.append((s,color),)
-
-print "Null tkinter log"
-
-if type(s) == type(u""):
-    s = g.toEncodedString(s,"ascii")
-
-print s</t>
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
-<t tx="EKR.20040614071102.1">def getScript (c,p,useSelectedText=True,forcePythonSentinels=True):
+<t tx="ekr.20031218072017.658">@nocolor
+
+There have been a couple different suggestions on how to obtain a .leo file
+that presents the conflicts for resolution.  My initial thought was to have
+some sort of external file containing only the structure information of interest.
+Edward has suggested that we could process the CVS created .leo file with all
+its conflict indicators.
+
+I'd like to offer another alternative: based on the ad-hoc procedure that Edward
+is currently using, i.e.,
+
+* Save your work to foo.leo file.
+* copy your foo.leo file to fooCvsTmp.leo
+* cvs ci
+* if there are no conflicts (hurray)
+*    remove fooCvsTmp.leo; finished
+* otherwise
+*    remove foo.leo
+*    cvs up foo.leo
+*    read foo.leo into an internal directed acyclic graph (DAG)
+*    generate the conflict resolution DAG from the proposed new leo internal
+DAG (which Leo already has as a matter of course) and the CVS derived DAG
+*    present for editting
+*    when you are satisfied and want to try to check in again, repeat.
+
+From the user's point of view, a CVS check in either succeeds or requires that
+the conflicts be resolved, after which another check in may be attempted.  If
+we're somehow interrupted in the middle of the process, the fooCvsTmp.leo file
+preserves the users work.
+</t>
+<t tx="ekr.20031218072017.659">https://sourceforge.net/forum/message.php?msg_id=1803722
+By: jmgilligan
+
+What is the intended behavior when foo.leo has a cloned node that appears several
+times in a derived (or multiple derived files) and the user edits this file
+or files to change two or more instances of the cloned node in different ways.
+
+Example:
+
+@file foo.py
+****begin tnode
+@others
+****end tnode
+...definition of procedure a
+***begin tnode
+def a:
+...print "a:", &lt;&lt;bar&gt;&gt;
+***end tnode
+...&lt;&lt;bar&gt;&gt;
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure b
+***begin tnode
+def b:
+...print "b:", &lt;&lt;bar&gt;&gt;
+***end tnode
+...&lt;&lt;bar&gt;&gt;
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure c
+***begin tnode
+def c:
+...print "a:", &lt;&lt;bar&gt;&gt;
+***end tnode
+...&lt;&lt;bar&gt;&gt;
+****begin tnode
+"bar"
+****end tnode
+
+In the .leo, if I edit &lt;&lt;bar&gt;&gt;, it will change simultaneously in each place,
+always in synch. However, suppose I edit foo.py in a text editor and change
+foo.py to read:
+
+#@+leo
+#@+node:0::@file foo.py
+#@+body
+#@+others
+#@+node:1::definition of a
+#@+body
+print "a:", 
+#@&lt;&lt;bar&gt;&gt;
+#@+node:1::&lt;&lt;bar&gt;&gt;
+#@+body
+"bar"
+#@-body
+#@-node:1::&lt;&lt;bar&gt;&gt;
+#@-body
+#@-node:1::definition of a
+#@+node:2::definition of b
+#@+body
+print "b:", 
+#@&lt;&lt;bar&gt;&gt;
+#@+node:1::&lt;&lt;bar&gt;&gt;
+#@+body
+"variation b"
+#@-body
+#@-node:1::&lt;&lt;bar&gt;&gt;
+#@-body
+#@-node:2::definition of b
+#@+node:3::definition of c
+#@+body
+print "c:", 
+#@&lt;&lt;bar&gt;&gt;
+#@+node:1::&lt;&lt;bar&gt;&gt;
+#@+body
+"variation c"
+#@-body
+#@-node:1::&lt;&lt;bar&gt;&gt;
+#@-body
+#@-node:3::definition of c
+#@-others
+#@-body
+#@-node:0::@file foo.py
+#@-leo
+
+Now what is supposed to happen when leo tries to read foo.py back in? It seems
+that there are three possible behaviors:
+
+1) leo reports a conflict that the user needs to resolve.
+2) leo breaks the clone: the three nodes become separate vnodes, not clones
+of the same one.
+3) leo arbitrarily takes one of the tnodes to be the new tnode for all of the
+clones. This is currently what happens. It creates something like a race condition,
+where the last node in the derived file determines what the final result will
+be. In this case, all three tnodes get text "variation c".
+
+This general question of how Leo should deal with conflicts in clone nodes seems
+to me that it needs to be addressed, particularly with respect to trying to
+avoid cvs conflicts via thick/thin modes.
+
+Note that this can become quite a subtle question because the same node can
+be cloned across several different derived files, in which case a serious race
+condition may pertain.
+
+At the least, I would like to see leo perform consistency checking on cloned
+nodes when it reads a derived file back in and warn the user if cloned nodes
+are inconsistent.
+
+Note that the issue also occurs with OpenWith: I can open each instance of a
+cloned node as a separate file in the external text editor. Which version is
+read back into leo depends on the order in which I save them from the external
+editor.
+</t>
+<t tx="ekr.20031218072017.660">By: jmgilligan ( Jonathan M. Gilligan ) 
+ Possible solution   
+2003-01-13 20:55  
+One possible solution for the conflicting clones problem is to have Leo, when it detects a conflicting clone, generate a text file (perhaps named LeoConflict_NNNN.leo, where NNNN is the gid of the node in question), which contains all the different versions of the node in question, output in leo XML format. 
+
+The vnode would then be marked with a "conflict" flag that would prevent the user from opening it in Leo until the conflict is resolved. See below for how the user resolves the conflict. 
+
+What I have in mind is something similar to the CVS conflict file, where a conflict between two versions is marked 
+
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; 
+blah blah blah? 
+======= 
+blah blah blah! 
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 
+
+Except that we would output this file in Leo XML format. The reason for XML format would be to avoid problems of how to generically delimit the different sections (different versions of the cloned node). Here leo's XML tags can unambiguously delimit the sections. 
+
+The user would then edit the conflict file and delete all but the desired version. Then he would tell leo to resolve the conflict by reading the corrected file in and replacing the contents of the conflicting node with the contents of the LeoConflict_NNNN.leo file. 
+
+On the down side, this may well be too baroque a fix for a problem that most users may never encounter. If so, perhaps it's best left alone until more pressing problems are solved. I know what I am doing with Leo and am always careful NOT to generate conflicting clones when I edit in an external text editor, so I don't absolutely need a resolution to this problem. I raised it because it's good for a program to have well-defined behavior when presented with anomalous input. 
+
+In this sense, perhaps the best thing is to allow users to generate code from clones (what Allan Holub referred to as "enough rope to shoot yourself in the foot"), but to tell them that this practice is frowned upon.  
+
+ 
+</t>
+<t tx="ekr.20031218072017.661">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1836117
+By: gilshwartz
+
+Edward, now that conflicting clones may not be the result of bad style, I would
+like to propose yet another solution that I have been thinking of for a while.
+
+My basic approach is that cloning is not just a convenience tool, it may also
+reflect some of the properties of the code/code set. Therefore my goal is for
+clone links to remain even if they are conflicting, and let the user resolve
+them at any convenient time. I also think that Leo's user interface is the best
+tool to resolve such conflicts.
+
+Thus here is my view of clone management and resolution inside Leo. Anytime
+content is loaded into Leo, if a clone set agrees (i.e. have the same content)
+all clone copies are marked "green". When one green clone is edited, all green
+clones are changed. This is Leo as it is now.
+
+If at some point conflicting clones are loaded, Leo decides on some representing
+content (may be based on policies like most occurring content, or latest timestamp,
+etc.) and provides visual clues for the conflict. The visual clue is give by
+a double node box, e.g.
+
++---------------+
++ clone org +
++---------------+
++ resolution +
++---------------+
+
+such that it is a single node in the tree, but has two content node, the original
+text, and the possibly arbitrary resolution.
+
+The resolution pseudo node is marked "blue", while the original text is either
+"green", if it is identical to the blue node, or "red", if it is not. To emphasis,
+the red/green nodes contain the specific (possibly) unique code associated with
+the derived file, while the pseudo blue node contains the shared clone content.
+During save to derived files, only the red/green content is saved, so effectively
+the file is not changed and the conflict is not resolved until the user chooses
+to do so. However, the clone relationship (via the gti) remains.
+
+During editing, changes to red/green clones are local and do not propagate to
+other clone copies (actually any change to a green node would turn it red).
+Changes to the blue nodes do propagate since it is a single view of the clone.
+A node pair may be converted to a regular node, effectively getting a new gti
+and eliminating the blue copy. Or, it may be converted to the shared copy,
+effectively forgetting its original content (leaving only the blue node). Once
+there are no more red nodes in a clone set, all its nodes become green again
+and the conflict is resolved.
+
+Some additional clone actions I think are useful are:
+
+1. Go to next/prev clone.
+2. Go to next/prev green clone (useful when there are red ones).
+3. Convert all green copies to a new clone group (useful when some clone copies
+needs to remain clones, but break from the original clone set, thus getting
+a new clone gti)
+
+Action 3 enables the user to partition its clone set to several clone groups
+by copying a clone's original content to its blue copy and finding matching
+(green) clones.
+
+What do we gain by all this?
+
+1. We can have conflicting clones without catastrophes.
+2. We get tools to handle conflicts and resolve them.
+3. We keep on working is Leo's environment, which is the most supportive one
+we can expect.
+
+Gil
+
+(By the way, I have a feeling that it would be useful to include along with
+the gti a hash of its node content, which could tell Leo is a node was changed
+outside of it. Also, including a timestamp in the opening sentinel, indicating
+when Leo last saved it. These may help having intelligent decisions by Leo in
+cases like conflicting clones.)
+</t>
+<t tx="ekr.20031218072017.662">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1804169
+By: gilshwartz
+
+Another thing to think about is what should happen when close heading is changing.
+Right now, if you are inside Leo, all headings will be changed, and if you try
+to change by hand it in the derived file, clone links are removed (after some
+error reporting). This is quite reasonable in the current scheme of things,
+where one is not really expected to mess up with Leo sentinels.
+
+However, if/when @include is implemented, one would probably edit some files
+with clones that may extend to other files and changing the clone node name
+(via Leo) is quite feasible. Note that the gti for the cloned node would probably
+not change. So
+
+1. Do Leo resync the clone content based on the gti?
+2. Does it break cloning and allocates a new gti for one (arbitrary?) clone
+set?
+3. Let the user resolve manually, offer undoable auto-resolution with reporting,
+other?
+
+More things to think about.
+
+Gil
+</t>
+<t tx="ekr.20031218072017.822">def createTopologyList (c,root=None,useHeadlines=False):
     
-    '''Return the expansion of the selected text of node p.
-    Return the expansion of all of node p's body text if there
-    is p is not the current node or if there is no text selection.'''
+    """Creates a list describing a node and all its descendents"""
 
-    at = c.atFileCommands
-    if not p:
-        p = c.currentPosition()
-    try:
-        if g.app.batchMode:
-            s = p.bodyString()
-        elif p == c.currentPosition():
-            if useSelectedText and c.frame.body.hasTextSelection():
-                s = c.frame.body.getSelectedText()
-            else:
-                s = c.frame.body.getAllText()
-        else:
-            s = p.bodyString()
-        # Remove extra leading whitespace so the user may execute indented code.
-        s = g.removeExtraLws(s,c.tab_width)
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            script = at.writeFromString(p.copy(),s,
-                forcePythonSentinels=forcePythonSentinels)
-            script = script.replace("\r\n","\n") # Use brute force.
-            g.app.scriptDict["script2"]=script
-        else: script = ''
-    except Exception:
-        s = "unexpected exception in g.getScript"
-        g.es_print(s)
-        g.es_exception()
-        script = ''
-
-    return script</t>
+    if not root: root = c.rootPosition()
+    v = root
+    if useHeadlines:
+        aList = [(v.numberOfChildren(),v.headString()),]
+    else:
+        aList = [v.numberOfChildren()]
+    child = v.firstChild()
+    while child:
+        aList.append(g.createTopologyList(c,child,useHeadlines))
+        child = child.next()
+    return aList</t>
 <t tx="ekr.20031218072017.840"></t>
 <t tx="ekr.20031218072017.844">@
 
@@ -1332,279 +1360,317 @@ presently that never happens.</t>
             return s
         except:
             return None</t>
-<t tx="ekr.20031218072017.1329"># This is the only key handler for the body pane.
-def onBodyChanged (self,undoType,
-    oldSel=None,oldText=None,oldYview=None,removeTrailing=None):
-    
-    '''Update Leo after the body has been changed.'''
-    
-    body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
-    p = c.currentPosition()
-    ch = bodyCtrl.get('insert-1c')
-    newText = bodyCtrl.get('1.0','end')
-    newSel = g.app.gui.getTextSelection(bodyCtrl)
-    if oldText is None: oldText = p.bodyString()
-    if removeTrailing is None:
-        removeTrailing = self.removeTrailingNewlines(oldText,newText,ch)
-    if removeTrailing and newText:
-        newText = newText[:-1]
-    # g.trace(removeTrailing,repr(ch),repr(newText))
-    c.undoer.setUndoTypingParams(p,undoType,
-        oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)
-    p.v.setTnodeText(newText)
-    p.v.t.insertSpot = body.getInsertionPoint()
-    &lt;&lt; recolor the body &gt;&gt;
-    if not c.changed: c.setChanged(True)
-    &lt;&lt; redraw the screen if necessary &gt;&gt;
-</t>
-<t tx="ekr.20031218072017.1473"># All output to the log stream eventually comes here.
-def put (self,s,color=None,tabName='Log'):
-    
-    # print 'tkLog.put',self.c.shortFileName(),s,
+<t tx="ekr.20031218072017.892">def __init__ (self,c,v,stack,trace=True):
 
-    if g.app.quitting:
-        return
-
-    if tabName:
-        self.selectTab(tabName)
+    """Create a new position."""
     
-    if self.logCtrl:
-        &lt;&lt; put s to log control &gt;&gt;
-    else:
-        &lt;&lt; put s to logWaiting and print s &gt;&gt;</t>
-<t tx="ekr.20031218072017.1723">def createMenuEntries (self,menu,table,dynamicMenu=False):
-        
-    '''Create a menu entry from the table.
-    New in 4.4: this method shows the shortcut in the menu,
-    but this method **never** binds any shortcuts.'''
-    
-    c = self.c ; f = c.frame ; k = c.keyHandler
-    
-    if g.app.unitTesting: return
+    __pychecker__ = '--no-argsused' # trace not used.
 
-    for data in table:
-        &lt;&lt; get label &amp; command or continue &gt;&gt;
-        &lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;
-        rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-        menuCallback = self.defineMenuCallback(command,commandName)
-        realLabel = self.getRealMenuName(label)
-        &lt;&lt; set amp_index using rawKey and realLabel &gt;&gt;
-        realLabel = realLabel.replace("&amp;","")
-        self.add_command(menu,label=realLabel,
-            accelerator= menu_shortcut or '',
-            command=menuCallback,underline=amp_index)</t>
-<t tx="ekr.20031218072017.1725"># First, get the old-style name.
-commandName = self.computeOldStyleShortcutKey(label)
-rawKey,bunchList = c.config.getShortcut(commandName)
-bunch = bunchList and bunchList[0]
-accel = bunch and bunch.val
-
-# Second, get new-style name.
-if not accel:
-    &lt;&lt; compute emacs_name &gt;&gt;
-        # Contains the not-so-horrible kludge.
-    if emacs_name:
-        commandName = emacs_name
-        rawKey,bunchList = c.config.getShortcut(emacs_name)
-        bunch = bunchList and bunchList[0]
-        accel = bunch and bunch.val
-    elif not dynamicMenu:
-        g.trace('No inverse for %s' % commandName)</t>
-<t tx="ekr.20031218072017.1728">if rawKey:
-    amp_index = rawKey.find("&amp;")
-else:
-    amp_index = -1
-
-if amp_index == -1:
-    amp_index = realLabel.find("&amp;")</t>
-<t tx="ekr.20031218072017.1810">def importDerivedFiles (self,parent,paths):
+    self.c = c
+    self.v = v
+    # assert(v is None or v.t)
+    self.stack = stack[:] # Creating a copy here is safest and best.
+    g.app.positions += 1
     
-    c = self.c ; u = c.undoer ; command = 'Import'
-    at = c.atFileCommands ; current = c.currentPosition()
-    self.tab_width = self.getTabWidth()
-    if not paths: return
-    c.beginUpdate()
+    # if g.app.tracePositions and trace:
+        # g.trace("%-25s %-25s %s" % (
+            # g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+    
+    # Note: __getattr__ implements p.t.</t>
+<t tx="ekr.20031218072017.1263">&lt;&lt; about os.rename &gt;&gt;
+
+def utils_rename (src,dst,mode=None,verbose=True):
+
+    '''Platform independent rename.'''
+
+    head, tail = g.os_path_split(dst)
+    if head and len(head) &gt; 0:
+        g.makeAllNonExistentDirectories(head)
+
+    if g.os_path_exists(dst):
+        if not g.utils_remove(dst):
+            return False
     try:
-        u.beforeChangeGroup(current,command)
-        for fileName in paths:
-            &lt;&lt; set isThin if fileName is a thin derived file &gt;&gt;
-            undoData = u.beforeInsertNode(parent)
-            p = parent.insertAfter()
-            if isThin:
-                at.forceGnxOnPosition(p)
-                p.initHeadString("@thin " + fileName)
-                at.read(p,thinFile=True)
+        # New in Leo 4.4b1: try using shutil first.
+        try:
+            import shutil # shutil is new in Python 2.3
+            shutil.move(src,dst)
+        except ImportError:
+            if sys.platform == "win32":
+                os.rename(src,dst)
             else:
-                p.initHeadString("Imported @file " + fileName)
-                at.read(p,importFileName=fileName)
-            p.contract()
-            u.afterInsertNode(p,command,undoData)
-        current.expand()
-        c.selectPosition(current)
-        c.setChanged(True)
-        u.afterChangeGroup(p,command)
-    finally:
-        c.endUpdate()</t>
-<t tx="ekr.20031218072017.2086">def preferences(self):
-    
-    '''Handle the preferences command.'''
-    
-    c = self
-    c.openLeoSettings()</t>
-<t tx="ekr.20031218072017.2098">@ This code "canonicalizes" both the shortcuts that appear in menus and the
-arguments to bind, mostly ignoring case and the order in which special keys are
-specified.
-
-For example, Ctrl+Shift+a is the same as Shift+Control+A. Each generates
-Shift+Ctrl-A in the menu and Control+A as the argument to bind.
-
-Returns (bind_shortcut, menu_shortcut)
+                try:
+                    # Alas, distutils.file_util may not exist.
+                    from distutils.file_util import move_file
+                    move_file(src,dst)
+                except ImportError:
+                    # Desperation: may give: 'Invalid cross-device link'
+                    os.rename(src,dst)
+        if mode:
+            g.utils_chmod(dst,mode,verbose)
+        return True
+    except Exception:
+        if verbose:
+            g.es('Exception renaming %s to %s' % (src,dst),color='red')
+            g.es_exception(full=False)
+        return False</t>
+<t tx="ekr.20031218072017.1391">@ Perhaps this routine should be the basis of atFile.scanAllDirectives and tangle.scanAllDirectives, but I am loath to make any further to these two already-infamous routines.  Also, this code does not check for @color and @nocolor directives: leoColor.useSyntaxColoring does that.
 @c
 
-def canonicalizeShortcut (self,shortcut):
+def scanDirectives(c,p=None):
     
-    if shortcut == None or len(shortcut) == 0:
-        return None,None
-    s = shortcut.strip().lower()
+    """Scan vnode v and v's ancestors looking for directives.
+
+    Returns a dict containing the results, including defaults."""
+
+    if p is None:
+        p = c.currentPosition()
+
+    &lt;&lt; Set local vars &gt;&gt;
+    old = {}
+    pluginsList = [] # 5/17/03: a list of items for use by plugins.
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        theDict = g.get_directives_dict(s)
+        &lt;&lt; Test for @comment and @language &gt;&gt;
+        &lt;&lt; Test for @encoding &gt;&gt;
+        &lt;&lt; Test for @lineending &gt;&gt;
+        &lt;&lt; Test for @pagewidth &gt;&gt;
+        &lt;&lt; Test for @path &gt;&gt;
+        &lt;&lt; Test for @tabwidth &gt;&gt;
+        &lt;&lt; Test for @wrap and @nowrap &gt;&gt;
+        g.doHook("scan-directives",c=c,p=p,v=p,s=s,
+            old_dict=old,dict=theDict,pluginsList=pluginsList)
+        old.update(theDict)
+
+    if path == None: path = g.getBaseDirectory(c=c)
+
+    return {
+        "delims"    : (delim1,delim2,delim3),
+        "encoding"  : encoding,
+        "language"  : language,
+        "lineending": lineending,
+        "pagewidth" : page_width,
+        "path"      : path,
+        "tabwidth"  : tab_width,
+        "pluginsList": pluginsList,
+        "wrap"      : wrap }</t>
+<t tx="ekr.20031218072017.1392">page_width = c.page_width
+tab_width  = c.tab_width
+language = c.target_language
+if c.target_language:
+    c.target_language = c.target_language.lower()
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+path = None
+encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
+lineending = g.getOutputNewline(c=c) # Init from config settings.
+wrap = c.config.getBool("body_pane_wraps")</t>
+<t tx="ekr.20031218072017.1393"># 1/23/05: Any previous @language or @comment prevents processing up the tree.
+# This code is now like the code in tangle.scanAlldirectives.
+
+if old.has_key("comment") or old.has_key("language"):
+    pass
+
+elif theDict.has_key("comment"):
+    k = theDict["comment"]
+    delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
+
+elif theDict.has_key("language"):
+    k = theDict["language"]
+    language,delim1,delim2,delim3 = g.set_language(s,k)</t>
+<t tx="ekr.20031218072017.1394">if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    has_cmd   = s.find("cmd") &gt;= 0     or s.find("command") &gt;= 0 # 11/18/03
-    has_ctrl  = s.find("control") &gt;= 0 or s.find("ctrl") &gt;= 0
-    has_alt   = s.find("alt") &gt;= 0
-    has_shift = s.find("shift") &gt;= 0   or s.find("shft") &gt;= 0
-    if sys.platform == "darwin":
-        if has_ctrl and not has_cmd:
-            has_cmd = True ; has_ctrl = False
-        if has_alt and not has_ctrl: # 9/14/04
-            has_ctrl = True ; has_alt = False
-    &lt;&lt; set the last field, preserving case &gt;&gt;
-    &lt;&lt; canonicalize the last field &gt;&gt;
-    &lt;&lt; synthesize the shortcuts from the information &gt;&gt;
-    # print repr(shortcut),repr(bind_shortcut),repr(menu_shortcut)
-    return bind_shortcut,menu_shortcut</t>
-<t tx="ekr.20031218072017.2099">bind_last = menu_last = last
-if len(last) == 1:
-    ch = last[0]
-    if ch in string.ascii_letters:
-        menu_last = string.upper(last)
-        if has_shift:
-            bind_last = string.upper(last)
+    e = g.scanAtEncodingDirective(s,theDict)
+    if e:
+        encoding = e
+</t>
+<t tx="ekr.20031218072017.1395">if not old.has_key("lineending") and theDict.has_key("lineending"):
+    
+    e = g.scanAtLineendingDirective(s,theDict)
+    if e:
+        lineending = e
+</t>
+<t tx="ekr.20031218072017.1396">if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,theDict)
+    if w and w &gt; 0:
+        page_width = w</t>
+<t tx="ekr.20031218072017.1397">if not path and not old.has_key("path") and theDict.has_key("path"):
+
+    k = theDict["path"]
+    &lt;&lt; compute relative path from s[k:] &gt;&gt;
+    if path and len(path) &gt; 0:
+        base = g.getBaseDirectory(c=c) # returns "" on error.
+        path = g.os_path_join(base,path)
+        </t>
+<t tx="ekr.20031218072017.1398">j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) &gt; 2 and (
+    (path[0]=='&lt;' and path[-1] == '&gt;') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+
+path = string.strip(path)
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(app.loadDir,path)</t>
+<t tx="ekr.20031218072017.1399">if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,theDict)
+    if w and w != 0:
+        tab_width = w</t>
+<t tx="ekr.20031218072017.1400">if not old.has_key("wrap") and not old.has_key("nowrap"):
+    
+    if theDict.has_key("wrap"):
+        wrap = True
+    elif theDict.has_key("nowrap"):
+        wrap = False</t>
+<t tx="ekr.20031218072017.1623">def new (self):
+
+    c,frame = g.app.newLeoCommanderAndFrame(fileName=None)
+    
+    # Needed for plugins.
+    g.doHook("new",old_c=self,c=c,new_c=c)
+    # Use the config params to set the size and location of the window.
+    c.beginUpdate()
+    try:
+        frame.setInitialWindowGeometry()
+        frame.deiconify()
+        frame.lift()
+        frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+        t = leoNodes.tnode()
+        v = leoNodes.vnode(c,t)
+        p = leoNodes.position(c,v,[])
+        v.initHeadString("NewHeadline")
+        v.moveToRoot()
+        c.editPosition(p)
+    finally:
+        c.endUpdate()
+        frame.body.setFocus()
+    return c # For unit test.</t>
+<t tx="ekr.20031218072017.1761">def insertHeadline (self,op_name="Insert Node"):
+    
+    '''Insert a node after the presently selected node.'''
+
+    c = self ; u = c.undoer
+    current = c.currentPosition()
+    
+    if not current: return
+
+    c.beginUpdate()
+    try:
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].p)):
+            p = current.insertAsNthChild(0)
         else:
-            bind_last = string.lower(last)
-    elif ch in string.digits:
-        bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
-    else:
-        &lt;&lt; define dict of Tk bind names &gt;&gt;
-        if ch in theDict.keys():
-            bind_last = theDict[ch]
-elif len(last) &gt; 0:
-    &lt;&lt; define dict of special names &gt;&gt;
-    last2 = string.lower(last)
-    if last2 in theDict.keys():
-        bind_last,menu_last = theDict[last2]</t>
-<t tx="ekr.20031218072017.2100"># These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-theDict = {
-    "!" : "exclam",
-    '"' : "quotedbl",
-    "#" : "numbersign",
-    "$" : "dollar",
-    "%" : "percent",
-    "&amp;" : "ampersand",
-    "'" : "quoteright",
-    "(" : "parenleft",
-    ")" : "parenright",
-    "*" : "asterisk",
-    "+" : "plus",
-    "," : "comma",
-    "-" : "minus",
-    "." : "period",
-    "/" : "slash",
-    ":" : "colon",
-    ";" : "semicolon",
-    "&lt;" : "less",
-    "=" : "equal",
-    "&gt;" : "greater",
-    "?" : "question",
-    "@" : "at",
-    "[" : "bracketleft",
-    "\\": "backslash",
-    "]" : "bracketright",
-    "^" : "asciicircum",
-    "_" : "underscore",
-    "`" : "quoteleft",
-    "{" : "braceleft",
-    "|" : "bar",
-    "}" : "braceright",
-    "~" : "asciitilde" }</t>
-<t tx="ekr.20031218072017.2101"># These keys are simply made-up names.  The menu_bind values are known to Tk.
-# Case is not significant in the keys.
+            p = current.insertAfter()
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.endEditing()
+        c.editPosition(p)
+    finally:
+        c.endUpdate(restoreFocus=False)
 
-theDict = {
-    "bksp"    : ("BackSpace","BkSp"),
-    "esc"     : ("Escape","Esc"),
-    # Arrow keys...
-    "dnarrow" : ("Down", "DnArrow"),
-    "ltarrow" : ("Left", "LtArrow"),
-    "rtarrow" : ("Right","RtArrow"),
-    "uparrow" : ("Up",   "UpArrow"),
-    # Page up/down keys...
-    "pageup"  : ("Prior","PgUp"),
-    "pagedn"  : ("Next", "PgDn")
-}
+    return p # for mod_labels plugin.</t>
+<t tx="ekr.20031218072017.1847">def setLog (self,log):
 
-@  The following are not translated, so what appears in the menu is the same as what is passed to Tk.  Case is significant.
-
-Note: the Tk documentation states that not all of these may be available on all platforms.
-
-F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
-BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
-Down, Left, Right, Up,
-Begin, End, Home, Next, Prior,
-Num_Lock, Pause, Scroll_Lock, Sys_Req,
-KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
-KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
-KP_F1,KP_F2,KP_F3,KP_F4,
-KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9</t>
-<t tx="ekr.20031218072017.2102">s2 = shortcut
-s2 = string.strip(s2)
-
-# Replace all minus signs by plus signs, except a trailing minus:
-if len(s2) &gt; 0 and s2[-1] == "-":
-    s2 = string.replace(s2,"-","+")
-    s2 = s2[:-1] + "-"
-else:
-    s2 = string.replace(s2,"-","+")
-
-fields = string.split(s2,"+")
-if fields == None or len(fields) == 0:
-    if not g.app.menuWarningsGiven:
-        print "bad shortcut specifier:", s
-    return None,None
-
-last = fields[-1]
-if last == None or len(last) == 0:
-    if not g.app.menuWarningsGiven:
-        print "bad shortcut specifier:", s
-    return None,None</t>
-<t tx="ekr.20031218072017.2103">bind_head = menu_head = ""
-
-if has_shift:
-    menu_head = "Shift+"
-    if len(last) &gt; 1 or (len(last)==1 and last[0] not in string.ascii_letters):
-        bind_head = "Shift-"
-if has_alt:
-    bind_head = bind_head + "Alt-"
-    menu_head = menu_head + "Alt+"
-
-if has_ctrl:
-    bind_head = bind_head + "Control-"
-    menu_head = menu_head + "Ctrl+"
+    """set the frame to which log messages will go"""
     
-if has_cmd: # 11/18/03
-    bind_head = bind_head + "Command-"
-    menu_head = menu_head + "Command+"
+    # print "setLog:",tag,"locked:",self.logIsLocked,log
+    if not self.logIsLocked:
+        self.log = log
+
+def lockLog(self):
+    """Disable changes to the log"""
+    self.logIsLocked = True
     
-bind_shortcut = "&lt;" + bind_head + bind_last + "&gt;"
-menu_shortcut = menu_head + menu_last</t>
+def unlockLog(self):
+    """Enable changes to the log"""
+    self.logIsLocked = False</t>
+<t tx="ekr.20031218072017.1974">def destroySelf (self):
+    
+    # Remember these: we are about to destroy all of our ivars!
+    top = self.top 
+    c = self.c
+    
+    # Indicate that the commander is no longer valid.
+    c.exists = False 
+    
+    # g.trace(self)
+
+    # Important: this destroys all the object of the commander too.
+    self.destroyAllObjects()
+    
+    c.exists = False # Make sure this one ivar has not been destroyed.
+
+    top.destroy()</t>
+<t tx="ekr.20031218072017.2052">def openWithFileName(fileName,old_c,
+    enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full, normalized, Unicode path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    theList = app.windowList
+    for frame in theList:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            frame.c.setLog()
+            return True, frame
+    try:
+        if old_c:
+            # New in 4.4: We must read the file *twice*.
+            # The first time sets settings for the later call to c.finishCreate.
+            # g.trace('***** prereading',fileName)
+            c2 = g.app.config.openSettingsFile(fileName)
+            if c2: g.app.config.updateSettings(c2,localFlag=True)
+        # Open the file in binary mode to allow 0x1a in bodies &amp; headlines.
+        theFile = open(fileName,'rb')
+        c,frame = app.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        c.beginUpdate()
+        try:
+            if not g.doHook("open1",old_c=old_c,c=c,new_c=c,fileName=fileName):
+                c.setLog()
+                app.lockLog()
+                frame.c.fileCommands.open(
+                    theFile,fileName,
+                    readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+                app.unlockLog()
+                for frame in g.app.windowList:
+                    # The recent files list has been updated by menu.updateRecentFiles.
+                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
+            # Bug fix in 4.4.
+            frame.openDirectory = g.os_path_dirname(fileName)
+            g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
+        finally:
+            c.endUpdate()
+            frame.bodyWantsFocus()
+        return True, frame
+    except IOError:
+        # Do not use string + here: it will fail for non-ascii strings!
+        if not g.app.unitTesting:
+            g.es("can not open: %s" % (fileName), color="blue")
+        return False, None
+    except Exception:
+        g.es("exceptions opening: %s" % (fileName),color="red")
+        g.es_exception()
+        return False, None</t>
 <t tx="ekr.20031218072017.2187">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
     
     __pychecker__ = '--no-argsused' # defaultSize not used.
@@ -1620,31 +1686,6 @@ menu_shortcut = menu_head + menu_last</t>
         g.es("family,size,slant,weight:",family,size,slant,weight)
         # g.es_exception() # This just confuses people.
         return g.app.config.defaultFont</t>
-<t tx="ekr.20031218072017.2290">def toggleAngleBrackets (self):
-    
-    c = self ; v = c.currentVnode()
-    
-    if g.app.batchMode:
-        c.notValidInBatchMode("Toggle Angle Brackets")
-        return
-        
-    c.endEditing()
-
-    s = v.headString().strip()
-    if (s[0:2] == "&lt;&lt;"
-        or s[-2:] == "&gt;&gt;"): # Must be on separate line.
-        if s[0:2] == "&lt;&lt;": s = s[2:]
-        if s[-2:] == "&gt;&gt;": s = s[:-2]
-        s = s.strip()
-    else:
-        s = g.angleBrackets(' ' + s + ' ')
-    
-    c.frame.tree.editLabel(v)
-    w = v.edit_widget()
-    if w:
-        w.delete("1.0","end")
-        w.insert("1.0",s)
-        c.frame.tree.onHeadChanged(v,'Toggle Angle Brackets')</t>
 <t tx="ekr.20031218072017.2373">def set_focus(self,c,w):
     
     __pychecker__ = '--no-argsused' # c not used at present.
@@ -1686,6 +1727,46 @@ s:  a string
 t:  a tnode or a text widget.
 u:  an undoer
 v:  a vnode</t>
+<t tx="ekr.20031218072017.2418">def initScriptFind(c,findHeadline,changeHeadline=None,firstNode=None,
+    script_search=True,script_change=True):
+        
+    __pychecker__ = '--no-argsused' # firstNode is not used.
+    
+    import leoTest
+    import leoGlobals as g
+
+    # Find the scripts.
+    p = c.currentPosition()
+    u = leoTest.testUtils(c)
+    find_p = u.findNodeInTree(p,findHeadline)
+    if find_p:
+        find_text = find_p.bodyString()
+    else:
+        g.es("no Find script node",color="red")
+        return
+    if changeHeadline:
+        change_p = u.findNodeInTree(p,changeHeadline)
+    else:
+        change_p = None
+    if change_p:
+        change_text = change_p.bodyString()
+    else:
+        change_text = ""
+    # print find_p,change_p
+    
+    # Initialize the find panel.
+    c.script_search_flag = script_search
+    c.script_change_flag = script_change and change_text
+    if script_search:
+        c.find_text = find_text.strip() + "\n"
+    else:
+        c.find_text = find_text
+    if script_change:
+        c.change_text = change_text.strip() + "\n"
+    else:
+        c.change_text = change_text
+    c.frame.findPanel.init(c)
+    c.showFindPanel()</t>
 <t tx="ekr.20031218072017.2582"></t>
 <t tx="ekr.20031218072017.2604"></t>
 <t tx="ekr.20031218072017.2606">@color
@@ -1703,7 +1784,652 @@ if 0: # Set to 1 for lint-like testing.
         print ; print "Warning (in leo.py): pychecker.checker running..." ; print
     except:
         print ; print 'Can not import pychecker' ; print</t>
-<t tx="ekr.20031218072017.2949"></t>
+<t tx="ekr.20031218072017.2615">def destroyWindow (self,frame):
+    
+    # g.trace(frame in g.app.windowList,frame)
+        
+    g.app.destroyOpenWithFilesForFrame(frame)
+
+    if frame in g.app.windowList:
+        g.app.windowList.remove(frame)
+        # g.trace(g.app.windowList)
+
+    # force the window to go away now.
+    # Important: this also destroys all the objects of the commander.
+    frame.destroySelf()</t>
+<t tx="ekr.20031218072017.2811"></t>
+<t tx="ekr.20031218072017.2812">def __init__(self,frame,fileName):
+
+    c = self
+    
+    # g.trace('Commands')
+    
+    c.exists = True # Indicate that this class exists and has not been destroyed.
+        # Do this early in the startup process so we can call hooks.
+    
+    # Init ivars with self.x instead of c.x to keep Pychecker happy
+    self.frame = frame
+    self.mFileName = fileName
+        # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
+
+    # g.trace(c) # Do this after setting c.mFileName.
+    c.initIvars()
+
+    self.useTextMinibuffer = False
+    self.showMinibuffer = c.config.getBool('useMinibuffer')
+
+    # initialize the sub-commanders.
+    # c.finishCreate creates the sub-commanders for edit commands.
+    self.fileCommands   = leoFileCommands.fileCommands(c)
+    self.atFileCommands = leoAtFile.atFile(c)
+    self.importCommands = leoImport.leoImportCommands(c)
+    self.tangleCommands = leoTangle.tangleCommands(c)
+    leoEditCommands.createEditCommanders(c)
+
+    if 0 and g.debugGC:
+        print ; print "*** using Null undoer ***" ; print
+        self.undoer = leoUndo.nullUndoer(self)
+    else:
+        self.undoer = leoUndo.undoer(self)</t>
+<t tx="ekr.20031218072017.2813">self._currentPosition = self.nullPosition()
+self._rootPosition    = self.nullPosition()
+self._topPosition     = self.nullPosition()
+
+# For saving and restoring focus.
+self.afterUpdateWidgetStack = []
+
+# For emacs/vim key handling.
+self.commandsDict = None
+self.keyHandler = None
+self.miniBufferWidget = None
+
+# per-document info...
+self.disableCommandsMessage = ''
+    # The presence of this message disables all commands.
+self.hookFunction = None
+self.openDirectory = None
+
+self.expansionLevel = 0  # The expansion level of this outline.
+self.expansionNode = None # The last node we expanded or contracted.
+self.changed = False # True if any data has been changed since the last save.
+self.loading = False # True if we are loading a file: disables c.setChanged()
+self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
+self.promptingForClose = False # To lock out additional closing dialogs.
+
+# For tangle/untangle
+self.tangle_errors = 0
+
+# Global options
+self.page_width = 132
+self.tab_width = -4
+self.tangle_batch_flag = False
+self.untangle_batch_flag = False
+# Default Tangle options
+self.tangle_directory = ""
+self.use_header_flag = False
+self.output_doc_flag = False
+# Default Target Language
+self.target_language = "python" # Required if leoConfig.txt does not exist.
+
+# These are defined here, and updated by the tree.select()
+self.beadList = [] # list of vnodes for the Back and Forward commands.
+self.beadPointer = -1 # present item in the list.
+self.visitedList = [] # list of positions for the Nodes dialog.
+
+# For hoist/dehoist commands.
+self.hoistStack = []
+    # Stack of nodes to be root of drawn tree.
+    # Affects drawing routines and find commands.
+self.recentFiles = [] # List of recent files</t>
+<t tx="ekr.20031218072017.2814">def __repr__ (self):
+    
+    return "Commander %d: %s" % (id(self),repr(self.mFileName))
+        
+__str__ = __repr__
+
+</t>
+<t tx="ekr.20031218072017.2817">def doCommand (self,command,label,event=None):
+
+    """Execute the given command, invoking hooks and catching exceptions.
+    
+    The code assumes that the "command1" hook has completely handled the command if
+    g.doHook("command1") returns False.
+    This provides a simple mechanism for overriding commands."""
+    
+    c = self
+    c.setLog()
+    p = c.currentPosition()
+    #g.trace(command.__name__,label)
+    
+    # The presence of this message disables all commands.
+    if c.disableCommandsMessage:
+        g.es(c.disableCommandsMessage,color='blue')
+        return 'break' # Inhibit all other handlers.
+
+    if label and event is None: # Do this only for legacy commands.
+        if label == "cantredo": label = "redo"
+        if label == "cantundo": label = "undo"
+        g.app.commandName = label
+
+    if not g.doHook("command1",c=c,p=p,v=p,label=label):
+        try:
+            if event is None:
+                val = command() # Call legacy command
+                if c and c.exists: # Be careful: the command could destroy c.
+                    c.keyHandler.funcReturn = val
+            else:
+                command(event) # Call minibuffer command.
+        except:
+            g.es("exception executing command")
+            print "exception executing command"
+            g.es_exception(c=c)
+            if c and c.exists and hasattr(c,'frame'):
+                c.redraw_now()
+
+    # Be careful there: the command could destroy c.
+    if c and c.exists:
+        p = c.currentPosition()
+        g.doHook("command2",c=c,p=p,v=p,label=label)
+            
+    return "break" # Inhibit all other handlers.</t>
+<t tx="ekr.20031218072017.2820"></t>
+<t tx="ekr.20031218072017.2821">def open(self):
+
+    c = self
+    &lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;
+
+    fileName = g.app.gui.runOpenFileDialog(
+        title="Open",
+        filetypes=[("Leo files", "*.leo"), ("All files", "*")],
+        defaultextension=".leo")
+
+    if fileName and len(fileName) &gt; 0:
+        ok, frame = g.openWithFileName(fileName,c)
+        if ok and closeFlag:
+            g.app.destroyWindow(c.frame)
+    else:
+        c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20031218072017.2822">@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+@c
+    
+closeFlag = (
+    c.frame.startupWindow and # The window was open on startup
+    not c.changed and not c.frame.saved and # The window has never been changed
+    g.app.numberOfWindows == 1) # Only one untitled window has ever been opened</t>
+<t tx="ekr.20031218072017.2823">def openWith(self,data=None):
+
+    """This routine handles the items in the Open With... menu.
+
+    These items can only be created by createOpenWithMenuFromTable().
+    Typically this would be done from the "open2" hook.
+    
+    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+    using a list, e.g.:
+        
+    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+    """
+    
+    c = self ; p = c.currentPosition()
+    if not data or len(data) != 3:
+        g.trace('bad data')
+        return
+    try:
+        openType,arg,ext=data
+        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
+            &lt;&lt; set ext based on the present language &gt;&gt;
+            &lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;
+            &lt;&lt; execute a command to open path in external editor &gt;&gt;
+        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+    except Exception:
+        g.es("unexpected exception in c.openWith")
+        g.es_exception()
+
+    return "break"
+</t>
+<t tx="ekr.20031218072017.2824">if not ext:
+    theDict = g.scanDirectives(c)
+    language = theDict.get("language")
+    ext = g.app.language_extension_dict.get(language)
+    # print language,ext
+    if ext == None:
+        ext = "txt"
+    
+if ext[0] != ".":
+    ext = "."+ext
+    
+# print "ext",ext</t>
+<t tx="ekr.20031218072017.2825">theDict = None ; path = None
+&lt;&lt; set dict and path if a temp file already refers to p.v.t &gt;&gt;
+if path:
+    &lt;&lt; create or recreate temp file as needed &gt;&gt;
+else:
+    path = c.createOpenWithTempFile(p,ext)
+
+if not path:
+    return # An error has occured.</t>
+<t tx="ekr.20031218072017.2826">searchPath = c.openWithTempFilePath(p,ext)
+
+if g.os_path_exists(searchPath):
+    for theDict in g.app.openWithFiles:
+        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
+            path = searchPath
+            break
+</t>
+<t tx="ekr.20031218072017.2827">@ We test for changes in both p and the temp file:
+
+- If only p's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = theDict.get("encoding")
+old_body = theDict.get("body")
+new_body = p.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
+
+old_time = theDict.get("time")
+try:
+    new_time = g.os_path_getmtime(path)
+except:
+    new_time = None
+    
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+    &lt;&lt; Raise dialog about conflict and set result &gt;&gt;
+    if result == "cancel": return
+    rewrite = result == "outline"
+else:
+    rewrite = body_changed
+        
+if rewrite:
+    path = c.createOpenWithTempFile(p,ext)
+else:
+    g.es("reopening: " + g.shortFileName(path),color="blue")</t>
+<t tx="ekr.20031218072017.2828">message = (
+    "Conflicting changes in outline and temp file\n\n" +
+    "Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(c,
+    "Conflict!", message,
+    yesMessage = "Outline",
+    noMessage = "File",
+    defaultButton = "Cancel")</t>
+<t tx="ekr.20031218072017.2829">try:
+    if arg == None: arg = ""
+    shortPath = path # g.shortFileName(path)
+    if openType == "os.system":
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
+    elif openType == "os.startfile":
+        command = "os.startfile(%s)" % (arg+shortPath)
+        os.startfile(arg+path)
+    elif openType == "exec":
+        command = "exec(%s)" % (arg+shortPath)
+        exec arg+path in {}
+    elif openType == "os.spawnl":
+        filename = g.os_path_basename(arg)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
+        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+    elif openType == "os.spawnv":
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:]
+        vtuple.insert(0, filename)
+            # add the name of the program as the first argument.
+            # Change suggested by Jim Sizelove.
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    # This clause by Jim Sizelove.
+    elif openType == "subprocess.Popen":
+        if isinstance(arg, basestring):
+            vtuple = arg + " " + path
+        elif isinstance(arg, (list, tuple)):
+            vtuple = arg[:]
+            vtuple.append(path)
+        command = "subprocess.Popen(%s)" % repr(vtuple)
+        if subprocess:
+            subprocess.Popen(vtuple)
+        else:
+            g.grace('Can not import subprocess.  Skipping: "%s"' % command)
+    else:
+        command="bad command:"+str(openType)
+        g.trace(command)
+except Exception:
+    g.es("exception executing: "+command)
+    g.es_exception()</t>
+<t tx="ekr.20031218072017.2830">def createOpenWithTempFile (self,p,ext):
+    
+    c = self
+    path = c.openWithTempFilePath(p,ext)
+    try:
+        if g.os_path_exists(path):
+            g.es("recreating:  " + g.shortFileName(path),color="red")
+        else:
+            g.es("creating:  " + g.shortFileName(path),color="blue")
+        theFile = open(path,"w")
+        # Convert s to whatever encoding is in effect.
+        s = p.bodyString()
+        theDict = g.scanDirectives(c,p=p)
+        encoding = theDict.get("encoding",None)
+        if encoding == None:
+            encoding = c.config.default_derived_file_encoding
+        s = g.toEncodedString(s,encoding,reportErrors=True) 
+        theFile.write(s)
+        theFile.flush()
+        theFile.close()
+        try:    time = g.os_path_getmtime(path)
+        except: time = None
+        # g.es("time: " + str(time))
+        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+        theDict = {
+            "body":s, "c":c, "encoding":encoding,
+            "f":theFile, "path":path, "time":time,
+            "p":p, "v":p.v }
+        &lt;&lt; remove previous entry from app.openWithFiles if it exists &gt;&gt;
+        g.app.openWithFiles.append(theDict)
+        return path
+    except:
+        if theFile:
+            theFile.close()
+        theFile = None
+        g.es("exception creating temp file",color="red")
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20031218072017.2831">for d in g.app.openWithFiles[:]:
+    p2 = d.get("p")
+    if p.v.t == p2.v.t:
+        # print "removing previous entry in g.app.openWithFiles for",p.headString()
+        g.app.openWithFiles.remove(d)</t>
+<t tx="ekr.20031218072017.2832">def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+    
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(g.os_path_abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path</t>
+<t tx="ekr.20031218072017.2833">def close(self):
+    
+    """Handle the File-Close command."""
+
+    g.app.closeLeoWindow(self.frame)</t>
+<t tx="ekr.20031218072017.2834">def save(self):
+
+    c = self
+    
+    if g.app.disableSave:
+        g.es("Save commands disabled",color="purple")
+        return
+    
+    # Make sure we never pass None to the ctor.
+    if not c.mFileName:
+        c.frame.title = ""
+        c.mFileName = ""
+
+    if c.mFileName != "":
+        # Calls c.setChanged(False) if no error.
+        c.fileCommands.save(c.mFileName)
+    else:
+        fileName = g.app.gui.runSaveFileDialog(
+            initialfile = c.mFileName,
+            title="Save",
+            filetypes=[("Leo files", "*.leo")],
+            defaultextension=".leo")
+        if fileName:
+            # Don't change mFileName until the dialog has suceeded.
+            c.mFileName = g.ensure_extension(fileName, ".leo")
+            c.frame.title = c.mFileName
+            c.frame.setTitle(g.computeWindowTitle(c.mFileName))
+            c.fileCommands.save(c.mFileName)
+            c.updateRecentFiles(c.mFileName)</t>
+<t tx="ekr.20031218072017.2835">def saveAs(self):
+    
+    c = self
+    
+    if g.app.disableSave:
+        g.es("Save commands disabled",color="purple")
+        return
+
+    # Make sure we never pass None to the ctor.
+    if not c.mFileName:
+        c.frame.title = ""
+
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile = c.mFileName,
+        title="Save As",
+        filetypes=[("Leo files", "*.leo")],
+        defaultextension=".leo")
+
+    if fileName:
+        # 7/2/02: don't change mFileName until the dialog has suceeded.
+        c.mFileName = g.ensure_extension(fileName, ".leo")
+        c.frame.title = c.mFileName
+        c.frame.setTitle(g.computeWindowTitle(c.mFileName))
+        # Calls c.setChanged(False) if no error.
+        c.fileCommands.saveAs(c.mFileName)
+        c.updateRecentFiles(c.mFileName)</t>
+<t tx="ekr.20031218072017.2836">def saveTo(self):
+    
+    c = self
+    
+    if g.app.disableSave:
+        g.es("Save commands disabled",color="purple")
+        return
+
+    # Make sure we never pass None to the ctor.
+    if not c.mFileName:
+        c.frame.title = ""
+
+    # set local fileName, _not_ c.mFileName
+    fileName = g.app.gui.runSaveFileDialog(
+        initialfile = c.mFileName,
+        title="Save To",
+        filetypes=[("Leo files", "*.leo")],
+        defaultextension=".leo")
+
+    if fileName:
+        fileName = g.ensure_extension(fileName, ".leo")
+        c.fileCommands.saveTo(fileName)
+        c.updateRecentFiles(fileName)</t>
+<t tx="ekr.20031218072017.2837">def revert(self):
+    
+    c = self
+
+    # Make sure the user wants to Revert.
+    if not c.mFileName:
+        return
+        
+    reply = g.app.gui.runAskYesNoDialog(c,"Revert",
+        "Revert to previous version of " + c.mFileName + "?")
+
+    if reply=="no":
+        return
+
+    # Kludge: rename this frame so openWithFileName won't think it is open.
+    fileName = c.mFileName ; c.mFileName = ""
+
+    # Create a new frame before deleting this frame.
+    ok, frame = g.openWithFileName(fileName,c)
+    if ok:
+        frame.deiconify()
+        g.app.destroyWindow(c.frame)
+    else:
+        c.mFileName = fileName
+</t>
+<t tx="ekr.20031218072017.2917">def goToNextDirtyHeadline (self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    p.moveToThreadNext()
+    while p and not p.isDirty():
+        p.moveToThreadNext()
+
+    if not p:
+        # Wrap around.
+        p = c.rootPosition()
+        while p and not p.isDirty():
+            p.moveToThreadNext()
+
+    if p:
+        c.beginUpdate()
+        try:
+            c.endEditing()
+            c.selectPosition(p)
+        finally:
+            c.endUpdate()
+    else:
+        g.es("done",color="blue")</t>
+<t tx="ekr.20031218072017.2918">def goToNextMarkedHeadline(self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    p.moveToThreadNext()
+    while p and not p.isMarked():
+        p.moveToThreadNext()
+
+    if p:
+        c.beginUpdate()
+        try:
+            c.endEditing()
+            c.selectPosition(p)
+        finally:
+            c.endUpdate()
+    else:
+        g.es("done",color="blue")</t>
+<t tx="ekr.20031218072017.2932">def openPythonWindow(self):
+
+    if sys.platform == "linux2":
+        &lt;&lt; open idle in Linux &gt;&gt;
+    else:
+        &lt;&lt; open idle in Windows &gt;&gt;
+</t>
+<t tx="ekr.20031218072017.2933"># 09-SEP-2002 DHEIN: Open Python window under linux
+
+try:
+    pathToLeo = g.os_path_join(g.app.loadDir,"leo.py")
+    sys.argv = [pathToLeo]
+    from idlelib import idle
+    if g.app.idle_imported:
+        reload(idle)
+    g.app.idle_imported = True
+except:
+    try:
+        g.es("idlelib could not be imported.")
+        g.es("Probably IDLE is not installed.")
+        g.es("Run Tools/idle/setup.py to build idlelib.")
+        g.es("Can not import idle")
+        g.es_exception() # This can fail!!
+    except: pass
+</t>
+<t tx="ekr.20031218072017.2934"># Initialize argv: the -t option sets the title of the Idle interp window.
+sys.argv = ["leo"] # ,"-t","Leo"]
+
+ok = False
+if g.CheckVersion(sys.version,"2.3"):
+    &lt;&lt; Try to open idle in Python 2.3 systems &gt;&gt;
+else:
+    &lt;&lt; Try to open idle in Python 2.2 systems &gt;&gt;
+
+if not ok:
+    g.es("Can not import idle")
+    if idle_dir and idle_dir not in sys.path:
+        g.es("Please add '%s' to sys.path" % idle_dir)</t>
+<t tx="ekr.20031218072017.2935">try:
+    executable_dir = g.os_path_dirname(sys.executable)
+    idle_dir = g.os_path_join(executable_dir,"Tools","idle")
+
+    # 1/29/04: sys.path doesn't handle unicode in 2.2.
+    idle_dir = str(idle_dir) # May throw an exception.
+
+    # 1/29/04: must add idle_dir to sys.path even when using importFromPath.
+    if idle_dir not in sys.path:
+        sys.path.insert(0,idle_dir)
+
+    if 1:
+        import PyShell
+    else: # Works, but is not better than import.
+        PyShell = g.importFromPath("PyShell",idle_dir)
+
+    if g.app.idle_imported:
+        reload(idle)
+        g.app.idle_imported = True
+        
+    if 1: # Mostly works, but causes problems when opening other .leo files.
+        PyShell.main()
+    else: # Doesn't work: destroys all of Leo when Idle closes.
+        self.leoPyShellMain()
+    ok = True
+except ImportError:
+    ok = False
+    g.es_exception()</t>
+<t tx="ekr.20031218072017.2936">try:
+    idle_dir = None
+    
+    import idlelib.PyShell
+
+    if g.app.idle_imported:
+        reload(idle)
+        g.app.idle_imported = True
+        
+    idlelib.PyShell.main()
+    ok = True
+
+except:
+    ok = False
+    g.es_exception()</t>
+<t tx="ekr.20031218072017.2937">@ The key parts of Pyshell.main(), but using Leo's root window instead of a new Tk root window.
+
+This does _not_ work well.  Using Leo's root window means that Idle will shut down Leo without warning when the Idle window is closed!
+@c
+
+def leoPyShellMain(self):
+    
+    import PyShell
+    root = g.app.root
+    PyShell.fixwordbreaks(root)
+    flist = PyShell.PyShellFileList(root)
+    shell = PyShell.PyShell(flist)
+    flist.pyshell = shell
+    shell.begin()</t>
 <t tx="ekr.20031218072017.2950">@
 **Important** These methods ensure that exactly zero or one (depending on the
 argument to endUpdate) redraws exist within the section of code bounded by
@@ -1724,356 +2450,166 @@ def beginUpdate(self):
     until the matching call to endUpdate.'''
     
     c = self
+    w = g.app.gui.get_focus(c.frame)
+    c.afterUpdateWidgetStack.append(w)
+    # g.trace(g.app.gui.widget_name(w),g.callers(5))
     c.frame.tree.beginUpdate()
     
-def endUpdate(self, flag=True):
+def endUpdate(self, flag=True,restoreFocus=True):
     
     '''Redraw the screen if flag is True.'''
 
     c = self
     c.frame.tree.endUpdate(flag)
+    w = c.afterUpdateWidgetStack.pop()
+    if not c.afterUpdateWidgetStack and restoreFocus:
+        # We are at the top-level endUpdate.
+        c.frame.widgetWantsFocus(w)
 
 BeginUpdate = beginUpdate # Compatibility with old scripts
 EndUpdate = endUpdate # Compatibility with old scripts
 </t>
-<t tx="ekr.20031218072017.2951">def bringToFront(self):
-
-    self.frame.deiconify()
-
-BringToFront = bringToFront # Compatibility with old scripts</t>
-<t tx="ekr.20031218072017.2953">def recolor(self):
-
-    c = self
-    c.frame.body.recolor(c.currentPosition())
-    
-def requestRecolor (self):
-    
-    c = self
-    c.frame.requestRecolorFlag = True</t>
-<t tx="ekr.20031218072017.2954">def redraw_now (self):
-    
-    c = self
-    
-    if g.app.quitting or not hasattr(c.frame,'top'):
-        return # nullFrame's do not have a top frame.
-
-    c.frame.tree.redraw_now()
-    c.frame.top.update_idletasks()
-    
-    if c.frame.requestRecolorFlag:
-        c.frame.requestRecolorFlag = False
-        c.recolor()
-
-# Compatibility with old scripts
-redraw = force_redraw = redraw_now</t>
 <t tx="ekr.20031218072017.2992"># Ends the editing in the outline.
 
-def endEditing(self):
-
-    self.frame.tree.endEditLabel()
-</t>
-<t tx="ekr.20031218072017.3070"># Replace selection with self.change_text.
-# If no selection, insert self.change_text at the cursor.
-
-def changeSelection(self):
-
-    c = self.c ; p = self.p ; gui = g.app.gui
-    # g.trace(self.in_headline)
-    t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
-    oldSel = sel = gui.getTextSelection(t)
-    if sel and len(sel) == 2:
-        start,end = sel
-        if start == end:
-            sel = None
-    if not sel or len(sel) != 2:
-        g.es("No text selected")
-        return False
-
-    # Replace the selection in _both_ controls.
-    start,end = oldSel
-    gui.replaceSelectionRangeWithText(t,          start,end,self.change_text)
-    gui.replaceSelectionRangeWithText(self.s_ctrl,start,end,self.change_text)
-
-    # Update the selection for the next match.
-    gui.setSelectionRangeWithLength(t,start,len(self.change_text))
-    c.frame.widgetWantsFocus(t)
-
-    # No redraws here: they would destroy the headline selection.
-    c.beginUpdate()
-    try:
-	    if self.mark_changes:
-	        p.setMarked()
-	    if self.in_headline:
-	        c.frame.tree.onHeadChanged(p,'Change')
-	    else:
-	        c.frame.body.onBodyChanged('Change',oldSel=oldSel)
-    finally:
-        c.endUpdate(False)
-        c.frame.tree.drawIcon(p) # redraw only the icon.
-     
-    return True
-</t>
-<t tx="ekr.20031218072017.3089"># Restores the screen after a search fails
-
-def restore (self,data):
-
-    c = self.c ; gui = g.app.gui
-    in_headline,p,t,insert,start,end = data
+def endEditing(self,restoreFocus=False):
     
-    c.frame.bringToFront() # Needed on the Mac
-
-    # Don't try to reedit headline.
-    c.selectPosition(p)
-    if not in_headline:
-
-        # Looks good and provides clear indication of failure or termination.
-        gui.setSelectionRange(t,insert,insert)
-        gui.setInsertPoint(t,insert)
-        gui.makeIndexVisible(t,insert)
-        c.frame.widgetWantsFocus(t)</t>
-<t tx="ekr.20031218072017.3091">def showSuccess(self,pos,newpos):
-
-    """Displays the final result.
-
-    Returns self.dummy_vnode, p.edit_widget() or c.frame.bodyCtrl with
-    "insert" and "sel" points set properly."""
-
-    c = self.c ; p = self.p ; gui = g.app.gui
+    c = self ; tree = c.frame.tree
     
-    c.frame.bringToFront() # Needed on the Mac
-    c.beginUpdate()
-    try:
-	    c.selectPosition(p)
-    finally:
-        c.endUpdate()
-    if self.in_headline:
-        c.editPosition(p)
-    # Set the focus and selection after the redraw.
-    t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
-    insert = g.choose(self.reverse,pos,newpos)
-    gui.setInsertPoint(t,insert)
-    # New in 4.4a3: a much better way to ensure progress in backward searches.
-    gui.setSelectionRange(t,pos,newpos)
-    if self.reverse:
-        gui.setInsertPoint(t,pos)
-    gui.makeIndexVisible(t,insert)
-    c.frame.widgetWantsFocus(t)
-    if self.wrap and not self.wrapPosition:
-        self.wrapPosition = self.p</t>
+    if restoreFocus:
+        w = g.app.gui.get_focus(c.frame)
+        tree.endEditLabel()
+        c.frame.widgetWantsFocus(w)
+    else:
+        tree.endEditLabel()</t>
+<t tx="ekr.20031218072017.3156"># It is dubious to bump the Tangle error count here, but it really doesn't hurt.
+
+def scanError(s):
+
+    """Bump the error count in the tangle command."""
+    
+    # New in Leo 4.4b1: just set this global.
+    g.app.scanErrors +=1
+    g.es(s)</t>
 <t tx="ekr.20031218072017.3625">&lt;&lt; about gui classes and gui plugins &gt;&gt;</t>
-<t tx="ekr.20031218072017.3689">def initialRatios (self):
-    
-    c = self.c
-
-    s = c.config.get("initial_splitter_orientation","string")
-    verticalFlag = s == None or (s != "h" and s != "horizontal")
-
-    if verticalFlag:
-        r = c.config.getRatio("initial_vertical_ratio")
-        if r == None or r &lt; 0.0 or r &gt; 1.0: r = 0.5
-        r2 = c.config.getRatio("initial_vertical_secondary_ratio")
-        if r2 == None or r2 &lt; 0.0 or r2 &gt; 1.0: r2 = 0.8
-    else:
-        r = c.config.getRatio("initial_horizontal_ratio")
-        if r == None or r &lt; 0.0 or r &gt; 1.0: r = 0.3
-        r2 = c.config.getRatio("initial_horizontal_secondary_ratio")
-        if r2 == None or r2 &lt; 0.0 or r2 &gt; 1.0: r2 = 0.8
-
-    # g.trace(r,r2)
-    return verticalFlag,r,r2</t>
-<t tx="ekr.20031218072017.3757">def defineEditMenuTop2Table (self):
-    
-    __pychecker__ = 'no-unusednames=c,f'
-
-    c = self.c ; f = self.frame
-
-    try:        show = c.frame.body.getColorizer().showInvisibles
-    except:     show = False
-    label = g.choose(show,"Hide In&amp;visibles","Show In&amp;visibles")
-        
-    self.editMenuTop2Table = [
-        ("&amp;Go To Line Number",c.goToLineNumber),
-        ("&amp;Execute Script",c.executeScript),
-        (label,c.viewAllCharacters),
-        ("Setti&amp;ngs",c.preferences),
-    ]
-
-    # Top-level shortcuts earlier: a,d,p,t,u,y,z
-    # Top-level shortcuts here: e,g,n,v</t>
 <t tx="ekr.20031218072017.3821"></t>
-<t tx="ekr.20031218072017.3878">def createFrame (self,message):
-    
-    """Create the frame for a number dialog."""
-    
-    if g.app.unitTesting: return
-    
-    f = self.frame
-    
-    lab = Tk.Label(f,text=message)
-    lab.pack(pady=10,side="left")
-    
-    self.number_entry = t = Tk.Entry(f,width=20)
-    t.pack(side="left")
-    
-    g.app.gui.set_focus(self.c,t)</t>
-<t tx="ekr.20031218072017.3975">def OnActivateBody (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
+<t tx="ekr.20031218072017.3843">def createFrame (self):
 
-    try:
-        frame = self ; c = frame.c
-        c.endEditing() # Required.
-        g.app.setLog(frame.log,"OnActivateBody")
-        w = g.app.gui.get_focus(frame)
-        if w != frame.body.bodyCtrl:
-            frame.tree.OnDeactivate()
-        frame.bodyWantsFocus()
-    except:
-        g.es_event_exception("activate body")
-        
-    return 'break'</t>
-<t tx="ekr.20031218072017.3982">def endEditLabelCommand (self):
+    gui = g.app.gui ; top = self.top
 
-    frame = self ; c = frame.c
+    &lt;&lt; create the organizer frames &gt;&gt;
+    &lt;&lt; create the browser rows &gt;&gt;
+    &lt;&lt; create the extension row &gt;&gt;
+    &lt;&lt; create the whitespace options frame &gt;&gt;
+    &lt;&lt; create the print options frame &gt;&gt;
+    &lt;&lt; create the compare buttons &gt;&gt;
+
+    gui.center_dialog(top) # Do this _after_ building the dialog!
+    self.finishCreate()
+    top.protocol("WM_DELETE_WINDOW", self.onClose)</t>
+<t tx="ekr.20031218072017.3844">outer = Tk.Frame(self.frame, bd=2,relief="groove")
+outer.pack(pady=4)
+
+row1 = Tk.Frame(outer)
+row1.pack(pady=4)
+
+row2 = Tk.Frame(outer)
+row2.pack(pady=4)
+
+row3 = Tk.Frame(outer)
+row3.pack(pady=4)
+
+row4 = Tk.Frame(outer)
+row4.pack(pady=4,expand=1,fill="x") # for left justification.
+
+options = Tk.Frame(outer)
+options.pack(pady=4)
+
+ws = Tk.Frame(options)
+ws.pack(side="left",padx=4)
+
+pr = Tk.Frame(options)
+pr.pack(side="right",padx=4)
+
+lower = Tk.Frame(outer)
+lower.pack(pady=6)</t>
+<t tx="ekr.20031218072017.3845">for row,text,text2,command,var in (
+    (row1,"Compare path 1:","Ignore first line",self.onBrowse1,self.ignoreFirstLine1Var),
+    (row2,"Compare path 2:","Ignore first line",self.onBrowse2,self.ignoreFirstLine2Var),
+    (row3,"Output file:",   "Use output file",  self.onBrowse3,self.useOutputFileVar) ):
+
+    lab = Tk.Label(row,anchor="e",text=text,width=13)
+    lab.pack(side="left",padx=4)
     
-    if g.app.batchMode:
-        c.notValidInBatchMode("End Edit Headline")
-    else:
-        c.endEditing()
-        
-        if 1: # This command always moves into the body pane.
-            c.frame.bodyWantsFocus()
-        else:
-            if c.frame.tree.stayInTree:
-                c.frame.treeWantsFocus()
-            else:
-                c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20031218072017.3983">def insertHeadlineTime (self):
-
-    frame = self ; c = frame.c ; p = c.currentPosition()
+    e = Tk.Entry(row)
+    e.pack(side="left",padx=2)
+    self.browseEntries.append(e)
     
-    if g.app.batchMode:
-        c.notValidInBatchMode("Insert Headline Time")
-        return
-        
-    c.editPosition(p)
-    c.frame.tree.setEditLabelState(p)
-    w = p.edit_widget()
-    if w:
-        time = c.getTime(body=False)
-        if 1: # We can't know if we were already editing, so insert at end.
-            g.app.gui.setSelectionRange(w,'end','end')
-            w.insert('end',time)
-        else:
-            i, j = g.app.gui.getTextSelection(w)
-            if i != j:
-                w.delete(i,j)
-            w.insert("insert",time)
-        c.frame.tree.onHeadChanged(p,'Insert Headline Time')</t>
-<t tx="ekr.20031218072017.4039">class leoTkinterLog (leoFrame.leoLog):
+    b = Tk.Button(row,text="browse...",command=command)
+    b.pack(side="left",padx=6)
+
+    b = Tk.Checkbutton(row,text=text2,anchor="w",variable=var,width=15)
+    b.pack(side="left")</t>
+<t tx="ekr.20031218072017.3846">b = Tk.Checkbutton(row4,anchor="w",var=self.limitToExtensionVar,
+    text="Limit directory compares to type:")
+b.pack(side="left",padx=4)
+
+self.extensionEntry = e = Tk.Entry(row4,width=6)
+e.pack(side="left",padx=2)
+
+b = Tk.Checkbutton(row4,anchor="w",var=self.appendOutputVar,
+    text="Append output to output file")
+b.pack(side="left",padx=4)</t>
+<t tx="ekr.20031218072017.3847">w,f = gui.create_labeled_frame(ws,caption="Whitespace options",relief="groove")
     
-    """A class that represents the log pane of a Tkinter window."""
-
-    @others</t>
-<t tx="ekr.20031218072017.4040">def __init__ (self,frame,parentFrame):
+for text,var in (
+    ("Ignore Leo sentinel lines", self.ignoreSentinelLinesVar),
+    ("Ignore blank lines",        self.ignoreBlankLinesVar),
+    ("Ignore leading whitespace", self.ignoreLeadingWhitespaceVar),
+    ("Ignore interior whitespace",self.ignoreInteriorWhitespaceVar),
+    ("Make whitespace visible",   self.makeWhitespaceVisibleVar) ):
     
-    # g.trace("leoTkinterLog")
+    b = Tk.Checkbutton(f,text=text,variable=var)
+    b.pack(side="top",anchor="w")
     
-    self.c = c = frame.c # Also set in the base constructor, but we need it here.
+spacer = Tk.Frame(f)
+spacer.pack(padx="1i")</t>
+<t tx="ekr.20031218072017.3848">w,f = gui.create_labeled_frame(pr,caption="Print options",relief="groove")
+
+row = Tk.Frame(f)
+row.pack(expand=1,fill="x")
+
+b = Tk.Checkbutton(row,text="Stop after",variable=self.stopAfterMismatchVar)
+b.pack(side="left",anchor="w")
+
+self.countEntry = e = Tk.Entry(row,width=4)
+e.pack(side="left",padx=2)
+e.insert(01,"1")
+
+lab = Tk.Label(row,text="mismatches")
+lab.pack(side="left",padx=2)
+
+for padx,text,var in (    
+    (0,  "Print matched lines",           self.printMatchesVar),
+    (20, "Show both matching lines",      self.printBothMatchesVar),
+    (0,  "Print mismatched lines",        self.printMismatchesVar),
+    (0,  "Print unmatched trailing lines",self.printTrailingMismatchesVar) ):
     
-    self.colorTags = []
-        # The list of color names used as tags in present tab.
-        # This gest switched by selectTab.
-
-    self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
+    b = Tk.Checkbutton(f,text=text,variable=var)
+    b.pack(side="top",anchor="w",padx=padx)
+    self.printButtons.append(b)
     
-    # New in 4.4a2: The log pane is a Pmw.Notebook...
+# To enable or disable the "Print both matching lines" button.
+b = self.printButtons[0]
+b.configure(command=self.onPrintMatchedLines)
 
-    self.nb = None      # The Pmw.Notebook that holds all the tabs.
-    self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
-    self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
-    self.logNumber = 0 # To create unique name fields for Tk.Text widgets.
-    self.tabMenu = None # A menu that pops up on right clicks in the hull or in tabs.
-    self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
-    self.newTabCount = 0 # Number of new tabs created.
+spacer = Tk.Frame(f)
+spacer.pack(padx="1i")</t>
+<t tx="ekr.20031218072017.3849">for text,command in (
+    ("Compare files",      self.onCompareFiles),
+    ("Compare directories",self.onCompareDirectories) ):
     
-    # Official status variables.  Can be used by client code.
-    self.tabName = None # The name of the active tab.
-    self.logCtrl = None # Same as self.textDict.get(self.tabName)
-    self.tabFrame = None # Same as self.frameDict.get(self.tabName)
-    
-    # Call the base class constructor and calls createControl.
-    leoFrame.leoLog.__init__(self,frame,parentFrame)
-</t>
-<t tx="ekr.20031218072017.4041">def configureBorder(self,border):
-    
-    self.logCtrl.configure(bd=border)
-    
-def configureFont(self,font):
-
-    self.logCtrl.configure(font=font)</t>
-<t tx="ekr.20031218072017.4042">def createControl (self,parentFrame):
-
-    c = self.c
-
-    self.nb = Pmw.NoteBook(parentFrame,
-        borderwidth = 1, pagemargin = 0,
-        raisecommand = self.raiseTab,
-        lowercommand = self.lowerTab,
-        arrownavigation = 0,
-    )
-
-    menu = self.makeTabMenu(tabName=None)
-
-    def hullMenuCallback(event):
-        self.onRightClick(event,menu)
-
-    self.nb.bind('&lt;Button-3&gt;',hullMenuCallback)
-
-    self.nb.pack(fill='both',expand=1)
-    self.selectTab('Log') # create the tab and make it the active tab.
-    return self.logCtrl</t>
-<t tx="ekr.20031218072017.4043">def getFontConfig (self):
-
-    font = self.logCtrl.cget("font")
-    # g.trace(font)
-    return font</t>
-<t tx="ekr.20031218072017.4044">def hasFocus (self):
-    
-    return g.app.gui.get_focus(self.frame) == self.logCtrl</t>
-<t tx="ekr.20031218072017.4045">def onActivateLog (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    try:
-        g.app.setLog(self,"OnActivateLog")
-        self.frame.tree.OnDeactivate()
-        self.frame.logWantsFocus()
-    except:
-        g.es_event_exception("activate log")</t>
-<t tx="ekr.20031218072017.4046">def setFontFromConfig (self):
-
-    c = self.c ; logCtrl = self.logCtrl
-
-    font = c.config.getFontFromParams(
-        "log_text_font_family", "log_text_font_size",
-        "log_text_font_slant",  "log_text_font_weight",
-        c.config.defaultLogFontSize)
-
-    self.fontRef = font # ESSENTIAL: retain a link to font.
-    logCtrl.configure(font=font)
-    
-    # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
-
-    bg = c.config.getColor("log_text_background_color")
-    if bg:
-        try: logCtrl.configure(bg=bg)
-        except: pass
-    
-    fg = c.config.getColor("log_text_foreground_color")
-    if fg:
-        try: logCtrl.configure(fg=fg)
-        except: pass</t>
+    b = Tk.Button(lower,text=text,command=command,width=18)
+    b.pack(side="left",padx=6)</t>
 <t tx="ekr.20031218072017.4059"></t>
 <t tx="ekr.20031218072017.4060"></t>
 <t tx="ekr.20031218072017.4061"># WARNING: Call this routine _after_ creating a dialog.
@@ -2285,7 +2821,11 @@ def moveIndexToNextLine(self,t,index):
     Return a tuple giving the insertion point if no range of text is selected."""
 
     # To get the current selection.
-    sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
+    try:
+        sel = t.tag_ranges("sel")
+    except Exception:
+        return 0,0
+
     if len(sel) == 2:
         i,j = sel
         if sort:
@@ -2360,83 +2900,58 @@ setSelectionRange = setTextSelection</t>
 <t tx="ekr.20031218072017.4098">def makeIndexVisible(self,t,index):
 
     return t.see(index)</t>
-<t tx="ekr.20040303163330">def setDirty (self,setDescendentsDirty=True):
+<t tx="ekr.20031218072017.4117">def defineMenuCallback(self,command,name):
     
-    '''Mark a node and all ancestor @file nodes dirty.'''
+    # The first parameter must be event, and it must default to None.
+    def menuCallback(event=None,self=self,command=command,label=name):
+        __pychecker__ = '--no-argsused' # event not used, and must be present.
+        
+        c = self.c
+        return c.doCommand(command,label)
 
-    p = self ; c = p.c ; dirtyVnodeList = []
+    return menuCallback</t>
+<t tx="ekr.20040117171654"># Using this routine can generate huge numbers of temporary positions during a tree traversal.
 
-    if not p.v.t.isDirty():
-        p.v.t.setDirty()
-        dirtyVnodeList.append(p.v)
-
-    # Important: this must be called even if p.v is already dirty.
-    # Typing can change the @ignore state!
-    dirtyVnodeList2 = p.setAllAncestorAtFileNodesDirty(setDescendentsDirty)
-    dirtyVnodeList.extend(dirtyVnodeList2)
-   
-    return dirtyVnodeList</t>
-<t tx="ekr.20040310062332.5">def unlink (self):
-
-    """Unlinks a position p from the tree before moving or deleting.
+def copy (self):
     
-    The p.v._fistChild link does NOT change."""
+    """"Return an independent copy of a position."""
     
-    # Warning: p.parent() is NOT necessarily the same as p.v._parent!
+    # if g.app.tracePositions:
+        # g.trace("%-25s %-25s %s" % (
+            # g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
 
-    p = self ; v = p.v
+    return position(self.c,self.v,self.stack,trace=False)</t>
+<t tx="ekr.20040321065415">def findNodeInTree(c,p,headline):
+
+    """Search for a node in v's tree matching the given headline."""
     
-    # g.trace('p.v._parent',p.v._parent," child:",v.t._firstChild," back:",v._back, " next:",v._next)
+    for p in p.subtree_iter():
+        if p.headString().strip() == headline.strip():
+            return p.copy()
+    return c.nullPosition()
+
+def findNodeAnywhere(c,headline):
     
-    # Special case the root.
-    if p == p.c.rootPosition():
-        assert(p.v._next)
-        p.c.setRootPosition(p.next())
+    for p in c.allNodes_iter():
+        if p.headString().strip() == headline.strip():
+            return p.copy()
+    return c.nullPosition()
     
-    # Remove v from it's tnode's vnodeList.
-    vnodeList = v.t.vnodeList
-    if v in vnodeList:
-        vnodeList.remove(v)
-    assert(v not in vnodeList)
+def findTopLevelNode(c,headline):
     
-    # Reset the firstChild link in its direct father.
-    if p.v._parent:
-        if 0: # This can fail.  I have no idea why it was present.
-            assert(p.v and p.v._parent in p.v.directParents())
-        if p.v._parent.t._firstChild == v:
-            #g.trace('resetting _parent.v.t._firstChild to',v._next)
-            p.v._parent.t._firstChild = v._next
-    else:
-        parent = p.parent()
-        if parent:
-            if 0: # This can fail.  I have no idea why it was present.
-                assert(parent.v in p.v.directParents())
-            if parent.v.t._firstChild == v:
-                #g.trace('resetting parent().v.t._firstChild to',v._next)
-                parent.v.t._firstChild = v._next
-
-    # Do NOT delete the links in any child nodes.
-
-    # Clear the links in other nodes.
-    if v._back: v._back._next = v._next
-    if v._next: v._next._back = v._back
-
-    # Unlink _this_ node.
-    v._parent = v._next = v._back = None
-
-    if 0:
-        g.trace('-'*20)
-        p.dump(label="p")
-        if parent: parent.dump(label="parent")</t>
+    for p in c.rootPosition().self_and_siblings_iter():
+        if p.headString().strip() == headline.strip():
+            return p.copy()
+    return c.nullPosition()</t>
 <t tx="ekr.20040629121554">def getBuildNumber(self):
     c = self
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.4 alpha 5 cvs-snapshot 1, build %s, December 5, 2005" % c.getBuildNumber()</t>
+    return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.357 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.374 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -2459,594 +2974,321 @@ setSelectionRange = setTextSelection</t>
     g.es(signon)
     g.es("Python %d.%d.%d, Tk %s, Pmw %s\n%s" % (n1,n2,n3,tkLevel,Pmw.version(),version))
     g.enl()</t>
+<t tx="ekr.20040715155607">def scanForAtIgnore(c,p):
+    
+    """Scan position p and its ancestors looking for @ignore directives."""
+
+    if g.app.unitTesting:
+        return False # For unit tests.
+
+    for p in p.self_and_parents_iter():
+        s = p.bodyString()
+        d = g.get_directives_dict(s)
+        if d.has_key("ignore"):
+            return True
+
+    return False</t>
 <t tx="ekr.20040722132104"></t>
-<t tx="ekr.20040803072955.35"></t>
-<t tx="ekr.20040803072955.36">def drawBox (self,p,x,y):
+<t tx="ekr.20040731071037">def initIvars(self):
 
-    tree = self ; c = self.c
-    y += 7 # draw the box at x, y+7
+    c = self
+    &lt;&lt; initialize ivars &gt;&gt;
+    self.config = configSettings(c)
+    g.app.config.setIvarsFromSettings(c)</t>
+<t tx="ekr.20040803072955.11">def newText (self,p,x,y):
     
-    theId = g.doHook("draw-outline-box",tree=tree,c=c,p=p,v=p,x=x,y=y)
+    canvas = self.canvas ; tag = "textBox"
+    c = self.c ; d = self.freeText
+    key = p.v ; assert key
+    pList = d.get(key,[])
+    
+    # Return only Tk.Text widgets with an exact match with p.
+    found = False
+    for i in xrange(len(pList)):
+        p2,t,theId = pList[i]
+        if p2 == p:
+            del pList[i]
+            theId = t.leo_window_id
+            assert(theId)
+            assert(t.leo_position == p2)
+            canvas.coords(theId,x,y)
+            t.configure(font=self.font) # 12/17/04
+            found = True ; break
+            
+    if not found:
+        # Tags are not valid in Tk.Text widgets.
+        # The name is valid, but apparently it must be unique.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
+    
+        if self.useBindtags:
+            t.bindtags(self.textBindings)
+        else:
+            c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
+            t.bind("&lt;Button-1&gt;", self.onHeadlineClick)
+            t.bind("&lt;Button-3&gt;", self.onHeadlineRightClick)
+            t.bind("&lt;Key&gt;",      self.onHeadlineKey)
+
+        if 0: # As of 4.4 this does not appear necessary.
+            t.bind("&lt;Control-t&gt;",self.onControlT)
+
+        if 0: # Crashes on XP.
+            &lt;&lt; patch by Maciej Kalisiak to handle scroll-wheel events &gt;&gt;
+    
+        theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        t.leo_window_id = theId # Never changes.
         
-    if theId is None:
-        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-        image = self.getIconImage(iconname)
-        theId = self.newBox(p,x,y+self.lineyoffset,image)
-        return theId
-    else:
-        return theId</t>
-<t tx="ekr.20040803072955.37">def drawClickBox (self,p,y):
-
-    h = self.line_height
-    
-    # Define a slighly larger rect to catch clicks.
-    if self.expanded_click_area:
-        self.newClickBox(p,0,y,1000,y+h-2)
-        
-        if 0: # A major change to the user interface.
-            &lt;&lt; change the appearance of headlines &gt;&gt;</t>
-<t tx="ekr.20040803072955.38">
-# Define a slighly smaller rect to colorize.
-color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
-
-# Color the click box or the headline
-def enterRect(event,id=color_rect,p=p,t=self.lastText):
-    if 1: # Color or underline the headline
-        t2 = self.lastColoredText
-        if t2: # decolor the old headline.
-            if 1: # deunderline
-                t2.tag_delete('underline')
-            else: # decolor
-                t2.configure(background="white")
-        if t and p != self.editPosition():
-            if 1: # underline
-                t.tag_add('underline','1.0','end')
-                t.tag_configure('underline',underline=True)
-            else: # color
-                t.configure(background="LightSteelBlue1")
-            self.lastColoredText = t
-        else: self.lastColoredText = None
-    else: # Color the click box.
-        if self.lastClickFrameId:
-            self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
-        self.lastClickFrameId = id
-        color = "LightSteelBlue1"
-        self.canvas.itemconfig(id,fill=color,outline=color)
-
-bind_id = self.canvas.tag_bind(click_rect, "&lt;Enter&gt;", enterRect) # , '+')
-self.tagBindings.append((click_rect,bind_id,"&lt;Enter&gt;"),)</t>
-<t tx="ekr.20040803072955.39">def drawIcon(self,p,x=None,y=None):
-    
-    """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
-
-    c = self.c
-    &lt;&lt; compute x,y and iconVal &gt;&gt;
-
-    if not g.doHook("draw-outline-icon",tree=self,c=c,p=p,v=p,x=x,y=y):
-
-        # Get the image.
-        imagename = "box%02d.GIF" % val
-        image = self.getIconImage(imagename)
-        self.newIcon(p,x,y+self.lineyoffset,image)
-        
-    return 0,self.icon_width # dummy icon height,width</t>
-<t tx="ekr.20040803072955.40">v = p.v
-
-if x is None and y is None:
-    try:
-        x,y = v.iconx, v.icony
-    except:
-        # Inject the ivars.
-        x,y = v.iconx, v.icony = 0,0
-else:
-    # Inject the ivars.
-    v.iconx, v.icony = x,y
-
-y += 2 # draw icon at y + 2
-
-# Always recompute v.iconVal.
-# This is an important drawing optimization.
-val = v.iconVal = v.computeIcon()
-assert(0 &lt;= val &lt;= 15)</t>
-<t tx="ekr.20040803072955.41">def drawLine (self,p,x1,y1,x2,y2):
-    
-    theId = self.newLine(p,x1,y1,x2,y2)
-    
-    return theId
-</t>
-<t tx="ekr.20040803072955.42">def drawNode(self,p,x,y):
-    
-    c = self.c
-    
-    data = g.doHook("draw-outline-node",tree=self,c=c,p=p,v=p,x=x,y=y)
-    if data is not None: return data
-    
     if self.trace and self.verbose:
-        print # Helps format traces
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
 
-    if 1:
-        self.lineyoffset = 0
-    else:
-        if hasattr(p.v.t,"unknownAttributes"):
-            self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
-        else:
-            self.lineyoffset = 0
-    
-    # Draw the horizontal line.
-    self.drawLine(p,
-        x,y+7+self.lineyoffset,
-        x+self.box_width,y+7+self.lineyoffset)
-    
-    if self.inVisibleArea(y):
-        return self.force_draw_node(p,x,y)
-    else:
-        return self.line_height,0</t>
-<t tx="ekr.20040803072955.43">def force_draw_node(self,p,x,y):
+    # Common configuration.
+    # We must call setText even if p matches: p's text may have changed!
+    self.setText(t,p.headString())
+    t.configure(width=self.headWidth(p=p))
+    t.leo_position = p # Never changes.
+    t.leo_generation = self.generation
 
-    h = 0 # The total height of the line.
-    indent = 0 # The amount to indent this line.
-    
-    h2,w2 = self.drawUserIcons(p,"beforeBox",x,y)
-    h = max(h,h2) ; x += w2 ; indent += w2
-
-    if p.hasChildren():
-        self.drawBox(p,x,y)
-
-    indent += self.box_width
-    x += self.box_width # even if box isn't drawn.
-
-    h2,w2 = self.drawUserIcons(p,"beforeIcon",x,y)
-    h = max(h,h2) ; x += w2 ; indent += w2
-
-    h2,w2 = self.drawIcon(p,x,y)
-    h = max(h,h2) ; x += w2 ; indent += w2/2
-    
-    # Nothing after here affects indentation.
-    h2,w2 = self.drawUserIcons(p,"beforeHeadline",x,y)
-    h = max(h,h2) ; x += w2
-
-    h2 = self.drawText(p,x,y)
-    h = max(h,h2)
-    x += self.widthInPixels(p.headString())
-
-    h2,w2 = self.drawUserIcons(p,"afterHeadline",x,y)
-    h = max(h,h2)
-    
-    self.drawClickBox(p,y)
-
-    return h,indent</t>
-<t tx="ekr.20040803072955.44">def drawText(self,p,x,y):
-    
-    """draw text for position p at nominal coordinates x,y."""
-    
-    assert(p)
-
-    c = self.c
-    x += self.text_indent
-    
-    data = g.doHook("draw-outline-text-box",tree=self,c=c,p=p,v=p,x=x,y=y)
-    if data is not None: return data
-    
-    self.newText(p,x,y+self.lineyoffset)
-
-    if 0: # old, experimental code.
-        &lt;&lt; highlight text widget on enter events &gt;&gt;
-   
-    self.configureTextState(p)
-
-    return self.line_height</t>
-<t tx="ekr.20040803072955.45"># t is the widget returned by self.newText.
-
-canvas = self.canvas
-h = self.line_height
-
-if 0: # Define a rect to colorize.
-
-    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-    self.canvas.itemconfig(color_rect,fill="",outline="")
-
-    def enterRect(event,id=color_rect):
-        if self.lastClickFrameId:
-            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
-        self.lastClickFrameId = id
-        color = "LightSteelBlue1"
-        self.canvas.itemconfig(id,fill=color,outline=color)
-    
-    bind_enter = t.bind( '&lt;Enter&gt;', enterRect, '+' )
-    self.bindings.append((t,bind_enter,"&lt;Enter&gt;"),)
-    
-if 0: # Colorize only the headline.
-
-    def enterRect(event,p=p,t=t):
-        t2 = self.lastColoredText
-        if t2:
-            if 1: # deunderline
-                t2.tag_delete('underline')
-            else: # color
-                t2.configure(background="white")
-        if p == self.editPosition():
-            self.lastColoredText = None
-        else:
-            self.lastColoredText = t
-            if 1: # underline
-                t.tag_add('underline','1.0', 'end')
-                t.tag_configure('underline',underline = True)
-            else: #color
-                t.configure(background="LightSteelBlue1")
-    
-    bind_enter = t.bind( '&lt;Enter&gt;', enterRect, '+' )
-    self.bindings.append((t,bind_enter,"&lt;Enter&gt;"),)</t>
-<t tx="ekr.20040803072955.46">def drawUserIcons(self,p,where,x,y):
-    
-    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
-    
-    h,w = 0,0 ; t = p.v.t
-    
-    if not hasattr(t,"unknownAttributes"):
-        return h,w
-    
-    iconsList = t.unknownAttributes.get("icons")
-    if not iconsList:
-        return h,w
-    
-    try:
-        for theDict in iconsList:
-            h2,w2 = self.drawUserIcon(p,where,x,y,w,theDict)
-            h = max(h,h2) ; w += w2
-    except:
-        g.es_exception()
-        
-    # g.trace(where,h,w)
-
-    return h,w</t>
-<t tx="ekr.20040803072955.47">def drawUserIcon (self,p,where,x,y,w2,theDict):
-    
-    h,w = 0,0
-
-    if where != theDict.get("where","beforeHeadline"):
-        return h,w
-
-    # g.trace(where,x,y,theDict)
-    
-    &lt;&lt; set offsets and pads &gt;&gt;
-    theType = theDict.get("type")
-    if theType == "icon":
-        if 0: # not ready yet.
-            s = theDict.get("icon")
-            &lt;&lt; draw the icon in string s &gt;&gt;
-    elif theType == "file":
-        theFile = theDict.get("file")
-        &lt;&lt; draw the icon at file &gt;&gt;
-    elif theType == "url":
-        ## url = theDict.get("url")
-        &lt;&lt; draw the icon at url &gt;&gt;
-        
-    # Allow user to specify height, width explicitly.
-    h = theDict.get("height",h)
-    w = theDict.get("width",w)
-
-    return h,w</t>
-<t tx="ekr.20040803072955.48">xoffset = theDict.get("xoffset")
-try:    xoffset = int(xoffset)
-except: xoffset = 0
-
-yoffset = theDict.get("yoffset")
-try:    yoffset = int(yoffset)
-except: yoffset = 0
-
-xpad = theDict.get("xpad")
-try:    xpad = int(xpad)
-except: xpad = 0
-
-ypad = theDict.get("ypad")
-try:    ypad = int(ypad)
-except: ypad = 0</t>
-<t tx="ekr.20040803072955.49">pass</t>
-<t tx="ekr.20040803072955.50">try:
-    image = self.iconimages[theFile]
-    # Get the image from the cache if possible.
-except KeyError:
-    try:
-        fullname = g.os_path_join(g.app.loadDir,"..","Icons",theFile)
-        fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas,file=fullname)
-        self.iconimages[fullname] = image
-    except:
-        #g.es("Exception loading: " + fullname)
-        #g.es_exception()
-        image = None
-        
-if image:
-    theId = self.canvas.create_image(
-        x+xoffset+w2,y+yoffset,
-        anchor="nw",image=image,tag="userIcon")
+    assert(theId == t.leo_window_id)
+    assert(not self.ids.get(theId))
     self.ids[theId] = p
-
-    assert(theId not in self.visibleIcons)
-    self.visibleUserIcons.append(theId)
-
-    h = image.height() + yoffset + ypad
-    w = image.width()  + xoffset + xpad
-
-</t>
-<t tx="ekr.20040803072955.51">pass</t>
-<t tx="ekr.20040803072955.52">def drawTopTree (self):
     
-    """Draws the top-level tree, taking into account the hoist state."""
+    # Entries are pairs (p,t,theId) indexed by v.
+    key = p.v ; assert key
+    pList = self.visibleText.get(key,[])
+    pList.append((p,t,theId),)
+    self.visibleText[key] = pList
+    return t</t>
+<t tx="ekr.20040803072955.16">def __init__(self,c,frame,canvas):
     
-    c = self.c ; canvas = self.canvas
-    
-    if 0:
-        self.redrawCount += 1
-        g.trace(self.redrawCount,g.callers(5))
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
 
-    self.redrawing = True
+    # Objects associated with this tree.
+    self.canvas = canvas
     
-    # Recycle all widgets.
-    self.recycleWidgets()
-    # Clear all ids so invisible id's don't confuse eventToPosition &amp; findPositionWithIconId
+    &lt;&lt; define drawing constants &gt;&gt;
+    &lt;&lt; old ivars &gt;&gt;
+    &lt;&lt; inject callbacks into the position class &gt;&gt;
+    
+    self.dragging = False
+    self.expanded_click_area = c.config.getBool("expanded_click_area")
+    self.generation = 0
+    self.prevPositions = 0
+    self.redrawing = False # Used only to disable traces.
+    self.redrawCount = 0 # Count for debugging.
+    self.revertHeadline = None # Previous headline text for abortEditLabel.
+    self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
+        # New in 4.4: We should stay in the tree to use per-pane bindings.
+    self.textBindings = [] # Set in setBindings.
+    self.textNumber = 0 # To make names unique.
+    self.trace = False
+    self.updateCount = 0 # Drawing is enabled only if self.updateCount &lt;= 0
+    self.useBindtags = True
+    self.verbose = True
+    
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are unchanging positions...
     self.ids = {}
     self.iconIds = {}
-    self.generation += 1
-    self.drag_p = None # Disable drags across redraws.
-    self.dragging = False
-    if self.trace:
-        if self.verbose:
-            print ; print
-        delta = g.app.positions - self.prevPositions
-        g.trace("**** gen: %3d positions: %5d +%4d" % (
-            self.generation,g.app.positions,delta))
-    self.prevPositions = g.app.positions
 
-    if c.hoistStack:
-        bunch = c.hoistStack[-1]
-        self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
-    else:
-        self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
-    
-    canvas.lower("lines")  # Lowest.
-    canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
-    canvas.lift("userIcon")
-    canvas.lift("plusBox")
-    canvas.lift("clickBox")
-    canvas.lift("iconBox") # Higest.
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {} # Keys are vnodes, values are Tk.Text widgets
+    self.visibleUserIcons = []
 
-    self.redrawing = False</t>
-<t tx="ekr.20040803072955.53">def drawTree(self,p,x,y,h,level,hoistFlag=False):
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+    self.freeUserIcons = []</t>
+<t tx="ekr.20040803072955.17">self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
 
-    tree = self ; c = self.c
-    yfirst = ylast = y
-    h1 = None
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height</t>
+<t tx="ekr.20040803072955.18"># Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+self.setColorFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("&lt;B1-ButtonRelease&gt;", self.redraw_now)</t>
+<t tx="ekr.20040803072955.19"># The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()</t>
+<t tx="ekr.20040803072955.28">def headWidth(self,p=None,s=''):
+
+    """Returns the proper width of the entry widget for the headline."""
     
-    data = g.doHook("draw-sub-outline",tree=tree,
-        c=c,p=p,v=p,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
-    if data is not None: return data
+    if p: s = p.headString()
+
+    return self.font.measure(s)/self.font.measure('0')+1
+
     
-    while p: # Do not use iterator.
-        # N.B. This is the ONLY copy of p that needs to be made.
-        # No other drawing routine calls any p.moveTo method.
-        const_p = p.copy()
-        h,indent = self.drawNode(const_p,x,y)
-        if h1 is None: h1 = h
-        y += h ; ylast = y
-        if p.isExpanded() and p.hasFirstChild():
-            # Must make an additional copy here by calling firstChild.
-            y = self.drawTree(p.firstChild(),x+indent,y,h,level+1)
-        if hoistFlag: break
-        else:         p = p.next()
-        # g.trace(p)
+def widthInPixels(self,s):
+
+    s = g.toEncodedString(s,g.app.tkEncoding)
+    
+    return self.font.measure(s)</t>
+<t tx="ekr.20040803072955.71"></t>
+<t tx="ekr.20040803072955.72">def checkWidgetList (self,tag):
+    
+    return True # This will fail when the headline actually changes!
+    
+    for t in self.visibleText:
         
-    # Draw the vertical line.
-    if level==0: # Special case to get exposed first line exactly right.
-        self.drawLine(None,x,yfirst+(h1-1)/2,x,ylast+self.hline_y-h)
-    else:
-        self.drawLine(None,x,yfirst-h1/2-1,x,ylast+self.hline_y-h)
-    return y</t>
-<t tx="ekr.20040803072955.58"># Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
-
-def redraw_now (self,scroll=True):
-
-    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
-        return
-        
-    c = self.c
-    
-    if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
-        g.trace(self.redrawCount,g.callers())
-        # g.print_stats()
-        # g.clear_stats()
-        
-    # Do the actual redraw.
-    self.redrawCount += 1
-    self.expandAllAncestors(c.currentPosition())
-    self.redrawHelper(scroll=scroll)
-    self.canvas.update_idletasks() # Important for unit tests.
-    
-redraw = redraw_now # Compatibility</t>
-<t tx="ekr.20040803072955.59">def redrawHelper (self,scroll=True):
-    
-    c = self.c
-    oldcursor = self.canvas['cursor']
-    self.canvas['cursor'] = "watch"
-
-    if not g.doHook("redraw-entire-outline",c=c):
-        c.setTopVnode(None)
-        self.setVisibleAreaToFullCanvas()
-        self.drawTopTree()
-        # Set up the scroll region after the tree has been redrawn.
-        x0, y0, x1, y1 = self.canvas.bbox("all")
-        self.canvas.configure(scrollregion=(0, 0, x1, y1))
-        if scroll:
-            self.canvas.update_idletasks() # Essential.
-            self.scrollTo()
+        p = t.leo_position
+        if p:
+            s = t.get("1.0","end").strip()
+            h = p.headString().strip()
             
-    g.doHook("after-redraw-outline",c=c)
-
-    self.canvas['cursor'] = oldcursor</t>
-<t tx="ekr.20040803072955.61">def idle_second_redraw (self):
-    
-    c = self.c
-        
-    # Erase and redraw the entire tree the SECOND time.
-    # This ensures that all visible nodes are allocated.
-    c.setTopVnode(None)
-    args = self.canvas.yview()
-    self.setVisibleArea(args)
-    
-    if 0:
-        self.deleteBindings()
-        self.canvas.delete("all")
-
-    self.drawTopTree()
-    
-    if self.trace:
-        print "idle_second_redraw allocated:",self.redrawCount</t>
-<t tx="ekr.20040803072955.62"></t>
-<t tx="ekr.20040803072955.63">def inVisibleArea (self,y1):
-    
-    if self.allocateOnlyVisibleNodes:
-        if self.visibleArea:
-            vis1,vis2 = self.visibleArea
-            y2 = y1 + self.line_height
-            return y2 &gt;= vis1 and y1 &lt;= vis2
-        else: return False
-    else:
-        return True # This forces all nodes to be allocated on all redraws.
-        
-def inExpandedVisibleArea (self,y1):
-    
-    if self.expandedVisibleArea:
-        vis1,vis2 = self.expandedVisibleArea
-        y2 = y1 + self.line_height
-        return y2 &gt;= vis1 and y1 &lt;= vis2
-    else:
-        return False</t>
-<t tx="ekr.20040803072955.64">def getIconImage (self, name):
-
-    # Return the image from the cache if possible.
-    if self.iconimages.has_key(name):
-        return self.iconimages[name]
-        
-    try:
-        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
-        fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas,file=fullname)
-        self.iconimages[name] = image
-        return image
-    except:
-        g.es("Exception loading: " + fullname)
-        g.es_exception()
-        return None</t>
-<t tx="ekr.20040803072955.65">def scrollTo(self,p=None):
-
-    """Scrolls the canvas so that p is in view."""
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    c = self.c ; frame = c.frame
-    if not p or not p.exists(c):
-        p = c.currentPosition()
-    if not p or not p.exists(c):
-        # g.trace('current p does not exist',p)
-        p = c.rootPosition()
-    if not p or not p.exists(c):
-        # g.trace('no position')
-        return
-    try:
-        last = p.lastVisible()
-        nextToLast = last.visBack()
-        h1 = self.yoffset(p)
-        h2 = self.yoffset(last)
-        &lt;&lt; compute approximate line height &gt;&gt;
-        &lt;&lt; Compute the fractions to scroll down/up &gt;&gt;
-        if frac &lt;= lo:
-            if self.prevMoveToFrac != frac:
-                self.prevMoveToFrac = frac
-                self.canvas.yview("moveto",frac)
-        elif frac2 + (hi - lo) &gt;= hi:
-            if self.prevMoveToFrac != frac2:
-                self.prevMoveToFrac = frac2
-                self.canvas.yview("moveto",frac2)
-
-        if self.allocateOnlyVisibleNodes:
-            self.canvas.after_idle(self.idle_second_redraw)
+            if h != s:
+                self.dumpWidgetList(tag)
+                return False
+        else:
+            self.dumpWidgetList(tag)
+            return False
             
-        c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
-        # g.trace("%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi))
-    except:
-        g.es_exception()
+    return True</t>
+<t tx="ekr.20040803072955.73">def dumpWidgetList (self,tag):
+    
+    print
+    print "checkWidgetList: %s" % tag
+    
+    for t in self.visibleText:
         
-idle_scrollTo = scrollTo # For compatibility.</t>
-<t tx="ekr.20040803072955.66">if nextToLast: # 2/2/03: compute approximate line height.
-    lineHeight = h2 - self.yoffset(nextToLast)
-else:
-    lineHeight = 20 # A reasonable default.</t>
-<t tx="ekr.20040803072955.67">data = frame.treeBar.get()
-try: lo, hi = data
-except: lo,hi = 0.0,1.0
-if h2 &gt; 0.1:
-    frac = float(h1)/float(h2) # For scrolling down.
-    frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
-    frac2 = frac2 - (hi - lo)
-else:
-    frac = frac2 = 0.0 # probably any value would work here.
+        p = t.leo_position
+        if p:
+            s = t.get("1.0","end").strip()
+            h = p.headString().strip()
     
-frac =  max(min(frac,1.0),0.0)
-frac2 = max(min(frac2,1.0),0.0)</t>
-<t tx="ekr.20040803072955.68">def numberOfVisibleNodes(self):
+            addr = self.textAddr(t)
+            print "p:",addr,h
+            if h != s:
+                print "t:",'*' * len(addr),s
+        else:
+            print "t.leo_position == None",t</t>
+<t tx="ekr.20040803072955.74">def eventToPosition (self,event):
+
+    canvas = self.canvas
+    x,y = event.x,event.y
+    # 7/28/04: Not doing this translation was the real bug.
+    x = canvas.canvasx(x) 
+    y = canvas.canvasy(y)
+    if self.trace: g.trace(x,y)
+    item = canvas.find_overlapping(x,y,x,y)
+    if not item: return None
+
+    # Item may be a tuple, possibly empty.
+    try:    theId = item[0]
+    except: theId = item
+    if not theId: return None
+
+    p = self.ids.get(theId)
     
-    n = 0 ; p = self.c.rootPosition()
-    while p:
-        n += 1
-        p.moveToVisNext()
-    return n</t>
-<t tx="ekr.20040803072955.70">@ We can't just return icony because the tree hasn't been redrawn yet.
-For the same reason we can't rely on any TK canvas methods here.
-@c
+    # A kludge: p will be None for vertical lines.
+    if not p:
+        item = canvas.find_overlapping(x+1,y,x+1,y)
+        try:    theId = item[0]
+        except: theId = item
+        if not theId: return None
+        p = self.ids.get(theId)
+        # g.trace("was vertical line",p)
+    
+    if self.trace and self.verbose:
+        if p:
+            w = self.findEditWidget(p)
+            g.trace("%3d %3d %3d %d" % (theId,x,y,id(w)),p.headString())
+        else:
+            g.trace("%3d %3d %3d" % (theId,x,y),None)
+        
+    # defensive programming: this copy is not needed.
+    if p: return p.copy() # Make _sure_ nobody changes this table!
+    else: return None</t>
+<t tx="ekr.20040803072955.75">def edit_widget (self,p):
+    
+    """Returns the Tk.Edit widget for position p."""
 
-def yoffset(self,p1):
-    # if not p1.isVisible(): print "yoffset not visible:",p1
-    root = self.c.rootPosition()
-    h,flag = self.yoffsetTree(root,p1)
-    # flag can be False during initialization.
-    # if not flag: print "yoffset fails:",h,v1
-    return h
+    return self.findEditWidget(p)
+    
+edit_text = edit_widget # For compatibility.</t>
+<t tx="ekr.20040803072955.76"># Search the widget list for widget t with t.leo_position == p.
 
-def yoffsetTree(self,p,p1):
-    h = 0
-    if not p.exists(self.c): return h,False # An extra precaution.
-    p = p.copy()
-    for p2 in p.siblings_iter():
-        # print "yoffsetTree:", p2
-        if p2 == p1:
-            return h, True
-        h += self.line_height
-        if p2.isExpanded() and p2.hasChildren():
-            child = p2.firstChild()
-            h2, flag = self.yoffsetTree(child,p1)
-            h += h2
-            if flag: return h, True
-    return h, False</t>
+def findEditWidget (self,p):
+    
+    """Return the Tk.Text item corresponding to p."""
+
+    c = self.c
+    
+    if p and c:
+        # New in 4.2: the dictionary is a list of pairs(p,v)
+        pairs = self.visibleText.get(p.v,[])
+        for p2,t2,id2 in pairs:
+            assert t2.leo_window_id == id2
+            assert t2.leo_position == p2
+            if p.equal(p2):
+                # g.trace('found',t2)
+                return t2
+        
+    # g.trace(not found',p.headString())
+    return None</t>
+<t tx="ekr.20040803072955.78"></t>
 <t tx="ekr.20040803072955.79">def onClickBoxClick (self,event):
     
-    c = self.c ; p = self.eventToPosition(event)
+    c = self.c
+    c.setLog()
+    p = self.eventToPosition(event)
 
     c.beginUpdate()
     try:
-	    if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+        if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
             c.endEditing() # Bug fix: 12/19/05
-	        if p.isExpanded(): p.contract()
-	        else:              p.expand()
-	        self.active = True
-	        self.select(p)
-	        if c.frame.findPanel:
-	            c.frame.findPanel.handleUserClick(p)
-	        if self.stayInTree:
-	            c.frame.treeWantsFocus()
-	        else:
-	            c.frame.bodyWantsFocus()
-	    g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+            if p.isExpanded(): p.contract()
+            else:              p.expand()
+            self.active = True
+            self.select(p)
+            if c.frame.findPanel:
+                c.frame.findPanel.handleUserClick(p)
+            if self.stayInTree:
+                c.frame.treeWantsFocus()
+            else:
+                c.frame.bodyWantsFocus()
+        g.doHook("boxclick2",c=c,p=p,v=p,event=event)
     finally:
         c.endUpdate()</t>
 <t tx="ekr.20040803072955.80"></t>
@@ -3056,6 +3298,8 @@ def yoffsetTree(self,p,p1):
     
     p = self.eventToPosition(event)
     if not p: return
+    
+    c.setLog()
     
     if self.trace and self.verbose: g.trace()
     
@@ -3076,6 +3320,8 @@ def yoffsetTree(self,p,p1):
     p = self.eventToPosition(event)
     if not p: return
     
+    c.setLog()
+    
     if self.trace and self.verbose: g.trace()
     
     try:
@@ -3095,6 +3341,8 @@ def yoffsetTree(self,p,p1):
         p = w.leo_position
     except AttributeError:
         return "continue"
+        
+    c.setLog()
 
     try:
         if not g.doHook("headrclick1",c=c,p=p,v=p,event=event):
@@ -3105,6 +3353,45 @@ def yoffsetTree(self,p,p1):
     except:
         g.es_event_exception("headrclick")
         
+    return "continue"</t>
+<t tx="ekr.20040803072955.84"></t>
+<t tx="ekr.20040803072955.85">def configureTextState (self,p):
+    
+    if not p: return
+    
+    if p.isCurrentPosition():
+        if p == self.editPosition():
+            self.setEditLabelState(p) # selected, editing.
+        else:
+            self.setSelectedLabelState(p) # selected, not editing.
+    else:
+        self.setUnselectedLabelState(p) # unselected</t>
+<t tx="ekr.20040803072955.86"># This works around an apparent Tk bug.
+
+def onControlT (self,event=None):
+
+    # If we don't inhibit further processing the Tx.Text widget switches characters!
+    return "break"</t>
+<t tx="ekr.20040803072955.87">def onHeadlineClick (self,event):
+    
+    c = self.c ; w = event.widget
+    
+    try:
+        p = w.leo_position
+    except AttributeError:
+        return "continue"
+        
+    # g.trace(p.headString())
+    
+    c.setLog()
+    
+    try:
+        if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
+            self.OnActivateHeadline(p)
+        g.doHook("headclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("headclick")
+
     return "continue"</t>
 <t tx="ekr.20040803072955.88">def onHeadlineKey (self,event):
     
@@ -3129,6 +3416,8 @@ def yoffsetTree(self,p,p1):
     
     p = self.eventToPosition(event)
     if not p: return
+    
+    c.setLog()
 
     try:
         if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
@@ -3166,17 +3455,17 @@ def onHeadChanged (self,p,undoType='Typing'):
         self.revertHeadline = s
         p.initHeadString(s)
         # g.trace(repr(s),g.callers())
-	    if changed:
-	        # g.trace('changed: old',repr(oldRevert),'new',repr(s))
-	        undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
-	        if not c.changed: c.setChanged(True)
-	        dirtyVnodeList = p.setDirty()
-	        u.afterChangeNodeContents(p,undoType,undoData,
-	            dirtyVnodeList=dirtyVnodeList)
-	    else:
-	        pass # g.trace('not changed')
+        if changed:
+            # g.trace('changed: old',repr(oldRevert),'new',repr(s))
+            undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+            u.afterChangeNodeContents(p,undoType,undoData,
+                dirtyVnodeList=dirtyVnodeList)
+        else:
+            pass # g.trace('not changed')
     finally:
-        c.endUpdate(changed)
+        c.endUpdate()
         if self.stayInTree:
             frame.treeWantsFocus()
         else:
@@ -3202,241 +3491,285 @@ if len(s) &gt; limit:
     s = s[:limit]
 
 s = g.toUnicode(s or '',g.app.tkEncoding)</t>
-<t tx="ekr.20040803072955.125"></t>
-<t tx="ekr.20040803072955.126">def endEditLabel (self):
+<t tx="ekr.20040803072955.99"></t>
+<t tx="ekr.20040803072955.100">def onContinueDrag(self,event):
     
-    '''End editing of a headline and update p.headString().'''
+    p = self.drag_p
+    if not p: return
 
-    c = self.c ; p = c.currentPosition()
+    try:
+        canvas = self.canvas ; frame = self.c.frame
+        if event:
+            x,y = event.x,event.y
+        else:
+            x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+            # Stop the scrolling if we go outside the entire window.
+            if x == -1 or y == -1: return 
+        if self.dragging: # This gets cleared by onEndDrag()
+            &lt;&lt; scroll the canvas as needed &gt;&gt;
+    except:
+        g.es_event_exception("continue drag")</t>
+<t tx="ekr.20040803072955.101"># Scroll the screen up or down one line if the cursor (y) is outside the canvas.
+h = canvas.winfo_height()
 
-    self.setEditPosition(None) # That is, self._editPosition = None
+if y &lt; 0 or y &gt; h:
+    lo, hi = frame.treeBar.get()
+    n = self.savedNumberOfVisibleNodes
+    line_frac = 1.0 / float(n)
+    frac = g.choose(y &lt; 0, lo - line_frac, lo + line_frac)
+    frac = min(frac,1.0)
+    frac = max(frac,0.0)
+    # g.es("lo,hi,frac:",lo,hi,frac)
+    canvas.yview("moveto", frac)
     
-    # Important: this will redraw if necessary.
-    self.onHeadChanged(p)</t>
-<t tx="ekr.20040803072955.127">def editLabel (self,p):
+    # Queue up another event to keep scrolling while the cursor is outside the canvas.
+    lo, hi = frame.treeBar.get()
+    if (y &lt; 0 and lo &gt; 0.1) or (y &gt; h and hi &lt; 0.9):
+        canvas.after_idle(self.onContinueDrag,None) # Don't propagate the event.</t>
+<t tx="ekr.20040803072955.102">def onDrag(self,event):
     
-    """Start editing p's headline."""
+    c = self.c ; p = self.drag_p
+    if not event: return
 
-    if self.editPosition() and p != self.editPosition():
-        self.endEditLabel()
-
-    self.setEditPosition(p) # That is, self._editPosition = p
+    c.setLog()
     
-    # g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget!'))
+    if not self.dragging:
+        if not g.doHook("drag1",c=c,p=p,v=p,event=event):
+            self.startDrag(event)
+        g.doHook("drag2",c=c,p=p,v=p,event=event)
+        
+    if not g.doHook("dragging1",c=c,p=p,v=p,event=event):
+        self.onContinueDrag(event)
+    g.doHook("dragging2",c=c,p=p,v=p,event=event)</t>
+<t tx="ekr.20040803072955.103">def onEndDrag(self,event):
+    
+    """Tree end-of-drag handler called from vnode event handler."""
+    
+    c = self.c ; p = self.drag_p
+    if not p: return
 
-    if p and p.edit_widget():
-        self.setEditLabelState(p) # Sets the focus immediately.
-        self.frame.headlineWantsFocus(p) # Make sure the focus sticks.</t>
-<t tx="ekr.20040803072955.128">@ Warning:
-Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+    c.setLog()
+    
+    if not g.doHook("enddrag1",c=c,p=p,v=p,event=event):
+        self.endDrag(event)
+    g.doHook("enddrag2",c=c,p=p,v=p,event=event)</t>
+<t tx="ekr.20040803072955.104">x,y = event.x,event.y
+canvas_x = canvas.canvasx(x)
+canvas_y = canvas.canvasy(y)
+
+theId = self.canvas.find_closest(canvas_x,canvas_y)
+# theId = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
+vdrag = self.findPositionWithIconId(theId)
+childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()</t>
+<t tx="ekr.20040803072955.105">def OnActivateHeadline (self,p,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    # g.trace(p.headString())
+
+    try:
+        c = self.c
+        c.setLog()
+        &lt;&lt; activate this window &gt;&gt;
+    except:
+        g.es_event_exception("activate tree")</t>
+<t tx="ekr.20040803072955.106">if p == c.currentPosition():
+    # g.trace("is current")
+    if self.active:
+        self.editLabel(p)
+    else:
+        # Set the focus immediately.  This is essential for proper editing.
+        c.frame.treeWantsFocus()
+else:
+    # g.trace("not current")
+    self.select(p)
+    if c.frame.findPanel:
+        c.frame.findPanel.handleUserClick(p)
+    if p.v.t.insertSpot != None:
+        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+        c.frame.bodyCtrl.see(p.v.t.insertSpot)
+    else:
+        c.frame.bodyCtrl.mark_set("insert","1.0")
+        
+    if self.stayInTree:
+        c.frame.treeWantsFocus()
+    else:
+        c.frame.bodyWantsFocus()
+
+self.active = True</t>
+<t tx="ekr.20040803072955.108">def OnDeactivate (self,event=None):
+    
+    """Deactivate the tree pane, dimming any headline being edited."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    tree = self ; c = self.c
+    focus = g.app.gui.get_focus(c.frame)
+
+    # Doing this on every click would interfere with the double-clicking.
+    if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
+        c.beginUpdate()
+        try:
+            tree.endEditLabel()
+            tree.dimEditLabel()
+        finally:
+            c.endUpdate(False)</t>
+<t tx="ekr.20040803072955.109">def findPositionWithIconId (self,theId):
+    
+    # Due to an old bug, theId may be a tuple.
+    try:
+        data = self.iconIds.get(theId[0])
+    except:
+        data = self.iconIds.get(theId)
+
+    if data:
+        p,generation = data
+        if generation==self.generation:
+            if self.trace and self.verbose:
+                g.trace(theId,p.headString())
+            return p
+        else:
+            if self.trace and self.verbose:
+                g.trace("*** wrong generation: %d ***" % theId)
+            return None
+    else:
+        if self.trace and self.verbose: g.trace(theId,None)
+        return None
+        
+    
+</t>
+<t tx="ekr.20040803072955.110">def OnPopup (self,p,event):
+    
+    """Handle right-clicks in the outline."""
+    
+    # Note: "headrclick" hooks handled by vnode callback routine.
+
+    if event != None:
+        c = self.c
+        c.setLog()
+
+        if not g.doHook("create-popup-menu",c=c,p=p,v=p,event=event):
+            self.createPopupMenu(event)
+        if not g.doHook("enable-popup-menu-items",c=c,p=p,v=p,event=event):
+            self.enablePopupMenuItems(p,event)
+        if not g.doHook("show-popup-menu",c=c,p=p,v=p,event=event):
+            self.showPopupMenu(event)
+
+    return "break"</t>
+<t tx="ekr.20040803072955.111">@ On Linux we must do something special to make the popup menu "unpost" if the mouse is clicked elsewhere.  So we have to catch the &lt;FocusOut&gt; event and explicitly unpost.  In order to process the &lt;FocusOut&gt; event, we need to be able to find the reference to the popup window again, so this needs to be an attribute of the tree object; hence, "self.popupMenu".
+
+Aside: though Tk tries to be muli-platform, the interaction with different window managers does cause small differences that will need to be compensated by system specific application code. :-(
 @c
 
-def select (self,p,updateBeadList=True):
+# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
+
+def OnPopupFocusLost(self,event=None):
     
-    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
+    __pychecker__ = '--no-argsused' # event not used.
+
+    self.popupMenu.unpost()</t>
+<t tx="ekr.20040803072955.112">def createPopupMenu (self,event):
     
-    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
-    old_p = c.currentPosition()
-    if not p or not p.exists(c): return # Not an error.
-
-    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        if old_p:
-            &lt;&lt; unselect the old node &gt;&gt;
-
-    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    __pychecker__ = '--no-argsused' # event not used.
     
-    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        &lt;&lt; select the new node &gt;&gt;
-        if p and p != old_p: # Suppress duplicate call.
-            try: # may fail during initialization.
-                # p is NOT c.currentPosition() here!
-                self.canvas.update_idletasks() # Essential.
-                self.scrollTo(p)
-            except Exception: pass
-        &lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
-        &lt;&lt; update c.visitedList &gt;&gt;
-
-    c.setCurrentPosition(p)
-    &lt;&lt; set the current node &gt;&gt;
+    c = self.c ; frame = c.frame
     
-    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)</t>
-<t tx="ekr.20040803072955.129"># Remember the position of the scrollbar before making any changes.
-yview=body.yview()
-insertSpot = c.frame.body.getInsertionPoint()
-
-if old_p != p:
-    self.endEditLabel() # sets editPosition = None
-    self.setUnselectedLabelState(old_p) # 12/17/04
-
-if old_p.edit_widget():
-    old_p.v.t.scrollBarSpot = yview
-    old_p.v.t.insertSpot = insertSpot</t>
-<t tx="ekr.20040803072955.130"># Bug fix: we must always set this, even if we never edit the node.
-self.revertHeadline = p.headString()
-
-frame.setWrap(p)
+    # If we are going to recreate it, we had better destroy it.
+    if self.popupMenu:
+        self.popupMenu.destroy()
+        self.popupMenu = None
     
-# Always do this.  Otherwise there can be problems with trailing hewlines.
-s = g.toUnicode(p.v.t.bodyString,"utf-8")
-self.setText(body,s)
-
-# We must do a full recoloring: we may be changing context!
-self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
-
-if p.v and p.v.t.scrollBarSpot != None:
-    first,last = p.v.t.scrollBarSpot
-    body.yview("moveto",first)
-
-if p.v and p.v.t.insertSpot != None:
-    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-    c.frame.bodyCtrl.see(p.v.t.insertSpot)
-else:
-    c.frame.bodyCtrl.mark_set("insert","1.0")
+    self.popupMenu = menu = Tk.Menu(g.app.root, tearoff=0)
     
-# g.trace("select:",p.headString())</t>
-<t tx="ekr.20040803072955.131">if updateBeadList:
-    
-    if c.beadPointer &gt; -1:
-        present_p = c.beadList[c.beadPointer]
-    else:
-        present_p = c.nullPosition()
-    
-    if p != present_p:
-        # Replace the tail of c.beadList by c and make c the present node.
-        # print "updating c.beadList"
-        c.beadPointer += 1
-        c.beadList[c.beadPointer:] = []
-        c.beadList.append(p.copy())
+    # Add the Open With entries if they exist.
+    if g.app.openWithTable:
+        frame.menu.createOpenWithMenuItemsFromTable(menu,g.app.openWithTable)
+        table = (("-",None,None),)
+        frame.menu.createMenuEntries(menu,table)
         
-    # g.trace(c.beadPointer,p,present_p)</t>
-<t tx="ekr.20040803072955.132"># Make p the most recently visited position on the list.
-if p in c.visitedList:
-    c.visitedList.remove(p)
+    &lt;&lt; Create the menu table &gt;&gt;
+    
+    # New in 4.4.  There is no need for a dontBind argument because
+    # Bindings from tables are ignored.
+    frame.menu.createMenuEntries(menu,table)</t>
+<t tx="ekr.20040803072955.113">table = (
+    ("&amp;Read @file Nodes",c.readAtFileNodes),
+    ("&amp;Write @file Nodes",c.fileCommands.writeAtFileNodes),
+    ("-",None),
+    ("&amp;Tangle",c.tangle),
+    ("&amp;Untangle",c.untangle),
+    ("-",None),
+    ("Toggle Angle &amp;Brackets",c.toggleAngleBrackets),
+    ("-",None),
+    ("Cut Node",c.cutOutline),
+    ("Copy Node",c.copyOutline),
+    ("&amp;Paste Node",c.pasteOutline),
+    ("&amp;Delete Node",c.deleteOutline),
+    ("-",None),
+    ("&amp;Insert Node",c.insertHeadline),
+    ("&amp;Clone Node",c.clone),
+    ("Sort C&amp;hildren",c.sortChildren),
+    ("&amp;Sort Siblings",c.sortSiblings),
+    ("-",None),
+    ("Contract Parent",c.contractParent),
+)</t>
+<t tx="ekr.20040803072955.114">def enablePopupMenuItems (self,v,event):
+    
+    """Enable and disable items in the popup menu."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    c = self.c ; menu = self.popupMenu
 
-c.visitedList.insert(0,p.copy())</t>
-<t tx="ekr.20040803072955.133">self.setSelectedLabelState(p)
+    &lt;&lt; set isAtRoot and isAtFile if v's tree contains @root or @file nodes &gt;&gt;
+    isAtFile = g.choose(isAtFile,1,0)
+    isAtRoot = g.choose(isAtRoot,1,0)
+    canContract = v.parent() != None
+    canContract = g.choose(canContract,1,0)
+    
+    enable = self.frame.menu.enableMenu
+    
+    for name in ("Read @file Nodes", "Write @file Nodes"):
+        enable(menu,name,isAtFile)
+    for name in ("Tangle", "Untangle"):
+        enable(menu,name,isAtRoot)
 
-frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+    enable(menu,"Cut Node",c.canCutOutline())
+    enable(menu,"Delete Node",c.canDeleteHeadline())
+    enable(menu,"Paste Node",c.canPasteOutline())
+    enable(menu,"Sort Children",c.canSortChildren())
+    enable(menu,"Sort Siblings",c.canSortSiblings())
+    enable(menu,"Contract Parent",c.canContractParent())</t>
+<t tx="ekr.20040803072955.115">isAtFile = False
+isAtRoot = False
 
-if self.stayInTree:
-    c.frame.treeWantsFocus()
-else:
-    frame.bodyWantsFocus()</t>
-<t tx="ekr.20040803072955.134"></t>
-<t tx="ekr.20040803072955.135">def setEditLabelState (self,p): # selected, editing
-
-    c = self.c ; w = p.edit_widget()
-
-    if p and w:
-        c.frame.widgetWantsFocus(w)
-        self.setEditHeadlineColors(p)
-        w.tag_remove("sel","1.0","end")
-        w.tag_add("sel","1.0","end")
-    else:
-        g.trace('no edit_widget')
+for v2 in v.self_and_subtree_iter():
+    if isAtFile and isAtRoot:
+        break
+    if (v2.isAtFileNode() or
+        v2.isAtNorefFileNode() or
+        v2.isAtAsisFileNode() or
+        v2.isAtNoSentFileNode()
+    ):
+        isAtFile = True
         
-setNormalLabelState = setEditLabelState # For compatibility.</t>
-<t tx="ekr.20040803072955.136">def setSelectedLabelState (self,p): # selected, disabled
+    isRoot,junk = g.is_special(v2.bodyString(),0,"@root")
+    if isRoot:
+        isAtRoot = True</t>
+<t tx="ekr.20040803072955.116">def showPopupMenu (self,event):
+    
+    """Show a popup menu."""
+    
+    c = self.c ; menu = self.popupMenu
 
-    if p and p.edit_widget():
-        self.setDisabledHeadlineColors(p)</t>
-<t tx="ekr.20040803072955.138">def setUnselectedLabelState (self,p): # not selected.
+    if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
+        menu.bind("&lt;FocusOut&gt;",self.OnPopupFocusLost)
+    
+    menu.post(event.x_root, event.y_root)
 
-    if p and p.edit_widget():
-        self.setUnselectedHeadlineColors(p)</t>
-<t tx="ekr.20040803072955.139">def setDisabledHeadlineColors (self,p):
-
-    c = self.c ; w = p.edit_widget()
-
-    if self.trace and self.verbose:
-        if not self.redrawing:
-            print "%10s %d %s" % ("disabled",id(w),p.headString())
-            # import traceback ; traceback.print_stack(limit=6)
-
-    fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
-    bg = c.config.getColor("headline_text_selected_background_color") or 'grey80'
-    
-    try:
-        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20040803072955.140">def setEditHeadlineColors (self,p):
-
-    c = self.c ; w = p.edit_widget()
-    
-    if self.trace and self.verbose:
-        if not self.redrawing:
-            print "%10s %d %s" % ("edit",id(2),p.headString())
-    
-    fg    = c.config.getColor("headline_text_editing_foreground_color") or 'black'
-    bg    = c.config.getColor("headline_text_editing_background_color") or 'white'
-    selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
-    selbg = c.config.getColor("headline_text_editing_selection_background_color")
-    
-    try: # Use system defaults for selection foreground/background
-        if selfg and selbg:
-            w.configure(
-                selectforeground=selfg,selectbackground=selbg,
-                state="normal",highlightthickness=1,fg=fg,bg=bg)
-        elif selfg and not selbg:
-            w.configure(
-                selectforeground=selfg,
-                state="normal",highlightthickness=1,fg=fg,bg=bg)
-        elif selbg and not selfg:
-            w.configure(
-                selectbackground=selbg,
-                state="normal",highlightthickness=1,fg=fg,bg=bg)
-        else:
-            w.configure(
-                state="normal",highlightthickness=1,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20040803072955.141">def setUnselectedHeadlineColors (self,p):
-    
-    c = self.c ; w = p.edit_widget()
-    
-    if self.trace and self.verbose:
-        if not self.redrawing:
-            print "%10s %d %s" % ("unselect",id(w),p.headString())
-            # import traceback ; traceback.print_stack(limit=6)
-    
-    fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
-    bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
-    
-    try:
-        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20040803072955.142"># Convenience methods so the caller doesn't have to know the present edit node.
-
-def dimEditLabel (self):
-    
-    p = self.c.currentPosition()
-    self.setSelectedLabelState(p)
-
-def undimEditLabel (self):
-
-    p = self.c.currentPosition()
-    self.setSelectedLabelState(p)</t>
-<t tx="ekr.20040803072955.143">def expandAllAncestors (self,p):
-    
-    '''Expand all ancestors without redrawing.
-    
-    Return a flag telling whether a redraw is needed.'''
-    
-    c = self.c ; redraw_flag = False
-
-    c.beginUpdate()
-    try:
-	    for p in p.parents_iter():
-	        if not p.isExpanded():
-	            p.expand()
-	            redraw_flag = True
-    finally:
-        c.endUpdate(False)
-
-    return redraw_flag</t>
+    # Set the focus immediately so we know when we lose it.
+    c.frame.widgetWantsFocus(menu)</t>
 <t tx="ekr.20040930075711">@nocolor
 
 Leo can't represent some files using nodes!
@@ -3461,528 +3794,6 @@ Leo's import code can't handle this:
 - Having the comment line stop the scanning of aClass is even worse.
 
 - This usually shows up with an unindented blank line instead of the comment line.</t>
-<t tx="ekr.20040930135204">fileName = g.os_path_normpath(fileName)
-
-try:
-    theFile = open(fileName,'rb')
-    isThin = at.scanHeaderForThin(theFile,fileName)
-    theFile.close()
-except IOError:
-    isThin = False</t>
-<t tx="ekr.20041005105605.8">def __init__(self,c):
-
-    # Note: Pychecker complains if we assign to at.x instead of self.x.
-    
-    # **Warning**: all these ivars must **also** be inited in initCommonIvars.
-    self.c = c
-    self.debug = False
-    self.fileCommands = c.fileCommands
-    self.testing = False # True: enable additional checks.
-    self.errors = 0 # Make sure at.error() works even when not inited.
-    # New in Leo 4.4a5: For createThinChild4 (LeoUser).
-    self._forcedGnxPositionList = []
-        # Must be here, putting it in initReadIvars doesn't work.
-
-    &lt;&lt; define the dispatch dictionary used by scanText4 &gt;&gt;</t>
-<t tx="ekr.20041005105605.9">self.dispatch_dict = {
-    # Plain line.
-    self.noSentinel: self.readNormalLine,
-    # Starting sentinels...
-    self.startAll:    self.readStartAll,
-    self.startAt:     self.readStartAt,
-    self.startDoc:    self.readStartDoc,
-    self.startLeo:    self.readStartLeo,
-    self.startMiddle: self.readStartMiddle,
-    self.startNode:   self.readStartNode,
-    self.startOthers: self.readStartOthers,
-    # Ending sentinels...
-    self.endAll:    self.readEndAll,
-    self.endAt:     self.readEndAt,
-    self.endDoc:    self.readEndDoc,
-    self.endLeo:    self.readEndLeo,
-    self.endMiddle: self.readEndMiddle,
-    self.endNode:   self.readEndNode,
-    self.endOthers: self.readEndOthers,
-    # Non-paired sentinels.
-    self.startAfterRef:  self.readAfterRef,
-    self.startClone:     self.readClone,
-    self.startComment:   self.readComment,
-    self.startDelims:    self.readDelims,
-    self.startDirective: self.readDirective,
-    self.startNl:        self.readNl,
-    self.startNonl:      self.readNonl,
-    self.startRef:       self.readRef,
-    self.startVerbatim:  self.readVerbatim,
-    # Ignored 3.x sentinels
-    self.endBody:               self.ignoreOldSentinel,
-    self.startBody:             self.ignoreOldSentinel,
-    self.startVerbatimAfterRef: self.ignoreOldSentinel }</t>
-<t tx="ekr.20041005105605.27">def readOpenFile(self,root,theFile,fileName):
-    
-    """Read an open derived file, either 3.x or 4.x."""
-    
-    at = self
-
-    firstLines,read_new,isThinDerivedFile = at.scanHeader(theFile,fileName)
-
-    if read_new:
-        lastLines = at.scanText4(theFile,fileName,root)
-    else:
-        lastLines = at.scanText3(theFile,root,[],at.endLeo)
-        
-    root.v.t.setVisited() # Disable warning about set nodes.
-
-    &lt;&lt; handle first and last lines &gt;&gt;</t>
-<t tx="ekr.20041005105605.28">try:
-    body = root.v.t.tempBodyString
-except:
-    body = ""
-
-lines = body.split('\n')
-at.completeFirstDirectives(lines,firstLines)
-at.completeLastDirectives(lines,lastLines)
-s = '\n'.join(lines).replace('\r', '')
-root.v.t.tempBodyString = s</t>
-<t tx="ekr.20041005105605.72">def createThinChild4 (self,gnxString,headline):
-
-    """Find or create a new vnode whose parent is at.lastThinNode."""
-
-    at = self ; c = at.c ; indices = g.app.nodeIndices
-    last = at.lastThinNode ; lastIndex = last.t.fileIndex
-    gnx = indices.scanGnx(gnxString,0)
-    
-    # New in Leo 4.4a5: Solve Read @file nodes problem (by LeoUser)
-    if self._forcedGnxPositionList and last in self._forcedGnxPositionList:
-        last.fileIndex = lastIndex=  gnx
-        self._forcedGnxPositionList.remove(last)
-
-    if 0:
-        g.trace("last",last,last.t.fileIndex)
-        g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
-    
-    # See if there is already a child with the proper index.
-    child = at.lastThinNode.firstChild()
-    while child and not indices.areEqual(gnx,child.t.fileIndex):
-        child = child.next()
-
-    if at.cloneSibCount &gt; 1:
-        n = at.cloneSibCount ; at.cloneSibCount = 0
-        if child: clonedSibs,junk = at.scanForClonedSibs(child)
-        else: clonedSibs = 0
-        copies = n - clonedSibs
-        # g.trace(copies,headline)
-    else:
-        if indices.areEqual(gnx,lastIndex):
-            return last
-        if child:
-            return child
-        copies = 1 # Create exactly one copy.
-
-    while copies &gt; 0:
-        copies -= 1
-        # Create the tnode only if it does not already exist.
-        tnodesDict = c.fileCommands.tnodesDict
-        t = tnodesDict.get(gnxString)
-        if t:
-            assert(indices.areEqual(t.fileIndex,gnx))
-        else:
-            t = leoNodes.tnode(bodyString=None,headString=headline)
-            t.fileIndex = gnx
-            tnodesDict[gnxString] = t
-        parent = at.lastThinNode
-        child = leoNodes.vnode(c,t)
-        t.vnodeList.append(child)
-        child.linkAsNthChild(parent,parent.numberOfChildren())
-        # g.trace('creating last child %s\nof parent%s\n' % (child,parent))
-
-    return child</t>
-<t tx="ekr.20041005105605.74">def scanText4 (self,theFile,fileName,p,verbose=False):
-    
-    """Scan a 4.x derived file non-recursively."""
-    
-    __pychecker__ = '--no-argsused' # fileName,verbose might be used for debugging.
-
-    at = self
-    &lt;&lt; init ivars for scanText4 &gt;&gt;
-    while at.errors == 0 and not at.done:
-        s = at.readLine(theFile)
-        if len(s) == 0: break
-        kind = at.sentinelKind4(s)
-        # g.trace(at.sentinelName(kind),s.strip())
-        if kind == at.noSentinel:
-            i = 0
-        else:
-            i = at.skipSentinelStart4(s,0)
-        func = at.dispatch_dict[kind]
-        func(s,i)
-
-    if at.errors == 0 and not at.done:
-        &lt;&lt; report unexpected end of text &gt;&gt;
-
-    return at.lastLines
-</t>
-<t tx="ekr.20041005105605.75"># Unstacked ivars...
-at.cloneSibCount = 0
-at.done = False
-at.inCode = True
-at.indent = 0 # Changed only for sentinels.
-at.lastLines = [] # The lines after @-leo
-at.leadingWs = ""
-at.root = p.copy() # Bug fix: 12/10/05
-at.rootSeen = False
-at.updateWarningGiven = False
-
-# Stacked ivars...
-at.endSentinelStack = [at.endLeo] # We have already handled the @+leo sentinel.
-at.out = [] ; at.outStack = []
-at.t = p.v.t ; at.tStack = []
-at.lastThinNode = p.v ; at.thinNodeStack = [p.v]
-
-if 0: # Useful for debugging.
-    if hasattr(p.v.t,"tnodeList"):
-        g.trace("len(tnodeList)",len(p.v.t.tnodeList),p.v)
-    else:
-        g.trace("no tnodeList",p.v)
-        
-# g.trace(at.startSentinelComment)</t>
-<t tx="ekr.20041005105605.76">assert(at.endSentinelStack)
-
-at.readError(
-    "Unexpected end of file. Expecting %s sentinel" %
-    at.sentinelName(at.endSentinelStack[-1]))</t>
-<t tx="ekr.20041005105605.77">def readNormalLine (self,s,i):
-
-    at = self
-    
-    if at.inCode:
-        if not at.raw:
-            s = g.removeLeadingWhitespace(s,at.indent,at.tab_width)
-        at.out.append(s)
-    else:
-        &lt;&lt; Skip the leading stuff &gt;&gt;
-        &lt;&lt; Append s to docOut &gt;&gt;</t>
-<t tx="ekr.20041005105605.78">if len(at.endSentinelComment) == 0:
-    # Skip the single comment delim and a blank.
-    i = g.skip_ws(s,0)
-    if g.match(s,i,at.startSentinelComment):
-        i += len(at.startSentinelComment)
-        if g.match(s,i," "): i += 1
-else:
-    i = at.skipIndent(s,0,at.indent)
-
-</t>
-<t tx="ekr.20041005105605.79">line = s[i:-1] # remove newline for rstrip.
-
-if line == line.rstrip():
-    # no trailing whitespace: the newline is real.
-    at.docOut.append(line + '\n')
-else:
-    # trailing whitespace: the newline is fake.
-    at.docOut.append(line)</t>
-<t tx="ekr.20041005105605.80"></t>
-<t tx="ekr.20041005105605.81">def readStartAll (self,s,i):
-    
-    """Read an @+all sentinel."""
-
-    at = self
-    j = g.skip_ws(s,i)
-    leadingWs = s[i:j]
-    if leadingWs:
-        assert(g.match(s,j,"@+all"))
-    else:
-        assert(g.match(s,j,"+all"))
-
-    # Make sure that the generated at-all is properly indented.
-    at.out.append(leadingWs + "@all\n")
-    
-    at.endSentinelStack.append(at.endAll)</t>
-<t tx="ekr.20041005105605.82">def readStartAt (self,s,i):
-    """Read an @+at sentinel."""
-    at = self ; assert(g.match(s,i,"+at"))
-    if 0:# new code: append whatever follows the sentinel.
-        i += 3 ; j = at.skipToEndSentinel(s,i) ; follow = s[i:j]
-        at.out.append('@' + follow) ; at.docOut = []
-    else:
-        i += 3 ; j = g.skip_ws(s,i) ; ws = s[i:j]
-        at.docOut = ['@' + ws + '\n'] # This newline may be removed by a following @nonl
-    at.inCode = False
-    at.endSentinelStack.append(at.endAt)
-    
-def readStartDoc (self,s,i):
-    """Read an @+doc sentinel."""
-    at = self ; assert(g.match(s,i,"+doc"))
-    if 0: # new code: append whatever follows the sentinel.
-        i += 4 ; j = at.skipToEndSentinel(s,i) ; follow = s[i:j]
-        at.out.append('@' + follow) ; at.docOut = []
-    else:
-        i += 4 ; j = g.skip_ws(s,i) ; ws = s[i:j]
-        at.docOut = ["@doc" + ws + '\n'] # This newline may be removed by a following @nonl
-    at.inCode = False
-    at.endSentinelStack.append(at.endDoc)
-    
-def skipToEndSentinel(self,s,i):
-    at = self
-    end = at.endSentinelComment
-    if end:
-        j = s.find(end,i)
-        if j == -1:
-            return g.skip_to_end_of_line(s,i)
-        else:
-            return j
-    else:
-        return g.skip_to_end_of_line(s,i)</t>
-<t tx="ekr.20041005105605.83">def readStartLeo (self,s,i):
-    
-    """Read an unexpected @+leo sentinel."""
-
-    at = self
-    assert(g.match(s,i,"+leo"))
-    at.readError("Ignoring unexpected @+leo sentinel")</t>
-<t tx="ekr.20041005105605.84">def readStartMiddle (self,s,i):
-    
-    """Read an @+middle sentinel."""
-    
-    at = self
-    
-    at.readStartNode(s,i,middle=True)</t>
-<t tx="ekr.20041005105605.85">def readStartNode (self,s,i,middle=False):
-    
-    """Read an @+node or @+middle sentinel."""
-    
-    at = self
-    if middle:
-        assert(g.match(s,i,"+middle:"))
-        i += 8
-    else:
-        assert(g.match(s,i,"+node:"))
-        i += 6
-    
-    if at.thinFile:
-        &lt;&lt; set gnx and bump i &gt;&gt;
-    &lt;&lt; Set headline, undoing the CWEB hack &gt;&gt;
-    if not at.root_seen:
-        at.root_seen = True
-        &lt;&lt; Check the filename in the sentinel &gt;&gt;
-
-    i,newIndent = g.skip_leading_ws_with_indent(s,0,at.tab_width)
-    at.indentStack.append(at.indent) ; at.indent = newIndent
-    
-    at.outStack.append(at.out) ; at.out = []
-    at.tStack.append(at.t)
-
-    if at.importing:
-        p = at.createImportedNode(at.root,headline)
-        at.t = p.v.t
-    elif at.thinFile:
-        at.thinNodeStack.append(at.lastThinNode)
-        at.lastThinNode = v = at.createThinChild4(gnx,headline)
-        at.t = v.t
-    else:
-        at.t = at.findChild4(headline)
-    
-    at.endSentinelStack.append(at.endNode)</t>
-<t tx="ekr.20041005105605.86"># We have skipped past the opening colon of the gnx.
-j = s.find(':',i)
-if j == -1:
-    g.trace("no closing colon",g.get_line(s,i))
-    at.readError("Expecting gnx in @+node sentinel")
-    return # 5/17/04
-else:
-    gnx = s[i:j]
-    i = j + 1 # Skip the i</t>
-<t tx="ekr.20041005105605.87"># Set headline to the rest of the line.
-# Don't strip leading whitespace."
-
-if len(at.endSentinelComment) == 0:
-    headline = s[i:-1].rstrip()
-else:
-    k = s.rfind(at.endSentinelComment,i)
-    headline = s[i:k].rstrip() # works if k == -1
-
-# Undo the CWEB hack: undouble @ signs if the opening comment delim ends in '@'.
-if at.startSentinelComment[-1:] == '@':
-    headline = headline.replace('@@','@')</t>
-<t tx="ekr.20041005105605.88">if 0: # This doesn't work so well in cooperative environments.
-    if not at.importing:
-
-        h = headline.strip()
-        
-        if h[:5] == "@file":
-            i,junk,junk = g.scanAtFileOptions(h)
-            fileName = string.strip(h[i:])
-            if fileName != at.targetFileName:
-                at.readError("File name in @node sentinel does not match file's name")
-        elif h[:8] == "@rawfile":
-            fileName = string.strip(h[8:])
-            if fileName != at.targetFileName:
-                at.readError("File name in @node sentinel does not match file's name")
-        else:
-            at.readError("Missing @file in root @node sentinel")</t>
-<t tx="ekr.20041005105605.89">def readStartOthers (self,s,i):
-    
-    """Read an @+others sentinel."""
-
-    at = self
-    j = g.skip_ws(s,i)
-    leadingWs = s[i:j]
-    if leadingWs:
-        assert(g.match(s,j,"@+others"))
-    else:
-        assert(g.match(s,j,"+others"))
-
-    # Make sure that the generated at-others is properly indented.
-    at.out.append(leadingWs + "@others\n")
-    
-    at.endSentinelStack.append(at.endOthers)</t>
-<t tx="ekr.20041005105605.90"></t>
-<t tx="ekr.20041005105605.91">def readEndAll (self,s,i):
-    
-    """Read an @-all sentinel."""
-    
-    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
-    
-    at = self
-    at.popSentinelStack(at.endAll)</t>
-<t tx="ekr.20041005105605.92">def readEndAt (self,s,i):
-    
-    """Read an @-at sentinel."""
-    
-    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
-
-    at = self
-    at.readLastDocLine("@")
-    at.popSentinelStack(at.endAt)
-    at.inCode = True
-        
-def readEndDoc (self,s,i):
-    
-    """Read an @-doc sentinel."""
-    
-    __pychecker__ = '--no-argsused' # s,i not used, but must be present.
-
-    at = self
-    at.readLastDocLine("@doc")
-    at.popSentinelStack(at.endDoc)
-    at.inCode = True</t>
-<t tx="ekr.20041005105605.93">def readEndLeo (self,s,i):
-    
-    """Read an @-leo sentinel."""
-    
-    __pychecker__ = '--no-argsused' # i not used, but must be present.
-    
-    at = self
-
-    # Ignore everything after @-leo.
-    # Such lines were presumably written by @last.
-    while 1:
-        s = at.readLine(at.inputFile)
-        if len(s) == 0: break
-        at.lastLines.append(s) # Capture all trailing lines, even if empty.
-
-    at.done = True</t>
-<t tx="ekr.20041005105605.94">def readEndMiddle (self,s,i):
-    
-    """Read an @-middle sentinel."""
-    
-    at = self
-    
-    at.readEndNode(s,i,middle=True)</t>
-<t tx="ekr.20041005105605.95">def readEndNode (self,s,i,middle=False):
-    
-    """Handle end-of-node processing for @-others and @-ref sentinels."""
-    
-    __pychecker__ = '--no-argsused' # i not used, but must be present.
-
-    at = self ; c = at.c
-    
-    # End raw mode.
-    at.raw = False
-    
-    # Set the temporary body text.
-    s = ''.join(at.out)
-    s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-
-    if at.importing:
-        at.t.bodyString = s
-    elif middle: 
-        pass # Middle sentinels never alter text.
-    else:
-        if hasattr(at.t,"tempBodyString") and s != at.t.tempBodyString:
-            old = at.t.tempBodyString
-        elif at.t.hasBody() and s != at.t.getBody():
-            old = at.t.getBody()
-        else:
-            old = None
-        # 9/4/04: Suppress this warning for the root: @first complicates matters.
-        if old and not g.app.unitTesting and at.t != at.root.t:
-            &lt;&lt; indicate that the node has been changed &gt;&gt;
-        at.t.tempBodyString = s
-
-    # Indicate that the tnode has been set in the derived file.
-    at.t.setVisited()
-
-    # End the previous node sentinel.
-    at.indent = at.indentStack.pop()
-    at.out = at.outStack.pop()
-    at.t = at.tStack.pop()
-    if at.thinFile and not at.importing:
-        at.lastThinNode = at.thinNodeStack.pop()
-
-    at.popSentinelStack(at.endNode)</t>
-<t tx="ekr.20041005105605.96">if at.perfectImportRoot:
-    &lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;
-    # p.setMarked()
-    at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
-    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-    at.c.setChanged(True)
-else:
-    if not at.updateWarningGiven:
-        at.updateWarningGiven = True
-        # print "***",at.t,at.root.t
-        g.es("Warning: updating changed text in %s" %
-            (at.root.headString()),color="blue")
-    # g.es("old...\n%s\n" % old)
-    # g.es("new...\n%s\n" % s)
-    # Just set the dirty bit. Ancestors will be marked dirty later.
-    at.t.setDirty()
-    if 1: # We must avoid the full setChanged logic here!
-        c.changed = True
-    else: # Far too slow for mass changes.
-        at.c.setChanged(True)</t>
-<t tx="ekr.20041005105605.97"># Report the number of corrected nodes.
-at.correctedLines += 1
-
-found = False
-for p in at.perfectImportRoot.self_and_subtree_iter():
-    if p.v.t == at.t:
-        found = True ; break
-
-if found:
-    if 0: # Not needed: we mark all corrected nodes.
-        g.es("Correcting %s" % p.headString(),color="blue")
-    if 0: # For debugging.
-        print ; print '-' * 40
-        print "old",len(old)
-        for line in g.splitLines(old):
-            #line = line.replace(' ','&lt; &gt;').replace('\t','&lt;TAB&gt;')
-            print repr(str(line))
-        print ; print '-' * 40
-        print "new",len(s)
-        for line in g.splitLines(s):
-            #line = line.replace(' ','&lt; &gt;').replace('\t','&lt;TAB&gt;')
-            print repr(str(line))
-        print ; print '-' * 40
-else:
-    # This should never happen.
-    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")</t>
-<t tx="ekr.20041005105605.98">def readEndOthers (self,s,i):
-    
-    """Read an @-others sentinel."""
-    
-    __pychecker__ = '--no-argsused' # s,i unused, but must be present.
-    
-    at = self
-    at.popSentinelStack(at.endOthers)</t>
 <t tx="ekr.20041005105605.99">def readLastDocLine (self,tag):
     
     """Read the @c line that terminates the doc part.
@@ -3999,16 +3810,20 @@ else:
     else:
         at.readError("Missing start of doc part")
         return
+        
+    # Bug fix: Append any whitespace following the tag to tag.
+    while s and s[0] in (' ','\t'):
+        tag = tag + s[0] ; s = s[1:]
 
     if end:
-        # 9/3/04: Remove leading newline.
+        # Remove leading newline.
         if s[0] == '\n': s = s[1:]
         # Remove opening block delim.
         if g.match(s,0,start):
             s = s[len(start):]
         else:
             at.readError("Missing open block comment")
-            g.trace(s)
+            g.trace('tag',repr(tag),'start',repr(start),'s',repr(s))
             return
         # Remove trailing newline.
         if s[-1] == '\n': s = s[:-1]
@@ -4023,304 +3838,82 @@ else:
             return
 
     at.out.append(tag + s)
-    at.docOut = []
-    </t>
-<t tx="ekr.20041005105605.100"></t>
-<t tx="ekr.20041005105605.101">def  ignoreOldSentinel (self,s,i):
-    
-    """Ignore an 3.x sentinel."""
-    
-    __pychecker__ = '--no-argsused' # i unused, but must be present.
-    
-    g.es("Ignoring 3.x sentinel: " + s.strip(), color="blue")</t>
-<t tx="ekr.20041005105605.102">def  readAfterRef (self,s,i):
-    
-    """Read an @afterref sentinel."""
-    
-    at = self
-    assert(g.match(s,i,"afterref"))
-    
-    # Append the next line to the text.
-    s = at.readLine(at.inputFile)
-    at.out.append(s)</t>
-<t tx="ekr.20041005105605.103">def readClone (self,s,i):
-    
-    at = self ; tag = "clone"
+    at.docOut = []</t>
+<t tx="ekr.20041111114148"># g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
 
-    assert(g.match(s,i,tag))
-    
-    # Skip the tag and whitespace.
-    i = g.skip_ws(s,i+len(tag))
-    
-    # Get the clone count.
-    junk,val = g.skip_long(s,i)
-    
-    if val == None:
-        at.readError("Invalid count in @clone sentinel")
+if self.controlDrag: # Clone p and move the clone.
+    if childFlag:
+        c.dragCloneToNthChildOf(p,vdrag,0)
     else:
-        at.cloneSibCount	 = val</t>
-<t tx="ekr.20041005105605.104">def readComment (self,s,i):
-    
-    """Read an @comment sentinel."""
+        c.dragCloneAfter(p,vdrag)
+else: # Just drag p.
+    if childFlag:
+        c.dragToNthChildOf(p,vdrag,0)
+    else:
+        c.dragAfter(p,vdrag)</t>
+<t tx="ekr.20041111114944"># This precomputes numberOfVisibleNodes(), a significant optimization.
+# We also indicate where findPositionWithIconId() should start looking for tree id's.
 
-    assert(g.match(s,i,"comment"))
-
-    # Just ignore the comment line!
-</t>
-<t tx="ekr.20041005105605.105">def readDelims (self,s,i):
+def startDrag (self,event):
     
-    """Read an @delims sentinel."""
+    """The official helper of the onDrag event handler."""
     
-    at = self
-    assert(g.match(s,i-1,"@delims"));
+    c = self.c ; canvas = self.canvas
+    c.setLog()
+    assert(not self.drag_p)
+    x = canvas.canvasx(event.x)
+    y = canvas.canvasy(event.y)
+    theId = canvas.find_closest(x,y)
+    # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    if theId is None: return
+    try: theId = theId[0]
+    except: pass
+    p = self.ids.get(theId)
+    if not p: return
+    self.drag_p = p.copy() # defensive programming: not needed.
+    self.dragging = True
+    # g.trace("*** start drag ***",theId,self.drag_p.headString())
+    # Only do this once: greatly speeds drags.
+    self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
+    if c.config.getBool("allow_clone_drags"):
+        self.controlDrag = c.frame.controlKeyIsDown
+        if c.config.getBool("look_for_control_drag_on_mouse_down"):
+            if c.config.getBool("enable_drag_messages"):
+                if self.controlDrag:
+                    g.es("dragged node will be cloned")
+                else:
+                    g.es("dragged node will be moved")
+    else: self.controlDrag = False
+    self.canvas['cursor'] = "hand2" # "center_ptr"</t>
+<t tx="ekr.20041111115908">def endDrag (self,event):
+    
+    """The official helper of the onEndDrag event handler."""
 
-    # Skip the keyword and whitespace.
-    i0 = i-1
-    i = g.skip_ws(s,i-1+7)
+    c = self.c ; p = self.drag_p
+    c.setLog()
+    canvas = self.canvas
+    if not event: return
+
+    c.beginUpdate()
+    try:
+        &lt;&lt; set vdrag, childFlag &gt;&gt;
+        if c.config.getBool("allow_clone_drags"):
+            if not c.config.getBool("look_for_control_drag_on_mouse_down"):
+                self.controlDrag = c.frame.controlKeyIsDown
+    
+        if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
+            &lt;&lt; drag p to vdrag &gt;&gt;
+        elif self.trace and self.verbose:
+            g.trace("Cancel drag")
         
-    # Get the first delim.
-    j = i
-    while i &lt; len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
-        i += 1
-    
-    if j &lt; i:
-        at.startSentinelComment = s[j:i]
-        # print "delim1:", at.startSentinelComment
-    
-        # Get the optional second delim.
-        j = i = g.skip_ws(s,i)
-        while i &lt; len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
-            i += 1
-        end = g.choose(j&lt;i,s[j:i],"")
-        i2 = g.skip_ws(s,i)
-        if end == at.endSentinelComment and (i2 &gt;= len(s) or g.is_nl(s,i2)):
-            at.endSentinelComment = "" # Not really two params.
-            line = s[i0:j]
-            line = line.rstrip()
-            at.out.append(line+'\n')
-        else:
-            at.endSentinelComment = end
-            # print "delim2:",end
-            line = s[i0:i]
-            line = line.rstrip()
-            at.out.append(line+'\n')
-    else:
-        at.readError("Bad @delims")
-        # Append the bad @delims line to the body text.
-        at.out.append("@delims")</t>
-<t tx="ekr.20041005105605.106">def readDirective (self,s,i):
-    
-    """Read an @@sentinel."""
-    
-    at = self
-    assert(g.match(s,i,"@")) # The first '@' has already been eaten.
-    
-    # g.trace(g.get_line(s,i))
-    
-    if g.match_word(s,i,"@raw"):
-        at.raw = True
-    elif g.match_word(s,i,"@end_raw"):
-        at.raw = False
-        
-    e = at.endSentinelComment
-    s2 = s[i:]
-    if len(e) &gt; 0:
-        k = s.rfind(e,i)
-        if k != -1:
-            s2 = s[i:k] + '\n'
-        
-    start = at.startSentinelComment
-    if start and len(start) &gt; 0 and start[-1] == '@':
-        s2 = s2.replace('@@','@')
-        
-    if 0: # New in 4.2.1: never change comment delims here...
-        if g.match_word(s,i,"@language"):
-            &lt;&lt; handle @language &gt;&gt;
-        elif g.match_word(s,i,"@comment"):
-            &lt;&lt; handle @comment &gt;&gt;
-
-    at.out.append(s2)</t>
-<t tx="ekr.20041005105605.107"># Skip the keyword and whitespace.
-i += len("@language")
-i = g.skip_ws(s,i)
-j = g.skip_c_id(s,i)
-language = s[i:j]
-
-delim1,delim2,delim3 = g.set_delims_from_language(language)
-
-g.trace(g.get_line(s,i))
-g.trace(delim1,delim2,delim3)
-
-# Returns a tuple (single,start,end) of comment delims
-if delim1:
-    at.startSentinelComment = delim1
-    at.endSentinelComment = "" # Must not be None.
-elif delim2 and delim3:
-    at.startSentinelComment = delim2
-    at.endSentinelComment = delim3
-else:
-    line = g.get_line(s,i)
-    g.es("Ignoring bad @@language sentinel: %s" % line,color="red")</t>
-<t tx="ekr.20041005105605.108">j = g.skip_line(s,i)
-line = s[i:j]
-delim1,delim2,delim3 = g.set_delims_from_string(line)
-
-#g.trace(g.get_line(s,i))
-#g.trace(delim1,delim2,delim3)
-
-# Returns a tuple (single,start,end) of comment delims
-if delim1:
-    self.startSentinelComment = delim1
-    self.endSentinelComment = "" # Must not be None.
-elif delim2 and delim3:
-    self.startSentinelComment = delim2
-    self.endSentinelComment = delim3
-else:
-    line = g.get_line(s,i)
-    g.es("Ignoring bad @comment sentinel: %s" % line,color="red")</t>
-<t tx="ekr.20041005105605.109">def readNl (self,s,i):
-    
-    """Handle an @nonl sentinel."""
-    
-    at = self
-    assert(g.match(s,i,"nl"))
-    
-    if at.inCode:
-        at.out.append('\n')
-    else:
-        at.docOut.append('\n')</t>
-<t tx="ekr.20041005105605.110">def readNonl (self,s,i):
-    
-    """Handle an @nonl sentinel."""
-    
-    at = self
-    assert(g.match(s,i,"nonl"))
-    
-    if at.inCode:
-        s = ''.join(at.out)
-        if s and s[-1] == '\n':
-            at.out = [s[:-1]]
-        else:
-            g.trace("out:",s)
-            at.readError("unexpected @nonl directive in code part")	
-    else:
-        s = ''.join(at.pending)
-        if s:
-            if s and s[-1] == '\n':
-                at.pending = [s[:-1]]
-            else:
-                g.trace("docOut:",s)
-                at.readError("unexpected @nonl directive in pending doc part")
-        else:
-            s = ''.join(at.docOut)
-            if s and s[-1] == '\n':
-                at.docOut = [s[:-1]]
-            else:
-                g.trace("docOut:",s)
-                at.readError("unexpected @nonl directive in doc part")</t>
-<t tx="ekr.20041005105605.111">@ The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
-@c
-
-def readRef (self,s,i):
-    
-    """Handle an @&lt;&lt; sentinel."""
-    
-    at = self
-    j = g.skip_ws(s,i)
-    assert(g.match(s,j,"&lt;&lt;"))
-    
-    if len(at.endSentinelComment) == 0:
-        line = s[i:-1] # No trailing newline
-    else:
-        k = s.find(at.endSentinelComment,i)
-        line = s[i:k] # No trailing newline, whatever k is.
-            
-    # Undo the cweb hack.
-    start = at.startSentinelComment
-    if start and len(start) &gt; 0 and start[-1] == '@':
-        line = line.replace('@@','@')
-
-    at.out.append(line)
-</t>
-<t tx="ekr.20041005105605.112">def readVerbatim (self,s,i):
-    
-    """Read an @verbatim sentinel."""
-    
-    at = self
-    assert(g.match(s,i,"verbatim"))
-    
-    # Append the next line to the text.
-    s = at.readLine(at.inputFile) 
-    i = at.skipIndent(s,0,at.indent)
-    at.out.append(s[i:])</t>
-<t tx="ekr.20041005105605.113">def badEndSentinel (self,expectedKind):
-    
-    """Handle a mismatched ending sentinel."""
-
-    at = self
-    assert(at.endSentinelStack)
-    s = "Ignoring %s sentinel.  Expecting %s" % (
-        at.sentinelName(at.endSentinelStack[-1]),
-        at.sentinelName(expectedKind))
-    at.readError(s)
-         
-def popSentinelStack (self,expectedKind):
-    
-    """Pop an entry from endSentinelStack and check it."""
-    
-    at = self
-    if at.endSentinelStack and at.endSentinelStack[-1] == expectedKind:
-        at.endSentinelStack.pop()
-    else:
-        at.badEndSentinel(expectedKind)</t>
-<t tx="ekr.20041005105605.127">def readError(self,message):
-
-    # This is useful now that we don't print the actual messages.
-    if self.errors == 0:
-        self.printError("----- error reading @file: %s" % self.targetFileName)
-        
-    # g.trace(self.root,g.callers())
-    
-    self.error(message)
-    
-    # Bug fix: 12/10/05: Delete all of root's tree.
-    self.root.v.t._firstChild = None
-    
-    self.root.setOrphan()
-    self.root.setDirty()</t>
-<t tx="ekr.20041005105605.220">def error(self,message):
-
-    if message:
-        self.printError(message)
-
-    self.errors += 1
-
-    # g.trace('errors',self.errors)</t>
-<t tx="ekr.20041117062717.14">def getShortcut (self,c,shortcutName):
-    
-    '''Return rawKey,accel for shortcutName'''
-    
-    key = c.frame.menu.canonicalizeMenuName(shortcutName)
-    key = key.replace('&amp;','') # Allow '&amp;' in names.
-    
-    if 1:
-        bunchList = self.get(c,key,"shortcut")
-        if bunchList:
-            bunchList = [bunch for bunch in bunchList
-                if bunch.val and bunch.val.lower() != 'none']
-            return key,bunchList
-        else:
-            return key,[]
-    else:
-        bunch = self.get(c,key,"shortcut")
-        if bunch and bunch.val:
-            # g.trace(bunch.pane,key,repr(bunch.val))
-            if bunch.val.lower() == 'none':
-                return key,None
-            else:
-                return key,bunch
-        else:
-            return key,None</t>
+        # Reset the old cursor by brute force.
+        self.canvas['cursor'] = "arrow"
+        self.dragging = False
+        self.drag_p = None
+    finally:
+        # Must set self.drag_p = None first.
+        c.endUpdate()
+        c.recolor_now() # Dragging can affect coloring.</t>
 <t tx="ekr.20041119040438">@nocolor
 
 This tree contains settings unique to this outline.</t>
@@ -4328,216 +3921,67 @@ This tree contains settings unique to this outline.</t>
 
 Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files. See further warnings in LeoDocs.leo.
 </t>
-<t tx="ekr.20041119204700">def __init__ (self,c):
-    
-    self.c = c
-    self.recentFiles = [] # List of recent files.
-    self.shortcutsDict = {}
-        # Keys are cononicalized shortcut names, values are bunches.
-    
-    # Keys are canonicalized names.
-    self.dispatchDict = {
-        'bool':         self.doBool,
-        'color':        self.doColor,
-        'directory':    self.doDirectory,
-        'font':         self.doFont,
-        'if':           self.doIf,
-        'ifgui':        self.doIfGui,
-        'ifplatform':   self.doIfPlatform,
-        'ignore':       self.doIgnore,
-        'int':          self.doInt,
-        'ints':         self.doInts,
-        'float':        self.doFloat,
-        'mode':         self.doMode, # New in 4.4b1.
-        'path':         self.doPath,
-        'page':         self.doPage,
-        'ratio':        self.doRatio,
-        'shortcut':     self.doShortcut,
-        'shortcuts':    self.doShortcuts,
-        'string':       self.doString,
-        'strings':      self.doStrings,
-    }</t>
-<t tx="ekr.20041120105609">def doShortcuts(self,p,kind,name,val):
-    
-    __pychecker__ = '--no-argsused' # kind,val not used.
-    
-    # g.trace(self.c.fileName(),p.headString(),g.callers())
-    
-    d = self.shortcutsDict # To detect duplicates.
-    s = p.bodyString()
-    lines = g.splitLines(s)
-    for line in lines:
-        line = line.strip()
-        if line and not g.match(line,0,'#'):
-            name,bunch = self.parseShortcutLine(line)
-            # g.trace(name,bunch)
-            if bunch is not None:
-                # New in 4.4a5:
-                bunchList = d.get(name,[])
-                bunchList.append(bunch)
-                d [name] = bunchList
-                self.set(p,"shortcut",name,bunchList)
-                self.setShortcut(name,bunchList)</t>
-<t tx="ekr.20041120112043">def parseShortcutLine (self,s):
-    
-    '''Parse a shortcut line.  Valid forms:
-        
-    settingName = shortcut
-    settingName ! paneName = shortcut'''
-    
-    name = val = None
-    j = g.skip_ws(s,0)
-    i = g.skip_id(s,j,'-') # New in 4.4: allow Emacs-style shortcut names.
-    name = s[j:i]
-    if not name: return None,None
-        
-    i = g.skip_ws(s,i)
-    if g.match(s,i,'!'): # New in 4.4: allow pane-specific shortcuts.
-        j = g.skip_ws(s,i+1)
-        i = g.skip_id(s,j)
-        pane = s[j:i]
-        if not pane.strip(): pane = 'all'
-    else: pane = 'all'
+<t tx="ekr.20041130173135">def hash (self):
 
-    i = g.skip_ws(s,i)
-    if g.match(s,i,'='):
-        i = g.skip_ws(s,i+1)
-        val = s[i:]
-           
-    # New in 4.4: Allow comments after the shortcut.
-    # Comments must be preceded by whitespace.
-    comment = ''
-    if val:
-        i = val.find('#')
-        if i &gt; 0 and val[i-1] in (' ','\t'):
-            # comment = val[i:].strip()
-            val = val[:i].strip()
-
-    # g.trace(pane,name,val,s)
-    return name,g.bunch(pane=pane,val=val)</t>
-<t tx="ekr.20041120113848">def doShortcut(self,p,kind,name,val):
-    
-    # Note:  kind,name,val are as returned from self.parseHeadline(p.headString())
-
-    self.set(p,kind,name,val)
-    self.setShortcut(name,val)</t>
+    c = self
+    if c.mFileName:
+        return g.os_path_abspath(c.mFileName).lower()
+    else:
+        return 0</t>
 <t tx="ekr.20041211042119"></t>
-<t tx="ekr.20041217135735.2">def setColorFromConfig (self):
+<t tx="ekr.20050102094729">def callTagHandler (bunch,tag,keywords):
     
-    c = self.c
-    
-    bg = c.config.getColor("log_pane_background_color") or 'white'
-    
-    try:
-        self.logCtrl.configure(bg=bg)
-    except:
-        g.es("exception setting log pane background color")
-        g.es_exception()</t>
-<t tx="ekr.20041222043017">def restoreAllState (self,d):
-    
-    '''Restore the log from a dict created by saveAllState.'''
-    
-    logCtrl = self.logCtrl
+    handler = bunch.fn ; moduleName = bunch.moduleName
 
-    # Restore the text.
-    text = d.get('text')
-    logCtrl.insert('end',text)
+    # Make sure the new commander exists.
+    if tag == 'idle':
+        for key in ('c','new_c'):
+            c = keywords.get(key)
+            if c:
+                # Make sure c exists and has a frame.
+                if not c.exists or not hasattr(c,'frame'):
+                    print 'skipping tag: c does not exists or does not have a frame.'
+                    return None
 
-    # Restore all colors.
-    colors = d.get('colors')
-    for color in colors.keys():
-        if color not in self.colorTags:
-            self.colorTags.append(color)
-            logCtrl.tag_config(color,foreground=color)
-        items = list(colors.get(color))
-        while items:
-            start,stop = items[0],items[1]
-            items = items[2:]
-            logCtrl.tag_add(color,start,stop)</t>
-<t tx="ekr.20041222043017.1">def saveAllState (self):
-    
-    '''Return a dict containing all data needed to recreate the log in another widget.'''
-    
-    logCtrl = self.logCtrl ; colors = {}
+    # Calls to registerHandler from inside the handler belong to moduleName.
+    global loadingModuleNameStack
+    loadingModuleNameStack.append(moduleName)
+    result = handler(tag,keywords)
+    loadingModuleNameStack.pop()
+    return result</t>
+<t tx="ekr.20050104123726.1">@ Here is the Python 2.4 documentation for rename (same as Python 2.3)
 
-    # Save the text
-    text = logCtrl.get('1.0','end')
+Rename the file or directory src to dst.  If dst is a directory, OSError will be raised.
 
-    # Save color tags.
-    tag_names = logCtrl.tag_names()
-    for tag in tag_names:
-        if tag in self.colorTags:
-            colors[tag] = logCtrl.tag_ranges(tag)
-            
-    d = {'text':text,'colors': colors}
-    # g.trace('\n',g.dictToString(d))
-    return d</t>
-<t tx="ekr.20041227071423">def setShortcut (self,name,bunch):
-    
-    c = self.c
-    
-    # None is a valid value for val.
-    key = c.frame.menu.canonicalizeMenuName(name)
-    rawKey = key.replace('&amp;','')
-    self.set(c,rawKey,"shortcut",bunch)
-    
-    # g.trace(bunch.pane,rawKey,bunch.val)</t>
-<t tx="ekr.20050120083053">@ New in 4.3. The proper way to change focus is to call c.frame.xWantsFocus.
+On Unix, if dst exists and is a file, it will be removed silently if the user
+has permission. The operation may fail on some Unix flavors if src and dst are
+on different filesystems. If successful, the renaming will be an atomic
+operation (this is a POSIX requirement).
 
-Important: This code never calls select, so there can be no race condition here
-that alters text improperly.</t>
-<t tx="ekr.20050120092028">def bodyWantsFocus(self):
-    w = self.body and self.body.bodyCtrl
-    self.set_focus(w)
+On Windows, if dst already exists, OSError will be raised even if it is a file;
+there may be no way to implement an atomic rename when dst names an existing
+file.</t>
+<t tx="ekr.20050107085710.1">def test_g_utils_rename():
+
+    __pychecker__ = '--no-reimport'
+
+    import os
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
         
-def headlineWantsFocus(self,p):
-    w = p and p.edit_widget()
-    self.set_focus(w)
+    assert not exists(path)
+    assert not g.utils_remove(path,verbose=False)
     
-def logWantsFocus(self):
-    w = self.log and self.log.logCtrl
-    self.set_focus(w)
-
-def minibufferWantsFocus(self):
-    # Important! We must preserve body selection!
-    if 1:
-        self.bodyWantsFocus()
-    else:
-        w = self.c.miniBufferWidget
-        self.set_focus(w)
-
-def treeWantsFocus(self):
-    w = self.tree and self.tree.canvas
-    self.set_focus(w)
+    f = file(path,'w')
+    f.write('test')
+    f.close()
     
-def widgetWantsFocus(self,w):
-    self.set_focus(w)
-</t>
-<t tx="ekr.20050120092028.1"># New in Leo 4.4a3: nothing happens at idle time.
-
-def set_focus(self,w):
-    
-    '''Set the focus to the widget specified in the xWantsFocus methods.'''
-
-    c = self.c
-
-    if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
-        name = w and hasattr(w,'_name') and w._name or '&lt;no name&gt;'
-        g.trace(name,g.callers(7)) 
-
-    if w:
-        self.wantedWidget = w
-        g.app.gui.set_focus(c,w)</t>
-<t tx="ekr.20050208133438">def forceLogUpdate (self,s):
-
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        try:
-            print s, # Don't add a newline.
-        except UnicodeError:
-            # g.app may not be inited during scripts!
-            print g.toEncodedString(s,'utf-8')
-    else:
-        self.logCtrl.update_idletasks()</t>
+    assert exists(path)
+    assert g.utils_remove(path,verbose=True)
+    assert not exists(path)</t>
 <t tx="ekr.20050210082320">def widget_wants_focus(self,c,widget):
 
     """Indicate that a widget want to get focus."""
@@ -4545,15 +3989,112 @@ def set_focus(self,w):
     c and c.frame.widgetWantsFocus(widget)
         
 widgetWantsFocus = widget_wants_focus</t>
-<t tx="ekr.20050211100535">def test_g_getScript_strips_crlf():
-
-    script = g.getScript(c,p) # This will get the text of this node.
-    assert script.find('\r\n') == -1, repr(script)</t>
 <t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
 c:\prog\leoCVS\leo\config\leoSettings.leo</t>
+<t tx="ekr.20050501111900">@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3125092
+By: thyrsus
+
+About a month ago, I posted a screed on how @thin was inadequate to address
+my needs; that what I needed to collaborate on via version control was exactly
+the essence of Leo's value: the multiple expressions of structure, which by
+their nature must exist outside of @thin.  I said I was going to live the pain
+to discover a modus vivendi.
+
+Having done that, let me now say:
+
+AAAAAAAAAAAAGGGGGGGGHHHHHHHHHH!
+
+But the exercise has led me to a vision, which I will implement to the extent
+my nonexistent spare time and paltry programming talents permit.
+
+The essence of the pain is "conflicts", which become more  certain to occur
+as the leo file encompases ever more related files.  As I work on a change to
+the Linux configuration, my colleague works on a change to the Solaris configuration,
+and one of us checks in our version of the leo file documenting the site
+configuration first, and the other cannot check in his version of that file.
+The conflict must be resolved by the human.  Using the "diff" tool on the .leo
+XML is not an answer (though thank Heaven and Ed for gnxs).  The resolution
+needs two levels of support: outline and node.
+
+With the .leo file declared binary, in the event of a conflict CVS leaves you
+with the most recent CVS version and your rejected version, and you're responsible
+for performing a reconciliation and then resubmitting that.  Leo will recognize
+the problem, and present both versions of the project, side by side, splitting
+the outline pane.  The parallel trees will scroll/expand/contract in unison.
+Outline branches present in CVS and not yours will display as blank space in
+your version; nodes present in your version and not CVS will display as blank
+space in the CVS version. The CVS version will be read only, your version editable.
+The same node with differences in its text or in its children will be highlighted.
+You will be able to drag nodes from the CVS version into your version. If the
+text of a selected node has conflicts, the text area will split in two, showing
+the CVS version and your version, with differences highlighted, both sides of
+the pane scrolling in unison, the CVS side read-only, and you can copy from
+that side to your side.  I intend to take as many ideas as I can from tkdiff
+(http://sourceforge.net/projects/tkdiff/ - see also
+http://freshmeat.net/screenshots/10602/ ).  (I have begun translating tkdiff
+from from tcl to python - nearly 9000 lines and I'm still learning both languages,
+so draw your own timeline.)  You edit your nodes, you edit your tree, you hit
+the "reconcile" button, and your reconciliation of the conflict goes into CVS.
+If, meanwhile, another one of your over-achieving colleages has again updated
+CVS, the process repeats with the most current CVS version.  Or you can hit
+the "abandon" button to give up on your changes.
+
+As the Hebrews say at Passover: "Next year in Jerusalem."</t>
+<t tx="ekr.20050506084734"># This is at.write specialized for scripting.
+
+def writeFromString(self,root,s,forcePythonSentinels=True):
+    
+    """Write a 4.x derived file from a string.
+    
+    This is used by the scripting logic."""
+    
+    at = self ; c = at.c
+    c.endEditing(restoreFocus=True) # Capture the current headline, but don't change the focus!
+
+    at.initWriteIvars(root,"&lt;string-file&gt;",
+        nosentinels=False,thinFile=False,scriptWrite=True,toString=True,
+        forcePythonSentinels=forcePythonSentinels)
+
+    try:
+        at.openFileForWriting(root,at.targetFileName,toString=True)
+        # Simulate writing the entire file so error recovery works.
+        at.writeOpenFile(root,nosentinels=False,toString=True,fromString=s)
+        at.closeWriteFile()
+        # Major bug: failure to clear this wipes out headlines!
+        # Minor bug: sometimes this causes slight problems...
+        if root: root.v.t.tnodeList = [] 
+    except:
+        at.exception("exception preprocessing script")
+
+    return at.stringOutput</t>
 <t tx="ekr.20050512031131"></t>
+<t tx="ekr.20050618045715">def PropagateButton4(e):
+    canvas.event_generate("&lt;Button-4&gt;")
+    return "break"
+
+def PropagateButton5(e):
+    canvas.event_generate("&lt;Button-5&gt;")
+    return "break"
+
+def PropagateMouseWheel(e):
+    canvas.event_generate("&lt;MouseWheel&gt;")
+    return "break"
+
+if self.useBindtags:
+    instance_tag = t.bindtags()[0]
+    t.bind_class(instance_tag, "&lt;Button-4&gt;", PropagateButton4)
+    t.bind_class(instance_tag, "&lt;Button-5&gt;", PropagateButton5)
+    t.bind_class(instance_tag, "&lt;MouseWheel&gt;",PropagateMouseWheel)
+else:
+    # UNTESTED CASE!!!
+    t.bind("&lt;Button-4&gt;", PropagateButton4)
+    t.bind("&lt;Button-5&gt;", PropagateButton5)
+    t.bind("&lt;MouseWheel&gt;", PropagateMouseWheel)
+
+</t>
 <t tx="ekr.20050707085637">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3237845
 By: eichin
@@ -4695,126 +4236,7 @@ Two (recently written) functions in leoGlobals.py support conversions from Pytho
 - g.convertRowColToPythonIndex does the reverse.
 
 Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by g.convertPythonIndexToRowCol is zero based, so the code that actually creates Tkinter indices from row/col must add 1 to the row.  Similar remarks apply when going in the reverse direction.</t>
-<t tx="ekr.20050831131028"></t>
-<t tx="ekr.20050831131452">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3280949
-By: billp9619
-
-&gt;&gt;Making Leo a friendly part of the opml world has the potential to be very
-important to Leo. &lt;&lt;
-
-This is probably point 5. and covers the implementation of opml features as
-exposed in Leo.
-
-Because Leo is highly scripted there may be many requests... currently out on
-the OPML list... that are solveable....such as how to see their outlines as
-HTML without passing thru the OPML web server /host. BTW...all this new opml
-stuff is only a week or two in production. The first message on
-http://groups.yahoo.com/group/opml-newbies/
-is July 25.
-
-&gt;&gt; The question of whether to duplicate body text in &lt;outline&gt; elements
-is minor&lt;&lt;
-
-Good. 
-
-Really, the opml tools are pretty much raw text/xml  and I was thinking the
-default fallback is ... all clone text is "duplicate". If you want clones then
-you will take care to only edit them in Leo. But if opml users all know and
-use clones routinely in other editors,  then this is good news for opml
-as technology.
-
-&gt;&gt;more complicated than it needs to be&lt;&lt;
-
-Well, both Leo and opml have only a few elements and each primarilly uses one
-which recusively nests to make up the outline portion. I suppose body nodes
-could be included more directly in headlines ... allowing un-numbered headlines
-basically, ... but I am not sure that the current way is inferior
-or complicated.
-
- A simpler (forgiving?) format might make it easier to create with external
-apps and encourage transforming other xml to Leo via XSLT. It would have to
-just "work".
-
-(One thing about Leo's bias towards elements to contain markup, versus attributes,
-is that ...you can cheat a little on escaping &amp;quot; in vh or t nodes ?...which
-makes code blocks smaller in the Leo xml.)
-
-Your list above is pretty much how I see it as well.
-
-regards,
-
-bill p
-
-</t>
-<t tx="ekr.20050831131452.1">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3282460
-By: billp9619
-
-Looking at some discussion of outline formats there was a remark that because
-opml places all text in attributes it is limited in not being able to contan
-other elements. On xml-dev I also saw some advice about opml followed by the
-comment that it is not a good format.
-
-opml is crippled in this regard but  Leo only restricts itself as a choice in
-order to  discern leo xml from content.(out of necessity we know).
-
-Of course with xml you can mix vocabularies based on the use of namespaces.
-By becoming namespace aware Leo could be adapted for non-escaped markup. The
-purpose then is xml parsing of leo as a standard container of other xml. I do
-not believe this is unthinkable  for some future capabilities... especially
-if such nodes would contain exclusively xml from another namespace.
-
-Just interesting that leo's format is more versatile than opml, 
-but, ...by choice for its own purposes, ...
- is in this part "backward" compatible with opml. :)  
-
-regards,
-
-bill p
-</t>
-<t tx="ekr.20050912063133"></t>
-<t tx="ekr.20050912065811"></t>
-<t tx="ekr.20050915062404">@nocolor
-
-Hi,
-
-I am the author of Leo http://webpages.charter.net/edreamleo/front.html an outline editor supporting clones http://webpages.charter.net/edreamleo/intro.html#clones-views.
-
-I am interested in having Leo be able to read and write opml files.  My understanding is that applications are free to use attributes of &lt;outline&gt; elements as they please, but I am wondering whether there are guidelines or existing conventions for representing clones.  Have any namespaces been defined for that purpose?
-
-Thanks.
-
-Edward
-</t>
 <t tx="ekr.20050916180203"></t>
-<t tx="ekr.20050920084036.43">def renameBuffer (self,event):
-    
-    self.k.setLabelBlue('Rename buffer from: ')
-    self.getBufferName(self.renameBufferFinisher1)
-    
-def renameBufferFinisher1 (self,name):
-    
-    self.fromName = name
-    self.k.setLabelBlue('Rename buffer from: %s to: ' % (name))
-    self.getBufferName(self.renameBufferFinisher2)
-    
-def renameBufferFinisher2 (self,name):
-    
-    c = self.c ; p = self.findBuffer(self.fromName)
-    if p:
-        c.frame.tree.editLabel(p)
-        w = p.edit_widget()
-        if w:
-            w.delete("1.0","end")
-            w.insert("1.0",name)
-            c.endEditing()
-            ### c.frame.tree.onHeadChanged(p,'rename-buffer %s' % p.headString())</t>
-<t tx="ekr.20050920084036.53">class editCommandsClass (baseEditCommandsClass):
-    
-    '''Contains editing commands with little or no state.'''
-
-    @others</t>
 <t tx="ekr.20050920084036.54">def __init__ (self,c):
 
     baseEditCommandsClass.__init__(self,c) # init the base class.
@@ -4825,6 +4247,9 @@ def renameBufferFinisher2 (self,name):
     self.extendMode = False # True: all cursor move commands extend the selection.
     self.fillPrefix = '' # For fill prefix functions.
     self.fillColumn = 70 # For line centering.
+    self.moveSpotNode = None # A tnode.
+    self.moveSpot = None # For retaining preferred column when moving up or down.
+    self.moveCol = None # For retaining preferred column when moving up or down.
     self.store ={'rlist':[], 'stext':''} # For dynamic expansion.
     self.swapSpots = []
     self._useRegex = False # For replace-string and replace-regex
@@ -4910,7 +4335,9 @@ def renameBufferFinisher2 (self,name):
         'replace-string':                       self.replaceString,
         'reverse-region':                       self.reverseRegion,
         'scroll-down':                          self.scrollDown,
+        'scroll-down-extend-selection':         self.scrollDownExtendSelection,
         'scroll-up':                            self.scrollUp,
+        'scroll-up-extend-selection':           self.scrollUpExtendSelection,
         'select-paragraph':                     self.selectParagraph,
         # Exists, but can not be executed via the minibuffer.
         # 'self-insert-command':                self.selfInsertCommand,
@@ -4938,485 +4365,30 @@ def renameBufferFinisher2 (self,name):
         'what-line':                            self.whatLine,
     }
 </t>
-<t tx="ekr.20050920084036.57"></t>
-<t tx="ekr.20050920084036.58"></t>
-<t tx="ekr.20050920084036.59">def dynamicExpansion (self,event): #, store = {'rlist': [], 'stext': ''} ):
-
-    k = self.k ; w = event.widget
-    rlist = self.store ['rlist']
-    stext = self.store ['stext']
-    i = w.index('insert -1c wordstart')
-    i2 = w.index('insert -1c wordend')
-    txt = w.get(i,i2)
-    dA = w.tag_ranges('dA')
-    w.tag_delete('dA')
-    def doDa (txt,from_='insert -1c wordstart',to_='insert -1c wordend'):
-        w.delete(from_,to_)
-        w.insert('insert',txt,'dA')
-
-    if dA:
-        dA1, dA2 = dA
-        dtext = w.get(dA1,dA2)
-        if dtext.startswith(stext) and i2 == dA2:
-            #This seems reasonable, since we cant get a whole word that has the '-' char in it, we do a good guess
-            if rlist:
-                txt = rlist.pop()
-            else:
-                txt = stext
-                w.delete(dA1,dA2)
-                dA2 = dA1 # since the text is going to be reread, we dont want to include the last dynamic abbreviation
-                self.getDynamicList(w,txt,rlist)
-            doDa(txt,dA1,dA2) ; return
-        else: dA = None
-
-    if not dA:
-        self.store ['stext'] = txt
-        self.store ['rlist'] = rlist = []
-        self.getDynamicList(w,txt,rlist)
-        if not rlist: return
-        txt = rlist.pop()
-        doDa(txt)
-</t>
-<t tx="ekr.20050920084036.60">def dynamicExpansion2 (self,event):
-
-    k = self.k ; w = event.widget
-    i = w.index('insert -1c wordstart')
-    i2 = w.index('insert -1c wordend')
-    txt = w.get(i,i2)
-    rlist = []
-    self.getDynamicList(w,txt,rlist)
-    dEstring = reduce(g.longestCommonPrefix,rlist)
-    if dEstring:
-        w.delete(i,i2)
-        w.insert(i,dEstring)</t>
-<t tx="ekr.20050920084036.61">def getDynamicList (self,w,txt,rlist):
-
-     ttext = w.get('1.0','end')
-     items = self.dynaregex.findall(ttext) #make a big list of what we are considering a 'word'
-     if items:
-         for word in items:
-             if not word.startswith(txt) or word == txt: continue #dont need words that dont match or == the pattern
-             if word not in rlist:
-                 rlist.append(word)
-             else:
-                 rlist.remove(word)
-                 rlist.append(word)</t>
-<t tx="ekr.20050920084036.62"></t>
-<t tx="ekr.20050920084036.63">def watchEscape (self,event):
-
-    k = self.k
-
-    if not k.inState():
-        k.setState('escape','start',handler=self.watchEscape)
-        k.setLabelBlue('Esc ')
-    elif k.getStateKind() == 'escape':
-        state = k.getState('escape')
-        hi1 = k.keysymHistory [0]
-        hi2 = k.keysymHistory [1]
-        if state == 'esc esc' and event.keysym == 'colon':
-            self.evalExpression(event)
-        elif state == 'evaluate':
-            self.escEvaluate(event)
-        elif hi1 == hi2 == 'Escape':
-            k.setState('escape','esc esc')
-            k.setLabel('Esc Esc -')
-        elif event.keysym not in ('Shift_L','Shift_R'):
-            k.keyboardQuit(event)</t>
-<t tx="ekr.20050920084036.64">def escEvaluate (self,event):
-
-    k = self.k ; w = event.widget
-
-    if k.getLabel() == 'Eval:':
-        k.setLabel('')
-
-    if event.keysym == 'Return':
-        expression = k.getLabel()
-        try:
-            ok = False
-            result = eval(expression,{},{})
-            result = str(result)
-            w.insert('insert',result)
-            ok = True
-        finally:
-            k.keyboardQuit(event)
-            if not ok:
-                k.setLabel('Error: Invalid Expression')
-    else:
-        k.updateLabel(event)</t>
-<t tx="ekr.20050920084036.65">def evalExpression (self,event):
-
-    k = self.k ; state = k.getState('eval-expression')
-    
-    if state == 0:
-        k.setLabelBlue('Eval: ',protect=True)
-        k.getArg(event,'eval-expression',1,self.evalExpression)
-    else:
-        k.clearState()
-        try:
-            e = k.arg
-            result = str(eval(e,{},{}))
-            k.setLabelGrey('Eval: %s -&gt; %s' % (e,result))
-        except Exception:
-            k.setLabelGrey('Invalid Expression: %s' % e)</t>
-<t tx="ekr.20050920084036.66">@
-These methods are currently just used in tandem to center the line or region within the fill column.
-for example, dependent upon the fill column, this text:
-
-cats
-raaaaaaaaaaaats
-mats
-zaaaaaaaaap
-
-may look like
-
-                                 cats
-                           raaaaaaaaaaaats
-                                 mats
-                             zaaaaaaaaap
-after an center-region command via Alt-x.
-
-
-@c
-
-
-@others</t>
-<t tx="ekr.20050920084036.67">def centerLine (self,event):
-
-    '''Centers line within current fillColumn'''
-
-    k = self.k ; w = event.widget
-
-    ind = w.index('insert linestart')
-    txt = w.get('insert linestart','insert lineend')
-    txt = txt.strip()
-    if len(txt) &gt;= self.fillColumn: return
-
-    amount = (self.fillColumn-len(txt)) / 2
-    ws = ' ' * amount
-    col, nind = ind.split('.')
-    ind = w.search('\w','insert linestart',regexp=True,stopindex='insert lineend')
-    if ind:
-        w.delete('insert linestart','%s' % ind)
-        w.insert('insert linestart',ws)</t>
-<t tx="ekr.20050920084036.68">def setFillColumn (self,event):
-
-    k = self.k ; state = k.getState('set-fill-column')
-    
-    if state == 0:
-        k.setLabelBlue('Set Fill Column: ')
-        k.getArg(event,'set-fill-column',1,self.setFillColumn)
-    else:
-        k.clearState()
-        try:
-            n = int(k.arg)
-            k.setLabelGrey('fill column is: %d' % n)
-            k.commandName = 'set-fill-column %d' % n
-        except ValueError:
-            k.resetLabel()</t>
-<t tx="ekr.20050920084036.69">def centerRegion( self, event ):
-
-    '''This method centers the current region within the fill column'''
-
-    k = self.k ; w = event.widget
-    start = w.index( 'sel.first linestart' )
-    sindex , x = start.split( '.' )
-    sindex = int( sindex )
-    end = w.index( 'sel.last linestart' )
-    eindex , x = end.split( '.' )
-    eindex = int( eindex )
-    while sindex &lt;= eindex:
-        txt = w.get( '%s.0 linestart' % sindex , '%s.0 lineend' % sindex )
-        txt = txt.strip()
-        if len( txt ) &gt;= self.fillColumn:
-            sindex = sindex + 1
-            continue
-        amount = ( self.fillColumn - len( txt ) ) / 2
-        ws = ' ' * amount
-        ind = w.search( '\w', '%s.0' % sindex, regexp = True, stopindex = '%s.0 lineend' % sindex )
-        if not ind: 
-            sindex = sindex + 1
-            continue
-        w.delete( '%s.0' % sindex , '%s' % ind )
-        w.insert( '%s.0' % sindex , ws )
-        sindex = sindex + 1</t>
-<t tx="ekr.20050920084036.70">def setFillPrefix( self, event ):
-
-    w = event.widget
-    txt = w.get( 'insert linestart', 'insert' )
-    self.fillPrefix = txt</t>
-<t tx="ekr.20050920084036.71">def _addPrefix (self,ntxt):
-
-    ntxt = ntxt.split('.')
-    ntxt = map(lambda a: self.fillPrefix+a,ntxt)
-    ntxt = '.'.join(ntxt)
-    return ntxt</t>
-<t tx="ekr.20050920084036.72"></t>
-<t tx="ekr.20050920084036.74"></t>
-<t tx="ekr.20050920084036.75">def backToIndentation (self,event):
-    
-    '''The back-to-indentation command, given anywhere on a line,
-    positions the point at the first non-blank character on the line.'''
-
-    w = event.widget
-    i = w.index('insert linestart')
-    i2 = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-    w.mark_set('insert',i2)</t>
-<t tx="ekr.20050920084036.76">def deleteIndentation (self,event):
-
-    k = self.k ; w = event.widget
-
-    txt = w.get('insert linestart','insert lineend')
-    txt = ' %s' % txt.lstrip()
-    w.delete('insert linestart','insert lineend +1c')
-    i = w.index('insert - 1c')
-    w.insert('insert -1c',txt)
-    w.mark_set('insert',i)</t>
-<t tx="ekr.20050920084036.77">def insertNewLineIndent (self,event):
-
-    w = event.widget
-    txt = w.get('insert linestart','insert lineend')
-    txt = self.getWSString(txt)
-    i = w.index('insert')
-    w.insert(i,txt)
-    w.mark_set('insert',i)
-    self.insertNewLine(event)
-</t>
-<t tx="ekr.20050920084036.78">def indentRelative (self,event):
-    
-    '''The indent-relative command indents at the point based on the previous
-    line (actually, the last non-empty line.) It inserts whitespace at the
-    point, moving point, until it is underneath an indentation point in the
-    previous line.
-    
-    An indentation point is the end of a sequence of whitespace or the end of
-    the line. If the point is farther right than any indentation point in the
-    previous line, the whitespace before point is deleted and the first
-    indentation point then applicable is used. If no indentation point is
-    applicable even then whitespace equivalent to a single tab is inserted.'''
-    
-    c = self.c ; undoType = 'Indent Relative'
-    
-    k = self.k ; w = event.widget
-    i = w.index('insert')
-    oldSel = (i,i)
-    line, col = i.split('.')
-    c2 = int(col)
-    l2 = int(line) -1
-    if l2 &lt; 1: return
-    txt = w.get('%s.%s' % (l2,c2),'%s.0 lineend' % l2)
-    if len(txt) &lt;= len(w.get('insert','insert lineend')):
-        w.insert('insert','\t')
-    else:
-        reg = re.compile('(\s+)')
-        ntxt = reg.split(txt)
-        replace_word = re.compile('\w')
-        for z in ntxt:
-            if z.isspace():
-                w.insert('insert',z)
-                break
-            else:
-                z = replace_word.subn(' ',z)
-                w.insert('insert',z[0])
-                
-    i = w.index('insert')
-    result = w.get('1.0','end')
-    head = tail = oldYview = None
-    c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)
-    w.mark_set('insert',i)</t>
-<t tx="ekr.20050920084036.79"></t>
-<t tx="ekr.20050920084036.80">def howMany (self,event):
-    
-    k = self.k ; w = event.widget ; state = k.getState('how-many')
-    
-    if state == 0:
-        k.setLabelBlue('How many: ',protect = True)
-        k.getArg(event,'how-many',1,self.howMany)
-    else:
-        k.clearState()
-        s = w.get('1.0','end')
-        reg = re.compile(k.arg)
-        i = reg.findall(s)
-        k.setLabelGrey('%s occurances of %s' % (len(i),k.arg))</t>
-<t tx="ekr.20050920084036.81">def lineNumber (self,event):
-
-    k = self.k ; w = event.widget
-
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    c = w.get('insert','insert + 1c')
-    txt = w.get('1.0','end')
-    txt2 = w.get('1.0','insert')
-    perc = len(txt) * .01
-    perc = int(len(txt2)/perc)
-    k.setLabelGrey('Char: %s point %s of %s(%s%s)  Column %s' % (c,len(txt2),len(txt),perc,'%',i1))</t>
-<t tx="ekr.20050920084036.83">def viewLossage (self,event):
-
-    k = self.k
-    loss = ''.join(leoKeys.keyHandlerClass.lossage)
-    k.setLabel(loss)</t>
-<t tx="ekr.20050920084036.84">def whatLine (self,event):
-
-    k = self.k ; w = event.widget
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    k.keyboardQuit(event)
-    k.setLabel("Line %s" % i1)</t>
-<t tx="ekr.20050920084036.85"></t>
-<t tx="ekr.20050920084036.86">def insertNewLineAndTab (self,event):
-
-    '''Insert a newline and tab'''
-
-    k = self.k ; w = event.widget
-    self.insertNewLine(event)
-    i = w.index('insert +1c')
-    w.insert(i,'\t')
-    w.mark_set('insert','%s lineend' % i)</t>
 <t tx="ekr.20050920084036.87">def deleteNextChar (self,event):
 
-    c = self.c ; w = event.widget
+    c = self.c
+    w = event and event.widget or g.app.gui.get_focus(c.frame)
+    if not g.app.gui.isTextWidget(w): return
 
-    g.trace(g.app.gui.widget_name(w))
-    
-    self.beginCommand('delete-char')
-    
+    name = g.app.gui.widget_name(w)
     i,j = g.app.gui.getTextSelection(w)
+    end = w.index('end-1c')
+    # g.trace(i,j,'end',w.index('end-1c'))
+    
+    if name.startswith('body'):
+        self.beginCommand()
 
+    changed = True
     if i != j:
         w.delete(i,j)
-    else:
+    elif j != end:
         w.delete(i)
+    else:
+        changed = False
         
-    self.endCommand()</t>
-<t tx="ekr.20050920084036.88"></t>
-<t tx="ekr.20050920084036.90">def flushLines (self,event):
-
-    '''Delete each line that contains a match for regexp, operating on the text after point.
-
-    In Transient Mark mode, if the region is active, the command operates on the region instead.'''
-
-    k = self.k ; state = k.getState('flush-lines')
-    
-    if state == 0:
-        k.setLabelBlue('Flush lines regexp: ',protect=True)
-        k.getArg(event,'flush-lines',1,self.flushLines)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.linesHelper(event,k.arg,'flush')
-        k.commandName = 'flush-lines %s' % k.arg</t>
-<t tx="ekr.20050920084036.92">def linesHelper (self,event,pattern,which):
-
-    k = self.k ; w = event.widget
-   
-    if w.tag_ranges('sel'):
-        i = w.index('sel.first') ; end = w.index('sel.last')
-    else:
-         i = w.index('insert') ; end = 'end'
-    txt = w.get(i,end)
-    tlines = txt.splitlines(True)
-    if which == 'flush':    keeplines = list(tlines)
-    else:                   keeplines = []
-
-    try:
-        regex = re.compile(pattern)
-        for n, z in enumerate(tlines):
-            f = regex.findall(z)
-            if which == 'flush' and f:
-                keeplines [n] = None
-            elif f:
-                keeplines.append(z)
-    except Exception, x:
-        return
-    if which == 'flush':
-        keeplines = [x for x in keeplines if x != None]
-    w.delete(i,end)
-    w.insert(i,''.join(keeplines))
-    w.mark_set('insert',i)</t>
-<t tx="ekr.20050920084036.95">@others</t>
-<t tx="ekr.20050920084036.96">def selectParagraph (self,event):
-
-    k = self.k ; w = event.widget
-    txt = w.get('insert linestart','insert lineend')
-    txt = txt.lstrip().rstrip()
-    i = w.index('insert')
-
-    if not txt:
-        while 1:
-            i = w.index('%s + 1 lines' % i)
-            txt = w.get('%s linestart' % i,'%s lineend' % i)
-            txt = txt.lstrip().rstrip()
-            if txt:
-                self.selectParagraphHelper(w,i) ; break
-            if w.index('%s lineend' % i) == w.index('end'):
-                return
-
-    if txt:
-        while 1:
-            i = w.index('%s - 1 lines' % i)
-            txt = w.get('%s linestart' % i,'%s lineend' % i)
-            txt = txt.lstrip().rstrip()
-            if not txt or w.index('%s linestart' % i) == w.index('1.0'):
-                if not txt: i = w.index('%s + 1 lines' % i)
-                self.selectParagraphHelper(w,i)
-                break</t>
-<t tx="ekr.20050920084036.97">def selectParagraphHelper (self,w,start):
-
-    i2 = start
-    while 1:
-        txt = w.get('%s linestart' % i2,'%s lineend' % i2)
-        if w.index('%s lineend' % i2) == w.index('end'):
-            break
-        txt = txt.lstrip().rstrip()
-        if not txt: break
-        else:
-            i2 = w.index('%s + 1 lines' % i2)
-
-    w.tag_add('sel','%s linestart' % start,'%s lineend' % i2)
-    w.mark_set('insert','%s lineend' % i2)</t>
-<t tx="ekr.20050920084036.98">def killParagraph (self,event):
-
-    k = self.k ; c = k.c ; w = event.widget
-    i = w.index('insert')
-    txt = w.get('insert linestart','insert lineend')
-
-    if not txt.rstrip().lstrip():
-        i = w.search(r'\w',i,regexp=True,stopindex='end')
-
-    self.selectParagraphHelper(w,i)
-    i2 = w.index('insert')
-    c.killBufferCommands.kill(event,i,i2)
-    w.mark_set('insert',i)
-    w.selection_clear()</t>
-<t tx="ekr.20050920084036.99">def backwardKillParagraph (self,event):
-
-    k = self.k ; c = k.c ; w = event.widget
-    i = w.index('insert')
-    i2 = i
-    txt = w.get('insert linestart','insert lineend')
-    if not txt.rstrip().lstrip():
-        self.backwardParagraph(event)
-        i2 = w.index('insert')
-    self.selectParagraph(event)
-    i3 = w.index('sel.first')
-    c.killBufferCommands.kill(event,i3,i2)
-    w.mark_set('insert',i)
-    w.selection_clear()</t>
-<t tx="ekr.20050920084036.100">def fillRegion (self,event):
-
-    k = self.k ; w = event.widget
-    if not self._chckSel(event): return
-
-    s1 = w.index('sel.first')
-    s2 = w.index('sel.last')
-    w.mark_set('insert',s1)
-    self.backwardParagraph(event)
-    if w.index('insert linestart') == '1.0':
-        self.fillParagraph(event)
-    while 1:
-        self.forwardParagraph(event)
-        if w.compare('insert','&gt;',s2):
-            break
-        self.fillParagraph(event)</t>
+    if name.startswith('body'):
+        self.endCommand(changed=changed)</t>
 <t tx="ekr.20050920084036.102">def backwardParagraph (self,event):
     
     self.backwardParagraphHelper (event,extend=False)
@@ -5432,490 +4404,17 @@ def forwardParagraph (self,event):
 def forwardParagraphExtendSelection (self,event):
     
     self.forwardParagraphHelper(event,extend=True)</t>
-<t tx="ekr.20050920084036.103">def fillParagraph( self, event ):
-    k = self.k ; w = event.widget
-    txt = w.get( 'insert linestart', 'insert lineend' )
-    txt = txt.lstrip().rstrip()
-    if txt:
-        i = w.index( 'insert' )
-        i2 = i
-        txt2 = txt
-        while txt2:
-            pi2 = w.index( '%s - 1 lines' % i2)
-            txt2 = w.get( '%s linestart' % pi2, '%s lineend' % pi2 )
-            if w.index( '%s linestart' % pi2 ) == '1.0':
-                i2 = w.search( '\w', '1.0', regexp = True, stopindex = 'end' )
-                break
-            if txt2.lstrip().rstrip() == '': break
-            i2 = pi2
-        i3 = i
-        txt3 = txt
-        while txt3:
-            pi3 = w.index( '%s + 1 lines' %i3 )
-            txt3 = w.get( '%s linestart' % pi3, '%s lineend' % pi3 )
-            if w.index( '%s lineend' % pi3 ) == w.index( 'end' ):
-                i3 = w.search( '\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
-                break
-            if txt3.lstrip().rstrip() == '': break
-            i3 = pi3
-        ntxt = w.get( '%s linestart' %i2, '%s lineend' %i3 )
-        ntxt = self._addPrefix( ntxt )
-        w.delete( '%s linestart' %i2, '%s lineend' % i3 )
-        w.insert( i2, ntxt )
-        w.mark_set( 'insert', i )</t>
-<t tx="ekr.20050920084036.104">def fillRegionAsParagraph (self,event):
-
-    k = self.k ; w = event.widget
-    if not self._chckSel(event): return
-
-    i1 = w.index('sel.first linestart')
-    i2 = w.index('sel.last lineend')
-    txt = w.get(i1,i2)
-    txt = self._addPrefix(txt)
-    w.delete(i1,i2)
-    w.insert(i1,txt)</t>
-<t tx="ekr.20050920084036.105">@others</t>
-<t tx="ekr.20050920084036.106">def setRegion (self,event):
-
-    mrk = 'sel'
-    w = event.widget
-
-    @others
-
-    extend(event)
-    w.bind('&lt;Right&gt;',extend,'+')
-    w.bind('&lt;Left&gt;',truncate,'+')
-    w.bind('&lt;Up&gt;',up,'+')
-    w.bind('&lt;Down&gt;',down,'+')
-
-    return 'break'</t>
-<t tx="ekr.20050920084036.107">def indentRegion (self,event):
-    w = event.widget
-    mrk = 'sel'
-    trange = w.tag_ranges(mrk)
-    if len(trange) != 0:
-        ind = w.search('\w','%s linestart' % trange[0],stopindex='end',regexp=True)
-        if not ind: return
-        text = w.get('%s linestart' % ind,'%s lineend' % ind)
-        sstring = text.lstrip()
-        sstring = sstring [0]
-        ws = text.split(sstring)
-        if len(ws) &gt; 1:
-            ws = ws [0]
-        else:
-            ws = ''
-        s, s1 = trange [0].split('.')
-        e, e1 = trange [ -1].split('.')
-        s = int(s)
-        s = s + 1
-        e = int(e) + 1
-        for z in xrange(s,e):
-            t2 = w.get('%s.0' % z,'%s.0 lineend' % z)
-            t2 = t2.lstrip()
-            t2 = ws + t2
-            w.delete('%s.0' % z,'%s.0 lineend' % z)
-            w.insert('%s.0' % z,t2)
-        ### w.event_generate('&lt;Key&gt;')
-        ### w.update_idletasks()
-    self.removeRKeys(w)</t>
-<t tx="ekr.20050920084036.108">def tabIndentRegion (self,event):
-
-    k = self.k ; w = event.widget
-    if not self._chckSel(event): return
-
-    i = w.index('sel.first')
-    i2 = w.index('sel.last')
-    i = w.index('%s linestart' % i)
-    i2 = w.index('%s linestart' % i2)
-    while 1:
-        w.insert(i,'\t')
-        if i == i2: break
-        i = w.index('%s + 1 lines' % i)</t>
-<t tx="ekr.20050920084036.109">def countRegion (self,event):
-
-    k = self.k ; w = event.widget
-
-    txt = w.get('sel.first','sel.last')
-    lines = 1 ; chars = 0
-    for z in txt:
-        if z == '\n': lines += 1
-        else:         chars += 1
-
-    k.setLabelGrey('Region has %s lines, %s character%s' % (
-        lines,chars,g.choose(chars==1,'','s')))</t>
-<t tx="ekr.20050920084036.110">def reverseRegion (self,event):
-
-    k = self.k ; w = event.widget
-    if not self._chckSel(event): return
-
-    ins = w.index('insert')
-    is1 = w.index('sel.first')
-    is2 = w.index('sel.last')
-    txt = w.get('%s linestart' % is1,'%s lineend' % is2)
-    w.delete('%s linestart' % is1,'%s lineend' % is2)
-    txt = txt.split('\n')
-    txt.reverse()
-    istart = is1.split('.')
-    istart = int(istart[0])
-    for z in txt:
-        w.insert('%s.0' % istart,'%s\n' % z)
-        istart = istart + 1
-    w.mark_set('insert',ins)
-    k.clearState()
-    k.resetLabel()</t>
-<t tx="ekr.20050920084036.111">def downCaseRegion (self,event):
-    self.caseHelper(event,'low')
-
-def upCaseRegion (self,event):
-    self.caseHelper(event,'up')
-
-def caseHelper (self,event,way):
-
-    w = event.widget ; trange = w.tag_ranges('sel')
-
-    if len(trange) != 0:
-        text = w.get(trange[0],trange[-1])
-        i = w.index('insert')
-        if text == ' ': return
-        w.delete(trange[0],trange[-1])
-        if way == 'low': text = text.lower()
-        if way == 'up':  text = text.upper()
-        w.insert('insert',text)
-        w.mark_set('insert',i)
-
-    self.removeRKeys(w)</t>
-<t tx="ekr.20050920084036.112"></t>
-<t tx="ekr.20050920084036.113">def replaceString (self,event):
-
-    k = self.k ; state = k.getState('replace-string')
-    prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
-
-    if state == 0:
-        self.widget = event.widget
-        self._sString = self._rpString = ''
-        s = '%s: ' % prompt
-        k.setLabelBlue(s,protect=True)
-        k.getArg(event,'replace-string',1,self.replaceString)
-    elif state == 1:
-        self._sString = k.arg
-        s = '%s: %s With: ' % (prompt,self._sString)
-        k.setLabelBlue(s,protect=True)
-        k.getArg(event,'replace-string',2,self.replaceString)
-    elif state == 2:
-        k.clearState()
-        self._rpString = k.arg ; w = self.widget
-        &lt;&lt; do the replace &gt;&gt;
-        k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
-        self._useRegex = False</t>
-<t tx="ekr.20050920084036.114"># g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
-i = 'insert' ; end = 'end' ; count = 0
-if w.tag_ranges('sel'):
-    i = w.index('sel.first')
-    end = w.index('sel.last')
-if self._useRegex:
-    txt = w.get(i,end)
-    try:
-        pattern = re.compile(self._sString)
-    except:
-        k.keyboardQuit(event)
-        k.setLabel("Illegal regular expression")
-        return
-    count = len(pattern.findall(txt))
-    if count:
-        ntxt = pattern.sub(self._rpString,txt)
-        w.delete(i,end)
-        w.insert(i,ntxt)
-else:
-    # Problem: adds newline at end of text.
-    txt = w.get(i,end)
-    count = txt.count(self._sString)
-    if count:
-        ntxt = txt.replace(self._sString,self._rpString)
-        w.delete(i,end)
-        w.insert(i,ntxt)</t>
-<t tx="ekr.20050920084036.115">def activateReplaceRegex( self ):
-    
-    '''This method turns regex replace on for replaceString'''
-
-    self._useRegex = True
-    return True</t>
 <t tx="ekr.20050920084036.116">def scrollDown (self,event):
+    self.scrollHelper(event,'down',extend=False)
 
-    k = self.k ; w = event.widget
-    chng = self.measure(w)
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    i1 = int(i1) + chng [0]
-    w.mark_set('insert','%s.%s' % (i1,i2))
-    w.see('insert')
+def scrollDownExtendSelection (self,event):
+    self.scrollHelper(event,'down',extend=True)
 
 def scrollUp (self,event):
+    self.scrollHelper(event,'up',extend=False)
 
-    k = self.k ; w = event.widget
-    chng = self.measure(w)
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    i1 = int(i1) - chng [0]
-    w.mark_set('insert','%s.%s' % (i1,i2))
-    w.see('insert')</t>
-<t tx="ekr.20050920084036.117">'''XEmacs provides several commands for sorting text in a buffer.  All
-operate on the contents of the region (the text between point and the
-mark).  They divide the text of the region into many "sort records",
-identify a "sort key" for each record, and then reorder the records
-using the order determined by the sort keys.  The records are ordered so
-that their keys are in alphabetical order, or, for numerical sorting, in
-numerical order.  In alphabetical sorting, all upper-case letters `A'
-through `Z' come before lower-case `a', in accordance with the ASCII
-character sequence.
-
-   The sort commands differ in how they divide the text into sort
-records and in which part of each record they use as the sort key.
-Most of the commands make each line a separate sort record, but some
-commands use paragraphs or pages as sort records.  Most of the sort
-commands use each entire sort record as its own sort key, but some use
-only a portion of the record as the sort key.
-
-`M-x sort-lines'
-     Divide the region into lines and sort by comparing the entire text
-     of a line.  A prefix argument means sort in descending order.
-
-`M-x sort-paragraphs'
-     Divide the region into paragraphs and sort by comparing the entire
-     text of a paragraph (except for leading blank lines).  A prefix
-     argument means sort in descending order.
-
-`M-x sort-pages'
-     Divide the region into pages and sort by comparing the entire text
-     of a page (except for leading blank lines).  A prefix argument
-     means sort in descending order.
-
-`M-x sort-fields'
-     Divide the region into lines and sort by comparing the contents of
-     one field in each line.  Fields are defined as separated by
-     whitespace, so the first run of consecutive non-whitespace
-     characters in a line constitutes field 1, the second such run
-     constitutes field 2, etc.
-
-     You specify which field to sort by with a numeric argument: 1 to
-     sort by field 1, etc.  A negative argument means sort in descending
-     order.  Thus, minus 2 means sort by field 2 in reverse-alphabetical
-     order.
-
-`M-x sort-numeric-fields'
-     Like `M-x sort-fields', except the specified field is converted to
-     a number for each line and the numbers are compared.  `10' comes
-     before `2' when considered as text, but after it when considered
-     as a number.
-
-`M-x sort-columns'
-     Like `M-x sort-fields', except that the text within each line used
-     for comparison comes from a fixed range of columns.  An explanation
-     is given below.
-
-   For example, if the buffer contains:
-
-     On systems where clash detection (locking of files being edited) is
-     implemented, XEmacs also checks the first time you modify a buffer
-     whether the file has changed on disk since it was last visited or
-     saved.  If it has, you are asked to confirm that you want to change
-     the buffer.
-
-then if you apply `M-x sort-lines' to the entire buffer you get:
-
-     On systems where clash detection (locking of files being edited) is
-     implemented, XEmacs also checks the first time you modify a buffer
-     saved.  If it has, you are asked to confirm that you want to change
-     the buffer.
-     whether the file has changed on disk since it was last visited or
-
-where the upper case `O' comes before all lower case letters.  If you
-apply instead `C-u 2 M-x sort-fields' you get:
-
-     saved.  If it has, you are asked to confirm that you want to change
-     implemented, XEmacs also checks the first time you modify a buffer
-     the buffer.
-     On systems where clash detection (locking of files being edited) is
-     whether the file has changed on disk since it was last visited or
-
-where the sort keys were `If', `XEmacs', `buffer', `systems', and `the'.
-
-   `M-x sort-columns' requires more explanation.  You specify the
-columns by putting point at one of the columns and the mark at the other
-column.  Because this means you cannot put point or the mark at the
-beginning of the first line to sort, this command uses an unusual
-definition of `region': all of the line point is in is considered part
-of the region, and so is all of the line the mark is in.
-
-   For example, to sort a table by information found in columns 10 to
-15, you could put the mark on column 10 in the first line of the table,
-and point on column 15 in the last line of the table, and then use this
-command.  Or you could put the mark on column 15 in the first line and
-point on column 10 in the last line.
-
-   This can be thought of as sorting the rectangle specified by point
-and the mark, except that the text on each line to the left or right of
-the rectangle moves along with the text inside the rectangle.  *Note
-Rectangles::.
-
-'''
-</t>
-<t tx="ekr.20050920084036.118">def sortLines (self,event,which=None): # event IS used.
-
-    k = self.k ; w = event.widget
-    if not self._chckSel(event):
-        return
-    i = w.index('sel.first')
-    i2 = w.index('sel.last')
-    is1 = i.split('.')
-    is2 = i2.split('.')
-    txt = w.get('%s.0' % is1[0],'%s.0 lineend' % is2[0])
-    ins = w.index('insert')
-    txt = txt.split('\n')
-    w.delete('%s.0' % is1[0],'%s.0 lineend' % is2[0])
-    txt.sort()
-    if which:
-        txt.reverse()
-    inum = int(is1[0])
-    for z in txt:
-        w.insert('%s.0' % inum,'%s\n' % z)
-        inum = inum + 1
-    w.mark_set('insert',ins)</t>
-<t tx="ekr.20050920084036.119">def sortColumns (self,event):
-
-    k = self.k ; w = event.widget
-    if not self._chckSel(event): return
-
-    ins = w.index('insert')
-    is1 = w.index('sel.first')
-    is2 = w.index('sel.last')
-    sint1, sint2 = is1.split('.')
-    sint2 = int(sint2)
-    sint3, sint4 = is2.split('.')
-    sint4 = int(sint4)
-    txt = w.get('%s.0' % sint1,'%s.0 lineend' % sint3)
-    w.delete('%s.0' % sint1,'%s.0 lineend' % sint3)
-    columns = []
-    i = int(sint1)
-    i2 = int(sint3)
-    while i &lt;= i2:
-        t = w.get('%s.%s' % (i,sint2),'%s.%s' % (i,sint4))
-        columns.append(t)
-        i = i + 1
-    txt = txt.split('\n')
-    zlist = zip(columns,txt)
-    zlist.sort()
-    i = int(sint1)
-    for z in xrange(len(zlist)):
-         w.insert('%s.0' % i,'%s\n' % zlist[z][1])
-         i = i + 1
-    w.mark_set('insert',ins)</t>
-<t tx="ekr.20050920084036.120">def sortFields (self,event,which=None):
-
-    k = self.k ; w = event.widget
-    if not self._chckSel(event): return
-
-    ins = w.index('insert')
-    is1 = w.index('sel.first')
-    is2 = w.index('sel.last')
-    txt = w.get('%s linestart' % is1,'%s lineend' % is2)
-    txt = txt.split('\n')
-    fields = []
-    fn = r'\w+'
-    frx = re.compile(fn)
-    for z in txt:
-        f = frx.findall(z)
-        if not which:
-            fields.append(f[0])
-        else:
-            i = int(which)
-            if len(f) &lt; i: return
-            i = i-1
-            fields.append(f[i])
-    nz = zip(fields,txt)
-    nz.sort()
-    w.delete('%s linestart' % is1,'%s lineend' % is2)
-    i = is1.split('.')
-    int1 = int(i[0])
-    for z in nz:
-        w.insert('%s.0' % int1,'%s\n' % z[1])
-        int1 = int1 + 1
-    w.mark_set('insert',ins)</t>
-<t tx="ekr.20050920084036.121"></t>
-<t tx="ekr.20050920084036.122">def transposeLines (self,event):
-
-    k = self.k ; w = event.widget
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    i1 = str(int(i1)-1)
-
-    if i1 != '0':
-        l2 = w.get('insert linestart','insert lineend')
-        w.delete('insert linestart-1c','insert lineend')
-        w.insert(i1+'.0',l2+'\n')
-    else:
-        l2 = w.get('2.0','2.0 lineend')
-        w.delete('2.0','2.0 lineend')
-        w.insert('1.0',l2+'\n')</t>
-<t tx="ekr.20050920084036.123">def swapWords (self,event,swapspots):
-
-    w = event.widget
-    txt = w.get('insert wordstart','insert wordend')
-    if txt == ' ': return
-    i = w.index('insert wordstart')
-    if len(swapspots) != 0:
-        if w.compare(i,'&gt;',swapspots[1]):
-            self.swapHelper(w,i,txt,swapspots[1],swapspots[0])
-        elif w.compare(i,'&lt;',swapspots[1]):
-            self.swapHelper(w,swapspots[1],swapspots[0],i,txt)
-    else:
-        swapspots.append(txt)
-        swapspots.append(i)
-
-def transposeWords (self,event):
-    self.swapWords(event,self.swapSpots)
-
-def swapHelper (self,w,find,ftext,lind,ltext):
-    w.delete(find,'%s wordend' % find)
-    w.insert(find,ltext)
-    w.delete(lind,'%s wordend' % lind)
-    w.insert(lind,ftext)
-    self.swapSpots.pop()
-    self.swapSpots.pop()
-</t>
-<t tx="ekr.20050920084036.124">def swapCharacters (self,event):
-
-    k = self.k ; w = event.widget
-    i = w.index('insert')
-    c1 = w.get('insert','insert +1c')
-    c2 = w.get('insert -1c','insert')
-    w.delete('insert -1c','insert')
-    w.insert('insert',c1)
-    w.delete('insert','insert +1c')
-    w.insert('insert',c2)
-    w.mark_set('insert',i)
-
-transposeCharacters = swapCharacters</t>
-<t tx="ekr.20050920084036.126">def tabify (self,event):
-    self.tabifyHelper (event,which='tabify')
-    
-def untabify (self,event):
-    self.tabifyHelper (event,which='untabify')
-
-def tabifyHelper (self,event,which):
-
-    k = self.k ; w = event.widget
-    if w.tag_ranges('sel'):
-        i = w.index('sel.first')
-        end = w.index('sel.last')
-        txt = w.get(i,end)
-        if which == 'tabify':
-            pattern = re.compile(' {4,4}') # Huh?
-            ntxt = pattern.sub('\t',txt)
-        else:
-            pattern = re.compile('\t')
-            ntxt = pattern.sub('    ',txt)
-        w.delete(i,end)
-        w.insert(i,ntxt)</t>
+def scrollUpExtendSelection (self,event):
+    self.scrollHelper(event,'up',extend=True)</t>
 <t tx="ekr.20050920084036.131">def backSentence (self,event):
     
     self.backSentenceHelper(event,extend=False)
@@ -5931,47 +4430,6 @@ def forwardSentence (self,event):
 def forwardSentenceExtendSelection (self,event):
     
     self.forwardSentenceHelper(event,extend=True)</t>
-<t tx="ekr.20050920084036.132"></t>
-<t tx="ekr.20050920084036.133">def setCommentColumn (self,event):
-
-    cc = event.widget.index('insert')
-    cc1, cc2 = cc.split('.')
-    self.ccolumn = cc2</t>
-<t tx="ekr.20050920084036.134">def indentToCommentColumn (self,event):
-
-    k = self.k ; w = event.widget
-
-    i = w.index('insert lineend')
-    i1, i2 = i.split('.')
-    i2 = int(i2)
-    c1 = int(self.ccolumn)
-
-    if i2 &lt; c1:
-        wsn = c1- i2
-        w.insert('insert lineend',' '*wsn)
-    if i2 &gt;= c1:
-        w.insert('insert lineend',' ')
-    w.mark_set('insert','insert lineend')</t>
-<t tx="ekr.20050920084036.135">def deleteSpaces (self,event,insertspace=False):
-
-    c = self.c
-    w = event and event.widget or g.app.gui.get_focus(c.frame)
-    name = g.app.gui.widget_name(w)
-    char = w.get('insert','insert + 1c ')
-    if not char.isspace(): return
-    
-    if name.startswith('body'):
-        oldText = w.get('1.0','end')
-        oldSel = g.app.gui.getTextSelection(w)
-        i = w.index('insert')
-        wf = w.search(r'\w',i,stopindex='%s lineend' % i,regexp=True)
-        wb = w.search(r'\w',i,stopindex='%s linestart' % i,regexp=True,backwards=True)
-        if '' in (wf,wb): return
-        w.delete('%s +1c' % wb,wf)
-        if insertspace: w.insert('insert',' ')
-        
-        c.frame.body.onBodyChanged(undoType='delete-spaces',
-            oldSel=oldSel,oldText=oldText,oldYview=None)</t>
 <t tx="ekr.20050920084036.136">def exchangePointMark (self,event):
     
     c = self.c ; w = event.widget
@@ -5991,24 +4449,10 @@ def forwardSentenceExtendSelection (self,event):
 
     c.frame.widgetWantsFocus(w)
     ins = w.index('insert')
-    sel_i,sel_j = g.app.gui.getTextSelection(w)
+    # sel_i,sel_j = g.app.gui.getTextSelection(w)
     i = w.search('.','insert',stopindex='end')
     ins = i and '%s +1c' % i or 'end'
     self.moveToHelper(event,ins,extend)</t>
-<t tx="ekr.20050920084036.138">def insertNewLine (self,event):
-
-    k = self.k ; w = event.widget
-    i = w.index('insert')
-    w.insert('insert','\n')
-    w.mark_set('insert',i)
-
-insertNewline = insertNewLine
-</t>
-<t tx="ekr.20050920084036.139">def insertParentheses (self,event):
-
-    k = self.k ; w = event.widget
-    w.insert('insert','()')
-    w.mark_set('insert','insert -1c')</t>
 <t tx="ekr.20050920084036.140">def movePastClose (self,event):
     
     self.movePastCloseHelper(event,extend=False)
@@ -6016,79 +4460,6 @@ insertNewline = insertNewLine
 def movePastCloseExtendSelection (self,event):
     
     self.movePastCloseHelper(event,extend=True)</t>
-<t tx="ekr.20050920084036.141">def removeBlankLines (self,event):
-    
-    '''The remove-blank-lines command removes lines containing nothing but
-    whitespace. If there is a text selection, only lines within the selected
-    text are affected; otherwise all blank lines in the selected node are
-    affected.'''
-    
-    c = self.c ; undoType = 'Remove Blank Lines' ; p = c.currentPosition()
-    result = []
-    body = p.bodyString()
-    hasSelection = c.frame.body.hasTextSelection()
-    
-    if hasSelection:
-        head,lines,tail,oldSel,oldYview = c.getBodyLines()
-        joinChar = '\n'
-    else:
-        head = tail = oldYview = None
-        lines = g.splitLines(body)
-        oldSel = ('1.0','1.0')
-        joinChar = ''
-
-    for line in lines:
-        if line.strip():
-            result.append(line)
-
-    result = joinChar.join(result)
-    
-    if result != body:
-        c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview)</t>
-<t tx="ekr.20050920084036.145">def changePreviousWord (self,event):
-
-    k = self.k ; stroke = k.stroke ; w = event.widget
-    i = w.index('insert')
-
-    self.moveWordHelper(event,extend=False,forward=False)
-
-    if stroke == '&lt;Alt-c&gt;':
-        self.capitalizeWord(event)
-    elif stroke == '&lt;Alt-u&gt;':
-         self.upCaseWord(event)
-    elif stroke == '&lt;Alt-l&gt;':
-        self.downCaseWord(event)
-
-    w.mark_set('insert',i)</t>
-<t tx="ekr.20050920084036.147">def measure (self,w):
-    i = w.index('insert')
-    i1, i2 = i.split('.')
-    start = int(i1)
-    watch = 0
-    ustart = start
-    pone = 1
-    top = i
-    bottom = i
-    while pone:
-        ustart = ustart-1
-        if ustart &lt; 0:
-            break
-        ds = '%s.0' % ustart
-        pone = w.dlineinfo(ds)
-        if pone:
-            top = ds
-            watch = watch + 1
-    pone = 1
-    ustart = start
-    while pone:
-        ustart = ustart + 1
-        ds = '%s.0' % ustart
-        pone = w.dlineinfo(ds)
-        if pone:
-            bottom = ds
-            watch = watch + 1
-
-    return watch, top, bottom</t>
 <t tx="ekr.20050920084036.148">def beginningOfBuffer (self,event):
     
     self.moveToHelper(event,'1.0',extend=False)
@@ -6121,6 +4492,210 @@ def forwardWordExtendSelection (self,event):
     
     self.moveWordHelper(event,extend=True,forward=True)
 </t>
+<t tx="ekr.20050920084036.188">def getPublicCommands (self):
+    
+    '''(leoCommands) Return a dict of the 'legacy' Leo commands.
+    A special case used only by this class.
+    Put the *raw* command name into the inverse dict, *not* 'leoCallback'.
+    
+    Also creates k.leoCallBackDict.  Keys are *raw* functions, values are emacs command names.'''
+    
+    k = self.k ; d2 = {}
+    k.leoCallbackDict = {}
+    
+    &lt;&lt; define dictionary d of names and Leo commands &gt;&gt;
+    
+    # Create a callback for each item in d.
+    keys = d.keys() ; keys.sort()
+    for name in keys:
+        f = d.get(name)
+        # Warning: k.createInverseCommandsDict uses the name of this callback.
+        def leoCallback (event,f=f,self=self,name=name):
+            # g.trace(f,name)
+            return self.c.doCommand(f,name)
+        d2 [name] = leoCallback
+        k.leoCallbackDict [leoCallback] = f
+        k.inverseCommandsDict [f.__name__] = name
+        # g.trace('leoCommands %24s = %s' % (f.__name__,name))
+        
+    return d2</t>
+<t tx="ekr.20050920084036.189">c = self.c ; f = c.frame
+
+d = {
+    'abort-edit-headline':          f.abortEditLabelCommand,
+    'about-leo':                    c.about,
+    'add-comments':                 c.addComments,     
+    'cascade-windows':              f.cascade,
+    'clear-recent-files':           c.clearRecentFiles,
+    'close-window':                 c.close,
+    'contract-or-go-left':          c.contractNodeOrGoToParent,
+    'check-python-code':            c.checkPythonCode,
+    'check-all-python-code':        c.checkAllPythonCode,
+    'check-outline':                c.checkOutline,
+    'clear-recent-files':           c.clearRecentFiles,
+    'clone-node':                   c.clone,
+    'close-find-dialog':            c.dismissFindPanel, # Deprecated.
+    'contract-node':                c.contractNode,
+    'contract-all':                 c.contractAllHeadlines,
+    'contract-parent':              c.contractParent,
+    'convert-all-blanks':           c.convertAllBlanks,
+    'convert-all-tabs':             c.convertAllTabs,
+    'convert-blanks':               c.convertBlanks,
+    'convert-tabs':                 c.convertTabs,
+    'copy-node':                    c.copyOutline,
+    'copy-text':                    f.copyText,
+    'cut-node':                     c.cutOutline,
+    'cut-text':                     f.cutText,
+    'de-hoist':                     c.dehoist,
+    'delete-comments':              c.deleteComments,
+    'delete-node':                  c.deleteOutline,
+    'demote':                       c.demote,
+    'dump-outline':                 c.dumpOutline,
+    'edit-headline':                c.editHeadline,
+    'end-edit-headline':            f.endEditLabelCommand,
+    'equal-sized-panes':            f.equalSizedPanes,
+    'execute-script':               c.executeScript,
+    'exit-leo':                     g.app.onQuit,
+    'expand-all':                   c.expandAllHeadlines,
+    'expand-next-level':            c.expandNextLevel,
+    'expand-node':                  c.expandNode,
+    'expand-and-go-right':          c.expandNodeAndGoToFirstChild,
+    'expand-or-go-right':           c.expandNodeOrGoToFirstChild,
+    'expand-prev-level':            c.expandPrevLevel,
+    'expand-to-level-1':            c.expandLevel1,
+    'expand-to-level-2':            c.expandLevel2,
+    'expand-to-level-3':            c.expandLevel3,
+    'expand-to-level-4':            c.expandLevel4,
+    'expand-to-level-5':            c.expandLevel5,
+    'expand-to-level-6':            c.expandLevel6,
+    'expand-to-level-7':            c.expandLevel7,
+    'expand-to-level-8':            c.expandLevel8,
+    'expand-to-level-9':            c.expandLevel9,
+    'export-headlines':             c.exportHeadlines,
+    'extract':                      c.extract,
+    'extract-names':                c.extractSectionNames,
+    'extract-section':              c.extractSection,
+    'find-dialog-change':           c.replace,              # Deprecated.
+    'find-dialog-change-then-find': c.replaceThenFind,  # Deprecated.
+    'find-dialog-change-all':       c.replaceAll,           # Deprecated.
+    'find-dialog-find-next':        c.findNext,             # Deprecated.
+    'find-dialog-find-previous':    c.findPrevious,         # Deprecated.
+    'flatten-outline':              c.flattenOutline,
+    'go-back':                      c.goPrevVisitedNode,
+    'go-forward':                   c.goNextVisitedNode,
+    'goto-first-node':              c.goToFirstNode,
+    'goto-first-sibling':           c.goToFirstSibling,
+    'goto-last-node':               c.goToLastNode,
+    'goto-last-sibling':            c.goToLastSibling,
+    'goto-last-visible':            c.goToLastVisibleNode,
+    'goto-line-number':             c.goToLineNumber,
+    'goto-next-changed':            c.goToNextDirtyHeadline,
+    'goto-next-clone':              c.goToNextClone,
+    'goto-next-marked':             c.goToNextMarkedHeadline,
+    'goto-next-node':               c.selectThreadNext,
+    'goto-next-sibling':            c.goToNextSibling,
+    'goto-next-visible':            c.selectVisNext,
+    'goto-parent':                  c.goToParent,
+    'goto-prev-node':               c.selectThreadBack,
+    'goto-prev-sibling':            c.goToPrevSibling,
+    'goto-prev-visible':            c.selectVisBack,
+    'hoist':                        c.hoist,
+    'import-at-file':               c.importAtFile,
+    'import-at-root':               c.importAtRoot,
+    'import-cweb-files':            c.importCWEBFiles,
+    'import-derived-file':          c.importDerivedFile,
+    'import-flattened-outline':     c.importFlattenedOutline,
+    'import-noweb-files':           c.importNowebFiles,
+    'indent-region':                c.indentBody,
+    'insert-node':                  c.insertHeadline,
+    'insert-body-time':             c.insertBodyTime,
+    'insert-headline-time':         f.insertHeadlineTime,
+    'mark':                         c.markHeadline,
+    'mark-changed-items':           c.markChangedHeadlines,
+    'mark-changed-roots':           c.markChangedRoots,
+    'mark-clones':                  c.markClones,
+    'mark-subheads':                c.markSubheads,
+    'match-bracket':                c.findMatchingBracket,
+    'minimize-all':                 f.minimizeAll,
+    'move-outline-down':            c.moveOutlineDown,
+    'move-outline-left':            c.moveOutlineLeft,
+    'move-outline-right':           c.moveOutlineRight,
+    'move-outline-up':              c.moveOutlineUp,
+    'new':                          c.new,
+    'open-compare-window':          c.openCompareWindow,
+    'open-find-dialog':             c.showFindPanel, # Deprecated.
+    'open-leoDocs-leo':             c.leoDocumentation,
+    'open-leoPlugins-leo':          c.openLeoPlugins,
+    'open-leoSettings-leo':         c.openLeoSettings,
+    'open-online-home':             c.leoHome,
+    'open-online-tutorial':         c.leoTutorial,
+    'open-offline-tutorial':        f.leoHelp,
+    'open-outline':                 c.open,
+    'open-python-window':           c.openPythonWindow,
+    'open-with':                    c.openWith,
+    'outline-to-CWEB':              c.outlineToCWEB,
+    'outline-to-noweb':             c.outlineToNoweb,
+    'paste-node':                   c.pasteOutline,
+    'paste-retaining-clones':       c.pasteOutlineRetainingClones,
+    'paste-text':                   f.pasteText,
+    'pretty-print-all-python-code': c.prettyPrintAllPythonCode,
+    'pretty-print-python-code':     c.prettyPrintPythonCode,
+    'promote':                      c.promote,
+    'read-at-file-nodes':           c.readAtFileNodes,
+    'read-outline-only':            c.readOutlineOnly,
+    'redo':                         c.undoer.redo,
+    'reformat-paragraph':           c.reformatParagraph,
+    'remove-sentinels':             c.removeSentinels,
+    'replace':                      c.replace,
+    'replace-then-find':            c.replaceThenFind,
+    'resize-to-screen':             f.resizeToScreen,
+    'revert':                       c.revert,
+    'save-file':                    c.save,
+    'save-file-as':                 c.saveAs,
+    'save-file-to':                 c.saveTo,
+    'select-all':                   f.body.selectAllText,
+    'settings':                     c.preferences,
+    'set-colors':                   c.colorPanel,
+    'set-font':                     c.fontPanel,
+    'show-invisibles':              c.viewAllCharacters,
+    'sort-children':                c.sortChildren,
+    'sort-siblings':                c.sortSiblings,
+    'tangle':                       c.tangle,
+    'tangle-all':                   c.tangleAll,
+    'tangle-marked':                c.tangleMarked,
+    'toggle-active-pane':           f.toggleActivePane,
+    'toggle-angle-brackets':        c.toggleAngleBrackets,
+    'toggle-split-direction':       f.toggleSplitDirection,
+    'undo':                         c.undoer.undo,
+    'unindent':                     c.dedentBody,
+    'unmark-all':                   c.unmarkAll,
+    'untangle':                     c.untangle,
+    'untangle-all':                 c.untangleAll,
+    'untangle-marked':              c.untangleMarked,
+    'weave':                        c.weave,
+    'write-at-file-nodes':          c.fileCommands.writeAtFileNodes,
+    'write-dirty-at-file-nodes':    c.fileCommands.writeDirtyAtFileNodes,
+    'write-missing-at-file-nodes':  c.fileCommands.writeMissingAtFileNodes,
+    'write-outline-only':           c.fileCommands.writeOutlineOnly,
+}</t>
+<t tx="ekr.20050920084036.203">def _executeMacro (self,macro,w):
+
+    k = self.k
+
+    for z in macro:
+        if len(z) == 2:
+            w.event_generate('&lt;Key&gt;',keycode=z[0],keysym=z[1])
+        else:
+            meth = z [0].lstrip('&lt;').rstrip('&gt;')
+            bunchList = k.bindingsDict.get(meth,[])  ### Probably should not strip &lt; and &gt;
+            if bunchList:
+                b = bunchList[0]
+                ev = Tk.Event()
+                ev.widget = w
+                ev.keycode = z [1]
+                ev.keysym = z [2]
+                ev.char = z [3]
+                k.masterCommand(ev,b.f,'&lt;%s&gt;' % meth)</t>
 <t tx="ekr.20050920084036.257">class searchCommandsClass (baseEditCommandsClass):
     
     '''Implements many kinds of searches.'''
@@ -6154,6 +4729,7 @@ def forwardWordExtendSelection (self,event):
         'find-tab-find':            self.findTabFindNext,
         'find-tab-find-prev':       self.findTabFindPrev,
         'find-tab-change':          self.findTabChange,
+        'find-tab-change-all':      self.findTabChangeAll,
         'find-tab-change-then-find':self.findTabChangeThenFind,
 
         'isearch-forward':          self.isearchForward,
@@ -6377,29 +4953,6 @@ def reSearchForward (self,event):
         s = g.choose(forward,'insert +%sc','insert -%sc')
         w.mark_set('insert',s % end)
         w.see('insert')</t>
-<t tx="ekr.20050920085536.2">def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
-    
-    '''Create a key handler for c.
-    c.frame.miniBufferWidget is a Tk.Label.
-    
-    useGlobalRegisters and useGlobalKillbuffer indicate whether to use
-    global (class vars) or per-instance (ivars) for kill buffers and registers.'''
-    
-    self.c = c
-    self.widget = c.frame.miniBufferWidget
-    self.useTextWidget = c.useTextMinibuffer
-        # A Tk Label or Text widget.
-        # Exists even if c.showMinibuffer is False.
-    self.useGlobalKillbuffer = useGlobalKillbuffer
-    self.useGlobalRegisters = useGlobalRegisters
-
-    # Generalize...
-    self.x_hasNumeric = ['sort-lines','sort-fields']
-
-    self.altX_prompt = 'full-command: '
-    &lt;&lt; define Tk ivars &gt;&gt;
-    &lt;&lt; define externally visible ivars &gt;&gt;
-    &lt;&lt; define internal ivars &gt;&gt;</t>
 <t tx="ekr.20050920085536.11">def add_ekr_altx_commands (self):
 
     &lt;&lt; define dict d of abbreviations &gt;&gt;
@@ -6481,33 +5034,25 @@ def reSearchForward (self,event):
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
     callback calls commandName (for error messages).'''
     
-    k = self ; c = k.c 
+    k = self ; c = k.c
 
-    if not shortcut: g.trace('No shortcut for %s' % commandName)
-    ## if shortcut == '&lt;None&gt;': return
-    bunch = k.bindingsDict.get(shortcut)
-    if bunch and bunch.pane == pane:
-        # g.trace('Not bound',shortcut)
-        if commandName != bunch.commandName:
-            g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
-                shortcut,bunch.commandName,commandName,pane),color='blue')
-        return
-        
     # g.trace(pane,shortcut,commandName)
 
+    if not shortcut: g.trace('No shortcut for %s' % commandName)
+    bunchList = k.bindingsDict.get(shortcut,[])
+    &lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;
+    &lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;
     try:
         &lt;&lt; bind callback to shortcut in pane &gt;&gt;
-
-        k.bindingsDict [shortcut] = g.bunch(
-            pane=pane,func=callback,commandName=commandName)
-
+        bunchList.append(
+            g.bunch(pane=pane,func=callback,commandName=commandName))
+        k.bindingsDict [shortcut] = bunchList
         return True
 
     except Exception: # Could be a user error.
         if not g.app.menuWarningsGiven:
             g.es_print('Exception binding %s to %s' % (shortcut,commandName))
             g.es_exception()
-            # g.printStack()
             g.app.menuWarningsGiven = True
 
         return False</t>
@@ -6570,70 +5115,32 @@ def reSearchForward (self,event):
         k.endCommand(event,commandName)
     else:
         k.setLabel('Command does not exist: %s' % commandName)</t>
-<t tx="ekr.20050920085536.58">def quickCommand (self,event):
-    
-    '''Handle 'quick-command' (control-c) mode.'''
-    
-    k = self ; stroke = k.stroke ; state = k.getState('quick-command')
-    
-    if state == 0:
-        k.setState('quick-command',1,handler=k.quickCommand)
-        k.setLabelBlue('quick command: ',protect=True)
-    else:
-        k.previous.insert(0,event.keysym)
-        if len(k.previous) &gt; 10: k.previous.pop()
-        
-        # g.trace('stroke',stroke,event.keysym)
-        if stroke == '&lt;Key&gt;' and event.keysym == 'r':
-            k.rCommand(event)
-        elif stroke in ('&lt;Key&gt;','&lt;Escape&gt;'):
-            if k.processKey(event): # Weird command-specific stuff.
-                k.clearState()
-        elif stroke in k.xcommands:
-            k.clearState()
-            k.xcommands [stroke](event)
-
-        k.endCommand(event,stroke)
-        
-    return 'break'</t>
-<t tx="ekr.20050920085536.63">def keyboardQuit (self,event):
-
-    '''This method clears the state and the minibuffer label.
-    
-    k.endCommand handles all other end-of-command chores.'''
-    
-    k = self ; c = k.c
-
-    if g.app.quitting:
-        return
-        
-    c.frame.log.deleteTab('Completion')
-    c.frame.log.deleteTab('Mode')
-    k.inputModeName = None
-        
-    k.clearState()
-    k.resetLabel()
-    
-    c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke):
+<t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke,commandName=None):
 
     '''This is the central dispatching method.
     All commands and keystrokes pass through here.'''
 
     k = self ; c = k.c
+    trace = c.config.getBool('trace_masterCommand')
+    c.setLog()
     c.startRedrawCount = c.frame.tree.redrawCount
     k.stroke = stroke # Set this global for general use.
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
+    w = event and event.widget
     k.func = func
     k.funcReturn = None # For unit testing.
-    commandName = k.ultimateFuncName(func)
+    if commandName is None:
+        commandName = k.ultimateFuncName(func)
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func or stroke != '&lt;Key&gt;'
+    interesting = func is not None or ch != '' # or stroke != '&lt;Key&gt;'
     
-    if c.config.getBool('trace_masterCommand'):
-        g.trace('stroke',stroke,'ch',repr(ch),'keysym',repr(keysym))
+    if trace and interesting:
+        g.trace(
+            'stroke:',stroke,'ch:',repr(ch),'keysym:',repr(keysym),
+            'widget:',w and g.app.gui.widget_name(w),
+            g.callers())
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
 
@@ -6678,8 +5185,15 @@ def reSearchForward (self,event):
         if expanded: return 'break'
 
     if func: # Func is an argument.
-        val = func(event)
-        k.funcReturn = k.funcReturn or val # For unit tests.
+        if trace: g.trace('command',commandName)
+        # Note: k.funcReturn is for k.simulateCommand.
+        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+            # The callback function will call c.doCommand
+            val = func(event)
+            k.funcReturn = k.funcReturn or val # For unit tests.
+        else:
+            # Call c.doCommand directly
+            c.doCommand(func,commandName,event=event)
         k.endCommand(event,commandName)
         return 'break'
     else:
@@ -6698,33 +5212,57 @@ if 0: # traces
     g.trace(keysym,stroke)
     g.trace(k.keysymHistory)
     g.trace(keyHandlerClass.lossage)</t>
-<t tx="ekr.20050920094633">def finishCreate (self):
+<t tx="ekr.20050920085536.75">def executeNTimes (self,event,n):
     
-    '''Complete the construction of the keyHandler class.
-    c.commandsDict has been created when this is called.'''
+    __pychecker__ = '--no-local' # z is used just for a repeat count.
     
-    k = self ; c = k.c
-   
-    k.createInverseCommandsDict()
-    
-    if not c.miniBufferWidget:
-        # Does not exist for leoSettings.leo files.
-        return
-        
-    # g.trace('keyHandler')
+    k = self ; stroke = k.stroke ; w = event.widget
+    g.trace('stroke',stroke,'keycode',event.keycode,'n',n)
 
-    # Important: bindings exist even if c.showMiniBuffer is False.
-    k.makeAllBindings()
+    if stroke == k.fullCommandKey:
+        for z in xrange(n):
+            k.fullCommand()
+    else:
+        stroke = stroke.lstrip('&lt;').rstrip('&gt;')
+        bunchList = k.bindingsDict.get(stroke,[])
+        if bunchList:
+            b = bunchList[0]
+            g.trace('method',b.f)
+            for z in xrange(n):
+                if 1: # No need to do this: commands never alter events.
+                    ev = Tk.Event()
+                    ev.widget = event.widget
+                    ev.keysym = event.keysym
+                    ev.keycode = event.keycode
+                    ev.char = event.char
+                k.masterCommand(event,b.f,'&lt;%s&gt;' % stroke)
+        else:
+            for z in xrange(n):
+                w.event_generate('&lt;Key&gt;',keycode=event.keycode,keysym=event.keysym)</t>
+<t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
     
-    c.frame.log.setTabBindings('Log')
-    c.frame.tree.setBindings()
-    if 0: # Hurray.  This was a massive kludge.
-        g.enableIdleTimeHook(250)
+    '''Finish creating the commander after frame.finishCreate.'''
     
-    if 0:
-        addTemacsExtensions(k)
-        addTemacsAbbreviations(k)
-        changeKeyStrokes(k,f.bodyCtrl)</t>
+    c = self ; p = c.currentPosition()
+    c.miniBufferWidget = c.frame.miniBufferWidget
+    # g.trace('Commands',c.fileName()) # g.callers())
+    
+    # Create a keyHandler even if there is no miniBuffer.
+    c.keyHandler = k = leoKeys.keyHandlerClass(c,
+        useGlobalKillbuffer=True,
+        useGlobalRegisters=True)
+
+    if g.app.config and g.app.config.inited:
+        # A 'real' .leo file.
+        c.commandsDict = leoEditCommands.finishCreateEditCommanders(c)
+        k.finishCreate()
+    else:
+        # A leoSettings.leo file.
+        c.commandsDict = {}
+
+    # Create the menu last so that we can use the key handler for shortcuts.
+    if not g.doHook("menu1",c=c,p=p,v=p):
+        c.frame.menu.createMenuBar(c.frame)</t>
 <t tx="ekr.20050921094025">@nocolor</t>
 <t tx="ekr.20050923172809.1">def callStateFunction (self,event):
     
@@ -6767,20 +5305,7 @@ if 0: # traces
         'a':    c.abbrevCommands.addAbbreviation,
         'a i':  c.abbrevCommands.addInverseAbbreviation,
     }
-    
-    self.rCommandDict = {
-        'space':    c.registerCommands.pointToRegister,
-        'a':        c.registerCommands.appendToRegister,
-        'i':        c.registerCommands.insertRegister,
-        'j':        c.registerCommands.jumpToRegister,
-        'n':        c.registerCommands.numberToRegister,
-        'p':        c.registerCommands.prependToRegister,
-        'r':        c.rectangleCommands.enterRectangleState,
-        's':        c.registerCommands.copyToRegister,
-        'v':        c.registerCommands.viewRegister,
-        'plus':     c.registerCommands.incrementRegister,
-    }
-    
+        
     self.variety_commands = {
         # Keys are Tk keysyms.
         'period':       c.editCommands.setFillPrefix,
@@ -6794,20 +5319,6 @@ if 0: # traces
         'f':            c.editCommands.setFillColumn,
         'b':            c.bufferCommands.switchToBuffer,
         'k':            c.bufferCommands.killBuffer,
-    }
-    
-    self.xcommands = {
-        '&lt;Control-t&gt;':  c.editCommands.transposeLines,
-        '&lt;Control-u&gt;':  c.editCommands.upCaseRegion,
-        '&lt;Control-l&gt;':  c.editCommands.downCaseRegion,
-        '&lt;Control-o&gt;':  c.editCommands.removeBlankLines,
-        '&lt;Control-i&gt;':  c.editFileCommands.insertFile,
-        '&lt;Control-s&gt;':  c.editFileCommands.saveFile,
-        '&lt;Control-x&gt;':  c.editCommands.exchangePointMark,
-        '&lt;Control-c&gt;':  c.controlCommands.shutdown,
-        '&lt;Control-b&gt;':  c.bufferCommands.listBuffers,
-        '&lt;Control-Shift-at&gt;': lambda event: event.widget.selection_clear(),
-        '&lt;Delete&gt;':     c.killBufferCommands.backwardKillSentence,
     }</t>
 <t tx="ekr.20050923174229.3">def callKeystrokeFunction (self,event):
     
@@ -6824,146 +5335,9 @@ if 0: # traces
         k.endCommand(event,commandName)
     
     return func</t>
-<t tx="ekr.20050923183943.4">def processKey (self,event):
-    
-    '''Handle special keys in quickCommand mode.
-    Return True if we should exit quickCommand mode.'''
-
-    k = self ; c = k.c ; previous = k.previous
-    
-    if event.keysym in ('Shift_L','Shift_R'): return False
-    # g.trace(event.keysym)
-
-    func = k.variety_commands.get(event.keysym)
-    if func:
-        k.keyboardQuit(event)
-        func(event)
-        return True
-
-    if event.keysym in ('a','i','e'):
-        if k.processAbbreviation(event):
-            return False # 'a e' or 'a i e' typed.
-        
-    if event.keysym == 'g': # Execute the abbreviation in the minibuffer.
-        s = k.getLabel(ignorePrompt=True)
-        if k.abbreviationFuncDict.has_key(s):
-            k.clearState()
-            k.keyboardQuit(event)
-            k.abbreviationFuncDict [s](event)
-            return True
-    
-    if event.keysym == 'e': # Execute the last macro.
-        k.keyboardQuit(event)
-        c.macroCommands.callLastKeyboardMacro(event)
-        return True
-
-    if event.keysym == 'x' and previous [1] not in ('Control_L','Control_R'):
-        event.keysym = 's'
-        k.setState('quick-command',1)
-        c.registerCommands.setNextRegister(event)
-        return True
-
-    if event.keysym == 'Escape' and len(previous) &gt; 1 and previous [1] == 'Escape':
-        k.repeatComplexCommand(event)
-        return True
-        
-    else:
-        return False</t>
-<t tx="ekr.20050923183943.6">def processAbbreviation (self,event):
-    
-    '''Handle a e or a i e.
-    Return True when the 'e' has been seen.'''
-    
-    k = self ; char = event.char
-
-    if k.getLabel() != 'a' and event.keysym == 'a':
-        k.setLabel('a')
-        return False
-
-    elif k.getLabel() == 'a':
-
-        if char == 'i':
-            k.setLabel('a i')
-            return False
-        elif char == 'e':
-            event.char = ''
-            k.expandAbbrev(event)
-            return True
-            
-    return False</t>
-<t tx="ekr.20050923213858"># Previously defined bindings.
-self.bindingsDict = {}
-    # Keys are Tk key names, values are g.bunch(pane,func,commandName)
-
-# Special bindings for k.fullCommand.
-self.mb_copyKey = None
-self.mb_pasteKey = None
-self.mb_cutKey = None
-
-# Keepting track of the characters in the mini-buffer.
-self.mb_history = []
-self.mb_prefix = ''
-self.mb_tabListPrefix = ''
-self.mb_tabList = []
-self.mb_tabListIndex = -1
-self.mb_prompt = ''
-
-self.func = None
-self.keysymHistory = []
-self.previous = []
-self.stroke = None
-
-# For getArg...
-self.afterGetArgState = None
-self.argTabList = []
-
-# For onIdleTime
-self.idleCount = 0</t>
 <t tx="ekr.20050924073836"></t>
-<t tx="ekr.20050928144501.1">Needed to support 'mouseless-Leo':
-
-- Set options from the keyboard.
-    - set-variable sets a (Python) variable using an minibuffer-style variable name.
-- Drive all tabs/dialogs from the keyboard,
-- Scroll outline pane up/down
-- Control all Leo commands &amp; widgets using only key commands.
-- focus-in-body/tree/log/dialog.
-- cycle-active-pane and cycle-active-widget (in a single pane) commands.
-- activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
-- create-tab, clear-tab commands, etc.
-    These might get the tab name from the minibuffer...</t>
+<t tx="ekr.20050928144501.1"></t>
 <t tx="ekr.20050929114218"></t>
-<t tx="ekr.20050929115226">def gotoCharacter (self,event):
-
-    k = self.k ; state = k.getState('goto-char')
-
-    if state == 0:
-        self.widget = event.widget
-        k.setLabelBlue('Goto character: ')
-        k.getArg(event,'goto-char',1,self.gotoCharacter)
-    else:
-        n = k.arg ; w = self.widget
-        if n.isdigit():
-            w.mark_set('insert','1.0 +%sc' % n)
-            w.see('insert')
-        k.resetLabel()
-        k.clearState()</t>
-<t tx="ekr.20050929124234">def gotoLine (self,event):
-
-    k = self.k ; state = k.getState('goto-line')
-    
-    if state == 0:
-        self.widget = event.widget
-        k.setLabelBlue('Goto line: ')
-        k.getArg(event,'goto-line',1,self.gotoLine)
-    else:
-        n = k.arg ;  w = self.widget
-        if n.isdigit():
-            w.mark_set('insert','%s.0' % n)
-            w.see('insert')
-        k.resetLabel()
-        k.clearState()</t>
-<t tx="ekr.20050929155208"></t>
 <t tx="ekr.20051001050607">def endCommand (self,event,commandName):
 
     '''Make sure Leo updates the widget following a command.
@@ -6973,7 +5347,7 @@ self.idleCount = 0</t>
 
     k = self ; c = k.c
     # The command may have closed the window.
-    if g.app.quitting or not hasattr(c,'currentPosition'): return
+    if g.app.quitting or not c.exists: return
 
     # Set the best possible undoType: prefer explicit commandName to k.commandName.
     commandName = commandName or k.commandName or ''
@@ -6993,81 +5367,6 @@ self.idleCount = 0</t>
         if 0: # Do *not* call this by default.  It interferes with undo.
             c.frame.body.onBodyChanged(undoType='Typing')</t>
 <t tx="ekr.20051001051355"></t>
-<t tx="ekr.20051002095724">def keepLines (self,event):
-
-    '''Delete each line that does not contain a match for regexp, operating on the text after point.
-
-    In Transient Mark mode, if the region is active, the command operates on the region instead.'''
-
-    k = self.k ; state = k.getState('keep-lines')
-    
-    if state == 0:
-        k.setLabelBlue('Keep lines regexp: ',protect=True)
-        k.getArg(event,'keep-lines',1,self.keepLines)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.linesHelper(event,k.arg,'keep')
-        k.commandName = 'keep-lines %s' % k.arg</t>
-<t tx="ekr.20051002102410">def down (event):
-
-    w = event.widget
-
-    if self.testinrange(w):
-        w.tag_add(mrk,'insert','insert lineend')
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        i1 = str(int(i1)+1)
-        w.mark_set('insert',i1+'.'+i2)
-        w.tag_add(mrk,'insert linestart -1c','insert')
-        if self.inRange(w,mrk,l='-1c',r='+1c'):
-            w.tag_remove(mrk,'1.0','insert')
-
-    return 'break'</t>
-<t tx="ekr.20051002102410.1">def extend (event):
-
-    w = event.widget
-    w.mark_set('insert','insert + 1c')
-
-    if self.inRange(w,mrk):
-        w.tag_remove(mrk,'insert -1c')
-    else:
-        w.tag_add(mrk,'insert -1c')
-        w.tag_configure(mrk,background='lightgrey')
-        self.testinrange(w)
-
-    return 'break'
-
-</t>
-<t tx="ekr.20051002102410.2">def truncate (event):
-
-    w = event.widget
-    w.mark_set('insert','insert -1c')
-
-    if self.inRange(w,mrk):
-        self.testinrange(w)
-        w.tag_remove(mrk,'insert')
-    else:
-        w.tag_add(mrk,'insert')
-        w.tag_configure(mrk,background='lightgrey')
-        self.testinrange(w)
-
-    return 'break'</t>
-<t tx="ekr.20051002102410.3">def up (event):
-
-    w = event.widget
-
-    if self.testinrange(w):
-        w.tag_add(mrk,'insert linestart','insert')
-        i = w.index('insert')
-        i1, i2 = i.split('.')
-        i1 = str(int(i1)-1)
-        w.mark_set('insert',i1+'.'+i2)
-        w.tag_add(mrk,'insert','insert lineend + 1c')
-        if self.inRange(w,mrk,l='-1c',r='+1c') and w.index('insert') != '1.0':
-            w.tag_remove(mrk,'insert','end')
-
-    return 'break'</t>
 <t tx="ekr.20051002111614">def wordSearchBackward (self,event):
 
     k = self.k ; state = k.getState('word-search-backward')
@@ -7098,34 +5397,6 @@ if s:
     else:
         if self.regexp: self.reSearchBackward(event)
         else:           self.searchBackward(event)</t>
-<t tx="ekr.20051004102314">def rCommand (self,event):
-    
-    k = self ; state = k.getState('r-command') ; ch = event.keysym
-    if state == 0:
-        k.setLabel ('quick-command r: ',protect=True)
-        k.setState('r-command',1,k.rCommand)
-    elif ch in ('Control_L','Alt_L','Shift_L'):
-        return
-    else:
-        k.clearState()
-        
-        # g.trace(repr(ch))
-        func = k.rCommandDict.get(ch)
-        if func:
-            k.commandName = 'quick-command r: '
-            k.resetLabel()
-            func(event)
-        else:
-            k.setLabelGrey('Unknown r command: %s' % repr(ch))</t>
-<t tx="ekr.20051006092617">if self.useTextWidget:
-    self.svar = None
-else:
-    if self.widget:
-        self.svar = Tk.StringVar()
-        self.widget.configure(textvariable=self.svar)
-        
-    else:
-        self.svar = None</t>
 <t tx="ekr.20051006092617.1">self.abbrevOn = False # True: abbreviations are on.
 self.arg = '' # The value returned by k.getArg.
 self.commandName = None # The name of the command being executed.
@@ -7160,11 +5431,11 @@ self.state = g.bunch(kind=None,n=None,handler=None)
             
         keyCallback = keyCallback1
     else:
-        def menuFuncCallback (event,command=command):
+        def menuFuncCallback (event,command=command,commandName=commandName):
             return command(event)
 
         def keyCallback2 (event,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
+            return k.masterCommand(event,func,stroke,commandName=commandName)
             
         keyCallback = keyCallback2
         
@@ -7172,14 +5443,25 @@ self.state = g.bunch(kind=None,n=None,handler=None)
 <t tx="ekr.20051007080058">def makeAllBindings (self):
     
     k = self ; c = k.c
-    
+
     k.bindingsDict = {}
     k.makeHardBindings()
     k.makeSpecialBindings()
+    k.addModeCommands() 
     k.makeBindingsFromCommandsDict()
-    k.add_ekr_altx_commands()
-    k.addModeCommands()
+    # k.add_ekr_altx_commands()
     k.checkBindings()</t>
+<t tx="ekr.20051007143620">def printCommandsDict (self):
+    
+    c = self
+    
+    print 'Commands...'
+    keys = c.commandsDict.keys()
+    keys.sort()
+    for key in keys:
+        command = c.commandsDict.get(key)
+        print '%30s = %s' % (key,g.choose(command,command.__name__,'&lt;None&gt;'))
+    print</t>
 <t tx="ekr.20051008082929">def createInverseCommandsDict (self):
     
     '''Add entries to k.inverseCommandsDict using c.commandDict,
@@ -7240,24 +5522,25 @@ self.state = g.bunch(kind=None,n=None,handler=None)
     
     '''Make the bindings and set ivars for sepcial keystrokes.'''
     
-    k = self ; c = k.c ; f = c.frame
+    k = self ; c = k.c
     
     # These defaults may be overridden.
     for pane,stroke,ivar,commandName,func in (
         ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
         ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
         ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
-        ('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+        #('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
         # These bindings for inside the minibuffer are strange beasts.
         # They are sent directly to k.fullcommand with a special callback.
-        ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
-        ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
-        ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
-        ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
-        ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
+        # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
+        # ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
+        # ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
+        # ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
+        # ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
     ):
         # Get the user shortcut *before* creating the callbacks.
         junk, bunchList = c.config.getShortcut(commandName)
+        # g.trace(commandName,bunchList)
         if bunchList:
             for bunch in bunchList:
                 accel = (bunch and bunch.val)
@@ -7273,23 +5556,27 @@ self.state = g.bunch(kind=None,n=None,handler=None)
         return k.masterCommand(event,func=None,stroke='&lt;Key&gt;')
 
     k.bindKey('all','&lt;Key&gt;',allKeysCallback,'master-command')</t>
-<t tx="ekr.20051010062551.1">@
+<t tx="ekr.20051010062551.1">@nocolor
+@
+
+ivars:
 
 c.commandsDict:
     keys are emacs command names, values are functions f.
 
 k.inverseCommandsDict:
     keys are f.__name__, values are emacs command names.
-    
-inverseBindingsDict (computed by computeInverseBindingDict)
-    keys are emacs command names, values are shortcuts.
 
 k.leoCallbackDict:
     keys are leoCallback functions, values are called functions.
 
 k.bindingsDict:
-    keys are shortcuts, values are g.bunch(func,name,warningGiven)
-</t>
+    keys are shortcuts, values are *lists* of g.bunch(func,name,warningGiven)
+
+not an ivar (computed by computeInverseBindingDict):
+
+inverseBindingDict
+    keys are emacs command names, values are *lists* of shortcuts.</t>
 <t tx="ekr.20051011072049.2">def cutText (self):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
@@ -7426,6 +5713,37 @@ indicies. It's probably time to do this.
 - Strip quotes from color, font settings.
 
 - Specify &amp; for most menu items.</t>
+<t tx="ekr.20051012201831">def printBindings (self,event):
+
+    '''Print all the bindings presently in effect.'''
+
+    k = self ; c = k.c
+    keys = k.bindingsDict.keys() ; keys.sort()
+
+    c.frame.log.clearTab('Command')
+    for key in keys:
+        bunchList = k.bindingsDict.get(key,[])
+        for b in bunchList:
+            pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
+            s = k.prettyPrintKey(key) + pane
+            g.es('%-30s\t%s' % (s,b.commandName),
+                tabName='Command')</t>
+<t tx="ekr.20051014061332">def printCommands (self,event):
+
+    '''Print all the known commands and their bindings, if any.'''
+
+    k = self ; c = k.c
+    
+    c.frame.log.clearTab('Command')
+    
+    inverseBindingDict = k.computeInverseBindingDict()
+    commandNames = c.commandsDict.keys() ; commandNames.sort()
+
+    for commandName in commandNames:
+        shortcutList = inverseBindingDict.get(commandName,[''])
+        for shortcut in shortcutList:
+            g.es('%-30s\t%s' % (commandName,k.prettyPrintKey(shortcut)),
+                tabName='Command')</t>
 <t tx="ekr.20051014152256">Improve import code so it handles stufff like this from Ipyton/iplib
 
 ### This should *not* terminate the function!
@@ -7445,7 +5763,31 @@ indicies. It's probably time to do this.
 - Ignore position of blank lines wrt sentinels.
 - Ignore (optionally?) underindented blank lines.
 - Use pyclbr to parse Python imports?</t>
-<t tx="ekr.20051014161015"></t>
+<t tx="ekr.20051014170754.1">def getShortcutForCommandName (self,commandName):
+    
+    k = self ; c = k.c
+
+    command = c.commandsDict.get(commandName)
+
+    if command:
+        for key in k.bindingsDict:
+            bunchList = k.bindingsDict.get(key,[])
+            for b in bunchList:
+                if b.commandName == commandName:
+                    return key
+    return ''
+    
+def getShortcutForCommand (self,command):
+    
+    k = self ; c = k.c
+    
+    if command:
+        for key in k.bindingsDict:
+            bunchList = k.bindingsDict.get(key,[])
+            for b in bunchList:
+                if b.commandName == command.__name__:
+                    return key
+    return ''</t>
 <t tx="ekr.20051015110547">def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
     
     '''Make the function available as a minibuffer command,
@@ -7473,504 +5815,59 @@ indicies. It's probably time to do this.
     else:
         if verbose:
             g.es_print('Registered %s' % (commandName), color='blue')</t>
-<t tx="ekr.20051015114221">def capitalizeWord (self,event):
-    self.capitalizeHelper(event,'cap')
-
-def downCaseWord (self,event):
-    self.capitalizeHelper(event,'low')
-
-def upCaseWord (self,event):
-    self.capitalizeHelper(event,'up')</t>
-<t tx="ekr.20051015114221.1">def capitalizeHelper (self,event,which):
-
-    w = event.widget
-    text = w.get('insert wordstart','insert wordend')
-    i = w.index('insert')
-    if text == ' ': return
-    w.delete('insert wordstart','insert wordend')
-    if which == 'cap':
-        text = text.capitalize()
-    if which == 'low':
-        text = text.lower()
-    if which == 'up':
-        text = text.upper()
-    w.insert('insert',text)
-    w.mark_set('insert',i)
-    
-</t>
-<t tx="ekr.20051016095907"></t>
-<t tx="ekr.20051016095907.1"></t>
-<t tx="ekr.20051016095907.2"></t>
-<t tx="ekr.20051016101724.1">def selectTab (self,tabName):
-
-    '''Create the tab if necessary and make it active.'''
-
-    c = self.c ; tabFrame = self.frameDict.get(tabName)
-
-    if tabFrame:
-        # Switch to a new colorTags list.
-        newColorTags = self.colorTagsDict.get(tabName)
-        self.colorTagsDict [self.tabName] = self.colorTags [:]
-        self.colorTags = newColorTags
-    else:
-        self.createTab(tabName)
-        
-    self.nb.selectpage(tabName)
-    # Update the status vars.
-    self.tabName = tabName
-    self.logCtrl = self.textDict.get(tabName)
-    # c.frame.widgetWantsFocus(self.logCtrl)
-    self.tabFrame = self.frameDict.get(tabName)
-    
-    # New in 4.4b1: call update *after* creating the tab.
-    tabFrame and tabFrame.update()
-
-    return tabFrame</t>
-<t tx="ekr.20051016101927">@ Printing uses self.logCtrl, so this code need not concern itself
-with which tab is active.
-
-Also, selectTab switches the contents of colorTags, so that is not concern.
-It may be that Pmw will allow us to dispense with the colorTags logic...</t>
-<t tx="ekr.20051016101927.1">def putnl (self,tabName='Log'):
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        self.logCtrl.insert("end",'\n')
-        self.logCtrl.see("end")
-        self.forceLogUpdate('\n')
-    else:
-        # Put a newline to logWaiting and print newline
-        g.app.logWaiting.append(('\n',"black"),)
-        print "Null tkinter log"
-        print
-</t>
-<t tx="ekr.20051016103459">def createTextWidget (self,parentFrame):
-    
-    self.logNumber += 1
-    log = Tk.Text(parentFrame,name="log-%d" % self.logNumber,
-        setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
-    
-    logBar = Tk.Scrollbar(parentFrame,name="logBar")
-
-    log['yscrollcommand'] = logBar.set
-    logBar['command'] = log.yview
-    
-    logBar.pack(side="right", fill="y")
-    # rr 8/14/02 added horizontal elevator 
-    if self.wrap == "none": 
-        logXBar = Tk.Scrollbar( 
-            parentFrame,name='logXBar',orient="horizontal") 
-        log['xscrollcommand'] = logXBar.set 
-        logXBar['command'] = log.xview 
-        logXBar.pack(side="bottom", fill="x")
-    log.pack(expand=1, fill="both")
-
-    return log</t>
 <t tx="ekr.20051016155819"></t>
-<t tx="ekr.20051017140811.1"></t>
 <t tx="ekr.20051017212057">def clearTab (self,tabName):
     
     self.selectTab(tabName)
     t = self.logCtrl
-    t.delete('1.0','end')</t>
-<t tx="ekr.20051018061932"></t>
-<t tx="ekr.20051018061932.1">def lowerTab (self,tabName):
+    if t:
+        t.delete('1.0','end')
+        # Necessary to allow focus to move *out* of t.
+        t.update()</t>
+<t tx="ekr.20051017212452"># Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
+
+def computeCompletionList (self,defaultTabList,backspace):
     
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='grey80')
-        
-        # New in 4.4b1: call update explicitly.
-        logCtrl = self.textDict.get(tabName)
-        logCtrl and logCtrl.update()
-        self.c.frame.bodyWantsFocus()
+    k = self ; c = k.c ; s = k.getLabel() 
+    command = s [len(k.mb_prompt):]
+        # s always includes prefix, so command is well defined.
 
-def raiseTab (self,tabName):
+    k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
 
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='LightSteelBlue1')
-        
-        # New in 4.4b1: call update explicitly.
-        logCtrl = self.textDict.get(tabName)
-        if logCtrl:
-            logCtrl.update()
-            self.c.frame.widgetWantsFocus(logCtrl)</t>
-<t tx="ekr.20051018072306">textWidget = self.createTextWidget(tabFrame)
+    c.frame.log.clearTab('Completion') # Creates the tab if necessary.
 
-# Set the background color.
-configName = 'log_pane_%s_tab_background_color' % tabName
-bg = c.config.getColor(configName) or 'MistyRose1'
-try: textWidget.configure(bg=bg)
-except Exception: pass # Could be a user error.
+    if k.mb_tabList:
+        k.mb_tabListIndex = -1 # The next item will be item 0.
 
-self.frameDict [tabName] = tabFrame
-self.textDict [tabName] = textWidget
-
-# Switch to a new colorTags list.
-if self.tabName:
-    self.colorTagsDict [self.tabName] = self.colorTags [:]
-self.colorTags = ['black']
-self.colorTagsDict [tabName] = self.colorTags
-
-# Make the bindings.
-textWidget.bind("&lt;Button-1&gt;",self.onActivateLog)
-textWidget.tag_config('black',foreground='black')</t>
-<t tx="ekr.20051018102027">def deleteTab (self,tabName):
-    
-    if tabName == 'Log':
-        pass
-
-    elif tabName in ('Find','Spell'):
-        self.selectTab('Log')
-    
-    elif tabName in self.nb.pagenames():
-        self.nb.delete(tabName)
-        self.colorTagsDict [tabName] = []
-        self.textDict [tabName] = None
-        self.frameDict [tabName] = None
-        self.tabName = None
-        self.selectTab('Log')
-        
-    # New in Leo 4.4b1.
-    self.c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20051019134106"></t>
-<t tx="ekr.20051019134106.1">def makeTabMenu (self,tabName=None):
-
-    '''Create a tab popup menu.'''
-
-    c = self.c
-    hull = self.nb.component('hull') # A Tk.Canvas.
-    
-    menu = Tk.Menu(hull,tearoff=0)
-    menu.add_command(label='New Tab',command=self.newTabFromMenu)
-    
-    if tabName:
-        # Important: tabName is the name when the tab is created.
-        # It is not affected by renaming, so we don't have to keep
-        # track of the correspondence between this name and what is in the label.
-        def deleteTabCallback():
-            self.deleteTab(tabName)
+        if not backspace:
+            k.setLabel(k.mb_prompt + common_prefix)
             
-        label = g.choose(
-            tabName in ('Find','Spell'),'Hide This Tab','Delete This Tab')
-        menu.add_command(label=label,command=deleteTabCallback)
- 
-        def renameTabCallback():
-            self.renameTabFromMenu(tabName)
+        inverseBindingDict = k.computeInverseBindingDict()
+        for commandName in k.mb_tabList:
+            shortcutList = inverseBindingDict.get(commandName,[''])
+            for shortcut in shortcutList:
+                g.es('%s %s' % (commandName,k.prettyPrintKey(shortcut)),tabName='Completion')
 
-        menu.add_command(label='Rename This Tab',command=renameTabCallback)
+    c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20051018070524">def computeInverseBindingDict (self):
 
-    return menu</t>
-<t tx="ekr.20051019134422">def onRightClick (self,event,menu):
+    k = self ; d = {}
     
-    c = self.c
-    menu.post(event.x_root,event.y_root)
-    
-    
-def onClick (self,event,tabName):
+    # keys are minibuffer command names, values are shortcuts.
+    for shortcut in k.bindingsDict.keys():
+        bunchList = k.bindingsDict.get(shortcut,[])
+        for b in bunchList:
+            shortcutList = d.get(b.commandName,[])
+            bunchList = k.bindingsDict.get(shortcut,[g.Bunch(pane='all')])
+            for b in bunchList:
+                # g.trace(shortcut,repr(b.pane))
+                pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
+                s = '%s %s' % (k.prettyPrintKey(shortcut),pane)
+                if s not in shortcutList:
+                    shortcutList.append(s)
+            d [b.commandName] = shortcutList
 
-    self.selectTab(tabName)</t>
-<t tx="ekr.20051019140004.1">def newTabFromMenu (self,tabName='Log'):
-
-    self.selectTab(tabName)
-    
-    # This is called by getTabName.
-    def selectTabCallback (newName):
-        self.selectTab(newName)
-
-    self.getTabName(selectTabCallback)</t>
-<t tx="ekr.20051019165401">def renameTabFromMenu (self,tabName):
-
-    if tabName in ('Log','Completions'):
-        g.es('can not rename %s tab' % (tabName),color='blue')
-    else:
-        def renameTabCallback (newName):
-            self.renameTab(tabName,newName)
-
-        self.getTabName(renameTabCallback)</t>
-<t tx="ekr.20051019170806">def renameTab (self,oldName,newName):
-    
-    label = self.nb.tab(oldName)
-    label.configure(text=newName)</t>
-<t tx="ekr.20051019172811">def getTabName (self,exitCallback):
-    
-    canvas = self.nb.component('hull')
-
-    # Overlay what is there!
-    f = Tk.Frame(canvas)
-    f.pack(side='top',fill='both',expand=1)
-    
-    row1 = Tk.Frame(f)
-    row1.pack(side='top',expand=0,fill='x',pady=10)
-    row2 = Tk.Frame(f)
-    row2.pack(side='top',expand=0,fill='x')
-
-    Tk.Label(row1,text='Tab name').pack(side='left')
-
-    e = Tk.Entry(row1,background='white')
-    e.pack(side='left')
-
-    def getNameCallback (event=None):
-        s = e.get().strip()
-        f.pack_forget()
-        if s: exitCallback(s)
-        
-    def closeTabNameCallback (event=None):
-        f.pack_forget()
-        
-    b = Tk.Button(row2,text='Ok',width=6,command=getNameCallback)
-    b.pack(side='left',padx=10)
-    
-    b = Tk.Button(row2,text='Cancel',width=6,command=closeTabNameCallback)
-    b.pack(side='left')
-
-    e.focus_force()
-    e.bind('&lt;Return&gt;',getNameCallback)</t>
-<t tx="ekr.20051019183105"></t>
-<t tx="ekr.20051019183105.1">def showColors (self,event):
-    
-    c = self.c ; log = c.frame.log ; tabName = 'Colors'
-    
-    &lt;&lt; define colors &gt;&gt;
-    
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    else:
-        log.selectTab(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        f = log.frameDict.get(tabName)
-        self.createColorPicker(f,colors)
-</t>
-<t tx="ekr.20051019183105.2">colors = (
-    "gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
-    "snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
-    "seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
-    "AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
-    "PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
-    "NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
-    "LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
-    "cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
-    "honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
-    "LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
-    "MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
-    "SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
-    "RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
-    "DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
-    "SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
-    "DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
-    "SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
-    "LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
-    "LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
-    "LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
-    "LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
-    "PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
-    "CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
-    "turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
-    "DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
-    "DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
-    "aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
-    "DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
-    "PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
-    "SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
-    "green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
-    "chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
-    "DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
-    "DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
-    "LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
-    "LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
-    "LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
-    "gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
-    "DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
-    "RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
-    "IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
-    "sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
-    "wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
-    "chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
-    "firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
-    "salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
-    "LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
-    "DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
-    "coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
-    "OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
-    "red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
-    "HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
-    "LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
-    "PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
-    "maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
-    "VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
-    "orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
-    "MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
-    "DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
-    "purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
-    "MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
-    "thistle4" )</t>
-<t tx="ekr.20051019183105.3">def createColorPicker (self,parent,colors):
-    
-    colors = list(colors)
-    bg = parent.cget('background')
-    
-    outer = Tk.Frame(parent,background=bg)
-    outer.pack(side='top',fill='both',expand=1,pady=10)
-    
-    f = Tk.Frame(outer)
-    f.pack(side='top',expand=0,fill='x')
-    f1 = Tk.Frame(f) ; f1.pack(side='top',expand=0,fill='x')
-    f2 = Tk.Frame(f) ; f2.pack(side='top',expand=1,fill='x')
-    f3 = Tk.Frame(f) ; f3.pack(side='top',expand=1,fill='x')
-    
-    label = Tk.Text(f1,height=1,width=20)
-    label.insert('1.0','Color name or value...')
-    label.pack(side='left',pady=6)
-
-    &lt;&lt; create optionMenu and callback &gt;&gt;
-    &lt;&lt; create picker button and callback &gt;&gt;</t>
-<t tx="ekr.20051019183105.4">colorBox = Pmw.ComboBox(f2,scrolledlist_items=colors)
-colorBox.pack(side='left',pady=4)
-
-def colorCallback (newName): 
-    label.delete('1.0','end')
-    label.insert('1.0',newName)
-    try:
-        for theFrame in (parent,outer,f,f1,f2,f3):
-            theFrame.configure(background=newName)
-    except: pass # Ignore invalid names.
-
-colorBox.configure(selectioncommand=colorCallback)</t>
-<t tx="ekr.20051019183105.5">def pickerCallback ():
-    rgb,val = tkColorChooser.askcolor(parent=parent,initialcolor=f.cget('background'))
-    if rgb or val:
-        # label.configure(text=val)
-        label.delete('1.0','end')
-        label.insert('1.0',val)
-        for theFrame in (parent,outer,f,f1,f2,f3):
-            theFrame.configure(background=val)
-
-b = Tk.Button(f3,text="Color Picker...",
-    command=pickerCallback,background=bg)
-b.pack(side='left',pady=4)</t>
-<t tx="ekr.20051019201809">def showFonts (self,event):
-
-    c = self.c ; log = c.frame.log ; tabName = 'Fonts'
-
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    else:
-        log.selectTab(tabName)
-        f = log.frameDict.get(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        self.createFontPicker(f)</t>
-<t tx="ekr.20051019201809.1">def createFontPicker (self,parent):
-
-    bg = parent.cget('background')
-    font = self.getFont()
-    &lt;&lt; create the frames &gt;&gt;
-    &lt;&lt; create the family combo box &gt;&gt;
-    &lt;&lt; create the size entry &gt;&gt;
-    &lt;&lt; create the weight combo box &gt;&gt;
-    &lt;&lt; create the slant combo box &gt;&gt;
-    &lt;&lt; create the sample text widget &gt;&gt;
-    &lt;&lt; create and bind the callbacks &gt;&gt;</t>
-<t tx="ekr.20051019201809.2">names = tkFont.families()
-names = list(names)
-names.sort()
-names.insert(0,'&lt;None&gt;')
-
-familyBox = Pmw.ComboBox(f1,
-    labelpos="we",label_text='Family:',label_width=10,
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=names)
-
-familyBox.selectitem(0)
-familyBox.pack(side="left",padx=2,pady=2)</t>
-<t tx="ekr.20051019201809.3">Tk.Label(f2,text="Size:",width=10,background=bg).pack(side="left")
-
-sizeEntry = Tk.Entry(f2,width=4) ##,textvariable=sv)
-sizeEntry.pack(side="left",padx=2,pady=2)
-</t>
-<t tx="ekr.20051019201809.4">weightBox = Pmw.ComboBox(f3,
-    labelpos="we",label_text="Weight:",label_width=10,
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=['&lt;None&gt;','normal','bold'])
-
-weightBox.selectitem(0)
-weightBox.pack(side="left",padx=2,pady=2)</t>
-<t tx="ekr.20051019201809.5">slantBox = Pmw.ComboBox(f4,
-    labelpos="we",label_text="Slant:",label_width=10,
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=['&lt;None&gt;','roman','italic'])
-
-slantBox.selectitem(0)
-slantBox.pack(side="left",padx=2,pady=2)</t>
-<t tx="ekr.20051019201809.6">def getFont(self,family=None,size=12,slant='roman',weight='normal'):
-    
-    try:
-        return tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-    except Exception:
-        g.es("exception setting font")
-        g.es("family,size,slant,weight:",family,size,slant,weight)
-        # g.es_exception() # This just confuses people.
-        return g.app.config.defaultFont</t>
-<t tx="ekr.20051019201809.7">def setFont(self,familyBox,sizeEntry,slantBox,weightBox,label):
-    
-    d = {}
-    for box,key in (
-        (familyBox, 'family'),
-        (None,      'size'),
-        (slantBox,  'slant'),
-        (weightBox, 'weight'),
-    ):
-        if box: val = box.get()
-        else:
-            val = sizeEntry.get().strip() or ''
-            try: int(val)
-            except ValueError: val = None
-        if val and val.lower() not in ('none','&lt;none&gt;',):
-            d[key] = val
-
-    family=d.get('family',None)
-    size=d.get('size',12)
-    weight=d.get('weight','normal')
-    slant=d.get('slant','roman')
-    font = self.getFont(family,size,slant,weight)
-    label.configure(font=font)</t>
-<t tx="ekr.20051019202139">f = Tk.Frame(parent,background=bg) ; f.pack (side='top',expand=0,fill='both')
-f1 = Tk.Frame(f,background=bg)     ; f1.pack(side='top',expand=1,fill='x')
-f2 = Tk.Frame(f,background=bg)     ; f2.pack(side='top',expand=1,fill='x')
-f3 = Tk.Frame(f,background=bg)     ; f3.pack(side='top',expand=1,fill='x')
-f4 = Tk.Frame(f,background=bg)     ; f4.pack(side='top',expand=1,fill='x')</t>
-<t tx="ekr.20051019202139.1">sample = Tk.Text(f,height=20,width=80,font=font)
-sample.pack(side='left')
-
-s = 'The quick brown fox\njumped over the lazy dog.\n0123456789'
-sample.insert('1.0',s)</t>
-<t tx="ekr.20051019202328">def fontCallback(event=None):
-    self.setFont(familyBox,sizeEntry,slantBox,weightBox,sample)
-
-for w in (familyBox,slantBox,weightBox):
-    w.configure(selectioncommand=fontCallback)
-
-sizeEntry.bind('&lt;Return&gt;',fontCallback)</t>
-<t tx="ekr.20051020075416">menu = self.makeTabMenu(tabName)
-tab = self.nb.tab(tabName)
-
-def tabMenuRightClickCallback(event):
-    self.onRightClick(event,menu)
-    
-def tabMenuClickCallback(event):
-    self.onClick(event,tabName)
-
-tab.bind('&lt;Button-1&gt;',tabMenuClickCallback)
-tab.bind('&lt;Button-3&gt;',tabMenuRightClickCallback)</t>
+    return d</t>
 <t tx="ekr.20051020120306">def openFindTab (self,event=None):
 
     c = self.c ; log = c.frame.log ; tabName = 'Find'
@@ -8374,30 +6271,12 @@ if not found:
     return t.search(*args,**keys)
 
 def init_s_ctrl (self,s):
-    t = self.s_ctrl	
+    t = self.s_ctrl
     t.delete("1.0","end")
     t.insert("end",s)
     t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
     return t</t>
 <t tx="ekr.20051021074728"></t>
-<t tx="ekr.20051021091958">ok = (
-    type(data) in (type(()), type([])) and
-    len(data) in (2,3)
-)
-    
-if ok:
-    if len(data) == 2:
-        label,command = data
-    else:
-        # New in 4.4: we ignore shortcuts bound in menu tables.
-        label,junk,command = data
-else:
-    g.trace('bad data in menu table: %s' % repr(data))
-    continue # Ignore bad data
-     
-if ok and label in (None,'-'):
-    self.add_separator(menu)
-    continue # That's all.</t>
 <t tx="ekr.20051021100806.1">@ One not-so-horrible kludge remains.
 
 The cut/copy/paste commands in the menu tables are not the same as the methods
@@ -8445,50 +6324,18 @@ if shortcut == '&lt;Key&gt;':
         w.bind(shortcut,callback,'+')
 else:
     for w in widgets:
+        # if shortcut == '&lt;Return&gt;': g.trace(g.app.gui.widget_name(w),shortcut,callback)
         w.bind(shortcut,callback)
     # Get rid of the default binding in the menu. (E.g., Alt-f)
     menu.bind(shortcut,lambda e: 'break')</t>
-<t tx="ekr.20051022142249"></t>
-<t tx="ekr.20051022144825">def focusToBody (self,event):
+<t tx="ekr.20051022141020">def onTreeClick (self,event=None):
     
-    self.c.frame.bodyWantsFocus()
-
-def focusToLog (self,event):
-
-    self.c.frame.logWantsFocus()
+    c = self.c
     
-def focusToMinibuffer (self,event):
-    
-    self.c.frame.minibufferWantsFocus()
+    c.setLog()
+    self.frame.treeWantsFocus()
 
-def focusToTree (self,event):
-    
-    self.c.frame.treeWantsFocus()</t>
-<t tx="ekr.20051022144825.1">def cycleFocus (self,event):
-
-    c = self.c ; frame = c.frame
-    
-    body = c.frame.body.bodyCtrl
-    log  = c.frame.log.logCtrl
-    tree = c.frame.tree.canvas
-
-    panes = [body,log,tree]
-
-    for w in panes:
-        if w == event.widget:
-            i = panes.index(w)
-            if i &gt;= len(panes) - 1:
-                i = 0
-            else:
-                i += 1
-            pane = panes[i] ; break
-    else:
-        # Assume we were somewhere in the tree.
-        pane = body
-        
-    # g.trace(pane)
-    frame.set_focus(pane)</t>
-<t tx="ekr.20051022152427"></t>
+    return 'break'</t>
 <t tx="ekr.20051022162730">def setTabBindings (self,tabName):
     
     c = self.c ; k = c.keyHandler
@@ -8496,12 +6343,7 @@ def focusToTree (self,event):
     w = self.textDict.get(tabName)
 
     if k and w:
-        k.copyBindingsToWidget(['all','log','text'],w)
-
-        # A wretched kludge: put the bindings in the tab!
-        # We can't seem to get focus away from it.
-        tab = self.nb.tab(tabName) # b is a Tk.Button.
-        k.copyBindingsToWidget(['all','log','text'],tab)</t>
+        k.copyBindingsToWidget(['log','text','all'],w)</t>
 <t tx="ekr.20051022211617"></t>
 <t tx="ekr.20051022212004"># Just open the Find tab if it has never been opened.
 # For minibuffer commands, it would be good to force the Find tab to be visible.
@@ -8510,15 +6352,20 @@ def focusToTree (self,event):
 def findTabChange(self,event=None):
 
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.changeCommand()
+    else:
+        self.openFindTab()
+        
+def findTabChangeAll(self,event=None):
+
+    if self.findTabHandler:
+        self.findTabHandler.changeAllCommand()
     else:
         self.openFindTab()
 
 def findTabChangeThenFind(self,event=None):
 
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.changeThenFindCommand()
     else:
         self.openFindTab()
@@ -8526,7 +6373,6 @@ def findTabChangeThenFind(self,event=None):
 def findTabFindNext (self,event=None):
     
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.findNextCommand()
     else:
         self.openFindTab()
@@ -8534,7 +6380,6 @@ def findTabFindNext (self,event=None):
 def findTabFindPrev (self,event=None):
     
     if self.findTabHandler:
-        #self.openFindTab()
         self.findTabHandler.findPrevCommand()
     else:
         self.openFindTab()
@@ -8542,31 +6387,44 @@ def findTabFindPrev (self,event=None):
 def hideFindTab (self,event=None):
     if self.findTabHandler:
         self.c.frame.log.selectTab('Log')</t>
+<t tx="ekr.20051023083258">def callers (n=5,excludeCaller=True):
+    
+    '''Return a list containing the callers of the function that called g.callerList.
+    
+    By default, the function that called g.callerList is not on the list,
+    which is what is wanted when using g.trace.'''
+    
+    result = []
+    while n &gt; 0:
+        s = g.callerName(n)
+        if s == 'callers':
+            if excludeCaller and result:
+                del result [-1]
+            break
+        elif s:
+            result.append(s)
+        n -= 1
+        
+    return ','.join(result)
+</t>
 <t tx="ekr.20051023094009"></t>
 <t tx="ekr.20051023181449">def createBindings (self):
     
     c = self.c ; k = c.keyHandler
 
     for w in (self.find_ctrl, self.change_ctrl):
-        k.copyBindingsToWidget(['text','mini'],w)
+        k.copyBindingsToWidget(['text','mini','all'],w)
         # Bind shortcuts for the following commands...
         for commandName,func in (
             ('find-tab-find',       self.findNextCommand),
             ('find-tab-find-prev',  self.findPrevCommand),
             ('find-tab-change',     self.changeCommand),
+            ('find-tab-change-all', self.changeAllCommand),
             ('find-tab-change-find',self.changeThenFindCommand),
         ):
-            if 1:
-                junk, bunchList = c.config.getShortcut(commandName)
-                for bunch in bunchList:
-                    accel = bunch.val
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                    if shortcut:
-                        # g.trace(shortcut,commandName)
-                        w.bind(shortcut,func)
-            else:
-                junk, bunch = c.config.getShortcut(commandName)
-                accel = bunch and bunch.val
+            junk, bunchList = c.config.getShortcut(commandName)
+            for bunch in bunchList:
+                accel = bunch.val
                 shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                 if shortcut:
                     # g.trace(shortcut,commandName)
@@ -8576,74 +6434,55 @@ def hideFindTab (self,event=None):
 
     for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
         w.bind("&lt;Key-Return&gt;", self.findButtonCallback)
-        w.bind("&lt;Key-Escape&gt;", self.hideTab)
-</t>
-<t tx="ekr.20051023182326">def copyBindingsToWidget (self,paneOrPanes,widget):
+        w.bind("&lt;Key-Escape&gt;", self.hideTab)</t>
+<t tx="ekr.20051023182326">def copyBindingsToWidget (self,paneOrPanes,w):
     
-    '''Copy all bindings for the given panes to widget.
+    '''Copy all bindings for the given panes to widget w.
     
-    paneOrPanes may be a single pane name or a list of pane names.'''
+    paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+    
+    # g.trace(paneOrPanes,g.app.gui.widget_name(w))
 
     k = self ; d = k.bindingsDict
+    bindings = {}
     keys = d.keys() ; keys.sort()
     if type(paneOrPanes) == type('abc'):
         panes = [paneOrPanes] # list(paneOrPanes) does not work.
     else:
         panes = paneOrPanes
+    # g.trace(panes)
 
-    # Keys are requests, values are list of panes that match.
-    matchingPanesDict = {
-        'all':  ['all','body','log','mini','text','tree'],
-        'body': ['all','body'],
-        'log':  ['all','log'],
-        # 'menu': [menu], # Not used.  Probably dubious.
-        'mini': ['all','mini'],                   
-        'text': ['all','body','log','text'],  # Text = body+log
-        'tree': ['all','tree'],
-    }
-
-    matchingPanes = []
-    for pane in panes:
-        matches = matchingPanesDict.get(pane,[])
-        for match in matches:
-            if match not in matchingPanes:
-                matchingPanes.append(match)
-
-    # g.trace(widget._name,'matchingPanes',matchingPanes,g.callers(3))
-    
     for shortcut in keys:
-        bunch = d.get(shortcut)
-        if bunch.pane in matchingPanes:
-            func = bunch.func
-            commandName = bunch.commandName
-            # g.trace('**binding',bunch.pane,shortcut,commandName,widget._name)
-            
-            # This callback executes the command in the given widget.
-            def textBindingsRedirectionCallback(event,
-                func=func,widget=widget,commandName=commandName):
-                __pychecker__ = '--no-argsused' # widget and commandName.
-                # g.trace(commandName,func,g.app.gui.widget_name(widget))
-                func(event)
-                return 'break'
+        shortcutsBunchList = []
+        for pane in panes:
+            old_panes = bindings.get(shortcut,[])
+            assert(type(old_panes)==type([]))
+            if old_panes and pane in old_panes:
+                # This should have been caught earlier, but another check doesn't hurt.
+                g.trace('*** redefining %s in %s' % (shortcut,pane))
+            else:
+                bunchList = d.get(shortcut,[])
+                for bunch in bunchList:
+                    if bunch.pane == pane:
+                        shortcutsBunchList.append(bunch)
+                        old_panes.append(pane)
+                        bindings [shortcut] = old_panes
+        # Create bindings for the shortcut in all panes.
+        if shortcutsBunchList:
+            self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
+                                
+    # Bind all other keys to k.masterCommand.
+    def generalTextKeyCallback (event,k=self):
+        k.masterCommand(event,func=None,stroke='&lt;Key&gt;',commandName=None)
 
-            widget.bind(shortcut,textBindingsRedirectionCallback)
-            
-    # New in 4.4a5: create the all-purpose binding.
-    # This allows Leo always to return 'break' in key handlers.
-    widget.bind('&lt;Key&gt;',k.onTextWidgetKey)</t>
+    w.bind('&lt;Key&gt;',generalTextKeyCallback)</t>
 <t tx="ekr.20051023183028">def findButtonCallback(self,event=None):
     
     __pychecker__ = '--no-argsused'
 
     self.findButton()
     return 'break'</t>
-<t tx="ekr.20051023192433">- Convert Emacs-Style Names to Menu Style Names when creating undo name.
-
-- Examine scheme for duplicate shortcuts.
-        - At present, a single command can be bound only once.
-        - It's not a horrible restriction...
-    
-- The colerer is calling c.config too much?</t>
+<t tx="ekr.20051023192433"></t>
 <t tx="ekr.20051024102724"># New in 4.4a2.
 
 def setBindings (self):
@@ -8653,7 +6492,7 @@ def setBindings (self):
     if self.useBindtags:
         # This _must_ be a Text widget attached to the canvas!
         self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
-        self.c.keyHandler.copyBindingsToWidget(['all','tree'],t)
+        self.c.keyHandler.copyBindingsToWidget(['text','tree','all'],t)
 
         # newText() attaches these bindings to all headlines.
         self.textBindings = t.bindtags()
@@ -8661,16 +6500,6 @@ def setBindings (self):
         self.bindingWidget = None
    
     self.createPermanentBindings()</t>
-<t tx="ekr.20051024173701">def createTab (self,tabName):
-    
-    c = self.c ; k = c.keyHandler
-    tabFrame = self.nb.add(tabName)
-    &lt;&lt; bind a tab-specific pop-up menu to the tab &gt;&gt;
-    &lt;&lt; Create the tab's text widget &gt;&gt;
-    self.setTabBindings(tabName)
-    
-    # New in 4.4b1: call update explicitly.
-    textWidget and textWidget.update()</t>
 <t tx="ekr.20051024192602"></t>
 <t tx="ekr.20051024192642.2">def findNextCommand (self,event=None):
     
@@ -8690,6 +6519,11 @@ def findPrevCommand (self,event=None):
     c = self.c
     self.setup_command(c)
     self.change()
+    
+def changeAllCommand (self,event=None):
+    c = self.c
+    self.setup_command(c)
+    self.changeAll()
     
 def changeThenFindCommand(self,event=None):
     
@@ -9206,6 +7040,14 @@ def change(self,event=None):
         self.handler.change()
     else:
         self.openSpellTab()
+        
+def changeAll(self,event=None):
+
+    if self.handler:
+        self.openSpellTab()
+        self.handler.changeAll()
+    else:
+        self.openSpellTab()
 
 def changeThenFind (self,event=None):
     
@@ -9275,7 +7117,7 @@ def ignore (self,event=None):
     widgets = (self.listBox, self.outerFrame)
 
     for w in widgets:
-        k.copyBindingsToWidget('text',w)
+        k.copyBindingsToWidget(['text','all'],w)
         # Bind shortcuts for the following commands...
         for commandName,func in (
             ('full-command',            k.fullCommand),
@@ -9285,23 +7127,14 @@ def ignore (self,event=None):
             ('spell-ignore',            self.ignore),
             ('spell-change-then-find',  self.changeThenFind),
         ):
-            if 1:
-                junk, bunchList = c.config.getShortcut(commandName)
-                for bunch in bunchList:
-                    accel = bunch.val
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
-                    if shortcut:
-                        # g.trace(shortcut,commandName)
-                        w.bind(shortcut,func)
-            else:
-                junk, bunch = c.config.getShortcut(commandName)
-                accel = bunch and bunch.val
+            junk, bunchList = c.config.getShortcut(commandName)
+            for bunch in bunchList:
+                accel = bunch.val
                 shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
                 if shortcut:
                     # g.trace(shortcut,commandName)
                     w.bind(shortcut,func)
-                    
-                </t>
+           </t>
 <t tx="ekr.20051025121408">def hide (self,event=None):
     
     self.c.frame.log.selectTab('Log')
@@ -10169,43 +8002,6 @@ Creating the background:
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
 </t>
-<t tx="ekr.20051026083733.6">body.colorizer.interrupt()
-c.frame.scanForTabWidth(p)
-body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
-self.forceFullRecolorFlag = False</t>
-<t tx="ekr.20051026083733.7">c.beginUpdate()
-try:
-    redraw_flag = False
-    # Update dirty bits.
-    # p.setDirty() sets all cloned and @file dirty bits.
-    if not p.isDirty() and p.setDirty():
-        redraw_flag = True
-        
-    # Update icons. p.v.iconVal may not exist during unit tests.
-    val = p.computeIcon()
-    if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-        p.v.iconVal = val
-        redraw_flag = True
-finally:
-    c.endUpdate(redraw_flag)</t>
-<t tx="ekr.20051026092433">def updateTab (self,p,w):
-
-    c = self.c ; d = g.scanDirectives(c,p)
-    tab_width = d.get("tabwidth",c.tab_width)
-    
-    i,j = g.app.gui.getTextSelection(w)
-    if i != j:
-        w.delete(i,j)
-    if tab_width &gt; 0:
-        w.insert("insert",'\t')
-    else:
-        # Get the preceeding characters.
-        s = w.get("insert linestart","insert")
-    
-        # Compute n, the number of spaces to insert.
-        width = g.computeWidth(s,tab_width)
-        n = abs(tab_width) - (width % abs(tab_width))
-        w.insert("insert",' ' * n)</t>
 <t tx="ekr.20051026092433.1">def backwardDeleteCharacter (self,event=None):
     
     c = self.c ; p = c.currentPosition()
@@ -10213,24 +8009,30 @@ finally:
     if not g.app.gui.isTextWidget(w): return
     
     name = g.app.gui.widget_name(w)
-    oldText = w.get('1.0','end')
-    i,j = oldSel = g.app.gui.getTextSelection(w)
-  
+    i,j = g.app.gui.getTextSelection(w)
+    # g.trace(i,j)
+
     if name.startswith('body'):
+        self.beginCommand()
         d = g.scanDirectives(c,p)
         tab_width = d.get("tabwidth",c.tab_width)
+        changed = True
         if i != j:
             w.delete(i,j)
+        elif i == '1.0':
+            changed = False # Bug fix: 1/6/06 (after a5 released).
         elif tab_width &gt; 0:
             w.delete('insert-1c')
         else:
             &lt;&lt; backspace with negative tab_width &gt;&gt;
-        c.frame.body.onBodyChanged(undoType='Typing',
-            oldSel=oldSel,oldText=oldText,oldYview=None)
+        self.endCommand(changed=changed)
     else:
+        # No undo in this widget.
         if i != j:
             w.delete(i,j)
-        else:
+        elif i != '1.0':
+            # Bug fix: 1/6/06 (after a5 released).
+            # Do nothing at the start of the headline.
             w.delete('insert-1c')</t>
 <t tx="ekr.20051026092746">s = prev = w.get("insert linestart","insert")
 n = len(prev)
@@ -10248,105 +8050,6 @@ while n2 &gt; 0:
 
 # Make sure we actually delete something.
 w.delete("insert -%dc" % (max(1,count)),"insert")</t>
-<t tx="ekr.20051026143009">@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
-
-It's not possible to tell, given the information available, what Tk has actually
-done. We need only make a reasonable guess here. setUndoTypingParams stores the
-number of trailing newlines in each undo bead, so whatever we do here can be
-faithfully undone and redone.
-@c
-
-def removeTrailingNewlines (self,old,new,ch):
-
-    '''Return True if a Tk has erroneously added a trailing newline.'''
-
-    if not new.endswith('\n'):
-        # There is no newline to remove.  Probably will never happen.
-        return False
-    elif not old:
-        # Ambigous case.  Formerly always returned False.
-        if new == "\n\n":
-            return True # Handle a very strange special case.
-        else:
-            return ch not in ('\r','\n')
-    elif old == new[:-1]:
-        # A single trailing character has been added.
-        return ch not in ('\r','\n') # Was False.
-    else:
-        # The text didn't have a newline, and now it does.
-        # Moveover, some other change has been made to the text,
-        # So at worst we have misrepresented the user's intentions slightly.
-        return True</t>
-<t tx="ekr.20051026171121">i,j = oldSel
-
-if i != j:
-    # No auto-indent if there is selected text.
-    w.delete(i,j)
-    w.insert(i,ch)
-else:
-    w.insert(i,ch)
-    if c.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-        # No auto-indent if in @nocolor mode or after a Change command.
-        removeTrailing = self.updateAutoIndent(p)</t>
-<t tx="ekr.20051026171121.1"># By David McNab:
-def updateAutoIndent (self,p):
-
-    c = self.c ; d = g.scanDirectives(c,p)
-    tab_width = d.get("tabwidth",c.tab_width) # Get the previous line.
-    s = c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # Add the leading whitespace to the present line.
-    junk, width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) &gt; 0 and s [ -1] == ':':
-        # For Python: increase auto-indent after colons.
-        if c.frame.body.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if c.config.getBool("smart_auto_indent"):
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width] ; tabex = 0
-        for i in range(0,len(s)):
-            if s [i] == '\t':
-                tabex += tab_width-1
-            if s [i] in '([{':
-                brackets.append(i+tabex+1)
-            elif s [i] in '}])' and len(brackets) &gt; 1:
-                brackets.pop()
-        width = brackets.pop()
-    ws = g.computeLeadingWhitespace(width,tab_width)
-    if ws:
-        c.frame.bodyCtrl.insert("insert",ws)
-        removeTrailing = False
-    else:
-        removeTrailing = None
-    return removeTrailing</t>
-<t tx="ekr.20051027114433">def getSelectedTab (self):
-    
-    return self.tabName</t>
-<t tx="ekr.20051027172949">def updateAutomatchBracket (self,p,w,ch,oldSel):
-    
-    # assert ch in ('(',')','[',']','{','}')
-    
-    c = self.c ; d = g.scanDirectives(c,p) ; i,j = oldSel
-    language = d.get('language')
-    
-    if ch in ('(','[','{',):
-        automatch = language not in ('plain',)
-        if automatch:
-            ch = ch + {'(':')','[':']','{':'}'}.get(ch)
-        if i != j:
-            w.delete(i,j)
-        w.insert(i,ch)
-        if automatch:
-            w.mark_set('insert','insert-1c')
-    else:
-        ch2 = w.get('insert')
-        if ch2 in (')',']','}'):
-            w.mark_set('insert','insert+1c')
-        else:
-            if i != j:
-                w.delete(i,j)
-            w.insert(i,ch)</t>
 <t tx="ekr.20051028061611.1">Revise:
     moveWordHelper
     findNextMatch
@@ -10389,6 +8092,283 @@ command mode.
 
 It would be nice if the &lt;FocusIn&gt; binding on the minibuffer widget were equivilent
 to Alt-x.</t>
+<t tx="ekr.20051104075904.4">def doTests(c,all,verbosity=1):
+
+    p = c.currentPosition() ; p1 = p.copy()
+    
+    g.app.unitTesting = True
+    try:
+        g.app.unitTestDict["fail"] = False
+    
+        if all: theIter = c.all_positions_iter()
+        else:   theIter = p.self_and_subtree_iter()
+        
+        # c.undoer.clearUndoState() # New in 4.3.1.
+        changed = c.isChanged()
+        suite = unittest.makeSuite(unittest.TestCase)
+    
+        for p in theIter:
+            if isTestNode(p):
+                test = makeTestCase(c,p)
+                if test: suite.addTest(test)
+            elif isSuiteNode(p):
+                test = makeTestSuite(c,p)
+                if test: suite.addTest(test)
+    
+        # Verbosity: 1: print just dots.
+        unittest.TextTestRunner(verbosity=verbosity).run(suite)
+        c.setChanged(changed) # Restore changed state.
+        # Restore the selected node unless overridden.
+        if g.app.unitTestDict.get('restoreSelectedNode',True):
+            c.selectPosition(p1)
+    finally:
+        g.app.unitTesting = False
+        </t>
+<t tx="ekr.20051104075904.5">class generalTestCase(unittest.TestCase):
+
+    """Create a unit test from a snippet of code."""
+
+    @others</t>
+<t tx="ekr.20051104075904.6">def __init__ (self,c,p):
+
+     # Init the base class.
+    unittest.TestCase.__init__(self)
+
+    self.c = c
+    self.p = p.copy()
+</t>
+<t tx="ekr.20051104075904.7">def fail (self,msg=None):
+
+    """Mark a unit test as having failed."""
+    
+    __pychecker__ = '--no-argsused'
+        #  msg needed so signature matches base class.
+
+    import leoGlobals as g
+
+    g.app.unitTestDict["fail"] = g.callerName(2)</t>
+<t tx="ekr.20051104075904.8">def setUp (self):
+
+    c = self.c ; p = self.p
+
+    c.selectPosition(p)</t>
+<t tx="ekr.20051104075904.9">def tearDown (self):
+
+    pass
+
+    # To do: restore the outline.</t>
+<t tx="ekr.20051104075904.10">def runTest (self,define_g = True):
+
+    c = self.c ; p = self.p.copy()
+    script = g.getScript(c,p).strip()
+    self.assert_(script)
+
+    # Execute the script. Let unit test handle any errors!
+    
+    if define_g:
+        # Execute the test in an environment containing c, g &amp; p.
+        exec script + '\n' in {'c':c,'g':g,'p':p}
+    else:
+        # Execute the test in a totally pristine environment.
+        exec script + '\n' in {}</t>
+<t tx="ekr.20051104075904.11">def shortDescription (self):
+
+    return self.p.headString() + '\n'</t>
+<t tx="ekr.20051104075904.12">@ This code executes the script in an @suite node.  This code assumes:
+- The script creates a one or more unit tests.
+- The script puts the result in g.app.scriptDict["suite"]
+@c
+
+def makeTestSuite (c,p):
+
+    """Create a suite of test cases by executing the script in an @suite node."""
+    
+    p = p.copy()
+
+    h = p.headString()
+    script = g.getScript(c,p).strip()
+    if not script:
+        print "no script in %s" % h
+        return None
+
+    try:
+        exec script + '\n' in {'c':c,'g':g,'p':p}
+        suite = g.app.scriptDict.get("suite")
+        if not suite:
+            print "%s script did not set g.app.scriptDict" % h
+        return suite
+    except:
+        g.trace('Exception creating test cases for %s' % p.headString())
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20051104075904.13">def makeTestCase (c,p):
+    
+    p = p.copy()
+
+    if p.bodyString().strip():
+        return generalTestCase(c,p)
+    else:
+        return None</t>
+<t tx="ekr.20051104075904.15"># A utility for use by script buttons.
+
+def runTimerOnNode (c,p,count):
+
+    s = p.bodyString().rstrip() + '\n'
+    
+    # A kludge so we the statement below can get c and p.
+    g.app.unitTestDict = {'c':c,'p':p}
+    
+    # This looks like the best we can do.
+    setup = 'import leoGlobals as g; c = g.app.unitTestDict.get("c"); p = g.app.unitTestDict.get("p")'
+
+    t = timeit.Timer(s,setup)
+
+    try:
+        if count is None:
+            count = 1000000
+        result = t.timeit(count)
+        print "count: %d time/count: %f %s" % (count,result/count,p.headString())
+    except:
+        t.print_exc()</t>
+<t tx="ekr.20051104075904.33">def numberOfClonesInOutline (self):
+
+    """Returns the number of cloned nodes in an outline"""
+
+    c = self.c ; n = 0
+    for p in c.allNodes_iter():
+        if p.isCloned():
+            n += 1
+    return n</t>
+<t tx="ekr.20051104075904.34">def numberOfNodesInOutline (self):
+
+    """Returns the total number of nodes in an outline"""
+
+    return len([p for p in self.c.allNodes_iter()])</t>
+<t tx="ekr.20051104075904.42">def runLeoTest(c,path,verbose=False,full=False):
+
+    frame = None ; ok = False ; old_gui = g.app.gui
+
+    try:
+        g.app.unitTesting = True
+        ok, frame = g.openWithFileName(path,c,enableLog=False)
+        assert(ok and frame)
+        errors = frame.c.checkOutline(verbose=verbose,unittest=True,full=full)
+        assert(errors == 0)
+        ok = True
+    finally:
+        g.app.gui = old_gui
+        if frame and frame.c != c:
+            g.app.closeLeoWindow(frame.c.frame)
+        c.frame.top.update()
+        g.app.unitTesting = True
+
+    if not ok: raise</t>
+<t tx="ekr.20051104075904.69">def makeEditBodySuite(c):
+
+    """Create an Edit Body test for every descendant of testParentHeadline.."""
+
+    p = c.currentPosition()
+    u = testUtils(c)
+    assert p.exists(c)
+    data_p = u.findNodeInTree(p,"editBodyTests")
+    assert(data_p)
+    temp_p = u.findNodeInTree(data_p,"tempNode")
+    assert(temp_p)
+
+    # Create the suite and add all test cases.
+    suite = unittest.makeSuite(unittest.TestCase)
+
+    for p in data_p.children_iter():
+        if p.headString()=="tempNode": continue # TempNode now in data tree.
+        before = u.findNodeInTree(p,"before")
+        after  = u.findNodeInTree(p,"after")
+        sel    = u.findNodeInTree(p,"selection")
+        ins    = u.findNodeInTree(p,"insert")
+        if before and after:
+            test = editBodyTestCase(c,p,before,after,sel,ins,temp_p)
+            suite.addTest(test)
+        else:
+            print 'missing "before" or "after" for', p.headString()
+
+    return suite</t>
+<t tx="ekr.20051104075904.78">def makeImportExportSuite(c,parentHeadline,doImport):
+
+    """Create an Import/Export test for every descendant of testParentHeadline.."""
+
+    u = testUtils(c)
+    parent = u.findNodeAnywhere(parentHeadline)
+    assert(parent)
+    temp = u.findNodeInTree(parent,"tempNode")
+    assert(temp)
+
+    # Create the suite and add all test cases.
+    suite = unittest.makeSuite(unittest.TestCase)
+
+    for p in parent.children_iter(copy=True):
+        if p == temp: continue
+        dialog = u.findNodeInTree(p,"dialog")
+        assert(dialog)
+        test = importExportTestCase(c,p,dialog,temp,doImport)
+        suite.addTest(test)
+
+    return suite</t>
+<t tx="ekr.20051104075904.89">def runPerfectImportTest(c,p,
+    testing=False,verbose=False,
+    ignoreSentinelsInCompare=False):
+        
+    __pychecker__ = '--no-shadowbuiltin' # input is a builtin.
+
+    # The contents of the "-input" and "-input-after" nodes define the changes.
+
+    p = c.currentPosition()
+    u = testUtils(c)
+    input           = u.findNodeInTree(p,"-input")              # i file: before the change.
+    input_ins       = u.findNodeInTree(p,"-input-after")        # j file: after the change.
+    output_sent     = u.findNodeInTree(p,"-output-sent")        # fat file -&gt; i file.
+    out_after_sent  = u.findNodeInTree(p,"-output-after-sent")  # Should match result.
+    result          = u.findNodeInTree(p,"-result")
+    ilines          = u.findNodeInTree(p,"-i_lines")
+    jlines          = u.findNodeInTree(p,"-j_lines")
+
+    # Create the output nodes containing sentinels from the original input.
+    u.writeNodesToNode(c,input,output_sent,sentinels=True)
+    u.writeNodesToNode(c,input_ins,out_after_sent,sentinels=True)
+
+    mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
+    delims = g.comment_delims_from_extension("foo.py")
+
+    fat_lines = g.splitLines(output_sent.bodyString())
+    i_lines,mapping = mu.create_mapping(fat_lines,delims)
+    if input_ins.hasChildren():
+        # Get the lines by stripping sentinels from -output-after-sent node.
+        lines = g.splitLines(out_after_sent.bodyString()) 
+        j_lines = mu.removeSentinelsFromLines(lines,delims)
+    else:
+        j_lines = g.splitLines(input_ins.bodyString()) 
+
+    # For viewing...
+    ilines.scriptSetBodyString(''.join(i_lines))
+    jlines.scriptSetBodyString(''.join(j_lines))
+    if ilines.bodyString() != input.bodyString():
+        if not ignoreSentinelsInCompare:
+            print "i_lines != input !"
+
+    # Put the resulting lines (with sentinels) into the -result node.
+    lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
+    result.scriptSetBodyString(''.join(lines))
+
+    if ignoreSentinelsInCompare:
+        sList = []
+        for s in (result.bodyString(),out_after_sent.bodyString()):
+            lines = g.splitLines(s)
+            lines = mu.removeSentinelsFromLines(lines,delims)
+            sList.append(''.join(lines))
+        return sList[0] == sList[1]
+    else:
+        return u.compareIgnoringNodeNames(
+            result.bodyString(),
+            out_after_sent.bodyString(),
+            delims,verbose=True)</t>
 <t tx="ekr.20051104152338"></t>
 <t tx="ekr.20051104152338.1">@nocolor
 
@@ -10437,7 +8417,7 @@ turns to this:
 # if() {
 
 code just breaks.</t>
-<t tx="ekr.20051105073850"></t>
+<t tx="ekr.20051105103233"></t>
 <t tx="ekr.20051110155735.1">@nocolor
 
 - Per-pane key bindings. (arrows, etc.)
@@ -10445,9 +8425,6 @@ code just breaks.</t>
 - Select the first entry.
 
 @color</t>
-<t tx="ekr.20051111065016">@ Ripping focus away from widgets is odious and bug prone.
-
-A much better solution: call update *after* log-pane operations.</t>
 <t tx="ekr.20051112075511">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3424153
@@ -10473,7 +8450,6 @@ button. I have a mac and Ctl-click, Command-click, etc doesn't work. What should
 I do?
 
 EKR: This is on the list of unfixable bugs, but I have a hard time believing there is no workaround.</t>
-<t tx="ekr.20051113080509"></t>
 <t tx="ekr.20051113090322">self.outerScrolledFrame = Pmw.ScrolledFrame(
     parentFrame,usehullsize = 1)
 
@@ -10488,61 +8464,23 @@ for z in ('borderframe','clipper','frame','hull'):
     
     '''Convert whatever-Z to whatever-Shift-Z'''
     
-    if not key:
-        return ''
-        
-    ch = key[-2]
+    k = self ; c = k.c
+    
+    if not key: return ''
+    if len(key) == 1: return key
+    if key.startswith('&lt;'):
+        key = key[1:]
+    if key.endswith('&gt;'):
+        key = key[:-1]
+    if not key: return ''
+    ch = key[-1]
+    
+    ch,junk = c.frame.menu.canonicalizeShortcut(ch)
 
     if ch in string.ascii_uppercase:
         return '%sShift-%s&gt;' % (key[:-2],ch.lower())
     else:
         return key</t>
-<t tx="ekr.20051123055200"></t>
-<t tx="ekr.20051125080855">def selfInsertCommand(self,event,action='insert'):
-    
-    '''Insert a character in the body pane.
-    
-    This is the default binding for all keys in the body pane.'''
-    
-    c = self.c ; p = c.currentPosition()
-    ch = event and event.char or ''
-    w = event and event.widget
-    name = g.app.gui.widget_name(w)
-    oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
-    oldText = name.startswith('body') and p.bodyString()
-    removeTrailing = None # A signal to compute it later.
-    undoType = 'Typing'
-    
-    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-        return "break" # The hook claims to have handled the event.
-        
-    if ch == '\t':
-        removeTrailing = self.updateTab(p,w)
-    elif ch == '\b':
-        # This is correct: we only come here if there no bindngs for this key. 
-        self.backwardDeleteCharacter(event)
-    elif ch in ('\r','\n'):
-        ch = '\n'
-        &lt;&lt; handle newline &gt;&gt;
-    elif ch in ('(',')','[',']','{','}') and c.config.getBool('autocomplete-brackets'):
-        self.updateAutomatchBracket(p,w,ch,oldSel)
-    elif ch: # Null chars must not delete the selection.
-        i,j = oldSel
-        if i != j:                  w.delete(i,j)
-        elif action == 'replace':   w.delete(i,'%s+1c' % i)
-        w.insert(i,ch)                     
-    else:
-        return 'break' # New in 4.4a5: this method *always* returns 'break'
-
-    # Update the text and handle undo.
-    newText = w.get('1.0','end')
-    w.see(w.index('insert'))
-    if newText != oldText:
-        c.frame.body.onBodyChanged(undoType=undoType,
-            oldSel=oldSel,oldText=oldText,oldYview=None,removeTrailing=removeTrailing)
-            
-    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-    return 'break'</t>
 <t tx="ekr.20051126122638">- Use typing completion to select desired word.
 - No auto-scan: use database instead.
 - Scan button does manual scan.
@@ -10654,7 +8592,7 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
         else:
             return g.toUnicode(s,g.app.tkEncoding)
     else:
-        return None</t>
+        return u""</t>
 <t tx="ekr.20051126131103">def doBackSpace (self):
 
     '''Cut back to previous prefix.'''
@@ -10918,37 +8856,6 @@ spell-ignore</t>
 Working throught the IronPython tutorial just now I saw how useful the dir function could be, especially dir(object)
 
 I'm thinking that Leo might use dir(object) to discover members for the auto-complete command.  It's not clear if or how this can be made to work, but it might be slick.</t>
-<t tx="ekr.20051206082304.1">@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=3461068
-By: vpe
-
-1) Strange behaviour after pasting in headlines:
-Start editing a headline in outline pane. Let's say it's 'Settings and
-buttons'.
-Select all text and copy (ctrl+c).
-Place cursor at the end and paste (ctrl+v). What I see is 'Settings and
-buttonsSetti'. That is text area does not expand to accomodate new text length.
-And I cannot move beyond that point.
-If I move to another headline I see that pasting was done correctly. 
-
-2) (done) I always make these changes without any problems:
-Code--&gt;Gui Tkinter classes--&gt;@thin leoTkinterTree.py--&gt;Config
-&amp; Measuring...--&gt;headWidth &amp; widthInPixels
-return max(self.minimum_headline_width,5 + len(s))  ##change to 1
-
-Code--&gt;Gui Tkinter classes--&gt;@thin leoTkinterTree.py--&gt; Birth...
-(tkTree)--&gt;__init__--&gt;&lt;&lt; define drawing constants &gt;&gt;
-self.minimum_headline_width = 20 # In characters. ##change to 2
-
-
-Leo 4.4 alpha 4, build  1.346 , December 5, 2005
-Python 2.4.2, Tk 8.4.7, Pmw 1.2
-Windows 5, 0, 2195, 2, Service Pack 4    &lt;--- nice!
-</t>
-<t tx="ekr.20051206082343"></t>
-<t tx="ekr.20051206111317"></t>
-<t tx="ekr.20051207120838.1"></t>
 <t tx="ekr.20051207130144">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=3460955
 By: nobody
@@ -10963,119 +8870,25 @@ this might be a path to do so.  It looks like an active project.
 leouser
 </t>
 <t tx="ekr.20051207130144.1"></t>
-<t tx="ekr.20051207140933"></t>
-<t tx="ekr.20051207140933.1">@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=3464605
-leouser
-
-You really need to think about using Ctrl-Space for starting selection mode.
-Its a wonderful thing.  Once in selection mode you just move around with your
-arrows and things get selected.  Or if you want to move quickly you can do stuff
-like Ctrl-a or Ctrl-e or Ctrl-&lt; or Ctrl-&gt;.  Combining selection mode and fast
-movement keystrokes is good...</t>
-<t tx="ekr.20051207180807"></t>
 <t tx="ekr.20051208081641"></t>
 <t tx="ekr.20051208081641.1">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3465251
 By: e
 
-after a save, undo last typing event
+(fixed) after a save, undo last typing event
 doesn't mark leo changed.
 you can go up and down the undo redo list
 and still the leo is not marked changed.
 the changes in the body do stick.
 didn't try other undo like insert node.
 
-I had a weird undo that I wasn't able to repeat
+**Important**: the follows was likely due to improper calls to g.top()
+
+(can't duplicate) I had a weird undo that I wasn't able to repeat
 after a reboot, when I had 2 leos open and
 and the undo after a save in one would display
-the last undo in a node body from the other leo.</t>
-<t tx="ekr.20051208091305"></t>
-<t tx="ekr.20051208091816"></t>
-<t tx="ekr.20051208100903"></t>
-<t tx="ekr.20051208100903.1">def forceGnxOnPosition (self,p):
-
-    self._forcedGnxPositionList.append(p.v)</t>
-<t tx="ekr.20051208102107">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3464874
-By: davidmcnab
-
-* The 'goto line number' dialog pops up without the text field active, so I'm
-forced into a Compulsory Mouse Click to activate the field before I can type
-in the line number (I'm one who regards unnecessary Compulsory Mouse Clicks as bugs).</t>
-<t tx="ekr.20051208102436"></t>
-<t tx="ekr.20051208102436.1"></t>
-<t tx="ekr.20051209081445"></t>
-<t tx="ekr.20051209081445.1">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3467558
-By: ktenney
-
-Current CVS, W2K
-
-I open a small Leo file, and from File-&gt;Open, select
-..\src\LeoPyRef.py. the log pane shows;
-
------ error reading @file: ../doc/leoToDo.txt
-Ignoring @-node sentinel. Expecting @-all
-
-At this point Leo locks up tight, must kill process.
-
-What I did:
-
-** atFile.readError delete's root's entire subtree.
-** atFile.read only warns about unvisited node if there is no error.
+the last undo in a node body from the other leo.
 </t>
-<t tx="ekr.20051209081445.2">@
-
-New in Leo 4.4: Leo calls the 'headkey1' and 'headkey2' hooks only when the user
-completes the editing of a headling, and ch is always '\r', regardless of
-platform.</t>
-<t tx="ekr.20051209083903">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3466412
-By: ktenney
-
-&gt;Use the read_only_nodes plugin. 
-
-It has a great feature list, but I can't get it to
-update after the file changes on the filesystem.
-
-I then looked at at_view.py, and the @view node
-plugin. (which I worked on way back when :-])
-
-It also doesn't work.
-I put a g.es(..) at the top of the icondclick2 method which is registered in
-the onCreate method
-of at_view.py;
-
-leoPlugins.registerHandler("icondclick2", myView.icondclick2)
-
-It seems that the method does not get called
-when the icon is doubleclicked.
-
-Could this behaviour be related to recent changes
-in Leo?
-</t>
-<t tx="ekr.20051209085227"></t>
-<t tx="ekr.20051209085227.1">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3462294
-By: nobody
-
-apparently the bodykey hooks are no longer used
-is why trace_keys plugin doesn't work.
-in leoKeys.py I see this trace can be turned on:
-.   if c.config.getBool('trace_masterCommand'):</t>
-<t tx="ekr.20051212135654">No change was actually needed, just new bindings.
-
-What I did:
-    
-- fixed a bug in copyBindingsToWidget
-- textBindingsRedirectionCallback now returns 'break', not None.</t>
-<t tx="ekr.20051213060647.1"></t>
-<t tx="ekr.20051213073224"></t>
 <t tx="ekr.20051213080533">def backCharacter (self,event):
     
     self.moveToHelper(event,'insert-1c',extend=False)
@@ -11109,309 +8922,59 @@ def forwardCharacterExtendSelection (self,event):
         ins = '1.0'
     if ins:
         self.moveToHelper(event,ins,extend)</t>
-<t tx="ekr.20051213100651"></t>
-<t tx="ekr.20051213100651.1"></t>
-<t tx="ekr.20051214075028"></t>
-<t tx="ekr.20051214082024">@nocolor
-
-Key bindings
-
-Leo must have commands to do what Tk text widgets do for all their standard bindings.  This is the only way I know of to allow users to choose different bindings for those actions.
-
-Therefore, Leo should pass *no* key events to Tk for 'default' handling.  That is, all of Leo's key handlers will return 'break', not None.  In particular, all text widgets must have something like selfInsertCommand so they can handle ordinary keystrokes.
-
-Typing in headlines *still* does not always stick.  The present event handlers for headlines have way too many paths through them.  The problems are caused in large part by the abort-edit-headline command: it requires state info.  I may add a beginEditHeadline command that will remember the state.  This will allow Leo to save the headline text on *every* keystroke, rather than only at the end.  This is *much* safer than trying to ensure that endEditHeadline gets called on every path.  The new endEditHeadline will have no responsibility for state except to clear the info set by beginEditHeadline.  Nothing much bad will ever happen if endEditHeadline doesn't get called once in a while.
-
-I hope to get all the necessary bindings and commands done this week.
-
-Undo
-
-Undo is well defined only for headlines and body text.  There is little or no use, alas, for event.widget in leoEditCommands.py.  Brian's suggestion of having beginUndo/endUndo markers makes a lot of sense: such markers simplify the code and hide implementation and policy details that should be hidden.
-
-Focus
-
-Getting focus exactly right is crucial: some of the present commands in leoEditCommands.py don't work if they are invoked by their long name rather than from a keystroke.
-
-In short, the combination of bindings, undo and focus creates a lot of problems that must be handled with extreme care.  It's frustrating to rewrite essentially every line of Brian's temacs code, but I believe it must be done.
-
-And we are not done yet.  Leo creates an environment different from Emacs:  incremental search must be expanded to move from node to node, the notion of the 'mark' must be generalized (in some, but not all situations), etc.  Sometimes, though, the generalization is also a simplification: as I have said before, Leo's nodes can and should be treated as exactly synonymous with Emacs's buffers.
-
-Edward
-</t>
-<t tx="ekr.20051214082024.1">make the default bindings work differently when editing
-the headline as opposed to when traversing the tree with the arrow keys.</t>
-<t tx="ekr.20051214113546.1">def onTextWidgetKey (self,event):
+<t tx="ekr.20051214132256"></t>
+<t tx="ekr.20051214133130">def beginCommand (self,undoType='Typing'):
     
-    '''This is the default key handler for all text widgets.
-    It should never be called for keys bound to any command.'''
+    '''Do the common processing at the start of each command.'''
 
-    ch = event and event.char or ''
-    w  = event and event.widget
+    return self.beginCommandHelper(ch='',undoType=undoType,w=self.w)
 
-    if w and ch:
-        i,j = g.app.gui.getTextSelection(w)
-        if i != j:
-            w.delete(i,j)
-        w.insert(i,ch)
-
-    return 'break'</t>
-<t tx="ekr.20051214113546.2"></t>
-<t tx="ekr.20051214115158"></t>
-<t tx="ekr.20051214125235">@nocolor
-
-- As before, tree.select always sets tree.revertHeadline.  This is the revert point.
-
-- endEditLabel now simply unselects the widget.  It has *no* responsibility for keeping the headline in synch with p.headString.  This is a major advance in reliability.
-
-- tree.onHeadChanged sets changed = s != oldRevert.  This is more reliable than previously.</t>
-<t tx="ekr.20051214125834"></t>
-<t tx="ekr.20051216080913.1"></t>
-<t tx="ekr.20051216081742"></t>
-<t tx="ekr.20051216083932"></t>
-<t tx="ekr.20051216084926">@nocolor
-
-Bug 1: OnActivateBody *must* call onHeadChanged: select is not always called!
-
-But 2: c.endEditing and tree.endEditLabel **must** call tree.onHeadChanged.</t>
-<t tx="ekr.20051216085517"></t>
-<t tx="ekr.20051216110817">@
-The change was logical, but it caused problems.
-
-The new 'insert' keyword arg must have the value 'sel.end' for compatibility with old code.</t>
-<t tx="ekr.20051216114320">@nocolor
-
-The problem was caused by the recent change to g.app.gui.setTextSelection.
-
-The default for the new 'insert' keyword must be sel.end for compatibility with old code.</t>
-<t tx="ekr.20051216125001"></t>
-<t tx="ekr.20051216155029">u = c.undoer ; w = c.frame.body.bodyCtrl
-
-s1 = '''\
-    c.beginUpdate()
-    try:'''
-s2 = '''\
-    finally:
-        c.endUpdate()'''
-
-b = u.beforeChangeNodeContents(p)
-
-i, j = g.app.gui.getTextSelection(w)
-if i != j:
-    s = w.get(i,j)
-    s = ''.join(['\t'+line for line in g.splitLines(s)])
-    w.delete(i,j)
-    w.insert(i,s1+'\n'+s+'\n'+s2)
-else:
-    w.insert(i,s1+'\n\t\t\n'+s2)
-
-c.recolor()
-u.afterChangeNodeContents(p,'add-begin/endUpdate',b)</t>
-<t tx="ekr.20051216155728">def beginUpdate (self):
+def beginCommandWithEvent (self,event,undoType='Typing'):
     
-    self.updateCount += 1
+    '''Do the common processing at the start of each command.'''
     
-def endUpdate (self,flag):
+    return self.beginCommandHelper(ch=event.char,undoType=undoType,w=event.widget)</t>
+<t tx="ekr.20051214133130.1">def endCommand(self,label=None,changed=True):
     
-    self.updateCount -= 1
-    if self.updateCount &lt;= 0:
-        if flag:
-            self.redraw_now()
-        if self.updateCount &lt; 0:
-            g.trace("Can't happen: negative updateCount")</t>
-<t tx="ekr.20051216160935">@nocolor
-
-To do:
-
-- Test abortEditLabelCommand.
-
-- c.redraw() redraws conditionally.
-- Create c.xxx methods that call the corresponding c.frame.tree methods.
-
-** Find is not selecting headlines properly.
-- Test drags.
-
-What I did:
-
-- Made c.begin/endUpdate and tree.begin/endUpdate functional again.
-- Created a script to add c.begin/endUpdate().
-- Removed redraw_flag from deleteOutline.
-- Tested undo/redo delete node.
-- Removed redraw_flag from insertHeadline.
-- Removed redraw_flag from onBodyChanged.
-- c.redraw_now() redraws undconditionally: it is used seldom.
-- Replaced c.redraw_now by c.redraw or c.begin/endUpdate.
-- Removed redraw_flag from c.selectPosition, tree.select, tree.onHeadChanged, body.onBodyChanged.
-
-</t>
-<t tx="ekr.20051216170531"># From Brian re Read @file nodes w/o creating copy of root node</t>
-<t tx="ekr.20051216171520">def recolor_now(self,p=None,incremental=False):
-
-    c = self
-    if p is None:
-        p = c.currentPosition()
-
-    c.frame.body.colorizer.colorize(p,incremental)</t>
-<t tx="ekr.20051217074031"></t>
-<t tx="ekr.20051217082130">@nocolor
-
-- &lt;&lt; unselect the old node &gt;&gt; in tree.select now calls
-    self.setUnselectedLabelState(old_p)
-
-- tree.endEditLabel no longer calls setUnselectedLabelState.
-    (This is important)</t>
-<t tx="ekr.20051217091236"></t>
-<t tx="ekr.20051217102943"></t>
-<t tx="ekr.20051217112605">@nocolor
-
-I've just investigated how Leo handles pane settings, and I believe all is
-working as intended. This is somewhat confusing, but there has been no change in
-this code for a long time: it has nothing whatever to do with the 4.4 code
-base.
-
-The so-called 'primary' ratio is the ratio between the body pane and the pane
-containing the other two panes. The so-called secondary ratio is the ratio
-between sizes of the log pane and the outline pane.
-
-The thing to keep in mind is that Leo saves *only* the primary ratio in .leo
-files. Leo does not save the so-called 'secondary' ratio in .leo files, because
-doing so would change Leo's file format.
-
-Because Leo **does** save the primary ratio in .leo files, Leo will open a file
-with the same primary ratio that you had when you last saved the file.
-
-Because Leo does **not** save the secondary ratio in the .leo file Leo
-determines the relative sizes of the log and outline panes from settings in
-leoSettings.leo. One of the two settings is used:
-
-- initial_horizontal_secondary_ratio or
-
-- initial_vertical_secondary_ratio
-
-Which one is used depends on the initial_splitter_orientation setting.
-
-**Important** If you change these settings you must restart Leo for them to take effect.
-
-I have been able to set the secondary ratio as I please from leoSettings.leo,
-and have observed that Leo properly saves and restores the primary ratio in .leo
-files.
-
-In short, everything works as it should.</t>
-<t tx="ekr.20051217135340"></t>
-<t tx="ekr.20051217135340.2"></t>
-<t tx="ekr.20051217175058">Use the zip file stuff initially.  We can add support for chapters to Leo's core later.</t>
-<t tx="ekr.20051218100605.1">def __init__(self,c):
+    '''Do the common processing at the end of each command.'''
     
-    # Note: Pychecker complains if about module attributes if we assign at.x instead of self.x.
-    leoBaseAtFile.__init__( self )
-    self.c = c
-    self.debug = False
-    self.fileCommands = c.fileCommands
-    self.testing = True # True: enable additional checks.
-    self._forcedGnxPositionList = [] #This has to be here, puttin it in initReadIvars renders it useless
+    c = self.c ; b = self.undoData ; k = self.k
 
-    c.checksums = {}
-    self.md5 = None
-    @others</t>
-<t tx="ekr.20051218100605.2">self.dispatch_dict = {
-    # Plain line.
-    self.noSentinel: self.readNormalLine,
-    # Starting sentinels...
-    self.startAll:    self.readStartAll,
-    self.startAt:     self.readStartAt,
-    self.startDoc:    self.readStartDoc,
-    self.startLeo:    self.readStartLeo,
-    self.startMiddle: self.readStartMiddle,
-    self.startNode:   self.readStartNode,
-    self.startOthers: self.readStartOthers,
-    # Ending sentinels...
-    self.endAll:    self.readEndAll,
-    self.endAt:     self.readEndAt,
-    self.endDoc:    self.readEndDoc,
-    self.endLeo:    self.readEndLeo,
-    self.endMiddle: self.readEndMiddle,
-    self.endNode:   self.readEndNode,
-    self.endOthers: self.readEndOthers,
-    # Non-paired sentinels.
-    self.startAfterRef:  self.readAfterRef,
-    self.startClone:     self.readClone,
-    self.startComment:   self.readComment,
-    self.startDelims:    self.readDelims,
-    self.startDirective: self.readDirective,
-    self.startNl:        self.readNl,
-    self.startNonl:      self.readNonl,
-    self.startRef:       self.readRef,
-    self.startVerbatim:  self.readVerbatim,
-    # Ignored 3.x sentinels
-    self.endBody:               self.ignoreOldSentinel,
-    self.startBody:             self.ignoreOldSentinel,
-    self.startVerbatimAfterRef: self.ignoreOldSentinel }</t>
-<t tx="ekr.20051218100605.3">def createThinChild4 (self,gnxString,headline):
-
-    """Find or create a new vnode whose parent is at.lastThinNode."""
-
-    at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
-    last = at.lastThinNode ; lastIndex = last.t.fileIndex
-    gnx = indices.scanGnx(gnxString,0)
-    if self._forcedGnxPositionList and last in self._forcedGnxPositionList:
-        last.fileIndex = lastIndex=  gnx
-        self._forcedGnxPositionList.remove( last )
+    if b:
+        name = b.name
+        if name.startswith('body'):
+            if changed:
+                c.frame.body.onBodyChanged(undoType=b.undoType,
+                    oldSel=b.oldSel,oldText=b.oldText,oldYview=None)
+        elif name.startswith('head'):
+            g.trace('Should not happen: endCommand does not support undo in headlines')
+        else: pass
         
-    if 0:
-        g.trace("last",last,last.t.fileIndex)
-        g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
-    
-    # See if there is already a child with the proper index.
-    child = at.lastThinNode.firstChild()
-    while child and not indices.areEqual(gnx,child.t.fileIndex):
-        child = child.next()
+    self.undoData = None # Bug fix: 1/6/06 (after a5 released).
 
-    if at.cloneSibCount &gt; 1:
-        n = at.cloneSibCount ; at.cloneSibCount = 0
-        if child: clonedSibs,junk = at.scanForClonedSibs(child)
-        else: clonedSibs = 0
-        copies = n - clonedSibs
-        # g.trace(copies,headline)
+    k.clearState()
+    if label:
+        k.setLabelGrey(label)
     else:
-        if indices.areEqual(gnx,lastIndex):
-            return last
-        if child:
-            return child
-        copies = 1 # Create exactly one copy.
+        k.resetLabel()</t>
+<t tx="ekr.20051215102349">def beginCommandHelper (self,ch,undoType,w):
 
-
-    while copies &gt; 0:
-        copies -= 1
-        # Create the tnode only if it does not already exist.
-        tnodesDict = c.fileCommands.tnodesDict
-        t = tnodesDict.get(gnxString)
-        if t:
-            assert(indices.areEqual(t.fileIndex,gnx))
-        else:
-            t = leoNodes.tnode(bodyString=None,headString=headline)
-            t.fileIndex = gnx
-            tnodesDict[gnxString] = t
-        parent = at.lastThinNode
-        child = leoNodes.vnode(c,t)
-        child.vid = gnxString
-        #print 'gnxString is %s' % gnxString
-        leoNodes.vid_vnode[ gnxString ] = child
-        leoNodes.tid_tnode[ gnxString ] = t
-        t.vnodeList.append(child)
-        child.linkAsNthChild(parent,parent.numberOfChildren())
-        # g.trace('creating last child %s\nof parent%s\n' % (child,parent))
-
-    return child</t>
-<t tx="ekr.20051218102312">@nocolor
-
-- self._forcedGnxPositionList = [] in ctor.
-
-- </t>
-<t tx="ekr.20051218110553">@
-
-This handles the root node properly so that Leo draws no duplicate node. The
-code is from LeoUser; thanks Brian.
-
-I also fixed a recent bugs: the screen was not being redrawn afterwards.</t>
+    p = self.c.currentPosition()
+    name = g.app.gui.widget_name(w)
+    
+    # Bug fix 1/6/06 (after a5 released): don't do this in headlines!
+    if name.startswith('body'):
+        oldSel =  g.app.gui.getTextSelection(w)
+        oldText = p.bodyString()
+        self.undoData = g.Bunch(
+            ch=ch,name=name,oldSel=oldSel,oldText=oldText,w=w,undoType=undoType)
+        
+    return w</t>
+<t tx="ekr.20051217135340.2"></t>
+<t tx="ekr.20051217175058">show-chapters
+hide-chapters
+add-chapter
+delete-this-chapter</t>
 <t tx="ekr.20051218121447">def moveWordHelper (self,event,extend,forward):
 
     '''This function moves the cursor to the next word, direction dependent on the way parameter'''
@@ -11438,15 +9001,16 @@ I also fixed a recent bugs: the screen was not being redrawn afterwards.</t>
     if not g.app.gui.isTextWidget(w): return
 
     c.frame.widgetWantsFocus(w)
-    i,j = g.app.gui.getTextSelection(w,sort=True)
-    spot = w.index(spot) # Capture initial value.
-    ins = w.index('insert')
+    
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+  
+    # Move to the spot.
     w.mark_set('insert',spot)
-    if extend or self.extendMode:
-        if w.compare(spot,'&lt;=',i):
-            g.app.gui.setTextSelection (w,spot,j,insert=None)
-        else:
-            g.app.gui.setTextSelection (w,i,spot,insert=None)
+    spot = w.index('insert')
+
+    # Handle the selection.
+    self.extendHelper(w,extend,ins1,spot)
     w.see(spot)</t>
 <t tx="ekr.20051218133207">def backwardParagraphHelper (self,event,extend):
     
@@ -11507,19 +9071,23 @@ def endOfLineExtendSelection (self,event):
 
 def nextLine (self,event):
     
-    self.moveToHelper(event,'insert + 1line',extend=False)
+    self.moveUpOrDownHelper(event,'down',extend=False)
+    # self.moveToHelper(event,'insert + 1line',extend=False)
     
 def nextLineExtendSelection (self,event):
     
-    self.moveToHelper(event,'insert + 1line',extend=True)
+    self.moveUpOrDownHelper(event,'down',extend=True)
+    #self.moveToHelper(event,'insert + 1line',extend=True)
     
 def prevLine (self,event):
     
-    self.moveToHelper(event,'insert - 1line',extend=False)
+    self.moveUpOrDownHelper(event,'up',extend=False)
+    #self.moveToHelper(event,'insert - 1line',extend=False)
     
 def prevLineExtendSelection (self,event):
     
-    self.moveToHelper(event,'insert - 1line',extend=True)</t>
+    self.moveUpOrDownHelper(event,'up',extend=True)
+    #self.moveToHelper(event,'insert - 1line',extend=True)</t>
 <t tx="ekr.20051218170358"></t>
 <t tx="ekr.20051218171457">def movePastCloseHelper (self,event,extend):
 
@@ -11565,73 +9133,37 @@ def toggleExtendMode (self,event):
     
     c = self.c ; w = event.widget
     c.frame.widgetWantsFocus(w)</t>
-<t tx="ekr.20051219090231"></t>
-<t tx="ekr.20051219122720">def forceGnxOnPosition (self,p):
-    
-    self._forcedGnxPositionList.append(p.v)</t>
-<t tx="ekr.20051219124309"></t>
-<t tx="ekr.20051219125559"></t>
-<t tx="ekr.20051219200934"></t>
 <t tx="ekr.20051220062654">An alternative to test.leo!</t>
-<t tx="ekr.20051220063601"></t>
-<t tx="ekr.20051220064128"></t>
-<t tx="ekr.20051220070321">@ This is the end of the ill-fated settings dialog.
-
-Important: you can use the show-colors and show-fonts commands to help set
-colors and fonts in leoSettings.leo.</t>
-<t tx="ekr.20051220070321.1"></t>
 <t tx="ekr.20051220083410">def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
     
     k = self
     
-    # g.trace(stroke,accel,shortcut,func.__name__)
+    # g.trace(commandName,shortcut,stroke)
+    
     if pane == 'mini' and func != k.keyboardQuit:
-        # Call a strange callback that bypasses k.masterCommand.
-        def minibufferKeyCallback(event,func=func,shortcut=shortcut):
-            k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
-
-        k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+        if 0:
+            # Call a strange callback that bypasses k.masterCommand.
+            def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
+    
+            k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
     else:
-        # Create two-levels of callbacks.
-        def specialCallback (event,func=func):
-            return func(event)
-
-        def keyCallback (event,func=specialCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-
-        k.bindKey(pane,shortcut,keyCallback,commandName)
-
+            # Create two-levels of callbacks.
+            def specialCallback (event,func=func):
+                return func(event)
+    
+            def keyCallback (event,func=specialCallback,stroke=shortcut):
+                return k.masterCommand(event,func,stroke)
+    
+            k.bindKey(pane,shortcut,keyCallback,commandName)
+    
     if ivar:
         setattr(k,ivar,shortcut)</t>
-<t tx="ekr.20051220090650">Error: 1
-AttributeError Exception in Tk callback
-  Function: &lt;function keyCallback2 at 0x01378630&gt; (type: &lt;type 'function'&gt;)
-  Args: (&lt;Tkinter.Event instance at 0x034905D0&gt;,)
-  Event type: KeyPress (type num: 2)
-Traceback (innermost last):
-  File "C:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1748, in __call__
-    return apply(self.func, args)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 814, in keyCallback2
-    def keyCallback2 (event,func=menuFuncCallback,stroke=shortcut):
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1143, in masterCommand
-    if stroke == k.abortAllModesKey: # 'Control-g'
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 811, in menuFuncCallback
-    def menuFuncCallback (event,command=command):
-  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 2250, in backwardDeleteCharacter
-    oldText = w.get('1.0','end')
-AttributeError: Canvas instance has no attribute 'get'
-
-</t>
-<t tx="ekr.20051220091742"></t>
-<t tx="ekr.20051220091742.1"></t>
-<t tx="ekr.20051220093312"></t>
 <t tx="ekr.20051220144507">def isTextWidget (self,w):
     
     '''Return True if w is a Text widget suitable for text-oriented commands.'''
     
     return w and isinstance(w,Tk.Text) </t>
-<t tx="ekr.20051220145225"></t>
-<t tx="ekr.20051221100114.1"></t>
 <t tx="ekr.20051221101851"></t>
 <t tx="ekr.20051221101851.1">@nocolor
 
@@ -11665,18 +9197,19 @@ might be a good thing.
 Leo should allow scripts to set sys.argv for
 commands they create. its very difficult to do now.
 
-e
-
-</t>
+e</t>
 <t tx="ekr.20060102092148.2">docutils installs it if it isn't available.
 </t>
 <t tx="ekr.20060102103625">def createModeCommand (self,name,modeDict):
 
     # c = self.c ; k = c.keyHandler
     commandName = 'enter-' + name
+    commandName = commandName.replace(' ','-')
         
     # Save the info for k.finishCreate and k.makeAllBindings.
     d = g.app.config.modeCommandsDict
+    
+    # g.trace(modeDict.keys())
 
     if d.get(name):
         g.trace('Ignoring duplicate mode: %s' % commandName)
@@ -11713,10 +9246,15 @@ e
     # Restore the global dict.
     self.shortcutsDict = d
     
+    # Change the pane of all entries to 'mode-name'.
+    # This will disable warnings about duplicate bindings.
+    for key in d2.keys():
+        bunchList = d2.get(key,[])
+        for bunch in bunchList:
+            bunch.pane = name
+    
     # Create the command, but not any bindings to it.
     self.createModeCommand(name,d2)</t>
-<t tx="ekr.20060102134206.1"></t>
-<t tx="ekr.20060102134206.2"></t>
 <t tx="ekr.20060102135349.2">def enterNamedMode (self,event,commandName):
     
     k = self ; c = k.c
@@ -11724,7 +9262,6 @@ e
     
     k.generalModeHandler(event,modeName)
 </t>
-<t tx="ekr.20060103100430"></t>
 <t tx="ekr.20060103101524">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=3501995
 By: nobody
@@ -11790,20 +9327,6 @@ import sys
 encoding = sys.getdefaultencoding() # 'cp1250'
 
 everything goes fine.</t>
-<t tx="ekr.20060103104509">@nocolor
-
-- set-insert, set-replace commands.
-- Fancier mode-help.
-- Use tabs in print-commands &amp; print-bindings.
-
-Docs
-- Document @mode and how to use it.
-- Move most settings docs to Customizing chapter.
-
-Cleanup
-- Default modes should set the label.
-- Create tkinterKeyHandler.
-- Complete vim emulation</t>
 <t tx="ekr.20060104083551">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3488030
 
@@ -11873,7 +9396,7 @@ divided by the pixel size of the '0' char.
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
     k = self ; c = k.c ; f = c.frame
-    modeName = name or k.inputModeName
+    modeName = name or k.inputModeName or '&lt;no mode name&gt;'
     commandName = 'enter-' + modeName
     state = k.getState(modeName)
     keysym = event and event.keysym or ''
@@ -11881,12 +9404,14 @@ divided by the pixel size of the '0' char.
     
     d = g.app.config.modeCommandsDict.get(commandName)
     if not d:
-        g.trace("can't happen")
+        k.clearState()
+        if commandName.endswith('-mode'): commandName = commandName[:-5]
+        k.setLabelGrey('@mode %s is not defined (or is empty)' % commandName)
     elif state == 0:
         k.inputModeName = modeName
         k.modeWidget = event and event.widget
         k.setState(name,1,handler=k.generalModeHandler)
-        k.setLabelBlue(name,protect=True)
+        k.setLabelBlue(name+': ',protect=True)
         k.modeCompletionList = d.keys()
     else:
         for key in d.keys():
@@ -11897,11 +9422,12 @@ divided by the pixel size of the '0' char.
                     # g.trace('calling',func)
                     if key != 'mode-help':
                         # This must be done first because commands can change windows.
-                        k.clearState()
-                        k.resetLabel()
                         k.endCommand(event,k.stroke)
                         k.inputModeName = None
                         c.frame.log.deleteTab('Mode')
+                        k.clearState()
+                        k.resetLabel()
+                        # k.setLabelGrey('top-level mode')
                         c.frame.widgetWantsFocus(k.modeWidget)
                     func(event)
                     return 'break'
@@ -11909,53 +9435,29 @@ divided by the pixel size of the '0' char.
         f.minibufferWantsFocus()
         
     return 'break'</t>
-<t tx="ekr.20060104120602">def matchKeys (self,event,shortcut):
-    
-    '''Return true if a binding matches the key specified by the event.'''
-    
-    k = self ; c = k.c
-    
-    if not k.stroke or not event: return False
-    
-    stroke = k.stroke ; keysym = event.keysym
-    shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
-    
-    if stroke == '&lt;Key&gt;':
-        val = shortcut == keysym or shortcut.startswith('Key-') and shortcut.endswith(keysym)
-    else:
-        val = stroke == shortcut2
-        
-    if 0:
-        g.trace('returns',val,
-            'stroke',stroke,'keysym',keysym,
-            'shortcut',shortcut,'shortcuts',shortcut2)
-        
-    return val</t>
 <t tx="ekr.20060104125946">def modeHelpHelper (self,d):
     
     k = self ; c = k.c
     
     c.frame.log.clearTab('Mode')
-    
+    lines = []
     for key in d.keys():
         bunchList = d.get(key)
-        bunch = bunchList and bunchList[0]
-        shortcut = bunch.val
-        if shortcut not in (None,'None'):
-            if shortcut.startswith('Key-'):
-                shortcut = shortcut[4:]
-                if len(shortcut) == 1:
-                    ch = shortcut[0]
-                    if ch in string.ascii_uppercase:
-                        shortcut = 'Shift-%s' % ch.lower()
-            g.es('%s\t%s' % (shortcut,key),tabName='Mode')</t>
+        for bunch in bunchList:
+            shortcut = bunch.val
+            if shortcut not in (None,'None'):
+                lines.append('%-30s\t%s' % (key,k.prettyPrintKey(shortcut)))
+    lines.sort()
+    for line in lines:
+        g.es(line,tabName='Mode')</t>
 <t tx="ekr.20060104154937">def addModeCommands (self):
     
-    '''Add commands created by @mode settings..'''
+    '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
 
     k = self ; c = k.c
     d = g.app.config.modeCommandsDict
     
+    # Create the callback functions and update c.commandsDict and k.inverseCommandsDict.
     for key in d.keys():
 
         def enterModeCallback (event=None,name=key):
@@ -11991,33 +9493,1858 @@ if defaultAction in ('insert','replace','ignore'):
 else:
     g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
     self.unboundKeyAction = 'insert'</t>
-<t tx="ekr.20060105123629"># The reason for this assert is unclear.</t>
-<t tx="ekr.20060105125102">Traceback (most recent call last):
-  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 239, in doCommand
-    val = command()
-  File "c:\prog\leoCVS\leo\src\leoUndo.py", line 1579, in undo
-    u.undoHelper()
-  File "c:\prog\leoCVS\leo\src\leoUndo.py", line 1729, in undoMove
-    u.p.moveToNthChildOf(u.oldParent,u.oldN)
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 2767, in moveToNthChildOf
-    p.unlink()
-  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 3310, in unlink
-    assert(parent.v in p.v.directParents())
-AssertionError</t>
-<t tx="ekr.20060105130519"></t>
-<t tx="ekr.20060105130546">- (done) put optparse.py in leo/extensions
-- Add optparse.py to distribution lists.</t>
-<t tx="ekr.20060105132013">def setIgnoreMode (self,event):
-    
-    self.unboundKeyAction = 'ignore'
-
-def setInsertMode (self,event):
-    
-    self.unboundKeyAction = 'insert'
-    
-def setOverwriteMode (self,event):
-    
-    self.unboundKeyAction = 'replace'</t>
 <t tx="ekr.20060105133043"></t>
+<t tx="ekr.20060105143454.1"></t>
+<t tx="ekr.20060105143454.2"></t>
+<t tx="ekr.20060106064618">A 'backward' delete at the start of a headline deletes the first character.
+delete-char does not work in headlines.</t>
+<t tx="ekr.20060106091831"></t>
+<t tx="ekr.20060106091831.1"></t>
+<t tx="ekr.20060106112159"># Every call was a potential bug.</t>
+<t tx="ekr.20060106112915"></t>
+<t tx="ekr.20060106114716"></t>
+<t tx="ekr.20060106125608"></t>
+<t tx="ekr.20060106125608.1"></t>
+<t tx="ekr.20060106131142"></t>
+<t tx="ekr.20060106172320"></t>
+<t tx="ekr.20060106212914"></t>
+<t tx="ekr.20060107082929">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3510448
+By: ktenney
+
+Howdy,
+
+I'm executing a script in a Leo node which has
+an indentation error. I get the following report,
+which doesn't help locate the error.
+
+Pardon me if this is well known issue, I don't
+remember discussion of it.
+
+Thanks,
+Kent
+
+################################################
+exception executing script
+Traceback (most recent call last):
+  File "C:\python24\lib\site-packages\leo\src\leoCommands.py", line 1277, in
+executeScript
+    exec script in d
+IndentationError: unindent does not match any outer indentation level (line
+103)
+--------------------
+  line 1276:                     # g.trace(script)
+* line 1277:                     exec script in d
+  line 1278:                     if not script1 and not silent:
+  line 1279:                         g.es("end of script",color="purple")
+
+</t>
+<t tx="ekr.20060107103157"></t>
+<t tx="ekr.20060107104019"></t>
+<t tx="ekr.20060107222329">@nocolor
+
+
+- 
+</t>
+<t tx="ekr.20060107224249.1"></t>
+<t tx="ekr.20060107231542">This could have been the source of weird find behavior.</t>
+<t tx="ekr.20060107232924">The following would be major changes, with little benefit.
+
+- Make leoGlobals a subclass of the commander.
+    - There are many calls to to g.es in leoGlobals.py.
+
+- Eliminate g.app.log.
+    - It is dangerous, but g.es requires it.
+
+- Eliminate g.scanErrors.
+    - A laudable goal, but it's real messy.</t>
+<t tx="ekr.20060108105607"># Leo now calls doCommand on all commands, so the 'command' hooks always get done.
+# In addition, the normal processing in doCommand catches errors, etc.</t>
+<t tx="ekr.20060108115434">The fix was to have x.getSelectedText return '' instead of None.</t>
+<t tx="ekr.20060108115434.1">
+AttributeError Exception in Tk callback
+  Function: &lt;function allKeysCallback at 0x03463730&gt; (type: &lt;type 'function'&gt;)
+  Args: (&lt;Tkinter.Event instance at 0x046801C0&gt;,)
+  Event type: KeyPress (type num: 2)
+Traceback (innermost last):
+  File "C:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1748, in __call__
+    return apply(self.func, args)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 647, in allKeysCallback
+    return k.masterCommand(event,func=None,stroke='&lt;Key&gt;')
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 763, in masterCommand
+    k.callStateFunction(event) # Calls end-command.
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 799, in callStateFunction
+    val = k.state.handler(event)
+  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 530, in stateHandler
+    self.doTabCompletion()
+  File "C:\prog\leoCVS\leo\src\leoEditCommands.py", line 457, in doTabCompletion
+    if s.startswith(self.prefix) and self.tabList:
+AttributeError: 'NoneType' object has no attribute 'startswith'
+
+================================================
+  Event contents:
+    char:
+    delta: 9
+    height: ??
+    keycode: 9
+    keysym: Tab
+    keysym_num: 65289
+    num: ??
+    serial: 197812
+    state: 8
+    time: 7154627
+    type: 2
+    widget: .62497976.62497136.17871136.17871376.body-pane
+    width: ??
+    x: 307
+    x_root: 688
+    y: 58
+    y_root: 624</t>
+<t tx="ekr.20060108120501">This is the easy way to do script finds!</t>
+<t tx="ekr.20060108151437"># This includes k.masterCommand and all event handlers.
+</t>
+<t tx="ekr.20060109060505">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3510983
+By: vpe
+
+I realized it's not necessary to do int-float-int conversion to calculate width.
+The result will be the same. So it's really simple:
+
+width = font.measure(p.headString())/font.measure('0')+1
+
+If font is not fixed-width, trailing space in headlines will vary between 0
+pixels and width of char '0'.</t>
+<t tx="ekr.20060109164136">def setLog (self):
+    
+    c = self
+
+    if c.exists:
+        try:
+            # c.frame or c.frame.log may not exist.
+            g.app.setLog(c.frame.log)
+        except AttributeError:
+            pass</t>
+<t tx="ekr.20060109183500.1">execute-named-script executes script in leo/scripts.
+
+
+
+does script_menu plugin exist? Yes!
+    Where does it get scripts?</t>
+<t tx="ekr.20060110070304"></t>
+<t tx="ekr.20060110070304.1">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3514627
+By: nobody
+
+&lt;quote&gt;I suspect what you want is to elimate all the !text specifications in
+the @shortcuts nodes. (just the !text part, not the whole binding!)&lt;/quote&gt;
+
+Not neccessarialy, I just want to hinder that the body pane looses the focus
+as soon as you press Ctrl-S for safe, or if you press ALT-DnArrow to skip to
+the next node in the tree pane.The focus should stay in the body pane without
+the need to explicitly give it back to it by mouse-click or Ctrl-T, but maybe
+in the case of Ctrl-s that is a bug ?
+Why should the body pane loose the focus by pressing Ctrl-S ?</t>
+<t tx="ekr.20060110084342"></t>
+<t tx="ekr.20060110084342.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3514294
+By: sergio_101
+
+i just started using Leo toinght, but i am having problems with the enter key..
+
+unless i hit ctl-enter, i cannot get a lf/cr.. it seems almost like the enter
+key is not active at all unless i hit ctl..</t>
+<t tx="ekr.20060110084342.2"></t>
+<t tx="ekr.20060110084342.3">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3514755
+
+Leo Log Window...
+Leo 4.4 alpha 5, build  1.358 , January 5, 2006
+Python 2.3.4, Tk 8.4.3, Pmw 1.2
+Windows 5, 1, 2600, 2, Service Pack 1
+
+When I hit Ctrl-H to edit a headline, the entire headline is selected. Fine.
+However, when I use an arrow key to move the cursor, the headline is _still_
+selected. This is NOT Windows-standard action. What's happened?</t>
+<t tx="ekr.20060110084745"># The report was mistaken.</t>
+<t tx="ekr.20060110084745.1">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3514816
+
+the cut&amp;paste doesn't mark leo dirty.
+a cut then change of focus, does
+an undo cleans up the mark again?</t>
+<t tx="ekr.20060110093631"></t>
+<t tx="ekr.20060110093631.1">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3509141
+By: rich_ries
+
+CLEO still does not remove markings. I set Priority -&gt; High, then tried Priority
+-&gt; Clear. Arrow is still showing. Tried Clear All. Arrow is still showing.
+
+FastGotoNode not working w/ ^SPC
+
+Group Operations NEEDS the old KEY-BASED version -- try tagging a dozen nodes,
+making a Mark, and cloning them using a mouse!!
+
+Need How-to for Labels:
+..Label to subnode
+..label to subnodes
+..labels to subnodes
+
+may be clear to the programmer, but not to anyone else.
+</t>
+<t tx="ekr.20060110102039">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3505544
+By: nobody
+
+this topic deserves another thread, rather 
+than hijack the IPython one in the main forum.
+
+presently Leo has a few options documented,
+--script has a required parameter filename
+batch mode also requires a filename.
+why are they not documented in the same place?
+why is batch mode option called --script?
+is it too late to change to --batch ?
+
+filenames in windows that have spaces will 
+have to be quoted if they follow an option.
+otherwise there will be no telling the filename
+after a --script from a possibly 'file name.leo'
+
+luckily, there was no need to force everyone 
+on windows to quote leo names or use -fsome.leo,
+especially when other options aren't used.
+a little tricky, but I think it works.
+
+the --script could as well load the leo itself
+for that matter maybe all the args after --script 
+should be assumed to be part of the scripts options
+and Leo should only process up to the --script fname.
+maybe there can be another option to collect
+options for the script to batch process.
+not necessary to decide now.
+
+optparse can verify option parameters 
+with callbacks. like does a filename exist,
+is there enough free diskspace etc etc.
+and provide a standard usage menu on exit.
+rather than a roll your own wherever it happens.
+I am not familiar enough with Leo startup to say
+how is the best way to verify filenames or to
+pass the filenames to run or set ivars.
+import leoGlobals as I have might not be possible
+this early in startup. need to get version info too.
+
+leo -script whatever.py  error or not? typo? fixable?
+leo --script whatever.py is ['script', 'whatever.py'] 
+coming up with a comprehensive set of input args and
+expected outcomes will be necessary for testing.
+I'll do that next.
+
+what about encoding problems, should check optparse archive.
+what about py2.2 using optparse from 2.4? trust but verify.
+this also has to be well tested.
+
+--help -? or -h all work.
+wasn't able to mimic the /help  /?
+windows world method of option entry.
+probably someone knows how.
+hope its not a registry setting!
+
+profile options might only be available if you
+enter -xpert mode, to avoid confusing anyone who 
+thinks they may need to run it because it is there.
+and be removed from the help menu as well.
+
+here is the proof of concept leomain.py,
+all it does is process commandline args and 
+print what command it will run or var it will set.
+nothing is actually opened or run.
+
+$ \c\py\python22\python leomain.py some.leo
+run(some.leo)
+
+$ \c\py\python22\python leomain.py some.leo -P
+profile(leoProfile.txt,some.leo)
+
+$ python leomain.py -profile=/tmp/proFile.txt my favorite.leo
+profile(rofile=/tmp/proFile.txt,my favorite.leo)
+
+woops! not sure how to guard against that.
+verifing is valid creatable filename could help.
+that should have been:
+
+$ python leomain.py --profile=/tmp/proFile.txt my favorite.leo
+profile(/tmp/proFile.txt,my favorite.leo)
+
+$ python leomain.py --script some.py some.leo
+script some.py
+run(some.leo)
+
+$ python leomain.py --script some.py
+script some.py
+run()
+
+that's the basics.
+needless to add, some of the code default 
+choices and wording of help messages 
+will have to be fine tuned. 
+have at it.
+
+post a note if something breaks.
+I know of a few typos already.
+
+[http://rclick.netfirms.com/leomain.py.htm]
+
+e
+</t>
+<t tx="ekr.20060110102239.1">@color
+"""  to run, add your path to leo below if not already set.
+
+proposed modification to leo.py for hprof or hotshot profile 
+giving standard help options from the commandline
+and making additional options or combinations less work.
+
+using optparse for commandline parsing
+for py2.2 will use optik if installed, but not critical
+requires copy of optparse.py from py2.4 in leo/extensions
+no problem for py2.3+ already in the stdlib
+this also need seperate testing, unittests to follow.
+
+to use from command or shell window:
+python leomain.py some args, see what happens.
+nothing except print will happen, no open or file creation.
+presently use a copy of sys.argv but that would be mutated.
+if something is not obvious it should be fixed.
+
+
+comments presently are interspersed throughout the file
+will be collected and shortened as bugs are removed.
+getting all options and filenames correctly is complicated
+by the possibility of unicode or spaces in filenames.
+some options require filenames for later processing in run()
+and a leo may be specified or even more than one at some point
+wildcard handling is not especially cross platform compatible.
+
+want to make it possible to enter filenames w/o quoting
+but will be impossible for now for batch &amp; script option params.
+they have to have quotes if there are spaces in the filenames on win.
+
+also somewhat ambiguous, -sscript filename
+will actually parse as --script cript filename
+this could be a source of error and questions.
+not sure if it can be avoided if there is to be longword args.
+
+another point, -script is a possible typo to document at least.
+
+a script like this could actually be some kind of leo launcher.
+an option could popup a filedialog to get a leo, so it could in Leo.
+or open the last leo that has been modified on the local filesystem.
+as well as be a test bed for optparse &amp; profile, read from ini file.
+not dependant on changing leo.py, just import leo, then leo.run(fname)
+
+for scripting, ability to set argv should be possible somehow.
+maybe set sys.argv = [] before run
+
+maybe just breeze through argv trying to concatenate filenames
+then try to parse it. and let parseopts save a copy
+later calls to parseopts w/o argv will use the saved attribute copy.
+probably passing opts+args to run() is cleaner though.
+
+
+this is the kind of merge that can give cvs merge a bad name, 
+good luck!
+leoGlobals and change of sys.path used only for testing.
+import leoGlobals may not work for the real leo.py this early
+before g.app is created. some refactoring is inevitable
+
+why check for win before trying to make filename w/spaces?
+does other os not have problem w/spaces in argv w/o quotes?
+and why win32? is there no win64 in Leo's user base
+or does it not have the space problem w/argv
+are single and double quotes around filename the same for other os?
+for windows they don't work like double quotes.
+
+
+the order of parameters might have to be significant
+but as it is, the.leo can appear anywhere
+and on win, all unused args are joined with spaces just in case
+if you do strange stuff possibly you get what you ask for.
+
+does Leo try to find filename.leo if filename is sans the extension?
+does it cause an overwrite existing file y/n/c or pass silently overwriting?
+
+-d datadir might be useful if you want to have other than the some.leo same dir
+-set somesetting=this like for outline bg color in script playback mode
+
+if leo is started from another shell, argv[0] might not be python or might be
+it could be IPython or something else, but there might be its args
+as well as the program it started that started Leo
+so really, argv should be [find(leo.py'):]
+and for some associations or os, no .py or .pyw required
+for that matter import leo; leo.run() bypasses option parsing altogether!
+this is another problem now that I think of it...
+but only if you also expected to get --script or some other option parsed
+if you import leo you probably know what you are doing
+you would have to set some global options, args I guess is what __main__ will do.
+searching to cut back sys.argv for python or python.exe leo etc etc 
+is bound to failure, too many cross platform possibilities.
+
+__file__ can also be unreliable when started from py2exe or freeze or a zip
+
+can't so far get /h (a default windows help option) to trigger --help.
+seems like if there is no -h option defined, -hanything gets help
+could be a source of typo errors 
+if other longword no param option started w/'h' 
+optparse doesn't handle word-otherword conversion to word_otherword
+may be reading the doc wrong on that.
+but will handle -sb scriptfile batchfile combining
+says -s outfile equivalent to --script=outfile
+but what about --script outfile?
+carefully avoiding too much smart processing.
+
+
+hopefully a test suite will expose any anomalies.
+the default help output has a few more inconsistencies.
+strange there are no bug reports about it in 2 years!
+also want to give default values in help, maybe there is a %default
+
+help gets cutoff at 80 chars, 79 according to a lone bugtrack entry
+but that was for optparse, nd maybe its base0 counting.
+maybe its still bug tracked as optik.sf.net, the original project name.
+
+for future editors, and I sense there will be future edits,
+if an individual help entry is longer than ~79 it will get formated ok.
+
+
+see if we can avoid the ridiculous problem on win where on error
+you get an exit and see nothing unless started from console!
+source of some forum traffic as well.
+maybe, if sys.platform etc: raw_input('press any key to exit')
+and for pythonw maybe should popup an alert somehow...
+one can dream.
+
+proof of concept, still missing pasing args to run somehow
+or seetting an ivar or whatever to get script/batchmode filenames
+from main to where it is required. that should be easy enough.
+
+
+
+filename is be mandatory for both and it should exist
+its checked for batch in leo.py already so checking should be more generic
+haven't looked up where --script is processed
+didn't rewtrite getbatchfile or whatever its called.
+that will be replaced with a check if tobatch has a filename
+decide if optparse callback should check for valid existing file
+and exit or continue accordingly.
+
+and for an opposing view, if you are scripting leo from another script
+then want to enter script mode or batch mode
+what has to be available is to intercept the call to read the file.
+and pass it a string of the script or batch, w/o problem.
+a seperate function instead of hardwireing the read at least.
+
+
+
+if I've forgotten anything please post a note to the forums.
+beyond that, I don't know what to tell you.
+this is proto typical alpha proof of concept pseudo code
+although tested somewhat and worked as I expect it to,
+it can't be expected to do everything unforseen as well.
+and I can't be sure some transmission error hasn't occured.
+hold me harmless or hit delete now.
+
+"""
+
+#replace w/Leo's real version assuming it can be known this early
+#won't be much use if its leo.py's version
+__version__ = '4.4a5' #w06104p01:34 optparse &amp; profile for Leo
+
+import sys, os
+
+#####for testing use only, obviously don't add to leo.py
+k = os.path.normpath(os.path.abspath(r"C:\c\leo\V43leos\leo-4-4-\src"))
+
+#path being unicode can affect less than py2.3
+if sys.version_info[:2] &lt; (2, 3):
+    k = str(k)
+
+#might not be found in sys path on win9x, there is no unicode paths
+if k not in sys.path:
+    sys.path.append(k)
+del k
+#needed in profile()too
+import leoGlobals as g
+
+
+@others
+
+#replace from here to end, sans comments
+if __name__ == "__main__":
+
+
+@
+
+    #print os.environ #('IPYTHON') #thought they had this!
+    #there is no IPY env var when @run is used -p shell?
+    #for IPy need to trim sys.argv
+    #sys.argv = sys.argv[2:]
+@c
+
+
+    #not the final configuration FIXME FIXME, danger will robinson
+    leofile = None
+    argvtight = []
+
+    #going to have to decide to build OptionParser seperatly
+    #before parsing so concatate can have access to it.
+    #concatate() should be here but is problematic
+    #needs to know too much about options.
+
+    #no sense if there are no options or no args.
+    #there are ways this can fail though probably rare 
+    #dir name w/trailing space + filename leading minus sign
+    #and have to decide if slash is ok for option indicator
+    #assume no complains if not win argv[1] is ok
+    if sys.argv &gt; 1:
+        if not [x for x in sys.argv if x[0] == '-']:  #in '-/'
+            if sys.platform=="win32": # 
+                leofile = ' '.join(sys.argv[1:])
+            else:
+                leofile = sys.argv[1]
+        else:
+            #just a test, don't trust it yet
+            #may not even need it after all.
+            #argvtight = concatate(sys.argv)
+            argvtight = sys.argv[1:]
+            #print 'concatate arg', argvtight
+
+    #might have to add these to g.app or some kind of global?
+    #they are needed in other parts of Leo before it completely starts
+    #may need to pass to run and through profile into run as well.
+
+    opts, args = parseopts(argvtight)
+
+    if args and not leofile: leofile = ' '.join(args)
+    elif args:
+        print &gt;&gt; sys.stderr, 'too many args, try --help'
+        #maybe print usage too? except its defined in parseopts
+        raise SystemExit(2)
+
+    #print 'past parse_args', `args`, 'leo=', `leofile`
+
+    #for testing only, don't merge exactly
+    if opts.tobatch:
+        #w/filename hopefully w/o spaces
+        print 'batch', opts.tobatch
+    if opts.toscript:
+        #w/filename hopefully w/o spaces
+        print 'script', opts.toscript
+
+    #assume run can get the options it needs at some later point
+    #the profile run might require other options 
+    #like print sorted stats report to file after exit
+    #maybe delay start gathering for 20 seconds but continue
+
+    #maybe should pass run a dict of the options 
+    #rather than a static function attribute or global 
+    #or just add to globals?
+
+    if opts.toprofile:
+        #will probably require filename arg
+        #can take a leofile arg as well, default to ''
+        #have to use keywords in case leofile is '' or drop coma
+        #the actual call may be different, print is for ease of testing
+        if leofile is None:  leofile = ''
+        else:  leofile  = ','+ leofile
+        #must be -P otherwise would be a string filename
+        if opts.toprofile == True: opts.toprofile = 'leoProfile.txt'
+        print 'profile(%s%s)'%(opts.toprofile, leofile)
+
+    else:
+        if leofile is None:  leofile = ''
+        print 'run(%s)'%leofile
+
+
+#e
+
+</t>
+<t tx="ekr.20060110102239.2">def profile (statfile='/tmp/leoProfile.txt', leofile= ''):
+    
+    """Gather and print statistics about Leo
+    using new speedy hprof 
+    http://www.planetsoc.com
+    http://www.soton.ac.uk/~fb102/Python/hprof-0.1.0.tar.gz
+    needs a blank __init__.py in the hprof dir
+
+    or hotshot 
+    even older profile if you want to go that far back
+    add option to force profile, hotshot, hprof or lstat
+
+    valid combined w/script or batch mode as well.
+    
+    may have the default args and calling sequence wrong
+    refactored too much too fast with no time for testing
+    should be easily fixed though. it did work yesterday!
+    """
+
+    #import profile, pstats
+    try:
+        from hprof.hprofile import Profile
+    except ImportError:
+        from hotshot import Profile
+
+    import time
+
+    start = time.time()
+    #print "start %s seconds"%((start))
+
+
+    prof = Profile(statfile)
+    prof.run('run(%s)' % leofile)
+    prof.close()
+
+    stop = time.time()
+    print 'Profile process ', statfile
+    print "took %7.3f seconds"%((stop-start)),
+    print "or %7.3f min"%((stop-start)/60)
+
+    #skip the profile stats output after run
+    #use scriptButton hprof in your work leo
+    #may add option to generate stats after the run
+</t>
+<t tx="ekr.20060110102239.3">def parseopts(argv):
+    """  
+    should verify leo.py is [0]? optparse ignores [:1] if no argv passed
+    except as %prog  in usage help
+    running test in commandline manually too, 
+    maybe need a maintest.py based on optik unit tests?
+
+    &gt;&gt;&gt; import sys
+    &gt;&gt;&gt; print 'argv:',`sys.argv`
+    'before sys set'
+    &gt;&gt;&gt; sys.argv = ["leo.py", "b", "b.txt"]
+    &gt;&gt;&gt; sys.argv = ["leo.py", "b", "-?"]
+    &gt;&gt;&gt; print 'argv:',`sys.argv`
+    'after sys set'
+    &gt;&gt;&gt; parseopts(sys.argv)
+    profile
+    """    
+    import leoGlobals as g
+    try:
+        #was the original name available for py2.2
+        import optik as optparse
+    except ImportError:
+        #using py2.3+ optparse
+        optparse = g.importExtension('optparse')
+
+    #description is in addition to normal help
+    #any way to get description to be the help w/o subclassing?
+    #later can use parser.usage= '%prog [-h,-n etc  defaults: -c ]'
+    
+    #if a filename doesn't have leo extension is it assumed?
+    #I think some of the comments are starting to repeat.
+    #maybe come will get closer to the point of active choice
+    #and I can delete the impostor comments.
+
+    descript = 'Leo the python scriptable literate programming editor '
+        
+    #usage  and description mutually exclusive?
+    #usage alone is printed on unknown option or maybe other error
+    #no wrap in that case
+
+    #getting this cross platform correct could be difficult
+    #especially with variations in associations
+    #and isn't and can't be complete wrt paths and pythonpath
+    #maybe point to the webspace and docs is enough
+    #.py not required for some , python not required for others
+    #maybe no choice but to generate some os specific strings
+    
+    #doesn't mac also have pythonw and can we detect running under wine?
+    #has to be some way of embedding \n 
+
+    #-s file -sfile --script=file or --script file all the same?
+    
+    usage = r'''options [-s/--script scriptfile -b/--batch batchfile leofile]
+        more options [-h, --help  and --version]
+        problems: try quoting any filenames
+        if there is still a problem: please report it with any details
+   http://webpages.charter.net/edreamleo/front.html  Leo version %s'''% __version__
+
+    #prog name assumed eventually to be leo.py
+    if sys.platform[:3] == 'win':
+        usage = 'python -i %%prog leofile.leo  no console pythonw leo.py'+ usage
+    else:
+        usage = 'python %%prog leofile.leo  -h or --help' + usage
+        
+    
+    parser = optparse.OptionParser(version='%%prog %s' % __version__, 
+                        description=descript, usage= usage)
+
+    #how to require a filename? and how to specify it is possibly w/spaces
+    #is -s:filename acceptable? that is a common arg convention.
+    #ideally tobatch would be None or be the filename
+    #and because of spaces con-cation will have to happen outside the parser
+
+    #please comment out any options that are not implemented yet.
+
+    for (l,w,a,t,d,f,h) in (
+
+        # -help does work because its just -h, gets me every time!
+        ('-?', '--hepl', "help", "", "", "",
+            "help message"),
+
+        ("-q", "--quiet", "store_true", "int", "verbose", 0,
+            "don't print status or trace messages"),
+
+        #    -script invalid option
+        ("-s", "--script", "store", "string", "toscript", None,
+            " script.py to run on startup"),
+
+        ("-b", "--batch", "store", "string", "tobatch", None,
+            "batch.py to run, no GUI"),
+
+        #if validate callback for script &amp; batch filename exists, 
+        #could happen here if Leo is going to quit later anyway
+        #and --safe may be mutually exclusive, confused -s being --script
+        #so validate has to wait for parsing to complete, would it?
+
+        #for profile filename is it valid? have permissions/disk space?
+        #may want to force hotshot even if hprof or lprof installed
+        #maybe only show these options if expert mode is on
+        #no need to get a flood of forum reports about profile results
+        #maybe leox.py has these options. oh, the possibilitiies.
+        #this is for the 5 other people interested in this...
+        #not something you want to do every day unless under duress.
+        #combined with script and/or batch mode should be very powerful
+        ("-p", "--profile", "store", "string", "toprofile", "",
+            " save  profile results in outfile.ext       DEFAULT:\
+            hprof or hotshot"),
+
+        #a conflicting option repeat of -p won't work, so upcased it
+        ("-P", "--Profile", "store_true", "", "toprofile", 0,
+            " save  profile results in leoProfile.txt in the leo dir"),
+
+        ):
+
+
+
+        #add --settings add -home for change of home maybe -temp maybe -set
+        #--settingsneeds leo/config as well as -home which one is germain
+
+
+        if a == 'help':
+            parser.add_option(l, w, action=a)
+
+        elif a != 'store':
+            parser.add_option(l, w, action=a,
+                        dest= d, default= f, help= h )
+        else:
+            parser.add_option(l, w, action=a,
+                type= t, dest= d, default= f, help= h )
+#
+
+
+@
+
+    parser.add_option("--no-trace",action="store_false",
+                  dest="trace", 
+                  help="Don't print commands before executing them.") 
+
+
+    #may want to subclass OptionParser to provide a Leo error exit
+
+    #is there a generic way to check for / used as an option trigger?
+    #is // even valid as a trigger
+    
+
+    #woops, if -h in argv a little too good
+    #better not prevent -high 20 or something similar
+    if '-h' in argv or '--help' in argv
+           
+    #for the win nubiee, / is the default win option starter
+    #have to check every arg individually, py2.2 no substring in
+    #definate bug that -? is not expected as help in optparse.
+    #able to enter -? as an option though.
+    
+    #can't seem to get /h to trigger help
+    for h in argv:
+        for i in ('-?', '/help', '/h', '/?'):
+            if i == h:
+                #parser.error("does this help?")
+                #parser.print_help()
+                parser.print_usage()
+                #print "didn't already exit!"
+                raise SystemExit(2)
+@c
+                
+
+    (opts, args) = parser.parse_args(argv)
+
+    #can I just trap error: no such option: -? and set help=True
+
+    return opts, args</t>
+<t tx="ekr.20060110102239.4">#### may have to skip this whole concatate thing ###
+#please ignore the comments too
+def concatate(argv, paramdict={}):
+    """
+    paramdict is a dict of single letter keys and
+    item = [T/F, 'longname'] set [1] as True/False for require param
+    
+    walk the list concatate anything with a space
+    to the previous item if it doesn't look like a valid option.
+    what are the valid options? we don't care...
+    is - s filename parseable as -s:filename ??
+    this has got to have generated lots of point counterpoint over the years.
+    should do some research... 
+    have to decide if will accept / as option seperator or if optparse does
+    this may not be doable if we alow options to also have spaces in filenames
+    does optparse resolve -ffilename as well as -f:filenname the same?
+
+    lets assume an options param can't have spaces, just get it working for now.
+    if you enter an option you better quote it if you need to
+    leave the space correcting behaviour for default or trailing filenames only
+    
+    now there is a problem need to know which oiptions have required params
+    otherwise can't decide how to concate, unless the space was preserved (it isn't)
+    I think on win or anywhere argv[n][0] is never going to be a space
+    dito for argv[n][-1]
+    so, its a simple FSM with 2 states, an option or a param
+    cancel concatate space if previous was an option
+    but here we go again, what about options that don't have params?
+    optparse doc talks at length about options not having optional params.
+    in Leo's case we may need to pass it a list of options that have no params?
+    maybe optparse team needs to gix this not the module user
+    maybe someone filed a patch already? more study!
+    if not who is going to need optparse after this gets done?
+    
+    maybe just concatate all trailing args till an option, process backward
+    its looking moore like a parser than a FSM now and I need to know too much.
+    maybe assume all options have required params for now untill imp paramdict
+    what about "-script=name, the doc implys that this may be valid?
+    
+    all validm but they don't mention -file=outfile, maybe is a typo missing -?
+    &lt;yourscript&gt; -f outfile --quiet
+    &lt;yourscript&gt; --quiet --file outfile
+    &lt;yourscript&gt; -q -foutfile
+    &lt;yourscript&gt; -qfoutfile
+    damm, this is not going to even be worth trying
+    seems -script == --script criptm 
+    that could be confusing and error prone
+
+
+    &gt;&gt;&gt; concatate(['1','2','3'])
+    ['1 2 3']
+    &gt;&gt;&gt; concatate(['-1','2','3'])  #rule option param can't have spaces
+    ['-1', '2', '3']
+    &gt;&gt;&gt; concatate(['-s','2','3' '4']) #-s has required param
+    ['-s', '2', '3 4']
+    &gt;&gt;&gt; # a little trickier -ffilename default arg, 
+    &gt;&gt;&gt; #optparse won't do this? getopt probably would,
+    &gt;&gt;&gt; concatate(['-1',' 2','3' '4'])
+    ['-1', '2', '3 4']
+
+    &gt;&gt;&gt; #fix for extra credit, user probably screwed up? should ask them?
+    &gt;&gt;&gt; concatate(['1','- 2','3'])
+    ['1', '- 2', '3']
+    
+    """
+
+    #preparse sys.argv concating filenames w/spaces 
+    #as appropriate for --script and --batch and any leofilename
+    #or is this something parseopts should be doing?
+    #not so simple really 
+    #if argc ==1 then no options or filename
+    #if any options start w/ - or / then it gets dicey
+    # could be a space in the last part of a directory in seperate items
+    #we may not be able to cover every concievable case
+    
+    prev = ''
+    lst = []
+    
+    for x in argv:
+
+        if x[0] == '-':  #or '/' or x in '/-'
+            lst.append(x)
+            if prev:
+                lst.append(prev)
+                prev = ''
+        else:
+            if prev: prev = prev + ' ' + x
+            else:    prev = x
+        
+        #print 'droped thru x:prev', `x`, `prev`
+    else:
+        if prev:
+            lst.append(prev)
+
+    return lst
+    
+
+</t>
+<t tx="ekr.20060110102239.5">@
+make into a real series of tests
+I made the name leo\smain.py because my associateions for py are to open editor
+so this could never run leo then open main.py even if I was in leo/src
+
+
+$ python leo main.py
+C:\C\PY\PYTHON~1\PYTHON.EXE: can't open file 'leo'
+
+$ python "leo main.py"
+past parse_args ['leo main.py']
+leo.run()
+
+$ python 'leo main.py'
+C:\C\PY\PYTHON~1\PYTHON.EXE: can't open file ''leo'
+
+$ python "leo main.py" filename
+past parse_args ['leo main.py', 'filename']
+leo.run()
+
+$ python "leo main.py" c:/filename /help/some.leo
+processed arg ['leo main.py', 'c:/filename', '/help/some.leo']
+past parse_args ['leo main.py', 'c:/filename', '/help/some.leo']
+leo.run()
+
+$ python "leo main.py" "c:/filename /help/some.leo"
+processed arg ['leo main.py', 'c:/filename /help/some.leo']
+past parse_args ['leo main.py', 'c:/filename /help/some.leo']
+leo.run()
+
+$ python "leo main.py" "c:/filename /help/some.leo"
+processed arg ['leo main.py', 'c:/filename /help/some.leo']
+past parse_args ['leo main.py', 'c:/filename /help/some.leo'] leo= c:/filename /
+help/some.leo
+leo.run(c:/filename /help/some.leo)
+
+$ python "leo main.py" c:/filename /help/some.leo
+processed arg ['leo main.py', 'c:/filename', '/help/some.leo']
+past parse_args ['leo main.py', 'c:/filename', '/help/some.leo'] leo= c:/filenam
+e /help/some.leo
+leo.run(c:/filename /help/some.leo)
+
+-script works for --script cript it seems
+and that could be a typo missing --script so the next filename
+gets concatated into the leo name which I guess can't be helped
+
+OTOH, if you use the default version=
+then --versions works but -v or -version doesn't
+
+
+$ \c\py\python24\python "leo main.py" test.leo -p whatever else
+concatate arg ['test.leo', '-p', 'whatever', 'else']
+past parse_args ['test.leo', 'else'] leo= 'test.leo else'
+profile(whatever, test.leo else)
+this is the thing that is still hard to avoid. on win, has to be
+$ \c\py\python24\python "leo main.py" test.leo -p "whatever else"
+
+really need to get this tested on other than old win9x,
+
+
+
+
+
+@killcolor
+</t>
+<t tx="ekr.20060110102239.6">@
+will it handle spaces in filenames w/o quotes?
+
+leo.py --script filename.leo is not good
+leo.py -script filename is not good, which is it a scriptfile or a leo to be?
+
+as error for -profile as an option, going to have to subclass override error
+AttributeError Values instance has no attribute 'profile' ["__module__ = 'exceptions' .", "__doc__ = 'Attribute not found.' ."] 
+this was a programmer error though, the var is toprofile
+
+little hard to test this as a script, can't control argv
+update, sys.argv = seems now to be working from doctest
+better readup, haven't used this in a while
+haven't read the docs in a while either, a good read.
+especially the origional optik.sf.net
+
+
+need to make this a function to call returning a dict maybe?
+at least to doctest it better w/o needing to create a test module 
+and then run it saving stdout
+
+its also going to be a little trickier to --script or --batch with --profile
+and what is exactly the difference with --batch and --script?
+one has no GUI maybe?
+
+
+- is valid in a filename, so primitive argv parsing
+will be difficult to distinguish in a filename w./spaces
+since the spaces cause seperate items and just a join
+is not good because you have to know if it is a valid arg
+what if it is a valid arg? this is a nightmare in any case...
+
+
+need a timer on operations while getting a profile
+expandall, contrract all so can be output with the pstats
+
+need to set options in a seperate function
+so can generate test for all functions and params on the fly
+this will be good in the general case for other programs
+
+anyone already depending on case insensitive args?
+
+default file for profile not working out
+comprimise -P as an option w/o param uses default leoProfile.txt
+
+if -p file name -s some.py will be difficult to get right w/o quoting
+will anyone ever expect a default? 
+unless thats in the leodir or something?
+dito for script and batch but what possible default could they have, 
+
+
+
+does x is None work on py2.2?
+
+</t>
+<t tx="ekr.20060110102239.7">@color
+@
+hprof from google summer of code replace hotshot &amp; profile
+much faster on the uptake and output!
+has compatibility modules so can use mostly the same calls
+this script uses the hprof calls. didn't mod leo.py yet
+as I am not able to compile _hotshot.c to pyd or .so
+it will use hotshot created profile ok.
+
+added psyco, need to create batch file so can automate &amp; timeit.
+also have modified leoGlobals match and a few other things already
+and proven You can shave at lest a few seconds overall,
+
+can combine add more than one profile run to get better data
+but I don;t do that in this script.
+
+and pypy has lstat which also didn't compile for me
+and possibly isn't windows compatible yet
+along with another mentioned in this past weeks py-dev summary.
+
+
+need something to compare the diff of 2 profiles
+sorted the same way, something to add comments to the
+profile, maybe a simple flatfile to manage profiling.
+seems this would have been a project for someone already?
+
+chg leo.py profile to create hotshot profile file
+then run, copy a node from library
+expand/contract a few times then exit.
+
+takes a few minutes to process the hotshot file
+then prints enormous amout of stats...
+you see a few leoGlobals called a few hundred thousand times
+on a run of 5 or 10 minutes.
+
+        Stats('foo', 'goo').strip_dirs().sort_stats('calls').\
+                            print_stats(5).print_callers(5)
+              "calls"     : (((1,-1),              ), "call count"),
+              "cumulative": (((3,-1),              ), "cumulative time"),
+              "file"      : (((4, 1),              ), "file name"),
+              "line"      : (((5, 1),              ), "line number"),
+              "module"    : (((4, 1),              ), "file name"),
+              "name"      : (((6, 1),              ), "function name"),
+              "nfl"       : (((6, 1),(4, 1),(5, 1),), "name/file/line"),
+              "pcalls"    : (((0,-1),              ), "call count"),
+              "stdname"   : (((7, 1),              ), "standard name"),
+              "time"      : (((2,-1),              ), "internal time"),
+
+@c
+from dyna_menu import dtef
+@others 
+
+ 
+def showstats():
+    """ log sort of stops printing when you type! or grab scrollbars.
+    need to print to copybuffer, redirect io to log print very slow
+    may actually be faster if you minimize leo
+    also can make the log window very small
+    in Leo4.4 you can multitask a little when it starts to print.
+    """
+    import leoGlobals as g
+    #import profile, pstats
+    try:
+        from hprof.hpstats import Stats
+    except ImportError:
+        from hotshot import Stats
+    import sys
+    
+    name = "/tmp/leoProfile.txt"
+    print 'processing ', name
+
+    #profile.run('leo.run()',name)
+    #prof = hotshot.Profile(name)
+    #prof.runcall(run)
+    #prof.close()
+
+    #p = pstats.Stats(name)
+    #p.strip_dirs()
+    #p.sort_stats('cum','file','name')
+    #p.print_stats()
+
+    
+    #would be nicer if strip_dirs left one more level of dir
+    #or even better took an int to leave how many levels
+    #several modules have similar def names, __init__ etc
+    #will have to override that.
+    
+    s = Stats(name).strip_dirs()
+
+    #need to reverse or trap stdout to file    
+    #why does g. not have a simple command to do this?
+    #whydoes stats.print not take a filename? 
+    #weird no one thinks of these things. is it just me?
+
+#    sys.stdout = g.fileLikeObject()
+    
+    print 'start.sort', dtef(c),
+    s.sort_stats("time").print_stats()  #.print_callers()
+@
+    stat = sys.stdout.get()
+    sys.stdout.close()
+    sys.stdout = sys.__stdout__
+
+    #attempt to get a better strip_dirs later
+    for k,v in repdict.iteritems():
+        stat = stat.replace(k,v)
+    print stat[:400]
+@c    
+
+print 'start', dtef(c),
+showstats()
+print 'done', dtef(c)</t>
+<t tx="ekr.20060110102239.8">try:
+    if 1:#1/0  If present, use psyco to accelerate the program
+        import psyco
+        psyco.full()  #carefull with this in py2.3 esp w/leo 
+        #shows alot of time in tkinter and other plain leo routines!
+        #though this was per module only 
+        #from psyco.classes import *
+
+        #psyco.log(logfile='c:/temp/sb1.log', mode='w', top=30)
+        #psyco.profile(0.2)
+        #psyco.profile( watermark=0.09, halflife=0.5, pollfreq=20,  parentframe=0.25, memory=None, time=None, memorymax=None, timemax=None) 
+        #psyco.bind(searchButton) #not in scope, put after def
+        #psyco.bind(gen_nodes)  #generators 
+except ImportError: pass
+</t>
+<t tx="ekr.20060110113743"></t>
+<t tx="ekr.20060110113743.1">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3515025
+By: nobody
+
+From: Rich
+
+&gt;&gt;  Rich, are you still having any problems with plugins? (except for problems
+with the initial dynamic enabling of plugins).
+ 
+I have a nimber of plugins turned on. Here are my findings:
+
+I've had troubles with the following:
+
+-  cleo.pyc
+....Markers are not cleared. 
+....Pressing Priority --&gt; clear gives:
+---------------------------------------------------
+........Error: 1
+........AttributeError Exception in Tk callback
+........  Function: &lt;function &lt;lambda&gt; at 0x0173BAB0&gt; (type: &lt;type 'function'&gt;)
+........  Args: ()
+........Traceback (innermost last):
+........  File "C:\Language\Python\lib\site-packages\Pmw\Pmw_1_2\lib\PmwBase.py",
+line 1747, in __call__
+............return apply(self.func, args)
+........  File "C:\Software Engineering\Leo\Leo 4.4\plugins\cleo.py", line 700,
+in &lt;lambda&gt;
+............command=lambda:self.priority_clear(p.v),underline=0)
+........  File "C:\Software Engineering\Leo\Leo 4.4\plugins\cleo.py", line 742,
+in priority_clear
+............self.changed_redraw()
+........  File "C:\Software Engineering\Leo\Leo 4.4\plugins\cleo.py", line 325,
+in changed_redraw
+............c.setChanged(True)
+........  File "c:\softwa~1\leo\leo4~1.4\src\leoCommands.py", line 5966, in
+setChanged
+............if not c.frame: return
+........AttributeError: Commands instance has no attribute 'frame'
+---------------------------------------------------
+(FWIW, I like the error window that pops up.)
+
+...."Clear All" does NOT clear ALL(nodes) but restores the node colors to their
+default values
+
+....CLEO does not pick up Leo's colors. I use Antique White for the backgrounds,
+but until I changed CLEO's "White" to "Antique White" it was a nuisance. Newbies
+wouldn't want to / shouldn't need to go in and change the source code.
+
+
+-  fastGotoNode.pyc
+....Ctrl-Spc does not work to bring up the menu
+
+~  groupOperations.pyc
+....(Image) is not a very helpful name -- To me, 'image' has to do with graphics.
+"GrpOps" would be better.
+
+....I found using the old-time key combinations a LOT easier than mousing
+around:
+........Shift+Alt+M........Mark
+........Shift+Alt+V........moVe (Remember Turbo Pascal?)
+........Shift+Alt+C........Copy
+........Shift+Alt+`........clone
+........Shift+Alt+T........Tag
+........Shift+Alt+R........Remove tag
+
+....... and I'd rather have a multitude of operations (as above) than a multitude
+of markings (mark for Move|Copy|Clone).
+
+The following work as expected:
++  add_directives.pyc
++  color_markup.pyc
++  hoist.pyc
++  nav_buttons.pyc
++  open_with.pyc - even with my editor!
++  rClick.pyc
++  startfile.pyc
++  UniversalScrolling.pyc
+
+Untried-until-I-get-a-chance:
+?  ConceptualSort.pyc
+?  labels.pyc
+?  Scripts
+?  timestamp.pyc
+?  UNL.pyc
+
+HTH,
+--Rich
+</t>
+<t tx="ekr.20060110120907">@tabwidth 4
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=3515341
+By: nobody
+
+from latest cvs. post g.top disable.
+
+inconsistent use of tabs and spaces
+leo\src\leoUndo.py: 
+leo\src\leoCommands.py:
+leo\src\leoTkinterTree.py: 
+@tabwidth 4
+	
+Library creating: default
+problem starting Library: default
+not sure where this is comming from.
+I though Library did nothing untill first used.
+the 2nd run of Leo, the db is already created
+so no error reported. 
+ok if have an existing db in the default place.
+
+leo\plugins\rClick.py", line 244, in rClicker
+    commandList=[
+UnboundLocalError: local variable 'rc_selectAllCallback' referenced before
+assignment
+
+a lambda would work here.
+or the callback has to be moved
+outside the if startswith body
+
+leo\src\leoTkinterGui.py", line 677, in getTextSelection
+    sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine
+instead!!
+AttributeError: Entry instance has no attribute 'tag_ranges'
+when paste into Entry widget of search box or button.
+paste only understands Text widget?
+and then only from Edit-Paste
+keyboard paste is ok.
+
+in dyna_menu
+TypeError: cmd_flip_Leo_debug() takes no arguments (1 given)
+thanks for adding the callback in plugin_menu, 
+but now any plugin that has cmd_* functions 
+needs a c or dummy parameter in all of them.
+
+'help' in 139i should be copied from 
+my website version 139j from last year.
+this one fails on modules if you have epydoc,
+that should fix the only crasher 
+in the dyna version included with Leo.
+
+pylint call might need to have the import
+lines tweaked, depending on which version.
+they stupidly changed logilab directorys
+from version 6 to 7 and then again 7+.
+Im not going to try and guess which if
+any version of pylint someone has installed.
+if you want it, then you can edit it in.
+
+otherwise everything so far seems to work.
+with other noted anomalies omited for brevity.
+movement keys not  unselecting text the main one.
+
+alpha testers, remember if there is a
+traceback error in a plugin, although
+Leo recovers often other plugins will
+stop working 100% correctly in every case.
+exit Leo and python and restart 
+maybe with the offending plugin disabled,
+to be sure other problems are real problems.
+
+docutils 0.4 was released today.
+has a new html slideshow writer.
+
+e</t>
+<t tx="ekr.20060110131309"></t>
+<t tx="ekr.20060110131309.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3515616
+
+Could we have a visible-line-up and visible-line-down command? (I.e. to move
+the cursor up or down by a visible rather than a logical line).  With these
+commands, the arrows plugin could be permanently retired!
+
+What I did:
+
+- next-line and prev-line now work as requested.  This obsoletes the arrow plugin.
+    - Removed the redundant tree.OnUpKey and tree.OnDownKey
+    - Retired the arrows plugin.
+
+- Created the extendHelper method.
+    This creates and maintains the moveSpot, moveCol an moveSpotNode ivars,
+    and is responsible for extending the selection range.</t>
+<t tx="ekr.20060110133007"></t>
+<t tx="ekr.20060110202238">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3516262
+By: btheado
+
+I notice some keystrokes in the body pane are missing compared to 4.4a4.  I
+guess Tk used to handle these:
+
+Home/End - move cursor to start/end of line
+Shift-Home/Shift-End - same with selection
+Ctrl-Home/Ctrl-End - move cursor to start/end of widget
+Shift-Pageup/Shift-Pagedown - select by page (oops I see that 4.4a didn't have
+these either)
+
+Tk also provides state for preserving the cursor column as much as possible
+and 4.4a5 no longer has this functionality.
+
+Example:
+========
+12345678
+1
+12345678
+========
+
+In 4.4a4, put the cursor on the 7 and move down two lines and the cursor will
+be on the other 7.  In 4.4a5, the cursor will end up on the 2 after moving down
+two lines.
+
+This cursor column preservation isn't unique to Tk.  I've noticed that vim supports
+it as well.  I find it useful.</t>
+<t tx="ekr.20060110202455"></t>
+<t tx="ekr.20060111103821"></t>
+<t tx="ekr.20060111103821.1">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3517023
+By: ktenney
+
+W2K, recent CVS (Sourceforge is asking for a
+passwords and refusing to let me update)
+
+Window - Open Python Window
+
+Close the Python Window
+
+Plugins - Core - Plugin Manager causes traceback;
+
+exception executing command
+Traceback (most recent call last):
+  File "C:\python24\lib\site-packages\leo\src\leoCommands.py", line 238, in
+doCommand
+    val = command()
+  File "C:\python24\lib\site-packages\leo\plugins\plugins_menu.py", line 548,
+in callback
+    p.hastoplevel()
+  File "C:\python24\lib\site-packages\leo\plugins\plugin_manager.py", line 231,
+in topLevelMenu
+    dlg = ManagerDialog(True)
+  File "C:\python24\lib\site-packages\leo\plugins\plugin_manager.py", line 777,
+in __init__
+    self.plugin_view = PluginView(self.upper, self.file_text)
+  File "C:\python24\lib\site-packages\leo\plugins\plugin_manager.py", line 282,
+in __init__
+    labelpos = 'w',label_text = 'Name:')
+  File "C:\Python24\lib\site-packages\Pmw\Pmw_1_2\lib\PmwEntryField.py", line
+73, in __init__
+    sequences = root.bind_class(tag)
+AttributeError: 'NoneType' object has no attribute 'bind_class'
+</t>
+<t tx="ekr.20060111103821.2"></t>
+<t tx="ekr.20060111103821.3">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3517180
+By: rich_ries
+
+With Universal Scrolling, the Right mouse button works (scrolls up) but the
+Left mouse button (scroll down) does not. (Yes, I made sure I had a Leo file
+I could scroll up/down in.)
+
+--Rich
+P.S. -- Is there any way for the "select-node-on-mouse-click" feature to be
+disabled during scrolling? When I'm scrolling along, and I come to a long node,
+the scrolling stops and the long node is selected. NOT what I want! FWIW, my
+workaround is to locate the mouse on the far left side of the Outline Pane.</t>
+<t tx="ekr.20060111112513">See this node in leoDocs.leo.
+
+Users Guide--&gt;FAQ--&gt;@rst html\FAQ.html--&gt;Learning to use Leo--&gt;When is deleting a node dangerous?</t>
+<t tx="ekr.20060111113925">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3517080</t>
+<t tx="ekr.20060111114001">@nocolor</t>
+<t tx="ekr.20060111134004"></t>
+<t tx="ekr.20060111134004.1">Leo's Open Python Window command should take care to run Idle in a separate process.
+
+The present code is essentially:
+
+import idlelib.PyShell
+idlelib.PyShell.main()
+
+As the present problems with the Plugins manager show, this has the potential for mischief.  Indeed, idle is a Tkinter process, so Idle's shutdown code could interfere with Tkinter, Pmw, g.app or all three.
+
+It's no good blaming Pmw or Idle or whatever, there needs to be a solid way of avoiding problems, both now and in the future.  The obvious way is to use os.system or subprocess to keep Idle at arm's length.  If necessary we can use settings in leoSettings.leo to tell Leo exactly how to start Idle.</t>
+<t tx="ekr.20060111134901"></t>
+<t tx="ekr.20060111152145"></t>
+<t tx="ekr.20060111152145.1"></t>
+<t tx="ekr.20060111193246"></t>
+<t tx="ekr.20060112045830">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3518387
+
+Here are the changes I made to get back to my old Leo:
+
+back-word                               = Ctrl-LtArrow
+back-word-extend-selection              = Shift-Ctrl-LtArrow
+beginning-of-buffer                     = Ctrl-Home
+beginning-of-buffer-extend-selection    = Shift-Ctrl-Home
+beginning-of-line                       = Home
+beginning-of-line-extend-selection      = Shift-Home
+delete-char                             = Delete
+end-of-buffer                           = Ctrl-End
+end-of-buffer-extend-selection          = Shift-Ctrl-End
+end-of-line                             = End
+end-of-line-extend-selection            = Shift-End
+forward-word                            = Ctrl-RtArrow
+forward-word-extend-selection           = Shift-Ctrl-RtArrow
+scroll-down                             = PageDn
+scroll-up                               = PageUp
+</t>
+<t tx="ekr.20060112062706"></t>
+<t tx="ekr.20060112062706.1">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3518722
+By: nobody
+
+I'm using Leo 4.3.1, build  1.266 , June 20, 2005.
+
+To generate HTML file I entered the outline header "@file bbb.xml" under which
+I put the following body text:
+
+//////////////// beginning of excerpt
+@first &lt;?xml version="1.0" encoding="windows-1250" ?&gt;
+@language html
+@
+comment line
+@c
+@others
+//////////////// end of excerpt
+
+This works OK.
+But, if I put a space after the sole @ above "comment line",  save and close
+the .leo file and then open it, Leo protests in log pane on the right:
+
+//////////////// beginning of excerpt
+----- error reading @file: bbb.xml
+Missing open block comment
+//////////////// end of excerpt
+
+maks.romih@snt.si</t>
+<t tx="ekr.20060112064517"></t>
+<t tx="ekr.20060112064517.1">I use SciTE, but these keystrokes are quite common.
+http://www.scintilla.org/SciTE.html
+
+These now exist in 'EKR bindings: a mix...'
+
+back-word                               ! text = Ctrl-LtArrow
+back-word-extend-selection              ! text = Ctrl-Shift-LtArrow
+beginning-of-line                       ! text = Home
+beginning-of-line-extend-selection      ! text = Shift-Home
+end-of-line                             ! text = End
+end-of-line-extend-selection            ! text = Shift-End
+forward-word                            ! text = Ctrl-RtArrow
+forward-word-extend-selection           ! text = Ctrl-Shift-RtArrow
+scroll-down                             ! text = PageDn
+scroll-up                               ! text = PageUp
+
+I added these, but the commands don't exist yet:
+
+beginning-of-text                       ! text = Ctrl-Home
+beginning-of-text-extend-selection      ! text = Ctrl-Shift-Home
+end-of-text                             ! text = Ctrl-End
+end-of-text-extend-selection            ! text = Ctrl-Shift-End
+scroll-down-extend-selection            ! text = Shift-PageDn
+scroll-up-extend-selection              ! text = Shift-PageUp
+
+Manfred
+marl@pragmatis.de
+www.pragmatis.de</t>
+<t tx="ekr.20060112065740"></t>
+<t tx="ekr.20060112070752"></t>
+<t tx="ekr.20060112084446">@nocolor
+
+- Set options from the keyboard.
+    - set-variable sets a (Python) variable using an minibuffer-style variable name.
+
+Focus
+    - focus-in-body/tree/log/dialog.
+    - cycle-active-pane and cycle-active-widget (in a single pane) commands.
+    - activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
+
+- Drive all tabs/dialogs from the keyboard
+
+- Control all Leo commands &amp; widgets using only key commands.
+
+- create-tab, clear-tab commands, etc.
+    These might get the tab name from the minibuffer...
+    
+- find character, word,etc.
+
+- extending the cursor
+    Possibly the same as moves, except for being in extend mode.
+    
+- moving text around
+    - cut, copy, paste, kill, yank, etc.
+    - delete to x
+
+- dismiss-about-dialog</t>
+<t tx="ekr.20060112094901"></t>
+<t tx="ekr.20060112112241"># These should be considered bug fixes.</t>
+<t tx="ekr.20060112191014">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3518792
+
+EKR: The change in focus happened in c.endEditing in at.writeFromString.
+
+I added a new restoreFocus keyword arg to c.endEditing.</t>
+<t tx="ekr.20060112202702">@nocolor
+
+1. copyBindingsToWidget now binds keys in priority order. This also simplifies
+and clarifies the code.
+
+2. Removed k.onTextWidgetKey.  Added a callback that invokes k.masterCommand.</t>
+<t tx="ekr.20060113050914"></t>
+<t tx="ekr.20060113060922">This corrects a problem that shows up as 'Invalid cross-device link' messages on Linux.
+
+http://sourceforge.net/forum/message.php?msg_id=3519803</t>
+<t tx="ekr.20060113062832.1">def copyBindingsHelper(self,bunchList,shortcut,w):
+
+    k = self ; c = k.c
+
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
+
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)</t>
+<t tx="ekr.20060113081442.2">@nocolor
+
+Later
+
+open-outline-by-name
+
+https://sourceforge.net/forum/message.php?msg_id=3519444
+
+write-rst
+execute-unit-tests</t>
+<t tx="ekr.20060113082917">def scrollHelper (self,event,direction,extend):
+
+    k = self.k ; c = k.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.frame.widgetWantsFocus(w)
+
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+    row, col = ins1.split('.') ; row = int(row) ; col = int(col)
+
+    # Compute the spot.
+    chng = self.measure(w) ; delta = chng [0]
+    row1 = g.choose(direction=='down',row+delta,row-delta)
+    spot = w.index('%d.%d' % (row1,col))
+    w.mark_set('insert',spot)
+
+    # Handle the extension.
+    self.extendHelper(w,extend,ins1,spot)
+    w.see('insert')</t>
+<t tx="ekr.20060113085710"></t>
+<t tx="ekr.20060113090042"></t>
+<t tx="ekr.20060113090732"></t>
+<t tx="ekr.20060113105246">def moveUpDown (self,direction):
+    c = self.c ; body = c.frame.bodyCtrl
+    # Make the insertion cursor visible so bbox won't return an empty list.
+    body.see("insert")
+    # Find the coordinates of the cursor and set the new height.
+    # There may be roundoff errors because character postions may not match exactly.
+    ins =  body.index("insert")
+    lines,char = g.scanf(ins,"%d.%d")
+    x,y,junk,textH = body.bbox("insert")
+    bodyW,bodyH = body.winfo_width(),body.winfo_height()
+    junk,maxy,junk,junk = body.bbox("@%d,%d" % (bodyW,bodyH))
+    # Make sure y is within text boundaries.
+    if direction == "up":
+        if y &lt;= textH:
+            body.yview("scroll",-1,"units")
+        else: y = max(y-textH,0)
+    else:
+        if y &gt;= maxy:
+            body.yview("scroll",1,"units")
+        else: y = min(y+textH,maxy)
+    # Position the cursor on the proper side of the characters.
+    newx,newy,width,junk = body.bbox("@%d,%d" % (x,y))
+    if x &gt; newx + width/2: x = newx + width + 1
+    result = body.index("@%d,%d" % (x,y))
+    body.mark_set("insert",result)
+    g.trace("entry:  %s.%s" % (lines,char),'result',result,'insert',body.index('insert'))
+    return "break" # Inhibit further bindings.</t>
+<t tx="ekr.20060113105246.1">def moveUpOrDownHelper (self,event,direction,extend):
+
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+    # Make the insertion cursor visible so bbox won't return an empty list.
+    w.see('insert')
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+    # Compute the new spot.
+    row1,col1 = ins1.split('.')
+    row1 = int(row1) ; col1 = int(col1)
+    # Find the coordinates of the cursor and set the new height.
+    # There may be roundoff errors because character postions may not match exactly.
+    x, y, junk, textH = w.bbox('insert')
+    bodyW, bodyH = w.winfo_width(), w.winfo_height()
+    junk, maxy, junk, junk = w.bbox("@%d,%d" % (bodyW,bodyH))
+    # Make sure y is within text boundaries.
+    if direction == "up":
+        if y &lt;= textH:  w.yview("scroll",-1,"units")
+        else:           y = max(y-textH,0)
+    else:
+        if y &gt;= maxy:   w.yview("scroll",1,"units")
+        else:           y = min(y+textH,maxy)
+    # Position the cursor on the proper side of the characters.
+    newx, newy, width, junk = w.bbox("@%d,%d" % (x,y))
+    if x &gt; newx + width / 2: x = newx + width + 1
+    # Move to the new row.
+    spot = w.index("@%d,%d" % (x,y))
+    row,col = spot.split('.')
+    row = int(row) ; col = int(col)
+    w.mark_set('insert',spot)
+    # Adjust the column in the *new* row, but only if we have actually gone to a new row.
+    if self.moveSpot:
+        if col != self.moveCol and row != row1:
+            s = w.get('insert linestart','insert lineend')
+            col = min(len(s),self.moveCol)
+            if col &gt;= 0:
+                w.mark_set('insert','%d.%d' % (row,col))
+                spot = w.index('insert')
+                w.see('insert')
+    # Handle the extension.
+    self.extendHelper(w,extend,ins1,spot)</t>
+<t tx="ekr.20060113130510">def extendHelper (self,w,extend,ins1,spot):
+
+    '''Handle the details of extending the selection.
+    
+    extend: Clear the selection unless this is True.
+    ins1:   The *previous* insert point.
+    spot:   The *new* insert point.
+    '''
+    c = self.c ; p = c.currentPosition()
+    moveSpot = self.moveSpot
+    if extend or self.extendMode:
+        i, j = g.app.gui.getTextSelection(w)
+        if (
+            not moveSpot or p.v.t != self.moveSpotNode or
+            i == j or # A cute trick
+            (not w.compare(moveSpot,'==',i) and
+             not w.compare(moveSpot,'==',j))
+        ):
+            self.moveSpotNode = p.v.t
+            self.moveSpot = w.index(ins1)
+            self.moveCol = int(ins1.split('.')[1])
+            # g.trace('reset moveSpot',self.moveSpot)
+        moveSpot = self.moveSpot
+        # g.trace(spot,moveSpot)
+        if w.compare(spot,'&lt;',moveSpot):
+            g.app.gui.setTextSelection(w,spot,moveSpot,insert=None)
+        else:
+            g.app.gui.setTextSelection(w,moveSpot,spot,insert=None)
+    else:
+        self.moveSpot = spot
+        self.moveCol = int(spot.split('.')[1])
+        g.app.gui.setTextSelection(w,spot,spot,insert=None)</t>
+<t tx="ekr.20060113163800">The fix was to add the 'text' specifier to the call to copyBindingsToWidget in tree.setTabBindings.</t>
+<t tx="ekr.20060113170919">@nocolor
+
+Hitting Backspace immediately put the focus in the log. Another backspace put
+the focus in the body pane.
+
+The problem was in log.clearTab.  It must do call t.update().</t>
+<t tx="ekr.20060113170919.1">- create-chapter, destroy-chapter, select-chapter, etc.
+
+- find-character-on-line, find-word-on-line, etc.
+
+- extend-to-word, extend-to-paragraph, extend-to-sentence, etc.</t>
+<t tx="ekr.20060114052626"></t>
+<t tx="ekr.20060114055611">- It should recolor the text.
+- Does it not stick sometimes?</t>
+<t tx="ekr.20060114055714"></t>
+<t tx="ekr.20060114060100">@nocolor
+
+- enter-x-mode doesn't get shortcuts.  Try putting @mode nodes last?
+
+- Add @string active-keyset setting?
+
+- The mode tab should present commands first, bindings second.
+
+- Modes should persist, unless we have a mode binding like:
+
+command-name -&gt; enter-x-mode = binding
+
+- Have bindings for top-level vim mode like this:
+
+show-completion-list = Tab
+show-completion-list = BackSpace
+
+Bugs:
+
+** Must stay in mode until we leave explictly.
+** @mode must bind shortcuts.
+</t>
+<t tx="ekr.20060114060100.1"></t>
+<t tx="ekr.20060114061826">@nocolor
+
+The fix is easy: extensionHelper resets movePoint any time there is no selection.
+
+@color
+</t>
+<t tx="ekr.20060114080203"></t>
+<t tx="ekr.20060114080424">@nocolor
+
+Scroll should work in body pane too.</t>
+<t tx="ekr.20060114091359">@ To do:
+    
+- inverseCommandsDict should be a list too.
+- getShortcutForCommandName should return a list.</t>
+<t tx="ekr.20060114103244"></t>
+<t tx="ekr.20060114104119"></t>
+<t tx="ekr.20060114104119.1"></t>
+<t tx="ekr.20060114110141">if c.config.getBool('trace_bindings'):
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    # g.trace(repr(theFilter))
+    if not theFilter or shortcut.find(theFilter) != -1:
+        pane_filter = c.config.getString('trace_bindings_pane_filter')
+        if not pane_filter or pane_filter.lower() == pane:
+            g.trace(pane,k.prettyPrintKey(shortcut),commandName)</t>
+<t tx="ekr.20060114115648">for bunch in bunchList:
+    if ( bunch and
+        # (not bunch.pane.endswith('-mode') and not pane.endswith('-mode')) and
+        (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
+        commandName != bunch.commandName
+    ):
+        g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+            k.prettyPrintKey(shortcut),
+            bunch.commandName,commandName,pane),
+            color='blue')
+        return</t>
+<t tx="ekr.20060114163130"></t>
+<t tx="ekr.20060114171910">def traceBinding (self,bunch,shortcut,w):
+
+    k = self ; c = k.c
+
+    if not c.config.getBool('trace_bindings'): return
+    
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    if theFilter and shortcut.lower().find(theFilter.lower()) == -1: return
+    
+    pane_filter = c.config.getString('trace_bindings_pane_filter')
+    
+    if not pane_filter or pane_filter.lower() == bunch.pane:
+         g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)</t>
+<t tx="ekr.20060114180908"></t>
+<t tx="ekr.20060114183604">@nocolor
+
+The fix was simply to call endUpdate() rather than endUpdate(changed) in onHeadChanged.
+This should be safe: The change-all command could always enclose the code in begin/endUpdate.</t>
+<t tx="ekr.20060114215112">
+</t>
+<t tx="ekr.20060115091804.2"></t>
+<t tx="ekr.20060115091804.3"></t>
+<t tx="ekr.20060115092257">@nocolor
+
+Standard keys (Windows defaults in parens)
+
+F1 help
+Windows key + F1 Windows Help
+F2 find-tab-find-prev (Rename)
+F3 find-tab-find (Find Files)
+F4 None (Address bar in Windows Explorer)
+F5 None (Refresh, Reload in Windows Explorer)
+F6 None (Should cycle from window to window)
+F7 open-spell-tab (Spell in Word)
+Shift-F7 None (Thesaurus in Word)
+F8 None (Safe mode)
+F9 None
+F10 None (Activate menu bar in many programs)
+F11 None (Toggle full screen mode in explorer)
+F12 None
+
+You can use F10 to highlight the first menu choice, and then use the arrow keys to move around the menus. Pressing the Shift key while pressing F10 will bring up the shortcut menu. This is similar to right-clicking on an object.</t>
+<t tx="ekr.20060115095641"></t>
+<t tx="ekr.20060115100407"></t>
+<t tx="ekr.20060115100841"></t>
+<t tx="ekr.20060115100841.1"></t>
+<t tx="ekr.20060115102006.1"></t>
+<t tx="ekr.20060115103349"></t>
+<t tx="ekr.20060115134337"></t>
+<t tx="ekr.20060115162515">To do: specify what mode to enter after each command:
+
+- command-name -&gt; mode-name = binding
+
+will specify what mode to enter after each command.
+At present, all commands exit to the top-level mode.</t>
 </tnodes>
 </leo_file>

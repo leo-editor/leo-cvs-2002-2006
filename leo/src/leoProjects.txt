@@ -4686,9 +4686,9 @@ for bunch in bunchList:
 #@-node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
 #@+node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
 if c.config.getBool('trace_bindings'):
-    filter = c.config.getString('trace_bindings_filter') or ''
-    # g.trace(repr(filter))
-    if not filter or shortcut.find(filter) != -1:
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    # g.trace(repr(theFilter))
+    if not theFilter or shortcut.find(theFilter) != -1:
         pane_filter = c.config.getString('trace_bindings_pane_filter')
         if not pane_filter or pane_filter.lower() == pane:
             g.trace(pane,k.prettyPrintKey(shortcut),commandName)
@@ -4969,7 +4969,7 @@ def makeSpecialBindings (self):
     
     '''Make the bindings and set ivars for sepcial keystrokes.'''
     
-    k = self ; c = k.c ; f = c.frame
+    k = self ; c = k.c
     
     # These defaults may be overridden.
     for pane,stroke,ivar,commandName,func in (
@@ -5319,9 +5319,9 @@ for bunch in bunchList:
 #@-node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
 #@+node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
 if c.config.getBool('trace_bindings'):
-    filter = c.config.getString('trace_bindings_filter') or ''
-    # g.trace(repr(filter))
-    if not filter or shortcut.find(filter) != -1:
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    # g.trace(repr(theFilter))
+    if not theFilter or shortcut.find(theFilter) != -1:
         pane_filter = c.config.getString('trace_bindings_pane_filter')
         if not pane_filter or pane_filter.lower() == pane:
             g.trace(pane,k.prettyPrintKey(shortcut),commandName)
@@ -5756,7 +5756,7 @@ k.bindingsDict:
 
 not an ivar (computed by computeInverseBindingDict):
 
-inverseBindingDict 
+inverseBindingDict
     keys are emacs command names, values are *lists* of shortcuts.
 #@nonl
 #@-node:ekr.20051010062551.1:<< about key dicts >>
@@ -6370,7 +6370,7 @@ def makeSpecialBindings (self):
     
     '''Make the bindings and set ivars for sepcial keystrokes.'''
     
-    k = self ; c = k.c ; f = c.frame
+    k = self ; c = k.c
     
     # These defaults may be overridden.
     for pane,stroke,ivar,commandName,func in (
@@ -6441,8 +6441,8 @@ def traceBinding (self,bunch,shortcut,w):
 
     if not c.config.getBool('trace_bindings'): return
     
-    filter = c.config.getString('trace_bindings_filter') or ''
-    if filter and shortcut.lower().find(filter.lower()) == -1: return
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    if theFilter and shortcut.lower().find(theFilter.lower()) == -1: return
     
     pane_filter = c.config.getString('trace_bindings_pane_filter')
     
@@ -9520,7 +9520,7 @@ k.bindingsDict:
 
 not an ivar (computed by computeInverseBindingDict):
 
-inverseBindingDict 
+inverseBindingDict
     keys are emacs command names, values are *lists* of shortcuts.
 #@nonl
 #@-node:ekr.20051010062551.1:<< about key dicts >>
@@ -9733,9 +9733,9 @@ for bunch in bunchList:
 #@-node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
 #@+node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
 if c.config.getBool('trace_bindings'):
-    filter = c.config.getString('trace_bindings_filter') or ''
-    # g.trace(repr(filter))
-    if not filter or shortcut.find(filter) != -1:
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    # g.trace(repr(theFilter))
+    if not theFilter or shortcut.find(theFilter) != -1:
         pane_filter = c.config.getString('trace_bindings_pane_filter')
         if not pane_filter or pane_filter.lower() == pane:
             g.trace(pane,k.prettyPrintKey(shortcut),commandName)
@@ -10016,7 +10016,7 @@ def makeSpecialBindings (self):
     
     '''Make the bindings and set ivars for sepcial keystrokes.'''
     
-    k = self ; c = k.c ; f = c.frame
+    k = self ; c = k.c
     
     # These defaults may be overridden.
     for pane,stroke,ivar,commandName,func in (
@@ -10158,12 +10158,6 @@ def generalModeHandler (self,event,name=None):
     return 'break'
 #@nonl
 #@-node:ekr.20060104110233:generalModeHandler
-#@+node:ekr.20060102135349.1:k.deleteModeBindings
-def deleteModeBindings (self,d):
-    
-    g.trace(d)
-#@nonl
-#@-node:ekr.20060102135349.1:k.deleteModeBindings
 #@+node:ekr.20060104164523:modeHelp & helper
 def modeHelp (self,event):
 
