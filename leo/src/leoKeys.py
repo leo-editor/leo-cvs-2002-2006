@@ -1131,45 +1131,30 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
-    #@+node:ekr.20050920085536.32:Externally visible commands
-    #@+node:ekr.20050930080419:digitArgument & universalArgument
-    def universalArgument (self,event):
-        
-        '''Begin a numeric argument for the following command.'''
-        
-        k = self
-        k.setLabelBlue('Universal Argument: ',protect=True)
-        k.universalDispatcher(event)
-        
-    def digitArgument (self,event):
-    
-        k = self
-        k.setLabelBlue('Digit Argument: ',protect=True)
-        k.universalDispatcher(event)
-    #@nonl
-    #@-node:ekr.20050930080419:digitArgument & universalArgument
-    #@+node:ekr.20060102135349.2:enterNamedMode &helpers
+    #@+node:ekr.20060115103349:Modes
+    #@+node:ekr.20060102135349.2:enterNamedMode
     def enterNamedMode (self,event,commandName):
         
         k = self ; c = k.c
         modeName = commandName[6:]
         
         k.generalModeHandler(event,modeName)
+    #@-node:ekr.20060102135349.2:enterNamedMode
     #@+node:ekr.20060104110233:generalModeHandler
     def generalModeHandler (self,event,name=None):
         
         '''Handle a mode defined by an @mode node in leoSettings.leo.'''
     
         k = self ; c = k.c ; f = c.frame
-        modeName = name or k.inputModeName
+        modeName = name or k.inputModeName or '<no mode name>'
         commandName = 'enter-' + modeName
         state = k.getState(modeName)
         keysym = event and event.keysym or ''
-        # g.trace(modeName,'state',state)
+        g.trace(modeName,'state',state)
         
         d = g.app.config.modeCommandsDict.get(commandName)
         if not d:
-            g.trace("can't happen")
+            g.trace("can't happen; no entry in modeCommandsDict for %s" % commandName)
         elif state == 0:
             k.inputModeName = modeName
             k.modeWidget = event and event.widget
@@ -1185,11 +1170,12 @@ class keyHandlerClass:
                         # g.trace('calling',func)
                         if key != 'mode-help':
                             # This must be done first because commands can change windows.
-                            k.clearState()
-                            k.resetLabel()
                             k.endCommand(event,k.stroke)
                             k.inputModeName = None
                             c.frame.log.deleteTab('Mode')
+                            k.clearState()
+                            k.resetLabel()
+                            # k.setLabelGrey('top-level mode')
                             c.frame.widgetWantsFocus(k.modeWidget)
                         func(event)
                         return 'break'
@@ -1199,7 +1185,19 @@ class keyHandlerClass:
         return 'break'
     #@nonl
     #@-node:ekr.20060104110233:generalModeHandler
-    #@+node:ekr.20060104164523:modeHelp/Helper
+    #@+node:ekr.20060102135349:k.addModeBindings
+    def addModeBindings (self,d):
+        
+        g.trace(d.keys())
+    #@nonl
+    #@-node:ekr.20060102135349:k.addModeBindings
+    #@+node:ekr.20060102135349.1:k.deleteModeBindings
+    def deleteModeBindings (self,d):
+        
+        g.trace(d)
+    #@nonl
+    #@-node:ekr.20060102135349.1:k.deleteModeBindings
+    #@+node:ekr.20060104164523:modeHelp & helper
     def modeHelp (self,event):
     
         '''The mode-help command.
@@ -1226,23 +1224,37 @@ class keyHandlerClass:
         k = self ; c = k.c
         
         c.frame.log.clearTab('Mode')
-        
+        lines = []
         for key in d.keys():
             bunchList = d.get(key)
-            bunch = bunchList and bunchList[0]
-            shortcut = bunch.val
-            if shortcut not in (None,'None'):
-                if shortcut.startswith('Key-'):
-                    shortcut = shortcut[4:]
-                    if len(shortcut) == 1:
-                        ch = shortcut[0]
-                        if ch in string.ascii_uppercase:
-                            shortcut = 'Shift-%s' % ch.lower()
-                g.es('%s\t%s' % (shortcut,key),tabName='Mode')
+            for bunch in bunchList:
+                shortcut = bunch.val
+                if shortcut not in (None,'None'):
+                    lines.append('%-20s\t%s' % (key,k.prettyPrintKey(shortcut)))
+        lines.sort()
+        for line in lines:
+            g.es(line,tabName='Mode')
     #@nonl
     #@-node:ekr.20060104125946:modeHelpHelper
-    #@-node:ekr.20060104164523:modeHelp/Helper
-    #@-node:ekr.20060102135349.2:enterNamedMode &helpers
+    #@-node:ekr.20060104164523:modeHelp & helper
+    #@-node:ekr.20060115103349:Modes
+    #@+node:ekr.20050920085536.32:Externally visible commands
+    #@+node:ekr.20050930080419:digitArgument & universalArgument
+    def universalArgument (self,event):
+        
+        '''Begin a numeric argument for the following command.'''
+        
+        k = self
+        k.setLabelBlue('Universal Argument: ',protect=True)
+        k.universalDispatcher(event)
+        
+    def digitArgument (self,event):
+    
+        k = self
+        k.setLabelBlue('Digit Argument: ',protect=True)
+        k.universalDispatcher(event)
+    #@nonl
+    #@-node:ekr.20050930080419:digitArgument & universalArgument
     #@+node:ekr.20051014170754:k.help
     def help (self,event):
         
@@ -1367,7 +1379,7 @@ class keyHandlerClass:
         for key in keys:
             bunchList = k.bindingsDict.get(key,[])
             for b in bunchList:
-                pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
+                pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
                 s = k.prettyPrintKey(key) + pane
                 g.es('%-30s\t%s' % (s,b.commandName),
                     tabName='Command')
@@ -2035,10 +2047,14 @@ class keyHandlerClass:
         
         '''Convert whatever-Z to whatever-Shift-Z'''
         
-        if not key:
-            return ''
-            
-        ch = len(key) > 2 and key[-2] or ''
+        if not key: return ''
+        if len(key) == 1: return key
+        if key.startswith('<'):
+            key = key[1:]
+        if key.endswith('>'):
+            key = key[:-1]
+        if not key: return ''
+        ch = key[-1]
     
         if ch in string.ascii_uppercase:
             return '%sShift-%s>' % (key[:-2],ch.lower())
@@ -2069,7 +2085,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051010063452:ultimateFuncName
     #@+node:ekr.20060114171910:traceBinding
-    def traceBinding (self,bunchList,shortcut,w):
+    def traceBinding (self,bunch,shortcut,w):
     
         k = self ; c = k.c
     
@@ -2080,9 +2096,8 @@ class keyHandlerClass:
         
         pane_filter = c.config.getString('trace_bindings_pane_filter')
         
-        for bunch in bunchList:
-            if not pane_filter or pane_filter.lower() == bunch.pane:
-                g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)
+        if not pane_filter or pane_filter.lower() == bunch.pane:
+             g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)
     #@nonl
     #@-node:ekr.20060114171910:traceBinding
     #@-node:ekr.20051002152108.1:Shared helpers
