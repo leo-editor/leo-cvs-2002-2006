@@ -2802,6 +2802,8 @@ def open(self):
         ok, frame = g.openWithFileName(fileName,c)
         if ok and closeFlag:
             g.app.destroyWindow(c.frame)
+    else:
+        c.frame.bodyWantsFocus()
 #@nonl
 #@+node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
 @ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
@@ -4770,7 +4772,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
     callback calls commandName (for error messages).'''
     
     k = self ; c = k.c
-    
+
     # g.trace(pane,shortcut,commandName)
 
     if not shortcut: g.trace('No shortcut for %s' % commandName)
@@ -5013,24 +5015,25 @@ def copyBindingsHelper(self,bunchList,shortcut,w):
 def makeAllBindings (self):
     
     k = self ; c = k.c
-    
+
     k.bindingsDict = {}
     k.makeHardBindings()
     k.makeSpecialBindings()
+    k.addModeCommands() 
     k.makeBindingsFromCommandsDict()
-    k.add_ekr_altx_commands()
-    k.addModeCommands()
+    # k.add_ekr_altx_commands()
     k.checkBindings()
 #@nonl
 #@-node:ekr.20051007080058:makeAllBindings
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
-    '''Add commands created by @mode settings..'''
+    '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
 
     k = self ; c = k.c
     d = g.app.config.modeCommandsDict
     
+    # Create the callback functions and update c.commandsDict and k.inverseCommandsDict.
     for key in d.keys():
 
         def enterModeCallback (event=None,name=key):
@@ -5428,7 +5431,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
     callback calls commandName (for error messages).'''
     
     k = self ; c = k.c
-    
+
     # g.trace(pane,shortcut,commandName)
 
     if not shortcut: g.trace('No shortcut for %s' % commandName)
@@ -5526,7 +5529,7 @@ def printBindings (self,event):
     for key in keys:
         bunchList = k.bindingsDict.get(key,[])
         for b in bunchList:
-            pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
+            pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
             s = k.prettyPrintKey(key) + pane
             g.es('%-30s\t%s' % (s,b.commandName),
                 tabName='Command')
@@ -5586,10 +5589,14 @@ def prettyPrintKey (self,key):
     
     '''Convert whatever-Z to whatever-Shift-Z'''
     
-    if not key:
-        return ''
-        
-    ch = len(key) > 2 and key[-2] or ''
+    if not key: return ''
+    if len(key) == 1: return key
+    if key.startswith('<'):
+        key = key[1:]
+    if key.endswith('>'):
+        key = key[:-1]
+    if not key: return ''
+    ch = key[-1]
 
     if ch in string.ascii_uppercase:
         return '%sShift-%s>' % (key[:-2],ch.lower())
@@ -5649,11 +5656,12 @@ def bindShortcut (self,pane,shortcut,command,commandName):
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
-    '''Add commands created by @mode settings..'''
+    '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
 
     k = self ; c = k.c
     d = g.app.config.modeCommandsDict
     
+    # Create the callback functions and update c.commandsDict and k.inverseCommandsDict.
     for key in d.keys():
 
         def enterModeCallback (event=None,name=key):
@@ -5877,20 +5885,24 @@ else:
 @nocolor
 @
 
+ivars:
+
 c.commandsDict:
     keys are emacs command names, values are functions f.
 
 k.inverseCommandsDict:
     keys are f.__name__, values are emacs command names.
 
-k.inverseBindingsDict (computed by computeInverseBindingDict)
-    keys are emacs command names, values are *lists* of shortcuts.
-
 k.leoCallbackDict:
     keys are leoCallback functions, values are called functions.
 
 k.bindingsDict:
     keys are shortcuts, values are *lists* of g.bunch(func,name,warningGiven)
+
+not an ivar (computed by computeInverseBindingDict):
+
+inverseBindingDict 
+    keys are emacs command names, values are *lists* of shortcuts.
 #@nonl
 #@-node:ekr.20051010062551.1:<< about key dicts >>
 #@+node:ekr.20051006092617.1:<< define externally visible ivars >>
@@ -5988,7 +6000,7 @@ def printBindings (self,event):
     for key in keys:
         bunchList = k.bindingsDict.get(key,[])
         for b in bunchList:
-            pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
+            pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
             s = k.prettyPrintKey(key) + pane
             g.es('%-30s\t%s' % (s,b.commandName),
                 tabName='Command')
@@ -6184,7 +6196,7 @@ def printBindings (self,event):
     for key in keys:
         bunchList = k.bindingsDict.get(key,[])
         for b in bunchList:
-            pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
+            pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
             s = k.prettyPrintKey(key) + pane
             g.es('%-30s\t%s' % (s,b.commandName),
                 tabName='Command')
@@ -6568,7 +6580,7 @@ def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
 #@-node:ekr.20051220083410:makeSpecialBinding
 #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
 #@+node:ekr.20060114171910:traceBinding
-def traceBinding (self,bunchList,shortcut,w):
+def traceBinding (self,bunch,shortcut,w):
 
     k = self ; c = k.c
 
@@ -6579,9 +6591,8 @@ def traceBinding (self,bunchList,shortcut,w):
     
     pane_filter = c.config.getString('trace_bindings_pane_filter')
     
-    for bunch in bunchList:
-        if not pane_filter or pane_filter.lower() == bunch.pane:
-            g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)
+    if not pane_filter or pane_filter.lower() == bunch.pane:
+         g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)
 #@nonl
 #@-node:ekr.20060114171910:traceBinding
 #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper

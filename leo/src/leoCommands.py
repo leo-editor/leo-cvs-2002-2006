@@ -437,6 +437,8 @@ class baseCommands:
             ok, frame = g.openWithFileName(fileName,c)
             if ok and closeFlag:
                 g.app.destroyWindow(c.frame)
+        else:
+            c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.2821:open
     #@+node:ekr.20031218072017.2823:openWith and allies

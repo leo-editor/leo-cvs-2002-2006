@@ -46,11 +46,11 @@
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>Debugging options</vh>
-<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = True</vh></v>
+<v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
-<v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter = </vh></v>
+<v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 </v>
@@ -344,10 +344,10 @@
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 </v>
-<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode file</vh></v>
+<v t="ekr.20060102113259" a="TV" annotate="7d71002e"><vh>@mode file</vh></v>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060112085325" a="TV"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
@@ -1098,7 +1098,7 @@ clear-rectangle                     = None
 clone-node                          = Ctrl-`
 close-find-dialog                   = None
 close-rectangle                     = None
-close-window                        = None
+close-window                        = Alt-F4
 contract-all                        = None             # Alt-- conflicts with negative-arg.
 contract-node                       = Alt-[
 contract-or-go-left                 = Alt-LtArrow
@@ -1533,6 +1533,7 @@ clone-node                          = Ctrl-`
 close-find-dialog                   = None
 close-rectangle                     = None
 close-window                        = Ctrl-W
+close-window                        = Alt-F4
 contract-all                        = Alt--
 contract-node                       = Alt-[
 contract-or-go-left                 = Alt-LtArrow
@@ -1653,7 +1654,7 @@ clear-rectangle                     = None
 clone-node                          = Ctrl-`   
 close-find-dialog                   = None
 close-rectangle                     = None
-close-window                        = None  # Ctrl-w conflicts with kill-region.
+close-window                        = Alt-F4
 contract-all                        = Alt--
 contract-node                       = Alt-[
 contract-or-go-left                 ! text = Alt-LtArrow
@@ -1756,7 +1757,7 @@ open-online-tutorial                = None
 open-outline                        = Ctrl-O    # Ctrl-O conflicts with insert-newline
 open-python-window                  = None  
 open-rectangle                      = None
-open-spell-tab                      = None
+open-spell-tab                      = F7
 open-with                           = None
 outline-to-CWEB                     = None
 outline-to-noweb                    = None
@@ -1878,14 +1879,15 @@ yank                                = Control-y
 yank-pop                            = Alt-y
 yank-rectangle                      = None
 zap-to-character                    = Alt-z</t>
-<t tx="ekr.20060102113259"># An experimental mode.
-
-# Boilerplate for most nodes.
+<t tx="ekr.20060102113259"># Boilerplate for most nodes.
 keyboard-quit   = Return
 mode-help       = Tab
+mode-help       = BackSpace
 
 # The key bindings for this node.
 # Plain keys can be specied as 'Key-x' or just 'x'.
+close-window    = c
+close-window    = Alt-F4
 exit-leo        = q
 new             = n
 open-outline    = o
@@ -1898,12 +1900,13 @@ save-file-to    = None</t>
 <t tx="ekr.20060103103812">@color</t>
 <t tx="ekr.20060103103812.1"># Defined by @mode nodes: needed to suppress warnings.
 
-enter-file-mode     = None</t>
+enter-file-mode     = F12</t>
 <t tx="ekr.20060103135341">@color</t>
 <t tx="ekr.20060103135341.1">enter-input-mode        = i
 enter-default-mode      = Alt-x
 
 close-window            = w
+close-window            = Alt-F4
 exit-leo                = q
 new                     = n
 open-outline            = o
@@ -2036,7 +2039,7 @@ clear-rectangle                         = None
 clone-node                              = Ctrl-` 
 close-find-dialog                       = None
 close-rectangle                         = None
-close-window                            = None # Ctrl-w conflicts with kill-region.
+close-window                            = Alt-F4
 contract-all                            = None
 contract-node                           = None
 contract-or-go-left                     ! tree = LtArrow
@@ -2409,7 +2412,7 @@ clear-rectangle                     = None
 clone-node                          = Ctrl-`
 close-find-dialog                   = None
 close-rectangle                     = None
-close-window                        = None # Ctrl-w conflicts with kill-region.
+close-window                        = Alt-F4 # Ctrl-w conflicts with kill-region.
 contract-all                        = Alt--
 contract-node                       = Alt-[
 contract-or-go-left                 = None

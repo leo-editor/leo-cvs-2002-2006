@@ -90,6 +90,8 @@ class parserBaseClass:
             
         # Save the info for k.finishCreate and k.makeAllBindings.
         d = g.app.config.modeCommandsDict
+        
+        # g.trace(modeDict.keys())
     
         if d.get(name):
             g.trace('Ignoring duplicate mode: %s' % commandName)
@@ -269,7 +271,7 @@ class parserBaseClass:
         if name.endswith('-'):
             name = name[:-1]
         name = name + '-mode'
-        # g.trace(name)
+        g.trace(name)
         
         # Check for duplicate mode names.
         if g.app.config.modeCommandsDict.get(name):
@@ -322,9 +324,9 @@ class parserBaseClass:
     #@+node:ekr.20041120105609:doShortcuts
     def doShortcuts(self,p,kind,name,val):
         
-        __pychecker__ = '--no-argsused' # kind,val not used.
+        __pychecker__ = '--no-argsused' # kind,val.
         
-        # g.trace(self.c.fileName(),p.headString(),g.callers())
+        # g.trace(self.c.fileName(),name)
         
         d = self.shortcutsDict # To detect duplicates.
         s = p.bodyString()
