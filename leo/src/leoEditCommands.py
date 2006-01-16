@@ -5361,7 +5361,7 @@ class registerCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.234:class registerCommandsClass (ok)
-#@+node:ekr.20051023094009:Search classes (ok, i-search is limited)
+#@+node:ekr.20051023094009:Search classes
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
 class findTab (leoFind.leoFind):
 
@@ -6303,7 +6303,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.257:class searchCommandsClass
-#@-node:ekr.20051023094009:Search classes (ok, i-search is limited)
+#@-node:ekr.20051023094009:Search classes
 #@+node:ekr.20051025071455:Spell classes (ok)
 #@+others
 #@+node:ekr.20051025071455.6:class Aspell

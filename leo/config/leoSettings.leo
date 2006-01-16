@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="187" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="188" clone_windows="0"/>
 <globals body_outline_ratio="0.611683848797">
 	<global_window_position top="28" left="431" height="873" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="TV" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
@@ -264,9 +264,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="TV" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
+<v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
@@ -4152,5 +4153,25 @@ enter-search-mode       = s
 # Vim uses : to enter a quick mode
 #   :s to start a substitution
 #   :w to write a file, etc.</t>
+<t tx="ekr.20060116090646">@nocolor
+
+Standard keys (Windows defaults in parens)
+
+F1 help
+Windows key + F1 Windows Help
+F2 find-tab-find-prev (Rename)
+F3 find-tab-find (Find Files)
+F4 None (Address bar in Windows Explorer)
+F5 None (Refresh, Reload in Windows Explorer)
+F6 None (Should cycle from window to window)
+F7 open-spell-tab (Spell in Word)
+Shift-F7 None (Thesaurus in Word)
+F8 None (Safe mode)
+F9 None
+F10 None (Activate menu bar in many programs)
+F11 None (Toggle full screen mode in explorer)
+F12 None
+
+You can use F10 to highlight the first menu choice, and then use the arrow keys to move around the menus. Pressing the Shift key while pressing F10 will bring up the shortcut menu. This is similar to right-clicking on an object.</t>
 </tnodes>
 </leo_file>
