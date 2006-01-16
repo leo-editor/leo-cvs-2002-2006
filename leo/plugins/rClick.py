@@ -35,6 +35,8 @@
 # - Eliminated g.top.
 # 0.9 EKR:
 # - Define callbacks so that all are accessible.
+# 0.10 EKR:
+# - Removed call to str that was causing a unicode error.
 #@-at
 #@nonl
 #@-node:ekr.20040422081253:<< version history >>
@@ -50,7 +52,7 @@ import re
 import sys
 #@-node:ekr.20050101090207.2:<< imports >>
 #@nl
-__version__ = "0.9"
+__version__ = "0.10"
 
 #@+others
 #@+node:ekr.20060108122501:Module-level
@@ -151,7 +153,7 @@ def rClicker(tag,keywords):
         #@+node:ekr.20040422073911:<< get text and word from the body text >>
         text = c.frame.body.getSelectedText()
         if text:
-            word=str(text.strip())
+            word = text.strip()
         else:
             ind0,ind1=c.frame.body.getTextSelection()
             n0,p0=ind0.split('.',2)
