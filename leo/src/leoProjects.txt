@@ -4447,7 +4447,7 @@ def handleDefaultChar(self,event):
         # For Leo 4.4a4: allow Tk defaults.
         # But this is dangerous, and should be removed.
         action = self.unboundKeyAction
-        if action in ('insert','replace'):
+        if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         return 'break'
     elif name.startswith('head'):
@@ -5450,8 +5450,10 @@ def prettyPrintKey (self,key):
         key = key[:-1]
     if not key: return ''
     ch = key[-1]
+    if not ch: return ''
     
-    ch,junk = c.frame.menu.canonicalizeShortcut(ch)
+    if len(ch) > 1:
+        ch,junk = c.frame.menu.canonicalizeShortcut(ch)
 
     if ch in string.ascii_uppercase:
         return '%sShift-%s>' % (key[:-2],ch.lower())
@@ -5776,18 +5778,8 @@ self.negativeArg = False
 self.regx = g.bunch(iter=None,key=None)
 self.repeatCount = None
 self.state = g.bunch(kind=None,n=None,handler=None)
-<< set self.unboundKeyAction >>
+self.setDefaultUnboundKeyAction()
 #@nonl
-#@+node:ekr.20060105085031:<< set self.unboundKeyAction >>
-defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
-defaultAction.lower()
-if defaultAction in ('insert','replace','ignore'):
-    self.unboundKeyAction = defaultAction
-else:
-    g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
-    self.unboundKeyAction = 'insert'
-#@nonl
-#@-node:ekr.20060105085031:<< set self.unboundKeyAction >>
 #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
 #@+node:ekr.20051008082929:createInverseCommandsDict
 def createInverseCommandsDict (self):
@@ -6331,7 +6323,7 @@ def handleDefaultChar(self,event):
         # For Leo 4.4a4: allow Tk defaults.
         # But this is dangerous, and should be removed.
         action = self.unboundKeyAction
-        if action in ('insert','replace'):
+        if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         return 'break'
     elif name.startswith('head'):
@@ -7255,7 +7247,7 @@ def handleDefaultChar(self,event):
         # For Leo 4.4a4: allow Tk defaults.
         # But this is dangerous, and should be removed.
         action = self.unboundKeyAction
-        if action in ('insert','replace'):
+        if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         return 'break'
     elif name.startswith('head'):
@@ -8252,7 +8244,7 @@ def handleDefaultChar(self,event):
         # For Leo 4.4a4: allow Tk defaults.
         # But this is dangerous, and should be removed.
         action = self.unboundKeyAction
-        if action in ('insert','replace'):
+        if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         return 'break'
     elif name.startswith('head'):
@@ -10200,6 +10192,71 @@ def modeHelpHelper (self,d):
 #@-node:ekr.20060104164523:modeHelp & helper
 #@-node:ekr.20060115103349:Modes
 #@-node:ekr.20060115091804.2:Finish support for @mode nodes
+#@+node:ekr.20060115195302.1:keyboard-quit restores default input mode
+#@+node:ekr.20050920085536.63:keyboardQuit
+def keyboardQuit (self,event):
+
+    '''This method clears the state and the minibuffer label.
+    
+    k.endCommand handles all other end-of-command chores.'''
+    
+    k = self ; c = k.c
+
+    if g.app.quitting:
+        return
+
+    g.trace()
+    c.frame.log.deleteTab('Completion')
+    c.frame.log.deleteTab('Mode')
+    k.inputModeName = None
+        
+    k.clearState()
+    k.resetLabel()
+    
+    k.setDefaultUnboundKeyAction()
+    c.frame.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20050920085536.63:keyboardQuit
+#@+node:ekr.20060105132013:set-xxx-Mode
+def setIgnoreMode (self,event):
+    
+    self.setMode('ignore')
+
+def setInsertMode (self,event):
+    
+    self.setMode('insert')
+    
+def setOverwriteMode (self,event):
+    
+    self.setMode('overwrite')
+    
+def setMode (self,mode):
+    
+    self.unboundKeyAction = mode
+    frame = self.c.frame
+    if hasattr(frame,'clearStatusLine'):
+        frame.clearStatusLine()
+        frame.putStatusLine('input mode: ',color='blue')
+        frame.putStatusLine(mode)
+#@nonl
+#@-node:ekr.20060105132013:set-xxx-Mode
+#@+node:ekr.20060115195302:setDefaultUnboundKeyAction
+def setDefaultUnboundKeyAction (self):
+    
+    k = self ; c = k.c
+
+    defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+    defaultAction.lower()
+    if defaultAction in ('ignore','insert','overwrite'):
+        self.unboundKeyAction = defaultAction
+    else:
+        g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
+        self.unboundKeyAction = 'insert'
+        
+    k.setMode(self.unboundKeyAction)
+#@nonl
+#@-node:ekr.20060115195302:setDefaultUnboundKeyAction
+#@-node:ekr.20060115195302.1:keyboard-quit restores default input mode
 #@-node:ekr.20060112094901:New features
 #@-node:ekr.20060106091831:4.4b1 projects
 #@-node:ekr.20050924073836:4.4 projects

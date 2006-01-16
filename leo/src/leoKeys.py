@@ -120,18 +120,7 @@ class keyHandlerClass:
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
         self.state = g.bunch(kind=None,n=None,handler=None)
-        #@<< set self.unboundKeyAction >>
-        #@+node:ekr.20060105085031:<< set self.unboundKeyAction >>
-        defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
-        defaultAction.lower()
-        if defaultAction in ('insert','replace','ignore'):
-            self.unboundKeyAction = defaultAction
-        else:
-            g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
-            self.unboundKeyAction = 'insert'
-        #@nonl
-        #@-node:ekr.20060105085031:<< set self.unboundKeyAction >>
-        #@nl
+        self.setDefaultUnboundKeyAction()
         #@nonl
         #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
         #@nl
@@ -224,6 +213,22 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051008082929:createInverseCommandsDict
     #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
+    #@+node:ekr.20060115195302:setDefaultUnboundKeyAction
+    def setDefaultUnboundKeyAction (self):
+        
+        k = self ; c = k.c
+    
+        defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+        defaultAction.lower()
+        if defaultAction in ('ignore','insert','overwrite'):
+            self.unboundKeyAction = defaultAction
+        else:
+            g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
+            self.unboundKeyAction = 'insert'
+            
+        k.setMode(self.unboundKeyAction)
+    #@nonl
+    #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20050920085536.11:add_ekr_altx_commands
@@ -877,7 +882,7 @@ class keyHandlerClass:
             # For Leo 4.4a4: allow Tk defaults.
             # But this is dangerous, and should be removed.
             action = self.unboundKeyAction
-            if action in ('insert','replace'):
+            if action in ('insert','overwrite'):
                 c.editCommands.selfInsertCommand(event,action=action)
             return 'break'
         elif name.startswith('head'):
@@ -1273,20 +1278,29 @@ class keyHandlerClass:
             return k.keyboardQuit(event)
     #@nonl
     #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
-    #@+node:ekr.20060105132013:set(ignore, insert, overwrite)Mode
+    #@+node:ekr.20060105132013:set-xxx-Mode
     def setIgnoreMode (self,event):
         
-        self.unboundKeyAction = 'ignore'
+        self.setMode('ignore')
     
     def setInsertMode (self,event):
         
-        self.unboundKeyAction = 'insert'
+        self.setMode('insert')
         
     def setOverwriteMode (self,event):
         
-        self.unboundKeyAction = 'replace'
+        self.setMode('overwrite')
+        
+    def setMode (self,mode):
+        
+        self.unboundKeyAction = mode
+        frame = self.c.frame
+        if hasattr(frame,'clearStatusLine'):
+            frame.clearStatusLine()
+            frame.putStatusLine('input mode: ',color='blue')
+            frame.putStatusLine(mode)
     #@nonl
-    #@-node:ekr.20060105132013:set(ignore, insert, overwrite)Mode
+    #@-node:ekr.20060105132013:set-xxx-Mode
     #@-node:ekr.20050920085536.32:Externally visible commands
     #@+node:ekr.20050920085536.73:universalDispatcher & helpers
     def universalDispatcher (self,event):
@@ -1573,7 +1587,8 @@ class keyHandlerClass:
     
         if g.app.quitting:
             return
-            
+    
+        g.trace()
         c.frame.log.deleteTab('Completion')
         c.frame.log.deleteTab('Mode')
         k.inputModeName = None
@@ -1581,6 +1596,7 @@ class keyHandlerClass:
         k.clearState()
         k.resetLabel()
         
+        k.setDefaultUnboundKeyAction()
         c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
@@ -1892,8 +1908,10 @@ class keyHandlerClass:
             key = key[:-1]
         if not key: return ''
         ch = key[-1]
+        if not ch: return ''
         
-        ch,junk = c.frame.menu.canonicalizeShortcut(ch)
+        if len(ch) > 1:
+            ch,junk = c.frame.menu.canonicalizeShortcut(ch)
     
         if ch in string.ascii_uppercase:
             return '%sShift-%s>' % (key[:-2],ch.lower())
