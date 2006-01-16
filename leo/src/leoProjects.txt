@@ -9492,6 +9492,17 @@ The fix was to add the 'text' specifier to the call to copyBindingsToWidget in t
 #@+node:ekr.20060115095641:Use pretty keys in tab completion tab
 #@-node:ekr.20060115095641:Use pretty keys in tab completion tab
 #@+node:ekr.20060115091804.2:Finish support for @mode nodes
+#@+node:ekr.20060116075549:Notes
+Specify what mode to enter after each command:
+
+- command-name -> mode-name = binding
+
+will specify what mode to enter after each command.
+At present, all commands exit to the top-level mode.
+
+- Add @string active-keyset setting?
+#@nonl
+#@-node:ekr.20060116075549:Notes
 #@+node:ekr.20051010062551.1:<< about key dicts >>
 @nocolor
 @
