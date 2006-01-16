@@ -13,10 +13,12 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"
+marks="ekr.20051010062551.1,ekr.20051010062551.1,"><vh>@thin leoProjects.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="EKR.20040519090151.2" a="TV"><vh>To do</vh>
+<v t="ekr.20040117181936"
+marks="ekr.20051010062551.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -261,10 +263,8 @@
 <v t="ekr.20050920084036.189"><vh>&lt;&lt; define dictionary d of names and Leo commands &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
-<v t="ekr.20051010062551.1"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh>
-<v t="ekr.20060105085031"><vh>&lt;&lt; set self.unboundKeyAction &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20051010062551.1" a="M"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
 <v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
 <v t="ekr.20051015110547"><vh>k.registerCommand</vh></v>
 </v>
@@ -480,7 +480,8 @@
 <v t="ekr.20060113163800"><vh>Made edit command keys work in headlines</vh></v>
 <v t="ekr.20060115095641"><vh>Use pretty keys in tab completion tab</vh></v>
 <v t="ekr.20060115091804.2"><vh>Finish support for @mode nodes</vh>
-<v t="ekr.20051010062551.1"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
+<v t="ekr.20060116075549"><vh>Notes</vh></v>
+<v t="ekr.20051010062551.1" a="M"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
 <v t="ekr.20060115134337"><vh>From leoConfig</vh>
 <v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
 <v t="ekr.20060102103625.1"><vh>doMode</vh></v>
@@ -516,54 +517,20 @@
 <v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20060115195302.1"><vh>keyboard-quit restores default input mode</vh>
+<v t="ekr.20050920085536.63"><vh>keyboardQuit</vh></v>
+<v t="ekr.20060105132013"><vh>set-xxx-Mode</vh></v>
+<v t="ekr.20060115195302"><vh>setDefaultUnboundKeyAction</vh></v>
 </v>
 </v>
 </v>
 </v>
 <v t="ekr.20050921094025"><vh>4.4 To do</vh>
-<v t="ekr.20060113085710"><vh>First</vh>
-<v t="ekr.20060115102006.1"><vh>Test on Mac</vh></v>
-</v>
-<v t="ekr.20060110202455"><vh>Next</vh>
-<v t="ekr.20060115091804.2"><vh>Finish support for @mode nodes</vh>
-<v t="ekr.20051010062551.1"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
-<v t="ekr.20060115134337"><vh>From leoConfig</vh>
-<v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
-<v t="ekr.20060102103625.1"><vh>doMode</vh></v>
-</v>
-<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
-<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
-<v t="ekr.20050920085536.11"><vh>add_ekr_altx_commands</vh>
-<v t="ekr.20050920085536.12"><vh>&lt;&lt; define dict d of abbreviations &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920085536.16"><vh>bindKey</vh>
-<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
-<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
-<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
-<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
-<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
-<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
-<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
-</v>
-<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
-<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
-<v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
-<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
-<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
-</v>
-<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
-</v>
-<v t="ekr.20060115103349"><vh>Modes</vh>
-<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
-<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
-<v t="ekr.20060104164523"><vh>modeHelp &amp; helper</vh>
-<v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060115162515"><vh>Specify what mode to enter for each mode command</vh></v>
+<v t="ekr.20060116073938"><vh>4.4b2</vh>
+<v t="ekr.20060116073938.1"><vh>First</vh>
+<v t="ekr.20051121070552"><vh>Add Cmds menu</vh></v>
+<v t="ekr.20060116092801"><vh>Code cleanup</vh>
 <v t="ekr.20060114215112"><vh>Make sure all (or most) callbacks call masterCommand</vh>
 <v t="ekr.20050920085536.65"><vh> masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
@@ -590,118 +557,87 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060115091804.3"><vh>Use sandbox2 for experiments</vh></v>
-<v t="ekr.20060114055714"><vh>Improve modes</vh>
-<v t="ekr.20060114060100"><vh>Notes</vh></v>
-<v t="ekr.20060114052626"><vh>@alias nodes set minibuffer aliases</vh></v>
+<v t="ekr.20060111134901"><vh>Implement c.es etc.</vh></v>
+<v t="ekr.20050707085637"><vh>Suggestions from an emacs user</vh>
+<v t="ekr.20060116082302.1"><vh>Use os.getenv('User") if it exists to get initial cvs name</vh></v>
+<v t="ekr.20060116083043"><vh>Two help menus on the Mac</vh></v>
+<v t="ekr.20060116083043.1"><vh>No context-menu on nodes or text</vh></v>
+<v t="ekr.20060116083043.2"><vh>Can't resize windows on the Mac</vh></v>
 </v>
-<v t="ekr.20060113170919.1"><vh>Think commands when designing workflow, and for chapters</vh></v>
-<v t="ekr.20050928144501.1"><vh>Commands for mouseless Leo</vh>
-<v t="ekr.20060114080424"><vh>Urgent commands needed for mouseless Leo</vh></v>
-<v t="ekr.20060112084446"><vh>Next</vh></v>
-<v t="ekr.20060110202238"><vh>Missing bindings/commands</vh></v>
-<v t="ekr.20060104083551"><vh>New commands for mouseless Leo (LeoUser)</vh></v>
-<v t="ekr.20050707085637"><vh>Suggestions from an emacs user</vh></v>
-<v t="ekr.20051221101851"><vh>Add commands to simulate clicks</vh>
+</v>
+<v t="ekr.20051217175058"><vh>*** Add chapters  to Leo's core</vh></v>
+<v t="ekr.20060115091804.2"><vh>Finish support for @mode nodes</vh>
+<v t="ekr.20060116075549"><vh>Notes</vh></v>
+<v t="ekr.20051010062551.1" a="M"><vh>&lt;&lt; about key dicts &gt;&gt;</vh></v>
+<v t="ekr.20060115134337"><vh>From leoConfig</vh>
+<v t="ekr.20060102103625"><vh>createModeCommand</vh></v>
+<v t="ekr.20060102103625.1"><vh>doMode</vh></v>
+</v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
+<v t="ekr.20050920085536.11"><vh>add_ekr_altx_commands</vh>
+<v t="ekr.20050920085536.12"><vh>&lt;&lt; define dict d of abbreviations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+<v t="ekr.20051022094136"><vh>&lt;&lt; bind callback to shortcut in pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
+<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
+</v>
+<v t="ekr.20051007080058"><vh>makeAllBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20050923174229.1"><vh>makeHardBindings</vh></v>
+<v t="ekr.20051008152134"><vh>makeSpecialBindings (also binds to 'Key')</vh>
+<v t="ekr.20051220083410"><vh>makeSpecialBinding</vh></v>
+</v>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+</v>
+<v t="ekr.20060115103349"><vh>Modes</vh>
+<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060104164523"><vh>modeHelp &amp; helper</vh>
+<v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060116084755"><vh>Urgent: mouseless Leo</vh>
+<v t="ekr.20060116091116"><vh>First</vh>
+<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
+<v t="ekr.20060116085217"><vh>scroll-pane-up/down</vh></v>
+<v t="ekr.20060116084526"><vh>delete-to-character</vh></v>
+<v t="ekr.20060116074839.2"><vh>extend-to-word, extend-to-paragraph, extend-to-sentence, etc.</vh></v>
+<v t="ekr.20060116083359.1"><vh>expand-pane &amp; contract-pane</vh></v>
+<v t="ekr.20060116085649"><vh>find-word-on-line, find-character-on-line</vh></v>
+<v t="ekr.20051012053017.4"><vh>Search mode</vh></v>
+<v t="ekr.20060116090357.2"><vh>Search options: create find-options panel</vh>
+<v t="ekr.20051103091115.1"><vh>Reorganize Find/Change settings</vh></v>
+</v>
+<v t="ekr.20060116091236"><vh>Unify all search commands</vh></v>
+</v>
+<v t="ekr.20060116091116.1"><vh>Next</vh>
+<v t="ekr.20051112075511"><vh>Switch cursor when changing search direction</vh></v>
+<v t="ekr.20060113090042"><vh>open-outline-by-name &amp; filename completion</vh></v>
+<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
+<v t="ekr.20051221101851"><vh>commands to simulate clicks in outlines</vh>
 <v t="ekr.20051221101851.1"><vh>Request</vh></v>
 </v>
-<v t="ekr.20060113090042"><vh>open-outline-by-name</vh></v>
-<v t="ekr.20060115092257"><vh>Reference for function keys</vh></v>
-</v>
-<v t="ekr.20060111152145"><vh>Improve scripts menu plugin</vh></v>
-<v t="ekr.20060111152145.1"><vh>Study jyLeo's chapters code</vh></v>
-<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
-<v t="ekr.20060111134901"><vh>Implement c.es etc.</vh></v>
-</v>
-<v t="ekr.20060105133043"><vh>Important</vh>
-<v t="ekr.20060111134004"><vh>Run Idle in a separate process</vh>
-<v t="ekr.20060111103821"><vh>This would fix weird crasher in Plugins Manager plugin</vh>
-<v t="ekr.20060111103821.1"><vh>Report</vh></v>
-</v>
-<v t="ekr.20060111134004.1"><vh>Posting</vh></v>
-<v t="ekr.20031218072017.2932"><vh>openPythonWindow (Dave Hein)</vh>
-<v t="ekr.20031218072017.2933"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2934"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh>
-<v t="ekr.20031218072017.2936"><vh>&lt;&lt; Try to open idle in Python 2.3 systems &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2935"><vh>&lt;&lt; Try to open idle in Python 2.2 systems&gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2937"><vh>leoPyShellMain</vh></v>
+<v t="ekr.20060116084526.1"><vh>insert/remove spaces/tabs from lines (LeoUser)</vh></v>
+<v t="ekr.20060104083551"><vh>move-line-up/down (LeoUser)</vh></v>
+<v t="ekr.20060116090428"><vh>Expand 'point' so it indicates node as well as text location</vh></v>
+<v t="ekr.20060116080040.3"><vh>set-option</vh></v>
+<v t="ekr.20060116074450"><vh>Drive tabs from keyboard</vh></v>
+<v t="ekr.20060109183500.1"><vh>execute-named-script</vh></v>
+<v t="ekr.20060116083359"><vh>Drive dialogs from keyboard</vh></v>
+<v t="ekr.20051021074728"><vh>Space completion</vh></v>
 </v>
 </v>
-<v t="ekr.20060109183500.1"><vh>Scripting improvements</vh></v>
-<v t="ekr.20060108120501"><vh>Add @find node to scripting plugin</vh></v>
-<v t="ekr.20051217135340.2"><vh>Create find-options panel</vh></v>
-<v t="ekr.20051217175058"><vh>Add support in Leo's core for chapters</vh></v>
-<v t="ekr.20051028061611.1"><vh>Unify all search commands</vh>
-<v t="ekr.20051112075511"><vh>Idea for improving search command code</vh></v>
-<v t="ekr.20051023094009"><vh>Search classes (ok, i-search is limited)</vh>
-<v t="ekr.20051020120306.6"><vh>class findTab (leoFind.leoFind)</vh>
-<v t="ekr.20051020120306.10"><vh>Birth &amp; death</vh>
-<v t="ekr.20051020120306.11"><vh>__init__</vh>
-<v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
-<v t="ekr.20051020120306.13"><vh>createFrame (findTab)</vh>
-<v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
-<v t="ekr.20051020120306.16"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.17"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.18"><vh>&lt;&lt; Create two columns of buttons &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.19"><vh>find.init</vh>
-<v t="ekr.20051020120306.20"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.21"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051020120306.22"><vh>find.update_ivars</vh></v>
-<v t="ekr.20051023183028"><vh>findButtonCallback</vh></v>
-<v t="ekr.20051024192602"><vh> Top level</vh>
-<v t="ekr.20051024192642.2"><vh>findNext/PrefCommand</vh></v>
-<v t="ekr.20051024192642.3"><vh>change/ThenFindCommand</vh></v>
-</v>
-<v t="ekr.20051020120306.25"><vh>hideTab</vh></v>
-<v t="ekr.20051020120306.26"><vh>bringToFront</vh></v>
-<v t="ekr.20051020120306.27"><vh>selectAllFindText</vh></v>
-<v t="ekr.20051020120306.28"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
-<v t="ekr.20051020120306.1"><vh>class underlinedTkButton</vh>
-<v t="ekr.20051020120306.2"><vh>__init__</vh>
-<v t="ekr.20051020120306.3"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.4"><vh>bindHotKey</vh></v>
-<v t="ekr.20051020120306.5"><vh>buttonCallback</vh></v>
-</v>
-</v>
-<v t="ekr.20050920084036.257"><vh>class searchCommandsClass</vh>
-<v t="ekr.20050920084036.258"><vh> ctor</vh></v>
-<v t="ekr.20050920084036.259"><vh>getPublicCommands (searchCommandsClass)</vh></v>
-<v t="ekr.20051022211617"><vh>find tab...</vh>
-<v t="ekr.20051020120306"><vh>openFindTab</vh></v>
-<v t="ekr.20051022212004"><vh>commands...</vh></v>
-</v>
-<v t="ekr.20050920084036.261"><vh>incremental search...</vh>
-<v t="ekr.20050920084036.262"><vh>startIncremental</vh></v>
-<v t="ekr.20050920084036.264"><vh>iSearchStateHandler &amp; helper</vh>
-<v t="ekr.20051002120125"><vh>&lt;&lt; do a non-incremental search &gt;&gt;</vh></v>
-<v t="ekr.20050920084036.263"><vh>iSearchHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.265"><vh>scolorizer</vh></v>
-</v>
-<v t="ekr.20050920084036.267"><vh>non-incremental search...</vh>
-<v t="ekr.20050920084036.269"><vh>seachForward/Backward &amp; helper</vh>
-<v t="ekr.20050920084036.268"><vh>plainSearchHelper</vh></v>
-</v>
-<v t="ekr.20051002111614"><vh>wordSearchBackward/Forward &amp; helper</vh>
-<v t="ekr.20050920084036.272"><vh>wordSearchHelper</vh></v>
-</v>
-<v t="ekr.20050920084036.274"><vh>reSearchBackward/Forward &amp; helper</vh>
-<v t="ekr.20050920084036.275"><vh>reSearchHelper</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20051012053017.4"><vh>Search improvements</vh></v>
-</v>
+<v t="ekr.20060116074839"><vh>Important</vh>
 <v t="ekr.20051126122638"><vh>Autocompletion tab</vh>
 <v t="ekr.20051205093049"><vh>Use dir for auto-complete ?</vh></v>
 <v t="ekr.20051025144611"><vh>Reference (Do not delete)</vh>
@@ -831,6 +767,30 @@
 <v t="ekr.20051126124705"><vh>stateHandler (autoCompleter)</vh></v>
 </v>
 </v>
+<v t="ekr.20060108120501"><vh>Add @find node to scripting plugin</vh></v>
+<v t="ekr.20060111152145"><vh>Improve scripts menu plugin</vh></v>
+<v t="ekr.20051202095626"><vh>help-for-command</vh></v>
+<v t="ekr.20050916180203"><vh>Make more commands undoable</vh></v>
+<v t="ekr.20060116073539"><vh>Fix bugs in new minibuffer commands</vh>
+<v t="ekr.20051202102337"><vh>Minibuffer commands notes</vh>
+<v t="ekr.20051202102337.1"><vh>abbrevCommandsClass (not ready yet)</vh></v>
+<v t="ekr.20051202102337.2"><vh>bufferCommandsClass Inot ready yet)</vh></v>
+<v t="ekr.20051202102337.3"><vh>controlCommandsClass (ok)</vh></v>
+<v t="ekr.20051202102337.4"><vh>editCommandsClass</vh></v>
+<v t="ekr.20051202102337.6"><vh>editFileCommandsClass</vh></v>
+<v t="ekr.20051202102752.1"><vh>keyHandlerCommandsClass (not ready yet)</vh></v>
+<v t="ekr.20051202102752.2"><vh>killBufferCommandsClass</vh></v>
+<v t="ekr.20051202102752.3"><vh>macroCommandsClass</vh></v>
+<v t="ekr.20051202102752.4"><vh>queryReplaceCommandsClass</vh></v>
+<v t="ekr.20051202102752.5"><vh>rectangleCommandsClass (ok)</vh></v>
+<v t="ekr.20051202102752.6"><vh>registerCommandsClass (ok, but could be expanded)</vh></v>
+<v t="ekr.20051202102752.7"><vh>searchCommandsClass (ok, but could be expanded)</vh></v>
+<v t="ekr.20051202102752.8"><vh>spellCommandsClass (ok)</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060116073229"><vh>4.4.1</vh>
 <v t="ekr.20051202094427"><vh>Resolve cvs conflicts</vh>
 <v t="ekr.20031218072017.658"><vh>Resolve CVS Conflicts command (Stepen Schaefer)</vh>
 <v t="ekr.20050501111900"><vh>Stephen Schaefer</vh></v>
@@ -840,12 +800,8 @@
 <v t="ekr.20031218072017.662"><vh>Gil 2</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20051129095023"><vh>Medium 3 days</vh>
-<v t="ekr.20051021074728"><vh>Space completion</vh></v>
-<v t="ekr.20051202100658"><vh>Filename completion</vh></v>
-<v t="ekr.20060107082929"><vh>Fix problem reporting indentation errors</vh></v>
-<v t="ekr.20051121070552"><vh>Add Cmds menu</vh></v>
+<v t="ekr.20060116074450.2"><vh>Make positions permanent?</vh></v>
+<v t="ekr.20060116074450.1"><vh>Bugs</vh>
 <v t="ekr.20051104152338"><vh>Fix bug in Remove Sentinels command</vh>
 <v t="ekr.20051104152338.1"><vh>Report</vh></v>
 </v>
@@ -853,8 +809,9 @@
 <v t="ekr.20040930075711"><vh>Handle underindented lines</vh></v>
 <v t="ekr.20040722132104"><vh>Write script to report underindented lines</vh></v>
 </v>
-<v t="ekr.20051112080017"><vh>Problem removing script buttons on the mac</vh></v>
-<v t="ekr.20051202095626"><vh>Add help-command</vh></v>
+<v t="ekr.20060107082929"><vh>Fix problem reporting indentation errors</vh></v>
+</v>
+<v t="ekr.20060116073938.2"><vh>Other</vh>
 <v t="ekr.20060110102039"><vh>--script option</vh>
 <v t="ekr.20060110102239.1"><vh>leomain.py</vh>
 <v t="ekr.20060110102239.2"><vh>def profile</vh></v>
@@ -867,8 +824,23 @@
 <v t="ekr.20060110102239.8"><vh>try: psyco</vh></v>
 </v>
 </v>
+<v t="ekr.20060111134004"><vh>Run Idle in a separate process</vh>
+<v t="ekr.20060111103821"><vh>This would fix weird crasher in Plugins Manager plugin</vh>
+<v t="ekr.20060111103821.1"><vh>Report</vh></v>
 </v>
-<v t="ekr.20051012062458.1"><vh>Minor</vh>
+<v t="ekr.20060111134004.1"><vh>Posting</vh></v>
+<v t="ekr.20031218072017.2932"><vh>openPythonWindow (Dave Hein)</vh>
+<v t="ekr.20031218072017.2933"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2934"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh>
+<v t="ekr.20031218072017.2936"><vh>&lt;&lt; Try to open idle in Python 2.3 systems &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2935"><vh>&lt;&lt; Try to open idle in Python 2.2 systems&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2937"><vh>leoPyShellMain</vh></v>
+</v>
+</v>
+<v t="ekr.20051012062458.1"><vh>Strip quotes from color, font settings.</vh></v>
+<v t="ekr.20060116074450.3"><vh>Put about dialog in a tab?</vh></v>
+<v t="ekr.20051112080017"><vh>Problem removing script buttons on the mac</vh></v>
 <v t="ekr.20060111103821.2"><vh>Fix problems with universalScrolling pluing</vh>
 <v t="ekr.20060111103821.3"><vh>Report</vh></v>
 </v>
@@ -929,45 +901,26 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051202102337"><vh>Minibuffer commands notes</vh>
-<v t="ekr.20051202102337.1"><vh>abbrevCommandsClass (not ready yet)</vh></v>
-<v t="ekr.20051202102337.2"><vh>bufferCommandsClass Inot ready yet)</vh></v>
-<v t="ekr.20051202102337.3"><vh>controlCommandsClass (ok)</vh></v>
-<v t="ekr.20051202102337.4"><vh>editCommandsClass</vh></v>
-<v t="ekr.20051202102337.6"><vh>editFileCommandsClass</vh></v>
-<v t="ekr.20051202102752.1"><vh>keyHandlerCommandsClass (not ready yet)</vh></v>
-<v t="ekr.20051202102752.2"><vh>killBufferCommandsClass</vh></v>
-<v t="ekr.20051202102752.3"><vh>macroCommandsClass</vh></v>
-<v t="ekr.20051202102752.4"><vh>queryReplaceCommandsClass</vh></v>
-<v t="ekr.20051202102752.5"><vh>rectangleCommandsClass (ok)</vh></v>
-<v t="ekr.20051202102752.6"><vh>registerCommandsClass (ok, but could be expanded)</vh></v>
-<v t="ekr.20051202102752.7"><vh>searchCommandsClass (ok, but could be expanded)</vh></v>
-<v t="ekr.20051202102752.8"><vh>spellCommandsClass (ok)</vh></v>
-</v>
 <v t="ekr.20060103101524"><vh>Improve command-line handling</vh></v>
 <v t="ekr.20050713105353"><vh>Add configuration setting to set menu fonts</vh>
 <v t="ekr.20050713105353.1"><vh>Email from Martin Moncrieffe &lt;mcm35@cam.ac.uk&gt;</vh></v>
 </v>
 <v t="ekr.20050512031131"><vh>Use global_log_window_position to specify outline/log ratio?</vh></v>
-<v t="ekr.20050916180203"><vh>Make more commands undoable</vh></v>
 <v t="ekr.20051016155819"><vh>treat plugins/options.py  differently?</vh></v>
-<v t="ekr.20051101161545"><vh>Allow multiple bindings for the same minibuffer command</vh></v>
 <v t="ekr.20060102092148.1"><vh>--safe option</vh></v>
-<v t="ekr.20060104083736"><vh>Improve how headline widtth gets computed</vh></v>
-<v t="ekr.20060105143454.1"><vh>The colerer is calling c.config too much?</vh></v>
+</v>
 </v>
 <v t="ekr.20051023192433"><vh>Maybe or never</vh>
+<v t="ekr.20060114052626"><vh>@alias nodes set minibuffer aliases</vh></v>
 <v t="ekr.20060105143454.2"><vh>Convert Emacs-Style Names to Menu Style Names when creating undo name</vh></v>
 <v t="ekr.20051220062654"><vh>Open .leo file in new process</vh></v>
-<v t="ekr.20051103091115.1"><vh>Report</vh></v>
 <v t="ekr.20051207130144"><vh>Investigate Tk DnD</vh>
 <v t="ekr.20051207130144.1"><vh>@url http://www.8ung.at/klappnase/TkinterDnD/TkinterDnD.html</vh></v>
 </v>
-<v t="ekr.20060102092148.2"><vh>auto-install docutils?</vh></v>
 <v t="ekr.20051104051733"><vh>Make Focus-in in minibuffer widget equivalent to Alt-x</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -2951,7 +2904,7 @@ def findTopLevelNode(c,headline):
     return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.374 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.375 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -4099,74 +4052,6 @@ else:
 http://sourceforge.net/forum/message.php?msg_id=3237845
 By: eichin
 
-First, I'd like to thank Mr. Ream for presenting at EuroPython; I've been an
-emacs user 'forever' (anyone else remember CCA emacs?) and have seen enough
-"this could change your world as much as emacs did" sorts of comments, finally
-seeing it on-screen live finally kicked me into trying it myself.
-
-My overall experience was mixed; some of this may be due to my laziness (I just
-unpacked 4-3-1 on my mac and ran src/leo.py, which got me a window so I counted
-it as working.)  I did the original version of this in leo to attempt to get
-some experience with it...
-
-I am an emacs user.  So of course, I will use emacs bindings first - and since
-some of them work (c-f, c-b) I get in trouble because the others then don't
-(c-p pops up a python shell, c-a does something dramatic.)  *definitely* needs
-at least a simple "you're an emacs user, here is basic editing in emacs bindings,
-the leo-specific stuff is pushed out of the way."  Note that this is not actually
-odd for a mac user - most of the basic emacs bindings work in text entry boxes,
-like the Safari textarea I'm typing this in now - I'm not asking for m-x, but
-for c-f/c-b/c-n/c-p/c-a/c-e and maybe a few more, but those are key.
-
-Pure keyboard usage is also key - one thing that worried me watching the demo
-was that Mr. Ream kept switching back and forth, keyboard to mouse, and that's
-bad - and when I say bad, I mean that Raskin's book had a good footnote pointing
-to a clinical study showing that RSIs correllated with *mouse* usage, not keyboard
-usage, in a mainstream computer user context.  Note that I don't really mean
-emacs-level keyboard-only use - just that in a typical hour of leo usage, I
-shouldn't need the mouse for anything I use twice.  Having unusual stuff only
-menus is fine.  Not having keybindings that I could find for *next-node* and
-*prev-node* is *not* fine.  Frankly, just logging everything *you* use in an
-hour and adding bindings for it might be enough...
-
-Similarly, think of simple use-cases/workflows and make them easier.  Can node-titles
-actually be multiple lines?  If not, why not have hitting return in a node title
-take me to the text window? (This is just one example I tried and was surprised
-didn't work.)  More critically, I couldn't find any keystroke at all to take
-me from editing nodes to editing text, but I may have been confused at that
-point.
-
-For another, mac-specific case: *don't steal system bindings*.  M-`
-(command-backtick, in macspeak) should cycle windows (M-~ the other direction.)
-Breaking this dooms you on the Mac; even if that's an important binding on other
-platforms, you just *have* to make it different on the mac - or you will only
-have cross platform occasional mac users and *never* have any users who are
-primarily mac users.  I suppose I should submit that one as a direct bug report.
-
-Minor nit - on startup, it asked me for a unique id, "possibly your CVS username".
-As a non-windows-user, that made no sense at all to me - at very least, it should
-fill in os.getenv("USER") as a default, because it's right on non-windows systems,
-isn't it?  (If it isn't, there's no explanation at that point that would tell
-me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
-issue.
-
-Defaulting to python-mode: sure, maybe it's just coloring, but coming into it
-expecting it to be primarily a text-in-outlines editor, that confused me a lot.
-I don't actually have an answer here - you can't cheat the way emacs does and
-use an extension or #! line to decide "this is python code", though you may
-be able to use other tricks - but a first time user is probably going to start
-with bits of text and *then* move on to code, and if there's a sane way to support
-that, please consider it.
-
-More mac nits: two HELP menus, one is empty; "open leo docs.leo" from the help
-menu gives a window that doesn't fit on-screen on my mac (tiger 10.4.1 12" powerbook)
-and this leaves the resize control off-screen, so I can't fix it either.
-
-Also (not so mac specific, but more glaring on the mac than elsewhere) - no
-context-menu on nodes or text, and I couldn't seem to drag nodes with the mouse
-at all (one of the things the mouse *is* obviously useful for, especially if
-I'm doing a bunch of rearrangement in one place and *not* going back and forth.)
-
 Finally, one comment from the talk that bothered me for a while and didn't click
 until later - "emacs doesn't really have an outline mode".  This is true, at
 face value - outline mode in fact is just some regexp and hiding kludging, powerful
@@ -4175,12 +4060,7 @@ it wasn't until I went home and checked mail that I caught it -- *GNUS* is actua
 surprisingly close in function set to an outliner.  Not in any immediately useful
 way, but it both clarifies why I think emacs could work this way *and* possibly
 clarifies why gnus users are so engaged by the interface :-)  Though that does
-mean gnus might be a reasonable source of suggestions for key bindings...
-
-Again, thanks for the demo.  It at least inspired a lot of interest, if not
-actually a new convert, but I'll be watching more closely, at least.
-
-_Mark_</t>
+mean gnus might be a reasonable source of suggestions for key bindings...</t>
 <t tx="ekr.20050713105353"></t>
 <t tx="ekr.20050713105353.1">@nocolor
 
@@ -4696,263 +4576,6 @@ d = {
                 ev.keysym = z [2]
                 ev.char = z [3]
                 k.masterCommand(ev,b.f,'&lt;%s&gt;' % meth)</t>
-<t tx="ekr.20050920084036.257">class searchCommandsClass (baseEditCommandsClass):
-    
-    '''Implements many kinds of searches.'''
-
-    @others</t>
-<t tx="ekr.20050920084036.258">def __init__ (self,c):
-    
-    # g.trace('searchCommandsClass')
-
-    baseEditCommandsClass.__init__(self,c) # init the base class.
-    
-    self.findTabHandler = None
-    
-    self.forward = True
-    self.regexp = False
-
-    # For replace-string and replace-regexp
-    self._sString = ''
-    self._rpString = ''
-    
-    try:
-        self.w = c.frame.body.bodyCtrl
-    except AttributeError:
-        self.w = None</t>
-<t tx="ekr.20050920084036.259">def getPublicCommands (self):
-    
-    return {
-        # The new find tab replaces the find dialog.
-        'hide-find-tab':            self.hideFindTab,
-        'open-find-tab':            self.openFindTab,
-        'find-tab-find':            self.findTabFindNext,
-        'find-tab-find-prev':       self.findTabFindPrev,
-        'find-tab-change':          self.findTabChange,
-        'find-tab-change-all':      self.findTabChangeAll,
-        'find-tab-change-then-find':self.findTabChangeThenFind,
-
-        'isearch-forward':          self.isearchForward,
-        'isearch-backward':         self.isearchBackward,
-        'isearch-forward-regexp':   self.isearchForwardRegexp,
-        'isearch-backward-regexp':  self.isearchBackwardRegexp,
-        
-        're-search-forward':        self.reSearchForward,
-        're-search-backward':       self.reSearchBackward,
-        
-        'search-forward':           self.searchForward,
-        'search-backward':          self.searchBackward,
-        'word-search-forward':      self.wordSearchForward,
-        'word-search-backward':     self.wordSearchBackward,
-    }</t>
-<t tx="ekr.20050920084036.261">def isearchForward (self,event):
-    self.startIncremental(event,forward=True,regexp=False)
-    
-def isearchBackward (self,event):
-    self.startIncremental(event,forward=False,regexp=False)
-    
-def isearchForwardRegexp (self,event):
-    self.startIncremental(event,forward=True,regexp=True)
-    
-def isearchBackwardRegexp (self,event):
-    self.startIncremental(event,forward=False,regexp=True)</t>
-<t tx="ekr.20050920084036.262">def startIncremental (self,event,forward,regexp):
-
-    c = self.c ; k = self.k
-    
-    self.forward = forward
-    self.regexp = regexp
-    k.setLabelBlue('isearch: ',protect=True)
-    k.setState('isearch',1,handler=self.iSearchStateHandler)
-    c.frame.minibufferWantsFocus()</t>
-<t tx="ekr.20050920084036.263">def iSearchHelper (self,event,forward,regexp):
-
-    '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
-    
-    k = self.k ; w = self.w
-    s = k.getLabel(ignorePrompt=True)
-    # g.trace(forward,repr(s))
-    if s:
-        try:
-            if forward:
-                i = w.search(s,"insert + 1c",stopindex='end',regexp=regexp)
-                if not i:
-                    # Start again at the top of the buffer.
-                    i = w.search(s,'1.0',stopindex='insert',regexp=regexp)
-            else:
-                i = w.search(s,'insert',backwards=True,stopindex='1.0',regexp=regexp)
-                if not i:
-                    # Start again at the bottom of the buffer.
-                    i = w.search(s,'end',backwards=True,stopindex='insert',regexp=regexp)
-            
-        except: pass
-
-        if i and not i.isspace():
-            w.mark_set('insert',i)
-            w.see('insert')</t>
-<t tx="ekr.20050920084036.264"># Called when from the state manager when the state is 'isearch'
-
-def iSearchStateHandler (self,event):
-
-    c = self.c ; k = self.k ; w = self.w ; keysym = event.keysym
-    if keysym == 'Control_L': return
-    
-    c.frame.bodyWantsFocus()
-    
-    # g.trace('keysym',keysym,'stroke',k.stroke)
-    
-    if 0: # Useful, but presently conflicts with other bindings.
-        if k.stroke == '&lt;Control-s&gt;':
-            self.startIncremental(event,forward=True,regexp=False)
-        elif k.stroke == '&lt;Control-r&gt;':
-            self.startIncremental(event,forward=False,regexp=False)
-
-    if keysym == 'Return':
-        if 0: # Doesn't do anything at present.
-            &lt;&lt; do a non-incremental search &gt;&gt;
-        k.resetLabel()
-        k.clearState()
-        return
-
-    if event.char == '\b':
-        g.trace('backspace not handled yet')
-        return
-    
-    if event.char:
-        k.updateLabel(event)
-        s = k.getLabel(ignorePrompt=True)
-        z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
-        if not z:
-           self.iSearchHelper(event,self.forward,self.regexp)
-        self.scolorizer(event)</t>
-<t tx="ekr.20050920084036.265">def scolorizer (self,event):
-
-    k = self.k ; w = self.w
-
-    stext = k.getLabel(ignorePrompt=True)
-    w.tag_delete('color')
-    w.tag_delete('color1')
-    if stext == '': return
-    ind = '1.0'
-    while ind:
-        try:
-            ind = w.search(stext,ind,stopindex='end',regexp=self.regexp)
-        except:
-            break
-        if ind:
-            i, d = ind.split('.')
-            d = str(int(d)+len(stext))
-            index = w.index('insert')
-            if ind == index:
-                w.tag_add('color1',ind,'%s.%s' % (i,d))
-            w.tag_add('color',ind,'%s.%s' % (i,d))
-            ind = i + '.' + d
-    w.tag_config('color',foreground='red')
-    w.tag_config('color1',background='lightblue')</t>
-<t tx="ekr.20050920084036.267"></t>
-<t tx="ekr.20050920084036.268">def plainSearchHelper (self,event,pattern,forward):
-
-    k = self.k ; w = self.w ; i = w.index('insert')
-
-    try:
-        if forward:
-            s = w.search(pattern,i,stopindex='end')
-            if s: s = w.index('%s +%sc' % (s,len(pattern)))
-        else:
-            s = w.search(pattern,i,stopindex='1.0',backwards=True)
-    except Exception:
-        return
-
-    if s:
-        w.mark_set('insert',s)</t>
-<t tx="ekr.20050920084036.269">def searchBackward (self,event):
-
-    k = self.k ; state = k.getState('search-backward')
-    if state == 0:
-        k.setLabelBlue('Search Backward: ',protect=True)
-        k.getArg(event,'search-backward',1,self.searchBackward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.plainSearchHelper(event,k.arg,forward=False)
-
-def searchForward (self,event):
-
-    k = self.k ; state = k.getState('search-forward')
-    if state == 0:
-        k.setLabelBlue('Search: ',protect=True)
-        k.getArg(event,'search-forward',1,self.searchForward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.plainSearchHelper(event,k.arg,forward=True)</t>
-<t tx="ekr.20050920084036.272">def wordSearchHelper (self,event,pattern,forward):
-
-    k = self.k ; w = self.w ; i = w.index('insert')
-    words = pattern.split()
-    sep = '[%s%s]+' % (string.punctuation,string.whitespace)
-    pattern = sep.join(words)
-    cpattern = re.compile(pattern)
-    if forward:
-        txt = w.get('insert','end')
-        match = cpattern.search(txt)
-        if not match: return
-        end = match.end()
-    else:
-        txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
-        a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
-        if len(a) &gt; 1:
-            b = re.findall(pattern,txt)
-            end = len(a[-1]) + len(b[-1])
-        else: return
-        
-    s = g.choose(forward,'insert +%sc','insert -%sc')
-    w.mark_set('insert',s % end)
-    w.see('insert')
-</t>
-<t tx="ekr.20050920084036.274">def reSearchBackward (self,event):
-
-    k = self.k ; state = k.getState('re-search-backward')
-    if state == 0:
-        k.setLabelBlue('Regexp Search backward:',protect=True)
-        k.getArg(event,'re-search-backward',1,self.reSearchBackward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.reSearchHelper(event,k.arg,forward=False)
-
-def reSearchForward (self,event):
-
-    k = self.k ; state = k.getState('re-search-forward')
-    if state == 0:
-        k.setLabelBlue('Regexp Search:',protect=True)
-        k.getArg(event,'re-search-forward',1,self.reSearchForward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.reSearchHelper(event,k.arg,forward=True)</t>
-<t tx="ekr.20050920084036.275">def reSearchHelper (self,event,pattern,forward):
-
-    k = self.k ; w = self.w
-    cpattern = re.compile(pattern)
-
-    if forward:
-        txt = w.get('insert','end')
-        match = cpattern.search(txt)
-        end = match.end()
-    else:
-        # The reverse words formula for Python Cookbook didn't quite work.
-        txt = w.get('1.0','insert') 
-        a = re.split(pattern,txt)
-        if len(a) &gt; 1:
-            b = re.findall(pattern,txt)
-            end = len(a[-1]) + len(b[-1])
-        else: return
-
-    if end:
-        s = g.choose(forward,'insert +%sc','insert -%sc')
-        w.mark_set('insert',s % end)
-        w.see('insert')</t>
 <t tx="ekr.20050920085536.11">def add_ekr_altx_commands (self):
 
     &lt;&lt; define dict d of abbreviations &gt;&gt;
@@ -5115,6 +4738,27 @@ def reSearchForward (self,event):
         k.endCommand(event,commandName)
     else:
         k.setLabel('Command does not exist: %s' % commandName)</t>
+<t tx="ekr.20050920085536.63">def keyboardQuit (self,event):
+
+    '''This method clears the state and the minibuffer label.
+    
+    k.endCommand handles all other end-of-command chores.'''
+    
+    k = self ; c = k.c
+
+    if g.app.quitting:
+        return
+
+    g.trace()
+    c.frame.log.deleteTab('Completion')
+    c.frame.log.deleteTab('Mode')
+    k.inputModeName = None
+        
+    k.clearState()
+    k.resetLabel()
+    
+    k.setDefaultUnboundKeyAction()
+    c.frame.bodyWantsFocus()</t>
 <t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke,commandName=None):
 
     '''This is the central dispatching method.
@@ -5336,7 +4980,6 @@ if 0: # traces
     
     return func</t>
 <t tx="ekr.20050924073836"></t>
-<t tx="ekr.20050928144501.1"></t>
 <t tx="ekr.20050929114218"></t>
 <t tx="ekr.20051001050607">def endCommand (self,event,commandName):
 
@@ -5367,36 +5010,6 @@ if 0: # traces
         if 0: # Do *not* call this by default.  It interferes with undo.
             c.frame.body.onBodyChanged(undoType='Typing')</t>
 <t tx="ekr.20051001051355"></t>
-<t tx="ekr.20051002111614">def wordSearchBackward (self,event):
-
-    k = self.k ; state = k.getState('word-search-backward')
-    if state == 0:
-        k.setLabelBlue('Word Search Backward: ',protect=True)
-        k.getArg(event,'word-search-backward',1,self.wordSearchBackward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.wordSearchHelper(event,k.arg,forward=False)
-
-def wordSearchForward (self,event):
-
-    k = self.k ; state = k.getState('word-search-forward')
-    if state == 0:
-        k.setLabelBlue('Word Search: ',protect=True)
-        k.getArg(event,'word-search-forward',1,self.wordSearchForward)
-    else:
-        k.clearState()
-        k.resetLabel()
-        self.wordSearchHelper(event,k.arg,forward=True)</t>
-<t tx="ekr.20051002120125">s = k.getLabel(ignorePrompt=True)
-
-if s:
-    if self.forward:
-        if self.regexp: self.reSearchForward(event)
-        else:           self.searchForward(event)
-    else:
-        if self.regexp: self.reSearchBackward(event)
-        else:           self.searchBackward(event)</t>
 <t tx="ekr.20051006092617.1">self.abbrevOn = False # True: abbreviations are on.
 self.arg = '' # The value returned by k.getArg.
 self.commandName = None # The name of the command being executed.
@@ -5412,7 +5025,7 @@ self.negativeArg = False
 self.regx = g.bunch(iter=None,key=None)
 self.repeatCount = None
 self.state = g.bunch(kind=None,n=None,handler=None)
-&lt;&lt; set self.unboundKeyAction &gt;&gt;</t>
+self.setDefaultUnboundKeyAction()</t>
 <t tx="ekr.20051006125633"></t>
 <t tx="ekr.20051006125633.1">def bindShortcut (self,pane,shortcut,command,commandName):
     
@@ -5671,48 +5284,17 @@ OnPasteFromMenu = pasteText</t>
                     name,abbrev,key))
             else:
                 g.trace('No shortcut for %s = %s' % (name,key))</t>
-<t tx="ekr.20051012053017.4">** Important: search headline option.
-    
-[iqr] incremental,query,regex
+<t tx="ekr.20051012053017.4">[iqr] incremental,query,regex
 [fb] forward,back
 [w] word
 [c] case-sensitive
 [hat] headline,all,body
 [osn] outline,subtree,node
 
-*Set defaults for all the above using commands.
-set-word-search-on/off
-set-search-case-on/off
-set-regexp-search-on/off
-set-wrap-search-on/off
-set-search-scope-to-outline/subtree/node
+Apply incremental search commands to headlines?</t>
+<t tx="ekr.20051012062458.1">- 
 
-** Search mode: Control keys could change these options *after* starting the search command.
-
-- Script-search commands
-script-search  (can we abort the search somehow?)
-set-find-script
-set-change-script
-
-Apply incremental search commands to headlines.  This might be fast, but is it useful if nodes aren't visible?</t>
-<t tx="ekr.20051012062458.1">- Review the posting about making positions permanent, or recording vnode
-indicies. It's probably time to do this.
-
-- Make sure there is some way of executing script find/changes.
-
--@link-unl/url/etc.
-
-- Put About dialog (all? dialogs) in tab.
-
-- Create minibuffer commands to close tabs by name.
-
-- the cycle-focus command should cycle through all log tabs.
-
-- Something cool that can be bound to alt-tab.
-
-- Strip quotes from color, font settings.
-
-- Specify &amp; for most menu items.</t>
+- </t>
 <t tx="ekr.20051012201831">def printBindings (self,event):
 
     '''Print all the bindings presently in effect.'''
@@ -5868,414 +5450,6 @@ def computeCompletionList (self,defaultTabList,backspace):
             d [b.commandName] = shortcutList
 
     return d</t>
-<t tx="ekr.20051020120306">def openFindTab (self,event=None):
-
-    c = self.c ; log = c.frame.log ; tabName = 'Find'
-
-    if log.frameDict.get(tabName):
-        log.selectTab(tabName)
-    else:
-        log.selectTab(tabName)
-        f = log.frameDict.get(tabName)
-        t = log.textDict.get(tabName)
-        t.pack_forget()
-        self.findTabHandler = findTab(c,f)
-        
-    self.findTabHandler.bringToFront()</t>
-<t tx="ekr.20051020120306.1">class underlinedTkButton:
-    
-    @others</t>
-<t tx="ekr.20051020120306.2">def __init__(self,buttonType,parent_widget,**keywords):
-
-    self.buttonType = buttonType
-    self.parent_widget = parent_widget
-    self.hotKey = None
-    text = keywords['text']
-
-    &lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;
-
-    # Create the button...
-    if self.hotKey:
-        keywords['text'] = text
-        keywords['underline'] = index
-
-    if buttonType.lower() == "button":
-        self.button = Tk.Button(parent_widget,keywords)
-    elif buttonType.lower() == "check":
-        self.button = Tk.Checkbutton(parent_widget,keywords)
-    elif buttonType.lower() == "radio":
-        self.button = Tk.Radiobutton(parent_widget,keywords)
-    else:
-        g.trace("bad buttonType")
-    
-    self.text = text # for traces</t>
-<t tx="ekr.20051020120306.3">index = text.find('&amp;')
-
-if index &gt; -1:
-
-    if index == len(text)-1:
-        # The word ends in an ampersand.  Ignore it; there is no hot key.
-        text = text[:-1]
-    else:
-        self.hotKey = text [index + 1]
-        text = text[:index] + text[index+1:]</t>
-<t tx="ekr.20051020120306.4">def bindHotKey (self,widget):
-    
-    if self.hotKey:
-        for key in (self.hotKey.lower(),self.hotKey.upper()):
-            widget.bind("&lt;Alt-%s&gt;" % key,self.buttonCallback)
-</t>
-<t tx="ekr.20051020120306.5"># The hot key has been hit.  Call the button's command.
-
-def buttonCallback (self, event=None):
-    
-    __pychecker__ = '--no-argsused' # the event param must be present.
-
-    # g.trace(self.text)
-
-    self.button.invoke ()
-    
-    # See if this helps.
-    return 'break'
-</t>
-<t tx="ekr.20051020120306.6">class findTab (leoFind.leoFind):
-
-    """A class that implements Leo's tkinter find tab."""
-
-    @others</t>
-<t tx="ekr.20051020120306.10"></t>
-<t tx="ekr.20051020120306.11">def __init__(self,c,parentFrame):
-
-    # Init the base class...
-    leoFind.leoFind.__init__(self,c,title='Find Tab')
-    self.c = c
-    self.frame = self.outerFrame = self.top = None # To keep pychecker happy.
-    
-    &lt;&lt; create the tkinter intVars &gt;&gt;
-    
-    # These are created later.
-    self.find_ctrl = None
-    self.change_ctrl = None 
-    self.outerScrolledFrame = None
-
-    self.createFrame(parentFrame)
-    self.createBindings()
-    
-    self.init(c) # New in 4.3: init only once.</t>
-<t tx="ekr.20051020120306.12">self.dict = {}
-
-for key in self.intKeys:
-    self.dict[key] = Tk.IntVar()
-
-for key in self.newStringKeys:
-    self.dict[key] = Tk.StringVar()
-    
-self.s_ctrl = Tk.Text() # Used by find.search()</t>
-<t tx="ekr.20051020120306.13">def createFrame (self,parentFrame):
-    
-    c = self.c
-    
-    &lt;&lt; Create the outer frames &gt;&gt;
-    &lt;&lt; Create the Find and Change panes &gt;&gt;
-    &lt;&lt; Create two columns of radio and checkboxes &gt;&gt;
-    &lt;&lt; Create two columns of buttons &gt;&gt;
-    
-    # Pack this last so buttons don't get squashed when frame is resized.
-    self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
-
-    for w in buttons:
-        w.bindHotKey(ftxt)
-        w.bindHotKey(ctxt)</t>
-<t tx="ekr.20051020120306.14">configName = 'log_pane_Find_tab_background_color'
-bg = c.config.getColor(configName) or 'MistyRose1'
-
-parentFrame.configure(background=bg)
-
-self.top = Tk.Frame(parentFrame,background=bg)
-self.top.pack(side='top',expand=0,fill='both',pady=5)
-    # Don't expand, so the frame goes to the top.
-
-self.outerScrolledFrame = Pmw.ScrolledFrame(
-    parentFrame,usehullsize = 1)
-
-self.outerFrame = outer = self.outerScrolledFrame.component('frame')
-self.outerFrame.configure(background=bg)
-
-for z in ('borderframe','clipper','frame','hull'):
-    self.outerScrolledFrame.component(z).configure(relief='flat',background=bg)</t>
-<t tx="ekr.20051020120306.15">fc = Tk.Frame(outer, bd="1m",background=bg)
-fc.pack(anchor="n", fill="x", expand=1)
-
-# Removed unused height/width params: using fractions causes problems in some locales!
-fpane = Tk.Frame(fc, bd=1,background=bg)
-cpane = Tk.Frame(fc, bd=1,background=bg)
-
-fpane.pack(anchor="n", expand=1, fill="x")
-cpane.pack(anchor="s", expand=1, fill="x")
-
-# Create the labels and text fields...
-flab = Tk.Label(fpane, width=8, text="Find:",background=bg)
-clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
-
-# Use bigger boxes for scripts.
-self.find_ctrl = ftxt = Tk.Text(
-    fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
-self.change_ctrl = ctxt = Tk.Text(
-    cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
-&lt;&lt; Bind Tab and control-tab &gt;&gt;
-
-if 0: # Add scrollbars.
-    fBar = Tk.Scrollbar(fpane,name='findBar')
-    cBar = Tk.Scrollbar(cpane,name='changeBar')
-    
-    for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
-        txt['yscrollcommand'] = bar.set
-        bar['command'] = txt.yview
-        bar.pack(side="right", fill="y")
-
-flab.pack(side="left")
-clab.pack(side="left")
-ctxt.pack(side="right", expand=1, fill="x") 
-ftxt.pack(side="right", expand=1, fill="x")</t>
-<t tx="ekr.20051020120306.16">def setFocus(w):
-    c = self.c
-    c.frame.widgetWantsFocus(w)
-    g.app.gui.setSelectionRange(w,"1.0","1.0")
-    return "break"
-    
-def toFind(event,w=ftxt): return setFocus(w)
-def toChange(event,w=ctxt): return setFocus(w)
-    
-def insertTab(w):
-    data = g.app.gui.getSelectionRange(w)
-    if data: start,end = data
-    else: start = end = g.app.gui.getInsertPoint(w)
-    g.app.gui.replaceSelectionRangeWithText(w,start,end,"\t")
-    return "break"
-
-def insertFindTab(event,w=ftxt): return insertTab(w)
-def insertChangeTab(event,w=ctxt): return insertTab(w)
-
-ftxt.bind("&lt;Tab&gt;",toChange)
-ctxt.bind("&lt;Tab&gt;",toFind)
-ftxt.bind("&lt;Control-Tab&gt;",insertFindTab)
-ctxt.bind("&lt;Control-Tab&gt;",insertChangeTab)</t>
-<t tx="ekr.20051020120306.17">columnsFrame = Tk.Frame(outer,relief="groove",bd=2,background=bg)
-
-columnsFrame.pack(expand=0,padx="7p",pady="2p")
-
-numberOfColumns = 2 # Number of columns
-columns = [] ; radioLists = [] ; checkLists = []
-for i in xrange(numberOfColumns):
-    columns.append(Tk.Frame(columnsFrame,bd=1))
-    radioLists.append([])
-    checkLists.append([])
-
-for i in xrange(numberOfColumns):
-    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
-    
-# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
-
-radioLists[0] = [
-    #(self.dict["radio-find-type"],"P&amp;Lain Search","plain-search"),  
-    #(self.dict["radio-find-type"],"&amp;Pattern Match Search","pattern-search"),
-    # (self.dict["radio-find-type"],"&amp;Script Search","script-search"),
-]
-checkLists[0] = [
-    # ("Scrip&amp;t Change",self.dict["script_change"]),
-    ("Whole Word",      self.dict["whole_word"]),
-    ("Ignore Case",     self.dict["ignore_case"]),
-    ("Wrap &amp;Around",     self.dict["wrap"]),
-    ("Reverse",         self.dict["reverse"]),
-    ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
-    ("Search Headline", self.dict["search_headline"]),
-    ("Search Body",     self.dict["search_body"]),
-]
-
-radioLists[1] = [
-    (self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
-    (self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
-    (self.dict["radio-search-scope"],"Node Only","node-only"),
-    # I don't know what selection-only is supposed to do.
-    (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
-]
-checkLists[1] = [
-    ('Clone Find All',  self.dict['clone_find_all']),
-    ("Mark Finds",      self.dict["mark_finds"]),
-    ("Mark &amp;Changes",   self.dict["mark_changes"]),
-    ('Show Context',    self.dict['batch']),
-]
-
-for i in xrange(numberOfColumns):
-    for var,name,val in radioLists[i]:
-        box = self.underlinedTkButton(
-            "radio",columns[i],anchor="w",text=name,variable=var,value=val,background=bg)
-        box.button.pack(fill="x")
-        box.button.bind("&lt;1&gt;", self.resetWrap)
-        if val == None: box.button.configure(state="disabled")
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-    for name,var in checkLists[i]:
-        box = self.underlinedTkButton(
-            "check",columns[i],anchor="w",text=name,variable=var,background=bg)
-        box.button.pack(fill="x")
-        box.button.bind("&lt;1&gt;", self.resetWrap)
-        box.bindHotKey(ftxt)
-        box.bindHotKey(ctxt)
-        if var is None: box.button.configure(state="disabled")</t>
-<t tx="ekr.20051020120306.18"># Create the alignment panes.
-buttons  = Tk.Frame(outer,background=bg)
-buttons1 = Tk.Frame(buttons,bd=1,background=bg)
-buttons2 = Tk.Frame(buttons,bd=1,background=bg)
-buttons.pack(side='top',expand=1)
-buttons1.pack(side='left')
-buttons2.pack(side='right')
-
-width = 15 ; defaultText = 'Find' ; buttons = []
-
-for text,boxKind,frame,callback in (
-    # Column 1...
-    ('Find','button',buttons1,self.findButtonCallback),
-    ('Incremental','check', buttons1,None),
-        ## variable=self.dict['incremental'])
-        ## May affect the file format.
-    ('Find All','button',buttons1,self.findAllButton),
-    # Column 2...
-    ('Change','button',buttons2,self.changeButton),
-    ('Change, Then Find','button',buttons2,self.changeThenFindButton),
-    ('Change All','button',buttons2,self.changeAllButton),
-):
-    w = self.underlinedTkButton(boxKind,frame,
-        text=text,command=callback)
-    buttons.append(w)
-    if text == defaultText:
-        w.button.configure(width=width-1,bd=4)
-    elif boxKind != 'check':
-        w.button.configure(width=width)
-    w.button.pack(side='top',anchor='w',pady=2,padx=2)</t>
-<t tx="ekr.20051020120306.19">def init (self,c):
-
-    # N.B.: separate c.ivars are much more convenient than a dict.
-    for key in self.intKeys:
-        # New in 4.3: get ivars from @settings.
-        val = c.config.getBool(key)
-        setattr(self,key,val)
-        val = g.choose(val,1,0) # Work around major Tk problem.
-        self.dict[key].set(val)
-        # g.trace(key,val)
-
-    &lt;&lt; set find/change widgets &gt;&gt;
-    &lt;&lt; set radio buttons from ivars &gt;&gt;</t>
-<t tx="ekr.20051020120306.20">self.find_ctrl.delete("1.0","end")
-self.change_ctrl.delete("1.0","end")
-
-# New in 4.3: Get setting from @settings.
-for w,setting,defaultText in (
-    (self.find_ctrl,"find_text",'&lt;find pattern here&gt;'),
-    (self.change_ctrl,"change_text",''),
-):
-    s = c.config.getString(setting)
-    if not s: s = defaultText
-    w.insert("end",s)</t>
-<t tx="ekr.20051020120306.21">found = False
-for var,setting in (
-    ("pattern_match","pattern-search"),
-    #("script_search","script-search")
-):
-    val = self.dict[var].get()
-    if val:
-        self.dict["radio-find-type"].set(setting)
-        found = True ; break
-if not found:
-    self.dict["radio-find-type"].set("plain-search")
-    
-found = False
-for var,setting in (
-    ("suboutline_only","suboutline-only"),
-    ("node_only","node-only"),
-    ("selection_only","selection-only")): # 11/9/03
-    val = self.dict[var].get()
-    if val:
-        self.dict["radio-search-scope"].set(setting)
-        found = True ; break
-if not found:
-    self.dict["radio-search-scope"].set("entire-outine")</t>
-<t tx="ekr.20051020120306.22">def update_ivars (self):
-    
-    """Called just before doing a find to update ivars from the find panel."""
-
-    for key in self.intKeys:
-        val = self.dict[key].get()
-        setattr(self, key, val) # No more _flag hack.
-        # g.trace(key,val)
-
-    # Set ivars from radio buttons. Convert these to 1 or 0.
-    find_type = self.dict["radio-find-type"].get()
-    self.pattern_match = g.choose(find_type == "pattern-search",1,0)
-    self.script_search = g.choose(find_type == "script-search",1,0)
-
-    search_scope = self.dict["radio-search-scope"].get()
-    self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
-    self.node_only       = g.choose(search_scope == "node-only",1,0)
-    self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
-
-    # New in 4.3: The caller is responsible for removing most trailing cruft.
-    # Among other things, this allows Leo to search for a single trailing space.
-    s = self.find_ctrl.get("1.0","end")
-    s = g.toUnicode(s,g.app.tkEncoding)
-    # g.trace(repr(s))
-    if s and s[-1] in ('\r','\n'):
-        s = s[:-1]
-    self.find_text = s
-
-    s = self.change_ctrl.get("1.0","end")
-    if s and s[-1] in ('\r','\n'):
-        s = s[:-1]
-    s = g.toUnicode(s,g.app.tkEncoding)
-    self.change_text = s</t>
-<t tx="ekr.20051020120306.25">def hideTab (self,event=None):
-    
-    c = self.c
-    
-    c.frame.log.selectTab('Log')
-    c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20051020120306.26">def bringToFront (self):
-
-    """Bring the Find Tab to the front and select the entire find text."""
-
-    c = self.c ; t = self.find_ctrl
-        
-    # The widget must have focus before we can adjust the text.
-    c.frame.widgetWantsFocus(t)
-    
-    # Delete one trailing newline.
-    s = t.get('1.0','end')
-    if s and s[-1] in ('\n','\r'):
-        t.delete('end-1c','end')
-
-    # Don't highlight the added trailing newline!
-    g.app.gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
-    
-    # This is also needed.
-    c.frame.widgetWantsFocus(t)</t>
-<t tx="ekr.20051020120306.27">def selectAllFindText (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event
-
-    w = self.frame.focus_get()
-    if g.app.gui.isTextWidget(w):
-        g.app.gui.setTextSelection(w,"1.0","end")
-
-    return "break"</t>
-<t tx="ekr.20051020120306.28">def gui_search (self,t,*args,**keys):
-    return t.search(*args,**keys)
-
-def init_s_ctrl (self,s):
-    t = self.s_ctrl
-    t.delete("1.0","end")
-    t.insert("end",s)
-    t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
-    return t</t>
 <t tx="ekr.20051021074728"></t>
 <t tx="ekr.20051021100806.1">@ One not-so-horrible kludge remains.
 
@@ -6344,49 +5518,6 @@ else:
 
     if k and w:
         k.copyBindingsToWidget(['log','text','all'],w)</t>
-<t tx="ekr.20051022211617"></t>
-<t tx="ekr.20051022212004"># Just open the Find tab if it has never been opened.
-# For minibuffer commands, it would be good to force the Find tab to be visible.
-# However, this leads to unfortunate confusion when executed from a shortcut.
-
-def findTabChange(self,event=None):
-
-    if self.findTabHandler:
-        self.findTabHandler.changeCommand()
-    else:
-        self.openFindTab()
-        
-def findTabChangeAll(self,event=None):
-
-    if self.findTabHandler:
-        self.findTabHandler.changeAllCommand()
-    else:
-        self.openFindTab()
-
-def findTabChangeThenFind(self,event=None):
-
-    if self.findTabHandler:
-        self.findTabHandler.changeThenFindCommand()
-    else:
-        self.openFindTab()
-
-def findTabFindNext (self,event=None):
-    
-    if self.findTabHandler:
-        self.findTabHandler.findNextCommand()
-    else:
-        self.openFindTab()
-
-def findTabFindPrev (self,event=None):
-    
-    if self.findTabHandler:
-        self.findTabHandler.findPrevCommand()
-    else:
-        self.openFindTab()
-        
-def hideFindTab (self,event=None):
-    if self.findTabHandler:
-        self.c.frame.log.selectTab('Log')</t>
 <t tx="ekr.20051023083258">def callers (n=5,excludeCaller=True):
     
     '''Return a list containing the callers of the function that called g.callerList.
@@ -6407,7 +5538,6 @@ def hideFindTab (self,event=None):
         
     return ','.join(result)
 </t>
-<t tx="ekr.20051023094009"></t>
 <t tx="ekr.20051023181449">def createBindings (self):
     
     c = self.c ; k = c.keyHandler
@@ -6476,12 +5606,6 @@ def hideFindTab (self,event=None):
         k.masterCommand(event,func=None,stroke='&lt;Key&gt;',commandName=None)
 
     w.bind('&lt;Key&gt;',generalTextKeyCallback)</t>
-<t tx="ekr.20051023183028">def findButtonCallback(self,event=None):
-    
-    __pychecker__ = '--no-argsused'
-
-    self.findButton()
-    return 'break'</t>
 <t tx="ekr.20051023192433"></t>
 <t tx="ekr.20051024102724"># New in 4.4a2.
 
@@ -6500,36 +5624,6 @@ def setBindings (self):
         self.bindingWidget = None
    
     self.createPermanentBindings()</t>
-<t tx="ekr.20051024192602"></t>
-<t tx="ekr.20051024192642.2">def findNextCommand (self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.findNext()
-    
-def findPrevCommand (self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.reverse = not self.reverse
-    self.findNext()
-    self.reverse = not self.reverse</t>
-<t tx="ekr.20051024192642.3">def changeCommand (self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.change()
-    
-def changeAllCommand (self,event=None):
-    c = self.c
-    self.setup_command(c)
-    self.changeAll()
-    
-def changeThenFindCommand(self,event=None):
-    
-    c = self.c
-    self.setup_command(c)
-    self.changeThenFind()</t>
 <t tx="ekr.20051025071455">@others
 </t>
 <t tx="ekr.20051025071455.1">class spellCommandsClass (baseEditCommandsClass):
@@ -7963,7 +7057,7 @@ Creating the background:
         # For Leo 4.4a4: allow Tk defaults.
         # But this is dangerous, and should be removed.
         action = self.unboundKeyAction
-        if action in ('insert','replace'):
+        if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         return 'break'
     elif name.startswith('head'):
@@ -8050,15 +7144,6 @@ while n2 &gt; 0:
 
 # Make sure we actually delete something.
 w.delete("insert -%dc" % (max(1,count)),"insert")</t>
-<t tx="ekr.20051028061611.1">Revise:
-    moveWordHelper
-    findNextMatch
-
-- Options to tell search commands whether search a single node, a subtree or the entire outline.
-
-- (Maybe) a default-search-command.
-
-- Expand 'point' so it indicates node as well as text location.</t>
 <t tx="ekr.20051029070945"># None of the following are correct.
 
 leoGlobals.py:1417: Setting aList to itself has no effect
@@ -8069,7 +7154,6 @@ leoKeys.py:1315: No module attribute (initAllEditCommanders) found
 
 C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionList) found</t>
 <t tx="ekr.20051031040240"></t>
-<t tx="ekr.20051101161545"></t>
 <t tx="ekr.20051103091115.1">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3411067
 By: rogererens
@@ -8430,16 +7514,13 @@ code just breaks.</t>
 http://sourceforge.net/forum/message.php?msg_id=3424153
 By: rogererens
 
-Perhaps you've got this already lurking, but let me offer one other suggestion:
-
-When reverting the search direction, it would be better to place the cursor
+When reversing the search direction, it would be better to place the cursor
 'on the other side' of the current hit, and then proceed to find the next occurrence
 of &lt;pattern&gt;. At the current state of affairs, searching in the reverse direction
 first finds the current occurrence _again_, just placing the cursor on the other
 side of the higlighted selection.
 
-This suggestion is based on the way searching in Vim works.
-</t>
+This suggestion is based on the way searching in Vim works.</t>
 <t tx="ekr.20051112080017">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3423121
@@ -8459,7 +7540,9 @@ self.outerFrame.configure(background=bg)
 for z in ('borderframe','clipper','frame','hull'):
     self.outerScrolledFrame.component(z).configure(
         relief='flat',background=bg)</t>
-<t tx="ekr.20051121070552"></t>
+<t tx="ekr.20051121070552">This is too trivial to ignore any longer.
+
+Specify &amp; for most menu items.</t>
 <t tx="ekr.20051122104219">def prettyPrintKey (self,key):
     
     '''Convert whatever-Z to whatever-Shift-Z'''
@@ -8474,8 +7557,10 @@ for z in ('borderframe','clipper','frame','hull'):
         key = key[:-1]
     if not key: return ''
     ch = key[-1]
+    if not ch: return ''
     
-    ch,junk = c.frame.menu.canonicalizeShortcut(ch)
+    if len(ch) &gt; 1:
+        ch,junk = c.frame.menu.canonicalizeShortcut(ch)
 
     if ch in string.ascii_uppercase:
         return '%sShift-%s&gt;' % (key[:-2],ch.lower())
@@ -8648,10 +7733,8 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
     w.delete('1.0','end')
     w.insert('1.0',self.text)
     gui.setTextSelection(w,'1.0','1.0')</t>
-<t tx="ekr.20051129095023"></t>
 <t tx="ekr.20051202094427">Investigate meld:  http://meld.sourceforge.net/</t>
 <t tx="ekr.20051202095626">Use docstrings as the help message.</t>
-<t tx="ekr.20051202100658"></t>
 <t tx="ekr.20051202102337">@nocolor</t>
 <t tx="ekr.20051202102337.1">auto-complete command is merely a prototype.</t>
 <t tx="ekr.20051202102337.2">ok:
@@ -8970,8 +8053,9 @@ def beginCommandWithEvent (self,event,undoType='Typing'):
             ch=ch,name=name,oldSel=oldSel,oldText=oldText,w=w,undoType=undoType)
         
     return w</t>
-<t tx="ekr.20051217135340.2"></t>
-<t tx="ekr.20051217175058">show-chapters
+<t tx="ekr.20051217175058">Study jyLeo's chapters code
+
+show-chapters
 hide-chapters
 add-chapter
 delete-this-chapter</t>
@@ -9198,8 +8282,6 @@ Leo should allow scripts to set sys.argv for
 commands they create. its very difficult to do now.
 
 e</t>
-<t tx="ekr.20060102092148.2">docutils installs it if it isn't available.
-</t>
 <t tx="ekr.20060102103625">def createModeCommand (self,name,modeDict):
 
     # c = self.c ; k = c.keyHandler
@@ -9327,70 +8409,21 @@ import sys
 encoding = sys.getdefaultencoding() # 'cp1250'
 
 everything goes fine.</t>
-<t tx="ekr.20060104083551">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3488030
+<t tx="ekr.20060104083551">http://sourceforge.net/forum/message.php?msg_id=3488030
 
-Some examples are:
-selected text --&gt; press space bar.  A space is added to all the selected lines
-at the beginning. tab does 4 spaces
+move-region-up
 
-selected text --&gt; hit back space.  A space is removed from the start of each
-line.  If a space is not available in one of the lines, nothing is done.
+Swap the selection with the line above it. If we are at the top of a node, the
+node identified by threadBack() is selected and the text is moved to the bottom
+of the node.
 
-selected text --&gt; hit keypad '-', selected text gets moved up one line.  The
-selection is swapped with the line above it.  If we are at the top of a node,
-the node identified by threadBack() is selected and the text is moved to the
-bottom of the node.
+move-region-down
 
-selected text --&gt; hit keypad '+', selected text gets moved down one line.  The
-selection is swapped with the line below it.  If we are at the bottom of the
-node, the node identified by threadNext() is selected and the text is moved
-to the top of the node.
+Swap the selection with the line below it. If we are at the bottom of the node,
+the node identified by threadNext() is selected and the text is moved to the top
+of the node.
 
-in all cases of movement the text remains selected, even with node traversals.
-
-- and + are arbitrary, you should be able to bind any key to these actions.
-space, backspace and tab probably should always retain their convential meaning.
-
-Also note, they we dont have to be in a mode to make this happen, it just happens.
-So you can do keyboard selection or even mouse selection and it works.  What
-matters is that something is selected.
-
-Code wise, my implementation is totally based on the JTextPane's Document structure.
-I rely heavily on the Paragraph Elements identified between the selection start
-and end.  Im not sure what would be the equivilent in Tk.  The concept is clear
-enough I hope that you could map out some functionality.  Having these large
-structures to work with makes it much simpler to do the movement right.
-
-leouser</t>
-<t tx="ekr.20060104083736">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3488438
-By: btheado
-
-&gt; len(p.headString()) doesn't work for wide 
-&gt; characters
-
-According to this:
-http://www.tcl.tk/man/tcl8.4/TkCmd/text.htm#M15
-
-"If the font doesn't have a uniform width then the width of the character '0'
-is used in translating from character units to screen units."
-
-Here is some Tcl code that can get an exact fit for the text widget width:
-
-pack [text .t]
-set font [.t cget -font]
-set widechars WWWWWWWW
-.t insert end $widechars
-set strpixels [font measure $font $widechars]
-set zeropixels [font measure $font 0]
-set width [expr int(ceil(double($strpixels) / $zeropixels))]
-.t configure -width $width
-
-
-Summary of code: Set the width to be the pixel size of the text widget string
-divided by the pixel size of the '0' char.
-</t>
+In all cases the moved text remains selected, even when the text moves to another node.</t>
 <t tx="ekr.20060104110233">def generalModeHandler (self,event,name=None):
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
@@ -9486,15 +8519,26 @@ divided by the pixel size of the '0' char.
 
 
 </t>
-<t tx="ekr.20060105085031">defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
-defaultAction.lower()
-if defaultAction in ('insert','replace','ignore'):
-    self.unboundKeyAction = defaultAction
-else:
-    g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
-    self.unboundKeyAction = 'insert'</t>
-<t tx="ekr.20060105133043"></t>
-<t tx="ekr.20060105143454.1"></t>
+<t tx="ekr.20060105132013">def setIgnoreMode (self,event):
+    
+    self.setMode('ignore')
+
+def setInsertMode (self,event):
+    
+    self.setMode('insert')
+    
+def setOverwriteMode (self,event):
+    
+    self.setMode('overwrite')
+    
+def setMode (self,mode):
+    
+    self.unboundKeyAction = mode
+    frame = self.c.frame
+    if hasattr(frame,'clearStatusLine'):
+        frame.clearStatusLine()
+        frame.putStatusLine('input mode: ',color='blue')
+        frame.putStatusLine(mode)</t>
 <t tx="ekr.20060105143454.2"></t>
 <t tx="ekr.20060106064618">A 'backward' delete at the start of a headline deletes the first character.
 delete-char does not work in headlines.</t>
@@ -9626,12 +8670,7 @@ pixels and width of char '0'.</t>
             g.app.setLog(c.frame.log)
         except AttributeError:
             pass</t>
-<t tx="ekr.20060109183500.1">execute-named-script executes script in leo/scripts.
-
-
-
-does script_menu plugin exist? Yes!
-    Where does it get scripts?</t>
+<t tx="ekr.20060109183500.1">execute-named-script executes script in leo/scripts.</t>
 <t tx="ekr.20060110070304"></t>
 <t tx="ekr.20060110070304.1">@nocolor
 https://sourceforge.net/forum/message.php?msg_id=3514627
@@ -10816,36 +9855,6 @@ What I did:
     This creates and maintains the moveSpot, moveCol an moveSpotNode ivars,
     and is responsible for extending the selection range.</t>
 <t tx="ekr.20060110133007"></t>
-<t tx="ekr.20060110202238">@nocolor
-https://sourceforge.net/forum/message.php?msg_id=3516262
-By: btheado
-
-I notice some keystrokes in the body pane are missing compared to 4.4a4.  I
-guess Tk used to handle these:
-
-Home/End - move cursor to start/end of line
-Shift-Home/Shift-End - same with selection
-Ctrl-Home/Ctrl-End - move cursor to start/end of widget
-Shift-Pageup/Shift-Pagedown - select by page (oops I see that 4.4a didn't have
-these either)
-
-Tk also provides state for preserving the cursor column as much as possible
-and 4.4a5 no longer has this functionality.
-
-Example:
-========
-12345678
-1
-12345678
-========
-
-In 4.4a4, put the cursor on the 7 and move down two lines and the cursor will
-be on the other 7.  In 4.4a5, the cursor will end up on the 2 after moving down
-two lines.
-
-This cursor column preservation isn't unique to Tk.  I've noticed that vim supports
-it as well.  I find it useful.</t>
-<t tx="ekr.20060110202455"></t>
 <t tx="ekr.20060111103821"></t>
 <t tx="ekr.20060111103821.1">@nocolor
 
@@ -10917,8 +9926,9 @@ As the present problems with the Plugins manager show, this has the potential fo
 
 It's no good blaming Pmw or Idle or whatever, there needs to be a solid way of avoiding problems, both now and in the future.  The obvious way is to use os.system or subprocess to keep Idle at arm's length.  If necessary we can use settings in leoSettings.leo to tell Leo exactly how to start Idle.</t>
 <t tx="ekr.20060111134901"></t>
-<t tx="ekr.20060111152145"></t>
-<t tx="ekr.20060111152145.1"></t>
+<t tx="ekr.20060111152145">- Organize scripts menu from subfolders of leo/scripts folder.
+
+- Create minibuffer commands for each script?</t>
 <t tx="ekr.20060111193246"></t>
 <t tx="ekr.20060112045830">@nocolor
 
@@ -11002,33 +10012,6 @@ marl@pragmatis.de
 www.pragmatis.de</t>
 <t tx="ekr.20060112065740"></t>
 <t tx="ekr.20060112070752"></t>
-<t tx="ekr.20060112084446">@nocolor
-
-- Set options from the keyboard.
-    - set-variable sets a (Python) variable using an minibuffer-style variable name.
-
-Focus
-    - focus-in-body/tree/log/dialog.
-    - cycle-active-pane and cycle-active-widget (in a single pane) commands.
-    - activate-xxx-menu commands.  (alternative to XP Alt-f, Alt-E, etc.)
-
-- Drive all tabs/dialogs from the keyboard
-
-- Control all Leo commands &amp; widgets using only key commands.
-
-- create-tab, clear-tab commands, etc.
-    These might get the tab name from the minibuffer...
-    
-- find character, word,etc.
-
-- extending the cursor
-    Possibly the same as moves, except for being in extend mode.
-    
-- moving text around
-    - cut, copy, paste, kill, yank, etc.
-    - delete to x
-
-- dismiss-about-dialog</t>
 <t tx="ekr.20060112094901"></t>
 <t tx="ekr.20060112112241"># These should be considered bug fixes.</t>
 <t tx="ekr.20060112191014">@nocolor
@@ -11112,7 +10095,6 @@ execute-unit-tests</t>
     # Handle the extension.
     self.extendHelper(w,extend,ins1,spot)
     w.see('insert')</t>
-<t tx="ekr.20060113085710"></t>
 <t tx="ekr.20060113090042"></t>
 <t tx="ekr.20060113090732"></t>
 <t tx="ekr.20060113105246">def moveUpDown (self,direction):
@@ -11223,37 +10205,9 @@ Hitting Backspace immediately put the focus in the log. Another backspace put
 the focus in the body pane.
 
 The problem was in log.clearTab.  It must do call t.update().</t>
-<t tx="ekr.20060113170919.1">- create-chapter, destroy-chapter, select-chapter, etc.
-
-- find-character-on-line, find-word-on-line, etc.
-
-- extend-to-word, extend-to-paragraph, extend-to-sentence, etc.</t>
-<t tx="ekr.20060114052626"></t>
+<t tx="ekr.20060114052626">This is not needed with Ctrl-C mode.</t>
 <t tx="ekr.20060114055611">- It should recolor the text.
 - Does it not stick sometimes?</t>
-<t tx="ekr.20060114055714"></t>
-<t tx="ekr.20060114060100">@nocolor
-
-- enter-x-mode doesn't get shortcuts.  Try putting @mode nodes last?
-
-- Add @string active-keyset setting?
-
-- The mode tab should present commands first, bindings second.
-
-- Modes should persist, unless we have a mode binding like:
-
-command-name -&gt; enter-x-mode = binding
-
-- Have bindings for top-level vim mode like this:
-
-show-completion-list = Tab
-show-completion-list = BackSpace
-
-Bugs:
-
-** Must stay in mode until we leave explictly.
-** @mode must bind shortcuts.
-</t>
 <t tx="ekr.20060114060100.1"></t>
 <t tx="ekr.20060114061826">@nocolor
 
@@ -11262,9 +10216,6 @@ The fix is easy: extensionHelper resets movePoint any time there is no selection
 @color
 </t>
 <t tx="ekr.20060114080203"></t>
-<t tx="ekr.20060114080424">@nocolor
-
-Scroll should work in body pane too.</t>
 <t tx="ekr.20060114091359">@ To do:
     
 - inverseCommandsDict should be a list too.
@@ -11312,39 +10263,109 @@ This should be safe: The change-all command could always enclose the code in beg
 <t tx="ekr.20060114215112">
 </t>
 <t tx="ekr.20060115091804.2"></t>
-<t tx="ekr.20060115091804.3"></t>
-<t tx="ekr.20060115092257">@nocolor
-
-Standard keys (Windows defaults in parens)
-
-F1 help
-Windows key + F1 Windows Help
-F2 find-tab-find-prev (Rename)
-F3 find-tab-find (Find Files)
-F4 None (Address bar in Windows Explorer)
-F5 None (Refresh, Reload in Windows Explorer)
-F6 None (Should cycle from window to window)
-F7 open-spell-tab (Spell in Word)
-Shift-F7 None (Thesaurus in Word)
-F8 None (Safe mode)
-F9 None
-F10 None (Activate menu bar in many programs)
-F11 None (Toggle full screen mode in explorer)
-F12 None
-
-You can use F10 to highlight the first menu choice, and then use the arrow keys to move around the menus. Pressing the Shift key while pressing F10 will bring up the shortcut menu. This is similar to right-clicking on an object.</t>
 <t tx="ekr.20060115095641"></t>
 <t tx="ekr.20060115100407"></t>
 <t tx="ekr.20060115100841"></t>
 <t tx="ekr.20060115100841.1"></t>
-<t tx="ekr.20060115102006.1"></t>
 <t tx="ekr.20060115103349"></t>
 <t tx="ekr.20060115134337"></t>
-<t tx="ekr.20060115162515">To do: specify what mode to enter after each command:
+<t tx="ekr.20060115195302">def setDefaultUnboundKeyAction (self):
+    
+    k = self ; c = k.c
+
+    defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+    defaultAction.lower()
+    if defaultAction in ('ignore','insert','overwrite'):
+        self.unboundKeyAction = defaultAction
+    else:
+        g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
+        self.unboundKeyAction = 'insert'
+        
+    k.setMode(self.unboundKeyAction)</t>
+<t tx="ekr.20060115195302.1"></t>
+<t tx="ekr.20060116073229"></t>
+<t tx="ekr.20060116073539"></t>
+<t tx="ekr.20060116073938"></t>
+<t tx="ekr.20060116073938.1">Not necessarily important, but should be done first.</t>
+<t tx="ekr.20060116073938.2"></t>
+<t tx="ekr.20060116074450">- create-tab
+- clear-tab
+- delete-tab
+- hide-tab
+
+These might get the tab name from the minibuffer...</t>
+<t tx="ekr.20060116074450.1"># These are minor</t>
+<t tx="ekr.20060116074450.2">- Review the posting about making positions permanent, or recording vnode
+indicies. It's probably time to do this.</t>
+<t tx="ekr.20060116074450.3"></t>
+<t tx="ekr.20060116074839"></t>
+<t tx="ekr.20060116074839.2"></t>
+<t tx="ekr.20060116075549">Specify what mode to enter after each command:
 
 - command-name -&gt; mode-name = binding
 
 will specify what mode to enter after each command.
-At present, all commands exit to the top-level mode.</t>
+At present, all commands exit to the top-level mode.
+
+- Add @string active-keyset setting?</t>
+<t tx="ekr.20060116080040.2">These would be an alternative to XP Alt-f, Alt-E, etc.
+</t>
+<t tx="ekr.20060116080040.3">set-option sets a (Python) variable using an minibuffer-style variable name.</t>
+<t tx="ekr.20060116082302.1">On startup, it asked me for a unique id, "possibly your CVS username".
+As a non-windows-user, that made no sense at all to me - at very least, it should
+fill in os.getenv("USER") as a default, because it's right on non-windows systems,
+isn't it?  (If it isn't, there's no explanation at that point that would tell
+me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
+issue.</t>
+<t tx="ekr.20060116083043">More mac nits: two HELP menus, one is empty; </t>
+<t tx="ekr.20060116083043.1"></t>
+<t tx="ekr.20060116083043.2">"open leo docs.leo" from the help
+menu gives a window that doesn't fit on-screen on my mac (tiger 10.4.1 12" powerbook)
+and this leaves the resize control off-screen, so I can't fix it either.</t>
+<t tx="ekr.20060116083359">- dismiss-about-dialog</t>
+<t tx="ekr.20060116083359.1"></t>
+<t tx="ekr.20060116084526"></t>
+<t tx="ekr.20060116084526.1">http://sourceforge.net/forum/message.php?msg_id=3488030
+
+add-space-to-lines      Adds a space is added to start of all selected lines.
+
+add-tab-to-line         Adds 4 spaces to start of all selected lines.
+
+remove-space-from lines Removes a space from start of all selected lines.
+
+remove-tab-from lines   Removes a space from start of all selected lines.</t>
+<t tx="ekr.20060116084755">Note: focus commands already exist.</t>
+<t tx="ekr.20060116085217">Urgent for outline pane, find panel, etc.
+
+The following commands already work in the body pane.
+
+scroll-down
+scroll-down-extend-selection  
+scroll-up
+scroll-up-extend-selection
+
+</t>
+<t tx="ekr.20060116085649"></t>
+<t tx="ekr.20060116090357.2">set-increment-search-on/off
+set-regexp-search-on/off
+set-search-body-on/off
+set-search-case-on/off
+set-search-headline-on/off
+set-search-scope-to-outline/subtree/node
+set-word-search-on/off
+set-wrap-search-on/off
+
+set-default-search-options: Sets the default search options to the present search options.
+
+Control keys could change these options *after* starting the search command?
+Or use 'Options' tab?
+
+
+</t>
+<t tx="ekr.20060116090428"></t>
+<t tx="ekr.20060116091116"></t>
+<t tx="ekr.20060116091116.1"></t>
+<t tx="ekr.20060116091236"></t>
+<t tx="ekr.20060116092801"></t>
 </tnodes>
 </leo_file>
