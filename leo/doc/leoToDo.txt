@@ -872,7 +872,7 @@ def handleDefaultChar(self,event):
         # For Leo 4.4a4: allow Tk defaults.
         # But this is dangerous, and should be removed.
         action = self.unboundKeyAction
-        if action in ('insert','replace'):
+        if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         return 'break'
     elif name.startswith('head'):
@@ -1264,38 +1264,6 @@ Focus
 - dismiss-about-dialog
 #@nonl
 #@-node:ekr.20060112084446:Next
-#@+node:ekr.20060110202238:Missing bindings/commands
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=3516262
-By: btheado
-
-I notice some keystrokes in the body pane are missing compared to 4.4a4.  I
-guess Tk used to handle these:
-
-Home/End - move cursor to start/end of line
-Shift-Home/Shift-End - same with selection
-Ctrl-Home/Ctrl-End - move cursor to start/end of widget
-Shift-Pageup/Shift-Pagedown - select by page (oops I see that 4.4a didn't have
-these either)
-
-Tk also provides state for preserving the cursor column as much as possible
-and 4.4a5 no longer has this functionality.
-
-Example:
-========
-12345678
-1
-12345678
-========
-
-In 4.4a4, put the cursor on the 7 and move down two lines and the cursor will
-be on the other 7.  In 4.4a5, the cursor will end up on the 2 after moving down
-two lines.
-
-This cursor column preservation isn't unique to Tk.  I've noticed that vim supports
-it as well.  I find it useful.
-#@nonl
-#@-node:ekr.20060110202238:Missing bindings/commands
 #@+node:ekr.20060104083551:New commands for mouseless Leo (LeoUser)
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3488030
@@ -6865,37 +6833,6 @@ commands they create. its very difficult to do now.
 e
 #@nonl
 #@-node:ekr.20060102092148.1:--safe option
-#@+node:ekr.20060104083736:Improve how headline widtth gets computed
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3488438
-By: btheado
-
-> len(p.headString()) doesn't work for wide 
-> characters
-
-According to this:
-http://www.tcl.tk/man/tcl8.4/TkCmd/text.htm#M15
-
-"If the font doesn't have a uniform width then the width of the character '0'
-is used in translating from character units to screen units."
-
-Here is some Tcl code that can get an exact fit for the text widget width:
-
-pack [text .t]
-set font [.t cget -font]
-set widechars WWWWWWWW
-.t insert end $widechars
-set strpixels [font measure $font $widechars]
-set zeropixels [font measure $font 0]
-set width [expr int(ceil(double($strpixels) / $zeropixels))]
-.t configure -width $width
-
-
-Summary of code: Set the width to be the pixel size of the text widget string
-divided by the pixel size of the '0' char.
-#@-node:ekr.20060104083736:Improve how headline widtth gets computed
-#@+node:ekr.20060105143454.1:The colerer is calling c.config too much?
-#@-node:ekr.20060105143454.1:The colerer is calling c.config too much?
 #@-node:ekr.20051012062458.1:Minor
 #@+node:ekr.20051023192433:Maybe or never
 #@+node:ekr.20060105143454.2:Convert Emacs-Style Names to Menu Style Names when creating undo name

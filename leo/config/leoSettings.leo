@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="180" clone_windows="0"/>
-<globals body_outline_ratio="0.628865979381">
-	<global_window_position top="29" left="314" height="873" width="843"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="187" clone_windows="0"/>
+<globals body_outline_ratio="0.611683848797">
+	<global_window_position top="28" left="431" height="873" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="TV" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
@@ -274,7 +274,7 @@
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
 <v t="ekr.20060111083044" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060110142111"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060111083214" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060115201647" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
@@ -286,7 +286,7 @@
 <v t="ekr.20060110141538.3" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = False</vh></v>
 <v t="ekr.20060111082542" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
 <v t="ekr.20060111082552" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060111082632" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060115201635" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
@@ -297,7 +297,7 @@
 <v t="ekr.20060111082854" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = False</vh></v>
 <v t="ekr.20060111082848" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
 <v t="ekr.20060111082717" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060111083023" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060115201600" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
 <v t="ekr.20060111082632.1"><vh>@shortcuts Legacy+: A-E</vh></v>
 <v t="ekr.20060112085643"><vh>@shortcuts Legacy+: F-M</vh></v>
@@ -306,7 +306,7 @@
 <v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20060112093227"><vh>Options</vh>
 <v t="ekr.20060110142111.1" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060111083545" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060115201600.1" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111083551" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060111083721" annotate="7d71002e"><vh>@bool useCmdMenu = False</vh></v>
 </v>
@@ -314,31 +314,31 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060103135341" annotate="7d71002e"><vh>Vim bindings (experimental)</vh>
+<v t="ekr.20060103135341" annotate="7d71002e"><vh>Vim bindings</vh>
 <v t="ekr.20060112093419"><vh>Options</vh>
 <v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = ignore</vh></v>
 </v>
 <v t="ekr.20060111083214.1"><vh>Modes</vh>
-<v t="ekr.20060103135341.10" annotate="7d71002e"><vh>@shortcuts modes</vh></v>
-<v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode file</vh></v>
-<v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode search</vh></v>
-<v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode outline</vh></v>
+<v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
+<v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
+<v t="ekr.20060115194553"><vh>@mode Quick</vh></v>
+<v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode Search</vh></v>
+<v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode Outline</vh></v>
 </v>
 <v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
+<v t="ekr.20060115203345"><vh>@url http://www.apmaths.uwo.ca/~xli/vim/quickstart.html</vh></v>
+<v t="ekr.20060115203942"><vh>@shortcuts plain keys</vh></v>
 <v t="ekr.20060103135341.11" annotate="7d71002e"><vh>@shortcuts A-E</vh></v>
 <v t="ekr.20060112165244"><vh>@shortcuts F-M</vh></v>
 <v t="ekr.20060103135341.12" annotate="7d71002e"><vh>@shortcuts N-Z</vh></v>
 </v>
-<v t="ekr.20060113163701"><vh>Vim Notes</vh></v>
-<v t="ekr.20060113174941"><vh>Settings bugs?</vh></v>
 </v>
 </v>
 <v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
-<v t="ekr.20060111082537" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
@@ -358,26 +358,47 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060103135341" a="TV"><vh>Vim bindings (experimental)</vh>
+<v t="ekr.20060115202002"><vh>To do</vh></v>
+<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060112093419.1"><vh>Options</vh>
+<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
+<v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+</v>
+<v t="ekr.20060115162748"><vh>Modes</vh>
+<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
+<v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
+<v t="ekr.20060115160004"><vh>@mode Register</vh></v>
+<v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
+</v>
+<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
+<v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
+<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+</v>
+</v>
+<v t="ekr.20060103135341"><vh>Vim bindings</vh>
 <v t="ekr.20060112093419"><vh>Options</vh>
 <v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [insert, replace, ignore] top_level_unbound_key_action = ignore</vh></v>
 </v>
 <v t="ekr.20060111083214.1"><vh>Modes</vh>
-<v t="ekr.20060103135341.10" annotate="7d71002e"><vh>@shortcuts modes</vh></v>
-<v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode file</vh></v>
-<v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode search</vh></v>
-<v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode outline</vh></v>
+<v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
+<v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
+<v t="ekr.20060115194553"><vh>@mode Quick</vh></v>
+<v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode Search</vh></v>
+<v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode Outline</vh></v>
 </v>
 <v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
+<v t="ekr.20060115203345"><vh>@url http://www.apmaths.uwo.ca/~xli/vim/quickstart.html</vh></v>
+<v t="ekr.20060115203942"><vh>@shortcuts plain keys</vh></v>
 <v t="ekr.20060103135341.11" annotate="7d71002e"><vh>@shortcuts A-E</vh></v>
 <v t="ekr.20060112165244"><vh>@shortcuts F-M</vh></v>
 <v t="ekr.20060103135341.12" annotate="7d71002e"><vh>@shortcuts N-Z</vh></v>
 </v>
-<v t="ekr.20060113163701"><vh>Vim Notes</vh></v>
-<v t="ekr.20060113174941"><vh>Settings bugs?</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1935,19 +1956,20 @@ enter-quick-command-mode    = Alt-C
 enter-rect-mode             = None
 enter-register-mode         = None</t>
 <t tx="ekr.20060103135341">@color</t>
-<t tx="ekr.20060103135341.1">enter-input-mode        = i
-enter-default-mode      = Alt-x
+<t tx="ekr.20060103135341.1"># Boilerplate for all modes.
+keyboard-quit           = Return
+mode-help               = Tab
 
-close-window            = w
 close-window            = Alt-F4
 exit-leo                = q
 new                     = n
 open-outline            = o
 save-file               = s
-save-file-as            = None
-save-file-to            = None</t>
-<t tx="ekr.20060103135341.2">enter-input-mode        = i
-enter-default-mode      = Alt-x
+save-file-as            = Shift-A
+save-file-to            = Shift-T</t>
+<t tx="ekr.20060103135341.2"># Boilerplate for all modes. 
+keyboard-quit           = Return
+mode-help               = Tab
 
 # find-tab-change                         = Ctrl-=
 # find-tab-change-all                     = None  # Not recommended to bind this to a shortcut.
@@ -1968,60 +1990,34 @@ enter-default-mode      = Alt-x
 # replace-then-find                       = None
 # search-backward                         = None
 # search-forward                          = None</t>
-<t tx="ekr.20060103135341.4"># de-hoist                = None
-# goto-first-sibling    = None
-# goto-last-node        = End     
-# goto-last-sibling     = None
-# goto-next-node        = None
-# goto-next-sibling     = None
-# goto-prev-node        = None
-# hoist                 = None
-# paste-retaining-clones= None
+<t tx="ekr.20060103135341.4"># Boilerplate for all modes.
+keyboard-quit           = Return
+mode-help               = Tab
 
-contract-all            = Alt--
-contract-node           = -
-contract-or-go-left     = None
-contract-parent         = LtArrow
-copy-node               = Shift-Ctrl-C
-cut-node                = Shift-Ctrl-X
-demote                  = None
-enter-default-mode      = Alt-x
-enter-input-mode        = i
-expand-and-go-right     = RtArrow
-expand-node             = Key-+
-goto-first-node         = Home      
-goto-last-visible       = End       
-goto-next-visible       = DnArrow
-goto-next-visible       = d
-goto-parent             = LtArrow
-goto-parent             = p
-goto-prev-sibling       = None
-goto-prev-visible       = UpArrow
-goto-prev-visible       = u
-insert-node             = n
-move-outline-down       = Shift-d
-move-outline-left       = Shift-l
-move-outline-right      = Shift-r
-move-outline-up         = Shift-u
-paste-node              = Shift-Ctrl-V
-promote                 = p
-</t>
-<t tx="ekr.20060103135341.10"># The initial_unbound_key_binding setting determines which mode is in effect when Leo starts.
+contract-or-go-left     Alt-LtArrow
+contract-or-go-left     LtArrow
+expand-and-go-right     Alt-RtArrow
+expand-and-go-right     RtArrow
+goto-first-node         Alt-Home
+goto-first-node         Home
+goto-last-visible       Alt-End
+goto-last-visible       End
+goto-next-visible       Alt-DnArrow
+goto-next-visible       DnArrow
+goto-prev-visible       Alt-UpArrow
+goto-prev-visible       UpArrow
 
-# enter-default-mode  = None
-# enter-ignore-mode   = None
-# enter-replace-mode  = None
-
-enter-file-mode             = f
-enter-insert-mode           = i
-#enter-move-cursor-mode     = m
-enter-outline-mode          = Key-o
-enter-search-mode           = Key-s 
-# enter-extend-selection-mode = x
-</t>
-<t tx="ekr.20060103135341.11"># Important: the print-commands and print-bindings show what bindings are in effect.
-
-# append-next-kill                      = None      # Control-Alt-w
+copy-node               = c
+cut-node                = x
+demote                  = Shift-d
+insert-node             = i
+move-outline-down       = d
+move-outline-left       = l
+move-outline-right      = r
+move-outline-up         = u
+paste-node              = p
+promote                 = Shift-p</t>
+<t tx="ekr.20060103135341.11"># append-next-kill                      = None      # Control-Alt-w
 # apply settings                        = None      # Does not exist yet.
 # call-last-keyboard-macro              = None
 # copy-to-buffer                        = None
@@ -2075,9 +2071,9 @@ close-rectangle                         = None
 close-window                            = Alt-F4
 contract-all                            = None
 contract-node                           = None
-contract-or-go-left                     ! tree = LtArrow
-# contract-or-go-left                   ! tree = Alt-LtArrow
 contract-or-go-left                     ! text = Alt-LtArrow
+contract-or-go-left                     ! tree = Alt-LtArrow
+contract-or-go-left                     ! tree = LtArrow
 contract-parent                         = None
 convert-all-blanks                      = None
 convert-all-tabs                        = None
@@ -2090,7 +2086,7 @@ copy-to-register                        = None
 count-region                            = None
 cut-node                                = None
 cut-text                                = Ctrl-x
-cycle-focus                             = Alt-Shift-f
+cycle-focus                             = None
 dabbrev-completion                      = None
 dabbrev-expands                         = None
 de-hoist                                = None
@@ -2108,14 +2104,14 @@ downcase-region                         = None
 downcase-word                           = None
 dump-outline                            = None
 edit-headline                           = Ctrl-H
-end-edit-headline                       ! tree = Return     # Esc is also possible.
+end-edit-headline                       ! tree = Return
 end-of-buffer                           ! text = Alt-greater # Same as Alt-Shift-greater
 end-of-buffer                           ! text = Ctrl-End
 end-of-buffer-extend-selection          ! text = Ctrl-Shift-End
 end-of-line                             ! text = Ctrl-e        
 end-of-line-extend-selection            ! text = Ctrl-Shift-e
 enter-file-mode                         = None
-equal-sized-panes                       = Alt-Shift-E
+equal-sized-panes                       = None
 escape                                  = None
 eval-expression                         = None
 exchange-point-mark                     = None  # Should be Ctrl-X Ctrl-X.
@@ -2123,9 +2119,9 @@ execute-script                          = None
 exit-leo                                = None
 expand-abbrev                           = None
 expand-all                              = None
-expand-and-go-right                     ! tree = RtArrow
-#expand-and-go-right                    ! tree = Alt-RtArrow
 expand-and-go-right                     ! text = Alt-RtArrow
+expand-and-go-right                     ! tree = Alt-RtArrow
+expand-and-go-right                     ! tree = RtArrow
 expand-next-level                       = None
 expand-node                             = None
 expand-or-go-right                      = None
@@ -2143,7 +2139,7 @@ expand-to-level-9                       = None
 export-headlines                        = None
 extract                                 = Shift-Ctrl-d
 extract-names                           = Shift-Ctrl-n
-extract-section                         = Shift-Ctrl-e
+extract-section                         = None
 </t>
 <t tx="ekr.20060103135341.12"># name-last-kbd-macro                   = None
 # number-to-register                    = None
@@ -2230,8 +2226,8 @@ set-extend-mode                         = None
 set-fill-column                         = None
 set-fill-prefix                         = None
 set-font                                = None
-set-ignore-mode                         = None
-set-insert-mode                         = None
+set-ignore-mode                         = None  # keyboard-quit does this, so we leave this empty.
+# set-insert-mode                         = None
 set-mark-command                        = Ctrl-space    # Also Ctrl-Shift-at
 set-overwrite-mode                      = None
 settings                                = None
@@ -2351,17 +2347,6 @@ False: Selecting an outline node transfers focus to the body pane.
 
        &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20060111082512">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
-<t tx="ekr.20060111082537">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-insert:  Leo inserts the key at the cursor (like Emacs)
-replace: Leo replaces the character at the cursor.
-ignore:  Leo ignores the key (like Vim).
-</t>
 <t tx="ekr.20060111082542">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
 <t tx="ekr.20060111082552">Important:
 
@@ -2378,17 +2363,6 @@ ignore:  Leo ignores the key (like Vim).
    Indeed, the following will work even if the minibuffer is hidden.
 
        &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
-<t tx="ekr.20060111082632">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-insert:  Leo inserts the key at the cursor (like Emacs)
-replace: Leo replaces the character at the cursor.
-ignore:  Leo ignores the key (like Vim).
-</t>
 <t tx="ekr.20060111082632.1">@color
 
 # Important: the print-commands and print-bindings show what bindings are in effect.
@@ -2536,17 +2510,6 @@ extract-section                     = Shift-Ctrl-e</t>
 False: Selecting an outline node transfers focus to the body pane.
        This was the way all version before Leo 4.4 worked, but
        it will prevent key binding in the outline pane for outline operations from being useful.</t>
-<t tx="ekr.20060111083023">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-insert:  Leo inserts the key at the cursor (like Emacs)
-replace: Leo replaces the character at the cursor.
-ignore:  Leo ignores the key (like Vim).
-</t>
 <t tx="ekr.20060111083035">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
 <t tx="ekr.20060111083044">Important:
 
@@ -2563,17 +2526,6 @@ ignore:  Leo ignores the key (like Vim).
    Indeed, the following will work even if the minibuffer is hidden.
 
        &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
-<t tx="ekr.20060111083214">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-insert:  Leo inserts the key at the cursor (like Emacs)
-replace: Leo replaces the character at the cursor.
-ignore:  Leo ignores the key (like Vim).
-</t>
 <t tx="ekr.20060111083214.1"></t>
 <t tx="ekr.20060111083427">@nocolor
 
@@ -2582,10 +2534,9 @@ when no mode is in effect.  Note: the keyboard-quit command exits all modes.
 
 The valid values are::
 
-insert:  Leo inserts the key at the cursor (like Emacs)
-replace: Leo replaces the character at the cursor.
 ignore:  Leo ignores the key (like Vim).
-</t>
+insert:  Leo inserts the key at the cursor (like Emacs)
+overwrite: Leo replaces the character at the cursor.</t>
 <t tx="ekr.20060111083432">Important:
 
 1. The minibuffer will exist regardless of this setting, but will not be shown
@@ -2603,17 +2554,6 @@ ignore:  Leo ignores the key (like Vim).
        &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20060111083537">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
 <t tx="ekr.20060111083537.1"></t>
-<t tx="ekr.20060111083545">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-insert:  Leo inserts the key at the cursor (like Emacs)
-replace: Leo replaces the character at the cursor.
-ignore:  Leo ignores the key (like Vim).
-</t>
 <t tx="ekr.20060111083551">Important:
 
 1. The minibuffer will exist regardless of this setting, but will not be shown
@@ -3973,13 +3913,15 @@ full-command                            = Alt-x
 go-back                                 = None
 go-forward                              = None
 goto-char                               = None
-goto-first-node                         ! tree = Home
-# goto-first-node                       ! tree = Alt-Home
 goto-first-node                         ! text = Alt-Home
+goto-first-node                         ! tree = Alt-Home
+goto-first-node                         ! tree = Home
 goto-first-sibling                      = None
 goto-last-node                          = None
 goto-last-sibling                       = None
-# goto-last-visible                     ! tree = End
+goto-last-visible                       ! text = Alt-End
+goto-last-visible                       ! tree = Alt-End
+goto-last-visible                       ! tree = End
 goto-last-visible                       ! tree = Alt-End
 goto-last-visible                       ! text = Alt-End
 goto-line                               = None  # Leo's goto-line-number is better.
@@ -3989,15 +3931,15 @@ goto-next-clone                         = None
 goto-next-marked                        = None
 goto-next-node                          = None
 goto-next-sibling                       = None
-goto-next-visible                       ! tree = DnArrow
-# goto-next-visible                     ! tree = Alt-DnArrow
 goto-next-visible                       ! text = Alt-DnArrow
+goto-next-visible                       ! tree = Alt-DnArrow
+goto-next-visible                       ! tree = DnArrow
 goto-parent                             = None
 goto-prev-node                          = None
 goto-prev-sibling                       = None
-goto-prev-visible                       ! tree = UpArrow
-# goto-prev-visible                     ! tree = Alt-UpArrow
 goto-prev-visible                       ! text = Alt-UpArrow
+goto-prev-visible                       ! tree = Alt-UpArrow
+goto-prev-visible                       ! tree = UpArrow
 help                                    = None
 hide-find-tab                           = None
 hide-mini-buffer                        = None
@@ -4031,6 +3973,7 @@ isearch-forward-regexp                  = None
 jump-to-register                        = None
 keep-lines                              = None
 keyboard-quit                           = Ctrl-g
+keyboard-quit                           ! text = Esc # The traditional Vim binding.
 kill-all-abbrevs                        = None
 kill-buffer                             = None
 kill-line                               ! text = Shift-Ctrl-k  # Ctrl-K conflicts with match-braket.
@@ -4064,10 +4007,6 @@ next-line-extend-selection              ! text = Shift-DnArrow
 previous-line                           ! text = UpArrow
 previous-line-extend-selection          ! text = Shift-UpArrow
 </t>
-<t tx="ekr.20060113163701">@nocolor
-
-</t>
-<t tx="ekr.20060113174941">what is replace-then-find??</t>
 <t tx="ekr.20060113182439"></t>
 <t tx="ekr.20060114073238">If True, Leo will report to the console which bindings have been created.
 
@@ -4129,5 +4068,89 @@ mode-help           = BackSpace
 # These should execute rectangle commands, as in Alt-X r r</t>
 <t tx="ekr.20060115162748"></t>
 <t tx="ekr.20060115162748.1"></t>
+<t tx="ekr.20060115194553"># Boilerplate for all modes.
+keyboard-quit           = Return
+mode-help               = Tab
+
+backward-kill-sentence  = Delete
+downcase-region         = Ctrl-D
+exchange-point-mark     = Ctrl-X
+insert-file             = Ctrl-I
+kill-region             = Ctrl-Shift-at # This should just delete the selected text.
+list-buffers            = Ctrl-B
+remove-blank-lines      = Ctrl-O
+save-buffers-kill-leo   = Ctrl-C
+save-file               = Ctrl-S
+transpose-lines         = Ctrl-T
+upcase-region           = Ctrl-U
+</t>
+<t tx="ekr.20060115201518">@nocolor
+
+This setting determines the initial binding for otherwise-unbound keystrokes
+when no mode is in effect.  Note: the keyboard-quit command exits all modes.
+
+The valid values are::
+
+ignore:  Leo ignores the key (like Vim).
+insert:  Leo inserts the key at the cursor (like Emacs)
+overwrite: Leo replaces the character at the cursor.</t>
+<t tx="ekr.20060115201600">@nocolor
+
+This setting determines the initial binding for otherwise-unbound keystrokes
+when no mode is in effect.  Note: the keyboard-quit command exits all modes.
+
+The valid values are::
+
+ignore:  Leo ignores the key (like Vim).
+insert:  Leo inserts the key at the cursor (like Emacs)
+overwrite: Leo replaces the character at the cursor.</t>
+<t tx="ekr.20060115201600.1">@nocolor
+
+This setting determines the initial binding for otherwise-unbound keystrokes
+when no mode is in effect.  Note: the keyboard-quit command exits all modes.
+
+The valid values are::
+
+ignore:  Leo ignores the key (like Vim).
+insert:  Leo inserts the key at the cursor (like Emacs)
+overwrite: Leo replaces the character at the cursor.</t>
+<t tx="ekr.20060115201635">@nocolor
+
+This setting determines the initial binding for otherwise-unbound keystrokes
+when no mode is in effect.  Note: the keyboard-quit command exits all modes.
+
+The valid values are::
+
+ignore:  Leo ignores the key (like Vim).
+insert:  Leo inserts the key at the cursor (like Emacs)
+overwrite: Leo replaces the character at the cursor.</t>
+<t tx="ekr.20060115201647">@nocolor
+
+This setting determines the initial binding for otherwise-unbound keystrokes
+when no mode is in effect.  Note: the keyboard-quit command exits all modes.
+
+The valid values are::
+
+ignore:  Leo ignores the key (like Vim).
+insert:  Leo inserts the key at the cursor (like Emacs)
+overwrite: Leo replaces the character at the cursor.</t>
+<t tx="ekr.20060115202002">@nocolor
+
+* Some commands must stay in mode: like move-outline commands in outline mode.
+- what is replace-then-find?
+- Add Shift-Arrow and Alt-Shift-Arrow keys for moves.</t>
+<t tx="ekr.20060115203345"></t>
+<t tx="ekr.20060115203942"># The initial_unbound_key_binding setting determines which mode is in effect when Leo starts.
+
+set-insert-mode         = i
+enter-file-mode         = f
+enter-outline-mode      = o
+enter-quick-mode        = q
+enter-search-mode       = s
+
+# Vim uses / to start a search.
+# Vim uses : to enter a quick mode
+#   :s to start a substitution
+#   :w to write a file, etc.</t>
 </tnodes>
 </leo_file>
