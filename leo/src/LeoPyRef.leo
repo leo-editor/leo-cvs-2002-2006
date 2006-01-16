@@ -16,7 +16,7 @@
 <v t="EKR.20040429143933"
 marks="ekr.20051010062551.1,ekr.20051010062551.1,"><vh>@thin leoProjects.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.2" a="TV"><vh>To do</vh>
+<v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"
 marks="ekr.20051010062551.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
@@ -920,7 +920,7 @@ marks="ekr.20051010062551.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051104051733"><vh>Make Focus-in in minibuffer widget equivalent to Alt-x</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -974,6 +974,9 @@ marks="ekr.20051010062551.1,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
+</v>
+<v t="ekr.20060116103125"><vh>Fix rClick problems</vh>
+<v t="ekr.20060116103125.1"><vh>Report</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10367,5 +10370,11 @@ Or use 'Options' tab?
 <t tx="ekr.20060116091116.1"></t>
 <t tx="ekr.20060116091236"></t>
 <t tx="ekr.20060116092801"></t>
+<t tx="ekr.20060116103125"></t>
+<t tx="ekr.20060116103125.1">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=3523972
+By: e
+
+To test: paste -' Ã- '- or anything non ascii in a body, select it, then right click</t>
 </tnodes>
 </leo_file>
