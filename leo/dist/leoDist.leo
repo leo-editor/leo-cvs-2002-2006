@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1122" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1123" clone_windows="0"/>
 <globals body_outline_ratio="0.475703324808">
 	<global_window_position top="55" left="143" height="782" width="822"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button Spell</vh></v>
 <v t="ekr.20051015172713"><vh>@button Save</vh></v>
 </v>
-<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259" a="E"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -24,6 +24,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
+<v t="ekr.20060116101806" a="TV"><vh>ANN: Leo 4.4b1</vh></v>
 <v t="ekr.20060106070701"><vh>ANN: Leo 4.4a5</vh></v>
 <v t="ekr.20051205092824"><vh>ANN: Leo 4.4a4</vh></v>
 <v t="ekr.20051110084338"><vh>ANN: Leo 4.4a3</vh></v>
@@ -106,9 +107,9 @@
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
 <v t="EKR.20040519080201.1"><vh>Distribution checklist</vh></v>
-<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="ekr.20050910192724"><vh>Pychecker warnings</vh></v>
-<v t="EKR.20040519080201.2" a="TV" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="ekr.20050430095952"><vh>Pychecker statements</vh></v>
 <v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
 <v t="ekr.20050212143754.1"><vh>What I did</vh></v>
@@ -4727,6 +4728,39 @@ The highlights of Leo 4.4:
 - @command nodes create minibuffer commands. You can bind key shortcuts to @button and @command nodes.
 
 - Leo handles key events and updates the screen immediately rather than waiting for idle time.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
+
+Edward K. Ream
+January 6, 2006
+</t>
+<t tx="ekr.20060116101806">[ANN: Leo 4.4b1 released]
+
+Leo 4.4 beta 1 is now available at:
+
+http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
+
+The code is stable; there are no known serious bugs. Some features are incomplete.
+
+Leo is a text editor, data organizer, project manager and much more.  See: http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4:
+----------------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word and paragraph manipulation, and commands to manipulate buffers, the kill ring, regions and rectangles.  You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes.  You can emulate the operation of Emacs, Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of dialogs, making those commands much easier to use. Plugins or scripts can easily create new tabs. The Completion tab shows possible typing completions.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
 
 Links:
 ------
