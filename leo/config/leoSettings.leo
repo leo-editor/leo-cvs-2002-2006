@@ -264,11 +264,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="TV" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
+<v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
@@ -315,7 +316,7 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060103135341" annotate="7d71002e"><vh>Vim bindings</vh>
+<v t="ekr.20060103135341" a="E" annotate="7d71002e"><vh>Vim bindings</vh>
 <v t="ekr.20060112093419"><vh>Options</vh>
 <v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
@@ -337,8 +338,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
-<v t="ekr.20060112093419.1"><vh>Options</vh>
+<v t="ekr.20051010112558" a="TV" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060112093419.1" a="E"><vh>Options</vh>
 <v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
@@ -350,7 +351,7 @@
 <v t="ekr.20060115160004"><vh>@mode Register</vh></v>
 <v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
 </v>
-<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
+<v t="ekr.20060115162748.1" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
@@ -360,47 +361,6 @@
 </v>
 </v>
 <v t="ekr.20060115202002"><vh>To do</vh></v>
-<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
-<v t="ekr.20060112093419.1"><vh>Options</vh>
-<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
-<v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-</v>
-<v t="ekr.20060115162748"><vh>Modes</vh>
-<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
-<v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
-<v t="ekr.20060115160004"><vh>@mode Register</vh></v>
-<v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
-</v>
-<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
-<v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
-</v>
-</v>
-<v t="ekr.20060103135341"><vh>Vim bindings</vh>
-<v t="ekr.20060112093419"><vh>Options</vh>
-<v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu=False</vh></v>
-<v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-</v>
-<v t="ekr.20060111083214.1"><vh>Modes</vh>
-<v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
-<v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
-<v t="ekr.20060115194553"><vh>@mode Quick</vh></v>
-<v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode Search</vh></v>
-<v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode Outline</vh></v>
-</v>
-<v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
-<v t="ekr.20060115203345"><vh>@url http://www.apmaths.uwo.ca/~xli/vim/quickstart.html</vh></v>
-<v t="ekr.20060115203942"><vh>@shortcuts plain keys</vh></v>
-<v t="ekr.20060103135341.11" annotate="7d71002e"><vh>@shortcuts A-E</vh></v>
-<v t="ekr.20060112165244"><vh>@shortcuts F-M</vh></v>
-<v t="ekr.20060103135341.12" annotate="7d71002e"><vh>@shortcuts N-Z</vh></v>
-</v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041119034357.1">@nocolor</t>
@@ -4173,5 +4133,52 @@ F11 None (Toggle full screen mode in explorer)
 F12 None
 
 You can use F10 to highlight the first menu choice, and then use the arrow keys to move around the menus. Pressing the Shift key while pressing F10 will bring up the shortcut menu. This is similar to right-clicking on an object.</t>
+<t tx="ekr.20060117092249">A mode is a temporary set of key bindings created by an @mode node whose
+headline has the form:
+
+@mode &lt;mode name&gt;
+
+The body text contains a list of shortcut specifiers. @mode nodes work just like
+@shortcuts, but as a side effect they create the enter-&lt;mode name&gt;-mode
+command.  For example, 
+
+@mode quick-commands
+
+creates the enter-quick-commands command. You can bind keys to such commands in
+@shortcut nodes as usual.
+
+Notes:
+
+- Pane specifiers are ignored in @mode nodes. Bindings apply only to a single
+mode.
+
+- @shortcuts nodes specify the bindings in effect for the 'default' or
+'top-level' mode. The keyboard-quit command always set the mode to the top-level
+mode.
+
+- The top_level_unbound_key_action setting determines what happens to unbound
+keys *only* for the top-level mode.
+
+- A mode contains *only* the key bindings explicitly specified in the @mode
+node. The only default key binding is the binding for the keyboard-quit command
+(usually Control-g). Thus, all modes except the top-level mode act as if
+top_level_unbound_key_action = 'ignore'. In particular, the set-ignore-mode,
+set-insert-mode and set-overwrite-mode commands affect only the top-level mode.
+
+- The mode-help command (recommend binding is Tab) lists all bound keystrokes in
+a mode.
+
+- At present, Leo enters the top-level mode after executing any command in a
+mode, except the mode-help command. Leo 4.4b2 will allow shortcut specifier
+lines in @mode nodes to have the form:
+
+command-name -&gt; mode-name = binding
+
+This will have the effect of executing the command and entering the indicated
+mode. As a special case,
+
+command-name -&gt; same = binding
+
+will cause the command to be executed without changing mode.</t>
 </tnodes>
 </leo_file>
