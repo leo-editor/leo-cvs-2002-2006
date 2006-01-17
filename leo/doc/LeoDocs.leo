@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="21290" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="21599" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
-	<global_window_position top="14" left="245" height="857" width="913"/>
+	<global_window_position top="29" left="340" height="857" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -744,8 +744,34 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
+<v t="ekr.20051219150602"><vh>4.4 alpha 5</vh>
+<v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
+<v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
+<v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
+<v t="ekr.20051219150602.10"><vh>Text box is now selected in goto-line-number command</vh></v>
+<v t="ekr.20051219150602.13"><vh>Restored headkey  &amp; bodykey hooks</vh></v>
+<v t="ekr.20051219150602.28"><vh>Fixed ancient bug in read error logic that hung Leo</vh></v>
+<v t="ekr.20051219150602.75"><vh>Fixed many headline problems</vh></v>
+<v t="ekr.20051219150602.81"><vh>Fixed problem in reformatParagraph</vh></v>
+<v t="ekr.20051219150602.85"><vh>Installed LeoUsers patch </vh></v>
+<v t="ekr.20060105182648.376"><vh>Improved Import Derived Files command.</vh></v>
+<v t="ekr.20060105182648.377"><vh>Fixed crasher in backwardDeleteCharacter</vh></v>
+<v t="ekr.20060105182648.378"><vh>Fixed recent bug: dialogs now get focus properly when first opened.</vh></v>
+<v t="ekr.20060105182648.379"><vh>Made sure shortcuts are printed clearly by k.registerCommand</vh></v>
+<v t="ekr.20060105182648.382"><vh>Suppressed crash undoing a clone followed by a drag</vh></v>
+</v>
+<v t="ekr.20051219150602.100"><vh>New features</vh>
+<v t="ekr.20051219150602.101"><vh>created ut.leo, ut.py and ut.bat</vh></v>
+<v t="ekr.20051219150602.102"><vh>Added modes/*.xml to distribution</vh></v>
+<v t="ekr.20051219150602.105"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
+<v t="ekr.20051219151926"><vh>Added classic key bindings in leoSettings.leo</vh></v>
+<v t="ekr.20060105182648.432"><vh>Allow multiple key bindings to the same command</vh></v>
+<v t="ekr.20060105182648.469"><vh>Settings command now opens leoSettings.leo</vh></v>
+<v t="ekr.20060105214753"><vh>Input modes</vh></v>
+</v>
+</v>
 <v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
 <v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
 <v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
@@ -2266,31 +2292,48 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20051219150602"><vh>4.4 alpha 5</vh>
-<v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
-<v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
-<v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
-<v t="ekr.20051219150602.10"><vh>Text box is now selected in goto-line-number command</vh></v>
-<v t="ekr.20051219150602.13"><vh>Restored headkey  &amp; bodykey hooks</vh></v>
-<v t="ekr.20051219150602.28"><vh>Fixed ancient bug in read error logic that hung Leo</vh></v>
-<v t="ekr.20051219150602.75"><vh>Fixed many headline problems</vh></v>
-<v t="ekr.20051219150602.81"><vh>Fixed problem in reformatParagraph</vh></v>
-<v t="ekr.20051219150602.85"><vh>Installed LeoUsers patch </vh></v>
-<v t="ekr.20060105182648.376"><vh>Improved Import Derived Files command.</vh></v>
-<v t="ekr.20060105182648.377"><vh>Fixed crasher in backwardDeleteCharacter</vh></v>
-<v t="ekr.20060105182648.378"><vh>Fixed recent bug: dialogs now get focus properly when first opened.</vh></v>
-<v t="ekr.20060105182648.379"><vh>Made sure shortcuts are printed clearly by k.registerCommand</vh></v>
-<v t="ekr.20060105182648.382"><vh>Suppressed crash undoing a clone followed by a drag</vh></v>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20060116174906" a="ETV"><vh>4.4 beta 1</vh>
+<v t="ekr.20060116174906.2"><vh>Bugs fixed</vh>
+<v t="ekr.20060116174906.3"><vh>Fixed minor headline problems</vh></v>
+<v t="ekr.20060116174906.63"><vh>Fixed undo problems</vh></v>
+<v t="ekr.20060116174906.86"><vh>Improved word-export plugin</vh></v>
+<v t="ekr.20060116174906.87"><vh>Removed a bad use of g.app.log in the find panel</vh></v>
+<v t="ekr.20060116174906.88"><vh>Fix crash: tab in minibuffer</vh></v>
+<v t="ekr.20060116174906.90"><vh>Installed patch for headline width</vh></v>
+<v t="ekr.20060116174906.97"><vh>Redraw screen properly after Move To Next Dirty</vh></v>
+<v t="ekr.20060116174906.100"><vh>Fixed focus bug</vh></v>
+<v t="ekr.20060116174906.103"><vh>Made sure to bring proper window on top in settings.leo button</vh></v>
+<v t="ekr.20060116174906.104"><vh>Arrow keys now clear the text selection</vh></v>
+<v t="ekr.20060116174906.113"><vh>Fixed several minor bugs</vh></v>
+<v t="ekr.20060116174906.118"><vh>Fixed problems with plugins</vh></v>
+<v t="ekr.20060116174906.122"><vh>Fixed old file handling bug</vh></v>
+<v t="ekr.20060116174906.125"><vh>Use shutil.move in g.utils_rename</vh></v>
+<v t="ekr.20060116174906.130"><vh>Simplified k.copyBindingsToWidget and eliminated k.onTextWidgetKey</vh></v>
+<v t="ekr.20060116174906.160"><vh>Made sure that focus stays in body during tab completion</vh></v>
+<v t="ekr.20060116174906.163"><vh>Leo now puts focus in body pane after deleting a window</vh></v>
+<v t="ekr.20060116174906.164"><vh>Fixed many binding problems</vh></v>
+<v t="ekr.20060116174906.185"><vh>Fixed extend-selection problems</vh></v>
+<v t="ekr.20060116174906.187"><vh>Fixed per-pane bindings!</vh></v>
+<v t="ekr.20060116174906.194"><vh>Always redraw the screen after editing a label</vh></v>
 </v>
-<v t="ekr.20051219150602.100"><vh>New features</vh>
-<v t="ekr.20051219150602.101"><vh>created ut.leo, ut.py and ut.bat</vh></v>
-<v t="ekr.20051219150602.102"><vh>Added modes/*.xml to distribution</vh></v>
-<v t="ekr.20051219150602.105"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
-<v t="ekr.20051219151926"><vh>Added classic key bindings in leoSettings.leo</vh></v>
-<v t="ekr.20060105182648.432"><vh>Allow multiple key bindings to the same command</vh></v>
-<v t="ekr.20060105182648.469"><vh>Settings command now opens leoSettings.leo</vh></v>
-<v t="ekr.20060105214753"><vh>Input modes</vh></v>
+<v t="ekr.20060116174906.195"><vh>Code level changes</vh>
+<v t="ekr.20060116174906.198"><vh>Removed g.top from Leo's core and all plugins</vh></v>
+<v t="ekr.20060116174906.199"><vh>Created c.exists ivar and related logic</vh></v>
+<v t="ekr.20060116174906.213"><vh>Call c.setLog in all entries into code</vh></v>
+<v t="ekr.20060116174906.255"><vh>Generalized doCommand</vh></v>
+</v>
+<v t="ekr.20060116174906.258"><vh>New features</vh>
+<v t="ekr.20060116174906.259" a="E"><vh>Installed many standard bindings to leoSettings.leo</vh></v>
+<v t="ekr.20060116174906.262"><vh>Added Check Bindings script in leoSettings.leo</vh></v>
+<v t="ekr.20060116174906.263" a="E"><vh>Scripts now maintain original focus</vh></v>
+<v t="ekr.20060116174906.267" a="E"><vh>Added scroll-up/down-extend-selection commands</vh></v>
+<v t="ekr.20060116174906.272" a="E"><vh>Improved cursor move/extend commands</vh></v>
+<v t="ekr.20060116174906.296" a="E"><vh>Added support for @mode nodes</vh></v>
+<v t="ekr.20060116174906.306" a="E"><vh>keyboard-quit restores default input mode</vh></v>
+</v>
+<v t="ekr.20060116174906.257"><vh>Added discusion to FAQ about when deleting a node is 'dangerous'</vh>
+<v t="ekr.20060111192108"><vh>When is deleting a node dangerous?</vh></v>
 </v>
 </v>
 </v>
@@ -22085,5 +22128,146 @@ If (maybe much later), we eliminate B' as a child of A will get::
         - B
 
 B has not been destroyed, but B is gone from @thin spam.py! So in this sense deleting a clone node can also be called dangerous.</t>
+<t tx="ekr.20060116174906">Leo 4.4 beta 1                                             January 17, 2006
+
+The code is stable; there are no known serious bugs. Some features are
+incomplete.
+
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word
+and paragraph manipulation, and commands to manipulate buffers, the kill ring,
+regions and rectangles. You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes. You can emulate the operation of Emacs,
+Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+dialogs, making those commands much easier to use. Plugins or scripts can easily
+create new tabs. The Completion tab shows possible typing completions.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
+<t tx="ekr.20060116174906.2"></t>
+<t tx="ekr.20060116174906.3">A 'backward' delete at the start of a headline deletes the first character.
+delete-char did not work in headlines.</t>
+<t tx="ekr.20060116174906.63">http://sourceforge.net/forum/message.php?msg_id=3465251</t>
+<t tx="ekr.20060116174906.86">http://sourceforge.net/forum/message.php?msg_id=3495741
+
+The plugin now uses sys.getdefaultencoding() to set the encoding.</t>
+<t tx="ekr.20060116174906.87">This could have been the source of weird find behavior.</t>
+<t tx="ekr.20060116174906.88">The fix was to have x.getSelectedText return '' instead of None.</t>
+<t tx="ekr.20060116174906.90">http://sourceforge.net/forum/message.php?msg_id=3510983</t>
+<t tx="ekr.20060116174906.97"></t>
+<t tx="ekr.20060116174906.100">https://sourceforge.net/forum/message.php?msg_id=3514627
+
+c.endUpdate now restores the previous focus by default.</t>
+<t tx="ekr.20060116174906.103"></t>
+<t tx="ekr.20060116174906.104">http://sourceforge.net/forum/message.php?msg_id=3514755
+</t>
+<t tx="ekr.20060116174906.113">http://sourceforge.net/forum/message.php?msg_id=3515341</t>
+<t tx="ekr.20060116174906.118">http://sourceforge.net/forum/message.php?msg_id=3509141
+
+Problems with cleo.  Installed patch: http://sourceforge.net/forum/message.php?msg_id=3517080
+
+https://sourceforge.net/forum/message.php?msg_id=3515025
+
+Problems with fastgotonode and and groupOperations.</t>
+<t tx="ekr.20060116174906.122">http://sourceforge.net/forum/message.php?msg_id=3518722
+
+To generate HTML file I entered the outline header "@file bbb.xml" under which
+I put the following body text:
+
+//////////////// beginning of excerpt
+@first &lt;?xml version="1.0" encoding="windows-1250" ?&gt;
+@language html
+@
+comment line
+@c
+@others
+//////////////// end of excerpt
+
+This works OK.
+But, if I put a space after the sole @ above "comment line",  save and close
+the .leo file and then open it, Leo protests in log pane on the right:
+
+//////////////// beginning of excerpt
+----- error reading @file: bbb.xml
+Missing open block comment
+//////////////// end of excerpt</t>
+<t tx="ekr.20060116174906.125">This corrects a problem that shows up as 'Invalid cross-device link' messages on Linux.
+
+http://sourceforge.net/forum/message.php?msg_id=3519803</t>
+<t tx="ekr.20060116174906.130">These should be considered bug fixes.
+
+- copyBindingsToWidget now binds keys in priority order. This also simplifies
+and clarifies the code.
+
+- Removed k.onTextWidgetKey.  Added a callback that invokes k.masterCommand.</t>
+<t tx="ekr.20060116174906.160">Hitting Backspace immediately put the focus in the log. Another backspace put
+the focus in the body pane.
+
+The problem was in log.clearTab.  It must do call t.update().</t>
+<t tx="ekr.20060116174906.163"></t>
+<t tx="ekr.20060116174906.164"></t>
+<t tx="ekr.20060116174906.185">extensionHelper resets movePoint any time there is no selection.</t>
+<t tx="ekr.20060116174906.187"></t>
+<t tx="ekr.20060116174906.194">The fix was to call endUpdate() rather than endUpdate(changed) in onHeadChanged.</t>
+<t tx="ekr.20060116174906.195"></t>
+<t tx="ekr.20060116174906.198">g.top and the associated g.app.log logic is inherently unreliable.</t>
+<t tx="ekr.20060116174906.199">This allows code to determine in a standard way whether a window is in the process of being destroyed.</t>
+<t tx="ekr.20060116174906.213">This includes k.masterCommand and all event handlers.
+</t>
+<t tx="ekr.20060116174906.255">Leo now calls doCommand on all commands, so the 'command' hooks and error
+processing always get done.</t>
+<t tx="ekr.20060116174906.257"></t>
+<t tx="ekr.20060116174906.258"></t>
+<t tx="ekr.20060116174906.259">@nocolor</t>
+<t tx="ekr.20060116174906.262"></t>
+<t tx="ekr.20060116174906.263">http://sourceforge.net/forum/message.php?msg_id=3518792
+
+EKR: The change in focus happened in c.endEditing in at.writeFromString.
+
+I added a new restoreFocus keyword arg to c.endEditing.</t>
+<t tx="ekr.20060116174906.267"></t>
+<t tx="ekr.20060116174906.272">http://sourceforge.net/forum/message.php?msg_id=3515616
+
+Could we have a visible-line-up and visible-line-down command? (I.e. to move
+the cursor up or down by a visible rather than a logical line).  With these
+commands, the arrows plugin could be permanently retired!
+
+What I did:
+
+- next-line and prev-line now work as requested.  This obsoletes the arrow plugin.
+    - Removed the redundant tree.OnUpKey and tree.OnDownKey
+    - Retired the arrows plugin.
+
+- Created the extendHelper method.
+    This creates and maintains the moveSpot, moveCol an moveSpotNode ivars,
+    and is responsible for extending the selection range.</t>
+<t tx="ekr.20060116174906.296">Still to do:
+
+Specify what mode to enter after each command:
+
+- command-name -&gt; mode-name = binding
+
+will specify what mode to enter after each command.
+At present, all commands exit to the top-level mode.
+
+- Add @string active-keyset setting?</t>
+<t tx="ekr.20060116174906.306"></t>
 </tnodes>
 </leo_file>

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1123" clone_windows="0"/>
 <globals body_outline_ratio="0.475703324808">
-	<global_window_position top="55" left="143" height="782" width="822"/>
+	<global_window_position top="62" left="232" height="782" width="822"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button Spell</vh></v>
 <v t="ekr.20051015172713"><vh>@button Save</vh></v>
 </v>
-<v t="EKR.20040519091259" a="E"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -24,7 +24,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20060116101806" a="TV"><vh>ANN: Leo 4.4b1</vh></v>
+<v t="ekr.20060116101806"><vh>ANN: Leo 4.4b1</vh></v>
 <v t="ekr.20060106070701"><vh>ANN: Leo 4.4a5</vh></v>
 <v t="ekr.20051205092824"><vh>ANN: Leo 4.4a4</vh></v>
 <v t="ekr.20051110084338"><vh>ANN: Leo 4.4a3</vh></v>
@@ -131,7 +131,7 @@
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
 <v t="ekr.20051205102401"><vh>Note: do search replace to update version numbers</vh></v>
-<v t="ekr.20050118095021"><vh>Leo 4.x installer  (update for each release)</vh>
+<v t="ekr.20050118095021" a="TV"><vh>Leo 4.x installer  (update for each release)</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
@@ -489,7 +489,7 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-4-a5", # No spaces here!
+version="4-4-b1", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -662,7 +662,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.4-a5
+Version: 4.4-b1
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -681,50 +681,31 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.4 alpha 5                                             January 6, 2006
+<t tx="EKR.20040519090846.9">Leo 4.4 beta 1                                             January 17, 2006
 
-This release completes the last major feature of Leo 4.4:
+The code is stable; there are no known serious bugs. Some features are
+incomplete.
 
-- User-specified key-binding modes.
-- Support for multiple key-bindings for individual minibuffer commands.
-
-This will be the last alpha version of Leo 4.4. Beta 1 is coming in about a
-week. You should be able to use this version safely; there are no known serious
-bugs.
-
-To learn about Leo, see: http://webpages.charter.net/edreamleo/intro.html
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
 
 The highlights of Leo 4.4:
-----------------------------------
+--------------------------
 - An Emacs-like mini-buffer: you can now execute any command by typing its long
-name. Support for tab completion.
+name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word
+and paragraph manipulation, and commands to manipulate buffers, the kill ring,
+regions and rectangles. You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes. You can emulate the operation of Emacs,
+Vim, or any other editor.
 
 - A tabbed log pane. The Find and Spell Check commands now use tabs instead of
 dialogs, making those commands much easier to use. Plugins or scripts can easily
 create new tabs. The Completion tab shows possible typing completions.
 
-- Support for almost all commands in the Emacs Cmds menu, including cursor
-and screen movement, basic character, word and paragraph manipulation, and
-commands to manipulate buffers, the kill ring, regions and rectangles.
-
-- Per-pane key bindings. You can bind shortcuts to multiple commands depending
-on which of Leo's panes presently has focus. For example, you can use arrow keys
-to move nodes in the outline pane, while retaining their defaults in Leo's body
-pane. Per-pane key bindings are essential for mouseless Leo.
-
-- @command nodes create minibuffer commands. You can bind key shortcuts to
-@button and @command nodes.
-
-- A rewrite of Leo's keystroke handling. In particular, Leo handles key events
-immediately rather than queuing them for idle time.
-
-- Leo recovers from crashes much more reliably than in any previous version.
-
-- Leo updates the screen immediately rather than waiting for idle time.
-This 'Newer World Order' simplifies the code and improves performance.
-
-- User-specified key-binding modes. This feature makes it possible to emulate all
-aspects of Emacs and Vim as far as key bindings are concerned.</t>
+- Dozens of other new features and bug fixes since Leo 4.3.3.</t>
 <t tx="EKR.20040519090846.10"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns.
@@ -3507,7 +3488,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-a5.exe"
+OutFile "LeoSetup-4-4-b1.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3719,7 +3700,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 Delete "$INSTDIR\test\test.leo"
 Delete "$INSTDIR\test\unitTest.leo"
 </t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-a5"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-b1"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
@@ -4771,7 +4752,7 @@ CVS:      http://sourceforge.net/cvs/?group_id=3458
 Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 
 Edward K. Ream
-January 6, 2006
+January 17, 2006
 </t>
 </tnodes>
 </leo_file>

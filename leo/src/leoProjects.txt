@@ -10270,8 +10270,6 @@ def setDefaultUnboundKeyAction (self):
 #@-node:ekr.20060115195302.1:keyboard-quit restores default input mode
 #@-node:ekr.20060112094901:New features
 #@-node:ekr.20060106091831:4.4b1 projects
-#@+node:ekr.20060116125926:changed in main line
-#@-node:ekr.20060116125926:changed in main line
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

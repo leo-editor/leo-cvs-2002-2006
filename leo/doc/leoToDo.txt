@@ -10,6 +10,8 @@
 #@+node:ekr.20060116073938.1:First
 Not necessarily important, but should be done first.
 #@nonl
+#@+node:ekr.20060116173818:Fix vampire nodes
+#@-node:ekr.20060116173818:Fix vampire nodes
 #@+node:ekr.20051121070552:Add Cmds menu
 This is too trivial to ignore any longer.
 

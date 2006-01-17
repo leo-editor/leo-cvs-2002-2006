@@ -216,8 +216,7 @@
 <v t="ekr.20060112062919"><vh>@@file commentTest.xml</vh></v>
 </v>
 <v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
-<v t="ekr.20060114164015"><vh>test editing state</vh></v>
-<v t="ekr.20060116103556" a="TV"><vh>rClick test for unicode</vh></v>
+<v t="ekr.20060114164015" a="TV"><vh>test editing state</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4226,6 +4225,5 @@ c.endEditing()
 c.selectPosition(p)
 w = p.edit_widget()
 print name(w),w.cget('state')</t>
-<t tx="ekr.20060116103556"> Ã</t>
 </tnodes>
 </leo_file>
