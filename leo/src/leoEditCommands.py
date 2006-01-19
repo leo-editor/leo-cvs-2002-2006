@@ -770,7 +770,7 @@ class abbrevCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.13:class abbrevCommandsClass (test)
-#@+node:ekr.20050920084036.31:class bufferCommandsClass (ok)
+#@+node:ekr.20050920084036.31:class bufferCommandsClass
 #@+at 
 #@nonl
 # An Emacs instance does not have knowledge of what is considered a buffer in 
@@ -1066,8 +1066,8 @@ class bufferCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050927102133.1:Utils
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.31:class bufferCommandsClass (ok)
-#@+node:ekr.20050920084036.150:class controlCommandsClass (ok)
+#@-node:ekr.20050920084036.31:class bufferCommandsClass
+#@+node:ekr.20050920084036.150:class controlCommandsClass
 class controlCommandsClass (baseEditCommandsClass):
     
     #@    @+others
@@ -1186,7 +1186,7 @@ class controlCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.153:suspend & iconifyOrDeiconifyFrame
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.150:class controlCommandsClass (ok)
+#@-node:ekr.20050920084036.150:class controlCommandsClass
 #@+node:ekr.20050920084036.53:class editCommandsClass
 class editCommandsClass (baseEditCommandsClass):
     
@@ -3720,7 +3720,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.53:class editCommandsClass
-#@+node:ekr.20050920084036.161:class editFileCommandsClass (test)
+#@+node:ekr.20050920084036.161:class editFileCommandsClass
 class editFileCommandsClass (baseEditCommandsClass):
     
     '''A class to load files into buffers and save buffers to files.'''
@@ -3864,8 +3864,8 @@ class editFileCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.170:saveFile
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.161:class editFileCommandsClass (test)
-#@+node:ekr.20050920084036.171:class keyHandlerCommandsClass (test)
+#@-node:ekr.20050920084036.161:class editFileCommandsClass
+#@+node:ekr.20050920084036.171:class keyHandlerCommandsClass
 class keyHandlerCommandsClass (baseEditCommandsClass):
     
     '''User commands to access the keyHandler class.'''
@@ -3884,8 +3884,7 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
         
         return {
             'digit-argument':           k.digitArgument,
-            # @mode settings create enter-xxx-mode commands.
-            # 'enter-named-mode':         k.enterNamedMode,
+            'full-command':             k.fullCommand, # For menu.
             'help':                     k.help,
             'hide-mini-buffer':         k.hideMinibuffer,
             'mode-help':                k.modeHelp,
@@ -3915,8 +3914,8 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.171:class keyHandlerCommandsClass (test)
-#@+node:ekr.20050920084036.174:class killBufferCommandsClass (test)
+#@-node:ekr.20050920084036.171:class keyHandlerCommandsClass
+#@+node:ekr.20050920084036.174:class killBufferCommandsClass
 class killBufferCommandsClass (baseEditCommandsClass):
     
     '''A class to manage the kill buffer.'''
@@ -4164,8 +4163,8 @@ class killBufferCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.128:zapToCharacter
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.174:class killBufferCommandsClass (test)
-#@+node:ekr.20050920084036.186:class leoCommandsClass (ok)
+#@-node:ekr.20050920084036.174:class killBufferCommandsClass
+#@+node:ekr.20050920084036.186:class leoCommandsClass
 class leoCommandsClass (baseEditCommandsClass):
     
     #@    @+others
@@ -4337,7 +4336,7 @@ class leoCommandsClass (baseEditCommandsClass):
             'toggle-angle-brackets':        c.toggleAngleBrackets,
             'toggle-split-direction':       f.toggleSplitDirection,
             'undo':                         c.undoer.undo,
-            'unindent':                     c.dedentBody,
+            'unindent-region':              c.dedentBody,
             'unmark-all':                   c.unmarkAll,
             'untangle':                     c.untangle,
             'untangle-all':                 c.untangleAll,
@@ -4370,7 +4369,7 @@ class leoCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.188:leoCommands.getPublicCommands
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.186:class leoCommandsClass (ok)
+#@-node:ekr.20050920084036.186:class leoCommandsClass
 #@+node:ekr.20050920084036.190:class macroCommandsClass
 class macroCommandsClass (baseEditCommandsClass):
 
@@ -5921,12 +5920,14 @@ class searchCommandsClass (baseEditCommandsClass):
         
         self.findTabHandler = None
         
+        # The last kind of search
+        
         self.forward = True
+        self.incremental = True
         self.regexp = False
-    
-        # For replace-string and replace-regexp
-        self._sString = ''
-        self._rpString = ''
+        self.word = True
+        self.searchString = ''
+        self.replaceString = '' # Not used yet.
         
         try:
             self.w = c.frame.body.bodyCtrl
@@ -5955,6 +5956,7 @@ class searchCommandsClass (baseEditCommandsClass):
             're-search-forward':        self.reSearchForward,
             're-search-backward':       self.reSearchBackward,
             
+            'search-again':             self.searchAgain,
             'search-forward':           self.searchForward,
             'search-backward':          self.searchBackward,
             'word-search-forward':      self.wordSearchForward,
@@ -6026,6 +6028,139 @@ class searchCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20051022212004:commands...
     #@-node:ekr.20051022211617:find tab...
+    #@+node:ekr.20060117181301:Common helpers
+    #@+node:ekr.20050920084036.263:iSearchHelper
+    def iSearchHelper (self,event,forward,regexp):
+    
+        '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
+        
+        k = self.k ; w = self.w
+        s = k.getLabel(ignorePrompt=True)
+        
+        self.incremental = True
+        self.forward = forward
+        self.regexp = regexp
+        # g.trace(forward,repr(s))
+        if s:
+            try:
+                if forward:
+                    i = w.search(s,"insert + 1c",stopindex='end',regexp=regexp)
+                    if not i:
+                        # Start again at the top of the buffer.
+                        i = w.search(s,'1.0',stopindex='insert',regexp=regexp)
+                else:
+                    i = w.search(s,'insert',backwards=True,stopindex='1.0',regexp=regexp)
+                    if not i:
+                        # Start again at the bottom of the buffer.
+                        i = w.search(s,'end',backwards=True,stopindex='insert',regexp=regexp)
+                
+            except: pass
+    
+            if i and not i.isspace():
+                w.mark_set('insert',i)
+                w.see('insert')
+    #@nonl
+    #@-node:ekr.20050920084036.263:iSearchHelper
+    #@+node:ekr.20050920084036.268:plainSearchHelper
+    def plainSearchHelper (self,event,pattern,forward):
+    
+        k = self.k ; w = self.w ; i = w.index('insert')
+        
+        self.forward = forward
+        self.incremental = False
+        self.regexp = False
+        self.searchString = pattern
+        self.word = False
+    
+        try:
+            if forward:
+                s = w.search(pattern,i,stopindex='end')
+                if s: s = w.index('%s +%sc' % (s,len(pattern)))
+            else:
+                s = w.search(pattern,i,stopindex='1.0',backwards=True)
+        except Exception:
+            return
+    
+        if s:
+            w.mark_set('insert',s)
+    #@nonl
+    #@-node:ekr.20050920084036.268:plainSearchHelper
+    #@+node:ekr.20050920084036.272:wordSearchHelper
+    def wordSearchHelper (self,event,pattern,forward):
+    
+        k = self.k ; w = self.w ; i = w.index('insert')
+        
+        self.forward = forward
+        self.incremental = False
+        self.regexp = False
+        self.searchString = pattern
+        self.word = True
+        
+        words = pattern.split()
+        sep = '[%s%s]+' % (string.punctuation,string.whitespace)
+        pattern = sep.join(words)
+        cpattern = re.compile(pattern)
+        if forward:
+            txt = w.get('insert','end')
+            match = cpattern.search(txt)
+            if not match: return
+            end = match.end()
+        else:
+            txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
+            a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
+            if len(a) > 1:
+                b = re.findall(pattern,txt)
+                end = len(a[-1]) + len(b[-1])
+            else: return
+            
+        s = g.choose(forward,'insert +%sc','insert -%sc')
+        w.mark_set('insert',s % end)
+        w.see('insert')
+    #@-node:ekr.20050920084036.272:wordSearchHelper
+    #@+node:ekr.20050920084036.275:reSearchHelper
+    def reSearchHelper (self,event,pattern,forward):
+    
+        k = self.k ; w = self.w
+        cpattern = re.compile(pattern)
+        
+        self.forward = forward
+        self.incremental = False
+        self.regexp = True
+        self.searchString = pattern
+        # self.word = self.word
+    
+        if forward:
+            txt = w.get('insert','end')
+            match = cpattern.search(txt)
+            end = match.end()
+        else:
+            # The reverse words formula for Python Cookbook didn't quite work.
+            txt = w.get('1.0','insert') 
+            a = re.split(pattern,txt)
+            if len(a) > 1:
+                b = re.findall(pattern,txt)
+                end = len(a[-1]) + len(b[-1])
+            else: return
+    
+        if end:
+            s = g.choose(forward,'insert +%sc','insert -%sc')
+            w.mark_set('insert',s % end)
+            w.see('insert')
+    #@nonl
+    #@-node:ekr.20050920084036.275:reSearchHelper
+    #@-node:ekr.20060117181301:Common helpers
+    #@+node:ekr.20060117181301.1:searchAgain & changeAgain 
+    def searchAgain (self,event):
+    
+        if self.incremental:
+            self.iSearchHelper(event,self.forward,self.regexp)
+        elif self.regexp:
+            self.reSearchHelper(event,self.searchString,self.forward)
+        elif self.word:
+            self.wordSearchHelper(event,self.searchString,self.forward)
+        else:
+            self.plainSearchHelper(event,self.searchString,self.forward)
+    #@-node:ekr.20060117181301.1:searchAgain & changeAgain 
     #@+node:ekr.20050920084036.261:incremental search...
     def isearchForward (self,event):
         self.startIncremental(event,forward=True,regexp=False)
@@ -6056,7 +6191,13 @@ class searchCommandsClass (baseEditCommandsClass):
     
     def iSearchStateHandler (self,event):
     
-        c = self.c ; k = self.k ; w = self.w ; keysym = event.keysym
+        c = self.c ; k = self.k ; w = self.w
+        
+        if not event:
+            g.trace('no event',g.callers())
+            return
+        keysym = event.keysym
+        ch = event.char
         if keysym == 'Control_L': return
         
         c.frame.bodyWantsFocus()
@@ -6089,11 +6230,11 @@ class searchCommandsClass (baseEditCommandsClass):
             k.clearState()
             return
     
-        if event.char == '\b':
+        if ch == '\b':
             g.trace('backspace not handled yet')
             return
         
-        if event.char:
+        if ch:
             k.updateLabel(event)
             s = k.getLabel(ignorePrompt=True)
             z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
@@ -6101,34 +6242,6 @@ class searchCommandsClass (baseEditCommandsClass):
                self.iSearchHelper(event,self.forward,self.regexp)
             self.scolorizer(event)
     #@nonl
-    #@+node:ekr.20050920084036.263:iSearchHelper
-    def iSearchHelper (self,event,forward,regexp):
-    
-        '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
-        
-        k = self.k ; w = self.w
-        s = k.getLabel(ignorePrompt=True)
-        # g.trace(forward,repr(s))
-        if s:
-            try:
-                if forward:
-                    i = w.search(s,"insert + 1c",stopindex='end',regexp=regexp)
-                    if not i:
-                        # Start again at the top of the buffer.
-                        i = w.search(s,'1.0',stopindex='insert',regexp=regexp)
-                else:
-                    i = w.search(s,'insert',backwards=True,stopindex='1.0',regexp=regexp)
-                    if not i:
-                        # Start again at the bottom of the buffer.
-                        i = w.search(s,'end',backwards=True,stopindex='insert',regexp=regexp)
-                
-            except: pass
-    
-            if i and not i.isspace():
-                w.mark_set('insert',i)
-                w.see('insert')
-    #@nonl
-    #@-node:ekr.20050920084036.263:iSearchHelper
     #@-node:ekr.20050920084036.264:iSearchStateHandler & helper
     #@+node:ekr.20050920084036.265:scolorizer
     def scolorizer (self,event):
@@ -6169,6 +6282,8 @@ class searchCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             k.resetLabel()
+            self._word = False
+            self.forward = False
             self.plainSearchHelper(event,k.arg,forward=False)
     
     def searchForward (self,event):
@@ -6180,26 +6295,10 @@ class searchCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             k.resetLabel()
+            self._word = False
+            self.forward = True
             self.plainSearchHelper(event,k.arg,forward=True)
     #@nonl
-    #@+node:ekr.20050920084036.268:plainSearchHelper
-    def plainSearchHelper (self,event,pattern,forward):
-    
-        k = self.k ; w = self.w ; i = w.index('insert')
-    
-        try:
-            if forward:
-                s = w.search(pattern,i,stopindex='end')
-                if s: s = w.index('%s +%sc' % (s,len(pattern)))
-            else:
-                s = w.search(pattern,i,stopindex='1.0',backwards=True)
-        except Exception:
-            return
-    
-        if s:
-            w.mark_set('insert',s)
-    #@nonl
-    #@-node:ekr.20050920084036.268:plainSearchHelper
     #@-node:ekr.20050920084036.269:seachForward/Backward & helper
     #@+node:ekr.20051002111614:wordSearchBackward/Forward & helper
     def wordSearchBackward (self,event):
@@ -6211,6 +6310,7 @@ class searchCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             k.resetLabel()
+            self.forward = False
             self.wordSearchHelper(event,k.arg,forward=False)
     
     def wordSearchForward (self,event):
@@ -6222,33 +6322,9 @@ class searchCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             k.resetLabel()
+            self.forward = True
             self.wordSearchHelper(event,k.arg,forward=True)
     #@nonl
-    #@+node:ekr.20050920084036.272:wordSearchHelper
-    def wordSearchHelper (self,event,pattern,forward):
-    
-        k = self.k ; w = self.w ; i = w.index('insert')
-        words = pattern.split()
-        sep = '[%s%s]+' % (string.punctuation,string.whitespace)
-        pattern = sep.join(words)
-        cpattern = re.compile(pattern)
-        if forward:
-            txt = w.get('insert','end')
-            match = cpattern.search(txt)
-            if not match: return
-            end = match.end()
-        else:
-            txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
-            a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
-            if len(a) > 1:
-                b = re.findall(pattern,txt)
-                end = len(a[-1]) + len(b[-1])
-            else: return
-            
-        s = g.choose(forward,'insert +%sc','insert -%sc')
-        w.mark_set('insert',s % end)
-        w.see('insert')
-    #@-node:ekr.20050920084036.272:wordSearchHelper
     #@-node:ekr.20051002111614:wordSearchBackward/Forward & helper
     #@+node:ekr.20050920084036.274:reSearchBackward/Forward & helper
     def reSearchBackward (self,event):
@@ -6273,31 +6349,6 @@ class searchCommandsClass (baseEditCommandsClass):
             k.resetLabel()
             self.reSearchHelper(event,k.arg,forward=True)
     #@nonl
-    #@+node:ekr.20050920084036.275:reSearchHelper
-    def reSearchHelper (self,event,pattern,forward):
-    
-        k = self.k ; w = self.w
-        cpattern = re.compile(pattern)
-    
-        if forward:
-            txt = w.get('insert','end')
-            match = cpattern.search(txt)
-            end = match.end()
-        else:
-            # The reverse words formula for Python Cookbook didn't quite work.
-            txt = w.get('1.0','insert') 
-            a = re.split(pattern,txt)
-            if len(a) > 1:
-                b = re.findall(pattern,txt)
-                end = len(a[-1]) + len(b[-1])
-            else: return
-    
-        if end:
-            s = g.choose(forward,'insert +%sc','insert -%sc')
-            w.mark_set('insert',s % end)
-            w.see('insert')
-    #@nonl
-    #@-node:ekr.20050920084036.275:reSearchHelper
     #@-node:ekr.20050920084036.274:reSearchBackward/Forward & helper
     #@-node:ekr.20050920084036.267:non-incremental search...
     #@-others
