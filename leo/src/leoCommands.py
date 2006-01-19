@@ -1341,7 +1341,7 @@ class baseCommands:
         finally: # New in 4.3 beta 2: unredirect output last.
             #@        << unredirect output >>
             #@+node:EKR.20040627100424:<< unredirect output >>
-            if c.config.redirect_execute_script_output_to_log_pane:
+            if c.exists and c.config.redirect_execute_script_output_to_log_pane:
             
                 g.restoreStderr()
                 g.restoreStdout()
@@ -5350,7 +5350,7 @@ class baseCommands:
         c = self
         c.frame.tree.endUpdate(flag)
         w = c.afterUpdateWidgetStack.pop()
-        if not c.afterUpdateWidgetStack and restoreFocus:
+        if c.exists and not c.afterUpdateWidgetStack and restoreFocus:
             # We are at the top-level endUpdate.
             c.frame.widgetWantsFocus(w)
     
