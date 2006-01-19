@@ -2230,20 +2230,20 @@ class leoTkinterBody (leoFrame.leoBody):
     #@-node:ekr.20031218072017.2182:tkBody. __init__
     #@+node:ekr.20031218072017.838:tkBody.createBindings
     def createBindings (self,frame):
-        
+    
         '''(tkBody) Create gui-dependent bindings.
         These are *not* made in nullBody instances.'''
-        
+    
         c = self.c ; t = self.bodyCtrl
-        
+    
         # Event handlers...
-        t.bind("<Button-1>", frame.OnBodyClick)
-        t.bind("<Button-3>", frame.OnBodyRClick)
-        t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
-        
+        t.bind("<Button-1>",frame.OnBodyClick)
+        t.bind("<Button-3>",frame.OnBodyRClick)
+        t.bind("<Double-Button-1>",frame.OnBodyDoubleClick)
+    
         if sys.platform.startswith('win'):
             # Support Linux middle-button paste easter egg.
-            t.bind("<Button-2>", frame.OnPaste)
+            t.bind("<Button-2>",frame.OnPaste)
     #@nonl
     #@-node:ekr.20031218072017.838:tkBody.createBindings
     #@+node:ekr.20031218072017.3998:tkBody.createControl
@@ -3267,9 +3267,9 @@ class leoTkinterLog (leoFrame.leoLog):
     # All output to the log stream eventually comes here.
     def put (self,s,color=None,tabName='Log'):
         
-        # print 'tkLog.put',self.c.shortFileName(),s,
-        
         c = self.c
+        
+        # print 'tkLog.put',self.c.shortFileName(),tabName,g.callers()
     
         if g.app.quitting or not c or not c.exists:
             return
@@ -3280,11 +3280,6 @@ class leoTkinterLog (leoFrame.leoLog):
         if self.logCtrl:
             #@        << put s to log control >>
             #@+node:EKR.20040423082910:<< put s to log control >>
-            if 0:
-                # Doing this here messes up the display in the log pane.
-                if type(s) == type(u""):
-                    s = g.toEncodedString(s,g.app.TkEncoding)
-            
             # New in 4.4b1: Restore the focus to a standard place.
             frame = self.c.frame
             focus_widget = g.app.gui.get_focus(frame)
