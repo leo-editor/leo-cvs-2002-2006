@@ -22,6 +22,8 @@ class leoMenu:
     #@+node:ekr.20031218072017.3751: leoMenu.__init__
     def __init__ (self,frame):
         
+        # g.trace('leoMenu',g.callers())
+        
         self.c = c = frame.c
         self.frame = frame
         self.menus = {} # Menu dictionary.
@@ -34,7 +36,8 @@ class leoMenu:
             # True if using new binding scheme.
             # You can set this to False in an emergency to revert to the old way.
     
-        self.defineMenuTables()
+        if 0: # Must be done much later.
+            self.defineMenuTables()
     #@nonl
     #@-node:ekr.20031218072017.3751: leoMenu.__init__
     #@+node:ekr.20031218072017.3775:oops
@@ -259,6 +262,8 @@ class leoMenu:
         
         c = self.c
         
+        self.defineMenuTables()
+        
         self.createFileMenuFromTable()
         self.createEditMenuFromTable()
         self.createOutlineMenuFromTable()
@@ -266,7 +271,7 @@ class leoMenu:
         g.doHook("create-optional-menus",c=c)
         
         if self.useCmdMenu:
-            self.createEditorMenuFromTable()
+            self.createCmndsMenuFromTable()
     
         self.createWindowMenuFromTable()
         self.createHelpMenuFromTable()
@@ -417,23 +422,29 @@ class leoMenu:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.3797:createOutlineMenuFromTable
-    #@+node:ekr.20050921103736:createEditorMenuFromTable
-    def createEditorMenuFromTable (self):
-    
+    #@+node:ekr.20050921103736:createCmndsMenuFromTable
+    def createCmndsMenuFromTable (self):
+        
         cmdsMenu = self.createNewMenu('C&mds')
+        self.createMenuEntries(cmdsMenu,self.cmdsMenuTopTable)
     
         for name,table,sep in (
-            #('View...',   self.emacsMenuViewMenuTable,    True),
-            ('Commands...',self.emacsMenuCommandsMenuTable,True),
-            ('Tools...',   self.emacsMenuToolsMenuTable,   True),
-            ('Options...', self.emacsMenuOptionsMenuTable, True),
-            ('Buffers...', self.emacsMenuBuffersMenuTable, False),
+            ('Abbrev...',       self.cmdsMenuAbbrevTable,       False),
+            ('Buffers...',      self.cmdsMenuBuffersTable,      False),
+            ('Center...',       self.cmdsMenuCenterTable,       False),
+            ('Change Case...',  self.cmdsMenuChangeCaseTable,   False),
+            ('Indent...',       self.cmdsMenuIndentTable,       False),
+            ('Macro...',        self.cmdsMenuMacroTable,        False),
+            ('Rectangles...',   self.cmdsMenuRectanglesTable,   False),
+            ('Registers...',    self.cmdsMenuRegistersTable,    False),
+            ('Sort...',         self.cmdsMenuSortTable,         False),
+            ('Spell Check...',  self.cmdsMenuSpellCheckTable,   False),
         ):
             menu = self.createNewMenu(name,'Cmds')
             self.createMenuEntries(menu,table)
             if sep: self.add_separator(cmdsMenu)
     #@nonl
-    #@-node:ekr.20050921103736:createEditorMenuFromTable
+    #@-node:ekr.20050921103736:createCmndsMenuFromTable
     #@+node:ekr.20031218072017.3802:createWindowMenuFromTable
     def createWindowMenuFromTable (self):
     
@@ -572,7 +583,7 @@ class leoMenu:
         self.defineWindowMenuTables()
     
         if self.useCmdMenu:
-            self.defineEditorMenuTables()
+            self.defineCmdsMenuTables()
     
         self.defineHelpMenuTables()
     #@nonl
@@ -1025,29 +1036,149 @@ class leoMenu:
     #@nonl
     #@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
     #@-node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
-    #@+node:ekr.20050921103230:defineEditorMenuTables
-    def defineEditorMenuTables (self):
+    #@+node:ekr.20050921103230:defineCmdsMenuTables & helpers
+    def defineCmdsMenuTables (self):
         
-        def dummyCommand():
-            pass
+        self.defineCmdsMenuTopTable()
+        self.defineCmdsMenuAbbrevTable()
+        self.defineCmdsMenuBuffersTable()
+        self.defineCmdsMenuCenterTable()
+        self.defineCmdsMenuChangeCaseTable()
+        self.defineCmdsMenuIndentTable()
+        self.defineCmdsMenuMacroTable()
+        self.defineCmdsMenuRectanglesTable()
+        self.defineCmdsMenuRegistersTable()
+        self.defineCmdsMenuSortTable()
+        self.defineCmdsMenuSpellCheckTable()
+    #@+node:ekr.20060117094955: defineCmdsMenuTopTable
+    def defineCmdsMenuTopTable (self):
         
-        self.emacsMenuCommandsMenuTable = [
-            ('Cmnd Command 1',dummyCommand),
+        self.cmdsMenuTopTable = [
+            ('Repeat Last Complex Command','repeat-complex-command'),
+            ('Execute Named Command','full-command'),
+            ("-",None),
         ]
+    #@-node:ekr.20060117094955: defineCmdsMenuTopTable
+    #@+node:ekr.20060117094955.1:defineCmdsMenuAbbrevTable (to do)
+    def defineCmdsMenuAbbrevTable (self):
         
-        self.emacsMenuToolsMenuTable = [
-            ('Tools Command 1',dummyCommand),
-        ]
-    
-        self.emacsMenuOptionsMenuTable = [
-            ('Options Command 1',dummyCommand),
-        ]
-    
-        self.emacsMenuBuffersMenuTable = [
-            ('Buffers Command 1',dummyCommand),
+        c = self.c
+        
+        self.cmdsMenuAbbrevTable = [
+            ("-",None),
         ]
     #@nonl
-    #@-node:ekr.20050921103230:defineEditorMenuTables
+    #@-node:ekr.20060117094955.1:defineCmdsMenuAbbrevTable (to do)
+    #@+node:ekr.20060117095212:defineCmdsMenuBufferTable
+    def defineCmdsMenuBuffersTable (self):
+    
+        self.cmdsMenuBuffersTable = [
+            ('Append To Buffer',             'append-to-buffer'),
+            ('Kill Buffer',                  'kill-buffer'),
+            ('List Buffers',                 'list-buffers'),
+            ('List Buffers Alphbetically',   'list-buffers-alphabetically'),
+            ('Prepend To Buffer',            'prepend-to-buffer'),
+            ('Rename Buffer',                'rename-buffer'),
+            ('Switch To Buffer',             'switch-to-buffer'),
+        ]
+    #@nonl
+    #@-node:ekr.20060117095212:defineCmdsMenuBufferTable
+    #@+node:ekr.20060117095212.5:defineCmdsMenuCenterTable  
+    def defineCmdsMenuCenterTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuCenterTable = [
+            ('Center Line',     'center-line'),
+            ('Center Region',   'center-region'),
+        ]
+    #@nonl
+    #@-node:ekr.20060117095212.5:defineCmdsMenuCenterTable  
+    #@+node:ekr.20060117095212.4:defineCmdsMenuChangeCaseTable
+    def defineCmdsMenuChangeCaseTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuChangeCaseTable = [
+            ('Capitalize Word', 'capitalize-word'),
+            ('Downcase Region', 'downcase-region'),
+            ('Downcase Word',   'downcase-word'),
+            ('Upcase Region',   'upcase-region'), # Crashes.
+            ('Upcase Word',     'upcase-word'),
+        ]
+        
+    #@nonl
+    #@-node:ekr.20060117095212.4:defineCmdsMenuChangeCaseTable
+    #@+node:ekr.20060117095212.6:defineCmdsMenuIndentTable
+    def defineCmdsMenuIndentTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuIndentTable = [
+            ('Indent Region',   'indent-region'),
+            ('Indent Relative', 'indent-relative'),
+            ('Indent Rigidly',  'indent-rigidly'),
+            ('Unindent Region', 'unindent-region'),
+        ]
+    #@nonl
+    #@-node:ekr.20060117095212.6:defineCmdsMenuIndentTable
+    #@+node:ekr.20060117114315:defineCmdsMenuMacroTable(to do)
+    def defineCmdsMenuMacroTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuMacroTable = [
+            ("-",None),
+        ]
+    #@nonl
+    #@-node:ekr.20060117114315:defineCmdsMenuMacroTable(to do)
+    #@+node:ekr.20060117095212.2:defineCmdsMenuRectanglesTable(to do)
+    def defineCmdsMenuRectanglesTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuRectanglesTable = [
+            ("-",None),
+        ]
+    #@nonl
+    #@-node:ekr.20060117095212.2:defineCmdsMenuRectanglesTable(to do)
+    #@+node:ekr.20060117095212.1:defineCmdsMenuRegistersTable(to do)
+    def defineCmdsMenuRegistersTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuRegistersTable = [
+            ("-",None),
+        ]
+    #@nonl
+    #@-node:ekr.20060117095212.1:defineCmdsMenuRegistersTable(to do)
+    #@+node:ekr.20060117095212.3:defineCmdsMenuSortTable
+    def defineCmdsMenuSortTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuSortTable = [
+            ('Sort Columns',    'sort-columns'),
+            ('Sort Fields',     'sort-fields'),
+            ('Sort Lines',      'sort-lines'),
+        ]
+    #@nonl
+    #@-node:ekr.20060117095212.3:defineCmdsMenuSortTable
+    #@+node:ekr.20060117095212.7:defineCmdsMenuSpellCheckTable
+    def defineCmdsMenuSpellCheckTable (self):
+    
+        c = self.c
+    
+        self.cmdsMenuSpellCheckTable = [
+            ('Check Spelling',      'open-spell-tab'),
+            ('Change',              'spell-change'),
+            ('Change, Then Find',   'spell-change-then-find'),
+            ('Find',                'spell-find'),
+            ('Ignore',              'spell-ignore'),
+        ]
+    #@nonl
+    #@-node:ekr.20060117095212.7:defineCmdsMenuSpellCheckTable
+    #@-node:ekr.20050921103230:defineCmdsMenuTables & helpers
     #@+node:ekr.20031218072017.3773:defineWindowMenuTables
     def defineWindowMenuTables (self):
         
@@ -1149,6 +1280,7 @@ class leoMenu:
                 
             if ok:
                 if len(data) == 2:
+                    # New in 4.4b2: command can be a minibuffer-command name (a string)
                     label,command = data
                 else:
                     # New in 4.4: we ignore shortcuts bound in menu tables.
@@ -1165,53 +1297,67 @@ class leoMenu:
             #@nl
             #@        << compute commandName & accel from label & command >>
             #@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-            # First, get the old-style name.
-            commandName = self.computeOldStyleShortcutKey(label)
-            rawKey,bunchList = c.config.getShortcut(commandName)
-            bunch = bunchList and bunchList[0]
-            accel = bunch and bunch.val
-            
-            # Second, get new-style name.
-            if not accel:
-                #@    << compute emacs_name >>
-                #@+node:ekr.20051021100806.1:<< compute emacs_name >>
-                #@+at 
-                #@nonl
-                # One not-so-horrible kludge remains.
-                # 
-                # The cut/copy/paste commands in the menu tables are not the 
-                # same as the methods
-                # actually bound to cut/copy/paste-text minibuffer commands, 
-                # so we must do a bit
-                # of extra translation to discover whether the user has 
-                # overridden their
-                # bindings.
-                #@-at
-                #@@c
-                
-                if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-                    emacs_name = '%s-text' % commandName
-                else:
-                    try: # User errors in the table can cause this.
-                        emacs_name = k.inverseCommandsDict.get(command.__name__)
-                    except Exception:
-                        emacs_name = None
-                #@nonl
-                #@-node:ekr.20051021100806.1:<< compute emacs_name >>
-                #@nl
-                    # Contains the not-so-horrible kludge.
-                if emacs_name:
-                    commandName = emacs_name
-                    rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # New in 4.4b2: command can be a minibuffer-command name (a string)
+            minibufferCommand = type(command) == type('')
+            if minibufferCommand:
+                commandName = command
+                command = c.commandsDict.get(commandName)
+                if command:
+                    rawKey,bunchList = c.config.getShortcut(commandName)
                     bunch = bunchList and bunchList[0]
                     accel = bunch and bunch.val
-                elif not dynamicMenu:
+                else:
                     g.trace('No inverse for %s' % commandName)
+                    continue # There is no way to make this menu entry.
+            else:
+                # First, get the old-style name.
+                commandName = self.computeOldStyleShortcutKey(label)
+                rawKey,bunchList = c.config.getShortcut(commandName)
+                bunch = bunchList and bunchList[0]
+                accel = bunch and bunch.val
+                
+                # Second, get new-style name.
+                if not accel:
+                    #@        << compute emacs_name >>
+                    #@+node:ekr.20051021100806.1:<< compute emacs_name >>
+                    #@+at 
+                    #@nonl
+                    # One not-so-horrible kludge remains.
+                    # 
+                    # The cut/copy/paste commands in the menu tables are not 
+                    # the same as the methods
+                    # actually bound to cut/copy/paste-text minibuffer 
+                    # commands, so we must do a bit
+                    # of extra translation to discover whether the user has 
+                    # overridden their
+                    # bindings.
+                    #@-at
+                    #@@c
+                    
+                    if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+                        emacs_name = '%s-text' % commandName
+                    else:
+                        try: # User errors in the table can cause this.
+                            emacs_name = k.inverseCommandsDict.get(command.__name__)
+                        except Exception:
+                            emacs_name = None
+                    #@nonl
+                    #@-node:ekr.20051021100806.1:<< compute emacs_name >>
+                    #@nl
+                        # Contains the not-so-horrible kludge.
+                    if emacs_name:
+                        commandName = emacs_name
+                        rawKey,bunchList = c.config.getShortcut(emacs_name)
+                        bunch = bunchList and bunchList[0]
+                        accel = bunch and bunch.val
+                    elif not dynamicMenu:
+                        g.trace('No inverse for %s' % commandName)
+                
             #@nonl
             #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             #@nl
             rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-            menuCallback = self.defineMenuCallback(command,commandName)
+            menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
             realLabel = self.getRealMenuName(label)
             #@        << set amp_index using rawKey and realLabel >>
             #@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
@@ -1490,16 +1636,32 @@ class leoMenu:
                 command=callback,underline=underline)
     #@-node:ekr.20051022043608.1:createOpenWithMenuItemsFromTable
     #@+node:ekr.20031218072017.4117:defineMenuCallback
-    def defineMenuCallback(self,command,name):
+    def defineMenuCallback(self,command,name,minibufferCommand):
         
-        # The first parameter must be event, and it must default to None.
-        def menuCallback(event=None,self=self,command=command,label=name):
-            __pychecker__ = '--no-argsused' # event not used, and must be present.
+        if minibufferCommand:
             
-            c = self.c
-            return c.doCommand(command,label)
-    
-        return menuCallback
+            # Create a dummy event as a signal to doCommand.
+            event = g.Bunch(keysym='',char='',widget='')
+            
+            # The first parameter must be event, and it must default to None.
+            def minibufferMenuCallback(event=event,self=self,command=command,label=name):
+                __pychecker__ = '--no-argsused' # event not used, and must be present.
+                
+                c = self.c
+                return c.doCommand(command,label,event)
+        
+            return minibufferMenuCallback
+            
+        else:
+        
+            # The first parameter must be event, and it must default to None.
+            def legacyMenuCallback(event=None,self=self,command=command,label=name):
+                __pychecker__ = '--no-argsused' # event not used, and must be present.
+                
+                c = self.c
+                return c.doCommand(command,label)
+        
+            return legacyMenuCallback
     #@nonl
     #@-node:ekr.20031218072017.4117:defineMenuCallback
     #@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback
