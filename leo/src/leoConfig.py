@@ -493,11 +493,20 @@ class parserBaseClass:
         settingName = shortcut
         settingName ! paneName = shortcut'''
         
-        name = val = None
+        name = val = nextMode = None
         j = g.skip_ws(s,0)
         i = g.skip_id(s,j,'-') # New in 4.4: allow Emacs-style shortcut names.
         name = s[j:i]
         if not name: return None,None
+        
+        # New in Leo 4.4b2.
+        i = g.skip_ws(s,i)
+        if g.match(s,i,'->'): # New in 4.4: allow pane-specific shortcuts.
+            j = g.skip_ws(s,i+2)
+            i = g.skip_id(s,j)
+            nextMode = s[j:i]
+            if not nextMode.strip(): nextMode = 'none'
+        else: nextMode = 'none'
             
         i = g.skip_ws(s,i)
         if g.match(s,i,'!'): # New in 4.4: allow pane-specific shortcuts.
@@ -522,7 +531,7 @@ class parserBaseClass:
                 val = val[:i].strip()
     
         # g.trace(pane,name,val,s)
-        return name,g.bunch(pane=pane,val=val)
+        return name,g.bunch(nextMode=nextMode,pane=pane,val=val)
     #@nonl
     #@-node:ekr.20041120112043:parseShortcutLine (g.app.config)
     #@-node:ekr.20041213082558:parsers
