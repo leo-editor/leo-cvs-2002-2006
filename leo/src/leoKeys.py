@@ -895,7 +895,7 @@ class keyHandlerClass:
         
         k = self ; val = None
         
-        g.trace(k.state.kind)
+        # g.trace(k.state.kind)
         
         if k.state.kind:
             if k.state.handler:
@@ -1065,14 +1065,14 @@ class keyHandlerClass:
         A possible convention would be to bind <Tab> to this command in most modes,
         by analogy with tab completion.'''
         
-        k = self
+        k = self ; c = k.c
     
         if k.inputModeName:
             commandName = 'enter-' + k.inputModeName
             d = g.app.config.modeCommandsDict.get(commandName)
             k.modeHelpHelper(d)
         else:
-            g.es('Not in any mode')
+            k.printBindings(event)
     
         return 'break'
     
@@ -1109,7 +1109,7 @@ class keyHandlerClass:
         state = k.getState(modeName)
        
         if state == 0:
-            g.trace(modeName,state)
+            # g.trace(modeName,state)
             k.modeWidget = event and event.widget
             self.initMode(event,modeName)
             k.setState(modeName,1,handler=k.generalModeHandler)
@@ -2019,36 +2019,6 @@ class keyHandlerClass:
         return ''
     #@nonl
     #@-node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
-    #@+node:ekr.20060104120602:matchKeys (to be deleted)
-    def matchKeys (self,stroke,shortcut):
-        
-        '''Return true if a binding matches the key specified by the event.'''
-        
-        k = self ; c = k.c
-        
-        shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
-        g.trace(stroke,shortcut)
-        return stroke == shortcut
-        
-        # if not k.stroke or not event: return False
-        # if not shortcut: shortcut = ''
-        # 
-        # stroke = k.stroke ; keysym = event.keysym ; keycode = event.keycode
-        # shortcut2, junk = c.frame.menu.canonicalizeShortcut(shortcut)
-        # 
-        # if stroke == '<Key>':
-            # val = shortcut == keysym or shortcut.startswith('Key-') and shortcut.endswith(keysym)
-        # else:
-            # val = stroke == shortcut2
-        # 
-        # if 0:
-            # g.trace('returns',val,
-                # 'stroke',stroke,'keysym',keysym,'keycode',keycode,
-                # 'shortcut',shortcut,'shortcuts',shortcut2)
-            # 
-        # return val
-    #@nonl
-    #@-node:ekr.20060104120602:matchKeys (to be deleted)
     #@+node:ekr.20051122104219:prettyPrintKey
     def prettyPrintKey (self,key):
         

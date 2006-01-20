@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7892" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7897" clone_windows="0"/>
 <globals body_outline_ratio="0.438470728793">
-	<global_window_position top="69" left="275" height="641" width="803"/>
+	<global_window_position top="122" left="401" height="641" width="803"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -37,6 +37,13 @@
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
 <v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
+</v>
+<v t="ekr.20060119121607"><vh>Run tcl script</vh>
+<v t="ekr.20060119121607.1"><vh>@@button Run tcl  script</vh></v>
+<v t="ekr.20060119121607.2"><vh>My first tcl script</vh></v>
+<v t="ekr.20060119121607.3"><vh>My second tcl scrip, organized with noweb markup</vh>
+<v t="ekr.20060119121607.4"><vh>the actual script</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
@@ -197,7 +204,7 @@
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
-<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" a="TV" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
@@ -214,9 +221,12 @@
 </v>
 <v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
 <v t="ekr.20060112062919"><vh>@@file commentTest.xml</vh></v>
-</v>
 <v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
-<v t="ekr.20060114164015" a="TV"><vh>test editing state</vh></v>
+<v t="ekr.20060114164015"><vh>test editing state</vh></v>
+<v t="ekr.20060119121607.5"><vh>tcl show bindings</vh></v>
+<v t="ekr.20060119170038"><vh>python show bindings</vh></v>
+<v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4225,5 +4235,62 @@ c.endEditing()
 c.selectPosition(p)
 w = p.edit_widget()
 print name(w),w.cget('state')</t>
+<t tx="ekr.20060119110527">def callback(event):
+    print event.keysym_num,event.state
+
+b = c.frame.body.bodyCtrl
+print b.bindtags()
+
+if 0:
+    aList = list(b.bindtags())
+    tag = 'default-leo-bindings'
+    
+    # Associates the callback with the tag.
+    b.bind_class(tag,'&lt;Key&gt;',callback,'+')
+    aList.insert(0,tag)
+    
+    # The binding will not be active until this statement
+    
+    b.bindtags(tuple(aList)) # Must be a tuple, not a list.
+    print b.bindtags()</t>
+<t tx="ekr.20060119121607">@language tcltk</t>
+<t tx="ekr.20060119121607.1"># To use this script, you must make this a script button, either with the
+# 'Script Button' button or by making this an @button node.
+
+# Executes body text of selected node as a tcl script.
+# For more information, see http://wiki.tcl.tk/6878
+
+# This statement allows you to organize your scripts using noweb markup.
+s = g.getScript(c,p,forcePythonSentinels=False)
+g.es(g.app.root.tk.eval(s))</t>
+<t tx="ekr.20060119121607.2"># This is a comment
+set x 50
+return [expr $x*10]</t>
+<t tx="ekr.20060119121607.3">@others</t>
+<t tx="ekr.20060119121607.4"># This is a comment
+set x 50 +
+return [expr $x*10]</t>
+<t tx="ekr.20060119121607.5">text .t
+foreach tag [bindtags .t] {
+  foreach keysym [bind $tag] {
+    set script [bind $tag $keysym]
+    puts "event $keysym for tag $tag executes: $script\n"
+  }
+}
+</t>
+<t tx="ekr.20060119170038">t = c.frame.body.bodyCtrl
+
+for tag in t.bindtags():
+    print '-' * 20, tag
+    print t.bind_class(tag)
+
+# foreach tag [bindtags .t] {
+  # foreach keysym [bind $tag] {
+    # set script [bind $tag $keysym]
+    # puts "event $keysym for tag $tag executes: $script\n"
+  # }
+# }
+# 
+</t>
 </tnodes>
 </leo_file>

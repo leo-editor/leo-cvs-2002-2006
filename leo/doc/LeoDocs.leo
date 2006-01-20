@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -744,7 +744,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20051219150602"><vh>4.4 alpha 5</vh>
 <v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
@@ -2292,8 +2292,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20060116174906" a="ETV"><vh>4.4 beta 1</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20060116174906"><vh>4.4 beta 1</vh>
 <v t="ekr.20060116174906.2"><vh>Bugs fixed</vh>
 <v t="ekr.20060116174906.3"><vh>Fixed minor headline problems</vh></v>
 <v t="ekr.20060116174906.63"><vh>Fixed undo problems</vh></v>

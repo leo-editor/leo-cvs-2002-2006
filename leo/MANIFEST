@@ -500,7 +500,6 @@ plugins\__overrideClasses.py
 plugins\__vnx__.py
 plugins\__wx_gui.py
 plugins\add_directives.py
-plugins\arrows.py
 plugins\at_folder.py
 plugins\at_produce.py
 plugins\at_view.py
