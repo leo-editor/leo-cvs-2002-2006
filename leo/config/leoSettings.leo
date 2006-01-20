@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="TV" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
@@ -255,7 +255,7 @@
 <v t="ekr.20041119050749.3"><vh>@bool allow_clone_drags = False</vh></v>
 <v t="ekr.20041119050749.4"><vh>@bool enable_drag_messages = False</vh></v>
 <v t="ekr.20041119050749.5"><vh>@bool expanded_click_area = True</vh></v>
-<v t="ekr.20060120123529"><vh>@bool initialClickExpandsOrContractsNode = False</vh></v>
+<v t="ekr.20060120123529"><vh>@bool initialClickExpandsOrContractsNode = True</vh></v>
 <v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
 <v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
 </v>
@@ -265,13 +265,13 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" a="TV" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -324,7 +324,7 @@
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060120103941"><vh>@bool showHelpWhenEnteringModes = True</vh></v>
 </v>
-<v t="ekr.20060111083214.1"><vh>Modes</vh>
+<v t="ekr.20060111083214.1" a="E"><vh>Modes</vh>
 <v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
 <v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117210056"><vh>@mode Move</vh></v>
@@ -400,7 +400,7 @@
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060120103941"><vh>@bool showHelpWhenEnteringModes = True</vh></v>
 </v>
-<v t="ekr.20060111083214.1"><vh>Modes</vh>
+<v t="ekr.20060111083214.1" a="E"><vh>Modes</vh>
 <v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
 <v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117210056"><vh>@mode Move</vh></v>
@@ -421,17 +421,6 @@
 </v>
 </v>
 <v t="ekr.20060115202002"><vh>To do</vh></v>
-<v t="ekr.20041119051246.1"><vh>Outline pane colors</vh>
-<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
-<v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
-<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
-<v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = None</vh></v>
-<v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = None</vh></v>
-<v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = None</vh></v>
-<v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = None</vh></v>
-<v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = None</vh></v>
-<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = #ffffec</vh></v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041119034357.1">@nocolor</t>
@@ -1890,13 +1879,13 @@ select-paragraph                    = None
 set-colors                          = None
 set-comment-column                  = None
 set-extend-mode                     = None
-set-ignore-mode                     = None
-set-insert-mode                     = None
+set-ignore-state                    = None
+set-insert-state                    = None
 set-fill-column                     = None
 set-fill-prefix                     = None
 set-font                            = None
 set-mark-command                    = Ctrl-space    # Also Ctrl-Shift-at
-set-overwrite-mode                  = None
+set-overwrite-state                 = None
 settings                            = None          
 shell-command                       = None
 shell-command-on-region             = None
@@ -2039,16 +2028,13 @@ keyboard-quit           = Return
 keyboard-quit           = Ctrl-g
 mode-help               = Tab
 
-demote                  -&gt; same = Ctrl-{
-promote                 -&gt; same = Ctrl-{
-insert-node             -&gt; same = Ctrl-i
-
-copy-node               -&gt; same = Ctrl-Shift-c
-cut-node                -&gt; same = Ctrl-Shift-x
-paste-node              -&gt; same = Ctrl-Shift-p
-
-undo                    -&gt; same = Ctrl-z
-redo                    -&gt; same = Ctrl-Shift-z
+# demote                  -&gt; same = Ctrl-{
+# promote                 -&gt; same = Ctrl-{
+# copy-node               -&gt; same = Ctrl-Shift-c
+# cut-node                -&gt; same = Ctrl-Shift-x
+# paste-node              -&gt; same = Ctrl-Shift-p
+# undo                    -&gt; same = Ctrl-z
+# redo                    -&gt; same = Ctrl-Shift-z
 
 # contract-or-go-left   = Alt-LtArrow
 # expand-and-go-right   = Alt-RtArrow
@@ -2057,6 +2043,7 @@ redo                    -&gt; same = Ctrl-Shift-z
 # goto-next-visible     = Alt-DnArrow
 # goto-prev-visible     = Alt-UpArrow
 
+insert-node                     = i # Must leave the state so we can edit the headline.
 contract-or-go-left     -&gt; same = l
 expand-and-go-right     -&gt; same = r
 goto-next-visible       -&gt; same = d
@@ -2698,10 +2685,10 @@ set-extend-mode                         = None
 set-fill-column                         = None
 set-fill-prefix                         = None
 set-font                                = None
-set-ignore-mode                         = None
-set-insert-mode                         = None
+set-ignore-state                        = None
+set-insert-state                        = None
 set-mark-command                        = Ctrl-space    # Also Ctrl-Shift-at
-set-overwrite-mode                      = None
+set-overwrite-state                     = None
 settings                                = None          # Ctrl-Y conflicts with yank.
 shell-command                           = None
 shell-command-on-region                 = None
@@ -2968,14 +2955,14 @@ select-all                      = None  # Ctrl-A conflicts with beginning-of-lin
 select-paragraph                = Alt-h
 set-colors                      = None
 set-comment-column              = None
-set-extend-mode                  = None
+set-extend-mode                 = None
 set-fill-column                 = None
 set-fill-prefix                 = None
 set-font                        = None
-set-ignore-mode                 = None
-set-insert-mode                 = None
+set-ignore-state                = None
+set-insert-state                = None
 set-mark-command                = Control-Shift-at
-set-overwrite-mode              = None
+set-overwrite-state             = None
 settings                        = None  # Ctrl-Y conflicts with yank.
 shell-command                   = Alt-exclam
 shell-command-on-region         = Alt-bar
@@ -3237,10 +3224,10 @@ set-extend-mode                     = None
 set-fill-column                     = None
 set-fill-prefix                     = None
 set-font                            = None
-set-ignore-mode                     = None
-set-insert-mode                     = None
+set-ignore-state                    = None
+set-insert-state                    = None
 set-mark-command                    = None
-set-overwrite-mode                  = None
+set-overwrite-state                 = None
 settings                            = Ctrl-Y
 shell-command                       = None
 shell-command-on-region             = None
@@ -3504,10 +3491,10 @@ set-extend-mode                     = None
 set-fill-column                     = None
 set-fill-prefix                     = None
 set-font                            = None
-set-ignore-mode                     = None
-set-insert-mode                     = None
+set-ignore-state                    = None
+set-insert-state                    = None
 set-mark-command                    = None
-set-overwrite-mode                  = None
+set-overwrite-state                 = None
 settings                            = None
 shell-command                       = None
 shell-command-on-region             = None
@@ -3876,8 +3863,8 @@ keys *only* for the top-level mode.
 - A mode contains *only* the key bindings explicitly specified in the @mode
 node. The only default key binding is the binding for the keyboard-quit command
 (usually Control-g). Thus, all modes except the top-level mode act as if
-top_level_unbound_key_action = 'ignore'. In particular, the set-ignore-mode,
-set-insert-mode and set-overwrite-mode commands affect only the top-level mode.
+top_level_unbound_key_action = 'ignore'. In particular, the set-ignore-state,
+set-insert-state and set-overwrite-state commands affect only the top-level mode.
 
 - The mode-help command (recommend binding is Tab) lists all bound keystrokes in
 a mode.
@@ -4310,13 +4297,13 @@ select-paragraph                    = None
 set-colors                          = None
 set-comment-column                  = None
 set-extend-mode                     = None
-set-ignore-mode                     = None
-set-insert-mode                     = None
+set-ignore-state                    = None
+set-insert-state                    = None
 set-fill-column                     = None
 set-fill-prefix                     = None
 set-font                            = None
 set-mark-command                    = Ctrl-space    # Also Ctrl-Shift-at
-set-overwrite-mode                  = None
+set-overwrite-state                 = None
 settings                            = None          
 shell-command                       = None
 shell-command-on-region             = None
@@ -4392,8 +4379,6 @@ zap-to-character                    = Alt-z</t>
 <t tx="ekr.20060120103941"></t>
 <t tx="ekr.20060120103955"></t>
 <t tx="ekr.20060120123529">True:  Clicking an unselected node selects the node and *also* expands or contracts it.
-False: Clicking an unselected node just selects the node.
-
-EKR hates True.  YMMV.</t>
+False: Clicking an unselected node just selects the node.</t>
 </tnodes>
 </leo_file>
