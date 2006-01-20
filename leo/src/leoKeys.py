@@ -371,47 +371,7 @@ class keyHandlerClass:
         #@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
         #@nl
         try:
-            #@        << bind callback to shortcut in pane >>
-            #@+node:ekr.20051022094136:<< bind callback to shortcut in pane >>
-            # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
-            # There should only be one binding for the minibuffer: the <Key>+ binding.
-            body = c.frame.body.bodyCtrl
-            log  = c.frame.log.logCtrl
-            menu = c.frame.menu
-            minibuffer = c.miniBufferWidget
-            tree = c.frame.tree.canvas
-            
-            d = {
-                'all':  [body,log,tree], # Probably not wise: menu
-                'body': [body],
-                'log':  [log],
-                'menu': [menu], # Not used, and probably dubious.
-                'mini': [minibuffer], # Needed so ctrl-g will work in the minibuffer!
-                'text': [body,log],
-                'tree': [tree],
-            }
-            
-            # if pane: g.trace('%4s %20s %s' % (pane, shortcut,commandName))
-            
-            widgets = d.get((pane or '').lower(),[])
-            
-            if shortcut == '<Key>':
-                # Important.  We must make this binding if the minibuffer can ever get focus.
-                if self.useTextWidget:
-                    widgets.append(minibuffer)
-                for w in widgets:
-                    #w.bind_class(bindtag,shortcut,callback,'+')
-                    w.bind(shortcut,callback,'+')
-            else:
-                for w in widgets:
-                    # if shortcut == '<Return>': g.trace(g.app.gui.widget_name(w),shortcut,callback)
-                    w.bind(shortcut,callback)
-                    #w.bind_class(bindtag,shortcut,callback)
-                # Get rid of the default binding in the menu. (E.g., Alt-f)
-                menu.bind(shortcut,lambda e: 'break')
-            #@nonl
-            #@-node:ekr.20051022094136:<< bind callback to shortcut in pane >>
-            #@nl
+            k.bindKeyHelper(pane,shortcut,callback,commandName)
             bunchList.append(
                 g.bunch(pane=pane,func=callback,commandName=commandName))
             k.bindingsDict [shortcut] = bunchList
@@ -425,6 +385,58 @@ class keyHandlerClass:
     
             return False
     #@nonl
+    #@+node:ekr.20051022094136:bindKeyHelper
+    def bindKeyHelper(self,pane,shortcut,callback,commandName):
+    
+        k = self ; c = k.c
+        
+        body = c.frame.body.bodyCtrl
+        log  = c.frame.log.logCtrl
+        menu = c.frame.menu
+        minibuffer = c.miniBufferWidget
+        tree = c.frame.tree.canvas
+        
+        d = {
+            'all':  [body,log,tree], # Probably not wise: menu
+            'body': [body],
+            'log':  [log],
+            'menu': [menu],         # Not used, and probably dubious.
+            'mini': [minibuffer],   # Needed so ctrl-g will work in the minibuffer!
+            'text': [body,log],
+            'tree': [tree],
+        }
+        
+        # if pane: g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+        
+        widgets = d.get((pane or '').lower(),[])
+        
+        # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
+        # There should only be one binding for the minibuffer: the <Key>+ binding.
+        if shortcut == '<Key>':
+            # Important.  We must make this binding if the minibuffer can ever get focus.
+            if self.useTextWidget:
+                widgets.append(minibuffer)
+            for w in widgets:
+                w.bind(shortcut,callback,'+')
+        elif k.isPlainKey(shortcut):
+            # Put the binding in a plain-key bindtag specific to this commander.
+            tag = k.plainKeyTag()
+            # g.trace('bindtags',tag,shortcut)
+            body.bind_class(tag,shortcut,callback)
+        else:
+            for w in widgets:
+                # if shortcut == '<Return>': g.trace(g.app.gui.widget_name(w),shortcut,callback)
+                w.bind(shortcut,callback)
+            # Get rid of the default binding in the menu. (E.g., Alt-f)
+            menu.bind(shortcut,lambda e: 'break')
+    #@nonl
+    #@-node:ekr.20051022094136:bindKeyHelper
+    #@+node:ekr.20060120082630:plainKeyTag
+    def plainKeyTag (self):
+        
+        return '%s-%s' % ('plain-key',self.c.fileName())
+    #@nonl
+    #@-node:ekr.20060120082630:plainKeyTag
     #@-node:ekr.20050920085536.16:bindKey
     #@+node:ekr.20051008135051.1:bindOpenWith
     def bindOpenWith (self,shortcut,name,data):
@@ -608,6 +620,19 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060113062832.1:copyBindingsHelper
     #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
+    #@+node:ekr.20060120071949:isPlainKey
+    def isPlainKey (self,shortcut):
+        
+        '''Return true if the shortcut refers to a plain key.'''
+    
+        shift = 'Shift-'
+        shortcut = shortcut or ''
+        if shortcut.startswith('<'):   shortcut = shortcut[1:]
+        if shortcut.endswith('>'):     shortcut = shortcut[:-1]
+        if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
+        return len(shortcut) == 1
+    #@nonl
+    #@-node:ekr.20060120071949:isPlainKey
     #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         
@@ -1432,25 +1457,50 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.48:repeatComplexCommand & helper
     #@+node:ekr.20060105132013:set-xxx-Mode
     def setIgnoreMode (self,event):
-        
+    
         self.setMode('ignore')
     
     def setInsertMode (self,event):
-        
+    
         self.setMode('insert')
-        
+    
     def setOverwriteMode (self,event):
-        
+    
         self.setMode('overwrite')
-        
+    
     def setMode (self,mode):
         
+        k = self ; c = k.c ; t = c.frame.body.bodyCtrl
+        
+        tag = k.plainKeyTag()
+        try: # Will fail for nullBody.
+            w = g.app.gui.get_focus(c.frame)
+            tags = t.bindtags()
+            tags = list(tags)
+            # g.trace('1',mode,'plain-keys:',tag in tags)
+        except AttributeError:
+            tags = []
+            w = None
+            
+        if tags:
+            if mode == 'ignore':
+                if tag not in tags:
+                    tags.insert(0,tag)
+                    t.bindtags(tuple(tags))
+            else:
+                if tag in tags:
+                    tags.remove(tag)
+                    t.bindtags(tuple(tags))
+        # g.trace('2',mode,'plain-keys:',tag in tags)
+    
         self.unboundKeyAction = mode
         frame = self.c.frame
         if hasattr(frame,'clearStatusLine'):
             frame.clearStatusLine()
             frame.putStatusLine('input mode: ',color='blue')
             frame.putStatusLine(mode)
+        # These commands never change focus.
+        w and c.frame.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20060105132013:set-xxx-Mode
     #@-node:ekr.20050920085536.32:Externally visible commands
@@ -1748,6 +1798,7 @@ class keyHandlerClass:
         k.resetLabel()
         
         k.setDefaultUnboundKeyAction()
+        c.endEditing()
         c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit

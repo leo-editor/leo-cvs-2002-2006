@@ -2321,7 +2321,7 @@ class editCommandsClass (baseEditCommandsClass):
         elif ch: # Null chars must not delete the selection.
             i,j = oldSel
             if i != j:                  w.delete(i,j)
-            elif action == 'replace':   w.delete(i,'%s+1c' % i)
+            elif action == 'overwrite': w.delete(i,'%s+1c' % i)
             w.insert(i,ch)                     
         else:
             return 'break' # New in 4.4a5: this method *always* returns 'break'
