@@ -1639,7 +1639,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.79:onClickBoxClick
     def onClickBoxClick (self,event):
         
-        c = self.c
+        c = self.c ; p1 = c.currentPosition()
         c.setLog()
         p = self.eventToPosition(event)
     
@@ -1647,9 +1647,10 @@ class leoTkinterTree (leoFrame.leoTree):
         try:
             if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
                 c.endEditing() # Bug fix: 12/19/05
-                if p.isExpanded(): p.contract()
-                else:              p.expand()
                 self.active = True
+                if p == p1 or c.config.getBool('initialClickExpandsOrContractsNode'):
+                    if p.isExpanded(): p.contract()
+                    else:              p.expand()
                 self.select(p)
                 if c.frame.findPanel:
                     c.frame.findPanel.handleUserClick(p)
@@ -2608,6 +2609,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
         g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+        
+        return 'break' # Supresses unwanted selection.
     #@nonl
     #@-node:ekr.20040803072955.128:tree.select
     #@+node:ekr.20040803072955.134:tree.set...LabelState
@@ -2654,8 +2657,12 @@ class leoTkinterTree (leoFrame.leoTree):
         fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
         bg = c.config.getColor("headline_text_selected_background_color") or 'grey80'
         
+        selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
+        selbg = c.config.getColor("headline_text_editing_selection_background_color")
+    
         try:
-            w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+            w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg,
+                selectbackground=bg,selectforeground=fg,highlightbackground=bg)
         except:
             g.es_exception()
     #@nonl
@@ -2671,25 +2678,12 @@ class leoTkinterTree (leoFrame.leoTree):
         
         fg    = c.config.getColor("headline_text_editing_foreground_color") or 'black'
         bg    = c.config.getColor("headline_text_editing_background_color") or 'white'
-        selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
-        selbg = c.config.getColor("headline_text_editing_selection_background_color")
+        selfg = c.config.getColor("headline_text_editing_selection_foreground_color") or 'white'
+        selbg = c.config.getColor("headline_text_editing_selection_background_color") or 'black'
         
         try: # Use system defaults for selection foreground/background
-            if selfg and selbg:
-                w.configure(
-                    selectforeground=selfg,selectbackground=selbg,
-                    state="normal",highlightthickness=1,fg=fg,bg=bg)
-            elif selfg and not selbg:
-                w.configure(
-                    selectforeground=selfg,
-                    state="normal",highlightthickness=1,fg=fg,bg=bg)
-            elif selbg and not selfg:
-                w.configure(
-                    selectbackground=selbg,
-                    state="normal",highlightthickness=1,fg=fg,bg=bg)
-            else:
-                w.configure(
-                    state="normal",highlightthickness=1,fg=fg,bg=bg)
+            w.configure(state="normal",highlightthickness=1,
+            fg=fg,bg=bg,selectforeground=selfg,selectbackground=selbg)
         except:
             g.es_exception()
     #@nonl
@@ -2708,7 +2702,8 @@ class leoTkinterTree (leoFrame.leoTree):
         bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
         
         try:
-            w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+            w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg,
+                selectbackground=bg,selectforeground=fg,highlightbackground=bg)
         except:
             g.es_exception()
     #@nonl
