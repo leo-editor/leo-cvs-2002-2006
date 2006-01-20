@@ -799,6 +799,8 @@ def openWithFileName(fileName,old_c,
             g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         finally:
             c.endUpdate()
+            k = c.keyHandler
+            k and k.setMode(k.unboundKeyAction)
             frame.bodyWantsFocus()
         return True, frame
     except IOError:

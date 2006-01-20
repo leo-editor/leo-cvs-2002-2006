@@ -326,7 +326,10 @@ class leoGui:
     #@+node:ekr.20031218072017.3741:oops
     def oops (self):
         
-        print "leoGui oops", g.callerName(2), "should be overridden in subclass"
+        # It is not usually an error to call methods of this class.
+        # However, this message is useful when writing gui plugins.
+        if 0:
+            print "leoGui oops", g.callerName(2), "should be overridden in subclass"
     #@nonl
     #@-node:ekr.20031218072017.3741:oops
     #@-others
@@ -411,8 +414,10 @@ class nullGui(leoGui):
         
         It is NOT an error to use this method."""
         
-        g.trace("nullGui",g.callerName(2))
-        pass
+        # It is not usually an error to call methods of this class.
+        # However, this message is useful when writing gui plugins.
+        if 0:
+            g.trace("nullGui",g.callerName(2))
     #@nonl
     #@-node:ekr.20031218072017.2230:oops
     #@+node:ekr.20031218072017.2231:setScript

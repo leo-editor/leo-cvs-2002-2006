@@ -178,7 +178,9 @@ class baseCommands:
     #@+node:ekr.20050920093543:c.finishCreate & helper
     def finishCreate (self):  # New in 4.4.
         
-        '''Finish creating the commander after frame.finishCreate.'''
+        '''Finish creating the commander after frame.finishCreate.
+        
+        Important: this is the last step in the startup process.'''
         
         c = self ; p = c.currentPosition()
         c.miniBufferWidget = c.frame.miniBufferWidget

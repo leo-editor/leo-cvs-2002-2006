@@ -131,6 +131,7 @@ class keyHandlerClass:
         self.repeatCount = None
         self.state = g.bunch(kind=None,n=None,handler=None)
         self.setDefaultUnboundKeyAction()
+        #@nonl
         #@-node:ekr.20051006092617.1:<< define externally visible ivars >>
         #@nl
         #@    << define internal ivars >>
@@ -199,11 +200,8 @@ class keyHandlerClass:
         c.frame.tree.setBindings()
         if 0: # Hurray.  This was a massive kludge.
             g.enableIdleTimeHook(250)
-        
-        if 0:
-            addTemacsExtensions(k)
-            addTemacsAbbreviations(k)
-            changeKeyStrokes(k,f.bodyCtrl)
+    
+        k.setMode(self.unboundKeyAction)
     #@nonl
     #@+node:ekr.20051008082929:createInverseCommandsDict
     def createInverseCommandsDict (self):
@@ -246,89 +244,6 @@ class keyHandlerClass:
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
-    #@+node:ekr.20050920085536.11:add_ekr_altx_commands
-    def add_ekr_altx_commands (self):
-    
-        #@    << define dict d of abbreviations >>
-        #@+node:ekr.20050920085536.12:<< define dict d of abbreviations >>
-        d = {
-            'again':'repeat-complex-command',
-            
-            # Leo searches.
-            # It's not possible to use Alt-x while the find-panel is frontmost.
-            # On XP you can use Alt-F4 to dismiss or Alt-tab to switch panes, then dismiss.
-            # (Or I could add a 'close' button with Alt-something hotkey :-)
-            'fx':   'dismiss-leo-find-panel',
-            'f':    'leo-find-panel',
-            'ff':   'leo-find-button',  
-            'fp':   'leo-find-previous',
-            'fc':   'leo-find-change-button',
-            'fcf':  'leo-find-change-then-find-button',
-        
-            'i':    'isearch-forward', 
-            'ib':   'isearch-backward',      
-            'ix':   'isearch-forward-regexp',
-            'irx':  'isearch-backward-regexp',
-            'ixr':  'isearch-backward-regexp',
-            
-            'r':    'replace-string',
-            'rx':   'replace-regex',
-        
-            's':    'search-forward',
-            'sb':   'search-backward',
-            'sv':   'save-file',
-            
-            'sw':   'word-search-forward',    
-            'sbw':  'word-search-backward',
-            'swb':  'word-search-backward',
-            
-            #
-            # 'a1'  'abbrev-on'
-            # 'a0'  'abbrev-off'
-         
-            ## Don't put these in: they might conflict with other abbreviatsions.
-            # 'fd':   'find-dialog',
-            # 'od':   'options-dialog',
-            
-            # At present these would be Leo Find stuff.
-            # 'fr':   'find-reverse',
-            # 'fx':   'find-regex',
-            # 'frx':  'find-regex-reverse',
-            # 'fxr':  'find-regex-reverse',
-            # 'fw':   'find-word',
-            # 'sf':   'set-find-text',
-            # 'sr':   'set-find-replace',
-            # 'ss':   'script-search',
-            # 'ssr':  'script-search-reverse',
-            
-            ## These could be shared...
-            # 'tfh':  'toggle-find-search-headline',
-            # 'tfb':  'toggle-find-search-body',
-            # 'tfw':  'toggle-find-word',
-            # 'tfn':  'toggle-find-node-only',
-            # 'tfi':  'toggle-find-ignore-case',
-            # 'tfmc': 'toggle-find-mark-changes',
-            # 'tfmf': 'toggle-find-mark-finds',
-        }
-        #@nonl
-        #@-node:ekr.20050920085536.12:<< define dict d of abbreviations >>
-        #@nl
-    
-        k = self ; c = k.c
-        k.abbreviationsDict = {}
-    
-        keys = d.keys()
-        keys.sort()
-        for key in keys:
-            val = d.get(key)
-            func = c.commandsDict.get(val)
-            if func:
-                # g.trace(('%-4s' % key),val)
-                c.commandsDict [key] = func
-                k.abbreviationsDict [key] = val
-                
-    #@nonl
-    #@-node:ekr.20050920085536.11:add_ekr_altx_commands
     #@+node:ekr.20050920085536.16:bindKey
     def bindKey (self,pane,shortcut,callback,commandName):
     
@@ -639,11 +554,9 @@ class keyHandlerClass:
         k = self ; c = k.c
     
         k.bindingsDict = {}
-        # k.makeHardBindings()
         k.makeSpecialBindings()
         k.addModeCommands() 
         k.makeBindingsFromCommandsDict()
-        # k.add_ekr_altx_commands()
         k.checkBindings()
         
         if 0:
@@ -674,50 +587,6 @@ class keyHandlerClass:
             k.inverseCommandsDict [f.__name__] = key
     #@nonl
     #@-node:ekr.20060104154937:addModeCommands
-    #@+node:ekr.20050923174229.1:makeHardBindings
-    def makeHardBindings (self):
-        
-        '''Define the bindings used in quick-command mode.'''
-        
-        k = self ; c = k.c
-        
-        self.negArgFunctions = {
-            '<Alt-c>': c.editCommands.changePreviousWord,
-            '<Alt-u>': c.editCommands.changePreviousWord,
-            '<Alt-l>': c.editCommands.changePreviousWord,
-        }
-        
-        # No longer used.  Very weird.
-        self.keystrokeFunctionDict = {
-            '<Control-s>':      (2, c.searchCommands.startIncremental),
-            '<Control-r>':      (2, c.searchCommands.startIncremental),
-            '<Alt-g>':          (1, c.editCommands.gotoLine),
-            '<Alt-z>':          (1, c.killBufferCommands.zapToCharacter),
-            '<Alt-percent>':    (1, c.queryReplaceCommands.queryReplace),
-            '<Control-Alt-w>':  (1, lambda event: 'break'),
-        }
-    
-        self.abbreviationFuncDict = {
-            'a':    c.abbrevCommands.addAbbreviation,
-            'a i':  c.abbrevCommands.addInverseAbbreviation,
-        }
-            
-        self.variety_commands = {
-            # Keys are Tk keysyms.
-            'period':       c.editCommands.setFillPrefix,
-            'parenleft':    c.macroCommands.startKbdMacro,
-            'parenright':   c.macroCommands.endKbdMacro,
-            'semicolon':    c.editCommands.setCommentColumn,
-            'Tab':          c.editCommands.tabIndentRegion,
-            'u':            c.undoer.undo,
-            'equal':        c.editCommands.lineNumber,
-            'h':            c.frame.body.selectAllText,
-            'f':            c.editCommands.setFillColumn,
-            'b':            c.bufferCommands.switchToBuffer,
-            'k':            c.bufferCommands.killBuffer,
-        }
-    #@nonl
-    #@-node:ekr.20050923174229.1:makeHardBindings
     #@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
     def makeSpecialBindings (self):
         
@@ -1136,6 +1005,9 @@ class keyHandlerClass:
         if state == 0:
             # g.trace(modeName,state)
             k.modeWidget = event and event.widget
+            if c.config.getBool('showHelpWhenEnteringModes'):
+                d = g.app.config.modeCommandsDict.get('enter-'+modeName)
+                k.modeHelpHelper(d)
             self.initMode(event,modeName)
             k.setState(modeName,1,handler=k.generalModeHandler)
         elif not func:
@@ -1159,7 +1031,6 @@ class keyHandlerClass:
                     self.initMode(event,nextMode) # Enter another mode.
     
         return 'break'
-    #@nonl
     #@+node:ekr.20060117202916:badMode
     def badMode(self,modeName):
         
@@ -1409,9 +1280,10 @@ class keyHandlerClass:
             bunchList = k.bindingsDict.get(key,[])
             for b in bunchList:
                 pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
-                s = k.prettyPrintKey(key) + pane
-                g.es('%-30s\t%s' % (s,b.commandName),
-                    tabName='Command')
+                if k.unboundKeyAction == 'ignore' or not k.isPlainKey(key):
+                    s = k.prettyPrintKey(key) + pane
+                    g.es('%-30s\t%s' % (s,b.commandName),
+                        tabName='Command')
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
