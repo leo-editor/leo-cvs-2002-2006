@@ -264,13 +264,13 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="TV" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -316,13 +316,36 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060103135341" annotate="7d71002e"><vh>Vim bindings</vh>
+<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060112093419.1"><vh>Options</vh>
+<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
+<v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+</v>
+<v t="ekr.20060115162748" a="E"><vh>Modes</vh>
+<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
+<v t="ekr.20060117182225"><vh>@mode Find</vh></v>
+<v t="ekr.20060117130936"><vh>@mode Find-options</vh></v>
+<v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
+<v t="ekr.20060115160004"><vh>@mode Register</vh></v>
+<v t="ekr.20060115160004.1" a="E"><vh>@mode Rect</vh></v>
+</v>
+<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
+<v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
+<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060103135341" a="E" annotate="7d71002e"><vh>Vim bindings</vh>
 <v t="ekr.20060112093419"><vh>Options</vh>
 <v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 </v>
-<v t="ekr.20060111083214.1"><vh>Modes</vh>
+<v t="ekr.20060111083214.1" a="E"><vh>Modes</vh>
 <v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
 <v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117210056"><vh>@mode Move</vh></v>
@@ -331,7 +354,7 @@
 <v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode Search</vh></v>
 <v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode Outline</vh></v>
 </v>
-<v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
+<v t="ekr.20060111083537.1" a="E"><vh>Shortcuts (bindings for the top-level mode)</vh>
 <v t="ekr.20060115203345"><vh>@url http://www.apmaths.uwo.ca/~xli/vim/quickstart.html</vh></v>
 <v t="ekr.20060119195749" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060115203942"><vh>@shortcuts plain keys</vh></v>
@@ -343,44 +366,21 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+</v>
+<v t="ekr.20051010112558" a="E"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
 <v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 </v>
-<v t="ekr.20060115162748"><vh>Modes</vh>
+<v t="ekr.20060115162748" a="E"><vh>Modes</vh>
 <v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117182225"><vh>@mode Find</vh></v>
 <v t="ekr.20060117130936"><vh>@mode Find-options</vh></v>
 <v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
 <v t="ekr.20060115160004"><vh>@mode Register</vh></v>
-<v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
-</v>
-<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
-<v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
-<v t="ekr.20060112093419.1"><vh>Options</vh>
-<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-</v>
-<v t="ekr.20060115162748"><vh>Modes</vh>
-<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
-<v t="ekr.20060117182225"><vh>@mode Find</vh></v>
-<v t="ekr.20060117130936"><vh>@mode Find-options</vh></v>
-<v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
-<v t="ekr.20060115160004"><vh>@mode Register</vh></v>
-<v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
+<v t="ekr.20060115160004.1" a="ETV"><vh>@mode Rect</vh></v>
 </v>
 <v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
@@ -395,7 +395,7 @@
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 </v>
-<v t="ekr.20060111083214.1"><vh>Modes</vh>
+<v t="ekr.20060111083214.1" a="E"><vh>Modes</vh>
 <v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
 <v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117210056"><vh>@mode Move</vh></v>
@@ -404,7 +404,7 @@
 <v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode Search</vh></v>
 <v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode Outline</vh></v>
 </v>
-<v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
+<v t="ekr.20060111083537.1" a="E"><vh>Shortcuts (bindings for the top-level mode)</vh>
 <v t="ekr.20060115203345"><vh>@url http://www.apmaths.uwo.ca/~xli/vim/quickstart.html</vh></v>
 <v t="ekr.20060119195749" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060115203942"><vh>@shortcuts plain keys</vh></v>
@@ -1315,10 +1315,7 @@ KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="ekr.20051010093913">c.save()</t>
-<t tx="ekr.20051010112558">@color
-
-
-</t>
+<t tx="ekr.20051010112558">@color</t>
 <t tx="ekr.20051011123608">n = len('insert-newline              ')
 
 s = p.bodyString()
@@ -1959,6 +1956,7 @@ zap-to-character                    = Alt-z</t>
 
 # Boilerplate for most modes.
 keyboard-quit   = Return
+keyboard-quit   = Ctrl-g
 mode-help       = Tab
 
 # The key bindings for this node.
@@ -3679,6 +3677,7 @@ For this setting to be useful the following must be true:
 - @bool trace_bindings must be True.</t>
 <t tx="ekr.20060115153348"># Boilerplate for most modes.
 keyboard-quit       = Return
+keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
 # enter-register-mode = Key-r
@@ -3707,8 +3706,8 @@ isearch-backward     = b
 # </t>
 <t tx="ekr.20060115160004"># Boilerplate for most modes.
 keyboard-quit       = Return
+keyboard-quit       = Ctrl-g
 mode-help           = Tab
-mode-help           = BackSpace
 
 append-to-register  = a
 copy-to-register    = s
@@ -3723,8 +3722,8 @@ view-register       = v
 </t>
 <t tx="ekr.20060115160004.1"># Boilerplate for most modes.
 keyboard-quit       = Return
+keyboard-quit       = Ctrl-g
 mode-help           = Tab
-mode-help           = BackSpace
 
 # These should execute rectangle commands, as in Alt-X r r</t>
 <t tx="ekr.20060115162748"></t>
@@ -3802,22 +3801,17 @@ overwrite: Leo replaces the character at the cursor.</t>
 
 - what is replace-then-find?</t>
 <t tx="ekr.20060115203345"></t>
-<t tx="ekr.20060115203942"># The initial_unbound_key_binding setting determines which mode is in effect when Leo starts.
+<t tx="ekr.20060115203942"># Leo handles bindings to plain alphabetic keys differently from other bindings.
 
 set-insert-mode         = i
+# set-overwrite-mode    = plus
 
 enter-delete-mode       = d
-enter-file-mode         = f
-enter-kill-mode         = k
+enter-file-mode         = f     # Vim uses :w for write, etc.
 enter-move-mode         = m
 enter-outline-mode      = o
-enter-quick-mode        = q
-enter-search-mode       = s
-
-# Vim uses / to start a search.
-# Vim uses : to enter a quick mode
-#   :s to start a substitution
-#   :w to write a file, etc.</t>
+enter-quick-mode        = q     # Vim uses :
+enter-search-mode       = s     # Vim uses / for search etc.</t>
 <t tx="ekr.20060116090646">@nocolor
 
 Standard keys (Windows defaults in parens)
@@ -3887,6 +3881,7 @@ command-name -&gt; same = binding
 will cause the command to be executed without changing mode.</t>
 <t tx="ekr.20060117130936"># Boilerplate for most modes.
 keyboard-quit       = Return
+keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
 toggle-find-clone-find-all-option   = Shift-c
@@ -3901,6 +3896,7 @@ toggle-find-word-option             = w
 toggle-find-wrap-around-option      = a</t>
 <t tx="ekr.20060117182225"># Boilerplate for most modes.
 keyboard-quit   = Return
+keyboard-quit   = Ctrl-g
 mode-help       = Tab
 
 isearch-forward         = i
