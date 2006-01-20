@@ -7,254 +7,6 @@
 @nocolor
 #@nonl
 #@+node:ekr.20060120105445:Fix recent bugs
-- 
-#@nonl
-#@+node:ekr.20060119201657:Improve printBindings and printCommands
-# Create alignColumns.
-#@nonl
-#@+node:ekr.20050920085536.32:Externally visible commands
-#@+node:ekr.20050930080419:digitArgument & universalArgument
-def universalArgument (self,event):
-    
-    '''Begin a numeric argument for the following command.'''
-    
-    k = self
-    k.setLabelBlue('Universal Argument: ',protect=True)
-    k.universalDispatcher(event)
-    
-def digitArgument (self,event):
-
-    k = self
-    k.setLabelBlue('Digit Argument: ',protect=True)
-    k.universalDispatcher(event)
-#@nonl
-#@-node:ekr.20050930080419:digitArgument & universalArgument
-#@+node:ekr.20051014170754:k.help
-def help (self,event):
-    
-    k = self ; c = k.c
-    commands = (
-        k.fullCommand,
-        k.quickCommand,
-        k.universalArgument,
-        k.keyboardQuit,
-        # negative-argument
-        # repeat-complex-command
-    )
-    shortcuts = [
-        k.getShortcutForCommand(command)
-        for command in commands]
-
-    # A bug in Leo: triple quotes puts indentation before each line.
-    s = '''
-The mini-buffer is intended to be like the Emacs buffer:
-
-%s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
-full command name, then hit <Return> to execute the command. Tab completion
-works, but not for file names.
-
-%s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
-The prompt is 'quick-command'. This mode is not completed, but stuff like
-`Ctrl-C r` and `Ctrl r r` do work.
-
-%s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
-count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
-unfinished.
-
-%s: Just like Emacs Ctrl-g: Closes the mini-buffer.
-'''
-
-    s = g.adjustTripleString(s,c.tab_width)
-        # Remove indentation from indentation of this function.
-    s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
-    g.es_print(s)
-#@nonl
-#@-node:ekr.20051014170754:k.help
-#@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
-def hideMinibuffer (self,event):
-    
-    k = self ; c = k.c
-    
-    c.frame.hideMinibuffer()
-    
-    g.es('Minibuffer hidden',color='red')
-
-    for commandName in ('show-mini-buffer','toggle-mini-buffer'):
-        shortcut = k.getShortcutForCommandName(commandName)
-        if shortcut:
-            g.es('%s is bound to: %s' % (commandName,shortcut))
-    
-    
-def showMinibuffer (self,event):
-    
-    k = self ; c = k.c
-    
-    c.frame.showMinibuffer()
-    
-def toggleMinibuffer (self,event):
-    
-    k = self ; c = k.c
-    
-    if c.frame.minibufferVisible:
-        k.hideMinibuffer(event)
-    else:
-        k.showMinibuffer(event)
-#@nonl
-#@-node:ekr.20051014155551:k.show/hide/toggleMinibuffer
-#@+node:ekr.20050920085536.68:negativeArgument (redo?)
-def negativeArgument (self,event):
-
-    k = self ; state = k.getState('neg-arg')
-
-    if state == 0:
-        k.setLabelBlue('Negative Argument: ',protect=True)
-        k.setState('neg-arg',1,k.negativeArgument)
-    else:
-        k.clearState()
-        k.resetLabel()
-        func = k.negArgFunctions.get(k.stroke)
-        if func:
-            func(event)
-
-    return 'break'
-#@nonl
-#@-node:ekr.20050920085536.68:negativeArgument (redo?)
-#@+node:ekr.20050920085536.77:numberCommand
-def numberCommand (self,event,stroke,number):
-
-    k = self ; k.stroke = stroke ; w = event.widget
-
-    k.universalDispatcher(event)
-    w.event_generate('<Key>',keysym=number)
-
-    return 'break'
-
-def numberCommand0 (self,event): return self.numberCommand (event,None,0)
-def numberCommand1 (self,event): return self.numberCommand (event,None,1)
-def numberCommand2 (self,event): return self.numberCommand (event,None,2)
-def numberCommand3 (self,event): return self.numberCommand (event,None,3)
-def numberCommand4 (self,event): return self.numberCommand (event,None,4)
-def numberCommand5 (self,event): return self.numberCommand (event,None,5)
-def numberCommand6 (self,event): return self.numberCommand (event,None,6)
-def numberCommand7 (self,event): return self.numberCommand (event,None,7)
-def numberCommand8 (self,event): return self.numberCommand (event,None,8)
-def numberCommand9 (self,event): return self.numberCommand (event,None,9)
-#@nonl
-#@-node:ekr.20050920085536.77:numberCommand
-#@+node:ekr.20051012201831:printBindings
-def printBindings (self,event):
-
-    '''Print all the bindings presently in effect.'''
-
-    k = self ; c = k.c
-    keys = k.bindingsDict.keys() ; keys.sort()
-
-    c.frame.log.clearTab('Command')
-    for key in keys:
-        bunchList = k.bindingsDict.get(key,[])
-        for b in bunchList:
-            pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
-            if k.unboundKeyAction == 'ignore' or not k.isPlainKey(key):
-                s = k.prettyPrintKey(key) + pane
-                g.es('%-30s\t%s' % (s,b.commandName),
-                    tabName='Command')
-#@nonl
-#@-node:ekr.20051012201831:printBindings
-#@+node:ekr.20051014061332:printCommands
-def printCommands (self,event):
-
-    '''Print all the known commands and their bindings, if any.'''
-
-    k = self ; c = k.c
-    
-    c.frame.log.clearTab('Command')
-    
-    inverseBindingDict = k.computeInverseBindingDict()
-    commandNames = c.commandsDict.keys() ; commandNames.sort()
-
-    for commandName in commandNames:
-        shortcutList = inverseBindingDict.get(commandName,[''])
-        for shortcut in shortcutList:
-            g.es('%-30s\t%s' % (commandName,k.prettyPrintKey(shortcut)),
-                tabName='Command')
-#@nonl
-#@-node:ekr.20051014061332:printCommands
-#@+node:ekr.20050920085536.48:repeatComplexCommand & helper
-def repeatComplexCommand (self,event):
-
-    k = self
-
-    if k.mb_history:
-        k.setState('last-altx',1,handler=k.doLastAltX)
-        k.setLabelBlue("Redo: %s" % k.mb_history[0])
-    return 'break'
-    
-def doLastAltX (self,event):
-    
-    k = self ; c = k.c
-
-    if event.keysym == 'Return' and k.mb_history:
-        last = k.mb_history [0]
-        c.commandsDict [last](event)
-        return 'break'
-    else:
-        return k.keyboardQuit(event)
-#@nonl
-#@-node:ekr.20050920085536.48:repeatComplexCommand & helper
-#@+node:ekr.20060105132013:set-xxx-Mode
-def setIgnoreMode (self,event):
-
-    self.setMode('ignore')
-
-def setInsertMode (self,event):
-
-    self.setMode('insert')
-
-def setOverwriteMode (self,event):
-
-    self.setMode('overwrite')
-
-def setMode (self,mode):
-    
-    k = self ; c = k.c ; t = c.frame.body.bodyCtrl
-    
-    tag = k.plainKeyTag()
-    try: # Will fail for nullBody.
-        w = g.app.gui.get_focus(c.frame)
-        tags = t.bindtags()
-        tags = list(tags)
-        # g.trace('1',mode,'plain-keys:',tag in tags)
-    except AttributeError:
-        tags = []
-        w = None
-        
-    if tags:
-        if mode == 'ignore':
-            if tag not in tags:
-                tags.insert(0,tag)
-                t.bindtags(tuple(tags))
-        else:
-            if tag in tags:
-                tags.remove(tag)
-                t.bindtags(tuple(tags))
-    # g.trace('2',mode,'plain-keys:',tag in tags)
-
-    self.unboundKeyAction = mode
-    frame = self.c.frame
-    if hasattr(frame,'clearStatusLine'):
-        frame.clearStatusLine()
-        frame.putStatusLine('input mode: ',color='blue')
-        frame.putStatusLine(mode)
-    # These commands never change focus.
-    w and c.frame.widgetWantsFocus(w)
-#@nonl
-#@-node:ekr.20060105132013:set-xxx-Mode
-#@-node:ekr.20050920085536.32:Externally visible commands
-#@-node:ekr.20060119201657:Improve printBindings and printCommands
-#@+node:ekr.20060120103549:Insert headline doesn't redraw headline properly in vim mode
-#@-node:ekr.20060120103549:Insert headline doesn't redraw headline properly in vim mode
-#@+node:ekr.20060120105605.1:i enters insert mode when editing headline
-#@-node:ekr.20060120105605.1:i enters insert mode when editing headline
 #@-node:ekr.20060120105445:Fix recent bugs
 #@+node:ekr.20060117201349:Latest
 #@+node:ekr.20051023094009:Search classes
@@ -1304,15 +1056,14 @@ def masterCommand (self,event,func,stroke,commandName=None):
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
         return 'break'
+        
+    if special: # Don't pass these on.
+        return 'break' 
 
     if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
+        val = k.callStateFunction(event) # Calls end-command.
+        if val != 'do-func': return 'break'
+        g.trace('Executing key outside of mode')
 
     if k.regx.iter:
         try:
@@ -2718,6 +2469,8 @@ def defineCmdsMenuSpellCheckTable (self):
 Note: focus commands already exist.
 #@nonl
 #@+node:ekr.20060116091116:Mousless Leo: First
+#@+node:ekr.20060120105605.1:i enters insert mode when editing headline
+#@-node:ekr.20060120105605.1:i enters insert mode when editing headline
 #@+node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
 #@-node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
 #@+node:ekr.20060116085217:scroll-pane-up/down
@@ -2927,14 +2680,14 @@ def generalModeHandler (self,event,
    
     if state == 0:
         # g.trace(modeName,state)
-        k.modeWidget = event and event.widget
-        if c.config.getBool('showHelpWhenEnteringModes'):
-            d = g.app.config.modeCommandsDict.get('enter-'+modeName)
-            k.modeHelpHelper(d)
         self.initMode(event,modeName)
         k.setState(modeName,1,handler=k.generalModeHandler)
+        if c.config.getBool('showHelpWhenEnteringModes'):
+            k.modeHelp(event)
     elif not func:
-        g.trace('No func: improper key binding')
+        # g.trace('No func: improper key binding')
+        # We were called from k.masterCommand because of an @settings key.
+        return 'do-func' # Tell the 
     else:
         # g.trace(modeName,state,commandName)
         if commandName == 'mode-help':
@@ -2944,7 +2697,7 @@ def generalModeHandler (self,event,
             self.endMode(event)
             func(event)
             if nextMode == 'none':
-                # Do *not* clear k.inputModeName here.
+                # Do *not* clear k.inputModeName or the focus here.
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
@@ -2998,18 +2751,19 @@ def modeCallback (event,k=k,
 # k.bindKey('all',stroke,modeCallback,commandName)
 
 t.bind_class(tagName,stroke,modeCallback)
+#@nonl
 #@-node:ekr.20060118181341:<< define modeCallback >>
 #@+node:ekr.20060119145631:<< define modeHelpCallback >>
-def modeHelpCallback (event,k=k,d=d):
+def modeHelpCallback (event,k=k):
     
-    if event and event.char != '': # and not special:
-        return k.modeHelpHelper(d)
+    if event and event.char != '':
+        return k.modeHelp(event)
     else:
         return 'break'
 
 # k.bindKey('all',stroke,modeHelpCallback,commandName)
 
-t.bind_class(tagName,'<Key>',modeHelpCallback)
+t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
 #@nonl
 #@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
@@ -3017,6 +2771,11 @@ t.bind_class(tagName,'<Key>',modeHelpCallback)
 def initMode (self,event,modeName):
 
     k = self ; c = k.c
+    
+    if not modeName:
+        g.trace('No mode name')
+        return
+
     k.inputModeName = modeName
     d = g.app.config.modeCommandsDict.get('enter-'+modeName)
     if not d:
@@ -3037,13 +2796,15 @@ def initMode (self,event,modeName):
         k.bindtagsDict[tagName] = True
 
     k.setLabelBlue(modeName+': ',protect=True)
-    c.frame.minibufferWantsFocus()
+    # Do *not* change the focus here!
 #@nonl
 #@-node:ekr.20060117202916.1:initMode
 #@+node:ekr.20060117202916.2:endMode
 def endMode(self,event):
     
     k = self ; c = k.c
+    
+    w = g.app.gui.get_focus(c.frame)
 
     # Restore the bind tags.
     t = c.frame.body.bodyCtrl
@@ -3054,7 +2815,9 @@ def endMode(self,event):
     k.clearState()
     k.resetLabel()
     # k.setLabelGrey('top-level mode')
-    c.frame.widgetWantsFocus(k.modeWidget)
+    
+    # Do *not* change the focus: the command may have changed it.
+    c.frame.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060117202916.2:endMode
 #@-node:ekr.20060104110233:generalModeHandler & helpers
@@ -3516,6 +3279,8 @@ def reSearchForward (self,event):
 Note: focus commands already exist.
 #@nonl
 #@+node:ekr.20060116091116:Mousless Leo: First
+#@+node:ekr.20060120105605.1:i enters insert mode when editing headline
+#@-node:ekr.20060120105605.1:i enters insert mode when editing headline
 #@+node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
 #@-node:ekr.20060116085649:find-word-on-line, find-character-on-line (forward & backward)
 #@+node:ekr.20060116085217:scroll-pane-up/down
@@ -3725,14 +3490,14 @@ def generalModeHandler (self,event,
    
     if state == 0:
         # g.trace(modeName,state)
-        k.modeWidget = event and event.widget
-        if c.config.getBool('showHelpWhenEnteringModes'):
-            d = g.app.config.modeCommandsDict.get('enter-'+modeName)
-            k.modeHelpHelper(d)
         self.initMode(event,modeName)
         k.setState(modeName,1,handler=k.generalModeHandler)
+        if c.config.getBool('showHelpWhenEnteringModes'):
+            k.modeHelp(event)
     elif not func:
-        g.trace('No func: improper key binding')
+        # g.trace('No func: improper key binding')
+        # We were called from k.masterCommand because of an @settings key.
+        return 'do-func' # Tell the 
     else:
         # g.trace(modeName,state,commandName)
         if commandName == 'mode-help':
@@ -3742,7 +3507,7 @@ def generalModeHandler (self,event,
             self.endMode(event)
             func(event)
             if nextMode == 'none':
-                # Do *not* clear k.inputModeName here.
+                # Do *not* clear k.inputModeName or the focus here.
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
@@ -3796,18 +3561,19 @@ def modeCallback (event,k=k,
 # k.bindKey('all',stroke,modeCallback,commandName)
 
 t.bind_class(tagName,stroke,modeCallback)
+#@nonl
 #@-node:ekr.20060118181341:<< define modeCallback >>
 #@+node:ekr.20060119145631:<< define modeHelpCallback >>
-def modeHelpCallback (event,k=k,d=d):
+def modeHelpCallback (event,k=k):
     
-    if event and event.char != '': # and not special:
-        return k.modeHelpHelper(d)
+    if event and event.char != '':
+        return k.modeHelp(event)
     else:
         return 'break'
 
 # k.bindKey('all',stroke,modeHelpCallback,commandName)
 
-t.bind_class(tagName,'<Key>',modeHelpCallback)
+t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
 #@nonl
 #@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
@@ -3815,6 +3581,11 @@ t.bind_class(tagName,'<Key>',modeHelpCallback)
 def initMode (self,event,modeName):
 
     k = self ; c = k.c
+    
+    if not modeName:
+        g.trace('No mode name')
+        return
+
     k.inputModeName = modeName
     d = g.app.config.modeCommandsDict.get('enter-'+modeName)
     if not d:
@@ -3835,13 +3606,15 @@ def initMode (self,event,modeName):
         k.bindtagsDict[tagName] = True
 
     k.setLabelBlue(modeName+': ',protect=True)
-    c.frame.minibufferWantsFocus()
+    # Do *not* change the focus here!
 #@nonl
 #@-node:ekr.20060117202916.1:initMode
 #@+node:ekr.20060117202916.2:endMode
 def endMode(self,event):
     
     k = self ; c = k.c
+    
+    w = g.app.gui.get_focus(c.frame)
 
     # Restore the bind tags.
     t = c.frame.body.bodyCtrl
@@ -3852,7 +3625,9 @@ def endMode(self,event):
     k.clearState()
     k.resetLabel()
     # k.setLabelGrey('top-level mode')
-    c.frame.widgetWantsFocus(k.modeWidget)
+    
+    # Do *not* change the focus: the command may have changed it.
+    c.frame.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060117202916.2:endMode
 #@-node:ekr.20060104110233:generalModeHandler & helpers
@@ -3931,15 +3706,14 @@ def masterCommand (self,event,func,stroke,commandName=None):
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
         return 'break'
+        
+    if special: # Don't pass these on.
+        return 'break' 
 
     if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
+        val = k.callStateFunction(event) # Calls end-command.
+        if val != 'do-func': return 'break'
+        g.trace('Executing key outside of mode')
 
     if k.regx.iter:
         try:
@@ -5395,15 +5169,14 @@ def masterCommand (self,event,func,stroke,commandName=None):
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
         return 'break'
+        
+    if special: # Don't pass these on.
+        return 'break' 
 
     if k.inState():
-        if not special: # Don't pass these on.
-            k.callStateFunction(event) # Calls end-command.
-        return 'break'
-
-    # if k.keystrokeFunctionDict.has_key(stroke):
-        # if k.callKeystrokeFunction(event): # Calls end-command
-            # return 'break'
+        val = k.callStateFunction(event) # Calls end-command.
+        if val != 'do-func': return 'break'
+        g.trace('Executing key outside of mode')
 
     if k.regx.iter:
         try:
@@ -6437,7 +6210,7 @@ def enterNamedMode (self,event,commandName):
     
     k.generalModeHandler(event,modeName=modeName)
 #@-node:ekr.20060102135349.2:enterNamedMode
-#@+node:ekr.20060104164523:modeHelp & helper
+#@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
 
     '''The mode-help command.
@@ -6446,38 +6219,43 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-
+    
+    c.endEditing(restoreFocus=True)
+    
     if k.inputModeName:
-        commandName = 'enter-' + k.inputModeName
-        d = g.app.config.modeCommandsDict.get(commandName)
+        d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
     else:
         k.printBindings(event)
 
     return 'break'
-
-
-
-
+#@nonl
 #@+node:ekr.20060104125946:modeHelpHelper
 def modeHelpHelper (self,d):
     
-    k = self ; c = k.c
-    
-    c.frame.log.clearTab('Mode')
-    lines = []
-    for key in d.keys():
+    k = self ; c = k.c ; tabName = 'Mode'
+    c.frame.log.clearTab(tabName)
+    keys = d.keys() ; keys.sort()
+
+    data = [] ; n = 20
+    for key in keys:
         bunchList = d.get(key)
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut not in (None,'None'):
-                lines.append('%-30s\t%s' % (key,k.prettyPrintKey(shortcut)))
-    lines.sort()
-    for line in lines:
-        g.es(line,tabName='Mode')
+                s1 = key
+                s2 = k.prettyPrintKey(shortcut)
+                n = max(n,len(s1))
+                data.append((s1,s2),)
+        
+    # This isn't perfect in variable-width fonts.
+    for s1,s2 in data:
+        g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
+        
+    g.es('\n----- %s' % (k.inputModeName),tabName=tabName)
 #@nonl
 #@-node:ekr.20060104125946:modeHelpHelper
-#@-node:ekr.20060104164523:modeHelp & helper
+#@-node:ekr.20060104164523:modeHelp
 #@+node:ekr.20060104110233:generalModeHandler & helpers
 def generalModeHandler (self,event,
     bunch=None,commandName=None,func=None,modeName=None):
@@ -6490,14 +6268,14 @@ def generalModeHandler (self,event,
    
     if state == 0:
         # g.trace(modeName,state)
-        k.modeWidget = event and event.widget
-        if c.config.getBool('showHelpWhenEnteringModes'):
-            d = g.app.config.modeCommandsDict.get('enter-'+modeName)
-            k.modeHelpHelper(d)
         self.initMode(event,modeName)
         k.setState(modeName,1,handler=k.generalModeHandler)
+        if c.config.getBool('showHelpWhenEnteringModes'):
+            k.modeHelp(event)
     elif not func:
-        g.trace('No func: improper key binding')
+        # g.trace('No func: improper key binding')
+        # We were called from k.masterCommand because of an @settings key.
+        return 'do-func' # Tell the 
     else:
         # g.trace(modeName,state,commandName)
         if commandName == 'mode-help':
@@ -6507,7 +6285,7 @@ def generalModeHandler (self,event,
             self.endMode(event)
             func(event)
             if nextMode == 'none':
-                # Do *not* clear k.inputModeName here.
+                # Do *not* clear k.inputModeName or the focus here.
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
@@ -6561,18 +6339,19 @@ def modeCallback (event,k=k,
 # k.bindKey('all',stroke,modeCallback,commandName)
 
 t.bind_class(tagName,stroke,modeCallback)
+#@nonl
 #@-node:ekr.20060118181341:<< define modeCallback >>
 #@+node:ekr.20060119145631:<< define modeHelpCallback >>
-def modeHelpCallback (event,k=k,d=d):
+def modeHelpCallback (event,k=k):
     
-    if event and event.char != '': # and not special:
-        return k.modeHelpHelper(d)
+    if event and event.char != '':
+        return k.modeHelp(event)
     else:
         return 'break'
 
 # k.bindKey('all',stroke,modeHelpCallback,commandName)
 
-t.bind_class(tagName,'<Key>',modeHelpCallback)
+t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
 #@nonl
 #@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
@@ -6580,6 +6359,11 @@ t.bind_class(tagName,'<Key>',modeHelpCallback)
 def initMode (self,event,modeName):
 
     k = self ; c = k.c
+    
+    if not modeName:
+        g.trace('No mode name')
+        return
+
     k.inputModeName = modeName
     d = g.app.config.modeCommandsDict.get('enter-'+modeName)
     if not d:
@@ -6600,13 +6384,15 @@ def initMode (self,event,modeName):
         k.bindtagsDict[tagName] = True
 
     k.setLabelBlue(modeName+': ',protect=True)
-    c.frame.minibufferWantsFocus()
+    # Do *not* change the focus here!
 #@nonl
 #@-node:ekr.20060117202916.1:initMode
 #@+node:ekr.20060117202916.2:endMode
 def endMode(self,event):
     
     k = self ; c = k.c
+    
+    w = g.app.gui.get_focus(c.frame)
 
     # Restore the bind tags.
     t = c.frame.body.bodyCtrl
@@ -6617,10 +6403,63 @@ def endMode(self,event):
     k.clearState()
     k.resetLabel()
     # k.setLabelGrey('top-level mode')
-    c.frame.widgetWantsFocus(k.modeWidget)
+    
+    # Do *not* change the focus: the command may have changed it.
+    c.frame.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060117202916.2:endMode
 #@-node:ekr.20060104110233:generalModeHandler & helpers
+#@+node:ekr.20060105132013:set-xxx-State
+def setIgnoreState (self,event):
+
+    self.setInputState('ignore')
+
+def setInsertState (self,event):
+
+    self.setInputState('insert')
+
+def setOverwriteState (self,event):
+
+    self.setInputState('overwrite')
+    
+def showInputState(self,state):
+    frame = self.c.frame
+    if hasattr(frame,'clearStatusLine'):
+        frame.clearStatusLine()
+        frame.putStatusLine('input state: ',color='blue')
+        frame.putStatusLine(state)
+
+def setInputState (self,state):
+    k = self ; c = k.c ; t = c.frame.body.bodyCtrl
+    
+    tag = k.plainKeyTag()
+    try: # Will fail for nullBody.
+        w = g.app.gui.get_focus(c.frame)
+        tags = t.bindtags()
+        tags = list(tags)
+        # g.trace('1',state,'plain-keys:',tag in tags)
+    except AttributeError:
+        tags = []
+        w = None
+        
+    if tags:
+        if state == 'ignore':
+            if tag not in tags:
+                tags.insert(0,tag)
+                t.bindtags(tuple(tags))
+        else:
+            if tag in tags:
+                tags.remove(tag)
+                t.bindtags(tuple(tags))
+    # g.trace('2',state,'plain-keys:',tag in tags)
+
+    self.unboundKeyAction = state
+    k.showInputState(state)
+   
+    # These commands never change focus.
+    w and c.frame.widgetWantsFocus(w)
+#@nonl
+#@-node:ekr.20060105132013:set-xxx-State
 #@-node:ekr.20060115103349:Modes
 #@-node:ekr.20060115091804.2:Finish support for @mode nodes
 #@+node:ekr.20060117074259:Handle Mac issues
