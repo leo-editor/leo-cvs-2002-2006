@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="193" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="194" clone_windows="0"/>
 <globals body_outline_ratio="0.611683848797">
 	<global_window_position top="52" left="421" height="873" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="TV" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
@@ -255,6 +255,7 @@
 <v t="ekr.20041119050749.3"><vh>@bool allow_clone_drags = False</vh></v>
 <v t="ekr.20041119050749.4"><vh>@bool enable_drag_messages = False</vh></v>
 <v t="ekr.20041119050749.5"><vh>@bool expanded_click_area = True</vh></v>
+<v t="ekr.20060120123529"><vh>@bool initialClickExpandsOrContractsNode = False</vh></v>
 <v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
 <v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
 </v>
@@ -264,13 +265,13 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -316,47 +317,25 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
-<v t="ekr.20060112093419.1"><vh>Options</vh>
-<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-</v>
-<v t="ekr.20060115162748" a="E"><vh>Modes</vh>
-<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
-<v t="ekr.20060117182225"><vh>@mode Find</vh></v>
-<v t="ekr.20060117130936"><vh>@mode Find-options</vh></v>
-<v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
-<v t="ekr.20060115160004"><vh>@mode Register</vh></v>
-<v t="ekr.20060115160004.1" a="E"><vh>@mode Rect</vh></v>
-</v>
-<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
-<v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060103135341" a="E" annotate="7d71002e"><vh>Vim bindings</vh>
+<v t="ekr.20060103135341" annotate="7d71002e"><vh>Vim bindings</vh>
 <v t="ekr.20060112093419"><vh>Options</vh>
 <v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20060120103941"><vh>@bool showHelpWhenEnteringModes = True</vh></v>
 </v>
-<v t="ekr.20060111083214.1" a="E"><vh>Modes</vh>
+<v t="ekr.20060111083214.1"><vh>Modes</vh>
 <v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
 <v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117210056"><vh>@mode Move</vh></v>
 <v t="ekr.20060117213826"><vh>@mode Delete</vh></v>
-<v t="ekr.20060115194553" a="E"><vh>@mode Quick</vh></v>
+<v t="ekr.20060115194553"><vh>@mode Quick</vh></v>
 <v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode Search</vh></v>
 <v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode Outline</vh></v>
 </v>
-<v t="ekr.20060111083537.1" a="E"><vh>Shortcuts (bindings for the top-level mode)</vh>
+<v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
 <v t="ekr.20060115203345"><vh>@url http://www.apmaths.uwo.ca/~xli/vim/quickstart.html</vh></v>
-<v t="ekr.20060119195749" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060119195749"><vh>Shortcuts</vh>
 <v t="ekr.20060115203942"><vh>@shortcuts plain keys</vh></v>
 <v t="ekr.20060119201117"><vh>@shortcuts change  from EKR bindings</vh></v>
 <v t="ekr.20060119195749.2" annotate="7d71002e"><vh>@shortcuts Vim: A-E</vh></v>
@@ -366,21 +345,46 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20051010112558" a="E"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20051010112558" annotate="7d71002e"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
 <v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+<v t="ekr.20060120103955"><vh>@bool showHelpWhenEnteringModes = True</vh></v>
 </v>
-<v t="ekr.20060115162748" a="E"><vh>Modes</vh>
+<v t="ekr.20060115162748"><vh>Modes</vh>
 <v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117182225"><vh>@mode Find</vh></v>
 <v t="ekr.20060117130936"><vh>@mode Find-options</vh></v>
 <v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
 <v t="ekr.20060115160004"><vh>@mode Register</vh></v>
-<v t="ekr.20060115160004.1" a="ETV"><vh>@mode Rect</vh></v>
+<v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
+</v>
+<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
+<v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
+<v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060102102958.1" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060112093419.1"><vh>Options</vh>
+<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
+<v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+<v t="ekr.20060120103955"><vh>@bool showHelpWhenEnteringModes = True</vh></v>
+</v>
+<v t="ekr.20060115162748"><vh>Modes</vh>
+<v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
+<v t="ekr.20060117182225"><vh>@mode Find</vh></v>
+<v t="ekr.20060117130936"><vh>@mode Find-options</vh></v>
+<v t="ekr.20060115153348"><vh>@mode Quick-command</vh></v>
+<v t="ekr.20060115160004"><vh>@mode Register</vh></v>
+<v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
 </v>
 <v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
@@ -394,19 +398,20 @@
 <v t="ekr.20060110142111.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060111083537" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111083432" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20060120103941"><vh>@bool showHelpWhenEnteringModes = True</vh></v>
 </v>
-<v t="ekr.20060111083214.1" a="E"><vh>Modes</vh>
+<v t="ekr.20060111083214.1"><vh>Modes</vh>
 <v t="ekr.20060111083427" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
 <v t="ekr.20060103135341.1" annotate="7d71002e"><vh>@mode File</vh></v>
 <v t="ekr.20060117210056"><vh>@mode Move</vh></v>
 <v t="ekr.20060117213826"><vh>@mode Delete</vh></v>
-<v t="ekr.20060115194553" a="E"><vh>@mode Quick</vh></v>
+<v t="ekr.20060115194553"><vh>@mode Quick</vh></v>
 <v t="ekr.20060103135341.2" annotate="7d71002e"><vh>@mode Search</vh></v>
 <v t="ekr.20060103135341.4" annotate="7d71002e"><vh>@mode Outline</vh></v>
 </v>
-<v t="ekr.20060111083537.1" a="E"><vh>Shortcuts (bindings for the top-level mode)</vh>
+<v t="ekr.20060111083537.1"><vh>Shortcuts (bindings for the top-level mode)</vh>
 <v t="ekr.20060115203345"><vh>@url http://www.apmaths.uwo.ca/~xli/vim/quickstart.html</vh></v>
-<v t="ekr.20060119195749" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060119195749"><vh>Shortcuts</vh>
 <v t="ekr.20060115203942"><vh>@shortcuts plain keys</vh></v>
 <v t="ekr.20060119201117"><vh>@shortcuts change  from EKR bindings</vh></v>
 <v t="ekr.20060119195749.2" annotate="7d71002e"><vh>@shortcuts Vim: A-E</vh></v>
@@ -416,6 +421,17 @@
 </v>
 </v>
 <v t="ekr.20060115202002"><vh>To do</vh></v>
+<v t="ekr.20041119051246.1"><vh>Outline pane colors</vh>
+<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
+<v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
+<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
+<v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = None</vh></v>
+<v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = None</vh></v>
+<v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = None</vh></v>
+<v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = None</vh></v>
+<v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = None</vh></v>
+<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = #ffffec</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041119034357.1">@nocolor</t>
@@ -3797,8 +3813,6 @@ insert:  Leo inserts the key at the cursor (like Emacs)
 overwrite: Leo replaces the character at the cursor.</t>
 <t tx="ekr.20060115202002">@nocolor
 
-*** Plain key commands can not be active in insert mode!
-
 - what is replace-then-find?</t>
 <t tx="ekr.20060115203345"></t>
 <t tx="ekr.20060115203942"># Leo handles bindings to plain alphabetic keys differently from other bindings.
@@ -3808,6 +3822,7 @@ set-insert-mode         = i
 
 enter-delete-mode       = d
 enter-file-mode         = f     # Vim uses :w for write, etc.
+mode-help               = h
 enter-move-mode         = m
 enter-outline-mode      = o
 enter-quick-mode        = q     # Vim uses :
@@ -4374,5 +4389,11 @@ yank-pop                            = Alt-y
 yank-rectangle                      = None
 zap-to-character                    = Alt-z</t>
 <t tx="ekr.20060119201117">mode-help                           = Tab</t>
+<t tx="ekr.20060120103941"></t>
+<t tx="ekr.20060120103955"></t>
+<t tx="ekr.20060120123529">True:  Clicking an unselected node selects the node and *also* expands or contracts it.
+False: Clicking an unselected node just selects the node.
+
+EKR hates True.  YMMV.</t>
 </tnodes>
 </leo_file>
