@@ -1105,9 +1105,8 @@ class keyHandlerClass:
         '''Handle a mode defined by an @mode node in leoSettings.leo.'''
     
         k = self ; c = k.c
-        modeName = modeName or k.inputModeName or ''
+        # modeName = modeName or k.inputModeName or ''
         state = k.getState(modeName)
-        # stroke = stroke or k.stroke or ''
        
         if state == 0:
             g.trace(modeName,state)
@@ -1117,11 +1116,11 @@ class keyHandlerClass:
         elif not func:
             g.trace('No func: improper key binding')
         else:
-            g.trace(modeName,state,commandName)
-            nextMode = bunch.nextMode
+            # g.trace(modeName,state,commandName)
             if commandName == 'mode-help':
                 func(event)
             else:
+                nextMode = bunch.nextMode
                 self.endMode(event)
                 func(event)
                 if nextMode == 'none':
@@ -1130,6 +1129,7 @@ class keyHandlerClass:
                     pass
                 elif nextMode == 'same':
                     self.initMode(event,modeName) # Re-enter this mode.
+                    k.setState(modeName,1,handler=k.generalModeHandler)
                 else:
                     self.initMode(event,nextMode) # Enter another mode.
     
@@ -1145,33 +1145,6 @@ class keyHandlerClass:
         k.setLabelGrey('@mode %s is not defined (or is empty)' % modeName)
     #@nonl
     #@-node:ekr.20060117202916:badMode
-    #@+node:ekr.20060117202916.1:initMode
-    def initMode (self,event,modeName):
-    
-        k = self ; c = k.c
-        k.inputModeName = modeName
-        d = g.app.config.modeCommandsDict.get('enter-'+modeName)
-        if not d:
-            self.badMode(modeName)
-            return
-            
-        t = c.frame.body.bodyCtrl
-        k.savedBindtags = t.bindtags()
-        tagName = '%s-%s' % (modeName,c.shortFileName())
-        t.bindtags(tuple([tagName]))
-        g.trace(modeName,tagName,t.bindtags())
-            
-        # Note: we much create separate bindings for each commander.
-        modeBindings = k.bindtagsDict.get(tagName)
-        if not modeBindings:
-            g.trace('created mode bindings: %s' % (tagName))
-            k.createModeBindings(modeName,tagName,d)
-            k.bindtagsDict[tagName] = True
-    
-        k.setLabelBlue(modeName+': ',protect=True)
-        
-        c.frame.minibufferWantsFocus()
-    #@nonl
     #@+node:ekr.20060119150624:createModeBindings
     def createModeBindings (self,modeName,tagName,d):
         
@@ -1185,12 +1158,17 @@ class keyHandlerClass:
                     shortcut = bunch.val
                     if shortcut and shortcut not in ('None','none',None):
                         stroke, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+                        # g.trace(stroke,shortcut)
                         #@                    << define modeCallback >>
                         #@+node:ekr.20060118181341:<< define modeCallback >>
-                        g.trace('Mode %s: binding %s to %s' % (modeName,stroke,commandName))
+                        # g.trace('Mode %s: binding %s to %s' % (modeName,stroke,commandName))
                         
-                        def modeCallback (event,k=k,bunch=bunch,commandName=commandName,func=func,modeName=modeName):
-                        
+                        def modeCallback (event,k=k,
+                            bunch=bunch,commandName=commandName,func=func,modeName=modeName,stroke=stroke):
+                                
+                            __pychecker__ = '--no-argsused' # stroke
+                            
+                            # g.trace(stroke)
                             return k.generalModeHandler(event,bunch,commandName,func,modeName)
                         
                         # k.bindKey('all',stroke,modeCallback,commandName)
@@ -1204,17 +1182,46 @@ class keyHandlerClass:
         #@    << define modeHelpCallback >>
         #@+node:ekr.20060119145631:<< define modeHelpCallback >>
         def modeHelpCallback (event,k=k,d=d):
-                
-            return k.modeHelpHelper(d)
+            
+            if event and event.char != '': # and not special:
+                return k.modeHelpHelper(d)
+            else:
+                return 'break'
         
         # k.bindKey('all',stroke,modeHelpCallback,commandName)
         
-        t.bind_class(tagName,stroke,modeHelpCallback)
+        t.bind_class(tagName,'<Key>',modeHelpCallback)
         #@nonl
         #@-node:ekr.20060119145631:<< define modeHelpCallback >>
         #@nl
     #@nonl
     #@-node:ekr.20060119150624:createModeBindings
+    #@+node:ekr.20060117202916.1:initMode
+    def initMode (self,event,modeName):
+    
+        k = self ; c = k.c
+        k.inputModeName = modeName
+        d = g.app.config.modeCommandsDict.get('enter-'+modeName)
+        if not d:
+            self.badMode(modeName)
+            return
+            
+        t = c.frame.body.bodyCtrl
+        k.savedBindtags = t.bindtags()
+        tagName = '%s-%s' % (modeName,c.fileName())
+        t.bindtags(tuple([tagName]))
+        # g.trace(modeName,tagName,t.bindtags())
+            
+        # Note: we much create separate bindings for each commander.
+        modeBindings = k.bindtagsDict.get(tagName)
+        if not modeBindings:
+            # g.trace('created mode bindings: %s' % (tagName))
+            k.createModeBindings(modeName,tagName,d)
+            k.bindtagsDict[tagName] = True
+    
+        k.setLabelBlue(modeName+': ',protect=True)
+        c.frame.minibufferWantsFocus()
+    #@nonl
     #@-node:ekr.20060117202916.1:initMode
     #@+node:ekr.20060117202916.2:endMode
     def endMode(self,event):
@@ -1224,7 +1231,6 @@ class keyHandlerClass:
         # Restore the bind tags.
         t = c.frame.body.bodyCtrl
         t.bindtags(k.savedBindtags)
-        g.trace(t.bindtags())
     
         k.endCommand(event,k.stroke)
         k.inputModeName = None
