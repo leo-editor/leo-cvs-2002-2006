@@ -800,7 +800,7 @@ def openWithFileName(fileName,old_c,
         finally:
             c.endUpdate()
             k = c.keyHandler
-            k and k.setMode(k.unboundKeyAction)
+            k and k.setInputState(k.unboundKeyAction)
             frame.bodyWantsFocus()
         return True, frame
     except IOError:
