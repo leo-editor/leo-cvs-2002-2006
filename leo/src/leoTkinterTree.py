@@ -1865,6 +1865,8 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; ch = event and event.char or ''
         i,j = g.app.gui.getTextSelection(w)
         
+        # g.trace(repr(ch))
+        
         if ch == '\b':
             if i != j:
                 w.delete(i,j)

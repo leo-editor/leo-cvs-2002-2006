@@ -333,17 +333,17 @@ class keyHandlerClass:
                 widgets.append(minibuffer)
             for w in widgets:
                 w.bind(shortcut,callback,'+')
-        elif k.isPlainKey(shortcut):
-            # Put the binding in a plain-key bindtag specific to this commander.
-            tag = k.plainKeyTag()
-            # g.trace('bindtags',tag,shortcut)
-            body.bind_class(tag,shortcut,callback)
         else:
-            for w in widgets:
-                # if shortcut == '<Return>': g.trace(g.app.gui.widget_name(w),shortcut,callback)
-                w.bind(shortcut,callback)
-            # Get rid of the default binding in the menu. (E.g., Alt-f)
-            menu.bind(shortcut,lambda e: 'break')
+            # Put *everything* in a bindtag set specific to this commander.
+            tag = k.plainKeyTag()
+            body.bind_class(tag,shortcut,callback)
+            
+            # Put everything *except* plain keys in a normal binding.
+            if not k.isPlainKey(shortcut):
+                for w in widgets:
+                    w.bind(shortcut,callback)
+                # Get rid of the default binding in the menu. (E.g., Alt-f)
+                menu.bind(shortcut,lambda e: 'break')
     #@nonl
     #@-node:ekr.20051022094136:bindKeyHelper
     #@+node:ekr.20060120082630:plainKeyTag
@@ -381,6 +381,10 @@ class keyHandlerClass:
         '''Bind one shortcut from a menu table.'''
         
         k = self ; shortcut = str(shortcut)
+        
+        # if k.isPlainKey(shortcut):
+            # g.trace('Ignoring plain key binding of %s to %s' % (shortcut,commandName))
+            # return
     
         if command.__name__ == 'leoCallback':
             # Get the function wrapped by *this* leoCallback function.
@@ -393,6 +397,9 @@ class keyHandlerClass:
                 
             keyCallback = keyCallback1
         else:
+            
+            # g.trace(commandName,shortcut,g.callers())
+    
             def menuFuncCallback (event,command=command,commandName=commandName):
                 return command(event)
     
@@ -461,7 +468,7 @@ class keyHandlerClass:
         
         paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
         
-        # g.trace(paneOrPanes,g.app.gui.widget_name(w))
+        # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
     
         k = self ; d = k.bindingsDict
         bindings = {}
@@ -473,23 +480,25 @@ class keyHandlerClass:
         # g.trace(panes)
     
         for shortcut in keys:
-            shortcutsBunchList = []
-            for pane in panes:
-                old_panes = bindings.get(shortcut,[])
-                assert(type(old_panes)==type([]))
-                if old_panes and pane in old_panes:
-                    # This should have been caught earlier, but another check doesn't hurt.
-                    g.trace('*** redefining %s in %s' % (shortcut,pane))
-                else:
-                    bunchList = d.get(shortcut,[])
-                    for bunch in bunchList:
-                        if bunch.pane == pane:
-                            shortcutsBunchList.append(bunch)
-                            old_panes.append(pane)
-                            bindings [shortcut] = old_panes
-            # Create bindings for the shortcut in all panes.
-            if shortcutsBunchList:
-                self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
+            # Do not copy plain key bindings.
+            if not k.isPlainKey(shortcut):
+                shortcutsBunchList = []
+                for pane in panes:
+                    old_panes = bindings.get(shortcut,[])
+                    assert(type(old_panes)==type([]))
+                    if old_panes and pane in old_panes:
+                        # This should have been caught earlier, but another check doesn't hurt.
+                        g.trace('*** redefining %s in %s' % (shortcut,pane))
+                    else:
+                        bunchList = d.get(shortcut,[])
+                        for bunch in bunchList:
+                            if bunch.pane == pane:
+                                shortcutsBunchList.append(bunch)
+                                old_panes.append(pane)
+                                bindings [shortcut] = old_panes
+                # Create bindings for the shortcut in all panes.
+                if shortcutsBunchList:
+                    self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
                                     
         # Bind all other keys to k.masterCommand.
         def generalTextKeyCallback (event,k=self):
@@ -539,12 +548,18 @@ class keyHandlerClass:
     def isPlainKey (self,shortcut):
         
         '''Return true if the shortcut refers to a plain key.'''
+        
+        shortcut1 = shortcut[:]
     
         shift = 'Shift-'
         shortcut = shortcut or ''
         if shortcut.startswith('<'):   shortcut = shortcut[1:]
         if shortcut.endswith('>'):     shortcut = shortcut[:-1]
         if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
+        
+        # if len(shortcut) == 1:
+            # g.trace(shortcut1)
+    
         return len(shortcut) == 1
     #@nonl
     #@-node:ekr.20060120071949:isPlainKey
@@ -832,6 +847,9 @@ class keyHandlerClass:
             action = self.unboundKeyAction
             if action in ('insert','overwrite'):
                 c.editCommands.selfInsertCommand(event,action=action)
+            else:
+                pass
+                # g.trace('ignoring key')
             return 'break'
         elif name.startswith('head'):
             g.trace("can't happen: %s" % (name),color='red')
@@ -841,7 +859,6 @@ class keyHandlerClass:
             # Let tkinter handle the event.
             # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
             return None
-    #@nonl
     #@-node:ekr.20051026083544:handleDefaultChar
     #@-node:ekr.20050920085536.65:masterCommand & helpers
     #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
@@ -966,7 +983,7 @@ class keyHandlerClass:
             d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
             k.modeHelpHelper(d)
         else:
-            k.printBindings(event)
+            k.printBindings(event,brief=True)
     
         return 'break'
     #@nonl
@@ -1003,15 +1020,18 @@ class keyHandlerClass:
         '''Handle a mode defined by an @mode node in leoSettings.leo.'''
     
         k = self ; c = k.c
-        # modeName = modeName or k.inputModeName or ''
         state = k.getState(modeName)
+        
+        # g.trace(modeName,state)
        
         if state == 0:
-            # g.trace(modeName,state)
+            
             self.initMode(event,modeName)
             k.setState(modeName,1,handler=k.generalModeHandler)
             if c.config.getBool('showHelpWhenEnteringModes'):
                 k.modeHelp(event)
+            else:
+                c.frame.log.deleteTab('Mode')
         elif not func:
             # g.trace('No func: improper key binding')
             # We were called from k.masterCommand because of an @settings key.
@@ -1035,6 +1055,7 @@ class keyHandlerClass:
                     self.initMode(event,nextMode) # Enter another mode.
     
         return 'break'
+    
     #@+node:ekr.20060117202916:badMode
     def badMode(self,modeName):
         
@@ -1151,7 +1172,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060117202916.2:endMode
     #@-node:ekr.20060104110233:generalModeHandler & helpers
-    #@+node:ekr.20060105132013:set-xxx-State
+    #@+node:ekr.20060105132013:set-xxx-State & setInputState
     def setIgnoreState (self,event):
     
         self.setInputState('ignore')
@@ -1163,26 +1184,17 @@ class keyHandlerClass:
     def setOverwriteState (self,event):
     
         self.setInputState('overwrite')
-        
-    def showInputState(self,state):
-        frame = self.c.frame
-        if hasattr(frame,'clearStatusLine'):
-            frame.clearStatusLine()
-            frame.putStatusLine('input state: ',color='blue')
-            frame.putStatusLine(state)
     
+    #@+node:ekr.20060120200818:NewHeadline
     def setInputState (self,state):
         k = self ; c = k.c ; t = c.frame.body.bodyCtrl
         
         tag = k.plainKeyTag()
         try: # Will fail for nullBody.
+            tags = list(t.bindtags())
             w = g.app.gui.get_focus(c.frame)
-            tags = t.bindtags()
-            tags = list(tags)
-            # g.trace('1',state,'plain-keys:',tag in tags)
         except AttributeError:
-            tags = []
-            w = None
+            tags = [] ; w = None
             
         if tags:
             if state == 'ignore':
@@ -1193,15 +1205,35 @@ class keyHandlerClass:
                 if tag in tags:
                     tags.remove(tag)
                     t.bindtags(tuple(tags))
-        # g.trace('2',state,'plain-keys:',tag in tags)
+        elif w:
+            g.trace("***** can't happen")
     
-        self.unboundKeyAction = state
-        k.showInputState(state)
+        # g.trace('%s-state' % (state),'plain key functions are',g.choose(tag in tags,'enabled','disabled'))
+        k.unboundKeyAction = state
+        k.showStateAndMode()
        
         # These commands never change focus.
         w and c.frame.widgetWantsFocus(w)
     #@nonl
-    #@-node:ekr.20060105132013:set-xxx-State
+    #@-node:ekr.20060120200818:NewHeadline
+    #@-node:ekr.20060105132013:set-xxx-State & setInputState
+    #@+node:ekr.20060120193743:showInputState
+    def showStateAndMode(self):
+        
+        k = self ; frame = k.c.frame
+        state = k.unboundKeyAction
+        mode = k.getStateKind() or 'none'
+       
+    
+        if hasattr(frame,'clearStatusLine'):
+            frame.clearStatusLine()
+            put = frame.putStatusLine
+            put('state: ',color='blue')
+            put(state)
+            put(' mode: ',color='blue')
+            put(mode)
+    #@nonl
+    #@-node:ekr.20060120193743:showInputState
     #@-node:ekr.20060115103349:Modes
     #@+node:ekr.20050920085536.32:Externally visible commands
     #@+node:ekr.20050930080419:digitArgument & universalArgument
@@ -1333,7 +1365,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.77:numberCommand
     #@+node:ekr.20051012201831:printBindings
-    def printBindings (self,event):
+    def printBindings (self,event,brief=False):
     
         '''Print all the bindings presently in effect.'''
     
@@ -1346,18 +1378,19 @@ class keyHandlerClass:
         for key in keys:
             bunchList = d.get(key,[])
             for b in bunchList:
-                pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
-                s1 = k.prettyPrintKey(key) + pane
-                s2 = b.commandName
-                n = max(n,len(s1))
-                data.append((s1,s2),)
+                if not brief or k.isPlainKey(key):
+                    pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
+                    s1 = k.prettyPrintKey(key) + pane
+                    s2 = b.commandName
+                    n = max(n,len(s1))
+                    data.append((s1,s2),)
         
         # This isn't perfect in variable-width fonts.
         for s1,s2 in data:
             g.es('%*s\t%s' % (-(n+1),s1,s2),tabName=tabName)
                        
         state = k.unboundKeyAction 
-        k.showInputState(state)
+        k.showStateAndMode()
                         
         g.es('\n----- input state: %s' % (state),tabName=tabName)
     #@nonl
@@ -2089,6 +2122,8 @@ class keyHandlerClass:
                 k.state.handler = handler
         else:
             k.clearState()
+            
+        k.showStateAndMode()
     #@-node:ekr.20050923172814.4:setState
     #@-node:ekr.20050923172809:State...
     #@-others
