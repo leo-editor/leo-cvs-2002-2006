@@ -312,13 +312,22 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
         canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
         canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
+        
+        def headKeyCallback (event,self=self):
+            return self.c.keyHandler.masterCommand(event,
+                func=None,stroke='<Key>',commandName=None)
     
         if self.useBindtags: # Create a dummy widget to hold all bindings.
             t = self.bindingWidget
             t.bind("<Button-1>", self.onHeadlineClick, '+')
             t.bind("<Button-3>", self.onHeadlineRightClick, '+')
-            t.bind("<Key>",      self.onHeadlineKey)
-                # There must be only one general key handler.
+            # There must be only one general key handler.
+            if 0:
+                # Warning: k.selfInsertCommand only handles body text at present.
+                t.bind('<Key>', headKeyCallback)
+            else:
+                t.bind("<Key>", self.onHeadlineKey)
+                    
     
             if 0: # This does not appear necessary in 4.4.
                 t.bind("<Control-t>",self.onControlT)
@@ -1846,6 +1855,8 @@ class leoTkinterTree (leoFrame.leoTree):
     
         w = event and event.widget or None
         ch = event and event.char or ''
+        
+        # g.trace(g.callers())
     
         # Testing for ch here prevents flashing in the headline
         # when the control key is held down.
@@ -2465,9 +2476,13 @@ class leoTkinterTree (leoFrame.leoTree):
         
         '''End editing of a headline and update p.headString().'''
     
-        c = self.c ; p = c.currentPosition()
+        c = self.c ; k = c.keyHandler ; p = c.currentPosition()
     
         self.setEditPosition(None) # That is, self._editPosition = None
+        
+        if k:
+            k.setDefaultUnboundKeyAction()
+            k.showStateAndMode()
         
         # Important: this will redraw if necessary.
         self.onHeadChanged(p)

@@ -1575,9 +1575,14 @@ class leoMenu:
         if has_cmd: # 11/18/03
             bind_head = bind_head + "Command-"
             menu_head = menu_head + "Command+"
-            
-        bind_shortcut = "<" + bind_head + bind_last + ">"
-        menu_shortcut = menu_head + menu_last
+        
+        # New in 4.4b2:
+        if not bind_head and bind_last and len(bind_last) == 1:
+            bind_shortcut = bind_last # Just return the actual character.
+            menu_shortcut = menu_head + menu_last
+        else:
+            bind_shortcut = "<" + bind_head + bind_last + ">"
+            menu_shortcut = menu_head + menu_last
         #@nonl
         #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
         #@nl

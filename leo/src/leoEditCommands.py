@@ -2289,6 +2289,9 @@ class editCommandsClass (baseEditCommandsClass):
         oldText = name.startswith('body') and p.bodyString()
         removeTrailing = None # A signal to compute it later.
         undoType = 'Typing'
+        trace = c.config.getBool('trace_masterCommand')
+        
+        if trace: g.trace(name)
         
         if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
             return "break" # The hook claims to have handled the event.
@@ -3884,6 +3887,7 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
         
         return {
             'digit-argument':           k.digitArgument,
+            'exit-named-mode':          k.exitNamedMode,
             'full-command':             k.fullCommand, # For menu.
             'help':                     k.help,
             'hide-mini-buffer':         k.hideMinibuffer,

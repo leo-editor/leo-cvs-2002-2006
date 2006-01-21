@@ -2694,11 +2694,15 @@ class baseCommands:
     #@+node:ekr.20031218072017.2886:editHeadline
     def editHeadline(self):
         
-        c = self ; tree = c.frame.tree
+        c = self ; k = c.keyHandler ; tree = c.frame.tree
         
         if g.app.batchMode:
             c.notValidInBatchMode("Edit Headline")
             return
+            
+        if k:
+            k.setDefaultUnboundKeyAction()
+            k.showStateAndMode()
     
         tree.editLabel(c.currentPosition())
     #@nonl
@@ -6037,11 +6041,15 @@ class baseCommands:
     
     def editPosition(self,p):
     
-        c = self
+        c = self ; k = self.keyHandler
     
         if p:
             c.selectPosition(p)
             c.frame.tree.editLabel(p)
+            
+            if k:
+                k.setDefaultUnboundKeyAction()
+                k.showStateAndMode()
     #@nonl
     #@-node:ekr.20031218072017.2991:c.editPosition
     #@+node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
