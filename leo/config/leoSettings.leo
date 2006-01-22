@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="248" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="249" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
 	<global_window_position top="56" left="359" height="872" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -266,13 +266,13 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="TV" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -318,14 +318,14 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060121073204" a="E" annotate="7d71002e"><vh>Vim bindings with plain-key bindings</vh>
+<v t="ekr.20060121073204" annotate="7d71002e"><vh>Vim bindings with plain-key bindings</vh>
 <v t="ekr.20060121073204.1"><vh>Options</vh>
 <v t="ekr.20060121073204.2" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060121073204.3" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060121073204.4" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060121073204.5"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
-<v t="ekr.20060121073204.6"><vh>Modes</vh>
+<v t="ekr.20060121073204.6" a="E"><vh>Modes</vh>
 <v t="ekr.20060121073204.7" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = ignore</vh></v>
 <v t="ekr.20060121073204.8"><vh>@@mode Command</vh></v>
 <v t="ekr.20060121073204.9" annotate="7d71002e"><vh>@mode File</vh></v>
@@ -402,7 +402,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Emacs bindings &amp; modes</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.1" a="E"><vh>To do</vh></v>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.3"><vh>Options</vh>
@@ -412,17 +412,22 @@
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
-<v t="ekr.20060122105527.9"><vh>Modes</vh>
-<v t="ekr.20060122105527.10"><vh>@mode Command</vh></v>
-<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File</vh></v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh></v>
+<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-E)</vh>
+<v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
+</v>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh></v>
+<v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
-<v t="ekr.20060122105527.14"><vh>@mode Find-options</vh></v>
-<v t="ekr.20060122105527.15" a="E"><vh>@mode Quick-command</vh></v>
-<v t="ekr.20060122105527.16"><vh>@mode Register</vh></v>
-<v t="ekr.20060122105527.17"><vh>@mode Rect</vh></v>
+</v>
+<v t="ekr.20060122105527.14" a="E"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
+<v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
+</v>
+<v t="ekr.20060122105527.15" a="E"><vh>@mode Quick-command (Alt-C)</vh></v>
+<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh></v>
 </v>
 <v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122115313"><vh>Commands now in edit mode</vh></v>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
@@ -432,7 +437,7 @@
 </v>
 </v>
 <v t="ekr.20060115202002"><vh>To do</vh></v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Emacs bindings &amp; modes</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.1" a="E"><vh>To do</vh></v>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.3"><vh>Options</vh>
@@ -442,17 +447,22 @@
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
-<v t="ekr.20060122105527.9"><vh>Modes</vh>
-<v t="ekr.20060122105527.10"><vh>@mode Command</vh></v>
-<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File</vh></v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh></v>
+<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-E)</vh>
+<v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
+</v>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh></v>
+<v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
-<v t="ekr.20060122105527.14"><vh>@mode Find-options</vh></v>
-<v t="ekr.20060122105527.15" a="E"><vh>@mode Quick-command</vh></v>
-<v t="ekr.20060122105527.16"><vh>@mode Register</vh></v>
-<v t="ekr.20060122105527.17"><vh>@mode Rect</vh></v>
+</v>
+<v t="ekr.20060122105527.14" a="E"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
+<v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
+</v>
+<v t="ekr.20060122105527.15" a="ETV"><vh>@mode Quick-command (Alt-C)</vh></v>
+<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh></v>
 </v>
 <v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122115313"><vh>Commands now in edit mode</vh></v>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
@@ -5120,35 +5130,38 @@ undo                    = Ctrl-Z</t>
 
 Support the exectution of a command when entering a mode.
 
-- Finish options mode</t>
+- Pretty Print should capitalize plain keys.</t>
 <t tx="ekr.20060122105527.2">#enter-command-mode     = Ctrl-space
 add-comments            = Ctrl-(
 auto-complete           = Ctrl-Tab
 clone-node              = Ctrl-`
 set-mark-command        = Ctrl-space    # Also Ctrl-Shift-at
 
-beginning-of-line       ! text = Ctrl-a         # Ctrl-a Conflicts with select-all
-# back-char             ! text = Ctrl-b
+beginning-of-line       = Ctrl-a         # Ctrl-a Conflicts with select-all
+# back-char             = Ctrl-b
 copy-text               = Ctrl-c        # Conflicts with Emacs ctrl-c
 move-outline-down       = Ctrl-d
-end-of-line             ! text = Ctrl-e
-enter-find-mode         = Ctrl-f
+end-of-line             = Ctrl-e
+enter-find-mode         = Ctrl-F
 keyboard-quit           = Ctrl-g
 edit-headline           = Ctrl-H
 insert-node             = Ctrl-I
+newline-and-indent      = Ctrl-J
 match-bracket           = Ctrl-K    # Conflicts with kill-line
 move-outline-left       = Ctrl-L
 mark                    = Ctrl-M
-new                     = Ctrl-n    # Ctrl-n conflicts with next-line.
-open-outline            = Ctrl-O    # Ctrl-O conflicts with insert-newline
+new                     = Ctrl-N    # next-line.
+enter-outline-mode      = Ctrl-O    # insert-newline, open-outline
+# UNUSED                = Ctrl-P    # previous-line
 exit-leo                = Ctrl-Q
 move-outline-right      = Ctrl-R
-save-file               = Ctrl-s
+save-file               = Ctrl-S
 toggle-active-pane      = Ctrl-T
 move-outline-up         = Ctrl-U
-paste-text              = Ctrl-v
-kill-region             = Ctrl-w
-cut-text                = Ctrl-x
+paste-text              = Ctrl-V
+enter-file-mode         = Ctrl-W    # kill-region
+cut-text                = Ctrl-X
+yank                    = Ctrl-y
 undo                    = Ctrl-Z</t>
 <t tx="ekr.20060122105527.3"></t>
 <t tx="ekr.20060122105527.4">@nocolor
@@ -5185,60 +5198,46 @@ False: Selecting an outline node transfers focus to the body pane.
        it will prevent key binding in the outline pane for outline operations from being useful.</t>
 <t tx="ekr.20060122105527.8"></t>
 <t tx="ekr.20060122105527.9"></t>
-<t tx="ekr.20060122105527.10"># Boilerplate for all modes.
-keyboard-quit           = Return
-exit-named-mode         = Ctrl-g
-mode-help               = Tab
+<t tx="ekr.20060122105527.11"># Boilerplate for most modes.
+keyboard-quit       = Ctrl-g
+exit-named-mode     = Return
+exit-named-mode     = BackSpace
+mode-help           = Tab
 
-enter-file-mode             = f
-enter-find-mode             = s
-enter-find-options-mode     = o
-enter-quick-command-mode    = q
-enter-rect-mode             = None
-enter-register-mode         = None</t>
-<t tx="ekr.20060122105527.11"># A silly mode illustrating vim-like operation.
+close-window            = Alt-F4
 
-# Boilerplate for most modes.
-keyboard-quit   = Return
-exit-named-mode = Ctrl-g
-mode-help       = Tab
+open-leoDocs-leo        = Shift-d
+open-leoPlugins-leo     = Shift-p
+open-leoSettings-leo    = Shift-s
 
-# The key bindings for this node.
-# Plain keys can be specied as 'Key-x' or just 'x'.
-close-window    = c
-close-window    = Alt-F4
-exit-leo        = q
-new             = n
-open-outline    = o
-save-file       = s
-
-# Bindings to None have no effect.
-# They can be used as documentation here.
-save-file-as    = None
-save-file-to    = None</t>
-<t tx="ekr.20060122105527.12"># Control-F
-
-# Boilerplate for most modes.
-exit-named-mode = Ctrl-g
-keyboard-quit   = Ctrl-g
-mode-help       = Tab
+save-file-as            = a
+new                     = n
+open-outline            = o     # to do: should be open-outline-by-name.
+exit-leo                = q
+save-file               = s
+save-file-to            = t
+close-window            = w
+</t>
+<t tx="ekr.20060122105527.12"># Boilerplate for most modes.
+exit-named-mode     = Return
+exit-named-mode     = BackSpace
+keyboard-quit       = Ctrl-g
+mode-help           = Tab
 
 enter-find-reverse-mode = r
 
 search-again            = a
-
 switch-to-buffer        = h
-
 isearch-forward         = i
-isearch-forward-regexp  = x
-
 search-forward          = f
 word-search-forward     = w
+isearch-forward-regexp  = x
 re-search-forward       = Shift-R</t>
 <t tx="ekr.20060122105527.13"># Boilerplate for most modes.
 exit-named-mode         = Return
 keyboard-quit           = Ctrl-g
 mode-help               = Tab
+enter-find-mode         = BackSpace
 
 search-again            = a
 
@@ -5249,24 +5248,24 @@ search-backward         = f
 word-search-backward    = w
 re-search-backward      = Shift-R</t>
 <t tx="ekr.20060122105527.14"># Boilerplate for most modes.
-exit-named-mode = Ctrl-g
+exit-named-mode     = Return
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
-toggle-find-clone-find-all-option   = Shift-c
-toggle-find-ignore-case-option      = i
-toggle-find-in-body-option          = b
-toggle-find-in-headline-option      = h
-toggle-find-mark-changes-option     = c
-toggle-find-mark-finds-option       = f
-toggle-find-regex-option            = x
-toggle-find-reverse-option          = r
-toggle-find-word-option             = w
-toggle-find-wrap-around-option      = a</t>
+enter-find-options-mode = f
+</t>
 <t tx="ekr.20060122105527.15"># Boilerplate for most modes.
-exit-named-mode     = Ctrl-g
+exit-named-mode     = Return
+exit-named-mode     = BackSpace
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
+
+enter-file-mode             = f
+enter-find-mode             = s
+enter-find-options-mode     = o
+enter-quick-command-mode    = q
+enter-rect-mode             = None
+enter-register-mode         = None
 
 # enter-register-mode = Key-r
 
@@ -5292,39 +5291,19 @@ isearch-backward     = b
 # transpose-lines         = Ctrl-T
 # upcase-region           = Ctrl-U
 # </t>
-<t tx="ekr.20060122105527.16"># Boilerplate for most modes.
-exit-named-mode     = Ctrl-g
-keyboard-quit       = Ctrl-g
-mode-help           = Tab
-
-append-to-register  = a
-copy-to-register    = s
-enter-rect-mode     = r
-# increment-register= Key-+
-insert-register     = i
-jump-to-register    = j
-# number-to-register= n
-point-to-register   = Space
-prepend-to-register = p
-view-register       = v
-</t>
-<t tx="ekr.20060122105527.17"># Boilerplate for most modes.
-exit-named-mode     = Ctrl-g
-keyboard-quit       = Ctrl-g
-mode-help           = Tab
-
-# These should execute rectangle commands, as in Alt-X r r</t>
 <t tx="ekr.20060122105527.18"></t>
 <t tx="ekr.20060122105527.19"># Defined by @mode nodes: needed to suppress warnings.
 
-enter-command-mode          = Alt-space
-#enter-command-mode          = Ctrl-space
-enter-file-mode             = None
-enter-find-mode             = Ctrl-f
-enter-find-options-mode     = None
-enter-quick-command-mode    = None
-enter-rect-mode             = None
-enter-register-mode         = None</t>
+# Options mode isn't needed just yet.
+# enter-options-mode          = Ctrl-Y    # yank
+
+enter-edit-mode             = Ctrl-E    #
+enter-edit-extend-mode      = None
+enter-find-mode             = Ctrl-F    # open-find-tab
+enter-outline-mode          = Ctrl-O    # open
+enter-file-mode             = Ctrl-W    # kill-region
+
+enter-quick-command-mode    = Alt-C</t>
 <t tx="ekr.20060122105527.20"># Important: the print-commands and print-bindings show what bindings are in effect.
 
 # append-next-kill                  = None
@@ -5342,29 +5321,29 @@ advertised-undo                     = None
 append-to-buffer                    = None
 append-to-register                  = None
 auto-complete                       = Ctrl-Tab
-# back-char                           ! text = Ctrl-b
-back-char                           ! text = LtArrow
-back-char-extend-selection          ! text = Shift-LtArrow
-back-paragraph                      ! text = Alt-braceleft 
-back-paragraph-extend-selection     ! text = Alt-Shift-braceleft
-back-sentence                       ! text = Alt-a  # No conflict
-back-sentence-extend-selection      = None # **Must** be Alt-Shift-a, but that conflicts with Sort Siblings.  Sigh.
+back-char                           = None # ! text = Ctrl-b
+back-char                           = None # ! text = LtArrow
+back-char-extend-selection          = None # ! text = Shift-LtArrow
+back-paragraph                      = None # ! text = Alt-braceleft 
+back-paragraph-extend-selection     = None # ! text = Alt-Shift-braceleft
+back-sentence                       = None # ! text = Alt-a  # No conflict
+back-sentence-extend-selection      = None # = None # Alt-Shift-a, sort-siblings
 back-to-indentation                 = None
-back-word                           ! text = Alt-b  
-back-word                           ! text = Ctrl-LtArrow
-back-word-extend-selection          ! text = Alt-Shift-b
-back-word-extend-selection          ! text = Ctrl-Shift-LtArrow
+back-word                           = None # ! text = Alt-b  
+back-word                           = None # ! text = Ctrl-LtArrow
+back-word-extend-selection          = None # ! text = Alt-Shift-b
+back-word-extend-selection          = None # ! text = Ctrl-Shift-LtArrow
 backward-delete-char                = BackSpace
 backward-kill-paragraph             = None
 backward-kill-sentence              = None
-backward-kill-word                  = Alt-Delete
-beginning-of-buffer                 ! text = Alt-less # Note: same as Alt-Shift-less
-beginning-of-buffer                 ! text = Ctrl-Home
-beginning-of-buffer-extend-selection! text = Ctrl-Shift-Home
-beginning-of-line                   ! text = Ctrl-a         # Ctrl-a Conflicts with select-all
-beginning-of-line                   ! text = Home
-beginning-of-line-extend-selection  ! text = Shift-Home
-beginning-of-line-extend-selection  = Ctrl-Shift-a # conflicts with select-all
+backward-kill-word                  = None # = Alt-Delete
+beginning-of-buffer                 = None # ! text = Alt-less # Note: same as Alt-Shift-less
+beginning-of-buffer                 = None # ! text = Ctrl-Home
+beginning-of-buffer-extend-selection = None # ! text = Ctrl-Shift-Home
+beginning-of-line                   = None # ! text = Ctrl-a         # Ctrl-a Conflicts with select-all
+beginning-of-line                   = None # ! text = Home
+beginning-of-line-extend-selection  = None # ! text = Shift-Home
+beginning-of-line-extend-selection  = None # = Ctrl-Shift-a # conflicts with select-all
 capitalize-word                     = None
 cascade-windows                     = None
 center-line                         = None
@@ -5416,14 +5395,14 @@ downcase-word                       = None
 dump-outline                        = None
 edit-headline                       = Ctrl-H
 end-edit-headline                   ! tree = Return     # Esc is also possible.
-end-of-buffer                       ! text = Alt-greater # Same as Alt-Shift-greater
-end-of-buffer                       ! text = Ctrl-End
-end-of-buffer-extend-selection      ! text = Shift-Ctrl-End
-end-of-line                         ! text = Ctrl-e
-end-of-line                         ! text = End
-end-of-line-extend-selection        ! text = Ctrl-Shift-e
-end-of-line-extend-selection        ! text = Shift-End
-exit-named-mode                    = None
+end-of-buffer                       = None # ! text = Alt-greater # Same as Alt-Shift-greater
+end-of-buffer                       = None # ! text = Ctrl-End
+end-of-buffer-extend-selection      = None # ! text = Shift-Ctrl-End
+end-of-line                         = None # ! text = Ctrl-e
+end-of-line                         = None # ! text = End
+end-of-line-extend-selection        = None # ! text = Ctrl-Shift-e
+end-of-line-extend-selection        = None # ! text = Shift-End
+exit-named-mode                     = None
 equal-sized-panes                   = None
 escape                              = None
 eval-expression                     = None
@@ -5550,11 +5529,11 @@ keep-lines                          = None
 keyboard-quit                       = Ctrl-g
 kill-all-abbrevs                    = None
 kill-buffer                         = None
-kill-line                           ! text = Shift-Ctrl-k  # Ctrl-K conflicts with match-braket.
+kill-line                           ! text = Shift-Ctrl-k  # Ctrl-K
 kill-paragraph                      = None
 kill-rectangle                      = None
-kill-region                         = Ctrl-w
-kill-region-save                    = Alt-w 	   # Ctrl-w conflicts with close.
+kill-region                         = None      # Ctrl-w
+kill-region-save                    = Alt-w 	   # Ctrl-w
 kill-sentence                       = Alt-k
 kill-word                           = Alt-d
 line-number                         = None
@@ -5567,7 +5546,7 @@ mark-changed-items                  = None
 mark-changed-roots                  = None 
 mark-clones                         = None
 mark-subheads                       = None  
-match-bracket                       = Ctrl-K    # Conflicts with kill-line
+match-bracket                       = Ctrl-K    # kill-line
 minimize-all                        = None
 mode-help                           = None
 move-outline-down                   = Ctrl-D
@@ -5583,9 +5562,9 @@ move-past-close-extend-selection    = None</t>
 <t tx="ekr.20060122105527.22"># name-last-kbd-macro               = None
 negative-argument                   = None      # Alt-minus conflicts with contract-all.
 new                                 = Ctrl-n    # Ctrl-n conflicts with next-line.
-newline-and-indent:                 = Control-j
-next-line                           ! text = DnArrow
-next-line-extend-selection          ! text = Shift-DnArrow
+newline-and-indent                  = Ctrl-j
+next-line                           = None # ! text = DnArrow
+next-line-extend-selection          = None # ! text = Shift-DnArrow
 number-command                      = None
 number-command-0                    = None
 number-command-1                    = None
@@ -5607,7 +5586,7 @@ open-leoSettings-leo                = None
 open-offline-tutorial               = None
 open-online-home                    = None
 open-online-tutorial                = None
-open-outline                        = Ctrl-O    # Ctrl-O conflicts with insert-newline
+open-outline                        = None
 open-python-window                  = None  
 open-rectangle                      = None
 open-spell-tab                      = F7
@@ -5739,9 +5718,187 @@ write-at-file-nodes                 = Shift-Ctrl-W
 write-dirty-at-file-nodes           = None
 write-missing-at-file-nodes         = None
 write-outline-only                  = None 
-yank                                = Control-y
+yank                                = None   # Ctrl-y
 yank-pop                            = Alt-y
 yank-rectangle                      = None
 zap-to-character                    = Alt-z</t>
+<t tx="ekr.20060122105732"># Boilerplate for all modes.
+exit-named-mode         = Return
+exit-named-mode         = BackSpace
+keyboard-quit           = Ctrl-g
+mode-help               = Tab
+
+# demote                  -&gt; same = Ctrl-{
+# promote                 -&gt; same = Ctrl-{
+# copy-node               -&gt; same = Ctrl-Shift-c
+# cut-node                -&gt; same = Ctrl-Shift-x
+# paste-node              -&gt; same = Ctrl-Shift-p
+# undo                    -&gt; same = Ctrl-z
+# redo                    -&gt; same = Ctrl-Shift-z
+
+# contract-or-go-left   = Alt-LtArrow
+# expand-and-go-right   = Alt-RtArrow
+# goto-first-node       = Alt-Home
+# goto-last-visible     = Alt-End
+# goto-next-visible     = Alt-DnArrow
+# goto-prev-visible     = Alt-UpArrow
+
+insert-node                     = i # Must leave the state so we can edit the headline.
+contract-or-go-left     -&gt; same = l
+expand-and-go-right     -&gt; same = r
+goto-next-visible       -&gt; same = d
+goto-prev-visible       -&gt; same = u
+
+contract-or-go-left     -&gt; same = LtArrow
+expand-and-go-right     -&gt; same = RtArrow
+goto-first-node         -&gt; same = Home
+goto-last-visible       -&gt; same = End
+goto-next-visible       -&gt; same = DnArrow
+goto-prev-visible       -&gt; same = UpArrow
+
+move-outline-down       -&gt; same = Shift-DnArrow
+move-outline-left       -&gt; same = Shift-LtArrow
+move-outline-right      -&gt; same = Shift-RtArrow
+move-outline-up         -&gt; same = Shift-UpArrow
+
+move-outline-down       -&gt; same = Shift-d
+move-outline-left       -&gt; same = Shift-l
+move-outline-right      -&gt; same = Shift-r
+move-outline-up         -&gt; same = Shift-u</t>
+<t tx="ekr.20060122112534"># Boilerplate for most modes.
+exit-named-mode         = Return
+keyboard-quit           = Ctrl-g
+mode-help               = Tab
+enter-find-mode         = BackSpace
+
+# toggle-find-clone-find-all-option   = Shift-C
+# toggle-find-mark-changes-option     = Shift-M
+# toggle-find-mark-finds-option       = Shift-F
+# 
+# toggle-find-ignore-case-option      = i
+# toggle-find-in-body-option          = b
+# toggle-find-in-headline-option      = h
+# 
+# toggle-find-regex-option            = x
+# toggle-find-reverse-option          = r
+# toggle-find-word-option             = w
+# toggle-find-wrap-around-option      = a</t>
+<t tx="ekr.20060122113439"># Boilerplate for most modes.
+keyboard-quit       = Ctrl-g
+exit-named-mode     = Return
+exit-named-mode     = BackSpace
+mode-help           = Tab
+
+# Other modes
+enter-edit-extend-mode  = x
+enter-find-mode         = Ctrl-f
+
+# back-paragraph                      -&gt; same = braceleft 
+# back-paragraph-extend-selection     -&gt; same = Shift-braceleft
+
+# Alt-keys (sentence)
+# back-sentence                       -&gt; same = Alt-A 
+# back-sentence-extend-selection      -&gt; same = Alt-Shift-A
+# forward-sentence                    -&gt; same =Alt-e
+# forward-sentence-extend-selection   -&gt; same =Alt-Shift-e
+
+# Arrow keys
+back-char                           -&gt; same = LtArrow
+back-char-extend-selection          -&gt; same = Shift-LtArrow
+forward-char                        -&gt; same = RtArrow
+forward-char-extend-selection       -&gt; same = Shift-RtArrow
+next-line                           -&gt; same = DnArrow
+next-line-extend-selection          -&gt; same = Shift-DnArrow
+previous-line                       -&gt; same = UpArrow
+previous-line-extend-selection      -&gt; same = Shift-UpArrow
+
+# Ctrl-arrow keys (words)
+back-word                           -&gt; same = Ctrl-LtArrow
+back-word-extend-selection          -&gt; same = Ctrl-Shift-LtArrow
+forward-word                        -&gt; same = Ctrl-RtArrow
+forward-word-extend-selection       -&gt; same = Ctrl-Shift-RtArrow
+
+# Ctrl-keys (buffer,find-mode)
+end-of-buffer                        -&gt; same = Ctrl-End
+end-of-buffer-extend-selection       -&gt; same = Ctrl-Shift-End
+beginning-of-buffer                  -&gt; same = Ctrl-Home
+beginning-of-buffer-extend-selection -&gt; same = Ctrl-Shift-Home
+
+# Plain keys
+back-char                           -&gt; same = b
+back-char-extend-selection          -&gt; same = Shift-b
+beginning-of-line                   -&gt; same = a
+beginning-of-line-extend-selection  -&gt; same = Shift-a       
+beginning-of-line                   -&gt; same = Home
+beginning-of-line-extend-selection  -&gt; same = Shift-Home
+end-of-line                         -&gt; same = e
+end-of-line-extend-selection        -&gt; same = Shift-e
+end-of-line                         -&gt; same = End
+end-of-line-extend-selection        -&gt; same = Shift-End
+forward-char                        -&gt; same = f
+forward-char-extend-selection       -&gt; same = Shift-f
+next-line                           -&gt; same = n
+next-line-extend-selection          -&gt; same = Shift-n
+previous-line                       -&gt; same = p
+previous-line-extend-selection      -&gt; same = Shift-p</t>
+<t tx="ekr.20060122115313"># These are not active bindings.
+
+# back-char                           ! text = Ctrl-b
+# back-char                           ! text = LtArrow
+# back-char-extend-selection          ! text = Shift-LtArrow
+# back-paragraph                      ! text = Alt-braceleft 
+# back-paragraph-extend-selection     ! text = Alt-Shift-braceleft
+# back-sentence                       ! text = Alt-a  # No conflict
+# back-sentence-extend-selection      = None # **Must** be Alt-Shift-a, but that conflicts with Sort Siblings.  Sigh.
+# back-to-indentation                 = None
+# back-word                           ! text = Alt-b  
+# back-word                           ! text = Ctrl-LtArrow
+# back-word-extend-selection          ! text = Alt-Shift-b
+# back-word-extend-selection          ! text = Ctrl-Shift-LtArrow
+
+# end-of-buffer                       ! text = Alt-greater # Same as Alt-Shift-greater
+# end-of-buffer                       ! text = Ctrl-End
+# end-of-buffer-extend-selection      ! text = Shift-Ctrl-End
+# end-of-line                         ! text = Ctrl-e
+# end-of-line                         ! text = End
+# end-of-line-extend-selection        ! text = Ctrl-Shift-e
+# end-of-line-extend-selection        ! text = Shift-End</t>
+<t tx="ekr.20060122122150"># Boilerplate for most modes.
+keyboard-quit       = Ctrl-g
+exit-named-mode     = Return
+mode-help           = Tab
+
+# Other modes
+enter-edit-mode     = Ctrl-e
+enter-find-mode     = Ctrl-f
+enter-edit-mode     = BackSpace
+
+# Arrow keys
+back-char                           -&gt; same = LtArrow
+back-char-extend-selection          -&gt; same = Shift-LtArrow
+forward-char                        -&gt; same = RtArrow
+forward-char-extend-selection       -&gt; same = Shift-RtArrow
+next-line                           -&gt; same = DnArrow
+next-line-extend-selection          -&gt; same = Shift-DnArrow
+previous-line                       -&gt; same = UpArrow
+previous-line-extend-selection      -&gt; same = Shift-UpArrow
+
+# Ctrl-arrow keys (words)
+back-word-extend-selection          -&gt; same = Ctrl-LtArrow
+forward-word-extend-selection       -&gt; same = Ctrl-RtArrow
+
+# Ctrl-keys (buffer,find-mode)
+end-of-buffer-extend-selection       -&gt; same = Ctrl-End
+beginning-of-buffer-extend-selection -&gt; same = Ctrl-Home
+
+# Plain keys
+back-char-extend-selection          -&gt; same = b
+beginning-of-line-extend-selection  -&gt; same = a       
+beginning-of-line-extend-selection  -&gt; same = Home
+end-of-line-extend-selection        -&gt; same = e
+end-of-line-extend-selection        -&gt; same = End
+forward-char-extend-selection       -&gt; same = f
+next-line-extend-selection          -&gt; same = n
+previous-line-extend-selection      -&gt; same = p</t>
 </tnodes>
 </leo_file>
