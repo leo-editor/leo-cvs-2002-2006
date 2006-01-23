@@ -1275,7 +1275,6 @@ class editCommandsClass (baseEditCommandsClass):
             'goto-line':                            self.gotoLine,
             'how-many':                             self.howMany,
             # Use indentBody in leoCommands.py
-            #'indent-region':                       self.indentRegion,
             'indent-relative':                      self.indentRelative,
             'indent-rigidly':                       self.tabIndentRegion,
             'indent-to-comment-column':             self.indentToCommentColumn,
