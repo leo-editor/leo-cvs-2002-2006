@@ -289,7 +289,7 @@ class keyHandlerClass:
             k.bindKeyHelper(pane,shortcut,callback,commandName)
             bunchList.append(
                 g.bunch(pane=pane,func=callback,commandName=commandName))
-            shortcut = shortcut.lstrip('<').rstrip('>')
+            shortcut = '<%s>' % shortcut.lstrip('<').rstrip('>')
             k.bindingsDict [shortcut] = bunchList
             return True
     
@@ -2087,7 +2087,7 @@ class keyHandlerClass:
                 bunchList = k.bindingsDict.get(key,[])
                 for b in bunchList:
                     if b.commandName == commandName:
-                        return key
+                        return '<%s>' % key.lstrip('<').rstrip('>')
         return ''
         
     def getShortcutForCommand (self,command):
@@ -2099,7 +2099,7 @@ class keyHandlerClass:
                 bunchList = k.bindingsDict.get(key,[])
                 for b in bunchList:
                     if b.commandName == command.__name__:
-                        return key
+                         return '<%s>' % key.lstrip('<').rstrip('>')
         return ''
     #@nonl
     #@-node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
