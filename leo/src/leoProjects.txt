@@ -2156,6 +2156,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
+        shortcut = shortcut.lstrip('<').rstrip('>')
         k.bindingsDict [shortcut] = bunchList
         return True
 
@@ -3164,6 +3165,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
+        shortcut = shortcut.lstrip('<').rstrip('>')
         k.bindingsDict [shortcut] = bunchList
         return True
 
@@ -3783,8 +3785,6 @@ def printBindings (self,event,brief=False):
                    
     state = k.unboundKeyAction 
     k.showStateAndMode()
-                    
-    g.es('\n----- input state: %s' % (state),tabName=tabName)
 #@nonl
 #@-node:ekr.20051012201831:printBindings
 #@+node:ekr.20050920085536.65:masterCommand & helpers
@@ -4590,8 +4590,6 @@ def printBindings (self,event,brief=False):
                    
     state = k.unboundKeyAction 
     k.showStateAndMode()
-                    
-    g.es('\n----- input state: %s' % (state),tabName=tabName)
 #@nonl
 #@-node:ekr.20051012201831:printBindings
 #@+node:ekr.20051014061332:printCommands
@@ -4669,8 +4667,6 @@ def printBindings (self,event,brief=False):
                    
     state = k.unboundKeyAction 
     k.showStateAndMode()
-                    
-    g.es('\n----- input state: %s' % (state),tabName=tabName)
 #@nonl
 #@-node:ekr.20051012201831:printBindings
 #@+node:ekr.20051014061332:printCommands
@@ -5479,6 +5475,187 @@ def yoffsetTree(self,p,p1):
   This change had no effect one way or the other.
 #@nonl
 #@-node:ekr.20060120200529:What I did
+#@+node:ekr.20031218072017.2098:canonicalizeShortcut
+@ This code "canonicalizes" both the shortcuts that appear in menus and the
+arguments to bind, mostly ignoring case and the order in which special keys are
+specified.
+
+For example, Ctrl+Shift+a is the same as Shift+Control+A. Each generates
+Shift+Ctrl-A in the menu and Control+A as the argument to bind.
+
+Returns (bind_shortcut, menu_shortcut)
+@c
+
+def canonicalizeShortcut (self,shortcut):
+    
+    if shortcut == None or len(shortcut) == 0:
+        return None,None
+    s = shortcut.strip().lower()
+    
+    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
+    has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
+    has_alt   = s.find("alt") >= 0
+    has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
+    if sys.platform == "darwin":
+        if has_ctrl and not has_cmd:
+            has_cmd = True ; has_ctrl = False
+        if has_alt and not has_ctrl: # 9/14/04
+            has_ctrl = True ; has_alt = False
+    << set the last field, preserving case >>
+    << canonicalize the last field >>
+    << synthesize the shortcuts from the information >>
+    # print repr(shortcut),repr(bind_shortcut),repr(menu_shortcut)
+    return bind_shortcut,menu_shortcut
+#@nonl
+#@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+s2 = shortcut
+s2 = string.strip(s2)
+
+# Replace all minus signs by plus signs, except a trailing minus:
+if len(s2) > 0 and s2[-1] == "-":
+    s2 = string.replace(s2,"-","+")
+    s2 = s2[:-1] + "-"
+else:
+    s2 = string.replace(s2,"-","+")
+
+fields = string.split(s2,"+")
+if fields == None or len(fields) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+
+last = fields[-1]
+if last == None or len(last) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+#@nonl
+#@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+#@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
+bind_last = menu_last = last
+if len(last) == 1:
+    ch = last[0]
+    if ch in string.ascii_letters:
+        menu_last = string.upper(last)
+        if has_shift:
+            bind_last = string.upper(last)
+        else:
+            bind_last = string.lower(last)
+    elif ch in string.digits:
+        bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+    else:
+        << define dict of Tk bind names >>
+        if ch in theDict.keys():
+            bind_last = theDict[ch]
+elif len(last) > 0:
+    << define dict of special names >>
+    last2 = string.lower(last)
+    if last2 in theDict.keys():
+        bind_last,menu_last = theDict[last2]
+#@nonl
+#@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+# These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+theDict = {
+    "!" : "exclam",
+    '"' : "quotedbl",
+    "#" : "numbersign",
+    "$" : "dollar",
+    "%" : "percent",
+    "&" : "ampersand",
+    "'" : "quoteright",
+    "(" : "parenleft",
+    ")" : "parenright",
+    "*" : "asterisk",
+    "+" : "plus",
+    "," : "comma",
+    "-" : "minus",
+    "." : "period",
+    "/" : "slash",
+    ":" : "colon",
+    ";" : "semicolon",
+    "<" : "less",
+    "=" : "equal",
+    ">" : "greater",
+    "?" : "question",
+    "@" : "at",
+    "[" : "bracketleft",
+    "\\": "backslash",
+    "]" : "bracketright",
+    "^" : "asciicircum",
+    "_" : "underscore",
+    "`" : "quoteleft",
+    "{" : "braceleft",
+    "|" : "bar",
+    "}" : "braceright",
+    "~" : "asciitilde" }
+#@nonl
+#@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+#@+node:ekr.20031218072017.2101:<< define dict of special names >>
+# These keys are simply made-up names.  The menu_bind values are known to Tk.
+# Case is not significant in the keys.
+
+theDict = {
+    "bksp"    : ("BackSpace","BkSp"),
+    "esc"     : ("Escape","Esc"),
+    # Arrow keys...
+    "dnarrow" : ("Down", "DnArrow"),
+    "ltarrow" : ("Left", "LtArrow"),
+    "rtarrow" : ("Right","RtArrow"),
+    "uparrow" : ("Up",   "UpArrow"),
+    # Page up/down keys...
+    "pageup"  : ("Prior","PgUp"),
+    "pagedn"  : ("Next", "PgDn")
+}
+
+@  The following are not translated, so what appears in the menu is the same as what is passed to Tk.  Case is significant.
+
+Note: the Tk documentation states that not all of these may be available on all platforms.
+
+F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+Down, Left, Right, Up,
+Begin, End, Home, Next, Prior,
+Num_Lock, Pause, Scroll_Lock, Sys_Req,
+KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+KP_F1,KP_F2,KP_F3,KP_F4,
+KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
+#@nonl
+#@-node:ekr.20031218072017.2101:<< define dict of special names >>
+#@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
+#@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+bind_head = menu_head = ""
+
+if has_alt:
+    bind_head = bind_head + "Alt-"
+    menu_head = menu_head + "Alt+"
+
+if has_ctrl:
+    bind_head = bind_head + "Control-"
+    menu_head = menu_head + "Ctrl+"
+    
+if has_cmd: # 11/18/03
+    bind_head = bind_head + "Command-"
+    menu_head = menu_head + "Command+"
+    
+if has_shift:
+    menu_head = menu_head + "Shift+"
+    if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+        bind_head = bind_head + "Shift-"
+
+# New in 4.4b2:
+if not bind_head and bind_last and len(bind_last) == 1:
+    bind_shortcut = '<Key-%s>' % bind_last
+    # g.trace(bind_shortcut)
+    "<" + bind_head + bind_last + ">"
+    # bind_shortcut = bind_last # Just return the actual character.
+    menu_shortcut = menu_head + menu_last
+else:
+    bind_shortcut = "<" + bind_head + bind_last + ">"
+    menu_shortcut = menu_head + menu_last
+#@nonl
+#@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+#@-node:ekr.20031218072017.2098:canonicalizeShortcut
 #@+node:ekr.20060122191605:KeyHandler
 #@+node:ekr.20051122104219:prettyPrintKey
 def prettyPrintKey (self,key):
@@ -5489,24 +5666,24 @@ def prettyPrintKey (self,key):
     
     key,junk = c.frame.menu.canonicalizeShortcut(key)
     if not key: return ''
-
-    if key.startswith('<'):
-        key = key[1:]
-    if key.endswith('>'):
-        key = key[:-1]
-
-    if not key: return ''
-    if len(key) == 1:
-        if key.islower():
-            return 'Plain-' + key.upper()
-        else:
-            return 'Shift-' + key
-        
-    ch1 = key[-2] ; ch2 = key[-1]
     
-    if ch1 == '-':
-        if ch2.islower():
-            return key[:-1] + ch2.upper()
+    key = key.lstrip('<').rstrip('>')
+    if not key: return ''
+
+    if len(key) == 1 or key.startswith('Key-'):
+        ch = key[-1]
+        if ch.islower():
+            return 'Key-' + ch.upper()
+        else:
+            return 'Shift-' + ch
+    elif (
+        not key.startswith('Control-') and
+        not key.startswith('Alt-') and
+        not key.startswith('Shift-')
+    ):
+        return 'Key-' + key
+    elif len(key) > 1 and key[-2] == '-':
+        return key[:-1] + key[-1].upper()
    
     return key
 #@nonl
@@ -5884,6 +6061,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
+        shortcut = shortcut.lstrip('<').rstrip('>')
         k.bindingsDict [shortcut] = bunchList
         return True
 
@@ -6170,6 +6348,60 @@ def endEditing(self,restoreFocus=False):
         tree.endEditLabel()
 #@nonl
 #@-node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
+#@+node:ekr.20051012201831:printBindings
+def printBindings (self,event,brief=False):
+
+    '''Print all the bindings presently in effect.'''
+
+    k = self ; c = k.c
+    d = k.bindingsDict ; tabName = 'Bindings'
+    keys = d.keys() ; keys.sort()
+    c.frame.log.clearTab(tabName)
+
+    data = [] ; n = 20
+    for key in keys:
+        bunchList = d.get(key,[])
+        for b in bunchList:
+            if not brief or k.isPlainKey(key):
+                pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
+                s1 = k.prettyPrintKey(key) + pane
+                s2 = b.commandName
+                n = max(n,len(s1))
+                data.append((s1,s2),)
+    
+    # This isn't perfect in variable-width fonts.
+    for s1,s2 in data:
+        g.es('%*s\t%s' % (-(n+1),s1,s2),tabName=tabName)
+                   
+    state = k.unboundKeyAction 
+    k.showStateAndMode()
+#@nonl
+#@-node:ekr.20051012201831:printBindings
+#@+node:ekr.20051014061332:printCommands
+def printCommands (self,event):
+
+    '''Print all the known commands and their bindings, if any.'''
+
+    k = self ; c = k.c ; tabName = 'Commands'
+    
+    c.frame.log.clearTab(tabName)
+    
+    inverseBindingDict = k.computeInverseBindingDict()
+    commandNames = c.commandsDict.keys() ; commandNames.sort()
+
+    data = [] ; n = 20
+    for commandName in commandNames:
+        shortcutList = inverseBindingDict.get(commandName,[''])
+        for shortcut in shortcutList:
+            s1 = commandName
+            s2 = k.prettyPrintKey(shortcut)
+            n = max(n,len(s1))
+            data.append((s1,s2),)
+                
+    # This isn't perfect in variable-width fonts.
+    for s1,s2 in data:
+        g.es('%*s\t%s' % (-(n+1),s1,s2),tabName=tabName)
+#@-node:ekr.20051014061332:printCommands
 #@-node:ekr.20060121095848:Commands
 #@+node:ekr.20060121095848.3:Tree...
 #@+node:ekr.20040803072955.90:head key handlers

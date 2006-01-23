@@ -289,6 +289,7 @@ class keyHandlerClass:
             k.bindKeyHelper(pane,shortcut,callback,commandName)
             bunchList.append(
                 g.bunch(pane=pane,func=callback,commandName=commandName))
+            shortcut = shortcut.lstrip('<').rstrip('>')
             k.bindingsDict [shortcut] = bunchList
             return True
     
@@ -1478,8 +1479,6 @@ class keyHandlerClass:
                        
         state = k.unboundKeyAction 
         k.showStateAndMode()
-                        
-        g.es('\n----- input state: %s' % (state),tabName=tabName)
     #@nonl
     #@-node:ekr.20051012201831:printBindings
     #@+node:ekr.20051014061332:printCommands
@@ -2113,24 +2112,24 @@ class keyHandlerClass:
         
         key,junk = c.frame.menu.canonicalizeShortcut(key)
         if not key: return ''
-    
-        if key.startswith('<'):
-            key = key[1:]
-        if key.endswith('>'):
-            key = key[:-1]
-    
-        if not key: return ''
-        if len(key) == 1:
-            if key.islower():
-                return 'Plain-' + key.upper()
-            else:
-                return 'Shift-' + key
-            
-        ch1 = key[-2] ; ch2 = key[-1]
         
-        if ch1 == '-':
-            if ch2.islower():
-                return key[:-1] + ch2.upper()
+        key = key.lstrip('<').rstrip('>')
+        if not key: return ''
+    
+        if len(key) == 1 or key.startswith('Key-'):
+            ch = key[-1]
+            if ch.islower():
+                return 'Key-' + ch.upper()
+            else:
+                return 'Shift-' + ch
+        elif (
+            not key.startswith('Control-') and
+            not key.startswith('Alt-') and
+            not key.startswith('Shift-')
+        ):
+            return 'Key-' + key
+        elif len(key) > 1 and key[-2] == '-':
+            return key[:-1] + key[-1].upper()
        
         return key
     #@nonl

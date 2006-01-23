@@ -1560,10 +1560,6 @@ class leoMenu:
         #@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
         bind_head = menu_head = ""
         
-        if has_shift:
-            menu_head = "Shift+"
-            if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
-                bind_head = "Shift-"
         if has_alt:
             bind_head = bind_head + "Alt-"
             menu_head = menu_head + "Alt+"
@@ -1575,10 +1571,18 @@ class leoMenu:
         if has_cmd: # 11/18/03
             bind_head = bind_head + "Command-"
             menu_head = menu_head + "Command+"
+            
+        if has_shift:
+            menu_head = menu_head + "Shift+"
+            if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+                bind_head = bind_head + "Shift-"
         
         # New in 4.4b2:
         if not bind_head and bind_last and len(bind_last) == 1:
-            bind_shortcut = bind_last # Just return the actual character.
+            bind_shortcut = '<Key-%s>' % bind_last
+            # g.trace(bind_shortcut)
+            "<" + bind_head + bind_last + ">"
+            # bind_shortcut = bind_last # Just return the actual character.
             menu_shortcut = menu_head + menu_last
         else:
             bind_shortcut = "<" + bind_head + bind_last + ">"
