@@ -4738,7 +4738,7 @@ class baseCommands:
             u.afterChangeGroup(current,command,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(current)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
         c.updateSyntaxColorer(current) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1767:demote
@@ -4800,7 +4800,7 @@ class baseCommands:
                 u.afterMoveNode(p,'Move Down',undoData,dirtyVnodeList)
                 c.selectPosition(p)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1768:moveOutlineDown
@@ -4832,7 +4832,7 @@ class baseCommands:
             u.afterMoveNode(p,'Move Left',undoData,dirtyVnodeList)
             c.selectPosition(p)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1770:moveOutlineLeft
@@ -4925,7 +4925,7 @@ class baseCommands:
                 u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
                 c.selectPosition(p)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1772:moveOutlineUp
@@ -4958,7 +4958,7 @@ class baseCommands:
             u.afterChangeGroup(p,command,dirtyVnodeList=dirtyVnodeList)
             c.selectPosition(p)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1774:promote
