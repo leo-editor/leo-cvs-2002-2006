@@ -78,6 +78,7 @@ class baseCommands:
     
         self.useTextMinibuffer = False
         self.showMinibuffer = c.config.getBool('useMinibuffer')
+        self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
     
         # initialize the sub-commanders.
         # c.finishCreate creates the sub-commanders for edit commands.

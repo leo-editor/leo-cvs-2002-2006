@@ -267,6 +267,8 @@ class parserBaseClass:
     
         # Compute the mode name.
         name = name.strip().lower()
+        k = name.find(' ')
+        if k > -1: name = name[:k]
         if name.endswith('mode'):
             name = name[:-4].strip()
         if name.endswith('-'):

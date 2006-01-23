@@ -413,10 +413,12 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
 <v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
-<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-E)</vh>
+<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
-<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh></v>
+<v t="ekr.20060122105527.11" a="E" annotate="7d71002e"><vh>@mode File Control-W)</vh>
+<v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
+</v>
 <v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
 </v>
@@ -424,10 +426,11 @@
 <v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
 </v>
 <v t="ekr.20060122105527.15" a="E"><vh>@mode Quick-command (Alt-C)</vh></v>
-<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh></v>
+<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
+<v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
+</v>
 </v>
 <v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
-<v t="ekr.20060122115313"><vh>Commands now in edit mode</vh></v>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
@@ -448,21 +451,24 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
 <v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
-<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-E)</vh>
+<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
-<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh></v>
+<v t="ekr.20060122105527.11" a="E" annotate="7d71002e"><vh>@mode File Control-W)</vh>
+<v t="ekr.20060122182825" a="TV"><vh>@mode File-open</vh></v>
+</v>
 <v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
 </v>
 <v t="ekr.20060122105527.14" a="E"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
 <v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
 </v>
-<v t="ekr.20060122105527.15" a="ETV"><vh>@mode Quick-command (Alt-C)</vh></v>
-<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh></v>
+<v t="ekr.20060122105527.15" a="E"><vh>@mode Quick-command (Alt-C)</vh></v>
+<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
+<v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
+</v>
 </v>
 <v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
-<v t="ekr.20060122115313"><vh>Commands now in edit mode</vh></v>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
@@ -5127,10 +5133,7 @@ cut-text                = Ctrl-x
 undo                    = Ctrl-Z</t>
 <t tx="ekr.20060122105527">@color</t>
 <t tx="ekr.20060122105527.1">@nocolor
-
-Support the exectution of a command when entering a mode.
-
-- Pretty Print should capitalize plain keys.</t>
+</t>
 <t tx="ekr.20060122105527.2">#enter-command-mode     = Ctrl-space
 add-comments            = Ctrl-(
 auto-complete           = Ctrl-Tab
@@ -5206,13 +5209,10 @@ mode-help           = Tab
 
 close-window            = Alt-F4
 
-open-leoDocs-leo        = Shift-d
-open-leoPlugins-leo     = Shift-p
-open-leoSettings-leo    = Shift-s
+enter-file-open-mode    = o
 
 save-file-as            = a
 new                     = n
-open-outline            = o     # to do: should be open-outline-by-name.
 exit-leo                = q
 save-file               = s
 save-file-to            = t
@@ -5297,11 +5297,13 @@ isearch-backward     = b
 # Options mode isn't needed just yet.
 # enter-options-mode          = Ctrl-Y    # yank
 
-enter-edit-mode             = Ctrl-E    #
+enter-edit-mode             = Ctrl-E    # end-of-line
 enter-edit-extend-mode      = None
 enter-find-mode             = Ctrl-F    # open-find-tab
 enter-outline-mode          = Ctrl-O    # open
+enter-outline-move-move     = None
 enter-file-mode             = Ctrl-W    # kill-region
+enter-file-open-mode        = None
 
 enter-quick-command-mode    = Alt-C</t>
 <t tx="ekr.20060122105527.20"># Important: the print-commands and print-bindings show what bindings are in effect.
@@ -5649,7 +5651,7 @@ set-insert-state                    = None
 set-fill-column                     = None
 set-fill-prefix                     = None
 set-font                            = None
-set-mark-command                    = Ctrl-space    # Also Ctrl-Shift-at
+set-mark-command                    = None # enter-edit-mode
 set-overwrite-state                 = None
 settings                            = None          
 shell-command                       = None
@@ -5727,23 +5729,27 @@ exit-named-mode         = Return
 exit-named-mode         = BackSpace
 keyboard-quit           = Ctrl-g
 mode-help               = Tab
+enter-outline-move-mode = M
 
-# demote                  -&gt; same = Ctrl-{
-# promote                 -&gt; same = Ctrl-{
-# copy-node               -&gt; same = Ctrl-Shift-c
-# cut-node                -&gt; same = Ctrl-Shift-x
-# paste-node              -&gt; same = Ctrl-Shift-p
-# undo                    -&gt; same = Ctrl-z
-# redo                    -&gt; same = Ctrl-Shift-z
+demote                  -&gt; same = Ctrl-{
+promote                 -&gt; same = Ctrl-}
+copy-node               -&gt; same = Ctrl-Shift-c
+cut-node                -&gt; same = Ctrl-Shift-x
+paste-node              -&gt; same = Ctrl-Shift-p
+undo                    -&gt; same = Ctrl-z
+redo                    -&gt; same = Ctrl-Shift-z
 
-# contract-or-go-left   = Alt-LtArrow
-# expand-and-go-right   = Alt-RtArrow
-# goto-first-node       = Alt-Home
-# goto-last-visible     = Alt-End
-# goto-next-visible     = Alt-DnArrow
-# goto-prev-visible     = Alt-UpArrow
+# These must exit the mode so the headline can be editied.
+edit-headline           = Ctrl-h
+insert-node             = Ctrl-i 
+edit-headline           = h
+insert-node             = i
 
-insert-node                     = i # Must leave the state so we can edit the headline.
+goto-first-node         -&gt; same = Home
+goto-last-visible       -&gt; same = End
+goto-first-node         -&gt; same = a
+goto-last-visible       -&gt; same = z
+
 contract-or-go-left     -&gt; same = l
 expand-and-go-right     -&gt; same = r
 goto-next-visible       -&gt; same = d
@@ -5751,20 +5757,8 @@ goto-prev-visible       -&gt; same = u
 
 contract-or-go-left     -&gt; same = LtArrow
 expand-and-go-right     -&gt; same = RtArrow
-goto-first-node         -&gt; same = Home
-goto-last-visible       -&gt; same = End
 goto-next-visible       -&gt; same = DnArrow
-goto-prev-visible       -&gt; same = UpArrow
-
-move-outline-down       -&gt; same = Shift-DnArrow
-move-outline-left       -&gt; same = Shift-LtArrow
-move-outline-right      -&gt; same = Shift-RtArrow
-move-outline-up         -&gt; same = Shift-UpArrow
-
-move-outline-down       -&gt; same = Shift-d
-move-outline-left       -&gt; same = Shift-l
-move-outline-right      -&gt; same = Shift-r
-move-outline-up         -&gt; same = Shift-u</t>
+goto-prev-visible       -&gt; same = UpArrow</t>
 <t tx="ekr.20060122112534"># Boilerplate for most modes.
 exit-named-mode         = Return
 keyboard-quit           = Ctrl-g
@@ -5785,22 +5779,17 @@ enter-find-mode         = BackSpace
 # toggle-find-wrap-around-option      = a</t>
 <t tx="ekr.20060122113439"># Boilerplate for most modes.
 keyboard-quit       = Ctrl-g
-exit-named-mode     = Return
-exit-named-mode     = BackSpace
+# exit-named-mode     = Return # Doesn't work well in headlines.
 mode-help           = Tab
+exit-named-mode     = BackSpace # backward-delete-char
 
 # Other modes
 enter-edit-extend-mode  = x
 enter-find-mode         = Ctrl-f
 
-# back-paragraph                      -&gt; same = braceleft 
-# back-paragraph-extend-selection     -&gt; same = Shift-braceleft
-
-# Alt-keys (sentence)
-# back-sentence                       -&gt; same = Alt-A 
-# back-sentence-extend-selection      -&gt; same = Alt-Shift-A
-# forward-sentence                    -&gt; same =Alt-e
-# forward-sentence-extend-selection   -&gt; same =Alt-Shift-e
+# Standard bindings:
+# undo                -&gt; same = Ctrl-z
+# redo                -&gt; same = Ctrl-Shift-z
 
 # Arrow keys
 back-char                           -&gt; same = LtArrow
@@ -5818,87 +5807,134 @@ back-word-extend-selection          -&gt; same = Ctrl-Shift-LtArrow
 forward-word                        -&gt; same = Ctrl-RtArrow
 forward-word-extend-selection       -&gt; same = Ctrl-Shift-RtArrow
 
-# Ctrl-keys (buffer,find-mode)
-end-of-buffer                        -&gt; same = Ctrl-End
-end-of-buffer-extend-selection       -&gt; same = Ctrl-Shift-End
-beginning-of-buffer                  -&gt; same = Ctrl-Home
-beginning-of-buffer-extend-selection -&gt; same = Ctrl-Shift-Home
+# Home &amp; End: usually start/end of line, but here using the buffer is convenient.
+beginning-of-buffer                  -&gt; same = Home
+beginning-of-buffer-extend-selection -&gt; same = Shift-Home
+end-of-buffer                        -&gt; same = End
+end-of-buffer-extend-selection       -&gt; same = Shift-End
+
+scroll-down                         -&gt; same = PageDn
+scroll-down-extend-selection        -&gt; same = Shift-PageDn
+scroll-up                           -&gt; same = PageUp 
+scroll-up-extend-selection          -&gt; same = Shift-PageUp
+
+# Deletes.
+#delete-char                         -&gt; same = Delete
+#backward-delete-char                -&gt; same = BackSpace
 
 # Plain keys
 back-char                           -&gt; same = b
 back-char-extend-selection          -&gt; same = Shift-b
+back-word                           -&gt; same = r         # unusual
+back-word-extend-selection          -&gt; same = Shift-r   # unusual
+beginning-of-buffer                 -&gt; same = h         # unusual
+beginning-of-buffer-extend-selection -&gt;same = Shift-h   # unusual
+end-of-buffer                       -&gt; same = z         # unusual
+end-of-buffer-extend-selection      -&gt; same = Shift-z   # unusual
 beginning-of-line                   -&gt; same = a
 beginning-of-line-extend-selection  -&gt; same = Shift-a       
-beginning-of-line                   -&gt; same = Home
-beginning-of-line-extend-selection  -&gt; same = Shift-Home
 end-of-line                         -&gt; same = e
 end-of-line-extend-selection        -&gt; same = Shift-e
-end-of-line                         -&gt; same = End
-end-of-line-extend-selection        -&gt; same = Shift-End
 forward-char                        -&gt; same = f
 forward-char-extend-selection       -&gt; same = Shift-f
+forward-word                        -&gt; same = w
+forward-word-extend-selection       -&gt; same = Shift-w
+next-line                           -&gt; same = d
+next-line-extend-selection          -&gt; same = Shift-d
 next-line                           -&gt; same = n
 next-line-extend-selection          -&gt; same = Shift-n
 previous-line                       -&gt; same = p
-previous-line-extend-selection      -&gt; same = Shift-p</t>
-<t tx="ekr.20060122115313"># These are not active bindings.
-
-# back-char                           ! text = Ctrl-b
-# back-char                           ! text = LtArrow
-# back-char-extend-selection          ! text = Shift-LtArrow
-# back-paragraph                      ! text = Alt-braceleft 
-# back-paragraph-extend-selection     ! text = Alt-Shift-braceleft
-# back-sentence                       ! text = Alt-a  # No conflict
-# back-sentence-extend-selection      = None # **Must** be Alt-Shift-a, but that conflicts with Sort Siblings.  Sigh.
-# back-to-indentation                 = None
-# back-word                           ! text = Alt-b  
-# back-word                           ! text = Ctrl-LtArrow
-# back-word-extend-selection          ! text = Alt-Shift-b
-# back-word-extend-selection          ! text = Ctrl-Shift-LtArrow
-
-# end-of-buffer                       ! text = Alt-greater # Same as Alt-Shift-greater
-# end-of-buffer                       ! text = Ctrl-End
-# end-of-buffer-extend-selection      ! text = Shift-Ctrl-End
-# end-of-line                         ! text = Ctrl-e
-# end-of-line                         ! text = End
-# end-of-line-extend-selection        ! text = Ctrl-Shift-e
-# end-of-line-extend-selection        ! text = Shift-End</t>
+previous-line-extend-selection      -&gt; same = Shift-p
+previous-line                       -&gt; same = u
+previous-line-extend-selection      -&gt; same = Shift-u</t>
 <t tx="ekr.20060122122150"># Boilerplate for most modes.
 keyboard-quit       = Ctrl-g
-exit-named-mode     = Return
+exit-named-mode     = BackSpace
 mode-help           = Tab
 
 # Other modes
 enter-edit-mode     = Ctrl-e
 enter-find-mode     = Ctrl-f
-enter-edit-mode     = BackSpace
+# enter-edit-mode     = BackSpace
+
+# Standard bindings.
+# undo                -&gt; same = Ctrl-z
+# redo                -&gt; same = Ctrl-Shift-z
 
 # Arrow keys
 back-char                           -&gt; same = LtArrow
-back-char-extend-selection          -&gt; same = Shift-LtArrow
 forward-char                        -&gt; same = RtArrow
-forward-char-extend-selection       -&gt; same = Shift-RtArrow
 next-line                           -&gt; same = DnArrow
-next-line-extend-selection          -&gt; same = Shift-DnArrow
 previous-line                       -&gt; same = UpArrow
-previous-line-extend-selection      -&gt; same = Shift-UpArrow
-
-# Ctrl-arrow keys (words)
 back-word-extend-selection          -&gt; same = Ctrl-LtArrow
 forward-word-extend-selection       -&gt; same = Ctrl-RtArrow
 
-# Ctrl-keys (buffer,find-mode)
-end-of-buffer-extend-selection       -&gt; same = Ctrl-End
-beginning-of-buffer-extend-selection -&gt; same = Ctrl-Home
+# Deletes.
+# delete-char                         -&gt; same = Delete
+# backward-delete-char                -&gt; same = BackSpace
+
+# Special keys
+end-of-buffer-extend-selection       -&gt; same = End
+beginning-of-buffer-extend-selection -&gt; same = Home
+scroll-down-extend-selection         -&gt; same = PageDn
+scroll-up-extend-selection           -&gt; same = PageUp
 
 # Plain keys
 back-char-extend-selection          -&gt; same = b
-beginning-of-line-extend-selection  -&gt; same = a       
-beginning-of-line-extend-selection  -&gt; same = Home
+back-word-extend-selection          -&gt; same = r   # unusual
+beginning-of-line-extend-selection  -&gt; same = a
+beginning-of-buffer-extend-selection -&gt;same = h   # unusual
+end-of-buffer-extend-selection      -&gt; same = z   # unusual
 end-of-line-extend-selection        -&gt; same = e
-end-of-line-extend-selection        -&gt; same = End
 forward-char-extend-selection       -&gt; same = f
 next-line-extend-selection          -&gt; same = n
-previous-line-extend-selection      -&gt; same = p</t>
+next-line-extend-selection          -&gt; same = d
+previous-line-extend-selection      -&gt; same = p
+previous-line-extend-selection      -&gt; same = u
+forward-word-extend-selection       -&gt; same = w</t>
+<t tx="ekr.20060122130002"># Boilerplate for all modes.
+exit-named-mode         = Return
+enter-outline-mode      = BackSpace
+keyboard-quit           = Ctrl-g
+mode-help               = Tab
+
+# These must exit the mode so the headline can be editied.
+edit-headline           = Ctrl-h
+insert-node             = Ctrl-i 
+edit-headline           = h
+insert-node             = i
+
+# Standard control keys.
+contract-all            -&gt; same = Alt--
+demote                  -&gt; same = Ctrl-{
+promote                 -&gt; same = Ctrl-}
+copy-node               -&gt; same = Ctrl-Shift-c
+cut-node                -&gt; same = Ctrl-Shift-x
+paste-node              -&gt; same = Ctrl-Shift-p
+undo                    -&gt; same = Ctrl-z
+redo                    -&gt; same = Ctrl-Shift-z
+
+contract-or-go-left     -&gt; same = LtArrow
+expand-and-go-right     -&gt; same = RtArrow
+goto-first-node         -&gt; same = Home
+goto-last-visible       -&gt; same = End
+goto-next-visible       -&gt; same = DnArrow
+goto-prev-visible       -&gt; same = UpArrow
+
+move-outline-down       -&gt; same = d
+move-outline-left       -&gt; same = l
+move-outline-right      -&gt; same = r
+move-outline-up         -&gt; same = u</t>
+<t tx="ekr.20060122182825"># Boilerplate for most modes.
+keyboard-quit       = Ctrl-g
+exit-named-mode     = Return
+mode-help           = Tab
+enter-file-mode     = BackSpace
+
+open-leoDocs-leo        = d
+open-leoPlugins-leo     = p
+open-leoSettings-leo    = s
+
+open-outline            = o     # to do: should be open-outline-by-name.</t>
 </tnodes>
 </leo_file>

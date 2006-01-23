@@ -1556,6 +1556,11 @@ class rstClass:
         
         openDirectory = self.c.frame.openDirectory
         default_path = self.getOption('default_path')
+        
+        if default_path:
+            default_path = g.os_path_abspath(default_path)
+        
+        # g.trace('default_path',default_path)
     
         if default_path:
             path = g.os_path_join(default_path,fileName)
@@ -1563,6 +1568,8 @@ class rstClass:
             path = g.os_path_join(openDirectory,fileName)
         else:
             path = fileName
+            
+        # g.trace('path',path)
             
         return path
     #@nonl

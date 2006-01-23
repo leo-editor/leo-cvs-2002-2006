@@ -1977,13 +1977,13 @@ def fullCommand (self,event,specialStroke=None,specialFunc=None):
     
     '''Handle 'full-command' (alt-x) mode.'''
 
-    k = self ; c = k.c ; f = c.frame ; state = k.getState('altx')
+    k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
     keysym = (event and event.keysym) or ''
     ch = (event and event.char) or ''
     # g.trace('state',state,keysym)
     if state == 0:
         k.completionFocusWidget = g.app.gui.get_focus(c.frame)
-        k.setState('altx',1,handler=k.fullCommand) 
+        k.setState('full-command',1,handler=k.fullCommand) 
         k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
         # Init mb_ ivars. This prevents problems with an initial backspace.
         k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
@@ -2601,8 +2601,8 @@ def exitNamedMode (self,event):
 
     if k.inState():
         k.endMode(event)
-        k.showStateAndMode()
-#@nonl
+    
+    k.showStateAndMode()
 #@-node:ekr.20060121104301:exitNamedMode
 #@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
@@ -2619,8 +2619,8 @@ def modeHelp (self,event):
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
-    else:
-        k.printBindings(event,brief=True)
+    # else:
+        # k.printBindings(event,brief=True)
 
     return 'break'
 #@nonl
@@ -2637,16 +2637,20 @@ def modeHelpHelper (self,d):
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut not in (None,'None'):
-                s1 = key
-                s2 = k.prettyPrintKey(shortcut)
+                s1 = k.prettyPrintKey(shortcut)
+                s2 = key
                 n = max(n,len(s1))
                 data.append((s1,s2),)
+                
+    data.sort()
+    
+    g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
         
     # This isn't perfect in variable-width fonts.
     for s1,s2 in data:
         g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
         
-    g.es('\n----- %s' % (k.inputModeName),tabName=tabName)
+    
 #@nonl
 #@-node:ekr.20060104125946:modeHelpHelper
 #@-node:ekr.20060104164523:modeHelp
@@ -2768,8 +2772,10 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
-        
-    t = c.frame.body.bodyCtrl
+
+
+    t = k.modeWidget = g.app.gui.get_focus(c.frame)        
+    # t = c.frame.body.bodyCtrl
     k.savedBindtags = t.bindtags()
     tagName = '%s-%s' % (modeName,c.fileName())
     t.bindtags(tuple([tagName]))
@@ -2794,7 +2800,8 @@ def endMode(self,event):
     w = g.app.gui.get_focus(c.frame)
 
     # Restore the bind tags.
-    t = c.frame.body.bodyCtrl
+    # t = c.frame.body.bodyCtrl
+    t = k.modeWidget
     t.bindtags(k.savedBindtags)
     
     c.frame.log.deleteTab('Mode')
@@ -4081,8 +4088,8 @@ def exitNamedMode (self,event):
 
     if k.inState():
         k.endMode(event)
-        k.showStateAndMode()
-#@nonl
+    
+    k.showStateAndMode()
 #@-node:ekr.20060121104301:exitNamedMode
 #@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
@@ -4099,8 +4106,8 @@ def modeHelp (self,event):
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
-    else:
-        k.printBindings(event,brief=True)
+    # else:
+        # k.printBindings(event,brief=True)
 
     return 'break'
 #@nonl
@@ -4117,16 +4124,20 @@ def modeHelpHelper (self,d):
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut not in (None,'None'):
-                s1 = key
-                s2 = k.prettyPrintKey(shortcut)
+                s1 = k.prettyPrintKey(shortcut)
+                s2 = key
                 n = max(n,len(s1))
                 data.append((s1,s2),)
+                
+    data.sort()
+    
+    g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
         
     # This isn't perfect in variable-width fonts.
     for s1,s2 in data:
         g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
         
-    g.es('\n----- %s' % (k.inputModeName),tabName=tabName)
+    
 #@nonl
 #@-node:ekr.20060104125946:modeHelpHelper
 #@-node:ekr.20060104164523:modeHelp
@@ -4248,8 +4259,10 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
-        
-    t = c.frame.body.bodyCtrl
+
+
+    t = k.modeWidget = g.app.gui.get_focus(c.frame)        
+    # t = c.frame.body.bodyCtrl
     k.savedBindtags = t.bindtags()
     tagName = '%s-%s' % (modeName,c.fileName())
     t.bindtags(tuple([tagName]))
@@ -4274,7 +4287,8 @@ def endMode(self,event):
     w = g.app.gui.get_focus(c.frame)
 
     # Restore the bind tags.
-    t = c.frame.body.bodyCtrl
+    # t = c.frame.body.bodyCtrl
+    t = k.modeWidget
     t.bindtags(k.savedBindtags)
     
     c.frame.log.deleteTab('Mode')
@@ -4607,7 +4621,7 @@ def repeatComplexCommand (self,event):
     k = self
 
     if k.mb_history:
-        k.setState('last-altx',1,handler=k.doLastAltX)
+        k.setState('last-full-command',1,handler=k.doLastAltX)
         k.setLabelBlue("Redo: %s" % k.mb_history[0])
     return 'break'
     
@@ -4693,16 +4707,20 @@ def modeHelpHelper (self,d):
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut not in (None,'None'):
-                s1 = key
-                s2 = k.prettyPrintKey(shortcut)
+                s1 = k.prettyPrintKey(shortcut)
+                s2 = key
                 n = max(n,len(s1))
                 data.append((s1,s2),)
+                
+    data.sort()
+    
+    g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
         
     # This isn't perfect in variable-width fonts.
     for s1,s2 in data:
         g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
         
-    g.es('\n----- %s' % (k.inputModeName),tabName=tabName)
+    
 #@nonl
 #@-node:ekr.20060104125946:modeHelpHelper
 #@+node:ekr.20060104164523:modeHelp
@@ -4720,8 +4738,8 @@ def modeHelp (self,event):
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
-    else:
-        k.printBindings(event,brief=True)
+    # else:
+        # k.printBindings(event,brief=True)
 
     return 'break'
 #@nonl
@@ -4738,30 +4756,28 @@ def modeHelpHelper (self,d):
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut not in (None,'None'):
-                s1 = key
-                s2 = k.prettyPrintKey(shortcut)
+                s1 = k.prettyPrintKey(shortcut)
+                s2 = key
                 n = max(n,len(s1))
                 data.append((s1,s2),)
+                
+    data.sort()
+    
+    g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
         
     # This isn't perfect in variable-width fonts.
     for s1,s2 in data:
         g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
         
-    g.es('\n----- %s' % (k.inputModeName),tabName=tabName)
+    
 #@nonl
 #@-node:ekr.20060104125946:modeHelpHelper
 #@-node:ekr.20060104164523:modeHelp
 #@-node:ekr.20060119201657:Improved printBindings, printCommands & modeHelp
 #@-node:ekr.20060120105247:Fixed minor bugs & made minor improvements
-#@+node:ekr.20060120105605.1:Fix problems with plain keys
-#@+node:ekr.20060120200529:Notes
+#@+node:ekr.20060120105605.1:(Modes project)
+#@+node:ekr.20060120200529:What I did
 @nocolor
-
-To do:
-
-- Mode help is not correct for insert-state, no-mode.
-
-What I did:
 
 - Made insert mode the default, even for vim-like bindings.
 
@@ -4785,7 +4801,8 @@ What I did:
 
 - Changed canonicalizeShortcut so it returns a single character for plain characters.
   This change had no effect one way or the other.
-#@-node:ekr.20060120200529:Notes
+#@nonl
+#@-node:ekr.20060120200529:What I did
 #@+node:ekr.20060121095848:Commands
 #@+node:ekr.20050920085536.63:keyboardQuit
 def keyboardQuit (self,event):
@@ -5690,8 +5707,8 @@ def exitNamedMode (self,event):
 
     if k.inState():
         k.endMode(event)
-        k.showStateAndMode()
-#@nonl
+    
+    k.showStateAndMode()
 #@-node:ekr.20060121104301:exitNamedMode
 #@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
@@ -5708,8 +5725,8 @@ def modeHelp (self,event):
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
-    else:
-        k.printBindings(event,brief=True)
+    # else:
+        # k.printBindings(event,brief=True)
 
     return 'break'
 #@nonl
@@ -5726,16 +5743,20 @@ def modeHelpHelper (self,d):
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut not in (None,'None'):
-                s1 = key
-                s2 = k.prettyPrintKey(shortcut)
+                s1 = k.prettyPrintKey(shortcut)
+                s2 = key
                 n = max(n,len(s1))
                 data.append((s1,s2),)
+                
+    data.sort()
+    
+    g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
         
     # This isn't perfect in variable-width fonts.
     for s1,s2 in data:
         g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
         
-    g.es('\n----- %s' % (k.inputModeName),tabName=tabName)
+    
 #@nonl
 #@-node:ekr.20060104125946:modeHelpHelper
 #@-node:ekr.20060104164523:modeHelp
@@ -5857,8 +5878,10 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
-        
-    t = c.frame.body.bodyCtrl
+
+
+    t = k.modeWidget = g.app.gui.get_focus(c.frame)        
+    # t = c.frame.body.bodyCtrl
     k.savedBindtags = t.bindtags()
     tagName = '%s-%s' % (modeName,c.fileName())
     t.bindtags(tuple([tagName]))
@@ -5883,7 +5906,8 @@ def endMode(self,event):
     w = g.app.gui.get_focus(c.frame)
 
     # Restore the bind tags.
-    t = c.frame.body.bodyCtrl
+    # t = c.frame.body.bodyCtrl
+    t = k.modeWidget
     t.bindtags(k.savedBindtags)
     
     c.frame.log.deleteTab('Mode')
@@ -6023,7 +6047,7 @@ def setState (self,kind,n,handler=None):
 #@-node:ekr.20050923172814.4:setState
 #@-node:ekr.20050923172809:State...
 #@-node:ekr.20060115103349:Modes & input states
-#@-node:ekr.20060120105605.1:Fix problems with plain keys
+#@-node:ekr.20060120105605.1:(Modes project)
 #@-node:ekr.20060117091600:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

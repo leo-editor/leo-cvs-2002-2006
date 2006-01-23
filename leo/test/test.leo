@@ -204,7 +204,7 @@
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
 </v>
-<v t="ekr.20051214100048" a="TV" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
@@ -227,6 +227,7 @@
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
+<v t="ekr.20060122115629" a="TV"><vh>Edit tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4292,5 +4293,109 @@ for tag in t.bindtags():
 # }
 # 
 </t>
+<t tx="ekr.20060122115629">import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &amp;gt;&amp;gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &amp;gt;&amp;gt; stdout, s, aaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb cccccccccccccccccccc ddddddddddddddddddddddddd eeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff
+        print &amp;gt;&amp;gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &amp;gt;&amp;gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &amp;gt;&amp;gt; stdout, s,
+        print &amp;gt;&amp;gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &amp;gt;&amp;gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &amp;gt;&amp;gt; stdout, s,
+        print &amp;gt;&amp;gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &amp;gt;&amp;gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &amp;gt;&amp;gt; stdout, s,
+        print &amp;gt;&amp;gt; stderr, s,
+print 'bye'
+import os
+import sys
+import time
+
+print "Hello from Leo's debugger"
+
+stdin = sys.stdin
+stdout = sys.stdout
+stderr = sys.stderr
+
+@others
+
+s = ''
+while s != 'kill':
+    print &amp;gt;&amp;gt; stderr, '.', # visible.
+    time.sleep(0.5)
+    s = nonBlockingRead(stdin)
+    if s:
+        print &amp;gt;&amp;gt; stdout, s,
+        print &amp;gt;&amp;gt; stderr, s,
+print 'bye'</t>
 </tnodes>
 </leo_file>

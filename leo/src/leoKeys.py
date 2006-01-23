@@ -870,13 +870,13 @@ class keyHandlerClass:
         
         '''Handle 'full-command' (alt-x) mode.'''
     
-        k = self ; c = k.c ; f = c.frame ; state = k.getState('altx')
+        k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
         keysym = (event and event.keysym) or ''
         ch = (event and event.char) or ''
         # g.trace('state',state,keysym)
         if state == 0:
             k.completionFocusWidget = g.app.gui.get_focus(c.frame)
-            k.setState('altx',1,handler=k.fullCommand) 
+            k.setState('full-command',1,handler=k.fullCommand) 
             k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
             # Init mb_ ivars. This prevents problems with an initial backspace.
             k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
@@ -978,8 +978,8 @@ class keyHandlerClass:
     
         if k.inState():
             k.endMode(event)
-            k.showStateAndMode()
-    #@nonl
+        
+        k.showStateAndMode()
     #@-node:ekr.20060121104301:exitNamedMode
     #@+node:ekr.20060104164523:modeHelp
     def modeHelp (self,event):
@@ -996,8 +996,8 @@ class keyHandlerClass:
         if k.inputModeName:
             d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
             k.modeHelpHelper(d)
-        else:
-            k.printBindings(event,brief=True)
+        # else:
+            # k.printBindings(event,brief=True)
     
         return 'break'
     #@nonl
@@ -1014,16 +1014,20 @@ class keyHandlerClass:
             for bunch in bunchList:
                 shortcut = bunch.val
                 if shortcut not in (None,'None'):
-                    s1 = key
-                    s2 = k.prettyPrintKey(shortcut)
+                    s1 = k.prettyPrintKey(shortcut)
+                    s2 = key
                     n = max(n,len(s1))
                     data.append((s1,s2),)
+                    
+        data.sort()
+        
+        g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
             
         # This isn't perfect in variable-width fonts.
         for s1,s2 in data:
             g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
             
-        g.es('\n----- %s' % (k.inputModeName),tabName=tabName)
+        
     #@nonl
     #@-node:ekr.20060104125946:modeHelpHelper
     #@-node:ekr.20060104164523:modeHelp
@@ -1147,8 +1151,10 @@ class keyHandlerClass:
         if not d:
             self.badMode(modeName)
             return
-            
-        t = c.frame.body.bodyCtrl
+    
+    
+        t = k.modeWidget = g.app.gui.get_focus(c.frame)        
+        # t = c.frame.body.bodyCtrl
         k.savedBindtags = t.bindtags()
         tagName = '%s-%s' % (modeName,c.fileName())
         t.bindtags(tuple([tagName]))
@@ -1173,7 +1179,8 @@ class keyHandlerClass:
         w = g.app.gui.get_focus(c.frame)
     
         # Restore the bind tags.
-        t = c.frame.body.bodyCtrl
+        # t = c.frame.body.bodyCtrl
+        t = k.modeWidget
         t.bindtags(k.savedBindtags)
         
         c.frame.log.deleteTab('Mode')
@@ -1504,7 +1511,7 @@ class keyHandlerClass:
         k = self
     
         if k.mb_history:
-            k.setState('last-altx',1,handler=k.doLastAltX)
+            k.setState('last-full-command',1,handler=k.doLastAltX)
             k.setLabelBlue("Redo: %s" % k.mb_history[0])
         return 'break'
         
@@ -2091,27 +2098,29 @@ class keyHandlerClass:
     #@+node:ekr.20051122104219:prettyPrintKey
     def prettyPrintKey (self,key):
         
-        '''Convert whatever-Z to whatever-Shift-Z'''
+        '''Print a shortcut in a pleasing way.'''
         
         k = self ; c = k.c
         
+        key,junk = c.frame.menu.canonicalizeShortcut(key)
         if not key: return ''
-        if len(key) == 1: return key
+    
         if key.startswith('<'):
             key = key[1:]
         if key.endswith('>'):
             key = key[:-1]
-        if not key: return ''
-        ch = key[-1]
-        if not ch: return ''
-        
-        if len(ch) > 1:
-            ch,junk = c.frame.menu.canonicalizeShortcut(ch)
     
-        if ch in string.ascii_uppercase:
-            return '%sShift-%s>' % (key[:-2],ch.lower())
-        else:
-            return key
+        if not key: return ''
+        if len(key) == 1:
+            return 'Plain-' + key.upper()
+            
+        ch1 = key[-2] ; ch2 = key[-1]
+        
+        if ch1 == '-':
+            if ch2.islower():
+                return key[:-1] + 'Shift-' +ch2.upper()
+       
+        return key
     #@nonl
     #@-node:ekr.20051122104219:prettyPrintKey
     #@+node:ekr.20051010063452:ultimateFuncName
