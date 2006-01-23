@@ -441,9 +441,14 @@ class tkinterGui(leoGui.leoGui):
                 # all the places where the code must call update()
                 
                 # New in 4.4b1: the place to call update is *after* log pane operations.
-                w.update() 
-    
-            w.focus_set()
+                w.update()
+                
+            try:
+                # It's possible that the widget doesn't exist now.
+                # It's easiest not to care.
+                w.focus_set()
+            except Exception:
+                pass
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
     #@+node:ekr.20050210082320:widget_wants_focus (tk.gui)

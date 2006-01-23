@@ -4862,7 +4862,7 @@ class baseCommands:
             u.afterMoveNode(p,'Move Right',undoData,dirtyVnodeList)
             c.selectPosition(p)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
         c.updateSyntaxColorer(p) # Moving can change syntax coloring.
     #@nonl
     #@-node:ekr.20031218072017.1771:moveOutlineRight
@@ -5350,12 +5350,12 @@ class baseCommands:
         # g.trace(g.app.gui.widget_name(w),g.callers(5))
         c.frame.tree.beginUpdate()
         
-    def endUpdate(self,flag=True,restoreFocus=True):
+    def endUpdate(self,flag=True,restoreFocus=True,scroll=False):
         
         '''Redraw the screen if flag is True.'''
     
         c = self
-        c.frame.tree.endUpdate(flag)
+        c.frame.tree.endUpdate(flag,scroll=scroll)
         w = c.afterUpdateWidgetStack.pop()
         if c.exists and not c.afterUpdateWidgetStack and restoreFocus:
             # We are at the top-level endUpdate.

@@ -2156,7 +2156,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
-        shortcut = shortcut.lstrip('<').rstrip('>')
+        shortcut = '<%s>' % shortcut.lstrip('<').rstrip('>')
         k.bindingsDict [shortcut] = bunchList
         return True
 
@@ -3165,7 +3165,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
-        shortcut = shortcut.lstrip('<').rstrip('>')
+        shortcut = '<%s>' % shortcut.lstrip('<').rstrip('>')
         k.bindingsDict [shortcut] = bunchList
         return True
 
@@ -4775,7 +4775,7 @@ def modeHelpHelper (self,d):
 #@-node:ekr.20060104164523:modeHelp
 #@-node:ekr.20060119201657:Improved printBindings, printCommands & modeHelp
 #@-node:ekr.20060120105247:Fixed minor bugs & made minor improvements
-#@+node:ekr.20060122183449:Disable auto-scrolling in outline pane on clicks
+#@+node:ekr.20060122183449:Disabled auto-scrolling in outline pane on clicks
 The outline jumps around too much when expanding/contracting nodes
 #@+node:ekr.20040803072955.35:Drawing... (tkTree)
 #@+node:ekr.20051216155728:tree.begin/endUpdate
@@ -4783,12 +4783,12 @@ def beginUpdate (self):
     
     self.updateCount += 1
     
-def endUpdate (self,flag):
+def endUpdate (self,flag,scroll=False):
     
     self.updateCount -= 1
     if self.updateCount <= 0:
         if flag:
-            self.redraw_now()
+            self.redraw_now(scroll=scroll)
         if self.updateCount < 0:
             g.trace("Can't happen: negative updateCount")
 #@nonl
@@ -5446,7 +5446,61 @@ def yoffsetTree(self,p,p1):
 #@-node:ekr.20040803072955.70:yoffset
 #@-node:ekr.20040803072955.62:Helpers...
 #@-node:ekr.20040803072955.35:Drawing... (tkTree)
-#@-node:ekr.20060122183449:Disable auto-scrolling in outline pane on clicks
+#@-node:ekr.20060122183449:Disabled auto-scrolling in outline pane on clicks
+#@+node:ekr.20060122191111.1:Fixed crasher re BackSpace in log window
+Error: 1
+TclError Exception in Tk callback
+  Function: <function textOrTreeKeyCallback at 0x0175EE30> (type: <type 'function'>)
+  Args: (<Tkinter.Event instance at 0x01758738>,)
+  Event type: KeyPress (type num: 2)
+Traceback (innermost last):
+  File "C:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1748, in __call__
+    return apply(self.func, args)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 541, in textOrTreeKeyCallback
+    func(event)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 408, in keyCallback2
+    return k.masterCommand(event,func,stroke,commandName=commandName)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 771, in masterCommand
+    val = k.callStateFunction(event) # Calls end-command.
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 811, in callStateFunction
+    val = k.state.handler(event)
+  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1054, in generalModeHandler
+    c.frame.widgetWantsFocus(w)
+  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 2147, in widgetWantsFocus
+    self.set_focus(w)
+  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 2164, in set_focus
+    g.app.gui.set_focus(c,w)
+  File "C:\prog\leoCVS\leo\src\leoTkinterGui.py", line 446, in set_focus
+    w.focus_set()
+  File "c:\python24\lib\lib-tk\Tkinter.py", line 399, in focus_set
+    self.tk.call('focus', self._w)
+TclError: bad window path name ".19703448.22376360.22417776.22417856.22418216.22418376.22511008.24514648.log-3"
+
+================================================
+  Event contents:
+    char: 
+    delta: 8
+    height: ??
+    keycode: 8
+    keysym: BackSpace
+    keysym_num: 65288
+    num: ??
+    serial: 5130
+    state: 8
+    time: 36484812
+    type: 2
+    widget: .19703448.22376360.22417776.22417856.22418216.22418376.22511008.24514648.log-3
+    width: ??
+    x: 246
+    x_root: 1215
+    y: 85
+    y_root: 303
+
+#@-node:ekr.20060122191111.1:Fixed crasher re BackSpace in log window
+#@+node:ekr.20060123062147:move-outline-right now forces a screen scroll
+# This is required now that scrolling is disabled by default.
+#@nonl
+#@-node:ekr.20060123062147:move-outline-right now forces a screen scroll
 #@+node:ekr.20060120105605.1:(Modes project)
 #@+node:ekr.20060120200529:What I did
 @nocolor
@@ -5656,6 +5710,34 @@ else:
 #@nonl
 #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
 #@-node:ekr.20031218072017.2098:canonicalizeShortcut
+#@+node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
+def getShortcutForCommandName (self,commandName):
+    
+    k = self ; c = k.c
+
+    command = c.commandsDict.get(commandName)
+
+    if command:
+        for key in k.bindingsDict:
+            bunchList = k.bindingsDict.get(key,[])
+            for b in bunchList:
+                if b.commandName == commandName:
+                    return '<%s>' % key.lstrip('<').rstrip('>')
+    return ''
+    
+def getShortcutForCommand (self,command):
+    
+    k = self ; c = k.c
+    
+    if command:
+        for key in k.bindingsDict:
+            bunchList = k.bindingsDict.get(key,[])
+            for b in bunchList:
+                if b.commandName == command.__name__:
+                     return '<%s>' % key.lstrip('<').rstrip('>')
+    return ''
+#@nonl
+#@-node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
 #@+node:ekr.20060122191605:KeyHandler
 #@+node:ekr.20051122104219:prettyPrintKey
 def prettyPrintKey (self,key):
@@ -6061,7 +6143,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
-        shortcut = shortcut.lstrip('<').rstrip('>')
+        shortcut = '<%s>' % shortcut.lstrip('<').rstrip('>')
         k.bindingsDict [shortcut] = bunchList
         return True
 

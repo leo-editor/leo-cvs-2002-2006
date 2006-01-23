@@ -827,12 +827,12 @@ class leoTkinterTree (leoFrame.leoTree):
         
         self.updateCount += 1
         
-    def endUpdate (self,flag):
+    def endUpdate (self,flag,scroll=False):
         
         self.updateCount -= 1
         if self.updateCount <= 0:
             if flag:
-                self.redraw_now()
+                self.redraw_now(scroll=scroll)
             if self.updateCount < 0:
                 g.trace("Can't happen: negative updateCount")
     #@nonl
