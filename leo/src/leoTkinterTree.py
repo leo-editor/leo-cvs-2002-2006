@@ -840,7 +840,9 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.58:redraw_now & helper
     # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
     
-    def redraw_now (self,scroll=True):
+    # New in 4.4b2: suppress scrolling by default.
+    
+    def redraw_now (self,scroll=False):
     
         if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
             return

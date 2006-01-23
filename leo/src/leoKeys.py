@@ -1152,7 +1152,6 @@ class keyHandlerClass:
             self.badMode(modeName)
             return
     
-    
         t = k.modeWidget = g.app.gui.get_focus(c.frame)        
         # t = c.frame.body.bodyCtrl
         k.savedBindtags = t.bindtags()
@@ -1182,6 +1181,7 @@ class keyHandlerClass:
         # t = c.frame.body.bodyCtrl
         t = k.modeWidget
         t.bindtags(k.savedBindtags)
+        k.savedBindtags = None
         
         c.frame.log.deleteTab('Mode')
     
@@ -1816,7 +1816,14 @@ class keyHandlerClass:
     
         c.frame.log.deleteTab('Completion')
         c.frame.log.deleteTab('Mode')
-        k.inputModeName = None
+        
+        # Completely clear the mode.
+        if k.inputModeName:
+            k.endMode()
+    
+        # Complete clear the state.
+        k.state.kind = None
+        k.state.n = None
             
         k.clearState()
         k.resetLabel()
@@ -2112,13 +2119,16 @@ class keyHandlerClass:
     
         if not key: return ''
         if len(key) == 1:
-            return 'Plain-' + key.upper()
+            if key.islower():
+                return 'Plain-' + key.upper()
+            else:
+                return 'Shift-' + key
             
         ch1 = key[-2] ; ch2 = key[-1]
         
         if ch1 == '-':
             if ch2.islower():
-                return key[:-1] + 'Shift-' +ch2.upper()
+                return key[:-1] + ch2.upper()
        
         return key
     #@nonl

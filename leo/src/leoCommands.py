@@ -5350,7 +5350,7 @@ class baseCommands:
         # g.trace(g.app.gui.widget_name(w),g.callers(5))
         c.frame.tree.beginUpdate()
         
-    def endUpdate(self, flag=True,restoreFocus=True):
+    def endUpdate(self,flag=True,restoreFocus=True):
         
         '''Redraw the screen if flag is True.'''
     
