@@ -165,7 +165,7 @@ class leoFind:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.3053:leoFind.__init__
-    #@+node:ekr.20031218072017.3055:Top Level Commands
+    #@+node:ekr.20060123065756.1:Top Level Buttons
     #@+node:ekr.20031218072017.3057:changeAllButton
     # The user has pushed the "Change All" button from the find panel.
     
@@ -196,19 +196,6 @@ class leoFind:
             self.change()
     #@nonl
     #@-node:ekr.20031218072017.3056:changeButton
-    #@+node:ekr.20031218072017.3061:changeCommand
-    # The user has selected the "Replace" menu item.
-    
-    def changeCommand(self,c):
-    
-        self.setup_command(c)
-    
-        if self.script_search:
-            self.doChangeScript()
-        else:
-            self.change()
-    #@nonl
-    #@-node:ekr.20031218072017.3061:changeCommand
     #@+node:ekr.20031218072017.3058:changeThenFindButton
     # The user has pushed the "Change Then Find" button from the find panel.
     
@@ -230,25 +217,6 @@ class leoFind:
                 self.changeThenFind()
     #@nonl
     #@-node:ekr.20031218072017.3058:changeThenFindButton
-    #@+node:ekr.20031218072017.3062:changeThenFindCommand
-    # The user has pushed the "Change Then Find" button from the Find menu.
-    
-    def changeThenFindCommand(self,c):
-    
-        self.setup_command(c)
-    
-        if self.script_search:
-            self.doChangeScript()
-            self.doFindScript()
-        else:
-            self.changeThenFind()
-    #@nonl
-    #@-node:ekr.20031218072017.3062:changeThenFindCommand
-    #@+node:ekr.20051013084200.1:dismiss: defined in subclass class
-    def dismiss (self):
-        pass
-    #@nonl
-    #@-node:ekr.20051013084200.1:dismiss: defined in subclass class
     #@+node:ekr.20031218072017.3060:findAllButton
     # The user has pushed the "Find All" button from the find panel.
     
@@ -279,6 +247,56 @@ class leoFind:
             self.findNext()
     #@nonl
     #@-node:ekr.20031218072017.3059:findButton
+    #@+node:ekr.20031218072017.3065:setup_button
+    # Initializes a search when a button is pressed in the Find panel.
+    
+    def setup_button(self):
+        
+        c = self.c
+        self.p = c.currentPosition()
+    
+        c.bringToFront()
+        if 0: # We _must_ retain the editing status for incremental searches!
+            c.endEditing()
+    
+        self.update_ivars()
+        self.adjust_ivars()
+    #@nonl
+    #@-node:ekr.20031218072017.3065:setup_button
+    #@-node:ekr.20060123065756.1:Top Level Buttons
+    #@+node:ekr.20031218072017.3055:Top Level Commands
+    #@+node:ekr.20031218072017.3061:changeCommand
+    # The user has selected the "Replace" menu item.
+    
+    def changeCommand(self,c):
+    
+        self.setup_command(c)
+    
+        if self.script_search:
+            self.doChangeScript()
+        else:
+            self.change()
+    #@nonl
+    #@-node:ekr.20031218072017.3061:changeCommand
+    #@+node:ekr.20031218072017.3062:changeThenFindCommand
+    # The user has pushed the "Change Then Find" button from the Find menu.
+    
+    def changeThenFindCommand(self,c):
+    
+        self.setup_command(c)
+    
+        if self.script_search:
+            self.doChangeScript()
+            self.doFindScript()
+        else:
+            self.changeThenFind()
+    #@nonl
+    #@-node:ekr.20031218072017.3062:changeThenFindCommand
+    #@+node:ekr.20051013084200.1:dismiss: defined in subclass class
+    def dismiss (self):
+        pass
+    #@nonl
+    #@-node:ekr.20051013084200.1:dismiss: defined in subclass class
     #@+node:ekr.20031218072017.3063:findNextCommand
     # The user has selected the "Find Next" menu item.
     
@@ -309,6 +327,20 @@ class leoFind:
         self.reverse = not self.reverse
     #@nonl
     #@-node:ekr.20031218072017.3064:fndPreviousCommand
+    #@+node:ekr.20060123070359.1:New commands
+    #@+node:ekr.20060123070359.2:incrementalSearchCommand
+    #@-node:ekr.20060123070359.2:incrementalSearchCommand
+    #@+node:ekr.20060123070359.3:wordSearchCommand
+    #@-node:ekr.20060123070359.3:wordSearchCommand
+    #@+node:ekr.20060123070359.4:regexSearchCommand
+    #@-node:ekr.20060123070359.4:regexSearchCommand
+    #@-node:ekr.20060123070359.1:New commands
+    #@+node:ekr.20060123070359.2:incrementalSearchCommand
+    #@-node:ekr.20060123070359.2:incrementalSearchCommand
+    #@+node:ekr.20060123070359.3:wordSearchCommand
+    #@-node:ekr.20060123070359.3:wordSearchCommand
+    #@+node:ekr.20060123070359.4:regexSearchCommand
+    #@-node:ekr.20060123070359.4:regexSearchCommand
     #@+node:EKR.20040503070514:handleUserClick
     def handleUserClick (self,p):
         
@@ -321,22 +353,6 @@ class leoFind:
         except: pass
     #@nonl
     #@-node:EKR.20040503070514:handleUserClick
-    #@+node:ekr.20031218072017.3065:setup_button
-    # Initializes a search when a button is pressed in the Find panel.
-    
-    def setup_button(self):
-        
-        c = self.c
-        self.p = c.currentPosition()
-    
-        c.bringToFront()
-        if 0: # We _must_ retain the editing status for incremental searches!
-            c.endEditing()
-    
-        self.update_ivars()
-        self.adjust_ivars()
-    #@nonl
-    #@-node:ekr.20031218072017.3065:setup_button
     #@+node:ekr.20031218072017.3066:setup_command
     # Initializes a search when a command is invoked from the menu.
     
@@ -1036,7 +1052,7 @@ class leoFind:
         try:
             c.selectPosition(p)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
         if self.in_headline:
             c.editPosition(p)
         # Set the focus and selection after the redraw.

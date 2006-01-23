@@ -5963,10 +5963,27 @@ class searchCommandsClass (baseEditCommandsClass):
             'search-again':             self.searchAgain,
             'search-forward':           self.searchForward,
             'search-backward':          self.searchBackward,
+    
+            'set-find-everywhere':                  self.setFindScopeEveryWhere,
+            'set-find-node-only':                   self.setFindScopeNodeOnly,
+            'set-find-suboutline-only':             self.setFindScopeSuboutlineOnly,
+            
+            'toggle-find-clone-find-all-option':    self.toggleCloneFindAllOption,
+            'toggle-find-ignore-case-option':       self.toggleIgnoreCaseOption,
+            'toggle-find-in-body-option':           self.toggleSearchBodyOption,
+            'toggle-find-in-headline-option':       self.toggleSearchHeadlineOption,
+            'toggle-find-mark-changes-option':      self.toggleMarkChangesOption,
+            'toggle-find-mark-finds-option':        self.toggleMarkFindsOption,
+            'toggle-find-regex-option':             self.toggleRegexOption,
+            'toggle-find-reverse-option':           self.toggleReverseOption,
+            'toggle-find-word-option':              self.toggleWholeWordOption,
+            'toggle-find-wrap-around-option':       self.toggleWrapSearchOption,
+            
             'word-search-forward':      self.wordSearchForward,
             'word-search-backward':     self.wordSearchBackward,
+            
         }
-    #@nonl
+    
     #@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
     #@+node:ekr.20051022211617:find tab...
     #@+node:ekr.20051020120306:openFindTab
@@ -6032,6 +6049,65 @@ class searchCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20051022212004:commands...
     #@-node:ekr.20051022211617:find tab...
+    #@+node:ekr.20060123115459:Options
+    #@+node:ekr.20060123120456:Wrappers
+    def setFindScopeEveryWhere (self, event):      return self.setFindScope('everywhere')
+    def setFindScopeNodeOnly (self, event):        return self.setFindScope('node-only')
+    def setFindScopeSuboutlineOnly (self, event):  return self.setFindScope('suboutline-only')
+    
+    def toggleCloneFindAllOption (self, event):    return self.toggleOption('clone_find_all')
+    def toggleIgnoreCaseOption (self, event):      return self.toggleOption('ignore_case')
+    def toggleMarkChangesOption (self, event):     return self.toggleOption('mark_changes')
+    def toggleMarkFindsOption (self, event):       return self.toggleOption('mark_finds')
+    def toggleRegexOption (self, event):           return self.toggleOption('pattern_match')
+    def toggleReverseOption (self, event):         return self.toggleOption('reverse')
+    def toggleSearchBodyOption (self, event):      return self.toggleOption('search_body')
+    def toggleSearchHeadlineOption (self, event):  return self.toggleOption('search_headline')
+    def toggleWholeWordOption (self, event):       return self.toggleOption('whole_word')
+    def toggleWrapSearchOption (self, event):      return self.toggleOption('wrap')
+    #@nonl
+    #@-node:ekr.20060123120456:Wrappers
+    #@+node:ekr.20060123115459.1:setFindScope
+    def setFindScope(self,where):
+        
+        '''Set the find-scope radio buttons.
+        
+        `where`: one of 'node-only', 'everywhere' or 'suboutline-only'. '''
+        
+        c = self.c
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
+            
+        fp = c.frame.findPanel
+        fp.bringToFront() # testing
+        
+        if where in ('node-only','everywhere','suboutline-only'):
+            var = fp.dict[var].get()
+            if var:
+                fp.dict["radio-search-scope"].set(where)
+                
+        else:
+            g.trace('bad `where` value:' % where)
+    #@nonl
+    #@-node:ekr.20060123115459.1:setFindScope
+    #@+node:ekr.20060123115459.2:toggleOption
+    def toggleOption (self, ivar):
+        
+        c = self.c
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
+            
+        fp = c.frame.findPanel
+        
+        if ivar in fp.intKeys:
+            g.trace(ivar)
+        else:
+            g.trace('bad find ivar')
+    #@nonl
+    #@-node:ekr.20060123115459.2:toggleOption
+    #@-node:ekr.20060123115459:Options
     #@+node:ekr.20060117181301:Common helpers
     #@+node:ekr.20050920084036.263:iSearchHelper
     def iSearchHelper (self,event,forward,regexp):
@@ -6039,36 +6115,38 @@ class searchCommandsClass (baseEditCommandsClass):
         '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
         
         k = self.k ; w = self.w
-        s = k.getLabel(ignorePrompt=True)
+        pattern = k.getLabel(ignorePrompt=True)
+        if not pattern: return
         
+        self.searchString = pattern
         self.incremental = True
         self.forward = forward
         self.regexp = regexp
-        # g.trace(forward,repr(s))
-        if s:
-            try:
-                if forward:
-                    i = w.search(s,"insert + 1c",stopindex='end',regexp=regexp)
-                    if not i:
-                        # Start again at the top of the buffer.
-                        i = w.search(s,'1.0',stopindex='insert',regexp=regexp)
-                else:
-                    i = w.search(s,'insert',backwards=True,stopindex='1.0',regexp=regexp)
-                    if not i:
-                        # Start again at the bottom of the buffer.
-                        i = w.search(s,'end',backwards=True,stopindex='insert',regexp=regexp)
-                
-            except: pass
-    
-            if i and not i.isspace():
-                w.mark_set('insert',i)
-                w.see('insert')
+       
+        try:
+            i = None
+            if forward:
+                i = w.search(pattern,"insert + 1c",stopindex='end',regexp=regexp)
+                if 0: # Not so useful when searches can cross buffer boundaries.
+                    if not i: # Start again at the top of the buffer.
+                        i = w.search(pattern,'1.0',stopindex='insert',regexp=regexp)
+            else:
+                i = w.search(pattern,'insert',backwards=True,stopindex='1.0',regexp=regexp)
+                if 0: # Not so useful when searches can cross buffer boundaries.
+                    if not i: # Start again at the bottom of the buffer.
+                        i = w.search(pattern,'end',backwards=True,stopindex='insert',regexp=regexp)
+        except: pass
+            
+        # Don't call endSearch here.  We'll do that when the user hits return.
+        if i and not i.isspace():
+            w.mark_set('insert',i)
+            w.see('insert')
     #@nonl
     #@-node:ekr.20050920084036.263:iSearchHelper
     #@+node:ekr.20050920084036.268:plainSearchHelper
     def plainSearchHelper (self,event,pattern,forward):
     
-        k = self.k ; w = self.w ; i = w.index('insert')
+        k = self.k ; w = self.w
         
         self.forward = forward
         self.incremental = False
@@ -6077,19 +6155,21 @@ class searchCommandsClass (baseEditCommandsClass):
         self.word = False
     
         try:
+            i = w.index('insert') ; j = None
             if forward:
-                s = w.search(pattern,i,stopindex='end')
-                if s: s = w.index('%s +%sc' % (s,len(pattern)))
+                i = w.search(pattern,i,stopindex='end')
             else:
-                s = w.search(pattern,i,stopindex='1.0',backwards=True)
-            if s:
-                w.mark_set('insert',s)
+                i = w.search(pattern,i,stopindex='1.0',backwards=True)
+           
         except Exception:
             g.es_exception()
-        
-        
+            
+        if i:
+            j = w.index('%s +%sc' % (i,len(pattern)))
+            if not forward: i,j = j,i
     
-        
+        self.endSearch(i,j)
+    
     #@-node:ekr.20050920084036.268:plainSearchHelper
     #@+node:ekr.20050920084036.272:wordSearchHelper
     def wordSearchHelper (self,event,pattern,forward):
@@ -6101,6 +6181,7 @@ class searchCommandsClass (baseEditCommandsClass):
         self.regexp = False
         self.searchString = pattern
         self.word = True
+        i = j = None
         
         words = pattern.split()
         sep = '[%s%s]+' % (string.punctuation,string.whitespace)
@@ -6109,19 +6190,24 @@ class searchCommandsClass (baseEditCommandsClass):
         if forward:
             txt = w.get('insert','end')
             match = cpattern.search(txt)
-            if not match: return
-            end = match.end()
+            if match:
+                i = match.start() ; j = match.end()
         else:
-            txt = w.get('1.0','insert') #initially the reverse words formula for Python Cookbook was going to be used.
-            a = re.split(pattern,txt) #that didnt quite work right.  This one apparently does.
-            if len(a) > 1:
+            txt = w.get('1.0','insert')
+            a = re.split(pattern,txt)
+            g.trace(repr(a))
+            if a and len(a) > 1:
                 b = re.findall(pattern,txt)
-                end = len(a[-1]) + len(b[-1])
-            else: return
-            
-        s = g.choose(forward,'insert +%sc','insert -%sc')
-        w.mark_set('insert',s % end)
-        w.see('insert')
+                n = 0
+                for z in a[:-1]:
+                    n += len(z)
+                i = n + len(b[-1])
+                j = i - len(pattern)
+        if i and j:
+            i = w.index('1.0 + %sc' % i)
+            j = w.index('1.0 + %sc' % j)
+        self.endSearch(i,j)
+    #@nonl
     #@-node:ekr.20050920084036.272:wordSearchHelper
     #@+node:ekr.20050920084036.275:reSearchHelper
     def reSearchHelper (self,event,pattern,forward):
@@ -6146,14 +6232,32 @@ class searchCommandsClass (baseEditCommandsClass):
             if len(a) > 1:
                 b = re.findall(pattern,txt)
                 end = len(a[-1]) + len(b[-1])
-            else: return
     
         if end:
-            s = g.choose(forward,'insert +%sc','insert -%sc')
-            w.mark_set('insert',s % end)
-            w.see('insert')
+            i = w.index('insert')
+            j = w.index('insert +%sc' % end)
+            if not forward: i,j = j,i
+        else: i = j = None
+        self.endSearch(i,j)
     #@nonl
     #@-node:ekr.20050920084036.275:reSearchHelper
+    #@+node:ekr.20060123091352.1:endSearch
+    def endSearch(self,i,j):
+        
+        k = self.k ; w = self.w
+        
+        if i and j:
+            if i != j:
+                g.app.gui.setTextSelection (w,i,j,insert=None)
+            w.mark_set('insert',j)
+            w.see('insert')
+        
+        k.clearState()
+        k.resetLabel()
+        k.setDefaultUnboundKeyAction()
+        k.showStateAndMode()
+    #@nonl
+    #@-node:ekr.20060123091352.1:endSearch
     #@-node:ekr.20060117181301:Common helpers
     #@+node:ekr.20060117181301.1:searchAgain & changeAgain 
     def searchAgain (self,event):
@@ -6217,23 +6321,11 @@ class searchCommandsClass (baseEditCommandsClass):
                 self.startIncremental(event,forward=False,regexp=False)
     
         if keysym == 'Return':
-            if 0: # Doesn't do anything at present.
-                #@            << do a non-incremental search >>
-                #@+node:ekr.20051002120125:<< do a non-incremental search >>
-                s = k.getLabel(ignorePrompt=True)
-                
-                if s:
-                    if self.forward:
-                        if self.regexp: self.reSearchForward(event)
-                        else:           self.searchForward(event)
-                    else:
-                        if self.regexp: self.reSearchBackward(event)
-                        else:           self.searchBackward(event)
-                #@nonl
-                #@-node:ekr.20051002120125:<< do a non-incremental search >>
-                #@nl
-            k.resetLabel()
-            k.clearState()
+            s = self.searchString
+            i = w.index('insert')
+            j = w.index('insert +%sc' % len(s))
+            if not self.forward: i,j = j,i
+            self.endSearch(i,j)
             return
     
         if ch == '\b':
@@ -6243,8 +6335,10 @@ class searchCommandsClass (baseEditCommandsClass):
         if ch:
             k.updateLabel(event)
             s = k.getLabel(ignorePrompt=True)
-            z = w.search(s,'insert',stopindex='insert +%sc' % len(s))
-            if not z:
+            i = w.search(s,'insert',stopindex='insert +%sc' % len(s))
+            if i:
+                self.searchString = s
+            else:
                self.iSearchHelper(event,self.forward,self.regexp)
             self.scolorizer(event)
     #@nonl
@@ -6272,6 +6366,7 @@ class searchCommandsClass (baseEditCommandsClass):
                     w.tag_add('color1',ind,'%s.%s' % (i,d))
                 w.tag_add('color',ind,'%s.%s' % (i,d))
                 ind = i + '.' + d
+    
         w.tag_config('color',foreground='red')
         w.tag_config('color1',background='lightblue')
     #@nonl
