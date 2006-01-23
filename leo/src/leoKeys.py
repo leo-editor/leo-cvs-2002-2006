@@ -1167,6 +1167,7 @@ class keyHandlerClass:
             k.bindtagsDict[tagName] = True
     
         k.setLabelBlue(modeName+': ',protect=True)
+        k.showStateAndMode()
         # Do *not* change the focus here!
     #@nonl
     #@-node:ekr.20060117202916.1:initMode
@@ -1189,6 +1190,7 @@ class keyHandlerClass:
         k.inputModeName = None
         k.clearState()
         k.resetLabel()
+        k.showStateAndMode()
     
         # k.setLabelGrey('top-level mode')
         
@@ -1316,7 +1318,7 @@ class keyHandlerClass:
         else:
             k.clearState()
             
-        k.showStateAndMode()
+        # k.showStateAndMode()
     #@-node:ekr.20050923172814.4:setState
     #@-node:ekr.20050923172809:State...
     #@-node:ekr.20060115103349:Modes & input states

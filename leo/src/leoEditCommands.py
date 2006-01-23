@@ -6082,12 +6082,14 @@ class searchCommandsClass (baseEditCommandsClass):
                 if s: s = w.index('%s +%sc' % (s,len(pattern)))
             else:
                 s = w.search(pattern,i,stopindex='1.0',backwards=True)
+            if s:
+                w.mark_set('insert',s)
         except Exception:
-            return
+            g.es_exception()
+        
+        
     
-        if s:
-            w.mark_set('insert',s)
-    #@nonl
+        
     #@-node:ekr.20050920084036.268:plainSearchHelper
     #@+node:ekr.20050920084036.272:wordSearchHelper
     def wordSearchHelper (self,event,pattern,forward):
@@ -6299,6 +6301,8 @@ class searchCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             k.resetLabel()
+            k.showStateAndMode()
+    
             self._word = False
             self.forward = True
             self.plainSearchHelper(event,k.arg,forward=True)
@@ -6326,6 +6330,7 @@ class searchCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             k.resetLabel()
+            k.showStateAndMode()
             self.forward = True
             self.wordSearchHelper(event,k.arg,forward=True)
     #@nonl
@@ -6351,6 +6356,7 @@ class searchCommandsClass (baseEditCommandsClass):
         else:
             k.clearState()
             k.resetLabel()
+            k.showStateAndMode()
             self.reSearchHelper(event,k.arg,forward=True)
     #@nonl
     #@-node:ekr.20050920084036.274:reSearchBackward/Forward & helper
