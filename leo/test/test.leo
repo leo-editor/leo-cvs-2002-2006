@@ -227,7 +227,7 @@
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
-<v t="ekr.20060122115629" a="TV"><vh>Edit tests</vh></v>
+<v t="ekr.20060122115629" a="V"><vh>Edit tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.

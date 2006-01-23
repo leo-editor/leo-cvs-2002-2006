@@ -412,7 +412,7 @@
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
-<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
@@ -450,12 +450,12 @@
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
-<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
 <v t="ekr.20060122105527.11" a="E" annotate="7d71002e"><vh>@mode File Control-W)</vh>
-<v t="ekr.20060122182825" a="TV"><vh>@mode File-open</vh></v>
+<v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
 <v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
@@ -470,7 +470,7 @@
 </v>
 <v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.20" a="TV" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
@@ -5339,9 +5339,8 @@ backward-delete-char                = BackSpace
 backward-kill-paragraph             = None
 backward-kill-sentence              = None
 backward-kill-word                  = None # = Alt-Delete
-beginning-of-buffer                 = None # ! text = Alt-less # Note: same as Alt-Shift-less
-beginning-of-buffer                 = None # ! text = Ctrl-Home
-beginning-of-buffer-extend-selection = None # ! text = Ctrl-Shift-Home
+beginning-of-buffer                 = None  # ! text = Home
+beginning-of-buffer-extend-selection = None # !text = Shift-Home
 beginning-of-line                   = None # ! text = Ctrl-a         # Ctrl-a Conflicts with select-all
 beginning-of-line                   = None # ! text = Home
 beginning-of-line-extend-selection  = None # ! text = Shift-Home
