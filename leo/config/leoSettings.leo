@@ -34,15 +34,15 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20060112110750"><vh>Buttons</vh>
+<v t="ekr.20060112110750" a="E"><vh>Buttons</vh>
 <v t="ekr.20051010093913" annotate="7d71002e"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608" annotate="7d71002e"><vh>@@button align to col</vh></v>
-<v t="ekr.20060112103537.17"><vh>@button Check Bindings</vh>
+<v t="ekr.20060112103537.17" a="E"><vh>@button Check Bindings</vh>
 <v t="ekr.20060112104119"><vh>&lt;&lt; define setNames &gt;&gt;</vh></v>
 <v t="ekr.20060112104333"><vh>doSet</vh></v>
 <v t="ekr.20060112105523"><vh>doShortcuts</vh></v>
 <v t="ekr.20060112104333.1"><vh>checkSets</vh></v>
-<v t="ekr.20060112104823"><vh>main</vh></v>
+<v t="ekr.20060112104823" a="E"><vh>main</vh></v>
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
@@ -273,7 +273,7 @@
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" a="V" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -308,7 +308,7 @@
 <v t="ekr.20060112085643"><vh>@shortcuts Legacy+: F-M</vh></v>
 <v t="ekr.20060112085643.1"><vh>@shortcuts Legacy+: N-Z</vh></v>
 </v>
-<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20060112093227"><vh>Options</vh>
 <v t="ekr.20060110142111.1" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060115201600.1" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
@@ -317,9 +317,9 @@
 </v>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
-<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
+<v t="ekr.20060112093227.2" a="EV"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20051010112558" a="E"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060122105438"><vh>To do</vh></v>
 <v t="ekr.20060122105438.1"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
@@ -339,7 +339,7 @@
 <v t="ekr.20060115160004"><vh>@mode Register</vh></v>
 <v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
 </v>
-<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
+<v t="ekr.20060115162748.1" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
@@ -347,7 +347,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.1"><vh>To do</vh></v>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.3"><vh>Options</vh>
@@ -357,25 +357,25 @@
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
-<v t="ekr.20060122105527.9"><vh>Modes</vh>
+<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
+<v t="ekr.20060122105527.14" a="E"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
 <v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
-<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
+<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
@@ -385,7 +385,7 @@
 </v>
 </v>
 <v t="ekr.20060115202002"><vh>To do</vh></v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.1"><vh>To do</vh></v>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.3"><vh>Options</vh>
@@ -395,25 +395,25 @@
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
-<v t="ekr.20060122105527.9"><vh>Modes</vh>
+<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
+<v t="ekr.20060122105527.14" a="E"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
 <v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
-<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
+<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
@@ -1214,6 +1214,7 @@ eval-expression:                    = None
 exchange-point-mark                 = None  # Should be Control-X Control-X.
 execute-script                      = None             # Ctrl-e conflicts with end-of-line
 exit-leo                            = Ctrl-Q
+exit-named-mode                     = None
 expand-abbrev                       = None
 expand-all                          = None
 expand-and-go-right                 = None
@@ -1528,6 +1529,7 @@ eval-expression                     = None
 exchange-point-mark                 = None
 execute-script                      = None
 exit-leo                            = None
+exit-named-mode                     = None
 expand-abbrev                       = None
 expand-all                          = None
 expand-and-go-right                 = None
@@ -1645,6 +1647,7 @@ eval-expression                     = None
 exchange-point-mark                 = None
 execute-script                      = Ctrl-E
 exit-leo                            = Ctrl-Q
+exit-named-mode                     = None
 expand-abbrev                       = None
 expand-all                          = Alt-9
 expand-and-go-right                 = None
@@ -1883,6 +1886,9 @@ set-ignore-state                    = None
 set-insert-state                    = None
 set-fill-column                     = None
 set-fill-prefix                     = None
+set-find-everywhere                 = None
+set-find-node-only                  = None
+set-find-suboutline-only            = None
 set-font                            = None
 set-mark-command                    = Ctrl-space    # Also Ctrl-Shift-at
 set-overwrite-state                 = None
@@ -2158,6 +2164,7 @@ eval-expression                     = None
 exchange-point-mark                 = None      # Should be Ctrl-X Ctrl-X.
 execute-script                      = None      # Ctrl-e conflicts with end-of-line
 exit-leo                            = Ctrl-Q
+exit-named-mode        
 expand-abbrev                       = None
 expand-all                          = None      # Alt-9: not useful enough.
 expand-and-go-right                 = None
@@ -2563,6 +2570,7 @@ scroll-down                             = PageDn    # Ctrl-v conflicts with past
 scroll-down-extend-selection            = None
 scroll-up                               = PageUp    # Alt-v conflicts with view-all-characters.
 scroll-up-extend-selection              = None
+search-again                            = None
 search-backward                         = None
 search-forward                          = None
 select-all                              = Shift-Ctrl-A # Ctrl-Shift-a conflicts with beginning-of-line-extend-selection.
@@ -2572,6 +2580,9 @@ set-comment-column                      = None
 set-extend-mode                         = None
 set-fill-column                         = None
 set-fill-prefix                         = None
+set-find-everywhere                     = None
+set-find-node-only                      = None
+set-find-suboutline-only                = None
 set-font                                = None
 set-ignore-state                        = None
 set-insert-state                        = None
@@ -2605,6 +2616,16 @@ tangle-marked                           = None      # Removed Shift-Ctrl-M: not 
 toggle-active-pane                      = Ctrl-T
 toggle-angle-brackets                   = None
 toggle-extend-mode                      = None
+toggle-find-clone-find-all-option       = None
+toggle-find-ignore-case-option          = None
+toggle-find-in-body-option              = None
+toggle-find-in-headline-option          = None
+toggle-find-mark-changes-option         = None
+toggle-find-mark-finds-option           = None
+toggle-find-regex-option                = None
+toggle-find-reverse-option              = None
+toggle-find-word-option                 = None
+toggle-find-wrap-around-option          = None
 toggle-mini-buffer                      = None
     # It **is** possible to use &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
     # This had better be defined if you intend ever to hide the minibuffer.
@@ -2614,7 +2635,7 @@ transpose-chars                         = None
 transpose-lines                         = None
 transpose-words                         = None
 undo                                    = Ctrl-Z
-unindent                                = Ctrl-[
+unindent-region                         = Ctrl-[
 universal-argument                      = Alt-u     # Usually Ctrl-u, conflicts with move-outline-up.
 unmark-all                              = None
 untabify                                = None
@@ -2836,6 +2857,7 @@ scroll-down                     = Control-v
 scroll-down-extend-selection    = None
 scroll-up                       = Alt-v
 scroll-up-extend-selection      = None
+search-again                    = None
 search-backward                 = None
 search-forward                  = None
 select-all                      = None
@@ -2846,6 +2868,9 @@ set-comment-column              = None
 set-extend-mode                 = None
 set-fill-column                 = None
 set-fill-prefix                 = None
+set-find-everywhere                 = None
+set-find-node-only                  = None
+set-find-suboutline-only            = None
 set-font                        = None
 set-ignore-state                = None
 set-insert-state                = None
@@ -2879,7 +2904,17 @@ tangle-marked                   = None      # Removed Shift-Ctrl-M: not useful e
 toggle-active-pane              = None      # Ctrl-T conflicts with swap-characters.
 toggle-angle-brackets           = None
 toggle-extend-mode              = None
-toggle-mini-buffer              = Alt+Shift+S
+toggle-find-clone-find-all-option   = None
+toggle-find-ignore-case-option      = None
+toggle-find-in-body-option          = None
+toggle-find-in-headline-option      = None
+toggle-find-mark-changes-option     = None
+toggle-find-mark-finds-option       = None
+toggle-find-regex-option            = None
+toggle-find-reverse-option          = None
+toggle-find-word-option             = None
+toggle-find-wrap-around-option      = None
+toggle-mini-buffer                  = Alt+Shift+S
     # It **is** possible to use &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
     # This had better be defined if you intend ever to hide the minibuffer.
     # To avoid confusion, it should be something unlikely to be typed by accident.
@@ -2888,7 +2923,7 @@ transpose-chars                 = Control-t
 transpose-lines                 = None
 transpose-words                 = Alt-t
 undo                            = None         # Ctrl-Z conflicts with suspend.
-unindent                        = Ctrl-[
+unindent-region                 = None
 universal-argument              = Ctrl-u
 unmark-all                      = None         # Alt-U: conflicts with upcase-word.
 untabify                        = None
@@ -3102,6 +3137,7 @@ scroll-down                         = PageDn
 scroll-down-extend-selection        = None
 scroll-up                           = PageUp
 scroll-up-extend-selection          = None
+search-again                        = None
 search-backward                     = None
 search-forward                      = None
 select-all                          = Ctrl-A
@@ -3111,6 +3147,9 @@ set-comment-column                  = None
 set-extend-mode                     = None
 set-fill-column                     = None
 set-fill-prefix                     = None
+set-find-everywhere                 = None
+set-find-node-only                  = None
+set-find-suboutline-only            = None
 set-font                            = None
 set-ignore-state                    = None
 set-insert-state                    = None
@@ -3143,6 +3182,16 @@ tangle-marked                       = Shift-Ctrl-M
 toggle-active-pane                  = Ctrl-T
 toggle-angle-brackets               = None
 toggle-extend-mode                  = None
+toggle-find-clone-find-all-option   = None
+toggle-find-ignore-case-option      = None
+toggle-find-in-body-option          = None
+toggle-find-in-headline-option      = None
+toggle-find-mark-changes-option     = None
+toggle-find-mark-finds-option       = None
+toggle-find-regex-option            = None
+toggle-find-reverse-option          = None
+toggle-find-word-option             = None
+toggle-find-wrap-around-option      = None
 toggle-mini-buffer                  = None
     # It **is** possible to use &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
     # This had better be defined if you intend ever to hide the minibuffer.
@@ -3152,7 +3201,7 @@ transpose-chars                     = None
 transpose-lines                     = None
 transpose-words                     = None
 undo                                = Ctrl-Z
-unindent                            = Ctrl-[
+unindent-region                     = Ctrl-[
 universal-argument                  = None
 unmark-all                          = Alt-U
 untabify                            = None
@@ -3369,6 +3418,7 @@ scroll-down                         = None
 scroll-down-extend-selection        = None
 scroll-up                           = None
 scroll-up-extend-selection          = None
+search-again                        = None
 search-backward                     = None
 search-forward                      = None
 select-all                          = None
@@ -3378,6 +3428,9 @@ set-comment-column                  = None
 set-extend-mode                     = None
 set-fill-column                     = None
 set-fill-prefix                     = None
+set-find-everywhere                 = None
+set-find-node-only                  = None
+set-find-suboutline-only            = None
 set-font                            = None
 set-ignore-state                    = None
 set-insert-state                    = None
@@ -3411,6 +3464,16 @@ tangle-marked                       = None
 toggle-active-pane                  = None
 toggle-angle-brackets               = None
 toggle-extend-mode                  = None
+toggle-find-clone-find-all-option   = None
+toggle-find-ignore-case-option      = None
+toggle-find-in-body-option          = None
+toggle-find-in-headline-option      = None
+toggle-find-mark-changes-option     = None
+toggle-find-mark-finds-option       = None
+toggle-find-regex-option            = None
+toggle-find-reverse-option          = None
+toggle-find-word-option             = None
+toggle-find-wrap-around-option      = None
 toggle-mini-buffer                  = None
     # It **is** possible to use &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
     # This had better be defined if you intend ever to hide the minibuffer.
@@ -3420,7 +3483,7 @@ transpose-chars                     = None
 transpose-lines                     = None
 transpose-words                     = None
 undo                                = None
-unindent                            = None
+unindent-region                     = None
 universal-argument                  = None
 unmark-all                          = None
 untabify                            = None
@@ -3466,8 +3529,8 @@ main()</t>
     'Legacy Leo bindings',
     'Legacy Leo shortcuts with important Emacs bindings',
     'No bindings',
-    'Vim bindings',
     'EKR bindings: a mix',
+    'EKR bindings: Mode-oriented',
 ]
 
 setNames.sort()</t>
@@ -3988,7 +4051,7 @@ enter-edit-mode             = Ctrl-E    # end-of-line
 enter-edit-extend-mode      = None
 enter-find-mode             = Ctrl-F    # open-find-tab
 enter-outline-mode          = Ctrl-O    # open
-enter-outline-move-move     = None
+enter-outline-move-mode     = None
 enter-file-mode             = Ctrl-W    # kill-region
 enter-file-open-mode        = None
 
@@ -4334,6 +4397,9 @@ set-ignore-state                    = None
 set-insert-state                    = None
 set-fill-column                     = None
 set-fill-prefix                     = None
+set-find-everywhere                 = None
+set-find-node-only                  = None
+set-find-suboutline-only            = None
 set-font                            = None
 set-mark-command                    = None # enter-edit-mode
 set-overwrite-state                 = None
@@ -4574,6 +4640,8 @@ enter-outline-mode      = BackSpace
 keyboard-quit           = Ctrl-g
 mode-help               = Tab
 
+# ** In this mode the meanings of keys and their Alt/Shift-partners are reversed.
+
 # These must exit the mode so the headline can be editied.
 edit-headline           = Ctrl-h
 insert-node             = Ctrl-i 
@@ -4590,12 +4658,25 @@ paste-node              -&gt; same = Ctrl-Shift-p
 undo                    -&gt; same = Ctrl-z
 redo                    -&gt; same = Ctrl-Shift-z
 
-contract-or-go-left     -&gt; same = LtArrow
-expand-and-go-right     -&gt; same = RtArrow
 goto-first-node         -&gt; same = Home
+goto-first-node         -&gt; same = Alt-Home
 goto-last-visible       -&gt; same = End
-goto-next-visible       -&gt; same = DnArrow
-goto-prev-visible       -&gt; same = UpArrow
+goto-last-visible       -&gt; same = Alt-End
+
+contract-or-go-left     -&gt; same = Alt-LtArrow
+expand-and-go-right     -&gt; same = Alt-RtArrow
+goto-next-visible       -&gt; same = Alt-DnArrow
+goto-prev-visible       -&gt; same = Alt-UpArrow
+
+contract-or-go-left     -&gt; same = Shift-l
+expand-and-go-right     -&gt; same = Shift-r
+goto-next-visible       -&gt; same = Shift-d
+goto-prev-visible       -&gt; same = Shift-u
+
+move-outline-down       -&gt; same = DnArrow
+move-outline-left       -&gt; same = LtArrow
+move-outline-right      -&gt; same = RtArrow
+move-outline-up         -&gt; same = UpArrow
 
 move-outline-down       -&gt; same = d
 move-outline-left       -&gt; same = l
