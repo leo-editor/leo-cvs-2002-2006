@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3052:@thin leoFind.py
+#@+node:ekr.20060123151617:@thin leoFind.py
 #@@language python
 #@@tabwidth -4
 #@@pagewidth 80
@@ -335,12 +335,6 @@ class leoFind:
     #@+node:ekr.20060123070359.4:regexSearchCommand
     #@-node:ekr.20060123070359.4:regexSearchCommand
     #@-node:ekr.20060123070359.1:New commands
-    #@+node:ekr.20060123070359.2:incrementalSearchCommand
-    #@-node:ekr.20060123070359.2:incrementalSearchCommand
-    #@+node:ekr.20060123070359.3:wordSearchCommand
-    #@-node:ekr.20060123070359.3:wordSearchCommand
-    #@+node:ekr.20060123070359.4:regexSearchCommand
-    #@-node:ekr.20060123070359.4:regexSearchCommand
     #@+node:EKR.20040503070514:handleUserClick
     def handleUserClick (self,p):
         
@@ -1098,5 +1092,5 @@ class leoFind:
     #@-node:ekr.20031218072017.3092:Must be overridden in subclasses
     #@-others
 #@nonl
-#@-node:ekr.20031218072017.3052:@thin leoFind.py
+#@-node:ekr.20060123151617:@thin leoFind.py
 #@-leo

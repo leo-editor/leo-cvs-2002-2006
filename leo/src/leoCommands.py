@@ -188,7 +188,7 @@ class baseCommands:
         # g.trace('Commands',c.fileName()) # g.callers())
         
         # Create a keyHandler even if there is no miniBuffer.
-        c.keyHandler = k = leoKeys.keyHandlerClass(c,
+        c.keyHandler = c.k = k = leoKeys.keyHandlerClass(c,
             useGlobalKillbuffer=True,
             useGlobalRegisters=True)
     
@@ -253,11 +253,15 @@ class baseCommands:
                 else:
                     command(event) # Call minibuffer command.
             except:
-                g.es("exception executing command")
-                print "exception executing command"
-                g.es_exception(c=c)
-                if c and c.exists and hasattr(c,'frame'):
-                    c.redraw_now()
+                if g.app.unitTesting:
+                    raise
+                else:
+                    g.es("exception executing command")
+                    print "exception executing command"
+                    g.es_exception(c=c)
+                    if c and c.exists and hasattr(c,'frame'):
+                        c.redraw_now()
+                
     
         # Be careful there: the command could destroy c.
         if c and c.exists:

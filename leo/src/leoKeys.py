@@ -150,6 +150,10 @@ class keyHandlerClass:
         self.mb_pasteKey = None
         self.mb_cutKey = None
         
+        self.abortAllModesKey = None
+        self.fullCommandKey = None
+        self.universalArgKey = None
+        
         # Keepting track of the characters in the mini-buffer.
         self.mb_history = []
         self.mb_prefix = ''
@@ -265,6 +269,7 @@ class keyHandlerClass:
                 (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
                 commandName != bunch.commandName
             ):
+                # shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
                 g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
                     k.prettyPrintKey(shortcut),
                     bunch.commandName,commandName,pane),
@@ -759,7 +764,7 @@ class keyHandlerClass:
             
         # g.trace(stroke,k.abortAllModesKey)
     
-        if stroke == k.abortAllModesKey: # 'Control-g'
+        if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
             k.clearState()
             k.keyboardQuit(event)
             k.endCommand(event,commandName)
@@ -1740,7 +1745,12 @@ class keyHandlerClass:
         func = c.commandsDict.get(commandName)
         
         if func:
-            event = stroke = None
+            # g.trace(commandName,func.__name__)
+            stroke = None
+            if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+                event = None # A legacy function.
+            else: # Create a dummy event as a signal.
+                event = g.bunch(keysym = '',char = '',widget = None)
             k.masterCommand(event,func,stroke)
             return k.funcReturn
         else:
@@ -1880,6 +1890,7 @@ class keyHandlerClass:
     def getLabel (self,ignorePrompt=False):
         
         k = self ; w = self.widget
+        if not w: return ''
         
         if self.useTextWidget:
             w.update_idletasks()
@@ -1900,11 +1911,11 @@ class keyHandlerClass:
     def protectLabel (self):
         
         k = self ; w = self.widget
+        if not w: return
     
         if self.useTextWidget:
-            if w:
-                w.update_idletasks()
-                k.mb_prefix = w.get('1.0','end')
+            w.update_idletasks()
+            k.mb_prefix = w.get('1.0','end')
         else:
             if k.svar:
                 k.mb_prefix = k.svar.get()
@@ -1922,14 +1933,14 @@ class keyHandlerClass:
     def setLabel (self,s,protect=False):
     
         k = self ; w = self.widget
+        if not w: return
     
         # g.trace(repr(s))
     
         if self.useTextWidget:
-            if w:
-                k.c.frame.minibufferWantsFocus()
-                w.update_idletasks()
-                w.delete('1.0','end') ; w.insert('1.0',s)
+            k.c.frame.minibufferWantsFocus()
+            w.update_idletasks()
+            w.delete('1.0','end') ; w.insert('1.0',s)
         else:
             if k.svar: k.svar.set(s)
     
@@ -1940,9 +1951,10 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.36:setLabelBlue
     def setLabelBlue (self,label=None,protect=False):
         
-        k = self
-    
-        k.widget.configure(background='lightblue')
+        k = self ; w = k.widget
+        if not w: return
+        
+        w.configure(background='lightblue')
     
         if label is not None:
             k.setLabel(label,protect)
@@ -1951,11 +1963,13 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.35:setLabelGrey
     def setLabelGrey (self,label=None):
     
-        k = self
-        k.widget.configure(background='lightgrey')
+        k = self ; w = self.widget
+        if not w: return
+        
+        w.configure(background='lightgrey')
         if label is not None:
             k.setLabel(label)
-            
+    
     setLabelGray = setLabelGrey
     #@nonl
     #@-node:ekr.20050920085536.35:setLabelGrey

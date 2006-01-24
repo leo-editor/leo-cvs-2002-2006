@@ -87,10 +87,12 @@ class leoGui:
         
         # g.trace("leoGui",guiName)
         
+        self.lastFrame = None
         self.leoIcon = None
         self.mGuiName = guiName
         self.mainLoop = None
         self.root = None
+        self.script = None
         self.utils = None
         self.isNullGui = False
     #@nonl
@@ -317,6 +319,13 @@ class leoGui:
             return "invalid gui name"
     #@nonl
     #@-node:ekr.20031218072017.3740:guiName
+    #@+node:ekr.20031218072017.2231:setScript
+    def setScript (self,script=None,scriptFileName=None):
+    
+        self.script = script
+        self.scriptFileName = scriptFileName
+    #@nonl
+    #@-node:ekr.20031218072017.2231:setScript
     #@+node:ekr.20051206103652:widget_name
     def widget_name (self,w):
         
@@ -420,13 +429,6 @@ class nullGui(leoGui):
             g.trace("nullGui",g.callerName(2))
     #@nonl
     #@-node:ekr.20031218072017.2230:oops
-    #@+node:ekr.20031218072017.2231:setScript
-    def setScript (self,script=None,scriptFileName=None):
-    
-        self.script = script
-        self.scriptFileName = scriptFileName
-    #@nonl
-    #@-node:ekr.20031218072017.2231:setScript
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.2223:class nullGui (leoGui)

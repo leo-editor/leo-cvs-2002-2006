@@ -69,7 +69,7 @@ def run(fileName=None,*args,**keywords):
     #@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
     #@nl
     g.computeStandardDirectories()
-    script = getBatchScript() # Do early so we can compute verbose next.
+    script, windowFlag = getBatchScript() # Do early so we can compute verbose next.
     verbose = script is None
     g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
     #@    << import leoNodes and leoConfig >>
@@ -96,7 +96,12 @@ def run(fileName=None,*args,**keywords):
     g.app.config.readSettingsFiles(fileName,verbose)
     g.app.setEncoding()
     if script:
-        createNullGuiWithScript(script)
+        if windowFlag:
+            g.app.createTkGui() # Creates global windows.
+            g.app.gui.setScript(script)
+            sys.args = []
+        else:
+            createNullGuiWithScript(script)
         fileName = None
     # Load plugins. Plugins may create g.app.gui.
     g.doHook("start1")
@@ -235,16 +240,19 @@ def createNullGuiWithScript (script):
 def getBatchScript ():
     
     import leoGlobals as g
+    windowFlag = False
     
     name = None ; i = 1 # Skip the dummy first arg.
     while i + 1 < len(sys.argv):
         arg = sys.argv[i].strip().lower()
         if arg in ("--script","-script"):
             name = sys.argv[i+1].strip() ; break
+        if arg in ("--script-window","-script-window"):
+            name = sys.argv[i+1].strip() ; windowFlag = True ; break
         i += 1
 
     if not name:
-        return None
+        return None, windowFlag
     name = g.os_path_join(g.app.loadDir,name)
     try:
         f = None
@@ -257,7 +265,7 @@ def getBatchScript ():
             script = None
     finally:
         if f: f.close()
-        return script
+        return script, windowFlag
 #@nonl
 #@-node:ekr.20031218072017.1939:getBatchScript
 #@+node:ekr.20041130093254:reportDirectories

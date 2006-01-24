@@ -172,15 +172,24 @@ class tkinterGui(leoGui.leoGui):
         pass
     
     #@-node:ekr.20031218072017.4054:recreateRootWindow (not used)
-    #@+node:ekr.20031218072017.4055:runMainLoop
+    #@+node:ekr.20031218072017.4055:runMainLoop (tkGui)
     def runMainLoop(self):
     
         """Run tkinter's main loop."""
     
-        # g.trace("tkinterGui")
-        self.root.mainloop()
+        if self.script:
+            log = g.app.log
+            if log:
+                print 'Start of batch script...\n'
+                log.c.executeScript(script=self.script)
+                print 'End of batch script'
+            else:
+                print 'no log, no commander for executeScript in tkInterGui.runMainLoop'
+        else:
+             # g.trace("tkinterGui")
+            self.root.mainloop()
     #@nonl
-    #@-node:ekr.20031218072017.4055:runMainLoop
+    #@-node:ekr.20031218072017.4055:runMainLoop (tkGui)
     #@-node:ekr.20031218072017.4048:app.gui.Tkinter birth & death
     #@+node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
     def runAboutLeoDialog(self,c,version,theCopyright,url,email):

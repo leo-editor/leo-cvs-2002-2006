@@ -443,13 +443,14 @@ class leoFrame:
         self.gui = gui
         
         # Objects attached to this frame.
-        self.menu = None
-        self.keys = None
         self.colorPanel = None 
-        self.fontPanel = None 
-        self.prefsPanel = None
         self.comparePanel = None
+        self.findPanel = None
+        self.fontPanel = None 
+        self.keys = None
+        self.menu = None
         self.miniBufferWidget = None # New in 4.4.
+        self.prefsPanel = None
         self.useMiniBufferWidget = False # New in 4.4
     
         # Gui-independent data
@@ -1562,6 +1563,18 @@ class nullLog (leoLog):
             g.rawPrint("")
     #@nonl
     #@-node:ekr.20041012083237.3:put and putnl (nullLog)
+    #@+node:ekr.20060124085830:tabs
+    def clearTab        (self,tabName): pass
+    def createTab       (self,tabName): pass
+    def deleteTab       (self,tabName): pass
+    def getSelectedTab          (self): pass
+    def lowerTab        (self,tabName): pass
+    def raiseTab        (self,tabName): pass
+    def renameTab (self,oldName,newName): pass
+    def selectTab       (self,tabName): pass
+    def setTabBindings  (self,tabName): pass
+    #@nonl
+    #@-node:ekr.20060124085830:tabs
     #@+node:ekr.20041012083237.4:setColorFromConfig & setFontFromConfig
     def setFontFromConfig (self):
         pass
@@ -1603,7 +1616,7 @@ class nullTree (leoTree):
     def beginUpdate (self):
         pass
         
-    def endUpdate (self,flag):
+    def endUpdate (self,flag,scroll=False):
         pass
     
     def enableDrawingAfterException (self):

@@ -1753,7 +1753,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         '''Copy the selected text from the widget to the clipboard.'''
         
         f = self ; c = f.c ; w = f.getFocus()
-        if not w: return
+        if not w or not g.app.gui.isTextWidget(w): return
     
         # Set the clipboard text.
         i,j = g.app.gui.getTextSelection(w)
@@ -1769,9 +1769,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
-        f = self ; c = f.c
-        w = f.getFocus()
-        if not w: return
+        f = self ; c = f.c ; w = f.getFocus()
+        if not w or not g.app.gui.isTextWidget(w): return
+    
         name = g.app.gui.widget_name(w)
         oldSel = g.app.gui.getTextSelection(w)
         oldText = w.get('1.0','end')
@@ -1800,7 +1800,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         '''Paste the clipboard into a widget.'''
     
         f = self ; c = f.c ; w = f.getFocus()
-        if not w: return
+        if not w or not g.app.gui.isTextWidget(w): return
+    
         name = g.app.gui.widget_name(w)
         oldSel = g.app.gui.getTextSelection(w)
         oldText = w.get('1.0','end')
