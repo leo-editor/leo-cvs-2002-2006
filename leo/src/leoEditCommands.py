@@ -4318,8 +4318,8 @@ class leoCommandsClass (baseEditCommandsClass):
             'redo':                         c.undoer.redo,
             'reformat-paragraph':           c.reformatParagraph,
             'remove-sentinels':             c.removeSentinels,
-            'replace':                      c.replace,
-            'replace-then-find':            c.replaceThenFind,
+            'find-tab-replace':             c.replace,
+            'find-tab-replace-then-find':   c.replaceThenFind,
             'resize-to-screen':             f.resizeToScreen,
             'revert':                       c.revert,
             'save-file':                    c.save,
@@ -5922,6 +5922,7 @@ class searchCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
         self.findTabHandler = None
+        self.minibufferFindHandler = None
         
         # The last kind of search
         
@@ -5942,19 +5943,20 @@ class searchCommandsClass (baseEditCommandsClass):
     def getPublicCommands (self):
         
         return {
-            # The new find tab replaces the find dialog.
-            'hide-find-tab':            self.hideFindTab,
-            'open-find-tab':            self.openFindTab,
             'find-tab-find':            self.findTabFindNext,
             'find-tab-find-prev':       self.findTabFindPrev,
             'find-tab-change':          self.findTabChange,
             'find-tab-change-all':      self.findTabChangeAll,
             'find-tab-change-then-find':self.findTabChangeThenFind,
+            
+            'hide-find-tab':            self.hideFindTab,
     
             'isearch-forward':          self.isearchForward,
             'isearch-backward':         self.isearchBackward,
             'isearch-forward-regexp':   self.isearchForwardRegexp,
             'isearch-backward-regexp':  self.isearchBackwardRegexp,
+            
+            'open-find-tab':            self.openFindTab,
             
             're-search-forward':        self.reSearchForward,
             're-search-backward':       self.reSearchBackward,
@@ -5980,11 +5982,10 @@ class searchCommandsClass (baseEditCommandsClass):
             
             'word-search-forward':      self.wordSearchForward,
             'word-search-backward':     self.wordSearchBackward,
-            
         }
     
     #@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
-    #@+node:ekr.20051022211617:find tab...
+    #@+node:ekr.20060123131421:Top-level methods
     #@+node:ekr.20051020120306:openFindTab
     def openFindTab (self,event=None):
     
@@ -6047,8 +6048,8 @@ class searchCommandsClass (baseEditCommandsClass):
             self.c.frame.log.selectTab('Log')
     #@nonl
     #@-node:ekr.20051022212004:commands...
-    #@-node:ekr.20051022211617:find tab...
-    #@+node:ekr.20060123115459:Options
+    #@-node:ekr.20060123131421:Top-level methods
+    #@+node:ekr.20060123115459:Find options
     #@+node:ekr.20060123120456:Wrappers
     def setFindScopeEveryWhere (self, event):      return self.setFindScope('everywhere')
     def setFindScopeNodeOnly (self, event):        return self.setFindScope('node-only')
@@ -6095,18 +6096,23 @@ class searchCommandsClass (baseEditCommandsClass):
         
         c = self.c
         
-        if not c.frame.findPanel:
-            c.frame.findPanel = g.app.gui.createFindPanel(c)
-            
-        fp = c.frame.findPanel
-        
-        if ivar in fp.intKeys:
-            g.trace(ivar)
+        if 1:
+            self.openMinibufferFind()
+            h = self.minibufferFindHandler
         else:
-            g.trace('bad find ivar')
+            self.openFindTab()
+            h = self.findTabHandler
+    
+        if ivar in h.intKeys:
+            var = h.dict.get(ivar)
+            val = not var.get()
+            var.set(val)
+            g.trace('%s = %s' % (ivar,val))
+        else:
+            g.trace('oops: bad find ivar %s' % ivar)
     #@nonl
     #@-node:ekr.20060123115459.2:toggleOption
-    #@-node:ekr.20060123115459:Options
+    #@-node:ekr.20060123115459:Find options
     #@+node:ekr.20060117181301:Common helpers
     #@+node:ekr.20050920084036.263:iSearchHelper
     def iSearchHelper (self,event,forward,regexp):

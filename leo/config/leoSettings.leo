@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="249" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="56" left="359" height="872" width="841"/>
+	<global_window_position top="62" left="402" height="872" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -34,15 +34,15 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20060112110750" a="E"><vh>Buttons</vh>
+<v t="ekr.20060112110750"><vh>Buttons</vh>
 <v t="ekr.20051010093913" annotate="7d71002e"><vh>@button Save</vh></v>
 <v t="ekr.20051011123608" annotate="7d71002e"><vh>@@button align to col</vh></v>
-<v t="ekr.20060112103537.17" a="E"><vh>@button Check Bindings</vh>
+<v t="ekr.20060112103537.17"><vh>@button Check Bindings</vh>
 <v t="ekr.20060112104119"><vh>&lt;&lt; define setNames &gt;&gt;</vh></v>
 <v t="ekr.20060112104333"><vh>doSet</vh></v>
 <v t="ekr.20060112105523"><vh>doShortcuts</vh></v>
 <v t="ekr.20060112104333.1"><vh>checkSets</vh></v>
-<v t="ekr.20060112104823" a="E"><vh>main</vh></v>
+<v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
@@ -274,7 +274,7 @@
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20060112093001"><vh>Options</vh>
 <v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111083044" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
@@ -286,7 +286,7 @@
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
 <v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
-<v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
+<v t="ekr.20060110141538.2" a="E" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
 <v t="ekr.20060112093001.2"><vh>Options</vh>
 <v t="ekr.20060110141538.3" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = False</vh></v>
 <v t="ekr.20060111082542" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -297,7 +297,7 @@
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
 </v>
-<v t="ekr.20060103103812" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060103103812" a="E" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060112093001.4"><vh>Options</vh>
 <v t="ekr.20060111082854" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = False</vh></v>
 <v t="ekr.20060111082848" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -317,9 +317,9 @@
 </v>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
-<v t="ekr.20060112093227.2" a="EV"><vh>@shortcuts No bindings: N-Z</vh></v>
+<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20051010112558" a="E"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060122105438"><vh>To do</vh></v>
 <v t="ekr.20060122105438.1"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060112093419.1"><vh>Options</vh>
@@ -358,16 +358,16 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
 <v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
-<v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
+<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14" a="E"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
+<v t="ekr.20060122105527.14"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
 <v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
@@ -377,6 +377,7 @@
 </v>
 <v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
+<v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
@@ -384,7 +385,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060115202002"><vh>To do</vh></v>
 <v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.1"><vh>To do</vh></v>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
@@ -396,16 +396,16 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 </v>
 <v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
-<v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
+<v t="ekr.20060122113439" a="E"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12" a="E"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14" a="E"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
+<v t="ekr.20060122105527.14"><vh>@@mode Options (Ctrl-Y) (Not needed now that that find mode is so good)</vh>
 <v t="ekr.20060122112534"><vh>@@mode Find-options</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
@@ -415,6 +415,7 @@
 </v>
 <v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
+<v t="ekr.20060124070546" a="TV"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
@@ -1859,10 +1860,8 @@ remove-directory                    = None
 remove-sentinels                    = None
 rename-buffer                       = None
 repeat-complex-command              = None      # Usually 'again', whatever that is.
-replace                             = None
 replace-regex                       = None
 replace-string                      = None
-replace-then-find                   = None
 resize-to-screen                    = None
 reverse-region                      = None
 revert                              = None
@@ -2265,6 +2264,8 @@ find-tab-change-all                 = None  # Not recommended to bind this to a 
 find-tab-change-then-find           = Ctrl--
 find-tab-find                       = F3
 find-tab-find-prev                  = F2
+find-tab-replace                    = None
+find-tab-replace-then-find          = None
 flatten-outline                     = None
 flush-lines                         = None
 focus-to-body                       = None
@@ -2392,6 +2393,8 @@ find-tab-change-all                     = None  # Not recommended to bind this t
 find-tab-change-then-find               = Ctrl--
 find-tab-find                           = F3
 find-tab-find-prev                      = F2
+find-tab-replace                        = None
+find-tab-replace-then-find              = None
 flatten-outline                         = None
 flush-lines                             = None
 focus-to-body                           = None
@@ -2555,10 +2558,8 @@ remove-directory                        = None
 remove-sentinels                        = None
 rename-buffer                           = None
 repeat-complex-command                  = None      # Usually 'again', whatever that is.
-replace                                 = None
 replace-regex                           = None
 replace-string                          = None
-replace-then-find                       = None
 resize-to-screen                        = None
 reverse-region                          = None
 revert                                  = None
@@ -2676,6 +2677,8 @@ find-tab-change-all                 = None  # Not recommended to bind this to a 
 find-tab-change-then-find           = Ctrl--
 find-tab-find                       = F3
 find-tab-find-prev                  = F2
+find-tab-replace                    = Ctrl-=
+find-tab-replace-then-find          = Ctrl--
 flatten-outline                     = None
 flush-lines                         = None
 focus-to-body                       = None
@@ -2842,10 +2845,8 @@ remove-directory                = None
 remove-sentinels                = None
 rename-buffer                   = None
 repeat-complex-command          = None
-replace                         = Ctrl-=
 replace-regex                   = None
 replace-string                  = None
-replace-then-find               = Ctrl--
 resize-to-screen                = None
 reverse-region                  = None
 revert                          = None
@@ -2946,7 +2947,8 @@ write-outline-only              = None
 yank                            = Control-y
 yank-pop                        = Alt-y
 yank-rectangle                  = None
-zap-to-character                = Alt-z</t>
+zap-to-character                = Alt-z
+</t>
 <t tx="ekr.20060112090844.4">fill-paragraph                          = None
 fill-region                             = None
 fill-region-as-paragraph                = None
@@ -2960,6 +2962,8 @@ find-tab-change-all                     = None  # Not recommended to bind this t
 find-tab-change-then-find               = Ctrl--
 find-tab-find                           = F3
 find-tab-find-prev                      = F2
+find-tab-replace                        = None
+find-tab-replace-then-find              = None
 flatten-outline                         = None
 flush-lines                             = None
 focus-to-body                           = None
@@ -3122,10 +3126,8 @@ remove-directory                    = None
 remove-sentinels                    = None
 rename-buffer                       = None
 repeat-complex-command              = None
-replace                             = None
 replace-regex                       = None
 replace-string                      = None
-replace-then-find                   = None
 resize-to-screen                    = None
 reverse-region                      = None
 revert                              = None
@@ -3242,6 +3244,8 @@ find-tab-change-all                 = None
 find-tab-change-then-find           = None
 find-tab-find                       = None
 find-tab-find-prev                  = None
+find-tab-replace                    = None
+find-tab-replace-then-find          = None
 flatten-outline                     = None
 flush-lines                         = None
 focus-to-body                       = None
@@ -3403,10 +3407,8 @@ remove-directory                    = None
 remove-sentinels                    = None
 rename-buffer                       = None
 repeat-complex-command              = None
-replace                             = None
 replace-regex                       = None
 replace-string                      = None
-replace-then-find                   = None
 resize-to-screen                    = None
 reverse-region                      = None
 revert                              = None
@@ -3731,9 +3733,6 @@ The valid values are::
 ignore:  Leo ignores the key (like Vim).
 insert:  Leo inserts the key at the cursor (like Emacs)
 overwrite: Leo replaces the character at the cursor.</t>
-<t tx="ekr.20060115202002">@nocolor
-
-- what is replace-then-find?</t>
 <t tx="ekr.20060116090646">@nocolor
 
 Standard keys (Windows defaults in parens)
@@ -4047,9 +4046,9 @@ enter-find-mode     = f
 # Options mode isn't needed just yet.
 # enter-options-mode          = Ctrl-Y    # yank
 
-enter-edit-mode             = Ctrl-E    # end-of-line
+enter-edit-mode             = Alt-space
 enter-edit-extend-mode      = None
-enter-find-mode             = Ctrl-F    # open-find-tab
+enter-find-mode             = Ctrl-Shift-F    # open-find-tab
 enter-outline-mode          = Ctrl-O    # open
 enter-outline-move-mode     = None
 enter-file-mode             = Ctrl-W    # kill-region
@@ -4080,20 +4079,20 @@ back-paragraph-extend-selection     = None # ! text = Alt-Shift-braceleft
 back-sentence                       = None # ! text = Alt-a  # No conflict
 back-sentence-extend-selection      = None # = None # Alt-Shift-a, sort-siblings
 back-to-indentation                 = None
-back-word                           = None # ! text = Alt-b  
-back-word                           = None # ! text = Ctrl-LtArrow
-back-word-extend-selection          = None # ! text = Alt-Shift-b
-back-word-extend-selection          = None # ! text = Ctrl-Shift-LtArrow
+back-word                           = ! text = Alt-b  
+back-word                           = ! text = Ctrl-LtArrow
+back-word-extend-selection          = ! text = Alt-Shift-b
+back-word-extend-selection          = ! text = Ctrl-Shift-LtArrow
 backward-delete-char                = BackSpace
 backward-kill-paragraph             = None
 backward-kill-sentence              = None
 backward-kill-word                  = None # = Alt-Delete
-beginning-of-buffer                 = None  # ! text = Home
-beginning-of-buffer-extend-selection = None # !text = Shift-Home
-beginning-of-line                   = None # ! text = Ctrl-a         # Ctrl-a Conflicts with select-all
-beginning-of-line                   = None # ! text = Home
-beginning-of-line-extend-selection  = None # ! text = Shift-Home
-beginning-of-line-extend-selection  = None # = Ctrl-Shift-a # conflicts with select-all
+beginning-of-buffer                  ! text = Ctrl-Home
+beginning-of-buffer-extend-selection ! text = Ctrl-Shift-Home
+beginning-of-line                    ! text = Home
+beginning-of-line-extend-selection   ! text = Shift-Home
+beginning-of-line                  ! text = Ctrl-a
+beginning-of-line-extend-selection ! text = Ctrl-Shift-a
 capitalize-word                     = None
 cascade-windows                     = None
 center-line                         = None
@@ -4145,13 +4144,13 @@ downcase-word                       = None
 dump-outline                        = None
 edit-headline                       = Ctrl-H
 end-edit-headline                   ! tree = Return     # Esc is also possible.
-end-of-buffer                       = None # ! text = Alt-greater # Same as Alt-Shift-greater
-end-of-buffer                       = None # ! text = Ctrl-End
-end-of-buffer-extend-selection      = None # ! text = Shift-Ctrl-End
-end-of-line                         = None # ! text = Ctrl-e
-end-of-line                         = None # ! text = End
-end-of-line-extend-selection        = None # ! text = Ctrl-Shift-e
-end-of-line-extend-selection        = None # ! text = Shift-End
+# end-of-buffer                      ! text = Alt-greater # Same as Alt-Shift-greater
+end-of-buffer                       ! text = Ctrl-End
+end-of-buffer-extend-selection      ! text = Ctrl-Shift-End
+end-of-line                         ! text = End
+end-of-line-extend-selection        ! text = Shift-End
+end-of-line                         ! text = Ctrl-e
+end-of-line-extend-selection        ! text = Ctrl-Shift-e
 exit-named-mode                     = None
 equal-sized-panes                   = None
 escape                              = None
@@ -4185,16 +4184,7 @@ extract-section                     = None # Was Shift-Ctrl-e</t>
 <t tx="ekr.20060122105527.21">fill-paragraph                      = None
 fill-region                         = None
 fill-region-as-paragraph            = None
-find-dialog-change                  = None  # Deprecated. 
-find-dialog-change-all              = None  # Deprecated. 
-find-dialog-change-then-find        = None  # Deprecated. 
-find-dialog-find-previous           = None  # Deprecated. 
-find-dialog-find-next               = None  # Deprecated. 
-find-tab-change                     = Ctrl-=
-find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
-find-tab-change-then-find           = Ctrl--
-find-tab-find                       = F3
-find-tab-find-prev                  = F2
+
 flatten-outline                     = None
 flush-lines                         = None
 focus-to-body                       = None
@@ -4207,8 +4197,8 @@ forward-paragraph                   ! text = Alt-braceright
 forward-paragraph-extend-selection  ! text = Alt-Shift-braceright
 forward-sentence                    ! text = Alt-e
 forward-sentence-extend-selection   ! text = Alt-Shift-e
-# forward-word                        ! text = Alt-f          # Usually opens file menu.
-# forward-word-extend-selection       ! text = Alt-Shift-f
+forward-word                        ! text = Alt-f          # Usually opens file menu.
+forward-word-extend-selection       ! text = Alt-Shift-f
 forward-word                        ! text = Ctrl-RtArrow
 forward-word-extend-selection       ! text = Ctrl-Shift-RtArrow
 full-command                        = Alt-x     
@@ -4242,9 +4232,7 @@ goto-prev-visible                   ! text = Alt-UpArrow
 goto-prev-visible                   ! tree = Alt-UpArrow
 goto-prev-visible                   ! tree = UpArrow
 help                                = F1
-hide-find-tab                       = None
 hide-mini-buffer                    = None
-hide-spell-tab                      = None
 hoist                               = None
 how-many                            = None
 iconify-frame                       = None  # Same as suspend.
@@ -4269,10 +4257,6 @@ insert-parentheses                  = None
 insert-register                     = None
 # insert-to-buffer                  = None
 inverse-add-global-abbrev           = None
-isearch-backward                    = None
-isearch-backward-regexp             = None
-isearch-forward                     = None
-isearch-forward-regexp              = None
 jump-to-register                    = None
 keep-lines                          = None
 keyboard-quit                       = Ctrl-g
@@ -4314,6 +4298,8 @@ new                                 = Ctrl-n    # Ctrl-n conflicts with next-lin
 newline-and-indent                  = Ctrl-j
 next-line                           ! text = DnArrow
 next-line-extend-selection          ! text = Shift-DnArrow
+# next-line                           ! text = Ctrl-N
+# next-line-extend-selection          ! text = Ctrl-Shift-N
 number-command                      = None
 number-command-0                    = None
 number-command-1                    = None
@@ -4327,8 +4313,6 @@ number-command-8                    = None
 number-command-9                    = None
 # number-to-register                = None
 open-compare-window                 = None
-open-find-dialog                    = None              # Deprecated.
-open-find-tab                       = Ctrl-Shift-F      # Deprecated: use find-mode now.
 open-leoDocs-leo                    = None
 open-leoPlugins-leo                 = None
 open-leoSettings-leo                = None
@@ -4350,13 +4334,13 @@ prepend-to-buffer                   = None
 prepend-to-register                 = None
 pretty-print-all-python-code        = None
 pretty-print-python-code            = None
+# previous-line                       ! text = Ctrl-P
+# previous-line-extend-selection      ! text = Ctrl-Shift-P
 previous-line                       ! text = UpArrow
 previous-line-extend-selection      ! text = Shift-UpArrow
 print-bindings                      = None
 print-commands                      = None
 promote                             = Ctrl-{            
-query-replace                       = None
-query-replace-regex                 = None
 quick-command                       = None # Now implemented with @mode
 re-search-backward                  = None
 re-search-forward                   = None
@@ -4370,10 +4354,6 @@ remove-directory                    = None
 remove-sentinels                    = None
 rename-buffer                       = None
 repeat-complex-command              = None      # Usually 'again', whatever that is.
-replace                             = None
-replace-regex                       = None
-replace-string                      = None
-replace-then-find                   = None
 resize-to-screen                    = None
 reverse-region                      = None
 revert                              = None
@@ -4385,9 +4365,6 @@ scroll-down                         ! text = PageDn
 scroll-up                           ! text = PageUp 
 scroll-down-extend-selection        ! text = Shift-PageDn
 scroll-up-extend-selection          ! text = Shift-PageUp
-search-again                        = None
-search-backward                     = None
-search-forward                      = None
 select-all                          = None # Shift-Ctrl-A conflicts with beginning-of-line-extend-selection.
 select-paragraph                    = None
 set-colors                          = None
@@ -4397,9 +4374,6 @@ set-ignore-state                    = None
 set-insert-state                    = None
 set-fill-column                     = None
 set-fill-prefix                     = None
-set-find-everywhere                 = None
-set-find-node-only                  = None
-set-find-suboutline-only            = None
 set-font                            = None
 set-mark-command                    = None # enter-edit-mode
 set-overwrite-state                 = None
@@ -4431,17 +4405,7 @@ tangle-marked                       = None
 toggle-active-pane                  = Ctrl-T
 toggle-angle-brackets               = None
 toggle-extend-mode                  = None
-toggle-find-clone-find-all-option   = None
-toggle-find-ignore-case-option      = None
-toggle-find-in-body-option          = None
-toggle-find-in-headline-option      = None
-toggle-find-mark-changes-option     = None
-toggle-find-mark-finds-option       = None
-toggle-find-regex-option            = None
-toggle-find-reverse-option          = None
-toggle-find-word-option             = None
-toggle-find-wrap-around-option      = None
-toggle-mini-buffer                  = None
+
     # It **is** possible to use &lt;alt-x&gt;toggle-mini-buffer&lt;return&gt; even if the mini-buffer isn't visible!
     # This had better be defined if you intend ever to hide the minibuffer.
     # To avoid confusion, it should be something unlikely to be typed by accident.
@@ -4463,8 +4427,6 @@ view-lossage                        = None
 view-register                       = None
 weave                               = None
 what-line                           = None
-word-search-backward                = None
-word-search-forward                 = None
 write-abbrev-file                   = None
 write-at-file-nodes                 = Shift-Ctrl-W
 write-dirty-at-file-nodes           = None
@@ -4473,7 +4435,9 @@ write-outline-only                  = None
 yank                                = None   # Ctrl-y
 yank-pop                            = Alt-y
 yank-rectangle                      = None
-zap-to-character                    = Alt-z</t>
+zap-to-character                    = Alt-z
+
+</t>
 <t tx="ekr.20060122105732"># Boilerplate for all modes.
 exit-named-mode         = Return
 exit-named-mode         = BackSpace
@@ -4535,7 +4499,7 @@ exit-named-mode     = BackSpace # backward-delete-char
 
 # Other modes
 enter-edit-extend-mode  = x
-enter-find-mode         = Ctrl-f
+enter-find-mode         = Ctrl-Shift-f
 
 # Standard bindings:
 # undo                -&gt; same = Ctrl-z
@@ -4600,7 +4564,7 @@ mode-help           = Tab
 
 # Other modes
 enter-edit-mode     = Ctrl-e
-enter-find-mode     = Ctrl-f
+enter-find-mode     = Ctrl-Shift-f
 # enter-edit-mode     = BackSpace
 
 # Standard bindings.
@@ -4698,5 +4662,51 @@ tab_text_font_size = None
 tab_text_font_slant = roman
 tab_text_font_weight = normal
 </t>
+<t tx="ekr.20060124070546"># Minibuffer searches have the side effect of changing the find-tab options.
+
+find-dialog-change                  = None  # Deprecated.
+find-dialog-change-all              = None  # Deprecated.
+find-dialog-change-then-find        = None  # Deprecated.
+find-dialog-find-previous           = None  # Deprecated.
+find-dialog-find-next               = None  # Deprecated.
+find-tab-change                     = Ctrl-=
+find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
+find-tab-change-then-find           = Ctrl--
+find-tab-find                       = F3
+find-tab-find-prev                  = F2
+find-tab-replace                    = None
+find-tab-replace-then-find          = None
+hide-find-tab                       = None
+hide-spell-tab                      = None
+isearch-backward                    = None
+isearch-backward-regexp             = None
+isearch-forward                     = None
+isearch-forward-regexp              = None
+open-find-dialog                    = None      # Deprecated.
+open-find-tab                       = Ctrl-F    # Deprecated: use find-mode now.
+query-replace                       = None
+query-replace-regex                 = None
+
+replace-regex                       = None
+replace-string                      = None
+search-again                        = None # Minibuffer search
+search-backward                     = None # Minibuffer search (plain)
+search-forward                      = None # Minibuffer search (plain)
+set-find-everywhere                 = None
+set-find-node-only                  = None
+set-find-suboutline-only            = None
+toggle-find-clone-find-all-option   = None
+toggle-find-ignore-case-option      = None
+toggle-find-in-body-option          = None
+toggle-find-in-headline-option      = None
+toggle-find-mark-changes-option     = None
+toggle-find-mark-finds-option       = None
+toggle-find-regex-option            = None
+toggle-find-reverse-option          = None
+toggle-find-word-option             = None
+toggle-find-wrap-around-option      = None
+toggle-mini-buffer                  = None
+word-search-backward                = None # Minibuffer search
+word-search-forward                 = None # Minibuffer search</t>
 </tnodes>
 </leo_file>
