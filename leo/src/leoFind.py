@@ -270,7 +270,7 @@ class leoFind:
     
     def changeCommand(self,c):
     
-        self.setup_command(c)
+        self.setup_command()
     
         if self.script_search:
             self.doChangeScript()
@@ -283,7 +283,7 @@ class leoFind:
     
     def changeThenFindCommand(self,c):
     
-        self.setup_command(c)
+        self.setup_command()
     
         if self.script_search:
             self.doChangeScript()
@@ -302,7 +302,7 @@ class leoFind:
     
     def findNextCommand(self,c):
     
-        self.setup_command(c)
+        self.setup_command()
     
         if self.script_search:
             self.doFindScript()
@@ -315,7 +315,7 @@ class leoFind:
     
     def findPreviousCommand(self,c):
     
-        self.setup_command(c)
+        self.setup_command()
     
         self.reverse = not self.reverse
     
@@ -327,14 +327,6 @@ class leoFind:
         self.reverse = not self.reverse
     #@nonl
     #@-node:ekr.20031218072017.3064:fndPreviousCommand
-    #@+node:ekr.20060123070359.1:New commands
-    #@+node:ekr.20060123070359.2:incrementalSearchCommand
-    #@-node:ekr.20060123070359.2:incrementalSearchCommand
-    #@+node:ekr.20060123070359.3:wordSearchCommand
-    #@-node:ekr.20060123070359.3:wordSearchCommand
-    #@+node:ekr.20060123070359.4:regexSearchCommand
-    #@-node:ekr.20060123070359.4:regexSearchCommand
-    #@-node:ekr.20060123070359.1:New commands
     #@+node:EKR.20040503070514:handleUserClick
     def handleUserClick (self,p):
         
@@ -350,14 +342,10 @@ class leoFind:
     #@+node:ekr.20031218072017.3066:setup_command
     # Initializes a search when a command is invoked from the menu.
     
-    def setup_command(self,c):
-    
-        self.c = c ; self.p = c.currentPosition()
-    
-        # g.trace(self.p)
+    def setup_command(self):
     
         if 0: # We _must_ retain the editing status for incremental searches!
-            c.endEditing()
+            self.c.endEditing()
     
         self.update_ivars()
         self.adjust_ivars()

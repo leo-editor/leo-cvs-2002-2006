@@ -16,7 +16,7 @@ class leoTkinterDialog:
     """The base class for all Leo Tkinter dialogs"""
     #@    @+others
     #@+node:ekr.20031218072017.3860:__init__ (tkDialog)
-    def __init__(self,c,title="",resizeable=True,canClose=True):
+    def __init__(self,c,title="",resizeable=True,canClose=True,show=True):
         
         """Constructor for the leoTkinterDialog class."""
         
@@ -30,6 +30,7 @@ class leoTkinterDialog:
         self.defaultButtonCommand = None  # Command to call when user closes the window by clicking the close box.
         self.frame = None # The outermost frame.
         self.root = None # g.app.root
+        self.show = show
         self.top = None # The toplevel Tk widget.
         self.focus_widget = None # The widget to get the first focus.
         self.canClose = canClose
@@ -157,7 +158,10 @@ class leoTkinterDialog:
         c = self.c ; self.modal = modal
     
         self.center() # Do this after all packing complete.
-        self.top.lift()
+        if self.show:
+            self.top.lift()
+        else:
+            self.top.withdraw()
     
         # Get all keystrokes.
         if self.modal:

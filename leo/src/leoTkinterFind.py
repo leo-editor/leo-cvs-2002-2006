@@ -88,15 +88,13 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@    @+others
     #@+node:ekr.20031218072017.3898:Birth & death
     #@+node:ekr.20031218072017.3899:__init__
-    def __init__(self,c,resizeable=False,title=None):
+    def __init__(self,c,resizeable=False,title=None,show=True):
     
         # g.trace("leoTkinterFind",c)
         
         # Init the base classes...
         leoFind.leoFind.__init__(self,c,title=title)
-        leoTkinterDialog.leoTkinterDialog.__init__(self,c,self.title,resizeable)
-        
-        if g.app.unitTesting:return
+        leoTkinterDialog.leoTkinterDialog.__init__(self,c,self.title,resizeable,show=show)
     
         #@    << create the tkinter intVars >>
         #@+node:ekr.20031218072017.3900:<< create the tkinter intVars >>
@@ -119,6 +117,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         
         self.createTopFrame() # Create the outer tkinter dialog frame.
         self.createFrame()
+        if self.top and not show:
+            self.top.withdraw()
         self.init(c) # New in 4.3: init only once.
     #@nonl
     #@-node:ekr.20031218072017.3899:__init__
@@ -324,7 +324,9 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
             widget.bind("<Key-Return>", findButtonCallback)
             widget.bind("<Key-Escape>", self.onCloseWindow)
         
-        self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+        if self.top:
+            self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+    #@nonl
     #@-node:ekr.20031218072017.3902:find.createFrame
     #@+node:ekr.20031218072017.2059:find.init
     def init (self,c):
