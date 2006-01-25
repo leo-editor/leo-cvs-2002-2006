@@ -37,7 +37,7 @@ subprocess =    g.importExtension('subprocess',pluginName=__name__,verbose=True)
 #@-node:ekr.20050101090207.8:<< imports >>
 #@nl
 
-__version__ = '1.8'
+__version__ = '1.9'
 #@<< version history >>
 #@+node:ekr.20050311110052:<< version history >>
 #@@killcolor
@@ -55,6 +55,10 @@ __version__ = '1.8'
 #     - Document how install subproces, and use g.importExtension to import 
 # subprocess.
 #     - Import subprocess with g.importExtension.
+# 1.9 EKR:
+#     - Removed key bindings from default table.
+#       Some way should be find to specify these bindings from 
+# leoSettings.leo.
 #@-at
 #@nonl
 #@-node:ekr.20050311110052:<< version history >>
@@ -173,14 +177,14 @@ def create_open_with_menu (tag,keywords):
         if 1: # Default table.
             # g.trace('using subprocess')
             table = (
-                ("Idle", "Alt+Ctrl+I",
+                ("Idle", None, # "Alt+Ctrl+I",
                     ("subprocess.Popen",
                         ["pythonw", "C:/Python24/Lib/idlelib/idle.pyw"], ".py")),
-                ("Word", "Alt+Ctrl+W",
+                ("Word", None, # "Alt+Ctrl+W",
                     ("subprocess.Popen",
                     "C:/Program Files/Microsoft Office/Office/WINWORD.exe",
                     None)),
-                ("WordPad", "Alt+Ctrl+T",
+                ("WordPad", None,# "Alt+Ctrl+T",
                     ("subprocess.Popen",
                     "C:/Program Files/Windows NT/Accessories/wordpad.exe",
                     None)),
