@@ -1211,7 +1211,7 @@ class editCommandsClass (baseEditCommandsClass):
         self.moveCol = None # For retaining preferred column when moving up or down.
         self.store ={'rlist':[], 'stext':''} # For dynamic expansion.
         self.swapSpots = []
-        self._useRegex = False # For replace-string and replace-regex
+        self._useRegex = False # For replace-string
         self.widget = None # For use by state handlers.
     #@nonl
     #@-node:ekr.20050920084036.54: ctor (editCommandsClass)
@@ -1292,8 +1292,6 @@ class editCommandsClass (baseEditCommandsClass):
             'previous-line':                        self.prevLine,
             'previous-line-extend-selection':       self.prevLineExtendSelection,
             'remove-blank-lines':                   self.removeBlankLines,
-            'replace-regex':                        self.activateReplaceRegex,
-            'replace-string':                       self.replaceString,
             'reverse-region':                       self.reverseRegion,
             'scroll-down':                          self.scrollDown,
             'scroll-down-extend-selection':         self.scrollDownExtendSelection,
@@ -3338,72 +3336,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@-others
     #@nonl
     #@-node:ekr.20050920084036.105:region...
-    #@+node:ekr.20050920084036.112:replace...
-    #@+node:ekr.20050920084036.113:replaceString
-    def replaceString (self,event):
-    
-        k = self.k ; state = k.getState('replace-string')
-        prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
-    
-        if state == 0:
-            self.widget = event.widget
-            self._sString = self._rpString = ''
-            s = '%s: ' % prompt
-            k.setLabelBlue(s,protect=True)
-            k.getArg(event,'replace-string',1,self.replaceString)
-        elif state == 1:
-            self._sString = k.arg
-            s = '%s: %s With: ' % (prompt,self._sString)
-            k.setLabelBlue(s,protect=True)
-            k.getArg(event,'replace-string',2,self.replaceString)
-        elif state == 2:
-            k.clearState()
-            self._rpString = k.arg ; w = self.widget
-            #@        << do the replace >>
-            #@+node:ekr.20050920084036.114:<< do the replace >>
-            # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
-            i = 'insert' ; end = 'end' ; count = 0
-            if w.tag_ranges('sel'):
-                i = w.index('sel.first')
-                end = w.index('sel.last')
-            if self._useRegex:
-                txt = w.get(i,end)
-                try:
-                    pattern = re.compile(self._sString)
-                except:
-                    k.keyboardQuit(event)
-                    k.setLabel("Illegal regular expression")
-                    return
-                count = len(pattern.findall(txt))
-                if count:
-                    ntxt = pattern.sub(self._rpString,txt)
-                    w.delete(i,end)
-                    w.insert(i,ntxt)
-            else:
-                # Problem: adds newline at end of text.
-                txt = w.get(i,end)
-                count = txt.count(self._sString)
-                if count:
-                    ntxt = txt.replace(self._sString,self._rpString)
-                    w.delete(i,end)
-                    w.insert(i,ntxt)
-            #@nonl
-            #@-node:ekr.20050920084036.114:<< do the replace >>
-            #@nl
-            k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
-            self._useRegex = False
-    #@nonl
-    #@-node:ekr.20050920084036.113:replaceString
-    #@+node:ekr.20050920084036.115:activateReplaceRegex
-    def activateReplaceRegex( self ):
-        
-        '''This method turns regex replace on for replaceString'''
-    
-        self._useRegex = True
-        return True
-    #@nonl
-    #@-node:ekr.20050920084036.115:activateReplaceRegex
-    #@-node:ekr.20050920084036.112:replace...
     #@+node:ekr.20050920084036.116:scrollUp/Down/extendSelection
     def scrollDown (self,event):
         self.scrollHelper(event,'down',extend=False)
@@ -4793,7 +4725,7 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.207:class queryReplaceCommandsClass (limited to single node)
-#@+node:ekr.20050920084036.221:class rectangleCommandsClass (ok,simplified)
+#@+node:ekr.20050920084036.221:class rectangleCommandsClass
 class rectangleCommandsClass (baseEditCommandsClass):
 
     #@    @+others
@@ -5011,8 +4943,8 @@ class rectangleCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.224:Entries
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.221:class rectangleCommandsClass (ok,simplified)
-#@+node:ekr.20050920084036.234:class registerCommandsClass (ok)
+#@-node:ekr.20050920084036.221:class rectangleCommandsClass
+#@+node:ekr.20050920084036.234:class registerCommandsClass
 class registerCommandsClass (baseEditCommandsClass):
 
     '''A class to represent registers a-z and the corresponding Emacs commands.'''
@@ -5363,7 +5295,7 @@ class registerCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.236:Entries...
     #@-others
 #@nonl
-#@-node:ekr.20050920084036.234:class registerCommandsClass (ok)
+#@-node:ekr.20050920084036.234:class registerCommandsClass
 #@+node:ekr.20051023094009:Search classes
 #@+node:ekr.20060123125256:class minibufferFind
 class minibufferFind:
@@ -5387,11 +5319,11 @@ class minibufferFind:
         
         '''Set the find-scope radio buttons.
         
-        `where` must be in ('node-only','entire-outine','suboutline-only'). '''
+        `where` must be in ('node-only','entire-outline','suboutline-only'). '''
         
         h = self.finder
         
-        if where in ('node-only','entire-outine','suboutline-only'):
+        if where in ('node-only','entire-outline','suboutline-only'):
             var = h.dict['radio-search-scope'].get()
             if var:
                 h.dict["radio-search-scope"].set(where)
@@ -5439,11 +5371,17 @@ class minibufferFind:
         head  = self.getOption('search_headline')
         body  = self.getOption('search_body')
         scope = self.getOption('radio-search-scope')
+        g.trace(repr(scope))
+        d = {'entire-outline':'all','suboutline-only':'tree','node-only':'node'}
+        scope = d.get(scope) or ''
         head = g.choose(head,'head','')
         body = g.choose(body,'body','')
         sep = g.choose(head and body,'+','')
-        s = '[%s%s%s]' % (head,sep,body)
-        z.append(s)
+    
+        frame.clearStatusLine()
+        s = '%s%s%s %s  ' % (head,sep,body,scope)
+        frame.putStatusLine(s,color='blue')
+    
         # Set the type field.
         script = self.getOption('script_search')
         regex  = self.getOption('pattern_match')
@@ -5467,11 +5405,8 @@ class minibufferFind:
         for ivar,s in table:
             val = self.getOption(ivar)
             if val: z.append(s)
-            
-        s = ' '.join(z)
-        # g.trace(s)
-        frame.clearStatusLine()
-        frame.putStatusLine(s)
+    
+        frame.putStatusLine(' '.join(z))
     #@nonl
     #@-node:ekr.20060125074939:showFindOptions
     #@+node:ekr.20060124135401:toggleOption
@@ -5645,6 +5580,61 @@ class minibufferFind:
             self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060125093807:searchWithPresentOptions
+    #@+node:ekr.20050920084036.113:replaceString
+    def replaceString (self,event):
+    
+        k = self.k ; state = k.getState('replace-string')
+        prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
+    
+        if state == 0:
+            self.widget = event.widget
+            self._sString = self._rpString = ''
+            s = '%s: ' % prompt
+            k.setLabelBlue(s,protect=True)
+            k.getArg(event,'replace-string',1,self.replaceString)
+        elif state == 1:
+            self._sString = k.arg
+            s = '%s: %s With: ' % (prompt,self._sString)
+            k.setLabelBlue(s,protect=True)
+            k.getArg(event,'replace-string',2,self.replaceString)
+        elif state == 2:
+            k.clearState()
+            self._rpString = k.arg ; w = self.widget
+            #@        << do the replace >>
+            #@+node:ekr.20050920084036.114:<< do the replace >>
+            # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
+            i = 'insert' ; end = 'end' ; count = 0
+            if w.tag_ranges('sel'):
+                i = w.index('sel.first')
+                end = w.index('sel.last')
+            if self._useRegex:
+                txt = w.get(i,end)
+                try:
+                    pattern = re.compile(self._sString)
+                except:
+                    k.keyboardQuit(event)
+                    k.setLabel("Illegal regular expression")
+                    return
+                count = len(pattern.findall(txt))
+                if count:
+                    ntxt = pattern.sub(self._rpString,txt)
+                    w.delete(i,end)
+                    w.insert(i,ntxt)
+            else:
+                # Problem: adds newline at end of text.
+                txt = w.get(i,end)
+                count = txt.count(self._sString)
+                if count:
+                    ntxt = txt.replace(self._sString,self._rpString)
+                    w.delete(i,end)
+                    w.insert(i,ntxt)
+            #@nonl
+            #@-node:ekr.20050920084036.114:<< do the replace >>
+            #@nl
+            k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
+            self._useRegex = False
+    #@nonl
+    #@-node:ekr.20050920084036.113:replaceString
     #@-others
 #@nonl
 #@-node:ekr.20060123125256:class minibufferFind
@@ -5846,22 +5836,20 @@ class findTab (leoFind.leoFind):
             ("Wrap &Around",     self.dict["wrap"]),
             ("Reverse",         self.dict["reverse"]),
             ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
-            ("Search Headline", self.dict["search_headline"]),
-            ("Search Body",     self.dict["search_body"]),
+            ("Mark Finds",      self.dict["mark_finds"]),
         ]
         
         radioLists[1] = [
-            (self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
+            (self.dict["radio-search-scope"],"Entire Outline","entire-outline"),
             (self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
             (self.dict["radio-search-scope"],"Node Only","node-only"),
-            # I don't know what selection-only is supposed to do.
-            (self.dict["radio-search-scope"],"Selection Only",None), #,"selection-only")
         ]
+        
         checkLists[1] = [
-            ('Clone Find All',  self.dict['clone_find_all']),
-            ("Mark Finds",      self.dict["mark_finds"]),
+            ("Search Headline", self.dict["search_headline"]),
+            ("Search Body",     self.dict["search_body"]),
             ("Mark &Changes",   self.dict["mark_changes"]),
-            ('Show Context',    self.dict['batch']),
+            # ('Show Context',    self.dict['batch']),
         ]
         
         for i in xrange(numberOfColumns):
@@ -5881,7 +5869,6 @@ class findTab (leoFind.leoFind):
                 box.bindHotKey(ftxt)
                 box.bindHotKey(ctxt)
                 if var is None: box.button.configure(state="disabled")
-        #@nonl
         #@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
         #@nl
         
@@ -5903,7 +5890,7 @@ class findTab (leoFind.leoFind):
             for text,boxKind,frame,callback in (
                 # Column 1...
                 ('Find','button',buttons1,self.findButtonCallback),
-                ('Incremental','check', buttons1,None),
+                # ('Incremental','check', buttons1,None),
                     ## variable=self.dict['incremental'])
                     ## May affect the file format.
                 ('Find All','button',buttons1,self.findAllButton),
@@ -5984,7 +5971,7 @@ class findTab (leoFind.leoFind):
                 self.dict["radio-search-scope"].set(setting)
                 found = True ; break
         if not found:
-            self.dict["radio-search-scope"].set("entire-outine")
+            self.dict["radio-search-scope"].set("entire-outline")
         #@nonl
         #@-node:ekr.20051020120306.21:<< set radio buttons from ivars >>
         #@nl
@@ -6214,12 +6201,12 @@ class searchCommandsClass (baseEditCommandsClass):
         
         # The last kind of search
         
-        self.forward = True
-        self.incremental = True
-        self.regexp = False
-        self.word = True
-        self.searchString = ''
-        self.replaceString = '' # Not used yet.
+        # self.forward = True
+        # self.incremental = True
+        # self.regexp = False
+        # self.word = True
+        #self.searchString = ''
+        #self.replaceString = '' # Not used yet.
         
         try:
             self.w = c.frame.body.bodyCtrl
@@ -6245,6 +6232,8 @@ class searchCommandsClass (baseEditCommandsClass):
             'isearch-backward-regexp':              self.isearchBackwardRegexp,
                         
             'open-find-tab':                        self.openFindTab,
+        
+            'replace-string':                       self.replaceString,
                         
             're-search-forward':                    self.reSearchForward,
             're-search-backward':                   self.reSearchBackward,
@@ -6358,7 +6347,7 @@ class searchCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20060124115801:getHandler
     #@+node:ekr.20060123115459:Find options wrappers
-    def setFindScopeEveryWhere     (self, event): return self.setFindScope('entire-outine')
+    def setFindScopeEveryWhere     (self, event): return self.setFindScope('entire-outline')
     def setFindScopeNodeOnly       (self, event): return self.setFindScope('node-only')
     def setFindScopeSuboutlineOnly (self, event): return self.setFindScope('suboutline-only')
     
@@ -6387,7 +6376,8 @@ class searchCommandsClass (baseEditCommandsClass):
     # def changeThenFind     (self,event): self.getHandler().changeThenFindCommand()
     # def findNext           (self,event): self.getHandler().findNextCommand()
     # def findPrev           (self,event): self.getHandler().findPrevCommand()
-    # 
+    
+    def replaceString      (self,event): self.getHandler().replaceString(event)
     def reSearchBackward   (self,event): self.getHandler().reSearchBackward(event)
     def reSearchForward    (self,event): self.getHandler().reSearchForward(event)
     def searchBackward     (self,event): self.getHandler().searchBackward(event)

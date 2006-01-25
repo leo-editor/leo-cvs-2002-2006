@@ -223,11 +223,16 @@ class keyHandlerClass:
     
         for name in c.commandsDict.keys():
             f = c.commandsDict.get(name)
-            
-            # 'leoCallback' callback created by leoCommands.getPublicCommands.
-            if f.__name__ != 'leoCallback':
-                k.inverseCommandsDict [f.__name__] = name
-                # g.trace('%24s = %s' % (f.__name__,name))
+            try:
+                # 'leoCallback' callback created by leoCommands.getPublicCommands.
+                if f.__name__ != 'leoCallback':
+                    k.inverseCommandsDict [f.__name__] = name
+                    # g.trace('%24s = %s' % (f.__name__,name))
+                    
+            except Exception:
+                g.es_exception()
+                g.trace(repr(name),repr(f),g.callers())
+                
     #@nonl
     #@-node:ekr.20051008082929:createInverseCommandsDict
     #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
@@ -1024,8 +1029,8 @@ class keyHandlerClass:
             for bunch in bunchList:
                 shortcut = bunch.val
                 if shortcut not in (None,'None'):
-                    s1 = k.prettyPrintKey(shortcut)
-                    s2 = key
+                    s1 = key
+                    s2 = k.prettyPrintKey(shortcut)
                     n = max(n,len(s1))
                     data.append((s1,s2),)
                     
@@ -1035,9 +1040,7 @@ class keyHandlerClass:
             
         # This isn't perfect in variable-width fonts.
         for s1,s2 in data:
-            g.es('%*s\t%s' % (-(n+3),s1,s2),tabName=tabName)
-            
-        
+            g.es('%*s %s' % (n,s1,s2),tabName=tabName)
     #@nonl
     #@-node:ekr.20060104125946:modeHelpHelper
     #@-node:ekr.20060104164523:modeHelp

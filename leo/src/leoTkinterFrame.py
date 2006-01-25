@@ -3193,9 +3193,11 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
     #@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-    def setFontFromConfig (self):
+    def setFontFromConfig (self,logCtrl = None):
     
-        c = self.c ; logCtrl = self.logCtrl
+        c = self.c
+        
+        if not logCtrl: logCtrl = self.logCtrl
     
         font = c.config.getFontFromParams(
             "log_text_font_family", "log_text_font_size",
@@ -3382,6 +3384,8 @@ class leoTkinterLog (leoFrame.leoLog):
         bg = c.config.getColor(configName) or 'MistyRose1'
         try: textWidget.configure(bg=bg)
         except Exception: pass # Could be a user error.
+        
+        self.setFontFromConfig(logCtrl=textWidget)
         
         self.frameDict [tabName] = tabFrame
         self.textDict [tabName] = textWidget

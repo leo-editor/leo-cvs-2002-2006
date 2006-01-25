@@ -229,7 +229,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
             ("Wrap &Around", self.dict["wrap"]),
             ("&Reverse",     self.dict["reverse"])]
         radioLists[2] = [
-            (self.dict["radio-search-scope"],"&Entire Outline","entire-outine"),
+            (self.dict["radio-search-scope"],"&Entire Outline","entire-outline"),
             (self.dict["radio-search-scope"],"Suboutline &Only","suboutline-only"),  
             (self.dict["radio-search-scope"],"&Node Only","node-only"),
             # I don't know what selection-only is supposed to do.
@@ -380,7 +380,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
                 self.dict["radio-search-scope"].set(setting)
                 found = True ; break
         if not found:
-            self.dict["radio-search-scope"].set("entire-outine")
+            self.dict["radio-search-scope"].set("entire-outline")
         #@nonl
         #@-node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
         #@nl
