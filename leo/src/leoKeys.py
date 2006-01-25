@@ -155,6 +155,7 @@ class keyHandlerClass:
         self.universalArgKey = None
         
         # Keepting track of the characters in the mini-buffer.
+        self.arg_completion = True
         self.mb_history = []
         self.mb_prefix = ''
         self.mb_tabListPrefix = ''
@@ -258,7 +259,9 @@ class keyHandlerClass:
     
         # g.trace(pane,shortcut,commandName)
     
-        if not shortcut: g.trace('No shortcut for %s' % commandName)
+        if not shortcut:
+            # g.trace('No shortcut for %s' % commandName)
+            return
         bunchList = k.bindingsDict.get(shortcut,[])
         k.computeKeysym_numDicts(shortcut)
         #@    << give warning and return if there is a serious redefinition >>
@@ -556,6 +559,7 @@ class keyHandlerClass:
         
         '''Return true if the shortcut refers to a plain key.'''
         
+        shortcut = shortcut or ''
         shortcut1 = shortcut[:]
     
         shift = 'Shift-'
@@ -1759,7 +1763,9 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051105155441:simulateCommand
     #@+node:ekr.20050920085536.62:getArg
-    def getArg (self,event,returnKind=None,returnState=None,handler=None,prefix=None,tabList=None):
+    def getArg (self,event,
+        returnKind=None,returnState=None,handler=None,
+        prefix=None,tabList=None,completion=True):
         
         '''Accumulate an argument until the user hits return (or control-g).
         Enter the given return state when done.
@@ -1768,9 +1774,9 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; state = k.getState('getArg')
         keysym = (event and event.keysym) or ''
-        # g.trace('state',state,'keysym',keysym)
+        # g.trace('state',state,'keysym',keysym,'completion',completion)
         if state == 0:
-            k.arg = ''
+            k.arg = '' ; k.arg_completion = completion
             if tabList: k.argTabList = tabList[:]
             else:       k.argTabList = []
             #@        << init altX vars >>
@@ -1798,12 +1804,13 @@ class keyHandlerClass:
             k.arg = k.getLabel(ignorePrompt=True)
             kind,n,handler = k.afterGetArgState
             if kind: k.setState(kind,n,handler)
+            c.frame.log.deleteTab('Completion')
             if handler: handler(event)
             c.frame.widgetWantsFocus(k.afterArgWidget)
         elif keysym == 'Tab':
-            k.doTabCompletion(k.argTabList)
+            k.doTabCompletion(k.argTabList,k.arg_completion)
         elif keysym == 'BackSpace':
-            k.doBackSpace(k.argTabList)
+            k.doBackSpace(k.argTabList,k.arg_completion)
             c.frame.minibufferWantsFocus()
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
@@ -2054,7 +2061,7 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.46:doBackSpace
     # Used by getArg and fullCommand.
     
-    def doBackSpace (self,defaultCompletionList):
+    def doBackSpace (self,defaultCompletionList,redraw=True):
     
         '''Cut back to previous prefix and update prefix.'''
     
@@ -2065,12 +2072,14 @@ class keyHandlerClass:
             k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
             k.setLabel(k.mb_tabListPrefix)
     
-        k.computeCompletionList(defaultCompletionList,backspace=True)
+        if redraw:
+            k.computeCompletionList(defaultCompletionList,backspace=True)
+    #@nonl
     #@-node:ekr.20050920085536.46:doBackSpace
     #@+node:ekr.20050920085536.44:doTabCompletion
     # Used by getArg and fullCommand.
     
-    def doTabCompletion (self,defaultTabList):
+    def doTabCompletion (self,defaultTabList,redraw=True):
         
         '''Handle tab completion when the user hits a tab.'''
         
@@ -2084,7 +2093,8 @@ class keyHandlerClass:
                 k.mb_tabListIndex = 0
             k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
         else:
-            k.computeCompletionList(defaultTabList,backspace=False)
+            if redraw:
+                k.computeCompletionList(defaultTabList,backspace=False)
     
         c.frame.bodyWantsFocus()
     #@nonl

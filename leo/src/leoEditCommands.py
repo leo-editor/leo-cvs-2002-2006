@@ -5365,20 +5365,21 @@ class registerCommandsClass (baseEditCommandsClass):
 #@nonl
 #@-node:ekr.20050920084036.234:class registerCommandsClass (ok)
 #@+node:ekr.20051023094009:Search classes
-#@+node:ekr.20060123125256:class minibufferFind (leoTkinterFind.leoTkinterFind)
-class minibufferFind (leoTkinterFind.leoTkinterFind):
+#@+node:ekr.20060123125256:class minibufferFind
+class minibufferFind:
 
-    '''An adapter class that implements minibuffer find commands using the existing base classes.'''
+    '''An adapter class that implements minibuffer find commands using the (hidden) Find Tab.'''
 
     #@    @+others
     #@+node:ekr.20060123125317.2: ctor (minibufferFind)
-    def __init__(self,c):
+    def __init__(self,c,finder):
+        
     
         # Init the base class...
-        leoTkinterFind.leoTkinterFind.__init__(self,c,title='Minibuffer Find',show=False)
+        # leoTkinterFind.leoTkinterFind.__init__(self,c,title='Minibuffer Find',show=False)
         self.c = c
         self.k = c.k
-    #@nonl
+        self.finder = finder
     #@-node:ekr.20060123125317.2: ctor (minibufferFind)
     #@+node:ekr.20060124140114:Options
     #@+node:ekr.20060124123133:setFindScope
@@ -5388,7 +5389,7 @@ class minibufferFind (leoTkinterFind.leoTkinterFind):
         
         `where` must be in ('node-only','entire-outine','suboutline-only'). '''
         
-        h = self
+        h = self.finder
         
         if where in ('node-only','entire-outine','suboutline-only'):
             var = h.dict['radio-search-scope'].get()
@@ -5401,7 +5402,7 @@ class minibufferFind (leoTkinterFind.leoTkinterFind):
     #@+node:ekr.20060124122844:setOption
     def setOption (self, ivar, val, verbose = True):
         
-        h = self
+        h = self.finder
     
         if ivar in h.intKeys:
             if val is not None:
@@ -5413,10 +5414,70 @@ class minibufferFind (leoTkinterFind.leoTkinterFind):
             g.trace('oops: bad find ivar %s' % ivar)
     #@nonl
     #@-node:ekr.20060124122844:setOption
+    #@+node:ekr.20060125082510:getOption
+    def getOption (self,ivar,verbose=False):
+        
+        h = self.finder
+        
+        var = h.dict.get(ivar)
+        if var:
+            val = var.get()
+            if verbose:
+                 g.trace('%s = %s' % (ivar,val))
+            return val
+        else:
+            g.trace('bad ivar name: %s' % name)
+    #@nonl
+    #@-node:ekr.20060125082510:getOption
+    #@+node:ekr.20060125074939:showFindOptions
+    def showFindOptions (self):
+        
+        '''Show the present find options in the status line.'''
+        
+        frame = self.c.frame ; z = []
+        # Set the scope field.
+        head  = self.getOption('search_headline')
+        body  = self.getOption('search_body')
+        scope = self.getOption('radio-search-scope')
+        head = g.choose(head,'head','')
+        body = g.choose(body,'body','')
+        sep = g.choose(head and body,'+','')
+        s = '[%s%s%s]' % (head,sep,body)
+        z.append(s)
+        # Set the type field.
+        script = self.getOption('script_search')
+        regex  = self.getOption('pattern_match')
+        change = self.getOption('script_change')
+        if script:
+            s1 = '*Script-find'
+            s2 = g.choose(change,'-change*','*')
+            z.append(s1+s2)
+        elif regex: z.append('regex')
+        
+        table = (
+            ('reverse',         'reverse'),
+            ('ignore_case',     'noCase'),
+            ('whole_word',      'word'),
+            ('wrap',            'wrap'),
+            ('mark_changes',    'markChg'),
+            ('mark_finds',      'markFnd'),
+            ('clone_find_all',  'cloneFndAll')
+        )
+            
+        for ivar,s in table:
+            val = self.getOption(ivar)
+            if val: z.append(s)
+            
+        s = ' '.join(z)
+        # g.trace(s)
+        frame.clearStatusLine()
+        frame.putStatusLine(s)
+    #@nonl
+    #@-node:ekr.20060125074939:showFindOptions
     #@+node:ekr.20060124135401:toggleOption
     def toggleOption (self, ivar):
         
-        h = self
+        h = self.finder
     
         if ivar in h.intKeys:
             var = h.dict.get(ivar)
@@ -5427,114 +5488,54 @@ class minibufferFind (leoTkinterFind.leoTkinterFind):
             g.trace('oops: bad find ivar %s' % ivar)
     #@nonl
     #@-node:ekr.20060124135401:toggleOption
-    #@-node:ekr.20060124140114:Options
     #@+node:ekr.20060124134356:setupArgs
-    def setupArgs (self,bunch=None):
+    def setupArgs (self,forward=False,regexp=False,word=False):
         
-        if bunch is None: bunch = g.Bunch(incremental=False)
+        h = self.finder
         
-        # A value of None means 'no change'
-        d = {
-            'ignore_case':  'ignore_case',      # Not used yet.
-            'incremental':  None,               # Not used yet.
-            'regexp':       'pattern_match',
-            'reverse':      'reverse',
-            'word':         'whole_word',
-            'wrap':         'wrap',             # Not used yet.
-        }
-        
-        for t,name in (
-            (self.find_ctrl,'searchString'),
-            (self.change_ctrl,'changeString'),
+        if forward is None:
+            reverse = None
+        else:
+            reverse = not forward
+    
+        for ivar,val,in (
+            ('reverse', reverse),
+            ('pattern_match',regexp),
+            ('whole_word',word),
         ):
-            s = bunch.get(name) or ''
-            s = g.toUnicode(s,g.app.tkEncoding)
-            t.delete('1.0','end')
-            t.insert('1.0',s)
-        
-        for key in bunch.keys():
-            if key not in ('incremental','searchString','changeString'):
-                ivar = d.get(key) ; val = bunch.get(key)
-                self.setOption(ivar,val,verbose=False)
+            if val is not None:
+                self.setOption(ivar,val,verbose=True)
                 
-        self.p = self.c.currentPosition()
-        self.update_ivars()
+        h.p = p = self.c.currentPosition()
+        h.v = p.v
+        h.update_ivars()
+        self.showFindOptions()
     #@nonl
     #@-node:ekr.20060124134356:setupArgs
-    #@+node:ekr.20060123125317.16:Legacy commands
-    #@+node:ekr.20060124140114.1:changeAllCommand
-    def changeAllCommand (self):
-    
-        self.setupArgs()
-        self.changeAll()
+    #@+node:ekr.20060125091234:setupSearchPattern
+    def setupSearchPattern (self,pattern):
         
-    #@-node:ekr.20060124140114.1:changeAllCommand
-    #@+node:ekr.20060123125317.18:changeCommand
-    def changeCommand (self):
-    
-        self.setupArgs()
-        self.change()
-    #@nonl
-    #@-node:ekr.20060123125317.18:changeCommand
-    #@+node:ekr.20060124140114.2:changeThenFindCommand
-    def changeThenFindCommand(sel):
-    
-        self.setupArgs()
-        self.changeThenFind()
-    #@-node:ekr.20060124140114.2:changeThenFindCommand
-    #@+node:ekr.20060123125317.17:findNextCommand
-    def findNextCommand (self):
+        h = self.finder ; t = h.find_ctrl
         
-        self.setupArgs()
-        self.findNext()
-    #@nonl
-    #@-node:ekr.20060123125317.17:findNextCommand
-    #@+node:ekr.20060124140114.3:findPrevCommand
-    def findPrevCommand (self):
-    
-        self.setupArgs()
-        self.reverse = not self.reverse
-        self.findNext()
-        self.reverse = not self.reverse
-    #@nonl
-    #@-node:ekr.20060124140114.3:findPrevCommand
-    #@-node:ekr.20060123125317.16:Legacy commands
-    #@+node:ekr.20060124173536:Emacs-style commands
-    # These must have an event arg because they are called from getArg.
-    #@nonl
-    #@+node:ekr.20060123091352.1:endSearch
-    def endSearch(self,i,j):
+        s = g.toUnicode(pattern,g.app.tkEncoding)
         
-        k = self.k ; w = self.w
+        t.delete('1.0','end')
+        t.insert('1.0',s)
         
-        if i and j:
-            if i != j:
-                g.app.gui.setTextSelection (w,i,j,insert=None)
-            w.mark_set('insert',j)
-            w.see('insert')
-        
-        k.clearState()
-        k.resetLabel()
-        k.setDefaultUnboundKeyAction()
-        k.showStateAndMode()
+        h.update_ivars()
     #@nonl
-    #@-node:ekr.20060123091352.1:endSearch
+    #@-node:ekr.20060125091234:setupSearchPattern
+    #@-node:ekr.20060124140114:Options
     #@+node:ekr.20060124181213.4:generalSearchHelper
-    def generalSearchHelper (self,pattern,forward,regexp,word):
+    def generalSearchHelper (self,pattern):
+        
+        self.setupSearchPattern(pattern)
     
-        k = self.k ; w = self.w
+        self.finder.p = self.c.currentPosition()
     
-        self.setupArgs(g.bunch(
-            incremental = False,
-            regexp = regexp,
-            reverse = not forward,
-            searchString = pattern,
-            word = word))
-    
-        if forward:
-            self.findNext()
-        else:
-            self.findPrev()
+        # This handles the reverse option.
+        self.finder.findNextCommand()
+    #@nonl
     #@-node:ekr.20060124181213.4:generalSearchHelper
     #@+node:ekr.20060124140224.1:seachForward/Backward
     def searchBackward (self,event):
@@ -5542,26 +5543,28 @@ class minibufferFind (leoTkinterFind.leoTkinterFind):
         k = self.k ; state = k.getState('search-backward')
         if state == 0:
             self.w = event and event.widget
+            self.setupArgs(forward=False,regexp=False,word=False)
             k.setLabelBlue('Search Backward: ',protect=True)
-            k.getArg(event,'search-backward',1,self.searchBackward)
+            k.getArg(event,'search-backward',1,self.searchBackward,completion=False)
         else:
             k.clearState()
             k.resetLabel()
             k.showStateAndMode()
-            self.generalSearchHelper(k.arg,forward=False,regexp=False,word=False)
+            self.generalSearchHelper(k.arg)
     
     def searchForward (self,event):
     
         k = self.k ; state = k.getState('search-forward')
         if state == 0:
             self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=False,word=False)
             k.setLabelBlue('Search: ',protect=True)
             k.getArg(event,'search-forward',1,self.searchForward)
         else:
             k.clearState()
             k.resetLabel()
             k.showStateAndMode()
-            self.generalSearchHelper(k.arg,forward=True,regexp=False,word=False)
+            self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060124140224.1:seachForward/Backward
     #@+node:ekr.20060124140224.2:wordSearchBackward/Forward
@@ -5570,26 +5573,28 @@ class minibufferFind (leoTkinterFind.leoTkinterFind):
         k = self.k ; state = k.getState('word-search-backward')
         if state == 0:
             self.w = event and event.widget
+            self.setupArgs(forward=False,regexp=False,word=True)
             k.setLabelBlue('Word Search Backward: ',protect=True)
-            k.getArg(event,'word-search-backward',1,self.wordSearchBackward)
+            k.getArg(event,'word-search-backward',1,self.wordSearchBackward,completion=False)
         else:
             k.clearState()
             k.resetLabel()
             k.showStateAndMode()
-            self.generalSearchHelper(k.arg,forward=False,regexp=False,word=True)
+            self.generalSearchHelper(k.arg)
     
     def wordSearchForward (self,event):
     
         k = self.k ; state = k.getState('word-search-forward')
         if state == 0:
             self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=False,word=True)
             k.setLabelBlue('Word Search: ',protect=True)
             k.getArg(event,'word-search-forward',1,self.wordSearchForward)
         else:
             k.clearState()
             k.resetLabel()
             k.showStateAndMode()
-            self.generalSearchHelper(k.arg,forward=True,regexp=False,word=True)
+            self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060124140224.2:wordSearchBackward/Forward
     #@+node:ekr.20060124140224.3:reSearchBackward/Forward
@@ -5598,32 +5603,51 @@ class minibufferFind (leoTkinterFind.leoTkinterFind):
         k = self.k ; state = k.getState('re-search-backward')
         if state == 0:
             self.w = event and event.widget
+            self.setupArgs(forward=False,regexp=True,word=None)
             k.setLabelBlue('Regexp Search backward:',protect=True)
-            k.getArg(event,'re-search-backward',1,self.reSearchBackward)
+            k.getArg(event,'re-search-backward',1,self.reSearchBackward,completion=False)
         else:
             k.clearState()
             k.resetLabel()
             k.showStateAndMode()
-            self.generalSearchHelper(k.arg,forward=False,regexp=True,word=None)
+            self.generalSearchHelper(k.arg)
     
     def reSearchForward (self,event):
     
         k = self.k ; state = k.getState('re-search-forward')
         if state == 0:
             self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=True,word=None)
             k.setLabelBlue('Regexp Search:',protect=True)
             k.getArg(event,'re-search-forward',1,self.reSearchForward)
         else:
             k.clearState()
             k.resetLabel()
             k.showStateAndMode()
-            self.generalSearchHelper(k.arg,forward=True,regexp=True,word=None)
+            self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060124140224.3:reSearchBackward/Forward
-    #@-node:ekr.20060124173536:Emacs-style commands
+    #@+node:ekr.20060125093807:searchWithPresentOptions
+    def searchWithPresentOptions (self,event):
+    
+        k = self.k ; tag = 'search-with-present-options'
+        
+        state = k.getState(tag)
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=None,regexp=None,word=None)
+            k.setLabelBlue('Search: ',protect=True)
+            k.getArg(event,tag,1,self.searchWithPresentOptions,completion=False)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    #@nonl
+    #@-node:ekr.20060125093807:searchWithPresentOptions
     #@-others
 #@nonl
-#@-node:ekr.20060123125256:class minibufferFind (leoTkinterFind.leoTkinterFind)
+#@-node:ekr.20060123125256:class minibufferFind
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
 class findTab (leoFind.leoFind):
     
@@ -5654,13 +5678,16 @@ class findTab (leoFind.leoFind):
         #@-node:ekr.20051020120306.12:<< create the tkinter intVars >>
         #@nl
         
+        self.optionsOnly = c.config.getBool('show_only_find_tab_options')
+        
         # These are created later.
         self.find_ctrl = None
         self.change_ctrl = None 
         self.outerScrolledFrame = None
     
         self.createFrame(parentFrame)
-        self.createBindings()
+        if not self.optionsOnly:
+            self.createBindings()
         
         self.init(c) # New in 4.3: init only once.
     #@nonl
@@ -5780,11 +5807,12 @@ class findTab (leoFind.leoFind):
                 txt['yscrollcommand'] = bar.set
                 bar['command'] = txt.yview
                 bar.pack(side="right", fill="y")
-        
-        flab.pack(side="left")
-        clab.pack(side="left")
-        ctxt.pack(side="right", expand=1, fill="x") 
-        ftxt.pack(side="right", expand=1, fill="x")
+                
+        if not self.optionsOnly:
+            flab.pack(side="left")
+            clab.pack(side="left")
+            ctxt.pack(side="right", expand=1, fill="x") 
+            ftxt.pack(side="right", expand=1, fill="x")
         #@nonl
         #@-node:ekr.20051020120306.15:<< Create the Find and Change panes >>
         #@nl
@@ -5856,41 +5884,45 @@ class findTab (leoFind.leoFind):
         #@nonl
         #@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
         #@nl
-        #@    << Create two columns of buttons >>
-        #@+node:ekr.20051020120306.18:<< Create two columns of buttons >>
-        # Create the alignment panes.
-        buttons  = Tk.Frame(outer,background=bg)
-        buttons1 = Tk.Frame(buttons,bd=1,background=bg)
-        buttons2 = Tk.Frame(buttons,bd=1,background=bg)
-        buttons.pack(side='top',expand=1)
-        buttons1.pack(side='left')
-        buttons2.pack(side='right')
         
-        width = 15 ; defaultText = 'Find' ; buttons = []
-        
-        for text,boxKind,frame,callback in (
-            # Column 1...
-            ('Find','button',buttons1,self.findButtonCallback),
-            ('Incremental','check', buttons1,None),
-                ## variable=self.dict['incremental'])
-                ## May affect the file format.
-            ('Find All','button',buttons1,self.findAllButton),
-            # Column 2...
-            ('Change','button',buttons2,self.changeButton),
-            ('Change, Then Find','button',buttons2,self.changeThenFindButton),
-            ('Change All','button',buttons2,self.changeAllButton),
-        ):
-            w = self.underlinedTkButton(boxKind,frame,
-                text=text,command=callback)
-            buttons.append(w)
-            if text == defaultText:
-                w.button.configure(width=width-1,bd=4)
-            elif boxKind != 'check':
-                w.button.configure(width=width)
-            w.button.pack(side='top',anchor='w',pady=2,padx=2)
-        #@nonl
-        #@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
-        #@nl
+        if  self.optionsOnly:
+            buttons = []
+        else:
+            #@        << Create two columns of buttons >>
+            #@+node:ekr.20051020120306.18:<< Create two columns of buttons >>
+            # Create the alignment panes.
+            buttons  = Tk.Frame(outer,background=bg)
+            buttons1 = Tk.Frame(buttons,bd=1,background=bg)
+            buttons2 = Tk.Frame(buttons,bd=1,background=bg)
+            buttons.pack(side='top',expand=1)
+            buttons1.pack(side='left')
+            buttons2.pack(side='right')
+            
+            width = 15 ; defaultText = 'Find' ; buttons = []
+            
+            for text,boxKind,frame,callback in (
+                # Column 1...
+                ('Find','button',buttons1,self.findButtonCallback),
+                ('Incremental','check', buttons1,None),
+                    ## variable=self.dict['incremental'])
+                    ## May affect the file format.
+                ('Find All','button',buttons1,self.findAllButton),
+                # Column 2...
+                ('Change','button',buttons2,self.changeButton),
+                ('Change, Then Find','button',buttons2,self.changeThenFindButton),
+                ('Change All','button',buttons2,self.changeAllButton),
+            ):
+                w = self.underlinedTkButton(boxKind,frame,
+                    text=text,command=callback)
+                buttons.append(w)
+                if text == defaultText:
+                    w.button.configure(width=width-1,bd=4)
+                elif boxKind != 'check':
+                    w.button.configure(width=width)
+                w.button.pack(side='top',anchor='w',pady=2,padx=2)
+            #@nonl
+            #@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
+            #@nl
         
         # Pack this last so buttons don't get squashed when frame is resized.
         self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
@@ -6199,37 +6231,34 @@ class searchCommandsClass (baseEditCommandsClass):
     def getPublicCommands (self):
         
         return {
-            'find-tab-find':            self.findTabFindNext,
-            'find-tab-find-prev':       self.findTabFindPrev,
-            'find-tab-change':          self.findTabChange,
-            'find-tab-change-all':      self.findTabChangeAll,
-            'find-tab-change-then-find':self.findTabChangeThenFind,
-            
-            'find-next':                self.findNext,
-            'find-prev':                self.findPrev,
-            'change':                   self.change,
-            'change-all':               self.changeAll,
-            'change-then-find':         self.changeThenFind,
-            
-            'hide-find-tab':            self.hideFindTab,
-    
-            'isearch-forward':          self.isearchForward,
-            'isearch-backward':         self.isearchBackward,
-            'isearch-forward-regexp':   self.isearchForwardRegexp,
-            'isearch-backward-regexp':  self.isearchBackwardRegexp,
-            
-            'open-find-tab':            self.openFindTab,
-            
-            're-search-forward':        self.reSearchForward,
-            're-search-backward':       self.reSearchBackward,
-            
-            'search-again':             self.searchAgain,
-            'search-forward':           self.searchForward,
-            'search-backward':          self.searchBackward,
+            'find-tab-find':                        self.findTabFindNext,
+            'find-tab-find-prev':                   self.findTabFindPrev,
+            'find-tab-change':                      self.findTabChange,
+            'find-tab-change-all':                  self.findTabChangeAll,
+            'find-tab-change-then-find':            self.findTabChangeThenFind,
+                        
+            'hide-find-tab':                        self.hideFindTab,
+                
+            'isearch-forward':                      self.isearchForward,
+            'isearch-backward':                     self.isearchBackward,
+            'isearch-forward-regexp':               self.isearchForwardRegexp,
+            'isearch-backward-regexp':              self.isearchBackwardRegexp,
+                        
+            'open-find-tab':                        self.openFindTab,
+                        
+            're-search-forward':                    self.reSearchForward,
+            're-search-backward':                   self.reSearchBackward,
+                    
+            'search-again':                         self.searchAgain,
+            'search-forward':                       self.searchForward,
+            'search-backward':                      self.searchBackward,
+            'search-with-present-options':          self.searchWithPresentOptions,
     
             'set-find-everywhere':                  self.setFindScopeEveryWhere,
             'set-find-node-only':                   self.setFindScopeNodeOnly,
             'set-find-suboutline-only':             self.setFindScopeSuboutlineOnly,
+            
+            'show-find-options':                    self.showFindOptions,
             
             'toggle-find-clone-find-all-option':    self.toggleCloneFindAllOption,
             'toggle-find-ignore-case-option':       self.toggleIgnoreCaseOption,
@@ -6242,14 +6271,13 @@ class searchCommandsClass (baseEditCommandsClass):
             'toggle-find-word-option':              self.toggleWholeWordOption,
             'toggle-find-wrap-around-option':       self.toggleWrapSearchOption,
             
-            'word-search-forward':      self.wordSearchForward,
-            'word-search-backward':     self.wordSearchBackward,
+            'word-search-forward':                  self.wordSearchForward,
+            'word-search-backward':                 self.wordSearchBackward,
         }
-    
     #@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
     #@+node:ekr.20060123131421:Top-level methods
     #@+node:ekr.20051020120306:openFindTab
-    def openFindTab (self,event=None):
+    def openFindTab (self,event=None,show=True):
     
         c = self.c ; log = c.frame.log ; tabName = 'Find'
     
@@ -6261,8 +6289,11 @@ class searchCommandsClass (baseEditCommandsClass):
             t = log.textDict.get(tabName)
             t.pack_forget()
             self.findTabHandler = findTab(c,f)
-            
-        self.findTabHandler.bringToFront()
+    
+        if show:
+            self.findTabHandler.bringToFront()
+        else:
+             log.deleteTab(tabName)
     #@nonl
     #@-node:ekr.20051020120306:openFindTab
     #@+node:ekr.20051022212004:Find Tab commands
@@ -6311,12 +6342,17 @@ class searchCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20051022212004:Find Tab commands
     #@+node:ekr.20060124115801:getHandler
-    def getHandler(self):
+    def getHandler(self,show=False):
         
         '''Return the minibuffer handler, creating it if necessary.'''
+        
+        c = self.c
+        
+        if not self.findTabHandler:
+            self.openFindTab(show=show) # sets self.findTabHandler.
     
         if not self.minibufferFindHandler:
-            self.minibufferFindHandler = minibufferFind(self.c)
+            self.minibufferFindHandler = minibufferFind(c,self.findTabHandler)
     
         return self.minibufferFindHandler
     #@nonl
@@ -6326,7 +6362,10 @@ class searchCommandsClass (baseEditCommandsClass):
     def setFindScopeNodeOnly       (self, event): return self.setFindScope('node-only')
     def setFindScopeSuboutlineOnly (self, event): return self.setFindScope('suboutline-only')
     
-    def setFindScope(self, where):  self.getHandler().setFindScope(where)
+    def setFindScope (self, where): self.getHandler().setFindScope(where)
+    
+    def showFindOptions      (self,event): self.getHandler().showFindOptions()
+    # def showFindOptionsPanel (self,event): self.getOptionsHandler().showFindOptionsPanel()
     
     def toggleCloneFindAllOption   (self, event): return self.toggleOption('clone_find_all')
     def toggleIgnoreCaseOption     (self, event): return self.toggleOption('ignore_case')
@@ -6339,22 +6378,25 @@ class searchCommandsClass (baseEditCommandsClass):
     def toggleWholeWordOption      (self, event): return self.toggleOption('whole_word')
     def toggleWrapSearchOption     (self, event): return self.toggleOption('wrap')
     
-    def toggleOption (self, ivar):  self.getHandler().toggleOption(ivar)
+    def toggleOption (self, ivar): self.getHandler().toggleOption(ivar)
     #@nonl
     #@-node:ekr.20060123115459:Find options wrappers
     #@+node:ekr.20060124093828:Find wrappers
-    def change             (self,event): self.getHandler().changeCommand()
-    def changeAll          (self,event): self.getHandler().changeAllCommand()
-    def changeThenFind     (self,event): self.getHandler().changeThenFindCommand()
-    def findNext           (self,event): self.getHandler().findNextCommand()
-    def findPrev           (self,event): self.getHandler().findPrevCommand()
-    
+    # def change             (self,event): self.getHandler().changeCommand()
+    # def changeAll          (self,event): self.getHandler().changeAllCommand()
+    # def changeThenFind     (self,event): self.getHandler().changeThenFindCommand()
+    # def findNext           (self,event): self.getHandler().findNextCommand()
+    # def findPrev           (self,event): self.getHandler().findPrevCommand()
+    # 
     def reSearchBackward   (self,event): self.getHandler().reSearchBackward(event)
     def reSearchForward    (self,event): self.getHandler().reSearchForward(event)
     def searchBackward     (self,event): self.getHandler().searchBackward(event)
     def searchForward      (self,event): self.getHandler().searchForward(event)
     def wordSearchBackward (self,event): self.getHandler().wordSearchBackward(event)
     def wordSearchForward  (self,event): self.getHandler().wordSearchForward(event)
+    
+    def searchWithPresentOptions (self,event):
+        self.getHandler().searchWithPresentOptions(event)
     #@nonl
     #@-node:ekr.20060124093828:Find wrappers
     #@-node:ekr.20060123131421:Top-level methods

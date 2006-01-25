@@ -154,6 +154,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         # Use bigger boxes for scripts.
         self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=4,width=20)
         self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=4,width=20)
+        
         #@<< Bind Tab and control-tab >>
         #@+node:ekr.20041026092141:<< Bind Tab and control-tab >>
         def setFocus(w):
@@ -313,7 +314,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         #@nonl
         #@-node:ekr.20031218072017.3905:<< Create two rows of buttons >>
         #@nl
-        
+    
         for widget in (self.find_ctrl, self.change_ctrl):
             widget.bind ("<1>",  self.resetWrap)
             widget.bind("<Key>", self.resetWrap)
