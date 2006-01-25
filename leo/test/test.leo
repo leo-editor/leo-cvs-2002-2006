@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7897" clone_windows="0"/>
-<globals body_outline_ratio="0.438470728793">
-	<global_window_position top="122" left="401" height="641" width="803"/>
+<globals body_outline_ratio="0.452742123687">
+	<global_window_position top="48" left="272" height="857" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -227,7 +227,10 @@
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
-<v t="ekr.20060122115629" a="V"><vh>Edit tests</vh></v>
+<v t="ekr.20060122115629"><vh>Edit tests</vh></v>
+<v t="ekr.20060124165505"><vh>Printing commands</vh></v>
+<v t="ekr.20060124165505.1"><vh>Printing c elements</vh></v>
+<v t="ekr.20060125082644" a="V"><vh>Test show-status</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4397,5 +4400,13 @@ while s != 'kill':
         print &amp;gt;&amp;gt; stdout, s,
         print &amp;gt;&amp;gt; stderr, s,
 print 'bye'</t>
+<t tx="ekr.20060124165505">keys = c.commandsDict.keys()
+keys.sort()
+g.es(g.listToString(keys))</t>
+<t tx="ekr.20060124165505.1">commands = dir(c)
+commands.sort()
+g.es(g.listToString(commands))
+</t>
+<t tx="ekr.20060125082644">c.k.simulateCommand('show-find-options')</t>
 </tnodes>
 </leo_file>

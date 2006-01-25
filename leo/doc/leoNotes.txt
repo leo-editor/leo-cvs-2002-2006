@@ -4806,7 +4806,385 @@ def openMinibufferFind (self,event=None):
 #@nonl
 #@-node:ekr.20060123130609.1:openMinibufferFind
 #@-node:ekr.20060124065113:Never used find code
+#@+node:ekr.20060124141522:Not used in searchCommandsClass (now in minibufferFind)
+#@+node:ekr.20050920084036.269:seachForward/Backward
+def searchBackward (self,event):
+
+    k = self.k ; state = k.getState('search-backward')
+    if state == 0:
+        k.setLabelBlue('Search Backward: ',protect=True)
+        k.getArg(event,'search-backward',1,self.searchBackward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        self._word = False
+        self.forward = False
+        self.plainSearchHelper(event,k.arg,forward=False)
+
+def searchForward (self,event):
+
+    k = self.k ; state = k.getState('search-forward')
+    if state == 0:
+        k.setLabelBlue('Search: ',protect=True)
+        k.getArg(event,'search-forward',1,self.searchForward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+
+        self._word = False
+        self.forward = True
+        self.plainSearchHelper(event,k.arg,forward=True)
+#@nonl
+#@-node:ekr.20050920084036.269:seachForward/Backward
+#@+node:ekr.20051002111614:wordSearchBackward/Forward
+def wordSearchBackward (self,event):
+
+    k = self.k ; state = k.getState('word-search-backward')
+    if state == 0:
+        k.setLabelBlue('Word Search Backward: ',protect=True)
+        k.getArg(event,'word-search-backward',1,self.wordSearchBackward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        self.forward = False
+        self.wordSearchHelper(event,k.arg,forward=False)
+
+def wordSearchForward (self,event):
+
+    k = self.k ; state = k.getState('word-search-forward')
+    if state == 0:
+        k.setLabelBlue('Word Search: ',protect=True)
+        k.getArg(event,'word-search-forward',1,self.wordSearchForward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.forward = True
+        self.wordSearchHelper(event,k.arg,forward=True)
+#@nonl
+#@-node:ekr.20051002111614:wordSearchBackward/Forward
+#@+node:ekr.20050920084036.274:reSearchBackward/Forward
+def reSearchBackward (self,event):
+
+    k = self.k ; state = k.getState('re-search-backward')
+    if state == 0:
+        k.setLabelBlue('Regexp Search backward:',protect=True)
+        k.getArg(event,'re-search-backward',1,self.reSearchBackward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        self.reSearchHelper(event,k.arg,forward=False)
+
+def reSearchForward (self,event):
+
+    k = self.k ; state = k.getState('re-search-forward')
+    if state == 0:
+        k.setLabelBlue('Regexp Search:',protect=True)
+        k.getArg(event,'re-search-forward',1,self.reSearchForward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.reSearchHelper(event,k.arg,forward=True)
+#@nonl
+#@-node:ekr.20050920084036.274:reSearchBackward/Forward
+#@-node:ekr.20060124141522:Not used in searchCommandsClass (now in minibufferFind)
+#@+node:ekr.20060124122622:Not used: defined in base class
+if 0:
+    @others
+#@nonl
+#@+node:ekr.20060123125317.11:find.init
+def init (self,c):
+
+    # N.B.: separate c.ivars are much more convenient than a dict.
+    for key in self.intKeys:
+        # New in 4.3: get ivars from @settings.
+        val = c.config.getBool(key)
+        setattr(self,key,val)
+        val = g.choose(val,1,0) # Work around major Tk problem.
+        self.dict[key].set(val)
+        # g.trace(key,val)
+
+    << set find/change widgets >>
+    << set radio buttons from ivars >>
+#@nonl
+#@+node:ekr.20060123125317.12:<< set find/change widgets >>
+self.find_ctrl.delete("1.0","end")
+self.change_ctrl.delete("1.0","end")
+
+# Get settings from @settings.
+for w,s,defaultText in (
+    (self.find_ctrl,"find_text",'<find pattern here>'),
+    (self.change_ctrl,"change_text",''),
+):
+    w.insert("end",s or defaultText)
+#@nonl
+#@-node:ekr.20060123125317.12:<< set find/change widgets >>
+#@+node:ekr.20060123125317.13:<< set radio buttons from ivars >>
+found = False
+for var,setting in (
+    ("pattern_match","pattern-search"),
+    #("script_search","script-search")
+):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-find-type"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-find-type"].set("plain-search")
+    
+found = False
+for var,setting in (
+    ("suboutline_only","suboutline-only"),
+    ("node_only","node-only"),
+    ("selection_only","selection-only")):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-search-scope"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-search-scope"].set("entire-outine")
+#@nonl
+#@-node:ekr.20060123125317.13:<< set radio buttons from ivars >>
+#@-node:ekr.20060123125317.11:find.init
+#@+node:ekr.20060123125317.14:find.update_ivars
+def update_ivars (self):
+    
+    """Called just before doing a find to update ivars from the find panel."""
+
+    for key in self.intKeys:
+        val = self.dict[key].get()
+        setattr(self, key, val) # No more _flag hack.
+        # g.trace(key,val)
+
+    # Set ivars from radio buttons. Convert these to 1 or 0.
+    find_type = self.dict["radio-find-type"].get()
+    self.pattern_match = g.choose(find_type == "pattern-search",1,0)
+    self.script_search = g.choose(find_type == "script-search",1,0)
+
+    search_scope = self.dict["radio-search-scope"].get()
+    self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
+    self.node_only       = g.choose(search_scope == "node-only",1,0)
+    self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
+
+    # New in 4.3: The caller is responsible for removing most trailing cruft.
+    # Among other things, this allows Leo to search for a single trailing space.
+    s = self.find_ctrl.get("1.0","end")
+    s = g.toUnicode(s,g.app.tkEncoding)
+    # g.trace(repr(s))
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
+    self.find_text = s
+
+    s = self.change_ctrl.get("1.0","end")
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
+    s = g.toUnicode(s,g.app.tkEncoding)
+    self.change_text = s
+#@nonl
+#@-node:ekr.20060123125317.14:find.update_ivars
+#@+node:ekr.20060123125317.22:Tkinter wrappers (leoTkinterFind)
+def gui_search (self,t,*args,**keys):
+    return t.search(*args,**keys)
+
+def init_s_ctrl (self,s):
+    t = self.s_ctrl
+    t.delete("1.0","end")
+    t.insert("end",s)
+    t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
+    return t
+#@nonl
+#@-node:ekr.20060123125317.22:Tkinter wrappers (leoTkinterFind)
+#@-node:ekr.20060124122622:Not used: defined in base class
+#@+node:ekr.20060124181213:Unused helpers
+#@+node:ekr.20050920084036.275:wordSearchHelper
+def wordSearchHelper (self,pattern,forward):
+
+    k = self.k ; w = self.w
+    cpattern = re.compile(pattern)
+
+    self.setupArgs(g.bunch(
+        incremental = False,
+        regexp = False,
+        reverse = False,
+        searchString = pattern,
+        word = True,
+    ))
+
+    if forward:
+        self.findNext()
+    else:
+        self.findPrev()
+
+    if 0:
+        << old code >>
+#@nonl
+#@+node:ekr.20060124181213.1:<< old code >>
+if forward:
+    txt = w.get('insert','end')
+    match = cpattern.search(txt)
+    end = match.end()
+else:
+    # The reverse words formula for Python Cookbook didn't quite work.
+    txt = w.get('1.0','insert') 
+    a = re.split(pattern,txt)
+    if len(a) > 1:
+        b = re.findall(pattern,txt)
+        end = len(a[-1]) + len(b[-1])
+
+if end:
+    i = w.index('insert')
+    j = w.index('insert +%sc' % end)
+    if not forward: i,j = j,i
+else: i = j = None
+self.endSearch(i,j)
+#@nonl
+#@-node:ekr.20060124181213.1:<< old code >>
+#@-node:ekr.20050920084036.275:wordSearchHelper
+#@+node:ekr.20050920084036.272:reSearchHelper
+def reSearchHelper (self,pattern,forward):
+
+    k = self.k ; w = self.w ; i = w.index('insert')
+
+    self.setupArgs(g.bunch(
+        incremental = False,
+        regexp = True,
+        reverse = False,
+        searchString = pattern,
+    ))
+
+    if 0:
+        << old code >>
+
+    if forward:
+        self.findNext()
+    else:
+        self.findPrev()
+#@nonl
+#@+node:ekr.20060124181213.2:<< old code >>
+
+    i = j = None
+    
+    words = pattern.split()
+    sep = '[%s%s]+' % (string.punctuation,string.whitespace)
+    pattern = sep.join(words)
+    cpattern = re.compile(pattern)
+    if forward:
+        txt = w.get('insert','end')
+        match = cpattern.search(txt)
+        if match:
+            i = match.start() ; j = match.end()
+    else:
+        txt = w.get('1.0','insert')
+        a = re.split(pattern,txt)
+        g.trace(repr(a))
+        if a and len(a) > 1:
+            b = re.findall(pattern,txt)
+            n = 0
+            for z in a[:-1]:
+                n += len(z)
+            i = n + len(b[-1])
+            j = i - len(pattern)
+    if i and j:
+        i = w.index('1.0 + %sc' % i)
+        j = w.index('1.0 + %sc' % j)
+    self.endSearch(i,j)
+#@nonl
+#@-node:ekr.20060124181213.2:<< old code >>
+#@-node:ekr.20050920084036.272:reSearchHelper
+#@+node:ekr.20050920084036.268:plainSearchHelper
+def plainSearchHelper (self,pattern,forward):
+
+    k = self.k ; w = self.w
+    
+    self.setupArgs(g.bunch(
+        incremental=False,
+        regexp = False,
+        reverse=not forward,
+        searchString=pattern,
+        word=False))
+        
+    if forward:
+        self.findNext()
+    else:
+        self.findPrev()
+        
+    if 0:
+        << old code >>
+#@nonl
+#@+node:ekr.20060124181213.3:<< old code >>
+try:
+    i = w.index('insert') ; j = None
+    if forward:
+        i = w.search(pattern,i,stopindex='end')
+    else:
+        i = w.search(pattern,i,stopindex='1.0',backwards=True)
+   
+except Exception:
+    g.es_exception()
+    
+if i:
+    j = w.index('%s +%sc' % (i,len(pattern)))
+    if not forward: i,j = j,i
+
+self.endSearch(i,j)
+#@nonl
+#@-node:ekr.20060124181213.3:<< old code >>
+#@-node:ekr.20050920084036.268:plainSearchHelper
+#@-node:ekr.20060124181213:Unused helpers
 #@-node:ekr.20031218072017.434:Unused code
+#@+node:ekr.20060123125317.16:Legacy commands minibufferFind (not used)
+if 0: # There is no need for these:  the find-tab-xxx commands do the same thing.
+    @others
+#@nonl
+#@+node:ekr.20060124140114.1:changeAllCommand
+def changeAllCommand (self):
+
+    self.finder.changeAllCommand()
+    
+#@-node:ekr.20060124140114.1:changeAllCommand
+#@+node:ekr.20060123125317.18:changeCommand
+def changeCommand (self):
+
+    self.finder.changeCommand()
+#@nonl
+#@-node:ekr.20060123125317.18:changeCommand
+#@+node:ekr.20060124140114.2:changeThenFindCommand
+def changeThenFindCommand(self):
+
+    self.finder.changeThenFindCommand()
+#@-node:ekr.20060124140114.2:changeThenFindCommand
+#@+node:ekr.20060123125317.17:findNextCommand
+def findNextCommand (self):
+    
+    self.finder.findNextCommand()
+#@nonl
+#@-node:ekr.20060123125317.17:findNextCommand
+#@+node:ekr.20060124140114.3:findPrevCommand
+def findPrevCommand (self):
+
+    self.finder.findPrevCommand()
+#@nonl
+#@-node:ekr.20060124140114.3:findPrevCommand
+#@-node:ekr.20060123125317.16:Legacy commands minibufferFind (not used)
+#@+node:ekr.20060123091352.1:minibufferFind.endSearch
+def endSearch(self,i,j):
+    
+    k = self.k ; w = self.w
+    
+    if i and j:
+        if i != j:
+            g.app.gui.setTextSelection (w,i,j,insert=None)
+        w.mark_set('insert',j)
+        w.see('insert')
+    
+    k.clearState()
+    k.resetLabel()
+    k.setDefaultUnboundKeyAction()
+    k.showStateAndMode()
+#@nonl
+#@-node:ekr.20060123091352.1:minibufferFind.endSearch
 #@-all
 #@nonl
 #@-node:ekr.20031218072017.329:@thin ../doc/leoNotes.txt

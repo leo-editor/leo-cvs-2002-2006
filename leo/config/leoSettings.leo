@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="249" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="253" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
 	<global_window_position top="34" left="305" height="872" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="V" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
@@ -119,7 +119,6 @@
 <v t="ekr.20041213105007" annotate="7d71002e"><vh>Fonts</vh>
 <v t="ekr.20041213105508"><vh>@font log font</vh></v>
 <v t="ekr.20041119034357.45"><vh>@font body text font</vh></v>
-<v t="ekr.20060123041203"><vh>@font tab font</vh></v>
 <v t="ekr.20041119051246.4"><vh>@font outline font</vh></v>
 </v>
 <v t="ekr.20050203090810" annotate="7d71002e"><vh>For unit tests</vh>
@@ -247,7 +246,7 @@
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.4</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.8</vh></v>
 <v t="ekr.20041119034357.60"><vh>@ratio initial_vertical_ratio = 0.5</vh></v>
-<v t="ekr.20041119034357.61"><vh>@ratio initial_vertical_secondary_ratio = 0.7</vh></v>
+<v t="ekr.20041119034357.61"><vh>@ratio initial_vertical_secondary_ratio = 0.65</vh></v>
 <v t="ekr.20041119034357.62"><vh>@int initial_window_height = 600</vh></v>
 <v t="ekr.20041119034357.63"><vh>@int initial_window_left = 20</vh></v>
 <v t="ekr.20041119034357.64"><vh>@int initial_window_top = 20</vh></v>
@@ -267,7 +266,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
@@ -280,6 +279,7 @@
 <v t="ekr.20060111083044" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060110142111"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060115201647" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060125114403"><vh>@bool show_only_find_tab_options = True</vh></v>
 </v>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
@@ -292,6 +292,7 @@
 <v t="ekr.20060111082542" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111082552" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060115201635" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060125114403.1"><vh>@bool show_only_find_tab_options = False</vh></v>
 </v>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
@@ -303,6 +304,7 @@
 <v t="ekr.20060111082848" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060111082717" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060115201600" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060125114403.2"><vh>@bool show_only_find_tab_options = False</vh></v>
 </v>
 <v t="ekr.20060111082632.1"><vh>@shortcuts Legacy+: A-E</vh></v>
 <v t="ekr.20060112085643"><vh>@shortcuts Legacy+: F-M</vh></v>
@@ -317,6 +319,7 @@
 <v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060120103955"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
+<v t="ekr.20060125114403.3"><vh>@bool show_only_find_tab_options = False</vh></v>
 </v>
 <v t="ekr.20060115162748"><vh>Modes</vh>
 <v t="ekr.20060121131041.2"><vh>@mode Command</vh></v>
@@ -336,7 +339,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" a="V" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
@@ -349,6 +352,7 @@
 <v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
+<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
 </v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -357,8 +361,8 @@
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
-<v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
+<v t="ekr.20060122105527.12"><vh>@@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 <v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
@@ -366,7 +370,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
@@ -376,7 +380,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.3"><vh>Options</vh>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
@@ -384,6 +388,7 @@
 <v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
+<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
 </v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -392,8 +397,8 @@
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
-<v t="ekr.20060122105527.13"><vh>@mode Find-reverse</vh></v>
+<v t="ekr.20060122105527.12"><vh>@@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 <v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
@@ -401,7 +406,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
@@ -596,7 +601,7 @@ Valid values: 0.0 to 1.0.
 
 **Important**: Leo **does** save this ratio when saving a .leo file, so Leo
 always uses this ratio only when creating a new outline.</t>
-<t tx="ekr.20041119034357.61">The ratio of outline (tree) pane size to body pane size when splitting the primary panes vertically.
+<t tx="ekr.20041119034357.61">The ratio of outline (tree) pane size to log pane size when splitting the primary panes vertically.
 
 Valid values: 0.0 to 1.0.
 
@@ -1072,8 +1077,8 @@ Therefore, @if-platform and @ifPlatformare equivalent to @ifplatform.</t>
 # 
 # Default size is 12 for Linux, 8 otherwise.
 
-log_text_font_family = None
-log_text_font_size = None
+log_text_font_family = Courier 
+log_text_font_size = 9
 log_text_font_slant = roman
 log_text_font_weight = normal
 </t>
@@ -1849,7 +1854,6 @@ remove-directory                    = None
 remove-sentinels                    = None
 rename-buffer                       = None
 repeat-complex-command              = None      # Usually 'again', whatever that is.
-replace-regex                       = None
 replace-string                      = None
 resize-to-screen                    = None
 reverse-region                      = None
@@ -2538,7 +2542,6 @@ remove-directory                        = None
 remove-sentinels                        = None
 rename-buffer                           = None
 repeat-complex-command                  = None      # Usually 'again', whatever that is.
-replace-regex                           = None
 replace-string                          = None
 resize-to-screen                        = None
 reverse-region                          = None
@@ -2825,7 +2828,6 @@ remove-directory                = None
 remove-sentinels                = None
 rename-buffer                   = None
 repeat-complex-command          = None
-replace-regex                   = None
 replace-string                  = None
 resize-to-screen                = None
 reverse-region                  = None
@@ -3092,7 +3094,6 @@ print-bindings                      = None
 print-commands                      = None
 promote                             = Ctrl-{            
 query-replace                       = None
-query-replace-regex                 = None
 quick-command                       = None
 re-search-backward                  = None
 re-search-forward                   = None
@@ -3106,7 +3107,6 @@ remove-directory                    = None
 remove-sentinels                    = None
 rename-buffer                       = None
 repeat-complex-command              = None
-replace-regex                       = None
 replace-string                      = None
 resize-to-screen                    = None
 reverse-region                      = None
@@ -3386,7 +3386,6 @@ remove-directory                    = None
 remove-sentinels                    = None
 rename-buffer                       = None
 repeat-complex-command              = None
-replace-regex                       = None
 replace-string                      = None
 resize-to-screen                    = None
 reverse-region                      = None
@@ -3402,6 +3401,7 @@ scroll-up-extend-selection          = None
 search-again                        = None
 search-backward                     = None
 search-forward                      = None
+search-with-present-options         = None
 select-all                          = None
 select-paragraph                    = None
 set-colors                          = None
@@ -3421,6 +3421,7 @@ settings                            = None
 shell-command                       = None
 shell-command-on-region             = None
 show-colors                         = None
+show-find-options                   = None
 show-fonts                          = None
 show-invisibles                     = None
 show-mini-buffer                    = None
@@ -3956,15 +3957,17 @@ exit-named-mode     = BackSpace
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
-enter-find-reverse-mode = r
+# enter-find-reverse-mode = r
+# search-again            = a
+# switch-to-buffer        = h
+# isearch-forward         = i
+# search-forward          = f
+# word-search-forward     = w
+# isearch-forward-regexp  = x
+# re-search-forward       = Shift-R
 
-search-again            = a
-switch-to-buffer        = h
-isearch-forward         = i
-search-forward          = f
-word-search-forward     = w
-isearch-forward-regexp  = x
-re-search-forward       = Shift-R</t>
+show-find-options       = o
+open-find-tab           = t</t>
 <t tx="ekr.20060122105527.13"># Boilerplate for most modes.
 exit-named-mode         = Return
 keyboard-quit           = Ctrl-g
@@ -3984,27 +3987,27 @@ exit-named-mode     = Return
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
-set-find-everywhere                 = e
-set-find-node-only                  = n
-set-find-suboutline-only            = s
+# This would be a great mode to open the find tab initially.
 
-# show-find-tab-options     = Ctrl-o
-# show-find-options         = o
+set-find-everywhere                 -&gt; same = e
+set-find-node-only                  -&gt; same = n
+set-find-suboutline-only            -&gt; same = s
 
-toggle-find-clone-find-all-option   = Ctrl-c
-toggle-find-ignore-case-option      = i
-toggle-find-in-body-option          = b
-toggle-find-in-headline-option      = h
-toggle-find-mark-changes-option     = c
-toggle-find-mark-finds-option       = m
-toggle-find-regex-option            = x
-toggle-find-reverse-option          = r
-toggle-find-word-option             = w
-toggle-find-wrap-around-option      = a
+open-find-tab                       = t  # Must exit: it interferes with the focus.
+show-find-options                   = o  # Must exit: otherwise it isn't visible (a bug)
+
+toggle-find-ignore-case-option      -&gt; same = i
+toggle-find-in-body-option          -&gt; same = b
+toggle-find-in-headline-option      -&gt; same = h
+toggle-find-mark-changes-option     -&gt; same = c
+toggle-find-mark-finds-option       -&gt; same = m
+toggle-find-regex-option            -&gt; same = x
+toggle-find-reverse-option          -&gt; same = r
+toggle-find-word-option             -&gt; same = w
+toggle-find-wrap-around-option      -&gt; same = a
 </t>
 <t tx="ekr.20060122105527.15"># Boilerplate for most modes.
 exit-named-mode     = Return
-exit-named-mode     = BackSpace
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
@@ -4018,14 +4021,24 @@ mode-help           = Tab
 show-invisibles         = Alt-v   
 sort-siblings           = Alt-a
 
-convert-blanks          = Shift-Ctrl-b
-convert-tabs            = Shift-Ctrl-j
+# convert-blanks          = Shift-Ctrl-b
+# convert-tabs            = Shift-Ctrl-j
 extract                 = Shift-Ctrl-d
 extract-names           = Shift-Ctrl-n
 extract-section         = Shift-Ctrl-e
 reformat-paragraph      = Shift-Ctrl-p
-sort-lines              = Shift-Ctrl-s
 write-at-file-nodes     = Shift-Ctrl-w
+
+close-rectangle         = c
+convert-blanks          = b
+convert-tabs            = t
+extract                 = d
+extract-names           = n
+extract-section         = e
+open-rectangle          = 0
+reformat-paragraph      = p
+sort-lines              = s
+write-at-file-nodes     = w
 
 # backward-kill-sentence  = Delete
 # downcase-region         = Ctrl-D
@@ -4043,9 +4056,12 @@ write-at-file-nodes     = Shift-Ctrl-w
 
 # Options mode isn't needed just yet.
 
+# There is no need for find mode with th find-with-present-options command!
+# enter-find-mode             = Ctrl-Shift-F    # open-find-tab
+
 enter-edit-mode             = Alt-space
 enter-edit-extend-mode      = None
-enter-find-mode             = Ctrl-Shift-F    # open-find-tab
+
 enter-options-mode          = Ctrl-Y    # yank
 enter-outline-mode          = Ctrl-O    # open
 enter-outline-move-mode     = None
@@ -4382,18 +4398,21 @@ open-leoPlugins-leo     = p
 open-leoSettings-leo    = s
 
 open-outline            = o     # to do: should be open-outline-by-name.</t>
-<t tx="ekr.20060123041203">tab_text_font_family = None
-tab_text_font_size = None
-tab_text_font_slant = roman
-tab_text_font_weight = normal
-</t>
 <t tx="ekr.20060124070546"># Minibuffer searches have the side effect of changing the find-tab options.
 
-find-dialog-change                  = None  # Deprecated.
-find-dialog-change-all              = None  # Deprecated.
-find-dialog-change-then-find        = None  # Deprecated.
-find-dialog-find-previous           = None  # Deprecated.
-find-dialog-find-next               = None  # Deprecated.
+# The find dialog is deprecated.
+find-dialog-change                  = None
+find-dialog-change-all              = None
+find-dialog-change-then-find        = None
+find-dialog-find-previous           = None
+find-dialog-find-next               = None
+open-find-dialog                    = None
+
+# The find tab may be used with the new minibuffer commands.
+# Both sets of commands use the options that are shown:
+# a) in the status line by the show-find-options command or
+# b) in the find-tab by the open-find-tab command.
+
 find-tab-change                     = Ctrl-=
 find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
 find-tab-change-then-find           = Ctrl--
@@ -4402,36 +4421,50 @@ find-tab-find-prev                  = F2
 find-tab-replace                    = None
 find-tab-replace-then-find          = None
 hide-find-tab                       = None
-hide-spell-tab                      = None
-isearch-backward                    = None # Minibuffer only search
-isearch-backward-regexp             = None # Minibuffer only search
-isearch-forward                     = None # Minibuffer only search
-isearch-forward-regexp              = None # Minibuffer search
-open-find-dialog                    = None      # Deprecated.
-open-find-tab                       = Ctrl-F    # Deprecated: use find-mode now.
-query-replace                       = None # Minibuffer adapter search
-query-replace-regex                 = None # Minibuffer adapter search
-replace-regex                       = None
+open-find-tab                       = Ctrl-Shift-f
+
+isearch-backward                    = None 
+isearch-backward-regexp             = None 
+isearch-forward                     = None
+isearch-forward-regexp              = None 
+
+query-replace                       = None 
+query-replace-regex                 = None 
+
 replace-string                      = None
-search-again                        = None # Minibuffer adapter search
-search-backward                     = None # Minibuffer adapter search (plain)
-search-forward                      = None # Minibuffer adapter searcy (plain)
-set-find-everywhere                 = None
-set-find-node-only                  = None
-set-find-suboutline-only            = None
-toggle-find-clone-find-all-option   = None
-toggle-find-ignore-case-option      = None
+
+search-again                        = None
+search-backward                     = None
+search-forward                      = None
+search-with-present-options         = Ctrl-f
+
+set-find-everywhere                 = Alt-Ctrl-e
+set-find-node-only                  = Alt-Ctrl-n
+set-find-suboutline-only            = Alt-Ctrl-s
+show-find-options                   = None
+
+toggle-find-ignore-case-option      = Alt-Ctrl-i
 toggle-find-in-body-option          = None
 toggle-find-in-headline-option      = None
 toggle-find-mark-changes-option     = None
 toggle-find-mark-finds-option       = None
-toggle-find-regex-option            = None
+toggle-find-regex-option            = Alt-Ctrl-x
 toggle-find-reverse-option          = None
-toggle-find-word-option             = None
+toggle-find-word-option             = Alt-Ctrl-w
 toggle-find-wrap-around-option      = None
-toggle-mini-buffer                  = None
-word-search-backward                = None # Minibuffer adapter search
-word-search-forward                 = None # Minibuffer adapter search</t>
+
+word-search-backward                = None 
+word-search-forward                 = None</t>
 <t tx="ekr.20060124112437">That way we only have to specify commands that actually have shortcuts.</t>
+<t tx="ekr.20060125104049">True: (recommended) The Find tab shows only options, not text or buttons.
+False: (legacy)     The Find tab shows text, options and buttons.</t>
+<t tx="ekr.20060125114403">True: (recommended) The Find tab shows only options, not text or buttons.
+False: (legacy)     The Find tab shows text, options and buttons.</t>
+<t tx="ekr.20060125114403.1">True: (recommended) The Find tab shows only options, not text or buttons.
+False: (legacy)     The Find tab shows text, options and buttons.</t>
+<t tx="ekr.20060125114403.2">True: (recommended) The Find tab shows only options, not text or buttons.
+False: (legacy)     The Find tab shows text, options and buttons.</t>
+<t tx="ekr.20060125114403.3">True: (recommended) The Find tab shows only options, not text or buttons.
+False: (legacy)     The Find tab shows text, options and buttons.</t>
 </tnodes>
 </leo_file>

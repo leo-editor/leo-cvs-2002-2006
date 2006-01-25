@@ -6248,8 +6248,7 @@ class searchCommandsClass (baseEditCommandsClass):
             'set-find-suboutline-only':             self.setFindScopeSuboutlineOnly,
             
             'show-find-options':                    self.showFindOptions,
-            
-            'toggle-find-clone-find-all-option':    self.toggleCloneFindAllOption,
+    
             'toggle-find-ignore-case-option':       self.toggleIgnoreCaseOption,
             'toggle-find-in-body-option':           self.toggleSearchBodyOption,
             'toggle-find-in-headline-option':       self.toggleSearchHeadlineOption,
@@ -6354,9 +6353,7 @@ class searchCommandsClass (baseEditCommandsClass):
     def setFindScope (self, where): self.getHandler().setFindScope(where)
     
     def showFindOptions      (self,event): self.getHandler().showFindOptions()
-    # def showFindOptionsPanel (self,event): self.getOptionsHandler().showFindOptionsPanel()
     
-    def toggleCloneFindAllOption   (self, event): return self.toggleOption('clone_find_all')
     def toggleIgnoreCaseOption     (self, event): return self.toggleOption('ignore_case')
     def toggleMarkChangesOption    (self, event): return self.toggleOption('mark_changes')
     def toggleMarkFindsOption      (self, event): return self.toggleOption('mark_finds')

@@ -2135,30 +2135,9 @@ class keyHandlerClass:
         
         '''Print a shortcut in a pleasing way.'''
         
-        k = self ; c = k.c
+        s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
         
-        key,junk = c.frame.menu.canonicalizeShortcut(key)
-        if not key: return ''
-        
-        key = key.lstrip('<').rstrip('>')
-        if not key: return ''
-    
-        if len(key) == 1 or key.startswith('Key-'):
-            ch = key[-1]
-            if ch.islower():
-                return 'Key-' + ch.upper()
-            else:
-                return 'Shift-' + ch
-        elif (
-            not key.startswith('Control-') and
-            not key.startswith('Alt-') and
-            not key.startswith('Shift-')
-        ):
-            return 'Key-' + key
-        elif len(key) > 1 and key[-2] == '-':
-            return key[:-1] + key[-1].upper()
-       
-        return key
+        return len(s) == 1 and 'Key+' + s or s
     #@nonl
     #@-node:ekr.20051122104219:prettyPrintKey
     #@+node:ekr.20051010063452:ultimateFuncName
