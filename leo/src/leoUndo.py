@@ -90,6 +90,8 @@ class baseUndoer:
         if u.granularity not in ('node','line','word','char'):
             u.granularity = 'line'
         # g.trace('undoer',u.granularity)
+        
+        u.max_undo_stack_size = c.config.getInt('max_undo_stack_size') or 0
     
         # Statistics comparing old and new ways (only if u.debug is on).
         u.new_mem = 0
@@ -107,7 +109,6 @@ class baseUndoer:
         
         # New in 4.2...
         u.optionalIvars = []
-    #@nonl
     #@+node:ekr.20031218072017.3607:clearIvars
     def clearIvars (self):
         
@@ -121,6 +122,19 @@ class baseUndoer:
     #@-node:ekr.20031218072017.3607:clearIvars
     #@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
     #@+node:ekr.20050416092908.1:Internal helpers
+    #@+node:ekr.20060127052111.1:cutStack
+    def cutStack (self):
+        
+        u = self ; n = u.max_undo_stack_size
+        
+        if n > 0:
+            if u.bead >= n:
+                g.trace('cutting back undo stack')
+                u.beads = u.beads[-n:]
+                u.bead = n-1
+            # g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
+    #@nonl
+    #@-node:ekr.20060127052111.1:cutStack
     #@+node:EKR.20040526150818:getBeed
     def getBead (self,n):
         
@@ -276,6 +290,8 @@ class baseUndoer:
             u.setRedoType(bunch.undoType)
         else:
             u.setRedoType("Can't Redo")
+            
+        u.cutStack()
     #@nonl
     #@-node:ekr.20031218072017.3616:setUndoTypes
     #@+node:EKR.20040530121329:u.restoreTree & helpers
