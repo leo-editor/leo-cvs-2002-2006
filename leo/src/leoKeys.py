@@ -2125,9 +2125,6 @@ class keyHandlerClass:
         '''Print a shortcut in a pleasing way.'''
         
         return self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
-        
-        # s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
-        # return len(s) == 1 and 'Key+' + s or s
     #@nonl
     #@-node:ekr.20051122104219:prettyPrintKey
     #@+node:ekr.20060114171910:traceBinding

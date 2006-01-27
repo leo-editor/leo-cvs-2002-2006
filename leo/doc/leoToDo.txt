@@ -8,17 +8,19 @@
 Also use a dict of object types to create a summary of statistics.
 #@nonl
 #@-node:ekr.20060127100926:Add enable-gc, disable-gc, print-gc-stats commands
-#@+node:ekr.20060126163152.1:(Compute binding keystroke from key event)
+#@+node:ekr.20060126163152.1:(Unified <Key> handler)
+#@+node:ekr.20060127135455:To do
+#@+node:ekr.20060127135455.1:create masterKeyHandler
+#@-node:ekr.20060127135455.1:create masterKeyHandler
 #@+node:ekr.20060127134838:Alt-Shift-A is being shown as Alt-A !!
 #@-node:ekr.20060127134838:Alt-Shift-A is being shown as Alt-A !!
-#@+node:ekr.20060127135128:PrettyPrintKey and related logic is broken
-#@-node:ekr.20060127135128:PrettyPrintKey and related logic is broken
-#@+node:ekr.20060127100038:To do: remove specialCallback hacks
-#@-node:ekr.20060127100038:To do: remove specialCallback hacks
+#@+node:ekr.20060127100038:Remove specialCallback hacks
+#@-node:ekr.20060127100038:Remove specialCallback hacks
 #@+node:ekr.20060127113243.1:Clicking (scrolling) in canvas can lose headline text
 def pushBeed (self
 #@nonl
 #@-node:ekr.20060127113243.1:Clicking (scrolling) in canvas can lose headline text
+#@-node:ekr.20060127135455:To do
 #@+node:ekr.20051105155441:simulateCommand
 def simulateCommand (self,commandName):
     
@@ -154,9 +156,6 @@ def prettyPrintKey (self,key):
     '''Print a shortcut in a pleasing way.'''
     
     return self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
-    
-    # s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
-    # return len(s) == 1 and 'Key+' + s or s
 #@nonl
 #@-node:ekr.20051122104219:prettyPrintKey
 #@+node:ekr.20050920085536.65:masterCommand & helpers
@@ -705,7 +704,7 @@ t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
 #@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
 #@-node:ekr.20060126171429:References to c.simple_bindings
-#@-node:ekr.20060126163152.1:(Compute binding keystroke from key event)
+#@-node:ekr.20060126163152.1:(Unified <Key> handler)
 #@+node:ekr.20060122183544:Improve search commands
 #@+node:ekr.20060124090814:To do
 @nocolor
