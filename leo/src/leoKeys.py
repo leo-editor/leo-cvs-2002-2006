@@ -120,9 +120,6 @@ class keyHandlerClass:
             # Keys are keysym_num's.  Values are strokes.
         self.keysym_numberInverseDict = {}
             # Keys are strokes, values are keysym_num's.
-        ### self.leoCallbackDict = {}
-            # Completed in leoCommands.getPublicCommands.
-            # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
         self.negativeArg = False
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
@@ -208,12 +205,10 @@ class keyHandlerClass:
     #@+node:ekr.20051008082929:createInverseCommandsDict
     def createInverseCommandsDict (self):
         
-        '''Add entries to k.inverseCommandsDict using c.commandDict,
-        except when c.commandDict.get(key) refers to the leoCallback function.
-        leoCommands.getPublicCommands has already added an entry in this case.
+        '''Add entries to k.inverseCommandsDict using c.commandDict.
         
-        In c.commandsDict        keys are command names, values are funcions f.
-        In k.inverseCommandsDict keys are f.__name__, values are emacs-style command names.
+        c.commandsDict:        keys are command names, values are funcions f.
+        k.inverseCommandsDict: keys are f.__name__, values are minibuffer command names.
         '''
     
         k = self ; c = k.c
@@ -221,17 +216,12 @@ class keyHandlerClass:
         for name in c.commandsDict.keys():
             f = c.commandsDict.get(name)
             try:
-                # 'leoCallback' callback created by leoCommands.getPublicCommands.
-                if f.__name__ == 'leoCallback':
-                    g.trace('oops: f.__name__ == leoCallback')
-                else:
-                    k.inverseCommandsDict [f.__name__] = name
-                    # g.trace('%24s = %s' % (f.__name__,name))
+                k.inverseCommandsDict [f.__name__] = name
+                # g.trace('%24s = %s' % (f.__name__,name))
                     
             except Exception:
                 g.es_exception()
                 g.trace(repr(name),repr(f),g.callers())
-                
     #@nonl
     #@-node:ekr.20051008082929:createInverseCommandsDict
     #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
@@ -391,44 +381,24 @@ class keyHandlerClass:
             return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
-    #@+node:ekr.20051006125633.1:bindShortcut
+    #@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
     def bindShortcut (self,pane,shortcut,command,commandName):
         
         '''Bind one shortcut from a menu table.'''
         
         k = self ; shortcut = str(shortcut)
         
-        # if k.isPlainKey(shortcut):
-            # g.trace('Ignoring plain key binding of %s to %s' % (shortcut,commandName))
-            # return
+        # g.trace(commandName,shortcut,g.callers())
     
-        if command.__name__ == 'leoCallback':
-            
-            g.trace('oops: should not happen: leoCallback used')
-            # Get the function wrapped by *this* leoCallback function.
-            func = k.leoCallbackDict.get(command)
-            commandName = k.inverseCommandsDict.get(func.__name__)
-            
-            # No need for a second layer of callback.
-            def keyCallback1 (event,k=k,func=command,stroke=shortcut):
-                return k.masterCommand(event,func,stroke)
-                
-            keyCallback = keyCallback1
-        else:
-            
-            # g.trace(commandName,shortcut,g.callers())
+        def menuFuncCallback (event,command=command,commandName=commandName):
+            return command(event)
     
-            def menuFuncCallback (event,command=command,commandName=commandName):
-                return command(event)
-    
-            def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-                return k.masterCommand(event,func,stroke,commandName=commandName)
-                
-            keyCallback = keyCallback2
+        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke,commandName=commandName)
             
-        return k.bindKey(pane,shortcut,keyCallback,commandName)
+        return k.bindKey(pane,shortcut,keyCallback2,commandName)
     #@nonl
-    #@-node:ekr.20051006125633.1:bindShortcut
+    #@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
     #@+node:ekr.20051011103654:checkBindings
     def checkBindings (self):
         
@@ -733,7 +703,7 @@ class keyHandlerClass:
         k.func = func
         k.funcReturn = None # For unit testing.
         if commandName is None:
-            commandName = k.ultimateFuncName(func)
+            commandName = func and func.__name__ or '<no function>'
         special = keysym in (
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func is not None or ch != '' # or stroke != '<Key>'
@@ -806,7 +776,6 @@ class keyHandlerClass:
     
         if func: # Func is an argument.
             if trace: g.trace('command',commandName)
-            ### if commandName.startswith('leoCallback') or 
             if commandName.startswith('specialCallback'):
                 # The callback function will call c.doCommand
                 val = func(event)
@@ -1760,7 +1729,6 @@ class keyHandlerClass:
         if func:
             # g.trace(commandName,func.__name__)
             stroke = None
-            ### if commandName.startswith('leoCallback') or 
             if commandName.startswith('specialCallback'):
                 event = None # A legacy function.
             else: # Create a dummy event as a signal.
@@ -2162,30 +2130,6 @@ class keyHandlerClass:
         # return len(s) == 1 and 'Key+' + s or s
     #@nonl
     #@-node:ekr.20051122104219:prettyPrintKey
-    #@+node:ekr.20051010063452:ultimateFuncName
-    def ultimateFuncName (self,func):
-        
-        '''Return func.__name__ unless it is 'leoCallback.
-        In that case, return the name in k.leoCallbackDict.get(func).'''
-        
-        k = self
-        
-        if not func:
-            return '<no function>'
-            
-        if func.__name__ != 'leoCallback':
-            return func.__name__
-            
-        g.trace('oops: leoCallback seen')
-            
-        # Get the function wrapped by this particular leoCallback function.
-        calledFunc = k.leoCallbackDict.get(func)
-        if calledFunc:
-            return 'leoCallback -> %s' % calledFunc.__name__ 
-        else:
-            return '<no leoCallback name>'
-    #@nonl
-    #@-node:ekr.20051010063452:ultimateFuncName
     #@+node:ekr.20060114171910:traceBinding
     def traceBinding (self,bunch,shortcut,w):
     

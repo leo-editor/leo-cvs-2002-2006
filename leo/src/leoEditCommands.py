@@ -4113,14 +4113,9 @@ class leoCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.188:leoCommands.getPublicCommands
     def getPublicCommands (self):
         
-        '''(leoCommands) Return a dict of the 'legacy' Leo commands.
-        A special case used only by this class.
-        Put the *raw* command name into the inverse dict, *not* 'leoCallback'.
-        
-        Also creates k.leoCallBackDict.  Keys are *raw* functions, values are emacs command names.'''
+        '''(leoCommands) Return a dict of the 'legacy' Leo commands.'''
         
         k = self.k ; d2 = {}
-        k.leoCallbackDict = {}
         
         #@    << define dictionary d of names and Leo commands >>
         #@+node:ekr.20050920084036.189:<< define dictionary d of names and Leo commands >>

@@ -4,6 +4,8 @@
 
 #@+all
 #@+node:ekr.20050921094025:4.4 To do
+#@+node:ekr.20060127133715:remove specialCallback hack
+#@-node:ekr.20060127133715:remove specialCallback hack
 #@+node:ekr.20060127100926:Add enable-gc, disable-gc, print-gc-stats commands
 Also use a dict of object types to create a summary of statistics.
 #@nonl
@@ -25,7 +27,6 @@ def simulateCommand (self,commandName):
     if func:
         # g.trace(commandName,func.__name__)
         stroke = None
-        ### if commandName.startswith('leoCallback') or 
         if commandName.startswith('specialCallback'):
             event = None # A legacy function.
         else: # Create a dummy event as a signal.
@@ -175,7 +176,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
-        commandName = k.ultimateFuncName(func)
+        commandName = func and func.__name__ or '<no function>'
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func is not None or ch != '' # or stroke != '<Key>'
@@ -231,7 +232,6 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        ### if commandName.startswith('leoCallback') or 
         if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
@@ -565,44 +565,24 @@ def bindOpenWith (self,shortcut,name,data):
         return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
 #@nonl
 #@-node:ekr.20051008135051.1:bindOpenWith
-#@+node:ekr.20051006125633.1:bindShortcut
+#@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
 def bindShortcut (self,pane,shortcut,command,commandName):
     
     '''Bind one shortcut from a menu table.'''
     
     k = self ; shortcut = str(shortcut)
     
-    # if k.isPlainKey(shortcut):
-        # g.trace('Ignoring plain key binding of %s to %s' % (shortcut,commandName))
-        # return
+    # g.trace(commandName,shortcut,g.callers())
 
-    if command.__name__ == 'leoCallback':
-        
-        g.trace('oops: should not happen: leoCallback used')
-        # Get the function wrapped by *this* leoCallback function.
-        func = k.leoCallbackDict.get(command)
-        commandName = k.inverseCommandsDict.get(func.__name__)
-        
-        # No need for a second layer of callback.
-        def keyCallback1 (event,k=k,func=command,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-            
-        keyCallback = keyCallback1
-    else:
-        
-        # g.trace(commandName,shortcut,g.callers())
+    def menuFuncCallback (event,command=command,commandName=commandName):
+        return command(event)
 
-        def menuFuncCallback (event,command=command,commandName=commandName):
-            return command(event)
-
-        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke,commandName=commandName)
-            
-        keyCallback = keyCallback2
+    def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+        return k.masterCommand(event,func,stroke,commandName=commandName)
         
-    return k.bindKey(pane,shortcut,keyCallback,commandName)
+    return k.bindKey(pane,shortcut,keyCallback2,commandName)
 #@nonl
-#@-node:ekr.20051006125633.1:bindShortcut
+#@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
 #@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
 def makeSpecialBindings (self):
     
@@ -3434,7 +3414,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
-        commandName = k.ultimateFuncName(func)
+        commandName = func and func.__name__ or '<no function>'
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func is not None or ch != '' # or stroke != '<Key>'
@@ -3490,7 +3470,6 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        ### if commandName.startswith('leoCallback') or 
         if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
@@ -6572,7 +6551,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
-        commandName = k.ultimateFuncName(func)
+        commandName = func and func.__name__ or '<no function>'
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func is not None or ch != '' # or stroke != '<Key>'
@@ -6628,7 +6607,6 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        ### if commandName.startswith('leoCallback') or 
         if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
@@ -6726,44 +6704,24 @@ def handleDefaultChar(self,event):
 #@-node:ekr.20050920085536.65:masterCommand & helpers
 #@+node:ekr.20060115100407:Found: callback
 #@+node:ekr.20060115100841:Do call masterCommand
-#@+node:ekr.20051006125633.1:bindShortcut
+#@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
 def bindShortcut (self,pane,shortcut,command,commandName):
     
     '''Bind one shortcut from a menu table.'''
     
     k = self ; shortcut = str(shortcut)
     
-    # if k.isPlainKey(shortcut):
-        # g.trace('Ignoring plain key binding of %s to %s' % (shortcut,commandName))
-        # return
+    # g.trace(commandName,shortcut,g.callers())
 
-    if command.__name__ == 'leoCallback':
-        
-        g.trace('oops: should not happen: leoCallback used')
-        # Get the function wrapped by *this* leoCallback function.
-        func = k.leoCallbackDict.get(command)
-        commandName = k.inverseCommandsDict.get(func.__name__)
-        
-        # No need for a second layer of callback.
-        def keyCallback1 (event,k=k,func=command,stroke=shortcut):
-            return k.masterCommand(event,func,stroke)
-            
-        keyCallback = keyCallback1
-    else:
-        
-        # g.trace(commandName,shortcut,g.callers())
+    def menuFuncCallback (event,command=command,commandName=commandName):
+        return command(event)
 
-        def menuFuncCallback (event,command=command,commandName=commandName):
-            return command(event)
-
-        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke,commandName=commandName)
-            
-        keyCallback = keyCallback2
+    def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+        return k.masterCommand(event,func,stroke,commandName=commandName)
         
-    return k.bindKey(pane,shortcut,keyCallback,commandName)
+    return k.bindKey(pane,shortcut,keyCallback2,commandName)
 #@nonl
-#@-node:ekr.20051006125633.1:bindShortcut
+#@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
 #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
 def copyBindingsToWidget (self,paneOrPanes,w):
     
