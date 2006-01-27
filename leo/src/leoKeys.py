@@ -30,9 +30,6 @@ import string
 # k.inverseCommandsDict:
 #     keys are f.__name__, values are emacs command names.
 # 
-# k.leoCallbackDict:
-#     keys are leoCallback functions, values are called functions.
-# 
 # k.bindingsDict:
 #     keys are shortcuts, values are *lists* of 
 # g.bunch(func,name,warningGiven)
@@ -123,7 +120,7 @@ class keyHandlerClass:
             # Keys are keysym_num's.  Values are strokes.
         self.keysym_numberInverseDict = {}
             # Keys are strokes, values are keysym_num's.
-        self.leoCallbackDict = {}
+        ### self.leoCallbackDict = {}
             # Completed in leoCommands.getPublicCommands.
             # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
         self.negativeArg = False
@@ -225,7 +222,9 @@ class keyHandlerClass:
             f = c.commandsDict.get(name)
             try:
                 # 'leoCallback' callback created by leoCommands.getPublicCommands.
-                if f.__name__ != 'leoCallback':
+                if f.__name__ == 'leoCallback':
+                    g.trace('oops: f.__name__ == leoCallback')
+                else:
                     k.inverseCommandsDict [f.__name__] = name
                     # g.trace('%24s = %s' % (f.__name__,name))
                     
@@ -404,6 +403,8 @@ class keyHandlerClass:
             # return
     
         if command.__name__ == 'leoCallback':
+            
+            g.trace('oops: should not happen: leoCallback used')
             # Get the function wrapped by *this* leoCallback function.
             func = k.leoCallbackDict.get(command)
             commandName = k.inverseCommandsDict.get(func.__name__)
@@ -728,7 +729,7 @@ class keyHandlerClass:
         keysym = event and event.keysym or ''
         ch = event and event.char or ''
         w = event and event.widget
-        state = event and event.state
+        state = event and hasattr(event,'state') and event.state or 0
         k.func = func
         k.funcReturn = None # For unit testing.
         if commandName is None:
@@ -805,7 +806,8 @@ class keyHandlerClass:
     
         if func: # Func is an argument.
             if trace: g.trace('command',commandName)
-            if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+            ### if commandName.startswith('leoCallback') or 
+            if commandName.startswith('specialCallback'):
                 # The callback function will call c.doCommand
                 val = func(event)
                 # k.simulateCommand uses k.funcReturn.
@@ -849,7 +851,6 @@ class keyHandlerClass:
         if func:
             func(event)
             commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-            # forceFocus = func.__name__ != 'leoCallback'
             k.endCommand(event,commandName)
         
         return func
@@ -1759,7 +1760,8 @@ class keyHandlerClass:
         if func:
             # g.trace(commandName,func.__name__)
             stroke = None
-            if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+            ### if commandName.startswith('leoCallback') or 
+            if commandName.startswith('specialCallback'):
                 event = None # A legacy function.
             else: # Create a dummy event as a signal.
                 event = g.bunch(keysym = '',char = '',widget = None)
@@ -1767,7 +1769,7 @@ class keyHandlerClass:
             return k.funcReturn
         else:
             g.trace('no command for %s' % (commandName),color='red')
-            raise AttributeError
+            if g.app.unitTesting: raise AttributeError
     #@nonl
     #@-node:ekr.20051105155441:simulateCommand
     #@+node:ekr.20050920085536.62:getArg
@@ -2154,9 +2156,10 @@ class keyHandlerClass:
         
         '''Print a shortcut in a pleasing way.'''
         
-        s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+        return self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
         
-        return len(s) == 1 and 'Key+' + s or s
+        # s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+        # return len(s) == 1 and 'Key+' + s or s
     #@nonl
     #@-node:ekr.20051122104219:prettyPrintKey
     #@+node:ekr.20051010063452:ultimateFuncName
@@ -2172,6 +2175,8 @@ class keyHandlerClass:
             
         if func.__name__ != 'leoCallback':
             return func.__name__
+            
+        g.trace('oops: leoCallback seen')
             
         # Get the function wrapped by this particular leoCallback function.
         calledFunc = k.leoCallbackDict.get(func)

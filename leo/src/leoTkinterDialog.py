@@ -30,7 +30,7 @@ class leoTkinterDialog:
         self.defaultButtonCommand = None  # Command to call when user closes the window by clicking the close box.
         self.frame = None # The outermost frame.
         self.root = None # g.app.root
-        self.show = show
+        self.showFlag = show
         self.top = None # The toplevel Tk widget.
         self.focus_widget = None # The widget to get the first focus.
         self.canClose = canClose
@@ -158,7 +158,7 @@ class leoTkinterDialog:
         c = self.c ; self.modal = modal
     
         self.center() # Do this after all packing complete.
-        if self.show:
+        if self.showFlag:
             self.top.lift()
         else:
             self.top.withdraw()

@@ -1752,7 +1752,7 @@ self.keysym_numberDict = {}
     # Keys are keysym_num's.  Values are strokes.
 self.keysym_numberInverseDict = {}
     # Keys are strokes, values are keysym_num's.
-self.leoCallbackDict = {}
+### self.leoCallbackDict = {}
     # Completed in leoCommands.getPublicCommands.
     # Keys are *raw* functions wrapped by the leoCallback, values are emacs command names.
 self.negativeArg = False
@@ -1823,7 +1823,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
     w = event and event.widget
-    state = event and event.state
+    state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
@@ -1883,7 +1883,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+        ### if commandName.startswith('leoCallback') or 
+        if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
             # k.simulateCommand uses k.funcReturn.
@@ -1943,7 +1944,6 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
         k.endCommand(event,commandName)
     
     return func
@@ -2292,6 +2292,8 @@ def bindShortcut (self,pane,shortcut,command,commandName):
         # return
 
     if command.__name__ == 'leoCallback':
+        
+        g.trace('oops: should not happen: leoCallback used')
         # Get the function wrapped by *this* leoCallback function.
         func = k.leoCallbackDict.get(command)
         commandName = k.inverseCommandsDict.get(func.__name__)
@@ -3306,6 +3308,8 @@ def bindShortcut (self,pane,shortcut,command,commandName):
         # return
 
     if command.__name__ == 'leoCallback':
+        
+        g.trace('oops: should not happen: leoCallback used')
         # Get the function wrapped by *this* leoCallback function.
         func = k.leoCallbackDict.get(command)
         commandName = k.inverseCommandsDict.get(func.__name__)
@@ -3821,7 +3825,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
     w = event and event.widget
-    state = event and event.state
+    state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
@@ -3881,7 +3885,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+        ### if commandName.startswith('leoCallback') or 
+        if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
             # k.simulateCommand uses k.funcReturn.
@@ -3941,7 +3946,6 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
         k.endCommand(event,commandName)
     
     return func
@@ -5563,7 +5567,7 @@ AttributeError: Canvas instance has no attribute 'get'
 #@nonl
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20051011072903.2:copyText
-def copyText (self):
+def copyText (self,event=None):
     
     '''Copy the selected text from the widget to the clipboard.'''
     
@@ -5580,7 +5584,7 @@ OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
-def cutText (self):
+def cutText (self,event=None):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
@@ -5610,7 +5614,7 @@ OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
-def pasteText (self):
+def pasteText (self,event=None):
 
     '''Paste the clipboard into a widget.'''
 
@@ -5709,17 +5713,26 @@ def clearIvars (self):
 #@+node:ekr.20060127052111.1:cutStack
 def cutStack (self):
     
-    # This logic is odious.  Instead, we should treat groups as single beads.
-    
     u = self ; n = u.max_undo_stack_size
-    
-    if n > 0 and u.bead >= n:
+
+    if n > 0 and u.bead >= n and not g.app.unitTesting:
+        
+        # Do nothing if we are in the middle of creating a group.
+        i = len(u.beads)-1
+        while i >= 0:
+            bunch = u.beads[i]
+            if bunch.kind == 'beforeGroup':
+                return
+            i -= 1
+
+        # This work regardless of how many items appear after bead n.
+        g.trace('Cutting undo stack to %d entries' % (n))
         u.beads = u.beads[-n:]
         u.bead = n-1
-        g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
+        # g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
 #@nonl
 #@-node:ekr.20060127052111.1:cutStack
-#@+node:EKR.20040526150818:getBeed
+#@+node:EKR.20040526150818:getBead
 def getBead (self,n):
     
     '''Set undoer ivars from the bunch at the top of the undo stack.'''
@@ -5734,8 +5747,8 @@ def getBead (self,n):
     
     return bunch
 #@nonl
-#@-node:EKR.20040526150818:getBeed
-#@+node:EKR.20040526150818.1:peekBeed
+#@-node:EKR.20040526150818:getBead
+#@+node:EKR.20040526150818.1:peekBead
 def peekBead (self,n):
     
     u = self
@@ -5745,7 +5758,27 @@ def peekBead (self,n):
     # g.trace(n,len(u.beads),bunch)
     return bunch
 #@nonl
-#@-node:EKR.20040526150818.1:peekBeed
+#@-node:EKR.20040526150818.1:peekBead
+#@+node:ekr.20060127113243:pushBead
+def pushBead (self,bunch):
+    
+    u = self
+    
+    # New in 4.4b2:  Add this to the group if it is being accumulated.
+    bunch2 = u.bead >= 0 and u.bead < len(u.beads) and u.beads[u.bead]
+
+    if bunch2 and bunch2.kind == 'beforeGroup':
+        # Just append the new bunch the group's items.
+        bunch2.items.append(bunch)
+    else:
+        # Push the bunch.
+        u.bead += 1
+        u.beads[u.bead:] = [bunch]
+        # g.trace('u.bead',u.bead,'len u.beads',len(u.beads))
+
+        # Recalculate the menu labels.
+        u.setUndoTypes()
+#@-node:ekr.20060127113243:pushBead
 #@+node:ekr.20060127070008:setIvarsFromBunch
 def setIvarsFromBunch (self,bunch):
     
@@ -5827,6 +5860,12 @@ def undoMenuName (self,name):
 def setRedoType (self,theType):
     # g.trace(theType,g.callers(7))
     u = self ; frame = u.c.frame
+    
+    if type(theType) != type(''):
+        g.trace('oops: expected string for command, got %s' % repr(theType))
+        g.trace(g.callers())
+        theType = '<unknown>'
+    
     menu = frame.menu.getMenu("Edit")
     name = u.redoMenuName(theType)
     if name != u.redoMenuLabel:
@@ -5844,6 +5883,10 @@ def setRedoType (self,theType):
 def setUndoType (self,theType):
     # g.trace(theType,g.callers(7))
     u = self ; frame = u.c.frame
+    if type(theType) != type(''):
+        g.trace('oops: expected string for command, got %s' % repr(theType))
+        g.trace(g.callers())
+        theType = '<unknown>'
     menu = frame.menu.getMenu("Edit")
     name = u.undoMenuName(theType)
     if name != u.undoMenuLabel:
@@ -6055,18 +6098,13 @@ def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
     u = self ; body = u.c.frame.body
     if u.redoing or u.undoing: return
     
-    if 1: # New code in 4.4b2: just change the kind of the bunch from 'beforeGroup' to 'endGroup'
+    # g.trace('u.bead',u.bead,'len u.beads',len(u.beads))
 
-        bunch =  u.beads[u.bead]
-        if bunch.kind == 'beforeGroup':
-            bunch.kind = 'afterGroup'
-        else:
-            g.trace('oops: expecting beforeGroup, got %s' % bunch.kind)
-        
+    bunch = u.beads[u.bead]
+    if bunch.kind == 'beforeGroup':
+        bunch.kind = 'afterGroup'
     else:
-        # Must use a _separate_ bunch than that created by beforeChangeGroup.
-        # (To allow separate bunch.kind fields.
-        bunch = u.createCommonBunch(p)
+        g.trace('oops: expecting beforeGroup, got %s' % bunch.kind)
 
     # Set the types & helpers.
     bunch.kind = 'afterGroup'
@@ -6075,7 +6113,7 @@ def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
     # Set helper only for undo:
     # The bead pointer will point to an 'beforeGroup' bead for redo.
     bunch.undoHelper = u.undoGroup
-    bunch.redoHelper = u.redoGroup ### Was None
+    bunch.redoHelper = u.redoGroup
     
     bunch.dirtyVnodeList = dirtyVnodeList
     
@@ -6119,18 +6157,7 @@ def afterChangeNodeContents (self,p,command,bunch,dirtyVnodeList=[]):
     bunch.newMarked = p.isMarked()
     bunch.newSel = body.getTextSelection()
     
-    # New in 4.4b2:  Add this to the group if it is being accumulated.
-    bunch2 = u.beads[u.bead]
-    if bunch2.kind == 'beforeGroup':
-        # Just append the new bunch the group's items.
-        bunch2.items.append(bunch)
-    else:
-        # Push the bunch.
-        u.bead += 1
-        u.beads[u.bead:] = [bunch]
-
-        # Recalculate the menu labels.
-        u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050315134017.2:afterChangeNodeContents
 #@+node:ekr.20050315134017.3:afterChangeTree
@@ -6151,13 +6178,8 @@ def afterChangeTree (self,p,command,bunch):
     bunch.newSel = body.getTextSelection()
     bunch.newText = body.getAllText()
     bunch.newTree = u.saveTree(p)
-
-    # Push the bunch, not a dict.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050315134017.3:afterChangeTree
 #@+node:ekr.20050424161505:afterClearRecentFiles
@@ -6171,12 +6193,7 @@ def afterClearRecentFiles (self,bunch):
     bunch.undoHelper = u.undoClearRecentFiles
     bunch.redoHelper = u.redoClearRecentFiles
     
-    # Push the bunch, not a dict.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 
     return bunch
 #@nonl
@@ -6205,12 +6222,7 @@ def afterCloneNode (self,p,command,bunch,dirtyVnodeList=[]):
     bunch.newDirty = p.isDirty()
     bunch.newMarked = p.isMarked()
 
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-    
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050411193627.5:afterCloneNode
 #@+node:ekr.20050411193627.6:afterDehoist
@@ -6229,12 +6241,7 @@ def afterDehoist (self,p,command):
     bunch.undoHelper = u.undoDehoistNode
     bunch.redoHelper = u.redoDehoistNode
 
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-    
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050411193627.6:afterDehoist
 #@+node:ekr.20050411193627.8:afterDeleteNode
@@ -6258,12 +6265,7 @@ def afterDeleteNode (self,p,command,bunch,dirtyVnodeList=[]):
     bunch.newDirty = p.isDirty()
     bunch.newMarked = p.isMarked()
 
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-    
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050411193627.8:afterDeleteNode
 #@+node:ekr.20050411193627.7:afterHoist
@@ -6282,12 +6284,7 @@ def afterHoist (self,p,command):
     bunch.undoHelper = u.undoHoistNode
     bunch.redoHelper = u.redoHoistNode
 
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-    
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050411193627.7:afterHoist
 #@+node:ekr.20050411193627.9:afterInsertNode
@@ -6299,6 +6296,7 @@ def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
     # Set types & helpers
     bunch.kind = 'insert'
     bunch.undoType = command
+    # g.trace(repr(command),g.callers())
     
     # Set helpers
     bunch.undoHelper = u.undoInsertNode
@@ -6324,12 +6322,7 @@ def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
         bunch.afterTree=afterTree
         # g.trace(afterTree)
 
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-    
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050411193627.9:afterInsertNode
 #@+node:ekr.20050526124257:afterMark
@@ -6352,12 +6345,7 @@ def afterMark (self,p,command,bunch,dirtyVnodeList=[]):
     bunch.newDirty = p.isDirty()
     bunch.newMarked = p.isMarked()
 
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050526124257:afterMark
 #@+node:ekr.20050410110343:afterMoveNode
@@ -6385,12 +6373,7 @@ def afterMoveNode (self,p,command,bunch,dirtyVnodeList=[]):
     bunch.newN = p.childIndex()
     bunch.newParent = p.parent()
     
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
-
-    # Recalculate the menu labels.
-    u.setUndoTypes()
+    u.pushBead(bunch)
 #@nonl
 #@-node:ekr.20050410110343:afterMoveNode
 #@-node:ekr.20050318085432.4:afterX...
@@ -6407,7 +6390,7 @@ def beforeChangeGroup (self,p,command):
     
     # Set helper only for redo:
     # The bead pointer will point to an 'afterGroup' bead for undo.
-    bunch.undoHelper = u.undoGroup ## None
+    bunch.undoHelper = u.undoGroup
     bunch.redoHelper = u.redoGroup
     bunch.items = []
 
@@ -6614,7 +6597,6 @@ def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview
     << save undo text info >>
     << save the selection and scrolling position >>
     << adjust the undo stack, clearing all forward entries >>
-    u.setUndoTypes() # Recalculate the menu labels.
     return bunch
 #@nonl
 #@+node:ekr.20040324061854:<< return if there is nothing to do >>
@@ -6766,7 +6748,6 @@ old_p = old_d and old_d.get('p')
 
 if newBead:
     # Push params on undo stack, clearing all forward entries.
-    u.bead += 1
     bunch = g.Bunch(
         p = p.copy(),
         kind='typing',
@@ -6778,6 +6759,7 @@ if newBead:
         oldNewlines=u.oldNewlines,
         oldMiddleLines=u.oldMiddleLines,
     )
+    u.pushBead(bunch)
 else:
     bunch = old_d
 
@@ -6789,10 +6771,6 @@ bunch.newSel=u.newSel
 bunch.newText=u.newText
 bunch.yview=u.yview
 
-u.beads[u.bead:] = [bunch]
-    
-# g.trace(u.bead,len(u.beads))
-#@nonl
 #@+node:ekr.20050125220613:<< set newBead if we can't share the previous bead >>
 @ We must set newBead to True if undo_type is not 'Typing' so that commands that
 get treated like typing (by updateBodyPane and onBodyChanged) don't get lumped
@@ -6874,7 +6852,7 @@ else:
 #@-node:ekr.20031218072017.1490:setUndoTypingParams
 #@-node:ekr.20031218072017.3608:Externally visible entries
 #@+node:ekr.20031218072017.2030:redo & helpers...
-def redo (self):
+def redo (self,event=None):
 
     u = self ; c = u.c
     # g.trace(g.callers(7))
@@ -7015,12 +6993,15 @@ def redoGroup (self):
     u.groupCount += 1
     
     bunch = u.beads[u.bead] ; count = 0
-    for z in bunch.items:
-        self.setIvarsFromBunch(z)
-        if z.redoHelper:
-            z.redoHelper() ; count += 1
-        else:
-            g.trace('oops: no redo helper for %s' % u.undoType)
+    if not hasattr(bunch,'items'):
+        g.trace('oops: expecting bunch.items.  bunch.kind = %s' % bunch.kind)
+    else:
+        for z in bunch.items:
+            self.setIvarsFromBunch(z)
+            if z.redoHelper:
+                z.redoHelper() ; count += 1
+            else:
+                g.trace('oops: no redo helper for %s' % u.undoType)
 
     u.groupCount -= 1
     
@@ -7126,7 +7107,7 @@ def redoTyping (self):
 #@-node:EKR.20040526075238.5:redoTyping
 #@-node:ekr.20031218072017.2030:redo & helpers...
 #@+node:ekr.20031218072017.2039:undo & helpers...
-def undo (self):
+def undo (self,event=None):
 
     """Undo the operation described by the undo parmaters."""
     
@@ -7226,12 +7207,16 @@ def undoGroup (self):
     u.groupCount += 1
     
     bunch = u.beads[u.bead] ; count = 0
-    for z in bunch.items:
-        self.setIvarsFromBunch(z)
-        if z.undoHelper:
-            z.undoHelper() ; count += 1
-        else:
-            g.trace('oops: no undo helper for %s' % u.undoType)
+    
+    if not hasattr(bunch,'items'):
+        g.trace('oops: expecting bunch.items.  bunch.kind = %s' % bunch.kind)
+    else:
+        for z in bunch.items:
+            self.setIvarsFromBunch(z)
+            if z.undoHelper:
+                z.undoHelper() ; count += 1
+            else:
+                g.trace('oops: no undo helper for %s' % u.undoType)
         
     u.groupCount -= 1
                
@@ -7500,17 +7485,74 @@ print "actual  :",textResult
 #@-node:ekr.20031218072017.1493:undoRedoText
 #@-node:ekr.20031218072017.2039:undo & helpers...
 #@-node:ekr.20031218072017.3605:class undoer
+#@+node:ekr.20031218072017.3614:setRedoType, setUndoType
+# These routines update both the ivar and the menu label.
+def setRedoType (self,theType):
+    # g.trace(theType,g.callers(7))
+    u = self ; frame = u.c.frame
+    
+    if type(theType) != type(''):
+        g.trace('oops: expected string for command, got %s' % repr(theType))
+        g.trace(g.callers())
+        theType = '<unknown>'
+    
+    menu = frame.menu.getMenu("Edit")
+    name = u.redoMenuName(theType)
+    if name != u.redoMenuLabel:
+        # Update menu using old name.
+        realLabel = frame.menu.getRealMenuName(name)
+        if realLabel == name:
+            underline=g.choose(g.match(name,0,"Can't"),-1,0)
+        else:
+            underline = realLabel.find("&")
+        realLabel = realLabel.replace("&","")
+        frame.menu.setMenuLabel(menu,u.realRedoMenuLabel,realLabel,underline=underline)
+        u.redoMenuLabel = name
+        u.realRedoMenuLabel = realLabel
+
+def setUndoType (self,theType):
+    # g.trace(theType,g.callers(7))
+    u = self ; frame = u.c.frame
+    if type(theType) != type(''):
+        g.trace('oops: expected string for command, got %s' % repr(theType))
+        g.trace(g.callers())
+        theType = '<unknown>'
+    menu = frame.menu.getMenu("Edit")
+    name = u.undoMenuName(theType)
+    if name != u.undoMenuLabel:
+        # Update menu using old name.
+        realLabel = frame.menu.getRealMenuName(name)
+        if realLabel == name:
+            underline=g.choose(g.match(name,0,"Can't"),-1,0)
+        else:
+            underline = realLabel.find("&")
+        realLabel = realLabel.replace("&","")
+        frame.menu.setMenuLabel(menu,u.realUndoMenuLabel,realLabel,underline=underline)
+        u.undoType = theType
+        u.undoMenuLabel = name
+        u.realUndoMenuLabel = realLabel
+#@nonl
+#@-node:ekr.20031218072017.3614:setRedoType, setUndoType
 #@+node:ekr.20060127052111.1:cutStack
 def cutStack (self):
     
-    # This logic is odious.  Instead, we should treat groups as single beads.
-    
     u = self ; n = u.max_undo_stack_size
-    
-    if n > 0 and u.bead >= n:
+
+    if n > 0 and u.bead >= n and not g.app.unitTesting:
+        
+        # Do nothing if we are in the middle of creating a group.
+        i = len(u.beads)-1
+        while i >= 0:
+            bunch = u.beads[i]
+            if bunch.kind == 'beforeGroup':
+                return
+            i -= 1
+
+        # This work regardless of how many items appear after bead n.
+        g.trace('Cutting undo stack to %d entries' % (n))
         u.beads = u.beads[-n:]
         u.bead = n-1
-        g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
+        # g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
 #@nonl
 #@-node:ekr.20060127052111.1:cutStack
 #@+node:ekr.20050318085713:undoGroup
@@ -7529,12 +7571,16 @@ def undoGroup (self):
     u.groupCount += 1
     
     bunch = u.beads[u.bead] ; count = 0
-    for z in bunch.items:
-        self.setIvarsFromBunch(z)
-        if z.undoHelper:
-            z.undoHelper() ; count += 1
-        else:
-            g.trace('oops: no undo helper for %s' % u.undoType)
+    
+    if not hasattr(bunch,'items'):
+        g.trace('oops: expecting bunch.items.  bunch.kind = %s' % bunch.kind)
+    else:
+        for z in bunch.items:
+            self.setIvarsFromBunch(z)
+            if z.undoHelper:
+                z.undoHelper() ; count += 1
+            else:
+                g.trace('oops: no undo helper for %s' % u.undoType)
         
     u.groupCount -= 1
                
@@ -7563,12 +7609,15 @@ def redoGroup (self):
     u.groupCount += 1
     
     bunch = u.beads[u.bead] ; count = 0
-    for z in bunch.items:
-        self.setIvarsFromBunch(z)
-        if z.redoHelper:
-            z.redoHelper() ; count += 1
-        else:
-            g.trace('oops: no redo helper for %s' % u.undoType)
+    if not hasattr(bunch,'items'):
+        g.trace('oops: expecting bunch.items.  bunch.kind = %s' % bunch.kind)
+    else:
+        for z in bunch.items:
+            self.setIvarsFromBunch(z)
+            if z.redoHelper:
+                z.redoHelper() ; count += 1
+            else:
+                g.trace('oops: no redo helper for %s' % u.undoType)
 
     u.groupCount -= 1
     
@@ -7581,27 +7630,74 @@ def redoGroup (self):
     newSel and c.frame.body.setTextSelection(newSel)
 #@nonl
 #@-node:ekr.20050318085432.6:redoGroup
-#@+node:ekr.20050315134017.7:beforeChangeGroup
-def beforeChangeGroup (self,p,command):
+#@+node:ekr.20031218072017.1761:c.insertHeadline
+def insertHeadline (self,event=None,op_name="Insert Node"):
     
-    u = self
-    bunch = u.createCommonBunch(p)
-    
-    # Set types.
-    bunch.kind = 'beforeGroup'
-    bunch.undoType = command
-    
-    # Set helper only for redo:
-    # The bead pointer will point to an 'afterGroup' bead for undo.
-    bunch.undoHelper = u.undoGroup ## None
-    bunch.redoHelper = u.redoGroup
-    bunch.items = []
+    '''Insert a node after the presently selected node.'''
 
-    # Push the bunch.
-    u.bead += 1
-    u.beads[u.bead:] = [bunch]
+    c = self ; u = c.undoer
+    current = c.currentPosition()
+    
+    if not current: return
+
+    c.beginUpdate()
+    try:
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].p)):
+            p = current.insertAsNthChild(0)
+        else:
+            p = current.insertAfter()
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+        c.endEditing()
+        c.editPosition(p)
+    finally:
+        c.endUpdate(restoreFocus=False,scroll=True)
+
+    return p # for mod_labels plugin.
 #@nonl
-#@-node:ekr.20050315134017.7:beforeChangeGroup
+#@-node:ekr.20031218072017.1761:c.insertHeadline
+#@+node:ekr.20050411193627.9:afterInsertNode
+def afterInsertNode (self,p,command,bunch,dirtyVnodeList=[]):
+    
+    u = self ; c = u.c
+    if u.redoing or u.undoing: return
+    
+    # Set types & helpers
+    bunch.kind = 'insert'
+    bunch.undoType = command
+    # g.trace(repr(command),g.callers())
+    
+    # Set helpers
+    bunch.undoHelper = u.undoInsertNode
+    bunch.redoHelper = u.redoInsertNode
+    
+    bunch.newP = p.copy()
+    bunch.dirtyVnodeList = dirtyVnodeList
+
+    bunch.newBack = p.back()
+    bunch.newParent = p.parent()
+
+    bunch.newChanged = c.isChanged()
+    bunch.newDirty = p.isDirty()
+    bunch.newMarked = p.isMarked()
+    
+    if bunch.pasteAsClone:
+        beforeTree=bunch.beforeTree
+        afterTree = []
+        for bunch2 in beforeTree:
+            t = bunch2.t
+            afterTree.append(
+                g.Bunch(t=t,head=t.headString[:],body=t.bodyString[:]))
+        bunch.afterTree=afterTree
+        # g.trace(afterTree)
+
+    u.pushBead(bunch)
+#@nonl
+#@-node:ekr.20050411193627.9:afterInsertNode
 #@+node:ekr.20050315134017.4:afterChangeGroup
 def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
 
@@ -7610,18 +7706,13 @@ def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
     u = self ; body = u.c.frame.body
     if u.redoing or u.undoing: return
     
-    if 1: # New code in 4.4b2: just change the kind of the bunch from 'beforeGroup' to 'endGroup'
+    # g.trace('u.bead',u.bead,'len u.beads',len(u.beads))
 
-        bunch =  u.beads[u.bead]
-        if bunch.kind == 'beforeGroup':
-            bunch.kind = 'afterGroup'
-        else:
-            g.trace('oops: expecting beforeGroup, got %s' % bunch.kind)
-        
+    bunch = u.beads[u.bead]
+    if bunch.kind == 'beforeGroup':
+        bunch.kind = 'afterGroup'
     else:
-        # Must use a _separate_ bunch than that created by beforeChangeGroup.
-        # (To allow separate bunch.kind fields.
-        bunch = u.createCommonBunch(p)
+        g.trace('oops: expecting beforeGroup, got %s' % bunch.kind)
 
     # Set the types & helpers.
     bunch.kind = 'afterGroup'
@@ -7630,7 +7721,7 @@ def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
     # Set helper only for undo:
     # The bead pointer will point to an 'beforeGroup' bead for redo.
     bunch.undoHelper = u.undoGroup
-    bunch.redoHelper = u.redoGroup ### Was None
+    bunch.redoHelper = u.redoGroup
     
     bunch.dirtyVnodeList = dirtyVnodeList
     
@@ -7697,14 +7788,14 @@ def canonicalizeShortcut (self,shortcut):
         return None,None
     s = shortcut.strip().lower()
     
-    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
+    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0
     has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
     has_alt   = s.find("alt") >= 0
     has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
     if sys.platform == "darwin":
         if has_ctrl and not has_cmd:
             has_cmd = True ; has_ctrl = False
-        if has_alt and not has_ctrl: # 9/14/04
+        if has_alt and not has_ctrl:
             has_ctrl = True ; has_alt = False
     << set the last field, preserving case >>
     << canonicalize the last field >>
@@ -7839,7 +7930,7 @@ if has_ctrl:
     bind_head = bind_head + "Control-"
     menu_head = menu_head + "Ctrl+"
     
-if has_cmd: # 11/18/03
+if has_cmd:
     bind_head = bind_head + "Command-"
     menu_head = menu_head + "Command+"
     
@@ -7848,16 +7939,18 @@ if has_shift:
     if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
         bind_head = bind_head + "Shift-"
 
-# New in 4.4b2:
+# New in 4.4a6: Only the menu_shortcut will exist.
+if not menu_head:
+    menu_shortcut = 'Key+%s' % menu_last
+else:
+    menu_shortcut = menu_head + menu_last
+    
+# To be removed in 4.4a6
 if not bind_head and bind_last and len(bind_last) == 1:
     bind_shortcut = '<Key-%s>' % bind_last
-    # g.trace(bind_shortcut)
-    "<" + bind_head + bind_last + ">"
-    # bind_shortcut = bind_last # Just return the actual character.
-    menu_shortcut = menu_head + menu_last
 else:
     bind_shortcut = "<" + bind_head + bind_last + ">"
-    menu_shortcut = menu_head + menu_last
+    
 #@nonl
 #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
 #@-node:ekr.20031218072017.2098:canonicalizeShortcut
@@ -7895,9 +7988,10 @@ def prettyPrintKey (self,key):
     
     '''Print a shortcut in a pleasing way.'''
     
-    s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+    return self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
     
-    return len(s) == 1 and 'Key+' + s or s
+    # s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+    # return len(s) == 1 and 'Key+' + s or s
 #@nonl
 #@-node:ekr.20051122104219:prettyPrintKey
 #@+node:ekr.20060121101953:Dispatching
@@ -7916,7 +8010,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
     w = event and event.widget
-    state = event and event.state
+    state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
@@ -7976,7 +8070,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+        ### if commandName.startswith('leoCallback') or 
+        if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
             # k.simulateCommand uses k.funcReturn.
@@ -8036,7 +8131,6 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
         k.endCommand(event,commandName)
     
     return func
@@ -8232,6 +8326,8 @@ def bindShortcut (self,pane,shortcut,command,commandName):
         # return
 
     if command.__name__ == 'leoCallback':
+        
+        g.trace('oops: should not happen: leoCallback used')
         # Get the function wrapped by *this* leoCallback function.
         func = k.leoCallbackDict.get(command)
         commandName = k.inverseCommandsDict.get(func.__name__)
@@ -8519,7 +8615,7 @@ def keyboardQuit (self,event):
 #@nonl
 #@-node:ekr.20050920085536.63:keyboardQuit
 #@+node:ekr.20031218072017.2886:editHeadline
-def editHeadline(self):
+def editHeadline (self,event=None):
     
     c = self ; k = c.keyHandler ; tree = c.frame.tree
     
@@ -8775,9 +8871,9 @@ def createPermanentBindings (self):
     canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
     canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
     
-    def headKeyCallback (event,self=self):
-        return self.c.keyHandler.masterCommand(event,
-            func=None,stroke='<Key>',commandName=None)
+    # def headKeyCallback (event,self=self):
+        # return self.c.keyHandler.masterCommand(event,
+            # func=None,stroke='<Key>',commandName=None)
 
     if self.useBindtags: # Create a dummy widget to hold all bindings.
         t = self.bindingWidget

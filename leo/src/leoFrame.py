@@ -472,29 +472,29 @@ class leoFrame:
     def OnCut   (self,event=None): self.oops()
     def OnPaste (self,event=None): self.oops()
     
-    def OnCutFromMenu  (self):     self.oops()
-    def OnCopyFromMenu (self):     self.oops()
-    def OnPasteFromMenu (self):    self.oops()
+    def OnCutFromMenu  (self,event=None):     self.oops()
+    def OnCopyFromMenu (self,event=None):     self.oops()
+    def OnPasteFromMenu (self,event=None):    self.oops()
     
-    def copyText  (self): self.oops()
-    def cutText   (self): self.oops()
-    def pasteText (self): self.oops()
+    def copyText  (self,event=None): self.oops()
+    def cutText   (self,event=None): self.oops()
+    def pasteText (self,event=None): self.oops()
     
-    def abortEditLabelCommand (self): self.oops()
-    def endEditLabelCommand (self):   self.oops()
-    def insertHeadlineTime (self):    self.oops()
+    def abortEditLabelCommand (self,event=None): self.oops()
+    def endEditLabelCommand   (self,event=None): self.oops()
+    def insertHeadlineTime    (self,event=None): self.oops()
     
     # In the Window menu...
-    def cascade(self):              self.oops()
-    def equalSizedPanes(self):      self.oops()
-    def hideLogWindow (self):       self.oops()
-    def minimizeAll(self):          self.oops()
-    def resizeToScreen(self):       self.oops()
-    def toggleActivePane(self):     self.oops()
-    def toggleSplitDirection(self): self.oops()
+    def cascade              (self,event=None): self.oops()
+    def equalSizedPanes      (self,event=None): self.oops()
+    def hideLogWindow        (self,event=None): self.oops()
+    def minimizeAll          (self,event=None): self.oops()
+    def resizeToScreen       (self,event=None): self.oops()
+    def toggleActivePane     (self,event=None): self.oops()
+    def toggleSplitDirection (self,event=None): self.oops()
     
     # In help menu...
-    def leoHelp (self): self.oops()
+    def leoHelp (self,event=None): self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3681: gui-dependent commands
     #@+node:ekr.20031218072017.3682:bringToFront, deiconify, lift & update

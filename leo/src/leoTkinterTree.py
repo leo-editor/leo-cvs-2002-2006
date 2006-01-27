@@ -313,9 +313,9 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
         canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
         
-        def headKeyCallback (event,self=self):
-            return self.c.keyHandler.masterCommand(event,
-                func=None,stroke='<Key>',commandName=None)
+        # def headKeyCallback (event,self=self):
+            # return self.c.keyHandler.masterCommand(event,
+                # func=None,stroke='<Key>',commandName=None)
     
         if self.useBindtags: # Create a dummy widget to hold all bindings.
             t = self.bindingWidget

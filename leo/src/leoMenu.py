@@ -1420,14 +1420,14 @@ class leoMenu:
             return None,None
         s = shortcut.strip().lower()
         
-        has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
+        has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0
         has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
         has_alt   = s.find("alt") >= 0
         has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
         if sys.platform == "darwin":
             if has_ctrl and not has_cmd:
                 has_cmd = True ; has_ctrl = False
-            if has_alt and not has_ctrl: # 9/14/04
+            if has_alt and not has_ctrl:
                 has_ctrl = True ; has_alt = False
         #@    << set the last field, preserving case >>
         #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
@@ -1568,7 +1568,7 @@ class leoMenu:
             bind_head = bind_head + "Control-"
             menu_head = menu_head + "Ctrl+"
             
-        if has_cmd: # 11/18/03
+        if has_cmd:
             bind_head = bind_head + "Command-"
             menu_head = menu_head + "Command+"
             
@@ -1577,16 +1577,18 @@ class leoMenu:
             if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
                 bind_head = bind_head + "Shift-"
         
-        # New in 4.4b2:
+        # New in 4.4a6: Only the menu_shortcut will exist.
+        if not menu_head:
+            menu_shortcut = 'Key+%s' % menu_last
+        else:
+            menu_shortcut = menu_head + menu_last
+            
+        # To be removed in 4.4a6
         if not bind_head and bind_last and len(bind_last) == 1:
             bind_shortcut = '<Key-%s>' % bind_last
-            # g.trace(bind_shortcut)
-            "<" + bind_head + bind_last + ">"
-            # bind_shortcut = bind_last # Just return the actual character.
-            menu_shortcut = menu_head + menu_last
         else:
             bind_shortcut = "<" + bind_head + bind_last + ">"
-            menu_shortcut = menu_head + menu_last
+            
         #@nonl
         #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
         #@nl
@@ -1603,7 +1605,6 @@ class leoMenu:
         keysym = event.keysym or ''
         
         s = []
-        
         shift = (state & 1) == 1
         caps  = (state & 2) == 2
         ctrl  = (state & 4) == 4

@@ -4291,12 +4291,7 @@ class leoCommandsClass (baseEditCommandsClass):
         keys = d.keys() ; keys.sort()
         for name in keys:
             f = d.get(name)
-            # Warning: k.createInverseCommandsDict uses the name of this callback.
-            def leoCallback (event,f=f,self=self,name=name):
-                # g.trace(f,name)
-                return self.c.doCommand(f,name)
-            d2 [name] = leoCallback
-            k.leoCallbackDict [leoCallback] = f
+            d2 [name] = f
             k.inverseCommandsDict [f.__name__] = name
             # g.trace('leoCommands %24s = %s' % (f.__name__,name))
             
@@ -5920,7 +5915,7 @@ class findTab (leoFind.leoFind):
     #@+node:ekr.20051020120306.19:find.init
     def init (self,c):
         
-        g.trace('Find Tab')
+        # g.trace('Find Tab')
     
         # N.B.: separate c.ivars are much more convenient than a dict.
         for key in self.intKeys:

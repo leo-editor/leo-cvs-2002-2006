@@ -1722,7 +1722,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3979:Gui-dependent commands
     #@+node:ekr.20031218072017.3980:Edit Menu...
     #@+node:ekr.20031218072017.3981:abortEditLabelCommand
-    def abortEditLabelCommand (self):
+    def abortEditLabelCommand (self,event=None):
         
         frame = self ; c = frame.c ; tree = frame.tree
         p = c.currentPosition() ; w = p.edit_widget()
@@ -1748,7 +1748,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3981:abortEditLabelCommand
     #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
     #@+node:ekr.20051011072903.2:copyText
-    def copyText (self):
+    def copyText (self,event=None):
         
         '''Copy the selected text from the widget to the clipboard.'''
         
@@ -1765,7 +1765,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@nonl
     #@-node:ekr.20051011072903.2:copyText
     #@+node:ekr.20051011072049.2:cutText
-    def cutText (self):
+    def cutText (self,event=None):
         
         '''Invoked from the mini-buffer and from shortcuts.'''
         
@@ -1795,7 +1795,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@nonl
     #@-node:ekr.20051011072049.2:cutText
     #@+node:ekr.20051011072903.5:pasteText
-    def pasteText (self):
+    def pasteText (self,event=None):
     
         '''Paste the clipboard into a widget.'''
     
@@ -1834,7 +1834,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20051011072903.5:pasteText
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
-    def endEditLabelCommand (self):
+    def endEditLabelCommand (self,event=None):
     
         frame = self ; c = frame.c
         
@@ -1853,7 +1853,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@nonl
     #@-node:ekr.20031218072017.3982:endEditLabelCommand
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
-    def insertHeadlineTime (self):
+    def insertHeadlineTime (self,event=None):
     
         frame = self ; c = frame.c ; p = c.currentPosition()
         
@@ -1880,19 +1880,19 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3980:Edit Menu...
     #@+node:ekr.20031218072017.3984:Window Menu...
     #@+node:ekr.20031218072017.3985:toggleActivePane
-    def toggleActivePane(self):
+    def toggleActivePane (self,event=None):
         
         frame = self
     
         # Toggle the focus immediately.
-        if g.app.gui.get_focus(self) == frame.bodyCtrl:
+        if g.app.gui.get_focus(frame) == frame.bodyCtrl:
             frame.treeWantsFocus()
         else:
             frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3985:toggleActivePane
     #@+node:ekr.20031218072017.3986:cascade
-    def cascade(self):
+    def cascade (self,event=None):
     
         x,y,delta = 10,10,10
         for frame in g.app.windowList:
@@ -1915,20 +1915,20 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 delta += 10
     #@-node:ekr.20031218072017.3986:cascade
     #@+node:ekr.20031218072017.3987:equalSizedPanes
-    def equalSizedPanes(self):
+    def equalSizedPanes (self,event=None):
     
         frame = self
         frame.resizePanesToRatio(0.5,frame.secondary_ratio)
     #@-node:ekr.20031218072017.3987:equalSizedPanes
     #@+node:ekr.20031218072017.3988:hideLogWindow
-    def hideLogWindow (self):
+    def hideLogWindow (self,event=None):
         
         frame = self
         frame.divideLeoSplitter2(0.99, not frame.splitVerticalFlag)
     #@nonl
     #@-node:ekr.20031218072017.3988:hideLogWindow
     #@+node:ekr.20031218072017.3989:minimizeAll
-    def minimizeAll(self):
+    def minimizeAll (self,event=None):
     
         
         self.minimize(g.app.pythonFrame)
@@ -1936,7 +1936,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             self.minimize(frame)
             self.minimize(frame.findPanel)
         
-    def minimize(self, frame):
+    def minimize(self,frame):
     
         if frame and frame.top.state() == "normal":
             frame.top.iconify()
@@ -1945,7 +1945,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3990:toggleSplitDirection (tkFrame)
     # The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
     
-    def toggleSplitDirection(self):
+    def toggleSplitDirection (self,event=None):
         
         # Switch directions.
         c = self.c
@@ -2033,7 +2033,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20041221122440.2:toggleTkSplitDirection
     #@-node:ekr.20031218072017.3990:toggleSplitDirection (tkFrame)
     #@+node:EKR.20040422130619:resizeToScreen
-    def resizeToScreen (self):
+    def resizeToScreen (self,event=None):
         
         top = self.top
         
@@ -2054,7 +2054,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3984:Window Menu...
     #@+node:ekr.20031218072017.3991:Help Menu...
     #@+node:ekr.20031218072017.3992:leoHelp
-    def leoHelp (self):
+    def leoHelp (self,event=None):
         
         frame = self ; c = frame.c
         
@@ -3189,27 +3189,27 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
     #@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-    def setFontFromConfig (self,logCtrl = None):
+    def setFontFromConfig (self,logCtrl=None):
     
         c = self.c
-        
+    
         if not logCtrl: logCtrl = self.logCtrl
     
         font = c.config.getFontFromParams(
             "log_text_font_family", "log_text_font_size",
-            "log_text_font_slant",  "log_text_font_weight",
+            "log_text_font_slant", "log_text_font_weight",
             c.config.defaultLogFontSize)
     
         self.fontRef = font # ESSENTIAL: retain a link to font.
         logCtrl.configure(font=font)
-        
+    
         # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
     
         bg = c.config.getColor("log_text_background_color")
         if bg:
             try: logCtrl.configure(bg=bg)
             except: pass
-        
+    
         fg = c.config.getColor("log_text_foreground_color")
         if fg:
             try: logCtrl.configure(fg=fg)

@@ -344,7 +344,7 @@ class leoFind:
     
     def setup_command(self):
         
-        g.trace('leoFind')
+        # g.trace('leoFind')
     
         if 0: # We _must_ retain the editing status for incremental searches!
             self.c.endEditing()
