@@ -343,6 +343,8 @@ class leoFind:
     # Initializes a search when a command is invoked from the menu.
     
     def setup_command(self):
+        
+        g.trace('leoFind')
     
         if 0: # We _must_ retain the editing status for incremental searches!
             self.c.endEditing()

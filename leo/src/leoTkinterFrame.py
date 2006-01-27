@@ -2133,12 +2133,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.set_focus(w)
     
     def minibufferWantsFocus(self):
-        # Important! We must preserve body selection!
-        if 1:
-            self.bodyWantsFocus()
-        else:
-            w = self.c.miniBufferWidget
-            self.set_focus(w)
+        # Let the key handler figure out what to do.
+        self.c.k.minibufferWantsFocus()
     
     def treeWantsFocus(self):
         w = self.tree and self.tree.canvas

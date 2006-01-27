@@ -373,21 +373,23 @@ class keyHandlerClass:
         
         '''Make a binding for the Open With command.'''
         
-        k = self ; c = k.c ;
+        k = self ; c = k.c
         
-        bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
-        
-        # g.trace(bind_shortcut,name,data)
-    
         # The first parameter must be event, and it must default to None.
         def openWithCallback(event=None,self=self,data=data):
             __pychecker__ = '--no-argsused' # event must be present.
             return self.c.openWith(data=data)
-    
-        def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
-            return k.masterCommand(event,func,stroke)
-                
-        return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
+        
+        if c.simple_bindings:
+            return k.bindKey('all',shortcut,openWithCallback,'open-with')
+        else:
+        
+            bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
+        
+            def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
+                return k.masterCommand(event,func,stroke)
+                    
+            return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
     #@+node:ekr.20051006125633.1:bindShortcut
@@ -588,10 +590,11 @@ class keyHandlerClass:
         k.makeSpecialBindings()
         k.addModeCommands() 
         k.makeBindingsFromCommandsDict()
+        if k.useTextWidget:
+            k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
         k.checkBindings()
         
         if 0:
-        
             # Print the keysym_num dicts.
             d = k.keysym_numberInverseDict
             keys = d.keys() ; keys.sort()
@@ -725,6 +728,7 @@ class keyHandlerClass:
         keysym = event and event.keysym or ''
         ch = event and event.char or ''
         w = event and event.widget
+        state = event and event.state
         k.func = func
         k.funcReturn = None # For unit testing.
         if commandName is None:
@@ -732,13 +736,14 @@ class keyHandlerClass:
         special = keysym in (
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func is not None or ch != '' # or stroke != '<Key>'
+        interesting = not special
         
         if trace and interesting:
             g.trace(
-                # 'c',c,
-                'stroke:',stroke,'ch:',repr(ch),'keysym:',repr(keysym),
-                'widget:',w and g.app.gui.widget_name(w),'func',func,
-                g.callers())
+                'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
+                'stroke2:',c.frame.menu.convertEventToStroke(event),
+                'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
+            )
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
     
@@ -888,7 +893,7 @@ class keyHandlerClass:
         k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
         keysym = (event and event.keysym) or ''
         ch = (event and event.char) or ''
-        # g.trace('state',state,keysym)
+        g.trace('state',state,keysym)
         if state == 0:
             k.completionFocusWidget = g.app.gui.get_focus(c.frame)
             k.setState('full-command',1,handler=k.fullCommand) 
@@ -1896,6 +1901,18 @@ class keyHandlerClass:
     # influence another.
     #@-at
     #@nonl
+    #@+node:ekr.20060125175103:k.minibufferWantsFocus
+    def minibufferWantsFocus(self):
+        
+        c = self.c
+        
+        if self.useTextWidget:
+            # Important! We must preserve body selection!
+            c.frame.widgetWantsFocus(c.miniBufferWidget)
+        else:
+            c.frame.bodyWantsFocus()
+    #@nonl
+    #@-node:ekr.20060125175103:k.minibufferWantsFocus
     #@+node:ekr.20051023132350:getLabel
     def getLabel (self,ignorePrompt=False):
         
@@ -1906,7 +1923,8 @@ class keyHandlerClass:
             w.update_idletasks()
             s = w and w.get('1.0','end')
             # Remove the cursed Tk newline.
-            if s.endswith('\n') or s.endswith('\r'): s = s[:-1]
+            while s.endswith('\n') or s.endswith('\r'):
+                s = s[:-1]
             # g.trace(repr(s))
         else:
             s = k.svar and k.svar.get()
@@ -1949,8 +1967,9 @@ class keyHandlerClass:
     
         if self.useTextWidget:
             k.c.frame.minibufferWantsFocus()
-            w.update_idletasks()
-            w.delete('1.0','end') ; w.insert('1.0',s)
+            # w.update_idletasks()
+            w.delete('1.0','end')
+            w.insert('1.0',s)
         else:
             if k.svar: k.svar.set(s)
     

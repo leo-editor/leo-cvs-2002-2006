@@ -1594,6 +1594,37 @@ class leoMenu:
         return bind_shortcut,menu_shortcut
     #@nonl
     #@-node:ekr.20031218072017.2098:canonicalizeShortcut
+    #@+node:ekr.20060126163152.2:convertEventToStroke
+    def convertEventToStroke (self,event):
+        
+        c = self.c ; k = c.k
+        if event is None: return ''
+        state = event.state
+        keysym = event.keysym or ''
+        
+        s = []
+        
+        shift = (state & 1) == 1
+        caps  = (state & 2) == 2
+        ctrl  = (state & 4) == 4
+        alt   = (state & 0x20000) == 0x20000
+        key   = not alt and not ctrl and not shift
+        
+        for z,val in (
+            # (key, 'Key+'),
+            (alt, 'Alt+'),
+            (ctrl,'Ctrl+'),
+            (shift,'Shift'),
+        ):
+            if z: s.append(val)
+            
+        s.append(keysym)
+        s = ''.join(s)
+        s = k.prettyPrintKey(s)
+        g.trace(s)
+        return s
+    #@nonl
+    #@-node:ekr.20060126163152.2:convertEventToStroke
     #@+node:ekr.20051022044950:computeOldStyleShortcutKey
     def computeOldStyleShortcutKey (self,s):
         

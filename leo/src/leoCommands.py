@@ -76,7 +76,7 @@ class baseCommands:
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()
     
-        self.useTextMinibuffer = False
+        self.useTextMinibuffer = c.config.getBool('useTextMinibuffer')
         self.showMinibuffer = c.config.getBool('useMinibuffer')
         self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
     
@@ -112,6 +112,7 @@ class baseCommands:
         self.commandsDict = None
         self.keyHandler = None
         self.miniBufferWidget = None
+        self.simple_bindings = False # Set later.
         
         # per-document info...
         self.disableCommandsMessage = ''
@@ -186,6 +187,8 @@ class baseCommands:
         c = self ; p = c.currentPosition()
         c.miniBufferWidget = c.frame.miniBufferWidget
         # g.trace('Commands',c.fileName()) # g.callers())
+        
+        c.simple_bindings = c.config.getBool('simple_bindings')
         
         # Create a keyHandler even if there is no miniBuffer.
         c.keyHandler = c.k = k = leoKeys.keyHandlerClass(c,

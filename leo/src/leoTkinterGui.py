@@ -633,7 +633,11 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4078:moveIndexForward & moveIndexToNextLine
     #@+node:ekr.20031218072017.4079:compareIndices
     def compareIndices (self,t,n1,rel,n2):
-        return t.compare(n1,rel,n2)
+        
+        try:
+            return t.compare(n1,rel,n2)
+        except Exception:
+            return False
     #@nonl
     #@-node:ekr.20031218072017.4079:compareIndices
     #@+node:ekr.20031218072017.4080:getindex
@@ -648,22 +652,31 @@ class tkinterGui(leoGui.leoGui):
     #@+node:ekr.20031218072017.4081:Insert Point
     #@+node:ekr.20031218072017.4082:getInsertPoint
     def getInsertPoint(self,t):
-    
-        return t.index("insert")
+        
+        try:
+            return t.index("insert")
+        except Exception:
+            return '1.0'
     #@nonl
     #@-node:ekr.20031218072017.4082:getInsertPoint
     #@+node:ekr.20031218072017.4083:setInsertPoint
     def setInsertPoint (self,t,pos):
     
-        return t.mark_set("insert",pos)
+        try:
+            t.mark_set("insert",pos)
+        except Exception:
+            pass
     #@nonl
     #@-node:ekr.20031218072017.4083:setInsertPoint
     #@-node:ekr.20031218072017.4081:Insert Point
     #@+node:ekr.20031218072017.4084:Selection
     #@+node:ekr.20031218072017.4085:getSelectionRange (to be deleted?)
     def getSelectionRange (self,t):
-    
-        return t.tag_ranges("sel")
+        
+        try:
+            return t.tag_ranges("sel")
+        except Exception:
+            return 0,0
     #@nonl
     #@-node:ekr.20031218072017.4085:getSelectionRange (to be deleted?)
     #@+node:ekr.20051126125950:getSelectedText
@@ -725,19 +738,22 @@ class tkinterGui(leoGui.leoGui):
     
         if not start or not end:
             return
-    
-        if t.compare(start, ">", end):
-            start,end = end,start
             
-        t.tag_remove("sel","1.0",start)
-        t.tag_add("sel",start,end)
-        t.tag_remove("sel",end,"end")
-        
-        # New in 4.4a5: this logic ensures compatibility with previous code.
-        if insert == 'sel.end':
-            g.app.gui.setInsertPoint(t,end)
-        elif insert is not None:
-            g.app.gui.setInsertPoint(t,insert)
+        try:
+            if t.compare(start, ">", end):
+                start,end = end,start
+                
+            t.tag_remove("sel","1.0",start)
+            t.tag_add("sel",start,end)
+            t.tag_remove("sel",end,"end")
+            
+            # New in 4.4a5: this logic ensures compatibility with previous code.
+            if insert == 'sel.end':
+                g.app.gui.setInsertPoint(t,end)
+            elif insert is not None:
+                g.app.gui.setInsertPoint(t,insert)
+        except Exception:
+            pass
         
     setSelectionRange = setTextSelection
     #@nonl
@@ -748,7 +764,7 @@ class tkinterGui(leoGui.leoGui):
     def getAllText (self,t):
         
         """Return all the text of Tk.Text t converted to unicode."""
-        
+    
         s = t.get("1.0","end")
         if s is None:
             return u""

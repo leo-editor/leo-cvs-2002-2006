@@ -2,14 +2,14 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7897" clone_windows="0"/>
-<globals body_outline_ratio="0.452742123687">
-	<global_window_position top="48" left="272" height="857" width="869"/>
+<globals body_outline_ratio="0.58926487748">
+	<global_window_position top="42" left="379" height="857" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -46,6 +46,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20060124165505.1"><vh>Printing c elements</vh></v>
 <v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
@@ -229,8 +230,8 @@
 </v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 <v t="ekr.20060124165505"><vh>Printing commands</vh></v>
-<v t="ekr.20060124165505.1"><vh>Printing c elements</vh></v>
-<v t="ekr.20060125082644" a="V"><vh>Test show-status</vh></v>
+<v t="ekr.20060125082644"><vh>Test show-status</vh></v>
+<v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4408,5 +4409,8 @@ commands.sort()
 g.es(g.listToString(commands))
 </t>
 <t tx="ekr.20060125082644">c.k.simulateCommand('show-find-options')</t>
+<t tx="ekr.20060126161404">root = c.rootPosition()
+p.moveAfter(root)
+c.redraw()</t>
 </tnodes>
 </leo_file>

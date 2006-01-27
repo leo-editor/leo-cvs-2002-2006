@@ -5305,10 +5305,7 @@ class minibufferFind:
     #@    @+others
     #@+node:ekr.20060123125317.2: ctor (minibufferFind)
     def __init__(self,c,finder):
-        
     
-        # Init the base class...
-        # leoTkinterFind.leoTkinterFind.__init__(self,c,title='Minibuffer Find',show=False)
         self.c = c
         self.k = c.k
         self.finder = finder
@@ -5467,6 +5464,7 @@ class minibufferFind:
         self.setupSearchPattern(pattern)
     
         self.finder.p = self.c.currentPosition()
+        self.finder.v = self.finder.p.v
     
         # This handles the reverse option.
         self.finder.findNextCommand()
@@ -5921,6 +5919,8 @@ class findTab (leoFind.leoFind):
     #@-node:ekr.20051020120306.13:createFrame (findTab)
     #@+node:ekr.20051020120306.19:find.init
     def init (self,c):
+        
+        g.trace('Find Tab')
     
         # N.B.: separate c.ivars are much more convenient than a dict.
         for key in self.intKeys:
@@ -5982,6 +5982,9 @@ class findTab (leoFind.leoFind):
     def update_ivars (self):
         
         """Called just before doing a find to update ivars from the find panel."""
+    
+        self.p = self.c.currentPosition()
+        self.v = self.p.v
     
         for key in self.intKeys:
             val = self.dict[key].get()
@@ -6280,8 +6283,8 @@ class searchCommandsClass (baseEditCommandsClass):
     
         if show:
             self.findTabHandler.bringToFront()
-        else:
-             log.deleteTab(tabName)
+        # else:
+             # log.deleteTab(tabName)
     #@nonl
     #@-node:ekr.20051020120306:openFindTab
     #@+node:ekr.20051022212004:Find Tab commands

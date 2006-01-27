@@ -2139,7 +2139,7 @@ def clearAllIvars (o):
 #@+node:ekr.20031218072017.1590:collectGarbage
 def collectGarbage(message=None):
     
-    if not debugGC: return
+    if not g.app.trace_gc: return
     
     if not message:
         message = g.callerName(n=2)
@@ -2150,31 +2150,43 @@ def collectGarbage(message=None):
     if 0:
         g.printGc(message)
     
-    if 1: # This isn't needed unless we want to look at individual objects.
+    #@    << make a list of the new objects >>
+    #@+node:ekr.20031218072017.1591:<< make a list of the new objects >>
+    # WARNING: the id trick is not proper because newly allocated objects can have the same address as old objets.
     
-        #@        << make a list of the new objects >>
-        #@+node:ekr.20031218072017.1591:<< make a list of the new objects >>
-        # WARNING: the id trick is not proper because newly allocated objects can have the same address as old objets.
+    global lastObjectsDict
+    objects = gc.get_objects()
+    
+    newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+    
+    lastObjectsDict = {}
+    for o in objects:
+        lastObjectsDict[id(o)]=o
+    
+    if g.app.trace_gc_verbose:
+        i = 0 ; n = len(newObjects)
+        while i < 100 and i < n:
+            o = newObjects[i]
+            if type(o) == type({}):
+                print 'dict keys:', len(o.keys())
+            elif type(o) in (type(()),type([])):
+                print 'list or tuple:', len(o)
+            else:
+                print o
+            i += 1
+        print '-' * 40, 
         
-        global lastObjectsDict
-        objects = gc.get_objects()
-        
-        newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
-        
-        lastObjectsDict = {}
-        for o in objects:
-            lastObjectsDict[id(o)]=o
-        #@nonl
-        #@-node:ekr.20031218072017.1591:<< make a list of the new objects >>
-        #@nl
-        print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
+    print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
+    #@nonl
+    #@-node:ekr.20031218072017.1591:<< make a list of the new objects >>
+    #@nl
 #@-node:ekr.20031218072017.1590:collectGarbage
 #@+node:ekr.20031218072017.1592:printGc
 def printGc(message=None,onlyPrintChanges=False):
     
     __pychecker__ = '--no-argsused' # onlyPrintChanges not used.
     
-    if not debugGC: return None
+    if not g.app.trace_gc: return None
     
     if not message:
         message = g.callerName(n=2)
