@@ -986,24 +986,25 @@ class baseUndoer:
         frame.menu.enableMenu(menu,u.redoMenuLabel,u.canRedo())
         frame.menu.enableMenu(menu,u.undoMenuLabel,u.canUndo())
     #@-node:ekr.20031218072017.3611:enableMenuItems
-    #@+node:ekr.20050525151217:getMark & rollbackToMark
-    def getMark (self):
+    #@+node:ekr.20050525151217:getMark & rollbackToMark (no longer used)
+    if 0:
+        def getMark (self):
         
-        __pychecker__ = '--no-classattr' # self.bead does, in fact, exist.
+            __pychecker__ = '--no-classattr' # self.bead does, in fact, exist.
+            
+            return self.bead
+            
+        def rollbackToMark (self,n):
+            
+            u = self
         
-        return self.bead
-        
-    def rollbackToMark (self,n):
-        
-        u = self
-    
-        u.bead = n
-        u.beads = u.beads[:n+1]
-        u.setUndoTypes()
-        
-    rollBackToMark = rollbackToMark
+            u.bead = n
+            u.beads = u.beads[:n+1]
+            u.setUndoTypes()
+            
+        rollBackToMark = rollbackToMark
     #@nonl
-    #@-node:ekr.20050525151217:getMark & rollbackToMark
+    #@-node:ekr.20050525151217:getMark & rollbackToMark (no longer used)
     #@+node:ekr.20031218072017.1490:setUndoTypingParams
     #@+at 
     #@nonl

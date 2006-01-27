@@ -854,7 +854,8 @@ class reformatParagraphTest:
         c = self.c ; p = self.p
         u = self.u = testUtils(c)
         
-        self.undoMark = c.undoer.getMark()
+        # self.undoMark = c.undoer.getMark()
+        c.undoer.clearUndoState()
     
         assert(p.exists(c))
         self.before = u.findNodeInTree(p,"before")
@@ -882,7 +883,8 @@ class reformatParagraphTest:
             while tempNode.firstChild():
                 tempNode.firstChild().doDelete()
             
-        c.undoer.rollbackToMark(self.undoMark)
+        # c.undoer.rollbackToMark(self.undoMark)
+        c.undoer.clearUndoState()
     #@nonl
     #@-node:ekr.20051104075904.56:tearDown
     #@-others
@@ -1136,7 +1138,8 @@ class editBodyTestCase(unittest.TestCase):
         
         if not g.app.enableUnitTest: return
         
-        self.undoMark = c.undoer.getMark()
+        # self.undoMark = c.undoer.getMark()
+        c.undoer.clearUndoState()
     
         # Delete all children of temp node.
         while tempNode.firstChild():
@@ -1178,7 +1181,8 @@ class editBodyTestCase(unittest.TestCase):
             
         tempNode.clearDirty()
         
-        c.undoer.rollbackToMark(self.undoMark)
+        # c.undoer.rollbackToMark(self.undoMark)
+        c.undoer.clearUndoState()
     #@nonl
     #@-node:ekr.20051104075904.76:tearDown
     #@-others

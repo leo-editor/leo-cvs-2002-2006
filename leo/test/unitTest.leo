@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8614" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8619" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
 	<global_window_position top="45" left="497" height="781" width="699"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -970,6 +970,41 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins</vh>
+<v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
+<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
+<v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050218015346.12"><vh>__init__</vh></v>
+<v t="ekr.20050218015346.13"><vh> fail</vh></v>
+<v t="ekr.20050218015346.16"><vh>runTest</vh></v>
+<v t="ekr.20050218015346.17"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050218015346.18"><vh>addTestRoutinesInPluginToSuite</vh></v>
+<v t="ekr.20050218015346.19"><vh>findTestsInModule</vh>
+<v t="ekr.20050218015346.20"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
+<v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
+</v>
+<v t="ekr.20050120095423.11"><vh>@suite plugins tests</vh>
+<v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
+<v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
+<v t="ekr.20050120095423.14"><vh>__init__</vh></v>
+<v t="ekr.20050120095423.15"><vh>fail</vh></v>
+<v t="ekr.20050120095423.16"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.17"><vh>setUp</vh></v>
+<v t="ekr.20050120095423.18"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
+</v>
+<v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
+<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
+<v t="ekr.20050120095423.8"><vh>__init__</vh></v>
+<v t="ekr.20050120095423.9"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
+</v>
+</v>
+</v>
 <v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304" annotate="7d71002e"><vh>@suite run all test routines (runs some tests twice!)</vh>
@@ -1331,9 +1366,10 @@
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
-<v t="ekr.20050408084135" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20050408084135" a="M" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
 <v t="ekr.20040712101754.37" annotate="7d71002e"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38" annotate="7d71002e"><vh>editBodyTests</vh>
+<v t="ekr.20060127120604"><vh>tempNode</vh></v>
 <v t="ekr.20050518070540" annotate="7d71002e"><vh>extract test2</vh>
 <v t="ekr.20050518070540.1"><vh>before</vh></v>
 <v t="ekr.20050518070545"><vh>after</vh></v>
@@ -1393,21 +1429,6 @@
 </v>
 <v t="ekr.20050518070927.4"><vh>selection</vh></v>
 </v>
-<v t="ekr.20050417202052" annotate="7d71002e"><vh>extractSectionNames</vh>
-<v t="ekr.20050417202052.1"><vh>before</vh></v>
-<v t="ekr.20050417202112"><vh>after</vh>
-<v t="ekr.20050417202112.1"><vh>&lt;&lt; section 1&gt;&gt;</vh></v>
-<v t="ekr.20050417202112.2"><vh>&lt;&lt; section 2&gt;&gt;</vh></v>
-<v t="ekr.20050417202112.3"><vh>&lt;&lt; section 3 &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050417202243"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.45" annotate="7d71002e"><vh>indentBody</vh>
-<v t="ekr.20040712101754.46"><vh>before</vh></v>
-<v t="ekr.20040712101754.47"><vh>after</vh></v>
-<v t="ekr.20040712101754.48"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040712101754.39" annotate="7d71002e"><vh>tempNode</vh></v>
 </v>
 </v>
 <v t="ekr.20050417102057" annotate="7d71002e"><vh>Reformat Paragraph tests</vh>
@@ -1581,46 +1602,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins</vh>
-<v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
-<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
-<v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050218015346.12"><vh>__init__</vh></v>
-<v t="ekr.20050218015346.13"><vh> fail</vh></v>
-<v t="ekr.20050218015346.16"><vh>runTest</vh></v>
-<v t="ekr.20050218015346.17"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050218015346.18"><vh>addTestRoutinesInPluginToSuite</vh></v>
-<v t="ekr.20050218015346.19"><vh>findTestsInModule</vh>
-<v t="ekr.20050218015346.20"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
-<v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
-</v>
-<v t="ekr.20050120095423.11"><vh>@suite plugins tests</vh>
-<v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
-<v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
-<v t="ekr.20050120095423.14"><vh>__init__</vh></v>
-<v t="ekr.20050120095423.15"><vh>fail</vh></v>
-<v t="ekr.20050120095423.16"><vh>runTest</vh></v>
-<v t="ekr.20050120095423.17"><vh>setUp</vh></v>
-<v t="ekr.20050120095423.18"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
-</v>
-<v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
-<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
-<v t="ekr.20050120095423.8"><vh>__init__</vh></v>
-<v t="ekr.20050120095423.9"><vh>runTest</vh></v>
-<v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20051107115231" annotate="7d71002e"><vh>Unit tests for Redraws</vh>
 <v t="ekr.20051122095426" annotate="7d71002e"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
 <v t="ekr.20051107115231.1" annotate="7d71002e"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051216171321" annotate="7d71002e"><vh>Test headline abc</vh></v>
-<v t="ekr.20051109034758" annotate="7d71002e"><vh>pasted node</vh></v>
 <v t="ekr.20051107115231.3" annotate="7d71002e"><vh>Reference</vh>
 <v t="ekr.20051107115231.4"><vh>manufactureKeyPressForCommandName</vh></v>
 <v t="ekr.20051107115231.5"><vh>simulateCommand</vh></v>
@@ -1689,14 +1674,9 @@
 <v t="ekr.20051107115231.9" annotate="7d71002e"><vh>@test Select a node when file is first loaded</vh></v>
 <v t="ekr.20051107115231.10" annotate="7d71002e"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11" annotate="7d71002e"><vh>@test New command redraws the screen</vh></v>
-<v t="ekr.20051108063253" annotate="7d71002e"><vh>@test openWithFileName draws the screen at least once</vh></v>
-<v t="ekr.20051108063032" annotate="7d71002e"><vh>@test pasteNode draws the screen exactly once</vh>
-<v t="ekr.20051108063458.46"><vh>&lt;&lt; define s, the node to be pasted &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051216171321.1" annotate="7d71002e"><vh>pasted node</vh></v>
 <v t="ekr.20051107115231.29" annotate="7d71002e"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 </v>
-<v t="ekr.20051107115231.13" a="M" annotate="7d71002e"><vh>Typing and undo tests</vh>
+<v t="ekr.20051107115231.13" annotate="7d71002e"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14" annotate="7d71002e"><vh>@test return ends editing of headline</vh></v>
 <v t="ekr.20051107115231.15" annotate="7d71002e"><vh>@test editLabel selects entire headline</vh></v>
 <v t="ekr.20051107115231.16" annotate="7d71002e"><vh>@test paste at end of headline</vh></v>
@@ -1714,11 +1694,11 @@
 <v t="ekr.20051120110335" annotate="7d71002e"><vh>@test inserting a new node can be undone and redone</vh></v>
 <v t="ekr.20051125155134" annotate="7d71002e"><vh>@test inserting a new node draws the screen exactly once</vh></v>
 <v t="ekr.20051120115046" annotate="7d71002e"><vh>@test undoing insert node restores previous node's body text</vh></v>
-<v t="ekr.20051125165933" a="M" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
+<v t="ekr.20051125165933" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
 <v t="ekr.20051125170139" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 </v>
 <v t="ekr.20051108141141" annotate="7d71002e"><vh>Not ready yet</vh>
-<v t="ekr.20051107115231.19" a="M"><vh>@@test typing and undo in headline - with selection</vh></v>
+<v t="ekr.20051107115231.19"><vh>@@test typing and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.32"><vh>@@test plugins manager stays in front</vh></v>
 <v t="ekr.20051109091333"><vh>@@test deleting the last body character text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051107115231.31"><vh>@test return in minibuffer after tab</vh></v>
@@ -1902,18 +1882,6 @@ Each child node will in turn have two or more children:
 - an "after" node
 - an optional selection node containing two lines giving the selection range in Tk coordinates.
 - An optional insert node containing one line giving the insert point in Tk coordinates.</t>
-<t tx="ekr.20040712101754.39"></t>
-<t tx="ekr.20040712101754.45"></t>
-<t tx="ekr.20040712101754.46">line 1
-line 2
-line 3
-line 4</t>
-<t tx="ekr.20040712101754.47">line 1
-    line 2
-    line 3
-line 4</t>
-<t tx="ekr.20040712101754.48">2.0
-3.0 lineend - 1c</t>
 <t tx="ekr.20040712101754.49"></t>
 <t tx="ekr.20040712101754.50">line 1
     line 2
@@ -3665,7 +3633,7 @@ g.app.scriptDict['suite'] = suite</t>
     c.selectVnode(move)
     commandName = self.parent.headString()
     command = getattr(c,commandName)
-    command()
+    command(event)
 
     assert(u.compareOutlines(self.before,self.after,compareHeadlines=False))
     c.undoer.undo()
@@ -6031,26 +5999,6 @@ after</t>
 sec line 3</t>
 <t tx="ekr.20050417201845.4">2.0
 5.0 lineend -1c</t>
-<t tx="ekr.20050417202052"></t>
-<t tx="ekr.20050417202052.1">line1
-&lt;&lt; section 1&gt;&gt;
-if 1:
-    &lt;&lt; section 2&gt;&gt;
-line 2
-    &lt;&lt; section 3 &gt;&gt;
-line 3</t>
-<t tx="ekr.20050417202112">line1
-&lt;&lt; section 1&gt;&gt;
-if 1:
-    &lt;&lt; section 2&gt;&gt;
-line 2
-    &lt;&lt; section 3 &gt;&gt;
-line 3</t>
-<t tx="ekr.20050417202112.1"></t>
-<t tx="ekr.20050417202112.2"></t>
-<t tx="ekr.20050417202112.3"></t>
-<t tx="ekr.20050417202243">1.0
-7.0 lineend - 1c</t>
 <t tx="ekr.20050417202713"></t>
 <t tx="ekr.20050417202713.1">@language python
 
@@ -13785,10 +13733,11 @@ assert c.frame.tree.redrawCount &gt; n</t>
 k.simulateCommand('new')
 c2 = k.funcReturn
 try:
+    assert c2
     assert c and c != c2
     assert c2.frame.tree.redrawCount &gt; 0
 finally:
-    c2.close()</t>
+    if c2: c2.close()</t>
 <t tx="ekr.20051107115231.13"></t>
 <t tx="ekr.20051107115231.14">import leoTest ; u = leoTest.testUtils(c)
 
@@ -14120,28 +14069,6 @@ finally:
     if 1:
         pass</t>
 <t tx="ekr.20051107115231.34"></t>
-<t tx="ekr.20051108063032">c.redraw_now() # To make node visible
-&lt;&lt; define s, the node to be pasted &gt;&gt;
-n = c.frame.tree.redrawCount
-g.app.gui.replaceClipboardWith(s)
-c.pasteOutline()
-n2 = c.frame.tree.redrawCount
-try:
-    assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
-finally:
-    c.undoer.undo()
-    c.redraw_now()</t>
-<t tx="ekr.20051108063253">c.redraw_now() # To make node visible
-
-k = c.keyHandler
-fileName = g.os_path_join('..','scripts','scripts.leo')
-ok,frame2 = g.openWithFileName(fileName,c)
-try:
-    assert ok
-    assert frame2
-    assert frame2.tree.redrawCount &gt;= 1
-finally:
-    frame2.c.close()</t>
 <t tx="ekr.20051108063458"></t>
 <t tx="ekr.20051108063458.1">@
 
@@ -14498,21 +14425,8 @@ def moveIndexToNextLine(self,t,index):
 <t tx="ekr.20051108063458.45">def makeIndexVisible(self,t,index):
 
     return t.see(index)</t>
-<t tx="ekr.20051108063458.46">
-s = '''&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;?xml-stylesheet ekr_stylesheet?&gt;
-&lt;leo_file&gt;
-&lt;leo_header file_format="1" tnodes="1" max_tnode_index="1"/&gt;
-&lt;vnodes&gt;
-&lt;v t="ekr.20051108063253.1" a="TV"&gt;&lt;vh&gt;pasted node&lt;/vh&gt;&lt;/v&gt;
-&lt;/vnodes&gt;
-&lt;tnodes&gt;
-&lt;t tx="ekr.20051108063253.1"&gt;&lt;/t&gt;
-&lt;/tnodes&gt;
-&lt;/leo_file&gt;'''</t>
 <t tx="ekr.20051108140810"></t>
 <t tx="ekr.20051108141141"></t>
-<t tx="ekr.20051109034758"></t>
 <t tx="ekr.20051109091152">import leoTest ; u = leoTest.testUtils(c)
 
 h = 'Test headline abc'
@@ -14649,7 +14563,6 @@ finally:
 <t tx="ekr.20051202100844.1"></t>
 <t tx="ekr.20051202100844.2"></t>
 <t tx="ekr.20051216171321"></t>
-<t tx="ekr.20051216171321.1"></t>
 <t tx="ekr.20060106211922">n = g.app.positions
 assert c.isCurrentPosition(None) is False
 assert c.isCurrentPosition(p) is True
@@ -14658,5 +14571,6 @@ assert g.app.positions == n</t>
 assert c.isRootPosition(None) is False
 assert c.isRootPosition(p) is False
 assert g.app.positions == n</t>
+<t tx="ekr.20060127120604"></t>
 </tnodes>
 </leo_file>

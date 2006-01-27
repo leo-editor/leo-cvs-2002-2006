@@ -4,11 +4,158 @@
 
 #@+all
 #@+node:ekr.20050921094025:4.4 To do
-@nocolor
+#@+node:ekr.20060127100926:Add enable-gc, disable-gc, print-gc-stats commands
+Also use a dict of object types to create a summary of statistics.
 #@nonl
-#@+node:ekr.20060126163152:Insert headline must scroll the outline)
-#@-node:ekr.20060126163152:Insert headline must scroll the outline)
+#@-node:ekr.20060127100926:Add enable-gc, disable-gc, print-gc-stats commands
 #@+node:ekr.20060126163152.1:(Compute binding keystroke from key event)
+#@+node:ekr.20060127100038:To do: remove specialCallback hacks
+#@-node:ekr.20060127100038:To do: remove specialCallback hacks
+#@+node:ekr.20060127113243.1:Clicking (scrolling) in canvas can lose headline text
+def pushBeed (self
+#@nonl
+#@-node:ekr.20060127113243.1:Clicking (scrolling) in canvas can lose headline text
+#@+node:ekr.20051105155441:simulateCommand
+def simulateCommand (self,commandName):
+    
+    k = self ; c = k.c
+    
+    func = c.commandsDict.get(commandName)
+    
+    if func:
+        # g.trace(commandName,func.__name__)
+        stroke = None
+        ### if commandName.startswith('leoCallback') or 
+        if commandName.startswith('specialCallback'):
+            event = None # A legacy function.
+        else: # Create a dummy event as a signal.
+            event = g.bunch(keysym = '',char = '',widget = None)
+        k.masterCommand(event,func,stroke)
+        return k.funcReturn
+    else:
+        g.trace('no command for %s' % (commandName),color='red')
+        if g.app.unitTesting: raise AttributeError
+#@nonl
+#@-node:ekr.20051105155441:simulateCommand
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.keyHandler
+    
+    if g.app.unitTesting: return
+
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
+        menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
+        realLabel = self.getRealMenuName(label)
+        << set amp_index using rawKey and realLabel >>
+        realLabel = realLabel.replace("&","")
+        self.add_command(menu,label=realLabel,
+            accelerator= menu_shortcut or '',
+            command=menuCallback,underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+if minibufferCommand:
+    commandName = command
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        bunch = bunchList and bunchList[0]
+        accel = bunch and bunch.val
+    else:
+        g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    bunch = bunchList and bunchList[0]
+    accel = bunch and bunch.val
+    
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            bunch = bunchList and bunchList[0]
+            accel = bunch and bunch.val
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)
+    
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+if rawKey:
+    amp_index = rawKey.find("&")
+else:
+    amp_index = -1
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@+node:ekr.20051122104219:prettyPrintKey
+def prettyPrintKey (self,key):
+    
+    '''Print a shortcut in a pleasing way.'''
+    
+    return self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+    
+    # s = self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+    # return len(s) == 1 and 'Key+' + s or s
+#@nonl
+#@-node:ekr.20051122104219:prettyPrintKey
 #@+node:ekr.20050920085536.65:masterCommand & helpers
 def masterCommand (self,event,func,stroke,commandName=None):
 
@@ -24,7 +171,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
     w = event and event.widget
-    state = event and event.state
+    state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
@@ -84,7 +231,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+        ### if commandName.startswith('leoCallback') or 
+        if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
             # k.simulateCommand uses k.funcReturn.
@@ -144,7 +292,6 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
         k.endCommand(event,commandName)
     
     return func
@@ -197,14 +344,14 @@ def canonicalizeShortcut (self,shortcut):
         return None,None
     s = shortcut.strip().lower()
     
-    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
+    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0
     has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
     has_alt   = s.find("alt") >= 0
     has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
     if sys.platform == "darwin":
         if has_ctrl and not has_cmd:
             has_cmd = True ; has_ctrl = False
-        if has_alt and not has_ctrl: # 9/14/04
+        if has_alt and not has_ctrl:
             has_ctrl = True ; has_alt = False
     << set the last field, preserving case >>
     << canonicalize the last field >>
@@ -339,7 +486,7 @@ if has_ctrl:
     bind_head = bind_head + "Control-"
     menu_head = menu_head + "Ctrl+"
     
-if has_cmd: # 11/18/03
+if has_cmd:
     bind_head = bind_head + "Command-"
     menu_head = menu_head + "Command+"
     
@@ -348,16 +495,18 @@ if has_shift:
     if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
         bind_head = bind_head + "Shift-"
 
-# New in 4.4b2:
+# New in 4.4a6: Only the menu_shortcut will exist.
+if not menu_head:
+    menu_shortcut = 'Key+%s' % menu_last
+else:
+    menu_shortcut = menu_head + menu_last
+    
+# To be removed in 4.4a6
 if not bind_head and bind_last and len(bind_last) == 1:
     bind_shortcut = '<Key-%s>' % bind_last
-    # g.trace(bind_shortcut)
-    "<" + bind_head + bind_last + ">"
-    # bind_shortcut = bind_last # Just return the actual character.
-    menu_shortcut = menu_head + menu_last
 else:
     bind_shortcut = "<" + bind_head + bind_last + ">"
-    menu_shortcut = menu_head + menu_last
+    
 #@nonl
 #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
 #@-node:ekr.20031218072017.2098:canonicalizeShortcut
@@ -370,7 +519,6 @@ def convertEventToStroke (self,event):
     keysym = event.keysym or ''
     
     s = []
-    
     shift = (state & 1) == 1
     caps  = (state & 2) == 2
     ctrl  = (state & 4) == 4
@@ -392,7 +540,7 @@ def convertEventToStroke (self,event):
     return s
 #@nonl
 #@-node:ekr.20060126163152.2:convertEventToStroke
-#@+node:ekr.20060126171429:References to simple_bindings
+#@+node:ekr.20060126171429:References to c.simple_bindings
 #@+node:ekr.20051008135051.1:bindOpenWith
 def bindOpenWith (self,shortcut,name,data):
     
@@ -429,6 +577,8 @@ def bindShortcut (self,pane,shortcut,command,commandName):
         # return
 
     if command.__name__ == 'leoCallback':
+        
+        g.trace('oops: should not happen: leoCallback used')
         # Get the function wrapped by *this* leoCallback function.
         func = k.leoCallbackDict.get(command)
         commandName = k.inverseCommandsDict.get(func.__name__)
@@ -572,7 +722,7 @@ t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
 #@nonl
 #@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
-#@-node:ekr.20060126171429:References to simple_bindings
+#@-node:ekr.20060126171429:References to c.simple_bindings
 #@-node:ekr.20060126163152.1:(Compute binding keystroke from key event)
 #@+node:ekr.20060122183544:Improve search commands
 #@+node:ekr.20060124090814:To do
@@ -1630,7 +1780,7 @@ for text,boxKind,frame,callback in (
 #@+node:ekr.20051020120306.19:find.init
 def init (self,c):
     
-    g.trace('Find Tab')
+    # g.trace('Find Tab')
 
     # N.B.: separate c.ivars are much more convenient than a dict.
     for key in self.intKeys:
@@ -3280,7 +3430,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
     w = event and event.widget
-    state = event and event.state
+    state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
@@ -3340,7 +3490,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+        ### if commandName.startswith('leoCallback') or 
+        if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
             # k.simulateCommand uses k.funcReturn.
@@ -3400,7 +3551,6 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
         k.endCommand(event,commandName)
     
     return func
@@ -6418,7 +6568,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     keysym = event and event.keysym or ''
     ch = event and event.char or ''
     w = event and event.widget
-    state = event and event.state
+    state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
     if commandName is None:
@@ -6478,7 +6628,8 @@ def masterCommand (self,event,func,stroke,commandName=None):
 
     if func: # Func is an argument.
         if trace: g.trace('command',commandName)
-        if commandName.startswith('leoCallback') or commandName.startswith('specialCallback'):
+        ### if commandName.startswith('leoCallback') or 
+        if commandName.startswith('specialCallback'):
             # The callback function will call c.doCommand
             val = func(event)
             # k.simulateCommand uses k.funcReturn.
@@ -6538,7 +6689,6 @@ def callKeystrokeFunction (self,event):
     if func:
         func(event)
         commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
-        # forceFocus = func.__name__ != 'leoCallback'
         k.endCommand(event,commandName)
     
     return func
@@ -6588,6 +6738,8 @@ def bindShortcut (self,pane,shortcut,command,commandName):
         # return
 
     if command.__name__ == 'leoCallback':
+        
+        g.trace('oops: should not happen: leoCallback used')
         # Get the function wrapped by *this* leoCallback function.
         func = k.leoCallbackDict.get(command)
         commandName = k.inverseCommandsDict.get(func.__name__)
@@ -8709,7 +8861,7 @@ It's no good blaming Pmw or Idle or whatever, there needs to be a solid way of a
 #@nonl
 #@-node:ekr.20060111134004.1:Posting
 #@+node:ekr.20031218072017.2932:openPythonWindow (Dave Hein)
-def openPythonWindow(self):
+def openPythonWindow (self,event=None):
 
     if sys.platform == "linux2":
         << open idle in Linux >>
@@ -11376,7 +11528,7 @@ def tag (self,name,i,j):
 #@+node:ekr.20050313174347.4:In commands...
 #@+node:ekr.20031218072017.2884:Edit Body submenu
 #@+node:ekr.20031218072017.1704:convertAllBlanks
-def convertAllBlanks (self):
+def convertAllBlanks (self,event=None):
     
     c = self ; u = c.undoer ; undoType = 'Convert All Blanks'
     current = c.currentPosition()
@@ -11395,7 +11547,7 @@ def convertAllBlanks (self):
             # g.trace(p.headString(),tabWidth)
             innerUndoData = u.beforeChangeNodeContents(p)
             if p == current:
-                changed,dirtyVnodeList2 = c.convertBlanks()
+                changed,dirtyVnodeList2 = c.convertBlanks(event)
                 if changed:
                     count += 1
                     dirtyVnodeList.extend(dirtyVnodeList2)
@@ -11423,7 +11575,7 @@ def convertAllBlanks (self):
 #@nonl
 #@-node:ekr.20031218072017.1704:convertAllBlanks
 #@+node:ekr.20031218072017.1705:convertAllTabs
-def convertAllTabs (self):
+def convertAllTabs (self,event=None):
 
     c = self ; u = c.undoer ; undoType = 'Convert All Tabs'
     current = c.currentPosition()
@@ -11440,7 +11592,7 @@ def convertAllTabs (self):
         for p in current.self_and_subtree_iter():
             undoData = u.beforeChangeNodeContents(p)
             if p == current:
-                changed,dirtyVnodeList2 = self.convertTabs()
+                changed,dirtyVnodeList2 = self.convertTabs(event)
                 if changed:
                     count += 1
                     dirtyVnodeList.extend(dirtyVnodeList2)
@@ -11468,7 +11620,7 @@ def convertAllTabs (self):
 #@nonl
 #@-node:ekr.20031218072017.1705:convertAllTabs
 #@+node:ekr.20031218072017.1821:convertBlanks
-def convertBlanks (self):
+def convertBlanks (self,event=None):
 
     c = self ; undoType = 'Convert Blanks'
     
@@ -11499,7 +11651,7 @@ def convertBlanks (self):
 #@nonl
 #@-node:ekr.20031218072017.1821:convertBlanks
 #@+node:ekr.20031218072017.1822:convertTabs
-def convertTabs (self):
+def convertTabs (self,event=None):
 
     c = self ; undoType = 'Convert Tabs'
     
@@ -11551,7 +11703,7 @@ def createLastChildNode (self,parent,headline,body):
 #@nonl
 #@-node:ekr.20031218072017.1823:createLastChildNode
 #@+node:ekr.20031218072017.1824:dedentBody
-def dedentBody (self):
+def dedentBody (self,event=None):
     
     c = self ; undoType = 'Unindent' ; current = c.currentPosition()
     
@@ -11576,7 +11728,7 @@ def dedentBody (self):
 #@nonl
 #@-node:ekr.20031218072017.1824:dedentBody
 #@+node:ekr.20031218072017.1706:extract
-def extract(self):
+def extract (self,event=None):
 
     c = self ; u = c.undoer ; undoType = 'Extract'
     current = c.currentPosition()
@@ -11614,7 +11766,7 @@ def extract(self):
 #@nonl
 #@-node:ekr.20031218072017.1706:extract
 #@+node:ekr.20031218072017.1708:extractSection
-def extractSection(self):
+def extractSection (self,event=None):
 
     c = self ; u = c.undoer ; undoType = 'Extract Section'
     current = c.currentPosition()
@@ -11669,7 +11821,7 @@ if oops:
 #@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
 #@-node:ekr.20031218072017.1708:extractSection
 #@+node:ekr.20031218072017.1710:extractSectionNames
-def extractSectionNames(self):
+def extractSectionNames(self,event=None):
 
     c = self ; u = c.undoer ; undoType = 'Extract Section Names'
     body = c.frame.body ; current = c.currentPosition()
@@ -11721,7 +11873,7 @@ else:
 #@-node:ekr.20031218072017.1711:<< Find the next section name >>
 #@-node:ekr.20031218072017.1710:extractSectionNames
 #@+node:ekr.20031218072017.1825:findBoundParagraph
-def findBoundParagraph (self):
+def findBoundParagraph (self,event=None):
     
     c = self
     head,ins,tail = c.frame.body.getInsertLines()
@@ -11784,7 +11936,7 @@ else:
 #@-node:ekr.20031218072017.1826:<< trace head_lines, ins, tail_lines >>
 #@-node:ekr.20031218072017.1825:findBoundParagraph
 #@+node:ekr.20031218072017.1827:findMatchingBracket
-def findMatchingBracket (self):
+def findMatchingBracket (self,event=None):
     
     c = self ; body = c.frame.body
     
@@ -11877,7 +12029,7 @@ def getBodyLines (self,expandSelection=False):
 #@nonl
 #@-node:ekr.20031218072017.1829:getBodyLines
 #@+node:ekr.20031218072017.1830:indentBody
-def indentBody (self):
+def indentBody (self,event=None):
     
     '''The indent-region command indents each line of the selected body text,
     or each line of a node if there is no selected text. The @tabwidth directive
@@ -11907,7 +12059,7 @@ def indentBody (self):
 #@nonl
 #@-node:ekr.20031218072017.1830:indentBody
 #@+node:ekr.20031218072017.1831:insertBodyTime & allies
-def insertBodyTime (self):
+def insertBodyTime (self,event=None):
     
     c = self ; undoType = 'Insert Body Time'
     
@@ -11956,7 +12108,7 @@ def getTime (self,body=True):
 #@-node:ekr.20031218072017.1831:insertBodyTime & allies
 #@+node:ekr.20050312114529:insert/removeComments
 #@+node:ekr.20050312114529.1:addComments
-def addComments (self):
+def addComments (self,event=None):
 
     c = self ; undoType = 'Add Comments' ; p = c.currentPosition()
     
@@ -11993,7 +12145,7 @@ def addComments (self):
 #@nonl
 #@-node:ekr.20050312114529.1:addComments
 #@+node:ekr.20050312114529.2:deleteComments
-def deleteComments (self):
+def deleteComments (self,event=None):
 
     c = self ; undoType = 'Delete Comments' ; p = c.currentPosition()
     
@@ -12046,7 +12198,7 @@ def deleteComments (self):
 #@-node:ekr.20050312114529.2:deleteComments
 #@-node:ekr.20050312114529:insert/removeComments
 #@+node:ekr.20031218072017.1833:reformatParagraph
-def reformatParagraph(self):
+def reformatParagraph (self,event=None):
 
     """Reformat a text paragraph in a Tk.Text widget
 
@@ -14446,7 +14598,7 @@ def getTextFromClipboard (self):
 #@-node:ekr.20031218072017.844:Clipboard (tkGui)
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20051011072903.2:copyText
-def copyText (self):
+def copyText (self,event=None):
     
     '''Copy the selected text from the widget to the clipboard.'''
     
@@ -14463,7 +14615,7 @@ OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
-def cutText (self):
+def cutText (self,event=None):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
@@ -14493,7 +14645,7 @@ OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
-def pasteText (self):
+def pasteText (self,event=None):
 
     '''Paste the clipboard into a widget.'''
 
@@ -17711,7 +17863,7 @@ def defineEditMenuTopTable (self):
 #@-node:ekr.20031218072017.839:defineEditMenuTopTable
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
 #@+node:ekr.20051011072903.2:copyText
-def copyText (self):
+def copyText (self,event=None):
     
     '''Copy the selected text from the widget to the clipboard.'''
     
@@ -17728,7 +17880,7 @@ OnCopyFromMenu = copyText
 #@nonl
 #@-node:ekr.20051011072903.2:copyText
 #@+node:ekr.20051011072049.2:cutText
-def cutText (self):
+def cutText (self,event=None):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
@@ -17758,7 +17910,7 @@ OnCutFromMenu = cutText
 #@nonl
 #@-node:ekr.20051011072049.2:cutText
 #@+node:ekr.20051011072903.5:pasteText
-def pasteText (self):
+def pasteText (self,event=None):
 
     '''Paste the clipboard into a widget.'''
 

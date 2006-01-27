@@ -17,12 +17,12 @@
 </v>
 <v t="ekr.20051208082927.1" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20051208085841"><vh>@test 1</vh></v>
-<v t="ekr.20051208085841.1"><vh>@@test assert False</vh></v>
+<v t="ekr.20051208085841.1" a="E"><vh>@@test assert False</vh></v>
 <v t="ekr.20060124085038" a="E"><vh>New find tests</vh>
 <v t="ekr.20060124085038.1"><vh>@test togle find options commands</vh></v>
 <v t="ekr.20060124085038.2"><vh>@test set find mode commands</vh></v>
-<v t="ekr.20060124193802"><vh>@test minbuffer find commands</vh></v>
-<v t="ekr.20060125075332" a="V"><vh>@test show-find-options</vh></v>
+<v t="ekr.20060124193802" a="V"><vh>@test minbuffer find commands</vh></v>
+<v t="ekr.20060125075332"><vh>@test show-find-options</vh></v>
 </v>
 </v>
 </vnodes>
@@ -39,7 +39,7 @@ python ..\src\leo.py -script-window ..\test\ut.py</t>
 <t tx="ekr.20051208085841.1">assert False,'This should fail'</t>
 <t tx="ekr.20060124085038"># Reference c.k.simulateCommand('command')</t>
 <t tx="ekr.20060124085038.1">table = (
-    'toggle-find-clone-find-all-option',
+    # 'toggle-find-clone-find-all-option',
     'toggle-find-ignore-case-option',
     'toggle-find-in-body-option',
     'toggle-find-in-headline-option',
@@ -70,8 +70,6 @@ for command in table:
 <t tx="ekr.20060124103819">cd c:\prog\leoCVS\leo\test
 python ..\src\leo.py -script-window ..\test\ut.py</t>
 <t tx="ekr.20060124193802">table = (
-    'find-next',
-    'find-prev',
     're-search-forward',
     're-search-backward',
     'search-forward',
