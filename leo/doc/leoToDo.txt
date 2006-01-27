@@ -4,13 +4,15 @@
 
 #@+all
 #@+node:ekr.20050921094025:4.4 To do
-#@+node:ekr.20060127133715:remove specialCallback hack
-#@-node:ekr.20060127133715:remove specialCallback hack
 #@+node:ekr.20060127100926:Add enable-gc, disable-gc, print-gc-stats commands
 Also use a dict of object types to create a summary of statistics.
 #@nonl
 #@-node:ekr.20060127100926:Add enable-gc, disable-gc, print-gc-stats commands
 #@+node:ekr.20060126163152.1:(Compute binding keystroke from key event)
+#@+node:ekr.20060127134838:Alt-Shift-A is being shown as Alt-A !!
+#@-node:ekr.20060127134838:Alt-Shift-A is being shown as Alt-A !!
+#@+node:ekr.20060127135128:PrettyPrintKey and related logic is broken
+#@-node:ekr.20060127135128:PrettyPrintKey and related logic is broken
 #@+node:ekr.20060127100038:To do: remove specialCallback hacks
 #@-node:ekr.20060127100038:To do: remove specialCallback hacks
 #@+node:ekr.20060127113243.1:Clicking (scrolling) in canvas can lose headline text

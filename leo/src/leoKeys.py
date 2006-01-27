@@ -1815,7 +1815,7 @@ class keyHandlerClass:
         
         # Completely clear the mode.
         if k.inputModeName:
-            k.endMode()
+            k.endMode(event)
     
         # Complete clear the state.
         k.state.kind = None
