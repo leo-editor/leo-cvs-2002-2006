@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="253" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
 	<global_window_position top="34" left="305" height="872" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -45,17 +45,20 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="V" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20060126171438"><vh>@bool simple_bindings = False</vh></v>
+<v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
+<v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
+<v t="ekr.20060121102627"><vh>@bool trace_modes = True</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 </v>
-<v t="ekr.20060113182439"><vh>Other options</vh>
+<v t="ekr.20060113182439" a="E"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -124,7 +127,7 @@
 <v t="ekr.20050203090810" annotate="7d71002e"><vh>For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
-<v t="ekr.20041119034357.3" annotate="7d71002e"><vh>General configuration options</vh>
+<v t="ekr.20041119034357.3" a="E" annotate="7d71002e"><vh>General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
@@ -145,6 +148,7 @@
 <v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
+<v t="ekr.20060127050605" a="TV"><vh>@int max_undo_stack_size = 50</vh></v>
 </v>
 <v t="ekr.20051123100536" annotate="7d71002e"><vh>Plugins settings</vh>
 <v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
@@ -266,6 +270,15 @@
 </v>
 </v>
 </v>
+<v t="ekr.20060122105527.3"><vh>Keyboard and minibuffer Options</vh>
+<v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
+<v t="ekr.20060122105527.5" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
+<v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
+<v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+<v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
+<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
+<v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = False</vh></v>
+</v>
 <v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
@@ -274,38 +287,17 @@
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
 <v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
-<v t="ekr.20060112093001"><vh>Options</vh>
-<v t="ekr.20060111083035" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060111083044" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060110142111"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060115201647" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060125114403"><vh>@bool show_only_find_tab_options = True</vh></v>
-</v>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
 <v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
 <v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
-<v t="ekr.20060112093001.2"><vh>Options</vh>
-<v t="ekr.20060110141538.3" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = False</vh></v>
-<v t="ekr.20060111082542" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060111082552" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060115201635" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060125114403.1"><vh>@bool show_only_find_tab_options = False</vh></v>
-</v>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
 </v>
 <v t="ekr.20060103103812" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
-<v t="ekr.20060112093001.4"><vh>Options</vh>
-<v t="ekr.20060111082854" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = False</vh></v>
-<v t="ekr.20060111082848" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060111082717" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060115201600" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060125114403.2"><vh>@bool show_only_find_tab_options = False</vh></v>
-</v>
 <v t="ekr.20060111082632.1"><vh>@shortcuts Legacy+: A-E</vh></v>
 <v t="ekr.20060112085643"><vh>@shortcuts Legacy+: F-M</vh></v>
 <v t="ekr.20060112085643.1"><vh>@shortcuts Legacy+: N-Z</vh></v>
@@ -313,14 +305,6 @@
 <v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060122105438"><vh>To do</vh></v>
 <v t="ekr.20060122105438.1"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060112093419.1"><vh>Options</vh>
-<v t="ekr.20060115201518" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060111082512" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060111082448" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20051022154824" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060120103955"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
-<v t="ekr.20060125114403.3"><vh>@bool show_only_find_tab_options = False</vh></v>
-</v>
 <v t="ekr.20060115162748"><vh>Modes</vh>
 <v t="ekr.20060121131041.2"><vh>@mode Command</vh></v>
 <v t="ekr.20060102113259" annotate="7d71002e"><vh>@mode File</vh></v>
@@ -346,14 +330,6 @@
 </v>
 <v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060122105527.3"><vh>Options</vh>
-<v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060122105527.5" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
-<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
-</v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
@@ -380,16 +356,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060122105527.3"><vh>Options</vh>
-<v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
-<v t="ekr.20060122105527.5" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
-<v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
-<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
-</v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
@@ -1333,12 +1301,6 @@ p.setBodyString(result)</t>
 <t tx="ekr.20051020125928">#d6c7d3
 #d2cad0
 #c6d3d7</t>
-<t tx="ekr.20051022154824">True: (Recommended) Selecting an outline node leaves the focus in the outline pane.
-      Essential when using key bindings that apply to the outline pane.
-
-False: Selecting an outline node transfers focus to the body pane.
-       This was the way all version before Leo 4.4 worked, but
-       it will prevent key binding in the outline pane for outline operations from being useful.</t>
 <t tx="ekr.20051025070845">#d6c7d3
 #d2cad0
 #c6d3d7
@@ -2015,50 +1977,6 @@ warnings about duplicate bindings.
 
 - The Check Bindings script only checks for missing bindings in this set.</t>
 <t tx="ekr.20060110141538.2">@color</t>
-<t tx="ekr.20060110141538.3">True: (Recommended) Selecting an outline node leaves the focus in the outline pane.
-      Essential when using key bindings that apply to the outline pane.
-
-False: Selecting an outline node transfers focus to the body pane.
-       This was the way all version before Leo 4.4 worked, but
-       it will prevent key binding in the outline pane for outline operations from being useful.</t>
-<t tx="ekr.20060110142111">True: (Recommended) Selecting an outline node leaves the focus in the outline pane.
-      Essential when using key bindings that apply to the outline pane.
-
-False: Selecting an outline node transfers focus to the body pane.
-       This was the way all version before Leo 4.4 worked, but
-       it will prevent key binding in the outline pane for outline operations from being useful.</t>
-<t tx="ekr.20060111082448">Important:
-
-1. The minibuffer will exist regardless of this setting, but will not be shown
-   initially if it is False.
-
-2. Hiding the minibuffer does not change any bindings or the operation of Leo in
-   any other way. Therefore, if you do hide the minibuffer initially, and never
-   want to use it, you should not bind shortcuts to any commands that use the
-   minibuffer.
-
-3. You can execute the show-mini-buffer, hide-mini-buffer and toggle-mini-buffer
-   commands (or any other minibuffer command!) if the minibuffer is hidden.
-   Indeed, the following will work even if the minibuffer is hidden.
-
-       &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
-<t tx="ekr.20060111082512">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
-<t tx="ekr.20060111082542">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
-<t tx="ekr.20060111082552">Important:
-
-1. The minibuffer will exist regardless of this setting, but will not be shown
-   initially if it is False.
-
-2. Hiding the minibuffer does not change any bindings or the operation of Leo in
-   any other way. Therefore, if you do hide the minibuffer initially, and never
-   want to use it, you should not bind shortcuts to any commands that use the
-   minibuffer.
-
-3. You can execute the show-mini-buffer, hide-mini-buffer and toggle-mini-buffer
-   commands (or any other minibuffer command!) if the minibuffer is hidden.
-   Indeed, the following will work even if the minibuffer is hidden.
-
-       &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20060111082632.1">@color
 
 # Important: the print-commands and print-bindings show what bindings are in effect.
@@ -2185,44 +2103,6 @@ export-headlines                    = None
 extract                             = Shift-Ctrl-d
 extract-names                       = Shift-Ctrl-n
 extract-section                     = Shift-Ctrl-e</t>
-<t tx="ekr.20060111082717">Important:
-
-1. The minibuffer will exist regardless of this setting, but will not be shown
-   initially if it is False.
-
-2. Hiding the minibuffer does not change any bindings or the operation of Leo in
-   any other way. Therefore, if you do hide the minibuffer initially, and never
-   want to use it, you should not bind shortcuts to any commands that use the
-   minibuffer.
-
-3. You can execute the show-mini-buffer, hide-mini-buffer and toggle-mini-buffer
-   commands (or any other minibuffer command!) if the minibuffer is hidden.
-   Indeed, the following will work even if the minibuffer is hidden.
-
-       &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
-<t tx="ekr.20060111082848">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
-<t tx="ekr.20060111082854">True: (Recommended) Selecting an outline node leaves the focus in the outline pane.
-      Essential when using key bindings that apply to the outline pane.
-
-False: Selecting an outline node transfers focus to the body pane.
-       This was the way all version before Leo 4.4 worked, but
-       it will prevent key binding in the outline pane for outline operations from being useful.</t>
-<t tx="ekr.20060111083035">The Cmds menu is not ready yet.  It will be similar to the Emacs Cmds menu.</t>
-<t tx="ekr.20060111083044">Important:
-
-1. The minibuffer will exist regardless of this setting, but will not be shown
-   initially if it is False.
-
-2. Hiding the minibuffer does not change any bindings or the operation of Leo in
-   any other way. Therefore, if you do hide the minibuffer initially, and never
-   want to use it, you should not bind shortcuts to any commands that use the
-   minibuffer.
-
-3. You can execute the show-mini-buffer, hide-mini-buffer and toggle-mini-buffer
-   commands (or any other minibuffer command!) if the minibuffer is hidden.
-   Indeed, the following will work even if the minibuffer is hidden.
-
-       &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20060111091324"></t>
 <t tx="ekr.20060111091324.1">If this setting is True, the ``fastgotonode_binding`` setting should be a
 Keyspecifier that does not conflict with any key binding in leoSettings.leo.
@@ -3207,9 +3087,6 @@ yank                                = None
 yank-pop                            = None
 yank-rectangle                      = None
 zap-to-character                    = None</t>
-<t tx="ekr.20060112093001"></t>
-<t tx="ekr.20060112093001.2"></t>
-<t tx="ekr.20060112093001.4"></t>
 <t tx="ekr.20060112093227.1">fill-paragraph                      = None
 fill-region                         = None
 fill-region-as-paragraph            = None
@@ -3489,7 +3366,6 @@ yank                                = None
 yank-pop                            = None
 yank-rectangle                      = None
 zap-to-character                    = None</t>
-<t tx="ekr.20060112093419.1"></t>
 <t tx="ekr.20060112103537.17">'''This script reports commands that exist in some but not all key- binding
 sets. setNames is a list of the roots of all such sets.'''
 
@@ -3663,46 +3539,6 @@ mode-help           = Tab
 # These should execute rectangle commands, as in Alt-X r r</t>
 <t tx="ekr.20060115162748"></t>
 <t tx="ekr.20060115162748.1"></t>
-<t tx="ekr.20060115201518">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-ignore:  Leo ignores the key (like Vim).
-insert:  Leo inserts the key at the cursor (like Emacs)
-overwrite: Leo replaces the character at the cursor.</t>
-<t tx="ekr.20060115201600">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-ignore:  Leo ignores the key (like Vim).
-insert:  Leo inserts the key at the cursor (like Emacs)
-overwrite: Leo replaces the character at the cursor.</t>
-<t tx="ekr.20060115201635">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-ignore:  Leo ignores the key (like Vim).
-insert:  Leo inserts the key at the cursor (like Emacs)
-overwrite: Leo replaces the character at the cursor.</t>
-<t tx="ekr.20060115201647">@nocolor
-
-This setting determines the initial binding for otherwise-unbound keystrokes
-when no mode is in effect.  Note: the keyboard-quit command exits all modes.
-
-The valid values are::
-
-ignore:  Leo ignores the key (like Vim).
-insert:  Leo inserts the key at the cursor (like Emacs)
-overwrite: Leo replaces the character at the cursor.</t>
 <t tx="ekr.20060116090646">@nocolor
 
 Standard keys (Windows defaults in parens)
@@ -3804,7 +3640,6 @@ isearch-forward-regexp  = x
 search-forward          = f
 word-search-forward     = w
 re-search-forward       = Shift-R</t>
-<t tx="ekr.20060120103955"></t>
 <t tx="ekr.20060120123529">True:  Clicking an unselected node selects the node and *also* expands or contracts it.
 False: Clicking an unselected node just selects the node.</t>
 <t tx="ekr.20060121102627"></t>
@@ -4421,7 +4256,7 @@ find-tab-find-prev                  = F2
 find-tab-replace                    = None
 find-tab-replace-then-find          = None
 hide-find-tab                       = None
-open-find-tab                       = Ctrl-Shift-f
+open-find-tab                       = Ctrl-f # Ctrl-Shift-f
 
 isearch-backward                    = None 
 isearch-backward-regexp             = None 
@@ -4436,7 +4271,7 @@ replace-string                      = None
 search-again                        = None
 search-backward                     = None
 search-forward                      = None
-search-with-present-options         = Ctrl-f
+search-with-present-options         = Shift-Ctrl-f # Ctrl-f
 
 set-find-everywhere                 = Alt-Ctrl-e
 set-find-node-only                  = Alt-Ctrl-n
@@ -4458,13 +4293,10 @@ word-search-forward                 = None</t>
 <t tx="ekr.20060124112437">That way we only have to specify commands that actually have shortcuts.</t>
 <t tx="ekr.20060125104049">True: (recommended) The Find tab shows only options, not text or buttons.
 False: (legacy)     The Find tab shows text, options and buttons.</t>
-<t tx="ekr.20060125114403">True: (recommended) The Find tab shows only options, not text or buttons.
-False: (legacy)     The Find tab shows text, options and buttons.</t>
-<t tx="ekr.20060125114403.1">True: (recommended) The Find tab shows only options, not text or buttons.
-False: (legacy)     The Find tab shows text, options and buttons.</t>
-<t tx="ekr.20060125114403.2">True: (recommended) The Find tab shows only options, not text or buttons.
-False: (legacy)     The Find tab shows text, options and buttons.</t>
-<t tx="ekr.20060125114403.3">True: (recommended) The Find tab shows only options, not text or buttons.
-False: (legacy)     The Find tab shows text, options and buttons.</t>
+<t tx="ekr.20060125165241"></t>
+<t tx="ekr.20060126075152">True: trace the garbage collector and storage allocation.</t>
+<t tx="ekr.20060126083715">True: verbose trace the garbage collector and storage allocation.</t>
+<t tx="ekr.20060126171438"></t>
+<t tx="ekr.20060127050605"></t>
 </tnodes>
 </leo_file>
