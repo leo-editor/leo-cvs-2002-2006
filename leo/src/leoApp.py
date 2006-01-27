@@ -69,6 +69,7 @@ class LeoApp:
         self.trace = False # True: enable debugging traces.
         self.trace_gc = False
         self.trace_gc_verbose = False
+        self.trace_gc_inited = False
         self.tracePositions = False
         self.trace_list = [] # "Sherlock" argument list for tracing().
         self.tkEncoding = "utf-8"

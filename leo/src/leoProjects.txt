@@ -14590,6 +14590,697 @@ top.lift()
 #@-node:ekr.20031218072017.3991:Help Menu...
 #@-node:ekr.20031218072017.3979:Gui-dependent commands
 #@-node:ekr.20060127095006:(Added event arg to all legacy commands)
+#@+node:ekr.20060127100926:(Improved gc stats slightly)
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.dialogs = 0 # Count of open dialogs.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scanErrors = 0 # The number of errors seen by g.scanError.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
+    self.trace = False # True: enable debugging traces.
+    self.trace_gc = False
+    self.trace_gc_verbose = False
+    self.trace_gc_inited = False
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.user_xresources_path = None # Resource file for Tk/tcl.
+    self.wantedCommander = None # Used by tkFrame.set_focus.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */", # C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
+    "php"   : "php",
+    "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@nonl
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@+node:ekr.20031218072017.1934:run & allies
+def run(fileName=None,*args,**keywords):
+    
+    """Initialize and run Leo"""
+    
+    __pychecker__ = '--no-argsused' # keywords not used.
+    
+    if not isValidPython(): return
+    << import leoGlobals and leoApp >>
+    g.computeStandardDirectories()
+    script, windowFlag = getBatchScript() # Do early so we can compute verbose next.
+    verbose = script is None
+    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
+    << import leoNodes and leoConfig >>
+    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    g.app.config = leoConfig.configClass()
+    fileName = completeFileName(fileName)
+    reportDirectories(verbose)
+    # Read settings *after* setting g.app.config.
+    # Read settings *before* opening plugins.
+    g.app.config.readSettingsFiles(fileName,verbose)
+    g.app.setEncoding()
+    if script:
+        if windowFlag:
+            g.app.createTkGui() # Creates global windows.
+            g.app.gui.setScript(script)
+            sys.args = []
+        else:
+            createNullGuiWithScript(script)
+        fileName = None
+    # Load plugins. Plugins may create g.app.gui.
+    g.doHook("start1")
+    if g.app.killed: return # Support for g.app.forceShutdown.
+    # Create the default gui if needed.
+    if g.app.gui == None:
+        g.app.createTkGui() # Creates global windows.
+    # Initialize tracing and statistics.
+    g.init_sherlock(args)
+    << start psycho >>
+    # New in 4.3: clear g.app.initing _before_ creating the frame.
+    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
+    # Create the main frame.  Show it and all queued messages.
+    c,frame = createFrame(fileName)
+    if not frame: return
+    g.app.trace_gc = c.config.getBool('trace_gc')
+    g.app.trace_gc_verbose = c.config.getBool('trace_gc_verbose')
+    if g.app.disableSave:
+        g.es("disabling save commands",color="red")
+    g.app.writeWaitingLog()
+    p = c.currentPosition()
+    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
+    g.enableIdleTimeHook()
+    if not fileName:
+        c.redraw_now()
+    frame.bodyWantsFocus()
+    g.app.gui.runMainLoop()
+#@nonl
+#@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+# Import leoGlobals, but do NOT set g.
+try:
+    import leoGlobals
+except ImportError:
+    print "Error importing leoGlobals.py"
+
+# Create the application object.
+try:
+    import leoApp
+    leoGlobals.app = leoApp.LeoApp()
+except ImportError:
+    print "Error importing leoApp.py"
+    
+# NOW we can set g.
+g = leoGlobals
+assert(g.app)
+#@nonl
+#@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+#@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+try:
+    import leoNodes
+except ImportError:
+    print "Error importing leoNodes.py"
+    import traceback ; traceback.print_exc()
+try:
+    import leoConfig
+except ImportError:
+    print "Error importing leoConfig.py"
+    import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+#@+node:ekr.20040411081633:<< start psycho >>
+if g.app and g.app.use_psyco:
+    try:
+        import psyco
+        if 0:
+            theFile = r"c:\prog\test\psycoLog.txt"
+            g.es("psyco now logging to",theFile,color="blue")
+            psyco.log(theFile)
+            psyco.profile()
+        psyco.full()
+        g.es("psyco now running",color="blue")
+    except ImportError:
+        pass
+    except:
+        print "unexpected exception importing psyco"
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040411081633:<< start psycho >>
+#@+node:ekr.20031218072017.1936:isValidPython
+def isValidPython():
+
+    message = """\
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
+"""
+    try:
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except ImportError:
+        print "isValidPython: can not import leoGlobals"
+        return 0
+    except:
+        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
+        import traceback ; traceback.print_exc()
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
+            print message
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
+        return ok
+    except:
+        print "isValidPython: unexpected exception: g.CheckVersion"
+        import traceback ; traceback.print_exc()
+        return 0
+#@nonl
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041124083125:completeFileName (leo.py)
+def completeFileName (fileName):
+    
+    import leoGlobals as g
+    
+    if not fileName:
+        return None
+        
+    # This does not depend on config settings.
+    fileName = g.os_path_join(os.getcwd(),fileName)
+
+    head,ext = g.os_path_splitext(fileName)
+    if not ext:
+        fileName = fileName + ".leo"
+
+    return fileName
+#@nonl
+#@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            ok, frame = g.openWithFileName(fileName,None)
+            if ok:
+                return frame.c,frame
+
+    # Create a _new_ frame & indicate it is the startup window.
+    c,frame = g.app.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio)
+    frame.startupWindow = True
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,c=c,new_c=c)
+
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@nonl
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+    
+    import leoGlobals as g
+    import leoGui
+    
+    g.app.batchMode = True
+    g.app.gui = leoGui.nullGui("nullGui")
+    if not g.app.root:
+        g.app.root = g.app.gui.createRootWindow()
+    g.app.gui.finishCreate()
+    g.app.gui.setScript(script)
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
+def getBatchScript ():
+    
+    import leoGlobals as g
+    windowFlag = False
+    
+    name = None ; i = 1 # Skip the dummy first arg.
+    while i + 1 < len(sys.argv):
+        arg = sys.argv[i].strip().lower()
+        if arg in ("--script","-script"):
+            name = sys.argv[i+1].strip() ; break
+        if arg in ("--script-window","-script-window"):
+            name = sys.argv[i+1].strip() ; windowFlag = True ; break
+        i += 1
+
+    if not name:
+        return None, windowFlag
+    name = g.os_path_join(g.app.loadDir,name)
+    try:
+        f = None
+        try:
+            f = open(name,'r')
+            script = f.read()
+            # g.trace("script",script)
+        except IOError:
+            g.es_print("can not open script file: " + name, color="red")
+            script = None
+    finally:
+        if f: f.close()
+        return script, windowFlag
+#@nonl
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@+node:ekr.20041130093254:reportDirectories
+def reportDirectories(verbose):
+    
+    import leoGlobals as g
+   
+    if verbose:
+        for kind,theDir in (
+            ("global config",g.app.globalConfigDir),
+            ("home",g.app.homeDir),
+        ):
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
+#@nonl
+#@-node:ekr.20041130093254:reportDirectories
+#@-node:ekr.20031218072017.1934:run & allies
+#@+node:ekr.20060127162818.1:class debugCommandsClass
+class debugCommandsClass (baseEditCommandsClass):
+    
+    @others
+#@nonl
+#@+node:ekr.20060127162921: ctor
+def __init__ (self,c):
+
+    baseEditCommandsClass.__init__(self,c) # init the base class.
+#@nonl
+#@-node:ekr.20060127162921: ctor
+#@+node:ekr.20060127163325: getPublicCommands
+def getPublicCommands (self):
+    
+    k = self
+
+    return {
+        'disable-gc-trace':             self.disableGcTrace,
+        'enable-gc-trace':              self.enableGcTrace,
+    }
+#@nonl
+#@-node:ekr.20060127163325: getPublicCommands
+#@+node:ekr.20060127163325.1:enable/disableGcTrace
+def disableGcTrace (self,event=None):
+    
+    self.trace_gc = False
+    
+def enableGcTrace (self,event=None):
+    
+    self.trace_gc = True
+    g.enable_gc_debug()
+#@nonl
+#@-node:ekr.20060127163325.1:enable/disableGcTrace
+#@-node:ekr.20060127162818.1:class debugCommandsClass
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+# New in 4.4b2: suppress scrolling by default.
+
+def redraw_now (self,scroll=False):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c
+    
+    g.collectGarbage()
+    
+    if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
+        g.trace(self.redrawCount,g.callers())
+        # g.print_stats()
+        # g.clear_stats()
+        
+    # Do the actual redraw.
+    self.redrawCount += 1
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@+node:ekr.20031218072017.1588:Garbage Collection
+# debugGC = False # Must be true to enable traces below.
+
+lastObjectCount = 0
+lastObjectsDict = {}
+lastTypesDict = {}
+lastFunctionsDict = {}
+
+@others
+#@+node:ekr.20060127162818:enable_gc_debug
+def enable_gc_debug(event=None):
+    
+    if gc:
+        gc.set_debug(
+            gc.DEBUG_STATS | # prints statistics.
+            # gc.DEBUG_LEAK | # Same as all below.
+            # gc.DEBUG_COLLECTABLE
+            # gc.DEBUG_UNCOLLECTABLE
+            gc.DEBUG_INSTANCES |
+            gc.DEBUG_OBJECTS
+            # gc.DEBUG_SAVEALL
+        )
+        g.app.trace_gc_inited = True
+    else:
+        es('Can not import gc module',color='blue')
+#@nonl
+#@-node:ekr.20060127162818:enable_gc_debug
+#@+node:ekr.20031218072017.1589:clearAllIvars
+def clearAllIvars (o):
+    
+    """Clear all ivars of o, a member of some class."""
+    
+    o.__dict__.clear()
+#@-node:ekr.20031218072017.1589:clearAllIvars
+#@+node:ekr.20031218072017.1590:collectGarbage
+def collectGarbage(message=None):
+    
+    if not g.app.trace_gc: return
+    
+    if not g.app.trace_gc_inited:
+        g.enable_gc_debug()
+    
+    if not g.app.trace_gc_inited:
+        g.app.trace_gc = False
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    try: gc.collect()
+    except: pass
+    
+    g.printGc(message)
+#@nonl
+#@-node:ekr.20031218072017.1590:collectGarbage
+#@+node:ekr.20031218072017.1592:printGc
+def printGc(message=None,onlyPrintChanges=False):
+    
+    __pychecker__ = '--no-argsused' # onlyPrintChanges not used.
+    
+    if not g.app.trace_gc: return None
+    
+    if not message:
+        message = g.callerName(n=2)
+        
+    printGcObjects(message)
+    printGcRefs(message)
+    
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
+#@+node:ekr.20060127164729.1:printGcObjects
+def printGcObjects(message):
+
+    global lastObjectCount
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        delta = n2-lastObjectCount
+        lastObjectCount = n2
+
+        print '-' * 30
+        print "garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message)
+        
+        << print number of each type of object >>
+        if 0:
+            << print added functions >>
+
+    except:
+        traceback.print_exc()
+#@nonl
+#@+node:ekr.20040703065638:<< print added functions >>
+import types
+import inspect
+
+global lastFunctionsDict
+
+funcDict = {}
+
+for obj in gc.get_objects():
+    if type(obj) == types.FunctionType:
+        key = repr(obj) # Don't create a pointer to the object!
+        funcDict[key]=None 
+        if not lastFunctionsDict.has_key(key):
+            print ; print obj
+            args, varargs, varkw,defaults  = inspect.getargspec(obj)
+            print "args", args
+            if varargs: print "varargs",varargs
+            if varkw: print "varkw",varkw
+            if defaults:
+                print "defaults..."
+                for s in defaults: print s
+
+lastFunctionsDict = funcDict
+funcDict = {}
+#@nonl
+#@-node:ekr.20040703065638:<< print added functions >>
+#@+node:ekr.20040703054646:<< print number of each type of object >>
+global lastTypesDict
+typesDict = {}
+
+for obj in gc.get_objects():
+    n = typesDict.get(type(obj),0)
+    t = type(obj)
+    if t == 'instance':
+        try: t = obj.__class__
+        except: pass
+    typesDict[t] = n + 1
+    
+# Create the union of all the keys.
+keys = typesDict.keys()
+for key in lastTypesDict.keys():
+    if key not in keys:
+        keys.append(key)
+
+keys.sort()
+for key in keys:
+    n1 = lastTypesDict.get(key,0)
+    n2 = typesDict.get(key,0)
+    delta2 = n2-n1
+    if delta2 != 0:
+        print "%+6d =%7d %s" % (delta2,n2,key)
+    
+lastTypesDict = typesDict
+typesDict = {}
+#@nonl
+#@-node:ekr.20040703054646:<< print number of each type of object >>
+#@-node:ekr.20060127164729.1:printGcObjects
+#@+node:ekr.20060127165509:printGcVerbose
+# WARNING: the id trick is not proper because newly allocated objects
+#          can have the same address as old objets.
+def printGcVerbose(message):
+
+    global lastObjectsDict
+    objects = gc.get_objects()
+    
+    newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+    
+    lastObjectsDict = {}
+    for o in objects:
+        lastObjectsDict[id(o)]=o
+        
+    dicts = 0 ; seqs = 0
+    
+    i = 0 ; n = len(newObjects)
+    while i < 100 and i < n:
+        o = newObjects[i]
+        if type(o) == type({}): dicts += 1
+        elif type(o) in (type(()),type([])):
+            seqs += 1
+        else:
+            print o
+        i += 1
+    print '-' * 40
+    print 'dicts: %d, sequences: %d' % (dicts,seqs)
+    print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
+#@nonl
+#@-node:ekr.20060127165509:printGcVerbose
+#@+node:ekr.20031218072017.1593:printGcRefs
+def printGcRefs (message):
+
+    refs = gc.get_referrers(app.windowList[0])
+    print '-' * 30
+
+    if g.app.trace_gc_verbose:
+        print "refs of", app.windowList[0]
+        for ref in refs:
+            print type(ref)
+    else:
+        print "%d referers" % len(refs)
+#@nonl
+#@-node:ekr.20031218072017.1593:printGcRefs
+#@-node:ekr.20031218072017.1592:printGc
+#@-node:ekr.20031218072017.1588:Garbage Collection
+#@-node:ekr.20060127100926:(Improved gc stats slightly)
 #@-node:ekr.20060117091600:4.4a6 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

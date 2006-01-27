@@ -1188,6 +1188,41 @@ class controlCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.150:class controlCommandsClass
+#@+node:ekr.20060127162818.1:class debugCommandsClass
+class debugCommandsClass (baseEditCommandsClass):
+    
+    #@    @+others
+    #@+node:ekr.20060127162921: ctor
+    def __init__ (self,c):
+    
+        baseEditCommandsClass.__init__(self,c) # init the base class.
+    #@nonl
+    #@-node:ekr.20060127162921: ctor
+    #@+node:ekr.20060127163325: getPublicCommands
+    def getPublicCommands (self):
+        
+        k = self
+    
+        return {
+            'disable-gc-trace':             self.disableGcTrace,
+            'enable-gc-trace':              self.enableGcTrace,
+        }
+    #@nonl
+    #@-node:ekr.20060127163325: getPublicCommands
+    #@+node:ekr.20060127163325.1:enable/disableGcTrace
+    def disableGcTrace (self,event=None):
+        
+        self.trace_gc = False
+        
+    def enableGcTrace (self,event=None):
+        
+        self.trace_gc = True
+        g.enable_gc_debug()
+    #@nonl
+    #@-node:ekr.20060127163325.1:enable/disableGcTrace
+    #@-others
+#@nonl
+#@-node:ekr.20060127162818.1:class debugCommandsClass
 #@+node:ekr.20050920084036.53:class editCommandsClass
 class editCommandsClass (baseEditCommandsClass):
     
@@ -7290,6 +7325,7 @@ classesList = [
     ('bufferCommands',      bufferCommandsClass),
     ('editCommands',        editCommandsClass),
     ('controlCommands',     controlCommandsClass),
+    ('debugCommands',       debugCommandsClass),
     ('editFileCommands',    editFileCommandsClass),
     ('keyHandlerCommands',  keyHandlerCommandsClass),
     ('killBufferCommands',  killBufferCommandsClass),

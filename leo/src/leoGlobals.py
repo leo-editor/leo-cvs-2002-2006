@@ -22,6 +22,11 @@ import leoGlobals as g # So code can use g below.
 
 if 0: # Don't import this here: it messes up Leo's startup code.
     import leoTest
+    
+try:
+    import gc
+except ImportError:
+    gc = None
 
 import exceptions
 import filecmp
@@ -2106,16 +2111,18 @@ shortFilename = shortFileName
 #@-node:ekr.20031218072017.3125:shortFileName & shortFilename
 #@-node:ekr.20031218072017.3116:Files & Directories...
 #@+node:ekr.20031218072017.1588:Garbage Collection
-debugGC = False # Must be true to enable traces below.
+# debugGC = False # Must be true to enable traces below.
 
 lastObjectCount = 0
 lastObjectsDict = {}
 lastTypesDict = {}
 lastFunctionsDict = {}
 
-if debugGC:
-    try: 
-        import gc
+#@+others
+#@+node:ekr.20060127162818:enable_gc_debug
+def enable_gc_debug(event=None):
+    
+    if gc:
         gc.set_debug(
             gc.DEBUG_STATS | # prints statistics.
             # gc.DEBUG_LEAK | # Same as all below.
@@ -2125,10 +2132,11 @@ if debugGC:
             gc.DEBUG_OBJECTS
             # gc.DEBUG_SAVEALL
         )
-    except ImportError:
-        traceback.print_exc()
-
-#@+others
+        g.app.trace_gc_inited = True
+    else:
+        es('Can not import gc module',color='blue')
+#@nonl
+#@-node:ekr.20060127162818:enable_gc_debug
 #@+node:ekr.20031218072017.1589:clearAllIvars
 def clearAllIvars (o):
     
@@ -2141,45 +2149,20 @@ def collectGarbage(message=None):
     
     if not g.app.trace_gc: return
     
+    if not g.app.trace_gc_inited:
+        g.enable_gc_debug()
+    
+    if not g.app.trace_gc_inited:
+        g.app.trace_gc = False
+    
     if not message:
         message = g.callerName(n=2)
     
     try: gc.collect()
     except: pass
     
-    if 0:
-        g.printGc(message)
-    
-    #@    << make a list of the new objects >>
-    #@+node:ekr.20031218072017.1591:<< make a list of the new objects >>
-    # WARNING: the id trick is not proper because newly allocated objects can have the same address as old objets.
-    
-    global lastObjectsDict
-    objects = gc.get_objects()
-    
-    newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
-    
-    lastObjectsDict = {}
-    for o in objects:
-        lastObjectsDict[id(o)]=o
-    
-    if g.app.trace_gc_verbose:
-        i = 0 ; n = len(newObjects)
-        while i < 100 and i < n:
-            o = newObjects[i]
-            if type(o) == type({}):
-                print 'dict keys:', len(o.keys())
-            elif type(o) in (type(()),type([])):
-                print 'list or tuple:', len(o)
-            else:
-                print o
-            i += 1
-        print '-' * 40, 
-        
-    print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
-    #@nonl
-    #@-node:ekr.20031218072017.1591:<< make a list of the new objects >>
-    #@nl
+    g.printGc(message)
+#@nonl
 #@-node:ekr.20031218072017.1590:collectGarbage
 #@+node:ekr.20031218072017.1592:printGc
 def printGc(message=None,onlyPrintChanges=False):
@@ -2190,16 +2173,27 @@ def printGc(message=None,onlyPrintChanges=False):
     
     if not message:
         message = g.callerName(n=2)
+        
+    printGcObjects(message)
+    printGcRefs(message)
     
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
+#@+node:ekr.20060127164729.1:printGcObjects
+def printGcObjects(message):
+
     global lastObjectCount
 
     try:
         n = len(gc.garbage)
         n2 = len(gc.get_objects())
         delta = n2-lastObjectCount
+        lastObjectCount = n2
 
         print '-' * 30
-        print "garbage: %d, objects: %+6d =%7d %s" % (n,delta,n2,message)
+        print "garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message)
         
         #@        << print number of each type of object >>
         #@+node:ekr.20040703054646:<< print number of each type of object >>
@@ -2208,7 +2202,11 @@ def printGc(message=None,onlyPrintChanges=False):
         
         for obj in gc.get_objects():
             n = typesDict.get(type(obj),0)
-            typesDict[type(obj)] = n + 1
+            t = type(obj)
+            if t == 'instance':
+                try: t = obj.__class__
+                except: pass
+            typesDict[t] = n + 1
             
         # Create the union of all the keys.
         keys = typesDict.keys()
@@ -2259,20 +2257,47 @@ def printGc(message=None,onlyPrintChanges=False):
             #@-node:ekr.20040703065638:<< print added functions >>
             #@nl
 
-        lastObjectCount = n2
-        return delta
     except:
         traceback.print_exc()
-        return None
 #@nonl
-#@-node:ekr.20031218072017.1592:printGc
+#@-node:ekr.20060127164729.1:printGcObjects
+#@+node:ekr.20060127165509:printGcVerbose
+# WARNING: the id trick is not proper because newly allocated objects
+#          can have the same address as old objets.
+def printGcVerbose(message):
+
+    global lastObjectsDict
+    objects = gc.get_objects()
+    
+    newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+    
+    lastObjectsDict = {}
+    for o in objects:
+        lastObjectsDict[id(o)]=o
+        
+    dicts = 0 ; seqs = 0
+    
+    i = 0 ; n = len(newObjects)
+    while i < 100 and i < n:
+        o = newObjects[i]
+        if type(o) == type({}): dicts += 1
+        elif type(o) in (type(()),type([])):
+            seqs += 1
+        else:
+            print o
+        i += 1
+    print '-' * 40
+    print 'dicts: %d, sequences: %d' % (dicts,seqs)
+    print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
+#@nonl
+#@-node:ekr.20060127165509:printGcVerbose
 #@+node:ekr.20031218072017.1593:printGcRefs
-def printGcRefs (verbose=True):
+def printGcRefs (message):
 
     refs = gc.get_referrers(app.windowList[0])
     print '-' * 30
 
-    if verbose:
+    if g.app.trace_gc_verbose:
         print "refs of", app.windowList[0]
         for ref in refs:
             print type(ref)
@@ -2280,8 +2305,8 @@ def printGcRefs (verbose=True):
         print "%d referers" % len(refs)
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
+#@-node:ekr.20031218072017.1592:printGc
 #@-others
-#@nonl
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
 #@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
