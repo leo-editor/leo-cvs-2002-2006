@@ -133,36 +133,6 @@ class baseUndoer:
             u.beads = u.beads[-n:]
             u.bead = n-1
             g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
-        
-        if 0: # First version of code, with hack for groups:
-        
-            if n > 0 and u.bead >= n:
-                i = len(u.beads) - 1
-                k = 0 # The number of items, treating groups as one item.
-                while i > 0 and k < n:
-                    kind = u.beads[i].kind
-                    if kind == 'afterGroup':
-                        while i > 0 and kind != 'beforeGroup':
-                            i -= 1
-                        if i == 0:
-                            return # In the middle of a group.
-                    i -= 1
-                    k += 1
-                    
-                # Make sure we aren't creating a group.
-                while i > 0:
-                    kind = u.beads[i].kind
-                    if kind == 'afterGroup':
-                        break # No problem.
-                    elif kind == 'beginGroup':
-                        return # Can't cut the stack.
-                    i -= 1
-        
-                n2 = len(u.beads) - i
-                if n2 < len(u.beads):
-                    u.beads = u.beads[-n2:]
-                    u.bead = n2-1
-                    g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
     #@nonl
     #@-node:ekr.20060127052111.1:cutStack
     #@+node:EKR.20040526150818:getBeed
