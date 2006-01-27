@@ -125,14 +125,44 @@ class baseUndoer:
     #@+node:ekr.20060127052111.1:cutStack
     def cutStack (self):
         
+        # This logic is odious.  Instead, we should treat groups as single beads.
+        
         u = self ; n = u.max_undo_stack_size
         
-        if n > 0:
-            if u.bead >= n:
-                g.trace('cutting back undo stack')
-                u.beads = u.beads[-n:]
-                u.bead = n-1
-            # g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
+        if n > 0 and u.bead >= n:
+            u.beads = u.beads[-n:]
+            u.bead = n-1
+            g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
+        
+        if 0: # First version of code, with hack for groups:
+        
+            if n > 0 and u.bead >= n:
+                i = len(u.beads) - 1
+                k = 0 # The number of items, treating groups as one item.
+                while i > 0 and k < n:
+                    kind = u.beads[i].kind
+                    if kind == 'afterGroup':
+                        while i > 0 and kind != 'beforeGroup':
+                            i -= 1
+                        if i == 0:
+                            return # In the middle of a group.
+                    i -= 1
+                    k += 1
+                    
+                # Make sure we aren't creating a group.
+                while i > 0:
+                    kind = u.beads[i].kind
+                    if kind == 'afterGroup':
+                        break # No problem.
+                    elif kind == 'beginGroup':
+                        return # Can't cut the stack.
+                    i -= 1
+        
+                n2 = len(u.beads) - i
+                if n2 < len(u.beads):
+                    u.beads = u.beads[-n2:]
+                    u.bead = n2-1
+                    g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
     #@nonl
     #@-node:ekr.20060127052111.1:cutStack
     #@+node:EKR.20040526150818:getBeed
@@ -145,8 +175,29 @@ class baseUndoer:
             return None
     
         bunch = u.beads[n]
-        # g.trace(n,len(u.beads),'-'*20)
-        self.clearIvars()
+    
+        self.setIvarsFromBunch(bunch)
+        
+        return bunch
+    #@nonl
+    #@-node:EKR.20040526150818:getBeed
+    #@+node:EKR.20040526150818.1:peekBeed
+    def peekBead (self,n):
+        
+        u = self
+        if n < 0 or n >= len(u.beads):
+            return None
+        bunch = u.beads[n]
+        # g.trace(n,len(u.beads),bunch)
+        return bunch
+    #@nonl
+    #@-node:EKR.20040526150818.1:peekBeed
+    #@+node:ekr.20060127070008:setIvarsFromBunch
+    def setIvarsFromBunch (self,bunch):
+        
+        u = self
+    
+        u.clearIvars()
     
         if 0: # Debugging.
             print '-' * 40
@@ -162,21 +213,8 @@ class baseUndoer:
             setattr(u,key,val)
             if key not in u.optionalIvars:
                 u.optionalIvars.append(key)
-    
-        return bunch
     #@nonl
-    #@-node:EKR.20040526150818:getBeed
-    #@+node:EKR.20040526150818.1:peekBeed
-    def peekBead (self,n):
-        
-        u = self
-        if n < 0 or n >= len(u.beads):
-            return None
-        bunch = u.beads[n]
-        # g.trace(n,len(u.beads),bunch)
-        return bunch
-    #@nonl
-    #@-node:EKR.20040526150818.1:peekBeed
+    #@-node:ekr.20060127070008:setIvarsFromBunch
     #@+node:ekr.20050126081529:recognizeStartOfTypingWord
     def recognizeStartOfTypingWord (self,
         old_lines,old_row,old_col,old_ch, 
@@ -290,7 +328,7 @@ class baseUndoer:
             u.setRedoType(bunch.undoType)
         else:
             u.setRedoType("Can't Redo")
-            
+        
         u.cutStack()
     #@nonl
     #@-node:ekr.20031218072017.3616:setUndoTypes
@@ -476,9 +514,18 @@ class baseUndoer:
         u = self ; body = u.c.frame.body
         if u.redoing or u.undoing: return
         
-        # Must use a _separate_ bunch than that created by beforeChangeGroup.
-        # (To allow separate bunch.kind fields.
-        bunch = u.createCommonBunch(p)
+        if 1: # New code in 4.4b2: just change the kind of the bunch from 'beforeGroup' to 'endGroup'
+    
+            bunch =  u.beads[u.bead]
+            if bunch.kind == 'beforeGroup':
+                bunch.kind = 'afterGroup'
+            else:
+                g.trace('oops: expecting beforeGroup, got %s' % bunch.kind)
+            
+        else:
+            # Must use a _separate_ bunch than that created by beforeChangeGroup.
+            # (To allow separate bunch.kind fields.
+            bunch = u.createCommonBunch(p)
     
         # Set the types & helpers.
         bunch.kind = 'afterGroup'
@@ -487,7 +534,7 @@ class baseUndoer:
         # Set helper only for undo:
         # The bead pointer will point to an 'beforeGroup' bead for redo.
         bunch.undoHelper = u.undoGroup
-        bunch.redoHelper = None
+        bunch.redoHelper = u.redoGroup ### Was None
         
         bunch.dirtyVnodeList = dirtyVnodeList
         
@@ -496,15 +543,17 @@ class baseUndoer:
         
         # Tells whether to report the number of separate changes undone/redone.
         bunch.reportFlag = reportFlag
-    
-        # Push the bunch.
-        u.bead += 1
-        u.beads[u.bead:] = [bunch]
+        
+        if 0:
+            # Push the bunch.
+            u.bead += 1
+            u.beads[u.bead:] = [bunch]
     
         # Recalculate the menu labels.
         u.setUndoTypes()
         
         # g.trace(u.undoMenuLabel,u.redoMenuLabel)
+    #@nonl
     #@-node:ekr.20050315134017.4:afterChangeGroup
     #@+node:ekr.20050315134017.2:afterChangeNodeContents
     def afterChangeNodeContents (self,p,command,bunch,dirtyVnodeList=[]):
@@ -529,12 +578,18 @@ class baseUndoer:
         bunch.newMarked = p.isMarked()
         bunch.newSel = body.getTextSelection()
         
-        # Push the bunch.
-        u.bead += 1
-        u.beads[u.bead:] = [bunch]
+        # New in 4.4b2:  Add this to the group if it is being accumulated.
+        bunch2 = u.beads[u.bead]
+        if bunch2.kind == 'beforeGroup':
+            # Just append the new bunch the group's items.
+            bunch2.items.append(bunch)
+        else:
+            # Push the bunch.
+            u.bead += 1
+            u.beads[u.bead:] = [bunch]
     
-        # Recalculate the menu labels.
-        u.setUndoTypes()
+            # Recalculate the menu labels.
+            u.setUndoTypes()
     #@nonl
     #@-node:ekr.20050315134017.2:afterChangeNodeContents
     #@+node:ekr.20050315134017.3:afterChangeTree
@@ -811,8 +866,9 @@ class baseUndoer:
         
         # Set helper only for redo:
         # The bead pointer will point to an 'afterGroup' bead for undo.
-        bunch.undoHelper = None
+        bunch.undoHelper = u.undoGroup ## None
         bunch.redoHelper = u.redoGroup
+        bunch.items = []
     
         # Push the bunch.
         u.bead += 1
@@ -1441,35 +1497,33 @@ class baseUndoer:
         
         '''Process beads until the matching 'afterGroup' bead is seen.'''
         
-        u = self ; c = u.c ; count = 0
+        u = self
+    
+        # Remember these values.
+        c = u.c
+        dirtyVnodeList = u.dirtyVnodeList or []
+        newSel = u.newSel
+        p = u.p.copy()
+        
         u.groupCount += 1
-        while 1:
-            u.bead += 1
-            d = u.getBead(u.bead+1) # sets ivars, including u.p.
-            if not d:
-                s = "Undo stack overrun for %s" % u.undoType
-                g.es_trace(s, color="red")
-                break
-            elif u.kind == 'afterGroup':
-                break
-            elif u.redoHelper:
-                count += 1
-                u.redoHelper()
+        
+        bunch = u.beads[u.bead] ; count = 0
+        for z in bunch.items:
+            self.setIvarsFromBunch(z)
+            if z.redoHelper:
+                z.redoHelper() ; count += 1
             else:
-                s = "No group redo helper for %s" % u.undoType
-                g.es_trace(s,color="red")
+                g.trace('oops: no redo helper for %s' % u.undoType)
+    
         u.groupCount -= 1
         
-        if u.dirtyVnodeList: # May be None instead of [].
-            for v in u.dirtyVnodeList:
-                v.t.setDirty()
+        for v in dirtyVnodeList:
+            v.t.setDirty()
     
-        if u.reportFlag:
-            g.es("redo %d instances" % count)
+        g.es("redo %d instances" % count)
             
-        c.selectPosition(u.p)
-        if u.newSel:
-            c.frame.body.setTextSelection(u.newSel)
+        c.selectPosition(p)
+        newSel and c.frame.body.setTextSelection(newSel)
     #@nonl
     #@-node:ekr.20050318085432.6:redoGroup
     #@+node:ekr.20050318085432.7:redoNodeContents
@@ -1654,36 +1708,33 @@ class baseUndoer:
         
         '''Process beads until the matching 'beforeGroup' bead is seen.'''
     
-        u = self ; c = u.c ; count = 0
-        reportFlag = u.reportFlag
+        u = self
+        
+        # Remember these values.
+        c = u.c
+        dirtyVnodeList = u.dirtyVnodeList or []
+        oldSel = u.oldSel
+        p = u.p.copy()
+    
         u.groupCount += 1
-    
-        while 1:
-            u.bead -= 1
-            d = u.getBead(u.bead) # sets ivars, including u.p.
-            if not d:
-                s = "Undo stack underrun for %s" % u.undoType
-                g.es_trace(s,color="red")
-                break
-            elif u.kind == 'beforeGroup':
-                break
-            elif u.undoHelper:
-                count += 1
-                u.undoHelper()
+        
+        bunch = u.beads[u.bead] ; count = 0
+        for z in bunch.items:
+            self.setIvarsFromBunch(z)
+            if z.undoHelper:
+                z.undoHelper() ; count += 1
             else:
-                s = "No group undo helper for %s" % u.undoType
-                g.es_trace(s, color="red")
-               
-        if u.dirtyVnodeList: # May be None instead of [].
-            for v in u.dirtyVnodeList:
-                v.t.clearDirty()
-    
+                g.trace('oops: no undo helper for %s' % u.undoType)
+            
         u.groupCount -= 1
-        if reportFlag:
-            g.es("undo %d instances" % count)
+                   
+        for v in dirtyVnodeList:
+            v.t.clearDirty()
     
-        if u.oldSel:
-            c.frame.body.setTextSelection(u.oldSel)
+        g.es("undo %d instances" % count)
+        
+        c.selectPosition(p)
+        oldSel and c.frame.body.setTextSelection(oldSel)
     #@nonl
     #@-node:ekr.20050318085713:undoGroup
     #@+node:ekr.20050412083244:undoHoistNode & undoDehoistNode
