@@ -310,7 +310,7 @@ class leoFind:
             self.findNext()
     #@nonl
     #@-node:ekr.20031218072017.3063:findNextCommand
-    #@+node:ekr.20031218072017.3064:fndPreviousCommand
+    #@+node:ekr.20031218072017.3064:findPreviousCommand
     # The user has selected the "Find Previous" menu item.
     
     def findPreviousCommand(self,c):
@@ -326,7 +326,7 @@ class leoFind:
     
         self.reverse = not self.reverse
     #@nonl
-    #@-node:ekr.20031218072017.3064:fndPreviousCommand
+    #@-node:ekr.20031218072017.3064:findPreviousCommand
     #@+node:EKR.20040503070514:handleUserClick
     def handleUserClick (self,p):
         
