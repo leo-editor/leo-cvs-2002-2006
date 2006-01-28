@@ -279,14 +279,14 @@
 <v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = False</vh></v>
 </v>
-<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
@@ -330,35 +330,7 @@
 </v>
 <v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060122105527.9"><vh>Modes</vh>
-<v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
-<v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
-</v>
-<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
-<v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
-</v>
-<v t="ekr.20060122105527.12"><vh>@@mode Find (Control-F)</vh>
-<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
-</v>
-<v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
-<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
-<v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
-</v>
-<v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
-</v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
-<v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060124070546" a="V"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
-<v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060122105527.9"><vh>Modes</vh>
+<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
@@ -379,7 +351,35 @@
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+<v t="ekr.20060122105527.22" a="E" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
+<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
+<v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
+</v>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
+<v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
+</v>
+<v t="ekr.20060122105527.12"><vh>@@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
+</v>
+<v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
+<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
+<v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
+</v>
+<v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
+</v>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
+<v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
+<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060122105527.22" a="EV" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
 </vnodes>
@@ -4027,8 +4027,10 @@ scroll-down                         ! text = PageDn
 scroll-up                           ! text = PageUp 
 scroll-down-extend-selection        ! text = Shift-PageDn
 scroll-up-extend-selection          ! text = Shift-PageUp
-select-all                          = None # Shift-Ctrl-A conflicts with beginning-of-line-extend-selection.
+select-all                          = Alt-Shift-A # Shift-Ctrl-A conflicts with beginning-of-line-extend-selection.
+sort-siblings                       = Alt-A
 split-line                          = Alt-Ctrl-o
+
 toggle-active-pane                  = Ctrl-T
 undo                                = Ctrl-Z
 unindent-region                     = Ctrl-[
