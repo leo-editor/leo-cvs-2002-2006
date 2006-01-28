@@ -1267,9 +1267,7 @@ class leoMenu:
         but this method **never** binds any shortcuts.'''
         
         c = self.c ; f = c.frame ; k = c.k
-        
         if g.app.unitTesting: return
-    
         for data in table:
             #@        << get label & command or continue >>
             #@+node:ekr.20051021091958:<< get label & command or continue >>
@@ -1299,13 +1297,17 @@ class leoMenu:
             #@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             # New in 4.4b2: command can be a minibuffer-command name (a string)
             minibufferCommand = type(command) == type('')
+            accel = None
             if minibufferCommand:
-                commandName = command
+                commandName = command 
                 command = c.commandsDict.get(commandName)
                 if command:
                     rawKey,bunchList = c.config.getShortcut(commandName)
-                    bunch = bunchList and bunchList[0]
-                    accel = bunch and bunch.val
+                    # Pick the first entry that is not a mode.
+                    for bunch in bunchList:
+                        if not bunch.pane.endswith('-mode'):
+                            # g.trace('1',bunch)
+                            accel = bunch and bunch.val ; break
                 else:
                     g.trace('No inverse for %s' % commandName)
                     continue # There is no way to make this menu entry.
@@ -1313,9 +1315,10 @@ class leoMenu:
                 # First, get the old-style name.
                 commandName = self.computeOldStyleShortcutKey(label)
                 rawKey,bunchList = c.config.getShortcut(commandName)
-                bunch = bunchList and bunchList[0]
-                accel = bunch and bunch.val
-                
+                for bunch in bunchList:
+                    if not bunch.pane.endswith('-mode'):
+                        # g.trace('2',bunch)
+                        accel = bunch and bunch.val ; break
                 # Second, get new-style name.
                 if not accel:
                     #@        << compute emacs_name >>
@@ -1348,16 +1351,17 @@ class leoMenu:
                     if emacs_name:
                         commandName = emacs_name
                         rawKey,bunchList = c.config.getShortcut(emacs_name)
-                        bunch = bunchList and bunchList[0]
-                        accel = bunch and bunch.val
+                        # Pick the first entry that is not a mode.
+                        for bunch in bunchList:
+                            if not bunch.pane.endswith('-mode'):
+                                accel = bunch.val ; break
+                                # g.trace('2',bunch)
                     elif not dynamicMenu:
                         g.trace('No inverse for %s' % commandName)
-                
             #@nonl
             #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             #@nl
             if 1:
-                # To do: we might call k.masterCommand directly
                 accelerator = stroke = k.shortcutFromSetting(accel) or ''
                 def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
                     return k.masterMenuHandler(stroke,command,commandName)

@@ -273,7 +273,7 @@ class keyHandlerClass:
             # g.trace('No shortcut for %s' % commandName)
             return
         if pane.endswith('mode'):
-            g.trace('Ignorning mode binding',shortcut,commandName)
+            # g.trace('Ignorning mode binding',shortcut,commandName)
             return
         bunchList = k.bindingsDict.get(shortcut,[])
         k.computeKeysym_numDicts(shortcut)
@@ -286,7 +286,7 @@ class keyHandlerClass:
                 commandName != bunch.commandName
             ):
                 g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
-                    k.prettyPrintKey(shortcut),
+                    shortcut,
                     bunch.commandName,commandName,pane),
                     color='blue')
                 return
@@ -301,7 +301,7 @@ class keyHandlerClass:
             if not theFilter or shortcut.find(theFilter) != -1:
                 pane_filter = c.config.getString('trace_bindings_pane_filter')
                 if not pane_filter or pane_filter.lower() == pane:
-                    g.trace(pane,k.prettyPrintKey(shortcut),commandName)
+                    g.trace(pane,shortcut,commandName)
         #@nonl
         #@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
         #@nl
@@ -309,7 +309,8 @@ class keyHandlerClass:
             k.bindKeyHelper(pane,shortcut,callback,commandName)
             bunchList.append(
                 g.bunch(pane=pane,func=callback,commandName=commandName))
-            shortcut = '<%s>' % shortcut.lstrip('<').rstrip('>')
+            shortcut = '<%s>' % shortcut.strip().lstrip('<').rstrip('>')
+            # if shortcut.startswith('<Shift'): g.trace('ooops',shortcut,g.callers())
             k.bindingsDict [shortcut] = bunchList
             return True
     
@@ -387,7 +388,7 @@ class keyHandlerClass:
             __pychecker__ = '--no-argsused' # event must be present.
             return self.c.openWith(data=data)
         
-        if c.simple_bindings:
+        if g.app.new_keys:
             return k.bindKey('all',shortcut,openWithCallback,'open-with')
         else:
             bind_shortcut = k.tkBindingFromSetting(shortcut)
@@ -1123,7 +1124,7 @@ class keyHandlerClass:
                 has_cmd = True ; has_ctrl = False
             if has_alt and not has_ctrl:
                 has_ctrl = True ; has_alt = False
-        if 1: # New, simplified.
+        if 0: # New, simplified.
             #@        << convert minus signs to plus signs >>
             #@+node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
             # Replace all minus signs by plus signs, except a trailing minus:
@@ -1174,29 +1175,35 @@ class keyHandlerClass:
             #@-node:ekr.20060128103640.2:<< compute the last field >>
             #@nl
             #@        << compute bind_shortcut >>
-            #@+node:ekr.20060128103640.3:<< compute bind_shortcut >>
+            #@+node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
             z = []
             
             for flag,val in (
                 (has_alt, 'Alt-'),
                 (has_ctrl,'Control-'),
                 (has_cmd, 'Command-'),
-                (has_shift,'Shift-'),
+                #(has_shift,'Shift-'),
             ):
                 if flag: z.append(val)
                 
-            if not z and len(bind_last) == 1:
-                if last.isupper():  z.append('Key-Shift-')
-                else:               z.append('Key-')
-            
-            z.append(bind_last)
+            # Tk is too picky about bindings.
+            if has_shift:
+                if len(bind_last) == 1:
+                    z.append(bind_last.upper())
+                else:
+                    z.append('Shift-%s' % bind_last)
+            else:
+                if len(bind_last) == 1:
+                    z.append('Key-%s' % bind_last)
+                else:
+                    z.append(bind_last)
                 
             bind_shortcut = ''.join(z)
             
             if not g.app.new_keys:
                 bind_shortcut = '<%s>' % bind_shortcut
             #@nonl
-            #@-node:ekr.20060128103640.3:<< compute bind_shortcut >>
+            #@-node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
             #@nl
             #@        << compute menu_shortcut >>
             #@+node:ekr.20060128103640.4:<< compute menu_shortcut >>
@@ -1209,18 +1216,14 @@ class keyHandlerClass:
                 (has_shift,'Shift+'),
             ):
                 if flag: z.append(val)
-            
-            if not z and len(menu_last) == 1:
-                if last.isupper():  z.append('Shift+')
-                else:               z.append('Key+')
-            
+                
             if len(menu_last) == 1:
+                if not z:  z.append('Key-')
                 menu_last = menu_last.upper()
             
             z.append(menu_last)
                 
             menu_shortcut = ''.join(z)
-            #@nonl
             #@-node:ekr.20060128103640.4:<< compute menu_shortcut >>
             #@nl
         else:
@@ -1406,8 +1409,7 @@ class keyHandlerClass:
             for bunch in bunchList:
                 shortcut = bunch.val
                 if shortcut not in (None,'None'):
-                    s1 = key
-                    s2 = k.prettyPrintKey(shortcut)
+                    s1 = key ; s2 = shortcut
                     n = max(n,len(s1))
                     data.append((s1,s2),)
                     
@@ -1857,14 +1859,14 @@ class keyHandlerClass:
             for b in bunchList:
                 if not brief or k.isPlainKey(key):
                     pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
-                    s1 = k.prettyPrintKey(key) + pane
+                    s1 = key + pane
                     s2 = b.commandName
                     n = max(n,len(s1))
                     data.append((s1,s2),)
         
         # This isn't perfect in variable-width fonts.
         for s1,s2 in data:
-            g.es('%*s\t%s' % (-(n+1),s1,s2),tabName=tabName)
+            g.es('%*s %s' % (-n,s1,s2),tabName=tabName)
                        
         state = k.unboundKeyAction 
         k.showStateAndMode()
@@ -1886,14 +1888,14 @@ class keyHandlerClass:
         for commandName in commandNames:
             shortcutList = inverseBindingDict.get(commandName,[''])
             for shortcut in shortcutList:
-                s1 = commandName
-                s2 = k.prettyPrintKey(shortcut)
+                s1 = commandName ; s2 = shortcut
                 n = max(n,len(s1))
                 data.append((s1,s2),)
                     
         # This isn't perfect in variable-width fonts.
         for s1,s2 in data:
-            g.es('%*s\t%s' % (-(n+1),s1,s2),tabName=tabName)
+            # g.es('%*s %s' % (-n,s1,s2),tabName=tabName)
+            g.es('%s %s' % (s1,s2),tabName=tabName)
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
     def repeatComplexCommand (self,event):
@@ -2254,8 +2256,8 @@ class keyHandlerClass:
             shortcut = k.tkBindingFromSetting(shortcut)
             ok = k.bindShortcut (pane,shortcut,func,commandName)
             if verbose and ok:
-                 g.es_print('Registered %s bound to %s' % (
-                    commandName,k.prettyPrintKey(shortcut)),color='blue')
+                 g.es_print('Registered %s bound to %s' % (commandName,shortcut),
+                    color='blue')
         else:
             if verbose:
                 g.es_print('Registered %s' % (commandName), color='blue')
@@ -2423,7 +2425,7 @@ class keyHandlerClass:
             for commandName in k.mb_tabList:
                 shortcutList = inverseBindingDict.get(commandName,[''])
                 for shortcut in shortcutList:
-                    g.es('%s %s' % (commandName,k.prettyPrintKey(shortcut)),tabName='Completion')
+                    g.es('%s %s' % (commandName,shortcut),tabName='Completion')
     
         c.frame.bodyWantsFocus()
     #@nonl
@@ -2442,7 +2444,7 @@ class keyHandlerClass:
                 for b in bunchList:
                     # g.trace(shortcut,repr(b.pane))
                     pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
-                    s = '%s %s' % (k.prettyPrintKey(shortcut),pane)
+                    s = '%s %s' % (shortcut,pane)
                     if s not in shortcutList:
                         shortcutList.append(s)
                 d [b.commandName] = shortcutList
@@ -2519,16 +2521,6 @@ class keyHandlerClass:
         return ''
     #@nonl
     #@-node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
-    #@+node:ekr.20051122104219:prettyPrintKey
-    def prettyPrintKey (self,key):
-        
-        '''Print a shortcut in a pleasing way.'''
-        
-        k = self
-        
-        return k.shortcutFromSetting(key) or ''
-    #@nonl
-    #@-node:ekr.20051122104219:prettyPrintKey
     #@+node:ekr.20060114171910:traceBinding
     def traceBinding (self,bunch,shortcut,w):
     
@@ -2542,7 +2534,7 @@ class keyHandlerClass:
         pane_filter = c.config.getString('trace_bindings_pane_filter')
         
         if not pane_filter or pane_filter.lower() == bunch.pane:
-             g.trace(bunch.pane,k.prettyPrintKey(shortcut),bunch.commandName,w._name)
+             g.trace(bunch.pane,shortcut,bunch.commandName,w._name)
     #@nonl
     #@-node:ekr.20060114171910:traceBinding
     #@-node:ekr.20051002152108.1:Shared helpers
