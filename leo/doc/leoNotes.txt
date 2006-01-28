@@ -5133,7 +5133,6 @@ self.endSearch(i,j)
 #@-node:ekr.20060124181213.3:<< old code >>
 #@-node:ekr.20050920084036.268:plainSearchHelper
 #@-node:ekr.20060124181213:Unused helpers
-#@-node:ekr.20031218072017.434:Unused code
 #@+node:ekr.20060123125317.16:Legacy commands minibufferFind (not used)
 if 0: # There is no need for these:  the find-tab-xxx commands do the same thing.
     @others
@@ -5185,6 +5184,17 @@ def endSearch(self,i,j):
     k.showStateAndMode()
 #@nonl
 #@-node:ekr.20060123091352.1:minibufferFind.endSearch
+#@+node:ekr.20051122104219:prettyPrintKey
+def prettyPrintKey (self,key):
+    
+    '''Print a shortcut in a pleasing way.'''
+    
+    k = self
+    
+    return k.shortcutFromSetting(key) or ''
+#@nonl
+#@-node:ekr.20051122104219:prettyPrintKey
+#@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
 #@-node:ekr.20031218072017.329:@thin ../doc/leoNotes.txt

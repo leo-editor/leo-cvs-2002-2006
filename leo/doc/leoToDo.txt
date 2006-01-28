@@ -9,8 +9,513 @@ def pushBeed (self
 #@nonl
 #@-node:ekr.20060127113243.1:Clicking (scrolling) in canvas can lose headline text
 #@+node:ekr.20060126163152.1:(Unified <Key> handler)
-#@+node:ekr.20060127134838:Alt-Shift-A is being shown as Alt-A !!
-g.app.gui.new_keys
+#@+node:ekr.20060127135455:To do
+#@+node:ekr.20060128081543:Initial Ctrl-F should bring find-tab to front if it does not exist
+#@-node:ekr.20060128081543:Initial Ctrl-F should bring find-tab to front if it does not exist
+#@+node:ekr.20060127185338:Create '+' binding so masterKeyHandler can 'shadow' the present code
+#@-node:ekr.20060127185338:Create '+' binding so masterKeyHandler can 'shadow' the present code
+#@+node:ekr.20060127100038:Remove specialCallback hacks
+#@-node:ekr.20060127100038:Remove specialCallback hacks
+#@-node:ekr.20060127135455:To do
+#@+node:ekr.20060126163152.2:gui.strokeFromEvent
+def strokeFromEvent (self,event):
+    
+    c = self.c ; k = c.k
+    if event is None: return ''
+    state = event.state
+    keysym = event.keysym or ''
+    
+    s = []
+    shift = (state & 1) == 1
+    caps  = (state & 2) == 2
+    ctrl  = (state & 4) == 4
+    alt   = (state & 0x20000) == 0x20000
+    key   = not alt and not ctrl and not shift
+    
+    for z,val in (
+        # (key, 'Key+'),
+        (alt, 'Alt+'),
+        (ctrl,'Ctrl+'),
+        (shift,'Shift'),
+    ):
+        if z: s.append(val)
+        
+    s.append(keysym)
+    s = ''.join(s)
+    g.trace(s)
+    return s
+#@nonl
+#@-node:ekr.20060126163152.2:gui.strokeFromEvent
+#@+node:ekr.20051006125633:Binding
+#@+node:ekr.20060127183752:masterKeyHandler
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    k = self
+    
+    stroke = g.app.gui.strokeFromEvent(event)
+    
+    func = k.matchStroke(stroke)
+    k.masterCommand(stroke,func) # etc.
+#@nonl
+#@-node:ekr.20060127183752:masterKeyHandler
+#@+node:ekr.20050920085536.16:bindKey
+def bindKey (self,pane,shortcut,callback,commandName):
+
+    '''Bind the indicated shortcut (a Tk keystroke) to the callback.
+    callback calls commandName (for error messages).'''
+    
+    k = self ; c = k.c
+
+    # g.trace(pane,shortcut,commandName)
+
+    if not shortcut:
+        # g.trace('No shortcut for %s' % commandName)
+        return
+    if pane.endswith('mode'):
+        # g.trace('Ignorning mode binding',shortcut,commandName)
+        return
+    bunchList = k.bindingsDict.get(shortcut,[])
+    k.computeKeysym_numDicts(shortcut)
+    << give warning and return if there is a serious redefinition >>
+    << trace bindings if enabled in leoSettings.leo >>
+    try:
+        k.bindKeyHelper(pane,shortcut,callback,commandName)
+        bunchList.append(
+            g.bunch(pane=pane,func=callback,commandName=commandName))
+        shortcut = '<%s>' % shortcut.strip().lstrip('<').rstrip('>')
+        # if shortcut.startswith('<Shift'): g.trace('ooops',shortcut,g.callers())
+        k.bindingsDict [shortcut] = bunchList
+        return True
+
+    except Exception: # Could be a user error.
+        if not g.app.menuWarningsGiven:
+            g.es_print('Exception binding %s to %s' % (shortcut,commandName))
+            g.es_exception()
+            g.app.menuWarningsGiven = True
+
+        return False
+#@nonl
+#@+node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
+for bunch in bunchList:
+    if ( bunch and
+        # (not bunch.pane.endswith('-mode') and not pane.endswith('-mode')) and
+        (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
+        commandName != bunch.commandName
+    ):
+        g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
+            shortcut,
+            bunch.commandName,commandName,pane),
+            color='blue')
+        return
+#@nonl
+#@-node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
+#@+node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
+if c.config.getBool('trace_bindings'):
+    theFilter = c.config.getString('trace_bindings_filter') or ''
+    # g.trace(repr(theFilter))
+    if not theFilter or shortcut.find(theFilter) != -1:
+        pane_filter = c.config.getString('trace_bindings_pane_filter')
+        if not pane_filter or pane_filter.lower() == pane:
+            g.trace(pane,shortcut,commandName)
+#@nonl
+#@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
+#@+node:ekr.20051022094136:bindKeyHelper
+def bindKeyHelper(self,pane,shortcut,callback,commandName):
+
+    k = self ; c = k.c
+    
+    body = c.frame.body.bodyCtrl
+    log  = c.frame.log.logCtrl
+    menu = c.frame.menu
+    minibuffer = c.miniBufferWidget
+    tree = c.frame.tree.canvas
+    
+    d = {
+        'all':  [body,log,tree], # Probably not wise: menu
+        'body': [body],
+        'log':  [log],
+        'menu': [menu],         # Not used, and probably dubious.
+        'mini': [minibuffer],   # Needed so ctrl-g will work in the minibuffer!
+        'text': [body,log],
+        'tree': [tree],
+    }
+    
+    # if pane: g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+    
+    widgets = d.get((pane or '').lower(),[])
+    
+    # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
+    # There should only be one binding for the minibuffer: the <Key>+ binding.
+    if shortcut == '<Key>':
+        # Important.  We must make this binding if the minibuffer can ever get focus.
+        if self.useTextWidget:
+            widgets.append(minibuffer)
+        for w in widgets:
+            w.bind(shortcut,callback,'+')
+    else:
+        # Put *everything* in a bindtag set specific to this commander.
+        if 0: # Support plain-key bindings.
+            tag = k.plainKeyTag()
+            body.bind_class(tag,shortcut,callback)
+        
+        # Put everything *except* plain keys in a normal binding.
+        if not k.isPlainKey(shortcut):
+            for w in widgets:
+                w.bind(shortcut,callback)
+            # Get rid of the default binding in the menu. (E.g., Alt-f)
+            menu.bind(shortcut,lambda e: 'break')
+#@nonl
+#@-node:ekr.20051022094136:bindKeyHelper
+#@+node:ekr.20060120082630:plainKeyTag
+def plainKeyTag (self):
+    
+    return '%s-%s' % ('plain-key',self.c.fileName())
+#@nonl
+#@-node:ekr.20060120082630:plainKeyTag
+#@-node:ekr.20050920085536.16:bindKey
+#@+node:ekr.20051008135051.1:bindOpenWith
+def bindOpenWith (self,shortcut,name,data):
+    
+    '''Make a binding for the Open With command.'''
+    
+    k = self ; c = k.c
+    
+    # The first parameter must be event, and it must default to None.
+    def openWithCallback(event=None,self=self,data=data):
+        __pychecker__ = '--no-argsused' # event must be present.
+        return self.c.openWith(data=data)
+    
+    if g.app.new_keys:
+        return k.bindKey('all',shortcut,openWithCallback,'open-with')
+    else:
+        bind_shortcut = k.tkBindingFromSetting(shortcut)
+    
+        def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
+            return k.masterCommand(event,func,stroke)
+                
+        return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
+#@nonl
+#@-node:ekr.20051008135051.1:bindOpenWith
+#@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
+def bindShortcut (self,pane,shortcut,command,commandName):
+    
+    '''Bind one shortcut from a menu table.'''
+    
+    k = self ; shortcut = str(shortcut)
+    
+    # g.trace(commandName,shortcut,g.callers())
+
+    def menuFuncCallback (event,command=command,commandName=commandName):
+        return command(event)
+
+    def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+        return k.masterCommand(event,func,stroke,commandName=commandName)
+        
+    return k.bindKey(pane,shortcut,keyCallback2,commandName)
+#@nonl
+#@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
+#@+node:ekr.20051011103654:checkBindings
+def checkBindings (self):
+    
+    '''Print warnings if commands do not have any @shortcut entry.
+    The entry may be `None`, of course.'''
+    
+    k = self ; c = k.c
+    
+    names = c.commandsDict.keys() ; names.sort()
+    
+    for name in names:
+        abbrev = k.abbreviationsDict.get(name)
+        key = c.frame.menu.canonicalizeMenuName(abbrev or name)
+        key = key.replace('&','')
+        if not g.app.config.exists(c,key,'shortcut'):
+            if abbrev:
+                 g.trace('No shortcut for abbrev %s -> %s = %s' % (
+                    name,abbrev,key))
+            else:
+                g.trace('No shortcut for %s = %s' % (name,key))
+#@nonl
+#@-node:ekr.20051011103654:checkBindings
+#@+node:ekr.20060119063223.1:computeKeysym_numDicts
+def computeKeysym_numDicts (self,shortcut):
+    
+    k = self
+    
+    if shortcut == '<Key>': return
+    
+    n = k.keysym_numberInverseDict.get(shortcut)
+    if n is not None:
+        # print 'keysym_num for %s = %d' % (shortcut,n)
+        return
+        
+    def callback (event,shortcut=shortcut):
+        n = event.keysym_num
+        # Trace causes problems.
+        print '%5d = %s' % (n,shortcut)
+        k.keysym_numberDict [n] = shortcut
+        k.keysym_numberInverseDict [shortcut] = n
+        
+    if 0:  # This causes all sorts of problems.
+        t = Tk.Text(k.c.frame.outerFrame)
+        t = k.c.frame.body.bodyCtrl
+        t.bind(shortcut,callback)
+        t.event_generate(shortcut)
+        # t.update()
+        # t.unbind(shortcut)
+#@nonl
+#@-node:ekr.20060119063223.1:computeKeysym_numDicts
+#@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
+def copyBindingsToWidget (self,paneOrPanes,w):
+    
+    '''Copy all bindings for the given panes to widget w.
+    
+    paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+    
+    # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
+
+    k = self ; d = k.bindingsDict
+    bindings = {}
+    keys = d.keys() ; keys.sort()
+    if type(paneOrPanes) == type('abc'):
+        panes = [paneOrPanes] # list(paneOrPanes) does not work.
+    else:
+        panes = paneOrPanes
+    # g.trace(panes)
+
+    for shortcut in keys:
+        # Do not copy plain key bindings.
+        if not k.isPlainKey(shortcut):
+            shortcutsBunchList = []
+            for pane in panes:
+                old_panes = bindings.get(shortcut,[])
+                assert(type(old_panes)==type([]))
+                if old_panes and pane in old_panes:
+                    # This should have been caught earlier, but another check doesn't hurt.
+                    g.trace('*** redefining %s in %s' % (shortcut,pane))
+                else:
+                    bunchList = d.get(shortcut,[])
+                    for bunch in bunchList:
+                        if bunch.pane == pane:
+                            shortcutsBunchList.append(bunch)
+                            old_panes.append(pane)
+                            bindings [shortcut] = old_panes
+            # Create bindings for the shortcut in all panes.
+            if shortcutsBunchList:
+                self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
+                                
+    # Bind all other keys to k.masterCommand.
+    def generalTextKeyCallback (event,k=self):
+        k.masterCommand(event,func=None,stroke='<Key>',commandName=None)
+
+    w.bind('<Key>',generalTextKeyCallback)
+#@nonl
+#@+node:ekr.20060113062832.1:copyBindingsHelper
+def copyBindingsHelper(self,bunchList,shortcut,w):
+
+    k = self ; c = k.c
+
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
+
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)
+#@nonl
+#@-node:ekr.20060113062832.1:copyBindingsHelper
+#@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
+#@+node:ekr.20051007080058:makeAllBindings
+def makeAllBindings (self):
+    
+    k = self ; c = k.c
+
+    k.bindingsDict = {}
+    k.makeSpecialBindings()
+    k.addModeCommands() 
+    k.makeBindingsFromCommandsDict()
+    if k.useTextWidget:
+        k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
+    k.checkBindings()
+    
+    if 0:
+        # Print the keysym_num dicts.
+        d = k.keysym_numberInverseDict
+        keys = d.keys() ; keys.sort()
+        for key in key():
+            n = d.get(key)
+            # print 'keysym_num for %s = %d' % (key,n)
+#@nonl
+#@-node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20060104154937:addModeCommands
+def addModeCommands (self):
+    
+    '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
+
+    k = self ; c = k.c
+    d = g.app.config.modeCommandsDict
+    
+    # Create the callback functions and update c.commandsDict and k.inverseCommandsDict.
+    for key in d.keys():
+
+        def enterModeCallback (event=None,name=key):
+            k.enterNamedMode(event,name)
+
+        c.commandsDict[key] = f = enterModeCallback
+        k.inverseCommandsDict [f.__name__] = key
+#@nonl
+#@-node:ekr.20060104154937:addModeCommands
+#@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+def makeSpecialBindings (self):
+    
+    '''Make the bindings and set ivars for sepcial keystrokes.'''
+    
+    k = self ; c = k.c
+    
+    # These defaults may be overridden.
+    for pane,stroke,ivar,commandName,func in (
+        ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
+        ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+        ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
+        #('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+        # These bindings for inside the minibuffer are strange beasts.
+        # They are sent directly to k.fullcommand with a special callback.
+        # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
+        # ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
+        # ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
+        # ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
+        # ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
+    ):
+        # Get the user shortcut *before* creating the callbacks.
+        junk, bunchList = c.config.getShortcut(commandName)
+        # g.trace(commandName,bunchList)
+        if bunchList:
+            for bunch in bunchList:
+                accel = (bunch and bunch.val)
+                shortcut = k.tkBindingFromSetting(accel)
+                self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
+        else:
+            accel = stroke
+            shortcut = k.tkBindingFromSetting(accel)
+            self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
+
+    # Add a binding for <Key> events, so all key events go through masterCommand.
+    def allKeysCallback (event):
+        return k.masterCommand(event,func=None,stroke='<Key>')
+
+    k.bindKey('all','<Key>',allKeysCallback,'master-command')
+#@nonl
+#@+node:ekr.20051220083410:makeSpecialBinding
+def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
+    
+    k = self
+    
+    # g.trace(commandName,shortcut,stroke)
+    
+    if pane == 'mini' and func != k.keyboardQuit:
+        if 0:
+            # Call a strange callback that bypasses k.masterCommand.
+            def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
+    
+            k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+    else:
+            # Create two-levels of callbacks.
+            def specialCallback (event,func=func):
+                return func(event)
+    
+            def keyCallback (event,func=specialCallback,stroke=shortcut):
+                return k.masterCommand(event,func,stroke)
+    
+            k.bindKey(pane,shortcut,keyCallback,commandName)
+    
+    if ivar:
+        setattr(k,ivar,shortcut)
+#@nonl
+#@-node:ekr.20051220083410:makeSpecialBinding
+#@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+#@+node:ekr.20051008134059:makeBindingsFromCommandsDict
+def makeBindingsFromCommandsDict (self):
+    
+    '''Add bindings for all entries in c.commandDict.'''
+
+    k = self ; c = k.c
+    keys = c.commandsDict.keys() ; keys.sort()
+
+    for commandName in keys:
+        command = c.commandsDict.get(commandName)
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val
+            if accel:
+                bind_shortcut = k.tkBindingFromSetting(accel)
+                k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
+                if 0:
+                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                    else:     g.trace(commandName)
+#@nonl
+#@-node:ekr.20051008134059:makeBindingsFromCommandsDict
+#@-node:ekr.20051006125633:Binding
+#@+node:ekr.20060128092340:Shortcuts
+#@+node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
+def isPlainKey (self,shortcut):
+    
+    '''Return true if the shortcut refers to a plain key.'''
+    
+    shortcut = shortcut or ''
+    shortcut1 = shortcut[:]
+
+    shift = 'Shift-'
+    shortcut = shortcut or ''
+    if shortcut.startswith('<'):   shortcut = shortcut[1:]
+    if shortcut.endswith('>'):     shortcut = shortcut[:-1]
+    if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
+    
+    # if len(shortcut) == 1:
+        # g.trace(shortcut1)
+
+    return len(shortcut) == 1
+#@nonl
+#@-node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
+#@+node:ekr.20060128081317:shortcutFromSetting, tkBindingFromSetting
+
+# - canonicalizeShortcut will be simplified and moved into shortcutFromSetting.
+
+# - tkBindingFromSetting will go away.
+
+def shortcutFromSetting (self,setting):
+    
+    return self.canonicalizeShortcut(setting)[1]
+    
+def tkBindingFromSetting (self,setting):
+
+    return self.canonicalizeShortcut(setting)[0]
 #@nonl
 #@+node:ekr.20031218072017.2098:canonicalizeShortcut
 @ This code "canonicalizes" both the shortcuts that appear in menus and the
@@ -41,7 +546,7 @@ def canonicalizeShortcut (self,shortcut):
             has_cmd = True ; has_ctrl = False
         if has_alt and not has_ctrl:
             has_ctrl = True ; has_alt = False
-    if 1: # New, simplified.
+    if 0: # New, simplified.
         << convert minus signs to plus signs >>
         << compute the last field >>
         << compute bind_shortcut >>
@@ -269,29 +774,35 @@ else:
 # g.trace('last',last,'bind_last',bind_last,'menu_last',menu_last)
 
 #@-node:ekr.20060128103640.2:<< compute the last field >>
-#@+node:ekr.20060128103640.3:<< compute bind_shortcut >>
+#@+node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
 z = []
 
 for flag,val in (
     (has_alt, 'Alt-'),
     (has_ctrl,'Control-'),
     (has_cmd, 'Command-'),
-    (has_shift,'Shift-'),
+    #(has_shift,'Shift-'),
 ):
     if flag: z.append(val)
     
-if not z and len(bind_last) == 1:
-    if last.isupper():  z.append('Key-Shift-')
-    else:               z.append('Key-')
-
-z.append(bind_last)
+# Tk is too picky about bindings.
+if has_shift:
+    if len(bind_last) == 1:
+        z.append(bind_last.upper())
+    else:
+        z.append('Shift-%s' % bind_last)
+else:
+    if len(bind_last) == 1:
+        z.append('Key-%s' % bind_last)
+    else:
+        z.append(bind_last)
     
 bind_shortcut = ''.join(z)
 
 if not g.app.new_keys:
     bind_shortcut = '<%s>' % bind_shortcut
 #@nonl
-#@-node:ekr.20060128103640.3:<< compute bind_shortcut >>
+#@-node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
 #@+node:ekr.20060128103640.4:<< compute menu_shortcut >>
 z = []
 
@@ -302,44 +813,17 @@ for flag,val in (
     (has_shift,'Shift+'),
 ):
     if flag: z.append(val)
-
-if not z and len(menu_last) == 1:
-    if last.isupper():  z.append('Shift+')
-    else:               z.append('Key+')
-
+    
 if len(menu_last) == 1:
+    if not z:  z.append('Key-')
     menu_last = menu_last.upper()
 
 z.append(menu_last)
     
 menu_shortcut = ''.join(z)
-#@nonl
 #@-node:ekr.20060128103640.4:<< compute menu_shortcut >>
 #@-node:ekr.20031218072017.2098:canonicalizeShortcut
-#@-node:ekr.20060127134838:Alt-Shift-A is being shown as Alt-A !!
-#@+node:ekr.20060127135455:To do
-#@+node:ekr.20060128081543:Initial Ctrl-F should bring find-tab to front if it does not exist
-#@-node:ekr.20060128081543:Initial Ctrl-F should bring find-tab to front if it does not exist
-#@+node:ekr.20060127185338:Create '+' binding so masterKeyHandler can 'shadow' the present code
-#@-node:ekr.20060127185338:Create '+' binding so masterKeyHandler can 'shadow' the present code
-#@+node:ekr.20060127100038:Remove specialCallback hacks
-#@-node:ekr.20060127100038:Remove specialCallback hacks
-#@-node:ekr.20060127135455:To do
-#@+node:ekr.20060127183752:masterKeyHandler
-def masterKeyHandler (self,event):
-    
-    '''In the new binding scheme, there is only one key binding.
-    
-    This is the handler for that binding.'''
-    
-    k = self
-    
-    stroke = g.app.gui.strokeFromEvent(event)
-    
-    func = k.matchStroke(stroke)
-    k.masterCommand(stroke,func) # etc.
-#@nonl
-#@-node:ekr.20060127183752:masterKeyHandler
+#@-node:ekr.20060128081317:shortcutFromSetting, tkBindingFromSetting
 #@+node:ekr.20060127185121:matchStroke
 def matchStroke (self,stroke):
     
@@ -369,159 +853,18 @@ def matchStroke (self,stroke):
     return k.unboundKeyHandler
 #@nonl
 #@-node:ekr.20060127185121:matchStroke
-#@+node:ekr.20051105155441:simulateCommand
-def simulateCommand (self,commandName):
+#@-node:ekr.20060128092340:Shortcuts
+#@+node:ekr.20051001051355:Dispatching...
+#@+node:ekr.20060128090219:masterMenuHandler
+def masterMenuHandler (self,stroke,command,commandName):
     
-    k = self ; c = k.c
+    k = self ; event = None ; func = command
     
-    func = c.commandsDict.get(commandName)
+    # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
     
-    if func:
-        # g.trace(commandName,func.__name__)
-        stroke = None
-        if commandName.startswith('specialCallback'):
-            event = None # A legacy function.
-        else: # Create a dummy event as a signal.
-            event = g.bunch(keysym = '',char = '',widget = None)
-        k.masterCommand(event,func,stroke)
-        return k.funcReturn
-    else:
-        g.trace('no command for %s' % (commandName),color='red')
-        if g.app.unitTesting: raise AttributeError
+    return k.masterCommand(event,func,stroke,commandName)
 #@nonl
-#@-node:ekr.20051105155441:simulateCommand
-#@+node:ekr.20031218072017.1723:createMenuEntries
-def createMenuEntries (self,menu,table,dynamicMenu=False):
-        
-    '''Create a menu entry from the table.
-    New in 4.4: this method shows the shortcut in the menu,
-    but this method **never** binds any shortcuts.'''
-    
-    c = self.c ; f = c.frame ; k = c.k
-    
-    if g.app.unitTesting: return
-
-    for data in table:
-        << get label & command or continue >>
-        << compute commandName & accel from label & command >>
-        if 1:
-            # To do: we might call k.masterCommand directly
-            accelerator = stroke = k.shortcutFromSetting(accel) or ''
-            def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
-                return k.masterMenuHandler(stroke,command,commandName)
-            realLabel = self.getRealMenuName(label)
-            amp_index = realLabel.find("&")
-            realLabel = realLabel.replace("&","")
-            self.add_command(menu,label=realLabel,
-                accelerator=accelerator,
-                command=masterMenuCallback,
-                underline=amp_index)
-        else:
-            # To do: remove defineMenuCallback
-            rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-            menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
-            realLabel = self.getRealMenuName(label)
-            << set amp_index using rawKey and realLabel >>
-            realLabel = realLabel.replace("&","")
-            self.add_command(menu,label=realLabel,
-                accelerator= menu_shortcut or '',
-                command=menuCallback,underline=amp_index)
-#@nonl
-#@+node:ekr.20051021091958:<< get label & command or continue >>
-ok = (
-    type(data) in (type(()), type([])) and
-    len(data) in (2,3)
-)
-    
-if ok:
-    if len(data) == 2:
-        # New in 4.4b2: command can be a minibuffer-command name (a string)
-        label,command = data
-    else:
-        # New in 4.4: we ignore shortcuts bound in menu tables.
-        label,junk,command = data
-else:
-    g.trace('bad data in menu table: %s' % repr(data))
-    continue # Ignore bad data
-     
-if ok and label in (None,'-'):
-    self.add_separator(menu)
-    continue # That's all.
-#@nonl
-#@-node:ekr.20051021091958:<< get label & command or continue >>
-#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-# New in 4.4b2: command can be a minibuffer-command name (a string)
-minibufferCommand = type(command) == type('')
-if minibufferCommand:
-    commandName = command
-    command = c.commandsDict.get(commandName)
-    if command:
-        rawKey,bunchList = c.config.getShortcut(commandName)
-        bunch = bunchList and bunchList[0]
-        accel = bunch and bunch.val
-    else:
-        g.trace('No inverse for %s' % commandName)
-        continue # There is no way to make this menu entry.
-else:
-    # First, get the old-style name.
-    commandName = self.computeOldStyleShortcutKey(label)
-    rawKey,bunchList = c.config.getShortcut(commandName)
-    bunch = bunchList and bunchList[0]
-    accel = bunch and bunch.val
-    
-    # Second, get new-style name.
-    if not accel:
-        << compute emacs_name >>
-            # Contains the not-so-horrible kludge.
-        if emacs_name:
-            commandName = emacs_name
-            rawKey,bunchList = c.config.getShortcut(emacs_name)
-            bunch = bunchList and bunchList[0]
-            accel = bunch and bunch.val
-        elif not dynamicMenu:
-            g.trace('No inverse for %s' % commandName)
-    
-#@nonl
-#@+node:ekr.20051021100806.1:<< compute emacs_name >>
-@ One not-so-horrible kludge remains.
-
-The cut/copy/paste commands in the menu tables are not the same as the methods
-actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
-of extra translation to discover whether the user has overridden their
-bindings.
-@c
-
-if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
-    emacs_name = '%s-text' % commandName
-else:
-    try: # User errors in the table can cause this.
-        emacs_name = k.inverseCommandsDict.get(command.__name__)
-    except Exception:
-        emacs_name = None
-#@nonl
-#@-node:ekr.20051021100806.1:<< compute emacs_name >>
-#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
-#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-if rawKey:
-    amp_index = rawKey.find("&")
-else:
-    amp_index = -1
-
-if amp_index == -1:
-    amp_index = realLabel.find("&")
-#@nonl
-#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-#@-node:ekr.20031218072017.1723:createMenuEntries
-#@+node:ekr.20051122104219:prettyPrintKey
-def prettyPrintKey (self,key):
-    
-    '''Print a shortcut in a pleasing way.'''
-    
-    k = self
-    
-    return k.shortcutFromSetting(key) or ''
-#@nonl
-#@-node:ekr.20051122104219:prettyPrintKey
+#@-node:ekr.20060128090219:masterMenuHandler
 #@+node:ekr.20050920085536.65:masterCommand & helpers
 def masterCommand (self,event,func,stroke,commandName=None):
 
@@ -692,6 +1035,125 @@ def handleDefaultChar(self,event):
 #@nonl
 #@-node:ekr.20051026083544:handleDefaultChar
 #@-node:ekr.20050920085536.65:masterCommand & helpers
+#@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
+def fullCommand (self,event,specialStroke=None,specialFunc=None):
+    
+    '''Handle 'full-command' (alt-x) mode.'''
+
+    k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
+    keysym = (event and event.keysym) or ''
+    ch = (event and event.char) or ''
+    g.trace('state',state,keysym)
+    if state == 0:
+        k.completionFocusWidget = g.app.gui.get_focus(c.frame)
+        k.setState('full-command',1,handler=k.fullCommand) 
+        k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
+        # Init mb_ ivars. This prevents problems with an initial backspace.
+        k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
+        k.mb_tabList = [] ; k.mb_tabListIndex = -1
+        f.minibufferWantsFocus()
+    elif keysym == 'Return':
+        c.frame.log.deleteTab('Completion')
+        c.frame.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
+        k.callAltXFunction(event)
+    elif keysym == 'Tab':
+        k.doTabCompletion(c.commandsDict.keys())
+        f.minibufferWantsFocus()
+    elif keysym == 'BackSpace':
+        k.doBackSpace(c.commandsDict.keys())
+        f.minibufferWantsFocus()
+    elif ch not in string.printable:
+        if specialStroke:
+            g.trace(specialStroke)
+            specialFunc()
+        f.minibufferWantsFocus()
+    else:
+        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+        k.mb_tabList = []
+        k.updateLabel(event)
+        k.mb_tabListPrefix = k.getLabel()
+        f.minibufferWantsFocus()
+        # g.trace('new prefix',k.mb_tabListPrefix)
+
+    return 'break'
+#@nonl
+#@+node:ekr.20050920085536.45:callAltXFunction
+def callAltXFunction (self,event):
+    
+    k = self ; c = k.c ; s = k.getLabel()
+    k.mb_tabList = []
+    commandName = s[len(k.mb_prefix):].strip()
+    func = c.commandsDict.get(commandName)
+
+    # These must be done *after* getting the command.
+    k.clearState()
+    k.resetLabel()
+
+    if func:
+        if commandName != 'repeat-complex-command':
+            k.mb_history.insert(0,commandName)
+        # if command in k.x_hasNumeric: func(event,aX)
+        func(event)
+        k.endCommand(event,commandName)
+    else:
+        k.setLabel('Command does not exist: %s' % commandName)
+#@nonl
+#@-node:ekr.20050920085536.45:callAltXFunction
+#@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
+#@+node:ekr.20051001050607:endCommand
+def endCommand (self,event,commandName):
+
+    '''Make sure Leo updates the widget following a command.
+    
+    Never changes the minibuffer label: individual commands must do that.
+    '''
+
+    k = self ; c = k.c
+    # The command may have closed the window.
+    if g.app.quitting or not c.exists: return
+
+    # Set the best possible undoType: prefer explicit commandName to k.commandName.
+    commandName = commandName or k.commandName or ''
+    k.commandName = k.commandName or commandName or ''
+    if commandName:
+        bodyCtrl = c.frame.body.bodyCtrl
+        if not k.inState():
+            __pychecker__ = '--no-classattr --no-objattrs'
+                # initAllEditCommanders *does* exist.
+            k.commandName = None
+            leoEditCommands.initAllEditCommanders(c)
+            try:
+                bodyCtrl.tag_delete('color')
+                bodyCtrl.tag_delete('color1')
+            except Exception:
+                pass
+        if 0: # Do *not* call this by default.  It interferes with undo.
+            c.frame.body.onBodyChanged(undoType='Typing')
+#@nonl
+#@-node:ekr.20051001050607:endCommand
+#@-node:ekr.20051001051355:Dispatching...
+#@+node:ekr.20051105155441:simulateCommand
+def simulateCommand (self,commandName):
+    
+    k = self ; c = k.c
+    
+    func = c.commandsDict.get(commandName)
+    
+    if func:
+        # g.trace(commandName,func.__name__)
+        stroke = None
+        if commandName.startswith('specialCallback'):
+            event = None # A legacy function.
+        else: # Create a dummy event as a signal.
+            event = g.bunch(keysym = '',char = '',widget = None)
+        k.masterCommand(event,func,stroke)
+        return k.funcReturn
+    else:
+        g.trace('no command for %s' % (commandName),color='red')
+        if g.app.unitTesting: raise AttributeError
+#@nonl
+#@-node:ekr.20051105155441:simulateCommand
+#@+node:ekr.20060128081637:Found: canonicalizeShortcut
 #@+node:ekr.20031218072017.2098:canonicalizeShortcut
 @ This code "canonicalizes" both the shortcuts that appear in menus and the
 arguments to bind, mostly ignoring case and the order in which special keys are
@@ -721,7 +1183,7 @@ def canonicalizeShortcut (self,shortcut):
             has_cmd = True ; has_ctrl = False
         if has_alt and not has_ctrl:
             has_ctrl = True ; has_alt = False
-    if 1: # New, simplified.
+    if 0: # New, simplified.
         << convert minus signs to plus signs >>
         << compute the last field >>
         << compute bind_shortcut >>
@@ -949,29 +1411,35 @@ else:
 # g.trace('last',last,'bind_last',bind_last,'menu_last',menu_last)
 
 #@-node:ekr.20060128103640.2:<< compute the last field >>
-#@+node:ekr.20060128103640.3:<< compute bind_shortcut >>
+#@+node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
 z = []
 
 for flag,val in (
     (has_alt, 'Alt-'),
     (has_ctrl,'Control-'),
     (has_cmd, 'Command-'),
-    (has_shift,'Shift-'),
+    #(has_shift,'Shift-'),
 ):
     if flag: z.append(val)
     
-if not z and len(bind_last) == 1:
-    if last.isupper():  z.append('Key-Shift-')
-    else:               z.append('Key-')
-
-z.append(bind_last)
+# Tk is too picky about bindings.
+if has_shift:
+    if len(bind_last) == 1:
+        z.append(bind_last.upper())
+    else:
+        z.append('Shift-%s' % bind_last)
+else:
+    if len(bind_last) == 1:
+        z.append('Key-%s' % bind_last)
+    else:
+        z.append(bind_last)
     
 bind_shortcut = ''.join(z)
 
 if not g.app.new_keys:
     bind_shortcut = '<%s>' % bind_shortcut
 #@nonl
-#@-node:ekr.20060128103640.3:<< compute bind_shortcut >>
+#@-node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
 #@+node:ekr.20060128103640.4:<< compute menu_shortcut >>
 z = []
 
@@ -982,21 +1450,16 @@ for flag,val in (
     (has_shift,'Shift+'),
 ):
     if flag: z.append(val)
-
-if not z and len(menu_last) == 1:
-    if last.isupper():  z.append('Shift+')
-    else:               z.append('Key+')
-
+    
 if len(menu_last) == 1:
+    if not z:  z.append('Key-')
     menu_last = menu_last.upper()
 
 z.append(menu_last)
     
 menu_shortcut = ''.join(z)
-#@nonl
 #@-node:ekr.20060128103640.4:<< compute menu_shortcut >>
 #@-node:ekr.20031218072017.2098:canonicalizeShortcut
-#@+node:ekr.20060126171429:References to c.simple_bindings
 #@+node:ekr.20051008135051.1:bindOpenWith
 def bindOpenWith (self,shortcut,name,data):
     
@@ -1009,7 +1472,7 @@ def bindOpenWith (self,shortcut,name,data):
         __pychecker__ = '--no-argsused' # event must be present.
         return self.c.openWith(data=data)
     
-    if c.simple_bindings:
+    if g.app.new_keys:
         return k.bindKey('all',shortcut,openWithCallback,'open-with')
     else:
         bind_shortcut = k.tkBindingFromSetting(shortcut)
@@ -1020,24 +1483,6 @@ def bindOpenWith (self,shortcut,name,data):
         return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
 #@nonl
 #@-node:ekr.20051008135051.1:bindOpenWith
-#@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
-def bindShortcut (self,pane,shortcut,command,commandName):
-    
-    '''Bind one shortcut from a menu table.'''
-    
-    k = self ; shortcut = str(shortcut)
-    
-    # g.trace(commandName,shortcut,g.callers())
-
-    def menuFuncCallback (event,command=command,commandName=commandName):
-        return command(event)
-
-    def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-        return k.masterCommand(event,func,stroke,commandName=commandName)
-        
-    return k.bindKey(pane,shortcut,keyCallback2,commandName)
-#@nonl
-#@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
 #@+node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
 def makeSpecialBindings (self):
     
@@ -1107,6 +1552,27 @@ def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
 #@nonl
 #@-node:ekr.20051220083410:makeSpecialBinding
 #@-node:ekr.20051008152134:makeSpecialBindings (also binds to 'Key')
+#@+node:ekr.20051008134059:makeBindingsFromCommandsDict
+def makeBindingsFromCommandsDict (self):
+    
+    '''Add bindings for all entries in c.commandDict.'''
+
+    k = self ; c = k.c
+    keys = c.commandsDict.keys() ; keys.sort()
+
+    for commandName in keys:
+        command = c.commandsDict.get(commandName)
+        key, bunchList = c.config.getShortcut(commandName)
+        for bunch in bunchList:
+            accel = bunch.val
+            if accel:
+                bind_shortcut = k.tkBindingFromSetting(accel)
+                k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
+                if 0:
+                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
+                    else:     g.trace(commandName)
+#@nonl
+#@-node:ekr.20051008134059:makeBindingsFromCommandsDict
 #@+node:ekr.20060119150624:createModeBindings
 def createModeBindings (self,modeName,tagName,d):
     
@@ -1157,7 +1623,1000 @@ t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
 #@nonl
 #@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
-#@-node:ekr.20060126171429:References to c.simple_bindings
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.k
+    if g.app.unitTesting: return
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        if 1:
+            accelerator = stroke = k.shortcutFromSetting(accel) or ''
+            def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+                return k.masterMenuHandler(stroke,command,commandName)
+            realLabel = self.getRealMenuName(label)
+            amp_index = realLabel.find("&")
+            realLabel = realLabel.replace("&","")
+            self.add_command(menu,label=realLabel,
+                accelerator=accelerator,
+                command=masterMenuCallback,
+                underline=amp_index)
+        else:
+            # To do: remove defineMenuCallback
+            rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
+            menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
+            realLabel = self.getRealMenuName(label)
+            << set amp_index using rawKey and realLabel >>
+            realLabel = realLabel.replace("&","")
+            self.add_command(menu,label=realLabel,
+                accelerator= menu_shortcut or '',
+                command=menuCallback,underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+accel = None
+if minibufferCommand:
+    commandName = command 
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
+    else:
+        g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+if rawKey:
+    amp_index = rawKey.find("&")
+else:
+    amp_index = -1
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@+node:ekr.20051023181449:createBindings (findTab)
+def createBindings (self):
+    
+    c = self.c ; k = c.k
+
+    for w in (self.find_ctrl, self.change_ctrl):
+        k.copyBindingsToWidget(['text','mini','all'],w)
+        # Bind shortcuts for the following commands...
+        for commandName,func in (
+            ('find-tab-find',       self.findNextCommand),
+            ('find-tab-find-prev',  self.findPrevCommand),
+            ('find-tab-change',     self.changeCommand),
+            ('find-tab-change-all', self.changeAllCommand),
+            ('find-tab-change-find',self.changeThenFindCommand),
+        ):
+            junk, bunchList = c.config.getShortcut(commandName)
+            for bunch in bunchList:
+                accel = bunch.val
+                shortcut = k.tkBindingFromSetting(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
+        w.bind ("<1>",  self.resetWrap,'+')
+        w.bind("<Key>", self.resetWrap,'+')
+
+    for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
+        w.bind("<Key-Return>", self.findButtonCallback)
+        w.bind("<Key-Escape>", self.hideTab)
+#@nonl
+#@-node:ekr.20051023181449:createBindings (findTab)
+#@+node:ekr.20051025120920:createBindings (spellTab)
+def createBindings (self):
+    
+    c = self.c ; k = c.k
+    widgets = (self.listBox, self.outerFrame)
+
+    for w in widgets:
+        k.copyBindingsToWidget(['text','all'],w)
+        # Bind shortcuts for the following commands...
+        for commandName,func in (
+            ('full-command',            k.fullCommand),
+            ('hide-spell-tab',          self.hide),
+            ('spell-add',               self.add),
+            ('spell-find',              self.find),
+            ('spell-ignore',            self.ignore),
+            ('spell-change-then-find',  self.changeThenFind),
+        ):
+            junk, bunchList = c.config.getShortcut(commandName)
+            for bunch in bunchList:
+                accel = bunch.val
+                shortcut = k.tkBindingFromSetting(accel)
+                if shortcut:
+                    # g.trace(shortcut,commandName)
+                    w.bind(shortcut,func)
+           
+#@nonl
+#@-node:ekr.20051025120920:createBindings (spellTab)
+#@+node:ekr.20051015110547:k.registerCommand
+def registerCommand (self,commandName,shortcut,func,pane='all',verbose=True):
+    
+    '''Make the function available as a minibuffer command,
+    and optionally attempt to bind a shortcut.
+    
+    You can wrap any method in a callback function, so the
+    restriction to functions is not significant.'''
+    
+    k = self ; c = k.c
+    
+    f = c.commandsDict.get(commandName)
+    if f:
+        g.es_trace('Redefining %s' % (commandName), color='red')
+        
+    c.commandsDict [commandName] = func
+    k.inverseCommandsDict [func.__name__] = commandName
+    
+    if shortcut:
+        shortcut = k.tkBindingFromSetting(shortcut)
+        ok = k.bindShortcut (pane,shortcut,func,commandName)
+        if verbose and ok:
+             g.es_print('Registered %s bound to %s' % (commandName,shortcut),
+                color='blue')
+    else:
+        if verbose:
+            g.es_print('Registered %s' % (commandName), color='blue')
+#@-node:ekr.20051015110547:k.registerCommand
+#@-node:ekr.20060128081637:Found: canonicalizeShortcut
+#@+node:ekr.20060128132058:Menu stuff
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.k
+    if g.app.unitTesting: return
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        if 1:
+            accelerator = stroke = k.shortcutFromSetting(accel) or ''
+            def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+                return k.masterMenuHandler(stroke,command,commandName)
+            realLabel = self.getRealMenuName(label)
+            amp_index = realLabel.find("&")
+            realLabel = realLabel.replace("&","")
+            self.add_command(menu,label=realLabel,
+                accelerator=accelerator,
+                command=masterMenuCallback,
+                underline=amp_index)
+        else:
+            # To do: remove defineMenuCallback
+            rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
+            menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
+            realLabel = self.getRealMenuName(label)
+            << set amp_index using rawKey and realLabel >>
+            realLabel = realLabel.replace("&","")
+            self.add_command(menu,label=realLabel,
+                accelerator= menu_shortcut or '',
+                command=menuCallback,underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+accel = None
+if minibufferCommand:
+    commandName = command 
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
+    else:
+        g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+if rawKey:
+    amp_index = rawKey.find("&")
+else:
+    amp_index = -1
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@+node:ekr.20031218072017.3752:defineMenuTables & helpers
+def defineMenuTables (self):
+    
+    c = self.c
+    
+    self.defineEditMenuTables()
+    self.defineFileMenuTables()
+    self.defineOutlineMenuTables()
+    self.defineWindowMenuTables()
+
+    if self.useCmdMenu:
+        self.defineCmdsMenuTables()
+
+    self.defineHelpMenuTables()
+#@nonl
+#@+node:ekr.20031218072017.3753:defineEditMenuTables & helpers
+def defineEditMenuTables (self):
+
+    self.defineEditMenuTopTable()
+    self.defineEditMenuEditCursorTable()
+    self.defineEditMenuEditBodyTable()
+    self.defineEditMenuEditHeadlineTable()
+    self.defineEditMenuFindMenuTable()
+    self.defineEditMenuTop2Table()
+#@nonl
+#@+node:ekr.20031218072017.839:defineEditMenuTopTable
+def defineEditMenuTopTable (self):
+    
+    __pychecker__ = 'no-unusednames=[f]' # We define 'f' just in case.
+
+    c = self.c ; f = self.frame
+    
+    self.editMenuTopTable = [
+        ("Can't Undo",c.undoer.undo), # &U reserved for Undo
+        ("Can't Redo",c.undoer.redo), # &R reserved for Redo
+        ("-",None),
+        ("Cu&t",f.OnCutFromMenu), 
+        ("Cop&y",f.OnCopyFromMenu),
+        ("&Paste",f.OnPasteFromMenu),
+        ("&Delete",c.editCommands.backwardDeleteCharacter),
+        ("Select &All",f.body.selectAllText),
+        ("-",None),
+    ]
+
+    # Top-level shortcuts here:  a,d,p,t,u,y,z
+    # Top-level shortcuts later: e,g,n,v
+#@nonl
+#@-node:ekr.20031218072017.839:defineEditMenuTopTable
+#@+node:ekr.20050711091931:defineEditMenuEditCursorTable
+def defineEditMenuEditCursorTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    if 0: ### Not ready yet.
+        # These should have Emacs names...
+        self.editMenuEditCursorTable = [
+            ('Delete Right',c.deleteRightChar), 
+            ('Delete Left',c.deleteLeftChar), 
+            # Moving the cursor.
+            ('Start of Line',c.moveToStartOfLine), 
+            ('End of Line',c.moveToEndOfLine), 
+            ('Start of Node',c.moveToStartOfNode),
+            ('End of Node',c.moveToEndOfNode), 
+            ('-',None,None),
+            # Extending the selection...
+            ('Select Line',c.selectEntireLine),
+            ('Extend To Start of Word',c.extendToStartOfWord),
+            ('Extend To End of Word',c.extendToEndOfWord),
+            ('Extend To Start Of Line',c.extendToStartOfLine), 
+            ('Extend To End Of Line',c.extendToEndOfLine), 
+            ('Extend To End of Node',c.extendToEndOfNode),
+            # The mark...
+        ]
+#@nonl
+#@-node:ekr.20050711091931:defineEditMenuEditCursorTable
+#@+node:ekr.20031218072017.3754:defineEditMenuEditBodyTable
+def defineEditMenuEditBodyTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.editMenuEditBodyTable = [
+        ("Extract &Section",c.extractSection),
+        ("Extract &Names",c.extractSectionNames),
+        ("&Extract",c.extract),
+        ("-",None,None),
+        ("Convert All B&lanks",c.convertAllBlanks),
+        ("Convert All T&abs",c.convertAllTabs),
+        ("Convert &Blanks",c.convertBlanks),
+        ("Convert &Tabs",c.convertTabs),
+        ("Insert Body Time/&Date",c.insertBodyTime),
+        ("&Reformat Paragraph",c.reformatParagraph),
+        ("-",None,None),
+        ("&Indent",c.indentBody),
+        ("&Unindent",c.dedentBody),
+        ("&Match Brackets",c.findMatchingBracket),
+        ("Add Comments",c.addComments),
+        ("Delete Comments",c.deleteComments),
+    ]
+    # Shortcuts a,b,d,e,i,l,m,n,r,s,t,u
+#@nonl
+#@-node:ekr.20031218072017.3754:defineEditMenuEditBodyTable
+#@+node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
+def defineEditMenuEditHeadlineTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+    
+    self.editMenuEditHeadlineTable = [
+        ("Edit &Headline",c.editHeadline),
+        ("&End Edit Headline",f.endEditLabelCommand),
+        ("&Abort Edit Headline",f.abortEditLabelCommand),
+        ("Insert Headline Time/&Date",f.insertHeadlineTime),
+        ("Toggle Angle Brackets",c.toggleAngleBrackets),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3755:defineEditMenuEditHeadlineTable
+#@+node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
+def defineEditMenuFindMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+    
+    if 1: # Bind to the Find tab.
+        sc = c.searchCommands
+        self.editMenuFindMenuTable = [
+            ("&Show Find Tab",sc.openFindTab),
+            ("&Hide Find Tab",sc.hideFindTab),
+            ("-",None),
+            ("Find &Next",          sc.findTabFindNext),
+            ("Find &Previous",      sc.findTabFindPrev),
+            ("&Replace",            sc.findTabChange),
+            ("Replace, &Then Find", sc.findTabChangeThenFind),
+        ]
+    else: # Bind to deprecated Find dialog.
+        self.editMenuFindMenuTable = [
+            ("&Find Panel",c.showFindPanel),
+            ("-",None),
+            ("Find &Next",c.findNext),
+            ("Find &Previous",c.findPrevious),
+            ("&Replace",c.replace),
+            ("Replace, &Then Find",c.replaceThenFind),
+        ]
+#@nonl
+#@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
+#@+node:ekr.20031218072017.3757:defineEditMenuTop2Table
+def defineEditMenuTop2Table (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+
+    c = self.c ; f = self.frame
+
+    try:        show = c.frame.body.getColorizer().showInvisibles
+    except:     show = False
+    label = g.choose(show,"Hide In&visibles","Show In&visibles")
+        
+    self.editMenuTop2Table = [
+        ("&Go To Line Number",c.goToLineNumber),
+        ("&Execute Script",c.executeScript),
+        (label,c.viewAllCharacters),
+        ("Setti&ngs",c.preferences),
+    ]
+
+    # Top-level shortcuts earlier: a,d,p,t,u,y,z
+    # Top-level shortcuts here: e,g,n,v
+#@nonl
+#@-node:ekr.20031218072017.3757:defineEditMenuTop2Table
+#@-node:ekr.20031218072017.3753:defineEditMenuTables & helpers
+#@+node:ekr.20031218072017.3758:defineFileMenuTables & helpers
+def defineFileMenuTables (self):
+
+    self.defineFileMenuTopTable()
+    self.defineFileMenuTop2Table()
+    self.defineFileMenuReadWriteMenuTable()
+    self.defineFileMenuTangleMenuTable()
+    self.defineFileMenuUntangleMenuTable()
+    self.defineFileMenuImportMenuTable()
+    self.defineFileMenuExportMenuTable()
+    self.defineFileMenuTop3MenuTable()
+#@nonl
+#@+node:ekr.20031218072017.3759:defineFileMenuTopTable
+def defineFileMenuTopTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.fileMenuTopTable = [
+        ("&New",c.new),
+        ("&Open...",c.open),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3759:defineFileMenuTopTable
+#@+node:ekr.20031218072017.3760:defineFileMenuTop2Table
+def defineFileMenuTop2Table (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.fileMenuTop2Table = [
+        ("-",None),
+        ("&Close",c.close),
+        ("&Save",c.save),
+        ("Save &As",c.saveAs),
+        ("Save To",c.saveTo), # &Tangle
+        ("Re&vert To Saved",c.revert), # &Read/Write
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3760:defineFileMenuTop2Table
+#@+node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
+def defineFileMenuReadWriteMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame ; fc = c.fileCommands
+
+    self.fileMenuReadWriteMenuTable = [
+        ("&Read Outline Only",c.readOutlineOnly),
+        ("Read @file &Nodes",c.readAtFileNodes),
+        ("-",None),
+        ("Write &Dirty @file Nodes",fc.writeDirtyAtFileNodes),
+        ("Write &Missing @file Nodes",fc.writeMissingAtFileNodes),
+        ("Write &Outline Only",fc.writeOutlineOnly),
+        ("&Write @file Nodes",fc.writeAtFileNodes),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3761:defineFileMenuReadWriteMenuTable
+#@+node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
+def defineFileMenuTangleMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.fileMenuTangleMenuTable = [
+        ("Tangle &All",c.tangleAll),
+        ("Tangle &Marked",c.tangleMarked),
+        ("&Tangle",c.tangle),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3762:defineFileMenuTangleMenuTable
+#@+node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
+def defineFileMenuUntangleMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.fileMenuUntangleMenuTable = [
+        ("Untangle &All",c.untangleAll),
+        ("Untangle &Marked",c.untangleMarked),
+        ("&Untangle",c.untangle),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3763:defineFileMenuUntangleMenuTable
+#@+node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
+def defineFileMenuImportMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.fileMenuImportMenuTable = [
+        ("Import Derived File",c.importDerivedFile),
+        ("Import To @&file",c.importAtFile),
+        ("Import To @&root",c.importAtRoot),
+        ("Import &CWEB Files",c.importCWEBFiles),
+        ("Import &noweb Files",c.importNowebFiles),
+        ("Import Flattened &Outline",c.importFlattenedOutline),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3764:defineFileMenuImportMenuTable
+#@+node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
+def defineFileMenuExportMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.fileMenuExportMenuTable = [
+        ("Export &Headlines",c.exportHeadlines),
+        ("Outline To &CWEB",c.outlineToCWEB),
+        ("Outline To &Noweb",c.outlineToNoweb),
+        ("&Flatten Outline",c.flattenOutline),
+        ("&Remove Sentinels",c.removeSentinels),
+        ("&Weave",c.weave),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3765:defineFileMenuExportMenuTable
+#@+node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
+def defineFileMenuTop3MenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.fileMenuTop3MenuTable = [
+        ("E&xit",g.app.onQuit),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3766:defineFileMenuTop3MenuTable
+#@-node:ekr.20031218072017.3758:defineFileMenuTables & helpers
+#@+node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
+def defineOutlineMenuTables (self):
+
+    self.defineOutlineMenuTopMenuTable()
+    self.defineOutlineMenuCheckOutlineMenuTable()
+    self.defineOutlineMenuExpandContractMenuTable()
+    self.defineOutlineMenuMoveMenuTable()
+    self.defineOutlineMenuMarkMenuTable()
+    self.defineOutlineMenuGoToMenuTable()
+#@nonl
+#@+node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
+def defineOutlineMenuTopMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.outlineMenuTopMenuTable = [
+        ("C&ut Node",c.cutOutline),
+        ("C&opy Node",c.copyOutline),
+        ("&Paste Node",c.pasteOutline),
+        ("Pas&te Node As Clone",c.pasteOutlineRetainingClones),
+        ("&Delete Node",c.deleteOutline),
+        ("-",None,None),
+        ("&Insert Node",c.insertHeadline),
+        ("&Clone Node",c.clone),
+        ("Sort Childre&n",c.sortChildren), # Conflicted with Hoist.
+        ("&Sort Siblings",c.sortSiblings),
+        ("-",None),
+        ("&Hoist",c.hoist),
+        ("D&e-Hoist",f.c.dehoist),
+        ("-",None),
+    ]
+    # Ampersand bindings:  a,c,d,e,h,i,n,o,p,t,s,
+    # Bindings for entries that go to submenus: a,g,k,m,x
+#@nonl
+#@-node:ekr.20031218072017.3768:defineOutlineMenuTopMenuTable
+#@+node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
+def defineOutlineMenuCheckOutlineMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.outlineMenuCheckOutlineMenuTable = [
+        ("Check &Outline",c.checkOutline),
+        ("&Dump Outline",c.dumpOutline),
+        ("-",None),
+        ("Check &All Python Code",c.checkAllPythonCode),
+        ("&Check Python &Code",c.checkPythonCode),
+        ("-",None),
+        ("Pretty P&rint All Python Code",c.prettyPrintAllPythonCode),
+        ("&Pretty Print Python Code",c.prettyPrintPythonCode),
+    ]
+    # shortcuts used: a,c,d,o,p,r
+#@nonl
+#@-node:ekr.20040711140738:defineOutlineMenuCheckOutlineMenuTable
+#@+node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
+def defineOutlineMenuExpandContractMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.outlineMenuExpandContractMenuTable = [
+        ("&Contract All",c.contractAllHeadlines),
+        ("Contract &Node",c.contractNode),
+        ("Contract &Parent",c.contractParent),
+        ("Contract Or Go Left",c.contractNodeOrGoToParent),
+        ("-",None),
+        ("Expand P&rev Level",c.expandPrevLevel),
+        ("Expand N&ext Level",c.expandNextLevel),
+        ("Expand And Go Right",c.expandNodeAndGoToFirstChild),
+        ("Expand Or Go Right",c.expandNodeOrGoToFirstChild),
+        ("-",None),
+        ("Expand To Level &1",c.expandLevel1),
+        ("Expand To Level &2",c.expandLevel2),
+        ("Expand To Level &3",c.expandLevel3),
+        ("Expand To Level &4",c.expandLevel4),
+        ("Expand To Level &5",c.expandLevel5),
+        ("Expand To Level &6",c.expandLevel6),
+        ("Expand To Level &7",c.expandLevel7),
+        ("Expand To Level &8",c.expandLevel8),
+        ("-",None),
+        ("Expand &All",c.expandAllHeadlines),
+        ("Expand N&ode",c.expandNode),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3769:defineOutlineMenuExpandContractMenuTable
+#@+node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
+def defineOutlineMenuMoveMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.outlineMenuMoveMenuTable = [
+        ("Move &Down",c.moveOutlineDown),
+        ("Move &Left",c.moveOutlineLeft),
+        ("Move &Right",c.moveOutlineRight),
+        ("Move &Up",c.moveOutlineUp),
+        ("-",None),
+        ("&Promote",c.promote),
+        ("&Demote",c.demote),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3770:defineOutlineMenuMoveMenuTable
+#@+node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
+def defineOutlineMenuMarkMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.outlineMenuMarkMenuTable = [
+        ("&Mark",c.markHeadline),
+        ("Mark &Subheads",c.markSubheads),
+        ("Mark Changed &Items",c.markChangedHeadlines),
+        ("Mark Changed &Roots",c.markChangedRoots),
+        ("Mark &Clones",c.markClones),
+        ("&Unmark All",c.unmarkAll),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3771:defineOutlineMenuMarkMenuTable
+#@+node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
+def defineOutlineMenuGoToMenuTable (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.outlineMenuGoToMenuTable = [
+        ("Go Prev Visited",c.goPrevVisitedNode), # Usually use buttons for this.
+        ("Go Next Visited",c.goNextVisitedNode),
+        ("Go To Prev Node",c.selectThreadBack),
+        ("Go To Next Node",c.selectThreadNext),
+        ("-",None),
+        ("Go To Next Marked",c.goToNextMarkedHeadline),
+        ("Go To Next Changed",c.goToNextDirtyHeadline),
+        ("Go To Next Clone",c.goToNextClone),
+        ("-",None),
+        ("Go To First Node",c.goToFirstNode),
+        ("Go To Prev Visible",c.selectVisBack),
+        ("Go To Next Visible",c.selectVisNext),
+        ("Go To Last Node",c.goToLastNode),
+        ('Go To Last Visible',c.goToLastVisibleNode),
+        ("-",None),
+        ("Go To Parent",c.goToParent),
+        ('Go To First Sibling',c.goToFirstSibling),
+        ('Go To Last Sibling',c.goToLastSibling),
+        ("Go To Prev Sibling",c.goToPrevSibling),
+        ("Go To Next Sibling",c.goToNextSibling),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3772:defineOutlineMenuGoToMenuTable
+#@-node:ekr.20031218072017.3767:defineOutlineMenuTables & helpers
+#@+node:ekr.20050921103230:defineCmdsMenuTables & helpers
+def defineCmdsMenuTables (self):
+    
+    self.defineCmdsMenuTopTable()
+    self.defineCmdsMenuAbbrevTable()
+    self.defineCmdsMenuBuffersTable()
+    self.defineCmdsMenuCenterTable()
+    self.defineCmdsMenuChangeCaseTable()
+    self.defineCmdsMenuIndentTable()
+    self.defineCmdsMenuMacroTable()
+    self.defineCmdsMenuRectanglesTable()
+    self.defineCmdsMenuRegistersTable()
+    self.defineCmdsMenuSortTable()
+    self.defineCmdsMenuSpellCheckTable()
+#@+node:ekr.20060117094955: defineCmdsMenuTopTable
+def defineCmdsMenuTopTable (self):
+    
+    self.cmdsMenuTopTable = [
+        ('Repeat Last Complex Command','repeat-complex-command'),
+        ('Execute Named Command','full-command'),
+        ("-",None),
+    ]
+#@-node:ekr.20060117094955: defineCmdsMenuTopTable
+#@+node:ekr.20060117094955.1:defineCmdsMenuAbbrevTable (to do)
+def defineCmdsMenuAbbrevTable (self):
+    
+    c = self.c
+    
+    self.cmdsMenuAbbrevTable = [
+        ("-",None),
+    ]
+#@nonl
+#@-node:ekr.20060117094955.1:defineCmdsMenuAbbrevTable (to do)
+#@+node:ekr.20060117095212:defineCmdsMenuBufferTable
+def defineCmdsMenuBuffersTable (self):
+
+    self.cmdsMenuBuffersTable = [
+        ('Append To Buffer',             'append-to-buffer'),
+        ('Kill Buffer',                  'kill-buffer'),
+        ('List Buffers',                 'list-buffers'),
+        ('List Buffers Alphbetically',   'list-buffers-alphabetically'),
+        ('Prepend To Buffer',            'prepend-to-buffer'),
+        ('Rename Buffer',                'rename-buffer'),
+        ('Switch To Buffer',             'switch-to-buffer'),
+    ]
+#@nonl
+#@-node:ekr.20060117095212:defineCmdsMenuBufferTable
+#@+node:ekr.20060117095212.5:defineCmdsMenuCenterTable  
+def defineCmdsMenuCenterTable (self):
+
+    c = self.c
+
+    self.cmdsMenuCenterTable = [
+        ('Center Line',     'center-line'),
+        ('Center Region',   'center-region'),
+    ]
+#@nonl
+#@-node:ekr.20060117095212.5:defineCmdsMenuCenterTable  
+#@+node:ekr.20060117095212.4:defineCmdsMenuChangeCaseTable
+def defineCmdsMenuChangeCaseTable (self):
+
+    c = self.c
+
+    self.cmdsMenuChangeCaseTable = [
+        ('Capitalize Word', 'capitalize-word'),
+        ('Downcase Region', 'downcase-region'),
+        ('Downcase Word',   'downcase-word'),
+        ('Upcase Region',   'upcase-region'), # Crashes.
+        ('Upcase Word',     'upcase-word'),
+    ]
+    
+#@nonl
+#@-node:ekr.20060117095212.4:defineCmdsMenuChangeCaseTable
+#@+node:ekr.20060117095212.6:defineCmdsMenuIndentTable
+def defineCmdsMenuIndentTable (self):
+
+    c = self.c
+
+    self.cmdsMenuIndentTable = [
+        ('Indent Region',   'indent-region'),
+        ('Indent Relative', 'indent-relative'),
+        ('Indent Rigidly',  'indent-rigidly'),
+        ('Unindent Region', 'unindent-region'),
+    ]
+#@nonl
+#@-node:ekr.20060117095212.6:defineCmdsMenuIndentTable
+#@+node:ekr.20060117114315:defineCmdsMenuMacroTable(to do)
+def defineCmdsMenuMacroTable (self):
+
+    c = self.c
+
+    self.cmdsMenuMacroTable = [
+        ("-",None),
+    ]
+#@nonl
+#@-node:ekr.20060117114315:defineCmdsMenuMacroTable(to do)
+#@+node:ekr.20060117095212.2:defineCmdsMenuRectanglesTable(to do)
+def defineCmdsMenuRectanglesTable (self):
+
+    c = self.c
+
+    self.cmdsMenuRectanglesTable = [
+        ("-",None),
+    ]
+#@nonl
+#@-node:ekr.20060117095212.2:defineCmdsMenuRectanglesTable(to do)
+#@+node:ekr.20060117095212.1:defineCmdsMenuRegistersTable(to do)
+def defineCmdsMenuRegistersTable (self):
+
+    c = self.c
+
+    self.cmdsMenuRegistersTable = [
+        ("-",None),
+    ]
+#@nonl
+#@-node:ekr.20060117095212.1:defineCmdsMenuRegistersTable(to do)
+#@+node:ekr.20060117095212.3:defineCmdsMenuSortTable
+def defineCmdsMenuSortTable (self):
+
+    c = self.c
+
+    self.cmdsMenuSortTable = [
+        ('Sort Columns',    'sort-columns'),
+        ('Sort Fields',     'sort-fields'),
+        ('Sort Lines',      'sort-lines'),
+    ]
+#@nonl
+#@-node:ekr.20060117095212.3:defineCmdsMenuSortTable
+#@+node:ekr.20060117095212.7:defineCmdsMenuSpellCheckTable
+def defineCmdsMenuSpellCheckTable (self):
+
+    c = self.c
+
+    self.cmdsMenuSpellCheckTable = [
+        ('Check Spelling',      'open-spell-tab'),
+        ('Change',              'spell-change'),
+        ('Change, Then Find',   'spell-change-then-find'),
+        ('Find',                'spell-find'),
+        ('Ignore',              'spell-ignore'),
+    ]
+#@nonl
+#@-node:ekr.20060117095212.7:defineCmdsMenuSpellCheckTable
+#@-node:ekr.20050921103230:defineCmdsMenuTables & helpers
+#@+node:ekr.20031218072017.3773:defineWindowMenuTables
+def defineWindowMenuTables (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.windowMenuTopTable = [
+        ("&Equal Sized Panes",f.equalSizedPanes),
+        ("Toggle &Active Pane",f.toggleActivePane),
+        ("Toggle &Split Direction",f.toggleSplitDirection),
+        ("-",None),
+        ("Resize To Screen",f.resizeToScreen),
+        ("Casca&de",f.cascade),
+        ("&Minimize All",f.minimizeAll),
+        ("-",None),
+        ("Open &Compare Window",c.openCompareWindow),
+        ("Open &Python Window",c.openPythonWindow),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3773:defineWindowMenuTables
+#@+node:ekr.20031218072017.3774:defineHelpMenuTables
+def defineHelpMenuTables (self):
+    
+    __pychecker__ = 'no-unusednames=c,f'
+    
+    c = self.c ; f = self.frame
+
+    self.helpMenuTopTable = [
+        ("&About Leo...",c.about),
+        ("Online &Home Page",c.leoHome),
+        ("Open Online &Tutorial",c.leoTutorial),
+    ]
+
+    self.helpMenuTop2Table = [
+        ("Open &Offline Tutorial",f.leoHelp),
+    ]
+
+    self.helpMenuTop3Table = [
+        ("-",None,None),
+        ("Open Leo&Docs.leo",c.leoDocumentation),
+        ("Open Leo&Plugins.leo",c.openLeoPlugins),
+        ("Open Leo&Settings.leo",c.openLeoSettings),
+    ]
+#@nonl
+#@-node:ekr.20031218072017.3774:defineHelpMenuTables
+#@-node:ekr.20031218072017.3752:defineMenuTables & helpers
+#@-node:ekr.20060128132058:Menu stuff
 #@-node:ekr.20060126163152.1:(Unified <Key> handler)
 #@+node:ekr.20060122183544:Improve search commands
 #@+node:ekr.20060124090814:To do
@@ -3625,8 +5084,6 @@ def finishCreate (self):  # New in 4.4.
     c.miniBufferWidget = c.frame.miniBufferWidget
     # g.trace('Commands',c.fileName()) # g.callers())
     
-    c.simple_bindings = c.config.getBool('simple_bindings')
-    
     # Create a keyHandler even if there is no miniBuffer.
     c.keyHandler = c.k = k = leoKeys.keyHandlerClass(c,
         useGlobalKillbuffer=True,
@@ -4540,14 +5997,11 @@ def createMenuEntries (self,menu,table,dynamicMenu=False):
     but this method **never** binds any shortcuts.'''
     
     c = self.c ; f = c.frame ; k = c.k
-    
     if g.app.unitTesting: return
-
     for data in table:
         << get label & command or continue >>
         << compute commandName & accel from label & command >>
         if 1:
-            # To do: we might call k.masterCommand directly
             accelerator = stroke = k.shortcutFromSetting(accel) or ''
             def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
                 return k.masterMenuHandler(stroke,command,commandName)
@@ -4594,13 +6048,17 @@ if ok and label in (None,'-'):
 #@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
 # New in 4.4b2: command can be a minibuffer-command name (a string)
 minibufferCommand = type(command) == type('')
+accel = None
 if minibufferCommand:
-    commandName = command
+    commandName = command 
     command = c.commandsDict.get(commandName)
     if command:
         rawKey,bunchList = c.config.getShortcut(commandName)
-        bunch = bunchList and bunchList[0]
-        accel = bunch and bunch.val
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
     else:
         g.trace('No inverse for %s' % commandName)
         continue # There is no way to make this menu entry.
@@ -4608,9 +6066,10 @@ else:
     # First, get the old-style name.
     commandName = self.computeOldStyleShortcutKey(label)
     rawKey,bunchList = c.config.getShortcut(commandName)
-    bunch = bunchList and bunchList[0]
-    accel = bunch and bunch.val
-    
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
     # Second, get new-style name.
     if not accel:
         << compute emacs_name >>
@@ -4618,11 +6077,13 @@ else:
         if emacs_name:
             commandName = emacs_name
             rawKey,bunchList = c.config.getShortcut(emacs_name)
-            bunch = bunchList and bunchList[0]
-            accel = bunch and bunch.val
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
         elif not dynamicMenu:
             g.trace('No inverse for %s' % commandName)
-    
 #@nonl
 #@+node:ekr.20051021100806.1:<< compute emacs_name >>
 @ One not-so-horrible kludge remains.
@@ -5867,7 +7328,6 @@ def strokeFromEvent (self,event):
         
     s.append(keysym)
     s = ''.join(s)
-    s = k.prettyPrintKey(s)
     g.trace(s)
     return s
 #@nonl
@@ -6980,7 +8440,7 @@ def bindOpenWith (self,shortcut,name,data):
         __pychecker__ = '--no-argsused' # event must be present.
         return self.c.openWith(data=data)
     
-    if c.simple_bindings:
+    if g.app.new_keys:
         return k.bindKey('all',shortcut,openWithCallback,'open-with')
     else:
         bind_shortcut = k.tkBindingFromSetting(shortcut)

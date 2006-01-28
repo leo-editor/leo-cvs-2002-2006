@@ -309,7 +309,6 @@ class tkinterGui(leoGui.leoGui):
             
         s.append(keysym)
         s = ''.join(s)
-        s = k.prettyPrintKey(s)
         g.trace(s)
         return s
     #@nonl
