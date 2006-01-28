@@ -243,6 +243,50 @@ class keyHandlerClass:
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
+    #@+node:ekr.20060127183752:masterKeyHandler
+    def masterKeyHandler (self,event):
+        
+        '''In the new binding scheme, there is only one key binding.
+        
+        This is the handler for that binding.'''
+        
+        k = self
+        
+        stroke = k.convertEventToStroke(event)
+        
+        func = k.matchStroke(stroke)
+        k.masterCommand(stroke,func) # etc.
+    #@nonl
+    #@-node:ekr.20060127183752:masterKeyHandler
+    #@+node:ekr.20060127185121:matchStroke
+    def matchStroke (self,stroke):
+        
+        '''Look up stroke in k.bindingsDict and return the best match.
+        
+        Priorities of matches:
+            
+        - Minibuffer.
+        - Any mode.
+        - Specialized-widget.  E.g., Return in the Find tab.
+        - General pane:  'text', 'tree', etc.
+        - 'all' binding.
+        '''
+        
+        k = self
+        
+        # Compute priorityList based on the present state (mode,etc)
+        
+        # In the new binding scheme, entries in k.bindingsDict are dicts.
+        # Keys are priority-keys, values are functions.
+        d = k.bindingsDict.get(stroke,{})
+        for z in priorityList:
+            f = d.get(z)
+            if f: return f
+            
+        # Nothing found.
+        return k.unboundKeyHandler
+    #@nonl
+    #@-node:ekr.20060127185121:matchStroke
     #@+node:ekr.20050920085536.16:bindKey
     def bindKey (self,pane,shortcut,callback,commandName):
     
