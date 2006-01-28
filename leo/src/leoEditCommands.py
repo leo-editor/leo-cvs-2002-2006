@@ -5483,16 +5483,37 @@ class minibufferFind:
     #@nonl
     #@-node:ekr.20060125091234:setupSearchPattern
     #@-node:ekr.20060124140114:Options
+    #@+node:ekr.20060128080201:cloneFindAll
+    def cloneFindAll (self,event):
+    
+        k = self.k ; tag = 'clone-find-all'
+        state = k.getState(tag)
+    
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=False,word=False)
+            k.setLabelBlue('Clone Find All: ',protect=True)
+            k.getArg(event,tag,1,self.cloneFindAll)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg,cloneFindAll=True)
+    #@nonl
+    #@-node:ekr.20060128080201:cloneFindAll
     #@+node:ekr.20060124181213.4:generalSearchHelper
-    def generalSearchHelper (self,pattern):
+    def generalSearchHelper (self,pattern,cloneFindAll):
         
         self.setupSearchPattern(pattern)
     
         self.finder.p = self.c.currentPosition()
         self.finder.v = self.finder.p.v
     
-        # This handles the reverse option.
-        self.finder.findNextCommand()
+        if cloneFindAll:
+             self.finder.cloneFindAllCommand()
+        else:
+            # This handles the reverse option.
+            self.finder.findNextCommand()
     #@nonl
     #@-node:ekr.20060124181213.4:generalSearchHelper
     #@+node:ekr.20060124140224.1:seachForward/Backward
@@ -6052,6 +6073,14 @@ class findTab (leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051023183028:findButtonCallback
     #@+node:ekr.20051024192602: Top level
+    #@+node:ekr.20060128075225:cloneFindAllCommand
+    def cloneFindAllCommand (self,event=None):
+        
+        self.setup_command()
+        self.clone_find_all = True
+        self.findAll()
+        self.clone_find_all = False
+    #@-node:ekr.20060128075225:cloneFindAllCommand
     #@+node:ekr.20051024192642.2:findNext/PrefCommand
     def findNextCommand (self,event=None):
     
@@ -6246,6 +6275,8 @@ class searchCommandsClass (baseEditCommandsClass):
     def getPublicCommands (self):
         
         return {
+            'clone-find-all':                       self.cloneFindAll,
+            
             'find-tab-find':                        self.findTabFindNext,
             'find-tab-find-prev':                   self.findTabFindPrev,
             'find-tab-change':                      self.findTabChange,
@@ -6266,7 +6297,7 @@ class searchCommandsClass (baseEditCommandsClass):
             're-search-forward':                    self.reSearchForward,
             're-search-backward':                   self.reSearchBackward,
                     
-            'search-again':                         self.searchAgain,
+            # 'search-again':                         self.searchAgain,
             'search-forward':                       self.searchForward,
             'search-backward':                      self.searchBackward,
             'search-with-present-options':          self.searchWithPresentOptions,
@@ -6401,6 +6432,8 @@ class searchCommandsClass (baseEditCommandsClass):
     # def changeThenFind     (self,event): self.getHandler().changeThenFindCommand()
     # def findNext           (self,event): self.getHandler().findNextCommand()
     # def findPrev           (self,event): self.getHandler().findPrevCommand()
+    
+    def cloneFindAll       (self,event): self.getHandler().cloneFindAll(event)
     
     def replaceString      (self,event): self.getHandler().replaceString(event)
     def reSearchBackward   (self,event): self.getHandler().reSearchBackward(event)
