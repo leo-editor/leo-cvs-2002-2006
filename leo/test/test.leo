@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -230,7 +230,7 @@
 </v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 <v t="ekr.20060124165505"><vh>Printing commands</vh></v>
-<v t="ekr.20060125082644"><vh>Test show-status</vh></v>
+<v t="ekr.20060125082644" a="V"><vh>Test show-find-options</vh></v>
 <v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
 </vnodes>
 <tnodes>
