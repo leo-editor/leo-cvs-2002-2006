@@ -127,7 +127,7 @@ class leoFind:
         #@nl
         
         self.intKeys = [
-            "batch", "clone_find_all","ignore_case", "node_only",
+            "batch","ignore_case", "node_only",
             "pattern_match", "search_headline", "search_body",
             "suboutline_only", "mark_changes", "mark_finds", "reverse",
             "script_search","script_change","selection_only",
@@ -138,6 +138,7 @@ class leoFind:
         
         # Ivars containing internal state...
         self.c = None # The commander for this search.
+        self.clone_find_all = False
         self.p = None # The position being searched.  Never saved between searches!
         self.in_headline = False # True: searching headline text.
         self.s_ctrl = None # The search text for this search.

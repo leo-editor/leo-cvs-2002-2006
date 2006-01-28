@@ -14,6 +14,7 @@ import leoEditCommands
 Tk = g.importExtension('Tkinter',pluginName=None,verbose=False)
 
 import string
+import sys
 #@nonl
 #@-node:ekr.20050920094258:<< imports >>
 #@nl
@@ -242,7 +243,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
-    #@+node:ekr.20051006125633:Binding (keyHandler)
+    #@+node:ekr.20051006125633:Binding
     #@+node:ekr.20060127183752:masterKeyHandler
     def masterKeyHandler (self,event):
         
@@ -252,41 +253,12 @@ class keyHandlerClass:
         
         k = self
         
-        stroke = k.convertEventToStroke(event)
+        stroke = g.app.gui.strokeFromEvent(event)
         
         func = k.matchStroke(stroke)
         k.masterCommand(stroke,func) # etc.
     #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
-    #@+node:ekr.20060127185121:matchStroke
-    def matchStroke (self,stroke):
-        
-        '''Look up stroke in k.bindingsDict and return the best match.
-        
-        Priorities of matches:
-            
-        - Minibuffer.
-        - Any mode.
-        - Specialized-widget.  E.g., Return in the Find tab.
-        - General pane:  'text', 'tree', etc.
-        - 'all' binding.
-        '''
-        
-        k = self
-        
-        # Compute priorityList based on the present state (mode,etc)
-        
-        # In the new binding scheme, entries in k.bindingsDict are dicts.
-        # Keys are priority-keys, values are functions.
-        d = k.bindingsDict.get(stroke,{})
-        for z in priorityList:
-            f = d.get(z)
-            if f: return f
-            
-        # Nothing found.
-        return k.unboundKeyHandler
-    #@nonl
-    #@-node:ekr.20060127185121:matchStroke
     #@+node:ekr.20050920085536.16:bindKey
     def bindKey (self,pane,shortcut,callback,commandName):
     
@@ -310,7 +282,6 @@ class keyHandlerClass:
                 (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
                 commandName != bunch.commandName
             ):
-                # shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
                 g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
                     k.prettyPrintKey(shortcut),
                     bunch.commandName,commandName,pane),
@@ -416,8 +387,7 @@ class keyHandlerClass:
         if c.simple_bindings:
             return k.bindKey('all',shortcut,openWithCallback,'open-with')
         else:
-        
-            bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
+            bind_shortcut = k.tkBindingFromSetting(shortcut)
         
             def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
                 return k.masterCommand(event,func,stroke)
@@ -576,26 +546,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060113062832.1:copyBindingsHelper
     #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
-    #@+node:ekr.20060120071949:isPlainKey
-    def isPlainKey (self,shortcut):
-        
-        '''Return true if the shortcut refers to a plain key.'''
-        
-        shortcut = shortcut or ''
-        shortcut1 = shortcut[:]
-    
-        shift = 'Shift-'
-        shortcut = shortcut or ''
-        if shortcut.startswith('<'):   shortcut = shortcut[1:]
-        if shortcut.endswith('>'):     shortcut = shortcut[:-1]
-        if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
-        
-        # if len(shortcut) == 1:
-            # g.trace(shortcut1)
-    
-        return len(shortcut) == 1
-    #@nonl
-    #@-node:ekr.20060120071949:isPlainKey
     #@+node:ekr.20051007080058:makeAllBindings
     def makeAllBindings (self):
         
@@ -663,11 +613,11 @@ class keyHandlerClass:
             if bunchList:
                 for bunch in bunchList:
                     accel = (bunch and bunch.val)
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    shortcut = k.tkBindingFromSetting(accel)
                     self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
             else:
                 accel = stroke
-                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                shortcut = k.tkBindingFromSetting(accel)
                 self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
     
         # Add a binding for <Key> events, so all key events go through masterCommand.
@@ -719,15 +669,25 @@ class keyHandlerClass:
             for bunch in bunchList:
                 accel = bunch.val
                 if accel:
-                    bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
+                    bind_shortcut = k.tkBindingFromSetting(accel)
                     k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
                     if 0:
                         if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
                         else:     g.trace(commandName)
     #@nonl
     #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
-    #@-node:ekr.20051006125633:Binding (keyHandler)
+    #@-node:ekr.20051006125633:Binding
     #@+node:ekr.20051001051355:Dispatching...
+    #@+node:ekr.20060128090219:masterMenuHandler
+    def masterMenuHandler (self,stroke,command,commandName):
+        
+        k = self ; event = None ; func = command
+        
+        # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
+        
+        return k.masterCommand(event,func,stroke,commandName)
+    #@nonl
+    #@-node:ekr.20060128090219:masterMenuHandler
     #@+node:ekr.20050920085536.65:masterCommand & helpers
     def masterCommand (self,event,func,stroke,commandName=None):
     
@@ -756,7 +716,7 @@ class keyHandlerClass:
         if trace and interesting:
             g.trace(
                 'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-                'stroke2:',c.frame.menu.convertEventToStroke(event),
+                'stroke2:',g.app.gui.strokeFromEvent(event),
                 'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
             )
     
@@ -996,6 +956,270 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051001050607:endCommand
     #@-node:ekr.20051001051355:Dispatching...
+    #@+node:ekr.20060128092340:Shortcuts
+    #@+node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
+    def isPlainKey (self,shortcut):
+        
+        '''Return true if the shortcut refers to a plain key.'''
+        
+        shortcut = shortcut or ''
+        shortcut1 = shortcut[:]
+    
+        shift = 'Shift-'
+        shortcut = shortcut or ''
+        if shortcut.startswith('<'):   shortcut = shortcut[1:]
+        if shortcut.endswith('>'):     shortcut = shortcut[:-1]
+        if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
+        
+        # if len(shortcut) == 1:
+            # g.trace(shortcut1)
+    
+        return len(shortcut) == 1
+    #@nonl
+    #@-node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
+    #@+node:ekr.20060128081317:shortcutFromSetting, tkBindingFromSetting
+    
+    # - canonicalizeShortcut will be simplified and moved into shortcutFromSetting.
+    
+    # - tkBindingFromSetting will go away.
+    
+    def shortcutFromSetting (self,setting):
+        
+        return self.canonicalizeShortcut(setting)[1]
+        
+    def tkBindingFromSetting (self,setting):
+    
+        return self.canonicalizeShortcut(setting)[0]
+    #@nonl
+    #@+node:ekr.20031218072017.2098:canonicalizeShortcut
+    #@+at 
+    #@nonl
+    # This code "canonicalizes" both the shortcuts that appear in menus and 
+    # the
+    # arguments to bind, mostly ignoring case and the order in which special 
+    # keys are
+    # specified.
+    # 
+    # For example, Ctrl+Shift+a is the same as Shift+Control+A. Each generates
+    # Shift+Ctrl-A in the menu and Control+A as the argument to bind.
+    # 
+    # Returns (bind_shortcut, menu_shortcut)
+    #@-at
+    #@@c
+    
+    def canonicalizeShortcut (self,shortcut):
+        
+        if shortcut == None or len(shortcut) == 0:
+            return None,None
+        s = shortcut.strip().lower()
+        
+        has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0
+        has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
+        has_alt   = s.find("alt") >= 0
+        has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
+        if sys.platform == "darwin":
+            if has_ctrl and not has_cmd:
+                has_cmd = True ; has_ctrl = False
+            if has_alt and not has_ctrl:
+                has_ctrl = True ; has_alt = False
+        #@    << set the last field, preserving case >>
+        #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+        s2 = shortcut
+        s2 = string.strip(s2)
+        
+        # Replace all minus signs by plus signs, except a trailing minus:
+        if len(s2) > 0 and s2[-1] == "-":
+            s2 = string.replace(s2,"-","+")
+            s2 = s2[:-1] + "-"
+        else:
+            s2 = string.replace(s2,"-","+")
+        
+        fields = string.split(s2,"+")
+        if fields == None or len(fields) == 0:
+            if not g.app.menuWarningsGiven:
+                print "bad shortcut specifier:", s
+            return None,None
+        
+        last = fields[-1]
+        if last == None or len(last) == 0:
+            if not g.app.menuWarningsGiven:
+                print "bad shortcut specifier:", s
+            return None,None
+        #@nonl
+        #@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+        #@nl
+        #@    << canonicalize the last field >>
+        #@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
+        bind_last = menu_last = last
+        if len(last) == 1:
+            ch = last[0]
+            if ch in string.ascii_letters:
+                menu_last = string.upper(last)
+                if has_shift:
+                    bind_last = string.upper(last)
+                else:
+                    bind_last = string.lower(last)
+            elif ch in string.digits:
+                bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+            else:
+                #@        << define dict of Tk bind names >>
+                #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+                # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+                theDict = {
+                    "!" : "exclam",
+                    '"' : "quotedbl",
+                    "#" : "numbersign",
+                    "$" : "dollar",
+                    "%" : "percent",
+                    "&" : "ampersand",
+                    "'" : "quoteright",
+                    "(" : "parenleft",
+                    ")" : "parenright",
+                    "*" : "asterisk",
+                    "+" : "plus",
+                    "," : "comma",
+                    "-" : "minus",
+                    "." : "period",
+                    "/" : "slash",
+                    ":" : "colon",
+                    ";" : "semicolon",
+                    "<" : "less",
+                    "=" : "equal",
+                    ">" : "greater",
+                    "?" : "question",
+                    "@" : "at",
+                    "[" : "bracketleft",
+                    "\\": "backslash",
+                    "]" : "bracketright",
+                    "^" : "asciicircum",
+                    "_" : "underscore",
+                    "`" : "quoteleft",
+                    "{" : "braceleft",
+                    "|" : "bar",
+                    "}" : "braceright",
+                    "~" : "asciitilde" }
+                #@nonl
+                #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+                #@nl
+                if ch in theDict.keys():
+                    bind_last = theDict[ch]
+        elif len(last) > 0:
+            #@    << define dict of special names >>
+            #@+node:ekr.20031218072017.2101:<< define dict of special names >>
+            # These keys are simply made-up names.  The menu_bind values are known to Tk.
+            # Case is not significant in the keys.
+            
+            theDict = {
+                "bksp"    : ("BackSpace","BkSp"),
+                "esc"     : ("Escape","Esc"),
+                # Arrow keys...
+                "dnarrow" : ("Down", "DnArrow"),
+                "ltarrow" : ("Left", "LtArrow"),
+                "rtarrow" : ("Right","RtArrow"),
+                "uparrow" : ("Up",   "UpArrow"),
+                # Page up/down keys...
+                "pageup"  : ("Prior","PgUp"),
+                "pagedn"  : ("Next", "PgDn")
+            }
+            
+            #@+at  
+            #@nonl
+            # The following are not translated, so what appears in the menu is 
+            # the same as what is passed to Tk.  Case is significant.
+            # 
+            # Note: the Tk documentation states that not all of these may be 
+            # available on all platforms.
+            # 
+            # F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+            # BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+            # Down, Left, Right, Up,
+            # Begin, End, Home, Next, Prior,
+            # Num_Lock, Pause, Scroll_Lock, Sys_Req,
+            # KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+            # KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+            # KP_F1,KP_F2,KP_F3,KP_F4,
+            # KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
+            #@-at
+            #@nonl
+            #@-node:ekr.20031218072017.2101:<< define dict of special names >>
+            #@nl
+            last2 = string.lower(last)
+            if last2 in theDict.keys():
+                bind_last,menu_last = theDict[last2]
+        #@nonl
+        #@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
+        #@nl
+        #@    << synthesize the shortcuts from the information >>
+        #@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+        bind_head = menu_head = ""
+        
+        if has_alt:
+            bind_head = bind_head + "Alt-"
+            menu_head = menu_head + "Alt+"
+        
+        if has_ctrl:
+            bind_head = bind_head + "Control-"
+            menu_head = menu_head + "Ctrl+"
+            
+        if has_cmd:
+            bind_head = bind_head + "Command-"
+            menu_head = menu_head + "Command+"
+            
+        if has_shift:
+            menu_head = menu_head + "Shift+"
+            if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+                bind_head = bind_head + "Shift-"
+        
+        # New in 4.4a6: Only the menu_shortcut will exist.
+        if not menu_head:
+            menu_shortcut = 'Key+%s' % menu_last
+        else:
+            menu_shortcut = menu_head + menu_last
+            
+        # To be removed in 4.4a6
+        if not bind_head and bind_last and len(bind_last) == 1:
+            bind_shortcut = '<Key-%s>' % bind_last
+        else:
+            bind_shortcut = "<" + bind_head + bind_last + ">"
+            
+        #@nonl
+        #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+        #@nl
+        # print repr(shortcut),repr(bind_shortcut),repr(menu_shortcut)
+        return bind_shortcut,menu_shortcut
+    #@nonl
+    #@-node:ekr.20031218072017.2098:canonicalizeShortcut
+    #@-node:ekr.20060128081317:shortcutFromSetting, tkBindingFromSetting
+    #@+node:ekr.20060127185121:matchStroke
+    def matchStroke (self,stroke):
+        
+        '''Look up stroke in k.bindingsDict and return the best match.
+        
+        Priorities of matches:
+            
+        - Minibuffer.
+        - Any mode.
+        - Specialized-widget.  E.g., Return in the Find tab.
+        - General pane:  'text', 'tree', etc.
+        - 'all' binding.
+        '''
+        
+        k = self
+        
+        # Compute priorityList based on the present state (mode,etc)
+        
+        # In the new binding scheme, entries in k.bindingsDict are dicts.
+        # Keys are priority-keys, values are functions.
+        d = k.bindingsDict.get(stroke,{})
+        for z in priorityList:
+            f = d.get(z)
+            if f: return f
+            
+        # Nothing found.
+        return k.unboundKeyHandler
+    #@nonl
+    #@-node:ekr.20060127185121:matchStroke
+    #@-node:ekr.20060128092340:Shortcuts
     #@+node:ekr.20060115103349:Modes & input states
     #@+node:ekr.20060102135349.2:enterNamedMode
     def enterNamedMode (self,event,commandName):
@@ -1129,7 +1353,7 @@ class keyHandlerClass:
                 for bunch in bunchList:
                     shortcut = bunch.val
                     if shortcut and shortcut not in ('None','none',None):
-                        stroke, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+                        stroke = k.tkBindingFromSetting(shortcut)
                         # g.trace(stroke,shortcut)
                         #@                    << define modeCallback >>
                         #@+node:ekr.20060118181341:<< define modeCallback >>
@@ -1893,8 +2117,7 @@ class keyHandlerClass:
         k.inverseCommandsDict [func.__name__] = commandName
         
         if shortcut:
-            # Retain the original spelling of the shortcut for the message.
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+            shortcut = k.tkBindingFromSetting(shortcut)
             ok = k.bindShortcut (pane,shortcut,func,commandName)
             if verbose and ok:
                  g.es_print('Registered %s bound to %s' % (
@@ -1902,7 +2125,6 @@ class keyHandlerClass:
         else:
             if verbose:
                 g.es_print('Registered %s' % (commandName), color='blue')
-    #@nonl
     #@-node:ekr.20051015110547:k.registerCommand
     #@-node:ekr.20051006065121:Externally visible helpers
     #@+node:ekr.20050924064254:Label...
@@ -2168,7 +2390,9 @@ class keyHandlerClass:
         
         '''Print a shortcut in a pleasing way.'''
         
-        return self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+        k = self
+        
+        return k.shortcutFromSetting(key) or ''
     #@nonl
     #@-node:ekr.20051122104219:prettyPrintKey
     #@+node:ekr.20060114171910:traceBinding

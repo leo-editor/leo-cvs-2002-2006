@@ -1261,7 +1261,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.2861:Edit Menu...
     #@+node:ekr.20031218072017.2862:Edit top level
     #@+node:ekr.20031218072017.2140:c.executeScript
-    def executeScript(self,p=None,script=None,
+    def executeScript(self,event=None,p=None,script=None,
         useSelectedText=True,define_g=True,define_name='__main__',silent=False):
     
         """This executes body text as a Python script.
@@ -1357,7 +1357,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2140:c.executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
-    def goToLineNumber (self,root=None,lines=None,n=None,scriptFind=False):
+    def goToLineNumber (self,event=None,root=None,lines=None,n=None,scriptFind=False):
         
         __pychecker__ = 'maxlines=400'
     

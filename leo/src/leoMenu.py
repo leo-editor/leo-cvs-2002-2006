@@ -1266,7 +1266,7 @@ class leoMenu:
         New in 4.4: this method shows the shortcut in the menu,
         but this method **never** binds any shortcuts.'''
         
-        c = self.c ; f = c.frame ; k = c.keyHandler
+        c = self.c ; f = c.frame ; k = c.k
         
         if g.app.unitTesting: return
     
@@ -1356,25 +1356,39 @@ class leoMenu:
             #@nonl
             #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             #@nl
-            rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-            menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
-            realLabel = self.getRealMenuName(label)
-            #@        << set amp_index using rawKey and realLabel >>
-            #@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-            if rawKey:
-                amp_index = rawKey.find("&")
-            else:
-                amp_index = -1
-            
-            if amp_index == -1:
+            if 1:
+                # To do: we might call k.masterCommand directly
+                accelerator = stroke = k.shortcutFromSetting(accel) or ''
+                def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+                    return k.masterMenuHandler(stroke,command,commandName)
+                realLabel = self.getRealMenuName(label)
                 amp_index = realLabel.find("&")
-            #@nonl
-            #@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-            #@nl
-            realLabel = realLabel.replace("&","")
-            self.add_command(menu,label=realLabel,
-                accelerator= menu_shortcut or '',
-                command=menuCallback,underline=amp_index)
+                realLabel = realLabel.replace("&","")
+                self.add_command(menu,label=realLabel,
+                    accelerator=accelerator,
+                    command=masterMenuCallback,
+                    underline=amp_index)
+            else:
+                # To do: remove defineMenuCallback
+                rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
+                menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
+                realLabel = self.getRealMenuName(label)
+                #@            << set amp_index using rawKey and realLabel >>
+                #@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+                if rawKey:
+                    amp_index = rawKey.find("&")
+                else:
+                    amp_index = -1
+                
+                if amp_index == -1:
+                    amp_index = realLabel.find("&")
+                #@nonl
+                #@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
+                #@nl
+                realLabel = realLabel.replace("&","")
+                self.add_command(menu,label=realLabel,
+                    accelerator= menu_shortcut or '',
+                    command=menuCallback,underline=amp_index)
     #@nonl
     #@-node:ekr.20031218072017.1723:createMenuEntries
     #@+node:ekr.20051022053758.1:Helpers
@@ -1398,234 +1412,6 @@ class leoMenu:
                 newname = newname+ch
         return newname
     #@-node:ekr.20031218072017.3783:canonicalizeMenuName & cononicalizeTranslatedMenuName
-    #@+node:ekr.20031218072017.2098:canonicalizeShortcut
-    #@+at 
-    #@nonl
-    # This code "canonicalizes" both the shortcuts that appear in menus and 
-    # the
-    # arguments to bind, mostly ignoring case and the order in which special 
-    # keys are
-    # specified.
-    # 
-    # For example, Ctrl+Shift+a is the same as Shift+Control+A. Each generates
-    # Shift+Ctrl-A in the menu and Control+A as the argument to bind.
-    # 
-    # Returns (bind_shortcut, menu_shortcut)
-    #@-at
-    #@@c
-    
-    def canonicalizeShortcut (self,shortcut):
-        
-        if shortcut == None or len(shortcut) == 0:
-            return None,None
-        s = shortcut.strip().lower()
-        
-        has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0
-        has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
-        has_alt   = s.find("alt") >= 0
-        has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
-        if sys.platform == "darwin":
-            if has_ctrl and not has_cmd:
-                has_cmd = True ; has_ctrl = False
-            if has_alt and not has_ctrl:
-                has_ctrl = True ; has_alt = False
-        #@    << set the last field, preserving case >>
-        #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
-        s2 = shortcut
-        s2 = string.strip(s2)
-        
-        # Replace all minus signs by plus signs, except a trailing minus:
-        if len(s2) > 0 and s2[-1] == "-":
-            s2 = string.replace(s2,"-","+")
-            s2 = s2[:-1] + "-"
-        else:
-            s2 = string.replace(s2,"-","+")
-        
-        fields = string.split(s2,"+")
-        if fields == None or len(fields) == 0:
-            if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s
-            return None,None
-        
-        last = fields[-1]
-        if last == None or len(last) == 0:
-            if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s
-            return None,None
-        #@nonl
-        #@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
-        #@nl
-        #@    << canonicalize the last field >>
-        #@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
-        bind_last = menu_last = last
-        if len(last) == 1:
-            ch = last[0]
-            if ch in string.ascii_letters:
-                menu_last = string.upper(last)
-                if has_shift:
-                    bind_last = string.upper(last)
-                else:
-                    bind_last = string.lower(last)
-            elif ch in string.digits:
-                bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
-            else:
-                #@        << define dict of Tk bind names >>
-                #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-                # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-                theDict = {
-                    "!" : "exclam",
-                    '"' : "quotedbl",
-                    "#" : "numbersign",
-                    "$" : "dollar",
-                    "%" : "percent",
-                    "&" : "ampersand",
-                    "'" : "quoteright",
-                    "(" : "parenleft",
-                    ")" : "parenright",
-                    "*" : "asterisk",
-                    "+" : "plus",
-                    "," : "comma",
-                    "-" : "minus",
-                    "." : "period",
-                    "/" : "slash",
-                    ":" : "colon",
-                    ";" : "semicolon",
-                    "<" : "less",
-                    "=" : "equal",
-                    ">" : "greater",
-                    "?" : "question",
-                    "@" : "at",
-                    "[" : "bracketleft",
-                    "\\": "backslash",
-                    "]" : "bracketright",
-                    "^" : "asciicircum",
-                    "_" : "underscore",
-                    "`" : "quoteleft",
-                    "{" : "braceleft",
-                    "|" : "bar",
-                    "}" : "braceright",
-                    "~" : "asciitilde" }
-                #@nonl
-                #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-                #@nl
-                if ch in theDict.keys():
-                    bind_last = theDict[ch]
-        elif len(last) > 0:
-            #@    << define dict of special names >>
-            #@+node:ekr.20031218072017.2101:<< define dict of special names >>
-            # These keys are simply made-up names.  The menu_bind values are known to Tk.
-            # Case is not significant in the keys.
-            
-            theDict = {
-                "bksp"    : ("BackSpace","BkSp"),
-                "esc"     : ("Escape","Esc"),
-                # Arrow keys...
-                "dnarrow" : ("Down", "DnArrow"),
-                "ltarrow" : ("Left", "LtArrow"),
-                "rtarrow" : ("Right","RtArrow"),
-                "uparrow" : ("Up",   "UpArrow"),
-                # Page up/down keys...
-                "pageup"  : ("Prior","PgUp"),
-                "pagedn"  : ("Next", "PgDn")
-            }
-            
-            #@+at  
-            #@nonl
-            # The following are not translated, so what appears in the menu is 
-            # the same as what is passed to Tk.  Case is significant.
-            # 
-            # Note: the Tk documentation states that not all of these may be 
-            # available on all platforms.
-            # 
-            # F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
-            # BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
-            # Down, Left, Right, Up,
-            # Begin, End, Home, Next, Prior,
-            # Num_Lock, Pause, Scroll_Lock, Sys_Req,
-            # KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
-            # KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
-            # KP_F1,KP_F2,KP_F3,KP_F4,
-            # KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
-            #@-at
-            #@nonl
-            #@-node:ekr.20031218072017.2101:<< define dict of special names >>
-            #@nl
-            last2 = string.lower(last)
-            if last2 in theDict.keys():
-                bind_last,menu_last = theDict[last2]
-        #@nonl
-        #@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
-        #@nl
-        #@    << synthesize the shortcuts from the information >>
-        #@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
-        bind_head = menu_head = ""
-        
-        if has_alt:
-            bind_head = bind_head + "Alt-"
-            menu_head = menu_head + "Alt+"
-        
-        if has_ctrl:
-            bind_head = bind_head + "Control-"
-            menu_head = menu_head + "Ctrl+"
-            
-        if has_cmd:
-            bind_head = bind_head + "Command-"
-            menu_head = menu_head + "Command+"
-            
-        if has_shift:
-            menu_head = menu_head + "Shift+"
-            if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
-                bind_head = bind_head + "Shift-"
-        
-        # New in 4.4a6: Only the menu_shortcut will exist.
-        if not menu_head:
-            menu_shortcut = 'Key+%s' % menu_last
-        else:
-            menu_shortcut = menu_head + menu_last
-            
-        # To be removed in 4.4a6
-        if not bind_head and bind_last and len(bind_last) == 1:
-            bind_shortcut = '<Key-%s>' % bind_last
-        else:
-            bind_shortcut = "<" + bind_head + bind_last + ">"
-            
-        #@nonl
-        #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
-        #@nl
-        # print repr(shortcut),repr(bind_shortcut),repr(menu_shortcut)
-        return bind_shortcut,menu_shortcut
-    #@nonl
-    #@-node:ekr.20031218072017.2098:canonicalizeShortcut
-    #@+node:ekr.20060126163152.2:convertEventToStroke
-    def convertEventToStroke (self,event):
-        
-        c = self.c ; k = c.k
-        if event is None: return ''
-        state = event.state
-        keysym = event.keysym or ''
-        
-        s = []
-        shift = (state & 1) == 1
-        caps  = (state & 2) == 2
-        ctrl  = (state & 4) == 4
-        alt   = (state & 0x20000) == 0x20000
-        key   = not alt and not ctrl and not shift
-        
-        for z,val in (
-            # (key, 'Key+'),
-            (alt, 'Alt+'),
-            (ctrl,'Ctrl+'),
-            (shift,'Shift'),
-        ):
-            if z: s.append(val)
-            
-        s.append(keysym)
-        s = ''.join(s)
-        s = k.prettyPrintKey(s)
-        g.trace(s)
-        return s
-    #@nonl
-    #@-node:ekr.20060126163152.2:convertEventToStroke
     #@+node:ekr.20051022044950:computeOldStyleShortcutKey
     def computeOldStyleShortcutKey (self,s):
         
@@ -1644,6 +1430,8 @@ class leoMenu:
         '''Create an entry in the Open with Menu from the table.
         
         Each entry should be a sequence with 2 or 3 elements.'''
+        
+        c = self.c ; k = c.k
     
         if g.app.unitTesting: return
     
@@ -1660,7 +1448,8 @@ class leoMenu:
                     label,openWithData = data ; accelerator = None
                 else:
                     label,accelerator,openWithData = data
-                    junk,accelerator = self.canonicalizeShortcut(accelerator)
+                    # junk,accelerator = self.canonicalizeShortcut(accelerator)
+                    accelerator = k.tkBindingFromSetting(accelerator)
             else:
                 g.trace('bad data in Open With table: %s' % repr(data))
                 continue # Ignore bad data

@@ -1805,6 +1805,16 @@ self.modeBunch = None
 #@-node:ekr.20050923213858:<< define internal ivars >>
 #@-node:ekr.20050920085536.2: ctor (keyHandler)
 #@+node:ekr.20051001051355:Dispatching...
+#@+node:ekr.20060128090219:masterMenuHandler
+def masterMenuHandler (self,stroke,command,commandName):
+    
+    k = self ; event = None ; func = command
+    
+    # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
+    
+    return k.masterCommand(event,func,stroke,commandName)
+#@nonl
+#@-node:ekr.20060128090219:masterMenuHandler
 #@+node:ekr.20050920085536.65:masterCommand & helpers
 def masterCommand (self,event,func,stroke,commandName=None):
 
@@ -1833,7 +1843,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     if trace and interesting:
         g.trace(
             'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',c.frame.menu.convertEventToStroke(event),
+            'stroke2:',g.app.gui.strokeFromEvent(event),
             'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
@@ -2139,7 +2149,22 @@ def parseShortcutLine (self,s):
     return name,g.bunch(nextMode=nextMode,pane=pane,val=val)
 #@nonl
 #@-node:ekr.20041120112043:parseShortcutLine (g.app.config)
-#@+node:ekr.20051006125633:Binding (keyHandler)
+#@+node:ekr.20051006125633:Binding
+#@+node:ekr.20060127183752:masterKeyHandler
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    k = self
+    
+    stroke = g.app.gui.strokeFromEvent(event)
+    
+    func = k.matchStroke(stroke)
+    k.masterCommand(stroke,func) # etc.
+#@nonl
+#@-node:ekr.20060127183752:masterKeyHandler
 #@+node:ekr.20050920085536.16:bindKey
 def bindKey (self,pane,shortcut,callback,commandName):
 
@@ -2180,7 +2205,6 @@ for bunch in bunchList:
         (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
         commandName != bunch.commandName
     ):
-        # shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
         g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
             k.prettyPrintKey(shortcut),
             bunch.commandName,commandName,pane),
@@ -2267,8 +2291,7 @@ def bindOpenWith (self,shortcut,name,data):
     if c.simple_bindings:
         return k.bindKey('all',shortcut,openWithCallback,'open-with')
     else:
-    
-        bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
+        bind_shortcut = k.tkBindingFromSetting(shortcut)
     
         def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
             return k.masterCommand(event,func,stroke)
@@ -2427,26 +2450,6 @@ def copyBindingsHelper(self,bunchList,shortcut,w):
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
-#@+node:ekr.20060120071949:isPlainKey
-def isPlainKey (self,shortcut):
-    
-    '''Return true if the shortcut refers to a plain key.'''
-    
-    shortcut = shortcut or ''
-    shortcut1 = shortcut[:]
-
-    shift = 'Shift-'
-    shortcut = shortcut or ''
-    if shortcut.startswith('<'):   shortcut = shortcut[1:]
-    if shortcut.endswith('>'):     shortcut = shortcut[:-1]
-    if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
-    
-    # if len(shortcut) == 1:
-        # g.trace(shortcut1)
-
-    return len(shortcut) == 1
-#@nonl
-#@-node:ekr.20060120071949:isPlainKey
 #@+node:ekr.20051007080058:makeAllBindings
 def makeAllBindings (self):
     
@@ -2514,11 +2517,11 @@ def makeSpecialBindings (self):
         if bunchList:
             for bunch in bunchList:
                 accel = (bunch and bunch.val)
-                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                shortcut = k.tkBindingFromSetting(accel)
                 self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
         else:
             accel = stroke
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            shortcut = k.tkBindingFromSetting(accel)
             self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
 
     # Add a binding for <Key> events, so all key events go through masterCommand.
@@ -2570,14 +2573,14 @@ def makeBindingsFromCommandsDict (self):
         for bunch in bunchList:
             accel = bunch.val
             if accel:
-                bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
+                bind_shortcut = k.tkBindingFromSetting(accel)
                 k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
                 if 0:
                     if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
                     else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
-#@-node:ekr.20051006125633:Binding (keyHandler)
+#@-node:ekr.20051006125633:Binding
 #@+node:ekr.20060115103349:Modes & input states
 #@+node:ekr.20060102135349.2:enterNamedMode
 def enterNamedMode (self,event,commandName):
@@ -2711,7 +2714,7 @@ def createModeBindings (self,modeName,tagName,d):
             for bunch in bunchList:
                 shortcut = bunch.val
                 if shortcut and shortcut not in ('None','none',None):
-                    stroke, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+                    stroke = k.tkBindingFromSetting(shortcut)
                     # g.trace(stroke,shortcut)
                     << define modeCallback >>
         else:
@@ -3135,7 +3138,22 @@ def updateTab (self,p,w):
 #@nonl
 #@-node:ekr.20051026092433:updateTab
 #@-node:ekr.20051125080855:selfInsertCommand
-#@+node:ekr.20051006125633:Binding (keyHandler)
+#@+node:ekr.20051006125633:Binding
+#@+node:ekr.20060127183752:masterKeyHandler
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    k = self
+    
+    stroke = g.app.gui.strokeFromEvent(event)
+    
+    func = k.matchStroke(stroke)
+    k.masterCommand(stroke,func) # etc.
+#@nonl
+#@-node:ekr.20060127183752:masterKeyHandler
 #@+node:ekr.20050920085536.16:bindKey
 def bindKey (self,pane,shortcut,callback,commandName):
 
@@ -3176,7 +3194,6 @@ for bunch in bunchList:
         (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
         commandName != bunch.commandName
     ):
-        # shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
         g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
             k.prettyPrintKey(shortcut),
             bunch.commandName,commandName,pane),
@@ -3263,8 +3280,7 @@ def bindOpenWith (self,shortcut,name,data):
     if c.simple_bindings:
         return k.bindKey('all',shortcut,openWithCallback,'open-with')
     else:
-    
-        bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(shortcut)
+        bind_shortcut = k.tkBindingFromSetting(shortcut)
     
         def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
             return k.masterCommand(event,func,stroke)
@@ -3423,26 +3439,6 @@ def copyBindingsHelper(self,bunchList,shortcut,w):
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
-#@+node:ekr.20060120071949:isPlainKey
-def isPlainKey (self,shortcut):
-    
-    '''Return true if the shortcut refers to a plain key.'''
-    
-    shortcut = shortcut or ''
-    shortcut1 = shortcut[:]
-
-    shift = 'Shift-'
-    shortcut = shortcut or ''
-    if shortcut.startswith('<'):   shortcut = shortcut[1:]
-    if shortcut.endswith('>'):     shortcut = shortcut[:-1]
-    if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
-    
-    # if len(shortcut) == 1:
-        # g.trace(shortcut1)
-
-    return len(shortcut) == 1
-#@nonl
-#@-node:ekr.20060120071949:isPlainKey
 #@+node:ekr.20051007080058:makeAllBindings
 def makeAllBindings (self):
     
@@ -3510,11 +3506,11 @@ def makeSpecialBindings (self):
         if bunchList:
             for bunch in bunchList:
                 accel = (bunch and bunch.val)
-                shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                shortcut = k.tkBindingFromSetting(accel)
                 self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
         else:
             accel = stroke
-            shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+            shortcut = k.tkBindingFromSetting(accel)
             self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
 
     # Add a binding for <Key> events, so all key events go through masterCommand.
@@ -3566,14 +3562,14 @@ def makeBindingsFromCommandsDict (self):
         for bunch in bunchList:
             accel = bunch.val
             if accel:
-                bind_shortcut, menu_shortcut = c.frame.menu.canonicalizeShortcut(accel)
+                bind_shortcut = k.tkBindingFromSetting(accel)
                 k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
                 if 0:
                     if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
                     else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
-#@-node:ekr.20051006125633:Binding (keyHandler)
+#@-node:ekr.20051006125633:Binding
 #@-node:ekr.20060119201356:Disabled plain-key bindings in insert/overwrite modes
 #@+node:ekr.20060120105247:Fixed minor bugs & made minor improvements
 @nocolor
@@ -3794,7 +3790,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     if trace and interesting:
         g.trace(
             'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',c.frame.menu.convertEventToStroke(event),
+            'stroke2:',g.app.gui.strokeFromEvent(event),
             'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
@@ -4187,7 +4183,7 @@ def createModeBindings (self,modeName,tagName,d):
             for bunch in bunchList:
                 shortcut = bunch.val
                 if shortcut and shortcut not in ('None','none',None):
-                    stroke, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+                    stroke = k.tkBindingFromSetting(shortcut)
                     # g.trace(stroke,shortcut)
                     << define modeCallback >>
         else:
@@ -5681,7 +5677,7 @@ def cutStack (self):
             i -= 1
 
         # This work regardless of how many items appear after bead n.
-        g.trace('Cutting undo stack to %d entries' % (n))
+        # g.trace('Cutting undo stack to %d entries' % (n))
         u.beads = u.beads[-n:]
         u.bead = n-1
         # g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
@@ -7505,7 +7501,7 @@ def cutStack (self):
             i -= 1
 
         # This work regardless of how many items appear after bead n.
-        g.trace('Cutting undo stack to %d entries' % (n))
+        # g.trace('Cutting undo stack to %d entries' % (n))
         u.beads = u.beads[-n:]
         u.bead = n-1
         # g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
@@ -7944,7 +7940,9 @@ def prettyPrintKey (self,key):
     
     '''Print a shortcut in a pleasing way.'''
     
-    return self.c.frame.menu.canonicalizeShortcut(key)[1] or ''
+    k = self
+    
+    return k.shortcutFromSetting(key) or ''
 #@nonl
 #@-node:ekr.20051122104219:prettyPrintKey
 #@+node:ekr.20060121101953:Dispatching
@@ -7976,7 +7974,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     if trace and interesting:
         g.trace(
             'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',c.frame.menu.convertEventToStroke(event),
+            'stroke2:',g.app.gui.strokeFromEvent(event),
             'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
@@ -8324,7 +8322,6 @@ for bunch in bunchList:
         (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
         commandName != bunch.commandName
     ):
-        # shortcut, junk = c.frame.menu.canonicalizeShortcut(shortcut)
         g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
             k.prettyPrintKey(shortcut),
             bunch.commandName,commandName,pane),
@@ -9049,7 +9046,7 @@ def createModeBindings (self,modeName,tagName,d):
             for bunch in bunchList:
                 shortcut = bunch.val
                 if shortcut and shortcut not in ('None','none',None):
-                    stroke, junk = c.frame.menu.canonicalizeShortcut(shortcut)
+                    stroke = k.tkBindingFromSetting(shortcut)
                     # g.trace(stroke,shortcut)
                     << define modeCallback >>
         else:
@@ -10356,7 +10353,7 @@ def weave (self,event=None):
 #@+node:ekr.20031218072017.2861:Edit Menu...
 #@+node:ekr.20031218072017.2862:Edit top level
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,
+def executeScript(self,event=None,p=None,script=None,
     useSelectedText=True,define_g=True,define_name='__main__',silent=False):
 
     """This executes body text as a Python script.
@@ -10448,7 +10445,7 @@ if c.exists and c.config.redirect_execute_script_output_to_log_pane:
 #@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.2864:goToLineNumber & allies
-def goToLineNumber (self,root=None,lines=None,n=None,scriptFind=False):
+def goToLineNumber (self,event=None,root=None,lines=None,n=None,scriptFind=False):
     
     __pychecker__ = 'maxlines=400'
 

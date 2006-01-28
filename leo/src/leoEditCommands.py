@@ -5380,7 +5380,7 @@ class minibufferFind:
                  g.trace('%s = %s' % (ivar,val))
             return val
         else:
-            g.trace('bad ivar name: %s' % name)
+            g.trace('bad ivar name: %s' % ivar)
     #@nonl
     #@-node:ekr.20060125082510:getOption
     #@+node:ekr.20060125074939:showFindOptions
@@ -5421,7 +5421,6 @@ class minibufferFind:
             ('wrap',            'wrap'),
             ('mark_changes',    'markChg'),
             ('mark_finds',      'markFnd'),
-            ('clone_find_all',  'cloneFndAll')
         )
             
         for ivar,s in table:
@@ -5729,7 +5728,7 @@ class findTab (leoFind.leoFind):
     #@+node:ekr.20051023181449:createBindings (findTab)
     def createBindings (self):
         
-        c = self.c ; k = c.keyHandler
+        c = self.c ; k = c.k
     
         for w in (self.find_ctrl, self.change_ctrl):
             k.copyBindingsToWidget(['text','mini','all'],w)
@@ -5744,7 +5743,7 @@ class findTab (leoFind.leoFind):
                 junk, bunchList = c.config.getShortcut(commandName)
                 for bunch in bunchList:
                     accel = bunch.val
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    shortcut = k.tkBindingFromSetting(accel)
                     if shortcut:
                         # g.trace(shortcut,commandName)
                         w.bind(shortcut,func)
@@ -6923,7 +6922,7 @@ class spellTab(leoFind.leoFind):
     #@+node:ekr.20051025120920:createBindings (spellTab)
     def createBindings (self):
         
-        c = self.c ; k = c.keyHandler
+        c = self.c ; k = c.k
         widgets = (self.listBox, self.outerFrame)
     
         for w in widgets:
@@ -6940,7 +6939,7 @@ class spellTab(leoFind.leoFind):
                 junk, bunchList = c.config.getShortcut(commandName)
                 for bunch in bunchList:
                     accel = bunch.val
-                    shortcut, junk = c.frame.menu.canonicalizeShortcut(accel)
+                    shortcut = k.tkBindingFromSetting(accel)
                     if shortcut:
                         # g.trace(shortcut,commandName)
                         w.bind(shortcut,func)
