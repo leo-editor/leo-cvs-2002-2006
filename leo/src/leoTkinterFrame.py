@@ -2744,7 +2744,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.4022:hasTextSelection
     #@+node:ekr.20031218072017.4023:selectAllText
-    def selectAllText (self):
+    def selectAllText (self,event=None):
     
         try:
             w = self.bodyCtrl.focus_get()

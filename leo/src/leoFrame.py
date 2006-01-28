@@ -303,7 +303,7 @@ class leoBody:
     def hasTextSelection (self):
         self.oops()
         
-    def selectAllText (self):
+    def selectAllText (self,event=None):
         self.oops()
         
     def setTextSelection (self,i,j=None,insert='sel.end'):
@@ -1202,7 +1202,7 @@ class nullBody (leoBody):
         i,j = self.selection
         return i != j
         
-    def selectAllText (self):
+    def selectAllText (self,event=None):
         self.selection = 0,len(self.s)
         
     def setTextSelection (self,i,j=None,insert='sel.end'):
