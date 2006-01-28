@@ -138,7 +138,7 @@ class baseUndoer:
                 i -= 1
     
             # This work regardless of how many items appear after bead n.
-            g.trace('Cutting undo stack to %d entries' % (n))
+            # g.trace('Cutting undo stack to %d entries' % (n))
             u.beads = u.beads[-n:]
             u.bead = n-1
             # g.trace('bead:',u.bead,'len(u.beads)',len(u.beads))
