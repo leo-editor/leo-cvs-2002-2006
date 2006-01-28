@@ -272,6 +272,9 @@ class keyHandlerClass:
         if not shortcut:
             # g.trace('No shortcut for %s' % commandName)
             return
+        if pane.endswith('mode'):
+            g.trace('Ignorning mode binding',shortcut,commandName)
+            return
         bunchList = k.bindingsDict.get(shortcut,[])
         k.computeKeysym_numDicts(shortcut)
         #@    << give warning and return if there is a serious redefinition >>
@@ -1007,187 +1010,318 @@ class keyHandlerClass:
     #@-at
     #@@c
     
+    #@<< define dict of special names >>
+    #@+node:ekr.20031218072017.2101:<< define dict of special names >>
+    # These keys are simply made-up names.  The menu_bind values are known to Tk.
+    # Case is not significant in the keys.
+    
+    if g.app.new_keys: # After changeover: a single value (there is no bind key)
+    
+        tkSpecialNamesDict = {
+            # "delete"  : "Delete",
+            "bksp"    : "BackSpace",
+            "esc"     : "Escape",
+            # Arrow keys...
+            "dnarrow" : "DnArrow",
+            "ltarrow" : "LtArrow",
+            "rtarrow" : "RtArrow",
+            "uparrow" : "UpArrow",
+            # Page up/down keys...
+            "pageup"  : "PageUp",
+            "pagedn"  : "PageDn",
+        }
+    
+    else: # Before changeover:  tuples of bind_last and menu_last
+    
+        tkSpecialNamesDict = {
+            "bksp"    : ("BackSpace","BkSp"),
+            "esc"     : ("Escape","Esc"),
+            # Arrow keys...
+            "dnarrow" : ("Down", "DnArrow"),
+            "ltarrow" : ("Left", "LtArrow"),
+            "rtarrow" : ("Right","RtArrow"),
+            "uparrow" : ("Up",   "UpArrow"),
+            # Page up/down keys...
+            "pageup"  : ("Prior","PgUp"),
+            "pagedn"  : ("Next", "PgDn")
+        }
+    
+    #@+at  
+    #@nonl
+    # The following are not translated, so what appears in the menu is the 
+    # same as what is passed to Tk.  Case is significant.
+    # 
+    # Note: the Tk documentation states that not all of these may be available 
+    # on all platforms.
+    # 
+    # F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+    # BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+    # Down, Left, Right, Up,
+    # Begin, End, Home, Next, Prior,
+    # Num_Lock, Pause, Scroll_Lock, Sys_Req,
+    # KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+    # KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+    # KP_F1,KP_F2,KP_F3,KP_F4,
+    # KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
+    #@-at
+    #@nonl
+    #@-node:ekr.20031218072017.2101:<< define dict of special names >>
+    #@nl
+    #@<< define dict of Tk bind names >>
+    #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+    if not g.app.new_keys: # new keys: just use the character itself.
+        # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+        tkBindNamesDict = {
+            "!" : "exclam",
+            '"' : "quotedbl",
+            "#" : "numbersign",
+            "$" : "dollar",
+            "%" : "percent",
+            "&" : "ampersand",
+            "'" : "quoteright",
+            "(" : "parenleft",
+            ")" : "parenright",
+            "*" : "asterisk",
+            "+" : "plus",
+            "," : "comma",
+            "-" : "minus",
+            "." : "period",
+            "/" : "slash",
+            ":" : "colon",
+            ";" : "semicolon",
+            "<" : "less",
+            "=" : "equal",
+            ">" : "greater",
+            "?" : "question",
+            "@" : "at",
+            "[" : "bracketleft",
+            "\\": "backslash",
+            "]" : "bracketright",
+            "^" : "asciicircum",
+            "_" : "underscore",
+            "`" : "quoteleft",
+            "{" : "braceleft",
+            "|" : "bar",
+            "}" : "braceright",
+            "~" : "asciitilde" }
+    #@nonl
+    #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+    #@nl
+    
     def canonicalizeShortcut (self,shortcut):
         
         if shortcut == None or len(shortcut) == 0:
             return None,None
-        s = shortcut.strip().lower()
-        
-        has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0
-        has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
-        has_alt   = s.find("alt") >= 0
-        has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
+        s = shortcut.strip()
+        s2 = s.lower()
+        has_cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+        has_ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+        has_alt   = s2.find("alt") >= 0
+        has_shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
         if sys.platform == "darwin":
             if has_ctrl and not has_cmd:
                 has_cmd = True ; has_ctrl = False
             if has_alt and not has_ctrl:
                 has_ctrl = True ; has_alt = False
-        #@    << set the last field, preserving case >>
-        #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
-        s2 = shortcut
-        s2 = string.strip(s2)
-        
-        # Replace all minus signs by plus signs, except a trailing minus:
-        if len(s2) > 0 and s2[-1] == "-":
-            s2 = string.replace(s2,"-","+")
-            s2 = s2[:-1] + "-"
-        else:
-            s2 = string.replace(s2,"-","+")
-        
-        fields = string.split(s2,"+")
-        if fields == None or len(fields) == 0:
-            if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s
-            return None,None
-        
-        last = fields[-1]
-        if last == None or len(last) == 0:
-            if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s
-            return None,None
-        #@nonl
-        #@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
-        #@nl
-        #@    << canonicalize the last field >>
-        #@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
-        bind_last = menu_last = last
-        if len(last) == 1:
-            ch = last[0]
-            if ch in string.ascii_letters:
-                menu_last = string.upper(last)
-                if has_shift:
-                    bind_last = string.upper(last)
-                else:
-                    bind_last = string.lower(last)
-            elif ch in string.digits:
-                bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+        if 1: # New, simplified.
+            #@        << convert minus signs to plus signs >>
+            #@+node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+            # Replace all minus signs by plus signs, except a trailing minus:
+            if s.endswith('-'):
+                s = s[:-1].replace('-','+') + '-'
             else:
-                #@        << define dict of Tk bind names >>
-                #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-                # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-                theDict = {
-                    "!" : "exclam",
-                    '"' : "quotedbl",
-                    "#" : "numbersign",
-                    "$" : "dollar",
-                    "%" : "percent",
-                    "&" : "ampersand",
-                    "'" : "quoteright",
-                    "(" : "parenleft",
-                    ")" : "parenright",
-                    "*" : "asterisk",
-                    "+" : "plus",
-                    "," : "comma",
-                    "-" : "minus",
-                    "." : "period",
-                    "/" : "slash",
-                    ":" : "colon",
-                    ";" : "semicolon",
-                    "<" : "less",
-                    "=" : "equal",
-                    ">" : "greater",
-                    "?" : "question",
-                    "@" : "at",
-                    "[" : "bracketleft",
-                    "\\": "backslash",
-                    "]" : "bracketright",
-                    "^" : "asciicircum",
-                    "_" : "underscore",
-                    "`" : "quoteleft",
-                    "{" : "braceleft",
-                    "|" : "bar",
-                    "}" : "braceright",
-                    "~" : "asciitilde" }
-                #@nonl
-                #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-                #@nl
-                if ch in theDict.keys():
-                    bind_last = theDict[ch]
-        elif len(last) > 0:
-            #@    << define dict of special names >>
-            #@+node:ekr.20031218072017.2101:<< define dict of special names >>
-            # These keys are simply made-up names.  The menu_bind values are known to Tk.
-            # Case is not significant in the keys.
-            
-            theDict = {
-                "bksp"    : ("BackSpace","BkSp"),
-                "esc"     : ("Escape","Esc"),
-                # Arrow keys...
-                "dnarrow" : ("Down", "DnArrow"),
-                "ltarrow" : ("Left", "LtArrow"),
-                "rtarrow" : ("Right","RtArrow"),
-                "uparrow" : ("Up",   "UpArrow"),
-                # Page up/down keys...
-                "pageup"  : ("Prior","PgUp"),
-                "pagedn"  : ("Next", "PgDn")
-            }
-            
-            #@+at  
+                s = s.replace('-','+')
             #@nonl
-            # The following are not translated, so what appears in the menu is 
-            # the same as what is passed to Tk.  Case is significant.
-            # 
-            # Note: the Tk documentation states that not all of these may be 
-            # available on all platforms.
-            # 
-            # F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
-            # BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
-            # Down, Left, Right, Up,
-            # Begin, End, Home, Next, Prior,
-            # Num_Lock, Pause, Scroll_Lock, Sys_Req,
-            # KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
-            # KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
-            # KP_F1,KP_F2,KP_F3,KP_F4,
-            # KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
-            #@-at
-            #@nonl
-            #@-node:ekr.20031218072017.2101:<< define dict of special names >>
+            #@-node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
             #@nl
-            last2 = string.lower(last)
-            if last2 in theDict.keys():
-                bind_last,menu_last = theDict[last2]
-        #@nonl
-        #@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
-        #@nl
-        #@    << synthesize the shortcuts from the information >>
-        #@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
-        bind_head = menu_head = ""
-        
-        if has_alt:
-            bind_head = bind_head + "Alt-"
-            menu_head = menu_head + "Alt+"
-        
-        if has_ctrl:
-            bind_head = bind_head + "Control-"
-            menu_head = menu_head + "Ctrl+"
+            #@        << compute the last field >>
+            #@+node:ekr.20060128103640.2:<< compute the last field >>
+            fields = s.split('+') # Don't lower this field.
+            if not fields:
+                if not g.app.menuWarningsGiven:
+                    print "bad shortcut specifier:", s1
+                return None,None
             
-        if has_cmd:
-            bind_head = bind_head + "Command-"
-            menu_head = menu_head + "Command+"
+            last = fields[-1]
+            if not last:
+                if not g.app.menuWarningsGiven:
+                    print "bad shortcut specifier:", s1
+                return None,None
             
-        if has_shift:
-            menu_head = menu_head + "Shift+"
-            if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
-                bind_head = bind_head + "Shift-"
-        
-        # New in 4.4a6: Only the menu_shortcut will exist.
-        if not menu_head:
-            menu_shortcut = 'Key+%s' % menu_last
+            if len(last) == 1:
+                if g.app.new_keys: # Just use the actual character.
+                    bind_last = menu_last = last  # Preserve the case here.
+                else: # Before changeover: convert to Tk names.
+                    d = self.tkBindNamesDict
+                    last2 = d.get(last)
+                    if last2:
+                        bind_last = menu_last = last2
+                    else:
+                        bind_last = menu_last = last # Preserve the case here.
+            else:
+                d = self.tkSpecialNamesDict
+                if g.app.new_keys: # values are single strings.
+                    bind_last = menu_last = d.get(last.lower(),last)
+                else: # Before changeover: values are tuples.
+                    aTuple = d.get(last.lower())
+                    if aTuple:
+                        bind_last, menu_last = aTuple
+                    else:
+                        bind_last = menu_last = last
+                    
+            # g.trace('last',last,'bind_last',bind_last,'menu_last',menu_last)
+            
+            #@-node:ekr.20060128103640.2:<< compute the last field >>
+            #@nl
+            #@        << compute bind_shortcut >>
+            #@+node:ekr.20060128103640.3:<< compute bind_shortcut >>
+            z = []
+            
+            for flag,val in (
+                (has_alt, 'Alt-'),
+                (has_ctrl,'Control-'),
+                (has_cmd, 'Command-'),
+                (has_shift,'Shift-'),
+            ):
+                if flag: z.append(val)
+                
+            if not z and len(bind_last) == 1:
+                if last.isupper():  z.append('Key-Shift-')
+                else:               z.append('Key-')
+            
+            z.append(bind_last)
+                
+            bind_shortcut = ''.join(z)
+            
+            if not g.app.new_keys:
+                bind_shortcut = '<%s>' % bind_shortcut
+            #@nonl
+            #@-node:ekr.20060128103640.3:<< compute bind_shortcut >>
+            #@nl
+            #@        << compute menu_shortcut >>
+            #@+node:ekr.20060128103640.4:<< compute menu_shortcut >>
+            z = []
+            
+            for flag,val in (
+                (has_alt, 'Alt+'),
+                (has_ctrl,'Ctrl+'),
+                (has_cmd, 'Command+'),
+                (has_shift,'Shift+'),
+            ):
+                if flag: z.append(val)
+            
+            if not z and len(menu_last) == 1:
+                if last.isupper():  z.append('Shift+')
+                else:               z.append('Key+')
+            
+            if len(menu_last) == 1:
+                menu_last = menu_last.upper()
+            
+            z.append(menu_last)
+                
+            menu_shortcut = ''.join(z)
+            #@nonl
+            #@-node:ekr.20060128103640.4:<< compute menu_shortcut >>
+            #@nl
         else:
-            menu_shortcut = menu_head + menu_last
+            #@        << set the last field, preserving case >>
+            #@+middle:ekr.20060128103640:old
+            #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+            s2 = shortcut
+            s2 = string.strip(s2)
             
-        # To be removed in 4.4a6
-        if not bind_head and bind_last and len(bind_last) == 1:
-            bind_shortcut = '<Key-%s>' % bind_last
-        else:
-            bind_shortcut = "<" + bind_head + bind_last + ">"
+            # Replace all minus signs by plus signs, except a trailing minus:
+            if len(s2) > 0 and s2[-1] == "-":
+                s2 = string.replace(s2,"-","+")
+                s2 = s2[:-1] + "-"
+            else:
+                s2 = string.replace(s2,"-","+")
             
-        #@nonl
-        #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
-        #@nl
-        # print repr(shortcut),repr(bind_shortcut),repr(menu_shortcut)
+            fields = string.split(s2,"+")
+            if fields == None or len(fields) == 0:
+                if not g.app.menuWarningsGiven:
+                    print "bad shortcut specifier:", s
+                return None,None
+            
+            last = fields[-1]
+            if last == None or len(last) == 0:
+                if not g.app.menuWarningsGiven:
+                    print "bad shortcut specifier:", s
+                return None,None
+            #@nonl
+            #@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+            #@-middle:ekr.20060128103640:old
+            #@nl
+            #@        << canonicalize the last field >>
+            #@+middle:ekr.20060128103640:old
+            #@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
+            bind_last = menu_last = last
+            if len(last) == 1:
+                ch = last[0]
+                if ch in string.ascii_letters:
+                    menu_last = string.upper(last)
+                    if has_shift:
+                        bind_last = string.upper(last)
+                    else:
+                        bind_last = string.lower(last)
+                elif ch in string.digits:
+                    bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+                else:
+                    d = self.tkBindNamesDict
+                    if ch in d.keys():
+                        bind_last = d[ch]
+            elif len(last) > 0:
+                d = self.tkSpecialNamesDict
+                last2 = string.lower(last)
+                if last2 in d.keys():
+                    bind_last,menu_last = d[last2]
+            #@nonl
+            #@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
+            #@-middle:ekr.20060128103640:old
+            #@nl
+            #@        << synthesize the shortcuts from the information >>
+            #@+middle:ekr.20060128103640:old
+            #@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+            bind_head = menu_head = ""
+            
+            if has_alt:
+                bind_head = bind_head + "Alt-"
+                menu_head = menu_head + "Alt+"
+            
+            if has_ctrl:
+                bind_head = bind_head + "Control-"
+                menu_head = menu_head + "Ctrl+"
+                
+            if has_cmd:
+                bind_head = bind_head + "Command-"
+                menu_head = menu_head + "Command+"
+                
+            if has_shift:
+                menu_head = menu_head + "Shift+"
+                if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+                    bind_head = bind_head + "Shift-"
+            
+            # New in 4.4a6: Only the menu_shortcut will exist.
+            if not menu_head:
+                menu_shortcut = 'Key+%s' % menu_last
+            else:
+                menu_shortcut = menu_head + menu_last
+                
+            # To be removed in 4.4a6
+            if not bind_head and bind_last and len(bind_last) == 1:
+                bind_shortcut = '<Key-%s>' % bind_last
+            else:
+                bind_shortcut = "<" + bind_head + bind_last + ">"
+                
+            #@nonl
+            #@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+            #@-middle:ekr.20060128103640:old
+            #@nl
+        # g.trace('bind: %25s menu: %s' % (bind_shortcut,menu_shortcut))
         return bind_shortcut,menu_shortcut
     #@nonl
+    #@+node:ekr.20060128103640:old
+    #@-node:ekr.20060128103640:old
     #@-node:ekr.20031218072017.2098:canonicalizeShortcut
     #@-node:ekr.20060128081317:shortcutFromSetting, tkBindingFromSetting
     #@+node:ekr.20060127185121:matchStroke

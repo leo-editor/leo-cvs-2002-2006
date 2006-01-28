@@ -20,6 +20,8 @@ class LeoApp:
     #@    @+others
     #@+node:ekr.20031218072017.1416:app.__init__
     def __init__(self):
+        
+        self.new_keys = False
     
         # These ivars are the global vars of this program.
         self.afterHandler = None
@@ -359,7 +361,7 @@ class LeoApp:
     #@nonl
     #@-node:ekr.20031218072017.2616:app.forceShutdown
     #@+node:ekr.20031218072017.2617:app.onQuit
-    def onQuit (self):
+    def onQuit (self,event=None):
         
         g.app.quitting = True
         
