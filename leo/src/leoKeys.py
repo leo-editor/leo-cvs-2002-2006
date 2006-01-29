@@ -50,6 +50,7 @@ import sys
 #@-node:ekr.20051010062551.1:<< about key dicts >>
 #@nl
 
+
 class keyHandlerClass:
     
     '''A class to support emacs-style commands.'''
@@ -68,6 +69,102 @@ class keyHandlerClass:
         # A case could be made for per-instance lossage, but this is not supported.
     #@nonl
     #@-node:ekr.20050924065520:<< define class vars >>
+    #@nl
+    #@    << define dict of special names >>
+    #@+node:ekr.20031218072017.2101:<< define dict of special names >>
+    # These keys are simply made-up names.  The menu_bind values are known to Tk.
+    # Case is not significant in the keys.
+    
+    if g.app.new_keys: # After changeover: a single value (there is no bind key)
+    
+        tkSpecialNamesDict = {
+            # "delete"  : "Delete",
+            "bksp"    : "BackSpace",
+            "esc"     : "Escape",
+            # Arrow keys...
+            "dnarrow" : "DnArrow",
+            "ltarrow" : "LtArrow",
+            "rtarrow" : "RtArrow",
+            "uparrow" : "UpArrow",
+            # Page up/down keys...
+            "pageup"  : "PageUp",
+            "pagedn"  : "PageDn",
+        }
+    
+    else: # Before changeover:  tuples of bind_last and menu_last
+    
+        tkSpecialNamesDict = {
+            "bksp"    : ("BackSpace","BkSp"),
+            "esc"     : ("Escape","Esc"),
+            # Arrow keys...
+            "dnarrow" : ("Down", "DnArrow"),
+            "ltarrow" : ("Left", "LtArrow"),
+            "rtarrow" : ("Right","RtArrow"),
+            "uparrow" : ("Up",   "UpArrow"),
+            # Page up/down keys...
+            "pageup"  : ("Prior","PgUp"),
+            "pagedn"  : ("Next", "PgDn")
+        }
+    
+    #@+at  
+    #@nonl
+    # The following are not translated, so what appears in the menu is the 
+    # same as what is passed to Tk.  Case is significant.
+    # 
+    # Note: the Tk documentation states that not all of these may be available 
+    # on all platforms.
+    # 
+    # F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+    # BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+    # Down, Left, Right, Up,
+    # Begin, End, Home, Next, Prior,
+    # Num_Lock, Pause, Scroll_Lock, Sys_Req,
+    # KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+    # KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+    # KP_F1,KP_F2,KP_F3,KP_F4,
+    # KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
+    #@-at
+    #@nonl
+    #@-node:ekr.20031218072017.2101:<< define dict of special names >>
+    #@nl
+    #@    << define dict of Tk bind names >>
+    #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+    # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+    tkBindNamesDict = {
+        "!" : "exclam",
+        '"' : "quotedbl",
+        "#" : "numbersign",
+        "$" : "dollar",
+        "%" : "percent",
+        "&" : "ampersand",
+        "'" : "quoteright",
+        "(" : "parenleft",
+        ")" : "parenright",
+        "*" : "asterisk",
+        "+" : "plus",
+        "," : "comma",
+        "-" : "minus",
+        "." : "period",
+        "/" : "slash",
+        ":" : "colon",
+        ";" : "semicolon",
+        "<" : "less",
+        "=" : "equal",
+        ">" : "greater",
+        "?" : "question",
+        "@" : "at",
+        "[" : "bracketleft",
+        "\\": "backslash",
+        "]" : "bracketright",
+        "^" : "asciicircum",
+        "_" : "underscore",
+        "`" : "quoteleft",
+        "{" : "braceleft",
+        "|" : "bar",
+        "}" : "braceright",
+        "~" : "asciitilde" }
+    #@nonl
+    #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
     #@nl
 
     #@    @+others
@@ -175,6 +272,12 @@ class keyHandlerClass:
         #@nonl
         #@-node:ekr.20050923213858:<< define internal ivars >>
         #@nl
+        
+        self.tkKeysymNamesDict = {}
+        for key in self.tkBindNamesDict.keys():
+            val = self.tkBindNamesDict.get(key)
+            self.tkKeysymNamesDict [val] = key
+            
     #@nonl
     #@-node:ekr.20050920085536.2: ctor (keyHandler)
     #@+node:ekr.20050920094633:finishCreate (keyHandler) & helpers
@@ -243,7 +346,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
-    #@+node:ekr.20051006125633:Binding
+    #@+node:ekr.20060129052538.1:master event handlers (keyHandler)
     #@+node:ekr.20060127183752:masterKeyHandler
     def masterKeyHandler (self,event):
         
@@ -252,13 +355,86 @@ class keyHandlerClass:
         This is the handler for that binding.'''
         
         k = self
+    
+        stroke,keysym = k.strokeFromEvent(event)
         
-        stroke = g.app.gui.strokeFromEvent(event)
-        
-        func = k.matchStroke(stroke)
-        k.masterCommand(stroke,func) # etc.
+        special = keysym in (
+            'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+            
+        if not special:
+             g.trace(stroke)
+    
+        if 0:
+            func = k.matchStroke(stroke)
+            k.masterCommand(stroke,func) # etc.
     #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
+    #@+node:ekr.20060129052538.2:masterClickHandler
+    def masterClickHandler (self,event):
+        
+        button = event and event.button or '<no button>'
+        w = event and event.widget or '<no widget>'
+        
+        g.trace(button,w)
+    #@nonl
+    #@-node:ekr.20060129052538.2:masterClickHandler
+    #@+node:ekr.20060128090219:masterMenuHandler
+    def masterMenuHandler (self,stroke,command,commandName):
+        
+        k = self ; event = None ; func = command
+        
+        # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
+        
+        return k.masterCommand(event,func,stroke,commandName)
+    #@nonl
+    #@-node:ekr.20060128090219:masterMenuHandler
+    #@+node:ekr.20060126163152.2:k.strokeFromEvent
+    def strokeFromEvent (self,event):
+        
+        c = self.c ; k = c.k
+        if event is None: return ''
+        state = event.state or 0
+        keysym = event.keysym or ''
+        ch = event.char
+        result = []
+        shift = (state & 1) == 1
+        caps  = (state & 2) == 2
+        ctrl  = (state & 4) == 4
+        alt   = (state & 0x20000) == 0x20000
+        plain = len(ch) == 1 and len(keysym) == 1
+        
+        # Handle plain characters with extreme care.
+        if plain:
+            if ctrl or alt:
+                # We will report alpha chars as uppercase and set shift.
+                if ch.isalpha():
+                    shift = ch.isupper()
+                    ch = ch.upper()
+                else:
+                    # For testing.  Tk probably will never set this.
+                    shift = False
+            else:
+                # Report plain chars *as they are* and clear shift.
+                shift = False # The case of ch is significant.
+        else:
+            # Convert complex keysyms to a single character (we hope).
+            ch2 = k.tkKeysymNamesDict.get(keysym)
+            if ch2:
+                ch = ch2 ; shift = False
+            else:
+                # Just use the unknown keysym.
+                g.trace('*'*30,'unknown keysym',repr(keysym))
+                
+        if alt: result.append('Alt+')
+        if ctrl: result.append('Ctrl+')
+        if shift: result.append('Shift+')
+        result.append(ch)
+        result = ''.join(result)
+        return result,keysym
+    #@nonl
+    #@-node:ekr.20060126163152.2:k.strokeFromEvent
+    #@-node:ekr.20060129052538.1:master event handlers (keyHandler)
+    #@+node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20050920085536.16:bindKey
     def bindKey (self,pane,shortcut,callback,commandName):
     
@@ -324,6 +500,11 @@ class keyHandlerClass:
     #@nonl
     #@+node:ekr.20051022094136:bindKeyHelper
     def bindKeyHelper(self,pane,shortcut,callback,commandName):
+        
+        ### return ###
+        
+        if g.app.new_keys:
+            return
     
         k = self ; c = k.c
         
@@ -561,6 +742,12 @@ class keyHandlerClass:
         k.makeBindingsFromCommandsDict()
         if k.useTextWidget:
             k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
+            
+        t = c.frame.body.bodyCtrl
+        g.trace(t)
+        t.bind('<Key>',k.masterKeyHandler,'+')
+        t.bind('<Button>',k.masterClickHandler,'+')
+    
         k.checkBindings()
         
         if 0:
@@ -680,18 +867,8 @@ class keyHandlerClass:
                         else:     g.trace(commandName)
     #@nonl
     #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
-    #@-node:ekr.20051006125633:Binding
-    #@+node:ekr.20051001051355:Dispatching...
-    #@+node:ekr.20060128090219:masterMenuHandler
-    def masterMenuHandler (self,stroke,command,commandName):
-        
-        k = self ; event = None ; func = command
-        
-        # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
-        
-        return k.masterCommand(event,func,stroke,commandName)
-    #@nonl
-    #@-node:ekr.20060128090219:masterMenuHandler
+    #@-node:ekr.20051006125633:Binding (keyHandler)
+    #@+node:ekr.20051001051355:Dispatching (keyHandler)
     #@+node:ekr.20050920085536.65:masterCommand & helpers
     def masterCommand (self,event,func,stroke,commandName=None):
     
@@ -720,7 +897,7 @@ class keyHandlerClass:
         if trace and interesting:
             g.trace(
                 'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-                'stroke2:',g.app.gui.strokeFromEvent(event),
+                'stroke2:',k.strokeFromEvent(event),
                 'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
             )
     
@@ -959,8 +1136,8 @@ class keyHandlerClass:
                 c.frame.body.onBodyChanged(undoType='Typing')
     #@nonl
     #@-node:ekr.20051001050607:endCommand
-    #@-node:ekr.20051001051355:Dispatching...
-    #@+node:ekr.20060128092340:Shortcuts
+    #@-node:ekr.20051001051355:Dispatching (keyHandler)
+    #@+node:ekr.20060128092340:Shortcuts (keyHandler)
     #@+node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
     def isPlainKey (self,shortcut):
         
@@ -1010,104 +1187,6 @@ class keyHandlerClass:
     # Returns (bind_shortcut, menu_shortcut)
     #@-at
     #@@c
-    
-    #@<< define dict of special names >>
-    #@+node:ekr.20031218072017.2101:<< define dict of special names >>
-    # These keys are simply made-up names.  The menu_bind values are known to Tk.
-    # Case is not significant in the keys.
-    
-    if g.app.new_keys: # After changeover: a single value (there is no bind key)
-    
-        tkSpecialNamesDict = {
-            # "delete"  : "Delete",
-            "bksp"    : "BackSpace",
-            "esc"     : "Escape",
-            # Arrow keys...
-            "dnarrow" : "DnArrow",
-            "ltarrow" : "LtArrow",
-            "rtarrow" : "RtArrow",
-            "uparrow" : "UpArrow",
-            # Page up/down keys...
-            "pageup"  : "PageUp",
-            "pagedn"  : "PageDn",
-        }
-    
-    else: # Before changeover:  tuples of bind_last and menu_last
-    
-        tkSpecialNamesDict = {
-            "bksp"    : ("BackSpace","BkSp"),
-            "esc"     : ("Escape","Esc"),
-            # Arrow keys...
-            "dnarrow" : ("Down", "DnArrow"),
-            "ltarrow" : ("Left", "LtArrow"),
-            "rtarrow" : ("Right","RtArrow"),
-            "uparrow" : ("Up",   "UpArrow"),
-            # Page up/down keys...
-            "pageup"  : ("Prior","PgUp"),
-            "pagedn"  : ("Next", "PgDn")
-        }
-    
-    #@+at  
-    #@nonl
-    # The following are not translated, so what appears in the menu is the 
-    # same as what is passed to Tk.  Case is significant.
-    # 
-    # Note: the Tk documentation states that not all of these may be available 
-    # on all platforms.
-    # 
-    # F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
-    # BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
-    # Down, Left, Right, Up,
-    # Begin, End, Home, Next, Prior,
-    # Num_Lock, Pause, Scroll_Lock, Sys_Req,
-    # KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
-    # KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
-    # KP_F1,KP_F2,KP_F3,KP_F4,
-    # KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
-    #@-at
-    #@nonl
-    #@-node:ekr.20031218072017.2101:<< define dict of special names >>
-    #@nl
-    #@<< define dict of Tk bind names >>
-    #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-    if not g.app.new_keys: # new keys: just use the character itself.
-        # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-        tkBindNamesDict = {
-            "!" : "exclam",
-            '"' : "quotedbl",
-            "#" : "numbersign",
-            "$" : "dollar",
-            "%" : "percent",
-            "&" : "ampersand",
-            "'" : "quoteright",
-            "(" : "parenleft",
-            ")" : "parenright",
-            "*" : "asterisk",
-            "+" : "plus",
-            "," : "comma",
-            "-" : "minus",
-            "." : "period",
-            "/" : "slash",
-            ":" : "colon",
-            ";" : "semicolon",
-            "<" : "less",
-            "=" : "equal",
-            ">" : "greater",
-            "?" : "question",
-            "@" : "at",
-            "[" : "bracketleft",
-            "\\": "backslash",
-            "]" : "bracketright",
-            "^" : "asciicircum",
-            "_" : "underscore",
-            "`" : "quoteleft",
-            "{" : "braceleft",
-            "|" : "bar",
-            "}" : "braceright",
-            "~" : "asciitilde" }
-    #@nonl
-    #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-    #@nl
     
     def canonicalizeShortcut (self,shortcut):
         
@@ -1356,7 +1435,7 @@ class keyHandlerClass:
         return k.unboundKeyHandler
     #@nonl
     #@-node:ekr.20060127185121:matchStroke
-    #@-node:ekr.20060128092340:Shortcuts
+    #@-node:ekr.20060128092340:Shortcuts (keyHandler)
     #@+node:ekr.20060115103349:Modes & input states
     #@+node:ekr.20060102135349.2:enterNamedMode
     def enterNamedMode (self,event,commandName):
