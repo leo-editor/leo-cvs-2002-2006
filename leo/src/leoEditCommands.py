@@ -3976,7 +3976,7 @@ class killBufferCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.180:backwardKillWord
     #@+node:ekr.20051216151811:clearKillRing
-    def clearKillRing (self):
+    def clearKillRing (self,event=None):
         
         self.killBuffer = []
     #@nonl
@@ -5501,7 +5501,7 @@ class minibufferFind:
     #@nonl
     #@-node:ekr.20060128080201:cloneFindAll
     #@+node:ekr.20060124181213.4:generalSearchHelper
-    def generalSearchHelper (self,pattern,cloneFindAll):
+    def generalSearchHelper (self,pattern,cloneFindAll=False):
         
         self.setupSearchPattern(pattern)
     
