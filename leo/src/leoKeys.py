@@ -481,7 +481,10 @@ class keyHandlerClass:
     def masterClick3Handler (self,event):
         
         k = self ; c = k.c
-        w = event and event.widget or '<no widget>'
+        
+        if not event: return
+        
+        w = event.widget or '<no widget>'
         name = g.app.gui.widget_name(w)
         
         g.trace(w)
@@ -1580,7 +1583,7 @@ class keyHandlerClass:
         #@nonl
         #@-node:ekr.20060129182405.7:<< compute stroke >>
         #@nl
-        g.trace(repr(shortcut),repr(stroke))
+        # g.trace(repr(shortcut),repr(stroke))
         return stroke
     #@nonl
     #@-node:ekr.20060129182405:k.strokeFromSetting
