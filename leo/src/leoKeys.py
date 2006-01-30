@@ -131,6 +131,13 @@ class keyHandlerClass:
     #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
     # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
     tkBindNamesDict = {
+        ' ' : 'space',
+        '\t': 'Tab',
+        '\n': 'Return',
+        '\r': '\\r',
+        '\x0b': 'bell',
+        # '\x0c': 'ctrl-c',
+    
         "!" : "exclam",
         '"' : "quotedbl",
         "#" : "numbersign",
@@ -347,6 +354,8 @@ class keyHandlerClass:
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20060129052538.1:master event handlers (keyHandler)
+    #@+node:ekr.20060129194153:To do: how to handle keys like Return, Tab, etc.
+    #@-node:ekr.20060129194153:To do: how to handle keys like Return, Tab, etc.
     #@+node:ekr.20060127183752:masterKeyHandler
     def masterKeyHandler (self,event):
         
@@ -389,6 +398,31 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060128090219:masterMenuHandler
     #@+node:ekr.20060126163152.2:k.strokeFromEvent
+    #@+at  
+    #@nonl
+    # The keys to k.bindingsDict must be consistent with what this method 
+    # returns.  Here are the rules:
+    # 
+    # 1.  The case of plain letters is significant:  a is not A.
+    # 
+    # 2.  The Shift- prefix can be applied *only* to letters.
+    # 
+    # 3.  The case of letters prefixed by Ctrl, Alt, Key- or Shift- is *not* 
+    # significant.  Examples:
+    # 
+    # 4. Shift will never appear in keys in k.bindingsDict.  In the table 
+    # below, the first entry is the key, the other entries are equivalents 
+    # that may be specified in leoSettings.leo.
+    # a, Key-a, Key-A
+    # A, Shift-A
+    # Alt-a, Alt-A
+    # Alt-A, Alt-Shift-a, Alt-Shift-A
+    # Ctrl-a, Ctrl-A
+    # Ctrl-A, Ctrl-Shift-a, Ctrl-Shift-A
+    # !, Key-!,Key-exclam,exclam
+    #@-at
+    #@@c
+    
     def strokeFromEvent (self,event):
         
         c = self.c ; k = c.k
@@ -397,42 +431,120 @@ class keyHandlerClass:
         keysym = event.keysym or ''
         ch = event.char
         result = []
-        shift = (state & 1) == 1
-        caps  = (state & 2) == 2
+        shift = (state & 1) == 1 # Used *only* to give a warning.
+        caps  = (state & 2) == 2 # Not used at all.
         ctrl  = (state & 4) == 4
         alt   = (state & 0x20000) == 0x20000
         plain = len(ch) == 1 and len(keysym) == 1
-        
-        # Handle plain characters with extreme care.
+    
+        # The big aha: we can ignore the shift state.
         if plain:
-            if ctrl or alt:
-                # We will report alpha chars as uppercase and set shift.
-                if ch.isalpha():
-                    shift = ch.isupper()
-                    ch = ch.upper()
-                else:
-                    # For testing.  Tk probably will never set this.
-                    shift = False
-            else:
-                # Report plain chars *as they are* and clear shift.
-                shift = False # The case of ch is significant.
+            if shift and ch.isalpha() and ch.islower():
+                g.trace('oops: inconsistent shift state. shift: %s, ch: %s' % (shift,ch))
         else:
-            # Convert complex keysyms to a single character (we hope).
             ch2 = k.tkKeysymNamesDict.get(keysym)
             if ch2:
-                ch = ch2 ; shift = False
+                ch = ch2 
             else:
                 # Just use the unknown keysym.
                 g.trace('*'*30,'unknown keysym',repr(keysym))
-                
+        
         if alt: result.append('Alt+')
         if ctrl: result.append('Ctrl+')
-        if shift: result.append('Shift+')
         result.append(ch)
         result = ''.join(result)
         return result,keysym
     #@nonl
     #@-node:ekr.20060126163152.2:k.strokeFromEvent
+    #@+node:ekr.20060129182405:k.strokeFromSetting
+    def strokeFromSetting (self,shortcut):
+        
+        '''Convert a user key setting to a key for k.bindingsDict.'''
+        
+        k = self
+        
+        if not shortcut: return None
+        s = shortcut ## .strip()
+        #@    << compute alt, cmd, ctrl, shift flags >>
+        #@+node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
+        s2 = s.lower()
+        cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+        ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+        alt   = s2.find("alt") >= 0
+        shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
+        if sys.platform == "darwin":
+            if ctrl and not cmd:
+                cmd = True ; ctrl = False
+            if alt and not ctrl:
+                ctrl = True ; alt = False
+        plain = not alt and not cmd and not ctrl
+        #@nonl
+        #@-node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
+        #@nl
+        #@    << convert minus signs to plus signs >>
+        #@+node:ekr.20060129185629:<< convert minus signs to plus signs >>
+        # Replace all minus signs by plus signs, except a trailing minus:
+        if s.endswith('-'):
+            s = s[:-1].replace('-','+') + '-'
+        else:
+            s = s.replace('-','+')
+        #@nonl
+        #@-node:ekr.20060129185629:<< convert minus signs to plus signs >>
+        #@nl
+        #@    << compute the last field >>
+        #@+node:ekr.20060129182405.6:<< compute the last field >>
+        fields = s.split('+')
+        last = fields and fields[-1]
+        if not last:
+            g.es("bad shortcut specifier:",repr(s),color='blue')
+            return None
+            
+        # g.trace('last',repr(last))
+        
+        if len(last) > 1:
+            d = k.tkKeysymNamesDict
+            #g.trace(last,d.keys())
+            last2 = d.get(last)
+            if last2:
+                # g.trace('%s -> %s' % (last,last2))
+                last=last2
+            else:
+                d = k.tkSpecialNamesDict
+                if g.app.new_keys: # values are single strings.
+                    last = d.get(last.lower(),last)
+                else: # Before changeover: values are tuples.
+                    aTuple = d.get(last.lower())
+                    if aTuple:
+                        last2,last2 = aTuple
+                        # g.trace('%s -> %s' % (last,last2))
+                        last=last2
+        #@nonl
+        #@-node:ekr.20060129182405.6:<< compute the last field >>
+        #@nl
+        #@    << compute stroke >>
+        #@+node:ekr.20060129182405.7:<< compute stroke >>
+        if shift:
+            if last.isalpha():
+                last = last.upper()
+            else:
+                g.es('Ignoring Shift in: ',s,color='blue')
+        
+        table = (
+            (alt,   'Alt+'),
+            (ctrl,  'Ctrl+'),
+            # (cmd, 'Cmnd-'),
+            # (shift, 'Shift-'),
+            (True,  last),
+        )
+        
+        stroke = ''.join([val for flag,val in table if flag])
+        #@nonl
+        #@-node:ekr.20060129182405.7:<< compute stroke >>
+        #@nl
+        g.trace(repr(shortcut),repr(stroke))
+        return stroke
+    #@nonl
+    #@-node:ekr.20060129182405:k.strokeFromSetting
     #@-node:ekr.20060129052538.1:master event handlers (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20050920085536.16:bindKey
