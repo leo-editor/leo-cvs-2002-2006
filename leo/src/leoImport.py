@@ -116,7 +116,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20041126042730:getTabWidth
     #@+node:ekr.20031218072017.1810:importDerivedFiles
-    def importDerivedFiles (self,parent,paths):
+    def importDerivedFiles (self,event=None,parent=None,paths=None):
         
         c = self.c ; u = c.undoer ; command = 'Import'
         at = c.atFileCommands ; current = c.currentPosition()
@@ -165,7 +165,7 @@ class baseLeoImportCommands:
     #@-node:ekr.20051208100903.1:forceGnxOnPosition
     #@-node:ekr.20031218072017.1810:importDerivedFiles
     #@+node:ekr.20031218072017.3212:importFilesCommand
-    def importFilesCommand (self,files,treeType,
+    def importFilesCommand (self,event=None,files=None,treeType=None,
         perfectImport=True,testing=False,verbose=False):
     
         c = self.c
@@ -326,7 +326,7 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3215:convertMoreString/StringsToOutlineAfter
     #@+node:ekr.20031218072017.3220:importFlattenedOutline
-    def importFlattenedOutline (self,files):
+    def importFlattenedOutline (self,files): # Not a command, so no event arg.
     
         c = self.c ; u = c.undoer ; current = c.currentPosition()
         if current == None: return

@@ -2201,11 +2201,11 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.3046:write_Leo_file
     #@+node:ekr.20031218072017.2012:writeAtFileNodes
-    def writeAtFileNodes (self):
+    def writeAtFileNodes (self,event=None):
         
         c = self.c
     
-        self.assignFileIndices() # 4/3/04
+        self.assignFileIndices()
         changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=True)
         assert(changedFiles != None)
         if changedFiles:
@@ -2214,7 +2214,7 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.2012:writeAtFileNodes
     #@+node:ekr.20031218072017.1666:writeDirtyAtFileNodes
-    def writeDirtyAtFileNodes (self): # fileCommands
+    def writeDirtyAtFileNodes (self,event=None):
     
         """The Write Dirty @file Nodes command"""
         
@@ -2228,7 +2228,7 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.1666:writeDirtyAtFileNodes
     #@+node:ekr.20031218072017.2013:writeMissingAtFileNodes
-    def writeMissingAtFileNodes (self):
+    def writeMissingAtFileNodes (self,event=None):
     
         c = self.c ; v = c.currentVnode()
     
@@ -2243,7 +2243,7 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.2013:writeMissingAtFileNodes
     #@+node:ekr.20031218072017.3050:writeOutlineOnly
-    def writeOutlineOnly (self):
+    def writeOutlineOnly (self,event=None):
     
         c = self.c
         c.endEditing()

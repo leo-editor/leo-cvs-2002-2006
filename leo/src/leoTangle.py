@@ -596,7 +596,7 @@ class baseTangleCommands:
     #@nonl
     #@-node:ekr.20031218072017.3471:initUntangleCommand
     #@+node:ekr.20031218072017.3472:tangle
-    def tangle(self):
+    def tangle(self,event=None):
         
         c = self.c ; p = c.currentPosition()
         self.initTangleCommand()
@@ -618,7 +618,7 @@ class baseTangleCommands:
     #@nonl
     #@-node:ekr.20031218072017.3472:tangle
     #@+node:ekr.20031218072017.3473:tangleAll
-    def tangleAll(self):
+    def tangleAll(self,event=None):
     
         c = self.c
         self.initTangleCommand()
@@ -641,7 +641,7 @@ class baseTangleCommands:
     #@nonl
     #@-node:ekr.20031218072017.3473:tangleAll
     #@+node:ekr.20031218072017.3474:tangleMarked
-    def tangleMarked(self):
+    def tangleMarked(self,event=None):
     
         c = self.c ; p = c.rootPosition()
         c.clearAllVisited() # No roots have been tangled yet.
@@ -761,7 +761,7 @@ class baseTangleCommands:
     #@nonl
     #@-node:ekr.20031218072017.3477:tangleTree (calls cleanup)
     #@+node:ekr.20031218072017.3478:untangle
-    def untangle(self):
+    def untangle(self,event=None):
     
         c = self.c ; p = c.currentPosition()
         self.initUntangleCommand()
@@ -775,7 +775,7 @@ class baseTangleCommands:
     #@nonl
     #@-node:ekr.20031218072017.3478:untangle
     #@+node:ekr.20031218072017.3479:untangleAll
-    def untangleAll(self):
+    def untangleAll(self,event=None):
     
         c = self.c
         self.initUntangleCommand()
@@ -800,7 +800,7 @@ class baseTangleCommands:
     #@nonl
     #@-node:ekr.20031218072017.3479:untangleAll
     #@+node:ekr.20031218072017.3480:untangleMarked
-    def untangleMarked(self):
+    def untangleMarked(self,event=None):
     
         c = self.c ; p = c.rootPosition()
         self.initUntangleCommand()
