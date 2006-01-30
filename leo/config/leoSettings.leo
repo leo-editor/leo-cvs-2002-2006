@@ -58,7 +58,7 @@
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 </v>
-<v t="ekr.20060113182439"><vh>Other options</vh>
+<v t="ekr.20060113182439" a="E"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -127,7 +127,7 @@
 <v t="ekr.20050203090810" annotate="7d71002e"><vh>For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
-<v t="ekr.20041119034357.3" annotate="7d71002e"><vh>General configuration options</vh>
+<v t="ekr.20041119034357.3" a="E" annotate="7d71002e"><vh>General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
@@ -148,7 +148,7 @@
 <v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
-<v t="ekr.20060127050605"><vh>@int max_undo_stack_size = 5</vh></v>
+<v t="ekr.20060127050605" a="V"><vh>@int max_undo_stack_size = 50</vh></v>
 </v>
 <v t="ekr.20051123100536" annotate="7d71002e"><vh>Plugins settings</vh>
 <v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
@@ -379,7 +379,7 @@
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060122105527.22" a="EV" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+<v t="ekr.20060122105527.22" a="E" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
 </vnodes>

@@ -1727,10 +1727,10 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     << define externally visible ivars >>
     << define internal ivars >>
     
-    self.tkKeysymNamesDict = {}
+    self.tkBindNamesInverseDict = {}
     for key in self.tkBindNamesDict.keys():
         val = self.tkBindNamesDict.get(key)
-        self.tkKeysymNamesDict [val] = key
+        self.tkBindNamesInverseDict [val] = key
         
 #@nonl
 #@+node:ekr.20051006092617:<< define Tk ivars >>
@@ -1774,6 +1774,10 @@ self.bindingsDict = {}
 # Previously defined binding tags.
 self.bindtagsDict = {}
     # Keys are strings (the tag), values are 'True'
+    
+self.masterBindingsDict = {}
+    # keys are scope names: 'all','text',etc. or mode names.
+    # Values are dicts: keys are strokes, values are g.bunch(commandName,func,pane,stroke)
 
 # Special bindings for k.fullCommand.
 self.mb_copyKey = None
@@ -2216,13 +2220,18 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
     k = self
     d =  k.masterBindingsDict.get(pane,{})
     
-    g.trace(pane,stroke,commandName,func and func.__name__)
+    stroke = stroke.lstrip('<').rstrip('>')
+    
+    if 0:
+        g.trace('%-4s %-15s %-40s %s' % (
+            pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
 
     if d.get(stroke):
         g.es('ignoring duplicate definition of %s to %s in %s' % (
             stroke,commandName,pane), color='blue')
     else:
-        d [stroke] = g.Bunch(commandName=commandName,func=func,stroke=stroke)
+        d [stroke] = g.Bunch(commandName=commandName,func=func,pane=pane,stroke=stroke)
+        k.masterBindingsDict [pane] = d
 #@nonl
 #@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
@@ -2422,6 +2431,8 @@ def copyBindingsToWidget (self,paneOrPanes,w):
 #@nonl
 #@+node:ekr.20060113062832.1:copyBindingsHelper
 def copyBindingsHelper(self,bunchList,shortcut,w):
+    
+    if g.app.new_keys: return ###
 
     k = self ; c = k.c
 
@@ -2539,10 +2550,11 @@ def makeSpecialBindings (self):
             self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
 
     # Add a binding for <Key> events, so all key events go through masterCommand.
-    def allKeysCallback (event):
-        return k.masterCommand(event,func=None,stroke='<Key>')
-
-    k.bindKey('all','<Key>',allKeysCallback,'master-command')
+    if not g.app.new_keys:
+        def allKeysCallback (event):
+            return k.masterCommand(event,func=None,stroke='<Key>')
+    
+        k.bindKey('all','<Key>',allKeysCallback,'master-command')
 #@nonl
 #@+node:ekr.20051220083410:makeSpecialBinding
 def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
@@ -3222,13 +3234,18 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
     k = self
     d =  k.masterBindingsDict.get(pane,{})
     
-    g.trace(pane,stroke,commandName,func and func.__name__)
+    stroke = stroke.lstrip('<').rstrip('>')
+    
+    if 0:
+        g.trace('%-4s %-15s %-40s %s' % (
+            pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
 
     if d.get(stroke):
         g.es('ignoring duplicate definition of %s to %s in %s' % (
             stroke,commandName,pane), color='blue')
     else:
-        d [stroke] = g.Bunch(commandName=commandName,func=func,stroke=stroke)
+        d [stroke] = g.Bunch(commandName=commandName,func=func,pane=pane,stroke=stroke)
+        k.masterBindingsDict [pane] = d
 #@nonl
 #@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
@@ -3428,6 +3445,8 @@ def copyBindingsToWidget (self,paneOrPanes,w):
 #@nonl
 #@+node:ekr.20060113062832.1:copyBindingsHelper
 def copyBindingsHelper(self,bunchList,shortcut,w):
+    
+    if g.app.new_keys: return ###
 
     k = self ; c = k.c
 
@@ -3545,10 +3564,11 @@ def makeSpecialBindings (self):
             self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
 
     # Add a binding for <Key> events, so all key events go through masterCommand.
-    def allKeysCallback (event):
-        return k.masterCommand(event,func=None,stroke='<Key>')
-
-    k.bindKey('all','<Key>',allKeysCallback,'master-command')
+    if not g.app.new_keys:
+        def allKeysCallback (event):
+            return k.masterCommand(event,func=None,stroke='<Key>')
+    
+        k.bindKey('all','<Key>',allKeysCallback,'master-command')
 #@nonl
 #@+node:ekr.20051220083410:makeSpecialBinding
 def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
@@ -13779,26 +13799,26 @@ def canonicalizeShortcut (self,shortcut):
         return None,None
     s = shortcut.strip()
     s2 = s.lower()
-    has_cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
-    has_ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
-    has_alt   = s2.find("alt") >= 0
-    has_shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
+    cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+    ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+    alt   = s2.find("alt") >= 0
+    shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
     if sys.platform == "darwin":
-        if has_ctrl and not has_cmd:
-            has_cmd = True ; has_ctrl = False
-        if has_alt and not has_ctrl:
-            has_ctrl = True ; has_alt = False
-    if 0: # New, simplified.
+        if ctrl and not cmd:
+            cmd = True ; ctrl = False
+        if alt and not ctrl:
+            ctrl = True ; alt = False
+    if g.app.new_keys: # New, simplified.
         << convert minus signs to plus signs >>
         << compute the last field >>
-        << compute bind_shortcut >>
-        << compute menu_shortcut >>
+        << compute shortcut >>
+        return shortcut,shortcut
     else:
         << set the last field, preserving case >>
         << canonicalize the last field >>
         << synthesize the shortcuts from the information >>
-    # g.trace('bind: %25s menu: %s' % (bind_shortcut,menu_shortcut))
-    return bind_shortcut,menu_shortcut
+        # g.trace('bind: %25s menu: %s' % (bind_shortcut,menu_shortcut))
+        return bind_shortcut,menu_shortcut
 #@nonl
 #@+node:ekr.20060128103640:old
 #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
@@ -13831,7 +13851,7 @@ if len(last) == 1:
     ch = last[0]
     if ch in string.ascii_letters:
         menu_last = string.upper(last)
-        if has_shift:
+        if shift:
             bind_last = string.upper(last)
         else:
             bind_last = string.lower(last)
@@ -13845,25 +13865,28 @@ elif len(last) > 0:
     d = self.tkSpecialNamesDict
     last2 = string.lower(last)
     if last2 in d.keys():
-        bind_last,menu_last = d[last2]
+        if g.app.new_keys:
+            bind_last = menu_last = d[last2]
+        else:
+            bind_last,menu_last = d[last2]
 #@nonl
 #@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
 #@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
 bind_head = menu_head = ""
 
-if has_alt:
+if alt:
     bind_head = bind_head + "Alt-"
     menu_head = menu_head + "Alt+"
 
-if has_ctrl:
+if ctrl:
     bind_head = bind_head + "Control-"
     menu_head = menu_head + "Ctrl+"
     
-if has_cmd:
+if cmd:
     bind_head = bind_head + "Command-"
     menu_head = menu_head + "Command+"
     
-if has_shift:
+if shift:
     menu_head = menu_head + "Shift+"
     if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
         bind_head = bind_head + "Shift-"
@@ -13905,77 +13928,29 @@ if not last:
     return None,None
 
 if len(last) == 1:
-    if g.app.new_keys: # Just use the actual character.
-        bind_last = menu_last = last  # Preserve the case here.
-    else: # Before changeover: convert to Tk names.
-        d = self.tkBindNamesDict
-        last2 = d.get(last)
-        if last2:
-            bind_last = menu_last = last2
-        else:
-            bind_last = menu_last = last # Preserve the case here.
+    if shift and last.islower():
+        last = last.upper()
 else:
     d = self.tkSpecialNamesDict
-    if g.app.new_keys: # values are single strings.
-        bind_last = menu_last = d.get(last.lower(),last)
-    else: # Before changeover: values are tuples.
-        aTuple = d.get(last.lower())
-        if aTuple:
-            bind_last, menu_last = aTuple
-        else:
-            bind_last = menu_last = last
-        
-# g.trace('last',last,'bind_last',bind_last,'menu_last',menu_last)
-
-#@-node:ekr.20060128103640.2:<< compute the last field >>
-#@+node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
-z = []
-
-for flag,val in (
-    (has_alt, 'Alt-'),
-    (has_ctrl,'Control-'),
-    (has_cmd, 'Command-'),
-    #(has_shift,'Shift-'),
-):
-    if flag: z.append(val)
-    
-# Tk is too picky about bindings.
-if has_shift:
-    if len(bind_last) == 1:
-        z.append(bind_last.upper())
-    else:
-        z.append('Shift-%s' % bind_last)
-else:
-    if len(bind_last) == 1:
-        z.append('Key-%s' % bind_last)
-    else:
-        z.append(bind_last)
-    
-bind_shortcut = ''.join(z)
-
-if not g.app.new_keys:
-    bind_shortcut = '<%s>' % bind_shortcut
+    last = d.get(last.lower(),last)
 #@nonl
-#@-node:ekr.20060128103640.3:<< compute bind_shortcut >> (to be deleted)
-#@+node:ekr.20060128103640.4:<< compute menu_shortcut >>
-z = []
-
-for flag,val in (
-    (has_alt, 'Alt+'),
-    (has_ctrl,'Ctrl+'),
-    (has_cmd, 'Command+'),
-    (has_shift,'Shift+'),
-):
-    if flag: z.append(val)
+#@-node:ekr.20060128103640.2:<< compute the last field >>
+#@+node:ekr.20060128103640.4:<< compute shortcut >>
+table = (
+    (alt, 'Alt+'),
+    (ctrl,'Ctrl+'),
+    (cmd, 'Cmnd+'),
+    # (shift,'Shift+'),
+    (True,last),
+)
     
-if len(menu_last) == 1:
-    if not z:  z.append('Key-')
-    menu_last = menu_last.upper()
-
-z.append(menu_last)
+# if len(menu_last) == 1:
+    # if not z:  z.append('Key-')
+    # menu_last = menu_last.upper()
     
-menu_shortcut = ''.join(z)
-#@-node:ekr.20060128103640.4:<< compute menu_shortcut >>
+shortcut = ''.join([val for flag,val in table if flag])
+#@nonl
+#@-node:ekr.20060128103640.4:<< compute shortcut >>
 #@-node:ekr.20031218072017.2098:canonicalizeShortcut
 #@+node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
 def getShortcutForCommandName (self,commandName):
@@ -14413,13 +14388,18 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
     k = self
     d =  k.masterBindingsDict.get(pane,{})
     
-    g.trace(pane,stroke,commandName,func and func.__name__)
+    stroke = stroke.lstrip('<').rstrip('>')
+    
+    if 0:
+        g.trace('%-4s %-15s %-40s %s' % (
+            pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
 
     if d.get(stroke):
         g.es('ignoring duplicate definition of %s to %s in %s' % (
             stroke,commandName,pane), color='blue')
     else:
-        d [stroke] = g.Bunch(commandName=commandName,func=func,stroke=stroke)
+        d [stroke] = g.Bunch(commandName=commandName,func=func,pane=pane,stroke=stroke)
+        k.masterBindingsDict [pane] = d
 #@nonl
 #@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
@@ -14528,6 +14508,8 @@ def copyBindingsToWidget (self,paneOrPanes,w):
 #@nonl
 #@+node:ekr.20060113062832.1:copyBindingsHelper
 def copyBindingsHelper(self,bunchList,shortcut,w):
+    
+    if g.app.new_keys: return ###
 
     k = self ; c = k.c
 
