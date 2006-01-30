@@ -1726,6 +1726,12 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     << define Tk ivars >>
     << define externally visible ivars >>
     << define internal ivars >>
+    
+    self.tkKeysymNamesDict = {}
+    for key in self.tkBindNamesDict.keys():
+        val = self.tkBindNamesDict.get(key)
+        self.tkKeysymNamesDict [val] = key
+        
 #@nonl
 #@+node:ekr.20051006092617:<< define Tk ivars >>
 if self.useTextWidget:
@@ -1804,17 +1810,7 @@ self.modeBunch = None
 #@nonl
 #@-node:ekr.20050923213858:<< define internal ivars >>
 #@-node:ekr.20050920085536.2: ctor (keyHandler)
-#@+node:ekr.20051001051355:Dispatching...
-#@+node:ekr.20060128090219:masterMenuHandler
-def masterMenuHandler (self,stroke,command,commandName):
-    
-    k = self ; event = None ; func = command
-    
-    # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
-    
-    return k.masterCommand(event,func,stroke,commandName)
-#@nonl
-#@-node:ekr.20060128090219:masterMenuHandler
+#@+node:ekr.20051001051355:Dispatching (keyHandler)
 #@+node:ekr.20050920085536.65:masterCommand & helpers
 def masterCommand (self,event,func,stroke,commandName=None):
 
@@ -1843,7 +1839,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     if trace and interesting:
         g.trace(
             'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',g.app.gui.strokeFromEvent(event),
+            'stroke2:',k.strokeFromEvent(event),
             'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
@@ -2081,7 +2077,7 @@ def endCommand (self,event,commandName):
             c.frame.body.onBodyChanged(undoType='Typing')
 #@nonl
 #@-node:ekr.20051001050607:endCommand
-#@-node:ekr.20051001051355:Dispatching...
+#@-node:ekr.20051001051355:Dispatching (keyHandler)
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
@@ -2149,23 +2145,8 @@ def parseShortcutLine (self,s):
     return name,g.bunch(nextMode=nextMode,pane=pane,val=val)
 #@nonl
 #@-node:ekr.20041120112043:parseShortcutLine (g.app.config)
-#@+node:ekr.20051006125633:Binding
-#@+node:ekr.20060127183752:masterKeyHandler
-def masterKeyHandler (self,event):
-    
-    '''In the new binding scheme, there is only one key binding.
-    
-    This is the handler for that binding.'''
-    
-    k = self
-    
-    stroke = g.app.gui.strokeFromEvent(event)
-    
-    func = k.matchStroke(stroke)
-    k.masterCommand(stroke,func) # etc.
-#@nonl
-#@-node:ekr.20060127183752:masterKeyHandler
-#@+node:ekr.20050920085536.16:bindKey
+#@+node:ekr.20051006125633:Binding (keyHandler)
+#@+node:ekr.20050920085536.16:bindKey & helpers
 def bindKey (self,pane,shortcut,callback,commandName):
 
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
@@ -2186,7 +2167,10 @@ def bindKey (self,pane,shortcut,callback,commandName):
     << give warning and return if there is a serious redefinition >>
     << trace bindings if enabled in leoSettings.leo >>
     try:
-        k.bindKeyHelper(pane,shortcut,callback,commandName)
+        if g.app.new_keys:
+            k.bindKeyToDict(pane,shortcut,callback,commandName)
+        else:
+            k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
         shortcut = '<%s>' % shortcut.strip().lstrip('<').rstrip('>')
@@ -2226,8 +2210,28 @@ if c.config.getBool('trace_bindings'):
             g.trace(pane,shortcut,commandName)
 #@nonl
 #@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
+#@+node:ekr.20060130093055:bindKeyToDict
+def bindKeyToDict (self,pane,stroke,func,commandName):
+    
+    k = self
+    d =  k.masterBindingsDict.get(pane,{})
+    
+    g.trace(pane,stroke,commandName,func and func.__name__)
+
+    if d.get(stroke):
+        g.es('ignoring duplicate definition of %s to %s in %s' % (
+            stroke,commandName,pane), color='blue')
+    else:
+        d [stroke] = g.Bunch(commandName=commandName,func=func,stroke=stroke)
+#@nonl
+#@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
 def bindKeyHelper(self,pane,shortcut,callback,commandName):
+    
+    ### return ###
+    
+    if g.app.new_keys:
+        return
 
     k = self ; c = k.c
     
@@ -2279,7 +2283,7 @@ def plainKeyTag (self):
     return '%s-%s' % ('plain-key',self.c.fileName())
 #@nonl
 #@-node:ekr.20060120082630:plainKeyTag
-#@-node:ekr.20050920085536.16:bindKey
+#@-node:ekr.20050920085536.16:bindKey & helpers
 #@+node:ekr.20051008135051.1:bindOpenWith
 def bindOpenWith (self,shortcut,name,data):
     
@@ -2465,6 +2469,12 @@ def makeAllBindings (self):
     k.makeBindingsFromCommandsDict()
     if k.useTextWidget:
         k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
+        
+    t = c.frame.body.bodyCtrl
+    g.trace(t)
+    t.bind('<Key>',k.masterKeyHandler,'+')
+    t.bind('<Button>',k.masterClickHandler,'+')
+
     k.checkBindings()
     
     if 0:
@@ -2584,7 +2594,7 @@ def makeBindingsFromCommandsDict (self):
                     else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
-#@-node:ekr.20051006125633:Binding
+#@-node:ekr.20051006125633:Binding (keyHandler)
 #@+node:ekr.20060115103349:Modes & input states
 #@+node:ekr.20060102135349.2:enterNamedMode
 def enterNamedMode (self,event,commandName):
@@ -3141,23 +3151,8 @@ def updateTab (self,p,w):
 #@nonl
 #@-node:ekr.20051026092433:updateTab
 #@-node:ekr.20051125080855:selfInsertCommand
-#@+node:ekr.20051006125633:Binding
-#@+node:ekr.20060127183752:masterKeyHandler
-def masterKeyHandler (self,event):
-    
-    '''In the new binding scheme, there is only one key binding.
-    
-    This is the handler for that binding.'''
-    
-    k = self
-    
-    stroke = g.app.gui.strokeFromEvent(event)
-    
-    func = k.matchStroke(stroke)
-    k.masterCommand(stroke,func) # etc.
-#@nonl
-#@-node:ekr.20060127183752:masterKeyHandler
-#@+node:ekr.20050920085536.16:bindKey
+#@+node:ekr.20051006125633:Binding (keyHandler)
+#@+node:ekr.20050920085536.16:bindKey & helpers
 def bindKey (self,pane,shortcut,callback,commandName):
 
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
@@ -3178,7 +3173,10 @@ def bindKey (self,pane,shortcut,callback,commandName):
     << give warning and return if there is a serious redefinition >>
     << trace bindings if enabled in leoSettings.leo >>
     try:
-        k.bindKeyHelper(pane,shortcut,callback,commandName)
+        if g.app.new_keys:
+            k.bindKeyToDict(pane,shortcut,callback,commandName)
+        else:
+            k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
         shortcut = '<%s>' % shortcut.strip().lstrip('<').rstrip('>')
@@ -3218,8 +3216,28 @@ if c.config.getBool('trace_bindings'):
             g.trace(pane,shortcut,commandName)
 #@nonl
 #@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
+#@+node:ekr.20060130093055:bindKeyToDict
+def bindKeyToDict (self,pane,stroke,func,commandName):
+    
+    k = self
+    d =  k.masterBindingsDict.get(pane,{})
+    
+    g.trace(pane,stroke,commandName,func and func.__name__)
+
+    if d.get(stroke):
+        g.es('ignoring duplicate definition of %s to %s in %s' % (
+            stroke,commandName,pane), color='blue')
+    else:
+        d [stroke] = g.Bunch(commandName=commandName,func=func,stroke=stroke)
+#@nonl
+#@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
 def bindKeyHelper(self,pane,shortcut,callback,commandName):
+    
+    ### return ###
+    
+    if g.app.new_keys:
+        return
 
     k = self ; c = k.c
     
@@ -3271,7 +3289,7 @@ def plainKeyTag (self):
     return '%s-%s' % ('plain-key',self.c.fileName())
 #@nonl
 #@-node:ekr.20060120082630:plainKeyTag
-#@-node:ekr.20050920085536.16:bindKey
+#@-node:ekr.20050920085536.16:bindKey & helpers
 #@+node:ekr.20051008135051.1:bindOpenWith
 def bindOpenWith (self,shortcut,name,data):
     
@@ -3457,6 +3475,12 @@ def makeAllBindings (self):
     k.makeBindingsFromCommandsDict()
     if k.useTextWidget:
         k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
+        
+    t = c.frame.body.bodyCtrl
+    g.trace(t)
+    t.bind('<Key>',k.masterKeyHandler,'+')
+    t.bind('<Button>',k.masterClickHandler,'+')
+
     k.checkBindings()
     
     if 0:
@@ -3576,7 +3600,7 @@ def makeBindingsFromCommandsDict (self):
                     else:     g.trace(commandName)
 #@nonl
 #@-node:ekr.20051008134059:makeBindingsFromCommandsDict
-#@-node:ekr.20051006125633:Binding
+#@-node:ekr.20051006125633:Binding (keyHandler)
 #@-node:ekr.20060119201356:Disabled plain-key bindings in insert/overwrite modes
 #@+node:ekr.20060120105247:Fixed minor bugs & made minor improvements
 @nocolor
@@ -3797,7 +3821,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     if trace and interesting:
         g.trace(
             'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',g.app.gui.strokeFromEvent(event),
+            'stroke2:',k.strokeFromEvent(event),
             'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
@@ -13749,9 +13773,6 @@ Shift+Ctrl-A in the menu and Control+A as the argument to bind.
 Returns (bind_shortcut, menu_shortcut)
 @c
 
-<< define dict of special names >>
-<< define dict of Tk bind names >>
-
 def canonicalizeShortcut (self,shortcut):
     
     if shortcut == None or len(shortcut) == 0:
@@ -13779,94 +13800,6 @@ def canonicalizeShortcut (self,shortcut):
     # g.trace('bind: %25s menu: %s' % (bind_shortcut,menu_shortcut))
     return bind_shortcut,menu_shortcut
 #@nonl
-#@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-if not g.app.new_keys: # new keys: just use the character itself.
-    # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-    tkBindNamesDict = {
-        "!" : "exclam",
-        '"' : "quotedbl",
-        "#" : "numbersign",
-        "$" : "dollar",
-        "%" : "percent",
-        "&" : "ampersand",
-        "'" : "quoteright",
-        "(" : "parenleft",
-        ")" : "parenright",
-        "*" : "asterisk",
-        "+" : "plus",
-        "," : "comma",
-        "-" : "minus",
-        "." : "period",
-        "/" : "slash",
-        ":" : "colon",
-        ";" : "semicolon",
-        "<" : "less",
-        "=" : "equal",
-        ">" : "greater",
-        "?" : "question",
-        "@" : "at",
-        "[" : "bracketleft",
-        "\\": "backslash",
-        "]" : "bracketright",
-        "^" : "asciicircum",
-        "_" : "underscore",
-        "`" : "quoteleft",
-        "{" : "braceleft",
-        "|" : "bar",
-        "}" : "braceright",
-        "~" : "asciitilde" }
-#@nonl
-#@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
-#@+node:ekr.20031218072017.2101:<< define dict of special names >>
-# These keys are simply made-up names.  The menu_bind values are known to Tk.
-# Case is not significant in the keys.
-
-if g.app.new_keys: # After changeover: a single value (there is no bind key)
-
-    tkSpecialNamesDict = {
-        # "delete"  : "Delete",
-        "bksp"    : "BackSpace",
-        "esc"     : "Escape",
-        # Arrow keys...
-        "dnarrow" : "DnArrow",
-        "ltarrow" : "LtArrow",
-        "rtarrow" : "RtArrow",
-        "uparrow" : "UpArrow",
-        # Page up/down keys...
-        "pageup"  : "PageUp",
-        "pagedn"  : "PageDn",
-    }
-
-else: # Before changeover:  tuples of bind_last and menu_last
-
-    tkSpecialNamesDict = {
-        "bksp"    : ("BackSpace","BkSp"),
-        "esc"     : ("Escape","Esc"),
-        # Arrow keys...
-        "dnarrow" : ("Down", "DnArrow"),
-        "ltarrow" : ("Left", "LtArrow"),
-        "rtarrow" : ("Right","RtArrow"),
-        "uparrow" : ("Up",   "UpArrow"),
-        # Page up/down keys...
-        "pageup"  : ("Prior","PgUp"),
-        "pagedn"  : ("Next", "PgDn")
-    }
-
-@  The following are not translated, so what appears in the menu is the same as what is passed to Tk.  Case is significant.
-
-Note: the Tk documentation states that not all of these may be available on all platforms.
-
-F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
-BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
-Down, Left, Right, Up,
-Begin, End, Home, Next, Prior,
-Num_Lock, Pause, Scroll_Lock, Sys_Req,
-KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
-KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
-KP_F1,KP_F2,KP_F3,KP_F4,
-KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
-#@nonl
-#@-node:ekr.20031218072017.2101:<< define dict of special names >>
 #@+node:ekr.20060128103640:old
 #@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
 s2 = shortcut
@@ -14102,7 +14035,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
     if trace and interesting:
         g.trace(
             'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',g.app.gui.strokeFromEvent(event),
+            'stroke2:',k.strokeFromEvent(event),
             'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
@@ -14410,7 +14343,7 @@ def bindShortcut (self,pane,shortcut,command,commandName):
     return k.bindKey(pane,shortcut,keyCallback2,commandName)
 #@nonl
 #@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
-#@+node:ekr.20050920085536.16:bindKey
+#@+node:ekr.20050920085536.16:bindKey & helpers
 def bindKey (self,pane,shortcut,callback,commandName):
 
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
@@ -14431,7 +14364,10 @@ def bindKey (self,pane,shortcut,callback,commandName):
     << give warning and return if there is a serious redefinition >>
     << trace bindings if enabled in leoSettings.leo >>
     try:
-        k.bindKeyHelper(pane,shortcut,callback,commandName)
+        if g.app.new_keys:
+            k.bindKeyToDict(pane,shortcut,callback,commandName)
+        else:
+            k.bindKeyHelper(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
         shortcut = '<%s>' % shortcut.strip().lstrip('<').rstrip('>')
@@ -14471,8 +14407,28 @@ if c.config.getBool('trace_bindings'):
             g.trace(pane,shortcut,commandName)
 #@nonl
 #@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
+#@+node:ekr.20060130093055:bindKeyToDict
+def bindKeyToDict (self,pane,stroke,func,commandName):
+    
+    k = self
+    d =  k.masterBindingsDict.get(pane,{})
+    
+    g.trace(pane,stroke,commandName,func and func.__name__)
+
+    if d.get(stroke):
+        g.es('ignoring duplicate definition of %s to %s in %s' % (
+            stroke,commandName,pane), color='blue')
+    else:
+        d [stroke] = g.Bunch(commandName=commandName,func=func,stroke=stroke)
+#@nonl
+#@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
 def bindKeyHelper(self,pane,shortcut,callback,commandName):
+    
+    ### return ###
+    
+    if g.app.new_keys:
+        return
 
     k = self ; c = k.c
     
@@ -14524,7 +14480,7 @@ def plainKeyTag (self):
     return '%s-%s' % ('plain-key',self.c.fileName())
 #@nonl
 #@-node:ekr.20060120082630:plainKeyTag
-#@-node:ekr.20050920085536.16:bindKey
+#@-node:ekr.20050920085536.16:bindKey & helpers
 #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
 def copyBindingsToWidget (self,paneOrPanes,w):
     

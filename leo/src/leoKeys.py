@@ -35,6 +35,10 @@ import sys
 #     keys are shortcuts, values are *lists* of 
 # g.bunch(func,name,warningGiven)
 # 
+# k.masterBindingsDict:
+#     keys are scope names: 'all','text',etc. or mode names.
+#     Values are dicts whose keys are strokes and whose values are functions.
+# 
 # g.app.keysym_numberDict:
 #     Keys are keysym_num's.  Values are strokes.
 # 
@@ -134,8 +138,8 @@ class keyHandlerClass:
         ' ' : 'space',
         '\t': 'Tab',
         '\n': 'Return',
-        '\r': '\\r',
-        '\x0b': 'bell',
+        #'\r': '\\r',
+        #'\x0b': 'bell',
         # '\x0c': 'ctrl-c',
     
         "!" : "exclam",
@@ -372,10 +376,33 @@ class keyHandlerClass:
             
         if not special:
              g.trace(stroke)
-    
-        if 0:
-            func = k.matchStroke(stroke)
-            k.masterCommand(stroke,func) # etc.
+             
+        if not g.app.new_keys: return
+        
+        if k.inState():
+            d =  k.masterBindingsDict.get(state)
+        else:
+            w = event and event.widget
+            w_name = g.app.gui.widget_name(w)
+            
+            for key,name in (
+                # Order here is similar to bindtags order.
+                ('mini','mini'), ('body','body'),
+                ('tree','head'), ('tree','canvas'),
+                ('log', 'log'),
+                ('text',None), ('all',None),
+            ):
+                if (
+                    name and w_name.startswith(name) or
+                    key == 'text' and g.app.gui.isTextWidget(w) or
+                    key == 'all'
+                ):
+                    d = k.masterBindingsDict.get(key)
+                    if d:
+                        bunch = d.get(stroke)
+                        if bunch:
+                            return k.masterCommand(
+                                event,bunch.func,bunch.stroke,bunch.commandName)
     #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
@@ -547,7 +574,7 @@ class keyHandlerClass:
     #@-node:ekr.20060129182405:k.strokeFromSetting
     #@-node:ekr.20060129052538.1:master event handlers (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
-    #@+node:ekr.20050920085536.16:bindKey
+    #@+node:ekr.20050920085536.16:bindKey & helpers
     def bindKey (self,pane,shortcut,callback,commandName):
     
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
@@ -594,7 +621,10 @@ class keyHandlerClass:
         #@-node:ekr.20060114110141:<< trace bindings if enabled in leoSettings.leo >>
         #@nl
         try:
-            k.bindKeyHelper(pane,shortcut,callback,commandName)
+            if g.app.new_keys:
+                k.bindKeyToDict(pane,shortcut,callback,commandName)
+            else:
+                k.bindKeyHelper(pane,shortcut,callback,commandName)
             bunchList.append(
                 g.bunch(pane=pane,func=callback,commandName=commandName))
             shortcut = '<%s>' % shortcut.strip().lstrip('<').rstrip('>')
@@ -610,6 +640,21 @@ class keyHandlerClass:
     
             return False
     #@nonl
+    #@+node:ekr.20060130093055:bindKeyToDict
+    def bindKeyToDict (self,pane,stroke,func,commandName):
+        
+        k = self
+        d =  k.masterBindingsDict.get(pane,{})
+        
+        g.trace(pane,stroke,commandName,func and func.__name__)
+    
+        if d.get(stroke):
+            g.es('ignoring duplicate definition of %s to %s in %s' % (
+                stroke,commandName,pane), color='blue')
+        else:
+            d [stroke] = g.Bunch(commandName=commandName,func=func,stroke=stroke)
+    #@nonl
+    #@-node:ekr.20060130093055:bindKeyToDict
     #@+node:ekr.20051022094136:bindKeyHelper
     def bindKeyHelper(self,pane,shortcut,callback,commandName):
         
@@ -668,7 +713,7 @@ class keyHandlerClass:
         return '%s-%s' % ('plain-key',self.c.fileName())
     #@nonl
     #@-node:ekr.20060120082630:plainKeyTag
-    #@-node:ekr.20050920085536.16:bindKey
+    #@-node:ekr.20050920085536.16:bindKey & helpers
     #@+node:ekr.20051008135051.1:bindOpenWith
     def bindOpenWith (self,shortcut,name,data):
         

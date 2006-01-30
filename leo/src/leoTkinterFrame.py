@@ -123,9 +123,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c.initVersion()
         c.signOnWithVersion()
         f.miniBufferWidget = f.createMiniBufferWidget()
-        f.body.createBindings(f)
+        f.createBindings()
         # f.enableTclTraces()
     #@nonl
+    #@+node:ekr.20060129051914.1:createBindings
+    def createBindings (self):
+        
+        f = self ; c = f.c
+        
+        if not g.app.new_keys:
+            f.body.createBindings(f)
+    #@-node:ekr.20060129051914.1:createBindings
     #@+node:ekr.20051009044751:createOuterFrames
     def createOuterFrames (self):
     
@@ -143,15 +151,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         # These don't work on Windows. Because of bugs in window managers,
         # there is NO WAY to know which window is on top!
-        f.top.bind("<Activate>",f.OnActivateLeoEvent)
-        f.top.bind("<Deactivate>",f.OnDeactivateLeoEvent)
-        f.top.bind("<Control-KeyPress>",f.OnControlKeyDown)
-        f.top.bind("<Control-KeyRelease>",f.OnControlKeyUp)
+        if 0:
+            f.top.bind("<Activate>",f.OnActivateLeoEvent)
+            f.top.bind("<Deactivate>",f.OnDeactivateLeoEvent)
+            f.top.bind("<Control-KeyPress>",f.OnControlKeyDown)
+            f.top.bind("<Control-KeyRelease>",f.OnControlKeyUp)
         
         # Create the outer frame, the 'hull' component.
         f.outerFrame = Tk.Frame(top)
         f.outerFrame.pack(expand=1,fill="both")
         f.componentClass(c,'hull',f.outerFrame)
+    #@nonl
     #@-node:ekr.20051009044751:createOuterFrames
     #@+node:ekr.20051009044920:createIconBarComponents
     # Warning: there is also a method called createIconBar.
@@ -2230,17 +2240,19 @@ class leoTkinterBody (leoFrame.leoBody):
     
         '''(tkBody) Create gui-dependent bindings.
         These are *not* made in nullBody instances.'''
+        
+        if not g.app.new_keys:
     
-        c = self.c ; t = self.bodyCtrl
-    
-        # Event handlers...
-        t.bind("<Button-1>",frame.OnBodyClick)
-        t.bind("<Button-3>",frame.OnBodyRClick)
-        t.bind("<Double-Button-1>",frame.OnBodyDoubleClick)
-    
-        if sys.platform.startswith('win'):
-            # Support Linux middle-button paste easter egg.
-            t.bind("<Button-2>",frame.OnPaste)
+            c = self.c ; t = self.bodyCtrl
+            
+            # Event handlers...
+            t.bind("<Button-1>",frame.OnBodyClick)
+            t.bind("<Button-3>",frame.OnBodyRClick)
+            t.bind("<Double-Button-1>",frame.OnBodyDoubleClick)
+            
+            if sys.platform.startswith('win'):
+                # Support Linux middle-button paste easter egg.
+                t.bind("<Button-2>",frame.OnPaste)
     #@nonl
     #@-node:ekr.20031218072017.838:tkBody.createBindings
     #@+node:ekr.20031218072017.3998:tkBody.createControl
