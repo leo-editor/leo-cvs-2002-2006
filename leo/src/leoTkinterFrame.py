@@ -3509,7 +3509,7 @@ class leoTkinterLog (leoFrame.leoLog):
         c = self.c ; k = c.keyHandler
     
         w = self.textDict.get(tabName)
-    
+        
         if k and w:
             k.copyBindingsToWidget(['log','text','all'],w)
     #@nonl

@@ -423,7 +423,7 @@ class keyHandlerClass:
         if not event:
             g.trace('oops: no event')
             return
-        
+    
         keysym = event.keysym or ''
         if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
             return
@@ -453,24 +453,43 @@ class keyHandlerClass:
                 ):
                     d = k.masterBindingsDict.get(key)
                     if d:
-                        bunch = d.get(stroke)
-                        if bunch:
-                            return k.masterCommand(
-                                event,bunch.func,bunch.stroke,bunch.commandName)
+                        b = d.get(stroke)
+                        if b:
+                            g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                            return k.masterCommand(event,b.func,b.stroke,b.commandName)
                                 
-        g.trace('no func')
+        # g.trace('no func')
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
     #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event):
         
-        button = event and hasattr(event,'button') and event.button or '<no button>'
-        w = event and event.widget or '<no widget>'
+        k = self ; c = k.c
         
-        g.trace(button,w)
+        # button = event and hasattr(event,'button') and event.button or '<no button>'
+        w = event and event.widget or '<no widget>'
+        name = g.app.gui.widget_name(w)
+        
+        g.trace(w)
+        
+        if name.startswith('head'):
+            c.frame.tree.onHeadlineClick(event)
     #@nonl
     #@-node:ekr.20060129052538.2:masterClickHandler
+    #@+node:ekr.20060130130942:masterClick3Handler
+    def masterClick3Handler (self,event):
+        
+        k = self ; c = k.c
+        w = event and event.widget or '<no widget>'
+        name = g.app.gui.widget_name(w)
+        
+        g.trace(w)
+        
+        if name.startswith('head'):
+            c.frame.tree.onHeadlineRightClick(event)
+    #@nonl
+    #@-node:ekr.20060130130942:masterClick3Handler
     #@+node:ekr.20060128090219:masterMenuHandler
     def masterMenuHandler (self,stroke,command,commandName):
         
@@ -558,7 +577,7 @@ class keyHandlerClass:
         stroke = stroke.lstrip('<').rstrip('>')
         
         if 0:
-            g.trace('%-4s %-15s %-40s %s' % (
+            g.trace('%-4s %-18s %-40s %s' % (
                 pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
     
         if d.get(stroke):
@@ -571,8 +590,6 @@ class keyHandlerClass:
     #@-node:ekr.20060130093055:bindKeyToDict
     #@+node:ekr.20051022094136:bindKeyHelper
     def bindKeyHelper(self,pane,shortcut,callback,commandName):
-        
-        ### return ###
         
         if g.app.new_keys:
             return
@@ -651,7 +668,7 @@ class keyHandlerClass:
             return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
     #@nonl
     #@-node:ekr.20051008135051.1:bindOpenWith
-    #@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
+    #@+node:ekr.20051006125633.1:bindShortcut
     def bindShortcut (self,pane,shortcut,command,commandName):
         
         '''Bind one shortcut from a menu table.'''
@@ -659,16 +676,19 @@ class keyHandlerClass:
         k = self ; shortcut = str(shortcut)
         
         # g.trace(commandName,shortcut,g.callers())
-    
-        def menuFuncCallback (event,command=command,commandName=commandName):
-            return command(event)
-    
-        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke,commandName=commandName)
-            
-        return k.bindKey(pane,shortcut,keyCallback2,commandName)
+        
+        if g.app.new_keys:
+            return k.bindKey(pane,shortcut,command,commandName)
+        else:
+            def menuFuncCallback (event,command=command,commandName=commandName):
+                return command(event)
+        
+            def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+                return k.masterCommand(event,func,stroke,commandName=commandName)
+                
+            return k.bindKey(pane,shortcut,keyCallback2,commandName)
     #@nonl
-    #@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
+    #@-node:ekr.20051006125633.1:bindShortcut
     #@+node:ekr.20051011103654:checkBindings
     def checkBindings (self):
         
@@ -725,6 +745,8 @@ class keyHandlerClass:
         '''Copy all bindings for the given panes to widget w.
         
         paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+        
+        if g.app.new_keys: return
         
         # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
     
@@ -804,7 +826,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060113062832.1:copyBindingsHelper
     #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
-    #@+node:ekr.20051007080058:makeAllBindings
+    #@+node:ekr.20051007080058:k.makeAllBindings
     def makeAllBindings (self):
         
         k = self ; c = k.c
@@ -813,13 +835,16 @@ class keyHandlerClass:
         k.makeSpecialBindings()
         k.addModeCommands() 
         k.makeBindingsFromCommandsDict()
-        if k.useTextWidget:
-            k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
-            
-        t = c.frame.body.bodyCtrl
-        g.trace(t)
-        t.bind('<Key>',k.masterKeyHandler,'+')
-        t.bind('<Button>',k.masterClickHandler,'+')
+        if g.app.new_keys:
+            for t in (
+                c.frame.body.bodyCtrl,
+                c.frame.tree.canvas,
+            ):
+                t.bind('<Key>',k.masterKeyHandler)
+                t.bind('<Button>',k.masterClickHandler)
+        else:
+            if k.useTextWidget:
+                k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
     
         k.checkBindings()
         
@@ -831,7 +856,7 @@ class keyHandlerClass:
                 n = d.get(key)
                 # print 'keysym_num for %s = %d' % (key,n)
     #@nonl
-    #@-node:ekr.20051007080058:makeAllBindings
+    #@-node:ekr.20051007080058:k.makeAllBindings
     #@+node:ekr.20060104154937:addModeCommands
     def addModeCommands (self):
         
@@ -905,15 +930,17 @@ class keyHandlerClass:
                     k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
         
                 k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+        elif g.app.new_keys:
+            k.bindKey(pane,shortcut,func,commandName)
         else:
-                # Create two-levels of callbacks.
-                def specialCallback (event,func=func):
-                    return func(event)
-        
-                def keyCallback (event,func=specialCallback,stroke=shortcut):
-                    return k.masterCommand(event,func,stroke)
-        
-                k.bindKey(pane,shortcut,keyCallback,commandName)
+            # Create two-levels of callbacks.
+            def specialCallback (event,func=func):
+                return func(event)
+    
+            def keyCallback (event,func=specialCallback,stroke=shortcut):
+                return k.masterCommand(event,func,stroke)
+    
+            k.bindKey(pane,shortcut,keyCallback,commandName)
         
         if ivar:
             setattr(k,ivar,shortcut)
@@ -961,18 +988,15 @@ class keyHandlerClass:
         state = event and hasattr(event,'state') and event.state or 0
         k.func = func
         k.funcReturn = None # For unit testing.
-        if commandName is None:
-            commandName = func and func.__name__ or '<no function>'
+        commandName = commandName or func and func.__name__ or '<no function>'
         special = keysym in (
             'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-        interesting = func is not None or ch != '' # or stroke != '<Key>'
-        interesting = not special
+        interesting = func is not None
         
         if trace and interesting:
             g.trace(
-                'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-                'stroke2:',k.strokeFromEvent(event),
-                'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
+                # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+                'w:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
             )
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -1090,23 +1114,17 @@ class keyHandlerClass:
         k = self ; c = k.c
         w = event and event.widget
         name = g.app.gui.widget_name(w)
-        trace = c.config.getBool('trace_masterCommand')
-        
-        if trace: g.trace(name)
     
-        if name.startswith('body') or name.startswith('head'):
-            # For Leo 4.4a4: allow Tk defaults.
-            # But this is dangerous, and should be removed.
+        if name.startswith('body') or (not g.app.new_keys and name.startswith('head')):
             action = k.unboundKeyAction
             if action in ('insert','overwrite'):
                 c.editCommands.selfInsertCommand(event,action=action)
             else:
                 pass ; g.trace('ignoring key')
             return 'break'
-        # elif name.startswith('head'):
-            # g.trace("can't happen: %s" % (name),color='red')
-            # c.frame.tree.updateHead(event,w)
-            # return 'break'
+        elif g.app.new_keys and name.startswith('head'):
+            c.frame.tree.onHeadlineKey(event)
+            return 'break'
         else:
             # Let tkinter handle the event.
             # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
@@ -1434,35 +1452,6 @@ class keyHandlerClass:
     #@-node:ekr.20060128103640:old
     #@-node:ekr.20031218072017.2098:canonicalizeShortcut
     #@-node:ekr.20060128081317:shortcutFromSetting, tkBindingFromSetting
-    #@+node:ekr.20060127185121:matchStroke
-    def matchStroke (self,stroke):
-        
-        '''Look up stroke in k.bindingsDict and return the best match.
-        
-        Priorities of matches:
-            
-        - Minibuffer.
-        - Any mode.
-        - Specialized-widget.  E.g., Return in the Find tab.
-        - General pane:  'text', 'tree', etc.
-        - 'all' binding.
-        '''
-        
-        k = self
-        
-        # Compute priorityList based on the present state (mode,etc)
-        
-        # In the new binding scheme, entries in k.bindingsDict are dicts.
-        # Keys are priority-keys, values are functions.
-        d = k.bindingsDict.get(stroke,{})
-        for z in priorityList:
-            f = d.get(z)
-            if f: return f
-            
-        # Nothing found.
-        return k.unboundKeyHandler
-    #@nonl
-    #@-node:ekr.20060127185121:matchStroke
     #@+node:ekr.20060126163152.2:k.strokeFromEvent
     # The keys to k.bindingsDict must be consistent with what this method returns.
     # See 'about internal bindings' for details.
@@ -1502,7 +1491,7 @@ class keyHandlerClass:
         if ctrl: result.append('Ctrl+')
         result.append(ch)
         result = ''.join(result)
-        g.trace('state',state,'keysym',keysym,'result',repr(result))
+        # g.trace('state',state,'keysym',keysym,'result',repr(result))
         return result
     #@nonl
     #@-node:ekr.20060126163152.2:k.strokeFromEvent

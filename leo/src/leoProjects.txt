@@ -1833,18 +1833,15 @@ def masterCommand (self,event,func,stroke,commandName=None):
     state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
-    if commandName is None:
-        commandName = func and func.__name__ or '<no function>'
+    commandName = commandName or func and func.__name__ or '<no function>'
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func is not None or ch != '' # or stroke != '<Key>'
-    interesting = not special
+    interesting = func is not None
     
     if trace and interesting:
         g.trace(
-            'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',k.strokeFromEvent(event),
-            'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
+            # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+            'w:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -1961,23 +1958,17 @@ def handleDefaultChar(self,event):
     k = self ; c = k.c
     w = event and event.widget
     name = g.app.gui.widget_name(w)
-    trace = c.config.getBool('trace_masterCommand')
-    
-    if trace: g.trace(name)
 
-    if name.startswith('body') or name.startswith('head'):
-        # For Leo 4.4a4: allow Tk defaults.
-        # But this is dangerous, and should be removed.
+    if name.startswith('body') or (not g.app.new_keys and name.startswith('head')):
         action = k.unboundKeyAction
         if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         else:
             pass ; g.trace('ignoring key')
         return 'break'
-    # elif name.startswith('head'):
-        # g.trace("can't happen: %s" % (name),color='red')
-        # c.frame.tree.updateHead(event,w)
-        # return 'break'
+    elif g.app.new_keys and name.startswith('head'):
+        c.frame.tree.onHeadlineKey(event)
+        return 'break'
     else:
         # Let tkinter handle the event.
         # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
@@ -2223,7 +2214,7 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
     stroke = stroke.lstrip('<').rstrip('>')
     
     if 0:
-        g.trace('%-4s %-15s %-40s %s' % (
+        g.trace('%-4s %-18s %-40s %s' % (
             pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
 
     if d.get(stroke):
@@ -2236,8 +2227,6 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
 #@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
 def bindKeyHelper(self,pane,shortcut,callback,commandName):
-    
-    ### return ###
     
     if g.app.new_keys:
         return
@@ -2316,7 +2305,7 @@ def bindOpenWith (self,shortcut,name,data):
         return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
 #@nonl
 #@-node:ekr.20051008135051.1:bindOpenWith
-#@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
+#@+node:ekr.20051006125633.1:bindShortcut
 def bindShortcut (self,pane,shortcut,command,commandName):
     
     '''Bind one shortcut from a menu table.'''
@@ -2324,16 +2313,19 @@ def bindShortcut (self,pane,shortcut,command,commandName):
     k = self ; shortcut = str(shortcut)
     
     # g.trace(commandName,shortcut,g.callers())
-
-    def menuFuncCallback (event,command=command,commandName=commandName):
-        return command(event)
-
-    def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-        return k.masterCommand(event,func,stroke,commandName=commandName)
-        
-    return k.bindKey(pane,shortcut,keyCallback2,commandName)
+    
+    if g.app.new_keys:
+        return k.bindKey(pane,shortcut,command,commandName)
+    else:
+        def menuFuncCallback (event,command=command,commandName=commandName):
+            return command(event)
+    
+        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke,commandName=commandName)
+            
+        return k.bindKey(pane,shortcut,keyCallback2,commandName)
 #@nonl
-#@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
+#@-node:ekr.20051006125633.1:bindShortcut
 #@+node:ekr.20051011103654:checkBindings
 def checkBindings (self):
     
@@ -2390,6 +2382,8 @@ def copyBindingsToWidget (self,paneOrPanes,w):
     '''Copy all bindings for the given panes to widget w.
     
     paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+    
+    if g.app.new_keys: return
     
     # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
 
@@ -2469,7 +2463,7 @@ def copyBindingsHelper(self,bunchList,shortcut,w):
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
-#@+node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20051007080058:k.makeAllBindings
 def makeAllBindings (self):
     
     k = self ; c = k.c
@@ -2478,13 +2472,16 @@ def makeAllBindings (self):
     k.makeSpecialBindings()
     k.addModeCommands() 
     k.makeBindingsFromCommandsDict()
-    if k.useTextWidget:
-        k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
-        
-    t = c.frame.body.bodyCtrl
-    g.trace(t)
-    t.bind('<Key>',k.masterKeyHandler,'+')
-    t.bind('<Button>',k.masterClickHandler,'+')
+    if g.app.new_keys:
+        for t in (
+            c.frame.body.bodyCtrl,
+            c.frame.tree.canvas,
+        ):
+            t.bind('<Key>',k.masterKeyHandler)
+            t.bind('<Button>',k.masterClickHandler)
+    else:
+        if k.useTextWidget:
+            k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
 
     k.checkBindings()
     
@@ -2496,7 +2493,7 @@ def makeAllBindings (self):
             n = d.get(key)
             # print 'keysym_num for %s = %d' % (key,n)
 #@nonl
-#@-node:ekr.20051007080058:makeAllBindings
+#@-node:ekr.20051007080058:k.makeAllBindings
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
@@ -2570,15 +2567,17 @@ def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
                 k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
     
             k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+    elif g.app.new_keys:
+        k.bindKey(pane,shortcut,func,commandName)
     else:
-            # Create two-levels of callbacks.
-            def specialCallback (event,func=func):
-                return func(event)
-    
-            def keyCallback (event,func=specialCallback,stroke=shortcut):
-                return k.masterCommand(event,func,stroke)
-    
-            k.bindKey(pane,shortcut,keyCallback,commandName)
+        # Create two-levels of callbacks.
+        def specialCallback (event,func=func):
+            return func(event)
+
+        def keyCallback (event,func=specialCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+
+        k.bindKey(pane,shortcut,keyCallback,commandName)
     
     if ivar:
         setattr(k,ivar,shortcut)
@@ -3237,7 +3236,7 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
     stroke = stroke.lstrip('<').rstrip('>')
     
     if 0:
-        g.trace('%-4s %-15s %-40s %s' % (
+        g.trace('%-4s %-18s %-40s %s' % (
             pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
 
     if d.get(stroke):
@@ -3250,8 +3249,6 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
 #@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
 def bindKeyHelper(self,pane,shortcut,callback,commandName):
-    
-    ### return ###
     
     if g.app.new_keys:
         return
@@ -3330,7 +3327,7 @@ def bindOpenWith (self,shortcut,name,data):
         return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
 #@nonl
 #@-node:ekr.20051008135051.1:bindOpenWith
-#@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
+#@+node:ekr.20051006125633.1:bindShortcut
 def bindShortcut (self,pane,shortcut,command,commandName):
     
     '''Bind one shortcut from a menu table.'''
@@ -3338,16 +3335,19 @@ def bindShortcut (self,pane,shortcut,command,commandName):
     k = self ; shortcut = str(shortcut)
     
     # g.trace(commandName,shortcut,g.callers())
-
-    def menuFuncCallback (event,command=command,commandName=commandName):
-        return command(event)
-
-    def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-        return k.masterCommand(event,func,stroke,commandName=commandName)
-        
-    return k.bindKey(pane,shortcut,keyCallback2,commandName)
+    
+    if g.app.new_keys:
+        return k.bindKey(pane,shortcut,command,commandName)
+    else:
+        def menuFuncCallback (event,command=command,commandName=commandName):
+            return command(event)
+    
+        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke,commandName=commandName)
+            
+        return k.bindKey(pane,shortcut,keyCallback2,commandName)
 #@nonl
-#@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
+#@-node:ekr.20051006125633.1:bindShortcut
 #@+node:ekr.20051011103654:checkBindings
 def checkBindings (self):
     
@@ -3404,6 +3404,8 @@ def copyBindingsToWidget (self,paneOrPanes,w):
     '''Copy all bindings for the given panes to widget w.
     
     paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+    
+    if g.app.new_keys: return
     
     # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
 
@@ -3483,7 +3485,7 @@ def copyBindingsHelper(self,bunchList,shortcut,w):
 #@nonl
 #@-node:ekr.20060113062832.1:copyBindingsHelper
 #@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
-#@+node:ekr.20051007080058:makeAllBindings
+#@+node:ekr.20051007080058:k.makeAllBindings
 def makeAllBindings (self):
     
     k = self ; c = k.c
@@ -3492,13 +3494,16 @@ def makeAllBindings (self):
     k.makeSpecialBindings()
     k.addModeCommands() 
     k.makeBindingsFromCommandsDict()
-    if k.useTextWidget:
-        k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
-        
-    t = c.frame.body.bodyCtrl
-    g.trace(t)
-    t.bind('<Key>',k.masterKeyHandler,'+')
-    t.bind('<Button>',k.masterClickHandler,'+')
+    if g.app.new_keys:
+        for t in (
+            c.frame.body.bodyCtrl,
+            c.frame.tree.canvas,
+        ):
+            t.bind('<Key>',k.masterKeyHandler)
+            t.bind('<Button>',k.masterClickHandler)
+    else:
+        if k.useTextWidget:
+            k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
 
     k.checkBindings()
     
@@ -3510,7 +3515,7 @@ def makeAllBindings (self):
             n = d.get(key)
             # print 'keysym_num for %s = %d' % (key,n)
 #@nonl
-#@-node:ekr.20051007080058:makeAllBindings
+#@-node:ekr.20051007080058:k.makeAllBindings
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
@@ -3584,15 +3589,17 @@ def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
                 k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
     
             k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+    elif g.app.new_keys:
+        k.bindKey(pane,shortcut,func,commandName)
     else:
-            # Create two-levels of callbacks.
-            def specialCallback (event,func=func):
-                return func(event)
-    
-            def keyCallback (event,func=specialCallback,stroke=shortcut):
-                return k.masterCommand(event,func,stroke)
-    
-            k.bindKey(pane,shortcut,keyCallback,commandName)
+        # Create two-levels of callbacks.
+        def specialCallback (event,func=func):
+            return func(event)
+
+        def keyCallback (event,func=specialCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+
+        k.bindKey(pane,shortcut,keyCallback,commandName)
     
     if ivar:
         setattr(k,ivar,shortcut)
@@ -3831,18 +3838,15 @@ def masterCommand (self,event,func,stroke,commandName=None):
     state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
-    if commandName is None:
-        commandName = func and func.__name__ or '<no function>'
+    commandName = commandName or func and func.__name__ or '<no function>'
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func is not None or ch != '' # or stroke != '<Key>'
-    interesting = not special
+    interesting = func is not None
     
     if trace and interesting:
         g.trace(
-            'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',k.strokeFromEvent(event),
-            'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
+            # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+            'w:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -3959,23 +3963,17 @@ def handleDefaultChar(self,event):
     k = self ; c = k.c
     w = event and event.widget
     name = g.app.gui.widget_name(w)
-    trace = c.config.getBool('trace_masterCommand')
-    
-    if trace: g.trace(name)
 
-    if name.startswith('body') or name.startswith('head'):
-        # For Leo 4.4a4: allow Tk defaults.
-        # But this is dangerous, and should be removed.
+    if name.startswith('body') or (not g.app.new_keys and name.startswith('head')):
         action = k.unboundKeyAction
         if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         else:
             pass ; g.trace('ignoring key')
         return 'break'
-    # elif name.startswith('head'):
-        # g.trace("can't happen: %s" % (name),color='red')
-        # c.frame.tree.updateHead(event,w)
-        # return 'break'
+    elif g.app.new_keys and name.startswith('head'):
+        c.frame.tree.onHeadlineKey(event)
+        return 'break'
     else:
         # Let tkinter handle the event.
         # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
@@ -13064,7 +13062,7 @@ top.lift()
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
     
-    self.new_keys = False
+    self.new_keys = True
 
     # These ivars are the global vars of this program.
     self.afterHandler = None
@@ -14000,18 +13998,15 @@ def masterCommand (self,event,func,stroke,commandName=None):
     state = event and hasattr(event,'state') and event.state or 0
     k.func = func
     k.funcReturn = None # For unit testing.
-    if commandName is None:
-        commandName = func and func.__name__ or '<no function>'
+    commandName = commandName or func and func.__name__ or '<no function>'
     special = keysym in (
         'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
-    interesting = func is not None or ch != '' # or stroke != '<Key>'
-    interesting = not special
+    interesting = func is not None
     
     if trace and interesting:
         g.trace(
-            'stroke: ',stroke,'state:','%4x' % state,'ch:',repr(ch),'keysym:',repr(keysym),'\n',
-            'stroke2:',k.strokeFromEvent(event),
-            'widget:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
+            # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+            'w:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
         )
 
     # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -14128,23 +14123,17 @@ def handleDefaultChar(self,event):
     k = self ; c = k.c
     w = event and event.widget
     name = g.app.gui.widget_name(w)
-    trace = c.config.getBool('trace_masterCommand')
-    
-    if trace: g.trace(name)
 
-    if name.startswith('body') or name.startswith('head'):
-        # For Leo 4.4a4: allow Tk defaults.
-        # But this is dangerous, and should be removed.
+    if name.startswith('body') or (not g.app.new_keys and name.startswith('head')):
         action = k.unboundKeyAction
         if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         else:
             pass ; g.trace('ignoring key')
         return 'break'
-    # elif name.startswith('head'):
-        # g.trace("can't happen: %s" % (name),color='red')
-        # c.frame.tree.updateHead(event,w)
-        # return 'break'
+    elif g.app.new_keys and name.startswith('head'):
+        c.frame.tree.onHeadlineKey(event)
+        return 'break'
     else:
         # Let tkinter handle the event.
         # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
@@ -14300,7 +14289,7 @@ def updateTab (self,p,w):
 #@-node:ekr.20051125080855:selfInsertCommand
 #@-node:ekr.20060121101953:Dispatching
 #@+node:ekr.20060121095848.2:Binding...
-#@+node:ekr.20051006125633.1:bindShortcut (to be deleted)
+#@+node:ekr.20051006125633.1:bindShortcut
 def bindShortcut (self,pane,shortcut,command,commandName):
     
     '''Bind one shortcut from a menu table.'''
@@ -14308,16 +14297,19 @@ def bindShortcut (self,pane,shortcut,command,commandName):
     k = self ; shortcut = str(shortcut)
     
     # g.trace(commandName,shortcut,g.callers())
-
-    def menuFuncCallback (event,command=command,commandName=commandName):
-        return command(event)
-
-    def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-        return k.masterCommand(event,func,stroke,commandName=commandName)
-        
-    return k.bindKey(pane,shortcut,keyCallback2,commandName)
+    
+    if g.app.new_keys:
+        return k.bindKey(pane,shortcut,command,commandName)
+    else:
+        def menuFuncCallback (event,command=command,commandName=commandName):
+            return command(event)
+    
+        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke,commandName=commandName)
+            
+        return k.bindKey(pane,shortcut,keyCallback2,commandName)
 #@nonl
-#@-node:ekr.20051006125633.1:bindShortcut (to be deleted)
+#@-node:ekr.20051006125633.1:bindShortcut
 #@+node:ekr.20050920085536.16:bindKey & helpers
 def bindKey (self,pane,shortcut,callback,commandName):
 
@@ -14391,7 +14383,7 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
     stroke = stroke.lstrip('<').rstrip('>')
     
     if 0:
-        g.trace('%-4s %-15s %-40s %s' % (
+        g.trace('%-4s %-18s %-40s %s' % (
             pane,repr(stroke),commandName,func and func.__name__)) # ,len(d.keys()))
 
     if d.get(stroke):
@@ -14404,8 +14396,6 @@ def bindKeyToDict (self,pane,stroke,func,commandName):
 #@-node:ekr.20060130093055:bindKeyToDict
 #@+node:ekr.20051022094136:bindKeyHelper
 def bindKeyHelper(self,pane,shortcut,callback,commandName):
-    
-    ### return ###
     
     if g.app.new_keys:
         return
@@ -14467,6 +14457,8 @@ def copyBindingsToWidget (self,paneOrPanes,w):
     '''Copy all bindings for the given panes to widget w.
     
     paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+    
+    if g.app.new_keys: return
     
     # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
 
@@ -14894,7 +14886,7 @@ def createPermanentBindings (self):
 def newText (self,p,x,y):
     
     canvas = self.canvas ; tag = "textBox"
-    c = self.c ; d = self.freeText
+    c = self.c ; d = self.freeText ; k = c.k
     key = p.v ; assert key
     pList = d.get(key,[])
     
@@ -14917,21 +14909,25 @@ def newText (self,p,x,y):
         self.textNumber += 1
         t = Tk.Text(canvas,name='head-%d' % self.textNumber,
             state="normal",font=self.font,bd=0,relief="flat",height=1)
-    
-        if self.useBindtags:
-            t.bindtags(self.textBindings)
+            
+        if g.app.new_keys:
+            t.bind('<Key>',k.masterKeyHandler,)
+            t.bind('<Button>',k.masterClickHandler)
         else:
-            c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
-            t.bind("<Button-1>", self.onHeadlineClick)
-            t.bind("<Button-3>", self.onHeadlineRightClick)
-            t.bind("<Key>",      self.onHeadlineKey)
-
-        if 0: # As of 4.4 this does not appear necessary.
-            t.bind("<Control-t>",self.onControlT)
-
-        if 0: # Crashes on XP.
-            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+            if self.useBindtags:
+                t.bindtags(self.textBindings)
+            else:
+                c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
+                t.bind("<Button-1>", self.onHeadlineClick)
+                t.bind("<Button-3>", self.onHeadlineRightClick)
+                t.bind("<Key>",      self.onHeadlineKey)
     
+            if 0: # As of 4.4 this does not appear necessary.
+                t.bind("<Control-t>",self.onControlT)
+    
+            if 0: # Crashes on XP.
+                << patch by Maciej Kalisiak to handle scroll-wheel events >>
+        
         theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
         t.leo_window_id = theId # Never changes.
         

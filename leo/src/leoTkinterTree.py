@@ -340,17 +340,20 @@ class leoTkinterTree (leoFrame.leoTree):
         
         '''Copy all bindings to headlines.'''
         
-        if self.useBindtags:
-            # This _must_ be a Text widget attached to the canvas!
-            self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
-            self.c.keyHandler.copyBindingsToWidget(['text','tree','all'],t)
-    
-            # newText() attaches these bindings to all headlines.
-            self.textBindings = t.bindtags()
+        if g.app.new_keys:
+            pass
         else:
-            self.bindingWidget = None
-       
-        self.createPermanentBindings()
+            if self.useBindtags:
+                # This _must_ be a Text widget attached to the canvas!
+                self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
+                self.c.keyHandler.copyBindingsToWidget(['text','tree','all'],t)
+        
+                # newText() attaches these bindings to all headlines.
+                self.textBindings = t.bindtags()
+            else:
+                self.bindingWidget = None
+           
+            self.createPermanentBindings()
     #@nonl
     #@-node:ekr.20051024102724:tkTtree.setBindings
     #@+node:ekr.20040803072955.21:injectCallbacks
@@ -525,7 +528,7 @@ class leoTkinterTree (leoFrame.leoTree):
     def newText (self,p,x,y):
         
         canvas = self.canvas ; tag = "textBox"
-        c = self.c ; d = self.freeText
+        c = self.c ; d = self.freeText ; k = c.k
         key = p.v ; assert key
         pList = d.get(key,[])
         
@@ -548,47 +551,51 @@ class leoTkinterTree (leoFrame.leoTree):
             self.textNumber += 1
             t = Tk.Text(canvas,name='head-%d' % self.textNumber,
                 state="normal",font=self.font,bd=0,relief="flat",height=1)
-        
-            if self.useBindtags:
-                t.bindtags(self.textBindings)
+                
+            if g.app.new_keys:
+                t.bind('<Key>',k.masterKeyHandler,)
+                t.bind('<Button>',k.masterClickHandler)
             else:
-                c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
-                t.bind("<Button-1>", self.onHeadlineClick)
-                t.bind("<Button-3>", self.onHeadlineRightClick)
-                t.bind("<Key>",      self.onHeadlineKey)
-    
-            if 0: # As of 4.4 this does not appear necessary.
-                t.bind("<Control-t>",self.onControlT)
-    
-            if 0: # Crashes on XP.
-                #@            << patch by Maciej Kalisiak to handle scroll-wheel events >>
-                #@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
-                def PropagateButton4(e):
-                    canvas.event_generate("<Button-4>")
-                    return "break"
-                
-                def PropagateButton5(e):
-                    canvas.event_generate("<Button-5>")
-                    return "break"
-                
-                def PropagateMouseWheel(e):
-                    canvas.event_generate("<MouseWheel>")
-                    return "break"
-                
                 if self.useBindtags:
-                    instance_tag = t.bindtags()[0]
-                    t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
-                    t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
-                    t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+                    t.bindtags(self.textBindings)
                 else:
-                    # UNTESTED CASE!!!
-                    t.bind("<Button-4>", PropagateButton4)
-                    t.bind("<Button-5>", PropagateButton5)
-                    t.bind("<MouseWheel>", PropagateMouseWheel)
-                
-                #@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
-                #@nl
+                    c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
+                    t.bind("<Button-1>", self.onHeadlineClick)
+                    t.bind("<Button-3>", self.onHeadlineRightClick)
+                    t.bind("<Key>",      self.onHeadlineKey)
         
+                if 0: # As of 4.4 this does not appear necessary.
+                    t.bind("<Control-t>",self.onControlT)
+        
+                if 0: # Crashes on XP.
+                    #@                << patch by Maciej Kalisiak to handle scroll-wheel events >>
+                    #@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+                    def PropagateButton4(e):
+                        canvas.event_generate("<Button-4>")
+                        return "break"
+                    
+                    def PropagateButton5(e):
+                        canvas.event_generate("<Button-5>")
+                        return "break"
+                    
+                    def PropagateMouseWheel(e):
+                        canvas.event_generate("<MouseWheel>")
+                        return "break"
+                    
+                    if self.useBindtags:
+                        instance_tag = t.bindtags()[0]
+                        t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+                        t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+                        t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+                    else:
+                        # UNTESTED CASE!!!
+                        t.bind("<Button-4>", PropagateButton4)
+                        t.bind("<Button-5>", PropagateButton5)
+                        t.bind("<MouseWheel>", PropagateMouseWheel)
+                    
+                    #@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+                    #@nl
+            
             theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
             t.leo_window_id = theId # Never changes.
             
