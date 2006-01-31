@@ -5490,7 +5490,7 @@ class minibufferFind:
     
         if state == 0:
             self.w = event and event.widget
-            self.setupArgs(forward=True,regexp=False,word=False)
+            self.setupArgs(forward=None,regexp=None,word=None)
             k.setLabelBlue('Clone Find All: ',protect=True)
             k.getArg(event,tag,1,self.cloneFindAll)
         else:
@@ -5733,8 +5733,8 @@ class findTab (leoFind.leoFind):
         if g.app.new_keys:
             for t in (self.find_ctrl, self.change_ctrl):
                 t.bind('<Key>',k.masterKeyHandler)
-                t.bind('<Button-1>',k.masterClickHandler)
-                t.bind('<Button-3>',k.masterClick3Handler)
+                t.bind('<Button>',k.masterClickHandler)
+                # t.bind('<Button-3>',k.masterClick3Handler)
         else:
             for w in (self.find_ctrl, self.change_ctrl):
                 k.copyBindingsToWidget(['text','mini','all'],w)
@@ -5922,6 +5922,7 @@ class findTab (leoFind.leoFind):
                 box.bindHotKey(ftxt)
                 box.bindHotKey(ctxt)
                 if var is None: box.button.configure(state="disabled")
+        #@nonl
         #@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
         #@nl
         
@@ -6228,6 +6229,7 @@ class findTab (leoFind.leoFind):
             if self.hotKey:
                 for key in (self.hotKey.lower(),self.hotKey.upper()):
                     widget.bind("<Alt-%s>" % key,self.buttonCallback)
+        #@nonl
         #@-node:ekr.20051020120306.4:bindHotKey
         #@+node:ekr.20051020120306.5:buttonCallback
         # The hot key has been hit.  Call the button's command.
