@@ -259,6 +259,10 @@ class keyHandlerClass:
     #@nl
 
     #@    @+others
+    #@+node:ekr.20060131101205: docs
+    #@-node:ekr.20060131101205: docs
+    #@+node:ekr.20060131101205.1: constants and dicts
+    #@-node:ekr.20060131101205.1: constants and dicts
     #@+node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20050920085536.2: ctor (keyHandler)
     def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
@@ -441,10 +445,6 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
-    #@+node:ekr.20060131101205: docs
-    #@-node:ekr.20060131101205: docs
-    #@+node:ekr.20060131101205.1: constants and dicts
-    #@-node:ekr.20060131101205.1: constants and dicts
     #@+node:ekr.20051006125633:Binding (keyHandler)
     #@+node:ekr.20050920085536.16:bindKey & helpers
     def bindKey (self,pane,shortcut,callback,commandName):
@@ -463,7 +463,7 @@ class keyHandlerClass:
             # g.trace('Ignorning mode binding',shortcut,commandName)
             return
         bunchList = k.bindingsDict.get(shortcut,[])
-        k.computeKeysym_numDicts(shortcut)
+        ### k.computeKeysym_numDicts(shortcut)
         #@    << give warning and return if there is a serious redefinition >>
         #@+node:ekr.20060114115648:<< give warning and return if there is a serious redefinition >>
         for bunch in bunchList:
@@ -655,34 +655,6 @@ class keyHandlerClass:
                     g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
-    #@+node:ekr.20060119063223.1:computeKeysym_numDicts
-    def computeKeysym_numDicts (self,shortcut):
-        
-        k = self
-        
-        if shortcut == '<Key>': return
-        
-        n = k.keysym_numberInverseDict.get(shortcut)
-        if n is not None:
-            # print 'keysym_num for %s = %d' % (shortcut,n)
-            return
-            
-        def callback (event,shortcut=shortcut):
-            n = event.keysym_num
-            # Trace causes problems.
-            print '%5d = %s' % (n,shortcut)
-            k.keysym_numberDict [n] = shortcut
-            k.keysym_numberInverseDict [shortcut] = n
-            
-        if 0:  # This causes all sorts of problems.
-            t = Tk.Text(k.c.frame.outerFrame)
-            t = k.c.frame.body.bodyCtrl
-            t.bind(shortcut,callback)
-            t.event_generate(shortcut)
-            # t.update()
-            # t.unbind(shortcut)
-    #@nonl
-    #@-node:ekr.20060119063223.1:computeKeysym_numDicts
     #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
     def copyBindingsToWidget (self,paneOrPanes,w):
         
