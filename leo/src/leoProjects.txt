@@ -3072,6 +3072,8 @@ def doCommand (self,command,label,event=None):
 #@nonl
 #@-node:ekr.20031218072017.2817: doCommand
 #@-node:ekr.20060131112557:Fixed crasher when clicking the close box during a long command
+#@+node:ekr.20060131115606:cloneFindAll now honor present find settings
+#@-node:ekr.20060131115606:cloneFindAll now honor present find settings
 #@-node:ekr.20060131113046:Bugs
 #@+node:ekr.20060117201349.1:Made modes work
 #@+node:ekr.20050920085536.2: ctor (keyHandler)
@@ -3530,7 +3532,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         # g.trace('Ignorning mode binding',shortcut,commandName)
         return
     bunchList = k.bindingsDict.get(shortcut,[])
-    k.computeKeysym_numDicts(shortcut)
+    ### k.computeKeysym_numDicts(shortcut)
     << give warning and return if there is a serious redefinition >>
     << trace bindings if enabled in leoSettings.leo >>
     try:
@@ -3720,34 +3722,6 @@ def checkBindings (self):
                 g.trace('No shortcut for %s = %s' % (name,key))
 #@nonl
 #@-node:ekr.20051011103654:checkBindings
-#@+node:ekr.20060119063223.1:computeKeysym_numDicts
-def computeKeysym_numDicts (self,shortcut):
-    
-    k = self
-    
-    if shortcut == '<Key>': return
-    
-    n = k.keysym_numberInverseDict.get(shortcut)
-    if n is not None:
-        # print 'keysym_num for %s = %d' % (shortcut,n)
-        return
-        
-    def callback (event,shortcut=shortcut):
-        n = event.keysym_num
-        # Trace causes problems.
-        print '%5d = %s' % (n,shortcut)
-        k.keysym_numberDict [n] = shortcut
-        k.keysym_numberInverseDict [shortcut] = n
-        
-    if 0:  # This causes all sorts of problems.
-        t = Tk.Text(k.c.frame.outerFrame)
-        t = k.c.frame.body.bodyCtrl
-        t.bind(shortcut,callback)
-        t.event_generate(shortcut)
-        # t.update()
-        # t.unbind(shortcut)
-#@nonl
-#@-node:ekr.20060119063223.1:computeKeysym_numDicts
 #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
 def copyBindingsToWidget (self,paneOrPanes,w):
     
@@ -4464,7 +4438,7 @@ def bindKey (self,pane,shortcut,callback,commandName):
         # g.trace('Ignorning mode binding',shortcut,commandName)
         return
     bunchList = k.bindingsDict.get(shortcut,[])
-    k.computeKeysym_numDicts(shortcut)
+    ### k.computeKeysym_numDicts(shortcut)
     << give warning and return if there is a serious redefinition >>
     << trace bindings if enabled in leoSettings.leo >>
     try:
@@ -4654,34 +4628,6 @@ def checkBindings (self):
                 g.trace('No shortcut for %s = %s' % (name,key))
 #@nonl
 #@-node:ekr.20051011103654:checkBindings
-#@+node:ekr.20060119063223.1:computeKeysym_numDicts
-def computeKeysym_numDicts (self,shortcut):
-    
-    k = self
-    
-    if shortcut == '<Key>': return
-    
-    n = k.keysym_numberInverseDict.get(shortcut)
-    if n is not None:
-        # print 'keysym_num for %s = %d' % (shortcut,n)
-        return
-        
-    def callback (event,shortcut=shortcut):
-        n = event.keysym_num
-        # Trace causes problems.
-        print '%5d = %s' % (n,shortcut)
-        k.keysym_numberDict [n] = shortcut
-        k.keysym_numberInverseDict [shortcut] = n
-        
-    if 0:  # This causes all sorts of problems.
-        t = Tk.Text(k.c.frame.outerFrame)
-        t = k.c.frame.body.bodyCtrl
-        t.bind(shortcut,callback)
-        t.event_generate(shortcut)
-        # t.update()
-        # t.unbind(shortcut)
-#@nonl
-#@-node:ekr.20060119063223.1:computeKeysym_numDicts
 #@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
 def copyBindingsToWidget (self,paneOrPanes,w):
     
@@ -13005,7 +12951,7 @@ top.lift()
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
     
-    self.new_keys = False
+    self.new_keys = True
 
     # These ivars are the global vars of this program.
     self.afterHandler = None

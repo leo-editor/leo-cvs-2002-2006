@@ -82,7 +82,7 @@ TypeError: rst3PluginCallback() takes no arguments (1 given)
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
     
-    self.new_keys = False
+    self.new_keys = True
 
     # These ivars are the global vars of this program.
     self.afterHandler = None
@@ -1387,7 +1387,7 @@ def cloneFindAll (self,event):
 
     if state == 0:
         self.w = event and event.widget
-        self.setupArgs(forward=True,regexp=False,word=False)
+        self.setupArgs(forward=None,regexp=None,word=None)
         k.setLabelBlue('Clone Find All: ',protect=True)
         k.getArg(event,tag,1,self.cloneFindAll)
     else:
@@ -1627,8 +1627,8 @@ def createBindings (self):
     if g.app.new_keys:
         for t in (self.find_ctrl, self.change_ctrl):
             t.bind('<Key>',k.masterKeyHandler)
-            t.bind('<Button-1>',k.masterClickHandler)
-            t.bind('<Button-3>',k.masterClick3Handler)
+            t.bind('<Button>',k.masterClickHandler)
+            # t.bind('<Button-3>',k.masterClick3Handler)
     else:
         for w in (self.find_ctrl, self.change_ctrl):
             k.copyBindingsToWidget(['text','mini','all'],w)
@@ -1826,6 +1826,7 @@ for i in xrange(numberOfColumns):
         box.bindHotKey(ftxt)
         box.bindHotKey(ctxt)
         if var is None: box.button.configure(state="disabled")
+#@nonl
 #@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
 #@+node:ekr.20051020120306.18:<< Create two columns of buttons >>
 # Create the alignment panes.
@@ -2115,6 +2116,7 @@ def bindHotKey (self,widget):
     if self.hotKey:
         for key in (self.hotKey.lower(),self.hotKey.upper()):
             widget.bind("<Alt-%s>" % key,self.buttonCallback)
+#@nonl
 #@-node:ekr.20051020120306.4:bindHotKey
 #@+node:ekr.20051020120306.5:buttonCallback
 # The hot key has been hit.  Call the button's command.
@@ -5319,7 +5321,7 @@ def add_bindings( context, body ):
             
     event = Tk.Event()
     event.keysym = ''
-    
+
     def processAutoBoxHandler( event = event , context = context, body = body  ): 
         processAutoBox( event, context , body  )
         
@@ -5334,6 +5336,7 @@ def add_bindings( context, body ):
          
     def bind2( args ): context.bind( *args )
     map( bind2, bindings )
+#@nonl
 #@-node:ekr.20051025144611.36:add_bindings
 #@+node:ekr.20051025144611.37:configureAutoBox
 def configureAutoBox ( autobox ,ww):
@@ -12685,7 +12688,7 @@ re-written in many plugins.
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
     
-    self.new_keys = False
+    self.new_keys = True
 
     # These ivars are the global vars of this program.
     self.afterHandler = None

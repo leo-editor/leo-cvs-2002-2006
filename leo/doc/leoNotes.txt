@@ -5295,6 +5295,34 @@ def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
 #@nonl
 #@-node:ekr.20060131104908.1:makeSpecialBinding
 #@-node:ekr.20060131104908:makeSpecialBindings (also binds to 'Key')
+#@+node:ekr.20060119063223.1:computeKeysym_numDicts
+def computeKeysym_numDicts (self,shortcut):
+    
+    k = self
+    
+    if shortcut == '<Key>': return
+    
+    n = k.keysym_numberInverseDict.get(shortcut)
+    if n is not None:
+        # print 'keysym_num for %s = %d' % (shortcut,n)
+        return
+        
+    def callback (event,shortcut=shortcut):
+        n = event.keysym_num
+        # Trace causes problems.
+        print '%5d = %s' % (n,shortcut)
+        k.keysym_numberDict [n] = shortcut
+        k.keysym_numberInverseDict [shortcut] = n
+        
+    if 0:  # This causes all sorts of problems.
+        t = Tk.Text(k.c.frame.outerFrame)
+        t = k.c.frame.body.bodyCtrl
+        t.bind(shortcut,callback)
+        t.event_generate(shortcut)
+        # t.update()
+        # t.unbind(shortcut)
+#@nonl
+#@-node:ekr.20060119063223.1:computeKeysym_numDicts
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
