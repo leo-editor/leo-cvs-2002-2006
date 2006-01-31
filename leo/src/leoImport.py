@@ -165,8 +165,9 @@ class baseLeoImportCommands:
     #@-node:ekr.20051208100903.1:forceGnxOnPosition
     #@-node:ekr.20031218072017.1810:importDerivedFiles
     #@+node:ekr.20031218072017.3212:importFilesCommand
-    def importFilesCommand (self,event=None,files=None,treeType=None,
+    def importFilesCommand (self,files=None,treeType=None,
         perfectImport=True,testing=False,verbose=False):
+            # Not a command.  It must *not* have an event arg.
     
         c = self.c
         if c == None: return

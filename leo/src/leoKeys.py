@@ -80,6 +80,10 @@ import sys
 #     Values are dicts:  keys are strokes, values are 
 # g.Bunch(commandName,func,pane,stroke)
 # 
+# k.settingsNameDict:
+#     Keys are lowercase settings, values are 'real' Tk key specifiers.
+#     Important: this table has no inverse.
+# 
 # g.app.keysym_numberDict:
 #     Keys are keysym_num's.  Values are strokes.
 # 
@@ -117,28 +121,33 @@ class keyHandlerClass:
     #@nl
     #@    << define dict of special names >>
     #@+node:ekr.20031218072017.2101:<< define dict of special names >>
-    # These keys are simply made-up names.  The menu_bind values are known to Tk.
-    # Case is not significant in the keys.
+    # These keys settings that may be specied in leoSettings.leo.
+    # Keys are lowercase, so that case is not significant *for these items only* in leoSettings.leo.
     
     if g.app.new_keys: # After changeover: a single value (there is no bind key)
     
-        tkSpecialNamesDict = {
-            # "delete"  : "Delete",
-            "bksp"    : "BackSpace",
-            "esc"     : "Escape",
-            # Arrow keys...
-            "dnarrow" : "DnArrow",
-            "ltarrow" : "LtArrow",
-            "rtarrow" : "RtArrow",
-            "uparrow" : "UpArrow",
-            # Page up/down keys...
-            "pageup"  : "PageUp",
-            "pagedn"  : "PageDn",
+        settingsNameDict = {
+            'bksp'    : 'BackSpace',
+            'dnarrow' : 'Down',
+            'esc'     : 'Escape',
+            'ltarrow' : 'Left',
+            'rtarrow' : 'Right',
+            'uparrow' : 'Up',
         }
-    
+        
+        # Add lowercase version of special keys and F-keys.
+        for s in (
+            'BackSpace','Delete','Down','End','Escape',
+            'Home','Left','PageDn','PageUp','Return','Right','Tab','Up',
+        ):
+            settingsNameDict [s.lower()] = s
+        for i in xrange(12):
+            s = 'F%d' % (i+1)
+            settingsNameDict [s.lower()] = s
+        
     else: # Before changeover:  tuples of bind_last and menu_last
     
-        tkSpecialNamesDict = {
+        settingsNameDict = {
             "bksp"    : ("BackSpace","BkSp"),
             "esc"     : ("Escape","Esc"),
             # Arrow keys...
@@ -175,21 +184,15 @@ class keyHandlerClass:
     #@    << define dict of Tk bind names >>
     #@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
     # These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+    
+    # Important: only the inverse dict is actually used in the new key binding scheme.
+    
+    # Tk may return the *values* of this dict in event.keysym fields.
+    # Leo will warn if it gets a event whose keysym not in values of this table.
+    
     tkBindNamesDict = {
-    
-        'Right':    'RtArrow',
-        'Left':     'LtArrow',
-        'Up':       'UpArrow',
-        'Down':     'DnArrow',
-        'BackSpace': 'BackSpace',
-        'space' :   'space',
-        #' ' : 'space',
-        '\t': 'Tab',
-        '\n': 'Return',
-        #'\r': '\\r',
-        #'\x0b': 'bell',
-        # '\x0c': 'ctrl-c',
-    
+        # '\t': 'Tab',
+        # '\n': 'Return',
         "!" : "exclam",
         '"' : "quotedbl",
         "#" : "numbersign",
@@ -221,7 +224,25 @@ class keyHandlerClass:
         "{" : "braceleft",
         "|" : "bar",
         "}" : "braceright",
-        "~" : "asciitilde" }
+        "~" : "asciitilde",
+    }
+    
+    # No translation: these suppress a warning in k.strokeFromEvent.
+    for s in (
+        'BackSpace','Delete','Down','End','Escape',
+        'Home','Left','PageDn','PageUp','Return','Right','Tab','Up',
+    ):
+        tkBindNamesDict[s] = s
+    
+    # Add F-keys.
+    for i in xrange(12):
+        s = 'F%d' % (i+1)
+        tkBindNamesDict [s] = s
+        
+    # Create the inverse dict.
+    tkBindNamesInverseDict = {}
+    for key in tkBindNamesDict.keys():
+        tkBindNamesInverseDict [tkBindNamesDict.get(key)] = key
     #@nonl
     #@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
     #@nl
@@ -336,10 +357,10 @@ class keyHandlerClass:
         #@-node:ekr.20050923213858:<< define internal ivars >>
         #@nl
         
-        self.tkBindNamesInverseDict = {}
-        for key in self.tkBindNamesDict.keys():
-            val = self.tkBindNamesDict.get(key)
-            self.tkBindNamesInverseDict [val] = key
+        # self.tkBindNamesInverseDict = {}
+        # for key in self.tkBindNamesDict.keys():
+            # val = self.tkBindNamesDict.get(key)
+            # self.tkBindNamesInverseDict [val] = key
             
     #@nonl
     #@-node:ekr.20050920085536.2: ctor (keyHandler)
@@ -410,8 +431,6 @@ class keyHandlerClass:
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20060129052538.1:master event handlers (keyHandler)
-    #@+node:ekr.20060129194153:To do: how to handle keys like Return, Tab, etc.
-    #@-node:ekr.20060129194153:To do: how to handle keys like Return, Tab, etc.
     #@+node:ekr.20060127183752:masterKeyHandler
     def masterKeyHandler (self,event):
         
@@ -419,7 +438,9 @@ class keyHandlerClass:
         
         This is the handler for that binding.'''
         
-        k = self
+        if not g.app.new_keys: return
+        
+        k = self ; c = k.c ; trace = c.config.getBool('trace_masterKeyHandler')
         if not event:
             g.trace('oops: no event')
             return
@@ -429,9 +450,7 @@ class keyHandlerClass:
             return
     
         stroke = k.strokeFromEvent(event)
-        g.trace(repr(stroke))
-             
-        if not g.app.new_keys: return
+        if trace: g.trace(repr(stroke))
         
         if k.inState():
             d =  k.masterBindingsDict.get(state)
@@ -455,12 +474,11 @@ class keyHandlerClass:
                     if d:
                         b = d.get(stroke)
                         if b:
-                            g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                            if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
                             return k.masterCommand(event,b.func,b.stroke,b.commandName)
                                 
         # g.trace('no func')
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
-    #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event):
@@ -471,10 +489,13 @@ class keyHandlerClass:
         w = event and event.widget or '<no widget>'
         name = g.app.gui.widget_name(w)
         
-        g.trace(w)
+        if c.config.getBool('trace_masterClickHandler'):
+            g.trace(w)
         
         if name.startswith('head'):
-            c.frame.tree.onHeadlineClick(event)
+            return c.frame.tree.onHeadlineClick(event)
+        else:
+            return None
     #@nonl
     #@-node:ekr.20060129052538.2:masterClickHandler
     #@+node:ekr.20060130130942:masterClick3Handler
@@ -487,10 +508,13 @@ class keyHandlerClass:
         w = event.widget or '<no widget>'
         name = g.app.gui.widget_name(w)
         
-        g.trace(w)
+        if c.config.getBool('trace_masterClickHandler'):
+            g.trace(w)
         
         if name.startswith('head'):
-            c.frame.tree.onHeadlineRightClick(event)
+            return c.frame.tree.onHeadlineRightClick(event)
+        else:
+            return None
     #@nonl
     #@-node:ekr.20060130130942:masterClick3Handler
     #@+node:ekr.20060128090219:masterMenuHandler
@@ -1254,18 +1278,24 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
     #@+node:ekr.20060128081317:shortcutFromSetting, tkBindingFromSetting
-    
     # - canonicalizeShortcut will be simplified and moved into shortcutFromSetting.
     
     # - tkBindingFromSetting will go away.
     
-    def shortcutFromSetting (self,setting):
+    if g.app.new_keys:
         
-        return self.canonicalizeShortcut(setting)[1]
-        
-    def tkBindingFromSetting (self,setting):
+        def shortcutFromSetting (self,setting):
+            return self.canonicalizeShortcut(setting)
+            
+        def tkBindingFromSetting (self,setting):
+            return self.canonicalizeShortcut(setting)
     
-        return self.canonicalizeShortcut(setting)[0]
+    else:
+        def shortcutFromSetting (self,setting):
+            return self.canonicalizeShortcut(setting)[1]
+            
+        def tkBindingFromSetting (self,setting):
+            return self.canonicalizeShortcut(setting)[0]
     #@nonl
     #@+node:ekr.20031218072017.2098:canonicalizeShortcut
     #@+at 
@@ -1286,7 +1316,8 @@ class keyHandlerClass:
     def canonicalizeShortcut (self,shortcut):
         
         if shortcut == None or len(shortcut) == 0:
-            return None,None
+            if g.app.new_keys:  return None
+            else:               return None,None
         s = shortcut.strip()
         s2 = s.lower()
         cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
@@ -1327,7 +1358,9 @@ class keyHandlerClass:
                 if shift and last.islower():
                     last = last.upper()
             else:
-                d = self.tkSpecialNamesDict
+                # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+                # This is a *one-way* translation, done only here.
+                d = self.settingsNameDict
                 last = d.get(last.lower(),last)
             #@nonl
             #@-node:ekr.20060128103640.2:<< compute the last field >>
@@ -1350,7 +1383,7 @@ class keyHandlerClass:
             #@nonl
             #@-node:ekr.20060128103640.4:<< compute shortcut >>
             #@nl
-            return shortcut,shortcut
+            return shortcut
         else:
             #@        << set the last field, preserving case >>
             #@+middle:ekr.20060128103640:old
@@ -1399,7 +1432,7 @@ class keyHandlerClass:
                     if ch in d.keys():
                         bind_last = d[ch]
             elif len(last) > 0:
-                d = self.tkSpecialNamesDict
+                d = self.settingsNameDict
                 last2 = string.lower(last)
                 if last2 in d.keys():
                     if g.app.new_keys:
@@ -1551,7 +1584,7 @@ class keyHandlerClass:
                 # g.trace('%s -> %s' % (last,last2))
                 last=last2
             else:
-                d = k.tkSpecialNamesDict
+                d = k.settingsNameDict
                 if g.app.new_keys: # values are single strings.
                     last = d.get(last.lower(),last)
                 else: # Before changeover: values are tuples.

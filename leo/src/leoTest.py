@@ -1262,7 +1262,7 @@ class importExportTestCase(unittest.TestCase):
     
         commandName = v.headString()
         command = getattr(c,commandName) # Will fail if command does not exist.
-        command()
+        command(event=None)
     
         failedMethod = g.app.unitTestDict.get("fail")
         self.failIf(failedMethod,failedMethod)

@@ -1727,10 +1727,10 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     << define externally visible ivars >>
     << define internal ivars >>
     
-    self.tkBindNamesInverseDict = {}
-    for key in self.tkBindNamesDict.keys():
-        val = self.tkBindNamesDict.get(key)
-        self.tkBindNamesInverseDict [val] = key
+    # self.tkBindNamesInverseDict = {}
+    # for key in self.tkBindNamesDict.keys():
+        # val = self.tkBindNamesDict.get(key)
+        # self.tkBindNamesInverseDict [val] = key
         
 #@nonl
 #@+node:ekr.20051006092617:<< define Tk ivars >>
@@ -13062,7 +13062,7 @@ top.lift()
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
     
-    self.new_keys = False
+    self.new_keys = True
 
     # These ivars are the global vars of this program.
     self.afterHandler = None
@@ -13794,7 +13794,8 @@ Returns (bind_shortcut, menu_shortcut)
 def canonicalizeShortcut (self,shortcut):
     
     if shortcut == None or len(shortcut) == 0:
-        return None,None
+        if g.app.new_keys:  return None
+        else:               return None,None
     s = shortcut.strip()
     s2 = s.lower()
     cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
@@ -13810,7 +13811,7 @@ def canonicalizeShortcut (self,shortcut):
         << convert minus signs to plus signs >>
         << compute the last field >>
         << compute shortcut >>
-        return shortcut,shortcut
+        return shortcut
     else:
         << set the last field, preserving case >>
         << canonicalize the last field >>
@@ -13860,7 +13861,7 @@ if len(last) == 1:
         if ch in d.keys():
             bind_last = d[ch]
 elif len(last) > 0:
-    d = self.tkSpecialNamesDict
+    d = self.settingsNameDict
     last2 = string.lower(last)
     if last2 in d.keys():
         if g.app.new_keys:
@@ -13929,7 +13930,9 @@ if len(last) == 1:
     if shift and last.islower():
         last = last.upper()
 else:
-    d = self.tkSpecialNamesDict
+    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+    # This is a *one-way* translation, done only here.
+    d = self.settingsNameDict
     last = d.get(last.lower(),last)
 #@nonl
 #@-node:ekr.20060128103640.2:<< compute the last field >>
