@@ -1602,8 +1602,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # Returns True if the close happened.
     
     def OnCloseLeoEvent(self):
-    
-        g.app.closeLeoWindow(self)
+        
+        f = self ; c = f.c
+        
+        if c.inCommand:
+            g.trace('requesting window close')
+            c.requestCloseWindow = True
+        else:
+            g.app.closeLeoWindow(self)
     #@nonl
     #@-node:ekr.20031218072017.3972:frame.OnCloseLeoEvent
     #@+node:ekr.20031218072017.3973:frame.OnControlKeyUp/Down

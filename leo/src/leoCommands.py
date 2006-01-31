@@ -105,6 +105,10 @@ class baseCommands:
         self._rootPosition    = self.nullPosition()
         self._topPosition     = self.nullPosition()
         
+        # Interlocks to prevent premature closing of a window.
+        self.inCommand = False
+        self.requestCloseWindow = False
+        
         # For saving and restoring focus.
         self.afterUpdateWidgetStack = []
         
@@ -246,9 +250,15 @@ class baseCommands:
     
         if not g.doHook("command1",c=c,p=p,v=p,label=label):
             try:
+                c.inCommand = True
                 val = command(event)
                 if c and c.exists: # Be careful: the command could destroy c.
-                    c.keyHandler.funcReturn = val
+                    c.k.funcReturn = val
+                    if c.requestCloseWindow:
+                        g.trace('Closing window after command')
+                        c.requestCloseWindow = False
+                        g.app.closeLeoWindow(c.frame)
+                c.inCommand = False
             except:
                 if g.app.unitTesting:
                     raise

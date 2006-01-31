@@ -4408,7 +4408,8 @@ g.es(g.listToString(keys))</t>
 commands.sort()
 g.es(g.listToString(commands))
 </t>
-<t tx="ekr.20060125082644">c.k.simulateCommand('show-find-options')</t>
+<t tx="ekr.20060125082644">This is a test of something.
+c.k.simulateCommand('show-find-options')</t>
 <t tx="ekr.20060126161404">root = c.rootPosition()
 p.moveAfter(root)
 c.redraw()</t>

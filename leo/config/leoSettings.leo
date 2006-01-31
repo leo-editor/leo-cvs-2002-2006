@@ -46,19 +46,21 @@
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060126171438"><vh>@bool simple_bindings = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = True</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20051126062243.1" a="V"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 </v>
-<v t="ekr.20060113182439" a="E"><vh>Other options</vh>
+<v t="ekr.20060113182439"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -148,7 +150,7 @@
 <v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
-<v t="ekr.20060127050605" a="V"><vh>@int max_undo_stack_size = 50</vh></v>
+<v t="ekr.20060127050605"><vh>@int max_undo_stack_size = 50</vh></v>
 </v>
 <v t="ekr.20051123100536" annotate="7d71002e"><vh>Plugins settings</vh>
 <v t="ekr.20060111091324"><vh>fastgotonode plugin</vh>
@@ -351,12 +353,12 @@
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060122105527.22" a="E" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+<v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -379,7 +381,7 @@
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060122105527.22" a="E" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
+<v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
 </vnodes>
@@ -4305,5 +4307,7 @@ False: (legacy)     The Find tab shows text, options and buttons.</t>
 In most cases the less verbose output is clearer.</t>
 <t tx="ekr.20060126171438"></t>
 <t tx="ekr.20060127050605"></t>
+<t tx="ekr.20060131071612"></t>
+<t tx="ekr.20060131071947"></t>
 </tnodes>
 </leo_file>

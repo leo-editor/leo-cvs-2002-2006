@@ -297,40 +297,60 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
     def createPermanentBindings (self):
         
-        c = self.c ; canvas = self.canvas
+        c = self.c ; k = c.k ; canvas = self.canvas
         
-        canvas.bind('<Button-1>',self.onTreeClick)
-    
-        if self.expanded_click_area:
-            canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
+        if g.app.new_keys:
+            
+            def treeClickCallback(event,self=self):
+                self.c.k.masterClickHandler(event,func=self.onTreeClick)
+            
+            canvas.bind('<Button-1>',treeClickCallback)
+            
+            table = [
+                ('iconBox','<Button-1>', self.onIconBoxClick),
+                ('iconBox','<Double-1>', self.onIconBoxDoubleClick),
+                ('iconBox','<Button-3>', self.onIconBoxRightClick),
+                ('iconBox','<B1-Motion>', self.onDrag),
+                ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
+            ]
+            
+            where = g.choose(self.expanded_click_area,'clickBox','plusBox')
+            table.append( (where,'<Button-1>', self.onClickBoxClick),)
+            
+            for a,b,func in table:
+                def treeTagBindCallback (event,self=self,func=func):
+                    # It's ok to call masterClickHandler for all these kinds of events.
+                    self.c.k.masterClickHandler(event,func=func)
+                canvas.tag_bind(a,b,treeTagBindCallback)
         else:
-            canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
-    
-        canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
-    
-        canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
-        canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
-        canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
-        canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
         
-        # def headKeyCallback (event,self=self):
-            # return self.c.keyHandler.masterCommand(event,
-                # func=None,stroke='<Key>',commandName=None)
-    
-        if self.useBindtags: # Create a dummy widget to hold all bindings.
-            t = self.bindingWidget
-            t.bind("<Button-1>", self.onHeadlineClick, '+')
-            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
-            # There must be only one general key handler.
-            if 0:
-                # Warning: k.selfInsertCommand only handles body text at present.
-                t.bind('<Key>', headKeyCallback)
+            canvas.bind('<Button-1>',self.onTreeClick)
+        
+            if self.expanded_click_area:
+                canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
             else:
-                t.bind("<Key>", self.onHeadlineKey)
-                    
+                canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
+        
+            canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+        
+            canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
+            canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
+            canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
+            canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
     
-            if 0: # This does not appear necessary in 4.4.
-                t.bind("<Control-t>",self.onControlT)
+            if self.useBindtags: # Create a dummy widget to hold all bindings.
+                t = self.bindingWidget
+                t.bind("<Button-1>", self.onHeadlineClick, '+')
+                t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+                # There must be only one general key handler.
+                if 0:
+                    # Warning: k.selfInsertCommand only handles body text at present.
+                    t.bind('<Key>', headKeyCallback)
+                else:
+                    t.bind("<Key>", self.onHeadlineKey)
+    
+                if 0: # This does not appear necessary in 4.4.
+                    t.bind("<Control-t>",self.onControlT)
     #@nonl
     #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
     #@+node:ekr.20051024102724:tkTtree.setBindings
@@ -341,7 +361,7 @@ class leoTkinterTree (leoFrame.leoTree):
         '''Copy all bindings to headlines.'''
         
         if g.app.new_keys:
-            pass
+            self.createPermanentBindings()
         else:
             if self.useBindtags:
                 # This _must_ be a Text widget attached to the canvas!

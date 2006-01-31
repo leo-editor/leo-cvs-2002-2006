@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8619" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8629" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
 	<global_window_position top="45" left="497" height="781" width="699"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="E" annotate="7d71002e"><vh>All unit tests</vh>
 <v t="ekr.20040712101754.2" annotate="7d71002e"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -970,7 +970,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins</vh>
+<v t="ekr.20050120095423" a="V" annotate="7d71002e"><vh>Unit tests for plugins</vh>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
@@ -1005,8 +1005,9 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests: simple</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
+<v t="ekr.20060131101825.1"><vh>@test print end of doctests</vh></v>
 <v t="ekr.20050106080304" annotate="7d71002e"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
@@ -1032,8 +1033,9 @@
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
+<v t="ekr.20060131102008"><vh>@test print end of test routines</vh></v>
 <v t="ekr.20041012101944" annotate="7d71002e"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" annotate="7d71002e"><vh>General Unit Tests...</vh>
+<v t="ekr.20040712101754" a="E" annotate="7d71002e"><vh>General Unit Tests...</vh>
 <v t="ekr.20041130092210" annotate="7d71002e"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
@@ -1153,8 +1155,8 @@
 <v t="ekr.20040712101754.7" annotate="7d71002e"><vh>Import/Export tests...</vh>
 <v t="ekr.20040712101754.8" annotate="7d71002e"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9" annotate="7d71002e"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" annotate="7d71002e"><vh>importTests</vh>
-<v t="ekr.20040712101754.11" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10" a="E" annotate="7d71002e"><vh>importTests</vh>
+<v t="ekr.20040712101754.11" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12" annotate="7d71002e"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1203,7 +1205,7 @@
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
-<v t="ekr.20050512083700" annotate="7d71002e"><vh>Marking tests...</vh>
+<v t="ekr.20050512083700" a="E" annotate="7d71002e"><vh>Marking tests...</vh>
 <v t="ekr.20040802065214" annotate="7d71002e"><vh>@test changing headline marks descendent @thin nodes dirty</vh>
 <v t="ekr.20040802065214.1"><vh>bogus</vh></v>
 </v>
@@ -1290,7 +1292,7 @@
 <v t="ekr.20040716142121.7"><vh>-result</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.187" annotate="7d71002e"><vh>Position tests...</vh>
+<v t="ekr.20040712101754.187" a="E" annotate="7d71002e"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.99" annotate="7d71002e"><vh>@test c iters</vh>
 <v t="ekr.20040712101754.100"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
 <v t="ekr.20040712101754.101"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
@@ -1344,13 +1346,13 @@
 </v>
 <v t="ekr.20040712101813"><vh>@xx test checkAllPythonCode</vh></v>
 </v>
-<v t="ekr.20050216060307" annotate="7d71002e"><vh>Tangle/Untangle tests...</vh>
+<v t="ekr.20050216060307" a="E" annotate="7d71002e"><vh>Tangle/Untangle tests...</vh>
 <v t="ekr.20050216060736" annotate="7d71002e"><vh>@test tangle command</vh>
 <v t="ekr.20050216060736.1"><vh>Tangle Root</vh>
 <v t="ekr.20050216060736.2"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050216062636" annotate="7d71002e"><vh>@test untangle command</vh>
+<v t="ekr.20050216062636" a="E" annotate="7d71002e"><vh>@test untangle command</vh>
 <v t="ekr.20050216062636.4" annotate="7d71002e"><vh>Tangle Root</vh>
 <v t="ekr.20050216062636.5"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
 </v>
@@ -1366,9 +1368,9 @@
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
-<v t="ekr.20050408084135" a="M" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
-<v t="ekr.20040712101754.37" annotate="7d71002e"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" annotate="7d71002e"><vh>editBodyTests</vh>
+<v t="ekr.20050408084135" a="EM" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37" a="E" annotate="7d71002e"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" a="E" annotate="7d71002e"><vh>editBodyTests</vh>
 <v t="ekr.20060127120604"><vh>tempNode</vh></v>
 <v t="ekr.20050518070540" annotate="7d71002e"><vh>extract test2</vh>
 <v t="ekr.20050518070540.1"><vh>before</vh></v>
@@ -1431,101 +1433,101 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050417102057" annotate="7d71002e"><vh>Reformat Paragraph tests</vh>
-<v t="ekr.20050417102114" annotate="7d71002e"><vh>@test noTrailingNewline</vh>
-<v t="ekr.20050417104821" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417124704" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417102057" a="E" annotate="7d71002e"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20050417102114" a="E" annotate="7d71002e"><vh>@test noTrailingNewline</vh>
+<v t="ekr.20050417104821" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417124704" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417102114.1" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417102114.2" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417111144" annotate="7d71002e"><vh>@test trailingNewline</vh>
-<v t="ekr.20050417111144.1" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417111240" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417111144" a="E" annotate="7d71002e"><vh>@test trailingNewline</vh>
+<v t="ekr.20050417111144.1" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417111240" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417111144.2" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417111144.3" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417113549" annotate="7d71002e"><vh>@test mixedLineLengths</vh>
-<v t="ekr.20050417113910" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417113921" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417113549" a="E" annotate="7d71002e"><vh>@test mixedLineLengths</vh>
+<v t="ekr.20050417113910" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417113921" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417113910.1" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417113910.2" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417114153" annotate="7d71002e"><vh>@test mixedLinesWithLeadingWS</vh>
-<v t="ekr.20050417114221" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417114221.1" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417114153" a="E" annotate="7d71002e"><vh>@test mixedLinesWithLeadingWS</vh>
+<v t="ekr.20050417114221" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417114221.1" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417114221.2" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417114221.3" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417114836" annotate="7d71002e"><vh>@test noChangeRequired</vh>
-<v t="ekr.20050417095124.16" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417114914" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417114836" a="E" annotate="7d71002e"><vh>@test noChangeRequired</vh>
+<v t="ekr.20050417095124.16" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417114914" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.17" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.18" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.11" annotate="7d71002e"><vh>@test honorLeadingWS</vh>
-<v t="ekr.20050417095124.19" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115111" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.11" a="E" annotate="7d71002e"><vh>@test honorLeadingWS</vh>
+<v t="ekr.20050417095124.19" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115111" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.20" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.21" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.12" annotate="7d71002e"><vh>@test honorLeadingWSVar1</vh>
-<v t="ekr.20050417095124.22" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115257" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.12" a="E" annotate="7d71002e"><vh>@test honorLeadingWSVar1</vh>
+<v t="ekr.20050417095124.22" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115257" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.23" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.24" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.13" annotate="7d71002e"><vh>@test simpleHangingIndent</vh>
-<v t="ekr.20050417095124.25" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115414" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.13" a="E" annotate="7d71002e"><vh>@test simpleHangingIndent</vh>
+<v t="ekr.20050417095124.25" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115414" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.26" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.27" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.14" annotate="7d71002e"><vh>@test testSimpleHangingIndentVar1</vh>
-<v t="ekr.20050417095124.28" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115559" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.14" a="E" annotate="7d71002e"><vh>@test testSimpleHangingIndentVar1</vh>
+<v t="ekr.20050417095124.28" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115559" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.29" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.30" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.15" annotate="7d71002e"><vh>@test simpleHangingIndentVar2</vh>
-<v t="ekr.20050417095124.31" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115709" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.15" a="E" annotate="7d71002e"><vh>@test simpleHangingIndentVar2</vh>
+<v t="ekr.20050417095124.31" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115709" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.32" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.33" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417120312.1" annotate="7d71002e"><vh>@test multiParagraphTest</vh>
-<v t="ekr.20050417095124.34" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417120312.2" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417120312.1" a="E" annotate="7d71002e"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417095124.34" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417120312.2" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.35" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.36" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417121448" annotate="7d71002e"><vh>@test multiParagraphWithListTest</vh>
-<v t="ekr.20050417095124.37" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417121448.1" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417121448" a="E" annotate="7d71002e"><vh>@test multiParagraphWithListTest</vh>
+<v t="ekr.20050417095124.37" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417121448.1" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.38" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.39" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417121942" annotate="7d71002e"><vh>@test leadingWSOnEmptyLinesTest</vh>
-<v t="ekr.20050417095124.43" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417121942.1" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417121942" a="E" annotate="7d71002e"><vh>@test leadingWSOnEmptyLinesTest</vh>
+<v t="ekr.20050417095124.43" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417121942.1" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.44" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.45" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417122215.1" annotate="7d71002e"><vh>@test directiveBreaksParagraphTest</vh>
-<v t="ekr.20050417095124.40" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417122215.2" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417122215.1" a="E" annotate="7d71002e"><vh>@test directiveBreaksParagraphTest</vh>
+<v t="ekr.20050417095124.40" a="E" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417122215.2" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.41" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.42" annotate="7d71002e"><vh>after</vh></v>
 </v>
@@ -1541,6 +1543,15 @@
 <v t="ekr.20050208111037"><vh>@test failure to convert unicode characters to ascii</vh></v>
 <v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
 </v>
+<v t="ekr.20060131101806"><vh>@test all commands have an event arg</vh></v>
+<v t="ekr.20060131101806.1"><vh>print end of general tests</vh></v>
+</v>
+<v t="ekr.20060130151716"><vh>New find tests</vh>
+<v t="ekr.20060130151716.1"><vh>@test togle find options commands</vh></v>
+<v t="ekr.20060130151716.2"><vh>@test set find mode commands</vh></v>
+<v t="ekr.20060130151716.3"><vh>@test minbuffer find commands</vh></v>
+<v t="ekr.20060130151716.4"><vh>@test show-find-options</vh></v>
+<v t="ekr.20060131102008.1"><vh>@test print of new find tests</vh></v>
 </v>
 <v t="ekr.20040712101754.102" annotate="7d71002e"><vh>Tests of @file nodes...</vh>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
@@ -1600,81 +1611,21 @@
 </v>
 </v>
 </v>
+<v t="ekr.20060131102008.2"><vh>@test print end of tests of @file nodes</vh></v>
 </v>
+<v t="ekr.20060131102817"><vh>@test print end of simple unit tests</vh></v>
 </v>
-<v t="ekr.20051107115231" annotate="7d71002e"><vh>Unit tests for Redraws</vh>
+<v t="ekr.20051107115231" annotate="7d71002e"><vh>Unit tests for typing</vh>
 <v t="ekr.20051122095426" annotate="7d71002e"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
 <v t="ekr.20051107115231.1" annotate="7d71002e"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051216171321" annotate="7d71002e"><vh>Test headline abc</vh></v>
-<v t="ekr.20051107115231.3" annotate="7d71002e"><vh>Reference</vh>
-<v t="ekr.20051107115231.4"><vh>manufactureKeyPressForCommandName</vh></v>
-<v t="ekr.20051107115231.5"><vh>simulateCommand</vh></v>
-<v t="ekr.20051108063458"><vh>app.gui.Tkinter.utils</vh>
-<v t="ekr.20051108063458.1"><vh>Clipboard (tkGui)</vh>
-<v t="ekr.20051108063458.2"><vh>replaceClipboardWith</vh></v>
-<v t="ekr.20051108063458.3"><vh>getTextFromClipboard</vh></v>
-</v>
-<v t="ekr.20051108063458.4"><vh>Dialog</vh>
-<v t="ekr.20051108063458.5"><vh>get_window_info</vh></v>
-<v t="ekr.20051108063458.6"><vh>center_dialog</vh></v>
-<v t="ekr.20051108063458.7"><vh>create_labeled_frame</vh></v>
-</v>
-<v t="ekr.20051108063458.8"><vh>Focus</vh>
-<v t="ekr.20051108063458.9"><vh>get_focus</vh></v>
-<v t="ekr.20051108063458.10"><vh>set_focus (app.gui)</vh></v>
-<v t="ekr.20051108063458.11"><vh>widget_wants_focus (tk.gui)</vh></v>
-</v>
-<v t="ekr.20051108063458.12"><vh>Font</vh>
-<v t="ekr.20051108063458.13"><vh>tkGui.getFontFromParams</vh></v>
-</v>
-<v t="ekr.20051108063458.14"><vh>Icons</vh>
-<v t="ekr.20051108063458.15"><vh>attachLeoIcon &amp; createLeoIcon</vh>
-<v t="ekr.20051108063458.16"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
-<v t="ekr.20051108063458.17"><vh>createLeoIcon</vh></v>
-</v>
-</v>
-<v t="ekr.20051108063458.18"><vh>Idle Time</vh>
-<v t="ekr.20051108063458.19"><vh>tkinterGui.setIdleTimeHook</vh></v>
-<v t="ekr.20051108063458.20"><vh>setIdleTimeHookAfterDelay</vh></v>
-</v>
-<v t="ekr.20051108063458.21"><vh>Indices (Tk)</vh>
-<v t="ekr.20051108063458.22"><vh>firstIndex</vh></v>
-<v t="ekr.20051108063458.23"><vh>lastIndex</vh></v>
-<v t="ekr.20051108063458.24"><vh>moveIndexBackward</vh></v>
-<v t="ekr.20051108063458.25"><vh>moveIndexForward &amp; moveIndexToNextLine</vh></v>
-<v t="ekr.20051108063458.26"><vh>compareIndices</vh></v>
-<v t="ekr.20051108063458.27"><vh>getindex</vh></v>
-</v>
-<v t="ekr.20051108063458.28"><vh>Insert Point</vh>
-<v t="ekr.20051108063458.29"><vh>getInsertPoint</vh></v>
-<v t="ekr.20051108063458.30"><vh>setInsertPoint</vh></v>
-</v>
-<v t="ekr.20051108063458.31"><vh>Selection</vh>
-<v t="ekr.20051108063458.32"><vh>getSelectionRange</vh></v>
-<v t="ekr.20051108063458.33"><vh>getTextSelection</vh></v>
-<v t="ekr.20051108063458.34"><vh>setSelectionRange</vh></v>
-<v t="ekr.20051108063458.35"><vh>setSelectionRangeWithLength</vh></v>
-<v t="ekr.20051108063458.36"><vh>setTextSelection</vh></v>
-</v>
-<v t="ekr.20051108063458.37"><vh>Text</vh>
-<v t="ekr.20051108063458.38"><vh>getAllText</vh></v>
-<v t="ekr.20051108063458.39"><vh>getCharAfterIndex</vh></v>
-<v t="ekr.20051108063458.40"><vh>getCharAtIndex</vh></v>
-<v t="ekr.20051108063458.41"><vh>getCharBeforeIndex</vh></v>
-<v t="ekr.20051108063458.42"><vh>getLineContainingIndex</vh></v>
-<v t="ekr.20051108063458.43"><vh>replaceSelectionRangeWithText (leoTkinterGui)</vh></v>
-</v>
-<v t="ekr.20051108063458.44"><vh>Visibility</vh>
-<v t="ekr.20051108063458.45"><vh>makeIndexVisible</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051107115231.7" annotate="7d71002e"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
 <v t="ekr.20051107115231.8" annotate="7d71002e"><vh>Commands tests</vh>
+<v t="ekr.20051107115231.7" annotate="7d71002e"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
 <v t="ekr.20051107115231.9" annotate="7d71002e"><vh>@test Select a node when file is first loaded</vh></v>
 <v t="ekr.20051107115231.10" annotate="7d71002e"><vh>@test Save command redraws the screen</vh></v>
 <v t="ekr.20051107115231.11" annotate="7d71002e"><vh>@test New command redraws the screen</vh></v>
 <v t="ekr.20051107115231.29" annotate="7d71002e"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
+<v t="ekr.20060131102609"><vh>@test print end of commands tests</vh></v>
 </v>
 <v t="ekr.20051107115231.13" annotate="7d71002e"><vh>Typing and undo tests</vh>
 <v t="ekr.20051107115231.14" annotate="7d71002e"><vh>@test return ends editing of headline</vh></v>
@@ -1696,6 +1647,7 @@
 <v t="ekr.20051120115046" annotate="7d71002e"><vh>@test undoing insert node restores previous node's body text</vh></v>
 <v t="ekr.20051125165933" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
 <v t="ekr.20051125170139" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
+<v t="ekr.20060131102450"><vh>print end of typing and undo tests</vh></v>
 </v>
 <v t="ekr.20051108141141" annotate="7d71002e"><vh>Not ready yet</vh>
 <v t="ekr.20051107115231.19"><vh>@@test typing and undo in headline - with selection</vh></v>
@@ -7795,7 +7747,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13688,31 +13640,6 @@ ab</t>
 <t tx="ekr.20051107115231"></t>
 <t tx="ekr.20051107115231.1">g.es_print('Test of @command')
 g.app.unitTestDict ['unit-test-command1'] = True</t>
-<t tx="ekr.20051107115231.3"></t>
-<t tx="ekr.20051107115231.4">def manufactureKeyPressForCommandName (self,w,commandName):
-    
-    '''Implement a command by passing a keypress to Tkinter.'''
-
-    k = self
-    
-    shortcut = k.getShortcutForCommandName(commandName)
-    
-    if shortcut and w:
-        w.event_generate(shortcut)
-    else:
-         g.trace('no shortcut for %s' % (commandName),color='red')</t>
-<t tx="ekr.20051107115231.5">def simulateCommand (self,commandName):
-    
-    k = self ; c = k.c
-    
-    func = c.commandsDict.get(commandName)
-    
-    if func:
-        event = stroke = None
-        k.masterCommand(event,func,stroke)
-    else:
-        g.trace('no command for %s' % (commandName),color='red')
-        raise AttributeError</t>
 <t tx="ekr.20051107115231.7">g.app.unitTestDict = {}
 c.executeMinibufferCommand('unit-test-command1')
 assert g.app.unitTestDict.get('unit-test-command1') == True</t>
@@ -14069,362 +13996,6 @@ finally:
     if 1:
         pass</t>
 <t tx="ekr.20051107115231.34"></t>
-<t tx="ekr.20051108063458"></t>
-<t tx="ekr.20051108063458.1">@
-
-The following are called only when g.app.gui.win32clipboard is not None, and
-presently that never happens.</t>
-<t tx="ekr.20051108063458.2">def replaceClipboardWith (self,s):
-
-    # g.app.gui.win32clipboard is always None.
-    wcb = g.app.gui.win32clipboard
-
-    if wcb:
-        try:
-            wcb.OpenClipboard(0)
-            wcb.EmptyClipboard()
-            wcb.SetClipboardText(s)
-            wcb.CloseClipboard()
-        except:
-            g.es_exception()
-    else:
-        self.root.clipboard_clear()
-        self.root.clipboard_append(s)</t>
-<t tx="ekr.20051108063458.3">def getTextFromClipboard (self):
-    
-    # g.app.gui.win32clipboard is always None.
-    wcb = g.app.gui.win32clipboard
-    
-    if wcb:
-        try:
-            wcb.OpenClipboard(0)
-            data = wcb.GetClipboardData()
-            wcb.CloseClipboard()
-            # g.trace(data)
-            return data
-        except TypeError:
-            # g.trace(None)
-            return None
-        except:
-            g.es_exception()
-            return None
-    else:
-        try:
-            s = self.root.selection_get(selection="CLIPBOARD")
-            return s
-        except:
-            return None</t>
-<t tx="ekr.20051108063458.4"></t>
-<t tx="ekr.20051108063458.5"># WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def get_window_info (self,top):
-    
-    top.update_idletasks() # Required to get proper info.
-
-    # Get the information about top and the screen.
-    geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
-    dim,x,y = string.split(geom,'+')
-    w,h = string.split(dim,'x')
-    w,h,x,y = int(w),int(h),int(x),int(y)
-    
-    return w,h,x,y</t>
-<t tx="ekr.20051108063458.6">def center_dialog(self,top):
-
-    """Center the dialog on the screen.
-
-    WARNING: Call this routine _after_ creating a dialog.
-    (This routine inhibits the grid and pack geometry managers.)"""
-
-    sw = top.winfo_screenwidth()
-    sh = top.winfo_screenheight()
-    w,h,x,y = self.get_window_info(top)
-    
-    # Set the new window coordinates, leaving w and h unchanged.
-    x = (sw - w)/2
-    y = (sh - h)/2
-    top.geometry("%dx%d%+d%+d" % (w,h,x,y))
-    
-    return w,h,x,y</t>
-<t tx="ekr.20051108063458.7"># Returns frames w and f.
-# Typically the caller would pack w into other frames, and pack content into f.
-
-def create_labeled_frame (self,parent,
-    caption=None,relief="groove",bd=2,padx=0,pady=0):
-
-    # Create w, the master frame.
-    w = Tk.Frame(parent)
-    w.grid(sticky="news")
-    
-    # Configure w as a grid with 5 rows and columns.
-    # The middle of this grid will contain f, the expandable content area.
-    w.columnconfigure(1,minsize=bd)
-    w.columnconfigure(2,minsize=padx)
-    w.columnconfigure(3,weight=1)
-    w.columnconfigure(4,minsize=padx)
-    w.columnconfigure(5,minsize=bd)
-    
-    w.rowconfigure(1,minsize=bd)
-    w.rowconfigure(2,minsize=pady)
-    w.rowconfigure(3,weight=1)
-    w.rowconfigure(4,minsize=pady)
-    w.rowconfigure(5,minsize=bd)
-
-    # Create the border spanning all rows and columns.
-    border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
-    border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
-    
-    # Create the content frame, f, in the center of the grid.
-    f = Tk.Frame(w,bd=bd)
-    f.grid(row=3,column=3,sticky="news")
-    
-    # Add the caption.
-    if caption and len(caption) &gt; 0:
-        caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
-        caption.tkraise(w)
-        caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
-
-    return w,f</t>
-<t tx="ekr.20051108063458.8"></t>
-<t tx="ekr.20051108063458.9">def get_focus(self,frame):
-    
-    """Returns the widget that has focus, or body if None."""
-
-    return frame.top.focus_displayof()</t>
-<t tx="ekr.20051108063458.10">def set_focus(self,c,w):
-    
-    __pychecker__ = '--no-argsused' # c not used at present.
-    
-    """Put the focus on the widget."""
-    
-    if w:
-        if 0:
-            name = hasattr(w,'_name') and w._name or '&lt;no name&gt;'
-            g.trace('GUI',name,g.callers(8))
-        w.focus_set()</t>
-<t tx="ekr.20051108063458.11">def widget_wants_focus(self,c,widget):
-
-    """Indicate that a widget want to get focus."""
-    
-    if c:
-        c.frame.widgetWantsFocus(widget,True)
-        
-widgetWantsFocus = widget_wants_focus</t>
-<t tx="ekr.20051108063458.12"></t>
-<t tx="ekr.20051108063458.13">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
-    
-    __pychecker__ = '--no-argsused' # defaultSize not used.
-
-    family_name = family
-    
-    try:
-        font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-        # if g.app.trace: g.trace(font)
-        return font
-    except:
-        g.es("exception setting font from ",family_name)
-        g.es("family,size,slant,weight:",family,size,slant,weight)
-        # g.es_exception() # This just confuses people.
-        return g.app.config.defaultFont</t>
-<t tx="ekr.20051108063458.14"></t>
-<t tx="ekr.20051108063458.15">def attachLeoIcon (self,w):
-    
-    """Try to attach a Leo icon to the Leo Window.
-    
-    Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
-    Otherwise, try to use the Python Imaging Library and the tkIcon package."""
-
-    if self.bitmap != None:
-        # We don't need PIL or tkicon: this is tk 8.3.4 or greater.
-        try:
-            w.wm_iconbitmap(self.bitmap)
-        except:
-            self.bitmap = None
-    
-    if self.bitmap == None:
-        try:
-            &lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;
-        except:
-            # import traceback ; traceback.print_exc()
-            self.leoIcon = None</t>
-<t tx="ekr.20051108063458.16">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
-
-Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
-Download tkIcon from http://www.effbot.org/downloads/#tkIcon
-
-Many thanks to Jonathan M. Gilligan for suggesting this code.
-@c
-
-import Image
-import tkIcon
-
-# Wait until the window has been drawn once before attaching the icon in OnVisiblity.
-def visibilityCallback(event,self=self,w=w):
-    __pychecker__ = '--no-argsused' # event not used.
-    try: self.leoIcon.attach(w.winfo_id())
-    except: pass
-w.bind("&lt;Visibility&gt;",visibilityCallback)
-if not self.leoIcon:
-    # Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
-    icon_file_name = g.os_path_join(g.app.loadDir,'..','Icons','LeoWin.gif')
-    icon_file_name = g.os_path_normpath(icon_file_name)
-    icon_image = Image.open(icon_file_name)
-    if 1: # Doesn't resize.
-        self.leoIcon = self.createLeoIcon(icon_image)
-    else: # Assumes 64x64
-        self.leoIcon = tkIcon.Icon(icon_image)</t>
-<t tx="ekr.20051108063458.17"># This code is adapted from tkIcon.__init__
-# Unlike the tkIcon code, this code does _not_ resize the icon file.
-
-def createLeoIcon (self,icon):
-    
-    try:
-        import Image,_tkicon
-        
-        i = icon ; m = None
-        # create transparency mask
-        if i.mode == "P":
-            try:
-                t = i.info["transparency"]
-                m = i.point(lambda i, t=t: i==t, "1")
-            except KeyError: pass
-        elif i.mode == "RGBA":
-            # get transparency layer
-            m = i.split()[3].point(lambda i: i == 0, "1")
-        if not m:
-            m = Image.new("1", i.size, 0) # opaque
-        # clear unused parts of the original image
-        i = i.convert("RGB")
-        i.paste((0, 0, 0), (0, 0), m)
-        # create icon
-        m = m.tostring("raw", ("1", 0, 1))
-        c = i.tostring("raw", ("BGRX", 0, -1))
-        return _tkicon.new(i.size, c, m)
-    except:
-        return None</t>
-<t tx="ekr.20051108063458.18"></t>
-<t tx="ekr.20051108063458.19">def setIdleTimeHook (self,idleTimeHookHandler):
-
-    if self.root:
-        self.root.after_idle(idleTimeHookHandler)</t>
-<t tx="ekr.20051108063458.20">def setIdleTimeHookAfterDelay (self,idleTimeHookHandler):
-    
-    if self.root:
-        g.app.root.after(g.app.idleTimeDelay,idleTimeHookHandler)</t>
-<t tx="ekr.20051108063458.21"></t>
-<t tx="ekr.20051108063458.22">def firstIndex (self):
-
-    return "1.0"</t>
-<t tx="ekr.20051108063458.23">def lastIndex (self):
-
-    return "end"</t>
-<t tx="ekr.20051108063458.24">def moveIndexBackward(self,index,n):
-
-    return "%s-%dc" % (index,n)
-</t>
-<t tx="ekr.20051108063458.25">def moveIndexForward(self,t,index,n):
-
-    newpos = t.index("%s+%dc" % (index,n))
-    
-    return g.choose(t.compare(newpos,"==","end"),None,newpos)
-    
-def moveIndexToNextLine(self,t,index):
-
-    newpos = t.index("%s linestart + 1lines" % (index))
-    
-    return g.choose(t.compare(newpos,"==","end"),None,newpos)</t>
-<t tx="ekr.20051108063458.26">def compareIndices (self,t,n1,rel,n2):
-    return t.compare(n1,rel,n2)</t>
-<t tx="ekr.20051108063458.27">def getindex(self,text,index):
-    
-    """Convert string index of the form line.col into a tuple of two ints."""
-    
-    return tuple(map(int,string.split(text.index(index), ".")))</t>
-<t tx="ekr.20051108063458.28"></t>
-<t tx="ekr.20051108063458.29">def getInsertPoint(self,t):
-
-    return t.index("insert")</t>
-<t tx="ekr.20051108063458.30">def setInsertPoint (self,t,pos):
-
-    return t.mark_set("insert",pos)</t>
-<t tx="ekr.20051108063458.31"></t>
-<t tx="ekr.20051108063458.32">def getSelectionRange (self,t):
-
-    return t.tag_ranges("sel")</t>
-<t tx="ekr.20051108063458.33">def getTextSelection (self,t):
-    
-    """Return a tuple representing the selected range of t, a Tk.Text widget.
-    
-    Return a tuple giving the insertion point if no range of text is selected."""
-
-    # To get the current selection
-    sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
-    if len(sel) == 2:
-        return sel
-    else:
-        # 7/1/03: Return the insertion point if there is no selected text.
-        insert = t.index("insert")
-        return insert,insert</t>
-<t tx="ekr.20051108063458.34">def setSelectionRange(self,t,n1,n2):
-
-    return g.app.gui.setTextSelection(t,n1,n2)</t>
-<t tx="ekr.20051108063458.35">def setSelectionRangeWithLength(self,t,start,length):
-    
-    return g.app.gui.setTextSelection(t,start,"%s+%dc" % (start,length))</t>
-<t tx="ekr.20051108063458.36">def setTextSelection (self,t,start,end):
-    
-    """tk gui: set the selection range in Tk.Text widget t."""
-
-    if not start or not end:
-        return
-
-    if t.compare(start, "&gt;", end):
-        start,end = end,start
-        
-    t.tag_remove("sel","1.0",start)
-    t.tag_add("sel",start,end)
-    t.tag_remove("sel",end,"end")
-    t.mark_set("insert",end)</t>
-<t tx="ekr.20051108063458.37"></t>
-<t tx="ekr.20051108063458.38">def getAllText (self,t):
-    
-    """Return all the text of Tk.Text t converted to unicode."""
-    
-    s = t.get("1.0","end")
-    if s is None:
-        return u""
-    else:
-        return g.toUnicode(s,g.app.tkEncoding)</t>
-<t tx="ekr.20051108063458.39">def getCharAfterIndex (self,t,index):
-    
-    if t.compare(index + "+1c","&gt;=","end"):
-        return None
-    else:
-        ch = t.get(index + "+1c")
-        return g.toUnicode(ch,g.app.tkEncoding)</t>
-<t tx="ekr.20051108063458.40">def getCharAtIndex (self,t,index):
-    ch = t.get(index)
-    return g.toUnicode(ch,g.app.tkEncoding)</t>
-<t tx="ekr.20051108063458.41">def getCharBeforeIndex (self,t,index):
-    
-    index = t.index(index)
-    if index == "1.0":
-        return None
-    else:
-        ch = t.get(index + "-1c")
-        return g.toUnicode(ch,g.app.tkEncoding)</t>
-<t tx="ekr.20051108063458.42">def getLineContainingIndex (self,t,index):
-
-    line = t.get(index + " linestart", index + " lineend")
-    return g.toUnicode(line,g.app.tkEncoding)</t>
-<t tx="ekr.20051108063458.43">def replaceSelectionRangeWithText (self,t,start,end,text):
-
-    t.delete(start,end)
-    t.insert(start,text)</t>
-<t tx="ekr.20051108063458.44"></t>
-<t tx="ekr.20051108063458.45">def makeIndexVisible(self,t,index):
-
-    return t.see(index)</t>
 <t tx="ekr.20051108140810"></t>
 <t tx="ekr.20051108141141"></t>
 <t tx="ekr.20051109091152">import leoTest ; u = leoTest.testUtils(c)
@@ -14572,5 +14143,67 @@ assert c.isRootPosition(None) is False
 assert c.isRootPosition(p) is False
 assert g.app.positions == n</t>
 <t tx="ekr.20060127120604"></t>
+<t tx="ekr.20060130151716"># Reference c.k.simulateCommand('command')</t>
+<t tx="ekr.20060130151716.1">table = (
+    # 'toggle-find-clone-find-all-option',
+    'toggle-find-ignore-case-option',
+    'toggle-find-in-body-option',
+    'toggle-find-in-headline-option',
+    'toggle-find-mark-changes-option',
+    'toggle-find-mark-finds-option',
+    'toggle-find-regex-option',
+    'toggle-find-reverse-option',
+    'toggle-find-word-option',
+    'toggle-find-wrap-around-option',
+)
+
+for command in table:
+    c.k.simulateCommand(command)
+    c.k.simulateCommand(command)
+    </t>
+<t tx="ekr.20060130151716.2">table = (
+    'set-find-everywhere',
+    'set-find-node-only',
+    'set-find-suboutline-only',
+)
+
+# show-find-tab-options     = Ctrl-o
+# show-find-options         = o
+
+for command in table:
+    c.k.simulateCommand(command)
+</t>
+<t tx="ekr.20060130151716.3">table = (
+    're-search-forward',
+    're-search-backward',
+    'search-forward',
+    'search-backward',
+    'word-search-forward',
+    'word-search-backward',
+)
+
+for command in table:
+    c.k.simulateCommand(command)</t>
+<t tx="ekr.20060130151716.4">c.k.simulateCommand('show-find-options')</t>
+<t tx="ekr.20060131101806">import inspect
+
+d = c.commandsDict ; keys = d.keys() ; keys.sort()
+
+for key in keys:
+    f = d.get(key) ; name = f and f.__name__
+    args, varargs, varkw, defaults = data = inspect.getargspec(f)
+    # print '%-28s' % (name),data
+    arg0 = len(args) &gt; 0 and args[0]
+    arg1 = len(args) &gt; 1 and args[1]
+    assert arg0 == 'self' and arg1 == 'event' or arg0 == 'event',\
+       'no event arg for %s, args: %s' % (name,data)</t>
+<t tx="ekr.20060131101806.1">print ; print 'End of general tests'</t>
+<t tx="ekr.20060131101825.1">print ; print 'End of doctests'</t>
+<t tx="ekr.20060131102008">print ; print 'End of test routines'</t>
+<t tx="ekr.20060131102008.1">print ; print 'End of new find tests'</t>
+<t tx="ekr.20060131102008.2">print ; print 'End of tests of @file nodes'</t>
+<t tx="ekr.20060131102450">print ; print 'End of typing and undo tests'</t>
+<t tx="ekr.20060131102609">print ; print 'End of commands tests'</t>
+<t tx="ekr.20060131102817">print ; print 'End of simple unit tests'</t>
 </tnodes>
 </leo_file>

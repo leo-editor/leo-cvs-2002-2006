@@ -5194,6 +5194,107 @@ def prettyPrintKey (self,key):
     return k.shortcutFromSetting(key) or ''
 #@nonl
 #@-node:ekr.20051122104219:prettyPrintKey
+#@+node:ekr.20060127185121:matchStroke
+def matchStroke (self,stroke):
+    
+    '''Look up stroke in k.bindingsDict and return the best match.
+    
+    Priorities of matches:
+        
+    - Minibuffer.
+    - Any mode.
+    - Specialized-widget.  E.g., Return in the Find tab.
+    - General pane:  'text', 'tree', etc.
+    - 'all' binding.
+    '''
+    
+    k = self
+    
+    # Compute priorityList based on the present state (mode,etc)
+    
+    # In the new binding scheme, entries in k.bindingsDict are dicts.
+    # Keys are priority-keys, values are functions.
+    d = k.bindingsDict.get(stroke,{})
+    for z in priorityList:
+        f = d.get(z)
+        if f: return f
+        
+    # Nothing found.
+    return k.unboundKeyHandler
+#@nonl
+#@-node:ekr.20060127185121:matchStroke
+#@+node:ekr.20060131104908:makeSpecialBindings (also binds to 'Key')
+def makeSpecialBindings (self):
+    
+    '''Make the bindings and set ivars for sepcial keystrokes.'''
+    
+    k = self ; c = k.c
+    
+    # These defaults may be overridden.
+    for pane,stroke,ivar,commandName,func in (
+        # # # ('all', 'Alt-x',  'fullCommandKey',  'full-command',  k.fullCommand),
+        # # # ('all', 'Ctrl-g', 'abortAllModesKey','keyboard-quit', k.keyboardQuit),
+        # # # ('all', 'Ctrl-u', 'universalArgKey', 'universal-argument', k.universalArgument),
+        #('all', 'Ctrl-c', 'quickCommandKey', 'quick-command', k.quickCommand),
+        # These bindings for inside the minibuffer are strange beasts.
+        # They are sent directly to k.fullcommand with a special callback.
+        # ('mini', 'Alt-x',  None,'full-command',  k.fullCommand),
+        # ('mini', 'Ctrl-g', None,'keyboard-quit', k.keyboardQuit),
+        # ('mini', 'Ctrl-c', 'mb_copyKey', 'copy-text', f.copyText),
+        # ('mini', 'Ctrl-v', 'mb_pasteKey','paste-text',f.pasteText),
+        # ('mini', 'Ctrl-x', 'mb_cutKey',  'cut-text',  f.cutText),
+    ):
+        # Get the user shortcut *before* creating the callbacks.
+        junk, bunchList = c.config.getShortcut(commandName)
+        # g.trace(commandName,bunchList)
+        if bunchList:
+            for bunch in bunchList:
+                accel = (bunch and bunch.val)
+                shortcut = k.tkBindingFromSetting(accel)
+                self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
+        else:
+            accel = stroke
+            shortcut = k.tkBindingFromSetting(accel)
+            self.makeSpecialBinding(commandName,func,ivar,pane,shortcut,stroke)
+
+    # Add a binding for <Key> events, so all key events go through masterCommand.
+    if not g.app.new_keys:
+        def allKeysCallback (event):
+            return k.masterCommand(event,func=None,stroke='<Key>')
+    
+        k.bindKey('all','<Key>',allKeysCallback,'master-command')
+#@nonl
+#@+node:ekr.20060131104908.1:makeSpecialBinding
+def makeSpecialBinding (self,commandName,func,ivar,pane,shortcut,stroke):
+    
+    k = self
+    
+    # g.trace(commandName,shortcut,stroke)
+    
+    if pane == 'mini' and func != k.keyboardQuit:
+        if 0:
+            # Call a strange callback that bypasses k.masterCommand.
+            def minibufferKeyCallback(event,func=func,shortcut=shortcut):
+                k.fullCommand(event,specialStroke=shortcut,specialFunc=func)
+    
+            k.bindKey(pane,shortcut,minibufferKeyCallback,commandName)
+    elif g.app.new_keys:
+        k.bindKey(pane,shortcut,func,commandName)
+    else:
+        # Create two-levels of callbacks.
+        def specialCallback (event,func=func):
+            return func(event)
+
+        def keyCallback (event,func=specialCallback,stroke=shortcut):
+            return k.masterCommand(event,func,stroke)
+
+        k.bindKey(pane,shortcut,keyCallback,commandName)
+    
+    if ivar:
+        setattr(k,ivar,shortcut)
+#@nonl
+#@-node:ekr.20060131104908.1:makeSpecialBinding
+#@-node:ekr.20060131104908:makeSpecialBindings (also binds to 'Key')
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
