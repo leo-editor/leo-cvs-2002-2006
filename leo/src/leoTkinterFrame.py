@@ -3509,17 +3509,12 @@ class leoTkinterLog (leoFrame.leoLog):
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:selectTab
-    #@+node:ekr.20051022162730:setTabBindings
+    #@+node:ekr.20051022162730:setTabBindings (does nothing at present)
     def setTabBindings (self,tabName):
         
-        c = self.c ; k = c.keyHandler
-    
-        w = self.textDict.get(tabName)
-        
-        if k and w:
-            k.copyBindingsToWidget(['log','text','all'],w)
+        pass
     #@nonl
-    #@-node:ekr.20051022162730:setTabBindings
+    #@-node:ekr.20051022162730:setTabBindings (does nothing at present)
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers
     #@+node:ekr.20051019134422:onRightClick & onClick
     def onRightClick (self,event,menu):

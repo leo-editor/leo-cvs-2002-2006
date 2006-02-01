@@ -5730,39 +5730,14 @@ class findTab (leoFind.leoFind):
         
         c = self.c ; k = c.k
         
-        if g.app.new_keys:
-            for t in (self.find_ctrl, self.change_ctrl):
-                t.bind('<Key>',k.masterKeyHandler)
-                t.bind('<Button>',k.masterClickHandler)
-                # t.bind('<Button-3>',k.masterClick3Handler)
-        else:
-            for w in (self.find_ctrl, self.change_ctrl):
-                k.copyBindingsToWidget(['text','mini','all'],w)
-    
-            # Bind shortcuts for the following commands...
-            for commandName,func in (
-                ('find-tab-find',       self.findNextCommand),
-                ('find-tab-find-prev',  self.findPrevCommand),
-                ('find-tab-change',     self.changeCommand),
-                ('find-tab-change-all', self.changeAllCommand),
-                ('find-tab-change-find',self.changeThenFindCommand),
-            ):
-                junk, bunchList = c.config.getShortcut(commandName)
-                for bunch in bunchList:
-                    accel = bunch.val
-                    shortcut = k.tkBindingFromSetting(accel)
-                    if shortcut:
-                        # g.trace(shortcut,commandName)
-                        w.bind(shortcut,func)
-                        
-        if 1: ## not g.app.new_keys:
-            for w in (self.find_ctrl, self.change_ctrl):
-                w.bind ("<1>",  self.resetWrap,'+')
-                w.bind("<Key>", self.resetWrap,'+')
-            
-                for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
-                    w.bind("<Key-Return>", self.findButtonCallback)
-                    w.bind("<Key-Escape>", self.hideTab)
+        for w in (self.find_ctrl, self.change_ctrl):
+            w.bind('<Key>',k.masterKeyHandler)
+            w.bind('<Button-1>',k.masterClickHandler)
+            # w.bind('<Button-3>',k.masterClick3Handler)
+            # w.bind ('Button-1>',  self.resetWrap,'+')
+            w.bind("<Key>", self.resetWrap,'+')
+            w.bind("<Key-Return>", self.findButtonCallback)
+            w.bind("<Key-Escape>", self.hideTab)
     #@nonl
     #@-node:ekr.20051023181449:createBindings (findTab)
     #@+node:ekr.20051020120306.13:createFrame (findTab)
@@ -6938,7 +6913,7 @@ class spellTab(leoFind.leoFind):
         widgets = (self.listBox, self.outerFrame)
     
         for w in widgets:
-            k.copyBindingsToWidget(['text','all'],w)
+    
             # Bind shortcuts for the following commands...
             for commandName,func in (
                 ('full-command',            k.fullCommand),
@@ -6951,7 +6926,7 @@ class spellTab(leoFind.leoFind):
                 junk, bunchList = c.config.getShortcut(commandName)
                 for bunch in bunchList:
                     accel = bunch.val
-                    shortcut = k.tkBindingFromSetting(accel)
+                    shortcut = k.shortcutFromSetting(accel)
                     if shortcut:
                         # g.trace(shortcut,commandName)
                         w.bind(shortcut,func)

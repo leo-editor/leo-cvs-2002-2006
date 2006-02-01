@@ -1361,38 +1361,16 @@ class leoMenu:
             #@nonl
             #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             #@nl
-            if 1:
-                accelerator = stroke = k.shortcutFromSetting(accel) or ''
-                def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
-                    return k.masterMenuHandler(stroke,command,commandName)
-                realLabel = self.getRealMenuName(label)
-                amp_index = realLabel.find("&")
-                realLabel = realLabel.replace("&","")
-                self.add_command(menu,label=realLabel,
-                    accelerator=accelerator,
-                    command=masterMenuCallback,
-                    underline=amp_index)
-            else:
-                # To do: remove defineMenuCallback
-                rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-                menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
-                realLabel = self.getRealMenuName(label)
-                #@            << set amp_index using rawKey and realLabel >>
-                #@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-                if rawKey:
-                    amp_index = rawKey.find("&")
-                else:
-                    amp_index = -1
-                
-                if amp_index == -1:
-                    amp_index = realLabel.find("&")
-                #@nonl
-                #@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >>
-                #@nl
-                realLabel = realLabel.replace("&","")
-                self.add_command(menu,label=realLabel,
-                    accelerator= menu_shortcut or '',
-                    command=menuCallback,underline=amp_index)
+            accelerator = stroke = k.shortcutFromSetting(accel) or ''
+            def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+                return k.masterMenuHandler(stroke,command,commandName)
+            realLabel = self.getRealMenuName(label)
+            amp_index = realLabel.find("&")
+            realLabel = realLabel.replace("&","")
+            self.add_command(menu,label=realLabel,
+                accelerator=accelerator,
+                command=masterMenuCallback,
+                underline=amp_index)
     #@nonl
     #@-node:ekr.20031218072017.1723:createMenuEntries
     #@+node:ekr.20051022053758.1:Helpers
@@ -1452,8 +1430,7 @@ class leoMenu:
                     label,openWithData = data ; accelerator = None
                 else:
                     label,accelerator,openWithData = data
-                    # junk,accelerator = self.canonicalizeShortcut(accelerator)
-                    accelerator = k.tkBindingFromSetting(accelerator)
+                    accelerator = k.shortcutFromSetting(accelerator)
             else:
                 g.trace('bad data in Open With table: %s' % repr(data))
                 continue # Ignore bad data

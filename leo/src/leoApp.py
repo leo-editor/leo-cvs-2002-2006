@@ -20,8 +20,6 @@ class LeoApp:
     #@    @+others
     #@+node:ekr.20031218072017.1416:app.__init__
     def __init__(self):
-        
-        self.new_keys = True
     
         # These ivars are the global vars of this program.
         self.afterHandler = None
