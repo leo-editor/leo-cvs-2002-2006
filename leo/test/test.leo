@@ -230,8 +230,8 @@
 </v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 <v t="ekr.20060124165505"><vh>Printing commands</vh></v>
-<v t="ekr.20060125082644" a="V"><vh>Test show-find-options</vh></v>
-<v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
+<v t="ekr.20060125082644"><vh>Test show-find-options</vh></v>
+<v t="ekr.20060126161404" a="V"><vh>Test of insert methods</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.

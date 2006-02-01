@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" a="E" annotate="7d71002e"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
 <v t="ekr.20040712101754.2" annotate="7d71002e"><vh>Unit tests for  .leo files</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -970,7 +970,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20050120095423" a="V" annotate="7d71002e"><vh>Unit tests for plugins</vh>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins</vh>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
@@ -1035,7 +1035,7 @@
 </v>
 <v t="ekr.20060131102008"><vh>@test print end of test routines</vh></v>
 <v t="ekr.20041012101944" annotate="7d71002e"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" a="E" annotate="7d71002e"><vh>General Unit Tests...</vh>
+<v t="ekr.20040712101754" annotate="7d71002e"><vh>General Unit Tests...</vh>
 <v t="ekr.20041130092210" annotate="7d71002e"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
@@ -1155,8 +1155,8 @@
 <v t="ekr.20040712101754.7" annotate="7d71002e"><vh>Import/Export tests...</vh>
 <v t="ekr.20040712101754.8" annotate="7d71002e"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9" annotate="7d71002e"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" a="E" annotate="7d71002e"><vh>importTests</vh>
-<v t="ekr.20040712101754.11" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10" annotate="7d71002e"><vh>importTests</vh>
+<v t="ekr.20040712101754.11" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12" annotate="7d71002e"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1205,7 +1205,7 @@
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
-<v t="ekr.20050512083700" a="E" annotate="7d71002e"><vh>Marking tests...</vh>
+<v t="ekr.20050512083700" annotate="7d71002e"><vh>Marking tests...</vh>
 <v t="ekr.20040802065214" annotate="7d71002e"><vh>@test changing headline marks descendent @thin nodes dirty</vh>
 <v t="ekr.20040802065214.1"><vh>bogus</vh></v>
 </v>
@@ -1292,7 +1292,7 @@
 <v t="ekr.20040716142121.7"><vh>-result</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.187" a="E" annotate="7d71002e"><vh>Position tests...</vh>
+<v t="ekr.20040712101754.187" annotate="7d71002e"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.99" annotate="7d71002e"><vh>@test c iters</vh>
 <v t="ekr.20040712101754.100"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
 <v t="ekr.20040712101754.101"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
@@ -1346,13 +1346,13 @@
 </v>
 <v t="ekr.20040712101813"><vh>@xx test checkAllPythonCode</vh></v>
 </v>
-<v t="ekr.20050216060307" a="E" annotate="7d71002e"><vh>Tangle/Untangle tests...</vh>
+<v t="ekr.20050216060307" annotate="7d71002e"><vh>Tangle/Untangle tests...</vh>
 <v t="ekr.20050216060736" annotate="7d71002e"><vh>@test tangle command</vh>
 <v t="ekr.20050216060736.1"><vh>Tangle Root</vh>
 <v t="ekr.20050216060736.2"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050216062636" a="E" annotate="7d71002e"><vh>@test untangle command</vh>
+<v t="ekr.20050216062636" annotate="7d71002e"><vh>@test untangle command</vh>
 <v t="ekr.20050216062636.4" annotate="7d71002e"><vh>Tangle Root</vh>
 <v t="ekr.20050216062636.5"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
 </v>
@@ -1368,9 +1368,9 @@
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
-<v t="ekr.20050408084135" a="EM" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
-<v t="ekr.20040712101754.37" a="E" annotate="7d71002e"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="E" annotate="7d71002e"><vh>editBodyTests</vh>
+<v t="ekr.20050408084135" a="M" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
+<v t="ekr.20040712101754.37" annotate="7d71002e"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" annotate="7d71002e"><vh>editBodyTests</vh>
 <v t="ekr.20060127120604"><vh>tempNode</vh></v>
 <v t="ekr.20050518070540" annotate="7d71002e"><vh>extract test2</vh>
 <v t="ekr.20050518070540.1"><vh>before</vh></v>
@@ -1433,101 +1433,101 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050417102057" a="E" annotate="7d71002e"><vh>Reformat Paragraph tests</vh>
-<v t="ekr.20050417102114" a="E" annotate="7d71002e"><vh>@test noTrailingNewline</vh>
-<v t="ekr.20050417104821" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417124704" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417102057" annotate="7d71002e"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20050417102114" annotate="7d71002e"><vh>@test noTrailingNewline</vh>
+<v t="ekr.20050417104821" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417124704" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417102114.1" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417102114.2" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417111144" a="E" annotate="7d71002e"><vh>@test trailingNewline</vh>
-<v t="ekr.20050417111144.1" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417111240" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417111144" annotate="7d71002e"><vh>@test trailingNewline</vh>
+<v t="ekr.20050417111144.1" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417111240" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417111144.2" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417111144.3" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417113549" a="E" annotate="7d71002e"><vh>@test mixedLineLengths</vh>
-<v t="ekr.20050417113910" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417113921" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417113549" annotate="7d71002e"><vh>@test mixedLineLengths</vh>
+<v t="ekr.20050417113910" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417113921" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417113910.1" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417113910.2" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417114153" a="E" annotate="7d71002e"><vh>@test mixedLinesWithLeadingWS</vh>
-<v t="ekr.20050417114221" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417114221.1" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417114153" annotate="7d71002e"><vh>@test mixedLinesWithLeadingWS</vh>
+<v t="ekr.20050417114221" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417114221.1" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417114221.2" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417114221.3" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417114836" a="E" annotate="7d71002e"><vh>@test noChangeRequired</vh>
-<v t="ekr.20050417095124.16" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417114914" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417114836" annotate="7d71002e"><vh>@test noChangeRequired</vh>
+<v t="ekr.20050417095124.16" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417114914" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.17" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.18" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.11" a="E" annotate="7d71002e"><vh>@test honorLeadingWS</vh>
-<v t="ekr.20050417095124.19" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115111" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.11" annotate="7d71002e"><vh>@test honorLeadingWS</vh>
+<v t="ekr.20050417095124.19" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115111" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.20" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.21" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.12" a="E" annotate="7d71002e"><vh>@test honorLeadingWSVar1</vh>
-<v t="ekr.20050417095124.22" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115257" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.12" annotate="7d71002e"><vh>@test honorLeadingWSVar1</vh>
+<v t="ekr.20050417095124.22" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115257" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.23" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.24" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.13" a="E" annotate="7d71002e"><vh>@test simpleHangingIndent</vh>
-<v t="ekr.20050417095124.25" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115414" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.13" annotate="7d71002e"><vh>@test simpleHangingIndent</vh>
+<v t="ekr.20050417095124.25" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115414" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.26" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.27" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.14" a="E" annotate="7d71002e"><vh>@test testSimpleHangingIndentVar1</vh>
-<v t="ekr.20050417095124.28" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115559" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.14" annotate="7d71002e"><vh>@test testSimpleHangingIndentVar1</vh>
+<v t="ekr.20050417095124.28" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115559" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.29" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.30" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417095020.15" a="E" annotate="7d71002e"><vh>@test simpleHangingIndentVar2</vh>
-<v t="ekr.20050417095124.31" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417115709" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417095020.15" annotate="7d71002e"><vh>@test simpleHangingIndentVar2</vh>
+<v t="ekr.20050417095124.31" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417115709" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.32" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.33" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417120312.1" a="E" annotate="7d71002e"><vh>@test multiParagraphTest</vh>
-<v t="ekr.20050417095124.34" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417120312.2" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417120312.1" annotate="7d71002e"><vh>@test multiParagraphTest</vh>
+<v t="ekr.20050417095124.34" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417120312.2" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.35" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.36" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417121448" a="E" annotate="7d71002e"><vh>@test multiParagraphWithListTest</vh>
-<v t="ekr.20050417095124.37" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417121448.1" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417121448" annotate="7d71002e"><vh>@test multiParagraphWithListTest</vh>
+<v t="ekr.20050417095124.37" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417121448.1" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.38" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.39" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417121942" a="E" annotate="7d71002e"><vh>@test leadingWSOnEmptyLinesTest</vh>
-<v t="ekr.20050417095124.43" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417121942.1" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417121942" annotate="7d71002e"><vh>@test leadingWSOnEmptyLinesTest</vh>
+<v t="ekr.20050417095124.43" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417121942.1" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.44" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.45" annotate="7d71002e"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20050417122215.1" a="E" annotate="7d71002e"><vh>@test directiveBreaksParagraphTest</vh>
-<v t="ekr.20050417095124.40" a="E" annotate="7d71002e"><vh>data</vh>
-<v t="ekr.20050417122215.2" a="E" annotate="7d71002e"><vh>tempNode</vh></v>
+<v t="ekr.20050417122215.1" annotate="7d71002e"><vh>@test directiveBreaksParagraphTest</vh>
+<v t="ekr.20050417095124.40" annotate="7d71002e"><vh>data</vh>
+<v t="ekr.20050417122215.2" annotate="7d71002e"><vh>tempNode</vh></v>
 <v t="ekr.20050417095124.41" annotate="7d71002e"><vh>before</vh></v>
 <v t="ekr.20050417095124.42" annotate="7d71002e"><vh>after</vh></v>
 </v>
@@ -7747,7 +7747,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
