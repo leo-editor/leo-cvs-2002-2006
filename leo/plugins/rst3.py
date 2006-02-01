@@ -41,7 +41,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.7'
+__version__ = '1.8'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -395,6 +395,9 @@ except ImportError:
 # - Fixed bug: preprocess ancestors as well as descendants in preprocessTree.
 # - Fixed bug: use the same path for the intermediate file as for the output 
 # file.
+# 
+# 1.8 EKR:
+# - Added event=None to arg list of rst3PluginCallback.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -629,7 +632,7 @@ class rstClass:
     
         c = self.c ; editMenu = c.frame.menu.getMenu('Edit')
     
-        def rst3PluginCallback ():
+        def rst3PluginCallback (event=None):
             self.processTopTree(c.currentPosition())
     
         table = (
