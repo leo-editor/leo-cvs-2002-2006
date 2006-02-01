@@ -424,7 +424,7 @@ class keyHandlerClass:
     #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
     #@-node:ekr.20050920085536.1: Birth (keyHandler)
     #@+node:ekr.20051006125633:Binding (keyHandler)
-    #@+node:ekr.20050920085536.16:bindKey & helpers
+    #@+node:ekr.20050920085536.16:bindKey
     def bindKey (self,pane,shortcut,callback,commandName):
     
         '''Bind the indicated shortcut (a Tk keystroke) to the callback.
@@ -433,7 +433,6 @@ class keyHandlerClass:
         k = self ; c = k.c
     
         # g.trace(pane,shortcut,commandName)
-    
         if not shortcut:
             # g.trace('No shortcut for %s' % commandName)
             return False
@@ -473,21 +472,20 @@ class keyHandlerClass:
             k.bindKeyToDict(pane,shortcut,callback,commandName)
             bunchList.append(
                 g.bunch(pane=pane,func=callback,commandName=commandName))
-            shortcut = '<%s>' % shortcut.strip().lstrip('<').rstrip('>')
+            shortcut = shortcut.strip().lstrip('<').rstrip('>')
             # if shortcut.startswith('<Shift'): g.trace('ooops',shortcut,g.callers())
             k.bindingsDict [shortcut] = bunchList
             return True
-    
         except Exception: # Could be a user error.
             if not g.app.menuWarningsGiven:
                 g.es_print('Exception binding %s to %s' % (shortcut,commandName))
                 g.es_exception()
                 g.app.menuWarningsGiven = True
-    
             return False
             
     bindShortcut = bindKey # For compatibility
     #@nonl
+    #@-node:ekr.20050920085536.16:bindKey
     #@+node:ekr.20060130093055:bindKeyToDict
     def bindKeyToDict (self,pane,stroke,func,commandName):
         
@@ -508,13 +506,6 @@ class keyHandlerClass:
             k.masterBindingsDict [pane] = d
     #@nonl
     #@-node:ekr.20060130093055:bindKeyToDict
-    #@+node:ekr.20060120082630:plainKeyTag
-    def plainKeyTag (self):
-        
-        return '%s-%s' % ('plain-key',self.c.fileName())
-    #@nonl
-    #@-node:ekr.20060120082630:plainKeyTag
-    #@-node:ekr.20050920085536.16:bindKey & helpers
     #@+node:ekr.20051008135051.1:bindOpenWith
     def bindOpenWith (self,shortcut,name,data):
         
@@ -568,6 +559,16 @@ class keyHandlerClass:
         k.checkBindings()
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
+    #@+node:ekr.20060201081225:k.makeAllModeBindings
+    def makeAllModeBindings (self):
+        
+        k = self
+        
+         ### if k.masterBindingsDict.get(modeName) is None:
+        ###    k.createModeBindings(modeName,d)
+        
+        
+    #@-node:ekr.20060201081225:k.makeAllModeBindings
     #@+node:ekr.20060104154937:addModeCommands
     def addModeCommands (self):
         
@@ -1029,20 +1030,21 @@ class keyHandlerClass:
         keys = d.keys() ; keys.sort()
         c.frame.log.clearTab(tabName)
     
-        data = [] ; n = 20
+        data = [] ; n1 = 4 ; n2 = 20
         for key in keys:
             bunchList = d.get(key,[])
             for b in bunchList:
                 if not brief or k.isPlainKey(key):
-                    pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
-                    s1 = key + pane
-                    s2 = b.commandName
-                    n = max(n,len(s1))
-                    data.append((s1,s2),)
-        
+                    pane = g.choose(b.pane=='all','',' %s:' % (b.pane))
+                    s1 = pane
+                    s2 = k.prettyPrintKey(key)
+                    s3 = b.commandName
+                    n1 = max(n1,len(s1))
+                    n2 = max(n2,len(s2))
+                    data.append((s1,s2,s3),)
         # This isn't perfect in variable-width fonts.
-        for s1,s2 in data:
-            g.es('%*s %s' % (-n,s1,s2),tabName=tabName)
+        for s1,s2,s3 in data:
+            g.es('%*s %*s %s' % (-n1,s1,-(min(12,n2)),s2,s3),tabName=tabName)
                        
         state = k.unboundKeyAction 
         k.showStateAndMode()
@@ -1060,18 +1062,21 @@ class keyHandlerClass:
         inverseBindingDict = k.computeInverseBindingDict()
         commandNames = c.commandsDict.keys() ; commandNames.sort()
     
-        data = [] ; n = 20
+        data = [] ; n1 = 4 ; n2 = 20
         for commandName in commandNames:
-            shortcutList = inverseBindingDict.get(commandName,[''])
-            for shortcut in shortcutList:
-                s1 = commandName ; s2 = shortcut
-                n = max(n,len(s1))
-                data.append((s1,s2),)
+            dataList = inverseBindingDict.get(commandName,[('',''),])
+            for z in dataList:
+                pane, key = z
+                s1 = pane
+                s2 = k.prettyPrintKey(key)
+                s3 = commandName
+                n1 = max(n1,len(s1))
+                n2 = max(n2,len(s2))
+                data.append((s1,s2,s3),)
                     
         # This isn't perfect in variable-width fonts.
-        for s1,s2 in data:
-            # g.es('%*s %s' % (-n,s1,s2),tabName=tabName)
-            g.es('%s %s' % (s1,s2),tabName=tabName)
+        for s1,s2,s3 in data:
+            g.es('%*s %*s %s' % (-n1,s1,-(min(12,n2)),s2,s3),tabName=tabName)
     #@-node:ekr.20051014061332:printCommands
     #@+node:ekr.20050920085536.48:repeatComplexCommand & helper
     def repeatComplexCommand (self,event):
@@ -1403,8 +1408,7 @@ class keyHandlerClass:
         This is the handler for that binding.'''
         
         if not event:
-            g.trace('oops: no event')
-            return
+            g.trace('oops: no event') ; return
     
         k = self ; c = k.c
         w = event and event.widget
@@ -1451,6 +1455,7 @@ class keyHandlerClass:
                                 
         if trace: g.trace(repr(stroke),'no func')
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+    #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):
@@ -1545,7 +1550,62 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060128090219:masterMenuHandler
     #@-node:ekr.20060129052538.1:master event handlers (keyHandler)
-    #@+node:ekr.20060115103349:Modes & input states
+    #@+node:ekr.20060115103349:Modes
+    #@+node:ekr.20060117202916:badMode
+    def badMode(self,modeName):
+        
+        k = self
+    
+        k.clearState()
+        if modeName.endswith('-mode'): modeName = modeName[:-5]
+        k.setLabelGrey('@mode %s is not defined (or is empty)' % modeName)
+    #@nonl
+    #@-node:ekr.20060117202916:badMode
+    #@+node:ekr.20060119150624:createModeBindings
+    def createModeBindings (self,modeName,d):
+        
+        k = self ; c = k.c
+    
+        for commandName in d.keys():
+            func = c.commandsDict.get(commandName)
+            if not func:
+                g.trace('No such command: %s' % commandName) ; continue
+            bunchList = d.get(commandName,[])
+            for bunch in bunchList:
+                shortcut = bunch.val
+                if shortcut and shortcut not in ('None','none',None):
+                    stroke = k.shortcutFromSetting(shortcut)
+                    # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+                    d2 = k.masterBindingsDict.get(modeName,{})
+                    d2 [stroke] = g.Bunch(
+                        commandName=commandName,
+                        func=func,
+                        nextMode=bunch.nextMode,
+                        stroke=stroke)
+                    k.masterBindingsDict [ modeName ] = d2
+    #@nonl
+    #@-node:ekr.20060119150624:createModeBindings
+    #@+node:ekr.20060117202916.2:endMode
+    def endMode(self,event):
+        
+        k = self ; c = k.c
+        
+        w = g.app.gui.get_focus(c.frame)
+        
+        c.frame.log.deleteTab('Mode')
+    
+        k.endCommand(event,k.stroke)
+        k.inputModeName = None
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+    
+        # k.setLabelGrey('top-level mode')
+        
+        # Do *not* change the focus: the command may have changed it.
+        c.frame.widgetWantsFocus(w)
+    #@nonl
+    #@-node:ekr.20060117202916.2:endMode
     #@+node:ekr.20060102135349.2:enterNamedMode
     def enterNamedMode (self,event,commandName):
         
@@ -1564,54 +1624,7 @@ class keyHandlerClass:
         
         k.showStateAndMode()
     #@-node:ekr.20060121104301:exitNamedMode
-    #@+node:ekr.20060104164523:modeHelp
-    def modeHelp (self,event):
-    
-        '''The mode-help command.
-        
-        A possible convention would be to bind <Tab> to this command in most modes,
-        by analogy with tab completion.'''
-        
-        k = self ; c = k.c
-        
-        c.endEditing(restoreFocus=True)
-        
-        if k.inputModeName:
-            d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
-            k.modeHelpHelper(d)
-        # else:
-            # k.printBindings(event,brief=True)
-    
-        return 'break'
-    #@nonl
-    #@+node:ekr.20060104125946:modeHelpHelper
-    def modeHelpHelper (self,d):
-        
-        k = self ; c = k.c ; tabName = 'Mode'
-        c.frame.log.clearTab(tabName)
-        keys = d.keys() ; keys.sort()
-    
-        data = [] ; n = 20
-        for key in keys:
-            bunchList = d.get(key)
-            for bunch in bunchList:
-                shortcut = bunch.val
-                if shortcut not in (None,'None'):
-                    s1 = key ; s2 = shortcut
-                    n = max(n,len(s1))
-                    data.append((s1,s2),)
-                    
-        data.sort()
-        
-        g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
-            
-        # This isn't perfect in variable-width fonts.
-        for s1,s2 in data:
-            g.es('%*s %s' % (n,s1,s2),tabName=tabName)
-    #@nonl
-    #@-node:ekr.20060104125946:modeHelpHelper
-    #@-node:ekr.20060104164523:modeHelp
-    #@+node:ekr.20060104110233:generalModeHandler & helpers
+    #@+node:ekr.20060104110233:generalModeHandler
     def generalModeHandler (self,event,
         commandName=None,func=None,modeName=None,nextMode=None):
         
@@ -1656,40 +1669,7 @@ class keyHandlerClass:
     
         return 'break'
     #@nonl
-    #@+node:ekr.20060117202916:badMode
-    def badMode(self,modeName):
-        
-        k = self
-    
-        k.clearState()
-        if modeName.endswith('-mode'): modeName = modeName[:-5]
-        k.setLabelGrey('@mode %s is not defined (or is empty)' % modeName)
-    #@nonl
-    #@-node:ekr.20060117202916:badMode
-    #@+node:ekr.20060119150624:createModeBindings
-    def createModeBindings (self,modeName,d):
-        
-        k = self ; c = k.c
-    
-        for commandName in d.keys():
-            func = c.commandsDict.get(commandName)
-            if not func:
-                g.trace('No such command: %s' % commandName) ; continue
-            bunchList = d.get(commandName,[])
-            for bunch in bunchList:
-                shortcut = bunch.val
-                if shortcut and shortcut not in ('None','none',None):
-                    stroke = k.shortcutFromSetting(shortcut)
-                    # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
-                    d2 = k.masterBindingsDict.get(modeName,{})
-                    d2 [stroke] = g.Bunch(
-                        commandName=commandName,
-                        func=func,
-                        nextMode=bunch.nextMode,
-                        stroke=stroke)
-                    k.masterBindingsDict [ modeName ] = d2
-    #@nonl
-    #@-node:ekr.20060119150624:createModeBindings
+    #@-node:ekr.20060104110233:generalModeHandler
     #@+node:ekr.20060117202916.1:initMode
     def initMode (self,event,modeName):
     
@@ -1715,29 +1695,52 @@ class keyHandlerClass:
         # Do *not* change the focus here!
     #@nonl
     #@-node:ekr.20060117202916.1:initMode
-    #@+node:ekr.20060117202916.2:endMode
-    def endMode(self,event):
+    #@+node:ekr.20060104164523:modeHelp
+    def modeHelp (self,event):
+    
+        '''The mode-help command.
+        
+        A possible convention would be to bind <Tab> to this command in most modes,
+        by analogy with tab completion.'''
         
         k = self ; c = k.c
         
-        w = g.app.gui.get_focus(c.frame)
+        c.endEditing(restoreFocus=True)
         
-        c.frame.log.deleteTab('Mode')
+        if k.inputModeName:
+            d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
+            k.modeHelpHelper(d)
     
-        k.endCommand(event,k.stroke)
-        k.inputModeName = None
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
-    
-        # k.setLabelGrey('top-level mode')
-        
-        # Do *not* change the focus: the command may have changed it.
-        c.frame.widgetWantsFocus(w)
+        return 'break'
     #@nonl
-    #@-node:ekr.20060117202916.2:endMode
-    #@-node:ekr.20060104110233:generalModeHandler & helpers
-    #@+node:ekr.20060105132013:set-xxx-State & setInputState
+    #@+node:ekr.20060104125946:modeHelpHelper
+    def modeHelpHelper (self,d):
+        
+        k = self ; c = k.c ; tabName = 'Mode'
+        c.frame.log.clearTab(tabName)
+        keys = d.keys() ; keys.sort()
+    
+        data = [] ; n = 20
+        for key in keys:
+            bunchList = d.get(key)
+            for bunch in bunchList:
+                shortcut = bunch.val
+                if shortcut not in (None,'None'):
+                    s1 = key ; s2 = k.prettyPrintKey(shortcut)
+                    n = max(n,len(s1))
+                    data.append((s1,s2),)
+                    
+        data.sort()
+        
+        # g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
+            
+        # This isn't perfect in variable-width fonts.
+        for s1,s2 in data:
+            g.es('%*s %s' % (n,s1,s2),tabName=tabName)
+    #@nonl
+    #@-node:ekr.20060104125946:modeHelpHelper
+    #@-node:ekr.20060104164523:modeHelp
+    #@+node:ekr.20060105132013:set-xxx-State
     def setIgnoreState (self,event):
     
         self.setInputState('ignore',showState=True)
@@ -1750,36 +1753,13 @@ class keyHandlerClass:
     
         self.setInputState('overwrite',showState=True)
     
+    #@-node:ekr.20060105132013:set-xxx-State
     #@+node:ekr.20060120200818:setInputState
     def setInputState (self,state,showState=False):
     
         k = self ; c = k.c
         
         w = g.app.gui.get_focus(c.frame)
-        
-        if 0: # Support for plain-key bindings.
-            tag = k.plainKeyTag()
-                       
-            try: # Will fail for nullBody.
-                # t = c.frame.top
-                t = c.frame.body.bodyCtrl
-                tags = list(t.bindtags())
-                
-            except AttributeError:
-                tags = [] ; t = w = None
-    
-            if tags:
-                if state == 'ignore':
-                    if tag not in tags:
-                        tags.insert(0,tag)
-                        t.bindtags(tuple(tags))
-                else:
-                    if tag in tags:
-                        tags.remove(tag)
-                        t.bindtags(tuple(tags))
-    
-            g.trace('%s-state' % (state),'plain key functions are',
-                g.choose(tag in tags,'enabled','disabled')) # ,tags)
     
         k.unboundKeyAction = state
         if state != 'insert' or showState:
@@ -1789,7 +1769,6 @@ class keyHandlerClass:
         w and c.frame.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20060120200818:setInputState
-    #@-node:ekr.20060105132013:set-xxx-State & setInputState
     #@+node:ekr.20060120193743:showStateAndMode
     def showStateAndMode(self):
         
@@ -1807,20 +1786,19 @@ class keyHandlerClass:
                 put(' mode: ',color='blue')
                 put(mode)
     #@-node:ekr.20060120193743:showStateAndMode
-    #@-node:ekr.20060115103349:Modes & input states
+    #@-node:ekr.20060115103349:Modes
     #@+node:ekr.20051002152108.1:Shared helpers
     #@+node:ekr.20051017212452:computeCompletionList
     # Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
     
     def computeCompletionList (self,defaultTabList,backspace):
         
-        k = self ; c = k.c ; s = k.getLabel() 
+        k = self ; c = k.c ; s = k.getLabel() ; tabName = 'Completion'
         command = s [len(k.mb_prompt):]
             # s always includes prefix, so command is well defined.
     
         k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
-    
-        c.frame.log.clearTab('Completion') # Creates the tab if necessary.
+        c.frame.log.clearTab(tabName)
     
         if k.mb_tabList:
             k.mb_tabListIndex = -1 # The next item will be item 0.
@@ -1829,10 +1807,19 @@ class keyHandlerClass:
                 k.setLabel(k.mb_prompt + common_prefix)
                 
             inverseBindingDict = k.computeInverseBindingDict()
+            data = [] ; n1 = 20; n2 = 4
             for commandName in k.mb_tabList:
-                shortcutList = inverseBindingDict.get(commandName,[''])
-                for shortcut in shortcutList:
-                    g.es('%s %s' % (commandName,shortcut),tabName='Completion')
+                dataList = inverseBindingDict.get(commandName,[('',''),])
+                for z in dataList:
+                    pane,key = z
+                    s1 = commandName
+                    s2 = pane
+                    s3 = k.prettyPrintKey(key)
+                    n1 = max(n1,len(s1))
+                    n2 = max(n2,len(s2))
+                    data.append((s1,s2,s3),)
+            for s1,s2,s3 in data:
+                g.es('%*s %*s %s' % (-(min(20,n1)),s1,n2,s2,s3),tabName=tabName)
     
         c.frame.bodyWantsFocus()
     #@nonl
@@ -1849,11 +1836,12 @@ class keyHandlerClass:
                 shortcutList = d.get(b.commandName,[])
                 bunchList = k.bindingsDict.get(shortcut,[g.Bunch(pane='all')])
                 for b in bunchList:
-                    # g.trace(shortcut,repr(b.pane))
-                    pane = g.choose(b.pane=='all','','[%s]' % (b.pane))
-                    s = '%s %s' % (shortcut,pane)
-                    if s not in shortcutList:
-                        shortcutList.append(s)
+                    #pane = g.choose(b.pane=='all','','%s:' % (b.pane))
+                    pane = '%s:' % (b.pane)
+                    data = (pane,shortcut)
+                    if data not in shortcutList:
+                        shortcutList.append(data)
+            
                 d [b.commandName] = shortcutList
     
         return d
@@ -1946,7 +1934,7 @@ class keyHandlerClass:
     #@-node:ekr.20060114171910:traceBinding
     #@-node:ekr.20051002152108.1:Shared helpers
     #@+node:ekr.20060128092340:Shortcuts (keyHandler)
-    #@+node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
+    #@+node:ekr.20060120071949:isPlainKey
     def isPlainKey (self,shortcut):
         
         '''Return true if the shortcut refers to a plain key.'''
@@ -1959,13 +1947,10 @@ class keyHandlerClass:
         if shortcut.startswith('<'):   shortcut = shortcut[1:]
         if shortcut.endswith('>'):     shortcut = shortcut[:-1]
         if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
-        
-        # if len(shortcut) == 1:
-            # g.trace(shortcut1)
     
         return len(shortcut) == 1
     #@nonl
-    #@-node:ekr.20060120071949:isPlainKey (to be deleted, after changeover)
+    #@-node:ekr.20060120071949:isPlainKey
     #@+node:ekr.20060128081317:shortcutFromSetting
     def shortcutFromSetting (self,setting):
     
@@ -2099,7 +2084,7 @@ class keyHandlerClass:
         k = self
         
         if not shortcut: return None
-        s = shortcut ## .strip()
+        s = shortcut
         #@    << compute alt, cmd, ctrl, shift flags >>
         #@+node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
         s2 = s.lower()
@@ -2189,6 +2174,35 @@ class keyHandlerClass:
         return '<%s>' % stroke
     #@nonl
     #@-node:ekr.20060131075440:k.tkbindingFromStroke
+    #@+node:ekr.20060201083154:k.prettyPrintKey
+    def prettyPrintKey (self,stroke):
+        
+        s = stroke.strip().lstrip('<').rstrip('>')
+        if not s: return ''
+    
+        shift = s.find("shift") >= 0 or s.find("shft") >= 0
+        
+        # Replace all minus signs by plus signs, except a trailing minus:
+        if s.endswith('-'): s = s[:-1].replace('-','+') + '-'
+        else:               s = s.replace('-','+')
+        fields = s.split('+')
+        last = fields and fields[-1]
+    
+        if last and len(last) == 1:
+            prev = s[:-1]
+            if last.isalpha():
+                if last.isupper():
+                    if not shift:
+                        s = prev + 'Shift+' + last
+                elif last.islower():
+                    if not prev:
+                        s = 'Key+' + last.upper()
+                    else:
+                        s = prev + last.upper()
+    
+        return '<%s>' % s
+    #@nonl
+    #@-node:ekr.20060201083154:k.prettyPrintKey
     #@-node:ekr.20060128092340:Shortcuts (keyHandler)
     #@+node:ekr.20050923172809:States
     #@+node:ekr.20050923172814.1:clearState

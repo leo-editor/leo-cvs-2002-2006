@@ -1688,26 +1688,25 @@ class leoTkinterFrame (leoFrame.leoFrame):
             g.es_event_exception("iconrclick")
     #@nonl
     #@-node:ekr.20031218072017.3977:OnBodyClick, OnBodyRClick (Events)
-    #@+node:ekr.20031218072017.3978:OnBodyDoubleClick (Events) (no longer used)
+    #@+node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
     def OnBodyDoubleClick (self,event=None):
     
         try:
-            c = self.c ; v = c.currentVnode()
-            if not g.doHook("bodydclick1",c=c,p=v,v=v,event=event):
-                if event: # 8/4/02: prevent wandering insertion point.
+            c = self.c ; p = c.currentPosition()
+            if not g.doHook("bodydclick1",c=c,p=p,v=p,event=event):
+                if event: # Prevent wandering insertion point.
                     index = "@%d,%d" % (event.x, event.y) # Find where we clicked.
-                    event.widget.tag_add('sel', 'insert wordstart', 'insert wordend')
-                body = self.bodyCtrl
-                start = body.index(index + " wordstart")
-                end = body.index(index + " wordend")
-                self.body.setTextSelection(start,end)
-            g.doHook("bodydclick2",c=c,p=v,v=v,event=event)
+                    w = self.bodyCtrl
+                    start = w.index(index + " wordstart")
+                    end   = w.index(index + " wordend")
+                    self.body.setTextSelection(start,end)
+            g.doHook("bodydclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("bodydclick")
             
         return "break" # Restore this to handle proper double-click logic.
     #@nonl
-    #@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events) (no longer used)
+    #@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
     #@+node:ekr.20031218072017.1803:OnMouseWheel (Tomaz Ficko)
     # Contributed by Tomaz Ficko.  This works on some systems.
     # On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
@@ -2243,18 +2242,14 @@ class leoTkinterBody (leoFrame.leoBody):
         t.bind('<Key>',k.masterKeyHandler)
     
         for kind,func,handler in (
-            ('<Button-1>',frame.OnBodyClick,k.masterClickHandler),
-            ('<Button-3>',frame.OnBodyRClick,k.masterClick3Handler),
+            ('<Button-1>',          frame.OnBodyClick,          k.masterClickHandler),
+            ('<Button-3>',          frame.OnBodyRClick,         k.masterClick3Handler),
+            ('<Double-Button-1>',   frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
+            ('<Double-Button-3>',   None,                       k.masterDoubleClick3Handler),
         ):
             def bodyClickCallback(event,handler=handler,func=func):
                 return handler(event,func)
             t.bind(kind,bodyClickCallback)
-            
-        for kind,handler in (
-            ('<Double-Button-1>',k.masterDoubleClickHandler),
-            ('<Double-Button-3>',k.masterDoubleClick3Handler),
-        ):
-            t.bind(kind,handler)
                 
         if sys.platform.startswith('win'):
             # Support Linux middle-button paste easter egg.
