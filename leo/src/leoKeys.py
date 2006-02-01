@@ -999,7 +999,8 @@ class keyHandlerClass:
         k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
         keysym = (event and event.keysym) or ''
         ch = (event and event.char) or ''
-        g.trace('state',state,keysym)
+        trace = c.config.getBool('trace_modes')
+        if trace: g.trace('state',state,keysym)
         if state == 0:
             k.completionFocusWidget = g.app.gui.get_focus(c.frame)
             k.setState('full-command',1,handler=k.fullCommand) 
@@ -1344,7 +1345,7 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; state = k.getState('getArg')
         keysym = (event and event.keysym) or ''
-        trace = c.config.getBool('trace_modes') or c.config.getBool('trace_masterKeyHandler')
+        trace = c.config.getBool('trace_modes')
         if trace: g.trace('state',state,'keysym',keysym,'completion',completion)
         if state == 0:
             k.arg = '' ; k.arg_completion = completion
@@ -1599,12 +1600,15 @@ class keyHandlerClass:
         '''In the new binding scheme, there is only one key binding.
         
         This is the handler for that binding.'''
-    
-        k = self ; c = k.c ; trace = c.config.getBool('trace_masterKeyHandler')
+        
         if not event:
             g.trace('oops: no event')
             return
     
+        k = self ; c = k.c
+        w = event and event.widget
+        w_name = g.app.gui.widget_name(w)
+        trace = c.config.getBool('trace_masterKeyHandler')
         keysym = event.keysym or ''
         if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
             return
@@ -1622,36 +1626,30 @@ class keyHandlerClass:
                         modeName=state,nextMode=b.nextMode)
                 else:
                     return k.modeHelp(event)
-            else:
-                g.trace('no dict for %s' % state)
-                return k.modeHelp(event)
-        else:
-            w = event and event.widget
-            w_name = g.app.gui.widget_name(w)
-            
-            for key,name in (
-                # Order here is similar to bindtags order.
-                ('mini','mini'), ('body','body'),
-                ('tree','head'), ('tree','canvas'),
-                ('log', 'log'),
-                ('text',None), ('all',None),
+            # Fall through: the dict will be empty for full-command mode.
+        
+        for key,name in (
+            # Order here is similar to bindtags order.
+            ('mini','mini'), ('body','body'),
+            ('tree','head'), ('tree','canvas'),
+            ('log', 'log'),
+            ('text',None), ('all',None),
+        ):
+            if (
+                name and w_name.startswith(name) or
+                key == 'text' and g.app.gui.isTextWidget(w) or
+                key == 'all'
             ):
-                if (
-                    name and w_name.startswith(name) or
-                    key == 'text' and g.app.gui.isTextWidget(w) or
-                    key == 'all'
-                ):
-                    d = k.masterBindingsDict.get(key)
-                    # g.trace(key,name,d and len(d.keys()))
-                    if d:
-                        b = d.get(stroke)
-                        if b:
-                            if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
-                            return k.masterCommand(event,b.func,b.stroke,b.commandName)
+                d = k.masterBindingsDict.get(key)
+                # g.trace(key,name,d and len(d.keys()))
+                if d:
+                    b = d.get(stroke)
+                    if b:
+                        if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                        return k.masterCommand(event,b.func,b.stroke,b.commandName)
                                 
         if trace: g.trace(repr(stroke),'no func')
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
-    #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):
@@ -1821,7 +1819,7 @@ class keyHandlerClass:
         k = self ; c = k.c
         state = k.getState(modeName)
         w = g.app.gui.get_focus(c.frame)
-        trace = c.config.getBool('trace_modes') or c.config.getBool('trace_masterKeyHandler')
+        trace = c.config.getBool('trace_modes')
         
         if trace: g.trace(modeName,state)
        
@@ -1889,7 +1887,6 @@ class keyHandlerClass:
                         nextMode=bunch.nextMode,
                         stroke=stroke)
                     k.masterBindingsDict [ modeName ] = d2
-                
     #@nonl
     #@-node:ekr.20060119150624:createModeBindings
     #@+node:ekr.20060117202916.1:initMode
