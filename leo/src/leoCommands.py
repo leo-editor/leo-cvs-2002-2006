@@ -252,14 +252,11 @@ class baseCommands:
             try:
                 c.inCommand = True
                 val = command(event)
+                c.inCommand = False
                 if c and c.exists: # Be careful: the command could destroy c.
                     c.k.funcReturn = val
-                    if c.requestCloseWindow:
-                        g.trace('Closing window after command')
-                        c.requestCloseWindow = False
-                        g.app.closeLeoWindow(c.frame)
-                c.inCommand = False
             except:
+                c.inCommand = False
                 if g.app.unitTesting:
                     raise
                 else:
@@ -268,7 +265,12 @@ class baseCommands:
                     g.es_exception(c=c)
                     if c and c.exists and hasattr(c,'frame'):
                         c.redraw_now()
-        
+                        
+            if c and c.exists and c.requestCloseWindow:
+                g.trace('Closing window after command')
+                c.requestCloseWindow = False
+                g.app.closeLeoWindow(c.frame)
+    
         # Be careful: the command could destroy c.
         if c and c.exists:
             p = c.currentPosition()

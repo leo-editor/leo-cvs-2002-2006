@@ -398,8 +398,6 @@ class keyHandlerClass:
         # Important: bindings exist even if c.showMiniBuffer is False.
         k.makeAllBindings()
         
-        c.frame.log.setTabBindings('Log')
-        c.frame.tree.setBindings()
         if 0: # Hurray.  This was a massive kludge.
             g.enableIdleTimeHook(250)
     
@@ -752,29 +750,10 @@ class keyHandlerClass:
         k.addModeCommands() 
         k.makeBindingsFromCommandsDict()
         k.initSpecialIvars()
-        if g.app.new_keys:
-            for t in (
-                c.frame.body.bodyCtrl,
-                c.frame.tree.canvas,
-            ):
-                t.bind('<Key>',k.masterKeyHandler)
-                #t.bind('<Button>',k.masterClickHandler)
-                #t.bind('<Button-3>',k.masterClick3Handler)
-                #t.bind('<Double-Button>',k.masterDoubleClickHandler)
-                #t.bind('<Double-Button-3>',k.masterDoubleClick3Handler)
-        else:
-            if k.useTextWidget:
-                k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
-    
+        c.frame.body.createBindings()
+        c.frame.log.setTabBindings('Log')
+        c.frame.tree.setBindings()
         k.checkBindings()
-        
-        if 0:
-            # Print the keysym_num dicts.
-            d = k.keysym_numberInverseDict
-            keys = d.keys() ; keys.sort()
-            for key in key():
-                n = d.get(key)
-                # print 'keysym_num for %s = %d' % (key,n)
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
     #@+node:ekr.20060104154937:addModeCommands
@@ -1365,7 +1344,8 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; state = k.getState('getArg')
         keysym = (event and event.keysym) or ''
-        # g.trace('state',state,'keysym',keysym,'completion',completion)
+        trace = c.config.getBool('trace_modes') or c.config.getBool('trace_masterKeyHandler')
+        if trace: g.trace('state',state,'keysym',keysym,'completion',completion)
         if state == 0:
             k.arg = '' ; k.arg_completion = completion
             if tabList: k.argTabList = tabList[:]
@@ -1611,15 +1591,15 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.38:updateLabel
     #@-node:ekr.20050924064254:Label...
     #@+node:ekr.20060129052538.1:master event handlers (keyHandler)
+        
+    #@nonl
     #@+node:ekr.20060127183752:masterKeyHandler
     def masterKeyHandler (self,event):
         
         '''In the new binding scheme, there is only one key binding.
         
         This is the handler for that binding.'''
-        
-        if not g.app.new_keys: return
-        
+    
         k = self ; c = k.c ; trace = c.config.getBool('trace_masterKeyHandler')
         if not event:
             g.trace('oops: no event')
@@ -1631,16 +1611,20 @@ class keyHandlerClass:
     
         stroke = k.strokeFromEvent(event)
         if k.inState():
-            if trace: g.trace(repr(stroke),'state',state)
             state = k.state.kind
+            if trace: g.trace(repr(stroke),'state',state)
             d =  k.masterBindingsDict.get(state)
             if d:
                 b = d.get(stroke)
                 if b:
-                    if trace: g.trace(
-                        'state: %s, %s found %s = %s' % (
-                            state,key,b.stroke,b.commandName))
-                    return k.masterCommand(event,b.func,b.stroke,b.commandName)
+                    return k.generalModeHandler (event,
+                        commandName=b.commandName,func=b.func,
+                        modeName=state,nextMode=b.nextMode)
+                else:
+                    return k.modeHelp(event)
+            else:
+                g.trace('no dict for %s' % state)
+                return k.modeHelp(event)
         else:
             w = event and event.widget
             w_name = g.app.gui.widget_name(w)
@@ -1667,29 +1651,30 @@ class keyHandlerClass:
                                 
         if trace: g.trace(repr(stroke),'no func')
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+    #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):
         
         k = self ; c = k.c
-        
+    
         # button = event and hasattr(event,'button') and event.button or '<no button>'
         w = event and event.widget or '<no widget>'
         name = g.app.gui.widget_name(w)
+        fname = func and func.__name__ or '<no func>'
         
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(w)
+            g.trace(name,fname)
             
         if func:
-            func(event)
-        elif name.startswith('head'):
-            return c.frame.tree.onHeadlineClick(event)
+            # Don't event *think* of overriding this.
+            return func(event)
         else:
             return None
     #@nonl
     #@-node:ekr.20060129052538.2:masterClickHandler
     #@+node:ekr.20060130130942:masterClick3Handler
-    def masterClick3Handler (self,event):
+    def masterClick3Handler (self,event,func=None):
         
         k = self ; c = k.c
         
@@ -1697,48 +1682,55 @@ class keyHandlerClass:
         
         w = event.widget or '<no widget>'
         name = g.app.gui.widget_name(w)
+        fname = func and func.__name__ or '<no func>'
         
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(w)
-        
-        if name.startswith('head'):
-            return c.frame.tree.onHeadlineRightClick(event)
+            g.trace(name,fname)
+            
+        if func:
+            # Don't event *think* of overriding this.
+            return func(event)
         else:
             return None
     #@nonl
     #@-node:ekr.20060130130942:masterClick3Handler
     #@+node:ekr.20060131084938:masterDoubleClickHandler
-    def masterDoubleClickHandler (self,event):
-        
-        k = self ; c = k.c
-        
-        # button = event and hasattr(event,'button') and event.button or '<no button>'
-        w = event and event.widget or '<no widget>'
-        name = g.app.gui.widget_name(w)
-        
+    def masterDoubleClickHandler (self,event,func=None):
+    
+        if not event or not event.widget: return 'break' ;
+    
+        k = self ; c = k.c ; p = c.currentPosition()
+        w = event.widget ; name = g.app.gui.widget_name(w)
+        fname = func and func.__name__ or '<no func>'
+    
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(w)
-        
-        if name.startswith('head'):
-            return c.frame.tree.onHeadlineClick(event)
+            g.trace(name,fname)
+            
+        if func:
+            # Don't event *think* of overriding this.
+            return func(event)
         else:
-            return None
+            i = w.index("@%d,%d" % (event.x,event.y))
+            g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+            return 'break'
     #@nonl
     #@-node:ekr.20060131084938:masterDoubleClickHandler
     #@+node:ekr.20060131085116:masterDoubleClick3Handler
-    def masterDoubleClick3Handler (self,event):
+    def masterDoubleClick3Handler (self,event,func=None):
         
         k = self ; c = k.c
         
         # button = event and hasattr(event,'button') and event.button or '<no button>'
         w = event and event.widget or '<no widget>'
         name = g.app.gui.widget_name(w)
+        fname = func and func.__name__ or '<no func>'
         
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(w)
-        
-        if name.startswith('head'):
-            return c.frame.tree.onHeadlineClick(event)
+            g.trace(name,fname)
+    
+        if func:
+            # Don't event *think* of overriding this.
+            return func(event)
         else:
             return None
     #@nonl
@@ -1822,19 +1814,20 @@ class keyHandlerClass:
     #@-node:ekr.20060104164523:modeHelp
     #@+node:ekr.20060104110233:generalModeHandler & helpers
     def generalModeHandler (self,event,
-        bunch=None,commandName=None,func=None,modeName=None):
+        commandName=None,func=None,modeName=None,nextMode=None):
         
         '''Handle a mode defined by an @mode node in leoSettings.leo.'''
     
         k = self ; c = k.c
         state = k.getState(modeName)
         w = g.app.gui.get_focus(c.frame)
-        trace = c.config.getBool('trace_modes')
+        trace = c.config.getBool('trace_modes') or c.config.getBool('trace_masterKeyHandler')
         
         if trace: g.trace(modeName,state)
        
         if state == 0:
             self.initMode(event,modeName)
+            k.inputModeName = modeName
             k.setState(modeName,1,handler=k.generalModeHandler)
             if c.config.getBool('showHelpWhenEnteringModes'):
                 k.modeHelp(event)
@@ -1849,15 +1842,15 @@ class keyHandlerClass:
             if commandName == 'mode-help':
                 func(event)
             else:
-                nextMode = bunch.nextMode
+                # nextMode = bunch.nextMode
                 self.endMode(event)
                 func(event)
-                if nextMode == 'none':
+                if nextMode in (None,'none'):
                     # Do *not* clear k.inputModeName or the focus here.
                     # func may have put us in *another* mode.
                     pass
                 elif nextMode == 'same':
-                    self.initMode(event,modeName) # Re-enter this mode.
+                    self.initMode(event,k.inputModeName) # Re-enter this mode.
                     k.setState(modeName,1,handler=k.generalModeHandler)
                 else:
                     self.initMode(event,nextMode) # Enter another mode.
@@ -1875,86 +1868,50 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060117202916:badMode
     #@+node:ekr.20060119150624:createModeBindings
-    def createModeBindings (self,modeName,tagName,d):
+    def createModeBindings (self,modeName,d):
         
-        k = self ; c = k.c ; t = c.frame.body.bodyCtrl
-        
+        k = self ; c = k.c
+    
         for commandName in d.keys():
             func = c.commandsDict.get(commandName)
-            if func:
-                bunchList = d.get(commandName,[])
-                for bunch in bunchList:
-                    shortcut = bunch.val
-                    if shortcut and shortcut not in ('None','none',None):
-                        stroke = k.tkBindingFromSetting(shortcut)
-                        # g.trace(stroke,shortcut)
-                        #@                    << define modeCallback >>
-                        #@+node:ekr.20060118181341:<< define modeCallback >>
-                        # g.trace('Mode %s: binding %s to %s' % (modeName,stroke,commandName))
-                        
-                        def modeCallback (event,k=k,
-                            bunch=bunch,commandName=commandName,func=func,modeName=modeName,stroke=stroke):
-                                
-                            __pychecker__ = '--no-argsused' # stroke
-                            
-                            # g.trace(stroke)
-                            return k.generalModeHandler(event,bunch,commandName,func,modeName)
-                        
-                        # k.bindKey('all',stroke,modeCallback,commandName)
-                        
-                        t.bind_class(tagName,stroke,modeCallback)
-                        #@nonl
-                        #@-node:ekr.20060118181341:<< define modeCallback >>
-                        #@nl
-            else:
-                g.trace('No such command: %s' % commandName)
-    
-        #@    << define modeHelpCallback >>
-        #@+node:ekr.20060119145631:<< define modeHelpCallback >>
-        def modeHelpCallback (event,k=k):
-            
-            if event and event.char != '':
-                return k.modeHelp(event)
-            else:
-                return 'break'
-        
-        # k.bindKey('all',stroke,modeHelpCallback,commandName)
-        
-        t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
-        #@nonl
-        #@-node:ekr.20060119145631:<< define modeHelpCallback >>
-        #@nl
+            if not func:
+                g.trace('No such command: %s' % commandName) ; continue
+            bunchList = d.get(commandName,[])
+            for bunch in bunchList:
+                shortcut = bunch.val
+                if shortcut and shortcut not in ('None','none',None):
+                    stroke = k.tkBindingFromSetting(shortcut)
+                    # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+                    d2 = k.masterBindingsDict.get(modeName,{})
+                    d2 [stroke] = g.Bunch(
+                        commandName=commandName,
+                        func=func,
+                        nextMode=bunch.nextMode,
+                        stroke=stroke)
+                    k.masterBindingsDict [ modeName ] = d2
+                
     #@nonl
     #@-node:ekr.20060119150624:createModeBindings
     #@+node:ekr.20060117202916.1:initMode
     def initMode (self,event,modeName):
     
         k = self ; c = k.c
-        
+    
         if not modeName:
-            g.trace('No mode name')
+            g.trace('oops: no modeName')
             return
     
-        k.inputModeName = modeName
         d = g.app.config.modeCommandsDict.get('enter-'+modeName)
         if not d:
             self.badMode(modeName)
             return
-    
-        t = k.modeWidget = g.app.gui.get_focus(c.frame)        
-        # t = c.frame.body.bodyCtrl
-        k.savedBindtags = t.bindtags()
-        tagName = '%s-%s' % (modeName,c.fileName())
-        t.bindtags(tuple([tagName]))
-        # g.trace(modeName,tagName,t.bindtags())
             
-        # Note: we much create separate bindings for each commander.
-        modeBindings = k.bindtagsDict.get(tagName)
-        if not modeBindings:
-            # g.trace('created mode bindings: %s' % (tagName))
-            k.createModeBindings(modeName,tagName,d)
-            k.bindtagsDict[tagName] = True
+        k.inputModeName = modeName
+        k.modeWidget = g.app.gui.get_focus(c.frame)
     
+        if k.masterBindingsDict.get(modeName) is None:
+            k.createModeBindings(modeName,d)
+       
         k.setLabelBlue(modeName+': ',protect=True)
         k.showStateAndMode()
         # Do *not* change the focus here!
@@ -1966,12 +1923,6 @@ class keyHandlerClass:
         k = self ; c = k.c
         
         w = g.app.gui.get_focus(c.frame)
-    
-        # Restore the bind tags.
-        # t = c.frame.body.bodyCtrl
-        t = k.modeWidget
-        t.bindtags(k.savedBindtags)
-        k.savedBindtags = None
         
         c.frame.log.deleteTab('Mode')
     

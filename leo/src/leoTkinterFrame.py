@@ -123,17 +123,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c.initVersion()
         c.signOnWithVersion()
         f.miniBufferWidget = f.createMiniBufferWidget()
-        f.createBindings()
         # f.enableTclTraces()
     #@nonl
-    #@+node:ekr.20060129051914.1:createBindings
-    def createBindings (self):
-        
-        f = self ; c = f.c
-        
-        if not g.app.new_keys:
-            f.body.createBindings(f)
-    #@-node:ekr.20060129051914.1:createBindings
     #@+node:ekr.20051009044751:createOuterFrames
     def createOuterFrames (self):
     
@@ -1697,7 +1688,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             g.es_event_exception("iconrclick")
     #@nonl
     #@-node:ekr.20031218072017.3977:OnBodyClick, OnBodyRClick (Events)
-    #@+node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
+    #@+node:ekr.20031218072017.3978:OnBodyDoubleClick (Events) (no longer used)
     def OnBodyDoubleClick (self,event=None):
     
         try:
@@ -1716,7 +1707,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             
         return "break" # Restore this to handle proper double-click logic.
     #@nonl
-    #@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
+    #@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events) (no longer used)
     #@+node:ekr.20031218072017.1803:OnMouseWheel (Tomaz Ficko)
     # Contributed by Tomaz Ficko.  This works on some systems.
     # On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
@@ -2242,23 +2233,32 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.2182:tkBody. __init__
     #@+node:ekr.20031218072017.838:tkBody.createBindings
-    def createBindings (self,frame):
+    def createBindings (self):
     
         '''(tkBody) Create gui-dependent bindings.
         These are *not* made in nullBody instances.'''
         
-        if not g.app.new_keys:
+        frame = self.frame ; c = self.c ; k = c.k ; t = self.bodyCtrl
     
-            c = self.c ; t = self.bodyCtrl
+        t.bind('<Key>',k.masterKeyHandler)
+    
+        for kind,func,handler in (
+            ('<Button-1>',frame.OnBodyClick,k.masterClickHandler),
+            ('<Button-3>',frame.OnBodyRClick,k.masterClick3Handler),
+        ):
+            def bodyClickCallback(event,handler=handler,func=func):
+                return handler(event,func)
+            t.bind(kind,bodyClickCallback)
             
-            # Event handlers...
-            t.bind("<Button-1>",frame.OnBodyClick)
-            t.bind("<Button-3>",frame.OnBodyRClick)
-            t.bind("<Double-Button-1>",frame.OnBodyDoubleClick)
-            
-            if sys.platform.startswith('win'):
-                # Support Linux middle-button paste easter egg.
-                t.bind("<Button-2>",frame.OnPaste)
+        for kind,handler in (
+            ('<Double-Button-1>',k.masterDoubleClickHandler),
+            ('<Double-Button-3>',k.masterDoubleClick3Handler),
+        ):
+            t.bind(kind,handler)
+                
+        if sys.platform.startswith('win'):
+            # Support Linux middle-button paste easter egg.
+            t.bind("<Button-2>",frame.OnPaste)
     #@nonl
     #@-node:ekr.20031218072017.838:tkBody.createBindings
     #@+node:ekr.20031218072017.3998:tkBody.createControl

@@ -73,8 +73,6 @@ class leoTkinterTree (leoFrame.leoTree):
     # - Added binding for plugBox so it doesn't interfere with the clickBox.  
     # Another weirdness.
     # 
-    # - Setting self.useBindtags = True also seems to work.
-    # 
     # - Re-enabled code in drawText that sets the headline state.
     # 
     # - Clear self.ids dict on each redraw so "invisible" id's don't confuse 
@@ -268,7 +266,6 @@ class leoTkinterTree (leoFrame.leoTree):
         self.textNumber = 0 # To make names unique.
         self.trace = False
         self.updateCount = 0 # Drawing is enabled only if self.updateCount <= 0
-        self.useBindtags = True
         self.verbose = True
         
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
@@ -294,86 +291,77 @@ class leoTkinterTree (leoFrame.leoTree):
         self.freeUserIcons = []
     #@nonl
     #@-node:ekr.20040803072955.16:__init__
-    #@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
-    def createPermanentBindings (self):
-        
-        c = self.c ; k = c.k ; canvas = self.canvas
-        
-        if g.app.new_keys:
-            
-            def treeClickCallback(event,self=self):
-                self.c.k.masterClickHandler(event,func=self.onTreeClick)
-            
-            canvas.bind('<Button-1>',treeClickCallback)
-            
-            table = [
-                ('iconBox','<Button-1>', self.onIconBoxClick),
-                ('iconBox','<Double-1>', self.onIconBoxDoubleClick),
-                ('iconBox','<Button-3>', self.onIconBoxRightClick),
-                ('iconBox','<B1-Motion>', self.onDrag),
-                ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
-            ]
-            
-            where = g.choose(self.expanded_click_area,'clickBox','plusBox')
-            table.append( (where,'<Button-1>', self.onClickBoxClick),)
-            
-            for a,b,func in table:
-                def treeTagBindCallback (event,self=self,func=func):
-                    # It's ok to call masterClickHandler for all these kinds of events.
-                    self.c.k.masterClickHandler(event,func=func)
-                canvas.tag_bind(a,b,treeTagBindCallback)
-        else:
-        
-            canvas.bind('<Button-1>',self.onTreeClick)
-        
-            if self.expanded_click_area:
-                canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
-            else:
-                canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
-        
-            canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
-        
-            canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
-            canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
-            canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
-            canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
-    
-            if self.useBindtags: # Create a dummy widget to hold all bindings.
-                t = self.bindingWidget
-                t.bind("<Button-1>", self.onHeadlineClick, '+')
-                t.bind("<Button-3>", self.onHeadlineRightClick, '+')
-                # There must be only one general key handler.
-                if 0:
-                    # Warning: k.selfInsertCommand only handles body text at present.
-                    t.bind('<Key>', headKeyCallback)
-                else:
-                    t.bind("<Key>", self.onHeadlineKey)
-    
-                if 0: # This does not appear necessary in 4.4.
-                    t.bind("<Control-t>",self.onControlT)
-    #@nonl
-    #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
     #@+node:ekr.20051024102724:tkTtree.setBindings
-    # New in 4.4a2.
-    
     def setBindings (self):
         
-        '''Copy all bindings to headlines.'''
+        '''Create master bindings for all headlines.'''
         
-        if g.app.new_keys:
-            self.createPermanentBindings()
-        else:
-            if self.useBindtags:
-                # This _must_ be a Text widget attached to the canvas!
-                self.bindingWidget = t = Tk.Text(self.canvas,name='dummyHeadBindingWidget')
-                self.c.keyHandler.copyBindingsToWidget(['text','tree','all'],t)
+        tree = self ; k = self.c.k
         
-                # newText() attaches these bindings to all headlines.
-                self.textBindings = t.bindtags()
-            else:
-                self.bindingWidget = None
-           
-            self.createPermanentBindings()
+        #@    << make bindings for a common binding widget >>
+        #@+node:ekr.20060131173440:<< make bindings for a common binding widget >>
+        self.bindingWidget = t = Tk.Text(self.canvas,name='bindingWidget')
+        
+        t.bind('<Key>',k.masterKeyHandler)
+        
+        table = (
+            ('<Button-1>',       k.masterClickHandler,          tree.onHeadlineClick),
+            ('<Button-3>',       k.masterClick3Handler,         tree.onHeadlineRightClick),
+            ('<Double-Button-1>',k.masterDoubleClickHandler,    tree.onHeadlineClick),
+            ('<Double-Button-3>',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
+        )
+        
+        for a,handler,func in table:
+            def treeBindingCallback(event,handler=handler,func=func):
+                return handler(event,func)
+            t.bind(a,treeBindingCallback)
+            
+        self.textBindings = t.bindtags()
+                
+        #g.trace(t.bind(),t.bindtags())
+        #@nonl
+        #@-node:ekr.20060131173440:<< make bindings for a common binding widget >>
+        #@nl
+        #@    << make bindings for the canvas itself >>
+        #@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
+        # Needed to transfer focus.
+        def treeClickCallback(event,self=self):
+            return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+        
+        self.canvas.bind('<Button-1>',treeClickCallback)
+        
+        self.canvas.bind('<Key>',k.masterKeyHandler),
+        #@nonl
+        #@-node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
+        #@nl
+        #@    << make bindings for tagged items on the canvas >>
+        #@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
+        table = [
+            ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
+            ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
+            ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
+            ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
+        ]
+        
+        where = g.choose(self.expanded_click_area,'clickBox','plusBox')
+        table.append((where,'<Button-1>',self.onClickBoxClick,k.masterClickHandler),)
+        
+        for a,b,func,handler in table:
+            def treeCallback(event,handler=handler,func=func):
+                return handler(event,func=func)
+            self.canvas.tag_bind(a,b,treeCallback)
+            
+        table = (
+            ('iconBox','<B1-Motion>',           self.onDrag),
+            ('iconBox','<Any-ButtonRelease-1>', self.onEndDrag),
+        )
+        
+        for a,b,handler in table:
+            def treeCallback2(event,handler=handler):
+                return handler(event)
+            self.canvas.tag_bind(a,b,treeCallback2)
+        #@-node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
+        #@nl
     #@nonl
     #@-node:ekr.20051024102724:tkTtree.setBindings
     #@+node:ekr.20040803072955.21:injectCallbacks
@@ -571,51 +559,31 @@ class leoTkinterTree (leoFrame.leoTree):
             self.textNumber += 1
             t = Tk.Text(canvas,name='head-%d' % self.textNumber,
                 state="normal",font=self.font,bd=0,relief="flat",height=1)
+            t.bindtags(self.textBindings) # Set the bindings for this widget.
+    
+            if 0: # Crashes on XP.
+                #@            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+                #@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+                def PropagateButton4(e):
+                    canvas.event_generate("<Button-4>")
+                    return "break"
                 
-            if g.app.new_keys:
-                t.bind('<Key>',k.masterKeyHandler,)
-                t.bind('<Button>',k.masterClickHandler)
-            else:
-                if self.useBindtags:
-                    t.bindtags(self.textBindings)
-                else:
-                    c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
-                    t.bind("<Button-1>", self.onHeadlineClick)
-                    t.bind("<Button-3>", self.onHeadlineRightClick)
-                    t.bind("<Key>",      self.onHeadlineKey)
+                def PropagateButton5(e):
+                    canvas.event_generate("<Button-5>")
+                    return "break"
+                
+                def PropagateMouseWheel(e):
+                    canvas.event_generate("<MouseWheel>")
+                    return "break"
+                
+                instance_tag = t.bindtags()[0]
+                t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+                t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+                t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+                #@nonl
+                #@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+                #@nl
         
-                if 0: # As of 4.4 this does not appear necessary.
-                    t.bind("<Control-t>",self.onControlT)
-        
-                if 0: # Crashes on XP.
-                    #@                << patch by Maciej Kalisiak to handle scroll-wheel events >>
-                    #@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
-                    def PropagateButton4(e):
-                        canvas.event_generate("<Button-4>")
-                        return "break"
-                    
-                    def PropagateButton5(e):
-                        canvas.event_generate("<Button-5>")
-                        return "break"
-                    
-                    def PropagateMouseWheel(e):
-                        canvas.event_generate("<MouseWheel>")
-                        return "break"
-                    
-                    if self.useBindtags:
-                        instance_tag = t.bindtags()[0]
-                        t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
-                        t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
-                        t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
-                    else:
-                        # UNTESTED CASE!!!
-                        t.bind("<Button-4>", PropagateButton4)
-                        t.bind("<Button-5>", PropagateButton5)
-                        t.bind("<MouseWheel>", PropagateMouseWheel)
-                    
-                    #@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
-                    #@nl
-            
             theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
             t.leo_window_id = theId # Never changes.
             

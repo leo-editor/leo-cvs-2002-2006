@@ -2240,19 +2240,20 @@ def modeHelpHelper (self,d):
 #@-node:ekr.20060104164523:modeHelp
 #@+node:ekr.20060104110233:generalModeHandler & helpers
 def generalModeHandler (self,event,
-    bunch=None,commandName=None,func=None,modeName=None):
+    commandName=None,func=None,modeName=None,nextMode=None):
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
     k = self ; c = k.c
     state = k.getState(modeName)
     w = g.app.gui.get_focus(c.frame)
-    trace = c.config.getBool('trace_modes')
+    trace = c.config.getBool('trace_modes') or c.config.getBool('trace_masterKeyHandler')
     
     if trace: g.trace(modeName,state)
    
     if state == 0:
         self.initMode(event,modeName)
+        k.inputModeName = modeName
         k.setState(modeName,1,handler=k.generalModeHandler)
         if c.config.getBool('showHelpWhenEnteringModes'):
             k.modeHelp(event)
@@ -2267,15 +2268,15 @@ def generalModeHandler (self,event,
         if commandName == 'mode-help':
             func(event)
         else:
-            nextMode = bunch.nextMode
+            # nextMode = bunch.nextMode
             self.endMode(event)
             func(event)
-            if nextMode == 'none':
+            if nextMode in (None,'none'):
                 # Do *not* clear k.inputModeName or the focus here.
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,modeName) # Re-enter this mode.
+                self.initMode(event,k.inputModeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -2293,84 +2294,50 @@ def badMode(self,modeName):
 #@nonl
 #@-node:ekr.20060117202916:badMode
 #@+node:ekr.20060119150624:createModeBindings
-def createModeBindings (self,modeName,tagName,d):
+def createModeBindings (self,modeName,d):
     
-    k = self ; c = k.c ; t = c.frame.body.bodyCtrl
-    
+    k = self ; c = k.c
+
     for commandName in d.keys():
         func = c.commandsDict.get(commandName)
-        if func:
-            bunchList = d.get(commandName,[])
-            for bunch in bunchList:
-                shortcut = bunch.val
-                if shortcut and shortcut not in ('None','none',None):
-                    stroke = k.tkBindingFromSetting(shortcut)
-                    # g.trace(stroke,shortcut)
-                    << define modeCallback >>
-        else:
-            g.trace('No such command: %s' % commandName)
-
-    << define modeHelpCallback >>
+        if not func:
+            g.trace('No such command: %s' % commandName) ; continue
+        bunchList = d.get(commandName,[])
+        for bunch in bunchList:
+            shortcut = bunch.val
+            if shortcut and shortcut not in ('None','none',None):
+                stroke = k.tkBindingFromSetting(shortcut)
+                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+                d2 = k.masterBindingsDict.get(modeName,{})
+                d2 [stroke] = g.Bunch(
+                    commandName=commandName,
+                    func=func,
+                    nextMode=bunch.nextMode,
+                    stroke=stroke)
+                k.masterBindingsDict [ modeName ] = d2
+            
 #@nonl
-#@+node:ekr.20060118181341:<< define modeCallback >>
-# g.trace('Mode %s: binding %s to %s' % (modeName,stroke,commandName))
-
-def modeCallback (event,k=k,
-    bunch=bunch,commandName=commandName,func=func,modeName=modeName,stroke=stroke):
-        
-    __pychecker__ = '--no-argsused' # stroke
-    
-    # g.trace(stroke)
-    return k.generalModeHandler(event,bunch,commandName,func,modeName)
-
-# k.bindKey('all',stroke,modeCallback,commandName)
-
-t.bind_class(tagName,stroke,modeCallback)
-#@nonl
-#@-node:ekr.20060118181341:<< define modeCallback >>
-#@+node:ekr.20060119145631:<< define modeHelpCallback >>
-def modeHelpCallback (event,k=k):
-    
-    if event and event.char != '':
-        return k.modeHelp(event)
-    else:
-        return 'break'
-
-# k.bindKey('all',stroke,modeHelpCallback,commandName)
-
-t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
-#@nonl
-#@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
 #@+node:ekr.20060117202916.1:initMode
 def initMode (self,event,modeName):
 
     k = self ; c = k.c
-    
+
     if not modeName:
-        g.trace('No mode name')
+        g.trace('oops: no modeName')
         return
 
-    k.inputModeName = modeName
     d = g.app.config.modeCommandsDict.get('enter-'+modeName)
     if not d:
         self.badMode(modeName)
         return
-
-    t = k.modeWidget = g.app.gui.get_focus(c.frame)        
-    # t = c.frame.body.bodyCtrl
-    k.savedBindtags = t.bindtags()
-    tagName = '%s-%s' % (modeName,c.fileName())
-    t.bindtags(tuple([tagName]))
-    # g.trace(modeName,tagName,t.bindtags())
         
-    # Note: we much create separate bindings for each commander.
-    modeBindings = k.bindtagsDict.get(tagName)
-    if not modeBindings:
-        # g.trace('created mode bindings: %s' % (tagName))
-        k.createModeBindings(modeName,tagName,d)
-        k.bindtagsDict[tagName] = True
+    k.inputModeName = modeName
+    k.modeWidget = g.app.gui.get_focus(c.frame)
 
+    if k.masterBindingsDict.get(modeName) is None:
+        k.createModeBindings(modeName,d)
+   
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     # Do *not* change the focus here!
@@ -2382,12 +2349,6 @@ def endMode(self,event):
     k = self ; c = k.c
     
     w = g.app.gui.get_focus(c.frame)
-
-    # Restore the bind tags.
-    # t = c.frame.body.bodyCtrl
-    t = k.modeWidget
-    t.bindtags(k.savedBindtags)
-    k.savedBindtags = None
     
     c.frame.log.deleteTab('Mode')
 
@@ -3046,14 +3007,11 @@ def doCommand (self,command,label,event=None):
         try:
             c.inCommand = True
             val = command(event)
+            c.inCommand = False
             if c and c.exists: # Be careful: the command could destroy c.
                 c.k.funcReturn = val
-                if c.requestCloseWindow:
-                    g.trace('Closing window after command')
-                    c.requestCloseWindow = False
-                    g.app.closeLeoWindow(c.frame)
-            c.inCommand = False
         except:
+            c.inCommand = False
             if g.app.unitTesting:
                 raise
             else:
@@ -3062,7 +3020,12 @@ def doCommand (self,command,label,event=None):
                 g.es_exception(c=c)
                 if c and c.exists and hasattr(c,'frame'):
                     c.redraw_now()
-    
+                    
+        if c and c.exists and c.requestCloseWindow:
+            g.trace('Closing window after command')
+            c.requestCloseWindow = False
+            g.app.closeLeoWindow(c.frame)
+
     # Be careful: the command could destroy c.
     if c and c.exists:
         p = c.currentPosition()
@@ -3819,29 +3782,10 @@ def makeAllBindings (self):
     k.addModeCommands() 
     k.makeBindingsFromCommandsDict()
     k.initSpecialIvars()
-    if g.app.new_keys:
-        for t in (
-            c.frame.body.bodyCtrl,
-            c.frame.tree.canvas,
-        ):
-            t.bind('<Key>',k.masterKeyHandler)
-            #t.bind('<Button>',k.masterClickHandler)
-            #t.bind('<Button-3>',k.masterClick3Handler)
-            #t.bind('<Double-Button>',k.masterDoubleClickHandler)
-            #t.bind('<Double-Button-3>',k.masterDoubleClick3Handler)
-    else:
-        if k.useTextWidget:
-            k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
-
+    c.frame.body.createBindings()
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
     k.checkBindings()
-    
-    if 0:
-        # Print the keysym_num dicts.
-        d = k.keysym_numberInverseDict
-        keys = d.keys() ; keys.sort()
-        for key in key():
-            n = d.get(key)
-            # print 'keysym_num for %s = %d' % (key,n)
 #@nonl
 #@-node:ekr.20051007080058:k.makeAllBindings
 #@+node:ekr.20060104154937:addModeCommands
@@ -3984,19 +3928,20 @@ def modeHelpHelper (self,d):
 #@-node:ekr.20060104164523:modeHelp
 #@+node:ekr.20060104110233:generalModeHandler & helpers
 def generalModeHandler (self,event,
-    bunch=None,commandName=None,func=None,modeName=None):
+    commandName=None,func=None,modeName=None,nextMode=None):
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
     k = self ; c = k.c
     state = k.getState(modeName)
     w = g.app.gui.get_focus(c.frame)
-    trace = c.config.getBool('trace_modes')
+    trace = c.config.getBool('trace_modes') or c.config.getBool('trace_masterKeyHandler')
     
     if trace: g.trace(modeName,state)
    
     if state == 0:
         self.initMode(event,modeName)
+        k.inputModeName = modeName
         k.setState(modeName,1,handler=k.generalModeHandler)
         if c.config.getBool('showHelpWhenEnteringModes'):
             k.modeHelp(event)
@@ -4011,15 +3956,15 @@ def generalModeHandler (self,event,
         if commandName == 'mode-help':
             func(event)
         else:
-            nextMode = bunch.nextMode
+            # nextMode = bunch.nextMode
             self.endMode(event)
             func(event)
-            if nextMode == 'none':
+            if nextMode in (None,'none'):
                 # Do *not* clear k.inputModeName or the focus here.
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,modeName) # Re-enter this mode.
+                self.initMode(event,k.inputModeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -4037,84 +3982,50 @@ def badMode(self,modeName):
 #@nonl
 #@-node:ekr.20060117202916:badMode
 #@+node:ekr.20060119150624:createModeBindings
-def createModeBindings (self,modeName,tagName,d):
+def createModeBindings (self,modeName,d):
     
-    k = self ; c = k.c ; t = c.frame.body.bodyCtrl
-    
+    k = self ; c = k.c
+
     for commandName in d.keys():
         func = c.commandsDict.get(commandName)
-        if func:
-            bunchList = d.get(commandName,[])
-            for bunch in bunchList:
-                shortcut = bunch.val
-                if shortcut and shortcut not in ('None','none',None):
-                    stroke = k.tkBindingFromSetting(shortcut)
-                    # g.trace(stroke,shortcut)
-                    << define modeCallback >>
-        else:
-            g.trace('No such command: %s' % commandName)
-
-    << define modeHelpCallback >>
+        if not func:
+            g.trace('No such command: %s' % commandName) ; continue
+        bunchList = d.get(commandName,[])
+        for bunch in bunchList:
+            shortcut = bunch.val
+            if shortcut and shortcut not in ('None','none',None):
+                stroke = k.tkBindingFromSetting(shortcut)
+                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+                d2 = k.masterBindingsDict.get(modeName,{})
+                d2 [stroke] = g.Bunch(
+                    commandName=commandName,
+                    func=func,
+                    nextMode=bunch.nextMode,
+                    stroke=stroke)
+                k.masterBindingsDict [ modeName ] = d2
+            
 #@nonl
-#@+node:ekr.20060118181341:<< define modeCallback >>
-# g.trace('Mode %s: binding %s to %s' % (modeName,stroke,commandName))
-
-def modeCallback (event,k=k,
-    bunch=bunch,commandName=commandName,func=func,modeName=modeName,stroke=stroke):
-        
-    __pychecker__ = '--no-argsused' # stroke
-    
-    # g.trace(stroke)
-    return k.generalModeHandler(event,bunch,commandName,func,modeName)
-
-# k.bindKey('all',stroke,modeCallback,commandName)
-
-t.bind_class(tagName,stroke,modeCallback)
-#@nonl
-#@-node:ekr.20060118181341:<< define modeCallback >>
-#@+node:ekr.20060119145631:<< define modeHelpCallback >>
-def modeHelpCallback (event,k=k):
-    
-    if event and event.char != '':
-        return k.modeHelp(event)
-    else:
-        return 'break'
-
-# k.bindKey('all',stroke,modeHelpCallback,commandName)
-
-t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
-#@nonl
-#@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
 #@+node:ekr.20060117202916.1:initMode
 def initMode (self,event,modeName):
 
     k = self ; c = k.c
-    
+
     if not modeName:
-        g.trace('No mode name')
+        g.trace('oops: no modeName')
         return
 
-    k.inputModeName = modeName
     d = g.app.config.modeCommandsDict.get('enter-'+modeName)
     if not d:
         self.badMode(modeName)
         return
-
-    t = k.modeWidget = g.app.gui.get_focus(c.frame)        
-    # t = c.frame.body.bodyCtrl
-    k.savedBindtags = t.bindtags()
-    tagName = '%s-%s' % (modeName,c.fileName())
-    t.bindtags(tuple([tagName]))
-    # g.trace(modeName,tagName,t.bindtags())
         
-    # Note: we much create separate bindings for each commander.
-    modeBindings = k.bindtagsDict.get(tagName)
-    if not modeBindings:
-        # g.trace('created mode bindings: %s' % (tagName))
-        k.createModeBindings(modeName,tagName,d)
-        k.bindtagsDict[tagName] = True
+    k.inputModeName = modeName
+    k.modeWidget = g.app.gui.get_focus(c.frame)
 
+    if k.masterBindingsDict.get(modeName) is None:
+        k.createModeBindings(modeName,d)
+   
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     # Do *not* change the focus here!
@@ -4126,12 +4037,6 @@ def endMode(self,event):
     k = self ; c = k.c
     
     w = g.app.gui.get_focus(c.frame)
-
-    # Restore the bind tags.
-    # t = c.frame.body.bodyCtrl
-    t = k.modeWidget
-    t.bindtags(k.savedBindtags)
-    k.savedBindtags = None
     
     c.frame.log.deleteTab('Mode')
 
@@ -4725,29 +4630,10 @@ def makeAllBindings (self):
     k.addModeCommands() 
     k.makeBindingsFromCommandsDict()
     k.initSpecialIvars()
-    if g.app.new_keys:
-        for t in (
-            c.frame.body.bodyCtrl,
-            c.frame.tree.canvas,
-        ):
-            t.bind('<Key>',k.masterKeyHandler)
-            #t.bind('<Button>',k.masterClickHandler)
-            #t.bind('<Button-3>',k.masterClick3Handler)
-            #t.bind('<Double-Button>',k.masterDoubleClickHandler)
-            #t.bind('<Double-Button-3>',k.masterDoubleClick3Handler)
-    else:
-        if k.useTextWidget:
-            k.copyBindingsToWidget(['text','mini','all'],c.miniBufferWidget)
-
+    c.frame.body.createBindings()
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
     k.checkBindings()
-    
-    if 0:
-        # Print the keysym_num dicts.
-        d = k.keysym_numberInverseDict
-        keys = d.keys() ; keys.sort()
-        for key in key():
-            n = d.get(key)
-            # print 'keysym_num for %s = %d' % (key,n)
 #@nonl
 #@-node:ekr.20051007080058:k.makeAllBindings
 #@+node:ekr.20060104154937:addModeCommands
@@ -7653,14 +7539,11 @@ def doCommand (self,command,label,event=None):
         try:
             c.inCommand = True
             val = command(event)
+            c.inCommand = False
             if c and c.exists: # Be careful: the command could destroy c.
                 c.k.funcReturn = val
-                if c.requestCloseWindow:
-                    g.trace('Closing window after command')
-                    c.requestCloseWindow = False
-                    g.app.closeLeoWindow(c.frame)
-            c.inCommand = False
         except:
+            c.inCommand = False
             if g.app.unitTesting:
                 raise
             else:
@@ -7669,7 +7552,12 @@ def doCommand (self,command,label,event=None):
                 g.es_exception(c=c)
                 if c and c.exists and hasattr(c,'frame'):
                     c.redraw_now()
-    
+                    
+        if c and c.exists and c.requestCloseWindow:
+            g.trace('Closing window after command')
+            c.requestCloseWindow = False
+            g.app.closeLeoWindow(c.frame)
+
     # Be careful: the command could destroy c.
     if c and c.exists:
         p = c.currentPosition()
@@ -14143,65 +14031,6 @@ def endEditLabel (self):
     self.onHeadChanged(p)
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
-#@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
-def createPermanentBindings (self):
-    
-    c = self.c ; k = c.k ; canvas = self.canvas
-    
-    if g.app.new_keys:
-        
-        def treeClickCallback(event,self=self):
-            self.c.k.masterClickHandler(event,func=self.onTreeClick)
-        
-        canvas.bind('<Button-1>',treeClickCallback)
-        
-        table = [
-            ('iconBox','<Button-1>', self.onIconBoxClick),
-            ('iconBox','<Double-1>', self.onIconBoxDoubleClick),
-            ('iconBox','<Button-3>', self.onIconBoxRightClick),
-            ('iconBox','<B1-Motion>', self.onDrag),
-            ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
-        ]
-        
-        where = g.choose(self.expanded_click_area,'clickBox','plusBox')
-        table.append( (where,'<Button-1>', self.onClickBoxClick),)
-        
-        for a,b,func in table:
-            def treeTagBindCallback (event,self=self,func=func):
-                # It's ok to call masterClickHandler for all these kinds of events.
-                self.c.k.masterClickHandler(event,func=func)
-            canvas.tag_bind(a,b,treeTagBindCallback)
-    else:
-    
-        canvas.bind('<Button-1>',self.onTreeClick)
-    
-        if self.expanded_click_area:
-            canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
-        else:
-            canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
-    
-        canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
-    
-        canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
-        canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
-        canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
-        canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
-
-        if self.useBindtags: # Create a dummy widget to hold all bindings.
-            t = self.bindingWidget
-            t.bind("<Button-1>", self.onHeadlineClick, '+')
-            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
-            # There must be only one general key handler.
-            if 0:
-                # Warning: k.selfInsertCommand only handles body text at present.
-                t.bind('<Key>', headKeyCallback)
-            else:
-                t.bind("<Key>", self.onHeadlineKey)
-
-            if 0: # This does not appear necessary in 4.4.
-                t.bind("<Control-t>",self.onControlT)
-#@nonl
-#@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
 #@+node:ekr.20040803072955.11:newText (leoTkinterTree)
 def newText (self,p,x,y):
     
@@ -14229,25 +14058,11 @@ def newText (self,p,x,y):
         self.textNumber += 1
         t = Tk.Text(canvas,name='head-%d' % self.textNumber,
             state="normal",font=self.font,bd=0,relief="flat",height=1)
-            
-        if g.app.new_keys:
-            t.bind('<Key>',k.masterKeyHandler,)
-            t.bind('<Button>',k.masterClickHandler)
-        else:
-            if self.useBindtags:
-                t.bindtags(self.textBindings)
-            else:
-                c.keyHandler.copyBindingsToWidget(['text','all'],t) # Text *must* be in the list.
-                t.bind("<Button-1>", self.onHeadlineClick)
-                t.bind("<Button-3>", self.onHeadlineRightClick)
-                t.bind("<Key>",      self.onHeadlineKey)
+        t.bindtags(self.textBindings) # Set the bindings for this widget.
+
+        if 0: # Crashes on XP.
+            << patch by Maciej Kalisiak to handle scroll-wheel events >>
     
-            if 0: # As of 4.4 this does not appear necessary.
-                t.bind("<Control-t>",self.onControlT)
-    
-            if 0: # Crashes on XP.
-                << patch by Maciej Kalisiak to handle scroll-wheel events >>
-        
         theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
         t.leo_window_id = theId # Never changes.
         
@@ -14285,17 +14100,11 @@ def PropagateMouseWheel(e):
     canvas.event_generate("<MouseWheel>")
     return "break"
 
-if self.useBindtags:
-    instance_tag = t.bindtags()[0]
-    t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
-    t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
-    t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
-else:
-    # UNTESTED CASE!!!
-    t.bind("<Button-4>", PropagateButton4)
-    t.bind("<Button-5>", PropagateButton5)
-    t.bind("<MouseWheel>", PropagateMouseWheel)
-
+instance_tag = t.bindtags()[0]
+t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+#@nonl
 #@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
 #@-node:ekr.20040803072955.11:newText (leoTkinterTree)
 #@-node:ekr.20060121095848.3:Tree...
@@ -14367,19 +14176,20 @@ def modeHelpHelper (self,d):
 #@-node:ekr.20060104164523:modeHelp
 #@+node:ekr.20060104110233:generalModeHandler & helpers
 def generalModeHandler (self,event,
-    bunch=None,commandName=None,func=None,modeName=None):
+    commandName=None,func=None,modeName=None,nextMode=None):
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
     k = self ; c = k.c
     state = k.getState(modeName)
     w = g.app.gui.get_focus(c.frame)
-    trace = c.config.getBool('trace_modes')
+    trace = c.config.getBool('trace_modes') or c.config.getBool('trace_masterKeyHandler')
     
     if trace: g.trace(modeName,state)
    
     if state == 0:
         self.initMode(event,modeName)
+        k.inputModeName = modeName
         k.setState(modeName,1,handler=k.generalModeHandler)
         if c.config.getBool('showHelpWhenEnteringModes'):
             k.modeHelp(event)
@@ -14394,15 +14204,15 @@ def generalModeHandler (self,event,
         if commandName == 'mode-help':
             func(event)
         else:
-            nextMode = bunch.nextMode
+            # nextMode = bunch.nextMode
             self.endMode(event)
             func(event)
-            if nextMode == 'none':
+            if nextMode in (None,'none'):
                 # Do *not* clear k.inputModeName or the focus here.
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,modeName) # Re-enter this mode.
+                self.initMode(event,k.inputModeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -14420,84 +14230,50 @@ def badMode(self,modeName):
 #@nonl
 #@-node:ekr.20060117202916:badMode
 #@+node:ekr.20060119150624:createModeBindings
-def createModeBindings (self,modeName,tagName,d):
+def createModeBindings (self,modeName,d):
     
-    k = self ; c = k.c ; t = c.frame.body.bodyCtrl
-    
+    k = self ; c = k.c
+
     for commandName in d.keys():
         func = c.commandsDict.get(commandName)
-        if func:
-            bunchList = d.get(commandName,[])
-            for bunch in bunchList:
-                shortcut = bunch.val
-                if shortcut and shortcut not in ('None','none',None):
-                    stroke = k.tkBindingFromSetting(shortcut)
-                    # g.trace(stroke,shortcut)
-                    << define modeCallback >>
-        else:
-            g.trace('No such command: %s' % commandName)
-
-    << define modeHelpCallback >>
+        if not func:
+            g.trace('No such command: %s' % commandName) ; continue
+        bunchList = d.get(commandName,[])
+        for bunch in bunchList:
+            shortcut = bunch.val
+            if shortcut and shortcut not in ('None','none',None):
+                stroke = k.tkBindingFromSetting(shortcut)
+                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+                d2 = k.masterBindingsDict.get(modeName,{})
+                d2 [stroke] = g.Bunch(
+                    commandName=commandName,
+                    func=func,
+                    nextMode=bunch.nextMode,
+                    stroke=stroke)
+                k.masterBindingsDict [ modeName ] = d2
+            
 #@nonl
-#@+node:ekr.20060118181341:<< define modeCallback >>
-# g.trace('Mode %s: binding %s to %s' % (modeName,stroke,commandName))
-
-def modeCallback (event,k=k,
-    bunch=bunch,commandName=commandName,func=func,modeName=modeName,stroke=stroke):
-        
-    __pychecker__ = '--no-argsused' # stroke
-    
-    # g.trace(stroke)
-    return k.generalModeHandler(event,bunch,commandName,func,modeName)
-
-# k.bindKey('all',stroke,modeCallback,commandName)
-
-t.bind_class(tagName,stroke,modeCallback)
-#@nonl
-#@-node:ekr.20060118181341:<< define modeCallback >>
-#@+node:ekr.20060119145631:<< define modeHelpCallback >>
-def modeHelpCallback (event,k=k):
-    
-    if event and event.char != '':
-        return k.modeHelp(event)
-    else:
-        return 'break'
-
-# k.bindKey('all',stroke,modeHelpCallback,commandName)
-
-t.bind_class(tagName,'<Key>',modeHelpCallback,'+')
-#@nonl
-#@-node:ekr.20060119145631:<< define modeHelpCallback >>
 #@-node:ekr.20060119150624:createModeBindings
 #@+node:ekr.20060117202916.1:initMode
 def initMode (self,event,modeName):
 
     k = self ; c = k.c
-    
+
     if not modeName:
-        g.trace('No mode name')
+        g.trace('oops: no modeName')
         return
 
-    k.inputModeName = modeName
     d = g.app.config.modeCommandsDict.get('enter-'+modeName)
     if not d:
         self.badMode(modeName)
         return
-
-    t = k.modeWidget = g.app.gui.get_focus(c.frame)        
-    # t = c.frame.body.bodyCtrl
-    k.savedBindtags = t.bindtags()
-    tagName = '%s-%s' % (modeName,c.fileName())
-    t.bindtags(tuple([tagName]))
-    # g.trace(modeName,tagName,t.bindtags())
         
-    # Note: we much create separate bindings for each commander.
-    modeBindings = k.bindtagsDict.get(tagName)
-    if not modeBindings:
-        # g.trace('created mode bindings: %s' % (tagName))
-        k.createModeBindings(modeName,tagName,d)
-        k.bindtagsDict[tagName] = True
+    k.inputModeName = modeName
+    k.modeWidget = g.app.gui.get_focus(c.frame)
 
+    if k.masterBindingsDict.get(modeName) is None:
+        k.createModeBindings(modeName,d)
+   
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     # Do *not* change the focus here!
@@ -14509,12 +14285,6 @@ def endMode(self,event):
     k = self ; c = k.c
     
     w = g.app.gui.get_focus(c.frame)
-
-    # Restore the bind tags.
-    # t = c.frame.body.bodyCtrl
-    t = k.modeWidget
-    t.bindtags(k.savedBindtags)
-    k.savedBindtags = None
     
     c.frame.log.deleteTab('Mode')
 
@@ -14603,6 +14373,1001 @@ def showStateAndMode(self):
 #@-node:ekr.20060120193743:showStateAndMode
 #@-node:ekr.20060115103349:Modes & input states
 #@-node:ekr.20060120105605.1:(Modes project)
+#@+node:ekr.20060126163152.1:(Master key handler)
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+    
+    self.new_keys = True
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.dialogs = 0 # Count of open dialogs.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scanErrors = 0 # The number of errors seen by g.scanError.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
+    self.trace = False # True: enable debugging traces.
+    self.trace_gc = False
+    self.trace_gc_verbose = False
+    self.trace_gc_inited = False
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.user_xresources_path = None # Resource file for Tk/tcl.
+    self.wantedCommander = None # Used by tkFrame.set_focus.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */", # C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "plsql" : "-- /* */", # SQL scripts qt02537 2005-05-27
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    # "perl" : "perl",
+    # "perlpod" : "perl",
+    "perl" : "pl",      # 11/7/05
+    "perlpod" : "pod",  # 11/7/05
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "plsql" : "sql", # qt02537 2005-05-27
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    # "perl"  : "perl",
+    "pl"    : "perl",   # 11/7/05
+    "pod"   : "perlpod", # 11/7/05
+    "php"   : "php",
+    "py"    : "python",
+    "sql"   : "plsql", # qt02537 2005-05-27
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@nonl
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@+node:ekr.20031218072017.2098:canonicalizeShortcut
+@ This code "canonicalizes" both the shortcuts that appear in menus and the
+arguments to bind, mostly ignoring case and the order in which special keys are
+specified.
+
+For example, Ctrl+Shift+a is the same as Shift+Control+A. Each generates
+Shift+Ctrl-A in the menu and Control+A as the argument to bind.
+
+Returns (bind_shortcut, menu_shortcut)
+@c
+
+def canonicalizeShortcut (self,shortcut):
+    
+    if shortcut == None or len(shortcut) == 0:
+        if g.app.new_keys:  return None
+        else:               return None,None
+    s = shortcut.strip()
+    s2 = s.lower()
+    cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+    ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+    alt   = s2.find("alt") >= 0
+    shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
+    if sys.platform == "darwin":
+        if ctrl and not cmd:
+            cmd = True ; ctrl = False
+        if alt and not ctrl:
+            ctrl = True ; alt = False
+    if g.app.new_keys: # New, simplified.
+        << convert minus signs to plus signs >>
+        << compute the last field >>
+        << compute shortcut >>
+        return shortcut
+    else:
+        << set the last field, preserving case >>
+        << canonicalize the last field >>
+        << synthesize the shortcuts from the information >>
+        # g.trace('bind: %25s menu: %s' % (bind_shortcut,menu_shortcut))
+        return bind_shortcut,menu_shortcut
+#@nonl
+#@+node:ekr.20060128103640:old
+#@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+s2 = shortcut
+s2 = string.strip(s2)
+
+# Replace all minus signs by plus signs, except a trailing minus:
+if len(s2) > 0 and s2[-1] == "-":
+    s2 = string.replace(s2,"-","+")
+    s2 = s2[:-1] + "-"
+else:
+    s2 = string.replace(s2,"-","+")
+
+fields = string.split(s2,"+")
+if fields == None or len(fields) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+
+last = fields[-1]
+if last == None or len(last) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+#@nonl
+#@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+#@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
+bind_last = menu_last = last
+if len(last) == 1:
+    ch = last[0]
+    if ch in string.ascii_letters:
+        menu_last = string.upper(last)
+        if shift:
+            bind_last = string.upper(last)
+        else:
+            bind_last = string.lower(last)
+    elif ch in string.digits:
+        bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+    else:
+        d = self.tkBindNamesDict
+        if ch in d.keys():
+            bind_last = d[ch]
+elif len(last) > 0:
+    d = self.settingsNameDict
+    last2 = string.lower(last)
+    if last2 in d.keys():
+        if g.app.new_keys:
+            bind_last = menu_last = d[last2]
+        else:
+            bind_last,menu_last = d[last2]
+#@nonl
+#@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
+#@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+bind_head = menu_head = ""
+
+if alt:
+    bind_head = bind_head + "Alt-"
+    menu_head = menu_head + "Alt+"
+
+if ctrl:
+    bind_head = bind_head + "Control-"
+    menu_head = menu_head + "Ctrl+"
+    
+if cmd:
+    bind_head = bind_head + "Command-"
+    menu_head = menu_head + "Command+"
+    
+if shift:
+    menu_head = menu_head + "Shift+"
+    if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+        bind_head = bind_head + "Shift-"
+
+# New in 4.4a6: Only the menu_shortcut will exist.
+if not menu_head:
+    menu_shortcut = 'Key+%s' % menu_last
+else:
+    menu_shortcut = menu_head + menu_last
+    
+# To be removed in 4.4a6
+if not bind_head and bind_last and len(bind_last) == 1:
+    bind_shortcut = '<Key-%s>' % bind_last
+else:
+    bind_shortcut = "<" + bind_head + bind_last + ">"
+    
+#@nonl
+#@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+#@-node:ekr.20060128103640:old
+#@+node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+# Replace all minus signs by plus signs, except a trailing minus:
+if s.endswith('-'):
+    s = s[:-1].replace('-','+') + '-'
+else:
+    s = s.replace('-','+')
+#@nonl
+#@-node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+#@+node:ekr.20060128103640.2:<< compute the last field >>
+fields = s.split('+') # Don't lower this field.
+if not fields:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s1
+    return None,None
+
+last = fields[-1]
+if not last:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s1
+    return None,None
+
+if len(last) == 1:
+    if shift:
+        last = last.upper()
+        shift = False
+    else:
+        last = last.lower()
+else:
+    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+    # This is a *one-way* translation, done only here.
+    d = self.settingsNameDict
+    last = d.get(last.lower(),last)
+#@nonl
+#@-node:ekr.20060128103640.2:<< compute the last field >>
+#@+node:ekr.20060128103640.4:<< compute shortcut >>
+# if shift and len(last) == 1 and last.isalpha():
+    # shift = False
+
+table = (
+    (alt, 'Alt+'),
+    (ctrl,'Ctrl+'),
+    (cmd, 'Cmnd+'),
+    (shift,'Shift+'),
+    (True,last),
+)
+    
+shortcut = ''.join([val for flag,val in table if flag])
+#@nonl
+#@-node:ekr.20060128103640.4:<< compute shortcut >>
+#@-node:ekr.20031218072017.2098:canonicalizeShortcut
+#@+node:ekr.20060129052538.1:master event handlers (keyHandler)
+    
+#@nonl
+#@+node:ekr.20060127183752:masterKeyHandler
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+
+    k = self ; c = k.c ; trace = c.config.getBool('trace_masterKeyHandler')
+    if not event:
+        g.trace('oops: no event')
+        return
+
+    keysym = event.keysym or ''
+    if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
+        return
+
+    stroke = k.strokeFromEvent(event)
+    if k.inState():
+        state = k.state.kind
+        if trace: g.trace(repr(stroke),'state',state)
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            b = d.get(stroke)
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
+        else:
+            g.trace('no dict for %s' % state)
+            return k.modeHelp(event)
+    else:
+        w = event and event.widget
+        w_name = g.app.gui.widget_name(w)
+        
+        for key,name in (
+            # Order here is similar to bindtags order.
+            ('mini','mini'), ('body','body'),
+            ('tree','head'), ('tree','canvas'),
+            ('log', 'log'),
+            ('text',None), ('all',None),
+        ):
+            if (
+                name and w_name.startswith(name) or
+                key == 'text' and g.app.gui.isTextWidget(w) or
+                key == 'all'
+            ):
+                d = k.masterBindingsDict.get(key)
+                # g.trace(key,name,d and len(d.keys()))
+                if d:
+                    b = d.get(stroke)
+                    if b:
+                        if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                        return k.masterCommand(event,b.func,b.stroke,b.commandName)
+                            
+    if trace: g.trace(repr(stroke),'no func')
+    return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+#@nonl
+#@-node:ekr.20060127183752:masterKeyHandler
+#@+node:ekr.20060129052538.2:masterClickHandler
+def masterClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c
+
+    # button = event and hasattr(event,'button') and event.button or '<no button>'
+    w = event and event.widget or '<no widget>'
+    name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+        
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20060129052538.2:masterClickHandler
+#@+node:ekr.20060130130942:masterClick3Handler
+def masterClick3Handler (self,event,func=None):
+    
+    k = self ; c = k.c
+    
+    if not event: return
+    
+    w = event.widget or '<no widget>'
+    name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+        
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20060130130942:masterClick3Handler
+#@+node:ekr.20060131084938:masterDoubleClickHandler
+def masterDoubleClickHandler (self,event,func=None):
+
+    if not event or not event.widget: return 'break' ;
+
+    k = self ; c = k.c ; p = c.currentPosition()
+    w = event.widget ; name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+        
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        i = w.index("@%d,%d" % (event.x,event.y))
+        g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+        return 'break'
+#@nonl
+#@-node:ekr.20060131084938:masterDoubleClickHandler
+#@+node:ekr.20060131085116:masterDoubleClick3Handler
+def masterDoubleClick3Handler (self,event,func=None):
+    
+    k = self ; c = k.c
+    
+    # button = event and hasattr(event,'button') and event.button or '<no button>'
+    w = event and event.widget or '<no widget>'
+    name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20060131085116:masterDoubleClick3Handler
+#@+node:ekr.20060128090219:masterMenuHandler
+def masterMenuHandler (self,stroke,command,commandName):
+    
+    k = self ; event = None ; func = command
+    
+    # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
+    
+    return k.masterCommand(event,func,stroke,commandName)
+#@nonl
+#@-node:ekr.20060128090219:masterMenuHandler
+#@-node:ekr.20060129052538.1:master event handlers (keyHandler)
+#@+node:ekr.20060126163152.2:k.strokeFromEvent
+# The keys to k.bindingsDict must be consistent with what this method returns.
+# See 'about internal bindings' for details.
+ 
+def strokeFromEvent (self,event):
+    
+    c = self.c ; k = c.k
+    if event is None: return ''
+    state = event.state or 0
+    keysym = event.keysym or ''
+    ch = event.char
+    result = []
+    shift = (state & 1) == 1 # Used *only* to give a warning.
+    caps  = (state & 2) == 2 # Not used at all.
+    ctrl  = (state & 4) == 4
+    alt   = (state & 0x20000) == 0x20000
+    plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
+    
+    # g.trace('ch',repr(ch),'keysym',repr(keysym))
+    
+    # The big aha: we can ignore the shift state.
+    if plain:
+        if shift and ch.isalpha() and ch.islower():
+            g.trace('oops: inconsistent shift state. shift: %s, ch: %s' % (shift,ch))
+        ch = keysym
+    else:
+        ch2 = k.tkBindNamesInverseDict.get(keysym)
+        if ch2:
+            ch = ch2 
+        else:
+            # Just use the unknown keysym.
+            g.trace('*'*30,'unknown keysym',repr(keysym))
+    
+    if alt: result.append('Alt+')
+    if ctrl: result.append('Ctrl+')
+    result.append(ch)
+    result = ''.join(result)
+    # g.trace('state',state,'keysym',keysym,'result',repr(result))
+    return result
+#@nonl
+#@-node:ekr.20060126163152.2:k.strokeFromEvent
+#@+node:ekr.20051007080058:k.makeAllBindings
+def makeAllBindings (self):
+    
+    k = self ; c = k.c
+
+    k.bindingsDict = {}
+    
+    k.addModeCommands() 
+    k.makeBindingsFromCommandsDict()
+    k.initSpecialIvars()
+    c.frame.body.createBindings()
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
+    k.checkBindings()
+#@nonl
+#@-node:ekr.20051007080058:k.makeAllBindings
+#@+node:ekr.20051008152134:initSpecialIvars
+def initSpecialIvars (self):
+    
+    '''Set ivars for special keystrokes from previously-existing bindings.'''
+
+    k = self ; c = k.c
+    
+    for ivar,commandName in (
+        ('fullCommandKey',  'full-command'),
+        ('abortAllModesKey','keyboard-quit'),
+        ('universalArgKey', 'universal-argument'),
+    ):
+        junk, bunchList = c.config.getShortcut(commandName)
+        # g.trace(commandName,bunchList)
+        bunchList = bunchList or [] ; found = False
+        for pane in ('text','all'):
+            for bunch in bunchList:
+                if bunch.pane == pane:
+                    stroke = k.strokeFromSetting(bunch.val)
+                    # g.trace(commandName,stroke)
+                    setattr(k,ivar,stroke) ; found = True ;break
+        if not found:
+            g.trace('no setting for %s' % commandName)
+
+    # Add a binding for <Key> events, so all key events go through masterCommand.
+    if not g.app.new_keys:
+        def allKeysCallback (event):
+            return k.masterCommand(event,func=None,stroke='<Key>')
+    
+        k.bindKey('all','<Key>',allKeysCallback,'master-command')
+#@nonl
+#@-node:ekr.20051008152134:initSpecialIvars
+#@-node:ekr.20060126163152.1:(Master key handler)
+#@+node:ekr.20060131120250:(Send all clicks through k.masterClickHandlers)
+#@+node:ekr.20060131191731:What I did
+@nocolor
+
+The master event handlers are now very simple and very general;
+they simply call the given func if one is supplied.
+
+The reason for this indirection is so we can intercept clicks when in the minibuffer.
+#@nonl
+#@-node:ekr.20060131191731:What I did
+#@+node:ekr.20060131133241:Tree
+#@+node:ekr.20051024102724:tkTtree.setBindings
+def setBindings (self):
+    
+    '''Create master bindings for all headlines.'''
+    
+    tree = self ; k = self.c.k
+    
+    << make bindings for a common binding widget >>
+    << make bindings for the canvas itself >>
+    << make bindings for tagged items on the canvas >>
+#@nonl
+#@+node:ekr.20060131173440:<< make bindings for a common binding widget >>
+self.bindingWidget = t = Tk.Text(self.canvas,name='bindingWidget')
+
+t.bind('<Key>',k.masterKeyHandler)
+
+table = (
+    ('<Button-1>',       k.masterClickHandler,          tree.onHeadlineClick),
+    ('<Button-3>',       k.masterClick3Handler,         tree.onHeadlineRightClick),
+    ('<Double-Button-1>',k.masterDoubleClickHandler,    tree.onHeadlineClick),
+    ('<Double-Button-3>',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
+)
+
+for a,handler,func in table:
+    def treeBindingCallback(event,handler=handler,func=func):
+        return handler(event,func)
+    t.bind(a,treeBindingCallback)
+    
+self.textBindings = t.bindtags()
+        
+#g.trace(t.bind(),t.bindtags())
+#@nonl
+#@-node:ekr.20060131173440:<< make bindings for a common binding widget >>
+#@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
+# Needed to transfer focus.
+def treeClickCallback(event,self=self):
+    return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+
+self.canvas.bind('<Button-1>',treeClickCallback)
+
+self.canvas.bind('<Key>',k.masterKeyHandler),
+#@nonl
+#@-node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
+#@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
+table = [
+    ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
+    ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
+    ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
+    ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
+]
+
+where = g.choose(self.expanded_click_area,'clickBox','plusBox')
+table.append((where,'<Button-1>',self.onClickBoxClick,k.masterClickHandler),)
+
+for a,b,func,handler in table:
+    def treeCallback(event,handler=handler,func=func):
+        return handler(event,func=func)
+    self.canvas.tag_bind(a,b,treeCallback)
+    
+table = (
+    ('iconBox','<B1-Motion>',           self.onDrag),
+    ('iconBox','<Any-ButtonRelease-1>', self.onEndDrag),
+)
+
+for a,b,handler in table:
+    def treeCallback2(event,handler=handler):
+        return handler(event)
+    self.canvas.tag_bind(a,b,treeCallback2)
+#@-node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
+#@-node:ekr.20051024102724:tkTtree.setBindings
+#@+node:ekr.20040803072955.11:newText (leoTkinterTree)
+def newText (self,p,x,y):
+    
+    canvas = self.canvas ; tag = "textBox"
+    c = self.c ; d = self.freeText ; k = c.k
+    key = p.v ; assert key
+    pList = d.get(key,[])
+    
+    # Return only Tk.Text widgets with an exact match with p.
+    found = False
+    for i in xrange(len(pList)):
+        p2,t,theId = pList[i]
+        if p2 == p:
+            del pList[i]
+            theId = t.leo_window_id
+            assert(theId)
+            assert(t.leo_position == p2)
+            canvas.coords(theId,x,y)
+            t.configure(font=self.font) # 12/17/04
+            found = True ; break
+            
+    if not found:
+        # Tags are not valid in Tk.Text widgets.
+        # The name is valid, but apparently it must be unique.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
+        t.bindtags(self.textBindings) # Set the bindings for this widget.
+
+        if 0: # Crashes on XP.
+            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+    
+        theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        t.leo_window_id = theId # Never changes.
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
+
+    # Common configuration.
+    # We must call setText even if p matches: p's text may have changed!
+    self.setText(t,p.headString())
+    t.configure(width=self.headWidth(p=p))
+    t.leo_position = p # Never changes.
+    t.leo_generation = self.generation
+
+    assert(theId == t.leo_window_id)
+    assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    
+    # Entries are pairs (p,t,theId) indexed by v.
+    key = p.v ; assert key
+    pList = self.visibleText.get(key,[])
+    pList.append((p,t,theId),)
+    self.visibleText[key] = pList
+    return t
+#@nonl
+#@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+def PropagateButton4(e):
+    canvas.event_generate("<Button-4>")
+    return "break"
+
+def PropagateButton5(e):
+    canvas.event_generate("<Button-5>")
+    return "break"
+
+def PropagateMouseWheel(e):
+    canvas.event_generate("<MouseWheel>")
+    return "break"
+
+instance_tag = t.bindtags()[0]
+t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+#@nonl
+#@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+#@-node:ekr.20040803072955.11:newText (leoTkinterTree)
+#@-node:ekr.20060131133241:Tree
+#@+node:ekr.20051007080058:k.makeAllBindings
+def makeAllBindings (self):
+    
+    k = self ; c = k.c
+
+    k.bindingsDict = {}
+    
+    k.addModeCommands() 
+    k.makeBindingsFromCommandsDict()
+    k.initSpecialIvars()
+    c.frame.body.createBindings()
+    c.frame.log.setTabBindings('Log')
+    c.frame.tree.setBindings()
+    k.checkBindings()
+#@nonl
+#@-node:ekr.20051007080058:k.makeAllBindings
+#@+node:ekr.20031218072017.838:tkBody.createBindings
+def createBindings (self):
+
+    '''(tkBody) Create gui-dependent bindings.
+    These are *not* made in nullBody instances.'''
+    
+    frame = self.frame ; c = self.c ; k = c.k ; t = self.bodyCtrl
+
+    t.bind('<Key>',k.masterKeyHandler)
+
+    for kind,func,handler in (
+        ('<Button-1>',frame.OnBodyClick,k.masterClickHandler),
+        ('<Button-3>',frame.OnBodyRClick,k.masterClick3Handler),
+    ):
+        def bodyClickCallback(event,handler=handler,func=func):
+            return handler(event,func)
+        t.bind(kind,bodyClickCallback)
+        
+    for kind,handler in (
+        ('<Double-Button-1>',k.masterDoubleClickHandler),
+        ('<Double-Button-3>',k.masterDoubleClick3Handler),
+    ):
+        t.bind(kind,handler)
+            
+    if sys.platform.startswith('win'):
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>",frame.OnPaste)
+#@nonl
+#@-node:ekr.20031218072017.838:tkBody.createBindings
+#@+node:ekr.20031218072017.3978:OnBodyDoubleClick (Events) (no longer used)
+def OnBodyDoubleClick (self,event=None):
+
+    try:
+        c = self.c ; v = c.currentVnode()
+        if not g.doHook("bodydclick1",c=c,p=v,v=v,event=event):
+            if event: # 8/4/02: prevent wandering insertion point.
+                index = "@%d,%d" % (event.x, event.y) # Find where we clicked.
+                event.widget.tag_add('sel', 'insert wordstart', 'insert wordend')
+            body = self.bodyCtrl
+            start = body.index(index + " wordstart")
+            end = body.index(index + " wordend")
+            self.body.setTextSelection(start,end)
+        g.doHook("bodydclick2",c=c,p=v,v=v,event=event)
+    except:
+        g.es_event_exception("bodydclick")
+        
+    return "break" # Restore this to handle proper double-click logic.
+#@nonl
+#@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events) (no longer used)
+#@+node:ekr.20040803072955.87:onHeadlineClick
+def onHeadlineClick (self,event):
+    
+    c = self.c ; w = event.widget
+    
+    try:
+        p = w.leo_position
+    except AttributeError:
+        return "continue"
+        
+    # g.trace(p.headString())
+    
+    c.setLog()
+    
+    try:
+        if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
+            self.OnActivateHeadline(p)
+        g.doHook("headclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("headclick")
+
+    return "continue"
+#@nonl
+#@-node:ekr.20040803072955.87:onHeadlineClick
+#@+node:ekr.20060129052538.1:master event handlers (keyHandler)
+    
+#@nonl
+#@+node:ekr.20060127183752:masterKeyHandler
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+
+    k = self ; c = k.c ; trace = c.config.getBool('trace_masterKeyHandler')
+    if not event:
+        g.trace('oops: no event')
+        return
+
+    keysym = event.keysym or ''
+    if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
+        return
+
+    stroke = k.strokeFromEvent(event)
+    if k.inState():
+        state = k.state.kind
+        if trace: g.trace(repr(stroke),'state',state)
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            b = d.get(stroke)
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
+        else:
+            g.trace('no dict for %s' % state)
+            return k.modeHelp(event)
+    else:
+        w = event and event.widget
+        w_name = g.app.gui.widget_name(w)
+        
+        for key,name in (
+            # Order here is similar to bindtags order.
+            ('mini','mini'), ('body','body'),
+            ('tree','head'), ('tree','canvas'),
+            ('log', 'log'),
+            ('text',None), ('all',None),
+        ):
+            if (
+                name and w_name.startswith(name) or
+                key == 'text' and g.app.gui.isTextWidget(w) or
+                key == 'all'
+            ):
+                d = k.masterBindingsDict.get(key)
+                # g.trace(key,name,d and len(d.keys()))
+                if d:
+                    b = d.get(stroke)
+                    if b:
+                        if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                        return k.masterCommand(event,b.func,b.stroke,b.commandName)
+                            
+    if trace: g.trace(repr(stroke),'no func')
+    return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+#@nonl
+#@-node:ekr.20060127183752:masterKeyHandler
+#@+node:ekr.20060129052538.2:masterClickHandler
+def masterClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c
+
+    # button = event and hasattr(event,'button') and event.button or '<no button>'
+    w = event and event.widget or '<no widget>'
+    name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+        
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20060129052538.2:masterClickHandler
+#@+node:ekr.20060130130942:masterClick3Handler
+def masterClick3Handler (self,event,func=None):
+    
+    k = self ; c = k.c
+    
+    if not event: return
+    
+    w = event.widget or '<no widget>'
+    name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+        
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20060130130942:masterClick3Handler
+#@+node:ekr.20060131084938:masterDoubleClickHandler
+def masterDoubleClickHandler (self,event,func=None):
+
+    if not event or not event.widget: return 'break' ;
+
+    k = self ; c = k.c ; p = c.currentPosition()
+    w = event.widget ; name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+        
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        i = w.index("@%d,%d" % (event.x,event.y))
+        g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+        return 'break'
+#@nonl
+#@-node:ekr.20060131084938:masterDoubleClickHandler
+#@+node:ekr.20060131085116:masterDoubleClick3Handler
+def masterDoubleClick3Handler (self,event,func=None):
+    
+    k = self ; c = k.c
+    
+    # button = event and hasattr(event,'button') and event.button or '<no button>'
+    w = event and event.widget or '<no widget>'
+    name = g.app.gui.widget_name(w)
+    fname = func and func.__name__ or '<no func>'
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(name,fname)
+
+    if func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+#@nonl
+#@-node:ekr.20060131085116:masterDoubleClick3Handler
+#@+node:ekr.20060128090219:masterMenuHandler
+def masterMenuHandler (self,stroke,command,commandName):
+    
+    k = self ; event = None ; func = command
+    
+    # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
+    
+    return k.masterCommand(event,func,stroke,commandName)
+#@nonl
+#@-node:ekr.20060128090219:masterMenuHandler
+#@-node:ekr.20060129052538.1:master event handlers (keyHandler)
+#@-node:ekr.20060131120250:(Send all clicks through k.masterClickHandlers)
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl
