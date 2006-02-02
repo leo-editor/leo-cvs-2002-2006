@@ -1391,9 +1391,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.38:updateLabel
     #@-node:ekr.20050924064254:Label...
-    #@+node:ekr.20060129052538.1:master event handlers (keyHandler)
-        
-    #@nonl
+    #@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
     #@+node:ekr.20060127183752:masterKeyHandler
     def masterKeyHandler (self,event):
         
@@ -1458,57 +1456,30 @@ class keyHandlerClass:
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):
         
-        k = self ; c = k.c
-    
-        # button = event and hasattr(event,'button') and event.button or '<no button>'
-        w = event and event.widget or '<no widget>'
-        name = g.app.gui.widget_name(w)
-        fname = func and func.__name__ or '<no func>'
+        k = self ; c = k.c ; w = event and event.widget
         
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(name,fname)
-            
-        if func:
+            g.trace(g.app.gui.widget_name(w),func and func.__name__)
+    
+        if event and func:
             # Don't event *think* of overriding this.
             return func(event)
         else:
             return None
+            
+    masterClick3Handler         = masterClickHandler
+    masterDoubleClick3Handler   = masterClickHandler
     #@nonl
     #@-node:ekr.20060129052538.2:masterClickHandler
-    #@+node:ekr.20060130130942:masterClick3Handler
-    def masterClick3Handler (self,event,func=None):
-        
-        k = self ; c = k.c
-        
-        if not event: return
-        
-        w = event.widget or '<no widget>'
-        name = g.app.gui.widget_name(w)
-        fname = func and func.__name__ or '<no func>'
-        
-        if c.config.getBool('trace_masterClickHandler'):
-            g.trace(name,fname)
-            
-        if func:
-            # Don't event *think* of overriding this.
-            return func(event)
-        else:
-            return None
-    #@nonl
-    #@-node:ekr.20060130130942:masterClick3Handler
     #@+node:ekr.20060131084938:masterDoubleClickHandler
     def masterDoubleClickHandler (self,event,func=None):
-    
-        if not event or not event.widget: return 'break' ;
-    
-        k = self ; c = k.c ; p = c.currentPosition()
-        w = event.widget ; name = g.app.gui.widget_name(w)
-        fname = func and func.__name__ or '<no func>'
-    
+        
+        k = self ; c = k.c ; w = event and event.widget
+        
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(name,fname)
-            
-        if func:
+            g.trace(g.app.gui.widget_name(w),func and func.__name__)
+    
+        if event and func:
             # Don't event *think* of overriding this.
             return func(event)
         else:
@@ -1517,26 +1488,6 @@ class keyHandlerClass:
             return 'break'
     #@nonl
     #@-node:ekr.20060131084938:masterDoubleClickHandler
-    #@+node:ekr.20060131085116:masterDoubleClick3Handler
-    def masterDoubleClick3Handler (self,event,func=None):
-        
-        k = self ; c = k.c
-        
-        # button = event and hasattr(event,'button') and event.button or '<no button>'
-        w = event and event.widget or '<no widget>'
-        name = g.app.gui.widget_name(w)
-        fname = func and func.__name__ or '<no func>'
-        
-        if c.config.getBool('trace_masterClickHandler'):
-            g.trace(name,fname)
-    
-        if func:
-            # Don't event *think* of overriding this.
-            return func(event)
-        else:
-            return None
-    #@nonl
-    #@-node:ekr.20060131085116:masterDoubleClick3Handler
     #@+node:ekr.20060128090219:masterMenuHandler
     def masterMenuHandler (self,stroke,command,commandName):
         
@@ -1547,7 +1498,7 @@ class keyHandlerClass:
         return k.masterCommand(event,func,stroke,commandName)
     #@nonl
     #@-node:ekr.20060128090219:masterMenuHandler
-    #@-node:ekr.20060129052538.1:master event handlers (keyHandler)
+    #@-node:ekr.20060129052538.1:Master event handlers (keyHandler)
     #@+node:ekr.20060115103349:Modes
     #@+node:ekr.20060117202916:badMode
     def badMode(self,modeName):
