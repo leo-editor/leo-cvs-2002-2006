@@ -1627,6 +1627,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.setLog()
             c.endEditing() # Required.
             w = g.app.gui.get_focus(frame)
+            # g.trace(g.app.gui.widget_name(w))
             if w != frame.body.bodyCtrl:
                 frame.tree.OnDeactivate()
             frame.bodyWantsFocus()
@@ -1670,20 +1671,22 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def OnBodyClick (self,event=None):
     
         try:
-            c = self.c ; v = c.currentVnode()
-            if not g.doHook("bodyclick1",c=c,p=v,v=v,event=event):
-                self.OnActivateBody(event=event)
-            g.doHook("bodyclick2",c=c,p=v,v=v,event=event)
+            c = self.c ; p = c.currentPosition()
+            if not g.doHook("bodyclick1",c=c,p=p,v=p,event=event):
+                focus = g.app.gui.get_focus(c.frame)
+                if focus != c.frame.body.bodyCtrl:
+                    self.OnActivateBody(event=event)
+            g.doHook("bodyclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("bodyclick")
     
     def OnBodyRClick(self,event=None):
         
         try:
-            c = self.c ; v = c.currentVnode()
-            if not g.doHook("bodyrclick1",c=c,p=v,v=v,event=event):
+            c = self.c ; p = c.currentPosition()
+            if not g.doHook("bodyrclick1",c=c,p=p,v=p,event=event):
                 pass # By default Leo does nothing.
-            g.doHook("bodyrclick2",c=c,p=v,v=v,event=event)
+            g.doHook("bodyrclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("iconrclick")
     #@nonl
