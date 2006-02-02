@@ -1625,10 +1625,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         try:
             frame = self ; c = frame.c
             c.setLog()
-            c.endEditing() # Required.
             w = g.app.gui.get_focus(frame)
-            # g.trace(g.app.gui.widget_name(w))
-            if w != frame.body.bodyCtrl:
+            if w != c.frame.body.bodyCtrl:
                 frame.tree.OnDeactivate()
             frame.bodyWantsFocus()
         except:
@@ -1673,9 +1671,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         try:
             c = self.c ; p = c.currentPosition()
             if not g.doHook("bodyclick1",c=c,p=p,v=p,event=event):
-                focus = g.app.gui.get_focus(c.frame)
-                if focus != c.frame.body.bodyCtrl:
-                    self.OnActivateBody(event=event)
+                self.OnActivateBody(event=event)
             g.doHook("bodyclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("bodyclick")

@@ -1205,22 +1205,57 @@ class debugCommandsClass (baseEditCommandsClass):
     
         return {
             'disable-gc-trace':     self.disableGcTrace,
+            'dump-all-objects':     self.dumpAllObjects,
+            'dump-new-objects':     self.dumpNewObjects,
             'enable-gc-trace':      self.enableGcTrace,
+            'free-tree-widgets':    self.freeTreeWidgets,
             'print-stats':          self.printStats,
+            'verbose-dump-objects': self.verboseDumpObjects,
         }
     #@nonl
     #@-node:ekr.20060127163325: getPublicCommands
+    #@+node:ekr.20060202160523:dumpAll/New/VerboseObjects
+    def dumpAllObjects (self,event=None):
+        
+        old = g.app.trace_gc
+        g.app.trace_gc = True
+        g.printGcAll()
+        g.app.trace_gc = old
+        
+    def dumpNewObjects (self,event=None):
+    
+        old = g.app.trace_gc
+        g.app.trace_gc = True
+        g.printGcObjects()
+        g.app.trace_gc = old
+        
+    def verboseDumpObjects (self,event=None):
+        
+        old = g.app.trace_gc
+        g.app.trace_gc = True
+        g.printGcVerbose()
+        g.app.trace_gc = old
+    #@-node:ekr.20060202160523:dumpAll/New/VerboseObjects
     #@+node:ekr.20060127163325.1:enable/disableGcTrace
     def disableGcTrace (self,event=None):
         
-        self.trace_gc = False
+        g.app.trace_gc = False
         
     def enableGcTrace (self,event=None):
         
-        self.trace_gc = True
+        g.app.trace_gc = True
         g.enable_gc_debug()
     #@nonl
     #@-node:ekr.20060127163325.1:enable/disableGcTrace
+    #@+node:ekr.20060202154734:freeTreeWidgets
+    def freeTreeWidgets (self,event=None):
+        
+        c = self.c
+        
+        c.frame.tree.destroyWidgets()
+        c.redraw()
+    #@nonl
+    #@-node:ekr.20060202154734:freeTreeWidgets
     #@+node:ekr.20060202133313:printStats
     def printStats (self,event=None):
         

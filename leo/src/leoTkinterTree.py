@@ -677,24 +677,28 @@ class leoTkinterTree (leoFrame.leoTree):
         self.visibleUserIcons = []
     #@nonl
     #@-node:ekr.20040803072955.12:recycleWidgets
-    #@+node:ekr.20040803072955.13:destroyWidgets (not used)
+    #@+node:ekr.20040803072955.13:destroyWidgets
     def destroyWidgets (self):
     
-        self.canvas.delete("all")
-        
+        self.ids = {}
+    
         self.visibleBoxes = []
         self.visibleClickBoxes = []
         self.visibleIcons = []
         self.visibleLines = []
-        self.visibleText = {}
         self.visibleUserIcons = []
+    
+        self.visibleText = {}
         
+        self.freeText = []
         self.freeBoxes = []
         self.freeClickBoxes = []
         self.freeIcons = []
         self.freeLines = []
+        
+        self.canvas.delete("all")
     #@nonl
-    #@-node:ekr.20040803072955.13:destroyWidgets (not used)
+    #@-node:ekr.20040803072955.13:destroyWidgets
     #@+node:ekr.20060202125419:showStats
     def showStats (self):
     
@@ -2204,7 +2208,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.83:onHeadlineRightClick
     #@-node:ekr.20040803072955.84:Text Box...
-    #@+node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+    #@+node:ekr.20040803072955.108:tree.OnDeactivate
     def OnDeactivate (self,event=None):
         
         """Deactivate the tree pane, dimming any headline being edited."""
@@ -2212,18 +2216,15 @@ class leoTkinterTree (leoFrame.leoTree):
         __pychecker__ = '--no-argsused' # event not used.
     
         tree = self ; c = self.c
-        focus = g.app.gui.get_focus(c.frame)
-    
-        # Doing this on every click would interfere with the double-clicking.
-        if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
-            c.beginUpdate()
-            try:
-                tree.endEditLabel()
-                tree.dimEditLabel()
-            finally:
-                c.endUpdate(False)
+       
+        c.beginUpdate()
+        try:
+            tree.endEditLabel()
+            tree.dimEditLabel()
+        finally:
+            c.endUpdate(False)
     #@nonl
-    #@-node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+    #@-node:ekr.20040803072955.108:tree.OnDeactivate
     #@+node:ekr.20040803072955.110:tree.OnPopup & allies
     def OnPopup (self,p,event):
         

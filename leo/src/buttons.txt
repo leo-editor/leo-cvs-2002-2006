@@ -34,6 +34,31 @@ c.spellCommands.openSpellTab()
 c.save()
 #@nonl
 #@-node:ekr.20051013103117:@button Save
+#@+node:ekr.20060202153509.1:@button Stats
+c.debugCommands.printStats()
+#@nonl
+#@-node:ekr.20060202153509.1:@button Stats
+#@+node:ekr.20060202154734.1:@button Gc
+c.debugCommands.enableGcTrace()
+g.collectGarbage()
+#@nonl
+#@-node:ekr.20060202154734.1:@button Gc
+#@+node:ekr.20060202154734.2:@button No-Gc
+g.app.trace_gc = False
+#@nonl
+#@-node:ekr.20060202154734.2:@button No-Gc
+#@+node:ekr.20060202162439:@button *New-obj
+c.debugCommands.verboseDumpObjects()
+#@nonl
+#@-node:ekr.20060202162439:@button *New-obj
+#@+node:ekr.20060202162439.1:@button New-obj
+c.debugCommands.dumpNewObjects()
+#@nonl
+#@-node:ekr.20060202162439.1:@button New-obj
+#@+node:ekr.20060202162439.2:@button All-obj
+c.debugCommands.dumpAllObjects()
+#@nonl
+#@-node:ekr.20060202162439.2:@button All-obj
 #@-all
 #@nonl
 #@-node:ekr.20051027111215:@thin buttons.txt

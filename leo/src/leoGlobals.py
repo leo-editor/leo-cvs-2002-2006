@@ -2182,7 +2182,7 @@ def printGc(message=None,onlyPrintChanges=False):
         
     
 #@+node:ekr.20060127164729.1:printGcObjects
-def printGcObjects(message):
+def printGcObjects(message=''):
 
     global lastObjectCount
 
@@ -2264,7 +2264,7 @@ def printGcObjects(message):
 #@+node:ekr.20060127165509:printGcVerbose
 # WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
-def printGcVerbose(message):
+def printGcVerbose(message=''):
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -2306,6 +2306,32 @@ def printGcRefs (message):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
+    
+    d = {} ; objects = gc.get_objects()
+    print '-' * 30
+    print '%d objects' % len(objects)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        items = d.items() ; items.sort(key=lambda x: x[1],reverse=True)
+        for z in items:
+            print '%40s %7d' % (z[0],z[1])
+
+    else: # Sort by type
+    
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            print '%40s %7d' % (t,d.get(t))
+#@nonl
+#@-node:ekr.20060202161935:printGcAll
 #@-others
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)

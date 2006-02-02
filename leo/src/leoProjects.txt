@@ -4699,8 +4699,7 @@ if image:
         x+xoffset+w2,y+yoffset,
         anchor="nw",image=image,tag="userIcon")
     self.ids[theId] = p
-
-    assert(theId not in self.visibleIcons)
+    # assert(theId not in self.visibleIcons)
     self.visibleUserIcons.append(theId)
 
     h = image.height() + yoffset + ypad
@@ -12392,7 +12391,7 @@ top.lift()
 #@-node:ekr.20031218072017.3991:Help Menu...
 #@-node:ekr.20031218072017.3979:Gui-dependent commands
 #@-node:ekr.20060127095006:(Added event arg to all legacy commands)
-#@+node:ekr.20060127100926:(Improved gc stats slightly)
+#@+node:ekr.20060127100926:(Improved gc stats)
 #@+node:ekr.20031218072017.1416:app.__init__
 def __init__(self):
 
@@ -12803,48 +12802,6 @@ def reportDirectories(verbose):
 #@nonl
 #@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies
-#@+node:ekr.20060127162818.1:class debugCommandsClass
-class debugCommandsClass (baseEditCommandsClass):
-    
-    @others
-#@nonl
-#@+node:ekr.20060127162921: ctor
-def __init__ (self,c):
-
-    baseEditCommandsClass.__init__(self,c) # init the base class.
-#@nonl
-#@-node:ekr.20060127162921: ctor
-#@+node:ekr.20060127163325: getPublicCommands
-def getPublicCommands (self):
-    
-    k = self
-
-    return {
-        'disable-gc-trace':     self.disableGcTrace,
-        'enable-gc-trace':      self.enableGcTrace,
-        'print-stats':          self.printStats,
-    }
-#@nonl
-#@-node:ekr.20060127163325: getPublicCommands
-#@+node:ekr.20060127163325.1:enable/disableGcTrace
-def disableGcTrace (self,event=None):
-    
-    self.trace_gc = False
-    
-def enableGcTrace (self,event=None):
-    
-    self.trace_gc = True
-    g.enable_gc_debug()
-#@nonl
-#@-node:ekr.20060127163325.1:enable/disableGcTrace
-#@+node:ekr.20060202133313:printStats
-def printStats (self,event=None):
-    
-    c = self.c
-    c.frame.tree.showStats()
-#@nonl
-#@-node:ekr.20060202133313:printStats
-#@-node:ekr.20060127162818.1:class debugCommandsClass
 #@+node:ekr.20040803072955.58:redraw_now & helper
 # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
@@ -12968,7 +12925,7 @@ def printGc(message=None,onlyPrintChanges=False):
         
     
 #@+node:ekr.20060127164729.1:printGcObjects
-def printGcObjects(message):
+def printGcObjects(message=''):
 
     global lastObjectCount
 
@@ -13048,7 +13005,7 @@ typesDict = {}
 #@+node:ekr.20060127165509:printGcVerbose
 # WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
-def printGcVerbose(message):
+def printGcVerbose(message=''):
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -13090,8 +13047,34 @@ def printGcRefs (message):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
+    
+    d = {} ; objects = gc.get_objects()
+    print '-' * 30
+    print '%d objects' % len(objects)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        items = d.items() ; items.sort(key=lambda x: x[1],reverse=True)
+        for z in items:
+            print '%40s %7d' % (z[0],z[1])
+
+    else: # Sort by type
+    
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            print '%40s %7d' % (t,d.get(t))
+#@nonl
+#@-node:ekr.20060202161935:printGcAll
 #@-node:ekr.20031218072017.1588:Garbage Collection
-#@-node:ekr.20060127100926:(Improved gc stats slightly)
+#@-node:ekr.20060127100926:(Improved gc stats)
 #@+node:ekr.20060201083530:(Added prettyPrintKey in various places)
 #@+node:ekr.20060201083154:k.prettyPrintKey
 def prettyPrintKey (self,stroke):
@@ -13394,7 +13377,7 @@ def masterMenuHandler (self,stroke,command,commandName):
 #@nonl
 #@-node:ekr.20060128090219:masterMenuHandler
 #@-node:ekr.20060129052538.1:Master event handlers (keyHandler)
-#@+node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+#@+node:ekr.20040803072955.108:tree.OnDeactivate
 def OnDeactivate (self,event=None):
     
     """Deactivate the tree pane, dimming any headline being edited."""
@@ -13402,18 +13385,15 @@ def OnDeactivate (self,event=None):
     __pychecker__ = '--no-argsused' # event not used.
 
     tree = self ; c = self.c
-    focus = g.app.gui.get_focus(c.frame)
-
-    # Doing this on every click would interfere with the double-clicking.
-    if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
-        c.beginUpdate()
-        try:
-            tree.endEditLabel()
-            tree.dimEditLabel()
-        finally:
-            c.endUpdate(False)
+   
+    c.beginUpdate()
+    try:
+        tree.endEditLabel()
+        tree.dimEditLabel()
+    finally:
+        c.endUpdate(False)
 #@nonl
-#@-node:ekr.20040803072955.108:tree.OnDeactivate (caused double-click problem)
+#@-node:ekr.20040803072955.108:tree.OnDeactivate
 #@+node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
 def OnActivateBody (self,event=None):
     
@@ -13422,10 +13402,8 @@ def OnActivateBody (self,event=None):
     try:
         frame = self ; c = frame.c
         c.setLog()
-        c.endEditing() # Required.
         w = g.app.gui.get_focus(frame)
-        # g.trace(g.app.gui.widget_name(w))
-        if w != frame.body.bodyCtrl:
+        if w != c.frame.body.bodyCtrl:
             frame.tree.OnDeactivate()
         frame.bodyWantsFocus()
     except:
@@ -13440,9 +13418,7 @@ def OnBodyClick (self,event=None):
     try:
         c = self.c ; p = c.currentPosition()
         if not g.doHook("bodyclick1",c=c,p=p,v=p,event=event):
-            focus = g.app.gui.get_focus(c.frame)
-            if focus != c.frame.body.bodyCtrl:
-                self.OnActivateBody(event=event)
+            self.OnActivateBody(event=event)
         g.doHook("bodyclick2",c=c,p=p,v=p,event=event)
     except:
         g.es_event_exception("bodyclick")
@@ -13478,6 +13454,8 @@ def OnBodyDoubleClick (self,event=None):
 #@nonl
 #@-node:ekr.20031218072017.3978:OnBodyDoubleClick (Events)
 #@-node:ekr.20060202121216:Double-click didn't work in the body pane.
+#@+node:ekr.20060202160109:Added free-text-widgets, dump-all-objects, dump-new-objects, verbose-dump-objects commands
+#@-node:ekr.20060202160109:Added free-text-widgets, dump-all-objects, dump-new-objects, verbose-dump-objects commands
 #@-node:ekr.20060117091600:4.4a6 projects
 #@+node:ekr.20060131120250:(Recent)
 #@+node:ekr.20060131191731:What I did
@@ -13811,13 +13789,11 @@ def newText (self,p,x,y):
         theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
         t.leo_window_id = theId # Never changes.
         
-        if self.trace:
-            g.trace('%4d' % (theId),self.textAddr(t),'** new')
+        if self.trace: g.trace('%4d' % (theId),self.textAddr(t),'** new')
             
-        assert(not self.ids.get(theId))
-        self.ids[theId] = p # Add the id of the *window*
-    
     # Common configuration.
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p # Add the id of the *window*
     self.setText(theId,t,p.headString())
     t.configure(width=self.headWidth(p=p))
     t.leo_position = p # This p never changes.
@@ -13936,6 +13912,16 @@ def OnBodyDoubleClick (self,event=None):
 #@nonl
 #@-node:ekr.20060201071346:Code cleanup
 #@+node:ekr.20060130151453:Find leaks
+#@+node:ekr.20060202153509:Gc todo
+@nocolor
+
+- Do we need tree.ids?? Could we use w.leo_position?
+
+- oops in eventToPosition (maybe just for Text objects)
+
+* Use Tk or Pmw calls to discover existing widgets.  (Use execute-tcl-code command).
+#@nonl
+#@-node:ekr.20060202153509:Gc todo
 #@+node:ekr.20060201114832:Notes
 @nocolor
 
@@ -14273,7 +14259,7 @@ def printGc(message=None,onlyPrintChanges=False):
         
     
 #@+node:ekr.20060127164729.1:printGcObjects
-def printGcObjects(message):
+def printGcObjects(message=''):
 
     global lastObjectCount
 
@@ -14353,7 +14339,7 @@ typesDict = {}
 #@+node:ekr.20060127165509:printGcVerbose
 # WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
-def printGcVerbose(message):
+def printGcVerbose(message=''):
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -14395,6 +14381,32 @@ def printGcRefs (message):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
+    
+    d = {} ; objects = gc.get_objects()
+    print '-' * 30
+    print '%d objects' % len(objects)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        items = d.items() ; items.sort(key=lambda x: x[1],reverse=True)
+        for z in items:
+            print '%40s %7d' % (z[0],z[1])
+
+    else: # Sort by type
+    
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            print '%40s %7d' % (t,d.get(t))
+#@nonl
+#@-node:ekr.20060202161935:printGcAll
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
 #@+node:EKR.20040602125018:enableIdleTimeHook
@@ -15047,6 +15059,34 @@ else:
 #@-node:ekr.20040803072955.133:<< set the current node >>
 #@-node:ekr.20040803072955.128:tree.select
 #@-node:ekr.20060202082221.1:Leaky code
+#@+node:ekr.20060202163829:Stats
+51439 objects
+                          <type 'tuple'>   27855
+                           <type 'dict'>    6107
+                           <type 'list'>    2063
+              <class 'leoGlobals.Bunch'>    1668
+47985 objects
+                          <type 'tuple'>   27371
+                           <type 'dict'>    4870
+              <class 'leoGlobals.Bunch'>    1646
+                           <type 'list'>    1476
+49414 objects
+                          <type 'tuple'>   27725
+                           <type 'dict'>    5405
+                           <type 'list'>    1657
+              <class 'leoGlobals.Bunch'>    1646
+48654 objects
+                          <type 'tuple'>   27535
+                           <type 'dict'>    5215
+              <class 'leoGlobals.Bunch'>    1646
+                           <type 'list'>    1467
+48912 objects
+                          <type 'tuple'>   27616
+                           <type 'dict'>    5279
+              <class 'leoGlobals.Bunch'>    1646
+                           <type 'list'>    1523
+#@nonl
+#@-node:ekr.20060202163829:Stats
 #@-node:ekr.20060130151453:Find leaks
 #@+node:ekr.20060202090032:Improved tree allocation
 #@+node:ekr.20060202110637:What I did
@@ -15064,6 +15104,9 @@ A *major* improvement to the tree allocation code:
      the *window* must be moved to the right spot.
 
 3. recycleWidgets is simpler and a bit faster.
+
+4. destroyWidgets now works: (the bug was not clearing tree.ids).
+#@nonl
 #@-node:ekr.20060202110637:What I did
 #@+node:ekr.20040803072955.128:tree.select
 #  Do **not** try to "optimize" this by returning if p==tree.currentPosition.
@@ -15425,8 +15468,8 @@ def newBox (self,p,x,y,image):
     assert(theId not in self.visibleBoxes)
     self.visibleBoxes.append(theId)
 
-    assert(not self.ids.get(theId))
-    assert(p)
+    # assert(not self.ids.get(theId))
+    # assert(p)
     self.ids[theId] = p
 
     return theId
@@ -15451,8 +15494,8 @@ def newClickBox (self,p,x1,y1,x2,y2):
     assert(theId not in self.visibleClickBoxes)
     self.visibleClickBoxes.append(theId)
     
-    assert(p)
-    assert(not self.ids.get(theId))
+    # assert(p)
+    # assert(not self.ids.get(theId))
     self.ids[theId] = p
     
     return theId
@@ -15469,18 +15512,14 @@ def newIcon (self,p,x,y,image):
         canvas.coords(theId,x,y)
     else:
         theId = canvas.create_image(x,y,image=image,anchor="nw",tag=tag)
-        assert(not self.ids.get(theId))
-        
-    if 0:
-        if self.trace and self.verbose:
-            g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),align=-20)
-        
-    assert(theId not in self.visibleIcons)
+        # assert(not self.ids.get(theId))
+
+    # assert(theId not in self.visibleIcons)
     self.visibleIcons.append(theId)
     
-    assert(p)
-    assert(not self.iconIds.get(theId))
-    assert(not self.ids.get(theId))
+    # assert(p)
+    # assert(not self.iconIds.get(theId))
+    # assert(not self.ids.get(theId))
     data = p,self.generation
     self.iconIds[theId] = data # Remember which vnode belongs to the icon.
     self.ids[theId] = p
@@ -15498,11 +15537,10 @@ def newLine (self,p,x1,y1,x2,y2):
         canvas.coords(theId,x1,y1,x2,y2)
     else:
         theId = canvas.create_line(x1,y1,x2,y2,tag="lines",fill="gray50") # stipple="gray25")
-        assert(not self.ids.get(theId))
+        # assert(not self.ids.get(theId))
 
-    assert(not self.ids.get(theId))
+    # assert(not self.ids.get(theId))
     self.ids[theId] = p
-        
     self.visibleLines.append(theId)
 
     return theId
@@ -15551,13 +15589,11 @@ def newText (self,p,x,y):
         theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
         t.leo_window_id = theId # Never changes.
         
-        if self.trace:
-            g.trace('%4d' % (theId),self.textAddr(t),'** new')
+        if self.trace: g.trace('%4d' % (theId),self.textAddr(t),'** new')
             
-        assert(not self.ids.get(theId))
-        self.ids[theId] = p # Add the id of the *window*
-    
     # Common configuration.
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p # Add the id of the *window*
     self.setText(theId,t,p.headString())
     t.configure(width=self.headWidth(p=p))
     t.leo_position = p # This p never changes.
@@ -15630,6 +15666,7 @@ def recycleWidgets (self):
         for t,theId in aList:
             # assert theId == t.leo_window_id
             canvas.coords(theId,-100,-100)
+            t.leo_position = None # Allow the position to be freed.
         self.freeText.extend(aList)
         self.visibleText = {}
     else:
@@ -15650,24 +15687,28 @@ def recycleWidgets (self):
     self.visibleUserIcons = []
 #@nonl
 #@-node:ekr.20040803072955.12:recycleWidgets
-#@+node:ekr.20040803072955.13:destroyWidgets (not used)
+#@+node:ekr.20040803072955.13:destroyWidgets
 def destroyWidgets (self):
 
-    self.canvas.delete("all")
-    
+    self.ids = {}
+
     self.visibleBoxes = []
     self.visibleClickBoxes = []
     self.visibleIcons = []
     self.visibleLines = []
-    self.visibleText = {}
     self.visibleUserIcons = []
+
+    self.visibleText = {}
     
+    self.freeText = []
     self.freeBoxes = []
     self.freeClickBoxes = []
     self.freeIcons = []
     self.freeLines = []
+    
+    self.canvas.delete("all")
 #@nonl
-#@-node:ekr.20040803072955.13:destroyWidgets (not used)
+#@-node:ekr.20040803072955.13:destroyWidgets
 #@+node:ekr.20060202125419:showStats
 def showStats (self):
 
