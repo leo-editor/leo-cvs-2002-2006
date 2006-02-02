@@ -1343,6 +1343,9 @@ class baseColorizer:
         
         c = self.c
         
+        if not c.config.getBool('use_syntax_coloring'):
+            return
+        
         # g.trace("incremental",self.incremental,p)
         if self.killFlag:
             self.removeAllTags()
