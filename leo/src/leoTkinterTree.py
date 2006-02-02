@@ -192,6 +192,12 @@ class leoTkinterTree (leoFrame.leoTree):
         leoFrame.leoTree.__init__(self,frame)
         
         self.new_alloc = True
+        
+        # Configuration and debugging settings.
+        self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
+        self.expanded_click_area = c.config.getBool("expanded_click_area")
+        self.stats = c.config.getBool('show_tree_stats')
+        self.trace = c.config.getBool('trace_tree')
     
         # Objects associated with this tree.
         self.canvas = canvas
@@ -256,23 +262,21 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         
         self.dragging = False
-        self.expanded_click_area = c.config.getBool("expanded_click_area")
         self.generation = 0
         self.prevPositions = 0
         self.redrawing = False # Used only to disable traces.
         self.redrawCount = 0 # Count for debugging.
         self.revertHeadline = None # Previous headline text for abortEditLabel.
-        self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
-            # New in 4.4: We should stay in the tree to use per-pane bindings.
+        
+        # New in 4.4: We should stay in the tree to use per-pane bindings.
         self.textBindings = [] # Set in setBindings.
         self.textNumber = 0 # To make names unique.
-        self.trace = c.config.getBool('trace_tree')
         self.updateCount = 0 # Drawing is enabled only if self.updateCount <= 0
         self.verbose = True
         
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
         
-        # Keys are id's, values are unchanging positions...
+        # Keys are id's, values are positions...
         self.ids = {}
         self.iconIds = {}
     
@@ -632,34 +636,28 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.12:recycleWidgets
     def recycleWidgets (self):
         
-        if self.trace: g.trace()
-        
-        if 0: # This is worse.
-            self.destroyWidgets()
-            return
-        
         canvas = self.canvas
         
         for theId in self.visibleBoxes:
-            assert(theId not in self.freeBoxes)
+            # assert(theId not in self.freeBoxes)
             self.freeBoxes.append(theId)
             canvas.coords(theId,-100,-100)
         self.visibleBoxes = []
-    
+        
         for theId in self.visibleClickBoxes:
-            assert(theId not in self.freeClickBoxes)
+            # assert(theId not in self.freeClickBoxes)
             self.freeClickBoxes.append(theId)
             canvas.coords(theId,-100,-100,-100,-100)
         self.visibleClickBoxes = []
         
         for theId in self.visibleIcons:
-            assert(theId not in self.freeIcons)
+            # assert(theId not in self.freeIcons)
             self.freeIcons.append(theId)
             canvas.coords(theId,-100,-100)
         self.visibleIcons = []
             
         for theId in self.visibleLines:
-            assert(theId not in self.freeLines)
+            # assert(theId not in self.freeLines)
             self.freeLines.append(theId)
             canvas.coords(theId,-100,-100,-100,-100)
         self.visibleLines = []
@@ -667,7 +665,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if self.new_alloc:
             aList = self.visibleText.values()
             for t,theId in aList:
-                assert theId == t.leo_window_id
+                # assert theId == t.leo_window_id
                 canvas.coords(theId,-100,-100)
             self.freeText.extend(aList)
             self.visibleText = {}
@@ -677,17 +675,17 @@ class leoTkinterTree (leoFrame.leoTree):
                 freeList = self.freeText.get(key,[])
                 for data in visList:
                     p,t,theId = data
-                    ### assert p  == t.leo_position
-                    assert theId == t.leo_window_id
+                    # assert theId == t.leo_window_id
                     canvas.coords(theId,-100,-100)
                     freeList.append(data)
                 self.freeText[key] = freeList
             self.visibleText = {}
-        
+            
         for theId in self.visibleUserIcons:
             # The present code does not recycle user Icons.
             self.canvas.delete(theId)
         self.visibleUserIcons = []
+    #@nonl
     #@-node:ekr.20040803072955.12:recycleWidgets
     #@+node:ekr.20040803072955.13:destroyWidgets (not used)
     def destroyWidgets (self):
@@ -707,19 +705,24 @@ class leoTkinterTree (leoFrame.leoTree):
         self.freeLines = []
     #@nonl
     #@-node:ekr.20040803072955.13:destroyWidgets (not used)
-    #@+node:ekr.20040803072955.14:getTextStats
-    def getTextStats (self):
-        
-        # Count the number of individual items in each list in freeText.
-        free = 0
-        for val in self.freeText.values():
-            free += len(val)
+    #@+node:ekr.20060202125419:showStats
+    def showStats (self):
+    
+    
+        format = '%10s used: %4d free: %4d'
+        z = []
+        for kind,a,b in (
+            ('boxes',self.visibleBoxes,self.freeBoxes),
+            ('clickBoxes',self.visibleClickBoxes,self.freeClickBoxes),
+            ('icons',self.visibleIcons,self.freeIcons),
+            ('lines',self.visibleLines,self.freeLines),
+            ('tesxt',self.visibleText.values(),self.freeText),
+        ):
+            z.append(format % (kind,len(a),len(b)))
             
-        visible = len(self.visibleText)
-        
-        return "%3d %3d tot: %4d" % (visible,free,visible+free)
+        g.trace('\n' + '\n'.join(z))
     #@nonl
-    #@-node:ekr.20040803072955.14:getTextStats
+    #@-node:ekr.20060202125419:showStats
     #@-node:ekr.20040803072955.6:Allocation...
     #@+node:ekr.20040803072955.26:Config & Measuring...
     #@+node:ekr.20040803072955.27:tree.getFont,setFont,setFontFromConfig
@@ -1328,6 +1331,7 @@ class leoTkinterTree (leoFrame.leoTree):
             delta = g.app.positions - self.prevPositions
             g.trace("**** gen: %-3d positions: %5d +%4d" % (
                 self.generation,g.app.positions,delta),g.callers())
+            
         self.prevPositions = g.app.positions
     
         if c.hoistStack:
@@ -1335,6 +1339,8 @@ class leoTkinterTree (leoFrame.leoTree):
             self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
         else:
             self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
+            
+        if self.stats: self.showStats()
         
         canvas.lower("lines")  # Lowest.
         canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
@@ -1635,7 +1641,7 @@ class leoTkinterTree (leoFrame.leoTree):
         """Return the Tk.Text item corresponding to p."""
     
         c = self.c
-        
+    
         if p and c:
             if self.new_alloc:
                 aTuple = self.visibleText.get(p.key())
@@ -2521,6 +2527,8 @@ class leoTkinterTree (leoFrame.leoTree):
         '''End editing of a headline and update p.headString().'''
     
         c = self.c ; k = c.keyHandler ; p = c.currentPosition()
+        
+        # w = g.app.gui.get_focus(c.frame)
     
         self.setEditPosition(None) # That is, self._editPosition = None
         
@@ -2530,6 +2538,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         # Important: this will redraw if necessary.
         self.onHeadChanged(p)
+        
+        # g.app.gui.set_focus(c,w)
     #@nonl
     #@-node:ekr.20040803072955.126:tree.endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
