@@ -1204,8 +1204,9 @@ class debugCommandsClass (baseEditCommandsClass):
         k = self
     
         return {
-            'disable-gc-trace':             self.disableGcTrace,
-            'enable-gc-trace':              self.enableGcTrace,
+            'disable-gc-trace':     self.disableGcTrace,
+            'enable-gc-trace':      self.enableGcTrace,
+            'print-stats':          self.printStats,
         }
     #@nonl
     #@-node:ekr.20060127163325: getPublicCommands
@@ -1220,6 +1221,13 @@ class debugCommandsClass (baseEditCommandsClass):
         g.enable_gc_debug()
     #@nonl
     #@-node:ekr.20060127163325.1:enable/disableGcTrace
+    #@+node:ekr.20060202133313:printStats
+    def printStats (self,event=None):
+        
+        c = self.c
+        c.frame.tree.showStats()
+    #@nonl
+    #@-node:ekr.20060202133313:printStats
     #@-others
 #@nonl
 #@-node:ekr.20060127162818.1:class debugCommandsClass

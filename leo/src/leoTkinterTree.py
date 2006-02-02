@@ -708,8 +708,6 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20060202125419:showStats
     def showStats (self):
     
-    
-        format = '%10s used: %4d free: %4d'
         z = []
         for kind,a,b in (
             ('boxes',self.visibleBoxes,self.freeBoxes),
@@ -718,9 +716,10 @@ class leoTkinterTree (leoFrame.leoTree):
             ('lines',self.visibleLines,self.freeLines),
             ('tesxt',self.visibleText.values(),self.freeText),
         ):
-            z.append(format % (kind,len(a),len(b)))
+            z.append('%10s used: %4d free: %4d' % (kind,len(a),len(b)))
             
-        g.trace('\n' + '\n'.join(z))
+        f = g.choose(self.stats,g.trace,g.es)
+        f('\n' + '\n'.join(z))
     #@nonl
     #@-node:ekr.20060202125419:showStats
     #@-node:ekr.20040803072955.6:Allocation...
