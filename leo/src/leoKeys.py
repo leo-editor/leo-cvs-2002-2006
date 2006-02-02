@@ -372,14 +372,9 @@ class keyHandlerClass:
         if not c.miniBufferWidget:
             # Does not exist for leoSettings.leo files.
             return
-            
-        # g.trace('keyHandler')
     
         # Important: bindings exist even if c.showMiniBuffer is False.
         k.makeAllBindings()
-        
-        if 0: # Hurray.  This was a massive kludge.
-            g.enableIdleTimeHook(250)
     
         k.setInputState(self.unboundKeyAction)
     #@nonl
@@ -670,7 +665,6 @@ class keyHandlerClass:
             #@        << add character to history >>
             #@+node:ekr.20050920085536.67:<< add character to history >>
             # Don't add multiple special characters to history.
-            
             k.keysymHistory.insert(0,keysym)
             
             if len(ch) > 0:
@@ -1452,9 +1446,13 @@ class keyHandlerClass:
                     if b:
                         if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
                         return k.masterCommand(event,b.func,b.stroke,b.commandName)
-                                
-        if trace: g.trace(repr(stroke),'no func')
-        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+    
+        if stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1:
+            if trace: g.trace('ignoring unbound special key')
+            return 'break'
+        else:
+            if trace: g.trace(repr(stroke),'no func')
+            return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
     #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
