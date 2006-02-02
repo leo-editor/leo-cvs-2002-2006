@@ -143,7 +143,8 @@ def run(fileName=None,*args,**keywords):
     g.app.writeWaitingLog()
     p = c.currentPosition()
     g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
-    g.enableIdleTimeHook()
+    if c.config.getBool('allow_idle_time_hook'):
+        g.enableIdleTimeHook()
     if not fileName:
         c.redraw_now()
     frame.bodyWantsFocus()
