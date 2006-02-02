@@ -4600,6 +4600,62 @@ def setInputState (self,state,showState=False):
     w and c.frame.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060201081920:setInputState (old version)
+#@+node:ekr.20040803072955.14:getTextStats
+def getTextStats (self):
+    
+    # Count the number of individual items in each list in freeText.
+    free = 0
+    for val in self.freeText.values():
+        free += len(val)
+        
+    visible = len(self.visibleText)
+    
+    return "%3d %3d tot: %4d" % (visible,free,visible+free)
+#@nonl
+#@-node:ekr.20040803072955.14:getTextStats
+#@+node:ekr.20060131085116:masterDoubleClick3Handler (not used)
+if 0:
+    def masterDoubleClick3Handler (self,event,func=None):
+    
+        k = self ; c = k.c
+        
+        # button = event and hasattr(event,'button') and event.button or '<no button>'
+        w = event and event.widget or '<no widget>'
+        name = g.app.gui.widget_name(w)
+        fname = func and func.__name__ or '<no func>'
+        
+        if c.config.getBool('trace_masterClickHandler'):
+            g.trace(name,fname)
+    
+        if func:
+            # Don't event *think* of overriding this.
+            return func(event)
+        else:
+            return None
+#@nonl
+#@-node:ekr.20060131085116:masterDoubleClick3Handler (not used)
+#@+node:ekr.20060130130942:masterClick3Handler (not used)
+if 0:
+    def masterClick3Handler (self,event,func=None):
+        
+        k = self ; c = k.c
+        
+        if c.config.getBool('trace_masterClickHandler'):
+            g.trace(name,fname)
+        
+        if not event: return
+        
+        w = event.widget
+        name = g.app.gui.widget_name(w)
+        fname = func and func.__name__
+    
+        if func:
+            # Don't event *think* of overriding this.
+            return func(event)
+        else:
+            return None
+#@nonl
+#@-node:ekr.20060130130942:masterClick3Handler (not used)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

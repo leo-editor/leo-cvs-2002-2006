@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="31" left="403" height="777" width="841"/>
+	<global_window_position top="47" left="364" height="777" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -46,8 +46,7 @@
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>Debugging options</vh>
-<v t="ekr.20060126171438"><vh>@bool simple_bindings = False</vh></v>
+<v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
@@ -58,7 +57,8 @@
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 <v t="ekr.20051126062243.1" a="E"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20060202092911" a="V"><vh>@bool trace_tree = False</vh></v>
+<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
+<v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060201111002" a="E"><vh>@bool use_syntax_coloring = True</vh></v>
@@ -284,7 +284,7 @@
 <v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = False</vh></v>
 </v>
-<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
@@ -328,10 +328,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
-<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
+<v t="ekr.20060112093227.2" a="V"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
 <v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
@@ -361,7 +361,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -3254,6 +3254,7 @@ previous-line                       = None
 previous-line-extend-selection      = None
 print-bindings                      = None
 print-commands                      = None
+print-stats                         = None
 promote                             = None
 query-replace                       = None
 query-replace-regex                 = None
@@ -4307,12 +4308,12 @@ False: (legacy)     The Find tab shows text, options and buttons.</t>
 <t tx="ekr.20060126083715">True: verbose trace the garbage collector and storage allocation.
 
 In most cases the less verbose output is clearer.</t>
-<t tx="ekr.20060126171438"></t>
 <t tx="ekr.20060127050605"></t>
 <t tx="ekr.20060131071612"></t>
 <t tx="ekr.20060131071947"></t>
 <t tx="ekr.20060201110016"></t>
 <t tx="ekr.20060201111002"></t>
 <t tx="ekr.20060202092911"></t>
+<t tx="ekr.20060202113731"></t>
 </tnodes>
 </leo_file>
