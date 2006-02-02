@@ -75,10 +75,6 @@ class leoTkinterTree (leoFrame.leoTree):
     # 
     # - Re-enabled code in drawText that sets the headline state.
     # 
-    # - Clear self.ids dict on each redraw so "invisible" id's don't confuse 
-    # eventToPosition.
-    #     This effectively disables a check on id's, but that can't be helped.
-    # 
     # - eventToPosition now returns p.copy, which means that nobody can change 
     # the list.
     # 
@@ -461,8 +457,8 @@ class leoTkinterTree (leoFrame.leoTree):
         assert(theId not in self.visibleBoxes)
         self.visibleBoxes.append(theId)
     
-        assert(not self.ids.get(theId))
-        assert(p)
+        # assert(not self.ids.get(theId))
+        # assert(p)
         self.ids[theId] = p
     
         return theId
@@ -487,8 +483,8 @@ class leoTkinterTree (leoFrame.leoTree):
         assert(theId not in self.visibleClickBoxes)
         self.visibleClickBoxes.append(theId)
         
-        assert(p)
-        assert(not self.ids.get(theId))
+        # assert(p)
+        # assert(not self.ids.get(theId))
         self.ids[theId] = p
         
         return theId
@@ -505,18 +501,14 @@ class leoTkinterTree (leoFrame.leoTree):
             canvas.coords(theId,x,y)
         else:
             theId = canvas.create_image(x,y,image=image,anchor="nw",tag=tag)
-            assert(not self.ids.get(theId))
-            
-        if 0:
-            if self.trace and self.verbose:
-                g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),align=-20)
-            
-        assert(theId not in self.visibleIcons)
+            # assert(not self.ids.get(theId))
+    
+        # assert(theId not in self.visibleIcons)
         self.visibleIcons.append(theId)
         
-        assert(p)
-        assert(not self.iconIds.get(theId))
-        assert(not self.ids.get(theId))
+        # assert(p)
+        # assert(not self.iconIds.get(theId))
+        # assert(not self.ids.get(theId))
         data = p,self.generation
         self.iconIds[theId] = data # Remember which vnode belongs to the icon.
         self.ids[theId] = p
@@ -534,11 +526,10 @@ class leoTkinterTree (leoFrame.leoTree):
             canvas.coords(theId,x1,y1,x2,y2)
         else:
             theId = canvas.create_line(x1,y1,x2,y2,tag="lines",fill="gray50") # stipple="gray25")
-            assert(not self.ids.get(theId))
+            # assert(not self.ids.get(theId))
     
-        assert(not self.ids.get(theId))
+        # assert(not self.ids.get(theId))
         self.ids[theId] = p
-            
         self.visibleLines.append(theId)
     
         return theId
@@ -607,13 +598,11 @@ class leoTkinterTree (leoFrame.leoTree):
             theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
             t.leo_window_id = theId # Never changes.
             
-            if self.trace:
-                g.trace('%4d' % (theId),self.textAddr(t),'** new')
+            if self.trace: g.trace('%4d' % (theId),self.textAddr(t),'** new')
                 
-            assert(not self.ids.get(theId))
-            self.ids[theId] = p # Add the id of the *window*
-        
         # Common configuration.
+        # assert(not self.ids.get(theId))
+        self.ids[theId] = p # Add the id of the *window*
         self.setText(theId,t,p.headString())
         t.configure(width=self.headWidth(p=p))
         t.leo_position = p # This p never changes.
@@ -667,6 +656,7 @@ class leoTkinterTree (leoFrame.leoTree):
             for t,theId in aList:
                 # assert theId == t.leo_window_id
                 canvas.coords(theId,-100,-100)
+                t.leo_position = None # Allow the position to be freed.
             self.freeText.extend(aList)
             self.visibleText = {}
         else:
@@ -1282,8 +1272,7 @@ class leoTkinterTree (leoFrame.leoTree):
                     x+xoffset+w2,y+yoffset,
                     anchor="nw",image=image,tag="userIcon")
                 self.ids[theId] = p
-            
-                assert(theId not in self.visibleIcons)
+                # assert(theId not in self.visibleIcons)
                 self.visibleUserIcons.append(theId)
             
                 h = image.height() + yoffset + ypad
