@@ -1453,6 +1453,8 @@ class position (object):
     
         # Use p.equal if speed is crucial.
         p1 = self
+        
+        # g.trace(p1.headString(),p2 and p2.headString())
     
         if p2 is None: # Allow tests like "p == None"
             if p1.v: return 1 # not equal
@@ -1504,9 +1506,7 @@ class position (object):
         self.stack = stack[:] # Creating a copy here is safest and best.
         g.app.positions += 1
         
-        # if g.app.tracePositions and trace:
-            # g.trace("%-25s %-25s %s" % (
-                # g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+        # if g.app.tracePositions and trace: g.trace(g.callers())
         
         # Note: __getattr__ implements p.t.
     #@nonl
@@ -1549,9 +1549,7 @@ class position (object):
         
         """"Return an independent copy of a position."""
         
-        # if g.app.tracePositions:
-            # g.trace("%-25s %-25s %s" % (
-                # g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+        # if g.app.tracePositions: g.trace(g.callers())
     
         return position(self.c,self.v,self.stack,trace=False)
     #@nonl
@@ -1596,6 +1594,18 @@ class position (object):
     isEqual = equal
     #@nonl
     #@-node:ekr.20040325142015:p.equal & isEqual
+    #@+node:ekr.20060202090907:p.key (new in 4.4b2)
+    def key (self):
+        
+        p = self
+    
+        return '%s:%d.%s' % (
+            id(p.v),
+            p.childIndex(),
+            ','.join([str(id(v)) for v in p.stack])
+        )
+    #@nonl
+    #@-node:ekr.20060202090907:p.key (new in 4.4b2)
     #@-node:ekr.20040228094013: ctor & other special methods...
     #@+node:ekr.20040306212636:Getters
     #@+node:ekr.20040306210951: vnode proxies
