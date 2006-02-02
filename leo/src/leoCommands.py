@@ -100,7 +100,7 @@ class baseCommands:
     
         c = self
         #@    << initialize ivars >>
-        #@+node:ekr.20031218072017.2813:<< initialize ivars >>
+        #@+node:ekr.20031218072017.2813:<< initialize ivars >> (commands)
         self._currentPosition = self.nullPosition()
         self._rootPosition    = self.nullPosition()
         self._topPosition     = self.nullPosition()
@@ -156,7 +156,7 @@ class baseCommands:
             # Affects drawing routines and find commands.
         self.recentFiles = [] # List of recent files
         #@nonl
-        #@-node:ekr.20031218072017.2813:<< initialize ivars >>
+        #@-node:ekr.20031218072017.2813:<< initialize ivars >> (commands)
         #@nl
         self.config = configSettings(c)
         g.app.config.setIvarsFromSettings(c)

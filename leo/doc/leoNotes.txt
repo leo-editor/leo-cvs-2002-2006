@@ -4375,6 +4375,231 @@ xwem-worklog-tasks-description
 @language python
 @color
 #@nonl
+#@+node:ekr.20051022094136:bindKeyHelper (not used)
+def bindKeyHelper(self,pane,shortcut,callback,commandName):
+    
+    if g.app.new_keys:
+        return
+
+    k = self ; c = k.c
+    
+    body = c.frame.body.bodyCtrl
+    log  = c.frame.log.logCtrl
+    menu = c.frame.menu
+    minibuffer = c.miniBufferWidget
+    tree = c.frame.tree.canvas
+    
+    d = {
+        'all':  [body,log,tree], # Probably not wise: menu
+        'body': [body],
+        'log':  [log],
+        'menu': [menu],         # Not used, and probably dubious.
+        'mini': [minibuffer],   # Needed so ctrl-g will work in the minibuffer!
+        'text': [body,log],
+        'tree': [tree],
+    }
+    
+    # if pane: g.trace('%4s %20s %s' % (pane, shortcut,commandName))
+    
+    widgets = d.get((pane or '').lower(),[])
+    
+    # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
+    # There should only be one binding for the minibuffer: the <Key>+ binding.
+    if shortcut == '<Key>':
+        # Important.  We must make this binding if the minibuffer can ever get focus.
+        if self.useTextWidget:
+            widgets.append(minibuffer)
+        for w in widgets:
+            w.bind(shortcut,callback,'+')
+    else:
+        # Put *everything* in a bindtag set specific to this commander.
+        if 0: # Support plain-key bindings.
+            tag = k.plainKeyTag()
+            body.bind_class(tag,shortcut,callback)
+        
+        # Put everything *except* plain keys in a normal binding.
+        if not k.isPlainKey(shortcut):
+            for w in widgets:
+                w.bind(shortcut,callback)
+            # Get rid of the default binding in the menu. (E.g., Alt-f)
+            menu.bind(shortcut,lambda e: 'break')
+#@nonl
+#@-node:ekr.20051022094136:bindKeyHelper (not used)
+#@+node:ekr.20060201064956:bindOpenWith (old code)
+def bindOpenWith (self,shortcut,name,data):
+    
+    '''Make a binding for the Open With command.'''
+    
+    k = self ; c = k.c
+    
+    # The first parameter must be event, and it must default to None.
+    def openWithCallback(event=None,self=self,data=data):
+        __pychecker__ = '--no-argsused' # event must be present.
+        return self.c.openWith(data=data)
+    
+    if g.app.new_keys:
+        return k.bindKey('all',shortcut,openWithCallback,'open-with')
+    else:
+        bind_shortcut = k.shortcutFromSetting(shortcut)
+    
+        def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
+            return k.masterCommand(event,func,stroke)
+                
+        return k.bindKey('all',bind_shortcut,keyCallback,'open-with')
+#@nonl
+#@-node:ekr.20060201064956:bindOpenWith (old code)
+#@+node:ekr.20051023182326:k.copyBindingsToWidget & helper
+def copyBindingsToWidget (self,paneOrPanes,w):
+    
+    '''Copy all bindings for the given panes to widget w.
+    
+    paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
+    
+    if g.app.new_keys: return
+    
+    # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
+
+    k = self ; d = k.bindingsDict
+    bindings = {}
+    keys = d.keys() ; keys.sort()
+    if type(paneOrPanes) == type('abc'):
+        panes = [paneOrPanes] # list(paneOrPanes) does not work.
+    else:
+        panes = paneOrPanes
+    # g.trace(panes)
+
+    for shortcut in keys:
+        # Do not copy plain key bindings.
+        if not k.isPlainKey(shortcut):
+            shortcutsBunchList = []
+            for pane in panes:
+                old_panes = bindings.get(shortcut,[])
+                assert(type(old_panes)==type([]))
+                if old_panes and pane in old_panes:
+                    # This should have been caught earlier, but another check doesn't hurt.
+                    g.trace('*** redefining %s in %s' % (shortcut,pane))
+                else:
+                    bunchList = d.get(shortcut,[])
+                    for bunch in bunchList:
+                        if bunch.pane == pane:
+                            shortcutsBunchList.append(bunch)
+                            old_panes.append(pane)
+                            bindings [shortcut] = old_panes
+            # Create bindings for the shortcut in all panes.
+            if shortcutsBunchList:
+                self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
+                                
+    # Bind all other keys to k.masterCommand.
+    def generalTextKeyCallback (event,k=self):
+        k.masterCommand(event,func=None,stroke='<Key>',commandName=None)
+
+    w.bind('<Key>',generalTextKeyCallback)
+#@nonl
+#@+node:ekr.20060113062832.1:copyBindingsHelper
+def copyBindingsHelper(self,bunchList,shortcut,w):
+    
+    if g.app.new_keys: return ###
+
+    k = self ; c = k.c
+
+    textBunch = treeBunch = None
+    for bunch in bunchList:
+        if bunch.pane == 'tree' and treeBunch is None:
+            treeBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif bunch.pane != 'tree' and textBunch is None:
+            textBunch = bunch
+            k.traceBinding (bunch,shortcut,w)
+        elif c.config.getBool('trace_bindings'):
+            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
+            
+    if textBunch and treeBunch:
+        def textAndTreeKeyCallback(event,c=c,
+            textFunc=textBunch.func,treeFunc=treeBunch.func):
+            w = c.currentPosition().edit_widget()
+            if w and w.cget('state') == 'disabled':
+                treeFunc(event)
+            else:
+                textFunc(event)
+            return 'break'
+
+        w.bind(shortcut,textAndTreeKeyCallback)
+        
+    elif textBunch or treeBunch:
+
+        def textOrTreeKeyCallback(event,func=bunch.func):
+            func(event)
+            return 'break'
+
+        w.bind(shortcut,textOrTreeKeyCallback)
+#@nonl
+#@-node:ekr.20060113062832.1:copyBindingsHelper
+#@-node:ekr.20051023182326:k.copyBindingsToWidget & helper
+#@+node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >> (from createMenuEntries)
+if rawKey:
+    amp_index = rawKey.find("&")
+else:
+    amp_index = -1
+
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set amp_index using rawKey and realLabel >> (from createMenuEntries)
+#@+node:ekr.20051006125633.1:bindShortcut
+def bindShortcut (self,pane,shortcut,command,commandName):
+    
+    '''Bind one shortcut from a menu table.'''
+    
+    k = self
+    
+    return k.bindKey(pane,shortcut,command,commandName)
+#@nonl
+#@-node:ekr.20051006125633.1:bindShortcut
+#@+node:ekr.20060120082630:plainKeyTag
+def plainKeyTag (self):
+    
+    return '%s-%s' % ('plain-key',self.c.fileName())
+#@nonl
+#@-node:ekr.20060120082630:plainKeyTag
+#@+node:ekr.20060201081920:setInputState (old version)
+def setInputState (self,state,showState=False):
+
+    k = self ; c = k.c
+    
+    w = g.app.gui.get_focus(c.frame)
+    
+    if 0: # Support for plain-key bindings.
+        tag = k.plainKeyTag()
+                   
+        try: # Will fail for nullBody.
+            # t = c.frame.top
+            t = c.frame.body.bodyCtrl
+            tags = list(t.bindtags())
+            
+        except AttributeError:
+            tags = [] ; t = w = None
+
+        if tags:
+            if state == 'ignore':
+                if tag not in tags:
+                    tags.insert(0,tag)
+                    t.bindtags(tuple(tags))
+            else:
+                if tag in tags:
+                    tags.remove(tag)
+                    t.bindtags(tuple(tags))
+
+        g.trace('%s-state' % (state),'plain key functions are',
+            g.choose(tag in tags,'enabled','disabled')) # ,tags)
+
+    k.unboundKeyAction = state
+    if state != 'insert' or showState:
+        k.showStateAndMode()
+   
+    # These commands never change focus.
+    w and c.frame.widgetWantsFocus(w)
+#@nonl
+#@-node:ekr.20060201081920:setInputState (old version)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

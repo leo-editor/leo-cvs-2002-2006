@@ -1620,10 +1620,7 @@
 <v t="ekr.20051107115231.1" annotate="7d71002e"><vh>@command unit-test-command1</vh></v>
 <v t="ekr.20051216171321" annotate="7d71002e"><vh>Test headline abc</vh></v>
 <v t="ekr.20051107115231.8" annotate="7d71002e"><vh>Commands tests</vh>
-<v t="ekr.20051107115231.7" annotate="7d71002e"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
 <v t="ekr.20051107115231.9" annotate="7d71002e"><vh>@test Select a node when file is first loaded</vh></v>
-<v t="ekr.20051107115231.10" annotate="7d71002e"><vh>@test Save command redraws the screen</vh></v>
-<v t="ekr.20051107115231.11" annotate="7d71002e"><vh>@test New command redraws the screen</vh></v>
 <v t="ekr.20051107115231.29" annotate="7d71002e"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
 <v t="ekr.20060131102609"><vh>@test print end of commands tests</vh></v>
 </v>
@@ -7747,7 +7744,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13640,9 +13637,6 @@ ab</t>
 <t tx="ekr.20051107115231"></t>
 <t tx="ekr.20051107115231.1">g.es_print('Test of @command')
 g.app.unitTestDict ['unit-test-command1'] = True</t>
-<t tx="ekr.20051107115231.7">g.app.unitTestDict = {}
-c.executeMinibufferCommand('unit-test-command1')
-assert g.app.unitTestDict.get('unit-test-command1') == True</t>
 <t tx="ekr.20051107115231.8"></t>
 <t tx="ekr.20051107115231.9">c.redraw_now() # To make node visible
 
@@ -13650,21 +13644,6 @@ c2 = c.new()
 p2 = c2.currentPosition()
 assert p.edit_widget()
 c2.close()</t>
-<t tx="ekr.20051107115231.10">c.redraw_now() # To make node visible
-
-k = c.keyHandler
-n = c.frame.tree.redrawCount
-k.simulateCommand('save-file')
-assert c.frame.tree.redrawCount &gt; n</t>
-<t tx="ekr.20051107115231.11">k = c.keyHandler
-k.simulateCommand('new')
-c2 = k.funcReturn
-try:
-    assert c2
-    assert c and c != c2
-    assert c2.frame.tree.redrawCount &gt; 0
-finally:
-    if c2: c2.close()</t>
 <t tx="ekr.20051107115231.13"></t>
 <t tx="ekr.20051107115231.14">import leoTest ; u = leoTest.testUtils(c)
 

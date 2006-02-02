@@ -27,11 +27,8 @@
 <v t="ekr.20051208085841" a="E"><vh>@test 1</vh></v>
 <v t="ekr.20060131110108" a="E" annotate="7d71002e"><vh>Commands tests</vh>
 <v t="ekr.20060131110108.1" annotate="7d71002e"><vh>@test of c.executeMinibufferCommand and @command</vh></v>
-<v t="ekr.20060131110108.2" annotate="7d71002e"><vh>@test Select a node when file is first loaded</vh></v>
-<v t="ekr.20060131110108.3" a="V" annotate="7d71002e"><vh>@test Save command redraws the screen</vh></v>
-<v t="ekr.20060131110108.4" a="E" annotate="7d71002e"><vh>@test New command redraws the screen</vh></v>
-<v t="ekr.20060131110108.5" annotate="7d71002e"><vh>@test Find keeps focus in body &amp; shows selected text</vh></v>
-<v t="ekr.20060131110108.6"><vh>@test print end of commands tests</vh></v>
+<v t="ekr.20060131110108.3" annotate="7d71002e"><vh>@test Save command redraws the screen</vh></v>
+<v t="ekr.20060131110108.4" a="EV" annotate="7d71002e"><vh>@test New command redraws the screen</vh></v>
 </v>
 </v>
 </vnodes>
@@ -81,12 +78,6 @@ for prefix,state in prefixes:
 <t tx="ekr.20060131110108.1">g.app.unitTestDict = {}
 c.executeMinibufferCommand('unit-test-command1')
 assert g.app.unitTestDict.get('unit-test-command1') == True</t>
-<t tx="ekr.20060131110108.2">c.redraw_now() # To make node visible
-
-c2 = c.new()
-p2 = c2.currentPosition()
-assert p.edit_widget()
-c2.close()</t>
 <t tx="ekr.20060131110108.3">c.redraw_now() # To make node visible
 k = c.k
 n = c.frame.tree.redrawCount
@@ -101,21 +92,6 @@ try:
     assert c2.frame.tree.redrawCount &gt; 0
 finally:
     if c2: c2.close()</t>
-<t tx="ekr.20060131110108.5">import leoEditCommands
-s = 'foo' ; bodyCtrl = c.frame.body.bodyCtrl
-
-c.searchCommands.openFindTab()
-h = c.searchCommands.findTabHandler
-w = h.find_ctrl
-w.delete('1.0','end')
-w.insert('1.0',s)
-c.frame.bodyWantsFocus()
-g.app.gui.setInsertPoint(bodyCtrl,'1.0')
-c.searchCommands.findTabFindNext()
-w = g.app.gui.get_focus(c.frame)
-
-assert w == bodyCtrl, 'focus %s' % w</t>
-<t tx="ekr.20060131110108.6">print ; print 'End of commands tests'</t>
 <t tx="ekr.20060131110151">g.es_print('Test of @command')
 g.app.unitTestDict ['unit-test-command1'] = True</t>
 </tnodes>

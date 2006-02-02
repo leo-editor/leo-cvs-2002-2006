@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="31" left="403" height="872" width="841"/>
+	<global_window_position top="31" left="403" height="777" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -52,13 +52,16 @@
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20051126062243.1" a="E"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20060202092911" a="V"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
+<v t="ekr.20060201111002" a="E"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
 <v t="ekr.20060113182439"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
@@ -129,7 +132,7 @@
 <v t="ekr.20050203090810" annotate="7d71002e"><vh>For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
-<v t="ekr.20041119034357.3" a="E" annotate="7d71002e"><vh>General configuration options</vh>
+<v t="ekr.20041119034357.3" annotate="7d71002e"><vh>General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
@@ -287,8 +290,8 @@
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
@@ -330,9 +333,9 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
@@ -348,7 +351,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
@@ -358,9 +361,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
@@ -376,7 +379,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
@@ -3598,14 +3601,12 @@ set-insert-state and set-overwrite-state commands affect only the top-level mode
 - The mode-help command (recommend binding is Tab) lists all bound keystrokes in
 a mode.
 
-- At present, Leo enters the top-level mode after executing any command in a
-mode, except the mode-help command. Leo 4.4b2 will allow shortcut specifier
-lines in @mode nodes to have the form:
+- Shortcut specifier lines in @mode nodes of the form:
 
 command-name -&gt; mode-name = binding
 
-This will have the effect of executing the command and entering the indicated
-mode. As a special case,
+specify that Leo will enter the named mode after executing the command. As a
+special case,
 
 command-name -&gt; same = binding
 
@@ -4310,5 +4311,8 @@ In most cases the less verbose output is clearer.</t>
 <t tx="ekr.20060127050605"></t>
 <t tx="ekr.20060131071612"></t>
 <t tx="ekr.20060131071947"></t>
+<t tx="ekr.20060201110016"></t>
+<t tx="ekr.20060201111002"></t>
+<t tx="ekr.20060202092911"></t>
 </tnodes>
 </leo_file>

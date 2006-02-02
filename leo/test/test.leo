@@ -220,9 +220,17 @@
 </v>
 <v t="ekr.20060108163117"><vh>@file-ref c:\prog\leoCVS\leo\test\ironPythonTest.bat</vh></v>
 </v>
-<v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
+<v t="ekr.20060113083051"><vh>Scrolling test</vh>
+<v t="ekr.20060201163600"><vh>child</vh>
+<v t="ekr.20060201170217"><vh>grandchild</vh></v>
+</v>
+</v>
 <v t="ekr.20060112062919"><vh>@@file commentTest.xml</vh></v>
-<v t="ekr.20060113083051"><vh>Scrolling test</vh></v>
+<v t="ekr.20060113083051"><vh>Scrolling test</vh>
+<v t="ekr.20060201163600"><vh>child</vh>
+<v t="ekr.20060201170217"><vh>grandchild</vh></v>
+</v>
+</v>
 <v t="ekr.20060114164015"><vh>test editing state</vh></v>
 <v t="ekr.20060119121607.5"><vh>tcl show bindings</vh></v>
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
@@ -231,7 +239,8 @@
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 <v t="ekr.20060124165505"><vh>Printing commands</vh></v>
 <v t="ekr.20060125082644"><vh>Test show-find-options</vh></v>
-<v t="ekr.20060126161404" a="V"><vh>Test of insert methods</vh></v>
+<v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
+<v t="ekr.20060201161437" a="TV"><vh>Prototype of p.key</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4413,5 +4422,17 @@ c.k.simulateCommand('show-find-options')</t>
 <t tx="ekr.20060126161404">root = c.rootPosition()
 p.moveAfter(root)
 c.redraw()</t>
+<t tx="ekr.20060201161437">def key(p):
+    # p = self
+    s = ','.join([str(id(v)) for v in p.stack])
+    return '%s:%d.%s' % (id(p.v),p.childIndex(),s)
+    
+print '-' * 40
+
+for p in c.allNodes_iter():
+    print '%30s %s' % (p.headString()[:30], key(p))
+</t>
+<t tx="ekr.20060201163600"></t>
+<t tx="ekr.20060201170217"></t>
 </tnodes>
 </leo_file>
