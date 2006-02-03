@@ -85,7 +85,6 @@ class parserBaseClass:
     #@+node:ekr.20060102103625:createModeCommand
     def createModeCommand (self,name,modeDict):
     
-        # c = self.c ; k = c.keyHandler
         commandName = 'enter-' + name
         commandName = commandName.replace(' ','-')
             
@@ -263,7 +262,7 @@ class parserBaseClass:
         
         '''Parse an @mode node and create the enter-<name>-mode command.'''
         
-        c = self.c ; k = c.keyHandler
+        c = self.c ; k = c.k
     
         # Compute the mode name.
         name = name.strip().lower()

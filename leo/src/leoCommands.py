@@ -114,7 +114,7 @@ class baseCommands:
         
         # For emacs/vim key handling.
         self.commandsDict = None
-        self.keyHandler = None
+        self.keyHandler = self.k = None
         self.miniBufferWidget = None
         
         # per-document info...
@@ -377,7 +377,7 @@ class baseCommands:
     #@+node:ekr.20051106040126:c.executeMinibufferCommand
     def executeMinibufferCommand (self,commandName):
         
-        c = self ; k = c.keyHandler
+        c = self ; k = c.k
         
         func = c.commandsDict.get(commandName)
         
@@ -2707,7 +2707,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.2886:editHeadline
     def editHeadline (self,event=None):
         
-        c = self ; k = c.keyHandler ; tree = c.frame.tree
+        c = self ; k = c.k ; tree = c.frame.tree
         
         if g.app.batchMode:
             c.notValidInBatchMode("Edit Headline")
@@ -6056,7 +6056,7 @@ class baseCommands:
     
     def editPosition(self,p):
     
-        c = self ; k = self.keyHandler
+        c = self ; k = c.k
     
         if p:
             c.selectPosition(p)

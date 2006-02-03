@@ -229,32 +229,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c.editPosition(p)
     #@nonl
     #@-node:ekr.20051009045404:createFirstTreeNode
-    #@+node:ekr.20050920094212:f.createMiniBufferWidget
-    def createMiniBufferWidget (self):
-        
-        '''Create the minbuffer below the status line.'''
-        
-        frame = self ; c = frame.c
-    
-        frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
-        if c.showMinibuffer:
-            f.pack(side='bottom',fill='x')
-    
-        lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
-        lab.pack(side='left')
-        
-        if c.useTextMinibuffer:
-            label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
-            label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
-        else:
-            label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minibuffer')
-            label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
-        
-        frame.minibufferVisible = c.showMinibuffer
-    
-        return label
-    #@nonl
-    #@-node:ekr.20050920094212:f.createMiniBufferWidget
     #@+node:ekr.20051121092320:f.enableTclTraces
     def enableTclTraces (self):
         
@@ -1313,6 +1287,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20041224072631:show/hideComponent
     #@-node:ekr.20041222060024:tkFrame.unpack/repack...
     #@+node:ekr.20051014154752:Minibuffer methods
+    #@+node:ekr.20060203115311:showMinibuffer
     def showMinibuffer (self):
         
         frame = self
@@ -1321,6 +1296,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             frame.minibufferFrame.pack(side='bottom',fill='x')
             frame.minibufferVisible = True
             
+    #@-node:ekr.20060203115311:showMinibuffer
+    #@+node:ekr.20060203115311.1:hideMinibuffer
     def hideMinibuffer (self):
         
         frame = self
@@ -1328,6 +1305,69 @@ class leoTkinterFrame (leoFrame.leoFrame):
             frame.minibufferFrame.pack_forget()
             frame.minibufferVisible = False
     #@nonl
+    #@-node:ekr.20060203115311.1:hideMinibuffer
+    #@+node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
+    # Perhaps not needed: the masterClickHandlers can do this.
+    
+    def onFocusInMinibuffer (self,event=None):
+        pass
+        
+    def onFocusOutMinibuffer (self,event=None):
+        pass
+    #@nonl
+    #@-node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
+    #@+node:ekr.20050920094212:f.createMiniBufferWidget
+    def createMiniBufferWidget (self):
+        
+        '''Create the minbuffer below the status line.'''
+        
+        frame = self ; c = frame.c
+    
+        frame.minibufferFrame = f = Tk.Frame(frame.outerFrame,relief='flat',borderwidth=0)
+        if c.showMinibuffer:
+            f.pack(side='bottom',fill='x')
+    
+        lab = Tk.Label(f,text='mini-buffer',justify='left',anchor='nw',foreground='blue')
+        lab.pack(side='left')
+        
+        if c.useTextMinibuffer:
+            label = Tk.Text(f,height=1,relief='groove',background='lightgrey',name='minibuffer')
+            label.pack(side='left',fill='x',expand=1,padx=2,pady=1)
+        else:
+            label = Tk.Label(f,relief='groove',justify='left',anchor='w',name='minibuffer')
+            label.pack(side='left',fill='both',expand=1,padx=2,pady=1)
+        
+        frame.minibufferVisible = c.showMinibuffer
+    
+        return label
+    #@nonl
+    #@-node:ekr.20050920094212:f.createMiniBufferWidget
+    #@+node:ekr.20060203114017:f.setMinibufferBindings
+    def setMinibufferBindings (self):
+        
+        '''Create bindings for the minibuffer..'''
+        
+        f = self ; c = f.c ; k = c.k ; t = f.miniBufferWidget
+        
+        if not c.useTextMinibuffer: return
+    
+        for kind,handler in (
+            ('<Key>',               k.masterKeyHandler),
+            ('<Button-1>',          k.masterClickHandler),
+            ('<Button-3>',          k.masterClick3Handler),
+            ('<Double-Button-1>',   k.masterDoubleClickHandler),
+            ('<Double-Button-3>',   k.masterDoubleClick3Handler),
+            ('<FocusIn>',           self.onFocusInMinibuffer),
+            ('<FocusOut>',          self.onFocusOutMinibuffer),
+        ):
+            t.bind(kind,handler)
+        
+        if 0:
+            if sys.platform.startswith('win'):
+                # Support Linux middle-button paste easter egg.
+                t.bind("<Button-2>",frame.OnPaste)
+    #@nonl
+    #@-node:ekr.20060203114017:f.setMinibufferBindings
     #@-node:ekr.20051014154752:Minibuffer methods
     #@+node:ekr.20031218072017.3953:Icon area methods (compatibility)
     def getIconBarObject(self):
@@ -2640,7 +2680,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.4015:makeInsertPointVisible
     def makeInsertPointVisible (self):
         
-        self.bodyCtrl.see("insert -5l")
+        self.bodyCtrl.see("insert") # -5l")
     #@nonl
     #@-node:ekr.20031218072017.4015:makeInsertPointVisible
     #@+node:ekr.20031218072017.4016:setInsertionPointTo...
@@ -3030,7 +3070,7 @@ class leoTkinterLog (leoFrame.leoLog):
         self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
         self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
         self.logNumber = 0 # To create unique name fields for Tk.Text widgets.
-        self.tabMenu = None # A menu that pops up on right clicks in the hull or in tabs.
+        self.menu = None # A menu that pops up on right clicks in the hull or in tabs.
         self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
         self.newTabCount = 0 # Number of new tabs created.
         
@@ -3367,55 +3407,41 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20051024173701:createTab
     def createTab (self,tabName):
         
-        c = self.c ; k = c.keyHandler
+        c = self.c ; k = c.k
         tabFrame = self.nb.add(tabName)
-        #@    << bind a tab-specific pop-up menu to the tab >>
-        #@+node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-        menu = self.makeTabMenu(tabName)
-        tab = self.nb.tab(tabName)
-        
-        def tabMenuRightClickCallback(event):
-            self.onRightClick(event,menu)
-            
-        def tabMenuClickCallback(event):
-            self.onClick(event,tabName)
-        
-        tab.bind('<Button-1>',tabMenuClickCallback)
-        tab.bind('<Button-3>',tabMenuRightClickCallback)
-        #@nonl
-        #@-node:ekr.20051020075416:<< bind a tab-specific pop-up menu to the tab >>
-        #@nl
+        self.menu = self.makeTabMenu(tabName)
         #@    << Create the tab's text widget >>
         #@+node:ekr.20051018072306:<< Create the tab's text widget >>
-        textWidget = self.createTextWidget(tabFrame)
+        t = self.createTextWidget(tabFrame)
         
         # Set the background color.
         configName = 'log_pane_%s_tab_background_color' % tabName
         bg = c.config.getColor(configName) or 'MistyRose1'
-        try: textWidget.configure(bg=bg)
+        try: t.configure(bg=bg)
         except Exception: pass # Could be a user error.
         
-        self.SetWidgetFontFromConfig(logCtrl=textWidget)
+        self.SetWidgetFontFromConfig(logCtrl=t)
         
         self.frameDict [tabName] = tabFrame
-        self.textDict [tabName] = textWidget
+        self.textDict [tabName] = t
         
         # Switch to a new colorTags list.
         if self.tabName:
             self.colorTagsDict [self.tabName] = self.colorTags [:]
+        
         self.colorTags = ['black']
         self.colorTagsDict [tabName] = self.colorTags
-        
-        # Make the bindings.
-        textWidget.bind("<Button-1>",self.onActivateLog)
-        textWidget.tag_config('black',foreground='black')
         #@nonl
         #@-node:ekr.20051018072306:<< Create the tab's text widget >>
         #@nl
-        self.setTabBindings(tabName)
+    
+        if tabName != 'Log':
+            # c.k doesn't exist when the log pane is created.
+            # k.makeAllBindings will call setTabBindings('Log')
+            self.setTabBindings(tabName)
         
         # New in 4.4b1: call update explicitly.
-        textWidget and textWidget.update()
+        t and t.update()
     #@nonl
     #@-node:ekr.20051024173701:createTab
     #@+node:ekr.20051018102027:deleteTab
@@ -3505,12 +3531,35 @@ class leoTkinterLog (leoFrame.leoLog):
         return tabFrame
     #@nonl
     #@-node:ekr.20051016101724.1:selectTab
-    #@+node:ekr.20051022162730:setTabBindings (does nothing at present)
+    #@+node:ekr.20051022162730:setTabBindings
     def setTabBindings (self,tabName):
         
-        pass
+        c = self.c ; k = c.k
+        tab = self.nb.tab(tabName)
+        text = self.textDict.get(tabName)
+        
+        # Send all event in the text area to the master handlers.
+        for kind,handler in (
+            ('<Key>',               k.masterKeyHandler),
+            ('<Button-1>',          k.masterClickHandler),
+            ('<Button-3>',          k.masterClick3Handler),
+            #('<Double-Button-1>',   k.masterDoubleClickHandler),
+            #('<Double-Button-3>',   k.masterDoubleClick3Handler),
+        ):
+            text.bind(kind,handler)
+            
+        # Clicks in the tab area are harmless: use the old code.
+        def tabMenuRightClickCallback(event,menu=self.menu):
+            self.onRightClick(event,menu)
+            
+        def tabMenuClickCallback(event,tabName=tabName):
+            self.onClick(event,tabName)
+        
+        tab.bind('<Button-1>',tabMenuClickCallback)
+        tab.bind('<Button-3>',tabMenuRightClickCallback)
+        
     #@nonl
-    #@-node:ekr.20051022162730:setTabBindings (does nothing at present)
+    #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers
     #@+node:ekr.20051019134422:onRightClick & onClick
     def onRightClick (self,event,menu):

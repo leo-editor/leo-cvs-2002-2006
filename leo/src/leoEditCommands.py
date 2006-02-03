@@ -42,14 +42,14 @@ class baseEditCommandsClass:
     def __init__ (self,c):
     
         self.c = c
-        self.k = self.keyHandler = None
+        self.k = self.k = None
         self.registers = {} # To keep pychecker happy.
         self.undoData = None
         
     def finishCreate(self):
     
         # Class delegators.
-        self.k = self.keyHandler = self.c.keyHandler
+        self.k = self.k = self.c.k
         try:
             self.w = self.c.frame.body.bodyCtrl # New in 4.4a4.
         except AttributeError:
@@ -374,7 +374,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
         
         self.c = c
-        self.k = c.keyHandler
+        self.k = c.k
         self.membersList = None
         self.prefix = None
         self.tabList = []
@@ -2183,11 +2183,11 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent... (To do: undo)
     #@+node:ekr.20050920084036.85:insert & delete...
-    #@+node:ekr.20051026092433.1:backwardDeleteCharacter
+    #@+node:ekr.20051026092433.1:backwardDeleteCharacter BUGGY
     def backwardDeleteCharacter (self,event=None):
         
         c = self.c ; p = c.currentPosition()
-        w = event and event.widget or g.app.gui.get_focus(c.frame)
+        w = event and event.widget ### or g.app.gui.get_focus(c.frame)
         if not g.app.gui.isTextWidget(w): return
         
         name = g.app.gui.widget_name(w)
@@ -2237,7 +2237,7 @@ class editCommandsClass (baseEditCommandsClass):
                 # Do nothing at the start of the headline.
                 w.delete('insert-1c')
     #@nonl
-    #@-node:ekr.20051026092433.1:backwardDeleteCharacter
+    #@-node:ekr.20051026092433.1:backwardDeleteCharacter BUGGY
     #@+node:ekr.20050920084036.87:deleteNextChar
     def deleteNextChar (self,event):
     

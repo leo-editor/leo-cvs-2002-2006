@@ -544,7 +544,7 @@ class leoMenu:
         self.createOpenWithMenuItemsFromTable(openWithMenu,table)
         for entry in table:
             name,shortcut,data = entry
-            c.keyHandler.bindOpenWith (shortcut,name,data)
+            c.k.bindOpenWith (shortcut,name,data)
     #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
     #@+node:ekr.20031218072017.2078:createRecentFilesMenuItems (leoMenu)
     def createRecentFilesMenuItems (self):

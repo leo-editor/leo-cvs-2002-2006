@@ -341,15 +341,15 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         #@    << make bindings for tagged items on the canvas >>
         #@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
-        table = [
+        where = g.choose(self.expanded_click_area,'clickBox','plusBox')
+        
+        table = (
+            (where,    '<Button-1>', self.onClickBoxClick,      k.masterClickHandler),
             ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
             ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
             ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
             ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
-        ]
-        
-        where = g.choose(self.expanded_click_area,'clickBox','plusBox')
-        table.append((where,'<Button-1>',self.onClickBoxClick,k.masterClickHandler),)
+        )
         
         for a,b,func,handler in table:
             def treeCallback(event,handler=handler,func=func):
@@ -1698,7 +1698,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c.beginUpdate()
         try:
             if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
-                c.endEditing() # Bug fix: 12/19/05
+                c.endEditing()
                 self.active = True
                 if p == p1 or c.config.getBool('initialClickExpandsOrContractsNode'):
                     if p.isExpanded(): p.contract()
@@ -2517,7 +2517,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         '''End editing of a headline and update p.headString().'''
     
-        c = self.c ; k = c.keyHandler ; p = c.currentPosition()
+        c = self.c ; k = c.k ; p = c.currentPosition()
         
         # w = g.app.gui.get_focus(c.frame)
     

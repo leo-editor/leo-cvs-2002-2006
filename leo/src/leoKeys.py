@@ -353,13 +353,15 @@ class keyHandlerClass:
         #@nl
     #@nonl
     #@-node:ekr.20050920085536.2: ctor (keyHandler)
-    #@+node:ekr.20050920094633:finishCreate (keyHandler) & helpers
+    #@+node:ekr.20050920094633:k.finishCreate & helpers
     def finishCreate (self):
         
         '''Complete the construction of the keyHandler class.
         c.commandsDict has been created when this is called.'''
         
         k = self ; c = k.c
+        
+        g.trace('keyHandler')
        
         k.createInverseCommandsDict()
         
@@ -394,7 +396,7 @@ class keyHandlerClass:
                 g.trace(repr(name),repr(f),g.callers())
     #@nonl
     #@-node:ekr.20051008082929:createInverseCommandsDict
-    #@-node:ekr.20050920094633:finishCreate (keyHandler) & helpers
+    #@-node:ekr.20050920094633:k.finishCreate & helpers
     #@+node:ekr.20060115195302:setDefaultUnboundKeyAction
     def setDefaultUnboundKeyAction (self):
         
@@ -545,6 +547,7 @@ class keyHandlerClass:
         c.frame.body.createBindings()
         c.frame.log.setTabBindings('Log')
         c.frame.tree.setBindings()
+        c.frame.setMinibufferBindings()
         k.checkBindings()
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
@@ -682,7 +685,6 @@ class keyHandlerClass:
         # g.trace(stroke,k.abortAllModesKey)
     
         if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
-            k.clearState()
             k.keyboardQuit(event)
             k.endCommand(event,commandName)
             return 'break'
@@ -690,10 +692,11 @@ class keyHandlerClass:
         if special: # Don't pass these on.
             return 'break' 
     
-        if k.inState():
-            val = k.callStateFunction(event) # Calls end-command.
-            if val != 'do-func': return 'break'
-            g.trace('Executing key outside of mode')
+        if 0: # *** This is now handled by k.masterKeyHandler.
+            if k.inState():
+                val = k.callStateFunction(event) # Calls end-command.
+                if val != 'do-func': return 'break'
+                g.trace('Executing key outside of mode')
     
         if k.regx.iter:
             try:
@@ -718,6 +721,8 @@ class keyHandlerClass:
                 c.doCommand(func,commandName,event=event)
             k.endCommand(event,commandName)
             return 'break'
+        elif k.inState():
+            return 'break' # New in 4.4b2: ignore unbound keys in a state.
         else:
             val = k.handleDefaultChar(event)
             return val
@@ -845,6 +850,7 @@ class keyHandlerClass:
         else:
             k.keyboardQuit(event)
             k.setLabel('Command does not exist: %s' % commandName)
+            c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.45:callAltXFunction
     #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
@@ -1320,13 +1326,13 @@ class keyHandlerClass:
     #@+node:ekr.20051023132350.1:setLabel
     def setLabel (self,s,protect=False):
     
-        k = self ; w = self.widget
+        k = self ; c = k.c ; w = self.widget
         if not w: return
     
         # g.trace(repr(s))
     
         if self.useTextWidget:
-            k.c.frame.minibufferWantsFocus()
+            ###### c.frame.minibufferWantsFocus()
             # w.update_idletasks()
             w.delete('1.0','end')
             w.insert('1.0',s)
@@ -1406,14 +1412,20 @@ class keyHandlerClass:
         trace = c.config.getBool('trace_masterKeyHandler')
         keysym = event.keysym or ''
         if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
-            return
+            return None
     
         stroke = k.strokeFromEvent(event)
+    
+        # Pass keyboard-quit to k.masterCommand for macro recording.
+        if k.abortAllModesKey and stroke == k.abortAllModesKey:
+            return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
+    
         if k.inState():
             state = k.state.kind
             if trace: g.trace(repr(stroke),'state',state)
             d =  k.masterBindingsDict.get(state)
             if d:
+                # A typical state
                 b = d.get(stroke)
                 if b:
                     return k.generalModeHandler (event,
@@ -1421,11 +1433,27 @@ class keyHandlerClass:
                         modeName=state,nextMode=b.nextMode)
                 else:
                     return k.modeHelp(event)
-            # Fall through: the dict will be empty for full-command mode.
+            elif state == 'full-command':
+                d = k.masterBindingsDict.get('mini')
+                b = d.get(stroke)
+                g.trace(d.keys())
+                g.trace(b)
+                if b:
+                    # Pass this on for macro recording.
+                    k.masterCommand(event,b.func,stroke,b.commandName)
+                    c.frame.minibufferWantsFocus()
+                    return 'break'
+                else:
+                    # Do the default state action.
+                    k.callStateFunction(event) # Calls end-command.
+                    return 'break'
+            else:
+                g.trace('No state dictionary for %s' % state)
+                return 'break'
         
         for key,name in (
             # Order here is similar to bindtags order.
-            ('mini','mini'), ('body','body'),
+            ('body','body'),
             ('tree','head'), ('tree','canvas'),
             ('log', 'log'),
             ('text',None), ('all',None),
@@ -1458,6 +1486,11 @@ class keyHandlerClass:
         
         if c.config.getBool('trace_masterClickHandler'):
             g.trace(g.app.gui.widget_name(w),func and func.__name__)
+            
+        if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+            g.es_print('Ignoring click outside active minibuffer',color='blue')
+            c.frame.minibufferWantsFocus()
+            return 'break'
     
         if event and func:
             # Don't event *think* of overriding this.
@@ -1898,7 +1931,7 @@ class keyHandlerClass:
         return len(shortcut) == 1
     #@nonl
     #@-node:ekr.20060120071949:isPlainKey
-    #@+node:ekr.20060128081317:shortcutFromSetting
+    #@+node:ekr.20060128081317:shortcutFromSetting (correct)
     def shortcutFromSetting (self,setting):
     
         if not setting:
@@ -1962,9 +1995,6 @@ class keyHandlerClass:
         #@nl
         #@    << compute shortcut >>
         #@+node:ekr.20060128103640.4:<< compute shortcut >>
-        # if shift and len(last) == 1 and last.isalpha():
-            # shift = False
-        
         table = (
             (alt, 'Alt+'),
             (ctrl,'Ctrl+'),
@@ -1980,8 +2010,9 @@ class keyHandlerClass:
         return shortcut
         
     canonicalizeShortcut = shortcutFromSetting # For compatibility.
+    strokeFromSetting    = shortcutFromSetting
     #@nonl
-    #@-node:ekr.20060128081317:shortcutFromSetting
+    #@-node:ekr.20060128081317:shortcutFromSetting (correct)
     #@+node:ekr.20060126163152.2:k.strokeFromEvent
     # The keys to k.bindingsDict must be consistent with what this method returns.
     # See 'about internal bindings' for details.
@@ -1994,7 +2025,7 @@ class keyHandlerClass:
         keysym = event.keysym or ''
         ch = event.char
         result = []
-        shift = (state & 1) == 1 # Used *only* to give a warning.
+        shift = (state & 1) == 1 # Not used for alpha chars.
         caps  = (state & 2) == 2 # Not used at all.
         ctrl  = (state & 4) == 4
         alt   = (state & 0x20000) == 0x20000
@@ -2007,6 +2038,7 @@ class keyHandlerClass:
             if shift and ch.isalpha() and ch.islower():
                 g.trace('oops: inconsistent shift state. shift: %s, ch: %s' % (shift,ch))
             ch = keysym
+            shift = False
         else:
             ch2 = k.tkBindNamesInverseDict.get(keysym)
             if ch2:
@@ -2017,90 +2049,13 @@ class keyHandlerClass:
         
         if alt: result.append('Alt+')
         if ctrl: result.append('Ctrl+')
+        if shift: result.append('Shift+')
         result.append(ch)
         result = ''.join(result)
         # g.trace('state',state,'keysym',keysym,'result',repr(result))
         return result
     #@nonl
     #@-node:ekr.20060126163152.2:k.strokeFromEvent
-    #@+node:ekr.20060129182405:k.strokeFromSetting
-    def strokeFromSetting (self,shortcut):
-        
-        '''Convert a user key setting to a key for k.bindingsDict.'''
-        
-        k = self
-        
-        if not shortcut: return None
-        s = shortcut
-        #@    << compute alt, cmd, ctrl, shift flags >>
-        #@+node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
-        s2 = s.lower()
-        cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
-        ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
-        alt   = s2.find("alt") >= 0
-        shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
-        if sys.platform == "darwin":
-            if ctrl and not cmd:
-                cmd = True ; ctrl = False
-            if alt and not ctrl:
-                ctrl = True ; alt = False
-        #@nonl
-        #@-node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
-        #@nl
-        #@    << convert minus signs to plus signs >>
-        #@+node:ekr.20060129185629:<< convert minus signs to plus signs >>
-        # Replace all minus signs by plus signs, except a trailing minus:
-        if s.endswith('-'):
-            s = s[:-1].replace('-','+') + '-'
-        else:
-            s = s.replace('-','+')
-        #@nonl
-        #@-node:ekr.20060129185629:<< convert minus signs to plus signs >>
-        #@nl
-        #@    << compute the last field >>
-        #@+node:ekr.20060129182405.6:<< compute the last field >>
-        fields = s.split('+')
-        last = fields and fields[-1]
-        if not last:
-            g.es("bad shortcut specifier:",repr(s),color='blue')
-            return None
-        
-        if len(last) > 1:
-            d = k.tkBindNamesInverseDict
-            last2 = d.get(last)
-            if last2:
-                last=last2
-            else:
-                d = k.settingsNameDict
-                last = d.get(last.lower(),last)
-                
-        #@nonl
-        #@-node:ekr.20060129182405.6:<< compute the last field >>
-        #@nl
-        #@    << compute stroke >>
-        #@+node:ekr.20060129182405.7:<< compute stroke >>
-        if shift:
-            if last.isalpha():
-                last = last.upper()
-            else:
-                g.es('Ignoring Shift in: ',s,color='blue')
-        
-        table = (
-            (alt,   'Alt+'),
-            (ctrl,  'Ctrl+'),
-            # (cmd, 'Cmnd-'),
-            # (shift, 'Shift-'),
-            (True,  last),
-        )
-        
-        stroke = ''.join([val for flag,val in table if flag])
-        #@nonl
-        #@-node:ekr.20060129182405.7:<< compute stroke >>
-        #@nl
-        # g.trace(repr(shortcut),repr(stroke))
-        return stroke
-    #@nonl
-    #@-node:ekr.20060129182405:k.strokeFromSetting
     #@+node:ekr.20060131075440:k.tkbindingFromStroke
     def tkbindingFromStroke (self,stroke):
         
