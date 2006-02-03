@@ -351,12 +351,6 @@ class keyHandlerClass:
         #@nonl
         #@-node:ekr.20050923213858:<< define internal ivars >>
         #@nl
-        
-        # self.tkBindNamesInverseDict = {}
-        # for key in self.tkBindNamesDict.keys():
-            # val = self.tkBindNamesDict.get(key)
-            # self.tkBindNamesInverseDict [val] = key
-            
     #@nonl
     #@-node:ekr.20050920085536.2: ctor (keyHandler)
     #@+node:ekr.20050920094633:finishCreate (keyHandler) & helpers

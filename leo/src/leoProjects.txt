@@ -3042,12 +3042,6 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     << define Tk ivars >>
     << define externally visible ivars >>
     << define internal ivars >>
-    
-    # self.tkBindNamesInverseDict = {}
-    # for key in self.tkBindNamesDict.keys():
-        # val = self.tkBindNamesDict.get(key)
-        # self.tkBindNamesInverseDict [val] = key
-        
 #@nonl
 #@+node:ekr.20051006092617:<< define Tk ivars >>
 if self.useTextWidget:

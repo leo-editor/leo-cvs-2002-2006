@@ -2,11 +2,62 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20050921094025:4.4 To do
-#@+node:ekr.20060202232638:Urgent: the focus sometimes improperly leaves the body pane
-#@-node:ekr.20060202232638:Urgent: the focus sometimes improperly leaves the body pane
-#@+node:ekr.20060125171123:(use a text minibuffer)
-# Essential for cut/copy/paste
+#@+node:ekr.20060202233315:To do first
+#@+node:ekr.20060202235508:Run pychecker
+#@-node:ekr.20060202235508:Run pychecker
+#@+node:ekr.20060202235215:Find does not always set the selection properly
+#@-node:ekr.20060202235215:Find does not always set the selection properly
+#@+node:ekr.20060202235215.1:Are there Enter and Leave bindings??
+#@-node:ekr.20060202235215.1:Are there Enter and Leave bindings??
+#@+node:ekr.20060202233828.3:Urgent: binding are not handled properly in the log pane
+#@-node:ekr.20060202233828.3:Urgent: binding are not handled properly in the log pane
+#@+node:ekr.20060202233828:Writing to a log window should not change focus
+#@-node:ekr.20060202233828:Writing to a log window should not change focus
+#@+node:ekr.20060202234446:Make sure everything works with multiple windows
+#@-node:ekr.20060202234446:Make sure everything works with multiple windows
+#@+node:ekr.20060202234446.1:Opening an ouline or creating a new  window should put focus in body
+#@-node:ekr.20060202234446.1:Opening an ouline or creating a new  window should put focus in body
+#@+node:ekr.20060202235215.2:Save command should write 'saving' to the log pane first.
+#@-node:ekr.20060202235215.2:Save command should write 'saving' to the log pane first.
+#@+node:ekr.20060202234446.2:New windows should have focus in body?
+# And the headline is not drawn properly.
 #@nonl
+#@-node:ekr.20060202234446.2:New windows should have focus in body?
+#@+node:ekr.20060202234446.3:Writing 'command does not exist' from minibuffer should leave focus in body
+# Right now it 'restores' the focus to the tree if it was in the tre previously.
+#@-node:ekr.20060202234446.3:Writing 'command does not exist' from minibuffer should leave focus in body
+#@+node:ekr.20060202232638:Urgent: the focus sometimes improperly leaves the body pane
+This happened when typing a backspace.
+#@nonl
+#@-node:ekr.20060202232638:Urgent: the focus sometimes improperly leaves the body pane
+#@+node:ekr.20060202233828.2:Binding conflicts for Alt-Shift-A are not reported properly
+# And the bindings aren't handled properly either.
+#@nonl
+#@-node:ekr.20060202233828.2:Binding conflicts for Alt-Shift-A are not reported properly
+#@+node:ekr.20060202233315.1:Remove hard binding for Ctrl-T in log pane
+And any other bindings.
+#@nonl
+#@-node:ekr.20060202233315.1:Remove hard binding for Ctrl-T in log pane
+#@+node:ekr.20060202235215.3:Remove deprecation warning
+#@+node:EKR.20040627114602:getDescendentUnknownAttributes
+# Only @thin vnodes have the descendentTnodeUnknownAttributes field.
+# The question is: what are we to do about this?
+
+def getDescendentUnknownAttributes (self,s):
+    
+    try:
+        bin = binascii.unhexlify(s) # Throws a TypeError if val is not a hex string.
+        val = pickle.loads(bin)
+        return val
+
+    except (TypeError,pickle.UnpicklingError,ImportError):
+        return None
+#@nonl
+#@-node:EKR.20040627114602:getDescendentUnknownAttributes
+#@-node:ekr.20060202235215.3:Remove deprecation warning
+#@-node:ekr.20060202233315:To do first
+#@+node:ekr.20060125171123:(use a text minibuffer)
+# Set @bool useTextMinibuffer = True
 #@+node:ekr.20050920085536.41:fullCommand (alt-x) & helper
 def fullCommand (self,event,specialStroke=None,specialFunc=None):
     
