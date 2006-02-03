@@ -335,7 +335,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         self.canvas.bind('<Button-1>',treeClickCallback)
         
-        self.canvas.bind('<Key>',k.masterKeyHandler),
+        self.canvas.bind('<Key>',k.masterKeyHandler)
         #@nonl
         #@-node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
         #@nl
@@ -2000,10 +2000,11 @@ class leoTkinterTree (leoFrame.leoTree):
                 pass # g.trace('not changed')
         finally:
             c.endUpdate()
-            if self.stayInTree:
-                frame.treeWantsFocus()
-            else:
-                frame.bodyWantsFocus()
+            if changed:
+                if self.stayInTree:
+                    frame.treeWantsFocus()
+                else:
+                    frame.bodyWantsFocus()
        
         g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
     #@nonl
