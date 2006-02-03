@@ -493,6 +493,7 @@ class baseFileCommands:
             return val
     
         except (TypeError,pickle.UnpicklingError,ImportError):
+            g.trace('oops: getDescendentUnknownAttributes')
             return None
     #@nonl
     #@-node:EKR.20040627114602:getDescendentUnknownAttributes
