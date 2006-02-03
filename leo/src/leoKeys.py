@@ -843,6 +843,7 @@ class keyHandlerClass:
             func(event)
             k.endCommand(event,commandName)
         else:
+            k.keyboardQuit(event)
             k.setLabel('Command does not exist: %s' % commandName)
     #@nonl
     #@-node:ekr.20050920085536.45:callAltXFunction
@@ -1124,7 +1125,10 @@ class keyHandlerClass:
             return k.funcReturn
         else:
             g.trace('no command for %s' % (commandName),color='red')
-            if g.app.unitTesting: raise AttributeError
+            if g.app.unitTesting:
+                raise AttributeError
+            else:
+                return None
     #@nonl
     #@-node:ekr.20051105155441:simulateCommand
     #@+node:ekr.20050920085536.62:getArg
@@ -1933,13 +1937,13 @@ class keyHandlerClass:
         fields = s.split('+') # Don't lower this field.
         if not fields:
             if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s1
+                print "bad shortcut specifier:", s
             return None,None
         
         last = fields[-1]
         if not last:
             if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s1
+                print "bad shortcut specifier:", s
             return None,None
         
         if len(last) == 1:
@@ -2040,7 +2044,6 @@ class keyHandlerClass:
                 cmd = True ; ctrl = False
             if alt and not ctrl:
                 ctrl = True ; alt = False
-        plain = not alt and not cmd and not ctrl
         #@nonl
         #@-node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
         #@nl
