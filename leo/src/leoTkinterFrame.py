@@ -3201,7 +3201,7 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
     #@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-    def setFontFromConfig (self,logCtrl=None):
+    def SetWidgetFontFromConfig (self,logCtrl=None):
     
         c = self.c
     
@@ -3226,6 +3226,8 @@ class leoTkinterLog (leoFrame.leoLog):
         if fg:
             try: logCtrl.configure(fg=fg)
             except: pass
+            
+    setFontFromConfig = SetWidgetFontFromConfig # Renaming supresses a pychecker warning.
     #@nonl
     #@-node:ekr.20031218072017.4046:tkLog.setFontFromConfig
     #@-node:ekr.20051016095907.1:Config & get/saveState
@@ -3393,7 +3395,7 @@ class leoTkinterLog (leoFrame.leoLog):
         try: textWidget.configure(bg=bg)
         except Exception: pass # Could be a user error.
         
-        self.setFontFromConfig(logCtrl=textWidget)
+        self.SetWidgetFontFromConfig(logCtrl=textWidget)
         
         self.frameDict [tabName] = tabFrame
         self.textDict [tabName] = textWidget
