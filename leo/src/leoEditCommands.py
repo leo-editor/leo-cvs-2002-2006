@@ -12,7 +12,6 @@ Modelled after Emacs and Vim commands.'''
 import leoGlobals as g
 
 import leoFind
-import leoTkinterFind
 import leoKeys
 
 import cPickle
@@ -5425,6 +5424,7 @@ class minibufferFind:
             return val
         else:
             g.trace('bad ivar name: %s' % ivar)
+            return None
     #@nonl
     #@-node:ekr.20060125082510:getOption
     #@+node:ekr.20060125074939:showFindOptions
@@ -6478,18 +6478,6 @@ class searchCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20060124093828:Find wrappers
     #@-node:ekr.20060123131421:Top-level methods
-    #@+node:ekr.20060117181301.1:searchAgain & changeAgain 
-    def searchAgain (self,event):
-    
-        if self.incremental:
-            self.iSearchHelper(event,self.forward,self.regexp)
-        elif self.regexp:
-            self.reSearchHelper(event,self.searchString,self.forward)
-        elif self.word:
-            self.wordSearchHelper(event,self.searchString,self.forward)
-        else:
-            self.plainSearchHelper(event,self.searchString,self.forward)
-    #@-node:ekr.20060117181301.1:searchAgain & changeAgain 
     #@+node:ekr.20050920084036.261:incremental search...
     def isearchForward (self,event):
         self.startIncremental(event,forward=True,regexp=False)
@@ -6624,6 +6612,13 @@ class searchCommandsClass (baseEditCommandsClass):
             w.see('insert')
     #@nonl
     #@-node:ekr.20050920084036.263:iSearchHelper
+    #@+node:ekr.20060203072636:endSearch
+    def endSearch (self,i,j):
+    
+        g.app.gui.setTextSelection (self.w,i,j,insert='sel.end')
+        self.k.keyboardQuit(event=None)
+    #@nonl
+    #@-node:ekr.20060203072636:endSearch
     #@-node:ekr.20050920084036.261:incremental search...
     #@-others
 #@nonl
