@@ -3066,7 +3066,7 @@ class baseCommands:
             c.endEditing()
             c.editPosition(p)
         finally:
-            c.endUpdate(restoreFocus=False,scroll=True)
+            c.endUpdate(scroll=True)
     
         return p # for mod_labels plugin.
     #@nonl
@@ -5357,21 +5357,23 @@ class baseCommands:
         until the matching call to endUpdate.'''
         
         c = self
-        w = g.app.gui.get_focus(c.frame)
-        c.afterUpdateWidgetStack.append(w)
+        if 0: # A bad idea.
+            w = g.app.gui.get_focus(c.frame)
+            c.afterUpdateWidgetStack.append(w)
         # g.trace(g.app.gui.widget_name(w),g.callers(5))
         c.frame.tree.beginUpdate()
         
-    def endUpdate(self,flag=True,restoreFocus=True,scroll=False):
+    def endUpdate(self,flag=True,scroll=False):
         
         '''Redraw the screen if flag is True.'''
     
         c = self
         c.frame.tree.endUpdate(flag,scroll=scroll)
-        w = c.afterUpdateWidgetStack.pop()
-        if c.exists and not c.afterUpdateWidgetStack and restoreFocus:
-            # We are at the top-level endUpdate.
-            c.frame.widgetWantsFocus(w)
+        if 0: # A bad idea.
+            w = c.afterUpdateWidgetStack.pop()
+            if c.exists and not c.afterUpdateWidgetStack and restoreFocus:
+                # We are at the top-level endUpdate.
+                c.frame.widgetWantsFocus(w)
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
     EndUpdate = endUpdate # Compatibility with old scripts
@@ -6068,16 +6070,17 @@ class baseCommands:
     #@+node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     # Ends the editing in the outline.
     
-    def endEditing(self,restoreFocus=False):
+    def endEditing(self):
         
-        c = self ; tree = c.frame.tree
+        c = self
+        c.frame.tree.endEditLabel()
         
-        if restoreFocus:
-            w = g.app.gui.get_focus(c.frame)
-            tree.endEditLabel()
-            c.frame.widgetWantsFocus(w)
-        else:
-            tree.endEditLabel()
+        # if restoreFocus:
+            # w = g.app.gui.get_focus(c.frame)
+            # tree.endEditLabel()
+            # c.frame.widgetWantsFocus(w)
+        # else:
+            # tree.endEditLabel()
     #@nonl
     #@-node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     #@+node:ekr.20031218072017.2997:c.selectPosition
