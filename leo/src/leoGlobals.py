@@ -2192,8 +2192,8 @@ def printGcObjects(message=''):
         delta = n2-lastObjectCount
         lastObjectCount = n2
 
-        print '-' * 30
-        print "garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message)
+        g.es_print('-' * 30)
+        g.es_print("garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message))
         
         #@        << print number of each type of object >>
         #@+node:ekr.20040703054646:<< print number of each type of object >>
@@ -2220,7 +2220,7 @@ def printGcObjects(message=''):
             n2 = typesDict.get(key,0)
             delta2 = n2-n1
             if delta2 != 0:
-                print "%+6d =%7d %s" % (delta2,n2,key)
+                g.es_print("%+6d =%7d %s" % (delta2,n2,key))
             
         lastTypesDict = typesDict
         typesDict = {}
@@ -2242,14 +2242,14 @@ def printGcObjects(message=''):
                     key = repr(obj) # Don't create a pointer to the object!
                     funcDict[key]=None 
                     if not lastFunctionsDict.has_key(key):
-                        print ; print obj
+                        g.es_print(obj)
                         args, varargs, varkw,defaults  = inspect.getargspec(obj)
-                        print "args", args
-                        if varargs: print "varargs",varargs
-                        if varkw: print "varkw",varkw
+                        g.es_print("args", args)
+                        if varargs: g.es_print("varargs",varargs)
+                        if varkw: g.es_print("varkw",varkw)
                         if defaults:
-                            print "defaults..."
-                            for s in defaults: print s
+                            g.es_print("defaults...")
+                            for s in defaults: g.es_print(s)
             
             lastFunctionsDict = funcDict
             funcDict = {}
@@ -2284,25 +2284,25 @@ def printGcVerbose(message=''):
         elif type(o) in (type(()),type([])):
             seqs += 1
         else:
-            print o
+            g.es_print(o)
         i += 1
-    print '-' * 40
-    print 'dicts: %d, sequences: %d' % (dicts,seqs)
-    print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
+    g.es_print('-' * 40)
+    g.es_print('dicts: %d, sequences: %d' % (dicts,seqs))
+    g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))
 #@nonl
 #@-node:ekr.20060127165509:printGcVerbose
 #@+node:ekr.20031218072017.1593:printGcRefs
 def printGcRefs (message):
 
     refs = gc.get_referrers(app.windowList[0])
-    print '-' * 30
+    g.es_print('-' * 30)
 
     if g.app.trace_gc_verbose:
-        print "refs of", app.windowList[0]
+        g.es_print("refs of", app.windowList[0])
         for ref in refs:
-            print type(ref)
+            g.es_print(type(ref))
     else:
-        print "%d referers" % len(refs)
+        g.es_print("%d referers" % len(refs))
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
@@ -2310,8 +2310,8 @@ def printGcRefs (message):
 def printGcAll (message=''):
     
     d = {} ; objects = gc.get_objects()
-    print '-' * 30
-    print '%d objects' % len(objects)
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects))
 
     for obj in objects:
         t = type(obj)
@@ -2323,13 +2323,11 @@ def printGcAll (message=''):
     if 1: # Sort by n
         items = d.items() ; items.sort(key=lambda x: x[1],reverse=True)
         for z in items:
-            print '%40s %7d' % (z[0],z[1])
-
+            g.es_print('%40s %7d' % (z[0],z[1]))
     else: # Sort by type
-    
         keys = d.keys() ; keys.sort()
         for t in keys:
-            print '%40s %7d' % (t,d.get(t))
+            g.es_print('%40s %7d' % (t,d.get(t)))
 #@nonl
 #@-node:ekr.20060202161935:printGcAll
 #@-others

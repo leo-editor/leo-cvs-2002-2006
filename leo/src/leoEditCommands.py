@@ -1261,6 +1261,7 @@ class debugCommandsClass (baseEditCommandsClass):
         
         c = self.c
         c.frame.tree.showStats()
+        self.dumpAllObjects()
     #@nonl
     #@-node:ekr.20060202133313:printStats
     #@-others

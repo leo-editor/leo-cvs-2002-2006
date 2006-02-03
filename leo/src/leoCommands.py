@@ -2935,7 +2935,7 @@ class baseCommands:
                 pasted.moveToNthChildOf(back,0)
             u.afterInsertNode(pasted,undoType,undoData)
         finally:
-            c.endUpdate()
+            c.endUpdate(scroll=True)
             c.recolor()
     #@nonl
     #@-node:ekr.20031218072017.1551:pasteOutline

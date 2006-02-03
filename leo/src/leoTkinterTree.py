@@ -712,8 +712,7 @@ class leoTkinterTree (leoFrame.leoTree):
         ):
             z.append('%10s used: %4d free: %4d' % (kind,len(a),len(b)))
             
-        f = g.choose(self.stats,g.trace,g.es)
-        f('\n' + '\n'.join(z))
+        g.es_print('\n' + '\n'.join(z))
     #@nonl
     #@-node:ekr.20060202125419:showStats
     #@-node:ekr.20040803072955.6:Allocation...
@@ -1611,7 +1610,9 @@ class leoTkinterTree (leoFrame.leoTree):
             item = canvas.find_overlapping(x+1,y,x+1,y)
             try:    theId = item[0]
             except: theId = item
-            if not theId: return None
+            if not theId:
+                g.es_print('oops: eventToPosition failed')
+                return None
             p = self.ids.get(theId)
             # g.trace("was vertical line",p)
         

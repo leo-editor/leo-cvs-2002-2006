@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7897" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7901" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="42" left="379" height="857" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -35,6 +35,13 @@
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
+<v t="ekr.20060202155426"><vh>@button Stats</vh></v>
+<v t="ekr.20060202155426.1"><vh>@button Gc</vh></v>
+<v t="ekr.20060202155426.2"><vh>@button No-Gc</vh></v>
+<v t="ekr.20060202155737"><vh>@button Free-Tree</vh></v>
+<v t="ekr.20060202160656" a="V"><vh>@button *new-obj</vh></v>
+<v t="ekr.20060202160706"><vh>@button New-obj</vh></v>
+<v t="ekr.20060202162051"><vh>@button All-obj</vh></v>
 <v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
 </v>
@@ -240,7 +247,7 @@
 <v t="ekr.20060124165505"><vh>Printing commands</vh></v>
 <v t="ekr.20060125082644"><vh>Test show-find-options</vh></v>
 <v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
-<v t="ekr.20060201161437" a="V"><vh>Prototype of p.key</vh></v>
+<v t="ekr.20060201161437"><vh>Prototype of p.key</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4434,5 +4441,13 @@ for p in c.allNodes_iter():
 </t>
 <t tx="ekr.20060201163600"></t>
 <t tx="ekr.20060201170217"></t>
+<t tx="ekr.20060202155426">c.debugCommands.printStats()</t>
+<t tx="ekr.20060202155426.1">c.debugCommands.enableGcTrace()
+g.collectGarbage()</t>
+<t tx="ekr.20060202155426.2">g.app.trace_gc = False</t>
+<t tx="ekr.20060202155737">c.debugCommands.freeTreeWidgets()</t>
+<t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
+<t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
+<t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
 </tnodes>
 </leo_file>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8736" clone_windows="0"/>
-<globals body_outline_ratio="0.537378114843">
-	<global_window_position top="10" left="443" height="840" width="793"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9062" clone_windows="0"/>
+<globals body_outline_ratio="0.628571428571">
+	<global_window_position top="29" left="431" height="840" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,10 +14,10 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.139,ekr.20040803072955.141,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.139,ekr.20040803072955.141,ekr.20040803072955.11,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.139,ekr.20040803072955.141,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.11,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"
+<v t="ekr.20040117181936" descendentTnodeUnknownAttributes="7d71005514656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"
 marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
@@ -53,21 +53,19 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20060115103349"><vh>Modes &amp; input states</vh>
+<v t="ekr.20060115103349"><vh>Modes</vh>
+<v t="ekr.20060117202916"><vh>badMode</vh></v>
+<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
+<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
 <v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
 <v t="ekr.20060121104301"><vh>exitNamedMode</vh></v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
 <v t="ekr.20060104164523"><vh>modeHelp</vh>
 <v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
 </v>
-<v t="ekr.20060104110233"><vh>generalModeHandler &amp; helpers</vh>
-<v t="ekr.20060117202916"><vh>badMode</vh></v>
-<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
-<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
-<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
-</v>
-<v t="ekr.20060105132013"><vh>set-xxx-State &amp; setInputState</vh>
+<v t="ekr.20060105132013"><vh>set-xxx-State</vh></v>
 <v t="ekr.20060120200818"><vh>setInputState</vh></v>
-</v>
 <v t="ekr.20060120193743"><vh>showStateAndMode</vh></v>
 </v>
 </v>
@@ -126,46 +124,37 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20041120112043"><vh>parseShortcutLine (g.app.config)</vh></v>
 <v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
-<v t="ekr.20050920085536.16"><vh>bindKey &amp; helpers</vh>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
 <v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
 <v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
-<v t="ekr.20051022094136"><vh>bindKeyHelper</vh></v>
-<v t="ekr.20060120082630"><vh>plainKeyTag</vh></v>
-</v>
 <v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
-<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
-<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
-<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
-</v>
 <v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20060201081225"><vh>k.makeAllModeBindings</vh></v>
 <v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
 <v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
 </v>
-<v t="ekr.20060115103349"><vh>Modes &amp; input states</vh>
+<v t="ekr.20060115103349"><vh>Modes</vh>
+<v t="ekr.20060117202916"><vh>badMode</vh></v>
+<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
+<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
 <v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
 <v t="ekr.20060121104301"><vh>exitNamedMode</vh></v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
 <v t="ekr.20060104164523"><vh>modeHelp</vh>
 <v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
 </v>
-<v t="ekr.20060104110233"><vh>generalModeHandler &amp; helpers</vh>
-<v t="ekr.20060117202916"><vh>badMode</vh></v>
-<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
-<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
-<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
-</v>
-<v t="ekr.20060105132013"><vh>set-xxx-State &amp; setInputState</vh>
+<v t="ekr.20060105132013"><vh>set-xxx-State</vh></v>
 <v t="ekr.20060120200818"><vh>setInputState</vh></v>
-</v>
 <v t="ekr.20060120193743"><vh>showStateAndMode</vh></v>
 </v>
 </v>
 <v t="ekr.20060119201356"><vh>Disabled plain-key bindings in insert/overwrite modes</vh>
-<v t="ekr.20060105132013"><vh>set-xxx-State &amp; setInputState</vh>
-<v t="ekr.20060120200818"><vh>setInputState</vh></v>
-</v>
+<v t="ekr.20060105132013"><vh>set-xxx-State</vh></v>
 <v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
 <v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
 <v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
@@ -173,20 +162,15 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20051026092433"><vh>updateTab</vh></v>
 </v>
 <v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
-<v t="ekr.20050920085536.16"><vh>bindKey &amp; helpers</vh>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
 <v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
 <v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
-<v t="ekr.20051022094136"><vh>bindKeyHelper</vh></v>
-<v t="ekr.20060120082630"><vh>plainKeyTag</vh></v>
-</v>
 <v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
-<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
-<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
-<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
-</v>
 <v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20060201081225"><vh>k.makeAllModeBindings</vh></v>
 <v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
 <v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
@@ -716,7 +700,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 </v>
 </v>
-<v t="ekr.20060127100926"><vh>(Improved gc stats slightly)</vh>
+<v t="ekr.20060127100926"><vh>(Improved gc stats)</vh>
 <v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
@@ -731,11 +715,6 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
 <v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
 <v t="ekr.20041130093254"><vh>reportDirectories</vh></v>
-</v>
-<v t="ekr.20060127162818.1"><vh>class debugCommandsClass</vh>
-<v t="ekr.20060127162921"><vh> ctor</vh></v>
-<v t="ekr.20060127163325"><vh> getPublicCommands</vh></v>
-<v t="ekr.20060127163325.1"><vh>enable/disableGcTrace</vh></v>
 </v>
 <v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
 <v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
@@ -752,128 +731,229 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
 <v t="ekr.20031218072017.1593"><vh>printGcRefs</vh></v>
 </v>
+<v t="ekr.20060202161935"><vh>printGcAll</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20060120105605.1"><vh>(Modes project)</vh>
-<v t="ekr.20060120200529"><vh>What I did</vh></v>
-<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
-<v t="ekr.20060128103640"><vh>old</vh>
-<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.2"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.4"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051014170754.1"><vh>getShortcutForCommand/Name (should return lists)</vh></v>
-<v t="ekr.20060121095848"><vh>Commands</vh>
-<v t="ekr.20050920085536.63"><vh>keyboardQuit</vh></v>
-<v t="ekr.20031218072017.2886"><vh>editHeadline</vh></v>
-<v t="ekr.20031218072017.2991"><vh>c.editPosition</vh></v>
-<v t="ekr.20031218072017.2992"><vh>c.endEditing (calls tree.endEditLabel)</vh></v>
+<v t="ekr.20060201083530"><vh>(Added prettyPrintKey in various places)</vh>
+<v t="ekr.20060201083154"><vh>k.prettyPrintKey</vh></v>
 <v t="ekr.20051012201831"><vh>printBindings</vh></v>
 <v t="ekr.20051014061332"><vh>printCommands</vh></v>
-</v>
-<v t="ekr.20060121095848.3"><vh>Tree...</vh>
-<v t="ekr.20040803072955.90"><vh>head key handlers</vh>
-<v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
-<v t="ekr.20051026083544.2"><vh>updateHead</vh></v>
-<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
-<v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
-<v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
-<v t="ekr.20050618045715"><vh>&lt;&lt; patch by Maciej Kalisiak  to handle scroll-wheel events &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20060115103349"><vh>Modes &amp; input states</vh>
-<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
-<v t="ekr.20060121104301"><vh>exitNamedMode</vh></v>
 <v t="ekr.20060104164523"><vh>modeHelp</vh>
 <v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
 </v>
-<v t="ekr.20060104110233"><vh>generalModeHandler &amp; helpers</vh>
-<v t="ekr.20060117202916"><vh>badMode</vh></v>
-<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
-<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
-<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
+<v t="ekr.20051017212452"><vh>computeCompletionList</vh></v>
+<v t="ekr.20051018070524"><vh>computeInverseBindingDict</vh></v>
 </v>
-<v t="ekr.20060105132013"><vh>set-xxx-State &amp; setInputState</vh>
-<v t="ekr.20060120200818"><vh>setInputState</vh></v>
-</v>
-<v t="ekr.20060120193743"><vh>showStateAndMode</vh></v>
-</v>
-</v>
-<v t="ekr.20060126163152.1"><vh>(Master key handler)</vh>
-<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
-<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-</v>
-<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
-<v t="ekr.20060128103640"><vh>old</vh>
-<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.2"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.4"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060129052538.1"><vh>master event handlers (keyHandler)</vh>
+<v t="ekr.20060202121216"><vh>Double-click didn't work in the body pane.</vh>
+<v t="ekr.20060129052538.1"><vh>Master event handlers (keyHandler)</vh>
 <v t="ekr.20060127183752"><vh>masterKeyHandler</vh></v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
-<v t="ekr.20060130130942"><vh>masterClick3Handler</vh></v>
 <v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
-<v t="ekr.20060131085116"><vh>masterDoubleClick3Handler</vh></v>
 <v t="ekr.20060128090219"><vh>masterMenuHandler</vh></v>
 </v>
-<v t="ekr.20060126163152.2"><vh>k.strokeFromEvent</vh></v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
-<v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
+<v t="ekr.20040803072955.108"><vh>tree.OnDeactivate</vh></v>
+<v t="ekr.20031218072017.3975"><vh>OnActivateBody (tkFrame)</vh></v>
+<v t="ekr.20031218072017.3977"><vh>OnBodyClick, OnBodyRClick (Events)</vh></v>
+<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events)</vh></v>
 </v>
-<v t="ekr.20060131120250"><vh>(Send all clicks through k.masterClickHandlers)</vh>
+<v t="ekr.20060202160109"><vh>Added free-text-widgets, dump-all-objects, dump-new-objects, verbose-dump-objects commands</vh></v>
+<v t="ekr.20060202141338"><vh>Added gc_stats to print-stats command</vh></v>
+</v>
+<v t="ekr.20060131120250"><vh>(Recent)</vh>
 <v t="ekr.20060131191731"><vh>What I did</vh></v>
-<v t="ekr.20060131133241"><vh>Tree</vh>
+<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
+<v t="ekr.20060201073913"><vh>Mode stuff</vh>
+<v t="ekr.20050920085536.62"><vh>getArg</vh>
+<v t="ekr.20050928092516"><vh>&lt;&lt; init altX vars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
+</v>
+<v t="ekr.20060131133241"><vh>Binding stuff</vh>
 <v t="ekr.20051024102724"><vh>tkTtree.setBindings</vh>
 <v t="ekr.20060131173440"><vh>&lt;&lt; make bindings for a common binding widget &gt;&gt;</vh></v>
 <v t="ekr.20060131173440.1"><vh>&lt;&lt; make bindings for the canvas itself &gt;&gt;</vh></v>
 <v t="ekr.20060131173440.2"><vh>&lt;&lt; make bindings for tagged items on the canvas &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
+<v t="ekr.20040803072955.11" a="M"><vh>newText (leoTkinterTree)</vh>
 <v t="ekr.20050618045715"><vh>&lt;&lt; patch by Maciej Kalisiak  to handle scroll-wheel events &gt;&gt;</vh></v>
 </v>
-</v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
 <v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
-<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events) (no longer used)</vh></v>
 <v t="ekr.20040803072955.87"><vh>onHeadlineClick</vh></v>
-<v t="ekr.20060129052538.1"><vh>master event handlers (keyHandler)</vh>
-<v t="ekr.20060127183752"><vh>masterKeyHandler</vh></v>
-<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
-<v t="ekr.20060130130942"><vh>masterClick3Handler</vh></v>
-<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
-<v t="ekr.20060131085116"><vh>masterDoubleClick3Handler</vh></v>
-<v t="ekr.20060128090219"><vh>masterMenuHandler</vh></v>
+<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events)</vh></v>
 </v>
-<v t="ekr.20050920085536.62"><vh>getArg</vh>
-<v t="ekr.20050928092516"><vh>&lt;&lt; init altX vars &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
-<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
-<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
-<v t="ekr.20060127183752"><vh>masterKeyHandler</vh></v>
-<v t="ekr.20060104110233"><vh>generalModeHandler &amp; helpers</vh>
-<v t="ekr.20060117202916"><vh>badMode</vh></v>
-<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
-<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
-<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
+<v t="ekr.20060201071346"><vh>Code cleanup</vh></v>
+<v t="ekr.20060130151453"><vh>Find leaks</vh>
+<v t="ekr.20060202153509"><vh>Gc todo</vh></v>
+<v t="ekr.20060201114832"><vh>Notes</vh></v>
+<v t="ekr.20060202082221"><vh>Reference code</vh>
+<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20041219072112"><vh>&lt;&lt; import leoGlobals and leoApp &gt;&gt;</vh></v>
+<v t="ekr.20041219072416.1"><vh>&lt;&lt; import leoNodes and leoConfig &gt;&gt;</vh></v>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
+<v t="ekr.20041124083125"><vh>completeFileName (leo.py)</vh></v>
+<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
+<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
+<v t="ekr.20041130093254"><vh>reportDirectories</vh></v>
+</v>
+<v t="ekr.20031218072017.1588"><vh>Garbage Collection</vh>
+<v t="ekr.20060127162818"><vh>enable_gc_debug</vh></v>
+<v t="ekr.20031218072017.1589"><vh>clearAllIvars</vh></v>
+<v t="ekr.20031218072017.1590"><vh>collectGarbage</vh></v>
+<v t="ekr.20031218072017.1592"><vh>printGc</vh>
+<v t="ekr.20060127164729.1"><vh>printGcObjects</vh>
+<v t="ekr.20040703065638"><vh>&lt;&lt; print added functions &gt;&gt;</vh></v>
+<v t="ekr.20040703054646"><vh>&lt;&lt; print number of each type of object &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
+<v t="ekr.20031218072017.1593"><vh>printGcRefs</vh></v>
+</v>
+<v t="ekr.20060202161935"><vh>printGcAll</vh></v>
+</v>
+<v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
+<v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
+</v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.125"><vh>Selecting &amp; editing... (tkTree)</vh>
+<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
+<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131" a="M"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132" a="M"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.134"><vh>tree.set...LabelState</vh>
+<v t="ekr.20040803072955.135"><vh>setEditLabelState</vh></v>
+<v t="ekr.20040803072955.136"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20040803072955.138"><vh>setUnselectedLabelState</vh></v>
+<v t="ekr.20040803072955.139" a="M"><vh>setDisabledHeadlineColors</vh></v>
+<v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
+<v t="ekr.20040803072955.141" a="M"><vh>setUnselectedHeadlineColors</vh></v>
+</v>
+<v t="ekr.20040803072955.142"><vh>dimEditLabel, undimEditLabel</vh></v>
+<v t="ekr.20040803072955.143"><vh>tree.expandAllAncestors</vh></v>
+</v>
+<v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt; (commands)</vh></v>
+<v t="ekr.20031218072017.893"><vh>p.__cmp__</vh></v>
+</v>
+<v t="ekr.20060202082221.1"><vh>Leaky code</vh>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131" a="M"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132" a="M"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060202163829"><vh>Stats</vh></v>
+<v t="ekr.20060127162818.1"><vh>class debugCommandsClass</vh>
+<v t="ekr.20060127162921"><vh> ctor</vh></v>
+<v t="ekr.20060127163325"><vh> getPublicCommands</vh></v>
+<v t="ekr.20060202160523"><vh>dumpAll/New/VerboseObjects</vh></v>
+<v t="ekr.20060127163325.1"><vh>enable/disableGcTrace</vh></v>
+<v t="ekr.20060202154734"><vh>freeTreeWidgets</vh></v>
+<v t="ekr.20060202133313"><vh>printStats</vh></v>
+</v>
+<v t="ekr.20060127100926"><vh>(Improved gc stats)</vh>
+<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
+<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20041219072112"><vh>&lt;&lt; import leoGlobals and leoApp &gt;&gt;</vh></v>
+<v t="ekr.20041219072416.1"><vh>&lt;&lt; import leoNodes and leoConfig &gt;&gt;</vh></v>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
+<v t="ekr.20041124083125"><vh>completeFileName (leo.py)</vh></v>
+<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
+<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
+<v t="ekr.20041130093254"><vh>reportDirectories</vh></v>
+</v>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20031218072017.1588"><vh>Garbage Collection</vh>
+<v t="ekr.20060127162818"><vh>enable_gc_debug</vh></v>
+<v t="ekr.20031218072017.1589"><vh>clearAllIvars</vh></v>
+<v t="ekr.20031218072017.1590"><vh>collectGarbage</vh></v>
+<v t="ekr.20031218072017.1592"><vh>printGc</vh>
+<v t="ekr.20060127164729.1"><vh>printGcObjects</vh>
+<v t="ekr.20040703065638"><vh>&lt;&lt; print added functions &gt;&gt;</vh></v>
+<v t="ekr.20040703054646"><vh>&lt;&lt; print number of each type of object &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
+<v t="ekr.20031218072017.1593"><vh>printGcRefs</vh></v>
+</v>
+<v t="ekr.20060202161935"><vh>printGcAll</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060202090032"><vh>Improved tree allocation</vh>
+<v t="ekr.20060202110637"><vh>What I did</vh></v>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131" a="M"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132" a="M"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.16"><vh>__init__ (tkTree)</vh>
+<v t="ekr.20040803072955.17"><vh>&lt;&lt; define drawing constants &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.18"><vh>&lt;&lt; old ivars &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.19"><vh>&lt;&lt; inject callbacks into the position class &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.76"><vh>findEditWidget</vh></v>
+<v t="ekr.20040803072955.32"><vh>setText</vh></v>
+<v t="ekr.20040803072955.6"><vh>Allocation...</vh>
+<v t="ekr.20040803072955.7"><vh>newBox</vh></v>
+<v t="ekr.20040803072955.8"><vh>newClickBox</vh></v>
+<v t="ekr.20040803072955.9"><vh>newIcon</vh></v>
+<v t="ekr.20040803072955.10"><vh>newLine</vh></v>
+<v t="ekr.20040803072955.11" a="M"><vh>newText (leoTkinterTree)</vh>
+<v t="ekr.20050618045715"><vh>&lt;&lt; patch by Maciej Kalisiak  to handle scroll-wheel events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.12"><vh>recycleWidgets</vh></v>
+<v t="ekr.20040803072955.13"><vh>destroyWidgets</vh></v>
+<v t="ekr.20060202125419"><vh>showStats</vh></v>
 </v>
 </v>
 </v>
 <v t="ekr.20050921094025"><vh>4.4 To do</vh>
+<v t="ekr.20060202232638"><vh>Urgent: the focus sometimes improperly leaves the body pane</vh></v>
+<v t="ekr.20060125171123"><vh>(use a text minibuffer)</vh>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+</v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+<v t="ekr.20050924064254"><vh>Label...</vh>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
+<v t="ekr.20051023132350"><vh>getLabel</vh></v>
+<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
+<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
+<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
+<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
+<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
+<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
+</v>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
+<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
+<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
+<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+</v>
+<v t="ekr.20060116073938"><vh>4.4a6</vh>
 <v t="ekr.20060122183544"><vh>Improve search commands</vh>
 <v t="ekr.20060124090814"><vh>To do</vh>
 <v t="ekr.20060125122550"><vh>Fix failed unit test</vh></v>
@@ -990,42 +1070,6 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 </v>
 </v>
-<v t="ekr.20060125171123"><vh>(use a text minibuffer)</vh>
-<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
-<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
-</v>
-<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
-<v t="ekr.20050924064254"><vh>Label...</vh>
-<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
-<v t="ekr.20051023132350"><vh>getLabel</vh></v>
-<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
-<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
-<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
-<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
-<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
-<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
-</v>
-<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
-<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
-<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
-</v>
-<v t="ekr.20060116073938"><vh>4.4a6</vh>
-<v t="ekr.20060127135455"><vh>To do first</vh>
-<v t="ekr.20060131192001"><vh>Remove new_keys and all disabled code</vh></v>
-<v t="ekr.20060130114255.1"><vh>** Fix recent crasher</vh></v>
-<v t="ekr.20060201054244"><vh>Make mode bindings only once in k.makeAllBindings</vh></v>
-<v t="ekr.20060131191926"><vh>We *do* need pretty-print key to print Ctrl-P as Ctrl-Shift-P</vh></v>
-<v t="ekr.20060131191926.1"><vh>Ignore unbound control/alt characters</vh></v>
-<v t="ekr.20060130165804"><vh>Fix new unit test problems</vh></v>
-<v t="ekr.20060131114204"><vh>setOption should not enter regex mode (at least for unit tests)</vh></v>
-<v t="ekr.20060131103936"><vh>** copy node must scroll the screen</vh></v>
-<v t="ekr.20060130151453"><vh>Turn off plugins while looking for leaks</vh></v>
-<v t="ekr.20060130114255"><vh>Test that inverse dicts really are inverses</vh></v>
-<v t="ekr.20060128151237"><vh>Unit tests for select-all, legacy commands with optional args, newly created/changed methods</vh></v>
-<v t="ekr.20060128081543"><vh>Initial Ctrl-F should bring find-tab to front if it does not exist</vh></v>
-<v t="ekr.20060127100038"><vh>Remove specialCallback hacks (after changeover)</vh></v>
-</v>
 <v t="ekr.20060122183914.1"><vh>Urgent for mouseless Leo</vh>
 <v t="ekr.20060122193554"><vh>prev-line and next-line do not remember column properly</vh></v>
 <v t="ekr.20060122185244.1"><vh>Change color of tree &amp; body</vh></v>
@@ -1036,6 +1080,13 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060122193554.1"><vh>print-status command</vh></v>
 <v t="ekr.20060123041119"><vh>Print saving in status line at start of saves</vh></v>
 <v t="ekr.20060123035436.1"><vh>Use constant-width font in tab panes</vh></v>
+</v>
+<v t="ekr.20060202141338.2"><vh>Tests</vh>
+<v t="ekr.20060201064706"><vh>Test bindings to open-with menu</vh></v>
+<v t="ekr.20060130114255"><vh>Test that inverse dicts really are inverses</vh></v>
+<v t="ekr.20060128151237"><vh>Unit tests for select-all, legacy commands with optional args, newly created/changed methods</vh></v>
+<v t="ekr.20060202141338.3"><vh>Add modes-inherit-bindings option</vh></v>
+<v t="ekr.20060202141338.4"><vh>Add support for widget bindings</vh></v>
 </v>
 <v t="ekr.20060122183914"><vh>Fix bugs</vh>
 <v t="ekr.20060130205153"><vh>Fix various small bugs</vh></v>
@@ -1051,8 +1102,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
 <v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
 </v>
-<v t="ekr.20051217175058"><vh>*** Add chapters  to Leo's core</vh></v>
-<v t="ekr.20060122185507"><vh>New commands</vh>
+<v t="ekr.20060122185507"><vh>New commands and features</vh>
 <v t="ekr.20060201054108"><vh>apropos-bindings</vh></v>
 <v t="ekr.20060131084102"><vh>apropos-find</vh></v>
 <v t="ekr.20060113090042"><vh>open-outline-by-name &amp; filename completion</vh></v>
@@ -1066,7 +1116,102 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 <v t="ekr.20060123035436.3"><vh>print-status command</vh></v>
 <v t="ekr.20060123095316"><vh>clear-selection command</vh></v>
+<v t="ekr.20060202231708.1"><vh>Use minibuffer names for all menu entries</vh></v>
 <v t="ekr.20060123095338"><vh>option: find commands set selection</vh></v>
+</v>
+<v t="ekr.20051217175058"><vh>*Add chapters  to Leo's core &amp; make positions permanent</vh>
+<v t="ekr.20060201150547" chapter="4b002e" vid="55187a6f7263616e6461212e323030353039323431393334343671002e"><vh>Chapters</vh>
+<v t="ekr.20060201150547.1" vid="55187a6f7263616e6461212e323030353132313231353239353671002e"><vh>What are Chapters?</vh></v>
+<v t="ekr.20060201150547.2" vid="55187a6f7263616e6461212e323030353132313131363336313871002e"><vh>Things A Developer should know about Chapters</vh></v>
+<v t="ekr.20060201150547.3" vid="551a7a6f7263616e6461212e32303035313231323135323935362e3171002e"><vh>A Note about Chapters and Commanders</vh></v>
+<v t="ekr.20060201150547.4" vid="55187a6f7263616e6461212e323030353039323531313037323071002e"><vh>commander delegates</vh></v>
+<v t="ekr.20060201150547.5" vid="55187a6f7263616e6461212e323030353039323431393532333171002e"><vh>stateChanged</vh></v>
+<v t="ekr.20060201150547.6" vid="55187a6f7263616e6461212e323030353039323531323535303871002e"><vh>getChaptersIterator</vh></v>
+<v t="ekr.20060201150547.7" vid="55187a6f7263616e6461212e323030353039323531353333323071002e"><vh>markNodesForChapterization</vh></v>
+<v t="ekr.20060201150547.8" vid="55187a6f7263616e6461212e323030353039323531363031313871002e"><vh>utility</vh>
+<v t="ekr.20060201150547.9" vid="551a7a6f7263616e6461212e32303035303932353136303131382e3171002e"><vh>changeChaptersName</vh></v>
+<v t="ekr.20060201150547.10" vid="55187a6f7263616e6461212e323030353039323531373034303371002e"><vh>moveNodeToChapter</vh></v>
+<v t="ekr.20060201150547.11" vid="55187a6f7263616e6461212e323030353039323931343533333071002e"><vh>copyNodeToChapter</vh></v>
+<v t="ekr.20060201150547.12" vid="55187a6f7263616e6461212e323030353039323931353032333271002e"><vh>cloneNodeToChapter</vh></v>
+<v t="ekr.20060201150547.13" vid="55187a6f7263616e6461212e323030353039323531383039323871002e"><vh>testNode</vh></v>
+<v t="ekr.20060201150547.14" vid="55187a6f7263616e6461212e323030353039323531393135333671002e"><vh>swapChapters</vh></v>
+<v t="ekr.20060201150547.15" vid="55187a6f7263616e6461212e323030353039323731363034323071002e"><vh>mergeChapters</vh></v>
+<v t="ekr.20060201150547.16" vid="55187a6f7263616e6461212e323030353039323631353339353371002e"><vh>selectChapter</vh></v>
+<v t="ekr.20060201150547.17" vid="55187a6f7263616e6461212e323030353132313231303431303371002e"><vh>insertChapter</vh></v>
+<v t="ekr.20060201150547.18" vid="55187a6f7263616e6461212e323030353039323731353538313971002e"><vh>findChapterForNode</vh></v>
+<v t="ekr.20060201150547.19" vid="55187a6f7263616e6461212e323030353039323731393031333871002e"><vh>turnNodeIntoChapter</vh></v>
+</v>
+<v t="ekr.20060201150547.20" vid="55187a6f7263616e6461212e323030353039323631373132313471002e"><vh>import and export</vh>
+<v t="ekr.20060201150547.21" vid="551a7a6f7263616e6461212e32303035303932363137313231342e3171002e"><vh>import outline</vh></v>
+<v t="ekr.20060201150547.22" vid="551a7a6f7263616e6461212e32303035303932363137313231342e3271002e"><vh>export outline</vh></v>
+</v>
+<v t="ekr.20060201150547.23" vid="55187a6f7263616e6461212e323030353039323531323331343071002e"><vh>adding and removing chapters</vh>
+<v t="ekr.20060201150547.24" vid="55187a6f7263616e6461212e323030353039323431393430323071002e"><vh>addChapter</vh></v>
+<v t="ekr.20060201150547.25" vid="55187a6f7263616e6461212e323030353132303631323538313471002e"><vh>addChapterForSettingsTree</vh></v>
+<v t="ekr.20060201150547.26" vid="551a7a6f7263616e6461212e32303035303932353132333134302e3171002e"><vh>freshChapter</vh></v>
+<v t="ekr.20060201150547.27" vid="55187a6f7263616e6461212e323030353039323531363433353171002e"><vh>removeChapter</vh></v>
+<v t="ekr.20060201150547.28" vid="55187a6f7263616e6461212e323030353132313231343430303471002e"><vh>quietRemoveChapter</vh></v>
+</v>
+<v t="ekr.20060201150547.29" vid="55187a6f7263616e6461212e323030353039323531343435303971002e"><vh>transforming an Outline into Chapers components</vh>
+<v t="ekr.20060201150547.30" vid="551a7a6f7263616e6461212e32303035303932353134343530392e3171002e"><vh>deferedChaperization</vh></v>
+<v t="ekr.20060201150547.31" vid="551a7a6f7263616e6461212e32303035303932343139333434362e3171002e"><vh>breakOutlineIntoChapters</vh></v>
+</v>
+<v t="ekr.20060201150547.32" vid="55187a6f7263616e6461212e323030353039323432313238353571002e"><vh>class ChaptersPopup</vh>
+<v t="ekr.20060201150547.33" vid="55187a6f7263616e6461212e323030353039323432313331353171002e"><vh>mousePressed</vh></v>
+<v t="ekr.20060201150547.34" vid="55187a6f7263616e6461212e323030353039323531363535343171002e"><vh>class CopyNodeToChapter</vh></v>
+<v t="ekr.20060201150547.35" vid="55187a6f7263616e6461212e323030353039323931353035323371002e"><vh>class CloneNodeToChapter</vh></v>
+<v t="ekr.20060201150547.36" vid="55187a6f7263616e6461212e323030353039323531393137333571002e"><vh>class SwapChapters</vh></v>
+<v t="ekr.20060201150547.37" vid="55187a6f7263616e6461212e323030353039323731363130333471002e"><vh>class MergeChapters</vh></v>
+</v>
+<v t="ekr.20060201150547.38" vid="55187a6f7263616e6461212e323030353039323531323334303871002e"><vh>Action Classes</vh>
+<v t="ekr.20060201150547.39" vid="551a7a6f7263616e6461212e32303035303932353132333430382e3171002e"><vh>DefAction</vh></v>
+</v>
+<v t="ekr.20060201150547.40" vid="55187a6f7263616e6461212e323030353039323431393536303371002e"><vh>class ChapterModel</vh></v>
+<v t="ekr.20060201150547.41" vid="55187a6f7263616e6461212e323030353039323531313439333571002e"><vh>class Chapter</vh></v>
+<v t="ekr.20060201150547.42" vid="55187a6f7263616e6461212e323030353132313031343330353271002e"><vh>class SliderMessageButtons</vh></v>
+<v t="ekr.20060201150547.43" vid="55187a6f7263616e6461212e323030353132313131353236303571002e"><vh>IconCloser</vh></v>
+<v t="ekr.20060201150547.44" vid="55187a6f7263616e6461212e323030353039323531353236303471002e"><vh>iterators</vh>
+<v t="ekr.20060201150547.45" vid="55187a6f7263616e6461212e323030353039323531323533323771002e"><vh>chaptersIterator</vh></v>
+<v t="ekr.20060201150547.46" vid="551a7a6f7263616e6461212e32303035303932353135333332302e3171002e"><vh>topLevelSiblingsIterator</vh></v>
+<v t="ekr.20060201150547.47" vid="551a7a6f7263616e6461212e32303035303932353135323630342e3171002e"><vh>cycleThroughChapters</vh></v>
+</v>
+<v t="ekr.20060201150547.48" vid="55187a6f7263616e6461212e323030353132313231303330303971002e"><vh>Undo</vh>
+<v t="ekr.20060201150547.49" vid="55187a6f7263616e6461212e323030353132313231303334313071002e"><vh>UndoRemoveChapter</vh></v>
+<v t="ekr.20060201150547.50" vid="55187a6f7263616e6461212e323030353132313231313034323771002e"><vh>UndoChangeChapterName</vh></v>
+<v t="ekr.20060201150547.51" vid="55187a6f7263616e6461212e323030353132313231343332333971002e"><vh>UndoAddChapter</vh></v>
+<v t="ekr.20060201150547.52" vid="55187a6f7263616e6461212e323030353132313231343437333371002e"><vh>UndoImport</vh></v>
+<v t="ekr.20060201150547.53" vid="55187a6f7263616e6461212e323030353132313231343534333371002e"><vh>UndoSwapChapters</vh></v>
+</v>
+<v t="ekr.20060201161901"><vh>(Important)</vh>
+<v t="ekr.20060201150547.7"><vh>markNodesForChapterization</vh></v>
+<v t="ekr.20060201150547.29"><vh>transforming an Outline into Chapers components</vh>
+<v t="ekr.20060201150547.30" vid="551a7a6f7263616e6461212e32303035303932353134343530392e3171002e"><vh>deferedChaperization</vh></v>
+<v t="ekr.20060201150547.31" vid="551a7a6f7263616e6461212e32303035303932343139333434362e3171002e"><vh>breakOutlineIntoChapters</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060201161901.1"><vh>Postings re undo</vh>
+<v t="ekr.20060201161901.2"><vh>@url http://sourceforge.net/forum/message.php?msg_id=3332355</vh></v>
+</v>
+<v t="ekr.20060201152349" chapter="4b002e" vid="55187a6f7263616e6461212e323030353038333131363531323771002e"><vh>NodeUndoer.py</vh>
+<v t="ekr.20060201152349.1"><vh>&lt;&lt;imports&gt;&gt;</vh></v>
+<v t="ekr.20060201152349.2"><vh>visualiseUndoStack</vh>
+<v t="ekr.20060201152349.3"><vh>&lt;&lt;_undoTo&gt;&gt;</vh></v>
+<v t="ekr.20060201152349.4"><vh>&lt;&lt;_redoTo&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060201152349.5"><vh>buildTableData</vh></v>
+<v t="ekr.20060201152349.6"><vh>setDataForTable</vh></v>
+<v t="ekr.20060201152349.7"><vh>pickle and unpickle</vh></v>
+<v t="ekr.20060201152349.8"><vh>checkSumViolation</vh></v>
+<v t="ekr.20060201152349.9"><vh>startCompounding stopCompounding</vh></v>
+<v t="ekr.20060201152349.10"><vh>infrastructure</vh>
+<v t="ekr.20060201152349.11"><vh>UneditableTableModel</vh></v>
+<v t="ekr.20060201152349.12"><vh>PickleProxy</vh></v>
+</v>
+<v t="ekr.20060201152349.13"><vh>UndoableProxyEvent</vh></v>
+<v t="ekr.20060201152349.14"><vh>&lt;&lt;UndoableDocumentEvent&gt;&gt;</vh></v>
+<v t="ekr.20060201152349.15"><vh>&lt;&lt;UndoableCompoundEvent&gt;&gt;</vh></v>
+</v>
 </v>
 <v t="ekr.20060122184800"><vh>Later</vh>
 <v t="ekr.20060116090428"><vh>Expand 'point' so it indicates node as well as text location</vh></v>
@@ -1158,7 +1303,6 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set amp_index using rawKey and realLabel &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="ekr.20060117123143"><vh>editing commands</vh></v>
@@ -1309,29 +1453,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 </v>
 <v t="ekr.20060116092801"><vh>Code cleanup</vh>
-<v t="ekr.20060114215112"><vh>Make sure all (or most) callbacks call masterCommand</vh>
-<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
-<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
-<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
-<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
-<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
-</v>
-<v t="ekr.20060115100407"><vh>Found: callback</vh>
-<v t="ekr.20060115100841"><vh>Do call masterCommand</vh>
-<v t="ekr.20051006125633.1"><vh>bindShortcut</vh></v>
-<v t="ekr.20051023182326"><vh>k.copyBindingsToWidget &amp; helper</vh>
-<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
-</v>
-<v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
-</v>
-<v t="ekr.20060115100841.1"><vh>Don't (yet) call masterCommand</vh>
-<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
-<v t="ekr.20060113062832.1"><vh>copyBindingsHelper</vh></v>
-<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
-<v t="ekr.20031218072017.4117"><vh>defineMenuCallback</vh></v>
-</v>
-</v>
-</v>
+<v t="ekr.20060114215112"><vh>Make sure all (or most) callbacks call masterCommand</vh></v>
 <v t="ekr.20060111134901"><vh>Implement c.es etc.</vh></v>
 </v>
 <v t="ekr.20051103091115.1"><vh>Reorganize Find/Change settings</vh></v>
@@ -1367,7 +1489,6 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20031218072017.662"><vh>Gil 2</vh></v>
 </v>
 </v>
-<v t="ekr.20060116074450.2"><vh>Make positions permanent?</vh></v>
 <v t="ekr.20060116074450.1"><vh>Bugs</vh>
 <v t="ekr.20051104152338"><vh>Fix bug in Remove Sentinels command</vh>
 <v t="ekr.20051104152338.1"><vh>Report</vh></v>
@@ -1488,21 +1609,6 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20051104051733"><vh>Make Focus-in in minibuffer widget equivalent to Alt-x</vh></v>
 </v>
 </v>
-<v t="ekr.20060127135455" a="V"><vh>To do first</vh>
-<v t="ekr.20060131192001"><vh>Remove new_keys and all disabled code</vh></v>
-<v t="ekr.20060130114255.1"><vh>** Fix recent crasher</vh></v>
-<v t="ekr.20060201054244"><vh>Make mode bindings only once in k.makeAllBindings</vh></v>
-<v t="ekr.20060131191926"><vh>We *do* need pretty-print key to print Ctrl-P as Ctrl-Shift-P</vh></v>
-<v t="ekr.20060131191926.1"><vh>Ignore unbound control/alt characters</vh></v>
-<v t="ekr.20060130165804"><vh>Fix new unit test problems</vh></v>
-<v t="ekr.20060131114204"><vh>setOption should not enter regex mode (at least for unit tests)</vh></v>
-<v t="ekr.20060131103936"><vh>** copy node must scroll the screen</vh></v>
-<v t="ekr.20060130151453"><vh>Turn off plugins while looking for leaks</vh></v>
-<v t="ekr.20060130114255"><vh>Test that inverse dicts really are inverses</vh></v>
-<v t="ekr.20060128151237"><vh>Unit tests for select-all, legacy commands with optional args, newly created/changed methods</vh></v>
-<v t="ekr.20060128081543"><vh>Initial Ctrl-F should bring find-tab to front if it does not exist</vh></v>
-<v t="ekr.20060127100038"><vh>Remove specialCallback hacks (after changeover)</vh></v>
-</v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
@@ -1527,6 +1633,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20031218072017.2810"
 marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
+<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
@@ -1555,75 +1662,29 @@ marks="ekr.20031218072017.3781,ekr.20050921103230,ekr.20031218072017.1723,"><vh>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 </v>
 </v>
-<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3748"
 marks="ekr.20051010062551.1,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20040803072955"
-marks="ekr.20040803072955.139,ekr.20040803072955.141,"><vh>@thin leoTkinterTree.py</vh></v>
-<v t="ekr.20060126163152.1"><vh>(Master key handler)</vh>
-<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
-<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+marks="ekr.20040803072955.11,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.139,ekr.20040803072955.141,"><vh>@thin leoTkinterTree.py</vh></v>
+<v t="ekr.20060125171123" a="V"><vh>(use a text minibuffer)</vh>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
 </v>
-<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
-<v t="ekr.20060128103640"><vh>old</vh>
-<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+<v t="ekr.20050924064254"><vh>Label...</vh>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
+<v t="ekr.20051023132350"><vh>getLabel</vh></v>
+<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
+<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
+<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
+<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
+<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
+<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
 </v>
-<v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.2"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.4"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060129052538.1"><vh>master event handlers (keyHandler)</vh>
-<v t="ekr.20060127183752"><vh>masterKeyHandler</vh></v>
-<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
-<v t="ekr.20060130130942"><vh>masterClick3Handler</vh></v>
-<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
-<v t="ekr.20060131085116"><vh>masterDoubleClick3Handler</vh></v>
-<v t="ekr.20060128090219"><vh>masterMenuHandler</vh></v>
-</v>
-<v t="ekr.20060126163152.2"><vh>k.strokeFromEvent</vh></v>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
+<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
+<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
 <v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
-<v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
-</v>
-<v t="ekr.20060131120250"><vh>(Send all clicks through k.masterClickHandlers)</vh>
-<v t="ekr.20060131191731"><vh>What I did</vh></v>
-<v t="ekr.20060131133241"><vh>Tree</vh>
-<v t="ekr.20051024102724"><vh>tkTtree.setBindings</vh>
-<v t="ekr.20060131173440"><vh>&lt;&lt; make bindings for a common binding widget &gt;&gt;</vh></v>
-<v t="ekr.20060131173440.1"><vh>&lt;&lt; make bindings for the canvas itself &gt;&gt;</vh></v>
-<v t="ekr.20060131173440.2"><vh>&lt;&lt; make bindings for tagged items on the canvas &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040803072955.11"><vh>newText (leoTkinterTree)</vh>
-<v t="ekr.20050618045715"><vh>&lt;&lt; patch by Maciej Kalisiak  to handle scroll-wheel events &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
-<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
-<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events) (no longer used)</vh></v>
-<v t="ekr.20040803072955.87"><vh>onHeadlineClick</vh></v>
-<v t="ekr.20060129052538.1"><vh>master event handlers (keyHandler)</vh>
-<v t="ekr.20060127183752"><vh>masterKeyHandler</vh></v>
-<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
-<v t="ekr.20060130130942"><vh>masterClick3Handler</vh></v>
-<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
-<v t="ekr.20060131085116"><vh>masterDoubleClick3Handler</vh></v>
-<v t="ekr.20060128090219"><vh>masterMenuHandler</vh></v>
-</v>
-<v t="ekr.20050920085536.62"><vh>getArg</vh>
-<v t="ekr.20050928092516"><vh>&lt;&lt; init altX vars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
-<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
-<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
-<v t="ekr.20060127183752"><vh>masterKeyHandler</vh></v>
-<v t="ekr.20060104110233"><vh>generalModeHandler &amp; helpers</vh>
-<v t="ekr.20060117202916"><vh>badMode</vh></v>
-<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
-<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
-<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
-</v>
 </v>
 </vnodes>
 <tnodes>
@@ -1764,6 +1825,57 @@ Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfo
     for v,vInfo,tInfo in treeInfo:
         u.restoreVnodeUndoInfo(vInfo)
         u.restoreTnodeUndoInfo(tInfo)</t>
+<t tx="EKR.20040602125018">@ Enables the "idle" hook.
+After enableIdleTimeHook is called, Leo will call the "idle" hook
+approximately every g.idleTimeDelay milliseconds.
+@c
+
+def enableIdleTimeHook(idleTimeDelay=100):
+
+    if not g.app.idleTimeHook:
+        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
+        # Start idle-time processing only after the first idle-time event.
+        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+        
+    # 1/4/05: Always update these.
+    g.app.idleTimeHook = True
+    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.</t>
+<t tx="EKR.20040602125018.1"># Disables the "idle" hook.
+def disableIdleTimeHook():
+    
+    g.app.idleTimeHook = False</t>
+<t tx="EKR.20040602125018.2"># An internal routine used to dispatch the "idle" hook.
+trace_count = 0
+
+def idleTimeHookHandler(*args,**keys):
+    
+    __pychecker__ = '--no-argsused' # args &amp; keys not used.
+    
+    if 0: # Do not use g.trace here!
+        global trace_count ; trace_count += 1
+        if trace_count % 10 == 0:
+            for w in g.app.windowList:
+                c = w.c
+                print "idleTimeHookHandler",trace_count,c.shortFileName()
+
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed: return
+    
+    for w in g.app.windowList:
+        c = w.c
+        # Do NOT compute c.currentPosition.
+        # This would be a MAJOR leak of positions.
+        g.doHook("idle",c=c)
+
+    # Requeue this routine after g.app.idleTimeDelay msec.
+    # (This delay is set by g.enableIdleTimeHook.)
+    # Faster requeues overload the system.
+    if g.app.idleTimeHook:
+        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+    else:
+        g.app.afterHandler = None</t>
 <t tx="EKR.20040609110138">found = False
 gnx = g.app.nodeIndices.scanGnx(gnx,0)
 
@@ -2205,18 +2317,14 @@ Gil
     t.bind('&lt;Key&gt;',k.masterKeyHandler)
 
     for kind,func,handler in (
-        ('&lt;Button-1&gt;',frame.OnBodyClick,k.masterClickHandler),
-        ('&lt;Button-3&gt;',frame.OnBodyRClick,k.masterClick3Handler),
+        ('&lt;Button-1&gt;',          frame.OnBodyClick,          k.masterClickHandler),
+        ('&lt;Button-3&gt;',          frame.OnBodyRClick,         k.masterClick3Handler),
+        ('&lt;Double-Button-1&gt;',   frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
+        ('&lt;Double-Button-3&gt;',   None,                       k.masterDoubleClick3Handler),
     ):
         def bodyClickCallback(event,handler=handler,func=func):
             return handler(event,func)
         t.bind(kind,bodyClickCallback)
-        
-    for kind,handler in (
-        ('&lt;Double-Button-1&gt;',k.masterDoubleClickHandler),
-        ('&lt;Double-Button-3&gt;',k.masterDoubleClick3Handler),
-    ):
-        t.bind(kind,handler)
             
     if sys.platform.startswith('win'):
         # Support Linux middle-button paste easter egg.
@@ -2286,6 +2394,30 @@ presently that never happens.</t>
             return s
         except:
             return None</t>
+<t tx="ekr.20031218072017.893">def __cmp__(self,p2):
+
+    """Return 0 if two postions are equivalent."""
+
+    # Use p.equal if speed is crucial.
+    p1 = self
+    
+    # g.trace(p1.headString(),p2 and p2.headString())
+
+    if p2 is None: # Allow tests like "p == None"
+        if p1.v: return 1 # not equal
+        else:    return 0 # equal
+
+    # Check entire stack quickly.
+    # The stack contains vnodes, so this is not a recursive call.
+    if p1.v != p2.v or p1.stack != p2.stack:
+        return 1 # notEqual
+
+    # This is slow: do this last!
+    if p1.childIndex() != p2.childIndex():
+        # Disambiguate clones having the same parents.
+        return 1 # notEqual
+
+    return 0 # equal</t>
 <t tx="ekr.20031218072017.1193">def deleteOutline (self,event=None,op_name="Delete Node"):
     
     """Deletes the current position.
@@ -2312,9 +2444,8 @@ presently that never happens.</t>
         c.endUpdate()
 
     c.validateOutline()</t>
+<t tx="ekr.20031218072017.1315"></t>
 <t tx="ekr.20031218072017.1416">def __init__(self):
-    
-    self.new_keys = True
 
     # These ivars are the global vars of this program.
     self.afterHandler = None
@@ -2636,7 +2767,7 @@ def pasteOutline(self,event=None,reassignIndices=True):
             pasted.moveToNthChildOf(back,0)
         u.afterInsertNode(pasted,undoType,undoData)
     finally:
-        c.endUpdate()
+        c.endUpdate(scroll=True)
         c.recolor()</t>
 <t tx="ekr.20031218072017.1588"># debugGC = False # Must be true to enable traces below.
 
@@ -2690,14 +2821,14 @@ lastFunctionsDict = {}
 <t tx="ekr.20031218072017.1593">def printGcRefs (message):
 
     refs = gc.get_referrers(app.windowList[0])
-    print '-' * 30
+    g.es_print('-' * 30)
 
     if g.app.trace_gc_verbose:
-        print "refs of", app.windowList[0]
+        g.es_print("refs of", app.windowList[0])
         for ref in refs:
-            print type(ref)
+            g.es_print(type(ref))
     else:
-        print "%d referers" % len(refs)</t>
+        g.es_print("%d referers" % len(refs))</t>
 <t tx="ekr.20031218072017.1623">def new (self,event=None):
 
     c,frame = g.app.newLeoCommanderAndFrame(fileName=None)
@@ -3005,27 +3136,16 @@ else:
     for data in table:
         &lt;&lt; get label &amp; command or continue &gt;&gt;
         &lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;
-        if 1:
-            accelerator = stroke = k.shortcutFromSetting(accel) or ''
-            def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
-                return k.masterMenuHandler(stroke,command,commandName)
-            realLabel = self.getRealMenuName(label)
-            amp_index = realLabel.find("&amp;")
-            realLabel = realLabel.replace("&amp;","")
-            self.add_command(menu,label=realLabel,
-                accelerator=accelerator,
-                command=masterMenuCallback,
-                underline=amp_index)
-        else:
-            # To do: remove defineMenuCallback
-            rawKey,menu_shortcut = self.canonicalizeShortcut(accel)
-            menuCallback = self.defineMenuCallback(command,commandName,minibufferCommand)
-            realLabel = self.getRealMenuName(label)
-            &lt;&lt; set amp_index using rawKey and realLabel &gt;&gt;
-            realLabel = realLabel.replace("&amp;","")
-            self.add_command(menu,label=realLabel,
-                accelerator= menu_shortcut or '',
-                command=menuCallback,underline=amp_index)</t>
+        accelerator = stroke = k.shortcutFromSetting(accel) or ''
+        def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+            return k.masterMenuHandler(stroke,command,commandName)
+        realLabel = self.getRealMenuName(label)
+        amp_index = realLabel.find("&amp;")
+        realLabel = realLabel.replace("&amp;","")
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator,
+            command=masterMenuCallback,
+            underline=amp_index)</t>
 <t tx="ekr.20031218072017.1725"># New in 4.4b2: command can be a minibuffer-command name (a string)
 minibufferCommand = type(command) == type('')
 accel = None
@@ -3064,13 +3184,6 @@ else:
                     # g.trace('2',bunch)
         elif not dynamicMenu:
             g.trace('No inverse for %s' % commandName)</t>
-<t tx="ekr.20031218072017.1728">if rawKey:
-    amp_index = rawKey.find("&amp;")
-else:
-    amp_index = -1
-
-if amp_index == -1:
-    amp_index = realLabel.find("&amp;")</t>
 <t tx="ekr.20031218072017.1759"></t>
 <t tx="ekr.20031218072017.1760">def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
     
@@ -3895,7 +4008,8 @@ c.recolor()</t>
     g.app.writeWaitingLog()
     p = c.currentPosition()
     g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
-    g.enableIdleTimeHook()
+    if c.config.getBool('allow_idle_time_hook'):
+        g.enableIdleTimeHook()
     if not fileName:
         c.redraw_now()
     frame.bodyWantsFocus()
@@ -4208,118 +4322,6 @@ closeFlag = (
         frame.comparePanel = g.app.gui.createComparePanel(c)
 
     frame.comparePanel.bringToFront()</t>
-<t tx="ekr.20031218072017.2098">@ This code "canonicalizes" both the shortcuts that appear in menus and the
-arguments to bind, mostly ignoring case and the order in which special keys are
-specified.
-
-For example, Ctrl+Shift+a is the same as Shift+Control+A. Each generates
-Shift+Ctrl-A in the menu and Control+A as the argument to bind.
-
-Returns (bind_shortcut, menu_shortcut)
-@c
-
-def canonicalizeShortcut (self,shortcut):
-    
-    if shortcut == None or len(shortcut) == 0:
-        if g.app.new_keys:  return None
-        else:               return None,None
-    s = shortcut.strip()
-    s2 = s.lower()
-    cmd   = s2.find("cmd") &gt;= 0     or s2.find("command") &gt;= 0
-    ctrl  = s2.find("control") &gt;= 0 or s2.find("ctrl") &gt;= 0
-    alt   = s2.find("alt") &gt;= 0
-    shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0
-    if sys.platform == "darwin":
-        if ctrl and not cmd:
-            cmd = True ; ctrl = False
-        if alt and not ctrl:
-            ctrl = True ; alt = False
-    if g.app.new_keys: # New, simplified.
-        &lt;&lt; convert minus signs to plus signs &gt;&gt;
-        &lt;&lt; compute the last field &gt;&gt;
-        &lt;&lt; compute shortcut &gt;&gt;
-        return shortcut
-    else:
-        &lt;&lt; set the last field, preserving case &gt;&gt;
-        &lt;&lt; canonicalize the last field &gt;&gt;
-        &lt;&lt; synthesize the shortcuts from the information &gt;&gt;
-        # g.trace('bind: %25s menu: %s' % (bind_shortcut,menu_shortcut))
-        return bind_shortcut,menu_shortcut</t>
-<t tx="ekr.20031218072017.2099">bind_last = menu_last = last
-if len(last) == 1:
-    ch = last[0]
-    if ch in string.ascii_letters:
-        menu_last = string.upper(last)
-        if shift:
-            bind_last = string.upper(last)
-        else:
-            bind_last = string.lower(last)
-    elif ch in string.digits:
-        bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
-    else:
-        d = self.tkBindNamesDict
-        if ch in d.keys():
-            bind_last = d[ch]
-elif len(last) &gt; 0:
-    d = self.settingsNameDict
-    last2 = string.lower(last)
-    if last2 in d.keys():
-        if g.app.new_keys:
-            bind_last = menu_last = d[last2]
-        else:
-            bind_last,menu_last = d[last2]</t>
-<t tx="ekr.20031218072017.2102">s2 = shortcut
-s2 = string.strip(s2)
-
-# Replace all minus signs by plus signs, except a trailing minus:
-if len(s2) &gt; 0 and s2[-1] == "-":
-    s2 = string.replace(s2,"-","+")
-    s2 = s2[:-1] + "-"
-else:
-    s2 = string.replace(s2,"-","+")
-
-fields = string.split(s2,"+")
-if fields == None or len(fields) == 0:
-    if not g.app.menuWarningsGiven:
-        print "bad shortcut specifier:", s
-    return None,None
-
-last = fields[-1]
-if last == None or len(last) == 0:
-    if not g.app.menuWarningsGiven:
-        print "bad shortcut specifier:", s
-    return None,None</t>
-<t tx="ekr.20031218072017.2103">bind_head = menu_head = ""
-
-if alt:
-    bind_head = bind_head + "Alt-"
-    menu_head = menu_head + "Alt+"
-
-if ctrl:
-    bind_head = bind_head + "Control-"
-    menu_head = menu_head + "Ctrl+"
-    
-if cmd:
-    bind_head = bind_head + "Command-"
-    menu_head = menu_head + "Command+"
-    
-if shift:
-    menu_head = menu_head + "Shift+"
-    if len(last) &gt; 1 or (len(last)==1 and last[0] not in string.ascii_letters):
-        bind_head = bind_head + "Shift-"
-
-# New in 4.4a6: Only the menu_shortcut will exist.
-if not menu_head:
-    menu_shortcut = 'Key+%s' % menu_last
-else:
-    menu_shortcut = menu_head + menu_last
-    
-# To be removed in 4.4a6
-if not bind_head and bind_last and len(bind_last) == 1:
-    bind_shortcut = '&lt;Key-%s&gt;' % bind_last
-else:
-    bind_shortcut = "&lt;" + bind_head + bind_last + "&gt;"
-    </t>
 <t tx="ekr.20031218072017.2140">def executeScript(self,event=None,p=None,script=None,
     useSelectedText=True,define_g=True,define_name='__main__',silent=False):
 
@@ -4496,6 +4498,60 @@ if 0: # Set to 1 for lint-like testing.
         g.app.finishQuit()
 
     return True # The window has been closed.</t>
+<t tx="ekr.20031218072017.2813">self._currentPosition = self.nullPosition()
+self._rootPosition    = self.nullPosition()
+self._topPosition     = self.nullPosition()
+
+# Interlocks to prevent premature closing of a window.
+self.inCommand = False
+self.requestCloseWindow = False
+
+# For saving and restoring focus.
+self.afterUpdateWidgetStack = []
+
+# For emacs/vim key handling.
+self.commandsDict = None
+self.keyHandler = None
+self.miniBufferWidget = None
+
+# per-document info...
+self.disableCommandsMessage = ''
+    # The presence of this message disables all commands.
+self.hookFunction = None
+self.openDirectory = None
+
+self.expansionLevel = 0  # The expansion level of this outline.
+self.expansionNode = None # The last node we expanded or contracted.
+self.changed = False # True if any data has been changed since the last save.
+self.loading = False # True if we are loading a file: disables c.setChanged()
+self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
+self.promptingForClose = False # To lock out additional closing dialogs.
+
+# For tangle/untangle
+self.tangle_errors = 0
+
+# Global options
+self.page_width = 132
+self.tab_width = -4
+self.tangle_batch_flag = False
+self.untangle_batch_flag = False
+# Default Tangle options
+self.tangle_directory = ""
+self.use_header_flag = False
+self.output_doc_flag = False
+# Default Target Language
+self.target_language = "python" # Required if leoConfig.txt does not exist.
+
+# These are defined here, and updated by the tree.select()
+self.beadList = [] # list of vnodes for the Back and Forward commands.
+self.beadPointer = -1 # present item in the list.
+self.visitedList = [] # list of positions for the Nodes dialog.
+
+# For hoist/dehoist commands.
+self.hoistStack = []
+    # Stack of nodes to be root of drawn tree.
+    # Affects drawing routines and find commands.
+self.recentFiles = [] # List of recent files</t>
 <t tx="ekr.20031218072017.2817">def doCommand (self,command,label,event=None):
 
     """Execute the given command, invoking hooks and catching exceptions.
@@ -6201,31 +6257,6 @@ def leoPyShellMain(self):
             ok, frame = g.openWithFileName(fileName,c)
             if not ok:
                 g.es("%s not found in %s or %s" % (name,configDir,homeDir))</t>
-<t tx="ekr.20031218072017.2991"># Selects v: sets the focus to p and edits p.
-
-def editPosition(self,p):
-
-    c = self ; k = self.keyHandler
-
-    if p:
-        c.selectPosition(p)
-        c.frame.tree.editLabel(p)
-        
-        if k:
-            k.setDefaultUnboundKeyAction()
-            k.showStateAndMode()</t>
-<t tx="ekr.20031218072017.2992"># Ends the editing in the outline.
-
-def endEditing(self,restoreFocus=False):
-    
-    c = self ; tree = c.frame.tree
-    
-    if restoreFocus:
-        w = g.app.gui.get_focus(c.frame)
-        tree.endEditLabel()
-        c.frame.widgetWantsFocus(w)
-    else:
-        tree.endEditLabel()</t>
 <t tx="ekr.20031218072017.2993">def selectThreadBack (self,event=None):
 
     c = self ; current = c.currentVnode()
@@ -6963,19 +6994,52 @@ def OnCloseLeoEvent(self):
         c.requestCloseWindow = True
     else:
         g.app.closeLeoWindow(self)</t>
+<t tx="ekr.20031218072017.3975">def OnActivateBody (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    try:
+        frame = self ; c = frame.c
+        c.setLog()
+        w = g.app.gui.get_focus(frame)
+        if w != c.frame.body.bodyCtrl:
+            frame.tree.OnDeactivate()
+        frame.bodyWantsFocus()
+    except:
+        g.es_event_exception("activate body")
+        
+    return 'break'</t>
+<t tx="ekr.20031218072017.3977">def OnBodyClick (self,event=None):
+
+    try:
+        c = self.c ; p = c.currentPosition()
+        if not g.doHook("bodyclick1",c=c,p=p,v=p,event=event):
+            self.OnActivateBody(event=event)
+        g.doHook("bodyclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("bodyclick")
+
+def OnBodyRClick(self,event=None):
+    
+    try:
+        c = self.c ; p = c.currentPosition()
+        if not g.doHook("bodyrclick1",c=c,p=p,v=p,event=event):
+            pass # By default Leo does nothing.
+        g.doHook("bodyrclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("iconrclick")</t>
 <t tx="ekr.20031218072017.3978">def OnBodyDoubleClick (self,event=None):
 
     try:
-        c = self.c ; v = c.currentVnode()
-        if not g.doHook("bodydclick1",c=c,p=v,v=v,event=event):
-            if event: # 8/4/02: prevent wandering insertion point.
+        c = self.c ; p = c.currentPosition()
+        if not g.doHook("bodydclick1",c=c,p=p,v=p,event=event):
+            if event: # Prevent wandering insertion point.
                 index = "@%d,%d" % (event.x, event.y) # Find where we clicked.
-                event.widget.tag_add('sel', 'insert wordstart', 'insert wordend')
-            body = self.bodyCtrl
-            start = body.index(index + " wordstart")
-            end = body.index(index + " wordend")
-            self.body.setTextSelection(start,end)
-        g.doHook("bodydclick2",c=c,p=v,v=v,event=event)
+                w = self.bodyCtrl
+                start = w.index(index + " wordstart")
+                end   = w.index(index + " wordend")
+                self.body.setTextSelection(start,end)
+        g.doHook("bodydclick2",c=c,p=p,v=p,event=event)
     except:
         g.es_event_exception("bodydclick")
         
@@ -7721,7 +7785,7 @@ bunch.yview=u.yview
     return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.389 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.390 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -7767,7 +7831,7 @@ for key in keys:
     n2 = typesDict.get(key,0)
     delta2 = n2-n1
     if delta2 != 0:
-        print "%+6d =%7d %s" % (delta2,n2,key)
+        g.es_print("%+6d =%7d %s" % (delta2,n2,key))
     
 lastTypesDict = typesDict
 typesDict = {}</t>
@@ -7783,14 +7847,14 @@ for obj in gc.get_objects():
         key = repr(obj) # Don't create a pointer to the object!
         funcDict[key]=None 
         if not lastFunctionsDict.has_key(key):
-            print ; print obj
+            g.es_print(obj)
             args, varargs, varkw,defaults  = inspect.getargspec(obj)
-            print "args", args
-            if varargs: print "varargs",varargs
-            if varkw: print "varkw",varkw
+            g.es_print("args", args)
+            if varargs: g.es_print("varargs",varargs)
+            if varkw: g.es_print("varkw",varkw)
             if defaults:
-                print "defaults..."
-                for s in defaults: print s
+                g.es_print("defaults...")
+                for s in defaults: g.es_print(s)
 
 lastFunctionsDict = funcDict
 funcDict = {}</t>
@@ -8190,29 +8254,123 @@ if isTkinter:
     if t:
         s = t.get("1.0","end")
         assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"</t>
+<t tx="ekr.20040803072955.6"></t>
+<t tx="ekr.20040803072955.7">def newBox (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "plusBox"
+
+    if self.freeBoxes:
+        theId = self.freeBoxes.pop(0)
+        canvas.coords(theId,x,y)
+        canvas.itemconfigure(theId,image=image)
+    else:
+        theId = canvas.create_image(x,y,image=image,tag=tag)
+        
+    if 0:
+        if self.trace and self.verbose:
+            g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),align=-20)
+
+    assert(theId not in self.visibleBoxes)
+    self.visibleBoxes.append(theId)
+
+    # assert(not self.ids.get(theId))
+    # assert(p)
+    self.ids[theId] = p
+
+    return theId</t>
+<t tx="ekr.20040803072955.8">def newClickBox (self,p,x1,y1,x2,y2):
+    
+    canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
+
+    if self.freeClickBoxes:
+        theId = self.freeClickBoxes.pop(0)
+        canvas.coords(theId,x1,y1,x2,y2)
+    else:
+        theId = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
+        canvas.itemconfig(theId,fill=defaultColor,outline=defaultColor)
+        
+    if 0:
+        if self.trace:
+            g.trace("%3d %3d %3d %3d %3d" % (theId,x1,y1,x2,y2),p.headString(),align=-20)
+
+    assert(theId not in self.visibleClickBoxes)
+    self.visibleClickBoxes.append(theId)
+    
+    # assert(p)
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    
+    return theId</t>
+<t tx="ekr.20040803072955.9">def newIcon (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "iconBox"
+
+    if self.freeIcons:
+        theId = self.freeIcons.pop(0)
+        canvas.itemconfigure(theId,image=image)
+        canvas.coords(theId,x,y)
+    else:
+        theId = canvas.create_image(x,y,image=image,anchor="nw",tag=tag)
+        # assert(not self.ids.get(theId))
+
+    # assert(theId not in self.visibleIcons)
+    self.visibleIcons.append(theId)
+    
+    # assert(p)
+    # assert(not self.iconIds.get(theId))
+    # assert(not self.ids.get(theId))
+    data = p,self.generation
+    self.iconIds[theId] = data # Remember which vnode belongs to the icon.
+    self.ids[theId] = p
+
+    return theId</t>
+<t tx="ekr.20040803072955.10">def newLine (self,p,x1,y1,x2,y2):
+    
+    canvas = self.canvas
+    
+    if self.freeLines:
+        theId = self.freeLines.pop(0)
+        canvas.coords(theId,x1,y1,x2,y2)
+    else:
+        theId = canvas.create_line(x1,y1,x2,y2,tag="lines",fill="gray50") # stipple="gray25")
+        # assert(not self.ids.get(theId))
+
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    self.visibleLines.append(theId)
+
+    return theId</t>
 <t tx="ekr.20040803072955.11">def newText (self,p,x,y):
     
     canvas = self.canvas ; tag = "textBox"
-    c = self.c ; d = self.freeText ; k = c.k
-    key = p.v ; assert key
-    pList = d.get(key,[])
+    c = self.c ;  k = c.k
+
+    if self.new_alloc:
+        found = len(self.freeText) &gt; 0
+        if found:
+            t,theId = self.freeText.pop()
+            if self.trace: g.trace('%4d' % (theId),self.textAddr(t),'recycled')
+            canvas.coords(theId,x,y) # Make the window visible again.
+                # theId is the id of the *window* not the text.
+    else:
+        d = self.freeText
+        key = p.v ; pList = d.get(key,[])
     
-    # Return only Tk.Text widgets with an exact match with p.
-    found = False
-    for i in xrange(len(pList)):
-        p2,t,theId = pList[i]
-        if p2 == p:
-            del pList[i]
-            theId = t.leo_window_id
-            assert(theId)
-            assert(t.leo_position == p2)
-            canvas.coords(theId,x,y)
-            t.configure(font=self.font) # 12/17/04
-            found = True ; break
+        # Return only Tk.Text widgets with an exact match with p.
+        found = False
+        for i in xrange(len(pList)):
+            p2,t,theId = pList[i]
+            if p2 == p:
+                del pList[i]
+                theId = t.leo_window_id
+                assert(theId)
+                ### assert(t.leo_position == p2)
+                canvas.coords(theId,x,y)
+                t.configure(font=self.font) # 12/17/04
+                found = True ; break
             
     if not found:
         # Tags are not valid in Tk.Text widgets.
-        # The name is valid, but apparently it must be unique.
         self.textNumber += 1
         t = Tk.Text(canvas,name='head-%d' % self.textNumber,
             state="normal",font=self.font,bd=0,relief="flat",height=1)
@@ -8224,26 +8382,214 @@ if isTkinter:
         theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
         t.leo_window_id = theId # Never changes.
         
-    if self.trace and self.verbose:
-        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),self.textAddr(t),align=-20)
-
+        if self.trace: g.trace('%4d' % (theId),self.textAddr(t),'** new')
+            
     # Common configuration.
-    # We must call setText even if p matches: p's text may have changed!
-    self.setText(t,p.headString())
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p # Add the id of the *window*
+    self.setText(theId,t,p.headString())
     t.configure(width=self.headWidth(p=p))
-    t.leo_position = p # Never changes.
-    t.leo_generation = self.generation
+    t.leo_position = p # This p never changes.
+        # *Required*: onHeadlineClick uses w.leo_position to get p
 
-    assert(theId == t.leo_window_id)
-    assert(not self.ids.get(theId))
-    self.ids[theId] = p
-    
-    # Entries are pairs (p,t,theId) indexed by v.
-    key = p.v ; assert key
-    pList = self.visibleText.get(key,[])
-    pList.append((p,t,theId),)
-    self.visibleText[key] = pList
+    if self.new_alloc:
+        # Keys are p.key().  Entries are (t,theId)
+        self.visibleText [p.key()] = t,theId
+    else:
+        t.leo_generation = self.generation
+        assert(theId == t.leo_window_id)
+        # Keys are p.v.  Values are pairs (p,t,theId)
+        key = p.v
+        pList = self.visibleText.get(key,[])
+        pList.append((p,t,theId),)
+        self.visibleText[key] = pList
     return t</t>
+<t tx="ekr.20040803072955.12">def recycleWidgets (self):
+    
+    canvas = self.canvas
+    
+    for theId in self.visibleBoxes:
+        # assert(theId not in self.freeBoxes)
+        self.freeBoxes.append(theId)
+        canvas.coords(theId,-100,-100)
+    self.visibleBoxes = []
+    
+    for theId in self.visibleClickBoxes:
+        # assert(theId not in self.freeClickBoxes)
+        self.freeClickBoxes.append(theId)
+        canvas.coords(theId,-100,-100,-100,-100)
+    self.visibleClickBoxes = []
+    
+    for theId in self.visibleIcons:
+        # assert(theId not in self.freeIcons)
+        self.freeIcons.append(theId)
+        canvas.coords(theId,-100,-100)
+    self.visibleIcons = []
+        
+    for theId in self.visibleLines:
+        # assert(theId not in self.freeLines)
+        self.freeLines.append(theId)
+        canvas.coords(theId,-100,-100,-100,-100)
+    self.visibleLines = []
+    
+    if self.new_alloc:
+        aList = self.visibleText.values()
+        for t,theId in aList:
+            # assert theId == t.leo_window_id
+            canvas.coords(theId,-100,-100)
+            t.leo_position = None # Allow the position to be freed.
+        self.freeText.extend(aList)
+        self.visibleText = {}
+    else:
+        for key in self.visibleText.keys():
+            visList = self.visibleText.get(key,[])
+            freeList = self.freeText.get(key,[])
+            for data in visList:
+                p,t,theId = data
+                # assert theId == t.leo_window_id
+                canvas.coords(theId,-100,-100)
+                freeList.append(data)
+            self.freeText[key] = freeList
+        self.visibleText = {}
+        
+    for theId in self.visibleUserIcons:
+        # The present code does not recycle user Icons.
+        self.canvas.delete(theId)
+    self.visibleUserIcons = []</t>
+<t tx="ekr.20040803072955.13">def destroyWidgets (self):
+
+    self.ids = {}
+
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleUserIcons = []
+
+    self.visibleText = {}
+    
+    self.freeText = []
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    
+    self.canvas.delete("all")</t>
+<t tx="ekr.20040803072955.16">def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
+    
+    self.new_alloc = True
+    
+    # Configuration and debugging settings.
+    self.stayInTree = c.config.getBool('stayInTreeAfterSelect')
+    self.expanded_click_area = c.config.getBool("expanded_click_area")
+    self.stats = c.config.getBool('show_tree_stats')
+    self.trace = c.config.getBool('trace_tree')
+
+    # Objects associated with this tree.
+    self.canvas = canvas
+    
+    &lt;&lt; define drawing constants &gt;&gt;
+    &lt;&lt; old ivars &gt;&gt;
+    &lt;&lt; inject callbacks into the position class &gt;&gt;
+    
+    self.dragging = False
+    self.generation = 0
+    self.prevPositions = 0
+    self.redrawing = False # Used only to disable traces.
+    self.redrawCount = 0 # Count for debugging.
+    self.revertHeadline = None # Previous headline text for abortEditLabel.
+    
+    # New in 4.4: We should stay in the tree to use per-pane bindings.
+    self.textBindings = [] # Set in setBindings.
+    self.textNumber = 0 # To make names unique.
+    self.updateCount = 0 # Drawing is enabled only if self.updateCount &lt;= 0
+    self.verbose = True
+    
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are positions...
+    self.ids = {}
+    self.iconIds = {}
+
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {}
+        # Pre 4.4b2: Keys are vnodes, values are Tk.Text widgets.
+        #     4.4b2: Keys are p.key(), values are Tk.Text widgets.
+    self.visibleUserIcons = []
+
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    if self.new_alloc:
+        self.freeText = [] # A list of free Tk.Text widgets
+    else:
+        self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+    self.freeUserIcons = []</t>
+<t tx="ekr.20040803072955.17">self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
+
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height</t>
+<t tx="ekr.20040803072955.18"># Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+self.setColorFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("&lt;B1-ButtonRelease&gt;", self.redraw_now)</t>
+<t tx="ekr.20040803072955.19"># The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()</t>
+<t tx="ekr.20040803072955.32">def setText (self,theId,t,s):
+    
+    """All changes to text widgets should come here."""
+
+    if self.trace: g.trace('%4d' % (theId), self.textAddr(t),s)
+            
+    state = t.cget("state")
+    if state != "normal":
+        t.configure(state="normal")
+    t.delete("1.0","end")
+    t.insert("end",s)
+    if state != "normal":
+        t.configure(state=state)</t>
 <t tx="ekr.20040803072955.35"></t>
 <t tx="ekr.20040803072955.36">def drawBox (self,p,x,y):
 
@@ -8346,8 +8692,9 @@ assert(0 &lt;= val &lt;= 15)</t>
     data = g.doHook("draw-outline-node",tree=self,c=c,p=p,v=p,x=x,y=y)
     if data is not None: return data
     
-    if self.trace and self.verbose:
-        print # Helps format traces
+    if 0:
+        if self.trace and self.verbose:
+            print # Helps format traces
 
     if 1:
         self.lineyoffset = 0
@@ -8546,8 +8893,7 @@ if image:
         x+xoffset+w2,y+yoffset,
         anchor="nw",image=image,tag="userIcon")
     self.ids[theId] = p
-
-    assert(theId not in self.visibleIcons)
+    # assert(theId not in self.visibleIcons)
     self.visibleUserIcons.append(theId)
 
     h = image.height() + yoffset + ypad
@@ -8560,10 +8906,6 @@ if image:
     """Draws the top-level tree, taking into account the hoist state."""
     
     c = self.c ; canvas = self.canvas
-    
-    if 0:
-        self.redrawCount += 1
-        g.trace(self.redrawCount,g.callers(5))
 
     self.redrawing = True
     
@@ -8576,11 +8918,12 @@ if image:
     self.drag_p = None # Disable drags across redraws.
     self.dragging = False
     if self.trace:
-        if self.verbose:
-            print ; print
+        self.redrawCount += 1
+        print ; print
         delta = g.app.positions - self.prevPositions
-        g.trace("**** gen: %3d positions: %5d +%4d" % (
-            self.generation,g.app.positions,delta))
+        g.trace("**** gen: %-3d positions: %5d +%4d" % (
+            self.generation,g.app.positions,delta),g.callers())
+        
     self.prevPositions = g.app.positions
 
     if c.hoistStack:
@@ -8588,6 +8931,8 @@ if image:
         self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
+        
+    if self.stats: self.showStats()
     
     canvas.lower("lines")  # Lowest.
     canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
@@ -8642,8 +8987,8 @@ def redraw_now (self,scroll=False):
     
     if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
-        # g.print_stats()
-        # g.clear_stats()
+        g.print_stats()
+        g.clear_stats()
         
     # Do the actual redraw.
     self.redrawCount += 1
@@ -8816,6 +9161,36 @@ def yoffsetTree(self,p,p1):
             h += h2
             if flag: return h, True
     return h, False</t>
+<t tx="ekr.20040803072955.76">def findEditWidget (self,p):
+    
+    """Return the Tk.Text item corresponding to p."""
+
+    c = self.c
+
+    if p and c:
+        if self.new_alloc:
+            aTuple = self.visibleText.get(p.key())
+            if aTuple:
+                t,theId = aTuple
+                # if self.trace: g.trace('%4d' % (theId),self.textAddr(t),p.headString())
+                return t
+            else:
+                # g.trace('oops: not found',p)
+                return None
+        else:
+            # VERY SLOW.
+            # Search the widget list for widget t with t.leo_position == p.
+            # New in 4.2: the dictionary is a list of pairs(p,v)
+            pairs = self.visibleText.get(p.v,[])
+            for p2,t2,id2 in pairs:
+                assert t2.leo_window_id == id2
+                assert t2.leo_position == p2
+                if p.equal(p2):
+                    # g.trace('found',t2)
+                    return t2
+        
+    # g.trace(not found',p.headString())
+    return None</t>
 <t tx="ekr.20040803072955.79">def onClickBoxClick (self,event):
     
     c = self.c ; p1 = c.currentPosition()
@@ -8843,7 +9218,7 @@ def yoffsetTree(self,p,p1):
 <t tx="ekr.20040803072955.87">def onHeadlineClick (self,event):
     
     c = self.c ; w = event.widget
-    
+
     try:
         p = w.leo_position
     except AttributeError:
@@ -8940,11 +9315,28 @@ if len(s) &gt; limit:
     s = s[:limit]
 
 s = g.toUnicode(s or '',g.app.tkEncoding)</t>
+<t tx="ekr.20040803072955.108">def OnDeactivate (self,event=None):
+    
+    """Deactivate the tree pane, dimming any headline being edited."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    tree = self ; c = self.c
+   
+    c.beginUpdate()
+    try:
+        tree.endEditLabel()
+        tree.dimEditLabel()
+    finally:
+        c.endUpdate(False)</t>
+<t tx="ekr.20040803072955.125"></t>
 <t tx="ekr.20040803072955.126">def endEditLabel (self):
     
     '''End editing of a headline and update p.headString().'''
 
     c = self.c ; k = c.keyHandler ; p = c.currentPosition()
+    
+    # w = g.app.gui.get_focus(c.frame)
 
     self.setEditPosition(None) # That is, self._editPosition = None
     
@@ -8953,7 +9345,138 @@ s = g.toUnicode(s or '',g.app.tkEncoding)</t>
         k.showStateAndMode()
     
     # Important: this will redraw if necessary.
-    self.onHeadChanged(p)</t>
+    self.onHeadChanged(p)
+    
+    # g.app.gui.set_focus(c,w)</t>
+<t tx="ekr.20040803072955.127">def editLabel (self,p):
+    
+    """Start editing p's headline."""
+
+    if self.editPosition() and p != self.editPosition():
+        self.endEditLabel()
+
+    self.setEditPosition(p) # That is, self._editPosition = p
+    
+    # g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget!'))
+
+    if p and p.edit_widget():
+        self.setEditLabelState(p) # Sets the focus immediately.
+        self.frame.headlineWantsFocus(p) # Make sure the focus sticks.</t>
+<t tx="ekr.20040803072955.128">#  Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
+    
+    # g.collectGarbage('select1')
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    if not p or not p.exists(c): return # Not an error.
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        if old_p:
+            &lt;&lt; unselect the old node &gt;&gt;
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        &lt;&lt; select the new node &gt;&gt;
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                # p is NOT c.currentPosition() here!
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo(p)
+            except Exception: pass
+        &lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
+        &lt;&lt; update c.visitedList &gt;&gt;
+        
+    # g.collectGarbage('select2')
+
+    c.setCurrentPosition(p)
+    &lt;&lt; set the current node &gt;&gt;
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    g.collectGarbage('select3')
+    
+    return 'break' # Supresses unwanted selection.</t>
+<t tx="ekr.20040803072955.129"># Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
+
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot</t>
+<t tx="ekr.20040803072955.130"># Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
+frame.setWrap(p)
+    
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(0,body,s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())</t>
+<t tx="ekr.20040803072955.131"># c.beadList is the list of nodes for the back and forward commands.
+
+if updateBeadList:
+    
+    if c.beadPointer &gt; -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by p and make p the present node.
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+        # New in Leo 4.4: limit this list to 100 items.
+        ### c.beadList = c.beadList [-100:]
+        # g.trace('len(c.beadList)',len(c.beadList))
+        
+    # g.trace(c.beadPointer,p,present_p)</t>
+<t tx="ekr.20040803072955.132"># The test 'p in c.visitedList' calls p.__cmp__, so this code *is* valid.
+
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+
+# New in Leo 4.4: Limit the size of this list.
+#### c.visitedList = c.visitedList[:100]
+
+# g.trace('len(c.visitedList)',len(c.visitedList))
+# g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!</t>
+<t tx="ekr.20040803072955.133">self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.frame.treeWantsFocus()
+else:
+    frame.bodyWantsFocus()</t>
 <t tx="ekr.20040803072955.134"></t>
 <t tx="ekr.20040803072955.135">def setEditLabelState (self,p): # selected, editing
 
@@ -9031,6 +9554,35 @@ setNormalLabelState = setEditLabelState # For compatibility.</t>
             selectbackground=bg,selectforeground=fg,highlightbackground=bg)
     except:
         g.es_exception()</t>
+<t tx="ekr.20040803072955.142"># Convenience methods so the caller doesn't have to know the present edit node.
+
+def dimEditLabel (self):
+    
+    p = self.c.currentPosition()
+    self.setSelectedLabelState(p)
+
+def undimEditLabel (self):
+
+    p = self.c.currentPosition()
+    self.setSelectedLabelState(p)</t>
+<t tx="ekr.20040803072955.143">def expandAllAncestors (self,p):
+    
+    '''Expand all ancestors without redrawing.
+    
+    Return a flag telling whether a redraw is needed.'''
+    
+    c = self.c ; redraw_flag = False
+
+    c.beginUpdate()
+    try:
+        for p in p.parents_iter():
+            if not p.isExpanded():
+                p.expand()
+                redraw_flag = True
+    finally:
+        c.endUpdate(False)
+
+    return redraw_flag</t>
 <t tx="ekr.20040930064232">def contractNodeOrGoToParent (self,event=None):
     
     """Simulate the left Arrow Key in folder of Windows Explorer."""
@@ -11265,36 +11817,31 @@ def iSearchStateHandler (self,event):
     k = self ; c = k.c
 
     # g.trace(pane,shortcut,commandName)
-
     if not shortcut:
         # g.trace('No shortcut for %s' % commandName)
-        return
-    if pane.endswith('mode'):
-        # g.trace('Ignorning mode binding',shortcut,commandName)
-        return
+        return False
+    if pane.endswith('-mode'):
+        g.trace('oops: ignoring mode binding',shortcut,commandName,g.callers())
+        return False
     bunchList = k.bindingsDict.get(shortcut,[])
-    ### k.computeKeysym_numDicts(shortcut)
     &lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;
     &lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;
     try:
-        if g.app.new_keys:
-            k.bindKeyToDict(pane,shortcut,callback,commandName)
-        else:
-            k.bindKeyHelper(pane,shortcut,callback,commandName)
+        k.bindKeyToDict(pane,shortcut,callback,commandName)
         bunchList.append(
             g.bunch(pane=pane,func=callback,commandName=commandName))
-        shortcut = '&lt;%s&gt;' % shortcut.strip().lstrip('&lt;').rstrip('&gt;')
+        shortcut = shortcut.strip().lstrip('&lt;').rstrip('&gt;')
         # if shortcut.startswith('&lt;Shift'): g.trace('ooops',shortcut,g.callers())
         k.bindingsDict [shortcut] = bunchList
         return True
-
     except Exception: # Could be a user error.
         if not g.app.menuWarningsGiven:
             g.es_print('Exception binding %s to %s' % (shortcut,commandName))
             g.es_exception()
             g.app.menuWarningsGiven = True
-
-        return False</t>
+        return False
+        
+bindShortcut = bindKey # For compatibility</t>
 <t tx="ekr.20050920085536.32"></t>
 <t tx="ekr.20050920085536.35">def setLabelGrey (self,label=None):
 
@@ -11501,35 +12048,6 @@ def doLastAltX (self,event):
 
     return 'break'
 </t>
-<t tx="ekr.20050920085536.63">def keyboardQuit (self,event):
-
-    '''This method clears the state and the minibuffer label.
-    
-    k.endCommand handles all other end-of-command chores.'''
-    
-    k = self ; c = k.c
-
-    if g.app.quitting:
-        return
-
-    c.frame.log.deleteTab('Completion')
-    c.frame.log.deleteTab('Mode')
-    
-    # Completely clear the mode.
-    if k.inputModeName:
-        k.endMode(event)
-
-    # Complete clear the state.
-    k.state.kind = None
-    k.state.n = None
-        
-    k.clearState()
-    k.resetLabel()
-    
-    k.setDefaultUnboundKeyAction()
-    k.showStateAndMode()
-    c.endEditing()
-    c.frame.bodyWantsFocus()</t>
 <t tx="ekr.20050920085536.65">def masterCommand (self,event,func,stroke,commandName=None):
 
     '''This is the central dispatching method.
@@ -11615,7 +12133,6 @@ def doLastAltX (self,event):
         val = k.handleDefaultChar(event)
         return val</t>
 <t tx="ekr.20050920085536.67"># Don't add multiple special characters to history.
-
 k.keysymHistory.insert(0,keysym)
 
 if len(ch) &gt; 0:
@@ -11935,24 +12452,6 @@ self.repeatCount = None
 self.state = g.bunch(kind=None,n=None,handler=None)
 self.setDefaultUnboundKeyAction()</t>
 <t tx="ekr.20051006125633"></t>
-<t tx="ekr.20051006125633.1">def bindShortcut (self,pane,shortcut,command,commandName):
-    
-    '''Bind one shortcut from a menu table.'''
-    
-    k = self ; shortcut = str(shortcut)
-    
-    # g.trace(commandName,shortcut,g.callers())
-    
-    if g.app.new_keys:
-        return k.bindKey(pane,shortcut,command,commandName)
-    else:
-        def menuFuncCallback (event,command=command,commandName=commandName):
-            return command(event)
-    
-        def keyCallback2 (event,k=k,func=menuFuncCallback,stroke=shortcut):
-            return k.masterCommand(event,func,stroke,commandName=commandName)
-            
-        return k.bindKey(pane,shortcut,keyCallback2,commandName)</t>
 <t tx="ekr.20051007080058">def makeAllBindings (self):
     
     k = self ; c = k.c
@@ -11988,13 +12487,10 @@ self.setDefaultUnboundKeyAction()</t>
         command = c.commandsDict.get(commandName)
         key, bunchList = c.config.getShortcut(commandName)
         for bunch in bunchList:
-            accel = bunch.val
-            if accel:
-                bind_shortcut = k.tkBindingFromSetting(accel)
-                k.bindShortcut(bunch.pane,bind_shortcut,command,commandName)
-                if 0:
-                    if bunch: g.trace('%s %s %s' % (commandName,bunch.pane,bunch.val))
-                    else:     g.trace(commandName)</t>
+            accel = bunch.val ; pane = bunch.pane
+            if accel and not pane.endswith('-mode'):
+                shortcut = k.shortcutFromSetting(accel)
+                k.bindKey(pane,shortcut,command,commandName)</t>
 <t tx="ekr.20051008135051.1">def bindOpenWith (self,shortcut,name,data):
     
     '''Make a binding for the Open With command.'''
@@ -12006,20 +12502,12 @@ self.setDefaultUnboundKeyAction()</t>
         __pychecker__ = '--no-argsused' # event must be present.
         return self.c.openWith(data=data)
     
-    if g.app.new_keys:
-        return k.bindKey('all',shortcut,openWithCallback,'open-with')
-    else:
-        bind_shortcut = k.tkBindingFromSetting(shortcut)
-    
-        def keyCallback (event,func=openWithCallback,stroke=bind_shortcut):
-            return k.masterCommand(event,func,stroke)
-                
-        return k.bindKey('all',bind_shortcut,keyCallback,'open-with')</t>
+    return k.bindKey('all',shortcut,openWithCallback,'open-with')</t>
 <t tx="ekr.20051008152134">def initSpecialIvars (self):
     
     '''Set ivars for special keystrokes from previously-existing bindings.'''
 
-    k = self ; c = k.c
+    k = self ; c = k.c ; trace = c.config.getBool('trace_bindings')
     
     for ivar,commandName in (
         ('fullCommandKey',  'full-command'),
@@ -12027,23 +12515,15 @@ self.setDefaultUnboundKeyAction()</t>
         ('universalArgKey', 'universal-argument'),
     ):
         junk, bunchList = c.config.getShortcut(commandName)
-        # g.trace(commandName,bunchList)
         bunchList = bunchList or [] ; found = False
         for pane in ('text','all'):
             for bunch in bunchList:
                 if bunch.pane == pane:
                     stroke = k.strokeFromSetting(bunch.val)
-                    # g.trace(commandName,stroke)
+                    if trace: g.trace(commandName,stroke)
                     setattr(k,ivar,stroke) ; found = True ;break
         if not found:
-            g.trace('no setting for %s' % commandName)
-
-    # Add a binding for &lt;Key&gt; events, so all key events go through masterCommand.
-    if not g.app.new_keys:
-        def allKeysCallback (event):
-            return k.masterCommand(event,func=None,stroke='&lt;Key&gt;')
-    
-        k.bindKey('all','&lt;Key&gt;',allKeysCallback,'master-command')</t>
+            g.trace('no setting for %s' % commandName)</t>
 <t tx="ekr.20051011072049.2">def cutText (self,event=None):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
@@ -12177,20 +12657,21 @@ OnPasteFromMenu = pasteText</t>
     keys = d.keys() ; keys.sort()
     c.frame.log.clearTab(tabName)
 
-    data = [] ; n = 20
+    data = [] ; n1 = 4 ; n2 = 20
     for key in keys:
         bunchList = d.get(key,[])
         for b in bunchList:
             if not brief or k.isPlainKey(key):
-                pane = g.choose(b.pane=='all','',' [%s]' % (b.pane))
-                s1 = key + pane
-                s2 = b.commandName
-                n = max(n,len(s1))
-                data.append((s1,s2),)
-    
+                pane = g.choose(b.pane=='all','',' %s:' % (b.pane))
+                s1 = pane
+                s2 = k.prettyPrintKey(key)
+                s3 = b.commandName
+                n1 = max(n1,len(s1))
+                n2 = max(n2,len(s2))
+                data.append((s1,s2,s3),)
     # This isn't perfect in variable-width fonts.
-    for s1,s2 in data:
-        g.es('%*s %s' % (-n,s1,s2),tabName=tabName)
+    for s1,s2,s3 in data:
+        g.es('%*s %*s %s' % (-n1,s1,-(min(12,n2)),s2,s3),tabName=tabName)
                    
     state = k.unboundKeyAction 
     k.showStateAndMode()</t>
@@ -12220,18 +12701,21 @@ OnPasteFromMenu = pasteText</t>
     inverseBindingDict = k.computeInverseBindingDict()
     commandNames = c.commandsDict.keys() ; commandNames.sort()
 
-    data = [] ; n = 20
+    data = [] ; n1 = 4 ; n2 = 20
     for commandName in commandNames:
-        shortcutList = inverseBindingDict.get(commandName,[''])
-        for shortcut in shortcutList:
-            s1 = commandName ; s2 = shortcut
-            n = max(n,len(s1))
-            data.append((s1,s2),)
+        dataList = inverseBindingDict.get(commandName,[('',''),])
+        for z in dataList:
+            pane, key = z
+            s1 = pane
+            s2 = k.prettyPrintKey(key)
+            s3 = commandName
+            n1 = max(n1,len(s1))
+            n2 = max(n2,len(s2))
+            data.append((s1,s2,s3),)
                 
     # This isn't perfect in variable-width fonts.
-    for s1,s2 in data:
-        # g.es('%*s %s' % (-n,s1,s2),tabName=tabName)
-        g.es('%s %s' % (s1,s2),tabName=tabName)
+    for s1,s2,s3 in data:
+        g.es('%*s %*s %s' % (-n1,s1,-(min(12,n2)),s2,s3),tabName=tabName)
 </t>
 <t tx="ekr.20051014152256">Improve import code so it handles stufff like this from Ipyton/iplib
 
@@ -12318,32 +12802,60 @@ unfinished.
         # Remove indentation from indentation of this function.
     s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
     g.es_print(s)</t>
-<t tx="ekr.20051014170754.1">def getShortcutForCommandName (self,commandName):
-    
-    k = self ; c = k.c
-
-    command = c.commandsDict.get(commandName)
-
-    if command:
-        for key in k.bindingsDict:
-            bunchList = k.bindingsDict.get(key,[])
-            for b in bunchList:
-                if b.commandName == commandName:
-                    return k.tkbindingFromStroke(key)
-    return ''
-    
-def getShortcutForCommand (self,command):
-    
-    k = self ; c = k.c
-    
-    if command:
-        for key in k.bindingsDict:
-            bunchList = k.bindingsDict.get(key,[])
-            for b in bunchList:
-                if b.commandName == command.__name__:
-                     return k.tkbindingFromStroke(key)
-    return ''</t>
 <t tx="ekr.20051016155819"></t>
+<t tx="ekr.20051017212452"># Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
+
+def computeCompletionList (self,defaultTabList,backspace):
+    
+    k = self ; c = k.c ; s = k.getLabel() ; tabName = 'Completion'
+    command = s [len(k.mb_prompt):]
+        # s always includes prefix, so command is well defined.
+
+    k.mb_tabList,common_prefix = g.itemsMatchingPrefixInList(command,defaultTabList)
+    c.frame.log.clearTab(tabName)
+
+    if k.mb_tabList:
+        k.mb_tabListIndex = -1 # The next item will be item 0.
+
+        if not backspace:
+            k.setLabel(k.mb_prompt + common_prefix)
+            
+        inverseBindingDict = k.computeInverseBindingDict()
+        data = [] ; n1 = 20; n2 = 4
+        for commandName in k.mb_tabList:
+            dataList = inverseBindingDict.get(commandName,[('',''),])
+            for z in dataList:
+                pane,key = z
+                s1 = commandName
+                s2 = pane
+                s3 = k.prettyPrintKey(key)
+                n1 = max(n1,len(s1))
+                n2 = max(n2,len(s2))
+                data.append((s1,s2,s3),)
+        for s1,s2,s3 in data:
+            g.es('%*s %*s %s' % (-(min(20,n1)),s1,n2,s2,s3),tabName=tabName)
+
+    c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20051018070524">def computeInverseBindingDict (self):
+
+    k = self ; d = {}
+    
+    # keys are minibuffer command names, values are shortcuts.
+    for shortcut in k.bindingsDict.keys():
+        bunchList = k.bindingsDict.get(shortcut,[])
+        for b in bunchList:
+            shortcutList = d.get(b.commandName,[])
+            bunchList = k.bindingsDict.get(shortcut,[g.Bunch(pane='all')])
+            for b in bunchList:
+                #pane = g.choose(b.pane=='all','','%s:' % (b.pane))
+                pane = '%s:' % (b.pane)
+                data = (pane,shortcut)
+                if data not in shortcutList:
+                    shortcutList.append(data)
+        
+            d [b.commandName] = shortcutList
+
+    return d</t>
 <t tx="ekr.20051020120306">def openFindTab (self,event=None,show=True):
 
     c = self.c ; log = c.frame.log ; tabName = 'Find'
@@ -12800,53 +13312,6 @@ else:
         emacs_name = k.inverseCommandsDict.get(command.__name__)
     except Exception:
         emacs_name = None</t>
-<t tx="ekr.20051022094136">def bindKeyHelper(self,pane,shortcut,callback,commandName):
-    
-    if g.app.new_keys:
-        return
-
-    k = self ; c = k.c
-    
-    body = c.frame.body.bodyCtrl
-    log  = c.frame.log.logCtrl
-    menu = c.frame.menu
-    minibuffer = c.miniBufferWidget
-    tree = c.frame.tree.canvas
-    
-    d = {
-        'all':  [body,log,tree], # Probably not wise: menu
-        'body': [body],
-        'log':  [log],
-        'menu': [menu],         # Not used, and probably dubious.
-        'mini': [minibuffer],   # Needed so ctrl-g will work in the minibuffer!
-        'text': [body,log],
-        'tree': [tree],
-    }
-    
-    # if pane: g.trace('%4s %20s %s' % (pane, shortcut,commandName))
-    
-    widgets = d.get((pane or '').lower(),[])
-    
-    # Binding to 'menu' causes problems with multiple pastes in the Find Tab.
-    # There should only be one binding for the minibuffer: the &lt;Key&gt;+ binding.
-    if shortcut == '&lt;Key&gt;':
-        # Important.  We must make this binding if the minibuffer can ever get focus.
-        if self.useTextWidget:
-            widgets.append(minibuffer)
-        for w in widgets:
-            w.bind(shortcut,callback,'+')
-    else:
-        # Put *everything* in a bindtag set specific to this commander.
-        if 0: # Support plain-key bindings.
-            tag = k.plainKeyTag()
-            body.bind_class(tag,shortcut,callback)
-        
-        # Put everything *except* plain keys in a normal binding.
-        if not k.isPlainKey(shortcut):
-            for w in widgets:
-                w.bind(shortcut,callback)
-            # Get rid of the default binding in the menu. (E.g., Alt-f)
-            menu.bind(shortcut,lambda e: 'break')</t>
 <t tx="ekr.20051022212004"># Just open the Find tab if it has never been opened.
 # For minibuffer commands, it would be good to force the Find tab to be visible.
 # However, this leads to unfortunate confusion when executed from a shortcut.
@@ -12943,84 +13408,14 @@ def hideFindTab (self,event=None):
     
     c = self.c ; k = c.k
     
-    if g.app.new_keys:
-        for t in (self.find_ctrl, self.change_ctrl):
-            t.bind('&lt;Key&gt;',k.masterKeyHandler)
-            t.bind('&lt;Button&gt;',k.masterClickHandler)
-            # t.bind('&lt;Button-3&gt;',k.masterClick3Handler)
-    else:
-        for w in (self.find_ctrl, self.change_ctrl):
-            k.copyBindingsToWidget(['text','mini','all'],w)
-
-        # Bind shortcuts for the following commands...
-        for commandName,func in (
-            ('find-tab-find',       self.findNextCommand),
-            ('find-tab-find-prev',  self.findPrevCommand),
-            ('find-tab-change',     self.changeCommand),
-            ('find-tab-change-all', self.changeAllCommand),
-            ('find-tab-change-find',self.changeThenFindCommand),
-        ):
-            junk, bunchList = c.config.getShortcut(commandName)
-            for bunch in bunchList:
-                accel = bunch.val
-                shortcut = k.tkBindingFromSetting(accel)
-                if shortcut:
-                    # g.trace(shortcut,commandName)
-                    w.bind(shortcut,func)
-                    
-    if 1: ## not g.app.new_keys:
-        for w in (self.find_ctrl, self.change_ctrl):
-            w.bind ("&lt;1&gt;",  self.resetWrap,'+')
-            w.bind("&lt;Key&gt;", self.resetWrap,'+')
-        
-            for w in (self.outerFrame, self.find_ctrl, self.change_ctrl):
-                w.bind("&lt;Key-Return&gt;", self.findButtonCallback)
-                w.bind("&lt;Key-Escape&gt;", self.hideTab)</t>
-<t tx="ekr.20051023182326">def copyBindingsToWidget (self,paneOrPanes,w):
-    
-    '''Copy all bindings for the given panes to widget w.
-    
-    paneOrPanes may be  pane name (a string) or a list of pane names in priority order.'''
-    
-    if g.app.new_keys: return
-    
-    # g.trace(paneOrPanes,g.app.gui.widget_name(w),g.callers())
-
-    k = self ; d = k.bindingsDict
-    bindings = {}
-    keys = d.keys() ; keys.sort()
-    if type(paneOrPanes) == type('abc'):
-        panes = [paneOrPanes] # list(paneOrPanes) does not work.
-    else:
-        panes = paneOrPanes
-    # g.trace(panes)
-
-    for shortcut in keys:
-        # Do not copy plain key bindings.
-        if not k.isPlainKey(shortcut):
-            shortcutsBunchList = []
-            for pane in panes:
-                old_panes = bindings.get(shortcut,[])
-                assert(type(old_panes)==type([]))
-                if old_panes and pane in old_panes:
-                    # This should have been caught earlier, but another check doesn't hurt.
-                    g.trace('*** redefining %s in %s' % (shortcut,pane))
-                else:
-                    bunchList = d.get(shortcut,[])
-                    for bunch in bunchList:
-                        if bunch.pane == pane:
-                            shortcutsBunchList.append(bunch)
-                            old_panes.append(pane)
-                            bindings [shortcut] = old_panes
-            # Create bindings for the shortcut in all panes.
-            if shortcutsBunchList:
-                self.copyBindingsHelper(shortcutsBunchList,shortcut,w)        
-                                
-    # Bind all other keys to k.masterCommand.
-    def generalTextKeyCallback (event,k=self):
-        k.masterCommand(event,func=None,stroke='&lt;Key&gt;',commandName=None)
-
-    w.bind('&lt;Key&gt;',generalTextKeyCallback)</t>
+    for w in (self.find_ctrl, self.change_ctrl):
+        w.bind('&lt;Key&gt;',k.masterKeyHandler)
+        w.bind('&lt;Button-1&gt;',k.masterClickHandler)
+        # w.bind('&lt;Button-3&gt;',k.masterClick3Handler)
+        # w.bind ('Button-1&gt;',  self.resetWrap,'+')
+        w.bind("&lt;Key&gt;", self.resetWrap,'+')
+        w.bind("&lt;Key-Return&gt;", self.findButtonCallback)
+        w.bind("&lt;Key-Escape&gt;", self.hideTab)</t>
 <t tx="ekr.20051023183028">def findButtonCallback(self,event=None):
     
     __pychecker__ = '--no-argsused'
@@ -13650,7 +14045,7 @@ def ignore (self,event=None):
     widgets = (self.listBox, self.outerFrame)
 
     for w in widgets:
-        k.copyBindingsToWidget(['text','all'],w)
+
         # Bind shortcuts for the following commands...
         for commandName,func in (
             ('full-command',            k.fullCommand),
@@ -13663,7 +14058,7 @@ def ignore (self,event=None):
             junk, bunchList = c.config.getShortcut(commandName)
             for bunch in bunchList:
                 accel = bunch.val
-                shortcut = k.tkBindingFromSetting(accel)
+                shortcut = k.shortcutFromSetting(accel)
                 if shortcut:
                     # g.trace(shortcut,commandName)
                     w.bind(shortcut,func)
@@ -14489,14 +14884,14 @@ Creating the background:
     w = event and event.widget
     name = g.app.gui.widget_name(w)
 
-    if name.startswith('body') or (not g.app.new_keys and name.startswith('head')):
+    if name.startswith('body'):
         action = k.unboundKeyAction
         if action in ('insert','overwrite'):
             c.editCommands.selfInsertCommand(event,action=action)
         else:
             pass ; g.trace('ignoring key')
         return 'break'
-    elif g.app.new_keys and name.startswith('head'):
+    elif name.startswith('head'):
         c.frame.tree.onHeadlineKey(event)
         return 'break'
     else:
@@ -15183,9 +15578,7 @@ def endUpdate (self,flag,scroll=False):
             self.redraw_now(scroll=scroll)
         if self.updateCount &lt; 0:
             g.trace("Can't happen: negative updateCount")</t>
-<t tx="ekr.20051217175058">Study jyLeo's chapters code
-
-show-chapters
+<t tx="ekr.20051217175058">show-chapters
 hide-chapters
 add-chapter
 delete-this-chapter</t>
@@ -15346,13 +15739,13 @@ In all cases the moved text remains selected, even when the text moves to anothe
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut not in (None,'None'):
-                s1 = key ; s2 = shortcut
+                s1 = key ; s2 = k.prettyPrintKey(shortcut)
                 n = max(n,len(s1))
                 data.append((s1,s2),)
                 
     data.sort()
     
-    g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
+    # g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
         
     # This isn't perfect in variable-width fonts.
     for s1,s2 in data:
@@ -15386,8 +15779,6 @@ In all cases the moved text remains selected, even when the text moves to anothe
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
-    # else:
-        # k.printBindings(event,brief=True)
 
     return 'break'</t>
 <t tx="ekr.20060105132013">def setIgnoreState (self,event):
@@ -16442,42 +16833,6 @@ It's no good blaming Pmw or Idle or whatever, there needs to be a solid way of a
 <t tx="ekr.20060111152145">- Organize scripts menu from subfolders of leo/scripts folder.
 
 - Create minibuffer commands for each script?</t>
-<t tx="ekr.20060113062832.1">def copyBindingsHelper(self,bunchList,shortcut,w):
-    
-    if g.app.new_keys: return ###
-
-    k = self ; c = k.c
-
-    textBunch = treeBunch = None
-    for bunch in bunchList:
-        if bunch.pane == 'tree' and treeBunch is None:
-            treeBunch = bunch
-            k.traceBinding (bunch,shortcut,w)
-        elif bunch.pane != 'tree' and textBunch is None:
-            textBunch = bunch
-            k.traceBinding (bunch,shortcut,w)
-        elif c.config.getBool('trace_bindings'):
-            g.trace('ignoring %s in %s' % (shortcut,bunch.pane))
-            
-    if textBunch and treeBunch:
-        def textAndTreeKeyCallback(event,c=c,
-            textFunc=textBunch.func,treeFunc=treeBunch.func):
-            w = c.currentPosition().edit_widget()
-            if w and w.cget('state') == 'disabled':
-                treeFunc(event)
-            else:
-                textFunc(event)
-            return 'break'
-
-        w.bind(shortcut,textAndTreeKeyCallback)
-        
-    elif textBunch or treeBunch:
-
-        def textOrTreeKeyCallback(event,func=bunch.func):
-            func(event)
-            return 'break'
-
-        w.bind(shortcut,textOrTreeKeyCallback)</t>
 <t tx="ekr.20060113090042"></t>
 <t tx="ekr.20060114052626">This is not needed with Ctrl-C mode.</t>
 <t tx="ekr.20060114055611">- It should recolor the text.
@@ -16500,11 +16855,7 @@ It's no good blaming Pmw or Idle or whatever, there needs to be a solid way of a
             bunch.commandName,commandName,pane),
             color='blue')
         return</t>
-<t tx="ekr.20060114215112">
-</t>
-<t tx="ekr.20060115100407"></t>
-<t tx="ekr.20060115100841"></t>
-<t tx="ekr.20060115100841.1"></t>
+<t tx="ekr.20060114215112"></t>
 <t tx="ekr.20060115103349"></t>
 <t tx="ekr.20060116073229"></t>
 <t tx="ekr.20060116073938"></t>
@@ -16516,8 +16867,6 @@ It's no good blaming Pmw or Idle or whatever, there needs to be a solid way of a
 
 These might get the tab name from the minibuffer...</t>
 <t tx="ekr.20060116074450.1"># These are minor</t>
-<t tx="ekr.20060116074450.2">- Review the posting about making positions permanent, or recording vnode
-indicies. It's probably time to do this.</t>
 <t tx="ekr.20060116074450.3"></t>
 <t tx="ekr.20060116074839.2"></t>
 <t tx="ekr.20060116080040.2">These would be an alternative to XP Alt-f, Alt-E, etc.
@@ -16866,7 +17215,7 @@ and defineMenuCallback.</t>
         for bunch in bunchList:
             shortcut = bunch.val
             if shortcut and shortcut not in ('None','none',None):
-                stroke = k.tkBindingFromSetting(shortcut)
+                stroke = k.shortcutFromSetting(shortcut)
                 # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
                 d2 = k.masterBindingsDict.get(modeName,{})
                 d2 [stroke] = g.Bunch(
@@ -16877,9 +17226,6 @@ and defineMenuCallback.</t>
                 k.masterBindingsDict [ modeName ] = d2</t>
 <t tx="ekr.20060119201356"></t>
 <t tx="ekr.20060119201657"></t>
-<t tx="ekr.20060120082630">def plainKeyTag (self):
-    
-    return '%s-%s' % ('plain-key',self.c.fileName())</t>
 <t tx="ekr.20060120084705"></t>
 <t tx="ekr.20060120103549">@nocolor
 
@@ -16909,7 +17255,6 @@ What I did:
 
 @color
 </t>
-<t tx="ekr.20060120105605.1"></t>
 <t tx="ekr.20060120110341">@nocolor
 
 - Added initialClickExpandsOrContractsNode settings.  Clicking an node expands or contracts the node if this setting is True.  EKR much prefers False. 
@@ -16934,59 +17279,11 @@ What I did:
             put(' mode: ',color='blue')
             put(mode)
 </t>
-<t tx="ekr.20060120200529">@nocolor
-
-- Made insert mode the default, even for vim-like bindings.
-
-- Eliminated plain-key bindings from leoSettings.leo.
-    - It's far easier to define a Command-mode.
-
-** Eliminates the effect of all plain-key bindings.
-    - setInputState never uses the bindtags bindings.
-
-- bindKeyHelper copies *all* bindings to the bindtag set.
-  This prevents control-i from matching the &lt;i&gt; binding.  Sheesh.
-
-- bindKeyHelper makes widget bindings for all bindings *except* plain key bindings.
-
-- copyBindingsToWidget does not copy plain key bindings.
-
-- k.setMode and k.setInputState call k.showInputState, so the state and mode are alway updated.
-
-- k.showStateAndMode just clears the status if state and mode are empty.
-    k.setInputState now takes a showState arg that if true forces a call to k.showStateAndMode.
-
-- Changed canonicalizeShortcut so it returns a single character for plain characters.
-  This change had no effect one way or the other.</t>
 <t tx="ekr.20060120200818">def setInputState (self,state,showState=False):
 
     k = self ; c = k.c
     
     w = g.app.gui.get_focus(c.frame)
-    
-    if 0: # Support for plain-key bindings.
-        tag = k.plainKeyTag()
-                   
-        try: # Will fail for nullBody.
-            # t = c.frame.top
-            t = c.frame.body.bodyCtrl
-            tags = list(t.bindtags())
-            
-        except AttributeError:
-            tags = [] ; t = w = None
-
-        if tags:
-            if state == 'ignore':
-                if tag not in tags:
-                    tags.insert(0,tag)
-                    t.bindtags(tuple(tags))
-            else:
-                if tag in tags:
-                    tags.remove(tag)
-                    t.bindtags(tuple(tags))
-
-        g.trace('%s-state' % (state),'plain key functions are',
-            g.choose(tag in tags,'enabled','disabled')) # ,tags)
 
     k.unboundKeyAction = state
     if state != 'insert' or showState:
@@ -16994,8 +17291,6 @@ What I did:
    
     # These commands never change focus.
     w and c.frame.widgetWantsFocus(w)</t>
-<t tx="ekr.20060121095848"></t>
-<t tx="ekr.20060121095848.3"></t>
 <t tx="ekr.20060121101642">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3534349
@@ -17513,45 +17808,6 @@ FAILED (errors=1)
         c.frame.widgetWantsFocus(c.miniBufferWidget)
     else:
         c.frame.bodyWantsFocus()</t>
-<t tx="ekr.20060126163152.1"></t>
-<t tx="ekr.20060126163152.2"># The keys to k.bindingsDict must be consistent with what this method returns.
-# See 'about internal bindings' for details.
- 
-def strokeFromEvent (self,event):
-    
-    c = self.c ; k = c.k
-    if event is None: return ''
-    state = event.state or 0
-    keysym = event.keysym or ''
-    ch = event.char
-    result = []
-    shift = (state &amp; 1) == 1 # Used *only* to give a warning.
-    caps  = (state &amp; 2) == 2 # Not used at all.
-    ctrl  = (state &amp; 4) == 4
-    alt   = (state &amp; 0x20000) == 0x20000
-    plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
-    
-    # g.trace('ch',repr(ch),'keysym',repr(keysym))
-    
-    # The big aha: we can ignore the shift state.
-    if plain:
-        if shift and ch.isalpha() and ch.islower():
-            g.trace('oops: inconsistent shift state. shift: %s, ch: %s' % (shift,ch))
-        ch = keysym
-    else:
-        ch2 = k.tkBindNamesInverseDict.get(keysym)
-        if ch2:
-            ch = ch2 
-        else:
-            # Just use the unknown keysym.
-            g.trace('*'*30,'unknown keysym',repr(keysym))
-    
-    if alt: result.append('Alt+')
-    if ctrl: result.append('Ctrl+')
-    result.append(ch)
-    result = ''.join(result)
-    # g.trace('state',state,'keysym',keysym,'result',repr(result))
-    return result</t>
 <t tx="ekr.20060127052111"># Added max_undo_stack_size setting.</t>
 <t tx="ekr.20060127052111.1">def cutStack (self):
     
@@ -17593,7 +17849,6 @@ def strokeFromEvent (self,event):
         if key not in u.optionalIvars:
             u.optionalIvars.append(key)</t>
 <t tx="ekr.20060127095006"></t>
-<t tx="ekr.20060127100038"></t>
 <t tx="ekr.20060127100926"></t>
 <t tx="ekr.20060127113243">def pushBead (self,bunch):
     
@@ -17614,7 +17869,6 @@ def strokeFromEvent (self,event):
         # Recalculate the menu labels.
         u.setUndoTypes()
 </t>
-<t tx="ekr.20060127135455"></t>
 <t tx="ekr.20060127162818">def enable_gc_debug(event=None):
     
     if gc:
@@ -17641,18 +17895,23 @@ def strokeFromEvent (self,event):
     k = self
 
     return {
-        'disable-gc-trace':             self.disableGcTrace,
-        'enable-gc-trace':              self.enableGcTrace,
+        'disable-gc-trace':     self.disableGcTrace,
+        'dump-all-objects':     self.dumpAllObjects,
+        'dump-new-objects':     self.dumpNewObjects,
+        'enable-gc-trace':      self.enableGcTrace,
+        'free-tree-widgets':    self.freeTreeWidgets,
+        'print-stats':          self.printStats,
+        'verbose-dump-objects': self.verboseDumpObjects,
     }</t>
 <t tx="ekr.20060127163325.1">def disableGcTrace (self,event=None):
     
-    self.trace_gc = False
+    g.app.trace_gc = False
     
 def enableGcTrace (self,event=None):
     
-    self.trace_gc = True
+    g.app.trace_gc = True
     g.enable_gc_debug()</t>
-<t tx="ekr.20060127164729.1">def printGcObjects(message):
+<t tx="ekr.20060127164729.1">def printGcObjects(message=''):
 
     global lastObjectCount
 
@@ -17662,8 +17921,8 @@ def enableGcTrace (self,event=None):
         delta = n2-lastObjectCount
         lastObjectCount = n2
 
-        print '-' * 30
-        print "garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message)
+        g.es_print('-' * 30)
+        g.es_print("garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message))
         
         &lt;&lt; print number of each type of object &gt;&gt;
         if 0:
@@ -17673,7 +17932,7 @@ def enableGcTrace (self,event=None):
         traceback.print_exc()</t>
 <t tx="ekr.20060127165509"># WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
-def printGcVerbose(message):
+def printGcVerbose(message=''):
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -17693,11 +17952,11 @@ def printGcVerbose(message):
         elif type(o) in (type(()),type([])):
             seqs += 1
         else:
-            print o
+            g.es_print(o)
         i += 1
-    print '-' * 40
-    print 'dicts: %d, sequences: %d' % (dicts,seqs)
-    print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))</t>
+    g.es_print('-' * 40)
+    g.es_print('dicts: %d, sequences: %d' % (dicts,seqs))
+    g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))</t>
 <t tx="ekr.20060127183752">def masterKeyHandler (self,event):
     
     '''In the new binding scheme, there is only one key binding.
@@ -17705,8 +17964,7 @@ def printGcVerbose(message):
     This is the handler for that binding.'''
     
     if not event:
-        g.trace('oops: no event')
-        return
+        g.trace('oops: no event') ; return
 
     k = self ; c = k.c
     w = event and event.widget
@@ -17750,10 +18008,13 @@ def printGcVerbose(message):
                 if b:
                     if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
                     return k.masterCommand(event,b.func,b.stroke,b.commandName)
-                            
-    if trace: g.trace(repr(stroke),'no func')
-    return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
-</t>
+
+    if stroke.find('Alt+') &gt; -1 or stroke.find('Ctrl+') &gt; -1:
+        if trace: g.trace('ignoring unbound special key')
+        return 'break'
+    else:
+        if trace: g.trace(repr(stroke),'no func')
+        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)</t>
 <t tx="ekr.20060128075225">def cloneFindAllCommand (self,event=None):
     
     self.setup_command()
@@ -17776,7 +18037,6 @@ def printGcVerbose(message):
         k.resetLabel()
         k.showStateAndMode()
         self.generalSearchHelper(k.arg,cloneFindAll=True)</t>
-<t tx="ekr.20060128081543"></t>
 <t tx="ekr.20060128090219">def masterMenuHandler (self,stroke,command,commandName):
     
     k = self ; event = None ; func = command
@@ -17784,66 +18044,23 @@ def printGcVerbose(message):
     # g.trace(stroke,command and command.__name__ or '&lt;no command&gt;',commandName)
     
     return k.masterCommand(event,func,stroke,commandName)</t>
-<t tx="ekr.20060128103640"></t>
-<t tx="ekr.20060128103640.1"># Replace all minus signs by plus signs, except a trailing minus:
-if s.endswith('-'):
-    s = s[:-1].replace('-','+') + '-'
-else:
-    s = s.replace('-','+')</t>
-<t tx="ekr.20060128103640.2">fields = s.split('+') # Don't lower this field.
-if not fields:
-    if not g.app.menuWarningsGiven:
-        print "bad shortcut specifier:", s1
-    return None,None
-
-last = fields[-1]
-if not last:
-    if not g.app.menuWarningsGiven:
-        print "bad shortcut specifier:", s1
-    return None,None
-
-if len(last) == 1:
-    if shift:
-        last = last.upper()
-        shift = False
-    else:
-        last = last.lower()
-else:
-    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
-    # This is a *one-way* translation, done only here.
-    d = self.settingsNameDict
-    last = d.get(last.lower(),last)</t>
-<t tx="ekr.20060128103640.4"># if shift and len(last) == 1 and last.isalpha():
-    # shift = False
-
-table = (
-    (alt, 'Alt+'),
-    (ctrl,'Ctrl+'),
-    (cmd, 'Cmnd+'),
-    (shift,'Shift+'),
-    (True,last),
-)
-    
-shortcut = ''.join([val for flag,val in table if flag])</t>
 <t tx="ekr.20060128151237"></t>
-<t tx="ekr.20060129052538.1">    </t>
+<t tx="ekr.20060129052538.1"></t>
 <t tx="ekr.20060129052538.2">def masterClickHandler (self,event,func=None):
     
-    k = self ; c = k.c
-
-    # button = event and hasattr(event,'button') and event.button or '&lt;no button&gt;'
-    w = event and event.widget or '&lt;no widget&gt;'
-    name = g.app.gui.widget_name(w)
-    fname = func and func.__name__ or '&lt;no func&gt;'
+    k = self ; c = k.c ; w = event and event.widget
     
     if c.config.getBool('trace_masterClickHandler'):
-        g.trace(name,fname)
-        
-    if func:
+        g.trace(g.app.gui.widget_name(w),func and func.__name__)
+
+    if event and func:
         # Don't event *think* of overriding this.
         return func(event)
     else:
-        return None</t>
+        return None
+        
+masterClick3Handler         = masterClickHandler
+masterDoubleClick3Handler   = masterClickHandler</t>
 <t tx="ekr.20060130093055">def bindKeyToDict (self,pane,stroke,func,commandName):
     
     k = self
@@ -17862,75 +18079,7 @@ shortcut = ''.join([val for flag,val in table if flag])</t>
         d [stroke] = g.Bunch(commandName=commandName,func=func,pane=pane,stroke=stroke)
         k.masterBindingsDict [pane] = d</t>
 <t tx="ekr.20060130114255"></t>
-<t tx="ekr.20060130114255.1">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3548918
-By: ktenney
-
-current CVS, W2K
-selecting a node with rst and 
-Edit -&gt; Write Restructured Text;
-
-exception executing command
-Traceback (most recent call last):
-  File "C:\python24\lib\site-packages\leo\src\leoCommands.py", line 249, in
-doCommand
-    val = command(event)
-TypeError: rst3PluginCallback() takes no arguments (1 given)</t>
-<t tx="ekr.20060130130942">def masterClick3Handler (self,event,func=None):
-    
-    k = self ; c = k.c
-    
-    if not event: return
-    
-    w = event.widget or '&lt;no widget&gt;'
-    name = g.app.gui.widget_name(w)
-    fname = func and func.__name__ or '&lt;no func&gt;'
-    
-    if c.config.getBool('trace_masterClickHandler'):
-        g.trace(name,fname)
-        
-    if func:
-        # Don't event *think* of overriding this.
-        return func(event)
-    else:
-        return None</t>
 <t tx="ekr.20060130151453"></t>
-<t tx="ekr.20060130165804">...........F.FF.....................
-======================================================================
-FAIL: @test of c.executeMinibufferCommand and @command
-
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "c:\prog\leoCVS\leo\src\leoTest.py", line 155, in runTest
-    exec script + '\n' in {'c':c,'g':g,'p':p}
-  File "&lt;string&gt;", line 5, in ?
-AssertionError
-
-======================================================================
-FAIL: @test Save command redraws the screen
-
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "c:\prog\leoCVS\leo\src\leoTest.py", line 155, in runTest
-    exec script + '\n' in {'c':c,'g':g,'p':p}
-  File "&lt;string&gt;", line 8, in ?
-AssertionError
-
-======================================================================
-FAIL: @test New command redraws the screen
-
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "c:\prog\leoCVS\leo\src\leoTest.py", line 155, in runTest
-    exec script + '\n' in {'c':c,'g':g,'p':p}
-  File "&lt;string&gt;", line 7, in ?
-AssertionError
-
-----------------------------------------------------------------------
-Ran 417 tests in 217.263s
-
-FAILED (failures=3)
-</t>
 <t tx="ekr.20060130205153">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3549737
 By: nobody
@@ -17960,44 +18109,21 @@ from config/leoSettings.leo
 </t>
 <t tx="ekr.20060131084102"></t>
 <t tx="ekr.20060131084938">def masterDoubleClickHandler (self,event,func=None):
-
-    if not event or not event.widget: return 'break' ;
-
-    k = self ; c = k.c ; p = c.currentPosition()
-    w = event.widget ; name = g.app.gui.widget_name(w)
-    fname = func and func.__name__ or '&lt;no func&gt;'
-
+    
+    k = self ; c = k.c ; w = event and event.widget
+    
     if c.config.getBool('trace_masterClickHandler'):
-        g.trace(name,fname)
-        
-    if func:
+        g.trace(g.app.gui.widget_name(w),func and func.__name__)
+
+    if event and func:
         # Don't event *think* of overriding this.
         return func(event)
     else:
         i = w.index("@%d,%d" % (event.x,event.y))
         g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
         return 'break'</t>
-<t tx="ekr.20060131085116">def masterDoubleClick3Handler (self,event,func=None):
-    
-    k = self ; c = k.c
-    
-    # button = event and hasattr(event,'button') and event.button or '&lt;no button&gt;'
-    w = event and event.widget or '&lt;no widget&gt;'
-    name = g.app.gui.widget_name(w)
-    fname = func and func.__name__ or '&lt;no func&gt;'
-    
-    if c.config.getBool('trace_masterClickHandler'):
-        g.trace(name,fname)
-
-    if func:
-        # Don't event *think* of overriding this.
-        return func(event)
-    else:
-        return None</t>
-<t tx="ekr.20060131103936"></t>
 <t tx="ekr.20060131112557"></t>
 <t tx="ekr.20060131113046"></t>
-<t tx="ekr.20060131114204"></t>
 <t tx="ekr.20060131115606"></t>
 <t tx="ekr.20060131120250"></t>
 <t tx="ekr.20060131133241"></t>
@@ -18017,9 +18143,7 @@ for a,handler,func in table:
         return handler(event,func)
     t.bind(a,treeBindingCallback)
     
-self.textBindings = t.bindtags()
-        
-#g.trace(t.bind(),t.bindtags())</t>
+self.textBindings = t.bindtags()</t>
 <t tx="ekr.20060131173440.1"># Needed to transfer focus.
 def treeClickCallback(event,self=self):
     return self.c.k.masterClickHandler(event,func=self.onTreeClick)
@@ -18058,10 +18182,2668 @@ The master event handlers are now very simple and very general;
 they simply call the given func if one is supplied.
 
 The reason for this indirection is so we can intercept clicks when in the minibuffer.</t>
-<t tx="ekr.20060131191926"></t>
-<t tx="ekr.20060131191926.1"></t>
-<t tx="ekr.20060131192001"></t>
 <t tx="ekr.20060201054108"></t>
-<t tx="ekr.20060201054244"></t>
+<t tx="ekr.20060201064706"></t>
+<t tx="ekr.20060201071346">@nocolor
+
+- Replaced k.tkBindingFromSetting by k.shortcutFromSetting.
+- Replaced k.canonicalizeShortcut by k.shortcutFromSetting.
+- Replaced k.bindShortcut with bindKey.
+- k.makeBindingsFromCommandsDict does not call k.bindKey for mode bindings.</t>
+<t tx="ekr.20060201073913"></t>
+<t tx="ekr.20060201081225">def makeAllModeBindings (self):
+    
+    k = self
+    
+     ### if k.masterBindingsDict.get(modeName) is None:
+    ###    k.createModeBindings(modeName,d)
+    
+    
+</t>
+<t tx="ekr.20060201083154">def prettyPrintKey (self,stroke):
+    
+    s = stroke.strip().lstrip('&lt;').rstrip('&gt;')
+    if not s: return ''
+
+    shift = s.find("shift") &gt;= 0 or s.find("shft") &gt;= 0
+    
+    # Replace all minus signs by plus signs, except a trailing minus:
+    if s.endswith('-'): s = s[:-1].replace('-','+') + '-'
+    else:               s = s.replace('-','+')
+    fields = s.split('+')
+    last = fields and fields[-1]
+
+    if last and len(last) == 1:
+        prev = s[:-1]
+        if last.isalpha():
+            if last.isupper():
+                if not shift:
+                    s = prev + 'Shift+' + last
+            elif last.islower():
+                if not prev:
+                    s = 'Key+' + last.upper()
+                else:
+                    s = prev + last.upper()
+
+    return '&lt;%s&gt;' % s</t>
+<t tx="ekr.20060201083530"></t>
+<t tx="ekr.20060201114832">@nocolor
+
+Turned off plugins.
+Turned off idle-time hook.
+Turned off colorizer.
+
+** Leak 1:  c.beadList and c.visitedList
+
+** Leak 2:  There is one object leaked for every headline visited.
+    This may be p.edit_widget()
+    
+** The entire headline widget logic is bizarre.
+    - Create p.id() -&gt; concatenation of vnodes.
+    - Create tree.widgetForPositionDict.
+        - keys are p.id's, values are widgets.
+    - Change p.edit_widget() to tree.edit_widget(p)
+
+** It looks like the find command is a major leak.</t>
+<t tx="ekr.20060201150547">@ignore
+
+from __future__ import generators
+import java
+import java.awt as awt
+import java.awt.event as aevent
+import javax.swing as swing
+import javax.swing.event as sevent
+import javax.swing.tree as stree
+import java.util.concurrent.locks as locks
+import leoNodes
+import leoGlobals as g
+import leoSwingUndo
+import javax.swing.undo as undo
+from utilities.DefCallable import DefCallable
+from utilities.Phaser import Phaser
+from utilities.Slider import Slider
+from leoSwingFrame import leoSwingTree
+
+
+class Chapters( sevent.ChangeListener ):
+    
+    def __init__( self, c ):
+        
+        self.c = c
+        self.book = None
+        path = g.os_path_join( g.app.loadDir,"..","Icons", "x.png" )
+        self.icon = swing.ImageIcon( path )
+        self.popup = self.ChaptersPopup( self )
+        self.chapters = {}
+        self.trees_chapters = {}
+        self.current_chapter = self.Chapter()
+        self.chapterlist = []
+        #let's skip adding the first chapter
+        #self.chapterlist.append( self.current_chapter )
+        self.current_chapter.setUndoer( leoSwingUndo.leoSwingUndo( c ) )
+        self.updateLock = locks.ReentrantLock() #this increase by 1 for each lock call. -1 for each unlock.  If it becomes 0, the lock is released
+        self.chaptersIterationBlocked = 0
+        self.chaptersundoer = undo.UndoManager()
+        self.chaptersPromptingForRemove = False
+        
+    
+    def getChapter( self ):
+        return self.current_chapter
+    
+    def startPromptingForRemove( self ):
+        self.chaptersPromptingForRemove = True
+        
+    def stopPromptingForRemove( self ):
+        self.chaptersPromptingForRemove = False
+    
+    def isPromptingForRemove( self ):
+        return self.chaptersPromptingForRemove
+    
+    
+    
+    def disablePopup( self ):
+        self.popup.disable()
+        
+    def enablePopup( self ):
+        self.popup.enable()
+    
+    def beginUpdate( self ):
+        self.updateLock.lock()
+        
+    def endUpdate( self ):
+        self.updateLock.unlock()
+    
+    def getWidget( self ):
+        if self.book is None:
+            # We defer creating until here because otherwise the book variable might miss a L&amp;amp;F change
+            self.book = swing.JTabbedPane()
+            self.book.addMouseListener( self.popup )
+            ssm = self.book.getModel()
+            ssm.addChangeListener( self )
+        return self.book
+        
+    def getSelectedChapter( self ):
+        return self.current_chapter
+    
+    def getSelectedChapterWidget( self ):
+        
+        return self.book.getSelectedComponent()
+    
+    @others
+    
+
+</t>
+<t tx="ekr.20060201150547.1">@
+Chapters simply put are multiple Outlines within the Leo instance.  The definition doesn't stop there though since having more than one Outline defines an interaction model between these Outlines.  It is better to think of it like so:
+    An Outline is composed of at least 1 Chapter.
+    A writen Outline with multiple Chapters should be indistinguishable from an Outline with one Chapter.  The only mark is that the roots will have a uA marking them as belonging to a specific Chapter.
+    So at read time, the Outline is read in then broken into its separate Chapters.
+    At write time, the Outline is reconstituted as one Outline during output.  The reunification is only realised on disk.  Internally we use magic unfication iterators that give the write process a sense that it is writing one outline.  These special iterators mean that there is a low impact upon the write code.  Much of it has stayed the same except that it now uses a different iterator.
+</t>
+<t tx="ekr.20060201150547.2">@
+Observation 1: Do not start a beginUpdate in one chapter and finish it with a endUpdate in another chapter.  You will lose your ability to work with the outline/chapter where the beginUpdate started.  I have seen this happen, so let this be a warning to you.  I guess a protective fix against this would be to keep track of which chapter an endUpdate belongs to.  Hence doing a beginUpdate in one chapter followed by and endUpdate in another chapter would target the first chapter.  Im unsure if this would work, but it is a thought that may make the implementation more robust.
+
+Observation 2: root positions should not become stale.  Since we aggresively copy everytime the root or current position is asked for from the chapter, the main copy should never change unless it is explicitly set.
+
+Observation 3: Sliders and Phasers work better than dialogs with Chapters.  Ive found it disruptive when working with Chapters to suddenly have a dialog pop up grabbing my attention away from the Chapter Im working on.  Hence Ive moved informational and querying of the user primarily to Sliders.  Not only does it attach a question or notification to a Chapter better it also is very nice animation to observe.  Keeping our focus on the Chapter in question is essential!
+
+Observation 4: We use the doHook mechanism to notify listeners that the current chapter has changed.  This makes it easy to monitor the changing of chapters, but the devloper must ensure that the chapter belongs to the chapters instance he is interested in.  Hence the commander is passed in as well.  If you are interested in the a specific Chapters instance the Commander should be enough to discern which chapters the chapter belongs to.  See the Node "A Note about Chapters and Commanders".
+
+</t>
+<t tx="ekr.20060201150547.3">@
+
+Chapters Swing takes the lessons learned from past Chapters plugins and simplifies the implementation by making the Chapters instance the provider of the root, current and top positions.  The Command is no longer in charge of this and will delegate the:
+    getCurrentPosition() # or is it c.currentPosition()? :D
+    getTopPosition()
+    getRootPosition()
+
+to the Chapters instance.  Each Commander now has a Chapters instance upon instantiation.
+
+Also setting the variables will be delegated to the Chapters instance, which in turn delegates to a Chapter instance.
+
+Hence we can keep the Commander interface and just restructure the internals and Chapters are now available.</t>
+<t tx="ekr.20060201150547.4">def setRootPosition( self, p ):
+    
+    #if self.loading: return
+    if p:
+        p = p.copy()
+    if self.current_chapter:
+        self.current_chapter.setRootPosition( p )
+    #self.roots[ self.current_chapter ] = p
+
+
+def getRootPosition( self ):
+    
+    #if self.loading: return
+    if self.current_chapter:
+        return self.current_chapter.getRootPosition()
+    return None   
+    #return self.roots[ self.current_chapter ].copy()
+    #rv = self.roots.get( self.current_chapter, None )
+    #if rv: rv = rv.copy()
+    #return rv
+    
+    
+def setCurrentPosition( self, p ):
+    
+    #if self.loading: return    
+    if p:
+        p = p.copy()
+    if self.current_chapter:
+        self.current_chapter.setCurrentPosition( p )   
+    #self.currentPositions[ self.current_chapter ] = p
+        
+    
+def getCurrentPosition( self ):
+    
+    #if self.loading: return
+    if self.current_chapter:
+        return self.current_chapter.getCurrentPosition()
+    return None
+        
+    #return self.currentPositions[ self.current_chapter ].copy()
+    #rv = self.currentPositions.get( self.current_chapter, None )
+    #if rv: rv = rv.copy()
+    #return rv</t>
+<t tx="ekr.20060201150547.5">def stateChanged( self, event ):
+    
+    c = self.c
+    try:
+        self.beginUpdate()
+        index = self.book.getSelectedIndex()
+        component = self.book.getComponentAt( index )
+        chapter = self.chapters[ component ]
+        c.frame.tree = chapter.tree
+        self.current_chapter = chapter
+        #chapter.tree.jtree.treeDidChange()
+        c.beginUpdate()
+        c.endUpdate()
+        #c.selectPosition( chapter.getCurrentPosition() )
+        self.current_chapter.undoer.setMenu( forceupdate = 1 )
+        g.doHook( "chapter-changed", c = self.c, chapter = chapter )
+    finally:
+        self.endUpdate()
+        
+    #if chapter.root:
+    #    chapter.root.linkAsRoot( None )
+
+@   
+    oldchapter = self.current_chapter
+    index = self.book.getSelectedIndex()
+    title = self.book.getTitleAt( index )
+    self.current_chapter = title
+    nwroot = self.chapters[ title ]
+    oldroot = self.c.rootPosition().copy()
+    self.chapters[ oldchapter ] = oldroot
+    c.beginUpdate()
+    c.setRootPosition( nwroot.copy() )
+    c.endUpdate()
+
+
+</t>
+<t tx="ekr.20060201150547.6">def iterateOverChapters( self ):
+    
+    for x in self.chaptersIterator():
+        print x
+        
+    
+
+</t>
+<t tx="ekr.20060201150547.7">def markNodesForChapterization( self ):
+
+    if not self.chaptersIterationBlocked:    
+        #for n in xrange( self.book.getTabCount() ):
+        #    widget = self.book.getComponentAt( n )
+        #    chapter = self.chapters[ widget ]
+        for n in xrange( len(self.chapterlist)):
+            chapter = self.chapterlist[ n ]
+            rp = chapter.getRootPosition()
+            rp_base = rp.copy()
+            for z in rp.self_and_siblings_iter( copy = True ):
+                v = z.v
+                if not hasattr( v, "unknownAttributes" ):
+                    v.unknownAttributes = {}
+                v.unknownAttributes[ 'chapter' ] = n
+                if z == rp_base:
+                    v.unknownAttributes[ 'chapter_name' ] = chapter.name
+    else:
+        rp = self.getRootPosition()
+        rp_base = rp.copy()
+        for z in rp.self_and_siblings_iter( copy = True ):
+            v = z.v
+            if not hasattr( v, "unknownAttributs" ):
+                v.unknownAttributes = {}
+            v.unknownAttributes[ 'chapter' ] = 0
+            if z == rp_base:
+                v.unknownAttributes[ 'chapter_name' ] = self.current_chapter.name</t>
+<t tx="ekr.20060201150547.8" />
+<t tx="551a7a6f7263616e6461212e32303035303932353136303131382e3171002e">def changeChaptersName( self ):
+       
+    chapter = self.current_chapter
+    if chapter.isMessaging(): return
+    chapter.startMessaging()
+    jp = swing.JPanel( java.awt.BorderLayout() )
+    slider = Slider( jp, direction = Slider.down )
+    #phaser = Phaser( jp )
+    nlabel = swing.JLabel( "Chapter Name:" )
+    jp.add( nlabel, java.awt.BorderLayout.NORTH )
+    jtf = swing.JTextField()
+    slider.setComponentToFocus( jtf )
+    #phaser.setComponentToFocus( jtf )
+    jtf.setText( str( chapter.name ) )
+    jp.add( jtf )
+    top = self.c.frame.top
+    def closeAndChange():
+        chapter.doneMessaging()
+        nw_name = jtf.getText()
+        book = self.book
+        index = book.getSelectedIndex()
+        old_name= book.getTitleAt( index ) 
+        book.setTitleAt( index, nw_name )
+        self.chaptersundoer.addEdit( self.UndoChangeChapterName( self, chapter, old_name, nw_name ) )
+        chapter.name = nw_name
+        slider.startRemoving()
+        #phaser.phaseRemove()
+    
+    class aa( swing.AbstractAction ):
+        def __init__( self, *args ):
+            swing.AbstractAction.__init__( self, *args )
+        
+        def actionPerformed( self, ae ):
+            closeAndChange()
+    ks = swing.KeyStroke.getKeyStroke( "ENTER" )
+    if ks:
+        am = jtf.getActionMap()
+        im = jtf.getInputMap()
+        im.put( ks, "enter" )
+        am.put( "enter", aa() )
+    jp2 = swing.JPanel() 
+    jb = swing.JButton( "Ok" )
+    jb.actionPerformed = lambda event : closeAndChange()
+    jp2.add( jb )
+    jp.add( jp2, java.awt.BorderLayout.SOUTH )
+    tree = self.c.frame.tree
+    jtree = tree.jtree
+    bg = jtree.getBackground()
+    fg = jtree.getForeground()
+    jp.setBackground( bg )
+    jp.setForeground( fg )
+    nlabel.setForeground( fg )
+    jp2.setBackground( bg )
+    jp2.setForeground( fg )
+    lb = swing.border.LineBorder( fg )
+    jp.setBorder( lb )
+    main_widget = tree.getWidget()
+    vrect = tree.jspane.getViewportBorderBounds()
+    height = slider.getPreferredSize().height
+    #height = phaser.getPreferredSize().height
+    vrect.height = height
+    slider.setBounds( vrect )
+    #phaser.setBounds( vrect )
+    gp = main_widget.getGlassPane()
+    gp.setVisible( True )
+    gp.add( slider )
+    #gp.add( phaser )
+
+
+
+</t>
+<t tx="ekr.20060201150547.9"></t>
+<t tx="ekr.20060201150547.10">def moveNodeToChapter( self, pos, chapter ):
+    
+    c = self.c
+    cpos = chapter.getCurrentPosition()
+    if not cpos:
+        cpos = chapter.getRootPosition()
+        
+    if cpos.isRoot():
+        testroot = cpos.copy()
+        testroot.moveToNext()
+        if not testroot:
+            return
+    
+    parent = cpos.getParent()    
+    if parent:
+        ok =  c.checkMoveWithParentWithWarning( pos.copy(), parent, True )
+    else:
+        ok = 1
+        
+    if not ok:
+        return
+    
+    try:    
+        self.beginUpdate()
+        current = self.current_chapter
+        c.beginUpdate()
+        pos.unlink()
+        c.endUpdate()
+    
+        self.current_chapter = chapter
+        c.frame.tree = chapter.tree
+        c.beginUpdate()
+        pos.linkAfter( cpos )
+        c.endUpdate()
+    
+
+        self.current_chapter = current
+        c.frame.tree = current.tree
+    finally:
+        self.endUpdate()
+
+</t>
+<t tx="ekr.20060201150547.11">def copyNodeToChapter( self, pos, chapter ):
+    
+    c = self.c
+    cpos = chapter.getCurrentPosition()
+    if not cpos:
+        cpos = chapter.getRootPosition()
+    
+    nwpos = pos.copyTreeAfter()    
+    #if cpos.isRoot():
+    #    testroot = cpos.copy()
+    #    testroot.moveToNext()
+    #    if not testroot:
+    #        return
+    
+    #parent = cpos.getParent()    
+    #if parent:
+    #    ok =  c.checkMoveWithParentWithWarning( pos.copy(), parent, True )
+    #else:
+    #    ok = 1
+        
+    #if not ok:
+    #    return
+    try:
+        self.beginUpdate()
+        current = self.current_chapter
+        c.beginUpdate()
+        nwpos.unlink()
+        c.endUpdate()
+    
+        self.current_chapter = chapter
+        c.frame.tree = chapter.tree
+        c.beginUpdate()
+        nwpos.linkAfter( cpos )
+        undo = leoSwingUndo.UndoableInsertNode( self.c, [ "Insert Node", nwpos.copy(), ], {} )
+        chapter.undoer.addUndo( undo )
+        c.endUpdate()
+        self.current_chapter = current
+        c.frame.tree = current.tree
+        current.undoer.setMenu( forceupdate = 1 )
+    finally:
+        self.endUpdate()
+</t>
+<t tx="ekr.20060201150547.12">def cloneNodeToChapter( self, pos, chapter ):
+    
+    c = self.c
+    cpos = chapter.getCurrentPosition()
+    if not cpos:
+        cpos = chapter.getRootPosition()
+    
+    nwpos = pos.clone( pos.copy() )
+        
+    #if cpos.isRoot():
+    #    testroot = cpos.copy()
+    #    testroot.moveToNext()
+    #    if not testroot:
+    #        return
+    
+    parent = cpos.getParent()    
+    if parent:
+        ok =  c.checkMoveWithParentWithWarning( nwpos.copy(), parent, True )
+    else:
+        ok = 1
+        
+    if not ok:
+        nwpos.unlink()
+        c.beginUpdate()
+        c.endUpdate()
+        return
+    
+    try:
+        self.beginUpdate()
+        current = self.current_chapter
+        c.beginUpdate()
+        nwpos.unlink()
+        c.endUpdate()
+    
+        self.current_chapter = chapter
+        c.frame.tree = chapter.tree
+        c.beginUpdate()
+        nwpos.linkAfter( cpos )
+        undo = leoSwingUndo.UndoableInsertNode( self.c, [ "Insert Node", nwpos.copy(), ], {} )
+        chapter.undoer.addUndo( undo )
+    finally:
+        c.endUpdate()
+    
+
+    self.current_chapter = current
+    c.frame.tree = current.tree
+    self.endUpdate()
+    current.undoer.setMenu( forceupdate = 1 )</t>
+<t tx="ekr.20060201150547.13">def testNode( self ):
+    
+    chapter = self.current_chapter
+    pos = chapter.getCurrentPosition()
+    
+    print pos
+    for ancestor in pos.self_and_parents_iter(): #copy = 1):
+        print ancestor, ancestor.isCloned()</t>
+<t tx="ekr.20060201150547.14">def swapChapters( self, chapter1, chapter2, undo = True ):
+
+    try:    
+        self.beginUpdate()
+        widget1 = chapter1.tree.getWidget()
+        widget2 = chapter2.tree.getWidget()
+        index1 = self.book.indexOfComponent( widget1 )
+        index2 = self.book.indexOfComponent( widget2 )
+        jp = swing.JPanel() #place holder, keeps order
+        self.book.setComponentAt( index1, jp )
+        self.book.setComponentAt( index2, widget1 )
+        self.book.setComponentAt( index1, widget2 )
+        self.book.setTitleAt( index1, chapter2.name )
+        self.book.setTitleAt( index2, chapter1.name )
+        i1 = self.chapterlist.index( chapter1 )
+        i2 = self.chapterlist.index( chapter2 )
+        self.chapterlist[ i1 ] = chapter2
+        self.chapterlist[ i2 ] = chapter1
+        self.current_chapter = chapter2
+        self.c.frame.tree = chapter2.tree
+        self.c.beginUpdate()
+        self.c.endUpdate()
+        if undo:
+            self.chaptersundoer.addEdit( self.UndoSwapChapters( self, chapter1, chapter2 )) 
+    finally:
+        self.endUpdate()
+    
+    </t>
+<t tx="ekr.20060201150547.15">def mergeChapters( self, chapter1, chapter2 ):
+
+	try:    
+        self.beginUpdate()
+    
+        rp = chapter2.getRootPosition()
+        nodes = []
+        for z in rp.self_and_siblings_iter( copy = True ):
+            nodes.append( z )
+    
+        for z in nodes:
+            z.unlink()
+        
+        rp2 = chapter1.getRootPosition()
+        for z in rp2.self_and_siblings_iter( copy = True ):
+            pass   
+        base = z.copy()
+
+    
+        self.c.beginUpdate()
+    
+        for z in nodes:
+            z.linkAfter( base )
+            base = z.copy()
+        
+        self.quietRemoveChapter( chapter2 )
+        self.c.endUpdate()    
+    finally:
+        self.endUpdate()</t>
+<t tx="ekr.20060201150547.16">def selectChapter( self, chapter ):
+    
+    widget = chapter.tree.getWidget()
+    index = self.book.indexOfComponent( widget )
+    if index != -1:
+        self.book.setSelectedComponent( widget )
+    </t>
+<t tx="ekr.20060201150547.17">def insertChapter( self, chapter ):
+    
+    self.chapterlist.append( chapter )
+    tree = chapter.tree 
+    self.trees_chapters[ tree ] = chapter
+    widget = tree.getWidget()   
+    self.chapters[ widget ] = chapter
+    ic = self.IconCloser( self.icon, self.removeChapter )
+    self.book.addTab( chapter.name, ic, widget )
+
+</t>
+<t tx="ekr.20060201150547.18">def findChapterForNode( self, p ):
+    
+    for n in xrange( self.book.getTabCount() ):
+        widget = self.book.getComponentAt( n )
+        chapter = self.chapters[ widget ]
+        rp = chapter.getRootPosition()
+        for z in rp.fromSelfAllNodes_iter( copy = True ):
+            if z == p: return chapter
+        
+    return None</t>
+<t tx="ekr.20060201150547.19">def turnNodeIntoChapter( self ):
+    
+    cp = self.current_chapter.getCurrentPosition()
+    if cp.isRoot():
+        testroot = cp.copy()
+        testroot.moveToNext()
+        if not testroot:
+            return
+    self.c.beginUpdate()
+    cp.unlink()
+    rp = self.current_chapter.getRootPosition()
+    self.current_chapter.setCurrentPosition( rp )
+    self.c.endUpdate()
+    self.freshChapter( p = cp )</t>
+<t tx="ekr.20060201150547.20">@others
+</t>
+<t tx="ekr.20060201150547.21">def importOutline( self ):
+    
+    fc = swing.JFileChooser()
+    fc.showOpenDialog( None )
+    sfile = fc.getSelectedFile()
+    if sfile:
+        self.loadFileAsChapter( sfile.getAbsolutePath() )
+    
+def loadFileAsChapter( self, fname ):
+    
+    c = self.c
+    targetfile = java.io.File( fname )
+    if not targetfile.exists() or targetfile.isDirectory():
+        return
+    
+    mungedname = targetfile.getName()
+    if mungedname.endswith( ".leo") : mungedname = mungedname[ : -4 ]
+    def run():
+        self.freshChapter( name = mungedname, edit = False, undo = False )
+        
+    dc = DefCallable( run )
+    ft = dc.wrappedAsFutureTask()
+    if java.awt.EventQueue.isDispatchThread():
+        ft.run()
+    else:
+        swing.SwingUtilities.invokeAndWait( ft )
+    
+    edit = sel.UndoImport( self, self.current_chapter )
+    self.chaptersundoer.addEdit( edit )
+    c.frame.disableResizing()
+    p = c.fileCommands.getLeoFileAsOutline( fname )
+    c.frame.enableResizing()
+    oldir = c.frame.openDirectory
+    parent = targetfile.getParentFile()
+    c.frame.openDirectory = parent.getAbsolutePath()
+    c.atFileCommands.readAll( c.rootPosition().copy() ,partialFlag=False)
+    c.frame.openDirectory= oldir
+    self.deferedChapterization( c.rootPosition(), selectchapter = self.getSelectedChapterWidget(), edit = edit )
+
+</t>
+<t tx="ekr.20060201150547.22">def exportOutline( self ):
+    
+    self.chaptersIterationBlocked = 1
+    self.beginUpdate()
+    fc = swing.JFileChooser()
+    fc.showSaveDialog( None )
+    sfile = fc.getSelectedFile()
+    if not sfile:
+        g.es( "No file name entered." )
+        return
+    fileName = fc.getName( sfile )
+    if not fileName.endswith( ".leo" ):
+        fileName = "%s.leo" % fileName
+    self.c.fileCommands.write_Leo_file( fileName, True )
+    self.chaptersIterationBlocked = 0
+    self.endUpdate()
+    g.es( "Done Exporting %s as %s" % ( self.current_chapter.name, fileName ) )</t>
+<t tx="ekr.20060201150547.23">@others
+</t>
+<t tx="ekr.20060201150547.24">def addChapter( self, name, p = None ):
+    
+
+    c = self.c
+    chapter = self.Chapter()
+    self.chapterlist.append( chapter )
+    chapter.setUndoer( leoSwingUndo.leoSwingUndo( c ) )
+    chapter.setRootPosition( p )
+    chapter.setCurrentPosition( p )
+    #self.current_chapter = current
+    cm = self.ChapterModel( c , chapter) #, p )
+    tree = leoSwingTree( frame = c.frame, model = cm, chapter= chapter )
+    tree.createAuxilaryWidgets()
+    #self.c.frame.tree = tree
+    chapter.setTree( tree )
+    chapter.name = name
+    self.trees_chapters[ tree ] = chapter
+    widget = tree.getWidget()
+    
+    self.chapters[ widget ] = chapter
+    ic = self.IconCloser( self.icon, self.removeChapter )
+    self.book.addTab( name, ic, widget )
+
+    if not self.current_chapter:
+        self.beginUpdate()
+        self.current_chapter = chapter
+        c.frame.tree = tree
+        self.endUpdate()
+
+    return tree
+
+
+
+</t>
+<t tx="ekr.20060201150547.25">def addChapterForSettingsTree( self, name, p = None , controller = None):
+    
+    c = self.c
+    chapter = self.current_chapter
+    #chapter = self.Chapter()
+    #chapter.setUndoer( leoSwingUndo.leoSwingUndo( c ) )
+    chapter.setRootPosition( p )
+    chapter.setCurrentPosition( p )
+    #c.chapters.current_chapter = chapter
+    #chapter = self.current_chapter
+    cm = self.ChapterModel( c , chapter)
+    import leoConfig
+    tree = leoConfig.settingsTree( frame = c.frame, model = cm, chapter = chapter, controller = controller )
+    chapter.setTree( tree )
+    chapter.name = name
+    self.trees_chapters[ tree ] = chapter
+    widget = tree.getWidget()
+    
+    self.chapters[ widget ] = chapter
+    self.book = self.getWidget()
+    self.book.addTab( name, widget )
+    if not self.current_chapter:
+        self.beginUpdate()
+        self.current_chapter = chapter
+        c.frame.tree = tree
+        self.endUpdate()
+
+    return tree
+
+
+
+
+</t>
+<t tx="ekr.20060201150547.26">def freshChapter( self, p = None, name = None, edit = True, undo = True ):
+    
+    c = self.c
+    if not p:
+        t = leoNodes.tnode( headString = "NewHeadline" )
+        v = leoNodes.vnode( c, t )
+        p = leoNodes.position( v, [] )
+    if not name:
+        name = "New Chapter"
+    tree = self.addChapter( name, p = p )                    
+    chapter = self.trees_chapters[ tree ]
+    if undo:
+        self.chaptersundoer.addEdit( self.UndoAddChapter( self, chapter ) ) 
+    try:
+        self.beginUpdate()
+        self.current_chapter = chapter
+        c.frame.tree = tree
+        p.linkAsRoot( None )
+        #self.current_chapter = current 
+        widget = tree.getWidget()
+        self.book.setSelectedComponent( widget )   
+    finally:
+        self.endUpdate()
+    tree.loaded = 1
+    if edit:
+        self.c.editPosition( p.copy() )</t>
+<t tx="ekr.20060201150547.27">def removeChapter( self, chapter = None, undo = True ):
+
+    tree = self.c.frame.tree
+    vrect = tree.jspane.getViewportBorderBounds()
+    main_widget = tree.getWidget()
+    gp = main_widget.getGlassPane()
+    bgc = tree.jtree.getBackground()
+    fgc = tree.jtree.getForeground() 
+    index = self.book.getSelectedIndex()
+    component = self.book.getComponentAt( index )
+    chapter = self.chapters[ component ]
+    fg = self.book.getForegroundAt( index )
+    bg = self.book.getBackgroundAt( index )
+    if chapter.isMessaging() or self.isPromptingForRemove(): return
+    chapter.startMessaging()
+    self.startPromptingForRemove()
+    self.book.setForegroundAt( index, bg )
+    self.book.setBackgroundAt( index, fg )
+    if self.book.getTabCount() == 1:
+        def ok( chapter = chapter ):
+            self.stopPromptingForRemove()
+            chapter.doneMessaging()
+            self.book.setForegroundAt( index, fg )
+            self.book.setBackgroundAt( index, bg )
+        buttons = ( ( "Ok", ok ), )
+        sa = self.SliderMessageButtons( "Can't remove the only Chapter", buttons = buttons, bgc = bgc, fgc = fgc )
+        gp.setVisible( True )
+        swidget = sa.getSlider()
+        height = swidget.getPreferredSize().height
+        vrect.height = height
+        swidget.setBounds( vrect )
+        gp.add( swidget )
+        return
+    else:
+        message = "Do you want to remove Chapter: %s ?" % chapter.name
+        def yes( component = component, chapter = chapter ):
+            self.book.remove( component )
+            chapter.doneMessaging()
+            self.chapterlist.remove( chapter )
+            tree = chapter.tree 
+            del self.trees_chapters[ tree ]
+            del self.chapters[ component ]
+            self.chaptersundoer.addEdit( self.UndoRemoveChapter( self, chapter ) )
+            try:
+                index = self.book.getSelectedIndex()
+                component = self.book.getComponentAt( index )
+                #self.chapters[ widget ] = chapter
+                chapter = self.chapters[ component ]
+                self.beginUpdate()
+                self.current_chapter = chapter
+                self.c.frame.tree = chapter.tree
+            finally:
+                self.endUpdate()
+            self.stopPromptingForRemove()            
+            g.doHook( "chapter-removed", c = self.c, chapter = chapter )
+            
+        def no( chapter = chapter ):
+            self.stopPromptingForRemove()
+            chapter.doneMessaging()
+            self.book.setForegroundAt( index, fg )
+            self.book.setBackgroundAt( index, bg )
+            
+        buttons = ( ( "Yes", yes ), ( "No", no ) )
+        sa = self.SliderMessageButtons( message, buttons = buttons, bgc = bgc, fgc = fgc )
+        gp.setVisible( True )
+        swidget = sa.getSlider()
+        height = swidget.getPreferredSize().height
+        vrect.height = height
+        swidget.setBounds( vrect )
+        gp.add( swidget )            
+           
+@    
+    index = self.book.getSelectedIndex()
+    component = self.book.getComponentAt( index )
+    chapter = self.chapters[ component ]
+    rv = swing.JOptionPane.showConfirmDialog( None,
+                                             "Do you want to remove Chapter: %s" % chapter.name,
+                                             "Remove a Chapter?",
+swing.JOptionPane.YES_NO_OPTION )
+    if rv == swing.JOptionPane.NO_OPTION: return
+
+
+    self.book.removeTabAt( index ) #removing does not fire a change event
+    index = self.book.getSelectedIndex()
+    component = self.book.getComponentAt( index )
+    chapter = self.chapters[ component ]
+    self.chapterlist.remove( chapter )
+    try:
+        self.beginUpdate()
+        self.current_chapter = chapter
+        self.c.frame.tree = chapter.tree
+    finally:
+        self.endUpdate()
+    g.doHook( "chapter-removed", c = self.c, chapter = chapter )
+</t>
+<t tx="ekr.20060201150547.28">def quietRemoveChapter( self, chapter ):
+    
+    tree = chapter.tree
+    component = tree.getWidget()
+    self.book.remove( component )
+    self.chapterlist.remove( chapter )
+    del self.trees_chapters[ tree ]
+    del self.chapters[ component ]    
+</t>
+<t tx="ekr.20060201150547.29">@others
+</t>
+<t tx="ekr.20060201150547.30">def deferedChapterization (self,pos,selectchapter=None,edit=None):
+
+    x = lambda: self.breakOutlineIntoChapters(pos,selectchapter,edit)
+    dc = DefCallable(x)
+    ft = dc.wrappedAsFutureTask()
+    swing.SwingUtilities.invokeLater(ft)</t>
+<t tx="ekr.20060201150547.31">def breakOutlineIntoChapters( self, p, selectchapter = None, edit = None ):
+    
+    #self.loading = 1
+    self.beginUpdate()
+    #self.updateLock.unlock()
+    n = 0 
+    last_z = None
+    p2 = p.copy()
+    level_0 = []
+    for z in p.self_and_siblings_iter( copy = True ):
+        level_0.append( z )
+
+    if level_0:
+        p1 = level_0[ 0 ]
+        v1 = p1.v
+        if hasattr( v1, "unknownAttributes" ):
+            uA = v1.unknownAttributes
+            if uA.has_key( "chapter_name" ):
+                name = uA[ 'chapter_name' ]
+                i = self.book.getSelectedIndex()
+                self.book.setTitleAt( i, name )
+                if self.current_chapter: #This needs to be set here or its lost in the next save
+                    self.current_chapter.name = name
+
+    for z in level_0:
+        v = z.v
+        name = "New Chapter"
+        if hasattr( v, "unknownAttributes" ):
+            if v.unknownAttributes.has_key( "chapter" ):
+                a_n = v.unknownAttributes[ "chapter" ]
+            else:
+                a_n = n
+            if v.unknownAttributes.has_key( "chapter_name" ):
+                name = v.unknownAttributes[ "chapter_name" ]
+        else:
+            a_n = n
+   
+        if a_n != n:
+            #self.c.endUpdate()
+            n = a_n
+            #z.doDelete( p2 )
+            z.unlink()
+            tree = self.c.chapters.addChapter( name, z.copy() )
+            widget = tree.getWidget()
+            chapter = self.chapters[ widget ]
+            self.c.frame.tree = chapter.tree
+            self.current_chapter = chapter
+            if edit and hasattr( edit, "addChapter" ):
+                edit.addChapter( chapter )
+            ic = self.IconCloser( self.icon, self.removeChapter )
+            self.book.addTab( name, ic, widget )
+            #self.book.addTab( name, widget )
+            self.book.setSelectedComponent( widget )
+            #self.c.beginUpdate()
+            last_z = z
+            z.linkAsRoot( None )
+            tree.loaded = 1
+            continue
+        
+        if last_z:
+            #z.moveAfter( last_z )
+            z.unlink() 
+            z.linkAfter( last_z )
+        last_z = z           
+    
+    if not selectchapter:
+        selectchapter = self.book.getComponentAt( 0 )       
+    self.book.setSelectedComponent( selectchapter )
+    self.c.beginUpdate()
+    self.c.endUpdate()       
+    self.endUpdate()</t>
+<t tx="ekr.20060201150547.32">class ChaptersPopup( aevent.MouseAdapter ):
+    
+    def __init__( self, chapters ):
+        aevent.MouseAdapter.__init__( self )
+        self.chapters = chapters
+        self.copyNodeToChapter = self.CopyNodeToChapter( chapters )
+        self.cloneNodeToChapter = self.CloneNodeToChapter( chapters )
+        self.swapChapters = self.SwapChapters( chapters )
+        self.mergeChapters = self.MergeChapters( chapters )
+        self.enabled = True
+        
+    def disable( self ):
+        self.enabled = False
+        
+    def enable( self ):
+        self.enabled = True
+        
+    @others</t>
+<t tx="ekr.20060201150547.33">def mousePressed( self, mE ):
+                
+    if mE.getClickCount() == 1 and self.enabled:
+        if mE.getButton() == mE.BUTTON3:
+            x = mE.getX()
+            y = mE.getY()
+            DefAction = self.chapters.DefAction        
+            popup = swing.JPopupMenu()            
+            popup.add( DefAction( "Add Chapter", self.chapters.freshChapter ) ) 
+            #popup.add( DefAction( "Remove Chapter", self.chapters.removeChapter ) )
+            #popup.add( DefAction( "ITERATE!", self.chapters.iterateOverChapters ) ) 
+            popup.add( DefAction( "Edit Chapters Name", self.chapters.changeChaptersName ) )
+            popup.addSeparator()
+            popup.add( self.copyNodeToChapter.getWidget() )
+            popup.add( self.cloneNodeToChapter.getWidget() )
+            popup.add( self.swapChapters.getWidget() )
+            popup.add( self.mergeChapters.getWidget() )
+            popup.add( DefAction( "Copy Node Into Chapter", self.chapters.turnNodeIntoChapter ) )
+            #popup.add( DefAction( "Test NODE", self.chapters.testNode ) )
+            popup.addSeparator()
+            menu = swing.JMenu( "Import/Export" )
+            popup.add( menu )
+            menu.add( DefAction( "Import Outline", self.chapters.importOutline ) )
+            menu.add( DefAction( "Export Chapter as Outline", self.chapters.exportOutline ) )
+            popup.addSeparator()
+            undoer = self.chapters.chaptersundoer
+            utext = undoer.getUndoPresentationName()
+            item = popup.add( DefAction( utext, undoer.undo ) )
+            if not undoer.canUndo():
+                item.setEnabled( False )
+                
+            rtext = undoer.getRedoPresentationName()
+            item = popup.add( DefAction( rtext, undoer.redo ) )
+            if not undoer.canRedo():
+                item.setEnabled( False )    
+                              
+            source = mE.getSource()                
+            popup.show( source, x, y )
+</t>
+<t tx="ekr.20060201150547.34">class CopyNodeToChapter( sevent.MenuListener ):
+    
+    def __init__( self, chapters ):
+        self.chapters = chapters
+        self.menu = swing.JMenu( "Copy Node To Chapter" )
+        self.menu.addMenuListener( self )
+        
+    def getWidget( self ):
+        return self.menu
+        
+    def menuSelected( self, me ):
+        
+        self.menu.removeAll()
+        current = self.chapters.current_chapter
+        cpos = current.getCurrentPosition()
+        root = current.getRootPosition()
+        #if cpos == root:
+        #    roottest = cpos.copy()
+        #    roottest.moveToNext()
+        #    if not roottest:
+        #        return
+        
+        for z in self.chapters.cycleThroughChapters( swap = 0 ):
+            if z == current: continue
+            jmi = swing.JMenuItem( z.name )
+            mvnd = lambda event, cpos = cpos.copy(), chapter = z: self.chapters.copyNodeToChapter( cpos, chapter )
+            jmi.actionPerformed = mvnd
+            self.menu.add( jmi )
+    
+    def menuDeselected( self, me ):
+        pass
+        
+    def menuCanceled( self, me ):
+        pass
+</t>
+<t tx="ekr.20060201150547.35">class CloneNodeToChapter( sevent.MenuListener ):
+    
+    def __init__( self, chapters ):
+        self.chapters = chapters
+        self.menu = swing.JMenu( "Clone Node To Chapter" )
+        self.menu.addMenuListener( self )
+        
+    def getWidget( self ):
+        return self.menu
+        
+    def menuSelected( self, me ):
+        
+        self.menu.removeAll()
+        current = self.chapters.current_chapter
+        cpos = current.getCurrentPosition()
+        root = current.getRootPosition()
+        #if cpos == root:
+        #    roottest = cpos.copy()
+        #    roottest.moveToNext()
+        #    if not roottest:
+        #        return
+        
+        for z in self.chapters.cycleThroughChapters( swap = 0 ):
+            if z == current: continue
+            jmi = swing.JMenuItem( z.name )
+            mvnd = lambda event, cpos = cpos.copy(), chapter = z: self.chapters.cloneNodeToChapter( cpos, chapter )
+            jmi.actionPerformed = mvnd
+            self.menu.add( jmi )
+    
+    def menuDeselected( self, me ):
+        pass
+        
+    def menuCanceled( self, me ):
+        pass
+</t>
+<t tx="ekr.20060201150547.36">class SwapChapters( sevent.MenuListener ):
+    
+    def __init__( self, chapters ):
+        self.chapters = chapters
+        self.menu = swing.JMenu( "Swap Chapters" )
+        self.menu.addMenuListener( self )
+        
+    def getWidget( self ):
+        return self.menu
+        
+    def menuSelected( self, me ):
+        
+        self.menu.removeAll()
+        current = self.chapters.current_chapter
+        
+        for z in self.chapters.cycleThroughChapters( swap = 0 ):
+            if z == current: continue
+            jmi = swing.JMenuItem( z.name )
+            swapchap = lambda event,  chapter = z: self.chapters.swapChapters( current, chapter )
+            jmi.actionPerformed = swapchap
+            self.menu.add( jmi )
+    
+    def menuDeselected( self, me ):
+        pass
+        
+    def menuCanceled( self, me ):
+        pass
+</t>
+<t tx="ekr.20060201150547.37">class MergeChapters( sevent.MenuListener ):
+    
+    def __init__( self, chapters ):
+        self.chapters = chapters
+        self.menu = swing.JMenu( "Merge Chapters" )
+        self.menu.addMenuListener( self )
+        
+    def getWidget( self ):
+        return self.menu
+        
+    def menuSelected( self, me ):
+        
+        self.menu.removeAll()
+        current = self.chapters.current_chapter
+        
+        for z in self.chapters.cycleThroughChapters( swap = 0 ):
+            if z == current: continue
+            jmi = swing.JMenuItem( z.name )
+            mergechapters = lambda event,  chapter = z: self.chapters.mergeChapters( current, chapter )
+            jmi.actionPerformed = mergechapters
+            self.menu.add( jmi )
+    
+    def menuDeselected( self, me ):
+        pass
+        
+    def menuCanceled( self, me ):
+        pass
+</t>
+<t tx="ekr.20060201150547.38">@others
+</t>
+<t tx="ekr.20060201150547.39">class DefAction( swing.AbstractAction ):
+    
+    def __init__( self, name, function ):
+        swing.AbstractAction.__init__( self, name )
+        self.function = function
+    
+    def actionPerformed( self, event ):
+        self.function()</t>
+<t tx="ekr.20060201150547.40">class ChapterModel( stree.TreeModel, java.lang.Runnable ):
+    
+    
+    
+    def __init__( self, c , chapter ):#, proot ):
+
+        self.c = c
+        self.tmlisteners = java.util.ArrayList();
+        self._root = self._rootN( c, chapter ) # , proot )
+        self._rTreePath = stree.TreePath( self._root ) 
+        self.chapter = chapter
+        self.drunning = 0
+
+        
+    def getChapter( self ):
+        return self.chapter
+
+    def getRoot( self ):
+        return self._root
+
+    def reload( self, full_reload = False ):
+        
+        
+        if full_reload:
+            t_r = self.c.frame.tree.tree_reloader
+            #for z in self.c.rootPosition().allNodes_iter( copy = True ):
+            for z in self._root.getRootPosition().allNodes_iter( copy = True ):
+                if z.isExpanded():
+                    t_r.expand( z )
+        
+        import jarray
+        a = jarray.zeros( 1, stree.TreeNode )
+        a[ 0 ] = self._root
+        e = sevent.TreeModelEvent( self._root, a )
+        for z in list( self.tmlisteners ):
+            z.treeStructureChanged( e )
+
+            
+    def dRun( self ):
+        self.drunning = 1
+        swing.SwingUtilities.invokeLater( self )
+            
+    def run( self ):
+        
+        try:
+            import jarray
+            a = jarray.zeros( 1, stree.TreeNode )
+            a[ 0 ] = self._root
+            e = sevent.TreeModelEvent( self._root, a )
+            for z in list( self.tmlisteners ):
+                z.treeStructureChanged( e )
+            if self.chapter.tree.jtree:
+                self.chapter.tree.jtree.fireTreeExpanded( self._rTreePath )
+                cp = self.chapter.getCurrentPosition()
+                cpp = self.getPathToRoot( cp )
+                self.chapter.tree.jtree.setSelectionPath( cpp )
+        finally:
+            self.drunning = 0
+    
+    def addTreeModelListener( self, listener ):
+        self.tmlisteners.add( listener )
+        
+    def removeTreeModelListener( self, listener ):
+        self.tmlisteners.remove( listener )
+    
+    def getChild( self, parent, ind ):
+        if parent is self._root:
+            return parent.getChildAt( ind ).copy()
+        return parent.getNthChild( ind ).copy()
+        
+    def getChildCount( self, parent ):
+        
+        if parent is self._root:
+            return parent.getChildCount()
+        if parent:
+            return parent.numberOfChildren()
+        else:
+            return 0
+        
+    def getIndexOfChild( self, parent, child ):
+        if parent is self._root:
+            return self._root.getIndex( child )
+        else:
+            return child.childIndex()
+
+
+    
+    def valueForPathChanged( self, path, value ):
+
+        pos = path.getLastPathComponent()
+        pos.setHeadString( value )
+        
+    def isLeaf( self, node ):
+        if node is self._root: return False
+        if node:
+            if node.numberOfChildren(): return False
+            else: return True
+        else:
+            return True
+            
+            
+    def getPathToRoot( self, node, masterlist = None ):
+        
+        path = []
+        #if not node:
+        #    node = self.c.rootPosition()
+        stopat = None
+        if self.chapter.hoistStack:
+            bunch = self.chapter.hoistStack[ -1 ]
+            stopat = bunch.p.copy()
+            
+        while node and node.level() != 0:
+            path.append( node.copy() )
+            if node == stopat: break
+            node = node.getParent()
+            if masterlist:
+                if node in masterlist:
+                    masterlist.remove( node )
+        else:
+            path.append( node.copy() )
+        
+        path.append( self._root )  
+        path.reverse()
+        tp = stree.TreePath( path )
+        return tp
+            
+    class _rootN( stree.TreeNode ):
+        
+        def __init__( self, c, chapter ):#, proot ):
+            self.c = c
+            self.chapter = chapter
+            self.v = None # These are for comparisons with positions, we must pretend to be a position
+            self.stack = None
+            
+            #self.chapters = c.chapters
+            #self.proot = proot
+        def expand( self ): pass
+        def contract( self ): pass
+        
+        def getChildIndex( self ):
+            return -1
+        
+        def getRootPosition( self ):
+            rp = self.chapter.getRootPosition()
+            return rp
+
+        
+        def getChildAt(self, childIndex):
+            rp = self.getRootPosition() #self.c.rootPosition()                
+            #if len( self.c.hoistStack ) != 0: #Hoist Code
+            if len( self.chapter.hoistStack ) != 0:
+                #rp = self.c.hoistStack[ -1 ].p.copy()
+                rp = self.chapter.hoistStack[ -1 ].p.copy()
+                def getParent( root = self ): #This slight modification to a copy allows the Tree to keep its expanded state
+                    return root
+                rp.getParent = getParent
+                return rp #End of Hoist Code
+            if not rp: return None
+            i = 0
+            for z in rp.siblings_iter():
+                if i == childIndex:
+                    return z
+                i = i + 1
+            return None       
+        
+        def getChildCount( self ):
+            #rp = self.c.rootPosition()
+            rp = self.getRootPosition()
+            if len( self.chapter.hoistStack ) != 0:
+                return 1
+            #if len( self.c.hoistStack ) != 0:
+            #    return 1
+            i = 0
+            for z in rp.siblings_iter():
+                i = i + 1
+            return i
+        
+        def getParent( self ):
+            return None
+            
+        def getIndex( self, node):
+            #rp = self.c.rootPosition()
+            rp = self.getRootPosition()
+            if len( self.chapter.hoistStack ) != 0:
+                return 0
+            i = 0
+            for z in rp.siblings_iter():
+                if z == node: return i
+                i = i + 1
+            return -1
+            
+        def getAllowsChildren( self ):
+            return True
+            
+        def isLeaf( self ):
+            return False
+            
+        def equal( self, x ):
+            if self is x: return True
+            else: return False
+            
+        def equals( self, x ):
+            if self is x: return True
+            else:
+                return False
+            
+        def copy( self ):
+            return self
+            
+        def bodyString( self ):
+            return ""
+            
+        def headString( self ):
+            return ""
+            
+        def children( self ):
+            
+            class _enum( util.Enumeration ):
+                
+                def __init__( self, iter ):
+                    self.iter = iter
+                    try:
+                        self.next = iter.next()
+                    except:
+                        self.next = None
+                
+                def hasMoreElements( self ):
+                    if self.next: return True
+                    else: return False
+                    
+                def nextElement( self ):
+                    
+                    try:
+                        rt = self.next
+                        self.next = iter.next()
+                    finally:
+                        return rt
+            #rp = self.c.rootPosition()
+            rp = self.getRootPosition()
+            return _enum( rp.siblings_iter( copy = True ) )
+            #return _enum( self.c.rootPosition.siblings_iter( copy = True ) )
+
+
+</t>
+<t tx="ekr.20060201150547.41">class Chapter:
+    
+    def __init__( self ):
+        
+        self.root = None
+        self.currentPosition = None
+        self.tree = None
+        self.name = None
+        self.hoistStack = []
+        self.undoer = None
+        self.messaging = False
+        
+    def startMessaging( self ):
+        self.messaging = True
+    
+    def isMessaging( self ):
+        return self.messaging
+        
+    def doneMessaging( self ):
+        self.messaging = False
+        
+    def isValid( self ):
+        widget = self.tree.getWidget()
+        if widget.getParent(): return True
+        else:
+            return False    
+        
+    def setUndoer( self, undoer ):
+        self.undoer = undoer
+        
+    def getUndoer( self ):
+        return self.undoer
+        
+    def getName( self ):
+        return self.name
+        
+    def setName( self, name ):
+        self.name = name
+        
+    
+    def getTree( self ):
+        return self.tree
+        
+    def setTree( self, tree ):
+        self.tree = tree
+    
+    def setRootPosition( self, p ):
+        if p:
+            p = p.copy()
+        self.root = p
+
+    def getRootPosition( self ):
+        p = self.root
+        if p:
+            p = p.copy()
+        return p
+    
+    def setCurrentPosition( self, p ):
+        if p:
+            p = p.copy()        
+        self.currentPosition = p
+        
+    
+    def getCurrentPosition( self ):
+        p = self.currentPosition
+        if p:
+            p = p.copy()
+        return p</t>
+<t tx="ekr.20060201150547.42">class SliderMessageButtons( sevent.AncestorListener ):
+    '''A class that manages creates a message with 0 to N buttons for
+       the user to select.  After selecting the button, the slider is removed.
+       After removal the function corresponding to the button is fired'''
+       
+    def __init__( self, message, buttons = (), direction = Slider.down, bgc = None, fgc = None ):
+        
+        self.backingpanel = swing.JPanel( awt.BorderLayout() )
+        self.slider = Slider( self.backingpanel, direction )
+        if fgc:
+            lb = swing.border.LineBorder( fgc )
+            self.backingpanel.setBorder( lb )
+        else:
+            lb = swing.border.LineBorder( self.backingpanel.getForeground() )
+            self.backingpanel.setBorder( lb )
+        jl = swing.JLabel( message )
+        jl.setHorizontalAlignment( swing.SwingConstants.CENTER )
+        self.backingpanel.add( jl )
+        jp2 = swing.JPanel()
+        self.func = None
+        for z in buttons:
+            label = z[ 0 ]
+            func = z[ 1 ]
+            b = swing.JButton( label )
+            b.actionPerformed = lambda event, func = func: self.__removeCall( func )
+            jp2.add( b )
+
+        self.backingpanel.add( jp2, awt.BorderLayout.SOUTH )
+        self.slider.setSize( self.slider.getPreferredSize() )
+        if not fgc is None:
+            self.backingpanel.setForeground( fgc )
+            jp2.setForeground( fgc )
+            jl.setForeground( fgc )
+        if not bgc is None:
+            self.backingpanel.setBackground( bgc )
+            jp2.setBackground( bgc )
+            jl.setBackground( bgc )
+        
+    def __removeCall( self, func ):
+        self.slider.addAncestorListener( self )
+        self.slider.startRemoving()
+        self.func = func
+        
+    def ancestorAdded( self, event):
+        pass
+        
+    def ancestorMoved( self, event ):
+        pass
+        
+    def ancestorRemoved( self, event ):
+        if not self.func is None:
+            self.func()
+        
+    def getSlider( self ):
+        return self.slider
+
+</t>
+<t tx="ekr.20060201150547.43">class IconCloser( swing.Icon, aevent.MouseAdapter ):
+    
+    def __init__( self, iicon, callback ):
+        
+        aevent.MouseAdapter.__init__( self )
+        self.iicon = iicon
+        self.component = None
+        self.x = None
+        self.y = None
+        self.callback = callback
+        
+    def mousePressed( self, event ):
+        
+        if event.getButton() == event.BUTTON1:
+            x = event.getX(); y = event.getY()
+            rec = awt.Rectangle( self.x, self.y, self.iicon.getIconWidth(), self.iicon.getIconHeight() )
+            if rec.contains( x,y ):
+                self.component.removeMouseListener( self )
+                self.component = None
+                dc = DefCallable(self.callback)
+                swing.SwingUtilities.invokeLater(dc.wrappedAsFutureTask())
+        
+    def getIconHeight( self ):
+        
+        return self.iicon.getIconHeight()
+        
+    def getIconWidth( self ):
+        
+        return self.iicon.getIconWidth()
+        
+    def paintIcon( self, jc, g, x, y ):
+        
+        if self.component == None:
+            self.component = jc
+            jc.addMouseListener( self )
+        self.x = x
+        self.y = y
+        self.iicon.paintIcon( jc, g, x ,y )
+        </t>
+<t tx="ekr.20060201150547.44">@others
+</t>
+<t tx="ekr.20060201150547.45">def chaptersIterator( self ):
+
+    if not self.chaptersIterationBlocked:
+        #for n in xrange( self.book.getTabCount() ):
+        #    widget = self.book.getComponentAt( n )
+        #    chapter = self.chapters[ widget ]
+        for chapter in self.chapterlist:
+            rp = chapter.getRootPosition()
+            for z in rp.fromSelfAllNodes_iter( copy = True ):
+                yield z
+    else:
+        
+        for z in self.c.allNodes_iter( copy = 1 ):
+            yield z            
+
+                
+</t>
+<t tx="ekr.20060201150547.46">def topLevelSiblingsIterator( self, ):
+
+    if not self.chaptersIterationBlocked:
+        #for n in xrange( self.book.getTabCount() ):
+        #    widget = self.book.getComponentAt( n )
+        #    chapter = self.chapters[ widget ]
+        for chapter in self.chapterlist:
+            rp = chapter.getRootPosition()
+            for z in rp.self_and_siblings_iter( copy = True ):
+                yield z
+    else:
+        rp = self.c.rootPosition()
+        for z in rp.self_and_siblings_iter( copy = True ):
+            yield z
+            
+</t>
+<t tx="ekr.20060201150547.47">def cycleThroughChapters( self, swap = 1 ):
+
+    if not self.chaptersIterationBlocked:
+        current = self.current_chapter
+        if swap: self.beginUpdate()
+        #for n in xrange( self.book.getTabCount() ):
+        #    widget = self.book.getComponentAt( n )
+        #    chapter = self.chapters[ widget ]
+        for chapter in self.chapterlist:
+            if swap:    
+                self.current_chapter = chapter
+            yield chapter
+    
+        self.current_chapter = current
+        if swap: self.endUpdate()
+    else:
+        yield self.current_chapter
+    
+</t>
+<t tx="ekr.20060201150547.48">@others</t>
+<t tx="ekr.20060201150547.49">class UndoRemoveChapter( undo.UndoableEdit ):
+    
+    def __init__( self, chapters, chapter ):
+        self.chapters = chapters
+        self.chapter = chapter
+        self.undone = False
+        
+    def addEdit( self, edit ): return False
+    def canRedo( self ): return self.undone
+    def canUndo( self ): return not self.undone
+    def die( self ):
+        self.chapters = None
+        self.chapter = None
+    def getPresentationName( self ): return "Undo Remove Chapter %s" % self.chapter.name
+    def getRedoPresentationName( self ): return "Redo Removing %s" % self.chapter.name
+    def getUndoPresentationName( self ): return "Undo Removing %s" % self.chapter.name
+    def isSignificant( self ): return True
+    def redo( self ):
+        
+        self.chapters.quietRemoveChapter( self.chapter )
+        self.undone = False
+        
+    def replaceEdit( self, edit ): return False
+    def undo( self ):
+        
+        self.chapters.insertChapter( self.chapter )
+        self.undone = True
+    
+</t>
+<t tx="ekr.20060201150547.50">class UndoChangeChapterName( undo.UndoableEdit ):
+    
+    def __init__( self, chapters, chapter, name1, name2 ):
+        self.chapters = chapters
+        self.chapter = chapter
+        self.name1 = name1
+        self.name2 = name2
+        self.undone = False
+        
+    def addEdit( self, edit ): return False
+    def canRedo( self ): return self.undone
+    def canUndo( self ): return not self.undone
+    def die( self ):
+        self.chapters = None
+        self.chapter = None
+    def getPresentationName( self ): return "Undo Changing Chapter Name From %s to %s" % ( self.name1, self.name2 )
+    def getRedoPresentationName( self ): return "Redo Changing Name From %s to %s" %  ( self.name1, self.name2 )
+    def getUndoPresentationName( self ): return "Undo Changing Name From %s to %s" % ( self.name1, self.name2 )
+    def isSignificant( self ): return True
+    def redo( self ):
+        
+        book = self.chapters.book
+        index = book.indexOfComponent( self.chapter.tree.getWidget() )
+        book.setTitleAt( index, self.name2 )
+        self.chapter.name = self.name2
+        self.undone = False
+        
+    def replaceEdit( self, edit ): return False
+    def undo( self ):
+        
+        book = self.chapters.book
+        index = book.indexOfComponent( self.chapter.tree.getWidget() )
+        book.setTitleAt( index, self.name1 )
+        self.chapter.name = self.name1
+        self.undone = True
+</t>
+<t tx="ekr.20060201150547.51">class UndoAddChapter( undo.UndoableEdit ):
+    
+    def __init__( self, chapters, chapter ):
+        self.chapters = chapters
+        self.chapter = chapter
+        self.undone = False
+        
+    def addEdit( self, edit ): return False
+    def canRedo( self ): return self.undone
+    def canUndo( self ): return not self.undone
+    def die( self ):
+        self.chapters = None
+        self.chapter = None
+    def getPresentationName( self ): return "Undo Add Chapter"
+    def getRedoPresentationName( self ): return "Redo Add Chapter"
+    def getUndoPresentationName( self ): return "Undo Add Chapter"
+    def isSignificant( self ): return True
+    def redo( self ):
+        
+        self.chapters.insertChapter( self.chapter )
+        self.undone = False
+        
+    def replaceEdit( self, edit ): return False
+    def undo( self ):
+        
+        self.chapters.quietRemoveChapter( self.chapter )
+        self.undone = True
+    
+</t>
+<t tx="ekr.20060201150547.52">class UndoImport( undo.UndoableEdit ):
+    
+    def __init__( self, chapters, chapter ):
+        self.chapters = chapters
+        self.chapter_list = []
+        self.chapter_list.append( chapter )
+        self.undone = False
+    
+    def addChapter( self, chapter ):
+        self.chapter_list.append( chapter )
+           
+    def addEdit( self, edit ): return False
+    def canRedo( self ): return self.undone
+    def canUndo( self ): return not self.undone
+    def die( self ):
+        self.chapters = None
+        self.chapter = None
+    def getPresentationName( self ): return "Undo Import Outline"
+    def getRedoPresentationName( self ): return "Redo Import Outline"
+    def getUndoPresentationName( self ): return "Undo Import Outline"
+    def isSignificant( self ): return True
+    def redo( self ):
+        
+        for z in self.chapter_list:
+            self.chapters.insertChapter( z )
+        self.undone = False
+        
+    def replaceEdit( self, edit ): return False
+    def undo( self ):
+        
+        for z in self.chapter_list:
+            self.chapters.quietRemoveChapter( z )
+        self.undone = True
+    
+</t>
+<t tx="ekr.20060201150547.53">class UndoSwapChapters( undo.UndoableEdit ):
+    
+    def __init__( self, chapters, chapter1, chapter2 ):
+        self.chapters = chapters
+        self.chapter1 = chapter1
+        self.chapter2 = chapter2
+        self.undone = False
+        
+    def addEdit( self, edit ): return False
+    def canRedo( self ): return self.undone
+    def canUndo( self ): return not self.undone
+    def die( self ):
+        self.chapters = None
+        self.chapter = None
+    def getPresentationName( self ): return "Undo Swap Chapters %s , %s" % ( self.chapter1.name, self.chapter2.name )
+    def getRedoPresentationName( self ): return "Redo Swap Chapters %s, %s" % ( self.chapter1.name , self.chapter2.name )
+    def getUndoPresentationName( self ): return "Undo Swap Chapters %s, %s" % ( self.chapter1.name , self.chapter2.name )
+    def isSignificant( self ): return True
+    def redo( self ):
+        
+        self.chapters.swapChapters( self.chapter1, self.chapter2, undo = False )
+        self.undone = False
+        
+    def replaceEdit( self, edit ): return False
+    def undo( self ):
+        
+        self.chapters.swapChapters( self.chapter1, self.chapter2, undo = False )
+        self.undone = True
+    
+</t>
+<t tx="ekr.20060201152349">@ignore
+
+&lt;&lt;imports&gt;&gt;
+#commanders = util.WeakHashMap()
+commanders = {}
+
+
+class NodeUndoer:
+    '''A class that manages NodeUndoerBase instances for tnodes'''
+    
+    undoers = {} #util.WeakHashMap()
+    checksums = util.WeakHashMap()
+    
+    def __init__( self, c, umenu, rmenu, gtnu, gtnr, vunstack, clearundo ):
+        '''c -&gt; a commander
+           umenu -&gt; a JMenuItem that is the 'undo' action
+           rmenu -&gt; a JMenuItem that is the 'redo' action
+           gtnu -&gt; a JMenuItem that is the 'goto next undo' action
+           gtnr -&gt; a JMenuItem that is the 'goto next redo' action
+           vunstack -&gt; a JMenuItem that is the 'visualise undo stack' action
+           clearundo -&gt; a JMenuItem that is the 'clear undo stack' action
+        '''
+        
+        self.c = c
+        self.umenu = umenu
+        umenu.actionPerformed = lambda event: self.undo()
+        self.rmenu = rmenu
+        rmenu.actionPerformed = lambda event: self.redo()
+        self.gtnu = gtnu
+        gtnu.actionPerformed = lambda event: self.gotoNextUndoSpot()
+        self.gtnr = gtnr
+        gtnr.actionPerformed = lambda event : self.gotoNextRedoSpot()
+        self.umanager = None
+        self.vunstack = vunstack
+        vunstack.actionPerformed = lambda event: self.visualiseUndoStack()
+        self.clearundo = clearundo
+        clearundo.actionPerformed = lambda event: self.clearUndo()
+        self.ignore = 0
+        self.tnode = None
+        self.compound = None 
+        self.checksums_ok = 1
+        self.checksum_violations = []
+        wm1 = WeakMethod( self, "serializeForLeoFile" ); wm2 = WeakMethod( self, "unserializeFromLeoFile" )
+        wm3 = WeakMethod( self, "checkSumViolation" )
+        leoPlugins.registerHandler( "write-leo-file-data", wm1 )
+        leoPlugins.registerHandler( "read-leo-file-data", wm2 )
+        leoPlugins.registerHandler( "checksum-violation", wm3 )
+    
+    def undo( self ):
+        
+        if self.ignore: return
+        self.ignore = 1
+        self.umanager.undo()
+        self.setMenu()
+        self.ignore = 0
+        return
+        
+    def redo( self ):
+        
+        if self.ignore: return
+        self.ignore = 1
+        self.umanager.redo()
+        self.setMenu()
+        self.ignore = 0
+        return
+        
+    
+    def setNode( self, p ):
+        
+        #print "SETTING NODE!!! %s" % t
+        #print "FILEINDEX %s" % t.fileIndex
+        #java.lang.Thread.dumpStack()
+        v = p.v
+        t = v.t
+        #vid = v.vid
+        
+        if self.tnode:
+            self.checksums[ self.tnode ] = md5.md5( self.tnode.bodyString ).hexdigest()
+        
+        #if self.undoers.containsKey( t ):
+        if self.undoers.has_key( v ):
+            #print "CONTAINTS %s" % t
+            ua = self.undoers[ v ]
+            print "--!!!!!!-- %s" % v
+            print ua.__class__
+            if ua.__class__ == leoSwingUndo.UndoBase:
+                self.umanager = self.undoers[ v ]
+                #if self.checksums.containsKey( v ):
+                #    checksum = self.checksums[ v ]
+                #    amd5 = md5.md5( t.bodyString )
+                #    if amd5.hexdigest() != checksum:
+                #        self.umanager.discardAllEdits()
+                #        g.es( "Emptied undoer for %s:%s because of checksum mismatch" % ( t.headString, t ), color = "red" )
+                #        #self.tnode = t
+                #        #return
+                #for z in self.umanager.undostack:
+                #    commanders[ z ] = self.c
+            else:
+                print "UNPICKLING!!!!!"
+                ua = cPickle.loads( ua )
+                print "UNPICKLED Is now %s %s" % ( ua, len( ua.undostack ) )
+                self.undoers[ v ] = ua
+                self.umanager = ua
+            if self.checksums.containsKey( t ):
+                checksum = self.checksums[ t ]
+                amd5 = md5.md5( t.bodyString )
+                if amd5.hexdigest() != checksum:
+                    self.umanager.discardAllEdits()
+                    print "DISCARDED EDITSS!!!!"
+                    g.es( "Emptied undoer for %s:%s because of checksum mismatch" % ( t.headString, t ), color = "red" )
+                    #self.tnode = t
+                    #return
+            for z in self.umanager.undostack:
+                commanders[ z ] = self.c
+                                    
+        else:
+            print "V not in Undoers %s" % v
+            #print v.vid
+            self.umanager = leoSwingUndo.UndoBase()
+            self.undoers[ v ] = self.umanager
+
+        self.tnode = t
+        self.setMenu()
+        
+    def __addUndo( self, undo ):
+        #self.umanager.addEdit( undo )
+        self.umanager.addUndo( undo )
+        #upe = self.UndoableProxyEvent( undo, self.umanager, self, self.c )
+        #self.c.undoer.addUndo( upe )
+        #die_listeners[ undo ] = upe
+        
+        
+    def addUndo( self, undo ):
+        
+        if not self.ignore:
+            
+            if self.compound:
+                self.compound.addEdit( undo )
+                return
+            
+            self.__addUndo( undo )                
+    
+        self.setMenu()
+            
+    def setMenu( self ):
+        
+        self.umenu.setText( self.umanager.getUndoPresentationName() )
+        self.umenu.setEnabled( self.umanager.canUndo() )
+        if self.umanager.canUndo():
+            self.gtnu.setEnabled( 1 )
+        else:
+            self.gtnu.setEnabled( 0 )
+        self.rmenu.setText( self.umanager.getRedoPresentationName() )    
+        self.rmenu.setEnabled( self.umanager.canRedo() ) 
+        if self.umanager.canRedo():
+            self.gtnr.setEnabled( 1 )
+        else:
+            self.gtnr.setEnabled( 0 )
+        
+        self.c.undoer.setMenu()
+               
+    
+    
+    def getUStack( self, tnode ):
+            
+        if hasattr( tnode, 'unknownAttributes' ):
+            uas = tnode.unknownAttributes
+        else:
+            tnode.unknownAttributes = uas = {}
+        
+        return uas
+        
+
+    def clearUndo( self ):
+        
+        self.umanager.discardAllEdits()
+        self.setMenu()
+        
+    def gotoNextUndoSpot( self ):
+        
+        ua = self.umanager.editToBeUndone()
+        if ua:
+            spot = ua.spot
+            self.c.frame.body._current_editor.setCaretPosition( spot )
+            return
+            
+    def gotoNextRedoSpot( self ):
+        ua = self.umanager.editToBeRedone()
+        if ua:
+            spot = ua.spot
+            self.c.frame.body._current_editor.setCaretPosition( spot )
+            return
+
+    @others
+    
+
+                    
+&lt;&lt;UndoableDocumentEvent&gt;&gt;
+&lt;&lt;UndoableCompoundEvent&gt;&gt;
+
+
+
+
+</t>
+<t tx="ekr.20060201152349.1">import java
+import java.util as util
+import javax.swing as swing
+import javax.swing.undo as sundo
+import javax.swing.event as sevent
+import java.io as io
+import jarray
+import md5
+import org.python.util as putil
+import NodeUndoerBase
+import LeoCompoundEdit
+import leoGlobals as g
+import zlib
+import leoSwingUndo
+import leoPlugins
+import leoNodes
+import base64
+import pickle
+import cPickle
+from utilities.WeakMethod import WeakMethod</t>
+<t tx="ekr.20060201152349.2">def visualiseUndoStack( self ):
+    
+    umanager = self.umanager            
+    table = swing.JTable( self.UneditableTableModel() )#( data, util.Vector( [ 'spot', 'data', 'action', 'redo/undo' ] ) )
+    table.setSelectionMode( swing.ListSelectionModel.SINGLE_SELECTION )
+    self.setDataForTable( table )
+
+    
+    jd = swing.JDialog()
+    jd.setTitle( "Undo Stack" )
+    cp = jd.getContentPane()
+    cp.add( swing.JScrollPane( table ) )
+    bholder = swing.JPanel()
+    cp.add( bholder, java.awt.BorderLayout.SOUTH )
+    uto = swing.JButton( "Undo To" )
+    bholder.add( uto )
+    &lt;&lt;_undoTo&gt;&gt;
+    uto.actionPerformed = _undoTo
+    
+    rto = swing.JButton( "Redo To" )
+    bholder.add( rto )
+    &lt;&lt;_redoTo&gt;&gt;
+    rto.actionPerformed = _redoTo
+    
+        
+    jb = swing.JButton( "Close" )
+    jb.actionPerformed = lambda event : jd.dispose()
+    bholder.add( jb )
+    jd.pack()
+    g.app.gui.center_dialog( jd )
+    jd.setModal( 1 )
+    jd.show()
+    
+    
+</t>
+<t tx="ekr.20060201152349.3">def _undoTo( event ):
+    sr = table.getSelectedRow()
+    if sr == -1:
+        swing.JOptionPane.showMessageDialog( None,
+                                            "No Selected Row",
+                                            "Select A Row Please",
+                                            swing.JOptionPane.INFORMATION_MESSAGE )
+        return
+    edits = umanager.getEdits()
+    undo = edits.get( sr )
+    if not undo.canUndo():
+        swing.JOptionPane.showMessageDialog( None, 
+                                            "Cant Undo To This Point", 
+                                            "Illegal Undo Selection", 
+                                            swing.JOptionPane.WARNING_MESSAGE )
+        return
+    self.ignore = 1
+    umanager.undoTo( undo )
+    self.ignore = 0
+    self.setDataForTable( table )
+</t>
+<t tx="ekr.20060201152349.4">def _redoTo( event ):
+    sr = table.getSelectedRow()
+    if sr == -1:
+        swing.JOptionPane.showMessageDialog( None,
+                                            "No Selected Row",
+                                            "Select A Row Please",
+                                            swing.JOptionPane.INFORMATION_MESSAGE )
+        return
+    edits = umanager.getEdits()
+    undo = edits.get( sr )
+    if not undo.canRedo():
+        swing.JOptionPane.showMessageDialog( None, 
+                                            "Cant Redo To This Point", 
+                                            "Illegal Redo Selection", 
+                                            swing.JOptionPane.WARNING_MESSAGE )
+        return
+        
+    self.ignore = 1
+    umanager.redoTo( undo )
+    self.ignore = 0
+    self.setDataForTable( table )
+    
+</t>
+<t tx="ekr.20060201152349.5">def buildTableData( self ):
+    
+    data = util.Vector()
+    editu = self.umanager.editToBeUndone()
+    editr = self.umanager.editToBeRedone()
+    umanager = self.umanager
+    cu = cr = -1
+    edits = umanager.getEdits()
+    for z in edits:
+        if z.__class__ == LeoCompoundEdit:
+            vec = java.util.Vector()
+            edits2 = z.getEdits()
+            spot = edits2[ 0 ].spot
+            vec.add( spot )
+            vec.add( "?" )
+            vec.add( z.getPresentationName() )
+            vec.add( "" )
+        else:
+            vec = z.getForTableModel()
+            
+        if z is editu:
+            vec.set( 3, 'current undo' )
+            cu = edits.indexOf( z )
+        elif z.canUndo():
+            vec.set( 3, 'undo' )
+        if z is editr:
+            vec.set( 3, 'current redo' )
+            cr = edits.indexOf( z )
+        elif z.canRedo():
+            vec.set( 3, 'redo' )
+        data.add( vec )
+    
+    return data, cu, cr
+
+
+</t>
+<t tx="ekr.20060201152349.6">def setDataForTable( self, table ):
+    
+    data, cu, cr = self.buildTableData()
+    dm = table.getModel()
+    dm.setDataVector( data, util.Vector( [ 'spot', 'data', 'action', 'redo/undo' ] ) )
+    lsm = table.getSelectionModel()
+    if cu != -1:
+        lsm.setLeadSelectionIndex( cu )
+    elif cr != -1:
+        lsm.setLeadSelectionIndex( cr )
+        
+    </t>
+<t tx="ekr.20060201152349.7">def serializeForLeoFile( self, tag, *args, **kwords ):
+    
+    if not args[ 0 ].has_key( "c" ): return
+    c = args[ 0 ][ 'c' ]
+    store = args[ 0 ][ 'store' ]
+    if c == self.c:
+        nwundoers = {}
+        for z in self.undoers:
+            if  self.undoers[ z ].__class__ == leoSwingUndo.UndoBase:
+                nwundoers[ z.vid ] = cPickle.dumps( self.undoers[ z ] )
+            else:
+                nwundoers[ z.vid ] = self.undoers[ z ]
+                
+        store.addData( "tundoer", nwundoers ) #the storage class does the rest of the work for us
+        
+
+def unserializeFromLeoFile( self, tag, *args, **kwords ):
+
+    if not args[ 0 ].has_key( "c" ): return
+    c = args[ 0 ][ 'c' ]
+    store = args[ 0 ][ 'store' ]
+    if c == self.c and self.checksums_ok:
+        try:
+            udata = store.getData( "tundoer" )
+            if udata:
+                for z in udata:
+                    if leoNodes.vid_vnode.has_key( z ):
+                        #print "A connection %s %s" % ( z, leoNodes.vid_vnode[ z ] )
+                        v = leoNodes.vid_vnode[ z ]
+                        self.undoers[ v ] = udata[ z ]
+
+        except:
+            self.undostack = []
+            self.undopointer = 0
+
+    if not self.checksums_ok:
+        self.checksums_ok = 1
+        self.checksum_violations = []
+        self.undostack = []
+        self.undopointer = 0
+        
+</t>
+<t tx="ekr.20060201152349.8">def checkSumViolation( self, tag, *args, **kwords ):
+    
+    if not args[ 0 ].has_key( "c" ): return
+    c = args[ 0 ][ 'c' ]
+    filename = args[ 0 ][ 'filename' ]
+    if c == self.c:
+        self.checksums_ok = 0
+        self.checksum_violations.append( filename )</t>
+<t tx="ekr.20060201152349.9">def startCompounding( self, name ):
+    self.compound = UndoableCompoundEvent( name )
+    #self.compound = LeoCompoundEdit( name )
+        
+def stopCompounding( self ):
+        
+    compound = self.compound
+    compound.end()
+    self.compound = None
+    #print "COMPOUND is %s" % compound
+    self.__addUndo( compound )
+    self.setMenu()
+</t>
+<t tx="ekr.20060201152349.10">@others</t>
+<t tx="ekr.20060201152349.11">class UneditableTableModel( swing.table.DefaultTableModel ):
+    
+    def __init__( self ):
+        swing.table.DefaultTableModel.__init__( self )
+        
+    def isCellEditable( self, row, column ):
+        return 0
+        
+</t>
+<t tx="ekr.20060201152349.12">class PickleProxy:
+    '''This class exists to pickle the NodeUndoerBase instance into a form
+       that can be safely stored in a Leo ua.'''
+       
+    def __init__( self, undoer, t ):
+        self.undoer = undoer
+        self.t = t
+            
+    def getPickleProxy( self ):
+        
+      
+        try:
+            #array = self.undoer.serializeSelf()
+            data = pickle.dumps( self.undoer )
+            ds = len( data )
+            pp = zlib.compress( data, level = 9 )
+            ps = len( pp )
+            amd5 = md5.md5( self.t.bodyString )
+            checksum = amd5.hexdigest()
+            return pp, checksum 
+        except Exception, x:
+            return "", ""  
+</t>
+<t tx="ekr.20060201152349.13">class UndoableProxyEvent( sundo.UndoableEdit ):
+
+       
+    def __init__( self, event, owner, master , c):
+        
+        self.event = event
+        self.owner = owner
+        self.master = master
+        self.c = c
+        self.cp = c.currentPosition().copy()
+        self._can_undo = event.canUndo()
+        self._can_redo = event.canRedo()
+        self.can_undo = self._can_undo
+        self.can_redo = self._can_redo
+        self.dieable = 0
+        self.ignore = 0
+        
+    
+    def __canRedo( self ):
+        return self._can_redo == self.event.canRedo()
+        
+    def __canUndo( self ):
+        return self._can_undo == self.event.canUndo()
+            
+            
+    def addEdit( self, edit ):
+        return 0
+        
+    def canRedo( self ):
+        #if self.__canUndo():
+        return self.can_redo
+        #else:
+        #    return self.event.canRedo()
+        
+    def canUndo( self ):
+        #if self.__canRedo():
+        return self.can_undo
+        #else:
+        #    return self.event.canUndo()
+        
+    def isAlive( self ):
+        return self.can_redo or self.can_undo
+    
+    def invalidate( self ):
+        self.c.undoer.killFromEvent( self )
+        
+    def die( self ):    
+        self.can_undo = self.can_redo = 0
+        #edits = self.owner.getEdits()
+        #spot = edits.indexOf( self.event )
+        #self.owner.trimEdits( spot, edits.size() )
+    
+        
+    def getPresentationName( self ):
+        return self.event.getPresentationName()
+        
+    def getRedoPresentationName( self ):
+        
+        if self.__canRedo():
+            return self.event.getRedoPresentationName()
+        elif self.isAlive():
+            return "Expended %s" % self.event.getRedoPresentationName()
+        else:
+            return "Dead %s" % self.event.getRedoPresentationName()
+        
+    def getUndoPresentationName( self ):
+        
+        if self.__canUndo():
+            return self.event.getUndoPresentationName()
+        elif self.isAlive():
+            return "Expended %s" % self.event.getUndoPresentationName()
+        else:
+            return "Dead %s" % self.event.getUndoPresentationName()
+        
+        
+    def isSignificant( self ):
+        return 1
+    
+    def sync( self ):
+        self._can_redo = self.event.canRedo()
+        self._can_undo = self.event.canUndo()
+        
+    def redo( self ):
+        
+        self.c.selectPosition( self.cp.copy() )
+        self.can_redo = 0
+        self.can_undo = 1
+        if self.__canRedo():
+            self.master.ignore = 1
+            if not self.ignore:
+                self.owner.redo()
+            self.master.ignore = 0
+            self.master.setMenu()
+            
+        self.sync()
+            
+        
+    def undo( self ):
+        
+        self.c.selectPosition( self.cp.copy() )
+        self.can_undo = 0
+        self.can_redo = 1
+        if self.__canUndo():
+            self.master.ignore = 1
+            if not self.ignore:
+                self.owner.undo()
+            self.master.ignore = 0
+            self.master.setMenu()
+            
+        self.sync()
+        
+    def replaceEdit( self, edit ):
+        return 0
+        
+
+</t>
+<t tx="ekr.20060201152349.14">class UndoableDocumentEvent3:#( sundo.UndoableEdit, io.Serializable ):
+    '''A class that takes the current Editors document and does undo changes
+       upon the data within the Editor.  It is assumed that the data in the document
+       will be in sync with the changes represented within the UndoableDocumentEvent'''
+       
+    def __init__( self, c, event, txt = "" ):
+        
+        commanders[ self ] = c
+        self.spot = event.getOffset()
+        self.length = event.getLength()
+        self.txt = txt
+
+        self.can_undo = 1
+        self.can_redo = 0
+        if self.txt.isspace():
+           name_txt = "%s whitespaces" % len( self.txt )
+        else:
+           name_txt = self.txt
+        
+        if event.getType() == sevent.DocumentEvent.EventType.INSERT:
+            self.etype = "insert"
+        elif event.getType() == sevent.DocumentEvent.EventType.REMOVE:
+            self.etype = "remove"
+
+            
+            
+        if self.etype == "insert":
+            self.name = "insert %s" % name_txt  
+        elif self.etype == "remove":
+            self.name = "remove %s" % name_txt
+    
+    #def __getstate__( self ):
+    #    dic = self.__dict__
+    #    import copy
+    #    rv = copy.copy( dic )
+    #    #del rv[ c ]
+    #    return rv        
+            
+    def addEdit( self, edit ):
+        return 0
+        
+    def canRedo( self ):
+        return self.can_redo
+        
+    def canUndo( self ):
+        
+        return self.can_undo
+        
+    def die( self ):    
+        self.can_undo = self.can_redo = 0
+        #if die_listeners.has_key( self ):
+        #    dlistener = die_listeners[ self ]
+        #    if dlistener.dieable:
+        #        print "WHACKING %s" % dlistener
+        #        dlistener.invalidate()
+    
+        
+    def getPresentationName( self ):
+        return self.name 
+        
+    def getRedoPresentationName( self ):
+        return "Redo %s" % self.name
+        
+    def getUndoPresentationName( self ):
+        return "Undo %s" % self.name
+        
+    def isSignificant( self ):
+        return 1
+        
+    def redo( self ):
+        
+        self.can_redo = 0
+        self.can_undo = 1
+        self.redoEvent()
+        
+    def undo( self ):
+        
+        self.can_undo = 0
+        self.can_redo = 1
+        self.undoEvent()
+        
+    def replaceEdit( self, edit ):
+        return 0
+        
+    def redoEvent( self ):
+        
+        c = commanders.get( self )
+        doc = c.frame.body._current_editor.getDocument()
+        if self.etype == "insert":
+            doc.insertString( self.spot, self.txt, None )
+            return       
+        elif self.etype == "remove":            
+            doc.remove( self.spot, self.length )
+            return    
+        
+    def undoEvent( self ):
+        
+
+        c = commanders.get( self )                
+        doc = c.frame.body._current_editor.getDocument()
+        if self.etype == "insert":
+            print 'undoing spot %s %s %s' % ( self.spot, self.length, self.txt )
+            doc.remove( self.spot, self.length )
+            print 'undone %s' % self
+            return  
+        elif self.etype == "remove":
+            doc.insertString( self.spot, self.txt, None )
+            return 
+
+    def getForTableModel( self ):
+        return util.Vector( [ self.spot, self.txt, self.name, '' ] )
+        
+
+
+</t>
+<t tx="ekr.20060201152349.15">class UndoableCompoundEvent3:
+    
+    def __init__( self, pname ):
+        #self.ce = sundo.CompoundEdit()
+        self.pname = pname
+        self.undostack = []
+        self.can_undo = 1
+        self.can_redo = 0
+        
+    def getPresentationName( self ):
+        return self.pname
+        
+    def getRedoPresentationName( self ):
+        return "Redo %s" % self.pname
+        
+    def getUndoPresentationName( self ):
+        return "Undo %s" % self.pname
+        
+    def canUndo( self ):
+        return self.can_undo
+        #return self.ce.canUndo()
+        
+    def canRedo( self ):
+        return self.can_redo
+        #return self.ce.canRedo()
+        
+    def undo( self ):
+        for z in self.undostack:
+            print z
+            z.undo()
+        self.can_undo = 0
+        self.can_redo = 1
+        
+    def redo( self ):
+        
+        self.undostack.reverse()
+        for z in self.undostack:
+            print z
+            z.redo()
+        
+        self.undostack.reverse()
+        self.can_undo = 1
+        self.can_redo = 0
+        
+    def isSignificant( self ):
+        return 1
+        #return self.ce.isSignificant()
+        
+    def addEdit( self, edit ):
+        self.undostack.insert( 0, edit )
+        
+
+    
+    def die( self ):
+        pass
+        #return self.ce.die()
+        
+    def end( self ):
+        pass
+        #return self.ce.end()
+        
+        
+
+            
+        
+
+</t>
+<t tx="ekr.20060201161901"></t>
+<t tx="ekr.20060201161901.1"></t>
+<t tx="ekr.20060201161901.2">@nocolor
+
+By: Edward K. Ream - edream 
+   RE: Dividing The Undo: doing w/o v.uA 
+2005-09-09 14:17  
+&gt; If we can open up how [Leo] reads xml, it may make it simpler to start developing a stash scheme. 
+ 
+I agree that reading xml more properly would be A Good Thing (tm). As we shall see, however, it is not the main issue. 
+ 
+&gt; DOM seems like a good path to start out on. 
+ 
+This is not the path I would have chosen. The new colorizer at in leoPlugins.leo at: 
+ 
+Plugins--&gt;Experimental/unfinished--&gt;New colorizer--&gt;@thin __jEdit_colorizer__.py 
+ 
+uses sax. I like the light-weight approach. I would rather do a bit more work in the initial parsing and create the data structures myself then relying on DOM. 
+ 
+But parsing is irrelevant. The problem is the design of *thin* derived files and the code that reads such files. Let us consider how we can "do without" v.unknownAttributes in thin derived files. I **shall not** change the format of thin derived files, so some trickery is required. The first step is read this section of Leo's new docs: 
+ 
+http://webpages.charter.net/edreamleo/customizing.html#adding-extensible-attributes-to-nodes-and-leo-files  /&gt; 
+The key here is the so-called 'hidden machinery'. This is an essential feature of the code that reads and writes thin derived files and it **will not** change. **Note**: Leo has two sets of read code: the code that reads .leo files has no trouble whatever recreating vnodes. It is only vnodes in thin derived files that may not have attributes. 
+ 
+**Important**: for @thin trees (in the outline) Leo saves *only* the &lt;v&gt; element corresponding to the @thin node itself. It is this &lt;v&gt; element that contains the 'hidden machinery'. Don't even think about having Leo write the whole tree of &lt;v&gt; elements: the 4.0 read code is made possible because these &lt;v&gt; elements do *not* exist. This eliminates all the error 'recovery' schemes that can not, if fact, be robust enough. 
+ 
+So the only real alternative is to add uA's sufficient to recreate elements in the *reconstituted* vnodes that Leo creates in the leoAtFile read logic. Happily, we can do this as follows. When writing, a plugin (or an extended Leo) would 'piggyback' the vnode attributes in the corresponding **t**.unknownAttributes field. When reading, the plugin (or Leo) would put the vnode attributes "where they belong" in the appropriate vnode. We associate a 'vnode traversal index' with each vnode. This is simply how many previous "same" vnodes appeared in the traversal before getting to the desired vnode. Something like this:: 
+ 
+vx = {} # traversal indices for vnodes. 
+for p in c.allNodes_iter(): 
+....n = vx.get(p.v.t,0) # n is the traversal index for vnode p.v. 
+....vx[p.v.t] = n+1 # bump the index for the next v such that v.t == p.v.t 
+ 
+We store attributes for vnode v in v.t.unknownAttributes, along with the traversal index. The read code uses the traversal index to copy vnode attributes from t.unknownAttributes to v.unknownAttrutes. Rather than forcing each plugin to do this, Leo should probably have support for this in the leoFileCommands read/write code. In short, the t.unknownAttributes machinery suffices in theory, and in practice a bit of support code would be good. 
+ 
+Glad you asked :-) . I have been willing to live without v.uA's in thin derived files. I never thought much about this until you asked, but necessity is the mother... So this is good. A way exists to treat all vnodes as first-class citizens. 
+ 
+Edward 
+</t>
+<t tx="ekr.20060202082221"></t>
+<t tx="ekr.20060202082221.1"></t>
+<t tx="ekr.20060202090032"></t>
+<t tx="ekr.20060202110637">@nocolor
+
+A *major* improvement to the tree allocation code:
+
+1.  Use p.key() to as keys to tree.visibleText.
+ This greatly speeds up tree.findEditWidget
+
+2. Eliminated the brain-dead requirement that previously-allocated widgets must match the position.
+   - The allocation code just gets *any* previously allocated widget.
+     This eliminates an n**2 search!
+   - The ancient problem was that theId refers to the *window* not its Text widget:
+     the *window* must be moved to the right spot.
+
+3. recycleWidgets is simpler and a bit faster.
+
+4. destroyWidgets now works: (the bug was not clearing tree.ids).</t>
+<t tx="ekr.20060202121216"></t>
+<t tx="ekr.20060202125419">def showStats (self):
+
+    z = []
+    for kind,a,b in (
+        ('boxes',self.visibleBoxes,self.freeBoxes),
+        ('clickBoxes',self.visibleClickBoxes,self.freeClickBoxes),
+        ('icons',self.visibleIcons,self.freeIcons),
+        ('lines',self.visibleLines,self.freeLines),
+        ('tesxt',self.visibleText.values(),self.freeText),
+    ):
+        z.append('%10s used: %4d free: %4d' % (kind,len(a),len(b)))
+        
+    g.es_print('\n' + '\n'.join(z))</t>
+<t tx="ekr.20060202133313">def printStats (self,event=None):
+    
+    c = self.c
+    c.frame.tree.showStats()
+    self.dumpAllObjects()</t>
+<t tx="ekr.20060202141338"></t>
+<t tx="ekr.20060202141338.2"></t>
+<t tx="ekr.20060202141338.3"></t>
+<t tx="ekr.20060202141338.4"></t>
+<t tx="ekr.20060202153509">@nocolor
+
+* Use Tk or Pmw calls to discover existing widgets.</t>
+<t tx="ekr.20060202154734">def freeTreeWidgets (self,event=None):
+    
+    c = self.c
+    
+    c.frame.tree.destroyWidgets()
+    c.redraw()</t>
+<t tx="ekr.20060202160109"></t>
+<t tx="ekr.20060202160523">def dumpAllObjects (self,event=None):
+    
+    old = g.app.trace_gc
+    g.app.trace_gc = True
+    g.printGcAll()
+    g.app.trace_gc = old
+    
+def dumpNewObjects (self,event=None):
+
+    old = g.app.trace_gc
+    g.app.trace_gc = True
+    g.printGcObjects()
+    g.app.trace_gc = old
+    
+def verboseDumpObjects (self,event=None):
+    
+    old = g.app.trace_gc
+    g.app.trace_gc = True
+    g.printGcVerbose()
+    g.app.trace_gc = old
+</t>
+<t tx="ekr.20060202161935">def printGcAll (message=''):
+    
+    d = {} ; objects = gc.get_objects()
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects))
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        items = d.items() ; items.sort(key=lambda x: x[1],reverse=True)
+        for z in items:
+            g.es_print('%40s %7d' % (z[0],z[1]))
+    else: # Sort by type
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            g.es_print('%40s %7d' % (t,d.get(t)))</t>
+<t tx="ekr.20060202163829">51439 objects
+                          &lt;type 'tuple'&gt;   27855
+                           &lt;type 'dict'&gt;    6107
+                           &lt;type 'list'&gt;    2063
+              &lt;class 'leoGlobals.Bunch'&gt;    1668
+47985 objects
+                          &lt;type 'tuple'&gt;   27371
+                           &lt;type 'dict'&gt;    4870
+              &lt;class 'leoGlobals.Bunch'&gt;    1646
+                           &lt;type 'list'&gt;    1476
+49414 objects
+                          &lt;type 'tuple'&gt;   27725
+                           &lt;type 'dict'&gt;    5405
+                           &lt;type 'list'&gt;    1657
+              &lt;class 'leoGlobals.Bunch'&gt;    1646
+48654 objects
+                          &lt;type 'tuple'&gt;   27535
+                           &lt;type 'dict'&gt;    5215
+              &lt;class 'leoGlobals.Bunch'&gt;    1646
+                           &lt;type 'list'&gt;    1467
+48912 objects
+                          &lt;type 'tuple'&gt;   27616
+                           &lt;type 'dict'&gt;    5279
+              &lt;class 'leoGlobals.Bunch'&gt;    1646
+                           &lt;type 'list'&gt;    1523</t>
+<t tx="ekr.20060202231708.1">This will allow @menu nodes in leoSettings.leo</t>
+<t tx="ekr.20060202232638"></t>
 </tnodes>
 </leo_file>
