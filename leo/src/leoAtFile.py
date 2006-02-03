@@ -2950,7 +2950,7 @@ class atFile:
         This is used by the scripting logic."""
         
         at = self ; c = at.c
-        c.endEditing(restoreFocus=True) # Capture the current headline, but don't change the focus!
+        c.endEditing() # Capture the current headline, but don't change the focus!
     
         at.initWriteIvars(root,"<string-file>",
             nosentinels=False,thinFile=False,scriptWrite=True,toString=True,
