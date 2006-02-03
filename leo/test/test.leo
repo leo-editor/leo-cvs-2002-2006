@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="E" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -39,7 +39,7 @@
 <v t="ekr.20060202155426.1"><vh>@button Gc</vh></v>
 <v t="ekr.20060202155426.2"><vh>@button No-Gc</vh></v>
 <v t="ekr.20060202155737"><vh>@button Free-Tree</vh></v>
-<v t="ekr.20060202160656" a="V"><vh>@button *new-obj</vh></v>
+<v t="ekr.20060202160656"><vh>@button *new-obj</vh></v>
 <v t="ekr.20060202160706"><vh>@button New-obj</vh></v>
 <v t="ekr.20060202162051"><vh>@button All-obj</vh></v>
 <v t="ekr.20051201090822"><vh>@settings</vh>

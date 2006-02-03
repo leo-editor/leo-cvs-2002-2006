@@ -50,8 +50,8 @@
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
@@ -63,7 +63,7 @@
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060201111002" a="E"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
-<v t="ekr.20060113182439"><vh>Other options</vh>
+<v t="ekr.20060113182439" a="E"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -99,7 +99,8 @@
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.20" annotate="7d71002e"><vh>Find/Change panel options</vh>
+<v t="ekr.20041119034357.20" a="E" annotate="7d71002e"><vh>Find/Change panel options</vh>
+<v t="ekr.20060125104049" a="V"><vh>@bool show_only_find_tab_options = False</vh></v>
 <v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
 <v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
 <v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
@@ -275,13 +276,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527.3"><vh>Keyboard and minibuffer Options</vh>
+<v t="ekr.20060122105527.3" a="E"><vh>Keyboard and minibuffer Options</vh>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060122105527.5" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
-<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = False</vh></v>
 </v>
 <v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
@@ -328,10 +328,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
-<v t="ekr.20060112093227.2" a="V"><vh>@shortcuts No bindings: N-Z</vh></v>
+<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
 <v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>

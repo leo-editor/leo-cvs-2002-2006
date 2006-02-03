@@ -3,58 +3,22 @@
 #@+all
 #@+node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20060202233315:To do first
-#@+node:ekr.20060202235508:Run pychecker
-#@-node:ekr.20060202235508:Run pychecker
-#@+node:ekr.20060202235215:Find does not always set the selection properly
-#@-node:ekr.20060202235215:Find does not always set the selection properly
-#@+node:ekr.20060202235215.1:Are there Enter and Leave bindings??
-#@-node:ekr.20060202235215.1:Are there Enter and Leave bindings??
-#@+node:ekr.20060202233828.3:Urgent: binding are not handled properly in the log pane
-#@-node:ekr.20060202233828.3:Urgent: binding are not handled properly in the log pane
-#@+node:ekr.20060202233828:Writing to a log window should not change focus
-#@-node:ekr.20060202233828:Writing to a log window should not change focus
-#@+node:ekr.20060202234446:Make sure everything works with multiple windows
-#@-node:ekr.20060202234446:Make sure everything works with multiple windows
-#@+node:ekr.20060202234446.1:Opening an ouline or creating a new  window should put focus in body
-#@-node:ekr.20060202234446.1:Opening an ouline or creating a new  window should put focus in body
 #@+node:ekr.20060202235215.2:Save command should write 'saving' to the log pane first.
 #@-node:ekr.20060202235215.2:Save command should write 'saving' to the log pane first.
-#@+node:ekr.20060202234446.2:New windows should have focus in body?
-# And the headline is not drawn properly.
+#@+node:ekr.20060203071736:Call w.see in Go To Line Number command
+gui.makeIndexVisible(t,insert)
 #@nonl
-#@-node:ekr.20060202234446.2:New windows should have focus in body?
-#@+node:ekr.20060202234446.3:Writing 'command does not exist' from minibuffer should leave focus in body
-# Right now it 'restores' the focus to the tree if it was in the tre previously.
-#@-node:ekr.20060202234446.3:Writing 'command does not exist' from minibuffer should leave focus in body
-#@+node:ekr.20060202232638:Urgent: the focus sometimes improperly leaves the body pane
-This happened when typing a backspace.
+#@-node:ekr.20060203071736:Call w.see in Go To Line Number command
+#@+node:ekr.20060202233828.3:Urgent: binding are not handled properly in the log pane
+And any other bindings.
+
+Remove hard binding for Ctrl-T in log pane.
 #@nonl
-#@-node:ekr.20060202232638:Urgent: the focus sometimes improperly leaves the body pane
+#@-node:ekr.20060202233828.3:Urgent: binding are not handled properly in the log pane
 #@+node:ekr.20060202233828.2:Binding conflicts for Alt-Shift-A are not reported properly
 # And the bindings aren't handled properly either.
 #@nonl
 #@-node:ekr.20060202233828.2:Binding conflicts for Alt-Shift-A are not reported properly
-#@+node:ekr.20060202233315.1:Remove hard binding for Ctrl-T in log pane
-And any other bindings.
-#@nonl
-#@-node:ekr.20060202233315.1:Remove hard binding for Ctrl-T in log pane
-#@+node:ekr.20060202235215.3:Remove deprecation warning
-#@+node:EKR.20040627114602:getDescendentUnknownAttributes
-# Only @thin vnodes have the descendentTnodeUnknownAttributes field.
-# The question is: what are we to do about this?
-
-def getDescendentUnknownAttributes (self,s):
-    
-    try:
-        bin = binascii.unhexlify(s) # Throws a TypeError if val is not a hex string.
-        val = pickle.loads(bin)
-        return val
-
-    except (TypeError,pickle.UnpicklingError,ImportError):
-        return None
-#@nonl
-#@-node:EKR.20040627114602:getDescendentUnknownAttributes
-#@-node:ekr.20060202235215.3:Remove deprecation warning
 #@-node:ekr.20060202233315:To do first
 #@+node:ekr.20060125171123:(use a text minibuffer)
 # Set @bool useTextMinibuffer = True
@@ -120,6 +84,7 @@ def callAltXFunction (self,event):
         func(event)
         k.endCommand(event,commandName)
     else:
+        k.keyboardQuit(event)
         k.setLabel('Command does not exist: %s' % commandName)
 #@nonl
 #@-node:ekr.20050920085536.45:callAltXFunction
@@ -359,7 +324,7 @@ def makeAllBindings (self):
 #@nonl
 #@-node:ekr.20051007080058:k.makeAllBindings
 #@-node:ekr.20060125171123:(use a text minibuffer)
-#@+node:ekr.20060116073938:4.4a6
+#@+node:ekr.20060116073938:4.4b2
 #@+node:ekr.20060122183544:Improve search commands
 #@+node:ekr.20060124090814:To do
 @nocolor
@@ -863,6 +828,7 @@ def getOption (self,ivar,verbose=False):
         return val
     else:
         g.trace('bad ivar name: %s' % ivar)
+        return None
 #@nonl
 #@-node:ekr.20060125082510:getOption
 #@+node:ekr.20060125074939:showFindOptions
@@ -1903,18 +1869,6 @@ def searchWithPresentOptions (self,event):
 #@nonl
 #@-node:ekr.20060124093828:Find wrappers
 #@-node:ekr.20060123131421:Top-level methods
-#@+node:ekr.20060117181301.1:searchAgain & changeAgain 
-def searchAgain (self,event):
-
-    if self.incremental:
-        self.iSearchHelper(event,self.forward,self.regexp)
-    elif self.regexp:
-        self.reSearchHelper(event,self.searchString,self.forward)
-    elif self.word:
-        self.wordSearchHelper(event,self.searchString,self.forward)
-    else:
-        self.plainSearchHelper(event,self.searchString,self.forward)
-#@-node:ekr.20060117181301.1:searchAgain & changeAgain 
 #@+node:ekr.20050920084036.261:incremental search...
 def isearchForward (self,event):
     self.startIncremental(event,forward=True,regexp=False)
@@ -2049,6 +2003,13 @@ def iSearchHelper (self,event,forward,regexp):
         w.see('insert')
 #@nonl
 #@-node:ekr.20050920084036.263:iSearchHelper
+#@+node:ekr.20060203072636:endSearch
+def endSearch (self,i,j):
+
+    g.app.gui.setTextSelection (self.w,i,j,insert='sel.end')
+    self.k.keyboardQuit(event=None)
+#@nonl
+#@-node:ekr.20060203072636:endSearch
 #@-node:ekr.20050920084036.261:incremental search...
 #@-node:ekr.20050920084036.257:class searchCommandsClass
 #@-node:ekr.20051023094009:Search classes
@@ -2225,6 +2186,8 @@ Evidently the issue is with the hooking/calling
 mech. not the plugin code itself.
 #@nonl
 #@-node:ekr.20060124082357:Fix problem with view plugin
+#@+node:ekr.20060202235215.1:Make sure the user doesn't specify Enter and Leave bindings by mistake
+#@-node:ekr.20060202235215.1:Make sure the user doesn't specify Enter and Leave bindings by mistake
 #@-node:ekr.20060122183914:Fix bugs
 #@+node:ekr.20060122185507:New commands and features
 #@+node:ekr.20060201054108:apropos-bindings
@@ -7604,7 +7567,7 @@ def set_focus(self,c,w):
             w2 = c.frame.outerFrame.focus_get()
             w2 and g.trace(g.app.gui.widget_name(name2),c)
 
-        if 0:
+        if 1:
             # A fix to the cursed problems with Pmw.Notebook.
             # I am not happy with this, but it seems preferable to trying to figure out
             # all the places where the code must call update()
@@ -8449,8 +8412,26 @@ spell-ignore
 #@-node:ekr.20051202102337:Finish minibuffer commands
 #@+node:ekr.20050916180203:Make more commands undoable
 #@-node:ekr.20050916180203:Make more commands undoable
+#@+node:ekr.20060202235215.3:Remove deprecation warning
+#@+node:EKR.20040627114602:getDescendentUnknownAttributes
+# Only @thin vnodes have the descendentTnodeUnknownAttributes field.
+# The question is: what are we to do about this?
+
+def getDescendentUnknownAttributes (self,s):
+    
+    try:
+        bin = binascii.unhexlify(s) # Throws a TypeError if val is not a hex string.
+        val = pickle.loads(bin)
+        return val
+
+    except (TypeError,pickle.UnpicklingError,ImportError):
+        g.trace('oops: getDescendentUnknownAttributes')
+        return None
+#@nonl
+#@-node:EKR.20040627114602:getDescendentUnknownAttributes
+#@-node:ekr.20060202235215.3:Remove deprecation warning
 #@-node:ekr.20060122184800:Later
-#@-node:ekr.20060116073938:4.4a6
+#@-node:ekr.20060116073938:4.4b2
 #@+node:ekr.20060116073229:4.4.1
 #@+node:ekr.20051202094427:Resolve cvs conflicts
 Investigate meld:  http://meld.sourceforge.net/
