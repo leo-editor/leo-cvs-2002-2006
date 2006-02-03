@@ -2292,10 +2292,10 @@ def printGcVerbose(message=''):
 #@nonl
 #@-node:ekr.20060127165509:printGcVerbose
 #@+node:ekr.20031218072017.1593:printGcRefs
-def printGcRefs (message):
+def printGcRefs (message=''):
 
     refs = gc.get_referrers(app.windowList[0])
-    g.es_print('-' * 30)
+    g.es_print('-' * 30,message)
 
     if g.app.trace_gc_verbose:
         g.es_print("refs of", app.windowList[0])
@@ -2311,7 +2311,7 @@ def printGcAll (message=''):
     
     d = {} ; objects = gc.get_objects()
     g.es_print('-' * 30)
-    g.es_print('%d objects' % len(objects))
+    g.es_print('%d objects' % len(objects),message)
 
     for obj in objects:
         t = type(obj)
@@ -2321,7 +2321,13 @@ def printGcAll (message=''):
         d[t] = d.get(t,0) + 1
         
     if 1: # Sort by n
-        items = d.items() ; items.sort(key=lambda x: x[1],reverse=True)
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
         for z in items:
             g.es_print('%40s %7d' % (z[0],z[1]))
     else: # Sort by type
