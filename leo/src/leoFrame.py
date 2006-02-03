@@ -158,7 +158,7 @@ class leoBody:
     #@nonl
     #@-node:ekr.20031218072017.3659:leoBody.setFontFromConfig
     #@+node:ekr.20031218072017.3660:Must be overriden in subclasses
-    def createBindings (self,frame):
+    def createBindings (self):
         self.oops()
     
     def createControl (self,frame,parentFrame):
@@ -1059,7 +1059,7 @@ class nullBody (leoBody):
     #@-node:ekr.20031218072017.2196:scanToEndOfLine
     #@-node:ekr.20031218072017.2193:Utils (internal use)
     #@+node:ekr.20031218072017.2197:Must be overriden in subclasses
-    def createBindings (self,frame):
+    def createBindings (self):
         self.oops()
     
     def createControl (self,frame,parentFrame):
