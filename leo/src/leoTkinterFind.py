@@ -470,8 +470,6 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@-node:ekr.20031218072017.3907:bringToFront
     #@+node:EKR.20040603221140:selectAllFindText
     def selectAllFindText (self,event=None):
-        
-        __pychecker__ = '--no-argsused' # the event param must be present.
     
         try:
             w = self.frame.focus_get()
