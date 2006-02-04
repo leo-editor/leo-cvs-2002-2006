@@ -2195,7 +2195,6 @@ class editCommandsClass (baseEditCommandsClass):
         # g.trace(i,j)
     
         if name.startswith('body'):
-            self.beginCommand()
             d = g.scanDirectives(c,p)
             tab_width = d.get("tabwidth",c.tab_width)
             changed = True
@@ -2227,7 +2226,6 @@ class editCommandsClass (baseEditCommandsClass):
                 #@nonl
                 #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
                 #@nl
-            self.endCommand(changed=changed)
         else:
             # No undo in this widget.
             if i != j:
@@ -5546,6 +5544,19 @@ class minibufferFind:
             self.generalSearchHelper(k.arg,cloneFindAll=True)
     #@nonl
     #@-node:ekr.20060128080201:cloneFindAll
+    #@+node:ekr.20060204120158:findAgain
+    def findAgain (self,event):
+    
+        f = self.finder
+        
+        f.p = self.c.currentPosition()
+        f.v = self.finder.p.v
+    
+        # This handles the reverse option.
+        return f.findAgainCommand()
+            
+    #@nonl
+    #@-node:ekr.20060204120158:findAgain
     #@+node:ekr.20060124181213.4:generalSearchHelper
     def generalSearchHelper (self,pattern,cloneFindAll=False):
         
@@ -6108,6 +6119,20 @@ class findTab (leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051023183028:findButtonCallback
     #@+node:ekr.20051024192602: Top level
+    #@+node:ekr.20060204120158.1:findAgainCommand
+    def findAgainCommand (self):
+        
+        s = self.find_ctrl.get("1.0","end")
+        s = g.toUnicode(s,g.app.tkEncoding)
+        if s.endswith('\n'): s = s[:-1]
+        
+        if s and s != '<find pattern here>':
+            self.findNextCommand()
+            return True
+        else:
+            # Tell the caller that to get the find args.
+            return False
+    #@-node:ekr.20060204120158.1:findAgainCommand
     #@+node:ekr.20060128075225:cloneFindAllCommand
     def cloneFindAllCommand (self,event=None):
         
@@ -6332,11 +6357,14 @@ class searchCommandsClass (baseEditCommandsClass):
                         
             're-search-forward':                    self.reSearchForward,
             're-search-backward':                   self.reSearchBackward,
-                    
-            # 'search-again':                         self.searchAgain,
+    
+            'search-again':                         self.findAgain,
+            # Uses existing search pattern.
+            
             'search-forward':                       self.searchForward,
             'search-backward':                      self.searchBackward,
             'search-with-present-options':          self.searchWithPresentOptions,
+            # Prompts for search pattern.
     
             'set-find-everywhere':                  self.setFindScopeEveryWhere,
             'set-find-node-only':                   self.setFindScopeNodeOnly,
@@ -6357,6 +6385,7 @@ class searchCommandsClass (baseEditCommandsClass):
             'word-search-forward':                  self.wordSearchForward,
             'word-search-backward':                 self.wordSearchBackward,
         }
+    #@nonl
     #@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
     #@+node:ekr.20060123131421:Top-level methods
     #@+node:ekr.20051020120306:openFindTab
@@ -6375,8 +6404,6 @@ class searchCommandsClass (baseEditCommandsClass):
     
         if show:
             self.findTabHandler.bringToFront()
-        # else:
-             # log.deleteTab(tabName)
     #@nonl
     #@-node:ekr.20051020120306:openFindTab
     #@+node:ekr.20051022212004:Find Tab commands
@@ -6483,6 +6510,17 @@ class searchCommandsClass (baseEditCommandsClass):
         self.getHandler().searchWithPresentOptions(event)
     #@nonl
     #@-node:ekr.20060124093828:Find wrappers
+    #@+node:ekr.20060204120158.2:findAgain
+    def findAgain (self,event):
+        
+        h = self.getHandler()
+        
+        # h.findAgain returns False if there is no search pattern.
+        # In that case, we revert to find-with-present-options.
+        if not h.findAgain(event):
+            h.searchWithPresentOptions(event)
+    #@nonl
+    #@-node:ekr.20060204120158.2:findAgain
     #@-node:ekr.20060123131421:Top-level methods
     #@+node:ekr.20050920084036.261:incremental search...
     def isearchForward (self,event):
