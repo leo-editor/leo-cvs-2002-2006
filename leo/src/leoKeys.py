@@ -1175,13 +1175,14 @@ class keyHandlerClass:
             k.afterGetArgState=returnKind,returnState,handler
             k.setState('getArg',1,k.getArg)
             k.afterArgWidget = event and event.widget or c.frame.body.bodyCtrl
+            if k.useTextWidget: c.frame.minibufferWantsFocus()
         elif keysym == 'Return':
             k.arg = k.getLabel(ignorePrompt=True)
             kind,n,handler = k.afterGetArgState
             if kind: k.setState(kind,n,handler)
             c.frame.log.deleteTab('Completion')
             if handler: handler(event)
-            c.frame.widgetWantsFocus(k.afterArgWidget)
+            # else: c.frame.widgetWantsFocus(k.afterArgWidget)
         elif keysym == 'Tab':
             k.doTabCompletion(k.argTabList,k.arg_completion)
         elif keysym == 'BackSpace':
@@ -1331,8 +1332,8 @@ class keyHandlerClass:
         # g.trace(repr(s))
     
         if self.useTextWidget:
-            ###### c.frame.minibufferWantsFocus()
-            # w.update_idletasks()
+            # Danger: this will rip the focus into the minibuffer.
+            # **without** calling g.app.gui.set_focus.
             w.delete('1.0','end')
             w.insert('1.0',s)
         else:
@@ -1422,6 +1423,8 @@ class keyHandlerClass:
         state = k.state.kind
         if trace: g.trace(repr(stroke),'state',state)
         if k.inState():
+            if state == 'getArg':
+                return k.getArg(event)
             d =  k.masterBindingsDict.get(state)
             if d:
                 # A typical state
@@ -1581,13 +1584,13 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         w = event and event.widget
-        wname = g.app.widget_name(w)
+        wname = g.app.gui.widget_name(w)
         if wname.startswith('log-'):
             return None # Kludge to allow tab completion.
         
         # g.trace(k.inState(), g.app.gui.widget_name(w))
         
-        if k.inState():
+        if 0: ## k.inState():
             d = k.computeInverseBindingDict()
             tupleList = d.get('keyboard-quit',[])
             if tupleList:
@@ -1696,6 +1699,9 @@ class keyHandlerClass:
                 k.modeHelp(event)
             else:
                 c.frame.log.deleteTab('Mode')
+            if k.useTextWidget:
+                c.frame.minibufferWantsFocus()
+            else:
                 c.frame.widgetWantsFocus(w)
         elif not func:
             g.trace('No func: improper key binding')
@@ -1707,6 +1713,8 @@ class keyHandlerClass:
             else:
                 # nextMode = bunch.nextMode
                 self.endMode(event)
+                if c.config.getBool('trace_doCommand'):
+                    g.trace(func.__name__)
                 func(event)
                 if nextMode in (None,'none'):
                     # Do *not* clear k.inputModeName or the focus here.
@@ -1737,13 +1745,16 @@ class keyHandlerClass:
             
         k.inputModeName = modeName
         k.modeWidget = g.app.gui.get_focus(c.frame)
-    
+        
         if k.masterBindingsDict.get(modeName) is None:
             k.createModeBindings(modeName,d)
        
         k.setLabelBlue(modeName+': ',protect=True)
         k.showStateAndMode()
-        # Do *not* change the focus here!
+        if k.useTextWidget:
+            c.frame.minibufferWantsFocus()
+        else:
+            pass # Do *not* change the focus here!
     #@nonl
     #@-node:ekr.20060117202916.1:initMode
     #@+node:ekr.20060104164523:modeHelp
@@ -1756,11 +1767,14 @@ class keyHandlerClass:
         
         k = self ; c = k.c
         
-        c.endEditing(restoreFocus=True)
+        c.endEditing()
         
         if k.inputModeName:
             d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
             k.modeHelpHelper(d)
+            
+        if k.useTextWidget:
+            c.frame.minibufferWantsFocus()
     
         return 'break'
     #@nonl
