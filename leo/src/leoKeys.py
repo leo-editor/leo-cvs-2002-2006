@@ -1698,7 +1698,7 @@ class keyHandlerClass:
             if c.config.getBool('showHelpWhenEnteringModes'):
                 k.modeHelp(event)
             else:
-                c.frame.log.deleteTab('Mode')
+                c.frame.log.hideTab('Mode')
             if k.useTextWidget:
                 c.frame.minibufferWantsFocus()
             else:
@@ -1711,6 +1711,7 @@ class keyHandlerClass:
             if commandName == 'mode-help':
                 func(event)
             else:
+                savedModeName = k.inputModeName # Remember this: it may be cleared.
                 # nextMode = bunch.nextMode
                 self.endMode(event)
                 if c.config.getBool('trace_doCommand'):
@@ -1721,7 +1722,7 @@ class keyHandlerClass:
                     # func may have put us in *another* mode.
                     pass
                 elif nextMode == 'same':
-                    self.initMode(event,k.inputModeName) # Re-enter this mode.
+                    self.initMode(event,savedModeName) # Re-enter this mode.
                     k.setState(modeName,1,handler=k.generalModeHandler)
                 else:
                     self.initMode(event,nextMode) # Enter another mode.
