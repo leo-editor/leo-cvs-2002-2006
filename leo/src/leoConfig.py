@@ -266,8 +266,8 @@ class parserBaseClass:
     
         # Compute the mode name.
         name = name.strip().lower()
-        k = name.find(' ')
-        if k > -1: name = name[:k]
+        j = name.find(' ')
+        if j > -1: name = name[:j]
         if name.endswith('mode'):
             name = name[:-4].strip()
         if name.endswith('-'):
@@ -297,6 +297,8 @@ class parserBaseClass:
             bunchList = d2.get(key,[])
             for bunch in bunchList:
                 bunch.pane = name
+                bunch.val = k.strokeFromSetting(bunch.val)
+                # g.trace(name,bunch.val)
         
         # Create the command, but not any bindings to it.
         self.createModeCommand(name,d2)
