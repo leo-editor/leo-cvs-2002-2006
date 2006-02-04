@@ -430,6 +430,8 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4065:get_focus
     #@+node:ekr.20031218072017.2373:set_focus (app.gui)
+    set_focus_count = 0
+    
     def set_focus(self,c,w):
         
         __pychecker__ = '--no-argsused' # c not used at present.
@@ -438,8 +440,9 @@ class tkinterGui(leoGui.leoGui):
         
         if w:
             if c.config.getBool('trace_g.app.gui.set_focus'):
-                g.trace('GUI',g.app.gui.widget_name(w),g.callers())
-                
+                self.set_focus_count += 1
+                g.trace('%4d' % (self.set_focus_count),
+                    g.app.gui.widget_name(w),g.callers())
             if 0:
                 w2 = c.frame.outerFrame.focus_get()
                 w2 and g.trace(g.app.gui.widget_name(name2),c)
