@@ -2518,8 +2518,6 @@ class leoTkinterTree (leoFrame.leoTree):
         '''End editing of a headline and update p.headString().'''
     
         c = self.c ; k = c.k ; p = c.currentPosition()
-        
-        # w = g.app.gui.get_focus(c.frame)
     
         self.setEditPosition(None) # That is, self._editPosition = None
         
@@ -2529,8 +2527,6 @@ class leoTkinterTree (leoFrame.leoTree):
         
         # Important: this will redraw if necessary.
         self.onHeadChanged(p)
-        
-        # g.app.gui.set_focus(c,w)
     #@nonl
     #@-node:ekr.20040803072955.126:tree.endEditLabel
     #@+node:ekr.20040803072955.127:editLabel

@@ -109,9 +109,6 @@ class baseCommands:
         self.inCommand = False
         self.requestCloseWindow = False
         
-        # For saving and restoring focus.
-        self.afterUpdateWidgetStack = []
-        
         # For emacs/vim key handling.
         self.commandsDict = None
         self.keyHandler = self.k = None
@@ -5357,10 +5354,6 @@ class baseCommands:
         until the matching call to endUpdate.'''
         
         c = self
-        if 0: # A bad idea.
-            w = g.app.gui.get_focus(c.frame)
-            c.afterUpdateWidgetStack.append(w)
-        # g.trace(g.app.gui.widget_name(w),g.callers(5))
         c.frame.tree.beginUpdate()
         
     def endUpdate(self,flag=True,scroll=False):
@@ -5369,11 +5362,6 @@ class baseCommands:
     
         c = self
         c.frame.tree.endUpdate(flag,scroll=scroll)
-        if 0: # A bad idea.
-            w = c.afterUpdateWidgetStack.pop()
-            if c.exists and not c.afterUpdateWidgetStack and restoreFocus:
-                # We are at the top-level endUpdate.
-                c.frame.widgetWantsFocus(w)
     
     BeginUpdate = beginUpdate # Compatibility with old scripts
     EndUpdate = endUpdate # Compatibility with old scripts
@@ -6074,13 +6062,6 @@ class baseCommands:
         
         c = self
         c.frame.tree.endEditLabel()
-        
-        # if restoreFocus:
-            # w = g.app.gui.get_focus(c.frame)
-            # tree.endEditLabel()
-            # c.frame.widgetWantsFocus(w)
-        # else:
-            # tree.endEditLabel()
     #@nonl
     #@-node:ekr.20031218072017.2992:c.endEditing (calls tree.endEditLabel)
     #@+node:ekr.20031218072017.2997:c.selectPosition
