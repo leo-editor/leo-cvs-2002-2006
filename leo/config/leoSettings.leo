@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="47" left="364" height="777" width="841"/>
+	<global_window_position top="94" left="402" height="777" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -56,12 +56,14 @@
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
-<v t="ekr.20051126062243.1" a="E"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
-<v t="ekr.20060201111002" a="E"><vh>@bool use_syntax_coloring = True</vh></v>
+<v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
 <v t="ekr.20060113182439"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
@@ -342,7 +344,7 @@
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 <v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
@@ -355,7 +357,7 @@
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
-<v t="ekr.20060122105527.20" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
@@ -371,7 +373,7 @@
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 <v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
@@ -384,7 +386,7 @@
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
-<v t="ekr.20060122105527.20" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
@@ -400,18 +402,26 @@
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
-<v t="ekr.20051126062243.1" a="E"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
-<v t="ekr.20060201111002" a="E"><vh>@bool use_syntax_coloring = True</vh></v>
+<v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
 <v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
+<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
+<v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
+<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -3828,17 +3838,20 @@ exit-named-mode     = BackSpace
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
+switch-to-buffer        = h
+
 # enter-find-reverse-mode = r
-# search-again            = a
-# switch-to-buffer        = h
 # isearch-forward         = i
-# search-forward          = f
-# word-search-forward     = w
+
 # isearch-forward-regexp  = x
 # re-search-forward       = Shift-R
 
-show-find-options       = o
-open-find-tab           = t</t>
+search-again                = a
+search-with-present-options = f
+word-search-forward         = w
+
+show-find-options   -&gt; same = o
+# open-find-tab     -&gt; same = t</t>
 <t tx="ekr.20060122105527.13"># Boilerplate for most modes.
 exit-named-mode         = Return
 keyboard-quit           = Ctrl-g
@@ -3906,7 +3919,7 @@ convert-tabs            = t
 extract                 = d
 extract-names           = n
 extract-section         = e
-open-rectangle          = 0
+open-rectangle          = o
 reformat-paragraph      = p
 sort-lines              = s
 write-at-file-nodes     = w
@@ -3938,6 +3951,7 @@ enter-outline-mode          = Ctrl-O    # open
 enter-outline-move-mode     = None
 enter-file-mode             = Ctrl-W    # kill-region
 enter-file-open-mode        = None
+# enter-find-mode             = Ctrl-F
 
 enter-quick-command-mode    = Alt-C</t>
 <t tx="ekr.20060122105527.20"># Important: the print-commands and print-bindings show what bindings are in effect.
@@ -4295,7 +4309,9 @@ find-tab-find-prev                  = F2
 find-tab-replace                    = None
 find-tab-replace-then-find          = None
 hide-find-tab                       = None
-open-find-tab                       = Ctrl-f # Ctrl-Shift-f
+
+open-find-tab                       = Shift-Ctrl-f
+enter-find-mode                     = Ctrl-F
 
 clone-find-all                      = None
 
@@ -4312,7 +4328,7 @@ replace-string                      = None
 search-again                        = None
 search-backward                     = None
 search-forward                      = None
-search-with-present-options         = Shift-Ctrl-f # Ctrl-f
+# search-with-present-options       = Shift-Ctrl-f # Ctrl-f
 
 set-find-everywhere                 = Alt-Ctrl-e
 set-find-node-only                  = Alt-Ctrl-n
@@ -4376,5 +4392,7 @@ forward-word-extend-selection       ! mini = Alt-Shift-f
 forward-word                        ! mini = Ctrl-RtArrow
 forward-word-extend-selection       ! mini = Ctrl-Shift-RtArrow
 </t>
+<t tx="ekr.20060204093736"></t>
+<t tx="ekr.20060204102644"></t>
 </tnodes>
 </leo_file>
