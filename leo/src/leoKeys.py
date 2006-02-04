@@ -93,7 +93,7 @@ import sys
 # g.app.keysym_numberInverseDict
 #     Keys are strokes, values are keysym_num's.
 # 
-# not an ivar (computed by computeInverseBindingDict):
+# not an ivar (computed by k.computeInverseBindingDict):
 # 
 # inverseBindingDict
 #     keys are emacs command names, values are *lists* of shortcuts.
@@ -1435,8 +1435,6 @@ class keyHandlerClass:
             elif state == 'full-command':
                 d = k.masterBindingsDict.get('mini')
                 b = d.get(stroke)
-                g.trace(d.keys())
-                g.trace(b)
                 if b:
                     # Pass this on for macro recording.
                     k.masterCommand(event,b.func,stroke,b.commandName)
@@ -1478,6 +1476,57 @@ class keyHandlerClass:
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
     #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
+    #@+node:ekr.20060129052538.2:masterClickHandler
+    def masterClickHandler (self,event,func=None):
+        
+        k = self ; c = k.c ; w = event and event.widget
+        
+        if c.config.getBool('trace_masterClickHandler'):
+            g.trace(g.app.gui.widget_name(w),func and func.__name__)
+            
+        if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+            g.es_print('Ignoring click outside active minibuffer',color='blue')
+            c.frame.minibufferWantsFocus()
+            return 'break'
+    
+        if event and func:
+            # Don't event *think* of overriding this.
+            return func(event)
+        else:
+            return None
+            
+    masterClick3Handler         = masterClickHandler
+    masterDoubleClick3Handler   = masterClickHandler
+    #@nonl
+    #@-node:ekr.20060129052538.2:masterClickHandler
+    #@+node:ekr.20060131084938:masterDoubleClickHandler
+    def masterDoubleClickHandler (self,event,func=None):
+        
+        k = self ; c = k.c ; w = event and event.widget
+        
+        if c.config.getBool('trace_masterClickHandler'):
+            g.trace(g.app.gui.widget_name(w),func and func.__name__)
+    
+        if event and func:
+            # Don't event *think* of overriding this.
+            return func(event)
+        else:
+            i = w.index("@%d,%d" % (event.x,event.y))
+            g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+            return 'break'
+    #@nonl
+    #@-node:ekr.20060131084938:masterDoubleClickHandler
+    #@+node:ekr.20060128090219:masterMenuHandler
+    def masterMenuHandler (self,stroke,func,commandName):
+        
+        k = self ; w = k.c.frame.getFocus()
+        
+        # Create a minimal event for commands that require them.
+        event = g.Bunch(char='',keysym='',widget=w)
+        
+        return k.masterCommand(event,func,stroke,commandName)
+    #@nonl
+    #@-node:ekr.20060128090219:masterMenuHandler
     #@+node:ekr.20060204083758:master click handlers: not used
     if 0:
         #@    @+others
@@ -1524,17 +1573,33 @@ class keyHandlerClass:
         #@-others
     #@nonl
     #@-node:ekr.20060204083758:master click handlers: not used
-    #@+node:ekr.20060128090219:masterMenuHandler
-    def masterMenuHandler (self,stroke,func,commandName):
+    #@+node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
+    def onFocusInMinibuffer (self,event=None):
+        k = self
+    
+    def onFocusOutMinibuffer (self,event=None):
+    
+        k = self ; c = k.c
+        w = event and event.widget
+        wname = g.app.widget_name(w)
+        if wname.startswith('log-'):
+            return None # Kludge to allow tab completion.
         
-        k = self ; w = k.c.frame.getFocus()
+        # g.trace(k.inState(), g.app.gui.widget_name(w))
         
-        # Create a minimal event for commands that require them.
-        event = g.Bunch(char='',keysym='',widget=w)
-        
-        return k.masterCommand(event,func,stroke,commandName)
-    #@nonl
-    #@-node:ekr.20060128090219:masterMenuHandler
+        if k.inState():
+            d = k.computeInverseBindingDict()
+            tupleList = d.get('keyboard-quit',[])
+            if tupleList:
+                for pane,stroke in tupleList:
+                    if pane in ('all:','text:','mini:'):
+                        g.es_print('Ignoring click: minibuffer is active',color='blue')
+                        g.es_print('Use %s to exit the minibuffer' % (stroke))
+                        c.frame.minibufferWantsFocus()
+                        return 'break'
+                
+        return None # Allow the click.
+    #@-node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
     #@-node:ekr.20060129052538.1:Master event handlers (keyHandler)
     #@+node:ekr.20060115103349:Modes
     #@+node:ekr.20060117202916:badMode
