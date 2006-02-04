@@ -6402,8 +6402,10 @@ class searchCommandsClass (baseEditCommandsClass):
             t.pack_forget()
             self.findTabHandler = findTab(c,f)
     
-        if show:
+        if show or c.config.getBool('minibufferSearchesShowFindTab'):
             self.findTabHandler.bringToFront()
+        else:
+            log.hideTab(tabName)
     #@nonl
     #@-node:ekr.20051020120306:openFindTab
     #@+node:ekr.20051022212004:Find Tab commands
