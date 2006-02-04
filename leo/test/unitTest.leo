@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8629" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8632" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
 	<global_window_position top="45" left="497" height="781" width="699"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -959,52 +959,7 @@
 </v>
 </v>
 <v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
-<v t="ekr.20040712101754.2" annotate="7d71002e"><vh>Unit tests for  .leo files</vh>
-<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
-<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
-<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
-<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
-<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
-<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
-<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
-<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
-</v>
-<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins</vh>
-<v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
-<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
-<v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050218015346.12"><vh>__init__</vh></v>
-<v t="ekr.20050218015346.13"><vh> fail</vh></v>
-<v t="ekr.20050218015346.16"><vh>runTest</vh></v>
-<v t="ekr.20050218015346.17"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050218015346.18"><vh>addTestRoutinesInPluginToSuite</vh></v>
-<v t="ekr.20050218015346.19"><vh>findTestsInModule</vh>
-<v t="ekr.20050218015346.20"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
-<v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
-</v>
-<v t="ekr.20050120095423.11"><vh>@suite plugins tests</vh>
-<v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
-<v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
-<v t="ekr.20050120095423.14"><vh>__init__</vh></v>
-<v t="ekr.20050120095423.15"><vh>fail</vh></v>
-<v t="ekr.20050120095423.16"><vh>runTest</vh></v>
-<v t="ekr.20050120095423.17"><vh>setUp</vh></v>
-<v t="ekr.20050120095423.18"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
-</v>
-<v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
-<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
-<v t="ekr.20050120095423.8"><vh>__init__</vh></v>
-<v t="ekr.20050120095423.9"><vh>runTest</vh></v>
-<v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
-</v>
-</v>
-</v>
+<v t="ekr.20060203200614"><vh>Basic Unit tests</vh>
 <v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests: simple</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20060131101825.1"><vh>@test print end of doctests</vh></v>
@@ -1197,6 +1152,10 @@
 <v t="ekr.20040712101754.35"><vh>dialog</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20060203181203.1"><vh>Key handling tests...</vh>
+<v t="ekr.20060203181203.2"><vh>@test strokeFromSetting</vh></v>
+<v t="ekr.20060203181203.3"><vh>@test strokeFromEvent</vh></v>
 </v>
 <v t="ekr.20050112095306.1" annotate="7d71002e"><vh>leoAtFile.py tests...</vh>
 <v t="ekr.20050105093136"><vh>@test atFile.remove</vh></v>
@@ -1659,7 +1618,57 @@
 <v t="ekr.20051202100844.2"><vh>@test arrow keys</vh></v>
 <v t="ekr.20051107115231.26"><vh>@@test paste in headline recomputes width</vh></v>
 </v>
-<v t="ekr.20051109143831" annotate="7d71002e"><vh>@test restore the screen and save the file (Make this the last test)</vh></v>
+<v t="ekr.20051109143831" annotate="7d71002e"><vh>@test restore the screen</vh></v>
+</v>
+</v>
+<v t="ekr.20060203200614.1"><vh>Lengthy unit tests</vh>
+<v t="ekr.20040712101754.2" annotate="7d71002e"><vh>Unit tests for  .leo files</vh>
+<v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
+<v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
+<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
+<v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
+<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
+<v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
+<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
+<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
+</v>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit tests for plugins</vh>
+<v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
+<v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
+<v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050218015346.12"><vh>__init__</vh></v>
+<v t="ekr.20050218015346.13"><vh> fail</vh></v>
+<v t="ekr.20050218015346.16"><vh>runTest</vh></v>
+<v t="ekr.20050218015346.17"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050218015346.18"><vh>addTestRoutinesInPluginToSuite</vh></v>
+<v t="ekr.20050218015346.19"><vh>findTestsInModule</vh>
+<v t="ekr.20050218015346.20"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
+<v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
+</v>
+<v t="ekr.20050120095423.11"><vh>@suite plugins tests</vh>
+<v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
+<v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
+<v t="ekr.20050120095423.14"><vh>__init__</vh></v>
+<v t="ekr.20050120095423.15"><vh>fail</vh></v>
+<v t="ekr.20050120095423.16"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.17"><vh>setUp</vh></v>
+<v t="ekr.20050120095423.18"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
+</v>
+<v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins</vh>
+<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
+<v t="ekr.20050120095423.8"><vh>__init__</vh></v>
+<v t="ekr.20050120095423.9"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
+</v>
+</v>
+<v t="ekr.20060203201949" annotate="7d71002e"><vh>@test restore the screen</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -14039,10 +14048,14 @@ import leoTest ; u = leoTest.testUtils(c)
 c.contractAllHeadlines()
 h = 'All unit tests'
 p = u.findNodeAnywhere(h)
-p.expand()
-g.app.unitTestDict['restoreSelectedNode']=False
-c.selectPosition(p)
-c.save()</t>
+if p:
+    c.beginUpdate()
+    try:
+        p.expand()
+        g.app.unitTestDict['restoreSelectedNode']=False
+        c.selectPosition(p)
+    finally:
+        c.endUpdate()</t>
 <t tx="ekr.20051120110335">c.insertHeadline()
 assert c.undoer.undoMenuLabel == 'Undo Insert Node'
 c.undoer.undo()
@@ -14162,7 +14175,9 @@ for command in table:
 )
 
 for command in table:
-    c.k.simulateCommand(command)</t>
+    # This is not a full test.  We must use keyboardQuit here!
+    c.k.simulateCommand(command)
+    c.k.keyboardQuit(None)</t>
 <t tx="ekr.20060130151716.4">c.k.simulateCommand('show-find-options')</t>
 <t tx="ekr.20060131101806">import inspect
 
@@ -14184,5 +14199,55 @@ for key in keys:
 <t tx="ekr.20060131102450">print ; print 'End of typing and undo tests'</t>
 <t tx="ekr.20060131102609">print ; print 'End of commands tests'</t>
 <t tx="ekr.20060131102817">print ; print 'End of simple unit tests'</t>
+<t tx="ekr.20060203181203.1"></t>
+<t tx="ekr.20060203181203.2">table = (
+    ('a','a'),
+    ('A','a'),
+    ('Alt-a','Alt+a'),
+    ('Alt-A','Alt+a'),
+    ('Alt-Shift-a','Alt+A'),
+    ('Shift-a','A'),
+    ('Shift-A','A'),
+    ('RtArrow','Right'),
+    ('Shift-RtArrow','Shift+Right'),
+    ('Ctrl-RtArrow','Ctrl+Right'),
+    ('Control-Right','Ctrl+Right'),
+)
+for setting, result in table:
+    val = c.k.strokeFromSetting(setting)
+    assert val==result,'Expected %s, Got %s' % (result,val)</t>
+<t tx="ekr.20060203181203.3">alt = 0x20000 ; ctrl  = 4 ; shift = 1 ; key = 0
+
+table = (
+    (key, 'a','a','a'),
+    (shift,'A','A','A'),
+    (alt,'','a','Alt+a'),
+    (alt+shift,'','A','Alt+A'),
+    (shift,'A','A','A',),
+    (key,'','Right','Right'),
+    (shift,'','Right','Shift+Right'),
+    (ctrl,'','Right','Ctrl+Right'),
+    (ctrl+shift,'','Right','Ctrl+Shift+Right'),
+)
+for state, ch, keysym, result in table:
+    val = c.k.strokeFromEvent(g.Bunch(state=state,char=ch,keysym=keysym))
+    assert val==result,'Expected %s, Got %s' % (result,val)</t>
+<t tx="ekr.20060203200614"></t>
+<t tx="ekr.20060203200614.1"></t>
+<t tx="ekr.20060203201949"># This is **not** a real unit test.
+# It simply restores the screen to a more convenient state.
+import leoTest ; u = leoTest.testUtils(c)
+
+c.contractAllHeadlines()
+h = 'All unit tests'
+p = u.findNodeAnywhere(h)
+if p:
+    c.beginUpdate()
+    try:
+        p.expand()
+        g.app.unitTestDict['restoreSelectedNode']=False
+        c.selectPosition(p)
+    finally:
+        c.endUpdate()</t>
 </tnodes>
 </leo_file>
