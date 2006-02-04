@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="94" left="402" height="777" width="841"/>
+	<global_window_position top="98" left="230" height="777" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -415,9 +415,9 @@
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 <v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
 <v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
-<v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = False</vh></v>
+<v t="ekr.20060204124608" a="V"><vh>@bool minibufferSearchesShowFindTab = False</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060122105527.12" a="V"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 </v>
@@ -4388,9 +4388,9 @@ forward-word-extend-selection       ! mini = Ctrl-Shift-RtArrow
 </t>
 <t tx="ekr.20060204093736"></t>
 <t tx="ekr.20060204102644"></t>
-<t tx="ekr.20060204124608">True:  the following commands show the Find Tab:
+<t tx="ekr.20060204124608">True: minibuffer commands show the Find Tab.
+False: minibuffer commands hide the Find Tab.
 
-find-with-previous-settings
-show-find-options</t>
+Important: the Find Tab always exists regardless of this setting.</t>
 </tnodes>
 </leo_file>

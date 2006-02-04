@@ -5147,7 +5147,8 @@ g.app.scriptDict['suite'] = suite</t>
         # g.trace(test.shortDescription())
         suite.addTest(test)
         
-    if 1: # Open a new window after all tests are completed.  Tests many plugins.
+    if 1:
+        # Open a new window after all tests are completed.  Tests many plugins.
         lastTest = lastTestCase(c,openFlag=True)
         suite.addTest(lastTest)
 
@@ -5203,8 +5204,13 @@ g.app.scriptDict['suite'] = suite</t>
             self.openFlag,'opening','open')
         print
         if self.openFlag:
-            new_c = c.new() # Create the new window.
-            new_c.frame.setTitle("unit test for 'new' hook")</t>
+            self.new_c = new_c = c.new() # Create the new window.
+            new_c.frame.setTitle("unit test for 'new' hook")
+            
+    if 0: # Doesn't work
+        def shutDown(self):
+            c = self.new_c
+            c.close()</t>
 <t tx="ekr.20050120095423.21">import leoPlugins
 
 print

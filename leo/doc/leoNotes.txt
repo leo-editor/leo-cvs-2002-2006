@@ -4656,18 +4656,10 @@ if 0:
             return None
 #@nonl
 #@-node:ekr.20060130130942:masterClick3Handler (not used)
-#@+node:ekr.20060117181301.1:searchAgain & changeAgain
-def searchAgain (self,event):
-
-    if self.incremental:
-        self.iSearchHelper(event,self.forward,self.regexp)
-    elif self.regexp:
-        self.reSearchHelper(event,self.searchString,self.forward)
-    elif self.word:
-        self.wordSearchHelper(event,self.searchString,self.forward)
-    else:
-        self.plainSearchHelper(event,self.searchString,self.forward)
-#@-node:ekr.20060117181301.1:searchAgain & changeAgain
+#@+node:ekr.20060117181301.1:searchAgain
+def searchAgain (self):
+    
+#@-node:ekr.20060117181301.1:searchAgain
 #@+node:ekr.20060129182405:k.strokeFromSetting (WRONG: USE shortcutFromSetting)
 if 0:
     def strokeFromSetting (self,shortcut):
