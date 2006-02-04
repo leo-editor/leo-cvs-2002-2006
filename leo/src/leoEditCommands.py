@@ -5778,7 +5778,6 @@ class findTab (leoFind.leoFind):
     
         table = (
             ('<Key>',k.masterKeyHandler),
-            ("<Key>",self.resetWrap,'+'),
             ("<Return>",self.findButtonCallback),
             ("<Escape>",self.hideTab),
         )
@@ -5786,6 +5785,9 @@ class findTab (leoFind.leoFind):
         for w in (self.find_ctrl,self.change_ctrl):
             for event, callback in table:
                 w.bind(event,callback)
+                
+            w.bind("<Key>",self.resetWrap,'+')
+                # Can't put this in the table bc of the '+' arg.
     #@nonl
     #@-node:ekr.20051023181449:createBindings (findTab)
     #@+node:ekr.20051020120306.13:createFrame (findTab)
