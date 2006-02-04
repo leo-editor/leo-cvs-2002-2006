@@ -1478,46 +1478,52 @@ class keyHandlerClass:
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
     #@nonl
     #@-node:ekr.20060127183752:masterKeyHandler
-    #@+node:ekr.20060129052538.2:masterClickHandler
-    def masterClickHandler (self,event,func=None):
-        
-        k = self ; c = k.c ; w = event and event.widget
-        
-        if c.config.getBool('trace_masterClickHandler'):
-            g.trace(g.app.gui.widget_name(w),func and func.__name__)
+    #@+node:ekr.20060204083758:master click handlers: not used
+    if 0:
+        #@    @+others
+        #@+node:ekr.20060129052538.2:masterClickHandler
+        def masterClickHandler (self,event,func=None):
             
-        if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
-            g.es_print('Ignoring click outside active minibuffer',color='blue')
-            c.frame.minibufferWantsFocus()
-            return 'break'
-    
-        if event and func:
-            # Don't event *think* of overriding this.
-            return func(event)
-        else:
-            return None
+            k = self ; c = k.c ; w = event and event.widget
             
-    masterClick3Handler         = masterClickHandler
-    masterDoubleClick3Handler   = masterClickHandler
-    #@nonl
-    #@-node:ekr.20060129052538.2:masterClickHandler
-    #@+node:ekr.20060131084938:masterDoubleClickHandler
-    def masterDoubleClickHandler (self,event,func=None):
+            if c.config.getBool('trace_masterClickHandler'):
+                g.trace(g.app.gui.widget_name(w),func and func.__name__)
+                
+            if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+                g.es_print('Ignoring click outside active minibuffer',color='blue')
+                c.frame.minibufferWantsFocus()
+                return 'break'
         
-        k = self ; c = k.c ; w = event and event.widget
+            if event and func:
+                # Don't event *think* of overriding this.
+                return func(event)
+            else:
+                return None
+                
+        masterClick3Handler         = masterClickHandler
+        masterDoubleClick3Handler   = masterClickHandler
+        #@nonl
+        #@-node:ekr.20060129052538.2:masterClickHandler
+        #@+node:ekr.20060131084938:masterDoubleClickHandler
+        def masterDoubleClickHandler (self,event,func=None):
+            
+            k = self ; c = k.c ; w = event and event.widget
+            
+            if c.config.getBool('trace_masterClickHandler'):
+                g.trace(g.app.gui.widget_name(w),func and func.__name__)
         
-        if c.config.getBool('trace_masterClickHandler'):
-            g.trace(g.app.gui.widget_name(w),func and func.__name__)
-    
-        if event and func:
-            # Don't event *think* of overriding this.
-            return func(event)
-        else:
-            i = w.index("@%d,%d" % (event.x,event.y))
-            g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
-            return 'break'
+            if event and func:
+                # Don't event *think* of overriding this.
+                return func(event)
+            else:
+                i = w.index("@%d,%d" % (event.x,event.y))
+                g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+                return 'break'
+        #@nonl
+        #@-node:ekr.20060131084938:masterDoubleClickHandler
+        #@-others
     #@nonl
-    #@-node:ekr.20060131084938:masterDoubleClickHandler
+    #@-node:ekr.20060204083758:master click handlers: not used
     #@+node:ekr.20060128090219:masterMenuHandler
     def masterMenuHandler (self,stroke,func,commandName):
         
