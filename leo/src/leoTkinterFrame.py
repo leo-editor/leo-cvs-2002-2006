@@ -1306,16 +1306,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
             frame.minibufferVisible = False
     #@nonl
     #@-node:ekr.20060203115311.1:hideMinibuffer
-    #@+node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
-    # Perhaps not needed: the masterClickHandlers can do this.
-    
-    def onFocusInMinibuffer (self,event=None):
-        pass
-        
-    def onFocusOutMinibuffer (self,event=None):
-        pass
-    #@nonl
-    #@-node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
     #@+node:ekr.20050920094212:f.createMiniBufferWidget
     def createMiniBufferWidget (self):
         
@@ -1354,8 +1344,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if 1:
              for kind,callback in (
                 ('<Key>',               k.masterKeyHandler),
-                ('<FocusIn>',           self.onFocusInMinibuffer),
-                ('<FocusOut>',          self.onFocusOutMinibuffer),
+                ('<FocusIn>',           k.onFocusInMinibuffer),
+                ('<FocusOut>',          k.onFocusOutMinibuffer),
             ):
                 t.bind(kind,callback)
             
