@@ -14,11 +14,11 @@
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040803072955.139,ekr.20040803072955.141,ekr.20040803072955.11,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.139,ekr.20040803072955.141,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.11,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040803072955.139,ekr.20040803072955.141,ekr.20040803072955.79,ekr.20050920085536.65,ekr.20040803072955.91,ekr.20051011072903.2,ekr.20051011072049.2,ekr.20051011072903.5,ekr.20031218072017.2817,ekr.20060127183752,ekr.20060129052538.2,ekr.20060128090219,ekr.20050920085536.2,ekr.20050920085536.45,ekr.20051007080058,ekr.20051007080058,ekr.20031218072017.1761,ekr.20031218072017.2886,ekr.20051011072903.2,ekr.20051011072049.2,ekr.20051011072903.5,ekr.20031218072017.1593,ekr.20060202161935,ekr.20060127183752,ekr.20060129052538.2,ekr.20060128090219,ekr.20031218072017.2886,ekr.20051011072903.2,ekr.20051011072049.2,ekr.20051011072903.5,ekr.20050920085536.2,ekr.20050920085536.45,ekr.20051007080058,ekr.20051007080058,ekr.20031218072017.1761,ekr.20040803072955.11,ekr.20031218072017.1593,ekr.20060202161935,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.139,ekr.20040803072955.141,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20031218072017.1593,ekr.20060202161935,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.11,ekr.20060125171123,ekr.20050920085536.45,ekr.20051023132350.1,ekr.20051007080058,ekr.20060127183752,ekr.20060129052538.2,ekr.20060128090219,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936" descendentTnodeUnknownAttributes="7d71005514656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"
-marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+marks="ekr.20050920085536.45,ekr.20051023132350.1,ekr.20051007080058,ekr.20060127183752,ekr.20060129052538.2,ekr.20060128090219,ekr.20060124122844,ekr.20060125082510,ekr.20060125074939,ekr.20051023181449,ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,ekr.20031218072017.2373,ekr.20051126123759.1,ekr.20031218072017.1593,ekr.20060202161935,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.139,ekr.20040803072955.141,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20031218072017.1593,ekr.20060202161935,ekr.20051011072903.2,ekr.20051011072049.2,ekr.20051011072903.5,ekr.20051011072903.2,ekr.20051011072049.2,ekr.20051011072903.5,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -36,11 +36,11 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
 <v t="ekr.20040803072955.141" a="M"><vh>setUnselectedHeadlineColors</vh></v>
 </v>
-<v t="ekr.20040803072955.79"><vh>onClickBoxClick</vh></v>
+<v t="ekr.20040803072955.79" a="M"><vh>onClickBoxClick</vh></v>
 </v>
 <v t="ekr.20060120103549"><vh>Insert headline didn't redraw headline properly in vim mode</vh>
 <v t="ekr.20051012201831"><vh>printBindings</vh></v>
-<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.65" a="M"><vh>masterCommand &amp; helpers</vh>
 <v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
 <v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
 <v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
@@ -49,7 +49,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20040803072955.90"><vh>head key handlers</vh>
 <v t="ekr.20040803072955.88"><vh>onHeadlineKey</vh></v>
 <v t="ekr.20051026083544.2"><vh>updateHead</vh></v>
-<v t="ekr.20040803072955.91"><vh>onHeadChanged</vh>
+<v t="ekr.20040803072955.91" a="M"><vh>onHeadChanged</vh>
 <v t="ekr.20040803072955.94"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
 </v>
 </v>
@@ -91,20 +91,49 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060122191111.1"><vh>Fixed crasher re BackSpace in log window</vh></v>
 <v t="ekr.20060124091545"><vh>Fixed crashers in cut/copy/paste commands</vh>
 <v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
-<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
-<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
-<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+<v t="ekr.20051011072903.2" a="M"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2" a="M"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5" a="M"><vh>pasteText</vh></v>
 </v>
 </v>
 <v t="ekr.20060131112557"><vh>Fixed crasher when clicking the close box during a long command</vh>
 <v t="ekr.20031218072017.3972"><vh>frame.OnCloseLeoEvent</vh></v>
 <v t="ekr.20031218072017.2609"><vh>app.closeLeoWindow</vh></v>
-<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
+<v t="ekr.20031218072017.2817" a="M"><vh> doCommand</vh></v>
 </v>
 <v t="ekr.20060131115606"><vh>cloneFindAll now honor present find settings</vh></v>
+<v t="ekr.20060201083530"><vh>(Added prettyPrintKey in various places)</vh>
+<v t="ekr.20060201083154"><vh>k.prettyPrintKey</vh></v>
+<v t="ekr.20051012201831"><vh>printBindings</vh></v>
+<v t="ekr.20051014061332"><vh>printCommands</vh></v>
+<v t="ekr.20060104164523"><vh>modeHelp</vh>
+<v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
+</v>
+<v t="ekr.20051017212452"><vh>computeCompletionList</vh></v>
+<v t="ekr.20051018070524"><vh>computeInverseBindingDict</vh></v>
+</v>
+<v t="ekr.20060202121216"><vh>Double-click didn't work in the body pane.</vh>
+<v t="ekr.20060129052538.1"><vh>Master event handlers (keyHandler)</vh>
+<v t="ekr.20060127183752" a="M"><vh>masterKeyHandler</vh></v>
+<v t="ekr.20060129052538.2" a="M"><vh>masterClickHandler</vh></v>
+<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
+<v t="ekr.20060128090219" a="M"><vh>masterMenuHandler</vh></v>
+<v t="ekr.20060204083758"><vh>master click handlers: not used</vh>
+<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
+<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
+</v>
+<v t="ekr.20060203115311.2"><vh>onFocusIn/OutMinibuffer</vh></v>
+</v>
+<v t="ekr.20040803072955.108"><vh>tree.OnDeactivate</vh></v>
+<v t="ekr.20031218072017.3975"><vh>OnActivateBody (tkFrame)</vh></v>
+<v t="ekr.20031218072017.3977"><vh>OnBodyClick, OnBodyRClick (Events)</vh></v>
+<v t="ekr.20031218072017.3978"><vh>OnBodyDoubleClick (Events)</vh></v>
+</v>
+<v t="ekr.20060203092949"><vh>Improved body.makeInsertPointVisible</vh></v>
+<v t="ekr.20060203202543"><vh>Fixed cut/copy/paste from menu</vh></v>
 </v>
 <v t="ekr.20060117201349.1"><vh>Made modes work</vh>
-<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
+<v t="ekr.20050920085536.2" a="M"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
 <v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
 <v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
@@ -117,7 +146,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
 </v>
 <v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
-<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+<v t="ekr.20050920085536.45" a="M"><vh>callAltXFunction</vh></v>
 </v>
 <v t="ekr.20051001050607"><vh>endCommand</vh></v>
 </v>
@@ -131,7 +160,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
 <v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20051007080058" a="M"><vh>k.makeAllBindings</vh></v>
 <v t="ekr.20060201081225"><vh>k.makeAllModeBindings</vh></v>
 <v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
@@ -169,7 +198,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
 <v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
 <v t="ekr.20051011103654"><vh>checkBindings</vh></v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20051007080058" a="M"><vh>k.makeAllBindings</vh></v>
 <v t="ekr.20060201081225"><vh>k.makeAllModeBindings</vh></v>
 <v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
 <v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
@@ -331,7 +360,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060127052111.1"><vh>cutStack</vh></v>
 <v t="ekr.20050318085713"><vh>undoGroup</vh></v>
 <v t="ekr.20050318085432.6"><vh>redoGroup</vh></v>
-<v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
+<v t="ekr.20031218072017.1761" a="M"><vh>c.insertHeadline</vh></v>
 <v t="ekr.20050411193627.9"><vh>afterInsertNode</vh></v>
 <v t="ekr.20050315134017.4"><vh>afterChangeGroup</vh></v>
 </v>
@@ -486,7 +515,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20031218072017.1838"><vh>updateBodyPane (handles changeNodeContents)</vh></v>
 </v>
 <v t="ekr.20031218072017.2885"><vh>Edit Headline submenu</vh>
-<v t="ekr.20031218072017.2886"><vh>editHeadline</vh></v>
+<v t="ekr.20031218072017.2886" a="M"><vh>editHeadline</vh></v>
 <v t="ekr.20031218072017.2290"><vh>toggleAngleBrackets</vh></v>
 </v>
 <v t="ekr.20031218072017.2887"><vh>Find submenu (frame methods)</vh>
@@ -672,9 +701,9 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20031218072017.3980"><vh>Edit Menu...</vh>
 <v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
 <v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
-<v t="ekr.20051011072903.2"><vh>copyText</vh></v>
-<v t="ekr.20051011072049.2"><vh>cutText</vh></v>
-<v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
+<v t="ekr.20051011072903.2" a="M"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2" a="M"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5" a="M"><vh>pasteText</vh></v>
 </v>
 <v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
 <v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
@@ -729,9 +758,9 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20040703054646"><vh>&lt;&lt; print number of each type of object &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
-<v t="ekr.20031218072017.1593"><vh>printGcRefs</vh></v>
+<v t="ekr.20031218072017.1593" a="M"><vh>printGcRefs</vh></v>
 </v>
-<v t="ekr.20060202161935"><vh>printGcAll</vh></v>
+<v t="ekr.20060202161935" a="M"><vh>printGcAll</vh></v>
 </v>
 </v>
 <v t="ekr.20060201083530"><vh>(Added prettyPrintKey in various places)</vh>
@@ -746,10 +775,15 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 <v t="ekr.20060202121216"><vh>Double-click didn't work in the body pane.</vh>
 <v t="ekr.20060129052538.1"><vh>Master event handlers (keyHandler)</vh>
-<v t="ekr.20060127183752"><vh>masterKeyHandler</vh></v>
+<v t="ekr.20060127183752" a="M"><vh>masterKeyHandler</vh></v>
+<v t="ekr.20060129052538.2" a="M"><vh>masterClickHandler</vh></v>
+<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
+<v t="ekr.20060128090219" a="M"><vh>masterMenuHandler</vh></v>
+<v t="ekr.20060204083758"><vh>master click handlers: not used</vh>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 <v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
-<v t="ekr.20060128090219"><vh>masterMenuHandler</vh></v>
+</v>
+<v t="ekr.20060203115311.2"><vh>onFocusIn/OutMinibuffer</vh></v>
 </v>
 <v t="ekr.20040803072955.108"><vh>tree.OnDeactivate</vh></v>
 <v t="ekr.20031218072017.3975"><vh>OnActivateBody (tkFrame)</vh></v>
@@ -758,6 +792,671 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 <v t="ekr.20060202160109"><vh>Added free-text-widgets, dump-all-objects, dump-new-objects, verbose-dump-objects commands</vh></v>
 <v t="ekr.20060202141338"><vh>Added gc_stats to print-stats command</vh></v>
+<v t="ekr.20060203065648"><vh>Code issues</vh>
+<v t="ekr.20060127095006"><vh>(Added event arg to all legacy commands)</vh>
+<v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
+<v t="ekr.20050920084036.188"><vh>leoCommands.getPublicCommands</vh>
+<v t="ekr.20050920084036.189"><vh>&lt;&lt; define dictionary d of names and Leo commands &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2818"><vh>Command handlers...</vh>
+<v t="ekr.20031218072017.2819"><vh>File Menu</vh>
+<v t="ekr.20031218072017.2820"><vh>top level</vh>
+<v t="ekr.20031218072017.1623"><vh>new</vh></v>
+<v t="ekr.20031218072017.2821"><vh>open</vh>
+<v t="ekr.20031218072017.2822"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2823"><vh>openWith and allies</vh>
+<v t="ekr.20031218072017.2824"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2825"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2826"><vh>&lt;&lt;set dict and path if a temp file already refers to p.v.t &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2827"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
+<v t="ekr.20031218072017.2828"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2829"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2830"><vh>createOpenWithTempFile</vh>
+<v t="ekr.20031218072017.2831"><vh>&lt;&lt; remove previous entry from app.openWithFiles if it exists &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2832"><vh>c.openWithTempFilePath</vh></v>
+</v>
+<v t="ekr.20031218072017.2833"><vh>close</vh></v>
+<v t="ekr.20031218072017.2834"><vh>save</vh></v>
+<v t="ekr.20031218072017.2835"><vh>saveAs</vh></v>
+<v t="ekr.20031218072017.2836"><vh>saveTo</vh></v>
+<v t="ekr.20031218072017.2837"><vh>revert</vh></v>
+</v>
+<v t="ekr.20031218072017.2079"><vh>Recent Files submenu &amp; allies</vh>
+<v t="ekr.20031218072017.2080"><vh>clearRecentFiles</vh></v>
+<v t="ekr.20031218072017.2081"><vh>openRecentFile</vh>
+<v t="ekr.20031218072017.2082"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2083"><vh>c.updateRecentFiles</vh></v>
+</v>
+<v t="ekr.20031218072017.2838"><vh>Read/Write submenu</vh>
+<v t="ekr.20031218072017.2839"><vh>readOutlineOnly</vh></v>
+<v t="ekr.20031218072017.1839"><vh>readAtFileNodes (commands)</vh></v>
+<v t="ekr.20031218072017.2840"><vh>4.0 Commands</vh>
+<v t="ekr.20031218072017.1809"><vh>importDerivedFile</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2841"><vh>Tangle submenu</vh>
+<v t="ekr.20031218072017.2842"><vh>tangleAll</vh></v>
+<v t="ekr.20031218072017.2843"><vh>tangleMarked</vh></v>
+<v t="ekr.20031218072017.2844"><vh>tangle</vh></v>
+</v>
+<v t="ekr.20031218072017.2845"><vh>Untangle submenu</vh>
+<v t="ekr.20031218072017.2846"><vh>untangleAll</vh></v>
+<v t="ekr.20031218072017.2847"><vh>untangleMarked</vh></v>
+<v t="ekr.20031218072017.2848"><vh>untangle</vh></v>
+</v>
+<v t="ekr.20031218072017.2849"><vh>Import&amp;Export submenu</vh>
+<v t="ekr.20031218072017.2850"><vh>exportHeadlines</vh></v>
+<v t="ekr.20031218072017.2851"><vh>flattenOutline</vh></v>
+<v t="ekr.20031218072017.2852"><vh>importAtRoot</vh></v>
+<v t="ekr.20031218072017.2853"><vh>importAtFile</vh></v>
+<v t="ekr.20031218072017.2854"><vh>importCWEBFiles</vh></v>
+<v t="ekr.20031218072017.2855"><vh>importFlattenedOutline</vh></v>
+<v t="ekr.20031218072017.2856"><vh>importNowebFiles</vh></v>
+<v t="ekr.20031218072017.2857"><vh>outlineToCWEB</vh></v>
+<v t="ekr.20031218072017.2858"><vh>outlineToNoweb</vh></v>
+<v t="ekr.20031218072017.2859"><vh>removeSentinels</vh></v>
+<v t="ekr.20031218072017.2860"><vh>weave</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2861"><vh>Edit Menu...</vh>
+<v t="ekr.20031218072017.2862"><vh>Edit top level</vh>
+<v t="ekr.20031218072017.2140"><vh>c.executeScript</vh>
+<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output &gt;&gt;</vh></v>
+<v t="ekr.20050505104140"><vh>&lt;&lt; handle an exception in the script &gt;&gt;</vh>
+<v t="EKR.20040612215018"><vh>&lt;&lt; dump the lines near the error &gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040627100424"><vh>&lt;&lt; unredirect output &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2864"><vh>goToLineNumber &amp; allies</vh>
+<v t="ekr.20031218072017.2865"><vh>&lt;&lt; set root &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2866"><vh>&lt;&lt; read the file into lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2867"><vh>&lt;&lt; get n, the line number, from a dialog &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2868"><vh>&lt;&lt; count outline lines, setting p,n2,found &gt;&gt; (@file-nosent only)</vh></v>
+<v t="ekr.20031218072017.2869"><vh>&lt;&lt; set p to the node given by vnodeName, etc. &gt;&gt;</vh>
+<v t="ekr.20041111093404"><vh>&lt;&lt; just scan for the node name &gt;&gt;</vh></v>
+<v t="EKR.20040609110138"><vh>&lt;&lt; 4.2: get node from gnx &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2870"><vh>&lt;&lt; 4.x: scan for the node using tnodeList and n &gt;&gt;</vh>
+<v t="ekr.20031218072017.2871"><vh>&lt;&lt; set tnodeIndex to the number of +node sentinels before line n &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2872"><vh>&lt;&lt; set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2873"><vh>&lt;&lt; set p to the first node whose headline matches vnodeName &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2874"><vh>&lt;&lt; 3.x: scan for the node with the given childIndex &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2875"><vh>&lt;&lt; select p and make it visible &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2876"><vh>&lt;&lt; put the cursor on line n2 of the body text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2877"><vh>convertLineToVnodeNameIndexLine</vh>
+<v t="ekr.20031218072017.2878"><vh>&lt;&lt; set delim, leoLine from the @+leo line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2879"><vh>&lt;&lt; scan back to  @+node, setting offset,nodeSentinelLine &gt;&gt;</vh>
+<v t="ekr.20031218072017.2880"><vh>&lt;&lt; handle delim while scanning backward &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2881"><vh>&lt;&lt; set vnodeName and (childIndex or gnx) from s &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2882"><vh>skipToMatchingNodeSentinel</vh></v>
+</v>
+<v t="bwmulder.20041231211219"><vh>gotoLineNumberOpen</vh></v>
+<v t="bwmulder.20041231211219.1"><vh>applyLineNumberMappingIfAny</vh></v>
+<v t="EKR.20040612232221"><vh>goToScriptLineNumber</vh></v>
+<v t="ekr.20031218072017.2088"><vh>fontPanel</vh></v>
+<v t="ekr.20031218072017.2090"><vh>colorPanel</vh></v>
+<v t="ekr.20031218072017.2883"><vh>viewAllCharacters</vh></v>
+<v t="ekr.20031218072017.2086"><vh>preferences</vh></v>
+</v>
+<v t="ekr.20031218072017.2884"><vh>Edit Body submenu</vh>
+<v t="ekr.20031218072017.1704"><vh>convertAllBlanks</vh></v>
+<v t="ekr.20031218072017.1705"><vh>convertAllTabs</vh></v>
+<v t="ekr.20031218072017.1821"><vh>convertBlanks</vh></v>
+<v t="ekr.20031218072017.1822"><vh>convertTabs</vh></v>
+<v t="ekr.20031218072017.1823"><vh>createLastChildNode</vh></v>
+<v t="ekr.20031218072017.1824"><vh>dedentBody</vh></v>
+<v t="ekr.20031218072017.1706"><vh>extract</vh></v>
+<v t="ekr.20031218072017.1708"><vh>extractSection</vh>
+<v t="ekr.20031218072017.1709"><vh>&lt;&lt; Set headline for extractSection &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1710"><vh>extractSectionNames</vh>
+<v t="ekr.20031218072017.1711"><vh>&lt;&lt; Find the next section name &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1825"><vh>findBoundParagraph</vh>
+<v t="ekr.20031218072017.1826"><vh>&lt;&lt; trace head_lines, ins, tail_lines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1827"><vh>findMatchingBracket</vh>
+<v t="ekr.20031218072017.1828"><vh>findMatchingBracket</vh></v>
+</v>
+<v t="ekr.20031218072017.1829"><vh>getBodyLines</vh></v>
+<v t="ekr.20031218072017.1830"><vh>indentBody</vh></v>
+<v t="ekr.20031218072017.1831"><vh>insertBodyTime &amp; allies</vh>
+<v t="ekr.20031218072017.1832"><vh>getTime</vh></v>
+</v>
+<v t="ekr.20050312114529"><vh>insert/removeComments</vh>
+<v t="ekr.20050312114529.1"><vh>addComments</vh></v>
+<v t="ekr.20050312114529.2"><vh>deleteComments</vh></v>
+</v>
+<v t="ekr.20031218072017.1833"><vh>reformatParagraph</vh>
+<v t="ekr.20031218072017.1834"><vh>&lt;&lt; compute vars for reformatParagraph &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1835"><vh>&lt;&lt; compute the leading whitespace &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1836"><vh>&lt;&lt; compute the result of wrapping all lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1837"><vh>&lt;&lt; update the body, selection &amp; undo state &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1838"><vh>updateBodyPane (handles changeNodeContents)</vh></v>
+</v>
+<v t="ekr.20031218072017.2885"><vh>Edit Headline submenu</vh>
+<v t="ekr.20031218072017.2886" a="M"><vh>editHeadline</vh></v>
+<v t="ekr.20031218072017.2290"><vh>toggleAngleBrackets</vh></v>
+</v>
+<v t="ekr.20031218072017.2887"><vh>Find submenu (frame methods)</vh>
+<v t="ekr.20051013084200"><vh>dismissFindPanel</vh></v>
+<v t="ekr.20031218072017.2888"><vh>showFindPanel</vh></v>
+<v t="ekr.20031218072017.2889"><vh>findNext</vh></v>
+<v t="ekr.20031218072017.2890"><vh>findPrevious</vh></v>
+<v t="ekr.20031218072017.2891"><vh>replace</vh></v>
+<v t="ekr.20031218072017.2892"><vh>replaceThenFind</vh></v>
+<v t="ekr.20051013083241"><vh>replaceAll</vh></v>
+</v>
+<v t="ekr.20031218072017.2893"><vh>notValidInBatchMode</vh></v>
+</v>
+<v t="ekr.20031218072017.2894"><vh>Outline menu...</vh>
+<v t="ekr.20031218072017.2895"><vh> Top Level... (Commands)</vh>
+<v t="ekr.20031218072017.1548"><vh>Cut &amp; Paste Outlines</vh>
+<v t="ekr.20031218072017.1549"><vh>cutOutline</vh></v>
+<v t="ekr.20031218072017.1550"><vh>copyOutline</vh></v>
+<v t="ekr.20031218072017.1551"><vh>pasteOutline</vh>
+<v t="ekr.20050418084539"><vh>&lt;&lt; remember all data for undo/redo Paste As Clone &gt;&gt;</vh></v>
+<v t="ekr.20050418084539.2"><vh>&lt;&lt; put only needed info in copiedBunchList &gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040610130943"><vh>pasteOutlineRetainingClones</vh></v>
+</v>
+<v t="ekr.20031218072017.2028"><vh>Hoist &amp; dehoist</vh></v>
+<v t="ekr.20031218072017.1759"><vh>Insert, Delete &amp; Clone (Commands)</vh>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
+<v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
+<v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
+<v t="ekr.20031218072017.1765"><vh>c.validateOutline</vh></v>
+</v>
+<v t="ekr.20050415134809"><vh>c.sortChildren</vh></v>
+<v t="ekr.20040303175026.12"><vh>c.sortChildrenHelper</vh></v>
+<v t="ekr.20050415134809.1"><vh>c.sortSiblings</vh></v>
+<v t="ekr.20031218072017.2896"><vh>c.sortTopLevel</vh></v>
+</v>
+<v t="ekr.20040711135959.2"><vh>Check Outline submenu...</vh>
+<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
+<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
+<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and child links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+<v t="ekr.20040731053740"><vh>assert that p.headString() matches p.edit_text.get</vh></v>
+</v>
+<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040723094220"><vh>Check Outline commands &amp; allies</vh>
+<v t="ekr.20040723094220.1"><vh>checkAllPythonCode</vh>
+<v t="ekr.20040723094220.2"><vh>&lt;&lt; print dots &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040723094220.3"><vh>checkPythonCode</vh>
+<v t="ekr.20040723094220.4"><vh>&lt;&lt; print dots &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040723094220.5"><vh>checkPythonNode</vh></v>
+<v t="ekr.20040723094220.6"><vh>tabNannyNode</vh></v>
+</v>
+<v t="ekr.20040412060927"><vh>c.dumpOutline</vh></v>
+<v t="ekr.20040711135959.1"><vh>Pretty Print commands</vh>
+<v t="ekr.20040712053025"><vh>prettyPrintAllPythonCode</vh></v>
+<v t="ekr.20040712053025.1"><vh>prettyPrintPythonCode</vh></v>
+<v t="ekr.20050729211526"><vh>prettyPrintPythonNode</vh></v>
+<v t="ekr.20040711135244.5"><vh>class prettyPrinter</vh>
+<v t="ekr.20040711135244.6"><vh>__init__</vh>
+<v t="ekr.20041021100850"><vh>&lt;&lt; define dispatch dict &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040713093048"><vh>clear</vh></v>
+<v t="ekr.20040713064323"><vh>dumpLines</vh></v>
+<v t="ekr.20040711135244.7"><vh>dumpToken</vh></v>
+<v t="ekr.20040713091855"><vh>endUndo</vh></v>
+<v t="ekr.20040711135244.8"><vh>get</vh></v>
+<v t="ekr.20040711135244.4"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20040711135244.9"><vh>put</vh></v>
+<v t="ekr.20041021104237"><vh>putArray</vh></v>
+<v t="ekr.20040711135244.10"><vh>putNormalToken &amp; allies</vh>
+<v t="ekr.20041021102938"><vh>doEndMarker</vh></v>
+<v t="ekr.20041021102340.1"><vh>doErrorToken</vh></v>
+<v t="ekr.20041021102340.2"><vh>doIndent &amp; doDedent</vh></v>
+<v t="ekr.20041021102340"><vh>doMultiLine (strings, etc).</vh></v>
+<v t="ekr.20041021101911.5"><vh>doName</vh></v>
+<v t="ekr.20041021101911.3"><vh>doNewline</vh></v>
+<v t="ekr.20041021101911.6"><vh>doNumber</vh></v>
+<v t="ekr.20040711135244.11"><vh>doOp</vh></v>
+<v t="ekr.20041021112219"><vh>doStartLine</vh></v>
+<v t="ekr.20041021101911.1"><vh>oops</vh></v>
+<v t="ekr.20041021101911.2"><vh>trace</vh></v>
+</v>
+<v t="ekr.20040711135244.12"><vh>putToken</vh></v>
+<v t="ekr.20040713070356"><vh>replaceBody</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.2898"><vh>Expand &amp; Contract...</vh>
+<v t="ekr.20031218072017.2899"><vh>Commands</vh>
+<v t="ekr.20031218072017.2900"><vh>contractAllHeadlines</vh></v>
+<v t="ekr.20031218072017.2901"><vh>contractNode</vh></v>
+<v t="ekr.20040930064232"><vh>contractNodeOrGoToParent</vh></v>
+<v t="ekr.20031218072017.2902"><vh>contractParent</vh></v>
+<v t="ekr.20031218072017.2903"><vh>expandAllHeadlines</vh></v>
+<v t="ekr.20031218072017.2904"><vh>expandAllSubheads</vh></v>
+<v t="ekr.20031218072017.2905"><vh>expandLevel1..9</vh></v>
+<v t="ekr.20031218072017.2906"><vh>expandNextLevel</vh></v>
+<v t="ekr.20031218072017.2907"><vh>expandNode</vh></v>
+<v t="ekr.20040930064232.1"><vh>expandNodeAnd/OrGoToFirstChild</vh></v>
+<v t="ekr.20031218072017.2908"><vh>expandPrevLevel</vh></v>
+</v>
+<v t="ekr.20031218072017.2909"><vh>Utilities</vh>
+<v t="ekr.20031218072017.2910"><vh>contractSubtree</vh></v>
+<v t="ekr.20031218072017.2911"><vh>expandSubtree</vh></v>
+<v t="ekr.20031218072017.2912"><vh>expandToLevel (rewritten in 4.4)</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2913"><vh>Goto</vh>
+<v t="ekr.20031218072017.1628"><vh>goNextVisitedNode</vh></v>
+<v t="ekr.20031218072017.1627"><vh>goPrevVisitedNode</vh></v>
+<v t="ekr.20031218072017.2914"><vh>goToFirstNode</vh></v>
+<v t="ekr.20051012092453"><vh>goToFirstSibling (New in 4.4)</vh></v>
+<v t="ekr.20031218072017.2915"><vh>goToLastNode (Bug fix in 4.4)</vh></v>
+<v t="ekr.20051012092847.1"><vh>goToLastSibling (New in 4.4)</vh></v>
+<v t="ekr.20050711153537"><vh>goToLastVisibleNode</vh></v>
+<v t="ekr.20031218072017.2916"><vh>goToNextClone</vh></v>
+<v t="ekr.20031218072017.2917"><vh>goToNextDirtyHeadline</vh></v>
+<v t="ekr.20031218072017.2918"><vh>goToNextMarkedHeadline</vh></v>
+<v t="ekr.20031218072017.2919"><vh>goToNextSibling</vh></v>
+<v t="ekr.20031218072017.2920"><vh>goToParent</vh></v>
+<v t="ekr.20031218072017.2921"><vh>goToPrevSibling</vh></v>
+<v t="ekr.20031218072017.2994"><vh>selectThreadNext</vh></v>
+<v t="ekr.20031218072017.2993"><vh>selectThreadBack</vh></v>
+<v t="ekr.20031218072017.2995"><vh>selectVisBack</vh></v>
+<v t="ekr.20031218072017.2996"><vh>selectVisNext</vh></v>
+</v>
+<v t="ekr.20031218072017.2922"><vh>Mark...</vh>
+<v t="ekr.20031218072017.2923"><vh>markChangedHeadlines</vh></v>
+<v t="ekr.20031218072017.2924"><vh>markChangedRoots</vh></v>
+<v t="ekr.20031218072017.2925"><vh>markAllAtFileNodesDirty (not used)</vh></v>
+<v t="ekr.20031218072017.2926"><vh>markAtFileNodesDirty (not used)</vh></v>
+<v t="ekr.20031218072017.2927"><vh>markClones</vh></v>
+<v t="ekr.20031218072017.2928"><vh>markHeadline</vh></v>
+<v t="ekr.20031218072017.2929"><vh>markSubheads</vh></v>
+<v t="ekr.20031218072017.2930"><vh>unmarkAll</vh></v>
+</v>
+<v t="ekr.20031218072017.1766"><vh>Move... (Commands)</vh>
+<v t="ekr.20031218072017.1767"><vh>demote</vh></v>
+<v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
+<v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move p down &amp; set moved if successful &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1770"><vh>moveOutlineLeft</vh></v>
+<v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
+<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move p up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1774"><vh>promote</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2931"><vh>Window Menu</vh>
+<v t="ekr.20031218072017.2092"><vh>openCompareWindow</vh></v>
+<v t="ekr.20031218072017.2932"><vh>openPythonWindow (Dave Hein)</vh>
+<v t="ekr.20031218072017.2933"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2934"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh>
+<v t="ekr.20031218072017.2936"><vh>&lt;&lt; Try to open idle in Python 2.3 systems &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2935"><vh>&lt;&lt; Try to open idle in Python 2.2 systems&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2937"><vh>leoPyShellMain</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2938"><vh>Help Menu</vh>
+<v t="ekr.20031218072017.2939"><vh>about (version number &amp; date)</vh></v>
+<v t="ekr.20031218072017.2943"><vh>leoConfig</vh></v>
+<v t="ekr.20031218072017.2940"><vh>leoDocumentation</vh></v>
+<v t="ekr.20031218072017.2941"><vh>leoHome</vh></v>
+<v t="ekr.20050130152008"><vh>leoPlugins</vh></v>
+<v t="ekr.20031218072017.2942"><vh>leoTutorial (version number)</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3979"><vh>Gui-dependent commands</vh>
+<v t="ekr.20031218072017.3980"><vh>Edit Menu...</vh>
+<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20051011072903.2" a="M"><vh>copyText</vh></v>
+<v t="ekr.20051011072049.2" a="M"><vh>cutText</vh></v>
+<v t="ekr.20051011072903.5" a="M"><vh>pasteText</vh></v>
+</v>
+<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="ekr.20031218072017.3984"><vh>Window Menu...</vh>
+<v t="ekr.20031218072017.3985"><vh>toggleActivePane</vh></v>
+<v t="ekr.20031218072017.3986"><vh>cascade</vh></v>
+<v t="ekr.20031218072017.3987"><vh>equalSizedPanes</vh></v>
+<v t="ekr.20031218072017.3988"><vh>hideLogWindow</vh></v>
+<v t="ekr.20031218072017.3989"><vh>minimizeAll</vh></v>
+<v t="ekr.20031218072017.3990"><vh>toggleSplitDirection (tkFrame)</vh>
+<v t="ekr.20041221122440.1"><vh>togglePmwSplitDirection</vh></v>
+<v t="ekr.20041221122440.2"><vh>toggleTkSplitDirection</vh></v>
+</v>
+<v t="EKR.20040422130619"><vh>resizeToScreen</vh></v>
+</v>
+<v t="ekr.20031218072017.3991"><vh>Help Menu...</vh>
+<v t="ekr.20031218072017.3992"><vh>leoHelp</vh>
+<v t="ekr.20031218072017.3993"><vh>showProgressBar</vh>
+<v t="ekr.20031218072017.3994"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060201071346"><vh>Code cleanup</vh></v>
+</v>
+<v t="ekr.20060203065648.1"><vh>Focus issues</vh>
+<v t="ekr.20060203062212"><vh>Removed code in c.begin/EndUpdate and c.endEditLabel that tried to save/restore focus</vh></v>
+<v t="ekr.20060203063143"><vh>Put back the call to w.upate in g.app.gui.set_focus</vh></v>
+<v t="ekr.20060202234446.3"><vh>Focus goes to body if minibuffer command does not exist</vh></v>
+<v t="ekr.20060203070452"><vh>Fixed major blunder: tree.onHeadChanged sets focus only if there was a real change</vh></v>
+</v>
+<v t="ekr.20060203065648.2"><vh>Scrolling issues</vh>
+<v t="ekr.20060122183449"><vh>Disabled auto-scrolling in outline pane on clicks</vh>
+<v t="ekr.20040803072955.35"><vh>Drawing... (tkTree)</vh>
+<v t="ekr.20051216155728"><vh>tree.begin/endUpdate</vh></v>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20040803072955.61"><vh>idle_second_redraw</vh></v>
+<v t="ekr.20051105073850"><vh>drawX...</vh>
+<v t="ekr.20040803072955.36"><vh>drawBox</vh></v>
+<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
+<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.39"><vh>drawIcon</vh>
+<v t="ekr.20040803072955.40"><vh>&lt;&lt; compute x,y and iconVal &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.41"><vh>drawLine</vh></v>
+<v t="ekr.20040803072955.42"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040803072955.43"><vh>force_draw_node</vh></v>
+</v>
+<v t="ekr.20040803072955.44"><vh>drawText</vh>
+<v t="ekr.20040803072955.45"><vh>&lt;&lt; highlight text widget on enter events &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.46"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040803072955.47"><vh>drawUserIcon</vh>
+<v t="ekr.20040803072955.48"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.49"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.50"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.51"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.52"><vh>drawTopTree</vh></v>
+<v t="ekr.20040803072955.53"><vh>drawTree</vh></v>
+</v>
+<v t="ekr.20040803072955.62"><vh>Helpers...</vh>
+<v t="ekr.20040803072955.63"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
+<v t="ekr.20040803072955.64"><vh>getIconImage</vh></v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.68"><vh>numberOfVisibleNodes</vh></v>
+<v t="ekr.20040803072955.70"><vh>yoffset</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060123062147"><vh>move-outline and find commands force a screen scroll</vh>
+<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
+</v>
+<v t="ekr.20060203065648.3"><vh>Several commands force screen scrollling</vh></v>
+</v>
+<v t="ekr.20060203065648.4"><vh>Features</vh>
+<v t="ekr.20060117201349.1"><vh>Made modes work</vh>
+<v t="ekr.20050920085536.2" a="M"><vh> ctor (keyHandler)</vh>
+<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051001051355"><vh>Dispatching (keyHandler)</vh>
+<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45" a="M"><vh>callAltXFunction</vh></v>
+</v>
+<v t="ekr.20051001050607"><vh>endCommand</vh></v>
+</v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20041120112043"><vh>parseShortcutLine (g.app.config)</vh></v>
+<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20051007080058" a="M"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20060201081225"><vh>k.makeAllModeBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+</v>
+<v t="ekr.20060115103349"><vh>Modes</vh>
+<v t="ekr.20060117202916"><vh>badMode</vh></v>
+<v t="ekr.20060119150624"><vh>createModeBindings</vh></v>
+<v t="ekr.20060117202916.2"><vh>endMode</vh></v>
+<v t="ekr.20060102135349.2"><vh>enterNamedMode</vh></v>
+<v t="ekr.20060121104301"><vh>exitNamedMode</vh></v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060117202916.1"><vh>initMode</vh></v>
+<v t="ekr.20060104164523"><vh>modeHelp</vh>
+<v t="ekr.20060104125946"><vh>modeHelpHelper</vh></v>
+</v>
+<v t="ekr.20060105132013"><vh>set-xxx-State</vh></v>
+<v t="ekr.20060120200818"><vh>setInputState</vh></v>
+<v t="ekr.20060120193743"><vh>showStateAndMode</vh></v>
+</v>
+</v>
+<v t="ekr.20060119201356"><vh>Disabled plain-key bindings in insert/overwrite modes</vh>
+<v t="ekr.20060105132013"><vh>set-xxx-State</vh></v>
+<v t="ekr.20051125080855"><vh>selfInsertCommand</vh>
+<v t="ekr.20051026171121"><vh>&lt;&lt; handle newline &gt;&gt;</vh></v>
+<v t="ekr.20051027172949"><vh>updateAutomatchBracket</vh></v>
+<v t="ekr.20051026171121.1"><vh>udpateAutoIndent</vh></v>
+<v t="ekr.20051026092433"><vh>updateTab</vh></v>
+</v>
+<v t="ekr.20051006125633"><vh>Binding (keyHandler)</vh>
+<v t="ekr.20050920085536.16"><vh>bindKey</vh>
+<v t="ekr.20060114115648"><vh>&lt;&lt; give warning and return if there is a serious redefinition &gt;&gt;</vh></v>
+<v t="ekr.20060114110141"><vh>&lt;&lt; trace bindings if enabled in leoSettings.leo &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060130093055"><vh>bindKeyToDict</vh></v>
+<v t="ekr.20051008135051.1"><vh>bindOpenWith</vh></v>
+<v t="ekr.20051011103654"><vh>checkBindings</vh></v>
+<v t="ekr.20051007080058" a="M"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20060201081225"><vh>k.makeAllModeBindings</vh></v>
+<v t="ekr.20060104154937"><vh>addModeCommands</vh></v>
+<v t="ekr.20051008152134"><vh>initSpecialIvars</vh></v>
+<v t="ekr.20051008134059"><vh>makeBindingsFromCommandsDict</vh></v>
+</v>
+</v>
+<v t="ekr.20060127052111"><vh>(Limited undo)</vh>
+<v t="ekr.20031218072017.3605"><vh>class undoer</vh>
+<v t="ekr.20031218072017.3606"><vh>undo.__init__ &amp; clearIvars</vh>
+<v t="ekr.20031218072017.3607"><vh>clearIvars</vh></v>
+</v>
+<v t="ekr.20050416092908.1"><vh>Internal helpers</vh>
+<v t="ekr.20060127052111.1"><vh>cutStack</vh></v>
+<v t="EKR.20040526150818"><vh>getBead</vh></v>
+<v t="EKR.20040526150818.1"><vh>peekBead</vh></v>
+<v t="ekr.20060127113243"><vh>pushBead</vh></v>
+<v t="ekr.20060127070008"><vh>setIvarsFromBunch</vh></v>
+<v t="ekr.20050126081529"><vh>recognizeStartOfTypingWord</vh></v>
+<v t="ekr.20031218072017.3613"><vh>redoMenuName, undoMenuName</vh></v>
+<v t="ekr.20031218072017.3614"><vh>setRedoType, setUndoType</vh></v>
+<v t="ekr.20031218072017.3616"><vh>setUndoTypes</vh></v>
+<v t="EKR.20040530121329"><vh>u.restoreTree &amp; helpers</vh>
+<v t="ekr.20050415170737.2"><vh>restoreVnodeUndoInfo</vh></v>
+<v t="ekr.20050415170812.2"><vh>restoreTnodeUndoInfo</vh></v>
+</v>
+<v t="EKR.20040528075307"><vh>u.saveTree &amp; helpers</vh>
+<v t="EKR.20040530114124"><vh>&lt;&lt; about u.saveTree &gt;&gt;</vh></v>
+<v t="ekr.20050415170737.1"><vh>createVnodeUndoInfo</vh></v>
+<v t="ekr.20050415170812.1"><vh>createTnodeUndoInfo</vh></v>
+</v>
+<v t="ekr.20050525151449"><vh>u.trace</vh></v>
+<v t="ekr.20050410095424"><vh>updateMarks</vh></v>
+</v>
+<v t="ekr.20031218072017.3608"><vh>Externally visible entries</vh>
+<v t="ekr.20050318085432.4"><vh>afterX...</vh>
+<v t="ekr.20050315134017.4"><vh>afterChangeGroup</vh></v>
+<v t="ekr.20050315134017.2"><vh>afterChangeNodeContents</vh></v>
+<v t="ekr.20050315134017.3"><vh>afterChangeTree</vh></v>
+<v t="ekr.20050424161505"><vh>afterClearRecentFiles</vh></v>
+<v t="ekr.20050411193627.5"><vh>afterCloneNode</vh></v>
+<v t="ekr.20050411193627.6"><vh>afterDehoist</vh></v>
+<v t="ekr.20050411193627.8"><vh>afterDeleteNode</vh></v>
+<v t="ekr.20050411193627.7"><vh>afterHoist</vh></v>
+<v t="ekr.20050411193627.9"><vh>afterInsertNode</vh></v>
+<v t="ekr.20050526124257"><vh>afterMark</vh></v>
+<v t="ekr.20050410110343"><vh>afterMoveNode</vh></v>
+</v>
+<v t="ekr.20050318085432.3"><vh>beforeX...</vh>
+<v t="ekr.20050315134017.7"><vh>beforeChangeGroup</vh></v>
+<v t="ekr.20050315133212.2"><vh>beforeChangeNodeContents</vh></v>
+<v t="ekr.20050315134017.6"><vh>beforeChangeTree</vh></v>
+<v t="ekr.20050424161505.1"><vh>beforeClearRecentFiles</vh></v>
+<v t="ekr.20050412080354"><vh>beforeCloneNode</vh></v>
+<v t="ekr.20050411193627.3"><vh>beforeDeleteNode</vh></v>
+<v t="ekr.20050411193627.4"><vh>beforeInsertNode</vh></v>
+<v t="ekr.20050526131252"><vh>beforeMark</vh></v>
+<v t="ekr.20050410110215"><vh>beforeMoveNode</vh></v>
+<v t="ekr.20050318085432.2"><vh>createCommonBunch</vh></v>
+</v>
+<v t="ekr.20031218072017.3610"><vh>canRedo &amp; canUndo</vh></v>
+<v t="ekr.20031218072017.3609"><vh>clearUndoState</vh></v>
+<v t="ekr.20031218072017.3611"><vh>enableMenuItems</vh></v>
+<v t="ekr.20050525151217"><vh>getMark &amp; rollbackToMark (no longer used)</vh></v>
+<v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
+<v t="ekr.20040324061854"><vh>&lt;&lt; return if there is nothing to do &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.1"><vh>&lt;&lt; init the undo params &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.2"><vh>&lt;&lt; save the selection and scrolling position &gt;&gt;</vh></v>
+<v t="ekr.20040324061854.3"><vh>&lt;&lt; adjust the undo stack, clearing all forward entries &gt;&gt;</vh>
+<v t="ekr.20050125220613"><vh>&lt;&lt; set newBead if we can't share the previous bead &gt;&gt;</vh>
+<v t="ekr.20050125203937"><vh>&lt;&lt; set newBead if the change does not continue a word &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.2030"><vh>redo &amp; helpers...</vh>
+<v t="ekr.20050424170219"><vh>redoClearRecentFiles</vh></v>
+<v t="ekr.20050412083057"><vh>redoCloneNode</vh></v>
+<v t="EKR.20040526072519.2"><vh>redoDeleteNode</vh></v>
+<v t="ekr.20050412084532"><vh>redoInsertNode</vh></v>
+<v t="ekr.20050412085138.1"><vh>redoHoistNode &amp; redoDehoistNode</vh></v>
+<v t="ekr.20050318085432.6"><vh>redoGroup</vh></v>
+<v t="ekr.20050318085432.7"><vh>redoNodeContents</vh></v>
+<v t="ekr.20050526125801"><vh>redoMark</vh></v>
+<v t="ekr.20050411111847"><vh>redoMove</vh></v>
+<v t="ekr.20050318085432.8"><vh>redoTree</vh></v>
+<v t="EKR.20040526075238.5"><vh>redoTyping</vh></v>
+</v>
+<v t="ekr.20031218072017.2039"><vh>undo &amp; helpers...</vh>
+<v t="ekr.20050424170219.1"><vh>undoClearRecentFiles</vh></v>
+<v t="ekr.20050412083057.1"><vh>undoCloneNode</vh></v>
+<v t="ekr.20050412084055"><vh>undoDeleteNode</vh></v>
+<v t="ekr.20050318085713"><vh>undoGroup</vh></v>
+<v t="ekr.20050412083244"><vh>undoHoistNode &amp; undoDehoistNode</vh></v>
+<v t="ekr.20050412085112"><vh>undoInsertNode</vh></v>
+<v t="ekr.20050526124906"><vh>undoMark</vh></v>
+<v t="ekr.20050411112033"><vh>undoMove</vh></v>
+<v t="ekr.20050318085713.1"><vh>undoNodeContents</vh></v>
+<v t="ekr.20050318085713.2"><vh>undoTree</vh></v>
+<v t="ekr.20050408100042"><vh>undoRedoTree</vh></v>
+<v t="EKR.20040526090701.4"><vh>undoTyping</vh></v>
+<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
+<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using p's body text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.3614"><vh>setRedoType, setUndoType</vh></v>
+<v t="ekr.20060127052111.1"><vh>cutStack</vh></v>
+<v t="ekr.20050318085713"><vh>undoGroup</vh></v>
+<v t="ekr.20050318085432.6"><vh>redoGroup</vh></v>
+<v t="ekr.20031218072017.1761" a="M"><vh>c.insertHeadline</vh></v>
+<v t="ekr.20050411193627.9"><vh>afterInsertNode</vh></v>
+<v t="ekr.20050315134017.4"><vh>afterChangeGroup</vh></v>
+</v>
+<v t="ekr.20060202160109"><vh>Added free-text-widgets, dump-all-objects, dump-new-objects, verbose-dump-objects commands</vh></v>
+<v t="ekr.20060202141338"><vh>Added gc_stats to print-stats command</vh></v>
+</v>
+<v t="ekr.20060202233828.3"><vh>Made proper bindings for the log pane</vh>
+<v t="ekr.20031218072017.4039"><vh>class leoTkinterLog</vh>
+<v t="ekr.20051016095907"><vh>tkLog Birth</vh>
+<v t="ekr.20031218072017.4040"><vh>tkLog.__init__</vh></v>
+<v t="ekr.20031218072017.4042"><vh>tkLog.createControl</vh></v>
+<v t="ekr.20051016103459"><vh>tkLog.createTextWidget</vh></v>
+<v t="ekr.20051019134106.1"><vh>tkLog.makeTabMenu</vh></v>
+</v>
+<v t="ekr.20051016095907.1"><vh>Config &amp; get/saveState</vh>
+<v t="ekr.20031218072017.4041"><vh>tkLog.configureBorder &amp; configureFont</vh></v>
+<v t="ekr.20031218072017.4043"><vh>tkLog.getFontConfig</vh></v>
+<v t="ekr.20041222043017"><vh>tkLog.restoreAllState</vh></v>
+<v t="ekr.20041222043017.1"><vh>tkLog.saveAllState</vh></v>
+<v t="ekr.20041217135735.2"><vh>tkLog.setColorFromConfig</vh></v>
+<v t="ekr.20031218072017.4046"><vh>tkLog.setFontFromConfig</vh></v>
+</v>
+<v t="ekr.20051016095907.2"><vh>Focus &amp; update (tkLog)</vh>
+<v t="ekr.20031218072017.4045"><vh>tkLog.onActivateLog</vh></v>
+<v t="ekr.20031218072017.4044"><vh>tkLog.hasFocus</vh></v>
+<v t="ekr.20050208133438"><vh>forceLogUpdate</vh></v>
+</v>
+<v t="ekr.20051016101927"><vh>put &amp; putnl (tkLog)</vh>
+<v t="ekr.20031218072017.1473"><vh>put</vh>
+<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051016101927.1"><vh>putnl</vh></v>
+</v>
+<v t="ekr.20051018061932"><vh>Tab (TkLog)</vh>
+<v t="ekr.20051017212057"><vh>clearTab</vh></v>
+<v t="ekr.20051024173701"><vh>createTab</vh>
+<v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051018102027"><vh>deleteTab</vh></v>
+<v t="ekr.20051027114433"><vh>getSelectedTab</vh></v>
+<v t="ekr.20051018061932.1"><vh>lower/raiseTab</vh></v>
+<v t="ekr.20051019170806"><vh>renameTab</vh></v>
+<v t="ekr.20051016101724.1"><vh>selectTab</vh></v>
+<v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
+<v t="ekr.20051019134106"><vh>Tab menu callbacks &amp; helpers</vh>
+<v t="ekr.20051019134422"><vh>onRightClick &amp; onClick</vh></v>
+<v t="ekr.20051019140004.1"><vh>newTabFromMenu</vh></v>
+<v t="ekr.20051019165401"><vh>renameTabFromMenu</vh></v>
+<v t="ekr.20051019172811"><vh>getTabName</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
+<v t="ekr.20051024173701"><vh>createTab</vh>
+<v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20060131120250"><vh>(Recent)</vh>
 <v t="ekr.20060131191731"><vh>What I did</vh></v>
@@ -810,9 +1509,9 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20040703054646"><vh>&lt;&lt; print number of each type of object &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
-<v t="ekr.20031218072017.1593"><vh>printGcRefs</vh></v>
+<v t="ekr.20031218072017.1593" a="M"><vh>printGcRefs</vh></v>
 </v>
-<v t="ekr.20060202161935"><vh>printGcAll</vh></v>
+<v t="ekr.20060202161935" a="M"><vh>printGcAll</vh></v>
 </v>
 <v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
 <v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
@@ -894,9 +1593,9 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20040703054646"><vh>&lt;&lt; print number of each type of object &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
-<v t="ekr.20031218072017.1593"><vh>printGcRefs</vh></v>
+<v t="ekr.20031218072017.1593" a="M"><vh>printGcRefs</vh></v>
 </v>
-<v t="ekr.20060202161935"><vh>printGcAll</vh></v>
+<v t="ekr.20060202161935" a="M"><vh>printGcAll</vh></v>
 </v>
 </v>
 </v>
@@ -930,12 +1629,9 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060202125419"><vh>showStats</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20050921094025"><vh>4.4 To do</vh>
-<v t="ekr.20060202232638"><vh>Urgent: the focus sometimes improperly leaves the body pane</vh></v>
-<v t="ekr.20060125171123"><vh>(use a text minibuffer)</vh>
+<v t="ekr.20060125171123" a="M"><vh>(use a text minibuffer)</vh>
 <v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
-<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+<v t="ekr.20050920085536.45" a="M"><vh>callAltXFunction</vh></v>
 </v>
 <v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
 <v t="ekr.20050924064254"><vh>Label...</vh>
@@ -943,7 +1639,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20051023132350"><vh>getLabel</vh></v>
 <v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
 <v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
-<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
+<v t="ekr.20051023132350.1" a="M"><vh>setLabel</vh></v>
 <v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
 <v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
 <v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
@@ -951,7 +1647,123 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
 <v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
 <v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
+<v t="ekr.20051007080058" a="M"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20060203112912"><vh>What I did</vh></v>
+<v t="ekr.20060203112912.1"><vh>Initing</vh>
+<v t="ekr.20050920093543"><vh>c.finishCreate &amp; helper</vh>
+<v t="ekr.20051007143620"><vh>printCommandsDict</vh></v>
+</v>
+<v t="ekr.20031218072017.2176"><vh>f.finishCreate &amp; helpers</vh>
+<v t="ekr.20051009044751"><vh>createOuterFrames</vh></v>
+<v t="ekr.20051009044920"><vh>createIconBarComponents</vh></v>
+<v t="ekr.20051009045208"><vh>createSplitterComponents</vh></v>
+<v t="ekr.20051009045300"><vh>createStatusLineComponents</vh></v>
+<v t="ekr.20051009045404"><vh>createFirstTreeNode</vh></v>
+<v t="ekr.20051121092320"><vh>f.enableTclTraces</vh></v>
+</v>
 <v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+</v>
+<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+<v t="ekr.20051014154752"><vh>Minibuffer methods</vh>
+<v t="ekr.20060203115311"><vh>showMinibuffer</vh></v>
+<v t="ekr.20060203115311.1"><vh>hideMinibuffer</vh></v>
+<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
+<v t="ekr.20060203114017"><vh>f.setMinibufferBindings</vh></v>
+</v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20051026092433.1"><vh>backwardDeleteCharacter BUGGY</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060129052538.1"><vh>Master event handlers (keyHandler)</vh>
+<v t="ekr.20060127183752" a="M"><vh>masterKeyHandler</vh></v>
+<v t="ekr.20060129052538.2" a="M"><vh>masterClickHandler</vh></v>
+<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
+<v t="ekr.20060128090219" a="M"><vh>masterMenuHandler</vh></v>
+<v t="ekr.20060204083758"><vh>master click handlers: not used</vh>
+<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
+<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
+</v>
+<v t="ekr.20060203115311.2"><vh>onFocusIn/OutMinibuffer</vh></v>
+</v>
+</v>
+<v t="ekr.20060204084632"><vh>What I did: 2-4-06</vh></v>
+</v>
+<v t="ekr.20050921094025"><vh>4.4 To do</vh>
+<v t="ekr.20060202232638"><vh>Urgent: the focus sometimes improperly leaves the body pane</vh></v>
+<v t="ekr.20060125171123"><vh>(use a text minibuffer)</vh>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45" a="M"><vh>callAltXFunction</vh></v>
+</v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+<v t="ekr.20050924064254"><vh>Label...</vh>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
+<v t="ekr.20051023132350"><vh>getLabel</vh></v>
+<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
+<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
+<v t="ekr.20051023132350.1" a="M"><vh>setLabel</vh></v>
+<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
+<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
+<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
+</v>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
+<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
+<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
+<v t="ekr.20051007080058" a="M"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20060203112912"><vh>What I did</vh></v>
+<v t="ekr.20060203112912.1"><vh>Initing</vh>
+<v t="ekr.20050920093543"><vh>c.finishCreate &amp; helper</vh>
+<v t="ekr.20051007143620"><vh>printCommandsDict</vh></v>
+</v>
+<v t="ekr.20031218072017.2176"><vh>f.finishCreate &amp; helpers</vh>
+<v t="ekr.20051009044751"><vh>createOuterFrames</vh></v>
+<v t="ekr.20051009044920"><vh>createIconBarComponents</vh></v>
+<v t="ekr.20051009045208"><vh>createSplitterComponents</vh></v>
+<v t="ekr.20051009045300"><vh>createStatusLineComponents</vh></v>
+<v t="ekr.20051009045404"><vh>createFirstTreeNode</vh></v>
+<v t="ekr.20051121092320"><vh>f.enableTclTraces</vh></v>
+</v>
+<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
+<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+</v>
+<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+<v t="ekr.20051014154752"><vh>Minibuffer methods</vh>
+<v t="ekr.20060203115311"><vh>showMinibuffer</vh></v>
+<v t="ekr.20060203115311.1"><vh>hideMinibuffer</vh></v>
+<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
+<v t="ekr.20060203114017"><vh>f.setMinibufferBindings</vh></v>
+</v>
+<v t="ekr.20060104110233"><vh>generalModeHandler</vh></v>
+<v t="ekr.20051026092433.1"><vh>backwardDeleteCharacter BUGGY</vh>
+<v t="ekr.20051026092746"><vh>&lt;&lt; backspace with negative tab_width &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060129052538.1"><vh>Master event handlers (keyHandler)</vh>
+<v t="ekr.20060127183752" a="M"><vh>masterKeyHandler</vh></v>
+<v t="ekr.20060129052538.2" a="M"><vh>masterClickHandler</vh></v>
+<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
+<v t="ekr.20060128090219" a="M"><vh>masterMenuHandler</vh></v>
+<v t="ekr.20060204083758"><vh>master click handlers: not used</vh>
+<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
+<v t="ekr.20060131084938"><vh>masterDoubleClickHandler</vh></v>
+</v>
+<v t="ekr.20060203115311.2"><vh>onFocusIn/OutMinibuffer</vh></v>
+</v>
 </v>
 <v t="ekr.20060116073938"><vh>4.4a6</vh>
 <v t="ekr.20060122183544"><vh>Improve search commands</vh>
@@ -995,9 +1807,9 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060123125317.2"><vh> ctor (minibufferFind)</vh></v>
 <v t="ekr.20060124140114"><vh>Options</vh>
 <v t="ekr.20060124123133"><vh>setFindScope</vh></v>
-<v t="ekr.20060124122844"><vh>setOption</vh></v>
-<v t="ekr.20060125082510"><vh>getOption</vh></v>
-<v t="ekr.20060125074939"><vh>showFindOptions</vh></v>
+<v t="ekr.20060124122844" a="M"><vh>setOption</vh></v>
+<v t="ekr.20060125082510" a="M"><vh>getOption</vh></v>
+<v t="ekr.20060125074939" a="M"><vh>showFindOptions</vh></v>
 <v t="ekr.20060124135401"><vh>toggleOption</vh></v>
 <v t="ekr.20060124134356"><vh>setupArgs</vh></v>
 <v t="ekr.20060125091234"><vh>setupSearchPattern</vh></v>
@@ -1017,7 +1829,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20051020120306.11"><vh>__init__</vh>
 <v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
+<v t="ekr.20051023181449" a="M"><vh>createBindings (findTab)</vh></v>
 <v t="ekr.20051020120306.13"><vh>createFrame (findTab)</vh>
 <v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
 <v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
@@ -1066,6 +1878,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20050920084036.264"><vh>iSearchStateHandler &amp; helper</vh></v>
 <v t="ekr.20050920084036.265"><vh>scolorizer</vh></v>
 <v t="ekr.20050920084036.263"><vh>iSearchHelper</vh></v>
+<v t="ekr.20060203072636"><vh>endSearch</vh></v>
 </v>
 </v>
 </v>
@@ -1101,6 +1914,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
 <v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
 <v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
+<v t="ekr.20060202235215.1"><vh>Make sure the user doesn't specify Enter and Leave bindings by mistake</vh></v>
 </v>
 <v t="ekr.20060122185507"><vh>New commands and features</vh>
 <v t="ekr.20060201054108"><vh>apropos-bindings</vh></v>
@@ -1387,7 +2201,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 <v t="ekr.20031218072017.4064"><vh>Focus</vh>
 <v t="ekr.20031218072017.4065"><vh>get_focus</vh></v>
-<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+<v t="ekr.20031218072017.2373" a="M"><vh>set_focus (app.gui)</vh></v>
 <v t="ekr.20050210082320"><vh>widget_wants_focus (tk.gui)</vh></v>
 </v>
 <v t="ekr.20031218072017.4066"><vh>Font</vh>
@@ -1438,7 +2252,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 <v t="ekr.20051126123249"><vh>class autoCompleterClass (prototype)</vh>
 <v t="ekr.20051126123759"><vh> birth</vh>
-<v t="ekr.20051126123759.1"><vh> ctor</vh></v>
+<v t="ekr.20051126123759.1" a="M"><vh> ctor</vh></v>
 <v t="ekr.20051126123759.2"><vh> getPublicCommands (autoCommandsClass)</vh></v>
 </v>
 <v t="ekr.20051127105431"><vh>abort</vh></v>
@@ -1477,6 +2291,125 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20051202102752.8"><vh>spellCommandsClass (ok)</vh></v>
 </v>
 <v t="ekr.20050916180203"><vh>Make more commands undoable</vh></v>
+<v t="ekr.20060203165231"><vh>Change outline or body text background when changing panes.</vh></v>
+<v t="ekr.20060202235215.3"><vh>Remove deprecation warning</vh>
+<v t="EKR.20040627114602"><vh>getDescendentUnknownAttributes</vh></v>
+</v>
+</v>
+<v t="ekr.20060130151453"><vh>Find leaks</vh>
+<v t="ekr.20060202153509"><vh>Gc todo</vh></v>
+<v t="ekr.20060201114832"><vh>Notes</vh></v>
+<v t="ekr.20060202082221"><vh>Reference code</vh>
+<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20041219072112"><vh>&lt;&lt; import leoGlobals and leoApp &gt;&gt;</vh></v>
+<v t="ekr.20041219072416.1"><vh>&lt;&lt; import leoNodes and leoConfig &gt;&gt;</vh></v>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
+<v t="ekr.20041124083125"><vh>completeFileName (leo.py)</vh></v>
+<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
+<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
+<v t="ekr.20041130093254"><vh>reportDirectories</vh></v>
+</v>
+<v t="ekr.20031218072017.1588"><vh>Garbage Collection</vh>
+<v t="ekr.20060127162818"><vh>enable_gc_debug</vh></v>
+<v t="ekr.20031218072017.1589"><vh>clearAllIvars</vh></v>
+<v t="ekr.20031218072017.1590"><vh>collectGarbage</vh></v>
+<v t="ekr.20031218072017.1592"><vh>printGc</vh>
+<v t="ekr.20060127164729.1"><vh>printGcObjects</vh>
+<v t="ekr.20040703065638"><vh>&lt;&lt; print added functions &gt;&gt;</vh></v>
+<v t="ekr.20040703054646"><vh>&lt;&lt; print number of each type of object &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
+<v t="ekr.20031218072017.1593" a="M"><vh>printGcRefs</vh></v>
+</v>
+<v t="ekr.20060202161935" a="M"><vh>printGcAll</vh></v>
+</v>
+<v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
+<v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
+<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
+</v>
+<v t="ekr.20040803072955.65"><vh>scrollTo</vh>
+<v t="ekr.20040803072955.66"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.67"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.125"><vh>Selecting &amp; editing... (tkTree)</vh>
+<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
+<v t="ekr.20040803072955.127"><vh>editLabel</vh></v>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131" a="M"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132" a="M"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.134"><vh>tree.set...LabelState</vh>
+<v t="ekr.20040803072955.135"><vh>setEditLabelState</vh></v>
+<v t="ekr.20040803072955.136"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20040803072955.138"><vh>setUnselectedLabelState</vh></v>
+<v t="ekr.20040803072955.139" a="M"><vh>setDisabledHeadlineColors</vh></v>
+<v t="ekr.20040803072955.140"><vh>setEditHeadlineColors</vh></v>
+<v t="ekr.20040803072955.141" a="M"><vh>setUnselectedHeadlineColors</vh></v>
+</v>
+<v t="ekr.20040803072955.142"><vh>dimEditLabel, undimEditLabel</vh></v>
+<v t="ekr.20040803072955.143"><vh>tree.expandAllAncestors</vh></v>
+</v>
+<v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt; (commands)</vh></v>
+<v t="ekr.20031218072017.893"><vh>p.__cmp__</vh></v>
+</v>
+<v t="ekr.20060202082221.1"><vh>Leaky code</vh>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131" a="M"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132" a="M"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060202163829"><vh>Stats</vh></v>
+<v t="ekr.20060127162818.1"><vh>class debugCommandsClass</vh>
+<v t="ekr.20060127162921"><vh> ctor</vh></v>
+<v t="ekr.20060127163325"><vh> getPublicCommands</vh></v>
+<v t="ekr.20060202160523"><vh>dumpAll/New/VerboseObjects</vh></v>
+<v t="ekr.20060127163325.1"><vh>enable/disableGcTrace</vh></v>
+<v t="ekr.20060202154734"><vh>freeTreeWidgets</vh></v>
+<v t="ekr.20060202133313"><vh>printStats</vh></v>
+</v>
+<v t="ekr.20060127100926"><vh>(Improved gc stats)</vh>
+<v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
+<v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20041219072112"><vh>&lt;&lt; import leoGlobals and leoApp &gt;&gt;</vh></v>
+<v t="ekr.20041219072416.1"><vh>&lt;&lt; import leoNodes and leoConfig &gt;&gt;</vh></v>
+<v t="ekr.20040411081633"><vh>&lt;&lt; start psycho &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
+<v t="ekr.20041124083125"><vh>completeFileName (leo.py)</vh></v>
+<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
+<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
+<v t="ekr.20041130093254"><vh>reportDirectories</vh></v>
+</v>
+<v t="ekr.20040803072955.58"><vh>redraw_now &amp; helper</vh>
+<v t="ekr.20040803072955.59"><vh>redrawHelper</vh></v>
+</v>
+<v t="ekr.20031218072017.1588"><vh>Garbage Collection</vh>
+<v t="ekr.20060127162818"><vh>enable_gc_debug</vh></v>
+<v t="ekr.20031218072017.1589"><vh>clearAllIvars</vh></v>
+<v t="ekr.20031218072017.1590"><vh>collectGarbage</vh></v>
+<v t="ekr.20031218072017.1592"><vh>printGc</vh>
+<v t="ekr.20060127164729.1"><vh>printGcObjects</vh>
+<v t="ekr.20040703065638"><vh>&lt;&lt; print added functions &gt;&gt;</vh></v>
+<v t="ekr.20040703054646"><vh>&lt;&lt; print number of each type of object &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060127165509"><vh>printGcVerbose</vh></v>
+<v t="ekr.20031218072017.1593" a="M"><vh>printGcRefs</vh></v>
+</v>
+<v t="ekr.20060202161935" a="M"><vh>printGcAll</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20060116073229"><vh>4.4.1</vh>
@@ -1608,6 +2541,7 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 </v>
 <v t="ekr.20051104051733"><vh>Make Focus-in in minibuffer widget equivalent to Alt-x</vh></v>
 </v>
+<v t="ekr.20060202233315"><vh>To do first</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -1631,11 +2565,13 @@ marks="ekr.20050921103230,ekr.20031218072017.1723,ekr.20050921103230,"><vh>@thin
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20040629121554.2,ekr.20031218072017.2886,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
+<v t="ekr.20050710142719"
+marks="ekr.20051126123759.1,ekr.20060124122844,ekr.20060125082510,ekr.20060125074939,ekr.20051023181449,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
-<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
+<v t="ekr.20031218072017.3093"
+marks="ekr.20031218072017.1593,ekr.20060202161935,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
@@ -1656,36 +2592,18 @@ marks="ekr.20031218072017.3781,ekr.20050921103230,ekr.20031218072017.1723,"><vh>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
-<v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
+<v t="ekr.20031218072017.3939"
+marks="ekr.20051011072903.2,ekr.20051011072049.2,ekr.20051011072903.5,"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.4047"
+marks="ekr.20031218072017.2373,"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.3748"
-marks="ekr.20051010062551.1,"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20040803072955"
-marks="ekr.20040803072955.11,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.139,ekr.20040803072955.141,"><vh>@thin leoTkinterTree.py</vh></v>
-<v t="ekr.20060125171123" a="V"><vh>(use a text minibuffer)</vh>
-<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
-<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
-</v>
-<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
-<v t="ekr.20050924064254"><vh>Label...</vh>
-<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
-<v t="ekr.20051023132350"><vh>getLabel</vh></v>
-<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
-<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
-<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
-<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
-<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
-<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
-</v>
-<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus</vh></v>
-<v t="ekr.20050120092028"><vh>xWantsFocus (tkFrame)</vh></v>
-<v t="ekr.20050920094212"><vh>f.createMiniBufferWidget</vh></v>
-<v t="ekr.20051007080058"><vh>k.makeAllBindings</vh></v>
-</v>
+marks="ekr.20051010062551.1,ekr.20051007080058,ekr.20050920085536.45,ekr.20051023132350.1,ekr.20060127183752,ekr.20060129052538.2,ekr.20060128090219,"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20040803072955" a="V"
+marks="ekr.20040803072955.11,ekr.20040803072955.91,ekr.20040803072955.131,ekr.20040803072955.132,ekr.20040803072955.139,ekr.20040803072955.141,"><vh>@thin leoTkinterTree.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040422130619">def resizeToScreen (self,event=None):
@@ -1704,6 +2622,37 @@ marks="ekr.20040803072955.11,ekr.20040803072955.131,ekr.20040803072955.132,ekr.2
         geom = "%dx%d%+d%+d" % (w-8,h-46,0,0)
    
     top.geometry(geom)</t>
+<t tx="EKR.20040423082910"># New in 4.4b1: Restore the focus to a standard place.
+frame = self.c.frame
+focus_widget = g.app.gui.get_focus(frame)
+name = g.app.gui.widget_name(focus_widget)
+for kind in ('body','head','canvas'):
+    if name.startswith(kind): break
+else:
+    focus_widget = frame.body.bodyCtrl
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+self.forceLogUpdate(s)
+frame.widgetWantsFocus(focus_widget)
+</t>
+<t tx="EKR.20040423082910.1">g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+
+if type(s) == type(u""):
+    s = g.toEncodedString(s,"ascii")
+
+print s</t>
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
@@ -1937,6 +2886,19 @@ else: # Print surrounding lines.
 
     g.restoreStderr()
     g.restoreStdout()</t>
+<t tx="EKR.20040627114602"># Only @thin vnodes have the descendentTnodeUnknownAttributes field.
+# The question is: what are we to do about this?
+
+def getDescendentUnknownAttributes (self,s):
+    
+    try:
+        bin = binascii.unhexlify(s) # Throws a TypeError if val is not a hex string.
+        val = pickle.loads(bin)
+        return val
+
+    except (TypeError,pickle.UnpicklingError,ImportError):
+        g.trace('oops: getDescendentUnknownAttributes')
+        return None</t>
 <t tx="bwmulder.20041231211219">def gotoLineNumberOpen(self, *args, **kw):
     """
     Hook for mod_shadow plugin.
@@ -2313,18 +3275,29 @@ Gil
     These are *not* made in nullBody instances.'''
     
     frame = self.frame ; c = self.c ; k = c.k ; t = self.bodyCtrl
+    
+    if 1:
+         for kind,callback in (
+            ('&lt;Key&gt;',               k.masterKeyHandler),
+            ('&lt;Button-1&gt;',          frame.OnBodyClick),
+            ('&lt;Button-3&gt;',          frame.OnBodyRClick),
+            ('&lt;Double-Button-1&gt;',   frame.OnBodyDoubleClick),
+            # ('&lt;Double-Button-3&gt;',   None),
+        ):
+            t.bind(kind,callback)
+        
+    else:
+        t.bind('&lt;Key&gt;',k.masterKeyHandler)
 
-    t.bind('&lt;Key&gt;',k.masterKeyHandler)
-
-    for kind,func,handler in (
-        ('&lt;Button-1&gt;',          frame.OnBodyClick,          k.masterClickHandler),
-        ('&lt;Button-3&gt;',          frame.OnBodyRClick,         k.masterClick3Handler),
-        ('&lt;Double-Button-1&gt;',   frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
-        ('&lt;Double-Button-3&gt;',   None,                       k.masterDoubleClick3Handler),
-    ):
-        def bodyClickCallback(event,handler=handler,func=func):
-            return handler(event,func)
-        t.bind(kind,bodyClickCallback)
+        for kind,func,handler in (
+            ('&lt;Button-1&gt;',          frame.OnBodyClick,          k.masterClickHandler),
+            ('&lt;Button-3&gt;',          frame.OnBodyRClick,         k.masterClick3Handler),
+            ('&lt;Double-Button-1&gt;',   frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
+            ('&lt;Double-Button-3&gt;',   None,                       k.masterDoubleClick3Handler),
+        ):
+            def bodyClickCallback(event,handler=handler,func=func):
+                return handler(event,func)
+            t.bind(kind,bodyClickCallback)
             
     if sys.platform.startswith('win'):
         # Support Linux middle-button paste easter egg.
@@ -2521,6 +3494,23 @@ self.prolog_postfix_string = "?&gt;"
 # leo.py 3.11
 self.use_unicode = True # True: use new unicode logic.
 </t>
+<t tx="ekr.20031218072017.1473"># All output to the log stream eventually comes here.
+def put (self,s,color=None,tabName='Log'):
+    
+    c = self.c
+    
+    # print 'tkLog.put',self.c.shortFileName(),tabName,g.callers()
+
+    if g.app.quitting or not c or not c.exists:
+        return
+
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
+        &lt;&lt; put s to log control &gt;&gt;
+    else:
+        &lt;&lt; put s to logWaiting and print s &gt;&gt;</t>
 <t tx="ekr.20031218072017.1490">@ This routine saves enough information so a typing operation can be undone and redone.
 
 We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
@@ -2818,10 +3808,10 @@ lastFunctionsDict = {}
         
     
 </t>
-<t tx="ekr.20031218072017.1593">def printGcRefs (message):
+<t tx="ekr.20031218072017.1593">def printGcRefs (message=''):
 
     refs = gc.get_referrers(app.windowList[0])
-    g.es_print('-' * 30)
+    g.es_print('-' * 30,message)
 
     if g.app.trace_gc_verbose:
         g.es_print("refs of", app.windowList[0])
@@ -3232,7 +4222,7 @@ else:
         c.endEditing()
         c.editPosition(p)
     finally:
-        c.endUpdate(restoreFocus=False,scroll=True)
+        c.endUpdate(scroll=True)
 
     return p # for mod_labels plugin.</t>
 <t tx="ekr.20031218072017.1762">def clone (self,event=None):
@@ -4356,6 +5346,26 @@ closeFlag = (
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr</t>
+<t tx="ekr.20031218072017.2176">def finishCreate (self,c):
+    
+    f = self ; f.c = c
+    # g.trace('tkFrame')
+    
+    # This must be done after creating the commander.
+    f.splitVerticalFlag,f.ratio,f.secondary_ratio = f.initialRatios()
+    f.createOuterFrames()
+    f.createIconBarComponents()
+    f.createSplitterComponents()
+    f.createStatusLineComponents()
+    f.createFirstTreeNode()
+    f.menu = leoTkinterMenu.leoTkinterMenu(f)
+        # c.finishCreate calls f.createMenuBar later.
+    c.setLog()
+    g.app.windowList.append(f)
+    c.initVersion()
+    c.signOnWithVersion()
+    f.miniBufferWidget = f.createMiniBufferWidget()
+    # f.enableTclTraces()</t>
 <t tx="ekr.20031218072017.2187">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
     
     __pychecker__ = '--no-argsused' # defaultSize not used.
@@ -4410,7 +5420,7 @@ closeFlag = (
             w2 = c.frame.outerFrame.focus_get()
             w2 and g.trace(g.app.gui.widget_name(name2),c)
 
-        if 0:
+        if 1:
             # A fix to the cursed problems with Pmw.Notebook.
             # I am not happy with this, but it seems preferable to trying to figure out
             # all the places where the code must call update()
@@ -4506,12 +5516,9 @@ self._topPosition     = self.nullPosition()
 self.inCommand = False
 self.requestCloseWindow = False
 
-# For saving and restoring focus.
-self.afterUpdateWidgetStack = []
-
 # For emacs/vim key handling.
 self.commandsDict = None
-self.keyHandler = None
+self.keyHandler = self.k = None
 self.miniBufferWidget = None
 
 # per-document info...
@@ -4564,6 +5571,9 @@ self.recentFiles = [] # List of recent files</t>
     c.setLog()
     p = c.currentPosition()
     #g.trace(command.__name__,label)
+    
+    if c.config.getBool('trace_doCommand'):
+        g.trace(command and command.__name__)
     
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
@@ -5571,7 +6581,7 @@ if not vnodeName:
 <t tx="ekr.20031218072017.2885"></t>
 <t tx="ekr.20031218072017.2886">def editHeadline (self,event=None):
     
-    c = self ; k = c.keyHandler ; tree = c.frame.tree
+    c = self ; k = c.k ; tree = c.frame.tree
     
     if g.app.batchMode:
         c.notValidInBatchMode("Edit Headline")
@@ -7217,6 +8227,114 @@ top.title("Download progress")
 self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
 scale.pack()
 top.lift()</t>
+<t tx="ekr.20031218072017.4039">class leoTkinterLog (leoFrame.leoLog):
+    
+    """A class that represents the log pane of a Tkinter window."""
+
+    @others</t>
+<t tx="ekr.20031218072017.4040">def __init__ (self,frame,parentFrame):
+    
+    # g.trace("leoTkinterLog")
+    
+    self.c = c = frame.c # Also set in the base constructor, but we need it here.
+    
+    self.colorTags = []
+        # The list of color names used as tags in present tab.
+        # This gest switched by selectTab.
+
+    self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
+    
+    # New in 4.4a2: The log pane is a Pmw.Notebook...
+
+    self.nb = None      # The Pmw.Notebook that holds all the tabs.
+    self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
+    self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
+    self.logNumber = 0 # To create unique name fields for Tk.Text widgets.
+    self.menu = None # A menu that pops up on right clicks in the hull or in tabs.
+    self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
+    self.newTabCount = 0 # Number of new tabs created.
+    
+    # Official status variables.  Can be used by client code.
+    self.tabName = None # The name of the active tab.
+    self.logCtrl = None # Same as self.textDict.get(self.tabName)
+    self.tabFrame = None # Same as self.frameDict.get(self.tabName)
+    
+    # Call the base class constructor and calls createControl.
+    leoFrame.leoLog.__init__(self,frame,parentFrame)
+</t>
+<t tx="ekr.20031218072017.4041">def configureBorder(self,border):
+    
+    self.logCtrl.configure(bd=border)
+    
+def configureFont(self,font):
+
+    self.logCtrl.configure(font=font)</t>
+<t tx="ekr.20031218072017.4042">def createControl (self,parentFrame):
+
+    c = self.c
+
+    self.nb = Pmw.NoteBook(parentFrame,
+        borderwidth = 1, pagemargin = 0,
+        raisecommand = self.raiseTab,
+        lowercommand = self.lowerTab,
+        arrownavigation = 0,
+    )
+
+    menu = self.makeTabMenu(tabName=None)
+
+    def hullMenuCallback(event):
+        self.onRightClick(event,menu)
+
+    self.nb.bind('&lt;Button-3&gt;',hullMenuCallback)
+
+    self.nb.pack(fill='both',expand=1)
+    self.selectTab('Log') # create the tab and make it the active tab.
+    return self.logCtrl</t>
+<t tx="ekr.20031218072017.4043">def getFontConfig (self):
+
+    font = self.logCtrl.cget("font")
+    # g.trace(font)
+    return font</t>
+<t tx="ekr.20031218072017.4044">def hasFocus (self):
+    
+    return g.app.gui.get_focus(self.frame) == self.logCtrl</t>
+<t tx="ekr.20031218072017.4045">def onActivateLog (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    try:
+        self.c.setLog()
+        self.frame.tree.OnDeactivate()
+        self.frame.logWantsFocus()
+    except:
+        g.es_event_exception("activate log")</t>
+<t tx="ekr.20031218072017.4046">def SetWidgetFontFromConfig (self,logCtrl=None):
+
+    c = self.c
+
+    if not logCtrl: logCtrl = self.logCtrl
+
+    font = c.config.getFontFromParams(
+        "log_text_font_family", "log_text_font_size",
+        "log_text_font_slant", "log_text_font_weight",
+        c.config.defaultLogFontSize)
+
+    self.fontRef = font # ESSENTIAL: retain a link to font.
+    logCtrl.configure(font=font)
+
+    # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
+
+    bg = c.config.getColor("log_text_background_color")
+    if bg:
+        try: logCtrl.configure(bg=bg)
+        except: pass
+
+    fg = c.config.getColor("log_text_foreground_color")
+    if fg:
+        try: logCtrl.configure(fg=fg)
+        except: pass
+        
+setFontFromConfig = SetWidgetFontFromConfig # Renaming supresses a pychecker warning.</t>
 <t tx="ekr.20031218072017.4059"></t>
 <t tx="ekr.20031218072017.4060"></t>
 <t tx="ekr.20031218072017.4061"># WARNING: Call this routine _after_ creating a dialog.
@@ -7785,7 +8903,7 @@ bunch.yview=u.yview
     return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.390 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.394 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -9200,7 +10318,7 @@ def yoffsetTree(self,p,p1):
     c.beginUpdate()
     try:
         if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
-            c.endEditing() # Bug fix: 12/19/05
+            c.endEditing()
             self.active = True
             if p == p1 or c.config.getBool('initialClickExpandsOrContractsNode'):
                 if p.isExpanded(): p.contract()
@@ -9290,10 +10408,11 @@ def onHeadChanged (self,p,undoType='Typing'):
             pass # g.trace('not changed')
     finally:
         c.endUpdate()
-        if self.stayInTree:
-            frame.treeWantsFocus()
-        else:
-            frame.bodyWantsFocus()
+        if changed:
+            if self.stayInTree:
+                frame.treeWantsFocus()
+            else:
+                frame.bodyWantsFocus()
    
     g.doHook("headkey2",c=c,p=p,v=p,ch=ch)</t>
 <t tx="ekr.20040803072955.94"># Remove one or two trailing newlines before warning of truncation.
@@ -9334,9 +10453,7 @@ s = g.toUnicode(s or '',g.app.tkEncoding)</t>
     
     '''End editing of a headline and update p.headString().'''
 
-    c = self.c ; k = c.keyHandler ; p = c.currentPosition()
-    
-    # w = g.app.gui.get_focus(c.frame)
+    c = self.c ; k = c.k ; p = c.currentPosition()
 
     self.setEditPosition(None) # That is, self._editPosition = None
     
@@ -9345,9 +10462,7 @@ s = g.toUnicode(s or '',g.app.tkEncoding)</t>
         k.showStateAndMode()
     
     # Important: this will redraw if necessary.
-    self.onHeadChanged(p)
-    
-    # g.app.gui.set_focus(c,w)</t>
+    self.onHeadChanged(p)</t>
 <t tx="ekr.20040803072955.127">def editLabel (self,p):
     
     """Start editing p's headline."""
@@ -9850,6 +10965,17 @@ Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files
         ):
             g.es("%s dir: %s" % (kind,theDir),color="blue")</t>
 <t tx="ekr.20041211042119"></t>
+<t tx="ekr.20041217135735.2">def setColorFromConfig (self):
+    
+    c = self.c
+    
+    bg = c.config.getColor("log_pane_background_color") or 'white'
+    
+    try:
+        self.logCtrl.configure(bg=bg)
+    except:
+        g.es("exception setting log pane background color")
+        g.es_exception()</t>
 <t tx="ekr.20041219072112"># Import leoGlobals, but do NOT set g.
 try:
     import leoGlobals
@@ -9940,6 +11066,45 @@ def togglePmwSplitDirection (self,verticalFlag):
     # Redraw with an appropriate ratio.
     vflag,ratio,secondary_ratio = frame.initialRatios()
     self.resizePanesToRatio(ratio,secondary_ratio)</t>
+<t tx="ekr.20041222043017">def restoreAllState (self,d):
+    
+    '''Restore the log from a dict created by saveAllState.'''
+    
+    logCtrl = self.logCtrl
+
+    # Restore the text.
+    text = d.get('text')
+    logCtrl.insert('end',text)
+
+    # Restore all colors.
+    colors = d.get('colors')
+    for color in colors.keys():
+        if color not in self.colorTags:
+            self.colorTags.append(color)
+            logCtrl.tag_config(color,foreground=color)
+        items = list(colors.get(color))
+        while items:
+            start,stop = items[0],items[1]
+            items = items[2:]
+            logCtrl.tag_add(color,start,stop)</t>
+<t tx="ekr.20041222043017.1">def saveAllState (self):
+    
+    '''Return a dict containing all data needed to recreate the log in another widget.'''
+    
+    logCtrl = self.logCtrl ; colors = {}
+
+    # Save the text
+    text = logCtrl.get('1.0','end')
+
+    # Save color tags.
+    tag_names = logCtrl.tag_names()
+    for tag in tag_names:
+        if tag in self.colorTags:
+            colors[tag] = logCtrl.tag_ranges(tag)
+            
+    d = {'text':text,'colors': colors}
+    # g.trace('\n',g.dictToString(d))
+    return d</t>
 <t tx="ekr.20050120092028">def bodyWantsFocus(self):
     w = self.body and self.body.bodyCtrl
     self.set_focus(w)
@@ -10075,6 +11240,16 @@ else:
     ok,frame = g.openWithFileName(fileName,c)
     if not ok:
         g.es("not found: %s" % name)</t>
+<t tx="ekr.20050208133438">def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.logCtrl.update_idletasks()</t>
 <t tx="ekr.20050210082320">def widget_wants_focus(self,c,widget):
 
     """Indicate that a widget want to get focus."""
@@ -11802,13 +12977,7 @@ def iSearchStateHandler (self,event):
     self.altX_prompt = 'full-command: '
     &lt;&lt; define Tk ivars &gt;&gt;
     &lt;&lt; define externally visible ivars &gt;&gt;
-    &lt;&lt; define internal ivars &gt;&gt;
-    
-    # self.tkBindNamesInverseDict = {}
-    # for key in self.tkBindNamesDict.keys():
-        # val = self.tkBindNamesDict.get(key)
-        # self.tkBindNamesInverseDict [val] = key
-        </t>
+    &lt;&lt; define internal ivars &gt;&gt;</t>
 <t tx="ekr.20050920085536.16">def bindKey (self,pane,shortcut,callback,commandName):
 
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
@@ -11969,7 +13138,9 @@ def doTabCompletion (self,defaultTabList,redraw=True):
         func(event)
         k.endCommand(event,commandName)
     else:
-        k.setLabel('Command does not exist: %s' % commandName)</t>
+        k.keyboardQuit(event)
+        k.setLabel('Command does not exist: %s' % commandName)
+        c.frame.bodyWantsFocus()</t>
 <t tx="ekr.20050920085536.46"># Used by getArg and fullCommand.
 
 def doBackSpace (self,defaultCompletionList,redraw=True):
@@ -12093,7 +13264,6 @@ def doLastAltX (self,event):
     # g.trace(stroke,k.abortAllModesKey)
 
     if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
-        k.clearState()
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
         return 'break'
@@ -12101,10 +13271,11 @@ def doLastAltX (self,event):
     if special: # Don't pass these on.
         return 'break' 
 
-    if k.inState():
-        val = k.callStateFunction(event) # Calls end-command.
-        if val != 'do-func': return 'break'
-        g.trace('Executing key outside of mode')
+    if 0: # *** This is now handled by k.masterKeyHandler.
+        if k.inState():
+            val = k.callStateFunction(event) # Calls end-command.
+            if val != 'do-func': return 'break'
+            g.trace('Executing key outside of mode')
 
     if k.regx.iter:
         try:
@@ -12129,6 +13300,8 @@ def doLastAltX (self,event):
             c.doCommand(func,commandName,event=event)
         k.endCommand(event,commandName)
         return 'break'
+    elif k.inState():
+        return 'break' # New in 4.4b2: ignore unbound keys in a state.
     else:
         val = k.handleDefaultChar(event)
         return val</t>
@@ -12227,6 +13400,25 @@ def numberCommand9 (self,event): return self.numberCommand (event,None,9)</t>
     frame.minibufferVisible = c.showMinibuffer
 
     return label</t>
+<t tx="ekr.20050920094633">def finishCreate (self):
+    
+    '''Complete the construction of the keyHandler class.
+    c.commandsDict has been created when this is called.'''
+    
+    k = self ; c = k.c
+    
+    # g.trace('keyHandler')
+   
+    k.createInverseCommandsDict()
+    
+    if not c.miniBufferWidget:
+        # Does not exist for leoSettings.leo files.
+        return
+
+    # Important: bindings exist even if c.showMiniBuffer is False.
+    k.makeAllBindings()
+
+    k.setInputState(self.unboundKeyAction)</t>
 <t tx="ekr.20050921094025"></t>
 <t tx="ekr.20050921103230">def defineCmdsMenuTables (self):
     
@@ -12464,6 +13656,7 @@ self.setDefaultUnboundKeyAction()</t>
     c.frame.body.createBindings()
     c.frame.log.setTabBindings('Log')
     c.frame.tree.setBindings()
+    c.frame.setMinibufferBindings()
     k.checkBindings()</t>
 <t tx="ekr.20051007143620">def printCommandsDict (self):
     
@@ -12476,6 +13669,25 @@ self.setDefaultUnboundKeyAction()</t>
         command = c.commandsDict.get(key)
         print '%30s = %s' % (key,g.choose(command,command.__name__,'&lt;None&gt;'))
     print</t>
+<t tx="ekr.20051008082929">def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict.
+    
+    c.commandsDict:        keys are command names, values are funcions f.
+    k.inverseCommandsDict: keys are f.__name__, values are minibuffer command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        try:
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+                
+        except Exception:
+            g.es_exception()
+            g.trace(repr(name),repr(f),g.callers())</t>
 <t tx="ekr.20051008134059">def makeBindingsFromCommandsDict (self):
     
     '''Add bindings for all entries in c.commandDict.'''
@@ -12524,11 +13736,100 @@ self.setDefaultUnboundKeyAction()</t>
                     setattr(k,ivar,stroke) ; found = True ;break
         if not found:
             g.trace('no setting for %s' % commandName)</t>
+<t tx="ekr.20051009044751">def createOuterFrames (self):
+
+    f = self ; c = f.c
+    f.top = top = Tk.Toplevel()
+    g.app.gui.attachLeoIcon(top)
+    top.title(f.title)
+    top.minsize(30,10) # In grid units.
+    
+    if g.os_path_exists(g.app.user_xresources_path):
+        f.top.option_readfile(g.app.user_xresources_path)
+    
+    f.top.protocol("WM_DELETE_WINDOW", f.OnCloseLeoEvent)
+    f.top.bind("&lt;Button-1&gt;", f.OnActivateLeoEvent)
+    
+    # These don't work on Windows. Because of bugs in window managers,
+    # there is NO WAY to know which window is on top!
+    if 0:
+        f.top.bind("&lt;Activate&gt;",f.OnActivateLeoEvent)
+        f.top.bind("&lt;Deactivate&gt;",f.OnDeactivateLeoEvent)
+        f.top.bind("&lt;Control-KeyPress&gt;",f.OnControlKeyDown)
+        f.top.bind("&lt;Control-KeyRelease&gt;",f.OnControlKeyUp)
+    
+    # Create the outer frame, the 'hull' component.
+    f.outerFrame = Tk.Frame(top)
+    f.outerFrame.pack(expand=1,fill="both")
+    f.componentClass(c,'hull',f.outerFrame)</t>
+<t tx="ekr.20051009044920"># Warning: there is also a method called createIconBar.
+
+def createIconBarComponents (self):
+
+    f = self ; c = f.c
+
+    iconBar = f.iconBarClass(c,f.outerFrame)
+    f.iconFrame = iconBar.iconFrame
+    f.iconBar = f.componentClass(c,
+        f.iconBarComponentName,iconBar.iconFrame,
+        iconBar,iconBar.pack,iconBar.unpack)
+    f.iconBar.show()</t>
+<t tx="ekr.20051009045208">def createSplitterComponents (self):
+
+    f = self ; c = f.c
+
+    f.createLeoSplitters(f.outerFrame)
+    
+    # Create the canvas, tree, log and body.
+    f.canvas = f.createCanvas(f.split2Pane1)
+    f.tree   = leoTkinterTree.leoTkinterTree(c,f,f.canvas)
+    f.log    = leoTkinterLog(f,f.split2Pane2)
+    f.body   = leoTkinterBody(f,f.split1Pane2)
+    
+    f.componentClass(c,'tree',f.split2Pane1, f.tree, f.packTree, f.unpackTree)
+    f.componentClass(c,'log', f.split2Pane2, f.log,  f.packLog,  f.unpackLog)
+    f.componentClass(c,'body',f.split1Pane2, f.body, f.packBody, f.unpackBody)
+    
+    # Yes, this an "official" ivar: this is a kludge.
+    f.bodyCtrl = f.body.bodyCtrl
+    
+    # Configure.
+    f.setTabWidth(c.tab_width)
+    f.tree.setColorFromConfig()
+    f.reconfigurePanes()
+    f.body.setFontFromConfig()
+    f.body.setColorFromConfig()</t>
+<t tx="ekr.20051009045300"># Warning: there is also a method called createStatusLine.
+
+def createStatusLineComponents (self):
+    
+    f = self ; c = f.c
+    statusLine = f.statusLineClass(c,f.outerFrame)
+    
+    # Create offical ivars in the frame class.
+    f.statusFrame = statusLine.statusFrame
+    f.statusLabel = statusLine.labelWidget
+    f.statusText  = statusLine.textWidget
+    
+    f.statusLine = f.componentClass(c,
+        f.statusLineComponentName,
+        statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
+    f.statusLine.show() # Show status line by default.</t>
+<t tx="ekr.20051009045404">def createFirstTreeNode (self):
+    
+    f = self ; c = f.c
+
+    t = leoNodes.tnode()
+    v = leoNodes.vnode(c,t)
+    p = leoNodes.position(c,v,[])
+    v.initHeadString("NewHeadline")
+    p.moveToRoot()
+    c.editPosition(p)</t>
 <t tx="ekr.20051011072049.2">def cutText (self,event=None):
     
     '''Invoked from the mini-buffer and from shortcuts.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
+    f = self ; c = f.c ; w = event and event.widget
     if not w or not g.app.gui.isTextWidget(w): return
 
     name = g.app.gui.widget_name(w)
@@ -12555,7 +13856,7 @@ OnCutFromMenu = cutText</t>
     
     '''Copy the selected text from the widget to the clipboard.'''
     
-    f = self ; c = f.c ; w = f.getFocus()
+    f = self ; c = f.c ; w = event and event.widget
     if not w or not g.app.gui.isTextWidget(w): return
 
     # Set the clipboard text.
@@ -12569,7 +13870,7 @@ OnCopyFromMenu = copyText</t>
 
     '''Paste the clipboard into a widget.'''
 
-    f = self ; c = f.c ; w = f.getFocus()
+    f = self ; c = f.c ; w = event and event.widget
     if not w or not g.app.gui.isTextWidget(w): return
 
     name = g.app.gui.widget_name(w)
@@ -12736,6 +14037,7 @@ OnPasteFromMenu = pasteText</t>
 - Ignore position of blank lines wrt sentinels.
 - Ignore (optionally?) underindented blank lines.
 - Use pyclbr to parse Python imports?</t>
+<t tx="ekr.20051014154752"></t>
 <t tx="ekr.20051014155551">def hideMinibuffer (self,event):
     
     k = self ; c = k.c
@@ -12802,7 +14104,87 @@ unfinished.
         # Remove indentation from indentation of this function.
     s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
     g.es_print(s)</t>
+<t tx="ekr.20051016095907"></t>
+<t tx="ekr.20051016095907.1"></t>
+<t tx="ekr.20051016095907.2"></t>
+<t tx="ekr.20051016101724.1">def selectTab (self,tabName):
+
+    '''Create the tab if necessary and make it active.'''
+
+    c = self.c ; tabFrame = self.frameDict.get(tabName)
+
+    if tabFrame:
+        # Switch to a new colorTags list.
+        newColorTags = self.colorTagsDict.get(tabName)
+        self.colorTagsDict [self.tabName] = self.colorTags [:]
+        self.colorTags = newColorTags
+    else:
+        self.createTab(tabName)
+        
+    self.nb.selectpage(tabName)
+    # Update the status vars.
+    self.tabName = tabName
+    self.logCtrl = self.textDict.get(tabName)
+    # c.frame.widgetWantsFocus(self.logCtrl)
+    self.tabFrame = self.frameDict.get(tabName)
+    
+    # New in 4.4b1: call update *after* creating the tab.
+    tabFrame and tabFrame.update()
+
+    return tabFrame</t>
+<t tx="ekr.20051016101927">@ Printing uses self.logCtrl, so this code need not concern itself
+with which tab is active.
+
+Also, selectTab switches the contents of colorTags, so that is not concern.
+It may be that Pmw will allow us to dispense with the colorTags logic...</t>
+<t tx="ekr.20051016101927.1">def putnl (self,tabName='Log'):
+
+    if g.app.quitting:
+        return
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
+        self.logCtrl.insert("end",'\n')
+        self.logCtrl.see("end")
+        self.forceLogUpdate('\n')
+    else:
+        # Put a newline to logWaiting and print newline
+        g.app.logWaiting.append(('\n',"black"),)
+        print "Null tkinter log"
+        print
+</t>
+<t tx="ekr.20051016103459">def createTextWidget (self,parentFrame):
+    
+    self.logNumber += 1
+    log = Tk.Text(parentFrame,name="log-%d" % self.logNumber,
+        setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
+    
+    logBar = Tk.Scrollbar(parentFrame,name="logBar")
+
+    log['yscrollcommand'] = logBar.set
+    logBar['command'] = log.yview
+    
+    logBar.pack(side="right", fill="y")
+    # rr 8/14/02 added horizontal elevator 
+    if self.wrap == "none": 
+        logXBar = Tk.Scrollbar( 
+            parentFrame,name='logXBar',orient="horizontal") 
+        log['xscrollcommand'] = logXBar.set 
+        logXBar['command'] = log.xview 
+        logXBar.pack(side="bottom", fill="x")
+    log.pack(expand=1, fill="both")
+
+    return log</t>
 <t tx="ekr.20051016155819"></t>
+<t tx="ekr.20051017212057">def clearTab (self,tabName):
+    
+    self.selectTab(tabName)
+    t = self.logCtrl
+    if t:
+        t.delete('1.0','end')
+        # Necessary to allow focus to move *out* of t.
+        t.update()</t>
 <t tx="ekr.20051017212452"># Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
 
 def computeCompletionList (self,defaultTabList,backspace):
@@ -12836,6 +14218,29 @@ def computeCompletionList (self,defaultTabList,backspace):
             g.es('%*s %*s %s' % (-(min(20,n1)),s1,n2,s2,s3),tabName=tabName)
 
     c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20051018061932"></t>
+<t tx="ekr.20051018061932.1">def lowerTab (self,tabName):
+    
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='grey80')
+        
+        # New in 4.4b1: call update explicitly.
+        logCtrl = self.textDict.get(tabName)
+        logCtrl and logCtrl.update()
+        self.c.frame.bodyWantsFocus()
+
+def raiseTab (self,tabName):
+
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='LightSteelBlue1')
+        
+        # New in 4.4b1: call update explicitly.
+        logCtrl = self.textDict.get(tabName)
+        if logCtrl:
+            logCtrl.update()
+            self.c.frame.widgetWantsFocus(logCtrl)</t>
 <t tx="ekr.20051018070524">def computeInverseBindingDict (self):
 
     k = self ; d = {}
@@ -12856,6 +14261,136 @@ def computeCompletionList (self,defaultTabList,backspace):
             d [b.commandName] = shortcutList
 
     return d</t>
+<t tx="ekr.20051018072306">t = self.createTextWidget(tabFrame)
+
+# Set the background color.
+configName = 'log_pane_%s_tab_background_color' % tabName
+bg = c.config.getColor(configName) or 'MistyRose1'
+try: t.configure(bg=bg)
+except Exception: pass # Could be a user error.
+
+self.SetWidgetFontFromConfig(logCtrl=t)
+
+self.frameDict [tabName] = tabFrame
+self.textDict [tabName] = t
+
+# Switch to a new colorTags list.
+if self.tabName:
+    self.colorTagsDict [self.tabName] = self.colorTags [:]
+
+self.colorTags = ['black']
+self.colorTagsDict [tabName] = self.colorTags</t>
+<t tx="ekr.20051018102027">def deleteTab (self,tabName):
+    
+    if tabName == 'Log':
+        pass
+
+    elif tabName in ('Find','Spell'):
+        self.selectTab('Log')
+    
+    elif tabName in self.nb.pagenames():
+        self.nb.delete(tabName)
+        self.colorTagsDict [tabName] = []
+        self.textDict [tabName] = None
+        self.frameDict [tabName] = None
+        self.tabName = None
+        self.selectTab('Log')
+        
+    # New in Leo 4.4b1.
+    self.c.frame.bodyWantsFocus()</t>
+<t tx="ekr.20051019134106"></t>
+<t tx="ekr.20051019134106.1">def makeTabMenu (self,tabName=None):
+
+    '''Create a tab popup menu.'''
+
+    c = self.c
+    hull = self.nb.component('hull') # A Tk.Canvas.
+    
+    menu = Tk.Menu(hull,tearoff=0)
+    menu.add_command(label='New Tab',command=self.newTabFromMenu)
+    
+    if tabName:
+        # Important: tabName is the name when the tab is created.
+        # It is not affected by renaming, so we don't have to keep
+        # track of the correspondence between this name and what is in the label.
+        def deleteTabCallback():
+            self.deleteTab(tabName)
+            
+        label = g.choose(
+            tabName in ('Find','Spell'),'Hide This Tab','Delete This Tab')
+        menu.add_command(label=label,command=deleteTabCallback)
+ 
+        def renameTabCallback():
+            self.renameTabFromMenu(tabName)
+
+        menu.add_command(label='Rename This Tab',command=renameTabCallback)
+
+    return menu</t>
+<t tx="ekr.20051019134422">def onRightClick (self,event,menu):
+    
+    c = self.c
+    menu.post(event.x_root,event.y_root)
+    
+    
+def onClick (self,event,tabName):
+
+    self.selectTab(tabName)</t>
+<t tx="ekr.20051019140004.1">def newTabFromMenu (self,tabName='Log'):
+
+    self.selectTab(tabName)
+    
+    # This is called by getTabName.
+    def selectTabCallback (newName):
+        self.selectTab(newName)
+
+    self.getTabName(selectTabCallback)</t>
+<t tx="ekr.20051019165401">def renameTabFromMenu (self,tabName):
+
+    if tabName in ('Log','Completions'):
+        g.es('can not rename %s tab' % (tabName),color='blue')
+    else:
+        def renameTabCallback (newName):
+            self.renameTab(tabName,newName)
+
+        self.getTabName(renameTabCallback)</t>
+<t tx="ekr.20051019170806">def renameTab (self,oldName,newName):
+    
+    label = self.nb.tab(oldName)
+    label.configure(text=newName)</t>
+<t tx="ekr.20051019172811">def getTabName (self,exitCallback):
+    
+    canvas = self.nb.component('hull')
+
+    # Overlay what is there!
+    f = Tk.Frame(canvas)
+    f.pack(side='top',fill='both',expand=1)
+    
+    row1 = Tk.Frame(f)
+    row1.pack(side='top',expand=0,fill='x',pady=10)
+    row2 = Tk.Frame(f)
+    row2.pack(side='top',expand=0,fill='x')
+
+    Tk.Label(row1,text='Tab name').pack(side='left')
+
+    e = Tk.Entry(row1,background='white')
+    e.pack(side='left')
+
+    def getNameCallback (event=None):
+        s = e.get().strip()
+        f.pack_forget()
+        if s: exitCallback(s)
+        
+    def closeTabNameCallback (event=None):
+        f.pack_forget()
+        
+    b = Tk.Button(row2,text='Ok',width=6,command=getNameCallback)
+    b.pack(side='left',padx=10)
+    
+    b = Tk.Button(row2,text='Cancel',width=6,command=closeTabNameCallback)
+    b.pack(side='left')
+
+    e.focus_force()
+    e.bind('&lt;Return&gt;',getNameCallback)</t>
 <t tx="ekr.20051020120306">def openFindTab (self,event=None,show=True):
 
     c = self.c ; log = c.frame.log ; tabName = 'Find'
@@ -13312,6 +14847,45 @@ else:
         emacs_name = k.inverseCommandsDict.get(command.__name__)
     except Exception:
         emacs_name = None</t>
+<t tx="ekr.20051022162730">def setTabBindings (self,tabName):
+    
+    c = self.c ; k = c.k
+    tab = self.nb.tab(tabName)
+    text = self.textDict.get(tabName)
+    
+    if 1:
+        def tabMenuRightClickCallback(event,menu=self.menu):
+            self.onRightClick(event,menu)
+            
+        def tabMenuClickCallback(event,tabName=tabName):
+            self.onClick(event,tabName)
+    
+        for kind,handler in (
+            ('&lt;Key&gt;',k.masterKeyHandler),
+            ('&lt;Button-1&gt;',tabMenuClickCallback),
+            ('&lt;Button-3&gt;',tabMenuRightClickCallback),
+        ):
+            text.bind(kind,handler)
+
+    else:
+    
+        # Send all event in the text area to the master handlers.
+        for kind,handler in (
+            ('&lt;Key&gt;',               k.masterKeyHandler),
+            ('&lt;Button-1&gt;',          k.masterClickHandler),
+            ('&lt;Button-3&gt;',          k.masterClick3Handler),
+        ):
+            text.bind(kind,handler)
+        
+        # Clicks in the tab area are harmless: use the old code.
+        def tabMenuRightClickCallback(event,menu=self.menu):
+            self.onRightClick(event,menu)
+            
+        def tabMenuClickCallback(event,tabName=tabName):
+            self.onClick(event,tabName)
+        
+        tab.bind('&lt;Button-1&gt;',tabMenuClickCallback)
+        tab.bind('&lt;Button-3&gt;',tabMenuRightClickCallback)</t>
 <t tx="ekr.20051022212004"># Just open the Find tab if it has never been opened.
 # For minibuffer commands, it would be good to force the Find tab to be visible.
 # However, this leads to unfortunate confusion when executed from a shortcut.
@@ -13378,13 +14952,13 @@ def hideFindTab (self,event=None):
 </t>
 <t tx="ekr.20051023132350.1">def setLabel (self,s,protect=False):
 
-    k = self ; w = self.widget
+    k = self ; c = k.c ; w = self.widget
     if not w: return
 
     # g.trace(repr(s))
 
     if self.useTextWidget:
-        k.c.frame.minibufferWantsFocus()
+        ###### c.frame.minibufferWantsFocus()
         # w.update_idletasks()
         w.delete('1.0','end')
         w.insert('1.0',s)
@@ -13405,17 +14979,21 @@ def hideFindTab (self,event=None):
         if k.svar:
             k.mb_prefix = k.svar.get()</t>
 <t tx="ekr.20051023181449">def createBindings (self):
-    
+
     c = self.c ; k = c.k
-    
-    for w in (self.find_ctrl, self.change_ctrl):
-        w.bind('&lt;Key&gt;',k.masterKeyHandler)
-        w.bind('&lt;Button-1&gt;',k.masterClickHandler)
-        # w.bind('&lt;Button-3&gt;',k.masterClick3Handler)
-        # w.bind ('Button-1&gt;',  self.resetWrap,'+')
-        w.bind("&lt;Key&gt;", self.resetWrap,'+')
-        w.bind("&lt;Key-Return&gt;", self.findButtonCallback)
-        w.bind("&lt;Key-Escape&gt;", self.hideTab)</t>
+
+    table = (
+        ('&lt;Key&gt;',k.masterKeyHandler),
+        ("&lt;Return&gt;",self.findButtonCallback),
+        ("&lt;Escape&gt;",self.hideTab),
+    )
+
+    for w in (self.find_ctrl,self.change_ctrl):
+        for event, callback in table:
+            w.bind(event,callback)
+            
+        w.bind("&lt;Key&gt;",self.resetWrap,'+')
+            # Can't put this in the table bc of the '+' arg.</t>
 <t tx="ekr.20051023183028">def findButtonCallback(self,event=None):
     
     __pychecker__ = '--no-argsused'
@@ -13432,6 +15010,20 @@ def hideFindTab (self,event=None):
     &lt;&lt; make bindings for a common binding widget &gt;&gt;
     &lt;&lt; make bindings for the canvas itself &gt;&gt;
     &lt;&lt; make bindings for tagged items on the canvas &gt;&gt;</t>
+<t tx="ekr.20051024173701">def createTab (self,tabName):
+    
+    c = self.c ; k = c.k
+    tabFrame = self.nb.add(tabName)
+    self.menu = self.makeTabMenu(tabName)
+    &lt;&lt; Create the tab's text widget &gt;&gt;
+
+    if tabName != 'Log':
+        # c.k doesn't exist when the log pane is created.
+        # k.makeAllBindings will call setTabBindings('Log')
+        self.setTabBindings(tabName)
+    
+    # New in 4.4b1: call update explicitly.
+    t and t.update()</t>
 <t tx="ekr.20051024192602"></t>
 <t tx="ekr.20051024192642.2">def findNextCommand (self,event=None):
 
@@ -14946,6 +16538,54 @@ Creating the background:
         width = g.computeWidth(s,tab_width)
         n = abs(tab_width) - (width % abs(tab_width))
         w.insert("insert",' ' * n)</t>
+<t tx="ekr.20051026092433.1">def backwardDeleteCharacter (self,event=None):
+    
+    c = self.c ; p = c.currentPosition()
+    w = event and event.widget
+    if not g.app.gui.isTextWidget(w): return
+    
+    name = g.app.gui.widget_name(w)
+    i,j = g.app.gui.getTextSelection(w)
+    # g.trace(i,j)
+
+    if name.startswith('body'):
+        self.beginCommand()
+        d = g.scanDirectives(c,p)
+        tab_width = d.get("tabwidth",c.tab_width)
+        changed = True
+        if i != j:
+            w.delete(i,j)
+        elif i == '1.0':
+            changed = False # Bug fix: 1/6/06 (after a5 released).
+        elif tab_width &gt; 0:
+            w.delete('insert-1c')
+        else:
+            &lt;&lt; backspace with negative tab_width &gt;&gt;
+        self.endCommand(changed=changed)
+    else:
+        # No undo in this widget.
+        if i != j:
+            w.delete(i,j)
+        elif i != '1.0':
+            # Bug fix: 1/6/06 (after a5 released).
+            # Do nothing at the start of the headline.
+            w.delete('insert-1c')</t>
+<t tx="ekr.20051026092746">s = prev = w.get("insert linestart","insert")
+n = len(prev)
+abs_width = abs(tab_width)
+
+# Delete up to this many spaces.
+n2 = (n % abs_width) or abs_width
+n2 = min(n,n2) ; count = 0
+
+while n2 &gt; 0:
+    n2 -= 1
+    ch = prev[n-count-1]
+    if ch != ' ': break
+    else: count += 1
+
+# Make sure we actually delete something.
+w.delete("insert -%dc" % (max(1,count)),"insert")</t>
 <t tx="ekr.20051026171121">i,j = oldSel
 
 if i != j:
@@ -14987,6 +16627,9 @@ def updateAutoIndent (self,p):
     else:
         removeTrailing = None
     return removeTrailing</t>
+<t tx="ekr.20051027114433">def getSelectedTab (self):
+    
+    return self.tabName</t>
 <t tx="ekr.20051027172949">def updateAutomatchBracket (self,p,w,ch,oldSel):
     
     # assert ch in ('(',')','[',']','{','}')
@@ -15131,6 +16774,38 @@ for z in ('borderframe','clipper','frame','hull'):
     self.outerScrolledFrame.component(z).configure(
         relief='flat',background=bg)</t>
 <t tx="ekr.20051121070552"></t>
+<t tx="ekr.20051121092320">def enableTclTraces (self):
+    
+    c = self.c
+
+    def tracewidget(event):
+        g.trace('enabling widget trace')
+        Pmw.tracetk(event.widget, 1)
+    
+    def untracewidget(event):
+        g.trace('disabling widget trace')
+        Pmw.tracetk(event.widget,0)
+        
+    def focusIn (event):
+        print("Focus in  %s (%s)" % (
+            event.widget,event.widget.winfo_class()))
+        
+    def focusOut (event):
+        print("Focus out %s (%s)" % (
+            event.widget,event.widget.winfo_class()))
+
+    # Put this in unit tests before the assert:
+    # c.frame.bar1.unbind_all("&lt;FocusIn&gt;")
+    # c.frame.bar1.unbind_all("&lt;FocusOut&gt;")
+
+    # Any widget would do:
+    w = c.frame.bar1
+    if 1:
+        w.bind_all("&lt;FocusIn&gt;", focusIn)
+        w.bind_all("&lt;FocusOut&gt;", focusOut)
+    else:
+        w.bind_all("&lt;Control-1&gt;", tracewidget)
+        w.bind_all("&lt;Control-Shift-1&gt;", untracewidget)</t>
 <t tx="ekr.20051125080855">def selfInsertCommand(self,event,action='insert'):
     
     '''Insert a character in the body pane.
@@ -15241,7 +16916,7 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
     baseEditCommandsClass.__init__(self,c) # init the base class.
     
     self.c = c
-    self.k = c.keyHandler
+    self.k = c.k
     self.membersList = None
     self.prefix = None
     self.tabList = []
@@ -17144,17 +18819,7 @@ and defineMenuCallback.</t>
         'untabify':                             self.untabify,
       
 </t>
-<t tx="ekr.20060117181301.1">def searchAgain (self,event):
-
-    if self.incremental:
-        self.iSearchHelper(event,self.forward,self.regexp)
-    elif self.regexp:
-        self.reSearchHelper(event,self.searchString,self.forward)
-    elif self.word:
-        self.wordSearchHelper(event,self.searchString,self.forward)
-    else:
-        self.plainSearchHelper(event,self.searchString,self.forward)
-</t>
+<t tx="ekr.20060117181301.1"></t>
 <t tx="ekr.20060117201349.1"></t>
 <t tx="ekr.20060117202916">def badMode(self,modeName):
     
@@ -17541,9 +19206,10 @@ def searchWithPresentOptions (self,event):
         if val is not None:
             var = h.dict.get(ivar)
             var.set(val)
-            if verbose:
+            if verbose and not g.app.unitTesting:
                 g.trace('%s = %s' % (ivar,val))
-    else:
+
+    elif not g.app.unitTesting:
         g.trace('oops: bad find ivar %s' % ivar)</t>
 <t tx="ekr.20060124123133">def setFindScope(self,where):
     
@@ -17694,7 +19360,6 @@ def reSearchForward (self,event):
     head  = self.getOption('search_headline')
     body  = self.getOption('search_body')
     scope = self.getOption('radio-search-scope')
-    g.trace(repr(scope))
     d = {'entire-outline':'all','suboutline-only':'tree','node-only':'node'}
     scope = d.get(scope) or ''
     head = g.choose(head,'head','')
@@ -17740,7 +19405,8 @@ def reSearchForward (self,event):
              g.trace('%s = %s' % (ivar,val))
         return val
     else:
-        g.trace('bad ivar name: %s' % ivar)</t>
+        g.trace('bad ivar name: %s' % ivar)
+        return None</t>
 <t tx="ekr.20060125091234">def setupSearchPattern (self,pattern):
     
     h = self.finder ; t = h.find_ctrl
@@ -17798,7 +19464,7 @@ FAILED (errors=1)
 - All log panes now use proper font setting.
 - Eliminated clone-find-all, selection-only, show-context checkboxes in the Find tab.
 - Eliminated toggle-find-clone-find-all-option command</t>
-<t tx="ekr.20060125171123"># Essential for cut/copy/paste</t>
+<t tx="ekr.20060125171123"></t>
 <t tx="ekr.20060125175103">def minibufferWantsFocus(self):
     
     c = self.c
@@ -17972,14 +19638,20 @@ def printGcVerbose(message=''):
     trace = c.config.getBool('trace_masterKeyHandler')
     keysym = event.keysym or ''
     if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
-        return
+        return None
 
     stroke = k.strokeFromEvent(event)
+
+    # Pass keyboard-quit to k.masterCommand for macro recording.
+    if k.abortAllModesKey and stroke == k.abortAllModesKey:
+        return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
+        
+    state = k.state.kind
+    if trace: g.trace(repr(stroke),'state',state)
     if k.inState():
-        state = k.state.kind
-        if trace: g.trace(repr(stroke),'state',state)
         d =  k.masterBindingsDict.get(state)
         if d:
+            # A typical state
             b = d.get(stroke)
             if b:
                 return k.generalModeHandler (event,
@@ -17987,11 +19659,25 @@ def printGcVerbose(message=''):
                     modeName=state,nextMode=b.nextMode)
             else:
                 return k.modeHelp(event)
-        # Fall through: the dict will be empty for full-command mode.
+        elif state == 'full-command':
+            d = k.masterBindingsDict.get('mini')
+            b = d.get(stroke)
+            if b:
+                # Pass this on for macro recording.
+                k.masterCommand(event,b.func,stroke,b.commandName)
+                c.frame.minibufferWantsFocus()
+                return 'break'
+            else:
+                # Do the default state action.
+                k.callStateFunction(event) # Calls end-command.
+                return 'break'
+        else:
+            g.trace('No state dictionary for %s' % state)
+            return 'break'
     
     for key,name in (
         # Order here is similar to bindtags order.
-        ('mini','mini'), ('body','body'),
+        ('body','body'),
         ('tree','head'), ('tree','canvas'),
         ('log', 'log'),
         ('text',None), ('all',None),
@@ -18037,11 +19723,12 @@ def printGcVerbose(message=''):
         k.resetLabel()
         k.showStateAndMode()
         self.generalSearchHelper(k.arg,cloneFindAll=True)</t>
-<t tx="ekr.20060128090219">def masterMenuHandler (self,stroke,command,commandName):
+<t tx="ekr.20060128090219">def masterMenuHandler (self,stroke,func,commandName):
     
-    k = self ; event = None ; func = command
+    k = self ; w = k.c.frame.getFocus()
     
-    # g.trace(stroke,command and command.__name__ or '&lt;no command&gt;',commandName)
+    # Create a minimal event for commands that require them.
+    event = g.Bunch(char='',keysym='',widget=w)
     
     return k.masterCommand(event,func,stroke,commandName)</t>
 <t tx="ekr.20060128151237"></t>
@@ -18052,6 +19739,11 @@ def printGcVerbose(message=''):
     
     if c.config.getBool('trace_masterClickHandler'):
         g.trace(g.app.gui.widget_name(w),func and func.__name__)
+        
+    if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+        g.es_print('Ignoring click outside active minibuffer',color='blue')
+        c.frame.minibufferWantsFocus()
+        return 'break'
 
     if event and func:
         # Don't event *think* of overriding this.
@@ -18131,57 +19823,75 @@ from config/leoSettings.leo
 
 t.bind('&lt;Key&gt;',k.masterKeyHandler)
 
-table = (
-    ('&lt;Button-1&gt;',       k.masterClickHandler,          tree.onHeadlineClick),
-    ('&lt;Button-3&gt;',       k.masterClick3Handler,         tree.onHeadlineRightClick),
-    ('&lt;Double-Button-1&gt;',k.masterDoubleClickHandler,    tree.onHeadlineClick),
-    ('&lt;Double-Button-3&gt;',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
-)
-
-for a,handler,func in table:
-    def treeBindingCallback(event,handler=handler,func=func):
-        return handler(event,func)
-    t.bind(a,treeBindingCallback)
+if 1:
+    table = (
+        ('&lt;Button-1&gt;',       tree.onHeadlineClick),
+        ('&lt;Button-3&gt;',       tree.onHeadlineRightClick),
+        ('&lt;Double-Button-1&gt;',tree.onHeadlineClick),
+        ('&lt;Double-Button-3&gt;',tree.onHeadlineRightClick),
+    )
+    for event,callback in table:
+        t.bind(event,callback)
+    
+else:
+    table = (
+        ('&lt;Button-1&gt;',       k.masterClickHandler,          tree.onHeadlineClick),
+        ('&lt;Button-3&gt;',       k.masterClick3Handler,         tree.onHeadlineRightClick),
+        ('&lt;Double-Button-1&gt;',k.masterDoubleClickHandler,    tree.onHeadlineClick),
+        ('&lt;Double-Button-3&gt;',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
+    )
+    
+    for a,handler,func in table:
+        def treeBindingCallback(event,handler=handler,func=func):
+            return handler(event,func)
+        t.bind(a,treeBindingCallback)
     
 self.textBindings = t.bindtags()</t>
 <t tx="ekr.20060131173440.1"># Needed to transfer focus.
-def treeClickCallback(event,self=self):
-    return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+if 1:
+    self.canvas.bind('&lt;Button-1&gt;',self.onTreeClick)
+else:
+    def treeClickCallback(event,self=self):
+        return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+    self.canvas.bind('&lt;Button-1&gt;',treeClickCallback)
 
-self.canvas.bind('&lt;Button-1&gt;',treeClickCallback)
+self.canvas.bind('&lt;Key&gt;',k.masterKeyHandler)</t>
+<t tx="ekr.20060131173440.2">where = g.choose(self.expanded_click_area,'clickBox','plusBox')
 
-self.canvas.bind('&lt;Key&gt;',k.masterKeyHandler),</t>
-<t tx="ekr.20060131173440.2">table = [
-    ('iconBox','&lt;Button-1&gt;', self.onIconBoxClick,       k.masterClickHandler),
-    ('iconBox','&lt;Double-1&gt;', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
-    ('iconBox','&lt;Button-3&gt;', self.onIconBoxRightClick,  k.masterClick3Handler),
-    ('iconBox','&lt;Double-3&gt;', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
-]
-
-where = g.choose(self.expanded_click_area,'clickBox','plusBox')
-table.append((where,'&lt;Button-1&gt;',self.onClickBoxClick,k.masterClickHandler),)
-
-for a,b,func,handler in table:
-    def treeCallback(event,handler=handler,func=func):
-        return handler(event,func=func)
-    self.canvas.tag_bind(a,b,treeCallback)
+if 1:
+    table = (
+        (where,    '&lt;Button-1&gt;',self.onClickBoxClick),
+        ('iconBox','&lt;Button-1&gt;',self.onIconBoxClick),
+        ('iconBox','&lt;Double-1&gt;',self.onIconBoxDoubleClick),
+        ('iconBox','&lt;Button-3&gt;',self.onIconBoxRightClick),
+        ('iconBox','&lt;Double-3&gt;',self.onIconBoxRightClick),
+        ('iconBox','&lt;B1-Motion&gt;',self.onDrag),
+        ('iconBox','&lt;Any-ButtonRelease-1&gt;',self.onEndDrag),
+    )
+    for tag,event,callback in table:
+        self.canvas.tag_bind(tag,event,callback)
     
-table = (
-    ('iconBox','&lt;B1-Motion&gt;',           self.onDrag),
-    ('iconBox','&lt;Any-ButtonRelease-1&gt;', self.onEndDrag),
-)
-
-for a,b,handler in table:
-    def treeCallback2(event,handler=handler):
-        return handler(event)
-    self.canvas.tag_bind(a,b,treeCallback2)
-</t>
-<t tx="ekr.20060131191731">@nocolor
-
-The master event handlers are now very simple and very general;
-they simply call the given func if one is supplied.
-
-The reason for this indirection is so we can intercept clicks when in the minibuffer.</t>
+else:
+    table = (
+        (where,    '&lt;Button-1&gt;', self.onClickBoxClick,      k.masterClickHandler),
+        ('iconBox','&lt;Button-1&gt;', self.onIconBoxClick,       k.masterClickHandler),
+        ('iconBox','&lt;Double-1&gt;', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
+        ('iconBox','&lt;Button-3&gt;', self.onIconBoxRightClick,  k.masterClick3Handler),
+        ('iconBox','&lt;Double-3&gt;', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
+    )
+    
+    for a,b,func,handler in table:
+        def treeCallback(event,handler=handler,func=func):
+            return handler(event,func=func)
+        self.canvas.tag_bind(a,b,treeCallback)
+    
+    table = (
+        ('iconBox','&lt;B1-Motion&gt;',           self.onDrag),
+        ('iconBox','&lt;Any-ButtonRelease-1&gt;', self.onEndDrag),
+    )
+    for a,b,callback in table:
+        self.canvas.tag_bind(a,b,callback)</t>
+<t tx="ekr.20060131191731"></t>
 <t tx="ekr.20060201054108"></t>
 <t tx="ekr.20060201064706"></t>
 <t tx="ekr.20060201071346">@nocolor
@@ -20801,7 +22511,7 @@ def verboseDumpObjects (self,event=None):
     
     d = {} ; objects = gc.get_objects()
     g.es_print('-' * 30)
-    g.es_print('%d objects' % len(objects))
+    g.es_print('%d objects' % len(objects),message)
 
     for obj in objects:
         t = type(obj)
@@ -20811,7 +22521,13 @@ def verboseDumpObjects (self,event=None):
         d[t] = d.get(t,0) + 1
         
     if 1: # Sort by n
-        items = d.items() ; items.sort(key=lambda x: x[1],reverse=True)
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
         for z in items:
             g.es_print('%40s %7d' % (z[0],z[1]))
     else: # Sort by type
@@ -20845,5 +22561,141 @@ def verboseDumpObjects (self,event=None):
                            &lt;type 'list'&gt;    1523</t>
 <t tx="ekr.20060202231708.1">This will allow @menu nodes in leoSettings.leo</t>
 <t tx="ekr.20060202232638"></t>
+<t tx="ekr.20060202233315">@nocolor
+
+- Add FocusIn, FocusOut bindings. (Move code from masterClickHandler)
+
+** Fix headline bug:
+    - Can save command affect headlines?
+    - Where should tree.endEditing be called?
+      (Change name from tree.endEditHeadline to tree.endEditing)
+
+* Clicking in log doesn't end editing in headline properly.
+  Neither does toggle-active-pane
+
+** Housecleaning:  remove old code:  if 1, if 0, ## etc.
+
+* Beginning of line &amp; back character must handle minibuffer differently.
+
+- Use focusOut &amp; focusIn events to control access to minibuffer.
+
+* Make sure the tree code doesn't get confused when recycling widgets.
+
+** Test referers when deleting objects.
+
+- (done) Fixed bug in strokeFromEvent.
+
+- (done) Replaced some calls to g.app.gui.get_focus: This is unreliable.  More should be removed.
+
+- (done) Fixed masterMenuHandler.</t>
+<t tx="ekr.20060202233828.3">And any other bindings.
+
+Remove hard binding for Ctrl-T in log pane.</t>
+<t tx="ekr.20060202234446.3"># Right now it 'restores' the focus to the tree if it was in the tre previously.
+</t>
+<t tx="ekr.20060202235215.1"></t>
+<t tx="ekr.20060202235215.3"></t>
+<t tx="ekr.20060203062212">@nocolor
+
+This is logically and practically dubious.
+True, a screen redraw shouldn't mess with the focus,
+but there are the following problems:
+
+1. c.endUpdate can happen anytime, and it could interfere with other efforts to set focus.
+2. g.app.get_focus might get the 'wrong' or a 'bad' focus.</t>
+<t tx="ekr.20060203063143">Trying to avoid this *does not work*</t>
+<t tx="ekr.20060203065648"></t>
+<t tx="ekr.20060203065648.1"></t>
+<t tx="ekr.20060203065648.2"></t>
+<t tx="ekr.20060203065648.3"># insert, clone, copy node, etc.</t>
+<t tx="ekr.20060203065648.4"></t>
+<t tx="ekr.20060203070452"></t>
+<t tx="ekr.20060203072636">def endSearch (self,i,j):
+
+    g.app.gui.setTextSelection (self.w,i,j,insert='sel.end')
+    self.k.keyboardQuit(event=None)</t>
+<t tx="ekr.20060203092949">Call w.see('insert'), not w.see('insert-5L')</t>
+<t tx="ekr.20060203112912"></t>
+<t tx="ekr.20060203112912.1"></t>
+<t tx="ekr.20060203114017">def setMinibufferBindings (self):
+    
+    '''Create bindings for the minibuffer..'''
+    
+    f = self ; c = f.c ; k = c.k ; t = f.miniBufferWidget
+    
+    if not c.useTextMinibuffer: return
+    
+    if 1:
+         for kind,callback in (
+            ('&lt;Key&gt;',               k.masterKeyHandler),
+            ('&lt;FocusIn&gt;',           k.onFocusInMinibuffer),
+            ('&lt;FocusOut&gt;',          k.onFocusOutMinibuffer),
+        ):
+            t.bind(kind,callback)
+        
+    else:
+        for kind,callback in (
+            ('&lt;Key&gt;',               k.masterKeyHandler),
+            ('&lt;Button-1&gt;',          k.masterClickHandler),
+            ('&lt;Button-3&gt;',          k.masterClick3Handler),
+            ('&lt;Double-Button-1&gt;',   k.masterDoubleClickHandler),
+            ('&lt;Double-Button-3&gt;',   k.masterDoubleClick3Handler),
+            ('&lt;FocusIn&gt;',           self.onFocusInMinibuffer),
+            ('&lt;FocusOut&gt;',          self.onFocusOutMinibuffer),
+        ):
+            t.bind(kind,callback)
+    
+    if 0:
+        if sys.platform.startswith('win'):
+            # Support Linux middle-button paste easter egg.
+            t.bind("&lt;Button-2&gt;",frame.OnPaste)</t>
+<t tx="ekr.20060203115311">def showMinibuffer (self):
+    
+    frame = self
+    
+    if not frame.minibufferVisible:
+        frame.minibufferFrame.pack(side='bottom',fill='x')
+        frame.minibufferVisible = True
+        
+</t>
+<t tx="ekr.20060203115311.1">def hideMinibuffer (self):
+    
+    frame = self
+    if frame.minibufferVisible:
+        frame.minibufferFrame.pack_forget()
+        frame.minibufferVisible = False</t>
+<t tx="ekr.20060203115311.2">def onFocusInMinibuffer (self,event=None):
+    k = self
+
+def onFocusOutMinibuffer (self,event=None):
+
+    k = self ; c = k.c
+    w = event and event.widget
+    wname = g.app.widget_name(w)
+    if wname.startswith('log-'):
+        return None # Kludge to allow tab completion.
+    
+    # g.trace(k.inState(), g.app.gui.widget_name(w))
+    
+    if k.inState():
+        d = k.computeInverseBindingDict()
+        tupleList = d.get('keyboard-quit',[])
+        if tupleList:
+            for pane,stroke in tupleList:
+                if pane in ('all:','text:','mini:'):
+                    g.es_print('Ignoring click: minibuffer is active',color='blue')
+                    g.es_print('Use %s to exit the minibuffer' % (stroke))
+                    c.frame.minibufferWantsFocus()
+                    return 'break'
+            
+    return None # Allow the click.
+</t>
+<t tx="ekr.20060203165231"></t>
+<t tx="ekr.20060203202543"></t>
+<t tx="ekr.20060204083758">if 0:
+    @others</t>
+<t tx="ekr.20060204084632">@nocolor
+
+- Removed master click handlers: not needed.</t>
 </tnodes>
 </leo_file>
