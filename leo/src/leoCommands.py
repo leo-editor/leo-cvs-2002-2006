@@ -235,6 +235,9 @@ class baseCommands:
         p = c.currentPosition()
         #g.trace(command.__name__,label)
         
+        if c.config.getBool('trace_doCommand'):
+            g.trace(command and command.__name__)
+        
         # The presence of this message disables all commands.
         if c.disableCommandsMessage:
             g.es(c.disableCommandsMessage,color='blue')
