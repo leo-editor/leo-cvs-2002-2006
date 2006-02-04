@@ -2196,7 +2196,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         c = self.c
     
-        if c.config.getBool('trace_g.app.gui.set_focus'): # A *very* effective trace.
+        if c.config.getBool('trace_f.set_focus'): # A *very* effective trace.
             name = w and hasattr(w,'_name') and w._name or '<no name>'
             g.trace(name,g.callers(7)) 
     
@@ -3475,6 +3475,12 @@ class leoTkinterLog (leoFrame.leoLog):
         self.c.frame.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051018102027:deleteTab
+    #@+node:ekr.20060204124347:hideTab
+    def hideTab (self,tabName):
+        
+        self.selectTab('Log')
+    #@nonl
+    #@-node:ekr.20060204124347:hideTab
     #@+node:ekr.20051027114433:getSelectedTab
     def getSelectedTab (self):
         
