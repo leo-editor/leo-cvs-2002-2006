@@ -361,7 +361,7 @@ class keyHandlerClass:
         
         k = self ; c = k.c
         
-        g.trace('keyHandler')
+        # g.trace('keyHandler')
        
         k.createInverseCommandsDict()
         
@@ -1105,7 +1105,6 @@ class keyHandlerClass:
         k = self
         
         stroke = k.getShortcutForCommandName(commandName)
-        # g.trace(commandName,stroke)
         
         if stroke and w:
             w.event_generate(stroke)
@@ -1419,10 +1418,10 @@ class keyHandlerClass:
         # Pass keyboard-quit to k.masterCommand for macro recording.
         if k.abortAllModesKey and stroke == k.abortAllModesKey:
             return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
-    
+            
+        state = k.state.kind
+        if trace: g.trace(repr(stroke),'state',state)
         if k.inState():
-            state = k.state.kind
-            if trace: g.trace(repr(stroke),'state',state)
             d =  k.masterBindingsDict.get(state)
             if d:
                 # A typical state
@@ -1520,11 +1519,12 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20060131084938:masterDoubleClickHandler
     #@+node:ekr.20060128090219:masterMenuHandler
-    def masterMenuHandler (self,stroke,command,commandName):
+    def masterMenuHandler (self,stroke,func,commandName):
         
-        k = self ; event = None ; func = command
+        k = self ; w = k.c.frame.getFocus()
         
-        # g.trace(stroke,command and command.__name__ or '<no command>',commandName)
+        # Create a minimal event for commands that require them.
+        event = g.Bunch(char='',keysym='',widget=w)
         
         return k.masterCommand(event,func,stroke,commandName)
     #@nonl
@@ -1931,7 +1931,7 @@ class keyHandlerClass:
         return len(shortcut) == 1
     #@nonl
     #@-node:ekr.20060120071949:isPlainKey
-    #@+node:ekr.20060128081317:shortcutFromSetting (correct)
+    #@+node:ekr.20060128081317:shortcutFromSetting
     def shortcutFromSetting (self,setting):
     
         if not setting:
@@ -2012,7 +2012,7 @@ class keyHandlerClass:
     canonicalizeShortcut = shortcutFromSetting # For compatibility.
     strokeFromSetting    = shortcutFromSetting
     #@nonl
-    #@-node:ekr.20060128081317:shortcutFromSetting (correct)
+    #@-node:ekr.20060128081317:shortcutFromSetting
     #@+node:ekr.20060126163152.2:k.strokeFromEvent
     # The keys to k.bindingsDict must be consistent with what this method returns.
     # See 'about internal bindings' for details.
@@ -2042,7 +2042,8 @@ class keyHandlerClass:
         else:
             ch2 = k.tkBindNamesInverseDict.get(keysym)
             if ch2:
-                ch = ch2 
+                ch = ch2
+                if len(ch) == 1: shift = False
             else:
                 # Just use the unknown keysym.
                 g.trace('*'*30,'unknown keysym',repr(keysym))

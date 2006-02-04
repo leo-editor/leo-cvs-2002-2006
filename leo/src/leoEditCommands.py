@@ -2187,7 +2187,7 @@ class editCommandsClass (baseEditCommandsClass):
     def backwardDeleteCharacter (self,event=None):
         
         c = self.c ; p = c.currentPosition()
-        w = event and event.widget ### or g.app.gui.get_focus(c.frame)
+        w = event and event.widget
         if not g.app.gui.isTextWidget(w): return
         
         name = g.app.gui.widget_name(w)
@@ -2242,7 +2242,7 @@ class editCommandsClass (baseEditCommandsClass):
     def deleteNextChar (self,event):
     
         c = self.c
-        w = event and event.widget or g.app.gui.get_focus(c.frame)
+        w = event and event.widget
         if not g.app.gui.isTextWidget(w): return
     
         name = g.app.gui.widget_name(w)
@@ -2269,7 +2269,9 @@ class editCommandsClass (baseEditCommandsClass):
     def deleteSpaces (self,event,insertspace=False):
     
         c = self.c
-        w = event and event.widget or g.app.gui.get_focus(c.frame)
+        w = event and event.widget
+        if not g.app.gui.isTextWidget(w): return
+    
         name = g.app.gui.widget_name(w)
         char = w.get('insert','insert + 1c ')
         if not char.isspace(): return
