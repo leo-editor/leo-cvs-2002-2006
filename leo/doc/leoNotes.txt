@@ -4656,7 +4656,7 @@ if 0:
             return None
 #@nonl
 #@-node:ekr.20060130130942:masterClick3Handler (not used)
-#@+node:ekr.20060117181301.1:searchAgain & changeAgain 
+#@+node:ekr.20060117181301.1:searchAgain & changeAgain
 def searchAgain (self,event):
 
     if self.incremental:
@@ -4667,7 +4667,82 @@ def searchAgain (self,event):
         self.wordSearchHelper(event,self.searchString,self.forward)
     else:
         self.plainSearchHelper(event,self.searchString,self.forward)
-#@-node:ekr.20060117181301.1:searchAgain & changeAgain 
+#@-node:ekr.20060117181301.1:searchAgain & changeAgain
+#@+node:ekr.20060129182405:k.strokeFromSetting (WRONG: USE shortcutFromSetting)
+if 0:
+    def strokeFromSetting (self,shortcut):
+        
+        '''Convert a user key setting to a key for k.bindingsDict.'''
+        
+        k = self
+        
+        if not shortcut: return None
+        s = shortcut
+        << compute alt, cmd, ctrl, shift flags >>
+        << convert minus signs to plus signs >>
+        << compute the last field >>
+        << compute stroke >>
+        # g.trace(repr(shortcut),repr(stroke))
+        return stroke
+#@nonl
+#@+node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
+s2 = s.lower()
+cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+alt   = s2.find("alt") >= 0
+shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
+if sys.platform == "darwin":
+    if ctrl and not cmd:
+        cmd = True ; ctrl = False
+    if alt and not ctrl:
+        ctrl = True ; alt = False
+#@nonl
+#@-node:ekr.20060129185458:<< compute alt, cmd, ctrl, shift flags >>
+#@+node:ekr.20060129185629:<< convert minus signs to plus signs >>
+# Replace all minus signs by plus signs, except a trailing minus:
+if s.endswith('-'):
+    s = s[:-1].replace('-','+') + '-'
+else:
+    s = s.replace('-','+')
+#@nonl
+#@-node:ekr.20060129185629:<< convert minus signs to plus signs >>
+#@+node:ekr.20060129182405.6:<< compute the last field >>
+fields = s.split('+')
+last = fields and fields[-1]
+if not last:
+    g.es("bad shortcut specifier:",repr(s),color='blue')
+    return None
+
+if len(last) > 1:
+    d = k.tkBindNamesInverseDict
+    last2 = d.get(last)
+    if last2:
+        last=last2
+    else:
+        d = k.settingsNameDict
+        last = d.get(last.lower(),last)
+        
+#@nonl
+#@-node:ekr.20060129182405.6:<< compute the last field >>
+#@+node:ekr.20060129182405.7:<< compute stroke >>
+if shift:
+    if last.isalpha():
+        last = last.upper()
+    else:
+        g.es('Ignoring Shift in: ',s,color='blue')
+
+table = (
+    (alt,   'Alt+'),
+    (ctrl,  'Ctrl+'),
+    # (cmd, 'Cmnd-'),
+    # (shift, 'Shift-'),
+    (True,  last),
+)
+
+stroke = ''.join([val for flag,val in table if flag])
+#@nonl
+#@-node:ekr.20060129182405.7:<< compute stroke >>
+#@-node:ekr.20060129182405:k.strokeFromSetting (WRONG: USE shortcutFromSetting)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

@@ -5407,9 +5407,10 @@ class minibufferFind:
             if val is not None:
                 var = h.dict.get(ivar)
                 var.set(val)
-                if verbose:
+                if verbose and not g.app.unitTesting:
                     g.trace('%s = %s' % (ivar,val))
-        else:
+    
+        elif not g.app.unitTesting:
             g.trace('oops: bad find ivar %s' % ivar)
     #@nonl
     #@-node:ekr.20060124122844:setOption
@@ -5439,7 +5440,6 @@ class minibufferFind:
         head  = self.getOption('search_headline')
         body  = self.getOption('search_body')
         scope = self.getOption('radio-search-scope')
-        g.trace(repr(scope))
         d = {'entire-outline':'all','suboutline-only':'tree','node-only':'node'}
         scope = d.get(scope) or ''
         head = g.choose(head,'head','')

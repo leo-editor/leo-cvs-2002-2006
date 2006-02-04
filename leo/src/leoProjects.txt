@@ -3430,6 +3430,8 @@ def OnBodyDoubleClick (self,event=None):
 Call w.see('insert'), not w.see('insert-5L')
 #@nonl
 #@-node:ekr.20060203092949:Improved body.makeInsertPointVisible
+#@+node:ekr.20060203202543:Fixed cut/copy/paste from menu
+#@-node:ekr.20060203202543:Fixed cut/copy/paste from menu
 #@-node:ekr.20060131113046:Bugs
 #@+node:ekr.20060203065648:Code issues
 #@+node:ekr.20060127095006:(Added event arg to all legacy commands)

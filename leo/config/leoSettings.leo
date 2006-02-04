@@ -45,13 +45,13 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
@@ -63,7 +63,7 @@
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060201111002" a="E"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
-<v t="ekr.20060113182439" a="E"><vh>Other options</vh>
+<v t="ekr.20060113182439"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
@@ -99,8 +99,8 @@
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.20" a="E" annotate="7d71002e"><vh>Find/Change panel options</vh>
-<v t="ekr.20060125104049" a="V"><vh>@bool show_only_find_tab_options = False</vh></v>
+<v t="ekr.20041119034357.20" annotate="7d71002e"><vh>Find/Change panel options</vh>
+<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
 <v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
 <v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
 <v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
@@ -276,15 +276,15 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527.3" a="E"><vh>Keyboard and minibuffer Options</vh>
+<v t="ekr.20060122105527.3"><vh>Keyboard and minibuffer Options</vh>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060122105527.5" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
 <v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
-<v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = False</vh></v>
+<v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 </v>
-<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
@@ -354,14 +354,15 @@
 <v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
+<v t="ekr.20060122105527.20" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -382,10 +383,35 @@
 <v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
+<v t="ekr.20060122105527.20" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
+</v>
+<v t="ekr.20060203094527" a="E"><vh>Recent options</vh>
+<v t="ekr.20051126062243"><vh>Debugging options</vh>
+<v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
+<v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
+<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
+<v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
+<v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
+<v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
+<v t="ekr.20051126062243.1" a="E"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
+<v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
+<v t="ekr.20060201111002" a="E"><vh>@bool use_syntax_coloring = True</vh></v>
+</v>
+<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
+<v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -3926,10 +3952,10 @@ add-comments                        = Ctrl-(
 auto-complete                       = Ctrl-Tab
 back-char                           ! text = LtArrow
 back-char-extend-selection          ! text = Shift-LtArrow
-back-word                           = ! text = Alt-b  
-back-word                           = ! text = Ctrl-LtArrow
-back-word-extend-selection          = ! text = Alt-Shift-b
-back-word-extend-selection          = ! text = Ctrl-Shift-LtArrow
+back-word                           ! text = Alt-b  
+back-word                           ! text = Ctrl-LtArrow
+back-word-extend-selection          ! text = Alt-Shift-b
+back-word-extend-selection          ! text = Ctrl-Shift-LtArrow
 backward-delete-char                = BackSpace
 backward-kill-word                  = Alt-Delete
 beginning-of-buffer                  ! text = Ctrl-Home
@@ -4319,5 +4345,36 @@ In most cases the less verbose output is clearer.</t>
 <t tx="ekr.20060201111002"></t>
 <t tx="ekr.20060202092911"></t>
 <t tx="ekr.20060202113731"></t>
+<t tx="ekr.20060203094527"></t>
+<t tx="ekr.20060203131942">copy-text           ! mini = Ctrl-c
+cut-text            ! mini = Ctrl-x
+paste-text          ! mini = Ctrl-v
+save-file           ! mini = Ctrl-s
+
+# keyboard-quit       ! mini = Ctrl-g
+
+back-char                           ! mini = LtArrow
+back-char-extend-selection          ! mini = Shift-LtArrow
+back-word                           ! mini = Alt-b  
+back-word                           ! mini = Ctrl-LtArrow
+back-word-extend-selection          ! mini = Alt-Shift-b
+back-word-extend-selection          ! mini = Ctrl-Shift-LtArrow
+backward-delete-char                ! mini = BackSpace
+backward-kill-word                  ! mini = Alt-Delete
+beginning-of-line                   ! mini = Home
+beginning-of-line-extend-selection  ! mini = Shift-Home
+beginning-of-line                   ! mini = Ctrl-a
+beginning-of-line-extend-selection  ! mini = Ctrl-Shift-a
+end-of-line                         ! mini = End
+end-of-line-extend-selection        ! mini = Shift-End
+end-of-line                         ! mini = Ctrl-e
+end-of-line-extend-selection        ! mini = Ctrl-Shift-e
+forward-char                        ! mini = RtArrow
+forward-char-extend-selection       ! mini = Shift-RtArrow
+forward-word                        ! mini = Alt-f          # Usually opens file menu.
+forward-word-extend-selection       ! mini = Alt-Shift-f
+forward-word                        ! mini = Ctrl-RtArrow
+forward-word-extend-selection       ! mini = Ctrl-Shift-RtArrow
+</t>
 </tnodes>
 </leo_file>
