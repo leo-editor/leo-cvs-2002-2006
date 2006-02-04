@@ -103,6 +103,7 @@
 </v>
 <v t="ekr.20041119034357.20" annotate="7d71002e"><vh>Find/Change panel options</vh>
 <v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
+<v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = False</vh></v>
 <v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
 <v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
 <v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
@@ -411,15 +412,12 @@
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
-<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 <v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
 <v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
+<v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = False</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12" a="V"><vh>@mode Find (Control-F)</vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 </v>
@@ -3838,20 +3836,16 @@ exit-named-mode     = BackSpace
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
-switch-to-buffer        = h
-
-# enter-find-reverse-mode = r
-# isearch-forward         = i
-
-# isearch-forward-regexp  = x
-# re-search-forward       = Shift-R
-
 search-again                = a
+switch-to-buffer            = h
 search-with-present-options = f
+show-find-options   -&gt; same = o
+open-find-tab       -&gt; same = t
 word-search-forward         = w
 
-show-find-options   -&gt; same = o
-# open-find-tab     -&gt; same = t</t>
+# isearch-forward         = i
+# isearch-forward-regexp  = x
+# re-search-forward       = r</t>
 <t tx="ekr.20060122105527.13"># Boilerplate for most modes.
 exit-named-mode         = Return
 keyboard-quit           = Ctrl-g
@@ -4394,5 +4388,9 @@ forward-word-extend-selection       ! mini = Ctrl-Shift-RtArrow
 </t>
 <t tx="ekr.20060204093736"></t>
 <t tx="ekr.20060204102644"></t>
+<t tx="ekr.20060204124608">True:  the following commands show the Find Tab:
+
+find-with-previous-settings
+show-find-options</t>
 </tnodes>
 </leo_file>
