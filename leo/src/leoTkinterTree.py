@@ -311,17 +311,28 @@ class leoTkinterTree (leoFrame.leoTree):
         
         t.bind('<Key>',k.masterKeyHandler)
         
-        table = (
-            ('<Button-1>',       k.masterClickHandler,          tree.onHeadlineClick),
-            ('<Button-3>',       k.masterClick3Handler,         tree.onHeadlineRightClick),
-            ('<Double-Button-1>',k.masterDoubleClickHandler,    tree.onHeadlineClick),
-            ('<Double-Button-3>',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
-        )
-        
-        for a,handler,func in table:
-            def treeBindingCallback(event,handler=handler,func=func):
-                return handler(event,func)
-            t.bind(a,treeBindingCallback)
+        if 1:
+            table = (
+                ('<Button-1>',       tree.onHeadlineClick),
+                ('<Button-3>',       tree.onHeadlineRightClick),
+                ('<Double-Button-1>',tree.onHeadlineClick),
+                ('<Double-Button-3>',tree.onHeadlineRightClick),
+            )
+            for event,callback in table:
+                t.bind(event,callback)
+            
+        else:
+            table = (
+                ('<Button-1>',       k.masterClickHandler,          tree.onHeadlineClick),
+                ('<Button-3>',       k.masterClick3Handler,         tree.onHeadlineRightClick),
+                ('<Double-Button-1>',k.masterDoubleClickHandler,    tree.onHeadlineClick),
+                ('<Double-Button-3>',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
+            )
+            
+            for a,handler,func in table:
+                def treeBindingCallback(event,handler=handler,func=func):
+                    return handler(event,func)
+                t.bind(a,treeBindingCallback)
             
         self.textBindings = t.bindtags()
         #@nonl
@@ -330,10 +341,12 @@ class leoTkinterTree (leoFrame.leoTree):
         #@    << make bindings for the canvas itself >>
         #@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
         # Needed to transfer focus.
-        def treeClickCallback(event,self=self):
-            return self.c.k.masterClickHandler(event,func=self.onTreeClick)
-        
-        self.canvas.bind('<Button-1>',treeClickCallback)
+        if 1:
+            self.canvas.bind('<Button-1>',self.onTreeClick)
+        else:
+            def treeClickCallback(event,self=self):
+                return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+            self.canvas.bind('<Button-1>',treeClickCallback)
         
         self.canvas.bind('<Key>',k.masterKeyHandler)
         #@nonl
@@ -343,28 +356,40 @@ class leoTkinterTree (leoFrame.leoTree):
         #@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
         where = g.choose(self.expanded_click_area,'clickBox','plusBox')
         
-        table = (
-            (where,    '<Button-1>', self.onClickBoxClick,      k.masterClickHandler),
-            ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
-            ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
-            ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
-            ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
-        )
-        
-        for a,b,func,handler in table:
-            def treeCallback(event,handler=handler,func=func):
-                return handler(event,func=func)
-            self.canvas.tag_bind(a,b,treeCallback)
+        if 1:
+            table = (
+                (where,    '<Button-1>',self.onClickBoxClick),
+                ('iconBox','<Button-1>',self.onIconBoxClick),
+                ('iconBox','<Double-1>',self.onIconBoxDoubleClick),
+                ('iconBox','<Button-3>',self.onIconBoxRightClick),
+                ('iconBox','<Double-3>',self.onIconBoxRightClick),
+                ('iconBox','<B1-Motion>',self.onDrag),
+                ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
+            )
+            for tag,event,callback in table:
+                self.canvas.tag_bind(tag,event,callback)
             
-        table = (
-            ('iconBox','<B1-Motion>',           self.onDrag),
-            ('iconBox','<Any-ButtonRelease-1>', self.onEndDrag),
-        )
-        
-        for a,b,handler in table:
-            def treeCallback2(event,handler=handler):
-                return handler(event)
-            self.canvas.tag_bind(a,b,treeCallback2)
+        else:
+            table = (
+                (where,    '<Button-1>', self.onClickBoxClick,      k.masterClickHandler),
+                ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
+                ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
+                ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
+                ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
+            )
+            
+            for a,b,func,handler in table:
+                def treeCallback(event,handler=handler,func=func):
+                    return handler(event,func=func)
+                self.canvas.tag_bind(a,b,treeCallback)
+            
+            table = (
+                ('iconBox','<B1-Motion>',           self.onDrag),
+                ('iconBox','<Any-ButtonRelease-1>', self.onEndDrag),
+            )
+            for a,b,callback in table:
+                self.canvas.tag_bind(a,b,callback)
+        #@nonl
         #@-node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
         #@nl
     #@nonl

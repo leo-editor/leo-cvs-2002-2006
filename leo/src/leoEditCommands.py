@@ -5773,17 +5773,19 @@ class findTab (leoFind.leoFind):
     #@-node:ekr.20051020120306.11:__init__
     #@+node:ekr.20051023181449:createBindings (findTab)
     def createBindings (self):
-        
+    
         c = self.c ; k = c.k
-        
-        for w in (self.find_ctrl, self.change_ctrl):
-            w.bind('<Key>',k.masterKeyHandler)
-            w.bind('<Button-1>',k.masterClickHandler)
-            # w.bind('<Button-3>',k.masterClick3Handler)
-            # w.bind ('Button-1>',  self.resetWrap,'+')
-            w.bind("<Key>", self.resetWrap,'+')
-            w.bind("<Key-Return>", self.findButtonCallback)
-            w.bind("<Key-Escape>", self.hideTab)
+    
+        table = (
+            ('<Key>',k.masterKeyHandler),
+            ("<Key>",self.resetWrap,'+'),
+            ("<Return>",self.findButtonCallback),
+            ("<Escape>",self.hideTab),
+        )
+    
+        for w in (self.find_ctrl,self.change_ctrl):
+            for event, callback in table:
+                w.bind(event,callback)
     #@nonl
     #@-node:ekr.20051023181449:createBindings (findTab)
     #@+node:ekr.20051020120306.13:createFrame (findTab)
