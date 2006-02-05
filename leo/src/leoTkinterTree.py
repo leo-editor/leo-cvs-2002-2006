@@ -311,28 +311,17 @@ class leoTkinterTree (leoFrame.leoTree):
         
         t.bind('<Key>',k.masterKeyHandler)
         
-        if 1:
-            table = (
-                ('<Button-1>',       tree.onHeadlineClick),
-                ('<Button-3>',       tree.onHeadlineRightClick),
-                ('<Double-Button-1>',tree.onHeadlineClick),
-                ('<Double-Button-3>',tree.onHeadlineRightClick),
-            )
-            for event,callback in table:
-                t.bind(event,callback)
-            
-        else:
-            table = (
-                ('<Button-1>',       k.masterClickHandler,          tree.onHeadlineClick),
-                ('<Button-3>',       k.masterClick3Handler,         tree.onHeadlineRightClick),
-                ('<Double-Button-1>',k.masterDoubleClickHandler,    tree.onHeadlineClick),
-                ('<Double-Button-3>',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
-            )
-            
-            for a,handler,func in table:
-                def treeBindingCallback(event,handler=handler,func=func):
-                    return handler(event,func)
-                t.bind(a,treeBindingCallback)
+        table = (
+            ('<Button-1>',       k.masterClickHandler,          tree.onHeadlineClick),
+            ('<Button-3>',       k.masterClick3Handler,         tree.onHeadlineRightClick),
+            ('<Double-Button-1>',k.masterDoubleClickHandler,    tree.onHeadlineClick),
+            ('<Double-Button-3>',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
+        )
+        
+        for a,handler,func in table:
+            def treeBindingCallback(event,handler=handler,func=func):
+                return handler(event,func)
+            t.bind(a,treeBindingCallback)
             
         self.textBindings = t.bindtags()
         #@nonl
@@ -341,12 +330,10 @@ class leoTkinterTree (leoFrame.leoTree):
         #@    << make bindings for the canvas itself >>
         #@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
         # Needed to transfer focus.
-        if 1:
-            self.canvas.bind('<Button-1>',self.onTreeClick)
-        else:
-            def treeClickCallback(event,self=self):
-                return self.c.k.masterClickHandler(event,func=self.onTreeClick)
-            self.canvas.bind('<Button-1>',treeClickCallback)
+        def treeClickCallback(event,self=self):
+            return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+        
+        self.canvas.bind('<Button-1>',treeClickCallback)
         
         self.canvas.bind('<Key>',k.masterKeyHandler)
         #@nonl

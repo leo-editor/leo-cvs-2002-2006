@@ -316,7 +316,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         #@nl
     
         for widget in (self.find_ctrl, self.change_ctrl):
-            widget.bind ("<1>",  self.resetWrap)
+            widget.bind ("<Button-1>",  self.resetWrap)
             widget.bind("<Key>", self.resetWrap)
             widget.bind("<Control-a>",self.selectAllFindText)
             #widget.bind(g.virtual_event_name("SelectAll"),self.selectAllFindText)

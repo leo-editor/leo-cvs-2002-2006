@@ -2345,8 +2345,6 @@ def printGc(message=None):
     if not message:
         message = g.callerName(n=2)
         
-    ## g.collectGarbase()
-        
     printGcObjects(message)
     printGcRefs(message)
     

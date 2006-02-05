@@ -950,7 +950,6 @@ class bufferCommandsClass (baseEditCommandsClass):
                 w.delete("1.0","end")
                 w.insert("1.0",name)
                 c.endEditing()
-                ### c.frame.tree.onHeadChanged(p,'rename-buffer %s' % p.headString())
     #@nonl
     #@-node:ekr.20050920084036.43:renameBuffer
     #@+node:ekr.20050920084036.40:switchToBuffer
@@ -5843,7 +5842,7 @@ class findTab (leoFind.leoFind):
         c = self.c ; k = c.k
     
         table = (
-            ('<Key>',k.masterKeyHandler),
+            ('<Key>',   k.masterKeyHandler),
             ("<Return>",self.findButtonCallback),
             ("<Escape>",self.hideTab),
         )
@@ -6003,7 +6002,7 @@ class findTab (leoFind.leoFind):
                 box = self.underlinedTkButton(
                     "radio",columns[i],anchor="w",text=name,variable=var,value=val,background=bg)
                 box.button.pack(fill="x")
-                box.button.bind("<1>", self.resetWrap)
+                box.button.bind("<Button-1>", self.resetWrap)
                 if val == None: box.button.configure(state="disabled")
                 box.bindHotKey(ftxt)
                 box.bindHotKey(ctxt)
@@ -6011,7 +6010,7 @@ class findTab (leoFind.leoFind):
                 box = self.underlinedTkButton(
                     "check",columns[i],anchor="w",text=name,variable=var,background=bg)
                 box.button.pack(fill="x")
-                box.button.bind("<1>", self.resetWrap)
+                box.button.bind("<Button-1>", self.resetWrap)
                 box.bindHotKey(ftxt)
                 box.bindHotKey(ctxt)
                 if var is None: box.button.configure(state="disabled")
@@ -6141,22 +6140,14 @@ class findTab (leoFind.leoFind):
             setattr(self, key, val)
             # g.trace(key,val)
     
-        # Set ivars from radio buttons. Convert these to 1 or 0.
-        if 0: ####
-            find_type = self.dict["radio-find-type"].get()
-            self.pattern_match = g.choose(find_type == "pattern-search",1,0)
-            self.script_search = g.choose(find_type == "script-search",1,0)
-    
         search_scope = self.dict["radio-search-scope"].get()
         self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
         self.node_only       = g.choose(search_scope == "node-only",1,0)
-        # self.selection       = g.choose(search_scope == "selection-only",1,0)
     
-        # New in 4.3: The caller is responsible for removing most trailing cruft.
+        # The caller is responsible for removing most trailing cruft.
         # Among other things, this allows Leo to search for a single trailing space.
         s = self.find_ctrl.get("1.0","end")
         s = g.toUnicode(s,g.app.tkEncoding)
-        # g.trace(repr(s))
         if s and s[-1] in ('\r','\n'):
             s = s[:-1]
         self.find_text = s
@@ -7048,7 +7039,7 @@ class spellTab(leoFind.leoFind):
         self.outerScrolledFrame.pack(expand=1,fill='both',padx=2,pady=2)
         
         self.fillbox([])
-        self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
+        self.listBox.bind("<Double-1>",self.onChangeThenFindButton)
         self.listBox.bind("<Button-1>",self.onSelectListBox)
         self.listBox.bind("<Map>",self.onMap)
     #@nonl

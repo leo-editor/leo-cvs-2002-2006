@@ -352,7 +352,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # Handle mouse wheel in the outline pane.
         if sys.platform == "linux2": # This crashes tcl83.dll
             canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-        if 1:
+        if 0:
             #@        << do scrolling by hand in a separate thread >>
             #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
             # New in 4.3: replaced global way with scrollWay ivar.
@@ -1343,26 +1343,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         if not c.useTextMinibuffer: return
         
-        if 1:
-             for kind,callback in (
-                ('<Key>',               k.masterKeyHandler),
-                ('<FocusIn>',           k.onFocusInMinibuffer),
-                ('<FocusOut>',          k.onFocusOutMinibuffer),
-            ):
-                t.bind(kind,callback)
-            
-        else:
-            for kind,callback in (
-                ('<Key>',               k.masterKeyHandler),
-                ('<Button-1>',          k.masterClickHandler),
-                ('<Button-3>',          k.masterClick3Handler),
-                ('<Double-Button-1>',   k.masterDoubleClickHandler),
-                ('<Double-Button-3>',   k.masterDoubleClick3Handler),
-                ('<FocusIn>',           self.onFocusInMinibuffer),
-                ('<FocusOut>',          self.onFocusOutMinibuffer),
-            ):
-                t.bind(kind,callback)
-        
+        for kind,callback in (
+            ('<Key>',           k.masterKeyHandler),
+            ('<Button-1>',      k.masterClickHandler),
+            ('<Button-3>',      k.masterClick3Handler),
+            ('<Double-1>',      k.masterDoubleClickHandler),
+            ('<Double-3>',      k.masterDoubleClick3Handler),
+            # ('<FocusIn>',     k.onFocusInMinibuffer),
+            # ('<FocusOut>',    k.onFocusOutMinibuffer),
+        ):
+            t.bind(kind,callback)
+    
         if 0:
             if sys.platform.startswith('win'):
                 # Support Linux middle-button paste easter egg.
@@ -2244,28 +2235,18 @@ class leoTkinterBody (leoFrame.leoBody):
         
         frame = self.frame ; c = self.c ; k = c.k ; t = self.bodyCtrl
         
-        if 1:
-             for kind,callback in (
-                ('<Key>',               k.masterKeyHandler),
-                ('<Button-1>',          frame.OnBodyClick),
-                ('<Button-3>',          frame.OnBodyRClick),
-                ('<Double-Button-1>',   frame.OnBodyDoubleClick),
-                # ('<Double-Button-3>',   None),
-            ):
-                t.bind(kind,callback)
-            
-        else:
-            t.bind('<Key>',k.masterKeyHandler)
+        t.bind('<Key>', k.masterKeyHandler)
     
-            for kind,func,handler in (
-                ('<Button-1>',          frame.OnBodyClick,          k.masterClickHandler),
-                ('<Button-3>',          frame.OnBodyRClick,         k.masterClick3Handler),
-                ('<Double-Button-1>',   frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
-                ('<Double-Button-3>',   None,                       k.masterDoubleClick3Handler),
-            ):
-                def bodyClickCallback(event,handler=handler,func=func):
-                    return handler(event,func)
-                t.bind(kind,bodyClickCallback)
+        for kind,func,handler in (
+            ('<Button-1>',  frame.OnBodyClick,          k.masterClickHandler),
+            ('<Button-3>',  frame.OnBodyRClick,         k.masterClick3Handler),
+            ('<Double-1>',  frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
+            ('<Double-3>',  None,                       k.masterDoubleClick3Handler),
+        ):
+            def bodyClickCallback(event,handler=handler,func=func):
+                return handler(event,func)
+    
+            t.bind(kind,bodyClickCallback)
                 
         if sys.platform.startswith('win'):
             # Support Linux middle-button paste easter egg.
@@ -3074,6 +3055,7 @@ class leoTkinterLog (leoFrame.leoLog):
         menu = self.makeTabMenu(tabName=None)
     
         def hullMenuCallback(event):
+            g.trace()
             self.onRightClick(event,menu)
     
         self.nb.bind('<Button-3>',hullMenuCallback)
@@ -3521,39 +3503,25 @@ class leoTkinterLog (leoFrame.leoLog):
         tab = self.nb.tab(tabName)
         text = self.textDict.get(tabName)
         
-        if 1:
-            def tabMenuRightClickCallback(event,menu=self.menu):
-                self.onRightClick(event,menu)
-                
-            def tabMenuClickCallback(event,tabName=tabName):
-                self.onClick(event,tabName)
+        # Send all event in the text area to the master handlers.
+        for kind,handler in (
+            ('<Key>',       k.masterKeyHandler),
+            ('<Button-1>',  k.masterClickHandler),
+            ('<Button-3>',  k.masterClick3Handler),
+        ):
+            text.bind(kind,handler)
         
-            for kind,handler in (
-                ('<Key>',k.masterKeyHandler),
-                ('<Button-1>',tabMenuClickCallback),
-                ('<Button-3>',tabMenuRightClickCallback),
-            ):
-                text.bind(kind,handler)
-    
-        else:
+        # Clicks in the tab area are harmless: use the old code.
+        def tabMenuRightClickCallback(event,menu=self.menu):
+            g.trace()
+            self.onRightClick(event,menu)
+            
+        def tabMenuClickCallback(event,tabName=tabName):
+            g.trace()
+            self.onClick(event,tabName)
         
-            # Send all event in the text area to the master handlers.
-            for kind,handler in (
-                ('<Key>',               k.masterKeyHandler),
-                ('<Button-1>',          k.masterClickHandler),
-                ('<Button-3>',          k.masterClick3Handler),
-            ):
-                text.bind(kind,handler)
-            
-            # Clicks in the tab area are harmless: use the old code.
-            def tabMenuRightClickCallback(event,menu=self.menu):
-                self.onRightClick(event,menu)
-                
-            def tabMenuClickCallback(event,tabName=tabName):
-                self.onClick(event,tabName)
-            
-            tab.bind('<Button-1>',tabMenuClickCallback)
-            tab.bind('<Button-3>',tabMenuRightClickCallback)
+        tab.bind('<Button-1>',tabMenuClickCallback)
+        tab.bind('<Button-3>',tabMenuRightClickCallback)
     #@nonl
     #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers

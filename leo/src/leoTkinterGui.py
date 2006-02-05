@@ -449,7 +449,7 @@ class tkinterGui(leoGui.leoGui):
                     g.trace(repr(w2),g.callers())
         
         if w:
-            if c.config.getBool('trace_g.app.gui.set_focus'):
+            if not g.app.unitTesting and c.config.getBool('trace_g.app.gui.set_focus'):
                 self.set_focus_count += 1
                 g.trace('%4d' % (self.set_focus_count),
                     g.app.gui.widget_name(w),g.callers())
