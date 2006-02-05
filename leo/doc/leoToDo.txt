@@ -5,19 +5,8 @@
 #@+node:ekr.20060202233315:To do first
 @nocolor
 
-- Replace frame.xWantsFocus with c.xWantsFocus
+- Support for @list on-enter-mode
 
-** Add an assert in gui.get/set_focus that the arg really is a commander!
-
-* Want a previous-search command (puts previous search pattern in minibuffer).
-
-- Right clicks in tabs don't work.
-
-- Minibuffer interface for GoToLine number.
-
-- Restore masterClickHandlers.
-    - FocusOut can not do the job.
-    
 * Clicking in log doesn't end editing in headline properly.
   Neither does toggle-active-pane
   
@@ -33,16 +22,24 @@
         - Weird: did we execute k.masterMenuHandler??
     - endEditLabel may be setting the focus improperly.
     
+- pasteText (with empty text?) crashed when pasting into minibuffer.
+    
 Later:
 
 - Make sure the tree code doesn't get confused when recycling widgets.
 
 - Test referers when deleting objects.
 
-- Housecleaning:  remove old code:  if 1, if 0, ## etc.
-
 @color
 #@nonl
+#@+node:ekr.20060205150019:New commands
+- Commands to put focus in find or change text.
+
+* Want a previous-search command (puts previous search pattern in minibuffer).
+
+- Minibuffer interface for GoToLine number.
+#@nonl
+#@-node:ekr.20060205150019:New commands
 #@-node:ekr.20060202233315:To do first
 #@+node:ekr.20060116073938:4.4b2
 #@+node:ekr.20060122183544:Improve search commands
@@ -947,7 +944,7 @@ def createBindings (self):
     c = self.c ; k = c.k
 
     table = (
-        ('<Key>',k.masterKeyHandler),
+        ('<Key>',   k.masterKeyHandler),
         ("<Return>",self.findButtonCallback),
         ("<Escape>",self.hideTab),
     )
@@ -1117,7 +1114,7 @@ for i in xrange(numberOfColumns):
         box = self.underlinedTkButton(
             "radio",columns[i],anchor="w",text=name,variable=var,value=val,background=bg)
         box.button.pack(fill="x")
-        box.button.bind("<1>", self.resetWrap)
+        box.button.bind("<Button-1>", self.resetWrap)
         if val == None: box.button.configure(state="disabled")
         box.bindHotKey(ftxt)
         box.bindHotKey(ctxt)
@@ -1125,7 +1122,7 @@ for i in xrange(numberOfColumns):
         box = self.underlinedTkButton(
             "check",columns[i],anchor="w",text=name,variable=var,background=bg)
         box.button.pack(fill="x")
-        box.button.bind("<1>", self.resetWrap)
+        box.button.bind("<Button-1>", self.resetWrap)
         box.bindHotKey(ftxt)
         box.bindHotKey(ctxt)
         if var is None: box.button.configure(state="disabled")
@@ -1238,22 +1235,14 @@ def update_ivars (self):
         setattr(self, key, val)
         # g.trace(key,val)
 
-    # Set ivars from radio buttons. Convert these to 1 or 0.
-    if 0: ####
-        find_type = self.dict["radio-find-type"].get()
-        self.pattern_match = g.choose(find_type == "pattern-search",1,0)
-        self.script_search = g.choose(find_type == "script-search",1,0)
-
     search_scope = self.dict["radio-search-scope"].get()
     self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
     self.node_only       = g.choose(search_scope == "node-only",1,0)
-    # self.selection       = g.choose(search_scope == "selection-only",1,0)
 
-    # New in 4.3: The caller is responsible for removing most trailing cruft.
+    # The caller is responsible for removing most trailing cruft.
     # Among other things, this allows Leo to search for a single trailing space.
     s = self.find_ctrl.get("1.0","end")
     s = g.toUnicode(s,g.app.tkEncoding)
-    # g.trace(repr(s))
     if s and s[-1] in ('\r','\n'):
         s = s[:-1]
     self.find_text = s
@@ -7385,7 +7374,7 @@ def set_focus(self,c,w):
                 g.trace(repr(w2),g.callers())
     
     if w:
-        if c.config.getBool('trace_g.app.gui.set_focus'):
+        if not g.app.unitTesting and c.config.getBool('trace_g.app.gui.set_focus'):
             self.set_focus_count += 1
             g.trace('%4d' % (self.set_focus_count),
                 g.app.gui.widget_name(w),g.callers())
@@ -8751,8 +8740,6 @@ def printGc(message=None):
     
     if not message:
         message = g.callerName(n=2)
-        
-    ## g.collectGarbase()
         
     printGcObjects(message)
     printGcRefs(message)
@@ -10229,8 +10216,6 @@ def printGc(message=None):
     
     if not message:
         message = g.callerName(n=2)
-        
-    ## g.collectGarbase()
         
     printGcObjects(message)
     printGcRefs(message)
@@ -12185,7 +12170,7 @@ def createSpellTab(self,parentFrame):
     self.outerScrolledFrame.pack(expand=1,fill='both',padx=2,pady=2)
     
     self.fillbox([])
-    self.listBox.bind("<Double-Button-1>",self.onChangeThenFindButton)
+    self.listBox.bind("<Double-1>",self.onChangeThenFindButton)
     self.listBox.bind("<Button-1>",self.onSelectListBox)
     self.listBox.bind("<Map>",self.onMap)
 #@nonl
@@ -17613,28 +17598,18 @@ def createBindings (self):
     
     frame = self.frame ; c = self.c ; k = c.k ; t = self.bodyCtrl
     
-    if 1:
-         for kind,callback in (
-            ('<Key>',               k.masterKeyHandler),
-            ('<Button-1>',          frame.OnBodyClick),
-            ('<Button-3>',          frame.OnBodyRClick),
-            ('<Double-Button-1>',   frame.OnBodyDoubleClick),
-            # ('<Double-Button-3>',   None),
-        ):
-            t.bind(kind,callback)
-        
-    else:
-        t.bind('<Key>',k.masterKeyHandler)
+    t.bind('<Key>', k.masterKeyHandler)
 
-        for kind,func,handler in (
-            ('<Button-1>',          frame.OnBodyClick,          k.masterClickHandler),
-            ('<Button-3>',          frame.OnBodyRClick,         k.masterClick3Handler),
-            ('<Double-Button-1>',   frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
-            ('<Double-Button-3>',   None,                       k.masterDoubleClick3Handler),
-        ):
-            def bodyClickCallback(event,handler=handler,func=func):
-                return handler(event,func)
-            t.bind(kind,bodyClickCallback)
+    for kind,func,handler in (
+        ('<Button-1>',  frame.OnBodyClick,          k.masterClickHandler),
+        ('<Button-3>',  frame.OnBodyRClick,         k.masterClick3Handler),
+        ('<Double-1>',  frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
+        ('<Double-3>',  None,                       k.masterDoubleClick3Handler),
+    ):
+        def bodyClickCallback(event,handler=handler,func=func):
+            return handler(event,func)
+
+        t.bind(kind,bodyClickCallback)
             
     if sys.platform.startswith('win'):
         # Support Linux middle-button paste easter egg.
@@ -20768,28 +20743,18 @@ def createBindings (self):
     
     frame = self.frame ; c = self.c ; k = c.k ; t = self.bodyCtrl
     
-    if 1:
-         for kind,callback in (
-            ('<Key>',               k.masterKeyHandler),
-            ('<Button-1>',          frame.OnBodyClick),
-            ('<Button-3>',          frame.OnBodyRClick),
-            ('<Double-Button-1>',   frame.OnBodyDoubleClick),
-            # ('<Double-Button-3>',   None),
-        ):
-            t.bind(kind,callback)
-        
-    else:
-        t.bind('<Key>',k.masterKeyHandler)
+    t.bind('<Key>', k.masterKeyHandler)
 
-        for kind,func,handler in (
-            ('<Button-1>',          frame.OnBodyClick,          k.masterClickHandler),
-            ('<Button-3>',          frame.OnBodyRClick,         k.masterClick3Handler),
-            ('<Double-Button-1>',   frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
-            ('<Double-Button-3>',   None,                       k.masterDoubleClick3Handler),
-        ):
-            def bodyClickCallback(event,handler=handler,func=func):
-                return handler(event,func)
-            t.bind(kind,bodyClickCallback)
+    for kind,func,handler in (
+        ('<Button-1>',  frame.OnBodyClick,          k.masterClickHandler),
+        ('<Button-3>',  frame.OnBodyRClick,         k.masterClick3Handler),
+        ('<Double-1>',  frame.OnBodyDoubleClick,    k.masterDoubleClickHandler),
+        ('<Double-3>',  None,                       k.masterDoubleClick3Handler),
+    ):
+        def bodyClickCallback(event,handler=handler,func=func):
+            return handler(event,func)
+
+        t.bind(kind,bodyClickCallback)
             
     if sys.platform.startswith('win'):
         # Support Linux middle-button paste easter egg.

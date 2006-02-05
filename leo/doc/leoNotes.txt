@@ -4783,6 +4783,33 @@ def widget_wants_focus(self,c,widget):
 widgetWantsFocus = widget_wants_focus
 #@nonl
 #@-node:ekr.20050210082320:widget_wants_focus (tk.gui)
+#@+node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
+def onFocusInMinibuffer (self,event=None):
+    k = self
+
+def onFocusOutMinibuffer (self,event=None):
+
+    k = self ; c = k.c
+    w = event and event.widget
+    wname = g.app.gui.widget_name(w)
+    if wname.startswith('log-'):
+        return None # Kludge to allow tab completion.
+    
+    # g.trace(k.inState(), g.app.gui.widget_name(w))
+    
+    if 0: ## k.inState():
+        d = k.computeInverseBindingDict()
+        tupleList = d.get('keyboard-quit',[])
+        if tupleList:
+            for pane,stroke in tupleList:
+                if pane in ('all:','text:','mini:'):
+                    g.es_print('Ignoring click: minibuffer is active',color='blue')
+                    g.es_print('Use %s to exit the minibuffer' % (stroke))
+                    c.minibufferWantsFocus()
+                    return 'break'
+            
+    return None # Allow the click.
+#@-node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
