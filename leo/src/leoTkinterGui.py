@@ -422,11 +422,11 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4060:Dialog
     #@+node:ekr.20031218072017.4064:Focus
     #@+node:ekr.20031218072017.4065:get_focus
-    def get_focus(self,frame):
+    def get_focus(self,c):
         
         """Returns the widget that has focus, or body if None."""
     
-        return frame.top.focus_displayof()
+        return c.frame.top.focus_displayof()
     #@nonl
     #@-node:ekr.20031218072017.4065:get_focus
     #@+node:ekr.20031218072017.2373:set_focus (app.gui)
@@ -438,14 +438,21 @@ class tkinterGui(leoGui.leoGui):
         
         """Put the focus on the widget."""
         
+        if 0: # Big trace if we have unexpected focus.
+            w2 = c.frame.outerFrame.focus_get()
+            wname = g.app.gui.widget_name(w2)
+            for s in ('canvas','log','mini','body','head'):
+                if wname.startswith(s): break
+            else:
+                if w2:
+                    g.trace('*'*40,'Previous widget',wname)
+                    g.trace(repr(w2),g.callers())
+        
         if w:
             if c.config.getBool('trace_g.app.gui.set_focus'):
                 self.set_focus_count += 1
                 g.trace('%4d' % (self.set_focus_count),
                     g.app.gui.widget_name(w),g.callers())
-            if 0:
-                w2 = c.frame.outerFrame.focus_get()
-                w2 and g.trace(g.app.gui.widget_name(name2),c)
     
             if 1:
                 # A fix to the cursed problems with Pmw.Notebook.
@@ -460,19 +467,10 @@ class tkinterGui(leoGui.leoGui):
                 # It's easiest not to care.
                 w.focus_set()
             except Exception:
+                g.es_exception()
                 pass
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
-    #@+node:ekr.20050210082320:widget_wants_focus (tk.gui)
-    def widget_wants_focus(self,c,widget):
-    
-        """Indicate that a widget want to get focus."""
-        
-        c and c.frame.widgetWantsFocus(widget)
-            
-    widgetWantsFocus = widget_wants_focus
-    #@nonl
-    #@-node:ekr.20050210082320:widget_wants_focus (tk.gui)
     #@-node:ekr.20031218072017.4064:Focus
     #@+node:ekr.20031218072017.4066:Font
     #@+node:ekr.20031218072017.2187:tkGui.getFontFromParams

@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -70,7 +70,7 @@
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 </v>
-<v t="ekr.20051120173230" annotate="7d71002e"><vh>Prototypes</vh>
+<v t="ekr.20051120173230" a="E" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
 <v t="ekr.20051112134206.2"><vh>&lt;&lt; about this module &gt;&gt;</vh></v>
@@ -211,8 +211,7 @@
 <v t="ekr.20060103102234"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
-</v>
-<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" a="V" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
@@ -243,11 +242,13 @@
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
+</v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 <v t="ekr.20060124165505"><vh>Printing commands</vh></v>
 <v t="ekr.20060125082644"><vh>Test show-find-options</vh></v>
 <v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
 <v t="ekr.20060201161437"><vh>Prototype of p.key</vh></v>
+<v t="ekr.20060205061810"><vh>Typing test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4051,7 +4052,9 @@ else:
 
     demo.regexdisplay.configure(regexconfig)
     return root</t>
-<t tx="ekr.20051214100048"></t>
+<t tx="ekr.20051214100048">@color
+
+This is a test of colorizer stuff.</t>
 <t tx="ekr.20051219184032">import leoTest
 leoTest.runTimerOnNode(p,count=1000)</t>
 <t tx="ekr.20051221091553">c.frame.tree.OnIconDoubleClick(p)
@@ -4449,5 +4452,6 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
+<t tx="ekr.20060205061810"></t>
 </tnodes>
 </leo_file>

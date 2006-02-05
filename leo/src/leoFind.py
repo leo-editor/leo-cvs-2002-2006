@@ -516,7 +516,7 @@ class leoFind:
     
         # Update the selection for the next match.
         gui.setSelectionRangeWithLength(t,start,len(self.change_text))
-        c.frame.widgetWantsFocus(t)
+        c.widgetWantsFocus(t)
     
         # No redraws here: they would destroy the headline selection.
         c.beginUpdate()
@@ -934,7 +934,7 @@ class leoFind:
                 # Search headline first.
                 self.in_headline = (
                     p == c.frame.tree.editPosition() and
-                    g.app.gui.get_focus(c.frame) != c.frame.body.bodyCtrl)
+                    c.get_focus() != c.frame.body.bodyCtrl)
         else:
             self.in_headline = self.search_headline
     #@nonl
@@ -956,7 +956,7 @@ class leoFind:
             sel = gui.getTextSelection(t)
         pos = gui.getInsertPoint(t)
         st = self.initNextText()
-        c.frame.widgetWantsFocus(t)
+        c.widgetWantsFocus(t)
         gui.setInsertPoint(st,pos)
         if sel:
             self.selStart,self.selEnd = sel
@@ -1005,7 +1005,7 @@ class leoFind:
             gui.setSelectionRange(t,insert,insert)
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
-            c.frame.widgetWantsFocus(t)
+            c.widgetWantsFocus(t)
     #@nonl
     #@-node:ekr.20031218072017.3089:restore
     #@+node:ekr.20031218072017.3090:save
@@ -1049,7 +1049,7 @@ class leoFind:
         if self.reverse:
             gui.setInsertPoint(t,pos)
         gui.makeIndexVisible(t,insert)
-        c.frame.widgetWantsFocus(t)
+        c.widgetWantsFocus(t)
         if self.wrap and not self.wrapPosition:
             self.wrapPosition = self.p
     #@nonl

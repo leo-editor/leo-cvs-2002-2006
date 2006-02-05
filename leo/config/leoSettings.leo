@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="98" left="230" height="777" width="841"/>
+	<global_window_position top="98" left="322" height="777" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -47,7 +47,7 @@
 </v>
 <v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
-<v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
+<v t="ekr.20060126075152"><vh>@bool trace_gc = True</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
@@ -99,33 +99,6 @@
 <v t="ekr.20041119043902.13"><vh>@bool print_matching_lines = False</vh></v>
 <v t="ekr.20041119043902.14"><vh>@bool print_mismatching_lines = True</vh></v>
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
-</v>
-</v>
-<v t="ekr.20041119034357.20" annotate="7d71002e"><vh>Find/Change panel options</vh>
-<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
-<v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = False</vh></v>
-<v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
-<v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
-<v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
-<v t="ekr.20041119050105.4"><vh>@bool batch = False</vh></v>
-<v t="ekr.20041119050105.5"><vh>@bool ignore_case = False</vh></v>
-<v t="ekr.20041119050105.6"><vh>@bool mark_changes = False</vh></v>
-<v t="ekr.20041119050105.7"><vh>@bool mark_finds = False</vh></v>
-<v t="ekr.20041119050105.12"><vh>@bool node_only = False</vh></v>
-<v t="ekr.20041119050105.9"><vh>@bool reverse = False</vh></v>
-<v t="ekr.20041120152657"><vh>@bool script_change = None</vh></v>
-<v t="ekr.20041119050105.14"><vh>@bool search_body = True</vh></v>
-<v t="ekr.20041119050105.15"><vh>@bool search_headline = False</vh></v>
-<v t="ekr.20041119050105.10"><vh>@bool whole_word = True</vh></v>
-<v t="ekr.20041119050105.11"><vh>@bool wrap = False</vh></v>
-</v>
-<v t="ekr.20041119050105.13"><vh>search extent radio buttons</vh>
-<v t="ekr.20041120152900"><vh>@bool selection_only = False</vh></v>
-<v t="ekr.20041119050105.16"><vh>@bool suboutline_only = False</vh></v>
-</v>
-<v t="ekr.20041120152900.1"><vh>search kind radio buttons</vh>
-<v t="ekr.20041119050105.8"><vh>@bool pattern_match = False</vh></v>
-<v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
 <v t="ekr.20041213105007" annotate="7d71002e"><vh>Fonts</vh>
@@ -279,6 +252,28 @@
 </v>
 </v>
 </v>
+<v t="ekr.20041119034357.20" annotate="7d71002e"><vh>Find/Change panel options</vh>
+<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = True</vh></v>
+<v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = True</vh></v>
+<v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
+<v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
+<v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
+<v t="ekr.20041119050105.4"><vh>@bool batch = False</vh></v>
+<v t="ekr.20041119050105.5"><vh>@bool ignore_case = False</vh></v>
+<v t="ekr.20041119050105.6"><vh>@bool mark_changes = False</vh></v>
+<v t="ekr.20041119050105.7"><vh>@bool mark_finds = False</vh></v>
+<v t="ekr.20041119050105.12"><vh>@bool node_only = False</vh></v>
+<v t="ekr.20041119050105.9"><vh>@bool reverse = False</vh></v>
+<v t="ekr.20041119050105.8"><vh>@bool pattern_match = False</vh></v>
+<v t="ekr.20041120152657"><vh>@bool script_change = None</vh></v>
+<v t="ekr.20041119050105.14"><vh>@bool search_body = True</vh></v>
+<v t="ekr.20041119050105.15"><vh>@bool search_headline = False</vh></v>
+<v t="ekr.20041119050105.10"><vh>@bool whole_word = True</vh></v>
+<v t="ekr.20041119050105.11"><vh>@bool wrap = False</vh></v>
+</v>
+<v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
+<v t="ekr.20041119050105.16"><vh>@bool suboutline_only = False</vh></v>
+</v>
 <v t="ekr.20060122105527.3"><vh>Keyboard and minibuffer Options</vh>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060122105527.5" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
@@ -345,10 +340,10 @@
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
+<v t="ekr.20060122105527.14"><vh>@mode Find-options (Control-Shift-F)</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
@@ -374,10 +369,10 @@
 <v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
+<v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@mode Options (Ctrl-Y)</vh></v>
+<v t="ekr.20060122105527.14"><vh>@mode Find-options (Control-Shift-F)</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
@@ -392,9 +387,25 @@
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
+<v t="ekr.20060122105527.9" a="E"><vh>Modes</vh>
+<v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
+<v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
+</v>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-W)</vh>
+<v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
+</v>
+<v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
+<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
+</v>
+<v t="ekr.20060122105527.14"><vh>@mode Find-options (Control-Shift-F)</vh></v>
+<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
+<v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
+</v>
+<v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
+</v>
 <v t="ekr.20060203094527" a="E"><vh>Recent options</vh>
 <v t="ekr.20051126062243"><vh>Debugging options</vh>
-<v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
+<v t="ekr.20060126075152"><vh>@bool trace_gc = True</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
@@ -412,14 +423,12 @@
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
-<v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
+<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060126075152"><vh>@bool trace_gc = True</vh></v>
 <v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
-<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = False</vh></v>
-<v t="ekr.20060204124608" a="V"><vh>@bool minibufferSearchesShowFindTab = False</vh></v>
+<v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = True</vh></v>
+<v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = True</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060122105527.12"><vh>@mode Find (Control-F)</vh>
-<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
-</v>
 </v>
 </vnodes>
 <tnodes>
@@ -894,9 +903,6 @@ The pattern "^*$" matches any line at all.</t>
 <t tx="ekr.20041119050105.10"></t>
 <t tx="ekr.20041119050105.11"></t>
 <t tx="ekr.20041119050105.12"></t>
-<t tx="ekr.20041119050105.13">Only one of these settings can be True.
-
-If None are true, Leo searches the entire headline.</t>
 <t tx="ekr.20041119050105.14">When checked, the Find and Change commands search body text.
 </t>
 <t tx="ekr.20041119050105.15">When checked, the Find and Change commands search headline text.
@@ -995,10 +1001,6 @@ except that it isn't necessary to import sys.
 This would be the natural way to implement platform-dependent settings.</t>
 <t tx="ekr.20041120152508"></t>
 <t tx="ekr.20041120152657"></t>
-<t tx="ekr.20041120152900"></t>
-<t tx="ekr.20041120152900.1">Only one of these settings can be True.
-
-If None are true, uses a 'Plain' search.</t>
 <t tx="ekr.20041120152900.2">When the Script Search radio button is selected Leo treats the contents of the
 Search Text as a script to execute whenever any kind of Find command is
 executed. Similarly, when the Script Change checkbox is selected Leo treats the
@@ -1481,6 +1483,7 @@ clone-node                          = None
 close-find-dialog                   = None
 close-rectangle                     = None
 close-window                        = None
+collect-garbage                     = None
 contract-all                        = None
 contract-node                       = None
 contract-or-go-left                 = None
@@ -3291,6 +3294,7 @@ previous-line                       = None
 previous-line-extend-selection      = None
 print-bindings                      = None
 print-commands                      = None
+print-gc-summary                    = None
 print-stats                         = None
 promote                             = None
 query-replace                       = None
@@ -3831,21 +3835,23 @@ save-file-to            = t
 close-window            = w
 </t>
 <t tx="ekr.20060122105527.12"># Boilerplate for most modes.
-exit-named-mode     = Return
-exit-named-mode     = BackSpace
-keyboard-quit       = Ctrl-g
-mode-help           = Tab
+exit-named-mode     -&gt; same = Return
+exit-named-mode     -&gt; same = BackSpace
+keyboard-quit       -&gt; same = Ctrl-g
+mode-help           -&gt; same = Tab
 
-search-again                = a
-switch-to-buffer            = h
-search-with-present-options = f
-show-find-options   -&gt; same = o
-open-find-tab       -&gt; same = t
-word-search-forward         = w
+enter-options-mode  = Ctrl-Y
 
-# isearch-forward         = i
-# isearch-forward-regexp  = x
-# re-search-forward       = r</t>
+search-again                 = a
+switch-to-buffer             = h
+search-with-present-options  = f
+show-find-options    -&gt; same = o
+open-find-tab        -&gt; same = t
+word-search-forward          = w
+
+# isearch-forward          = i
+# isearch-forward-regexp   = x
+# re-search-forward        = r</t>
 <t tx="ekr.20060122105527.13"># Boilerplate for most modes.
 exit-named-mode         = Return
 keyboard-quit           = Ctrl-g
@@ -3865,14 +3871,21 @@ exit-named-mode     = Return
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
-# This would be a great mode to open the find tab initially.
+# enter-find-mode     = Ctrl-F
+search-with-present-options         = Ctrl-f
+replace-string                      = Ctrl-Shift-r
+find-tab-find                       = F3
+find-tab-find-prev                  = F2
+find-tab-change                     = Ctrl-=
+find-tab-change-then-find           = Ctrl--
 
 set-find-everywhere                 -&gt; same = e
 set-find-node-only                  -&gt; same = n
 set-find-suboutline-only            -&gt; same = s
 
-open-find-tab                       = t  # Must exit: it interferes with the focus.
-show-find-options                   = o  # Must exit: otherwise it isn't visible (a bug)
+# One or both should happen automatically on entry to this mode.
+open-find-tab                       -&gt; same = t
+show-find-options                   -&gt; same = o  
 
 toggle-find-ignore-case-option      -&gt; same = i
 toggle-find-in-body-option          -&gt; same = b
@@ -3882,8 +3895,7 @@ toggle-find-mark-finds-option       -&gt; same = m
 toggle-find-regex-option            -&gt; same = x
 toggle-find-reverse-option          -&gt; same = r
 toggle-find-word-option             -&gt; same = w
-toggle-find-wrap-around-option      -&gt; same = a
-</t>
+toggle-find-wrap-around-option      -&gt; same = a</t>
 <t tx="ekr.20060122105527.15"># Boilerplate for most modes.
 exit-named-mode     = Return
 keyboard-quit       = Ctrl-g
@@ -4280,67 +4292,52 @@ open-leoPlugins-leo     = p
 open-leoSettings-leo    = s
 
 open-outline            = o     # to do: should be open-outline-by-name.</t>
-<t tx="ekr.20060124070546"># Minibuffer searches have the side effect of changing the find-tab options.
+<t tx="ekr.20060124070546"># Frequently used...
+enter-find-options-mode             = Ctrl-Shift-F
 
-# The find dialog is deprecated.
-find-dialog-change                  = None
-find-dialog-change-all              = None
-find-dialog-change-then-find        = None
-find-dialog-find-previous           = None
-find-dialog-find-next               = None
-open-find-dialog                    = None
-
-# The find tab may be used with the new minibuffer commands.
-# Both sets of commands use the options that are shown:
-# a) in the status line by the show-find-options command or
-# b) in the find-tab by the open-find-tab command.
-
-find-tab-change                     = Ctrl-=
-find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
-find-tab-change-then-find           = Ctrl--
-find-tab-find                       = F3
-find-tab-find-prev                  = F2
-find-tab-replace                    = None
-find-tab-replace-then-find          = None
-hide-find-tab                       = None
-
-open-find-tab                       = Shift-Ctrl-f
-enter-find-mode                     = Ctrl-F
+# To start finds and changes...
+search-again                        = None  # similar to search-with-present-options.
+search-with-present-options         = Ctrl-f
+replace-string                      = Ctrl-Shift-r
 
 clone-find-all                      = None
-
 isearch-backward                    = None 
 isearch-backward-regexp             = None 
 isearch-forward                     = None
-isearch-forward-regexp              = None 
-
-query-replace                       = None 
-query-replace-regex                 = None 
-
-replace-string                      = None
-
-search-again                        = None
+isearch-forward-regexp              = None
+query-replace                       = None
+query-replace-regex                 = None
 search-backward                     = None
 search-forward                      = None
-# search-with-present-options       = Shift-Ctrl-f # Ctrl-f
+word-search-backward                = None 
+word-search-forward                 = None
 
-set-find-everywhere                 = Alt-Ctrl-e
-set-find-node-only                  = Alt-Ctrl-n
-set-find-suboutline-only            = Alt-Ctrl-s
+# To coninue finds and changes...
+find-tab-find                       = F3
+find-tab-find-prev                  = F2
+find-tab-change                     = Ctrl-=
+find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
+find-tab-change-then-find           = Ctrl--
+
+#find-tab-replace                    = None
+#find-tab-replace-then-find          = None
+hide-find-tab                       = None
+open-find-tab                       = None # Shift-Ctrl-f
+
+# Options.  find-options mode is convenient enough.
+set-find-everywhere                 = None
+set-find-node-only                  = None
+set-find-suboutline-only            = None
 show-find-options                   = None
-
-toggle-find-ignore-case-option      = Alt-Ctrl-i
+toggle-find-ignore-case-option      = None
 toggle-find-in-body-option          = None
 toggle-find-in-headline-option      = None
 toggle-find-mark-changes-option     = None
 toggle-find-mark-finds-option       = None
-toggle-find-regex-option            = Alt-Ctrl-x
+toggle-find-regex-option            = None
 toggle-find-reverse-option          = None
-toggle-find-word-option             = Alt-Ctrl-w
-toggle-find-wrap-around-option      = None
-
-word-search-backward                = None 
-word-search-forward                 = None</t>
+toggle-find-word-option             = None
+toggle-find-wrap-around-option      = None</t>
 <t tx="ekr.20060125104049">True: (recommended) The Find tab shows only options, not text or buttons.
 False: (legacy)     The Find tab shows text, options and buttons.</t>
 <t tx="ekr.20060125165241"></t>

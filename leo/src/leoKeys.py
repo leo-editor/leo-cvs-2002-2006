@@ -316,6 +316,7 @@ class keyHandlerClass:
             # keys are scope names: 'all','text',etc. or mode names.
             # Values are dicts: keys are strokes, values are g.bunch(commandName,func,pane,stroke)
         
+        
         # Special bindings for k.fullCommand.
         self.mb_copyKey = None
         self.mb_pasteKey = None
@@ -340,14 +341,15 @@ class keyHandlerClass:
         self.stroke = None
         
         # For getArg...
-        self.afterGetArgState = None
-        self.argTabList = []
+        
         
         # For onIdleTime
         self.idleCount = 0
         
         # For modes
-        self.modeBunch = None
+        self.afterGetArgState = None
+        self.argTabList = []
+        self.modeBindingsDict = {}
         #@nonl
         #@-node:ekr.20050923213858:<< define internal ivars >>
         #@nl
@@ -551,16 +553,6 @@ class keyHandlerClass:
         k.checkBindings()
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
-    #@+node:ekr.20060201081225:k.makeAllModeBindings
-    def makeAllModeBindings (self):
-        
-        k = self
-        
-         ### if k.masterBindingsDict.get(modeName) is None:
-        ###    k.createModeBindings(modeName,d)
-        
-        
-    #@-node:ekr.20060201081225:k.makeAllModeBindings
     #@+node:ekr.20060104154937:addModeCommands
     def addModeCommands (self):
         
@@ -791,40 +783,40 @@ class keyHandlerClass:
         
         '''Handle 'full-command' (alt-x) mode.'''
     
-        k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
+        k = self ; c = k.c ; state = k.getState('full-command')
         keysym = (event and event.keysym) or ''
         ch = (event and event.char) or ''
         trace = c.config.getBool('trace_modes')
         if trace: g.trace('state',state,keysym)
         if state == 0:
-            k.completionFocusWidget = g.app.gui.get_focus(c.frame)
+            k.completionFocusWidget = c.get_focus()
             k.setState('full-command',1,handler=k.fullCommand) 
             k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
             # Init mb_ ivars. This prevents problems with an initial backspace.
             k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
             k.mb_tabList = [] ; k.mb_tabListIndex = -1
-            f.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         elif keysym == 'Return':
             c.frame.log.deleteTab('Completion')
-            c.frame.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
+            c.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
             k.callAltXFunction(event)
         elif keysym == 'Tab':
             k.doTabCompletion(c.commandsDict.keys())
-            f.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         elif keysym == 'BackSpace':
             k.doBackSpace(c.commandsDict.keys())
-            f.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         elif ch not in string.printable:
             if specialStroke:
                 g.trace(specialStroke)
                 specialFunc()
-            f.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
             k.updateLabel(event)
             k.mb_tabListPrefix = k.getLabel()
-            f.minibufferWantsFocus()
+            c.minibufferWantsFocus()
             # g.trace('new prefix',k.mb_tabListPrefix)
     
         return 'break'
@@ -850,7 +842,7 @@ class keyHandlerClass:
         else:
             k.keyboardQuit(event)
             k.setLabel('Command does not exist: %s' % commandName)
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.45:callAltXFunction
     #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
@@ -1171,23 +1163,22 @@ class keyHandlerClass:
             #@nl
             # Set the states.
             bodyCtrl = c.frame.body.bodyCtrl
-            c.frame.widgetWantsFocus(bodyCtrl)
+            c.widgetWantsFocus(bodyCtrl)
             k.afterGetArgState=returnKind,returnState,handler
             k.setState('getArg',1,k.getArg)
             k.afterArgWidget = event and event.widget or c.frame.body.bodyCtrl
-            if k.useTextWidget: c.frame.minibufferWantsFocus()
+            if k.useTextWidget: c.minibufferWantsFocus()
         elif keysym == 'Return':
             k.arg = k.getLabel(ignorePrompt=True)
             kind,n,handler = k.afterGetArgState
             if kind: k.setState(kind,n,handler)
             c.frame.log.deleteTab('Completion')
             if handler: handler(event)
-            # else: c.frame.widgetWantsFocus(k.afterArgWidget)
         elif keysym == 'Tab':
             k.doTabCompletion(k.argTabList,k.arg_completion)
         elif keysym == 'BackSpace':
             k.doBackSpace(k.argTabList,k.arg_completion)
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
             # Clear the list, any other character besides tab indicates that a new prefix is in effect.
             k.mb_tabList = []
@@ -1225,7 +1216,7 @@ class keyHandlerClass:
         k.setDefaultUnboundKeyAction()
         k.showStateAndMode()
         c.endEditing()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.63:keyboardQuit
     #@+node:ekr.20051015110547:k.registerCommand
@@ -1274,9 +1265,9 @@ class keyHandlerClass:
         
         if self.useTextWidget:
             # Important! We must preserve body selection!
-            c.frame.widgetWantsFocus(c.miniBufferWidget)
+            c.widgetWantsFocus(c.miniBufferWidget)
         else:
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20060125175103:k.minibufferWantsFocus
     #@+node:ekr.20051023132350:getLabel
@@ -1332,10 +1323,14 @@ class keyHandlerClass:
         # g.trace(repr(s))
     
         if self.useTextWidget:
+            w_old = c.get_focus()
             # Danger: this will rip the focus into the minibuffer.
-            # **without** calling g.app.gui.set_focus.
+            # **without** calling c.set_focus.
             w.delete('1.0','end')
             w.insert('1.0',s)
+            if w_old != w:
+                # g.trace('Restoring focus to',g.app.gui.widget_name(w_old))
+                c.set_focus(w_old)
         else:
             if k.svar: k.svar.set(s)
     
@@ -1397,6 +1392,8 @@ class keyHandlerClass:
     #@-node:ekr.20050924064254:Label...
     #@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
     #@+node:ekr.20060127183752:masterKeyHandler
+    master_key_count = 0
+    
     def masterKeyHandler (self,event):
         
         '''In the new binding scheme, there is only one key binding.
@@ -1413,6 +1410,11 @@ class keyHandlerClass:
         keysym = event.keysym or ''
         if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
             return None
+            
+        self.master_key_count += 1
+        if not g.app.unitTesting and c.config.getBool('trace_gc'):
+            if (self.master_key_count % 100) == 0:
+                g.printGcSummary(trace=True)
     
         stroke = k.strokeFromEvent(event)
     
@@ -1423,30 +1425,41 @@ class keyHandlerClass:
         state = k.state.kind
         if trace: g.trace(repr(stroke),'state',state)
         if k.inState():
+            # First: honor the 'mini' bindings.
+            d = k.masterBindingsDict.get('mini')
+            b = d.get(stroke)
+            if b:
+                # Pass this on for macro recording.
+                k.masterCommand(event,b.func,stroke,b.commandName)
+                c.minibufferWantsFocus()
+                return 'break'
+            # Second, pass keys to getArg or full-command modes if they are active.
             if state == 'getArg':
                 return k.getArg(event)
-            d =  k.masterBindingsDict.get(state)
-            if d:
-                # A typical state
-                b = d.get(stroke)
-                if b:
-                    return k.generalModeHandler (event,
-                        commandName=b.commandName,func=b.func,
-                        modeName=state,nextMode=b.nextMode)
-                else:
-                    return k.modeHelp(event)
             elif state == 'full-command':
                 d = k.masterBindingsDict.get('mini')
                 b = d.get(stroke)
                 if b:
                     # Pass this on for macro recording.
                     k.masterCommand(event,b.func,stroke,b.commandName)
-                    c.frame.minibufferWantsFocus()
+                    c.minibufferWantsFocus()
                     return 'break'
                 else:
                     # Do the default state action.
                     k.callStateFunction(event) # Calls end-command.
                     return 'break'
+            # Third, pass keys to the general mode handler.
+            d =  k.masterBindingsDict.get(state)
+            if d:
+                # A typical state
+                b = d.get(stroke)
+                g.trace(d.keys())
+                if b:
+                    return k.generalModeHandler (event,
+                        commandName=b.commandName,func=b.func,
+                        modeName=state,nextMode=b.nextMode)
+                else:
+                    return k.modeHelp(event)
             else:
                 g.trace('No state dictionary for %s' % state)
                 return 'break'
@@ -1489,7 +1502,7 @@ class keyHandlerClass:
             
         if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
             g.es_print('Ignoring click outside active minibuffer',color='blue')
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
             return 'break'
     
         if event and func:
@@ -1527,6 +1540,10 @@ class keyHandlerClass:
         # Create a minimal event for commands that require them.
         event = g.Bunch(char='',keysym='',widget=w)
         
+        if 1:
+            if not g.app.unitTesting:
+                g.trace(g.app.gui.widget_name(w))
+        
         return k.masterCommand(event,func,stroke,commandName)
     #@nonl
     #@-node:ekr.20060128090219:masterMenuHandler
@@ -1543,7 +1560,7 @@ class keyHandlerClass:
                 
             if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
                 g.es_print('Ignoring click outside active minibuffer',color='blue')
-                c.frame.minibufferWantsFocus()
+                c.minibufferWantsFocus()
                 return 'break'
         
             if event and func:
@@ -1598,7 +1615,7 @@ class keyHandlerClass:
                     if pane in ('all:','text:','mini:'):
                         g.es_print('Ignoring click: minibuffer is active',color='blue')
                         g.es_print('Use %s to exit the minibuffer' % (stroke))
-                        c.frame.minibufferWantsFocus()
+                        c.minibufferWantsFocus()
                         return 'break'
                 
         return None # Allow the click.
@@ -1626,10 +1643,16 @@ class keyHandlerClass:
                 g.trace('No such command: %s' % commandName) ; continue
             bunchList = d.get(commandName,[])
             for bunch in bunchList:
-                shortcut = bunch.val
-                if shortcut and shortcut not in ('None','none',None):
-                    stroke = k.shortcutFromSetting(shortcut)
-                    # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+                stroke = bunch.val
+                # Important: bunch.val is a stroke returned from k.strokeFromSetting.
+                # Do not call k.strokeFromSetting again here!
+                if stroke and stroke not in ('None','none',None):
+                    if 0:
+                        g.trace(
+                            modeName,
+                            '%10s' % (stroke),
+                            '%20s' % (commandName),
+                            bunch.nextMode)
                     d2 = k.masterBindingsDict.get(modeName,{})
                     d2 [stroke] = g.Bunch(
                         commandName=commandName,
@@ -1642,10 +1665,8 @@ class keyHandlerClass:
     #@+node:ekr.20060117202916.2:endMode
     def endMode(self,event):
         
-        k = self ; c = k.c
-        
-        w = g.app.gui.get_focus(c.frame)
-        
+        k = self ; c = k.c ; w = c.get_focus()
+    
         c.frame.log.deleteTab('Mode')
     
         k.endCommand(event,k.stroke)
@@ -1657,7 +1678,7 @@ class keyHandlerClass:
         # k.setLabelGrey('top-level mode')
         
         # Do *not* change the focus: the command may have changed it.
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20060117202916.2:endMode
     #@+node:ekr.20060102135349.2:enterNamedMode
@@ -1684,9 +1705,8 @@ class keyHandlerClass:
         
         '''Handle a mode defined by an @mode node in leoSettings.leo.'''
     
-        k = self ; c = k.c
+        k = self ; c = k.c ;  w = c.get_focus()
         state = k.getState(modeName)
-        w = g.app.gui.get_focus(c.frame)
         trace = c.config.getBool('trace_modes')
         
         if trace: g.trace(modeName,state)
@@ -1700,9 +1720,9 @@ class keyHandlerClass:
             else:
                 c.frame.log.hideTab('Mode')
             if k.useTextWidget:
-                c.frame.minibufferWantsFocus()
+                c.minibufferWantsFocus()
             else:
-                c.frame.widgetWantsFocus(w)
+                c.widgetWantsFocus(w)
         elif not func:
             g.trace('No func: improper key binding')
             return 'break'
@@ -1722,7 +1742,7 @@ class keyHandlerClass:
                     # func may have put us in *another* mode.
                     pass
                 elif nextMode == 'same':
-                    self.initMode(event,savedModeName) # Re-enter this mode.
+                    self.reinitMode(modeName) # Re-enter this mode.
                     k.setState(modeName,1,handler=k.generalModeHandler)
                 else:
                     self.initMode(event,nextMode) # Enter another mode.
@@ -1743,9 +1763,11 @@ class keyHandlerClass:
         if not d:
             self.badMode(modeName)
             return
+        else:
+            k.modeBindingsDict = d
             
         k.inputModeName = modeName
-        k.modeWidget = g.app.gui.get_focus(c.frame)
+        k.modeWidget = c.get_focus()
         
         if k.masterBindingsDict.get(modeName) is None:
             k.createModeBindings(modeName,d)
@@ -1753,11 +1775,30 @@ class keyHandlerClass:
         k.setLabelBlue(modeName+': ',protect=True)
         k.showStateAndMode()
         if k.useTextWidget:
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
             pass # Do *not* change the focus here!
     #@nonl
     #@-node:ekr.20060117202916.1:initMode
+    #@+node:ekr.20060204140416:reinitMode
+    def reinitMode (self,modeName):
+        
+        k = self ; c = k.c
+    
+        d = k.modeBindingsDict
+        
+        k.inputModeName = modeName
+        k.createModeBindings(modeName,d)
+        
+        # Do not set the status line here.
+        k.setLabelBlue(modeName+': ',protect=True)
+    
+        if k.useTextWidget:
+            c.minibufferWantsFocus()
+        else:
+            pass # Do *not* change the focus here!
+    #@nonl
+    #@-node:ekr.20060204140416:reinitMode
     #@+node:ekr.20060104164523:modeHelp
     def modeHelp (self,event):
     
@@ -1767,15 +1808,17 @@ class keyHandlerClass:
         by analogy with tab completion.'''
         
         k = self ; c = k.c
-        
+    
         c.endEditing()
+        
+        g.trace(k.inputModeName)
         
         if k.inputModeName:
             d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
             k.modeHelpHelper(d)
             
         if k.useTextWidget:
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
     
         return 'break'
     #@nonl
@@ -1823,16 +1866,14 @@ class keyHandlerClass:
     #@+node:ekr.20060120200818:setInputState
     def setInputState (self,state,showState=False):
     
-        k = self ; c = k.c
-        
-        w = g.app.gui.get_focus(c.frame)
+        k = self ; c = k.c ; w = c.get_focus()
     
         k.unboundKeyAction = state
         if state != 'insert' or showState:
             k.showStateAndMode()
        
         # These commands never change focus.
-        w and c.frame.widgetWantsFocus(w)
+        w and c.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20060120200818:setInputState
     #@+node:ekr.20060120193743:showStateAndMode
@@ -1887,7 +1928,7 @@ class keyHandlerClass:
             for s1,s2,s3 in data:
                 g.es('%*s %*s %s' % (-(min(20,n1)),s1,n2,s2,s3),tabName=tabName)
     
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051017212452:computeCompletionList
     #@+node:ekr.20051018070524:computeInverseBindingDict
@@ -1951,7 +1992,7 @@ class keyHandlerClass:
             if redraw:
                 k.computeCompletionList(defaultTabList,backspace=False)
     
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)

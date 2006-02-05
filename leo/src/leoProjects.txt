@@ -22,6 +22,8 @@
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>
 @color
 
+# __pychecker__ = '--no-argsused'
+
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
 if 0: # Set to 1 for lint-like testing.
@@ -1667,6 +1669,8 @@ def skip_ws_and_nl(s,i):
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>
 @color
 
+# __pychecker__ = '--no-argsused'
+
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
 if 0: # Set to 1 for lint-like testing.
@@ -1694,7 +1698,7 @@ leoKeys.py:1315: No module attribute (initAllEditCommanders) found
 C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionList) found
 #@nonl
 #@-node:ekr.20051029070945:Pychecker report
-#@+node:ekr.20060117091600:4.4a6 projects
+#@+node:ekr.20060117091600:4.4b2 projects
 #@+node:ekr.20060131113046:Bugs
 #@+node:ekr.20060117091430.1:Fixed crasher in Save button
 @nocolor
@@ -1736,7 +1740,7 @@ def setEditLabelState (self,p): # selected, editing
     c = self.c ; w = p.edit_widget()
 
     if p and w:
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         self.setEditHeadlineColors(p)
         w.tag_remove("sel","1.0","end")
         w.tag_add("sel","1.0","end")
@@ -1844,9 +1848,9 @@ def onClickBoxClick (self,event):
             if c.frame.findPanel:
                 c.frame.findPanel.handleUserClick(p)
             if self.stayInTree:
-                c.frame.treeWantsFocus()
+                c.treeWantsFocus()
             else:
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
         g.doHook("boxclick2",c=c,p=p,v=p,event=event)
     finally:
         c.endUpdate()
@@ -2114,8 +2118,7 @@ def onHeadChanged (self,p,undoType='Typing'):
     '''Officially change a headline.
     Set the old undo text to the previous revert point.'''
     
-    c = self.c ; frame = c.frame ; u = c.undoer
-    w = self.edit_widget(p)
+    c = self.c ; u = c.undoer ; w = self.edit_widget(p)
     if not w: return
     
     ch = '\r' # New in 4.4: we only report the final keystroke.
@@ -2145,9 +2148,9 @@ def onHeadChanged (self,p,undoType='Typing'):
         c.endUpdate()
         if changed:
             if self.stayInTree:
-                frame.treeWantsFocus()
+                c.treeWantsFocus()
             else:
-                frame.bodyWantsFocus()
+                c.bodyWantsFocus()
    
     g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
 #@nonl
@@ -2197,10 +2200,16 @@ def createModeBindings (self,modeName,d):
             g.trace('No such command: %s' % commandName) ; continue
         bunchList = d.get(commandName,[])
         for bunch in bunchList:
-            shortcut = bunch.val
-            if shortcut and shortcut not in ('None','none',None):
-                stroke = k.shortcutFromSetting(shortcut)
-                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+            stroke = bunch.val
+            # Important: bunch.val is a stroke returned from k.strokeFromSetting.
+            # Do not call k.strokeFromSetting again here!
+            if stroke and stroke not in ('None','none',None):
+                if 0:
+                    g.trace(
+                        modeName,
+                        '%10s' % (stroke),
+                        '%20s' % (commandName),
+                        bunch.nextMode)
                 d2 = k.masterBindingsDict.get(modeName,{})
                 d2 [stroke] = g.Bunch(
                     commandName=commandName,
@@ -2213,10 +2222,8 @@ def createModeBindings (self,modeName,d):
 #@+node:ekr.20060117202916.2:endMode
 def endMode(self,event):
     
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
-    
+    k = self ; c = k.c ; w = c.get_focus()
+
     c.frame.log.deleteTab('Mode')
 
     k.endCommand(event,k.stroke)
@@ -2228,7 +2235,7 @@ def endMode(self,event):
     # k.setLabelGrey('top-level mode')
     
     # Do *not* change the focus: the command may have changed it.
-    c.frame.widgetWantsFocus(w)
+    c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060117202916.2:endMode
 #@+node:ekr.20060102135349.2:enterNamedMode
@@ -2255,9 +2262,8 @@ def generalModeHandler (self,event,
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
-    k = self ; c = k.c
+    k = self ; c = k.c ;  w = c.get_focus()
     state = k.getState(modeName)
-    w = g.app.gui.get_focus(c.frame)
     trace = c.config.getBool('trace_modes')
     
     if trace: g.trace(modeName,state)
@@ -2271,9 +2277,9 @@ def generalModeHandler (self,event,
         else:
             c.frame.log.hideTab('Mode')
         if k.useTextWidget:
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
-            c.frame.widgetWantsFocus(w)
+            c.widgetWantsFocus(w)
     elif not func:
         g.trace('No func: improper key binding')
         return 'break'
@@ -2293,7 +2299,7 @@ def generalModeHandler (self,event,
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,savedModeName) # Re-enter this mode.
+                self.reinitMode(modeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -2314,9 +2320,11 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
+    else:
+        k.modeBindingsDict = d
         
     k.inputModeName = modeName
-    k.modeWidget = g.app.gui.get_focus(c.frame)
+    k.modeWidget = c.get_focus()
     
     if k.masterBindingsDict.get(modeName) is None:
         k.createModeBindings(modeName,d)
@@ -2324,11 +2332,30 @@ def initMode (self,event,modeName):
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         pass # Do *not* change the focus here!
 #@nonl
 #@-node:ekr.20060117202916.1:initMode
+#@+node:ekr.20060204140416:reinitMode
+def reinitMode (self,modeName):
+    
+    k = self ; c = k.c
+
+    d = k.modeBindingsDict
+    
+    k.inputModeName = modeName
+    k.createModeBindings(modeName,d)
+    
+    # Do not set the status line here.
+    k.setLabelBlue(modeName+': ',protect=True)
+
+    if k.useTextWidget:
+        c.minibufferWantsFocus()
+    else:
+        pass # Do *not* change the focus here!
+#@nonl
+#@-node:ekr.20060204140416:reinitMode
 #@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
 
@@ -2338,15 +2365,17 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-    
+
     c.endEditing()
+    
+    g.trace(k.inputModeName)
     
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
         
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
 
     return 'break'
 #@nonl
@@ -2394,16 +2423,14 @@ def setOverwriteState (self,event):
 #@+node:ekr.20060120200818:setInputState
 def setInputState (self,state,showState=False):
 
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
+    k = self ; c = k.c ; w = c.get_focus()
 
     k.unboundKeyAction = state
     if state != 'insert' or showState:
         k.showStateAndMode()
    
     # These commands never change focus.
-    w and c.frame.widgetWantsFocus(w)
+    w and c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060120200818:setInputState
 #@+node:ekr.20060120193743:showStateAndMode
@@ -2729,15 +2756,17 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-    
+
     c.endEditing()
+    
+    g.trace(k.inputModeName)
     
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
         
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
 
     return 'break'
 #@nonl
@@ -2771,53 +2800,6 @@ def modeHelpHelper (self,d):
 #@-node:ekr.20060119201657:Improved printBindings, printCommands & modeHelp
 #@-node:ekr.20060120105247:Fixed minor bugs & made minor improvements
 #@+node:ekr.20060122191111.1:Fixed crasher re BackSpace in log window
-Error: 1
-TclError Exception in Tk callback
-  Function: <function textOrTreeKeyCallback at 0x0175EE30> (type: <type 'function'>)
-  Args: (<Tkinter.Event instance at 0x01758738>,)
-  Event type: KeyPress (type num: 2)
-Traceback (innermost last):
-  File "C:\prog\leoCVS\leo\extensions\Pmw\Pmw_1_2\lib\PmwBase.py", line 1748, in __call__
-    return apply(self.func, args)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 541, in textOrTreeKeyCallback
-    func(event)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 408, in keyCallback2
-    return k.masterCommand(event,func,stroke,commandName=commandName)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 771, in masterCommand
-    val = k.callStateFunction(event) # Calls end-command.
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 811, in callStateFunction
-    val = k.state.handler(event)
-  File "C:\prog\leoCVS\leo\src\leoKeys.py", line 1054, in generalModeHandler
-    c.frame.widgetWantsFocus(w)
-  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 2147, in widgetWantsFocus
-    self.set_focus(w)
-  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 2164, in set_focus
-    g.app.gui.set_focus(c,w)
-  File "C:\prog\leoCVS\leo\src\leoTkinterGui.py", line 446, in set_focus
-    w.focus_set()
-  File "c:\python24\lib\lib-tk\Tkinter.py", line 399, in focus_set
-    self.tk.call('focus', self._w)
-TclError: bad window path name ".19703448.22376360.22417776.22417856.22418216.22418376.22511008.24514648.log-3"
-
-================================================
-  Event contents:
-    char: 
-    delta: 8
-    height: ??
-    keycode: 8
-    keysym: BackSpace
-    keysym_num: 65288
-    num: ??
-    serial: 5130
-    state: 8
-    time: 36484812
-    type: 2
-    widget: .19703448.22376360.22417776.22417856.22418216.22418376.22511008.24514648.log-3
-    width: ??
-    x: 246
-    x_root: 1215
-    y: 85
-    y_root: 303
 
 #@-node:ekr.20060122191111.1:Fixed crasher re BackSpace in log window
 #@+node:ekr.20060124091545:Fixed crashers in cut/copy/paste commands
@@ -2893,7 +2875,11 @@ def pasteText (self,event=None):
     i,j = g.app.gui.getTextSelection(w)
     s = s1 = g.app.gui.getTextFromClipboard()
     
-    if name.startswith('head'):
+    # g.trace(name)
+    
+    singleLine = name.startswith('head') or name.startswith('minibuffer')
+    
+    if singleLine:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
@@ -2905,14 +2891,16 @@ def pasteText (self,event=None):
 
     if name.startswith('body'):
         c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    elif name.startswith('head'):
+    elif singleLine:
         s = w.get('1.0','end')
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        # The headline is not officially changed yet.
-        # p.initHeadString(s)
-        w.configure(width=f.tree.headWidth(s=s))
-    else: pass
+        if name.startswith('head'):
+            # The headline is not officially changed yet.
+            # p.initHeadString(s)
+            w.configure(width=f.tree.headWidth(s=s))
+    else:
+        pass
     
 OnPasteFromMenu = pasteText
 #@nonl
@@ -2969,7 +2957,7 @@ def closeLeoWindow (self,frame):
         w.deiconify()
         w.lift()
         w.c.setLog()
-        w.bodyWantsFocus()
+        w.c.bodyWantsFocus()
     else:
         g.app.finishQuit()
 
@@ -2977,6 +2965,8 @@ def closeLeoWindow (self,frame):
 #@nonl
 #@-node:ekr.20031218072017.2609:app.closeLeoWindow
 #@+node:ekr.20031218072017.2817: doCommand
+command_count = 0
+
 def doCommand (self,command,label,event=None):
 
     """Execute the given command, invoking hooks and catching exceptions.
@@ -2985,14 +2975,21 @@ def doCommand (self,command,label,event=None):
     g.doHook("command1") returns False.
     This provides a simple mechanism for overriding commands."""
     
-    c = self
+    c = self ; p = c.currentPosition()
     c.setLog()
-    p = c.currentPosition()
-    #g.trace(command.__name__,label)
-    
-    if not g.app.unitTesting and c.config.getBool('trace_doCommand'):
-        g.trace(command and command.__name__)
-    
+
+    self.command_count += 1
+    if not g.app.unitTesting and (
+        c.config.getBool('trace_doCommand') or
+        c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+    ):
+        commandName = command and command.__name__
+        if (self.command_count % 10) == 0:
+            w = c.get_focus() ; wname = c.widget_name(w)
+            g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
+        else:
+            g.trace(commandName)
+
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
         g.es(c.disableCommandsMessage,color='blue')
@@ -3134,15 +3131,17 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-    
+
     c.endEditing()
+    
+    g.trace(k.inputModeName)
     
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
         
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
 
     return 'break'
 #@nonl
@@ -3206,7 +3205,7 @@ def computeCompletionList (self,defaultTabList,backspace):
         for s1,s2,s3 in data:
             g.es('%*s %*s %s' % (-(min(20,n1)),s1,n2,s2,s3),tabName=tabName)
 
-    c.frame.bodyWantsFocus()
+    c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051017212452:computeCompletionList
 #@+node:ekr.20051018070524:computeInverseBindingDict
@@ -3236,6 +3235,8 @@ def computeInverseBindingDict (self):
 #@+node:ekr.20060202121216:Double-click didn't work in the body pane.
 #@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
 #@+node:ekr.20060127183752:masterKeyHandler
+master_key_count = 0
+
 def masterKeyHandler (self,event):
     
     '''In the new binding scheme, there is only one key binding.
@@ -3252,6 +3253,11 @@ def masterKeyHandler (self,event):
     keysym = event.keysym or ''
     if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
         return None
+        
+    self.master_key_count += 1
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
 
     stroke = k.strokeFromEvent(event)
 
@@ -3262,30 +3268,41 @@ def masterKeyHandler (self,event):
     state = k.state.kind
     if trace: g.trace(repr(stroke),'state',state)
     if k.inState():
+        # First: honor the 'mini' bindings.
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return 'break'
+        # Second, pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
-        d =  k.masterBindingsDict.get(state)
-        if d:
-            # A typical state
-            b = d.get(stroke)
-            if b:
-                return k.generalModeHandler (event,
-                    commandName=b.commandName,func=b.func,
-                    modeName=state,nextMode=b.nextMode)
-            else:
-                return k.modeHelp(event)
         elif state == 'full-command':
             d = k.masterBindingsDict.get('mini')
             b = d.get(stroke)
             if b:
                 # Pass this on for macro recording.
                 k.masterCommand(event,b.func,stroke,b.commandName)
-                c.frame.minibufferWantsFocus()
+                c.minibufferWantsFocus()
                 return 'break'
             else:
                 # Do the default state action.
                 k.callStateFunction(event) # Calls end-command.
                 return 'break'
+        # Third, pass keys to the general mode handler.
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            # A typical state
+            b = d.get(stroke)
+            g.trace(d.keys())
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
         else:
             g.trace('No state dictionary for %s' % state)
             return 'break'
@@ -3328,7 +3345,7 @@ def masterClickHandler (self,event,func=None):
         
     if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
         g.es_print('Ignoring click outside active minibuffer',color='blue')
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
         return 'break'
 
     if event and func:
@@ -3366,6 +3383,10 @@ def masterMenuHandler (self,stroke,func,commandName):
     # Create a minimal event for commands that require them.
     event = g.Bunch(char='',keysym='',widget=w)
     
+    if 1:
+        if not g.app.unitTesting:
+            g.trace(g.app.gui.widget_name(w))
+    
     return k.masterCommand(event,func,stroke,commandName)
 #@nonl
 #@-node:ekr.20060128090219:masterMenuHandler
@@ -3383,7 +3404,7 @@ def masterClickHandler (self,event,func=None):
         
     if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
         g.es_print('Ignoring click outside active minibuffer',color='blue')
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
         return 'break'
 
     if event and func:
@@ -3436,7 +3457,7 @@ def onFocusOutMinibuffer (self,event=None):
                 if pane in ('all:','text:','mini:'):
                     g.es_print('Ignoring click: minibuffer is active',color='blue')
                     g.es_print('Use %s to exit the minibuffer' % (stroke))
-                    c.frame.minibufferWantsFocus()
+                    c.minibufferWantsFocus()
                     return 'break'
             
     return None # Allow the click.
@@ -3467,10 +3488,10 @@ def OnActivateBody (self,event=None):
     try:
         frame = self ; c = frame.c
         c.setLog()
-        w = g.app.gui.get_focus(frame)
+        w = c.get_focus()
         if w != c.frame.body.bodyCtrl:
             frame.tree.OnDeactivate()
-        frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     except:
         g.es_event_exception("activate body")
         
@@ -3598,6 +3619,7 @@ self.masterBindingsDict = {}
     # keys are scope names: 'all','text',etc. or mode names.
     # Values are dicts: keys are strokes, values are g.bunch(commandName,func,pane,stroke)
 
+
 # Special bindings for k.fullCommand.
 self.mb_copyKey = None
 self.mb_pasteKey = None
@@ -3622,14 +3644,15 @@ self.previous = []
 self.stroke = None
 
 # For getArg...
-self.afterGetArgState = None
-self.argTabList = []
+
 
 # For onIdleTime
 self.idleCount = 0
 
 # For modes
-self.modeBunch = None
+self.afterGetArgState = None
+self.argTabList = []
+self.modeBindingsDict = {}
 #@nonl
 #@-node:ekr.20050923213858:<< define internal ivars >>
 #@-node:ekr.20050920085536.2: ctor (keyHandler)
@@ -3801,40 +3824,40 @@ def fullCommand (self,event,specialStroke=None,specialFunc=None):
     
     '''Handle 'full-command' (alt-x) mode.'''
 
-    k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
+    k = self ; c = k.c ; state = k.getState('full-command')
     keysym = (event and event.keysym) or ''
     ch = (event and event.char) or ''
     trace = c.config.getBool('trace_modes')
     if trace: g.trace('state',state,keysym)
     if state == 0:
-        k.completionFocusWidget = g.app.gui.get_focus(c.frame)
+        k.completionFocusWidget = c.get_focus()
         k.setState('full-command',1,handler=k.fullCommand) 
         k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
         # Init mb_ ivars. This prevents problems with an initial backspace.
         k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
         k.mb_tabList = [] ; k.mb_tabListIndex = -1
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     elif keysym == 'Return':
         c.frame.log.deleteTab('Completion')
-        c.frame.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
+        c.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
         k.callAltXFunction(event)
     elif keysym == 'Tab':
         k.doTabCompletion(c.commandsDict.keys())
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     elif keysym == 'BackSpace':
         k.doBackSpace(c.commandsDict.keys())
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     elif ch not in string.printable:
         if specialStroke:
             g.trace(specialStroke)
             specialFunc()
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         # Clear the list, any other character besides tab indicates that a new prefix is in effect.
         k.mb_tabList = []
         k.updateLabel(event)
         k.mb_tabListPrefix = k.getLabel()
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
         # g.trace('new prefix',k.mb_tabListPrefix)
 
     return 'break'
@@ -3860,7 +3883,7 @@ def callAltXFunction (self,event):
     else:
         k.keyboardQuit(event)
         k.setLabel('Command does not exist: %s' % commandName)
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20050920085536.45:callAltXFunction
 #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
@@ -4098,16 +4121,6 @@ def makeAllBindings (self):
     k.checkBindings()
 #@nonl
 #@-node:ekr.20051007080058:k.makeAllBindings
-#@+node:ekr.20060201081225:k.makeAllModeBindings
-def makeAllModeBindings (self):
-    
-    k = self
-    
-     ### if k.masterBindingsDict.get(modeName) is None:
-    ###    k.createModeBindings(modeName,d)
-    
-    
-#@-node:ekr.20060201081225:k.makeAllModeBindings
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
@@ -4191,10 +4204,16 @@ def createModeBindings (self,modeName,d):
             g.trace('No such command: %s' % commandName) ; continue
         bunchList = d.get(commandName,[])
         for bunch in bunchList:
-            shortcut = bunch.val
-            if shortcut and shortcut not in ('None','none',None):
-                stroke = k.shortcutFromSetting(shortcut)
-                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+            stroke = bunch.val
+            # Important: bunch.val is a stroke returned from k.strokeFromSetting.
+            # Do not call k.strokeFromSetting again here!
+            if stroke and stroke not in ('None','none',None):
+                if 0:
+                    g.trace(
+                        modeName,
+                        '%10s' % (stroke),
+                        '%20s' % (commandName),
+                        bunch.nextMode)
                 d2 = k.masterBindingsDict.get(modeName,{})
                 d2 [stroke] = g.Bunch(
                     commandName=commandName,
@@ -4207,10 +4226,8 @@ def createModeBindings (self,modeName,d):
 #@+node:ekr.20060117202916.2:endMode
 def endMode(self,event):
     
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
-    
+    k = self ; c = k.c ; w = c.get_focus()
+
     c.frame.log.deleteTab('Mode')
 
     k.endCommand(event,k.stroke)
@@ -4222,7 +4239,7 @@ def endMode(self,event):
     # k.setLabelGrey('top-level mode')
     
     # Do *not* change the focus: the command may have changed it.
-    c.frame.widgetWantsFocus(w)
+    c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060117202916.2:endMode
 #@+node:ekr.20060102135349.2:enterNamedMode
@@ -4249,9 +4266,8 @@ def generalModeHandler (self,event,
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
-    k = self ; c = k.c
+    k = self ; c = k.c ;  w = c.get_focus()
     state = k.getState(modeName)
-    w = g.app.gui.get_focus(c.frame)
     trace = c.config.getBool('trace_modes')
     
     if trace: g.trace(modeName,state)
@@ -4265,9 +4281,9 @@ def generalModeHandler (self,event,
         else:
             c.frame.log.hideTab('Mode')
         if k.useTextWidget:
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
-            c.frame.widgetWantsFocus(w)
+            c.widgetWantsFocus(w)
     elif not func:
         g.trace('No func: improper key binding')
         return 'break'
@@ -4287,7 +4303,7 @@ def generalModeHandler (self,event,
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,savedModeName) # Re-enter this mode.
+                self.reinitMode(modeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -4308,9 +4324,11 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
+    else:
+        k.modeBindingsDict = d
         
     k.inputModeName = modeName
-    k.modeWidget = g.app.gui.get_focus(c.frame)
+    k.modeWidget = c.get_focus()
     
     if k.masterBindingsDict.get(modeName) is None:
         k.createModeBindings(modeName,d)
@@ -4318,11 +4336,30 @@ def initMode (self,event,modeName):
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         pass # Do *not* change the focus here!
 #@nonl
 #@-node:ekr.20060117202916.1:initMode
+#@+node:ekr.20060204140416:reinitMode
+def reinitMode (self,modeName):
+    
+    k = self ; c = k.c
+
+    d = k.modeBindingsDict
+    
+    k.inputModeName = modeName
+    k.createModeBindings(modeName,d)
+    
+    # Do not set the status line here.
+    k.setLabelBlue(modeName+': ',protect=True)
+
+    if k.useTextWidget:
+        c.minibufferWantsFocus()
+    else:
+        pass # Do *not* change the focus here!
+#@nonl
+#@-node:ekr.20060204140416:reinitMode
 #@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
 
@@ -4332,15 +4369,17 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-    
+
     c.endEditing()
+    
+    g.trace(k.inputModeName)
     
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
         
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
 
     return 'break'
 #@nonl
@@ -4388,16 +4427,14 @@ def setOverwriteState (self,event):
 #@+node:ekr.20060120200818:setInputState
 def setInputState (self,state,showState=False):
 
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
+    k = self ; c = k.c ; w = c.get_focus()
 
     k.unboundKeyAction = state
     if state != 'insert' or showState:
         k.showStateAndMode()
    
     # These commands never change focus.
-    w and c.frame.widgetWantsFocus(w)
+    w and c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060120200818:setInputState
 #@+node:ekr.20060120193743:showStateAndMode
@@ -4715,16 +4752,6 @@ def makeAllBindings (self):
     k.checkBindings()
 #@nonl
 #@-node:ekr.20051007080058:k.makeAllBindings
-#@+node:ekr.20060201081225:k.makeAllModeBindings
-def makeAllModeBindings (self):
-    
-    k = self
-    
-     ### if k.masterBindingsDict.get(modeName) is None:
-    ###    k.createModeBindings(modeName,d)
-    
-    
-#@-node:ekr.20060201081225:k.makeAllModeBindings
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
@@ -4817,15 +4844,18 @@ def redraw_now (self,scroll=False):
         
     c = self.c
     
-    g.collectGarbage()
+    self.redrawCount += 1
     
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.redrawCount % 5) == 0:
+            g.printGcSummary(trace=True)
+
     if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
         g.print_stats()
         g.clear_stats()
-        
+
     # Do the actual redraw.
-    self.redrawCount += 1
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
@@ -5490,7 +5520,7 @@ def showSuccess(self,pos,newpos):
     if self.reverse:
         gui.setInsertPoint(t,pos)
     gui.makeIndexVisible(t,insert)
-    c.frame.widgetWantsFocus(t)
+    c.widgetWantsFocus(t)
     if self.wrap and not self.wrapPosition:
         self.wrapPosition = self.p
 #@nonl
@@ -6729,7 +6759,7 @@ def redo (self,event=None):
         c.setChanged(True)
         c.endUpdate()
         c.recolor_now()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     u.redoing = False
     u.bead += 1
     u.setUndoTypes()
@@ -6942,10 +6972,10 @@ def redoTyping (self):
         tag="redo",undoType=u.undoType)
     
     if u.newSel:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setTextSelection(u.newSel)
     if u.yview:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)
 #@nonl
 #@-node:EKR.20040526075238.5:redoTyping
@@ -6989,7 +7019,7 @@ def undo (self,event=None):
         c.setChanged(True)
         c.endUpdate()
         c.recolor_now()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 
     u.undoing = False
     u.bead -= 1
@@ -7223,10 +7253,10 @@ def undoTyping (self):
         tag="undo",undoType=u.undoType)
 
     if u.oldSel:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setTextSelection(u.oldSel)
     if u.yview:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)
 #@nonl
 #@-node:EKR.20040526090701.4:undoTyping
@@ -7589,6 +7619,8 @@ def afterChangeGroup (self,p,command,reportFlag=False,dirtyVnodeList=[]):
 #@-node:ekr.20060127052111:(Limited undo)
 #@+node:ekr.20060127095006:(Added event arg to all legacy commands)
 #@+node:ekr.20031218072017.2817: doCommand
+command_count = 0
+
 def doCommand (self,command,label,event=None):
 
     """Execute the given command, invoking hooks and catching exceptions.
@@ -7597,14 +7629,21 @@ def doCommand (self,command,label,event=None):
     g.doHook("command1") returns False.
     This provides a simple mechanism for overriding commands."""
     
-    c = self
+    c = self ; p = c.currentPosition()
     c.setLog()
-    p = c.currentPosition()
-    #g.trace(command.__name__,label)
-    
-    if not g.app.unitTesting and c.config.getBool('trace_doCommand'):
-        g.trace(command and command.__name__)
-    
+
+    self.command_count += 1
+    if not g.app.unitTesting and (
+        c.config.getBool('trace_doCommand') or
+        c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+    ):
+        commandName = command and command.__name__
+        if (self.command_count % 10) == 0:
+            w = c.get_focus() ; wname = c.widget_name(w)
+            g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
+        else:
+            g.trace(commandName)
+
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
         g.es(c.disableCommandsMessage,color='blue')
@@ -7873,7 +7912,7 @@ def open (self,event=None):
         if ok and closeFlag:
             g.app.destroyWindow(c.frame)
     else:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@+node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
 @ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
@@ -9020,7 +9059,7 @@ else:
     c.frame.body.setInsertionPointToEnd()
     g.es("%d lines" % len(lines), color="blue")
 
-c.frame.bodyWantsFocus()
+c.bodyWantsFocus()
 c.frame.body.makeInsertPointVisible()
 #@nonl
 #@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
@@ -11838,7 +11877,7 @@ def selectThreadNext (self,event=None):
             c.selectPosition(p)
         finally:
             c.endUpdate()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.2994:selectThreadNext
 #@+node:ekr.20031218072017.2993:selectThreadBack
@@ -12618,7 +12657,11 @@ def pasteText (self,event=None):
     i,j = g.app.gui.getTextSelection(w)
     s = s1 = g.app.gui.getTextFromClipboard()
     
-    if name.startswith('head'):
+    # g.trace(name)
+    
+    singleLine = name.startswith('head') or name.startswith('minibuffer')
+    
+    if singleLine:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
@@ -12630,14 +12673,16 @@ def pasteText (self,event=None):
 
     if name.startswith('body'):
         c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    elif name.startswith('head'):
+    elif singleLine:
         s = w.get('1.0','end')
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        # The headline is not officially changed yet.
-        # p.initHeadString(s)
-        w.configure(width=f.tree.headWidth(s=s))
-    else: pass
+        if name.startswith('head'):
+            # The headline is not officially changed yet.
+            # p.initHeadString(s)
+            w.configure(width=f.tree.headWidth(s=s))
+    else:
+        pass
     
 OnPasteFromMenu = pasteText
 #@nonl
@@ -12654,12 +12699,12 @@ def endEditLabelCommand (self,event=None):
         c.endEditing()
         
         if 1: # This command always moves into the body pane.
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
         else:
             if c.frame.tree.stayInTree:
-                c.frame.treeWantsFocus()
+                c.treeWantsFocus()
             else:
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.3982:endEditLabelCommand
 #@+node:ekr.20031218072017.3983:insertHeadlineTime
@@ -12692,13 +12737,13 @@ def insertHeadlineTime (self,event=None):
 #@+node:ekr.20031218072017.3985:toggleActivePane
 def toggleActivePane (self,event=None):
     
-    frame = self
+    frame = self ; c = frame.c
 
     # Toggle the focus immediately.
-    if g.app.gui.get_focus(frame) == frame.bodyCtrl:
-        frame.treeWantsFocus()
+    if c.get_focus() == frame.bodyCtrl:
+        c.treeWantsFocus()
     else:
-        frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.3985:toggleActivePane
 #@+node:ekr.20031218072017.3986:cascade
@@ -12976,7 +13021,6 @@ def __init__(self):
     self.unitTesting = False # True if unit testing.
     self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
     self.user_xresources_path = None # Resource file for Tk/tcl.
-    self.wantedCommander = None # Used by tkFrame.set_focus.
     self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 
     # Global panels.  Destroyed when Leo ends.
@@ -13138,7 +13182,7 @@ def run(fileName=None,*args,**keywords):
         g.enableIdleTimeHook()
     if not fileName:
         c.redraw_now()
-    frame.bodyWantsFocus()
+    c.bodyWantsFocus()
     g.app.gui.runMainLoop()
 #@nonl
 #@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
@@ -13338,15 +13382,18 @@ def redraw_now (self,scroll=False):
         
     c = self.c
     
-    g.collectGarbage()
+    self.redrawCount += 1
     
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.redrawCount % 5) == 0:
+            g.printGcSummary(trace=True)
+
     if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
         g.print_stats()
         g.clear_stats()
-        
+
     # Do the actual redraw.
-    self.redrawCount += 1
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
@@ -13392,12 +13439,12 @@ def enable_gc_debug(event=None):
     if gc:
         gc.set_debug(
             gc.DEBUG_STATS | # prints statistics.
-            # gc.DEBUG_LEAK | # Same as all below.
-            # gc.DEBUG_COLLECTABLE
-            # gc.DEBUG_UNCOLLECTABLE
+            gc.DEBUG_LEAK | # Same as all below.
+            gc.DEBUG_COLLECTABLE |
+            gc.DEBUG_UNCOLLECTABLE |
             gc.DEBUG_INSTANCES |
-            gc.DEBUG_OBJECTS
-            # gc.DEBUG_SAVEALL
+            gc.DEBUG_OBJECTS |
+            gc.DEBUG_SAVEALL
         )
         g.app.trace_gc_inited = True
     else:
@@ -13411,8 +13458,9 @@ def clearAllIvars (o):
     
     o.__dict__.clear()
 #@-node:ekr.20031218072017.1589:clearAllIvars
+#@+node:ekr.20060205043324:Called from commands
 #@+node:ekr.20031218072017.1590:collectGarbage
-def collectGarbage(message=None):
+def collectGarbage():
     
     if not g.app.trace_gc: return
     
@@ -13422,34 +13470,71 @@ def collectGarbage(message=None):
     if not g.app.trace_gc_inited:
         g.app.trace_gc = False
     
-    if not message:
-        message = g.callerName(n=2)
-    
     try: gc.collect()
     except: pass
-    
-    g.printGc(message)
-#@nonl
 #@-node:ekr.20031218072017.1590:collectGarbage
-#@+node:ekr.20031218072017.1592:printGc
-def printGc(message=None,onlyPrintChanges=False):
-    
-    __pychecker__ = '--no-argsused' # onlyPrintChanges not used.
-    
-    if not g.app.trace_gc: return None
+#@+node:ekr.20060205043324.1:printGcSummary
+def printGcSummary (message='',trace=False):
     
     if not message:
         message = g.callerName(n=2)
-        
-    printGcObjects(message)
-    printGcRefs(message)
+
+    # g.collectGarbage()
+    enable_gc_debug
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        s = 'garbage: %d, objects: %d, %s' % (n,n2,message)
+        if trace:
+            print s
+        else:
+            g.es_print(s)
+    except:
+        traceback.print_exc()
+#@nonl
+#@-node:ekr.20060205043324.1:printGcSummary
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
     
-    if g.app.trace_gc_verbose:
-        printGcVerbose(message)
-        
+    if not message:
+        message = g.callerName(n=2)
     
+    # g.collectGarbage()
+    
+    d = {} ; objects = gc.get_objects()
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects),message)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
+        for z in items:
+            g.es_print('%40s %7d' % (z[0],z[1]))
+    else: # Sort by type
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            g.es_print('%40s %7d' % (t,d.get(t)))
+#@-node:ekr.20060202161935:printGcAll
 #@+node:ekr.20060127164729.1:printGcObjects
 def printGcObjects(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectCount
 
@@ -13529,7 +13614,13 @@ typesDict = {}
 #@+node:ekr.20060127165509:printGcVerbose
 # WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
+
 def printGcVerbose(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -13556,6 +13647,25 @@ def printGcVerbose(message=''):
     g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))
 #@nonl
 #@-node:ekr.20060127165509:printGcVerbose
+#@-node:ekr.20060205043324:Called from commands
+#@+node:ekr.20060205043324.2:Called from unit tests
+#@+node:ekr.20031218072017.1592:printGc
+def printGc(message=None):
+    
+    if not g.app.trace_gc: return None
+    
+    if not message:
+        message = g.callerName(n=2)
+        
+    ## g.collectGarbase()
+        
+    printGcObjects(message)
+    printGcRefs(message)
+    
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
 #@+node:ekr.20031218072017.1593:printGcRefs
 def printGcRefs (message=''):
 
@@ -13571,36 +13681,7 @@ def printGcRefs (message=''):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
-#@+node:ekr.20060202161935:printGcAll
-def printGcAll (message=''):
-    
-    d = {} ; objects = gc.get_objects()
-    g.es_print('-' * 30)
-    g.es_print('%d objects' % len(objects),message)
-
-    for obj in objects:
-        t = type(obj)
-        if t == 'instance':
-            try: t = obj.__class__
-            except: pass
-        d[t] = d.get(t,0) + 1
-        
-    if 1: # Sort by n
-        
-        items = d.items()
-        try:
-            # Support for keword args to sort function exists in Python 2.4.
-            # Support for None as an alternative to omitting cmp exists in Python 2.3.
-            items.sort(key=lambda x: x[1],reverse=True)
-        except: pass
-        for z in items:
-            g.es_print('%40s %7d' % (z[0],z[1]))
-    else: # Sort by type
-        keys = d.keys() ; keys.sort()
-        for t in keys:
-            g.es_print('%40s %7d' % (t,d.get(t)))
-#@nonl
-#@-node:ekr.20060202161935:printGcAll
+#@-node:ekr.20060205043324.2:Called from unit tests
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@-node:ekr.20060127100926:(Improved gc stats)
 #@+node:ekr.20060201083530:(Added prettyPrintKey in various places)
@@ -13700,15 +13781,17 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-    
+
     c.endEditing()
+    
+    g.trace(k.inputModeName)
     
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
         
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
 
     return 'break'
 #@nonl
@@ -13772,7 +13855,7 @@ def computeCompletionList (self,defaultTabList,backspace):
         for s1,s2,s3 in data:
             g.es('%*s %*s %s' % (-(min(20,n1)),s1,n2,s2,s3),tabName=tabName)
 
-    c.frame.bodyWantsFocus()
+    c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051017212452:computeCompletionList
 #@+node:ekr.20051018070524:computeInverseBindingDict
@@ -13802,6 +13885,8 @@ def computeInverseBindingDict (self):
 #@+node:ekr.20060202121216:Double-click didn't work in the body pane.
 #@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
 #@+node:ekr.20060127183752:masterKeyHandler
+master_key_count = 0
+
 def masterKeyHandler (self,event):
     
     '''In the new binding scheme, there is only one key binding.
@@ -13818,6 +13903,11 @@ def masterKeyHandler (self,event):
     keysym = event.keysym or ''
     if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
         return None
+        
+    self.master_key_count += 1
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
 
     stroke = k.strokeFromEvent(event)
 
@@ -13828,30 +13918,41 @@ def masterKeyHandler (self,event):
     state = k.state.kind
     if trace: g.trace(repr(stroke),'state',state)
     if k.inState():
+        # First: honor the 'mini' bindings.
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return 'break'
+        # Second, pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
-        d =  k.masterBindingsDict.get(state)
-        if d:
-            # A typical state
-            b = d.get(stroke)
-            if b:
-                return k.generalModeHandler (event,
-                    commandName=b.commandName,func=b.func,
-                    modeName=state,nextMode=b.nextMode)
-            else:
-                return k.modeHelp(event)
         elif state == 'full-command':
             d = k.masterBindingsDict.get('mini')
             b = d.get(stroke)
             if b:
                 # Pass this on for macro recording.
                 k.masterCommand(event,b.func,stroke,b.commandName)
-                c.frame.minibufferWantsFocus()
+                c.minibufferWantsFocus()
                 return 'break'
             else:
                 # Do the default state action.
                 k.callStateFunction(event) # Calls end-command.
                 return 'break'
+        # Third, pass keys to the general mode handler.
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            # A typical state
+            b = d.get(stroke)
+            g.trace(d.keys())
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
         else:
             g.trace('No state dictionary for %s' % state)
             return 'break'
@@ -13894,7 +13995,7 @@ def masterClickHandler (self,event,func=None):
         
     if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
         g.es_print('Ignoring click outside active minibuffer',color='blue')
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
         return 'break'
 
     if event and func:
@@ -13932,6 +14033,10 @@ def masterMenuHandler (self,stroke,func,commandName):
     # Create a minimal event for commands that require them.
     event = g.Bunch(char='',keysym='',widget=w)
     
+    if 1:
+        if not g.app.unitTesting:
+            g.trace(g.app.gui.widget_name(w))
+    
     return k.masterCommand(event,func,stroke,commandName)
 #@nonl
 #@-node:ekr.20060128090219:masterMenuHandler
@@ -13949,7 +14054,7 @@ def masterClickHandler (self,event,func=None):
         
     if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
         g.es_print('Ignoring click outside active minibuffer',color='blue')
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
         return 'break'
 
     if event and func:
@@ -14002,7 +14107,7 @@ def onFocusOutMinibuffer (self,event=None):
                 if pane in ('all:','text:','mini:'):
                     g.es_print('Ignoring click: minibuffer is active',color='blue')
                     g.es_print('Use %s to exit the minibuffer' % (stroke))
-                    c.frame.minibufferWantsFocus()
+                    c.minibufferWantsFocus()
                     return 'break'
             
     return None # Allow the click.
@@ -14033,10 +14138,10 @@ def OnActivateBody (self,event=None):
     try:
         frame = self ; c = frame.c
         c.setLog()
-        w = g.app.gui.get_focus(frame)
+        w = c.get_focus()
         if w != c.frame.body.bodyCtrl:
             frame.tree.OnDeactivate()
-        frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     except:
         g.es_event_exception("activate body")
         
@@ -14092,6 +14197,8 @@ def OnBodyDoubleClick (self,event=None):
 #@+node:ekr.20060203065648:Code issues
 #@+node:ekr.20060127095006:(Added event arg to all legacy commands)
 #@+node:ekr.20031218072017.2817: doCommand
+command_count = 0
+
 def doCommand (self,command,label,event=None):
 
     """Execute the given command, invoking hooks and catching exceptions.
@@ -14100,14 +14207,21 @@ def doCommand (self,command,label,event=None):
     g.doHook("command1") returns False.
     This provides a simple mechanism for overriding commands."""
     
-    c = self
+    c = self ; p = c.currentPosition()
     c.setLog()
-    p = c.currentPosition()
-    #g.trace(command.__name__,label)
-    
-    if not g.app.unitTesting and c.config.getBool('trace_doCommand'):
-        g.trace(command and command.__name__)
-    
+
+    self.command_count += 1
+    if not g.app.unitTesting and (
+        c.config.getBool('trace_doCommand') or
+        c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+    ):
+        commandName = command and command.__name__
+        if (self.command_count % 10) == 0:
+            w = c.get_focus() ; wname = c.widget_name(w)
+            g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
+        else:
+            g.trace(commandName)
+
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
         g.es(c.disableCommandsMessage,color='blue')
@@ -14376,7 +14490,7 @@ def open (self,event=None):
         if ok and closeFlag:
             g.app.destroyWindow(c.frame)
     else:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@+node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
 @ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
@@ -15523,7 +15637,7 @@ else:
     c.frame.body.setInsertionPointToEnd()
     g.es("%d lines" % len(lines), color="blue")
 
-c.frame.bodyWantsFocus()
+c.bodyWantsFocus()
 c.frame.body.makeInsertPointVisible()
 #@nonl
 #@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
@@ -18341,7 +18455,7 @@ def selectThreadNext (self,event=None):
             c.selectPosition(p)
         finally:
             c.endUpdate()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.2994:selectThreadNext
 #@+node:ekr.20031218072017.2993:selectThreadBack
@@ -19121,7 +19235,11 @@ def pasteText (self,event=None):
     i,j = g.app.gui.getTextSelection(w)
     s = s1 = g.app.gui.getTextFromClipboard()
     
-    if name.startswith('head'):
+    # g.trace(name)
+    
+    singleLine = name.startswith('head') or name.startswith('minibuffer')
+    
+    if singleLine:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
@@ -19133,14 +19251,16 @@ def pasteText (self,event=None):
 
     if name.startswith('body'):
         c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    elif name.startswith('head'):
+    elif singleLine:
         s = w.get('1.0','end')
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-        # The headline is not officially changed yet.
-        # p.initHeadString(s)
-        w.configure(width=f.tree.headWidth(s=s))
-    else: pass
+        if name.startswith('head'):
+            # The headline is not officially changed yet.
+            # p.initHeadString(s)
+            w.configure(width=f.tree.headWidth(s=s))
+    else:
+        pass
     
 OnPasteFromMenu = pasteText
 #@nonl
@@ -19157,12 +19277,12 @@ def endEditLabelCommand (self,event=None):
         c.endEditing()
         
         if 1: # This command always moves into the body pane.
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
         else:
             if c.frame.tree.stayInTree:
-                c.frame.treeWantsFocus()
+                c.treeWantsFocus()
             else:
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.3982:endEditLabelCommand
 #@+node:ekr.20031218072017.3983:insertHeadlineTime
@@ -19195,13 +19315,13 @@ def insertHeadlineTime (self,event=None):
 #@+node:ekr.20031218072017.3985:toggleActivePane
 def toggleActivePane (self,event=None):
     
-    frame = self
+    frame = self ; c = frame.c
 
     # Toggle the focus immediately.
-    if g.app.gui.get_focus(frame) == frame.bodyCtrl:
-        frame.treeWantsFocus()
+    if c.get_focus() == frame.bodyCtrl:
+        c.treeWantsFocus()
     else:
-        frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.3985:toggleActivePane
 #@+node:ekr.20031218072017.3986:cascade
@@ -19481,15 +19601,18 @@ def redraw_now (self,scroll=False):
         
     c = self.c
     
-    g.collectGarbage()
+    self.redrawCount += 1
     
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.redrawCount % 5) == 0:
+            g.printGcSummary(trace=True)
+
     if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
         g.print_stats()
         g.clear_stats()
-        
+
     # Do the actual redraw.
-    self.redrawCount += 1
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
@@ -20154,7 +20277,7 @@ def showSuccess(self,pos,newpos):
     if self.reverse:
         gui.setInsertPoint(t,pos)
     gui.makeIndexVisible(t,insert)
-    c.frame.widgetWantsFocus(t)
+    c.widgetWantsFocus(t)
     if self.wrap and not self.wrapPosition:
         self.wrapPosition = self.p
 #@nonl
@@ -20238,6 +20361,7 @@ self.masterBindingsDict = {}
     # keys are scope names: 'all','text',etc. or mode names.
     # Values are dicts: keys are strokes, values are g.bunch(commandName,func,pane,stroke)
 
+
 # Special bindings for k.fullCommand.
 self.mb_copyKey = None
 self.mb_pasteKey = None
@@ -20262,14 +20386,15 @@ self.previous = []
 self.stroke = None
 
 # For getArg...
-self.afterGetArgState = None
-self.argTabList = []
+
 
 # For onIdleTime
 self.idleCount = 0
 
 # For modes
-self.modeBunch = None
+self.afterGetArgState = None
+self.argTabList = []
+self.modeBindingsDict = {}
 #@nonl
 #@-node:ekr.20050923213858:<< define internal ivars >>
 #@-node:ekr.20050920085536.2: ctor (keyHandler)
@@ -20441,40 +20566,40 @@ def fullCommand (self,event,specialStroke=None,specialFunc=None):
     
     '''Handle 'full-command' (alt-x) mode.'''
 
-    k = self ; c = k.c ; f = c.frame ; state = k.getState('full-command')
+    k = self ; c = k.c ; state = k.getState('full-command')
     keysym = (event and event.keysym) or ''
     ch = (event and event.char) or ''
     trace = c.config.getBool('trace_modes')
     if trace: g.trace('state',state,keysym)
     if state == 0:
-        k.completionFocusWidget = g.app.gui.get_focus(c.frame)
+        k.completionFocusWidget = c.get_focus()
         k.setState('full-command',1,handler=k.fullCommand) 
         k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
         # Init mb_ ivars. This prevents problems with an initial backspace.
         k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
         k.mb_tabList = [] ; k.mb_tabListIndex = -1
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     elif keysym == 'Return':
         c.frame.log.deleteTab('Completion')
-        c.frame.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
+        c.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
         k.callAltXFunction(event)
     elif keysym == 'Tab':
         k.doTabCompletion(c.commandsDict.keys())
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     elif keysym == 'BackSpace':
         k.doBackSpace(c.commandsDict.keys())
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     elif ch not in string.printable:
         if specialStroke:
             g.trace(specialStroke)
             specialFunc()
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         # Clear the list, any other character besides tab indicates that a new prefix is in effect.
         k.mb_tabList = []
         k.updateLabel(event)
         k.mb_tabListPrefix = k.getLabel()
-        f.minibufferWantsFocus()
+        c.minibufferWantsFocus()
         # g.trace('new prefix',k.mb_tabListPrefix)
 
     return 'break'
@@ -20500,7 +20625,7 @@ def callAltXFunction (self,event):
     else:
         k.keyboardQuit(event)
         k.setLabel('Command does not exist: %s' % commandName)
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20050920085536.45:callAltXFunction
 #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
@@ -20738,16 +20863,6 @@ def makeAllBindings (self):
     k.checkBindings()
 #@nonl
 #@-node:ekr.20051007080058:k.makeAllBindings
-#@+node:ekr.20060201081225:k.makeAllModeBindings
-def makeAllModeBindings (self):
-    
-    k = self
-    
-     ### if k.masterBindingsDict.get(modeName) is None:
-    ###    k.createModeBindings(modeName,d)
-    
-    
-#@-node:ekr.20060201081225:k.makeAllModeBindings
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
@@ -20831,10 +20946,16 @@ def createModeBindings (self,modeName,d):
             g.trace('No such command: %s' % commandName) ; continue
         bunchList = d.get(commandName,[])
         for bunch in bunchList:
-            shortcut = bunch.val
-            if shortcut and shortcut not in ('None','none',None):
-                stroke = k.shortcutFromSetting(shortcut)
-                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+            stroke = bunch.val
+            # Important: bunch.val is a stroke returned from k.strokeFromSetting.
+            # Do not call k.strokeFromSetting again here!
+            if stroke and stroke not in ('None','none',None):
+                if 0:
+                    g.trace(
+                        modeName,
+                        '%10s' % (stroke),
+                        '%20s' % (commandName),
+                        bunch.nextMode)
                 d2 = k.masterBindingsDict.get(modeName,{})
                 d2 [stroke] = g.Bunch(
                     commandName=commandName,
@@ -20847,10 +20968,8 @@ def createModeBindings (self,modeName,d):
 #@+node:ekr.20060117202916.2:endMode
 def endMode(self,event):
     
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
-    
+    k = self ; c = k.c ; w = c.get_focus()
+
     c.frame.log.deleteTab('Mode')
 
     k.endCommand(event,k.stroke)
@@ -20862,7 +20981,7 @@ def endMode(self,event):
     # k.setLabelGrey('top-level mode')
     
     # Do *not* change the focus: the command may have changed it.
-    c.frame.widgetWantsFocus(w)
+    c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060117202916.2:endMode
 #@+node:ekr.20060102135349.2:enterNamedMode
@@ -20889,9 +21008,8 @@ def generalModeHandler (self,event,
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
-    k = self ; c = k.c
+    k = self ; c = k.c ;  w = c.get_focus()
     state = k.getState(modeName)
-    w = g.app.gui.get_focus(c.frame)
     trace = c.config.getBool('trace_modes')
     
     if trace: g.trace(modeName,state)
@@ -20905,9 +21023,9 @@ def generalModeHandler (self,event,
         else:
             c.frame.log.hideTab('Mode')
         if k.useTextWidget:
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
-            c.frame.widgetWantsFocus(w)
+            c.widgetWantsFocus(w)
     elif not func:
         g.trace('No func: improper key binding')
         return 'break'
@@ -20927,7 +21045,7 @@ def generalModeHandler (self,event,
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,savedModeName) # Re-enter this mode.
+                self.reinitMode(modeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -20948,9 +21066,11 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
+    else:
+        k.modeBindingsDict = d
         
     k.inputModeName = modeName
-    k.modeWidget = g.app.gui.get_focus(c.frame)
+    k.modeWidget = c.get_focus()
     
     if k.masterBindingsDict.get(modeName) is None:
         k.createModeBindings(modeName,d)
@@ -20958,11 +21078,30 @@ def initMode (self,event,modeName):
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         pass # Do *not* change the focus here!
 #@nonl
 #@-node:ekr.20060117202916.1:initMode
+#@+node:ekr.20060204140416:reinitMode
+def reinitMode (self,modeName):
+    
+    k = self ; c = k.c
+
+    d = k.modeBindingsDict
+    
+    k.inputModeName = modeName
+    k.createModeBindings(modeName,d)
+    
+    # Do not set the status line here.
+    k.setLabelBlue(modeName+': ',protect=True)
+
+    if k.useTextWidget:
+        c.minibufferWantsFocus()
+    else:
+        pass # Do *not* change the focus here!
+#@nonl
+#@-node:ekr.20060204140416:reinitMode
 #@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
 
@@ -20972,15 +21111,17 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-    
+
     c.endEditing()
+    
+    g.trace(k.inputModeName)
     
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
         
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
 
     return 'break'
 #@nonl
@@ -21028,16 +21169,14 @@ def setOverwriteState (self,event):
 #@+node:ekr.20060120200818:setInputState
 def setInputState (self,state,showState=False):
 
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
+    k = self ; c = k.c ; w = c.get_focus()
 
     k.unboundKeyAction = state
     if state != 'insert' or showState:
         k.showStateAndMode()
    
     # These commands never change focus.
-    w and c.frame.widgetWantsFocus(w)
+    w and c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060120200818:setInputState
 #@+node:ekr.20060120193743:showStateAndMode
@@ -21355,16 +21494,6 @@ def makeAllBindings (self):
     k.checkBindings()
 #@nonl
 #@-node:ekr.20051007080058:k.makeAllBindings
-#@+node:ekr.20060201081225:k.makeAllModeBindings
-def makeAllModeBindings (self):
-    
-    k = self
-    
-     ### if k.masterBindingsDict.get(modeName) is None:
-    ###    k.createModeBindings(modeName,d)
-    
-    
-#@-node:ekr.20060201081225:k.makeAllModeBindings
 #@+node:ekr.20060104154937:addModeCommands
 def addModeCommands (self):
     
@@ -22660,7 +22789,7 @@ def redo (self,event=None):
         c.setChanged(True)
         c.endUpdate()
         c.recolor_now()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     u.redoing = False
     u.bead += 1
     u.setUndoTypes()
@@ -22873,10 +23002,10 @@ def redoTyping (self):
         tag="redo",undoType=u.undoType)
     
     if u.newSel:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setTextSelection(u.newSel)
     if u.yview:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)
 #@nonl
 #@-node:EKR.20040526075238.5:redoTyping
@@ -22920,7 +23049,7 @@ def undo (self,event=None):
         c.setChanged(True)
         c.endUpdate()
         c.recolor_now()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 
     u.undoing = False
     u.bead -= 1
@@ -23154,10 +23283,10 @@ def undoTyping (self):
         tag="undo",undoType=u.undoType)
 
     if u.oldSel:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setTextSelection(u.oldSel)
     if u.yview:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.setYScrollPosition(u.yview)
 #@nonl
 #@-node:EKR.20040526090701.4:undoTyping
@@ -23765,7 +23894,7 @@ def onActivateLog (self,event=None):
     try:
         self.c.setLog()
         self.frame.tree.OnDeactivate()
-        self.frame.logWantsFocus()
+        self.c.logWantsFocus()
     except:
         g.es_event_exception("activate log")
 #@nonl
@@ -23773,7 +23902,7 @@ def onActivateLog (self,event=None):
 #@+node:ekr.20031218072017.4044:tkLog.hasFocus
 def hasFocus (self):
     
-    return g.app.gui.get_focus(self.frame) == self.logCtrl
+    return self.c.get_focus() == self.logCtrl
 #@nonl
 #@-node:ekr.20031218072017.4044:tkLog.hasFocus
 #@+node:ekr.20050208133438:forceLogUpdate
@@ -23818,13 +23947,12 @@ def put (self,s,color=None,tabName='Log'):
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
 # New in 4.4b1: Restore the focus to a standard place.
-frame = self.c.frame
-focus_widget = g.app.gui.get_focus(frame)
+focus_widget = c.get_focus()
 name = g.app.gui.widget_name(focus_widget)
 for kind in ('body','head','canvas'):
     if name.startswith(kind): break
 else:
-    focus_widget = frame.body.bodyCtrl
+    focus_widget = c.frame.body.bodyCtrl
 
 if color:
     if color not in self.colorTags:
@@ -23838,7 +23966,7 @@ else:
 
 self.logCtrl.see("end")
 self.forceLogUpdate(s)
-frame.widgetWantsFocus(focus_widget)
+c.widgetWantsFocus(focus_widget)
 #@-node:EKR.20040423082910:<< put s to log control >>
 #@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
 g.app.logWaiting.append((s,color),)
@@ -23940,11 +24068,13 @@ def deleteTab (self,tabName):
         self.selectTab('Log')
         
     # New in Leo 4.4b1.
-    self.c.frame.bodyWantsFocus()
+    self.c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051018102027:deleteTab
 #@+node:ekr.20060204124347:hideTab
 def hideTab (self,tabName):
+    
+    __pychecker__ = '--no-argsused' # tabName
     
     self.selectTab('Log')
 #@nonl
@@ -23965,7 +24095,7 @@ def lowerTab (self,tabName):
         # New in 4.4b1: call update explicitly.
         logCtrl = self.textDict.get(tabName)
         logCtrl and logCtrl.update()
-        self.c.frame.bodyWantsFocus()
+        self.c.bodyWantsFocus()
 
 def raiseTab (self,tabName):
 
@@ -23977,7 +24107,7 @@ def raiseTab (self,tabName):
         logCtrl = self.textDict.get(tabName)
         if logCtrl:
             logCtrl.update()
-            self.c.frame.widgetWantsFocus(logCtrl)
+            self.c.widgetWantsFocus(logCtrl)
 #@nonl
 #@-node:ekr.20051018061932.1:lower/raiseTab
 #@+node:ekr.20051019170806:renameTab
@@ -24006,7 +24136,6 @@ def selectTab (self,tabName):
     # Update the status vars.
     self.tabName = tabName
     self.logCtrl = self.textDict.get(tabName)
-    # c.frame.widgetWantsFocus(self.logCtrl)
     self.tabFrame = self.frameDict.get(tabName)
     
     # New in 4.4b1: call update *after* creating the tab.
@@ -24216,11 +24345,13 @@ self.colorTagsDict [tabName] = self.colorTags
 #@-node:ekr.20051018072306:<< Create the tab's text widget >>
 #@-node:ekr.20051024173701:createTab
 #@-node:ekr.20060202233828.3:Made proper bindings for the log pane
-#@-node:ekr.20060117091600:4.4a6 projects
+#@-node:ekr.20060117091600:4.4b2 projects
 #@+node:ekr.20060131120250:(Recent)
 #@+node:ekr.20060131191731:What I did
 #@-node:ekr.20060131191731:What I did
 #@+node:ekr.20031218072017.2817: doCommand
+command_count = 0
+
 def doCommand (self,command,label,event=None):
 
     """Execute the given command, invoking hooks and catching exceptions.
@@ -24229,14 +24360,21 @@ def doCommand (self,command,label,event=None):
     g.doHook("command1") returns False.
     This provides a simple mechanism for overriding commands."""
     
-    c = self
+    c = self ; p = c.currentPosition()
     c.setLog()
-    p = c.currentPosition()
-    #g.trace(command.__name__,label)
-    
-    if not g.app.unitTesting and c.config.getBool('trace_doCommand'):
-        g.trace(command and command.__name__)
-    
+
+    self.command_count += 1
+    if not g.app.unitTesting and (
+        c.config.getBool('trace_doCommand') or
+        c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+    ):
+        commandName = command and command.__name__
+        if (self.command_count % 10) == 0:
+            w = c.get_focus() ; wname = c.widget_name(w)
+            g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
+        else:
+            g.trace(commandName)
+
     # The presence of this message disables all commands.
     if c.disableCommandsMessage:
         g.es(c.disableCommandsMessage,color='blue')
@@ -24300,23 +24438,22 @@ def getArg (self,event,
         << init altX vars >>
         # Set the states.
         bodyCtrl = c.frame.body.bodyCtrl
-        c.frame.widgetWantsFocus(bodyCtrl)
+        c.widgetWantsFocus(bodyCtrl)
         k.afterGetArgState=returnKind,returnState,handler
         k.setState('getArg',1,k.getArg)
         k.afterArgWidget = event and event.widget or c.frame.body.bodyCtrl
-        if k.useTextWidget: c.frame.minibufferWantsFocus()
+        if k.useTextWidget: c.minibufferWantsFocus()
     elif keysym == 'Return':
         k.arg = k.getLabel(ignorePrompt=True)
         kind,n,handler = k.afterGetArgState
         if kind: k.setState(kind,n,handler)
         c.frame.log.deleteTab('Completion')
         if handler: handler(event)
-        # else: c.frame.widgetWantsFocus(k.afterArgWidget)
     elif keysym == 'Tab':
         k.doTabCompletion(k.argTabList,k.arg_completion)
     elif keysym == 'BackSpace':
         k.doBackSpace(k.argTabList,k.arg_completion)
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         # Clear the list, any other character besides tab indicates that a new prefix is in effect.
         k.mb_tabList = []
@@ -24351,9 +24488,11 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
+    else:
+        k.modeBindingsDict = d
         
     k.inputModeName = modeName
-    k.modeWidget = g.app.gui.get_focus(c.frame)
+    k.modeWidget = c.get_focus()
     
     if k.masterBindingsDict.get(modeName) is None:
         k.createModeBindings(modeName,d)
@@ -24361,7 +24500,7 @@ def initMode (self,event,modeName):
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         pass # Do *not* change the focus here!
 #@nonl
@@ -24372,9 +24511,8 @@ def generalModeHandler (self,event,
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
-    k = self ; c = k.c
+    k = self ; c = k.c ;  w = c.get_focus()
     state = k.getState(modeName)
-    w = g.app.gui.get_focus(c.frame)
     trace = c.config.getBool('trace_modes')
     
     if trace: g.trace(modeName,state)
@@ -24388,9 +24526,9 @@ def generalModeHandler (self,event,
         else:
             c.frame.log.hideTab('Mode')
         if k.useTextWidget:
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
-            c.frame.widgetWantsFocus(w)
+            c.widgetWantsFocus(w)
     elif not func:
         g.trace('No func: improper key binding')
         return 'break'
@@ -24410,7 +24548,7 @@ def generalModeHandler (self,event,
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,savedModeName) # Re-enter this mode.
+                self.reinitMode(modeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -24429,10 +24567,16 @@ def createModeBindings (self,modeName,d):
             g.trace('No such command: %s' % commandName) ; continue
         bunchList = d.get(commandName,[])
         for bunch in bunchList:
-            shortcut = bunch.val
-            if shortcut and shortcut not in ('None','none',None):
-                stroke = k.shortcutFromSetting(shortcut)
-                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+            stroke = bunch.val
+            # Important: bunch.val is a stroke returned from k.strokeFromSetting.
+            # Do not call k.strokeFromSetting again here!
+            if stroke and stroke not in ('None','none',None):
+                if 0:
+                    g.trace(
+                        modeName,
+                        '%10s' % (stroke),
+                        '%20s' % (commandName),
+                        bunch.nextMode)
                 d2 = k.masterBindingsDict.get(modeName,{})
                 d2 [stroke] = g.Bunch(
                     commandName=commandName,
@@ -24797,7 +24941,7 @@ def run(fileName=None,*args,**keywords):
         g.enableIdleTimeHook()
     if not fileName:
         c.redraw_now()
-    frame.bodyWantsFocus()
+    c.bodyWantsFocus()
     g.app.gui.runMainLoop()
 #@nonl
 #@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
@@ -25000,12 +25144,12 @@ def enable_gc_debug(event=None):
     if gc:
         gc.set_debug(
             gc.DEBUG_STATS | # prints statistics.
-            # gc.DEBUG_LEAK | # Same as all below.
-            # gc.DEBUG_COLLECTABLE
-            # gc.DEBUG_UNCOLLECTABLE
+            gc.DEBUG_LEAK | # Same as all below.
+            gc.DEBUG_COLLECTABLE |
+            gc.DEBUG_UNCOLLECTABLE |
             gc.DEBUG_INSTANCES |
-            gc.DEBUG_OBJECTS
-            # gc.DEBUG_SAVEALL
+            gc.DEBUG_OBJECTS |
+            gc.DEBUG_SAVEALL
         )
         g.app.trace_gc_inited = True
     else:
@@ -25019,8 +25163,9 @@ def clearAllIvars (o):
     
     o.__dict__.clear()
 #@-node:ekr.20031218072017.1589:clearAllIvars
+#@+node:ekr.20060205043324:Called from commands
 #@+node:ekr.20031218072017.1590:collectGarbage
-def collectGarbage(message=None):
+def collectGarbage():
     
     if not g.app.trace_gc: return
     
@@ -25030,34 +25175,71 @@ def collectGarbage(message=None):
     if not g.app.trace_gc_inited:
         g.app.trace_gc = False
     
-    if not message:
-        message = g.callerName(n=2)
-    
     try: gc.collect()
     except: pass
-    
-    g.printGc(message)
-#@nonl
 #@-node:ekr.20031218072017.1590:collectGarbage
-#@+node:ekr.20031218072017.1592:printGc
-def printGc(message=None,onlyPrintChanges=False):
-    
-    __pychecker__ = '--no-argsused' # onlyPrintChanges not used.
-    
-    if not g.app.trace_gc: return None
+#@+node:ekr.20060205043324.1:printGcSummary
+def printGcSummary (message='',trace=False):
     
     if not message:
         message = g.callerName(n=2)
-        
-    printGcObjects(message)
-    printGcRefs(message)
+
+    # g.collectGarbage()
+    enable_gc_debug
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        s = 'garbage: %d, objects: %d, %s' % (n,n2,message)
+        if trace:
+            print s
+        else:
+            g.es_print(s)
+    except:
+        traceback.print_exc()
+#@nonl
+#@-node:ekr.20060205043324.1:printGcSummary
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
     
-    if g.app.trace_gc_verbose:
-        printGcVerbose(message)
-        
+    if not message:
+        message = g.callerName(n=2)
     
+    # g.collectGarbage()
+    
+    d = {} ; objects = gc.get_objects()
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects),message)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
+        for z in items:
+            g.es_print('%40s %7d' % (z[0],z[1]))
+    else: # Sort by type
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            g.es_print('%40s %7d' % (t,d.get(t)))
+#@-node:ekr.20060202161935:printGcAll
 #@+node:ekr.20060127164729.1:printGcObjects
 def printGcObjects(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectCount
 
@@ -25137,7 +25319,13 @@ typesDict = {}
 #@+node:ekr.20060127165509:printGcVerbose
 # WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
+
 def printGcVerbose(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -25164,6 +25352,25 @@ def printGcVerbose(message=''):
     g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))
 #@nonl
 #@-node:ekr.20060127165509:printGcVerbose
+#@-node:ekr.20060205043324:Called from commands
+#@+node:ekr.20060205043324.2:Called from unit tests
+#@+node:ekr.20031218072017.1592:printGc
+def printGc(message=None):
+    
+    if not g.app.trace_gc: return None
+    
+    if not message:
+        message = g.callerName(n=2)
+        
+    ## g.collectGarbase()
+        
+    printGcObjects(message)
+    printGcRefs(message)
+    
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
 #@+node:ekr.20031218072017.1593:printGcRefs
 def printGcRefs (message=''):
 
@@ -25179,36 +25386,7 @@ def printGcRefs (message=''):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
-#@+node:ekr.20060202161935:printGcAll
-def printGcAll (message=''):
-    
-    d = {} ; objects = gc.get_objects()
-    g.es_print('-' * 30)
-    g.es_print('%d objects' % len(objects),message)
-
-    for obj in objects:
-        t = type(obj)
-        if t == 'instance':
-            try: t = obj.__class__
-            except: pass
-        d[t] = d.get(t,0) + 1
-        
-    if 1: # Sort by n
-        
-        items = d.items()
-        try:
-            # Support for keword args to sort function exists in Python 2.4.
-            # Support for None as an alternative to omitting cmp exists in Python 2.3.
-            items.sort(key=lambda x: x[1],reverse=True)
-        except: pass
-        for z in items:
-            g.es_print('%40s %7d' % (z[0],z[1]))
-    else: # Sort by type
-        keys = d.keys() ; keys.sort()
-        for t in keys:
-            g.es_print('%40s %7d' % (t,d.get(t)))
-#@nonl
-#@-node:ekr.20060202161935:printGcAll
+#@-node:ekr.20060205043324.2:Called from unit tests
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
 #@+node:EKR.20040602125018:enableIdleTimeHook
@@ -25369,7 +25547,7 @@ def editLabel (self,p):
 
     if p and p.edit_widget():
         self.setEditLabelState(p) # Sets the focus immediately.
-        self.frame.headlineWantsFocus(p) # Make sure the focus sticks.
+        self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
 #@nonl
 #@-node:ekr.20040803072955.127:editLabel
 #@+node:ekr.20040803072955.128:tree.select
@@ -25378,8 +25556,6 @@ def editLabel (self,p):
 def select (self,p,updateBeadList=True):
     
     '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
-    
-    # g.collectGarbage('select1')
     
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
@@ -25401,16 +25577,12 @@ def select (self,p,updateBeadList=True):
             except Exception: pass
         << update c.beadList or c.beadPointer >>
         << update c.visitedList >>
-        
-    # g.collectGarbage('select2')
 
     c.setCurrentPosition(p)
     << set the current node >>
     
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    g.collectGarbage('select3')
     
     return 'break' # Supresses unwanted selection.
 #@nonl
@@ -25499,9 +25671,9 @@ self.setSelectedLabelState(p)
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 
 if self.stayInTree:
-    c.frame.treeWantsFocus()
+    c.treeWantsFocus()
 else:
-    frame.bodyWantsFocus()
+    c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20040803072955.133:<< set the current node >>
 #@-node:ekr.20040803072955.128:tree.select
@@ -25512,7 +25684,7 @@ def setEditLabelState (self,p): # selected, editing
     c = self.c ; w = p.edit_widget()
 
     if p and w:
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         self.setEditHeadlineColors(p)
         w.tag_remove("sel","1.0","end")
         w.tag_add("sel","1.0","end")
@@ -25642,6 +25814,9 @@ self._currentPosition = self.nullPosition()
 self._rootPosition    = self.nullPosition()
 self._topPosition     = self.nullPosition()
 
+# Official ivars.
+self.gui = g.app.gui
+
 # Interlocks to prevent premature closing of a window.
 self.inCommand = False
 self.requestCloseWindow = False
@@ -25727,8 +25902,6 @@ def select (self,p,updateBeadList=True):
     
     '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
     
-    # g.collectGarbage('select1')
-    
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
     if not p or not p.exists(c): return # Not an error.
@@ -25749,16 +25922,12 @@ def select (self,p,updateBeadList=True):
             except Exception: pass
         << update c.beadList or c.beadPointer >>
         << update c.visitedList >>
-        
-    # g.collectGarbage('select2')
 
     c.setCurrentPosition(p)
     << set the current node >>
     
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    g.collectGarbage('select3')
     
     return 'break' # Supresses unwanted selection.
 #@nonl
@@ -25847,9 +26016,9 @@ self.setSelectedLabelState(p)
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 
 if self.stayInTree:
-    c.frame.treeWantsFocus()
+    c.treeWantsFocus()
 else:
-    frame.bodyWantsFocus()
+    c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20040803072955.133:<< set the current node >>
 #@-node:ekr.20040803072955.128:tree.select
@@ -25893,18 +26062,26 @@ def __init__ (self,c):
     baseEditCommandsClass.__init__(self,c) # init the base class.
 #@nonl
 #@-node:ekr.20060127162921: ctor
+#@+node:ekr.20060205050659:collectGarbage
+def collectGarbage (self,event=None):
+    
+    g.collectGarbage()
+#@nonl
+#@-node:ekr.20060205050659:collectGarbage
 #@+node:ekr.20060127163325: getPublicCommands
 def getPublicCommands (self):
     
     k = self
 
     return {
+        'collect-garbage':      self.collectGarbage,
         'disable-gc-trace':     self.disableGcTrace,
         'dump-all-objects':     self.dumpAllObjects,
         'dump-new-objects':     self.dumpNewObjects,
         'enable-gc-trace':      self.enableGcTrace,
         'free-tree-widgets':    self.freeTreeWidgets,
         'print-stats':          self.printStats,
+        'print-gc-summary':     self.printGcSummary,
         'verbose-dump-objects': self.verboseDumpObjects,
     }
 #@nonl
@@ -25951,6 +26128,12 @@ def freeTreeWidgets (self,event=None):
     c.redraw()
 #@nonl
 #@-node:ekr.20060202154734:freeTreeWidgets
+#@+node:ekr.20060205043324.3:printGcSummary
+def printGcSummary (self,event=None):
+
+    g.printGcSummary()
+#@nonl
+#@-node:ekr.20060205043324.3:printGcSummary
 #@+node:ekr.20060202133313:printStats
 def printStats (self,event=None):
     
@@ -26021,7 +26204,6 @@ def __init__(self):
     self.unitTesting = False # True if unit testing.
     self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
     self.user_xresources_path = None # Resource file for Tk/tcl.
-    self.wantedCommander = None # Used by tkFrame.set_focus.
     self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 
     # Global panels.  Destroyed when Leo ends.
@@ -26183,7 +26365,7 @@ def run(fileName=None,*args,**keywords):
         g.enableIdleTimeHook()
     if not fileName:
         c.redraw_now()
-    frame.bodyWantsFocus()
+    c.bodyWantsFocus()
     g.app.gui.runMainLoop()
 #@nonl
 #@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
@@ -26383,15 +26565,18 @@ def redraw_now (self,scroll=False):
         
     c = self.c
     
-    g.collectGarbage()
+    self.redrawCount += 1
     
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.redrawCount % 5) == 0:
+            g.printGcSummary(trace=True)
+
     if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
         g.trace(self.redrawCount,g.callers())
         g.print_stats()
         g.clear_stats()
-        
+
     # Do the actual redraw.
-    self.redrawCount += 1
     self.expandAllAncestors(c.currentPosition())
     self.redrawHelper(scroll=scroll)
     self.canvas.update_idletasks() # Important for unit tests.
@@ -26437,12 +26622,12 @@ def enable_gc_debug(event=None):
     if gc:
         gc.set_debug(
             gc.DEBUG_STATS | # prints statistics.
-            # gc.DEBUG_LEAK | # Same as all below.
-            # gc.DEBUG_COLLECTABLE
-            # gc.DEBUG_UNCOLLECTABLE
+            gc.DEBUG_LEAK | # Same as all below.
+            gc.DEBUG_COLLECTABLE |
+            gc.DEBUG_UNCOLLECTABLE |
             gc.DEBUG_INSTANCES |
-            gc.DEBUG_OBJECTS
-            # gc.DEBUG_SAVEALL
+            gc.DEBUG_OBJECTS |
+            gc.DEBUG_SAVEALL
         )
         g.app.trace_gc_inited = True
     else:
@@ -26456,8 +26641,9 @@ def clearAllIvars (o):
     
     o.__dict__.clear()
 #@-node:ekr.20031218072017.1589:clearAllIvars
+#@+node:ekr.20060205043324:Called from commands
 #@+node:ekr.20031218072017.1590:collectGarbage
-def collectGarbage(message=None):
+def collectGarbage():
     
     if not g.app.trace_gc: return
     
@@ -26467,34 +26653,71 @@ def collectGarbage(message=None):
     if not g.app.trace_gc_inited:
         g.app.trace_gc = False
     
-    if not message:
-        message = g.callerName(n=2)
-    
     try: gc.collect()
     except: pass
-    
-    g.printGc(message)
-#@nonl
 #@-node:ekr.20031218072017.1590:collectGarbage
-#@+node:ekr.20031218072017.1592:printGc
-def printGc(message=None,onlyPrintChanges=False):
-    
-    __pychecker__ = '--no-argsused' # onlyPrintChanges not used.
-    
-    if not g.app.trace_gc: return None
+#@+node:ekr.20060205043324.1:printGcSummary
+def printGcSummary (message='',trace=False):
     
     if not message:
         message = g.callerName(n=2)
-        
-    printGcObjects(message)
-    printGcRefs(message)
+
+    # g.collectGarbage()
+    enable_gc_debug
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        s = 'garbage: %d, objects: %d, %s' % (n,n2,message)
+        if trace:
+            print s
+        else:
+            g.es_print(s)
+    except:
+        traceback.print_exc()
+#@nonl
+#@-node:ekr.20060205043324.1:printGcSummary
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
     
-    if g.app.trace_gc_verbose:
-        printGcVerbose(message)
-        
+    if not message:
+        message = g.callerName(n=2)
     
+    # g.collectGarbage()
+    
+    d = {} ; objects = gc.get_objects()
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects),message)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
+        for z in items:
+            g.es_print('%40s %7d' % (z[0],z[1]))
+    else: # Sort by type
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            g.es_print('%40s %7d' % (t,d.get(t)))
+#@-node:ekr.20060202161935:printGcAll
 #@+node:ekr.20060127164729.1:printGcObjects
 def printGcObjects(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectCount
 
@@ -26574,7 +26797,13 @@ typesDict = {}
 #@+node:ekr.20060127165509:printGcVerbose
 # WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
+
 def printGcVerbose(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -26601,6 +26830,25 @@ def printGcVerbose(message=''):
     g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))
 #@nonl
 #@-node:ekr.20060127165509:printGcVerbose
+#@-node:ekr.20060205043324:Called from commands
+#@+node:ekr.20060205043324.2:Called from unit tests
+#@+node:ekr.20031218072017.1592:printGc
+def printGc(message=None):
+    
+    if not g.app.trace_gc: return None
+    
+    if not message:
+        message = g.callerName(n=2)
+        
+    ## g.collectGarbase()
+        
+    printGcObjects(message)
+    printGcRefs(message)
+    
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
 #@+node:ekr.20031218072017.1593:printGcRefs
 def printGcRefs (message=''):
 
@@ -26616,36 +26864,7 @@ def printGcRefs (message=''):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
-#@+node:ekr.20060202161935:printGcAll
-def printGcAll (message=''):
-    
-    d = {} ; objects = gc.get_objects()
-    g.es_print('-' * 30)
-    g.es_print('%d objects' % len(objects),message)
-
-    for obj in objects:
-        t = type(obj)
-        if t == 'instance':
-            try: t = obj.__class__
-            except: pass
-        d[t] = d.get(t,0) + 1
-        
-    if 1: # Sort by n
-        
-        items = d.items()
-        try:
-            # Support for keword args to sort function exists in Python 2.4.
-            # Support for None as an alternative to omitting cmp exists in Python 2.3.
-            items.sort(key=lambda x: x[1],reverse=True)
-        except: pass
-        for z in items:
-            g.es_print('%40s %7d' % (z[0],z[1]))
-    else: # Sort by type
-        keys = d.keys() ; keys.sort()
-        for t in keys:
-            g.es_print('%40s %7d' % (t,d.get(t)))
-#@nonl
-#@-node:ekr.20060202161935:printGcAll
+#@-node:ekr.20060205043324.2:Called from unit tests
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@-node:ekr.20060127100926:(Improved gc stats)
 #@-node:ekr.20060130151453:Find leaks
@@ -26676,8 +26895,6 @@ def select (self,p,updateBeadList=True):
     
     '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
     
-    # g.collectGarbage('select1')
-    
     c = self.c ; frame = c.frame ; body = frame.bodyCtrl
     old_p = c.currentPosition()
     if not p or not p.exists(c): return # Not an error.
@@ -26698,16 +26915,12 @@ def select (self,p,updateBeadList=True):
             except Exception: pass
         << update c.beadList or c.beadPointer >>
         << update c.visitedList >>
-        
-    # g.collectGarbage('select2')
 
     c.setCurrentPosition(p)
     << set the current node >>
     
     g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    g.collectGarbage('select3')
     
     return 'break' # Supresses unwanted selection.
 #@nonl
@@ -26796,9 +27009,9 @@ self.setSelectedLabelState(p)
 frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 
 if self.stayInTree:
-    c.frame.treeWantsFocus()
+    c.treeWantsFocus()
 else:
-    frame.bodyWantsFocus()
+    c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20040803072955.133:<< set the current node >>
 #@-node:ekr.20040803072955.128:tree.select
@@ -27288,628 +27501,7 @@ def showStats (self):
 #@-node:ekr.20060202125419:showStats
 #@-node:ekr.20040803072955.6:Allocation...
 #@-node:ekr.20060202090032:Improved tree allocation
-#@+node:ekr.20060204084632:What I did: 2-4-06
-@nocolor
-
-- Removed master click handlers: not needed.
-    - Added FocusIn, FocusOut bindings. (Moved code from masterClickHandler).
-
-- Made many changes so that modes work again with k.masterKeyHandler.
-
-- Minibuffer finds now work.
-    - New search-again command: it reverts to find-with-present-options if there is no search pattern.
-    - Added support for minibufferSearchesShowFindTab option.
-
-- Revised @find mode.  It is now usable and is bound to Ctrl-F.
-#@nonl
-#@-node:ekr.20060204084632:What I did: 2-4-06
 #@+node:ekr.20060204105811:Recent
-#@+node:ekr.20031218072017.4039:class leoTkinterLog
-class leoTkinterLog (leoFrame.leoLog):
-    
-    """A class that represents the log pane of a Tkinter window."""
-
-    @others
-#@nonl
-#@+node:ekr.20051016095907:tkLog Birth
-#@+node:ekr.20031218072017.4040:tkLog.__init__
-def __init__ (self,frame,parentFrame):
-    
-    # g.trace("leoTkinterLog")
-    
-    self.c = c = frame.c # Also set in the base constructor, but we need it here.
-    
-    self.colorTags = []
-        # The list of color names used as tags in present tab.
-        # This gest switched by selectTab.
-
-    self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
-    
-    # New in 4.4a2: The log pane is a Pmw.Notebook...
-
-    self.nb = None      # The Pmw.Notebook that holds all the tabs.
-    self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
-    self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
-    self.logNumber = 0 # To create unique name fields for Tk.Text widgets.
-    self.menu = None # A menu that pops up on right clicks in the hull or in tabs.
-    self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
-    self.newTabCount = 0 # Number of new tabs created.
-    
-    # Official status variables.  Can be used by client code.
-    self.tabName = None # The name of the active tab.
-    self.logCtrl = None # Same as self.textDict.get(self.tabName)
-    self.tabFrame = None # Same as self.frameDict.get(self.tabName)
-    
-    # Call the base class constructor and calls createControl.
-    leoFrame.leoLog.__init__(self,frame,parentFrame)
-#@-node:ekr.20031218072017.4040:tkLog.__init__
-#@+node:ekr.20031218072017.4042:tkLog.createControl
-def createControl (self,parentFrame):
-
-    c = self.c
-
-    self.nb = Pmw.NoteBook(parentFrame,
-        borderwidth = 1, pagemargin = 0,
-        raisecommand = self.raiseTab,
-        lowercommand = self.lowerTab,
-        arrownavigation = 0,
-    )
-
-    menu = self.makeTabMenu(tabName=None)
-
-    def hullMenuCallback(event):
-        self.onRightClick(event,menu)
-
-    self.nb.bind('<Button-3>',hullMenuCallback)
-
-    self.nb.pack(fill='both',expand=1)
-    self.selectTab('Log') # create the tab and make it the active tab.
-    return self.logCtrl
-#@nonl
-#@-node:ekr.20031218072017.4042:tkLog.createControl
-#@+node:ekr.20051016103459:tkLog.createTextWidget
-def createTextWidget (self,parentFrame):
-    
-    self.logNumber += 1
-    log = Tk.Text(parentFrame,name="log-%d" % self.logNumber,
-        setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
-    
-    logBar = Tk.Scrollbar(parentFrame,name="logBar")
-
-    log['yscrollcommand'] = logBar.set
-    logBar['command'] = log.yview
-    
-    logBar.pack(side="right", fill="y")
-    # rr 8/14/02 added horizontal elevator 
-    if self.wrap == "none": 
-        logXBar = Tk.Scrollbar( 
-            parentFrame,name='logXBar',orient="horizontal") 
-        log['xscrollcommand'] = logXBar.set 
-        logXBar['command'] = log.xview 
-        logXBar.pack(side="bottom", fill="x")
-    log.pack(expand=1, fill="both")
-
-    return log
-#@nonl
-#@-node:ekr.20051016103459:tkLog.createTextWidget
-#@+node:ekr.20051019134106.1:tkLog.makeTabMenu
-def makeTabMenu (self,tabName=None):
-
-    '''Create a tab popup menu.'''
-
-    c = self.c
-    hull = self.nb.component('hull') # A Tk.Canvas.
-    
-    menu = Tk.Menu(hull,tearoff=0)
-    menu.add_command(label='New Tab',command=self.newTabFromMenu)
-    
-    if tabName:
-        # Important: tabName is the name when the tab is created.
-        # It is not affected by renaming, so we don't have to keep
-        # track of the correspondence between this name and what is in the label.
-        def deleteTabCallback():
-            self.deleteTab(tabName)
-            
-        label = g.choose(
-            tabName in ('Find','Spell'),'Hide This Tab','Delete This Tab')
-        menu.add_command(label=label,command=deleteTabCallback)
- 
-        def renameTabCallback():
-            self.renameTabFromMenu(tabName)
-
-        menu.add_command(label='Rename This Tab',command=renameTabCallback)
-
-    return menu
-#@nonl
-#@-node:ekr.20051019134106.1:tkLog.makeTabMenu
-#@-node:ekr.20051016095907:tkLog Birth
-#@+node:ekr.20051016095907.1:Config & get/saveState
-#@+node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
-def configureBorder(self,border):
-    
-    self.logCtrl.configure(bd=border)
-    
-def configureFont(self,font):
-
-    self.logCtrl.configure(font=font)
-#@nonl
-#@-node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
-#@+node:ekr.20031218072017.4043:tkLog.getFontConfig
-def getFontConfig (self):
-
-    font = self.logCtrl.cget("font")
-    # g.trace(font)
-    return font
-#@nonl
-#@-node:ekr.20031218072017.4043:tkLog.getFontConfig
-#@+node:ekr.20041222043017:tkLog.restoreAllState
-def restoreAllState (self,d):
-    
-    '''Restore the log from a dict created by saveAllState.'''
-    
-    logCtrl = self.logCtrl
-
-    # Restore the text.
-    text = d.get('text')
-    logCtrl.insert('end',text)
-
-    # Restore all colors.
-    colors = d.get('colors')
-    for color in colors.keys():
-        if color not in self.colorTags:
-            self.colorTags.append(color)
-            logCtrl.tag_config(color,foreground=color)
-        items = list(colors.get(color))
-        while items:
-            start,stop = items[0],items[1]
-            items = items[2:]
-            logCtrl.tag_add(color,start,stop)
-#@nonl
-#@-node:ekr.20041222043017:tkLog.restoreAllState
-#@+node:ekr.20041222043017.1:tkLog.saveAllState
-def saveAllState (self):
-    
-    '''Return a dict containing all data needed to recreate the log in another widget.'''
-    
-    logCtrl = self.logCtrl ; colors = {}
-
-    # Save the text
-    text = logCtrl.get('1.0','end')
-
-    # Save color tags.
-    tag_names = logCtrl.tag_names()
-    for tag in tag_names:
-        if tag in self.colorTags:
-            colors[tag] = logCtrl.tag_ranges(tag)
-            
-    d = {'text':text,'colors': colors}
-    # g.trace('\n',g.dictToString(d))
-    return d
-#@nonl
-#@-node:ekr.20041222043017.1:tkLog.saveAllState
-#@+node:ekr.20041217135735.2:tkLog.setColorFromConfig
-def setColorFromConfig (self):
-    
-    c = self.c
-    
-    bg = c.config.getColor("log_pane_background_color") or 'white'
-    
-    try:
-        self.logCtrl.configure(bg=bg)
-    except:
-        g.es("exception setting log pane background color")
-        g.es_exception()
-#@nonl
-#@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
-#@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-def SetWidgetFontFromConfig (self,logCtrl=None):
-
-    c = self.c
-
-    if not logCtrl: logCtrl = self.logCtrl
-
-    font = c.config.getFontFromParams(
-        "log_text_font_family", "log_text_font_size",
-        "log_text_font_slant", "log_text_font_weight",
-        c.config.defaultLogFontSize)
-
-    self.fontRef = font # ESSENTIAL: retain a link to font.
-    logCtrl.configure(font=font)
-
-    # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
-
-    bg = c.config.getColor("log_text_background_color")
-    if bg:
-        try: logCtrl.configure(bg=bg)
-        except: pass
-
-    fg = c.config.getColor("log_text_foreground_color")
-    if fg:
-        try: logCtrl.configure(fg=fg)
-        except: pass
-        
-setFontFromConfig = SetWidgetFontFromConfig # Renaming supresses a pychecker warning.
-#@nonl
-#@-node:ekr.20031218072017.4046:tkLog.setFontFromConfig
-#@-node:ekr.20051016095907.1:Config & get/saveState
-#@+node:ekr.20051016095907.2:Focus & update (tkLog)
-#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
-def onActivateLog (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    try:
-        self.c.setLog()
-        self.frame.tree.OnDeactivate()
-        self.frame.logWantsFocus()
-    except:
-        g.es_event_exception("activate log")
-#@nonl
-#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
-#@+node:ekr.20031218072017.4044:tkLog.hasFocus
-def hasFocus (self):
-    
-    return g.app.gui.get_focus(self.frame) == self.logCtrl
-#@nonl
-#@-node:ekr.20031218072017.4044:tkLog.hasFocus
-#@+node:ekr.20050208133438:forceLogUpdate
-def forceLogUpdate (self,s):
-
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        try:
-            print s, # Don't add a newline.
-        except UnicodeError:
-            # g.app may not be inited during scripts!
-            print g.toEncodedString(s,'utf-8')
-    else:
-        self.logCtrl.update_idletasks()
-#@nonl
-#@-node:ekr.20050208133438:forceLogUpdate
-#@-node:ekr.20051016095907.2:Focus & update (tkLog)
-#@+node:ekr.20051016101927:put & putnl (tkLog)
-@ Printing uses self.logCtrl, so this code need not concern itself
-with which tab is active.
-
-Also, selectTab switches the contents of colorTags, so that is not concern.
-It may be that Pmw will allow us to dispense with the colorTags logic...
-#@nonl
-#@+node:ekr.20031218072017.1473:put
-# All output to the log stream eventually comes here.
-def put (self,s,color=None,tabName='Log'):
-    
-    c = self.c
-    
-    # print 'tkLog.put',self.c.shortFileName(),tabName,g.callers()
-
-    if g.app.quitting or not c or not c.exists:
-        return
-
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        << put s to log control >>
-    else:
-        << put s to logWaiting and print s >>
-#@nonl
-#@+node:EKR.20040423082910:<< put s to log control >>
-# New in 4.4b1: Restore the focus to a standard place.
-frame = self.c.frame
-focus_widget = g.app.gui.get_focus(frame)
-name = g.app.gui.widget_name(focus_widget)
-for kind in ('body','head','canvas'):
-    if name.startswith(kind): break
-else:
-    focus_widget = frame.body.bodyCtrl
-
-if color:
-    if color not in self.colorTags:
-        self.colorTags.append(color)
-        self.logCtrl.tag_config(color,foreground=color)
-    self.logCtrl.insert("end",s)
-    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-    self.logCtrl.tag_add("black","end")
-else:
-    self.logCtrl.insert("end",s)
-
-self.logCtrl.see("end")
-self.forceLogUpdate(s)
-frame.widgetWantsFocus(focus_widget)
-#@-node:EKR.20040423082910:<< put s to log control >>
-#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-g.app.logWaiting.append((s,color),)
-
-print "Null tkinter log"
-
-if type(s) == type(u""):
-    s = g.toEncodedString(s,"ascii")
-
-print s
-#@nonl
-#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
-#@-node:ekr.20031218072017.1473:put
-#@+node:ekr.20051016101927.1:putnl
-def putnl (self,tabName='Log'):
-
-    if g.app.quitting:
-        return
-    if tabName:
-        self.selectTab(tabName)
-    
-    if self.logCtrl:
-        self.logCtrl.insert("end",'\n')
-        self.logCtrl.see("end")
-        self.forceLogUpdate('\n')
-    else:
-        # Put a newline to logWaiting and print newline
-        g.app.logWaiting.append(('\n',"black"),)
-        print "Null tkinter log"
-        print
-#@-node:ekr.20051016101927.1:putnl
-#@-node:ekr.20051016101927:put & putnl (tkLog)
-#@+node:ekr.20051018061932:Tab (TkLog)
-#@+node:ekr.20051017212057:clearTab
-def clearTab (self,tabName):
-    
-    self.selectTab(tabName)
-    t = self.logCtrl
-    if t:
-        t.delete('1.0','end')
-        # Necessary to allow focus to move *out* of t.
-        t.update()
-#@nonl
-#@-node:ekr.20051017212057:clearTab
-#@+node:ekr.20051024173701:createTab
-def createTab (self,tabName):
-    
-    c = self.c ; k = c.k
-    tabFrame = self.nb.add(tabName)
-    self.menu = self.makeTabMenu(tabName)
-    << Create the tab's text widget >>
-
-    if tabName != 'Log':
-        # c.k doesn't exist when the log pane is created.
-        # k.makeAllBindings will call setTabBindings('Log')
-        self.setTabBindings(tabName)
-    
-    # New in 4.4b1: call update explicitly.
-    t and t.update()
-#@nonl
-#@+node:ekr.20051018072306:<< Create the tab's text widget >>
-t = self.createTextWidget(tabFrame)
-
-# Set the background color.
-configName = 'log_pane_%s_tab_background_color' % tabName
-bg = c.config.getColor(configName) or 'MistyRose1'
-try: t.configure(bg=bg)
-except Exception: pass # Could be a user error.
-
-self.SetWidgetFontFromConfig(logCtrl=t)
-
-self.frameDict [tabName] = tabFrame
-self.textDict [tabName] = t
-
-# Switch to a new colorTags list.
-if self.tabName:
-    self.colorTagsDict [self.tabName] = self.colorTags [:]
-
-self.colorTags = ['black']
-self.colorTagsDict [tabName] = self.colorTags
-#@nonl
-#@-node:ekr.20051018072306:<< Create the tab's text widget >>
-#@-node:ekr.20051024173701:createTab
-#@+node:ekr.20051018102027:deleteTab
-def deleteTab (self,tabName):
-    
-    if tabName == 'Log':
-        pass
-
-    elif tabName in ('Find','Spell'):
-        self.selectTab('Log')
-    
-    elif tabName in self.nb.pagenames():
-        self.nb.delete(tabName)
-        self.colorTagsDict [tabName] = []
-        self.textDict [tabName] = None
-        self.frameDict [tabName] = None
-        self.tabName = None
-        self.selectTab('Log')
-        
-    # New in Leo 4.4b1.
-    self.c.frame.bodyWantsFocus()
-#@nonl
-#@-node:ekr.20051018102027:deleteTab
-#@+node:ekr.20060204124347:hideTab
-def hideTab (self,tabName):
-    
-    self.selectTab('Log')
-#@nonl
-#@-node:ekr.20060204124347:hideTab
-#@+node:ekr.20051027114433:getSelectedTab
-def getSelectedTab (self):
-    
-    return self.tabName
-#@nonl
-#@-node:ekr.20051027114433:getSelectedTab
-#@+node:ekr.20051018061932.1:lower/raiseTab
-def lowerTab (self,tabName):
-    
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='grey80')
-        
-        # New in 4.4b1: call update explicitly.
-        logCtrl = self.textDict.get(tabName)
-        logCtrl and logCtrl.update()
-        self.c.frame.bodyWantsFocus()
-
-def raiseTab (self,tabName):
-
-    if tabName:
-        b = self.nb.tab(tabName) # b is a Tk.Button.
-        b.config(bg='LightSteelBlue1')
-        
-        # New in 4.4b1: call update explicitly.
-        logCtrl = self.textDict.get(tabName)
-        if logCtrl:
-            logCtrl.update()
-            self.c.frame.widgetWantsFocus(logCtrl)
-#@nonl
-#@-node:ekr.20051018061932.1:lower/raiseTab
-#@+node:ekr.20051019170806:renameTab
-def renameTab (self,oldName,newName):
-    
-    label = self.nb.tab(oldName)
-    label.configure(text=newName)
-#@nonl
-#@-node:ekr.20051019170806:renameTab
-#@+node:ekr.20051016101724.1:selectTab
-def selectTab (self,tabName):
-
-    '''Create the tab if necessary and make it active.'''
-
-    c = self.c ; tabFrame = self.frameDict.get(tabName)
-
-    if tabFrame:
-        # Switch to a new colorTags list.
-        newColorTags = self.colorTagsDict.get(tabName)
-        self.colorTagsDict [self.tabName] = self.colorTags [:]
-        self.colorTags = newColorTags
-    else:
-        self.createTab(tabName)
-        
-    self.nb.selectpage(tabName)
-    # Update the status vars.
-    self.tabName = tabName
-    self.logCtrl = self.textDict.get(tabName)
-    # c.frame.widgetWantsFocus(self.logCtrl)
-    self.tabFrame = self.frameDict.get(tabName)
-    
-    # New in 4.4b1: call update *after* creating the tab.
-    tabFrame and tabFrame.update()
-
-    return tabFrame
-#@nonl
-#@-node:ekr.20051016101724.1:selectTab
-#@+node:ekr.20051022162730:setTabBindings
-def setTabBindings (self,tabName):
-    
-    c = self.c ; k = c.k
-    tab = self.nb.tab(tabName)
-    text = self.textDict.get(tabName)
-    
-    if 1:
-        def tabMenuRightClickCallback(event,menu=self.menu):
-            self.onRightClick(event,menu)
-            
-        def tabMenuClickCallback(event,tabName=tabName):
-            self.onClick(event,tabName)
-    
-        for kind,handler in (
-            ('<Key>',k.masterKeyHandler),
-            ('<Button-1>',tabMenuClickCallback),
-            ('<Button-3>',tabMenuRightClickCallback),
-        ):
-            text.bind(kind,handler)
-
-    else:
-    
-        # Send all event in the text area to the master handlers.
-        for kind,handler in (
-            ('<Key>',               k.masterKeyHandler),
-            ('<Button-1>',          k.masterClickHandler),
-            ('<Button-3>',          k.masterClick3Handler),
-        ):
-            text.bind(kind,handler)
-        
-        # Clicks in the tab area are harmless: use the old code.
-        def tabMenuRightClickCallback(event,menu=self.menu):
-            self.onRightClick(event,menu)
-            
-        def tabMenuClickCallback(event,tabName=tabName):
-            self.onClick(event,tabName)
-        
-        tab.bind('<Button-1>',tabMenuClickCallback)
-        tab.bind('<Button-3>',tabMenuRightClickCallback)
-#@nonl
-#@-node:ekr.20051022162730:setTabBindings
-#@+node:ekr.20051019134106:Tab menu callbacks & helpers
-#@+node:ekr.20051019134422:onRightClick & onClick
-def onRightClick (self,event,menu):
-    
-    c = self.c
-    menu.post(event.x_root,event.y_root)
-    
-    
-def onClick (self,event,tabName):
-
-    self.selectTab(tabName)
-#@nonl
-#@-node:ekr.20051019134422:onRightClick & onClick
-#@+node:ekr.20051019140004.1:newTabFromMenu
-def newTabFromMenu (self,tabName='Log'):
-
-    self.selectTab(tabName)
-    
-    # This is called by getTabName.
-    def selectTabCallback (newName):
-        self.selectTab(newName)
-
-    self.getTabName(selectTabCallback)
-#@nonl
-#@-node:ekr.20051019140004.1:newTabFromMenu
-#@+node:ekr.20051019165401:renameTabFromMenu
-def renameTabFromMenu (self,tabName):
-
-    if tabName in ('Log','Completions'):
-        g.es('can not rename %s tab' % (tabName),color='blue')
-    else:
-        def renameTabCallback (newName):
-            self.renameTab(tabName,newName)
-
-        self.getTabName(renameTabCallback)
-#@nonl
-#@-node:ekr.20051019165401:renameTabFromMenu
-#@+node:ekr.20051019172811:getTabName
-def getTabName (self,exitCallback):
-    
-    canvas = self.nb.component('hull')
-
-    # Overlay what is there!
-    f = Tk.Frame(canvas)
-    f.pack(side='top',fill='both',expand=1)
-    
-    row1 = Tk.Frame(f)
-    row1.pack(side='top',expand=0,fill='x',pady=10)
-    row2 = Tk.Frame(f)
-    row2.pack(side='top',expand=0,fill='x')
-
-    Tk.Label(row1,text='Tab name').pack(side='left')
-
-    e = Tk.Entry(row1,background='white')
-    e.pack(side='left')
-
-    def getNameCallback (event=None):
-        s = e.get().strip()
-        f.pack_forget()
-        if s: exitCallback(s)
-        
-    def closeTabNameCallback (event=None):
-        f.pack_forget()
-        
-    b = Tk.Button(row2,text='Ok',width=6,command=getNameCallback)
-    b.pack(side='left',padx=10)
-    
-    b = Tk.Button(row2,text='Cancel',width=6,command=closeTabNameCallback)
-    b.pack(side='left')
-
-    e.focus_force()
-    e.bind('<Return>',getNameCallback)
-#@nonl
-#@-node:ekr.20051019172811:getTabName
-#@-node:ekr.20051019134106:Tab menu callbacks & helpers
-#@-node:ekr.20051018061932:Tab (TkLog)
-#@-node:ekr.20031218072017.4039:class leoTkinterLog
 #@+node:ekr.20060203112912.1:Initing
 #@+node:ekr.20050920093543:c.finishCreate & helper
 def finishCreate (self):  # New in 4.4.
@@ -28200,10 +27792,16 @@ def createModeBindings (self,modeName,d):
             g.trace('No such command: %s' % commandName) ; continue
         bunchList = d.get(commandName,[])
         for bunch in bunchList:
-            shortcut = bunch.val
-            if shortcut and shortcut not in ('None','none',None):
-                stroke = k.shortcutFromSetting(shortcut)
-                # g.trace(modeName,'%10s' % (stroke),'%20s' % (commandName),bunch.nextMode)
+            stroke = bunch.val
+            # Important: bunch.val is a stroke returned from k.strokeFromSetting.
+            # Do not call k.strokeFromSetting again here!
+            if stroke and stroke not in ('None','none',None):
+                if 0:
+                    g.trace(
+                        modeName,
+                        '%10s' % (stroke),
+                        '%20s' % (commandName),
+                        bunch.nextMode)
                 d2 = k.masterBindingsDict.get(modeName,{})
                 d2 [stroke] = g.Bunch(
                     commandName=commandName,
@@ -28216,10 +27814,8 @@ def createModeBindings (self,modeName,d):
 #@+node:ekr.20060117202916.2:endMode
 def endMode(self,event):
     
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
-    
+    k = self ; c = k.c ; w = c.get_focus()
+
     c.frame.log.deleteTab('Mode')
 
     k.endCommand(event,k.stroke)
@@ -28231,7 +27827,7 @@ def endMode(self,event):
     # k.setLabelGrey('top-level mode')
     
     # Do *not* change the focus: the command may have changed it.
-    c.frame.widgetWantsFocus(w)
+    c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060117202916.2:endMode
 #@+node:ekr.20060102135349.2:enterNamedMode
@@ -28258,9 +27854,8 @@ def generalModeHandler (self,event,
     
     '''Handle a mode defined by an @mode node in leoSettings.leo.'''
 
-    k = self ; c = k.c
+    k = self ; c = k.c ;  w = c.get_focus()
     state = k.getState(modeName)
-    w = g.app.gui.get_focus(c.frame)
     trace = c.config.getBool('trace_modes')
     
     if trace: g.trace(modeName,state)
@@ -28274,9 +27869,9 @@ def generalModeHandler (self,event,
         else:
             c.frame.log.hideTab('Mode')
         if k.useTextWidget:
-            c.frame.minibufferWantsFocus()
+            c.minibufferWantsFocus()
         else:
-            c.frame.widgetWantsFocus(w)
+            c.widgetWantsFocus(w)
     elif not func:
         g.trace('No func: improper key binding')
         return 'break'
@@ -28296,7 +27891,7 @@ def generalModeHandler (self,event,
                 # func may have put us in *another* mode.
                 pass
             elif nextMode == 'same':
-                self.initMode(event,savedModeName) # Re-enter this mode.
+                self.reinitMode(modeName) # Re-enter this mode.
                 k.setState(modeName,1,handler=k.generalModeHandler)
             else:
                 self.initMode(event,nextMode) # Enter another mode.
@@ -28317,9 +27912,11 @@ def initMode (self,event,modeName):
     if not d:
         self.badMode(modeName)
         return
+    else:
+        k.modeBindingsDict = d
         
     k.inputModeName = modeName
-    k.modeWidget = g.app.gui.get_focus(c.frame)
+    k.modeWidget = c.get_focus()
     
     if k.masterBindingsDict.get(modeName) is None:
         k.createModeBindings(modeName,d)
@@ -28327,11 +27924,30 @@ def initMode (self,event,modeName):
     k.setLabelBlue(modeName+': ',protect=True)
     k.showStateAndMode()
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     else:
         pass # Do *not* change the focus here!
 #@nonl
 #@-node:ekr.20060117202916.1:initMode
+#@+node:ekr.20060204140416:reinitMode
+def reinitMode (self,modeName):
+    
+    k = self ; c = k.c
+
+    d = k.modeBindingsDict
+    
+    k.inputModeName = modeName
+    k.createModeBindings(modeName,d)
+    
+    # Do not set the status line here.
+    k.setLabelBlue(modeName+': ',protect=True)
+
+    if k.useTextWidget:
+        c.minibufferWantsFocus()
+    else:
+        pass # Do *not* change the focus here!
+#@nonl
+#@-node:ekr.20060204140416:reinitMode
 #@+node:ekr.20060104164523:modeHelp
 def modeHelp (self,event):
 
@@ -28341,15 +27957,17 @@ def modeHelp (self,event):
     by analogy with tab completion.'''
     
     k = self ; c = k.c
-    
+
     c.endEditing()
+    
+    g.trace(k.inputModeName)
     
     if k.inputModeName:
         d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
         k.modeHelpHelper(d)
         
     if k.useTextWidget:
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
 
     return 'break'
 #@nonl
@@ -28397,16 +28015,14 @@ def setOverwriteState (self,event):
 #@+node:ekr.20060120200818:setInputState
 def setInputState (self,state,showState=False):
 
-    k = self ; c = k.c
-    
-    w = g.app.gui.get_focus(c.frame)
+    k = self ; c = k.c ; w = c.get_focus()
 
     k.unboundKeyAction = state
     if state != 'insert' or showState:
         k.showStateAndMode()
    
     # These commands never change focus.
-    w and c.frame.widgetWantsFocus(w)
+    w and c.widgetWantsFocus(w)
 #@nonl
 #@-node:ekr.20060120200818:setInputState
 #@+node:ekr.20060120193743:showStateAndMode
@@ -28427,66 +28043,10 @@ def showStateAndMode(self):
             put(mode)
 #@-node:ekr.20060120193743:showStateAndMode
 #@-node:ekr.20060115103349:Modes
-#@+node:ekr.20050920085536.62:getArg
-def getArg (self,event,
-    returnKind=None,returnState=None,handler=None,
-    prefix=None,tabList=None,completion=True):
-    
-    '''Accumulate an argument until the user hits return (or control-g).
-    Enter the given return state when done.
-    The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
-    '''
-
-    k = self ; c = k.c ; state = k.getState('getArg')
-    keysym = (event and event.keysym) or ''
-    trace = c.config.getBool('trace_modes')
-    if trace: g.trace('state',state,'keysym',keysym,'completion',completion)
-    if state == 0:
-        k.arg = '' ; k.arg_completion = completion
-        if tabList: k.argTabList = tabList[:]
-        else:       k.argTabList = []
-        << init altX vars >>
-        # Set the states.
-        bodyCtrl = c.frame.body.bodyCtrl
-        c.frame.widgetWantsFocus(bodyCtrl)
-        k.afterGetArgState=returnKind,returnState,handler
-        k.setState('getArg',1,k.getArg)
-        k.afterArgWidget = event and event.widget or c.frame.body.bodyCtrl
-        if k.useTextWidget: c.frame.minibufferWantsFocus()
-    elif keysym == 'Return':
-        k.arg = k.getLabel(ignorePrompt=True)
-        kind,n,handler = k.afterGetArgState
-        if kind: k.setState(kind,n,handler)
-        c.frame.log.deleteTab('Completion')
-        if handler: handler(event)
-        # else: c.frame.widgetWantsFocus(k.afterArgWidget)
-    elif keysym == 'Tab':
-        k.doTabCompletion(k.argTabList,k.arg_completion)
-    elif keysym == 'BackSpace':
-        k.doBackSpace(k.argTabList,k.arg_completion)
-        c.frame.minibufferWantsFocus()
-    else:
-        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
-        k.mb_tabList = []
-        k.updateLabel(event)
-        k.mb_tabListPrefix = k.getLabel()
-
-    return 'break'
-#@+node:ekr.20050928092516:<< init altX vars >>
-# Clear the list, any other character besides tab indicates that a new prefix is in effect.
-k.mb_tabList = []
-
-if prefix:
-    k.mb_tabListPrefix = prefix
-    k.mb_prefix = prefix
-    k.mb_prompt = prefix
-else:
-    k.mb_tabListPrefix = k.mb_prefix = k.getLabel()
-    k.mb_prompt = ''
-#@nonl
-#@-node:ekr.20050928092516:<< init altX vars >>
-#@-node:ekr.20050920085536.62:getArg
+#@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
 #@+node:ekr.20060127183752:masterKeyHandler
+master_key_count = 0
+
 def masterKeyHandler (self,event):
     
     '''In the new binding scheme, there is only one key binding.
@@ -28503,6 +28063,11 @@ def masterKeyHandler (self,event):
     keysym = event.keysym or ''
     if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
         return None
+        
+    self.master_key_count += 1
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
 
     stroke = k.strokeFromEvent(event)
 
@@ -28513,30 +28078,41 @@ def masterKeyHandler (self,event):
     state = k.state.kind
     if trace: g.trace(repr(stroke),'state',state)
     if k.inState():
+        # First: honor the 'mini' bindings.
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return 'break'
+        # Second, pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
-        d =  k.masterBindingsDict.get(state)
-        if d:
-            # A typical state
-            b = d.get(stroke)
-            if b:
-                return k.generalModeHandler (event,
-                    commandName=b.commandName,func=b.func,
-                    modeName=state,nextMode=b.nextMode)
-            else:
-                return k.modeHelp(event)
         elif state == 'full-command':
             d = k.masterBindingsDict.get('mini')
             b = d.get(stroke)
             if b:
                 # Pass this on for macro recording.
                 k.masterCommand(event,b.func,stroke,b.commandName)
-                c.frame.minibufferWantsFocus()
+                c.minibufferWantsFocus()
                 return 'break'
             else:
                 # Do the default state action.
                 k.callStateFunction(event) # Calls end-command.
                 return 'break'
+        # Third, pass keys to the general mode handler.
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            # A typical state
+            b = d.get(stroke)
+            g.trace(d.keys())
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
         else:
             g.trace('No state dictionary for %s' % state)
             return 'break'
@@ -28569,6 +28145,134 @@ def masterKeyHandler (self,event):
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
 #@nonl
 #@-node:ekr.20060127183752:masterKeyHandler
+#@+node:ekr.20060129052538.2:masterClickHandler
+def masterClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c ; w = event and event.widget
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(g.app.gui.widget_name(w),func and func.__name__)
+        
+    if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+        g.es_print('Ignoring click outside active minibuffer',color='blue')
+        c.minibufferWantsFocus()
+        return 'break'
+
+    if event and func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+        
+masterClick3Handler         = masterClickHandler
+masterDoubleClick3Handler   = masterClickHandler
+#@nonl
+#@-node:ekr.20060129052538.2:masterClickHandler
+#@+node:ekr.20060131084938:masterDoubleClickHandler
+def masterDoubleClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c ; w = event and event.widget
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(g.app.gui.widget_name(w),func and func.__name__)
+
+    if event and func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        i = w.index("@%d,%d" % (event.x,event.y))
+        g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+        return 'break'
+#@nonl
+#@-node:ekr.20060131084938:masterDoubleClickHandler
+#@+node:ekr.20060128090219:masterMenuHandler
+def masterMenuHandler (self,stroke,func,commandName):
+    
+    k = self ; w = k.c.frame.getFocus()
+    
+    # Create a minimal event for commands that require them.
+    event = g.Bunch(char='',keysym='',widget=w)
+    
+    if 1:
+        if not g.app.unitTesting:
+            g.trace(g.app.gui.widget_name(w))
+    
+    return k.masterCommand(event,func,stroke,commandName)
+#@nonl
+#@-node:ekr.20060128090219:masterMenuHandler
+#@+node:ekr.20060204083758:master click handlers: not used
+if 0:
+    @others
+#@nonl
+#@+node:ekr.20060129052538.2:masterClickHandler
+def masterClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c ; w = event and event.widget
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(g.app.gui.widget_name(w),func and func.__name__)
+        
+    if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+        g.es_print('Ignoring click outside active minibuffer',color='blue')
+        c.minibufferWantsFocus()
+        return 'break'
+
+    if event and func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        return None
+        
+masterClick3Handler         = masterClickHandler
+masterDoubleClick3Handler   = masterClickHandler
+#@nonl
+#@-node:ekr.20060129052538.2:masterClickHandler
+#@+node:ekr.20060131084938:masterDoubleClickHandler
+def masterDoubleClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c ; w = event and event.widget
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(g.app.gui.widget_name(w),func and func.__name__)
+
+    if event and func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        i = w.index("@%d,%d" % (event.x,event.y))
+        g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+        return 'break'
+#@nonl
+#@-node:ekr.20060131084938:masterDoubleClickHandler
+#@-node:ekr.20060204083758:master click handlers: not used
+#@+node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
+def onFocusInMinibuffer (self,event=None):
+    k = self
+
+def onFocusOutMinibuffer (self,event=None):
+
+    k = self ; c = k.c
+    w = event and event.widget
+    wname = g.app.gui.widget_name(w)
+    if wname.startswith('log-'):
+        return None # Kludge to allow tab completion.
+    
+    # g.trace(k.inState(), g.app.gui.widget_name(w))
+    
+    if 0: ## k.inState():
+        d = k.computeInverseBindingDict()
+        tupleList = d.get('keyboard-quit',[])
+        if tupleList:
+            for pane,stroke in tupleList:
+                if pane in ('all:','text:','mini:'):
+                    g.es_print('Ignoring click: minibuffer is active',color='blue')
+                    g.es_print('Use %s to exit the minibuffer' % (stroke))
+                    c.minibufferWantsFocus()
+                    return 'break'
+            
+    return None # Allow the click.
+#@-node:ekr.20060203115311.2:onFocusIn/OutMinibuffer
+#@-node:ekr.20060129052538.1:Master event handlers (keyHandler)
 #@+node:ekr.20060204112941:(Fixed terrible bug: rips focus away)
 #@+node:ekr.20051214132256:begin/endCommand
 #@+node:ekr.20051214133130:beginCommand  & beginCommandWithEvent
@@ -28602,7 +28306,7 @@ def beginCommandHelper (self,ch,undoType,w):
 #@-node:ekr.20051215102349:beingCommandHelper
 #@-node:ekr.20051214133130:beginCommand  & beginCommandWithEvent
 #@+node:ekr.20051214133130.1:endCommand
-def endCommand(self,label=None,changed=True):
+def endCommand(self,label=None,changed=True,setLabel=True):
     
     '''Do the common processing at the end of each command.'''
     
@@ -28621,25 +28325,31 @@ def endCommand(self,label=None,changed=True):
     self.undoData = None # Bug fix: 1/6/06 (after a5 released).
 
     k.clearState()
-    if label:
-        k.setLabelGrey(label)
-    else:
-        k.resetLabel()
+    
+    # Warning: basic editing commands **must not** set the label.
+    if setLabel:
+        if label:
+            k.setLabelGrey(label)
+        else:
+            k.resetLabel()
 #@nonl
 #@-node:ekr.20051214133130.1:endCommand
 #@-node:ekr.20051214132256:begin/endCommand
-#@+node:ekr.20051026092433.1:backwardDeleteCharacter BUGGY
+#@+node:ekr.20051026092433.1:backwardDeleteCharacter
 def backwardDeleteCharacter (self,event=None):
     
     c = self.c ; p = c.currentPosition()
     w = event and event.widget
-    if not g.app.gui.isTextWidget(w): return
+    if not g.app.gui.isTextWidget(w):
+        g.trace('*'*40,'Not a text widget',g.app.gui.widget_name(w))
+        return
     
     name = g.app.gui.widget_name(w)
     i,j = g.app.gui.getTextSelection(w)
     # g.trace(i,j)
 
     if name.startswith('body'):
+        self.beginCommand()
         d = g.scanDirectives(c,p)
         tab_width = d.get("tabwidth",c.tab_width)
         changed = True
@@ -28651,6 +28361,7 @@ def backwardDeleteCharacter (self,event=None):
             w.delete('insert-1c')
         else:
             << backspace with negative tab_width >>
+        self.endCommand(changed=True,setLabel=False) # Necessary to make text changes stick.
     else:
         # No undo in this widget.
         if i != j:
@@ -28679,7 +28390,7 @@ while n2 > 0:
 w.delete("insert -%dc" % (max(1,count)),"insert")
 #@nonl
 #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
-#@-node:ekr.20051026092433.1:backwardDeleteCharacter BUGGY
+#@-node:ekr.20051026092433.1:backwardDeleteCharacter
 #@+node:ekr.20050924064254:Label...
 @ There is something dubious about tracking states separately for separate commands.
 In fact, there is only one mini-buffer, and it has only one state.
@@ -28692,9 +28403,9 @@ def minibufferWantsFocus(self):
     
     if self.useTextWidget:
         # Important! We must preserve body selection!
-        c.frame.widgetWantsFocus(c.miniBufferWidget)
+        c.widgetWantsFocus(c.miniBufferWidget)
     else:
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20060125175103:k.minibufferWantsFocus
 #@+node:ekr.20051023132350:getLabel
@@ -28750,10 +28461,14 @@ def setLabel (self,s,protect=False):
     # g.trace(repr(s))
 
     if self.useTextWidget:
+        w_old = c.get_focus()
         # Danger: this will rip the focus into the minibuffer.
-        # **without** calling g.app.gui.set_focus.
+        # **without** calling c.set_focus.
         w.delete('1.0','end')
         w.insert('1.0',s)
+        if w_old != w:
+            # g.trace('Restoring focus to',g.app.gui.widget_name(w_old))
+            c.set_focus(w_old)
     else:
         if k.svar: k.svar.set(s)
 
@@ -28814,62 +28529,1229 @@ def updateLabel (self,event,suppressControlChars=True):
 #@-node:ekr.20050920085536.38:updateLabel
 #@-node:ekr.20050924064254:Label...
 #@-node:ekr.20060204112941:(Fixed terrible bug: rips focus away)
-#@+node:ekr.20060204114505:(search-again)
-#@+node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
+#@+node:ekr.20031218072017.1588:Garbage Collection
+# debugGC = False # Must be true to enable traces below.
+
+lastObjectCount = 0
+lastObjectsDict = {}
+lastTypesDict = {}
+lastFunctionsDict = {}
+
+@others
+#@+node:ekr.20060127162818:enable_gc_debug
+def enable_gc_debug(event=None):
+    
+    if gc:
+        gc.set_debug(
+            gc.DEBUG_STATS | # prints statistics.
+            gc.DEBUG_LEAK | # Same as all below.
+            gc.DEBUG_COLLECTABLE |
+            gc.DEBUG_UNCOLLECTABLE |
+            gc.DEBUG_INSTANCES |
+            gc.DEBUG_OBJECTS |
+            gc.DEBUG_SAVEALL
+        )
+        g.app.trace_gc_inited = True
+    else:
+        es('Can not import gc module',color='blue')
+#@nonl
+#@-node:ekr.20060127162818:enable_gc_debug
+#@+node:ekr.20031218072017.1589:clearAllIvars
+def clearAllIvars (o):
+    
+    """Clear all ivars of o, a member of some class."""
+    
+    o.__dict__.clear()
+#@-node:ekr.20031218072017.1589:clearAllIvars
+#@+node:ekr.20060205043324:Called from commands
+#@+node:ekr.20031218072017.1590:collectGarbage
+def collectGarbage():
+    
+    if not g.app.trace_gc: return
+    
+    if not g.app.trace_gc_inited:
+        g.enable_gc_debug()
+    
+    if not g.app.trace_gc_inited:
+        g.app.trace_gc = False
+    
+    try: gc.collect()
+    except: pass
+#@-node:ekr.20031218072017.1590:collectGarbage
+#@+node:ekr.20060205043324.1:printGcSummary
+def printGcSummary (message='',trace=False):
+    
+    if not message:
+        message = g.callerName(n=2)
+
+    # g.collectGarbage()
+    enable_gc_debug
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        s = 'garbage: %d, objects: %d, %s' % (n,n2,message)
+        if trace:
+            print s
+        else:
+            g.es_print(s)
+    except:
+        traceback.print_exc()
+#@nonl
+#@-node:ekr.20060205043324.1:printGcSummary
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
+    
+    d = {} ; objects = gc.get_objects()
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects),message)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
+        for z in items:
+            g.es_print('%40s %7d' % (z[0],z[1]))
+    else: # Sort by type
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            g.es_print('%40s %7d' % (t,d.get(t)))
+#@-node:ekr.20060202161935:printGcAll
+#@+node:ekr.20060127164729.1:printGcObjects
+def printGcObjects(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
+
+    global lastObjectCount
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        delta = n2-lastObjectCount
+        lastObjectCount = n2
+
+        g.es_print('-' * 30)
+        g.es_print("garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message))
+        
+        << print number of each type of object >>
+        if 0:
+            << print added functions >>
+
+    except:
+        traceback.print_exc()
+#@nonl
+#@+node:ekr.20040703065638:<< print added functions >>
+import types
+import inspect
+
+global lastFunctionsDict
+
+funcDict = {}
+
+for obj in gc.get_objects():
+    if type(obj) == types.FunctionType:
+        key = repr(obj) # Don't create a pointer to the object!
+        funcDict[key]=None 
+        if not lastFunctionsDict.has_key(key):
+            g.es_print(obj)
+            args, varargs, varkw,defaults  = inspect.getargspec(obj)
+            g.es_print("args", args)
+            if varargs: g.es_print("varargs",varargs)
+            if varkw: g.es_print("varkw",varkw)
+            if defaults:
+                g.es_print("defaults...")
+                for s in defaults: g.es_print(s)
+
+lastFunctionsDict = funcDict
+funcDict = {}
+#@nonl
+#@-node:ekr.20040703065638:<< print added functions >>
+#@+node:ekr.20040703054646:<< print number of each type of object >>
+global lastTypesDict
+typesDict = {}
+
+for obj in gc.get_objects():
+    n = typesDict.get(type(obj),0)
+    t = type(obj)
+    if t == 'instance':
+        try: t = obj.__class__
+        except: pass
+    typesDict[t] = n + 1
+    
+# Create the union of all the keys.
+keys = typesDict.keys()
+for key in lastTypesDict.keys():
+    if key not in keys:
+        keys.append(key)
+
+keys.sort()
+for key in keys:
+    n1 = lastTypesDict.get(key,0)
+    n2 = typesDict.get(key,0)
+    delta2 = n2-n1
+    if delta2 != 0:
+        g.es_print("%+6d =%7d %s" % (delta2,n2,key))
+    
+lastTypesDict = typesDict
+typesDict = {}
+#@nonl
+#@-node:ekr.20040703054646:<< print number of each type of object >>
+#@-node:ekr.20060127164729.1:printGcObjects
+#@+node:ekr.20060127165509:printGcVerbose
+# WARNING: the id trick is not proper because newly allocated objects
+#          can have the same address as old objets.
+
+def printGcVerbose(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
+
+    global lastObjectsDict
+    objects = gc.get_objects()
+    
+    newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+    
+    lastObjectsDict = {}
+    for o in objects:
+        lastObjectsDict[id(o)]=o
+        
+    dicts = 0 ; seqs = 0
+    
+    i = 0 ; n = len(newObjects)
+    while i < 100 and i < n:
+        o = newObjects[i]
+        if type(o) == type({}): dicts += 1
+        elif type(o) in (type(()),type([])):
+            seqs += 1
+        else:
+            g.es_print(o)
+        i += 1
+    g.es_print('-' * 40)
+    g.es_print('dicts: %d, sequences: %d' % (dicts,seqs))
+    g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))
+#@nonl
+#@-node:ekr.20060127165509:printGcVerbose
+#@-node:ekr.20060205043324:Called from commands
+#@+node:ekr.20060205043324.2:Called from unit tests
+#@+node:ekr.20031218072017.1592:printGc
+def printGc(message=None):
+    
+    if not g.app.trace_gc: return None
+    
+    if not message:
+        message = g.callerName(n=2)
+        
+    ## g.collectGarbase()
+        
+    printGcObjects(message)
+    printGcRefs(message)
+    
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
+#@+node:ekr.20031218072017.1593:printGcRefs
+def printGcRefs (message=''):
+
+    refs = gc.get_referrers(app.windowList[0])
+    g.es_print('-' * 30,message)
+
+    if g.app.trace_gc_verbose:
+        g.es_print("refs of", app.windowList[0])
+        for ref in refs:
+            g.es_print(type(ref))
+    else:
+        g.es_print("%d referers" % len(refs))
+#@nonl
+#@-node:ekr.20031218072017.1593:printGcRefs
+#@-node:ekr.20031218072017.1592:printGc
+#@-node:ekr.20060205043324.2:Called from unit tests
+#@-node:ekr.20031218072017.1588:Garbage Collection
+#@+node:ekr.20060127162818.1:class debugCommandsClass
+class debugCommandsClass (baseEditCommandsClass):
+    
+    @others
+#@nonl
+#@+node:ekr.20060127162921: ctor
+def __init__ (self,c):
+
+    baseEditCommandsClass.__init__(self,c) # init the base class.
+#@nonl
+#@-node:ekr.20060127162921: ctor
+#@+node:ekr.20060205050659:collectGarbage
+def collectGarbage (self,event=None):
+    
+    g.collectGarbage()
+#@nonl
+#@-node:ekr.20060205050659:collectGarbage
+#@+node:ekr.20060127163325: getPublicCommands
 def getPublicCommands (self):
     
+    k = self
+
     return {
-        'clone-find-all':                       self.cloneFindAll,
-        
-        'find-tab-find':                        self.findTabFindNext,
-        'find-tab-find-prev':                   self.findTabFindPrev,
-        'find-tab-change':                      self.findTabChange,
-        'find-tab-change-all':                  self.findTabChangeAll,
-        'find-tab-change-then-find':            self.findTabChangeThenFind,
-                    
-        'hide-find-tab':                        self.hideFindTab,
-            
-        'isearch-forward':                      self.isearchForward,
-        'isearch-backward':                     self.isearchBackward,
-        'isearch-forward-regexp':               self.isearchForwardRegexp,
-        'isearch-backward-regexp':              self.isearchBackwardRegexp,
-                    
-        'open-find-tab':                        self.openFindTab,
-    
-        'replace-string':                       self.replaceString,
-                    
-        're-search-forward':                    self.reSearchForward,
-        're-search-backward':                   self.reSearchBackward,
-
-        'search-again':                         self.findAgain,
-        # Uses existing search pattern.
-        
-        'search-forward':                       self.searchForward,
-        'search-backward':                      self.searchBackward,
-        'search-with-present-options':          self.searchWithPresentOptions,
-        # Prompts for search pattern.
-
-        'set-find-everywhere':                  self.setFindScopeEveryWhere,
-        'set-find-node-only':                   self.setFindScopeNodeOnly,
-        'set-find-suboutline-only':             self.setFindScopeSuboutlineOnly,
-        
-        'show-find-options':                    self.showFindOptions,
-
-        'toggle-find-ignore-case-option':       self.toggleIgnoreCaseOption,
-        'toggle-find-in-body-option':           self.toggleSearchBodyOption,
-        'toggle-find-in-headline-option':       self.toggleSearchHeadlineOption,
-        'toggle-find-mark-changes-option':      self.toggleMarkChangesOption,
-        'toggle-find-mark-finds-option':        self.toggleMarkFindsOption,
-        'toggle-find-regex-option':             self.toggleRegexOption,
-        'toggle-find-reverse-option':           self.toggleReverseOption,
-        'toggle-find-word-option':              self.toggleWholeWordOption,
-        'toggle-find-wrap-around-option':       self.toggleWrapSearchOption,
-        
-        'word-search-forward':                  self.wordSearchForward,
-        'word-search-backward':                 self.wordSearchBackward,
+        'collect-garbage':      self.collectGarbage,
+        'disable-gc-trace':     self.disableGcTrace,
+        'dump-all-objects':     self.dumpAllObjects,
+        'dump-new-objects':     self.dumpNewObjects,
+        'enable-gc-trace':      self.enableGcTrace,
+        'free-tree-widgets':    self.freeTreeWidgets,
+        'print-stats':          self.printStats,
+        'print-gc-summary':     self.printGcSummary,
+        'verbose-dump-objects': self.verboseDumpObjects,
     }
 #@nonl
-#@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
+#@-node:ekr.20060127163325: getPublicCommands
+#@+node:ekr.20060202160523:dumpAll/New/VerboseObjects
+def dumpAllObjects (self,event=None):
+    
+    old = g.app.trace_gc
+    g.app.trace_gc = True
+    g.printGcAll()
+    g.app.trace_gc = old
+    
+def dumpNewObjects (self,event=None):
+
+    old = g.app.trace_gc
+    g.app.trace_gc = True
+    g.printGcObjects()
+    g.app.trace_gc = old
+    
+def verboseDumpObjects (self,event=None):
+    
+    old = g.app.trace_gc
+    g.app.trace_gc = True
+    g.printGcVerbose()
+    g.app.trace_gc = old
+#@-node:ekr.20060202160523:dumpAll/New/VerboseObjects
+#@+node:ekr.20060127163325.1:enable/disableGcTrace
+def disableGcTrace (self,event=None):
+    
+    g.app.trace_gc = False
+    
+def enableGcTrace (self,event=None):
+    
+    g.app.trace_gc = True
+    g.enable_gc_debug()
+#@nonl
+#@-node:ekr.20060127163325.1:enable/disableGcTrace
+#@+node:ekr.20060202154734:freeTreeWidgets
+def freeTreeWidgets (self,event=None):
+    
+    c = self.c
+    
+    c.frame.tree.destroyWidgets()
+    c.redraw()
+#@nonl
+#@-node:ekr.20060202154734:freeTreeWidgets
+#@+node:ekr.20060205043324.3:printGcSummary
+def printGcSummary (self,event=None):
+
+    g.printGcSummary()
+#@nonl
+#@-node:ekr.20060205043324.3:printGcSummary
+#@+node:ekr.20060202133313:printStats
+def printStats (self,event=None):
+    
+    c = self.c
+    c.frame.tree.showStats()
+    self.dumpAllObjects()
+#@nonl
+#@-node:ekr.20060202133313:printStats
+#@-node:ekr.20060127162818.1:class debugCommandsClass
+#@+node:ekr.20060205044935:Calls to printGcSummary
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+# New in 4.4b2: suppress scrolling by default.
+
+def redraw_now (self,scroll=False):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c
+    
+    self.redrawCount += 1
+    
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.redrawCount % 5) == 0:
+            g.printGcSummary(trace=True)
+
+    if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
+        g.trace(self.redrawCount,g.callers())
+        g.print_stats()
+        g.clear_stats()
+
+    # Do the actual redraw.
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@+node:ekr.20060127183752:masterKeyHandler
+master_key_count = 0
+
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    if not event:
+        g.trace('oops: no event') ; return
+
+    k = self ; c = k.c
+    w = event and event.widget
+    w_name = g.app.gui.widget_name(w)
+    trace = c.config.getBool('trace_masterKeyHandler')
+    keysym = event.keysym or ''
+    if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
+        return None
+        
+    self.master_key_count += 1
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
+
+    stroke = k.strokeFromEvent(event)
+
+    # Pass keyboard-quit to k.masterCommand for macro recording.
+    if k.abortAllModesKey and stroke == k.abortAllModesKey:
+        return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
+        
+    state = k.state.kind
+    if trace: g.trace(repr(stroke),'state',state)
+    if k.inState():
+        # First: honor the 'mini' bindings.
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return 'break'
+        # Second, pass keys to getArg or full-command modes if they are active.
+        if state == 'getArg':
+            return k.getArg(event)
+        elif state == 'full-command':
+            d = k.masterBindingsDict.get('mini')
+            b = d.get(stroke)
+            if b:
+                # Pass this on for macro recording.
+                k.masterCommand(event,b.func,stroke,b.commandName)
+                c.minibufferWantsFocus()
+                return 'break'
+            else:
+                # Do the default state action.
+                k.callStateFunction(event) # Calls end-command.
+                return 'break'
+        # Third, pass keys to the general mode handler.
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            # A typical state
+            b = d.get(stroke)
+            g.trace(d.keys())
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
+        else:
+            g.trace('No state dictionary for %s' % state)
+            return 'break'
+    
+    for key,name in (
+        # Order here is similar to bindtags order.
+        ('body','body'),
+        ('tree','head'), ('tree','canvas'),
+        ('log', 'log'),
+        ('text',None), ('all',None),
+    ):
+        if (
+            name and w_name.startswith(name) or
+            key == 'text' and g.app.gui.isTextWidget(w) or
+            key == 'all'
+        ):
+            d = k.masterBindingsDict.get(key)
+            # g.trace(key,name,d and len(d.keys()))
+            if d:
+                b = d.get(stroke)
+                if b:
+                    if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                    return k.masterCommand(event,b.func,b.stroke,b.commandName)
+
+    if stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1:
+        if trace: g.trace('ignoring unbound special key')
+        return 'break'
+    else:
+        if trace: g.trace(repr(stroke),'no func')
+        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+#@nonl
+#@-node:ekr.20060127183752:masterKeyHandler
+#@+node:ekr.20031218072017.2817: doCommand
+command_count = 0
+
+def doCommand (self,command,label,event=None):
+
+    """Execute the given command, invoking hooks and catching exceptions.
+    
+    The code assumes that the "command1" hook has completely handled the command if
+    g.doHook("command1") returns False.
+    This provides a simple mechanism for overriding commands."""
+    
+    c = self ; p = c.currentPosition()
+    c.setLog()
+
+    self.command_count += 1
+    if not g.app.unitTesting and (
+        c.config.getBool('trace_doCommand') or
+        c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+    ):
+        commandName = command and command.__name__
+        if (self.command_count % 10) == 0:
+            w = c.get_focus() ; wname = c.widget_name(w)
+            g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
+        else:
+            g.trace(commandName)
+
+    # The presence of this message disables all commands.
+    if c.disableCommandsMessage:
+        g.es(c.disableCommandsMessage,color='blue')
+        return 'break' # Inhibit all other handlers.
+
+    if label and event is None: # Do this only for legacy commands.
+        if label == "cantredo": label = "redo"
+        if label == "cantundo": label = "undo"
+        g.app.commandName = label
+
+    if not g.doHook("command1",c=c,p=p,v=p,label=label):
+        try:
+            c.inCommand = True
+            val = command(event)
+            c.inCommand = False
+            if c and c.exists: # Be careful: the command could destroy c.
+                c.k.funcReturn = val
+        except:
+            c.inCommand = False
+            if g.app.unitTesting:
+                raise
+            else:
+                g.es("exception executing command")
+                print "exception executing command"
+                g.es_exception(c=c)
+                if c and c.exists and hasattr(c,'frame'):
+                    c.redraw_now()
+                    
+        if c and c.exists and c.requestCloseWindow:
+            g.trace('Closing window after command')
+            c.requestCloseWindow = False
+            g.app.closeLeoWindow(c.frame)
+
+    # Be careful: the command could destroy c.
+    if c and c.exists:
+        p = c.currentPosition()
+        g.doHook("command2",c=c,p=p,v=p,label=label)
+            
+    return "break" # Inhibit all other handlers.
+#@nonl
+#@-node:ekr.20031218072017.2817: doCommand
+#@-node:ekr.20060205044935:Calls to printGcSummary
+#@+node:ekr.20031218072017.4039:class leoTkinterLog
+class leoTkinterLog (leoFrame.leoLog):
+    
+    """A class that represents the log pane of a Tkinter window."""
+
+    @others
+#@nonl
+#@+node:ekr.20051016095907:tkLog Birth
+#@+node:ekr.20031218072017.4040:tkLog.__init__
+def __init__ (self,frame,parentFrame):
+    
+    # g.trace("leoTkinterLog")
+    
+    self.c = c = frame.c # Also set in the base constructor, but we need it here.
+    
+    self.colorTags = []
+        # The list of color names used as tags in present tab.
+        # This gest switched by selectTab.
+
+    self.wrap = g.choose(c.config.getBool('log_pane_wraps'),"word","none")
+    
+    # New in 4.4a2: The log pane is a Pmw.Notebook...
+
+    self.nb = None      # The Pmw.Notebook that holds all the tabs.
+    self.colorTagsDict = {} # Keys are page names.  Values are saved colorTags lists.
+    self.frameDict = {}  # Keys are page names. Values are Tk.Frames.
+    self.logNumber = 0 # To create unique name fields for Tk.Text widgets.
+    self.menu = None # A menu that pops up on right clicks in the hull or in tabs.
+    self.textDict = {}  # Keys are page names. Values are Tk.Text widgets.
+    self.newTabCount = 0 # Number of new tabs created.
+    
+    # Official status variables.  Can be used by client code.
+    self.tabName = None # The name of the active tab.
+    self.logCtrl = None # Same as self.textDict.get(self.tabName)
+    self.tabFrame = None # Same as self.frameDict.get(self.tabName)
+    
+    # Call the base class constructor and calls createControl.
+    leoFrame.leoLog.__init__(self,frame,parentFrame)
+#@-node:ekr.20031218072017.4040:tkLog.__init__
+#@+node:ekr.20031218072017.4042:tkLog.createControl
+def createControl (self,parentFrame):
+
+    c = self.c
+
+    self.nb = Pmw.NoteBook(parentFrame,
+        borderwidth = 1, pagemargin = 0,
+        raisecommand = self.raiseTab,
+        lowercommand = self.lowerTab,
+        arrownavigation = 0,
+    )
+
+    menu = self.makeTabMenu(tabName=None)
+
+    def hullMenuCallback(event):
+        self.onRightClick(event,menu)
+
+    self.nb.bind('<Button-3>',hullMenuCallback)
+
+    self.nb.pack(fill='both',expand=1)
+    self.selectTab('Log') # create the tab and make it the active tab.
+    return self.logCtrl
+#@nonl
+#@-node:ekr.20031218072017.4042:tkLog.createControl
+#@+node:ekr.20051016103459:tkLog.createTextWidget
+def createTextWidget (self,parentFrame):
+    
+    self.logNumber += 1
+    log = Tk.Text(parentFrame,name="log-%d" % self.logNumber,
+        setgrid=0,wrap=self.wrap,bd=2,bg="white",relief="flat")
+    
+    logBar = Tk.Scrollbar(parentFrame,name="logBar")
+
+    log['yscrollcommand'] = logBar.set
+    logBar['command'] = log.yview
+    
+    logBar.pack(side="right", fill="y")
+    # rr 8/14/02 added horizontal elevator 
+    if self.wrap == "none": 
+        logXBar = Tk.Scrollbar( 
+            parentFrame,name='logXBar',orient="horizontal") 
+        log['xscrollcommand'] = logXBar.set 
+        logXBar['command'] = log.xview 
+        logXBar.pack(side="bottom", fill="x")
+    log.pack(expand=1, fill="both")
+
+    return log
+#@nonl
+#@-node:ekr.20051016103459:tkLog.createTextWidget
+#@+node:ekr.20051019134106.1:tkLog.makeTabMenu
+def makeTabMenu (self,tabName=None):
+
+    '''Create a tab popup menu.'''
+
+    c = self.c
+    hull = self.nb.component('hull') # A Tk.Canvas.
+    
+    menu = Tk.Menu(hull,tearoff=0)
+    menu.add_command(label='New Tab',command=self.newTabFromMenu)
+    
+    if tabName:
+        # Important: tabName is the name when the tab is created.
+        # It is not affected by renaming, so we don't have to keep
+        # track of the correspondence between this name and what is in the label.
+        def deleteTabCallback():
+            self.deleteTab(tabName)
+            
+        label = g.choose(
+            tabName in ('Find','Spell'),'Hide This Tab','Delete This Tab')
+        menu.add_command(label=label,command=deleteTabCallback)
+ 
+        def renameTabCallback():
+            self.renameTabFromMenu(tabName)
+
+        menu.add_command(label='Rename This Tab',command=renameTabCallback)
+
+    return menu
+#@nonl
+#@-node:ekr.20051019134106.1:tkLog.makeTabMenu
+#@-node:ekr.20051016095907:tkLog Birth
+#@+node:ekr.20051016095907.1:Config & get/saveState
+#@+node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
+def configureBorder(self,border):
+    
+    self.logCtrl.configure(bd=border)
+    
+def configureFont(self,font):
+
+    self.logCtrl.configure(font=font)
+#@nonl
+#@-node:ekr.20031218072017.4041:tkLog.configureBorder & configureFont
+#@+node:ekr.20031218072017.4043:tkLog.getFontConfig
+def getFontConfig (self):
+
+    font = self.logCtrl.cget("font")
+    # g.trace(font)
+    return font
+#@nonl
+#@-node:ekr.20031218072017.4043:tkLog.getFontConfig
+#@+node:ekr.20041222043017:tkLog.restoreAllState
+def restoreAllState (self,d):
+    
+    '''Restore the log from a dict created by saveAllState.'''
+    
+    logCtrl = self.logCtrl
+
+    # Restore the text.
+    text = d.get('text')
+    logCtrl.insert('end',text)
+
+    # Restore all colors.
+    colors = d.get('colors')
+    for color in colors.keys():
+        if color not in self.colorTags:
+            self.colorTags.append(color)
+            logCtrl.tag_config(color,foreground=color)
+        items = list(colors.get(color))
+        while items:
+            start,stop = items[0],items[1]
+            items = items[2:]
+            logCtrl.tag_add(color,start,stop)
+#@nonl
+#@-node:ekr.20041222043017:tkLog.restoreAllState
+#@+node:ekr.20041222043017.1:tkLog.saveAllState
+def saveAllState (self):
+    
+    '''Return a dict containing all data needed to recreate the log in another widget.'''
+    
+    logCtrl = self.logCtrl ; colors = {}
+
+    # Save the text
+    text = logCtrl.get('1.0','end')
+
+    # Save color tags.
+    tag_names = logCtrl.tag_names()
+    for tag in tag_names:
+        if tag in self.colorTags:
+            colors[tag] = logCtrl.tag_ranges(tag)
+            
+    d = {'text':text,'colors': colors}
+    # g.trace('\n',g.dictToString(d))
+    return d
+#@nonl
+#@-node:ekr.20041222043017.1:tkLog.saveAllState
+#@+node:ekr.20041217135735.2:tkLog.setColorFromConfig
+def setColorFromConfig (self):
+    
+    c = self.c
+    
+    bg = c.config.getColor("log_pane_background_color") or 'white'
+    
+    try:
+        self.logCtrl.configure(bg=bg)
+    except:
+        g.es("exception setting log pane background color")
+        g.es_exception()
+#@nonl
+#@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
+#@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
+def SetWidgetFontFromConfig (self,logCtrl=None):
+
+    c = self.c
+
+    if not logCtrl: logCtrl = self.logCtrl
+
+    font = c.config.getFontFromParams(
+        "log_text_font_family", "log_text_font_size",
+        "log_text_font_slant", "log_text_font_weight",
+        c.config.defaultLogFontSize)
+
+    self.fontRef = font # ESSENTIAL: retain a link to font.
+    logCtrl.configure(font=font)
+
+    # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
+
+    bg = c.config.getColor("log_text_background_color")
+    if bg:
+        try: logCtrl.configure(bg=bg)
+        except: pass
+
+    fg = c.config.getColor("log_text_foreground_color")
+    if fg:
+        try: logCtrl.configure(fg=fg)
+        except: pass
+        
+setFontFromConfig = SetWidgetFontFromConfig # Renaming supresses a pychecker warning.
+#@nonl
+#@-node:ekr.20031218072017.4046:tkLog.setFontFromConfig
+#@-node:ekr.20051016095907.1:Config & get/saveState
+#@+node:ekr.20051016095907.2:Focus & update (tkLog)
+#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
+def onActivateLog (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    try:
+        self.c.setLog()
+        self.frame.tree.OnDeactivate()
+        self.c.logWantsFocus()
+    except:
+        g.es_event_exception("activate log")
+#@nonl
+#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
+#@+node:ekr.20031218072017.4044:tkLog.hasFocus
+def hasFocus (self):
+    
+    return self.c.get_focus() == self.logCtrl
+#@nonl
+#@-node:ekr.20031218072017.4044:tkLog.hasFocus
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.logCtrl.update_idletasks()
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@-node:ekr.20051016095907.2:Focus & update (tkLog)
+#@+node:ekr.20051016101927:put & putnl (tkLog)
+@ Printing uses self.logCtrl, so this code need not concern itself
+with which tab is active.
+
+Also, selectTab switches the contents of colorTags, so that is not concern.
+It may be that Pmw will allow us to dispense with the colorTags logic...
+#@nonl
+#@+node:ekr.20031218072017.1473:put
+# All output to the log stream eventually comes here.
+def put (self,s,color=None,tabName='Log'):
+    
+    c = self.c
+    
+    # print 'tkLog.put',self.c.shortFileName(),tabName,g.callers()
+
+    if g.app.quitting or not c or not c.exists:
+        return
+
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
+        << put s to log control >>
+    else:
+        << put s to logWaiting and print s >>
+#@nonl
+#@+node:EKR.20040423082910:<< put s to log control >>
+# New in 4.4b1: Restore the focus to a standard place.
+focus_widget = c.get_focus()
+name = g.app.gui.widget_name(focus_widget)
+for kind in ('body','head','canvas'):
+    if name.startswith(kind): break
+else:
+    focus_widget = c.frame.body.bodyCtrl
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+self.forceLogUpdate(s)
+c.widgetWantsFocus(focus_widget)
+#@-node:EKR.20040423082910:<< put s to log control >>
+#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+
+if type(s) == type(u""):
+    s = g.toEncodedString(s,"ascii")
+
+print s
+#@nonl
+#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+#@-node:ekr.20031218072017.1473:put
+#@+node:ekr.20051016101927.1:putnl
+def putnl (self,tabName='Log'):
+
+    if g.app.quitting:
+        return
+    if tabName:
+        self.selectTab(tabName)
+    
+    if self.logCtrl:
+        self.logCtrl.insert("end",'\n')
+        self.logCtrl.see("end")
+        self.forceLogUpdate('\n')
+    else:
+        # Put a newline to logWaiting and print newline
+        g.app.logWaiting.append(('\n',"black"),)
+        print "Null tkinter log"
+        print
+#@-node:ekr.20051016101927.1:putnl
+#@-node:ekr.20051016101927:put & putnl (tkLog)
+#@+node:ekr.20051018061932:Tab (TkLog)
+#@+node:ekr.20051017212057:clearTab
+def clearTab (self,tabName):
+    
+    self.selectTab(tabName)
+    t = self.logCtrl
+    if t:
+        t.delete('1.0','end')
+        # Necessary to allow focus to move *out* of t.
+        t.update()
+#@nonl
+#@-node:ekr.20051017212057:clearTab
+#@+node:ekr.20051024173701:createTab
+def createTab (self,tabName):
+    
+    c = self.c ; k = c.k
+    tabFrame = self.nb.add(tabName)
+    self.menu = self.makeTabMenu(tabName)
+    << Create the tab's text widget >>
+
+    if tabName != 'Log':
+        # c.k doesn't exist when the log pane is created.
+        # k.makeAllBindings will call setTabBindings('Log')
+        self.setTabBindings(tabName)
+    
+    # New in 4.4b1: call update explicitly.
+    t and t.update()
+#@nonl
+#@+node:ekr.20051018072306:<< Create the tab's text widget >>
+t = self.createTextWidget(tabFrame)
+
+# Set the background color.
+configName = 'log_pane_%s_tab_background_color' % tabName
+bg = c.config.getColor(configName) or 'MistyRose1'
+try: t.configure(bg=bg)
+except Exception: pass # Could be a user error.
+
+self.SetWidgetFontFromConfig(logCtrl=t)
+
+self.frameDict [tabName] = tabFrame
+self.textDict [tabName] = t
+
+# Switch to a new colorTags list.
+if self.tabName:
+    self.colorTagsDict [self.tabName] = self.colorTags [:]
+
+self.colorTags = ['black']
+self.colorTagsDict [tabName] = self.colorTags
+#@nonl
+#@-node:ekr.20051018072306:<< Create the tab's text widget >>
+#@-node:ekr.20051024173701:createTab
+#@+node:ekr.20051018102027:deleteTab
+def deleteTab (self,tabName):
+    
+    if tabName == 'Log':
+        pass
+
+    elif tabName in ('Find','Spell'):
+        self.selectTab('Log')
+    
+    elif tabName in self.nb.pagenames():
+        self.nb.delete(tabName)
+        self.colorTagsDict [tabName] = []
+        self.textDict [tabName] = None
+        self.frameDict [tabName] = None
+        self.tabName = None
+        self.selectTab('Log')
+        
+    # New in Leo 4.4b1.
+    self.c.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051018102027:deleteTab
+#@+node:ekr.20060204124347:hideTab
+def hideTab (self,tabName):
+    
+    __pychecker__ = '--no-argsused' # tabName
+    
+    self.selectTab('Log')
+#@nonl
+#@-node:ekr.20060204124347:hideTab
+#@+node:ekr.20051027114433:getSelectedTab
+def getSelectedTab (self):
+    
+    return self.tabName
+#@nonl
+#@-node:ekr.20051027114433:getSelectedTab
+#@+node:ekr.20051018061932.1:lower/raiseTab
+def lowerTab (self,tabName):
+    
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='grey80')
+        
+        # New in 4.4b1: call update explicitly.
+        logCtrl = self.textDict.get(tabName)
+        logCtrl and logCtrl.update()
+        self.c.bodyWantsFocus()
+
+def raiseTab (self,tabName):
+
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='LightSteelBlue1')
+        
+        # New in 4.4b1: call update explicitly.
+        logCtrl = self.textDict.get(tabName)
+        if logCtrl:
+            logCtrl.update()
+            self.c.widgetWantsFocus(logCtrl)
+#@nonl
+#@-node:ekr.20051018061932.1:lower/raiseTab
+#@+node:ekr.20051019170806:renameTab
+def renameTab (self,oldName,newName):
+    
+    label = self.nb.tab(oldName)
+    label.configure(text=newName)
+#@nonl
+#@-node:ekr.20051019170806:renameTab
+#@+node:ekr.20051016101724.1:selectTab
+def selectTab (self,tabName):
+
+    '''Create the tab if necessary and make it active.'''
+
+    c = self.c ; tabFrame = self.frameDict.get(tabName)
+
+    if tabFrame:
+        # Switch to a new colorTags list.
+        newColorTags = self.colorTagsDict.get(tabName)
+        self.colorTagsDict [self.tabName] = self.colorTags [:]
+        self.colorTags = newColorTags
+    else:
+        self.createTab(tabName)
+        
+    self.nb.selectpage(tabName)
+    # Update the status vars.
+    self.tabName = tabName
+    self.logCtrl = self.textDict.get(tabName)
+    self.tabFrame = self.frameDict.get(tabName)
+    
+    # New in 4.4b1: call update *after* creating the tab.
+    tabFrame and tabFrame.update()
+
+    return tabFrame
+#@nonl
+#@-node:ekr.20051016101724.1:selectTab
+#@+node:ekr.20051022162730:setTabBindings
+def setTabBindings (self,tabName):
+    
+    c = self.c ; k = c.k
+    tab = self.nb.tab(tabName)
+    text = self.textDict.get(tabName)
+    
+    if 1:
+        def tabMenuRightClickCallback(event,menu=self.menu):
+            self.onRightClick(event,menu)
+            
+        def tabMenuClickCallback(event,tabName=tabName):
+            self.onClick(event,tabName)
+    
+        for kind,handler in (
+            ('<Key>',k.masterKeyHandler),
+            ('<Button-1>',tabMenuClickCallback),
+            ('<Button-3>',tabMenuRightClickCallback),
+        ):
+            text.bind(kind,handler)
+
+    else:
+    
+        # Send all event in the text area to the master handlers.
+        for kind,handler in (
+            ('<Key>',               k.masterKeyHandler),
+            ('<Button-1>',          k.masterClickHandler),
+            ('<Button-3>',          k.masterClick3Handler),
+        ):
+            text.bind(kind,handler)
+        
+        # Clicks in the tab area are harmless: use the old code.
+        def tabMenuRightClickCallback(event,menu=self.menu):
+            self.onRightClick(event,menu)
+            
+        def tabMenuClickCallback(event,tabName=tabName):
+            self.onClick(event,tabName)
+        
+        tab.bind('<Button-1>',tabMenuClickCallback)
+        tab.bind('<Button-3>',tabMenuRightClickCallback)
+#@nonl
+#@-node:ekr.20051022162730:setTabBindings
+#@+node:ekr.20051019134106:Tab menu callbacks & helpers
+#@+node:ekr.20051019134422:onRightClick & onClick
+def onRightClick (self,event,menu):
+    
+    c = self.c
+    menu.post(event.x_root,event.y_root)
+    
+    
+def onClick (self,event,tabName):
+
+    self.selectTab(tabName)
+#@nonl
+#@-node:ekr.20051019134422:onRightClick & onClick
+#@+node:ekr.20051019140004.1:newTabFromMenu
+def newTabFromMenu (self,tabName='Log'):
+
+    self.selectTab(tabName)
+    
+    # This is called by getTabName.
+    def selectTabCallback (newName):
+        self.selectTab(newName)
+
+    self.getTabName(selectTabCallback)
+#@nonl
+#@-node:ekr.20051019140004.1:newTabFromMenu
+#@+node:ekr.20051019165401:renameTabFromMenu
+def renameTabFromMenu (self,tabName):
+
+    if tabName in ('Log','Completions'):
+        g.es('can not rename %s tab' % (tabName),color='blue')
+    else:
+        def renameTabCallback (newName):
+            self.renameTab(tabName,newName)
+
+        self.getTabName(renameTabCallback)
+#@nonl
+#@-node:ekr.20051019165401:renameTabFromMenu
+#@+node:ekr.20051019172811:getTabName
+def getTabName (self,exitCallback):
+    
+    canvas = self.nb.component('hull')
+
+    # Overlay what is there!
+    f = Tk.Frame(canvas)
+    f.pack(side='top',fill='both',expand=1)
+    
+    row1 = Tk.Frame(f)
+    row1.pack(side='top',expand=0,fill='x',pady=10)
+    row2 = Tk.Frame(f)
+    row2.pack(side='top',expand=0,fill='x')
+
+    Tk.Label(row1,text='Tab name').pack(side='left')
+
+    e = Tk.Entry(row1,background='white')
+    e.pack(side='left')
+
+    def getNameCallback (event=None):
+        s = e.get().strip()
+        f.pack_forget()
+        if s: exitCallback(s)
+        
+    def closeTabNameCallback (event=None):
+        f.pack_forget()
+        
+    b = Tk.Button(row2,text='Ok',width=6,command=getNameCallback)
+    b.pack(side='left',padx=10)
+    
+    b = Tk.Button(row2,text='Cancel',width=6,command=closeTabNameCallback)
+    b.pack(side='left')
+
+    e.focus_force()
+    e.bind('<Return>',getNameCallback)
+#@nonl
+#@-node:ekr.20051019172811:getTabName
+#@-node:ekr.20051019134106:Tab menu callbacks & helpers
+#@-node:ekr.20051018061932:Tab (TkLog)
+#@-node:ekr.20031218072017.4039:class leoTkinterLog
+#@+node:ekr.20031218072017.2373:set_focus (app.gui)
+set_focus_count = 0
+
+def set_focus(self,c,w):
+    
+    __pychecker__ = '--no-argsused' # c not used at present.
+    
+    """Put the focus on the widget."""
+    
+    if 0: # Big trace if we have unexpected focus.
+        w2 = c.frame.outerFrame.focus_get()
+        wname = g.app.gui.widget_name(w2)
+        for s in ('canvas','log','mini','body','head'):
+            if wname.startswith(s): break
+        else:
+            if w2:
+                g.trace('*'*40,'Previous widget',wname)
+                g.trace(repr(w2),g.callers())
+    
+    if w:
+        if c.config.getBool('trace_g.app.gui.set_focus'):
+            self.set_focus_count += 1
+            g.trace('%4d' % (self.set_focus_count),
+                g.app.gui.widget_name(w),g.callers())
+
+        if 1:
+            # A fix to the cursed problems with Pmw.Notebook.
+            # I am not happy with this, but it seems preferable to trying to figure out
+            # all the places where the code must call update()
+            
+            # New in 4.4b1: the place to call update is *after* log pane operations.
+            w.update()
+            
+        try:
+            # It's possible that the widget doesn't exist now.
+            # It's easiest not to care.
+            w.focus_set()
+        except Exception:
+            g.es_exception()
+            pass
+#@nonl
+#@-node:ekr.20031218072017.2373:set_focus (app.gui)
 #@+node:ekr.20051023094009:Search classes
 #@+node:ekr.20060123125256:class minibufferFind
 class minibufferFind:
@@ -28904,7 +29786,7 @@ def setFindScope(self,where):
 #@nonl
 #@-node:ekr.20060124123133:setFindScope
 #@+node:ekr.20060124122844:setOption
-def setOption (self, ivar, val, verbose = True):
+def setOption (self, ivar, val, verbose = False):
     
     h = self.finder
 
@@ -28990,7 +29872,7 @@ def toggleOption (self, ivar):
         var = h.dict.get(ivar)
         val = not var.get()
         var.set(val)
-        # g.trace('%s = %s' % (ivar,val))
+        # g.trace('%s = %s' % (ivar,val),var)
     else:
         g.trace('oops: bad find ivar %s' % ivar)
 #@nonl
@@ -29019,6 +29901,19 @@ def setupArgs (self,forward=False,regexp=False,word=False):
     self.showFindOptions()
 #@nonl
 #@-node:ekr.20060124134356:setupArgs
+#@+node:ekr.20060205105950:setupChangePattern
+def setupChangePattern (self,pattern):
+    
+    h = self.finder ; t = h.change_ctrl
+    
+    s = g.toUnicode(pattern,g.app.tkEncoding)
+    
+    t.delete('1.0','end')
+    t.insert('1.0',s)
+    
+    h.update_ivars()
+#@nonl
+#@-node:ekr.20060205105950:setupChangePattern
 #@+node:ekr.20060125091234:setupSearchPattern
 def setupSearchPattern (self,pattern):
     
@@ -29079,6 +29974,21 @@ def generalSearchHelper (self,pattern,cloneFindAll=False):
         self.finder.findNextCommand()
 #@nonl
 #@-node:ekr.20060124181213.4:generalSearchHelper
+#@+node:ekr.20060205105950.1:generalChangeHelper
+def generalChangeHelper (self,find_pattern,change_pattern):
+    
+    g.trace(repr(change_pattern))
+    
+    self.setupSearchPattern(find_pattern)
+    self.setupChangePattern(change_pattern)
+
+    self.finder.p = self.c.currentPosition()
+    self.finder.v = self.finder.p.v
+
+    # This handles the reverse option.
+    self.finder.findNextCommand()
+#@nonl
+#@-node:ekr.20060205105950.1:generalChangeHelper
 #@+node:ekr.20060124140224.1:seachForward/Backward
 def searchBackward (self,event):
 
@@ -29191,11 +30101,11 @@ def searchWithPresentOptions (self,event):
 def replaceString (self,event):
 
     k = self.k ; state = k.getState('replace-string')
-    prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
+    pattern_match = self.getOption ('pattern_match')
+    prompt = 'Replace ' + g.choose(pattern_match,'Regex','String')
 
     if state == 0:
         self.widget = event.widget
-        self._sString = self._rpString = ''
         s = '%s: ' % prompt
         k.setLabelBlue(s,protect=True)
         k.getArg(event,'replace-string',1,self.replaceString)
@@ -29206,10 +30116,16 @@ def replaceString (self,event):
         k.getArg(event,'replace-string',2,self.replaceString)
     elif state == 2:
         k.clearState()
-        self._rpString = k.arg ; w = self.widget
-        << do the replace >>
-        k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
-        self._useRegex = False
+        if 1: # Use the legacy find command.
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalChangeHelper(self._sString,k.arg)
+        else:
+            self._rpString = k.arg ; w = self.widget
+            << do the replace >>
+            k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
+            self._useRegex = False
 #@nonl
 #@+node:ekr.20050920084036.114:<< do the replace >>
 # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
@@ -29361,11 +30277,18 @@ cpane.pack(anchor="s", expand=1, fill="x")
 flab = Tk.Label(fpane, width=8, text="Find:",background=bg)
 clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
 
-# Use bigger boxes for scripts.
-self.find_ctrl = ftxt = Tk.Text(
-    fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
-self.change_ctrl = ctxt = Tk.Text(
-    cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
+if self.optionsOnly:
+    # Use one-line boxes.
+    self.find_ctrl = ftxt = Tk.Text(
+        fpane,bd=1,relief="groove",height=1,width=25,name='find-text')
+    self.change_ctrl = ctxt = Tk.Text(
+        cpane,bd=1,relief="groove",height=1,width=25,name='change-text')
+else:
+    # Use bigger boxes for scripts.
+    self.find_ctrl = ftxt = Tk.Text(
+        fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
+    self.change_ctrl = ctxt = Tk.Text(
+        cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
 << Bind Tab and control-tab >>
 
 if 0: # Add scrollbars.
@@ -29377,16 +30300,17 @@ if 0: # Add scrollbars.
         bar['command'] = txt.yview
         bar.pack(side="right", fill="y")
         
-if not self.optionsOnly:
-    flab.pack(side="left")
-    clab.pack(side="left")
-    ctxt.pack(side="right", expand=1, fill="x") 
-    ftxt.pack(side="right", expand=1, fill="x")
+if self.optionsOnly:
+    flab.pack(side="left") ; ftxt.pack(side="left")
+    clab.pack(side="left") ; ctxt.pack(side="left")
+else:
+    flab.pack(side="left") ; ftxt.pack(side="right", expand=1, fill="x")
+    clab.pack(side="left") ; ctxt.pack(side="right", expand=1, fill="x")
 #@nonl
 #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
 def setFocus(w):
     c = self.c
-    c.frame.widgetWantsFocus(w)
+    c.widgetWantsFocus(w)
     g.app.gui.setSelectionRange(w,"1.0","1.0")
     return "break"
     
@@ -29424,35 +30348,29 @@ for i in xrange(numberOfColumns):
 
 for i in xrange(numberOfColumns):
     columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
-    
-# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
 
-radioLists[0] = [
-    #(self.dict["radio-find-type"],"P&Lain Search","plain-search"),  
-    #(self.dict["radio-find-type"],"&Pattern Match Search","pattern-search"),
-    # (self.dict["radio-find-type"],"&Script Search","script-search"),
-]
+radioLists[0] = []
+
 checkLists[0] = [
     # ("Scrip&t Change",self.dict["script_change"]),
-    ("Whole Word",      self.dict["whole_word"]),
-    ("Ignore Case",     self.dict["ignore_case"]),
-    ("Wrap &Around",     self.dict["wrap"]),
-    ("Reverse",         self.dict["reverse"]),
-    ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
-    ("Mark Finds",      self.dict["mark_finds"]),
+    ("Whole &Word", self.dict["whole_word"]),
+    ("&Ignore Case",self.dict["ignore_case"]),
+    ("Wrap &Around",self.dict["wrap"]),
+    ("&Reverse",    self.dict["reverse"]),
+    ('Rege&xp',     self.dict['pattern_match']),
+    ("Mark &Finds", self.dict["mark_finds"]),
 ]
 
 radioLists[1] = [
-    (self.dict["radio-search-scope"],"Entire Outline","entire-outline"),
-    (self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
-    (self.dict["radio-search-scope"],"Node Only","node-only"),
+    (self.dict["radio-search-scope"],"&Entire Outline","entire-outline"),
+    (self.dict["radio-search-scope"],"&Suboutline Only","suboutline-only"),  
+    (self.dict["radio-search-scope"],"&Node Only","node-only"),
 ]
 
 checkLists[1] = [
-    ("Search Headline", self.dict["search_headline"]),
-    ("Search Body",     self.dict["search_body"]),
-    ("Mark &Changes",   self.dict["mark_changes"]),
-    # ('Show Context',    self.dict['batch']),
+    ("Search &Headline", self.dict["search_headline"]),
+    ("Search &Body",     self.dict["search_body"]),
+    ("Mark &Changes",    self.dict["mark_changes"]),
 ]
 
 for i in xrange(numberOfColumns):
@@ -29556,7 +30474,8 @@ found = False
 for var,setting in (
     ("suboutline_only","suboutline-only"),
     ("node_only","node-only"),
-    ("selection_only","selection-only")): # 11/9/03
+    # ("selection_only","selection-only")
+):
     val = self.dict[var].get()
     if val:
         self.dict["radio-search-scope"].set(setting)
@@ -29577,18 +30496,19 @@ def update_ivars (self):
 
     for key in self.intKeys:
         val = self.dict[key].get()
-        setattr(self, key, val) # No more _flag hack.
+        setattr(self, key, val)
         # g.trace(key,val)
 
     # Set ivars from radio buttons. Convert these to 1 or 0.
-    find_type = self.dict["radio-find-type"].get()
-    self.pattern_match = g.choose(find_type == "pattern-search",1,0)
-    self.script_search = g.choose(find_type == "script-search",1,0)
+    if 0: ####
+        find_type = self.dict["radio-find-type"].get()
+        self.pattern_match = g.choose(find_type == "pattern-search",1,0)
+        self.script_search = g.choose(find_type == "script-search",1,0)
 
     search_scope = self.dict["radio-search-scope"].get()
     self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
     self.node_only       = g.choose(search_scope == "node-only",1,0)
-    self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
+    # self.selection       = g.choose(search_scope == "selection-only",1,0)
 
     # New in 4.3: The caller is responsible for removing most trailing cruft.
     # Among other things, this allows Leo to search for a single trailing space.
@@ -29676,7 +30596,7 @@ def hideTab (self,event=None):
     c = self.c
     
     c.frame.log.selectTab('Log')
-    c.frame.bodyWantsFocus()
+    c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051020120306.25:hideTab
 #@+node:ekr.20051020120306.26:bringToFront
@@ -29687,7 +30607,7 @@ def bringToFront (self):
     c = self.c ; t = self.find_ctrl
         
     # The widget must have focus before we can adjust the text.
-    c.frame.widgetWantsFocus(t)
+    c.widgetWantsFocus(t)
     
     # Delete one trailing newline.
     s = t.get('1.0','end')
@@ -29698,7 +30618,7 @@ def bringToFront (self):
     g.app.gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
     
     # This is also needed.
-    c.frame.widgetWantsFocus(t)
+    c.widgetWantsFocus(t)
 #@nonl
 #@-node:ekr.20051020120306.26:bringToFront
 #@+node:ekr.20051020120306.27:selectAllFindText
@@ -29886,8 +30806,10 @@ def getPublicCommands (self):
 def openFindTab (self,event=None,show=True):
 
     c = self.c ; log = c.frame.log ; tabName = 'Find'
+    
+    wasOpen = log.frameDict.get(tabName)
 
-    if log.frameDict.get(tabName):
+    if wasOpen:
         log.selectTab(tabName)
     else:
         log.selectTab(tabName)
@@ -29896,7 +30818,7 @@ def openFindTab (self,event=None,show=True):
         t.pack_forget()
         self.findTabHandler = findTab(c,f)
 
-    if show or c.config.getBool('minibufferSearchesShowFindTab'):
+    if show or wasOpen or c.config.getBool('minibufferSearchesShowFindTab'):
         self.findTabHandler.bringToFront()
     else:
         log.hideTab(tabName)
@@ -29954,9 +30876,10 @@ def getHandler(self,show=False):
     
     c = self.c
     
-    if not self.findTabHandler:
-        self.openFindTab(show=show) # sets self.findTabHandler.
-
+    self.openFindTab(show=show)
+        # sets self.findTabHandler,
+        # but *not* minibufferFindHandler.
+    
     if not self.minibufferFindHandler:
         self.minibufferFindHandler = minibufferFind(c,self.findTabHandler)
 
@@ -30040,7 +30963,7 @@ def startIncremental (self,event,forward,regexp):
     self.regexp = regexp
     k.setLabelBlue('isearch: ',protect=True)
     k.setState('isearch',1,handler=self.iSearchStateHandler)
-    c.frame.minibufferWantsFocus()
+    c.minibufferWantsFocus()
 #@nonl
 #@-node:ekr.20050920084036.262:startIncremental
 #@+node:ekr.20050920084036.264:iSearchStateHandler & helper
@@ -30057,7 +30980,7 @@ def iSearchStateHandler (self,event):
     ch = event.char
     if keysym == 'Control_L': return
     
-    c.frame.bodyWantsFocus()
+    c.bodyWantsFocus()
     
     # g.trace('keysym',keysym,'stroke',k.stroke)
     
@@ -30162,8 +31085,201 @@ def endSearch (self,i,j):
 #@-node:ekr.20050920084036.261:incremental search...
 #@-node:ekr.20050920084036.257:class searchCommandsClass
 #@-node:ekr.20051023094009:Search classes
-#@-node:ekr.20060204114505:(search-again)
+#@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+@
+**Important** These methods ensure that exactly zero or one (depending on the
+argument to endUpdate) redraws exist within the section of code bounded by
+c.beginUpdate and c.endUpdate. This greatly simplifies and clarifies the code.
+
+Callers should ensure that every beginUpdate is matched with an endUpdate by
+using the following pattern:
+    c.beginUpdate()
+    try:
+        << whatever >>
+    finally:
+        c.endUpdate()
+@c
+
+def beginUpdate(self):
+    
+    '''Suppress redraws of the tree (except for explict calls to c.redraw_now)
+    until the matching call to endUpdate.'''
+    
+    c = self
+    c.frame.tree.beginUpdate()
+    
+def endUpdate(self,flag=True,scroll=False):
+    
+    '''Redraw the screen if flag is True.'''
+
+    c = self
+    c.frame.tree.endUpdate(flag,scroll=scroll)
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@+node:ekr.20031218072017.2951:c.bringToFront
+def bringToFront(self):
+
+    self.frame.deiconify()
+
+BringToFront = bringToFront # Compatibility with old scripts
+#@nonl
+#@-node:ekr.20031218072017.2951:c.bringToFront
+#@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
+def recolor(self):
+
+    c = self
+    c.frame.body.recolor(c.currentPosition())
+    
+def requestRecolor (self):
+    
+    c = self
+    c.frame.requestRecolorFlag = True
+#@nonl
+#@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
+#@+node:ekr.20051216171520:c.recolor_now
+def recolor_now(self,p=None,incremental=False):
+
+    c = self
+    if p is None:
+        p = c.currentPosition()
+
+    c.frame.body.colorizer.colorize(p,incremental)
+#@nonl
+#@-node:ekr.20051216171520:c.recolor_now
+#@+node:ekr.20031218072017.2954:c.redraw_now
+def redraw_now (self):
+    
+    c = self
+    
+    if g.app.quitting or not c.exists or not hasattr(c.frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    c.frame.tree.redraw_now()
+    c.frame.top.update_idletasks()
+    
+    if c.frame.requestRecolorFlag:
+        c.frame.requestRecolorFlag = False
+        c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now
+#@nonl
+#@-node:ekr.20031218072017.2954:c.redraw_now
+#@+node:ekr.20060205103842:c.set_focus and c.get_focus
+def get_focus (self):
+    
+    c = self
+    
+    return g.app.gui.get_focus(c)
+    
+def set_focus (self,widget):
+    
+    c = self
+    
+    g.app.gui.set_focus(c,widget)
+#@nonl
+#@-node:ekr.20060205103842:c.set_focus and c.get_focus
+#@+node:ekr.20060205111103:c.widget_name
+def widget_name (self,widget):
+    
+    c = self
+    
+    return c.gui.widget_name(widget)
+#@nonl
+#@-node:ekr.20060205111103:c.widget_name
+#@+node:ekr.20050120092028:c.xWantsFocus
+def bodyWantsFocus(self):
+    c = self ; w = c.frame.body and c.frame.body.bodyCtrl
+    w and c.set_focus(w)
+        
+def headlineWantsFocus(self,p):
+    c = self ; w = p and p.edit_widget()
+    w and c.set_focus(w)
+    
+def logWantsFocus(self):
+    c = self ; w = self.frame.log and self.frame.log.logCtrl
+    w and c.set_focus(w)
+
+def minibufferWantsFocus(self):
+    c = self ; k = c.k
+    # Let the key handler figure out what to do.
+    k and k.minibufferWantsFocus()
+
+def treeWantsFocus(self):
+    c = self ; w = self.frame.tree and self.frame.tree.canvas
+    w and c.set_focus(w)
+    
+def widgetWantsFocus(self,w):
+    c = self
+    w and c.set_focus(w)
+#@-node:ekr.20050120092028:c.xWantsFocus
+#@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@-node:ekr.20060204105811:Recent
+#@+node:ekr.20060204084632:What I did: 2-4-06
+@nocolor
+
+- Fixed bug in strokeFromEvent.
+
+- Replaced some calls to g.app.gui.get_focus: This is unreliable.  More should be removed.
+
+- Fixed masterMenuHandler.
+
+- Removed master click handlers: not needed.
+    - Added FocusIn, FocusOut bindings. (Moved code from masterClickHandler).
+
+- Made many changes so that modes work again with k.masterKeyHandler.
+
+- Minibuffer finds now work.
+    - New search-again command: it reverts to find-with-present-options if there is no search pattern.
+    - Added support for minibufferSearchesShowFindTab option.
+
+- Revised @find mode.  It is now usable and is bound to Ctrl-F.
+
+- Made toggle-find-regex-options work.
+#@nonl
+#@-node:ekr.20060204084632:What I did: 2-4-06
+#@+node:ekr.20060205041217.1:What I did: 2-5-06
+@nocolor
+
+- Special keys now work in all modes uniformly.
+
+The Aha was to honor 'mini' bindings first in k.masterKeyHandler.
+
+- Added gc traces every 100 keystrokes, every command, every 10 redraws.
+
+- There is no doubt about it: the focus is being ripped into the headline sometimes.
+
+*** This is *totally weird*: tkFrame.set_focus was setting c to a tkFrame(!!)
+    - How did the call to c.config ever work???????????????????
+
+- Changed calling sequence of g.app.gui.get_focus so it takes a commander, not a frame.
+    - This makes gui.get_focus use the same calling sequence as g.set_focus.
+
+- Added traces that report weird focus issues.
+
+- k.setLabel now restores the focus.
+
+- Changed find keystrokes:
+    - Bound Ctrl-F to search-with-present-options.
+    - Eliminate Find mode: I never used it.
+    - Bound Shift-Ctrl-F to find-options mode.
+
+- Added c.gui ivar and c.set_focus and c.get_focus methods.  Useful abbreviations.
+
+- Fixed bug in createModeBindings: it must not call k.strokeFromSetting again.
+
+- Revised replace-string command so it sets up arguments for Tab find.
+    - This is different from the normal Emacs replace-string command, but it works well in Leo.
+
+- Added smaller Find/Change text in Find Tab when show_only_find_tab_options is True.
+  It is often helpful to see this state.
+
+- Enable minibufferSearchesShowFindTab.  This turns out to be quite useful and natural.
+#@nonl
+#@-node:ekr.20060205041217.1:What I did: 2-5-06
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

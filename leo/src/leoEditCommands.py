@@ -94,7 +94,7 @@ class baseEditCommandsClass:
     #@-node:ekr.20051215102349:beingCommandHelper
     #@-node:ekr.20051214133130:beginCommand  & beginCommandWithEvent
     #@+node:ekr.20051214133130.1:endCommand
-    def endCommand(self,label=None,changed=True):
+    def endCommand(self,label=None,changed=True,setLabel=True):
         
         '''Do the common processing at the end of each command.'''
         
@@ -113,10 +113,13 @@ class baseEditCommandsClass:
         self.undoData = None # Bug fix: 1/6/06 (after a5 released).
     
         k.clearState()
-        if label:
-            k.setLabelGrey(label)
-        else:
-            k.resetLabel()
+        
+        # Warning: basic editing commands **must not** set the label.
+        if setLabel:
+            if label:
+                k.setLabelGrey(label)
+            else:
+                k.resetLabel()
     #@nonl
     #@-node:ekr.20051214133130.1:endCommand
     #@-node:ekr.20051214132256:begin/endCommand
@@ -211,7 +214,7 @@ class baseEditCommandsClass:
     def getRectanglePoints (self):
     
         c = self.c ; w = self.w
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     
         i  = w.index('sel.first')
         i2 = w.index('sel.last')
@@ -251,6 +254,24 @@ class baseEditCommandsClass:
     #@nonl
     #@-node:ekr.20050920084036.11:testinrange
     #@-node:ekr.20050929161635:Helpers
+    #@+node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
+    def focusToBody (self,event):
+        
+        self.c.bodyWantsFocus()
+    
+    def focusToLog (self,event):
+    
+        self.c.logWantsFocus()
+        
+    def focusToMinibuffer (self,event):
+        
+        self.c.minibufferWantsFocus()
+    
+    def focusToTree (self,event):
+        
+        self.c.treeWantsFocus()
+    #@nonl
+    #@-node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.1:<< define class baseEditCommandsClass >>
@@ -399,7 +420,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
         
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
     
         w.delete('1.0','end')
         w.insert('1.0',self.text)
@@ -424,7 +445,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     def computeCompletionList (self):
         
         c = self.c ; gui = g.app.gui ; w = self.widget
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         s = gui.getSelectedText(w)
         if s:
             self.tabList,common_prefix = g.itemsMatchingPrefixInList(s,self.membersList)
@@ -464,14 +485,14 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
         else:
             self.computeCompletionList()
     
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051126123249.1:doTabCompletion (autoCompleter)
     #@+node:ekr.20051127065601:extendSelection
     def extendSelection (self,s):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         
         if gui.hasSelection(w):
             i,j = gui.getSelectionRange(w)
@@ -487,7 +508,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     def finish (self):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         
         i,j = gui.getTextSelection(w)
         if i != j:
@@ -498,7 +519,7 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     def setSelection (self,s):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         
         if gui.hasSelection(w):
             i,j = gui.getSelectionRange(w)
@@ -1197,18 +1218,26 @@ class debugCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
     #@nonl
     #@-node:ekr.20060127162921: ctor
+    #@+node:ekr.20060205050659:collectGarbage
+    def collectGarbage (self,event=None):
+        
+        g.collectGarbage()
+    #@nonl
+    #@-node:ekr.20060205050659:collectGarbage
     #@+node:ekr.20060127163325: getPublicCommands
     def getPublicCommands (self):
         
         k = self
     
         return {
+            'collect-garbage':      self.collectGarbage,
             'disable-gc-trace':     self.disableGcTrace,
             'dump-all-objects':     self.dumpAllObjects,
             'dump-new-objects':     self.dumpNewObjects,
             'enable-gc-trace':      self.enableGcTrace,
             'free-tree-widgets':    self.freeTreeWidgets,
             'print-stats':          self.printStats,
+            'print-gc-summary':     self.printGcSummary,
             'verbose-dump-objects': self.verboseDumpObjects,
         }
     #@nonl
@@ -1255,6 +1284,12 @@ class debugCommandsClass (baseEditCommandsClass):
         c.redraw()
     #@nonl
     #@-node:ekr.20060202154734:freeTreeWidgets
+    #@+node:ekr.20060205043324.3:printGcSummary
+    def printGcSummary (self,event=None):
+    
+        g.printGcSummary()
+    #@nonl
+    #@-node:ekr.20060205043324.3:printGcSummary
     #@+node:ekr.20060202133313:printStats
     def printStats (self,event=None):
         
@@ -1296,7 +1331,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
     def getPublicCommands (self):        
     
-        k = self.k
+        c = self.c ; k = self.k
     
         return {
             'back-to-indentation':                  self.backToIndentation,
@@ -1902,28 +1937,10 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20050920084036.65:evalExpression
     #@+node:ekr.20051022142249:focus (editCommandsClass)
-    #@+node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
-    def focusToBody (self,event):
-        
-        self.c.frame.bodyWantsFocus()
-    
-    def focusToLog (self,event):
-    
-        self.c.frame.logWantsFocus()
-        
-    def focusToMinibuffer (self,event):
-        
-        self.c.frame.minibufferWantsFocus()
-    
-    def focusToTree (self,event):
-        
-        self.c.frame.treeWantsFocus()
-    #@nonl
-    #@-node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
     #@+node:ekr.20051022144825.1:cycleFocus
     def cycleFocus (self,event):
     
-        c = self.c ; frame = c.frame
+        c = self.c
         
         body = c.frame.body.bodyCtrl
         log  = c.frame.log.logCtrl
@@ -1944,7 +1961,7 @@ class editCommandsClass (baseEditCommandsClass):
             pane = body
             
         # g.trace(pane)
-        frame.set_focus(pane)
+        c.set_focus(pane)
     #@nonl
     #@-node:ekr.20051022144825.1:cycleFocus
     #@-node:ekr.20051022142249:focus (editCommandsClass)
@@ -2183,18 +2200,21 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050920084036.78:indentRelative
     #@-node:ekr.20050920084036.74:indent... (To do: undo)
     #@+node:ekr.20050920084036.85:insert & delete...
-    #@+node:ekr.20051026092433.1:backwardDeleteCharacter BUGGY
+    #@+node:ekr.20051026092433.1:backwardDeleteCharacter
     def backwardDeleteCharacter (self,event=None):
         
         c = self.c ; p = c.currentPosition()
         w = event and event.widget
-        if not g.app.gui.isTextWidget(w): return
+        if not g.app.gui.isTextWidget(w):
+            g.trace('*'*40,'Not a text widget',g.app.gui.widget_name(w))
+            return
         
         name = g.app.gui.widget_name(w)
         i,j = g.app.gui.getTextSelection(w)
         # g.trace(i,j)
     
         if name.startswith('body'):
+            self.beginCommand()
             d = g.scanDirectives(c,p)
             tab_width = d.get("tabwidth",c.tab_width)
             changed = True
@@ -2226,6 +2246,7 @@ class editCommandsClass (baseEditCommandsClass):
                 #@nonl
                 #@-node:ekr.20051026092746:<< backspace with negative tab_width >>
                 #@nl
+            self.endCommand(changed=True,setLabel=False) # Necessary to make text changes stick.
         else:
             # No undo in this widget.
             if i != j:
@@ -2235,7 +2256,7 @@ class editCommandsClass (baseEditCommandsClass):
                 # Do nothing at the start of the headline.
                 w.delete('insert-1c')
     #@nonl
-    #@-node:ekr.20051026092433.1:backwardDeleteCharacter BUGGY
+    #@-node:ekr.20051026092433.1:backwardDeleteCharacter
     #@+node:ekr.20050920084036.87:deleteNextChar
     def deleteNextChar (self,event):
     
@@ -2260,7 +2281,7 @@ class editCommandsClass (baseEditCommandsClass):
             changed = False
             
         if name.startswith('body'):
-            self.endCommand(changed=changed)
+            self.endCommand(changed=changed,setLabel=False)
     #@nonl
     #@-node:ekr.20050920084036.87:deleteNextChar
     #@+node:ekr.20050920084036.135:deleteSpaces
@@ -2743,7 +2764,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         
         # Remember the original insert point.  This may become the moveSpot.
         ins1 = w.index('insert')
@@ -2765,7 +2786,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
         
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         if forward:
              ind = w.search('\w','insert',stopindex='end',regexp=True)
              if ind: nind = '%s wordend' % ind
@@ -2783,7 +2804,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         i = w.search('(','insert',backwards=True,stopindex='1.0')
         if '' == i: return
     
@@ -2810,7 +2831,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         i = w.search('.','insert',backwards=True,stopindex='1.0')
         if i:
             i2 = w.search('.',i,backwards=True,stopindex='1.0')
@@ -2830,7 +2851,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         ins = w.index('insert')
         # sel_i,sel_j = g.app.gui.getTextSelection(w)
         i = w.search('.','insert',stopindex='end')
@@ -2844,7 +2865,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         i = w.index('insert')
         while 1:
             txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
@@ -2868,7 +2889,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         i = w.index('insert')
         while 1:
             s = w.get('%s linestart' % i,'%s lineend' % i).strip()
@@ -2892,7 +2913,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         i,j = g.app.gui.getTextSelection(w,sort=False)
         if i != j:
             ins = w.index('insert')
@@ -2907,21 +2928,21 @@ class editCommandsClass (baseEditCommandsClass):
         self.extendMode = False
         
         c = self.c ; w = event.widget
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
     
     def setExtendMode (self,event):
         
         self.extendMode = True
         
         c = self.c ; w = event.widget
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
         
     def toggleExtendMode (self,event):
         
         self.extendMode = not self.extendMode
         
         c = self.c ; w = event.widget
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
     #@nonl
     #@-node:ekr.20051218174113:extendMode
     #@+node:ekr.20050920084036.148:buffers
@@ -3433,7 +3454,7 @@ class editCommandsClass (baseEditCommandsClass):
         k = self.k ; c = k.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.frame.widgetWantsFocus(w)
+        c.widgetWantsFocus(w)
     
         # Remember the original insert point.  This may become the moveSpot.
         ins1 = w.index('insert')
@@ -5002,7 +5023,7 @@ class rectangleCommandsClass (baseEditCommandsClass):
             r1, r2, r3, r4 = self.stringRect
             w.mark_set('sel.start','%d.%d' % (r1,r2))
             w.mark_set('sel.end',  '%d.%d' % (r3,r4))
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
             for r in xrange(r1,r3+1):
                 w.delete('%s.%s' % (r,r2),'%s.%s' % (r,r4))
                 w.insert('%s.%s' % (r,r2),k.arg)
@@ -5112,7 +5133,7 @@ class registerCommandsClass (baseEditCommandsClass):
             if self.checkBodySelection():
                 if event.keysym in string.letters:
                     w = c.frame.body.bodyCtrl
-                    c.frame.bodyWantsFocus()
+                    c.bodyWantsFocus()
                     key = event.keysym.lower()
                     val = self.registers.get(key,'')
                     try:
@@ -5123,7 +5144,7 @@ class registerCommandsClass (baseEditCommandsClass):
                     k.setLabelGrey('Register %s = %s' % (key,repr(val)))
                 else:
                     k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.238:appendToRegister
     #@+node:ekr.20050920084036.237:prependToRegister
@@ -5139,7 +5160,7 @@ class registerCommandsClass (baseEditCommandsClass):
             if self.checkBodySelection():
                 if event.keysym in string.letters:
                     w = c.frame.body.bodyCtrl
-                    c.frame.bodyWantsFocus()
+                    c.bodyWantsFocus()
                     key = event.keysym.lower()
                     val = self.registers.get(key,'')
                     try:
@@ -5150,7 +5171,7 @@ class registerCommandsClass (baseEditCommandsClass):
                     k.setLabelGrey('Register %s = %s' % (key,repr(val)))
                 else:
                     k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.237:prependToRegister
     #@+node:ekr.20050920084036.239:copyRectangleToRegister
@@ -5167,7 +5188,7 @@ class registerCommandsClass (baseEditCommandsClass):
             if event.keysym in string.letters:
                 key = event.keysym.lower()
                 w = c.frame.body.bodyCtrl
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
                 r1, r2, r3, r4 = self.getRectanglePoints()
                 rect = []
                 while r1 <= r3:
@@ -5178,7 +5199,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Register %s = %s' % (key,repr(rect)))
             else:
                 k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.239:copyRectangleToRegister
     #@+node:ekr.20050920084036.240:copyToRegister
@@ -5196,7 +5217,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 if event.keysym in string.letters:
                     key = event.keysym.lower()
                     w = c.frame.body.bodyCtrl
-                    c.frame.bodyWantsFocus()
+                    c.bodyWantsFocus()
                     try:
                         val = w.get('sel.first','sel.last')
                     except Exception:
@@ -5206,7 +5227,7 @@ class registerCommandsClass (baseEditCommandsClass):
                     k.setLabelGrey('Register %s = %s' % (key,repr(val)))
                 else:
                     k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.240:copyToRegister
     #@+node:ekr.20050920084036.241:incrementRegister
@@ -5232,7 +5253,7 @@ class registerCommandsClass (baseEditCommandsClass):
                     k.setLabelGrey("Can't increment register %s = %s" % (key,val))
             else:
                 k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@-node:ekr.20050920084036.241:incrementRegister
     #@+node:ekr.20050920084036.242:insertRegister
     def insertRegister (self,event):
@@ -5247,7 +5268,7 @@ class registerCommandsClass (baseEditCommandsClass):
             k.clearState()
             if event.keysym in string.letters:
                 w = c.frame.body.bodyCtrl
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
                 key = event.keysym.lower()
                 val = self.registers.get(key)
                 if val:
@@ -5260,7 +5281,7 @@ class registerCommandsClass (baseEditCommandsClass):
                     k.setLabelGrey('Register %s is empty' % key)
             else:
                 k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.242:insertRegister
     #@+node:ekr.20050920084036.243:jumpToRegister
@@ -5278,7 +5299,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 key = event.keysym.lower()
                 val = self.registers.get(key)
                 w = c.frame.body.bodyCtrl
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
                 if val:
                     try:
                         w.mark_set('insert',val)
@@ -5287,7 +5308,7 @@ class registerCommandsClass (baseEditCommandsClass):
                         k.setLabelGrey('Register %s is not a valid location' % key)
                 else:
                     k.setLabelGrey('Register %s is empty' % key)
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.243:jumpToRegister
     #@+node:ekr.20050920084036.244:numberToRegister (not used)
@@ -5330,14 +5351,14 @@ class registerCommandsClass (baseEditCommandsClass):
             k.clearState()
             if event.keysym in string.letters:
                 w = c.frame.body.bodyCtrl
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
                 key = event.keysym.lower()
                 val = w.index('insert')
                 self.registers[key] = val
                 k.setLabelGrey('Register %s = %s' % (key,repr(val)))
             else:
                 k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.245:pointToRegister
     #@+node:ekr.20050920084036.246:viewRegister
@@ -5357,7 +5378,7 @@ class registerCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Register %s = %s' % (key,repr(val)))
             else:
                 k.setLabelGrey('Register must be a letter')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.246:viewRegister
     #@-node:ekr.20050920084036.236:Entries...
@@ -5397,7 +5418,7 @@ class minibufferFind:
     #@nonl
     #@-node:ekr.20060124123133:setFindScope
     #@+node:ekr.20060124122844:setOption
-    def setOption (self, ivar, val, verbose = True):
+    def setOption (self, ivar, val, verbose = False):
         
         h = self.finder
     
@@ -5483,7 +5504,7 @@ class minibufferFind:
             var = h.dict.get(ivar)
             val = not var.get()
             var.set(val)
-            # g.trace('%s = %s' % (ivar,val))
+            # g.trace('%s = %s' % (ivar,val),var)
         else:
             g.trace('oops: bad find ivar %s' % ivar)
     #@nonl
@@ -5512,6 +5533,19 @@ class minibufferFind:
         self.showFindOptions()
     #@nonl
     #@-node:ekr.20060124134356:setupArgs
+    #@+node:ekr.20060205105950:setupChangePattern
+    def setupChangePattern (self,pattern):
+        
+        h = self.finder ; t = h.change_ctrl
+        
+        s = g.toUnicode(pattern,g.app.tkEncoding)
+        
+        t.delete('1.0','end')
+        t.insert('1.0',s)
+        
+        h.update_ivars()
+    #@nonl
+    #@-node:ekr.20060205105950:setupChangePattern
     #@+node:ekr.20060125091234:setupSearchPattern
     def setupSearchPattern (self,pattern):
         
@@ -5572,6 +5606,21 @@ class minibufferFind:
             self.finder.findNextCommand()
     #@nonl
     #@-node:ekr.20060124181213.4:generalSearchHelper
+    #@+node:ekr.20060205105950.1:generalChangeHelper
+    def generalChangeHelper (self,find_pattern,change_pattern):
+        
+        g.trace(repr(change_pattern))
+        
+        self.setupSearchPattern(find_pattern)
+        self.setupChangePattern(change_pattern)
+    
+        self.finder.p = self.c.currentPosition()
+        self.finder.v = self.finder.p.v
+    
+        # This handles the reverse option.
+        self.finder.findNextCommand()
+    #@nonl
+    #@-node:ekr.20060205105950.1:generalChangeHelper
     #@+node:ekr.20060124140224.1:seachForward/Backward
     def searchBackward (self,event):
     
@@ -5684,11 +5733,11 @@ class minibufferFind:
     def replaceString (self,event):
     
         k = self.k ; state = k.getState('replace-string')
-        prompt = 'Replace ' + g.choose(self._useRegex,'Regex','String')
+        pattern_match = self.getOption ('pattern_match')
+        prompt = 'Replace ' + g.choose(pattern_match,'Regex','String')
     
         if state == 0:
             self.widget = event.widget
-            self._sString = self._rpString = ''
             s = '%s: ' % prompt
             k.setLabelBlue(s,protect=True)
             k.getArg(event,'replace-string',1,self.replaceString)
@@ -5699,40 +5748,46 @@ class minibufferFind:
             k.getArg(event,'replace-string',2,self.replaceString)
         elif state == 2:
             k.clearState()
-            self._rpString = k.arg ; w = self.widget
-            #@        << do the replace >>
-            #@+node:ekr.20050920084036.114:<< do the replace >>
-            # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
-            i = 'insert' ; end = 'end' ; count = 0
-            if w.tag_ranges('sel'):
-                i = w.index('sel.first')
-                end = w.index('sel.last')
-            if self._useRegex:
-                txt = w.get(i,end)
-                try:
-                    pattern = re.compile(self._sString)
-                except:
-                    k.keyboardQuit(event)
-                    k.setLabel("Illegal regular expression")
-                    return
-                count = len(pattern.findall(txt))
-                if count:
-                    ntxt = pattern.sub(self._rpString,txt)
-                    w.delete(i,end)
-                    w.insert(i,ntxt)
+            if 1: # Use the legacy find command.
+                k.clearState()
+                k.resetLabel()
+                k.showStateAndMode()
+                self.generalChangeHelper(self._sString,k.arg)
             else:
-                # Problem: adds newline at end of text.
-                txt = w.get(i,end)
-                count = txt.count(self._sString)
-                if count:
-                    ntxt = txt.replace(self._sString,self._rpString)
-                    w.delete(i,end)
-                    w.insert(i,ntxt)
-            #@nonl
-            #@-node:ekr.20050920084036.114:<< do the replace >>
-            #@nl
-            k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
-            self._useRegex = False
+                self._rpString = k.arg ; w = self.widget
+                #@            << do the replace >>
+                #@+node:ekr.20050920084036.114:<< do the replace >>
+                # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
+                i = 'insert' ; end = 'end' ; count = 0
+                if w.tag_ranges('sel'):
+                    i = w.index('sel.first')
+                    end = w.index('sel.last')
+                if self._useRegex:
+                    txt = w.get(i,end)
+                    try:
+                        pattern = re.compile(self._sString)
+                    except:
+                        k.keyboardQuit(event)
+                        k.setLabel("Illegal regular expression")
+                        return
+                    count = len(pattern.findall(txt))
+                    if count:
+                        ntxt = pattern.sub(self._rpString,txt)
+                        w.delete(i,end)
+                        w.insert(i,ntxt)
+                else:
+                    # Problem: adds newline at end of text.
+                    txt = w.get(i,end)
+                    count = txt.count(self._sString)
+                    if count:
+                        ntxt = txt.replace(self._sString,self._rpString)
+                        w.delete(i,end)
+                        w.insert(i,ntxt)
+                #@nonl
+                #@-node:ekr.20050920084036.114:<< do the replace >>
+                #@nl
+                k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
+                self._useRegex = False
     #@nonl
     #@-node:ekr.20050920084036.113:replaceString
     #@-others
@@ -5844,16 +5899,23 @@ class findTab (leoFind.leoFind):
         flab = Tk.Label(fpane, width=8, text="Find:",background=bg)
         clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
         
-        # Use bigger boxes for scripts.
-        self.find_ctrl = ftxt = Tk.Text(
-            fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
-        self.change_ctrl = ctxt = Tk.Text(
-            cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
+        if self.optionsOnly:
+            # Use one-line boxes.
+            self.find_ctrl = ftxt = Tk.Text(
+                fpane,bd=1,relief="groove",height=1,width=25,name='find-text')
+            self.change_ctrl = ctxt = Tk.Text(
+                cpane,bd=1,relief="groove",height=1,width=25,name='change-text')
+        else:
+            # Use bigger boxes for scripts.
+            self.find_ctrl = ftxt = Tk.Text(
+                fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
+            self.change_ctrl = ctxt = Tk.Text(
+                cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
         #@<< Bind Tab and control-tab >>
         #@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
         def setFocus(w):
             c = self.c
-            c.frame.widgetWantsFocus(w)
+            c.widgetWantsFocus(w)
             g.app.gui.setSelectionRange(w,"1.0","1.0")
             return "break"
             
@@ -5887,11 +5949,12 @@ class findTab (leoFind.leoFind):
                 bar['command'] = txt.yview
                 bar.pack(side="right", fill="y")
                 
-        if not self.optionsOnly:
-            flab.pack(side="left")
-            clab.pack(side="left")
-            ctxt.pack(side="right", expand=1, fill="x") 
-            ftxt.pack(side="right", expand=1, fill="x")
+        if self.optionsOnly:
+            flab.pack(side="left") ; ftxt.pack(side="left")
+            clab.pack(side="left") ; ctxt.pack(side="left")
+        else:
+            flab.pack(side="left") ; ftxt.pack(side="right", expand=1, fill="x")
+            clab.pack(side="left") ; ctxt.pack(side="right", expand=1, fill="x")
         #@nonl
         #@-node:ekr.20051020120306.15:<< Create the Find and Change panes >>
         #@nl
@@ -5910,35 +5973,29 @@ class findTab (leoFind.leoFind):
         
         for i in xrange(numberOfColumns):
             columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
-            
-        # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
         
-        radioLists[0] = [
-            #(self.dict["radio-find-type"],"P&Lain Search","plain-search"),  
-            #(self.dict["radio-find-type"],"&Pattern Match Search","pattern-search"),
-            # (self.dict["radio-find-type"],"&Script Search","script-search"),
-        ]
+        radioLists[0] = []
+        
         checkLists[0] = [
             # ("Scrip&t Change",self.dict["script_change"]),
-            ("Whole Word",      self.dict["whole_word"]),
-            ("Ignore Case",     self.dict["ignore_case"]),
-            ("Wrap &Around",     self.dict["wrap"]),
-            ("Reverse",         self.dict["reverse"]),
-            ('Regexp',          self.dict["radio-find-type"]=='pattern-search'),
-            ("Mark Finds",      self.dict["mark_finds"]),
+            ("Whole &Word", self.dict["whole_word"]),
+            ("&Ignore Case",self.dict["ignore_case"]),
+            ("Wrap &Around",self.dict["wrap"]),
+            ("&Reverse",    self.dict["reverse"]),
+            ('Rege&xp',     self.dict['pattern_match']),
+            ("Mark &Finds", self.dict["mark_finds"]),
         ]
         
         radioLists[1] = [
-            (self.dict["radio-search-scope"],"Entire Outline","entire-outline"),
-            (self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
-            (self.dict["radio-search-scope"],"Node Only","node-only"),
+            (self.dict["radio-search-scope"],"&Entire Outline","entire-outline"),
+            (self.dict["radio-search-scope"],"&Suboutline Only","suboutline-only"),  
+            (self.dict["radio-search-scope"],"&Node Only","node-only"),
         ]
         
         checkLists[1] = [
-            ("Search Headline", self.dict["search_headline"]),
-            ("Search Body",     self.dict["search_body"]),
-            ("Mark &Changes",   self.dict["mark_changes"]),
-            # ('Show Context',    self.dict['batch']),
+            ("Search &Headline", self.dict["search_headline"]),
+            ("Search &Body",     self.dict["search_body"]),
+            ("Mark &Changes",    self.dict["mark_changes"]),
         ]
         
         for i in xrange(numberOfColumns):
@@ -6057,7 +6114,8 @@ class findTab (leoFind.leoFind):
         for var,setting in (
             ("suboutline_only","suboutline-only"),
             ("node_only","node-only"),
-            ("selection_only","selection-only")): # 11/9/03
+            # ("selection_only","selection-only")
+        ):
             val = self.dict[var].get()
             if val:
                 self.dict["radio-search-scope"].set(setting)
@@ -6080,18 +6138,19 @@ class findTab (leoFind.leoFind):
     
         for key in self.intKeys:
             val = self.dict[key].get()
-            setattr(self, key, val) # No more _flag hack.
+            setattr(self, key, val)
             # g.trace(key,val)
     
         # Set ivars from radio buttons. Convert these to 1 or 0.
-        find_type = self.dict["radio-find-type"].get()
-        self.pattern_match = g.choose(find_type == "pattern-search",1,0)
-        self.script_search = g.choose(find_type == "script-search",1,0)
+        if 0: ####
+            find_type = self.dict["radio-find-type"].get()
+            self.pattern_match = g.choose(find_type == "pattern-search",1,0)
+            self.script_search = g.choose(find_type == "script-search",1,0)
     
         search_scope = self.dict["radio-search-scope"].get()
         self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
         self.node_only       = g.choose(search_scope == "node-only",1,0)
-        self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
+        # self.selection       = g.choose(search_scope == "selection-only",1,0)
     
         # New in 4.3: The caller is responsible for removing most trailing cruft.
         # Among other things, this allows Leo to search for a single trailing space.
@@ -6179,7 +6238,7 @@ class findTab (leoFind.leoFind):
         c = self.c
         
         c.frame.log.selectTab('Log')
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051020120306.25:hideTab
     #@+node:ekr.20051020120306.26:bringToFront
@@ -6190,7 +6249,7 @@ class findTab (leoFind.leoFind):
         c = self.c ; t = self.find_ctrl
             
         # The widget must have focus before we can adjust the text.
-        c.frame.widgetWantsFocus(t)
+        c.widgetWantsFocus(t)
         
         # Delete one trailing newline.
         s = t.get('1.0','end')
@@ -6201,7 +6260,7 @@ class findTab (leoFind.leoFind):
         g.app.gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
         
         # This is also needed.
-        c.frame.widgetWantsFocus(t)
+        c.widgetWantsFocus(t)
     #@nonl
     #@-node:ekr.20051020120306.26:bringToFront
     #@+node:ekr.20051020120306.27:selectAllFindText
@@ -6392,8 +6451,10 @@ class searchCommandsClass (baseEditCommandsClass):
     def openFindTab (self,event=None,show=True):
     
         c = self.c ; log = c.frame.log ; tabName = 'Find'
+        
+        wasOpen = log.frameDict.get(tabName)
     
-        if log.frameDict.get(tabName):
+        if wasOpen:
             log.selectTab(tabName)
         else:
             log.selectTab(tabName)
@@ -6402,7 +6463,7 @@ class searchCommandsClass (baseEditCommandsClass):
             t.pack_forget()
             self.findTabHandler = findTab(c,f)
     
-        if show or c.config.getBool('minibufferSearchesShowFindTab'):
+        if show or wasOpen or c.config.getBool('minibufferSearchesShowFindTab'):
             self.findTabHandler.bringToFront()
         else:
             log.hideTab(tabName)
@@ -6460,9 +6521,10 @@ class searchCommandsClass (baseEditCommandsClass):
         
         c = self.c
         
-        if not self.findTabHandler:
-            self.openFindTab(show=show) # sets self.findTabHandler.
-    
+        self.openFindTab(show=show)
+            # sets self.findTabHandler,
+            # but *not* minibufferFindHandler.
+        
         if not self.minibufferFindHandler:
             self.minibufferFindHandler = minibufferFind(c,self.findTabHandler)
     
@@ -6546,7 +6608,7 @@ class searchCommandsClass (baseEditCommandsClass):
         self.regexp = regexp
         k.setLabelBlue('isearch: ',protect=True)
         k.setState('isearch',1,handler=self.iSearchStateHandler)
-        c.frame.minibufferWantsFocus()
+        c.minibufferWantsFocus()
     #@nonl
     #@-node:ekr.20050920084036.262:startIncremental
     #@+node:ekr.20050920084036.264:iSearchStateHandler & helper
@@ -6563,7 +6625,7 @@ class searchCommandsClass (baseEditCommandsClass):
         ch = event.char
         if keysym == 'Control_L': return
         
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         
         # g.trace('keysym',keysym,'stroke',k.stroke)
         
@@ -6836,7 +6898,7 @@ class spellCommandsClass (baseEditCommandsClass):
         
         if self.handler:
             self.c.frame.log.selectTab('Log')
-            self.c.frame.bodyWantsFocus()
+            self.c.bodyWantsFocus()
     
     def ignore (self,event=None):
         
@@ -7087,7 +7149,7 @@ class spellTab(leoFind.leoFind):
     
         self.find()
         self.updateButtons()
-        self.c.frame.bodyWantsFocus()
+        self.c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051025071455.33:onFindButton
     #@+node:ekr.20051025071455.34:onHideButton
@@ -7153,11 +7215,11 @@ class spellTab(leoFind.leoFind):
                 t.insert(start,selection)
                 g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
                 c.frame.body.onBodyChanged("Change",oldSel=oldSel)
-                c.frame.widgetWantsFocus(t)
+                c.widgetWantsFocus(t)
                 return True
     
         # The focus must never leave the body pane.
-        c.frame.widgetWantsFocus(t)
+        c.widgetWantsFocus(t)
         return False
     #@nonl
     #@-node:ekr.20051025071455.38:change
@@ -7181,7 +7243,7 @@ class spellTab(leoFind.leoFind):
     
         if alts:
             self.fillbox(alts,word)
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
             # Copy the working selection range to the body pane
             start, end = g.app.gui.getTextSelection(self.workCtrl)
             g.app.gui.setTextSelection(bodyCtrl,start,end)
@@ -7372,7 +7434,7 @@ class spellTab(leoFind.leoFind):
         
         c = self.c
         self.updateButtons()
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
     #@-node:ekr.20051025071455.50:onSelectListBox
     #@+node:ekr.20051025071455.51:update
     def update(self,show=True,fill=False):
@@ -7388,7 +7450,7 @@ class spellTab(leoFind.leoFind):
     
         if show:
             self.bringToFront()
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051025071455.51:update
     #@+node:ekr.20051025071455.52:updateButtons

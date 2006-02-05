@@ -4735,6 +4735,54 @@ stroke = ''.join([val for flag,val in table if flag])
 #@nonl
 #@-node:ekr.20060129182405.7:<< compute stroke >>
 #@-node:ekr.20060129182405:k.strokeFromSetting (WRONG: USE shortcutFromSetting)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+# New in Leo 4.4a3: nothing happens at idle time.
+
+def set_focus(self,w):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    frame = self ; c = frame.c
+
+    if c.config.getBool('trace_f.set_focus'): # A *very* effective trace.
+        name = w and hasattr(w,'_name') and w._name or '<no name>'
+        g.trace(name,g.callers(7)) 
+
+    if w:
+        self.wantedWidget = w
+        g.app.gui.set_focus(c,w)
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@+node:ekr.20051105170852:delayedFocus (leoFrame)
+def bodyWantsFocus(self):
+    self.oops()
+        
+def headlineWantsFocus(self,p):
+    self.oops()
+    
+def logWantsFocus(self):
+    self.oops()
+
+def minibufferWantsFocus(self):
+    self.oops()
+
+def treeWantsFocus(self):
+    self.oops()
+    
+def widgetWantsFocus(self,widget):
+    self.oops()
+#@nonl
+#@-node:ekr.20051105170852:delayedFocus (leoFrame)
+#@+node:ekr.20050210082320:widget_wants_focus (tk.gui)
+def widget_wants_focus(self,c,widget):
+
+    """Indicate that a widget want to get focus."""
+    
+    c and c.widgetWantsFocus(widget)
+        
+widgetWantsFocus = widget_wants_focus
+#@nonl
+#@-node:ekr.20050210082320:widget_wants_focus (tk.gui)
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

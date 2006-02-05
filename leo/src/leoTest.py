@@ -271,7 +271,7 @@ def runGc(disable=False):
     gc.enable()
     set_debugGc()
     gc.collect()
-    printGc(message=message,onlyPrintChanges=False)
+    printGc(message=message)
     if disable:
         gc.disable()
     # makeObjectList(message)
@@ -310,9 +310,9 @@ def makeObjectList(message):
 #@nonl
 #@-node:ekr.20051104075904.19:makeObjectList
 #@+node:ekr.20051104075904.20:printGc
-def printGc(message=None,onlyPrintChanges=False):
+def printGc(message=None):
     
-    __pychecker__ = '--no-argsused' # onlyPrintChanges may be useful for debugging.
+    '''Called from unit tests.'''
 
     if not message:
         message = g.callerName(n=2)

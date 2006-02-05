@@ -308,6 +308,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         canvas = Tk.Canvas(parentFrame,name="canvas",
             bd=0,bg="white",relief="flat")
+            
+        # g.trace('canvas',repr(canvas),'name',frame.c.widget_name(canvas))
     
         frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
         
@@ -917,7 +919,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
                     background = self.statusFrame.cget("background")
                 t.configure(state="disabled",background=background)
             self.enabled = False
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
             
         def enable (self,background="white"):
             
@@ -925,7 +927,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c = self.c ; t = self.textWidget
             if t:
                 t.configure(state="normal",background=background)
-                c.frame.widgetWantsFocus(t)
+                c.widgetWantsFocus(t)
             self.enabled = True
                 
         def isEnabled(self):
@@ -1664,10 +1666,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         try:
             frame = self ; c = frame.c
             c.setLog()
-            w = g.app.gui.get_focus(frame)
+            w = c.get_focus()
             if w != c.frame.body.bodyCtrl:
                 frame.tree.OnDeactivate()
-            frame.bodyWantsFocus()
+            c.bodyWantsFocus()
         except:
             g.es_event_exception("activate body")
             
@@ -1694,11 +1696,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
         __pychecker__ = '--no-argsused' # event not used.
     
         try:
-            frame = self
-            frame.c.setLog()
+            frame = self ; c = frame.c
+            c.setLog()
+    
             if 0: # Do NOT do this here!
                 # OnActivateTree can get called when the tree gets DE-activated!!
-                frame.bodyWantsFocus()
+                c.bodyWantsFocus()
                 
         except:
             g.es_event_exception("activate tree")
@@ -1852,7 +1855,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
         i,j = g.app.gui.getTextSelection(w)
         s = s1 = g.app.gui.getTextFromClipboard()
         
-        if name.startswith('head'):
+        # g.trace(name)
+        
+        singleLine = name.startswith('head') or name.startswith('minibuffer')
+        
+        if singleLine:
             # Strip trailing newlines so the truncation doesn't cause confusion.
             while s and s [ -1] in ('\n','\r'):
                 s = s [: -1]
@@ -1864,14 +1871,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         if name.startswith('body'):
             c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        elif name.startswith('head'):
+        elif singleLine:
             s = w.get('1.0','end')
             while s and s [ -1] in ('\n','\r'):
                 s = s [: -1]
-            # The headline is not officially changed yet.
-            # p.initHeadString(s)
-            w.configure(width=f.tree.headWidth(s=s))
-        else: pass
+            if name.startswith('head'):
+                # The headline is not officially changed yet.
+                # p.initHeadString(s)
+                w.configure(width=f.tree.headWidth(s=s))
+        else:
+            pass
         
     OnPasteFromMenu = pasteText
     #@nonl
@@ -1888,12 +1897,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.endEditing()
             
             if 1: # This command always moves into the body pane.
-                c.frame.bodyWantsFocus()
+                c.bodyWantsFocus()
             else:
                 if c.frame.tree.stayInTree:
-                    c.frame.treeWantsFocus()
+                    c.treeWantsFocus()
                 else:
-                    c.frame.bodyWantsFocus()
+                    c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3982:endEditLabelCommand
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
@@ -1926,13 +1935,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3985:toggleActivePane
     def toggleActivePane (self,event=None):
         
-        frame = self
+        frame = self ; c = frame.c
     
         # Toggle the focus immediately.
-        if g.app.gui.get_focus(frame) == frame.bodyCtrl:
-            frame.treeWantsFocus()
+        if c.get_focus() == frame.bodyCtrl:
+            c.treeWantsFocus()
         else:
-            frame.bodyWantsFocus()
+            c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3985:toggleActivePane
     #@+node:ekr.20031218072017.3986:cascade
@@ -2163,48 +2172,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # that alters text improperly.
     #@-at
     #@nonl
-    #@+node:ekr.20050120092028:xWantsFocus (tkFrame)
-    def bodyWantsFocus(self):
-        w = self.body and self.body.bodyCtrl
-        self.set_focus(w)
-            
-    def headlineWantsFocus(self,p):
-        w = p and p.edit_widget()
-        self.set_focus(w)
-        
-    def logWantsFocus(self):
-        w = self.log and self.log.logCtrl
-        self.set_focus(w)
-    
-    def minibufferWantsFocus(self):
-        # Let the key handler figure out what to do.
-        self.c.k.minibufferWantsFocus()
-    
-    def treeWantsFocus(self):
-        w = self.tree and self.tree.canvas
-        self.set_focus(w)
-        
-    def widgetWantsFocus(self,w):
-        self.set_focus(w)
-    #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
-    #@+node:ekr.20050120092028.1:set_focus (tkFrame)
-    # New in Leo 4.4a3: nothing happens at idle time.
-    
-    def set_focus(self,w):
-        
-        '''Set the focus to the widget specified in the xWantsFocus methods.'''
-    
-        c = self.c
-    
-        if c.config.getBool('trace_f.set_focus'): # A *very* effective trace.
-            name = w and hasattr(w,'_name') and w._name or '<no name>'
-            g.trace(name,g.callers(7)) 
-    
-        if w:
-            self.wantedWidget = w
-            g.app.gui.set_focus(c,w)
-    #@nonl
-    #@-node:ekr.20050120092028.1:set_focus (tkFrame)
     #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
     #@+node:ekr.20031218072017.3995:Tk bindings...
     def bringToFront (self):
@@ -2501,6 +2468,16 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20051026143009:removeTrailingNewlines
     #@-node:ekr.20031218072017.1329:onBodyChanged (tkBody) & removeTrailingNewlines
+    #@+node:ekr.20031218072017.4003:Focus (tkBody)
+    def hasFocus (self):
+        
+        return self.bodyCtrl == self.frame.top.focus_displayof()
+        
+    def setFocus (self):
+        
+        self.c.widgetWantsFocus(self.bodyCtrl)
+    #@nonl
+    #@-node:ekr.20031218072017.4003:Focus (tkBody)
     #@+node:ekr.20031218072017.3999:forceRecolor
     def forceFullRecolor (self):
         
@@ -2574,16 +2551,6 @@ class leoTkinterBody (leoFrame.leoBody):
         return self.bodyCtrl.configure(*args,**keys)
     #@nonl
     #@-node:ekr.20031218072017.2184:Configuration (Tk spelling)
-    #@+node:ekr.20031218072017.4003:Focus (tkBody)
-    def hasFocus (self):
-        
-        return self.bodyCtrl == self.frame.top.focus_displayof()
-        
-    def setFocus (self):
-        
-        self.frame.widgetWantsFocus(self.bodyCtrl)
-    #@nonl
-    #@-node:ekr.20031218072017.4003:Focus (tkBody)
     #@+node:ekr.20031218072017.4004:Height & width
     def getBodyPaneHeight (self):
         
@@ -3290,7 +3257,7 @@ class leoTkinterLog (leoFrame.leoLog):
         try:
             self.c.setLog()
             self.frame.tree.OnDeactivate()
-            self.frame.logWantsFocus()
+            self.c.logWantsFocus()
         except:
             g.es_event_exception("activate log")
     #@nonl
@@ -3298,7 +3265,7 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20031218072017.4044:tkLog.hasFocus
     def hasFocus (self):
         
-        return g.app.gui.get_focus(self.frame) == self.logCtrl
+        return self.c.get_focus() == self.logCtrl
     #@nonl
     #@-node:ekr.20031218072017.4044:tkLog.hasFocus
     #@+node:ekr.20050208133438:forceLogUpdate
@@ -3344,13 +3311,12 @@ class leoTkinterLog (leoFrame.leoLog):
             #@        << put s to log control >>
             #@+node:EKR.20040423082910:<< put s to log control >>
             # New in 4.4b1: Restore the focus to a standard place.
-            frame = self.c.frame
-            focus_widget = g.app.gui.get_focus(frame)
+            focus_widget = c.get_focus()
             name = g.app.gui.widget_name(focus_widget)
             for kind in ('body','head','canvas'):
                 if name.startswith(kind): break
             else:
-                focus_widget = frame.body.bodyCtrl
+                focus_widget = c.frame.body.bodyCtrl
             
             if color:
                 if color not in self.colorTags:
@@ -3364,7 +3330,7 @@ class leoTkinterLog (leoFrame.leoLog):
             
             self.logCtrl.see("end")
             self.forceLogUpdate(s)
-            frame.widgetWantsFocus(focus_widget)
+            c.widgetWantsFocus(focus_widget)
             #@-node:EKR.20040423082910:<< put s to log control >>
             #@nl
         else:
@@ -3472,11 +3438,13 @@ class leoTkinterLog (leoFrame.leoLog):
             self.selectTab('Log')
             
         # New in Leo 4.4b1.
-        self.c.frame.bodyWantsFocus()
+        self.c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051018102027:deleteTab
     #@+node:ekr.20060204124347:hideTab
     def hideTab (self,tabName):
+        
+        __pychecker__ = '--no-argsused' # tabName
         
         self.selectTab('Log')
     #@nonl
@@ -3497,7 +3465,7 @@ class leoTkinterLog (leoFrame.leoLog):
             # New in 4.4b1: call update explicitly.
             logCtrl = self.textDict.get(tabName)
             logCtrl and logCtrl.update()
-            self.c.frame.bodyWantsFocus()
+            self.c.bodyWantsFocus()
     
     def raiseTab (self,tabName):
     
@@ -3509,7 +3477,7 @@ class leoTkinterLog (leoFrame.leoLog):
             logCtrl = self.textDict.get(tabName)
             if logCtrl:
                 logCtrl.update()
-                self.c.frame.widgetWantsFocus(logCtrl)
+                self.c.widgetWantsFocus(logCtrl)
     #@nonl
     #@-node:ekr.20051018061932.1:lower/raiseTab
     #@+node:ekr.20051019170806:renameTab
@@ -3538,7 +3506,6 @@ class leoTkinterLog (leoFrame.leoLog):
         # Update the status vars.
         self.tabName = tabName
         self.logCtrl = self.textDict.get(tabName)
-        # c.frame.widgetWantsFocus(self.logCtrl)
         self.tabFrame = self.frameDict.get(tabName)
         
         # New in 4.4b1: call update *after* creating the tab.

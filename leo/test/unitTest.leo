@@ -7759,7 +7759,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13668,10 +13668,10 @@ c.selectPosition(p)
 c.redraw_now() # To make node visible
 c.frame.tree.editLabel(p)
 w = p.edit_widget()
-w2 = g.app.gui.get_focus(c.frame)
+w2 = c.get_focus()
 assert w == w2, 'oops1 %s != %s' % (w,w2)
 w.event_generate('&lt;Return&gt;')
-assert w != g.app.gui.get_focus(c.frame),'oops2'</t>
+assert w != c.get_focus(),'oops2'</t>
 <t tx="ekr.20051107115231.15">import leoTest ; u = leoTest.testUtils(c)
 
 k = c.keyHandler
@@ -13840,7 +13840,7 @@ p = u.findNodeAnywhere(h)
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
 c.selectPosition(p)
-c.frame.bodyWantsFocus()
+c.bodyWantsFocus()
 paste = 'ABC'
 g.app.gui.replaceClipboardWith(paste)
 menu.invoke(i)
@@ -13887,7 +13887,7 @@ p = u.findNodeAnywhere(h)
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
 c.selectPosition(p)
-c.frame.bodyWantsFocus()
+c.bodyWantsFocus()
 paste = '# Should be a comment'
 g.app.gui.replaceClipboardWith(paste)
 n = c.frame.body.colorizer.count
@@ -13973,10 +13973,10 @@ h = c.searchCommands.findTabHandler
 w = h.find_ctrl
 w.delete('1.0','end')
 w.insert('1.0',s)
-c.frame.bodyWantsFocus()
+c.bodyWantsFocus()
 g.app.gui.setInsertPoint(bodyCtrl,'1.0')
 c.searchCommands.findTabFindNext()
-w = g.app.gui.get_focus(c.frame)
+w = c.get_focus()
 
 assert w == bodyCtrl, 'focus %s' % w</t>
 <t tx="ekr.20051107115231.31"></t>
@@ -13999,7 +13999,7 @@ p = u.findNodeAnywhere(h)
 c.selectPosition(p)
 c.redraw_now() # To make node visible
 n = c.frame.tree.redrawCount
-c.frame.bodyWantsFocus()
+c.bodyWantsFocus()
 try:
     c.frame.body.bodyCtrl.event_generate('a')
     n2 = c.frame.tree.redrawCount
@@ -14018,7 +14018,7 @@ c.selectPosition(p)
 p.setBodyString('a')
 c.redraw_now() # To make node visible and to set the icon.
 try:
-    c.frame.bodyWantsFocus()
+    c.bodyWantsFocus()
     n = c.frame.tree.redrawCount
     w = c.frame.body.bodyCtrl
     w.mark_set('insert','end')
@@ -14038,7 +14038,7 @@ c.selectPosition(p)
 p.setBodyString('a')
 c.redraw_now() # To make node visible
 n = c.frame.tree.redrawCount
-c.frame.bodyWantsFocus()
+c.bodyWantsFocus()
 try:
     c.frame.body.bodyCtrl.event_generate('a')
     n2 = c.frame.tree.redrawCount
@@ -14098,7 +14098,7 @@ c.selectPosition(p)
 s = 'ABC'
 p.setBodyString(s)
 try:
-    c.frame.bodyWantsFocus()
+    c.bodyWantsFocus()
     w = c.frame.body.bodyCtrl
     w.mark_set('insert','1.2')
     w.event_generate('&lt;Delete&gt;')

@@ -105,6 +105,9 @@ class baseCommands:
         self._rootPosition    = self.nullPosition()
         self._topPosition     = self.nullPosition()
         
+        # Official ivars.
+        self.gui = g.app.gui
+        
         # Interlocks to prevent premature closing of a window.
         self.inCommand = False
         self.requestCloseWindow = False
@@ -222,6 +225,8 @@ class baseCommands:
     #@-node:ekr.20050920093543:c.finishCreate & helper
     #@-node:ekr.20031218072017.2811: c.Birth & death
     #@+node:ekr.20031218072017.2817: doCommand
+    command_count = 0
+    
     def doCommand (self,command,label,event=None):
     
         """Execute the given command, invoking hooks and catching exceptions.
@@ -230,14 +235,21 @@ class baseCommands:
         g.doHook("command1") returns False.
         This provides a simple mechanism for overriding commands."""
         
-        c = self
+        c = self ; p = c.currentPosition()
         c.setLog()
-        p = c.currentPosition()
-        #g.trace(command.__name__,label)
-        
-        if not g.app.unitTesting and c.config.getBool('trace_doCommand'):
-            g.trace(command and command.__name__)
-        
+    
+        self.command_count += 1
+        if not g.app.unitTesting and (
+            c.config.getBool('trace_doCommand') or
+            c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+        ):
+            commandName = command and command.__name__
+            if (self.command_count % 10) == 0:
+                w = c.get_focus() ; wname = c.widget_name(w)
+                g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
+            else:
+                g.trace(commandName)
+    
         # The presence of this message disables all commands.
         if c.disableCommandsMessage:
             g.es(c.disableCommandsMessage,color='blue')
@@ -453,7 +465,7 @@ class baseCommands:
             if ok and closeFlag:
                 g.app.destroyWindow(c.frame)
         else:
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.2821:open
     #@+node:ekr.20031218072017.2823:openWith and allies
@@ -1637,7 +1649,7 @@ class baseCommands:
             c.frame.body.setInsertionPointToEnd()
             g.es("%d lines" % len(lines), color="blue")
         
-        c.frame.bodyWantsFocus()
+        c.bodyWantsFocus()
         c.frame.body.makeInsertPointVisible()
         #@nonl
         #@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
@@ -4491,7 +4503,7 @@ class baseCommands:
                 c.selectPosition(p)
             finally:
                 c.endUpdate()
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.2994:selectThreadNext
     #@+node:ekr.20031218072017.2993:selectThreadBack
@@ -5418,6 +5430,54 @@ class baseCommands:
     redraw = force_redraw = redraw_now
     #@nonl
     #@-node:ekr.20031218072017.2954:c.redraw_now
+    #@+node:ekr.20060205103842:c.set_focus and c.get_focus
+    def get_focus (self):
+        
+        c = self
+        
+        return g.app.gui.get_focus(c)
+        
+    def set_focus (self,widget):
+        
+        c = self
+        
+        g.app.gui.set_focus(c,widget)
+    #@nonl
+    #@-node:ekr.20060205103842:c.set_focus and c.get_focus
+    #@+node:ekr.20060205111103:c.widget_name
+    def widget_name (self,widget):
+        
+        c = self
+        
+        return c.gui.widget_name(widget)
+    #@nonl
+    #@-node:ekr.20060205111103:c.widget_name
+    #@+node:ekr.20050120092028:c.xWantsFocus
+    def bodyWantsFocus(self):
+        c = self ; w = c.frame.body and c.frame.body.bodyCtrl
+        w and c.set_focus(w)
+            
+    def headlineWantsFocus(self,p):
+        c = self ; w = p and p.edit_widget()
+        w and c.set_focus(w)
+        
+    def logWantsFocus(self):
+        c = self ; w = self.frame.log and self.frame.log.logCtrl
+        w and c.set_focus(w)
+    
+    def minibufferWantsFocus(self):
+        c = self ; k = c.k
+        # Let the key handler figure out what to do.
+        k and k.minibufferWantsFocus()
+    
+    def treeWantsFocus(self):
+        c = self ; w = self.frame.tree and self.frame.tree.canvas
+        w and c.set_focus(w)
+        
+    def widgetWantsFocus(self,w):
+        c = self
+        w and c.set_focus(w)
+    #@-node:ekr.20050120092028:c.xWantsFocus
     #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
     #@+node:ekr.20031218072017.2955:Enabling Menu Items
     #@+node:ekr.20040323172420:Slow routines: no longer used

@@ -173,7 +173,7 @@ class leoTkinterDialog:
         # New in 4.4 a2: g.app.dialogs is a count of the open dialogs.
         g.app.dialogs += 1
             
-        c and c.frame.widgetWantsFocus(self.focus_widget)
+        c and c.widgetWantsFocus(self.focus_widget)
            
         self.root.wait_window(self.top)
         
@@ -502,15 +502,15 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
         
         if g.app.unitTesting: return
         
-        f = self.frame
+        c = self.c
         
-        lab = Tk.Label(f,text=message)
+        lab = Tk.Label(self.frame,text=message)
         lab.pack(pady=10,side="left")
         
-        self.number_entry = t = Tk.Entry(f,width=20)
+        self.number_entry = t = Tk.Entry(self.frame,width=20)
         t.pack(side="left")
         
-        g.app.gui.set_focus(self.c,t)
+        c.set_focus(t)
     #@nonl
     #@-node:ekr.20031218072017.3878:tkinterAskOKCancelNumber.createFrame
     #@+node:ekr.20031218072017.3879:tkinterAskOKCancelNumber.okButton, cancelButton

@@ -12,6 +12,8 @@
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>
 #@@color
 
+# __pychecker__ = '--no-argsused'
+
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
 if 0: # Set to 1 for lint-like testing.
@@ -147,7 +149,7 @@ def run(fileName=None,*args,**keywords):
         g.enableIdleTimeHook()
     if not fileName:
         c.redraw_now()
-    frame.bodyWantsFocus()
+    c.bodyWantsFocus()
     g.app.gui.runMainLoop()
 #@nonl
 #@+node:ekr.20031218072017.1936:isValidPython

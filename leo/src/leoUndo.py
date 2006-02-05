@@ -1345,7 +1345,7 @@ class baseUndoer:
             c.setChanged(True)
             c.endUpdate()
             c.recolor_now()
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
         u.redoing = False
         u.bead += 1
         u.setUndoTypes()
@@ -1558,10 +1558,10 @@ class baseUndoer:
             tag="redo",undoType=u.undoType)
         
         if u.newSel:
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
             c.frame.body.setTextSelection(u.newSel)
         if u.yview:
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
             c.frame.body.setYScrollPosition(u.yview)
     #@nonl
     #@-node:EKR.20040526075238.5:redoTyping
@@ -1605,7 +1605,7 @@ class baseUndoer:
             c.setChanged(True)
             c.endUpdate()
             c.recolor_now()
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
     
         u.undoing = False
         u.bead -= 1
@@ -1839,10 +1839,10 @@ class baseUndoer:
             tag="undo",undoType=u.undoType)
     
         if u.oldSel:
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
             c.frame.body.setTextSelection(u.oldSel)
         if u.yview:
-            c.frame.bodyWantsFocus()
+            c.bodyWantsFocus()
             c.frame.body.setYScrollPosition(u.yview)
     #@nonl
     #@-node:EKR.20040526090701.4:undoTyping

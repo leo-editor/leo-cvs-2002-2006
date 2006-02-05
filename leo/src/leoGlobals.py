@@ -806,7 +806,7 @@ def openWithFileName(fileName,old_c,
             c.endUpdate()
             k = c.k
             k and k.setInputState(k.unboundKeyAction)
-            frame.bodyWantsFocus()
+            c.bodyWantsFocus()
         return True, frame
     except IOError:
         # Do not use string + here: it will fail for non-ascii strings!
@@ -2125,12 +2125,12 @@ def enable_gc_debug(event=None):
     if gc:
         gc.set_debug(
             gc.DEBUG_STATS | # prints statistics.
-            # gc.DEBUG_LEAK | # Same as all below.
-            # gc.DEBUG_COLLECTABLE
-            # gc.DEBUG_UNCOLLECTABLE
+            gc.DEBUG_LEAK | # Same as all below.
+            gc.DEBUG_COLLECTABLE |
+            gc.DEBUG_UNCOLLECTABLE |
             gc.DEBUG_INSTANCES |
-            gc.DEBUG_OBJECTS
-            # gc.DEBUG_SAVEALL
+            gc.DEBUG_OBJECTS |
+            gc.DEBUG_SAVEALL
         )
         g.app.trace_gc_inited = True
     else:
@@ -2144,8 +2144,9 @@ def clearAllIvars (o):
     
     o.__dict__.clear()
 #@-node:ekr.20031218072017.1589:clearAllIvars
+#@+node:ekr.20060205043324:Called from commands
 #@+node:ekr.20031218072017.1590:collectGarbage
-def collectGarbage(message=None):
+def collectGarbage():
     
     if not g.app.trace_gc: return
     
@@ -2155,34 +2156,71 @@ def collectGarbage(message=None):
     if not g.app.trace_gc_inited:
         g.app.trace_gc = False
     
-    if not message:
-        message = g.callerName(n=2)
-    
     try: gc.collect()
     except: pass
-    
-    g.printGc(message)
-#@nonl
 #@-node:ekr.20031218072017.1590:collectGarbage
-#@+node:ekr.20031218072017.1592:printGc
-def printGc(message=None,onlyPrintChanges=False):
-    
-    __pychecker__ = '--no-argsused' # onlyPrintChanges not used.
-    
-    if not g.app.trace_gc: return None
+#@+node:ekr.20060205043324.1:printGcSummary
+def printGcSummary (message='',trace=False):
     
     if not message:
         message = g.callerName(n=2)
-        
-    printGcObjects(message)
-    printGcRefs(message)
+
+    # g.collectGarbage()
+    enable_gc_debug
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        s = 'garbage: %d, objects: %d, %s' % (n,n2,message)
+        if trace:
+            print s
+        else:
+            g.es_print(s)
+    except:
+        traceback.print_exc()
+#@nonl
+#@-node:ekr.20060205043324.1:printGcSummary
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
     
-    if g.app.trace_gc_verbose:
-        printGcVerbose(message)
-        
+    if not message:
+        message = g.callerName(n=2)
     
+    # g.collectGarbage()
+    
+    d = {} ; objects = gc.get_objects()
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects),message)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
+        for z in items:
+            g.es_print('%40s %7d' % (z[0],z[1]))
+    else: # Sort by type
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            g.es_print('%40s %7d' % (t,d.get(t)))
+#@-node:ekr.20060202161935:printGcAll
 #@+node:ekr.20060127164729.1:printGcObjects
 def printGcObjects(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectCount
 
@@ -2264,7 +2302,13 @@ def printGcObjects(message=''):
 #@+node:ekr.20060127165509:printGcVerbose
 # WARNING: the id trick is not proper because newly allocated objects
 #          can have the same address as old objets.
+
 def printGcVerbose(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    # g.collectGarbage()
 
     global lastObjectsDict
     objects = gc.get_objects()
@@ -2291,6 +2335,25 @@ def printGcVerbose(message=''):
     g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))
 #@nonl
 #@-node:ekr.20060127165509:printGcVerbose
+#@-node:ekr.20060205043324:Called from commands
+#@+node:ekr.20060205043324.2:Called from unit tests
+#@+node:ekr.20031218072017.1592:printGc
+def printGc(message=None):
+    
+    if not g.app.trace_gc: return None
+    
+    if not message:
+        message = g.callerName(n=2)
+        
+    ## g.collectGarbase()
+        
+    printGcObjects(message)
+    printGcRefs(message)
+    
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
 #@+node:ekr.20031218072017.1593:printGcRefs
 def printGcRefs (message=''):
 
@@ -2306,36 +2369,7 @@ def printGcRefs (message=''):
 #@nonl
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1592:printGc
-#@+node:ekr.20060202161935:printGcAll
-def printGcAll (message=''):
-    
-    d = {} ; objects = gc.get_objects()
-    g.es_print('-' * 30)
-    g.es_print('%d objects' % len(objects),message)
-
-    for obj in objects:
-        t = type(obj)
-        if t == 'instance':
-            try: t = obj.__class__
-            except: pass
-        d[t] = d.get(t,0) + 1
-        
-    if 1: # Sort by n
-        
-        items = d.items()
-        try:
-            # Support for keword args to sort function exists in Python 2.4.
-            # Support for None as an alternative to omitting cmp exists in Python 2.3.
-            items.sort(key=lambda x: x[1],reverse=True)
-        except: pass
-        for z in items:
-            g.es_print('%40s %7d' % (z[0],z[1]))
-    else: # Sort by type
-        keys = d.keys() ; keys.sort()
-        for t in keys:
-            g.es_print('%40s %7d' % (t,d.get(t)))
-#@nonl
-#@-node:ekr.20060202161935:printGcAll
+#@-node:ekr.20060205043324.2:Called from unit tests
 #@-others
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)

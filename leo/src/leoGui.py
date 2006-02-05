@@ -262,12 +262,16 @@ class leoGui:
     def set_focus(self,commander,widget):
     
         """Set the focus of the widget in the given commander if it needs to be changed."""
+        
+        __pychecker__ = '--no-argsused' # widget
     
         self.oops()
         
     def widget_wants_focus(self,commander,widget):
     
         """Indicate that a widget want to get focus."""
+        
+        __pychecker__ = '--no-argsused' # widget
     
         self.oops()
     #@nonl

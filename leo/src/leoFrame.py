@@ -514,26 +514,6 @@ class leoFrame:
         
         self.oops()
     #@-node:ekr.20031218072017.3682:bringToFront, deiconify, lift & update
-    #@+node:ekr.20051105170852:delayedFocus
-    def bodyWantsFocus(self):
-        self.oops()
-            
-    def headlineWantsFocus(self,p):
-        self.oops()
-        
-    def logWantsFocus(self):
-        self.oops()
-    
-    def minibufferWantsFocus(self):
-        self.oops()
-    
-    def treeWantsFocus(self):
-        self.oops()
-        
-    def widgetWantsFocus(self,widget):
-        self.oops()
-    #@nonl
-    #@-node:ekr.20051105170852:delayedFocus
     #@+node:ekr.20031218072017.3683:config stuff...
     #@+node:ekr.20031218072017.3684:resizePanesToRatio
     def resizePanesToRatio (self,ratio,secondary_ratio):
@@ -1447,26 +1427,6 @@ class nullFrame (leoFrame):
         pass
     #@nonl
     #@-node:ekr.20041130065921:deiconfy, lift, update
-    #@+node:ekr.20051105170808:delayedFocus
-    def bodyWantsFocus(self):
-        pass
-            
-    def headlineWantsFocus(self,p):
-        pass
-        
-    def logWantsFocus(self):
-        pass
-    
-    def minibufferWantsFocus(self):
-        pass
-    
-    def treeWantsFocus(self):
-        pass
-        
-    def widgetWantsFocus(self,widget):
-        pass
-    #@nonl
-    #@-node:ekr.20051105170808:delayedFocus
     #@+node:ekr.20041120073824:destroySelf
     def destroySelf (self):
         

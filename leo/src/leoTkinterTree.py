@@ -902,15 +902,18 @@ class leoTkinterTree (leoFrame.leoTree):
             
         c = self.c
         
-        g.collectGarbage()
+        self.redrawCount += 1
         
+        if not g.app.unitTesting and c.config.getBool('trace_gc'):
+            if (self.redrawCount % 5) == 0:
+                g.printGcSummary(trace=True)
+    
         if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
             g.trace(self.redrawCount,g.callers())
             g.print_stats()
             g.clear_stats()
-            
+    
         # Do the actual redraw.
-        self.redrawCount += 1
         self.expandAllAncestors(c.currentPosition())
         self.redrawHelper(scroll=scroll)
         self.canvas.update_idletasks() # Important for unit tests.
@@ -1732,9 +1735,9 @@ class leoTkinterTree (leoFrame.leoTree):
                 if c.frame.findPanel:
                     c.frame.findPanel.handleUserClick(p)
                 if self.stayInTree:
-                    c.frame.treeWantsFocus()
+                    c.treeWantsFocus()
                 else:
-                    c.frame.bodyWantsFocus()
+                    c.bodyWantsFocus()
             g.doHook("boxclick2",c=c,p=p,v=p,event=event)
         finally:
             c.endUpdate()
@@ -1973,8 +1976,7 @@ class leoTkinterTree (leoFrame.leoTree):
         '''Officially change a headline.
         Set the old undo text to the previous revert point.'''
         
-        c = self.c ; frame = c.frame ; u = c.undoer
-        w = self.edit_widget(p)
+        c = self.c ; u = c.undoer ; w = self.edit_widget(p)
         if not w: return
         
         ch = '\r' # New in 4.4: we only report the final keystroke.
@@ -2027,9 +2029,9 @@ class leoTkinterTree (leoFrame.leoTree):
             c.endUpdate()
             if changed:
                 if self.stayInTree:
-                    frame.treeWantsFocus()
+                    c.treeWantsFocus()
                 else:
-                    frame.bodyWantsFocus()
+                    c.bodyWantsFocus()
        
         g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
     #@nonl
@@ -2124,7 +2126,7 @@ class leoTkinterTree (leoFrame.leoTree):
                     self.editLabel(p)
                 else:
                     # Set the focus immediately.  This is essential for proper editing.
-                    c.frame.treeWantsFocus()
+                    c.treeWantsFocus()
             else:
                 # g.trace("not current")
                 self.select(p)
@@ -2137,9 +2139,9 @@ class leoTkinterTree (leoFrame.leoTree):
                     c.frame.bodyCtrl.mark_set("insert","1.0")
                     
                 if self.stayInTree:
-                    c.frame.treeWantsFocus()
+                    c.treeWantsFocus()
                 else:
-                    c.frame.bodyWantsFocus()
+                    c.bodyWantsFocus()
             
             self.active = True
             #@nonl
@@ -2155,7 +2157,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c
         
         c.setLog()
-        self.frame.treeWantsFocus()
+        c.treeWantsFocus()
     
         return 'break'
     #@nonl
@@ -2412,7 +2414,7 @@ class leoTkinterTree (leoFrame.leoTree):
         menu.post(event.x_root, event.y_root)
     
         # Set the focus immediately so we know when we lose it.
-        c.frame.widgetWantsFocus(menu)
+        c.widgetWantsFocus(menu)
     #@nonl
     #@-node:ekr.20040803072955.116:showPopupMenu
     #@-node:ekr.20040803072955.110:tree.OnPopup & allies
@@ -2568,7 +2570,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if p and p.edit_widget():
             self.setEditLabelState(p) # Sets the focus immediately.
-            self.frame.headlineWantsFocus(p) # Make sure the focus sticks.
+            self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
     #@nonl
     #@-node:ekr.20040803072955.127:editLabel
     #@+node:ekr.20040803072955.128:tree.select
@@ -2577,8 +2579,6 @@ class leoTkinterTree (leoFrame.leoTree):
     def select (self,p,updateBeadList=True):
         
         '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
-        
-        # g.collectGarbage('select1')
         
         c = self.c ; frame = c.frame ; body = frame.bodyCtrl
         old_p = c.currentPosition()
@@ -2683,8 +2683,6 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nonl
             #@-node:ekr.20040803072955.132:<< update c.visitedList >>
             #@nl
-            
-        # g.collectGarbage('select2')
     
         c.setCurrentPosition(p)
         #@    << set the current node >>
@@ -2694,17 +2692,15 @@ class leoTkinterTree (leoFrame.leoTree):
         frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
         
         if self.stayInTree:
-            c.frame.treeWantsFocus()
+            c.treeWantsFocus()
         else:
-            frame.bodyWantsFocus()
+            c.bodyWantsFocus()
         #@nonl
         #@-node:ekr.20040803072955.133:<< set the current node >>
         #@nl
         
         g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
         g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-        
-        g.collectGarbage('select3')
         
         return 'break' # Supresses unwanted selection.
     #@nonl
@@ -2716,7 +2712,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; w = p.edit_widget()
     
         if p and w:
-            c.frame.widgetWantsFocus(w)
+            c.widgetWantsFocus(w)
             self.setEditHeadlineColors(p)
             w.tag_remove("sel","1.0","end")
             w.tag_add("sel","1.0","end")
