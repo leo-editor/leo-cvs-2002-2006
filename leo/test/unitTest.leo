@@ -959,10 +959,12 @@
 </v>
 </v>
 <v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
-<v t="ekr.20060203200614"><vh>Basic Unit tests</vh>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests: simple</vh>
+<v t="ekr.20060203200614" a="E"><vh>Basic Unit tests</vh>
+<v t="ekr.20060205165937"><vh>Doctests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20060131101825.1"><vh>@test print end of doctests</vh></v>
+</v>
+<v t="ekr.20060205165937.1"><vh>Test routines</vh>
 <v t="ekr.20050106080304" annotate="7d71002e"><vh>@suite run all test routines (runs some tests twice!)</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
@@ -989,6 +991,8 @@
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 <v t="ekr.20060131102008"><vh>@test print end of test routines</vh></v>
+</v>
+<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>Unit tests: simple</vh>
 <v t="ekr.20041012101944" annotate="7d71002e"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754" annotate="7d71002e"><vh>General Unit Tests...</vh>
 <v t="ekr.20041130092210" annotate="7d71002e"><vh>Batch mode tests...</vh>
@@ -14255,5 +14259,7 @@ if p:
         c.selectPosition(p)
     finally:
         c.endUpdate()</t>
+<t tx="ekr.20060205165937"></t>
+<t tx="ekr.20060205165937.1"></t>
 </tnodes>
 </leo_file>

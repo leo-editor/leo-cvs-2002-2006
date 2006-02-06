@@ -455,12 +455,9 @@ class tkinterGui(leoGui.leoGui):
         
         if w:
             try:
-                if 0:
-                    # A fix to the cursed problems with Pmw.Notebook.
-                    # I am not happy with this, but it seems preferable to trying to figure out
-                    # all the places where the code must call update()
-                    
-                    # New in 4.4b1: the place to call update is *after* log pane operations.
+                if 0: # No longer needed.
+                    # A call to findTab.bringToFront caused
+                    # the focus problems with Pmw.Notebook.
                     w.update()
     
                 # It's possible that the widget doesn't exist now.

@@ -211,7 +211,7 @@
 <v t="ekr.20060103102234"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
-<v t="ekr.20051214100048" a="V" annotate="7d71002e"><vh>Recent tests</vh>
+<v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
@@ -248,7 +248,7 @@
 <v t="ekr.20060125082644"><vh>Test show-find-options</vh></v>
 <v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
 <v t="ekr.20060201161437"><vh>Prototype of p.key</vh></v>
-<v t="ekr.20060205061810"><vh>Typing test</vh></v>
+<v t="ekr.20060205061810" a="V"><vh>Typing test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4452,6 +4452,6 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
-<t tx="ekr.20060205061810"></t>
+<t tx="ekr.20060205061810">c.helpCommands.help(None)</t>
 </tnodes>
 </leo_file>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="21599" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="22222" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
 	<global_window_position top="29" left="340" height="857" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -157,7 +157,7 @@
 <v t="ekr.20050830080545"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.2" a="E"><vh>Chapter 1: Installing Leo</vh>
+<v t="ekr.20050831195331.2"><vh>Chapter 1: Installing Leo</vh>
 <v t="edream.110203163054.48"><vh>@rst html\install.html</vh>
 <v t="ekr.20050901110110"><vh>@rst-no-head links</vh></v>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -321,16 +321,16 @@
 <v t="ekr.20050901102400.2"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.4" a="E"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="ekr.20040403171740" a="E"><vh>@rst html\scripting.html</vh>
+<v t="ekr.20050831195331.4"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="ekr.20040403171740"><vh>@rst html\scripting.html</vh>
 <v t="ekr.20050812134441.1"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050901184158"><vh>@rst-ignore Important: you can run these examples!</vh></v>
 <v t="ekr.20040403183229" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3122206e616d653d22687474702d6e6f64652d6d61726b65722d31223e710155043c2f613e71025d710328553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710455063c2f6469763e71055d71062855063c626f64793e710755073c2f626f64793e71085d71092855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710a55073c2f68746d6c3e710b4e65656555243c64697620636c6173733d2273656374696f6e222069643d226f76657276696577223e0a710c55493c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643122206e616d653d226f76657276696577223e4f766572766965773c2f613e3c2f68313e0a710d652e"><vh>Overview</vh></v>
 <v t="ekr.20040403173920.3" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3522206e616d653d22687474702d6e6f64652d6d61726b65722d35223e710155043c2f613e71025d71032855403c64697620636c6173733d2273656374696f6e222069643d22672d746f702d7468652d636f6d6d616e6465722d6f662d7468652d746f702d77696e646f77223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55363c64697620636c6173733d2273656374696f6e222069643d22672d65732d77726974652d746f2d7468652d6c6f672d70616e65223e0a711055703c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643322206e616d653d22672d65732d77726974652d746f2d7468652d6c6f672d70616e65223e672e657328293a20777269746520746f20746865206c6f672070616e653c2f613e3c2f68313e0a7111652e"><vh>g.es writes to the log pane</vh></v>
 <v t="ekr.20040403175157.1" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3722206e616d653d22687474702d6e6f64652d6d61726b65722d37223e710155043c2f613e71025d71032855353c64697620636c6173733d2273656374696f6e222069643d22672d65732d77726974652d746f2d7468652d6c6f672d70616e65223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55463c64697620636c6173733d2273656374696f6e222069643d226170702d77696e646f776c6973742d7468652d6c6973742d6f662d616c6c2d6f70656e2d6672616d6573223e0a7110558e3c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643422206e616d653d226170702d77696e646f776c6973742d7468652d6c6973742d6f662d616c6c2d6f70656e2d6672616d6573223e6170702e77696e646f774c6973743a20746865206c697374206f6620616c6c206f70656e206672616d65733c2f613e3c2f68313e0a7111652e"><vh>app.windowList: the list of all open frames</vh></v>
 <v t="ekr.20040403173920.6" rst_http_attribute="5d71002855443c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d3922206e616d653d22687474702d6e6f64652d6d61726b65722d39223e710155043c2f613e71025d71032855453c64697620636c6173733d2273656374696f6e222069643d226170702d77696e646f776c6973742d7468652d6c6973742d6f662d616c6c2d6f70656e2d6672616d6573223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f55463c64697620636c6173733d2273656374696f6e222069643d2267657474696e672d616e642d73657474696e672d686561646c696e652d616e642d626f64792d74657874223e0a7110558d3c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643522206e616d653d2267657474696e672d616e642d73657474696e672d686561646c696e652d616e642d626f64792d74657874223e47657474696e6720616e642073657474696e6720686561646c696e6520616e6420626f647920746578743c2f613e3c2f68313e0a7111652e"><vh>Getting and setting headline and body text</vh></v>
-<v t="ekr.20040403173920.9" a="E" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313122206e616d653d22687474702d6e6f64652d6d61726b65722d3131223e710155043c2f613e71025d71032855453c64697620636c6173733d2273656374696f6e222069643d2267657474696e672d616e642d73657474696e672d686561646c696e652d616e642d626f64792d74657874223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f552f3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e0a7110555f3c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643622206e616d653d2274726176657273696e672d6f75746c696e6573223e54726176657273696e67206f75746c696e65733c2f613e3c2f68313e0a7111652e"><vh>Traversing outlines</vh>
-<v t="ekr.20050902073404" a="V"><vh>About copying positions</vh></v>
+<v t="ekr.20040403173920.9" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313122206e616d653d22687474702d6e6f64652d6d61726b65722d3131223e710155043c2f613e71025d71032855453c64697620636c6173733d2273656374696f6e222069643d2267657474696e672d616e642d73657474696e672d686561646c696e652d616e642d626f64792d74657874223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e6565656555073c2f6469763e0a710f552f3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e0a7110555f3c68313e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643622206e616d653d2274726176657273696e672d6f75746c696e6573223e54726176657273696e67206f75746c696e65733c2f613e3c2f68313e0a7111652e"><vh>Traversing outlines</vh>
+<v t="ekr.20050902073404"><vh>About copying positions</vh></v>
 <v t="ekr.20040403173920.10" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313322206e616d653d22687474702d6e6f64652d6d61726b65722d3133223e710155043c2f613e71025d710328552e3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e710455063c2f6469763e71055d710628553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710755063c2f6469763e71085d71092855063c626f64793e710a55073c2f626f64793e710b5d710c2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e710d55073c2f68746d6c3e710e4e65656565552b3c64697620636c6173733d2273656374696f6e222069643d22632d616c6c6e6f6465732d69746572223e0a710f55573c68323e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643722206e616d653d22632d616c6c6e6f6465732d69746572223e632e616c6c4e6f6465735f697465723c2f613e3c2f68323e0a7110652e"><vh>c.allNodes_iter</vh></v>
 <v t="ekr.20040403173920.13" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313522206e616d653d22687474702d6e6f64652d6d61726b65722d3135223e710155043c2f613e71025d710328552a3c64697620636c6173733d2273656374696f6e222069643d22632d616c6c6e6f6465732d69746572223e710455063c2f6469763e71055d710628552e3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e710755063c2f6469763e71085d710928553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710a55063c2f6469763e710b5d710c2855063c626f64793e710d55073c2f626f64793e710e5d710f2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e711055073c2f68746d6c3e71114e656565656555073c2f6469763e0a7112552b3c64697620636c6173733d2273656374696f6e222069643d22702d6368696c6472656e2d69746572223e0a711355573c68323e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643822206e616d653d22702d6368696c6472656e2d69746572223e702e6368696c6472656e5f697465723c2f613e3c2f68323e0a7114652e"><vh>p.children_iter</vh></v>
 <v t="ekr.20040403173920.14" rst_http_attribute="5d71002855463c6120636c6173733d22746172676574222069643d22687474702d6e6f64652d6d61726b65722d313722206e616d653d22687474702d6e6f64652d6d61726b65722d3137223e710155043c2f613e71025d710328552a3c64697620636c6173733d2273656374696f6e222069643d22702d6368696c6472656e2d69746572223e710455063c2f6469763e71055d710628552e3c64697620636c6173733d2273656374696f6e222069643d2274726176657273696e672d6f75746c696e6573223e710755063c2f6469763e71085d710928553f3c64697620636c6173733d22646f63756d656e74222069643d22636861707465722d372d736372697074696e672d6c656f2d776974682d707974686f6e223e710a55063c2f6469763e710b5d710c2855063c626f64793e710d55073c2f626f64793e710e5d710f2855433c68746d6c20786d6c6e733d22687474703a2f2f7777772e77332e6f72672f313939392f7868746d6c2220786d6c3a6c616e673d22656e22206c616e673d22656e223e711055073c2f68746d6c3e71114e656565656555073c2f6469763e0a711255463c64697620636c6173733d2273656374696f6e222069643d22702d706172656e74732d697465722d616e642d702d73656c662d616e642d706172656e74732d69746572223e0a7113558d3c68323e3c6120636c6173733d22746f632d6261636b7265662220687265663d222369643922206e616d653d22702d706172656e74732d697465722d616e642d702d73656c662d616e642d706172656e74732d69746572223e702e706172656e74735f6974657220616e6420702e73656c665f616e645f706172656e74735f697465723c2f613e3c2f68323e0a7114652e"><vh>p.parents_iter &amp; p.self_and_parents_iter</vh></v>
@@ -744,792 +744,9 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
-<v t="ekr.20051219150602"><vh>4.4 alpha 5</vh>
-<v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
-<v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
-<v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
-<v t="ekr.20051219150602.10"><vh>Text box is now selected in goto-line-number command</vh></v>
-<v t="ekr.20051219150602.13"><vh>Restored headkey  &amp; bodykey hooks</vh></v>
-<v t="ekr.20051219150602.28"><vh>Fixed ancient bug in read error logic that hung Leo</vh></v>
-<v t="ekr.20051219150602.75"><vh>Fixed many headline problems</vh></v>
-<v t="ekr.20051219150602.81"><vh>Fixed problem in reformatParagraph</vh></v>
-<v t="ekr.20051219150602.85"><vh>Installed LeoUsers patch </vh></v>
-<v t="ekr.20060105182648.376"><vh>Improved Import Derived Files command.</vh></v>
-<v t="ekr.20060105182648.377"><vh>Fixed crasher in backwardDeleteCharacter</vh></v>
-<v t="ekr.20060105182648.378"><vh>Fixed recent bug: dialogs now get focus properly when first opened.</vh></v>
-<v t="ekr.20060105182648.379"><vh>Made sure shortcuts are printed clearly by k.registerCommand</vh></v>
-<v t="ekr.20060105182648.382"><vh>Suppressed crash undoing a clone followed by a drag</vh></v>
-</v>
-<v t="ekr.20051219150602.100"><vh>New features</vh>
-<v t="ekr.20051219150602.101"><vh>created ut.leo, ut.py and ut.bat</vh></v>
-<v t="ekr.20051219150602.102"><vh>Added modes/*.xml to distribution</vh></v>
-<v t="ekr.20051219150602.105"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
-<v t="ekr.20051219151926"><vh>Added classic key bindings in leoSettings.leo</vh></v>
-<v t="ekr.20060105182648.432"><vh>Allow multiple key bindings to the same command</vh></v>
-<v t="ekr.20060105182648.469"><vh>Settings command now opens leoSettings.leo</vh></v>
-<v t="ekr.20060105214753"><vh>Input modes</vh></v>
-</v>
-</v>
-<v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
-<v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
-<v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
-<v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
-<v t="ekr.20051101161405.1"><vh>@shortcuts nodes in leoSettings.leo allow per-pane bindings</vh></v>
-<v t="ekr.20051101161405.2"><vh>The scripting plugin allows key bindings</vh></v>
-<v t="ekr.20051101161405.3"><vh>EKR shortcuts</vh></v>
-<v t="ekr.20051101162123"><vh>Leo now ignores key bindings in menu tables</vh></v>
-</v>
-<v t="ekr.20051205091625"><vh>Status of minibuffer commands</vh></v>
-<v t="ekr.20051028051616"><vh>New in alpha 1...</vh>
-<v t="ekr.20051028051444.4"><vh>New options</vh>
-<v t="ekr.20051028051444.5"><vh>The @bool useMinibuffer option</vh></v>
-<v t="ekr.20051028051444.6"><vh>The @bool useCmdMenu option</vh></v>
-<v t="ekr.20051028051444.7"><vh>Options for selected body text</vh></v>
-</v>
-<v t="ekr.20051028051444.8"><vh>New mini-buffer commands</vh></v>
-<v t="ekr.20051028051444.9"><vh>New code-level features</vh>
-<v t="ekr.20051028051444.10"><vh>Dictionaries of keys and commands</vh></v>
-<v t="ekr.20051028051444.11"><vh>Functions that return the present key bindings</vh></v>
-<v t="ekr.20051028051444.12"><vh>The registerCommand helper</vh></v>
-</v>
-<v t="ekr.20051028051444.13"><vh>Bugs fixed (in 4.3 code base)</vh>
-<v t="ekr.20051028051444.14"><vh>Leo protects c.endUpdate with a 'finally' clause</vh></v>
-<v t="ekr.20051028051444.15"><vh>Added kludge to solve infamous control-v problems</vh></v>
-<v t="ekr.20051028051444.16"><vh>Fixed bug in Leo's read logic</vh></v>
-<v t="ekr.20051028051444.17"><vh>Fixed bug in goto-last-node.</vh></v>
-<v t="ekr.20051028051444.18"><vh>Leo now reads @settings trees when opening a .leo file from another outline.</vh></v>
-<v t="ekr.20051028051444.19"><vh>Improved g.removeExtraLws</vh></v>
-</v>
-</v>
-<v t="ekr.20051028051616.1"><vh>New in alpha 2</vh>
-<v t="ekr.20051101162123.1"><vh>The tabbed log</vh>
-<v t="ekr.20051028051616.172"><vh>Programming the tabbed log</vh></v>
-</v>
-<v t="ekr.20051028061322"><vh>New minibuffer commands</vh></v>
-<v t="ekr.20051028051616.299"><vh>Optional generation of closing brackets</vh></v>
-<v t="ekr.20051101182739"><vh>New settings in leoSettings.leo</vh></v>
-<v t="ekr.20051101161949"><vh>Improved and retired plugins</vh>
-<v t="ekr.20051028051616.160"><vh>Improved the scripting plugin</vh></v>
-<v t="ekr.20051101162947"><vh>Retired the TabbedLog plugin</vh></v>
-</v>
-<v t="ekr.20051101163145"><vh>Many code-level improvements</vh></v>
-<v t="ekr.20051101163404"><vh>Fixed minor bugs</vh></v>
-</v>
-<v t="ekr.20051109112610"><vh>New in alpha 3</vh>
-<v t="ekr.20051109112826"><vh>The New and Newer World Orders</vh></v>
-<v t="ekr.20051109141223"><vh>Bugs fixed...</vh>
-<v t="ekr.20051109112826.217"><vh>Fix crasher in Open logic</vh></v>
-<v t="ekr.20051109112826.227"><vh>(Undo ends editing</vh></v>
-<v t="ekr.20051109112826.257"><vh>Disabled minibuffer when not in use</vh></v>
-<v t="ekr.20051109112826.315"><vh>Fixed bug in Find Backward</vh></v>
-<v t="ekr.20051109112826.265"><vh>Improved Spell tab</vh></v>
-</v>
-<v t="ekr.20051109141524"><vh>New features</vh>
-<v t="ekr.20051109112826.222"><vh>Created scripts.leo and unitTest.leo</vh></v>
-<v t="ekr.20051109112826.254"><vh>c.executeMinibufferCommand executes a minibuffer command by name</vh></v>
-<v t="ekr.20051109112826.310"><vh>Improved perl entries in language dicts</vh></v>
-</v>
-<v t="ekr.20051109141524.1"><vh>Code-level changes</vh>
-<v t="ekr.20051109112826.223"><vh>Changed  edit_text to edit_widget everywhere</vh></v>
-<v t="ekr.20051109112826.224"><vh>Removed tree ivars</vh></v>
-<v t="ekr.20051109142920"><vh>Removed frame.begin/endUpdate</vh></v>
-</v>
-</v>
-<v t="ekr.20051128181229"><vh>New in alpha 4</vh>
-<v t="ekr.20051128181351"><vh>Bugs fixed</vh>
-<v t="ekr.20051128181302.148"><vh>Changed scripting plugin so files opened with buttons stay in front</vh></v>
-<v t="ekr.20051128181302.183"><vh>Fixed undo/redo bugs</vh></v>
-<v t="ekr.20051128181302.192"><vh>Fixed focus problem with tab completion</vh></v>
-<v t="ekr.20051128181302.193"><vh>Fixed minor Save bug</vh></v>
-<v t="ekr.20051128181302.231"><vh>Fixed long-standing problem with Plugins Manager plugin</vh></v>
-<v t="ekr.20051128181302.244"><vh>Fixed 2 outline editing bugs</vh></v>
-<v t="ekr.20051205090923.13"><vh>Fixed crasher in deleteNextChar</vh></v>
-<v t="ekr.20051205090923.16"><vh>Fixed new headline bug</vh></v>
-<v t="ekr.20051205090923.22"><vh>Fix problems applying settings</vh></v>
-<v t="ekr.20051128181302.204"><vh>Fixed several bugs in rst3 plugin</vh></v>
-</v>
-<v t="ekr.20051128181651"><vh>Code changes</vh>
-<v t="ekr.20051128181302.149"><vh>Removed later arg from c.frame.xWantsFocus</vh></v>
-<v t="ekr.20051128181302.196"><vh>Created enableTclTraces</vh></v>
-<v t="ekr.20051128181302.208"><vh>Eliminated w.update in g.app.gui.set_focus</vh></v>
-</v>
-<v t="ekr.20051128181651.1"><vh>New &amp; improved features and files</vh>
-<v t="ekr.20051128181302.147"><vh>Moved all scripts into scripts.leo</vh></v>
-<v t="ekr.20051128181302.150"><vh>Improved how the New Tab and Rename Tab commands work in the log pane</vh></v>
-<v t="ekr.20051128181302.151"><vh>Improved the appearance of the Spell tab</vh></v>
-<v t="ekr.20051128181302.156"><vh>Added Clone-find checkbox to the Find tab</vh></v>
-<v t="ekr.20051128181302.171"><vh>Improved find tab</vh></v>
-<v t="ekr.20051128181302.211"><vh>Improved formatting of shortcuts in print-commands and print-bindings</vh></v>
-<v t="ekr.20051128181302.213"><vh>Added settings for vim plugin</vh></v>
-<v t="ekr.20051128181302.214"><vh>Put up a dialog if can't import Pmw</vh></v>
-<v t="ekr.20051128181302.229"><vh>Bound &lt;Return&gt; to end-edit-headline</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050917092557"><vh>4.3.3 final</vh>
-<v t="ekr.20050917105646"><vh>Fixes made in 4.3.3</vh></v>
-<v t="ekr.20050917092557.1"><vh>Rewrote documentation</vh></v>
-<v t="ekr.20050917092557.2"><vh>Bug fixes...</vh>
-<v t="ekr.20050917092557.3"><vh>Fixed various unicode bugs</vh></v>
-<v t="ekr.20050917092557.4"><vh>Fixed bugs relating to recent files</vh></v>
-<v t="ekr.20050917092557.5"><vh>Fixed minor crasher in colorizer</vh></v>
-<v t="ekr.20050917092557.6"><vh>Protected several methods used by plugin manager</vh></v>
-<v t="ekr.20050917092557.7"><vh>Added test files to distribution list and cvs</vh></v>
-</v>
-<v t="ekr.20050917092557.8"><vh>New and improved  plugins</vh>
-<v t="ekr.20050917092557.9"><vh>New rst3 plugin</vh></v>
-<v t="ekr.20050917092557.10"><vh>Improved spellpyx plugin</vh></v>
-<v t="ekr.20050917092557.11"><vh>Improved vim and openWith plugins</vh></v>
-</v>
-<v t="ekr.20050917092557.12"><vh>New &amp; improved features...</vh>
-<v t="ekr.20050917092557.13"><vh>Added g.es_print, g.es_trace function</vh></v>
-<v t="ekr.20050917092557.14"><vh>Improved PrettyPrinting</vh></v>
-</v>
-</v>
-<v t="ekr.20050913131848"><vh>4.3.2 final</vh>
-<v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
-<v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
-<v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
-<v t="ekr.20050906104931.15"><vh>Fixed bugs relating to recent files</vh></v>
-<v t="ekr.20050906104931.38"><vh>Fixed minor crasher in colorizer</vh></v>
-<v t="ekr.20050906104931.42"><vh>Protected several methods used by plugin manager</vh></v>
-<v t="ekr.20050906104931.43"><vh>Added test files to distribution list and cvs</vh></v>
-</v>
-<v t="ekr.20050908164150"><vh>New and improved  plugins</vh>
-<v t="ekr.20050908164150.1"><vh>New rst3 plugin</vh></v>
-<v t="ekr.20050908164150.2"><vh>Improved spellpyx plugin</vh></v>
-<v t="ekr.20050910143326"><vh>Improved vim and openWith plugins</vh></v>
-</v>
-<v t="ekr.20050906104931.48"><vh>New &amp; improved features...</vh>
-<v t="ekr.20050906104931.49"><vh>Added g.es_print, g.es_trace function</vh></v>
-<v t="ekr.20050906104931.56"><vh>Improved PrettyPrinting</vh></v>
-</v>
-</v>
-<v t="ekr.20050906104918"><vh>4.3.2 beta 1</vh></v>
-<v t="ekr.20050620144052"><vh>4.3.1</vh>
-<v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
-<v t="ekr.20050620144052.3"><vh>Fixed bug in @ratio setting</vh></v>
-<v t="ekr.20050620144052.6"><vh>Fixed crasher footprint plugin</vh></v>
-<v t="ekr.20050620144052.8"><vh>Fixed invalid position bug)</vh></v>
-<v t="ekr.20050620144052.48"><vh>Fixed undo problems in unit tests</vh></v>
-<v t="ekr.20050620144052.112"><vh>Made sure same case is used in all recent files entries</vh></v>
-<v t="ekr.20050620144052.114"><vh>Made sure all dialogs gets focus when they are run</vh></v>
-<v t="ekr.20050620144052.116"><vh>Improved Resize To Screen command</vh></v>
-<v t="ekr.20050620144052.119"><vh>Made sure comments are always visible in setting dialog even for non-@ nodes</vh></v>
-<v t="ekr.20050620144052.154"><vh>Fixed problem with leading @ in body text</vh></v>
-<v t="ekr.20050620144052.166"><vh>Fixed several  crashers while undoing a move involving clones</vh></v>
-<v t="ekr.20050620144052.182"><vh>Fixed Unicode encoding problem</vh></v>
-<v t="ekr.20050620144052.185"><vh>Fixed problem with coloring @language plain</vh></v>
-<v t="ekr.20050620144602"><vh>Fixed bug: Mark Clones command did not work</vh></v>
-</v>
-<v t="ekr.20050620144052.207"><vh>New features...</vh>
-<v t="ekr.20050620144052.208"><vh>Created separate helpers for idle_body_key</vh></v>
-<v t="ekr.20050620144052.210"><vh>Made all Mark commands undoable</vh></v>
-<v t="ekr.20050620144052.222"><vh>Removed dependence on profile and pstats modules from leoTest.py</vh></v>
-<v t="ekr.20050620144052.231"><vh>Added support for tk resource files</vh></v>
-<v t="ekr.20050620144425"><vh>Added support for coloring the PL/SQL language</vh></v>
-</v>
-</v>
-<v t="ekr.20050523092026.1"><vh>4.3... @settings</vh>
-<v t="ekr.20050523092026"><vh>4.3-final</vh>
-<v t="ekr.20050523092056.1"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
-<v t="ekr.20050523092056.4"><vh>Fixed crasher in Extract Section Command</vh></v>
-</v>
-<v t="ekr.20050513141852"><vh>4.3-beta 2</vh>
-<v t="ekr.20050513141913.1"><vh>Fixed bugs...</vh>
-<v t="ekr.20050513141913.16"><vh>Fixed nodenavagator bug</vh></v>
-<v t="ekr.20050513141913.17"><vh>Fixed LaTex Coloring bug</vh></v>
-<v t="ekr.20050513141913.22"><vh>Error messages in scripts are now redirected properly.</vh></v>
-<v t="ekr.20050513141913.30"><vh>Fixed 2 crashers in nav_buttons plugin</vh></v>
-<v t="ekr.20050513141913.57"><vh>Fixed crasher in yoffsetTree</vh></v>
-<v t="ekr.20050513141913.60"><vh>Fixed crasher in undo</vh></v>
-<v t="ekr.20050513141913.82"><vh>Fixed  several problems with Extract and Extract Section</vh></v>
-<v t="ekr.20050513141913.91"><vh>Fixed bug with Delete in headlines</vh></v>
-<v t="ekr.20050513141913.127"><vh>Fixed bugs re initial_splitter_orientation &amp; @strings &amp; @ints generally</vh></v>
-<v t="ekr.20050513141913.140"><vh>Fixed bug with hoist + insert</vh></v>
-<v t="ekr.20050513141913.145"><vh>Fixed problem with settings dialog position when panes split horizontally</vh></v>
-<v t="ekr.20050513141913.149"><vh>Fixed problem changing shortcut &amp; redid shortcuts widget</vh></v>
-</v>
-<v t="ekr.20050513141913.187"><vh>New Features...</vh>
-<v t="ekr.20050513141913.97"><vh>Marking any node sets the outline changed</vh></v>
-<v t="ekr.20050513141913.188"><vh>Allow quoted urls in  @urls nodes</vh></v>
-<v t="ekr.20050513141913.194"><vh>Moved executeFile into core</vh></v>
-<v t="ekr.20050513141913.197"><vh>Rewrote g.getScript using at.writeFromString</vh></v>
-<v t="ekr.20050513141913.233"><vh>Added define_name arg to c.executeScript</vh></v>
-</v>
-</v>
-<v t="ekr.20050429094215"><vh>4.3-beta 1</vh>
-<v t="ekr.20050429094215.2"><vh>Fixed bugs...</vh>
-<v t="ekr.20050429094215.3"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
-<v t="ekr.20050429094215.22"><vh>Finally! fixed .leoID problem!</vh></v>
-<v t="ekr.20050429094215.31"><vh>Investigated problem with LeoPluginsRef.leo</vh></v>
-<v t="ekr.20050429094215.41"><vh>Fixed conflicts in menu shortcuts</vh></v>
-<v t="ekr.20050429094215.113"><vh>Fixed bug in p.initStatus caught by pychecker</vh></v>
-<v t="ekr.20050429094215.116"><vh>Fixed crasher in import logic (leoAtFile)</vh></v>
-<v t="ekr.20050429094215.120"><vh>Put in protections against unbounded recursion in idle_scrollTo</vh></v>
-</v>
-<v t="ekr.20050429094215.130"><vh>New features...</vh>
-<v t="ekr.20050429094215.131"><vh>Created stand-alone leoGlobals.py module</vh></v>
-<v t="ekr.20050429094215.139"><vh>Leo now ignores problems opening settings file for chapters plugin</vh></v>
-<v t="ekr.20050429094215.145"><vh>Improved write logic</vh></v>
-<v t="ekr.20050429094215.173"><vh>Rewrote the undo code</vh></v>
-<v t="ekr.20050429094215.286"><vh>Implemented undo/redo for Paste Retaining clones</vh></v>
-<v t="ekr.20050429094215.316"><vh>Added support for 'str_' uA's</vh></v>
-<v t="ekr.20050429094215.347"><vh>Removed unused params from leoAtFile.py</vh></v>
-<v t="ekr.20050429094215.353"><vh>Leo  saves recent files info in .leoRecentFiles.txt files</vh>
-<v t="ekr.20050429094215.354"><vh>What I did</vh></v>
-<v t="ekr.20050429094215.355"><vh>New plan</vh></v>
-<v t="ekr.20050429094215.161"><vh>write_Leo_file</vh>
-<v t="ekr.20050429094215.162"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.163"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.164"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.165"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.166"><vh>&lt;&lt; delete fileName &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.167"><vh>&lt;&lt; rename backupName to fileName &gt;&gt;</vh></v>
-<v t="ekr.20050429094215.168"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050429094215.141"><vh>Scanning @settings (g.app.config)</vh>
-<v t="ekr.20050429094215.142"><vh>openSettingsFile</vh></v>
-<v t="ekr.20050429094215.143"><vh>config.readSettingsFiles</vh></v>
-<v t="ekr.20050429094215.144"><vh>readSettings</vh></v>
-</v>
-<v t="ekr.20050429094215.350"><vh>setRecentFiles (c.configSettings)</vh></v>
-<v t="ekr.20050429094215.356"><vh>appendToRecentFiles (g.app.config)</vh></v>
-<v t="ekr.20050429094215.349"><vh>clearRecentFiles</vh></v>
-<v t="ekr.20050429094215.357"><vh>Reading and writing .leoRecentFiles.txt (g.app.config)</vh>
-<v t="ekr.20050429094215.358"><vh>readRecentFilesFile</vh></v>
-<v t="ekr.20050429094215.359"><vh>writeRecentFilesFile &amp; helper</vh>
-<v t="ekr.20050429094215.360"><vh>writeRecentFilesFileHelper</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050429095849"><vh>Finished all @settings coding</vh></v>
-</v>
-</v>
-<v t="ekr.20050313101229"><vh>4.3-a4</vh>
-<v t="ekr.20050313101229.2"><vh>Fixed bugs...</vh>
-<v t="ekr.20050313101229.69"><vh>Fix colorizer bug for initial @nocolor in @root nodes</vh></v>
-<v t="ekr.20050313101229.74"><vh>Fixed @wrap bug</vh></v>
-<v t="ekr.20050313101229.77"><vh>Fixed change-all bug</vh></v>
-</v>
-<v t="ekr.20050313103448"><vh>New features...</vh>
-<v t="ekr.20050313101229.95"><vh>Created Add Comments and Delete Comments commands</vh></v>
-<v t="ekr.20050313101229.94"><vh>Deprecated new_c key in hooks, added c key</vh></v>
-<v t="ekr.20050313103448.1"><vh>Added the 'before-create-leo-frame' hook</vh></v>
-<v t="ekr.20050313101229.101"><vh>Added support for mod_labels plugin</vh></v>
-</v>
-<v t="ekr.20050313101229.100"><vh>Revised plugins for the 4.3 code base</vh></v>
-</v>
-<v t="ekr.20050221104844"><vh>4.3-a3</vh>
-<v t="ekr.20050221104844.2"><vh>Bugs</vh>
-<v t="ekr.20050221104844.3"><vh>Fixed crasher in Tangle</vh></v>
-<v t="ekr.20050221104844.12"><vh>Applied patch to rst2 plugin</vh></v>
-<v t="ekr.20050221104844.14"><vh>Revised searchbox plugin so it works with Leo 4.3</vh></v>
-<v t="ekr.20050221104844.27"><vh>Fixed bugs in nav_buttons and nodenavigator plugins</vh></v>
-<v t="ekr.20050221104844.45"><vh>Made sure Leo asks for leoID at most once</vh></v>
-<v t="ekr.20050221104844.54"><vh>Fixed botch in g.pdb</vh></v>
-<v t="ekr.20050222100936"><vh>Fixed crasher when executing a script if the script was selected text in a new window</vh></v>
-</v>
-<v t="ekr.20050221104844.57"><vh>New features</vh>
-<v t="ekr.20050221104844.58"><vh>Added sets.py to distribution</vh></v>
-<v t="ekr.20050221104844.59"><vh>Added color='suppress' hack to g.es</vh></v>
-</v>
-</v>
-<v t="ekr.20050126100405"><vh>4.3-a2</vh>
-<v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
-<v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
-<v t="ekr.20050209141626.4"><vh>Fixed very old bug in Undo Insert Node </vh></v>
-<v t="ekr.20050209141626.8"><vh>Made sure to remove duplicates from recent files</vh></v>
-<v t="ekr.20050209141626.12"><vh>Fixed indentation problems in leoTkinterFind.py</vh></v>
-<v t="ekr.20050209141626.13"><vh>Changed leoConfig.txt to leoSettings.leo in Help menu, etc.</vh></v>
-<v t="ekr.20050209141626.16"><vh>Investigated recent files problems</vh></v>
-<v t="ekr.20050209141626.23"><vh>Improved queuing of log messages</vh></v>
-<v t="ekr.20050209141626.42"><vh>Fixed crasher in Change All command</vh></v>
-<v t="ekr.20050209141626.43"><vh>Fixed crasher in script button</vh></v>
-<v t="ekr.20050209141626.46"><vh>Fixed print problems on the Mac</vh></v>
-<v t="ekr.20050209141626.53"><vh>leoTest.runTests now makes copies of all positions</vh></v>
-<v t="ekr.20050209141626.54"><vh>Fixed problems with unit test file paths</vh></v>
-<v t="ekr.20050209141626.55"><vh>Made local config settings work again</vh></v>
-<v t="ekr.20050209141626.91"><vh>Fix problems searching for nothing but whitespace</vh></v>
-<v t="ekr.20050210101318"><vh>Fixed problems with typing return in the Find panel</vh></v>
-<v t="ekr.20050209141626.101"><vh>Buttons no longer work in toolbars when settings dialog is open</vh></v>
-<v t="ekr.20050209141626.102"><vh>Fixed bug in delayed focus logic</vh></v>
-<v t="ekr.20050209141626.105"><vh>Made sure Leo asks for leoID at most once</vh></v>
-<v t="ekr.20050209141626.113"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
-<v t="ekr.20050209141626.114"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
-<v t="ekr.20050211095754"><vh>Fixed bug reading encoding field in derived files</vh></v>
-<v t="ekr.20050212054743"><vh>Allow indented code blocks to be run using Execute Script command</vh></v>
-<v t="ekr.20050212144116"><vh>Fixed problems found by pychecker</vh></v>
-</v>
-<v t="ekr.20050209141626.150"><vh>New features...</vh>
-<v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
-<v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
-</v>
-<v t="ekr.20050209141626.185"><vh>Added support for top-level init function in plugins</vh></v>
-<v t="ekr.20050209141626.190"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
-<v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
-<v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
-<v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
-<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts, unit tests &amp; test routines</vh></v>
-<v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
-</v>
-</v>
-<v t="ekr.20050122090311"><vh>4.3-a1</vh>
-<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009"><vh>Using @settings trees and leoSettings.leo</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
-<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
-</v>
-<v t="ekr.20050123092834.520"><vh>Rewrote Leo's read/write logic</vh></v>
-<v t="ekr.20050123115804"><vh>Added Plugins Manager plugin</vh></v>
-<v t="ekr.20050123115804.1"><vh>You can install third-party extensions in Leo's extensions directory</vh></v>
-</v>
-<v t="ekr.20050123092834.1"><vh>Fixed bugs...</vh>
-<v t="ekr.20050123101208"><vh> Major bugs: these bugs corrupted derived files!</vh>
-<v t="ekr.20050123092834.432"><vh>Fixed double doc part bug</vh></v>
-<v t="ekr.20050123092834.497"><vh>Fixed bug in how Leo writes thin derived files</vh></v>
-</v>
-<v t="ekr.20050123092834.2"><vh>Commands</vh>
-<v t="ekr.20050123092834.6"><vh>Fixed problems with spawnv option of openWith</vh></v>
-<v t="ekr.20050123092834.19"><vh>Fixed bug in  Remove Sentinels command</vh></v>
-<v t="ekr.20050123092834.27"><vh>Fixed bug re Paste Node As Clone</vh></v>
-<v t="ekr.20050123092834.42"><vh>Fixed Pretty Print commands for Python 2.4</vh></v>
-<v t="ekr.20050123092834.71"><vh>Fixed crasher in Import Derived Files command</vh></v>
-<v t="ekr.20050123092834.510"><vh>Search commands are now restricted to hoisted area</vh></v>
-</v>
-<v t="ekr.20050123100706.1"><vh>Distribution</vh>
-<v t="ekr.20050123092834.491"><vh>Fixed file association in leoDist.leo</vh></v>
-</v>
-<v t="ekr.20050123092834.165"><vh>Files</vh>
-<v t="ekr.20050123092834.492"><vh>g.import wrappers return module if it is in sys.modules</vh></v>
-<v t="ekr.20050123092834.166"><vh>Disabled changes to comment delims in @@language and @@comment sentinels</vh></v>
-<v t="ekr.20050123092834.176"><vh>Made sure files that differ only in line ending get written if @lineending is in effect</vh></v>
-<v t="ekr.20050123092834.196"><vh>Fixed bug:  @nosent wrote sentinels!</vh></v>
-<v t="ekr.20050123092834.422"><vh>Fixed bug in replaceTargetFileIfDifferent</vh></v>
-<v t="ekr.20050123092834.424"><vh>Made sure that @ignore forces writing of inner @thin trees</vh></v>
-<v t="ekr.20050123092834.431"><vh>Fixed crasher when attempting to write a derived file to an invalid path</vh></v>
-<v t="ekr.20050123092834.434"><vh>Fixed Python 2.4 deprecation warning when saving .leo files</vh></v>
-<v t="ekr.20050123092834.499"><vh>Fixed crasher in getOutputNewline</vh></v>
-<v t="ekr.20050123092834.544"><vh>Always use os.rename in utils_rename</vh></v>
-<v t="ekr.20050123151338"><vh>Fixed bugs handling @language &amp; @comment in atFile.scanAllDirectives &amp; g.scanDirectives)</vh></v>
-</v>
-<v t="ekr.20050123103303"><vh>Gui</vh>
-<v t="ekr.20050123092834.502"><vh>Put the scrollWheel workaround in createTkTreeCanvas</vh></v>
-</v>
-<v t="ekr.20050123100706.2"><vh>Menus</vh>
-<v t="ekr.20050123092834.81"><vh>Fixed problems with Control-E</vh></v>
-<v t="ekr.20050123092834.490"><vh>Better handling of duplicate menu shortcuts</vh></v>
-</v>
-<v t="ekr.20050123092834.159"><vh>Nodes</vh>
-<v t="ekr.20050123092834.160"><vh>Fixed crash after cutting an imported node</vh></v>
-<v t="ekr.20050123092834.163"><vh>Removed invalid assert in lastVisible</vh></v>
-<v t="ekr.20050123093854.1"><vh>Fixed bugs in tnodes_iter and unique_tnodes_iter</vh></v>
-</v>
-<v t="ekr.20050123111723"><vh>Plugins</vh>
-<v t="ekr.20050123092834.1047"><vh>Fixed two bugs in Plugins Manager plugin</vh></v>
-<v t="ekr.20050123092834.1052"><vh>Fixed bug re referencing destroyed ivars</vh></v>
-<v t="ekr.20050123092834.1057"><vh>Fixed bug in registerOneHandler</vh></v>
-<v t="ekr.20050123092834.506"><vh>Fixed conflict between settings panel and chapters plugin</vh></v>
-</v>
-<v t="ekr.20050123092834.526"><vh>Pychecker</vh></v>
-<v t="ekr.20050123092834.438"><vh>Scripting</vh>
-<v t="ekr.20050123092834.439"><vh>Fixed unbounded recursion with --script and redirected output</vh></v>
-<v t="ekr.20050123092834.474"><vh>Script buttons now execute the entire script</vh></v>
-<v t="ekr.20050123092834.480"><vh>Fixed error reporting in executeScript when the error happens outside the script</vh></v>
-</v>
-<v t="ekr.20050123092834.486"><vh>Startup</vh>
-<v t="ekr.20050123092834.487"><vh>Non-existent command-line file becomes name of new Leo wiindow</vh></v>
-<v t="ekr.20050123092834.1011"><vh>computeHomeDir now handles references to other vars</vh></v>
-</v>
-</v>
-<v t="ekr.20050123092834.896"><vh>New or improved features...</vh>
-<v t="ekr.20050123110009"><vh>Using @settings trees and leoSettings.leo</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
-<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
-</v>
-<v t="ekr.20050123103303.1"><vh>Code</vh>
-<v t="ekr.20050123092834.520"><vh>Rewrote Leo's read/write logic</vh></v>
-<v t="ekr.20050123092834.173"><vh>Added g.cantImport</vh></v>
-<v t="ekr.20050123092834.901"><vh>Added g.fileLikeObject.readline</vh></v>
-<v t="ekr.20050123092834.928"><vh>Added support for g.app.debugSwitch in es_exception</vh></v>
-<v t="ekr.20050123092834.984"><vh>Restored drawing/event hooks</vh></v>
-<v t="ekr.20050123092834.1004"><vh>Added p=p param to all hooks containing v=v</vh></v>
-<v t="ekr.20050123092834.565"><vh>Implemented delayed focus scheme</vh></v>
-</v>
-<v t="ekr.20050123103521"><vh>Commands</vh>
-<v t="ekr.20050123092834.897"><vh>Added 'Expand Or Go Right' and 'Contract or Go Left' commands</vh></v>
-<v t="ekr.20050123092834.908"><vh>Added keyboard shortcuts to find panel</vh></v>
-<v t="ekr.20050123092834.1005"><vh>Find panels are now associated with individual Leo windows</vh></v>
-<v t="ekr.20050123105026"><vh>Find panels are now inited from @settings nodes</vh></v>
-<v t="ekr.20050123092834.961"><vh>Improved Go To Line Number and Execute Script commands</vh></v>
-<v t="ekr.20050123092834.1018"><vh>Improved support for relative path names</vh></v>
-<v t="ekr.20050123092834.1043"><vh>Implemented 'Undo Clear Recent Files'</vh></v>
-<v t="ekr.20050123092834.517"><vh>Removed old-style write commands</vh></v>
-</v>
-<v t="ekr.20050123092834.1044"><vh>Plugins &amp; extensions</vh>
-<v t="ekr.20050123115804"><vh>Added Plugins Manager plugin</vh></v>
-<v t="ekr.20050123115804.1"><vh>You can install third-party extensions in Leo's extensions directory</vh></v>
-<v t="ekr.20050123112151"><vh>Improved doHandlersForTag</vh></v>
-<v t="ekr.20050123092834.1013"><vh>Leo now associates modules with hook handlers</vh></v>
-</v>
-<v t="ekr.20050123103753"><vh>Syntax Coloring &amp; languages</vh>
-<v t="ekr.20050123092834.903"><vh>Added support for Ada</vh></v>
-<v t="ekr.20050123092834.929"><vh>Added support for Forth</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20050210102150"><vh>4.2... @file-thin, shared tnodes</vh>
-<v t="ekr.20040922074200"><vh>4.2 final</vh></v>
-<v t="ekr.20040914103359"><vh>4.2 rc1</vh>
-<v t="ekr.20040914103743.1"><vh>Added new features</vh>
-<v t="ekr.20040914103359.137"><vh>Added c.frame.openDirectory to sys.path when executing scripts</vh></v>
-<v t="ekr.20040914103359.37"><vh>Added expanded_click_area option to disable left click logic in outline pane</vh></v>
-<v t="ekr.20040914103359.2"><vh>Restored the "iconclick1/2" hooks</vh></v>
-<v t="ekr.20040914103359.19"><vh>(Allow longer headlines for to support long url's)</vh>
-<v t="ekr.20040914103359.20"><vh>Report</vh></v>
-<v t="ekr.20040914103359.21"><vh>idle_head_key</vh>
-<v t="ekr.20040914103359.22"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
-<v t="ekr.20040914103359.23"><vh>&lt;&lt; set the widget text to head &gt;&gt;</vh></v>
-<v t="ekr.20040914103359.24"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
-<v t="ekr.20040914103359.25"><vh>&lt;&lt; update p &gt;&gt;</vh></v>
-<v t="ekr.20040914103359.26"><vh>&lt;&lt; reconfigure p and all nodes joined to p &gt;&gt;</vh></v>
-<v t="ekr.20040914103359.27"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040914103743"><vh>Fixed bugs</vh>
-<v t="ekr.20040914103359.47"><vh>Disabled perfect import</vh></v>
-<v t="ekr.20040914103359.127"><vh>Fixed bugs in Tangle/Untangle</vh></v>
-<v t="ekr.20040914103359.12"><vh>Fixed Import Derived Files command</vh></v>
-<v t="ekr.20040914103359.15"><vh>Fixed parsing of minimal &lt;preferences&gt; tag</vh></v>
-<v t="ekr.20040914103359.7"><vh>Fixed problem with tabs on MacOs</vh></v>
-<v t="ekr.20040914103359.28"><vh>Fixed read errors with @language html</vh></v>
-<v t="ekr.20040914103359.4"><vh>Made sure a proper message is given with invalid versions of Python</vh></v>
-<v t="ekr.20040914103359.110"><vh>Removed failed assert from colorizer</vh></v>
-<v t="ekr.20040914103359.31"><vh>Removed spurious "Warning: updating changed text" messages</vh></v>
-<v t="ekr.20040914103359.129"><vh>Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac</vh></v>
-</v>
-</v>
-<v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
-<v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
-<v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
-<v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
-<v t="ekr.20040804164600.56"><vh>Added 3 .cascading style sheets to the distribution list</vh></v>
-<v t="ekr.20040804164600.98"><vh>Fixed some bugs in g.importFromPath</vh></v>
-<v t="ekr.20040804164600.102"><vh>Fixed major bug in write logic</vh></v>
-<v t="ekr.20040804164600.265"><vh>Fixed bug in p.isAncestorOf</vh></v>
-<v t="ekr.20040804164600.275"><vh>Leo now writes only the currently selected tree when pasting to the clipboard</vh></v>
-<v t="ekr.20040804164600.377"><vh>Fixed performance bug when reading .leo files</vh></v>
-<v t="ekr.20040804170846"><vh>Leo now reports problems with bad directories more clearly</vh></v>
-<v t="ekr.20040804164600.394"><vh>Leo reads collapsed xml tags properly in .leo files</vh></v>
-<v t="ekr.20040804164600.406"><vh>Leo makes brings the confirm save box to the front</vh></v>
-<v t="ekr.20040804164600.419"><vh>Improved how es_exception gets line number of errors</vh></v>
-<v t="ekr.20040804164600.421"><vh>Fixed major bug: changing headline now marks subnodes dirty</vh></v>
-<v t="ekr.20040804164600.470"><vh>Leo now gives update warning only once per derived file</vh></v>
-<v t="ekr.20040804164600.471"><vh>Leo updates tnodeLists properly in all situations</vh></v>
-<v t="ekr.20040804164600.515"><vh>Fixed several leaks of positions</vh></v>
-<v t="ekr.20040804171818"><vh>Fixed all unit tests so they work with both Python 2.2 and Python 2.3</vh></v>
-</v>
-<v t="ekr.20040804165258.2"><vh>Features</vh>
-<v t="ekr.20040804172113"><vh>@test and @suite greatly aid unit testing</vh></v>
-<v t="ekr.20040804172113.1"><vh>New scripts in test.leo make it very easy to use the gc, profile and timeit modules</vh></v>
-<v t="ekr.20040804165258.3"><vh>Import dialogs allow multiple selections</vh></v>
-<v t="ekr.20040804165258.4"><vh>New Check menu and commands</vh></v>
-<v t="ekr.20040804170531"><vh>Perfect Import feature automatically corrects imported files</vh></v>
-<v t="ekr.20040804170657"><vh>Improved performance of outline pane</vh></v>
-<v t="ekr.20040804164600.424"><vh>The Go To Line Number command ignores all @all nodes</vh></v>
-</v>
-</v>
-<v t="EKR.20040628095213"><vh>4.2 beta 1 &amp; beta 2</vh>
-<v t="EKR.20040628095213.311"><vh>New coding conventions</vh></v>
-<v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
-<v t="ekr.20040705111716"><vh>in 4.2 b2</vh>
-<v t="ekr.20040705111716.1"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
-<v t="ekr.20040705111716.45"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
-<v t="ekr.20040705111716.126"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
-<v t="ekr.20040705150130"><vh>Leo passes all important pychecker tests</vh></v>
-</v>
-<v t="ekr.20040705112148"><vh>in 4.2 b1</vh>
-<v t="EKR.20040628095213.513"><vh>Changed *nix install script</vh></v>
-<v t="EKR.20040628100535"><vh>Fixed bugs</vh>
-<v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
-<v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
-<v t="EKR.20040628095213.56"><vh>Fixed syntax colouring Bug in html mode</vh></v>
-<v t="EKR.20040628095213.60"><vh>Colorizing fixes</vh></v>
-<v t="EKR.20040628095213.113"><vh>Fixed Select All bug</vh></v>
-<v t="EKR.20040628095213.121"><vh>Fixed bugs in @tab_width: support backspace with negative tab width</vh></v>
-<v t="EKR.20040628095213.143"><vh>Fixed bugs in Remove Sentinel command</vh></v>
-<v t="EKR.20040628095213.160"><vh>Eliminated spurious error messages in Import Derived File command</vh></v>
-<v t="EKR.20040628095213.192"><vh>Removed gnx in headlines when importing thin derived files</vh></v>
-<v t="EKR.20040628095213.202"><vh>Fixed bugs reading 4.1 files</vh></v>
-<v t="EKR.20040628095213.213"><vh>Fixed Open With bug</vh></v>
-<v t="EKR.20040628095213.225"><vh>Fixed Go To Line Number command</vh></v>
-<v t="EKR.20040628095213.246"><vh>Fixed crash when importing Borland wstring.cpp</vh></v>
-<v t="EKR.20040628095213.279"><vh>Fixed bug in insertBodyTime</vh></v>
-<v t="EKR.20040628095213.297"><vh>Fixed bug when pasting large text into headlines</vh></v>
-<v t="EKR.20040628095213.308"><vh>Fixed bug in delete command</vh></v>
-<v t="EKR.20040628095213.312"><vh>Fixed oops: nullGui setIdleTimeHook</vh></v>
-<v t="EKR.20040628095213.324"><vh>Fixed problems with trailing newlines and spurious changed bit</vh></v>
-<v t="EKR.20040628095213.346"><vh>Fixed headline key handling</vh></v>
-<v t="EKR.20040628095213.348"><vh>Fixed Problems executing script</vh></v>
-<v t="EKR.20040628095213.354"><vh>Fixed problem with PHP and @last</vh></v>
-<v t="EKR.20040628095213.366"><vh>Fixed bug when writing unknownAttributes</vh></v>
-<v t="EKR.20040628095213.368"><vh>Fixed bugs opening a second file</vh></v>
-<v t="EKR.20040628095213.404"><vh>Fixed bug: @last silently failed when extra lines exist</vh></v>
-<v t="EKR.20040628095213.407"><vh>Fixed hang when dragging from one clone copy to another</vh></v>
-<v t="EKR.20040628095213.412"><vh>Fixed crash in Write Missing</vh></v>
-<v t="EKR.20040628095213.442"><vh>Fixed bug in getScript</vh></v>
-<v t="EKR.20040628095213.444"><vh>Fixed problems with @all</vh></v>
-<v t="EKR.20040628095213.499"><vh>Fixed double print in Execute Script command</vh></v>
-<v t="EKR.20040628095213.512"><vh>Fixed bug reading leo.nsi</vh></v>
-</v>
-<v t="EKR.20040628100535.1"><vh>Added new features</vh>
-<v t="EKR.20040628095213.52"><vh>Allowed &lt;/leo_header&gt; tag</vh></v>
-<v t="EKR.20040628095213.109"><vh>Replaced the word "Leo" with Leo icon in Find/Compare/Prefs windows</vh></v>
-<v t="EKR.20040628095213.110"><vh>Improved Import command slightly</vh></v>
-<v t="EKR.20040628095213.197"><vh>Added 3 files to distribution lists</vh></v>
-<v t="EKR.20040628095213.198"><vh>Supported @tabwidth in indent/dedent</vh></v>
-<v t="EKR.20040628095213.264"><vh>Import now creates absolute path</vh></v>
-<v t="EKR.20040628095213.269"><vh>Created @killcolor directive</vh></v>
-<v t="EKR.20040628095213.282"><vh>Added Paste Retaining Clones command</vh></v>
-<v t="EKR.20040628095213.314"><vh>Added readLineGenerator &amp; readLineClass to leoGlobals</vh></v>
-<v t="EKR.20040628095213.334"><vh>Much better error handling in executeScript</vh></v>
-<v t="EKR.20040628095213.377"><vh>Recovered nodes when reading .leo files containing topology errors</vh></v>
-<v t="EKR.20040628095213.391"><vh>Generalized write-to-string logic</vh></v>
-<v t="EKR.20040628095213.408"><vh>Added case_sensitiveLanguage to colorizer</vh></v>
-<v t="EKR.20040628095213.425"><vh>Write entire @thin tree on write errors</vh></v>
-<v t="EKR.20040628095213.485"><vh>Handled inner @language and @comment properly</vh></v>
-<v t="EKR.20040628095213.490"><vh>Better reporting of body text conflicts</vh></v>
-<v t="EKR.20040628095213.493"><vh>Improved error handling for unknownAttributes</vh></v>
-<v t="EKR.20040628095213.501"><vh>Read and write all t.unknownAttributes in top vnode of an @thin tree</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040601084317"><vh>4.2 a3</vh>
-<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
-<v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
-<v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
-<v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
-<v t="EKR.20040601084317.142"><vh>Fixed problems saving unknownAttribute field</vh></v>
-<v t="EKR.20040601102115"><vh>Fixed unicode problem in the Dump Outline command</vh></v>
-</v>
-<v t="EKR.20040601101227"><vh>New Features</vh>
-<v t="EKR.20040601101227.1"><vh>Leo ignores all directives in @all trees</vh></v>
-<v t="EKR.20040601101430.1"><vh>@+-middle sentinels allow sections to be defined in grandchildren</vh></v>
-<v t="EKR.20040601101510"><vh>@clone sentinel allows siblings to be cloned</vh></v>
-<v t="EKR.20040601101547"><vh>Created @thin, @nosent, @noref and @asis abbreviations</vh>
-<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
-</v>
-<v t="EKR.20040601084317.102"><vh>Made undo extensible</vh></v>
-<v t="EKR.20040601102703"><vh>Started work on simple new undo scheme</vh></v>
-<v t="EKR.20040601084317.161"><vh>Created new c, p, v iterators</vh></v>
-</v>
-<v t="EKR.20040601102808"><vh>Known bugs</vh></v>
-</v>
-<v t="EKR.20040518070558"><vh>4.2 a2</vh>
-<v t="EKR.20040518070940.5"><vh>Implemented @file-thin</vh></v>
-<v t="EKR.20040518070824"><vh>Fixed bugs</vh>
-<v t="EKR.20040518071415"><vh>Fixed clone bug that caused parts of outlines to disappear</vh></v>
-<v t="EKR.20040518070940.156"><vh>Fixed long-standing problem with the outline-only command</vh></v>
-<v t="EKR.20040518070824.1"><vh>Made sure file indices are always assigned when writing files.</vh></v>
-<v t="EKR.20040518070940"><vh>Fixed problems with missing tnodeList with @file-noref</vh></v>
-<v t="EKR.20040518070940.164"><vh>Added t.writeBit</vh></v>
-</v>
-<v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
-</v>
-</v>
-<v t="ekr.20050210102150.1"><vh>4.1... gnx's</vh>
-<v t="ekr.20040216151748"><vh>4.1 final</vh>
-<v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
-<v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
-<v t="ekr.20040216153725"><vh>Changed Undo/Redo messages</vh></v>
-<v t="ekr.20040217075627"><vh>Fixed clone bug when pasting nodes</vh></v>
-<v t="ekr.20040217085036.1"><vh>Investigated encoding problem: it's a Python 2.3 bug</vh></v>
-</v>
-<v t="ekr.20040131040356"><vh>4.1 rc4</vh>
-<v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
-<v t="ekr.20040201114855.42"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
-<v t="ekr.20040201114855.91"><vh>newButtons.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201114855.29"><vh>nodenavigator.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201114855.36"><vh>rowcol.py: EKR</vh></v>
-<v t="ekr.20040201114855.3"><vh>rst2.py plugin: Steve Zatz</vh></v>
-<v t="ekr.20040201114855.13"><vh>searchbox.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201120903"><vh>status_line.py plugin: EKR</vh></v>
-</v>
-<v t="ekr.20040131041015"><vh>New features in 4.1 rc4</vh>
-<v t="ekr.20040131040544.10"><vh>Leo no longer automatically draws the status area</vh></v>
-<v t="ekr.20040131040544.21"><vh>Esc and enter key now work in the find panel</vh></v>
-<v t="ekr.20040131040544.55"><vh>Improved message for orphan nodes</vh></v>
-<v t="ekr.20040131040544.178"><vh>Eliminated marking nodes dirty unnecessarily</vh></v>
-<v t="ekr.20040131040544.222"><vh>Execute Script command now ends all nodes with a newline</vh></v>
-<v t="ekr.20040131040544.2"><vh>Added message when plugins are disabled</vh></v>
-<v t="ekr.20040201061329"><vh>Created status_line.py plugin</vh></v>
-<v t="ekr.20040201114855.105"><vh>Simplified operation of script-find/change &amp; improved documentation</vh>
-<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
-<v t="edream.111803060152.1"><vh>How it works</vh></v>
-<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
-<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
-</v>
-</v>
-<v t="ekr.20040201114855.106"><vh>Added done message to Mark Changed commands</vh></v>
-</v>
-<v t="ekr.20040131040356.1"><vh>Bugs fixed in 4.1 rc4</vh>
-<v t="ekr.20040131044727"><vh>Fixed several bugs when writing derived files</vh></v>
-<v t="ekr.20040131040754"><vh>Fixed several crashers</vh></v>
-<v t="ekr.20040131040544.5"><vh>Fixed "bad leo file" when reading some 3.x .leo files</vh></v>
-<v t="ekr.20040131040544.18"><vh>Fixed huge performance bug in cut/copy node commands</vh></v>
-<v t="ekr.20040131040544.32"><vh>Leo now properly re-enables drawing after exceptions</vh></v>
-<v t="ekr.20040201114855.107"><vh>Fixed major bug in tkFind.init</vh></v>
-<v t="ekr.20040131040544.73"><vh>Fixed bug in Move Up command</vh></v>
-<v t="ekr.20040131040544.81"><vh>Fixed bug in Import Derived File</vh></v>
-<v t="ekr.20040131040544.146"><vh>Fixed bugs related to saving read-only files</vh></v>
-<v t="ekr.20040131040544.169"><vh>Fixed bug in Import Python Window command when using Python 2.2</vh></v>
-<v t="ekr.20040131040544.228"><vh>Fixed bugs in Convert All BlanksTabs commands</vh></v>
-<v t="ekr.20040131040544.258"><vh>Fixed crashes in open_shell.py plugin</vh></v>
-<v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
-<v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
-<v t="ekr.20040131100557"><vh>Fixed glitches when inserting node in hoisted outline</vh></v>
-<v t="ekr.20040203084228"><vh>Fixed bugs in search command</vh></v>
-</v>
-<v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
-<v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
-<v t="ekr.20040131040356.4"><vh>New configuration settings</vh></v>
-<v t="ekr.20040131040356.5"><vh>New features</vh></v>
-</v>
-<v t="edream.121403160546"><vh>4.1 rc3</vh>
-<v t="edream.121403165221"><vh>Bugs fixed in this release</vh></v>
-<v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
-<v t="edream.121403161017.1"><vh>New code-level features</vh></v>
-<v t="edream.121403161017.2"><vh>New configuration settings</vh></v>
-<v t="edream.121403161340"><vh>New features</vh></v>
-</v>
-<v t="edream.110603185805"><vh>4.1 beta 5</vh>
-<v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
-<v t="edream.120403180443"><vh>New and improved features</vh>
-<v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
-<v t="edream.120403174147.112"><vh>Leo now adjusts newly opened windows so they fit on the screen</vh></v>
-<v t="edream.120403174147.119"><vh>Tested support for Unicode file &amp; directory names</vh></v>
-<v t="edream.120403174147.128"><vh>Added code so @url nodes may open .leo files</vh></v>
-<v t="edream.120403174147.56"><vh>Fixed problems with @lineending platform</vh></v>
-</v>
-<v t="edream.120403174241"><vh>Bugs fixed</vh>
-<v t="edream.120403174147.30"><vh>Fixed crasher in Apply Settings command</vh></v>
-<v t="edream.120403174147.102"><vh>Fixed crasher in Toggle Angle Brackets command</vh></v>
-<v t="edream.120403174147.109"><vh>Fixed crasher when setting Icon in Linux)</vh></v>
-<v t="edream.120403174147.33"><vh>Fixed Find panel bug on the Mac</vh></v>
-<v t="edream.120403174147.36"><vh>Fixed Import backslash-newline bug</vh></v>
-<v t="edream.120403174147.61"><vh>Fixed Linux import problem</vh></v>
-<v t="edream.120403174147.63"><vh>Fixed Recent files crasher</vh></v>
-<v t="edream.120403174147.65"><vh>Fixed Replace Blanks command</vh></v>
-<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
-<v t="edream.120403174147.94"><vh>Fixed several long-standing bugs related to Extract commands</vh></v>
-</v>
-</v>
-<v t="edream.120403180443.1"><vh>Changes made in earlier 4.1 betas</vh>
-<v t="edream.110603190234.1"><vh>Code-level features</vh>
-<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
-<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
-<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
-</v>
-<v t="edream.110603190404"><vh>Fixed bugs</vh>
-<v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
-<v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
-<v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
-<v t="edream.111803060643"><vh>Fixed LaTeX syntax coloring bug</vh></v>
-</v>
-<v t="edream.110603192009"><vh>Improved format of .leo files</vh>
-<v t="edream.110603190322.9"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
-<v t="edream.110603190322.10"><vh>Leo now writes node_only find prefs</vh></v>
-<v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
-</v>
-<v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
-<v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
-<v t="edream.110203163054.833"><vh>Executing Python scripts in body text</vh></v>
-<v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
-<v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
-<v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
-<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
-<v t="edream.111803060152.1"><vh>How it works</vh></v>
-<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
-<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
-</v>
-</v>
-<v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
-<v t="edream.111803062437"><vh>Shift commands now shift single line if no selection</vh></v>
-</v>
-<v t="edream.110303182719"><vh>New config settings</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
-</v>
-<v t="ekr.20050210102358"><vh>4.0... New read logic eliminates read errors, eliminated child indices</vh>
-<v t="edream.110203163054.66"><vh>4.0.1 through 4.0.4</vh></v>
-<v t="edream.110203163054.67"><vh>4.0 final</vh>
-<v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
-<v t="edream.110203163054.69"><vh>4.0 beta 3</vh>
-<v t="edream.110203163054.70"><vh>Fixed bugs</vh>
-<v t="edream.110203163054.71"><vh>Fixed bug that caused some clones not to be marked as clones</vh></v>
-<v t="edream.110203163054.72"><vh>Corrected problems with setting icons on Linux</vh></v>
-<v t="edream.110203163054.73"><vh>Fixed crasher in sentinelName</vh></v>
-<v t="edream.110203163054.74"><vh>Reenabled orphans &amp; ignored test in new write logic</vh></v>
-</v>
-<v t="edream.110203163054.75"><vh>New features</vh>
-<v t="edream.110203163054.76"><vh>Added support for unknown tnode and vnode attributes</vh></v>
-<v t="edream.110203163054.77"><vh>Added build number to signon</vh></v>
-<v t="edream.110203163054.78"><vh>Added better error message in setDefaultIcon</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.79"><vh>4.0 beta 2</vh>
-<v t="edream.110203163054.80"><vh>To-do for 4.0 final</vh></v>
-<v t="edream.110203163054.81"><vh>Fixed Bugs</vh>
-<v t="edream.110203163054.82"><vh>Added crucial defensive checks in v.headString() and v.bodySting()</vh></v>
-<v t="edream.110203163054.83"><vh>Ensured newlines before all sentinels in @rawfile</vh></v>
-<v t="edream.110203163054.84"><vh>Fixed bugs involving find params</vh></v>
-<v t="edream.110203163054.85"><vh>Fixed Python Import bug</vh></v>
-<v t="edream.110203163054.86"><vh>Fixed several more unicode bugs</vh></v>
-<v t="edream.110203163054.87"><vh>Fixed crasher in Go To Outline command.</vh></v>
-<v t="edream.110203163054.88"><vh>Fixed @rawfile write problem</vh></v>
-</v>
-<v t="edream.110203163054.89"><vh>Improved commands</vh>
-<v t="edream.110203163054.90"><vh>Finished Import Derived File command and made it undoable</vh></v>
-<v t="edream.110203163054.91"><vh>Moved Clear Recent Files menu item into Recent Files menu</vh></v>
-<v t="edream.110203163054.92"><vh>Added better log message for Convert All Tabs/Blanks commands</vh></v>
-<v t="edream.110203163054.93"><vh>Marked changed nodes &amp; make the @file node and the outline dirty.</vh></v>
-<v t="edream.110203163054.94"><vh>Rewrote icon code so it doesn't use PIL or tkIcon in Python 2.3</vh></v>
-<v t="edream.110203163054.95"><vh>Created leoGui base class for tkinterGui class</vh></v>
-</v>
-<v t="edream.110203163054.96"><vh>New and improved settings</vh>
-<v t="edream.110203163054.97"><vh>Added support for two new settings affecting drags</vh></v>
-<v t="edream.110203163054.98"><vh>changed default for config.write_old_format_derived_files</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.99"><vh>4.0 beta 1</vh>
-<v t="edream.110203163054.100"><vh>4.0 Theory of operation</vh></v>
-<v t="edream.110203163054.101"><vh>New commands &amp; options</vh>
-<v t="edream.110203163054.102"><vh>New write_old_format_derived_files option</vh></v>
-<v t="edream.110203163054.103"><vh>New Clear Recent Files command</vh></v>
-<v t="edream.110203163054.104"><vh>New Import Derived File command</vh></v>
-<v t="edream.110203163054.105"><vh>New Write 3.x/4.x Derived Files &amp; autosave</vh></v>
-</v>
-<v t="edream.110203163054.106"><vh>New plugins</vh></v>
-<v t="edream.110203163054.107"><vh>New read logic and greatly inproved error recovery</vh>
-<v t="edream.110203163054.108"><vh>Added test for unvisited nodes in read logic</vh></v>
-<v t="edream.110203163054.109"><vh>Error recovery is _much_ better than before</vh></v>
-</v>
-<v t="edream.110203163054.110"><vh>Improvements &amp; bug fixes</vh>
-<v t="edream.110203163054.111"><vh>Added horizontal scrollbar in body pane when @nowrap in effect</vh></v>
-<v t="edream.110203163054.112"><vh>Added support for Python 2.3</vh></v>
-<v t="edream.110203163054.113"><vh>Leo recycles window objects only if more than one window open</vh></v>
-<v t="edream.110203163054.114"><vh>Removed "not undoable" message from Read @file Nodes command</vh></v>
-<v t="edream.110203163054.115"><vh>Removed Open Python Window command</vh></v>
-<v t="edream.110203163054.116"><vh>Simplified read and write code</vh></v>
-</v>
-</v>
-</v>
-</v>
+<v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
 <v t="edream.110203163054.119"><vh>3.12 final</vh>
 <v t="edream.110203163054.120"><vh>Bug fixes (major)</vh>
@@ -2292,7 +1509,791 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20050210102358"><vh>4.0... New read logic eliminates read errors, eliminated child indices</vh>
+<v t="edream.110203163054.66"><vh>4.0.1 through 4.0.4</vh></v>
+<v t="edream.110203163054.67"><vh>4.0 final</vh>
+<v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
+<v t="edream.110203163054.69"><vh>4.0 beta 3</vh>
+<v t="edream.110203163054.70"><vh>Fixed bugs</vh>
+<v t="edream.110203163054.71"><vh>Fixed bug that caused some clones not to be marked as clones</vh></v>
+<v t="edream.110203163054.72"><vh>Corrected problems with setting icons on Linux</vh></v>
+<v t="edream.110203163054.73"><vh>Fixed crasher in sentinelName</vh></v>
+<v t="edream.110203163054.74"><vh>Reenabled orphans &amp; ignored test in new write logic</vh></v>
+</v>
+<v t="edream.110203163054.75"><vh>New features</vh>
+<v t="edream.110203163054.76"><vh>Added support for unknown tnode and vnode attributes</vh></v>
+<v t="edream.110203163054.77"><vh>Added build number to signon</vh></v>
+<v t="edream.110203163054.78"><vh>Added better error message in setDefaultIcon</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.79"><vh>4.0 beta 2</vh>
+<v t="edream.110203163054.80"><vh>To-do for 4.0 final</vh></v>
+<v t="edream.110203163054.81"><vh>Fixed Bugs</vh>
+<v t="edream.110203163054.82"><vh>Added crucial defensive checks in v.headString() and v.bodySting()</vh></v>
+<v t="edream.110203163054.83"><vh>Ensured newlines before all sentinels in @rawfile</vh></v>
+<v t="edream.110203163054.84"><vh>Fixed bugs involving find params</vh></v>
+<v t="edream.110203163054.85"><vh>Fixed Python Import bug</vh></v>
+<v t="edream.110203163054.86"><vh>Fixed several more unicode bugs</vh></v>
+<v t="edream.110203163054.87"><vh>Fixed crasher in Go To Outline command.</vh></v>
+<v t="edream.110203163054.88"><vh>Fixed @rawfile write problem</vh></v>
+</v>
+<v t="edream.110203163054.89"><vh>Improved commands</vh>
+<v t="edream.110203163054.90"><vh>Finished Import Derived File command and made it undoable</vh></v>
+<v t="edream.110203163054.91"><vh>Moved Clear Recent Files menu item into Recent Files menu</vh></v>
+<v t="edream.110203163054.92"><vh>Added better log message for Convert All Tabs/Blanks commands</vh></v>
+<v t="edream.110203163054.93"><vh>Marked changed nodes &amp; make the @file node and the outline dirty.</vh></v>
+<v t="edream.110203163054.94"><vh>Rewrote icon code so it doesn't use PIL or tkIcon in Python 2.3</vh></v>
+<v t="edream.110203163054.95"><vh>Created leoGui base class for tkinterGui class</vh></v>
+</v>
+<v t="edream.110203163054.96"><vh>New and improved settings</vh>
+<v t="edream.110203163054.97"><vh>Added support for two new settings affecting drags</vh></v>
+<v t="edream.110203163054.98"><vh>changed default for config.write_old_format_derived_files</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.99"><vh>4.0 beta 1</vh>
+<v t="edream.110203163054.100"><vh>4.0 Theory of operation</vh></v>
+<v t="edream.110203163054.101"><vh>New commands &amp; options</vh>
+<v t="edream.110203163054.102"><vh>New write_old_format_derived_files option</vh></v>
+<v t="edream.110203163054.103"><vh>New Clear Recent Files command</vh></v>
+<v t="edream.110203163054.104"><vh>New Import Derived File command</vh></v>
+<v t="edream.110203163054.105"><vh>New Write 3.x/4.x Derived Files &amp; autosave</vh></v>
+</v>
+<v t="edream.110203163054.106"><vh>New plugins</vh></v>
+<v t="edream.110203163054.107"><vh>New read logic and greatly inproved error recovery</vh>
+<v t="edream.110203163054.108"><vh>Added test for unvisited nodes in read logic</vh></v>
+<v t="edream.110203163054.109"><vh>Error recovery is _much_ better than before</vh></v>
+</v>
+<v t="edream.110203163054.110"><vh>Improvements &amp; bug fixes</vh>
+<v t="edream.110203163054.111"><vh>Added horizontal scrollbar in body pane when @nowrap in effect</vh></v>
+<v t="edream.110203163054.112"><vh>Added support for Python 2.3</vh></v>
+<v t="edream.110203163054.113"><vh>Leo recycles window objects only if more than one window open</vh></v>
+<v t="edream.110203163054.114"><vh>Removed "not undoable" message from Read @file Nodes command</vh></v>
+<v t="edream.110203163054.115"><vh>Removed Open Python Window command</vh></v>
+<v t="edream.110203163054.116"><vh>Simplified read and write code</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050210102150.1"><vh>4.1... gnx's</vh>
+<v t="ekr.20040216151748"><vh>4.1 final</vh>
+<v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
+<v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
+<v t="ekr.20040216153725"><vh>Changed Undo/Redo messages</vh></v>
+<v t="ekr.20040217075627"><vh>Fixed clone bug when pasting nodes</vh></v>
+<v t="ekr.20040217085036.1"><vh>Investigated encoding problem: it's a Python 2.3 bug</vh></v>
+</v>
+<v t="ekr.20040131040356"><vh>4.1 rc4</vh>
+<v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
+<v t="ekr.20040201114855.42"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
+<v t="ekr.20040201114855.91"><vh>newButtons.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.29"><vh>nodenavigator.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.36"><vh>rowcol.py: EKR</vh></v>
+<v t="ekr.20040201114855.3"><vh>rst2.py plugin: Steve Zatz</vh></v>
+<v t="ekr.20040201114855.13"><vh>searchbox.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201120903"><vh>status_line.py plugin: EKR</vh></v>
+</v>
+<v t="ekr.20040131041015"><vh>New features in 4.1 rc4</vh>
+<v t="ekr.20040131040544.10"><vh>Leo no longer automatically draws the status area</vh></v>
+<v t="ekr.20040131040544.21"><vh>Esc and enter key now work in the find panel</vh></v>
+<v t="ekr.20040131040544.55"><vh>Improved message for orphan nodes</vh></v>
+<v t="ekr.20040131040544.178"><vh>Eliminated marking nodes dirty unnecessarily</vh></v>
+<v t="ekr.20040131040544.222"><vh>Execute Script command now ends all nodes with a newline</vh></v>
+<v t="ekr.20040131040544.2"><vh>Added message when plugins are disabled</vh></v>
+<v t="ekr.20040201061329"><vh>Created status_line.py plugin</vh></v>
+<v t="ekr.20040201114855.105"><vh>Simplified operation of script-find/change &amp; improved documentation</vh>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
+<v t="ekr.20040201114855.106"><vh>Added done message to Mark Changed commands</vh></v>
+</v>
+<v t="ekr.20040131040356.1"><vh>Bugs fixed in 4.1 rc4</vh>
+<v t="ekr.20040131044727"><vh>Fixed several bugs when writing derived files</vh></v>
+<v t="ekr.20040131040754"><vh>Fixed several crashers</vh></v>
+<v t="ekr.20040131040544.5"><vh>Fixed "bad leo file" when reading some 3.x .leo files</vh></v>
+<v t="ekr.20040131040544.18"><vh>Fixed huge performance bug in cut/copy node commands</vh></v>
+<v t="ekr.20040131040544.32"><vh>Leo now properly re-enables drawing after exceptions</vh></v>
+<v t="ekr.20040201114855.107"><vh>Fixed major bug in tkFind.init</vh></v>
+<v t="ekr.20040131040544.73"><vh>Fixed bug in Move Up command</vh></v>
+<v t="ekr.20040131040544.81"><vh>Fixed bug in Import Derived File</vh></v>
+<v t="ekr.20040131040544.146"><vh>Fixed bugs related to saving read-only files</vh></v>
+<v t="ekr.20040131040544.169"><vh>Fixed bug in Import Python Window command when using Python 2.2</vh></v>
+<v t="ekr.20040131040544.228"><vh>Fixed bugs in Convert All BlanksTabs commands</vh></v>
+<v t="ekr.20040131040544.258"><vh>Fixed crashes in open_shell.py plugin</vh></v>
+<v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
+<v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
+<v t="ekr.20040131100557"><vh>Fixed glitches when inserting node in hoisted outline</vh></v>
+<v t="ekr.20040203084228"><vh>Fixed bugs in search command</vh></v>
+</v>
+<v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
+<v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
+<v t="ekr.20040131040356.4"><vh>New configuration settings</vh></v>
+<v t="ekr.20040131040356.5"><vh>New features</vh></v>
+</v>
+<v t="edream.121403160546"><vh>4.1 rc3</vh>
+<v t="edream.121403165221"><vh>Bugs fixed in this release</vh></v>
+<v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
+<v t="edream.121403161017.1"><vh>New code-level features</vh></v>
+<v t="edream.121403161017.2"><vh>New configuration settings</vh></v>
+<v t="edream.121403161340"><vh>New features</vh></v>
+</v>
+<v t="edream.110603185805"><vh>4.1 beta 5</vh>
+<v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
+<v t="edream.120403180443"><vh>New and improved features</vh>
+<v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
+<v t="edream.120403174147.112"><vh>Leo now adjusts newly opened windows so they fit on the screen</vh></v>
+<v t="edream.120403174147.119"><vh>Tested support for Unicode file &amp; directory names</vh></v>
+<v t="edream.120403174147.128"><vh>Added code so @url nodes may open .leo files</vh></v>
+<v t="edream.120403174147.56"><vh>Fixed problems with @lineending platform</vh></v>
+</v>
+<v t="edream.120403174241"><vh>Bugs fixed</vh>
+<v t="edream.120403174147.30"><vh>Fixed crasher in Apply Settings command</vh></v>
+<v t="edream.120403174147.102"><vh>Fixed crasher in Toggle Angle Brackets command</vh></v>
+<v t="edream.120403174147.109"><vh>Fixed crasher when setting Icon in Linux)</vh></v>
+<v t="edream.120403174147.33"><vh>Fixed Find panel bug on the Mac</vh></v>
+<v t="edream.120403174147.36"><vh>Fixed Import backslash-newline bug</vh></v>
+<v t="edream.120403174147.61"><vh>Fixed Linux import problem</vh></v>
+<v t="edream.120403174147.63"><vh>Fixed Recent files crasher</vh></v>
+<v t="edream.120403174147.65"><vh>Fixed Replace Blanks command</vh></v>
+<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bugs</vh></v>
+<v t="edream.120403174147.94"><vh>Fixed several long-standing bugs related to Extract commands</vh></v>
+</v>
+</v>
+<v t="edream.120403180443.1"><vh>Changes made in earlier 4.1 betas</vh>
+<v t="edream.110603190234.1"><vh>Code-level features</vh>
+<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
+<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
+<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+</v>
+<v t="edream.110603190404"><vh>Fixed bugs</vh>
+<v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
+<v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
+<v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
+<v t="edream.111803060643"><vh>Fixed LaTeX syntax coloring bug</vh></v>
+</v>
+<v t="edream.110603192009"><vh>Improved format of .leo files</vh>
+<v t="edream.110603190322.9"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
+<v t="edream.110603190322.10"><vh>Leo now writes node_only find prefs</vh></v>
+<v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
+</v>
+<v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
+<v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
+<v t="edream.110203163054.833"><vh>Executing Python scripts in body text</vh></v>
+<v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
+<v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
+<v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
+<v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+<v t="edream.111803062437"><vh>Shift commands now shift single line if no selection</vh></v>
+</v>
+<v t="edream.110303182719"><vh>New config settings</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
+</v>
+<v t="ekr.20050210102150"><vh>4.2... @file-thin, shared tnodes</vh>
+<v t="ekr.20040922074200"><vh>4.2 final</vh></v>
+<v t="ekr.20040914103359"><vh>4.2 rc1</vh>
+<v t="ekr.20040914103743.1"><vh>Added new features</vh>
+<v t="ekr.20040914103359.137"><vh>Added c.frame.openDirectory to sys.path when executing scripts</vh></v>
+<v t="ekr.20040914103359.37"><vh>Added expanded_click_area option to disable left click logic in outline pane</vh></v>
+<v t="ekr.20040914103359.2"><vh>Restored the "iconclick1/2" hooks</vh></v>
+<v t="ekr.20040914103359.19"><vh>(Allow longer headlines for to support long url's)</vh>
+<v t="ekr.20040914103359.20"><vh>Report</vh></v>
+<v t="ekr.20040914103359.21"><vh>idle_head_key</vh>
+<v t="ekr.20040914103359.22"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.23"><vh>&lt;&lt; set the widget text to head &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.24"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.25"><vh>&lt;&lt; update p &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.26"><vh>&lt;&lt; reconfigure p and all nodes joined to p &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.27"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040914103743"><vh>Fixed bugs</vh>
+<v t="ekr.20040914103359.47"><vh>Disabled perfect import</vh></v>
+<v t="ekr.20040914103359.127"><vh>Fixed bugs in Tangle/Untangle</vh></v>
+<v t="ekr.20040914103359.12"><vh>Fixed Import Derived Files command</vh></v>
+<v t="ekr.20040914103359.15"><vh>Fixed parsing of minimal &lt;preferences&gt; tag</vh></v>
+<v t="ekr.20040914103359.7"><vh>Fixed problem with tabs on MacOs</vh></v>
+<v t="ekr.20040914103359.28"><vh>Fixed read errors with @language html</vh></v>
+<v t="ekr.20040914103359.4"><vh>Made sure a proper message is given with invalid versions of Python</vh></v>
+<v t="ekr.20040914103359.110"><vh>Removed failed assert from colorizer</vh></v>
+<v t="ekr.20040914103359.31"><vh>Removed spurious "Warning: updating changed text" messages</vh></v>
+<v t="ekr.20040914103359.129"><vh>Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac</vh></v>
+</v>
+</v>
+<v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
+<v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
+<v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
+<v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
+<v t="ekr.20040804164600.56"><vh>Added 3 .cascading style sheets to the distribution list</vh></v>
+<v t="ekr.20040804164600.98"><vh>Fixed some bugs in g.importFromPath</vh></v>
+<v t="ekr.20040804164600.102"><vh>Fixed major bug in write logic</vh></v>
+<v t="ekr.20040804164600.265"><vh>Fixed bug in p.isAncestorOf</vh></v>
+<v t="ekr.20040804164600.275"><vh>Leo now writes only the currently selected tree when pasting to the clipboard</vh></v>
+<v t="ekr.20040804164600.377"><vh>Fixed performance bug when reading .leo files</vh></v>
+<v t="ekr.20040804170846"><vh>Leo now reports problems with bad directories more clearly</vh></v>
+<v t="ekr.20040804164600.394"><vh>Leo reads collapsed xml tags properly in .leo files</vh></v>
+<v t="ekr.20040804164600.406"><vh>Leo makes brings the confirm save box to the front</vh></v>
+<v t="ekr.20040804164600.419"><vh>Improved how es_exception gets line number of errors</vh></v>
+<v t="ekr.20040804164600.421"><vh>Fixed major bug: changing headline now marks subnodes dirty</vh></v>
+<v t="ekr.20040804164600.470"><vh>Leo now gives update warning only once per derived file</vh></v>
+<v t="ekr.20040804164600.471"><vh>Leo updates tnodeLists properly in all situations</vh></v>
+<v t="ekr.20040804164600.515"><vh>Fixed several leaks of positions</vh></v>
+<v t="ekr.20040804171818"><vh>Fixed all unit tests so they work with both Python 2.2 and Python 2.3</vh></v>
+</v>
+<v t="ekr.20040804165258.2"><vh>Features</vh>
+<v t="ekr.20040804172113"><vh>@test and @suite greatly aid unit testing</vh></v>
+<v t="ekr.20040804172113.1"><vh>New scripts in test.leo make it very easy to use the gc, profile and timeit modules</vh></v>
+<v t="ekr.20040804165258.3"><vh>Import dialogs allow multiple selections</vh></v>
+<v t="ekr.20040804165258.4"><vh>New Check menu and commands</vh></v>
+<v t="ekr.20040804170531"><vh>Perfect Import feature automatically corrects imported files</vh></v>
+<v t="ekr.20040804170657"><vh>Improved performance of outline pane</vh></v>
+<v t="ekr.20040804164600.424"><vh>The Go To Line Number command ignores all @all nodes</vh></v>
+</v>
+</v>
+<v t="EKR.20040628095213"><vh>4.2 beta 1 &amp; beta 2</vh>
+<v t="EKR.20040628095213.311"><vh>New coding conventions</vh></v>
+<v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
+<v t="ekr.20040705111716"><vh>in 4.2 b2</vh>
+<v t="ekr.20040705111716.1"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
+<v t="ekr.20040705111716.45"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
+<v t="ekr.20040705111716.126"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
+<v t="ekr.20040705150130"><vh>Leo passes all important pychecker tests</vh></v>
+</v>
+<v t="ekr.20040705112148"><vh>in 4.2 b1</vh>
+<v t="EKR.20040628095213.513"><vh>Changed *nix install script</vh></v>
+<v t="EKR.20040628100535"><vh>Fixed bugs</vh>
+<v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
+<v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
+<v t="EKR.20040628095213.56"><vh>Fixed syntax colouring Bug in html mode</vh></v>
+<v t="EKR.20040628095213.60"><vh>Colorizing fixes</vh></v>
+<v t="EKR.20040628095213.113"><vh>Fixed Select All bug</vh></v>
+<v t="EKR.20040628095213.121"><vh>Fixed bugs in @tab_width: support backspace with negative tab width</vh></v>
+<v t="EKR.20040628095213.143"><vh>Fixed bugs in Remove Sentinel command</vh></v>
+<v t="EKR.20040628095213.160"><vh>Eliminated spurious error messages in Import Derived File command</vh></v>
+<v t="EKR.20040628095213.192"><vh>Removed gnx in headlines when importing thin derived files</vh></v>
+<v t="EKR.20040628095213.202"><vh>Fixed bugs reading 4.1 files</vh></v>
+<v t="EKR.20040628095213.213"><vh>Fixed Open With bug</vh></v>
+<v t="EKR.20040628095213.225"><vh>Fixed Go To Line Number command</vh></v>
+<v t="EKR.20040628095213.246"><vh>Fixed crash when importing Borland wstring.cpp</vh></v>
+<v t="EKR.20040628095213.279"><vh>Fixed bug in insertBodyTime</vh></v>
+<v t="EKR.20040628095213.297"><vh>Fixed bug when pasting large text into headlines</vh></v>
+<v t="EKR.20040628095213.308"><vh>Fixed bug in delete command</vh></v>
+<v t="EKR.20040628095213.312"><vh>Fixed oops: nullGui setIdleTimeHook</vh></v>
+<v t="EKR.20040628095213.324"><vh>Fixed problems with trailing newlines and spurious changed bit</vh></v>
+<v t="EKR.20040628095213.346"><vh>Fixed headline key handling</vh></v>
+<v t="EKR.20040628095213.348"><vh>Fixed Problems executing script</vh></v>
+<v t="EKR.20040628095213.354"><vh>Fixed problem with PHP and @last</vh></v>
+<v t="EKR.20040628095213.366"><vh>Fixed bug when writing unknownAttributes</vh></v>
+<v t="EKR.20040628095213.368"><vh>Fixed bugs opening a second file</vh></v>
+<v t="EKR.20040628095213.404"><vh>Fixed bug: @last silently failed when extra lines exist</vh></v>
+<v t="EKR.20040628095213.407"><vh>Fixed hang when dragging from one clone copy to another</vh></v>
+<v t="EKR.20040628095213.412"><vh>Fixed crash in Write Missing</vh></v>
+<v t="EKR.20040628095213.442"><vh>Fixed bug in getScript</vh></v>
+<v t="EKR.20040628095213.444"><vh>Fixed problems with @all</vh></v>
+<v t="EKR.20040628095213.499"><vh>Fixed double print in Execute Script command</vh></v>
+<v t="EKR.20040628095213.512"><vh>Fixed bug reading leo.nsi</vh></v>
+</v>
+<v t="EKR.20040628100535.1"><vh>Added new features</vh>
+<v t="EKR.20040628095213.52"><vh>Allowed &lt;/leo_header&gt; tag</vh></v>
+<v t="EKR.20040628095213.109"><vh>Replaced the word "Leo" with Leo icon in Find/Compare/Prefs windows</vh></v>
+<v t="EKR.20040628095213.110"><vh>Improved Import command slightly</vh></v>
+<v t="EKR.20040628095213.197"><vh>Added 3 files to distribution lists</vh></v>
+<v t="EKR.20040628095213.198"><vh>Supported @tabwidth in indent/dedent</vh></v>
+<v t="EKR.20040628095213.264"><vh>Import now creates absolute path</vh></v>
+<v t="EKR.20040628095213.269"><vh>Created @killcolor directive</vh></v>
+<v t="EKR.20040628095213.282"><vh>Added Paste Retaining Clones command</vh></v>
+<v t="EKR.20040628095213.314"><vh>Added readLineGenerator &amp; readLineClass to leoGlobals</vh></v>
+<v t="EKR.20040628095213.334"><vh>Much better error handling in executeScript</vh></v>
+<v t="EKR.20040628095213.377"><vh>Recovered nodes when reading .leo files containing topology errors</vh></v>
+<v t="EKR.20040628095213.391"><vh>Generalized write-to-string logic</vh></v>
+<v t="EKR.20040628095213.408"><vh>Added case_sensitiveLanguage to colorizer</vh></v>
+<v t="EKR.20040628095213.425"><vh>Write entire @thin tree on write errors</vh></v>
+<v t="EKR.20040628095213.485"><vh>Handled inner @language and @comment properly</vh></v>
+<v t="EKR.20040628095213.490"><vh>Better reporting of body text conflicts</vh></v>
+<v t="EKR.20040628095213.493"><vh>Improved error handling for unknownAttributes</vh></v>
+<v t="EKR.20040628095213.501"><vh>Read and write all t.unknownAttributes in top vnode of an @thin tree</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040601084317"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
+<v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
+<v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
+<v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
+<v t="EKR.20040601084317.142"><vh>Fixed problems saving unknownAttribute field</vh></v>
+<v t="EKR.20040601102115"><vh>Fixed unicode problem in the Dump Outline command</vh></v>
+</v>
+<v t="EKR.20040601101227"><vh>New Features</vh>
+<v t="EKR.20040601101227.1"><vh>Leo ignores all directives in @all trees</vh></v>
+<v t="EKR.20040601101430.1"><vh>@+-middle sentinels allow sections to be defined in grandchildren</vh></v>
+<v t="EKR.20040601101510"><vh>@clone sentinel allows siblings to be cloned</vh></v>
+<v t="EKR.20040601101547"><vh>Created @thin, @nosent, @noref and @asis abbreviations</vh>
+<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
+</v>
+<v t="EKR.20040601084317.102"><vh>Made undo extensible</vh></v>
+<v t="EKR.20040601102703"><vh>Started work on simple new undo scheme</vh></v>
+<v t="EKR.20040601084317.161"><vh>Created new c, p, v iterators</vh></v>
+</v>
+<v t="EKR.20040601102808"><vh>Known bugs</vh></v>
+</v>
+<v t="EKR.20040518070558"><vh>4.2 a2</vh>
+<v t="EKR.20040518070940.5"><vh>Implemented @file-thin</vh></v>
+<v t="EKR.20040518070824"><vh>Fixed bugs</vh>
+<v t="EKR.20040518071415"><vh>Fixed clone bug that caused parts of outlines to disappear</vh></v>
+<v t="EKR.20040518070940.156"><vh>Fixed long-standing problem with the outline-only command</vh></v>
+<v t="EKR.20040518070824.1"><vh>Made sure file indices are always assigned when writing files.</vh></v>
+<v t="EKR.20040518070940"><vh>Fixed problems with missing tnodeList with @file-noref</vh></v>
+<v t="EKR.20040518070940.164"><vh>Added t.writeBit</vh></v>
+</v>
+<v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
+</v>
+</v>
+<v t="ekr.20060206111600"><vh>4.3...@settings</vh>
+<v t="ekr.20050917092557"><vh>4.3.3 final</vh>
+<v t="ekr.20050917105646"><vh>Fixes made in 4.3.3</vh></v>
+<v t="ekr.20050917092557.1"><vh>Rewrote documentation</vh></v>
+<v t="ekr.20050917092557.2"><vh>Bug fixes...</vh>
+<v t="ekr.20050917092557.3"><vh>Fixed various unicode bugs</vh></v>
+<v t="ekr.20050917092557.4"><vh>Fixed bugs relating to recent files</vh></v>
+<v t="ekr.20050917092557.5"><vh>Fixed minor crasher in colorizer</vh></v>
+<v t="ekr.20050917092557.6"><vh>Protected several methods used by plugin manager</vh></v>
+<v t="ekr.20050917092557.7"><vh>Added test files to distribution list and cvs</vh></v>
+</v>
+<v t="ekr.20050917092557.8"><vh>New and improved  plugins</vh>
+<v t="ekr.20050917092557.9"><vh>New rst3 plugin</vh></v>
+<v t="ekr.20050917092557.10"><vh>Improved spellpyx plugin</vh></v>
+<v t="ekr.20050917092557.11"><vh>Improved vim and openWith plugins</vh></v>
+</v>
+<v t="ekr.20050917092557.12"><vh>New &amp; improved features...</vh>
+<v t="ekr.20050917092557.13"><vh>Added g.es_print, g.es_trace function</vh></v>
+<v t="ekr.20050917092557.14"><vh>Improved PrettyPrinting</vh></v>
+</v>
+</v>
+<v t="ekr.20050913131848"><vh>4.3.2 final</vh>
+<v t="ekr.20050906104918.1"><vh>Rewrote documentation</vh></v>
+<v t="ekr.20050906104931.1"><vh>Bug fixes...</vh>
+<v t="ekr.20050909082711"><vh>Fixed various unicode bugs</vh></v>
+<v t="ekr.20050906104931.15"><vh>Fixed bugs relating to recent files</vh></v>
+<v t="ekr.20050906104931.38"><vh>Fixed minor crasher in colorizer</vh></v>
+<v t="ekr.20050906104931.42"><vh>Protected several methods used by plugin manager</vh></v>
+<v t="ekr.20050906104931.43"><vh>Added test files to distribution list and cvs</vh></v>
+</v>
+<v t="ekr.20050908164150"><vh>New and improved  plugins</vh>
+<v t="ekr.20050908164150.1"><vh>New rst3 plugin</vh></v>
+<v t="ekr.20050908164150.2"><vh>Improved spellpyx plugin</vh></v>
+<v t="ekr.20050910143326"><vh>Improved vim and openWith plugins</vh></v>
+</v>
+<v t="ekr.20050906104931.48"><vh>New &amp; improved features...</vh>
+<v t="ekr.20050906104931.49"><vh>Added g.es_print, g.es_trace function</vh></v>
+<v t="ekr.20050906104931.56"><vh>Improved PrettyPrinting</vh></v>
+</v>
+</v>
+<v t="ekr.20050906104918"><vh>4.3.2 beta 1</vh></v>
+<v t="ekr.20050620144052"><vh>4.3.1</vh>
+<v t="ekr.20050620144052.2"><vh>Bug fixes...</vh>
+<v t="ekr.20050620144052.3"><vh>Fixed bug in @ratio setting</vh></v>
+<v t="ekr.20050620144052.6"><vh>Fixed crasher footprint plugin</vh></v>
+<v t="ekr.20050620144052.8"><vh>Fixed invalid position bug)</vh></v>
+<v t="ekr.20050620144052.48"><vh>Fixed undo problems in unit tests</vh></v>
+<v t="ekr.20050620144052.112"><vh>Made sure same case is used in all recent files entries</vh></v>
+<v t="ekr.20050620144052.114"><vh>Made sure all dialogs gets focus when they are run</vh></v>
+<v t="ekr.20050620144052.116"><vh>Improved Resize To Screen command</vh></v>
+<v t="ekr.20050620144052.119"><vh>Made sure comments are always visible in setting dialog even for non-@ nodes</vh></v>
+<v t="ekr.20050620144052.154"><vh>Fixed problem with leading @ in body text</vh></v>
+<v t="ekr.20050620144052.166"><vh>Fixed several  crashers while undoing a move involving clones</vh></v>
+<v t="ekr.20050620144052.182"><vh>Fixed Unicode encoding problem</vh></v>
+<v t="ekr.20050620144052.185"><vh>Fixed problem with coloring @language plain</vh></v>
+<v t="ekr.20050620144602"><vh>Fixed bug: Mark Clones command did not work</vh></v>
+</v>
+<v t="ekr.20050620144052.207"><vh>New features...</vh>
+<v t="ekr.20050620144052.208"><vh>Created separate helpers for idle_body_key</vh></v>
+<v t="ekr.20050620144052.210"><vh>Made all Mark commands undoable</vh></v>
+<v t="ekr.20050620144052.222"><vh>Removed dependence on profile and pstats modules from leoTest.py</vh></v>
+<v t="ekr.20050620144052.231"><vh>Added support for tk resource files</vh></v>
+<v t="ekr.20050620144425"><vh>Added support for coloring the PL/SQL language</vh></v>
+</v>
+</v>
+<v t="ekr.20050523092026"><vh>4.3-final</vh>
+<v t="ekr.20050523092056.1"><vh>Fixed crasher when pie-menu plugin enabled</vh></v>
+<v t="ekr.20050523092056.4"><vh>Fixed crasher in Extract Section Command</vh></v>
+</v>
+<v t="ekr.20050513141852"><vh>4.3-beta 2</vh>
+<v t="ekr.20050513141913.1"><vh>Fixed bugs...</vh>
+<v t="ekr.20050513141913.16"><vh>Fixed nodenavagator bug</vh></v>
+<v t="ekr.20050513141913.17"><vh>Fixed LaTex Coloring bug</vh></v>
+<v t="ekr.20050513141913.22"><vh>Error messages in scripts are now redirected properly.</vh></v>
+<v t="ekr.20050513141913.30"><vh>Fixed 2 crashers in nav_buttons plugin</vh></v>
+<v t="ekr.20050513141913.57"><vh>Fixed crasher in yoffsetTree</vh></v>
+<v t="ekr.20050513141913.60"><vh>Fixed crasher in undo</vh></v>
+<v t="ekr.20050513141913.82"><vh>Fixed  several problems with Extract and Extract Section</vh></v>
+<v t="ekr.20050513141913.91"><vh>Fixed bug with Delete in headlines</vh></v>
+<v t="ekr.20050513141913.127"><vh>Fixed bugs re initial_splitter_orientation &amp; @strings &amp; @ints generally</vh></v>
+<v t="ekr.20050513141913.140"><vh>Fixed bug with hoist + insert</vh></v>
+<v t="ekr.20050513141913.145"><vh>Fixed problem with settings dialog position when panes split horizontally</vh></v>
+<v t="ekr.20050513141913.149"><vh>Fixed problem changing shortcut &amp; redid shortcuts widget</vh></v>
+</v>
+<v t="ekr.20050513141913.187"><vh>New Features...</vh>
+<v t="ekr.20050513141913.97"><vh>Marking any node sets the outline changed</vh></v>
+<v t="ekr.20050513141913.188"><vh>Allow quoted urls in  @urls nodes</vh></v>
+<v t="ekr.20050513141913.194"><vh>Moved executeFile into core</vh></v>
+<v t="ekr.20050513141913.197"><vh>Rewrote g.getScript using at.writeFromString</vh></v>
+<v t="ekr.20050513141913.233"><vh>Added define_name arg to c.executeScript</vh></v>
+</v>
+</v>
+<v t="ekr.20050429094215"><vh>4.3-beta 1</vh>
+<v t="ekr.20050429094215.2"><vh>Fixed bugs...</vh>
+<v t="ekr.20050429094215.3"><vh>Made sure NameErrors are reported with tracebacks in scripts</vh></v>
+<v t="ekr.20050429094215.22"><vh>Finally! fixed .leoID problem!</vh></v>
+<v t="ekr.20050429094215.31"><vh>Investigated problem with LeoPluginsRef.leo</vh></v>
+<v t="ekr.20050429094215.41"><vh>Fixed conflicts in menu shortcuts</vh></v>
+<v t="ekr.20050429094215.113"><vh>Fixed bug in p.initStatus caught by pychecker</vh></v>
+<v t="ekr.20050429094215.116"><vh>Fixed crasher in import logic (leoAtFile)</vh></v>
+<v t="ekr.20050429094215.120"><vh>Put in protections against unbounded recursion in idle_scrollTo</vh></v>
+</v>
+<v t="ekr.20050429094215.130"><vh>New features...</vh>
+<v t="ekr.20050429094215.131"><vh>Created stand-alone leoGlobals.py module</vh></v>
+<v t="ekr.20050429094215.139"><vh>Leo now ignores problems opening settings file for chapters plugin</vh></v>
+<v t="ekr.20050429094215.145"><vh>Improved write logic</vh></v>
+<v t="ekr.20050429094215.173"><vh>Rewrote the undo code</vh></v>
+<v t="ekr.20050429094215.286"><vh>Implemented undo/redo for Paste Retaining clones</vh></v>
+<v t="ekr.20050429094215.316"><vh>Added support for 'str_' uA's</vh></v>
+<v t="ekr.20050429094215.347"><vh>Removed unused params from leoAtFile.py</vh></v>
+<v t="ekr.20050429094215.353"><vh>Leo  saves recent files info in .leoRecentFiles.txt files</vh>
+<v t="ekr.20050429094215.354"><vh>What I did</vh></v>
+<v t="ekr.20050429094215.355"><vh>New plan</vh></v>
+<v t="ekr.20050429094215.161"><vh>write_Leo_file</vh>
+<v t="ekr.20050429094215.162"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.163"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.164"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.165"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.166"><vh>&lt;&lt; delete fileName &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.167"><vh>&lt;&lt; rename backupName to fileName &gt;&gt;</vh></v>
+<v t="ekr.20050429094215.168"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050429094215.141"><vh>Scanning @settings (g.app.config)</vh>
+<v t="ekr.20050429094215.142"><vh>openSettingsFile</vh></v>
+<v t="ekr.20050429094215.143"><vh>config.readSettingsFiles</vh></v>
+<v t="ekr.20050429094215.144"><vh>readSettings</vh></v>
+</v>
+<v t="ekr.20050429094215.350"><vh>setRecentFiles (c.configSettings)</vh></v>
+<v t="ekr.20050429094215.356"><vh>appendToRecentFiles (g.app.config)</vh></v>
+<v t="ekr.20050429094215.349"><vh>clearRecentFiles</vh></v>
+<v t="ekr.20050429094215.357"><vh>Reading and writing .leoRecentFiles.txt (g.app.config)</vh>
+<v t="ekr.20050429094215.358"><vh>readRecentFilesFile</vh></v>
+<v t="ekr.20050429094215.359"><vh>writeRecentFilesFile &amp; helper</vh>
+<v t="ekr.20050429094215.360"><vh>writeRecentFilesFileHelper</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050429095849"><vh>Finished all @settings coding</vh></v>
+</v>
+</v>
+<v t="ekr.20050313101229"><vh>4.3-a4</vh>
+<v t="ekr.20050313101229.2"><vh>Fixed bugs...</vh>
+<v t="ekr.20050313101229.69"><vh>Fix colorizer bug for initial @nocolor in @root nodes</vh></v>
+<v t="ekr.20050313101229.74"><vh>Fixed @wrap bug</vh></v>
+<v t="ekr.20050313101229.77"><vh>Fixed change-all bug</vh></v>
+</v>
+<v t="ekr.20050313103448"><vh>New features...</vh>
+<v t="ekr.20050313101229.95"><vh>Created Add Comments and Delete Comments commands</vh></v>
+<v t="ekr.20050313101229.94"><vh>Deprecated new_c key in hooks, added c key</vh></v>
+<v t="ekr.20050313103448.1"><vh>Added the 'before-create-leo-frame' hook</vh></v>
+<v t="ekr.20050313101229.101"><vh>Added support for mod_labels plugin</vh></v>
+</v>
+<v t="ekr.20050313101229.100"><vh>Revised plugins for the 4.3 code base</vh></v>
+</v>
+<v t="ekr.20050221104844"><vh>4.3-a3</vh>
+<v t="ekr.20050221104844.2"><vh>Bugs</vh>
+<v t="ekr.20050221104844.3"><vh>Fixed crasher in Tangle</vh></v>
+<v t="ekr.20050221104844.12"><vh>Applied patch to rst2 plugin</vh></v>
+<v t="ekr.20050221104844.14"><vh>Revised searchbox plugin so it works with Leo 4.3</vh></v>
+<v t="ekr.20050221104844.27"><vh>Fixed bugs in nav_buttons and nodenavigator plugins</vh></v>
+<v t="ekr.20050221104844.45"><vh>Made sure Leo asks for leoID at most once</vh></v>
+<v t="ekr.20050221104844.54"><vh>Fixed botch in g.pdb</vh></v>
+<v t="ekr.20050222100936"><vh>Fixed crasher when executing a script if the script was selected text in a new window</vh></v>
+</v>
+<v t="ekr.20050221104844.57"><vh>New features</vh>
+<v t="ekr.20050221104844.58"><vh>Added sets.py to distribution</vh></v>
+<v t="ekr.20050221104844.59"><vh>Added color='suppress' hack to g.es</vh></v>
+</v>
+</v>
+<v t="ekr.20050126100405"><vh>4.3-a2</vh>
+<v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
+<v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
+<v t="ekr.20050209141626.4"><vh>Fixed very old bug in Undo Insert Node </vh></v>
+<v t="ekr.20050209141626.8"><vh>Made sure to remove duplicates from recent files</vh></v>
+<v t="ekr.20050209141626.12"><vh>Fixed indentation problems in leoTkinterFind.py</vh></v>
+<v t="ekr.20050209141626.13"><vh>Changed leoConfig.txt to leoSettings.leo in Help menu, etc.</vh></v>
+<v t="ekr.20050209141626.16"><vh>Investigated recent files problems</vh></v>
+<v t="ekr.20050209141626.23"><vh>Improved queuing of log messages</vh></v>
+<v t="ekr.20050209141626.42"><vh>Fixed crasher in Change All command</vh></v>
+<v t="ekr.20050209141626.43"><vh>Fixed crasher in script button</vh></v>
+<v t="ekr.20050209141626.46"><vh>Fixed print problems on the Mac</vh></v>
+<v t="ekr.20050209141626.53"><vh>leoTest.runTests now makes copies of all positions</vh></v>
+<v t="ekr.20050209141626.54"><vh>Fixed problems with unit test file paths</vh></v>
+<v t="ekr.20050209141626.55"><vh>Made local config settings work again</vh></v>
+<v t="ekr.20050209141626.91"><vh>Fix problems searching for nothing but whitespace</vh></v>
+<v t="ekr.20050210101318"><vh>Fixed problems with typing return in the Find panel</vh></v>
+<v t="ekr.20050209141626.101"><vh>Buttons no longer work in toolbars when settings dialog is open</vh></v>
+<v t="ekr.20050209141626.102"><vh>Fixed bug in delayed focus logic</vh></v>
+<v t="ekr.20050209141626.105"><vh>Made sure Leo asks for leoID at most once</vh></v>
+<v t="ekr.20050209141626.113"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
+<v t="ekr.20050209141626.114"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
+<v t="ekr.20050211095754"><vh>Fixed bug reading encoding field in derived files</vh></v>
+<v t="ekr.20050212054743"><vh>Allow indented code blocks to be run using Execute Script command</vh></v>
+<v t="ekr.20050212144116"><vh>Fixed problems found by pychecker</vh></v>
+</v>
+<v t="ekr.20050209141626.150"><vh>New features...</vh>
+<v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
+<v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
+</v>
+<v t="ekr.20050209141626.185"><vh>Added support for top-level init function in plugins</vh></v>
+<v t="ekr.20050209141626.190"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
+<v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
+<v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
+<v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
+<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts, unit tests &amp; test routines</vh></v>
+<v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
+</v>
+</v>
+<v t="ekr.20050122090311"><vh>4.3-a1</vh>
+<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
+<v t="ekr.20050123110009"><vh>Using @settings trees and leoSettings.leo</vh>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
+</v>
+<v t="ekr.20050123092834.520"><vh>Rewrote Leo's read/write logic</vh></v>
+<v t="ekr.20050123115804"><vh>Added Plugins Manager plugin</vh></v>
+<v t="ekr.20050123115804.1"><vh>You can install third-party extensions in Leo's extensions directory</vh></v>
+</v>
+<v t="ekr.20050123092834.1"><vh>Fixed bugs...</vh>
+<v t="ekr.20050123101208"><vh> Major bugs: these bugs corrupted derived files!</vh>
+<v t="ekr.20050123092834.432"><vh>Fixed double doc part bug</vh></v>
+<v t="ekr.20050123092834.497"><vh>Fixed bug in how Leo writes thin derived files</vh></v>
+</v>
+<v t="ekr.20050123092834.2"><vh>Commands</vh>
+<v t="ekr.20050123092834.6"><vh>Fixed problems with spawnv option of openWith</vh></v>
+<v t="ekr.20050123092834.19"><vh>Fixed bug in  Remove Sentinels command</vh></v>
+<v t="ekr.20050123092834.27"><vh>Fixed bug re Paste Node As Clone</vh></v>
+<v t="ekr.20050123092834.42"><vh>Fixed Pretty Print commands for Python 2.4</vh></v>
+<v t="ekr.20050123092834.71"><vh>Fixed crasher in Import Derived Files command</vh></v>
+<v t="ekr.20050123092834.510"><vh>Search commands are now restricted to hoisted area</vh></v>
+</v>
+<v t="ekr.20050123100706.1"><vh>Distribution</vh>
+<v t="ekr.20050123092834.491"><vh>Fixed file association in leoDist.leo</vh></v>
+</v>
+<v t="ekr.20050123092834.165"><vh>Files</vh>
+<v t="ekr.20050123092834.492"><vh>g.import wrappers return module if it is in sys.modules</vh></v>
+<v t="ekr.20050123092834.166"><vh>Disabled changes to comment delims in @@language and @@comment sentinels</vh></v>
+<v t="ekr.20050123092834.176"><vh>Made sure files that differ only in line ending get written if @lineending is in effect</vh></v>
+<v t="ekr.20050123092834.196"><vh>Fixed bug:  @nosent wrote sentinels!</vh></v>
+<v t="ekr.20050123092834.422"><vh>Fixed bug in replaceTargetFileIfDifferent</vh></v>
+<v t="ekr.20050123092834.424"><vh>Made sure that @ignore forces writing of inner @thin trees</vh></v>
+<v t="ekr.20050123092834.431"><vh>Fixed crasher when attempting to write a derived file to an invalid path</vh></v>
+<v t="ekr.20050123092834.434"><vh>Fixed Python 2.4 deprecation warning when saving .leo files</vh></v>
+<v t="ekr.20050123092834.499"><vh>Fixed crasher in getOutputNewline</vh></v>
+<v t="ekr.20050123092834.544"><vh>Always use os.rename in utils_rename</vh></v>
+<v t="ekr.20050123151338"><vh>Fixed bugs handling @language &amp; @comment in atFile.scanAllDirectives &amp; g.scanDirectives)</vh></v>
+</v>
+<v t="ekr.20050123103303"><vh>Gui</vh>
+<v t="ekr.20050123092834.502"><vh>Put the scrollWheel workaround in createTkTreeCanvas</vh></v>
+</v>
+<v t="ekr.20050123100706.2"><vh>Menus</vh>
+<v t="ekr.20050123092834.81"><vh>Fixed problems with Control-E</vh></v>
+<v t="ekr.20050123092834.490"><vh>Better handling of duplicate menu shortcuts</vh></v>
+</v>
+<v t="ekr.20050123092834.159"><vh>Nodes</vh>
+<v t="ekr.20050123092834.160"><vh>Fixed crash after cutting an imported node</vh></v>
+<v t="ekr.20050123092834.163"><vh>Removed invalid assert in lastVisible</vh></v>
+<v t="ekr.20050123093854.1"><vh>Fixed bugs in tnodes_iter and unique_tnodes_iter</vh></v>
+</v>
+<v t="ekr.20050123111723"><vh>Plugins</vh>
+<v t="ekr.20050123092834.1047"><vh>Fixed two bugs in Plugins Manager plugin</vh></v>
+<v t="ekr.20050123092834.1052"><vh>Fixed bug re referencing destroyed ivars</vh></v>
+<v t="ekr.20050123092834.1057"><vh>Fixed bug in registerOneHandler</vh></v>
+<v t="ekr.20050123092834.506"><vh>Fixed conflict between settings panel and chapters plugin</vh></v>
+</v>
+<v t="ekr.20050123092834.526"><vh>Pychecker</vh></v>
+<v t="ekr.20050123092834.438"><vh>Scripting</vh>
+<v t="ekr.20050123092834.439"><vh>Fixed unbounded recursion with --script and redirected output</vh></v>
+<v t="ekr.20050123092834.474"><vh>Script buttons now execute the entire script</vh></v>
+<v t="ekr.20050123092834.480"><vh>Fixed error reporting in executeScript when the error happens outside the script</vh></v>
+</v>
+<v t="ekr.20050123092834.486"><vh>Startup</vh>
+<v t="ekr.20050123092834.487"><vh>Non-existent command-line file becomes name of new Leo wiindow</vh></v>
+<v t="ekr.20050123092834.1011"><vh>computeHomeDir now handles references to other vars</vh></v>
+</v>
+</v>
+<v t="ekr.20050123092834.896"><vh>New or improved features...</vh>
+<v t="ekr.20050123110009"><vh>Using @settings trees and leoSettings.leo</vh>
+<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
+<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
+</v>
+<v t="ekr.20050123103303.1"><vh>Code</vh>
+<v t="ekr.20050123092834.520"><vh>Rewrote Leo's read/write logic</vh></v>
+<v t="ekr.20050123092834.173"><vh>Added g.cantImport</vh></v>
+<v t="ekr.20050123092834.901"><vh>Added g.fileLikeObject.readline</vh></v>
+<v t="ekr.20050123092834.928"><vh>Added support for g.app.debugSwitch in es_exception</vh></v>
+<v t="ekr.20050123092834.984"><vh>Restored drawing/event hooks</vh></v>
+<v t="ekr.20050123092834.1004"><vh>Added p=p param to all hooks containing v=v</vh></v>
+<v t="ekr.20050123092834.565"><vh>Implemented delayed focus scheme</vh></v>
+</v>
+<v t="ekr.20050123103521"><vh>Commands</vh>
+<v t="ekr.20050123092834.897"><vh>Added 'Expand Or Go Right' and 'Contract or Go Left' commands</vh></v>
+<v t="ekr.20050123092834.908"><vh>Added keyboard shortcuts to find panel</vh></v>
+<v t="ekr.20050123092834.1005"><vh>Find panels are now associated with individual Leo windows</vh></v>
+<v t="ekr.20050123105026"><vh>Find panels are now inited from @settings nodes</vh></v>
+<v t="ekr.20050123092834.961"><vh>Improved Go To Line Number and Execute Script commands</vh></v>
+<v t="ekr.20050123092834.1018"><vh>Improved support for relative path names</vh></v>
+<v t="ekr.20050123092834.1043"><vh>Implemented 'Undo Clear Recent Files'</vh></v>
+<v t="ekr.20050123092834.517"><vh>Removed old-style write commands</vh></v>
+</v>
+<v t="ekr.20050123092834.1044"><vh>Plugins &amp; extensions</vh>
+<v t="ekr.20050123115804"><vh>Added Plugins Manager plugin</vh></v>
+<v t="ekr.20050123115804.1"><vh>You can install third-party extensions in Leo's extensions directory</vh></v>
+<v t="ekr.20050123112151"><vh>Improved doHandlersForTag</vh></v>
+<v t="ekr.20050123092834.1013"><vh>Leo now associates modules with hook handlers</vh></v>
+</v>
+<v t="ekr.20050123103753"><vh>Syntax Coloring &amp; languages</vh>
+<v t="ekr.20050123092834.903"><vh>Added support for Ada</vh></v>
+<v t="ekr.20050123092834.929"><vh>Added support for Forth</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060206111717.1"><vh>4.4 minibuffer, keys</vh>
+<v t="ekr.20051219150602"><vh>4.4 alpha 5</vh>
+<v t="ekr.20051219150602.2"><vh>Fixed bugs</vh>
+<v t="ekr.20051219150602.3"><vh>Made sure focus doesn't go to log during tab completion or after writes to log</vh></v>
+<v t="ekr.20051219150602.7"><vh>Fixed problem with getScript in batch mode</vh></v>
+<v t="ekr.20051219150602.10"><vh>Text box is now selected in goto-line-number command</vh></v>
+<v t="ekr.20051219150602.13"><vh>Restored headkey  &amp; bodykey hooks</vh></v>
+<v t="ekr.20051219150602.28"><vh>Fixed ancient bug in read error logic that hung Leo</vh></v>
+<v t="ekr.20051219150602.75"><vh>Fixed many headline problems</vh></v>
+<v t="ekr.20051219150602.81"><vh>Fixed problem in reformatParagraph</vh></v>
+<v t="ekr.20051219150602.85"><vh>Installed LeoUsers patch </vh></v>
+<v t="ekr.20060105182648.376"><vh>Improved Import Derived Files command.</vh></v>
+<v t="ekr.20060105182648.377"><vh>Fixed crasher in backwardDeleteCharacter</vh></v>
+<v t="ekr.20060105182648.378"><vh>Fixed recent bug: dialogs now get focus properly when first opened.</vh></v>
+<v t="ekr.20060105182648.379"><vh>Made sure shortcuts are printed clearly by k.registerCommand</vh></v>
+<v t="ekr.20060105182648.382"><vh>Suppressed crash undoing a clone followed by a drag</vh></v>
+</v>
+<v t="ekr.20051219150602.100"><vh>New features</vh>
+<v t="ekr.20051219150602.101"><vh>created ut.leo, ut.py and ut.bat</vh></v>
+<v t="ekr.20051219150602.102"><vh>Added modes/*.xml to distribution</vh></v>
+<v t="ekr.20051219150602.105"><vh>Revised cursor movement commands and added selection-extension commands</vh></v>
+<v t="ekr.20051219151926"><vh>Added classic key bindings in leoSettings.leo</vh></v>
+<v t="ekr.20060105182648.432"><vh>Allow multiple key bindings to the same command</vh></v>
+<v t="ekr.20060105182648.469"><vh>Settings command now opens leoSettings.leo</vh></v>
+<v t="ekr.20060105214753"><vh>Input modes</vh></v>
+</v>
+</v>
+<v t="ekr.20051028051444"><vh>4.4 alpha 4</vh>
+<v t="ekr.20051028051444.1"><vh>Quick Start</vh></v>
+<v t="ekr.20051028051444.2"><vh>The 'key' features of 4.4</vh>
+<v t="ekr.20051101161405"><vh>Leo's minibuffer works like the Emacs mini-buffer</vh></v>
+<v t="ekr.20051101161405.1"><vh>@shortcuts nodes in leoSettings.leo allow per-pane bindings</vh></v>
+<v t="ekr.20051101161405.2"><vh>The scripting plugin allows key bindings</vh></v>
+<v t="ekr.20051101161405.3"><vh>EKR shortcuts</vh></v>
+<v t="ekr.20051101162123"><vh>Leo now ignores key bindings in menu tables</vh></v>
+</v>
+<v t="ekr.20051205091625"><vh>Status of minibuffer commands</vh></v>
+<v t="ekr.20051028051616"><vh>New in alpha 1...</vh>
+<v t="ekr.20051028051444.4"><vh>New options</vh>
+<v t="ekr.20051028051444.5"><vh>The @bool useMinibuffer option</vh></v>
+<v t="ekr.20051028051444.6"><vh>The @bool useCmdMenu option</vh></v>
+<v t="ekr.20051028051444.7"><vh>Options for selected body text</vh></v>
+</v>
+<v t="ekr.20051028051444.8"><vh>New mini-buffer commands</vh></v>
+<v t="ekr.20051028051444.9"><vh>New code-level features</vh>
+<v t="ekr.20051028051444.10"><vh>Dictionaries of keys and commands</vh></v>
+<v t="ekr.20051028051444.11"><vh>Functions that return the present key bindings</vh></v>
+<v t="ekr.20051028051444.12"><vh>The registerCommand helper</vh></v>
+</v>
+<v t="ekr.20051028051444.13"><vh>Bugs fixed (in 4.3 code base)</vh>
+<v t="ekr.20051028051444.14"><vh>Leo protects c.endUpdate with a 'finally' clause</vh></v>
+<v t="ekr.20051028051444.15"><vh>Added kludge to solve infamous control-v problems</vh></v>
+<v t="ekr.20051028051444.16"><vh>Fixed bug in Leo's read logic</vh></v>
+<v t="ekr.20051028051444.17"><vh>Fixed bug in goto-last-node.</vh></v>
+<v t="ekr.20051028051444.18"><vh>Leo now reads @settings trees when opening a .leo file from another outline.</vh></v>
+<v t="ekr.20051028051444.19"><vh>Improved g.removeExtraLws</vh></v>
+</v>
+</v>
+<v t="ekr.20051028051616.1"><vh>New in alpha 2</vh>
+<v t="ekr.20051101162123.1"><vh>The tabbed log</vh>
+<v t="ekr.20051028051616.172"><vh>Programming the tabbed log</vh></v>
+</v>
+<v t="ekr.20051028061322"><vh>New minibuffer commands</vh></v>
+<v t="ekr.20051028051616.299"><vh>Optional generation of closing brackets</vh></v>
+<v t="ekr.20051101182739"><vh>New settings in leoSettings.leo</vh></v>
+<v t="ekr.20051101161949"><vh>Improved and retired plugins</vh>
+<v t="ekr.20051028051616.160"><vh>Improved the scripting plugin</vh></v>
+<v t="ekr.20051101162947"><vh>Retired the TabbedLog plugin</vh></v>
+</v>
+<v t="ekr.20051101163145"><vh>Many code-level improvements</vh></v>
+<v t="ekr.20051101163404"><vh>Fixed minor bugs</vh></v>
+</v>
+<v t="ekr.20051109112610"><vh>New in alpha 3</vh>
+<v t="ekr.20051109112826"><vh>The New and Newer World Orders</vh></v>
+<v t="ekr.20051109141223"><vh>Bugs fixed...</vh>
+<v t="ekr.20051109112826.217"><vh>Fix crasher in Open logic</vh></v>
+<v t="ekr.20051109112826.227"><vh>(Undo ends editing</vh></v>
+<v t="ekr.20051109112826.257"><vh>Disabled minibuffer when not in use</vh></v>
+<v t="ekr.20051109112826.315"><vh>Fixed bug in Find Backward</vh></v>
+<v t="ekr.20051109112826.265"><vh>Improved Spell tab</vh></v>
+</v>
+<v t="ekr.20051109141524"><vh>New features</vh>
+<v t="ekr.20051109112826.222"><vh>Created scripts.leo and unitTest.leo</vh></v>
+<v t="ekr.20051109112826.254"><vh>c.executeMinibufferCommand executes a minibuffer command by name</vh></v>
+<v t="ekr.20051109112826.310"><vh>Improved perl entries in language dicts</vh></v>
+</v>
+<v t="ekr.20051109141524.1"><vh>Code-level changes</vh>
+<v t="ekr.20051109112826.223"><vh>Changed  edit_text to edit_widget everywhere</vh></v>
+<v t="ekr.20051109112826.224"><vh>Removed tree ivars</vh></v>
+<v t="ekr.20051109142920"><vh>Removed frame.begin/endUpdate</vh></v>
+</v>
+</v>
+<v t="ekr.20051128181229"><vh>New in alpha 4</vh>
+<v t="ekr.20051128181351"><vh>Bugs fixed</vh>
+<v t="ekr.20051128181302.148"><vh>Changed scripting plugin so files opened with buttons stay in front</vh></v>
+<v t="ekr.20051128181302.183"><vh>Fixed undo/redo bugs</vh></v>
+<v t="ekr.20051128181302.192"><vh>Fixed focus problem with tab completion</vh></v>
+<v t="ekr.20051128181302.193"><vh>Fixed minor Save bug</vh></v>
+<v t="ekr.20051128181302.231"><vh>Fixed long-standing problem with Plugins Manager plugin</vh></v>
+<v t="ekr.20051128181302.244"><vh>Fixed 2 outline editing bugs</vh></v>
+<v t="ekr.20051205090923.13"><vh>Fixed crasher in deleteNextChar</vh></v>
+<v t="ekr.20051205090923.16"><vh>Fixed new headline bug</vh></v>
+<v t="ekr.20051205090923.22"><vh>Fix problems applying settings</vh></v>
+<v t="ekr.20051128181302.204"><vh>Fixed several bugs in rst3 plugin</vh></v>
+</v>
+<v t="ekr.20051128181651"><vh>Code changes</vh>
+<v t="ekr.20051128181302.149"><vh>Removed later arg from c.frame.xWantsFocus</vh></v>
+<v t="ekr.20051128181302.196"><vh>Created enableTclTraces</vh></v>
+<v t="ekr.20051128181302.208"><vh>Eliminated w.update in g.app.gui.set_focus</vh></v>
+</v>
+<v t="ekr.20051128181651.1"><vh>New &amp; improved features and files</vh>
+<v t="ekr.20051128181302.147"><vh>Moved all scripts into scripts.leo</vh></v>
+<v t="ekr.20051128181302.150"><vh>Improved how the New Tab and Rename Tab commands work in the log pane</vh></v>
+<v t="ekr.20051128181302.151"><vh>Improved the appearance of the Spell tab</vh></v>
+<v t="ekr.20051128181302.156"><vh>Added Clone-find checkbox to the Find tab</vh></v>
+<v t="ekr.20051128181302.171"><vh>Improved find tab</vh></v>
+<v t="ekr.20051128181302.211"><vh>Improved formatting of shortcuts in print-commands and print-bindings</vh></v>
+<v t="ekr.20051128181302.213"><vh>Added settings for vim plugin</vh></v>
+<v t="ekr.20051128181302.214"><vh>Put up a dialog if can't import Pmw</vh></v>
+<v t="ekr.20051128181302.229"><vh>Bound &lt;Return&gt; to end-edit-headline</vh></v>
+</v>
+</v>
+</v>
 <v t="ekr.20060116174906"><vh>4.4 beta 1</vh>
 <v t="ekr.20060116174906.2"><vh>Bugs fixed</vh>
 <v t="ekr.20060116174906.3"><vh>Fixed minor headline problems</vh></v>
@@ -2324,17 +2325,234 @@
 <v t="ekr.20060116174906.255"><vh>Generalized doCommand</vh></v>
 </v>
 <v t="ekr.20060116174906.258"><vh>New features</vh>
-<v t="ekr.20060116174906.259" a="E"><vh>Installed many standard bindings to leoSettings.leo</vh></v>
+<v t="ekr.20060116174906.259"><vh>Installed many standard bindings to leoSettings.leo</vh></v>
 <v t="ekr.20060116174906.262"><vh>Added Check Bindings script in leoSettings.leo</vh></v>
-<v t="ekr.20060116174906.263" a="E"><vh>Scripts now maintain original focus</vh></v>
-<v t="ekr.20060116174906.267" a="E"><vh>Added scroll-up/down-extend-selection commands</vh></v>
-<v t="ekr.20060116174906.272" a="E"><vh>Improved cursor move/extend commands</vh></v>
-<v t="ekr.20060116174906.296" a="E"><vh>Added support for @mode nodes</vh></v>
-<v t="ekr.20060116174906.306" a="E"><vh>keyboard-quit restores default input mode</vh></v>
+<v t="ekr.20060116174906.263"><vh>Scripts now maintain original focus</vh></v>
+<v t="ekr.20060116174906.267"><vh>Added scroll-up/down-extend-selection commands</vh></v>
+<v t="ekr.20060116174906.272"><vh>Improved cursor move/extend commands</vh></v>
+<v t="ekr.20060116174906.296"><vh>Added support for @mode nodes</vh></v>
+<v t="ekr.20060116174906.306"><vh>keyboard-quit restores default input mode</vh></v>
 </v>
 <v t="ekr.20060116174906.257"><vh>Added discusion to FAQ about when deleting a node is 'dangerous'</vh>
 <v t="ekr.20060111192108"><vh>When is deleting a node dangerous?</vh></v>
 </v>
+</v>
+<v t="ekr.20060206111508"><vh>4.4 beta 2</vh>
+<v t="ekr.20060206111508.2"><vh>Bugs</vh>
+<v t="ekr.20060206111508.3"><vh>Fixed crasher in Save button</vh></v>
+<v t="ekr.20060206111508.4"><vh>Fixed minor bugs &amp; made minor improvements</vh>
+<v t="ekr.20060206111508.5"><vh>Fixed two annoying headline glitches</vh>
+<v t="ekr.20060206111508.6"><vh>tree.set...LabelState</vh>
+<v t="ekr.20060206111508.7"><vh>setEditLabelState</vh></v>
+<v t="ekr.20060206111508.8"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20060206111508.9"><vh>setUnselectedLabelState</vh></v>
+<v t="ekr.20060206111508.10"><vh>setDisabledHeadlineColors</vh></v>
+<v t="ekr.20060206111508.11"><vh>setEditHeadlineColors</vh></v>
+<v t="ekr.20060206111508.12"><vh>setUnselectedHeadlineColors</vh></v>
+</v>
+<v t="ekr.20060206111508.13"><vh>onClickBoxClick</vh></v>
+</v>
+<v t="ekr.20060206111508.14"><vh>Insert headline didn't redraw headline properly in vim mode</vh>
+<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
+<v t="ekr.20060206111508.16"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20060206111508.17"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20060206111508.18"><vh>callStateFunction</vh></v>
+<v t="ekr.20060206111508.19"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20060206111508.20"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20060206111508.21"><vh>head key handlers</vh>
+<v t="ekr.20060206111508.22"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20060206111508.23"><vh>updateHead</vh></v>
+<v t="ekr.20060206111508.24"><vh>onHeadChanged</vh>
+<v t="ekr.20060206111508.25"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060206111508.26"><vh>Modes</vh>
+<v t="ekr.20060206111508.27"><vh>badMode</vh></v>
+<v t="ekr.20060206111508.28"><vh>createModeBindings</vh></v>
+<v t="ekr.20060206111508.29"><vh>endMode</vh></v>
+<v t="ekr.20060206111508.30"><vh>enterNamedMode</vh></v>
+<v t="ekr.20060206111508.31"><vh>exitNamedMode</vh></v>
+<v t="ekr.20060206111508.32"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060206111508.33"><vh>initMode</vh></v>
+<v t="ekr.20060206111508.34"><vh>reinitMode</vh></v>
+<v t="ekr.20060206111508.35"><vh>modeHelp</vh>
+<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
+</v>
+<v t="ekr.20060206111508.37"><vh>set-xxx-State</vh></v>
+<v t="ekr.20060206111508.38"><vh>setInputState</vh></v>
+<v t="ekr.20060206111508.39"><vh>showStateAndMode</vh></v>
+</v>
+</v>
+<v t="ekr.20060206111508.40"><vh>Improved printBindings, printCommands &amp; modeHelp</vh>
+<v t="ekr.20060206111508.41"><vh>Externally visible commands</vh>
+<v t="ekr.20060206111508.42"><vh>digitArgument &amp; universalArgument</vh></v>
+<v t="ekr.20060206111508.43"><vh>k.show/hide/toggleMinibuffer</vh></v>
+<v t="ekr.20060206111508.44"><vh>negativeArgument (redo?)</vh></v>
+<v t="ekr.20060206111508.45"><vh>numberCommand</vh></v>
+<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
+<v t="ekr.20060206111508.46"><vh>printCommands</vh></v>
+<v t="ekr.20060206111508.47"><vh>repeatComplexCommand &amp; helper</vh></v>
+</v>
+<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
+<v t="ekr.20060206111508.46"><vh>printCommands</vh></v>
+<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
+<v t="ekr.20060206111508.35"><vh>modeHelp</vh>
+<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060206111508.48"><vh>Fixed crasher re BackSpace in log window</vh></v>
+<v t="ekr.20060206111508.49"><vh>Fixed crashers in cut/copy/paste commands</vh>
+<v t="ekr.20060206111508.50"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20060206111508.51"><vh>copyText</vh></v>
+<v t="ekr.20060206111508.52"><vh>cutText</vh></v>
+<v t="ekr.20060206111508.53"><vh>pasteText</vh></v>
+</v>
+</v>
+<v t="ekr.20060206111508.54"><vh>Fixed crasher when clicking the close box during a long command</vh>
+<v t="ekr.20060206111508.55"><vh>frame.OnCloseLeoEvent</vh></v>
+<v t="ekr.20060206111508.56"><vh>app.closeLeoWindow</vh></v>
+<v t="ekr.20060206111508.57"><vh> doCommand</vh></v>
+</v>
+<v t="ekr.20060206111508.58"><vh>cloneFindAll now honor present find settings</vh></v>
+<v t="ekr.20060206111508.63"><vh>Double-click didn't work in the body pane.</vh></v>
+<v t="ekr.20060206111508.74"><vh>Improved body.makeInsertPointVisible</vh></v>
+<v t="ekr.20060206111508.75"><vh>Fixed cut/copy/paste from menu</vh></v>
+<v t="ekr.20060206111508.553"><vh>Fixed major blunder: tree.onHeadChanged sets focus only if there was a real change</vh></v>
+</v>
+<v t="ekr.20060206112001"><vh>New commandes</vh>
+<v t="ekr.20060206111508.545"><vh>Added free-text-widgets, dump-all-objects, dump-new-objects, verbose-dump-objects commands</vh></v>
+<v t="ekr.20060206111508.546"><vh>Added gc_stats to print-stats command</vh></v>
+</v>
+<v t="ekr.20060206111853"><vh>New features</vh>
+<v t="ekr.20060206111508.76"><vh>Made modes work</vh></v>
+<v t="ekr.20060206111508.97"><vh>Disabled plain-key bindings in insert/overwrite modes</vh></v>
+<v t="ekr.20060206111508.103"><vh>Disabled auto-scrolling in outline pane on clicks</vh></v>
+<v t="ekr.20060206111508.136"><vh>move-outline and find commands force a screen scroll</vh></v>
+<v t="ekr.20060206111508.517"><vh>(Improved gc stats)</vh></v>
+<v t="ekr.20060206111508.138"><vh>(Limited undo)</vh></v>
+</v>
+<v t="ekr.20060206111508.547"><vh>Code issues</vh>
+<v t="ekr.20060206111508.229"><vh>(Added event arg to all legacy commands)</vh></v>
+<v t="ekr.20060206111508.548"><vh>Code cleanup</vh></v>
+<v t="ekr.20060206111508.550"><vh>Removed code in c.begin/EndUpdate and c.endEditLabel that tried to save/restore focus</vh></v>
+<v t="ekr.20060206111508.596"><vh>Improved tree allocation</vh></v>
+</v>
+<v t="ekr.20060206111508.620"><vh>What I did earlier</vh></v>
+<v t="ekr.20060206111508.621"><vh>What I did: 2-4-06</vh></v>
+<v t="ekr.20060206111508.622"><vh>What I did: 2-5-06</vh></v>
+<v t="ekr.20060206111508.623"><vh>What I did: 2-6-05</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20060206111508" a="V"><vh>4.4 beta 2</vh>
+<v t="ekr.20060206111508.2"><vh>Bugs</vh>
+<v t="ekr.20060206111508.3"><vh>Fixed crasher in Save button</vh></v>
+<v t="ekr.20060206111508.4"><vh>Fixed minor bugs &amp; made minor improvements</vh>
+<v t="ekr.20060206111508.5"><vh>Fixed two annoying headline glitches</vh>
+<v t="ekr.20060206111508.6"><vh>tree.set...LabelState</vh>
+<v t="ekr.20060206111508.7"><vh>setEditLabelState</vh></v>
+<v t="ekr.20060206111508.8"><vh>setSelectedLabelState</vh></v>
+<v t="ekr.20060206111508.9"><vh>setUnselectedLabelState</vh></v>
+<v t="ekr.20060206111508.10"><vh>setDisabledHeadlineColors</vh></v>
+<v t="ekr.20060206111508.11"><vh>setEditHeadlineColors</vh></v>
+<v t="ekr.20060206111508.12"><vh>setUnselectedHeadlineColors</vh></v>
+</v>
+<v t="ekr.20060206111508.13"><vh>onClickBoxClick</vh></v>
+</v>
+<v t="ekr.20060206111508.14"><vh>Insert headline didn't redraw headline properly in vim mode</vh>
+<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
+<v t="ekr.20060206111508.16"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20060206111508.17"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20060206111508.18"><vh>callStateFunction</vh></v>
+<v t="ekr.20060206111508.19"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20060206111508.20"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20060206111508.21"><vh>head key handlers</vh>
+<v t="ekr.20060206111508.22"><vh>onHeadlineKey</vh></v>
+<v t="ekr.20060206111508.23"><vh>updateHead</vh></v>
+<v t="ekr.20060206111508.24"><vh>onHeadChanged</vh>
+<v t="ekr.20060206111508.25"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060206111508.26"><vh>Modes</vh>
+<v t="ekr.20060206111508.27"><vh>badMode</vh></v>
+<v t="ekr.20060206111508.28"><vh>createModeBindings</vh></v>
+<v t="ekr.20060206111508.29"><vh>endMode</vh></v>
+<v t="ekr.20060206111508.30"><vh>enterNamedMode</vh></v>
+<v t="ekr.20060206111508.31"><vh>exitNamedMode</vh></v>
+<v t="ekr.20060206111508.32"><vh>generalModeHandler</vh></v>
+<v t="ekr.20060206111508.33"><vh>initMode</vh></v>
+<v t="ekr.20060206111508.34"><vh>reinitMode</vh></v>
+<v t="ekr.20060206111508.35"><vh>modeHelp</vh>
+<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
+</v>
+<v t="ekr.20060206111508.37"><vh>set-xxx-State</vh></v>
+<v t="ekr.20060206111508.38"><vh>setInputState</vh></v>
+<v t="ekr.20060206111508.39"><vh>showStateAndMode</vh></v>
+</v>
+</v>
+<v t="ekr.20060206111508.40"><vh>Improved printBindings, printCommands &amp; modeHelp</vh>
+<v t="ekr.20060206111508.41"><vh>Externally visible commands</vh>
+<v t="ekr.20060206111508.42"><vh>digitArgument &amp; universalArgument</vh></v>
+<v t="ekr.20060206111508.43"><vh>k.show/hide/toggleMinibuffer</vh></v>
+<v t="ekr.20060206111508.44"><vh>negativeArgument (redo?)</vh></v>
+<v t="ekr.20060206111508.45"><vh>numberCommand</vh></v>
+<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
+<v t="ekr.20060206111508.46"><vh>printCommands</vh></v>
+<v t="ekr.20060206111508.47"><vh>repeatComplexCommand &amp; helper</vh></v>
+</v>
+<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
+<v t="ekr.20060206111508.46"><vh>printCommands</vh></v>
+<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
+<v t="ekr.20060206111508.35"><vh>modeHelp</vh>
+<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060206111508.48"><vh>Fixed crasher re BackSpace in log window</vh></v>
+<v t="ekr.20060206111508.49"><vh>Fixed crashers in cut/copy/paste commands</vh>
+<v t="ekr.20060206111508.50"><vh>Cut/Copy/Paste (tkFrame)</vh>
+<v t="ekr.20060206111508.51"><vh>copyText</vh></v>
+<v t="ekr.20060206111508.52"><vh>cutText</vh></v>
+<v t="ekr.20060206111508.53"><vh>pasteText</vh></v>
+</v>
+</v>
+<v t="ekr.20060206111508.54"><vh>Fixed crasher when clicking the close box during a long command</vh>
+<v t="ekr.20060206111508.55"><vh>frame.OnCloseLeoEvent</vh></v>
+<v t="ekr.20060206111508.56"><vh>app.closeLeoWindow</vh></v>
+<v t="ekr.20060206111508.57"><vh> doCommand</vh></v>
+</v>
+<v t="ekr.20060206111508.58"><vh>cloneFindAll now honor present find settings</vh></v>
+<v t="ekr.20060206111508.63"><vh>Double-click didn't work in the body pane.</vh></v>
+<v t="ekr.20060206111508.74"><vh>Improved body.makeInsertPointVisible</vh></v>
+<v t="ekr.20060206111508.75"><vh>Fixed cut/copy/paste from menu</vh></v>
+<v t="ekr.20060206111508.553"><vh>Fixed major blunder: tree.onHeadChanged sets focus only if there was a real change</vh></v>
+</v>
+<v t="ekr.20060206112001"><vh>New commandes</vh>
+<v t="ekr.20060206111508.545"><vh>Added free-text-widgets, dump-all-objects, dump-new-objects, verbose-dump-objects commands</vh></v>
+<v t="ekr.20060206111508.546"><vh>Added gc_stats to print-stats command</vh></v>
+</v>
+<v t="ekr.20060206111853"><vh>New features</vh>
+<v t="ekr.20060206111508.76"><vh>Made modes work</vh></v>
+<v t="ekr.20060206111508.97"><vh>Disabled plain-key bindings in insert/overwrite modes</vh></v>
+<v t="ekr.20060206111508.103"><vh>Disabled auto-scrolling in outline pane on clicks</vh></v>
+<v t="ekr.20060206111508.136"><vh>move-outline and find commands force a screen scroll</vh></v>
+<v t="ekr.20060206111508.517"><vh>(Improved gc stats)</vh></v>
+<v t="ekr.20060206111508.138"><vh>(Limited undo)</vh></v>
+</v>
+<v t="ekr.20060206111508.547"><vh>Code issues</vh>
+<v t="ekr.20060206111508.229"><vh>(Added event arg to all legacy commands)</vh></v>
+<v t="ekr.20060206111508.548"><vh>Code cleanup</vh></v>
+<v t="ekr.20060206111508.550"><vh>Removed code in c.begin/EndUpdate and c.endEditLabel that tried to save/restore focus</vh></v>
+<v t="ekr.20060206111508.596"><vh>Improved tree allocation</vh></v>
+</v>
+<v t="ekr.20060206111508.620"><vh>What I did earlier</vh></v>
+<v t="ekr.20060206111508.621"><vh>What I did: 2-4-06</vh></v>
+<v t="ekr.20060206111508.622"><vh>What I did: 2-5-06</vh></v>
+<v t="ekr.20060206111508.623"><vh>What I did: 2-6-05</vh></v>
 </v>
 </v>
 </v>
@@ -12794,7 +13012,6 @@ Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
 will attempt to import such extensions from the extensions directory if normal
 imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
 sets.py in this directory.</t>
-<t tx="ekr.20050523092026.1"></t>
 <t tx="ekr.20050523092056.1">http://sourceforge.net/forum/message.php?msg_id=3155657
 
 Enabling the Pie Menu plug-in caused Leo to quit when opening .leo files.</t>
@@ -22270,5 +22487,1168 @@ At present, all commands exit to the top-level mode.
 
 - Add @string active-keyset setting?</t>
 <t tx="ekr.20060116174906.306"></t>
+<t tx="ekr.20060206111508">Leo 4.4 beta 2                                          February 10, 2006
+
+The code is stable; there are no known serious bugs. Some features are
+incomplete.
+
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4b2:
+----------------------------
+- Integrated minibuffer search commands into the framework of Leo's legacy find commands.
+- User modes fully functional.
+- New master key and click handlers.
+- Fixed a long-standing bug that affected all aspects of Leo's screen handling.
+- Rewrote the code that allocates widgets in the tree.  Fixes an important memory leak.
+
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word
+and paragraph manipulation, and commands to manipulate buffers, the kill ring,
+regions and rectangles. You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes. You can emulate the operation of Emacs,
+Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+dialogs, making those commands much easier to use. Plugins or scripts can easily
+create new tabs. The Completion tab shows possible typing completions.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
+<t tx="ekr.20060206111508.2"></t>
+<t tx="ekr.20060206111508.3">@nocolor
+
+Must check for c.exists in c.executeScript after executing the script.</t>
+<t tx="ekr.20060206111508.4">@nocolor
+
+- keyboard-quit now ends editing.
+
+- print-bindings shows plain keys only in 'ignore' mode.
+
+- Removed k.add_ekr_altx_commands and k.makeHardBindings.
+
+- Added binding to vim plain shortcuts: mode-help = h
+
+- Print the initial mode when first creating a window.
+  The change had to be made in g.openWithFileName because of the UNL plugin.
+
+- Improved print-bindings &amp; mode help.
+
+- endMode retains the widget on entry, so e.g., inserting a new node retaings the headline editing state.
+
+@color
+</t>
+<t tx="ekr.20060206111508.5">@nocolor
+
+- Added initialClickExpandsOrContractsNode settings.  Clicking an node expands or contracts the node if this setting is True.  EKR much prefers False. 
+
+- Selecting a headline should not select text in it.
+
+@color
+</t>
+<t tx="ekr.20060206111508.6"></t>
+<t tx="ekr.20060206111508.7">def setEditLabelState (self,p): # selected, editing
+
+    c = self.c ; w = p.edit_widget()
+
+    if p and w:
+        c.widgetWantsFocus(w)
+        self.setEditHeadlineColors(p)
+        w.tag_remove("sel","1.0","end")
+        w.tag_add("sel","1.0","end")
+    else:
+        g.trace('no edit_widget')
+        
+setNormalLabelState = setEditLabelState # For compatibility.</t>
+<t tx="ekr.20060206111508.8">def setSelectedLabelState (self,p): # selected, disabled
+
+    if p and p.edit_widget():
+        self.setDisabledHeadlineColors(p)</t>
+<t tx="ekr.20060206111508.9">def setUnselectedLabelState (self,p): # not selected.
+
+    if p and p.edit_widget():
+        self.setUnselectedHeadlineColors(p)</t>
+<t tx="ekr.20060206111508.10">def setDisabledHeadlineColors (self,p):
+
+    c = self.c ; w = p.edit_widget()
+
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("disabled",id(w),p.headString())
+            # import traceback ; traceback.print_stack(limit=6)
+
+    fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
+    bg = c.config.getColor("headline_text_selected_background_color") or 'grey80'
+    
+    selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
+    selbg = c.config.getColor("headline_text_editing_selection_background_color")
+
+    try:
+        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg,
+            selectbackground=bg,selectforeground=fg,highlightbackground=bg)
+    except:
+        g.es_exception()</t>
+<t tx="ekr.20060206111508.11">def setEditHeadlineColors (self,p):
+
+    c = self.c ; w = p.edit_widget()
+    
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("edit",id(2),p.headString())
+    
+    fg    = c.config.getColor("headline_text_editing_foreground_color") or 'black'
+    bg    = c.config.getColor("headline_text_editing_background_color") or 'white'
+    selfg = c.config.getColor("headline_text_editing_selection_foreground_color") or 'white'
+    selbg = c.config.getColor("headline_text_editing_selection_background_color") or 'black'
+    
+    try: # Use system defaults for selection foreground/background
+        w.configure(state="normal",highlightthickness=1,
+        fg=fg,bg=bg,selectforeground=selfg,selectbackground=selbg)
+    except:
+        g.es_exception()</t>
+<t tx="ekr.20060206111508.12">def setUnselectedHeadlineColors (self,p):
+    
+    c = self.c ; w = p.edit_widget()
+    
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("unselect",id(w),p.headString())
+            # import traceback ; traceback.print_stack(limit=6)
+    
+    fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
+    bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
+    
+    try:
+        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg,
+            selectbackground=bg,selectforeground=fg,highlightbackground=bg)
+    except:
+        g.es_exception()</t>
+<t tx="ekr.20060206111508.13">def onClickBoxClick (self,event):
+    
+    c = self.c ; p1 = c.currentPosition()
+    c.setLog()
+    p = self.eventToPosition(event)
+
+    c.beginUpdate()
+    try:
+        if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+            c.endEditing()
+            self.active = True
+            if p == p1 or c.config.getBool('initialClickExpandsOrContractsNode'):
+                if p.isExpanded(): p.contract()
+                else:              p.expand()
+            self.select(p)
+            if c.frame.findPanel:
+                c.frame.findPanel.handleUserClick(p)
+            if self.stayInTree:
+                c.treeWantsFocus()
+            else:
+                c.bodyWantsFocus()
+        g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+    finally:
+        c.endUpdate()</t>
+<t tx="ekr.20060206111508.14">@nocolor
+
+What I did:
+    
+- endMode must not change focus.
+
+- modeHelp calls c.endEditing(retainFocus=True)
+
+@color</t>
+<t tx="ekr.20060206111508.15">def printBindings (self,event,brief=False):
+
+    '''Print all the bindings presently in effect.'''
+
+    k = self ; c = k.c
+    d = k.bindingsDict ; tabName = 'Bindings'
+    keys = d.keys() ; keys.sort()
+    c.frame.log.clearTab(tabName)
+
+    data = [] ; n1 = 4 ; n2 = 20
+    for key in keys:
+        bunchList = d.get(key,[])
+        for b in bunchList:
+            if not brief or k.isPlainKey(key):
+                pane = g.choose(b.pane=='all','',' %s:' % (b.pane))
+                s1 = pane
+                s2 = k.prettyPrintKey(key)
+                s3 = b.commandName
+                n1 = max(n1,len(s1))
+                n2 = max(n2,len(s2))
+                data.append((s1,s2,s3),)
+    # This isn't perfect in variable-width fonts.
+    for s1,s2,s3 in data:
+        g.es('%*s %*s %s' % (-n1,s1,-(min(12,n2)),s2,s3),tabName=tabName)
+                   
+    state = k.unboundKeyAction 
+    k.showStateAndMode()</t>
+<t tx="ekr.20060206111508.16">def masterCommand (self,event,func,stroke,commandName=None):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    c.setLog()
+    trace = c.config.getBool('trace_masterCommand')
+  
+    c.startRedrawCount = c.frame.tree.redrawCount
+    k.stroke = stroke # Set this global for general use.
+    keysym = event and event.keysym or ''
+    ch = event and event.char or ''
+    w = event and event.widget
+    state = event and hasattr(event,'state') and event.state or 0
+    k.func = func
+    k.funcReturn = None # For unit testing.
+    commandName = commandName or func and func.__name__ or '&lt;no function&gt;'
+    special = keysym in (
+        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func is not None
+    
+    if trace and interesting:
+        g.trace(
+            # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+            'w:',w and c.widget_name(w),'func:',func and func.__name__
+        )
+
+    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+
+    inserted = not special or (
+        stroke != '&lt;Key&gt;' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
+
+    if inserted:
+        # g.trace(stroke,keysym)
+        &lt;&lt; add character to history &gt;&gt;
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName)
+        return 'break'
+        
+    if special: # Don't pass these on.
+        return 'break' 
+
+    if 0: # *** This is now handled by k.masterKeyHandler.
+        if k.inState():
+            val = k.callStateFunction(event) # Calls end-command.
+            if val != 'do-func': return 'break'
+            g.trace('Executing key outside of mode')
+
+    if k.regx.iter:
+        try:
+            k.regXKey = keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        if trace: g.trace('command',commandName)
+        if commandName.startswith('specialCallback'):
+            # The callback function will call c.doCommand
+            val = func(event)
+            # k.simulateCommand uses k.funcReturn.
+            k.funcReturn = k.funcReturn or val # For unit tests.
+        else:
+            # Call c.doCommand directly
+            c.doCommand(func,commandName,event=event)
+        k.endCommand(event,commandName)
+        return 'break'
+    elif k.inState():
+        return 'break' # New in 4.4b2: ignore unbound keys in a state.
+    else:
+        val = k.handleDefaultChar(event)
+        return val</t>
+<t tx="ekr.20060206111508.17"># Don't add multiple special characters to history.
+k.keysymHistory.insert(0,keysym)
+
+if len(ch) &gt; 0:
+    if len(keyHandlerClass.lossage) &gt; 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,ch)
+
+if 0: # traces
+    g.trace(keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)</t>
+<t tx="ekr.20060206111508.18">def callStateFunction (self,event):
+    
+    k = self ; val = None
+    
+    # g.trace(k.state.kind)
+    
+    if k.state.kind:
+        if k.state.handler:
+            val = k.state.handler(event)
+            if val != 'continue':
+                k.endCommand(event,k.commandName)
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+            
+    return val</t>
+<t tx="ekr.20060206111508.19">def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        k.endCommand(event,commandName)
+    
+    return func</t>
+<t tx="ekr.20060206111508.20">def handleDefaultChar(self,event):
+    
+    k = self ; c = k.c
+    w = event and event.widget
+    name = c.widget_name(w)
+
+    if name.startswith('body'):
+        action = k.unboundKeyAction
+        if action in ('insert','overwrite'):
+            c.editCommands.selfInsertCommand(event,action=action)
+        else:
+            pass ; g.trace('ignoring key')
+        return 'break'
+    elif name.startswith('head'):
+        c.frame.tree.onHeadlineKey(event)
+        return 'break'
+    else:
+        # Let tkinter handle the event.
+        # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
+        return None</t>
+<t tx="ekr.20060206111508.21"></t>
+<t tx="ekr.20060206111508.22">def onHeadlineKey (self,event):
+    
+    '''Handle a key event in a headline.'''
+
+    w = event and event.widget or None
+    ch = event and event.char or ''
+    
+    # g.trace(g.callers())
+
+    # Testing for ch here prevents flashing in the headline
+    # when the control key is held down.
+    if ch:
+        # g.trace(repr(ch),g.callers())
+        self.updateHead(event,w)
+
+    return 'break' # Required
+</t>
+<t tx="ekr.20060206111508.23">def updateHead (self,event,w):
+    
+    '''Update a headline from an event.
+    
+    The headline officially changes only when editing ends.'''
+    
+    c = self.c ; ch = event and event.char or ''
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # g.trace(repr(ch))
+    
+    if ch == '\b':
+        if i != j:
+            w.delete(i,j)
+        else:
+            w.delete('insert-1c')
+    elif ch and ch not in ('\n','\r'):
+        if i != j:
+            w.delete(i,j)
+        i = w.index('insert')
+        w.insert(i,ch)
+
+    s = w.get('1.0','end')
+    if s.endswith('\n'):
+        s = s[:-1]
+    w.configure(width=self.headWidth(s=s))
+
+    if ch in ('\n','\r'):
+        self.endEditLabel() # Now calls self.onHeadChanged.
+</t>
+<t tx="ekr.20060206111508.24"># Tricky code: do not change without careful thought and testing.
+
+def onHeadChanged (self,p,undoType='Typing'):
+    
+    '''Officially change a headline.
+    Set the old undo text to the previous revert point.'''
+    
+    c = self.c ; u = c.undoer ; w = self.edit_widget(p)
+    if not w: return
+    
+    ch = '\r' # New in 4.4: we only report the final keystroke.
+    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
+        return # The hook claims to have handled the event.
+
+    s = w.get('1.0','end')
+    &lt;&lt; truncate s if it has multiple lines &gt;&gt;
+    c.beginUpdate()
+    try:
+        # Make the change official, but undo to the *old* revert point.
+        oldRevert = self.revertHeadline
+        changed = s != oldRevert
+        self.revertHeadline = s
+        p.initHeadString(s)
+        # g.trace(repr(s),g.callers())
+        if changed:
+            # g.trace('changed: old',repr(oldRevert),'new',repr(s))
+            undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+            u.afterChangeNodeContents(p,undoType,undoData,
+                dirtyVnodeList=dirtyVnodeList)
+        else:
+            pass # g.trace('not changed')
+    finally:
+        c.endUpdate()
+        if changed:
+            if self.stayInTree:
+                c.treeWantsFocus()
+            else:
+                c.bodyWantsFocus()
+   
+    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)</t>
+<t tx="ekr.20060206111508.25"># Remove one or two trailing newlines before warning of truncation.
+for i in (0,1):
+    if s and s[-1] == '\n':
+        if len(s) &gt; 1: s = s[:-1]
+        else: s = ''
+
+# Warn if there are multiple lines.
+i = s.find('\n')
+if i &gt; -1:
+    # g.trace(i,len(s),repr(s))
+    g.es("Truncating headline to one line",color="blue")
+    s = s[:i]
+
+limit = 1000
+if len(s) &gt; limit:
+    g.es("Truncating headline to %d characters" % (limit),color="blue")
+    s = s[:limit]
+
+s = g.toUnicode(s or '',g.app.tkEncoding)</t>
+<t tx="ekr.20060206111508.26"></t>
+<t tx="ekr.20060206111508.27">def badMode(self,modeName):
+    
+    k = self
+
+    k.clearState()
+    if modeName.endswith('-mode'): modeName = modeName[:-5]
+    k.setLabelGrey('@mode %s is not defined (or is empty)' % modeName)</t>
+<t tx="ekr.20060206111508.28">def createModeBindings (self,modeName,d):
+    
+    k = self ; c = k.c
+
+    for commandName in d.keys():
+        func = c.commandsDict.get(commandName)
+        if not func:
+            g.trace('No such command: %s' % commandName) ; continue
+        bunchList = d.get(commandName,[])
+        for bunch in bunchList:
+            stroke = bunch.val
+            # Important: bunch.val is a stroke returned from k.strokeFromSetting.
+            # Do not call k.strokeFromSetting again here!
+            if stroke and stroke not in ('None','none',None):
+                if 0:
+                    g.trace(
+                        modeName,
+                        '%10s' % (stroke),
+                        '%20s' % (commandName),
+                        bunch.nextMode)
+                d2 = k.masterBindingsDict.get(modeName,{})
+                d2 [stroke] = g.Bunch(
+                    commandName=commandName,
+                    func=func,
+                    nextMode=bunch.nextMode,
+                    stroke=stroke)
+                k.masterBindingsDict [ modeName ] = d2</t>
+<t tx="ekr.20060206111508.29">def endMode(self,event):
+    
+    k = self ; c = k.c ; w = c.get_focus()
+
+    c.frame.log.deleteTab('Mode')
+
+    k.endCommand(event,k.stroke)
+    k.inputModeName = None
+    k.clearState()
+    k.resetLabel()
+    k.showStateAndMode()
+
+    # k.setLabelGrey('top-level mode')
+    
+    # Do *not* change the focus: the command may have changed it.
+    c.widgetWantsFocus(w)</t>
+<t tx="ekr.20060206111508.30">def enterNamedMode (self,event,commandName):
+    
+    k = self ; c = k.c
+    modeName = commandName[6:]
+    
+    k.generalModeHandler(event,modeName=modeName)
+</t>
+<t tx="ekr.20060206111508.31">def exitNamedMode (self,event):
+    
+    k = self
+
+    if k.inState():
+        k.endMode(event)
+    
+    k.showStateAndMode()
+</t>
+<t tx="ekr.20060206111508.32">def generalModeHandler (self,event,
+    commandName=None,func=None,modeName=None,nextMode=None):
+    
+    '''Handle a mode defined by an @mode node in leoSettings.leo.'''
+
+    k = self ; c = k.c ;  w = c.get_focus()
+    state = k.getState(modeName)
+    trace = c.config.getBool('trace_modes')
+    
+    if trace: g.trace(modeName,state)
+   
+    if state == 0:
+        self.initMode(event,modeName)
+        k.inputModeName = modeName
+        k.setState(modeName,1,handler=k.generalModeHandler)
+        if c.config.getBool('showHelpWhenEnteringModes'):
+            k.modeHelp(event)
+        else:
+            c.frame.log.hideTab('Mode')
+        if k.useTextWidget:
+            c.minibufferWantsFocus()
+        else:
+            c.widgetWantsFocus(w)
+    elif not func:
+        g.trace('No func: improper key binding')
+        return 'break'
+    else:
+        if trace: g.trace(modeName,state,commandName)
+        if commandName == 'mode-help':
+            func(event)
+        else:
+            savedModeName = k.inputModeName # Remember this: it may be cleared.
+            # nextMode = bunch.nextMode
+            self.endMode(event)
+            if c.config.getBool('trace_doCommand'):
+                g.trace(func.__name__)
+            func(event)
+            if nextMode in (None,'none'):
+                # Do *not* clear k.inputModeName or the focus here.
+                # func may have put us in *another* mode.
+                pass
+            elif nextMode == 'same':
+                self.reinitMode(modeName) # Re-enter this mode.
+                k.setState(modeName,1,handler=k.generalModeHandler)
+            else:
+                self.initMode(event,nextMode) # Enter another mode.
+
+    return 'break'</t>
+<t tx="ekr.20060206111508.33">def initMode (self,event,modeName):
+
+    k = self ; c = k.c
+
+    if not modeName:
+        g.trace('oops: no modeName')
+        return
+
+    d = g.app.config.modeCommandsDict.get('enter-'+modeName)
+    if not d:
+        self.badMode(modeName)
+        return
+    else:
+        k.modeBindingsDict = d
+        
+    k.inputModeName = modeName
+    k.modeWidget = c.get_focus()
+    
+    if k.masterBindingsDict.get(modeName) is None:
+        k.createModeBindings(modeName,d)
+   
+    k.setLabelBlue(modeName+': ',protect=True)
+    k.showStateAndMode()
+    if k.useTextWidget:
+        c.minibufferWantsFocus()
+    else:
+        pass # Do *not* change the focus here!</t>
+<t tx="ekr.20060206111508.34">def reinitMode (self,modeName):
+    
+    k = self ; c = k.c
+
+    d = k.modeBindingsDict
+    
+    k.inputModeName = modeName
+    k.createModeBindings(modeName,d)
+    
+    # Do not set the status line here.
+    k.setLabelBlue(modeName+': ',protect=True)
+
+    if k.useTextWidget:
+        c.minibufferWantsFocus()
+    else:
+        pass # Do *not* change the focus here!</t>
+<t tx="ekr.20060206111508.35">def modeHelp (self,event):
+
+    '''The mode-help command.
+    
+    A possible convention would be to bind &lt;Tab&gt; to this command in most modes,
+    by analogy with tab completion.'''
+    
+    k = self ; c = k.c
+
+    c.endEditing()
+    
+    g.trace(k.inputModeName)
+    
+    if k.inputModeName:
+        d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
+        k.modeHelpHelper(d)
+        
+    if k.useTextWidget:
+        c.minibufferWantsFocus()
+
+    return 'break'</t>
+<t tx="ekr.20060206111508.36">def modeHelpHelper (self,d):
+    
+    k = self ; c = k.c ; tabName = 'Mode'
+    c.frame.log.clearTab(tabName)
+    keys = d.keys() ; keys.sort()
+
+    data = [] ; n = 20
+    for key in keys:
+        bunchList = d.get(key)
+        for bunch in bunchList:
+            shortcut = bunch.val
+            if shortcut not in (None,'None'):
+                s1 = key ; s2 = k.prettyPrintKey(shortcut)
+                n = max(n,len(s1))
+                data.append((s1,s2),)
+                
+    data.sort()
+    
+    # g.es('%s\n\n' % (k.inputModeName),tabName=tabName)
+        
+    # This isn't perfect in variable-width fonts.
+    for s1,s2 in data:
+        g.es('%*s %s' % (n,s1,s2),tabName=tabName)</t>
+<t tx="ekr.20060206111508.37">def setIgnoreState (self,event):
+
+    self.setInputState('ignore',showState=True)
+
+def setInsertState (self,event):
+
+    self.setInputState('insert',showState=True)
+
+def setOverwriteState (self,event):
+
+    self.setInputState('overwrite',showState=True)
+
+</t>
+<t tx="ekr.20060206111508.38">def setInputState (self,state,showState=False):
+
+    k = self ; c = k.c ; w = c.get_focus()
+
+    k.unboundKeyAction = state
+    if state != 'insert' or showState:
+        k.showStateAndMode()
+   
+    # These commands never change focus.
+    w and c.widgetWantsFocus(w)</t>
+<t tx="ekr.20060206111508.39">def showStateAndMode(self):
+    
+    k = self ; frame = k.c.frame
+    state = k.unboundKeyAction
+    mode = k.getStateKind()
+   
+    if hasattr(frame,'clearStatusLine'):
+        frame.clearStatusLine()
+        put = frame.putStatusLine
+        if state != 'insert':
+            put('state: ',color='blue')
+            put(state)
+        if mode:
+            put(' mode: ',color='blue')
+            put(mode)
+</t>
+<t tx="ekr.20060206111508.40"></t>
+<t tx="ekr.20060206111508.41"></t>
+<t tx="ekr.20060206111508.42">def universalArgument (self,event):
+    
+    '''Begin a numeric argument for the following command.'''
+    
+    k = self
+    k.setLabelBlue('Universal Argument: ',protect=True)
+    k.universalDispatcher(event)
+    
+def digitArgument (self,event):
+
+    k = self
+    k.setLabelBlue('Digit Argument: ',protect=True)
+    k.universalDispatcher(event)</t>
+<t tx="ekr.20060206111508.43">def hideMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    c.frame.hideMinibuffer()
+    
+    g.es('Minibuffer hidden',color='red')
+
+    for commandName in ('show-mini-buffer','toggle-mini-buffer'):
+        shortcut = k.getShortcutForCommandName(commandName)
+        if shortcut:
+            g.es('%s is bound to: %s' % (commandName,shortcut))
+    
+    
+def showMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    c.frame.showMinibuffer()
+    
+def toggleMinibuffer (self,event):
+    
+    k = self ; c = k.c
+    
+    if c.frame.minibufferVisible:
+        k.hideMinibuffer(event)
+    else:
+        k.showMinibuffer(event)</t>
+<t tx="ekr.20060206111508.44">def negativeArgument (self,event):
+
+    k = self ; state = k.getState('neg-arg')
+
+    if state == 0:
+        k.setLabelBlue('Negative Argument: ',protect=True)
+        k.setState('neg-arg',1,k.negativeArgument)
+    else:
+        k.clearState()
+        k.resetLabel()
+        func = k.negArgFunctions.get(k.stroke)
+        if func:
+            func(event)
+
+    return 'break'</t>
+<t tx="ekr.20060206111508.45">def numberCommand (self,event,stroke,number):
+
+    k = self ; k.stroke = stroke ; w = event.widget
+
+    k.universalDispatcher(event)
+    w.event_generate('&lt;Key&gt;',keysym=number)
+
+    return 'break'
+
+def numberCommand0 (self,event): return self.numberCommand (event,None,0)
+def numberCommand1 (self,event): return self.numberCommand (event,None,1)
+def numberCommand2 (self,event): return self.numberCommand (event,None,2)
+def numberCommand3 (self,event): return self.numberCommand (event,None,3)
+def numberCommand4 (self,event): return self.numberCommand (event,None,4)
+def numberCommand5 (self,event): return self.numberCommand (event,None,5)
+def numberCommand6 (self,event): return self.numberCommand (event,None,6)
+def numberCommand7 (self,event): return self.numberCommand (event,None,7)
+def numberCommand8 (self,event): return self.numberCommand (event,None,8)
+def numberCommand9 (self,event): return self.numberCommand (event,None,9)</t>
+<t tx="ekr.20060206111508.46">def printCommands (self,event):
+
+    '''Print all the known commands and their bindings, if any.'''
+
+    k = self ; c = k.c ; tabName = 'Commands'
+    
+    c.frame.log.clearTab(tabName)
+    
+    inverseBindingDict = k.computeInverseBindingDict()
+    commandNames = c.commandsDict.keys() ; commandNames.sort()
+
+    data = [] ; n1 = 4 ; n2 = 20
+    for commandName in commandNames:
+        dataList = inverseBindingDict.get(commandName,[('',''),])
+        for z in dataList:
+            pane, key = z
+            s1 = pane
+            s2 = k.prettyPrintKey(key)
+            s3 = commandName
+            n1 = max(n1,len(s1))
+            n2 = max(n2,len(s2))
+            data.append((s1,s2,s3),)
+                
+    # This isn't perfect in variable-width fonts.
+    for s1,s2,s3 in data:
+        g.es('%*s %*s %s' % (-n1,s1,-(min(12,n2)),s2,s3),tabName=tabName)
+</t>
+<t tx="ekr.20060206111508.47">def repeatComplexCommand (self,event):
+
+    k = self
+
+    if k.mb_history:
+        k.setState('last-full-command',1,handler=k.doLastAltX)
+        k.setLabelBlue("Redo: %s" % k.mb_history[0])
+    return 'break'
+    
+def doLastAltX (self,event):
+    
+    k = self ; c = k.c
+
+    if event.keysym == 'Return' and k.mb_history:
+        last = k.mb_history [0]
+        c.commandsDict [last](event)
+        return 'break'
+    else:
+        return k.keyboardQuit(event)</t>
+<t tx="ekr.20060206111508.48">
+</t>
+<t tx="ekr.20060206111508.49">Traceback (most recent call last):
+
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 250, in doCommand
+    val = command() # Call legacy command
+
+  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 1777, in cutText
+    oldText = w.get('1.0','end')
+
+AttributeError: Canvas instance has no attribute 'get'</t>
+<t tx="ekr.20060206111508.50"></t>
+<t tx="ekr.20060206111508.51">def copyText (self,event=None):
+    
+    '''Copy the selected text from the widget to the clipboard.'''
+    
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    # Set the clipboard text.
+    i,j = g.app.gui.getTextSelection(w)
+    if i != j:
+        s = w.get(i,j)
+        g.app.gui.replaceClipboardWith(s)
+        
+OnCopyFromMenu = copyText</t>
+<t tx="ekr.20060206111508.52">def cutText (self,event=None):
+    
+    '''Invoked from the mini-buffer and from shortcuts.'''
+    
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # Update the widget and set the clipboard text.
+    if i != j:
+        s = w.get(i,j)
+        w.delete(i,j)
+        g.app.gui.replaceClipboardWith(s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Cut',oldSel=oldSel,oldText=oldText)
+    elif name.startswith('head'):
+        # The headline is not officially changed yet.
+        # p.initHeadString(s)
+        w.configure(width=f.tree.headWidth(s=s))
+    else: pass
+
+OnCutFromMenu = cutText</t>
+<t tx="ekr.20060206111508.53">def pasteText (self,event=None):
+
+    '''Paste the clipboard into a widget.'''
+
+    f = self ; c = f.c ; w = event and event.widget
+    if not w or not g.app.gui.isTextWidget(w): return
+
+    name = c.widget_name(w)
+    oldSel = g.app.gui.getTextSelection(w)
+    oldText = w.get('1.0','end')
+    i,j = g.app.gui.getTextSelection(w)
+    s = s1 = g.app.gui.getTextFromClipboard()
+    
+    # g.trace(name)
+    
+    singleLine = name.startswith('head') or name.startswith('minibuffer')
+    
+    if singleLine:
+        # Strip trailing newlines so the truncation doesn't cause confusion.
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+    
+    # Update the widget.
+    if i != j:
+        w.delete(i,j)
+    w.insert(i,s)
+
+    if name.startswith('body'):
+        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+    elif singleLine:
+        s = w.get('1.0','end')
+        while s and s [ -1] in ('\n','\r'):
+            s = s [: -1]
+        if name.startswith('head'):
+            # The headline is not officially changed yet.
+            # p.initHeadString(s)
+            w.configure(width=f.tree.headWidth(s=s))
+    else:
+        pass
+    
+OnPasteFromMenu = pasteText</t>
+<t tx="ekr.20060206111508.54"></t>
+<t tx="ekr.20060206111508.55"># Called from quit logic and when user closes the window.
+# Returns True if the close happened.
+
+def OnCloseLeoEvent(self):
+    
+    f = self ; c = f.c
+    
+    if c.inCommand:
+        g.trace('requesting window close')
+        c.requestCloseWindow = True
+    else:
+        g.app.closeLeoWindow(self)</t>
+<t tx="ekr.20060206111508.56">def closeLeoWindow (self,frame):
+    
+    """Attempt to close a Leo window.
+    
+    Return False if the user veto's the close."""
+    
+    c = frame.c
+    
+    if c.promptingForClose:
+        # There is already a dialog open asking what to do.
+        return False
+        
+    g.app.config.writeRecentFilesFile(c) # Make sure .leoRecentFiles.txt is written.
+
+    if c.changed:
+        c.promptingForClose = True
+        veto = frame.promptForSave()
+        c.promptingForClose = False
+        if veto: return False
+
+    g.app.setLog(None) # no log until we reactive a window.
+    
+    g.doHook("close-frame",c=c) # This may remove frame from the window list.
+    
+    if frame in g.app.windowList:
+        g.app.destroyWindow(frame)
+    
+    if g.app.windowList:
+        # Pick a window to activate so we can set the log.
+        w = g.app.windowList[0]
+        w.deiconify()
+        w.lift()
+        w.c.setLog()
+        w.c.bodyWantsFocus()
+    else:
+        g.app.finishQuit()
+
+    return True # The window has been closed.</t>
+<t tx="ekr.20060206111508.57">command_count = 0
+
+def doCommand (self,command,label,event=None):
+
+    """Execute the given command, invoking hooks and catching exceptions.
+    
+    The code assumes that the "command1" hook has completely handled the command if
+    g.doHook("command1") returns False.
+    This provides a simple mechanism for overriding commands."""
+    
+    c = self ; p = c.currentPosition()
+    c.setLog()
+
+    self.command_count += 1
+    if not g.app.unitTesting and (
+        c.config.getBool('trace_doCommand') or
+        c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+    ):
+        commandName = command and command.__name__
+        if (self.command_count % 10) == 0:
+            w = c.get_focus() ; wname = c.widget_name(w)
+            g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
+        else:
+            g.trace(commandName)
+
+    # The presence of this message disables all commands.
+    if c.disableCommandsMessage:
+        g.es(c.disableCommandsMessage,color='blue')
+        return 'break' # Inhibit all other handlers.
+
+    if label and event is None: # Do this only for legacy commands.
+        if label == "cantredo": label = "redo"
+        if label == "cantundo": label = "undo"
+        g.app.commandName = label
+
+    if not g.doHook("command1",c=c,p=p,v=p,label=label):
+        try:
+            c.inCommand = True
+            val = command(event)
+            c.inCommand = False
+            if c and c.exists: # Be careful: the command could destroy c.
+                c.k.funcReturn = val
+        except:
+            c.inCommand = False
+            if g.app.unitTesting:
+                raise
+            else:
+                g.es("exception executing command")
+                print "exception executing command"
+                g.es_exception(c=c)
+                if c and c.exists and hasattr(c,'frame'):
+                    c.redraw_now()
+                    
+        if c and c.exists and c.requestCloseWindow:
+            g.trace('Closing window after command')
+            c.requestCloseWindow = False
+            g.app.closeLeoWindow(c.frame)
+
+    # Be careful: the command could destroy c.
+    if c and c.exists:
+        p = c.currentPosition()
+        g.doHook("command2",c=c,p=p,v=p,label=label)
+            
+    return "break" # Inhibit all other handlers.</t>
+<t tx="ekr.20060206111508.58"></t>
+<t tx="ekr.20060206111508.63"></t>
+<t tx="ekr.20060206111508.74">Call w.see('insert'), not w.see('insert-5L')</t>
+<t tx="ekr.20060206111508.75"></t>
+<t tx="ekr.20060206111508.76"></t>
+<t tx="ekr.20060206111508.97"></t>
+<t tx="ekr.20060206111508.103">The outline jumps around too much when expanding/contracting nodes
+</t>
+<t tx="ekr.20060206111508.136"># This is required now that scrolling is disabled by default.</t>
+<t tx="ekr.20060206111508.138"># Added max_undo_stack_size setting.</t>
+<t tx="ekr.20060206111508.229"></t>
+<t tx="ekr.20060206111508.517"></t>
+<t tx="ekr.20060206111508.545"></t>
+<t tx="ekr.20060206111508.546"></t>
+<t tx="ekr.20060206111508.547"></t>
+<t tx="ekr.20060206111508.548">@nocolor
+
+- Replaced k.tkBindingFromSetting by k.shortcutFromSetting.
+- Replaced k.canonicalizeShortcut by k.shortcutFromSetting.
+- Replaced k.bindShortcut with bindKey.
+- k.makeBindingsFromCommandsDict does not call k.bindKey for mode bindings.</t>
+<t tx="ekr.20060206111508.550">@nocolor
+
+This is logically and practically dubious.
+True, a screen redraw shouldn't mess with the focus,
+but there are the following problems:
+
+1. c.endUpdate can happen anytime, and it could interfere with other efforts to set focus.
+2. g.app.get_focus might get the 'wrong' or a 'bad' focus.</t>
+<t tx="ekr.20060206111508.553"></t>
+<t tx="ekr.20060206111508.596">A *major* improvement to the tree allocation code:
+
+1.  Use p.key() to as keys to tree.visibleText.
+ This greatly speeds up tree.findEditWidget
+
+2. Eliminated the brain-dead requirement that previously-allocated widgets must match the position.
+   - The allocation code just gets *any* previously allocated widget.
+     This eliminates an n**2 search!
+   - The ancient problem was that theId refers to the *window* not its Text widget:
+     the *window* must be moved to the right spot.
+
+3. recycleWidgets is simpler and a bit faster.
+
+4. destroyWidgets now works: (the bug was not clearing tree.ids).</t>
+<t tx="ekr.20060206111508.620">@nocolor
+
+- Mode help should show commands first, not bindings.
+- Fixed-space font looks much better in log.
+- All log panes now use proper font setting.
+- Eliminated clone-find-all, selection-only, show-context checkboxes in the Find tab.
+- Eliminated toggle-find-clone-find-all-option command</t>
+<t tx="ekr.20060206111508.621">@nocolor
+
+- Fixed bug in strokeFromEvent.
+
+- Replaced some calls to g.app.gui.get_focus: This is unreliable.  More should be removed.
+
+- Fixed masterMenuHandler.
+
+- Removed master click handlers: not needed.
+    - Added FocusIn, FocusOut bindings. (Moved code from masterClickHandler).
+
+- Made many changes so that modes work again with k.masterKeyHandler.
+
+- Minibuffer finds now work.
+    - New search-again command: it reverts to find-with-present-options if there is no search pattern.
+    - Added support for minibufferSearchesShowFindTab option.
+
+- Revised @find mode.  It is now usable and is bound to Ctrl-F.
+
+- Made toggle-find-regex-options work.</t>
+<t tx="ekr.20060206111508.622">@nocolor
+
+- Special keys now work in all modes uniformly.
+
+The Aha was to honor 'mini' bindings first in k.masterKeyHandler.
+
+- Added gc traces every 100 keystrokes, every command, every 10 redraws.
+
+- There is no doubt about it: the focus is being ripped into the headline sometimes.
+
+*** This is *totally weird*: tkFrame.set_focus was setting c to a tkFrame(!!)
+    - How did the call to c.config ever work???????????????????
+
+- Changed calling sequence of g.app.gui.get_focus so it takes a commander, not a frame.
+    - This makes gui.get_focus use the same calling sequence as g.set_focus.
+
+- Added traces that report weird focus issues.
+
+- k.setLabel now restores the focus.
+
+- Changed find keystrokes:
+    - Bound Ctrl-F to search-with-present-options.
+    - Eliminate Find mode: I never used it.
+    - Bound Shift-Ctrl-F to find-options mode.
+
+- Added c.gui ivar and c.set_focus and c.get_focus methods.  Useful abbreviations.
+
+- Fixed bug in createModeBindings: it must not call k.strokeFromSetting again.
+
+- Revised replace-string command so it sets up arguments for Tab find.
+    - This is different from the normal Emacs replace-string command, but it works well in Leo.
+
+- Added smaller Find/Change text in Find Tab when show_only_find_tab_options is True.
+  It is often helpful to see this state.
+
+- Enable minibufferSearchesShowFindTab.  This turns out to be quite useful and natural.
+
+- Replaced frame.xWantsFocus with c.xWantsFocus.
+
+- Restored masterClickHandlers.  FocusOut can not do the job.
+
+* Giant breakthrough:  The problem with focus 'sticking' in the Pmw.Notebook was due to a call to bringToFront.  Apparently, the side effect was to assign a focus to the widget that had it previously.  This makes sense, and can not be considered a Tk bug.
+
+- With this breakthrough, I have been able to remove almost all calls to w.update in Leo.
+
+* Also, I can not dispense with the calls to w.after that were used to draw the status line.  The master key and click handlers now call the update method directly.  This may ease a major stress on Tk.</t>
+<t tx="ekr.20060206111508.623">- Ran Leo with Python23 to test memory allocation.
+
+- Call update_idletasks when writing to the log.</t>
+<t tx="ekr.20060206111600"></t>
+<t tx="ekr.20060206111717"></t>
+<t tx="ekr.20060206111717.1"></t>
+<t tx="ekr.20060206111853"></t>
+<t tx="ekr.20060206112001"></t>
 </tnodes>
 </leo_file>
