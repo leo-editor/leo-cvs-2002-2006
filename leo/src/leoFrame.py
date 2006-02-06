@@ -676,6 +676,23 @@ class leoFrame:
         c.frame.setTabWidth(w)
     #@nonl
     #@-node:ekr.20031218072017.1375:scanForTabWidth
+    #@+node:ekr.20060206093313:xWantsFocus
+    # For compatibility with old scripts.
+    # Using the commander methods directly is recommended.
+    
+    def bodyWantsFocus(self):
+        return self.c.bodyWantsFocus()
+       
+    def headlineWantsFocus(self,p):
+        return self.c.headlineWantsFocus(p)
+        
+    def logWantsFocus(self):
+        return self.c.logWantsFocus()
+        
+    def minibufferWantsFocus(self):
+        return self.c.minibufferWantsFocus()
+    #@nonl
+    #@-node:ekr.20060206093313:xWantsFocus
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.3678:class leoFrame
