@@ -165,7 +165,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
             
         def toFind(event,w=ftxt): return setFocus(w)
         def toChange(event,w=ctxt): return setFocus(w)
-            
+        
         def insertTab(w):
             data = g.app.gui.getSelectionRange(w)
             if data: start,end = data

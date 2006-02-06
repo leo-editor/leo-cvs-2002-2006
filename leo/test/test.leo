@@ -4452,6 +4452,12 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
-<t tx="ekr.20060205061810">c.helpCommands.help(None)</t>
+<t tx="ekr.20060205061810">c.helpCommands.help(None)
+
+
+
+
+
+</t>
 </tnodes>
 </leo_file>

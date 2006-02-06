@@ -50,8 +50,8 @@
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
@@ -60,7 +60,7 @@
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
@@ -353,7 +353,7 @@
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.20" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
@@ -365,7 +365,7 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="V"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -387,7 +387,7 @@
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.20" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
@@ -413,8 +413,8 @@
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
@@ -423,19 +423,19 @@
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 </v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060125104049"><vh>@bool show_only_find_tab_options = True</vh></v>
 <v t="ekr.20060204124608"><vh>@bool minibufferSearchesShowFindTab = True</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060204093736" a="V"><vh>@bool trace_doCommand = True</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
 </v>
 </vnodes>
 <tnodes>
