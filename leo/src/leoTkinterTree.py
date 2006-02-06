@@ -1147,54 +1147,6 @@ class leoTkinterTree (leoFrame.leoTree):
         if data is not None: return data
         
         self.newText(p,x,y+self.lineyoffset)
-    
-        if 0: # old, experimental code.
-            #@        << highlight text widget on enter events >>
-            #@+node:ekr.20040803072955.45:<< highlight text widget on enter events >>
-            # t is the widget returned by self.newText.
-            
-            canvas = self.canvas
-            h = self.line_height
-            
-            if 0: # Define a rect to colorize.
-            
-                color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-                self.canvas.itemconfig(color_rect,fill="",outline="")
-            
-                def enterRect(event,id=color_rect):
-                    if self.lastClickFrameId:
-                        self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
-                    self.lastClickFrameId = id
-                    color = "LightSteelBlue1"
-                    self.canvas.itemconfig(id,fill=color,outline=color)
-                
-                bind_enter = t.bind( '<Enter>', enterRect, '+' )
-                self.bindings.append((t,bind_enter,"<Enter>"),)
-                
-            if 0: # Colorize only the headline.
-            
-                def enterRect(event,p=p,t=t):
-                    t2 = self.lastColoredText
-                    if t2:
-                        if 1: # deunderline
-                            t2.tag_delete('underline')
-                        else: # color
-                            t2.configure(background="white")
-                    if p == self.editPosition():
-                        self.lastColoredText = None
-                    else:
-                        self.lastColoredText = t
-                        if 1: # underline
-                            t.tag_add('underline','1.0', 'end')
-                            t.tag_configure('underline',underline = True)
-                        else: #color
-                            t.configure(background="LightSteelBlue1")
-                
-                bind_enter = t.bind( '<Enter>', enterRect, '+' )
-                self.bindings.append((t,bind_enter,"<Enter>"),)
-            #@nonl
-            #@-node:ekr.20040803072955.45:<< highlight text widget on enter events >>
-            #@nl
        
         self.configureTextState(p)
     
