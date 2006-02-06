@@ -133,8 +133,10 @@ class keyHandlerClass:
         'Delete','Down',
         'End','Escape',
         'F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12',
-        'Home','Left','Linefeed','Next',
-        'PageDn','PageUp','Prior',
+        'Home','Left','Linefeed',
+        'Next',
+        #'PageDn','PageUp',
+        'Prior',
         'Return','Right',
         'Tab','Up',
     )
@@ -169,6 +171,8 @@ class keyHandlerClass:
         'dnarrow' : 'Down',
         'esc'     : 'Escape',
         'ltarrow' : 'Left',
+        'pageup'  : 'Prior',
+        'pagedn'  : 'Next',
         'rtarrow' : 'Right',
         'uparrow' : 'Up',
     }
