@@ -79,8 +79,8 @@ class baseEditCommandsClass:
     #@+node:ekr.20051215102349:beingCommandHelper
     def beginCommandHelper (self,ch,undoType,w):
     
-        p = self.c.currentPosition()
-        name = g.app.gui.widget_name(w)
+        c = self.c ; p = c.currentPosition()
+        name = c.widget_name(w)
         
         # Bug fix 1/6/06 (after a5 released): don't do this in headlines!
         if name.startswith('body'):
@@ -2205,14 +2205,14 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; p = c.currentPosition()
         w = event and event.widget
         if not g.app.gui.isTextWidget(w):
-            g.trace('*'*40,'Not a text widget',g.app.gui.widget_name(w))
+            g.trace('*'*40,'Not a text widget',c.widget_name(w))
             return
         
-        name = g.app.gui.widget_name(w)
+        wname = c.widget_name(w)
         i,j = g.app.gui.getTextSelection(w)
-        # g.trace(i,j)
+        g.trace(wname,i,j)
     
-        if name.startswith('body'):
+        if wname.startswith('body'):
             self.beginCommand()
             d = g.scanDirectives(c,p)
             tab_width = d.get("tabwidth",c.tab_width)
@@ -2254,16 +2254,14 @@ class editCommandsClass (baseEditCommandsClass):
                 # Bug fix: 1/6/06 (after a5 released).
                 # Do nothing at the start of the headline.
                 w.delete('insert-1c')
-    #@nonl
     #@-node:ekr.20051026092433.1:backwardDeleteCharacter
     #@+node:ekr.20050920084036.87:deleteNextChar
     def deleteNextChar (self,event):
     
-        c = self.c
-        w = event and event.widget
+        c = self.c ; w = event and event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        name = g.app.gui.widget_name(w)
+        name = c.widget_name(w)
         i,j = g.app.gui.getTextSelection(w)
         end = w.index('end-1c')
         # g.trace(i,j,'end',w.index('end-1c'))
@@ -2286,11 +2284,10 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.135:deleteSpaces
     def deleteSpaces (self,event,insertspace=False):
     
-        c = self.c
-        w = event and event.widget
+        c = self.c ; w = event and event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        name = g.app.gui.widget_name(w)
+        name = c.widget_name(w)
         char = w.get('insert','insert + 1c ')
         if not char.isspace(): return
         
@@ -2380,7 +2377,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; p = c.currentPosition()
         ch = event and event.char or ''
         w = event and event.widget
-        name = g.app.gui.widget_name(w)
+        name = c.widget_name(w)
         oldSel =  name.startswith('body') and g.app.gui.getTextSelection(w)
         oldText = name.startswith('body') and p.bodyString()
         removeTrailing = None # A signal to compute it later.
@@ -3898,6 +3895,144 @@ class editFileCommandsClass (baseEditCommandsClass):
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.161:class editFileCommandsClass
+#@+node:ekr.20060205164707:class helpCommandsClass
+class helpCommandsClass (baseEditCommandsClass):
+    
+    '''A class to load files into buffers and save buffers to files.'''
+    
+    #@    @+others
+    #@+node:ekr.20060205165501:getPublicCommands (helpCommands)
+    def getPublicCommands (self):
+        
+        return {
+            'help':                     self.help,
+            'apropos-bindings':         self.aproposBindings,
+            'apropos-find-commands':    self.aproposFindCommands,
+        }
+    #@nonl
+    #@-node:ekr.20060205165501:getPublicCommands (helpCommands)
+    #@+node:ekr.20051014170754:help
+    def help (self,event=None):
+    
+        # A bug in Leo: triple quotes puts indentation before each line.
+        c = self.c
+        s = '''
+    The mini-buffer is intended to be like the Emacs buffer:
+    
+    full-command: (default shortcut: Alt-x) Puts the focus in the minibuffer. Type a
+    full command name, then hit <Return> to execute the command. Tab completion
+    works, but not yet for file names.
+    
+    quick-command-mode (default shortcut: Alt-x). Like Emacs Control-C. This mode is
+    defined in leoSettings.leo. It is useful for commonly-used commands.
+    
+    universal-argument (default shortcut: Alt-u). Like Emacs Ctrl-u. Adds a repeat
+    count for later command. Ctrl-u 999 a adds 999 a's. Many features remain
+    unfinished.
+    
+    keyboard-quit (default shortcut: Ctrl-g) Exits any minibuffer mode and puts
+    the focus in the body pane.'''
+    
+        s = g.adjustTripleString(s,c.tab_width)
+            # Remove indentation from indentation of this function.
+        # s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
+        g.es_print(s)
+    #@nonl
+    #@+node:ekr.20060205165654:test_help
+    def test_help(self):
+        
+        c.helpCommands.help()
+    #@nonl
+    #@-node:ekr.20060205165654:test_help
+    #@-node:ekr.20051014170754:help
+    #@+node:ekr.20060205170335:aproposBindings
+    def aproposBindings (self,event=None):
+        
+        c = self.c
+        s = '''
+    A shortcut specification has the form:
+        
+    command-name = shortcutSpecifier
+    
+    or
+    
+    command-name ! pane = shortcutSpecifier
+    
+    The first form creates a binding for all panes except the minibuffer. The second
+    form creates a binding for one or more panes. The possible values for 'pane'
+    are:
+    
+    pane    bound panes
+    ----    -----------
+    all     body,log,tree
+    body    body
+    log     log
+    mini    minibuffer
+    text    body,log
+    tree    tree
+        
+    You may use None as the specifier. Otherwise, a shortcut specifier consists of a
+    head followed by a tail. The head may be empty, or may be a concatenation of the
+    following: (All entries in each row are equivalent).
+        
+    Shift+ Shift-
+    Alt+ or Alt-
+    Control+, Control-, Ctrl+ or Ctrl-
+    
+    Notes:
+    
+    1. The case of plain letters is significant:  a is not A.
+    
+    2. The Shift- (or Shift+) prefix can be applied *only* to letters or
+    multi-letter tails. Leo will ignore (with a warning) the shift prefix applied to
+    other single letters, e.g., Ctrl-Shift-(
+    
+    3. The case of letters prefixed by Ctrl-, Alt-, Key- or Shift- is *not*
+    significant.
+    
+    The following table illustrates these rules.  In each row, the first entry is the key (for k.bindingsDict) and the other entries are equivalents that the user may specify in leoSettings.leo:
+    
+    a, Key-a, Key-A
+    A, Shift-A
+    Alt-a, Alt-A
+    Alt-A, Alt-Shift-a, Alt-Shift-A
+    Ctrl-a, Ctrl-A
+    Ctrl-A, Ctrl-Shift-a, Ctrl-Shift-A
+    !, Key-!,Key-exclam,exclam
+    '''
+    
+        s = g.adjustTripleString(s,c.tab_width)
+            # Remove indentation from indentation of this function.
+        g.es_print(s)
+    #@nonl
+    #@+node:ekr.20060205170435:test_apropos_bindings
+    def test_apropos_bindings (self):
+    
+        c.helpCommands.aproposBindings()
+    #@nonl
+    #@-node:ekr.20060205170435:test_apropos_bindings
+    #@-node:ekr.20060205170335:aproposBindings
+    #@+node:ekr.20060205170335.1:aproposFindCommands
+    def aproposFindCommands (self, event=None):
+        
+        c = self.c
+        s = '''
+    apropos-find-commands not ready yet'''
+    
+        s = g.adjustTripleString(s,c.tab_width)
+            # Remove indentation from indentation of this function.
+        g.es_print(s)
+    #@nonl
+    #@+node:ekr.20060205170552:test_apropos_find_commands
+    def test_apropos_find_commands (self):
+    
+        c.helpCommands.aproposFindCommands()
+    #@nonl
+    #@-node:ekr.20060205170552:test_apropos_find_commands
+    #@-node:ekr.20060205170335.1:aproposFindCommands
+    #@-others
+#@nonl
+#@-node:ekr.20060205164707:class helpCommandsClass
 #@+node:ekr.20050920084036.171:class keyHandlerCommandsClass
 class keyHandlerCommandsClass (baseEditCommandsClass):
     
@@ -3919,7 +4054,6 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'digit-argument':           k.digitArgument,
             'exit-named-mode':          k.exitNamedMode,
             'full-command':             k.fullCommand, # For menu.
-            'help':                     k.help,
             'hide-mini-buffer':         k.hideMinibuffer,
             'mode-help':                k.modeHelp,
             'negative-argument':        k.negativeArgument,
@@ -6455,7 +6589,7 @@ class searchCommandsClass (baseEditCommandsClass):
             self.findTabHandler = findTab(c,f)
     
         if show or wasOpen or c.config.getBool('minibufferSearchesShowFindTab'):
-            self.findTabHandler.bringToFront()
+            pass # self.findTabHandler.bringToFront()
         else:
             log.hideTab(tabName)
     #@nonl
@@ -7484,6 +7618,7 @@ classesList = [
     ('controlCommands',     controlCommandsClass),
     ('debugCommands',       debugCommandsClass),
     ('editFileCommands',    editFileCommandsClass),
+    ('helpCommands',        helpCommandsClass),
     ('keyHandlerCommands',  keyHandlerCommandsClass),
     ('killBufferCommands',  killBufferCommandsClass),
     ('leoCommands',         leoCommandsClass),

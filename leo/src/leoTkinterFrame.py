@@ -964,7 +964,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             if not self.isVisible:
                 self.isVisible = True
                 self.statusFrame.pack(fill="x",pady=1)
-        
+                
+            if 0: # Now done in k.masterKeyHandler and k.masterClickHandler.
                 # Register an idle-time handler to update the row and column indicators.
                 self.statusFrame.after_idle(self.update)
                 
@@ -1011,6 +1012,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
             if g.app.killed or not self.isVisible:
                 return
+                
+            # g.trace('statusLine')
         
             index = body.index("insert")
             row,col = g.app.gui.getindex(body,index)
@@ -1025,8 +1028,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 lab.configure(text=s)
                 self.lastRow = row
                 self.lastCol = col
-        
-            self.statusFrame.after(500,self.update)
+                
+            if 0: # Now done in k.masterKeyHandler and k.masterClickHandler.
+                self.statusFrame.after(500,self.update)
         #@nonl
         #@-node:ekr.20031218072017.1733:update
         #@-others
@@ -1439,6 +1443,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
     def statusLineIsEnabled(self):
         return self.callStatus('isEnabled')
+        
+    def updateStatusLine(self):
+        return self.callStatus('update')
     #@nonl
     #@-node:ekr.20041223105114.1:Status line methods (compatibility)
     #@+node:ekr.20031218072017.3967:Configuration (tkFrame)
@@ -1810,7 +1817,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         f = self ; c = f.c ; w = event and event.widget
         if not w or not g.app.gui.isTextWidget(w): return
     
-        name = g.app.gui.widget_name(w)
+        name = c.widget_name(w)
         oldSel = g.app.gui.getTextSelection(w)
         oldText = w.get('1.0','end')
         i,j = g.app.gui.getTextSelection(w)
@@ -1840,7 +1847,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         f = self ; c = f.c ; w = event and event.widget
         if not w or not g.app.gui.isTextWidget(w): return
     
-        name = g.app.gui.widget_name(w)
+        name = c.widget_name(w)
         oldSel = g.app.gui.getTextSelection(w)
         oldText = w.get('1.0','end')
         i,j = g.app.gui.getTextSelection(w)
@@ -3294,7 +3301,7 @@ class leoTkinterLog (leoFrame.leoLog):
             #@+node:EKR.20040423082910:<< put s to log control >>
             # New in 4.4b1: Restore the focus to a standard place.
             focus_widget = c.get_focus()
-            name = g.app.gui.widget_name(focus_widget)
+            name = c.widget_name(focus_widget)
             for kind in ('body','head','canvas'):
                 if name.startswith(kind): break
             else:
@@ -3359,7 +3366,7 @@ class leoTkinterLog (leoFrame.leoLog):
         if t:
             t.delete('1.0','end')
             # Necessary to allow focus to move *out* of t.
-            t.update()
+            # t.update()
     #@nonl
     #@-node:ekr.20051017212057:clearTab
     #@+node:ekr.20051024173701:createTab
@@ -3399,7 +3406,7 @@ class leoTkinterLog (leoFrame.leoLog):
             self.setTabBindings(tabName)
         
         # New in 4.4b1: call update explicitly.
-        t and t.update()
+        # t and t.update()
     #@nonl
     #@-node:ekr.20051024173701:createTab
     #@+node:ekr.20051018102027:deleteTab
@@ -3446,7 +3453,7 @@ class leoTkinterLog (leoFrame.leoLog):
             
             # New in 4.4b1: call update explicitly.
             logCtrl = self.textDict.get(tabName)
-            logCtrl and logCtrl.update()
+            # logCtrl and logCtrl.update()
             self.c.bodyWantsFocus()
     
     def raiseTab (self,tabName):
@@ -3458,8 +3465,10 @@ class leoTkinterLog (leoFrame.leoLog):
             # New in 4.4b1: call update explicitly.
             logCtrl = self.textDict.get(tabName)
             if logCtrl:
-                logCtrl.update()
-                self.c.widgetWantsFocus(logCtrl)
+                self.c.bodyWantsFocus()
+                # logCtrl.update()
+                # self.c.widgetWantsFocus(logCtrl)
+                # logCtrl.update()
     #@nonl
     #@-node:ekr.20051018061932.1:lower/raiseTab
     #@+node:ekr.20051019170806:renameTab
@@ -3491,7 +3500,7 @@ class leoTkinterLog (leoFrame.leoLog):
         self.tabFrame = self.frameDict.get(tabName)
         
         # New in 4.4b1: call update *after* creating the tab.
-        tabFrame and tabFrame.update()
+        # tabFrame and tabFrame.update()
     
         return tabFrame
     #@nonl

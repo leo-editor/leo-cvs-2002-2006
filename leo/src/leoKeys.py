@@ -641,7 +641,7 @@ class keyHandlerClass:
         if trace and interesting:
             g.trace(
                 # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
-                'w:',w and g.app.gui.widget_name(w),'func:',func and func.__name__
+                'w:',w and c.widget_name(w),'func:',func and func.__name__
             )
     
         # if interesting: g.trace(stroke,commandName,k.getStateKind())
@@ -759,7 +759,7 @@ class keyHandlerClass:
         
         k = self ; c = k.c
         w = event and event.widget
-        name = g.app.gui.widget_name(w)
+        name = c.widget_name(w)
     
         if name.startswith('body'):
             action = k.unboundKeyAction
@@ -895,47 +895,6 @@ class keyHandlerClass:
         k.universalDispatcher(event)
     #@nonl
     #@-node:ekr.20050930080419:digitArgument & universalArgument
-    #@+node:ekr.20051014170754:k.help
-    def help (self,event):
-        
-        k = self ; c = k.c
-        commands = (
-            k.fullCommand,
-            k.quickCommand,
-            k.universalArgument,
-            k.keyboardQuit,
-            # negative-argument
-            # repeat-complex-command
-        )
-        shortcuts = [
-            k.getShortcutForCommand(command)
-            for command in commands]
-    
-        # A bug in Leo: triple quotes puts indentation before each line.
-        s = '''
-    The mini-buffer is intended to be like the Emacs buffer:
-    
-    %s: Just like Emacs Alt-x: starts minibuffer. The prompt is 'full-command' Type a
-    full command name, then hit <Return> to execute the command. Tab completion
-    works, but not for file names.
-    
-    %s: Like Emacs Control-C: (Ctrl-C conflicts with XP cut). starts minibuffer.
-    The prompt is 'quick-command'. This mode is not completed, but stuff like
-    `Ctrl-C r` and `Ctrl r r` do work.
-    
-    %s: Like Emacs Ctrl-u: (Ctrl-u conflicts with move-outline-up). Add a repeat
-    count for later command. Ctrl-u 999 a adds 999 a's, but many features remain
-    unfinished.
-    
-    %s: Just like Emacs Ctrl-g: Closes the mini-buffer.
-    '''
-    
-        s = g.adjustTripleString(s,c.tab_width)
-            # Remove indentation from indentation of this function.
-        s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
-        g.es_print(s)
-    #@nonl
-    #@-node:ekr.20051014170754:k.help
     #@+node:ekr.20051014155551:k.show/hide/toggleMinibuffer
     def hideMinibuffer (self,event):
         
@@ -1329,7 +1288,7 @@ class keyHandlerClass:
             w.delete('1.0','end')
             w.insert('1.0',s)
             if w_old != w:
-                # g.trace('Restoring focus to',g.app.gui.widget_name(w_old))
+                # g.trace('Restoring focus to',c.widget_name(w_old))
                 c.set_focus(w_old)
         else:
             if k.svar: k.svar.set(s)
@@ -1400,15 +1359,20 @@ class keyHandlerClass:
         
         This is the handler for that binding.'''
         
-        if not event:
-            g.trace('oops: no event') ; return
+        k = self ; c = k.c
+        val = self.masterKeyHandlerHelper(event)
+        c.frame.updateStatusLine()
+        return val
+    #@nonl
+    #@+node:ekr.20060205221734:masterKeyHandlerHelper
+    def masterKeyHandlerHelper (self,event):
     
         k = self ; c = k.c
         w = event and event.widget
-        w_name = g.app.gui.widget_name(w)
+        w_name = c.widget_name(w)
         trace = c.config.getBool('trace_masterKeyHandler')
         keysym = event.keysym or ''
-        if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R'):
+        if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R','Win_L','Win_R'):
             return None
             
         self.master_key_count += 1
@@ -1491,6 +1455,7 @@ class keyHandlerClass:
             if trace: g.trace(repr(stroke),'no func')
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
     #@nonl
+    #@-node:ekr.20060205221734:masterKeyHandlerHelper
     #@-node:ekr.20060127183752:masterKeyHandler
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):
@@ -1498,7 +1463,10 @@ class keyHandlerClass:
         k = self ; c = k.c ; w = event and event.widget
         
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(g.app.gui.widget_name(w),func and func.__name__)
+            g.trace(c.widget_name(w),func and func.__name__)
+            
+        # Oh joy: no more need for an idle-time or timed call.
+        c.frame.updateStatusLine()
             
         if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
             g.es_print('Ignoring click outside active minibuffer',color='blue')
@@ -1521,7 +1489,7 @@ class keyHandlerClass:
         k = self ; c = k.c ; w = event and event.widget
         
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(g.app.gui.widget_name(w),func and func.__name__)
+            g.trace(c.widget_name(w),func and func.__name__)
     
         if event and func:
             # Don't event *think* of overriding this.
@@ -1535,14 +1503,14 @@ class keyHandlerClass:
     #@+node:ekr.20060128090219:masterMenuHandler
     def masterMenuHandler (self,stroke,func,commandName):
         
-        k = self ; w = k.c.frame.getFocus()
+        k = self ; c = k.c ; w = c.frame.getFocus()
         
         # Create a minimal event for commands that require them.
         event = g.Bunch(char='',keysym='',widget=w)
         
         if 1:
             if not g.app.unitTesting:
-                g.trace(g.app.gui.widget_name(w))
+                g.trace(c.widget_name(w))
         
         return k.masterCommand(event,func,stroke,commandName)
     #@nonl

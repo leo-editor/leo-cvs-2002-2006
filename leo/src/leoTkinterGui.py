@@ -440,31 +440,30 @@ class tkinterGui(leoGui.leoGui):
         
         if 0: # Big trace if we have unexpected focus.
             w2 = c.frame.outerFrame.focus_get()
-            wname = g.app.gui.widget_name(w2)
+            wname = c.widget_name(w2)
             for s in ('canvas','log','mini','body','head'):
                 if wname.startswith(s): break
             else:
                 if w2:
                     g.trace('*'*40,'Previous widget',wname)
                     g.trace(repr(w2),g.callers())
+                    
+        if not g.app.unitTesting and c.config.getBool('trace_g.app.gui.set_focus'):
+            self.set_focus_count += 1
+            g.trace('%4d' % (self.set_focus_count),
+                c.widget_name(w),g.callers())
         
         if w:
-            if not g.app.unitTesting and c.config.getBool('trace_g.app.gui.set_focus'):
-                self.set_focus_count += 1
-                g.trace('%4d' % (self.set_focus_count),
-                    g.app.gui.widget_name(w),g.callers())
-    
-            if 1:
-                # A fix to the cursed problems with Pmw.Notebook.
-                # I am not happy with this, but it seems preferable to trying to figure out
-                # all the places where the code must call update()
-                
-                # New in 4.4b1: the place to call update is *after* log pane operations.
-                w.update()
-                
             try:
+                if 0:
+                    # A fix to the cursed problems with Pmw.Notebook.
+                    # I am not happy with this, but it seems preferable to trying to figure out
+                    # all the places where the code must call update()
+                    
+                    # New in 4.4b1: the place to call update is *after* log pane operations.
+                    w.update()
+    
                 # It's possible that the widget doesn't exist now.
-                # It's easiest not to care.
                 w.focus_set()
             except Exception:
                 g.es_exception()

@@ -8,17 +8,6 @@
 #@+node:ekr.20041227063801:<< imports >>
 import leoGlobals as g
 import leoGui
-
-# if 1: # Used by settings controller.
-    # import leoNodes
-    # import leoTkinterTree
-# 
-    # Pmw = g.importExtension("Pmw",pluginName="leoConfig.py",verbose=False)
-# 
-    # import Tkinter as Tk
-    # import tkColorChooser
-    # import tkFont
-
 import sys
 #@nonl
 #@-node:ekr.20041227063801:<< imports >>
