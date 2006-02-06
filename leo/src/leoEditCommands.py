@@ -2210,7 +2210,7 @@ class editCommandsClass (baseEditCommandsClass):
         
         wname = c.widget_name(w)
         i,j = g.app.gui.getTextSelection(w)
-        g.trace(wname,i,j)
+        # g.trace(wname,i,j)
     
         if wname.startswith('body'):
             self.beginCommand()
@@ -2254,6 +2254,7 @@ class editCommandsClass (baseEditCommandsClass):
                 # Bug fix: 1/6/06 (after a5 released).
                 # Do nothing at the start of the headline.
                 w.delete('insert-1c')
+    #@nonl
     #@-node:ekr.20051026092433.1:backwardDeleteCharacter
     #@+node:ekr.20050920084036.87:deleteNextChar
     def deleteNextChar (self,event):
@@ -5519,7 +5520,7 @@ class registerCommandsClass (baseEditCommandsClass):
 #@nonl
 #@-node:ekr.20050920084036.234:class registerCommandsClass
 #@+node:ekr.20051023094009:Search classes
-#@+node:ekr.20060123125256:class minibufferFind
+#@+node:ekr.20060123125256:class minibufferFind (the findHandler)
 class minibufferFind:
 
     '''An adapter class that implements minibuffer find commands using the (hidden) Find Tab.'''
@@ -5532,7 +5533,7 @@ class minibufferFind:
         self.k = c.k
         self.finder = finder
     #@-node:ekr.20060123125317.2: ctor (minibufferFind)
-    #@+node:ekr.20060124140114:Options
+    #@+node:ekr.20060124140114: Options
     #@+node:ekr.20060124123133:setFindScope
     def setFindScope(self,where):
         
@@ -5642,30 +5643,6 @@ class minibufferFind:
             g.trace('oops: bad find ivar %s' % ivar)
     #@nonl
     #@-node:ekr.20060124135401:toggleOption
-    #@+node:ekr.20060124134356:setupArgs
-    def setupArgs (self,forward=False,regexp=False,word=False):
-        
-        h = self.finder
-        
-        if forward is None:
-            reverse = None
-        else:
-            reverse = not forward
-    
-        for ivar,val,in (
-            ('reverse', reverse),
-            ('pattern_match',regexp),
-            ('whole_word',word),
-        ):
-            if val is not None:
-                self.setOption(ivar,val,verbose=True)
-                
-        h.p = p = self.c.currentPosition()
-        h.v = p.v
-        h.update_ivars()
-        self.showFindOptions()
-    #@nonl
-    #@-node:ekr.20060124134356:setupArgs
     #@+node:ekr.20060205105950:setupChangePattern
     def setupChangePattern (self,pattern):
         
@@ -5692,7 +5669,43 @@ class minibufferFind:
         h.update_ivars()
     #@nonl
     #@-node:ekr.20060125091234:setupSearchPattern
-    #@-node:ekr.20060124140114:Options
+    #@-node:ekr.20060124140114: Options
+    #@+node:ekr.20060124134356: setupArgs
+    def setupArgs (self,forward=False,regexp=False,word=False,statusLine='',setDefaultSearch=False):
+        
+        h = self.finder ; k = self.k
+        
+        if forward is None:
+            reverse = None
+        else:
+            reverse = not forward
+    
+        for ivar,val,in (
+            ('reverse', reverse),
+            ('pattern_match',regexp),
+            ('whole_word',word),
+        ):
+            if val is not None:
+                self.setOption(ivar,val,verbose=True)
+                
+        h.p = p = self.c.currentPosition()
+        h.v = p.v
+        h.update_ivars()
+        self.showFindOptions()
+        
+        
+        
+        if statusLine:
+            k.setLabelBlue(statusLine,protect=True)
+            
+            return ### not ready yet.
+            if setDefaultSearch:
+                t = h.find_ctrl
+                s = t.get('1.0','end')
+                while s.endswith('\n') or s.endswith('\r'):
+                    s = s[:-1]
+                k.extendLabel(s,select=True)
+    #@-node:ekr.20060124134356: setupArgs
     #@+node:ekr.20060128080201:cloneFindAll
     def cloneFindAll (self,event):
     
@@ -5724,21 +5737,6 @@ class minibufferFind:
             
     #@nonl
     #@-node:ekr.20060204120158:findAgain
-    #@+node:ekr.20060124181213.4:generalSearchHelper
-    def generalSearchHelper (self,pattern,cloneFindAll=False):
-        
-        self.setupSearchPattern(pattern)
-    
-        self.finder.p = self.c.currentPosition()
-        self.finder.v = self.finder.p.v
-    
-        if cloneFindAll:
-             self.finder.cloneFindAllCommand()
-        else:
-            # This handles the reverse option.
-            self.finder.findNextCommand()
-    #@nonl
-    #@-node:ekr.20060124181213.4:generalSearchHelper
     #@+node:ekr.20060205105950.1:generalChangeHelper
     def generalChangeHelper (self,find_pattern,change_pattern):
         
@@ -5754,114 +5752,21 @@ class minibufferFind:
         self.finder.findNextCommand()
     #@nonl
     #@-node:ekr.20060205105950.1:generalChangeHelper
-    #@+node:ekr.20060124140224.1:seachForward/Backward
-    def searchBackward (self,event):
-    
-        k = self.k ; state = k.getState('search-backward')
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=False,regexp=False,word=False)
-            k.setLabelBlue('Search Backward: ',protect=True)
-            k.getArg(event,'search-backward',1,self.searchBackward,completion=False)
-        else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg)
-    
-    def searchForward (self,event):
-    
-        k = self.k ; state = k.getState('search-forward')
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=True,regexp=False,word=False)
-            k.setLabelBlue('Search: ',protect=True)
-            k.getArg(event,'search-forward',1,self.searchForward)
-        else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg)
-    #@nonl
-    #@-node:ekr.20060124140224.1:seachForward/Backward
-    #@+node:ekr.20060124140224.2:wordSearchBackward/Forward
-    def wordSearchBackward (self,event):
-    
-        k = self.k ; state = k.getState('word-search-backward')
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=False,regexp=False,word=True)
-            k.setLabelBlue('Word Search Backward: ',protect=True)
-            k.getArg(event,'word-search-backward',1,self.wordSearchBackward,completion=False)
-        else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg)
-    
-    def wordSearchForward (self,event):
-    
-        k = self.k ; state = k.getState('word-search-forward')
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=True,regexp=False,word=True)
-            k.setLabelBlue('Word Search: ',protect=True)
-            k.getArg(event,'word-search-forward',1,self.wordSearchForward)
-        else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg)
-    #@nonl
-    #@-node:ekr.20060124140224.2:wordSearchBackward/Forward
-    #@+node:ekr.20060124140224.3:reSearchBackward/Forward
-    def reSearchBackward (self,event):
-    
-        k = self.k ; state = k.getState('re-search-backward')
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=False,regexp=True,word=None)
-            k.setLabelBlue('Regexp Search backward:',protect=True)
-            k.getArg(event,'re-search-backward',1,self.reSearchBackward,completion=False)
-        else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg)
-    
-    def reSearchForward (self,event):
-    
-        k = self.k ; state = k.getState('re-search-forward')
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=True,regexp=True,word=None)
-            k.setLabelBlue('Regexp Search:',protect=True)
-            k.getArg(event,'re-search-forward',1,self.reSearchForward)
-        else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg)
-    #@nonl
-    #@-node:ekr.20060124140224.3:reSearchBackward/Forward
-    #@+node:ekr.20060125093807:searchWithPresentOptions
-    def searchWithPresentOptions (self,event):
-    
-        k = self.k ; tag = 'search-with-present-options'
+    #@+node:ekr.20060124181213.4:generalSearchHelper
+    def generalSearchHelper (self,pattern,cloneFindAll=False):
         
-        state = k.getState(tag)
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=None,regexp=None,word=None)
-            k.setLabelBlue('Search: ',protect=True)
-            k.getArg(event,tag,1,self.searchWithPresentOptions,completion=False)
+        self.setupSearchPattern(pattern)
+    
+        self.finder.p = self.c.currentPosition()
+        self.finder.v = self.finder.p.v
+    
+        if cloneFindAll:
+             self.finder.cloneFindAllCommand()
         else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg)
+            # This handles the reverse option.
+            self.finder.findNextCommand()
     #@nonl
-    #@-node:ekr.20060125093807:searchWithPresentOptions
+    #@-node:ekr.20060124181213.4:generalSearchHelper
     #@+node:ekr.20050920084036.113:replaceString
     def replaceString (self,event):
     
@@ -5923,9 +5828,118 @@ class minibufferFind:
                 self._useRegex = False
     #@nonl
     #@-node:ekr.20050920084036.113:replaceString
+    #@+node:ekr.20060124140224.3:reSearchBackward/Forward
+    def reSearchBackward (self,event):
+    
+        k = self.k ; state = k.getState('re-search-backward')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=False,regexp=True,word=None)
+            k.setLabelBlue('Regexp Search backward:',protect=True)
+            k.getArg(event,'re-search-backward',1,self.reSearchBackward,completion=False)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    
+    def reSearchForward (self,event):
+    
+        k = self.k ; state = k.getState('re-search-forward')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=True,word=None)
+            k.setLabelBlue('Regexp Search:',protect=True)
+            k.getArg(event,'re-search-forward',1,self.reSearchForward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    #@nonl
+    #@-node:ekr.20060124140224.3:reSearchBackward/Forward
+    #@+node:ekr.20060124140224.1:seachForward/Backward
+    def searchBackward (self,event):
+    
+        k = self.k ; state = k.getState('search-backward')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=False,regexp=False,word=False)
+            k.setLabelBlue('Search Backward: ',protect=True)
+            k.getArg(event,'search-backward',1,self.searchBackward,completion=False)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    
+    def searchForward (self,event):
+    
+        k = self.k ; state = k.getState('search-forward')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=False,word=False)
+            k.setLabelBlue('Search: ',protect=True)
+            k.getArg(event,'search-forward',1,self.searchForward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    #@nonl
+    #@-node:ekr.20060124140224.1:seachForward/Backward
+    #@+node:ekr.20060125093807:searchWithPresentOptions
+    def searchWithPresentOptions (self,event):
+    
+        k = self.k ; tag = 'search-with-present-options'
+        
+        state = k.getState(tag)
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=None,regexp=None,word=None,
+                statusLine='Search: ',setDefaultSearch=True)
+            # k.setLabelBlue('Search: ',protect=True)
+            k.getArg(event,tag,1,self.searchWithPresentOptions,completion=False)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    #@nonl
+    #@-node:ekr.20060125093807:searchWithPresentOptions
+    #@+node:ekr.20060124140224.2:wordSearchBackward/Forward
+    def wordSearchBackward (self,event):
+    
+        k = self.k ; state = k.getState('word-search-backward')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=False,regexp=False,word=True)
+            k.setLabelBlue('Word Search Backward: ',protect=True)
+            k.getArg(event,'word-search-backward',1,self.wordSearchBackward,completion=False)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    
+    def wordSearchForward (self,event):
+    
+        k = self.k ; state = k.getState('word-search-forward')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=False,word=True)
+            k.setLabelBlue('Word Search: ',protect=True)
+            k.getArg(event,'word-search-forward',1,self.wordSearchForward)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg)
+    #@nonl
+    #@-node:ekr.20060124140224.2:wordSearchBackward/Forward
     #@-others
 #@nonl
-#@-node:ekr.20060123125256:class minibufferFind
+#@-node:ekr.20060123125256:class minibufferFind (the findHandler)
 #@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
 class findTab (leoFind.leoFind):
     
