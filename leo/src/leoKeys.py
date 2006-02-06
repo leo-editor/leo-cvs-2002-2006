@@ -1297,6 +1297,20 @@ class keyHandlerClass:
             k.mb_prefix = s
     #@nonl
     #@-node:ekr.20051023132350.1:setLabel
+    #@+node:ekr.20060206064635:extendLabel
+    def extendLabel(self,s,select=False):
+        
+        k = self ; c = k.c ; w = self.widget
+        if not w: return
+    
+        if self.useTextWidget:
+            # No need to save focus.
+            i = w.index('end')
+            w.insert('end',s)
+            if select:
+                g.app.gui.setTextSelection(w,i,'end',insert=None)
+    #@nonl
+    #@-node:ekr.20060206064635:extendLabel
     #@+node:ekr.20050920085536.36:setLabelBlue
     def setLabelBlue (self,label=None,protect=False):
         
