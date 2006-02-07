@@ -5949,6 +5949,8 @@ class findTab (leoFind.leoFind):
     #@+node:ekr.20051020120306.10:Birth & death
     #@+node:ekr.20051020120306.11:__init__
     def __init__(self,c,parentFrame):
+        
+        # g.trace('findTab')
     
         # Init the base class...
         leoFind.leoFind.__init__(self,c,title='Find Tab')
@@ -5978,27 +5980,36 @@ class findTab (leoFind.leoFind):
         self.outerScrolledFrame = None
     
         self.createFrame(parentFrame)
-        if not self.optionsOnly:
-            self.createBindings()
+        self.createBindings()
         
         self.init(c) # New in 4.3: init only once.
     #@nonl
     #@-node:ekr.20051020120306.11:__init__
     #@+node:ekr.20051023181449:createBindings (findTab)
     def createBindings (self):
-    
+        
         c = self.c ; k = c.k
+        
+        def resetWrapCallback(event,self=self,k=k):
+            self.resetWrap(event)
+            k.masterKeyHandler(event)
     
         table = (
-            ('<Key>',   k.masterKeyHandler),
-            ("<Return>",self.findButtonCallback),
-            ("<Escape>",self.hideTab),
+            ('<Button-1>',  k.masterClickHandler),
+            ('<Double-1>',  k.masterClickHandler),
+            ('<Button-3>',  k.masterClickHandler),
+            ('<Double-3>',  k.masterClickHandler),
+            ('<Key>',       k.masterKeyHandler),
+            ('<Key>',       resetWrapCallback),
+            ('<Return>',    self.findButtonCallback),
+            ("<Escape>",    self.hideTab),
         )
     
         for w in (self.find_ctrl,self.change_ctrl):
             for event, callback in table:
                 w.bind(event,callback)
-                
+        
+        if 0:
             w.bind("<Key>",self.resetWrap,'+')
                 # Can't put this in the table bc of the '+' arg.
     #@nonl
@@ -6007,6 +6018,8 @@ class findTab (leoFind.leoFind):
     def createFrame (self,parentFrame):
         
         c = self.c
+        
+        # g.trace('findTab')
         
         #@    << Create the outer frames >>
         #@+node:ekr.20051020120306.14:<< Create the outer frames >>
@@ -6207,10 +6220,11 @@ class findTab (leoFind.leoFind):
         
         # Pack this last so buttons don't get squashed when frame is resized.
         self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
-    
-        for w in buttons:
-            w.bindHotKey(ftxt)
-            w.bindHotKey(ctxt)
+        
+        if 0: # These dont work in the new binding scheme.  Use shortcuts or mode bindings instead.
+            for w in buttons:
+                w.bindHotKey(ftxt)
+                w.bindHotKey(ctxt)
     #@nonl
     #@-node:ekr.20051020120306.13:createFrame (findTab)
     #@+node:ekr.20051020120306.19:find.init

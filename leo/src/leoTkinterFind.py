@@ -130,6 +130,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@-node:ekr.20031218072017.3901:destroySelf
     #@+node:ekr.20031218072017.3902:find.createFrame
     def createFrame (self):
+        
+        # g.trace('legacy')
     
         # Create the find panel...
         outer = Tk.Frame(self.frame,relief="groove",bd=2)
@@ -271,14 +273,14 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
         # HotKeys used for plain buttons (enter),d,g,t
         
-        def findButtonCallback(event=None):
-            __pychecker__ = '--no-argsused' # the event param must be present.
+        def findButtonCallback(event,self=self):
             self.findButton()
             return 'break'
         
         # Create the first row of buttons
         findButton=Tk.Button(buttons,
             width=9,text="Find",bd=4,command=findButtonCallback) # The default.
+        
         findButton.pack(pady="1p",padx="25p",side="left")
         
         contextBox = underlinedTkButton("check",buttons,
@@ -314,21 +316,32 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         #@nonl
         #@-node:ekr.20031218072017.3905:<< Create two rows of buttons >>
         #@nl
+    #@nonl
+    #@-node:ekr.20031218072017.3902:find.createFrame
+    #@+node:ekr.20060207080537:find.createBindings
+    def createBindings (self):
+        
+        # Legacy bindings.  Can be overwritten in subclasses.
+        
+        # g.trace('legacy')
+        
+        def findButtonCallback2(event,self=self):
+            self.findButton()
+            return 'break'
     
         for widget in (self.find_ctrl, self.change_ctrl):
             widget.bind ("<Button-1>",  self.resetWrap)
-            widget.bind("<Key>", self.resetWrap)
-            widget.bind("<Control-a>",self.selectAllFindText)
-            #widget.bind(g.virtual_event_name("SelectAll"),self.selectAllFindText)
+            widget.bind("<Key>",        self.resetWrap)
+            widget.bind("<Control-a>",  self.selectAllFindText)
         
         for widget in (outer, self.find_ctrl, self.change_ctrl):
-            widget.bind("<Key-Return>", findButtonCallback)
+            widget.bind("<Key-Return>", findButtonCallback2)
             widget.bind("<Key-Escape>", self.onCloseWindow)
         
         if self.top:
             self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
     #@nonl
-    #@-node:ekr.20031218072017.3902:find.createFrame
+    #@-node:ekr.20060207080537:find.createBindings
     #@+node:ekr.20031218072017.2059:find.init
     def init (self,c):
     
