@@ -1321,12 +1321,10 @@ class baseUndoer:
             # g.trace('cant redo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead+1):
-            g.trace('no bead')
-            return
+            g.trace('no bead') ; return
         if not c.currentPosition():
-            g.trace('no current position')
-            return
-            
+            g.trace('no current position') ; return
+    
         # g.trace(u.undoType)
         # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
         u.redoing = True 
@@ -1334,6 +1332,7 @@ class baseUndoer:
     
         c.beginUpdate()
         try:
+            c.endEditing()
             if u.redoHelper:
                 u.redoHelper()
             else:
@@ -1477,10 +1476,13 @@ class baseUndoer:
     #@+node:ekr.20050318085432.7:redoNodeContents
     def redoNodeContents (self):
         
-        u = self
+        u = self ; c = u.c
         
         u.p.setTnodeText(u.newBody)
         u.p.initHeadString(u.newHead)
+        c.frame.tree.setHeadline(u.p,u.newHead) # New in 4.4b2.
+        
+        # g.trace('newHead',u.newHead,'revert',c.frame.tree.revertHeadline)
         
         if u.groupCount == 0 and u.newSel:
             u.c.frame.body.setTextSelection(u.newSel)
@@ -1573,27 +1575,23 @@ class baseUndoer:
         
         u = self ; c = u.c
         # g.trace(g.callers(7))
-    
-        c.endEditing() # Capture the headline *before* checking for undo.
         
         if not u.canUndo():
             # g.trace('cant undo',u.undoMenuLabel,u.redoMenuLabel)
             return
         if not u.getBead(u.bead):
-            g.trace('no bead')
-            return # Sets ivars.
+            g.trace('no bead') ; return
         if not c.currentPosition():
-            g.trace('no current position')
-            return
+            g.trace('no current position') ; return
             
         # g.trace(u.undoType)
-    
         # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
         u.undoing = True
         u.groupCount = 0
     
         c.beginUpdate()
         try:
+            c.endEditing()
             if u.undoHelper:
                 u.undoHelper()
             else:
@@ -1769,10 +1767,11 @@ class baseUndoer:
         including headline and body text, and dirty and marked bits.
         '''
         
-        u = self
+        u = self ; c = u.c
         
         u.p.setTnodeText(u.oldBody)
         u.p.initHeadString(u.oldHead)
+        c.frame.tree.setHeadline(u.p,u.oldHead) # New in 4.4b2.
     
         if u.groupCount == 0 and u.oldSel:
             u.c.frame.body.setTextSelection(u.oldSel)
