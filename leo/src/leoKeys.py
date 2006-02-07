@@ -1062,6 +1062,7 @@ class keyHandlerClass:
         stroke = k.getShortcutForCommandName(commandName)
         
         if stroke and w:
+            # g.trace(g.app.gui.widget_name(w))
             w.event_generate(stroke)
         else:
             g.trace('no shortcut for %s' % (commandName),color='red')
@@ -1368,7 +1369,7 @@ class keyHandlerClass:
     #@-node:ekr.20050920085536.38:updateLabel
     #@-node:ekr.20050924064254:Label...
     #@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
-    #@+node:ekr.20060127183752:masterKeyHandler
+    #@+node:ekr.20060127183752:masterKeyHandler & helper
     master_key_count = 0
     
     def masterKeyHandler (self,event):
@@ -1388,7 +1389,7 @@ class keyHandlerClass:
         k = self ; c = k.c
         w = event and event.widget
         w_name = c.widget_name(w)
-        trace = c.config.getBool('trace_masterKeyHandler')
+        trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
         keysym = event.keysym or ''
         if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R','Win_L','Win_R'):
             return None
@@ -1449,7 +1450,9 @@ class keyHandlerClass:
         for key,name in (
             # Order here is similar to bindtags order.
             ('body','body'),
-            ('tree','head'), ('tree','canvas'),
+            ('text','head'), # Important: text bindings in head before tree bindings.
+            ('tree','head'),
+            ('tree','canvas'),
             ('log', 'log'),
             ('text',None), ('all',None),
         ):
@@ -1474,27 +1477,38 @@ class keyHandlerClass:
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
     #@nonl
     #@-node:ekr.20060205221734:masterKeyHandlerHelper
-    #@-node:ekr.20060127183752:masterKeyHandler
+    #@-node:ekr.20060127183752:masterKeyHandler & helper
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):
         
-        k = self ; c = k.c ; w = event and event.widget
+        k = self ; c = k.c
+        if not event: return
+        w = event.widget ; wname = c.widget_name(w)
         
         if c.config.getBool('trace_masterClickHandler'):
-            g.trace(c.widget_name(w),func and func.__name__)
-            
-        # Oh joy: no more need for an idle-time or timed call.
-        c.frame.updateStatusLine()
-            
+            g.trace(wname,func and func.__name__)
+    
         if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
             g.es_print('Ignoring click outside active minibuffer',color='blue')
             c.minibufferWantsFocus()
             return 'break'
     
+        # Update the selection point immediately for updateStatusLine.
+        if wname.startswith('body'):
+            try:
+                i = w.index('@%s,%s' % (event.x,event.y))
+                g.app.gui.setInsertPoint(w,i)
+                c.frame.updateStatusLine()
+            except Exception:
+                pass
+    
         if event and func:
-            # Don't event *think* of overriding this.
+            # Don't even *think* of overriding this.
             return func(event)
         else:
+            # All tree callbacks have a func, so we can't be in the tree.
+            g.trace('*'*20,'auto-deactivate tree: %s' % wname)
+            c.frame.tree.OnDeactivate()
             return None
             
     masterClick3Handler         = masterClickHandler
@@ -1779,14 +1793,24 @@ class keyHandlerClass:
     #@+node:ekr.20060120200818:setInputState
     def setInputState (self,state,showState=False):
     
-        k = self ; c = k.c ; w = c.get_focus()
+        k = self ; c = k.c
+        w = c.get_focus()
+        wname = g.app.gui.widget_name(w)
     
         k.unboundKeyAction = state
         if state != 'insert' or showState:
             k.showStateAndMode()
        
         # These commands never change focus.
+        # Alas, get_focus may be unreliable while focus is changing.
         w and c.widgetWantsFocus(w)
+        
+        if 1: # This has the potential to rip focus from the body.
+            for z in (None,'body','tree','head','canvas'):
+                if not z or wname.startswith(z):
+                    return
+            else:
+                g.trace('-'*20,'widget',wname)
     #@nonl
     #@-node:ekr.20060120200818:setInputState
     #@+node:ekr.20060120193743:showStateAndMode
