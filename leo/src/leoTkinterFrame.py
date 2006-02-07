@@ -1005,21 +1005,19 @@ class leoTkinterFrame (leoFrame.leoFrame):
         #@+node:ekr.20031218072017.1733:update
         def update (self):
             
-            c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
+            c = self.c ; w = self.bodyCtrl ; lab = self.labelWidget
             if g.app.killed or not self.isVisible:
                 return
-                
-            # g.trace('statusLine')
         
-            index = body.index("insert")
-            row,col = g.app.gui.getindex(body,index)
+            index = w.index("insert")
+            row,col = g.app.gui.getindex(w,index)
         
             if col > 0:
-                s = body.get("%d.0" % (row),index)
+                s = w.get("%d.0" % (row),index)
                 s = g.toUnicode(s,g.app.tkEncoding)
                 col = g.computeWidth (s,c.tab_width)
         
-            if row != self.lastRow or col != self.lastCol:
+            if 1: # row != self.lastRow or col != self.lastCol:
                 s = "line %d, col %d " % (row,col)
                 # Important: this does not change the focus because labels never get focus.
                 lab.configure(text=s)
@@ -1770,7 +1768,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.notValidInBatchMode("Abort Edit Headline")
             return
             
-        # g.trace(p == tree.editPosition(),repr(tree.revertHeadline))
+        # g.trace('isEditing',p == tree.editPosition(),'revertHeadline',repr(tree.revertHeadline))
             
         if w and p == tree.editPosition():
             # Revert the headline text.
@@ -1880,6 +1878,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste (tkFrame)
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
     def endEditLabelCommand (self,event=None):
+        
+        '''End editing of a headline and move focus to the body pane.'''
     
         frame = self ; c = frame.c
         
@@ -1887,14 +1887,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c.notValidInBatchMode("End Edit Headline")
         else:
             c.endEditing()
-            
-            if 1: # This command always moves into the body pane.
-                c.bodyWantsFocus()
-            else:
-                if c.frame.tree.stayInTree:
-                    c.treeWantsFocus()
-                else:
-                    c.bodyWantsFocus()
+            c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3982:endEditLabelCommand
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
@@ -1927,12 +1920,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3985:toggleActivePane
     def toggleActivePane (self,event=None):
         
+        '''Toggle the focus between the outline and body panes.'''
+        
         frame = self ; c = frame.c
     
-        # Toggle the focus immediately.
         if c.get_focus() == frame.bodyCtrl:
             c.treeWantsFocus()
         else:
+            c.endEditing()
             c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20031218072017.3985:toggleActivePane
@@ -2173,6 +2168,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def getFocus(self):
         """Returns the widget that has focus, or body if None."""
         try:
+            # This method is unreliable while focus is changing.
+            # The call to update_idletasks may help.  Or not.
+            self.top.update_idletasks()
             f = self.top.focus_displayof()
         except Exception:
             f = None
@@ -3234,8 +3232,6 @@ class leoTkinterLog (leoFrame.leoLog):
     #@+node:ekr.20051016095907.2:Focus & update (tkLog)
     #@+node:ekr.20031218072017.4045:tkLog.onActivateLog
     def onActivateLog (self,event=None):
-        
-        __pychecker__ = '--no-argsused' # event not used.
     
         try:
             self.c.setLog()
