@@ -30,18 +30,18 @@
 <v t="ekr.20051124080305"><vh>chooseBreakPoint</vh></v>
 </v>
 <v t="ekr.20060104162223"><vh>@@button file-mode</vh></v>
+<v t="ekr.20060202155737"><vh>@@button Free-Tree</vh></v>
+<v t="ekr.20060202160656"><vh>@@button *new-obj</vh></v>
+<v t="ekr.20060202160706"><vh>@@button New-obj</vh></v>
+<v t="ekr.20060202155426.1"><vh>@@button Gc</vh></v>
+<v t="ekr.20060202155426.2"><vh>@@button No-Gc</vh></v>
+<v t="ekr.20060202162051"><vh>@@button All-obj</vh></v>
+<v t="ekr.20060202155426"><vh>@@button Stats</vh></v>
 </v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
 <v t="ekr.20050911112310"><vh>@button Save</vh></v>
-<v t="ekr.20060202155426"><vh>@button Stats</vh></v>
-<v t="ekr.20060202155426.1"><vh>@button Gc</vh></v>
-<v t="ekr.20060202155426.2"><vh>@button No-Gc</vh></v>
-<v t="ekr.20060202155737"><vh>@button Free-Tree</vh></v>
-<v t="ekr.20060202160656"><vh>@button *new-obj</vh></v>
-<v t="ekr.20060202160706"><vh>@button New-obj</vh></v>
-<v t="ekr.20060202162051"><vh>@button All-obj</vh></v>
 <v t="ekr.20051201090822"><vh>@settings</vh>
 <v t="ekr.20051201063427.1"><vh>@shortcuts</vh></v>
 </v>
@@ -248,7 +248,9 @@
 <v t="ekr.20060125082644"><vh>Test show-find-options</vh></v>
 <v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
 <v t="ekr.20060201161437"><vh>Prototype of p.key</vh></v>
-<v t="ekr.20060205061810" a="V"><vh>Typing test</vh></v>
+<v t="ekr.20060205061810" a="E"><vh>Typing test</vh>
+<v t="ekr.20060206163900" a="V"><vh>a</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4459,5 +4461,6 @@ g.collectGarbage()</t>
 
 
 </t>
+<t tx="ekr.20060206163900"></t>
 </tnodes>
 </leo_file>

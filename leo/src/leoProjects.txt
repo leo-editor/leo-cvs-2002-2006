@@ -1709,6 +1709,8 @@ This is another test.
 #@nonl
 #@+node:ekr.20031218072017.3982:endEditLabelCommand
 def endEditLabelCommand (self,event=None):
+    
+    '''End editing of a headline and move focus to the body pane.'''
 
     frame = self ; c = frame.c
     
@@ -1716,14 +1718,7 @@ def endEditLabelCommand (self,event=None):
         c.notValidInBatchMode("End Edit Headline")
     else:
         c.endEditing()
-        
-        if 1: # This command always moves into the body pane.
-            c.bodyWantsFocus()
-        else:
-            if c.frame.tree.stayInTree:
-                c.treeWantsFocus()
-            else:
-                c.bodyWantsFocus()
+        c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20031218072017.3982:endEditLabelCommand
 #@+node:ekr.20040803072955.126:tree.endEditLabel
@@ -1817,16 +1812,15 @@ def onHeadChanged (self,p,undoType='Typing'):
         changed = s != oldRevert
         self.revertHeadline = s
         p.initHeadString(s)
-        # g.trace(repr(s),g.callers())
+        if self.trace_edit and not g.app.unitTesting:
+            if changed:
+                g.trace('changed: old',repr(oldRevert),'new',repr(s))
         if changed:
-            # g.trace('changed: old',repr(oldRevert),'new',repr(s))
             undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
             if not c.changed: c.setChanged(True)
             dirtyVnodeList = p.setDirty()
             u.afterChangeNodeContents(p,undoType,undoData,
                 dirtyVnodeList=dirtyVnodeList)
-        else:
-            pass # g.trace('not changed')
     finally:
         c.endUpdate()
         if changed:
@@ -1836,7 +1830,6 @@ def onHeadChanged (self,p,undoType='Typing'):
                 c.bodyWantsFocus()
    
     g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
-#@nonl
 #@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
 # Remove one or two trailing newlines before warning of truncation.
 for i in (0,1):
@@ -2646,14 +2639,24 @@ def setOverwriteState (self,event):
 #@+node:ekr.20060120200818:setInputState
 def setInputState (self,state,showState=False):
 
-    k = self ; c = k.c ; w = c.get_focus()
+    k = self ; c = k.c
+    w = c.get_focus()
+    wname = g.app.gui.widget_name(w)
 
     k.unboundKeyAction = state
     if state != 'insert' or showState:
         k.showStateAndMode()
    
     # These commands never change focus.
+    # Alas, get_focus may be unreliable while focus is changing.
     w and c.widgetWantsFocus(w)
+    
+    if 1: # This has the potential to rip focus from the body.
+        for z in (None,'body','tree','head','canvas'):
+            if not z or wname.startswith(z):
+                return
+        else:
+            g.trace('-'*20,'widget',wname)
 #@nonl
 #@-node:ekr.20060120200818:setInputState
 #@+node:ekr.20060120193743:showStateAndMode
@@ -2675,7 +2678,7 @@ def showStateAndMode(self):
 #@-node:ekr.20060120193743:showStateAndMode
 #@-node:ekr.20060115103349:Modes
 #@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
-#@+node:ekr.20060127183752:masterKeyHandler
+#@+node:ekr.20060127183752:masterKeyHandler & helper
 master_key_count = 0
 
 def masterKeyHandler (self,event):
@@ -2695,7 +2698,7 @@ def masterKeyHandlerHelper (self,event):
     k = self ; c = k.c
     w = event and event.widget
     w_name = c.widget_name(w)
-    trace = c.config.getBool('trace_masterKeyHandler')
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
     keysym = event.keysym or ''
     if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R','Win_L','Win_R'):
         return None
@@ -2756,7 +2759,9 @@ def masterKeyHandlerHelper (self,event):
     for key,name in (
         # Order here is similar to bindtags order.
         ('body','body'),
-        ('tree','head'), ('tree','canvas'),
+        ('text','head'), # Important: text bindings in head before tree bindings.
+        ('tree','head'),
+        ('tree','canvas'),
         ('log', 'log'),
         ('text',None), ('all',None),
     ):
@@ -2781,27 +2786,38 @@ def masterKeyHandlerHelper (self,event):
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
 #@nonl
 #@-node:ekr.20060205221734:masterKeyHandlerHelper
-#@-node:ekr.20060127183752:masterKeyHandler
+#@-node:ekr.20060127183752:masterKeyHandler & helper
 #@+node:ekr.20060129052538.2:masterClickHandler
 def masterClickHandler (self,event,func=None):
     
-    k = self ; c = k.c ; w = event and event.widget
+    k = self ; c = k.c
+    if not event: return
+    w = event.widget ; wname = c.widget_name(w)
     
     if c.config.getBool('trace_masterClickHandler'):
-        g.trace(c.widget_name(w),func and func.__name__)
-        
-    # Oh joy: no more need for an idle-time or timed call.
-    c.frame.updateStatusLine()
-        
+        g.trace(wname,func and func.__name__)
+
     if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
         g.es_print('Ignoring click outside active minibuffer',color='blue')
         c.minibufferWantsFocus()
         return 'break'
 
+    # Update the selection point immediately for updateStatusLine.
+    if wname.startswith('body'):
+        try:
+            i = w.index('@%s,%s' % (event.x,event.y))
+            g.app.gui.setInsertPoint(w,i)
+            c.frame.updateStatusLine()
+        except Exception:
+            pass
+
     if event and func:
-        # Don't event *think* of overriding this.
+        # Don't even *think* of overriding this.
         return func(event)
     else:
+        # All tree callbacks have a func, so we can't be in the tree.
+        g.trace('*'*20,'auto-deactivate tree: %s' % wname)
+        c.frame.tree.OnDeactivate()
         return None
         
 masterClick3Handler         = masterClickHandler
@@ -3109,18 +3125,24 @@ def redraw_now (self,scroll=False):
     if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
         return
         
-    c = self.c
+    c = self.c ;  self.redrawCount += 1
     
-    self.redrawCount += 1
-    
-    if not g.app.unitTesting and c.config.getBool('trace_gc'):
-        if (self.redrawCount % 5) == 0:
-            g.printGcSummary(trace=True)
-
-    if not g.app.unitTesting and c.config.getBool('trace_redraw_now'):
-        g.trace(self.redrawCount,g.callers())
-        g.print_stats()
-        g.clear_stats()
+    if not g.app.unitTesting:
+        if self.trace_gc:
+            if (self.redrawCount % 5) == 0:
+                g.printGcSummary(trace=True)
+        if self.trace_redraw_now or self.trace_alloc:
+            g.trace(self.redrawCount,g.callers())
+            if self.trace_stats:
+                g.print_stats()
+                g.clear_stats()
+                
+    # New in 4.4b2: Call endEditLabel, but suppress the redraw.
+    self.beginUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        self.endUpdate(False)
 
     # Do the actual redraw.
     self.expandAllAncestors(c.currentPosition())
@@ -3153,7 +3175,7 @@ def redrawHelper (self,scroll=True):
 #@nonl
 #@-node:ekr.20040803072955.59:redrawHelper
 #@-node:ekr.20040803072955.58:redraw_now & helper
-#@+node:ekr.20060127183752:masterKeyHandler
+#@+node:ekr.20060127183752:masterKeyHandler & helper
 master_key_count = 0
 
 def masterKeyHandler (self,event):
@@ -3173,7 +3195,7 @@ def masterKeyHandlerHelper (self,event):
     k = self ; c = k.c
     w = event and event.widget
     w_name = c.widget_name(w)
-    trace = c.config.getBool('trace_masterKeyHandler')
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
     keysym = event.keysym or ''
     if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R','Win_L','Win_R'):
         return None
@@ -3234,7 +3256,9 @@ def masterKeyHandlerHelper (self,event):
     for key,name in (
         # Order here is similar to bindtags order.
         ('body','body'),
-        ('tree','head'), ('tree','canvas'),
+        ('text','head'), # Important: text bindings in head before tree bindings.
+        ('tree','head'),
+        ('tree','canvas'),
         ('log', 'log'),
         ('text',None), ('all',None),
     ):
@@ -3259,7 +3283,7 @@ def masterKeyHandlerHelper (self,event):
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
 #@nonl
 #@-node:ekr.20060205221734:masterKeyHandlerHelper
-#@-node:ekr.20060127183752:masterKeyHandler
+#@-node:ekr.20060127183752:masterKeyHandler & helper
 #@+node:ekr.20031218072017.2817: doCommand
 command_count = 0
 
@@ -3959,8 +3983,6 @@ setFontFromConfig = SetWidgetFontFromConfig # Renaming supresses a pychecker war
 #@+node:ekr.20051016095907.2:Focus & update (tkLog)
 #@+node:ekr.20031218072017.4045:tkLog.onActivateLog
 def onActivateLog (self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
 
     try:
         self.c.setLog()
@@ -4732,6 +4754,8 @@ class findTab (leoFind.leoFind):
 #@+node:ekr.20051020120306.10:Birth & death
 #@+node:ekr.20051020120306.11:__init__
 def __init__(self,c,parentFrame):
+    
+    # g.trace('findTab')
 
     # Init the base class...
     leoFind.leoFind.__init__(self,c,title='Find Tab')
@@ -4748,8 +4772,7 @@ def __init__(self,c,parentFrame):
     self.outerScrolledFrame = None
 
     self.createFrame(parentFrame)
-    if not self.optionsOnly:
-        self.createBindings()
+    self.createBindings()
     
     self.init(c) # New in 4.3: init only once.
 #@nonl
@@ -4768,19 +4791,29 @@ self.s_ctrl = Tk.Text() # Used by find.search()
 #@-node:ekr.20051020120306.11:__init__
 #@+node:ekr.20051023181449:createBindings (findTab)
 def createBindings (self):
-
+    
     c = self.c ; k = c.k
+    
+    def resetWrapCallback(event,self=self,k=k):
+        self.resetWrap(event)
+        k.masterKeyHandler(event)
 
     table = (
-        ('<Key>',   k.masterKeyHandler),
-        ("<Return>",self.findButtonCallback),
-        ("<Escape>",self.hideTab),
+        ('<Button-1>',  k.masterClickHandler),
+        ('<Double-1>',  k.masterClickHandler),
+        ('<Button-3>',  k.masterClickHandler),
+        ('<Double-3>',  k.masterClickHandler),
+        ('<Key>',       k.masterKeyHandler),
+        ('<Key>',       resetWrapCallback),
+        ('<Return>',    self.findButtonCallback),
+        ("<Escape>",    self.hideTab),
     )
 
     for w in (self.find_ctrl,self.change_ctrl):
         for event, callback in table:
             w.bind(event,callback)
-            
+    
+    if 0:
         w.bind("<Key>",self.resetWrap,'+')
             # Can't put this in the table bc of the '+' arg.
 #@nonl
@@ -4789,6 +4822,8 @@ def createBindings (self):
 def createFrame (self,parentFrame):
     
     c = self.c
+    
+    # g.trace('findTab')
     
     << Create the outer frames >>
     << Create the Find and Change panes >>
@@ -4801,10 +4836,11 @@ def createFrame (self,parentFrame):
     
     # Pack this last so buttons don't get squashed when frame is resized.
     self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
-
-    for w in buttons:
-        w.bindHotKey(ftxt)
-        w.bindHotKey(ctxt)
+    
+    if 0: # These dont work in the new binding scheme.  Use shortcuts or mode bindings instead.
+        for w in buttons:
+            w.bindHotKey(ftxt)
+            w.bindHotKey(ctxt)
 #@nonl
 #@+node:ekr.20051020120306.14:<< Create the outer frames >>
 configName = 'log_pane_Find_tab_background_color'
@@ -5822,16 +5858,2052 @@ def showSuccess(self,pos,newpos):
 #@-node:ekr.20060206105214:search-with-present-bindings inits with find text selected
 #@-node:ekr.20060204105811:Recent
 #@+node:ekr.20060206062108.1:What I did: 2-6-05
+@nocolor
+
 - Ran Leo with Python23 to test memory allocation.
 
 - Call update_idletasks when writing to the log.
+
+- Fixed several tree bugs.
+
+- Updated selection point immediately in masterKeyHandler.
+  Otherwise, updateStatusLine would be one click behind.
 #@nonl
 #@-node:ekr.20060206062108.1:What I did: 2-6-05
-#@+node:ekr.20060206124634:1. Bind all clicks to k.masterClickHandler
+#@+node:ekr.20060207110750:What I did: 2-7-05
+@nocolor
+
+Fixed several bugs related to recent changes.
+All unit tests now pass.
+#@nonl
+#@-node:ekr.20060207110750:What I did: 2-7-05
+#@+node:ekr.20060207091145:Fixed undo problem in headlines
+#@+node:ekr.20060207110408:Notes
+@nocolor
+
+In the new drawing scheme, tree.redraw_now always calls c.endEditing, which
+calls tree.onHeadChanged. The effect of this was to reverse the action of
+undo/redoNodeContents.
+
+The solution was to change the edit widget directly before calling
+tree.redraw_now. To do this, I created the new tree.setHeadline method.
+#@nonl
+#@-node:ekr.20060207110408:Notes
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+# New in 4.4b2: suppress scrolling by default.
+
+def redraw_now (self,scroll=False):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c ;  self.redrawCount += 1
+    
+    if not g.app.unitTesting:
+        if self.trace_gc:
+            if (self.redrawCount % 5) == 0:
+                g.printGcSummary(trace=True)
+        if self.trace_redraw_now or self.trace_alloc:
+            g.trace(self.redrawCount,g.callers())
+            if self.trace_stats:
+                g.print_stats()
+                g.clear_stats()
+                
+    # New in 4.4b2: Call endEditLabel, but suppress the redraw.
+    self.beginUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        self.endUpdate(False)
+
+    # Do the actual redraw.
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@+node:ekr.20040803072955.127:editLabel
+def editLabel (self,p):
+    
+    """Start editing p's headline."""
+
+    if self.editPosition() and p != self.editPosition():
+        c.beginUpdate()
+        try:
+            self.endEditLabel()
+        finally:
+            c.endUpdate(False)
+
+    self.setEditPosition(p) # That is, self._editPosition = p
+    
+    if self.trace_edit and not g.app.unitTesting:
+        g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget'))
+
+    if p and p.edit_widget():
+        self.revertHeadline = p.headString() # New in 4.4b2: helps undo.
+        self.setEditLabelState(p) # Sets the focus immediately.
+        self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
+#@nonl
+#@-node:ekr.20040803072955.127:editLabel
+#@+node:ekr.20040803072955.91:onHeadChanged
+# Tricky code: do not change without careful thought and testing.
+
+def onHeadChanged (self,p,undoType='Typing'):
+    
+    '''Officially change a headline.
+    Set the old undo text to the previous revert point.'''
+    
+    c = self.c ; u = c.undoer ; w = self.edit_widget(p)
+    if not w: return
+    
+    ch = '\r' # New in 4.4: we only report the final keystroke.
+    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
+        return # The hook claims to have handled the event.
+
+    s = w.get('1.0','end')
+    << truncate s if it has multiple lines >>
+    c.beginUpdate()
+    try:
+        # Make the change official, but undo to the *old* revert point.
+        oldRevert = self.revertHeadline
+        changed = s != oldRevert
+        self.revertHeadline = s
+        p.initHeadString(s)
+        if self.trace_edit and not g.app.unitTesting:
+            if changed:
+                g.trace('changed: old',repr(oldRevert),'new',repr(s))
+        if changed:
+            undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+            u.afterChangeNodeContents(p,undoType,undoData,
+                dirtyVnodeList=dirtyVnodeList)
+    finally:
+        c.endUpdate()
+        if changed:
+            if self.stayInTree:
+                c.treeWantsFocus()
+            else:
+                c.bodyWantsFocus()
+   
+    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
+#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+# Remove one or two trailing newlines before warning of truncation.
+for i in (0,1):
+    if s and s[-1] == '\n':
+        if len(s) > 1: s = s[:-1]
+        else: s = ''
+
+# Warn if there are multiple lines.
+i = s.find('\n')
+if i > -1:
+    # g.trace(i,len(s),repr(s))
+    g.es("Truncating headline to one line",color="blue")
+    s = s[:i]
+
+limit = 1000
+if len(s) > limit:
+    g.es("Truncating headline to %d characters" % (limit),color="blue")
+    s = s[:limit]
+
+s = g.toUnicode(s or '',g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+#@-node:ekr.20040803072955.91:onHeadChanged
+#@+node:ekr.20050318085713.1:undoNodeContents
+def undoNodeContents (self):
+    
+    '''Undo all changes to the contents of a node,
+    including headline and body text, and dirty and marked bits.
+    '''
+    
+    u = self ; c = u.c
+    
+    u.p.setTnodeText(u.oldBody)
+    u.p.initHeadString(u.oldHead)
+    c.frame.tree.setHeadline(u.p,u.oldHead) # New in 4.4b2.
+
+    if u.groupCount == 0 and u.oldSel:
+        u.c.frame.body.setTextSelection(u.oldSel)
+    
+    u.updateMarks('old')
+    
+    for v in u.dirtyVnodeList:
+        v.t.clearDirty()
+#@nonl
+#@-node:ekr.20050318085713.1:undoNodeContents
+#@+node:ekr.20050318085432.7:redoNodeContents
+def redoNodeContents (self):
+    
+    u = self ; c = u.c
+    
+    u.p.setTnodeText(u.newBody)
+    u.p.initHeadString(u.newHead)
+    c.frame.tree.setHeadline(u.p,u.newHead) # New in 4.4b2.
+    
+    # g.trace('newHead',u.newHead,'revert',c.frame.tree.revertHeadline)
+    
+    if u.groupCount == 0 and u.newSel:
+        u.c.frame.body.setTextSelection(u.newSel)
+    
+    u.updateMarks('new')
+    
+    for v in u.dirtyVnodeList:
+        v.t.setDirty()
+#@nonl
+#@-node:ekr.20050318085432.7:redoNodeContents
+#@+node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
+def setHeadline (self,p,s):
+    
+    '''Set the actual text of the headline widget.
+    
+    This is called from the undo/redo logic to change the text before redrawing.'''
+    
+    w = self.edit_widget(p)
+    if w:
+        w.configure(state='normal')
+        w.delete('1.0','end')
+        if s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
+        w.insert('1.0',s)
+        self.revertHeadline = s
+        # g.trace(repr(s),w.get('1.0','end'))
+    else:
+        g.trace('-'*20,'oops')
+#@nonl
+#@-node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
+#@-node:ekr.20060207091145:Fixed undo problem in headlines
+#@+node:ekr.20060206124634:Fixed headline/tree bugs
+#@+node:ekr.20060206114712:To do
+@nocolor
+
+- Backspace in empty body text sometimes moves focus to canvas, and sometimes improperly draws icon.
+
+- change g.app.gui.widget_name(w) to c.widget_name(w)
+#@nonl
+#@-node:ekr.20060206114712:To do
+#@+node:ekr.20060206170207:What I did
+@nocolor
+
+- Added call to endEditLabel() in onTreeClick.
+
+- Added several new traces to tkTree class.
+
+* tree.redraw_now now ends editing properly. This fixes lots of bugs. In
+particular, it avoid any chance that p.edit_widget won't correspond to the
+present position.
+
+- k.masterClickHandler calls tree.OnDeactivate() if there is no callback function.
+  This solves most headline focus problems, provided that all panes bind clicks to k.masterClickHandler.
+
+- toggle-active-pane now ends editing properly.
+
+- insert-headline now calls c.editPosition after calling c.endUpdate().
+#@nonl
+#@-node:ekr.20060206170207:What I did
+#@+node:ekr.20040803072955.15: Birth... (tkTree)
+#@+node:ekr.20040803072955.16:__init__ (tkTree)
+def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
+    
+    self.new_alloc = True
+    
+    # Configuration and debugging settings.
+    self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
+    self.expanded_click_area    = c.config.getBool("expanded_click_area")
+    self.trace_stats            = c.config.getBool('show_tree_stats')
+    self.trace                  = c.config.getBool('trace_tree')
+    self.trace_alloc            = c.config.getBool('trace_tree_alloc')
+    self.trace_edit             = c.config.getBool('trace_tree_edit')
+    self.trace_gc               = c.config.getBool('trace_gc')
+    self.trace_redraw_now       = c.config.getBool('trace_redraw_now')
+
+    # Objects associated with this tree.
+    self.canvas = canvas
+    
+    << define drawing constants >>
+    << old ivars >>
+    << inject callbacks into the position class >>
+    
+    self.dragging = False
+    self.generation = 0
+    self.prevPositions = 0
+    self.redrawing = False # Used only to disable traces.
+    self.redrawCount = 0 # Count for debugging.
+    self.revertHeadline = None # Previous headline text for abortEditLabel.
+    
+    # New in 4.4: We should stay in the tree to use per-pane bindings.
+    self.textBindings = [] # Set in setBindings.
+    self.textNumber = 0 # To make names unique.
+    self.updateCount = 0 # Drawing is enabled only if self.updateCount <= 0
+    self.verbose = True
+    
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are positions...
+    self.ids = {}
+    self.iconIds = {}
+
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {}
+        # Pre 4.4b2: Keys are vnodes, values are Tk.Text widgets.
+        #     4.4b2: Keys are p.key(), values are Tk.Text widgets.
+    self.visibleUserIcons = []
+
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    if self.new_alloc:
+        self.freeText = [] # A list of free Tk.Text widgets
+    else:
+        self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+    self.freeUserIcons = []
+#@nonl
+#@+node:ekr.20040803072955.17:<< define drawing constants >>
+self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
+
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height
+#@nonl
+#@-node:ekr.20040803072955.17:<< define drawing constants >>
+#@+node:ekr.20040803072955.18:<< old ivars >>
+# Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+self.setColorFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw_now)
+#@nonl
+#@-node:ekr.20040803072955.18:<< old ivars >>
+#@+node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+# The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()
+#@nonl
+#@-node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+#@-node:ekr.20040803072955.16:__init__ (tkTree)
+#@+node:ekr.20051024102724:tkTtree.setBindings
+def setBindings (self):
+    
+    '''Create master bindings for all headlines.'''
+    
+    tree = self ; k = self.c.k
+    
+    << make bindings for a common binding widget >>
+    << make bindings for the canvas itself >>
+    << make bindings for tagged items on the canvas >>
+#@nonl
+#@+node:ekr.20060131173440:<< make bindings for a common binding widget >>
+self.bindingWidget = t = Tk.Text(self.canvas,name='bindingWidget')
+
+t.bind('<Key>',k.masterKeyHandler)
+
+table = (
+    ('<Button-1>',       k.masterClickHandler,          tree.onHeadlineClick),
+    ('<Button-3>',       k.masterClick3Handler,         tree.onHeadlineRightClick),
+    ('<Double-Button-1>',k.masterDoubleClickHandler,    tree.onHeadlineClick),
+    ('<Double-Button-3>',k.masterDoubleClick3Handler,   tree.onHeadlineRightClick),
+)
+
+for a,handler,func in table:
+    def treeBindingCallback(event,handler=handler,func=func):
+        return handler(event,func)
+    t.bind(a,treeBindingCallback)
+    
+self.textBindings = t.bindtags()
+#@nonl
+#@-node:ekr.20060131173440:<< make bindings for a common binding widget >>
+#@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
+# Needed to transfer focus.
+def treeClickCallback(event,self=self):
+    return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+
+self.canvas.bind('<Button-1>',treeClickCallback)
+
+self.canvas.bind('<Key>',k.masterKeyHandler)
+#@nonl
+#@-node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
+#@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
+where = g.choose(self.expanded_click_area,'clickBox','plusBox')
+
+if 1:
+    table = (
+        (where,    '<Button-1>',self.onClickBoxClick),
+        ('iconBox','<Button-1>',self.onIconBoxClick),
+        ('iconBox','<Double-1>',self.onIconBoxDoubleClick),
+        ('iconBox','<Button-3>',self.onIconBoxRightClick),
+        ('iconBox','<Double-3>',self.onIconBoxRightClick),
+        ('iconBox','<B1-Motion>',self.onDrag),
+        ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
+    )
+    for tag,event,callback in table:
+        self.canvas.tag_bind(tag,event,callback)
+    
+else:
+    table = (
+        (where,    '<Button-1>', self.onClickBoxClick,      k.masterClickHandler),
+        ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
+        ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
+        ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
+        ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
+    )
+    
+    for a,b,func,handler in table:
+        def treeCallback(event,handler=handler,func=func):
+            return handler(event,func=func)
+        self.canvas.tag_bind(a,b,treeCallback)
+    
+    table = (
+        ('iconBox','<B1-Motion>',           self.onDrag),
+        ('iconBox','<Any-ButtonRelease-1>', self.onEndDrag),
+    )
+    for a,b,callback in table:
+        self.canvas.tag_bind(a,b,callback)
+#@nonl
+#@-node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
+#@-node:ekr.20051024102724:tkTtree.setBindings
+#@+node:ekr.20040803072955.21:injectCallbacks
+def injectCallbacks(self):
+    
+    << define tkinter callbacks to be injected in the position class >>
+
+    for f in (OnHyperLinkControlClick,OnHyperLinkEnter,OnHyperLinkLeave):
+        
+        g.funcToMethod(f,leoNodes.position)
+#@nonl
+#@+node:ekr.20040803072955.22:<< define tkinter callbacks to be injected in the position class >>
+# N.B. These vnode methods are entitled to know about details of the leoTkinterTree class.
+
+@others
+
+#@+node:ekr.20040803072955.23:OnHyperLinkControlClick
+def OnHyperLinkControlClick (self,event):
+    
+    """Callback injected into position class."""
+    
+    p = self ; c = p.c
+    try:
+        if not g.doHook("hypercclick1",c=c,p=p,v=p,event=event):
+            c.beginUpdate()
+            try:
+                c.selectPosition(p)
+            finally:
+                c.endUpdate()
+            c.frame.bodyCtrl.mark_set("insert","1.0")
+        g.doHook("hypercclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("hypercclick")
+#@nonl
+#@-node:ekr.20040803072955.23:OnHyperLinkControlClick
+#@+node:ekr.20040803072955.24:OnHyperLinkEnter
+def OnHyperLinkEnter (self,event=None):
+    
+    """Callback injected into position class."""
+
+    try:
+        p = self ; c = p.c
+        if not g.doHook("hyperenter1",c=c,p=p,v=p,event=event):
+            if 0: # This works, and isn't very useful.
+                c.frame.bodyCtrl.tag_config(p.tagName,background="green")
+        g.doHook("hyperenter2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("hyperenter")
+#@nonl
+#@-node:ekr.20040803072955.24:OnHyperLinkEnter
+#@+node:ekr.20040803072955.25:OnHyperLinkLeave
+def OnHyperLinkLeave (self,event=None):
+    
+    """Callback injected into position class."""
+
+    try:
+        p = self ; c = p.c
+        if not g.doHook("hyperleave1",c=c,p=p,v=p,event=event):
+            if 0: # This works, and isn't very useful.
+                c.frame.bodyCtrl.tag_config(p.tagName,background="white")
+        g.doHook("hyperleave2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("hyperleave")
+#@nonl
+#@-node:ekr.20040803072955.25:OnHyperLinkLeave
+#@-node:ekr.20040803072955.22:<< define tkinter callbacks to be injected in the position class >>
+#@-node:ekr.20040803072955.21:injectCallbacks
+#@-node:ekr.20040803072955.15: Birth... (tkTree)
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+# New in 4.4b2: suppress scrolling by default.
+
+def redraw_now (self,scroll=False):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c ;  self.redrawCount += 1
+    
+    if not g.app.unitTesting:
+        if self.trace_gc:
+            if (self.redrawCount % 5) == 0:
+                g.printGcSummary(trace=True)
+        if self.trace_redraw_now or self.trace_alloc:
+            g.trace(self.redrawCount,g.callers())
+            if self.trace_stats:
+                g.print_stats()
+                g.clear_stats()
+                
+    # New in 4.4b2: Call endEditLabel, but suppress the redraw.
+    self.beginUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        self.endUpdate(False)
+
+    # Do the actual redraw.
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    
+redraw = redraw_now # Compatibility
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@+node:ekr.20040803072955.6:Allocation...
+#@+node:ekr.20040803072955.7:newBox
+def newBox (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "plusBox"
+
+    if self.freeBoxes:
+        theId = self.freeBoxes.pop(0)
+        canvas.coords(theId,x,y)
+        canvas.itemconfigure(theId,image=image)
+    else:
+        theId = canvas.create_image(x,y,image=image,tag=tag)
+        
+    if self.trace_alloc:
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),align=-20)
+
+    assert(theId not in self.visibleBoxes)
+    self.visibleBoxes.append(theId)
+
+    # assert(not self.ids.get(theId))
+    # assert(p)
+    self.ids[theId] = p
+
+    return theId
+#@nonl
+#@-node:ekr.20040803072955.7:newBox
+#@+node:ekr.20040803072955.8:newClickBox
+def newClickBox (self,p,x1,y1,x2,y2):
+    
+    canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
+
+    if self.freeClickBoxes:
+        theId = self.freeClickBoxes.pop(0)
+        canvas.coords(theId,x1,y1,x2,y2)
+    else:
+        theId = self.canvas.create_rectangle(x1,y1,x2,y2,tag=tag)
+        canvas.itemconfig(theId,fill=defaultColor,outline=defaultColor)
+        
+    if self.trace_alloc:
+        g.trace("%3d %3d %3d %3d %3d" % (theId,x1,y1,x2,y2),p.headString(),align=-20)
+
+    assert(theId not in self.visibleClickBoxes)
+    self.visibleClickBoxes.append(theId)
+    
+    # assert(p)
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    
+    return theId
+#@nonl
+#@-node:ekr.20040803072955.8:newClickBox
+#@+node:ekr.20040803072955.9:newIcon
+def newIcon (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "iconBox"
+
+    if self.freeIcons:
+        theId = self.freeIcons.pop(0)
+        canvas.itemconfigure(theId,image=image)
+        canvas.coords(theId,x,y)
+    else:
+        theId = canvas.create_image(x,y,image=image,anchor="nw",tag=tag)
+        # assert(not self.ids.get(theId))
+
+    # assert(theId not in self.visibleIcons)
+    self.visibleIcons.append(theId)
+    
+    # assert(p)
+    # assert(not self.iconIds.get(theId))
+    # assert(not self.ids.get(theId))
+    data = p,self.generation
+    self.iconIds[theId] = data # Remember which vnode belongs to the icon.
+    self.ids[theId] = p
+
+    return theId
+#@nonl
+#@-node:ekr.20040803072955.9:newIcon
+#@+node:ekr.20040803072955.10:newLine
+def newLine (self,p,x1,y1,x2,y2):
+    
+    canvas = self.canvas
+    
+    if self.freeLines:
+        theId = self.freeLines.pop(0)
+        canvas.coords(theId,x1,y1,x2,y2)
+    else:
+        theId = canvas.create_line(x1,y1,x2,y2,tag="lines",fill="gray50") # stipple="gray25")
+        # assert(not self.ids.get(theId))
+
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p
+    self.visibleLines.append(theId)
+
+    return theId
+#@nonl
+#@-node:ekr.20040803072955.10:newLine
+#@+node:ekr.20040803072955.11:newText (leoTkinterTree)
+def newText (self,p,x,y):
+    
+    canvas = self.canvas ; tag = "textBox"
+    c = self.c ;  k = c.k
+
+    if self.new_alloc:
+        found = len(self.freeText) > 0
+        if found:
+            t,theId = self.freeText.pop()
+            if self.trace_alloc: g.trace('%4d' % (theId),self.textAddr(t),'recycled')
+            canvas.coords(theId,x,y) # Make the window visible again.
+                # theId is the id of the *window* not the text.
+    else:
+        d = self.freeText
+        key = p.v ; pList = d.get(key,[])
+    
+        # Return only Tk.Text widgets with an exact match with p.
+        found = False
+        for i in xrange(len(pList)):
+            p2,t,theId = pList[i]
+            if p2 == p:
+                del pList[i]
+                theId = t.leo_window_id
+                assert(theId)
+                ### assert(t.leo_position == p2)
+                canvas.coords(theId,x,y)
+                t.configure(font=self.font) # 12/17/04
+                found = True ; break
+            
+    if not found:
+        # Tags are not valid in Tk.Text widgets.
+        self.textNumber += 1
+        t = Tk.Text(canvas,name='head-%d' % self.textNumber,
+            state="normal",font=self.font,bd=0,relief="flat",height=1)
+        t.bindtags(self.textBindings) # Set the bindings for this widget.
+
+        if 0: # Crashes on XP.
+            << patch by Maciej Kalisiak to handle scroll-wheel events >>
+    
+        theId = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
+        t.leo_window_id = theId # Never changes.
+        
+        if self.trace_alloc:
+            g.trace('%4d' % (theId),self.textAddr(t),'** new')
+            
+    # Common configuration.
+    # assert(not self.ids.get(theId))
+    self.ids[theId] = p # Add the id of the *window*
+    self.setText(theId,t,p.headString())
+    t.configure(width=self.headWidth(p=p))
+    t.leo_position = p # This p never changes.
+        # *Required*: onHeadlineClick uses w.leo_position to get p
+
+    if self.new_alloc:
+        # Keys are p.key().  Entries are (t,theId)
+        self.visibleText [p.key()] = t,theId
+    else:
+        t.leo_generation = self.generation
+        assert(theId == t.leo_window_id)
+        # Keys are p.v.  Values are pairs (p,t,theId)
+        key = p.v
+        pList = self.visibleText.get(key,[])
+        pList.append((p,t,theId),)
+        self.visibleText[key] = pList
+    return t
+#@nonl
+#@+node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+def PropagateButton4(e):
+    canvas.event_generate("<Button-4>")
+    return "break"
+
+def PropagateButton5(e):
+    canvas.event_generate("<Button-5>")
+    return "break"
+
+def PropagateMouseWheel(e):
+    canvas.event_generate("<MouseWheel>")
+    return "break"
+
+instance_tag = t.bindtags()[0]
+t.bind_class(instance_tag, "<Button-4>", PropagateButton4)
+t.bind_class(instance_tag, "<Button-5>", PropagateButton5)
+t.bind_class(instance_tag, "<MouseWheel>",PropagateMouseWheel)
+#@nonl
+#@-node:ekr.20050618045715:<< patch by Maciej Kalisiak  to handle scroll-wheel events >>
+#@-node:ekr.20040803072955.11:newText (leoTkinterTree)
+#@+node:ekr.20040803072955.12:recycleWidgets
+def recycleWidgets (self):
+    
+    canvas = self.canvas
+    
+    for theId in self.visibleBoxes:
+        # assert(theId not in self.freeBoxes)
+        self.freeBoxes.append(theId)
+        canvas.coords(theId,-100,-100)
+    self.visibleBoxes = []
+    
+    for theId in self.visibleClickBoxes:
+        # assert(theId not in self.freeClickBoxes)
+        self.freeClickBoxes.append(theId)
+        canvas.coords(theId,-100,-100,-100,-100)
+    self.visibleClickBoxes = []
+    
+    for theId in self.visibleIcons:
+        # assert(theId not in self.freeIcons)
+        self.freeIcons.append(theId)
+        canvas.coords(theId,-100,-100)
+    self.visibleIcons = []
+        
+    for theId in self.visibleLines:
+        # assert(theId not in self.freeLines)
+        self.freeLines.append(theId)
+        canvas.coords(theId,-100,-100,-100,-100)
+    self.visibleLines = []
+    
+    if self.new_alloc:
+        aList = self.visibleText.values()
+        for t,theId in aList:
+            # assert theId == t.leo_window_id
+            canvas.coords(theId,-100,-100)
+            t.leo_position = None # Allow the position to be freed.
+        self.freeText.extend(aList)
+        self.visibleText = {}
+    else:
+        for key in self.visibleText.keys():
+            visList = self.visibleText.get(key,[])
+            freeList = self.freeText.get(key,[])
+            for data in visList:
+                p,t,theId = data
+                # assert theId == t.leo_window_id
+                canvas.coords(theId,-100,-100)
+                freeList.append(data)
+            self.freeText[key] = freeList
+        self.visibleText = {}
+        
+    for theId in self.visibleUserIcons:
+        # The present code does not recycle user Icons.
+        self.canvas.delete(theId)
+    self.visibleUserIcons = []
+#@nonl
+#@-node:ekr.20040803072955.12:recycleWidgets
+#@+node:ekr.20040803072955.13:destroyWidgets
+def destroyWidgets (self):
+
+    self.ids = {}
+
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleUserIcons = []
+
+    self.visibleText = {}
+    
+    self.freeText = []
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    
+    self.canvas.delete("all")
+#@nonl
+#@-node:ekr.20040803072955.13:destroyWidgets
+#@+node:ekr.20060202125419:showStats
+def showStats (self):
+
+    z = []
+    for kind,a,b in (
+        ('boxes',self.visibleBoxes,self.freeBoxes),
+        ('clickBoxes',self.visibleClickBoxes,self.freeClickBoxes),
+        ('icons',self.visibleIcons,self.freeIcons),
+        ('lines',self.visibleLines,self.freeLines),
+        ('tesxt',self.visibleText.values(),self.freeText),
+    ):
+        z.append('%10s used: %4d free: %4d' % (kind,len(a),len(b)))
+        
+    g.es_print('\n' + '\n'.join(z))
+#@nonl
+#@-node:ekr.20060202125419:showStats
+#@-node:ekr.20040803072955.6:Allocation...
+#@+node:ekr.20040803072955.71:Event handlers (tkTree)
+#@+node:ekr.20051105103233:Helpers
+#@+node:ekr.20040803072955.72:checkWidgetList
+def checkWidgetList (self,tag):
+    
+    return True # This will fail when the headline actually changes!
+    
+    for t in self.visibleText:
+        
+        p = t.leo_position
+        if p:
+            s = t.get("1.0","end").strip()
+            h = p.headString().strip()
+            
+            if h != s:
+                self.dumpWidgetList(tag)
+                return False
+        else:
+            self.dumpWidgetList(tag)
+            return False
+            
+    return True
+#@nonl
+#@-node:ekr.20040803072955.72:checkWidgetList
+#@+node:ekr.20040803072955.73:dumpWidgetList
+def dumpWidgetList (self,tag):
+    
+    print
+    print "checkWidgetList: %s" % tag
+    
+    for t in self.visibleText:
+        
+        p = t.leo_position
+        if p:
+            s = t.get("1.0","end").strip()
+            h = p.headString().strip()
+    
+            addr = self.textAddr(t)
+            print "p:",addr,h
+            if h != s:
+                print "t:",'*' * len(addr),s
+        else:
+            print "t.leo_position == None",t
+#@nonl
+#@-node:ekr.20040803072955.73:dumpWidgetList
+#@+node:ekr.20040803072955.75:edit_widget
+def edit_widget (self,p):
+    
+    """Returns the Tk.Edit widget for position p."""
+
+    return self.findEditWidget(p)
+    
+edit_text = edit_widget # For compatibility.
+#@nonl
+#@-node:ekr.20040803072955.75:edit_widget
+#@+node:ekr.20040803072955.74:eventToPosition
+def eventToPosition (self,event):
+
+    canvas = self.canvas
+    x,y = event.x,event.y
+    x = canvas.canvasx(x) 
+    y = canvas.canvasy(y)
+    if self.trace: g.trace(x,y)
+    item = canvas.find_overlapping(x,y,x,y)
+    if not item: return None
+
+    # Item may be a tuple, possibly empty.
+    try:    theId = item[0]
+    except: theId = item
+    if not theId: return None
+
+    p = self.ids.get(theId)
+    
+    # A kludge: p will be None for vertical lines.
+    if not p:
+        item = canvas.find_overlapping(x+1,y,x+1,y)
+        try:    theId = item[0]
+        except: theId = item
+        if not theId:
+            g.es_print('oops: eventToPosition failed')
+            return None
+        p = self.ids.get(theId)
+        # g.trace("was vertical line",p)
+    
+    if self.trace and self.verbose:
+        if p:
+            w = self.findEditWidget(p)
+            g.trace("%3d %3d %3d %d" % (theId,x,y,id(w)),p.headString())
+        else:
+            g.trace("%3d %3d %3d" % (theId,x,y),None)
+        
+    # defensive programming: this copy is not needed.
+    if p: return p.copy() # Make _sure_ nobody changes this table!
+    else: return None
+#@nonl
+#@-node:ekr.20040803072955.74:eventToPosition
+#@+node:ekr.20040803072955.76:findEditWidget
+def findEditWidget (self,p):
+    
+    """Return the Tk.Text item corresponding to p."""
+
+    c = self.c
+
+    if p and c:
+        if self.new_alloc:
+            aTuple = self.visibleText.get(p.key())
+            if aTuple:
+                t,theId = aTuple
+                # if self.trace: g.trace('%4d' % (theId),self.textAddr(t),p.headString())
+                return t
+            else:
+                # g.trace('oops: not found',p)
+                return None
+        else:
+            # VERY SLOW.
+            # Search the widget list for widget t with t.leo_position == p.
+            # New in 4.2: the dictionary is a list of pairs(p,v)
+            pairs = self.visibleText.get(p.v,[])
+            for p2,t2,id2 in pairs:
+                assert t2.leo_window_id == id2
+                assert t2.leo_position == p2
+                if p.equal(p2):
+                    # g.trace('found',t2)
+                    return t2
+        
+    # g.trace(not found',p.headString())
+    return None
+#@nonl
+#@-node:ekr.20040803072955.76:findEditWidget
+#@+node:ekr.20040803072955.109:findVnodeWithIconId
+def findPositionWithIconId (self,theId):
+    
+    # Due to an old bug, theId may be a tuple.
+    try:
+        data = self.iconIds.get(theId[0])
+    except:
+        data = self.iconIds.get(theId)
+
+    if data:
+        p,generation = data
+        if generation==self.generation:
+            if self.trace and self.verbose:
+                g.trace(theId,p.headString())
+            return p
+        else:
+            if self.trace and self.verbose:
+                g.trace("*** wrong generation: %d ***" % theId)
+            return None
+    else:
+        if self.trace and self.verbose: g.trace(theId,None)
+        return None
+#@nonl
+#@-node:ekr.20040803072955.109:findVnodeWithIconId
+#@-node:ekr.20051105103233:Helpers
+#@+node:ekr.20040803072955.78:Click Box...
+#@+node:ekr.20040803072955.79:onClickBoxClick
+def onClickBoxClick (self,event):
+    
+    c = self.c ; p1 = c.currentPosition()
+    c.setLog()
+    p = self.eventToPosition(event)
+
+    c.beginUpdate()
+    try:
+        if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+            c.endEditing()
+            self.active = True
+            if p == p1 or c.config.getBool('initialClickExpandsOrContractsNode'):
+                if p.isExpanded(): p.contract()
+                else:              p.expand()
+            self.select(p)
+            if c.frame.findPanel:
+                c.frame.findPanel.handleUserClick(p)
+            if self.stayInTree:
+                c.treeWantsFocus()
+            else:
+                c.bodyWantsFocus()
+        g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+    finally:
+        c.endUpdate()
+#@nonl
+#@-node:ekr.20040803072955.79:onClickBoxClick
+#@-node:ekr.20040803072955.78:Click Box...
+#@+node:ekr.20040803072955.99:Dragging
+#@+node:ekr.20041111115908:endDrag
+def endDrag (self,event):
+    
+    """The official helper of the onEndDrag event handler."""
+
+    c = self.c ; p = self.drag_p
+    c.setLog()
+    canvas = self.canvas
+    if not event: return
+
+    c.beginUpdate()
+    try:
+        << set vdrag, childFlag >>
+        if c.config.getBool("allow_clone_drags"):
+            if not c.config.getBool("look_for_control_drag_on_mouse_down"):
+                self.controlDrag = c.frame.controlKeyIsDown
+    
+        if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
+            << drag p to vdrag >>
+        elif self.trace and self.verbose:
+            g.trace("Cancel drag")
+        
+        # Reset the old cursor by brute force.
+        self.canvas['cursor'] = "arrow"
+        self.dragging = False
+        self.drag_p = None
+    finally:
+        # Must set self.drag_p = None first.
+        c.endUpdate()
+        c.recolor_now() # Dragging can affect coloring.
+#@nonl
+#@+node:ekr.20040803072955.104:<< set vdrag, childFlag >>
+x,y = event.x,event.y
+canvas_x = canvas.canvasx(x)
+canvas_y = canvas.canvasy(y)
+
+theId = self.canvas.find_closest(canvas_x,canvas_y)
+# theId = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
+vdrag = self.findPositionWithIconId(theId)
+childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
+#@nonl
+#@-node:ekr.20040803072955.104:<< set vdrag, childFlag >>
+#@+node:ekr.20041111114148:<< drag p to vdrag >>
+# g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
+
+if self.controlDrag: # Clone p and move the clone.
+    if childFlag:
+        c.dragCloneToNthChildOf(p,vdrag,0)
+    else:
+        c.dragCloneAfter(p,vdrag)
+else: # Just drag p.
+    if childFlag:
+        c.dragToNthChildOf(p,vdrag,0)
+    else:
+        c.dragAfter(p,vdrag)
+#@nonl
+#@-node:ekr.20041111114148:<< drag p to vdrag >>
+#@-node:ekr.20041111115908:endDrag
+#@+node:ekr.20041111114944:startDrag
+# This precomputes numberOfVisibleNodes(), a significant optimization.
+# We also indicate where findPositionWithIconId() should start looking for tree id's.
+
+def startDrag (self,event):
+    
+    """The official helper of the onDrag event handler."""
+    
+    c = self.c ; canvas = self.canvas
+    c.setLog()
+    assert(not self.drag_p)
+    x = canvas.canvasx(event.x)
+    y = canvas.canvasy(event.y)
+    theId = canvas.find_closest(x,y)
+    # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    if theId is None: return
+    try: theId = theId[0]
+    except: pass
+    p = self.ids.get(theId)
+    if not p: return
+    self.drag_p = p.copy() # defensive programming: not needed.
+    self.dragging = True
+    # g.trace("*** start drag ***",theId,self.drag_p.headString())
+    # Only do this once: greatly speeds drags.
+    self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
+    if c.config.getBool("allow_clone_drags"):
+        self.controlDrag = c.frame.controlKeyIsDown
+        if c.config.getBool("look_for_control_drag_on_mouse_down"):
+            if c.config.getBool("enable_drag_messages"):
+                if self.controlDrag:
+                    g.es("dragged node will be cloned")
+                else:
+                    g.es("dragged node will be moved")
+    else: self.controlDrag = False
+    self.canvas['cursor'] = "hand2" # "center_ptr"
+#@nonl
+#@-node:ekr.20041111114944:startDrag
+#@+node:ekr.20040803072955.100:onContinueDrag
+def onContinueDrag(self,event):
+    
+    p = self.drag_p
+    if not p: return
+
+    try:
+        canvas = self.canvas ; frame = self.c.frame
+        if event:
+            x,y = event.x,event.y
+        else:
+            x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+            # Stop the scrolling if we go outside the entire window.
+            if x == -1 or y == -1: return 
+        if self.dragging: # This gets cleared by onEndDrag()
+            << scroll the canvas as needed >>
+    except:
+        g.es_event_exception("continue drag")
+#@nonl
+#@+node:ekr.20040803072955.101:<< scroll the canvas as needed >>
+# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
+h = canvas.winfo_height()
+
+if y < 0 or y > h:
+    lo, hi = frame.treeBar.get()
+    n = self.savedNumberOfVisibleNodes
+    line_frac = 1.0 / float(n)
+    frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
+    frac = min(frac,1.0)
+    frac = max(frac,0.0)
+    # g.es("lo,hi,frac:",lo,hi,frac)
+    canvas.yview("moveto", frac)
+    
+    # Queue up another event to keep scrolling while the cursor is outside the canvas.
+    lo, hi = frame.treeBar.get()
+    if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
+        canvas.after_idle(self.onContinueDrag,None) # Don't propagate the event.
+#@nonl
+#@-node:ekr.20040803072955.101:<< scroll the canvas as needed >>
+#@-node:ekr.20040803072955.100:onContinueDrag
+#@+node:ekr.20040803072955.102:onDrag
+def onDrag(self,event):
+    
+    c = self.c ; p = self.drag_p
+    if not event: return
+
+    c.setLog()
+    
+    if not self.dragging:
+        if not g.doHook("drag1",c=c,p=p,v=p,event=event):
+            self.startDrag(event)
+        g.doHook("drag2",c=c,p=p,v=p,event=event)
+        
+    if not g.doHook("dragging1",c=c,p=p,v=p,event=event):
+        self.onContinueDrag(event)
+    g.doHook("dragging2",c=c,p=p,v=p,event=event)
+#@nonl
+#@-node:ekr.20040803072955.102:onDrag
+#@+node:ekr.20040803072955.103:onEndDrag
+def onEndDrag(self,event):
+    
+    """Tree end-of-drag handler called from vnode event handler."""
+    
+    c = self.c ; p = self.drag_p
+    if not p: return
+
+    c.setLog()
+    
+    if not g.doHook("enddrag1",c=c,p=p,v=p,event=event):
+        self.endDrag(event)
+    g.doHook("enddrag2",c=c,p=p,v=p,event=event)
+#@nonl
+#@-node:ekr.20040803072955.103:onEndDrag
+#@-node:ekr.20040803072955.99:Dragging
+#@+node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20040803072955.88:onHeadlineKey
+def onHeadlineKey (self,event):
+    
+    '''Handle a key event in a headline.'''
+
+    w = event and event.widget or None
+    ch = event and event.char or ''
+    
+    # g.trace(g.callers())
+
+    # Testing for ch here prevents flashing in the headline
+    # when the control key is held down.
+    if ch:
+        # g.trace(repr(ch),g.callers())
+        self.updateHead(event,w)
+
+    return 'break' # Required
+#@-node:ekr.20040803072955.88:onHeadlineKey
+#@+node:ekr.20051026083544.2:updateHead
+def updateHead (self,event,w):
+    
+    '''Update a headline from an event.
+    
+    The headline officially changes only when editing ends.'''
+    
+    c = self.c ; ch = event and event.char or ''
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # g.trace(repr(ch))
+    
+    if ch == '\b':
+        if i != j:
+            w.delete(i,j)
+        else:
+            w.delete('insert-1c')
+    elif ch and ch not in ('\n','\r'):
+        if i != j:
+            w.delete(i,j)
+        i = w.index('insert')
+        w.insert(i,ch)
+
+    s = w.get('1.0','end')
+    if s.endswith('\n'):
+        s = s[:-1]
+    w.configure(width=self.headWidth(s=s))
+
+    if ch in ('\n','\r'):
+        self.endEditLabel() # Now calls self.onHeadChanged.
+#@-node:ekr.20051026083544.2:updateHead
+#@+node:ekr.20040803072955.91:onHeadChanged
+# Tricky code: do not change without careful thought and testing.
+
+def onHeadChanged (self,p,undoType='Typing'):
+    
+    '''Officially change a headline.
+    Set the old undo text to the previous revert point.'''
+    
+    c = self.c ; u = c.undoer ; w = self.edit_widget(p)
+    if not w: return
+    
+    ch = '\r' # New in 4.4: we only report the final keystroke.
+    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
+        return # The hook claims to have handled the event.
+
+    s = w.get('1.0','end')
+    << truncate s if it has multiple lines >>
+    c.beginUpdate()
+    try:
+        # Make the change official, but undo to the *old* revert point.
+        oldRevert = self.revertHeadline
+        changed = s != oldRevert
+        self.revertHeadline = s
+        p.initHeadString(s)
+        if self.trace_edit and not g.app.unitTesting:
+            if changed:
+                g.trace('changed: old',repr(oldRevert),'new',repr(s))
+        if changed:
+            undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
+            if not c.changed: c.setChanged(True)
+            dirtyVnodeList = p.setDirty()
+            u.afterChangeNodeContents(p,undoType,undoData,
+                dirtyVnodeList=dirtyVnodeList)
+    finally:
+        c.endUpdate()
+        if changed:
+            if self.stayInTree:
+                c.treeWantsFocus()
+            else:
+                c.bodyWantsFocus()
+   
+    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
+#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+# Remove one or two trailing newlines before warning of truncation.
+for i in (0,1):
+    if s and s[-1] == '\n':
+        if len(s) > 1: s = s[:-1]
+        else: s = ''
+
+# Warn if there are multiple lines.
+i = s.find('\n')
+if i > -1:
+    # g.trace(i,len(s),repr(s))
+    g.es("Truncating headline to one line",color="blue")
+    s = s[:i]
+
+limit = 1000
+if len(s) > limit:
+    g.es("Truncating headline to %d characters" % (limit),color="blue")
+    s = s[:limit]
+
+s = g.toUnicode(s or '',g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
+#@-node:ekr.20040803072955.91:onHeadChanged
+#@-node:ekr.20040803072955.90:head key handlers
+#@+node:ekr.20040803072955.80:Icon Box...
+#@+node:ekr.20040803072955.81:onIconBoxClick
+def onIconBoxClick (self,event):
+    
+    c = self.c ; tree = self
+    
+    p = self.eventToPosition(event)
+    if not p: return
+    
+    c.setLog()
+    
+    if self.trace and self.verbose: g.trace()
+    
+    if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
+        if event:
+            self.onDrag(event)
+        tree.endEditLabel()
+        tree.select(p)
+        if c.frame.findPanel:
+            c.frame.findPanel.handleUserClick(p)
+    g.doHook("iconclick2",c=c,p=p,v=p,event=event)
+        
+    return "break" # disable expanded box handling.
+#@nonl
+#@-node:ekr.20040803072955.81:onIconBoxClick
+#@+node:ekr.20040803072955.89:onIconBoxRightClick
+def onIconBoxRightClick (self,event):
+    
+    """Handle a right click in any outline widget."""
+
+    c = self.c
+    
+    p = self.eventToPosition(event)
+    if not p:
+        g.trace('*'*20,'oops')
+        return
+    
+    c.setLog()
+
+    try:
+        if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
+            self.OnActivateHeadline(p)
+            self.endEditLabel()
+            self.OnPopup(p,event)
+        g.doHook("iconrclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("iconrclick")
+        
+    return "continue"
+#@-node:ekr.20040803072955.89:onIconBoxRightClick
+#@+node:ekr.20040803072955.82:onIconBoxDoubleClick
+def onIconBoxDoubleClick (self,event):
+    
+    c = self.c
+
+    p = self.eventToPosition(event)
+    if not p: return
+    
+    c.setLog()
+    
+    if self.trace and self.verbose: g.trace()
+    
+    try:
+        if not g.doHook("icondclick1",c=c,p=p,v=p,event=event):
+            self.endEditLabel() # Bug fix: 11/30/05
+            self.OnIconDoubleClick(p) # Call the method in the base class.
+        g.doHook("icondclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("icondclick")
+#@nonl
+#@-node:ekr.20040803072955.82:onIconBoxDoubleClick
+#@-node:ekr.20040803072955.80:Icon Box...
+#@+node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
+def OnActivateHeadline (self,p,event=None):
+    
+    '''Handle common process when any part of a headline is clicked.'''
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    # g.trace(p.headString())
+
+    try:
+        c = self.c
+        c.setLog()
+        << activate this window >>
+    except:
+        g.es_event_exception("activate tree")
+#@+node:ekr.20040803072955.106:<< activate this window >>
+if p == c.currentPosition():
+    # g.trace("is current")
+    # The *second* click in the headline starts editing.
+    if self.active:
+        self.editLabel(p)
+    else:
+        # Set the focus immediately.  This is essential for proper editing.
+        c.treeWantsFocus()
+else:
+    # g.trace("not current")
+    self.select(p)
+    if c.frame.findPanel:
+        c.frame.findPanel.handleUserClick(p)
+    if p.v.t.insertSpot != None:
+        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+        c.frame.bodyCtrl.see(p.v.t.insertSpot)
+    else:
+        c.frame.bodyCtrl.mark_set("insert","1.0")
+        
+    if self.stayInTree:
+        g.trace('*'*20,'Moving to tree')
+        c.treeWantsFocus()
+    else:
+        c.bodyWantsFocus()
+
+# The next click *in the same headline* will start editing.
+self.active = True
+#@nonl
+#@-node:ekr.20040803072955.106:<< activate this window >>
+#@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
+#@+node:ekr.20051022141020:onTreeClick
+def onTreeClick (self,event=None):
+    
+    tree = self ; c = tree.c
+    
+    c.setLog()
+    tree.endEditLabel()
+    c.treeWantsFocus()
+
+    return 'break'
+#@nonl
+#@-node:ekr.20051022141020:onTreeClick
+#@+node:ekr.20040803072955.84:Text Box...
+#@+node:ekr.20040803072955.85:configureTextState
+def configureTextState (self,p):
+    
+    if not p: return
+    
+    if p.isCurrentPosition():
+        if p == self.editPosition():
+            self.setEditLabelState(p) # selected, editing.
+        else:
+            self.setSelectedLabelState(p) # selected, not editing.
+    else:
+        self.setUnselectedLabelState(p) # unselected
+#@nonl
+#@-node:ekr.20040803072955.85:configureTextState
+#@+node:ekr.20040803072955.86:onCtontrolT
+# This works around an apparent Tk bug.
+
+def onControlT (self,event=None):
+
+    # If we don't inhibit further processing the Tx.Text widget switches characters!
+    return "break"
+#@nonl
+#@-node:ekr.20040803072955.86:onCtontrolT
+#@+node:ekr.20040803072955.87:onHeadlineClick
+def onHeadlineClick (self,event):
+    
+    c = self.c ; w = event.widget
+
+    try:
+        p = w.leo_position
+    except AttributeError:
+        g.trace('*'*20,'oops')
+        return "continue"
+        
+    # g.trace(p.headString())
+    
+    c.setLog()
+    
+    try:
+        if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
+            self.OnActivateHeadline(p)
+        g.doHook("headclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("headclick")
+
+    return "continue"
+#@nonl
+#@-node:ekr.20040803072955.87:onHeadlineClick
+#@+node:ekr.20040803072955.83:onHeadlineRightClick
+def onHeadlineRightClick (self,event):
+
+    """Handle a right click in any outline widget."""
+
+    c = self.c ; w = event.widget
+    
+    try:
+        p = w.leo_position
+    except AttributeError:
+        g.trace('*'*20,'oops')
+        return "continue"
+        
+    c.setLog()
+
+    try:
+        if not g.doHook("headrclick1",c=c,p=p,v=p,event=event):
+            self.OnActivateHeadline(p)
+            self.endEditLabel()
+            self.OnPopup(p,event)
+        g.doHook("headrclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("headrclick")
+        
+    return "continue"
+#@-node:ekr.20040803072955.83:onHeadlineRightClick
+#@-node:ekr.20040803072955.84:Text Box...
+#@+node:ekr.20040803072955.108:tree.OnDeactivate
+def OnDeactivate (self,event=None):
+    
+    """Deactivate the tree pane, dimming any headline being edited."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    tree = self ; c = self.c
+    
+    g.trace(g.callers())
+   
+    c.beginUpdate()
+    try:
+        tree.endEditLabel()
+        tree.dimEditLabel()
+    finally:
+        c.endUpdate(False)
+#@nonl
+#@-node:ekr.20040803072955.108:tree.OnDeactivate
+#@+node:ekr.20040803072955.110:tree.OnPopup & allies
+def OnPopup (self,p,event):
+    
+    """Handle right-clicks in the outline."""
+    
+    # Note: "headrclick" hooks handled by vnode callback routine.
+
+    if event != None:
+        c = self.c
+        c.setLog()
+
+        if not g.doHook("create-popup-menu",c=c,p=p,v=p,event=event):
+            self.createPopupMenu(event)
+        if not g.doHook("enable-popup-menu-items",c=c,p=p,v=p,event=event):
+            self.enablePopupMenuItems(p,event)
+        if not g.doHook("show-popup-menu",c=c,p=p,v=p,event=event):
+            self.showPopupMenu(event)
+
+    return "break"
+#@nonl
+#@+node:ekr.20040803072955.111:OnPopupFocusLost
+@ On Linux we must do something special to make the popup menu "unpost" if the mouse is clicked elsewhere.  So we have to catch the <FocusOut> event and explicitly unpost.  In order to process the <FocusOut> event, we need to be able to find the reference to the popup window again, so this needs to be an attribute of the tree object; hence, "self.popupMenu".
+
+Aside: though Tk tries to be muli-platform, the interaction with different window managers does cause small differences that will need to be compensated by system specific application code. :-(
+@c
+
+# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
+
+def OnPopupFocusLost(self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+
+    self.popupMenu.unpost()
+#@nonl
+#@-node:ekr.20040803072955.111:OnPopupFocusLost
+#@+node:ekr.20040803072955.112:createPopupMenu
+def createPopupMenu (self,event):
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    c = self.c ; frame = c.frame
+    
+    # If we are going to recreate it, we had better destroy it.
+    if self.popupMenu:
+        self.popupMenu.destroy()
+        self.popupMenu = None
+    
+    self.popupMenu = menu = Tk.Menu(g.app.root, tearoff=0)
+    
+    # Add the Open With entries if they exist.
+    if g.app.openWithTable:
+        frame.menu.createOpenWithMenuItemsFromTable(menu,g.app.openWithTable)
+        table = (("-",None,None),)
+        frame.menu.createMenuEntries(menu,table)
+        
+    << Create the menu table >>
+    
+    # New in 4.4.  There is no need for a dontBind argument because
+    # Bindings from tables are ignored.
+    frame.menu.createMenuEntries(menu,table)
+#@nonl
+#@+node:ekr.20040803072955.113:<< Create the menu table >>
+table = (
+    ("&Read @file Nodes",c.readAtFileNodes),
+    ("&Write @file Nodes",c.fileCommands.writeAtFileNodes),
+    ("-",None),
+    ("&Tangle",c.tangle),
+    ("&Untangle",c.untangle),
+    ("-",None),
+    ("Toggle Angle &Brackets",c.toggleAngleBrackets),
+    ("-",None),
+    ("Cut Node",c.cutOutline),
+    ("Copy Node",c.copyOutline),
+    ("&Paste Node",c.pasteOutline),
+    ("&Delete Node",c.deleteOutline),
+    ("-",None),
+    ("&Insert Node",c.insertHeadline),
+    ("&Clone Node",c.clone),
+    ("Sort C&hildren",c.sortChildren),
+    ("&Sort Siblings",c.sortSiblings),
+    ("-",None),
+    ("Contract Parent",c.contractParent),
+)
+#@nonl
+#@-node:ekr.20040803072955.113:<< Create the menu table >>
+#@-node:ekr.20040803072955.112:createPopupMenu
+#@+node:ekr.20040803072955.114:enablePopupMenuItems
+def enablePopupMenuItems (self,v,event):
+    
+    """Enable and disable items in the popup menu."""
+    
+    __pychecker__ = '--no-argsused' # event not used.
+    
+    c = self.c ; menu = self.popupMenu
+
+    << set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+    isAtFile = g.choose(isAtFile,1,0)
+    isAtRoot = g.choose(isAtRoot,1,0)
+    canContract = v.parent() != None
+    canContract = g.choose(canContract,1,0)
+    
+    enable = self.frame.menu.enableMenu
+    
+    for name in ("Read @file Nodes", "Write @file Nodes"):
+        enable(menu,name,isAtFile)
+    for name in ("Tangle", "Untangle"):
+        enable(menu,name,isAtRoot)
+
+    enable(menu,"Cut Node",c.canCutOutline())
+    enable(menu,"Delete Node",c.canDeleteHeadline())
+    enable(menu,"Paste Node",c.canPasteOutline())
+    enable(menu,"Sort Children",c.canSortChildren())
+    enable(menu,"Sort Siblings",c.canSortSiblings())
+    enable(menu,"Contract Parent",c.canContractParent())
+#@nonl
+#@+node:ekr.20040803072955.115:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+isAtFile = False
+isAtRoot = False
+
+for v2 in v.self_and_subtree_iter():
+    if isAtFile and isAtRoot:
+        break
+    if (v2.isAtFileNode() or
+        v2.isAtNorefFileNode() or
+        v2.isAtAsisFileNode() or
+        v2.isAtNoSentFileNode()
+    ):
+        isAtFile = True
+        
+    isRoot,junk = g.is_special(v2.bodyString(),0,"@root")
+    if isRoot:
+        isAtRoot = True
+#@nonl
+#@-node:ekr.20040803072955.115:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+#@-node:ekr.20040803072955.114:enablePopupMenuItems
+#@+node:ekr.20040803072955.116:showPopupMenu
+def showPopupMenu (self,event):
+    
+    """Show a popup menu."""
+    
+    c = self.c ; menu = self.popupMenu
+
+    if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
+        menu.bind("<FocusOut>",self.OnPopupFocusLost)
+    
+    menu.post(event.x_root, event.y_root)
+
+    # Set the focus immediately so we know when we lose it.
+    c.widgetWantsFocus(menu)
+#@nonl
+#@-node:ekr.20040803072955.116:showPopupMenu
+#@-node:ekr.20040803072955.110:tree.OnPopup & allies
+#@-node:ekr.20040803072955.71:Event handlers (tkTree)
+#@+node:ekr.20040803072955.125:Selecting & editing... (tkTree)
+#@+node:ekr.20040803072955.126:tree.endEditLabel
+def endEditLabel (self):
+    
+    '''End editing of a headline and update p.headString().'''
+
+    c = self.c ; k = c.k ; p = c.currentPosition()
+
+    self.setEditPosition(None) # That is, self._editPosition = None
+    
+    if k:
+        k.setDefaultUnboundKeyAction()
+        k.showStateAndMode()
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
+#@nonl
+#@-node:ekr.20040803072955.126:tree.endEditLabel
+#@+node:ekr.20040803072955.127:editLabel
+def editLabel (self,p):
+    
+    """Start editing p's headline."""
+
+    if self.editPosition() and p != self.editPosition():
+        c.beginUpdate()
+        try:
+            self.endEditLabel()
+        finally:
+            c.endUpdate(False)
+
+    self.setEditPosition(p) # That is, self._editPosition = p
+    
+    if self.trace_edit and not g.app.unitTesting:
+        g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget'))
+
+    if p and p.edit_widget():
+        self.revertHeadline = p.headString() # New in 4.4b2: helps undo.
+        self.setEditLabelState(p) # Sets the focus immediately.
+        self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
+#@nonl
+#@-node:ekr.20040803072955.127:editLabel
+#@+node:ekr.20040803072955.128:tree.select
+#  Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    if not p or not p.exists(c): return # Not an error.
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        if old_p:
+            << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                # p is NOT c.currentPosition() here!
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo(p)
+            except Exception: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    c.setCurrentPosition(p)
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    return 'break' # Supresses unwanted selection.
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >>
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
+
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >>
+#@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
+frame.setWrap(p)
+    
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(0,body,s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+# c.beadList is the list of nodes for the back and forward commands.
+
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by p and make p the present node.
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+        # New in Leo 4.4: limit this list to 100 items.
+        ### c.beadList = c.beadList [-100:]
+        # g.trace('len(c.beadList)',len(c.beadList))
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# The test 'p in c.visitedList' calls p.__cmp__, so this code *is* valid.
+
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+
+# New in Leo 4.4: Limit the size of this list.
+#### c.visitedList = c.visitedList[:100]
+
+# g.trace('len(c.visitedList)',len(c.visitedList))
+# g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.treeWantsFocus()
+else:
+    c.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
+def setHeadline (self,p,s):
+    
+    '''Set the actual text of the headline widget.
+    
+    This is called from the undo/redo logic to change the text before redrawing.'''
+    
+    w = self.edit_widget(p)
+    if w:
+        w.configure(state='normal')
+        w.delete('1.0','end')
+        if s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
+        w.insert('1.0',s)
+        self.revertHeadline = s
+        # g.trace(repr(s),w.get('1.0','end'))
+    else:
+        g.trace('-'*20,'oops')
+#@nonl
+#@-node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
+#@+node:ekr.20040803072955.134:tree.set...LabelState
+#@+node:ekr.20040803072955.135:setEditLabelState
+def setEditLabelState (self,p): # selected, editing
+
+    c = self.c ; w = p.edit_widget()
+
+    if p and w:
+        c.widgetWantsFocus(w)
+        self.setEditHeadlineColors(p)
+        w.tag_remove("sel","1.0","end")
+        w.tag_add("sel","1.0","end")
+    else:
+        g.trace('no edit_widget')
+        
+setNormalLabelState = setEditLabelState # For compatibility.
+#@nonl
+#@-node:ekr.20040803072955.135:setEditLabelState
+#@+node:ekr.20040803072955.136:setSelectedLabelState
+def setSelectedLabelState (self,p): # selected, disabled
+
+    if p and p.edit_widget():
+        self.setDisabledHeadlineColors(p)
+#@nonl
+#@-node:ekr.20040803072955.136:setSelectedLabelState
+#@+node:ekr.20040803072955.138:setUnselectedLabelState
+def setUnselectedLabelState (self,p): # not selected.
+
+    if p and p.edit_widget():
+        self.setUnselectedHeadlineColors(p)
+#@nonl
+#@-node:ekr.20040803072955.138:setUnselectedLabelState
+#@+node:ekr.20040803072955.139:setDisabledHeadlineColors
+def setDisabledHeadlineColors (self,p):
+
+    c = self.c ; w = p.edit_widget()
+
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("disabled",id(w),p.headString())
+            # import traceback ; traceback.print_stack(limit=6)
+
+    fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
+    bg = c.config.getColor("headline_text_selected_background_color") or 'grey80'
+    
+    selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
+    selbg = c.config.getColor("headline_text_editing_selection_background_color")
+
+    try:
+        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg,
+            selectbackground=bg,selectforeground=fg,highlightbackground=bg)
+    except:
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040803072955.139:setDisabledHeadlineColors
+#@+node:ekr.20040803072955.140:setEditHeadlineColors
+def setEditHeadlineColors (self,p):
+
+    c = self.c ; w = p.edit_widget()
+    
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("edit",id(2),p.headString())
+    
+    fg    = c.config.getColor("headline_text_editing_foreground_color") or 'black'
+    bg    = c.config.getColor("headline_text_editing_background_color") or 'white'
+    selfg = c.config.getColor("headline_text_editing_selection_foreground_color") or 'white'
+    selbg = c.config.getColor("headline_text_editing_selection_background_color") or 'black'
+    
+    try: # Use system defaults for selection foreground/background
+        w.configure(state="normal",highlightthickness=1,
+        fg=fg,bg=bg,selectforeground=selfg,selectbackground=selbg)
+    except:
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040803072955.140:setEditHeadlineColors
+#@+node:ekr.20040803072955.141:setUnselectedHeadlineColors
+def setUnselectedHeadlineColors (self,p):
+    
+    c = self.c ; w = p.edit_widget()
+    
+    if self.trace and self.verbose:
+        if not self.redrawing:
+            print "%10s %d %s" % ("unselect",id(w),p.headString())
+            # import traceback ; traceback.print_stack(limit=6)
+    
+    fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
+    bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
+    
+    try:
+        w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg,
+            selectbackground=bg,selectforeground=fg,highlightbackground=bg)
+    except:
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040803072955.141:setUnselectedHeadlineColors
+#@-node:ekr.20040803072955.134:tree.set...LabelState
+#@+node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
+# Convenience methods so the caller doesn't have to know the present edit node.
+
+def dimEditLabel (self):
+    
+    p = self.c.currentPosition()
+    self.setSelectedLabelState(p)
+
+def undimEditLabel (self):
+
+    p = self.c.currentPosition()
+    self.setSelectedLabelState(p)
+#@nonl
+#@-node:ekr.20040803072955.142:dimEditLabel, undimEditLabel
+#@+node:ekr.20040803072955.143:tree.expandAllAncestors
+def expandAllAncestors (self,p):
+    
+    '''Expand all ancestors without redrawing.
+    
+    Return a flag telling whether a redraw is needed.'''
+    
+    c = self.c ; redraw_flag = False
+
+    c.beginUpdate()
+    try:
+        for p in p.parents_iter():
+            if not p.isExpanded():
+                p.expand()
+                redraw_flag = True
+    finally:
+        c.endUpdate(False)
+
+    return redraw_flag
+#@nonl
+#@-node:ekr.20040803072955.143:tree.expandAllAncestors
+#@-node:ekr.20040803072955.125:Selecting & editing... (tkTree)
 #@+node:ekr.20060206123942:Found: .bind
 #@+node:ekr.20060206124948:Legacy Find tab
 #@+node:ekr.20031218072017.3902:find.createFrame
 def createFrame (self):
+    
+    # g.trace('legacy')
 
     # Create the find panel...
     outer = Tk.Frame(self.frame,relief="groove",bd=2)
@@ -5840,19 +7912,6 @@ def createFrame (self):
     << Create the Find and Change panes >>
     << Create four columns of radio and checkboxes >>
     << Create two rows of buttons >>
-
-    for widget in (self.find_ctrl, self.change_ctrl):
-        widget.bind ("<Button-1>",  self.resetWrap)
-        widget.bind("<Key>", self.resetWrap)
-        widget.bind("<Control-a>",self.selectAllFindText)
-        #widget.bind(g.virtual_event_name("SelectAll"),self.selectAllFindText)
-    
-    for widget in (outer, self.find_ctrl, self.change_ctrl):
-        widget.bind("<Key-Return>", findButtonCallback)
-        widget.bind("<Key-Escape>", self.onCloseWindow)
-    
-    if self.top:
-        self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
 #@nonl
 #@+node:ekr.20031218072017.3904:<< Create the Find and Change panes >>
 fc = Tk.Frame(outer, bd="1m")
@@ -5984,14 +8043,14 @@ buttons2.pack(anchor="n",expand=1,fill="x")
 # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
 # HotKeys used for plain buttons (enter),d,g,t
 
-def findButtonCallback(event=None):
-    __pychecker__ = '--no-argsused' # the event param must be present.
+def findButtonCallback(event,self=self):
     self.findButton()
     return 'break'
 
 # Create the first row of buttons
 findButton=Tk.Button(buttons,
     width=9,text="Find",bd=4,command=findButtonCallback) # The default.
+
 findButton.pack(pady="1p",padx="25p",side="left")
 
 contextBox = underlinedTkButton("check",buttons,
@@ -6587,399 +8646,130 @@ def up (event):
 #@-node:ekr.20050920084036.106:setRegion
 #@+node:ekr.20051023181449:createBindings (findTab)
 def createBindings (self):
-
+    
     c = self.c ; k = c.k
+    
+    def resetWrapCallback(event,self=self,k=k):
+        self.resetWrap(event)
+        k.masterKeyHandler(event)
 
     table = (
-        ('<Key>',   k.masterKeyHandler),
-        ("<Return>",self.findButtonCallback),
-        ("<Escape>",self.hideTab),
+        ('<Button-1>',  k.masterClickHandler),
+        ('<Double-1>',  k.masterClickHandler),
+        ('<Button-3>',  k.masterClickHandler),
+        ('<Double-3>',  k.masterClickHandler),
+        ('<Key>',       k.masterKeyHandler),
+        ('<Key>',       resetWrapCallback),
+        ('<Return>',    self.findButtonCallback),
+        ("<Escape>",    self.hideTab),
     )
 
     for w in (self.find_ctrl,self.change_ctrl):
         for event, callback in table:
             w.bind(event,callback)
-            
+    
+    if 0:
         w.bind("<Key>",self.resetWrap,'+')
             # Can't put this in the table bc of the '+' arg.
 #@nonl
 #@-node:ekr.20051023181449:createBindings (findTab)
 #@-node:ekr.20060206123942:Found: .bind
-#@+node:ekr.20040803072955.71:Event handlers (tkTree)
-#@+node:ekr.20051105103233:Helpers
-#@+node:ekr.20040803072955.72:checkWidgetList
-def checkWidgetList (self,tag):
+#@+node:ekr.20060206160612:Found: onHeadChanged
+#@+node:ekr.20031218072017.2290:toggleAngleBrackets
+def toggleAngleBrackets (self,event=None):
     
-    return True # This will fail when the headline actually changes!
+    c = self ; v = c.currentVnode()
     
-    for t in self.visibleText:
+    if g.app.batchMode:
+        c.notValidInBatchMode("Toggle Angle Brackets")
+        return
         
-        p = t.leo_position
-        if p:
-            s = t.get("1.0","end").strip()
-            h = p.headString().strip()
-            
-            if h != s:
-                self.dumpWidgetList(tag)
-                return False
+    c.endEditing()
+
+    s = v.headString().strip()
+    if (s[0:2] == "<<"
+        or s[-2:] == ">>"): # Must be on separate line.
+        if s[0:2] == "<<": s = s[2:]
+        if s[-2:] == ">>": s = s[:-2]
+        s = s.strip()
+    else:
+        s = g.angleBrackets(' ' + s + ' ')
+    
+    c.frame.tree.editLabel(v)
+    w = v.edit_widget()
+    if w:
+        w.delete("1.0","end")
+        w.insert("1.0",s)
+        c.frame.tree.onHeadChanged(v,'Toggle Angle Brackets')
+#@nonl
+#@-node:ekr.20031218072017.2290:toggleAngleBrackets
+#@+node:ekr.20031218072017.3070:changeSelection
+# Replace selection with self.change_text.
+# If no selection, insert self.change_text at the cursor.
+
+def changeSelection(self):
+
+    c = self.c ; p = self.p ; gui = g.app.gui
+    # g.trace(self.in_headline)
+    t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
+    oldSel = sel = gui.getTextSelection(t)
+    if sel and len(sel) == 2:
+        start,end = sel
+        if start == end:
+            sel = None
+    if not sel or len(sel) != 2:
+        g.es("No text selected")
+        return False
+
+    # Replace the selection in _both_ controls.
+    start,end = oldSel
+    gui.replaceSelectionRangeWithText(t,          start,end,self.change_text)
+    gui.replaceSelectionRangeWithText(self.s_ctrl,start,end,self.change_text)
+
+    # Update the selection for the next match.
+    gui.setSelectionRangeWithLength(t,start,len(self.change_text))
+    c.widgetWantsFocus(t)
+
+    # No redraws here: they would destroy the headline selection.
+    c.beginUpdate()
+    try:
+        if self.mark_changes:
+            p.setMarked()
+        if self.in_headline:
+            c.frame.tree.onHeadChanged(p,'Change')
         else:
-            self.dumpWidgetList(tag)
-            return False
-            
+            c.frame.body.onBodyChanged('Change',oldSel=oldSel)
+    finally:
+        c.endUpdate(False)
+        c.frame.tree.drawIcon(p) # redraw only the icon.
+     
     return True
-#@nonl
-#@-node:ekr.20040803072955.72:checkWidgetList
-#@+node:ekr.20040803072955.73:dumpWidgetList
-def dumpWidgetList (self,tag):
+#@-node:ekr.20031218072017.3070:changeSelection
+#@+node:ekr.20031218072017.3983:insertHeadlineTime
+def insertHeadlineTime (self,event=None):
+
+    frame = self ; c = frame.c ; p = c.currentPosition()
     
-    print
-    print "checkWidgetList: %s" % tag
-    
-    for t in self.visibleText:
+    if g.app.batchMode:
+        c.notValidInBatchMode("Insert Headline Time")
+        return
         
-        p = t.leo_position
-        if p:
-            s = t.get("1.0","end").strip()
-            h = p.headString().strip()
-    
-            addr = self.textAddr(t)
-            print "p:",addr,h
-            if h != s:
-                print "t:",'*' * len(addr),s
+    c.editPosition(p)
+    c.frame.tree.setEditLabelState(p)
+    w = p.edit_widget()
+    if w:
+        time = c.getTime(body=False)
+        if 1: # We can't know if we were already editing, so insert at end.
+            g.app.gui.setSelectionRange(w,'end','end')
+            w.insert('end',time)
         else:
-            print "t.leo_position == None",t
+            i, j = g.app.gui.getTextSelection(w)
+            if i != j:
+                w.delete(i,j)
+            w.insert("insert",time)
+        c.frame.tree.onHeadChanged(p,'Insert Headline Time')
 #@nonl
-#@-node:ekr.20040803072955.73:dumpWidgetList
-#@+node:ekr.20040803072955.75:edit_widget
-def edit_widget (self,p):
-    
-    """Returns the Tk.Edit widget for position p."""
-
-    return self.findEditWidget(p)
-    
-edit_text = edit_widget # For compatibility.
-#@nonl
-#@-node:ekr.20040803072955.75:edit_widget
-#@+node:ekr.20040803072955.74:eventToPosition
-def eventToPosition (self,event):
-
-    canvas = self.canvas
-    x,y = event.x,event.y
-    # 7/28/04: Not doing this translation was the real bug.
-    x = canvas.canvasx(x) 
-    y = canvas.canvasy(y)
-    if self.trace: g.trace(x,y)
-    item = canvas.find_overlapping(x,y,x,y)
-    if not item: return None
-
-    # Item may be a tuple, possibly empty.
-    try:    theId = item[0]
-    except: theId = item
-    if not theId: return None
-
-    p = self.ids.get(theId)
-    
-    # A kludge: p will be None for vertical lines.
-    if not p:
-        item = canvas.find_overlapping(x+1,y,x+1,y)
-        try:    theId = item[0]
-        except: theId = item
-        if not theId:
-            g.es_print('oops: eventToPosition failed')
-            return None
-        p = self.ids.get(theId)
-        # g.trace("was vertical line",p)
-    
-    if self.trace and self.verbose:
-        if p:
-            w = self.findEditWidget(p)
-            g.trace("%3d %3d %3d %d" % (theId,x,y,id(w)),p.headString())
-        else:
-            g.trace("%3d %3d %3d" % (theId,x,y),None)
-        
-    # defensive programming: this copy is not needed.
-    if p: return p.copy() # Make _sure_ nobody changes this table!
-    else: return None
-#@nonl
-#@-node:ekr.20040803072955.74:eventToPosition
-#@+node:ekr.20040803072955.76:findEditWidget
-def findEditWidget (self,p):
-    
-    """Return the Tk.Text item corresponding to p."""
-
-    c = self.c
-
-    if p and c:
-        if self.new_alloc:
-            aTuple = self.visibleText.get(p.key())
-            if aTuple:
-                t,theId = aTuple
-                # if self.trace: g.trace('%4d' % (theId),self.textAddr(t),p.headString())
-                return t
-            else:
-                # g.trace('oops: not found',p)
-                return None
-        else:
-            # VERY SLOW.
-            # Search the widget list for widget t with t.leo_position == p.
-            # New in 4.2: the dictionary is a list of pairs(p,v)
-            pairs = self.visibleText.get(p.v,[])
-            for p2,t2,id2 in pairs:
-                assert t2.leo_window_id == id2
-                assert t2.leo_position == p2
-                if p.equal(p2):
-                    # g.trace('found',t2)
-                    return t2
-        
-    # g.trace(not found',p.headString())
-    return None
-#@nonl
-#@-node:ekr.20040803072955.76:findEditWidget
-#@+node:ekr.20040803072955.109:findVnodeWithIconId
-def findPositionWithIconId (self,theId):
-    
-    # Due to an old bug, theId may be a tuple.
-    try:
-        data = self.iconIds.get(theId[0])
-    except:
-        data = self.iconIds.get(theId)
-
-    if data:
-        p,generation = data
-        if generation==self.generation:
-            if self.trace and self.verbose:
-                g.trace(theId,p.headString())
-            return p
-        else:
-            if self.trace and self.verbose:
-                g.trace("*** wrong generation: %d ***" % theId)
-            return None
-    else:
-        if self.trace and self.verbose: g.trace(theId,None)
-        return None
-        
-    
-#@-node:ekr.20040803072955.109:findVnodeWithIconId
-#@-node:ekr.20051105103233:Helpers
-#@+node:ekr.20040803072955.78:Click Box...
-#@+node:ekr.20040803072955.79:onClickBoxClick
-def onClickBoxClick (self,event):
-    
-    c = self.c ; p1 = c.currentPosition()
-    c.setLog()
-    p = self.eventToPosition(event)
-
-    c.beginUpdate()
-    try:
-        if p and not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
-            c.endEditing()
-            self.active = True
-            if p == p1 or c.config.getBool('initialClickExpandsOrContractsNode'):
-                if p.isExpanded(): p.contract()
-                else:              p.expand()
-            self.select(p)
-            if c.frame.findPanel:
-                c.frame.findPanel.handleUserClick(p)
-            if self.stayInTree:
-                c.treeWantsFocus()
-            else:
-                c.bodyWantsFocus()
-        g.doHook("boxclick2",c=c,p=p,v=p,event=event)
-    finally:
-        c.endUpdate()
-#@nonl
-#@-node:ekr.20040803072955.79:onClickBoxClick
-#@-node:ekr.20040803072955.78:Click Box...
-#@+node:ekr.20040803072955.99:Dragging
-#@+node:ekr.20041111115908:endDrag
-def endDrag (self,event):
-    
-    """The official helper of the onEndDrag event handler."""
-
-    c = self.c ; p = self.drag_p
-    c.setLog()
-    canvas = self.canvas
-    if not event: return
-
-    c.beginUpdate()
-    try:
-        << set vdrag, childFlag >>
-        if c.config.getBool("allow_clone_drags"):
-            if not c.config.getBool("look_for_control_drag_on_mouse_down"):
-                self.controlDrag = c.frame.controlKeyIsDown
-    
-        if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
-            << drag p to vdrag >>
-        elif self.trace and self.verbose:
-            g.trace("Cancel drag")
-        
-        # Reset the old cursor by brute force.
-        self.canvas['cursor'] = "arrow"
-        self.dragging = False
-        self.drag_p = None
-    finally:
-        # Must set self.drag_p = None first.
-        c.endUpdate()
-        c.recolor_now() # Dragging can affect coloring.
-#@nonl
-#@+node:ekr.20040803072955.104:<< set vdrag, childFlag >>
-x,y = event.x,event.y
-canvas_x = canvas.canvasx(x)
-canvas_y = canvas.canvasy(y)
-
-theId = self.canvas.find_closest(canvas_x,canvas_y)
-# theId = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-
-vdrag = self.findPositionWithIconId(theId)
-childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
-#@nonl
-#@-node:ekr.20040803072955.104:<< set vdrag, childFlag >>
-#@+node:ekr.20041111114148:<< drag p to vdrag >>
-# g.trace("*** end drag   ***",theId,x,y,p.headString(),vdrag.headString())
-
-if self.controlDrag: # Clone p and move the clone.
-    if childFlag:
-        c.dragCloneToNthChildOf(p,vdrag,0)
-    else:
-        c.dragCloneAfter(p,vdrag)
-else: # Just drag p.
-    if childFlag:
-        c.dragToNthChildOf(p,vdrag,0)
-    else:
-        c.dragAfter(p,vdrag)
-#@nonl
-#@-node:ekr.20041111114148:<< drag p to vdrag >>
-#@-node:ekr.20041111115908:endDrag
-#@+node:ekr.20041111114944:startDrag
-# This precomputes numberOfVisibleNodes(), a significant optimization.
-# We also indicate where findPositionWithIconId() should start looking for tree id's.
-
-def startDrag (self,event):
-    
-    """The official helper of the onDrag event handler."""
-    
-    c = self.c ; canvas = self.canvas
-    c.setLog()
-    assert(not self.drag_p)
-    x = canvas.canvasx(event.x)
-    y = canvas.canvasy(event.y)
-    theId = canvas.find_closest(x,y)
-    # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-    if theId is None: return
-    try: theId = theId[0]
-    except: pass
-    p = self.ids.get(theId)
-    if not p: return
-    self.drag_p = p.copy() # defensive programming: not needed.
-    self.dragging = True
-    # g.trace("*** start drag ***",theId,self.drag_p.headString())
-    # Only do this once: greatly speeds drags.
-    self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-    if c.config.getBool("allow_clone_drags"):
-        self.controlDrag = c.frame.controlKeyIsDown
-        if c.config.getBool("look_for_control_drag_on_mouse_down"):
-            if c.config.getBool("enable_drag_messages"):
-                if self.controlDrag:
-                    g.es("dragged node will be cloned")
-                else:
-                    g.es("dragged node will be moved")
-    else: self.controlDrag = False
-    self.canvas['cursor'] = "hand2" # "center_ptr"
-#@nonl
-#@-node:ekr.20041111114944:startDrag
-#@+node:ekr.20040803072955.100:onContinueDrag
-def onContinueDrag(self,event):
-    
-    p = self.drag_p
-    if not p: return
-
-    try:
-        canvas = self.canvas ; frame = self.c.frame
-        if event:
-            x,y = event.x,event.y
-        else:
-            x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
-            # Stop the scrolling if we go outside the entire window.
-            if x == -1 or y == -1: return 
-        if self.dragging: # This gets cleared by onEndDrag()
-            << scroll the canvas as needed >>
-    except:
-        g.es_event_exception("continue drag")
-#@nonl
-#@+node:ekr.20040803072955.101:<< scroll the canvas as needed >>
-# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
-h = canvas.winfo_height()
-
-if y < 0 or y > h:
-    lo, hi = frame.treeBar.get()
-    n = self.savedNumberOfVisibleNodes
-    line_frac = 1.0 / float(n)
-    frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
-    frac = min(frac,1.0)
-    frac = max(frac,0.0)
-    # g.es("lo,hi,frac:",lo,hi,frac)
-    canvas.yview("moveto", frac)
-    
-    # Queue up another event to keep scrolling while the cursor is outside the canvas.
-    lo, hi = frame.treeBar.get()
-    if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-        canvas.after_idle(self.onContinueDrag,None) # Don't propagate the event.
-#@nonl
-#@-node:ekr.20040803072955.101:<< scroll the canvas as needed >>
-#@-node:ekr.20040803072955.100:onContinueDrag
-#@+node:ekr.20040803072955.102:onDrag
-def onDrag(self,event):
-    
-    c = self.c ; p = self.drag_p
-    if not event: return
-
-    c.setLog()
-    
-    if not self.dragging:
-        if not g.doHook("drag1",c=c,p=p,v=p,event=event):
-            self.startDrag(event)
-        g.doHook("drag2",c=c,p=p,v=p,event=event)
-        
-    if not g.doHook("dragging1",c=c,p=p,v=p,event=event):
-        self.onContinueDrag(event)
-    g.doHook("dragging2",c=c,p=p,v=p,event=event)
-#@nonl
-#@-node:ekr.20040803072955.102:onDrag
-#@+node:ekr.20040803072955.103:onEndDrag
-def onEndDrag(self,event):
-    
-    """Tree end-of-drag handler called from vnode event handler."""
-    
-    c = self.c ; p = self.drag_p
-    if not p: return
-
-    c.setLog()
-    
-    if not g.doHook("enddrag1",c=c,p=p,v=p,event=event):
-        self.endDrag(event)
-    g.doHook("enddrag2",c=c,p=p,v=p,event=event)
-#@nonl
-#@-node:ekr.20040803072955.103:onEndDrag
-#@-node:ekr.20040803072955.99:Dragging
-#@+node:ekr.20040803072955.90:head key handlers
-#@+node:ekr.20040803072955.88:onHeadlineKey
-def onHeadlineKey (self,event):
-    
-    '''Handle a key event in a headline.'''
-
-    w = event and event.widget or None
-    ch = event and event.char or ''
-    
-    # g.trace(g.callers())
-
-    # Testing for ch here prevents flashing in the headline
-    # when the control key is held down.
-    if ch:
-        # g.trace(repr(ch),g.callers())
-        self.updateHead(event,w)
-
-    return 'break' # Required
-#@-node:ekr.20040803072955.88:onHeadlineKey
+#@-node:ekr.20031218072017.3983:insertHeadlineTime
 #@+node:ekr.20051026083544.2:updateHead
 def updateHead (self,event,w):
     
@@ -7011,75 +8801,79 @@ def updateHead (self,event,w):
     if ch in ('\n','\r'):
         self.endEditLabel() # Now calls self.onHeadChanged.
 #@-node:ekr.20051026083544.2:updateHead
-#@+node:ekr.20040803072955.91:onHeadChanged
-# Tricky code: do not change without careful thought and testing.
+#@+node:ekr.20040803072955.126:tree.endEditLabel
+def endEditLabel (self):
+    
+    '''End editing of a headline and update p.headString().'''
 
-def onHeadChanged (self,p,undoType='Typing'):
+    c = self.c ; k = c.k ; p = c.currentPosition()
+
+    self.setEditPosition(None) # That is, self._editPosition = None
     
-    '''Officially change a headline.
-    Set the old undo text to the previous revert point.'''
+    if k:
+        k.setDefaultUnboundKeyAction()
+        k.showStateAndMode()
     
-    c = self.c ; u = c.undoer ; w = self.edit_widget(p)
-    if not w: return
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
+#@nonl
+#@-node:ekr.20040803072955.126:tree.endEditLabel
+#@-node:ekr.20060206160612:Found: onHeadChanged
+#@+node:ekr.20060206160612.1:Found: endEditLabel
+#@+node:ekr.20040803072955.127:editLabel
+def editLabel (self,p):
     
-    ch = '\r' # New in 4.4: we only report the final keystroke.
-    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
-        return # The hook claims to have handled the event.
+    """Start editing p's headline."""
+
+    if self.editPosition() and p != self.editPosition():
+        c.beginUpdate()
+        try:
+            self.endEditLabel()
+        finally:
+            c.endUpdate(False)
+
+    self.setEditPosition(p) # That is, self._editPosition = p
+    
+    if self.trace_edit and not g.app.unitTesting:
+        g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget'))
+
+    if p and p.edit_widget():
+        self.revertHeadline = p.headString() # New in 4.4b2: helps undo.
+        self.setEditLabelState(p) # Sets the focus immediately.
+        self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
+#@nonl
+#@-node:ekr.20040803072955.127:editLabel
+#@+node:ekr.20051026083544.2:updateHead
+def updateHead (self,event,w):
+    
+    '''Update a headline from an event.
+    
+    The headline officially changes only when editing ends.'''
+    
+    c = self.c ; ch = event and event.char or ''
+    i,j = g.app.gui.getTextSelection(w)
+    
+    # g.trace(repr(ch))
+    
+    if ch == '\b':
+        if i != j:
+            w.delete(i,j)
+        else:
+            w.delete('insert-1c')
+    elif ch and ch not in ('\n','\r'):
+        if i != j:
+            w.delete(i,j)
+        i = w.index('insert')
+        w.insert(i,ch)
 
     s = w.get('1.0','end')
-    << truncate s if it has multiple lines >>
-    c.beginUpdate()
-    try:
-        # Make the change official, but undo to the *old* revert point.
-        oldRevert = self.revertHeadline
-        changed = s != oldRevert
-        self.revertHeadline = s
-        p.initHeadString(s)
-        # g.trace(repr(s),g.callers())
-        if changed:
-            # g.trace('changed: old',repr(oldRevert),'new',repr(s))
-            undoData = u.beforeChangeNodeContents(p,oldHead=oldRevert)
-            if not c.changed: c.setChanged(True)
-            dirtyVnodeList = p.setDirty()
-            u.afterChangeNodeContents(p,undoType,undoData,
-                dirtyVnodeList=dirtyVnodeList)
-        else:
-            pass # g.trace('not changed')
-    finally:
-        c.endUpdate()
-        if changed:
-            if self.stayInTree:
-                c.treeWantsFocus()
-            else:
-                c.bodyWantsFocus()
-   
-    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
-#@nonl
-#@+node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-# Remove one or two trailing newlines before warning of truncation.
-for i in (0,1):
-    if s and s[-1] == '\n':
-        if len(s) > 1: s = s[:-1]
-        else: s = ''
+    if s.endswith('\n'):
+        s = s[:-1]
+    w.configure(width=self.headWidth(s=s))
 
-# Warn if there are multiple lines.
-i = s.find('\n')
-if i > -1:
-    # g.trace(i,len(s),repr(s))
-    g.es("Truncating headline to one line",color="blue")
-    s = s[:i]
-
-limit = 1000
-if len(s) > limit:
-    g.es("Truncating headline to %d characters" % (limit),color="blue")
-    s = s[:limit]
-
-s = g.toUnicode(s or '',g.app.tkEncoding)
-#@nonl
-#@-node:ekr.20040803072955.94:<< truncate s if it has multiple lines >>
-#@-node:ekr.20040803072955.91:onHeadChanged
-#@-node:ekr.20040803072955.90:head key handlers
-#@+node:ekr.20040803072955.80:Icon Box...
+    if ch in ('\n','\r'):
+        self.endEditLabel() # Now calls self.onHeadChanged.
+#@-node:ekr.20051026083544.2:updateHead
 #@+node:ekr.20040803072955.81:onIconBoxClick
 def onIconBoxClick (self,event):
     
@@ -7095,7 +8889,7 @@ def onIconBoxClick (self,event):
     if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
         if event:
             self.onDrag(event)
-        tree.endEditLabel() # Bug fix: 11/30/05
+        tree.endEditLabel()
         tree.select(p)
         if c.frame.findPanel:
             c.frame.findPanel.handleUserClick(p)
@@ -7112,7 +8906,9 @@ def onIconBoxRightClick (self,event):
     c = self.c
     
     p = self.eventToPosition(event)
-    if not p: return
+    if not p:
+        g.trace('*'*20,'oops')
+        return
     
     c.setLog()
 
@@ -7126,7 +8922,6 @@ def onIconBoxRightClick (self,event):
         g.es_event_exception("iconrclick")
         
     return "continue"
-#@nonl
 #@-node:ekr.20040803072955.89:onIconBoxRightClick
 #@+node:ekr.20040803072955.82:onIconBoxDoubleClick
 def onIconBoxDoubleClick (self,event):
@@ -7149,108 +8944,6 @@ def onIconBoxDoubleClick (self,event):
         g.es_event_exception("icondclick")
 #@nonl
 #@-node:ekr.20040803072955.82:onIconBoxDoubleClick
-#@-node:ekr.20040803072955.80:Icon Box...
-#@+node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
-def OnActivateHeadline (self,p,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    # g.trace(p.headString())
-
-    try:
-        c = self.c
-        c.setLog()
-        << activate this window >>
-    except:
-        g.es_event_exception("activate tree")
-#@nonl
-#@+node:ekr.20040803072955.106:<< activate this window >>
-if p == c.currentPosition():
-    # g.trace("is current")
-    if self.active:
-        self.editLabel(p)
-    else:
-        # Set the focus immediately.  This is essential for proper editing.
-        c.treeWantsFocus()
-else:
-    # g.trace("not current")
-    self.select(p)
-    if c.frame.findPanel:
-        c.frame.findPanel.handleUserClick(p)
-    if p.v.t.insertSpot != None:
-        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-        c.frame.bodyCtrl.see(p.v.t.insertSpot)
-    else:
-        c.frame.bodyCtrl.mark_set("insert","1.0")
-        
-    if self.stayInTree:
-        c.treeWantsFocus()
-    else:
-        c.bodyWantsFocus()
-
-self.active = True
-#@nonl
-#@-node:ekr.20040803072955.106:<< activate this window >>
-#@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
-#@+node:ekr.20051022141020:onTreeClick
-def onTreeClick (self,event=None):
-    
-    c = self.c
-    
-    c.setLog()
-    c.treeWantsFocus()
-
-    return 'break'
-#@nonl
-#@-node:ekr.20051022141020:onTreeClick
-#@+node:ekr.20040803072955.84:Text Box...
-#@+node:ekr.20040803072955.85:configureTextState
-def configureTextState (self,p):
-    
-    if not p: return
-    
-    if p.isCurrentPosition():
-        if p == self.editPosition():
-            self.setEditLabelState(p) # selected, editing.
-        else:
-            self.setSelectedLabelState(p) # selected, not editing.
-    else:
-        self.setUnselectedLabelState(p) # unselected
-#@nonl
-#@-node:ekr.20040803072955.85:configureTextState
-#@+node:ekr.20040803072955.86:onCtontrolT
-# This works around an apparent Tk bug.
-
-def onControlT (self,event=None):
-
-    # If we don't inhibit further processing the Tx.Text widget switches characters!
-    return "break"
-#@nonl
-#@-node:ekr.20040803072955.86:onCtontrolT
-#@+node:ekr.20040803072955.87:onHeadlineClick
-def onHeadlineClick (self,event):
-    
-    c = self.c ; w = event.widget
-
-    try:
-        p = w.leo_position
-    except AttributeError:
-        return "continue"
-        
-    # g.trace(p.headString())
-    
-    c.setLog()
-    
-    try:
-        if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
-            self.OnActivateHeadline(p)
-        g.doHook("headclick2",c=c,p=p,v=p,event=event)
-    except:
-        g.es_event_exception("headclick")
-
-    return "continue"
-#@nonl
-#@-node:ekr.20040803072955.87:onHeadlineClick
 #@+node:ekr.20040803072955.83:onHeadlineRightClick
 def onHeadlineRightClick (self,event):
 
@@ -7261,6 +8954,7 @@ def onHeadlineRightClick (self,event):
     try:
         p = w.leo_position
     except AttributeError:
+        g.trace('*'*20,'oops')
         return "continue"
         
     c.setLog()
@@ -7275,9 +8969,7 @@ def onHeadlineRightClick (self,event):
         g.es_event_exception("headrclick")
         
     return "continue"
-#@nonl
 #@-node:ekr.20040803072955.83:onHeadlineRightClick
-#@-node:ekr.20040803072955.84:Text Box...
 #@+node:ekr.20040803072955.108:tree.OnDeactivate
 def OnDeactivate (self,event=None):
     
@@ -7286,6 +8978,8 @@ def OnDeactivate (self,event=None):
     __pychecker__ = '--no-argsused' # event not used.
 
     tree = self ; c = self.c
+    
+    g.trace(g.callers())
    
     c.beginUpdate()
     try:
@@ -7295,160 +8989,2377 @@ def OnDeactivate (self,event=None):
         c.endUpdate(False)
 #@nonl
 #@-node:ekr.20040803072955.108:tree.OnDeactivate
-#@+node:ekr.20040803072955.110:tree.OnPopup & allies
-def OnPopup (self,p,event):
+#@+node:ekr.20040803072955.126:tree.endEditLabel
+def endEditLabel (self):
     
-    """Handle right-clicks in the outline."""
+    '''End editing of a headline and update p.headString().'''
+
+    c = self.c ; k = c.k ; p = c.currentPosition()
+
+    self.setEditPosition(None) # That is, self._editPosition = None
     
-    # Note: "headrclick" hooks handled by vnode callback routine.
+    if k:
+        k.setDefaultUnboundKeyAction()
+        k.showStateAndMode()
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
+#@nonl
+#@-node:ekr.20040803072955.126:tree.endEditLabel
+#@+node:ekr.20040803072955.129:<< unselect the old node >>
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
 
-    if event != None:
-        c = self.c
-        c.setLog()
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
 
-        if not g.doHook("create-popup-menu",c=c,p=p,v=p,event=event):
-            self.createPopupMenu(event)
-        if not g.doHook("enable-popup-menu-items",c=c,p=p,v=p,event=event):
-            self.enablePopupMenuItems(p,event)
-        if not g.doHook("show-popup-menu",c=c,p=p,v=p,event=event):
-            self.showPopupMenu(event)
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >>
+#@-node:ekr.20060206160612.1:Found: endEditLabel
+#@+node:ekr.20060206160840:Found: .editPosition
+#@+node:ekr.20060206162444:Commands
+#@+node:ekr.20031218072017.1623:new
+def new (self,event=None):
+
+    c,frame = g.app.newLeoCommanderAndFrame(fileName=None)
+    
+    # Needed for plugins.
+    g.doHook("new",old_c=self,c=c,new_c=c)
+    # Use the config params to set the size and location of the window.
+    c.beginUpdate()
+    try:
+        frame.setInitialWindowGeometry()
+        frame.deiconify()
+        frame.lift()
+        frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+        t = leoNodes.tnode()
+        v = leoNodes.vnode(c,t)
+        p = leoNodes.position(c,v,[])
+        v.initHeadString("NewHeadline")
+        v.moveToRoot()
+        c.editPosition(p)
+    finally:
+        c.endUpdate()
+        frame.body.setFocus()
+    return c # For unit test.
+#@nonl
+#@-node:ekr.20031218072017.1623:new
+#@+node:ekr.20031218072017.2998:selectVnodeWithEditing
+# Selects the given node and enables editing of the headline if editFlag is True.
+
+def selectVnodeWithEditing(self,v,editFlag):
+
+    c = self
+    if editFlag:
+        c.editPosition(v)
+    else:
+        c.selectVnode(v)
+
+selectPositionWithEditing = selectVnodeWithEditing
+#@nonl
+#@-node:ekr.20031218072017.2998:selectVnodeWithEditing
+#@+node:ekr.20031218072017.3220:importFlattenedOutline
+def importFlattenedOutline (self,files): # Not a command, so no event arg.
+
+    c = self.c ; u = c.undoer ; current = c.currentPosition()
+    if current == None: return
+    if len(files) < 1: return
+
+    self.setEncoding()
+    fileName = files[0] # files contains at most one file.
+    << Read the file into array >>
+
+    # Convert the string to an outline and insert it after the current node.
+    undoData = u.beforeInsertNode(current)
+    p = self.convertMoreStringsToOutlineAfter(array,current)
+    if p:
+        c.endEditing()
+        c.validateOutline()
+        c.editPosition(p)
+        p.setDirty()
+        c.setChanged(True)
+        u.afterInsertNode(p,'Import',undoData)
+    else:
+        g.es(fileName + " is not a valid MORE file.")
+#@nonl
+#@+node:ekr.20031218072017.3221:<< Read the file into array >>
+try:
+    theFile = open(fileName)
+    s = theFile.read()
+    s = string.replace(s,"\r","")
+    s = g.toUnicode(s,self.encoding)
+    array = string.split(s,"\n")
+    theFile.close()
+except IOError:
+    g.es("Can not open " + fileName, color="blue")
+    leoTest.fail()
+    return
+#@-node:ekr.20031218072017.3221:<< Read the file into array >>
+#@-node:ekr.20031218072017.3220:importFlattenedOutline
+#@+node:ekr.20031218072017.3086:initInHeadline
+# Guesses which pane to start in for incremental searches and changes.
+# This must not alter the current "insert" or "sel" marks.
+
+def initInHeadline (self):
+
+    c = self.c ; p = self.p
+
+    # Do not change this without careful thought and extensive testing!
+    if self.search_headline and self.search_body:
+        # A temporary expedient.
+        if self.reverse:
+            self.in_headline = False
+        else:
+            # Search headline first.
+            self.in_headline = (
+                p == c.frame.tree.editPosition() and
+                c.get_focus() != c.frame.body.bodyCtrl)
+    else:
+        self.in_headline = self.search_headline
+#@nonl
+#@-node:ekr.20031218072017.3086:initInHeadline
+#@+node:ekr.20031218072017.3091:showSuccess
+def showSuccess(self,pos,newpos):
+
+    """Displays the final result.
+
+    Returns self.dummy_vnode, p.edit_widget() or c.frame.bodyCtrl with
+    "insert" and "sel" points set properly."""
+
+    c = self.c ; p = self.p ; gui = g.app.gui
+    
+    c.frame.bringToFront() # Needed on the Mac
+    c.beginUpdate()
+    try:
+        c.selectPosition(p)
+    finally:
+        c.endUpdate(scroll=True)
+    if self.in_headline:
+        c.editPosition(p)
+    # Set the focus and selection after the redraw.
+    t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
+    insert = g.choose(self.reverse,pos,newpos)
+    gui.setInsertPoint(t,insert)
+    # New in 4.4a3: a much better way to ensure progress in backward searches.
+    gui.setSelectionRange(t,pos,newpos)
+    if self.reverse:
+        gui.setInsertPoint(t,pos)
+    gui.makeIndexVisible(t,insert)
+    c.widgetWantsFocus(t)
+    if self.wrap and not self.wrapPosition:
+        self.wrapPosition = self.p
+#@nonl
+#@-node:ekr.20031218072017.3091:showSuccess
+#@+node:ekr.20051009045404:createFirstTreeNode
+def createFirstTreeNode (self):
+    
+    f = self ; c = f.c
+
+    t = leoNodes.tnode()
+    v = leoNodes.vnode(c,t)
+    p = leoNodes.position(c,v,[])
+    v.initHeadString("NewHeadline")
+    p.moveToRoot()
+    c.editPosition(p)
+#@nonl
+#@-node:ekr.20051009045404:createFirstTreeNode
+#@+node:ekr.20031218072017.3983:insertHeadlineTime
+def insertHeadlineTime (self,event=None):
+
+    frame = self ; c = frame.c ; p = c.currentPosition()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Insert Headline Time")
+        return
+        
+    c.editPosition(p)
+    c.frame.tree.setEditLabelState(p)
+    w = p.edit_widget()
+    if w:
+        time = c.getTime(body=False)
+        if 1: # We can't know if we were already editing, so insert at end.
+            g.app.gui.setSelectionRange(w,'end','end')
+            w.insert('end',time)
+        else:
+            i, j = g.app.gui.getTextSelection(w)
+            if i != j:
+                w.delete(i,j)
+            w.insert("insert",time)
+        c.frame.tree.onHeadChanged(p,'Insert Headline Time')
+#@nonl
+#@-node:ekr.20031218072017.3983:insertHeadlineTime
+#@-node:ekr.20060206162444:Commands
+#@+node:ekr.20040803072955.85:configureTextState
+def configureTextState (self,p):
+    
+    if not p: return
+    
+    if p.isCurrentPosition():
+        if p == self.editPosition():
+            self.setEditLabelState(p) # selected, editing.
+        else:
+            self.setSelectedLabelState(p) # selected, not editing.
+    else:
+        self.setUnselectedLabelState(p) # unselected
+#@nonl
+#@-node:ekr.20040803072955.85:configureTextState
+#@+node:ekr.20031218072017.3981:abortEditLabelCommand
+def abortEditLabelCommand (self,event=None):
+    
+    frame = self ; c = frame.c ; tree = frame.tree
+    p = c.currentPosition() ; w = p.edit_widget()
+    
+    if g.app.batchMode:
+        c.notValidInBatchMode("Abort Edit Headline")
+        return
+        
+    # g.trace('isEditing',p == tree.editPosition(),'revertHeadline',repr(tree.revertHeadline))
+        
+    if w and p == tree.editPosition():
+        # Revert the headline text.
+        w.delete("1.0","end")
+        w.insert("end",tree.revertHeadline)
+        p.initHeadString(tree.revertHeadline)
+        c.beginUpdate()
+        try:
+            c.endEditing()
+            c.selectPosition(p)
+        finally:
+            c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.3981:abortEditLabelCommand
+#@+node:ekr.20040803072955.127:editLabel
+def editLabel (self,p):
+    
+    """Start editing p's headline."""
+
+    if self.editPosition() and p != self.editPosition():
+        c.beginUpdate()
+        try:
+            self.endEditLabel()
+        finally:
+            c.endUpdate(False)
+
+    self.setEditPosition(p) # That is, self._editPosition = p
+    
+    if self.trace_edit and not g.app.unitTesting:
+        g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget'))
+
+    if p and p.edit_widget():
+        self.revertHeadline = p.headString() # New in 4.4b2: helps undo.
+        self.setEditLabelState(p) # Sets the focus immediately.
+        self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
+#@nonl
+#@-node:ekr.20040803072955.127:editLabel
+#@-node:ekr.20060206160840:Found: .editPosition
+#@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
+#@+node:ekr.20060127183752:masterKeyHandler & helper
+master_key_count = 0
+
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    k = self ; c = k.c
+    val = self.masterKeyHandlerHelper(event)
+    c.frame.updateStatusLine()
+    return val
+#@nonl
+#@+node:ekr.20060205221734:masterKeyHandlerHelper
+def masterKeyHandlerHelper (self,event):
+
+    k = self ; c = k.c
+    w = event and event.widget
+    w_name = c.widget_name(w)
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+    keysym = event.keysym or ''
+    if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R','Win_L','Win_R'):
+        return None
+        
+    self.master_key_count += 1
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
+
+    stroke = k.strokeFromEvent(event)
+
+    # Pass keyboard-quit to k.masterCommand for macro recording.
+    if k.abortAllModesKey and stroke == k.abortAllModesKey:
+        return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
+        
+    state = k.state.kind
+    if trace: g.trace(repr(stroke),'state',state)
+    if k.inState():
+        # First: honor the 'mini' bindings.
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return 'break'
+        # Second, pass keys to getArg or full-command modes if they are active.
+        if state == 'getArg':
+            return k.getArg(event)
+        elif state == 'full-command':
+            d = k.masterBindingsDict.get('mini')
+            b = d.get(stroke)
+            if b:
+                # Pass this on for macro recording.
+                k.masterCommand(event,b.func,stroke,b.commandName)
+                c.minibufferWantsFocus()
+                return 'break'
+            else:
+                # Do the default state action.
+                k.callStateFunction(event) # Calls end-command.
+                return 'break'
+        # Third, pass keys to the general mode handler.
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            # A typical state
+            b = d.get(stroke)
+            g.trace(d.keys())
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
+        else:
+            g.trace('No state dictionary for %s' % state)
+            return 'break'
+    
+    for key,name in (
+        # Order here is similar to bindtags order.
+        ('body','body'),
+        ('text','head'), # Important: text bindings in head before tree bindings.
+        ('tree','head'),
+        ('tree','canvas'),
+        ('log', 'log'),
+        ('text',None), ('all',None),
+    ):
+        if (
+            name and w_name.startswith(name) or
+            key == 'text' and g.app.gui.isTextWidget(w) or
+            key == 'all'
+        ):
+            d = k.masterBindingsDict.get(key)
+            # g.trace(key,name,d and len(d.keys()))
+            if d:
+                b = d.get(stroke)
+                if b:
+                    if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                    return k.masterCommand(event,b.func,b.stroke,b.commandName)
+
+    if stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1:
+        if trace: g.trace('ignoring unbound special key')
+        return 'break'
+    else:
+        if trace: g.trace(repr(stroke),'no func')
+        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+#@nonl
+#@-node:ekr.20060205221734:masterKeyHandlerHelper
+#@-node:ekr.20060127183752:masterKeyHandler & helper
+#@+node:ekr.20060129052538.2:masterClickHandler
+def masterClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c
+    if not event: return
+    w = event.widget ; wname = c.widget_name(w)
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(wname,func and func.__name__)
+
+    if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+        g.es_print('Ignoring click outside active minibuffer',color='blue')
+        c.minibufferWantsFocus()
+        return 'break'
+
+    # Update the selection point immediately for updateStatusLine.
+    if wname.startswith('body'):
+        try:
+            i = w.index('@%s,%s' % (event.x,event.y))
+            g.app.gui.setInsertPoint(w,i)
+            c.frame.updateStatusLine()
+        except Exception:
+            pass
+
+    if event and func:
+        # Don't even *think* of overriding this.
+        return func(event)
+    else:
+        # All tree callbacks have a func, so we can't be in the tree.
+        g.trace('*'*20,'auto-deactivate tree: %s' % wname)
+        c.frame.tree.OnDeactivate()
+        return None
+        
+masterClick3Handler         = masterClickHandler
+masterDoubleClick3Handler   = masterClickHandler
+#@nonl
+#@-node:ekr.20060129052538.2:masterClickHandler
+#@+node:ekr.20060131084938:masterDoubleClickHandler
+def masterDoubleClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c ; w = event and event.widget
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(c.widget_name(w),func and func.__name__)
+
+    if event and func:
+        # Don't event *think* of overriding this.
+        return func(event)
+    else:
+        i = w.index("@%d,%d" % (event.x,event.y))
+        g.app.gui.setTextSelection(w,i+' wordstart',i+' wordend')
+        return 'break'
+#@nonl
+#@-node:ekr.20060131084938:masterDoubleClickHandler
+#@+node:ekr.20060128090219:masterMenuHandler
+def masterMenuHandler (self,stroke,func,commandName):
+    
+    k = self ; c = k.c ; w = c.frame.getFocus()
+    
+    # Create a minimal event for commands that require them.
+    event = g.Bunch(char='',keysym='',widget=w)
+    
+    if 1:
+        if not g.app.unitTesting:
+            g.trace(c.widget_name(w))
+    
+    return k.masterCommand(event,func,stroke,commandName)
+#@nonl
+#@-node:ekr.20060128090219:masterMenuHandler
+#@-node:ekr.20060129052538.1:Master event handlers (keyHandler)
+#@+node:ekr.20041025152343.1:class leoTkinterFind
+class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
+
+    """A class that implements Leo's tkinter find dialog."""
+
+    @others
+#@nonl
+#@+node:ekr.20031218072017.3898:Birth & death
+#@+node:ekr.20031218072017.3899:__init__
+def __init__(self,c,resizeable=False,title=None,show=True):
+
+    # g.trace("leoTkinterFind",c)
+    
+    # Init the base classes...
+    leoFind.leoFind.__init__(self,c,title=title)
+    leoTkinterDialog.leoTkinterDialog.__init__(self,c,self.title,resizeable,show=show)
+
+    << create the tkinter intVars >>
+    
+    # These are created later.
+    self.find_ctrl = None
+    self.change_ctrl = None 
+    
+    self.createTopFrame() # Create the outer tkinter dialog frame.
+    self.createFrame()
+    if self.top and not show:
+        self.top.withdraw()
+    self.init(c) # New in 4.3: init only once.
+#@nonl
+#@+node:ekr.20031218072017.3900:<< create the tkinter intVars >>
+self.dict = {}
+
+for key in self.intKeys:
+    self.dict[key] = Tk.IntVar()
+
+for key in self.newStringKeys:
+    self.dict[key] = Tk.StringVar()
+    
+self.s_ctrl = Tk.Text() # Used by find.search()
+#@nonl
+#@-node:ekr.20031218072017.3900:<< create the tkinter intVars >>
+#@-node:ekr.20031218072017.3899:__init__
+#@+node:ekr.20031218072017.3901:destroySelf
+def destroySelf (self):
+    
+    self.top.destroy()
+#@nonl
+#@-node:ekr.20031218072017.3901:destroySelf
+#@+node:ekr.20031218072017.3902:find.createFrame
+def createFrame (self):
+    
+    # g.trace('legacy')
+
+    # Create the find panel...
+    outer = Tk.Frame(self.frame,relief="groove",bd=2)
+    outer.pack(padx=2,pady=2)
+
+    << Create the Find and Change panes >>
+    << Create four columns of radio and checkboxes >>
+    << Create two rows of buttons >>
+#@nonl
+#@+node:ekr.20031218072017.3904:<< Create the Find and Change panes >>
+fc = Tk.Frame(outer, bd="1m")
+fc.pack(anchor="n", fill="x", expand=1)
+
+# Removed unused height/width params: using fractions causes problems in some locales!
+fpane = Tk.Frame(fc, bd=1)
+cpane = Tk.Frame(fc, bd=1)
+
+fpane.pack(anchor="n", expand=1, fill="x")
+cpane.pack(anchor="s", expand=1, fill="x")
+
+# Create the labels and text fields...
+flab = Tk.Label(fpane, width=8, text="Find:")
+clab = Tk.Label(cpane, width=8, text="Change:")
+
+# Use bigger boxes for scripts.
+self.find_ctrl   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=4,width=20)
+self.change_ctrl = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=4,width=20)
+
+<< Bind Tab and control-tab >>
+
+fBar = Tk.Scrollbar(fpane,name='findBar')
+cBar = Tk.Scrollbar(cpane,name='changeBar')
+
+# Add scrollbars.
+for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
+    txt['yscrollcommand'] = bar.set
+    bar['command'] = txt.yview
+    bar.pack(side="right", fill="y")
+
+flab.pack(side="left")
+clab.pack(side="left")
+ctxt.pack(side="right", expand=1, fill="both")
+ftxt.pack(side="right", expand=1, fill="both")
+#@nonl
+#@+node:ekr.20041026092141:<< Bind Tab and control-tab >>
+def setFocus(w):
+    c = self.c
+    c.widgetWantsFocus(w)
+    g.app.gui.setSelectionRange(w,"1.0","1.0")
+    return "break"
+    
+def toFind(event,w=ftxt): return setFocus(w)
+def toChange(event,w=ctxt): return setFocus(w)
+
+def insertTab(w):
+    data = g.app.gui.getSelectionRange(w)
+    if data: start,end = data
+    else: start = end = g.app.gui.getInsertPoint(w)
+    g.app.gui.replaceSelectionRangeWithText(w,start,end,"\t")
+    return "break"
+
+def insertFindTab(event,w=ftxt): return insertTab(w)
+def insertChangeTab(event,w=ctxt): return insertTab(w)
+
+ftxt.bind("<Tab>",toChange)
+ctxt.bind("<Tab>",toFind)
+ftxt.bind("<Control-Tab>",insertFindTab)
+ctxt.bind("<Control-Tab>",insertChangeTab)
+#@nonl
+#@-node:ekr.20041026092141:<< Bind Tab and control-tab >>
+#@-node:ekr.20031218072017.3904:<< Create the Find and Change panes >>
+#@+node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
+columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
+columnsFrame.pack(anchor="e",expand=1,padx="7p",pady="2p") # Don't fill.
+
+numberOfColumns = 4 # Number of columns
+columns = [] ; radioLists = [] ; checkLists = []
+for i in xrange(numberOfColumns):
+    columns.append(Tk.Frame(columnsFrame,bd=1))
+    radioLists.append([])
+    checkLists.append([])
+
+for i in xrange(numberOfColumns):
+    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
+    
+# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
+
+radioLists[0] = [
+    (self.dict["radio-find-type"],"P&Lain Search","plain-search"),  
+    (self.dict["radio-find-type"],"&Pattern Match Search","pattern-search"),
+    (self.dict["radio-find-type"],"&Script Search","script-search")]
+checkLists[0] = [
+    ("Scrip&t Change",self.dict["script_change"])]
+checkLists[1] = [
+    ("&Whole Word",  self.dict["whole_word"]),
+    ("&Ignore Case", self.dict["ignore_case"]),
+    ("Wrap &Around", self.dict["wrap"]),
+    ("&Reverse",     self.dict["reverse"])]
+radioLists[2] = [
+    (self.dict["radio-search-scope"],"&Entire Outline","entire-outline"),
+    (self.dict["radio-search-scope"],"Suboutline &Only","suboutline-only"),  
+    (self.dict["radio-search-scope"],"&Node Only","node-only"),
+    # I don't know what selection-only is supposed to do.
+    (self.dict["radio-search-scope"],"Selection Only",None)] #,"selection-only")]
+checkLists[2] = []
+checkLists[3] = [
+    ("Search &Headline Text", self.dict["search_headline"]),
+    ("Search &Body Text",     self.dict["search_body"]),
+    ("&Mark Finds",           self.dict["mark_finds"]),
+    ("Mark &Changes",         self.dict["mark_changes"])]
+
+for i in xrange(numberOfColumns):
+    for var,name,val in radioLists[i]:
+        box = underlinedTkButton("radio",columns[i],anchor="w",text=name,variable=var,value=val)
+        box.button.pack(fill="x")
+        box.button.bind("<1>", self.resetWrap)
+        if val == None: box.button.configure(state="disabled")
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+    for name,var in checkLists[i]:
+        box = underlinedTkButton("check",columns[i],anchor="w",text=name,variable=var)
+        box.button.pack(fill="x")
+        box.button.bind("<1>", self.resetWrap)
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+        if var is None: box.button.configure(state="disabled")
+#@nonl
+#@-node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
+#@+node:ekr.20031218072017.3905:<< Create two rows of buttons >>
+# Create the button panes
+buttons  = Tk.Frame(outer,bd=1)
+buttons2 = Tk.Frame(outer,bd=1)
+buttons.pack (anchor="n",expand=1,fill="x")
+buttons2.pack(anchor="n",expand=1,fill="x")
+
+# In 4.4 it's dubious to define these keys.  For example, Alt-x must be reserved!
+# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
+# HotKeys used for plain buttons (enter),d,g,t
+
+def findButtonCallback(event,self=self):
+    self.findButton()
+    return 'break'
+
+# Create the first row of buttons
+findButton=Tk.Button(buttons,
+    width=9,text="Find",bd=4,command=findButtonCallback) # The default.
+
+findButton.pack(pady="1p",padx="25p",side="left")
+
+contextBox = underlinedTkButton("check",buttons,
+    anchor="w",text="Show Conte&xt",variable=self.dict["batch"])
+contextBox.button.pack(pady="1p",side="left",expand=1)
+contextBox.bindHotKey(ftxt)
+contextBox.bindHotKey(ctxt)
+
+findAllButton = underlinedTkButton("button",buttons,
+    width=9,text="Fin&d All",command=self.findAllButton)
+findAllButton.button.pack(pady="1p",padx="25p",side="right",fill="x")
+findAllButton.bindHotKey(ftxt)
+findAllButton.bindHotKey(ctxt)
+
+# Create the second row of buttons
+changeButton = underlinedTkButton("button",buttons2,
+    width=10,text="Chan&Ge",command=self.changeButton)
+changeButton.button.pack(pady="1p",padx="25p",side="left")
+changeButton.bindHotKey(ftxt)
+changeButton.bindHotKey(ctxt)
+
+changeFindButton = underlinedTkButton("button",buttons2,
+    text="Change, &Then Find",command=self.changeThenFindButton)
+changeFindButton.button.pack(pady="1p",side="left",expand=1)
+changeFindButton.bindHotKey(ftxt)
+changeFindButton.bindHotKey(ctxt)
+    
+changeAllButton = underlinedTkButton("button",buttons2,
+    width=10,text="Change All",command=self.changeAllButton)
+changeAllButton.button.pack(pady="1p",padx="25p",side="right")
+changeAllButton.bindHotKey(ftxt)
+changeAllButton.bindHotKey(ctxt)
+#@nonl
+#@-node:ekr.20031218072017.3905:<< Create two rows of buttons >>
+#@-node:ekr.20031218072017.3902:find.createFrame
+#@+node:ekr.20060207080537:find.createBindings
+def createBindings (self):
+    
+    # Legacy bindings.  Can be overwritten in subclasses.
+    
+    # g.trace('legacy')
+    
+    def findButtonCallback2(event,self=self):
+        self.findButton()
+        return 'break'
+
+    for widget in (self.find_ctrl, self.change_ctrl):
+        widget.bind ("<Button-1>",  self.resetWrap)
+        widget.bind("<Key>",        self.resetWrap)
+        widget.bind("<Control-a>",  self.selectAllFindText)
+    
+    for widget in (outer, self.find_ctrl, self.change_ctrl):
+        widget.bind("<Key-Return>", findButtonCallback2)
+        widget.bind("<Key-Escape>", self.onCloseWindow)
+    
+    if self.top:
+        self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+#@nonl
+#@-node:ekr.20060207080537:find.createBindings
+#@+node:ekr.20031218072017.2059:find.init
+def init (self,c):
+
+    # N.B.: separate c.ivars are much more convenient than a dict.
+    for key in self.intKeys:
+        # New in 4.3: get ivars from @settings.
+        val = c.config.getBool(key)
+        setattr(self,key,val)
+        val = g.choose(val,1,0) # Work around major Tk problem.
+        self.dict[key].set(val)
+        # g.trace(key,val)
+
+    << set find/change widgets >>
+    << set radio buttons from ivars >>
+#@nonl
+#@+node:ekr.20031218072017.2060:<< set find/change widgets >>
+self.find_ctrl.delete("1.0","end")
+self.change_ctrl.delete("1.0","end")
+
+# New in 4.3: Get setting from @settings.
+for w,setting,defaultText in (
+    (self.find_ctrl,"find_text",'<find pattern here>'),
+    (self.change_ctrl,"change_text",''),
+):
+    s = c.config.getString(setting)
+    if not s: s = defaultText
+    w.insert("end",s)
+#@nonl
+#@-node:ekr.20031218072017.2060:<< set find/change widgets >>
+#@+node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
+found = False
+for var,setting in (
+    ("pattern_match","pattern-search"),
+    ("script_search","script-search")):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-find-type"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-find-type"].set("plain-search")
+    
+found = False
+for var,setting in (
+    ("suboutline_only","suboutline-only"),
+    ("node_only","node-only"),
+    # ("selection_only","selection-only"),
+):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-search-scope"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-search-scope"].set("entire-outline")
+#@nonl
+#@-node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
+#@-node:ekr.20031218072017.2059:find.init
+#@-node:ekr.20031218072017.3898:Birth & death
+#@+node:ekr.20031218072017.1460:find.update_ivars
+def update_ivars (self):
+    
+    """Called just before doing a find to update ivars from the find panel."""
+
+    for key in self.intKeys:
+        val = self.dict[key].get()
+        setattr(self, key, val) # No more _flag hack.
+        # g.trace(key,val)
+
+    # Set ivars from radio buttons. Convert these to 1 or 0.
+    if 0: ###
+        find_type = self.dict["radio-find-type"].get()
+        self.pattern_match = g.choose(find_type == "pattern-search",1,0)
+        self.script_search = g.choose(find_type == "script-search",1,0)
+    
+    search_scope = self.dict["radio-search-scope"].get()
+    self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
+    self.node_only       = g.choose(search_scope == "node-only",1,0)
+    self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
+
+    # New in 4.3: The caller is responsible for removing most trailing cruft.
+    # Among other things, this allows Leo to search for a single trailing space.
+    s = self.find_ctrl.get("1.0","end")
+    s = g.toUnicode(s,g.app.tkEncoding)
+    # g.trace(repr(s))
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
+    self.find_text = s
+
+    s = self.change_ctrl.get("1.0","end")
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
+    s = g.toUnicode(s,g.app.tkEncoding)
+    self.change_text = s
+#@nonl
+#@-node:ekr.20031218072017.1460:find.update_ivars
+#@+node:ekr.20050204090259:tkFind.adjust_find_text
+def adjust_find_text(self,s):
+    
+    w = self.find_ctrl
+    
+    w.delete("1.0","end")
+    w.insert("end",s)
+#@nonl
+#@-node:ekr.20050204090259:tkFind.adjust_find_text
+#@+node:ekr.20031218072017.3906:onCloseWindow
+def onCloseWindow(self,event=None):
+    
+    __pychecker__ = '--no-argsused' # the event param must be present.
+
+    self.top.withdraw()
+#@nonl
+#@-node:ekr.20031218072017.3906:onCloseWindow
+#@+node:ekr.20051013084256:dismiss
+def dismiss (self):
+    
+    self.top.withdraw()
+#@nonl
+#@-node:ekr.20051013084256:dismiss
+#@+node:ekr.20031218072017.3907:bringToFront
+def bringToFront (self):
+    
+    """Bring the tkinter Find Panel to the front."""
+    
+    c = self.c ; t = self.find_ctrl ; gui = g.app.gui
+            
+    self.top.withdraw() # Helps bring the window to the front.
+    self.top.deiconify()
+    self.top.lift()
+    c.widgetWantsFocus(t)
+    
+    # Apparently, the text can not be adjusted unless the widget has focus...
+    s = t.get('1.0','end')
+    if s and s[-1] in ('\n','\r'):
+        t.delete('end-1c','end')
+
+    # New in 4.3: don't highlight the stupid added trailing newline!
+    gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
+    c.widgetWantsFocus(t)
+#@nonl
+#@-node:ekr.20031218072017.3907:bringToFront
+#@+node:EKR.20040603221140:selectAllFindText
+def selectAllFindText (self,event=None):
+
+    try:
+        w = self.frame.focus_get()
+        g.app.gui.setTextSelection(w,"1.0","end")
+        return "break"
+    except:
+        return None # To keep pychecker happy.
+#@nonl
+#@-node:EKR.20040603221140:selectAllFindText
+#@+node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
+def gui_search (self,t,*args,**keys):
+    return t.search(*args,**keys)
+
+def init_s_ctrl (self,s):
+    t = self.s_ctrl
+    t.delete("1.0","end")
+    t.insert("end",s)
+    t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
+    return t
+#@nonl
+#@-node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
+#@-node:ekr.20041025152343.1:class leoTkinterFind
+#@+node:ekr.20051023094009:Search classes
+#@+node:ekr.20060123125256:class minibufferFind (the findHandler)
+class minibufferFind:
+
+    '''An adapter class that implements minibuffer find commands using the (hidden) Find Tab.'''
+
+    @others
+#@nonl
+#@+node:ekr.20060123125317.2: ctor (minibufferFind)
+def __init__(self,c,finder):
+
+    self.c = c
+    self.k = c.k
+    self.finder = finder
+#@-node:ekr.20060123125317.2: ctor (minibufferFind)
+#@+node:ekr.20060124140114: Options
+#@+node:ekr.20060124123133:setFindScope
+def setFindScope(self,where):
+    
+    '''Set the find-scope radio buttons.
+    
+    `where` must be in ('node-only','entire-outline','suboutline-only'). '''
+    
+    h = self.finder
+    
+    if where in ('node-only','entire-outline','suboutline-only'):
+        var = h.dict['radio-search-scope'].get()
+        if var:
+            h.dict["radio-search-scope"].set(where)
+    else:
+        g.trace('oops: bad `where` value: %s' % where)
+#@nonl
+#@-node:ekr.20060124123133:setFindScope
+#@+node:ekr.20060124122844:setOption
+def setOption (self, ivar, val, verbose = False):
+    
+    h = self.finder
+
+    if ivar in h.intKeys:
+        if val is not None:
+            var = h.dict.get(ivar)
+            var.set(val)
+            if verbose and not g.app.unitTesting:
+                g.trace('%s = %s' % (ivar,val))
+
+    elif not g.app.unitTesting:
+        g.trace('oops: bad find ivar %s' % ivar)
+#@nonl
+#@-node:ekr.20060124122844:setOption
+#@+node:ekr.20060125082510:getOption
+def getOption (self,ivar,verbose=False):
+    
+    h = self.finder
+    
+    var = h.dict.get(ivar)
+    if var:
+        val = var.get()
+        if verbose:
+             g.trace('%s = %s' % (ivar,val))
+        return val
+    else:
+        g.trace('bad ivar name: %s' % ivar)
+        return None
+#@nonl
+#@-node:ekr.20060125082510:getOption
+#@+node:ekr.20060125074939:showFindOptions
+def showFindOptions (self):
+    
+    '''Show the present find options in the status line.'''
+    
+    frame = self.c.frame ; z = []
+    # Set the scope field.
+    head  = self.getOption('search_headline')
+    body  = self.getOption('search_body')
+    scope = self.getOption('radio-search-scope')
+    d = {'entire-outline':'all','suboutline-only':'tree','node-only':'node'}
+    scope = d.get(scope) or ''
+    head = g.choose(head,'head','')
+    body = g.choose(body,'body','')
+    sep = g.choose(head and body,'+','')
+
+    frame.clearStatusLine()
+    s = '%s%s%s %s  ' % (head,sep,body,scope)
+    frame.putStatusLine(s,color='blue')
+
+    # Set the type field.
+    script = self.getOption('script_search')
+    regex  = self.getOption('pattern_match')
+    change = self.getOption('script_change')
+    if script:
+        s1 = '*Script-find'
+        s2 = g.choose(change,'-change*','*')
+        z.append(s1+s2)
+    elif regex: z.append('regex')
+    
+    table = (
+        ('reverse',         'reverse'),
+        ('ignore_case',     'noCase'),
+        ('whole_word',      'word'),
+        ('wrap',            'wrap'),
+        ('mark_changes',    'markChg'),
+        ('mark_finds',      'markFnd'),
+    )
+        
+    for ivar,s in table:
+        val = self.getOption(ivar)
+        if val: z.append(s)
+
+    frame.putStatusLine(' '.join(z))
+#@nonl
+#@-node:ekr.20060125074939:showFindOptions
+#@+node:ekr.20060124135401:toggleOption
+def toggleOption (self, ivar):
+    
+    h = self.finder
+
+    if ivar in h.intKeys:
+        var = h.dict.get(ivar)
+        val = not var.get()
+        var.set(val)
+        # g.trace('%s = %s' % (ivar,val),var)
+    else:
+        g.trace('oops: bad find ivar %s' % ivar)
+#@nonl
+#@-node:ekr.20060124135401:toggleOption
+#@+node:ekr.20060205105950:setupChangePattern
+def setupChangePattern (self,pattern):
+    
+    h = self.finder ; t = h.change_ctrl
+    
+    s = g.toUnicode(pattern,g.app.tkEncoding)
+    
+    t.delete('1.0','end')
+    t.insert('1.0',s)
+    
+    h.update_ivars()
+#@nonl
+#@-node:ekr.20060205105950:setupChangePattern
+#@+node:ekr.20060125091234:setupSearchPattern
+def setupSearchPattern (self,pattern):
+    
+    h = self.finder ; t = h.find_ctrl
+    
+    s = g.toUnicode(pattern,g.app.tkEncoding)
+    
+    t.delete('1.0','end')
+    t.insert('1.0',s)
+    
+    h.update_ivars()
+#@nonl
+#@-node:ekr.20060125091234:setupSearchPattern
+#@-node:ekr.20060124140114: Options
+#@+node:ekr.20060124134356: setupArgs
+def setupArgs (self,forward=False,regexp=False,word=False,statusLine='',setDefaultSearch=False):
+    
+    h = self.finder ; k = self.k
+    
+    if forward is None:
+        reverse = None
+    else:
+        reverse = not forward
+
+    for ivar,val,in (
+        ('reverse', reverse),
+        ('pattern_match',regexp),
+        ('whole_word',word),
+    ):
+        if val is not None:
+            self.setOption(ivar,val,verbose=True)
+            
+    h.p = p = self.c.currentPosition()
+    h.v = p.v
+    h.update_ivars()
+    self.showFindOptions()
+    
+    
+    
+    if statusLine:
+        k.setLabelBlue(statusLine,protect=True)
+        
+        return ### not ready yet.
+        if setDefaultSearch:
+            t = h.find_ctrl
+            s = t.get('1.0','end')
+            while s.endswith('\n') or s.endswith('\r'):
+                s = s[:-1]
+            k.extendLabel(s,select=True)
+#@-node:ekr.20060124134356: setupArgs
+#@+node:ekr.20060128080201:cloneFindAll
+def cloneFindAll (self,event):
+
+    k = self.k ; tag = 'clone-find-all'
+    state = k.getState(tag)
+
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=None,regexp=None,word=None)
+        k.setLabelBlue('Clone Find All: ',protect=True)
+        k.getArg(event,tag,1,self.cloneFindAll)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg,cloneFindAll=True)
+#@nonl
+#@-node:ekr.20060128080201:cloneFindAll
+#@+node:ekr.20060204120158:findAgain
+def findAgain (self,event):
+
+    f = self.finder
+    
+    f.p = self.c.currentPosition()
+    f.v = self.finder.p.v
+
+    # This handles the reverse option.
+    return f.findAgainCommand()
+        
+#@nonl
+#@-node:ekr.20060204120158:findAgain
+#@+node:ekr.20060205105950.1:generalChangeHelper
+def generalChangeHelper (self,find_pattern,change_pattern):
+    
+    g.trace(repr(change_pattern))
+    
+    self.setupSearchPattern(find_pattern)
+    self.setupChangePattern(change_pattern)
+
+    self.finder.p = self.c.currentPosition()
+    self.finder.v = self.finder.p.v
+
+    # This handles the reverse option.
+    self.finder.findNextCommand()
+#@nonl
+#@-node:ekr.20060205105950.1:generalChangeHelper
+#@+node:ekr.20060124181213.4:generalSearchHelper
+def generalSearchHelper (self,pattern,cloneFindAll=False):
+    
+    self.setupSearchPattern(pattern)
+
+    self.finder.p = self.c.currentPosition()
+    self.finder.v = self.finder.p.v
+
+    if cloneFindAll:
+         self.finder.cloneFindAllCommand()
+    else:
+        # This handles the reverse option.
+        self.finder.findNextCommand()
+#@nonl
+#@-node:ekr.20060124181213.4:generalSearchHelper
+#@+node:ekr.20050920084036.113:replaceString
+def replaceString (self,event):
+
+    k = self.k ; state = k.getState('replace-string')
+    pattern_match = self.getOption ('pattern_match')
+    prompt = 'Replace ' + g.choose(pattern_match,'Regex','String')
+
+    if state == 0:
+        self.widget = event.widget
+        s = '%s: ' % prompt
+        k.setLabelBlue(s,protect=True)
+        k.getArg(event,'replace-string',1,self.replaceString)
+    elif state == 1:
+        self._sString = k.arg
+        s = '%s: %s With: ' % (prompt,self._sString)
+        k.setLabelBlue(s,protect=True)
+        k.getArg(event,'replace-string',2,self.replaceString)
+    elif state == 2:
+        k.clearState()
+        if 1: # Use the legacy find command.
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalChangeHelper(self._sString,k.arg)
+        else:
+            self._rpString = k.arg ; w = self.widget
+            << do the replace >>
+            k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
+            self._useRegex = False
+#@nonl
+#@+node:ekr.20050920084036.114:<< do the replace >>
+# g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
+i = 'insert' ; end = 'end' ; count = 0
+if w.tag_ranges('sel'):
+    i = w.index('sel.first')
+    end = w.index('sel.last')
+if self._useRegex:
+    txt = w.get(i,end)
+    try:
+        pattern = re.compile(self._sString)
+    except:
+        k.keyboardQuit(event)
+        k.setLabel("Illegal regular expression")
+        return
+    count = len(pattern.findall(txt))
+    if count:
+        ntxt = pattern.sub(self._rpString,txt)
+        w.delete(i,end)
+        w.insert(i,ntxt)
+else:
+    # Problem: adds newline at end of text.
+    txt = w.get(i,end)
+    count = txt.count(self._sString)
+    if count:
+        ntxt = txt.replace(self._sString,self._rpString)
+        w.delete(i,end)
+        w.insert(i,ntxt)
+#@nonl
+#@-node:ekr.20050920084036.114:<< do the replace >>
+#@-node:ekr.20050920084036.113:replaceString
+#@+node:ekr.20060124140224.3:reSearchBackward/Forward
+def reSearchBackward (self,event):
+
+    k = self.k ; state = k.getState('re-search-backward')
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=False,regexp=True,word=None)
+        k.setLabelBlue('Regexp Search backward:',protect=True)
+        k.getArg(event,'re-search-backward',1,self.reSearchBackward,completion=False)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg)
+
+def reSearchForward (self,event):
+
+    k = self.k ; state = k.getState('re-search-forward')
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=True,regexp=True,word=None)
+        k.setLabelBlue('Regexp Search:',protect=True)
+        k.getArg(event,'re-search-forward',1,self.reSearchForward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg)
+#@nonl
+#@-node:ekr.20060124140224.3:reSearchBackward/Forward
+#@+node:ekr.20060124140224.1:seachForward/Backward
+def searchBackward (self,event):
+
+    k = self.k ; state = k.getState('search-backward')
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=False,regexp=False,word=False)
+        k.setLabelBlue('Search Backward: ',protect=True)
+        k.getArg(event,'search-backward',1,self.searchBackward,completion=False)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg)
+
+def searchForward (self,event):
+
+    k = self.k ; state = k.getState('search-forward')
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=True,regexp=False,word=False)
+        k.setLabelBlue('Search: ',protect=True)
+        k.getArg(event,'search-forward',1,self.searchForward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg)
+#@nonl
+#@-node:ekr.20060124140224.1:seachForward/Backward
+#@+node:ekr.20060125093807:searchWithPresentOptions
+def searchWithPresentOptions (self,event):
+
+    k = self.k ; tag = 'search-with-present-options'
+    
+    state = k.getState(tag)
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=None,regexp=None,word=None,
+            statusLine='Search: ',setDefaultSearch=True)
+        # k.setLabelBlue('Search: ',protect=True)
+        k.getArg(event,tag,1,self.searchWithPresentOptions,completion=False)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg)
+#@nonl
+#@-node:ekr.20060125093807:searchWithPresentOptions
+#@+node:ekr.20060124140224.2:wordSearchBackward/Forward
+def wordSearchBackward (self,event):
+
+    k = self.k ; state = k.getState('word-search-backward')
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=False,regexp=False,word=True)
+        k.setLabelBlue('Word Search Backward: ',protect=True)
+        k.getArg(event,'word-search-backward',1,self.wordSearchBackward,completion=False)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg)
+
+def wordSearchForward (self,event):
+
+    k = self.k ; state = k.getState('word-search-forward')
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=True,regexp=False,word=True)
+        k.setLabelBlue('Word Search: ',protect=True)
+        k.getArg(event,'word-search-forward',1,self.wordSearchForward)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg)
+#@nonl
+#@-node:ekr.20060124140224.2:wordSearchBackward/Forward
+#@-node:ekr.20060123125256:class minibufferFind (the findHandler)
+#@+node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
+class findTab (leoFind.leoFind):
+    
+    '''An adapter class that implements Leo's Find tab.'''
+
+    @others
+#@nonl
+#@+node:ekr.20051020120306.10:Birth & death
+#@+node:ekr.20051020120306.11:__init__
+def __init__(self,c,parentFrame):
+    
+    # g.trace('findTab')
+
+    # Init the base class...
+    leoFind.leoFind.__init__(self,c,title='Find Tab')
+    self.c = c
+    self.frame = self.outerFrame = self.top = None
+    
+    << create the tkinter intVars >>
+    
+    self.optionsOnly = c.config.getBool('show_only_find_tab_options')
+    
+    # These are created later.
+    self.find_ctrl = None
+    self.change_ctrl = None 
+    self.outerScrolledFrame = None
+
+    self.createFrame(parentFrame)
+    self.createBindings()
+    
+    self.init(c) # New in 4.3: init only once.
+#@nonl
+#@+node:ekr.20051020120306.12:<< create the tkinter intVars >>
+self.dict = {}
+
+for key in self.intKeys:
+    self.dict[key] = Tk.IntVar()
+
+for key in self.newStringKeys:
+    self.dict[key] = Tk.StringVar()
+    
+self.s_ctrl = Tk.Text() # Used by find.search()
+#@nonl
+#@-node:ekr.20051020120306.12:<< create the tkinter intVars >>
+#@-node:ekr.20051020120306.11:__init__
+#@+node:ekr.20051023181449:createBindings (findTab)
+def createBindings (self):
+    
+    c = self.c ; k = c.k
+    
+    def resetWrapCallback(event,self=self,k=k):
+        self.resetWrap(event)
+        k.masterKeyHandler(event)
+
+    table = (
+        ('<Button-1>',  k.masterClickHandler),
+        ('<Double-1>',  k.masterClickHandler),
+        ('<Button-3>',  k.masterClickHandler),
+        ('<Double-3>',  k.masterClickHandler),
+        ('<Key>',       k.masterKeyHandler),
+        ('<Key>',       resetWrapCallback),
+        ('<Return>',    self.findButtonCallback),
+        ("<Escape>",    self.hideTab),
+    )
+
+    for w in (self.find_ctrl,self.change_ctrl):
+        for event, callback in table:
+            w.bind(event,callback)
+    
+    if 0:
+        w.bind("<Key>",self.resetWrap,'+')
+            # Can't put this in the table bc of the '+' arg.
+#@nonl
+#@-node:ekr.20051023181449:createBindings (findTab)
+#@+node:ekr.20051020120306.13:createFrame (findTab)
+def createFrame (self,parentFrame):
+    
+    c = self.c
+    
+    # g.trace('findTab')
+    
+    << Create the outer frames >>
+    << Create the Find and Change panes >>
+    << Create two columns of radio and checkboxes >>
+    
+    if  self.optionsOnly:
+        buttons = []
+    else:
+        << Create two columns of buttons >>
+    
+    # Pack this last so buttons don't get squashed when frame is resized.
+    self.outerScrolledFrame.pack(side='top',expand=1,fill='both',padx=2,pady=2)
+    
+    if 0: # These dont work in the new binding scheme.  Use shortcuts or mode bindings instead.
+        for w in buttons:
+            w.bindHotKey(ftxt)
+            w.bindHotKey(ctxt)
+#@nonl
+#@+node:ekr.20051020120306.14:<< Create the outer frames >>
+configName = 'log_pane_Find_tab_background_color'
+bg = c.config.getColor(configName) or 'MistyRose1'
+
+parentFrame.configure(background=bg)
+
+self.top = Tk.Frame(parentFrame,background=bg)
+self.top.pack(side='top',expand=0,fill='both',pady=5)
+    # Don't expand, so the frame goes to the top.
+
+self.outerScrolledFrame = Pmw.ScrolledFrame(
+    parentFrame,usehullsize = 1)
+
+self.outerFrame = outer = self.outerScrolledFrame.component('frame')
+self.outerFrame.configure(background=bg)
+
+for z in ('borderframe','clipper','frame','hull'):
+    self.outerScrolledFrame.component(z).configure(relief='flat',background=bg)
+#@nonl
+#@-node:ekr.20051020120306.14:<< Create the outer frames >>
+#@+node:ekr.20051020120306.15:<< Create the Find and Change panes >>
+fc = Tk.Frame(outer, bd="1m",background=bg)
+fc.pack(anchor="n", fill="x", expand=1)
+
+# Removed unused height/width params: using fractions causes problems in some locales!
+fpane = Tk.Frame(fc, bd=1,background=bg)
+cpane = Tk.Frame(fc, bd=1,background=bg)
+
+fpane.pack(anchor="n", expand=1, fill="x")
+cpane.pack(anchor="s", expand=1, fill="x")
+
+# Create the labels and text fields...
+flab = Tk.Label(fpane, width=8, text="Find:",background=bg)
+clab = Tk.Label(cpane, width=8, text="Change:",background=bg)
+
+if self.optionsOnly:
+    # Use one-line boxes.
+    self.find_ctrl = ftxt = Tk.Text(
+        fpane,bd=1,relief="groove",height=1,width=25,name='find-text')
+    self.change_ctrl = ctxt = Tk.Text(
+        cpane,bd=1,relief="groove",height=1,width=25,name='change-text')
+else:
+    # Use bigger boxes for scripts.
+    self.find_ctrl = ftxt = Tk.Text(
+        fpane,bd=1,relief="groove",height=3,width=15,name='find-text')
+    self.change_ctrl = ctxt = Tk.Text(
+        cpane,bd=1,relief="groove",height=3,width=15,name='change-text')
+<< Bind Tab and control-tab >>
+
+if 0: # Add scrollbars.
+    fBar = Tk.Scrollbar(fpane,name='findBar')
+    cBar = Tk.Scrollbar(cpane,name='changeBar')
+    
+    for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
+        txt['yscrollcommand'] = bar.set
+        bar['command'] = txt.yview
+        bar.pack(side="right", fill="y")
+        
+if self.optionsOnly:
+    flab.pack(side="left") ; ftxt.pack(side="left")
+    clab.pack(side="left") ; ctxt.pack(side="left")
+else:
+    flab.pack(side="left") ; ftxt.pack(side="right", expand=1, fill="x")
+    clab.pack(side="left") ; ctxt.pack(side="right", expand=1, fill="x")
+#@nonl
+#@+node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
+def setFocus(w):
+    c = self.c
+    c.widgetWantsFocus(w)
+    g.app.gui.setSelectionRange(w,"1.0","1.0")
+    return "break"
+    
+def toFind(event,w=ftxt): return setFocus(w)
+def toChange(event,w=ctxt): return setFocus(w)
+    
+def insertTab(w):
+    data = g.app.gui.getSelectionRange(w)
+    if data: start,end = data
+    else: start = end = g.app.gui.getInsertPoint(w)
+    g.app.gui.replaceSelectionRangeWithText(w,start,end,"\t")
+    return "break"
+
+def insertFindTab(event,w=ftxt): return insertTab(w)
+def insertChangeTab(event,w=ctxt): return insertTab(w)
+
+ftxt.bind("<Tab>",toChange)
+ctxt.bind("<Tab>",toFind)
+ftxt.bind("<Control-Tab>",insertFindTab)
+ctxt.bind("<Control-Tab>",insertChangeTab)
+#@nonl
+#@-node:ekr.20051020120306.16:<< Bind Tab and control-tab >>
+#@-node:ekr.20051020120306.15:<< Create the Find and Change panes >>
+#@+node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
+columnsFrame = Tk.Frame(outer,relief="groove",bd=2,background=bg)
+
+columnsFrame.pack(expand=0,padx="7p",pady="2p")
+
+numberOfColumns = 2 # Number of columns
+columns = [] ; radioLists = [] ; checkLists = []
+for i in xrange(numberOfColumns):
+    columns.append(Tk.Frame(columnsFrame,bd=1))
+    radioLists.append([])
+    checkLists.append([])
+
+for i in xrange(numberOfColumns):
+    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
+
+radioLists[0] = []
+
+checkLists[0] = [
+    # ("Scrip&t Change",self.dict["script_change"]),
+    ("Whole &Word", self.dict["whole_word"]),
+    ("&Ignore Case",self.dict["ignore_case"]),
+    ("Wrap &Around",self.dict["wrap"]),
+    ("&Reverse",    self.dict["reverse"]),
+    ('Rege&xp',     self.dict['pattern_match']),
+    ("Mark &Finds", self.dict["mark_finds"]),
+]
+
+radioLists[1] = [
+    (self.dict["radio-search-scope"],"&Entire Outline","entire-outline"),
+    (self.dict["radio-search-scope"],"&Suboutline Only","suboutline-only"),  
+    (self.dict["radio-search-scope"],"&Node Only","node-only"),
+]
+
+checkLists[1] = [
+    ("Search &Headline", self.dict["search_headline"]),
+    ("Search &Body",     self.dict["search_body"]),
+    ("Mark &Changes",    self.dict["mark_changes"]),
+]
+
+for i in xrange(numberOfColumns):
+    for var,name,val in radioLists[i]:
+        box = self.underlinedTkButton(
+            "radio",columns[i],anchor="w",text=name,variable=var,value=val,background=bg)
+        box.button.pack(fill="x")
+        box.button.bind("<Button-1>", self.resetWrap)
+        if val == None: box.button.configure(state="disabled")
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+    for name,var in checkLists[i]:
+        box = self.underlinedTkButton(
+            "check",columns[i],anchor="w",text=name,variable=var,background=bg)
+        box.button.pack(fill="x")
+        box.button.bind("<Button-1>", self.resetWrap)
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+        if var is None: box.button.configure(state="disabled")
+#@nonl
+#@-node:ekr.20051020120306.17:<< Create two columns of radio and checkboxes >>
+#@+node:ekr.20051020120306.18:<< Create two columns of buttons >>
+# Create the alignment panes.
+buttons  = Tk.Frame(outer,background=bg)
+buttons1 = Tk.Frame(buttons,bd=1,background=bg)
+buttons2 = Tk.Frame(buttons,bd=1,background=bg)
+buttons.pack(side='top',expand=1)
+buttons1.pack(side='left')
+buttons2.pack(side='right')
+
+width = 15 ; defaultText = 'Find' ; buttons = []
+
+for text,boxKind,frame,callback in (
+    # Column 1...
+    ('Find','button',buttons1,self.findButtonCallback),
+    # ('Incremental','check', buttons1,None),
+        ## variable=self.dict['incremental'])
+        ## May affect the file format.
+    ('Find All','button',buttons1,self.findAllButton),
+    # Column 2...
+    ('Change','button',buttons2,self.changeButton),
+    ('Change, Then Find','button',buttons2,self.changeThenFindButton),
+    ('Change All','button',buttons2,self.changeAllButton),
+):
+    w = self.underlinedTkButton(boxKind,frame,
+        text=text,command=callback)
+    buttons.append(w)
+    if text == defaultText:
+        w.button.configure(width=width-1,bd=4)
+    elif boxKind != 'check':
+        w.button.configure(width=width)
+    w.button.pack(side='top',anchor='w',pady=2,padx=2)
+#@nonl
+#@-node:ekr.20051020120306.18:<< Create two columns of buttons >>
+#@-node:ekr.20051020120306.13:createFrame (findTab)
+#@+node:ekr.20051020120306.19:find.init
+def init (self,c):
+    
+    # g.trace('Find Tab')
+
+    # N.B.: separate c.ivars are much more convenient than a dict.
+    for key in self.intKeys:
+        # New in 4.3: get ivars from @settings.
+        val = c.config.getBool(key)
+        setattr(self,key,val)
+        val = g.choose(val,1,0) # Work around major Tk problem.
+        self.dict[key].set(val)
+        # g.trace(key,val)
+
+    << set find/change widgets >>
+    << set radio buttons from ivars >>
+#@nonl
+#@+node:ekr.20051020120306.20:<< set find/change widgets >>
+self.find_ctrl.delete("1.0","end")
+self.change_ctrl.delete("1.0","end")
+
+# New in 4.3: Get setting from @settings.
+for w,setting,defaultText in (
+    (self.find_ctrl,"find_text",'<find pattern here>'),
+    (self.change_ctrl,"change_text",''),
+):
+    s = c.config.getString(setting)
+    if not s: s = defaultText
+    w.insert("end",s)
+#@nonl
+#@-node:ekr.20051020120306.20:<< set find/change widgets >>
+#@+node:ekr.20051020120306.21:<< set radio buttons from ivars >>
+found = False
+for var,setting in (
+    ("pattern_match","pattern-search"),
+    #("script_search","script-search")
+):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-find-type"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-find-type"].set("plain-search")
+    
+found = False
+for var,setting in (
+    ("suboutline_only","suboutline-only"),
+    ("node_only","node-only"),
+    # ("selection_only","selection-only")
+):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-search-scope"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-search-scope"].set("entire-outline")
+#@nonl
+#@-node:ekr.20051020120306.21:<< set radio buttons from ivars >>
+#@-node:ekr.20051020120306.19:find.init
+#@-node:ekr.20051020120306.10:Birth & death
+#@+node:ekr.20051020120306.22:find.update_ivars
+def update_ivars (self):
+    
+    """Called just before doing a find to update ivars from the find panel."""
+
+    self.p = self.c.currentPosition()
+    self.v = self.p.v
+
+    for key in self.intKeys:
+        val = self.dict[key].get()
+        setattr(self, key, val)
+        # g.trace(key,val)
+
+    search_scope = self.dict["radio-search-scope"].get()
+    self.suboutline_only = g.choose(search_scope == "suboutline-only",1,0)
+    self.node_only       = g.choose(search_scope == "node-only",1,0)
+
+    # The caller is responsible for removing most trailing cruft.
+    # Among other things, this allows Leo to search for a single trailing space.
+    s = self.find_ctrl.get("1.0","end")
+    s = g.toUnicode(s,g.app.tkEncoding)
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
+    self.find_text = s
+
+    s = self.change_ctrl.get("1.0","end")
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
+    s = g.toUnicode(s,g.app.tkEncoding)
+    self.change_text = s
+#@nonl
+#@-node:ekr.20051020120306.22:find.update_ivars
+#@+node:ekr.20051023183028:findButtonCallback
+def findButtonCallback(self,event=None):
+    
+    __pychecker__ = '--no-argsused'
+
+    self.findButton()
+    return 'break'
+#@nonl
+#@-node:ekr.20051023183028:findButtonCallback
+#@+node:ekr.20051024192602: Top level
+#@+node:ekr.20060204120158.1:findAgainCommand
+def findAgainCommand (self):
+    
+    s = self.find_ctrl.get("1.0","end")
+    s = g.toUnicode(s,g.app.tkEncoding)
+    if s.endswith('\n'): s = s[:-1]
+    
+    if s and s != '<find pattern here>':
+        self.findNextCommand()
+        return True
+    else:
+        # Tell the caller that to get the find args.
+        return False
+#@-node:ekr.20060204120158.1:findAgainCommand
+#@+node:ekr.20060128075225:cloneFindAllCommand
+def cloneFindAllCommand (self,event=None):
+    
+    self.setup_command()
+    self.clone_find_all = True
+    self.findAll()
+    self.clone_find_all = False
+#@-node:ekr.20060128075225:cloneFindAllCommand
+#@+node:ekr.20051024192642.2:findNext/PrefCommand
+def findNextCommand (self,event=None):
+
+    self.setup_command()
+    self.findNext()
+    
+def findPrevCommand (self,event=None):
+    
+    self.setup_command()
+    self.reverse = not self.reverse
+    self.findNext()
+    self.reverse = not self.reverse
+#@nonl
+#@-node:ekr.20051024192642.2:findNext/PrefCommand
+#@+node:ekr.20051024192642.3:change/ThenFindCommand
+def changeCommand (self,event=None):
+
+    self.setup_command()
+    self.change()
+    
+def changeAllCommand (self,event=None):
+
+    self.setup_command()
+    self.changeAll()
+    
+def changeThenFindCommand(self,event=None):
+    
+    self.setup_command()
+    self.changeThenFind()
+#@nonl
+#@-node:ekr.20051024192642.3:change/ThenFindCommand
+#@-node:ekr.20051024192602: Top level
+#@+node:ekr.20051020120306.25:hideTab
+def hideTab (self,event=None):
+    
+    c = self.c
+    
+    c.frame.log.selectTab('Log')
+    c.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051020120306.25:hideTab
+#@+node:ekr.20051020120306.26:bringToFront
+def bringToFront (self):
+
+    """Bring the Find Tab to the front and select the entire find text."""
+
+    c = self.c ; t = self.find_ctrl
+        
+    # The widget must have focus before we can adjust the text.
+    c.widgetWantsFocus(t)
+    
+    # Delete one trailing newline.
+    s = t.get('1.0','end')
+    if s and s[-1] in ('\n','\r'):
+        t.delete('end-1c','end')
+
+    # Don't highlight the added trailing newline!
+    g.app.gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
+    
+    # This is also needed.
+    c.widgetWantsFocus(t)
+#@nonl
+#@-node:ekr.20051020120306.26:bringToFront
+#@+node:ekr.20051020120306.27:selectAllFindText
+def selectAllFindText (self,event=None):
+    
+    __pychecker__ = '--no-argsused' # event
+
+    w = self.frame.focus_get()
+    if g.app.gui.isTextWidget(w):
+        g.app.gui.setTextSelection(w,"1.0","end")
 
     return "break"
 #@nonl
-#@+node:ekr.20040803072955.111:OnPopupFocusLost
-@ On Linux we must do something special to make the popup menu "unpost" if the mouse is clicked elsewhere.  So we have to catch the <FocusOut> event and explicitly unpost.  In order to process the <FocusOut> event, we need to be able to find the reference to the popup window again, so this needs to be an attribute of the tree object; hence, "self.popupMenu".
+#@-node:ekr.20051020120306.27:selectAllFindText
+#@+node:ekr.20051020120306.28:Tkinter wrappers (leoTkinterFind)
+def gui_search (self,t,*args,**keys):
+    return t.search(*args,**keys)
 
-Aside: though Tk tries to be muli-platform, the interaction with different window managers does cause small differences that will need to be compensated by system specific application code. :-(
-@c
-
-# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
-
-def OnPopupFocusLost(self,event=None):
-    
-    __pychecker__ = '--no-argsused' # event not used.
-
-    self.popupMenu.unpost()
+def init_s_ctrl (self,s):
+    t = self.s_ctrl
+    t.delete("1.0","end")
+    t.insert("end",s)
+    t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
+    return t
 #@nonl
-#@-node:ekr.20040803072955.111:OnPopupFocusLost
-#@+node:ekr.20040803072955.112:createPopupMenu
-def createPopupMenu (self,event):
+#@-node:ekr.20051020120306.28:Tkinter wrappers (leoTkinterFind)
+#@+node:ekr.20051020120306.1:class underlinedTkButton
+class underlinedTkButton:
     
-    __pychecker__ = '--no-argsused' # event not used.
+    @others
+#@nonl
+#@+node:ekr.20051020120306.2:__init__
+def __init__(self,buttonType,parent_widget,**keywords):
+
+    self.buttonType = buttonType
+    self.parent_widget = parent_widget
+    self.hotKey = None
+    text = keywords['text']
+
+    << set self.hotKey if '&' is in the string >>
+
+    # Create the button...
+    if self.hotKey:
+        keywords['text'] = text
+        keywords['underline'] = index
+
+    if buttonType.lower() == "button":
+        self.button = Tk.Button(parent_widget,keywords)
+    elif buttonType.lower() == "check":
+        self.button = Tk.Checkbutton(parent_widget,keywords)
+    elif buttonType.lower() == "radio":
+        self.button = Tk.Radiobutton(parent_widget,keywords)
+    else:
+        g.trace("bad buttonType")
     
-    c = self.c ; frame = c.frame
+    self.text = text # for traces
+#@nonl
+#@+node:ekr.20051020120306.3:<< set self.hotKey if '&' is in the string >>
+index = text.find('&')
+
+if index > -1:
+
+    if index == len(text)-1:
+        # The word ends in an ampersand.  Ignore it; there is no hot key.
+        text = text[:-1]
+    else:
+        self.hotKey = text [index + 1]
+        text = text[:index] + text[index+1:]
+#@nonl
+#@-node:ekr.20051020120306.3:<< set self.hotKey if '&' is in the string >>
+#@-node:ekr.20051020120306.2:__init__
+#@+node:ekr.20051020120306.4:bindHotKey
+def bindHotKey (self,widget):
     
-    # If we are going to recreate it, we had better destroy it.
-    if self.popupMenu:
-        self.popupMenu.destroy()
-        self.popupMenu = None
+    if self.hotKey:
+        for key in (self.hotKey.lower(),self.hotKey.upper()):
+            widget.bind("<Alt-%s>" % key,self.buttonCallback)
+#@nonl
+#@-node:ekr.20051020120306.4:bindHotKey
+#@+node:ekr.20051020120306.5:buttonCallback
+# The hot key has been hit.  Call the button's command.
+
+def buttonCallback (self, event=None):
     
-    self.popupMenu = menu = Tk.Menu(g.app.root, tearoff=0)
+    __pychecker__ = '--no-argsused' # the event param must be present.
+
+    # g.trace(self.text)
+
+    self.button.invoke ()
     
-    # Add the Open With entries if they exist.
-    if g.app.openWithTable:
-        frame.menu.createOpenWithMenuItemsFromTable(menu,g.app.openWithTable)
-        table = (("-",None,None),)
-        frame.menu.createMenuEntries(menu,table)
+    # See if this helps.
+    return 'break'
+#@-node:ekr.20051020120306.5:buttonCallback
+#@-node:ekr.20051020120306.1:class underlinedTkButton
+#@-node:ekr.20051020120306.6:class findTab (leoFind.leoFind)
+#@+node:ekr.20050920084036.257:class searchCommandsClass
+class searchCommandsClass (baseEditCommandsClass):
+    
+    '''Implements many kinds of searches.'''
+
+    @others
+#@nonl
+#@+node:ekr.20050920084036.258: ctor
+def __init__ (self,c):
+    
+    # g.trace('searchCommandsClass')
+
+    baseEditCommandsClass.__init__(self,c) # init the base class.
+    
+    self.findTabHandler = None
+    self.minibufferFindHandler = None
+    
+    # The last kind of search
+    
+    # self.forward = True
+    # self.incremental = True
+    # self.regexp = False
+    # self.word = True
+    #self.searchString = ''
+    #self.replaceString = '' # Not used yet.
+    
+    try:
+        self.w = c.frame.body.bodyCtrl
+    except AttributeError:
+        self.w = None
+#@nonl
+#@-node:ekr.20050920084036.258: ctor
+#@+node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
+def getPublicCommands (self):
+    
+    return {
+        'clone-find-all':                       self.cloneFindAll,
         
-    << Create the menu table >>
+        'find-tab-find':                        self.findTabFindNext,
+        'find-tab-find-prev':                   self.findTabFindPrev,
+        'find-tab-change':                      self.findTabChange,
+        'find-tab-change-all':                  self.findTabChangeAll,
+        'find-tab-change-then-find':            self.findTabChangeThenFind,
+                    
+        'hide-find-tab':                        self.hideFindTab,
+            
+        'isearch-forward':                      self.isearchForward,
+        'isearch-backward':                     self.isearchBackward,
+        'isearch-forward-regexp':               self.isearchForwardRegexp,
+        'isearch-backward-regexp':              self.isearchBackwardRegexp,
+                    
+        'open-find-tab':                        self.openFindTab,
     
-    # New in 4.4.  There is no need for a dontBind argument because
-    # Bindings from tables are ignored.
-    frame.menu.createMenuEntries(menu,table)
-#@nonl
-#@+node:ekr.20040803072955.113:<< Create the menu table >>
-table = (
-    ("&Read @file Nodes",c.readAtFileNodes),
-    ("&Write @file Nodes",c.fileCommands.writeAtFileNodes),
-    ("-",None),
-    ("&Tangle",c.tangle),
-    ("&Untangle",c.untangle),
-    ("-",None),
-    ("Toggle Angle &Brackets",c.toggleAngleBrackets),
-    ("-",None),
-    ("Cut Node",c.cutOutline),
-    ("Copy Node",c.copyOutline),
-    ("&Paste Node",c.pasteOutline),
-    ("&Delete Node",c.deleteOutline),
-    ("-",None),
-    ("&Insert Node",c.insertHeadline),
-    ("&Clone Node",c.clone),
-    ("Sort C&hildren",c.sortChildren),
-    ("&Sort Siblings",c.sortSiblings),
-    ("-",None),
-    ("Contract Parent",c.contractParent),
-)
-#@nonl
-#@-node:ekr.20040803072955.113:<< Create the menu table >>
-#@-node:ekr.20040803072955.112:createPopupMenu
-#@+node:ekr.20040803072955.114:enablePopupMenuItems
-def enablePopupMenuItems (self,v,event):
-    
-    """Enable and disable items in the popup menu."""
-    
-    __pychecker__ = '--no-argsused' # event not used.
-    
-    c = self.c ; menu = self.popupMenu
+        'replace-string':                       self.replaceString,
+                    
+        're-search-forward':                    self.reSearchForward,
+        're-search-backward':                   self.reSearchBackward,
 
-    << set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-    isAtFile = g.choose(isAtFile,1,0)
-    isAtRoot = g.choose(isAtRoot,1,0)
-    canContract = v.parent() != None
-    canContract = g.choose(canContract,1,0)
-    
-    enable = self.frame.menu.enableMenu
-    
-    for name in ("Read @file Nodes", "Write @file Nodes"):
-        enable(menu,name,isAtFile)
-    for name in ("Tangle", "Untangle"):
-        enable(menu,name,isAtRoot)
-
-    enable(menu,"Cut Node",c.canCutOutline())
-    enable(menu,"Delete Node",c.canDeleteHeadline())
-    enable(menu,"Paste Node",c.canPasteOutline())
-    enable(menu,"Sort Children",c.canSortChildren())
-    enable(menu,"Sort Siblings",c.canSortSiblings())
-    enable(menu,"Contract Parent",c.canContractParent())
-#@nonl
-#@+node:ekr.20040803072955.115:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-isAtFile = False
-isAtRoot = False
-
-for v2 in v.self_and_subtree_iter():
-    if isAtFile and isAtRoot:
-        break
-    if (v2.isAtFileNode() or
-        v2.isAtNorefFileNode() or
-        v2.isAtAsisFileNode() or
-        v2.isAtNoSentFileNode()
-    ):
-        isAtFile = True
+        'search-again':                         self.findAgain,
+        # Uses existing search pattern.
         
-    isRoot,junk = g.is_special(v2.bodyString(),0,"@root")
-    if isRoot:
-        isAtRoot = True
-#@nonl
-#@-node:ekr.20040803072955.115:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-#@-node:ekr.20040803072955.114:enablePopupMenuItems
-#@+node:ekr.20040803072955.116:showPopupMenu
-def showPopupMenu (self,event):
-    
-    """Show a popup menu."""
-    
-    c = self.c ; menu = self.popupMenu
+        'search-forward':                       self.searchForward,
+        'search-backward':                      self.searchBackward,
+        'search-with-present-options':          self.searchWithPresentOptions,
+        # Prompts for search pattern.
 
-    if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
-        menu.bind("<FocusOut>",self.OnPopupFocusLost)
-    
-    menu.post(event.x_root, event.y_root)
+        'set-find-everywhere':                  self.setFindScopeEveryWhere,
+        'set-find-node-only':                   self.setFindScopeNodeOnly,
+        'set-find-suboutline-only':             self.setFindScopeSuboutlineOnly,
+        
+        'show-find-options':                    self.showFindOptions,
 
-    # Set the focus immediately so we know when we lose it.
-    c.widgetWantsFocus(menu)
+        'toggle-find-ignore-case-option':       self.toggleIgnoreCaseOption,
+        'toggle-find-in-body-option':           self.toggleSearchBodyOption,
+        'toggle-find-in-headline-option':       self.toggleSearchHeadlineOption,
+        'toggle-find-mark-changes-option':      self.toggleMarkChangesOption,
+        'toggle-find-mark-finds-option':        self.toggleMarkFindsOption,
+        'toggle-find-regex-option':             self.toggleRegexOption,
+        'toggle-find-reverse-option':           self.toggleReverseOption,
+        'toggle-find-word-option':              self.toggleWholeWordOption,
+        'toggle-find-wrap-around-option':       self.toggleWrapSearchOption,
+        
+        'word-search-forward':                  self.wordSearchForward,
+        'word-search-backward':                 self.wordSearchBackward,
+    }
 #@nonl
-#@-node:ekr.20040803072955.116:showPopupMenu
-#@-node:ekr.20040803072955.110:tree.OnPopup & allies
-#@-node:ekr.20040803072955.71:Event handlers (tkTree)
-#@-node:ekr.20060206124634:1. Bind all clicks to k.masterClickHandler
+#@-node:ekr.20050920084036.259:getPublicCommands (searchCommandsClass)
+#@+node:ekr.20060123131421:Top-level methods
+#@+node:ekr.20051020120306:openFindTab
+def openFindTab (self,event=None,show=True):
+
+    c = self.c ; log = c.frame.log ; tabName = 'Find'
+    
+    wasOpen = log.frameDict.get(tabName)
+
+    if wasOpen:
+        log.selectTab(tabName)
+    else:
+        log.selectTab(tabName)
+        f = log.frameDict.get(tabName)
+        t = log.textDict.get(tabName)
+        t.pack_forget()
+        self.findTabHandler = findTab(c,f)
+
+    if show or wasOpen or c.config.getBool('minibufferSearchesShowFindTab'):
+        pass # self.findTabHandler.bringToFront()
+    else:
+        log.hideTab(tabName)
+#@nonl
+#@-node:ekr.20051020120306:openFindTab
+#@+node:ekr.20051022212004:Find Tab commands
+# Just open the Find tab if it has never been opened.
+# For minibuffer commands, it would be good to force the Find tab to be visible.
+# However, this leads to unfortunate confusion when executed from a shortcut.
+
+def findTabChange(self,event=None):
+
+    if self.findTabHandler:
+        self.findTabHandler.changeCommand()
+    else:
+        self.openFindTab()
+        
+def findTabChangeAll(self,event=None):
+
+    if self.findTabHandler:
+        self.findTabHandler.changeAllCommand()
+    else:
+        self.openFindTab()
+
+def findTabChangeThenFind(self,event=None):
+
+    if self.findTabHandler:
+        self.findTabHandler.changeThenFindCommand()
+    else:
+        self.openFindTab()
+
+def findTabFindNext (self,event=None):
+    
+    if self.findTabHandler:
+        self.findTabHandler.findNextCommand()
+    else:
+        self.openFindTab()
+
+def findTabFindPrev (self,event=None):
+    
+    if self.findTabHandler:
+        self.findTabHandler.findPrevCommand()
+    else:
+        self.openFindTab()
+        
+def hideFindTab (self,event=None):
+    if self.findTabHandler:
+        self.c.frame.log.selectTab('Log')
+#@nonl
+#@-node:ekr.20051022212004:Find Tab commands
+#@+node:ekr.20060124115801:getHandler
+def getHandler(self,show=False):
+    
+    '''Return the minibuffer handler, creating it if necessary.'''
+    
+    c = self.c
+    
+    self.openFindTab(show=show)
+        # sets self.findTabHandler,
+        # but *not* minibufferFindHandler.
+    
+    if not self.minibufferFindHandler:
+        self.minibufferFindHandler = minibufferFind(c,self.findTabHandler)
+
+    return self.minibufferFindHandler
+#@nonl
+#@-node:ekr.20060124115801:getHandler
+#@+node:ekr.20060123115459:Find options wrappers
+def setFindScopeEveryWhere     (self, event): return self.setFindScope('entire-outline')
+def setFindScopeNodeOnly       (self, event): return self.setFindScope('node-only')
+def setFindScopeSuboutlineOnly (self, event): return self.setFindScope('suboutline-only')
+
+def setFindScope (self, where): self.getHandler().setFindScope(where)
+
+def showFindOptions      (self,event): self.getHandler().showFindOptions()
+
+def toggleIgnoreCaseOption     (self, event): return self.toggleOption('ignore_case')
+def toggleMarkChangesOption    (self, event): return self.toggleOption('mark_changes')
+def toggleMarkFindsOption      (self, event): return self.toggleOption('mark_finds')
+def toggleRegexOption          (self, event): return self.toggleOption('pattern_match')
+def toggleReverseOption        (self, event): return self.toggleOption('reverse')
+def toggleSearchBodyOption     (self, event): return self.toggleOption('search_body')
+def toggleSearchHeadlineOption (self, event): return self.toggleOption('search_headline')
+def toggleWholeWordOption      (self, event): return self.toggleOption('whole_word')
+def toggleWrapSearchOption     (self, event): return self.toggleOption('wrap')
+
+def toggleOption (self, ivar): self.getHandler().toggleOption(ivar)
+#@nonl
+#@-node:ekr.20060123115459:Find options wrappers
+#@+node:ekr.20060124093828:Find wrappers
+# def change             (self,event): self.getHandler().changeCommand()
+# def changeAll          (self,event): self.getHandler().changeAllCommand()
+# def changeThenFind     (self,event): self.getHandler().changeThenFindCommand()
+# def findNext           (self,event): self.getHandler().findNextCommand()
+# def findPrev           (self,event): self.getHandler().findPrevCommand()
+
+def cloneFindAll       (self,event): self.getHandler().cloneFindAll(event)
+
+def replaceString      (self,event): self.getHandler().replaceString(event)
+def reSearchBackward   (self,event): self.getHandler().reSearchBackward(event)
+def reSearchForward    (self,event): self.getHandler().reSearchForward(event)
+def searchBackward     (self,event): self.getHandler().searchBackward(event)
+def searchForward      (self,event): self.getHandler().searchForward(event)
+def wordSearchBackward (self,event): self.getHandler().wordSearchBackward(event)
+def wordSearchForward  (self,event): self.getHandler().wordSearchForward(event)
+
+def searchWithPresentOptions (self,event):
+    self.getHandler().searchWithPresentOptions(event)
+#@nonl
+#@-node:ekr.20060124093828:Find wrappers
+#@+node:ekr.20060204120158.2:findAgain
+def findAgain (self,event):
+    
+    h = self.getHandler()
+    
+    # h.findAgain returns False if there is no search pattern.
+    # In that case, we revert to find-with-present-options.
+    if not h.findAgain(event):
+        h.searchWithPresentOptions(event)
+#@nonl
+#@-node:ekr.20060204120158.2:findAgain
+#@-node:ekr.20060123131421:Top-level methods
+#@+node:ekr.20050920084036.261:incremental search...
+def isearchForward (self,event):
+    self.startIncremental(event,forward=True,regexp=False)
+    
+def isearchBackward (self,event):
+    self.startIncremental(event,forward=False,regexp=False)
+    
+def isearchForwardRegexp (self,event):
+    self.startIncremental(event,forward=True,regexp=True)
+    
+def isearchBackwardRegexp (self,event):
+    self.startIncremental(event,forward=False,regexp=True)
+#@nonl
+#@+node:ekr.20050920084036.262:startIncremental
+def startIncremental (self,event,forward,regexp):
+
+    c = self.c ; k = self.k
+    
+    self.forward = forward
+    self.regexp = regexp
+    k.setLabelBlue('isearch: ',protect=True)
+    k.setState('isearch',1,handler=self.iSearchStateHandler)
+    c.minibufferWantsFocus()
+#@nonl
+#@-node:ekr.20050920084036.262:startIncremental
+#@+node:ekr.20050920084036.264:iSearchStateHandler & helper
+# Called when from the state manager when the state is 'isearch'
+
+def iSearchStateHandler (self,event):
+
+    c = self.c ; k = self.k ; w = self.w
+    
+    if not event:
+        g.trace('no event',g.callers())
+        return
+    keysym = event.keysym
+    ch = event.char
+    if keysym == 'Control_L': return
+    
+    c.bodyWantsFocus()
+    
+    # g.trace('keysym',keysym,'stroke',k.stroke)
+    
+    if 0: # Useful, but presently conflicts with other bindings.
+        if k.stroke == '<Control-s>':
+            self.startIncremental(event,forward=True,regexp=False)
+        elif k.stroke == '<Control-r>':
+            self.startIncremental(event,forward=False,regexp=False)
+
+    if keysym == 'Return':
+        s = self.searchString
+        i = w.index('insert')
+        j = w.index('insert +%sc' % len(s))
+        if not self.forward: i,j = j,i
+        self.endSearch(i,j)
+        return
+
+    if ch == '\b':
+        g.trace('backspace not handled yet')
+        return
+    
+    if ch:
+        k.updateLabel(event)
+        s = k.getLabel(ignorePrompt=True)
+        i = w.search(s,'insert',stopindex='insert +%sc' % len(s))
+        if i:
+            self.searchString = s
+        else:
+           self.iSearchHelper(event,self.forward,self.regexp)
+        self.scolorizer(event)
+#@nonl
+#@-node:ekr.20050920084036.264:iSearchStateHandler & helper
+#@+node:ekr.20050920084036.265:scolorizer
+def scolorizer (self,event):
+
+    k = self.k ; w = self.w
+
+    stext = k.getLabel(ignorePrompt=True)
+    w.tag_delete('color')
+    w.tag_delete('color1')
+    if stext == '': return
+    ind = '1.0'
+    while ind:
+        try:
+            ind = w.search(stext,ind,stopindex='end',regexp=self.regexp)
+        except:
+            break
+        if ind:
+            i, d = ind.split('.')
+            d = str(int(d)+len(stext))
+            index = w.index('insert')
+            if ind == index:
+                w.tag_add('color1',ind,'%s.%s' % (i,d))
+            w.tag_add('color',ind,'%s.%s' % (i,d))
+            ind = i + '.' + d
+
+    w.tag_config('color',foreground='red')
+    w.tag_config('color1',background='lightblue')
+#@nonl
+#@-node:ekr.20050920084036.265:scolorizer
+#@+node:ekr.20050920084036.263:iSearchHelper
+def iSearchHelper (self,event,forward,regexp):
+
+    '''This method moves the insert spot to position that matches the pattern in the miniBuffer'''
+    
+    k = self.k ; w = self.w
+    pattern = k.getLabel(ignorePrompt=True)
+    if not pattern: return
+    
+    self.searchString = pattern
+    self.incremental = True
+    self.forward = forward
+    self.regexp = regexp
+   
+    try:
+        i = None
+        if forward:
+            i = w.search(pattern,"insert + 1c",stopindex='end',regexp=regexp)
+            if 0: # Not so useful when searches can cross buffer boundaries.
+                if not i: # Start again at the top of the buffer.
+                    i = w.search(pattern,'1.0',stopindex='insert',regexp=regexp)
+        else:
+            i = w.search(pattern,'insert',backwards=True,stopindex='1.0',regexp=regexp)
+            if 0: # Not so useful when searches can cross buffer boundaries.
+                if not i: # Start again at the bottom of the buffer.
+                    i = w.search(pattern,'end',backwards=True,stopindex='insert',regexp=regexp)
+    except: pass
+        
+    # Don't call endSearch here.  We'll do that when the user hits return.
+    if i and not i.isspace():
+        w.mark_set('insert',i)
+        w.see('insert')
+#@nonl
+#@-node:ekr.20050920084036.263:iSearchHelper
+#@+node:ekr.20060203072636:endSearch
+def endSearch (self,i,j):
+
+    g.app.gui.setTextSelection (self.w,i,j,insert='sel.end')
+    self.k.keyboardQuit(event=None)
+#@nonl
+#@-node:ekr.20060203072636:endSearch
+#@-node:ekr.20050920084036.261:incremental search...
+#@-node:ekr.20050920084036.257:class searchCommandsClass
+#@-node:ekr.20051023094009:Search classes
+#@+node:ekr.20031218072017.1761:c.insertHeadline
+def insertHeadline (self,event=None,op_name="Insert Node"):
+    
+    '''Insert a node after the presently selected node.'''
+
+    c = self ; u = c.undoer
+    current = c.currentPosition()
+    
+    if not current: return
+
+    c.beginUpdate()
+    try:
+        undoData = c.undoer.beforeInsertNode(current)
+        # Make sure the new node is visible when hoisting.
+        if ((current.hasChildren() and current.isExpanded()) or
+            (c.hoistStack and current == c.hoistStack[-1].p)):
+            p = current.insertAsNthChild(0)
+        else:
+            p = current.insertAfter()
+        dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
+    finally:
+        c.endUpdate(False,scroll=True)
+        c.editPosition(p)
+
+    return p # for mod_labels plugin.
+#@nonl
+#@-node:ekr.20031218072017.1761:c.insertHeadline
+#@+node:ekr.20040803072955.127:editLabel
+def editLabel (self,p):
+    
+    """Start editing p's headline."""
+
+    if self.editPosition() and p != self.editPosition():
+        c.beginUpdate()
+        try:
+            self.endEditLabel()
+        finally:
+            c.endUpdate(False)
+
+    self.setEditPosition(p) # That is, self._editPosition = p
+    
+    if self.trace_edit and not g.app.unitTesting:
+        g.trace(p.headString(),g.choose(p.edit_widget(),'','no edit widget'))
+
+    if p and p.edit_widget():
+        self.revertHeadline = p.headString() # New in 4.4b2: helps undo.
+        self.setEditLabelState(p) # Sets the focus immediately.
+        self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
+#@nonl
+#@-node:ekr.20040803072955.127:editLabel
+#@-node:ekr.20060206124634:Fixed headline/tree bugs
+#@+node:ekr.20060207103936:setInputState is messing with body focus
+#@+node:ekr.20031218072017.3995:Tk bindings...
+def bringToFront (self):
+    self.top.deiconify()
+    self.top.lift()
+
+def getFocus(self):
+    """Returns the widget that has focus, or body if None."""
+    try:
+        # This method is unreliable while focus is changing.
+        # The call to update_idletasks may help.  Or not.
+        self.top.update_idletasks()
+        f = self.top.focus_displayof()
+    except Exception:
+        f = None
+    if f:
+        return f
+    else:
+        return self.bodyCtrl
+        
+def getTitle (self):
+    return self.top.title()
+    
+def setTitle (self,title):
+    return self.top.title(title)
+    
+def get_window_info(self):
+    return g.app.gui.get_window_info(self.top)
+    
+def iconify(self):
+    self.top.iconify()
+
+def deiconify (self):
+    self.top.deiconify()
+    
+def lift (self):
+    self.top.lift()
+    
+def update (self):
+    self.top.update()
+#@nonl
+#@-node:ekr.20031218072017.3995:Tk bindings...
+#@+node:ekr.20060205103842:c.set_focus and c.get_focus
+def get_focus (self):
+    
+    c = self
+    
+    return g.app.gui.get_focus(c)
+    
+def set_focus (self,widget):
+    
+    c = self
+    
+    g.app.gui.set_focus(c,widget)
+#@nonl
+#@-node:ekr.20060205103842:c.set_focus and c.get_focus
+#@+node:ekr.20060120200818:setInputState
+def setInputState (self,state,showState=False):
+
+    k = self ; c = k.c
+    w = c.get_focus()
+    wname = g.app.gui.widget_name(w)
+
+    k.unboundKeyAction = state
+    if state != 'insert' or showState:
+        k.showStateAndMode()
+   
+    # These commands never change focus.
+    # Alas, get_focus may be unreliable while focus is changing.
+    w and c.widgetWantsFocus(w)
+    
+    if 1: # This has the potential to rip focus from the body.
+        for z in (None,'body','tree','head','canvas'):
+            if not z or wname.startswith(z):
+                return
+        else:
+            g.trace('-'*20,'widget',wname)
+#@nonl
+#@-node:ekr.20060120200818:setInputState
+#@+node:ekr.20060120193743:showStateAndMode
+def showStateAndMode(self):
+    
+    k = self ; frame = k.c.frame
+    state = k.unboundKeyAction
+    mode = k.getStateKind()
+   
+    if hasattr(frame,'clearStatusLine'):
+        frame.clearStatusLine()
+        put = frame.putStatusLine
+        if state != 'insert':
+            put('state: ',color='blue')
+            put(state)
+        if mode:
+            put(' mode: ',color='blue')
+            put(mode)
+#@-node:ekr.20060120193743:showStateAndMode
+#@-node:ekr.20060207103936:setInputState is messing with body focus
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

@@ -958,7 +958,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20051108140810" annotate="7d71002e"><vh>All unit tests</vh>
+<v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
 <v t="ekr.20060203200614"><vh>Basic Unit tests</vh>
 <v t="ekr.20060205165937"><vh>Doctests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
@@ -1591,7 +1591,7 @@
 <v t="ekr.20051107115231.14" annotate="7d71002e"><vh>@test return ends editing of headline</vh></v>
 <v t="ekr.20051107115231.15" annotate="7d71002e"><vh>@test editLabel selects entire headline</vh></v>
 <v t="ekr.20051107115231.16" annotate="7d71002e"><vh>@test paste at end of headline</vh></v>
-<v t="ekr.20051107115231.17" annotate="7d71002e"><vh>@test typing and undo in headline - at end</vh></v>
+<v t="ekr.20051107115231.17" a="M" annotate="7d71002e"><vh>@test typing and undo in headline - at end</vh></v>
 <v t="ekr.20051107115231.18" annotate="7d71002e"><vh>@test paste and undo in headline - at end</vh></v>
 <v t="ekr.20051107115231.20" annotate="7d71002e"><vh>@test paste and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.21" annotate="7d71002e"><vh>@test selecting new node retains typing in headline</vh></v>
@@ -1674,10 +1674,6 @@
 <v t="ekr.20060203201949" annotate="7d71002e"><vh>@test restore the screen</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20060203181203.1" a="V"><vh>Key handling tests...</vh>
-<v t="ekr.20060203181203.2"><vh>@test strokeFromSetting</vh></v>
-<v t="ekr.20060203181203.3"><vh>@test strokeFromEvent</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -13714,31 +13710,34 @@ try:
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.17">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
 frame = c.frame ; tree = frame.tree ; canvas = tree.canvas
 h = 'Test headline abc'
 p = u.findNodeAnywhere(h)
+assert p,'oops0'
 c.selectPosition(p)
 c.redraw_now() # To make node visible
-tree.editLabel(p)
+c.editPosition(p)
 w = p.edit_widget()
 try:
-    assert w
+    assert w, 'oops1'
     g.app.gui.setSelectionRange(w,'end','end')
     w.event_generate('X')
     w.event_generate('Y')
     w.event_generate('Z')
     w.event_generate('&lt;Return&gt;')
-    assert p.headString() == h + 'XYZ'
-    assert c.undoer.undoMenuLabel == 'Undo Typing'
+    assert p.headString() == h + 'XYZ','oops2'
+    assert c.undoer.undoMenuLabel == 'Undo Typing','oops3'
     k.manufactureKeyPressForCommandName(w,'undo')
-    assert c.undoer.redoMenuLabel == 'Redo Typing'
-    assert p.headString() == h
+    assert c.undoer.redoMenuLabel == 'Redo Typing','oops4'
+    assert p.headString() == h,'oops5 got: %s' % (p.headString())
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.18">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
@@ -13763,6 +13762,7 @@ try:
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.19"># Totally weird.
 
@@ -13817,6 +13817,7 @@ try:
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.21">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
@@ -13840,6 +13841,7 @@ try:
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.22">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
@@ -13886,6 +13888,7 @@ try:
 finally:
     if 1:
         p.setHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.24"># Should be a comment# Should be a comment
 import leoTest ; u = leoTest.testUtils(c)
@@ -13928,6 +13931,7 @@ try:
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.26">import leoTest ; u = leoTest.testUtils(c)
 k = c.keyHandler
@@ -13972,6 +13976,7 @@ try:
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051107115231.29">import leoEditCommands
 s = 'foo' ; bodyCtrl = c.frame.body.bodyCtrl
@@ -14095,7 +14100,7 @@ c.frame.body.bodyCtrl.update()</t>
 c.insertHeadline()
 try:
     n2 = c.frame.tree.redrawCount
-    assert n2 == n + 1
+    assert n2 == n + 1,'redraws: %d' % (n2 - n)
 finally:
     c.undoer.undo()</t>
 <t tx="ekr.20051125165933">import leoTest ; u = leoTest.testUtils(c)
@@ -14134,6 +14139,7 @@ try:
 finally:
     if 1:
         p.initHeadString(h)
+        c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
 <t tx="ekr.20051130080047"></t>
 <t tx="ekr.20051202100844"></t>
