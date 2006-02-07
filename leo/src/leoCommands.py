@@ -3075,10 +3075,9 @@ class baseCommands:
             dirtyVnodeList = p.setAllAncestorAtFileNodesDirty()
             c.setChanged(True)
             u.afterInsertNode(p,op_name,undoData,dirtyVnodeList=dirtyVnodeList)
-            c.endEditing()
-            c.editPosition(p)
         finally:
-            c.endUpdate(scroll=True)
+            c.endUpdate(False,scroll=True)
+            c.editPosition(p)
     
         return p # for mod_labels plugin.
     #@nonl
@@ -4682,6 +4681,7 @@ class baseCommands:
             u.afterMark(p,undoType,bunch,dirtyVnodeList=dirtyVnodeList)
         finally:
             c.endUpdate()
+    #@nonl
     #@-node:ekr.20031218072017.2928:markHeadline
     #@+node:ekr.20031218072017.2929:markSubheads
     def markSubheads (self,event=None):
