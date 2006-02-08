@@ -2021,7 +2021,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         '''Handle common process when any part of a headline is clicked.'''
         
-        g.trace(p.headString())
+        # g.trace(p.headString())
         
         returnVal = 'break' # Default: do nothing more.
     

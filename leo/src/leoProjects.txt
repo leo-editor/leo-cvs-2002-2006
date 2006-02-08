@@ -2247,7 +2247,7 @@ def OnActivateHeadline (self,p,event=None):
     
     '''Handle common process when any part of a headline is clicked.'''
     
-    g.trace(p.headString())
+    # g.trace(p.headString())
     
     returnVal = 'break' # Default: do nothing more.
 
@@ -3304,7 +3304,7 @@ def showSuccess(self,pos,newpos):
 #@nonl
 #@-node:ekr.20031218072017.3091:showSuccess
 #@-node:ekr.20060206165304:Fixed find.success bug
-#@+node:ekr.20060208064636:Fixed recent blunder so lick in headline works
+#@+node:ekr.20060208064636:Fixed recent blunder so click in headline works
 #@+node:ekr.20040803072955.127:editLabel
 def editLabel (self,p):
     
@@ -3359,7 +3359,7 @@ def OnActivateHeadline (self,p,event=None):
     
     '''Handle common process when any part of a headline is clicked.'''
     
-    g.trace(p.headString())
+    # g.trace(p.headString())
     
     returnVal = 'break' # Default: do nothing more.
 
@@ -3434,7 +3434,7 @@ def onHeadlineClick (self,event):
     return returnVal
 #@nonl
 #@-node:ekr.20040803072955.87:onHeadlineClick
-#@-node:ekr.20060208064636:Fixed recent blunder so lick in headline works
+#@-node:ekr.20060208064636:Fixed recent blunder so click in headline works
 #@+node:ekr.20060206124634:Fixed tree icon bug
 #@+node:ekr.20060208081656:Notes
 @nocolor
@@ -3535,7 +3535,6 @@ try:
         p.v.iconVal = val
         redraw_flag = True
 finally:
-    g.trace(redraw_flag)
     c.endUpdate(redraw_flag)
 #@nonl
 #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>

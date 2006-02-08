@@ -2410,7 +2410,6 @@ class leoTkinterBody (leoFrame.leoBody):
                     p.v.iconVal = val
                     redraw_flag = True
             finally:
-                g.trace(redraw_flag)
                 c.endUpdate(redraw_flag)
             #@nonl
             #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
