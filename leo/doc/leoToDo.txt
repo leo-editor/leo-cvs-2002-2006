@@ -1808,6 +1808,65 @@ def bringToFront(self):
 BringToFront = bringToFront # Compatibility with old scripts
 #@nonl
 #@-node:ekr.20031218072017.2951:c.bringToFront
+#@+node:ekr.20060205103842:c.get/request/set_focus
+def get_focus (self):
+    
+    c = self
+    return g.app.gui.get_focus(c)
+    
+def request_focus(self,w):
+
+    c = self
+    if w: c.requestedFocusWidget = w
+    c.traceFocus(w)
+    
+def set_focus (self,w):
+    
+    c = self
+    
+    if 1: # An optimization.
+        c.requestedFocusWidget = w
+        c.masterFocusHandler()
+    
+    else: # Safer, perhaps.
+        c.hasFocusWidget = c.requestedFocusWidget = w
+        g.app.gui.set_focus(c,w)
+#@nonl
+#@-node:ekr.20060205103842:c.get/request/set_focus
+#@+node:ekr.20060207140352:c.masterFocusHandler
+def masterFocusHandler (self):
+    
+    c = self ; 
+    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+    
+    # Give priority to later requests, but default to previously set widget.
+    w = c.requestedFocusWidget or c.hasFocusWidget
+    
+    if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
+        if trace: g.trace('*'*20,'no change.')
+        c.requestedFocusWidget = None
+    elif w:
+        # Ignore whatever g.app.gui.get_focus might say.
+        ok = g.app.gui.set_focus(c,w)
+        if ok: c.hasFocusWidget = w
+        c.requestedFocusWidget = None
+    else:
+        if trace: g.trace('*'*20,'oops: moving to body pane.')
+        c.bodyWantsFocusNow()
+
+restoreRequestedFocus = masterFocusHandler
+#@nonl
+#@-node:ekr.20060207140352:c.masterFocusHandler
+#@+node:ekr.20060208143543:c.noKnownFocus
+def noKnownFocus (self):
+    
+    '''Indicate that the widget with focus is not known.
+    This will force a later call to g.app.gui.set_focus().'''
+    
+    
+    self.hasFocusWidget = None
+#@nonl
+#@-node:ekr.20060208143543:c.noKnownFocus
 #@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
 def recolor(self):
 
@@ -1849,31 +1908,19 @@ def redraw_now (self):
 redraw = force_redraw = redraw_now
 #@nonl
 #@-node:ekr.20031218072017.2954:c.redraw_now
-#@+node:ekr.20060205103842:c.get/request/set_focus
-def get_focus (self):
-    
-    c = self
-    return g.app.gui.get_focus(c)
-    
-def request_focus(self,w):
+#@+node:ekr.20060207142332:c.traceFocus
+trace_focus_count = 0
 
-    c = self
-    if w: c.requestedFocusWidget = w
-    c.traceFocus(w)
-    
-def set_focus (self,w):
+def traceFocus (self,w):
     
     c = self
-    
-    if 1: # An optimization.
-        c.requestedFocusWidget = w
-        c.masterFocusHandler()
-    
-    else: # Safer, perhaps.
-        c.hasFocusWidget = c.requestedFocusWidget = w
-        g.app.gui.set_focus(c,w)
+
+    if not g.app.unitTesting and c.config.getBool('trace_focus'):
+        c.trace_focus_count += 1
+        g.trace('%4d' % (c.trace_focus_count),
+            c.widget_name(w),g.callers())
 #@nonl
-#@-node:ekr.20060205103842:c.get/request/set_focus
+#@-node:ekr.20060207142332:c.traceFocus
 #@+node:ekr.20060205111103:c.widget_name
 def widget_name (self,widget):
     
@@ -1929,43 +1976,6 @@ def widgetWantsFocus(self,w):
 def widgetWantsFocusNow(self,w):
     c = self ; c.set_focus(w)
 #@-node:ekr.20050120092028:c.xWantsFocus/Now
-#@+node:ekr.20060207142332:c.traceFocus
-trace_focus_count = 0
-
-def traceFocus (self,w):
-    
-    c = self
-
-    if not g.app.unitTesting and c.config.getBool('trace_focus'):
-        c.trace_focus_count += 1
-        g.trace('%4d' % (c.trace_focus_count),
-            c.widget_name(w),g.callers())
-#@nonl
-#@-node:ekr.20060207142332:c.traceFocus
-#@+node:ekr.20060207140352:c.masterFocusHandler
-def masterFocusHandler (self):
-    
-    c = self ; 
-    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
-    
-    # Give priority to later requests, but default to previously set widget.
-    w = c.requestedFocusWidget or c.hasFocusWidget
-    
-    if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
-        if trace: g.trace('*'*20,'no change.')
-        c.requestedFocusWidget = None
-    elif w:
-        # Ignore whatever g.app.gui.get_focus might say.
-        ok = g.app.gui.set_focus(c,w)
-        if ok: c.hasFocusWidget = w
-        c.requestedFocusWidget = None
-    else:
-        if trace: g.trace('*'*20,'oops: moving to body pane.')
-        c.bodyWantsFocusNow()
-
-restoreRequestedFocus = masterFocusHandler
-#@nonl
-#@-node:ekr.20060207140352:c.masterFocusHandler
 #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@+node:ekr.20031218072017.4039:class leoTkinterLog
 class leoTkinterLog (leoFrame.leoLog):

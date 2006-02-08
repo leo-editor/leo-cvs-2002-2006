@@ -1419,8 +1419,6 @@ All unit tests now pass.
 
 - No need to save/restore focus in status line.
 
-- Added call to endEditLabel() in onTreeClick.
-
 - Added several new traces to tkTree class.
 
 * tree.redraw_now now ends editing properly. This fixes lots of bugs. In
@@ -1441,8 +1439,6 @@ def __init__(self,c,frame,canvas):
     
     # Init the base class.
     leoFrame.leoTree.__init__(self,frame)
-    
-    self.new_alloc = True
     
     # Configuration and debugging settings.
     self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
@@ -1495,10 +1491,8 @@ def __init__(self,c,frame,canvas):
     self.freeClickBoxes = []
     self.freeIcons = []
     self.freeLines = []
-    if self.new_alloc:
-        self.freeText = [] # A list of free Tk.Text widgets
-    else:
-        self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+    self.freeText = [] # New in 4.4b2: a list of free Tk.Text widgets
+   
     self.freeUserIcons = []
 #@nonl
 #@+node:ekr.20040803072955.17:<< define drawing constants >>
@@ -1562,7 +1556,7 @@ def setBindings (self):
     tree = self ; k = self.c.k
     
     << make bindings for a common binding widget >>
-    << make bindings for the canvas itself >>
+    self.canvas.bind('<Key>',k.masterKeyHandler)
     << make bindings for tagged items on the canvas >>
 #@nonl
 #@+node:ekr.20060131173440:<< make bindings for a common binding widget >>
@@ -1585,52 +1579,20 @@ for a,handler,func in table:
 self.textBindings = t.bindtags()
 #@nonl
 #@-node:ekr.20060131173440:<< make bindings for a common binding widget >>
-#@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
-if 0: # Needed to transfer focus.
-    def treeClickCallback(event,self=self):
-        return self.c.k.masterClickHandler(event,func=self.onTreeClick)
-    
-    self.canvas.bind('<Button-1>',treeClickCallback)
-
-self.canvas.bind('<Key>',k.masterKeyHandler)
-#@nonl
-#@-node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
 #@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
 where = g.choose(self.expanded_click_area,'clickBox','plusBox')
 
-if 1:
-    table = (
-        (where,    '<Button-1>',self.onClickBoxClick),
-        ('iconBox','<Button-1>',self.onIconBoxClick),
-        ('iconBox','<Double-1>',self.onIconBoxDoubleClick),
-        ('iconBox','<Button-3>',self.onIconBoxRightClick),
-        ('iconBox','<Double-3>',self.onIconBoxRightClick),
-        ('iconBox','<B1-Motion>',self.onDrag),
-        ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
-    )
-    for tag,event,callback in table:
-        self.canvas.tag_bind(tag,event,callback)
-    
-else:
-    table = (
-        (where,    '<Button-1>', self.onClickBoxClick,      k.masterClickHandler),
-        ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
-        ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
-        ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
-        ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
-    )
-    
-    for a,b,func,handler in table:
-        def treeCallback(event,handler=handler,func=func):
-            return handler(event,func=func)
-        self.canvas.tag_bind(a,b,treeCallback)
-    
-    table = (
-        ('iconBox','<B1-Motion>',           self.onDrag),
-        ('iconBox','<Any-ButtonRelease-1>', self.onEndDrag),
-    )
-    for a,b,callback in table:
-        self.canvas.tag_bind(a,b,callback)
+table = (
+    (where,    '<Button-1>',self.onClickBoxClick),
+    ('iconBox','<Button-1>',self.onIconBoxClick),
+    ('iconBox','<Double-1>',self.onIconBoxDoubleClick),
+    ('iconBox','<Button-3>',self.onIconBoxRightClick),
+    ('iconBox','<Double-3>',self.onIconBoxRightClick),
+    ('iconBox','<B1-Motion>',self.onDrag),
+    ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
+)
+for tag,event,callback in table:
+    self.canvas.tag_bind(tag,event,callback)
 #@nonl
 #@-node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
 #@-node:ekr.20051024102724:tkTtree.setBindings
@@ -1804,27 +1766,15 @@ def findEditWidget (self,p):
     c = self.c
 
     if p and c:
-        if self.new_alloc:
-            aTuple = self.visibleText.get(p.key())
-            if aTuple:
-                t,theId = aTuple
-                # if self.trace: g.trace('%4d' % (theId),self.textAddr(t),p.headString())
-                return t
-            else:
-                # g.trace('oops: not found',p)
-                return None
+        aTuple = self.visibleText.get(p.key())
+        if aTuple:
+            t,theId = aTuple
+            # if self.trace: g.trace('%4d' % (theId),self.textAddr(t),p.headString())
+            return t
         else:
-            # VERY SLOW.
-            # Search the widget list for widget t with t.leo_position == p.
-            # New in 4.2: the dictionary is a list of pairs(p,v)
-            pairs = self.visibleText.get(p.v,[])
-            for p2,t2,id2 in pairs:
-                assert t2.leo_window_id == id2
-                assert t2.leo_position == p2
-                if p.equal(p2):
-                    # g.trace('found',t2)
-                    return t2
-        
+            # g.trace('oops: not found',p)
+            return None
+
     # g.trace(not found',p.headString())
     return None
 #@nonl
@@ -2293,14 +2243,6 @@ self.active = True
 #@nonl
 #@-node:ekr.20040803072955.106:<< activate this window >>
 #@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
-#@+node:ekr.20051022141020:onTreeClick
-def onTreeClick (self,event=None):
-    
-    '''Handle an event in the tree canvas, outside of any tree widget.'''
-    
-    return 'break'
-#@nonl
-#@-node:ekr.20051022141020:onTreeClick
 #@+node:ekr.20040803072955.84:Text Box...
 #@+node:ekr.20040803072955.85:configureTextState
 def configureTextState (self,p):
@@ -2674,7 +2616,7 @@ def setInputState (self,state,showState=False):
 #@+node:ekr.20060120193743:showStateAndMode
 def showStateAndMode(self):
     
-    k = self ; frame = k.c.frame
+    k = self ; c = k.c ; frame = c.frame
     state = k.unboundKeyAction
     mode = k.getStateKind()
    
@@ -2687,6 +2629,9 @@ def showStateAndMode(self):
         if mode:
             put(' mode: ',color='blue')
             put(mode)
+        
+        # Late change.
+        c.noKnownFocus()
 #@-node:ekr.20060120193743:showStateAndMode
 #@-node:ekr.20060207103936:setInputState is messing with body focus
 #@+node:ekr.20060206165304:Fixed find.success bug
@@ -3268,7 +3213,9 @@ def restore (self,data):
         gui.setSelectionRange(t,insert,insert)
         gui.setInsertPoint(t,insert)
         gui.makeIndexVisible(t,insert)
-        c.widgetWantsFocusNow(t)
+    
+    # g.trace(c.widget_name(t))
+    c.widgetWantsFocusNow(t)
 #@nonl
 #@-node:ekr.20031218072017.3089:restore
 #@+node:ekr.20031218072017.3091:showSuccess
@@ -3346,14 +3293,6 @@ def setEditLabelState (self,p): # selected, editing
 setNormalLabelState = setEditLabelState # For compatibility.
 #@nonl
 #@-node:ekr.20040803072955.135:setEditLabelState
-#@+node:ekr.20051022141020:onTreeClick
-def onTreeClick (self,event=None):
-    
-    '''Handle an event in the tree canvas, outside of any tree widget.'''
-    
-    return 'break'
-#@nonl
-#@-node:ekr.20051022141020:onTreeClick
 #@+node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
 def OnActivateHeadline (self,p,event=None):
     

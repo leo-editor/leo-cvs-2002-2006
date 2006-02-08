@@ -7277,8 +7277,9 @@ if updateBeadList:
         c.beadList.append(p.copy())
         
         # New in Leo 4.4: limit this list to 100 items.
-        ### c.beadList = c.beadList [-100:]
-        # g.trace('len(c.beadList)',len(c.beadList))
+        if 0: # Doesn't work yet.
+            c.beadList = c.beadList [-100:]
+            g.trace('len(c.beadList)',len(c.beadList))
         
     # g.trace(c.beadPointer,p,present_p)
 #@nonl
@@ -7291,9 +7292,6 @@ if p in c.visitedList:
     c.visitedList.remove(p)
 
 c.visitedList.insert(0,p.copy())
-
-# New in Leo 4.4: Limit the size of this list.
-#### c.visitedList = c.visitedList[:100]
 
 # g.trace('len(c.visitedList)',len(c.visitedList))
 # g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!
@@ -7646,8 +7644,9 @@ if updateBeadList:
         c.beadList.append(p.copy())
         
         # New in Leo 4.4: limit this list to 100 items.
-        ### c.beadList = c.beadList [-100:]
-        # g.trace('len(c.beadList)',len(c.beadList))
+        if 0: # Doesn't work yet.
+            c.beadList = c.beadList [-100:]
+            g.trace('len(c.beadList)',len(c.beadList))
         
     # g.trace(c.beadPointer,p,present_p)
 #@nonl
@@ -7660,9 +7659,6 @@ if p in c.visitedList:
     c.visitedList.remove(p)
 
 c.visitedList.insert(0,p.copy())
-
-# New in Leo 4.4: Limit the size of this list.
-#### c.visitedList = c.visitedList[:100]
 
 # g.trace('len(c.visitedList)',len(c.visitedList))
 # g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!
