@@ -105,6 +105,10 @@ class baseCommands:
         self._rootPosition    = self.nullPosition()
         self._topPosition     = self.nullPosition()
         
+        # Delayed focus.
+        self.hasFocusWidget = None
+        self.requestedFocusWidget = None
+        
         # Official ivars.
         self.gui = g.app.gui
         
@@ -207,6 +211,8 @@ class baseCommands:
         # Create the menu last so that we can use the key handler for shortcuts.
         if not g.doHook("menu1",c=c,p=p,v=p):
             c.frame.menu.createMenuBar(c.frame)
+            
+        c.bodyWantsFocusNow()
     #@nonl
     #@+node:ekr.20051007143620:printCommandsDict
     def printCommandsDict (self):
@@ -244,11 +250,7 @@ class baseCommands:
             c.config.getBool('trace_gc') and (self.command_count % 10) == 0
         ):
             commandName = command and command.__name__
-            if (self.command_count % 10) == 0:
-                w = c.get_focus() ; wname = c.widget_name(w)
-                g.printGcSummary('doCommand: %s %s' % (commandName,wname),trace=True)
-            else:
-                g.trace(commandName)
+            g.trace(commandName)
     
         # The presence of this message disables all commands.
         if c.disableCommandsMessage:
@@ -5430,20 +5432,31 @@ class baseCommands:
     redraw = force_redraw = redraw_now
     #@nonl
     #@-node:ekr.20031218072017.2954:c.redraw_now
-    #@+node:ekr.20060205103842:c.set_focus and c.get_focus
+    #@+node:ekr.20060205103842:c.get/request/set_focus
     def get_focus (self):
         
         c = self
-        
         return g.app.gui.get_focus(c)
         
-    def set_focus (self,widget):
+    def request_focus(self,w):
+    
+        c = self
+        if w: c.requestedFocusWidget = w
+        c.traceFocus(w)
+        
+    def set_focus (self,w):
         
         c = self
         
-        g.app.gui.set_focus(c,widget)
+        if 1: # An optimization.
+            c.requestedFocusWidget = w
+            c.masterFocusHandler()
+        
+        else: # Safer, perhaps.
+            c.hasFocusWidget = c.requestedFocusWidget = w
+            g.app.gui.set_focus(c,w)
     #@nonl
-    #@-node:ekr.20060205103842:c.set_focus and c.get_focus
+    #@-node:ekr.20060205103842:c.get/request/set_focus
     #@+node:ekr.20060205111103:c.widget_name
     def widget_name (self,widget):
         
@@ -5452,32 +5465,90 @@ class baseCommands:
         return c.gui.widget_name(widget)
     #@nonl
     #@-node:ekr.20060205111103:c.widget_name
-    #@+node:ekr.20050120092028:c.xWantsFocus
+    #@+node:ekr.20050120092028:c.xWantsFocus/Now
     def bodyWantsFocus(self):
-        c = self ; w = c.frame.body and c.frame.body.bodyCtrl
-        w and c.set_focus(w)
+        c = self ; body = c.frame.body
+        c.request_focus(body and body.bodyCtrl)
+        
+    def bodyWantsFocusNow(self):
+        c = self ; body = c.frame.body
+        c.set_focus(body and body.bodyCtrl)
             
     def headlineWantsFocus(self,p):
-        c = self ; w = p and p.edit_widget()
-        w and c.set_focus(w)
+        c = self
+        c.request_focus(p and p.edit_widget())
+        
+    def headlineWantsFocusNow(self,p):
+        c = self
+        c.set_focus(p and p.edit_widget())
         
     def logWantsFocus(self):
-        c = self ; w = self.frame.log and self.frame.log.logCtrl
-        w and c.set_focus(w)
+        c = self ; log = c.frame.log
+        c.request_focus(log and log.logCtrl)
+        
+    def logWantsFocusNow(self):
+        c = self ; log = c.frame.log
+        c.set_focus(log and log.logCtrl)
     
     def minibufferWantsFocus(self):
         c = self ; k = c.k
-        # Let the key handler figure out what to do.
         k and k.minibufferWantsFocus()
+        
+    def minibufferWantsFocusNow(self):
+        c = self ; k = c.k
+        k and k.minibufferWantsFocusNow()
     
     def treeWantsFocus(self):
-        c = self ; w = self.frame.tree and self.frame.tree.canvas
-        w and c.set_focus(w)
+        c = self ; tree = c.frame.tree
+        c.request_focus(tree and tree.canvas)
+        
+    def treeWantsFocusNow(self):
+        c = self ; tree = c.frame.tree
+        c.set_focus(tree and tree.canvas)
         
     def widgetWantsFocus(self,w):
+        c = self ; c.request_focus(w)
+        
+    def widgetWantsFocusNow(self,w):
+        c = self ; c.set_focus(w)
+    #@-node:ekr.20050120092028:c.xWantsFocus/Now
+    #@+node:ekr.20060207142332:c.traceFocus
+    trace_focus_count = 0
+    
+    def traceFocus (self,w):
+        
         c = self
-        w and c.set_focus(w)
-    #@-node:ekr.20050120092028:c.xWantsFocus
+    
+        if not g.app.unitTesting and c.config.getBool('trace_focus'):
+            c.trace_focus_count += 1
+            g.trace('%4d' % (c.trace_focus_count),
+                c.widget_name(w),g.callers())
+    #@nonl
+    #@-node:ekr.20060207142332:c.traceFocus
+    #@+node:ekr.20060207140352:c.masterFocusHandler
+    def masterFocusHandler (self):
+        
+        c = self ; 
+        trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+        
+        # Give priority to later requests, but default to previously set widget.
+        w = c.requestedFocusWidget or c.hasFocusWidget
+        
+        if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
+            if trace: g.trace('*'*20,'no change.')
+            c.requestedFocusWidget = None
+        elif w:
+            # Ignore whatever g.app.gui.get_focus might say.
+            ok = g.app.gui.set_focus(c,w)
+            if ok: c.hasFocusWidget = w
+            c.requestedFocusWidget = None
+        else:
+            if trace: g.trace('*'*20,'oops: moving to body pane.')
+            c.bodyWantsFocusNow()
+    
+    restoreRequestedFocus = masterFocusHandler
+    #@nonl
+    #@-node:ekr.20060207140352:c.masterFocusHandler
     #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
     #@+node:ekr.20031218072017.2955:Enabling Menu Items
     #@+node:ekr.20040323172420:Slow routines: no longer used
