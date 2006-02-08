@@ -131,7 +131,7 @@
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
 <v t="ekr.20051205102401"><vh>Note: do search replace to update version numbers</vh></v>
-<v t="ekr.20050118095021" a="TV"><vh>Leo 4.x installer  (update for each release)</vh>
+<v t="ekr.20050118095021" a="V"><vh>Leo 4.x installer  (update for each release)</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
@@ -489,7 +489,7 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-4-b1", # No spaces here!
+version="4-4-b2", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -662,7 +662,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.4-b1
+Version: 4.4-b2
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -3488,7 +3488,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-b1.exe"
+OutFile "LeoSetup-4-4-b2.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3547,6 +3547,7 @@ File "..\doc\LeoPostings.leo"
 
 File "..\doc\leoNotes.txt"
 File "..\doc\leoToDo.txt"
+File "..\doc\leoToDoLater.txt"
 
 File "..\doc\Readme.txt"
 File "..\doc\Pkg-info.txt"
@@ -3576,6 +3577,7 @@ Delete "$INSTDIR\doc\LeoPostings.leo"
 
 Delete "$INSTDIR\doc\leoNotes.txt"
 Delete "$INSTDIR\doc\leoToDo.txt"
+Delete "$INSTDIR\doc\leoToDoLater.txt"
 
 Delete "$INSTDIR\doc\License.txt"
 Delete "$INSTDIR\doc\Install.txt"
@@ -3700,7 +3702,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 Delete "$INSTDIR\test\test.leo"
 Delete "$INSTDIR\test\unitTest.leo"
 </t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-b1"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-b2"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/

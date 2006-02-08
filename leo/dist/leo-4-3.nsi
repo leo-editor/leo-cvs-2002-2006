@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.4-b1"
+!define PRODUCT_VERSION "4.4-b2"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl
@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-b1.exe"
+OutFile "LeoSetup-4-4-b2.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -255,6 +255,7 @@ Section "Leo" SEC01
   
   File "..\doc\leoNotes.txt"
   File "..\doc\leoToDo.txt"
+  File "..\doc\leoToDoLater.txt"
   
   File "..\doc\Readme.txt"
   File "..\doc\Pkg-info.txt"
@@ -560,6 +561,7 @@ Section Uninstall
   
   Delete "$INSTDIR\doc\leoNotes.txt"
   Delete "$INSTDIR\doc\leoToDo.txt"
+  Delete "$INSTDIR\doc\leoToDoLater.txt"
   
   Delete "$INSTDIR\doc\License.txt"
   Delete "$INSTDIR\doc\Install.txt"
