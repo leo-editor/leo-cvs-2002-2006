@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="255" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="98" left="322" height="777" width="841"/>
+	<global_window_position top="98" left="322" height="758" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -50,19 +50,20 @@
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
-<v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
+<v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = True</vh></v>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
-<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = True</vh></v>
+<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
@@ -415,32 +416,35 @@
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
-<v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
+<v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = True</vh></v>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
-<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = True</vh></v>
+<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
 <v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 </v>
-<v t="ekr.20060204093736"><vh>@bool trace_doCommand = True</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = True</vh></v>
-<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = True</vh></v>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = True</vh></v>
-<v t="ekr.20060202092911" a="E"><vh>@bool trace_tree = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
-<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = True</vh></v>
+<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
+<v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
+<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
+<v t="ekr.20060122105527.7" a="V"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -3832,11 +3836,10 @@ overwrite: Leo replaces the character at the cursor.</t>
 
        &lt;alt-x&gt;show-mini-buffer&lt;return&gt;</t>
 <t tx="ekr.20060122105527.7">True: (Recommended) Selecting an outline node leaves the focus in the outline pane.
-      Essential when using key bindings that apply to the outline pane.
 
-False: Selecting an outline node transfers focus to the body pane.
-       This was the way all version before Leo 4.4 worked, but
-       it will prevent key binding in the outline pane for outline operations from being useful.</t>
+If this is False it will be harder to use the arrow keys in the headline.
+    
+False: (Legacy) Selecting an outline node transfers focus to the body pane.</t>
 <t tx="ekr.20060122105527.8"></t>
 <t tx="ekr.20060122105527.9"></t>
 <t tx="ekr.20060122105527.11"># Boilerplate for most modes.
@@ -4413,5 +4416,6 @@ False: minibuffer commands hide the Find Tab.
 Important: the Find Tab always exists regardless of this setting.</t>
 <t tx="ekr.20060206155101"></t>
 <t tx="ekr.20060206161839"></t>
+<t tx="ekr.20060207142012"></t>
 </tnodes>
 </leo_file>

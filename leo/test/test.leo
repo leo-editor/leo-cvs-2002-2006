@@ -248,9 +248,10 @@
 <v t="ekr.20060125082644"><vh>Test show-find-options</vh></v>
 <v t="ekr.20060126161404"><vh>Test of insert methods</vh></v>
 <v t="ekr.20060201161437"><vh>Prototype of p.key</vh></v>
-<v t="ekr.20060205061810" a="E"><vh>Typing test</vh>
-<v t="ekr.20060206163900" a="V"><vh>a</vh></v>
+<v t="ekr.20060205061810"><vh>Typing test</vh>
+<v t="ekr.20060206163900"><vh>a</vh></v>
 </v>
+<v t="ekr.20060208081017" a="V"><vh>Empty</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4442,8 +4443,7 @@ c.redraw()</t>
 print '-' * 40
 
 for p in c.allNodes_iter():
-    print '%30s %s' % (p.headString()[:30], key(p))
-</t>
+    print '%30s %s' % (p.headString()[:30], key(p))</t>
 <t tx="ekr.20060201163600"></t>
 <t tx="ekr.20060201170217"></t>
 <t tx="ekr.20060202155426">c.debugCommands.printStats()</t>
@@ -4454,13 +4454,8 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
-<t tx="ekr.20060205061810">c.helpCommands.help(None)
-
-
-
-
-
-</t>
-<t tx="ekr.20060206163900"></t>
+<t tx="ekr.20060205061810">c.helpCommands.help(None)</t>
+<t tx="ekr.20060206163900">g.es('hi')</t>
+<t tx="ekr.20060208081017"></t>
 </tnodes>
 </leo_file>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="8632" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="8636" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
-	<global_window_position top="45" left="497" height="781" width="699"/>
+	<global_window_position top="64" left="198" height="781" width="1027"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1595,17 +1595,17 @@
 <v t="ekr.20051107115231.18" annotate="7d71002e"><vh>@test paste and undo in headline - at end</vh></v>
 <v t="ekr.20051107115231.20" annotate="7d71002e"><vh>@test paste and undo in headline - with selection</vh></v>
 <v t="ekr.20051107115231.21" annotate="7d71002e"><vh>@test selecting new node retains typing in headline</vh></v>
-<v t="ekr.20051107115231.22" annotate="7d71002e"><vh>@test paste from menu into body sticks</vh></v>
-<v t="ekr.20051107115231.23" annotate="7d71002e"><vh>@test paste from menu into headline sticks</vh></v>
+<v t="ekr.20060208072307" annotate="7d71002e"><vh>@test paste from menu into body sticks</vh></v>
+<v t="ekr.20060208072331" annotate="7d71002e"><vh>@test paste from menu into headline sticks</vh></v>
 <v t="ekr.20051107115231.24" annotate="7d71002e"><vh>@test paste from menu to body recolors the body</vh></v>
 <v t="ekr.20051107115231.25" annotate="7d71002e"><vh>@test typing in headline recomputes width</vh></v>
 <v t="ekr.20051107115231.28" annotate="7d71002e"><vh>@test selecting new node retains paste in headline</vh></v>
-<v t="ekr.20051109091152" annotate="7d71002e"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
+<v t="ekr.20060208072358" annotate="7d71002e"><vh>@test typing in empty body text redraws the screen (and icon)</vh></v>
 <v t="ekr.20051109091731" annotate="7d71002e"><vh>@test typing in non-empty body text does not redraw the screen</vh></v>
 <v t="ekr.20051120110335" annotate="7d71002e"><vh>@test inserting a new node can be undone and redone</vh></v>
 <v t="ekr.20051125155134" annotate="7d71002e"><vh>@test inserting a new node draws the screen exactly once</vh></v>
 <v t="ekr.20051120115046" annotate="7d71002e"><vh>@test undoing insert node restores previous node's body text</vh></v>
-<v t="ekr.20051125165933" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
+<v t="ekr.20060208072415" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in body</vh></v>
 <v t="ekr.20051125170139" annotate="7d71002e"><vh>@test &lt;Delete&gt; key sticks in headline</vh></v>
 <v t="ekr.20060131102450"><vh>print end of typing and undo tests</vh></v>
 </v>
@@ -7763,7 +7763,7 @@ if 0:
             a["lineYOffset"] = 0
             
 c.redraw()</t>
-<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20051104081502.162" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -13843,53 +13843,6 @@ finally:
         p.initHeadString(h)
         c.frame.tree.setHeadline(p,h)
         c.redraw_now()</t>
-<t tx="ekr.20051107115231.22">import leoTest ; u = leoTest.testUtils(c)
-h = 'Test headline abc'
-p = u.findNodeAnywhere(h)
-# Post by hand.
-menu = c.frame.menu.getMenu('Edit')
-i = menu.index('Paste')
-c.selectPosition(p)
-c.bodyWantsFocus()
-paste = 'ABC'
-g.app.gui.replaceClipboardWith(paste)
-menu.invoke(i)
-# Move around and and make sure it doesn't change.
-try:
-    assert p.bodyString() == paste
-    c.selectPosition(p.threadBack())
-    assert p.bodyString() == paste
-    c.selectPosition(p)
-    assert p.bodyString() == paste
-finally:
-    if 1:
-        p.setBodyString('')
-        c.redraw_now()
-</t>
-<t tx="ekr.20051107115231.23">import leoTest ; u = leoTest.testUtils(c)
-h = 'Test headline abc'
-p = u.findNodeAnywhere(h)
-# Post by hand.
-menu = c.frame.menu.getMenu('Edit')
-i = menu.index('Paste')
-c.selectPosition(p)
-c.frame.tree.editLabel(p)
-w = p.edit_widget()
-g.app.gui.setSelectionRange(w,'end','end')
-paste = 'ABC'
-g.app.gui.replaceClipboardWith(paste)
-menu.invoke(i)
-# Move around and and make sure it doesn't change.
-try:
-    c.selectPosition(p.threadBack())
-    assert p.headString() == h + paste
-    c.selectPosition(p)
-    assert p.headString() == h + paste
-finally:
-    if 1:
-        p.setHeadString(h)
-        c.frame.tree.setHeadline(p,h)
-        c.redraw_now()</t>
 <t tx="ekr.20051107115231.24"># Should be a comment# Should be a comment
 import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
@@ -13898,7 +13851,7 @@ p = u.findNodeAnywhere(h)
 menu = c.frame.menu.getMenu('Edit')
 i = menu.index('Paste')
 c.selectPosition(p)
-c.bodyWantsFocus()
+c.bodyWantsFocusNow()
 paste = '# Should be a comment'
 g.app.gui.replaceClipboardWith(paste)
 n = c.frame.body.colorizer.count
@@ -14005,22 +13958,6 @@ finally:
 <t tx="ekr.20051107115231.34"></t>
 <t tx="ekr.20051108140810"></t>
 <t tx="ekr.20051108141141"></t>
-<t tx="ekr.20051109091152">import leoTest ; u = leoTest.testUtils(c)
-
-h = 'Test headline abc'
-p = u.findNodeAnywhere(h)
-c.selectPosition(p)
-c.redraw_now() # To make node visible
-n = c.frame.tree.redrawCount
-c.bodyWantsFocus()
-try:
-    c.frame.body.bodyCtrl.event_generate('a')
-    n2 = c.frame.tree.redrawCount
-    assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
-finally:
-    if 1:
-        p.setBodyString('')
-        c.redraw_now()</t>
 <t tx="ekr.20051109091333"># Not ready yet: generating a backspace seems impossible!
 
 import leoTest ; u = leoTest.testUtils(c)
@@ -14031,7 +13968,7 @@ c.selectPosition(p)
 p.setBodyString('a')
 c.redraw_now() # To make node visible and to set the icon.
 try:
-    c.bodyWantsFocus()
+    c.bodyWantsFocusNow()
     n = c.frame.tree.redrawCount
     w = c.frame.body.bodyCtrl
     w.mark_set('insert','end')
@@ -14051,7 +13988,7 @@ c.selectPosition(p)
 p.setBodyString('a')
 c.redraw_now() # To make node visible
 n = c.frame.tree.redrawCount
-c.bodyWantsFocus()
+c.bodyWantsFocusNow()
 try:
     c.frame.body.bodyCtrl.event_generate('a')
     n2 = c.frame.tree.redrawCount
@@ -14103,28 +14040,6 @@ try:
     assert n2 == n + 1,'redraws: %d' % (n2 - n)
 finally:
     c.undoer.undo()</t>
-<t tx="ekr.20051125165933">import leoTest ; u = leoTest.testUtils(c)
-h = 'Test headline abc'
-p = u.findNodeAnywhere(h)
-assert(p)
-c.selectPosition(p)
-s = 'ABC'
-p.setBodyString(s)
-try:
-    c.bodyWantsFocus()
-    w = c.frame.body.bodyCtrl
-    w.mark_set('insert','1.2')
-    w.event_generate('&lt;Delete&gt;')
-    assert p.bodyString() == s[:-1]
-    c.selectPosition(p.threadBack())
-    c.selectPosition(p)
-    assert p.bodyString() == s[:-1]
-finally:
-    if 1:
-        p.setBodyString('')
-        c.redraw_now()
-
-</t>
 <t tx="ekr.20051125170139">import leoTest ; u = leoTest.testUtils(c)
 h = 'Test headline abc'
 p = u.findNodeAnywhere(h)
@@ -14273,5 +14188,94 @@ if p:
         c.endUpdate()</t>
 <t tx="ekr.20060205165937"></t>
 <t tx="ekr.20060205165937.1"></t>
+<t tx="ekr.20060208072307">import leoTest ; u = leoTest.testUtils(c)
+h = 'Test headline abc'
+p = u.findNodeAnywhere(h)
+assert p, 'oops0'
+# Post by hand.
+menu = c.frame.menu.getMenu('Edit')
+i = menu.index('Paste')
+c.selectPosition(p)
+c.bodyWantsFocusNow()
+paste = 'ABC'
+g.app.gui.replaceClipboardWith(paste)
+menu.invoke(i)
+# Move around and and make sure it doesn't change.
+try:
+    assert p.bodyString() == paste
+    c.selectPosition(p.threadBack())
+    assert p.bodyString() == paste
+    c.selectPosition(p)
+    assert p.bodyString() == paste
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()
+</t>
+<t tx="ekr.20060208072331">import leoTest ; u = leoTest.testUtils(c)
+h = 'Test headline abc'
+p = u.findNodeAnywhere(h)
+assert p, 'oops0'
+# Post by hand.
+menu = c.frame.menu.getMenu('Edit')
+i = menu.index('Paste')
+c.selectPosition(p)
+c.frame.tree.editLabel(p)
+w = p.edit_widget()
+g.app.gui.setSelectionRange(w,'end','end')
+paste = 'ABC'
+g.app.gui.replaceClipboardWith(paste)
+menu.invoke(i)
+# Move around and and make sure it doesn't change.
+try:
+    c.selectPosition(p.threadBack())
+    assert p.headString() == h + paste
+    c.selectPosition(p)
+    assert p.headString() == h + paste
+finally:
+    if 1:
+        p.setHeadString(h)
+        c.frame.tree.setHeadline(p,h)
+        c.redraw_now()</t>
+<t tx="ekr.20060208072358">import leoTest ; u = leoTest.testUtils(c)
+
+h = 'Test headline abc'
+p = u.findNodeAnywhere(h)
+assert p, 'oops0'
+c.selectPosition(p)
+c.redraw_now() # To make node visible
+n = c.frame.tree.redrawCount
+c.bodyWantsFocusNow()
+assert not p.bodyString(), 'oops1'
+try:
+    c.frame.body.bodyCtrl.event_generate('a')
+    n2 = c.frame.tree.redrawCount
+    assert n2 == n + 1,'too many or too few redraws: %d' % (n2-n)
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()</t>
+<t tx="ekr.20060208072415">import leoTest ; u = leoTest.testUtils(c)
+h = 'Test headline abc'
+p = u.findNodeAnywhere(h)
+assert p, 'oops0'
+c.selectPosition(p)
+s = 'ABC'
+p.setBodyString(s)
+try:
+    c.bodyWantsFocusNow()
+    w = c.frame.body.bodyCtrl
+    w.mark_set('insert','1.2')
+    w.event_generate('&lt;Delete&gt;')
+    assert p.bodyString() == s[:-1]
+    c.selectPosition(p.threadBack())
+    c.selectPosition(p)
+    assert p.bodyString() == s[:-1]
+finally:
+    if 1:
+        p.setBodyString('')
+        c.redraw_now()
+
+</t>
 </tnodes>
 </leo_file>
