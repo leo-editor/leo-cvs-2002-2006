@@ -320,7 +320,6 @@ class keyHandlerClass:
             # keys are scope names: 'all','text',etc. or mode names.
             # Values are dicts: keys are strokes, values are g.bunch(commandName,func,pane,stroke)
         
-        
         # Special bindings for k.fullCommand.
         self.mb_copyKey = None
         self.mb_pasteKey = None
@@ -343,9 +342,6 @@ class keyHandlerClass:
         self.keysymHistory = []
         self.previous = []
         self.stroke = None
-        
-        # For getArg...
-        
         
         # For onIdleTime
         self.idleCount = 0
@@ -1057,12 +1053,12 @@ class keyHandlerClass:
         
         '''Implement a command by passing a keypress to Tkinter.'''
     
-        k = self
+        k = self ; c = k.c
         
         stroke = k.getShortcutForCommandName(commandName)
         
         if stroke and w:
-            # g.trace(g.app.gui.widget_name(w))
+            # g.trace(c.widget_name(w))
             w.event_generate(stroke)
         else:
             g.trace('no shortcut for %s' % (commandName),color='red')
@@ -1222,18 +1218,24 @@ class keyHandlerClass:
     # influence another.
     #@-at
     #@nonl
-    #@+node:ekr.20060125175103:k.minibufferWantsFocus
+    #@+node:ekr.20060125175103:k.minibufferWantsFocus/Now
     def minibufferWantsFocus(self):
         
         c = self.c
-        
         if self.useTextWidget:
-            # Important! We must preserve body selection!
             c.widgetWantsFocus(c.miniBufferWidget)
         else:
             c.bodyWantsFocus()
+    
+    def minibufferWantsFocusNow(self):
+        
+        c = self.c
+        if self.useTextWidget:
+            c.widgetWantsFocusNow(c.miniBufferWidget)
+        else:
+            c.bodyWantsFocusNow()
     #@nonl
-    #@-node:ekr.20060125175103:k.minibufferWantsFocus
+    #@-node:ekr.20060125175103:k.minibufferWantsFocus/Now
     #@+node:ekr.20051023132350:getLabel
     def getLabel (self,ignorePrompt=False):
         
@@ -1287,14 +1289,9 @@ class keyHandlerClass:
         # g.trace(repr(s))
     
         if self.useTextWidget:
-            w_old = c.get_focus()
-            # Danger: this will rip the focus into the minibuffer.
-            # **without** calling c.set_focus.
             w.delete('1.0','end')
             w.insert('1.0',s)
-            if w_old != w:
-                # g.trace('Restoring focus to',c.widget_name(w_old))
-                c.set_focus(w_old)
+            c.masterFocusHandler() # Restore to the previously requested focus.
         else:
             if k.svar: k.svar.set(s)
     
@@ -1380,7 +1377,9 @@ class keyHandlerClass:
         
         k = self ; c = k.c
         val = self.masterKeyHandlerHelper(event)
-        c.frame.updateStatusLine()
+        if val: # Ignore special keys.
+            c.frame.updateStatusLine()
+            c.masterFocusHandler()
         return val
     #@nonl
     #@+node:ekr.20060205221734:masterKeyHandlerHelper
@@ -1504,11 +1503,14 @@ class keyHandlerClass:
     
         if event and func:
             # Don't even *think* of overriding this.
-            return func(event)
+            val = func(event)
+            c.masterFocusHandler()
+            return val
         else:
             # All tree callbacks have a func, so we can't be in the tree.
-            g.trace('*'*20,'auto-deactivate tree: %s' % wname)
+            # g.trace('*'*20,'auto-deactivate tree: %s' % wname)
             c.frame.tree.OnDeactivate()
+            c.masterFocusHandler()
             return None
             
     masterClick3Handler         = masterClickHandler
@@ -1592,7 +1594,7 @@ class keyHandlerClass:
     #@+node:ekr.20060117202916.2:endMode
     def endMode(self,event):
         
-        k = self ; c = k.c ; w = c.get_focus()
+        k = self ; c = k.c
     
         c.frame.log.deleteTab('Mode')
     
@@ -1600,12 +1602,7 @@ class keyHandlerClass:
         k.inputModeName = None
         k.clearState()
         k.resetLabel()
-        k.showStateAndMode()
-    
-        # k.setLabelGrey('top-level mode')
-        
-        # Do *not* change the focus: the command may have changed it.
-        c.widgetWantsFocus(w)
+        k.showStateAndMode() # Restores focus.
     #@nonl
     #@-node:ekr.20060117202916.2:endMode
     #@+node:ekr.20060102135349.2:enterNamedMode
@@ -1632,7 +1629,7 @@ class keyHandlerClass:
         
         '''Handle a mode defined by an @mode node in leoSettings.leo.'''
     
-        k = self ; c = k.c ;  w = c.get_focus()
+        k = self ; c = k.c
         state = k.getState(modeName)
         trace = c.config.getBool('trace_modes')
         
@@ -1649,7 +1646,7 @@ class keyHandlerClass:
             if k.useTextWidget:
                 c.minibufferWantsFocus()
             else:
-                c.widgetWantsFocus(w)
+                c.restoreRequestedFocus()
         elif not func:
             g.trace('No func: improper key binding')
             return 'break'
@@ -1694,7 +1691,6 @@ class keyHandlerClass:
             k.modeBindingsDict = d
             
         k.inputModeName = modeName
-        k.modeWidget = c.get_focus()
         
         if k.masterBindingsDict.get(modeName) is None:
             k.createModeBindings(modeName,d)
@@ -1794,23 +1790,10 @@ class keyHandlerClass:
     def setInputState (self,state,showState=False):
     
         k = self ; c = k.c
-        w = c.get_focus()
-        wname = g.app.gui.widget_name(w)
     
         k.unboundKeyAction = state
         if state != 'insert' or showState:
             k.showStateAndMode()
-       
-        # These commands never change focus.
-        # Alas, get_focus may be unreliable while focus is changing.
-        w and c.widgetWantsFocus(w)
-        
-        if 1: # This has the potential to rip focus from the body.
-            for z in (None,'body','tree','head','canvas'):
-                if not z or wname.startswith(z):
-                    return
-            else:
-                g.trace('-'*20,'widget',wname)
     #@nonl
     #@-node:ekr.20060120200818:setInputState
     #@+node:ekr.20060120193743:showStateAndMode
