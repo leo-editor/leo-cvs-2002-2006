@@ -1,7 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20060207133601:@thin ../doc/leoToDoLater.txt
 #@+all
-#@+node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20060116073938:To do 4.4b3
 #@+node:ekr.20060206105214:search-with-present-bindings inits with find text selected
 #@+node:ekr.20060124134356: setupArgs
@@ -11080,7 +11079,6 @@ to Alt-x.
 #@nonl
 #@-node:ekr.20051104051733:Make Focus-in in minibuffer widget equivalent to Alt-x
 #@-node:ekr.20051023192433:Maybe or never
-#@-node:ekr.20050921094025:4.4 To do
 #@+node:ekr.20050816165305:Important
 #@+node:ekr.20031218072017.801:Zipped .leo files
 #@+node:ekr.20050428062312:Request 1

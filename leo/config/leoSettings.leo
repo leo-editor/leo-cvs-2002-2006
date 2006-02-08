@@ -53,7 +53,7 @@
 <v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
@@ -419,7 +419,7 @@
 <v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
@@ -438,13 +438,13 @@
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
+<v t="ekr.20060202092911" a="EV"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
 <v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = True</vh></v>
-<v t="ekr.20060122105527.7" a="V"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060122105527.7"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 </v>
 </vnodes>
 <tnodes>

@@ -2754,7 +2754,8 @@ These would be an alternative to XP Alt-f, Alt-E, etc.
 #@+node:ekr.20060206105450:Finish apropos-find-commands
 #@-node:ekr.20060206105450:Finish apropos-find-commands
 #@+node:ekr.20060206104510:Docs
-
+Refer to 4.4b3 to do first list.
+#@nonl
 #@+node:ekr.20060124090925:Posting
 Minibuffer search commands should be nothing a but a thin interface to Leo's already existing tab-search commands.  That is, the searchCommandsClass in leoEditCommands.py will be an adapter class on the leoFind class in leoFind.py.  It won't be a subclass: it will use the already existing class.
 
