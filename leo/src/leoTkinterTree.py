@@ -333,11 +333,11 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         #@    << make bindings for the canvas itself >>
         #@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
-        # Needed to transfer focus.
-        def treeClickCallback(event,self=self):
-            return self.c.k.masterClickHandler(event,func=self.onTreeClick)
-        
-        self.canvas.bind('<Button-1>',treeClickCallback)
+        if 0: # Needed to transfer focus.
+            def treeClickCallback(event,self=self):
+                return self.c.k.masterClickHandler(event,func=self.onTreeClick)
+            
+            self.canvas.bind('<Button-1>',treeClickCallback)
         
         self.canvas.bind('<Key>',k.masterKeyHandler)
         #@nonl
@@ -913,6 +913,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.expandAllAncestors(c.currentPosition())
         self.redrawHelper(scroll=scroll)
         self.canvas.update_idletasks() # Important for unit tests.
+        c.masterFocusHandler()
         
     redraw = redraw_now # Compatibility
     #@nonl
@@ -1991,7 +1992,7 @@ class leoTkinterTree (leoFrame.leoTree):
         except:
             g.es_event_exception("iconrclick")
             
-        return "continue"
+        return 'break'
     #@-node:ekr.20040803072955.89:onIconBoxRightClick
     #@+node:ekr.20040803072955.82:onIconBoxDoubleClick
     def onIconBoxDoubleClick (self,event):
@@ -2020,9 +2021,9 @@ class leoTkinterTree (leoFrame.leoTree):
         
         '''Handle common process when any part of a headline is clicked.'''
         
-        __pychecker__ = '--no-argsused' # event not used.
+        g.trace(p.headString())
         
-        # g.trace(p.headString())
+        returnVal = 'break' # Default: do nothing more.
     
         try:
             c = self.c
@@ -2034,9 +2035,11 @@ class leoTkinterTree (leoFrame.leoTree):
                 # The *second* click in the headline starts editing.
                 if self.active:
                     self.editLabel(p)
+                    returnVal = 'continue'
                 else:
                     # Set the focus immediately.  This is essential for proper editing.
-                    c.treeWantsFocus()
+                    c.treeWantsFocusNow()
+                    returnVal = 'break'
             else:
                 # g.trace("not current")
                 self.select(p)
@@ -2049,10 +2052,10 @@ class leoTkinterTree (leoFrame.leoTree):
                     c.frame.bodyCtrl.mark_set("insert","1.0")
                     
                 if self.stayInTree:
-                    g.trace('*'*20,'Moving to tree')
-                    c.treeWantsFocus()
+                    c.treeWantsFocusNow()
                 else:
-                    c.bodyWantsFocus()
+                    c.bodyWantsFocusNow()
+                returnVal = 'break'
             
             # The next click *in the same headline* will start editing.
             self.active = True
@@ -2061,16 +2064,15 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nl
         except:
             g.es_event_exception("activate tree")
+            
+        return returnVal
+    #@nonl
     #@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
     #@+node:ekr.20051022141020:onTreeClick
     def onTreeClick (self,event=None):
         
-        tree = self ; c = tree.c
+        '''Handle an event in the tree canvas, outside of any tree widget.'''
         
-        c.setLog()
-        tree.endEditLabel()
-        c.treeWantsFocus()
-    
         return 'break'
     #@nonl
     #@-node:ekr.20051022141020:onTreeClick
@@ -2107,20 +2109,24 @@ class leoTkinterTree (leoFrame.leoTree):
             p = w.leo_position
         except AttributeError:
             g.trace('*'*20,'oops')
-            return "continue"
+            return 'break'
             
         # g.trace(p.headString())
         
         c.setLog()
-        
+    
         try:
             if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
-                self.OnActivateHeadline(p)
+                returnVal = self.OnActivateHeadline(p)
             g.doHook("headclick2",c=c,p=p,v=p,event=event)
         except:
+            returnVal = 'break'
             g.es_event_exception("headclick")
     
-        return "continue"
+        # 'continue' is sometimes correct here.
+        # 'break' would make it impossible to unselect the headline text.
+        # g.trace('returnVal',returnVal,'stayInTree',self.stayInTree)
+        return returnVal
     #@nonl
     #@-node:ekr.20040803072955.87:onHeadlineClick
     #@+node:ekr.20040803072955.83:onHeadlineRightClick
@@ -2134,7 +2140,7 @@ class leoTkinterTree (leoFrame.leoTree):
             p = w.leo_position
         except AttributeError:
             g.trace('*'*20,'oops')
-            return "continue"
+            return 'break'
             
         c.setLog()
     
@@ -2147,7 +2153,9 @@ class leoTkinterTree (leoFrame.leoTree):
         except:
             g.es_event_exception("headrclick")
             
-        return "continue"
+        # 'continue' *is* correct here.
+        # 'break' would make it impossible to unselect the headline text.
+        return 'continue'
     #@-node:ekr.20040803072955.83:onHeadlineRightClick
     #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.108:tree.OnDeactivate
@@ -2159,7 +2167,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         tree = self ; c = self.c
         
-        g.trace(g.callers())
+        # g.trace(g.callers())
        
         c.beginUpdate()
         try:
@@ -2475,6 +2483,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def editLabel (self,p):
         
         """Start editing p's headline."""
+        
+        c = self.c
     
         if self.editPosition() and p != self.editPosition():
             c.beginUpdate()
@@ -2491,7 +2501,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if p and p.edit_widget():
             self.revertHeadline = p.headString() # New in 4.4b2: helps undo.
             self.setEditLabelState(p) # Sets the focus immediately.
-            self.frame.c.headlineWantsFocus(p) # Make sure the focus sticks.
+            c.headlineWantsFocus(p) # Make sure the focus sticks.
     #@nonl
     #@-node:ekr.20040803072955.127:editLabel
     #@+node:ekr.20040803072955.128:tree.select
@@ -2653,7 +2663,7 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; w = p.edit_widget()
     
         if p and w:
-            c.widgetWantsFocus(w)
+            c.widgetWantsFocusNow(w)
             self.setEditHeadlineColors(p)
             w.tag_remove("sel","1.0","end")
             w.tag_add("sel","1.0","end")
