@@ -450,8 +450,7 @@ class tkinterGui(leoGui.leoGui):
                     
         if not g.app.unitTesting and c.config.getBool('trace_g.app.gui.set_focus'):
             self.set_focus_count += 1
-            g.trace('%4d' % (self.set_focus_count),
-                c.widget_name(w),g.callers())
+            g.trace('%4d %10s' % (self.set_focus_count,c.widget_name(w)),g.callers())
         
         if w:
             try:
@@ -462,9 +461,10 @@ class tkinterGui(leoGui.leoGui):
     
                 # It's possible that the widget doesn't exist now.
                 w.focus_set()
+                return True
             except Exception:
-                g.es_exception()
-                pass
+                # g.es_exception()
+                return False
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
     #@-node:ekr.20031218072017.4064:Focus
@@ -667,7 +667,7 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4083:setInsertPoint
     #@-node:ekr.20031218072017.4081:Insert Point
     #@+node:ekr.20031218072017.4084:Selection
-    #@+node:ekr.20031218072017.4085:getSelectionRange (to be deleted?)
+    #@+node:ekr.20031218072017.4085:getSelectionRange
     def getSelectionRange (self,t):
         
         try:
@@ -675,7 +675,7 @@ class tkinterGui(leoGui.leoGui):
         except Exception:
             return 0,0
     #@nonl
-    #@-node:ekr.20031218072017.4085:getSelectionRange (to be deleted?)
+    #@-node:ekr.20031218072017.4085:getSelectionRange
     #@+node:ekr.20051126125950:getSelectedText
     def getSelectedText (self,t):
     

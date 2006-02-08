@@ -52,6 +52,22 @@ for s in d:
 #@-node:ekr.20050123160215.1:Put all files in alpha order in ExamDiff
 #@-node:ekr.20050123161408:ExamDiff files
 #@+node:ekr.20031218072017.365:How to...
+#@+node:ekr.20060208112908:CVS stuff...
+#@+node:ekr.20060208112908.1:How to check out leo from SourceForge
+The Tortoise cvs params:
+
+:ext:edream@cvs.sourceforge.net:/cvsroot/leo
+
+That is...
+
+Protocol: pserver
+Server: cvs.sourceforge.net
+Repository folder: /cvsroot/leo
+User name: your cvs name
+
+### :pserver:anonymous@cvs.sourceforge.net:/cvsroot/leo
+#@nonl
+#@-node:ekr.20060208112908.1:How to check out leo from SourceForge
 #@+node:ekr.20031218072017.366:How to add and remove files from CVS repository
 use the command line option in the admin menu to do the following:
 
@@ -68,6 +84,31 @@ remove readme*.doc
 	(then do commit)
 #@nonl
 #@-node:ekr.20031218072017.366:How to add and remove files from CVS repository
+#@+node:ekr.20031218072017.391:How to use CVS branches
+@nocolor
+
+I have a fair bit of expertise on CVS branches. It's late at night, so I don't have time for a long soapbox spiel at the moment. I will try to post something tomorrow. 
+
+The brief picture is: 
+
+* Check out code from CVS at the point you want to create the branch. 
+
+* Make sure none of the files in your sandbox is modified. 
+
+* Create the branch (cvs tag -b branchname). The branch name must start with a letter (upper or lower case) and thereafter can have alphanumeric characters, hyphens, and underscores (no periods or spaces). 
+
+* The branch is created on the repository, but your sandbox is still checked out on the main branch. To check out on the new branch, do "cvs up -r branchname". 
+
+When you want to merge changes back into the main branch, you can use "cvs up -r MAIN" to retrieve the main branch, then "cvs up -j branchname" to merge changes, then "cvs commit" to commit the merged version to the main branch AFTER YOU HAVE VERIFIED IT. 
+
+I would recommend caution with merging because as you have noted, leo files are not well set up for CVS. They don't merge well because of inconsistent sentinel values. 
+
+You may want to look at manually merging changes back into the main branch until leo implements invariant unique (UUID) sentinel indices. 
+
+This will not hurt your ability to use branches, only your ability to automatically merge changes from one branch onto another.
+#@nonl
+#@-node:ekr.20031218072017.391:How to use CVS branches
+#@-node:ekr.20060208112908:CVS stuff...
 #@+node:ekr.20031218072017.367:How to add support for a new language
 @nocolor
 
@@ -1557,30 +1598,6 @@ when the user executes a script with Pdb it:
 
 that way you get all the goodness that pdb can offer.
 #@-node:ekr.20050510071834:How to use a temp file with pdb
-#@+node:ekr.20031218072017.391:How to use CVS branches
-@nocolor
-
-I have a fair bit of expertise on CVS branches. It's late at night, so I don't have time for a long soapbox spiel at the moment. I will try to post something tomorrow. 
-
-The brief picture is: 
-
-* Check out code from CVS at the point you want to create the branch. 
-
-* Make sure none of the files in your sandbox is modified. 
-
-* Create the branch (cvs tag -b branchname). The branch name must start with a letter (upper or lower case) and thereafter can have alphanumeric characters, hyphens, and underscores (no periods or spaces). 
-
-* The branch is created on the repository, but your sandbox is still checked out on the main branch. To check out on the new branch, do "cvs up -r branchname". 
-
-When you want to merge changes back into the main branch, you can use "cvs up -r MAIN" to retrieve the main branch, then "cvs up -j branchname" to merge changes, then "cvs commit" to commit the merged version to the main branch AFTER YOU HAVE VERIFIED IT. 
-
-I would recommend caution with merging because as you have noted, leo files are not well set up for CVS. They don't merge well because of inconsistent sentinel values. 
-
-You may want to look at manually merging changes back into the main branch until leo implements invariant unique (UUID) sentinel indices. 
-
-This will not hurt your ability to use branches, only your ability to automatically merge changes from one branch onto another.
-#@nonl
-#@-node:ekr.20031218072017.391:How to use CVS branches
 #@+node:ekr.20041214135556:How to use Tile
 @nocolor
 https://sourceforge.net/forum/message.php?msg_id=2882718

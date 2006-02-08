@@ -1083,7 +1083,7 @@ class leoMenu:
         ]
     #@nonl
     #@-node:ekr.20060117095212:defineCmdsMenuBufferTable
-    #@+node:ekr.20060117095212.5:defineCmdsMenuCenterTable  
+    #@+node:ekr.20060117095212.5:defineCmdsMenuCenterTable
     def defineCmdsMenuCenterTable (self):
     
         c = self.c
@@ -1093,7 +1093,7 @@ class leoMenu:
             ('Center Region',   'center-region'),
         ]
     #@nonl
-    #@-node:ekr.20060117095212.5:defineCmdsMenuCenterTable  
+    #@-node:ekr.20060117095212.5:defineCmdsMenuCenterTable
     #@+node:ekr.20060117095212.4:defineCmdsMenuChangeCaseTable
     def defineCmdsMenuChangeCaseTable (self):
     
