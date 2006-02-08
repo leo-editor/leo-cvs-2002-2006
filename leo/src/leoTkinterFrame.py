@@ -123,6 +123,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c.initVersion()
         c.signOnWithVersion()
         f.miniBufferWidget = f.createMiniBufferWidget()
+        c.bodyWantsFocusNow()
         # f.enableTclTraces()
     #@nonl
     #@+node:ekr.20051009044751:createOuterFrames
@@ -2363,7 +2364,9 @@ class leoTkinterBody (leoFrame.leoBody):
         
         body = self ; c = self.c ; bodyCtrl = body.bodyCtrl
         p = c.currentPosition()
-        ch = bodyCtrl.get('insert-1c')
+        insert = bodyCtrl.index('insert')
+        ch = g.choose(insert=='1.0','',bodyCtrl.get('insert-1c'))
+        # ch = bodyCtrl.get('insert-1c')
         newText = bodyCtrl.get('1.0','end')
         newSel = g.app.gui.getTextSelection(bodyCtrl)
         if oldText is None: oldText = p.bodyString()
@@ -2371,41 +2374,48 @@ class leoTkinterBody (leoFrame.leoBody):
             removeTrailing = self.removeTrailingNewlines(oldText,newText,ch)
         if removeTrailing and newText:
             newText = newText[:-1]
-        # g.trace(removeTrailing,repr(ch),repr(newText))
-        c.undoer.setUndoTypingParams(p,undoType,
-            oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)
-        p.v.setTnodeText(newText)
-        p.v.t.insertSpot = body.getInsertionPoint()
-        #@    << recolor the body >>
-        #@+node:ekr.20051026083733.6:<< recolor the body >>
-        body.colorizer.interrupt()
-        c.frame.scanForTabWidth(p)
-        body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
-        self.forceFullRecolorFlag = False
-        #@nonl
-        #@-node:ekr.20051026083733.6:<< recolor the body >>
-        #@nl
-        if not c.changed: c.setChanged(True)
-        #@    << redraw the screen if necessary >>
-        #@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-        c.beginUpdate()
-        try:
-            redraw_flag = False
-            # Update dirty bits.
-            # p.setDirty() sets all cloned and @file dirty bits.
-            if not p.isDirty() and p.setDirty():
-                redraw_flag = True
-                
-            # Update icons. p.v.iconVal may not exist during unit tests.
-            val = p.computeIcon()
-            if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-                p.v.iconVal = val
-                redraw_flag = True
-        finally:
-            c.endUpdate(redraw_flag)
-        #@nonl
-        #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
-        #@nl
+        changed = oldText != newText
+        if 0:
+            g.trace('removeTrailing',removeTrailing,'changed',changed,
+                'ch',repr(ch),'newText',repr(newText),'oldText',repr(oldText),
+                g.callers())
+        if changed:
+            c.undoer.setUndoTypingParams(p,undoType,
+                oldText=oldText,newText=newText,oldSel=oldSel,newSel=newSel,oldYview=oldYview)
+            p.v.setTnodeText(newText)
+            p.v.t.insertSpot = body.getInsertionPoint()
+            #@        << recolor the body >>
+            #@+node:ekr.20051026083733.6:<< recolor the body >>
+            body.colorizer.interrupt()
+            c.frame.scanForTabWidth(p)
+            body.recolor_now(p,incremental=not self.forceFullRecolorFlag)
+            self.forceFullRecolorFlag = False
+            #@nonl
+            #@-node:ekr.20051026083733.6:<< recolor the body >>
+            #@nl
+            if not c.changed: c.setChanged(True)
+            #@        << redraw the screen if necessary >>
+            #@+node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+            c.beginUpdate()
+            try:
+                redraw_flag = False
+                # Update dirty bits.
+                # p.setDirty() sets all cloned and @file dirty bits.
+                if not p.isDirty() and p.setDirty():
+                    redraw_flag = True
+                    
+                # Update icons. p.v.iconVal may not exist during unit tests.
+                val = p.computeIcon()
+                if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+                    p.v.iconVal = val
+                    redraw_flag = True
+            finally:
+                g.trace(redraw_flag)
+                c.endUpdate(redraw_flag)
+            #@nonl
+            #@-node:ekr.20051026083733.7:<< redraw the screen if necessary >>
+            #@nl
+    #@nonl
     #@+node:ekr.20051026143009:removeTrailingNewlines
     #@+at 
     #@nonl
@@ -3289,14 +3299,6 @@ class leoTkinterLog (leoFrame.leoLog):
         if self.logCtrl:
             #@        << put s to log control >>
             #@+node:EKR.20040423082910:<< put s to log control >>
-            # New in 4.4b1: Restore the focus to a standard place.
-            focus_widget = c.get_focus()
-            name = c.widget_name(focus_widget)
-            for kind in ('body','head','canvas'):
-                if name.startswith(kind): break
-            else:
-                focus_widget = c.frame.body.bodyCtrl
-            
             if color:
                 if color not in self.colorTags:
                     self.colorTags.append(color)
@@ -3309,7 +3311,7 @@ class leoTkinterLog (leoFrame.leoLog):
             
             self.logCtrl.see("end")
             self.forceLogUpdate(s)
-            c.widgetWantsFocus(focus_widget)
+            #@nonl
             #@-node:EKR.20040423082910:<< put s to log control >>
             #@nl
             self.logCtrl.update_idletasks()
