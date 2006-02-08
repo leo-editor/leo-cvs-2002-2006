@@ -331,55 +331,22 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nonl
         #@-node:ekr.20060131173440:<< make bindings for a common binding widget >>
         #@nl
-        #@    << make bindings for the canvas itself >>
-        #@+node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
-        if 0: # Needed to transfer focus.
-            def treeClickCallback(event,self=self):
-                return self.c.k.masterClickHandler(event,func=self.onTreeClick)
-            
-            self.canvas.bind('<Button-1>',treeClickCallback)
-        
         self.canvas.bind('<Key>',k.masterKeyHandler)
-        #@nonl
-        #@-node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
-        #@nl
         #@    << make bindings for tagged items on the canvas >>
         #@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
         where = g.choose(self.expanded_click_area,'clickBox','plusBox')
         
-        if 1:
-            table = (
-                (where,    '<Button-1>',self.onClickBoxClick),
-                ('iconBox','<Button-1>',self.onIconBoxClick),
-                ('iconBox','<Double-1>',self.onIconBoxDoubleClick),
-                ('iconBox','<Button-3>',self.onIconBoxRightClick),
-                ('iconBox','<Double-3>',self.onIconBoxRightClick),
-                ('iconBox','<B1-Motion>',self.onDrag),
-                ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
-            )
-            for tag,event,callback in table:
-                self.canvas.tag_bind(tag,event,callback)
-            
-        else:
-            table = (
-                (where,    '<Button-1>', self.onClickBoxClick,      k.masterClickHandler),
-                ('iconBox','<Button-1>', self.onIconBoxClick,       k.masterClickHandler),
-                ('iconBox','<Double-1>', self.onIconBoxDoubleClick, k.masterDoubleClickHandler),
-                ('iconBox','<Button-3>', self.onIconBoxRightClick,  k.masterClick3Handler),
-                ('iconBox','<Double-3>', self.onIconBoxRightClick,  k.masterDoubleClick3Handler),
-            )
-            
-            for a,b,func,handler in table:
-                def treeCallback(event,handler=handler,func=func):
-                    return handler(event,func=func)
-                self.canvas.tag_bind(a,b,treeCallback)
-            
-            table = (
-                ('iconBox','<B1-Motion>',           self.onDrag),
-                ('iconBox','<Any-ButtonRelease-1>', self.onEndDrag),
-            )
-            for a,b,callback in table:
-                self.canvas.tag_bind(a,b,callback)
+        table = (
+            (where,    '<Button-1>',self.onClickBoxClick),
+            ('iconBox','<Button-1>',self.onIconBoxClick),
+            ('iconBox','<Double-1>',self.onIconBoxDoubleClick),
+            ('iconBox','<Button-3>',self.onIconBoxRightClick),
+            ('iconBox','<Double-3>',self.onIconBoxRightClick),
+            ('iconBox','<B1-Motion>',self.onDrag),
+            ('iconBox','<Any-ButtonRelease-1>',self.onEndDrag),
+        )
+        for tag,event,callback in table:
+            self.canvas.tag_bind(tag,event,callback)
         #@nonl
         #@-node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
         #@nl
@@ -574,7 +541,6 @@ class leoTkinterTree (leoFrame.leoTree):
                     del pList[i]
                     theId = t.leo_window_id
                     assert(theId)
-                    ### assert(t.leo_position == p2)
                     canvas.coords(theId,x,y)
                     t.configure(font=self.font) # 12/17/04
                     found = True ; break
@@ -1044,10 +1010,6 @@ class leoTkinterTree (leoFrame.leoTree):
         
         data = g.doHook("draw-outline-node",tree=self,c=c,p=p,v=p,x=x,y=y)
         if data is not None: return data
-        
-        if 0:
-            if self.trace and self.verbose:
-                print # Helps format traces
     
         if 1:
             self.lineyoffset = 0
@@ -2068,14 +2030,6 @@ class leoTkinterTree (leoFrame.leoTree):
         return returnVal
     #@nonl
     #@-node:ekr.20040803072955.105:OnActivateHeadline (tkTree)
-    #@+node:ekr.20051022141020:onTreeClick
-    def onTreeClick (self,event=None):
-        
-        '''Handle an event in the tree canvas, outside of any tree widget.'''
-        
-        return 'break'
-    #@nonl
-    #@-node:ekr.20051022141020:onTreeClick
     #@+node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.85:configureTextState
     def configureTextState (self,p):
@@ -2589,8 +2543,9 @@ class leoTkinterTree (leoFrame.leoTree):
                     c.beadList.append(p.copy())
                     
                     # New in Leo 4.4: limit this list to 100 items.
-                    ### c.beadList = c.beadList [-100:]
-                    # g.trace('len(c.beadList)',len(c.beadList))
+                    if 0: # Doesn't work yet.
+                        c.beadList = c.beadList [-100:]
+                        g.trace('len(c.beadList)',len(c.beadList))
                     
                 # g.trace(c.beadPointer,p,present_p)
             #@nonl
@@ -2605,9 +2560,6 @@ class leoTkinterTree (leoFrame.leoTree):
                 c.visitedList.remove(p)
             
             c.visitedList.insert(0,p.copy())
-            
-            # New in Leo 4.4: Limit the size of this list.
-            #### c.visitedList = c.visitedList[:100]
             
             # g.trace('len(c.visitedList)',len(c.visitedList))
             # g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!
