@@ -1005,7 +1005,7 @@ class leoFind:
             gui.setSelectionRange(t,insert,insert)
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
-            c.widgetWantsFocus(t)
+            c.widgetWantsFocusNow(t)
     #@nonl
     #@-node:ekr.20031218072017.3089:restore
     #@+node:ekr.20031218072017.3090:save
@@ -1043,13 +1043,13 @@ class leoFind:
         # Set the focus and selection after the redraw.
         t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
         insert = g.choose(self.reverse,pos,newpos)
-        gui.setInsertPoint(t,insert)
+        ###gui.setInsertPoint(t,insert)
         # New in 4.4a3: a much better way to ensure progress in backward searches.
-        gui.setSelectionRange(t,pos,newpos)
-        if self.reverse:
-            gui.setInsertPoint(t,pos)
+        gui.setSelectionRange(t,pos,newpos,insert=insert)
+        # # # if self.reverse:
+            # # # gui.setInsertPoint(t,pos)
         gui.makeIndexVisible(t,insert)
-        c.widgetWantsFocus(t)
+        c.widgetWantsFocusNow(t)
         if self.wrap and not self.wrapPosition:
             self.wrapPosition = self.p
     #@nonl
