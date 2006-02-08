@@ -1005,7 +1005,9 @@ class leoFind:
             gui.setSelectionRange(t,insert,insert)
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
-            c.widgetWantsFocusNow(t)
+        
+        # g.trace(c.widget_name(t))
+        c.widgetWantsFocusNow(t)
     #@nonl
     #@-node:ekr.20031218072017.3089:restore
     #@+node:ekr.20031218072017.3090:save

@@ -1799,7 +1799,7 @@ class keyHandlerClass:
     #@+node:ekr.20060120193743:showStateAndMode
     def showStateAndMode(self):
         
-        k = self ; frame = k.c.frame
+        k = self ; c = k.c ; frame = c.frame
         state = k.unboundKeyAction
         mode = k.getStateKind()
        
@@ -1812,6 +1812,9 @@ class keyHandlerClass:
             if mode:
                 put(' mode: ',color='blue')
                 put(mode)
+            
+            # Late change.
+            c.noKnownFocus()
     #@-node:ekr.20060120193743:showStateAndMode
     #@-node:ekr.20060115103349:Modes
     #@+node:ekr.20051002152108.1:Shared helpers
