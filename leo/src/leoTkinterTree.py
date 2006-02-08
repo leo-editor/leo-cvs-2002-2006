@@ -187,8 +187,6 @@ class leoTkinterTree (leoFrame.leoTree):
         # Init the base class.
         leoFrame.leoTree.__init__(self,frame)
         
-        self.new_alloc = True
-        
         # Configuration and debugging settings.
         self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
         self.expanded_click_area    = c.config.getBool("expanded_click_area")
@@ -295,10 +293,8 @@ class leoTkinterTree (leoFrame.leoTree):
         self.freeClickBoxes = []
         self.freeIcons = []
         self.freeLines = []
-        if self.new_alloc:
-            self.freeText = [] # A list of free Tk.Text widgets
-        else:
-            self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+        self.freeText = [] # New in 4.4b2: a list of free Tk.Text widgets
+       
         self.freeUserIcons = []
     #@nonl
     #@-node:ekr.20040803072955.16:__init__ (tkTree)
@@ -522,30 +518,15 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas = self.canvas ; tag = "textBox"
         c = self.c ;  k = c.k
     
-        if self.new_alloc:
-            found = len(self.freeText) > 0
-            if found:
-                t,theId = self.freeText.pop()
-                if self.trace_alloc: g.trace('%4d' % (theId),self.textAddr(t),'recycled')
-                canvas.coords(theId,x,y) # Make the window visible again.
-                    # theId is the id of the *window* not the text.
-        else:
-            d = self.freeText
-            key = p.v ; pList = d.get(key,[])
         
-            # Return only Tk.Text widgets with an exact match with p.
-            found = False
-            for i in xrange(len(pList)):
-                p2,t,theId = pList[i]
-                if p2 == p:
-                    del pList[i]
-                    theId = t.leo_window_id
-                    assert(theId)
-                    canvas.coords(theId,x,y)
-                    t.configure(font=self.font) # 12/17/04
-                    found = True ; break
-                
-        if not found:
+        found = len(self.freeText) > 0
+        if found:
+            t,theId = self.freeText.pop()
+            if self.trace_alloc: g.trace('%4d' % (theId),self.textAddr(t),'recycled')
+            canvas.coords(theId,x,y) # Make the window visible again.
+                # theId is the id of the *window* not the text.
+    
+        else:
             # Tags are not valid in Tk.Text widgets.
             self.textNumber += 1
             t = Tk.Text(canvas,name='head-%d' % self.textNumber,
@@ -582,24 +563,15 @@ class leoTkinterTree (leoFrame.leoTree):
                 g.trace('%4d' % (theId),self.textAddr(t),'** new')
                 
         # Common configuration.
-        # assert(not self.ids.get(theId))
         self.ids[theId] = p # Add the id of the *window*
         self.setText(theId,t,p.headString())
         t.configure(width=self.headWidth(p=p))
         t.leo_position = p # This p never changes.
-            # *Required*: onHeadlineClick uses w.leo_position to get p
+            # *Required*: onHeadlineClick uses w.leo_position to get p.
     
-        if self.new_alloc:
-            # Keys are p.key().  Entries are (t,theId)
-            self.visibleText [p.key()] = t,theId
-        else:
-            t.leo_generation = self.generation
-            assert(theId == t.leo_window_id)
-            # Keys are p.v.  Values are pairs (p,t,theId)
-            key = p.v
-            pList = self.visibleText.get(key,[])
-            pList.append((p,t,theId),)
-            self.visibleText[key] = pList
+        # Keys are p.key().  Entries are (t,theId)
+        self.visibleText [p.key()] = t,theId
+        
         return t
     #@nonl
     #@-node:ekr.20040803072955.11:newText (leoTkinterTree)
@@ -632,26 +604,15 @@ class leoTkinterTree (leoFrame.leoTree):
             canvas.coords(theId,-100,-100,-100,-100)
         self.visibleLines = []
         
-        if self.new_alloc:
-            aList = self.visibleText.values()
-            for t,theId in aList:
-                # assert theId == t.leo_window_id
-                canvas.coords(theId,-100,-100)
-                t.leo_position = None # Allow the position to be freed.
-            self.freeText.extend(aList)
-            self.visibleText = {}
-        else:
-            for key in self.visibleText.keys():
-                visList = self.visibleText.get(key,[])
-                freeList = self.freeText.get(key,[])
-                for data in visList:
-                    p,t,theId = data
-                    # assert theId == t.leo_window_id
-                    canvas.coords(theId,-100,-100)
-                    freeList.append(data)
-                self.freeText[key] = freeList
-            self.visibleText = {}
-            
+       
+        aList = self.visibleText.values()
+        for t,theId in aList:
+            # assert theId == t.leo_window_id
+            canvas.coords(theId,-100,-100)
+            t.leo_position = None # Allow the position to be freed.
+        self.freeText.extend(aList)
+        self.visibleText = {}
+    
         for theId in self.visibleUserIcons:
             # The present code does not recycle user Icons.
             self.canvas.delete(theId)
@@ -1536,27 +1497,15 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c
     
         if p and c:
-            if self.new_alloc:
-                aTuple = self.visibleText.get(p.key())
-                if aTuple:
-                    t,theId = aTuple
-                    # if self.trace: g.trace('%4d' % (theId),self.textAddr(t),p.headString())
-                    return t
-                else:
-                    # g.trace('oops: not found',p)
-                    return None
+            aTuple = self.visibleText.get(p.key())
+            if aTuple:
+                t,theId = aTuple
+                # if self.trace: g.trace('%4d' % (theId),self.textAddr(t),p.headString())
+                return t
             else:
-                # VERY SLOW.
-                # Search the widget list for widget t with t.leo_position == p.
-                # New in 4.2: the dictionary is a list of pairs(p,v)
-                pairs = self.visibleText.get(p.v,[])
-                for p2,t2,id2 in pairs:
-                    assert t2.leo_window_id == id2
-                    assert t2.leo_position == p2
-                    if p.equal(p2):
-                        # g.trace('found',t2)
-                        return t2
-            
+                # g.trace('oops: not found',p)
+                return None
+    
         # g.trace(not found',p.headString())
         return None
     #@nonl
