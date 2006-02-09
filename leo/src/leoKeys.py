@@ -1487,6 +1487,7 @@ class keyHandlerClass:
             try:
                 i = w.index('@%s,%s' % (event.x,event.y))
                 g.app.gui.setInsertPoint(w,i)
+                c.editCommands.setMoveCol(w,i)
                 c.frame.updateStatusLine()
             except Exception:
                 pass
