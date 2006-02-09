@@ -2675,7 +2675,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050929114218:move... (leoEditCommands)
     #@+node:ekr.20051218170358: helpers
     #@+node:ekr.20060113130510:extendHelper
-    def extendHelper (self,w,extend,ins1,spot):
+    def extendHelper (self,w,extend,ins1,spot,setSpot=True):
     
         '''Handle the details of extending the selection.
         
@@ -2704,8 +2704,9 @@ class editCommandsClass (baseEditCommandsClass):
             else:
                 g.app.gui.setTextSelection(w,moveSpot,spot,insert=None)
         else:
-            self.moveSpot = spot
-            self.moveCol = int(spot.split('.')[1])
+            # Don't change the moveCol while extending: that would mess up the selection.
+            if setSpot or not moveSpot:
+                self.setMoveCol(w,spot)
             g.app.gui.setTextSelection(w,spot,spot,insert=None)
     #@nonl
     #@-node:ekr.20060113130510:extendHelper
@@ -2751,7 +2752,7 @@ class editCommandsClass (baseEditCommandsClass):
                     spot = w.index('insert')
                     w.see('insert')
         # Handle the extension.
-        self.extendHelper(w,extend,ins1,spot)
+        self.extendHelper(w,extend,ins1,spot,setSpot=False)
     #@nonl
     #@-node:ekr.20060113105246.1:moveUpOrDownHelper
     #@+node:ekr.20051218122116:moveToHelper
@@ -2763,7 +2764,7 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
-        c.widgetWantsFocus(w)
+        c.widgetWantsFocusNow(w)
         
         # Remember the original insert point.  This may become the moveSpot.
         ins1 = w.index('insert')
@@ -2773,7 +2774,7 @@ class editCommandsClass (baseEditCommandsClass):
         spot = w.index('insert')
     
         # Handle the selection.
-        self.extendHelper(w,extend,ins1,spot)
+        self.extendHelper(w,extend,ins1,spot,setSpot=True)
         w.see(spot)
     #@nonl
     #@-node:ekr.20051218122116:moveToHelper
@@ -2905,6 +2906,15 @@ class editCommandsClass (baseEditCommandsClass):
             self.moveToHelper(event,i,extend)
     #@nonl
     #@-node:ekr.20051218133207:backwardParagraphHelper
+    #@+node:ekr.20060209095101:setMoveCol
+    def setMoveCol (self,w,spot):
+        
+        self.moveSpot = spot
+        self.moveCol = int(spot.split('.')[1])
+    
+        # g.trace('spot',self.moveSpot,'col',self.moveCol)
+    #@nonl
+    #@-node:ekr.20060209095101:setMoveCol
     #@-node:ekr.20051218170358: helpers
     #@+node:ekr.20050920084036.136:exchangePointMark
     def exchangePointMark (self,event):
@@ -2980,40 +2990,28 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051213080533:characters
     #@+node:ekr.20051218141237:lines
     def beginningOfLine (self,event):
-        
         self.moveToHelper(event,'insert linestart',extend=False)
         
     def beginningOfLineExtendSelection (self,event):
-        
         self.moveToHelper(event,'insert linestart',extend=True)
         
     def endOfLine (self,event):
-        
         self.moveToHelper(event,'insert lineend',extend=False)
         
     def endOfLineExtendSelection (self,event):
-        
         self.moveToHelper(event,'insert lineend',extend=True)
     
     def nextLine (self,event):
-        
         self.moveUpOrDownHelper(event,'down',extend=False)
-        # self.moveToHelper(event,'insert + 1line',extend=False)
         
     def nextLineExtendSelection (self,event):
-        
         self.moveUpOrDownHelper(event,'down',extend=True)
-        #self.moveToHelper(event,'insert + 1line',extend=True)
         
     def prevLine (self,event):
-        
         self.moveUpOrDownHelper(event,'up',extend=False)
-        #self.moveToHelper(event,'insert - 1line',extend=False)
         
     def prevLineExtendSelection (self,event):
-        
         self.moveUpOrDownHelper(event,'up',extend=True)
-        #self.moveToHelper(event,'insert - 1line',extend=True)
     #@nonl
     #@-node:ekr.20051218141237:lines
     #@+node:ekr.20050920084036.140:movePastClose (test)
@@ -3466,7 +3464,7 @@ class editCommandsClass (baseEditCommandsClass):
         w.mark_set('insert',spot)
     
         # Handle the extension.
-        self.extendHelper(w,extend,ins1,spot)
+        self.extendHelper(w,extend,ins1,spot,setSpot=False)
         w.see('insert')
     #@nonl
     #@-node:ekr.20060113082917:scrollHelper
@@ -6114,7 +6112,6 @@ class findTab (leoFind.leoFind):
             ('<Double-1>',  k.masterClickHandler),
             ('<Button-3>',  k.masterClickHandler),
             ('<Double-3>',  k.masterClickHandler),
-            ('<Key>',       k.masterKeyHandler),
             ('<Key>',       resetWrapCallback),
             ('<Return>',    self.findButtonCallback),
             ("<Escape>",    self.hideTab),
@@ -6123,10 +6120,6 @@ class findTab (leoFind.leoFind):
         for w in (self.find_ctrl,self.change_ctrl):
             for event, callback in table:
                 w.bind(event,callback)
-        
-        if 0:
-            w.bind("<Key>",self.resetWrap,'+')
-                # Can't put this in the table bc of the '+' arg.
     #@nonl
     #@-node:ekr.20051023181449:createBindings (findTab)
     #@+node:ekr.20051020120306.13:createFrame (findTab)
