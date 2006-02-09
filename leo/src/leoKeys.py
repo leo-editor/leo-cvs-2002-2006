@@ -1802,9 +1802,10 @@ class keyHandlerClass:
             if mode:
                 put(' mode: ',color='blue')
                 put(mode)
-            
-            # Late change.
-            c.noKnownFocus()
+                
+            # Restore the focus.
+            c.restoreFocus()
+    #@nonl
     #@-node:ekr.20060120193743:showStateAndMode
     #@-node:ekr.20060115103349:Modes
     #@+node:ekr.20051002152108.1:Shared helpers

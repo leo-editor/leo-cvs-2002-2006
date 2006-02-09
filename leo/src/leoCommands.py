@@ -5420,13 +5420,13 @@ class baseCommands:
     def masterFocusHandler (self):
         
         c = self ; 
-        trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+        trace = not g.app.unitTesting and c.config.getBool('trace_masterFocusHandler')
         
         # Give priority to later requests, but default to previously set widget.
         w = c.requestedFocusWidget or c.hasFocusWidget
         
         if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
-            if trace: g.trace('*'*20,'no change.')
+            if trace: g.trace('no change.')
             c.requestedFocusWidget = None
         elif w:
             # Ignore whatever g.app.gui.get_focus might say.
@@ -5434,22 +5434,12 @@ class baseCommands:
             if ok: c.hasFocusWidget = w
             c.requestedFocusWidget = None
         else:
-            if trace: g.trace('*'*20,'oops: moving to body pane.')
+            g.trace('*'*20,'oops: moving to body pane.')
             c.bodyWantsFocusNow()
     
     restoreRequestedFocus = masterFocusHandler
     #@nonl
     #@-node:ekr.20060207140352:c.masterFocusHandler
-    #@+node:ekr.20060208143543:c.noKnownFocus
-    def noKnownFocus (self):
-        
-        '''Indicate that the widget with focus is not known.
-        This will force a later call to g.app.gui.set_focus().'''
-        
-        
-        self.hasFocusWidget = None
-    #@nonl
-    #@-node:ekr.20060208143543:c.noKnownFocus
     #@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
     def recolor(self):
     
@@ -5491,6 +5481,33 @@ class baseCommands:
     redraw = force_redraw = redraw_now
     #@nonl
     #@-node:ekr.20031218072017.2954:c.redraw_now
+    #@+node:ekr.20060208143543:c.restoreFocus
+    def restoreFocus (self):
+        
+        '''Ensure that the focus eventually gets restored.'''
+        
+        c =self
+        trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+    
+        if c.requestedFocusWidget:
+            c.hasFocusWidget = None # Force an update
+        elif c.hasFocusWidget:
+            c.requestedFocusWidget = c.hasFocusWidget
+            c.hasFocusWidget = None # Force an update
+        else:
+            # Should not happen, except during unit testing.
+            # c.masterFocusHandler sets c.hasFocusWidget,
+            # so if it is not set here it is because this method cleared it.
+            if not g.app.unitTesting: g.trace('oops: no requested or present widget.')
+            c.bodyWantsFocusNow()
+        
+        if c.inCommand:
+            if trace: g.trace('expecting later call to c.masterFocusHandler')
+            pass # A call to c.masterFocusHandler will surely happen.
+        else:
+            c.masterFocusHandler() # Do it now.
+    #@nonl
+    #@-node:ekr.20060208143543:c.restoreFocus
     #@+node:ekr.20060207142332:c.traceFocus
     trace_focus_count = 0
     
