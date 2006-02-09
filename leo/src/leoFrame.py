@@ -484,6 +484,10 @@ class leoFrame:
     def endEditLabelCommand   (self,event=None): self.oops()
     def insertHeadlineTime    (self,event=None): self.oops()
     
+    # Expanding and contracting panes.
+    def contractPane         (self,event=None): self.oops()
+    def expandPane           (self,event=None): self.oops()
+    
     # In the Window menu...
     def cascade              (self,event=None): self.oops()
     def equalSizedPanes      (self,event=None): self.oops()

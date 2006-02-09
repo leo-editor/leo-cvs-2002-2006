@@ -5397,6 +5397,11 @@ class baseCommands:
         c = self
         return g.app.gui.get_focus(c)
         
+    def get_requested_focus (self):
+        
+        c = self
+        return c.requestedFocusWidget or c.hasFocusWidget or g.app.gui.get_focus(c)
+        
     def request_focus(self,w):
     
         c = self

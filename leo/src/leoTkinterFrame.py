@@ -1758,6 +1758,67 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.1803:OnMouseWheel (Tomaz Ficko)
     #@-node:ekr.20031218072017.3971:Event handlers (tkFrame)
     #@+node:ekr.20031218072017.3979:Gui-dependent commands
+    #@+node:ekr.20060209110128:Minibuffer commands... (tkFrame)
+    
+    #@+node:ekr.20060209110128.1:contractPane & helpers
+    def contractPane (self,event=None):
+        
+        f = self ; c = f.c
+        w = c.get_requested_focus()
+        wname = c.widget_name(w)
+    
+        g.trace(wname)
+        if not w: return
+        
+        if wname.startswith('body'):
+            self.contractBodyPane()
+        elif wname.startswith('log'):
+            self.contractLogPane()
+        elif wname.startswith('head') or wname.startswith('canvas'):
+            self.contractTreePane()
+    #@nonl
+    #@+node:ekr.20060209110936:contract...Pane
+    def contractBodyPane(self,event=None):
+        g.trace()
+    
+    def contractLogPane(self,event=None):
+        g.trace()
+        
+    def contractTreePane(self,event=None):
+        g.trace()
+    #@nonl
+    #@-node:ekr.20060209110936:contract...Pane
+    #@-node:ekr.20060209110128.1:contractPane & helpers
+    #@+node:ekr.20060209110128.2:expandPane & helpers
+    def expandPane (self,event=None):
+    
+        f = self ; c = f.c
+            
+        w = c.get_requested_focus()
+        wname = c.widget_name(w)
+    
+        g.trace(wname)
+        if not w: return
+        
+        if wname.startswith('body'):
+            self.expandBodyPane()
+        elif wname.startswith('log'):
+            self.expandLogPane()
+        elif wname.startswith('head') or wname.startswith('canvas'):
+            self.expandTreePane()
+    #@nonl
+    #@+node:ekr.20060209110941:expand...Pane
+    def expandBodyPane(self,event=None):
+        g.trace()
+    
+    def expandLogPane(self,event=None):
+        g.trace()
+        
+    def expandTreePane(self,event=None):
+        g.trace()
+    #@-node:ekr.20060209110941:expand...Pane
+    #@-node:ekr.20060209110128.2:expandPane & helpers
+    #@-node:ekr.20060209110128:Minibuffer commands... (tkFrame)
     #@+node:ekr.20031218072017.3980:Edit Menu...
     #@+node:ekr.20031218072017.3981:abortEditLabelCommand
     def abortEditLabelCommand (self,event=None):
