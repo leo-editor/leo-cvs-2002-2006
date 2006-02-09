@@ -1111,7 +1111,9 @@ class controlCommandsClass (baseEditCommandsClass):
             'save-buffers-kill-leo':        self.saveBuffersKillLeo,
             'shell-command':                self.shellCommand,
             'shell-command-on-region':      self.shellCommandOnRegion,
-            'suspend':                      self.suspend,
+            
+            # adding this makes a unit test fail.
+            # 'suspend':                    self.suspend,
         }
     #@nonl
     #@-node:ekr.20050920084036.152: getPublicCommands
@@ -4367,7 +4369,6 @@ class leoCommandsClass (baseEditCommandsClass):
             'check-outline':                c.checkOutline,
             'clear-recent-files':           c.clearRecentFiles,
             'clone-node':                   c.clone,
-            'close-find-dialog':            c.dismissFindPanel, # Deprecated.
             'contract-node':                c.contractNode,
             'contract-all':                 c.contractAllHeadlines,
             'contract-parent':              c.contractParent,
@@ -4408,11 +4409,6 @@ class leoCommandsClass (baseEditCommandsClass):
             'extract':                      c.extract,
             'extract-names':                c.extractSectionNames,
             'extract-section':              c.extractSection,
-            'find-dialog-change':           c.replace,              # Deprecated.
-            'find-dialog-change-then-find': c.replaceThenFind,  # Deprecated.
-            'find-dialog-change-all':       c.replaceAll,           # Deprecated.
-            'find-dialog-find-next':        c.findNext,             # Deprecated.
-            'find-dialog-find-previous':    c.findPrevious,         # Deprecated.
             'flatten-outline':              c.flattenOutline,
             'go-back':                      c.goPrevVisitedNode,
             'go-forward':                   c.goNextVisitedNode,
@@ -4479,8 +4475,6 @@ class leoCommandsClass (baseEditCommandsClass):
             'redo':                         c.undoer.redo,
             'reformat-paragraph':           c.reformatParagraph,
             'remove-sentinels':             c.removeSentinels,
-            'find-tab-replace':             c.replace,
-            'find-tab-replace-then-find':   c.replaceThenFind,
             'resize-to-screen':             f.resizeToScreen,
             'revert':                       c.revert,
             'save-file':                    c.save,

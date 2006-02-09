@@ -700,26 +700,17 @@ class leoMenu:
         
         c = self.c ; f = self.frame
         
-        if 1: # Bind to the Find tab.
-            sc = c.searchCommands
-            self.editMenuFindMenuTable = [
-                ("&Show Find Tab",sc.openFindTab),
-                ("&Hide Find Tab",sc.hideFindTab),
-                ("-",None),
-                ("Find &Next",          sc.findTabFindNext),
-                ("Find &Previous",      sc.findTabFindPrev),
-                ("&Replace",            sc.findTabChange),
-                ("Replace, &Then Find", sc.findTabChangeThenFind),
-            ]
-        else: # Bind to deprecated Find dialog.
-            self.editMenuFindMenuTable = [
-                ("&Find Panel",c.showFindPanel),
-                ("-",None),
-                ("Find &Next",c.findNext),
-                ("Find &Previous",c.findPrevious),
-                ("&Replace",c.replace),
-                ("Replace, &Then Find",c.replaceThenFind),
-            ]
+        # Bind to the Find tab.
+        sc = c.searchCommands
+        self.editMenuFindMenuTable = [
+            ("&Show Find Tab",  sc.openFindTab),
+            ("&Hide Find Tab",  sc.hideFindTab),
+            ("-",None),
+            ("Find &Next",          sc.findTabFindNext),
+            ("Find &Previous",      sc.findTabFindPrev),
+            ("&Replace",            sc.findTabChange),
+            ("Replace, &Then Find", sc.findTabChangeThenFind),
+        ]
     #@nonl
     #@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
     #@+node:ekr.20031218072017.3757:defineEditMenuTop2Table

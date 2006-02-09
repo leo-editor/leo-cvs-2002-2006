@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="255" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="98" left="322" height="720" width="841"/>
+	<global_window_position top="103" left="368" height="701" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -285,10 +285,10 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 </v>
-<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051101160257" a="E" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
-<v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
+<v t="ekr.20060116090646" a="V"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
@@ -329,7 +329,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
@@ -411,7 +411,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060203094527" a="V"><vh>Recent options</vh>
+<v t="ekr.20060203094527"><vh>Recent options</vh>
 <v t="ekr.20051126062243"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -438,7 +438,7 @@
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20060202092911" a="E"><vh>@bool trace_tree = False</vh></v>
+<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
 <v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
@@ -1138,7 +1138,7 @@ CadetBlue3 has been suggested.</t>
 <t tx="ekr.20051007193321"># append-next-kill                  = None
 # apply settings                    = None
 # call-last-keyboard-macro          = None
-# check-spelling                    = Alt-Shift-A   # Add this command.
+# check-spelling                    = None
 # copy-to-buffer                    = None
 # end-kbd-macro                     = None
         
@@ -1183,7 +1183,7 @@ clear-kill-ring                     = None
 clear-recent-files                  = None
 clear-rectangle                     = None
 clone-node                          = Ctrl-`
-close-find-dialog                   = None
+
 close-rectangle                     = None
 close-window                        = Alt-F4
 contract-all                        = None             # Alt-- conflicts with negative-arg.
@@ -1506,7 +1506,6 @@ clear-recent-files                  = None
 clear-rectangle                     = None
 clone-find-all                      = None
 clone-node                          = None
-close-find-dialog                   = None
 close-rectangle                     = None
 close-window                        = None
 collect-garbage                     = None
@@ -1627,7 +1626,6 @@ clear-kill-ring                     = None
 clear-recent-files                  = None
 clear-rectangle                     = None
 clone-node                          = Ctrl-`
-close-find-dialog                   = None
 close-rectangle                     = None
 close-window                        = Ctrl-W
 close-window                        = Alt-F4
@@ -1750,7 +1748,6 @@ clear-kill-ring                     = None
 clear-recent-files                  = None
 clear-rectangle                     = None
 clone-node                          = Ctrl-`   
-close-find-dialog                   = None
 close-rectangle                     = None
 close-window                        = Alt-F4
 contract-all                        = Alt--
@@ -1845,8 +1842,7 @@ number-command-8                    = None
 number-command-9                    = None
 # number-to-register                = None
 open-compare-window                 = None
-open-find-dialog                    = None              # Deprecated.
-open-find-tab                       = Ctrl-Shift-F      # Deprecated: use find-mode now.
+open-find-tab                       = Ctrl-Shift-F
 open-leoDocs-leo                    = None
 open-leoPlugins-leo                 = None
 open-leoSettings-leo                = None
@@ -1946,7 +1942,6 @@ tangle-marked                       = None
 toggle-active-pane                  = Ctrl-T
 toggle-angle-brackets               = None
 toggle-extend-mode                  = None
-toggle-find-clone-find-all-option   = None
 toggle-find-ignore-case-option      = None
 toggle-find-in-body-option          = None
 toggle-find-in-headline-option      = None
@@ -2103,7 +2098,6 @@ clear-kill-ring                     = None
 clear-recent-files                  = None
 clear-rectangle                     = None
 clone-node                          = Ctrl-`
-close-find-dialog                   = None
 close-rectangle                     = None
 close-window                        = Alt-F4 # Ctrl-w conflicts with kill-region.
 contract-all                        = Alt--
@@ -2190,18 +2184,11 @@ Double-Button-3 # Useful if you also have the rClick plugin enabled.</t>
 <t tx="ekr.20060112085325">fill-paragraph                      = None
 fill-region                         = None
 fill-region-as-paragraph            = None
-find-dialog-change                  = None  # Deprecated. 
-find-dialog-change-all              = None  # Deprecated. 
-find-dialog-change-then-find        = None  # Deprecated. 
-find-dialog-find-previous           = None  # Deprecated. 
-find-dialog-find-next               = None  # Deprecated. 
 find-tab-change                     = Ctrl-=
 find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
 find-tab-change-then-find           = Ctrl--
 find-tab-find                       = F3
 find-tab-find-prev                  = F2
-find-tab-replace                    = None
-find-tab-replace-then-find          = None
 flatten-outline                     = None
 flush-lines                         = None
 focus-to-body                       = None
@@ -2319,18 +2306,11 @@ move-past-close-extend-selection    = None</t>
 <t tx="ekr.20060112085643">fill-paragraph                          = None
 fill-region                             = None
 fill-region-as-paragraph                = None
-find-dialog-change                      = None  # Deprecated. 
-find-dialog-change-all                  = None  # Deprecated. 
-find-dialog-change-then-find            = None  # Deprecated. 
-find-dialog-find-previous               = None  # Deprecated. 
-find-dialog-find-next                   = None  # Deprecated. 
 find-tab-change                         = Ctrl-=
 find-tab-change-all                     = None  # Not recommended to bind this to a shortcut.
 find-tab-change-then-find               = Ctrl--
 find-tab-find                           = F3
 find-tab-find-prev                      = F2
-find-tab-replace                        = None
-find-tab-replace-then-find              = None
 flatten-outline                         = None
 flush-lines                             = None
 focus-to-body                           = None
@@ -2451,7 +2431,6 @@ number-command-8                        = None
 number-command-9                        = None
 # number-to-register                    = None
 open-compare-window                     = None
-open-find-dialog                        = None  # Deprecated. The find tab is much better.
 open-find-tab                           = Ctrl-f
 open-leoDocs-leo                        = None
 open-leoPlugins-leo                     = None
@@ -2552,7 +2531,6 @@ tangle-marked                           = None      # Removed Shift-Ctrl-M: not 
 toggle-active-pane                      = Ctrl-T
 toggle-angle-brackets                   = None
 toggle-extend-mode                      = None
-toggle-find-clone-find-all-option       = None
 toggle-find-ignore-case-option          = None
 toggle-find-in-body-option              = None
 toggle-find-in-headline-option          = None
@@ -2602,18 +2580,11 @@ zap-to-character                        = Alt-z</t>
 fill-paragraph                      = Alt-q
 fill-region                         = None
 fill-region-as-paragraph            = None
-find-dialog-change                  = None  # Deprecated. 
-find-dialog-change-all              = None  # Deprecated. 
-find-dialog-change-then-find        = None  # Deprecated. 
-find-dialog-find-next               = None  # Deprecated. 
-find-dialog-find-previous           = None  # Deprecated. 
 find-tab-change                     = Ctrl-=
 find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
 find-tab-change-then-find           = Ctrl--
 find-tab-find                       = F3
 find-tab-find-prev                  = F2
-find-tab-replace                    = Ctrl-=
-find-tab-replace-then-find          = Ctrl--
 flatten-outline                     = None
 flush-lines                         = None
 focus-to-body                       = None
@@ -2658,7 +2629,6 @@ hide-spell-tab                      = None
 hoist                               = None
 how-many                            = None
 iconify-frame                       = None
-iconify-frame                       = None
 import-at-file                      = None         # Removed Shift-Ctrl-F: not useful enough.
 import-at-root                      = None
 import-cweb-files                   = None
@@ -2700,8 +2670,7 @@ list-abbrevs                        = None
 list-buffers                        = None
 list-buffers-alphabetically         = None
 mode-help                           = None
-move-past-close-extend-selection    = None
-</t>
+move-past-close-extend-selection    = None</t>
 <t tx="ekr.20060112090844.1"># name-last-kbd-macro           = None
 # number-to-register            = None
 # save-buffer                   = None  # Use save instead.
@@ -2737,7 +2706,6 @@ number-command-7                = Alt-7
 number-command-8                = Alt-8
 number-command-9                = Alt-9 
 open-compare-window             = None
-open-find-dialog                = None
 open-find-tab                   = None
 open-leoDocs-leo                = None
 open-leoPlugins-leo             = None
@@ -2839,7 +2807,6 @@ tangle-marked                   = None      # Removed Shift-Ctrl-M: not useful e
 toggle-active-pane              = None      # Ctrl-T conflicts with swap-characters.
 toggle-angle-brackets           = None
 toggle-extend-mode              = None
-toggle-find-clone-find-all-option   = None
 toggle-find-ignore-case-option      = None
 toggle-find-in-body-option          = None
 toggle-find-in-headline-option      = None
@@ -2886,18 +2853,11 @@ zap-to-character                = Alt-z
 <t tx="ekr.20060112090844.4">fill-paragraph                          = None
 fill-region                             = None
 fill-region-as-paragraph                = None
-find-dialog-change                      = None  # Deprecated. 
-find-dialog-change-all                  = None  # Deprecated. 
-find-dialog-change-then-find            = None  # Deprecated. 
-find-dialog-find-previous               = None  # Deprecated. 
-find-dialog-find-next                   = None  # Deprecated. 
 find-tab-change                         = Ctrl-=
 find-tab-change-all                     = None  # Not recommended to bind this to a shortcut.
 find-tab-change-then-find               = Ctrl--
 find-tab-find                           = F3
 find-tab-find-prev                      = F2
-find-tab-replace                        = None
-find-tab-replace-then-find              = None
 flatten-outline                         = None
 flush-lines                             = None
 focus-to-body                           = None
@@ -3017,7 +2977,6 @@ number-command-7                    = None
 number-command-8                    = None
 number-command-9                    = None
 open-compare-window                 = None
-open-find-dialog                    = None
 open-find-tab                       = Ctrl-F
 open-leoDocs-leo                    = None
 open-leoPlugins-leo                 = None
@@ -3116,7 +3075,6 @@ tangle-marked                       = Shift-Ctrl-M
 toggle-active-pane                  = Ctrl-T
 toggle-angle-brackets               = None
 toggle-extend-mode                  = None
-toggle-find-clone-find-all-option   = None
 toggle-find-ignore-case-option      = None
 toggle-find-in-body-option          = None
 toggle-find-in-headline-option      = None
@@ -3162,18 +3120,11 @@ zap-to-character                    = None</t>
 <t tx="ekr.20060112093227.1">fill-paragraph                      = None
 fill-region                         = None
 fill-region-as-paragraph            = None
-find-dialog-change                  = None
-find-dialog-change-all              = None
-find-dialog-change-then-find        = None
-find-dialog-find-previous           = None
-find-dialog-find-next               = None
 find-tab-change                     = None
 find-tab-change-all                 = None
 find-tab-change-then-find           = None
 find-tab-find                       = None
 find-tab-find-prev                  = None
-find-tab-replace                    = None
-find-tab-replace-then-find          = None
 flatten-outline                     = None
 flush-lines                         = None
 focus-to-body                       = None
@@ -3293,7 +3244,7 @@ number-command-8                    = None
 number-command-9                    = None
 # number-to-register                = None
 open-compare-window                 = None
-open-find-dialog                    = None
+open-find-dialog                    = None # Deprecated: all find commands use the Find *tab*
 open-find-tab                       = None
 open-leoDocs-leo                    = None
 open-leoPlugins-leo                 = None
@@ -3398,7 +3349,6 @@ tangle-marked                       = None
 toggle-active-pane                  = None
 toggle-angle-brackets               = None
 toggle-extend-mode                  = None
-toggle-find-clone-find-all-option   = None
 toggle-find-ignore-case-option      = None
 toggle-find-in-body-option          = None
 toggle-find-in-headline-option      = None
@@ -3685,7 +3635,6 @@ exit-named-mode = Ctrl-g
 keyboard-quit       = Ctrl-g
 mode-help           = Tab
 
-toggle-find-clone-find-all-option   = Shift-c
 toggle-find-ignore-case-option      = i
 toggle-find-in-body-option          = b
 toggle-find-in-headline-option      = h
@@ -4344,8 +4293,6 @@ find-tab-change                     = Ctrl-=
 find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
 find-tab-change-then-find           = Ctrl--
 
-#find-tab-replace                    = None
-#find-tab-replace-then-find          = None
 hide-find-tab                       = None
 open-find-tab                       = None # Shift-Ctrl-f
 

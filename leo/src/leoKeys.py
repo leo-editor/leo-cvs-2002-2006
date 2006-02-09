@@ -87,12 +87,6 @@ import sys
 #     Keys are lowercase settings, values are 'real' Tk key specifiers.
 #     Important: this table has no inverse.
 # 
-# g.app.keysym_numberDict:
-#     Keys are keysym_num's.  Values are strokes.
-# 
-# g.app.keysym_numberInverseDict
-#     Keys are strokes, values are keysym_num's.
-# 
 # not an ivar (computed by k.computeInverseBindingDict):
 # 
 # inverseBindingDict
@@ -293,10 +287,6 @@ class keyHandlerClass:
         self.inputModeName = '' # The name of the input mode, or None.
         self.inverseCommandsDict = {}
             # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
-        self.keysym_numberDict = {}
-            # Keys are keysym_num's.  Values are strokes.
-        self.keysym_numberInverseDict = {}
-            # Keys are strokes, values are keysym_num's.
         self.negativeArg = False
         self.regx = g.bunch(iter=None,key=None)
         self.repeatCount = None
