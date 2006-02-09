@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="255" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="256" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
 	<global_window_position top="103" left="368" height="701" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -57,6 +57,7 @@
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
@@ -285,10 +286,10 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 </v>
-<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20051101160257" a="E" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
-<v t="ekr.20060116090646" a="V"><vh>Reference for function keys</vh></v>
+<v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
@@ -352,7 +353,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -368,7 +369,7 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -386,9 +387,9 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
+<v t="ekr.20060124070546" a="V"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
@@ -423,6 +424,7 @@
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
@@ -441,10 +443,10 @@
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
 <v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
-<v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
+<v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
-<v t="ekr.20060122105527.7"><vh>@bool stayInTreeAfterSelect = True</vh></v>
+<v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4288,6 +4290,7 @@ word-search-forward                 = None
 
 # To coninue finds and changes...
 find-tab-find                       = F3
+find-tab-find-all                   = None
 find-tab-find-prev                  = F2
 find-tab-change                     = Ctrl-=
 find-tab-change-all                 = None  # Not recommended to bind this to a shortcut.
@@ -4364,5 +4367,6 @@ Important: the Find Tab always exists regardless of this setting.</t>
 <t tx="ekr.20060206155101"></t>
 <t tx="ekr.20060206161839"></t>
 <t tx="ekr.20060207142012"></t>
+<t tx="ekr.20060209045356"></t>
 </tnodes>
 </leo_file>

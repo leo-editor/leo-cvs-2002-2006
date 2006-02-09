@@ -708,8 +708,6 @@ class leoFind:
     #@-node:ekr.20031218072017.3075:findNextMatch
     #@+node:ekr.20031218072017.3076:resetWrap
     def resetWrap (self,event=None):
-        
-        __pychecker__ = '--no-argsused'
     
         self.wrapPosition = None
         self.onlyPosition = None
@@ -1006,7 +1004,7 @@ class leoFind:
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
         
-        g.trace(c.widget_name(t))
+        # g.trace(c.widget_name(t))
         c.widgetWantsFocusNow(t)
     #@nonl
     #@-node:ekr.20031218072017.3089:restore

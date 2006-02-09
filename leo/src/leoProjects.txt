@@ -2063,7 +2063,6 @@ def createBindings (self):
         ('<Double-1>',  k.masterClickHandler),
         ('<Button-3>',  k.masterClickHandler),
         ('<Double-3>',  k.masterClickHandler),
-        ('<Key>',       k.masterKeyHandler),
         ('<Key>',       resetWrapCallback),
         ('<Return>',    self.findButtonCallback),
         ("<Escape>",    self.hideTab),
@@ -2072,10 +2071,6 @@ def createBindings (self):
     for w in (self.find_ctrl,self.change_ctrl):
         for event, callback in table:
             w.bind(event,callback)
-    
-    if 0:
-        w.bind("<Key>",self.resetWrap,'+')
-            # Can't put this in the table bc of the '+' arg.
 #@nonl
 #@-node:ekr.20051023181449:createBindings (findTab)
 #@+node:ekr.20051020120306.13:createFrame (findTab)
@@ -3865,6 +3860,7 @@ def masterClickHandler (self,event,func=None):
         try:
             i = w.index('@%s,%s' % (event.x,event.y))
             g.app.gui.setInsertPoint(w,i)
+            c.editCommands.setMoveCol(w,i)
             c.frame.updateStatusLine()
         except Exception:
             pass
@@ -5968,7 +5964,7 @@ def restore (self,data):
         gui.setInsertPoint(t,insert)
         gui.makeIndexVisible(t,insert)
     
-    g.trace(c.widget_name(t))
+    # g.trace(c.widget_name(t))
     c.widgetWantsFocusNow(t)
 #@nonl
 #@-node:ekr.20031218072017.3089:restore
@@ -6717,6 +6713,580 @@ else:
 #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
 #@-node:ekr.20060209083424:Fixed problem with 'spelling' of menu bindings
+#@+node:ekr.20060122193554:Set remembered column properly in prev-line and next-line
+#@+node:ekr.20060209094610:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3549737
+
+for extend selection,
+with binding to arrow keys,
+if you switch from up to dn arrow,
+the selection restarts again.
+this should just change extend direction
+while still using the same selection.
+#@-node:ekr.20060209094610:Report
+#@+node:ekr.20060129052538.2:masterClickHandler
+def masterClickHandler (self,event,func=None):
+    
+    k = self ; c = k.c
+    if not event: return
+    w = event.widget ; wname = c.widget_name(w)
+    
+    if c.config.getBool('trace_masterClickHandler'):
+        g.trace(wname,func and func.__name__)
+
+    if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+        g.es_print('Ignoring click outside active minibuffer',color='blue')
+        c.minibufferWantsFocus()
+        return 'break'
+
+    # Update the selection point immediately for updateStatusLine.
+    if wname.startswith('body'):
+        try:
+            i = w.index('@%s,%s' % (event.x,event.y))
+            g.app.gui.setInsertPoint(w,i)
+            c.editCommands.setMoveCol(w,i)
+            c.frame.updateStatusLine()
+        except Exception:
+            pass
+
+    if event and func:
+        # Don't even *think* of overriding this.
+        val = func(event)
+        c.masterFocusHandler()
+        return val
+    else:
+        # All tree callbacks have a func, so we can't be in the tree.
+        # g.trace('*'*20,'auto-deactivate tree: %s' % wname)
+        c.frame.tree.OnDeactivate()
+        c.masterFocusHandler()
+        return None
+        
+masterClick3Handler         = masterClickHandler
+masterDoubleClick3Handler   = masterClickHandler
+#@nonl
+#@-node:ekr.20060129052538.2:masterClickHandler
+#@+node:ekr.20060113105246.1:moveUpOrDownHelper
+def moveUpOrDownHelper (self,event,direction,extend):
+
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+    # Make the insertion cursor visible so bbox won't return an empty list.
+    w.see('insert')
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+    # Compute the new spot.
+    row1,col1 = ins1.split('.')
+    row1 = int(row1) ; col1 = int(col1)
+    # Find the coordinates of the cursor and set the new height.
+    # There may be roundoff errors because character postions may not match exactly.
+    x, y, junk, textH = w.bbox('insert')
+    bodyW, bodyH = w.winfo_width(), w.winfo_height()
+    junk, maxy, junk, junk = w.bbox("@%d,%d" % (bodyW,bodyH))
+    # Make sure y is within text boundaries.
+    if direction == "up":
+        if y <= textH:  w.yview("scroll",-1,"units")
+        else:           y = max(y-textH,0)
+    else:
+        if y >= maxy:   w.yview("scroll",1,"units")
+        else:           y = min(y+textH,maxy)
+    # Position the cursor on the proper side of the characters.
+    newx, newy, width, junk = w.bbox("@%d,%d" % (x,y))
+    if x > newx + width / 2: x = newx + width + 1
+    # Move to the new row.
+    spot = w.index("@%d,%d" % (x,y))
+    row,col = spot.split('.')
+    row = int(row) ; col = int(col)
+    w.mark_set('insert',spot)
+    # Adjust the column in the *new* row, but only if we have actually gone to a new row.
+    if self.moveSpot:
+        if col != self.moveCol and row != row1:
+            s = w.get('insert linestart','insert lineend')
+            col = min(len(s),self.moveCol)
+            if col >= 0:
+                w.mark_set('insert','%d.%d' % (row,col))
+                spot = w.index('insert')
+                w.see('insert')
+    # Handle the extension.
+    self.extendHelper(w,extend,ins1,spot,setSpot=False)
+#@nonl
+#@-node:ekr.20060113105246.1:moveUpOrDownHelper
+#@+node:ekr.20051218122116:moveToHelper
+def moveToHelper (self,event,spot,extend):
+    
+    '''Common helper method for commands the move the cursor
+    in a way that can be described by a Tk Text expression.'''
+    
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocusNow(w)
+    
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+  
+    # Move to the spot.
+    w.mark_set('insert',spot)
+    spot = w.index('insert')
+
+    # Handle the selection.
+    self.extendHelper(w,extend,ins1,spot,setSpot=True)
+    w.see(spot)
+#@nonl
+#@-node:ekr.20051218122116:moveToHelper
+#@+node:ekr.20060113130510:extendHelper
+def extendHelper (self,w,extend,ins1,spot,setSpot=True):
+
+    '''Handle the details of extending the selection.
+    
+    extend: Clear the selection unless this is True.
+    ins1:   The *previous* insert point.
+    spot:   The *new* insert point.
+    '''
+    c = self.c ; p = c.currentPosition()
+    moveSpot = self.moveSpot
+    if extend or self.extendMode:
+        i, j = g.app.gui.getTextSelection(w)
+        if (
+            not moveSpot or p.v.t != self.moveSpotNode or
+            i == j or # A cute trick
+            (not w.compare(moveSpot,'==',i) and
+             not w.compare(moveSpot,'==',j))
+        ):
+            self.moveSpotNode = p.v.t
+            self.moveSpot = w.index(ins1)
+            self.moveCol = int(ins1.split('.')[1])
+            # g.trace('reset moveSpot',self.moveSpot)
+        moveSpot = self.moveSpot
+        # g.trace(spot,moveSpot)
+        if w.compare(spot,'<',moveSpot):
+            g.app.gui.setTextSelection(w,spot,moveSpot,insert=None)
+        else:
+            g.app.gui.setTextSelection(w,moveSpot,spot,insert=None)
+    else:
+        # Don't change the moveCol while extending: that would mess up the selection.
+        if setSpot or not moveSpot:
+            self.setMoveCol(w,spot)
+        g.app.gui.setTextSelection(w,spot,spot,insert=None)
+#@nonl
+#@-node:ekr.20060113130510:extendHelper
+#@+node:ekr.20060209095101:setMoveCol
+def setMoveCol (self,w,spot):
+    
+    self.moveSpot = spot
+    self.moveCol = int(spot.split('.')[1])
+
+    # g.trace('spot',self.moveSpot,'col',self.moveCol)
+#@nonl
+#@-node:ekr.20060209095101:setMoveCol
+#@+node:ekr.20050929114218:move... (leoEditCommands)
+#@+node:ekr.20051218170358: helpers
+#@+node:ekr.20060113130510:extendHelper
+def extendHelper (self,w,extend,ins1,spot,setSpot=True):
+
+    '''Handle the details of extending the selection.
+    
+    extend: Clear the selection unless this is True.
+    ins1:   The *previous* insert point.
+    spot:   The *new* insert point.
+    '''
+    c = self.c ; p = c.currentPosition()
+    moveSpot = self.moveSpot
+    if extend or self.extendMode:
+        i, j = g.app.gui.getTextSelection(w)
+        if (
+            not moveSpot or p.v.t != self.moveSpotNode or
+            i == j or # A cute trick
+            (not w.compare(moveSpot,'==',i) and
+             not w.compare(moveSpot,'==',j))
+        ):
+            self.moveSpotNode = p.v.t
+            self.moveSpot = w.index(ins1)
+            self.moveCol = int(ins1.split('.')[1])
+            # g.trace('reset moveSpot',self.moveSpot)
+        moveSpot = self.moveSpot
+        # g.trace(spot,moveSpot)
+        if w.compare(spot,'<',moveSpot):
+            g.app.gui.setTextSelection(w,spot,moveSpot,insert=None)
+        else:
+            g.app.gui.setTextSelection(w,moveSpot,spot,insert=None)
+    else:
+        # Don't change the moveCol while extending: that would mess up the selection.
+        if setSpot or not moveSpot:
+            self.setMoveCol(w,spot)
+        g.app.gui.setTextSelection(w,spot,spot,insert=None)
+#@nonl
+#@-node:ekr.20060113130510:extendHelper
+#@+node:ekr.20060113105246.1:moveUpOrDownHelper
+def moveUpOrDownHelper (self,event,direction,extend):
+
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+    # Make the insertion cursor visible so bbox won't return an empty list.
+    w.see('insert')
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+    # Compute the new spot.
+    row1,col1 = ins1.split('.')
+    row1 = int(row1) ; col1 = int(col1)
+    # Find the coordinates of the cursor and set the new height.
+    # There may be roundoff errors because character postions may not match exactly.
+    x, y, junk, textH = w.bbox('insert')
+    bodyW, bodyH = w.winfo_width(), w.winfo_height()
+    junk, maxy, junk, junk = w.bbox("@%d,%d" % (bodyW,bodyH))
+    # Make sure y is within text boundaries.
+    if direction == "up":
+        if y <= textH:  w.yview("scroll",-1,"units")
+        else:           y = max(y-textH,0)
+    else:
+        if y >= maxy:   w.yview("scroll",1,"units")
+        else:           y = min(y+textH,maxy)
+    # Position the cursor on the proper side of the characters.
+    newx, newy, width, junk = w.bbox("@%d,%d" % (x,y))
+    if x > newx + width / 2: x = newx + width + 1
+    # Move to the new row.
+    spot = w.index("@%d,%d" % (x,y))
+    row,col = spot.split('.')
+    row = int(row) ; col = int(col)
+    w.mark_set('insert',spot)
+    # Adjust the column in the *new* row, but only if we have actually gone to a new row.
+    if self.moveSpot:
+        if col != self.moveCol and row != row1:
+            s = w.get('insert linestart','insert lineend')
+            col = min(len(s),self.moveCol)
+            if col >= 0:
+                w.mark_set('insert','%d.%d' % (row,col))
+                spot = w.index('insert')
+                w.see('insert')
+    # Handle the extension.
+    self.extendHelper(w,extend,ins1,spot,setSpot=False)
+#@nonl
+#@-node:ekr.20060113105246.1:moveUpOrDownHelper
+#@+node:ekr.20051218122116:moveToHelper
+def moveToHelper (self,event,spot,extend):
+    
+    '''Common helper method for commands the move the cursor
+    in a way that can be described by a Tk Text expression.'''
+    
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocusNow(w)
+    
+    # Remember the original insert point.  This may become the moveSpot.
+    ins1 = w.index('insert')
+  
+    # Move to the spot.
+    w.mark_set('insert',spot)
+    spot = w.index('insert')
+
+    # Handle the selection.
+    self.extendHelper(w,extend,ins1,spot,setSpot=True)
+    w.see(spot)
+#@nonl
+#@-node:ekr.20051218122116:moveToHelper
+#@+node:ekr.20051218121447:moveWordHelper
+def moveWordHelper (self,event,extend,forward):
+
+    '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+    
+    c.widgetWantsFocus(w)
+    if forward:
+         ind = w.search('\w','insert',stopindex='end',regexp=True)
+         if ind: nind = '%s wordend' % ind
+         else:   nind = 'end'
+    else:
+         ind = w.search('\w','insert -1c',stopindex='1.0',regexp=True,backwards=True)
+         if ind: nind = '%s wordstart' % ind
+         else:   nind = '1.0'
+    self.moveToHelper(event,nind,extend)
+#@nonl
+#@-node:ekr.20051218121447:moveWordHelper
+#@+node:ekr.20051218171457:movePastCloseHelper
+def movePastCloseHelper (self,event,extend):
+
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocus(w)
+    i = w.search('(','insert',backwards=True,stopindex='1.0')
+    if '' == i: return
+
+    icheck = w.search(')','insert',backwards=True,stopindex='1.0')
+    if icheck:
+        ic = w.compare(i,'<',icheck)
+        if ic: return
+
+    i2 = w.search(')','insert',stopindex='end')
+    if '' == i2: return
+
+    i2check = w.search('(','insert',stopindex='end')
+    if i2check:
+        ic2 = w.compare(i2,'>',i2check)
+        if ic2: return
+    
+    ins = '%s+1c' % i2
+    self.moveToHelper(event,ins,extend)
+#@nonl
+#@-node:ekr.20051218171457:movePastCloseHelper
+#@+node:ekr.20051213094517:backSentenceHelper
+def backSentenceHelper (self,event,extend):
+
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocus(w)
+    i = w.search('.','insert',backwards=True,stopindex='1.0')
+    if i:
+        i2 = w.search('.',i,backwards=True,stopindex='1.0')
+        if i2:
+            ins = w.search('\w',i2,stopindex=i,regexp=True) or i2
+        else:
+            ins = '1.0'
+    else:
+        ins = '1.0'
+    if ins:
+        self.moveToHelper(event,ins,extend)
+#@nonl
+#@-node:ekr.20051213094517:backSentenceHelper
+#@+node:ekr.20050920084036.137:forwardSentenceHelper
+def forwardSentenceHelper (self,event,extend):
+
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocus(w)
+    ins = w.index('insert')
+    # sel_i,sel_j = g.app.gui.getTextSelection(w)
+    i = w.search('.','insert',stopindex='end')
+    ins = i and '%s +1c' % i or 'end'
+    self.moveToHelper(event,ins,extend)
+#@nonl
+#@-node:ekr.20050920084036.137:forwardSentenceHelper
+#@+node:ekr.20051218133207.1:forwardParagraphHelper
+def forwardParagraphHelper (self,event,extend):
+    
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocus(w)
+    i = w.index('insert')
+    while 1:
+        txt = w.get('%s linestart' % i,'%s lineend' % i).strip()
+        if txt:
+            i = w.index('%s + 1 lines' % i)
+            if w.index('%s linestart' % i) == w.index('end'):
+                i = w.search(r'\w','end',backwards=True,regexp=True,stopindex='1.0')
+                i = '%s + 1c' % i
+                break
+        else:
+            i = w.search(r'\w',i,regexp=True,stopindex='end')
+            i = '%s' % i
+            break
+    if i:
+        self.moveToHelper(event,i,extend)
+#@nonl
+#@-node:ekr.20051218133207.1:forwardParagraphHelper
+#@+node:ekr.20051218133207:backwardParagraphHelper
+def backwardParagraphHelper (self,event,extend):
+    
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocus(w)
+    i = w.index('insert')
+    while 1:
+        s = w.get('%s linestart' % i,'%s lineend' % i).strip()
+        if s:
+            i = w.index('%s - 1 lines' % i)
+            if w.index('%s linestart' % i) == '1.0':
+                i = w.search(r'\w','1.0',regexp=True,stopindex='end')
+                break
+        else:
+            i = w.search(r'\w',i,backwards=True,regexp=True,stopindex='1.0')
+            i = '%s +1c' % i
+            break
+    if i:
+        self.moveToHelper(event,i,extend)
+#@nonl
+#@-node:ekr.20051218133207:backwardParagraphHelper
+#@+node:ekr.20060209095101:setMoveCol
+def setMoveCol (self,w,spot):
+    
+    self.moveSpot = spot
+    self.moveCol = int(spot.split('.')[1])
+
+    # g.trace('spot',self.moveSpot,'col',self.moveCol)
+#@nonl
+#@-node:ekr.20060209095101:setMoveCol
+#@-node:ekr.20051218170358: helpers
+#@+node:ekr.20050920084036.136:exchangePointMark
+def exchangePointMark (self,event):
+    
+    c = self.c ; w = event.widget
+    if not g.app.gui.isTextWidget(w): return
+
+    c.widgetWantsFocus(w)
+    i,j = g.app.gui.getTextSelection(w,sort=False)
+    if i != j:
+        ins = w.index('insert')
+        ins = g.choose(ins==i,j,i)
+        g.app.gui.setInsertPoint(w,ins)
+        g.app.gui.setTextSelection(w,i,j,insert=None)
+#@nonl
+#@-node:ekr.20050920084036.136:exchangePointMark
+#@+node:ekr.20051218174113:extendMode
+def clearExtendMode (self,event):
+    
+    self.extendMode = False
+    
+    c = self.c ; w = event.widget
+    c.widgetWantsFocus(w)
+
+def setExtendMode (self,event):
+    
+    self.extendMode = True
+    
+    c = self.c ; w = event.widget
+    c.widgetWantsFocus(w)
+    
+def toggleExtendMode (self,event):
+    
+    self.extendMode = not self.extendMode
+    
+    c = self.c ; w = event.widget
+    c.widgetWantsFocus(w)
+#@nonl
+#@-node:ekr.20051218174113:extendMode
+#@+node:ekr.20050920084036.148:buffers
+def beginningOfBuffer (self,event):
+    
+    self.moveToHelper(event,'1.0',extend=False)
+    
+def beginningOfBufferExtendSelection (self,event):
+    
+    self.moveToHelper(event,'1.0',extend=True)
+
+def endOfBuffer (self,event):
+    
+    self.moveToHelper(event,'end',extend=False)
+    
+def endOfBufferExtendSelection (self,event):
+    
+    self.moveToHelper(event,'end',extend=True)
+#@-node:ekr.20050920084036.148:buffers
+#@+node:ekr.20051213080533:characters
+def backCharacter (self,event):
+    
+    self.moveToHelper(event,'insert-1c',extend=False)
+    
+def backCharacterExtendSelection (self,event):
+    
+    self.moveToHelper(event,'insert-1c',extend=True)
+    
+def forwardCharacter (self,event):
+    
+    self.moveToHelper (event,'insert+1c',extend=False)
+    
+def forwardCharacterExtendSelection (self,event):
+    
+    self.moveToHelper (event,'insert+1c',extend=True)
+#@-node:ekr.20051213080533:characters
+#@+node:ekr.20051218141237:lines
+def beginningOfLine (self,event):
+    self.moveToHelper(event,'insert linestart',extend=False)
+    
+def beginningOfLineExtendSelection (self,event):
+    self.moveToHelper(event,'insert linestart',extend=True)
+    
+def endOfLine (self,event):
+    self.moveToHelper(event,'insert lineend',extend=False)
+    
+def endOfLineExtendSelection (self,event):
+    self.moveToHelper(event,'insert lineend',extend=True)
+
+def nextLine (self,event):
+    self.moveUpOrDownHelper(event,'down',extend=False)
+    
+def nextLineExtendSelection (self,event):
+    self.moveUpOrDownHelper(event,'down',extend=True)
+    
+def prevLine (self,event):
+    self.moveUpOrDownHelper(event,'up',extend=False)
+    
+def prevLineExtendSelection (self,event):
+    self.moveUpOrDownHelper(event,'up',extend=True)
+#@nonl
+#@-node:ekr.20051218141237:lines
+#@+node:ekr.20050920084036.140:movePastClose (test)
+def movePastClose (self,event):
+    
+    self.movePastCloseHelper(event,extend=False)
+    
+def movePastCloseExtendSelection (self,event):
+    
+    self.movePastCloseHelper(event,extend=True)
+#@nonl
+#@-node:ekr.20050920084036.140:movePastClose (test)
+#@+node:ekr.20050920084036.102:paragraphs
+def backwardParagraph (self,event):
+    
+    self.backwardParagraphHelper (event,extend=False)
+    
+def backwardParagraphExtendSelection (self,event):
+    
+    self.backwardParagraphHelper (event,extend=True)
+    
+def forwardParagraph (self,event):
+
+    self.forwardParagraphHelper(event,extend=False)
+    
+def forwardParagraphExtendSelection (self,event):
+    
+    self.forwardParagraphHelper(event,extend=True)
+#@nonl
+#@-node:ekr.20050920084036.102:paragraphs
+#@+node:ekr.20050920084036.131:sentences
+def backSentence (self,event):
+    
+    self.backSentenceHelper(event,extend=False)
+    
+def backSentenceExtendSelection (self,event):
+    
+    self.backSentenceHelper(event,extend=True)
+    
+def forwardSentence (self,event):
+    
+    self.forwardSentenceHelper(event,extend=False)
+    
+def forwardSentenceExtendSelection (self,event):
+    
+    self.forwardSentenceHelper(event,extend=True)
+#@nonl
+#@-node:ekr.20050920084036.131:sentences
+#@+node:ekr.20050920084036.149:words
+def backwardWord (self,event):
+    
+    self.moveWordHelper(event,extend=False,forward=False)
+    
+def backwardWordExtendSelection (self,event):
+    
+    self.moveWordHelper(event,extend=True,forward=False)
+
+def forwardWord (self,event):
+    
+    self.moveWordHelper(event,extend=False,forward=True)
+    
+def forwardWordExtendSelection (self,event):
+    
+    self.moveWordHelper(event,extend=True,forward=True)
+#@-node:ekr.20050920084036.149:words
+#@-node:ekr.20050929114218:move... (leoEditCommands)
+#@-node:ekr.20060122193554:Set remembered column properly in prev-line and next-line
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
