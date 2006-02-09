@@ -3939,7 +3939,9 @@ class helpCommandsClass (baseEditCommandsClass):
         s = g.adjustTripleString(s,c.tab_width)
             # Remove indentation from indentation of this function.
         # s = s % (shortcuts[0],shortcuts[1],shortcuts[2],shortcuts[3])
-        g.es_print(s)
+        
+        if not g.app.unitTesting:
+            g.es_print(s)
     #@nonl
     #@+node:ekr.20060205165654:test_help
     def test_help(self):
@@ -4006,7 +4008,9 @@ class helpCommandsClass (baseEditCommandsClass):
     
         s = g.adjustTripleString(s,c.tab_width)
             # Remove indentation from indentation of this function.
-        g.es_print(s)
+            
+        if not g.app.unitTesting:
+            g.es_print(s)
     #@nonl
     #@+node:ekr.20060205170435:test_apropos_bindings
     def test_apropos_bindings (self):
@@ -4024,7 +4028,9 @@ class helpCommandsClass (baseEditCommandsClass):
     
         s = g.adjustTripleString(s,c.tab_width)
             # Remove indentation from indentation of this function.
-        g.es_print(s)
+            
+        if not g.app.unitTesting:
+            g.es_print(s)
     #@nonl
     #@+node:ekr.20060205170552:test_apropos_find_commands
     def test_apropos_find_commands (self):
@@ -5700,6 +5706,22 @@ class minibufferFind:
                     s = s[:-1]
                 k.extendLabel(s,select=True)
     #@-node:ekr.20060124134356: setupArgs
+    #@+node:ekr.20060209064140:findAll
+    def findAll (self,event):
+    
+        k = self.k ; state = k.getState('find-all')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=False,word=True)
+            k.setLabelBlue('Find All: ',protect=True)
+            k.getArg(event,'find-all',1,self.findAll)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg,findAll=True)
+    #@nonl
+    #@-node:ekr.20060209064140:findAll
     #@+node:ekr.20060128080201:cloneFindAll
     def cloneFindAll (self,event):
     
@@ -5747,14 +5769,16 @@ class minibufferFind:
     #@nonl
     #@-node:ekr.20060205105950.1:generalChangeHelper
     #@+node:ekr.20060124181213.4:generalSearchHelper
-    def generalSearchHelper (self,pattern,cloneFindAll=False):
+    def generalSearchHelper (self,pattern,cloneFindAll=False,findAll=False):
         
         self.setupSearchPattern(pattern)
     
         self.finder.p = self.c.currentPosition()
         self.finder.v = self.finder.p.v
     
-        if cloneFindAll:
+        if findAll:
+             self.finder.findAllCommand()
+        elif cloneFindAll:
              self.finder.cloneFindAllCommand()
         else:
             # This handles the reverse option.
@@ -6325,6 +6349,13 @@ class findTab (leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051023183028:findButtonCallback
     #@+node:ekr.20051024192602: Top level
+    #@+node:ekr.20060209064832:findAllCommand
+    def findAllCommand (self,event=None):
+    
+        self.setup_command()
+        self.findAll()
+    #@nonl
+    #@-node:ekr.20060209064832:findAllCommand
     #@+node:ekr.20060204120158.1:findAgainCommand
     def findAgainCommand (self):
         
@@ -6523,15 +6554,6 @@ class searchCommandsClass (baseEditCommandsClass):
         self.findTabHandler = None
         self.minibufferFindHandler = None
         
-        # The last kind of search
-        
-        # self.forward = True
-        # self.incremental = True
-        # self.regexp = False
-        # self.word = True
-        #self.searchString = ''
-        #self.replaceString = '' # Not used yet.
-        
         try:
             self.w = c.frame.body.bodyCtrl
         except AttributeError:
@@ -6543,7 +6565,9 @@ class searchCommandsClass (baseEditCommandsClass):
         
         return {
             'clone-find-all':                       self.cloneFindAll,
+            'find-tab-find-all':                    self.findAll,
             
+            # Thin wrappers on Find tab
             'find-tab-find':                        self.findTabFindNext,
             'find-tab-find-prev':                   self.findTabFindPrev,
             'find-tab-change':                      self.findTabChange,
@@ -6641,6 +6665,13 @@ class searchCommandsClass (baseEditCommandsClass):
             self.findTabHandler.changeThenFindCommand()
         else:
             self.openFindTab()
+            
+    def findTabFindAll(self,event=None):
+    
+        if self.findTabHandler:
+            self.findTabHandler.findAllCommand()
+        else:
+            self.openFindTab()
     
     def findTabFindNext (self,event=None):
         
@@ -6701,13 +6732,8 @@ class searchCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20060123115459:Find options wrappers
     #@+node:ekr.20060124093828:Find wrappers
-    # def change             (self,event): self.getHandler().changeCommand()
-    # def changeAll          (self,event): self.getHandler().changeAllCommand()
-    # def changeThenFind     (self,event): self.getHandler().changeThenFindCommand()
-    # def findNext           (self,event): self.getHandler().findNextCommand()
-    # def findPrev           (self,event): self.getHandler().findPrevCommand()
-    
     def cloneFindAll       (self,event): self.getHandler().cloneFindAll(event)
+    def findAll            (self,event): self.getHandler().findAll(event)
     
     def replaceString      (self,event): self.getHandler().replaceString(event)
     def reSearchBackward   (self,event): self.getHandler().reSearchBackward(event)
