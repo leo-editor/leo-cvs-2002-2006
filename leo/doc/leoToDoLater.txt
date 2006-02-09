@@ -169,13 +169,10 @@ def showSuccess(self,pos,newpos):
     # Set the focus and selection after the redraw.
     t = g.choose(self.in_headline,p.edit_widget(),c.frame.bodyCtrl)
     insert = g.choose(self.reverse,pos,newpos)
-    ###gui.setInsertPoint(t,insert)
     # New in 4.4a3: a much better way to ensure progress in backward searches.
     gui.setSelectionRange(t,pos,newpos,insert=insert)
-    # # # if self.reverse:
-        # # # gui.setInsertPoint(t,pos)
-    gui.makeIndexVisible(t,insert)
     c.widgetWantsFocusNow(t)
+    gui.makeIndexVisible(t,insert)
     if self.wrap and not self.wrapPosition:
         self.wrapPosition = self.p
 #@nonl
@@ -673,26 +670,17 @@ def defineEditMenuFindMenuTable (self):
     
     c = self.c ; f = self.frame
     
-    if 1: # Bind to the Find tab.
-        sc = c.searchCommands
-        self.editMenuFindMenuTable = [
-            ("&Show Find Tab",sc.openFindTab),
-            ("&Hide Find Tab",sc.hideFindTab),
-            ("-",None),
-            ("Find &Next",          sc.findTabFindNext),
-            ("Find &Previous",      sc.findTabFindPrev),
-            ("&Replace",            sc.findTabChange),
-            ("Replace, &Then Find", sc.findTabChangeThenFind),
-        ]
-    else: # Bind to deprecated Find dialog.
-        self.editMenuFindMenuTable = [
-            ("&Find Panel",c.showFindPanel),
-            ("-",None),
-            ("Find &Next",c.findNext),
-            ("Find &Previous",c.findPrevious),
-            ("&Replace",c.replace),
-            ("Replace, &Then Find",c.replaceThenFind),
-        ]
+    # Bind to the Find tab.
+    sc = c.searchCommands
+    self.editMenuFindMenuTable = [
+        ("&Show Find Tab",  sc.openFindTab),
+        ("&Hide Find Tab",  sc.hideFindTab),
+        ("-",None),
+        ("Find &Next",          sc.findTabFindNext),
+        ("Find &Previous",      sc.findTabFindPrev),
+        ("&Replace",            sc.findTabChange),
+        ("Replace, &Then Find", sc.findTabChangeThenFind),
+    ]
 #@nonl
 #@-node:ekr.20031218072017.3756:defineEditMenuFindMenuTable
 #@+node:ekr.20031218072017.3757:defineEditMenuTop2Table
@@ -8531,6 +8519,8 @@ def printGcRefs (message=''):
 #@+node:ekr.20060116073229:To do 4.4.1
 #@+node:ekr.20051202094427:Resolve cvs conflicts
 Investigate meld:  http://meld.sourceforge.net/
+
+Create a 'generate cvs conflicst' script for testing.
 #@nonl
 #@+node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
 @nocolor
