@@ -2120,7 +2120,7 @@ class keyHandlerClass:
     #@+node:ekr.20060201083154:k.prettyPrintKey
     def prettyPrintKey (self,stroke):
         
-        s = stroke.strip().lstrip('<').rstrip('>')
+        s = stroke and stroke.strip().lstrip('<').rstrip('>')
         if not s: return ''
     
         shift = s.find("shift") >= 0 or s.find("shft") >= 0

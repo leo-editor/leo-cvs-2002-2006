@@ -1353,6 +1353,7 @@ class leoMenu:
             #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
             #@nl
             accelerator = stroke = k.shortcutFromSetting(accel) or ''
+            accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('<').rstrip('>')
             def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
                 return k.masterMenuHandler(stroke,command,commandName)
             realLabel = self.getRealMenuName(label)

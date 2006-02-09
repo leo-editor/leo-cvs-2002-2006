@@ -1755,6 +1755,22 @@ def setupArgs (self,forward=False,regexp=False,word=False,statusLine='',setDefau
                 s = s[:-1]
             k.extendLabel(s,select=True)
 #@-node:ekr.20060124134356: setupArgs
+#@+node:ekr.20060209064140:findAll
+def findAll (self,event):
+
+    k = self.k ; state = k.getState('find-all')
+    if state == 0:
+        self.w = event and event.widget
+        self.setupArgs(forward=True,regexp=False,word=True)
+        k.setLabelBlue('Find All: ',protect=True)
+        k.getArg(event,'find-all',1,self.findAll)
+    else:
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+        self.generalSearchHelper(k.arg,findAll=True)
+#@nonl
+#@-node:ekr.20060209064140:findAll
 #@+node:ekr.20060128080201:cloneFindAll
 def cloneFindAll (self,event):
 
@@ -1802,14 +1818,16 @@ def generalChangeHelper (self,find_pattern,change_pattern):
 #@nonl
 #@-node:ekr.20060205105950.1:generalChangeHelper
 #@+node:ekr.20060124181213.4:generalSearchHelper
-def generalSearchHelper (self,pattern,cloneFindAll=False):
+def generalSearchHelper (self,pattern,cloneFindAll=False,findAll=False):
     
     self.setupSearchPattern(pattern)
 
     self.finder.p = self.c.currentPosition()
     self.finder.v = self.finder.p.v
 
-    if cloneFindAll:
+    if findAll:
+         self.finder.findAllCommand()
+    elif cloneFindAll:
          self.finder.cloneFindAllCommand()
     else:
         # This handles the reverse option.
@@ -2370,6 +2388,13 @@ def findButtonCallback(self,event=None):
 #@nonl
 #@-node:ekr.20051023183028:findButtonCallback
 #@+node:ekr.20051024192602: Top level
+#@+node:ekr.20060209064832:findAllCommand
+def findAllCommand (self,event=None):
+
+    self.setup_command()
+    self.findAll()
+#@nonl
+#@-node:ekr.20060209064832:findAllCommand
 #@+node:ekr.20060204120158.1:findAgainCommand
 def findAgainCommand (self):
     
@@ -2565,15 +2590,6 @@ def __init__ (self,c):
     self.findTabHandler = None
     self.minibufferFindHandler = None
     
-    # The last kind of search
-    
-    # self.forward = True
-    # self.incremental = True
-    # self.regexp = False
-    # self.word = True
-    #self.searchString = ''
-    #self.replaceString = '' # Not used yet.
-    
     try:
         self.w = c.frame.body.bodyCtrl
     except AttributeError:
@@ -2585,7 +2601,9 @@ def getPublicCommands (self):
     
     return {
         'clone-find-all':                       self.cloneFindAll,
+        'find-tab-find-all':                    self.findAll,
         
+        # Thin wrappers on Find tab
         'find-tab-find':                        self.findTabFindNext,
         'find-tab-find-prev':                   self.findTabFindPrev,
         'find-tab-change':                      self.findTabChange,
@@ -2683,6 +2701,13 @@ def findTabChangeThenFind(self,event=None):
         self.findTabHandler.changeThenFindCommand()
     else:
         self.openFindTab()
+        
+def findTabFindAll(self,event=None):
+
+    if self.findTabHandler:
+        self.findTabHandler.findAllCommand()
+    else:
+        self.openFindTab()
 
 def findTabFindNext (self,event=None):
     
@@ -2743,13 +2768,8 @@ def toggleOption (self, ivar): self.getHandler().toggleOption(ivar)
 #@nonl
 #@-node:ekr.20060123115459:Find options wrappers
 #@+node:ekr.20060124093828:Find wrappers
-# def change             (self,event): self.getHandler().changeCommand()
-# def changeAll          (self,event): self.getHandler().changeAllCommand()
-# def changeThenFind     (self,event): self.getHandler().changeThenFindCommand()
-# def findNext           (self,event): self.getHandler().findNextCommand()
-# def findPrev           (self,event): self.getHandler().findPrevCommand()
-
 def cloneFindAll       (self,event): self.getHandler().cloneFindAll(event)
+def findAll            (self,event): self.getHandler().findAll(event)
 
 def replaceString      (self,event): self.getHandler().replaceString(event)
 def reSearchBackward   (self,event): self.getHandler().reSearchBackward(event)
@@ -2990,13 +3010,13 @@ def set_focus (self,w):
 def masterFocusHandler (self):
     
     c = self ; 
-    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+    trace = not g.app.unitTesting and c.config.getBool('trace_masterFocusHandler')
     
     # Give priority to later requests, but default to previously set widget.
     w = c.requestedFocusWidget or c.hasFocusWidget
     
     if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
-        if trace: g.trace('*'*20,'no change.')
+        if trace: g.trace('no change.')
         c.requestedFocusWidget = None
     elif w:
         # Ignore whatever g.app.gui.get_focus might say.
@@ -3004,22 +3024,12 @@ def masterFocusHandler (self):
         if ok: c.hasFocusWidget = w
         c.requestedFocusWidget = None
     else:
-        if trace: g.trace('*'*20,'oops: moving to body pane.')
+        g.trace('*'*20,'oops: moving to body pane.')
         c.bodyWantsFocusNow()
 
 restoreRequestedFocus = masterFocusHandler
 #@nonl
 #@-node:ekr.20060207140352:c.masterFocusHandler
-#@+node:ekr.20060208143543:c.noKnownFocus
-def noKnownFocus (self):
-    
-    '''Indicate that the widget with focus is not known.
-    This will force a later call to g.app.gui.set_focus().'''
-    
-    
-    self.hasFocusWidget = None
-#@nonl
-#@-node:ekr.20060208143543:c.noKnownFocus
 #@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
 def recolor(self):
 
@@ -3061,6 +3071,33 @@ def redraw_now (self):
 redraw = force_redraw = redraw_now
 #@nonl
 #@-node:ekr.20031218072017.2954:c.redraw_now
+#@+node:ekr.20060208143543:c.restoreFocus
+def restoreFocus (self):
+    
+    '''Ensure that the focus eventually gets restored.'''
+    
+    c =self
+    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+
+    if c.requestedFocusWidget:
+        c.hasFocusWidget = None # Force an update
+    elif c.hasFocusWidget:
+        c.requestedFocusWidget = c.hasFocusWidget
+        c.hasFocusWidget = None # Force an update
+    else:
+        # Should not happen, except during unit testing.
+        # c.masterFocusHandler sets c.hasFocusWidget,
+        # so if it is not set here it is because this method cleared it.
+        if not g.app.unitTesting: g.trace('oops: no requested or present widget.')
+        c.bodyWantsFocusNow()
+    
+    if c.inCommand:
+        if trace: g.trace('expecting later call to c.masterFocusHandler')
+        pass # A call to c.masterFocusHandler will surely happen.
+    else:
+        c.masterFocusHandler() # Do it now.
+#@nonl
+#@-node:ekr.20060208143543:c.restoreFocus
 #@+node:ekr.20060207142332:c.traceFocus
 trace_focus_count = 0
 
@@ -3882,7 +3919,7 @@ def masterMenuHandler (self,stroke,func,commandName):
 #@-node:ekr.20060128090219:masterMenuHandler
 #@-node:ekr.20060129052538.1:Master event handlers (keyHandler)
 #@-node:ekr.20060204105811:Recent
-#@+node:ekr.20060208080524:Recent 4.4b2 projects
+#@+node:ekr.20060208080524:4.4b2 projects
 #@+node:ekr.20060206062108.1:What I did: 2-6-05
 @nocolor
 
@@ -4122,13 +4159,6 @@ def setHeadline (self,p,s):
 #@nonl
 #@-node:ekr.20060207101443:tree.setHeadline (new in 4.4b2)
 #@-node:ekr.20060207091145:Fixed undo problem in headlines
-#@+node:ekr.20060207110750:What I did: 2-7-05
-@nocolor
-
-Fixed several bugs related to recent changes.
-All unit tests now pass.
-#@nonl
-#@-node:ekr.20060207110750:What I did: 2-7-05
 #@+node:ekr.20060207135120:Created c.masterFocusHandler and made it work
 #@+node:ekr.20060207164200:What I did
 @nocolor
@@ -5352,9 +5382,10 @@ def showStateAndMode(self):
         if mode:
             put(' mode: ',color='blue')
             put(mode)
-        
-        # Late change.
-        c.noKnownFocus()
+            
+        # Restore the focus.
+        c.restoreFocus()
+#@nonl
 #@-node:ekr.20060120193743:showStateAndMode
 #@-node:ekr.20060207103936:setInputState is messing with body focus
 #@+node:ekr.20060206165304:Fixed find.success bug
@@ -6208,7 +6239,485 @@ open-find-dialog actuall refer to the find tab.
 - Severl other minor shortcut problems.
 #@nonl
 #@-node:ekr.20060208195315:Added unit tests for key dicts
-#@-node:ekr.20060208080524:Recent 4.4b2 projects
+#@+node:ekr.20060209042734:Improved restore-focus logic when updating status line
+#@+node:ekr.20031218072017.2817: doCommand
+command_count = 0
+
+def doCommand (self,command,label,event=None):
+
+    """Execute the given command, invoking hooks and catching exceptions.
+    
+    The code assumes that the "command1" hook has completely handled the command if
+    g.doHook("command1") returns False.
+    This provides a simple mechanism for overriding commands."""
+    
+    c = self ; p = c.currentPosition()
+    c.setLog()
+
+    self.command_count += 1
+    if not g.app.unitTesting and (
+        c.config.getBool('trace_doCommand') or
+        c.config.getBool('trace_gc') and (self.command_count % 10) == 0
+    ):
+        commandName = command and command.__name__
+        g.trace(commandName)
+
+    # The presence of this message disables all commands.
+    if c.disableCommandsMessage:
+        g.es(c.disableCommandsMessage,color='blue')
+        return 'break' # Inhibit all other handlers.
+
+    if label and event is None: # Do this only for legacy commands.
+        if label == "cantredo": label = "redo"
+        if label == "cantundo": label = "undo"
+        g.app.commandName = label
+
+    if not g.doHook("command1",c=c,p=p,v=p,label=label):
+        try:
+            c.inCommand = True
+            val = command(event)
+            c.inCommand = False
+            if c and c.exists: # Be careful: the command could destroy c.
+                c.k.funcReturn = val
+        except:
+            c.inCommand = False
+            if g.app.unitTesting:
+                raise
+            else:
+                g.es("exception executing command")
+                print "exception executing command"
+                g.es_exception(c=c)
+                if c and c.exists and hasattr(c,'frame'):
+                    c.redraw_now()
+                    
+        if c and c.exists and c.requestCloseWindow:
+            g.trace('Closing window after command')
+            c.requestCloseWindow = False
+            g.app.closeLeoWindow(c.frame)
+
+    # Be careful: the command could destroy c.
+    if c and c.exists:
+        p = c.currentPosition()
+        g.doHook("command2",c=c,p=p,v=p,label=label)
+            
+    return "break" # Inhibit all other handlers.
+#@nonl
+#@-node:ekr.20031218072017.2817: doCommand
+#@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+@
+**Important** These methods ensure that exactly zero or one (depending on the
+argument to endUpdate) redraws exist within the section of code bounded by
+c.beginUpdate and c.endUpdate. This greatly simplifies and clarifies the code.
+
+Callers should ensure that every beginUpdate is matched with an endUpdate by
+using the following pattern:
+    c.beginUpdate()
+    try:
+        << whatever >>
+    finally:
+        c.endUpdate()
+@c
+
+def beginUpdate(self):
+    
+    '''Suppress redraws of the tree (except for explict calls to c.redraw_now)
+    until the matching call to endUpdate.'''
+    
+    c = self
+    c.frame.tree.beginUpdate()
+    
+def endUpdate(self,flag=True,scroll=False):
+    
+    '''Redraw the screen if flag is True.'''
+
+    c = self
+    c.frame.tree.endUpdate(flag,scroll=scroll)
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@+node:ekr.20031218072017.2951:c.bringToFront
+def bringToFront(self):
+
+    self.frame.deiconify()
+
+BringToFront = bringToFront # Compatibility with old scripts
+#@nonl
+#@-node:ekr.20031218072017.2951:c.bringToFront
+#@+node:ekr.20060205103842:c.get/request/set_focus
+def get_focus (self):
+    
+    c = self
+    return g.app.gui.get_focus(c)
+    
+def request_focus(self,w):
+
+    c = self
+    if w: c.requestedFocusWidget = w
+    c.traceFocus(w)
+    
+def set_focus (self,w):
+    
+    c = self
+    
+    if 1: # An optimization.
+        c.requestedFocusWidget = w
+        c.masterFocusHandler()
+    
+    else: # Safer, perhaps.
+        c.hasFocusWidget = c.requestedFocusWidget = w
+        g.app.gui.set_focus(c,w)
+#@nonl
+#@-node:ekr.20060205103842:c.get/request/set_focus
+#@+node:ekr.20060207140352:c.masterFocusHandler
+def masterFocusHandler (self):
+    
+    c = self ; 
+    trace = not g.app.unitTesting and c.config.getBool('trace_masterFocusHandler')
+    
+    # Give priority to later requests, but default to previously set widget.
+    w = c.requestedFocusWidget or c.hasFocusWidget
+    
+    if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
+        if trace: g.trace('no change.')
+        c.requestedFocusWidget = None
+    elif w:
+        # Ignore whatever g.app.gui.get_focus might say.
+        ok = g.app.gui.set_focus(c,w)
+        if ok: c.hasFocusWidget = w
+        c.requestedFocusWidget = None
+    else:
+        g.trace('*'*20,'oops: moving to body pane.')
+        c.bodyWantsFocusNow()
+
+restoreRequestedFocus = masterFocusHandler
+#@nonl
+#@-node:ekr.20060207140352:c.masterFocusHandler
+#@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
+def recolor(self):
+
+    c = self
+    c.frame.body.recolor(c.currentPosition())
+    
+def requestRecolor (self):
+    
+    c = self
+    c.frame.requestRecolorFlag = True
+#@nonl
+#@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
+#@+node:ekr.20051216171520:c.recolor_now
+def recolor_now(self,p=None,incremental=False):
+
+    c = self
+    if p is None:
+        p = c.currentPosition()
+
+    c.frame.body.colorizer.colorize(p,incremental)
+#@nonl
+#@-node:ekr.20051216171520:c.recolor_now
+#@+node:ekr.20031218072017.2954:c.redraw_now
+def redraw_now (self):
+    
+    c = self
+    
+    if g.app.quitting or not c.exists or not hasattr(c.frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    c.frame.tree.redraw_now()
+    c.frame.top.update_idletasks()
+    
+    if c.frame.requestRecolorFlag:
+        c.frame.requestRecolorFlag = False
+        c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now
+#@nonl
+#@-node:ekr.20031218072017.2954:c.redraw_now
+#@+node:ekr.20060208143543:c.restoreFocus
+def restoreFocus (self):
+    
+    '''Ensure that the focus eventually gets restored.'''
+    
+    c =self
+    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+
+    if c.requestedFocusWidget:
+        c.hasFocusWidget = None # Force an update
+    elif c.hasFocusWidget:
+        c.requestedFocusWidget = c.hasFocusWidget
+        c.hasFocusWidget = None # Force an update
+    else:
+        # Should not happen, except during unit testing.
+        # c.masterFocusHandler sets c.hasFocusWidget,
+        # so if it is not set here it is because this method cleared it.
+        if not g.app.unitTesting: g.trace('oops: no requested or present widget.')
+        c.bodyWantsFocusNow()
+    
+    if c.inCommand:
+        if trace: g.trace('expecting later call to c.masterFocusHandler')
+        pass # A call to c.masterFocusHandler will surely happen.
+    else:
+        c.masterFocusHandler() # Do it now.
+#@nonl
+#@-node:ekr.20060208143543:c.restoreFocus
+#@+node:ekr.20060207142332:c.traceFocus
+trace_focus_count = 0
+
+def traceFocus (self,w):
+    
+    c = self
+
+    if not g.app.unitTesting and c.config.getBool('trace_focus'):
+        c.trace_focus_count += 1
+        g.trace('%4d' % (c.trace_focus_count),
+            c.widget_name(w),g.callers())
+#@nonl
+#@-node:ekr.20060207142332:c.traceFocus
+#@+node:ekr.20060205111103:c.widget_name
+def widget_name (self,widget):
+    
+    c = self
+    
+    return c.gui.widget_name(widget)
+#@nonl
+#@-node:ekr.20060205111103:c.widget_name
+#@+node:ekr.20050120092028:c.xWantsFocus/Now
+def bodyWantsFocus(self):
+    c = self ; body = c.frame.body
+    c.request_focus(body and body.bodyCtrl)
+    
+def bodyWantsFocusNow(self):
+    c = self ; body = c.frame.body
+    c.set_focus(body and body.bodyCtrl)
+        
+def headlineWantsFocus(self,p):
+    c = self
+    c.request_focus(p and p.edit_widget())
+    
+def headlineWantsFocusNow(self,p):
+    c = self
+    c.set_focus(p and p.edit_widget())
+    
+def logWantsFocus(self):
+    c = self ; log = c.frame.log
+    c.request_focus(log and log.logCtrl)
+    
+def logWantsFocusNow(self):
+    c = self ; log = c.frame.log
+    c.set_focus(log and log.logCtrl)
+
+def minibufferWantsFocus(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocus()
+    
+def minibufferWantsFocusNow(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocusNow()
+
+def treeWantsFocus(self):
+    c = self ; tree = c.frame.tree
+    c.request_focus(tree and tree.canvas)
+    
+def treeWantsFocusNow(self):
+    c = self ; tree = c.frame.tree
+    c.set_focus(tree and tree.canvas)
+    
+def widgetWantsFocus(self,w):
+    c = self ; c.request_focus(w)
+    
+def widgetWantsFocusNow(self,w):
+    c = self ; c.set_focus(w)
+#@-node:ekr.20050120092028:c.xWantsFocus/Now
+#@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
+#@+node:ekr.20060120193743:showStateAndMode
+def showStateAndMode(self):
+    
+    k = self ; c = k.c ; frame = c.frame
+    state = k.unboundKeyAction
+    mode = k.getStateKind()
+   
+    if hasattr(frame,'clearStatusLine'):
+        frame.clearStatusLine()
+        put = frame.putStatusLine
+        if state != 'insert':
+            put('state: ',color='blue')
+            put(state)
+        if mode:
+            put(' mode: ',color='blue')
+            put(mode)
+            
+        # Restore the focus.
+        c.restoreFocus()
+#@nonl
+#@-node:ekr.20060120193743:showStateAndMode
+#@+node:ekr.20060208143543:c.restoreFocus
+def restoreFocus (self):
+    
+    '''Ensure that the focus eventually gets restored.'''
+    
+    c =self
+    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+
+    if c.requestedFocusWidget:
+        c.hasFocusWidget = None # Force an update
+    elif c.hasFocusWidget:
+        c.requestedFocusWidget = c.hasFocusWidget
+        c.hasFocusWidget = None # Force an update
+    else:
+        # Should not happen, except during unit testing.
+        # c.masterFocusHandler sets c.hasFocusWidget,
+        # so if it is not set here it is because this method cleared it.
+        if not g.app.unitTesting: g.trace('oops: no requested or present widget.')
+        c.bodyWantsFocusNow()
+    
+    if c.inCommand:
+        if trace: g.trace('expecting later call to c.masterFocusHandler')
+        pass # A call to c.masterFocusHandler will surely happen.
+    else:
+        c.masterFocusHandler() # Do it now.
+#@nonl
+#@-node:ekr.20060208143543:c.restoreFocus
+#@-node:ekr.20060209042734:Improved restore-focus logic when updating status line
+#@+node:ekr.20060209083424:Fixed problem with 'spelling' of menu bindings
+#@+node:ekr.20060201083154:k.prettyPrintKey
+def prettyPrintKey (self,stroke):
+    
+    s = stroke and stroke.strip().lstrip('<').rstrip('>')
+    if not s: return ''
+
+    shift = s.find("shift") >= 0 or s.find("shft") >= 0
+    
+    # Replace all minus signs by plus signs, except a trailing minus:
+    if s.endswith('-'): s = s[:-1].replace('-','+') + '-'
+    else:               s = s.replace('-','+')
+    fields = s.split('+')
+    last = fields and fields[-1]
+
+    if last and len(last) == 1:
+        prev = s[:-1]
+        if last.isalpha():
+            if last.isupper():
+                if not shift:
+                    s = prev + 'Shift+' + last
+            elif last.islower():
+                if not prev:
+                    s = 'Key+' + last.upper()
+                else:
+                    s = prev + last.upper()
+
+    return '<%s>' % s
+#@nonl
+#@-node:ekr.20060201083154:k.prettyPrintKey
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.k
+    if g.app.unitTesting: return
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        accelerator = stroke = k.shortcutFromSetting(accel) or ''
+        accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('<').rstrip('>')
+        def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+            return k.masterMenuHandler(stroke,command,commandName)
+        realLabel = self.getRealMenuName(label)
+        amp_index = realLabel.find("&")
+        realLabel = realLabel.replace("&","")
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator,
+            command=masterMenuCallback,
+            underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+accel = None
+if minibufferCommand:
+    commandName = command 
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
+    else:
+        g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@-node:ekr.20060209083424:Fixed problem with 'spelling' of menu bindings
+#@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl
