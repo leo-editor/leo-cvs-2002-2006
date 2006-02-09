@@ -1683,8 +1683,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
     #@+node:ekr.20031218072017.3976:OnActivateTree
     def OnActivateTree (self,event=None):
-        
-        __pychecker__ = '--no-argsused' # event not used.
     
         try:
             frame = self ; c = frame.c
@@ -1775,19 +1773,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         elif wname.startswith('log'):
             self.contractLogPane()
         elif wname.startswith('head') or wname.startswith('canvas'):
-            self.contractTreePane()
+            self.contractOutlinePane()
     #@nonl
-    #@+node:ekr.20060209110936:contract...Pane
-    def contractBodyPane(self,event=None):
-        g.trace()
-    
-    def contractLogPane(self,event=None):
-        g.trace()
-        
-    def contractTreePane(self,event=None):
-        g.trace()
-    #@nonl
-    #@-node:ekr.20060209110936:contract...Pane
     #@-node:ekr.20060209110128.1:contractPane & helpers
     #@+node:ekr.20060209110128.2:expandPane & helpers
     def expandPane (self,event=None):
@@ -1805,19 +1792,48 @@ class leoTkinterFrame (leoFrame.leoFrame):
         elif wname.startswith('log'):
             self.expandLogPane()
         elif wname.startswith('head') or wname.startswith('canvas'):
-            self.expandTreePane()
+            self.expandOutlinePane()
     #@nonl
-    #@+node:ekr.20060209110941:expand...Pane
-    def expandBodyPane(self,event=None):
-        g.trace()
+    #@-node:ekr.20060209110128.2:expandPane & helpers
+    #@+node:ekr.20060209110936:expand/contract/hide...Pane
+    #@+at 
+    #@nonl
+    # The first arg to divideLeoSplitter means the following:
+    # 
+    #     f.splitVerticalFlag: use the primary   (tree/body) ratio.
+    # not f.splitVerticalFlag: use the secondary (tree/log) ratio.
+    #@-at
+    #@@c
+    
+    def contractBodyPane (self,event=None):
+        f = self ; r = min(1.0,f.ratio+0.1)
+        f.divideLeoSplitter(f.splitVerticalFlag,r)
+    
+    def contractLogPane (self,event=None):
+        f = self ; r = min(1.0,f.ratio+0.1)
+        f.divideLeoSplitter(not f.splitVerticalFlag,r)
+    
+    def contractOutlinePane (self,event=None):
+        f = self ; r = max(0.0,f.ratio-0.1)
+        f.divideLeoSplitter(f.splitVerticalFlag,r)
+    
+    expandBodyPane = contractOutlinePane
+    expandOutlinePane = contractBodyPane
     
     def expandLogPane(self,event=None):
-        g.trace()
-        
-    def expandTreePane(self,event=None):
-        g.trace()
-    #@-node:ekr.20060209110941:expand...Pane
-    #@-node:ekr.20060209110128.2:expandPane & helpers
+        f = self ; r = max(0.0,f.ratio-0.1)
+        f.divideLeoSplitter(not f.splitVerticalFlag,r)
+    
+    def hideBodyPane (self,event=None):
+        f = self ; f.divideLeoSplitter(f.splitVerticalFlag,1.0)
+    
+    def hideLogPane (self,event=None):
+        f = self ; f.divideLeoSplitter(not f.splitVerticalFlag,1.0)
+    
+    def hideOutlinePane (self,event=None):
+        f = self ; f.divideLeoSplitter(f.splitVerticalFlag,0.0)
+    #@nonl
+    #@-node:ekr.20060209110936:expand/contract/hide...Pane
     #@-node:ekr.20060209110128:Minibuffer commands... (tkFrame)
     #@+node:ekr.20031218072017.3980:Edit Menu...
     #@+node:ekr.20031218072017.3981:abortEditLabelCommand
