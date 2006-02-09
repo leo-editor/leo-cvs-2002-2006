@@ -1398,6 +1398,7 @@ class editCommandsClass (baseEditCommandsClass):
             'goto-line':                            self.gotoLine,
             'hide-body-pane':                       c.frame.hideBodyPane,
             'hide-log-pane':                        c.frame.hideLogPane,
+            'hide-pane':                            c.frame.hidePane,
             'hide-outline-pane':                    c.frame.hideOutlinePane,
             'how-many':                             self.howMany,
             # Use indentBody in leoCommands.py

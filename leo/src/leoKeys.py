@@ -1501,7 +1501,7 @@ class keyHandlerClass:
             # All tree callbacks have a func, so we can't be in the tree.
             # g.trace('*'*20,'auto-deactivate tree: %s' % wname)
             c.frame.tree.OnDeactivate()
-            c.masterFocusHandler()
+            c.widgetWantsFocusNow(w)
             return None
             
     masterClick3Handler         = masterClickHandler

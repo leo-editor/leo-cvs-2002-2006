@@ -1005,7 +1005,10 @@ class leoFind:
             gui.makeIndexVisible(t,insert)
         
         # g.trace(c.widget_name(t))
-        c.widgetWantsFocusNow(t)
+        # c.widgetWantsFocusNow(t)
+        
+        # I prefer always putting the focus in the body.
+        c.bodyWantsFocusNow()
     #@nonl
     #@-node:ekr.20031218072017.3089:restore
     #@+node:ekr.20031218072017.3090:save

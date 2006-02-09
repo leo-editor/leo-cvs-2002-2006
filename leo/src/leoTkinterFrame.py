@@ -1758,26 +1758,45 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3979:Gui-dependent commands
     #@+node:ekr.20060209110128:Minibuffer commands... (tkFrame)
     
-    #@+node:ekr.20060209110128.1:contractPane & helpers
+    #@+node:ekr.20060209110128.1:contractPane
     def contractPane (self,event=None):
         
         f = self ; c = f.c
         w = c.get_requested_focus()
         wname = c.widget_name(w)
     
-        g.trace(wname)
+        # g.trace(wname)
         if not w: return
         
         if wname.startswith('body'):
-            self.contractBodyPane()
+            f.contractBodyPane()
         elif wname.startswith('log'):
-            self.contractLogPane()
+            f.contractLogPane()
         elif wname.startswith('head') or wname.startswith('canvas'):
-            self.contractOutlinePane()
+            f.contractOutlinePane()
     #@nonl
-    #@-node:ekr.20060209110128.1:contractPane & helpers
-    #@+node:ekr.20060209110128.2:expandPane & helpers
+    #@-node:ekr.20060209110128.1:contractPane
+    #@+node:ekr.20060209110128.2:expandPane
     def expandPane (self,event=None):
+    
+        f = self ; c = f.c
+            
+        w = c.get_requested_focus()
+        wname = c.widget_name(w)
+    
+        # g.trace(wname)
+        if not w: return
+        
+        if wname.startswith('body'):
+            f.expandBodyPane()
+        elif wname.startswith('log'):
+            f.expandLogPane()
+        elif wname.startswith('head') or wname.startswith('canvas'):
+            f.expandOutlinePane()
+    #@nonl
+    #@-node:ekr.20060209110128.2:expandPane
+    #@+node:ekr.20060209143933:hidePane
+    def hidePane (self,event=None):
     
         f = self ; c = f.c
             
@@ -1788,13 +1807,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if not w: return
         
         if wname.startswith('body'):
-            self.expandBodyPane()
+            f.hideBodyPane()
+            c.treeWantsFocusNow()
         elif wname.startswith('log'):
-            self.expandLogPane()
+            f.hideLogPane()
+            c.bodyWantsFocusNow()
         elif wname.startswith('head') or wname.startswith('canvas'):
-            self.expandOutlinePane()
+            f.hideOutlinePane()
+            c.bodyWantsFocusNow()
     #@nonl
-    #@-node:ekr.20060209110128.2:expandPane & helpers
+    #@-node:ekr.20060209143933:hidePane
     #@+node:ekr.20060209110936:expand/contract/hide...Pane
     #@+at 
     #@nonl
