@@ -487,6 +487,16 @@ class leoFrame:
     # Expanding and contracting panes.
     def contractPane         (self,event=None): self.oops()
     def expandPane           (self,event=None): self.oops()
+    def contractBodyPane     (self,event=None): self.oops()
+    def contractLogPane      (self,event=None): self.oops()
+    def contractOutlinePane  (self,event=None): self.oops()
+    def expandLogPane        (self,event=None): self.oops()
+    def hideBodyPane         (self,event=None): self.oops()
+    def hideLogPane          (self,event=None): self.oops()
+    def hideOutlinePane      (self,event=None): self.oops()
+        
+    expandBodyPane = contractOutlinePane
+    expandOutlinePane = contractBodyPane
     
     # In the Window menu...
     def cascade              (self,event=None): self.oops()

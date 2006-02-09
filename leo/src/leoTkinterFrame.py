@@ -1816,13 +1816,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def contractOutlinePane (self,event=None):
         f = self ; r = max(0.0,f.ratio-0.1)
         f.divideLeoSplitter(f.splitVerticalFlag,r)
-    
-    expandBodyPane = contractOutlinePane
-    expandOutlinePane = contractBodyPane
+        
+    def expandBodyPane (self,event=None):
+        self.contractOutlinePane()
     
     def expandLogPane(self,event=None):
         f = self ; r = max(0.0,f.ratio-0.1)
         f.divideLeoSplitter(not f.splitVerticalFlag,r)
+        
+    def expandOutlinePane (self,event=None):
+        self.contractBodyPane()
     
     def hideBodyPane (self,event=None):
         f = self ; f.divideLeoSplitter(f.splitVerticalFlag,1.0)
