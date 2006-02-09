@@ -493,6 +493,7 @@ class leoFrame:
     def expandLogPane        (self,event=None): self.oops()
     def hideBodyPane         (self,event=None): self.oops()
     def hideLogPane          (self,event=None): self.oops()
+    def hidePane             (self,event=None): self.oops()
     def hideOutlinePane      (self,event=None): self.oops()
         
     expandBodyPane = contractOutlinePane
