@@ -8053,6 +8053,404 @@ def createLastChildOf (v,headline):
     return child
 #@-node:createLastChildOf
 #@-node:Recursive import script
+#@+node:rst-to-leo
+'''A script to import rst files into Leo.
+
+This script parses a file containing Restructured text and creates node suitable for the rst3 plugin.
+
+To run, do the following:
+    
+1. Create a call to the function ReSt2Leo below.
+   The argument to ReST2Leo should be the url (including a local file)
+   of a file containing restructure text.
+   
+2. Run this node using the Execute Script command or the Run Script button.
+
+The script will create a sibling of this node for each call to ReST2Leo in this node.
+For example, this node will create a sibling called 'reStructuredText Demonstration'.
+The root headline of the created tree will be the top-level heading of the imported file.
+'''
+<<rst2leo declarations>>
+@language python
+@others
+
+# files to test with:
+# demo - http://docutils.sourceforge.net/docs/user/rst/demo.txt
+# ReST specs - http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.txt
+
+if 1:
+    ReST2Leo('http://docutils.sourceforge.net/docs/user/rst/demo.txt')
+if 0:
+    ReST2Leo('http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.txt')
+if 0:
+    ReST2Leo('http://springfed.com/ac/IssueNo0003Info/editform')
+#@nonl
+#@+node:<<rst2leo declarations>>
+#all the allowable underline characters
+valid_underline_characters = [
+    '!','"','#','$','%','&',"'",'(',')','*','+',
+    ',','-','.','/',':',';','<','=','>','?','@',
+    '[','\\',']','^','_','`','{','|','}','~',
+]
+#@nonl
+#@-node:<<rst2leo declarations>>
+#@+node:class ParseReST
+class ParseReST:
+    """Processes a chunks of ReST, creating a list of nodes/sections
+    """
+    @others
+#@nonl
+#@+node:__init__
+def __init__(self, input):
+    
+    """Initialize document level variables
+    """
+    if type(input) == type('string'):
+        self.lines = input.split("\n")
+    else:            
+        self.lines = input
+        
+    self.index = 0 
+        
+    # for each section gather title, contents and underline character
+    # over-under titles are indicated by 
+    # 2 character strings for underline_character
+    # the initial section is root
+    self.section = {'title':'root', 'contents':[], 'underline_character':'root'}
+    # the list of nodes
+    self.sections = []
+    
+#@-node:__init__
+#@+node:isCharacterLine
+def isCharacterLine(self):
+    """Determine if the current line consists of only 
+    valid underline characters
+    """
+    line = self.lines[self.index]
+    character_line_found = False
+    if len(line) > 0:
+        if line[0] in valid_underline_characters:
+            c = line[0]
+            for char in line:
+                if char == c:
+                    character_line_found = True
+                else:
+                    character_line_found = False
+                    #get out of the loop
+                    #otherwise error if 1st and last are characters
+                    break
+    else:
+        return False
+    return character_line_found
+#@-node:isCharacterLine
+#@+node:isTransition
+def isTransition(self):
+    """self.index is pointing to a character line
+    if there are blank lines on either side, this is a transition
+    """
+    
+    current = self.lines[self.index]
+    prev = self.lines[self.index - 1]
+    next = self.lines[self.index + 1]
+    
+    return len(prev) == 0 and len(next) == 0
+#@-node:isTransition
+#@+node:isUnderline
+def isUnderline(self):
+    """self.index is pointing to a character line 
+    if we are preceded by a blank line, then a line
+    not longer than this, we have an underline
+    """
+    
+    current = self.lines[self.index].strip()
+    prev = self.lines[self.index - 1].strip()
+    prevprev = self.lines[self.index - 2].strip()
+
+
+    return len(prev) > 0 and \
+    len(prev) <= len(current) and \
+    len(prevprev) == 0
+#@nonl
+#@-node:isUnderline
+#@+node:isUnderOverline
+def isUnderOverline(self):
+    """self.index is pointing at a character line
+    if there is a line not longer than this
+    followed by a character line like this,
+    we have an UnderOverline
+    """
+    
+    current = self.lines[self.index].strip()
+    next = self.lines[self.index + 1].strip()
+    #the last line may be a character line
+    try:
+        nextnext = self.lines[self.index + 2]
+    except IndexError:
+        return False
+
+    return (nextnext == current) and (len(next) > 0) \
+    and len(next) <= len(current)
+#@nonl
+#@-node:isUnderOverline
+#@+node:isSectionHead
+def isSectionHead(self):
+    """The current line is a character line,
+    is this a section heading?
+    http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#sections
+    """
+    # save typing with aliases
+    current = self.lines[self.index]
+    prev = self.lines[self.index - 1]
+    next = self.lines[self.index + 1]
+   
+    # a transition has a blank line before and after
+    if  self.isTransition():
+        return False
+        
+    # underline section heading    
+    if self.isUnderline():
+        # previous to discovering the underline, we appended
+        # the section title to the current section. 
+        # Remove it before closing the section
+        self.section['contents'].pop()
+        self.closeCurrentSection()
+        self.section['underline_character'] = current[0]
+        self.section['title'] = prev
+        # step index past this line
+        self.index += 1
+        return True
+        
+    # over-under section heading
+    if self.isUnderOverline():
+        self.closeCurrentSection()
+        self.section['underline_character'] = current[0:2]
+        # leading whitespace is allowed in over under style, remove it
+        self.section['title'] = next.strip()
+        # step index past overline, section title, and underline
+        self.index += 3
+        return True
+        
+        raise Exception ("Error in foundSectionHead()")
+#@-node:isSectionHead
+#@+node:closeCurrentSection
+def closeCurrentSection(self):
+    """We have a section title, which ended the previous
+    section. Add this section to nodes, and start the next
+    """
+    self.sections.append(self.section)
+    self.section = {'title':'', 'contents':[], 'underline_character':''}
+#@-node:closeCurrentSection
+#@+node:insertTitle
+def insertTitle(self, uc, isSubTitle = False):
+    """Inserting a title consists of merging section[1],
+    the first section, into section[0], the root.
+    This works the same for title and subtitle, since
+    merging title deletes section[1], making the subtitle
+    section[1]
+    
+    The 'isSubTitle' parameter differentiates between title and subtitle
+    """    
+    title = self.sections[1]['title']
+    
+    if not isSubTitle:
+        self.sections[0]['title'] = title
+    
+    # extend the charline and pad the title
+    charline = (len(title) * uc[0]) + (4 * uc[0])
+    title = '  ' + title
+    
+    self.sections[0]['contents'].append('')
+    self.sections[0]['contents'].append(charline)
+    self.sections[0]['contents'].append(title)
+    self.sections[0]['contents'].append(charline)
+    self.sections[0]['contents'].append('')
+    
+    # append each line, not the list of lines
+    for line in self.sections[1]['contents']:
+        self.sections[0]['contents'].append(line)
+        
+    del self.sections[1]
+    
+#@-node:insertTitle
+#@+node:fixupSections
+def fixupSections(self):
+    """Make corrections to the list of sections
+    to reflect the syntax for 'Title' and 'Subtitle'
+    
+    If the first section heading is a unique over/under
+    it is a title, and should stay in the root section.
+    
+    If the second section heading is a unique over/under
+    it is a subtitle and should remain in the root section.
+    """
+    
+    def isUnique(uc, start):
+        index = start
+        while index < len(self.sections):
+            if self.sections[index]['underline_character'] == uc:
+                return False
+            index += 1
+        return True                
+            
+    
+    # self.sections[0] is root, a special case
+    underline_first = self.sections[1]['underline_character'] 
+    if len(underline_first) > 1:
+        if isUnique(underline_first, 2):
+            # the section head is the document title and must
+            # be added to the root section
+            self.insertTitle(underline_first)
+    if len(self.sections) > 2:
+        underline_second = self.sections[2]['underline_character'] 
+        if len(underline_second) > 1:
+            if isUnique(underline_second, 3):
+                # the section head is the document subtitle and must
+                # be added to the root section
+                self.insertTitle(underline_second, True)
+    
+#@nonl
+#@-node:fixupSections
+#@+node:contents2String
+def contents2String(self):
+    """convert the list of strings in 
+    self.sections[index]['contents'] to a string
+    suitable for sticking into a Leo body
+    """
+    
+    for section in self.sections:
+        section['contents'] = '\n'.join(section['contents'])
+#@nonl
+#@-node:contents2String
+#@+node:processLines
+def processLines(self):
+    """Loop through the lines of ReST input, building a list
+    of sectopms. A section consists of::
+        -title
+        -contents
+        -underline_character
+    """
+    line_count = len(self.lines)
+    
+    while self.index < line_count:
+        if self.isCharacterLine() and self.isSectionHead():
+            # isCharacterLine() and isSectionHead() do all the housekeeping
+            # required. This doesn't look like good style, but I'm not
+            # sure how this should be written.
+            pass
+        else:        
+            self.section['contents'].append(self.lines[self.index])
+            self.index += 1
+    
+    self.closeCurrentSection()
+    if len(self.sections) > 1:
+        if len(self.sections[0]['underline_character']) > 1:
+            self.fixupSections()
+    self.contents2String()
+    return self.sections
+#@-node:processLines
+#@-node:class ParseReST
+#@+node:class BuildLeo
+class BuildLeo:
+    @others
+#@nonl
+#@+node:__init__
+def __init__(self, nodes):
+    """the nodes paramater is returned by ParseReST.processLines
+    It is a list of dictionaries consisting of 
+    underline_character, title, contents 
+    """
+    self.nodes = nodes
+    
+    # self.levels is a dictionary, the keys
+    # are underline_character and the value is the
+    # last Leo node created at that level
+    self.levels = {}
+    
+    # self.underline_characters is a list of the underline characters
+    # in the order of levels. The first is always 'root'
+    self.underline_characters = ['root',]
+    
+    
+        
+
+#@-node:__init__
+#@+node:processNodes
+def processNodes(self):
+    """Step through the list of nodes created by
+    parseReST creating the appropriate Leo nodes
+    """
+    
+    # Create root node as a sibling of current node
+    root = p.insertAfter()
+    self.levels['root'] = root
+    
+    rootstring = self.nodes[0]['contents']
+    roottitle = self.nodes[0]['title']
+    root.setBodyString(rootstring)
+    root.setHeadString(roottitle)
+    
+    # step through the rest of the nodes
+    index = 1
+    while index < len(self.nodes):
+        uc = self.nodes[index]['underline_character']
+        title = self.nodes[index]['title']
+        contents = self.nodes[index]['contents']
+        
+        # this level exists, insert the node
+        if self.levels.has_key(uc):
+            # get parent of this node
+            parent_index = self.underline_characters.index(uc) - 1
+            parent_uc = self.underline_characters[parent_index]
+            current = self.levels[parent_uc].insertAsLastChild()
+            self.levels[uc] = current
+            current.setHeadString(title)
+            current.setBodyString(contents)
+
+        # if this is the first time this uc is encountered
+        # it means we are creating a new sublevel 
+        # create the level then insert the node
+        else:
+            # if we are descending to a new level, the parent 
+            # underline character is currently the last one
+            parent = self.levels[self.underline_characters[-1] ]
+            self.underline_characters.append(uc)
+            current = parent.insertAsLastChild()
+            self.levels[uc]  = current
+            current.setHeadString(title)
+            current.setBodyString(contents)
+            
+        index += 1
+#@nonl
+#@-node:processNodes
+#@-node:class BuildLeo
+#@+node:ReST2Leo
+def ReST2Leo(input):
+    """ A wrapper for ParseReST and BuildLeo
+    """
+    
+    if type(input) == type(""):
+        if input.startswith("http"):
+            from urllib import urlopen
+            try:
+                data = urlopen(input).read()
+            except HTTPError:
+                print 'Unable to open page %s' % input
+                return
+        else:
+            try:
+                data = open(input, 'r').read()
+            except IOError:
+                print 'Unable to open file %s' % input
+                return
+                
+    parsed = ParseReST(data)
+    sections = parsed.processLines()
+    nodes = BuildLeo(sections)
+    nodes.processNodes()
+    c.redraw()    
+#@nonl
+#@-node:ReST2Leo
+#@-node:rst-to-leo
 #@+node:Runniung tcl scripts from the body pane
 @language tcltk
 #@nonl
