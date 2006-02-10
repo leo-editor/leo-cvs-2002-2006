@@ -2071,6 +2071,8 @@ class keyHandlerClass:
         alt   = (state & 0x20000) == 0x20000
         plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
         
+        # g.es('state: %x' % state)
+        
         # g.trace('ch',repr(ch),'keysym',repr(keysym))
         
         # The big aha: we can ignore the shift state.
