@@ -909,7 +909,7 @@ def alert(message):
     tkMessageBox.showwarning("Alert", message)
 #@-node:ekr.20031218072017.3105:alert
 #@+node:ekr.20051023083258:callers
-def callers (n=5,excludeCaller=True):
+def callers (n=8,excludeCaller=True):
     
     '''Return a list containing the callers of the function that called g.callerList.
     
@@ -2156,7 +2156,9 @@ def collectGarbage():
     if not g.app.trace_gc_inited:
         g.app.trace_gc = False
     
-    try: gc.collect()
+    try:
+        g.es_print('Collecting garbage',color='red')
+        gc.collect()
     except: pass
 #@-node:ekr.20031218072017.1590:collectGarbage
 #@+node:ekr.20060205043324.1:printGcSummary
