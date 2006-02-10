@@ -7439,9 +7439,11 @@ class spellTab(leoFind.leoFind):
     
         """Handle a click in the Find button in the Spell tab."""
     
+        c = self.c
         self.find()
         self.updateButtons()
-        self.c.bodyWantsFocus()
+        c.invalidateFocus()
+        c.bodyWantsFocusNow()
     #@nonl
     #@-node:ekr.20051025071455.33:onFindButton
     #@+node:ekr.20051025071455.34:onHideButton
@@ -7507,11 +7509,13 @@ class spellTab(leoFind.leoFind):
                 t.insert(start,selection)
                 g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
                 c.frame.body.onBodyChanged("Change",oldSel=oldSel)
-                c.widgetWantsFocus(t)
+                c.invalidateFocus()
+                c.bodyWantsFocusNow()
                 return True
     
         # The focus must never leave the body pane.
-        c.widgetWantsFocus(t)
+        c.invalidateFocus()
+        c.bodyWantsFocusNow()
         return False
     #@nonl
     #@-node:ekr.20051025071455.38:change
@@ -7535,7 +7539,8 @@ class spellTab(leoFind.leoFind):
     
         if alts:
             self.fillbox(alts,word)
-            c.bodyWantsFocus()
+            c.invalidateFocus()
+            c.bodyWantsFocusNow()
             # Copy the working selection range to the body pane
             start, end = g.app.gui.getTextSelection(self.workCtrl)
             g.app.gui.setTextSelection(bodyCtrl,start,end)
@@ -7543,6 +7548,8 @@ class spellTab(leoFind.leoFind):
         else:
             g.es("no more misspellings")
             self.fillbox([])
+            c.invalidateFocus()
+            c.bodyWantsFocusNow()
     #@nonl
     #@-node:ekr.20051025071455.40:find
     #@+node:ekr.20051025121408:hide
