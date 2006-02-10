@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="8637" clone_windows="0"/>
 <globals body_outline_ratio="0.581306017926">
-	<global_window_position top="65" left="130" height="781" width="1027"/>
+	<global_window_position top="65" left="329" height="781" width="828"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -959,7 +959,7 @@
 </v>
 </v>
 <v t="ekr.20051108140810" a="EV" annotate="7d71002e"><vh>All unit tests</vh>
-<v t="ekr.20060203200614" a="E"><vh>Basic Unit tests</vh>
+<v t="ekr.20060203200614"><vh>Basic Unit tests</vh>
 <v t="ekr.20060205165937"><vh>Doctests</vh>
 <v t="ekr.20040712101754.274" annotate="7d71002e"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20060131101825.1"><vh>@test print end of doctests</vh></v>
@@ -992,9 +992,9 @@
 </v>
 <v t="ekr.20060131102008"><vh>@test print end of test routines</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit tests: simple</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>General unit tests</vh>
+<v t="ekr.20060131101806"><vh>@test all commands have an event arg</vh></v>
 <v t="ekr.20041012101944" annotate="7d71002e"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" annotate="7d71002e"><vh>General Unit Tests...</vh>
 <v t="ekr.20041130092210" annotate="7d71002e"><vh>Batch mode tests...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
@@ -1212,6 +1212,13 @@
 <v t="ekr.20040803091512"><vh>@@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
 <v t="ekr.20040917062206"><vh>@test g.cantImport returns None</vh></v>
 </v>
+<v t="ekr.20060130151716"><vh>New find tests</vh>
+<v t="ekr.20060130151716.1"><vh>@test togle find options commands</vh></v>
+<v t="ekr.20060130151716.2"><vh>@test set find mode commands</vh></v>
+<v t="ekr.20060130151716.3"><vh>@test minbuffer find commands</vh></v>
+<v t="ekr.20060130151716.4"><vh>@test show-find-options</vh></v>
+<v t="ekr.20060131102008.1"><vh>@test print of new find tests</vh></v>
+</v>
 <v t="ekr.20040716144017" annotate="7d71002e"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -1331,6 +1338,66 @@
 <v t="ekr.20050203084930" annotate="7d71002e"><vh>Test settings...</vh>
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
+</v>
+<v t="ekr.20040712101754.102" annotate="7d71002e"><vh>Tests of @file nodes...</vh>
+<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
+<v t="ekr.20040712101754.104"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.105"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
+<v t="ekr.20040712101754.107"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.108"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
+<v t="ekr.20040712101754.110"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.111"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
+<v t="ekr.20040707141957.13"><vh>#@thin</vh></v>
+<v t="ekr.20040707141957.14"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041020100733"><vh>@test @nosent</vh>
+<v t="ekr.20041020100733.1"><vh>#@nosent</vh>
+<v t="ekr.20041020100918"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041020100918.1"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041020100733.2"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041021062800"><vh>@test @noref</vh>
+<v t="ekr.20041021063220"><vh>#@noref</vh>
+<v t="ekr.20041021063220.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041021063220.2"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041021063220.3"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041021065844"><vh>@test @asis</vh>
+<v t="ekr.20041021065903"><vh>#@asis</vh>
+<v t="ekr.20041021065903.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041021065903.2"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041021065844.1"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041004093917"><vh>@test read from string</vh>
+<v t="ekr.20041004093917.1"><vh>Input</vh></v>
+<v t="ekr.20041021071036"><vh>Result</vh></v>
+<v t="ekr.20041004100940"><vh>Expected</vh>
+<v t="ekr.20041001111106"><vh>@thin c:\prog\test\at-file-thin-test2.txt</vh>
+<v t="ekr.20041001111106.1"><vh>node 1</vh>
+<v t="ekr.20041001111106.2"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
+<v t="ekr.20041001111106.3"><vh>child node 1</vh></v>
+<v t="ekr.20041001111106.4"><vh>child node 2</vh></v>
+</v>
+</v>
+<v t="ekr.20041001111106.5"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="ekr.20041001111106.6"><vh>organizer node</vh>
+<v t="ekr.20041001111106.7"><vh>ref child 1</vh></v>
+<v t="ekr.20041001111106.8"><vh>ref child 2</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060131102008.2"><vh>@test print end of tests of @file nodes</vh></v>
 </v>
 <v t="ekr.20050408084135" a="M" annotate="7d71002e"><vh>Undo/Redo Tests</vh>
 <v t="ekr.20040712101754.37" annotate="7d71002e"><vh>@suite Edit body tests</vh>
@@ -1507,77 +1574,7 @@
 <v t="ekr.20050208111037"><vh>@test failure to convert unicode characters to ascii</vh></v>
 <v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
 </v>
-<v t="ekr.20060131101806"><vh>@test all commands have an event arg</vh></v>
-<v t="ekr.20060131101806.1"><vh>print end of general tests</vh></v>
-</v>
-<v t="ekr.20060130151716"><vh>New find tests</vh>
-<v t="ekr.20060130151716.1"><vh>@test togle find options commands</vh></v>
-<v t="ekr.20060130151716.2"><vh>@test set find mode commands</vh></v>
-<v t="ekr.20060130151716.3"><vh>@test minbuffer find commands</vh></v>
-<v t="ekr.20060130151716.4"><vh>@test show-find-options</vh></v>
-<v t="ekr.20060131102008.1"><vh>@test print of new find tests</vh></v>
-</v>
-<v t="ekr.20040712101754.102" annotate="7d71002e"><vh>Tests of @file nodes...</vh>
-<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
-<v t="ekr.20040712101754.104"><vh>#@file</vh></v>
-<v t="ekr.20040712101754.105"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
-<v t="ekr.20040712101754.107"><vh>#@file</vh></v>
-<v t="ekr.20040712101754.108"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
-<v t="ekr.20040712101754.110"><vh>#@file</vh></v>
-<v t="ekr.20040712101754.111"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
-<v t="ekr.20040707141957.13"><vh>#@thin</vh></v>
-<v t="ekr.20040707141957.14"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041020100733"><vh>@test @nosent</vh>
-<v t="ekr.20041020100733.1"><vh>#@nosent</vh>
-<v t="ekr.20041020100918"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041020100918.1"><vh>unnamed node</vh></v>
-</v>
-<v t="ekr.20041020100733.2"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041021062800"><vh>@test @noref</vh>
-<v t="ekr.20041021063220"><vh>#@noref</vh>
-<v t="ekr.20041021063220.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041021063220.2"><vh>unnamed node</vh></v>
-</v>
-<v t="ekr.20041021063220.3"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041021065844"><vh>@test @asis</vh>
-<v t="ekr.20041021065903"><vh>#@asis</vh>
-<v t="ekr.20041021065903.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041021065903.2"><vh>unnamed node</vh></v>
-</v>
-<v t="ekr.20041021065844.1"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041004093917"><vh>@test read from string</vh>
-<v t="ekr.20041004093917.1"><vh>Input</vh></v>
-<v t="ekr.20041021071036"><vh>Result</vh></v>
-<v t="ekr.20041004100940"><vh>Expected</vh>
-<v t="ekr.20041001111106"><vh>@thin c:\prog\test\at-file-thin-test2.txt</vh>
-<v t="ekr.20041001111106.1"><vh>node 1</vh>
-<v t="ekr.20041001111106.2"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
-<v t="ekr.20041001111106.3"><vh>child node 1</vh></v>
-<v t="ekr.20041001111106.4"><vh>child node 2</vh></v>
-</v>
-</v>
-<v t="ekr.20041001111106.5"><vh>&lt;&lt; ref &gt;&gt;</vh>
-<v t="ekr.20041001111106.6"><vh>organizer node</vh>
-<v t="ekr.20041001111106.7"><vh>ref child 1</vh></v>
-<v t="ekr.20041001111106.8"><vh>ref child 2</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20060131102008.2"><vh>@test print end of tests of @file nodes</vh></v>
-</v>
-<v t="ekr.20060131102817"><vh>@test print end of simple tests</vh></v>
+<v t="ekr.20060131102817"><vh>@test print end of general tests</vh></v>
 </v>
 <v t="ekr.20051107115231" annotate="7d71002e"><vh>Unit tests for typing</vh>
 <v t="ekr.20051122095426" annotate="7d71002e"><vh>@test make sure the window is visible (Make this the first test)</vh></v>
@@ -1742,7 +1739,6 @@ Line 1
 #@-node:ekr.20040707141957.13:#@thin
 #@-leo
 last line 1: no newline</t>
-<t tx="ekr.20040712101754"></t>
 <t tx="ekr.20040712101754.2">@language python
 @tabwidth -4</t>
 <t tx="ekr.20040712101754.3">import leoTest
@@ -14127,14 +14123,13 @@ for key in keys:
     arg1 = len(args) &gt; 1 and args[1]
     assert arg0 == 'self' and arg1 == 'event' or arg0 == 'event',\
        'no event arg for %s, args: %s' % (name,data)</t>
-<t tx="ekr.20060131101806.1">print ; print 'End of general tests'</t>
 <t tx="ekr.20060131101825.1">print ; print 'End of doctests'</t>
 <t tx="ekr.20060131102008">print ; print 'End of test routines'</t>
 <t tx="ekr.20060131102008.1">print ; print 'End of new find tests'</t>
 <t tx="ekr.20060131102008.2">print ; print 'End of tests of @file nodes'</t>
 <t tx="ekr.20060131102450">print ; print 'End of typing and undo tests'</t>
 <t tx="ekr.20060131102609">print ; print 'End of commands tests'</t>
-<t tx="ekr.20060131102817">print ; print 'End of simple unit tests'</t>
+<t tx="ekr.20060131102817">print ; print 'End of general unit tests'</t>
 <t tx="ekr.20060203181203.1"></t>
 <t tx="ekr.20060203181203.2">table = (
     ('a','a'),

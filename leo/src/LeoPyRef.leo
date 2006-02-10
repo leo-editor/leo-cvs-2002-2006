@@ -16,10 +16,11 @@
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"
+expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -761,10 +762,11 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20060206103355"><vh>To do 4.4b2</vh>
+<v t="ekr.20060206103355" a="E"><vh>To do 4.4b2</vh>
+<v t="ekr.20060209180725"><vh>Status report</vh></v>
 <v t="ekr.20060209144933"><vh>Make sure bindings can end in '+' and '-'</vh></v>
-<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (4)</vh>
-<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
+<v t="ekr.20060122183914.1" a="E"><vh>Urgent commands for mouseless Leo (4)</vh>
+<v t="ekr.20060116080040.2" a="V"><vh>activate-xxx-menu commands</vh></v>
 <v t="ekr.20060209113357"><vh>clicks should clear selection</vh></v>
 <v t="ekr.20060209105526.1"><vh>select-all-text must remove trailing newline from headline</vh></v>
 <v t="ekr.20060209042734.1"><vh>Add click commands &amp; convenience methods</vh>
@@ -8714,5 +8716,14 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
         f.hideOutlinePane()
         c.bodyWantsFocusNow()</t>
 <t tx="ekr.20060209144933"></t>
+<t tx="ekr.20060209180725">@nocolor
+
+- The code feels much more stable than last week.  Leo is working smoothly now.
+
+- I am able to fix new bugs within 24 hours.  I run unit tests now after every real change.
+
+- B2 could go out the door today, but I shall spend the next few days on the b2 to-do list.  This will give me more time for testing and will eliminate items that have been on the to-do list for *way* too long.
+
+- In the next few days I'll be writing more about 'what's new in b2'.  There is a lot.  This will, of course, form the basis for the release notes and other documentation.</t>
 </tnodes>
 </leo_file>

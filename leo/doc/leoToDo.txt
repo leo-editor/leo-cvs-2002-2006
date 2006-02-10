@@ -2,22 +2,40 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060122183914.1:Urgent commands for mouseless Leo (4)
+#@+node:ekr.20060209180725:Status report
 @nocolor
+
+- The code feels much more stable than last week.  Leo is working smoothly now.
+
+- I am able to fix new bugs within 24 hours.  I run unit tests now after every real change.
+
+- B2 could go out the door today, but I shall spend the next few days on the b2 to-do list.  This will give me more time for testing and will eliminate items that have been on the to-do list for *way* too long.
+
+- In the next few days I'll be writing more about 'what's new in b2'.  There is a lot.  This will, of course, form the basis for the release notes and other documentation.
 #@nonl
-#@+node:ekr.20060116083359.1:expand-pane & contract-pane
-#@-node:ekr.20060116083359.1:expand-pane & contract-pane
+#@-node:ekr.20060209180725:Status report
+#@+node:ekr.20060209144933:Make sure bindings can end in '+' and '-'
+#@-node:ekr.20060209144933:Make sure bindings can end in '+' and '-'
+#@+node:ekr.20060122183914.1:Urgent commands for mouseless Leo (4)
+#@+node:ekr.20060116080040.2:activate-xxx-menu commands
+These would be an alternative to XP Alt-f, Alt-E, etc.
+#@-node:ekr.20060116080040.2:activate-xxx-menu commands
+#@+node:ekr.20060209113357:clicks should clear selection
+#@-node:ekr.20060209113357:clicks should clear selection
+#@+node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
+#@-node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
 #@+node:ekr.20060209042734.1:Add click commands & convenience methods
 - The c.click methods can call tree event handlers directly.
 - Add minibuffer commands for some (all?) of these convenience methods.
 - No need to add click simulators for menus: they will be separate minibuffer commands.
 #@nonl
+#@+node:ekr.20031218072017.792:Double Click Node command
+#@-node:ekr.20031218072017.792:Double Click Node command
 #@-node:ekr.20060209042734.1:Add click commands & convenience methods
-#@+node:ekr.20060116080040.2:activate-xxx-menu commands
-These would be an alternative to XP Alt-f, Alt-E, etc.
-#@-node:ekr.20060116080040.2:activate-xxx-menu commands
 #@+node:ekr.20060206103531:(maybe) select-find-tab-find-text & select-find-tab-change-text
 #@-node:ekr.20060206103531:(maybe) select-find-tab-find-text & select-find-tab-change-text
+#@+node:ekr.20060209105218.2:(maybe) contract-all-except-present-tree
+#@-node:ekr.20060209105218.2:(maybe) contract-all-except-present-tree
 #@-node:ekr.20060122183914.1:Urgent commands for mouseless Leo (4)
 #@+node:ekr.20060122183914:Fix minor bugs 10
 #@+node:ekr.20060206131908:pasteText (with empty text?) crashed when pasting into minibuffer
@@ -249,6 +267,42 @@ def test_apropos_find_commands (self):
 All key bindings specified with !mini pane specifier apply to all modes.
 #@nonl
 #@-node:ekr.20060206104722:Modes may inherit bindings
+#@+node:ekr.20060209140942:New commands
+Mouseless Leo has arrived.  Cvs now contains code to support the following commands, with the default bindings as shown:
+
+contract-log-pane       = Alt-Ctrl-RtArrow 
+expand-body-pane        = Alt-Ctrl-UpArrow  
+expand-log-pane         = Alt-Ctrl-LtArrow
+expand-outline-pane     = Alt-Ctrl-DnArrow
+
+contract-outline-pane   = None
+contract-body-pane      = None
+
+contract-pane           = Alt-Ctrl--
+expand-pane             = Alt-Ctrl-+
+
+hide-body-pane          = None
+hide-log-pane           = None
+hide-pane               = Alt-Ctrl-!
+hide-outline-pane       = None
+
+Notes:
+
+- The expand commands increase or decrease the ratio between panes by 0.1.  The hide commands set the ratio to 0.0 or 1.0 as appropriate.
+
+- The expand-pane and contract-pane commands expand or contract whatever pane has focus.
+
+- There is a small asymmetry: expanding the outline pane contracts the *body* pane, not the log pane.  This asymmetry is a bit more noticable in the expand-pane and contract-pane commands.
+
+- There are no bindings for the contract-body-pane and contract-outline-pane commands because these are equivalent to expand-outline_pane and expand-body-pane commands.
+
+- For the 'split horizontally' orientation, it would be natural to change the bindings as follows:
+
+contract-log-pane       = Alt-Ctrl-DnArrow
+expand-body-pane        = Alt-Ctrl-LtArrow 
+expand-log-pane         = Alt-Ctrl-UpArrow 
+expand-outline-pane     = Alt-Ctrl-RtArrow
+#@-node:ekr.20060209140942:New commands
 #@-node:ekr.20060209053234:What's new in b2
 #@-node:ekr.20060206103355:To do 4.4b2
 #@-all
