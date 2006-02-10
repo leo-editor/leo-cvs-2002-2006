@@ -329,7 +329,10 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nonl
         #@-node:ekr.20060131173440:<< make bindings for a common binding widget >>
         #@nl
+    
         self.canvas.bind('<Key>',k.masterKeyHandler)
+        self.canvas.bind('<Button-1>',self.onTreeClick)
+    
         #@    << make bindings for tagged items on the canvas >>
         #@+node:ekr.20060131173440.2:<< make bindings for tagged items on the canvas >>
         where = g.choose(self.expanded_click_area,'clickBox','plusBox')
@@ -2246,6 +2249,18 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.116:showPopupMenu
     #@-node:ekr.20040803072955.110:tree.OnPopup & allies
+    #@+node:ekr.20051022141020:onTreeClick
+    def onTreeClick (self,event=None):
+        
+        '''Handle an event in the tree canvas, outside of any tree widget.'''
+        
+        c = self.c
+    
+        c.treeWantsFocusNow()
+        
+        return 'break'
+    #@nonl
+    #@-node:ekr.20051022141020:onTreeClick
     #@-node:ekr.20040803072955.71:Event handlers (tkTree)
     #@+node:ekr.20040803072955.118:Incremental drawing...
     #@+node:ekr.20040803072955.119:allocateNodes
