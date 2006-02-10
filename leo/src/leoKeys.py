@@ -1488,7 +1488,7 @@ class keyHandlerClass:
         if wname.startswith('body'):
             try:
                 i = w.index('@%s,%s' % (event.x,event.y))
-                g.app.gui.setInsertPoint(w,i)
+                g.app.gui.setTextSelection (w,i,i,insert=i)
                 c.editCommands.setMoveCol(w,i)
                 c.frame.updateStatusLine()
             except Exception:
