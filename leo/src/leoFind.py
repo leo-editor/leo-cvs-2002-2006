@@ -486,9 +486,9 @@ class leoFind:
             p = c.currentPosition()
             u.afterChangeGroup(p,undoType,reportFlag=True)
             g.es("changed: %d instances" % (count))
-            self.restore(saveData)
         finally:
             c.endUpdate()
+            self.restore(saveData)
     #@nonl
     #@-node:ekr.20031218072017.3069:changeAll (sets end of change-all group)
     #@+node:ekr.20031218072017.3070:changeSelection
@@ -997,18 +997,19 @@ class leoFind:
     
         # Don't try to reedit headline.
         c.selectPosition(p)
+        
         if not in_headline:
-    
             # Looks good and provides clear indication of failure or termination.
             gui.setSelectionRange(t,insert,insert)
             gui.setInsertPoint(t,insert)
             gui.makeIndexVisible(t,insert)
         
-        # g.trace(c.widget_name(t))
-        # c.widgetWantsFocusNow(t)
+        #g.trace(c.widget_name(t))
         
-        # I prefer always putting the focus in the body.
-        c.bodyWantsFocusNow()
+        if 1: # I prefer always putting the focus in the body.
+            c.bodyWantsFocusNow()
+        else:
+            c.widgetWantsFocusNow(t)
     #@nonl
     #@-node:ekr.20031218072017.3089:restore
     #@+node:ekr.20031218072017.3090:save
