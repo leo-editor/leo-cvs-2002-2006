@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="E"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -84,8 +84,8 @@
 <v t="ekr.20050812125502"><vh>@rst-no-head End stuff</vh></v>
 </v>
 </v>
-<v t="ekr.20050831195331.1"><vh>FAQ</vh>
-<v t="ekr.20050830115714"><vh>@rst html\FAQ.html</vh>
+<v t="ekr.20050831195331.1" a="E"><vh>FAQ</vh>
+<v t="ekr.20050830115714" a="E"><vh>@rst html\FAQ.html</vh>
 <v t="ekr.20050830120007"><vh>@rst-no-head Links</vh></v>
 <v t="ekr.20050830115714.1"><vh>Learning to use Leo</vh>
 <v t="ekr.20050830115714.2"><vh>What's the best way to learn to use Leo?</vh></v>
@@ -119,7 +119,8 @@
 <v t="ekr.20050830115714.113"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20050830115714.116"><vh>How can I show Leo files with Excel?</vh></v>
 </v>
-<v t="ekr.20050830115714.76"><vh>Trouble shooting</vh>
+<v t="ekr.20050830115714.76" a="V"><vh>Trouble shooting</vh>
+<v t="ekr.20060210070421"><vh>I can't run Leo from a cvs sandbox.  What's going on?</vh></v>
 <v t="ekr.20050830115714.77"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
 <v t="ekr.20050906090012"><vh>How can I run Leo from a console window?</vh></v>
 <v t="ekr.20050830115714.9"><vh>Some characters in derived files look funny. What can I do?</vh></v>
@@ -2446,8 +2447,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20060206111508" a="V"><vh>4.4 beta 2</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20060206111508"><vh>4.4 beta 2</vh>
 <v t="ekr.20060206111508.2"><vh>Bugs</vh>
 <v t="ekr.20060206111508.3"><vh>Fixed crasher in Save button</vh></v>
 <v t="ekr.20060206111508.4"><vh>Fixed minor bugs &amp; made minor improvements</vh>
@@ -23650,5 +23651,8 @@ The Aha was to honor 'mini' bindings first in k.masterKeyHandler.
 <t tx="ekr.20060206111717.1"></t>
 <t tx="ekr.20060206111853"></t>
 <t tx="ekr.20060206112001"></t>
+<t tx="ekr.20060210070421">Leo's extensions folder contains Pmw in official distributions, but not in the
+Cvs repository, so you won't be able to use a Leo in a sandbox unless you copy
+Pmw to the extensions folder or have Pmw otherwise availble on Python's path.</t>
 </tnodes>
 </leo_file>

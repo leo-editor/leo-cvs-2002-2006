@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="V" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -413,7 +413,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060203094527" a="E"><vh>Recent options</vh>
+<v t="ekr.20060203094527"><vh>Recent options</vh>
 <v t="ekr.20051126062243"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -449,7 +449,7 @@
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
-<v t="ekr.20060210105437" a="TV"><vh>@bool trace_select = False</vh></v>
+<v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1455,7 +1455,12 @@ See "About shortcut specifiers" for a full discussion of what may appear in the 
 <t tx="ekr.20051123100536.1">A common alternative is:
 
 vim_cmd = c:\Program Files\vim\vim64\gvim --servername LEO
-    _vim_exe = r"c:\Program Files\vim\vim64\gvim"</t>
+    _vim_exe = r"c:\Program Files\vim\vim64\gvim"
+
+For MacOS X (darwin) the following are typical defaults:
+
+vim_cmd = "/Applications/gvim.app/Contents/MacOS/gvim --servername LEO" 
+vim_exe = "gvim"</t>
 <t tx="ekr.20051123100536.2"></t>
 <t tx="ekr.20051123100536.3"></t>
 <t tx="ekr.20051126062243"></t>

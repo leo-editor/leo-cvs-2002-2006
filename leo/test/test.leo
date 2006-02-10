@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="7901" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
-	<global_window_position top="42" left="379" height="857" width="869"/>
+	<global_window_position top="14" left="306" height="857" width="787"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -243,7 +243,8 @@
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
 </v>
-<v t="ekr.20060122115629" a="V"><vh>Edit tests</vh></v>
+<v t="ekr.20060122115629"><vh>Edit tests</vh></v>
+<v t="ekr.20060209204257" a="V"><vh>prototype of menu post commands</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4429,5 +4430,24 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
+<t tx="ekr.20060209204257">import tkFont
+name = 'Outline'
+menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
+
+# Compute the *approximate* x offsets of each menu.
+offsets = {} ; n = 0
+for z in menus:
+    menu = c.frame.menu.getMenu(z)
+    fontName = menu.cget('font')
+    font = tkFont.Font(font=fontName)
+    # print '%8s' % (z),menu.winfo_reqwidth(),menu.master,menu.winfo_x()
+    offsets[z] = n
+    # A total hack: sorta works on windows.
+    n += font.measure(z+' '*4)+1 
+
+top = c.frame.top
+topx,topy = top.winfo_rootx(),top.winfo_rooty()
+menu = c.frame.menu.getMenu(name)
+menu.post(topx+offsets.get(name,0),topy)</t>
 </tnodes>
 </leo_file>

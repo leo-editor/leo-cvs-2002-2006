@@ -2,24 +2,20 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060209180725:Status report
-@nocolor
-
-- The code feels much more stable than last week.  Leo is working smoothly now.
-
-- I am able to fix new bugs within 24 hours.  I run unit tests now after every real change.
-
-- B2 could go out the door today, but I shall spend the next few days on the b2 to-do list.  This will give me more time for testing and will eliminate items that have been on the to-do list for *way* too long.
-
-- In the next few days I'll be writing more about 'what's new in b2'.  There is a lot.  This will, of course, form the basis for the release notes and other documentation.
+#@+node:ekr.20060210112752:Recent focus improvements
+The last fix (I hope) to focus problems.
+The Pmw log code now calls c.invalidateFocus before calling c.bodyWantsFocus.
+This inidcates that the Pmw code has moved the foucs without calling c.set_focus.
 #@nonl
-#@-node:ekr.20060209180725:Status report
-#@+node:ekr.20060209144933:Make sure bindings can end in '+' and '-'
-#@-node:ekr.20060209144933:Make sure bindings can end in '+' and '-'
+#@-node:ekr.20060210112752:Recent focus improvements
+#@+node:ekr.20060210105940.1:Don't abort the minibuffer if the command does not exist
+#@-node:ekr.20060210105940.1:Don't abort the minibuffer if the command does not exist
 #@+node:ekr.20060122183914.1:Urgent commands for mouseless Leo (4)
 #@+node:ekr.20060116080040.2:activate-xxx-menu commands
 These would be an alternative to XP Alt-f, Alt-E, etc.
 #@-node:ekr.20060116080040.2:activate-xxx-menu commands
+#@+node:ekr.20060209203908:add fully-expand-xxx-pane commands
+#@-node:ekr.20060209203908:add fully-expand-xxx-pane commands
 #@+node:ekr.20060209113357:clicks should clear selection
 #@-node:ekr.20060209113357:clicks should clear selection
 #@+node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
@@ -146,7 +142,25 @@ mech. not the plugin code itself.
 @nocolor
 
 Refer to 4.4b3 to do first list.
+
+@color
 #@nonl
+#@+node:ekr.20060210111310:Unification of all calling sequences
+@nocolor
+
+The recent unification of the callling sequences of all commands, both legacy
+and minibuffer, had the side effect of breaking some plugins. The new 'event'
+arg was the culprit.
+
+The new prefered way of calling c.openWith is:
+
+c.openWith(data=data)
+
+I've corrected all the affected plugins. In particular, the vim plugin works again.
+#@nonl
+#@-node:ekr.20060210111310:Unification of all calling sequences
+#@+node:ekr.20060210105733:New debugging settings in leosettings.leo
+#@-node:ekr.20060210105733:New debugging settings in leosettings.leo
 #@+node:ekr.20060205170335.1:aproposFindCommands
 def aproposFindCommands (self, event=None):
     
@@ -303,6 +317,8 @@ expand-body-pane        = Alt-Ctrl-LtArrow
 expand-log-pane         = Alt-Ctrl-UpArrow 
 expand-outline-pane     = Alt-Ctrl-RtArrow
 #@-node:ekr.20060209140942:New commands
+#@+node:ekr.20060209201859:How to use modes
+#@-node:ekr.20060209201859:How to use modes
 #@-node:ekr.20060209053234:What's new in b2
 #@-node:ekr.20060206103355:To do 4.4b2
 #@-all
