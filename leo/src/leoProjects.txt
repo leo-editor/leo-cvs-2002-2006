@@ -3882,7 +3882,7 @@ def masterClickHandler (self,event,func=None):
     if wname.startswith('body'):
         try:
             i = w.index('@%s,%s' % (event.x,event.y))
-            g.app.gui.setInsertPoint(w,i)
+            g.app.gui.setTextSelection (w,i,i,insert=i)
             c.editCommands.setMoveCol(w,i)
             c.frame.updateStatusLine()
         except Exception:
@@ -7454,7 +7454,7 @@ def masterClickHandler (self,event,func=None):
     if wname.startswith('body'):
         try:
             i = w.index('@%s,%s' % (event.x,event.y))
-            g.app.gui.setInsertPoint(w,i)
+            g.app.gui.setTextSelection (w,i,i,insert=i)
             c.editCommands.setMoveCol(w,i)
             c.frame.updateStatusLine()
         except Exception:
@@ -11186,7 +11186,7 @@ def masterClickHandler (self,event,func=None):
     if wname.startswith('body'):
         try:
             i = w.index('@%s,%s' % (event.x,event.y))
-            g.app.gui.setInsertPoint(w,i)
+            g.app.gui.setTextSelection (w,i,i,insert=i)
             c.editCommands.setMoveCol(w,i)
             c.frame.updateStatusLine()
         except Exception:
@@ -11209,6 +11209,8 @@ masterDoubleClick3Handler   = masterClickHandler
 #@nonl
 #@-node:ekr.20060129052538.2:masterClickHandler
 #@-node:ekr.20060116083359.1:Added expand/contract/hide-pane/fully-expand commands
+#@+node:ekr.20060209113357:clicks now clear selection
+#@-node:ekr.20060209113357:clicks now clear selection
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

@@ -8,14 +8,12 @@
 #@-node:ekr.20060210123709:Fix Alt-key issue on Linux
 #@+node:ekr.20060210123709.1:Test on MacOS
 #@-node:ekr.20060210123709.1:Test on MacOS
-#@+node:ekr.20060122183914.1:Urgent commands for mouseless Leo (4)
-#@+node:ekr.20060209113357:clicks should clear selection
-#@-node:ekr.20060209113357:clicks should clear selection
+#@+node:ekr.20060122183914.1:Urgent commands for mouseless Leo (3)
+#@+node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
+#@-node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
 #@+node:ekr.20060116080040.2:activate-xxx-menu commands
 These would be an alternative to XP Alt-f, Alt-E, etc.
 #@-node:ekr.20060116080040.2:activate-xxx-menu commands
-#@+node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
-#@-node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
 #@+node:ekr.20060209042734.1:Add click commands & convenience methods
 - The c.click methods can call tree event handlers directly.
 - Add minibuffer commands for some (all?) of these convenience methods.
@@ -28,7 +26,7 @@ These would be an alternative to XP Alt-f, Alt-E, etc.
 #@-node:ekr.20060206103531:(maybe) select-find-tab-find-text & select-find-tab-change-text
 #@+node:ekr.20060209105218.2:(maybe) contract-all-except-present-tree
 #@-node:ekr.20060209105218.2:(maybe) contract-all-except-present-tree
-#@-node:ekr.20060122183914.1:Urgent commands for mouseless Leo (4)
+#@-node:ekr.20060122183914.1:Urgent commands for mouseless Leo (3)
 #@+node:ekr.20060122183914:Fix minor bugs 10
 #@+node:ekr.20060206131908:pasteText (with empty text?) crashed when pasting into minibuffer
 #@-node:ekr.20060206131908:pasteText (with empty text?) crashed when pasting into minibuffer
@@ -277,9 +275,10 @@ def test_apropos_find_commands (self):
 All key bindings specified with !mini pane specifier apply to all modes.
 #@nonl
 #@-node:ekr.20060206104722:Modes may inherit bindings
-#@+node:ekr.20060209140942:New commands
+#@+node:ekr.20060209140942:New commands not in legacy Leo
 Mouseless Leo has arrived.  Cvs now contains code to support the following commands, with the default bindings as shown:
 
+#@+node:ekr.20060210131047:expand/contract/hide/fully-expand-pane
 contract-log-pane       = Alt-Ctrl-RtArrow 
 expand-body-pane        = Alt-Ctrl-UpArrow  
 expand-log-pane         = Alt-Ctrl-LtArrow
@@ -293,8 +292,13 @@ expand-pane             = Alt-Ctrl-+
 
 hide-body-pane          = None
 hide-log-pane           = None
-hide-pane               = Alt-Ctrl-!
+hide-pane               = Alt-Ctrl--
 hide-outline-pane       = None
+
+fully-expand-body-pane      = None
+fully-expand-log-pane       = None
+fully-expand-pane           = Alt-Ctrl-+
+fully-expand-outline-pane   = None
 
 Notes:
 
@@ -312,7 +316,12 @@ contract-log-pane       = Alt-Ctrl-DnArrow
 expand-body-pane        = Alt-Ctrl-LtArrow 
 expand-log-pane         = Alt-Ctrl-UpArrow 
 expand-outline-pane     = Alt-Ctrl-RtArrow
-#@-node:ekr.20060209140942:New commands
+#@-node:ekr.20060210131047:expand/contract/hide/fully-expand-pane
+#@+node:ekr.20060210131120:activate-xxx-menu (todo)
+#@-node:ekr.20060210131120:activate-xxx-menu (todo)
+#@+node:ekr.20060210131120.1:minibuffer find commands
+#@-node:ekr.20060210131120.1:minibuffer find commands
+#@-node:ekr.20060209140942:New commands not in legacy Leo
 #@+node:ekr.20060209201859:How to design and use modes
 #@-node:ekr.20060209201859:How to design and use modes
 #@-node:ekr.20060209053234:What's new in b2

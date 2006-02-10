@@ -774,6 +774,7 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 </v>
+<v t="ekr.20060209113357"><vh>clicks now clear selection</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -834,10 +835,9 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
 <v t="ekr.20060210123709"><vh>Fix Alt-key issue on Linux</vh></v>
 <v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
-<v t="ekr.20060122183914.1" a="E"><vh>Urgent commands for mouseless Leo (4)</vh>
-<v t="ekr.20060209113357" a="V"><vh>clicks should clear selection</vh></v>
-<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
+<v t="ekr.20060122183914.1" a="EV"><vh>Urgent commands for mouseless Leo (3)</vh>
 <v t="ekr.20060209105526.1"><vh>select-all-text must remove trailing newline from headline</vh></v>
+<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
 <v t="ekr.20060209042734.1"><vh>Add click commands &amp; convenience methods</vh>
 <v t="ekr.20031218072017.792"><vh>Double Click Node command</vh></v>
 </v>
@@ -866,7 +866,11 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20060205170552"><vh>test_apropos_find_commands</vh></v>
 </v>
 <v t="ekr.20060206104722"><vh>Modes may inherit bindings</vh></v>
-<v t="ekr.20060209140942"><vh>New commands</vh></v>
+<v t="ekr.20060209140942"><vh>New commands not in legacy Leo</vh>
+<v t="ekr.20060210131047"><vh>expand/contract/hide/fully-expand-pane</vh></v>
+<v t="ekr.20060210131120"><vh>activate-xxx-menu (todo)</vh></v>
+<v t="ekr.20060210131120.1"><vh>minibuffer find commands</vh></v>
+</v>
 <v t="ekr.20060209201859"><vh>How to design and use modes</vh></v>
 </v>
 </v>
@@ -8257,7 +8261,7 @@ shortcut = ''.join([val for flag,val in table if flag])</t>
     if wname.startswith('body'):
         try:
             i = w.index('@%s,%s' % (event.x,event.y))
-            g.app.gui.setInsertPoint(w,i)
+            g.app.gui.setTextSelection (w,i,i,insert=i)
             c.editCommands.setMoveCol(w,i)
             c.frame.updateStatusLine()
         except Exception:
@@ -8967,38 +8971,6 @@ def expandOutlinePane (self,event=None):
 <t tx="ekr.20060209113357"></t>
 <t tx="ekr.20060209140942">Mouseless Leo has arrived.  Cvs now contains code to support the following commands, with the default bindings as shown:
 
-contract-log-pane       = Alt-Ctrl-RtArrow 
-expand-body-pane        = Alt-Ctrl-UpArrow  
-expand-log-pane         = Alt-Ctrl-LtArrow
-expand-outline-pane     = Alt-Ctrl-DnArrow
-
-contract-outline-pane   = None
-contract-body-pane      = None
-
-contract-pane           = Alt-Ctrl--
-expand-pane             = Alt-Ctrl-+
-
-hide-body-pane          = None
-hide-log-pane           = None
-hide-pane               = Alt-Ctrl-!
-hide-outline-pane       = None
-
-Notes:
-
-- The expand commands increase or decrease the ratio between panes by 0.1.  The hide commands set the ratio to 0.0 or 1.0 as appropriate.
-
-- The expand-pane and contract-pane commands expand or contract whatever pane has focus.
-
-- There is a small asymmetry: expanding the outline pane contracts the *body* pane, not the log pane.  This asymmetry is a bit more noticable in the expand-pane and contract-pane commands.
-
-- There are no bindings for the contract-body-pane and contract-outline-pane commands because these are equivalent to expand-outline_pane and expand-body-pane commands.
-
-- For the 'split horizontally' orientation, it would be natural to change the bindings as follows:
-
-contract-log-pane       = Alt-Ctrl-DnArrow
-expand-body-pane        = Alt-Ctrl-LtArrow 
-expand-log-pane         = Alt-Ctrl-UpArrow 
-expand-outline-pane     = Alt-Ctrl-RtArrow
 </t>
 <t tx="ekr.20060209143933">def hidePane (self,event=None):
 
@@ -9105,5 +9077,45 @@ def hideLogPane (self,event=None):
 def hideOutlinePane (self,event=None):
     f = self ; f.divideLeoSplitter(f.splitVerticalFlag,0.0)</t>
 <t tx="ekr.20060210125025"># Not having it is confusing.</t>
+<t tx="ekr.20060210131047">contract-log-pane       = Alt-Ctrl-RtArrow 
+expand-body-pane        = Alt-Ctrl-UpArrow  
+expand-log-pane         = Alt-Ctrl-LtArrow
+expand-outline-pane     = Alt-Ctrl-DnArrow
+
+contract-outline-pane   = None
+contract-body-pane      = None
+
+contract-pane           = Alt-Ctrl--
+expand-pane             = Alt-Ctrl-+
+
+hide-body-pane          = None
+hide-log-pane           = None
+hide-pane               = Alt-Ctrl--
+hide-outline-pane       = None
+
+fully-expand-body-pane      = None
+fully-expand-log-pane       = None
+fully-expand-pane           = Alt-Ctrl-+
+fully-expand-outline-pane   = None
+
+Notes:
+
+- The expand commands increase or decrease the ratio between panes by 0.1.  The hide commands set the ratio to 0.0 or 1.0 as appropriate.
+
+- The expand-pane and contract-pane commands expand or contract whatever pane has focus.
+
+- There is a small asymmetry: expanding the outline pane contracts the *body* pane, not the log pane.  This asymmetry is a bit more noticable in the expand-pane and contract-pane commands.
+
+- There are no bindings for the contract-body-pane and contract-outline-pane commands because these are equivalent to expand-outline_pane and expand-body-pane commands.
+
+- For the 'split horizontally' orientation, it would be natural to change the bindings as follows:
+
+contract-log-pane       = Alt-Ctrl-DnArrow
+expand-body-pane        = Alt-Ctrl-LtArrow 
+expand-log-pane         = Alt-Ctrl-UpArrow 
+expand-outline-pane     = Alt-Ctrl-RtArrow
+</t>
+<t tx="ekr.20060210131120"></t>
+<t tx="ekr.20060210131120.1"></t>
 </tnodes>
 </leo_file>
