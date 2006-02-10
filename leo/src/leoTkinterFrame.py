@@ -1795,6 +1795,25 @@ class leoTkinterFrame (leoFrame.leoFrame):
             f.expandOutlinePane()
     #@nonl
     #@-node:ekr.20060209110128.2:expandPane
+    #@+node:ekr.20060210123852:fullyExpandPane
+    def fullyExpandPane (self,event=None):
+    
+        f = self ; c = f.c
+            
+        w = c.get_requested_focus()
+        wname = c.widget_name(w)
+    
+        # g.trace(wname)
+        if not w: return
+        
+        if wname.startswith('body'):
+            f.fullyExpandBodyPane()
+        elif wname.startswith('log'):
+            f.fullyExpandLogPane()
+        elif wname.startswith('head') or wname.startswith('canvas'):
+            f.fullyExpandOutlinePane()
+    #@nonl
+    #@-node:ekr.20060210123852:fullyExpandPane
     #@+node:ekr.20060209143933:hidePane
     def hidePane (self,event=None):
     
@@ -1848,7 +1867,18 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
     def expandOutlinePane (self,event=None):
         self.contractBodyPane()
+    #@nonl
+    #@-node:ekr.20060209110936:expand/contract/hide...Pane
+    #@+node:ekr.20060210123852.1:fullyExpand/hide...Pane
+    def fullyExpandBodyPane (self,event=None):
+        f = self ; f.divideLeoSplitter(f.splitVerticalFlag,0.0)
     
+    def fullyExpandLogPane (self,event=None):
+        f = self ; f.divideLeoSplitter(not f.splitVerticalFlag,0.0)
+    
+    def fullyExpandOutlinePane (self,event=None):
+        f = self ; f.divideLeoSplitter(f.splitVerticalFlag,1.0)
+        
     def hideBodyPane (self,event=None):
         f = self ; f.divideLeoSplitter(f.splitVerticalFlag,1.0)
     
@@ -1858,7 +1888,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def hideOutlinePane (self,event=None):
         f = self ; f.divideLeoSplitter(f.splitVerticalFlag,0.0)
     #@nonl
-    #@-node:ekr.20060209110936:expand/contract/hide...Pane
+    #@-node:ekr.20060210123852.1:fullyExpand/hide...Pane
     #@-node:ekr.20060209110128:Minibuffer commands... (tkFrame)
     #@+node:ekr.20031218072017.3980:Edit Menu...
     #@+node:ekr.20031218072017.3981:abortEditLabelCommand
