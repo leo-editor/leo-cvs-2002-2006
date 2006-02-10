@@ -18,7 +18,7 @@ import sys
 #@nonl
 #@-node:ekr.20050218024153:<< imports >>
 #@nl
-__version__ = "1.9"
+__version__ = "1.10"
 #@<< version history >>
 #@+node:ekr.20050218024153.1:<< version history >>
 #@@killcolor
@@ -40,6 +40,9 @@ __version__ = "1.9"
 # 1.9 EKR:
 #     - Installed patch from mackal to find client on Linux.
 #       See http://sourceforge.net/forum/message.php?msg_id=3219471
+# 1.10 EKR:
+#     - Corrected the call to openWith.  It must now use data=data due to a 
+# new event param.
 #@-at
 #@nonl
 #@-node:ekr.20050218024153.1:<< version history >>
@@ -115,7 +118,8 @@ def open_in_emacs (tag,keywords,val=None):
             os.system(_emacs_cmd)
         v.OpenWithOldBody=v.bodyString() # Remember the old contents
         # open the node in emacs (note the space after _emacs_cmd)
-        c.openWith(("os.spawnl", _emacs_cmd, None),) # mcm 9/III/05
+        data = "os.spawnl", _emacs_cmd, None
+        c.openWith(data=data)
     else:
         # Reopen the old temp file.
         os.system(_emacs_cmd)

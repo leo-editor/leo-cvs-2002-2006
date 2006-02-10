@@ -24,7 +24,7 @@ plugins_menu.py
 #open_shell.py
 #at_view.py
 #fastGotoNode.py
-#vim.py
+vim.py
 #newButtons.py
 #UniversalScrolling.py
 #mod_http.py

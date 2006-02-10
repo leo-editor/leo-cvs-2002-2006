@@ -47,7 +47,7 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.11"
+__version__ = "1.12"
 #@<< version history >>
 #@+node:ekr.20050226184411.1:<< version history >>
 #@@killcolor
@@ -87,6 +87,10 @@ __version__ = "1.11"
 # 1.11 EKR:
 #     - Emergency default for window is now the default location: c:\Program 
 # Files\vim\vim63
+# 1.12 EKR:
+#     - Added emergency default for 'darwin'.
+#     - Corrected the call to openWith.  It must now use data=data due to a 
+# new event param.
 #@-at
 #@nonl
 #@-node:ekr.20050226184411.1:<< version history >>
@@ -200,6 +204,9 @@ if sys.platform == 'win32':
     # Works on XP with vim in the folder indicated.
     _vim_cmd = r"c:\Program Files\vim\vim63\gvim --servername LEO"
     _vim_exe = r"c:\Program Files\vim\vim63\gvim"
+elif sys.platform == 'darwin':
+    _vim_cmd = "/Applications/gvim.app/Contents/MacOS/gvim --servername LEO"
+    _vim_exe = "gvim"
 else: 
     _vim_cmd = "vim --servername LEO"
     _vim_exe = "vim"
@@ -231,6 +238,8 @@ def init ():
 #@+node:EKR.20040517075715.11:open_in_vim
 def open_in_vim (tag,keywords,val=None):
     
+    g.trace(keywords)
+    
     c = keywords.get('c')
     p = keywords.get("p")
     if not c or not p: return
@@ -261,13 +270,13 @@ def open_in_vim (tag,keywords,val=None):
         v.OpenWithOldBody=v.bodyString() # Remember the previous contents.
         if subprocess:
             # New code by Jim Sizemore.
-            c.openWith(
-                ("subprocess.Popen",
-                [vim_exe, "--servername", "LEO", "--remote-silent"], None),)
+            data = "subprocess.Popen",[vim_exe, "--servername", "LEO", "--remote-silent"], None
+            c.openWith(data=data)
         else:
             # Works, but gives weird error message on first open of Vim.
             # note the space after --remote.
-            c.openWith(("os.spawnv", [vim_exe,"--servername LEO ","--remote "], None),)
+            data = "os.spawnv", [vim_exe,"--servername LEO ","--remote "], None
+            c.openWith(data=data)
     else:
         # Reopen the old temp file.
         os.system(vim_cmd+"--remote-send '<C-\\><C-N>:e "+path+"<CR>'")
