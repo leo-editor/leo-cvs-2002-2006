@@ -2094,6 +2094,8 @@ class editCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20050920084036.72:goto...
     #@+node:ekr.20050929115226:gotoCharacter
     def gotoCharacter (self,event):
+        
+        '''Put the cursor at the n'th character of the buffer.'''
     
         k = self.k ; state = k.getState('goto-char')
     
@@ -2112,6 +2114,8 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20050929115226:gotoCharacter
     #@+node:ekr.20050929124234:gotoLine
     def gotoLine (self,event):
+        
+        '''Put the cursor at the n'th line of the buffer.'''
     
         k = self.k ; state = k.getState('goto-line')
         
