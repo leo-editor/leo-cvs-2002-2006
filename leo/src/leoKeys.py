@@ -1369,7 +1369,7 @@ class keyHandlerClass:
         
         k = self ; c = k.c
         val = self.masterKeyHandlerHelper(event)
-        if val: # Ignore special keys.
+        if val and c and c.exists: # Ignore special keys.
             c.frame.updateStatusLine()
             c.masterFocusHandler()
         return val
