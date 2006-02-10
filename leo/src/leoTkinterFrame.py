@@ -2896,7 +2896,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@+node:ekr.20031218072017.4023:selectAllText
     def selectAllText (self,event=None):
         
-        c = self.c
+        c = self.c ; k = c.k
     
         try:
             w = c.get_focus() ; wname = c.widget_name(w)
@@ -2905,8 +2905,14 @@ class leoTkinterBody (leoFrame.leoBody):
                 s = w.get('1.0','end')
                 while s.endswith('\n') or s.endswith('\r'):
                     s = s[:-1] ; n += 1
-            g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
+                g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
+            elif wname.startswith('mini'):
+                i,j = k.getEditableTextRange()
+                g.app.gui.setTextSelection(w,i,j)
+            else:
+                g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
         except:
+            # g.es_exception()
             pass
     #@nonl
     #@-node:ekr.20031218072017.4023:selectAllText

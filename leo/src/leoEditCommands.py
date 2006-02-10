@@ -2790,25 +2790,39 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20060113105246.1:moveUpOrDownHelper
     #@+node:ekr.20051218122116:moveToHelper
     def moveToHelper (self,event,spot,extend):
-        
+    
         '''Common helper method for commands the move the cursor
         in a way that can be described by a Tk Text expression.'''
-        
-        c = self.c ; w = event.widget
+    
+        c = self.c ; k = c.k ; w = event.widget
         if not g.app.gui.isTextWidget(w): return
     
         c.widgetWantsFocusNow(w)
-        
-        # Remember the original insert point.  This may become the moveSpot.
-        ins1 = w.index('insert')
-      
-        # Move to the spot.
-        w.mark_set('insert',spot)
-        spot = w.index('insert')
     
-        # Handle the selection.
-        self.extendHelper(w,extend,ins1,spot,setSpot=True)
-        w.see(spot)
+        wname = c.widget_name(w)
+        if wname.startswith('mini'):
+            # Put the request in the proper range.
+            i, j = k.getEditableTextRange()
+            ins1 = w.index('insert')
+            spot = w.index(spot)
+            if w.compare(spot,'<',i):
+                spot = i
+            elif w.compare(spot,'>',j):
+                spot = j
+            w.mark_set('insert',spot)
+            self.extendHelper(w,extend,ins1,spot,setSpot=False)
+            w.see(spot)
+        else:
+            # Remember the original insert point.  This may become the moveSpot.
+            ins1 = w.index('insert')
+    
+            # Move to the spot.
+            w.mark_set('insert',spot)
+            spot = w.index('insert')
+    
+            # Handle the selection.
+            self.extendHelper(w,extend,ins1,spot,setSpot=True)
+            w.see(spot)
     #@nonl
     #@-node:ekr.20051218122116:moveToHelper
     #@+node:ekr.20051218121447:moveWordHelper

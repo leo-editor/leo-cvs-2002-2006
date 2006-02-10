@@ -1356,6 +1356,21 @@ class keyHandlerClass:
         k.setLabel(s)
     #@nonl
     #@-node:ekr.20050920085536.38:updateLabel
+    #@+node:ekr.20060210141604.1:getEditableTextRange
+    def getEditableTextRange (self):
+        
+        k = self ; w = self.widget ; n = 0
+        
+        s = w.get('1.0','end')
+        while s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1] ; n += 1
+            
+        i = w.index('1.%d' % len(k.mb_prefix))
+        j = w.index('end -%dc' % n)
+        
+        # g.trace(i,j)
+        return i,j
+    #@-node:ekr.20060210141604.1:getEditableTextRange
     #@-node:ekr.20050924064254:Label...
     #@+node:ekr.20060129052538.1:Master event handlers (keyHandler)
     #@+node:ekr.20060127183752:masterKeyHandler & helper
@@ -1403,6 +1418,7 @@ class keyHandlerClass:
             d = k.masterBindingsDict.get('mini')
             b = d.get(stroke)
             if b:
+                # if trace: g.trace(repr(stroke),'mini binding',b.commandName)
                 # Pass this on for macro recording.
                 k.masterCommand(event,b.func,stroke,b.commandName)
                 c.minibufferWantsFocus()
