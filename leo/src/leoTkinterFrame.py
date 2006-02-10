@@ -2895,10 +2895,17 @@ class leoTkinterBody (leoFrame.leoBody):
     #@-node:ekr.20031218072017.4022:hasTextSelection
     #@+node:ekr.20031218072017.4023:selectAllText
     def selectAllText (self,event=None):
+        
+        c = self.c
     
         try:
-            w = self.bodyCtrl.focus_get()
-            g.app.gui.setTextSelection(w,"1.0","end")
+            w = c.get_focus() ; wname = c.widget_name(w)
+            n = 0
+            if wname.startswith('head'):
+                s = w.get('1.0','end')
+                while s.endswith('\n') or s.endswith('\r'):
+                    s = s[:-1] ; n += 1
+            g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
         except:
             pass
     #@nonl
