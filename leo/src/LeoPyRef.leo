@@ -16,11 +16,10 @@
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"
-expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -775,6 +774,9 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 </v>
 <v t="ekr.20060209113357"><vh>clicks now clear selection</vh></v>
+<v t="ekr.20060210132142.1"><vh>Special-cased select-all-text in headlines</vh>
+<v t="ekr.20031218072017.4023"><vh>selectAllText</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -831,11 +833,12 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 </v>
-<v t="ekr.20060206103355" a="E"><vh>To do 4.4b2</vh>
+<v t="ekr.20060206103355"><vh>To do 4.4b2</vh>
 <v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
 <v t="ekr.20060210123709"><vh>Fix Alt-key issue on Linux</vh></v>
 <v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
-<v t="ekr.20060122183914.1" a="EV"><vh>Urgent commands for mouseless Leo (3)</vh>
+<v t="ekr.20060210132142"><vh>Bindings to set search scope and toggle word &amp; case options</vh></v>
+<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (3)</vh>
 <v t="ekr.20060209105526.1"><vh>select-all-text must remove trailing newline from headline</vh></v>
 <v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
 <v t="ekr.20060209042734.1"><vh>Add click commands &amp; convenience methods</vh>
@@ -2001,6 +2004,20 @@ def lift (self):
     
 def update (self):
     self.top.update()</t>
+<t tx="ekr.20031218072017.4023">def selectAllText (self,event=None):
+    
+    c = self.c
+
+    try:
+        w = c.get_focus() ; wname = c.widget_name(w)
+        n = 0
+        if wname.startswith('head'):
+            s = w.get('1.0','end')
+            while s.endswith('\n') or s.endswith('\r'):
+                s = s[:-1] ; n += 1
+        g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
+    except:
+        pass</t>
 <t tx="ekr.20031218072017.4039">class leoTkinterLog (leoFrame.leoLog):
     
     """A class that represents the log pane of a Tkinter window."""
@@ -8155,7 +8172,7 @@ def masterKeyHandler (self,event):
     
     k = self ; c = k.c
     val = self.masterKeyHandlerHelper(event)
-    if val: # Ignore special keys.
+    if val and c and c.exists: # Ignore special keys.
         c.frame.updateStatusLine()
         c.masterFocusHandler()
     return val</t>
@@ -9117,5 +9134,7 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 </t>
 <t tx="ekr.20060210131120"></t>
 <t tx="ekr.20060210131120.1"></t>
+<t tx="ekr.20060210132142">These are the most common binding that I need.  I never seem to want to go into find-options-mode.</t>
+<t tx="ekr.20060210132142.1"></t>
 </tnodes>
 </leo_file>

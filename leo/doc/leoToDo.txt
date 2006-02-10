@@ -8,6 +8,10 @@
 #@-node:ekr.20060210123709:Fix Alt-key issue on Linux
 #@+node:ekr.20060210123709.1:Test on MacOS
 #@-node:ekr.20060210123709.1:Test on MacOS
+#@+node:ekr.20060210132142:Bindings to set search scope and toggle word & case options
+These are the most common binding that I need.  I never seem to want to go into find-options-mode.
+#@nonl
+#@-node:ekr.20060210132142:Bindings to set search scope and toggle word & case options
 #@+node:ekr.20060122183914.1:Urgent commands for mouseless Leo (3)
 #@+node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline
 #@-node:ekr.20060209105526.1:select-all-text must remove trailing newline from headline

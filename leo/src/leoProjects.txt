@@ -3763,7 +3763,7 @@ def masterKeyHandler (self,event):
     
     k = self ; c = k.c
     val = self.masterKeyHandlerHelper(event)
-    if val: # Ignore special keys.
+    if val and c and c.exists: # Ignore special keys.
         c.frame.updateStatusLine()
         c.masterFocusHandler()
     return val
@@ -11211,6 +11211,25 @@ masterDoubleClick3Handler   = masterClickHandler
 #@-node:ekr.20060116083359.1:Added expand/contract/hide-pane/fully-expand commands
 #@+node:ekr.20060209113357:clicks now clear selection
 #@-node:ekr.20060209113357:clicks now clear selection
+#@+node:ekr.20060210132142.1:Special-cased select-all-text in headlines
+#@+node:ekr.20031218072017.4023:selectAllText
+def selectAllText (self,event=None):
+    
+    c = self.c
+
+    try:
+        w = c.get_focus() ; wname = c.widget_name(w)
+        n = 0
+        if wname.startswith('head'):
+            s = w.get('1.0','end')
+            while s.endswith('\n') or s.endswith('\r'):
+                s = s[:-1] ; n += 1
+        g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
+    except:
+        pass
+#@nonl
+#@-node:ekr.20031218072017.4023:selectAllText
+#@-node:ekr.20060210132142.1:Special-cased select-all-text in headlines
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
