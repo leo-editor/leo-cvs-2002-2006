@@ -190,13 +190,15 @@ class leoTkinterTree (leoFrame.leoTree):
         # Configuration and debugging settings.
         self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
         self.expanded_click_area    = c.config.getBool("expanded_click_area")
-        self.trace_stats            = c.config.getBool('show_tree_stats')
+        
         self.trace                  = c.config.getBool('trace_tree')
         self.trace_alloc            = c.config.getBool('trace_tree_alloc')
         self.trace_edit             = c.config.getBool('trace_tree_edit')
         self.trace_gc               = c.config.getBool('trace_gc')
         self.trace_redraw_now       = c.config.getBool('trace_redraw_now')
-    
+        self.trace_select           = c.config.getBool('trace_select')
+        self.trace_stats            = c.config.getBool('show_tree_stats')
+     
         # Objects associated with this tree.
         self.canvas = canvas
         
@@ -2417,6 +2419,8 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; frame = c.frame ; body = frame.bodyCtrl
         old_p = c.currentPosition()
         if not p or not p.exists(c): return # Not an error.
+        
+        if self.trace_select and not g.app.unitTesting: g.trace(g.callers())
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             if old_p:
