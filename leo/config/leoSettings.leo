@@ -354,7 +354,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -370,7 +370,7 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -388,12 +388,12 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060122105527.21" a="V"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
@@ -413,7 +413,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060203094527"><vh>Recent options</vh>
+<v t="ekr.20060203094527" a="V"><vh>Recent options</vh>
 <v t="ekr.20051126062243"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -438,7 +438,7 @@
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 </v>
-<v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
+<v t="ekr.20060204093736" a="E"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
@@ -4090,7 +4090,8 @@ scroll-down                         ! text = PageDn
 scroll-up                           ! text = PageUp 
 scroll-down-extend-selection        ! text = Shift-PageDn
 scroll-up-extend-selection          ! text = Shift-PageUp
-select-all                          = Alt-Shift-A # Shift-Ctrl-A conflicts with beginning-of-line-extend-selection.
+select-all                          ! text =  Alt-Shift-A 
+    # Shift-Ctrl-A conflicts with beginning-of-line-extend-selection.
 sort-siblings                       = Alt-A
 split-line                          = Alt-Ctrl-o
 
@@ -4389,7 +4390,7 @@ forward-word                        ! mini = Alt-f          # Usually opens file
 forward-word-extend-selection       ! mini = Alt-Shift-f
 forward-word                        ! mini = Ctrl-RtArrow
 forward-word-extend-selection       ! mini = Ctrl-Shift-RtArrow
-</t>
+select-all                          ! mini = Alt-Shift-A </t>
 <t tx="ekr.20060204093736"></t>
 <t tx="ekr.20060204102644"></t>
 <t tx="ekr.20060204124608">True: minibuffer commands show the Find Tab.

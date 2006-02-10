@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9072" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9073" clone_windows="0"/>
 <globals body_outline_ratio="0.480459770115">
 	<global_window_position top="25" left="452" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -19,7 +19,7 @@
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -777,6 +777,74 @@
 <v t="ekr.20060210132142.1"><vh>Special-cased select-all-text in headlines</vh>
 <v t="ekr.20031218072017.4023"><vh>selectAllText</vh></v>
 </v>
+<v t="ekr.20060210141604"><vh>Special-cased commands for minibuffer</vh>
+<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
+<v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
+<v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
+<v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
+<v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
+</v>
+<v t="ekr.20031218072017.4060"><vh>Dialog</vh>
+<v t="ekr.20031218072017.4061"><vh>get_window_info</vh></v>
+<v t="ekr.20031218072017.4062"><vh>center_dialog</vh></v>
+<v t="ekr.20031218072017.4063"><vh>create_labeled_frame</vh></v>
+</v>
+<v t="ekr.20031218072017.4064"><vh>Focus</vh>
+<v t="ekr.20031218072017.4065"><vh>get_focus</vh></v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4066"><vh>Font</vh>
+<v t="ekr.20031218072017.2187"><vh>tkGui.getFontFromParams</vh></v>
+</v>
+<v t="ekr.20031218072017.4067"><vh>Icons</vh>
+<v t="ekr.20031218072017.4068"><vh>attachLeoIcon &amp; createLeoIcon</vh>
+<v t="ekr.20031218072017.4069"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.4070"><vh>createLeoIcon</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.4071"><vh>Idle Time</vh>
+<v t="ekr.20031218072017.4072"><vh>tkinterGui.setIdleTimeHook</vh></v>
+<v t="ekr.20031218072017.4073"><vh>setIdleTimeHookAfterDelay</vh></v>
+</v>
+<v t="ekr.20031218072017.4074"><vh>Indices (Tk)</vh>
+<v t="ekr.20031218072017.4075"><vh>firstIndex</vh></v>
+<v t="ekr.20031218072017.4076"><vh>lastIndex</vh></v>
+<v t="ekr.20031218072017.4077"><vh>moveIndexBackward</vh></v>
+<v t="ekr.20031218072017.4078"><vh>moveIndexForward &amp; moveIndexToNextLine</vh></v>
+<v t="ekr.20031218072017.4079"><vh>compareIndices</vh></v>
+<v t="ekr.20031218072017.4080"><vh>getindex</vh></v>
+</v>
+<v t="ekr.20031218072017.4081"><vh>Insert Point</vh>
+<v t="ekr.20031218072017.4082"><vh>getInsertPoint</vh></v>
+<v t="ekr.20031218072017.4083"><vh>setInsertPoint</vh></v>
+</v>
+<v t="ekr.20031218072017.4084"><vh>Selection</vh>
+<v t="ekr.20031218072017.4085"><vh>getSelectionRange</vh></v>
+<v t="ekr.20051126125950"><vh>getSelectedText</vh></v>
+<v t="ekr.20031218072017.4086"><vh>getTextSelection</vh></v>
+<v t="ekr.20051126171929"><vh>hasSelection</vh></v>
+<v t="ekr.20031218072017.4088"><vh>setSelectionRangeWithLength</vh></v>
+<v t="ekr.20031218072017.4089"><vh>setTextSelection &amp; setSelectionRange</vh></v>
+</v>
+<v t="ekr.20031218072017.4090"><vh>Text</vh>
+<v t="ekr.20031218072017.4091"><vh>getAllText</vh></v>
+<v t="ekr.20031218072017.4092"><vh>getCharAfterIndex</vh></v>
+<v t="ekr.20031218072017.4093"><vh>getCharAtIndex</vh></v>
+<v t="ekr.20031218072017.4094"><vh>getCharBeforeIndex</vh></v>
+<v t="ekr.20031218072017.4095"><vh>getLineContainingIndex</vh></v>
+<v t="ekr.20031218072017.4096"><vh>replaceSelectionRangeWithText (leoTkinterGui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4097"><vh>Visibility</vh>
+<v t="ekr.20031218072017.4098"><vh>makeIndexVisible</vh></v>
+</v>
+<v t="ekr.20051220144507"><vh>isTextWidget</vh></v>
+</v>
+<v t="ekr.20031218072017.4023"><vh>selectAllText</vh></v>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+</v>
+<v t="ekr.20051218122116"><vh>moveToHelper</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -833,16 +901,23 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 </v>
-<v t="ekr.20060206103355"><vh>To do 4.4b2</vh>
+<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
 <v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
 <v t="ekr.20060210123709"><vh>Fix Alt-key issue on Linux</vh></v>
 <v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
 <v t="ekr.20060210132142"><vh>Bindings to set search scope and toggle word &amp; case options</vh></v>
-<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (3)</vh>
-<v t="ekr.20060209105526.1"><vh>select-all-text must remove trailing newline from headline</vh></v>
-<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
+<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (1+2+2)</vh>
+<v t="ekr.20060210145627"><vh>Copy find text into minibuffer for search commands</vh>
+<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
+<v t="ekr.20060125093807"><vh>searchWithPresentOptions</vh></v>
+</v>
 <v t="ekr.20060209042734.1"><vh>Add click commands &amp; convenience methods</vh>
 <v t="ekr.20031218072017.792"><vh>Double Click Node command</vh></v>
+<v t="ekr.20051221101851.1"><vh>Request</vh></v>
+</v>
+<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh>
+<v t="ekr.20060210133835"><vh>prototype of menu post commands</vh></v>
+<v t="ekr.20060210133835.1"><vh>computeMenuPositions</vh></v>
 </v>
 <v t="ekr.20060206103531"><vh>(maybe) select-find-tab-find-text &amp; select-find-tab-change-text</vh></v>
 <v t="ekr.20060209105218.2"><vh>(maybe) contract-all-except-present-tree</vh></v>
@@ -2006,7 +2081,7 @@ def update (self):
     self.top.update()</t>
 <t tx="ekr.20031218072017.4023">def selectAllText (self,event=None):
     
-    c = self.c
+    c = self.c ; k = c.k
 
     try:
         w = c.get_focus() ; wname = c.widget_name(w)
@@ -2015,8 +2090,14 @@ def update (self):
             s = w.get('1.0','end')
             while s.endswith('\n') or s.endswith('\r'):
                 s = s[:-1] ; n += 1
-        g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
+            g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
+        elif wname.startswith('mini'):
+            i,j = k.getEditableTextRange()
+            g.app.gui.setTextSelection(w,i,j)
+        else:
+            g.app.gui.setTextSelection(w,'1.0','end - %dc' % (n))
     except:
+        # g.es_exception()
         pass</t>
 <t tx="ekr.20031218072017.4039">class leoTkinterLog (leoFrame.leoLog):
     
@@ -7461,25 +7542,39 @@ def forwardCharacterExtendSelection (self,event):
          else:   nind = '1.0'
     self.moveToHelper(event,nind,extend)</t>
 <t tx="ekr.20051218122116">def moveToHelper (self,event,spot,extend):
-    
+
     '''Common helper method for commands the move the cursor
     in a way that can be described by a Tk Text expression.'''
-    
-    c = self.c ; w = event.widget
+
+    c = self.c ; k = c.k ; w = event.widget
     if not g.app.gui.isTextWidget(w): return
 
     c.widgetWantsFocusNow(w)
-    
-    # Remember the original insert point.  This may become the moveSpot.
-    ins1 = w.index('insert')
-  
-    # Move to the spot.
-    w.mark_set('insert',spot)
-    spot = w.index('insert')
 
-    # Handle the selection.
-    self.extendHelper(w,extend,ins1,spot,setSpot=True)
-    w.see(spot)</t>
+    wname = c.widget_name(w)
+    if wname.startswith('mini'):
+        # Put the request in the proper range.
+        i, j = k.getEditableTextRange()
+        ins1 = w.index('insert')
+        spot = w.index(spot)
+        if w.compare(spot,'&lt;',i):
+            spot = i
+        elif w.compare(spot,'&gt;',j):
+            spot = j
+        w.mark_set('insert',spot)
+        self.extendHelper(w,extend,ins1,spot,setSpot=False)
+        w.see(spot)
+    else:
+        # Remember the original insert point.  This may become the moveSpot.
+        ins1 = w.index('insert')
+
+        # Move to the spot.
+        w.mark_set('insert',spot)
+        spot = w.index('insert')
+
+        # Handle the selection.
+        self.extendHelper(w,extend,ins1,spot,setSpot=True)
+        w.see(spot)</t>
 <t tx="ekr.20051218133207">def backwardParagraphHelper (self,event,extend):
     
     c = self.c ; w = event.widget
@@ -7594,6 +7689,16 @@ def toggleExtendMode (self,event):
     '''Return True if w is a Text widget suitable for text-oriented commands.'''
     
     return w and isinstance(w,Tk.Text) </t>
+<t tx="ekr.20051221101851.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3487424
+By: p_michalczyk
+
+Does anybody know how to double-click headline in outline panel using only keyboard
+(that is how to simulate double-click through keyboard shortcut) ?
+I need it to execute @run nodes from keyboard.
+
+EKR: This can be done with @command nodes, but Leo should have official commands to do this too.</t>
 <t tx="ekr.20060113082917">def scrollHelper (self,event,direction,extend):
 
     k = self.k ; c = k.c ; w = event.widget
@@ -8571,6 +8676,7 @@ def set_focus (self,w):
         d = k.masterBindingsDict.get('mini')
         b = d.get(stroke)
         if b:
+            # if trace: g.trace(repr(stroke),'mini binding',b.commandName)
             # Pass this on for macro recording.
             k.masterCommand(event,b.func,stroke,b.commandName)
             c.minibufferWantsFocus()
@@ -8924,7 +9030,6 @@ while still using the same selection.
 
     # g.trace('spot',self.moveSpot,'col',self.moveCol)</t>
 <t tx="ekr.20060209105218.2"></t>
-<t tx="ekr.20060209105526.1"></t>
 <t tx="ekr.20060209110128">
 </t>
 <t tx="ekr.20060209110128.1">def contractPane (self,event=None):
@@ -9136,5 +9241,70 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 <t tx="ekr.20060210131120.1"></t>
 <t tx="ekr.20060210132142">These are the most common binding that I need.  I never seem to want to go into find-options-mode.</t>
 <t tx="ekr.20060210132142.1"></t>
+<t tx="ekr.20060210133835">import tkFont
+name = 'Outline'
+menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
+
+# Compute the *approximate* x offsets of each menu.
+offsets = {} ; n = 0
+for z in menus:
+    menu = c.frame.menu.getMenu(z)
+    fontName = menu.cget('font')
+    font = tkFont.Font(font=fontName)
+    # print '%8s' % (z),menu.winfo_reqwidth(),menu.master,menu.winfo_x()
+    offsets[z] = n
+    # A total hack: sorta works on windows.
+    n += font.measure(z+' '*4)+1 
+
+top = c.frame.top
+topx,topy = top.winfo_rootx(),top.winfo_rooty()
+menu = c.frame.menu.getMenu(name)
+menu.post(topx+offsets.get(name,0),topy)</t>
+<t tx="ekr.20060210133835.1">import tkFont
+
+# To do: create self.menuList while creating menus.
+
+def computeMenuPositions (self):
+    
+    menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
+    
+    # Compute the *approximate* x offsets of each menu.
+    d = {}
+    n = 0
+    for z in menus:
+        menu = self.getMenu(z)
+        fontName = menu.cget('font')
+        font = tkFont.Font(font=fontName)
+        # print '%8s' % (z),menu.winfo_reqwidth(),menu.master,menu.winfo_x()
+        d [z] = n
+        # A total hack: sorta works on windows.
+        n += font.measure(z+' '*4)+1
+        
+    self.menuPositionsDict = d</t>
+<t tx="ekr.20060210141604">@nocolor
+
+(done) select-all-text.
+(done) move back/forward char.
+(done) move back/forward char.
+(done) start-of-line, end-of-line.
+    
+It turned out that the only special case is in moveToHelper, which means the solution is general.
+
+@color</t>
+<t tx="ekr.20060210141604.1">def getEditableTextRange (self):
+    
+    k = self ; w = self.widget ; n = 0
+    
+    s = w.get('1.0','end')
+    while s.endswith('\n') or s.endswith('\r'):
+        s = s[:-1] ; n += 1
+        
+    i = w.index('1.%d' % len(k.mb_prefix))
+    j = w.index('end -%dc' % n)
+    
+    # g.trace(i,j)
+    return i,j
+</t>
+<t tx="ekr.20060210145627"></t>
 </tnodes>
 </leo_file>
