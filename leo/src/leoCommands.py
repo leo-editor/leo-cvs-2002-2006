@@ -485,8 +485,9 @@ class baseCommands:
         """
         
         c = self ; p = c.currentPosition()
-        if not data or len(data) != 3:
-            g.trace('bad data')
+        n = data and len(data) or 0
+        if n != 3:
+            g.trace('bad data, length must be 3, got %d' % n)
             return
         try:
             openType,arg,ext=data
@@ -5421,6 +5422,16 @@ class baseCommands:
             g.app.gui.set_focus(c,w)
     #@nonl
     #@-node:ekr.20060205103842:c.get/request/set_focus
+    #@+node:ekr.20060210103358:c.invalidateFocus
+    def invalidateFocus (self):
+        
+        '''Indicate that the focus is in an invalid location, or is unknown.'''
+        
+        c = self
+        c.requestedFocusWidget = None
+        c.hasFocusWidget = None
+        
+    #@-node:ekr.20060210103358:c.invalidateFocus
     #@+node:ekr.20060207140352:c.masterFocusHandler
     def masterFocusHandler (self):
         
@@ -5523,7 +5534,7 @@ class baseCommands:
         if not g.app.unitTesting and c.config.getBool('trace_focus'):
             c.trace_focus_count += 1
             g.trace('%4d' % (c.trace_focus_count),
-                c.widget_name(w),g.callers())
+                c.widget_name(w),g.callers(8))
     #@nonl
     #@-node:ekr.20060207142332:c.traceFocus
     #@+node:ekr.20060205111103:c.widget_name
@@ -5534,53 +5545,55 @@ class baseCommands:
         return c.gui.widget_name(widget)
     #@nonl
     #@-node:ekr.20060205111103:c.widget_name
-    #@+node:ekr.20050120092028:c.xWantsFocus/Now
+    #@+node:ekr.20050120092028:c.xWantsFocus
     def bodyWantsFocus(self):
         c = self ; body = c.frame.body
         c.request_focus(body and body.bodyCtrl)
         
-    def bodyWantsFocusNow(self):
-        c = self ; body = c.frame.body
-        c.set_focus(body and body.bodyCtrl)
-            
     def headlineWantsFocus(self,p):
         c = self
         c.request_focus(p and p.edit_widget())
-        
-    def headlineWantsFocusNow(self,p):
-        c = self
-        c.set_focus(p and p.edit_widget())
         
     def logWantsFocus(self):
         c = self ; log = c.frame.log
         c.request_focus(log and log.logCtrl)
         
-    def logWantsFocusNow(self):
-        c = self ; log = c.frame.log
-        c.set_focus(log and log.logCtrl)
-    
     def minibufferWantsFocus(self):
         c = self ; k = c.k
         k and k.minibufferWantsFocus()
         
-    def minibufferWantsFocusNow(self):
-        c = self ; k = c.k
-        k and k.minibufferWantsFocusNow()
-    
     def treeWantsFocus(self):
         c = self ; tree = c.frame.tree
         c.request_focus(tree and tree.canvas)
+        
+    def widgetWantsFocus(self,w):
+        c = self ; c.request_focus(w)
+    #@nonl
+    #@-node:ekr.20050120092028:c.xWantsFocus
+    #@+node:ekr.20060210102201:c.xWantsFocusNow
+    def bodyWantsFocusNow(self):
+        c = self ; body = c.frame.body
+        c.set_focus(body and body.bodyCtrl)
+        
+    def headlineWantsFocusNow(self,p):
+        c = self
+        c.set_focus(p and p.edit_widget())
+        
+    def logWantsFocusNow(self):
+        c = self ; log = c.frame.log
+        c.set_focus(log and log.logCtrl)
+    
+    def minibufferWantsFocusNow(self):
+        c = self ; k = c.k
+        k and k.minibufferWantsFocusNow()
         
     def treeWantsFocusNow(self):
         c = self ; tree = c.frame.tree
         c.set_focus(tree and tree.canvas)
         
-    def widgetWantsFocus(self,w):
-        c = self ; c.request_focus(w)
-        
     def widgetWantsFocusNow(self,w):
         c = self ; c.set_focus(w)
-    #@-node:ekr.20050120092028:c.xWantsFocus/Now
+    #@-node:ekr.20060210102201:c.xWantsFocusNow
     #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
     #@+node:ekr.20031218072017.2955:Enabling Menu Items
     #@+node:ekr.20040323172420:Slow routines: no longer used
