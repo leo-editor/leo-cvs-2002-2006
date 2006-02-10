@@ -3515,7 +3515,9 @@ class leoTkinterLog (leoFrame.leoLog):
             self.selectTab('Log')
             
         # New in Leo 4.4b1.
+        self.c.invalidateFocus()
         self.c.bodyWantsFocus()
+        
     #@nonl
     #@-node:ekr.20051018102027:deleteTab
     #@+node:ekr.20060204124347:hideTab
@@ -3538,6 +3540,7 @@ class leoTkinterLog (leoFrame.leoLog):
         if tabName:
             b = self.nb.tab(tabName) # b is a Tk.Button.
             b.config(bg='grey80')
+        self.c.invalidateFocus()
         self.c.bodyWantsFocus()
     
     def raiseTab (self,tabName):
@@ -3545,6 +3548,7 @@ class leoTkinterLog (leoFrame.leoLog):
         if tabName:
             b = self.nb.tab(tabName) # b is a Tk.Button.
             b.config(bg='LightSteelBlue1')
+        self.c.invalidateFocus()
         self.c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20051018061932.1:lower/raiseTab
