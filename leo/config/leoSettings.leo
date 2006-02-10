@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="V" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -354,7 +354,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -370,7 +370,7 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -388,12 +388,12 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060122105527.21" a="V"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
@@ -3160,6 +3160,9 @@ forward-word                        = None
 forward-word-extend-selection       = None
 free-tree-widgets                   = None
 full-command                        = None
+fully-expand-body-pane              = None
+fully-expand-log-pane               = None
+fully-expand-outline-pane           = None
 go-back                             = None
 go-forward                          = None
 goto-char                           = None
@@ -4028,7 +4031,8 @@ forward-word                        ! text = Alt-f          # Usually opens file
 forward-word-extend-selection       ! text = Alt-Shift-f
 forward-word                        ! text = Ctrl-RtArrow
 forward-word-extend-selection       ! text = Ctrl-Shift-RtArrow
-full-command                        = Alt-x     
+full-command                        = Alt-x
+fully-expand-pane                   = Alt-Ctrl-!
 goto-first-node                     ! text = Alt-Home
 goto-first-node                     ! tree = Alt-Home
 goto-first-node                     ! tree = Home
@@ -4044,7 +4048,7 @@ goto-prev-visible                   ! text = Alt-UpArrow
 goto-prev-visible                   ! tree = Alt-UpArrow
 goto-prev-visible                   ! tree = UpArrow
 help                                = F1
-hide-pane                           = Alt-Ctrl-!
+hide-pane                           = None
 indent-region                       = Ctrl-]
 insert-node                         = Ctrl-I
 keyboard-quit                       = Ctrl-g

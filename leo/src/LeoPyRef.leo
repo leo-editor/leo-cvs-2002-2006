@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9071" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9072" clone_windows="0"/>
 <globals body_outline_ratio="0.480459770115">
-	<global_window_position top="13" left="533" height="870" width="793"/>
+	<global_window_position top="25" left="452" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -16,7 +16,8 @@
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"
+expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
@@ -369,6 +370,7 @@
 </v>
 <v t="ekr.20040803072955.116"><vh>showPopupMenu</vh></v>
 </v>
+<v t="ekr.20051022141020"><vh>onTreeClick</vh></v>
 </v>
 <v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
 </v>
@@ -578,66 +580,8 @@
 <v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
 </v>
 </v>
-</v>
-</v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
-<v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
-<v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
-<v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
-<v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
-<v t="ekr.20040629121554.3"><vh>c.signOnWithVersion</vh></v>
-</v>
-<v t="ekr.20051031040240"><vh>Buttons and settings</vh>
-<v t="ekr.20051027111215"><vh>@thin buttons.txt</vh></v>
-<v t="ekr.20041119040438"><vh>@settings</vh>
-<v t="ekr.20050420073615"><vh>@recent-files</vh></v>
-<v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
-<v t="ekr.20041211042119"><vh>@int page_width = 80</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
-<v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
-<v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
-<v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
-<v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
-<v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
-<v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
-<v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
-<v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
-<v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
-<v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
-<v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
-<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
-<v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
-</v>
-<v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
-<v t="ekr.20050721093241"><vh>&lt;&lt; about gui classes and gui plugins &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3630"><vh>@thin leoCompare.py</vh></v>
-<v t="ekr.20060123151617"><vh>@thin leoFind.py</vh></v>
-<v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
-<v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
-<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
-</v>
-<v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
-<v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
-<v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
-<v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
-<v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
-<v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
-<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
-</v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
-</v>
-<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
-<v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
-<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (4)</vh>
-<v t="ekr.20060116083359.1"><vh>Added expand/contract/hide-pane commands</vh>
+<v t="ekr.20060210125025"><vh>Restored tree.onTreeClick</vh></v>
+<v t="ekr.20060116083359.1"><vh>Added expand/contract/hide-pane/fully-expand commands</vh>
 <v t="ekr.20050920084036.53"><vh>class editCommandsClass</vh>
 <v t="ekr.20050929155208"><vh> birth</vh>
 <v t="ekr.20050920084036.54"><vh> ctor (editCommandsClass)</vh></v>
@@ -823,14 +767,76 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20060209110128"><vh>Minibuffer commands... (tkFrame)</vh>
 <v t="ekr.20060209110128.1"><vh>contractPane</vh></v>
 <v t="ekr.20060209110128.2"><vh>expandPane</vh></v>
+<v t="ekr.20060210123852"><vh>fullyExpandPane</vh></v>
 <v t="ekr.20060209143933"><vh>hidePane</vh></v>
 <v t="ekr.20060209110936"><vh>expand/contract/hide...Pane</vh></v>
+<v t="ekr.20060210123852.1"><vh>fullyExpand/hide...Pane</vh></v>
 </v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
+<v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
+<v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
+<v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
+<v t="ekr.20040629121554.3"><vh>c.signOnWithVersion</vh></v>
+</v>
+<v t="ekr.20051031040240"><vh>Buttons and settings</vh>
+<v t="ekr.20051027111215"><vh>@thin buttons.txt</vh></v>
+<v t="ekr.20041119040438"><vh>@settings</vh>
+<v t="ekr.20050420073615"><vh>@recent-files</vh></v>
+<v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
+<v t="ekr.20041211042119"><vh>@int page_width = 80</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
+<v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
+<v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
+<v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
+<v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
+<v t="ekr.20031218072017.2810"
+marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
+<v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
+<v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
+<v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
+<v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
+<v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
+<v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
+<v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
+<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
+<v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
+</v>
+<v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
+<v t="ekr.20050721093241"><vh>&lt;&lt; about gui classes and gui plugins &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3630"><vh>@thin leoCompare.py</vh></v>
+<v t="ekr.20060123151617"><vh>@thin leoFind.py</vh></v>
+<v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
+<v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
+<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
+</v>
+<v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
+<v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
+<v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
+<v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
+<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
+<v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
+<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
+</v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
+</v>
+<v t="ekr.20060206103355" a="E"><vh>To do 4.4b2</vh>
+<v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
+<v t="ekr.20060210123709"><vh>Fix Alt-key issue on Linux</vh></v>
+<v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
+<v t="ekr.20060122183914.1" a="E"><vh>Urgent commands for mouseless Leo (4)</vh>
+<v t="ekr.20060209113357" a="V"><vh>clicks should clear selection</vh></v>
 <v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
-<v t="ekr.20060209203908"><vh>add fully-expand-xxx-pane commands</vh></v>
-<v t="ekr.20060209113357"><vh>clicks should clear selection</vh></v>
 <v t="ekr.20060209105526.1"><vh>select-all-text must remove trailing newline from headline</vh></v>
 <v t="ekr.20060209042734.1"><vh>Add click commands &amp; convenience methods</vh>
 <v t="ekr.20031218072017.792"><vh>Double Click Node command</vh></v>
@@ -861,7 +867,7 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 </v>
 <v t="ekr.20060206104722"><vh>Modes may inherit bindings</vh></v>
 <v t="ekr.20060209140942"><vh>New commands</vh></v>
-<v t="ekr.20060209201859"><vh>How to use modes</vh></v>
+<v t="ekr.20060209201859"><vh>How to design and use modes</vh></v>
 </v>
 </v>
 </vnodes>
@@ -2412,7 +2418,7 @@ setSelectionRange = setTextSelection</t>
     return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.402 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.403 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -4072,6 +4078,10 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
         'forward-sentence-extend-selection':    self.forwardSentenceExtendSelection,
         'forward-word':                         self.forwardWord,
         'forward-word-extend-selection':        self.forwardWordExtendSelection,
+        'fully-expand-body-pane':               c.frame.fullyExpandBodyPane,
+        'fully-expand-log-pane':                c.frame.fullyExpandLogPane,
+        'fully-expand-pane':                    c.frame.fullyExpandPane,
+        'fully-expand-outline-pane':            c.frame.fullyExpandOutlinePane,
         'goto-char':                            self.gotoCharacter,
         'goto-line':                            self.gotoLine,
         'hide-body-pane':                       c.frame.hideBodyPane,
@@ -6865,6 +6875,15 @@ else:
         emacs_name = k.inverseCommandsDict.get(command.__name__)
     except Exception:
         emacs_name = None</t>
+<t tx="ekr.20051022141020">def onTreeClick (self,event=None):
+    
+    '''Handle an event in the tree canvas, outside of any tree widget.'''
+    
+    c = self.c
+
+    c.treeWantsFocusNow()
+    
+    return 'break'</t>
 <t tx="ekr.20051022142249"></t>
 <t tx="ekr.20051022144825.1">def cycleFocus (self,event):
 
@@ -6999,7 +7018,10 @@ def hideFindTab (self,event=None):
     tree = self ; k = self.c.k
     
     &lt;&lt; make bindings for a common binding widget &gt;&gt;
+
     self.canvas.bind('&lt;Key&gt;',k.masterKeyHandler)
+    self.canvas.bind('&lt;Button-1&gt;',self.onTreeClick)
+
     &lt;&lt; make bindings for tagged items on the canvas &gt;&gt;</t>
 <t tx="ekr.20051024173701">def createTab (self,tabName):
     
@@ -8941,16 +8963,7 @@ def expandLogPane(self,event=None):
     f.divideLeoSplitter(not f.splitVerticalFlag,r)
     
 def expandOutlinePane (self,event=None):
-    self.contractBodyPane()
-
-def hideBodyPane (self,event=None):
-    f = self ; f.divideLeoSplitter(f.splitVerticalFlag,1.0)
-
-def hideLogPane (self,event=None):
-    f = self ; f.divideLeoSplitter(not f.splitVerticalFlag,1.0)
-
-def hideOutlinePane (self,event=None):
-    f = self ; f.divideLeoSplitter(f.splitVerticalFlag,0.0)</t>
+    self.contractBodyPane()</t>
 <t tx="ekr.20060209113357"></t>
 <t tx="ekr.20060209140942">Mouseless Leo has arrived.  Cvs now contains code to support the following commands, with the default bindings as shown:
 
@@ -9008,7 +9021,6 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
         c.bodyWantsFocusNow()</t>
 <t tx="ekr.20060209144933"># Made sure bindings can end in '+' and '-'</t>
 <t tx="ekr.20060209201859"></t>
-<t tx="ekr.20060209203908"></t>
 <t tx="ekr.20060210071428"></t>
 <t tx="ekr.20060210102201">def bodyWantsFocusNow(self):
     c = self ; body = c.frame.body
@@ -9057,5 +9069,41 @@ c.openWith(data=data)
 I've corrected all the affected plugins. In particular, the vim plugin works again.</t>
 <t tx="ekr.20060210120212"></t>
 <t tx="ekr.20060210121150"></t>
+<t tx="ekr.20060210123709"></t>
+<t tx="ekr.20060210123709.1"></t>
+<t tx="ekr.20060210123852">def fullyExpandPane (self,event=None):
+
+    f = self ; c = f.c
+        
+    w = c.get_requested_focus()
+    wname = c.widget_name(w)
+
+    # g.trace(wname)
+    if not w: return
+    
+    if wname.startswith('body'):
+        f.fullyExpandBodyPane()
+    elif wname.startswith('log'):
+        f.fullyExpandLogPane()
+    elif wname.startswith('head') or wname.startswith('canvas'):
+        f.fullyExpandOutlinePane()</t>
+<t tx="ekr.20060210123852.1">def fullyExpandBodyPane (self,event=None):
+    f = self ; f.divideLeoSplitter(f.splitVerticalFlag,0.0)
+
+def fullyExpandLogPane (self,event=None):
+    f = self ; f.divideLeoSplitter(not f.splitVerticalFlag,0.0)
+
+def fullyExpandOutlinePane (self,event=None):
+    f = self ; f.divideLeoSplitter(f.splitVerticalFlag,1.0)
+    
+def hideBodyPane (self,event=None):
+    f = self ; f.divideLeoSplitter(f.splitVerticalFlag,1.0)
+
+def hideLogPane (self,event=None):
+    f = self ; f.divideLeoSplitter(not f.splitVerticalFlag,1.0)
+
+def hideOutlinePane (self,event=None):
+    f = self ; f.divideLeoSplitter(f.splitVerticalFlag,0.0)</t>
+<t tx="ekr.20060210125025"># Not having it is confusing.</t>
 </tnodes>
 </leo_file>

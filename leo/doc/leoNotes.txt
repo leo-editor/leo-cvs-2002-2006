@@ -4400,14 +4400,6 @@ if 0: # Needed to transfer focus.
     self.canvas.bind('<Button-1>',treeClickCallback)
 
 #@-node:ekr.20060131173440.1:<< make bindings for the canvas itself >>
-#@+node:ekr.20051022141020:onTreeClick
-def onTreeClick (self,event=None):
-    
-    '''Handle an event in the tree canvas, outside of any tree widget.'''
-    
-    return 'break'
-#@nonl
-#@-node:ekr.20051022141020:onTreeClick
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
