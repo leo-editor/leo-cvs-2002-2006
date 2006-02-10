@@ -8070,14 +8070,18 @@ The script will create a sibling of this node for each call to ReST2Leo in this 
 For example, this node will create a sibling called 'reStructuredText Demonstration'.
 The root headline of the created tree will be the top-level heading of the imported file.
 '''
-<<rst2leo declarations>>
+
 @language python
+@tabwidth -4
+
+__version__ = '0.1'
+<< version history >>
+
+<< define valid_underline_characters >>
+
 @others
 
 # files to test with:
-# demo - http://docutils.sourceforge.net/docs/user/rst/demo.txt
-# ReST specs - http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.txt
-
 if 1:
     ReST2Leo('http://docutils.sourceforge.net/docs/user/rst/demo.txt')
 if 0:
@@ -8085,15 +8089,23 @@ if 0:
 if 0:
     ReST2Leo('http://springfed.com/ac/IssueNo0003Info/editform')
 #@nonl
-#@+node:<<rst2leo declarations>>
-#all the allowable underline characters
+#@+node:<< define valid_underline_characters >>
+# all the allowable underline characters.
+
 valid_underline_characters = [
     '!','"','#','$','%','&',"'",'(',')','*','+',
     ',','-','.','/',':',';','<','=','>','?','@',
     '[','\\',']','^','_','`','{','|','}','~',
 ]
 #@nonl
-#@-node:<<rst2leo declarations>>
+#@-node:<< define valid_underline_characters >>
+#@+node:<< version history >>
+@nocolor
+@
+
+v 0.1: Kent Tenney with minor mods by EKR.
+#@nonl
+#@-node:<< version history >>
 #@+node:class ParseReST
 class ParseReST:
     """Processes a chunks of ReST, creating a list of nodes/sections
@@ -8119,7 +8131,7 @@ def __init__(self, input):
     self.section = {'title':'root', 'contents':[], 'underline_character':'root'}
     # the list of nodes
     self.sections = []
-    
+#@nonl
 #@-node:__init__
 #@+node:isCharacterLine
 def isCharacterLine(self):
@@ -8142,6 +8154,7 @@ def isCharacterLine(self):
     else:
         return False
     return character_line_found
+#@nonl
 #@-node:isCharacterLine
 #@+node:isTransition
 def isTransition(self):
@@ -8154,6 +8167,7 @@ def isTransition(self):
     next = self.lines[self.index + 1]
     
     return len(prev) == 0 and len(next) == 0
+#@nonl
 #@-node:isTransition
 #@+node:isUnderline
 def isUnderline(self):
@@ -8231,6 +8245,7 @@ def isSectionHead(self):
         return True
         
         raise Exception ("Error in foundSectionHead()")
+#@nonl
 #@-node:isSectionHead
 #@+node:closeCurrentSection
 def closeCurrentSection(self):
@@ -8239,6 +8254,7 @@ def closeCurrentSection(self):
     """
     self.sections.append(self.section)
     self.section = {'title':'', 'contents':[], 'underline_character':''}
+#@nonl
 #@-node:closeCurrentSection
 #@+node:insertTitle
 def insertTitle(self, uc, isSubTitle = False):
@@ -8270,7 +8286,7 @@ def insertTitle(self, uc, isSubTitle = False):
         self.sections[0]['contents'].append(line)
         
     del self.sections[1]
-    
+#@nonl
 #@-node:insertTitle
 #@+node:fixupSections
 def fixupSections(self):
@@ -8291,7 +8307,6 @@ def fixupSections(self):
                 return False
             index += 1
         return True                
-            
     
     # self.sections[0] is root, a special case
     underline_first = self.sections[1]['underline_character'] 
@@ -8307,7 +8322,6 @@ def fixupSections(self):
                 # the section head is the document subtitle and must
                 # be added to the root section
                 self.insertTitle(underline_second, True)
-    
 #@nonl
 #@-node:fixupSections
 #@+node:contents2String
@@ -8340,13 +8354,14 @@ def processLines(self):
         else:        
             self.section['contents'].append(self.lines[self.index])
             self.index += 1
-    
+
     self.closeCurrentSection()
     if len(self.sections) > 1:
         if len(self.sections[0]['underline_character']) > 1:
             self.fixupSections()
     self.contents2String()
     return self.sections
+#@nonl
 #@-node:processLines
 #@-node:class ParseReST
 #@+node:class BuildLeo
