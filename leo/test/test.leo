@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -244,7 +244,7 @@
 </v>
 </v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
-<v t="ekr.20060209204257" a="V"><vh>prototype of menu post commands</vh></v>
+<v t="ekr.20060209204257"><vh>prototype of menu post commands</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.

@@ -11270,9 +11270,11 @@ def onFindButton(self):
 
     """Handle a click in the Find button in the Spell tab."""
 
+    c = self.c
     self.find()
     self.updateButtons()
-    self.c.bodyWantsFocus()
+    c.invalidateFocus()
+    c.bodyWantsFocusNow()
 #@nonl
 #@-node:ekr.20051025071455.33:onFindButton
 #@+node:ekr.20051025071455.34:onHideButton
@@ -11338,11 +11340,13 @@ def change(self,event=None):
             t.insert(start,selection)
             g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
             c.frame.body.onBodyChanged("Change",oldSel=oldSel)
-            c.widgetWantsFocus(t)
+            c.invalidateFocus()
+            c.bodyWantsFocusNow()
             return True
 
     # The focus must never leave the body pane.
-    c.widgetWantsFocus(t)
+    c.invalidateFocus()
+    c.bodyWantsFocusNow()
     return False
 #@nonl
 #@-node:ekr.20051025071455.38:change
@@ -11366,7 +11370,8 @@ def find (self,event=None):
 
     if alts:
         self.fillbox(alts,word)
-        c.bodyWantsFocus()
+        c.invalidateFocus()
+        c.bodyWantsFocusNow()
         # Copy the working selection range to the body pane
         start, end = g.app.gui.getTextSelection(self.workCtrl)
         g.app.gui.setTextSelection(bodyCtrl,start,end)
@@ -11374,6 +11379,8 @@ def find (self,event=None):
     else:
         g.es("no more misspellings")
         self.fillbox([])
+        c.invalidateFocus()
+        c.bodyWantsFocusNow()
 #@nonl
 #@-node:ekr.20051025071455.40:find
 #@+node:ekr.20051025121408:hide

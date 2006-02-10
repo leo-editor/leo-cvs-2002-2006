@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9071" clone_windows="0"/>
 <globals body_outline_ratio="0.480459770115">
-	<global_window_position top="31" left="406" height="870" width="793"/>
+	<global_window_position top="13" left="533" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -562,7 +562,82 @@
 <v t="ekr.20050920084036.149"><vh>words</vh></v>
 </v>
 </v>
-<v t="ekr.20060116083359.1"><vh>expand/contract/hide-pane commands</vh>
+<v t="ekr.20060209144933"><vh>Fixed bug in k.shortcutFromSetting</vh>
+<v t="ekr.20060128081317"><vh>shortcutFromSetting</vh>
+<v t="ekr.20060201065809"><vh>&lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.2"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.4"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060210071428"><vh>Fixed vim plugin &amp; openWith</vh></v>
+<v t="ekr.20060210120212"><vh>Fixed focus problems in spell tab</vh></v>
+<v t="ekr.20060210105940.1"><vh>Don't abort the minibuffer if the command does not exist</vh>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
+<v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
+<v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
+<v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
+<v t="ekr.20040629121554.3"><vh>c.signOnWithVersion</vh></v>
+</v>
+<v t="ekr.20051031040240"><vh>Buttons and settings</vh>
+<v t="ekr.20051027111215"><vh>@thin buttons.txt</vh></v>
+<v t="ekr.20041119040438"><vh>@settings</vh>
+<v t="ekr.20050420073615"><vh>@recent-files</vh></v>
+<v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
+<v t="ekr.20041211042119"><vh>@int page_width = 80</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
+<v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
+<v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
+<v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
+<v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
+<v t="ekr.20031218072017.2810"
+marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
+<v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
+<v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
+<v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
+<v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
+<v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
+<v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
+<v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
+<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
+<v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
+</v>
+<v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
+<v t="ekr.20050721093241"><vh>&lt;&lt; about gui classes and gui plugins &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3630"><vh>@thin leoCompare.py</vh></v>
+<v t="ekr.20060123151617"><vh>@thin leoFind.py</vh></v>
+<v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
+<v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
+<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
+</v>
+<v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
+<v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
+<v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
+<v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
+<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
+<v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
+<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
+</v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
+</v>
+<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
+<v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
+<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (4)</vh>
+<v t="ekr.20060116083359.1"><vh>Added expand/contract/hide-pane commands</vh>
 <v t="ekr.20050920084036.53"><vh>class editCommandsClass</vh>
 <v t="ekr.20050929155208"><vh> birth</vh>
 <v t="ekr.20050920084036.54"><vh> ctor (editCommandsClass)</vh></v>
@@ -753,74 +828,6 @@
 </v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 </v>
-<v t="ekr.20060209144933"><vh>Fixed bug in k.shortcutFromSetting</vh>
-<v t="ekr.20060128081317"><vh>shortcutFromSetting</vh>
-<v t="ekr.20060201065809"><vh>&lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.2"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
-<v t="ekr.20060128103640.4"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20060210071428"><vh>Fixed vim plugin &amp; openWith</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
-<v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
-<v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
-<v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
-<v t="ekr.20040629121554.2" a="M" labels="540801000032383634373033303061353332373632363536363666373236353230363336383631366536373635336132373061373033313061353636343635363632303639366536393734353636353732373336393666366532303238373336353663363632393361356337353330333033303631323032303230323036333230336432303733363536633636356337353330333033303631323032303230323036333265373636353732323033643230323232343532363537363639373336393666366533613230333132653332333233353230323432323230323332303433353635333230373537303634363137343635373332303734363836393733326530613730333230613733326571002e"><vh>initVersion</vh></v>
-<v t="ekr.20040629121554.3"><vh>c.signOnWithVersion</vh></v>
-</v>
-<v t="ekr.20051031040240"><vh>Buttons and settings</vh>
-<v t="ekr.20051027111215"><vh>@thin buttons.txt</vh></v>
-<v t="ekr.20041119040438"><vh>@settings</vh>
-<v t="ekr.20050420073615"><vh>@recent-files</vh></v>
-<v t="ekr.20041119042418"><vh>@bool use_plugins = True</vh></v>
-<v t="ekr.20041211042119"><vh>@int page_width = 80</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
-<v t="ekr.20031218072017.2605"><vh>@thin leo.py </vh></v>
-<v t="ekr.20031218072017.2608"><vh>@thin leoApp.py</vh></v>
-<v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
-<v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
-<v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
-<v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
-<v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
-<v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
-<v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
-<v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
-<v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
-<v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
-<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
-<v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
-</v>
-<v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
-<v t="ekr.20050721093241"><vh>&lt;&lt; about gui classes and gui plugins &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3630"><vh>@thin leoCompare.py</vh></v>
-<v t="ekr.20060123151617"><vh>@thin leoFind.py</vh></v>
-<v t="ekr.20031218072017.3655"><vh>@thin leoFrame.py</vh></v>
-<v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
-<v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
-</v>
-<v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
-<v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
-<v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
-<v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
-<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
-<v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
-<v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
-<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
-</v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
-</v>
-<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
-<v t="ekr.20060210105940.1"><vh>Don't abort the minibuffer if the command does not exist</vh></v>
-<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (4)</vh>
 <v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
 <v t="ekr.20060209203908"><vh>add fully-expand-xxx-pane commands</vh></v>
 <v t="ekr.20060209113357"><vh>clicks should clear selection</vh></v>
@@ -5519,6 +5526,70 @@ def iSearchStateHandler (self,event):
     &lt;&lt; define Tk ivars &gt;&gt;
     &lt;&lt; define externally visible ivars &gt;&gt;
     &lt;&lt; define internal ivars &gt;&gt;</t>
+<t tx="ekr.20050920085536.41">def fullCommand (self,event,specialStroke=None,specialFunc=None):
+    
+    '''Handle 'full-command' (alt-x) mode.'''
+
+    k = self ; c = k.c ; state = k.getState('full-command')
+    keysym = (event and event.keysym) or ''
+    ch = (event and event.char) or ''
+    trace = c.config.getBool('trace_modes')
+    if trace: g.trace('state',state,keysym)
+    if state == 0:
+        k.completionFocusWidget = c.get_focus()
+        k.setState('full-command',1,handler=k.fullCommand) 
+        k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
+        # Init mb_ ivars. This prevents problems with an initial backspace.
+        k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
+        k.mb_tabList = [] ; k.mb_tabListIndex = -1
+        c.minibufferWantsFocus()
+    elif keysym == 'Return':
+        c.frame.log.deleteTab('Completion')
+        c.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
+        k.callAltXFunction(event)
+    elif keysym == 'Tab':
+        k.doTabCompletion(c.commandsDict.keys())
+        c.minibufferWantsFocus()
+    elif keysym == 'BackSpace':
+        k.doBackSpace(c.commandsDict.keys())
+        c.minibufferWantsFocus()
+    elif ch not in string.printable:
+        if specialStroke:
+            g.trace(specialStroke)
+            specialFunc()
+        c.minibufferWantsFocus()
+    else:
+        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+        k.mb_tabList = []
+        k.updateLabel(event)
+        k.mb_tabListPrefix = k.getLabel()
+        c.minibufferWantsFocus()
+        # g.trace('new prefix',k.mb_tabListPrefix)
+
+    return 'break'</t>
+<t tx="ekr.20050920085536.45">def callAltXFunction (self,event):
+    
+    k = self ; c = k.c ; s = k.getLabel()
+    k.mb_tabList = []
+    commandName = s[len(k.mb_prefix):].strip()
+    func = c.commandsDict.get(commandName)
+
+    if func:
+        # These must be done *after* getting the command.
+        k.clearState()
+        k.resetLabel()
+        if commandName != 'repeat-complex-command':
+            k.mb_history.insert(0,commandName)
+        # if command in k.x_hasNumeric: func(event,aX)
+        func(event)
+        k.endCommand(event,commandName)
+    else:
+        if 1: # Useful.
+            k.doTabCompletion(c.commandsDict.keys())
+        else: # Annoying.
+            k.keyboardQuit(event)
+            k.setLabel('Command does not exist: %s' % commandName)
+            c.bodyWantsFocus()</t>
 <t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
     
     '''Finish creating the commander after frame.finishCreate.
@@ -8984,5 +9055,7 @@ The new prefered way of calling c.openWith is:
 c.openWith(data=data)
 
 I've corrected all the affected plugins. In particular, the vim plugin works again.</t>
+<t tx="ekr.20060210120212"></t>
+<t tx="ekr.20060210121150"></t>
 </tnodes>
 </leo_file>

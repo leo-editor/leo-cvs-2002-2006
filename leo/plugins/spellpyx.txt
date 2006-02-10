@@ -1847,6 +1847,7 @@ temacs
 tempAttributes
 tempChildNode
 tempChild_v
+tempFileName
 tempNode
 temp_p
 temp_v

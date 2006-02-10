@@ -819,20 +819,22 @@ class keyHandlerClass:
         commandName = s[len(k.mb_prefix):].strip()
         func = c.commandsDict.get(commandName)
     
-        # These must be done *after* getting the command.
-        k.clearState()
-        k.resetLabel()
-    
         if func:
+            # These must be done *after* getting the command.
+            k.clearState()
+            k.resetLabel()
             if commandName != 'repeat-complex-command':
                 k.mb_history.insert(0,commandName)
             # if command in k.x_hasNumeric: func(event,aX)
             func(event)
             k.endCommand(event,commandName)
         else:
-            k.keyboardQuit(event)
-            k.setLabel('Command does not exist: %s' % commandName)
-            c.bodyWantsFocus()
+            if 1: # Useful.
+                k.doTabCompletion(c.commandsDict.keys())
+            else: # Annoying.
+                k.keyboardQuit(event)
+                k.setLabel('Command does not exist: %s' % commandName)
+                c.bodyWantsFocus()
     #@nonl
     #@-node:ekr.20050920085536.45:callAltXFunction
     #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
@@ -1725,7 +1727,7 @@ class keyHandlerClass:
     
         c.endEditing()
         
-        g.trace(k.inputModeName)
+        # g.trace(k.inputModeName)
         
         if k.inputModeName:
             d = g.app.config.modeCommandsDict.get('enter-'+k.inputModeName)
