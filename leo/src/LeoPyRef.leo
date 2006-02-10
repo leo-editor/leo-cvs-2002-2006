@@ -16,8 +16,7 @@
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"
-expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
@@ -212,6 +211,7 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
 <v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
 <v t="ekr.20060205103842"><vh>c.get/request/set_focus</vh></v>
+<v t="ekr.20060210103358"><vh>c.invalidateFocus</vh></v>
 <v t="ekr.20060207140352"><vh>c.masterFocusHandler</vh></v>
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
@@ -219,7 +219,8 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060208143543"><vh>c.restoreFocus</vh></v>
 <v t="ekr.20060207142332"><vh>c.traceFocus</vh></v>
 <v t="ekr.20060205111103"><vh>c.widget_name</vh></v>
-<v t="ekr.20050120092028"><vh>c.xWantsFocus/Now</vh></v>
+<v t="ekr.20050120092028"><vh>c.xWantsFocus</vh></v>
+<v t="ekr.20060210102201"><vh>c.xWantsFocusNow</vh></v>
 </v>
 <v t="ekr.20031218072017.4039"><vh>class leoTkinterLog</vh>
 <v t="ekr.20051016095907"><vh>tkLog Birth</vh>
@@ -377,7 +378,49 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060120200818"><vh>setInputState</vh></v>
 <v t="ekr.20060120193743"><vh>showStateAndMode</vh></v>
 </v>
-<v t="ekr.20060206165304"><vh>Fixed find.success bug</vh>
+<v t="ekr.20060206165304"><vh>Fixed focus-after-find bugs</vh>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20060205103842"><vh>c.get/request/set_focus</vh></v>
+<v t="ekr.20060210103358"><vh>c.invalidateFocus</vh></v>
+<v t="ekr.20060207140352"><vh>c.masterFocusHandler</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
+<v t="ekr.20060208143543"><vh>c.restoreFocus</vh></v>
+<v t="ekr.20060207142332"><vh>c.traceFocus</vh></v>
+<v t="ekr.20060205111103"><vh>c.widget_name</vh></v>
+<v t="ekr.20050120092028"><vh>c.xWantsFocus</vh></v>
+<v t="ekr.20060210102201"><vh>c.xWantsFocusNow</vh></v>
+</v>
+<v t="ekr.20051018061932"><vh>Tab (TkLog)</vh>
+<v t="ekr.20051017212057"><vh>clearTab</vh></v>
+<v t="ekr.20051024173701"><vh>createTab</vh>
+<v t="ekr.20051018072306"><vh>&lt;&lt; Create the tab's text widget &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051018102027"><vh>deleteTab</vh></v>
+<v t="ekr.20060204124347"><vh>hideTab</vh></v>
+<v t="ekr.20051027114433"><vh>getSelectedTab</vh></v>
+<v t="ekr.20051018061932.1"><vh>lower/raiseTab</vh></v>
+<v t="ekr.20051019170806"><vh>renameTab</vh></v>
+<v t="ekr.20051016101724.1"><vh>selectTab</vh></v>
+<v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
+<v t="ekr.20051019134106"><vh>Tab menu callbacks &amp; helpers</vh>
+<v t="ekr.20051019134422"><vh>onRightClick &amp; onClick</vh></v>
+<v t="ekr.20051019140004.1"><vh>newTabFromMenu</vh></v>
+<v t="ekr.20051019165401"><vh>renameTabFromMenu</vh></v>
+<v t="ekr.20051019172811"><vh>getTabName</vh></v>
+</v>
+</v>
+<v t="ekr.20040803072955.128"><vh>tree.select</vh>
+<v t="ekr.20040803072955.129"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.130"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.131"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.132"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.133"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
 <v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
 <v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
 <v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
@@ -465,6 +508,7 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
 <v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
 <v t="ekr.20060205103842"><vh>c.get/request/set_focus</vh></v>
+<v t="ekr.20060210103358"><vh>c.invalidateFocus</vh></v>
 <v t="ekr.20060207140352"><vh>c.masterFocusHandler</vh></v>
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
@@ -472,7 +516,8 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060208143543"><vh>c.restoreFocus</vh></v>
 <v t="ekr.20060207142332"><vh>c.traceFocus</vh></v>
 <v t="ekr.20060205111103"><vh>c.widget_name</vh></v>
-<v t="ekr.20050120092028"><vh>c.xWantsFocus/Now</vh></v>
+<v t="ekr.20050120092028"><vh>c.xWantsFocus</vh></v>
+<v t="ekr.20060210102201"><vh>c.xWantsFocusNow</vh></v>
 </v>
 <v t="ekr.20060120193743"><vh>showStateAndMode</vh></v>
 <v t="ekr.20060208143543"><vh>c.restoreFocus</vh></v>
@@ -678,6 +723,7 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
 <v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
 <v t="ekr.20060205103842"><vh>c.get/request/set_focus</vh></v>
+<v t="ekr.20060210103358"><vh>c.invalidateFocus</vh></v>
 <v t="ekr.20060207140352"><vh>c.masterFocusHandler</vh></v>
 <v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
 <v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
@@ -685,7 +731,8 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060208143543"><vh>c.restoreFocus</vh></v>
 <v t="ekr.20060207142332"><vh>c.traceFocus</vh></v>
 <v t="ekr.20060205111103"><vh>c.widget_name</vh></v>
-<v t="ekr.20050120092028"><vh>c.xWantsFocus/Now</vh></v>
+<v t="ekr.20050120092028"><vh>c.xWantsFocus</vh></v>
+<v t="ekr.20060210102201"><vh>c.xWantsFocusNow</vh></v>
 </v>
 <v t="ekr.20031218072017.3971"><vh>Event handlers (tkFrame)</vh>
 <v t="ekr.20031218072017.3972"><vh>frame.OnCloseLeoEvent</vh></v>
@@ -706,6 +753,15 @@ expanded="ekr.20060122183914.1,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 </v>
+<v t="ekr.20060209144933"><vh>Fixed bug in k.shortcutFromSetting</vh>
+<v t="ekr.20060128081317"><vh>shortcutFromSetting</vh>
+<v t="ekr.20060201065809"><vh>&lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.2"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
+<v t="ekr.20060128103640.4"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060210071428"><vh>Fixed vim plugin &amp; openWith</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -759,14 +815,14 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
 </v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20060206103355" a="E"><vh>To do 4.4b2</vh>
-<v t="ekr.20060209180725"><vh>Status report</vh></v>
-<v t="ekr.20060209144933"><vh>Make sure bindings can end in '+' and '-'</vh></v>
-<v t="ekr.20060122183914.1" a="E"><vh>Urgent commands for mouseless Leo (4)</vh>
-<v t="ekr.20060116080040.2" a="V"><vh>activate-xxx-menu commands</vh></v>
+<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
+<v t="ekr.20060210105940.1"><vh>Don't abort the minibuffer if the command does not exist</vh></v>
+<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (4)</vh>
+<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh></v>
+<v t="ekr.20060209203908"><vh>add fully-expand-xxx-pane commands</vh></v>
 <v t="ekr.20060209113357"><vh>clicks should clear selection</vh></v>
 <v t="ekr.20060209105526.1"><vh>select-all-text must remove trailing newline from headline</vh></v>
 <v t="ekr.20060209042734.1"><vh>Add click commands &amp; convenience methods</vh>
@@ -790,12 +846,15 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
 </v>
 <v t="ekr.20060209053234"><vh>What's new in b2</vh>
+<v t="ekr.20060210111310"><vh>Unification of all calling sequences</vh></v>
+<v t="ekr.20060210105733"><vh>New debugging settings in leosettings.leo</vh></v>
 <v t="ekr.20060205170335.1"><vh>aproposFindCommands</vh>
 <v t="ekr.20060209082023.1"><vh>&lt;&lt; define s &gt;&gt;</vh></v>
 <v t="ekr.20060205170552"><vh>test_apropos_find_commands</vh></v>
 </v>
 <v t="ekr.20060206104722"><vh>Modes may inherit bindings</vh></v>
 <v t="ekr.20060209140942"><vh>New commands</vh></v>
+<v t="ekr.20060209201859"><vh>How to use modes</vh></v>
 </v>
 </v>
 </vnodes>
@@ -965,7 +1024,9 @@ lastFunctionsDict = {}
     if not g.app.trace_gc_inited:
         g.app.trace_gc = False
     
-    try: gc.collect()
+    try:
+        g.es_print('Collecting garbage',color='red')
+        gc.collect()
     except: pass
 </t>
 <t tx="ekr.20031218072017.1592">def printGc(message=None):
@@ -1611,18 +1672,19 @@ def restore (self,data):
 
     # Don't try to reedit headline.
     c.selectPosition(p)
+    
     if not in_headline:
-
         # Looks good and provides clear indication of failure or termination.
         gui.setSelectionRange(t,insert,insert)
         gui.setInsertPoint(t,insert)
         gui.makeIndexVisible(t,insert)
     
-    # g.trace(c.widget_name(t))
-    # c.widgetWantsFocusNow(t)
+    #g.trace(c.widget_name(t))
     
-    # I prefer always putting the focus in the body.
-    c.bodyWantsFocusNow()</t>
+    if 1: # I prefer always putting the focus in the body.
+        c.bodyWantsFocusNow()
+    else:
+        c.widgetWantsFocusNow(t)</t>
 <t tx="ekr.20031218072017.3091">def showSuccess(self,pos,newpos):
 
     """Displays the final result.
@@ -2471,13 +2533,15 @@ else: # Use plain click.
     # Configuration and debugging settings.
     self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
     self.expanded_click_area    = c.config.getBool("expanded_click_area")
-    self.trace_stats            = c.config.getBool('show_tree_stats')
+    
     self.trace                  = c.config.getBool('trace_tree')
     self.trace_alloc            = c.config.getBool('trace_tree_alloc')
     self.trace_edit             = c.config.getBool('trace_tree_edit')
     self.trace_gc               = c.config.getBool('trace_gc')
     self.trace_redraw_now       = c.config.getBool('trace_redraw_now')
-
+    self.trace_select           = c.config.getBool('trace_select')
+    self.trace_stats            = c.config.getBool('show_tree_stats')
+ 
     # Objects associated with this tree.
     self.canvas = canvas
     
@@ -3318,6 +3382,115 @@ for v2 in v.self_and_subtree_iter():
         self.revertHeadline = p.headString() # New in 4.4b2: helps undo.
         self.setEditLabelState(p) # Sets the focus immediately.
         c.headlineWantsFocus(p) # Make sure the focus sticks.</t>
+<t tx="ekr.20040803072955.128">#  Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    if not p or not p.exists(c): return # Not an error.
+    
+    if self.trace_select and not g.app.unitTesting: g.trace(g.callers())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        if old_p:
+            &lt;&lt; unselect the old node &gt;&gt;
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        &lt;&lt; select the new node &gt;&gt;
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                # p is NOT c.currentPosition() here!
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo(p)
+            except Exception: pass
+        &lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
+        &lt;&lt; update c.visitedList &gt;&gt;
+
+    c.setCurrentPosition(p)
+    &lt;&lt; set the current node &gt;&gt;
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    return 'break' # Supresses unwanted selection.</t>
+<t tx="ekr.20040803072955.129"># Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
+
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot</t>
+<t tx="ekr.20040803072955.130"># Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
+frame.setWrap(p)
+    
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(0,body,s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())</t>
+<t tx="ekr.20040803072955.131"># c.beadList is the list of nodes for the back and forward commands.
+
+if updateBeadList:
+    
+    if c.beadPointer &gt; -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by p and make p the present node.
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+        # New in Leo 4.4: limit this list to 100 items.
+        if 0: # Doesn't work yet.
+            c.beadList = c.beadList [-100:]
+            g.trace('len(c.beadList)',len(c.beadList))
+        
+    # g.trace(c.beadPointer,p,present_p)</t>
+<t tx="ekr.20040803072955.132"># The test 'p in c.visitedList' calls p.__cmp__, so this code *is* valid.
+
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+
+# g.trace('len(c.visitedList)',len(c.visitedList))
+# g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!</t>
+<t tx="ekr.20040803072955.133">self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.treeWantsFocus()
+else:
+    c.bodyWantsFocus()</t>
 <t tx="ekr.20040803072955.135">def setEditLabelState (self,p): # selected, editing
 
     c = self.c ; w = p.edit_widget()
@@ -3685,48 +3858,24 @@ canvas.bind("&lt;ButtonPress&gt;",mapWheel,add=1)</t>
     c = self ; body = c.frame.body
     c.request_focus(body and body.bodyCtrl)
     
-def bodyWantsFocusNow(self):
-    c = self ; body = c.frame.body
-    c.set_focus(body and body.bodyCtrl)
-        
 def headlineWantsFocus(self,p):
     c = self
     c.request_focus(p and p.edit_widget())
-    
-def headlineWantsFocusNow(self,p):
-    c = self
-    c.set_focus(p and p.edit_widget())
     
 def logWantsFocus(self):
     c = self ; log = c.frame.log
     c.request_focus(log and log.logCtrl)
     
-def logWantsFocusNow(self):
-    c = self ; log = c.frame.log
-    c.set_focus(log and log.logCtrl)
-
 def minibufferWantsFocus(self):
     c = self ; k = c.k
     k and k.minibufferWantsFocus()
     
-def minibufferWantsFocusNow(self):
-    c = self ; k = c.k
-    k and k.minibufferWantsFocusNow()
-
 def treeWantsFocus(self):
     c = self ; tree = c.frame.tree
     c.request_focus(tree and tree.canvas)
     
-def treeWantsFocusNow(self):
-    c = self ; tree = c.frame.tree
-    c.set_focus(tree and tree.canvas)
-    
 def widgetWantsFocus(self,w):
-    c = self ; c.request_focus(w)
-    
-def widgetWantsFocusNow(self,w):
-    c = self ; c.set_focus(w)
-</t>
+    c = self ; c.request_focus(w)</t>
 <t tx="ekr.20050208133438">def forceLogUpdate (self,s):
 
     if sys.platform == "darwin": # Does not work on MacOS X.
@@ -5463,6 +5612,8 @@ self.modeBindingsDict = {}</t>
 <t tx="ekr.20050924073836"></t>
 <t tx="ekr.20050929114218"></t>
 <t tx="ekr.20050929115226">def gotoCharacter (self,event):
+    
+    '''Put the cursor at the n'th character of the buffer.'''
 
     k = self.k ; state = k.getState('goto-char')
 
@@ -5478,6 +5629,8 @@ self.modeBindingsDict = {}</t>
         k.resetLabel()
         k.clearState()</t>
 <t tx="ekr.20050929124234">def gotoLine (self,event):
+    
+    '''Put the cursor at the n'th line of the buffer.'''
 
     k = self.k ; state = k.getState('goto-line')
     
@@ -5813,6 +5966,7 @@ It may be that Pmw will allow us to dispense with the colorTags logic...</t>
     if tabName:
         b = self.nb.tab(tabName) # b is a Tk.Button.
         b.config(bg='grey80')
+    self.c.invalidateFocus()
     self.c.bodyWantsFocus()
 
 def raiseTab (self,tabName):
@@ -5820,6 +5974,7 @@ def raiseTab (self,tabName):
     if tabName:
         b = self.nb.tab(tabName) # b is a Tk.Button.
         b.config(bg='LightSteelBlue1')
+    self.c.invalidateFocus()
     self.c.bodyWantsFocus()</t>
 <t tx="ekr.20051018072306">t = self.createTextWidget(tabFrame)
 
@@ -5857,7 +6012,9 @@ self.colorTagsDict [tabName] = self.colorTags</t>
         self.selectTab('Log')
         
     # New in Leo 4.4b1.
-    self.c.bodyWantsFocus()</t>
+    self.c.invalidateFocus()
+    self.c.bodyWantsFocus()
+    </t>
 <t tx="ekr.20051019134106"></t>
 <t tx="ekr.20051019134106.1">def makeTabMenu (self,tabName=None):
 
@@ -7927,6 +8084,20 @@ def masterKeyHandler (self,event):
         k.resetLabel()
         k.showStateAndMode()
         self.generalSearchHelper(k.arg,cloneFindAll=True)</t>
+<t tx="ekr.20060128081317">def shortcutFromSetting (self,setting):
+
+    if not setting:
+        return None
+
+    s = setting.strip()
+    &lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;
+    &lt;&lt; convert minus signs to plus signs &gt;&gt;
+    &lt;&lt; compute the last field &gt;&gt;
+    &lt;&lt; compute shortcut &gt;&gt;
+    return shortcut
+    
+canonicalizeShortcut = shortcutFromSetting # For compatibility.
+strokeFromSetting    = shortcutFromSetting</t>
 <t tx="ekr.20060128090219">def masterMenuHandler (self,stroke,func,commandName):
     
     k = self ; c = k.c ; w = c.frame.getFocus()
@@ -7939,6 +8110,41 @@ def masterKeyHandler (self,event):
             g.trace(c.widget_name(w))
     
     return k.masterCommand(event,func,stroke,commandName)</t>
+<t tx="ekr.20060128103640.1"># Replace all minus signs by plus signs, except a trailing minus:
+if s.endswith('-'):
+    s = s[:-1].replace('-','+') + '-'
+else:
+    s = s.replace('-','+')</t>
+<t tx="ekr.20060128103640.2">if s.endswith('+'):
+    last = '+'
+else:
+    fields = s.split('+') # Don't lower this field.
+    last = fields and fields[-1]
+    if not last:
+        if not g.app.menuWarningsGiven:
+            print "bad shortcut specifier:", s
+        return None
+
+if len(last) == 1:
+    if shift:
+        last = last.upper()
+        shift = False
+    else:
+        last = last.lower()
+else:
+    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+    # This is a *one-way* translation, done only here.
+    d = self.settingsNameDict
+    last = d.get(last.lower(),last)</t>
+<t tx="ekr.20060128103640.4">table = (
+    (alt, 'Alt+'),
+    (ctrl,'Ctrl+'),
+    (cmd, 'Cmnd+'),
+    (shift,'Shift+'),
+    (True,last),
+)
+    
+shortcut = ''.join([val for flag,val in table if flag])</t>
 <t tx="ekr.20060129052538.1"></t>
 <t tx="ekr.20060129052538.2">def masterClickHandler (self,event,func=None):
     
@@ -8022,6 +8228,18 @@ table = (
 )
 for tag,event,callback in table:
     self.canvas.tag_bind(tag,event,callback)</t>
+<t tx="ekr.20060201065809">s2 = s.lower()
+
+cmd   = s2.find("cmd") &gt;= 0     or s2.find("command") &gt;= 0
+ctrl  = s2.find("control") &gt;= 0 or s2.find("ctrl") &gt;= 0
+alt   = s2.find("alt") &gt;= 0
+shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0
+
+if sys.platform == "darwin":
+    if ctrl and not cmd:
+        cmd = True ; ctrl = False
+    if alt and not ctrl:
+        ctrl = True ; alt = False</t>
 <t tx="ekr.20060201083154">def prettyPrintKey (self,stroke):
     
     s = stroke and stroke.strip().lstrip('&lt;').rstrip('&gt;')
@@ -8331,7 +8549,7 @@ Warning: ignoring bool:body_gmt_time not string
 There may be conflicting settings!</t>
 <t tx="ekr.20060206124634"></t>
 <t tx="ekr.20060206131908"></t>
-<t tx="ekr.20060206165304">Clean up handling of selection.</t>
+<t tx="ekr.20060206165304"></t>
 <t tx="ekr.20060207091145"></t>
 <t tx="ekr.20060207101443">def setHeadline (self,p,s):
     
@@ -8390,7 +8608,7 @@ def traceFocus (self,w):
     if not g.app.unitTesting and c.config.getBool('trace_focus'):
         c.trace_focus_count += 1
         g.trace('%4d' % (c.trace_focus_count),
-            c.widget_name(w),g.callers())</t>
+            c.widget_name(w),g.callers(8))</t>
 <t tx="ekr.20060207164200">@nocolor
 
 * Found the reason why focus was *still* sticking in the outline pane:
@@ -8460,7 +8678,9 @@ open-find-dialog actuall refer to the find tab.
 - No need to add click simulators for menus: they will be separate minibuffer commands.</t>
 <t tx="ekr.20060209053234">@nocolor
 
-Refer to 4.4b3 to do first list.</t>
+Refer to 4.4b3 to do first list.
+
+@color</t>
 <t tx="ekr.20060209064140">def findAll (self,event):
 
     k = self.k ; state = k.getState('find-all')
@@ -8715,15 +8935,54 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
     elif wname.startswith('head') or wname.startswith('canvas'):
         f.hideOutlinePane()
         c.bodyWantsFocusNow()</t>
-<t tx="ekr.20060209144933"></t>
-<t tx="ekr.20060209180725">@nocolor
+<t tx="ekr.20060209144933"># Made sure bindings can end in '+' and '-'</t>
+<t tx="ekr.20060209201859"></t>
+<t tx="ekr.20060209203908"></t>
+<t tx="ekr.20060210071428"></t>
+<t tx="ekr.20060210102201">def bodyWantsFocusNow(self):
+    c = self ; body = c.frame.body
+    c.set_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocusNow(self,p):
+    c = self
+    c.set_focus(p and p.edit_widget())
+    
+def logWantsFocusNow(self):
+    c = self ; log = c.frame.log
+    c.set_focus(log and log.logCtrl)
 
-- The code feels much more stable than last week.  Leo is working smoothly now.
+def minibufferWantsFocusNow(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocusNow()
+    
+def treeWantsFocusNow(self):
+    c = self ; tree = c.frame.tree
+    c.set_focus(tree and tree.canvas)
+    
+def widgetWantsFocusNow(self,w):
+    c = self ; c.set_focus(w)
+</t>
+<t tx="ekr.20060210103358">def invalidateFocus (self):
+    
+    '''Indicate that the focus is in an invalid location, or is unknown.'''
+    
+    c = self
+    c.requestedFocusWidget = None
+    c.hasFocusWidget = None
+    
+</t>
+<t tx="ekr.20060210105733"></t>
+<t tx="ekr.20060210105940.1"></t>
+<t tx="ekr.20060210111310">@nocolor
 
-- I am able to fix new bugs within 24 hours.  I run unit tests now after every real change.
+The recent unification of the callling sequences of all commands, both legacy
+and minibuffer, had the side effect of breaking some plugins. The new 'event'
+arg was the culprit.
 
-- B2 could go out the door today, but I shall spend the next few days on the b2 to-do list.  This will give me more time for testing and will eliminate items that have been on the to-do list for *way* too long.
+The new prefered way of calling c.openWith is:
 
-- In the next few days I'll be writing more about 'what's new in b2'.  There is a lot.  This will, of course, form the basis for the release notes and other documentation.</t>
+c.openWith(data=data)
+
+I've corrected all the affected plugins. In particular, the vim plugin works again.</t>
 </tnodes>
 </leo_file>

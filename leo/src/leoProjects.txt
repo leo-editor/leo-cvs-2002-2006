@@ -1356,7 +1356,9 @@ def collectGarbage():
     if not g.app.trace_gc_inited:
         g.app.trace_gc = False
     
-    try: gc.collect()
+    try:
+        g.es_print('Collecting garbage',color='red')
+        gc.collect()
     except: pass
 #@-node:ekr.20031218072017.1590:collectGarbage
 #@+node:ekr.20060205043324.1:printGcSummary
@@ -3006,6 +3008,16 @@ def set_focus (self,w):
         g.app.gui.set_focus(c,w)
 #@nonl
 #@-node:ekr.20060205103842:c.get/request/set_focus
+#@+node:ekr.20060210103358:c.invalidateFocus
+def invalidateFocus (self):
+    
+    '''Indicate that the focus is in an invalid location, or is unknown.'''
+    
+    c = self
+    c.requestedFocusWidget = None
+    c.hasFocusWidget = None
+    
+#@-node:ekr.20060210103358:c.invalidateFocus
 #@+node:ekr.20060207140352:c.masterFocusHandler
 def masterFocusHandler (self):
     
@@ -3108,7 +3120,7 @@ def traceFocus (self,w):
     if not g.app.unitTesting and c.config.getBool('trace_focus'):
         c.trace_focus_count += 1
         g.trace('%4d' % (c.trace_focus_count),
-            c.widget_name(w),g.callers())
+            c.widget_name(w),g.callers(8))
 #@nonl
 #@-node:ekr.20060207142332:c.traceFocus
 #@+node:ekr.20060205111103:c.widget_name
@@ -3119,53 +3131,55 @@ def widget_name (self,widget):
     return c.gui.widget_name(widget)
 #@nonl
 #@-node:ekr.20060205111103:c.widget_name
-#@+node:ekr.20050120092028:c.xWantsFocus/Now
+#@+node:ekr.20050120092028:c.xWantsFocus
 def bodyWantsFocus(self):
     c = self ; body = c.frame.body
     c.request_focus(body and body.bodyCtrl)
     
-def bodyWantsFocusNow(self):
-    c = self ; body = c.frame.body
-    c.set_focus(body and body.bodyCtrl)
-        
 def headlineWantsFocus(self,p):
     c = self
     c.request_focus(p and p.edit_widget())
-    
-def headlineWantsFocusNow(self,p):
-    c = self
-    c.set_focus(p and p.edit_widget())
     
 def logWantsFocus(self):
     c = self ; log = c.frame.log
     c.request_focus(log and log.logCtrl)
     
-def logWantsFocusNow(self):
-    c = self ; log = c.frame.log
-    c.set_focus(log and log.logCtrl)
-
 def minibufferWantsFocus(self):
     c = self ; k = c.k
     k and k.minibufferWantsFocus()
     
-def minibufferWantsFocusNow(self):
-    c = self ; k = c.k
-    k and k.minibufferWantsFocusNow()
-
 def treeWantsFocus(self):
     c = self ; tree = c.frame.tree
     c.request_focus(tree and tree.canvas)
+    
+def widgetWantsFocus(self,w):
+    c = self ; c.request_focus(w)
+#@nonl
+#@-node:ekr.20050120092028:c.xWantsFocus
+#@+node:ekr.20060210102201:c.xWantsFocusNow
+def bodyWantsFocusNow(self):
+    c = self ; body = c.frame.body
+    c.set_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocusNow(self,p):
+    c = self
+    c.set_focus(p and p.edit_widget())
+    
+def logWantsFocusNow(self):
+    c = self ; log = c.frame.log
+    c.set_focus(log and log.logCtrl)
+
+def minibufferWantsFocusNow(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocusNow()
     
 def treeWantsFocusNow(self):
     c = self ; tree = c.frame.tree
     c.set_focus(tree and tree.canvas)
     
-def widgetWantsFocus(self,w):
-    c = self ; c.request_focus(w)
-    
 def widgetWantsFocusNow(self,w):
     c = self ; c.set_focus(w)
-#@-node:ekr.20050120092028:c.xWantsFocus/Now
+#@-node:ekr.20060210102201:c.xWantsFocusNow
 #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@+node:ekr.20031218072017.4039:class leoTkinterLog
 class leoTkinterLog (leoFrame.leoLog):
@@ -3564,7 +3578,9 @@ def deleteTab (self,tabName):
         self.selectTab('Log')
         
     # New in Leo 4.4b1.
+    self.c.invalidateFocus()
     self.c.bodyWantsFocus()
+    
 #@nonl
 #@-node:ekr.20051018102027:deleteTab
 #@+node:ekr.20060204124347:hideTab
@@ -3587,6 +3603,7 @@ def lowerTab (self,tabName):
     if tabName:
         b = self.nb.tab(tabName) # b is a Tk.Button.
         b.config(bg='grey80')
+    self.c.invalidateFocus()
     self.c.bodyWantsFocus()
 
 def raiseTab (self,tabName):
@@ -3594,6 +3611,7 @@ def raiseTab (self,tabName):
     if tabName:
         b = self.nb.tab(tabName) # b is a Tk.Button.
         b.config(bg='LightSteelBlue1')
+    self.c.invalidateFocus()
     self.c.bodyWantsFocus()
 #@nonl
 #@-node:ekr.20051018061932.1:lower/raiseTab
@@ -4197,13 +4215,15 @@ def __init__(self,c,frame,canvas):
     # Configuration and debugging settings.
     self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
     self.expanded_click_area    = c.config.getBool("expanded_click_area")
-    self.trace_stats            = c.config.getBool('show_tree_stats')
+    
     self.trace                  = c.config.getBool('trace_tree')
     self.trace_alloc            = c.config.getBool('trace_tree_alloc')
     self.trace_edit             = c.config.getBool('trace_tree_edit')
     self.trace_gc               = c.config.getBool('trace_gc')
     self.trace_redraw_now       = c.config.getBool('trace_redraw_now')
-
+    self.trace_select           = c.config.getBool('trace_select')
+    self.trace_stats            = c.config.getBool('show_tree_stats')
+ 
     # Objects associated with this tree.
     self.canvas = canvas
     
@@ -5394,9 +5414,652 @@ def showStateAndMode(self):
 #@nonl
 #@-node:ekr.20060120193743:showStateAndMode
 #@-node:ekr.20060207103936:setInputState is messing with body focus
-#@+node:ekr.20060206165304:Fixed find.success bug
-Clean up handling of selection.
+#@+node:ekr.20060206165304:Fixed focus-after-find bugs
+#@+node:ekr.20031218072017.2949:Drawing Utilities (commands)
+#@+node:ekr.20031218072017.2950:c.begin/endUpdate
+@
+**Important** These methods ensure that exactly zero or one (depending on the
+argument to endUpdate) redraws exist within the section of code bounded by
+c.beginUpdate and c.endUpdate. This greatly simplifies and clarifies the code.
+
+Callers should ensure that every beginUpdate is matched with an endUpdate by
+using the following pattern:
+    c.beginUpdate()
+    try:
+        << whatever >>
+    finally:
+        c.endUpdate()
+@c
+
+def beginUpdate(self):
+    
+    '''Suppress redraws of the tree (except for explict calls to c.redraw_now)
+    until the matching call to endUpdate.'''
+    
+    c = self
+    c.frame.tree.beginUpdate()
+    
+def endUpdate(self,flag=True,scroll=False):
+    
+    '''Redraw the screen if flag is True.'''
+
+    c = self
+    c.frame.tree.endUpdate(flag,scroll=scroll)
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts
+#@-node:ekr.20031218072017.2950:c.begin/endUpdate
+#@+node:ekr.20031218072017.2951:c.bringToFront
+def bringToFront(self):
+
+    self.frame.deiconify()
+
+BringToFront = bringToFront # Compatibility with old scripts
 #@nonl
+#@-node:ekr.20031218072017.2951:c.bringToFront
+#@+node:ekr.20060205103842:c.get/request/set_focus
+def get_focus (self):
+    
+    c = self
+    return g.app.gui.get_focus(c)
+    
+def get_requested_focus (self):
+    
+    c = self
+    return c.requestedFocusWidget or c.hasFocusWidget or g.app.gui.get_focus(c)
+    
+def request_focus(self,w):
+
+    c = self
+    if w: c.requestedFocusWidget = w
+    c.traceFocus(w)
+    
+def set_focus (self,w):
+    
+    c = self
+    
+    if 1: # An optimization.
+        c.requestedFocusWidget = w
+        c.masterFocusHandler()
+    
+    else: # Safer, perhaps.
+        c.hasFocusWidget = c.requestedFocusWidget = w
+        g.app.gui.set_focus(c,w)
+#@nonl
+#@-node:ekr.20060205103842:c.get/request/set_focus
+#@+node:ekr.20060210103358:c.invalidateFocus
+def invalidateFocus (self):
+    
+    '''Indicate that the focus is in an invalid location, or is unknown.'''
+    
+    c = self
+    c.requestedFocusWidget = None
+    c.hasFocusWidget = None
+    
+#@-node:ekr.20060210103358:c.invalidateFocus
+#@+node:ekr.20060207140352:c.masterFocusHandler
+def masterFocusHandler (self):
+    
+    c = self ; 
+    trace = not g.app.unitTesting and c.config.getBool('trace_masterFocusHandler')
+    
+    # Give priority to later requests, but default to previously set widget.
+    w = c.requestedFocusWidget or c.hasFocusWidget
+    
+    if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
+        if trace: g.trace('no change.')
+        c.requestedFocusWidget = None
+    elif w:
+        # Ignore whatever g.app.gui.get_focus might say.
+        ok = g.app.gui.set_focus(c,w)
+        if ok: c.hasFocusWidget = w
+        c.requestedFocusWidget = None
+    else:
+        g.trace('*'*20,'oops: moving to body pane.')
+        c.bodyWantsFocusNow()
+
+restoreRequestedFocus = masterFocusHandler
+#@nonl
+#@-node:ekr.20060207140352:c.masterFocusHandler
+#@+node:ekr.20031218072017.2953:c.recolor & requestRecolor
+def recolor(self):
+
+    c = self
+    c.frame.body.recolor(c.currentPosition())
+    
+def requestRecolor (self):
+    
+    c = self
+    c.frame.requestRecolorFlag = True
+#@nonl
+#@-node:ekr.20031218072017.2953:c.recolor & requestRecolor
+#@+node:ekr.20051216171520:c.recolor_now
+def recolor_now(self,p=None,incremental=False):
+
+    c = self
+    if p is None:
+        p = c.currentPosition()
+
+    c.frame.body.colorizer.colorize(p,incremental)
+#@nonl
+#@-node:ekr.20051216171520:c.recolor_now
+#@+node:ekr.20031218072017.2954:c.redraw_now
+def redraw_now (self):
+    
+    c = self
+    
+    if g.app.quitting or not c.exists or not hasattr(c.frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    c.frame.tree.redraw_now()
+    c.frame.top.update_idletasks()
+    
+    if c.frame.requestRecolorFlag:
+        c.frame.requestRecolorFlag = False
+        c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now
+#@nonl
+#@-node:ekr.20031218072017.2954:c.redraw_now
+#@+node:ekr.20060208143543:c.restoreFocus
+def restoreFocus (self):
+    
+    '''Ensure that the focus eventually gets restored.'''
+    
+    c =self
+    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+
+    if c.requestedFocusWidget:
+        c.hasFocusWidget = None # Force an update
+    elif c.hasFocusWidget:
+        c.requestedFocusWidget = c.hasFocusWidget
+        c.hasFocusWidget = None # Force an update
+    else:
+        # Should not happen, except during unit testing.
+        # c.masterFocusHandler sets c.hasFocusWidget,
+        # so if it is not set here it is because this method cleared it.
+        if not g.app.unitTesting: g.trace('oops: no requested or present widget.')
+        c.bodyWantsFocusNow()
+    
+    if c.inCommand:
+        if trace: g.trace('expecting later call to c.masterFocusHandler')
+        pass # A call to c.masterFocusHandler will surely happen.
+    else:
+        c.masterFocusHandler() # Do it now.
+#@nonl
+#@-node:ekr.20060208143543:c.restoreFocus
+#@+node:ekr.20060207142332:c.traceFocus
+trace_focus_count = 0
+
+def traceFocus (self,w):
+    
+    c = self
+
+    if not g.app.unitTesting and c.config.getBool('trace_focus'):
+        c.trace_focus_count += 1
+        g.trace('%4d' % (c.trace_focus_count),
+            c.widget_name(w),g.callers(8))
+#@nonl
+#@-node:ekr.20060207142332:c.traceFocus
+#@+node:ekr.20060205111103:c.widget_name
+def widget_name (self,widget):
+    
+    c = self
+    
+    return c.gui.widget_name(widget)
+#@nonl
+#@-node:ekr.20060205111103:c.widget_name
+#@+node:ekr.20050120092028:c.xWantsFocus
+def bodyWantsFocus(self):
+    c = self ; body = c.frame.body
+    c.request_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocus(self,p):
+    c = self
+    c.request_focus(p and p.edit_widget())
+    
+def logWantsFocus(self):
+    c = self ; log = c.frame.log
+    c.request_focus(log and log.logCtrl)
+    
+def minibufferWantsFocus(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocus()
+    
+def treeWantsFocus(self):
+    c = self ; tree = c.frame.tree
+    c.request_focus(tree and tree.canvas)
+    
+def widgetWantsFocus(self,w):
+    c = self ; c.request_focus(w)
+#@nonl
+#@-node:ekr.20050120092028:c.xWantsFocus
+#@+node:ekr.20060210102201:c.xWantsFocusNow
+def bodyWantsFocusNow(self):
+    c = self ; body = c.frame.body
+    c.set_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocusNow(self,p):
+    c = self
+    c.set_focus(p and p.edit_widget())
+    
+def logWantsFocusNow(self):
+    c = self ; log = c.frame.log
+    c.set_focus(log and log.logCtrl)
+
+def minibufferWantsFocusNow(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocusNow()
+    
+def treeWantsFocusNow(self):
+    c = self ; tree = c.frame.tree
+    c.set_focus(tree and tree.canvas)
+    
+def widgetWantsFocusNow(self,w):
+    c = self ; c.set_focus(w)
+#@-node:ekr.20060210102201:c.xWantsFocusNow
+#@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
+#@+node:ekr.20051018061932:Tab (TkLog)
+#@+node:ekr.20051017212057:clearTab
+def clearTab (self,tabName):
+    
+    self.selectTab(tabName)
+    t = self.logCtrl
+    t and t.delete('1.0','end')
+#@nonl
+#@-node:ekr.20051017212057:clearTab
+#@+node:ekr.20051024173701:createTab
+def createTab (self,tabName):
+    
+    c = self.c ; k = c.k
+    tabFrame = self.nb.add(tabName)
+    self.menu = self.makeTabMenu(tabName)
+    << Create the tab's text widget >>
+
+    if tabName != 'Log':
+        # c.k doesn't exist when the log pane is created.
+        # k.makeAllBindings will call setTabBindings('Log')
+        self.setTabBindings(tabName)
+#@nonl
+#@+node:ekr.20051018072306:<< Create the tab's text widget >>
+t = self.createTextWidget(tabFrame)
+
+# Set the background color.
+configName = 'log_pane_%s_tab_background_color' % tabName
+bg = c.config.getColor(configName) or 'MistyRose1'
+try: t.configure(bg=bg)
+except Exception: pass # Could be a user error.
+
+self.SetWidgetFontFromConfig(logCtrl=t)
+
+self.frameDict [tabName] = tabFrame
+self.textDict [tabName] = t
+
+# Switch to a new colorTags list.
+if self.tabName:
+    self.colorTagsDict [self.tabName] = self.colorTags [:]
+
+self.colorTags = ['black']
+self.colorTagsDict [tabName] = self.colorTags
+#@nonl
+#@-node:ekr.20051018072306:<< Create the tab's text widget >>
+#@-node:ekr.20051024173701:createTab
+#@+node:ekr.20051018102027:deleteTab
+def deleteTab (self,tabName):
+    
+    if tabName == 'Log':
+        pass
+
+    elif tabName in ('Find','Spell'):
+        self.selectTab('Log')
+    
+    elif tabName in self.nb.pagenames():
+        self.nb.delete(tabName)
+        self.colorTagsDict [tabName] = []
+        self.textDict [tabName] = None
+        self.frameDict [tabName] = None
+        self.tabName = None
+        self.selectTab('Log')
+        
+    # New in Leo 4.4b1.
+    self.c.invalidateFocus()
+    self.c.bodyWantsFocus()
+    
+#@nonl
+#@-node:ekr.20051018102027:deleteTab
+#@+node:ekr.20060204124347:hideTab
+def hideTab (self,tabName):
+    
+    __pychecker__ = '--no-argsused' # tabName
+    
+    self.selectTab('Log')
+#@nonl
+#@-node:ekr.20060204124347:hideTab
+#@+node:ekr.20051027114433:getSelectedTab
+def getSelectedTab (self):
+    
+    return self.tabName
+#@nonl
+#@-node:ekr.20051027114433:getSelectedTab
+#@+node:ekr.20051018061932.1:lower/raiseTab
+def lowerTab (self,tabName):
+    
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='grey80')
+    self.c.invalidateFocus()
+    self.c.bodyWantsFocus()
+
+def raiseTab (self,tabName):
+
+    if tabName:
+        b = self.nb.tab(tabName) # b is a Tk.Button.
+        b.config(bg='LightSteelBlue1')
+    self.c.invalidateFocus()
+    self.c.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20051018061932.1:lower/raiseTab
+#@+node:ekr.20051019170806:renameTab
+def renameTab (self,oldName,newName):
+    
+    label = self.nb.tab(oldName)
+    label.configure(text=newName)
+#@nonl
+#@-node:ekr.20051019170806:renameTab
+#@+node:ekr.20051016101724.1:selectTab
+def selectTab (self,tabName):
+
+    '''Create the tab if necessary and make it active.'''
+
+    c = self.c ; tabFrame = self.frameDict.get(tabName)
+
+    if tabFrame:
+        # Switch to a new colorTags list.
+        newColorTags = self.colorTagsDict.get(tabName)
+        self.colorTagsDict [self.tabName] = self.colorTags [:]
+        self.colorTags = newColorTags
+    else:
+        self.createTab(tabName)
+        
+    self.nb.selectpage(tabName)
+    # Update the status vars.
+    self.tabName = tabName
+    self.logCtrl = self.textDict.get(tabName)
+    self.tabFrame = self.frameDict.get(tabName)
+
+    return tabFrame
+#@nonl
+#@-node:ekr.20051016101724.1:selectTab
+#@+node:ekr.20051022162730:setTabBindings
+def setTabBindings (self,tabName):
+    
+    c = self.c ; k = c.k
+    tab = self.nb.tab(tabName)
+    text = self.textDict.get(tabName)
+    
+    # Send all event in the text area to the master handlers.
+    for kind,handler in (
+        ('<Key>',       k.masterKeyHandler),
+        ('<Button-1>',  k.masterClickHandler),
+        ('<Button-3>',  k.masterClick3Handler),
+    ):
+        text.bind(kind,handler)
+    
+    # Clicks in the tab area are harmless: use the old code.
+    def tabMenuRightClickCallback(event,menu=self.menu):
+        g.trace()
+        self.onRightClick(event,menu)
+        
+    def tabMenuClickCallback(event,tabName=tabName):
+        g.trace()
+        self.onClick(event,tabName)
+    
+    tab.bind('<Button-1>',tabMenuClickCallback)
+    tab.bind('<Button-3>',tabMenuRightClickCallback)
+#@nonl
+#@-node:ekr.20051022162730:setTabBindings
+#@+node:ekr.20051019134106:Tab menu callbacks & helpers
+#@+node:ekr.20051019134422:onRightClick & onClick
+def onRightClick (self,event,menu):
+    
+    c = self.c
+    menu.post(event.x_root,event.y_root)
+    
+    
+def onClick (self,event,tabName):
+
+    self.selectTab(tabName)
+#@nonl
+#@-node:ekr.20051019134422:onRightClick & onClick
+#@+node:ekr.20051019140004.1:newTabFromMenu
+def newTabFromMenu (self,tabName='Log'):
+
+    self.selectTab(tabName)
+    
+    # This is called by getTabName.
+    def selectTabCallback (newName):
+        self.selectTab(newName)
+
+    self.getTabName(selectTabCallback)
+#@nonl
+#@-node:ekr.20051019140004.1:newTabFromMenu
+#@+node:ekr.20051019165401:renameTabFromMenu
+def renameTabFromMenu (self,tabName):
+
+    if tabName in ('Log','Completions'):
+        g.es('can not rename %s tab' % (tabName),color='blue')
+    else:
+        def renameTabCallback (newName):
+            self.renameTab(tabName,newName)
+
+        self.getTabName(renameTabCallback)
+#@nonl
+#@-node:ekr.20051019165401:renameTabFromMenu
+#@+node:ekr.20051019172811:getTabName
+def getTabName (self,exitCallback):
+    
+    canvas = self.nb.component('hull')
+
+    # Overlay what is there!
+    f = Tk.Frame(canvas)
+    f.pack(side='top',fill='both',expand=1)
+    
+    row1 = Tk.Frame(f)
+    row1.pack(side='top',expand=0,fill='x',pady=10)
+    row2 = Tk.Frame(f)
+    row2.pack(side='top',expand=0,fill='x')
+
+    Tk.Label(row1,text='Tab name').pack(side='left')
+
+    e = Tk.Entry(row1,background='white')
+    e.pack(side='left')
+
+    def getNameCallback (event=None):
+        s = e.get().strip()
+        f.pack_forget()
+        if s: exitCallback(s)
+        
+    def closeTabNameCallback (event=None):
+        f.pack_forget()
+        
+    b = Tk.Button(row2,text='Ok',width=6,command=getNameCallback)
+    b.pack(side='left',padx=10)
+    
+    b = Tk.Button(row2,text='Cancel',width=6,command=closeTabNameCallback)
+    b.pack(side='left')
+
+    e.focus_force()
+    e.bind('<Return>',getNameCallback)
+#@nonl
+#@-node:ekr.20051019172811:getTabName
+#@-node:ekr.20051019134106:Tab menu callbacks & helpers
+#@-node:ekr.20051018061932:Tab (TkLog)
+#@+node:ekr.20040803072955.128:tree.select
+#  Do **not** try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    '''Select a node.  Never redraws outline, but may change coloring of individual headlines.'''
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+    if not p or not p.exists(c): return # Not an error.
+    
+    if self.trace_select and not g.app.unitTesting: g.trace(g.callers())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        if old_p:
+            << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # Suppress duplicate call.
+            try: # may fail during initialization.
+                # p is NOT c.currentPosition() here!
+                self.canvas.update_idletasks() # Essential.
+                self.scrollTo(p)
+            except Exception: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    c.setCurrentPosition(p)
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    return 'break' # Supresses unwanted selection.
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >>
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p != p:
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p) # 12/17/04
+
+if old_p.edit_widget():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20040803072955.129:<< unselect the old node >>
+#@+node:ekr.20040803072955.130:<< select the new node >>
+# Bug fix: we must always set this, even if we never edit the node.
+self.revertHeadline = p.headString()
+
+frame.setWrap(p)
+    
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(0,body,s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v and p.v.t.insertSpot != None:
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+    
+# g.trace("select:",p.headString())
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+# c.beadList is the list of nodes for the back and forward commands.
+
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by p and make p the present node.
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+        # New in Leo 4.4: limit this list to 100 items.
+        if 0: # Doesn't work yet.
+            c.beadList = c.beadList [-100:]
+            g.trace('len(c.beadList)',len(c.beadList))
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# The test 'p in c.visitedList' calls p.__cmp__, so this code *is* valid.
+
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+
+# g.trace('len(c.visitedList)',len(c.visitedList))
+# g.trace([z.headString()[:10] for z in c.visitedList]) # don't assign to p!
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+self.setSelectedLabelState(p)
+
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+if self.stayInTree:
+    c.treeWantsFocus()
+else:
+    c.bodyWantsFocus()
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20031218072017.2373:set_focus (app.gui)
+set_focus_count = 0
+
+def set_focus(self,c,w):
+    
+    __pychecker__ = '--no-argsused' # c not used at present.
+    
+    """Put the focus on the widget."""
+    
+    if 0: # Big trace if we have unexpected focus.
+        w2 = c.frame.outerFrame.focus_get()
+        wname = c.widget_name(w2)
+        for s in ('canvas','log','mini','body','head'):
+            if wname.startswith(s): break
+        else:
+            if w2:
+                g.trace('*'*40,'Previous widget',wname)
+                g.trace(repr(w2),g.callers())
+                
+    if not g.app.unitTesting and c.config.getBool('trace_g.app.gui.set_focus'):
+        self.set_focus_count += 1
+        g.trace('%4d %10s' % (self.set_focus_count,c.widget_name(w)),g.callers())
+    
+    if w:
+        try:
+            if 0: # No longer needed.
+                # A call to findTab.bringToFront caused
+                # the focus problems with Pmw.Notebook.
+                w.update()
+
+            # It's possible that the widget doesn't exist now.
+            w.focus_set()
+            return True
+        except Exception:
+            # g.es_exception()
+            return False
+#@nonl
+#@-node:ekr.20031218072017.2373:set_focus (app.gui)
 #@+node:ekr.20031218072017.4059:app.gui.Tkinter.utils
 #@+node:ekr.20031218072017.844:Clipboard (tkGui)
 @
@@ -5967,18 +6630,19 @@ def restore (self,data):
 
     # Don't try to reedit headline.
     c.selectPosition(p)
+    
     if not in_headline:
-
         # Looks good and provides clear indication of failure or termination.
         gui.setSelectionRange(t,insert,insert)
         gui.setInsertPoint(t,insert)
         gui.makeIndexVisible(t,insert)
     
-    # g.trace(c.widget_name(t))
-    # c.widgetWantsFocusNow(t)
+    #g.trace(c.widget_name(t))
     
-    # I prefer always putting the focus in the body.
-    c.bodyWantsFocusNow()
+    if 1: # I prefer always putting the focus in the body.
+        c.bodyWantsFocusNow()
+    else:
+        c.widgetWantsFocusNow(t)
 #@nonl
 #@-node:ekr.20031218072017.3089:restore
 #@+node:ekr.20031218072017.3091:showSuccess
@@ -6010,7 +6674,7 @@ def showSuccess(self,pos,newpos):
         self.wrapPosition = self.p
 #@nonl
 #@-node:ekr.20031218072017.3091:showSuccess
-#@-node:ekr.20060206165304:Fixed find.success bug
+#@-node:ekr.20060206165304:Fixed focus-after-find bugs
 #@+node:ekr.20060208064636:Fixed recent blunder so click in headline works
 #@+node:ekr.20040803072955.127:editLabel
 def editLabel (self,p):
@@ -6384,6 +7048,16 @@ def set_focus (self,w):
         g.app.gui.set_focus(c,w)
 #@nonl
 #@-node:ekr.20060205103842:c.get/request/set_focus
+#@+node:ekr.20060210103358:c.invalidateFocus
+def invalidateFocus (self):
+    
+    '''Indicate that the focus is in an invalid location, or is unknown.'''
+    
+    c = self
+    c.requestedFocusWidget = None
+    c.hasFocusWidget = None
+    
+#@-node:ekr.20060210103358:c.invalidateFocus
 #@+node:ekr.20060207140352:c.masterFocusHandler
 def masterFocusHandler (self):
     
@@ -6486,7 +7160,7 @@ def traceFocus (self,w):
     if not g.app.unitTesting and c.config.getBool('trace_focus'):
         c.trace_focus_count += 1
         g.trace('%4d' % (c.trace_focus_count),
-            c.widget_name(w),g.callers())
+            c.widget_name(w),g.callers(8))
 #@nonl
 #@-node:ekr.20060207142332:c.traceFocus
 #@+node:ekr.20060205111103:c.widget_name
@@ -6497,53 +7171,55 @@ def widget_name (self,widget):
     return c.gui.widget_name(widget)
 #@nonl
 #@-node:ekr.20060205111103:c.widget_name
-#@+node:ekr.20050120092028:c.xWantsFocus/Now
+#@+node:ekr.20050120092028:c.xWantsFocus
 def bodyWantsFocus(self):
     c = self ; body = c.frame.body
     c.request_focus(body and body.bodyCtrl)
     
-def bodyWantsFocusNow(self):
-    c = self ; body = c.frame.body
-    c.set_focus(body and body.bodyCtrl)
-        
 def headlineWantsFocus(self,p):
     c = self
     c.request_focus(p and p.edit_widget())
-    
-def headlineWantsFocusNow(self,p):
-    c = self
-    c.set_focus(p and p.edit_widget())
     
 def logWantsFocus(self):
     c = self ; log = c.frame.log
     c.request_focus(log and log.logCtrl)
     
-def logWantsFocusNow(self):
-    c = self ; log = c.frame.log
-    c.set_focus(log and log.logCtrl)
-
 def minibufferWantsFocus(self):
     c = self ; k = c.k
     k and k.minibufferWantsFocus()
     
-def minibufferWantsFocusNow(self):
-    c = self ; k = c.k
-    k and k.minibufferWantsFocusNow()
-
 def treeWantsFocus(self):
     c = self ; tree = c.frame.tree
     c.request_focus(tree and tree.canvas)
+    
+def widgetWantsFocus(self,w):
+    c = self ; c.request_focus(w)
+#@nonl
+#@-node:ekr.20050120092028:c.xWantsFocus
+#@+node:ekr.20060210102201:c.xWantsFocusNow
+def bodyWantsFocusNow(self):
+    c = self ; body = c.frame.body
+    c.set_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocusNow(self,p):
+    c = self
+    c.set_focus(p and p.edit_widget())
+    
+def logWantsFocusNow(self):
+    c = self ; log = c.frame.log
+    c.set_focus(log and log.logCtrl)
+
+def minibufferWantsFocusNow(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocusNow()
     
 def treeWantsFocusNow(self):
     c = self ; tree = c.frame.tree
     c.set_focus(tree and tree.canvas)
     
-def widgetWantsFocus(self,w):
-    c = self ; c.request_focus(w)
-    
 def widgetWantsFocusNow(self,w):
     c = self ; c.set_focus(w)
-#@-node:ekr.20050120092028:c.xWantsFocus/Now
+#@-node:ekr.20060210102201:c.xWantsFocusNow
 #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@+node:ekr.20060120193743:showStateAndMode
 def showStateAndMode(self):
@@ -8086,6 +8762,8 @@ def _addPrefix (self,ntxt):
 #@+node:ekr.20050920084036.72:goto...
 #@+node:ekr.20050929115226:gotoCharacter
 def gotoCharacter (self,event):
+    
+    '''Put the cursor at the n'th character of the buffer.'''
 
     k = self.k ; state = k.getState('goto-char')
 
@@ -8104,6 +8782,8 @@ def gotoCharacter (self,event):
 #@-node:ekr.20050929115226:gotoCharacter
 #@+node:ekr.20050929124234:gotoLine
 def gotoLine (self,event):
+    
+    '''Put the cursor at the n'th line of the buffer.'''
 
     k = self.k ; state = k.getState('goto-line')
     
@@ -9820,6 +10500,16 @@ def set_focus (self,w):
         g.app.gui.set_focus(c,w)
 #@nonl
 #@-node:ekr.20060205103842:c.get/request/set_focus
+#@+node:ekr.20060210103358:c.invalidateFocus
+def invalidateFocus (self):
+    
+    '''Indicate that the focus is in an invalid location, or is unknown.'''
+    
+    c = self
+    c.requestedFocusWidget = None
+    c.hasFocusWidget = None
+    
+#@-node:ekr.20060210103358:c.invalidateFocus
 #@+node:ekr.20060207140352:c.masterFocusHandler
 def masterFocusHandler (self):
     
@@ -9922,7 +10612,7 @@ def traceFocus (self,w):
     if not g.app.unitTesting and c.config.getBool('trace_focus'):
         c.trace_focus_count += 1
         g.trace('%4d' % (c.trace_focus_count),
-            c.widget_name(w),g.callers())
+            c.widget_name(w),g.callers(8))
 #@nonl
 #@-node:ekr.20060207142332:c.traceFocus
 #@+node:ekr.20060205111103:c.widget_name
@@ -9933,53 +10623,55 @@ def widget_name (self,widget):
     return c.gui.widget_name(widget)
 #@nonl
 #@-node:ekr.20060205111103:c.widget_name
-#@+node:ekr.20050120092028:c.xWantsFocus/Now
+#@+node:ekr.20050120092028:c.xWantsFocus
 def bodyWantsFocus(self):
     c = self ; body = c.frame.body
     c.request_focus(body and body.bodyCtrl)
     
-def bodyWantsFocusNow(self):
-    c = self ; body = c.frame.body
-    c.set_focus(body and body.bodyCtrl)
-        
 def headlineWantsFocus(self,p):
     c = self
     c.request_focus(p and p.edit_widget())
-    
-def headlineWantsFocusNow(self,p):
-    c = self
-    c.set_focus(p and p.edit_widget())
     
 def logWantsFocus(self):
     c = self ; log = c.frame.log
     c.request_focus(log and log.logCtrl)
     
-def logWantsFocusNow(self):
-    c = self ; log = c.frame.log
-    c.set_focus(log and log.logCtrl)
-
 def minibufferWantsFocus(self):
     c = self ; k = c.k
     k and k.minibufferWantsFocus()
     
-def minibufferWantsFocusNow(self):
-    c = self ; k = c.k
-    k and k.minibufferWantsFocusNow()
-
 def treeWantsFocus(self):
     c = self ; tree = c.frame.tree
     c.request_focus(tree and tree.canvas)
+    
+def widgetWantsFocus(self,w):
+    c = self ; c.request_focus(w)
+#@nonl
+#@-node:ekr.20050120092028:c.xWantsFocus
+#@+node:ekr.20060210102201:c.xWantsFocusNow
+def bodyWantsFocusNow(self):
+    c = self ; body = c.frame.body
+    c.set_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocusNow(self,p):
+    c = self
+    c.set_focus(p and p.edit_widget())
+    
+def logWantsFocusNow(self):
+    c = self ; log = c.frame.log
+    c.set_focus(log and log.logCtrl)
+
+def minibufferWantsFocusNow(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocusNow()
     
 def treeWantsFocusNow(self):
     c = self ; tree = c.frame.tree
     c.set_focus(tree and tree.canvas)
     
-def widgetWantsFocus(self,w):
-    c = self ; c.request_focus(w)
-    
 def widgetWantsFocusNow(self,w):
     c = self ; c.set_focus(w)
-#@-node:ekr.20050120092028:c.xWantsFocus/Now
+#@-node:ekr.20060210102201:c.xWantsFocusNow
 #@-node:ekr.20031218072017.2949:Drawing Utilities (commands)
 #@+node:ekr.20031218072017.3971:Event handlers (tkFrame)
 #@+node:ekr.20031218072017.3972:frame.OnCloseLeoEvent
@@ -10282,6 +10974,88 @@ masterDoubleClick3Handler   = masterClickHandler
 #@nonl
 #@-node:ekr.20060129052538.2:masterClickHandler
 #@-node:ekr.20060116083359.1:expand/contract/hide-pane commands
+#@+node:ekr.20060209144933:Fixed bug in k.shortcutFromSetting
+# Made sure bindings can end in '+' and '-'
+#@nonl
+#@+node:ekr.20060128081317:shortcutFromSetting
+def shortcutFromSetting (self,setting):
+
+    if not setting:
+        return None
+
+    s = setting.strip()
+    << define cmd, ctrl, alt, shift >>
+    << convert minus signs to plus signs >>
+    << compute the last field >>
+    << compute shortcut >>
+    return shortcut
+    
+canonicalizeShortcut = shortcutFromSetting # For compatibility.
+strokeFromSetting    = shortcutFromSetting
+#@nonl
+#@+node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
+s2 = s.lower()
+
+cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+alt   = s2.find("alt") >= 0
+shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
+
+if sys.platform == "darwin":
+    if ctrl and not cmd:
+        cmd = True ; ctrl = False
+    if alt and not ctrl:
+        ctrl = True ; alt = False
+#@nonl
+#@-node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
+#@+node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+# Replace all minus signs by plus signs, except a trailing minus:
+if s.endswith('-'):
+    s = s[:-1].replace('-','+') + '-'
+else:
+    s = s.replace('-','+')
+#@nonl
+#@-node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+#@+node:ekr.20060128103640.2:<< compute the last field >>
+if s.endswith('+'):
+    last = '+'
+else:
+    fields = s.split('+') # Don't lower this field.
+    last = fields and fields[-1]
+    if not last:
+        if not g.app.menuWarningsGiven:
+            print "bad shortcut specifier:", s
+        return None
+
+if len(last) == 1:
+    if shift:
+        last = last.upper()
+        shift = False
+    else:
+        last = last.lower()
+else:
+    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+    # This is a *one-way* translation, done only here.
+    d = self.settingsNameDict
+    last = d.get(last.lower(),last)
+#@nonl
+#@-node:ekr.20060128103640.2:<< compute the last field >>
+#@+node:ekr.20060128103640.4:<< compute shortcut >>
+table = (
+    (alt, 'Alt+'),
+    (ctrl,'Ctrl+'),
+    (cmd, 'Cmnd+'),
+    (shift,'Shift+'),
+    (True,last),
+)
+    
+shortcut = ''.join([val for flag,val in table if flag])
+#@nonl
+#@-node:ekr.20060128103640.4:<< compute shortcut >>
+#@-node:ekr.20060128081317:shortcutFromSetting
+#@-node:ekr.20060209144933:Fixed bug in k.shortcutFromSetting
+#@+node:ekr.20060210071428:Fixed vim plugin & openWith
+#@-node:ekr.20060210071428:Fixed vim plugin & openWith
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
