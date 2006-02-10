@@ -2009,17 +2009,15 @@ class keyHandlerClass:
         #@nl
         #@    << compute the last field >>
         #@+node:ekr.20060128103640.2:<< compute the last field >>
-        fields = s.split('+') # Don't lower this field.
-        if not fields:
-            if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s
-            return None,None
-        
-        last = fields[-1]
-        if not last:
-            if not g.app.menuWarningsGiven:
-                print "bad shortcut specifier:", s
-            return None,None
+        if s.endswith('+'):
+            last = '+'
+        else:
+            fields = s.split('+') # Don't lower this field.
+            last = fields and fields[-1]
+            if not last:
+                if not g.app.menuWarningsGiven:
+                    print "bad shortcut specifier:", s
+                return None
         
         if len(last) == 1:
             if shift:
