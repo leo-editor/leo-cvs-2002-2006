@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9073" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9074" clone_windows="0"/>
 <globals body_outline_ratio="0.480459770115">
 	<global_window_position top="25" left="452" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -13,7 +13,8 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"
+marks="ekr.20051022142249,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -133,15 +134,17 @@
 <v t="ekr.20060205105950"><vh>setupChangePattern</vh></v>
 <v t="ekr.20060125091234"><vh>setupSearchPattern</vh></v>
 </v>
+<v t="ekr.20060210164421"><vh>addFindStringToLabel</vh></v>
+<v t="ekr.20060210180352"><vh>addChangeStringToLabel</vh></v>
 <v t="ekr.20060124134356"><vh> setupArgs</vh></v>
 <v t="ekr.20060209064140"><vh>findAll</vh></v>
 <v t="ekr.20060128080201"><vh>cloneFindAll</vh></v>
 <v t="ekr.20060204120158"><vh>findAgain</vh></v>
+<v t="ekr.20060210173041"><vh>stateZeroHelper</vh></v>
+<v t="ekr.20060210174441"><vh>lastStateHelper</vh></v>
 <v t="ekr.20060205105950.1"><vh>generalChangeHelper</vh></v>
 <v t="ekr.20060124181213.4"><vh>generalSearchHelper</vh></v>
-<v t="ekr.20050920084036.113"><vh>replaceString</vh>
-<v t="ekr.20050920084036.114"><vh>&lt;&lt; do the replace &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20050920084036.113"><vh>replaceString</vh></v>
 <v t="ekr.20060124140224.3"><vh>reSearchBackward/Forward</vh></v>
 <v t="ekr.20060124140224.1"><vh>seachForward/Backward</vh></v>
 <v t="ekr.20060125093807"><vh>searchWithPresentOptions</vh></v>
@@ -591,6 +594,14 @@
 <v t="ekr.20050920084036.145"><vh>changePreviousWord</vh></v>
 <v t="ekr.20051015114221.1"><vh>capitalizeHelper</vh></v>
 </v>
+<v t="ekr.20051022142249" a="M"><vh>clicks and focus (editCommandsClass)</vh>
+<v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
+<v t="ekr.20051022144825"><vh>focusTo...</vh></v>
+<v t="ekr.20060211063744.1"><vh>clicks in the headline</vh></v>
+<v t="ekr.20060211055455"><vh>clicks in the icon box</vh></v>
+<v t="ekr.20060211062025"><vh>clickClickBox</vh></v>
+<v t="ekr.20060211063744.2"><vh>simulate...Drag</vh></v>
+</v>
 <v t="ekr.20051019183105"><vh>color &amp; font</vh>
 <v t="ekr.20051019183105.1"><vh>show-colors</vh>
 <v t="ekr.20051019183105.2"><vh>&lt;&lt; define colors &gt;&gt;</vh></v>
@@ -627,9 +638,6 @@
 <v t="ekr.20050920084036.64"><vh>escEvaluate (Revise)</vh></v>
 </v>
 <v t="ekr.20050920084036.65"><vh>evalExpression</vh></v>
-<v t="ekr.20051022142249"><vh>focus (editCommandsClass)</vh>
-<v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
-</v>
 <v t="ekr.20050920084036.66"><vh>fill column and centering</vh>
 <v t="ekr.20050920084036.67"><vh>centerLine</vh></v>
 <v t="ekr.20050920084036.68"><vh>setFillColumn</vh></v>
@@ -845,6 +853,264 @@
 </v>
 <v t="ekr.20051218122116"><vh>moveToHelper</vh></v>
 </v>
+<v t="ekr.20060210145627"><vh>Copy find text into minibuffer for search commands</vh>
+<v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
+<v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
+<v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
+<v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
+</v>
+<v t="ekr.20031218072017.4060"><vh>Dialog</vh>
+<v t="ekr.20031218072017.4061"><vh>get_window_info</vh></v>
+<v t="ekr.20031218072017.4062"><vh>center_dialog</vh></v>
+<v t="ekr.20031218072017.4063"><vh>create_labeled_frame</vh></v>
+</v>
+<v t="ekr.20031218072017.4064"><vh>Focus</vh>
+<v t="ekr.20031218072017.4065"><vh>get_focus</vh></v>
+<v t="ekr.20031218072017.2373"><vh>set_focus (app.gui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4066"><vh>Font</vh>
+<v t="ekr.20031218072017.2187"><vh>tkGui.getFontFromParams</vh></v>
+</v>
+<v t="ekr.20031218072017.4067"><vh>Icons</vh>
+<v t="ekr.20031218072017.4068"><vh>attachLeoIcon &amp; createLeoIcon</vh>
+<v t="ekr.20031218072017.4069"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.4070"><vh>createLeoIcon</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.4071"><vh>Idle Time</vh>
+<v t="ekr.20031218072017.4072"><vh>tkinterGui.setIdleTimeHook</vh></v>
+<v t="ekr.20031218072017.4073"><vh>setIdleTimeHookAfterDelay</vh></v>
+</v>
+<v t="ekr.20031218072017.4074"><vh>Indices (Tk)</vh>
+<v t="ekr.20031218072017.4075"><vh>firstIndex</vh></v>
+<v t="ekr.20031218072017.4076"><vh>lastIndex</vh></v>
+<v t="ekr.20031218072017.4077"><vh>moveIndexBackward</vh></v>
+<v t="ekr.20031218072017.4078"><vh>moveIndexForward &amp; moveIndexToNextLine</vh></v>
+<v t="ekr.20031218072017.4079"><vh>compareIndices</vh></v>
+<v t="ekr.20031218072017.4080"><vh>getindex</vh></v>
+</v>
+<v t="ekr.20031218072017.4081"><vh>Insert Point</vh>
+<v t="ekr.20031218072017.4082"><vh>getInsertPoint</vh></v>
+<v t="ekr.20031218072017.4083"><vh>setInsertPoint</vh></v>
+</v>
+<v t="ekr.20031218072017.4084"><vh>Selection</vh>
+<v t="ekr.20031218072017.4085"><vh>getSelectionRange</vh></v>
+<v t="ekr.20051126125950"><vh>getSelectedText</vh></v>
+<v t="ekr.20031218072017.4086"><vh>getTextSelection</vh></v>
+<v t="ekr.20051126171929"><vh>hasSelection</vh></v>
+<v t="ekr.20031218072017.4088"><vh>setSelectionRangeWithLength</vh></v>
+<v t="ekr.20031218072017.4089"><vh>setTextSelection &amp; setSelectionRange</vh></v>
+</v>
+<v t="ekr.20031218072017.4090"><vh>Text</vh>
+<v t="ekr.20031218072017.4091"><vh>getAllText</vh></v>
+<v t="ekr.20031218072017.4092"><vh>getCharAfterIndex</vh></v>
+<v t="ekr.20031218072017.4093"><vh>getCharAtIndex</vh></v>
+<v t="ekr.20031218072017.4094"><vh>getCharBeforeIndex</vh></v>
+<v t="ekr.20031218072017.4095"><vh>getLineContainingIndex</vh></v>
+<v t="ekr.20031218072017.4096"><vh>replaceSelectionRangeWithText (leoTkinterGui)</vh></v>
+</v>
+<v t="ekr.20031218072017.4097"><vh>Visibility</vh>
+<v t="ekr.20031218072017.4098"><vh>makeIndexVisible</vh></v>
+</v>
+<v t="ekr.20051220144507"><vh>isTextWidget</vh></v>
+</v>
+<v t="ekr.20060210172035"><vh>From keyHandler</vh>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+</v>
+<v t="ekr.20050924064254"><vh>Label...</vh>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus/Now</vh></v>
+<v t="ekr.20051023132350"><vh>getLabel</vh></v>
+<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
+<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
+<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
+<v t="ekr.20060206064635"><vh>extendLabel</vh></v>
+<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
+<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
+<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
+<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
+</v>
+<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
+<v t="ekr.20050920085536.62"><vh>getArg</vh>
+<v t="ekr.20050928092516"><vh>&lt;&lt; init altX vars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060206064635"><vh>extendLabel</vh></v>
+<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
+<v t="ekr.20050920085536.46"><vh>doBackSpace</vh></v>
+<v t="ekr.20050920085536.44"><vh>doTabCompletion</vh></v>
+</v>
+<v t="ekr.20060125093807"><vh>searchWithPresentOptions</vh></v>
+<v t="ekr.20060210164421"><vh>addFindStringToLabel</vh></v>
+<v t="ekr.20051023094009"><vh>Search classes</vh>
+<v t="ekr.20060123125256"><vh>class minibufferFind (the findHandler)</vh>
+<v t="ekr.20060123125317.2"><vh> ctor (minibufferFind)</vh></v>
+<v t="ekr.20060124140114"><vh> Options</vh>
+<v t="ekr.20060124123133"><vh>setFindScope</vh></v>
+<v t="ekr.20060124122844"><vh>setOption</vh></v>
+<v t="ekr.20060125082510"><vh>getOption</vh></v>
+<v t="ekr.20060125074939"><vh>showFindOptions</vh></v>
+<v t="ekr.20060124135401"><vh>toggleOption</vh></v>
+<v t="ekr.20060205105950"><vh>setupChangePattern</vh></v>
+<v t="ekr.20060125091234"><vh>setupSearchPattern</vh></v>
+</v>
+<v t="ekr.20060210164421"><vh>addFindStringToLabel</vh></v>
+<v t="ekr.20060210180352"><vh>addChangeStringToLabel</vh></v>
+<v t="ekr.20060124134356"><vh> setupArgs</vh></v>
+<v t="ekr.20060209064140"><vh>findAll</vh></v>
+<v t="ekr.20060128080201"><vh>cloneFindAll</vh></v>
+<v t="ekr.20060204120158"><vh>findAgain</vh></v>
+<v t="ekr.20060210173041"><vh>stateZeroHelper</vh></v>
+<v t="ekr.20060210174441"><vh>lastStateHelper</vh></v>
+<v t="ekr.20060205105950.1"><vh>generalChangeHelper</vh></v>
+<v t="ekr.20060124181213.4"><vh>generalSearchHelper</vh></v>
+<v t="ekr.20050920084036.113"><vh>replaceString</vh></v>
+<v t="ekr.20060124140224.3"><vh>reSearchBackward/Forward</vh></v>
+<v t="ekr.20060124140224.1"><vh>seachForward/Backward</vh></v>
+<v t="ekr.20060125093807"><vh>searchWithPresentOptions</vh></v>
+<v t="ekr.20060124140224.2"><vh>wordSearchBackward/Forward</vh></v>
+</v>
+<v t="ekr.20051020120306.6"><vh>class findTab (leoFind.leoFind)</vh>
+<v t="ekr.20051020120306.10"><vh>Birth &amp; death</vh>
+<v t="ekr.20051020120306.11"><vh>__init__</vh>
+<v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
+<v t="ekr.20051020120306.13"><vh>createFrame (findTab)</vh>
+<v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
+<v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
+<v t="ekr.20051020120306.16"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020120306.17"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20051020120306.18"><vh>&lt;&lt; Create two columns of buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020120306.19"><vh>find.init</vh>
+<v t="ekr.20051020120306.20"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
+<v t="ekr.20051020120306.21"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20051020120306.22"><vh>find.update_ivars</vh></v>
+<v t="ekr.20051023183028"><vh>findButtonCallback</vh></v>
+<v t="ekr.20051024192602"><vh> Top level</vh>
+<v t="ekr.20060209064832"><vh>findAllCommand</vh></v>
+<v t="ekr.20060204120158.1"><vh>findAgainCommand</vh></v>
+<v t="ekr.20060128075225"><vh>cloneFindAllCommand</vh></v>
+<v t="ekr.20051024192642.2"><vh>findNext/PrefCommand</vh></v>
+<v t="ekr.20051024192642.3"><vh>change/ThenFindCommand</vh></v>
+</v>
+<v t="ekr.20051020120306.25"><vh>hideTab</vh></v>
+<v t="ekr.20051020120306.26"><vh>bringToFront</vh></v>
+<v t="ekr.20051020120306.27"><vh>selectAllFindText</vh></v>
+<v t="ekr.20051020120306.28"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
+<v t="ekr.20051020120306.1"><vh>class underlinedTkButton</vh>
+<v t="ekr.20051020120306.2"><vh>__init__</vh>
+<v t="ekr.20051020120306.3"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051020120306.4"><vh>bindHotKey</vh></v>
+<v t="ekr.20051020120306.5"><vh>buttonCallback</vh></v>
+</v>
+</v>
+<v t="ekr.20050920084036.257"><vh>class searchCommandsClass</vh>
+<v t="ekr.20050920084036.258"><vh> ctor</vh></v>
+<v t="ekr.20050920084036.259"><vh>getPublicCommands (searchCommandsClass)</vh></v>
+<v t="ekr.20060123131421"><vh>Top-level methods</vh>
+<v t="ekr.20051020120306"><vh>openFindTab</vh></v>
+<v t="ekr.20051022212004"><vh>Find Tab commands</vh></v>
+<v t="ekr.20060124115801"><vh>getHandler</vh></v>
+<v t="ekr.20060123115459"><vh>Find options wrappers</vh></v>
+<v t="ekr.20060124093828"><vh>Find wrappers</vh></v>
+<v t="ekr.20060204120158.2"><vh>findAgain</vh></v>
+</v>
+<v t="ekr.20050920084036.261"><vh>incremental search...</vh>
+<v t="ekr.20050920084036.262"><vh>startIncremental</vh></v>
+<v t="ekr.20050920084036.264"><vh>iSearchStateHandler &amp; helper</vh></v>
+<v t="ekr.20050920084036.265"><vh>scolorizer</vh></v>
+<v t="ekr.20050920084036.263"><vh>iSearchHelper</vh></v>
+<v t="ekr.20060203072636"><vh>endSearch</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.792"><vh>Added commands to simulate clicks</vh>
+<v t="ekr.20060211065245"><vh>What I did</vh></v>
+<v t="ekr.20050920084036.55"><vh> getPublicCommands (editCommandsClass)</vh></v>
+<v t="ekr.20060211061217"><vh>Tree event handlers that trigger hooks</vh>
+<v t="ekr.20040803072955.80"><vh>Icon Box...</vh>
+<v t="ekr.20040803072955.81"><vh>onIconBoxClick</vh></v>
+<v t="ekr.20040803072955.89"><vh>onIconBoxRightClick</vh></v>
+<v t="ekr.20040803072955.82"><vh>onIconBoxDoubleClick</vh></v>
+</v>
+<v t="ekr.20040803072955.79"><vh>onClickBoxClick</vh></v>
+<v t="ekr.20040803072955.99"><vh>Dragging</vh>
+<v t="ekr.20041111115908"><vh>endDrag</vh>
+<v t="ekr.20040803072955.104"><vh>&lt;&lt; set vdrag, childFlag &gt;&gt;</vh></v>
+<v t="ekr.20041111114148"><vh>&lt;&lt; drag p to vdrag &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041111114944"><vh>startDrag</vh></v>
+<v t="ekr.20040803072955.100"><vh>onContinueDrag</vh>
+<v t="ekr.20040803072955.101"><vh>&lt;&lt; scroll the canvas as needed &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.102"><vh>onDrag</vh></v>
+<v t="ekr.20040803072955.103"><vh>onEndDrag</vh></v>
+</v>
+<v t="ekr.20040803072955.87"><vh>onHeadlineClick</vh></v>
+<v t="ekr.20040803072955.83"><vh>onHeadlineRightClick</vh></v>
+</v>
+<v t="ekr.20051022142249"><vh>clicks and focus (editCommandsClass)</vh>
+<v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
+<v t="ekr.20051022144825"><vh>focusTo...</vh></v>
+<v t="ekr.20060211063744.1"><vh>clicks in the headline</vh></v>
+<v t="ekr.20060211055455"><vh>clicks in the icon box</vh></v>
+<v t="ekr.20060211062025"><vh>clickClickBox</vh></v>
+<v t="ekr.20060211063744.2"><vh>simulate...Drag</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
+<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (1+2+2)</vh>
+<v t="ekr.20060211071114"><vh>Clicks are not handled properly in the minibuffer</vh></v>
+<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh>
+<v t="ekr.20060210133835"><vh>prototype of menu post commands</vh></v>
+<v t="ekr.20060210133835.1"><vh>computeMenuPositions</vh></v>
+</v>
+<v t="ekr.20060206103531"><vh>(maybe) select-find-tab-find-text &amp; select-find-tab-change-text</vh></v>
+<v t="ekr.20060209105218.2"><vh>(maybe) contract-all-except-present-tree</vh></v>
+</v>
+<v t="ekr.20060122183914"><vh>Fix minor bugs 10</vh>
+<v t="ekr.20060210180603"><vh>Multiple pastes into find tab</vh></v>
+<v t="ekr.20060206131908"><vh>pasteText (with empty text?) crashed when pasting into minibuffer</vh></v>
+<v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
+<v t="ekr.20060206113925"><vh>Make sure yield works with Python 2.2</vh></v>
+<v t="ekr.20060206113925.1"><vh>Fix problem with body_gmt_time setting</vh></v>
+<v t="ekr.20060121101642"><vh>Make sure save updates the open directory</vh></v>
+<v t="ekr.20050707085637"><vh>Suggestions from an emacs user 3</vh>
+<v t="ekr.20060116082302.1"><vh>Use os.getenv('User") if it exists to get initial cvs name</vh></v>
+<v t="ekr.20060116083043"><vh>Two help menus on the Mac</vh></v>
+<v t="ekr.20060116083043.1"><vh>Add context-menus on nodes or text</vh></v>
+</v>
+<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
+<v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
+</v>
+<v t="ekr.20060209053234"><vh>What's new in b2</vh>
+<v t="ekr.20060210111310"><vh>Unification of all calling sequences</vh></v>
+<v t="ekr.20060210105733"><vh>New debugging settings in leosettings.leo</vh></v>
+<v t="ekr.20060205170335.1"><vh>aproposFindCommands</vh>
+<v t="ekr.20060209082023.1"><vh>&lt;&lt; define s &gt;&gt;</vh></v>
+<v t="ekr.20060205170552"><vh>test_apropos_find_commands</vh></v>
+</v>
+<v t="ekr.20060206104722"><vh>Modes may inherit bindings</vh></v>
+<v t="ekr.20060209140942"><vh>New commands not in legacy Leo</vh>
+<v t="ekr.20060210131047"><vh>expand/contract/hide/fully-expand-pane</vh></v>
+<v t="ekr.20060210131120"><vh>activate-xxx-menu (todo)</vh></v>
+<v t="ekr.20060210131120.1"><vh>minibuffer find commands</vh></v>
+</v>
+<v t="ekr.20060209201859"><vh>How to design and use modes</vh></v>
+</v>
+<v t="ekr.20060210201454"><vh>Distribution</vh>
+<v t="ekr.20060210123709"><vh>Fix Alt-key issue on Linux</vh></v>
+<v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
+<v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
+<v t="ekr.20060210132142"><vh>Bindings to set search scope and toggle word &amp; case options</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -896,61 +1162,11 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20050710142719"><vh>@thin leoEditCommands.py</vh></v>
-</v>
-<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
-<v t="ekr.20060210121150"><vh>Posting: big and urgent</vh></v>
-<v t="ekr.20060210123709"><vh>Fix Alt-key issue on Linux</vh></v>
-<v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
-<v t="ekr.20060210132142"><vh>Bindings to set search scope and toggle word &amp; case options</vh></v>
-<v t="ekr.20060122183914.1"><vh>Urgent commands for mouseless Leo (1+2+2)</vh>
-<v t="ekr.20060210145627"><vh>Copy find text into minibuffer for search commands</vh>
-<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
-<v t="ekr.20060125093807"><vh>searchWithPresentOptions</vh></v>
-</v>
-<v t="ekr.20060209042734.1"><vh>Add click commands &amp; convenience methods</vh>
-<v t="ekr.20031218072017.792"><vh>Double Click Node command</vh></v>
-<v t="ekr.20051221101851.1"><vh>Request</vh></v>
-</v>
-<v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh>
-<v t="ekr.20060210133835"><vh>prototype of menu post commands</vh></v>
-<v t="ekr.20060210133835.1"><vh>computeMenuPositions</vh></v>
-</v>
-<v t="ekr.20060206103531"><vh>(maybe) select-find-tab-find-text &amp; select-find-tab-change-text</vh></v>
-<v t="ekr.20060209105218.2"><vh>(maybe) contract-all-except-present-tree</vh></v>
-</v>
-<v t="ekr.20060122183914"><vh>Fix minor bugs 10</vh>
-<v t="ekr.20060206131908"><vh>pasteText (with empty text?) crashed when pasting into minibuffer</vh></v>
-<v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
-<v t="ekr.20060206113925"><vh>Make sure yield works with Python 2.2</vh></v>
-<v t="ekr.20060206113925.1"><vh>Fix problem with body_gmt_time setting</vh></v>
-<v t="ekr.20060121101642"><vh>Make sure save updates the open directory</vh></v>
-<v t="ekr.20050707085637"><vh>Suggestions from an emacs user 3</vh>
-<v t="ekr.20060116082302.1"><vh>Use os.getenv('User") if it exists to get initial cvs name</vh></v>
-<v t="ekr.20060116083043"><vh>Two help menus on the Mac</vh></v>
-<v t="ekr.20060116083043.1"><vh>Add context-menus on nodes or text</vh></v>
-</v>
-<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
-<v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
-</v>
-<v t="ekr.20060209053234"><vh>What's new in b2</vh>
-<v t="ekr.20060210111310"><vh>Unification of all calling sequences</vh></v>
-<v t="ekr.20060210105733"><vh>New debugging settings in leosettings.leo</vh></v>
-<v t="ekr.20060205170335.1"><vh>aproposFindCommands</vh>
-<v t="ekr.20060209082023.1"><vh>&lt;&lt; define s &gt;&gt;</vh></v>
-<v t="ekr.20060205170552"><vh>test_apropos_find_commands</vh></v>
-</v>
-<v t="ekr.20060206104722"><vh>Modes may inherit bindings</vh></v>
-<v t="ekr.20060209140942"><vh>New commands not in legacy Leo</vh>
-<v t="ekr.20060210131047"><vh>expand/contract/hide/fully-expand-pane</vh></v>
-<v t="ekr.20060210131120"><vh>activate-xxx-menu (todo)</vh></v>
-<v t="ekr.20060210131120.1"><vh>minibuffer find commands</vh></v>
-</v>
-<v t="ekr.20060209201859"><vh>How to design and use modes</vh></v>
-</v>
+<v t="ekr.20050710142719"
+marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2420,6 +2636,7 @@ def moveIndexToNextLine(self,t,index):
 <t tx="ekr.20031218072017.4085">def getSelectionRange (self,t):
     
     try:
+        # Warning: this can return None.
         return t.tag_ranges("sel")
     except Exception:
         return 0,0</t>
@@ -2953,11 +3170,14 @@ edit_text = edit_widget # For compatibility.</t>
     # g.trace(not found',p.headString())
     return None</t>
 <t tx="ekr.20040803072955.78"></t>
-<t tx="ekr.20040803072955.79">def onClickBoxClick (self,event):
+<t tx="ekr.20040803072955.79">def onClickBoxClick (self,event,p=None):
     
     c = self.c ; p1 = c.currentPosition()
+    
+    if not p: p = self.eventToPosition(event)
+    if not p: return
+    
     c.setLog()
-    p = self.eventToPosition(event)
 
     c.beginUpdate()
     try:
@@ -2978,11 +3198,11 @@ edit_text = edit_widget # For compatibility.</t>
     finally:
         c.endUpdate()</t>
 <t tx="ekr.20040803072955.80"></t>
-<t tx="ekr.20040803072955.81">def onIconBoxClick (self,event):
+<t tx="ekr.20040803072955.81">def onIconBoxClick (self,event,p=None):
     
     c = self.c ; tree = self
     
-    p = self.eventToPosition(event)
+    if not p: p = self.eventToPosition(event)
     if not p: return
     
     c.setLog()
@@ -2999,11 +3219,11 @@ edit_text = edit_widget # For compatibility.</t>
     g.doHook("iconclick2",c=c,p=p,v=p,event=event)
         
     return "break" # disable expanded box handling.</t>
-<t tx="ekr.20040803072955.82">def onIconBoxDoubleClick (self,event):
+<t tx="ekr.20040803072955.82">def onIconBoxDoubleClick (self,event,p=None):
     
     c = self.c
 
-    p = self.eventToPosition(event)
+    if not p: p = self.eventToPosition(event)
     if not p: return
     
     c.setLog()
@@ -3062,15 +3282,16 @@ def onControlT (self,event=None):
 
     # If we don't inhibit further processing the Tx.Text widget switches characters!
     return "break"</t>
-<t tx="ekr.20040803072955.87">def onHeadlineClick (self,event):
+<t tx="ekr.20040803072955.87">def onHeadlineClick (self,event,p=None):
     
     c = self.c ; w = event.widget
-
-    try:
-        p = w.leo_position
-    except AttributeError:
-        g.trace('*'*20,'oops')
-        return 'break'
+    
+    if not p:
+        try:
+            p = w.leo_position
+        except AttributeError:
+            g.trace('*'*20,'oops')
+    if not p: return 'break'
         
     # g.trace(p.headString())
     
@@ -3105,16 +3326,14 @@ def onControlT (self,event=None):
 
     return 'break' # Required
 </t>
-<t tx="ekr.20040803072955.89">def onIconBoxRightClick (self,event):
+<t tx="ekr.20040803072955.89">def onIconBoxRightClick (self,event,p=None):
     
     """Handle a right click in any outline widget."""
 
     c = self.c
     
-    p = self.eventToPosition(event)
-    if not p:
-        g.trace('*'*20,'oops')
-        return
+    if not p: p = self.eventToPosition(event)
+    if not p: return
     
     c.setLog()
 
@@ -3346,7 +3565,9 @@ self.active = True</t>
         return None</t>
 <t tx="ekr.20040803072955.110">def OnPopup (self,p,event):
     
-    """Handle right-clicks in the outline."""
+    """Handle right-clicks in the outline.
+    
+    This is *not* an event handler: it is called from other event handlers."""
     
     # Note: "headrclick" hooks handled by vnode callback routine.
 
@@ -3634,22 +3855,24 @@ else: # Just drag p.
 <t tx="ekr.20041111114944"># This precomputes numberOfVisibleNodes(), a significant optimization.
 # We also indicate where findPositionWithIconId() should start looking for tree id's.
 
-def startDrag (self,event):
+def startDrag (self,event,p=None):
     
     """The official helper of the onDrag event handler."""
     
     c = self.c ; canvas = self.canvas
-    c.setLog()
-    assert(not self.drag_p)
-    x = canvas.canvasx(event.x)
-    y = canvas.canvasy(event.y)
-    theId = canvas.find_closest(x,y)
-    # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-    if theId is None: return
-    try: theId = theId[0]
-    except: pass
-    p = self.ids.get(theId)
+    
+    if not p:
+        assert(not self.drag_p)
+        x = canvas.canvasx(event.x)
+        y = canvas.canvasy(event.y)
+        theId = canvas.find_closest(x,y)
+        # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+        if theId is None: return
+        try: theId = theId[0]
+        except: pass
+        p = self.ids.get(theId)
     if not p: return
+    c.setLog()
     self.drag_p = p.copy() # defensive programming: not needed.
     self.dragging = True
     # g.trace("*** start drag ***",theId,self.drag_p.headString())
@@ -4140,6 +4363,9 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
         'center-line':                          self.centerLine,
         'center-region':                        self.centerRegion,
         'clear-extend-mode':                    self.clearExtendMode,
+        'click-click-box':                      self.clickClickBox,
+        'click-headline':                       self.clickHeadline,
+        'click-icon-box':                       self.clickIconBox,
         'contract-body-pane':                   c.frame.contractBodyPane,
         'contract-log-pane':                    c.frame.contractLogPane,
         'contract-outline-pane':                c.frame.contractOutlinePane,
@@ -4153,6 +4379,8 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
         'delete-spaces':                        self.deleteSpaces,
         'downcase-region':                      self.downCaseRegion,
         'downcase-word':                        self.downCaseWord,
+        'double-click-headline':                self.doubleClickHeadline,
+        'double-click-icon-box':                self.doubleClickIconBox,
         'end-of-buffer':                        self.endOfBuffer,
         'end-of-buffer-extend-selection':       self.endOfBufferExtendSelection,
         'end-of-line':                          self.endOfLine,
@@ -4223,7 +4451,8 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
         'set-mark-command':                     self.setRegion,
         'show-colors':                          self.showColors,
         'show-fonts':                           self.showFonts,
-        # 'save-buffer':                        self.saveFile,
+        'simulate-begin-drag':                  self.simulateBeginDrag,
+        'simulate-end-drag':                    self.simulateEndDrag,
         'sort-columns':                         self.sortColumns,
         'sort-fields':                          self.sortFields,
         'sort-lines':                           self.sortLines,
@@ -4895,58 +5124,23 @@ def caseHelper (self,event,way):
     self.removeRKeys(w)</t>
 <t tx="ekr.20050920084036.113">def replaceString (self,event):
 
-    k = self.k ; state = k.getState('replace-string')
+    k = self.k ; tag = 'replace-string' ; state = k.getState(tag)
     pattern_match = self.getOption ('pattern_match')
     prompt = 'Replace ' + g.choose(pattern_match,'Regex','String')
 
     if state == 0:
-        self.widget = event.widget
-        s = '%s: ' % prompt
-        k.setLabelBlue(s,protect=True)
-        k.getArg(event,'replace-string',1,self.replaceString)
+        self.setupArgs(forward=None,regexp=None,word=None)
+        prefix = '%s: ' % prompt
+        self.stateZeroHelper(event,tag,prefix,self.replaceString)
     elif state == 1:
         self._sString = k.arg
         s = '%s: %s With: ' % (prompt,self._sString)
         k.setLabelBlue(s,protect=True)
-        k.getArg(event,'replace-string',2,self.replaceString)
+        self.addChangeStringToLabel()
+        k.getArg(event,'replace-string',2,self.replaceString,completion=False,prefix=s)
     elif state == 2:
-        k.clearState()
-        if 1: # Use the legacy find command.
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalChangeHelper(self._sString,k.arg)
-        else:
-            self._rpString = k.arg ; w = self.widget
-            &lt;&lt; do the replace &gt;&gt;
-            k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
-            self._useRegex = False</t>
-<t tx="ekr.20050920084036.114"># g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
-i = 'insert' ; end = 'end' ; count = 0
-if w.tag_ranges('sel'):
-    i = w.index('sel.first')
-    end = w.index('sel.last')
-if self._useRegex:
-    txt = w.get(i,end)
-    try:
-        pattern = re.compile(self._sString)
-    except:
-        k.keyboardQuit(event)
-        k.setLabel("Illegal regular expression")
-        return
-    count = len(pattern.findall(txt))
-    if count:
-        ntxt = pattern.sub(self._rpString,txt)
-        w.delete(i,end)
-        w.insert(i,ntxt)
-else:
-    # Problem: adds newline at end of text.
-    txt = w.get(i,end)
-    count = txt.count(self._sString)
-    if count:
-        ntxt = txt.replace(self._sString,self._rpString)
-        w.delete(i,end)
-        w.insert(i,ntxt)</t>
+        self.lastStateHelper()
+        self.generalChangeHelper(self._sString,k.arg)</t>
 <t tx="ekr.20050920084036.116">def scrollDown (self,event):
     self.scrollHelper(event,'down',extend=False)
 
@@ -5638,6 +5832,62 @@ def iSearchStateHandler (self,event):
     &lt;&lt; define Tk ivars &gt;&gt;
     &lt;&lt; define externally visible ivars &gt;&gt;
     &lt;&lt; define internal ivars &gt;&gt;</t>
+<t tx="ekr.20050920085536.35">def setLabelGrey (self,label=None):
+
+    k = self ; w = self.widget
+    if not w: return
+    
+    w.configure(background='lightgrey')
+    if label is not None:
+        k.setLabel(label)
+
+setLabelGray = setLabelGrey</t>
+<t tx="ekr.20050920085536.36">def setLabelBlue (self,label=None,protect=False):
+    
+    k = self ; w = k.widget
+    if not w: return
+    
+    w.configure(background='lightblue')
+
+    if label is not None:
+        k.setLabel(label,protect)</t>
+<t tx="ekr.20050920085536.37">def resetLabel (self):
+    
+    k = self
+    k.setLabelGrey('')
+    k.mb_prefix = ''</t>
+<t tx="ekr.20050920085536.38">def updateLabel (self,event,suppressControlChars=True):
+
+    '''Mimic what would happen with the keyboard and a Text editor
+    instead of plain accumalation.'''
+    
+    k = self ; c = k.c ; w = self.widget
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
+
+    # g.trace(ch,keysym,k.stroke)
+    
+    if ch == '\b': # Handle backspace.
+        # Don't backspace over the prompt.
+        if len(s) &lt;= k.mb_prefix:
+            return 
+        elif len(s) == 1: s = ''
+        else: s = s [0:-1]
+    elif suppressControlChars and ch not in string.printable:
+        return
+    elif ch and ch not in ('\n','\r'):
+        if self.useTextWidget:
+            c.widgetWantsFocusNow(w)
+            i,j = g.app.gui.getTextSelection(w)
+            if i != j:
+                w.delete(i,j)
+            i = w.index('insert')
+            w.insert(i,ch)
+            # g.trace(k.mb_prefix)       
+        else:
+            # Just add the character.
+            k.setLabel(k.getLabel() + ch)
+</t>
 <t tx="ekr.20050920085536.41">def fullCommand (self,event,specialStroke=None,specialFunc=None):
     
     '''Handle 'full-command' (alt-x) mode.'''
@@ -5679,6 +5929,27 @@ def iSearchStateHandler (self,event):
         # g.trace('new prefix',k.mb_tabListPrefix)
 
     return 'break'</t>
+<t tx="ekr.20050920085536.44"># Used by getArg and fullCommand.
+
+def doTabCompletion (self,defaultTabList,redraw=True):
+    
+    '''Handle tab completion when the user hits a tab.'''
+    
+    k = self ; c = k.c ; s = k.getLabel().strip()
+    
+    if k.mb_tabList and s.startswith(k.mb_tabListPrefix):
+        # g.trace('cycle',repr(s))
+        # Set the label to the next item on the tab list.
+        k.mb_tabListIndex +=1
+        if k.mb_tabListIndex &gt;= len(k.mb_tabList):
+            k.mb_tabListIndex = 0
+        k.setLabel(k.mb_prompt + k.mb_tabList [k.mb_tabListIndex])
+    else:
+        if redraw:
+            k.computeCompletionList(defaultTabList,backspace=False)
+
+    c.bodyWantsFocus()
+</t>
 <t tx="ekr.20050920085536.45">def callAltXFunction (self,event):
     
     k = self ; c = k.c ; s = k.getLabel()
@@ -5702,6 +5973,70 @@ def iSearchStateHandler (self,event):
             k.keyboardQuit(event)
             k.setLabel('Command does not exist: %s' % commandName)
             c.bodyWantsFocus()</t>
+<t tx="ekr.20050920085536.46"># Used by getArg and fullCommand.
+
+def doBackSpace (self,defaultCompletionList,completion=True):
+
+    '''Cut back to previous prefix and update prefix.'''
+
+    k = self ; c = k.c
+    
+    # g.trace('completion',completion)
+    
+    if completion:
+        if len(k.mb_tabListPrefix) &gt; len(k.mb_prefix):
+            k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
+            k.setLabel(k.mb_tabListPrefix)
+            k.computeCompletionList(defaultCompletionList,backspace=True)
+    else:
+        s = k.getLabel(ignorePrompt=False)
+        # g.trace(repr(s),repr(k.mb_prefix))
+        if s and len(s) &gt; len(k.mb_prefix):
+            k.setLabel(s[:-1])</t>
+<t tx="ekr.20050920085536.62">def getArg (self,event,
+    returnKind=None,returnState=None,handler=None,
+    prefix=None,tabList=None,completion=True):
+    
+    '''Accumulate an argument until the user hits return (or control-g).
+    Enter the given return state when done.
+    The prefix is does not form the arg.  The prefix defaults to the k.getLabel().
+    '''
+
+    k = self ; c = k.c ; state = k.getState('getArg')
+    keysym = (event and event.keysym) or ''
+    trace = c.config.getBool('trace_modes')
+    if trace: g.trace('state',state,'keysym',keysym,'completion',completion)
+    if state == 0:
+        k.arg = '' ; k.arg_completion = completion
+        if tabList: k.argTabList = tabList[:]
+        else:       k.argTabList = []
+        &lt;&lt; init altX vars &gt;&gt;
+        # Set the states.
+        bodyCtrl = c.frame.body.bodyCtrl
+        c.widgetWantsFocus(bodyCtrl)
+        k.afterGetArgState=returnKind,returnState,handler
+        k.setState('getArg',1,k.getArg)
+        k.afterArgWidget = event and event.widget or c.frame.body.bodyCtrl
+        if k.useTextWidget: c.minibufferWantsFocus()
+    elif keysym == 'Return':
+        k.arg = k.getLabel(ignorePrompt=True)
+        kind,n,handler = k.afterGetArgState
+        if kind: k.setState(kind,n,handler)
+        c.frame.log.deleteTab('Completion')
+        if handler: handler(event)
+    elif keysym == 'Tab':
+        k.doTabCompletion(k.argTabList,k.arg_completion)
+    elif keysym == 'BackSpace':
+        k.doBackSpace(k.argTabList,k.arg_completion)
+        c.minibufferWantsFocus()
+    else:
+        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+        k.mb_tabList = []
+        k.updateLabel(event)
+        k.mb_tabListPrefix = k.getLabel()
+
+    return 'break'
+</t>
 <t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
     
     '''Finish creating the commander after frame.finishCreate.
@@ -5792,7 +6127,20 @@ self.idleCount = 0
 self.afterGetArgState = None
 self.argTabList = []
 self.modeBindingsDict = {}</t>
+<t tx="ekr.20050924064254">@ There is something dubious about tracking states separately for separate commands.
+In fact, there is only one mini-buffer, and it has only one state.
+OTOH, maintaining separate states makes it impossible for one command to influence another.</t>
 <t tx="ekr.20050924073836"></t>
+<t tx="ekr.20050928092516"># Clear the list, any other character besides tab indicates that a new prefix is in effect.
+k.mb_tabList = []
+
+if prefix:
+    k.mb_tabListPrefix = prefix
+    k.mb_prefix = prefix
+    k.mb_prompt = prefix
+else:
+    k.mb_tabListPrefix = k.mb_prefix = k.getLabel()
+    k.mb_prompt = ''</t>
 <t tx="ekr.20050929114218"></t>
 <t tx="ekr.20050929115226">def gotoCharacter (self,event):
     
@@ -6986,7 +7334,36 @@ else:
     c.treeWantsFocusNow()
     
     return 'break'</t>
-<t tx="ekr.20051022142249"></t>
+<t tx="ekr.20051022142249">@nocolor
+@color
+@
+
+Commands that simulate clicks in the outline are useful because such events call
+hooks. In particular, double-click-icon-box will invoke the vim or xemacs
+plugins if they are enabled.
+
+Notes:
+- There is no need to simulate clicks in the canvas.  Left and right clicks are handled elsewhere.
+
+- Most clicks are equivent to other commands. There is no need to simulate those clicks here.
+
+- The simulateDrg methods are here for completeness.  They have not been tested.
+</t>
+<t tx="ekr.20051022144825">def focusToBody (self,event):
+    
+    self.c.bodyWantsFocus()
+
+def focusToLog (self,event):
+
+    self.c.logWantsFocus()
+    
+def focusToMinibuffer (self,event):
+    
+    self.c.minibufferWantsFocus()
+
+def focusToTree (self,event):
+    
+    self.c.treeWantsFocus()</t>
 <t tx="ekr.20051022144825.1">def cycleFocus (self,event):
 
     c = self.c
@@ -7086,6 +7463,54 @@ def hideFindTab (self,event=None):
     if self.findTabHandler:
         self.c.frame.log.selectTab('Log')</t>
 <t tx="ekr.20051023094009"></t>
+<t tx="ekr.20051023132350">def getLabel (self,ignorePrompt=False):
+    
+    k = self ; w = self.widget
+    if not w: return ''
+    
+    if self.useTextWidget:
+        w.update_idletasks()
+        s = w and w.get('1.0','end')
+        # Remove the cursed Tk newline.
+        while s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
+        # g.trace(repr(s))
+    else:
+        s = k.svar and k.svar.get()
+
+    if ignorePrompt:
+        return s[len(k.mb_prefix):]
+    else:
+        return s or ''
+
+</t>
+<t tx="ekr.20051023132350.1">def setLabel (self,s,protect=False):
+
+    k = self ; c = k.c ; w = self.widget
+    if not w: return
+
+    # g.trace(repr(s))
+
+    if self.useTextWidget:
+        w.delete('1.0','end')
+        w.insert('1.0',s)
+        c.masterFocusHandler() # Restore to the previously requested focus.
+    else:
+        if k.svar: k.svar.set(s)
+
+    if protect:
+        k.mb_prefix = s</t>
+<t tx="ekr.20051023132350.2">def protectLabel (self):
+    
+    k = self ; w = self.widget
+    if not w: return
+
+    if self.useTextWidget:
+        w.update_idletasks()
+        k.mb_prefix = w.get('1.0','end')
+    else:
+        if k.svar:
+            k.mb_prefix = k.svar.get()</t>
 <t tx="ekr.20051023181449">def createBindings (self):
     
     c = self.c ; k = c.k
@@ -7689,16 +8114,6 @@ def toggleExtendMode (self,event):
     '''Return True if w is a Text widget suitable for text-oriented commands.'''
     
     return w and isinstance(w,Tk.Text) </t>
-<t tx="ekr.20051221101851.1">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3487424
-By: p_michalczyk
-
-Does anybody know how to double-click headline in outline panel using only keyboard
-(that is how to simulate double-click through keyboard shortcut) ?
-I need it to execute @run nodes from keyboard.
-
-EKR: This can be done with @command nodes, but Leo should have official commands to do this too.</t>
 <t tx="ekr.20060113082917">def scrollHelper (self,event,direction,extend):
 
     k = self.k ; c = k.c ; w = event.widget
@@ -7944,7 +8359,7 @@ def searchWithPresentOptions (self,event):
         self.minibufferFindHandler = minibufferFind(c,self.findTabHandler)
 
     return self.minibufferFindHandler</t>
-<t tx="ekr.20060124122844">def setOption (self, ivar, val, verbose = False):
+<t tx="ekr.20060124122844">def setOption (self, ivar, val):
     
     h = self.finder
 
@@ -7952,8 +8367,7 @@ def searchWithPresentOptions (self,event):
         if val is not None:
             var = h.dict.get(ivar)
             var.set(val)
-            if verbose and not g.app.unitTesting:
-                g.trace('%s = %s' % (ivar,val))
+            # g.trace('%s = %s' % (ivar,val))
 
     elif not g.app.unitTesting:
         g.trace('oops: bad find ivar %s' % ivar)</t>
@@ -7971,7 +8385,7 @@ def searchWithPresentOptions (self,event):
             h.dict["radio-search-scope"].set(where)
     else:
         g.trace('oops: bad `where` value: %s' % where)</t>
-<t tx="ekr.20060124134356">def setupArgs (self,forward=False,regexp=False,word=False,statusLine='',setDefaultSearch=False):
+<t tx="ekr.20060124134356">def setupArgs (self,forward=False,regexp=False,word=False):
     
     h = self.finder ; k = self.k
     
@@ -7986,26 +8400,12 @@ def searchWithPresentOptions (self,event):
         ('whole_word',word),
     ):
         if val is not None:
-            self.setOption(ivar,val,verbose=True)
+            self.setOption(ivar,val)
             
     h.p = p = self.c.currentPosition()
     h.v = p.v
     h.update_ivars()
-    self.showFindOptions()
-    
-    
-    
-    if statusLine:
-        k.setLabelBlue(statusLine,protect=True)
-        
-        return ### not ready yet.
-        if setDefaultSearch:
-            t = h.find_ctrl
-            s = t.get('1.0','end')
-            while s.endswith('\n') or s.endswith('\r'):
-                s = s[:-1]
-            k.extendLabel(s,select=True)
-</t>
+    self.showFindOptions()</t>
 <t tx="ekr.20060124135401">def toggleOption (self, ivar):
     
     h = self.finder
@@ -8020,84 +8420,65 @@ def searchWithPresentOptions (self,event):
 <t tx="ekr.20060124140114"></t>
 <t tx="ekr.20060124140224.1">def searchBackward (self,event):
 
-    k = self.k ; state = k.getState('search-backward')
+    k = self.k ; tag = 'search-backward' ; state = k.getState(tag)
+
     if state == 0:
-        self.w = event and event.widget
         self.setupArgs(forward=False,regexp=False,word=False)
-        k.setLabelBlue('Search Backward: ',protect=True)
-        k.getArg(event,'search-backward',1,self.searchBackward,completion=False)
+        self.stateZeroHelper(event,tag,'Search Backward: ',self.searchBackward)
     else:
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
+        self.lastStateHelper()
         self.generalSearchHelper(k.arg)
 
 def searchForward (self,event):
 
-    k = self.k ; state = k.getState('search-forward')
+    k = self.k ; tag = 'search-forward' ; state = k.getState(tag)
+
     if state == 0:
-        self.w = event and event.widget
         self.setupArgs(forward=True,regexp=False,word=False)
-        k.setLabelBlue('Search: ',protect=True)
-        k.getArg(event,'search-forward',1,self.searchForward)
+        self.stateZeroHelper(event,tag,'Search: ',self.searchForward)
     else:
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
+        self.lastStateHelper()
         self.generalSearchHelper(k.arg)</t>
 <t tx="ekr.20060124140224.2">def wordSearchBackward (self,event):
 
-    k = self.k ; state = k.getState('word-search-backward')
+    k = self.k ; tag = 'word-search-backward' ; state = k.getState(tag)
+
     if state == 0:
-        self.w = event and event.widget
         self.setupArgs(forward=False,regexp=False,word=True)
-        k.setLabelBlue('Word Search Backward: ',protect=True)
-        k.getArg(event,'word-search-backward',1,self.wordSearchBackward,completion=False)
+        self.stateZeroHelper(event,tag,'Word Search Backward: ',self.wordSearchBackward)
     else:
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
+        self.lastStateHelper()
         self.generalSearchHelper(k.arg)
 
 def wordSearchForward (self,event):
 
-    k = self.k ; state = k.getState('word-search-forward')
+    k = self.k ; tag = 'word-search-forward' ; state = k.getState(tag)
+    
     if state == 0:
-        self.w = event and event.widget
         self.setupArgs(forward=True,regexp=False,word=True)
-        k.setLabelBlue('Word Search: ',protect=True)
-        k.getArg(event,'word-search-forward',1,self.wordSearchForward)
+        self.stateZeroHelper(event,tag,'Word Search: ',self.wordSearchForward)
     else:
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
+        self.lastStateHelper()
         self.generalSearchHelper(k.arg)</t>
 <t tx="ekr.20060124140224.3">def reSearchBackward (self,event):
 
-    k = self.k ; state = k.getState('re-search-backward')
+    k = self.k ; tag = 're-search-backward' ; state = k.getState(tag)
+    
     if state == 0:
-        self.w = event and event.widget
         self.setupArgs(forward=False,regexp=True,word=None)
-        k.setLabelBlue('Regexp Search backward:',protect=True)
-        k.getArg(event,'re-search-backward',1,self.reSearchBackward,completion=False)
+        self.stateZeroHelper(event,tag,'Regexp Search Backward:',self.reSearchBackward)
     else:
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
+        self.lastStateHelper()
         self.generalSearchHelper(k.arg)
 
 def reSearchForward (self,event):
 
-    k = self.k ; state = k.getState('re-search-forward')
+    k = self.k ; tag = 're-search-forward' ; state = k.getState(tag)
     if state == 0:
-        self.w = event and event.widget
         self.setupArgs(forward=True,regexp=True,word=None)
-        k.setLabelBlue('Regexp Search:',protect=True)
-        k.getArg(event,'re-search-forward',1,self.reSearchForward)
+        self.stateZeroHelper(event,tag,'Regexp Search:',self.reSearchForward)
     else:
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
+        self.lastStateHelper()
         self.generalSearchHelper(k.arg)</t>
 <t tx="ekr.20060124181213.4">def generalSearchHelper (self,pattern,cloneFindAll=False,findAll=False):
     
@@ -8182,19 +8563,31 @@ def reSearchForward (self,event):
 <t tx="ekr.20060125093807">def searchWithPresentOptions (self,event):
 
     k = self.k ; tag = 'search-with-present-options'
-    
     state = k.getState(tag)
+
     if state == 0:
-        self.w = event and event.widget
-        self.setupArgs(forward=None,regexp=None,word=None,
-            statusLine='Search: ',setDefaultSearch=True)
-        # k.setLabelBlue('Search: ',protect=True)
-        k.getArg(event,tag,1,self.searchWithPresentOptions,completion=False)
+        self.setupArgs(forward=None,regexp=None,word=None)
+        self.stateZeroHelper(event,tag,'Search: ',self.searchWithPresentOptions)
     else:
         k.clearState()
         k.resetLabel()
         k.showStateAndMode()
         self.generalSearchHelper(k.arg)</t>
+<t tx="ekr.20060125175103">def minibufferWantsFocus(self):
+    
+    c = self.c
+    if self.useTextWidget:
+        c.widgetWantsFocus(c.miniBufferWidget)
+    else:
+        c.bodyWantsFocus()
+
+def minibufferWantsFocusNow(self):
+    
+    c = self.c
+    if self.useTextWidget:
+        c.widgetWantsFocusNow(c.miniBufferWidget)
+    else:
+        c.bodyWantsFocusNow()</t>
 <t tx="ekr.20060127162818">def enable_gc_debug(event=None):
     
     if gc:
@@ -8619,7 +9012,7 @@ def set_focus (self,w):
     h.update_ivars()</t>
 <t tx="ekr.20060205105950.1">def generalChangeHelper (self,find_pattern,change_pattern):
     
-    g.trace(repr(change_pattern))
+    # g.trace(repr(change_pattern))
     
     self.setupSearchPattern(find_pattern)
     self.setupChangePattern(change_pattern)
@@ -8750,6 +9143,20 @@ def set_focus (self,w):
 
 - Updated selection point immediately in masterKeyHandler.
   Otherwise, updateStatusLine would be one click behind.</t>
+<t tx="ekr.20060206064635">def extendLabel(self,s,select=False,protect=False):
+    
+    k = self ; c = k.c ; w = self.widget
+    if not w: return
+
+    if self.useTextWidget:
+        c.widgetWantsFocusNow(w)
+        w.insert('end',s)
+        if select:
+            i,j = k.getEditableTextRange()
+            g.app.gui.setTextSelection(w,i,j,insert=j)
+        if protect:
+            k.protectLabel()
+</t>
 <t tx="ekr.20060206103355"></t>
 <t tx="ekr.20060206103531"></t>
 <t tx="ekr.20060206104722">All key bindings specified with !mini pane specifier apply to all modes.</t>
@@ -8893,9 +9300,6 @@ open-find-dialog actuall refer to the find tab.
 
 - Severl other minor shortcut problems.</t>
 <t tx="ekr.20060209042734"></t>
-<t tx="ekr.20060209042734.1">- The c.click methods can call tree event handlers directly.
-- Add minibuffer commands for some (all?) of these convenience methods.
-- No need to add click simulators for menus: they will be separate minibuffer commands.</t>
 <t tx="ekr.20060209053234">@nocolor
 
 Refer to 4.4b3 to do first list.
@@ -9305,6 +9709,117 @@ It turned out that the only special case is in moveToHelper, which means the sol
     # g.trace(i,j)
     return i,j
 </t>
-<t tx="ekr.20060210145627"></t>
+<t tx="ekr.20060210145627"># To do: getArg must handle completion = False differently.</t>
+<t tx="ekr.20060210164421">def addFindStringToLabel (self):
+    
+    c = self.c ; k = c.k ; h = self.finder ; t = h.find_ctrl
+
+    s = t.get('1.0','end')
+    while s.endswith('\n') or s.endswith('\r'):
+        s = s[:-1]
+
+    k.extendLabel(s,select=True,protect=True)</t>
+<t tx="ekr.20060210172035"></t>
+<t tx="ekr.20060210173041">def stateZeroHelper (self,event,tag,prefix,handler):
+
+    k = self.k
+    self.w = event and event.widget
+    k.setLabelBlue(prefix,protect=True)
+    self.addFindStringToLabel()
+    k.getArg(event,tag,1,handler,completion=False,prefix=prefix)</t>
+<t tx="ekr.20060210174441">def lastStateHelper (self):
+    
+    k = self.k
+    k.clearState()
+    k.resetLabel()
+    k.showStateAndMode()</t>
+<t tx="ekr.20060210180352">def addChangeStringToLabel (self):
+    
+    c = self.c ; k = c.k ; h = self.finder ; t = h.change_ctrl
+
+    s = t.get('1.0','end')
+    while s.endswith('\n') or s.endswith('\r'):
+        s = s[:-1]
+
+    k.extendLabel(s,select=True,protect=True)</t>
+<t tx="ekr.20060210180603"></t>
+<t tx="ekr.20060210201454"></t>
+<t tx="ekr.20060211055455"># These call the actual event handlers so as to trigger hooks.
+
+def clickIconBox (self,event=None):
+
+    '''Simulate a click in the icon box of the presently selected headline.'''
+    c = self.c ; p = c.currentPosition()
+    c.frame.tree.onIconBoxClick(event,p=p)
+
+def doubleClickIconBox (self,event=None):
+
+    '''Simulate a double-click in the icon box of the presently selected headline.'''
+    c = self.c ; p = c.currentPosition()
+    c.frame.tree.onIconBoxDoubleClick(event,p=p)
+
+def rightClickIconBox (self,event=None):
+
+    '''Simulate a right click in the icon box of the presently selected headline.'''
+    c = self.c ; p = c.currentPosition()
+    c.frame.tree.onIconBoxRightClick(event,p=p)</t>
+<t tx="ekr.20060211061217"></t>
+<t tx="ekr.20060211062025"># Call the actual event handlers so as to trigger hooks.
+
+def clickClickBox (self,event=None):
+
+    '''Simulate a click in the click box (+- box) of the presently selected headline.'''
+
+    c = self.c ; p = c.currentPosition()
+    c.frame.tree.onClickBoxClick(event,p=p)</t>
+<t tx="ekr.20060211063744.1"># These call the actual event handlers so as to trigger hooks.
+
+def clickHeadline (self,event=None):
+
+    '''Simulate a click in the icon box of the presently selected headline.'''
+    c = self.c ; p = c.currentPosition()
+    c.frame.tree.onHeadlineClick(event,p=p)
+    
+def doubleClickHeadline (self,event=None):
+    return self.clickHeadline(event)
+
+def rightClickHeadline (self,event=None):
+
+    '''Simulate a double-click in the icon box of the presently selected headline.'''
+    c = self.c ; p = c.currentPosition()
+    c.frame.tree.onHeadlineRightClick(event,p=p)</t>
+<t tx="ekr.20060211063744.2"># These call the drag setup methods which in turn trigger hooks.
+
+def simulateBeginDrag (self,event=None):
+
+    '''Simulate the start of a drag in the presently selected headline.'''
+    c = self.c ; p = c.currentPosition()
+    c.frame.tree.startDrag(event,p=p)
+
+def simulateEndDrag (self,event=None):
+
+    '''Simulate the end of a drag in the presently selected headline.'''
+    c = self.c ; p = c.currentPosition()
+    
+    # Note: this assumes that tree.startDrag has already been called.
+    c.frame.tree.endDrag(event)</t>
+<t tx="ekr.20060211065245">@nocolor
+
+# http://sourceforge.net/forum/message.php?msg_id=3487424
+
+Commands that simulate clicks in the outline are useful because such events call
+hooks. In particular, double-click-icon-box will invoke the vim or xemacs
+plugins if they are enabled.
+
+Added these commands: click-click-box, click-headline, click-icon-box, double-click-headline, double-click-icon-box, simulate-begin-drag, simulate-end-drag
+
+Notes:
+    
+- There is no need to simulate clicks in the canvas.  Left and right clicks are handled elsewhere.
+
+- Most clicks are equivent to other commands. There is no need to simulate those clicks here.
+
+- The simulateDrg methods are here for completeness.  They have not been tested.</t>
+<t tx="ekr.20060211071114"></t>
 </tnodes>
 </leo_file>
