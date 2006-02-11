@@ -2461,10 +2461,10 @@ class baseCommands:
         # Try to get the format string from leoConfig.txt.
         if body:
             format = c.config.getString("body_time_format_string")
-            gmt    = c.config.getString("body_gmt_time")
+            gmt    = c.config.getBool("body_gmt_time")
         else:
             format = c.config.getString("headline_time_format_string")
-            gmt     = c.config.getString("headline_gmt_time")
+            gmt    = c.config.getBool("headline_gmt_time")
     
         if format == None:
             format = default_format
@@ -2479,7 +2479,7 @@ class baseCommands:
             g.es("time.strftime not available on this platform",color="blue")
             return ""
         except:
-            g.es_exception() # Probably a bad format string in leoConfig.txt.
+            g.es_exception() # Probably a bad format string in leoSettings.leo.
             s = time.strftime(default_format,time.gmtime())
         return s
     #@-node:ekr.20031218072017.1832:getTime
