@@ -7,6 +7,8 @@
 
 Modelled after Emacs and Vim commands.'''
 
+from __future__ import generators # To make Leo work with Python 2.2
+
 #@<< imports >>
 #@+node:ekr.20050710151017:<< imports >>
 import leoGlobals as g
