@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -287,30 +287,30 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 </v>
-<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
 <v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
-<v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
+<v t="ekr.20060110141538.2" a="E" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
 </v>
-<v t="ekr.20060103103812" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060103103812" a="E" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060111082632.1"><vh>@shortcuts Legacy+: A-E</vh></v>
 <v t="ekr.20060112085643"><vh>@shortcuts Legacy+: F-M</vh></v>
 <v t="ekr.20060112085643.1"><vh>@shortcuts Legacy+: N-Z</vh></v>
 </v>
-<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20051010112558" a="E"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060122105438"><vh>To do</vh></v>
 <v t="ekr.20060122105438.1"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060115162748"><vh>Modes</vh>
@@ -331,7 +331,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" a="E" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
@@ -354,7 +354,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -368,7 +368,7 @@
 <v t="ekr.20060110141538.1" a="E"><vh>No bindings</vh>
 <v t="ekr.20051218202206" a="E" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
-<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
+<v t="ekr.20060112093227.2" a="TV"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
 <v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
@@ -388,10 +388,10 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060203131942" a="V"><vh>@shortcuts Minibuffer bindings</vh></v>
+<v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
@@ -1473,6 +1473,13 @@ vim_exe = "gvim"</t>
 abbrev-mode                         = None
 abort-edit-headline                 = None
 about-leo                           = None
+activate-cmds-menu                  = None
+activate-edit-menu                  = None
+activate-file-menu                  = None
+activate-help-menu                  = None
+activate-outline-menu               = None
+activate-plugins-menu               = None
+activate-window-menu                = None
 add-comments                        = None
 add-global-abbrev                   = None
 advertised-undo                     = None
@@ -1951,7 +1958,7 @@ spell-ignore                        = None
 split-line                          = Alt-Ctrl-o
 # start-kbd-macro                   = None
 string-rectangle                    = None
-# suspend                           = None # Use iconify-frame instead.
+suspend                             = None
 switch-to-buffer                    = None
 tabify                              = None
 tangle                              = None      
@@ -2260,7 +2267,7 @@ hide-mini-buffer                    = None
 hide-spell-tab                      = None
 hoist                               = None
 how-many                            = None
-iconify-frame                       = None  # Same as suspend.
+iconify-frame                       = None
 import-at-file                      = None
 import-at-root                      = None
 import-cweb-files                   = None
@@ -2540,7 +2547,7 @@ spell-ignore                            = None
 split-line                              = Alt-Ctrl-o
 # start-kbd-macro                       = None
 string-rectangle                        = None
-# suspend                               = None  # Use iconify-frame instead.
+suspend                                 = None
 switch-to-buffer                        = None
 tabify                                  = None
 tangle                                  = None      # Removed Shift-Ctrl-T: not useful enough.
@@ -2646,7 +2653,7 @@ hide-mini-buffer                    = None
 hide-spell-tab                      = None
 hoist                               = None
 how-many                            = None
-iconify-frame                       = Control-z # Was suspend
+iconify-frame                       = Control-z
 import-at-file                      = None         # Removed Shift-Ctrl-F: not useful enough.
 import-at-root                      = None
 import-cweb-files                   = None
@@ -2816,7 +2823,7 @@ spell-find                      = None
 spell-ignore                    = None
 split-line                      = Control-Alt-o
 string-rectangle                = None
-# suspend                       = None  # Use iconify-frame instead.
+suspend                         = None
 switch-to-buffer                = None
 tabify                          = None
 tangle                          = None      # Removed Shift-Ctrl-T: not useful enough.
@@ -3084,7 +3091,7 @@ spell-find                          = None
 spell-ignore                        = None
 split-line                          = None
 string-rectangle                    = None
-# suspend                           = None # use iconify-frame instead
+suspend                             = None
 switch-to-buffer                    = None
 tabify                              = None
 tangle                              = Shift-Ctrl-T
@@ -3367,7 +3374,7 @@ spell-ignore                        = None
 split-line                          = None
 # start-kbd-macro                   = None
 string-rectangle                    = None
-# suspend                           = None # Use iconify-frame instead.
+suspend                             = None
 switch-to-buffer                    = None
 tabify                              = None
 tangle                              = None
