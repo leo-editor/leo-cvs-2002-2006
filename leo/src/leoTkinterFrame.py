@@ -1983,23 +1983,26 @@ class leoTkinterFrame (leoFrame.leoFrame):
             # Strip trailing newlines so the truncation doesn't cause confusion.
             while s and s [ -1] in ('\n','\r'):
                 s = s [: -1]
-        
-        # Update the widget.
-        if i != j:
-            w.delete(i,j)
-        w.insert(i,s)
     
-        if wname.startswith('body'):
-            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-        elif singleLine:
-            s = w.get('1.0','end')
-            while s and s [ -1] in ('\n','\r'):
-                s = s [: -1]
-            if wname.startswith('head'):
-                # The headline is not officially changed yet.
-                # p.initHeadString(s)
-                w.configure(width=f.tree.headWidth(s=s))
-        else: pass
+        try:
+            # Update the widget.
+            if i != j:
+                w.delete(i,j)
+            w.insert(i,s)
+        
+            if wname.startswith('body'):
+                c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+            elif singleLine:
+                s = w.get('1.0','end')
+                while s and s [ -1] in ('\n','\r'):
+                    s = s [: -1]
+                if wname.startswith('head'):
+                    # The headline is not officially changed yet.
+                    # p.initHeadString(s)
+                    w.configure(width=f.tree.headWidth(s=s))
+            else: pass
+        except Exception:
+            pass # Tk sometimes throws weird exceptions here.
             
         return 'break' # Essential
     
