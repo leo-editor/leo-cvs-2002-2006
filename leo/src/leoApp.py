@@ -413,9 +413,10 @@ class LeoApp:
         homeDir = g.app.homeDir
         globalConfigDir = g.app.globalConfigDir
         loadDir = g.app.loadDir
-    
-        #@    << return if we can set self.leoID from sys.leoID >>
-        #@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+        
+        verbose = True
+        #@    << return if we can set leoID from sys.leoID >>
+        #@+node:ekr.20031218072017.1979:<< return if we can set leoID from sys.leoID>>
         # This would be set by in Python's sitecustomize.py file.
         
         # 7/2/04: Use hasattr & getattr to suppress pychecker warning.
@@ -425,16 +426,15 @@ class LeoApp:
         
         if hasattr(sys,nonConstantAttr):
             g.app.leoID = getattr(sys,nonConstantAttr)
-            if verbose:
-                g.es("leoID = " + g.app.leoID, color="orange")
+            if verbose: g.es_print("leoID = " + g.app.leoID, color='red')
             return
         else:
             g.app.leoID = None
         #@nonl
-        #@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+        #@-node:ekr.20031218072017.1979:<< return if we can set leoID from sys.leoID>>
         #@nl
-        #@    << return if we can set self.leoID from "leoID.txt" >>
-        #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+        #@    << return if we can set leoID from "leoID.txt" >>
+        #@+node:ekr.20031218072017.1980:<< return if we can set leoID from "leoID.txt" >>
         for theDir in (homeDir,globalConfigDir,loadDir):
             # N.B. We would use the _working_ directory if theDir is None!
             if theDir:
@@ -446,21 +446,34 @@ class LeoApp:
                     if s and len(s) > 0:
                         g.app.leoID = s
                         if verbose:
-                            g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                            g.es_print("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
                         return
                     elif verbose:
-                        g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+                        g.es_print("empty %s (in %s)" % (tag,theDir), color = "red")
                 except IOError:
                     g.app.leoID = None
                     # g.es("%s not found in %s" % (tag,theDir),color="red")
                 except Exception:
                     g.app.leoID = None
-                    g.es('Unexpected exception in app.setLeoID',color='red')
+                    g.es_print('Unexpected exception in app.setLeoID',color='red')
                     g.es_exception()
         #@nonl
-        #@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+        #@-node:ekr.20031218072017.1980:<< return if we can set leoID from "leoID.txt" >>
         #@nl
-    
+        #@    << return if we can set leoID from os.getenv('USER') >>
+        #@+node:ekr.20060211140947.1:<< return if we can set leoID from os.getenv('USER') >>
+        try:
+            id = os.getenv('USER')
+            if id:
+                if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(id)),color='red')
+                g.app.leoID = id
+                return
+                
+        except Exception:
+            pass
+        #@nonl
+        #@-node:ekr.20060211140947.1:<< return if we can set leoID from os.getenv('USER') >>
+        #@nl
         #@    << put up a dialog requiring a valid id >>
         #@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
         # New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
@@ -472,7 +485,7 @@ class LeoApp:
         g.app.leoID = g.app.gui.runAskLeoIDDialog()
         
         # g.trace(g.app.leoID)
-        g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
+        g.es_print("leoID = %s" % (repr(g.app.leoID)),color="blue")
         #@nonl
         #@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
         #@nl
