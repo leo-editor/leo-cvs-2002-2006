@@ -671,6 +671,7 @@ class tkinterGui(leoGui.leoGui):
     def getSelectionRange (self,t):
         
         try:
+            # Warning: this can return None.
             return t.tag_ranges("sel")
         except Exception:
             return 0,0
