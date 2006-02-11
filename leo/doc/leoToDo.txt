@@ -2,23 +2,7 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060122183914:Fix minor bugs 6
-#@+node:ekr.20060121101642:Make sure save updates the open directory
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3534349
-By: edcdave
-
-Thanks for the tip. I did some further checking along this vein and found that
-saving the Leo file is not sufficient - I have to exit the document and open
-it again before the rst destination directory is set correctly.
-
-While I was testing this, I encountered a problem with the delete key. But I'll
-post it in another thread.
-
-Thanks again,
-Dave Harris
-#@-node:ekr.20060121101642:Make sure save updates the open directory
+#@+node:ekr.20060122183914:Fix minor bugs 5
 #@+node:ekr.20060211112120.1:disable menu enablers if commander does not exist
 Only affects unit tests, probably.
 #@nonl
@@ -64,13 +48,8 @@ mech. not the plugin code itself.
 def createHelpMenuFromTable (self):
 
     if sys.platform == 'darwin':
-        try:
-            # helpMenu = self.createNewMenu (menuName='top.help',parentName='top')
-            helpMenu = Tk.Menu('top.help')
-        except Exception:
-            g.trace('Can not get MacOS Help menu')
-            g.es_exception()
-            return
+        helpMenu = self.getMacHelpMenu()
+        if not helpMenu: return
     else:
         helpMenu = self.createNewMenu("&Help")
     
@@ -136,8 +115,23 @@ def destroyMenu (self,menuName):
     del self.menus[cmn]
 #@nonl
 #@-node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
+#@+node:ekr.20060211144330.1:getMacHelpMenu
+def getMacHelpMenu (self):
+    
+    return None ###
+    
+    try:
+        helpMenu = Tk.Menu('top.help')
+        return helpMenu
+        
+    except Exception:
+        g.trace('Can not get MacOS Help menu')
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20060211144330.1:getMacHelpMenu
 #@-node:ekr.20060116083043:Use special Help menu on the Mac
-#@-node:ekr.20060122183914:Fix minor bugs 6
+#@-node:ekr.20060122183914:Fix minor bugs 5
 #@+node:ekr.20060211100150:Fix chapters plugin
 #@-node:ekr.20060211100150:Fix chapters plugin
 #@+node:ekr.20060210201454:Distribution
