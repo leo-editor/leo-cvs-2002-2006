@@ -2103,7 +2103,8 @@ class keyHandlerClass:
         shift = (state & 1) == 1 # Not used for alpha chars.
         caps  = (state & 2) == 2 # Not used at all.
         ctrl  = (state & 4) == 4
-        alt   = (state & 0x20000) == 0x20000
+        # Linux uses, 8 and 0x80, XP uses 0x20000.
+        alt   = (state & 0x20000) == 0x20000 or (state & 8) == 8 or (state & 0x80) == 0x80
         plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
         
         # g.es('state: %x' % state)
