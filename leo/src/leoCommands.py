@@ -774,6 +774,7 @@ class baseCommands:
                 c.mFileName = g.ensure_extension(fileName, ".leo")
                 c.frame.title = c.mFileName
                 c.frame.setTitle(g.computeWindowTitle(c.mFileName))
+                c.frame.openDirectory = g.os_path_dirname(c.mFileName) # Bug fix in 4.4b2.
                 c.fileCommands.save(c.mFileName)
                 c.updateRecentFiles(c.mFileName)
     #@nonl
@@ -802,6 +803,7 @@ class baseCommands:
             c.mFileName = g.ensure_extension(fileName, ".leo")
             c.frame.title = c.mFileName
             c.frame.setTitle(g.computeWindowTitle(c.mFileName))
+            c.frame.openDirectory = g.os_path_dirname(c.mFileName) # Bug fix in 4.4b2.
             # Calls c.setChanged(False) if no error.
             c.fileCommands.saveAs(c.mFileName)
             c.updateRecentFiles(c.mFileName)
