@@ -1637,7 +1637,1034 @@ def stateHandler (self,event):
 #@-node:ekr.20051126124705:stateHandler (autoCompleter)
 #@-node:ekr.20051126123249:class autoCompleterClass (prototype)
 #@-node:ekr.20051126122638:Autocompletion tab
-#@+node:ekr.20060130151453:Find leaks
+#@+node:ekr.20051202094427:Resolve cvs conflicts
+Investigate meld:  http://meld.sourceforge.net/
+
+Create a 'generate cvs conflicst' script for testing.
+#@nonl
+#@+node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
+@nocolor
+
+There have been a couple different suggestions on how to obtain a .leo file
+that presents the conflicts for resolution.  My initial thought was to have
+some sort of external file containing only the structure information of interest.
+Edward has suggested that we could process the CVS created .leo file with all
+its conflict indicators.
+
+I'd like to offer another alternative: based on the ad-hoc procedure that Edward
+is currently using, i.e.,
+
+* Save your work to foo.leo file.
+* copy your foo.leo file to fooCvsTmp.leo
+* cvs ci
+* if there are no conflicts (hurray)
+*    remove fooCvsTmp.leo; finished
+* otherwise
+*    remove foo.leo
+*    cvs up foo.leo
+*    read foo.leo into an internal directed acyclic graph (DAG)
+*    generate the conflict resolution DAG from the proposed new leo internal
+DAG (which Leo already has as a matter of course) and the CVS derived DAG
+*    present for editting
+*    when you are satisfied and want to try to check in again, repeat.
+
+From the user's point of view, a CVS check in either succeeds or requires that
+the conflicts be resolved, after which another check in may be attempted.  If
+we're somehow interrupted in the middle of the process, the fooCvsTmp.leo file
+preserves the users work.
+#@+node:ekr.20050501111900:Stephen Schaefer
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3125092
+By: thyrsus
+
+About a month ago, I posted a screed on how @thin was inadequate to address
+my needs; that what I needed to collaborate on via version control was exactly
+the essence of Leo's value: the multiple expressions of structure, which by
+their nature must exist outside of @thin.  I said I was going to live the pain
+to discover a modus vivendi.
+
+Having done that, let me now say:
+
+AAAAAAAAAAAAGGGGGGGGHHHHHHHHHH!
+
+But the exercise has led me to a vision, which I will implement to the extent
+my nonexistent spare time and paltry programming talents permit.
+
+The essence of the pain is "conflicts", which become more  certain to occur
+as the leo file encompases ever more related files.  As I work on a change to
+the Linux configuration, my colleague works on a change to the Solaris configuration,
+and one of us checks in our version of the leo file documenting the site
+configuration first, and the other cannot check in his version of that file.
+The conflict must be resolved by the human.  Using the "diff" tool on the .leo
+XML is not an answer (though thank Heaven and Ed for gnxs).  The resolution
+needs two levels of support: outline and node.
+
+With the .leo file declared binary, in the event of a conflict CVS leaves you
+with the most recent CVS version and your rejected version, and you're responsible
+for performing a reconciliation and then resubmitting that.  Leo will recognize
+the problem, and present both versions of the project, side by side, splitting
+the outline pane.  The parallel trees will scroll/expand/contract in unison.
+Outline branches present in CVS and not yours will display as blank space in
+your version; nodes present in your version and not CVS will display as blank
+space in the CVS version. The CVS version will be read only, your version editable.
+The same node with differences in its text or in its children will be highlighted.
+You will be able to drag nodes from the CVS version into your version. If the
+text of a selected node has conflicts, the text area will split in two, showing
+the CVS version and your version, with differences highlighted, both sides of
+the pane scrolling in unison, the CVS side read-only, and you can copy from
+that side to your side.  I intend to take as many ideas as I can from tkdiff
+(http://sourceforge.net/projects/tkdiff/ - see also
+http://freshmeat.net/screenshots/10602/ ).  (I have begun translating tkdiff
+from from tcl to python - nearly 9000 lines and I'm still learning both languages,
+so draw your own timeline.)  You edit your nodes, you edit your tree, you hit
+the "reconcile" button, and your reconciliation of the conflict goes into CVS.
+If, meanwhile, another one of your over-achieving colleages has again updated
+CVS, the process repeats with the most current CVS version.  Or you can hit
+the "abandon" button to give up on your changes.
+
+As the Hebrews say at Passover: "Next year in Jerusalem."
+#@nonl
+#@-node:ekr.20050501111900:Stephen Schaefer
+#@+node:ekr.20031218072017.659:Jonathon 1
+https://sourceforge.net/forum/message.php?msg_id=1803722
+By: jmgilligan
+
+What is the intended behavior when foo.leo has a cloned node that appears several
+times in a derived (or multiple derived files) and the user edits this file
+or files to change two or more instances of the cloned node in different ways.
+
+Example:
+
+@file foo.py
+****begin tnode
+@others
+****end tnode
+...definition of procedure a
+***begin tnode
+def a:
+...print "a:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure b
+***begin tnode
+def b:
+...print "b:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure c
+***begin tnode
+def c:
+...print "a:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+In the .leo, if I edit <<bar>>, it will change simultaneously in each place,
+always in synch. However, suppose I edit foo.py in a text editor and change
+foo.py to read:
+
+#@verbatim
+#@+leo
+#@verbatim
+#@+node:0::@file foo.py
+#@verbatim
+#@+body
+#@verbatim
+#@+others
+#@verbatim
+#@+node:1::definition of a
+#@verbatim
+#@+body
+print "a:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"bar"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::definition of a
+#@verbatim
+#@+node:2::definition of b
+#@verbatim
+#@+body
+print "b:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"variation b"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:2::definition of b
+#@verbatim
+#@+node:3::definition of c
+#@verbatim
+#@+body
+print "c:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"variation c"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:3::definition of c
+#@verbatim
+#@-others
+#@verbatim
+#@-body
+#@verbatim
+#@-node:0::@file foo.py
+#@verbatim
+#@-leo
+
+Now what is supposed to happen when leo tries to read foo.py back in? It seems
+that there are three possible behaviors:
+
+1) leo reports a conflict that the user needs to resolve.
+2) leo breaks the clone: the three nodes become separate vnodes, not clones
+of the same one.
+3) leo arbitrarily takes one of the tnodes to be the new tnode for all of the
+clones. This is currently what happens. It creates something like a race condition,
+where the last node in the derived file determines what the final result will
+be. In this case, all three tnodes get text "variation c".
+
+This general question of how Leo should deal with conflicts in clone nodes seems
+to me that it needs to be addressed, particularly with respect to trying to
+avoid cvs conflicts via thick/thin modes.
+
+Note that this can become quite a subtle question because the same node can
+be cloned across several different derived files, in which case a serious race
+condition may pertain.
+
+At the least, I would like to see leo perform consistency checking on cloned
+nodes when it reads a derived file back in and warn the user if cloned nodes
+are inconsistent.
+
+Note that the issue also occurs with OpenWith: I can open each instance of a
+cloned node as a separate file in the external text editor. Which version is
+read back into leo depends on the order in which I save them from the external
+editor.
+#@-node:ekr.20031218072017.659:Jonathon 1
+#@+node:ekr.20031218072017.660:Jonathan 2
+By: jmgilligan ( Jonathan M. Gilligan ) 
+ Possible solution   
+2003-01-13 20:55  
+One possible solution for the conflicting clones problem is to have Leo, when it detects a conflicting clone, generate a text file (perhaps named LeoConflict_NNNN.leo, where NNNN is the gid of the node in question), which contains all the different versions of the node in question, output in leo XML format. 
+
+The vnode would then be marked with a "conflict" flag that would prevent the user from opening it in Leo until the conflict is resolved. See below for how the user resolves the conflict. 
+
+What I have in mind is something similar to the CVS conflict file, where a conflict between two versions is marked 
+
+<<<<<<< 
+blah blah blah? 
+======= 
+blah blah blah! 
+>>>>>>> 
+
+Except that we would output this file in Leo XML format. The reason for XML format would be to avoid problems of how to generically delimit the different sections (different versions of the cloned node). Here leo's XML tags can unambiguously delimit the sections. 
+
+The user would then edit the conflict file and delete all but the desired version. Then he would tell leo to resolve the conflict by reading the corrected file in and replacing the contents of the conflicting node with the contents of the LeoConflict_NNNN.leo file. 
+
+On the down side, this may well be too baroque a fix for a problem that most users may never encounter. If so, perhaps it's best left alone until more pressing problems are solved. I know what I am doing with Leo and am always careful NOT to generate conflicting clones when I edit in an external text editor, so I don't absolutely need a resolution to this problem. I raised it because it's good for a program to have well-defined behavior when presented with anomalous input. 
+
+In this sense, perhaps the best thing is to allow users to generate code from clones (what Allan Holub referred to as "enough rope to shoot yourself in the foot"), but to tell them that this practice is frowned upon.  
+
+ 
+#@-node:ekr.20031218072017.660:Jonathan 2
+#@+node:ekr.20031218072017.661:Gil 1
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1836117
+By: gilshwartz
+
+Edward, now that conflicting clones may not be the result of bad style, I would
+like to propose yet another solution that I have been thinking of for a while.
+
+My basic approach is that cloning is not just a convenience tool, it may also
+reflect some of the properties of the code/code set. Therefore my goal is for
+clone links to remain even if they are conflicting, and let the user resolve
+them at any convenient time. I also think that Leo's user interface is the best
+tool to resolve such conflicts.
+
+Thus here is my view of clone management and resolution inside Leo. Anytime
+content is loaded into Leo, if a clone set agrees (i.e. have the same content)
+all clone copies are marked "green". When one green clone is edited, all green
+clones are changed. This is Leo as it is now.
+
+If at some point conflicting clones are loaded, Leo decides on some representing
+content (may be based on policies like most occurring content, or latest timestamp,
+etc.) and provides visual clues for the conflict. The visual clue is give by
+a double node box, e.g.
+
++---------------+
++ clone org +
++---------------+
++ resolution +
++---------------+
+
+such that it is a single node in the tree, but has two content node, the original
+text, and the possibly arbitrary resolution.
+
+The resolution pseudo node is marked "blue", while the original text is either
+"green", if it is identical to the blue node, or "red", if it is not. To emphasis,
+the red/green nodes contain the specific (possibly) unique code associated with
+the derived file, while the pseudo blue node contains the shared clone content.
+During save to derived files, only the red/green content is saved, so effectively
+the file is not changed and the conflict is not resolved until the user chooses
+to do so. However, the clone relationship (via the gti) remains.
+
+During editing, changes to red/green clones are local and do not propagate to
+other clone copies (actually any change to a green node would turn it red).
+Changes to the blue nodes do propagate since it is a single view of the clone.
+A node pair may be converted to a regular node, effectively getting a new gti
+and eliminating the blue copy. Or, it may be converted to the shared copy,
+effectively forgetting its original content (leaving only the blue node). Once
+there are no more red nodes in a clone set, all its nodes become green again
+and the conflict is resolved.
+
+Some additional clone actions I think are useful are:
+
+1. Go to next/prev clone.
+2. Go to next/prev green clone (useful when there are red ones).
+3. Convert all green copies to a new clone group (useful when some clone copies
+needs to remain clones, but break from the original clone set, thus getting
+a new clone gti)
+
+Action 3 enables the user to partition its clone set to several clone groups
+by copying a clone's original content to its blue copy and finding matching
+(green) clones.
+
+What do we gain by all this?
+
+1. We can have conflicting clones without catastrophes.
+2. We get tools to handle conflicts and resolve them.
+3. We keep on working is Leo's environment, which is the most supportive one
+we can expect.
+
+Gil
+
+(By the way, I have a feeling that it would be useful to include along with
+the gti a hash of its node content, which could tell Leo is a node was changed
+outside of it. Also, including a timestamp in the opening sentinel, indicating
+when Leo last saved it. These may help having intelligent decisions by Leo in
+cases like conflicting clones.)
+#@-node:ekr.20031218072017.661:Gil 1
+#@+node:ekr.20031218072017.662:Gil 2
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1804169
+By: gilshwartz
+
+Another thing to think about is what should happen when close heading is changing.
+Right now, if you are inside Leo, all headings will be changed, and if you try
+to change by hand it in the derived file, clone links are removed (after some
+error reporting). This is quite reasonable in the current scheme of things,
+where one is not really expected to mess up with Leo sentinels.
+
+However, if/when @include is implemented, one would probably edit some files
+with clones that may extend to other files and changing the clone node name
+(via Leo) is quite feasible. Note that the gti for the cloned node would probably
+not change. So
+
+1. Do Leo resync the clone content based on the gti?
+2. Does it break cloning and allocates a new gti for one (arbitrary?) clone
+set?
+3. Let the user resolve manually, offer undoable auto-resolution with reporting,
+other?
+
+More things to think about.
+
+Gil
+#@-node:ekr.20031218072017.662:Gil 2
+#@-node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
+#@-node:ekr.20051202094427:Resolve cvs conflicts
+#@+node:ekr.20041228084018.5:Finish zodb plugin
+@ New notes:
+
+- openFromZODB would be similar to openWithFileName, but gets root, current positions from zodb.
+
+- Either we save positions in the zodb, or we figure out how to create root, current positions from vnodes.
+    - Root positions is easy, but current position could be anywhere.
+
+- Save commands would commit to zodb.  Revert would abort.
+#@nonl
+#@+node:ekr.20040226114127: Zope test
+@color
+
+import leoGlobals as g
+import ZODB
+
+d = dir(ZODB) ; d.sort()
+
+g.trace(g.toString(d))
+
+if 0:
+    storage = ZODB.FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs")
+    g.trace(storage)
+    if 0:
+        db = ZODB.DB(storage)
+        g.es(storage)
+        g.es(db)
+        db.close()
+#@nonl
+#@-node:ekr.20040226114127: Zope test
+#@+node:ekr.20041002151816:ZODB docs
+#@+node:ekr.20041002151816.1:What is the ZODB?
+http://zope.org/Wikis/ZODB/FrontPage/guide/node2.html#SECTION000210000000000000000
+
+1.1 What is the ZODB?
+
+The ZODB is a persistence system for Python objects. Persistent programming
+languages provide facilities that automatically write objects to disk and read
+them in again when they're required by a running program. By installing the
+ZODB, you add such facilities to Python.
+
+#@-node:ekr.20041002151816.1:What is the ZODB?
+#@+node:ekr.20041002151816.2:How ZODB Works
+2.2 How ZODB Works
+
+The ZODB is conceptually simple. Python classes subclass a persistent.Persistent
+class to become ZODB-aware. Instances of persistent objects are brought in from
+a permanent storage medium, such as a disk file, when the program needs them,
+and remain cached in RAM. The ZODB traps modifications to objects, so that when
+a statement such as obj.size = 1 is executed, the modified object is marked as
+``dirty.'' On request, any dirty objects are written out to permanent storage;
+this is called committing a transaction. Transactions can also be aborted or
+rolled back, which results in any changes being discarded, dirty objects
+reverting to their initial state before the transaction began.
+
+#@-node:ekr.20041002151816.2:How ZODB Works
+#@+node:ekr.20041002151816.3:Rules for Writing Persistent Classes
+2.6 Rules for Writing Persistent Classes
+
+Practically all persistent languages impose some restrictions on programming
+style, warning against constructs they can't handle or adding subtle semantic
+changes, and the ZODB is no exception. Happily, the ZODB's restrictions are
+fairly simple to understand, and in practice it isn't too painful to work around
+them.
+
+The summary of rules is as follows:
+
+* If you modify a mutable object that's the value of an object's attribute, the
+ZODB can't catch that, and won't mark the object as dirty. The solution is to
+either set the dirty bit yourself when you modify mutable objects, or use a
+wrapper for Python's lists and dictionaries (PersistentList, PersistentMapping)
+that will set the dirty bit properly.
+
+* Recent versions of the ZODB allow writing a class with __setattr__ ,
+__getattr__, or __delattr__ methods. (Older versions didn't support this at
+all.) If you write such a __setattr__ or __delattr__ method, its code has to set
+the dirty bit manually.
+
+* A persistent class should not have an __del__ method. The database moves
+objects freely between memory and storage. If an object has not been used in a
+while, it may be released and its contents loaded from storage the next time it
+is used. Since the Python interpreter is unaware of persistence, it would call
+the __del__ each time the object was freed.
+#@nonl
+#@-node:ekr.20041002151816.3:Rules for Writing Persistent Classes
+#@-node:ekr.20041002151816:ZODB docs
+#@+node:ekr.20031218072017.406:Zop url's
+#@+node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
+#@-node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
+#@+node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
+#@-node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
+#@+node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
+#@-node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
+#@-node:ekr.20031218072017.406:Zop url's
+#@+node:ekr.20040107064101.5:Zope notes
+#@+node:ekr.20031218072017.405:Kent Tenny Notes
+@nocolor
+
+Outlook: server for email, addresses & calendar.  Groupware.  Chandler similar.
+
+Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
+
+Zope: another way to access Leo files.  Maybe twisted is better?
+
+Wiki anology: edit Leo files with browser.  Write through the web.
+
+longrun.org
+
+Wiki principles: 
+	- Sharing is 90% of collaboration.
+	- Zope: Subscribe to a wiki: email when page changes.
+	- RSS: xml that defines piece of info(tile,url,abstract)
+		- Client has a list of rss feeds: an xml file.
+		- List of intesting people: notified when they say something.
+
+Two goals:
+	- publish Leo files
+	- edit Leo files
+
+Brother needs cvs.
+Kent not so worried about cvs.
+	-Leo file is a web site!
+	- Helper layer between user and OS.
+		- Look at aap project.  Author of vim. a-p.org
+			- Replacement for make in Python.  Automating tool.
+		- Expert prepares Leo file.  User uses it.
+#@nonl
+#@-node:ekr.20031218072017.405:Kent Tenny Notes
+#@+node:ekr.20040107065006:posting
+@nocolor
+
+Yes he's absolutely right -- focus on the ZODB.
+
+..stay alway from ZTP. ZPT, TPZ, CMF, Plone and all that other stuff for now.
+
+I jsut came accross a handy slide show overview from last spring:
+http://jace.seacrow.com/tech/zope/blug-zodb
+
+BerkeyDB Storage is cool too and fits Leo well I think. plays nicely wiht ZODB
+standalnioe and in Zope.
+#@-node:ekr.20040107065006:posting
+#@+node:ekr.20040107064854:example Code
+from ZODG import FileStorage,DB
+from Persistence import Persistent
+
+# Connect to db.
+# FileStorage is standard: entire db is stored in a single file.
+storage = FileStorage.FileStorage("/tmp/test-filestorage.fs")
+db = DB.(storage)
+conn = db.open()
+
+# Get the root of the db.
+root = conn.root()
+
+# Defining user classes.
+class leoData(Persistent):
+	pass
+	
+# Commit or revert.
+get_transaction().commit()
+get_transaction().abort()
+#@nonl
+#@-node:ekr.20040107064854:example Code
+#@+node:ekr.20040107080609.1:Zshell
+@nocolor
+
+By: jasonic ( Jason Cunliffe )
+ZShell  
+2003-12-31 22:25
+
+Hi, Just another friendly reminder to check out Jerome Alet's ZShell, one of Zope's best kept secrets:
+
+http://www.librelogiciel.com/software/
+
+ZShell : Manipulate the Zope Object DataBase with Unix shell like commands
+
+and also
+
+ZShellScripts : Unifies the Zope notion of Scripts and provides several Script interpreters : Python, Unix shell , Lisp, Perl, PHP, Ruby, and Zope ZShell
+
+Not only for obvious usefullness, but also as a valuable study of Python access to the ZODB.
+
+JAXML is cool too..
+http://www.librelogiciel.com/software/jaxml/action_Presentation
+
+- Jason
+#@nonl
+#@-node:ekr.20040107080609.1:Zshell
+#@+node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
+#@-node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
+#@+node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
+#@-node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
+#@-node:ekr.20040107064101.5:Zope notes
+#@+node:ekr.20031218072017.412:Zope postings
+#@+node:ekr.20031218072017.413:From Rodrigo re: Zope.
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007586
+By: rodrigo_b
+
+z2.py,
+>Supposing that that I did find this file, what would I be looking for? 
+
+This is the Main script, the principal program, the code that startup all the
+servers, the only python program that make run Zope, it the code called by start.py,
+and it is the one to which you pass the command lines.
+
+With the command line you can indicate which services to start up at which ports.
+This is IMPORTANT. Also you can enable/disable the Debug mode.
+
+python z2.py --help will give you some infos about what I'm talking about.
+
+In linux the debug or not debug mode, enable the console or daemon mode (that
+means 'background task mode').
+
+In windows, I'm not sure that disabling the debug mode will be enough.
+I know that at the install time you can setup Zope as a Windows Service, so
+it will start automatically every time Windows Startup, and it will not open
+a console window.
+
+But first look at the debug mode.
+
+Start.bat give some defaults command lines to z2.py
+
+Webdav,
+>What issues are involved in this choice, and why should I care today? 
+
+from www.webdav.org
+
+What is WebDAV? 
+Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
+It is a set of extensions to the HTTP protocol which allows users to collaboratively
+edit and manage files on remote web servers.
+
+For example that means that you can open you Windows Explorer (from your mail
+I understand that you work on an MsWindows OS),
+tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
+view and edit the Zope Objects just as a normal file system (well, almost).
+
+WebDav is a standard and there are Python implementations. WebDav is support
+by  Oscom.
+
+WebDav is cool.
+WebDav is the 'highest level tool'.
+
+ZODB,
+
+>Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
+the ZODB?
+
+You have to thinks to ZODB just as what it is: a Persistent Object Database.
+Most objects in Zope are Persistents, that mean that their instances do not
+die when you shutdown the server.
+
+The ZODB store his data in it own format.
+I think that GNX should be keeped.
+You have to basic ways to put nodes into Zope.
+
+First: the hard way: create a new Product (Products are something like Zope
+plugins) that is based on the Leo code, but were there is no node storage, instead
+the node should be Persistents. Then add rendering code to this objects.
+
+Leo node object + Persistence + ZClass + Rendering Code -> Leo Zope node.
+
+Additionaly you should create an Folder like object that should be an 'Leo Outline
+Zope Object',  actuating as an Leo nodes container.
+
+This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
+
+Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
+DTMLDocuments, edited via WebDav, with <dtml-comments> , and stuff like that.
+The Leo import/export that nodes.
+
+RodrigoB.
+
+#@-node:ekr.20031218072017.413:From Rodrigo re: Zope.
+#@+node:ekr.20031218072017.414:Clarification from Kent Tenny
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2009081
+By: ktenney
+
+Edward,
+
+I don't see ZLeo replacing Leo, rather a method of accessing
+Leo files.
+
+When I write, I almost always want it to be web accessable,
+so that I can access it from any browser, and so that I can
+share it easily. I would like myfile.leo to live
+at http://longrun.org/leo/myfile.leo. It can be read and
+written to from any browser (according to how permissions are
+configured) The page describing how to configure Apache would
+be found at http://longrun.org/leo/myfile.leo/Apache/configure
+The only requirement to work with Leo files is a browser.
+
+I wouldn't want to lose the capability to edit outside
+the browser, using a standalone version of Leo or Zope's
+ExternalEditor product. ExternalEditor allows me to click
+an icon to open the page I'm viewing in any editor. I could
+open it in Leo as a Leo file, or open just the page in
+Vim (http://vim.sourceforge.net/index.php)
+
+Zope is ponderous, I think of it as more of a platform
+than an application. My understanding of how Zope works
+grows slowly, in the mean time my focus is on _products_.
+Installing a product in Zope is like installing an application
+in Windows or Linux.
+
+One of the most evolved products is Plone/CMF http://plone.org
+which is basically a turnkey web site.
+
+twisted http://twistedmatrix.com is a brilliant set of network
+programming tools. That's all I know about it.
+
+I'm not sure about Chandler (http://www.osafoundation.org/) 
+(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
+
+You might try subscribing to a Zope mailing list or two
+http://www.zope.org/Resources/MailingLists
+The community of users and developers is very important to Zope.
+
+Thanks,
+Kent
+#@-node:ekr.20031218072017.414:Clarification from Kent Tenny
+#@+node:ekr.20031218072017.415:From Rodrigo re: ip
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007817
+By: rodrigo_b
+
+If zope is running some server then this server will be accesible from your
+network if and only if there is no firewall in the way.
+
+The people can access to your services using (normally on internet you do not
+have a domain name)
+
+your_ip:the_service_port
+
+Example:
+zope http service on port 8080 on your machine.
+When  you connect to internet your machine got an extra IP.
+Then simple put on the web browser
+
+http://your_conexion_ip:8080
+
+and Tada you will see the root_zope/index_html object rendered intro HTML.
+
+Most of the ISP give you a dinamic IP.
+Some companies provides you dinamic IP Domain Name services, allowing to attach
+a domain name to your machine dinamically (each time you reconect).
+
+then you can have:
+
+http://leo.edward.com:8080/
+
+The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
+HTTP service.
+
+With this in mind you can access ftp
+
+ftp://your_ip_or_domain_name:8021
+
+or webdav, or anything else.
+#@-node:ekr.20031218072017.415:From Rodrigo re: ip
+#@+node:ekr.20031218072017.416:Other servers
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2007832
+By: rodrigo_b
+
+I would made a warning.
+
+Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
+flexible.
+
+There is a lot of other way.
+
+Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
+aviable.
+
+I think that we should define better 
+
+What we want to do?
+
+before choosing the tool.
+
+As I said, I had already used Zope, I choosed it because of very specific features,
+but nothing indicate that Zope is the best way to get Leo to the colaborative
+network universe.
+
+I think that we should at least consider:
+- SimpleHTTPServer
+- To take of the Medusa Server from Zope (that is use Zope code in the standard
+Leo distribution, avoying dependences)
+- Twisted matrix (I had no experience with it, but it looks much more
+flexible/powerfull)
+
+Zope provides you a specific framework, you have to match you application to
+this framework, Zope (in my opinion) it is not a tool, it's an ambient.
+
+It's seems that Edward it is new in the web oriented software, I think it has
+a lot of potencialities and it will benefits Leo devellopment.
+
+Please Edward, look at Zope as an example but not as THE options. Think about
+what can be done, what should be done, and then we will take the best tool.
+
+Anyway my opinion:
+- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
+server	
+- Medusa: usefull, very eficiente, just http server...
+- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
+new paradigm, a devellopment tool.
+- Zope: powerfull, eficient, comes with battery included, bad documentation,
+to very paradigm oriented, the apps have to fit the paradigm, don't believe
+all the promises, strong enthousiast comunity, poor web examples.
+
+
+RodrigoB. 
+#@-node:ekr.20031218072017.416:Other servers
+#@+node:ekr.20031218072017.417:Is my ip public?
+https://sourceforge.net/forum/message.php?msg_id=2007962
+By: bwmulder
+
+Since no one else answered this question, let me take a first take on the
+question:
+
+If you are connected to the internet, people can use your IP number to connect
+to your computer. This IP number is often given dynamically, though some DSL
+providers give you fixed IP numbers for an additional fee. If you did not ask
+for fixed IP numbers, you probably have an dynamic IP number (I think).
+
+An IP number consist of four digits. A connection to the (example) IP number
+111.222.333.444 can by made via the request http://111.222.333.444
+
+If you have a dynamic IP number, and your Internet provider provides you with
+some space to publish HTML, you could, via a script, upload your current IP
+number dynamically.
+
+You might also consider buying a domain name. In this case, people can use the
+domain name to connect to your computer instead of the IP number.
+
+Another consideration are firewalls. Normally, you want a firewall isolating
+your computer from attacks from the Internet. I firewall can be some additional
+software. I am currently using a router, a piece of hardware, as a firewall.
+Windows XP has firewall software build in. You might have to configure your
+firewall to let requests for your server go through.
+
+Finally, you might want to check the agreement you entered with your Internet
+service provider, if you are allowed to run a server from your connection. It
+might become a problem if your server becomes very popular.
+#@-node:ekr.20031218072017.417:Is my ip public?
+#@+node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2009279
+By: paulpaterson
+
+What I see Zope offering is an alternative way of storing and retrieving nodes.
+What you also get for "free" with Zope is concurrent access, security,
+http/ftp/webdav access to the same node information etc. The hidden price you
+pay is that Zope is big and many users will have other tools which can provide
+these facilities also.
+
+So, my thinking is that we can abstract the basic idea (alternative ways of
+storing and retrieving node information) into Leo and then let the magic really
+happen in the concrete implementation stage.
+
+What does this mean? Well, we could change Leo so that whenever it goes to retrieve
+Headline or Body it goes to a Node Server object to do that. The Node Server
+object uses whatever method it wants to retrieve or set the information. The
+Node server would also be responsible for telling Leo what child nodes an object
+has and whether they are clones or not.
+
+The cool part is that we could implement different kinds of Node server to talk
+to different back-ends. These can then be thought of as drivers. So we might
+have,
+
+- a file system driver where all information is stored in files and directories
+- a database driver where the DB stores all information
+- an ftp driver
+- a Zope driver
+- the default Leo driver
+
+People could write a driver to their own back end storage system. 
+
+What is the advantage of this?
+
+Well, the magic really happens in the back-end. If you choose a back end which
+supports versioning, security, concurrent working, web access, etc etc then
+Leo now supports them. If you choose a back-end which supports dynamic mark-up
+or some other fancy stuff then Leo supports it. The key is that Leo doesn't
+need to bind itself to any one system to achieve this - the end user can install
+the relevant driver, configure the back-end and just go with it.
+
+Paul
+#@-node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
+#@+node:ekr.20031218072017.419:From Paul Paterson
+Ok, I'll have a bash in a rough order or when things occurred...
+
+
+1. Everything is web based. I had the same problem you did. I ran the
+thing and said, "ok, so what did it do". Others have pointed you in the
+right direction now with visiting http://localhost:8080 and
+http://localhost:8080/manage to view the site and mange it respectively.
+
+If you are running WinNT, 2000 or XP you can also run Zope as a service,
+which is much more convenient as you don't need the console window open
+all the time.
+
+
+2. Everything in Zope is an object. Ok, you'll see this a lot. The best
+thing to do is think "wow, cool" and then forget it again as you
+probably wont really see how this helps at all until you get much deeper
+into Zope. 
+
+
+3. DTML allows you to construct web pages by piecing together bits much
+like writing a program from functions. In fact you will find DTML is a
+lot like tangling Leo's @root nodes. Here's a bit...
+
+<!-- start html -->
+
+<h>DTML allows you to assemble web pages much like Leo tangles
+documents</h>
+
+<p>For instance, have a look at how this page is constructed</p>
+
+<dtml-var first_bit>
+<dtml-var second_bit>
+<dtml-var third_bit>
+
+<!-- end html -->
+
+The <dtml-var name> bit is like a < < name > > directive. It effectively
+inserts the object (could be HTML, an image or something more complex)
+in the current page. 
+
+To see this snippet in action you can visit my server at
+http://24.243.129.68:8080/members/sandbox/index_html
+
+To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
+(username=edream, pwd=leo) and then click on the index_html to see the
+main DTML. Feel free to mess around in here but please don't publish the
+IP address as my ISP doesn't allow servers!
+
+
+4. There is a lot of power in Zope products. Try going to www.zope.org
+and seeing what is available. As an example I put a Wiki in the sandbox
+area http://24.243.129.68:8080/members/sandbox/edswiki
+
+
+5. If you are looking for a good book to begin with then steer clear of
+"The Zope Book"! If you don't mind paying then "The book of Zope" is a
+much better introduction. When you have read this then "The Zope Book"
+will make some sense but really I found this book tremendously hard to
+get through.
+
+
+6. Web standards are very cool! Zope supports FTP. Point your favourite
+FTP tool to,
+
+ftp://24.243.129.68:8021/members/sandbox/
+
+Or try using WebDav by creating a network place pointing to
+
+http://24.243.129.68:8080/members/sandbox
+
+You can then use windows explorer or an ftp tool to browse your objects.
+
+
+7. Everything is an object! I can't do justice to the concept of
+Acquisition here but by the time you have messed around with Zope a bit
+you should start to see how acquisition starts to make things really
+work like classes in Python. 
+
+
+I realize this isn't very coherent - if I get a spare moment this
+weekend I'll knock up a quick demo showing Leo interacting with Zope.
+
+Regards,
+
+Paul
+#@-node:ekr.20031218072017.419:From Paul Paterson
+#@+node:ekr.20040117092727.2:using zodb versions
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2379351
+By: korakot
+
+If leo use database storage (ZODB or otherwise)
+it could scale much better. This will bring us some
+possiblity to store all versions of changes to a node
+or a tree.
+
+Cloning will then point to a specific version. If there
+is no conflict, it can update to a later version when
+the primary clone change. If there is a conflict
+we can deal with it wisely using 'diff information'
+because we have 'all versions' stored.
+
+#@-node:ekr.20040117092727.2:using zodb versions
+#@+node:ekr.20031218072017.737:Leo & data bases
+From: "Scott Chapman" <scott_list@mischko.com>
+To: <edreamleo@charter.net>
+Sent: Monday, November 10, 2003 11:05 AM
+Subject: Enhancement request: Make Leo deal with a database
+
+It would be Way Cool if Leo could deal with psycopg or other DataBase 
+API compliant implementations and fetch and store database records.
+
+Details of what I'd like to see:
+
+I'm working on Python source code. I want Leo to pull a source code file 
+from a database record built something like this:
+
+filename: text
+updated: datetimestamp
+code: text
+
+Leo would insert a new record, not update an existing one, each time a 
+Save was done, with a more current time stamp.  
+
+When a File Open was requested (i.e. a node on a existing Leo outline 
+was being pulled from a database), Leo would fetch the most recent 
+time-stamped version only.
+
+I use this same technique for my wiki pages.  It's very easy to 
+implement in SQL and works great.
+
+Leo would also need the ability to save the same file to a regular 
+python source code file on disk at a specific location, so you'd have 
+to be able to put more than one save/load directive in a given node.
+
+This would provide a nice version history and could lead to other Useful 
+Things in Leo.
+
+Scott
+#@nonl
+#@-node:ekr.20031218072017.737:Leo & data bases
+#@-node:ekr.20031218072017.412:Zope postings
+#@-node:ekr.20041228084018.5:Finish zodb plugin
+#@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
+@ To do:
+
+- ** Use a general purpose XML parser to parse the jEdit mode files.
+- ** Do incremental syntax coloring
+	- Create lines table.
+	- Initialize lines table when select new node.
+- Use strings for states.
+- Define colorizeLine method.
+- Create self.state ivar
+- Use a keyword lead-in table.
+	- Use this for latex keywords and Leo keywords.
+	- Add ignore-case ivar.
+- Define @language xml.
+- Defined syntax coloring for all jEdit token types:
+	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
+	Where do Leo keywords fit in?
+
+#@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
+#@+node:ekr.20060130151453:Find leaks (may be fixed)
 - Test referers when deleting objects.
 #@nonl
 #@+node:ekr.20060202153509:Gc todo
@@ -3701,1036 +4728,11 @@ def printGcRefs (message=''):
 #@-node:ekr.20060205043324.2:Called from unit tests
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@-node:ekr.20060127100926:(Improved gc stats)
-#@-node:ekr.20060130151453:Find leaks
-#@+node:ekr.20051202094427:Resolve cvs conflicts
-Investigate meld:  http://meld.sourceforge.net/
-
-Create a 'generate cvs conflicst' script for testing.
-#@nonl
-#@+node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
-@nocolor
-
-There have been a couple different suggestions on how to obtain a .leo file
-that presents the conflicts for resolution.  My initial thought was to have
-some sort of external file containing only the structure information of interest.
-Edward has suggested that we could process the CVS created .leo file with all
-its conflict indicators.
-
-I'd like to offer another alternative: based on the ad-hoc procedure that Edward
-is currently using, i.e.,
-
-* Save your work to foo.leo file.
-* copy your foo.leo file to fooCvsTmp.leo
-* cvs ci
-* if there are no conflicts (hurray)
-*    remove fooCvsTmp.leo; finished
-* otherwise
-*    remove foo.leo
-*    cvs up foo.leo
-*    read foo.leo into an internal directed acyclic graph (DAG)
-*    generate the conflict resolution DAG from the proposed new leo internal
-DAG (which Leo already has as a matter of course) and the CVS derived DAG
-*    present for editting
-*    when you are satisfied and want to try to check in again, repeat.
-
-From the user's point of view, a CVS check in either succeeds or requires that
-the conflicts be resolved, after which another check in may be attempted.  If
-we're somehow interrupted in the middle of the process, the fooCvsTmp.leo file
-preserves the users work.
-#@+node:ekr.20050501111900:Stephen Schaefer
-@killcolor
-https://sourceforge.net/forum/message.php?msg_id=3125092
-By: thyrsus
-
-About a month ago, I posted a screed on how @thin was inadequate to address
-my needs; that what I needed to collaborate on via version control was exactly
-the essence of Leo's value: the multiple expressions of structure, which by
-their nature must exist outside of @thin.  I said I was going to live the pain
-to discover a modus vivendi.
-
-Having done that, let me now say:
-
-AAAAAAAAAAAAGGGGGGGGHHHHHHHHHH!
-
-But the exercise has led me to a vision, which I will implement to the extent
-my nonexistent spare time and paltry programming talents permit.
-
-The essence of the pain is "conflicts", which become more  certain to occur
-as the leo file encompases ever more related files.  As I work on a change to
-the Linux configuration, my colleague works on a change to the Solaris configuration,
-and one of us checks in our version of the leo file documenting the site
-configuration first, and the other cannot check in his version of that file.
-The conflict must be resolved by the human.  Using the "diff" tool on the .leo
-XML is not an answer (though thank Heaven and Ed for gnxs).  The resolution
-needs two levels of support: outline and node.
-
-With the .leo file declared binary, in the event of a conflict CVS leaves you
-with the most recent CVS version and your rejected version, and you're responsible
-for performing a reconciliation and then resubmitting that.  Leo will recognize
-the problem, and present both versions of the project, side by side, splitting
-the outline pane.  The parallel trees will scroll/expand/contract in unison.
-Outline branches present in CVS and not yours will display as blank space in
-your version; nodes present in your version and not CVS will display as blank
-space in the CVS version. The CVS version will be read only, your version editable.
-The same node with differences in its text or in its children will be highlighted.
-You will be able to drag nodes from the CVS version into your version. If the
-text of a selected node has conflicts, the text area will split in two, showing
-the CVS version and your version, with differences highlighted, both sides of
-the pane scrolling in unison, the CVS side read-only, and you can copy from
-that side to your side.  I intend to take as many ideas as I can from tkdiff
-(http://sourceforge.net/projects/tkdiff/ - see also
-http://freshmeat.net/screenshots/10602/ ).  (I have begun translating tkdiff
-from from tcl to python - nearly 9000 lines and I'm still learning both languages,
-so draw your own timeline.)  You edit your nodes, you edit your tree, you hit
-the "reconcile" button, and your reconciliation of the conflict goes into CVS.
-If, meanwhile, another one of your over-achieving colleages has again updated
-CVS, the process repeats with the most current CVS version.  Or you can hit
-the "abandon" button to give up on your changes.
-
-As the Hebrews say at Passover: "Next year in Jerusalem."
-#@nonl
-#@-node:ekr.20050501111900:Stephen Schaefer
-#@+node:ekr.20031218072017.659:Jonathon 1
-https://sourceforge.net/forum/message.php?msg_id=1803722
-By: jmgilligan
-
-What is the intended behavior when foo.leo has a cloned node that appears several
-times in a derived (or multiple derived files) and the user edits this file
-or files to change two or more instances of the cloned node in different ways.
-
-Example:
-
-@file foo.py
-****begin tnode
-@others
-****end tnode
-...definition of procedure a
-***begin tnode
-def a:
-...print "a:", <<bar>>
-***end tnode
-...<<bar>>
-****begin tnode
-"bar"
-****end tnode
-
-...definition of procedure b
-***begin tnode
-def b:
-...print "b:", <<bar>>
-***end tnode
-...<<bar>>
-****begin tnode
-"bar"
-****end tnode
-
-...definition of procedure c
-***begin tnode
-def c:
-...print "a:", <<bar>>
-***end tnode
-...<<bar>>
-****begin tnode
-"bar"
-****end tnode
-
-In the .leo, if I edit <<bar>>, it will change simultaneously in each place,
-always in synch. However, suppose I edit foo.py in a text editor and change
-foo.py to read:
-
-#@verbatim
-#@+leo
-#@verbatim
-#@+node:0::@file foo.py
-#@verbatim
-#@+body
-#@verbatim
-#@+others
-#@verbatim
-#@+node:1::definition of a
-#@verbatim
-#@+body
-print "a:", 
-#@verbatim
-#@<<bar>>
-#@verbatim
-#@+node:1::<<bar>>
-#@verbatim
-#@+body
-"bar"
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::<<bar>>
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::definition of a
-#@verbatim
-#@+node:2::definition of b
-#@verbatim
-#@+body
-print "b:", 
-#@verbatim
-#@<<bar>>
-#@verbatim
-#@+node:1::<<bar>>
-#@verbatim
-#@+body
-"variation b"
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::<<bar>>
-#@verbatim
-#@-body
-#@verbatim
-#@-node:2::definition of b
-#@verbatim
-#@+node:3::definition of c
-#@verbatim
-#@+body
-print "c:", 
-#@verbatim
-#@<<bar>>
-#@verbatim
-#@+node:1::<<bar>>
-#@verbatim
-#@+body
-"variation c"
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::<<bar>>
-#@verbatim
-#@-body
-#@verbatim
-#@-node:3::definition of c
-#@verbatim
-#@-others
-#@verbatim
-#@-body
-#@verbatim
-#@-node:0::@file foo.py
-#@verbatim
-#@-leo
-
-Now what is supposed to happen when leo tries to read foo.py back in? It seems
-that there are three possible behaviors:
-
-1) leo reports a conflict that the user needs to resolve.
-2) leo breaks the clone: the three nodes become separate vnodes, not clones
-of the same one.
-3) leo arbitrarily takes one of the tnodes to be the new tnode for all of the
-clones. This is currently what happens. It creates something like a race condition,
-where the last node in the derived file determines what the final result will
-be. In this case, all three tnodes get text "variation c".
-
-This general question of how Leo should deal with conflicts in clone nodes seems
-to me that it needs to be addressed, particularly with respect to trying to
-avoid cvs conflicts via thick/thin modes.
-
-Note that this can become quite a subtle question because the same node can
-be cloned across several different derived files, in which case a serious race
-condition may pertain.
-
-At the least, I would like to see leo perform consistency checking on cloned
-nodes when it reads a derived file back in and warn the user if cloned nodes
-are inconsistent.
-
-Note that the issue also occurs with OpenWith: I can open each instance of a
-cloned node as a separate file in the external text editor. Which version is
-read back into leo depends on the order in which I save them from the external
-editor.
-#@-node:ekr.20031218072017.659:Jonathon 1
-#@+node:ekr.20031218072017.660:Jonathan 2
-By: jmgilligan ( Jonathan M. Gilligan ) 
- Possible solution   
-2003-01-13 20:55  
-One possible solution for the conflicting clones problem is to have Leo, when it detects a conflicting clone, generate a text file (perhaps named LeoConflict_NNNN.leo, where NNNN is the gid of the node in question), which contains all the different versions of the node in question, output in leo XML format. 
-
-The vnode would then be marked with a "conflict" flag that would prevent the user from opening it in Leo until the conflict is resolved. See below for how the user resolves the conflict. 
-
-What I have in mind is something similar to the CVS conflict file, where a conflict between two versions is marked 
-
-<<<<<<< 
-blah blah blah? 
-======= 
-blah blah blah! 
->>>>>>> 
-
-Except that we would output this file in Leo XML format. The reason for XML format would be to avoid problems of how to generically delimit the different sections (different versions of the cloned node). Here leo's XML tags can unambiguously delimit the sections. 
-
-The user would then edit the conflict file and delete all but the desired version. Then he would tell leo to resolve the conflict by reading the corrected file in and replacing the contents of the conflicting node with the contents of the LeoConflict_NNNN.leo file. 
-
-On the down side, this may well be too baroque a fix for a problem that most users may never encounter. If so, perhaps it's best left alone until more pressing problems are solved. I know what I am doing with Leo and am always careful NOT to generate conflicting clones when I edit in an external text editor, so I don't absolutely need a resolution to this problem. I raised it because it's good for a program to have well-defined behavior when presented with anomalous input. 
-
-In this sense, perhaps the best thing is to allow users to generate code from clones (what Allan Holub referred to as "enough rope to shoot yourself in the foot"), but to tell them that this practice is frowned upon.  
-
- 
-#@-node:ekr.20031218072017.660:Jonathan 2
-#@+node:ekr.20031218072017.661:Gil 1
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1836117
-By: gilshwartz
-
-Edward, now that conflicting clones may not be the result of bad style, I would
-like to propose yet another solution that I have been thinking of for a while.
-
-My basic approach is that cloning is not just a convenience tool, it may also
-reflect some of the properties of the code/code set. Therefore my goal is for
-clone links to remain even if they are conflicting, and let the user resolve
-them at any convenient time. I also think that Leo's user interface is the best
-tool to resolve such conflicts.
-
-Thus here is my view of clone management and resolution inside Leo. Anytime
-content is loaded into Leo, if a clone set agrees (i.e. have the same content)
-all clone copies are marked "green". When one green clone is edited, all green
-clones are changed. This is Leo as it is now.
-
-If at some point conflicting clones are loaded, Leo decides on some representing
-content (may be based on policies like most occurring content, or latest timestamp,
-etc.) and provides visual clues for the conflict. The visual clue is give by
-a double node box, e.g.
-
-+---------------+
-+ clone org +
-+---------------+
-+ resolution +
-+---------------+
-
-such that it is a single node in the tree, but has two content node, the original
-text, and the possibly arbitrary resolution.
-
-The resolution pseudo node is marked "blue", while the original text is either
-"green", if it is identical to the blue node, or "red", if it is not. To emphasis,
-the red/green nodes contain the specific (possibly) unique code associated with
-the derived file, while the pseudo blue node contains the shared clone content.
-During save to derived files, only the red/green content is saved, so effectively
-the file is not changed and the conflict is not resolved until the user chooses
-to do so. However, the clone relationship (via the gti) remains.
-
-During editing, changes to red/green clones are local and do not propagate to
-other clone copies (actually any change to a green node would turn it red).
-Changes to the blue nodes do propagate since it is a single view of the clone.
-A node pair may be converted to a regular node, effectively getting a new gti
-and eliminating the blue copy. Or, it may be converted to the shared copy,
-effectively forgetting its original content (leaving only the blue node). Once
-there are no more red nodes in a clone set, all its nodes become green again
-and the conflict is resolved.
-
-Some additional clone actions I think are useful are:
-
-1. Go to next/prev clone.
-2. Go to next/prev green clone (useful when there are red ones).
-3. Convert all green copies to a new clone group (useful when some clone copies
-needs to remain clones, but break from the original clone set, thus getting
-a new clone gti)
-
-Action 3 enables the user to partition its clone set to several clone groups
-by copying a clone's original content to its blue copy and finding matching
-(green) clones.
-
-What do we gain by all this?
-
-1. We can have conflicting clones without catastrophes.
-2. We get tools to handle conflicts and resolve them.
-3. We keep on working is Leo's environment, which is the most supportive one
-we can expect.
-
-Gil
-
-(By the way, I have a feeling that it would be useful to include along with
-the gti a hash of its node content, which could tell Leo is a node was changed
-outside of it. Also, including a timestamp in the opening sentinel, indicating
-when Leo last saved it. These may help having intelligent decisions by Leo in
-cases like conflicting clones.)
-#@-node:ekr.20031218072017.661:Gil 1
-#@+node:ekr.20031218072017.662:Gil 2
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1804169
-By: gilshwartz
-
-Another thing to think about is what should happen when close heading is changing.
-Right now, if you are inside Leo, all headings will be changed, and if you try
-to change by hand it in the derived file, clone links are removed (after some
-error reporting). This is quite reasonable in the current scheme of things,
-where one is not really expected to mess up with Leo sentinels.
-
-However, if/when @include is implemented, one would probably edit some files
-with clones that may extend to other files and changing the clone node name
-(via Leo) is quite feasible. Note that the gti for the cloned node would probably
-not change. So
-
-1. Do Leo resync the clone content based on the gti?
-2. Does it break cloning and allocates a new gti for one (arbitrary?) clone
-set?
-3. Let the user resolve manually, offer undoable auto-resolution with reporting,
-other?
-
-More things to think about.
-
-Gil
-#@-node:ekr.20031218072017.662:Gil 2
-#@-node:ekr.20031218072017.658:Resolve CVS Conflicts command (Stepen Schaefer)
-#@-node:ekr.20051202094427:Resolve cvs conflicts
-#@+node:ekr.20041228084018.5:Finish zodb plugin
-@ New notes:
-
-- openFromZODB would be similar to openWithFileName, but gets root, current positions from zodb.
-
-- Either we save positions in the zodb, or we figure out how to create root, current positions from vnodes.
-    - Root positions is easy, but current position could be anywhere.
-
-- Save commands would commit to zodb.  Revert would abort.
-#@nonl
-#@+node:ekr.20040226114127: Zope test
-@color
-
-import leoGlobals as g
-import ZODB
-
-d = dir(ZODB) ; d.sort()
-
-g.trace(g.toString(d))
-
-if 0:
-    storage = ZODB.FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs")
-    g.trace(storage)
-    if 0:
-        db = ZODB.DB(storage)
-        g.es(storage)
-        g.es(db)
-        db.close()
-#@nonl
-#@-node:ekr.20040226114127: Zope test
-#@+node:ekr.20041002151816:ZODB docs
-#@+node:ekr.20041002151816.1:What is the ZODB?
-http://zope.org/Wikis/ZODB/FrontPage/guide/node2.html#SECTION000210000000000000000
-
-1.1 What is the ZODB?
-
-The ZODB is a persistence system for Python objects. Persistent programming
-languages provide facilities that automatically write objects to disk and read
-them in again when they're required by a running program. By installing the
-ZODB, you add such facilities to Python.
-
-#@-node:ekr.20041002151816.1:What is the ZODB?
-#@+node:ekr.20041002151816.2:How ZODB Works
-2.2 How ZODB Works
-
-The ZODB is conceptually simple. Python classes subclass a persistent.Persistent
-class to become ZODB-aware. Instances of persistent objects are brought in from
-a permanent storage medium, such as a disk file, when the program needs them,
-and remain cached in RAM. The ZODB traps modifications to objects, so that when
-a statement such as obj.size = 1 is executed, the modified object is marked as
-``dirty.'' On request, any dirty objects are written out to permanent storage;
-this is called committing a transaction. Transactions can also be aborted or
-rolled back, which results in any changes being discarded, dirty objects
-reverting to their initial state before the transaction began.
-
-#@-node:ekr.20041002151816.2:How ZODB Works
-#@+node:ekr.20041002151816.3:Rules for Writing Persistent Classes
-2.6 Rules for Writing Persistent Classes
-
-Practically all persistent languages impose some restrictions on programming
-style, warning against constructs they can't handle or adding subtle semantic
-changes, and the ZODB is no exception. Happily, the ZODB's restrictions are
-fairly simple to understand, and in practice it isn't too painful to work around
-them.
-
-The summary of rules is as follows:
-
-* If you modify a mutable object that's the value of an object's attribute, the
-ZODB can't catch that, and won't mark the object as dirty. The solution is to
-either set the dirty bit yourself when you modify mutable objects, or use a
-wrapper for Python's lists and dictionaries (PersistentList, PersistentMapping)
-that will set the dirty bit properly.
-
-* Recent versions of the ZODB allow writing a class with __setattr__ ,
-__getattr__, or __delattr__ methods. (Older versions didn't support this at
-all.) If you write such a __setattr__ or __delattr__ method, its code has to set
-the dirty bit manually.
-
-* A persistent class should not have an __del__ method. The database moves
-objects freely between memory and storage. If an object has not been used in a
-while, it may be released and its contents loaded from storage the next time it
-is used. Since the Python interpreter is unaware of persistence, it would call
-the __del__ each time the object was freed.
-#@nonl
-#@-node:ekr.20041002151816.3:Rules for Writing Persistent Classes
-#@-node:ekr.20041002151816:ZODB docs
-#@+node:ekr.20031218072017.406:Zop url's
-#@+node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@-node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@+node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@-node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@+node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.406:Zop url's
-#@+node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20031218072017.405:Kent Tenny Notes
-@nocolor
-
-Outlook: server for email, addresses & calendar.  Groupware.  Chandler similar.
-
-Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
-
-Zope: another way to access Leo files.  Maybe twisted is better?
-
-Wiki anology: edit Leo files with browser.  Write through the web.
-
-longrun.org
-
-Wiki principles: 
-	- Sharing is 90% of collaboration.
-	- Zope: Subscribe to a wiki: email when page changes.
-	- RSS: xml that defines piece of info(tile,url,abstract)
-		- Client has a list of rss feeds: an xml file.
-		- List of intesting people: notified when they say something.
-
-Two goals:
-	- publish Leo files
-	- edit Leo files
-
-Brother needs cvs.
-Kent not so worried about cvs.
-	-Leo file is a web site!
-	- Helper layer between user and OS.
-		- Look at aap project.  Author of vim. a-p.org
-			- Replacement for make in Python.  Automating tool.
-		- Expert prepares Leo file.  User uses it.
-#@nonl
-#@-node:ekr.20031218072017.405:Kent Tenny Notes
-#@+node:ekr.20040107065006:posting
-@nocolor
-
-Yes he's absolutely right -- focus on the ZODB.
-
-..stay alway from ZTP. ZPT, TPZ, CMF, Plone and all that other stuff for now.
-
-I jsut came accross a handy slide show overview from last spring:
-http://jace.seacrow.com/tech/zope/blug-zodb
-
-BerkeyDB Storage is cool too and fits Leo well I think. plays nicely wiht ZODB
-standalnioe and in Zope.
-#@-node:ekr.20040107065006:posting
-#@+node:ekr.20040107064854:example Code
-from ZODG import FileStorage,DB
-from Persistence import Persistent
-
-# Connect to db.
-# FileStorage is standard: entire db is stored in a single file.
-storage = FileStorage.FileStorage("/tmp/test-filestorage.fs")
-db = DB.(storage)
-conn = db.open()
-
-# Get the root of the db.
-root = conn.root()
-
-# Defining user classes.
-class leoData(Persistent):
-	pass
-	
-# Commit or revert.
-get_transaction().commit()
-get_transaction().abort()
-#@nonl
-#@-node:ekr.20040107064854:example Code
-#@+node:ekr.20040107080609.1:Zshell
-@nocolor
-
-By: jasonic ( Jason Cunliffe )
-ZShell  
-2003-12-31 22:25
-
-Hi, Just another friendly reminder to check out Jerome Alet's ZShell, one of Zope's best kept secrets:
-
-http://www.librelogiciel.com/software/
-
-ZShell : Manipulate the Zope Object DataBase with Unix shell like commands
-
-and also
-
-ZShellScripts : Unifies the Zope notion of Scripts and provides several Script interpreters : Python, Unix shell , Lisp, Perl, PHP, Ruby, and Zope ZShell
-
-Not only for obvious usefullness, but also as a valuable study of Python access to the ZODB.
-
-JAXML is cool too..
-http://www.librelogiciel.com/software/jaxml/action_Presentation
-
-- Jason
-#@nonl
-#@-node:ekr.20040107080609.1:Zshell
-#@+node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@-node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@+node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20031218072017.412:Zope postings
-#@+node:ekr.20031218072017.413:From Rodrigo re: Zope.
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007586
-By: rodrigo_b
-
-z2.py,
->Supposing that that I did find this file, what would I be looking for? 
-
-This is the Main script, the principal program, the code that startup all the
-servers, the only python program that make run Zope, it the code called by start.py,
-and it is the one to which you pass the command lines.
-
-With the command line you can indicate which services to start up at which ports.
-This is IMPORTANT. Also you can enable/disable the Debug mode.
-
-python z2.py --help will give you some infos about what I'm talking about.
-
-In linux the debug or not debug mode, enable the console or daemon mode (that
-means 'background task mode').
-
-In windows, I'm not sure that disabling the debug mode will be enough.
-I know that at the install time you can setup Zope as a Windows Service, so
-it will start automatically every time Windows Startup, and it will not open
-a console window.
-
-But first look at the debug mode.
-
-Start.bat give some defaults command lines to z2.py
-
-Webdav,
->What issues are involved in this choice, and why should I care today? 
-
-from www.webdav.org
-
-What is WebDAV? 
-Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
-It is a set of extensions to the HTTP protocol which allows users to collaboratively
-edit and manage files on remote web servers.
-
-For example that means that you can open you Windows Explorer (from your mail
-I understand that you work on an MsWindows OS),
-tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
-view and edit the Zope Objects just as a normal file system (well, almost).
-
-WebDav is a standard and there are Python implementations. WebDav is support
-by  Oscom.
-
-WebDav is cool.
-WebDav is the 'highest level tool'.
-
-ZODB,
-
->Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
-the ZODB?
-
-You have to thinks to ZODB just as what it is: a Persistent Object Database.
-Most objects in Zope are Persistents, that mean that their instances do not
-die when you shutdown the server.
-
-The ZODB store his data in it own format.
-I think that GNX should be keeped.
-You have to basic ways to put nodes into Zope.
-
-First: the hard way: create a new Product (Products are something like Zope
-plugins) that is based on the Leo code, but were there is no node storage, instead
-the node should be Persistents. Then add rendering code to this objects.
-
-Leo node object + Persistence + ZClass + Rendering Code -> Leo Zope node.
-
-Additionaly you should create an Folder like object that should be an 'Leo Outline
-Zope Object',  actuating as an Leo nodes container.
-
-This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
-
-Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
-DTMLDocuments, edited via WebDav, with <dtml-comments> , and stuff like that.
-The Leo import/export that nodes.
-
-RodrigoB.
-
-#@-node:ekr.20031218072017.413:From Rodrigo re: Zope.
-#@+node:ekr.20031218072017.414:Clarification from Kent Tenny
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009081
-By: ktenney
-
-Edward,
-
-I don't see ZLeo replacing Leo, rather a method of accessing
-Leo files.
-
-When I write, I almost always want it to be web accessable,
-so that I can access it from any browser, and so that I can
-share it easily. I would like myfile.leo to live
-at http://longrun.org/leo/myfile.leo. It can be read and
-written to from any browser (according to how permissions are
-configured) The page describing how to configure Apache would
-be found at http://longrun.org/leo/myfile.leo/Apache/configure
-The only requirement to work with Leo files is a browser.
-
-I wouldn't want to lose the capability to edit outside
-the browser, using a standalone version of Leo or Zope's
-ExternalEditor product. ExternalEditor allows me to click
-an icon to open the page I'm viewing in any editor. I could
-open it in Leo as a Leo file, or open just the page in
-Vim (http://vim.sourceforge.net/index.php)
-
-Zope is ponderous, I think of it as more of a platform
-than an application. My understanding of how Zope works
-grows slowly, in the mean time my focus is on _products_.
-Installing a product in Zope is like installing an application
-in Windows or Linux.
-
-One of the most evolved products is Plone/CMF http://plone.org
-which is basically a turnkey web site.
-
-twisted http://twistedmatrix.com is a brilliant set of network
-programming tools. That's all I know about it.
-
-I'm not sure about Chandler (http://www.osafoundation.org/) 
-(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
-
-You might try subscribing to a Zope mailing list or two
-http://www.zope.org/Resources/MailingLists
-The community of users and developers is very important to Zope.
-
-Thanks,
-Kent
-#@-node:ekr.20031218072017.414:Clarification from Kent Tenny
-#@+node:ekr.20031218072017.415:From Rodrigo re: ip
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007817
-By: rodrigo_b
-
-If zope is running some server then this server will be accesible from your
-network if and only if there is no firewall in the way.
-
-The people can access to your services using (normally on internet you do not
-have a domain name)
-
-your_ip:the_service_port
-
-Example:
-zope http service on port 8080 on your machine.
-When  you connect to internet your machine got an extra IP.
-Then simple put on the web browser
-
-http://your_conexion_ip:8080
-
-and Tada you will see the root_zope/index_html object rendered intro HTML.
-
-Most of the ISP give you a dinamic IP.
-Some companies provides you dinamic IP Domain Name services, allowing to attach
-a domain name to your machine dinamically (each time you reconect).
-
-then you can have:
-
-http://leo.edward.com:8080/
-
-The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
-HTTP service.
-
-With this in mind you can access ftp
-
-ftp://your_ip_or_domain_name:8021
-
-or webdav, or anything else.
-#@-node:ekr.20031218072017.415:From Rodrigo re: ip
-#@+node:ekr.20031218072017.416:Other servers
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007832
-By: rodrigo_b
-
-I would made a warning.
-
-Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
-flexible.
-
-There is a lot of other way.
-
-Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
-aviable.
-
-I think that we should define better 
-
-What we want to do?
-
-before choosing the tool.
-
-As I said, I had already used Zope, I choosed it because of very specific features,
-but nothing indicate that Zope is the best way to get Leo to the colaborative
-network universe.
-
-I think that we should at least consider:
-- SimpleHTTPServer
-- To take of the Medusa Server from Zope (that is use Zope code in the standard
-Leo distribution, avoying dependences)
-- Twisted matrix (I had no experience with it, but it looks much more
-flexible/powerfull)
-
-Zope provides you a specific framework, you have to match you application to
-this framework, Zope (in my opinion) it is not a tool, it's an ambient.
-
-It's seems that Edward it is new in the web oriented software, I think it has
-a lot of potencialities and it will benefits Leo devellopment.
-
-Please Edward, look at Zope as an example but not as THE options. Think about
-what can be done, what should be done, and then we will take the best tool.
-
-Anyway my opinion:
-- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
-server	
-- Medusa: usefull, very eficiente, just http server...
-- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
-new paradigm, a devellopment tool.
-- Zope: powerfull, eficient, comes with battery included, bad documentation,
-to very paradigm oriented, the apps have to fit the paradigm, don't believe
-all the promises, strong enthousiast comunity, poor web examples.
-
-
-RodrigoB. 
-#@-node:ekr.20031218072017.416:Other servers
-#@+node:ekr.20031218072017.417:Is my ip public?
-https://sourceforge.net/forum/message.php?msg_id=2007962
-By: bwmulder
-
-Since no one else answered this question, let me take a first take on the
-question:
-
-If you are connected to the internet, people can use your IP number to connect
-to your computer. This IP number is often given dynamically, though some DSL
-providers give you fixed IP numbers for an additional fee. If you did not ask
-for fixed IP numbers, you probably have an dynamic IP number (I think).
-
-An IP number consist of four digits. A connection to the (example) IP number
-111.222.333.444 can by made via the request http://111.222.333.444
-
-If you have a dynamic IP number, and your Internet provider provides you with
-some space to publish HTML, you could, via a script, upload your current IP
-number dynamically.
-
-You might also consider buying a domain name. In this case, people can use the
-domain name to connect to your computer instead of the IP number.
-
-Another consideration are firewalls. Normally, you want a firewall isolating
-your computer from attacks from the Internet. I firewall can be some additional
-software. I am currently using a router, a piece of hardware, as a firewall.
-Windows XP has firewall software build in. You might have to configure your
-firewall to let requests for your server go through.
-
-Finally, you might want to check the agreement you entered with your Internet
-service provider, if you are allowed to run a server from your connection. It
-might become a problem if your server becomes very popular.
-#@-node:ekr.20031218072017.417:Is my ip public?
-#@+node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009279
-By: paulpaterson
-
-What I see Zope offering is an alternative way of storing and retrieving nodes.
-What you also get for "free" with Zope is concurrent access, security,
-http/ftp/webdav access to the same node information etc. The hidden price you
-pay is that Zope is big and many users will have other tools which can provide
-these facilities also.
-
-So, my thinking is that we can abstract the basic idea (alternative ways of
-storing and retrieving node information) into Leo and then let the magic really
-happen in the concrete implementation stage.
-
-What does this mean? Well, we could change Leo so that whenever it goes to retrieve
-Headline or Body it goes to a Node Server object to do that. The Node Server
-object uses whatever method it wants to retrieve or set the information. The
-Node server would also be responsible for telling Leo what child nodes an object
-has and whether they are clones or not.
-
-The cool part is that we could implement different kinds of Node server to talk
-to different back-ends. These can then be thought of as drivers. So we might
-have,
-
-- a file system driver where all information is stored in files and directories
-- a database driver where the DB stores all information
-- an ftp driver
-- a Zope driver
-- the default Leo driver
-
-People could write a driver to their own back end storage system. 
-
-What is the advantage of this?
-
-Well, the magic really happens in the back-end. If you choose a back end which
-supports versioning, security, concurrent working, web access, etc etc then
-Leo now supports them. If you choose a back-end which supports dynamic mark-up
-or some other fancy stuff then Leo supports it. The key is that Leo doesn't
-need to bind itself to any one system to achieve this - the end user can install
-the relevant driver, configure the back-end and just go with it.
-
-Paul
-#@-node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-#@+node:ekr.20031218072017.419:From Paul Paterson
-Ok, I'll have a bash in a rough order or when things occurred...
-
-
-1. Everything is web based. I had the same problem you did. I ran the
-thing and said, "ok, so what did it do". Others have pointed you in the
-right direction now with visiting http://localhost:8080 and
-http://localhost:8080/manage to view the site and mange it respectively.
-
-If you are running WinNT, 2000 or XP you can also run Zope as a service,
-which is much more convenient as you don't need the console window open
-all the time.
-
-
-2. Everything in Zope is an object. Ok, you'll see this a lot. The best
-thing to do is think "wow, cool" and then forget it again as you
-probably wont really see how this helps at all until you get much deeper
-into Zope. 
-
-
-3. DTML allows you to construct web pages by piecing together bits much
-like writing a program from functions. In fact you will find DTML is a
-lot like tangling Leo's @root nodes. Here's a bit...
-
-<!-- start html -->
-
-<h>DTML allows you to assemble web pages much like Leo tangles
-documents</h>
-
-<p>For instance, have a look at how this page is constructed</p>
-
-<dtml-var first_bit>
-<dtml-var second_bit>
-<dtml-var third_bit>
-
-<!-- end html -->
-
-The <dtml-var name> bit is like a < < name > > directive. It effectively
-inserts the object (could be HTML, an image or something more complex)
-in the current page. 
-
-To see this snippet in action you can visit my server at
-http://24.243.129.68:8080/members/sandbox/index_html
-
-To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
-(username=edream, pwd=leo) and then click on the index_html to see the
-main DTML. Feel free to mess around in here but please don't publish the
-IP address as my ISP doesn't allow servers!
-
-
-4. There is a lot of power in Zope products. Try going to www.zope.org
-and seeing what is available. As an example I put a Wiki in the sandbox
-area http://24.243.129.68:8080/members/sandbox/edswiki
-
-
-5. If you are looking for a good book to begin with then steer clear of
-"The Zope Book"! If you don't mind paying then "The book of Zope" is a
-much better introduction. When you have read this then "The Zope Book"
-will make some sense but really I found this book tremendously hard to
-get through.
-
-
-6. Web standards are very cool! Zope supports FTP. Point your favourite
-FTP tool to,
-
-ftp://24.243.129.68:8021/members/sandbox/
-
-Or try using WebDav by creating a network place pointing to
-
-http://24.243.129.68:8080/members/sandbox
-
-You can then use windows explorer or an ftp tool to browse your objects.
-
-
-7. Everything is an object! I can't do justice to the concept of
-Acquisition here but by the time you have messed around with Zope a bit
-you should start to see how acquisition starts to make things really
-work like classes in Python. 
-
-
-I realize this isn't very coherent - if I get a spare moment this
-weekend I'll knock up a quick demo showing Leo interacting with Zope.
-
-Regards,
-
-Paul
-#@-node:ekr.20031218072017.419:From Paul Paterson
-#@+node:ekr.20040117092727.2:using zodb versions
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2379351
-By: korakot
-
-If leo use database storage (ZODB or otherwise)
-it could scale much better. This will bring us some
-possiblity to store all versions of changes to a node
-or a tree.
-
-Cloning will then point to a specific version. If there
-is no conflict, it can update to a later version when
-the primary clone change. If there is a conflict
-we can deal with it wisely using 'diff information'
-because we have 'all versions' stored.
-
-#@-node:ekr.20040117092727.2:using zodb versions
-#@+node:ekr.20031218072017.737:Leo & data bases
-From: "Scott Chapman" <scott_list@mischko.com>
-To: <edreamleo@charter.net>
-Sent: Monday, November 10, 2003 11:05 AM
-Subject: Enhancement request: Make Leo deal with a database
-
-It would be Way Cool if Leo could deal with psycopg or other DataBase 
-API compliant implementations and fetch and store database records.
-
-Details of what I'd like to see:
-
-I'm working on Python source code. I want Leo to pull a source code file 
-from a database record built something like this:
-
-filename: text
-updated: datetimestamp
-code: text
-
-Leo would insert a new record, not update an existing one, each time a 
-Save was done, with a more current time stamp.  
-
-When a File Open was requested (i.e. a node on a existing Leo outline 
-was being pulled from a database), Leo would fetch the most recent 
-time-stamped version only.
-
-I use this same technique for my wiki pages.  It's very easy to 
-implement in SQL and works great.
-
-Leo would also need the ability to save the same file to a regular 
-python source code file on disk at a specific location, so you'd have 
-to be able to put more than one save/load directive in a given node.
-
-This would provide a nice version history and could lead to other Useful 
-Things in Leo.
-
-Scott
-#@nonl
-#@-node:ekr.20031218072017.737:Leo & data bases
-#@-node:ekr.20031218072017.412:Zope postings
-#@-node:ekr.20041228084018.5:Finish zodb plugin
-#@+node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
-@ To do:
-
-- ** Use a general purpose XML parser to parse the jEdit mode files.
-- ** Do incremental syntax coloring
-	- Create lines table.
-	- Initialize lines table when select new node.
-- Use strings for states.
-- Define colorizeLine method.
-- Create self.state ivar
-- Use a keyword lead-in table.
-	- Use this for latex keywords and Leo keywords.
-	- Add ignore-case ivar.
-- Define @language xml.
-- Defined syntax coloring for all jEdit token types:
-	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
-	Where do Leo keywords fit in?
-
-#@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
+#@-node:ekr.20060130151453:Find leaks (may be fixed)
 #@-node:ekr.20060209104733:Urgent and big (overdue)
 #@+node:ekr.20060116073938:To do 4.4b3
+#@+node:ekr.20060116083043.1:Add context-menus on nodes or text
+#@-node:ekr.20060116083043.1:Add context-menus on nodes or text
 #@+node:ekr.20060122183544:Improve isearch
 @nocolor
 
