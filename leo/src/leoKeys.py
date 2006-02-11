@@ -428,11 +428,12 @@ class keyHandlerClass:
         for bunch in bunchList:
             if ( bunch and
                 # (not bunch.pane.endswith('-mode') and not pane.endswith('-mode')) and
+                bunch.pane != 'mini' and # Minibuffer bindings are completely separate.
                 (bunch.pane == pane or pane == 'all' or bunch.pane == 'all') and
                 commandName != bunch.commandName
             ):
                 g.es_print('Ignoring redefinition of %s from %s to %s in %s' % (
-                    shortcut,
+                    k.prettyPrintKey(shortcut),
                     bunch.commandName,commandName,pane),
                     color='blue')
                 return
@@ -1292,18 +1293,19 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20051023132350.1:setLabel
     #@+node:ekr.20060206064635:extendLabel
-    def extendLabel(self,s,select=False):
+    def extendLabel(self,s,select=False,protect=False):
         
         k = self ; c = k.c ; w = self.widget
         if not w: return
     
         if self.useTextWidget:
-            # No need to save focus.
-            i = w.index('end')
+            c.widgetWantsFocusNow(w)
             w.insert('end',s)
             if select:
-                g.app.gui.setTextSelection(w,i,'end',insert=None)
-    #@nonl
+                i,j = k.getEditableTextRange()
+                g.app.gui.setTextSelection(w,i,j,insert=j)
+            if protect:
+                k.protectLabel()
     #@-node:ekr.20060206064635:extendLabel
     #@+node:ekr.20050920085536.36:setLabelBlue
     def setLabelBlue (self,label=None,protect=False):
@@ -1336,11 +1338,11 @@ class keyHandlerClass:
         '''Mimic what would happen with the keyboard and a Text editor
         instead of plain accumalation.'''
         
-        k = self ; s = k.getLabel()
+        k = self ; c = k.c ; w = self.widget
         ch = (event and event.char) or ''
         keysym = (event and event.keysym) or ''
-        
-        # g.trace(repr(s),ch,keysym,k.stroke)
+    
+        # g.trace(ch,keysym,k.stroke)
         
         if ch == '\b': # Handle backspace.
             # Don't backspace over the prompt.
@@ -1351,10 +1353,17 @@ class keyHandlerClass:
         elif suppressControlChars and ch not in string.printable:
             return
         elif ch and ch not in ('\n','\r'):
-            s = s + ch # Add the character.
-        
-        k.setLabel(s)
-    #@nonl
+            if self.useTextWidget:
+                c.widgetWantsFocusNow(w)
+                i,j = g.app.gui.getTextSelection(w)
+                if i != j:
+                    w.delete(i,j)
+                i = w.index('insert')
+                w.insert(i,ch)
+                # g.trace(k.mb_prefix)       
+            else:
+                # Just add the character.
+                k.setLabel(k.getLabel() + ch)
     #@-node:ekr.20050920085536.38:updateLabel
     #@+node:ekr.20060210141604.1:getEditableTextRange
     def getEditableTextRange (self):
@@ -1890,19 +1899,24 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.46:doBackSpace
     # Used by getArg and fullCommand.
     
-    def doBackSpace (self,defaultCompletionList,redraw=True):
+    def doBackSpace (self,defaultCompletionList,completion=True):
     
         '''Cut back to previous prefix and update prefix.'''
     
         k = self ; c = k.c
-    
-        if len(k.mb_tabListPrefix) > len(k.mb_prefix):
-    
-            k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
-            k.setLabel(k.mb_tabListPrefix)
-    
-        if redraw:
-            k.computeCompletionList(defaultCompletionList,backspace=True)
+        
+        # g.trace('completion',completion)
+        
+        if completion:
+            if len(k.mb_tabListPrefix) > len(k.mb_prefix):
+                k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
+                k.setLabel(k.mb_tabListPrefix)
+                k.computeCompletionList(defaultCompletionList,backspace=True)
+        else:
+            s = k.getLabel(ignorePrompt=False)
+            # g.trace(repr(s),repr(k.mb_prefix))
+            if s and len(s) > len(k.mb_prefix):
+                k.setLabel(s[:-1])
     #@nonl
     #@-node:ekr.20050920085536.46:doBackSpace
     #@+node:ekr.20050920085536.44:doTabCompletion
@@ -1926,7 +1940,6 @@ class keyHandlerClass:
                 k.computeCompletionList(defaultTabList,backspace=False)
     
         c.bodyWantsFocus()
-    #@nonl
     #@-node:ekr.20050920085536.44:doTabCompletion
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
     def getShortcutForCommandName (self,commandName):
