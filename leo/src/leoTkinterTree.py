@@ -1542,11 +1542,14 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20051105103233:Helpers
     #@+node:ekr.20040803072955.78:Click Box...
     #@+node:ekr.20040803072955.79:onClickBoxClick
-    def onClickBoxClick (self,event):
+    def onClickBoxClick (self,event,p=None):
         
         c = self.c ; p1 = c.currentPosition()
+        
+        if not p: p = self.eventToPosition(event)
+        if not p: return
+        
         c.setLog()
-        p = self.eventToPosition(event)
     
         c.beginUpdate()
         try:
@@ -1635,22 +1638,24 @@ class leoTkinterTree (leoFrame.leoTree):
     # This precomputes numberOfVisibleNodes(), a significant optimization.
     # We also indicate where findPositionWithIconId() should start looking for tree id's.
     
-    def startDrag (self,event):
+    def startDrag (self,event,p=None):
         
         """The official helper of the onDrag event handler."""
         
         c = self.c ; canvas = self.canvas
-        c.setLog()
-        assert(not self.drag_p)
-        x = canvas.canvasx(event.x)
-        y = canvas.canvasy(event.y)
-        theId = canvas.find_closest(x,y)
-        # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-        if theId is None: return
-        try: theId = theId[0]
-        except: pass
-        p = self.ids.get(theId)
+        
+        if not p:
+            assert(not self.drag_p)
+            x = canvas.canvasx(event.x)
+            y = canvas.canvasy(event.y)
+            theId = canvas.find_closest(x,y)
+            # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+            if theId is None: return
+            try: theId = theId[0]
+            except: pass
+            p = self.ids.get(theId)
         if not p: return
+        c.setLog()
         self.drag_p = p.copy() # defensive programming: not needed.
         self.dragging = True
         # g.trace("*** start drag ***",theId,self.drag_p.headString())
@@ -1862,11 +1867,11 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.90:head key handlers
     #@+node:ekr.20040803072955.80:Icon Box...
     #@+node:ekr.20040803072955.81:onIconBoxClick
-    def onIconBoxClick (self,event):
+    def onIconBoxClick (self,event,p=None):
         
         c = self.c ; tree = self
         
-        p = self.eventToPosition(event)
+        if not p: p = self.eventToPosition(event)
         if not p: return
         
         c.setLog()
@@ -1886,16 +1891,14 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.81:onIconBoxClick
     #@+node:ekr.20040803072955.89:onIconBoxRightClick
-    def onIconBoxRightClick (self,event):
+    def onIconBoxRightClick (self,event,p=None):
         
         """Handle a right click in any outline widget."""
     
         c = self.c
         
-        p = self.eventToPosition(event)
-        if not p:
-            g.trace('*'*20,'oops')
-            return
+        if not p: p = self.eventToPosition(event)
+        if not p: return
         
         c.setLog()
     
@@ -1911,11 +1914,11 @@ class leoTkinterTree (leoFrame.leoTree):
         return 'break'
     #@-node:ekr.20040803072955.89:onIconBoxRightClick
     #@+node:ekr.20040803072955.82:onIconBoxDoubleClick
-    def onIconBoxDoubleClick (self,event):
+    def onIconBoxDoubleClick (self,event,p=None):
         
         c = self.c
     
-        p = self.eventToPosition(event)
+        if not p: p = self.eventToPosition(event)
         if not p: return
         
         c.setLog()
@@ -2009,15 +2012,16 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.86:onCtontrolT
     #@+node:ekr.20040803072955.87:onHeadlineClick
-    def onHeadlineClick (self,event):
+    def onHeadlineClick (self,event,p=None):
         
         c = self.c ; w = event.widget
-    
-        try:
-            p = w.leo_position
-        except AttributeError:
-            g.trace('*'*20,'oops')
-            return 'break'
+        
+        if not p:
+            try:
+                p = w.leo_position
+            except AttributeError:
+                g.trace('*'*20,'oops')
+        if not p: return 'break'
             
         # g.trace(p.headString())
         
@@ -2088,7 +2092,9 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.110:tree.OnPopup & allies
     def OnPopup (self,p,event):
         
-        """Handle right-clicks in the outline."""
+        """Handle right-clicks in the outline.
+        
+        This is *not* an event handler: it is called from other event handlers."""
         
         # Note: "headrclick" hooks handled by vnode callback routine.
     
