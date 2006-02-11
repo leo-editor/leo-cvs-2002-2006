@@ -6213,7 +6213,7 @@ class findTab (leoFind.leoFind):
         
         def resetWrapCallback(event,self=self,k=k):
             self.resetWrap(event)
-            k.masterKeyHandler(event)
+            return k.masterKeyHandler(event)
     
         table = (
             ('<Button-1>',  k.masterClickHandler),
