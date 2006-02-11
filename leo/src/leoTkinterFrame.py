@@ -1346,8 +1346,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
             ('<Button-3>',      k.masterClick3Handler),
             ('<Double-1>',      k.masterDoubleClickHandler),
             ('<Double-3>',      k.masterDoubleClick3Handler),
-            # ('<FocusIn>',     k.onFocusInMinibuffer),
-            # ('<FocusOut>',    k.onFocusOutMinibuffer),
         ):
             t.bind(kind,callback)
     
@@ -1972,15 +1970,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
         f = self ; c = f.c ; w = event and event.widget
         if not w or not g.app.gui.isTextWidget(w): return
     
-        name = c.widget_name(w)
+        wname = c.widget_name(w)
         oldSel = g.app.gui.getTextSelection(w)
         oldText = w.get('1.0','end')
         i,j = g.app.gui.getTextSelection(w)
         s = s1 = g.app.gui.getTextFromClipboard()
+        # g.trace(wname,s,i,j)
         
-        # g.trace(name)
-        
-        singleLine = name.startswith('head') or name.startswith('minibuffer')
+        singleLine = wname.startswith('head') or wname.startswith('minibuffer')
         
         if singleLine:
             # Strip trailing newlines so the truncation doesn't cause confusion.
@@ -1992,19 +1989,20 @@ class leoTkinterFrame (leoFrame.leoFrame):
             w.delete(i,j)
         w.insert(i,s)
     
-        if name.startswith('body'):
+        if wname.startswith('body'):
             c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
         elif singleLine:
             s = w.get('1.0','end')
             while s and s [ -1] in ('\n','\r'):
                 s = s [: -1]
-            if name.startswith('head'):
+            if wname.startswith('head'):
                 # The headline is not officially changed yet.
                 # p.initHeadString(s)
                 w.configure(width=f.tree.headWidth(s=s))
-        else:
-            pass
-        
+        else: pass
+            
+        return 'break' # Essential
+    
     OnPasteFromMenu = pasteText
     #@nonl
     #@-node:ekr.20051011072903.5:pasteText
@@ -3209,7 +3207,7 @@ class leoTkinterLog (leoFrame.leoLog):
     
         def hullMenuCallback(event):
             g.trace()
-            self.onRightClick(event,menu)
+            return self.onRightClick(event,menu)
     
         self.nb.bind('<Button-3>',hullMenuCallback)
     
@@ -3259,14 +3257,14 @@ class leoTkinterLog (leoFrame.leoLog):
             # It is not affected by renaming, so we don't have to keep
             # track of the correspondence between this name and what is in the label.
             def deleteTabCallback():
-                self.deleteTab(tabName)
+                return self.deleteTab(tabName)
                 
             label = g.choose(
                 tabName in ('Find','Spell'),'Hide This Tab','Delete This Tab')
             menu.add_command(label=label,command=deleteTabCallback)
      
             def renameTabCallback():
-                self.renameTabFromMenu(tabName)
+                return self.renameTabFromMenu(tabName)
     
             menu.add_command(label='Rename This Tab',command=renameTabCallback)
     
@@ -3643,12 +3641,10 @@ class leoTkinterLog (leoFrame.leoLog):
         
         # Clicks in the tab area are harmless: use the old code.
         def tabMenuRightClickCallback(event,menu=self.menu):
-            g.trace()
-            self.onRightClick(event,menu)
+            return self.onRightClick(event,menu)
             
         def tabMenuClickCallback(event,tabName=tabName):
-            g.trace()
-            self.onClick(event,tabName)
+            return self.onClick(event,tabName)
         
         tab.bind('<Button-1>',tabMenuClickCallback)
         tab.bind('<Button-3>',tabMenuRightClickCallback)
@@ -3674,7 +3670,7 @@ class leoTkinterLog (leoFrame.leoLog):
         
         # This is called by getTabName.
         def selectTabCallback (newName):
-            self.selectTab(newName)
+            return self.selectTab(newName)
     
         self.getTabName(selectTabCallback)
     #@nonl
@@ -3686,7 +3682,7 @@ class leoTkinterLog (leoFrame.leoLog):
             g.es('can not rename %s tab' % (tabName),color='blue')
         else:
             def renameTabCallback (newName):
-                self.renameTab(tabName,newName)
+                return self.renameTab(tabName,newName)
     
             self.getTabName(renameTabCallback)
     #@nonl
