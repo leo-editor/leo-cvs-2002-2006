@@ -70,6 +70,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
     #@+node:ekr.20060211144330.1:getMacHelpMenu
     def getMacHelpMenu (self):
         
+        return None ###
+        
         try:
             helpMenu = Tk.Menu('top.help')
             return helpMenu
