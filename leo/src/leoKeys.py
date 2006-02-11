@@ -1496,11 +1496,11 @@ class keyHandlerClass:
     #@-node:ekr.20060127183752:masterKeyHandler & helper
     #@+node:ekr.20060129052538.2:masterClickHandler
     def masterClickHandler (self,event,func=None):
-        
+    
         k = self ; c = k.c
         if not event: return
         w = event.widget ; wname = c.widget_name(w)
-        
+    
         if c.config.getBool('trace_masterClickHandler'):
             g.trace(wname,func and func.__name__)
     
@@ -1511,13 +1511,20 @@ class keyHandlerClass:
     
         # Update the selection point immediately for updateStatusLine.
         if wname.startswith('body'):
-            try:
-                i = w.index('@%s,%s' % (event.x,event.y))
-                g.app.gui.setTextSelection (w,i,i,insert=i)
-                c.editCommands.setMoveCol(w,i)
-                c.frame.updateStatusLine()
-            except Exception:
-                pass
+            i = w.index('@%s,%s' % (event.x,event.y))
+            g.app.gui.setTextSelection(w,i,i,insert=i)
+            c.editCommands.setMoveCol(w,i)
+            c.frame.updateStatusLine()
+        elif wname.startswith('mini'):
+            x = w.index('@%s,%s' % (event.x,event.y))
+            i, j = k.getEditableTextRange()
+            xcol = int(x.split('.')[1])
+            icol = int(i.split('.')[1])
+            jcol = int(j.split('.')[1])
+            # g.trace(xcol,icol,jcol,icol <= xcol <= jcol)
+            if icol <= xcol <= jcol:
+                g.app.gui.setTextSelection(w,x,x,insert=x)
+            else: return 'break'
     
         if event and func:
             # Don't even *think* of overriding this.
@@ -1530,9 +1537,9 @@ class keyHandlerClass:
             c.frame.tree.OnDeactivate()
             c.widgetWantsFocusNow(w)
             return None
-            
-    masterClick3Handler         = masterClickHandler
-    masterDoubleClick3Handler   = masterClickHandler
+    
+    masterClick3Handler = masterClickHandler
+    masterDoubleClick3Handler = masterClickHandler
     #@nonl
     #@-node:ekr.20060129052538.2:masterClickHandler
     #@+node:ekr.20060131084938:masterDoubleClickHandler
