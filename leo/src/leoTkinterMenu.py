@@ -67,6 +67,13 @@ class leoTkinterMenu (leoMenu.leoMenu):
     #@nonl
     #@-node:ekr.20060210133835.1:tkMenu.computeMenuPositions
     #@-node:ekr.20060211101811:Activate menu commands
+    #@+node:ekr.20060211144330.1:getMacHelpMenu
+    
+    def getMacHelpMenu (self):
+        
+        return None
+    #@nonl
+    #@-node:ekr.20060211144330.1:getMacHelpMenu
     #@+node:ekr.20031218072017.4103:Tkinter menu bindings
     # See the Tk docs for what these routines are to do
     #@nonl

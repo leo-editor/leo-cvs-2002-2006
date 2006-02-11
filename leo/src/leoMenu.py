@@ -456,7 +456,16 @@ class leoMenu:
     #@+node:ekr.20031218072017.3803:createHelpMenuFromTable
     def createHelpMenuFromTable (self):
     
-        helpMenu = self.createNewMenu("&Help")
+        if sys.platform == 'darwin':
+            try:
+                # helpMenu = self.createNewMenu (menuName='top.help',parentName='top')
+                helpMenu = Tk.Menu('top.help')
+            except Exception:
+                g.trace('Can not get MacOS Help menu')
+                g.es_exception()
+                return
+        else:
+            helpMenu = self.createNewMenu("&Help")
         
         self.createMenuEntries(helpMenu,self.helpMenuTopTable)
         
