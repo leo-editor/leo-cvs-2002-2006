@@ -2,74 +2,6 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060210121150:Posting: big and urgent
-#@-node:ekr.20060210121150:Posting: big and urgent
-#@+node:ekr.20060210123709:Fix Alt-key issue on Linux
-#@-node:ekr.20060210123709:Fix Alt-key issue on Linux
-#@+node:ekr.20060210123709.1:Test on MacOS
-#@-node:ekr.20060210123709.1:Test on MacOS
-#@+node:ekr.20060210132142:Bindings to set search scope and toggle word & case options
-These are the most common binding that I need.  I never seem to want to go into find-options-mode.
-#@nonl
-#@-node:ekr.20060210132142:Bindings to set search scope and toggle word & case options
-#@+node:ekr.20060122183914.1:Urgent commands for mouseless Leo (1+2+2)
-#@+node:ekr.20060210145627:Copy find text into minibuffer for search commands
-#@+node:ekr.20060210141604.1:getEditableTextRange
-def getEditableTextRange (self):
-    
-    k = self ; w = self.widget ; n = 0
-    
-    s = w.get('1.0','end')
-    while s.endswith('\n') or s.endswith('\r'):
-        s = s[:-1] ; n += 1
-        
-    i = w.index('1.%d' % len(k.mb_prefix))
-    j = w.index('end -%dc' % n)
-    
-    # g.trace(i,j)
-    return i,j
-#@-node:ekr.20060210141604.1:getEditableTextRange
-#@+node:ekr.20060125093807:searchWithPresentOptions
-def searchWithPresentOptions (self,event):
-
-    k = self.k ; tag = 'search-with-present-options'
-    
-    state = k.getState(tag)
-    if state == 0:
-        self.w = event and event.widget
-        self.setupArgs(forward=None,regexp=None,word=None,
-            statusLine='Search: ',setDefaultSearch=True)
-        # k.setLabelBlue('Search: ',protect=True)
-        k.getArg(event,tag,1,self.searchWithPresentOptions,completion=False)
-    else:
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
-        self.generalSearchHelper(k.arg)
-#@nonl
-#@-node:ekr.20060125093807:searchWithPresentOptions
-#@-node:ekr.20060210145627:Copy find text into minibuffer for search commands
-#@+node:ekr.20060209042734.1:Add click commands & convenience methods
-- The c.click methods can call tree event handlers directly.
-- Add minibuffer commands for some (all?) of these convenience methods.
-- No need to add click simulators for menus: they will be separate minibuffer commands.
-#@nonl
-#@+node:ekr.20031218072017.792:Double Click Node command
-#@-node:ekr.20031218072017.792:Double Click Node command
-#@+node:ekr.20051221101851.1:Request
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3487424
-By: p_michalczyk
-
-Does anybody know how to double-click headline in outline panel using only keyboard
-(that is how to simulate double-click through keyboard shortcut) ?
-I need it to execute @run nodes from keyboard.
-
-EKR: This can be done with @command nodes, but Leo should have official commands to do this too.
-#@nonl
-#@-node:ekr.20051221101851.1:Request
-#@-node:ekr.20060209042734.1:Add click commands & convenience methods
 #@+node:ekr.20060116080040.2:activate-xxx-menu commands
 These would be an alternative to XP Alt-f, Alt-E, etc.
 #@+node:ekr.20060210133835:prototype of menu post commands
@@ -119,12 +51,9 @@ def computeMenuPositions (self):
 #@nonl
 #@-node:ekr.20060210133835.1:computeMenuPositions
 #@-node:ekr.20060116080040.2:activate-xxx-menu commands
-#@+node:ekr.20060206103531:(maybe) select-find-tab-find-text & select-find-tab-change-text
-#@-node:ekr.20060206103531:(maybe) select-find-tab-find-text & select-find-tab-change-text
-#@+node:ekr.20060209105218.2:(maybe) contract-all-except-present-tree
-#@-node:ekr.20060209105218.2:(maybe) contract-all-except-present-tree
-#@-node:ekr.20060122183914.1:Urgent commands for mouseless Leo (1+2+2)
 #@+node:ekr.20060122183914:Fix minor bugs 10
+#@+node:ekr.20060210180603:Multiple pastes into find tab
+#@-node:ekr.20060210180603:Multiple pastes into find tab
 #@+node:ekr.20060206131908:pasteText (with empty text?) crashed when pasting into minibuffer
 #@-node:ekr.20060206131908:pasteText (with empty text?) crashed when pasting into minibuffer
 #@+node:ekr.20060122185244.2:Fix unindent command
@@ -422,6 +351,14 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 #@+node:ekr.20060209201859:How to design and use modes
 #@-node:ekr.20060209201859:How to design and use modes
 #@-node:ekr.20060209053234:What's new in b2
+#@+node:ekr.20060210201454:Distribution
+#@+node:ekr.20060211095145:What's new in Leo 4.4
+#@-node:ekr.20060211095145:What's new in Leo 4.4
+#@+node:ekr.20060210123709:Fix Alt-key issue on Linux
+#@-node:ekr.20060210123709:Fix Alt-key issue on Linux
+#@+node:ekr.20060210123709.1:Test on MacOS
+#@-node:ekr.20060210123709.1:Test on MacOS
+#@-node:ekr.20060210201454:Distribution
 #@-node:ekr.20060206103355:To do 4.4b2
 #@-all
 #@nonl

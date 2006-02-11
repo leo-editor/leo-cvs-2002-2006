@@ -1297,6 +1297,7 @@ def setInsertPoint (self,t,pos):
 def getSelectionRange (self,t):
     
     try:
+        # Warning: this can return None.
         return t.tag_ranges("sel")
     except Exception:
         return 0,0
@@ -4730,16 +4731,6 @@ Scott
 #@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
 #@-node:ekr.20060209104733:Urgent and big (overdue)
 #@+node:ekr.20060116073938:To do 4.4b3
-#@+node:ekr.20060202233315:To do first
-@nocolor
-
-- The search command should copy the present find text to the minibuffer and select it.
-
-- Support for @list on-enter-mode
-#@nonl
-#@-node:ekr.20060202233315:To do first
-#@+node:ekr.20060116173818:*** Fix vampire nodes
-#@-node:ekr.20060116173818:*** Fix vampire nodes
 #@+node:ekr.20060122183544:Improve isearch
 @nocolor
 
@@ -4748,6 +4739,8 @@ Scott
 #@-node:ekr.20060122183544:Improve isearch
 #@+node:ekr.20060122185507:New commands and features
 #@+node:ekr.20060210140415:Most important
+#@+node:ekr.20060211093935:Support for @list and on-enter-mode
+#@-node:ekr.20060211093935:Support for @list and on-enter-mode
 #@+node:ekr.20060113090042:open-outline-by-name & filename completion
 #@-node:ekr.20060113090042:open-outline-by-name & filename completion
 #@+node:ekr.20060122194643:isearch-headline (forward & backward)
@@ -4804,6 +4797,8 @@ Use docstrings as the help message.
 #@-node:ekr.20060116090428:Expand 'point' so it indicates node as well as text location
 #@-node:ekr.20060210140415:Most important
 #@+node:ekr.20060210140415.1:Others
+#@+node:ekr.20060209105218.2:contract-all-except-present-tree
+#@-node:ekr.20060209105218.2:contract-all-except-present-tree
 #@+node:ekr.20060206114203:toggle-find-tab-views
 show/hide buttons, etc.
 #@-node:ekr.20060206114203:toggle-find-tab-views
@@ -6349,6 +6344,8 @@ It would be shown in the Find tab.
 #@nonl
 #@-node:ekr.20060206131908.1:set-first-search-node command (indicate it in the find tab)
 #@-node:ekr.20060206104841:New features
+#@+node:ekr.20060116173818:*** Fix vampire nodes
+#@-node:ekr.20060116173818:*** Fix vampire nodes
 #@+node:ekr.20051217175058:*Add chapters  to Leo's core & make positions permanent
 show-chapters
 hide-chapters

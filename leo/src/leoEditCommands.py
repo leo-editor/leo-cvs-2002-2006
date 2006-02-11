@@ -1506,26 +1506,6 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051015114221.1:capitalizeHelper
     #@-node:ekr.20050920084036.57:capitalization & case
     #@+node:ekr.20051022142249:clicks and focus (editCommandsClass)
-    #@@nocolor
-    #@@color
-    #@+at
-    # 
-    # Commands that simulate clicks in the outline are useful because such 
-    # events call
-    # hooks. In particular, double-click-icon-box will invoke the vim or 
-    # xemacs
-    # plugins if they are enabled.
-    # 
-    # Notes:
-    # - There is no need to simulate clicks in the canvas.  Left and right 
-    # clicks are handled elsewhere.
-    # 
-    # - Most clicks are equivent to other commands. There is no need to 
-    # simulate those clicks here.
-    # 
-    # - The simulateDrg methods are here for completeness.  They have not been 
-    # tested.
-    #@-at
     #@+node:ekr.20051022144825.1:cycleFocus
     def cycleFocus (self,event):
     

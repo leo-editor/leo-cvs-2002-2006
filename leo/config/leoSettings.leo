@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="256" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="172" left="341" height="701" width="841"/>
+	<global_window_position top="172" left="430" height="701" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -323,7 +323,7 @@
 <v t="ekr.20060115160004"><vh>@mode Register</vh></v>
 <v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
 </v>
-<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
+<v t="ekr.20060115162748.1" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
@@ -332,7 +332,7 @@
 </v>
 </v>
 <v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
-<v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
+<v t="ekr.20051218202206" a="E" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
@@ -348,13 +348,13 @@
 <v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@mode Find-options (Control-Shift-F)</vh></v>
+<v t="ekr.20060122105527.14"><vh>@@mode Find-options (Control-Shift-F)</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -365,12 +365,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1"><vh>No bindings</vh>
-<v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
+<v t="ekr.20060110141538.1" a="E"><vh>No bindings</vh>
+<v t="ekr.20051218202206" a="E" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -382,16 +382,16 @@
 <v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@mode Find-options (Control-Shift-F)</vh></v>
+<v t="ekr.20060122105527.14"><vh>@@mode Find-options (Control-Shift-F)</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
+<v t="ekr.20060203131942" a="V"><vh>@shortcuts Minibuffer bindings</vh></v>
 <v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
@@ -407,13 +407,13 @@
 <v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@mode Find-options (Control-Shift-F)</vh></v>
+<v t="ekr.20060122105527.14"><vh>@@mode Find-options (Control-Shift-F)</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060203094527" a="V"><vh>Recent options</vh>
+<v t="ekr.20060203094527"><vh>Recent options</vh>
 <v t="ekr.20051126062243"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -439,17 +439,12 @@
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 </v>
 <v t="ekr.20060204093736" a="E"><vh>@bool trace_doCommand = False</vh></v>
-<v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
-<v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
-<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
+<v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1514,6 +1509,9 @@ clear-extend-mode                   = None
 clear-kill-ring                     = None
 clear-recent-files                  = None
 clear-rectangle                     = None
+click-click-box                     = None
+click-headline                      = None
+click-icon-box                      = None
 clone-find-all                      = None
 clone-node                          = None
 close-rectangle                     = None
@@ -1555,6 +1553,8 @@ digit-argument                      = None
 disable-gc-trace                    = None
 downcase-region                     = None
 downcase-word                       = None
+double-click-headline               = None
+double-click-icon-box               = None
 dump-all-objects                    = None
 dump-new-objects                    = None
 dump-outline                        = None
@@ -1951,7 +1951,7 @@ spell-ignore                        = None
 split-line                          = Alt-Ctrl-o
 # start-kbd-macro                   = None
 string-rectangle                    = None
-suspend                             = None
+# suspend                           = None # Use iconify-frame instead.
 switch-to-buffer                    = None
 tabify                              = None
 tangle                              = None      
@@ -2540,7 +2540,7 @@ spell-ignore                            = None
 split-line                              = Alt-Ctrl-o
 # start-kbd-macro                       = None
 string-rectangle                        = None
-suspend                                 = None
+# suspend                               = None  # Use iconify-frame instead.
 switch-to-buffer                        = None
 tabify                                  = None
 tangle                                  = None      # Removed Shift-Ctrl-T: not useful enough.
@@ -2646,7 +2646,7 @@ hide-mini-buffer                    = None
 hide-spell-tab                      = None
 hoist                               = None
 how-many                            = None
-iconify-frame                       = None
+iconify-frame                       = Control-z # Was suspend
 import-at-file                      = None         # Removed Shift-Ctrl-F: not useful enough.
 import-at-root                      = None
 import-cweb-files                   = None
@@ -2816,7 +2816,7 @@ spell-find                      = None
 spell-ignore                    = None
 split-line                      = Control-Alt-o
 string-rectangle                = None
-suspend                         = Control-z
+# suspend                       = None  # Use iconify-frame instead.
 switch-to-buffer                = None
 tabify                          = None
 tangle                          = None      # Removed Shift-Ctrl-T: not useful enough.
@@ -3084,7 +3084,7 @@ spell-find                          = None
 spell-ignore                        = None
 split-line                          = None
 string-rectangle                    = None
-suspend                             = None
+# suspend                           = None # use iconify-frame instead
 switch-to-buffer                    = None
 tabify                              = None
 tangle                              = Shift-Ctrl-T
@@ -3353,6 +3353,8 @@ show-find-options                   = None
 show-fonts                          = None
 show-invisibles                     = None
 show-mini-buffer                    = None
+simulate-begin-drag                 = None
+simulate-end-drag                   = None
 sort-children                       = None
 sort-columns                        = None
 sort-fields                         = None
@@ -3365,7 +3367,7 @@ spell-ignore                        = None
 split-line                          = None
 # start-kbd-macro                   = None
 string-rectangle                    = None
-suspend                             = None
+# suspend                           = None # Use iconify-frame instead.
 switch-to-buffer                    = None
 tabify                              = None
 tangle                              = None
@@ -4332,20 +4334,22 @@ find-tab-change-then-find           = Ctrl--
 hide-find-tab                       = None
 open-find-tab                       = None # Shift-Ctrl-f
 
-# Options.  find-options mode is convenient enough.
-set-find-everywhere                 = None
-set-find-node-only                  = None
-set-find-suboutline-only            = None
-show-find-options                   = None
-toggle-find-ignore-case-option      = None
-toggle-find-in-body-option          = None
-toggle-find-in-headline-option      = None
-toggle-find-mark-changes-option     = None
-toggle-find-mark-finds-option       = None
-toggle-find-regex-option            = None
-toggle-find-reverse-option          = None
-toggle-find-word-option             = None
-toggle-find-wrap-around-option      = None</t>
+# Options.  Shift-Ctrl v,x,z are taken by cut-node, paste-node and redo.
+# These are now minibuffer-only bindings.
+
+# set-find-everywhere                 = Shift-Ctrl-e
+# set-find-node-only                  = Shift-Ctrl-n
+# set-find-suboutline-only            = Shift-Ctrl-o
+# show-find-options                   = None
+# toggle-find-ignore-case-option      = Shift-Ctrl-i
+# toggle-find-in-body-option          = Shift-Ctrl-b
+# toggle-find-in-headline-option      = Shift-Ctrl-h
+# toggle-find-mark-changes-option     = None
+# toggle-find-mark-finds-option       = None
+# toggle-find-regex-option            = None # The conflict isn't severe: there are separate regex commands.
+# toggle-find-reverse-option          = Shift-Ctrl-r
+# toggle-find-word-option             = Shift-Ctrl-w
+# toggle-find-wrap-around-option      = Shift-Ctrl-a</t>
 <t tx="ekr.20060125104049">True: (recommended) The Find tab shows only options, not text or buttons.
 False: (legacy)     The Find tab shows text, options and buttons.</t>
 <t tx="ekr.20060125165241"></t>
@@ -4368,13 +4372,15 @@ save-file           ! mini = Ctrl-s
 
 # keyboard-quit       ! mini = Ctrl-g
 
+# Important: at present binding to BackSpace in the minibuffer causes problems.
+# backward-delete-char                ! mini = BackSpace
+
 back-char                           ! mini = LtArrow
 back-char-extend-selection          ! mini = Shift-LtArrow
 back-word                           ! mini = Alt-b  
 back-word                           ! mini = Ctrl-LtArrow
 back-word-extend-selection          ! mini = Alt-Shift-b
 back-word-extend-selection          ! mini = Ctrl-Shift-LtArrow
-backward-delete-char                ! mini = BackSpace
 backward-kill-word                  ! mini = Alt-Delete
 beginning-of-line                   ! mini = Home
 beginning-of-line-extend-selection  ! mini = Shift-Home
@@ -4390,7 +4396,21 @@ forward-word                        ! mini = Alt-f          # Usually opens file
 forward-word-extend-selection       ! mini = Alt-Shift-f
 forward-word                        ! mini = Ctrl-RtArrow
 forward-word-extend-selection       ! mini = Ctrl-Shift-RtArrow
-select-all                          ! mini = Alt-Shift-A </t>
+select-all                          ! mini = Alt-Shift-A
+
+# Find options.  Important: conflicts with non-minibuffer bindings do not matter here!
+set-find-everywhere                 ! mini = Alt-Ctrl-e
+set-find-node-only                  ! mini = Alt-Ctrl-n
+set-find-suboutline-only            ! mini = Alt-Ctrl-s
+toggle-find-ignore-case-option      ! mini = Alt-Ctrl-i
+toggle-find-in-body-option          ! mini = Alt-Ctrl-b
+toggle-find-in-headline-option      ! mini = Alt-Ctrl-h
+toggle-find-mark-changes-option     ! mini = Alt-Ctrl-c
+toggle-find-mark-finds-option       ! mini = Alt-Ctrl-f
+toggle-find-regex-option            ! mini = Alt-Ctrl-x
+toggle-find-reverse-option          ! mini = Alt-Ctrl-r
+toggle-find-word-option             ! mini = Alt-Ctrl-w
+toggle-find-wrap-around-option      ! mini = Alt-Ctrl-a</t>
 <t tx="ekr.20060204093736"></t>
 <t tx="ekr.20060204102644"></t>
 <t tx="ekr.20060204124608">True: minibuffer commands show the Find Tab.
