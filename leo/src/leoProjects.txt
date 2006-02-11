@@ -1204,23 +1204,26 @@ def pasteText (self,event=None):
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-    
-    # Update the widget.
-    if i != j:
-        w.delete(i,j)
-    w.insert(i,s)
 
-    if wname.startswith('body'):
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    elif singleLine:
-        s = w.get('1.0','end')
-        while s and s [ -1] in ('\n','\r'):
-            s = s [: -1]
-        if wname.startswith('head'):
-            # The headline is not officially changed yet.
-            # p.initHeadString(s)
-            w.configure(width=f.tree.headWidth(s=s))
-    else: pass
+    try:
+        # Update the widget.
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,s)
+    
+        if wname.startswith('body'):
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        elif singleLine:
+            s = w.get('1.0','end')
+            while s and s [ -1] in ('\n','\r'):
+                s = s [: -1]
+            if wname.startswith('head'):
+                # The headline is not officially changed yet.
+                # p.initHeadString(s)
+                w.configure(width=f.tree.headWidth(s=s))
+        else: pass
+    except Exception:
+        pass # Tk sometimes throws weird exceptions here.
         
     return 'break' # Essential
 
@@ -1228,6 +1231,9 @@ OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
 #@-node:ekr.20060210180603:Fixed multiple pastes into find tab
+#@+node:ekr.20060206131908:catch exceptions in pasteText
+# Paste-text crashed when pasting into minibuffer
+#@-node:ekr.20060206131908:catch exceptions in pasteText
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

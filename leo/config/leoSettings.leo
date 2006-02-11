@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -287,30 +287,30 @@
 <v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 </v>
-<v t="ekr.20051007200824" a="E" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
-<v t="ekr.20060104093101" a="E" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
+<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
 <v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
-<v t="ekr.20060110141538.2" a="E" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
+<v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
 </v>
-<v t="ekr.20060103103812" a="E" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20060103103812" annotate="7d71002e"><vh>Legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060111082632.1"><vh>@shortcuts Legacy+: A-E</vh></v>
 <v t="ekr.20060112085643"><vh>@shortcuts Legacy+: F-M</vh></v>
 <v t="ekr.20060112085643.1"><vh>@shortcuts Legacy+: N-Z</vh></v>
 </v>
-<v t="ekr.20051010112558" a="E"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
+<v t="ekr.20051010112558"><vh>EKR bindings: a mix of legacy Leo shortcuts with important Emacs bindings</vh>
 <v t="ekr.20060122105438"><vh>To do</vh></v>
 <v t="ekr.20060122105438.1"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060115162748"><vh>Modes</vh>
@@ -323,7 +323,7 @@
 <v t="ekr.20060115160004"><vh>@mode Register</vh></v>
 <v t="ekr.20060115160004.1"><vh>@mode Rect</vh></v>
 </v>
-<v t="ekr.20060115162748.1" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060115162748.1"><vh>Shortcuts</vh>
 <v t="ekr.20060103103812.1" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060102102958" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060112085325"><vh>@shortcuts EKR: F-M</vh></v>
@@ -331,8 +331,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
-<v t="ekr.20051218202206" a="E" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
+<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
@@ -365,12 +365,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" a="E"><vh>No bindings</vh>
-<v t="ekr.20051218202206" a="E" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
+<v t="ekr.20060110141538.1"><vh>No bindings</vh>
+<v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
-<v t="ekr.20060112093227.2" a="TV"><vh>@shortcuts No bindings: N-Z</vh></v>
+<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -413,7 +413,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060203094527"><vh>Recent options</vh>
+<v t="ekr.20060203094527" a="E"><vh>Recent options</vh>
 <v t="ekr.20051126062243"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -438,8 +438,8 @@
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 </v>
-<v t="ekr.20060204093736" a="E"><vh>@bool trace_doCommand = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
+<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>

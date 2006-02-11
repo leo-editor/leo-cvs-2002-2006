@@ -2,20 +2,7 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060210180603:Multiple pastes into find tab
-#@-node:ekr.20060210180603:Multiple pastes into find tab
-#@+node:ekr.20060122183914:Fix minor bugs 9
-#@+node:ekr.20060114055611:Fix sort-lines problems
-- It should recolor the text.
-- Does it not stick sometimes?
-#@nonl
-#@-node:ekr.20060114055611:Fix sort-lines problems
-#@+node:ekr.20060206131908:pasteText (with empty text?) crashed when pasting into minibuffer
-#@-node:ekr.20060206131908:pasteText (with empty text?) crashed when pasting into minibuffer
-#@+node:ekr.20060122185244.2:Fix unindent command
-unindent-region should do nothing if not in body pane, or it should work in all panes.
-#@nonl
-#@-node:ekr.20060122185244.2:Fix unindent command
+#@+node:ekr.20060211112120:Fix ancient bugs 6
 #@+node:ekr.20060206113925:Make sure yield works with Python 2.2
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3549737
@@ -37,22 +24,6 @@ Warning: ignoring bool:body_gmt_time not string
 There may be conflicting settings!
 #@nonl
 #@-node:ekr.20060206113925.1:Fix problem with body_gmt_time setting
-#@+node:ekr.20060121101642:Make sure save updates the open directory
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3534349
-By: edcdave
-
-Thanks for the tip. I did some further checking along this vein and found that
-saving the Leo file is not sufficient - I have to exit the document and open
-it again before the rst destination directory is set correctly.
-
-While I was testing this, I encountered a problem with the delete key. But I'll
-post it in another thread.
-
-Thanks again,
-Dave Harris
-#@-node:ekr.20060121101642:Make sure save updates the open directory
 #@+node:ekr.20060116082302.1:Use os.getenv('User") if it exists to get initial cvs name
 http://sourceforge.net/forum/message.php?msg_id=3237845
 
@@ -70,6 +41,22 @@ http://sourceforge.net/forum/message.php?msg_id=3237845
 More mac nits: two HELP menus, one is empty; 
 #@nonl
 #@-node:ekr.20060116083043:Two help menus on the Mac
+#@+node:ekr.20060121101642:Make sure save updates the open directory
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3534349
+By: edcdave
+
+Thanks for the tip. I did some further checking along this vein and found that
+saving the Leo file is not sufficient - I have to exit the document and open
+it again before the rst destination directory is set correctly.
+
+While I was testing this, I encountered a problem with the delete key. But I'll
+post it in another thread.
+
+Thanks again,
+Dave Harris
+#@-node:ekr.20060121101642:Make sure save updates the open directory
 #@+node:ekr.20060124082357:Fix problem with view plugin
 @nocolor
 
@@ -95,7 +82,22 @@ Evidently the issue is with the hooking/calling
 mech. not the plugin code itself.
 #@nonl
 #@-node:ekr.20060124082357:Fix problem with view plugin
-#@-node:ekr.20060122183914:Fix minor bugs 9
+#@-node:ekr.20060211112120:Fix ancient bugs 6
+#@+node:ekr.20060122183914:Fix minor bugs 3
+#@+node:ekr.20060211112120.1:disable menu enablers if commander does not exist
+Only affects unit tests, probably.
+#@nonl
+#@-node:ekr.20060211112120.1:disable menu enablers if commander does not exist
+#@+node:ekr.20060114055611:Fix sort-lines problems
+- It should recolor the text.
+- Does it not stick sometimes?
+#@nonl
+#@-node:ekr.20060114055611:Fix sort-lines problems
+#@+node:ekr.20060122185244.2:Fix unindent command
+unindent-region should do nothing if not in body pane, or it should work in all panes.
+#@nonl
+#@-node:ekr.20060122185244.2:Fix unindent command
+#@-node:ekr.20060122183914:Fix minor bugs 3
 #@+node:ekr.20060211100150:Fix chapters plugin
 #@-node:ekr.20060211100150:Fix chapters plugin
 #@+node:ekr.20060210123709:URGENT: Fix Alt-key issue on Linux

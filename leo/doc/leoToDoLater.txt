@@ -1157,10 +1157,10 @@ import tkIcon
 
 # Wait until the window has been drawn once before attaching the icon in OnVisiblity.
 def visibilityCallback(event,self=self,w=w):
-    __pychecker__ = '--no-argsused' # event not used.
     try: self.leoIcon.attach(w.winfo_id())
     except: pass
 w.bind("<Visibility>",visibilityCallback)
+
 if not self.leoIcon:
     # Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
     icon_file_name = g.os_path_join(g.app.loadDir,'..','Icons','LeoWin.gif')
@@ -15668,39 +15668,42 @@ def pasteText (self,event=None):
     f = self ; c = f.c ; w = event and event.widget
     if not w or not g.app.gui.isTextWidget(w): return
 
-    name = c.widget_name(w)
+    wname = c.widget_name(w)
     oldSel = g.app.gui.getTextSelection(w)
     oldText = w.get('1.0','end')
     i,j = g.app.gui.getTextSelection(w)
     s = s1 = g.app.gui.getTextFromClipboard()
+    # g.trace(wname,s,i,j)
     
-    # g.trace(name)
-    
-    singleLine = name.startswith('head') or name.startswith('minibuffer')
+    singleLine = wname.startswith('head') or wname.startswith('minibuffer')
     
     if singleLine:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-    
-    # Update the widget.
-    if i != j:
-        w.delete(i,j)
-    w.insert(i,s)
 
-    if name.startswith('body'):
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    elif singleLine:
-        s = w.get('1.0','end')
-        while s and s [ -1] in ('\n','\r'):
-            s = s [: -1]
-        if name.startswith('head'):
-            # The headline is not officially changed yet.
-            # p.initHeadString(s)
-            w.configure(width=f.tree.headWidth(s=s))
-    else:
-        pass
+    try:
+        # Update the widget.
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,s)
     
+        if wname.startswith('body'):
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        elif singleLine:
+            s = w.get('1.0','end')
+            while s and s [ -1] in ('\n','\r'):
+                s = s [: -1]
+            if wname.startswith('head'):
+                # The headline is not officially changed yet.
+                # p.initHeadString(s)
+                w.configure(width=f.tree.headWidth(s=s))
+        else: pass
+    except Exception:
+        pass # Tk sometimes throws weird exceptions here.
+        
+    return 'break' # Essential
+
 OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
@@ -18955,39 +18958,42 @@ def pasteText (self,event=None):
     f = self ; c = f.c ; w = event and event.widget
     if not w or not g.app.gui.isTextWidget(w): return
 
-    name = c.widget_name(w)
+    wname = c.widget_name(w)
     oldSel = g.app.gui.getTextSelection(w)
     oldText = w.get('1.0','end')
     i,j = g.app.gui.getTextSelection(w)
     s = s1 = g.app.gui.getTextFromClipboard()
+    # g.trace(wname,s,i,j)
     
-    # g.trace(name)
-    
-    singleLine = name.startswith('head') or name.startswith('minibuffer')
+    singleLine = wname.startswith('head') or wname.startswith('minibuffer')
     
     if singleLine:
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-    
-    # Update the widget.
-    if i != j:
-        w.delete(i,j)
-    w.insert(i,s)
 
-    if name.startswith('body'):
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    elif singleLine:
-        s = w.get('1.0','end')
-        while s and s [ -1] in ('\n','\r'):
-            s = s [: -1]
-        if name.startswith('head'):
-            # The headline is not officially changed yet.
-            # p.initHeadString(s)
-            w.configure(width=f.tree.headWidth(s=s))
-    else:
-        pass
+    try:
+        # Update the widget.
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,s)
     
+        if wname.startswith('body'):
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        elif singleLine:
+            s = w.get('1.0','end')
+            while s and s [ -1] in ('\n','\r'):
+                s = s [: -1]
+            if wname.startswith('head'):
+                # The headline is not officially changed yet.
+                # p.initHeadString(s)
+                w.configure(width=f.tree.headWidth(s=s))
+        else: pass
+    except Exception:
+        pass # Tk sometimes throws weird exceptions here.
+        
+    return 'break' # Essential
+
 OnPasteFromMenu = pasteText
 #@nonl
 #@-node:ekr.20051011072903.5:pasteText
