@@ -457,13 +457,8 @@ class leoMenu:
     def createHelpMenuFromTable (self):
     
         if sys.platform == 'darwin':
-            try:
-                # helpMenu = self.createNewMenu (menuName='top.help',parentName='top')
-                helpMenu = Tk.Menu('top.help')
-            except Exception:
-                g.trace('Can not get MacOS Help menu')
-                g.es_exception()
-                return
+            helpMenu = self.getMacHelpMenu()
+            if not helpMenu: return
         else:
             helpMenu = self.createNewMenu("&Help")
         
