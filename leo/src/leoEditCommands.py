@@ -254,24 +254,6 @@ class baseEditCommandsClass:
     #@nonl
     #@-node:ekr.20050920084036.11:testinrange
     #@-node:ekr.20050929161635:Helpers
-    #@+node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
-    def focusToBody (self,event):
-        
-        self.c.bodyWantsFocus()
-    
-    def focusToLog (self,event):
-    
-        self.c.logWantsFocus()
-        
-    def focusToMinibuffer (self,event):
-        
-        self.c.minibufferWantsFocus()
-    
-    def focusToTree (self,event):
-        
-        self.c.treeWantsFocus()
-    #@nonl
-    #@-node:ekr.20051022144825:focusToBody/Log/Tree/Minibuffer
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.1:<< define class baseEditCommandsClass >>
@@ -1367,6 +1349,9 @@ class editCommandsClass (baseEditCommandsClass):
             'center-line':                          self.centerLine,
             'center-region':                        self.centerRegion,
             'clear-extend-mode':                    self.clearExtendMode,
+            'click-click-box':                      self.clickClickBox,
+            'click-headline':                       self.clickHeadline,
+            'click-icon-box':                       self.clickIconBox,
             'contract-body-pane':                   c.frame.contractBodyPane,
             'contract-log-pane':                    c.frame.contractLogPane,
             'contract-outline-pane':                c.frame.contractOutlinePane,
@@ -1380,6 +1365,8 @@ class editCommandsClass (baseEditCommandsClass):
             'delete-spaces':                        self.deleteSpaces,
             'downcase-region':                      self.downCaseRegion,
             'downcase-word':                        self.downCaseWord,
+            'double-click-headline':                self.doubleClickHeadline,
+            'double-click-icon-box':                self.doubleClickIconBox,
             'end-of-buffer':                        self.endOfBuffer,
             'end-of-buffer-extend-selection':       self.endOfBufferExtendSelection,
             'end-of-line':                          self.endOfLine,
@@ -1450,7 +1437,8 @@ class editCommandsClass (baseEditCommandsClass):
             'set-mark-command':                     self.setRegion,
             'show-colors':                          self.showColors,
             'show-fonts':                           self.showFonts,
-            # 'save-buffer':                        self.saveFile,
+            'simulate-begin-drag':                  self.simulateBeginDrag,
+            'simulate-end-drag':                    self.simulateEndDrag,
             'sort-columns':                         self.sortColumns,
             'sort-fields':                          self.sortFields,
             'sort-lines':                           self.sortLines,
@@ -1517,6 +1505,143 @@ class editCommandsClass (baseEditCommandsClass):
         
     #@-node:ekr.20051015114221.1:capitalizeHelper
     #@-node:ekr.20050920084036.57:capitalization & case
+    #@+node:ekr.20051022142249:clicks and focus (editCommandsClass)
+    #@@nocolor
+    #@@color
+    #@+at
+    # 
+    # Commands that simulate clicks in the outline are useful because such 
+    # events call
+    # hooks. In particular, double-click-icon-box will invoke the vim or 
+    # xemacs
+    # plugins if they are enabled.
+    # 
+    # Notes:
+    # - There is no need to simulate clicks in the canvas.  Left and right 
+    # clicks are handled elsewhere.
+    # 
+    # - Most clicks are equivent to other commands. There is no need to 
+    # simulate those clicks here.
+    # 
+    # - The simulateDrg methods are here for completeness.  They have not been 
+    # tested.
+    #@-at
+    #@+node:ekr.20051022144825.1:cycleFocus
+    def cycleFocus (self,event):
+    
+        c = self.c
+        
+        body = c.frame.body.bodyCtrl
+        log  = c.frame.log.logCtrl
+        tree = c.frame.tree.canvas
+    
+        panes = [body,log,tree]
+    
+        for w in panes:
+            if w == event.widget:
+                i = panes.index(w)
+                if i >= len(panes) - 1:
+                    i = 0
+                else:
+                    i += 1
+                pane = panes[i] ; break
+        else:
+            # Assume we were somewhere in the tree.
+            pane = body
+            
+        # g.trace(pane)
+        c.set_focus(pane)
+    #@nonl
+    #@-node:ekr.20051022144825.1:cycleFocus
+    #@+node:ekr.20051022144825:focusTo...
+    def focusToBody (self,event):
+        
+        self.c.bodyWantsFocus()
+    
+    def focusToLog (self,event):
+    
+        self.c.logWantsFocus()
+        
+    def focusToMinibuffer (self,event):
+        
+        self.c.minibufferWantsFocus()
+    
+    def focusToTree (self,event):
+        
+        self.c.treeWantsFocus()
+    #@nonl
+    #@-node:ekr.20051022144825:focusTo...
+    #@+node:ekr.20060211063744.1:clicks in the headline
+    # These call the actual event handlers so as to trigger hooks.
+    
+    def clickHeadline (self,event=None):
+    
+        '''Simulate a click in the icon box of the presently selected headline.'''
+        c = self.c ; p = c.currentPosition()
+        c.frame.tree.onHeadlineClick(event,p=p)
+        
+    def doubleClickHeadline (self,event=None):
+        return self.clickHeadline(event)
+    
+    def rightClickHeadline (self,event=None):
+    
+        '''Simulate a double-click in the icon box of the presently selected headline.'''
+        c = self.c ; p = c.currentPosition()
+        c.frame.tree.onHeadlineRightClick(event,p=p)
+    #@nonl
+    #@-node:ekr.20060211063744.1:clicks in the headline
+    #@+node:ekr.20060211055455:clicks in the icon box
+    # These call the actual event handlers so as to trigger hooks.
+    
+    def clickIconBox (self,event=None):
+    
+        '''Simulate a click in the icon box of the presently selected headline.'''
+        c = self.c ; p = c.currentPosition()
+        c.frame.tree.onIconBoxClick(event,p=p)
+    
+    def doubleClickIconBox (self,event=None):
+    
+        '''Simulate a double-click in the icon box of the presently selected headline.'''
+        c = self.c ; p = c.currentPosition()
+        c.frame.tree.onIconBoxDoubleClick(event,p=p)
+    
+    def rightClickIconBox (self,event=None):
+    
+        '''Simulate a right click in the icon box of the presently selected headline.'''
+        c = self.c ; p = c.currentPosition()
+        c.frame.tree.onIconBoxRightClick(event,p=p)
+    #@nonl
+    #@-node:ekr.20060211055455:clicks in the icon box
+    #@+node:ekr.20060211062025:clickClickBox
+    # Call the actual event handlers so as to trigger hooks.
+    
+    def clickClickBox (self,event=None):
+    
+        '''Simulate a click in the click box (+- box) of the presently selected headline.'''
+    
+        c = self.c ; p = c.currentPosition()
+        c.frame.tree.onClickBoxClick(event,p=p)
+    #@nonl
+    #@-node:ekr.20060211062025:clickClickBox
+    #@+node:ekr.20060211063744.2:simulate...Drag
+    # These call the drag setup methods which in turn trigger hooks.
+    
+    def simulateBeginDrag (self,event=None):
+    
+        '''Simulate the start of a drag in the presently selected headline.'''
+        c = self.c ; p = c.currentPosition()
+        c.frame.tree.startDrag(event,p=p)
+    
+    def simulateEndDrag (self,event=None):
+    
+        '''Simulate the end of a drag in the presently selected headline.'''
+        c = self.c ; p = c.currentPosition()
+        
+        # Note: this assumes that tree.startDrag has already been called.
+        c.frame.tree.endDrag(event)
+    #@nonl
+    #@-node:ekr.20060211063744.2:simulate...Drag
+    #@-node:ekr.20051022142249:clicks and focus (editCommandsClass)
     #@+node:ekr.20051019183105:color & font
     #@+node:ekr.20051019183105.1:show-colors
     def showColors (self,event):
@@ -1966,35 +2091,6 @@ class editCommandsClass (baseEditCommandsClass):
                 k.setLabelGrey('Invalid Expression: %s' % e)
     #@nonl
     #@-node:ekr.20050920084036.65:evalExpression
-    #@+node:ekr.20051022142249:focus (editCommandsClass)
-    #@+node:ekr.20051022144825.1:cycleFocus
-    def cycleFocus (self,event):
-    
-        c = self.c
-        
-        body = c.frame.body.bodyCtrl
-        log  = c.frame.log.logCtrl
-        tree = c.frame.tree.canvas
-    
-        panes = [body,log,tree]
-    
-        for w in panes:
-            if w == event.widget:
-                i = panes.index(w)
-                if i >= len(panes) - 1:
-                    i = 0
-                else:
-                    i += 1
-                pane = panes[i] ; break
-        else:
-            # Assume we were somewhere in the tree.
-            pane = body
-            
-        # g.trace(pane)
-        c.set_focus(pane)
-    #@nonl
-    #@-node:ekr.20051022144825.1:cycleFocus
-    #@-node:ekr.20051022142249:focus (editCommandsClass)
     #@+node:ekr.20050920084036.66:fill column and centering
     #@+at
     # These methods are currently just used in tandem to center the line or 
@@ -4927,11 +5023,6 @@ class queryReplaceCommandsClass (baseEditCommandsClass):
         self.qQ = None
         self.qR = None
         self.replaced = 0 # The number of replacements.
-        
-        # self.qgetQuery = False
-        # self.qgetReplace = False
-        # self.qrexecute = False
-    #@nonl
     #@-node:ekr.20050920084036.208: ctor & init
     #@+node:ekr.20050920084036.209: getPublicCommands
     def getPublicCommands (self):
@@ -5694,7 +5785,7 @@ class minibufferFind:
     #@nonl
     #@-node:ekr.20060124123133:setFindScope
     #@+node:ekr.20060124122844:setOption
-    def setOption (self, ivar, val, verbose = False):
+    def setOption (self, ivar, val):
         
         h = self.finder
     
@@ -5702,8 +5793,7 @@ class minibufferFind:
             if val is not None:
                 var = h.dict.get(ivar)
                 var.set(val)
-                if verbose and not g.app.unitTesting:
-                    g.trace('%s = %s' % (ivar,val))
+                # g.trace('%s = %s' % (ivar,val))
     
         elif not g.app.unitTesting:
             g.trace('oops: bad find ivar %s' % ivar)
@@ -5812,8 +5902,32 @@ class minibufferFind:
     #@nonl
     #@-node:ekr.20060125091234:setupSearchPattern
     #@-node:ekr.20060124140114: Options
+    #@+node:ekr.20060210164421:addFindStringToLabel
+    def addFindStringToLabel (self):
+        
+        c = self.c ; k = c.k ; h = self.finder ; t = h.find_ctrl
+    
+        s = t.get('1.0','end')
+        while s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
+    
+        k.extendLabel(s,select=True,protect=True)
+    #@nonl
+    #@-node:ekr.20060210164421:addFindStringToLabel
+    #@+node:ekr.20060210180352:addChangeStringToLabel
+    def addChangeStringToLabel (self):
+        
+        c = self.c ; k = c.k ; h = self.finder ; t = h.change_ctrl
+    
+        s = t.get('1.0','end')
+        while s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
+    
+        k.extendLabel(s,select=True,protect=True)
+    #@nonl
+    #@-node:ekr.20060210180352:addChangeStringToLabel
     #@+node:ekr.20060124134356: setupArgs
-    def setupArgs (self,forward=False,regexp=False,word=False,statusLine='',setDefaultSearch=False):
+    def setupArgs (self,forward=False,regexp=False,word=False):
         
         h = self.finder ; k = self.k
         
@@ -5828,25 +5942,13 @@ class minibufferFind:
             ('whole_word',word),
         ):
             if val is not None:
-                self.setOption(ivar,val,verbose=True)
+                self.setOption(ivar,val)
                 
         h.p = p = self.c.currentPosition()
         h.v = p.v
         h.update_ivars()
         self.showFindOptions()
-        
-        
-        
-        if statusLine:
-            k.setLabelBlue(statusLine,protect=True)
-            
-            return ### not ready yet.
-            if setDefaultSearch:
-                t = h.find_ctrl
-                s = t.get('1.0','end')
-                while s.endswith('\n') or s.endswith('\r'):
-                    s = s[:-1]
-                k.extendLabel(s,select=True)
+    #@nonl
     #@-node:ekr.20060124134356: setupArgs
     #@+node:ekr.20060209064140:findAll
     def findAll (self,event):
@@ -5895,10 +5997,29 @@ class minibufferFind:
             
     #@nonl
     #@-node:ekr.20060204120158:findAgain
+    #@+node:ekr.20060210173041:stateZeroHelper
+    def stateZeroHelper (self,event,tag,prefix,handler):
+    
+        k = self.k
+        self.w = event and event.widget
+        k.setLabelBlue(prefix,protect=True)
+        self.addFindStringToLabel()
+        k.getArg(event,tag,1,handler,completion=False,prefix=prefix)
+    #@nonl
+    #@-node:ekr.20060210173041:stateZeroHelper
+    #@+node:ekr.20060210174441:lastStateHelper
+    def lastStateHelper (self):
+        
+        k = self.k
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+    #@nonl
+    #@-node:ekr.20060210174441:lastStateHelper
     #@+node:ekr.20060205105950.1:generalChangeHelper
     def generalChangeHelper (self,find_pattern,change_pattern):
         
-        g.trace(repr(change_pattern))
+        # g.trace(repr(change_pattern))
         
         self.setupSearchPattern(find_pattern)
         self.setupChangePattern(change_pattern)
@@ -5930,121 +6051,69 @@ class minibufferFind:
     #@+node:ekr.20050920084036.113:replaceString
     def replaceString (self,event):
     
-        k = self.k ; state = k.getState('replace-string')
+        k = self.k ; tag = 'replace-string' ; state = k.getState(tag)
         pattern_match = self.getOption ('pattern_match')
         prompt = 'Replace ' + g.choose(pattern_match,'Regex','String')
     
         if state == 0:
-            self.widget = event.widget
-            s = '%s: ' % prompt
-            k.setLabelBlue(s,protect=True)
-            k.getArg(event,'replace-string',1,self.replaceString)
+            self.setupArgs(forward=None,regexp=None,word=None)
+            prefix = '%s: ' % prompt
+            self.stateZeroHelper(event,tag,prefix,self.replaceString)
         elif state == 1:
             self._sString = k.arg
             s = '%s: %s With: ' % (prompt,self._sString)
             k.setLabelBlue(s,protect=True)
-            k.getArg(event,'replace-string',2,self.replaceString)
+            self.addChangeStringToLabel()
+            k.getArg(event,'replace-string',2,self.replaceString,completion=False,prefix=s)
         elif state == 2:
-            k.clearState()
-            if 1: # Use the legacy find command.
-                k.clearState()
-                k.resetLabel()
-                k.showStateAndMode()
-                self.generalChangeHelper(self._sString,k.arg)
-            else:
-                self._rpString = k.arg ; w = self.widget
-                #@            << do the replace >>
-                #@+node:ekr.20050920084036.114:<< do the replace >>
-                # g.es('%s %s by %s' % (prompt,repr(self._sString),repr(self._rpString)),color='blue')
-                i = 'insert' ; end = 'end' ; count = 0
-                if w.tag_ranges('sel'):
-                    i = w.index('sel.first')
-                    end = w.index('sel.last')
-                if self._useRegex:
-                    txt = w.get(i,end)
-                    try:
-                        pattern = re.compile(self._sString)
-                    except:
-                        k.keyboardQuit(event)
-                        k.setLabel("Illegal regular expression")
-                        return
-                    count = len(pattern.findall(txt))
-                    if count:
-                        ntxt = pattern.sub(self._rpString,txt)
-                        w.delete(i,end)
-                        w.insert(i,ntxt)
-                else:
-                    # Problem: adds newline at end of text.
-                    txt = w.get(i,end)
-                    count = txt.count(self._sString)
-                    if count:
-                        ntxt = txt.replace(self._sString,self._rpString)
-                        w.delete(i,end)
-                        w.insert(i,ntxt)
-                #@nonl
-                #@-node:ekr.20050920084036.114:<< do the replace >>
-                #@nl
-                k.setLabelGrey('Replaced %s occurance%s' % (count,g.choose(count==1,'','s')))
-                self._useRegex = False
+            self.lastStateHelper()
+            self.generalChangeHelper(self._sString,k.arg)
     #@nonl
     #@-node:ekr.20050920084036.113:replaceString
     #@+node:ekr.20060124140224.3:reSearchBackward/Forward
     def reSearchBackward (self,event):
     
-        k = self.k ; state = k.getState('re-search-backward')
+        k = self.k ; tag = 're-search-backward' ; state = k.getState(tag)
+        
         if state == 0:
-            self.w = event and event.widget
             self.setupArgs(forward=False,regexp=True,word=None)
-            k.setLabelBlue('Regexp Search backward:',protect=True)
-            k.getArg(event,'re-search-backward',1,self.reSearchBackward,completion=False)
+            self.stateZeroHelper(event,tag,'Regexp Search Backward:',self.reSearchBackward)
         else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
+            self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     
     def reSearchForward (self,event):
     
-        k = self.k ; state = k.getState('re-search-forward')
+        k = self.k ; tag = 're-search-forward' ; state = k.getState(tag)
         if state == 0:
-            self.w = event and event.widget
             self.setupArgs(forward=True,regexp=True,word=None)
-            k.setLabelBlue('Regexp Search:',protect=True)
-            k.getArg(event,'re-search-forward',1,self.reSearchForward)
+            self.stateZeroHelper(event,tag,'Regexp Search:',self.reSearchForward)
         else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
+            self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060124140224.3:reSearchBackward/Forward
     #@+node:ekr.20060124140224.1:seachForward/Backward
     def searchBackward (self,event):
     
-        k = self.k ; state = k.getState('search-backward')
+        k = self.k ; tag = 'search-backward' ; state = k.getState(tag)
+    
         if state == 0:
-            self.w = event and event.widget
             self.setupArgs(forward=False,regexp=False,word=False)
-            k.setLabelBlue('Search Backward: ',protect=True)
-            k.getArg(event,'search-backward',1,self.searchBackward,completion=False)
+            self.stateZeroHelper(event,tag,'Search Backward: ',self.searchBackward)
         else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
+            self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     
     def searchForward (self,event):
     
-        k = self.k ; state = k.getState('search-forward')
+        k = self.k ; tag = 'search-forward' ; state = k.getState(tag)
+    
         if state == 0:
-            self.w = event and event.widget
             self.setupArgs(forward=True,regexp=False,word=False)
-            k.setLabelBlue('Search: ',protect=True)
-            k.getArg(event,'search-forward',1,self.searchForward)
+            self.stateZeroHelper(event,tag,'Search: ',self.searchForward)
         else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
+            self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060124140224.1:seachForward/Backward
@@ -6052,14 +6121,11 @@ class minibufferFind:
     def searchWithPresentOptions (self,event):
     
         k = self.k ; tag = 'search-with-present-options'
-        
         state = k.getState(tag)
+    
         if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=None,regexp=None,word=None,
-                statusLine='Search: ',setDefaultSearch=True)
-            # k.setLabelBlue('Search: ',protect=True)
-            k.getArg(event,tag,1,self.searchWithPresentOptions,completion=False)
+            self.setupArgs(forward=None,regexp=None,word=None)
+            self.stateZeroHelper(event,tag,'Search: ',self.searchWithPresentOptions)
         else:
             k.clearState()
             k.resetLabel()
@@ -6070,30 +6136,24 @@ class minibufferFind:
     #@+node:ekr.20060124140224.2:wordSearchBackward/Forward
     def wordSearchBackward (self,event):
     
-        k = self.k ; state = k.getState('word-search-backward')
+        k = self.k ; tag = 'word-search-backward' ; state = k.getState(tag)
+    
         if state == 0:
-            self.w = event and event.widget
             self.setupArgs(forward=False,regexp=False,word=True)
-            k.setLabelBlue('Word Search Backward: ',protect=True)
-            k.getArg(event,'word-search-backward',1,self.wordSearchBackward,completion=False)
+            self.stateZeroHelper(event,tag,'Word Search Backward: ',self.wordSearchBackward)
         else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
+            self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     
     def wordSearchForward (self,event):
     
-        k = self.k ; state = k.getState('word-search-forward')
+        k = self.k ; tag = 'word-search-forward' ; state = k.getState(tag)
+        
         if state == 0:
-            self.w = event and event.widget
             self.setupArgs(forward=True,regexp=False,word=True)
-            k.setLabelBlue('Word Search: ',protect=True)
-            k.getArg(event,'word-search-forward',1,self.wordSearchForward)
+            self.stateZeroHelper(event,tag,'Word Search: ',self.wordSearchForward)
         else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
+            self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060124140224.2:wordSearchBackward/Forward
