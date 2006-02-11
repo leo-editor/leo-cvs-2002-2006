@@ -1472,7 +1472,6 @@ class leoMenu:
         
         # The first parameter must be event, and it must default to None.
         def openWithMenuCallback(event=None,self=self,data=data):
-            __pychecker__ = '--no-argsused' # event param must be present.
             return self.c.openWith(data=data)
     
         return openWithMenuCallback

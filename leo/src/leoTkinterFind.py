@@ -67,15 +67,13 @@ class underlinedTkButton:
     # The hot key has been hit.  Call the button's command.
     
     def buttonCallback (self, event=None):
-        
-        __pychecker__ = '--no-argsused' # the event param must be present.
     
         # g.trace(self.text)
-    
         self.button.invoke ()
         
         # See if this helps.
         return 'break'
+    #@nonl
     #@-node:ekr.20041025152717:buttonCallback
     #@-others
 #@nonl

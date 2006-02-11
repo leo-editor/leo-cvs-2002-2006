@@ -1566,10 +1566,7 @@ class keyHandlerClass:
         
         # Create a minimal event for commands that require them.
         event = g.Bunch(char='',keysym='',widget=w)
-        
-        if 1:
-            if not g.app.unitTesting:
-                g.trace(c.widget_name(w))
+        # g.trace(c.widget_name(w))
         
         return k.masterCommand(event,func,stroke,commandName)
     #@nonl

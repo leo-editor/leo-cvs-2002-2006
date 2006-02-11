@@ -526,10 +526,10 @@ class tkinterGui(leoGui.leoGui):
                 
                 # Wait until the window has been drawn once before attaching the icon in OnVisiblity.
                 def visibilityCallback(event,self=self,w=w):
-                    __pychecker__ = '--no-argsused' # event not used.
                     try: self.leoIcon.attach(w.winfo_id())
                     except: pass
                 w.bind("<Visibility>",visibilityCallback)
+                
                 if not self.leoIcon:
                     # Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
                     icon_file_name = g.os_path_join(g.app.loadDir,'..','Icons','LeoWin.gif')
