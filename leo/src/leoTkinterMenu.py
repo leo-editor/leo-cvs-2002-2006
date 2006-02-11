@@ -9,6 +9,7 @@
 import leoGlobals as g
 import leoMenu
 import Tkinter as Tk
+import tkFont
 
 class leoTkinterMenu (leoMenu.leoMenu):
     """A class that represents a Leo window."""
@@ -26,6 +27,46 @@ class leoTkinterMenu (leoMenu.leoMenu):
     #@nonl
     #@-node:ekr.20031218072017.4102:leoTkinterMenu.__init__
     #@-node:ekr.20031218072017.4101:Birth & death
+    #@+node:ekr.20060211101811:Activate menu commands
+    #@+node:ekr.20060211100905.1:tkMenu.activateMenu
+    def activateMenu (self,menuName):
+        
+        c = self.c ;  top = c.frame.top
+        topx,topy = top.winfo_rootx(),top.winfo_rooty()
+        menu = c.frame.menu.getMenu(menuName)
+    
+        if menu:
+            d = self.computeMenuPositions()
+            x = d.get(menuName)
+            if x is None:
+                 x = 0 ; g.trace('oops, no menu offset: %s' % menuName)
+            menu.post(topx+d.get(menuName,0),topy)
+        else:
+            g.trace('oops, no menu: %s' % menuName)
+    #@nonl
+    #@-node:ekr.20060211100905.1:tkMenu.activateMenu
+    #@+node:ekr.20060210133835.1:tkMenu.computeMenuPositions
+    def computeMenuPositions (self):
+        
+        # A hack.  It would be better to set this when creating the menus.
+        menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
+        
+        # Compute the *approximate* x offsets of each menu.
+        d = {}
+        n = 0
+        for z in menus:
+            menu = self.getMenu(z)
+            fontName = menu.cget('font')
+            font = tkFont.Font(font=fontName)
+            # print '%8s' % (z),menu.winfo_reqwidth(),menu.master,menu.winfo_x()
+            d [z] = n
+            # A total hack: sorta works on windows.
+            n += font.measure(z+' '*4)+1
+            
+        return d
+    #@nonl
+    #@-node:ekr.20060210133835.1:tkMenu.computeMenuPositions
+    #@-node:ekr.20060211101811:Activate menu commands
     #@+node:ekr.20031218072017.4103:Tkinter menu bindings
     # See the Tk docs for what these routines are to do
     #@nonl

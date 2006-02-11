@@ -1551,6 +1551,9 @@ class leoMenu:
     #@nonl
     #@-node:ekr.20031218072017.3809:9 Routines with Tk spellings
     #@+node:ekr.20031218072017.3810:8 Routines with new spellings
+    def activateMenu (self,menuName): # New in Leo 4.4b2.
+        self.oops()
+    
     def clearAccel (self,menu,name):
         self.oops()
     
