@@ -1093,9 +1093,7 @@ class controlCommandsClass (baseEditCommandsClass):
             'save-buffers-kill-leo':        self.saveBuffersKillLeo,
             'shell-command':                self.shellCommand,
             'shell-command-on-region':      self.shellCommandOnRegion,
-            
-            # adding this makes a unit test fail.
-            # 'suspend':                    self.suspend,
+            'suspend':                      self.suspend,
         }
     #@nonl
     #@-node:ekr.20050920084036.152: getPublicCommands
@@ -1185,8 +1183,10 @@ class controlCommandsClass (baseEditCommandsClass):
         w = event.widget
         w.winfo_toplevel().iconify()
         
-    iconifyFrame = suspend
-    #@nonl
+    # Must be a separate function so that k.inverseCommandsDict will be a true inverse.
+        
+    def iconifyFrame (self,event):
+        self.suspend(event)
     #@-node:ekr.20050920084036.153:suspend & iconifyOrDeiconifyFrame
     #@-others
 #@nonl
@@ -1330,6 +1330,13 @@ class editCommandsClass (baseEditCommandsClass):
         c = self.c ; k = self.k
     
         return {
+            'activate-cmds-menu':                   self.activateCmdsMenu,
+            'activate-edit-menu':                   self.activateEditMenu,
+            'activate-file-menu':                   self.activateFileMenu,
+            'activate-help-menu':                   self.activateHelpMenu,
+            'activate-outline-menu':                self.activateOutlineMenu,
+            'activate-plugins-menu':                self.activatePluginsMenu,
+            'activate-window-menu':                 self.activateWindowMenu,        
             'back-to-indentation':                  self.backToIndentation,
             'back-char':                            self.backCharacter,
             'back-char-extend-selection':           self.backCharacterExtendSelection,
@@ -1506,6 +1513,20 @@ class editCommandsClass (baseEditCommandsClass):
     #@-node:ekr.20051015114221.1:capitalizeHelper
     #@-node:ekr.20050920084036.57:capitalization & case
     #@+node:ekr.20051022142249:clicks and focus (editCommandsClass)
+    #@+node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
+    def activateCmdsMenu    (self,event=None): self.activateMenu('Cmds')
+    def activateEditMenu    (self,event=None): self.activateMenu('Edit')
+    def activateFileMenu    (self,event=None): self.activateMenu('File')
+    def activateHelpMenu    (self,event=None): self.activateMenu('Help')
+    def activateOutlineMenu (self,event=None): self.activateMenu('Outline')
+    def activatePluginsMenu (self,event=None): self.activateMenu('Plugins')
+    def activateWindowMenu  (self,event=None): self.activateMenu('Window')
+    
+    def activateMenu (self,menuName):
+        c = self.c
+        c.frame.menu.activateMenu(menuName)
+    #@nonl
+    #@-node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
     #@+node:ekr.20051022144825.1:cycleFocus
     def cycleFocus (self,event):
     
