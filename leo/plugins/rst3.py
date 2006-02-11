@@ -41,7 +41,9 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 # rst3.py based on rst2.py v2.4.
 
-__version__ = '1.8'
+from __future__ import generators # To make this plugin work with Python 2.2.
+
+__version__ = '1.9'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -398,6 +400,10 @@ except ImportError:
 # 
 # 1.8 EKR:
 # - Added event=None to arg list of rst3PluginCallback.
+# 
+# 1.9 EKR:
+#     - Added from __future__ import generators to suppress warning in Python 
+# 2.2.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x

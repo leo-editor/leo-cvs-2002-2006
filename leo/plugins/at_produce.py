@@ -30,6 +30,8 @@ WARNING: trying to execute a non-existent command will hang Leo.
 #@@language python
 #@@tabwidth -4
 
+from __future__ import generators # To make this plugin work with Python 2.2.
+
 #@<< imports >>
 #@+node:ekr.20040915085715:<< imports >>
 import leoGlobals as g
@@ -45,7 +47,7 @@ import time
 import weakref
 #@-node:ekr.20040915085715:<< imports >>
 #@nl
-__version__ = '.2'
+__version__ = '.3'
 #@<< version history >>
 #@+node:ekr.20050311110629:<< version history >>
 #@@killcolor
@@ -56,6 +58,10 @@ __version__ = '.2'
 #     - Move all docs into docstring.
 #     - Created init function.
 #     - Use keywords dict to get c.  Removed haveseen dict.
+# 
+# .3 EKR:
+#     - Added from __future__ import generators to suppress warning in Python 
+# 2.2.
 #@-at
 #@nonl
 #@-node:ekr.20050311110629:<< version history >>

@@ -13,8 +13,10 @@ that access the zodb database.
 # WARNING:
 # WARNING: highly experimental code:  USE AT YOUR OWN RISK.
 # WARNING:
+    
+from __future__ import generators # To make this plugin work with Python 2.2.
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 #@<< imports >>
 #@+node:ekr.20050825154553.1:<< imports >>
@@ -48,7 +50,11 @@ except ImportError:
 # 
 # - Update to reflect new c argument to position.__init__.
 # 
+# 0.0.4 EKR:
+#     - Added from __future__ import generators to suppress warning in Python 
+# 2.2.
 #@-at
+#@nonl
 #@-node:ekr.20050825154553.2:<< change log >>
 #@nl
 #@<< to do >>

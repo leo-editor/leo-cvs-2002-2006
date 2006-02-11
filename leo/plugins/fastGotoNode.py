@@ -35,6 +35,8 @@ parent's parent or after a sibling, if they exist.
 #@@language python
 #@@tabwidth -4
 
+from __future__ import generators # To make this plugin work with Python 2.2.
+
 #@<< imports >>
 #@+node:mork.20041018091414.2:<< imports >>
 import leoPlugins
@@ -47,7 +49,7 @@ import os
 #@nonl
 #@-node:mork.20041018091414.2:<< imports >>
 #@nl
-__version__ = ".105"
+__version__ = ".106"
 #@<< version history >>
 #@+node:ekr.20050226120947.1:<< version history >>
 #@@nocolor
@@ -75,6 +77,9 @@ __version__ = ".105"
 # - Use g.app.windowList to init windows.  This should be done dynamically.
 # - Removed langdict stuff, but left the disabled code as a guide in case
 #   somebody wants to implement langdict settings in leoSettings.leo.
+# .106 EKR:
+#     - Added from __future__ import generators to suppress warning in Python 
+# 2.2.
 #@-at
 #@nonl
 #@-node:ekr.20050226120947.1:<< version history >>
