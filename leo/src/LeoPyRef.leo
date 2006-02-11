@@ -12,7 +12,7 @@
 <v t="EKR.20040430162943"><vh>Notes</vh>
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.3" a="V"><vh>Projects</vh>
+<v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
 marks="ekr.20051022142249,"><vh>@thin leoProjects.txt</vh></v>
 </v>
@@ -409,6 +409,7 @@ marks="ekr.20051022142249,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20051015114221.1"><vh>capitalizeHelper</vh></v>
 </v>
 <v t="ekr.20051022142249" a="M"><vh>clicks and focus (editCommandsClass)</vh>
+<v t="ekr.20060211100905"><vh>activate-x-menu &amp; activateMenu (editCommandsClass)</vh></v>
 <v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
 <v t="ekr.20051022144825"><vh>focusTo...</vh></v>
 <v t="ekr.20060211063744.1"><vh>clicks in the headline</vh></v>
@@ -870,6 +871,7 @@ marks="ekr.20051022142249,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20040803072955.83"><vh>onHeadlineRightClick</vh></v>
 </v>
 <v t="ekr.20051022142249"><vh>clicks and focus (editCommandsClass)</vh>
+<v t="ekr.20060211100905"><vh>activate-x-menu &amp; activateMenu (editCommandsClass)</vh></v>
 <v t="ekr.20051022144825.1"><vh>cycleFocus</vh></v>
 <v t="ekr.20051022144825"><vh>focusTo...</vh></v>
 <v t="ekr.20060211063744.1"><vh>clicks in the headline</vh></v>
@@ -881,29 +883,31 @@ marks="ekr.20051022142249,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060211071114"><vh>Clicks are now handled properly in the minibuffer</vh>
 <v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20060206103355"><vh>To do 4.4b2</vh>
 <v t="ekr.20060116080040.2"><vh>activate-xxx-menu commands</vh>
-<v t="ekr.20060210133835"><vh>prototype of menu post commands</vh></v>
-<v t="ekr.20060210133835.1"><vh>computeMenuPositions</vh></v>
+<v t="ekr.20050920084036.55"><vh> getPublicCommands (editCommandsClass)</vh></v>
+<v t="ekr.20060211100905"><vh>activate-x-menu &amp; activateMenu (editCommandsClass)</vh></v>
+<v t="ekr.20060211100905.1"><vh>tkMenu.activateMenu</vh></v>
+<v t="ekr.20060210133835.1"><vh>tkMenu.computeMenuPositions</vh></v>
 </v>
-<v t="ekr.20060122183914"><vh>Fix minor bugs 10</vh>
+</v>
+</v>
+<v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
 <v t="ekr.20060210180603"><vh>Multiple pastes into find tab</vh></v>
+<v t="ekr.20060122183914"><vh>Fix minor bugs 9</vh>
+<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
 <v t="ekr.20060206131908"><vh>pasteText (with empty text?) crashed when pasting into minibuffer</vh></v>
 <v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
 <v t="ekr.20060206113925"><vh>Make sure yield works with Python 2.2</vh></v>
 <v t="ekr.20060206113925.1"><vh>Fix problem with body_gmt_time setting</vh></v>
 <v t="ekr.20060121101642"><vh>Make sure save updates the open directory</vh></v>
-<v t="ekr.20050707085637"><vh>Suggestions from an emacs user 3</vh>
 <v t="ekr.20060116082302.1"><vh>Use os.getenv('User") if it exists to get initial cvs name</vh></v>
 <v t="ekr.20060116083043"><vh>Two help menus on the Mac</vh></v>
-<v t="ekr.20060116083043.1"><vh>Add context-menus on nodes or text</vh></v>
-</v>
-<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
 <v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
 </v>
-<v t="ekr.20060209053234"><vh>What's new in b2</vh>
+<v t="ekr.20060211100150"><vh>Fix chapters plugin</vh></v>
+<v t="ekr.20060210123709"><vh>URGENT: Fix Alt-key issue on Linux</vh></v>
+<v t="ekr.20060210201454"><vh>Distribution</vh>
+<v t="ekr.20060209053234"><vh>What's new in Leo 4.4</vh>
 <v t="ekr.20060210111310"><vh>Unification of all calling sequences</vh></v>
 <v t="ekr.20060210105733"><vh>New debugging settings in leosettings.leo</vh></v>
 <v t="ekr.20060205170335.1"><vh>aproposFindCommands</vh>
@@ -918,9 +922,6 @@ marks="ekr.20051022142249,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="ekr.20060209201859"><vh>How to design and use modes</vh></v>
 </v>
-<v t="ekr.20060210201454"><vh>Distribution</vh>
-<v t="ekr.20060211095145"><vh>What's new in Leo 4.4</vh></v>
-<v t="ekr.20060210123709"><vh>Fix Alt-key issue on Linux</vh></v>
 <v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
 </v>
 </v>
@@ -973,11 +974,11 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -3674,19 +3675,6 @@ def widgetWantsFocus(self,w):
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
 c:\prog\leoCVS\leo\config\leoSettings.leo</t>
-<t tx="ekr.20050707085637">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3237845
-By: eichin
-
-Finally, one comment from the talk that bothered me for a while and didn't click
-until later - "emacs doesn't really have an outline mode".  This is true, at
-face value - outline mode in fact is just some regexp and hiding kludging, powerful
-in it's own way but not "deep".  However, the operations felt familiar, and
-it wasn't until I went home and checked mail that I caught it -- *GNUS* is actually
-surprisingly close in function set to an outliner.  Not in any immediately useful
-way, but it both clarifies why I think emacs could work this way *and* possibly
-clarifies why gnus users are so engaged by the interface :-)  Though that does
-mean gnus might be a reasonable source of suggestions for key bindings...</t>
 <t tx="ekr.20050721093241">@nocolor
 
 The following are notes for anyone who is interested in writing alternate gui's for Leo.
@@ -3754,6 +3742,13 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
     c = self.c ; k = self.k
 
     return {
+        'activate-cmds-menu':                   self.activateCmdsMenu,
+        'activate-edit-menu':                   self.activateEditMenu,
+        'activate-file-menu':                   self.activateFileMenu,
+        'activate-help-menu':                   self.activateHelpMenu,
+        'activate-outline-menu':                self.activateOutlineMenu,
+        'activate-plugins-menu':                self.activatePluginsMenu,
+        'activate-window-menu':                 self.activateWindowMenu,        
         'back-to-indentation':                  self.backToIndentation,
         'back-char':                            self.backCharacter,
         'back-char-extend-selection':           self.backCharacterExtendSelection,
@@ -7546,16 +7541,18 @@ def toggleExtendMode (self,event):
         self.unboundKeyAction = 'insert'
         
     k.setInputState(self.unboundKeyAction)</t>
-<t tx="ekr.20060116080040.2">These would be an alternative to XP Alt-f, Alt-E, etc.
-</t>
-<t tx="ekr.20060116082302.1">On startup, it asked me for a unique id, "possibly your CVS username".
+<t tx="ekr.20060116080040.2"></t>
+<t tx="ekr.20060116082302.1">http://sourceforge.net/forum/message.php?msg_id=3237845
+
+On startup, it asked me for a unique id, "possibly your CVS username".
 As a non-windows-user, that made no sense at all to me - at very least, it should
 fill in os.getenv("USER") as a default, because it's right on non-windows systems,
 isn't it?  (If it isn't, there's no explanation at that point that would tell
 me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
 issue.</t>
-<t tx="ekr.20060116083043">More mac nits: two HELP menus, one is empty; </t>
-<t tx="ekr.20060116083043.1"></t>
+<t tx="ekr.20060116083043">http://sourceforge.net/forum/message.php?msg_id=3237845
+
+More mac nits: two HELP menus, one is empty; </t>
 <t tx="ekr.20060116083359.1"></t>
 <t tx="ekr.20060120193743">def showStateAndMode(self):
     
@@ -8344,6 +8341,7 @@ Warning: 'yield' will become a reserved keyword
 for python2.2 leoEditCommands.py needs
 from __future__ import generators</t>
 <t tx="ekr.20060206113925.1">@nocolor
+
 http://sourceforge.net/forum/message.php?msg_id=3549737
 
 Warning: ignoring bool:body_gmt_time not string
@@ -8815,31 +8813,9 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 <t tx="ekr.20060210131120"></t>
 <t tx="ekr.20060210131120.1"></t>
 <t tx="ekr.20060210132142.1"></t>
-<t tx="ekr.20060210133835">import tkFont
-name = 'Outline'
-menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
-
-# Compute the *approximate* x offsets of each menu.
-offsets = {} ; n = 0
-for z in menus:
-    menu = c.frame.menu.getMenu(z)
-    fontName = menu.cget('font')
-    font = tkFont.Font(font=fontName)
-    # print '%8s' % (z),menu.winfo_reqwidth(),menu.master,menu.winfo_x()
-    offsets[z] = n
-    # A total hack: sorta works on windows.
-    n += font.measure(z+' '*4)+1 
-
-top = c.frame.top
-topx,topy = top.winfo_rootx(),top.winfo_rooty()
-menu = c.frame.menu.getMenu(name)
-menu.post(topx+offsets.get(name,0),topy)</t>
-<t tx="ekr.20060210133835.1">import tkFont
-
-# To do: create self.menuList while creating menus.
-
-def computeMenuPositions (self):
+<t tx="ekr.20060210133835.1">def computeMenuPositions (self):
     
+    # A hack.  It would be better to set this when creating the menus.
     menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
     
     # Compute the *approximate* x offsets of each menu.
@@ -8854,7 +8830,7 @@ def computeMenuPositions (self):
         # A total hack: sorta works on windows.
         n += font.measure(z+' '*4)+1
         
-    self.menuPositionsDict = d</t>
+    return d</t>
 <t tx="ekr.20060210141604">@nocolor
 
 (done) select-all-text.
@@ -8993,6 +8969,31 @@ Notes:
 
 - The simulateDrag methods have not been tested.  It's not clear that they can be useful, but what the heck...</t>
 <t tx="ekr.20060211071114"></t>
-<t tx="ekr.20060211095145"></t>
+<t tx="ekr.20060211100150"></t>
+<t tx="ekr.20060211100905">def activateCmdsMenu    (self,event=None): self.activateMenu('Cmds')
+def activateEditMenu    (self,event=None): self.activateMenu('Edit')
+def activateFileMenu    (self,event=None): self.activateMenu('File')
+def activateHelpMenu    (self,event=None): self.activateMenu('Help')
+def activateOutlineMenu (self,event=None): self.activateMenu('Outline')
+def activatePluginsMenu (self,event=None): self.activateMenu('Plugins')
+def activateWindowMenu  (self,event=None): self.activateMenu('Window')
+
+def activateMenu (self,menuName):
+    c = self.c
+    c.frame.menu.activateMenu(menuName)</t>
+<t tx="ekr.20060211100905.1">def activateMenu (self,menuName):
+    
+    c = self.c ;  top = c.frame.top
+    topx,topy = top.winfo_rootx(),top.winfo_rooty()
+    menu = c.frame.menu.getMenu(menuName)
+
+    if menu:
+        d = self.computeMenuPositions()
+        x = d.get(menuName)
+        if x is None:
+             x = 0 ; g.trace('oops, no menu offset: %s' % menuName)
+        menu.post(topx+d.get(menuName,0),topy)
+    else:
+        g.trace('oops, no menu: %s' % menuName)</t>
 </tnodes>
 </leo_file>

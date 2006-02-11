@@ -5477,6 +5477,13 @@ def getPublicCommands (self):
     c = self.c ; k = self.k
 
     return {
+        'activate-cmds-menu':                   self.activateCmdsMenu,
+        'activate-edit-menu':                   self.activateEditMenu,
+        'activate-file-menu':                   self.activateFileMenu,
+        'activate-help-menu':                   self.activateHelpMenu,
+        'activate-outline-menu':                self.activateOutlineMenu,
+        'activate-plugins-menu':                self.activatePluginsMenu,
+        'activate-window-menu':                 self.activateWindowMenu,        
         'back-to-indentation':                  self.backToIndentation,
         'back-char':                            self.backCharacter,
         'back-char-extend-selection':           self.backCharacterExtendSelection,
@@ -5653,6 +5660,20 @@ def capitalizeHelper (self,event,which):
 #@-node:ekr.20051015114221.1:capitalizeHelper
 #@-node:ekr.20050920084036.57:capitalization & case
 #@+node:ekr.20051022142249:clicks and focus (editCommandsClass)
+#@+node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
+def activateCmdsMenu    (self,event=None): self.activateMenu('Cmds')
+def activateEditMenu    (self,event=None): self.activateMenu('Edit')
+def activateFileMenu    (self,event=None): self.activateMenu('File')
+def activateHelpMenu    (self,event=None): self.activateMenu('Help')
+def activateOutlineMenu (self,event=None): self.activateMenu('Outline')
+def activatePluginsMenu (self,event=None): self.activateMenu('Plugins')
+def activateWindowMenu  (self,event=None): self.activateMenu('Window')
+
+def activateMenu (self,menuName):
+    c = self.c
+    c.frame.menu.activateMenu(menuName)
+#@nonl
+#@-node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
 #@+node:ekr.20051022144825.1:cycleFocus
 def cycleFocus (self,event):
 
@@ -11740,6 +11761,13 @@ def getPublicCommands (self):
     c = self.c ; k = self.k
 
     return {
+        'activate-cmds-menu':                   self.activateCmdsMenu,
+        'activate-edit-menu':                   self.activateEditMenu,
+        'activate-file-menu':                   self.activateFileMenu,
+        'activate-help-menu':                   self.activateHelpMenu,
+        'activate-outline-menu':                self.activateOutlineMenu,
+        'activate-plugins-menu':                self.activatePluginsMenu,
+        'activate-window-menu':                 self.activateWindowMenu,        
         'back-to-indentation':                  self.backToIndentation,
         'back-char':                            self.backCharacter,
         'back-char-extend-selection':           self.backCharacterExtendSelection,
@@ -12199,6 +12227,20 @@ def onHeadlineRightClick (self,event):
 #@-node:ekr.20040803072955.83:onHeadlineRightClick
 #@-node:ekr.20060211061217:Tree event handlers that trigger hooks
 #@+node:ekr.20051022142249:clicks and focus (editCommandsClass)
+#@+node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
+def activateCmdsMenu    (self,event=None): self.activateMenu('Cmds')
+def activateEditMenu    (self,event=None): self.activateMenu('Edit')
+def activateFileMenu    (self,event=None): self.activateMenu('File')
+def activateHelpMenu    (self,event=None): self.activateMenu('Help')
+def activateOutlineMenu (self,event=None): self.activateMenu('Outline')
+def activatePluginsMenu (self,event=None): self.activateMenu('Plugins')
+def activateWindowMenu  (self,event=None): self.activateMenu('Window')
+
+def activateMenu (self,menuName):
+    c = self.c
+    c.frame.menu.activateMenu(menuName)
+#@nonl
+#@-node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
 #@+node:ekr.20051022144825.1:cycleFocus
 def cycleFocus (self,event):
 
@@ -12366,6 +12408,198 @@ masterDoubleClick3Handler = masterClickHandler
 #@nonl
 #@-node:ekr.20060129052538.2:masterClickHandler
 #@-node:ekr.20060211071114:Clicks are now handled properly in the minibuffer
+#@+node:ekr.20060116080040.2:activate-xxx-menu commands
+#@+node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
+def getPublicCommands (self):        
+
+    c = self.c ; k = self.k
+
+    return {
+        'activate-cmds-menu':                   self.activateCmdsMenu,
+        'activate-edit-menu':                   self.activateEditMenu,
+        'activate-file-menu':                   self.activateFileMenu,
+        'activate-help-menu':                   self.activateHelpMenu,
+        'activate-outline-menu':                self.activateOutlineMenu,
+        'activate-plugins-menu':                self.activatePluginsMenu,
+        'activate-window-menu':                 self.activateWindowMenu,        
+        'back-to-indentation':                  self.backToIndentation,
+        'back-char':                            self.backCharacter,
+        'back-char-extend-selection':           self.backCharacterExtendSelection,
+        'back-paragraph':                       self.backwardParagraph,
+        'back-paragraph-extend-selection':      self.backwardParagraphExtendSelection,
+        'back-sentence':                        self.backSentence,
+        'back-sentence-extend-selection':       self.backSentenceExtendSelection,
+        'back-word':                            self.backwardWord,
+        'back-word-extend-selection':           self.backwardWordExtendSelection,
+        'backward-delete-char':                 self.backwardDeleteCharacter,
+        'backward-kill-paragraph':              self.backwardKillParagraph,
+        'beginning-of-buffer':                  self.beginningOfBuffer,
+        'beginning-of-buffer-extend-selection': self.beginningOfBufferExtendSelection,
+        'beginning-of-line':                    self.beginningOfLine,
+        'beginning-of-line-extend-selection':   self.beginningOfLineExtendSelection,
+        'capitalize-word':                      self.capitalizeWord,
+        'center-line':                          self.centerLine,
+        'center-region':                        self.centerRegion,
+        'clear-extend-mode':                    self.clearExtendMode,
+        'click-click-box':                      self.clickClickBox,
+        'click-headline':                       self.clickHeadline,
+        'click-icon-box':                       self.clickIconBox,
+        'contract-body-pane':                   c.frame.contractBodyPane,
+        'contract-log-pane':                    c.frame.contractLogPane,
+        'contract-outline-pane':                c.frame.contractOutlinePane,
+        'contract-pane':                        c.frame.contractPane,
+        'count-region':                         self.countRegion,
+        'cycle-focus':                          self.cycleFocus,
+        'dabbrev-completion':                   self.dynamicExpansion2,
+        'dabbrev-expands':                      self.dynamicExpansion,
+        'delete-char':                          self.deleteNextChar,
+        'delete-indentation':                   self.deleteIndentation,
+        'delete-spaces':                        self.deleteSpaces,
+        'downcase-region':                      self.downCaseRegion,
+        'downcase-word':                        self.downCaseWord,
+        'double-click-headline':                self.doubleClickHeadline,
+        'double-click-icon-box':                self.doubleClickIconBox,
+        'end-of-buffer':                        self.endOfBuffer,
+        'end-of-buffer-extend-selection':       self.endOfBufferExtendSelection,
+        'end-of-line':                          self.endOfLine,
+        'end-of-line-extend-selection':         self.endOfLineExtendSelection,
+        'escape':                               self.watchEscape,
+        'eval-expression':                      self.evalExpression,
+        'exchange-point-mark':                  self.exchangePointMark,
+        'expand-body-pane':                     c.frame.expandBodyPane,
+        'expand-log-pane':                      c.frame.expandLogPane,
+        'expand-outline-pane':                  c.frame.expandOutlinePane,
+        'expand-pane':                          c.frame.expandPane,
+        'fill-paragraph':                       self.fillParagraph,
+        'fill-region':                          self.fillRegion,
+        'fill-region-as-paragraph':             self.fillRegionAsParagraph,
+        'flush-lines':                          self.flushLines,
+        'focus-to-body':                        self.focusToBody,
+        'focus-to-log':                         self.focusToLog,
+        'focus-to-minibuffer':                  self.focusToMinibuffer,
+        'focus-to-tree':                        self.focusToTree,
+        'forward-char':                         self.forwardCharacter,
+        'forward-char-extend-selection':        self.forwardCharacterExtendSelection,
+        'forward-paragraph':                    self.forwardParagraph,
+        'forward-paragraph-extend-selection':   self.forwardParagraphExtendSelection,
+        'forward-sentence':                     self.forwardSentence,
+        'forward-sentence-extend-selection':    self.forwardSentenceExtendSelection,
+        'forward-word':                         self.forwardWord,
+        'forward-word-extend-selection':        self.forwardWordExtendSelection,
+        'fully-expand-body-pane':               c.frame.fullyExpandBodyPane,
+        'fully-expand-log-pane':                c.frame.fullyExpandLogPane,
+        'fully-expand-pane':                    c.frame.fullyExpandPane,
+        'fully-expand-outline-pane':            c.frame.fullyExpandOutlinePane,
+        'goto-char':                            self.gotoCharacter,
+        'goto-line':                            self.gotoLine,
+        'hide-body-pane':                       c.frame.hideBodyPane,
+        'hide-log-pane':                        c.frame.hideLogPane,
+        'hide-pane':                            c.frame.hidePane,
+        'hide-outline-pane':                    c.frame.hideOutlinePane,
+        'how-many':                             self.howMany,
+        # Use indentBody in leoCommands.py
+        'indent-relative':                      self.indentRelative,
+        'indent-rigidly':                       self.tabIndentRegion,
+        'indent-to-comment-column':             self.indentToCommentColumn,
+        'insert-newline':                       self.insertNewline,
+        'insert-parentheses':                   self.insertParentheses,
+        'keep-lines':                           self.keepLines,
+        'kill-paragraph':                       self.killParagraph,
+        'line-number':                          self.lineNumber,
+        'move-past-close':                      self.movePastClose,
+        'move-past-close-extend-selection':     self.movePastCloseExtendSelection,
+        'newline-and-indent':                   self.insertNewLineAndTab,
+        'next-line':                            self.nextLine,
+        'next-line-extend-selection':           self.nextLineExtendSelection,
+        'previous-line':                        self.prevLine,
+        'previous-line-extend-selection':       self.prevLineExtendSelection,
+        'remove-blank-lines':                   self.removeBlankLines,
+        'reverse-region':                       self.reverseRegion,
+        'scroll-down':                          self.scrollDown,
+        'scroll-down-extend-selection':         self.scrollDownExtendSelection,
+        'scroll-up':                            self.scrollUp,
+        'scroll-up-extend-selection':           self.scrollUpExtendSelection,
+        'select-paragraph':                     self.selectParagraph,
+        # Exists, but can not be executed via the minibuffer.
+        # 'self-insert-command':                self.selfInsertCommand,
+        'set-comment-column':                   self.setCommentColumn,
+        'set-extend-mode':                      self.setExtendMode,
+        'set-fill-column':                      self.setFillColumn,
+        'set-fill-prefix':                      self.setFillPrefix,
+        'set-mark-command':                     self.setRegion,
+        'show-colors':                          self.showColors,
+        'show-fonts':                           self.showFonts,
+        'simulate-begin-drag':                  self.simulateBeginDrag,
+        'simulate-end-drag':                    self.simulateEndDrag,
+        'sort-columns':                         self.sortColumns,
+        'sort-fields':                          self.sortFields,
+        'sort-lines':                           self.sortLines,
+        'split-line':                           self.insertNewLineIndent,
+        'tabify':                               self.tabify,
+        'toggle-extend-mode':                   self.toggleExtendMode,
+        'transpose-chars':                      self.transposeCharacters,
+        'transpose-lines':                      self.transposeLines,
+        'transpose-words':                      self.transposeWords,
+        'untabify':                             self.untabify,
+        'upcase-region':                        self.upCaseRegion,
+        'upcase-word':                          self.upCaseWord,
+        'view-lossage':                         self.viewLossage,
+        'what-line':                            self.whatLine,
+    }
+#@-node:ekr.20050920084036.55: getPublicCommands (editCommandsClass)
+#@+node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
+def activateCmdsMenu    (self,event=None): self.activateMenu('Cmds')
+def activateEditMenu    (self,event=None): self.activateMenu('Edit')
+def activateFileMenu    (self,event=None): self.activateMenu('File')
+def activateHelpMenu    (self,event=None): self.activateMenu('Help')
+def activateOutlineMenu (self,event=None): self.activateMenu('Outline')
+def activatePluginsMenu (self,event=None): self.activateMenu('Plugins')
+def activateWindowMenu  (self,event=None): self.activateMenu('Window')
+
+def activateMenu (self,menuName):
+    c = self.c
+    c.frame.menu.activateMenu(menuName)
+#@nonl
+#@-node:ekr.20060211100905:activate-x-menu & activateMenu (editCommandsClass)
+#@+node:ekr.20060211100905.1:tkMenu.activateMenu
+def activateMenu (self,menuName):
+    
+    c = self.c ;  top = c.frame.top
+    topx,topy = top.winfo_rootx(),top.winfo_rooty()
+    menu = c.frame.menu.getMenu(menuName)
+
+    if menu:
+        d = self.computeMenuPositions()
+        x = d.get(menuName)
+        if x is None:
+             x = 0 ; g.trace('oops, no menu offset: %s' % menuName)
+        menu.post(topx+d.get(menuName,0),topy)
+    else:
+        g.trace('oops, no menu: %s' % menuName)
+#@nonl
+#@-node:ekr.20060211100905.1:tkMenu.activateMenu
+#@+node:ekr.20060210133835.1:tkMenu.computeMenuPositions
+def computeMenuPositions (self):
+    
+    # A hack.  It would be better to set this when creating the menus.
+    menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
+    
+    # Compute the *approximate* x offsets of each menu.
+    d = {}
+    n = 0
+    for z in menus:
+        menu = self.getMenu(z)
+        fontName = menu.cget('font')
+        font = tkFont.Font(font=fontName)
+        # print '%8s' % (z),menu.winfo_reqwidth(),menu.master,menu.winfo_x()
+        d [z] = n
+        # A total hack: sorta works on windows.
+        n += font.measure(z+' '*4)+1
+        
+    return d
+#@nonl
+#@-node:ekr.20060210133835.1:tkMenu.computeMenuPositions
+#@-node:ekr.20060116080040.2:activate-xxx-menu commands
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
