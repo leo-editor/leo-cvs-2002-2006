@@ -2,45 +2,7 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060211112120:Fix ancient bugs 6
-#@+node:ekr.20060206113925:Make sure yield works with Python 2.2
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3549737
-By: nobody
-
-\src\leoEditCommands.py:340: 
-Warning: 'yield' will become a reserved keyword 
-
-for python2.2 leoEditCommands.py needs
-from __future__ import generators
-#@nonl
-#@-node:ekr.20060206113925:Make sure yield works with Python 2.2
-#@+node:ekr.20060206113925.1:Fix problem with body_gmt_time setting
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3549737
-
-Warning: ignoring bool:body_gmt_time not string
-There may be conflicting settings!
-#@nonl
-#@-node:ekr.20060206113925.1:Fix problem with body_gmt_time setting
-#@+node:ekr.20060116082302.1:Use os.getenv('User") if it exists to get initial cvs name
-http://sourceforge.net/forum/message.php?msg_id=3237845
-
-On startup, it asked me for a unique id, "possibly your CVS username".
-As a non-windows-user, that made no sense at all to me - at very least, it should
-fill in os.getenv("USER") as a default, because it's right on non-windows systems,
-isn't it?  (If it isn't, there's no explanation at that point that would tell
-me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
-issue.
-#@nonl
-#@-node:ekr.20060116082302.1:Use os.getenv('User") if it exists to get initial cvs name
-#@+node:ekr.20060116083043:Two help menus on the Mac
-http://sourceforge.net/forum/message.php?msg_id=3237845
-
-More mac nits: two HELP menus, one is empty; 
-#@nonl
-#@-node:ekr.20060116083043:Two help menus on the Mac
+#@+node:ekr.20060122183914:Fix minor bugs 6
 #@+node:ekr.20060121101642:Make sure save updates the open directory
 @nocolor
 
@@ -57,6 +19,19 @@ post it in another thread.
 Thanks again,
 Dave Harris
 #@-node:ekr.20060121101642:Make sure save updates the open directory
+#@+node:ekr.20060211112120.1:disable menu enablers if commander does not exist
+Only affects unit tests, probably.
+#@nonl
+#@-node:ekr.20060211112120.1:disable menu enablers if commander does not exist
+#@+node:ekr.20060114055611:Fix sort-lines problems
+- It should recolor the text.
+- Does it not stick sometimes?
+#@nonl
+#@-node:ekr.20060114055611:Fix sort-lines problems
+#@+node:ekr.20060122185244.2:Fix unindent command
+unindent-region should do nothing if not in body pane, or it should work in all panes.
+#@nonl
+#@-node:ekr.20060122185244.2:Fix unindent command
 #@+node:ekr.20060124082357:Fix problem with view plugin
 @nocolor
 
@@ -82,26 +57,89 @@ Evidently the issue is with the hooking/calling
 mech. not the plugin code itself.
 #@nonl
 #@-node:ekr.20060124082357:Fix problem with view plugin
-#@-node:ekr.20060211112120:Fix ancient bugs 6
-#@+node:ekr.20060122183914:Fix minor bugs 3
-#@+node:ekr.20060211112120.1:disable menu enablers if commander does not exist
-Only affects unit tests, probably.
+#@+node:ekr.20060116083043:Use special Help menu on the Mac
+# http://sourceforge.net/forum/message.php?msg_id=3237845
 #@nonl
-#@-node:ekr.20060211112120.1:disable menu enablers if commander does not exist
-#@+node:ekr.20060114055611:Fix sort-lines problems
-- It should recolor the text.
-- Does it not stick sometimes?
+#@+node:ekr.20031218072017.3803:createHelpMenuFromTable
+def createHelpMenuFromTable (self):
+
+    if sys.platform == 'darwin':
+        try:
+            # helpMenu = self.createNewMenu (menuName='top.help',parentName='top')
+            helpMenu = Tk.Menu('top.help')
+        except Exception:
+            g.trace('Can not get MacOS Help menu')
+            g.es_exception()
+            return
+    else:
+        helpMenu = self.createNewMenu("&Help")
+    
+    self.createMenuEntries(helpMenu,self.helpMenuTopTable)
+    
+    if sys.platform=="win32":
+        self.createMenuEntries(helpMenu,self.helpMenuTop2Table)
+    
+    self.createMenuEntries(helpMenu,self.helpMenuTop3Table)
 #@nonl
-#@-node:ekr.20060114055611:Fix sort-lines problems
-#@+node:ekr.20060122185244.2:Fix unindent command
-unindent-region should do nothing if not in body pane, or it should work in all panes.
+#@-node:ekr.20031218072017.3803:createHelpMenuFromTable
+#@+node:ekr.20031218072017.4113:new_menu
+def new_menu(self,parent,tearoff=False):
+    
+    """Wrapper for the Tkinter new_menu menu method."""
+
+    return Tk.Menu(parent,tearoff=tearoff)
 #@nonl
-#@-node:ekr.20060122185244.2:Fix unindent command
-#@-node:ekr.20060122183914:Fix minor bugs 3
+#@-node:ekr.20031218072017.4113:new_menu
+#@+node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
+def createNewMenu (self,menuName,parentName="top",before=None):
+
+    try:
+        parent = self.getMenu(parentName) # parent may be None.
+        menu = self.getMenu(menuName)
+        if menu:
+            g.es("menu already exists: " + menuName,color="red")
+        else:
+            menu = self.new_menu(parent,tearoff=0)
+            self.setMenu(menuName,menu)
+            label = self.getRealMenuName(menuName)
+            amp_index = label.find("&")
+            label = label.replace("&","")
+            if before: # Insert the menu before the "before" menu.
+                index_label = self.getRealMenuName(before)
+                amp_index = index_label.find("&")
+                index_label = index_label.replace("&","")
+                index = parent.index(index_label)
+                self.insert_cascade(parent,index=index,label=label,menu=menu,underline=amp_index)
+            else:
+                self.add_cascade(parent,label=label,menu=menu,underline=amp_index)
+            return menu
+    except:
+        g.es("exception creating " + menuName + " menu")
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
+#@+node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
+def getMenu (self,menuName):
+
+    cmn = self.canonicalizeMenuName(menuName)
+    return self.menus.get(cmn)
+    
+def setMenu (self,menuName,menu):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    self.menus [cmn] = menu
+    
+def destroyMenu (self,menuName):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    del self.menus[cmn]
+#@nonl
+#@-node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
+#@-node:ekr.20060116083043:Use special Help menu on the Mac
+#@-node:ekr.20060122183914:Fix minor bugs 6
 #@+node:ekr.20060211100150:Fix chapters plugin
 #@-node:ekr.20060211100150:Fix chapters plugin
-#@+node:ekr.20060210123709:URGENT: Fix Alt-key issue on Linux
-#@-node:ekr.20060210123709:URGENT: Fix Alt-key issue on Linux
 #@+node:ekr.20060210201454:Distribution
 #@+node:ekr.20060209053234:What's new in Leo 4.4
 @nocolor

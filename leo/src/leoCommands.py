@@ -2452,7 +2452,7 @@ class baseCommands:
         c.frame.body.insertAtInsertPoint(s)
         c.frame.body.onBodyChanged(undoType,oldSel=oldSel)
     #@nonl
-    #@+node:ekr.20031218072017.1832:getTime
+    #@+node:ekr.20031218072017.1832:getTime & test
     def getTime (self,body=True):
     
         c = self
@@ -2482,7 +2482,7 @@ class baseCommands:
             g.es_exception() # Probably a bad format string in leoSettings.leo.
             s = time.strftime(default_format,time.gmtime())
         return s
-    #@-node:ekr.20031218072017.1832:getTime
+    #@-node:ekr.20031218072017.1832:getTime & test
     #@-node:ekr.20031218072017.1831:insertBodyTime & allies
     #@+node:ekr.20050312114529:insert/removeComments
     #@+node:ekr.20050312114529.1:addComments

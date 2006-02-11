@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9074" clone_windows="0"/>
 <globals body_outline_ratio="0.480459770115">
-	<global_window_position top="25" left="452" height="870" width="793"/>
+	<global_window_position top="21" left="417" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -99,25 +99,42 @@
 <v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
 <v t="ekr.20051011072903.5"><vh>pasteText</vh></v>
 </v>
+<v t="ekr.20060206131908"><vh>catch exceptions in pasteText</vh></v>
+<v t="ekr.20060206113925"><vh>Made sure yield works with Python 2.2</vh></v>
+<v t="ekr.20060211132742"><vh>Fixed the alt key on Linux</vh>
+<v t="ekr.20060126163152.2"><vh>k.strokeFromEvent</vh></v>
+</v>
+<v t="ekr.20060206113925.1"><vh>Fixed problem with body_gmt_time setting</vh>
+<v t="ekr.20060211135013"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1832"><vh>getTime &amp; test</vh></v>
+</v>
+<v t="ekr.20060116082302.1"><vh>Use os.getenv('User") if it exists to get initial cvs name</vh>
+<v t="ekr.20060211140947"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1978"><vh>app.setLeoID</vh>
+<v t="ekr.20031218072017.1979"><vh>&lt;&lt; return if we can set leoID from sys.leoID&gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1980"><vh>&lt;&lt; return if we can set leoID from "leoID.txt" &gt;&gt;</vh></v>
+<v t="ekr.20060211140947.1"><vh>&lt;&lt; return if we can set leoID from os.getenv('USER') &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1981"><vh>&lt;&lt; put up a dialog requiring a valid id &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1982"><vh>&lt;&lt; attempt to create leoID.txt &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
-<v t="ekr.20060211112120"><vh>Ancient bugs 6</vh>
-<v t="ekr.20060206113925"><vh>Make sure yield works with Python 2.2</vh></v>
-<v t="ekr.20060206113925.1"><vh>Fix problem with body_gmt_time setting</vh></v>
-<v t="ekr.20060116082302.1"><vh>Use os.getenv('User") if it exists to get initial cvs name</vh></v>
-<v t="ekr.20060116083043"><vh>Two help menus on the Mac</vh></v>
+<v t="ekr.20060122183914"><vh>Fix minor bugs 6</vh>
 <v t="ekr.20060121101642"><vh>Make sure save updates the open directory</vh></v>
-<v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
-</v>
-<v t="ekr.20060122183914"><vh>Fix minor bugs 4</vh>
-<v t="ekr.20060206131908"><vh>catch exceptions in pasteText</vh></v>
 <v t="ekr.20060211112120.1"><vh>disable menu enablers if commander does not exist</vh></v>
 <v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
 <v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
+<v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
+<v t="ekr.20060116083043"><vh>Use special Help menu on the Mac</vh>
+<v t="ekr.20031218072017.3803"><vh>createHelpMenuFromTable</vh></v>
+<v t="ekr.20031218072017.4113"><vh>new_menu</vh></v>
+<v t="ekr.20031218072017.3804"><vh>createNewMenu (contains Tk code)</vh></v>
+<v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
+</v>
 </v>
 <v t="ekr.20060211100150"><vh>Fix chapters plugin</vh></v>
-<v t="ekr.20060210123709"><vh>URGENT: Fix Alt-key issue on Linux</vh></v>
 <v t="ekr.20060210201454"><vh>Distribution</vh>
 <v t="ekr.20060209053234"><vh>What's new in Leo 4.4</vh>
 <v t="ekr.20060210111310"><vh>Unification of all calling sequences</vh></v>
@@ -185,12 +202,12 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
-<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
+<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -263,6 +280,36 @@ self.redrawCount = 0
 self.wantedWidget = None
 self.wantedCallbackScheduled = False
 self.scrollWay = None</t>
+<t tx="ekr.20031218072017.1832">def getTime (self,body=True):
+
+    c = self
+    default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+    
+    # Try to get the format string from leoConfig.txt.
+    if body:
+        format = c.config.getString("body_time_format_string")
+        gmt    = c.config.getBool("body_gmt_time")
+    else:
+        format = c.config.getString("headline_time_format_string")
+        gmt    = c.config.getBool("headline_gmt_time")
+
+    if format == None:
+        format = default_format
+
+    try:
+        import time
+        if gmt:
+            s = time.strftime(format,time.gmtime())
+        else:
+            s = time.strftime(format,time.localtime())
+    except (ImportError, NameError):
+        g.es("time.strftime not available on this platform",color="blue")
+        return ""
+    except:
+        g.es_exception() # Probably a bad format string in leoSettings.leo.
+        s = time.strftime(default_format,time.gmtime())
+    return s
+</t>
 <t tx="ekr.20031218072017.1974">def destroySelf (self):
     
     # Remember these: we are about to destroy all of our ivars!
@@ -320,6 +367,81 @@ for v in vList:
     g.clearAllIvars(v)
 
 vList = [] ; tDict = {} # Remove these references immediately.</t>
+<t tx="ekr.20031218072017.1978">def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+    
+    verbose = True
+    &lt;&lt; return if we can set leoID from sys.leoID &gt;&gt;
+    &lt;&lt; return if we can set leoID from "leoID.txt" &gt;&gt;
+    &lt;&lt; return if we can set leoID from os.getenv('USER') &gt;&gt;
+    &lt;&lt; put up a dialog requiring a valid id &gt;&gt;
+    &lt;&lt; attempt to create leoID.txt &gt;&gt;</t>
+<t tx="ekr.20031218072017.1979"># This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr &amp; getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose: g.es_print("leoID = " + g.app.leoID, color='red')
+    return
+else:
+    g.app.leoID = None</t>
+<t tx="ekr.20031218072017.1980">for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'r')
+            s = f.readline()
+            f.close()
+            if s and len(s) &gt; 0:
+                g.app.leoID = s
+                if verbose:
+                    g.es_print("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                return
+            elif verbose:
+                g.es_print("empty %s (in %s)" % (tag,theDir), color = "red")
+        except IOError:
+            g.app.leoID = None
+            # g.es("%s not found in %s" % (tag,theDir),color="red")
+        except Exception:
+            g.app.leoID = None
+            g.es_print('Unexpected exception in app.setLeoID',color='red')
+            g.es_exception()</t>
+<t tx="ekr.20031218072017.1981"># New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+
+# g.trace(g.app.leoID)
+g.es_print("leoID = %s" % (repr(g.app.leoID)),color="blue")</t>
+<t tx="ekr.20031218072017.1982">for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        cant = "can not create %s in %s" % (tag,theDir)
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'w')
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                s = "%s created in %s" % (tag,theDir)
+                g.es_print(s, color="red")
+                return
+            else:
+                g.es(cant,color='red')
+        except IOError:
+            g.es(cant,color='red')</t>
 <t tx="ekr.20031218072017.2176">def finishCreate (self,c):
     
     f = self ; f.c = c
@@ -479,6 +601,65 @@ __str__ = __repr__
 
 </t>
 <t tx="ekr.20031218072017.3625">&lt;&lt; about gui classes and gui plugins &gt;&gt;</t>
+<t tx="ekr.20031218072017.3803">def createHelpMenuFromTable (self):
+
+    if sys.platform == 'darwin':
+        try:
+            # helpMenu = self.createNewMenu (menuName='top.help',parentName='top')
+            helpMenu = Tk.Menu('top.help')
+        except Exception:
+            g.trace('Can not get MacOS Help menu')
+            g.es_exception()
+            return
+    else:
+        helpMenu = self.createNewMenu("&amp;Help")
+    
+    self.createMenuEntries(helpMenu,self.helpMenuTopTable)
+    
+    if sys.platform=="win32":
+        self.createMenuEntries(helpMenu,self.helpMenuTop2Table)
+    
+    self.createMenuEntries(helpMenu,self.helpMenuTop3Table)</t>
+<t tx="ekr.20031218072017.3804">def createNewMenu (self,menuName,parentName="top",before=None):
+
+    try:
+        parent = self.getMenu(parentName) # parent may be None.
+        menu = self.getMenu(menuName)
+        if menu:
+            g.es("menu already exists: " + menuName,color="red")
+        else:
+            menu = self.new_menu(parent,tearoff=0)
+            self.setMenu(menuName,menu)
+            label = self.getRealMenuName(menuName)
+            amp_index = label.find("&amp;")
+            label = label.replace("&amp;","")
+            if before: # Insert the menu before the "before" menu.
+                index_label = self.getRealMenuName(before)
+                amp_index = index_label.find("&amp;")
+                index_label = index_label.replace("&amp;","")
+                index = parent.index(index_label)
+                self.insert_cascade(parent,index=index,label=label,menu=menu,underline=amp_index)
+            else:
+                self.add_cascade(parent,label=label,menu=menu,underline=amp_index)
+            return menu
+    except:
+        g.es("exception creating " + menuName + " menu")
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20031218072017.3807">def getMenu (self,menuName):
+
+    cmn = self.canonicalizeMenuName(menuName)
+    return self.menus.get(cmn)
+    
+def setMenu (self,menuName,menu):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    self.menus [cmn] = menu
+    
+def destroyMenu (self,menuName):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    del self.menus[cmn]</t>
 <t tx="ekr.20031218072017.3821"></t>
 <t tx="ekr.20031218072017.3941"></t>
 <t tx="ekr.20031218072017.3942">def __repr__ (self):
@@ -609,6 +790,11 @@ def onDragSplitterBar (self, event, verticalFlag):
     for panel in panels:
         if panel:
             panel.top.destroy()</t>
+<t tx="ekr.20031218072017.4113">def new_menu(self,parent,tearoff=False):
+    
+    """Wrapper for the Tkinter new_menu menu method."""
+
+    return Tk.Menu(parent,tearoff=tearoff)</t>
 <t tx="ekr.20040629121554">def getBuildNumber(self):
     c = self
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
@@ -1231,23 +1417,26 @@ def createStatusLineComponents (self):
         # Strip trailing newlines so the truncation doesn't cause confusion.
         while s and s [ -1] in ('\n','\r'):
             s = s [: -1]
-    
-    # Update the widget.
-    if i != j:
-        w.delete(i,j)
-    w.insert(i,s)
 
-    if wname.startswith('body'):
-        c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
-    elif singleLine:
-        s = w.get('1.0','end')
-        while s and s [ -1] in ('\n','\r'):
-            s = s [: -1]
-        if wname.startswith('head'):
-            # The headline is not officially changed yet.
-            # p.initHeadString(s)
-            w.configure(width=f.tree.headWidth(s=s))
-    else: pass
+    try:
+        # Update the widget.
+        if i != j:
+            w.delete(i,j)
+        w.insert(i,s)
+    
+        if wname.startswith('body'):
+            c.frame.body.onBodyChanged('Paste',oldSel=oldSel,oldText=oldText)
+        elif singleLine:
+            s = w.get('1.0','end')
+            while s and s [ -1] in ('\n','\r'):
+                s = s [: -1]
+            if wname.startswith('head'):
+                # The headline is not officially changed yet.
+                # p.initHeadString(s)
+                w.configure(width=f.tree.headWidth(s=s))
+        else: pass
+    except Exception:
+        pass # Tk sometimes throws weird exceptions here.
         
     return 'break' # Essential
 
@@ -1330,17 +1519,8 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
         self.unboundKeyAction = 'insert'
         
     k.setInputState(self.unboundKeyAction)</t>
-<t tx="ekr.20060116082302.1">http://sourceforge.net/forum/message.php?msg_id=3237845
-
-On startup, it asked me for a unique id, "possibly your CVS username".
-As a non-windows-user, that made no sense at all to me - at very least, it should
-fill in os.getenv("USER") as a default, because it's right on non-windows systems,
-isn't it?  (If it isn't, there's no explanation at that point that would tell
-me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
-issue.</t>
-<t tx="ekr.20060116083043">http://sourceforge.net/forum/message.php?msg_id=3237845
-
-More mac nits: two HELP menus, one is empty; </t>
+<t tx="ekr.20060116082302.1"></t>
+<t tx="ekr.20060116083043"># http://sourceforge.net/forum/message.php?msg_id=3237845</t>
 <t tx="ekr.20060121101642">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3534349
@@ -1380,6 +1560,50 @@ node body.
 
 Evidently the issue is with the hooking/calling
 mech. not the plugin code itself.</t>
+<t tx="ekr.20060126163152.2"># The keys to k.bindingsDict must be consistent with what this method returns.
+# See 'about internal bindings' for details.
+ 
+def strokeFromEvent (self,event):
+    
+    c = self.c ; k = c.k
+    if event is None: return ''
+    state = event.state or 0
+    keysym = event.keysym or ''
+    ch = event.char
+    result = []
+    shift = (state &amp; 1) == 1 # Not used for alpha chars.
+    caps  = (state &amp; 2) == 2 # Not used at all.
+    ctrl  = (state &amp; 4) == 4
+    # Linux uses, 8 and 0x80, XP uses 0x20000.
+    alt   = (state &amp; 0x20000) == 0x20000 or (state &amp; 8) == 8 or (state &amp; 0x80) == 0x80
+    plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
+    
+    # g.es('state: %x' % state)
+    
+    # g.trace('ch',repr(ch),'keysym',repr(keysym))
+    
+    # The big aha: we can ignore the shift state.
+    if plain:
+        if shift and ch.isalpha() and ch.islower():
+            g.trace('oops: inconsistent shift state. shift: %s, ch: %s' % (shift,ch))
+        ch = keysym
+        shift = False
+    else:
+        ch2 = k.tkBindNamesInverseDict.get(keysym)
+        if ch2:
+            ch = ch2
+            if len(ch) == 1: shift = False
+        else:
+            # Just use the unknown keysym.
+            g.trace('*'*30,'unknown keysym',repr(keysym))
+    
+    if alt: result.append('Alt+')
+    if ctrl: result.append('Ctrl+')
+    if shift: result.append('Shift+')
+    result.append(ch)
+    result = ''.join(result)
+    # g.trace('state',state,'keysym',keysym,'result',repr(result))
+    return result</t>
 <t tx="ekr.20060203112912.1"></t>
 <t tx="ekr.20060205170335.1">def aproposFindCommands (self, event=None):
     
@@ -1405,13 +1629,15 @@ By: nobody
 Warning: 'yield' will become a reserved keyword 
 
 for python2.2 leoEditCommands.py needs
-from __future__ import generators</t>
-<t tx="ekr.20060206113925.1">@nocolor
+from __future__ import generators
 
-http://sourceforge.net/forum/message.php?msg_id=3549737
+Also changed the following plugins:
 
-Warning: ignoring bool:body_gmt_time not string
-There may be conflicting settings!</t>
+at_produce.py
+fastGotoNode.py
+rst3.py
+zodb.py</t>
+<t tx="ekr.20060206113925.1"></t>
 <t tx="ekr.20060206131908"># Paste-text crashed when pasting into minibuffer
 </t>
 <t tx="ekr.20060208080524"></t>
@@ -1529,7 +1755,6 @@ The new prefered way of calling c.openWith is:
 c.openWith(data=data)
 
 I've corrected all the affected plugins. In particular, the vim plugin works again.</t>
-<t tx="ekr.20060210123709"></t>
 <t tx="ekr.20060210123709.1"></t>
 <t tx="ekr.20060210131047">contract-log-pane       = Alt-Ctrl-RtArrow 
 expand-body-pane        = Alt-Ctrl-UpArrow  
@@ -1574,7 +1799,31 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 <t tx="ekr.20060210180603"># The callback must return what k.masterKeyHandler returns (i.e., 'break')</t>
 <t tx="ekr.20060210201454"></t>
 <t tx="ekr.20060211100150"></t>
-<t tx="ekr.20060211112120"></t>
 <t tx="ekr.20060211112120.1">Only affects unit tests, probably.</t>
+<t tx="ekr.20060211132742"># http://sourceforge.net/forum/message.php?msg_id=3571104</t>
+<t tx="ekr.20060211135013">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3549737
+
+The fix was to call getBool rather than getString.</t>
+<t tx="ekr.20060211140947">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3237845
+
+On startup, it asked me for a unique id, "possibly your CVS username".
+As a non-windows-user, that made no sense at all to me - at very least, it should
+fill in os.getenv("USER") as a default, because it's right on non-windows systems,
+isn't it?  (If it isn't, there's no explanation at that point that would tell
+me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
+issue.</t>
+<t tx="ekr.20060211140947.1">try:
+    id = os.getenv('USER')
+    if id:
+        if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(id)),color='red')
+        g.app.leoID = id
+        return
+        
+except Exception:
+    pass</t>
 </tnodes>
 </leo_file>

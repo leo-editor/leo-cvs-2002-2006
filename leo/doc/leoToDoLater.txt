@@ -5907,7 +5907,16 @@ def createWindowMenuFromTable (self):
 #@+node:ekr.20031218072017.3803:createHelpMenuFromTable
 def createHelpMenuFromTable (self):
 
-    helpMenu = self.createNewMenu("&Help")
+    if sys.platform == 'darwin':
+        try:
+            # helpMenu = self.createNewMenu (menuName='top.help',parentName='top')
+            helpMenu = Tk.Menu('top.help')
+        except Exception:
+            g.trace('Can not get MacOS Help menu')
+            g.es_exception()
+            return
+    else:
+        helpMenu = self.createNewMenu("&Help")
     
     self.createMenuEntries(helpMenu,self.helpMenuTopTable)
     
@@ -12324,7 +12333,7 @@ def insertBodyTime (self,event=None):
     c.frame.body.insertAtInsertPoint(s)
     c.frame.body.onBodyChanged(undoType,oldSel=oldSel)
 #@nonl
-#@+node:ekr.20031218072017.1832:getTime
+#@+node:ekr.20031218072017.1832:getTime & test
 def getTime (self,body=True):
 
     c = self
@@ -12333,10 +12342,10 @@ def getTime (self,body=True):
     # Try to get the format string from leoConfig.txt.
     if body:
         format = c.config.getString("body_time_format_string")
-        gmt    = c.config.getString("body_gmt_time")
+        gmt    = c.config.getBool("body_gmt_time")
     else:
         format = c.config.getString("headline_time_format_string")
-        gmt     = c.config.getString("headline_gmt_time")
+        gmt    = c.config.getBool("headline_gmt_time")
 
     if format == None:
         format = default_format
@@ -12351,10 +12360,10 @@ def getTime (self,body=True):
         g.es("time.strftime not available on this platform",color="blue")
         return ""
     except:
-        g.es_exception() # Probably a bad format string in leoConfig.txt.
+        g.es_exception() # Probably a bad format string in leoSettings.leo.
         s = time.strftime(default_format,time.gmtime())
     return s
-#@-node:ekr.20031218072017.1832:getTime
+#@-node:ekr.20031218072017.1832:getTime & test
 #@-node:ekr.20031218072017.1831:insertBodyTime & allies
 #@+node:ekr.20050312114529:insert/removeComments
 #@+node:ekr.20050312114529.1:addComments

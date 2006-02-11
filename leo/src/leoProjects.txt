@@ -1234,6 +1234,234 @@ OnPasteFromMenu = pasteText
 #@+node:ekr.20060206131908:catch exceptions in pasteText
 # Paste-text crashed when pasting into minibuffer
 #@-node:ekr.20060206131908:catch exceptions in pasteText
+#@+node:ekr.20060206113925:Made sure yield works with Python 2.2
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3549737
+By: nobody
+
+\src\leoEditCommands.py:340: 
+Warning: 'yield' will become a reserved keyword 
+
+for python2.2 leoEditCommands.py needs
+from __future__ import generators
+
+Also changed the following plugins:
+
+at_produce.py
+fastGotoNode.py
+rst3.py
+zodb.py
+#@nonl
+#@-node:ekr.20060206113925:Made sure yield works with Python 2.2
+#@+node:ekr.20060211132742:Fixed the alt key on Linux
+# http://sourceforge.net/forum/message.php?msg_id=3571104
+#@nonl
+#@+node:ekr.20060126163152.2:k.strokeFromEvent
+# The keys to k.bindingsDict must be consistent with what this method returns.
+# See 'about internal bindings' for details.
+ 
+def strokeFromEvent (self,event):
+    
+    c = self.c ; k = c.k
+    if event is None: return ''
+    state = event.state or 0
+    keysym = event.keysym or ''
+    ch = event.char
+    result = []
+    shift = (state & 1) == 1 # Not used for alpha chars.
+    caps  = (state & 2) == 2 # Not used at all.
+    ctrl  = (state & 4) == 4
+    # Linux uses, 8 and 0x80, XP uses 0x20000.
+    alt   = (state & 0x20000) == 0x20000 or (state & 8) == 8 or (state & 0x80) == 0x80
+    plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
+    
+    # g.es('state: %x' % state)
+    
+    # g.trace('ch',repr(ch),'keysym',repr(keysym))
+    
+    # The big aha: we can ignore the shift state.
+    if plain:
+        if shift and ch.isalpha() and ch.islower():
+            g.trace('oops: inconsistent shift state. shift: %s, ch: %s' % (shift,ch))
+        ch = keysym
+        shift = False
+    else:
+        ch2 = k.tkBindNamesInverseDict.get(keysym)
+        if ch2:
+            ch = ch2
+            if len(ch) == 1: shift = False
+        else:
+            # Just use the unknown keysym.
+            g.trace('*'*30,'unknown keysym',repr(keysym))
+    
+    if alt: result.append('Alt+')
+    if ctrl: result.append('Ctrl+')
+    if shift: result.append('Shift+')
+    result.append(ch)
+    result = ''.join(result)
+    # g.trace('state',state,'keysym',keysym,'result',repr(result))
+    return result
+#@nonl
+#@-node:ekr.20060126163152.2:k.strokeFromEvent
+#@-node:ekr.20060211132742:Fixed the alt key on Linux
+#@+node:ekr.20060206113925.1:Fixed problem with body_gmt_time setting
+#@+node:ekr.20060211135013:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3549737
+
+The fix was to call getBool rather than getString.
+#@nonl
+#@-node:ekr.20060211135013:Report
+#@+node:ekr.20031218072017.1832:getTime & test
+def getTime (self,body=True):
+
+    c = self
+    default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+    
+    # Try to get the format string from leoConfig.txt.
+    if body:
+        format = c.config.getString("body_time_format_string")
+        gmt    = c.config.getBool("body_gmt_time")
+    else:
+        format = c.config.getString("headline_time_format_string")
+        gmt    = c.config.getBool("headline_gmt_time")
+
+    if format == None:
+        format = default_format
+
+    try:
+        import time
+        if gmt:
+            s = time.strftime(format,time.gmtime())
+        else:
+            s = time.strftime(format,time.localtime())
+    except (ImportError, NameError):
+        g.es("time.strftime not available on this platform",color="blue")
+        return ""
+    except:
+        g.es_exception() # Probably a bad format string in leoSettings.leo.
+        s = time.strftime(default_format,time.gmtime())
+    return s
+#@-node:ekr.20031218072017.1832:getTime & test
+#@-node:ekr.20060206113925.1:Fixed problem with body_gmt_time setting
+#@+node:ekr.20060116082302.1:Use os.getenv('User") if it exists to get initial cvs name
+#@+node:ekr.20060211140947:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3237845
+
+On startup, it asked me for a unique id, "possibly your CVS username".
+As a non-windows-user, that made no sense at all to me - at very least, it should
+fill in os.getenv("USER") as a default, because it's right on non-windows systems,
+isn't it?  (If it isn't, there's no explanation at that point that would tell
+me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
+issue.
+#@nonl
+#@-node:ekr.20060211140947:Report
+#@+node:ekr.20031218072017.1978:app.setLeoID
+def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+    
+    verbose = True
+    << return if we can set leoID from sys.leoID >>
+    << return if we can set leoID from "leoID.txt" >>
+    << return if we can set leoID from os.getenv('USER') >>
+    << put up a dialog requiring a valid id >>
+    << attempt to create leoID.txt >>
+#@nonl
+#@+node:ekr.20031218072017.1979:<< return if we can set leoID from sys.leoID>>
+# This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose: g.es_print("leoID = " + g.app.leoID, color='red')
+    return
+else:
+    g.app.leoID = None
+#@nonl
+#@-node:ekr.20031218072017.1979:<< return if we can set leoID from sys.leoID>>
+#@+node:ekr.20031218072017.1980:<< return if we can set leoID from "leoID.txt" >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'r')
+            s = f.readline()
+            f.close()
+            if s and len(s) > 0:
+                g.app.leoID = s
+                if verbose:
+                    g.es_print("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                return
+            elif verbose:
+                g.es_print("empty %s (in %s)" % (tag,theDir), color = "red")
+        except IOError:
+            g.app.leoID = None
+            # g.es("%s not found in %s" % (tag,theDir),color="red")
+        except Exception:
+            g.app.leoID = None
+            g.es_print('Unexpected exception in app.setLeoID',color='red')
+            g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.1980:<< return if we can set leoID from "leoID.txt" >>
+#@+node:ekr.20060211140947.1:<< return if we can set leoID from os.getenv('USER') >>
+try:
+    id = os.getenv('USER')
+    if id:
+        if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(id)),color='red')
+        g.app.leoID = id
+        return
+        
+except Exception:
+    pass
+#@nonl
+#@-node:ekr.20060211140947.1:<< return if we can set leoID from os.getenv('USER') >>
+#@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+# New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+
+# g.trace(g.app.leoID)
+g.es_print("leoID = %s" % (repr(g.app.leoID)),color="blue")
+#@nonl
+#@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+#@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    # N.B. We would use the _working_ directory if theDir is None!
+    if theDir:
+        cant = "can not create %s in %s" % (tag,theDir)
+        try:
+            fn = g.os_path_join(theDir,tag)
+            f = open(fn,'w')
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                s = "%s created in %s" % (tag,theDir)
+                g.es_print(s, color="red")
+                return
+            else:
+                g.es(cant,color='red')
+        except IOError:
+            g.es(cant,color='red')
+#@nonl
+#@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+#@-node:ekr.20031218072017.1978:app.setLeoID
+#@-node:ekr.20060116082302.1:Use os.getenv('User") if it exists to get initial cvs name
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
