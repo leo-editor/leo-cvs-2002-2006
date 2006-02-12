@@ -414,7 +414,7 @@ class LeoApp:
         globalConfigDir = g.app.globalConfigDir
         loadDir = g.app.loadDir
         
-        verbose = True
+        verbose = not g.app.unitTesting
         #@    << return if we can set leoID from sys.leoID >>
         #@+node:ekr.20031218072017.1979:<< return if we can set leoID from sys.leoID>>
         # This would be set by in Python's sitecustomize.py file.
