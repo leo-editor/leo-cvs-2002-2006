@@ -138,8 +138,9 @@ def run(fileName=None,*args,**keywords):
     # Create the main frame.  Show it and all queued messages.
     c,frame = createFrame(fileName)
     if not frame: return
-    g.app.trace_gc = c.config.getBool('trace_gc')
-    g.app.trace_gc_verbose = c.config.getBool('trace_gc_verbose')
+    g.app.trace_gc          = c.config.getBool('trace_gc')
+    g.app.trace_gc_calls    = c.config.getBool('trace_gc_calls')
+    g.app.trace_gc_verbose  = c.config.getBool('trace_gc_verbose')
     if g.app.disableSave:
         g.es("disabling save commands",color="red")
     g.app.writeWaitingLog()

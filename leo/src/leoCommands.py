@@ -242,14 +242,11 @@ class baseCommands:
         This provides a simple mechanism for overriding commands."""
         
         c = self ; p = c.currentPosition()
+        commandName = command and command.__name__
         c.setLog()
     
         self.command_count += 1
-        if not g.app.unitTesting and (
-            c.config.getBool('trace_doCommand') or
-            c.config.getBool('trace_gc') and (self.command_count % 10) == 0
-        ):
-            commandName = command and command.__name__
+        if not g.app.unitTesting and c.config.getBool('trace_doCommand'):
             g.trace(commandName)
     
         # The presence of this message disables all commands.

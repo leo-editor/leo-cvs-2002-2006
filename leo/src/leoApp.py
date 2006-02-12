@@ -68,8 +68,9 @@ class LeoApp:
         self.scriptDict = {} # For communication between Execute Script command and scripts.
         self.statsDict = {} # Statistics dict used by g.stat, g.clear_stats, g.print_stats.
         self.trace = False # True: enable debugging traces.
-        self.trace_gc = False
-        self.trace_gc_verbose = False
+        self.trace_gc = False # defined in run()
+        self.trace_gc_calls = False # defined in run()
+        self.trace_gc_verbose = False # defined in run()
         self.trace_gc_inited = False
         self.tracePositions = False
         self.trace_list = [] # "Sherlock" argument list for tracing().

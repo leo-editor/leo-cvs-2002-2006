@@ -3097,6 +3097,460 @@ def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 #@-node:ekr.20060212061804.1:runSaveFileDialog
 #@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
 #@-node:ekr.20060212055701:Remember previous open directory
+#@+node:ekr.20060212101331:Improved gc tracing
+#@+node:ekr.20040803072955.16:__init__ (tkTree)
+def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
+    
+    # Configuration and debugging settings.
+    self.expanded_click_area    = c.config.getBool('expanded_click_area')
+    self.gc_before_redraw       = c.config.getBool('gc_before_redraw')
+    self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
+
+    self.trace                  = c.config.getBool('trace_tree')
+    self.trace_alloc            = c.config.getBool('trace_tree_alloc')
+    self.trace_edit             = c.config.getBool('trace_tree_edit')
+    self.trace_redraw_now       = c.config.getBool('trace_redraw_now')
+    self.trace_select           = c.config.getBool('trace_select')
+    self.trace_stats            = c.config.getBool('show_tree_stats')
+ 
+    # Objects associated with this tree.
+    self.canvas = canvas
+    
+    << define drawing constants >>
+    << old ivars >>
+    << inject callbacks into the position class >>
+    
+    self.dragging = False
+    self.generation = 0
+    self.prevPositions = 0
+    self.redrawing = False # Used only to disable traces.
+    self.redrawCount = 0 # Count for debugging.
+    self.revertHeadline = None # Previous headline text for abortEditLabel.
+    
+    # New in 4.4: We should stay in the tree to use per-pane bindings.
+    self.textBindings = [] # Set in setBindings.
+    self.textNumber = 0 # To make names unique.
+    self.updateCount = 0 # Drawing is enabled only if self.updateCount <= 0
+    self.verbose = True
+    
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are positions...
+    self.ids = {}
+    self.iconIds = {}
+
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {}
+        # Pre 4.4b2: Keys are vnodes, values are Tk.Text widgets.
+        #     4.4b2: Keys are p.key(), values are Tk.Text widgets.
+    self.visibleUserIcons = []
+
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    self.freeText = [] # New in 4.4b2: a list of free Tk.Text widgets
+   
+    self.freeUserIcons = []
+#@nonl
+#@+node:ekr.20040803072955.17:<< define drawing constants >>
+self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
+
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height
+#@nonl
+#@-node:ekr.20040803072955.17:<< define drawing constants >>
+#@+node:ekr.20040803072955.18:<< old ivars >>
+# Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+self.setColorFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw_now)
+#@nonl
+#@-node:ekr.20040803072955.18:<< old ivars >>
+#@+node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+# The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()
+#@nonl
+#@-node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+#@-node:ekr.20040803072955.16:__init__ (tkTree)
+#@+node:ekr.20060127163325.1:enable/disableGcTrace
+def disableGcTrace (self,event=None):
+    
+    g.app.trace_gc = False
+    
+def enableGcTrace (self,event=None):
+    
+    g.app.trace_gc = True
+    g.app.trace_gc_inited = False
+    g.enable_gc_debug()
+#@nonl
+#@-node:ekr.20060127163325.1:enable/disableGcTrace
+#@+node:ekr.20040803072955.58:redraw_now & helper
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+# New in 4.4b2: suppress scrolling by default.
+
+def redraw_now (self,scroll=False):
+
+    if g.app.quitting or self.drag_p or self.frame not in g.app.windowList:
+        return
+        
+    c = self.c ;  self.redrawCount += 1
+    
+    if not g.app.unitTesting:
+        if self.gc_before_redraw:
+            g.collectGarbage()
+        if g.app.trace_gc_verbose:
+            if (self.redrawCount % 5) == 0:
+                g.printGcSummary(trace=True)
+        if self.trace_redraw_now or self.trace_alloc:
+            g.trace(self.redrawCount,g.callers())
+            if self.trace_stats:
+                g.print_stats()
+                g.clear_stats()
+                
+    # New in 4.4b2: Call endEditLabel, but suppress the redraw.
+    self.beginUpdate()
+    try:
+        self.endEditLabel()
+    finally:
+        self.endUpdate(False)
+
+    # Do the actual redraw.
+    self.expandAllAncestors(c.currentPosition())
+    self.redrawHelper(scroll=scroll)
+    self.canvas.update_idletasks() # Important for unit tests.
+    c.masterFocusHandler()
+    
+redraw = redraw_now # Compatibility
+#@nonl
+#@+node:ekr.20040803072955.59:redrawHelper
+def redrawHelper (self,scroll=True):
+    
+    c = self.c
+    oldcursor = self.canvas['cursor']
+    self.canvas['cursor'] = "watch"
+
+    if not g.doHook("redraw-entire-outline",c=c):
+        c.setTopVnode(None)
+        self.setVisibleAreaToFullCanvas()
+        self.drawTopTree()
+        # Set up the scroll region after the tree has been redrawn.
+        x0, y0, x1, y1 = self.canvas.bbox("all")
+        self.canvas.configure(scrollregion=(0, 0, x1, y1))
+        if scroll:
+            self.canvas.update_idletasks() # Essential.
+            self.scrollTo()
+            
+    g.doHook("after-redraw-outline",c=c)
+
+    self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20040803072955.59:redrawHelper
+#@-node:ekr.20040803072955.58:redraw_now & helper
+#@+node:ekr.20031218072017.1588:Garbage Collection
+# debugGC = False # Must be true to enable traces below.
+
+lastObjectCount = 0
+lastObjectsDict = {}
+lastTypesDict = {}
+lastFunctionsDict = {}
+
+@others
+#@+node:ekr.20060127162818:enable_gc_debug
+def enable_gc_debug(event=None):
+    
+    if g.app.trace_gc_inited:
+        return
+    
+    if gc:
+        if g.app.trace_gc_verbose:
+            gc.set_debug(
+                gc.DEBUG_STATS | # prints statistics.
+                gc.DEBUG_LEAK | # Same as all below.
+                gc.DEBUG_COLLECTABLE |
+                gc.DEBUG_UNCOLLECTABLE |
+                gc.DEBUG_INSTANCES |
+                gc.DEBUG_OBJECTS |
+                gc.DEBUG_SAVEALL
+            )
+            g.es('enabled verbose gc stats',color='blue')
+        else:
+            gc.set_debug(gc.DEBUG_STATS)
+            g.es('enabled brief gc stats',color='blue')
+    else:
+        g.es('Can not import gc module',color='blue')
+#@nonl
+#@-node:ekr.20060127162818:enable_gc_debug
+#@+node:ekr.20031218072017.1589:clearAllIvars
+def clearAllIvars (o):
+    
+    """Clear all ivars of o, a member of some class."""
+    
+    o.__dict__.clear()
+#@-node:ekr.20031218072017.1589:clearAllIvars
+#@+node:ekr.20060205043324:Called from commands
+#@+node:ekr.20031218072017.1590:collectGarbage
+def collectGarbage():
+
+    try:
+        if not g.app.trace_gc_inited and g.app.trace_gc_verbose:
+            g.enable_gc_debug()
+
+        if g.app.trace_gc_verbose or g.app.trace_gc_calls:
+            g.es_print('Collecting garbage')
+
+        gc.collect()
+    except:
+        pass
+        
+    # Only init once, regardless of what happens.
+    g.app.trace_gc_inited = True
+#@nonl
+#@-node:ekr.20031218072017.1590:collectGarbage
+#@+node:ekr.20060205043324.1:printGcSummary
+def printGcSummary (message='',trace=False):
+    
+    if not message:
+        message = g.callerName(n=2)
+
+    g.enable_gc_debug()
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        s = 'garbage: %d, objects: %d, %s' % (n,n2,message)
+        if trace:
+            print s
+        else:
+            g.es_print(s)
+    except:
+        traceback.print_exc()
+#@nonl
+#@-node:ekr.20060205043324.1:printGcSummary
+#@+node:ekr.20060202161935:printGcAll
+def printGcAll (message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+    
+    d = {} ; objects = gc.get_objects()
+    g.es_print('-' * 30)
+    g.es_print('%d objects' % len(objects),message)
+
+    for obj in objects:
+        t = type(obj)
+        if t == 'instance':
+            try: t = obj.__class__
+            except: pass
+        d[t] = d.get(t,0) + 1
+        
+    if 1: # Sort by n
+        
+        items = d.items()
+        try:
+            # Support for keword args to sort function exists in Python 2.4.
+            # Support for None as an alternative to omitting cmp exists in Python 2.3.
+            items.sort(key=lambda x: x[1],reverse=True)
+        except: pass
+        for z in items:
+            g.es_print('%40s %7d' % (z[0],z[1]))
+    else: # Sort by type
+        keys = d.keys() ; keys.sort()
+        for t in keys:
+            g.es_print('%40s %7d' % (t,d.get(t)))
+#@-node:ekr.20060202161935:printGcAll
+#@+node:ekr.20060127164729.1:printGcObjects
+def printGcObjects(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+
+    global lastObjectCount
+
+    try:
+        n = len(gc.garbage)
+        n2 = len(gc.get_objects())
+        delta = n2-lastObjectCount
+        lastObjectCount = n2
+
+        g.es_print('-' * 30)
+        g.es_print("garbage: %d, objects: %d, delta: %d %s" % (n,n2,delta,message))
+        
+        << print number of each type of object >>
+        if 0:
+            << print added functions >>
+
+    except:
+        traceback.print_exc()
+#@nonl
+#@+node:ekr.20040703065638:<< print added functions >>
+import types
+import inspect
+
+global lastFunctionsDict
+
+funcDict = {}
+
+for obj in gc.get_objects():
+    if type(obj) == types.FunctionType:
+        key = repr(obj) # Don't create a pointer to the object!
+        funcDict[key]=None 
+        if not lastFunctionsDict.has_key(key):
+            g.es_print(obj)
+            args, varargs, varkw,defaults  = inspect.getargspec(obj)
+            g.es_print("args", args)
+            if varargs: g.es_print("varargs",varargs)
+            if varkw: g.es_print("varkw",varkw)
+            if defaults:
+                g.es_print("defaults...")
+                for s in defaults: g.es_print(s)
+
+lastFunctionsDict = funcDict
+funcDict = {}
+#@nonl
+#@-node:ekr.20040703065638:<< print added functions >>
+#@+node:ekr.20040703054646:<< print number of each type of object >>
+global lastTypesDict
+typesDict = {}
+
+for obj in gc.get_objects():
+    n = typesDict.get(type(obj),0)
+    t = type(obj)
+    if t == 'instance':
+        try: t = obj.__class__
+        except: pass
+    typesDict[t] = n + 1
+    
+# Create the union of all the keys.
+keys = typesDict.keys()
+for key in lastTypesDict.keys():
+    if key not in keys:
+        keys.append(key)
+
+keys.sort()
+for key in keys:
+    n1 = lastTypesDict.get(key,0)
+    n2 = typesDict.get(key,0)
+    delta2 = n2-n1
+    if delta2 != 0:
+        g.es_print("%+6d =%7d %s" % (delta2,n2,key))
+    
+lastTypesDict = typesDict
+typesDict = {}
+#@nonl
+#@-node:ekr.20040703054646:<< print number of each type of object >>
+#@-node:ekr.20060127164729.1:printGcObjects
+#@+node:ekr.20060127165509:printGcVerbose
+# WARNING: the id trick is not proper because newly allocated objects
+#          can have the same address as old objets.
+
+def printGcVerbose(message=''):
+    
+    if not message:
+        message = g.callerName(n=2)
+
+    global lastObjectsDict
+    objects = gc.get_objects()
+    
+    newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+    
+    lastObjectsDict = {}
+    for o in objects:
+        lastObjectsDict[id(o)]=o
+        
+    dicts = 0 ; seqs = 0
+    
+    i = 0 ; n = len(newObjects)
+    while i < 100 and i < n:
+        o = newObjects[i]
+        if type(o) == type({}): dicts += 1
+        elif type(o) in (type(()),type([])):
+            seqs += 1
+        else:
+            g.es_print(o)
+        i += 1
+    g.es_print('-' * 40)
+    g.es_print('dicts: %d, sequences: %d' % (dicts,seqs))
+    g.es_print("%25s: %d new, %d total objects" % (message,len(newObjects),len(objects)))
+#@nonl
+#@-node:ekr.20060127165509:printGcVerbose
+#@-node:ekr.20060205043324:Called from commands
+#@+node:ekr.20060205043324.2:Called from unit tests
+#@+node:ekr.20031218072017.1592:printGc
+def printGc(message=None):
+    
+    if not g.app.trace_gc: return None
+    
+    if not message:
+        message = g.callerName(n=2)
+        
+    printGcObjects(message)
+    printGcRefs(message)
+    
+    if g.app.trace_gc_verbose:
+        printGcVerbose(message)
+        
+    
+#@+node:ekr.20031218072017.1593:printGcRefs
+def printGcRefs (message=''):
+
+    refs = gc.get_referrers(app.windowList[0])
+    g.es_print('-' * 30,message)
+
+    if g.app.trace_gc_verbose:
+        g.es_print("refs of", app.windowList[0])
+        for ref in refs:
+            g.es_print(type(ref))
+    else:
+        g.es_print("%d referers" % len(refs))
+#@nonl
+#@-node:ekr.20031218072017.1593:printGcRefs
+#@-node:ekr.20031218072017.1592:printGc
+#@-node:ekr.20060205043324.2:Called from unit tests
+#@-node:ekr.20031218072017.1588:Garbage Collection
+#@-node:ekr.20060212101331:Improved gc tracing
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

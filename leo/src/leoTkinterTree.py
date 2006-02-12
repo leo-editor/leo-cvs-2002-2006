@@ -188,13 +188,13 @@ class leoTkinterTree (leoFrame.leoTree):
         leoFrame.leoTree.__init__(self,frame)
         
         # Configuration and debugging settings.
+        self.expanded_click_area    = c.config.getBool('expanded_click_area')
+        self.gc_before_redraw       = c.config.getBool('gc_before_redraw')
         self.stayInTree             = c.config.getBool('stayInTreeAfterSelect')
-        self.expanded_click_area    = c.config.getBool("expanded_click_area")
-        
+    
         self.trace                  = c.config.getBool('trace_tree')
         self.trace_alloc            = c.config.getBool('trace_tree_alloc')
         self.trace_edit             = c.config.getBool('trace_tree_edit')
-        self.trace_gc               = c.config.getBool('trace_gc')
         self.trace_redraw_now       = c.config.getBool('trace_redraw_now')
         self.trace_select           = c.config.getBool('trace_select')
         self.trace_stats            = c.config.getBool('show_tree_stats')
@@ -825,7 +825,9 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ;  self.redrawCount += 1
         
         if not g.app.unitTesting:
-            if self.trace_gc:
+            if self.gc_before_redraw:
+                g.collectGarbage()
+            if g.app.trace_gc_verbose:
                 if (self.redrawCount % 5) == 0:
                     g.printGcSummary(trace=True)
             if self.trace_redraw_now or self.trace_alloc:

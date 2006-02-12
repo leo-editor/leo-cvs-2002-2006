@@ -2122,19 +2122,26 @@ lastFunctionsDict = {}
 #@+node:ekr.20060127162818:enable_gc_debug
 def enable_gc_debug(event=None):
     
+    if g.app.trace_gc_inited:
+        return
+    
     if gc:
-        gc.set_debug(
-            gc.DEBUG_STATS | # prints statistics.
-            gc.DEBUG_LEAK | # Same as all below.
-            gc.DEBUG_COLLECTABLE |
-            gc.DEBUG_UNCOLLECTABLE |
-            gc.DEBUG_INSTANCES |
-            gc.DEBUG_OBJECTS |
-            gc.DEBUG_SAVEALL
-        )
-        g.app.trace_gc_inited = True
+        if g.app.trace_gc_verbose:
+            gc.set_debug(
+                gc.DEBUG_STATS | # prints statistics.
+                gc.DEBUG_LEAK | # Same as all below.
+                gc.DEBUG_COLLECTABLE |
+                gc.DEBUG_UNCOLLECTABLE |
+                gc.DEBUG_INSTANCES |
+                gc.DEBUG_OBJECTS |
+                gc.DEBUG_SAVEALL
+            )
+            g.es('enabled verbose gc stats',color='blue')
+        else:
+            gc.set_debug(gc.DEBUG_STATS)
+            g.es('enabled brief gc stats',color='blue')
     else:
-        es('Can not import gc module',color='blue')
+        g.es('Can not import gc module',color='blue')
 #@nonl
 #@-node:ekr.20060127162818:enable_gc_debug
 #@+node:ekr.20031218072017.1589:clearAllIvars
@@ -2147,19 +2154,21 @@ def clearAllIvars (o):
 #@+node:ekr.20060205043324:Called from commands
 #@+node:ekr.20031218072017.1590:collectGarbage
 def collectGarbage():
-    
-    if not g.app.trace_gc: return
-    
-    if not g.app.trace_gc_inited:
-        g.enable_gc_debug()
-    
-    if not g.app.trace_gc_inited:
-        g.app.trace_gc = False
-    
+
     try:
-        g.es_print('Collecting garbage',color='red')
+        if not g.app.trace_gc_inited and g.app.trace_gc_verbose:
+            g.enable_gc_debug()
+
+        if g.app.trace_gc_verbose or g.app.trace_gc_calls:
+            g.es_print('Collecting garbage')
+
         gc.collect()
-    except: pass
+    except:
+        pass
+        
+    # Only init once, regardless of what happens.
+    g.app.trace_gc_inited = True
+#@nonl
 #@-node:ekr.20031218072017.1590:collectGarbage
 #@+node:ekr.20060205043324.1:printGcSummary
 def printGcSummary (message='',trace=False):
@@ -2167,8 +2176,7 @@ def printGcSummary (message='',trace=False):
     if not message:
         message = g.callerName(n=2)
 
-    # g.collectGarbage()
-    enable_gc_debug
+    g.enable_gc_debug()
 
     try:
         n = len(gc.garbage)
@@ -2187,8 +2195,6 @@ def printGcAll (message=''):
     
     if not message:
         message = g.callerName(n=2)
-    
-    # g.collectGarbage()
     
     d = {} ; objects = gc.get_objects()
     g.es_print('-' * 30)
@@ -2221,8 +2227,6 @@ def printGcObjects(message=''):
     
     if not message:
         message = g.callerName(n=2)
-    
-    # g.collectGarbage()
 
     global lastObjectCount
 
@@ -2309,8 +2313,6 @@ def printGcVerbose(message=''):
     
     if not message:
         message = g.callerName(n=2)
-    
-    # g.collectGarbage()
 
     global lastObjectsDict
     objects = gc.get_objects()

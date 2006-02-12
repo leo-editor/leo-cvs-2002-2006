@@ -1258,6 +1258,7 @@ class debugCommandsClass (baseEditCommandsClass):
     def enableGcTrace (self,event=None):
         
         g.app.trace_gc = True
+        g.app.trace_gc_inited = False
         g.enable_gc_debug()
     #@nonl
     #@-node:ekr.20060127163325.1:enable/disableGcTrace
