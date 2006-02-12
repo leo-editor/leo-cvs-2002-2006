@@ -321,6 +321,7 @@ class keyHandlerClass:
         
         # Keepting track of the characters in the mini-buffer.
         self.arg_completion = True
+        self.mb_event = None
         self.mb_history = []
         self.mb_prefix = ''
         self.mb_tabListPrefix = ''
@@ -780,7 +781,7 @@ class keyHandlerClass:
         trace = c.config.getBool('trace_modes')
         if trace: g.trace('state',state,keysym)
         if state == 0:
-            k.completionFocusWidget = c.get_focus()
+            k.mb_event = event # Save the full event for later.
             k.setState('full-command',1,handler=k.fullCommand) 
             k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
             # Init mb_ ivars. This prevents problems with an initial backspace.
@@ -789,8 +790,7 @@ class keyHandlerClass:
             c.minibufferWantsFocus()
         elif keysym == 'Return':
             c.frame.log.deleteTab('Completion')
-            c.widgetWantsFocus(k.completionFocusWidget) # Important, so cut-text works, e.g.
-            k.callAltXFunction(event)
+            k.callAltXFunction(k.mb_event)
         elif keysym == 'Tab':
             k.doTabCompletion(c.commandsDict.keys())
             c.minibufferWantsFocus()
@@ -826,7 +826,7 @@ class keyHandlerClass:
             k.resetLabel()
             if commandName != 'repeat-complex-command':
                 k.mb_history.insert(0,commandName)
-            # if command in k.x_hasNumeric: func(event,aX)
+            c.widgetWantsFocusNow(event.widget) # Important, so cut-text works, e.g.
             func(event)
             k.endCommand(event,commandName)
         else:
