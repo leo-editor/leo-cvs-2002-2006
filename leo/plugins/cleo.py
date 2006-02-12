@@ -30,7 +30,7 @@ import sys
 #@nonl
 #@-node:ekr.20050227071948.35:<< imports >>
 #@nl
-__version__ = "0.13"
+__version__ = "0.14"
 #@<< version history >>
 #@+node:ekr.20050227071948.36:<< version history >>
 #@@killcolor
@@ -70,6 +70,7 @@ __version__ = "0.13"
 # - Added override of setDisabledHeadlineColors so that color changes in 
 # headlines happen immediately.
 # - Removed checkmark menu item because there is no easy way to clear it.
+# 0.14 EKR: Installed further patch to clear checkmark.
 #@-at
 #@nonl
 #@-node:ekr.20050227071948.36:<< version history >>
@@ -401,25 +402,49 @@ class cleoController:
         # print ">> Action"
         c = self.c ; tree = c.frame.tree ; canvas = tree.canvas
         clear = colour == 'background-colour'
-        
+    
         if clear:
             colour = self.background_colour
     
         canvas.create_line(v.iconx-10,v.icony+8,v.iconx+5,v.icony+8,
-            arrow="last",fill=colour,width=4)
+            arrow = "last", fill = colour, width = 4)
     
         if clear:
-            canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,
-                fill = 'Gray50',width=1)
+            # canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,
+                # fill = 'Gray50',width=1)
     
+            # Define the 3 points of a check mark to allow quick adjustment.
+            XpointA = v.iconx-15 + 3
+            YpointA = v.icony + 8-2
+            XpointB = v.iconx-7
+            YpointB = v.icony + 13
+            XpointC = v.iconx + 5
+            YpointC = v.icony-2
+            # "white-out" the check mark.
+            canvas.create_line(XpointA,YpointA,XpointB,YpointB,fill=colour,width=2)
+            canvas.create_line(XpointB,YpointB,XpointC,YpointC,fill=colour,width=2)
+            # restore line 
+            canvas.create_line(v.iconx-12,v.icony+7,v.iconx+6,v.icony+7,fill='Gray50',width=1)
+    #@nonl
     #@-node:ekr.20050227071948.47:draw_arrow
     #@+node:ekr.20050227071948.48:draw_tick
     def draw_tick (self,v,colour='salmon'):
-        
-        canvas = self.c.frame.tree.canvas 
     
-        canvas.create_line(v.iconx+13-5,v.icony+8,v.iconx+13,v.icony+13,fill=colour,width=2)
-        canvas.create_line(v.iconx+13,v.icony+13,v.iconx+13+12,v.icony-2,fill=colour,width=2)
+        canvas = self.c.frame.tree.canvas
+    
+        # canvas.create_line(v.iconx+13-5,v.icony+8,v.iconx+13,v.icony+13,fill=colour,width=2)
+        # canvas.create_line(v.iconx+13,v.icony+13,v.iconx+13+12,v.icony-2,fill=colour,width=2)
+    
+        # Define the 3 points of a check mark to allow quick adjustment.
+        XpointA = v.iconx-15 + 3
+        YpointA = v.icony + 8-2
+        XpointB = v.iconx-7
+        YpointB = v.icony + 13
+        XpointC = v.iconx + 5
+        YpointC = v.icony-2
+        # draw the check-mark
+        canvas.create_line(XpointA,YpointA,XpointB,YpointB,fill=colour,width=2)
+        canvas.create_line(XpointB,YpointB,XpointC,YpointC,fill=colour,width=2)
     #@nonl
     #@-node:ekr.20050227071948.48:draw_tick
     #@+node:ekr.20050227074440.3:draw_invertedT
@@ -595,7 +620,7 @@ class cleoController:
             (3,'Medium'),
             (4,'Low',),
             (5,'None',),
-            # (self.donePriority,'Done'),
+            (self.donePriority,'Done'),
         ):
             s = '%d %s' % (value,label)
             menu.add_radiobutton(
