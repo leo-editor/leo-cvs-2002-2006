@@ -56,13 +56,15 @@ class leoMenu:
     
         # Allow the user first crack at updating menus.
         c = self.c
-        c.setLog()
-        p = c.currentPosition()
-    
-        if not g.doHook("menu2",c=c,p=p,v=p):
-            self.updateFileMenu()
-            self.updateEditMenu()
-            self.updateOutlineMenu()
+        
+        if c and c.exists:
+            c.setLog()
+            p = c.currentPosition()
+        
+            if not g.doHook("menu2",c=c,p=p,v=p):
+                self.updateFileMenu()
+                self.updateEditMenu()
+                self.updateOutlineMenu()
     #@nonl
     #@-node:ekr.20031218072017.3777:updateAllMenus
     #@+node:ekr.20031218072017.3778:updateFileMenu
