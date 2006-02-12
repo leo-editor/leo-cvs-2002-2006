@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9074" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9076" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="21" left="417" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -175,23 +175,45 @@
 <v t="ekr.20060210102201"><vh>c.xWantsFocusNow</vh></v>
 </v>
 </v>
+<v t="ekr.20060211112120.1"><vh>Call updateAllMenus only if c.exists</vh></v>
+<v t="ekr.20060211193044"><vh>Fixed problem with view plugin</vh></v>
+<v t="ekr.20060211194440"><vh>Installed cleo patch</vh></v>
+<v t="ekr.20060212055701"><vh>Remember previous open directory</vh>
+<v t="ekr.20060212055701.1"><vh>Request</vh></v>
+<v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20031218072017.2820"><vh>top level</vh>
+<v t="ekr.20031218072017.1623"><vh>new</vh></v>
+<v t="ekr.20031218072017.2821"><vh>open</vh>
+<v t="ekr.20031218072017.2822"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2823"><vh>openWith and allies</vh>
+<v t="ekr.20031218072017.2824"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2825"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2826"><vh>&lt;&lt;set dict and path if a temp file already refers to p.v.t &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2827"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
+<v t="ekr.20031218072017.2828"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2829"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2830"><vh>createOpenWithTempFile</vh>
+<v t="ekr.20031218072017.2831"><vh>&lt;&lt; remove previous entry from app.openWithFiles if it exists &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2832"><vh>c.openWithTempFilePath</vh></v>
+</v>
+<v t="ekr.20031218072017.2833"><vh>close</vh></v>
+<v t="ekr.20031218072017.2834"><vh>save</vh></v>
+<v t="ekr.20031218072017.2835"><vh>saveAs</vh></v>
+<v t="ekr.20031218072017.2836"><vh>saveTo</vh></v>
+<v t="ekr.20031218072017.2837"><vh>revert</vh></v>
+</v>
+<v t="ekr.20031218072017.4057"><vh>app.gui.Tkinter file dialogs</vh>
+<v t="ekr.20060212061804"><vh>runOpenFileDialog</vh></v>
+<v t="ekr.20060212061804.1"><vh>runSaveFileDialog</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
-<v t="ekr.20060122183914"><vh>Fix bugs 4</vh>
-<v t="ekr.20060211112120.1"><vh>disable menu enablers if commander does not exist</vh></v>
-<v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
-<v t="ekr.20060116083043"><vh>Use special Help menu on the Mac</vh>
-<v t="ekr.20031218072017.3803"><vh>createHelpMenuFromTable</vh></v>
-<v t="ekr.20031218072017.4113"><vh>new_menu</vh></v>
-<v t="ekr.20031218072017.3804"><vh>createNewMenu (contains Tk code)</vh></v>
-<v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
-<v t="ekr.20060211144330.1"><vh>getMacHelpMenu</vh></v>
-</v>
-<v t="ekr.20060211184834"><vh>Review all commands in leoEditCommands.py</vh>
-<v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
-</v>
-</v>
 <v t="ekr.20060209053234"><vh>What's new in Leo 4.4</vh>
 <v t="ekr.20060210111310"><vh>Unification of all calling sequences</vh></v>
 <v t="ekr.20060210105733"><vh>New debugging settings in leosettings.leo</vh></v>
@@ -206,6 +228,18 @@
 <v t="ekr.20060210131120.1"><vh>minibuffer find commands</vh></v>
 </v>
 <v t="ekr.20060209201859"><vh>How to design and use modes</vh></v>
+</v>
+<v t="ekr.20060122183914"><vh>Fix bugs</vh>
+<v t="ekr.20060211184834"><vh>Review all commands in leoEditCommands.py</vh>
+<v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
+</v>
+<v t="ekr.20060116083043"><vh>(Maybe) Use special Help menu on the Mac</vh>
+<v t="ekr.20031218072017.3803"><vh>createHelpMenuFromTable</vh></v>
+<v t="ekr.20031218072017.4113"><vh>new_menu</vh></v>
+<v t="ekr.20031218072017.3804"><vh>createNewMenu (contains Tk code)</vh></v>
+<v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
+<v t="ekr.20060211144330.1"><vh>getMacHelpMenu</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -566,7 +600,7 @@ g.es_print("leoID = %s" % (repr(g.app.leoID)),color="blue")</t>
                     # The recent files list has been updated by menu.updateRecentFiles.
                     frame.c.config.setRecentFiles(g.app.config.recentFiles)
             # Bug fix in 4.4.
-            frame.openDirectory = g.os_path_dirname(fileName)
+            frame.openDirectory = g.os_path_abspath(g.os_path_dirname(fileName))
             g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         finally:
             c.endUpdate()
@@ -754,6 +788,9 @@ __str__ = __repr__
 
     if fileName and len(fileName) &gt; 0:
         ok, frame = g.openWithFileName(fileName,c)
+        if ok:
+            g.app.globalOpenDir = frame.openDirectory
+            # g.es('current directory: %s' %  g.app.globalOpenDir)
         if ok and closeFlag:
             g.app.destroyWindow(c.frame)
     else:
@@ -1353,6 +1390,7 @@ def onDragSplitterBar (self, event, verticalFlag):
     for panel in panels:
         if panel:
             panel.top.destroy()</t>
+<t tx="ekr.20031218072017.4057"># We no longer specify default extensions so that we can open and save files without extensions.</t>
 <t tx="ekr.20031218072017.4113">def new_menu(self,parent,tearoff=False):
     
     """Wrapper for the Tkinter new_menu menu method."""
@@ -1366,7 +1404,7 @@ def onDragSplitterBar (self, event, verticalFlag):
     return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.405 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.407 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -2264,28 +2302,6 @@ The fix was to set c.frame.openDirectory in save and
 </t>
 <t tx="ekr.20060122183914"></t>
 <t tx="ekr.20060122185244.2"># unindent-region should work in all panes.</t>
-<t tx="ekr.20060124082357">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3538274
-By: ktenney
-
-The plugin to support @view nodes is not working
-for me, when I doubleclick an @view node, the 
-cursor changes to an hourglass a couple times, but
-nothing happens in the body of the node.
-
-I imported at_view.py into a node, named it
-@button at_view.py, and added the following;
-
-v = View(c)
-v.icondclick2(None,None)    
-
-This works as a button; clicking the button
-when an @view node is selected updates the
-node body.
-
-Evidently the issue is with the hooking/calling
-mech. not the plugin code itself.</t>
 <t tx="ekr.20060126163152.2"># The keys to k.bindingsDict must be consistent with what this method returns.
 # See 'about internal bindings' for details.
  
@@ -2650,7 +2666,7 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 <t tx="ekr.20060210131120"></t>
 <t tx="ekr.20060210131120.1"></t>
 <t tx="ekr.20060210180603"># The callback must return what k.masterKeyHandler returns (i.e., 'break')</t>
-<t tx="ekr.20060211112120.1">Only affects unit tests, probably.</t>
+<t tx="ekr.20060211112120.1">There was a problem during unit tests.  It may have other implications.</t>
 <t tx="ekr.20060211132742"># http://sourceforge.net/forum/message.php?msg_id=3571104</t>
 <t tx="ekr.20060211135013">@nocolor
 
@@ -2702,5 +2718,134 @@ The problem: event.widget is the minibuffer.  It must be the body text.
 with the tab pane, and so we *must* be careful to yank the focus back to the
 body.</t>
 <t tx="ekr.20060211184834">Any command that alters text should call begin/endCommand.</t>
+<t tx="ekr.20060211193044">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3538274
+
+It's not clear that there were serious problems with the plugin, but I improved the code and error messages.  All features work for me.
+
+Several plugins use the icon-double-click hook.  The reported problems could have been due to plugin conflicts.
+</t>
+<t tx="ekr.20060211194440">http://sourceforge.net/forum/message.php?msg_id=3517080
+
+Patch for CLeo to allow check-marks:
+-----------------------------------------------------
+Line 412 in def draw_arrow:
+replace 
+............canvas.create_line(v.iconx-10,v.icony+7,v.iconx+5,v.icony+7,fill
+= 'Gray50',width=1)
+
+with
+............#@........&lt;&lt; Blank Check &gt;&gt;
+............#@+node:rjries.20060113114142:&lt;&lt; Blank Check &gt;&gt;
+............#@&lt;&lt; Point Setter &gt;&gt;
+............#@+node:rjries.20060113114350:&lt;&lt; Point Setter &gt;&gt;
+............# Define the 3 points of a check mark to allow quick adjustment
+............XpointA = v.iconx  -15+3
+............YpointA = v.icony  +8-2
+............XpointB = v.iconx  -7
+............YpointB = v.icony  +13
+............XpointC = v.iconx  +5
+............YpointC = v.icony  -2
+............#@nonl
+............#@-node:rjries.20060113114350:&lt;&lt; Point Setter &gt;&gt;
+............#@nl
+............# "white-out" the check mark
+............canvas.create_line(XpointA, YpointA, XpointB, YpointB,
+fill=colour,width=2)
+............canvas.create_line(XpointB, YpointB, XpointC, YpointC,
+fill=colour,width=2)
+............#@nonl
+............#@-node:rjries.20060113114142:&lt;&lt; Blank Check &gt;&gt;
+............#@nl
+............# restore line 
+............canvas.create_line(v.iconx-12,v.icony+7,v.iconx+6,v.icony+7,fill
+= 'Gray50',width=1)
+
+-----------------------------------------------------
+Line 421-422 in def draw_tick (**not draw_arrow):
+replace 
+........canvas.create_line(v.iconx+13-5,v.icony+8,v.iconx+13,v.icony+13,fill=colour,width=2)
+........canvas.create_line(v.iconx+13,v.icony+13,v.iconx+13+12,v.icony-2,fill=colour,width=2)
+
+with
+
+........#@....&lt;&lt; Point Setter &gt;&gt;
+........#@+node:rjries.20060113114350:&lt;&lt; Point Setter &gt;&gt;
+........# Define the 3 points of a check mark to allow quick adjustment
+........XpointA = v.iconx  -15+3
+........YpointA = v.icony  +8-2
+........XpointB = v.iconx  -7
+........YpointB = v.icony  +13
+........XpointC = v.iconx  +5
+........YpointC = v.icony  -2
+........#@nonl
+........#@-node:rjries.20060113114350:&lt;&lt; Point Setter &gt;&gt;
+........#@nl
+........# draw the check-mark
+........canvas.create_line(XpointA, YpointA, XpointB, YpointB,
+fill=colour,width=2)
+........canvas.create_line(XpointB, YpointB, XpointC, YpointC,
+fill=colour,width=2)
+
+-----------------------------------------------------
+Line 598 in def priority_menu
+replace
+............# (self.donePriority,'Done'),
+with
+............(self.donePriority,'Done'),
+</t>
+<t tx="ekr.20060212055701"></t>
+<t tx="ekr.20060212055701.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3571431
+By: ktenney
+
+To reiterate a request:
+
+When doing File-&gt;Open the default directory should the directory which
+was navigated to for previous 'Open'
+
+What I did:
+
+- Defined g.app.globalOpenDir # The directory last used to open a file.</t>
+<t tx="ekr.20060212061804">def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+
+    """Create and run an Tkinter open file dialog ."""
+    
+    __pychecker__ = '--no-argsused' # defaultextension not used.
+    
+    initialdir = g.app.globalOpenDir or g.os_path_abspath(os.getcwd())
+    
+    if multiple:
+        # askopenfilenames requires Python 2.3 and Tk 8.4.
+        if (
+            g.CheckVersion(sys.version,"2.3") and
+            g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
+        ):
+            files = tkFileDialog.askopenfilenames(
+                title=title,filetypes=filetypes,initialdir=initialdir)
+            # g.trace(files)
+            return list(files)
+        else:
+            # Get one file and return it as a list.
+            theFile = tkFileDialog.askopenfilename(
+                title=title,filetypes=filetypes,initialdir=initialdir)
+            return [theFile]
+    else:
+        # Return a single file name as a string.
+        return tkFileDialog.askopenfilename(
+            title=title,filetypes=filetypes,initialdir=initialdir)</t>
+<t tx="ekr.20060212061804.1">def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+
+    """Create and run an Tkinter save file dialog ."""
+    
+    __pychecker__ = '--no-argsused' # defaultextension not used.
+    
+    initialdir=g.app.globalOpenDir or g.os_path_abspath(os.getcwd()),
+
+    return tkFileDialog.asksaveasfilename(
+        initialdir=initialdir,initialfile=initialfile,
+        title=title,filetypes=filetypes)</t>
 </tnodes>
 </leo_file>
