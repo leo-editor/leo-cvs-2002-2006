@@ -36,6 +36,7 @@ class LeoApp:
         self.dialogs = 0 # Count of open dialogs.
         self.disableSave = False
         self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+        self.globalOpenDir = None # The directory last used to open a file.
         self.gui = None # The gui class.
         self.hasOpenWithMenu = False # True: open with plugin has been loaded.
         self.hookError = False # True: suppress further calls to hooks.

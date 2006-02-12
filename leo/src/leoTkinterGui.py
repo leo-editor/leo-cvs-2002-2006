@@ -19,6 +19,7 @@ import leoTkinterFind
 import leoTkinterFrame
 import tkFont
 import tkFileDialog
+import os
 import string
 import sys
 
@@ -227,41 +228,51 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
     #@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
     # We no longer specify default extensions so that we can open and save files without extensions.
-    
+    #@nonl
+    #@+node:ekr.20060212061804:runOpenFileDialog
     def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
     
         """Create and run an Tkinter open file dialog ."""
         
         __pychecker__ = '--no-argsused' # defaultextension not used.
         
+        initialdir = g.app.globalOpenDir or g.os_path_abspath(os.getcwd())
+        
         if multiple:
-            # askopenfilenames requires Pythone 2.3 and Tk 8.4.
+            # askopenfilenames requires Python 2.3 and Tk 8.4.
             if (
                 g.CheckVersion(sys.version,"2.3") and
                 g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
             ):
-                files = tkFileDialog.askopenfilenames(title=title,filetypes=filetypes)
+                files = tkFileDialog.askopenfilenames(
+                    title=title,filetypes=filetypes,initialdir=initialdir)
                 # g.trace(files)
                 return list(files)
             else:
                 # Get one file and return it as a list.
-                theFile = tkFileDialog.askopenfilename(title=title,filetypes=filetypes)
+                theFile = tkFileDialog.askopenfilename(
+                    title=title,filetypes=filetypes,initialdir=initialdir)
                 return [theFile]
         else:
             # Return a single file name as a string.
-            return tkFileDialog.askopenfilename(title=title, filetypes=filetypes)
-    
+            return tkFileDialog.askopenfilename(
+                title=title,filetypes=filetypes,initialdir=initialdir)
+    #@nonl
+    #@-node:ekr.20060212061804:runOpenFileDialog
+    #@+node:ekr.20060212061804.1:runSaveFileDialog
     def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
     
         """Create and run an Tkinter save file dialog ."""
         
         __pychecker__ = '--no-argsused' # defaultextension not used.
+        
+        initialdir=g.app.globalOpenDir or g.os_path_abspath(os.getcwd()),
     
         return tkFileDialog.asksaveasfilename(
-            initialfile=initialfile,
-            title=title,
-            filetypes=filetypes)
+            initialdir=initialdir,initialfile=initialfile,
+            title=title,filetypes=filetypes)
     #@nonl
+    #@-node:ekr.20060212061804.1:runSaveFileDialog
     #@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
     #@+node:ekr.20031218072017.4058:app.gui.Tkinter panels
     def createComparePanel(self,c):

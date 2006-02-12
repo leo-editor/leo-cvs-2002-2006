@@ -464,6 +464,9 @@ class baseCommands:
     
         if fileName and len(fileName) > 0:
             ok, frame = g.openWithFileName(fileName,c)
+            if ok:
+                g.app.globalOpenDir = frame.openDirectory
+                # g.es('current directory: %s' %  g.app.globalOpenDir)
             if ok and closeFlag:
                 g.app.destroyWindow(c.frame)
         else:

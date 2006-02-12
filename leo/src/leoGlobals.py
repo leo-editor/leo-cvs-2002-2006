@@ -800,7 +800,7 @@ def openWithFileName(fileName,old_c,
                     # The recent files list has been updated by menu.updateRecentFiles.
                     frame.c.config.setRecentFiles(g.app.config.recentFiles)
             # Bug fix in 4.4.
-            frame.openDirectory = g.os_path_dirname(fileName)
+            frame.openDirectory = g.os_path_abspath(g.os_path_dirname(fileName))
             g.doHook("open2",old_c=old_c,c=c,new_c=frame.c,fileName=fileName)
         finally:
             c.endUpdate()
