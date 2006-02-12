@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="22681" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
-	<global_window_position top="43" left="401" height="857" width="913"/>
+	<global_window_position top="31" left="225" height="857" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -4141,7 +4141,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060212102459" a="E"><vh>What's new in Leo 4.4</vh>
+<v t="ekr.20060212102459" a="V"><vh>What's new in Leo 4.4</vh>
 <v t="ekr.20060212102459.4"><vh>Minibuffer-oriented find commands</vh></v>
 <v t="ekr.20060212111040"><vh>Flexible key modes</vh>
 <v t="ekr.20060212102459.11"><vh>How to design and use modes</vh></v>
@@ -4153,7 +4153,7 @@
 <v t="ekr.20060212102459.10"><vh>minibuffer find commands</vh></v>
 </v>
 <v t="ekr.20060212102459.2"><vh>Many new features  in leosettings.leo</vh></v>
-<v t="ekr.20060212110830" a="V"><vh>coming in 4.4 b3</vh></v>
+<v t="ekr.20060212110830"><vh>coming in 4.4 b3</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -31964,11 +31964,7 @@ Notes:
         n += font.measure(z+' '*4)+1
         
     return d</t>
-<t tx="ekr.20060212102459">@nocolor
-
-Refer to 4.4b3 to do first list.
-
-@color</t>
+<t tx="ekr.20060212102459">@nocolor</t>
 <t tx="ekr.20060212102459.2"></t>
 <t tx="ekr.20060212102459.4">@nocolor
 
