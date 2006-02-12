@@ -84,7 +84,7 @@ class baseEditCommandsClass:
         c = self.c ; p = c.currentPosition()
         name = c.widget_name(w)
         
-        # Bug fix 1/6/06 (after a5 released): don't do this in headlines!
+        # Don't do this in headlines!
         if name.startswith('body'):
             oldSel =  g.app.gui.getTextSelection(w)
             oldText = p.bodyString()
@@ -171,11 +171,11 @@ class baseEditCommandsClass:
     #@-node:ekr.20050920084036.12:removeRKeys (baseCommandsClass)
     #@+node:ekr.20050929161635:Helpers
     #@+node:ekr.20050920084036.249:_chckSel
-    def _chckSel (self,event,warning=''):
+    def _chckSel (self,event,warning='no selection'):
     
         c = self.c ; k = self.k
         
-        w = event and event.widget or c.frame.body.bodyCtrl
+        w = event and event.widget
     
         val = 'sel' in w.tag_names() and w.tag_ranges('sel')
         
@@ -3717,11 +3717,12 @@ class editCommandsClass (baseEditCommandsClass):
     
     '''
     #@+node:ekr.20050920084036.118:sortLines
-    def sortLines (self,event,which=None): # event IS used.
+    def sortLines (self,event,which=None):
     
-        k = self.k ; w = event.widget
-        if not self._chckSel(event):
-            return
+        c = self.c ; k = c.k ; w = event.widget
+        g.trace(c.widget_name(w))
+        if not self._chckSel(event): return
+        self.beginCommand()
         i = w.index('sel.first')
         i2 = w.index('sel.last')
         is1 = i.split('.')
@@ -3738,6 +3739,7 @@ class editCommandsClass (baseEditCommandsClass):
             w.insert('%s.0' % inum,'%s\n' % z)
             inum = inum + 1
         w.mark_set('insert',ins)
+        self.endCommand(changed=True,setLabel=False)
     #@nonl
     #@-node:ekr.20050920084036.118:sortLines
     #@+node:ekr.20050920084036.119:sortColumns
