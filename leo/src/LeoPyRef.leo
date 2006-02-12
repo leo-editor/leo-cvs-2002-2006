@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9074" clone_windows="0"/>
-<globals body_outline_ratio="0.480459770115">
+<globals body_outline_ratio="0.5">
 	<global_window_position top="21" left="417" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -13,8 +13,7 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-expanded="ekr.20031218072017.2823,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -125,7 +124,7 @@ expanded="ekr.20031218072017.2823,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20031218072017.2821"><vh>open</vh>
 <v t="ekr.20031218072017.2822"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2823" a="E"><vh>openWith and allies</vh>
+<v t="ekr.20031218072017.2823"><vh>openWith and allies</vh>
 <v t="ekr.20031218072017.2824"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2825"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
 <v t="ekr.20031218072017.2826"><vh>&lt;&lt;set dict and path if a temp file already refers to p.v.t &gt;&gt;</vh></v>
@@ -147,13 +146,40 @@ expanded="ekr.20031218072017.2823,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="ekr.20031218072017.2052"><vh>g.openWithFileName</vh></v>
 </v>
+<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh>
+<v t="ekr.20060211175131"><vh>What I did</vh></v>
+<v t="ekr.20050920084036.118"><vh>sortLines</vh></v>
+<v t="ekr.20051214132256"><vh>begin/endCommand</vh>
+<v t="ekr.20051214133130"><vh>beginCommand  &amp; beginCommandWithEvent</vh>
+<v t="ekr.20051215102349"><vh>beingCommandHelper</vh></v>
+</v>
+<v t="ekr.20051214133130.1"><vh>endCommand</vh></v>
+</v>
+<v t="ekr.20050920085536.41"><vh>fullCommand (alt-x) &amp; helper</vh>
+<v t="ekr.20050920085536.45"><vh>callAltXFunction</vh></v>
+</v>
+<v t="ekr.20060207140352"><vh>c.masterFocusHandler</vh></v>
+<v t="ekr.20031218072017.2949"><vh>Drawing Utilities (commands)</vh>
+<v t="ekr.20031218072017.2950"><vh>c.begin/endUpdate</vh></v>
+<v t="ekr.20031218072017.2951"><vh>c.bringToFront</vh></v>
+<v t="ekr.20060205103842"><vh>c.get/request/set_focus</vh></v>
+<v t="ekr.20060210103358"><vh>c.invalidateFocus</vh></v>
+<v t="ekr.20060207140352"><vh>c.masterFocusHandler</vh></v>
+<v t="ekr.20031218072017.2953"><vh>c.recolor &amp; requestRecolor</vh></v>
+<v t="ekr.20051216171520"><vh>c.recolor_now</vh></v>
+<v t="ekr.20031218072017.2954"><vh>c.redraw_now</vh></v>
+<v t="ekr.20060208143543"><vh>c.restoreFocus</vh></v>
+<v t="ekr.20060207142332"><vh>c.traceFocus</vh></v>
+<v t="ekr.20060205111103"><vh>c.widget_name</vh></v>
+<v t="ekr.20050120092028"><vh>c.xWantsFocus</vh></v>
+<v t="ekr.20060210102201"><vh>c.xWantsFocusNow</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20060206103355" a="V"><vh>To do 4.4b2</vh>
-<v t="ekr.20060122183914"><vh>Fix minor bugs 5</vh>
+<v t="ekr.20060122183914"><vh>Fix bugs 4</vh>
 <v t="ekr.20060211112120.1"><vh>disable menu enablers if commander does not exist</vh></v>
-<v t="ekr.20060114055611"><vh>Fix sort-lines problems</vh></v>
-<v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
 <v t="ekr.20060124082357"><vh>Fix problem with view plugin</vh></v>
 <v t="ekr.20060116083043"><vh>Use special Help menu on the Mac</vh>
 <v t="ekr.20031218072017.3803"><vh>createHelpMenuFromTable</vh></v>
@@ -162,9 +188,10 @@ expanded="ekr.20031218072017.2823,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20031218072017.3807"><vh>getMenu, setMenu, destroyMenu</vh></v>
 <v t="ekr.20060211144330.1"><vh>getMacHelpMenu</vh></v>
 </v>
+<v t="ekr.20060211184834"><vh>Review all commands in leoEditCommands.py</vh>
+<v t="ekr.20060122185244.2"><vh>Fix unindent command</vh></v>
 </v>
-<v t="ekr.20060211100150"><vh>Fix chapters plugin</vh></v>
-<v t="ekr.20060210201454"><vh>Distribution</vh>
+</v>
 <v t="ekr.20060209053234"><vh>What's new in Leo 4.4</vh>
 <v t="ekr.20060210111310"><vh>Unification of all calling sequences</vh></v>
 <v t="ekr.20060210105733"><vh>New debugging settings in leosettings.leo</vh></v>
@@ -179,8 +206,6 @@ expanded="ekr.20031218072017.2823,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060210131120.1"><vh>minibuffer find commands</vh></v>
 </v>
 <v t="ekr.20060209201859"><vh>How to design and use modes</vh></v>
-</v>
-<v t="ekr.20060210123709.1"><vh>Test on MacOS</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -205,8 +230,7 @@ expanded="ekr.20031218072017.2823,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,"
-expanded="ekr.20031218072017.2823,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
@@ -235,9 +259,9 @@ expanded="ekr.20031218072017.2823,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -427,7 +451,7 @@ vList = [] ; tDict = {} # Remove these references immediately.</t>
     globalConfigDir = g.app.globalConfigDir
     loadDir = g.app.loadDir
     
-    verbose = True
+    verbose = not g.app.unitTesting
     &lt;&lt; return if we can set leoID from sys.leoID &gt;&gt;
     &lt;&lt; return if we can set leoID from "leoID.txt" &gt;&gt;
     &lt;&lt; return if we can set leoID from os.getenv('USER') &gt;&gt;
@@ -1081,6 +1105,69 @@ except Exception:
     else:
         c.mFileName = fileName
 </t>
+<t tx="ekr.20031218072017.2949"></t>
+<t tx="ekr.20031218072017.2950">@
+**Important** These methods ensure that exactly zero or one (depending on the
+argument to endUpdate) redraws exist within the section of code bounded by
+c.beginUpdate and c.endUpdate. This greatly simplifies and clarifies the code.
+
+Callers should ensure that every beginUpdate is matched with an endUpdate by
+using the following pattern:
+    c.beginUpdate()
+    try:
+        &lt;&lt; whatever &gt;&gt;
+    finally:
+        c.endUpdate()
+@c
+
+def beginUpdate(self):
+    
+    '''Suppress redraws of the tree (except for explict calls to c.redraw_now)
+    until the matching call to endUpdate.'''
+    
+    c = self
+    c.frame.tree.beginUpdate()
+    
+def endUpdate(self,flag=True,scroll=False):
+    
+    '''Redraw the screen if flag is True.'''
+
+    c = self
+    c.frame.tree.endUpdate(flag,scroll=scroll)
+
+BeginUpdate = beginUpdate # Compatibility with old scripts
+EndUpdate = endUpdate # Compatibility with old scripts
+</t>
+<t tx="ekr.20031218072017.2951">def bringToFront(self):
+
+    self.frame.deiconify()
+
+BringToFront = bringToFront # Compatibility with old scripts</t>
+<t tx="ekr.20031218072017.2953">def recolor(self):
+
+    c = self
+    c.frame.body.recolor(c.currentPosition())
+    
+def requestRecolor (self):
+    
+    c = self
+    c.frame.requestRecolorFlag = True</t>
+<t tx="ekr.20031218072017.2954">def redraw_now (self):
+    
+    c = self
+    
+    if g.app.quitting or not c.exists or not hasattr(c.frame,'top'):
+        return # nullFrame's do not have a top frame.
+
+    c.frame.tree.redraw_now()
+    c.frame.top.update_idletasks()
+    
+    if c.frame.requestRecolorFlag:
+        c.frame.requestRecolorFlag = False
+        c.recolor()
+
+# Compatibility with old scripts
+redraw = force_redraw = redraw_now</t>
 <t tx="ekr.20031218072017.3625">&lt;&lt; about gui classes and gui plugins &gt;&gt;</t>
 <t tx="ekr.20031218072017.3803">def createHelpMenuFromTable (self):
 
@@ -1573,6 +1660,28 @@ def mapWheel(e):
         return frame.OnMouseWheel(e)
 
 canvas.bind("&lt;ButtonPress&gt;",mapWheel,add=1)</t>
+<t tx="ekr.20050120092028">def bodyWantsFocus(self):
+    c = self ; body = c.frame.body
+    c.request_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocus(self,p):
+    c = self
+    c.request_focus(p and p.edit_widget())
+    
+def logWantsFocus(self):
+    c = self ; log = c.frame.log
+    c.request_focus(log and log.logCtrl)
+    
+def minibufferWantsFocus(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocus()
+    
+def treeWantsFocus(self):
+    c = self ; tree = c.frame.tree
+    c.request_focus(tree and tree.canvas)
+    
+def widgetWantsFocus(self,w):
+    c = self ; c.request_focus(w)</t>
 <t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
@@ -1617,6 +1726,29 @@ Two (recently written) functions in leoGlobals.py support conversions from Pytho
 - g.convertRowColToPythonIndex does the reverse.
 
 Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by g.convertPythonIndexToRowCol is zero based, so the code that actually creates Tkinter indices from row/col must add 1 to the row.  Similar remarks apply when going in the reverse direction.</t>
+<t tx="ekr.20050920084036.118">def sortLines (self,event,which=None):
+
+    c = self.c ; k = c.k ; w = event.widget
+    g.trace(c.widget_name(w))
+    if not self._chckSel(event): return
+    self.beginCommand()
+    i = w.index('sel.first')
+    i2 = w.index('sel.last')
+    is1 = i.split('.')
+    is2 = i2.split('.')
+    txt = w.get('%s.0' % is1[0],'%s.0 lineend' % is2[0])
+    ins = w.index('insert')
+    txt = txt.split('\n')
+    w.delete('%s.0' % is1[0],'%s.0 lineend' % is2[0])
+    txt.sort()
+    if which:
+        txt.reverse()
+    inum = int(is1[0])
+    for z in txt:
+        w.insert('%s.0' % inum,'%s\n' % z)
+        inum = inum + 1
+    w.mark_set('insert',ins)
+    self.endCommand(changed=True,setLabel=False)</t>
 <t tx="ekr.20050920085536.1"></t>
 <t tx="ekr.20050920085536.2">def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     
@@ -1641,6 +1773,69 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
     &lt;&lt; define Tk ivars &gt;&gt;
     &lt;&lt; define externally visible ivars &gt;&gt;
     &lt;&lt; define internal ivars &gt;&gt;</t>
+<t tx="ekr.20050920085536.41">def fullCommand (self,event,specialStroke=None,specialFunc=None):
+    
+    '''Handle 'full-command' (alt-x) mode.'''
+
+    k = self ; c = k.c ; state = k.getState('full-command')
+    keysym = (event and event.keysym) or ''
+    ch = (event and event.char) or ''
+    trace = c.config.getBool('trace_modes')
+    if trace: g.trace('state',state,keysym)
+    if state == 0:
+        k.mb_event = event # Save the full event for later.
+        k.setState('full-command',1,handler=k.fullCommand) 
+        k.setLabelBlue('%s' % (k.altX_prompt),protect=True)
+        # Init mb_ ivars. This prevents problems with an initial backspace.
+        k.mb_prompt = k.mb_tabListPrefix = k.mb_prefix = k.altX_prompt
+        k.mb_tabList = [] ; k.mb_tabListIndex = -1
+        c.minibufferWantsFocus()
+    elif keysym == 'Return':
+        c.frame.log.deleteTab('Completion')
+        k.callAltXFunction(k.mb_event)
+    elif keysym == 'Tab':
+        k.doTabCompletion(c.commandsDict.keys())
+        c.minibufferWantsFocus()
+    elif keysym == 'BackSpace':
+        k.doBackSpace(c.commandsDict.keys())
+        c.minibufferWantsFocus()
+    elif ch not in string.printable:
+        if specialStroke:
+            g.trace(specialStroke)
+            specialFunc()
+        c.minibufferWantsFocus()
+    else:
+        # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+        k.mb_tabList = []
+        k.updateLabel(event)
+        k.mb_tabListPrefix = k.getLabel()
+        c.minibufferWantsFocus()
+        # g.trace('new prefix',k.mb_tabListPrefix)
+
+    return 'break'</t>
+<t tx="ekr.20050920085536.45">def callAltXFunction (self,event):
+    
+    k = self ; c = k.c ; s = k.getLabel()
+    k.mb_tabList = []
+    commandName = s[len(k.mb_prefix):].strip()
+    func = c.commandsDict.get(commandName)
+
+    if func:
+        # These must be done *after* getting the command.
+        k.clearState()
+        k.resetLabel()
+        if commandName != 'repeat-complex-command':
+            k.mb_history.insert(0,commandName)
+        c.widgetWantsFocusNow(event.widget) # Important, so cut-text works, e.g.
+        func(event)
+        k.endCommand(event,commandName)
+    else:
+        if 1: # Useful.
+            k.doTabCompletion(c.commandsDict.keys())
+        else: # Annoying.
+            k.keyboardQuit(event)
+            k.setLabel('Command does not exist: %s' % commandName)
+            c.bodyWantsFocus()</t>
 <t tx="ekr.20050920093543">def finishCreate (self):  # New in 4.4.
     
     '''Finish creating the commander after frame.finishCreate.
@@ -1712,6 +1907,7 @@ self.universalArgKey = None
 
 # Keepting track of the characters in the mini-buffer.
 self.arg_completion = True
+self.mb_event = None
 self.mb_history = []
 self.mb_prefix = ''
 self.mb_tabListPrefix = ''
@@ -1980,8 +2176,65 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
     else:
         w.bind_all("&lt;Control-1&gt;", tracewidget)
         w.bind_all("&lt;Control-Shift-1&gt;", untracewidget)</t>
-<t tx="ekr.20060114055611">- It should recolor the text.
-- Does it not stick sometimes?</t>
+<t tx="ekr.20051214132256"></t>
+<t tx="ekr.20051214133130">def beginCommand (self,undoType='Typing'):
+    
+    '''Do the common processing at the start of each command.'''
+
+    return self.beginCommandHelper(ch='',undoType=undoType,w=self.w)
+
+def beginCommandWithEvent (self,event,undoType='Typing'):
+    
+    '''Do the common processing at the start of each command.'''
+    
+    return self.beginCommandHelper(ch=event.char,undoType=undoType,w=event.widget)</t>
+<t tx="ekr.20051214133130.1">def endCommand(self,label=None,changed=True,setLabel=True):
+    
+    '''Do the common processing at the end of each command.'''
+    
+    c = self.c ; b = self.undoData ; k = self.k
+
+    if b:
+        name = b.name
+        if name.startswith('body'):
+            if changed:
+                c.frame.body.onBodyChanged(undoType=b.undoType,
+                    oldSel=b.oldSel,oldText=b.oldText,oldYview=None)
+        elif name.startswith('head'):
+            g.trace('Should not happen: endCommand does not support undo in headlines')
+        else: pass
+        
+    self.undoData = None # Bug fix: 1/6/06 (after a5 released).
+
+    k.clearState()
+    
+    # Warning: basic editing commands **must not** set the label.
+    if setLabel:
+        if label:
+            k.setLabelGrey(label)
+        else:
+            k.resetLabel()</t>
+<t tx="ekr.20051215102349">def beginCommandHelper (self,ch,undoType,w):
+
+    c = self.c ; p = c.currentPosition()
+    name = c.widget_name(w)
+    
+    # Don't do this in headlines!
+    if name.startswith('body'):
+        oldSel =  g.app.gui.getTextSelection(w)
+        oldText = p.bodyString()
+        self.undoData = g.Bunch(
+            ch=ch,name=name,oldSel=oldSel,oldText=oldText,w=w,undoType=undoType)
+        
+    return w</t>
+<t tx="ekr.20051216171520">def recolor_now(self,p=None,incremental=False):
+
+    c = self
+    if p is None:
+        p = c.currentPosition()
+
+    c.frame.body.colorizer.colorize(p,incremental)</t>
+<t tx="ekr.20060114055611"></t>
 <t tx="ekr.20060115195302">def setDefaultUnboundKeyAction (self):
     
     k = self ; c = k.c
@@ -2010,7 +2263,7 @@ The fix was to set c.frame.openDirectory in save and
 @color
 </t>
 <t tx="ekr.20060122183914"></t>
-<t tx="ekr.20060122185244.2">unindent-region should do nothing if not in body pane, or it should work in all panes.</t>
+<t tx="ekr.20060122185244.2"># unindent-region should work in all panes.</t>
 <t tx="ekr.20060124082357">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3538274
@@ -2078,6 +2331,38 @@ def strokeFromEvent (self,event):
     # g.trace('state',state,'keysym',keysym,'result',repr(result))
     return result</t>
 <t tx="ekr.20060203112912.1"></t>
+<t tx="ekr.20060205103842">def get_focus (self):
+    
+    c = self
+    return g.app.gui.get_focus(c)
+    
+def get_requested_focus (self):
+    
+    c = self
+    return c.requestedFocusWidget or c.hasFocusWidget or g.app.gui.get_focus(c)
+    
+def request_focus(self,w):
+
+    c = self
+    if w: c.requestedFocusWidget = w
+    c.traceFocus(w)
+    
+def set_focus (self,w):
+    
+    c = self
+    
+    if 1: # An optimization.
+        c.requestedFocusWidget = w
+        c.masterFocusHandler()
+    
+    else: # Safer, perhaps.
+        c.hasFocusWidget = c.requestedFocusWidget = w
+        g.app.gui.set_focus(c,w)</t>
+<t tx="ekr.20060205111103">def widget_name (self,widget):
+    
+    c = self
+    
+    return c.gui.widget_name(widget)</t>
 <t tx="ekr.20060205170335.1">def aproposFindCommands (self, event=None):
     
     c = self.c
@@ -2113,7 +2398,70 @@ zodb.py</t>
 <t tx="ekr.20060206113925.1"></t>
 <t tx="ekr.20060206131908"># Paste-text crashed when pasting into minibuffer
 </t>
+<t tx="ekr.20060207140352">def masterFocusHandler (self):
+    
+    c = self ; 
+    trace = not g.app.unitTesting and c.config.getBool('trace_masterFocusHandler')
+    
+    # Give priority to later requests, but default to previously set widget.
+    w = c.requestedFocusWidget or c.hasFocusWidget
+    wname = c.widget_name(w)
+    
+    if trace: g.trace(
+        'requested',c.widget_name(c.requestedFocusWidget),
+        'present',c.widget_name(c.hasFocusWidget),
+        g.callers())
+    
+    if c.hasFocusWidget and (
+        not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget):
+        # if trace: g.trace('no change.',wname)
+        c.requestedFocusWidget = None
+    elif w:
+        # Ignore whatever g.app.gui.get_focus might say.
+        ok = g.app.gui.set_focus(c,w)
+        if ok: c.hasFocusWidget = w
+        c.requestedFocusWidget = None
+    else:
+        # This is not an error: it can arise because of a call to k.invalidateFocus.
+        # g.trace('*'*20,'oops: moving to body pane.')
+        c.bodyWantsFocusNow()
+
+restoreRequestedFocus = masterFocusHandler</t>
+<t tx="ekr.20060207142332">trace_focus_count = 0
+
+def traceFocus (self,w):
+    
+    c = self
+
+    if not g.app.unitTesting and c.config.getBool('trace_focus'):
+        c.trace_focus_count += 1
+        g.trace('%4d' % (c.trace_focus_count),
+            c.widget_name(w),g.callers(8))</t>
 <t tx="ekr.20060208080524"></t>
+<t tx="ekr.20060208143543">def restoreFocus (self):
+    
+    '''Ensure that the focus eventually gets restored.'''
+    
+    c =self
+    trace = not g.app.unitTesting and c.config.getBool('trace_focus')
+
+    if c.requestedFocusWidget:
+        c.hasFocusWidget = None # Force an update
+    elif c.hasFocusWidget:
+        c.requestedFocusWidget = c.hasFocusWidget
+        c.hasFocusWidget = None # Force an update
+    else:
+        # Should not happen, except during unit testing.
+        # c.masterFocusHandler sets c.hasFocusWidget,
+        # so if it is not set here it is because this method cleared it.
+        if not g.app.unitTesting: g.trace('oops: no requested or present widget.')
+        c.bodyWantsFocusNow()
+    
+    if c.inCommand:
+        if trace: g.trace('expecting later call to c.masterFocusHandler')
+        pass # A call to c.masterFocusHandler will surely happen.
+    else:
+        c.masterFocusHandler() # Do it now.</t>
 <t tx="ekr.20060209053234">@nocolor
 
 Refer to 4.4b3 to do first list.
@@ -2216,6 +2564,39 @@ isearch-forward-regexp.'''</t>
 
 </t>
 <t tx="ekr.20060209201859"></t>
+<t tx="ekr.20060210102201">def bodyWantsFocusNow(self):
+    c = self ; body = c.frame.body
+    c.set_focus(body and body.bodyCtrl)
+    
+def headlineWantsFocusNow(self,p):
+    c = self
+    c.set_focus(p and p.edit_widget())
+    
+def logWantsFocusNow(self):
+    c = self ; log = c.frame.log
+    c.set_focus(log and log.logCtrl)
+
+def minibufferWantsFocusNow(self):
+    c = self ; k = c.k
+    k and k.minibufferWantsFocusNow()
+    
+def treeWantsFocusNow(self):
+    c = self ; tree = c.frame.tree
+    c.set_focus(tree and tree.canvas)
+    
+def widgetWantsFocusNow(self,w):
+    c = self ; c.set_focus(w)
+</t>
+<t tx="ekr.20060210103358">def invalidateFocus (self):
+    
+    '''Indicate that the focus is in an invalid location, or is unknown.'''
+    
+    c = self
+    c.requestedFocusWidget = None
+    c.hasFocusWidget = None
+    # g.trace(g.callers())
+    
+</t>
 <t tx="ekr.20060210105733"></t>
 <t tx="ekr.20060210111310">@nocolor
 
@@ -2228,7 +2609,6 @@ The new prefered way of calling c.openWith is:
 c.openWith(data=data)
 
 I've corrected all the affected plugins. In particular, the vim plugin works again.</t>
-<t tx="ekr.20060210123709.1"></t>
 <t tx="ekr.20060210131047">contract-log-pane       = Alt-Ctrl-RtArrow 
 expand-body-pane        = Alt-Ctrl-UpArrow  
 expand-log-pane         = Alt-Ctrl-LtArrow
@@ -2270,8 +2650,6 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 <t tx="ekr.20060210131120"></t>
 <t tx="ekr.20060210131120.1"></t>
 <t tx="ekr.20060210180603"># The callback must return what k.masterKeyHandler returns (i.e., 'break')</t>
-<t tx="ekr.20060210201454"></t>
-<t tx="ekr.20060211100150"></t>
 <t tx="ekr.20060211112120.1">Only affects unit tests, probably.</t>
 <t tx="ekr.20060211132742"># http://sourceforge.net/forum/message.php?msg_id=3571104</t>
 <t tx="ekr.20060211135013">@nocolor
@@ -2310,5 +2688,19 @@ except Exception:
         g.trace('Can not get MacOS Help menu')
         g.es_exception()
         return None</t>
+<t tx="ekr.20060211175131">@nocolor
+
+The problem: event.widget is the minibuffer.  It must be the body text.
+
+- k.fullCommand saves the initial event and passes it on to callAltXFunction.
+
+- There was a bug in c.masterFocusHandler.  The correct test for 'no change' is:
+
+    if c.hasFocusWidget and c.requestedFocusWidget == c.hasFocusWidget:
+
+** Important: the 'extra' calls to set_focus are correct. The minibuffer messes
+with the tab pane, and so we *must* be careful to yank the focus back to the
+body.</t>
+<t tx="ekr.20060211184834">Any command that alters text should call begin/endCommand.</t>
 </tnodes>
 </leo_file>

@@ -245,7 +245,7 @@
 </v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 <v t="ekr.20060209204257"><vh>prototype of menu post commands</vh></v>
-<v t="ekr.20060211135735" a="V"><vh>test of c.getTime</vh></v>
+<v t="ekr.20060211171647" a="V"><vh>test of sort-lines</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4450,6 +4450,14 @@ top = c.frame.top
 topx,topy = top.winfo_rootx(),top.winfo_rooty()
 menu = c.frame.menu.getMenu(name)
 menu.post(topx+offsets.get(name,0),topy)</t>
-<t tx="ekr.20060211135735">print c.getTime()</t>
+<t tx="ekr.20060211171647">this
+is
+a
+# comment 2
+test
+of
+sort-lines
+# comment 1
+</t>
 </tnodes>
 </leo_file>

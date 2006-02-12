@@ -2,20 +2,11 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060122183914:Fix minor bugs 5
+#@+node:ekr.20060122183914:Fix bugs 4
 #@+node:ekr.20060211112120.1:disable menu enablers if commander does not exist
 Only affects unit tests, probably.
 #@nonl
 #@-node:ekr.20060211112120.1:disable menu enablers if commander does not exist
-#@+node:ekr.20060114055611:Fix sort-lines problems
-- It should recolor the text.
-- Does it not stick sometimes?
-#@nonl
-#@-node:ekr.20060114055611:Fix sort-lines problems
-#@+node:ekr.20060122185244.2:Fix unindent command
-unindent-region should do nothing if not in body pane, or it should work in all panes.
-#@nonl
-#@-node:ekr.20060122185244.2:Fix unindent command
 #@+node:ekr.20060124082357:Fix problem with view plugin
 @nocolor
 
@@ -131,10 +122,15 @@ def getMacHelpMenu (self):
 #@nonl
 #@-node:ekr.20060211144330.1:getMacHelpMenu
 #@-node:ekr.20060116083043:Use special Help menu on the Mac
-#@-node:ekr.20060122183914:Fix minor bugs 5
-#@+node:ekr.20060211100150:Fix chapters plugin
-#@-node:ekr.20060211100150:Fix chapters plugin
-#@+node:ekr.20060210201454:Distribution
+#@+node:ekr.20060211184834:Review all commands in leoEditCommands.py
+Any command that alters text should call begin/endCommand.
+#@nonl
+#@+node:ekr.20060122185244.2:Fix unindent command
+# unindent-region should work in all panes.
+#@nonl
+#@-node:ekr.20060122185244.2:Fix unindent command
+#@-node:ekr.20060211184834:Review all commands in leoEditCommands.py
+#@-node:ekr.20060122183914:Fix bugs 4
 #@+node:ekr.20060209053234:What's new in Leo 4.4
 @nocolor
 
@@ -328,9 +324,6 @@ expand-outline-pane     = Alt-Ctrl-RtArrow
 #@+node:ekr.20060209201859:How to design and use modes
 #@-node:ekr.20060209201859:How to design and use modes
 #@-node:ekr.20060209053234:What's new in Leo 4.4
-#@+node:ekr.20060210123709.1:Test on MacOS
-#@-node:ekr.20060210123709.1:Test on MacOS
-#@-node:ekr.20060210201454:Distribution
 #@-node:ekr.20060206103355:To do 4.4b2
 #@-all
 #@nonl
