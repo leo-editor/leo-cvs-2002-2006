@@ -5432,6 +5432,7 @@ class baseCommands:
         c = self
         c.requestedFocusWidget = None
         c.hasFocusWidget = None
+        # g.trace(g.callers())
         
     #@-node:ekr.20060210103358:c.invalidateFocus
     #@+node:ekr.20060207140352:c.masterFocusHandler
@@ -5442,9 +5443,16 @@ class baseCommands:
         
         # Give priority to later requests, but default to previously set widget.
         w = c.requestedFocusWidget or c.hasFocusWidget
+        wname = c.widget_name(w)
         
-        if not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget:
-            if trace: g.trace('no change.')
+        if trace: g.trace(
+            'requested',c.widget_name(c.requestedFocusWidget),
+            'present',c.widget_name(c.hasFocusWidget),
+            g.callers())
+        
+        if c.hasFocusWidget and (
+            not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget):
+            # if trace: g.trace('no change.',wname)
             c.requestedFocusWidget = None
         elif w:
             # Ignore whatever g.app.gui.get_focus might say.
@@ -5452,7 +5460,8 @@ class baseCommands:
             if ok: c.hasFocusWidget = w
             c.requestedFocusWidget = None
         else:
-            g.trace('*'*20,'oops: moving to body pane.')
+            # This is not an error: it can arise because of a call to k.invalidateFocus.
+            # g.trace('*'*20,'oops: moving to body pane.')
             c.bodyWantsFocusNow()
     
     restoreRequestedFocus = masterFocusHandler
