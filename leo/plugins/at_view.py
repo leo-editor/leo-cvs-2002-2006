@@ -23,7 +23,7 @@ This plugin also accumulates the effect of all ``@path`` nodes.
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = "0.6"
+__version__ = "0.7"
 #@<< version history >>
 #@+node:ktenney.20041211072654.3:<< version history >>
 #@+at
@@ -47,6 +47,8 @@ __version__ = "0.6"
 #     - Corrected and expanded doc string.
 # 0.6 EKR:
 #     - Added better error message if can't load extensions.
+# 0.7 EKR:
+#     - Simplified code, fixed bugs and improved error messages.
 #@-at
 #@nonl
 #@-node:ktenney.20041211072654.3:<< version history >>
@@ -95,7 +97,7 @@ class View:
         self.current = self.c.currentPosition()
         hs = self.current.headString()
     
-        # g.trace('head',hs)
+        g.trace(hs)
         
         if hs.startswith('@view'):
             self.view()
@@ -130,6 +132,8 @@ class View:
         # get a path object for this position
         currentPath = self.getCurrentPath()
     
+        # g.trace(currentPath.exists(),currentPath)
+    
         if currentPath.exists():
             g.es('currentPath: %s' % currentPath.abspath())
             if currentPath.isfile():
@@ -137,6 +141,8 @@ class View:
     
             if currentPath.isdir():
                 self.processDirectory(currentPath, self.current)
+        else:
+            g.es('path does not exist: %s' % (str(currentPath)),color='blue')
     #@nonl
     #@-node:ktenney.20041211072654.10:view
     #@+node:ktenney.20041212102137:clip
@@ -176,7 +182,7 @@ class View:
         # get a path object for this position
         currentPath = self.getCurrentPath()
         
-        g.trace(currentPath)
+        # g.trace(currentPath.exists(),currentPath)
         
         if currentPath.exists():
             path = currentPath.abspath()
@@ -195,6 +201,8 @@ class View:
                 elif not line.strip().startswith('#@'):
                     lines.append(line)
             self.current.setBodyTextOrPane(''.join(lines))
+        else:
+            g.es('path does not exist: %s' % (str(currentPath)),color='blue')
     #@nonl
     #@-node:ktenney.20041211072654.15:strip
     #@+node:ktenney.20041211072654.11:getCurrentPath
@@ -208,8 +216,8 @@ class View:
         # we are currently in a @view node; get the file or directory name
         pathFragments.append(self.getPathFragment(self.current))
         
-        for node in self.current.parents_iter():
-            pathFragments.append(self.getPathFragment(node))
+        for p in self.current.parents_iter():
+            pathFragments.append(self.getPathFragment(p))
                 
         if pathFragments:
             currentPath = path.path(pathFragments.pop())
@@ -222,19 +230,20 @@ class View:
     #@nonl
     #@-node:ktenney.20041211072654.11:getCurrentPath
     #@+node:ktenney.20041211072654.12:getPathFragment
-    def getPathFragment(self, node):
-        
+    def getPathFragment (self,p):
+    
         """
         Return the path fragment if this node is a @path or @view or any @file node.
         """
     
-        head = node.headString()
-        
-        if (head.startswith('@path') or head.startswith('@view') or head.startswith('@file') or \
-            head.startswith('@thin') or head.startswith('@nosent') or head.startswith('@asis') ):
-            
-            return head[head.find(' '):].strip()
-            
+        head = p.headString()
+    
+        for s in ('@path','@view','@strip','@file','@thin','@nosent','@asis'):
+            if head.startswith(s):
+                fragment = head [head.find(' '):].strip()
+                # g.trace(repr(fragment))
+                return fragment
+    
         return ''
     #@nonl
     #@-node:ktenney.20041211072654.12:getPathFragment
@@ -244,6 +253,8 @@ class View:
         """parameters are a path object and a node.
            the path is a file, place it's contents into the node
         """
+        
+        g.trace(node)
     
         node.setBodyTextOrPane(''.join(path.lines()))
     #@nonl
