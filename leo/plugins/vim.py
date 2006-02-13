@@ -4,6 +4,8 @@
 #@+node:ekr.20050226184411:<< docstring >>
 '''A plugin that communicates with VIM.
 
+Important: the open_with plugin must be enabled for this plugin to work properly.
+
 When properly installed, this plugin does the following:
     
 - Double clickin on a node's icon opens that node in VIM. You can open nodes in
@@ -47,7 +49,7 @@ This installer installs the subprocess sources and also _subprocess.pyd in Pytho
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.12"
+__version__ = "1.13"
 #@<< version history >>
 #@+node:ekr.20050226184411.1:<< version history >>
 #@@killcolor
@@ -91,6 +93,9 @@ __version__ = "1.12"
 #     - Added emergency default for 'darwin'.
 #     - Corrected the call to openWith.  It must now use data=data due to a 
 # new event param.
+# 1.13 EKR:
+# - The docstring now states that the open_with plugin must be enabled for 
+# this to work.
 #@-at
 #@nonl
 #@-node:ekr.20050226184411.1:<< version history >>
