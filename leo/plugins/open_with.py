@@ -95,7 +95,7 @@ def on_idle (tag,keywords):
     import os
     a = g.app
     if a.killed: return
-    # g.trace('open with plugin')
+    g.trace('open with plugin')
     for dict in a.openWithFiles:
         path = dict.get("path")
         c = dict.get("c")
