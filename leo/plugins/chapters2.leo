@@ -115,7 +115,7 @@
 <v t="ekr.20060213023839" a="E"><vh> Chapters</vh>
 <v t="ekr.20060213023839.1"><vh>&lt;&lt; remember the originals for decorated methods &gt;&gt;</vh></v>
 <v t="ekr.20060213023839.2"><vh>setTree</vh></v>
-<v t="ekr.20060213023839.3" a="V"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060213023839.3" a="E"><vh>@thin chapters2.py</vh></v>
 </v>
 </vnodes>
 <tnodes>

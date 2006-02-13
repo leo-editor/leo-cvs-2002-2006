@@ -34,80 +34,16 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.70"
+__version__ = "0.101"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
-#@+others
-#@+node:ekr.20060213023839.6:Before Leo 4.4
-#@+at
-# 
-# v .2
-# 
-# 1. Trash. If there is a Chapter in the Leo project called 'Trash' all 
-# deleted nodes are deposited there. Then when deleted in the 'Trash' chapter 
-# it is finally removed. There is an option to quickly add a Trash barrel in 
-# the menu.
-# 2. Menu moved from Outline to being summoned by right clicking on a chapter 
-# tab or in the area of the tabs.
-# 3. Swapping Chapters. Swap one Chapter for another one.
-# 4. Conversion ops. Take one Outline and turn each node into a Chapter. The 
-# convers operation is also there, take each top level node in each Chapter 
-# and add it to one Chapter.
-# 5. Import/Export. You are now able to load leo files as Chapters. This 
-# means, for example, that if you have 5 Outlines that you would like to bind 
-# together as one Leo file but keep their separateness you can now import 
-# those 5 Outlines into there own Chapters. You can also Export a single 
-# Chapter into it's own separate Leo file.
-# 6. Search and Clone. This functionality is very similar to the Filtered 
-# Hoist concept. You decide which Chapter you want your search results to 
-# appear in and a dialog will pop up. You can enter simple text or a more 
-# complex regular expression and the function will search all the outlines and 
-# create a node with the results as children.
-# 7. Editors now have headlines indicating what Chapters and what node are 
-# being worked on.
-# 
-# v .6 EKR: Based on version .5 by Leo User.
-# 
-# - Added g. before all functions in leoGlobals.py.
-# - Right clicking on Chapter tab crashes.
-# 
-# .61 fixed up a couple of spots.
-# 
-# .62 EKR: Restored conditional call to g.app.createTkGui(__file__) in startup 
-# code.
-# 
-# .63 EKR: Added long docstring.
-# 
-# .64 fixed cloneWalk and PDF Convertor.
-# 
-# .65 EKR: added new keyword args to new_getLeoFile and new_open.
-#     - This is needed because of changes to the corresponding method's in 
-# Leo's core.
-# 
-# .66 EKR: use notebooks.get(c) throughout.
-#     - c may not exist during unit testing.  Not a complete fix, not tested!
-# 
-# .67 EKR:
-#     - Added 'silent' keywords to new_getLeoFile and new_open.
-# .68 EKR:
-#     - Use 'c._xPosition. or c.nullPosition()' to init so that c._xPosition 
-# is never None.
-#@-at
-#@nonl
-#@-node:ekr.20060213023839.6:Before Leo 4.4
-#@-others
-
 #@@nocolor
 
 #@+at 
-#@nonl
-# New in Leo 4.4b2:
-# 
-# v .70 EKR:
-# - init returns proper status.
-# - Code cleanup related to positions.
-# 
+# v .101 EKR: 2-13-06 Created from chapters.py.
+# This will be the new working version of the chapters plugin.
 #@-at
+#@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
 #@nl
 #@<< imports >>
