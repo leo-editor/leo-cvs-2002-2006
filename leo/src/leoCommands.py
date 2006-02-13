@@ -622,7 +622,6 @@ class baseCommands:
                         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
                     # This clause by Jim Sizelove.
                     elif openType == "subprocess.Popen":
-                        g.trace()
                         if isinstance(arg, basestring):
                             vtuple = arg + " " + path
                         elif isinstance(arg, (list, tuple)):

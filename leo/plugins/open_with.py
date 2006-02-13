@@ -95,7 +95,7 @@ def on_idle (tag,keywords):
     import os
     a = g.app
     if a.killed: return
-    g.trace('open with plugin')
+    # g.trace('open with plugin')
     for dict in a.openWithFiles:
         path = dict.get("path")
         c = dict.get("c")
@@ -105,7 +105,7 @@ def on_idle (tag,keywords):
         if path and os.path.exists(path):
             try:
                 time = os.path.getmtime(path)
-                g.trace(path,time,dict.get('time')
+                # g.trace(path,time,dict.get('time'))
                 if time and time != dict.get("time"):
                     dict["time"] = time # inhibit endless dialog loop.
                     # The file has changed.
