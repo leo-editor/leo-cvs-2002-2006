@@ -105,6 +105,7 @@ def on_idle (tag,keywords):
         if path and os.path.exists(path):
             try:
                 time = os.path.getmtime(path)
+                g.trace(path,time,dict.get('time')
                 if time and time != dict.get("time"):
                     dict["time"] = time # inhibit endless dialog loop.
                     # The file has changed.
