@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6194" clone_windows="0"/>
 <globals body_outline_ratio="0.69825436409">
-	<global_window_position top="32" left="381" height="802" width="865"/>
+	<global_window_position top="33" left="194" height="802" width="865"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1450,7 +1450,8 @@ marks="mork.20040926105355.8,"><vh>@thin chapters.py</vh></v>
 <v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
 <v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
 <v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
-<v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
+<v t="EKR.20040517075715.4"
+expanded="EKR.20040517075715.5,"><vh>@thin open_with.py</vh></v>
 <v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
 <v t="EKR.20040517075715.13"><vh>Word export</vh>

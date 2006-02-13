@@ -1640,6 +1640,23 @@ def stateHandler (self,event):
 #@-node:ekr.20051126122638:Autocompletion tab
 #@+node:ekr.20060211100150:Fix chapters plugin
 #@-node:ekr.20060211100150:Fix chapters plugin
+#@+node:ekr.20060213151918:Add baloons
+#@+node:ekr.20060212125650:createBalloon
+def createBalloon (tab,sv):
+
+    'Create a balloon for a widget.' ''
+
+    balloon = Pmw.Balloon(tab,initwait=100)
+    balloon.bind(tab,'')
+    hull = balloon.component('hull')
+    def blockExpose (event):
+        if sv.get() == '':
+             hull.withdraw()
+    hull.bind('<Expose>',blockExpose,'+')
+    balloon._label.configure(textvariable=sv)
+#@nonl
+#@-node:ekr.20060212125650:createBalloon
+#@-node:ekr.20060213151918:Add baloons
 #@+node:ekr.20060211184834:Review all commands in leoEditCommands.py
 Any command that alters text should call begin/endCommand.
 #@nonl

@@ -1,25 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
-#@+node:ekr.20060212125650:createBalloon
-def createBalloon (tab,sv):
-
-    'Create a balloon for a widget.' ''
-
-    balloon = Pmw.Balloon(tab,initwait=100)
-    balloon.bind(tab,'')
-    hull = balloon.component('hull')
-    def blockExpose (event):
-        if sv.get() == '':
-             hull.withdraw()
-    hull.bind('<Expose>',blockExpose,'+')
-    balloon._label.configure(textvariable=sv)
-#@nonl
-#@-node:ekr.20060212125650:createBalloon
-#@+node:ekr.20060206103355:To do 4.4b2
-#@+node:ekr.20060212130514:Restore legacy bindings for extract section?
-#@-node:ekr.20060212130514:Restore legacy bindings for extract section?
-#@-node:ekr.20060206103355:To do 4.4b2
 #@-all
 #@nonl
 #@-node:ekr.20040117181936:@thin ../doc/leoToDo.txt

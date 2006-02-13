@@ -24,12 +24,13 @@ plugins_menu.py
 #open_shell.py
 #at_view.py
 #fastGotoNode.py
-vim.py
+
 #newButtons.py
 #UniversalScrolling.py
 #mod_http.py
 #niceNosent.py
 #################
+#vim.py
 #chapters.py
 #bibtex.py
 #autotrees.py
@@ -56,7 +57,7 @@ mod_scripting.py
 #nodenavigator.py
 #searchbox.py
 #xemacs.py
-#open_with.py
+open_with.py
 #nav_buttons.py
 #base64Packager.py
 #EditAttributes.py
