@@ -106,6 +106,8 @@ __version__ = "0.70"
 # v .70 EKR:
 # - init returns proper status.
 # - Code cleanup related to positions.
+# v .71 EKR:
+# - A few crashes fixed.
 # 
 #@-at
 #@-node:ekr.20041103051117:<< version history >>
@@ -283,6 +285,32 @@ class Chapter:
 #@+node:mork.20040930090735:Creating widgets...
 # This category deals with creating widgets and any support functions for doing so.
 #@nonl
+#@+node:mork.20040926105355.21:newCreateControl
+def newCreateControl (self,frame,parentFrame):
+    
+    c = self.c ; notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+
+    if c not in pbodies:
+        parentFrame = createPanedWidget(parentFrame,c)
+    pbody = pbodies [c]
+    l, r = addHeading(parentFrame)
+    ctrl = old_createControl(self,frame,parentFrame)
+    ctrl.bind("<FocusIn>",lambda event,body=frame.body: getGoodPage(event,body),'+')
+    i = 1.0 / len(pbody.panes())
+    for z in pbody.panes():
+        pbody.configurepane(z,size=i)
+    pbody.updatelayout()
+    frame.body.l = l
+    frame.body.r = r
+    frame.body.editorName = editorNames [parentFrame]
+    if frame not in twidgets:
+        twidgets [frame] = []
+    twidgets [frame].append(frame.body)
+    l.configure(textvariable=getSV(c,notebook.getcurselection()))
+    return ctrl
+#@nonl
+#@-node:mork.20040926105355.21:newCreateControl
 #@+node:mork.20040929110556:createPanedWidget
 def createPanedWidget (parentFrame,c):
 
@@ -378,6 +406,17 @@ def getNameMaker (notebook):
     return nameMaker()
 #@nonl
 #@-node:mork.20040929093051:getNameMaker
+#@+node:mork.20040926105355.24:newTreeinit
+def newTreeinit (self,c,frame,canvas):
+
+    sv = getSV(c,canvas.name)
+    
+    global old_tree_init
+    old_tree_init(self,c,frame,canvas)
+
+    self.chapter = chapters [sv] = Chapter(c,self,frame,canvas)
+#@nonl
+#@-node:mork.20040926105355.24:newTreeinit
 #@+node:mork.20040926105355.25:constructTree
 def constructTree (frame,notebook,name):
 
@@ -425,7 +464,7 @@ def newEditor (c):
     af = leoTkinterBody(frame,zpane)
     c.frame.bodyCtrl = af.bodyCtrl
     af.setFontFromConfig()
-    af.createBindings(frame)
+    af.createBindings() # .71
     af.bodyCtrl.focus_set()
     cname = notebook.getcurselection()
     af.l.configure(textvariable=getSV(c,cname))
@@ -983,6 +1022,44 @@ def walkChapters (c,ignorelist=[],chapname=False):
 #@@c
 #@+others
 #@+node:mork.20040930091035.1:opening
+#@+node:mork.20040926105355.28:newGetLeoFile
+def newGetLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    global iscStringIO
+
+    if iscStringIO:
+        def dontSetReadOnly (self,name,value):
+            if name not in ('read_only','tnodesDict'):
+                self.__dict__ [name] = value
+        self.read_only = False
+        self.__class__.__setattr__ = dontSetReadOnly
+
+    rt = old_getLeoFile(self,fileName,readAtFileNodesFlag,silent)
+    if iscStringIO:
+        del self.__class__.__setattr__
+
+    return rt
+#@nonl
+#@-node:mork.20040926105355.28:newGetLeoFile
+#@+node:mork.20040926105355.29:newOpen
+def newOpen (self,file,fileName,readAtFileNodesFlag=True,silent=False):
+
+    global iscStringIO, stringIOCommander
+    c = self.c
+
+    if zipfile.is_zipfile(fileName):
+        iscStringIO = True
+        stringIOCommander = c
+        chapters = openChaptersFile(fileName)
+        g.es(str(len(chapters))+" Chapters To Read",color='blue')
+        insertChapters(chapters,c.frame,c)
+        g.es("Finished Reading Chapters",color='blue')
+        iscStringIO = False
+        return True
+
+    return old_open(self,file,fileName,readAtFileNodesFlag,silent)
+#@nonl
+#@-node:mork.20040926105355.29:newOpen
 #@+node:mork.20040926105355.9:openChaptersFile
 def openChaptersFile (fileName):
 
@@ -1029,6 +1106,27 @@ def insertChapters (chapters,frame,c):
 #@-node:mork.20040926105355.8:insertChapters
 #@-node:mork.20040930091035.1:opening
 #@+node:mork.20040930091035.2:closing
+#@+node:mork.20040926105355.30:newWrite_LEO_file
+def newWrite_LEO_file (self,fileName,outlineOnlyFlag,singleChapter=False):
+
+    c = self.c ; at = c.atFileCommands
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+
+    pagenames = notebook.pagenames()
+    if len(pagenames) > 1 and not singleChapter:
+        chapList = []
+        self.__class__.__setattr__ = getMakeStringIO(chapList)
+        rv = writeChapters(self,fileName,pagenames,c,outlineOnlyFlag)
+        if rv:
+            zipChapters(fileName,pagenames,c,chapList)
+        del self.__class__.__setattr__
+    else:
+        rv = old_write_Leo_file(self,fileName,outlineOnlyFlag)
+
+    return rv
+#@nonl
+#@-node:mork.20040926105355.30:newWrite_LEO_file
 #@+node:mork.20040929092231:getMakeStringIO
 def getMakeStringIO (chapList):
 
@@ -1095,7 +1193,7 @@ def zipChapters (fileName,pagenames,c,chapList):
 #@-at
 #@@c
 #@+others
-#@+node:mork.20040926105355.34:new_os_path_dirname (ok)
+#@+node:mork.20040926105355.34:new_os_path_dirname
 def new_os_path_dirname (path,encoding=None):
 
     global iscStringIO, stringIOCommander
@@ -1107,7 +1205,64 @@ def new_os_path_dirname (path,encoding=None):
         global old_os_path_dirname
         return old_os_path_dirname(path,encoding)
 #@nonl
-#@-node:mork.20040926105355.34:new_os_path_dirname (ok)
+#@-node:mork.20040926105355.34:new_os_path_dirname
+#@+node:mork.20040926105355.45:newendEditLabel
+def newEndEditLabel (self):
+
+    c = self.c ; p = c.currentPosition() ; h = p.headString()
+
+    if p and h and hasattr(c.frame.body,'r'):
+         c.frame.body.r.configure(text=h)
+
+    return old_editLabel(self)
+#@nonl
+#@-node:mork.20040926105355.45:newendEditLabel
+#@+node:mork.20040926105355.52:newselect
+def newSelect (self,p,updateBeadList=True):
+
+    c = p.v.c ; h = p.headString()
+    g.trace(h)
+
+    self.frame.body.lastPosition = p
+    return_val = old_select(self,p,updateBeadList)
+
+    notebook = notebooks.get(c)
+    if notebook: # May be None for unit testing.
+
+        self.frame.body.lastChapter = notebook.getcurselection()
+
+        if hasattr(p.c.frame.body,'r'):
+            c.frame.body.r.configure(text=h)
+
+    return return_val
+#@nonl
+#@-node:mork.20040926105355.52:newselect
+#@+node:mork.20040926105355.49:newTrashDelete
+def newDoDelete (self,newPosition):
+
+    c = self.c ; notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+
+    pagenames = notebook.pagenames()
+    pagenames = [getSV(c,x).get().upper() for x in pagenames]
+    nbnam = notebook.getcurselection()
+    if nbnam != None:
+        name = getSV(c,notebook.getcurselection()).get().upper()
+    else: name = 'TRASH'
+    tsh = 'TRASH'
+    g.trace(name)
+    if name != tsh and tsh in pagenames:
+        index = pagenames.index(tsh)
+        trchapter = chapters [getSV(c,index)]
+        trashnode = trchapter.rp
+        trchapter.setVariables()
+        self.moveAfter(trashnode)
+        c.cChapter.setVariables()
+        c.selectPosition(newPosition)
+        return self
+    old_doDelete(newPosition) # .71
+#@nonl
+#@-node:mork.20040926105355.49:newTrashDelete
 #@+node:mork.20040926105355.21:newCreateControl
 def newCreateControl (self,frame,parentFrame):
     
@@ -1134,42 +1289,6 @@ def newCreateControl (self,frame,parentFrame):
     return ctrl
 #@nonl
 #@-node:mork.20040926105355.21:newCreateControl
-#@+node:mork.20040926105355.49:newDoDelete
-def newDoDelete (self,newPosition):
-
-    c = self.c ; notebook = notebooks.get(c)
-    if not notebook: return # For unit testing
-
-    pagenames = notebook.pagenames()
-    pagenames = [getSV(c,x).get().upper() for x in pagenames]
-    nbnam = notebook.getcurselection()
-    if nbnam != None:
-        name = getSV(c,notebook.getcurselection()).get().upper()
-    else: name = 'TRASH'
-    tsh = 'TRASH'
-    if name != tsh and tsh in pagenames:
-        index = pagenames.index(tsh)
-        trchapter = chapters [getSV(c,index)]
-        trashnode = trchapter.rp
-        trchapter.setVariables()
-        self.moveAfter(trashnode)
-        c.cChapter.setVariables()
-        c.selectPosition(newPosition)
-        return self
-    old_doDelete(self,newPosition)
-#@nonl
-#@-node:mork.20040926105355.49:newDoDelete
-#@+node:mork.20040926105355.45:newEndEditLabel (ok)
-def newEndEditLabel (self):
-
-    c = self.c ; p = c.currentPosition() ; h = p.headString()
-
-    if p and h and hasattr(c.frame.body,'r'):
-         c.frame.body.r.configure(text=h)
-
-    return old_editLabel(self)
-#@nonl
-#@-node:mork.20040926105355.45:newEndEditLabel (ok)
 #@+node:mork.20040926105355.28:newGetLeoFile
 def newGetLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
 
@@ -1208,26 +1327,6 @@ def newOpen (self,file,fileName,readAtFileNodesFlag=True,silent=False):
     return old_open(self,file,fileName,readAtFileNodesFlag,silent)
 #@nonl
 #@-node:mork.20040926105355.29:newOpen
-#@+node:mork.20040926105355.52:newSelect
-def newSelect (self,p,updateBeadList=True):
-
-    c = p.v.c ; h = p.headString()
-    g.trace(h)
-
-    self.frame.body.lastPosition = p
-    return_val = old_select(self,p,updateBeadList)
-
-    notebook = notebooks.get(c)
-    if notebook: # May be None for unit testing.
-
-        self.frame.body.lastChapter = notebook.getcurselection()
-
-        if hasattr(p.c.frame.body,'r'):
-            c.frame.body.r.configure(text=h)
-
-    return return_val
-#@nonl
-#@-node:mork.20040926105355.52:newSelect
 #@+node:mork.20040926105355.24:newTreeinit
 def newTreeinit (self,c,frame,canvas):
 
@@ -1244,27 +1343,6 @@ def newTreeinit (self,c,frame,canvas):
 #@-node:mork.20040930091624:decorated Leo functions
 #@+node:mork.20040930091759:operation( node ) to Chapter
 #@+others
-#@+node:mork.20040926105355.30:newWrite_LEO_file
-def newWrite_LEO_file (self,fileName,outlineOnlyFlag,singleChapter=False):
-
-    c = self.c ; at = c.atFileCommands
-    notebook = notebooks.get(c)
-    if not notebook: return # For unit testing
-
-    pagenames = notebook.pagenames()
-    if len(pagenames) > 1 and not singleChapter:
-        chapList = []
-        self.__class__.__setattr__ = getMakeStringIO(chapList)
-        rv = writeChapters(self,fileName,pagenames,c,outlineOnlyFlag)
-        if rv:
-            zipChapters(fileName,pagenames,c,chapList)
-        del self.__class__.__setattr__
-    else:
-        rv = old_write_Leo_file(self,fileName,outlineOnlyFlag)
-
-    return rv
-#@nonl
-#@-node:mork.20040926105355.30:newWrite_LEO_file
 #@+node:mork.20040926105355.31:cloneToChapter
 def cloneToChapter (c,name):
 
@@ -1351,6 +1429,27 @@ def makeNodeIntoChapter (c,vnd=None):
     c.selectPosition(oChapter.rp)
 #@nonl
 #@-node:mork.20040926105355.39:makeNodeIntoChapter
+#@+node:mork.20040926105355.30:newWrite_LEO_file
+def newWrite_LEO_file (self,fileName,outlineOnlyFlag,singleChapter=False):
+
+    c = self.c ; at = c.atFileCommands
+    notebook = notebooks.get(c)
+    if not notebook: return # For unit testing
+
+    pagenames = notebook.pagenames()
+    if len(pagenames) > 1 and not singleChapter:
+        chapList = []
+        self.__class__.__setattr__ = getMakeStringIO(chapList)
+        rv = writeChapters(self,fileName,pagenames,c,outlineOnlyFlag)
+        if rv:
+            zipChapters(fileName,pagenames,c,chapList)
+        del self.__class__.__setattr__
+    else:
+        rv = old_write_Leo_file(self,fileName,outlineOnlyFlag)
+
+    return rv
+#@nonl
+#@-node:mork.20040926105355.30:newWrite_LEO_file
 #@-others
 #@nonl
 #@-node:mork.20040930091759:operation( node ) to Chapter
