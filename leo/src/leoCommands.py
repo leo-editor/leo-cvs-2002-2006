@@ -300,7 +300,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()
+        return "Leo 4.4 beta 2, build %s, February 14, 2006" % c.getBuildNumber()
     #@nonl
     #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
@@ -2875,6 +2875,8 @@ class baseCommands:
         s = g.app.gui.getTextFromClipboard()
         pasteAsClone = not reassignIndices
         undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
+        
+        c.endEditing()
     
         if not s or not c.canPasteOutline(s):
             return # This should never happen.
@@ -2913,7 +2915,7 @@ class baseCommands:
         else:
             pasted = c.importCommands.convertMoreStringToOutlineAfter(s,current)
         if not pasted: return
-        
+    
         c.beginUpdate()
         try:
             copiedBunchList = []

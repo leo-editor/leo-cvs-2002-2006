@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9077" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="49" left="417" height="870" width="793"/>
+	<global_window_position top="32" left="489" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -252,31 +252,13 @@
 <v t="ekr.20051208100903.1"><vh>forceGnxOnPosition</vh></v>
 </v>
 </v>
-<v t="ekr.20060213094300"><vh>Vim problems</vh>
-<v t="ekr.20031218072017.1315"><vh>idle time functions (leoGlobals)</vh>
-<v t="EKR.20040602125018"><vh>enableIdleTimeHook</vh></v>
-<v t="EKR.20040602125018.1"><vh>disableIdleTimeHook</vh></v>
-<v t="EKR.20040602125018.2"><vh>idleTimeHookHandler</vh></v>
-</v>
-<v t="ekr.20031218072017.2823"><vh>openWith and allies</vh>
-<v t="ekr.20031218072017.2824"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2825"><vh>&lt;&lt; create or reopen temp file, testing for conflicting changes &gt;&gt;</vh>
-<v t="ekr.20031218072017.2826"><vh>&lt;&lt;set dict and path if a temp file already refers to p.v.t &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2827"><vh>&lt;&lt; create or recreate temp file as needed &gt;&gt;</vh>
-<v t="ekr.20031218072017.2828"><vh>&lt;&lt; Raise dialog about conflict and set result &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2829"><vh>&lt;&lt; execute a command to open path in external editor &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2830"><vh>createOpenWithTempFile</vh>
-<v t="ekr.20031218072017.2831"><vh>&lt;&lt; remove previous entry from app.openWithFiles if it exists &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2832"><vh>c.openWithTempFilePath</vh></v>
+<v t="ekr.20060213154136"><vh>Fixed bug: paste outline lost headline editing</vh>
+<v t="ekr.20031218072017.1551"><vh>pasteOutline</vh>
+<v t="ekr.20050418084539"><vh>&lt;&lt; remember all data for undo/redo Paste As Clone &gt;&gt;</vh></v>
+<v t="ekr.20050418084539.2"><vh>&lt;&lt; put only needed info in copiedBunchList &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20060206103355"><vh>To do 4.4b2</vh>
-<v t="ekr.20060212130514"><vh>Restore legacy bindings for extract section?</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -338,57 +320,6 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
-<t tx="EKR.20040602125018">@ Enables the "idle" hook.
-After enableIdleTimeHook is called, Leo will call the "idle" hook
-approximately every g.idleTimeDelay milliseconds.
-@c
-
-def enableIdleTimeHook(idleTimeDelay=100):
-
-    if not g.app.idleTimeHook:
-        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
-        # Start idle-time processing only after the first idle-time event.
-        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
-        g.app.afterHandler = g.idleTimeHookHandler
-        
-    # 1/4/05: Always update these.
-    g.app.idleTimeHook = True
-    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.</t>
-<t tx="EKR.20040602125018.1"># Disables the "idle" hook.
-def disableIdleTimeHook():
-    
-    g.app.idleTimeHook = False</t>
-<t tx="EKR.20040602125018.2"># An internal routine used to dispatch the "idle" hook.
-trace_count = 0
-
-def idleTimeHookHandler(*args,**keys):
-    
-    __pychecker__ = '--no-argsused' # args &amp; keys not used.
-    
-    if 0: # Do not use g.trace here!
-        global trace_count ; trace_count += 1
-        if trace_count % 10 == 0:
-            for w in g.app.windowList:
-                c = w.c
-                print "idleTimeHookHandler",trace_count,c.shortFileName()
-
-    # New for Python 2.3: may be called during shutdown.
-    if g.app.killed: return
-    
-    for w in g.app.windowList:
-        c = w.c
-        # Do NOT compute c.currentPosition.
-        # This would be a MAJOR leak of positions.
-        g.doHook("idle",c=c)
-
-    # Requeue this routine after g.app.idleTimeDelay msec.
-    # (This delay is set by g.enableIdleTimeHook.)
-    # Faster requeues overload the system.
-    if g.app.idleTimeHook:
-        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
-        g.app.afterHandler = g.idleTimeHookHandler
-    else:
-        g.app.afterHandler = None</t>
 <t tx="ekr.20031218072017.998">def setCallback (self,*args,**keys):
     
     """Callback to adjust the scrollbar.
@@ -412,7 +343,51 @@ def yviewCallback (self,*args,**keys):
         self.tree.allocateNodesBeforeScrolling(args)
 
     apply(self.canvas.yview,args,keys)</t>
-<t tx="ekr.20031218072017.1315"></t>
+<t tx="ekr.20031218072017.1551"># To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
+
+def pasteOutline(self,event=None,reassignIndices=True):
+
+    c = self ; u = c.undoer ; current = c.currentPosition()
+    s = g.app.gui.getTextFromClipboard()
+    pasteAsClone = not reassignIndices
+    undoType = g.choose(reassignIndices,'Paste Node','Paste As Clone')
+    
+    c.endEditing()
+
+    if not s or not c.canPasteOutline(s):
+        return # This should never happen.
+
+    isLeo = g.match(s,0,g.app.prolog_prefix_string)
+    tnodeInfoDict = {}
+    if pasteAsClone:
+        &lt;&lt; remember all data for undo/redo Paste As Clone &gt;&gt;
+
+    if isLeo:
+        pasted = c.fileCommands.getLeoOutline(s,reassignIndices)
+    else:
+        pasted = c.importCommands.convertMoreStringToOutlineAfter(s,current)
+    if not pasted: return
+
+    c.beginUpdate()
+    try:
+        copiedBunchList = []
+        if pasteAsClone:
+            &lt;&lt; put only needed info in copiedBunchList &gt;&gt;
+        undoData = u.beforeInsertNode(current,
+        pasteAsClone=pasteAsClone,copiedBunchList=copiedBunchList)
+        c.endEditing()
+        c.validateOutline()
+        c.selectPosition(pasted)
+        pasted.setDirty()
+        c.setChanged(True)
+        # paste as first child if back is expanded.
+        back = pasted.back()
+        if back and back.isExpanded():
+            pasted.moveToNthChildOf(back,0)
+        u.afterInsertNode(pasted,undoType,undoData)
+    finally:
+        c.endUpdate(scroll=True)
+        c.recolor()</t>
 <t tx="ekr.20031218072017.1588"># debugGC = False # Must be true to enable traces below.
 
 lastObjectCount = 0
@@ -1133,7 +1108,6 @@ result = g.app.gui.runAskYesNoCancelDialog(c,
         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
     # This clause by Jim Sizelove.
     elif openType == "subprocess.Popen":
-        g.trace()
         if isinstance(arg, basestring):
             vtuple = arg + " " + path
         elif isinstance(arg, (list, tuple)):
@@ -1540,7 +1514,7 @@ def onDragSplitterBar (self, event, verticalFlag):
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.4 beta 1, build %s, January 17, 2006" % c.getBuildNumber()</t>
+    return "Leo 4.4 beta 2, build %s, February 14, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
     c.ver = "$Revision: 1.408 $" # CVS updates this.</t>
@@ -2078,6 +2052,36 @@ def treeWantsFocus(self):
     
 def widgetWantsFocus(self,w):
     c = self ; c.request_focus(w)</t>
+<t tx="ekr.20050418084539">@
+
+We don't know yet which nodes will be affected by the paste, so we remember
+everything. This is expensive, but foolproof.
+
+The alternative is to try to remember the 'before' values of tnodes in the
+fileCommands read logic. Several experiments failed, and the code is very ugly.
+In short, it seems wise to do things the foolproof way.
+
+@c
+
+for p in c.allNodes_iter():
+    t = p.v.t
+    if t not in tnodeInfoDict.keys():
+        tnodeInfoDict[t] = g.Bunch(
+            t=t,head=p.headString(),body=p.bodyString())</t>
+<t tx="ekr.20050418084539.2"># Create a dict containing only copied tnodes.
+copiedTnodeDict = {}
+for p in pasted.self_and_subtree_iter():
+    if p.v.t not in copiedTnodeDict:
+        copiedTnodeDict[p.v.t] = p.v.t
+        
+# g.trace(copiedTnodeDict.keys())
+
+for t in tnodeInfoDict.keys():
+    bunch = tnodeInfoDict.get(t)
+    if copiedTnodeDict.get(t):
+        copiedBunchList.append(bunch)
+
+# g.trace('copiedBunchList',copiedBunchList)</t>
 <t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
@@ -2961,7 +2965,6 @@ def set_focus (self,w):
     else:
         if trace: g.trace(repr(stroke),'no func')
         return k.masterCommand(event,func=None,stroke=stroke,commandName=None)</t>
-<t tx="ekr.20060206103355"></t>
 <t tx="ekr.20060206113925">@nocolor
 http://sourceforge.net/forum/message.php?msg_id=3549737
 By: nobody
@@ -3248,9 +3251,8 @@ What I did:
         initialdir=initialdir,initialfile=initialfile,
         title=title,filetypes=filetypes)</t>
 <t tx="ekr.20060212101331"></t>
-<t tx="ekr.20060212130514"></t>
 <t tx="ekr.20060213090947"></t>
-<t tx="ekr.20060213094300"></t>
 <t tx="ekr.20060213143106"></t>
+<t tx="ekr.20060213154136"></t>
 </tnodes>
 </leo_file>

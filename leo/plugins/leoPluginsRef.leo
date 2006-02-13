@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6194" clone_windows="0"/>
-<globals body_outline_ratio="0.69825436409">
-	<global_window_position top="33" left="194" height="802" width="865"/>
+<globals body_outline_ratio="0.495562130178">
+	<global_window_position top="41" left="253" height="676" width="682"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
