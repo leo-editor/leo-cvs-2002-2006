@@ -59,6 +59,8 @@ __version__ = '1.9'
 #     - Removed key bindings from default table.
 #       Some way should be find to specify these bindings from 
 # leoSettings.leo.
+# 1.10 EKR:
+#     - The init code now explicitly calls g.enableIdleTimeHook.
 #@-at
 #@nonl
 #@-node:ekr.20050311110052:<< version history >>
@@ -76,6 +78,7 @@ def init():
     
         if g.app.gui.guiName() == "tkinter":
             g.app.hasOpenWithMenu = True
+            g.enableIdleTimeHook(idleTimeDelay=1000) # Check every second.
             leoPlugins.registerHandler("idle", on_idle)
             leoPlugins.registerHandler(('new','open2'), create_open_with_menu)
             g.plugin_signon(__name__)
@@ -92,6 +95,7 @@ def on_idle (tag,keywords):
     import os
     a = g.app
     if a.killed: return
+    # g.trace('open with plugin')
     for dict in a.openWithFiles:
         path = dict.get("path")
         c = dict.get("c")
