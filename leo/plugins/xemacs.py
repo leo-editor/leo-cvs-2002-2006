@@ -2,6 +2,8 @@
 #@+node:EKR.20040517075715.12:@thin xemacs.py
 '''This plugin allows you to edit nodes in emacs/xemacs.
 
+Important: the open_with plugin must be enabled for this plugin to work properly.
+
 Depending on your preference, selecting or double-clicking a node will pass the
 body text of that node to emacs. You may edit the node in the emacs buffer and
 changes will appear in Leo. '''
@@ -18,7 +20,7 @@ import sys
 #@nonl
 #@-node:ekr.20050218024153:<< imports >>
 #@nl
-__version__ = "1.10"
+__version__ = "1.11"
 #@<< version history >>
 #@+node:ekr.20050218024153.1:<< version history >>
 #@@killcolor
@@ -43,6 +45,9 @@ __version__ = "1.10"
 # 1.10 EKR:
 #     - Corrected the call to openWith.  It must now use data=data due to a 
 # new event param.
+# 1.11 EKR:
+#     - The docstring now states that the open_with plugin must be enabled for 
+# this to work.
 #@-at
 #@nonl
 #@-node:ekr.20050218024153.1:<< version history >>
