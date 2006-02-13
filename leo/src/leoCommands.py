@@ -622,6 +622,7 @@ class baseCommands:
                         apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
                     # This clause by Jim Sizelove.
                     elif openType == "subprocess.Popen":
+                        g.trace()
                         if isinstance(arg, basestring):
                             vtuple = arg + " " + path
                         elif isinstance(arg, (list, tuple)):
@@ -988,7 +989,6 @@ class baseCommands:
             c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.1839:readAtFileNodes (commands)
-    #@+node:ekr.20031218072017.2840:4.0 Commands
     #@+node:ekr.20031218072017.1809:importDerivedFile
     def importDerivedFile (self,event=None):
         
@@ -1013,10 +1013,9 @@ class baseCommands:
             multiple=True)
     
         if names:
-            c.importCommands.importDerivedFiles(p,names)
+            c.importCommands.importDerivedFiles(parent=p,paths=names)
     #@nonl
     #@-node:ekr.20031218072017.1809:importDerivedFile
-    #@-node:ekr.20031218072017.2840:4.0 Commands
     #@-node:ekr.20031218072017.2838:Read/Write submenu
     #@+node:ekr.20031218072017.2841:Tangle submenu
     #@+node:ekr.20031218072017.2842:tangleAll
@@ -3105,7 +3104,7 @@ class baseCommands:
         finally:
             c.endUpdate()
     
-        return clone # For mod_labels plugin.
+        return clone # For mod_labels and chapters plugins.
     #@nonl
     #@-node:ekr.20031218072017.1762:c.clone
     #@+node:ekr.20031218072017.1765:c.validateOutline

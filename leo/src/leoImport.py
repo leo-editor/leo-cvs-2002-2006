@@ -116,7 +116,8 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20041126042730:getTabWidth
     #@+node:ekr.20031218072017.1810:importDerivedFiles
-    def importDerivedFiles (self,event=None,parent=None,paths=None):
+    def importDerivedFiles (self,parent=None,paths=None):
+        # Not a command.  It must *not* have an event arg.
         
         c = self.c ; u = c.undoer ; command = 'Import'
         at = c.atFileCommands ; current = c.currentPosition()
