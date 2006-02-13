@@ -245,9 +245,7 @@
 </v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 <v t="ekr.20060209204257"><vh>prototype of menu post commands</vh></v>
-<v t="ekr.20060211171647"><vh>test of sort-lines</vh></v>
-<v t="ekr.20060211190214"><vh>@strip c:\prog\leoCVS\leo\src\leoApp.py</vh></v>
-<v t="ekr.20060211192441" a="TV"><vh>@view xyzzy</vh></v>
+<v t="ekr.20060213085838" a="V"><vh>Test of search for unicode characters</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4452,16 +4450,6 @@ top = c.frame.top
 topx,topy = top.winfo_rootx(),top.winfo_rooty()
 menu = c.frame.menu.getMenu(name)
 menu.post(topx+offsets.get(name,0),topy)</t>
-<t tx="ekr.20060211171647">this
-is
-a
-# comment 2
-test
-of
-sort-lines
-# comment 1
-</t>
-<t tx="ekr.20060211190214"></t>
-<t tx="ekr.20060211192441"></t>
+<t tx="ekr.20060213085838">Ö</t>
 </tnodes>
 </leo_file>
