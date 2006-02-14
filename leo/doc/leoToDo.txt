@@ -2,7 +2,87 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060116073938:To do 4.4b3
-#@+node:ekr.20060212110815:First: urgent
+#@+node:ekr.20060213164147:Fix crasher in Go To Line command
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3545403
+By: e
+
+more str() to remove...
+
+with some non ascii headline,
+a traceback after an executeScript
+calls goto linenumber
+
+ \leo-4-4-\src\leoCommands.py, line 1822, in goToScriptLineNumber
+    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
+ \leo-4-4-\src\leoCommands.py", line 1466, in goToLineNumber
+    if p.matchHeadline(vnodeName):
+ \leo-4-4-\src\leoNodes.py, line 1631, in matchHeadline
+    def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
+ \leo-4-4-\src\leoNodes.py, line 665, in matchHeadline
+    return s == h[0:len(s)]
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc2 in position 1: ordinal
+not in range(128)
+
+aÂ² + bÂ² = cÂ²
+#@-node:ekr.20060213164147:Fix crasher in Go To Line command
+#@+node:ekr.20060213151411:Fix problems with unicode characters & caps lock
+#@+node:ekr.20060213160417:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3573470
+By: nobody
+
+Thank you for fast respond. I made some next testing and here are results.
+
+OS - WindowsXP
+>> locale.getdefaultlocale()
+('cs_CZ', 'cp1250')
+
+I'm trying write letters 'eÃ©Ä>Ã«' in mini-buffer:
+
+e = LATIN SMALL LETTER E
+Ã© = LATIN SMALL LETTER E WITH ACUTE
+Ä> = LATIN SMALL LETTER E WITH CARON
+Ã« = LATIN SMALL LETTER E WITH DIAERESIS
+
+Letters 'Ä>' and 'Ã©' are directly on the keyboard,
+letter 'Ã«' I have to insert as multi key.
+
+>> @bool trace_masterKeyHandler = True 
+>> In leoSettings.leo. You should see the message: 
+>> 'ignoring unbound special key' 
+
+No - I got message:
+
+-----------------------------------------------
+strokeFromEvent: state 4 keysym f result 'Ctrl+f'
+masterKeyHandlerHelper: 'Ctrl+f' state None
+masterKeyHandlerHelper: all found Ctrl+f = search-with-present-options
+strokeFromEvent: state 0 keysym e result 'e'
+masterKeyHandlerHelper: 'e' state getArg
+strokeFromEvent: ****************************** unknown keysym 'eacute'
+strokeFromEvent: state 0 keysym eacute result '\xc3\xa9'
+masterKeyHandlerHelper: '\xc3\xa9' state getArg
+strokeFromEvent: ****************************** unknown keysym 'igrave'
+strokeFromEvent: state 0 keysym igrave result '\xc4\x9b'
+masterKeyHandlerHelper: '\xc4\x9b' state getArg
+strokeFromEvent: ****************************** unknown keysym 'Multi_key'
+strokeFromEvent: state 0 keysym Multi_key result ''
+masterKeyHandlerHelper: '' state getArg
+strokeFromEvent: state 0 keysym e result 'e'
+masterKeyHandlerHelper: 'e' state getArg
+-----------------------------------------------
+
+When I insert same letters in body panel, message is identical, but text in
+panel is inserted correctly.
+
+(Sorry for my english, I'm not native speaker).
+
+Milan Melena
+#@-node:ekr.20060213160417:Report
+#@-node:ekr.20060213151411:Fix problems with unicode characters & caps lock
 #@+node:ekr.20051126122638:Autocompletion tab
 - Use typing completion to select desired word.
 - No auto-scan: use database instead.
@@ -11,6 +91,10 @@
 - @strings autocompleter-info
 list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
   (Autocompleter may already do this)
+#@+node:ekr.20060214110318:Options
+- Manual update only.
+#@nonl
+#@-node:ekr.20060214110318:Options
 #@+node:ekr.20051205093049:Use dir for auto-complete ?
 @nocolor
 
@@ -1638,123 +1722,34 @@ def stateHandler (self,event):
 #@-node:ekr.20051126124705:stateHandler (autoCompleter)
 #@-node:ekr.20051126123249:class autoCompleterClass (prototype)
 #@-node:ekr.20051126122638:Autocompletion tab
-#@+node:ekr.20060211100150:Fix chapters plugin
-#@-node:ekr.20060211100150:Fix chapters plugin
-#@+node:ekr.20060213151918:Add baloons
-#@+node:ekr.20060212125650:createBalloon
-def createBalloon (tab,sv):
+#@+node:ekr.20060214110318.1:After autocompleter
+#@+node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+Having to define dummy methods is getting odious.
+#@nonl
+#@-node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+#@+node:ekr.20060122183544:Improve isearch
+@nocolor
 
-    'Create a balloon for a widget.' ''
+- Handle backspace for isearch: keep a stack of previous matches.
+- Allow cross-node isearches.
+#@-node:ekr.20060122183544:Improve isearch
+#@+node:ekr.20060214072931:Improve unit testing
+@nocolor
 
-    balloon = Pmw.Balloon(tab,initwait=100)
-    balloon.bind(tab,'')
-    hull = balloon.component('hull')
-    def blockExpose (event):
-        if sv.get() == '':
-             hull.withdraw()
-    hull.bind('<Expose>',blockExpose,'+')
-    balloon._label.configure(textvariable=sv)
-#@nonl
-#@-node:ekr.20060212125650:createBalloon
-#@-node:ekr.20060213151918:Add baloons
-#@+node:ekr.20060211184834:Review all commands in leoEditCommands.py
-Any command that alters text should call begin/endCommand.
-#@nonl
-#@+node:ekr.20060122185244.2:Fix unindent command
-# unindent-region should work in all panes.
-#@nonl
-#@-node:ekr.20060122185244.2:Fix unindent command
-#@-node:ekr.20060211184834:Review all commands in leoEditCommands.py
-#@+node:ekr.20060116083043:Use special Help menu on the Mac
-# http://sourceforge.net/forum/message.php?msg_id=3237845
-#@nonl
-#@+node:ekr.20031218072017.3803:createHelpMenuFromTable
-def createHelpMenuFromTable (self):
+http://sourceforge.net/forum/message.php?msg_id=3575014
+By: ktenney
 
-    if sys.platform == 'darwin':
-        helpMenu = self.getMacHelpMenu()
-        if not helpMenu: return
-    else:
-        helpMenu = self.createNewMenu("&Help")
-    
-    self.createMenuEntries(helpMenu,self.helpMenuTopTable)
-    
-    if sys.platform=="win32":
-        self.createMenuEntries(helpMenu,self.helpMenuTop2Table)
-    
-    self.createMenuEntries(helpMenu,self.helpMenuTop3Table)
-#@nonl
-#@-node:ekr.20031218072017.3803:createHelpMenuFromTable
-#@+node:ekr.20031218072017.4113:new_menu
-def new_menu(self,parent,tearoff=False):
-    
-    """Wrapper for the Tkinter new_menu menu method."""
+> it seems my Leo file must have a @button Unit Test  
 
-    return Tk.Menu(parent,tearoff=tearoff)
-#@nonl
-#@-node:ekr.20031218072017.4113:new_menu
-#@+node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
-def createNewMenu (self,menuName,parentName="top",before=None):
+Good point. I'll add a run-unit-test command soon.
 
-    try:
-        parent = self.getMenu(parentName) # parent may be None.
-        menu = self.getMenu(menuName)
-        if menu:
-            g.es("menu already exists: " + menuName,color="red")
-        else:
-            menu = self.new_menu(parent,tearoff=0)
-            self.setMenu(menuName,menu)
-            label = self.getRealMenuName(menuName)
-            amp_index = label.find("&")
-            label = label.replace("&","")
-            if before: # Insert the menu before the "before" menu.
-                index_label = self.getRealMenuName(before)
-                amp_index = index_label.find("&")
-                index_label = index_label.replace("&","")
-                index = parent.index(index_label)
-                self.insert_cascade(parent,index=index,label=label,menu=menu,underline=amp_index)
-            else:
-                self.add_cascade(parent,label=label,menu=menu,underline=amp_index)
-            return menu
-    except:
-        g.es("exception creating " + menuName + " menu")
-        g.es_exception()
-        return None
-#@nonl
-#@-node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
-#@+node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
-def getMenu (self,menuName):
+> the @test output goes to the console.
 
-    cmn = self.canonicalizeMenuName(menuName)
-    return self.menus.get(cmn)
-    
-def setMenu (self,menuName,menu):
-    
-    cmn = self.canonicalizeMenuName(menuName)
-    self.menus [cmn] = menu
-    
-def destroyMenu (self,menuName):
-    
-    cmn = self.canonicalizeMenuName(menuName)
-    del self.menus[cmn]
+It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
+
+@bool unit_test_output_to_log_pane = True
 #@nonl
-#@-node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
-#@+node:ekr.20060211144330.1:getMacHelpMenu
-def getMacHelpMenu (self):
-    
-    return None ###
-    
-    try:
-        helpMenu = Tk.Menu('top.help')
-        return helpMenu
-        
-    except Exception:
-        g.trace('Can not get MacOS Help menu')
-        g.es_exception()
-        return None
-#@nonl
-#@-node:ekr.20060211144330.1:getMacHelpMenu
-#@-node:ekr.20060116083043:Use special Help menu on the Mac
+#@-node:ekr.20060214072931:Improve unit testing
 #@+node:ekr.20060213094300:Fix problems with open with
 #@+node:ekr.20060213145539:The causes
 @nocolor
@@ -2124,113 +2119,123 @@ def openWithTempFilePath (self,p,ext):
 #@-node:ekr.20031218072017.2832:c.openWithTempFilePath
 #@-node:ekr.20031218072017.2823:openWith and allies
 #@-node:ekr.20060213094300:Fix problems with open with
-#@+node:ekr.20060213151411:Fix problems with unicode characters
-#@+node:ekr.20060213160417:Report
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3573470
-By: nobody
-
-Thank you for fast respond. I made some next testing and here are results.
-
-OS - WindowsXP
->> locale.getdefaultlocale()
-('cs_CZ', 'cp1250')
-
-I'm trying write letters 'eÃ©Ä>Ã«' in mini-buffer:
-
-e = LATIN SMALL LETTER E
-Ã© = LATIN SMALL LETTER E WITH ACUTE
-Ä> = LATIN SMALL LETTER E WITH CARON
-Ã« = LATIN SMALL LETTER E WITH DIAERESIS
-
-Letters 'Ä>' and 'Ã©' are directly on the keyboard,
-letter 'Ã«' I have to insert as multi key.
-
->> @bool trace_masterKeyHandler = True 
->> In leoSettings.leo. You should see the message: 
->> 'ignoring unbound special key' 
-
-No - I got message:
-
------------------------------------------------
-strokeFromEvent: state 4 keysym f result 'Ctrl+f'
-masterKeyHandlerHelper: 'Ctrl+f' state None
-masterKeyHandlerHelper: all found Ctrl+f = search-with-present-options
-strokeFromEvent: state 0 keysym e result 'e'
-masterKeyHandlerHelper: 'e' state getArg
-strokeFromEvent: ****************************** unknown keysym 'eacute'
-strokeFromEvent: state 0 keysym eacute result '\xc3\xa9'
-masterKeyHandlerHelper: '\xc3\xa9' state getArg
-strokeFromEvent: ****************************** unknown keysym 'igrave'
-strokeFromEvent: state 0 keysym igrave result '\xc4\x9b'
-masterKeyHandlerHelper: '\xc4\x9b' state getArg
-strokeFromEvent: ****************************** unknown keysym 'Multi_key'
-strokeFromEvent: state 0 keysym Multi_key result ''
-masterKeyHandlerHelper: '' state getArg
-strokeFromEvent: state 0 keysym e result 'e'
-masterKeyHandlerHelper: 'e' state getArg
------------------------------------------------
-
-When I insert same letters in body panel, message is identical, but text in
-panel is inserted correctly.
-
-(Sorry for my english, I'm not native speaker).
-
-Milan Melena
-#@-node:ekr.20060213160417:Report
-#@-node:ekr.20060213151411:Fix problems with unicode characters
-#@+node:ekr.20060213164147:Fix crasher in Go To Line command
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3545403
-By: e
-
-more str() to remove...
-
-with some non ascii headline,
-a traceback after an executeScript
-calls goto linenumber
-
- \leo-4-4-\src\leoCommands.py, line 1822, in goToScriptLineNumber
-    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
- \leo-4-4-\src\leoCommands.py", line 1466, in goToLineNumber
-    if p.matchHeadline(vnodeName):
- \leo-4-4-\src\leoNodes.py, line 1631, in matchHeadline
-    def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
- \leo-4-4-\src\leoNodes.py, line 665, in matchHeadline
-    return s == h[0:len(s)]
-UnicodeDecodeError: 'ascii' codec can't decode byte 0xc2 in position 1: ordinal
-not in range(128)
-
-aÂ² + bÂ² = cÂ²
-#@-node:ekr.20060213164147:Fix crasher in Go To Line command
-#@+node:ekr.20060214072931:Improve unit testing
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3575014
-By: ktenney
-
-> it seems my Leo file must have a @button Unit Test  
-
-Good point. I'll add a run-unit-test command soon.
-
-> the @test output goes to the console.
-
-It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
-
-@bool unit_test_output_to_log_pane = True
+#@+node:ekr.20060211184834:Review all commands in leoEditCommands.py
+Any command that alters text should call begin/endCommand.
 #@nonl
-#@-node:ekr.20060214072931:Improve unit testing
-#@+node:ekr.20060214082747:Caps lock reverses shift setting?
-#@-node:ekr.20060214082747:Caps lock reverses shift setting?
-#@-node:ekr.20060212110815:First: urgent
-#@+node:ekr.20060122183544:Improve isearch
-@nocolor
+#@+node:ekr.20060122185244.2:Fix unindent command
+# unindent-region should work in all panes.
+#@nonl
+#@-node:ekr.20060122185244.2:Fix unindent command
+#@-node:ekr.20060211184834:Review all commands in leoEditCommands.py
+#@+node:ekr.20060213151918:Add baloons
+#@+node:ekr.20060212125650:createBalloon
+def createBalloon (tab,sv):
 
-- Handle backspace for isearch: keep a stack of previous matches.
-- Allow cross-node isearches.
-#@-node:ekr.20060122183544:Improve isearch
+    'Create a balloon for a widget.' ''
+
+    balloon = Pmw.Balloon(tab,initwait=100)
+    balloon.bind(tab,'')
+    hull = balloon.component('hull')
+    def blockExpose (event):
+        if sv.get() == '':
+             hull.withdraw()
+    hull.bind('<Expose>',blockExpose,'+')
+    balloon._label.configure(textvariable=sv)
+#@nonl
+#@-node:ekr.20060212125650:createBalloon
+#@-node:ekr.20060213151918:Add baloons
+#@+node:ekr.20060116083043:Use special Help menu on the Mac
+# http://sourceforge.net/forum/message.php?msg_id=3237845
+#@nonl
+#@+node:ekr.20031218072017.3803:createHelpMenuFromTable
+def createHelpMenuFromTable (self):
+
+    if sys.platform == 'darwin':
+        helpMenu = self.getMacHelpMenu()
+        if not helpMenu: return
+    else:
+        helpMenu = self.createNewMenu("&Help")
+    
+    self.createMenuEntries(helpMenu,self.helpMenuTopTable)
+    
+    if sys.platform=="win32":
+        self.createMenuEntries(helpMenu,self.helpMenuTop2Table)
+    
+    self.createMenuEntries(helpMenu,self.helpMenuTop3Table)
+#@nonl
+#@-node:ekr.20031218072017.3803:createHelpMenuFromTable
+#@+node:ekr.20031218072017.4113:new_menu
+def new_menu(self,parent,tearoff=False):
+    
+    """Wrapper for the Tkinter new_menu menu method."""
+
+    return Tk.Menu(parent,tearoff=tearoff)
+#@nonl
+#@-node:ekr.20031218072017.4113:new_menu
+#@+node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
+def createNewMenu (self,menuName,parentName="top",before=None):
+
+    try:
+        parent = self.getMenu(parentName) # parent may be None.
+        menu = self.getMenu(menuName)
+        if menu:
+            g.es("menu already exists: " + menuName,color="red")
+        else:
+            menu = self.new_menu(parent,tearoff=0)
+            self.setMenu(menuName,menu)
+            label = self.getRealMenuName(menuName)
+            amp_index = label.find("&")
+            label = label.replace("&","")
+            if before: # Insert the menu before the "before" menu.
+                index_label = self.getRealMenuName(before)
+                amp_index = index_label.find("&")
+                index_label = index_label.replace("&","")
+                index = parent.index(index_label)
+                self.insert_cascade(parent,index=index,label=label,menu=menu,underline=amp_index)
+            else:
+                self.add_cascade(parent,label=label,menu=menu,underline=amp_index)
+            return menu
+    except:
+        g.es("exception creating " + menuName + " menu")
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.3804:createNewMenu (contains Tk code)
+#@+node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
+def getMenu (self,menuName):
+
+    cmn = self.canonicalizeMenuName(menuName)
+    return self.menus.get(cmn)
+    
+def setMenu (self,menuName,menu):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    self.menus [cmn] = menu
+    
+def destroyMenu (self,menuName):
+    
+    cmn = self.canonicalizeMenuName(menuName)
+    del self.menus[cmn]
+#@nonl
+#@-node:ekr.20031218072017.3807:getMenu, setMenu, destroyMenu
+#@+node:ekr.20060211144330.1:getMacHelpMenu
+def getMacHelpMenu (self):
+    
+    return None ###
+    
+    try:
+        helpMenu = Tk.Menu('top.help')
+        return helpMenu
+        
+    except Exception:
+        g.trace('Can not get MacOS Help menu')
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20060211144330.1:getMacHelpMenu
+#@-node:ekr.20060116083043:Use special Help menu on the Mac
+#@+node:ekr.20060211100150:Fix chapters plugin
+#@-node:ekr.20060211100150:Fix chapters plugin
 #@+node:ekr.20060122185507:New commands
 #@+node:ekr.20060210140415:Most important
 #@+node:ekr.20060211093935:Support for @list and on-enter-mode
@@ -2289,6 +2294,8 @@ Use docstrings as the help message.
 #@-node:ekr.20051202095626:help-for-command
 #@+node:ekr.20060116090428:Expand 'point' so it indicates node as well as text location
 #@-node:ekr.20060116090428:Expand 'point' so it indicates node as well as text location
+#@+node:ekr.20060214140221:update-settings-file command
+#@-node:ekr.20060214140221:update-settings-file command
 #@-node:ekr.20060210140415:Most important
 #@+node:ekr.20060210140415.1:Others
 #@+node:ekr.20060209105218.2:contract-all-except-present-tree
@@ -3842,10 +3849,7 @@ It would be shown in the Find tab.
 #@-node:ekr.20060206104841:New features
 #@+node:ekr.20060116173818:*** Fix vampire nodes
 #@-node:ekr.20060116173818:*** Fix vampire nodes
-#@+node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
-Having to define dummy methods is getting odious.
-#@nonl
-#@-node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+#@-node:ekr.20060214110318.1:After autocompleter
 #@+node:ekr.20060122184800:Later
 #@+node:ekr.20060117074259:Handle Mac issues
 #@+node:ekr.20060117074259.1:Report

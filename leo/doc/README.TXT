@@ -1,4 +1,8 @@
-Leo 4.4 beta 1                                             January 17, 2006
+Leo 4.4 beta 2                                             February 14, 2006
+
+Leo 4.4 beta 2 is now available at:
+
+http://sourceforge.net/project/showfiles.php?group_id=3458&package_id=29106
 
 This version fixes dozens of bugs, improves performance and polishes the user interface.  The code is stable; there are no known serious bugs.
 

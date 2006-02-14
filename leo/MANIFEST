@@ -509,6 +509,7 @@ plugins\autotrees.py
 plugins\base64Packager.py
 plugins\bibtex.py
 plugins\chapters.py
+plugins\chapters2.py
 plugins\chinese_menu.py
 plugins\cleo.py
 plugins\color_markup.py
