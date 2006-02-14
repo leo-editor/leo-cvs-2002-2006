@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="EV" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
@@ -302,7 +302,7 @@
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
 <v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
-<v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
+<v t="ekr.20060110141538.2" a="E" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
@@ -344,27 +344,59 @@
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
-<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@mode File Control-Shift-W)</vh>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@@mode File</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
 <v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
-<v t="ekr.20060122105527.14"><vh>@@mode Find-options (Control-Shift-F)</vh></v>
+<v t="ekr.20060122105527.14"><vh>@@mode Find-options</vh></v>
 <v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-Shift-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.20" a="E" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
 <v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
+</v>
+</v>
+<v t="ekr.20060110141538.1"><vh>No bindings</vh>
+<v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
+<v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
+<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
+</v>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
+<v t="ekr.20060122105527.9"><vh>Modes</vh>
+<v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
+<v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
+</v>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@@mode File</vh>
+<v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
+</v>
+<v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
+<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
+</v>
+<v t="ekr.20060122105527.14"><vh>@@mode Find-options</vh></v>
+<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-Shift-O)</vh>
+<v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
+</v>
+<v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
+</v>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
+<v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
+<v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
+<v t="ekr.20060122105527.20" a="EV" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
+<v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
+<v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
 </vnodes>
@@ -3876,10 +3908,11 @@ enter-edit-extend-mode      = None
 
 enter-options-mode          = Ctrl-Shift-Y
 enter-outline-mode          = Ctrl-Shift-O
+
 enter-outline-move-mode     = None
-enter-file-mode             = Ctrl-Shift-W    # kill-region
+enter-file-mode             = None
 enter-file-open-mode        = None
-# enter-find-mode             = Ctrl-F
+enter-find-mode             = None
 
 enter-quick-command-mode    = Alt-C</t>
 <t tx="ekr.20060122105527.20"># Important: the print-commands and print-bindings show what bindings are in effect.
@@ -3944,7 +3977,10 @@ expand-log-pane                     = Alt-Ctrl-LtArrow  # Alt-Ctrl-UpArrow in ot
 expand-pane                         = Alt+Ctrl-=
 expand-outline-pane                 = Alt-Ctrl-DnArrow  # Alt-Ctrl-RtArrow in other orientation.
 expand-next-level                   = Alt-=
-expand-node                         = Alt-]</t>
+expand-node                         = Alt-]
+extract                             = Shift-Ctrl-D
+extract-names                       = Shift-Ctrl-N
+extract-section                     = Shift-Ctrl-S  # Shift-Ctrl-E: end-of-line-extend-selection</t>
 <t tx="ekr.20060122105527.21">forward-char                        ! text = RtArrow
 forward-char-extend-selection       ! text = Shift-RtArrow
 forward-paragraph                   ! text = Alt-braceright
@@ -4024,6 +4060,8 @@ toggle-active-pane                  = Ctrl-T
 undo                                = Ctrl-Z
 unindent-region                     = Ctrl-[
 universal-argument                  = Alt-u     # Usually Ctrl-u, conflicts with move-outline-up.
+write-at-file-nodes                 = Shift-Ctrl-W
+write-dirty-at-file-nodes           = Shift+Ctrl+Q
 zap-to-character                    = Alt-z</t>
 <t tx="ekr.20060122105732"># Boilerplate for all modes.
 exit-named-mode         = Return
