@@ -1755,7 +1755,7 @@ def getMacHelpMenu (self):
 #@nonl
 #@-node:ekr.20060211144330.1:getMacHelpMenu
 #@-node:ekr.20060116083043:Use special Help menu on the Mac
-#@+node:ekr.20060213094300:Fix problems with open with, vim and xemacs plugins
+#@+node:ekr.20060213094300:Fix problems with open with
 #@+node:ekr.20060213145539:The causes
 @nocolor
 
@@ -2123,9 +2123,107 @@ def openWithTempFilePath (self,p,ext):
 #@nonl
 #@-node:ekr.20031218072017.2832:c.openWithTempFilePath
 #@-node:ekr.20031218072017.2823:openWith and allies
-#@-node:ekr.20060213094300:Fix problems with open with, vim and xemacs plugins
+#@-node:ekr.20060213094300:Fix problems with open with
 #@+node:ekr.20060213151411:Fix problems with unicode characters
+#@+node:ekr.20060213160417:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3573470
+By: nobody
+
+Thank you for fast respond. I made some next testing and here are results.
+
+OS - WindowsXP
+>> locale.getdefaultlocale()
+('cs_CZ', 'cp1250')
+
+I'm trying write letters 'eÃ©Ä>Ã«' in mini-buffer:
+
+e = LATIN SMALL LETTER E
+Ã© = LATIN SMALL LETTER E WITH ACUTE
+Ä> = LATIN SMALL LETTER E WITH CARON
+Ã« = LATIN SMALL LETTER E WITH DIAERESIS
+
+Letters 'Ä>' and 'Ã©' are directly on the keyboard,
+letter 'Ã«' I have to insert as multi key.
+
+>> @bool trace_masterKeyHandler = True 
+>> In leoSettings.leo. You should see the message: 
+>> 'ignoring unbound special key' 
+
+No - I got message:
+
+-----------------------------------------------
+strokeFromEvent: state 4 keysym f result 'Ctrl+f'
+masterKeyHandlerHelper: 'Ctrl+f' state None
+masterKeyHandlerHelper: all found Ctrl+f = search-with-present-options
+strokeFromEvent: state 0 keysym e result 'e'
+masterKeyHandlerHelper: 'e' state getArg
+strokeFromEvent: ****************************** unknown keysym 'eacute'
+strokeFromEvent: state 0 keysym eacute result '\xc3\xa9'
+masterKeyHandlerHelper: '\xc3\xa9' state getArg
+strokeFromEvent: ****************************** unknown keysym 'igrave'
+strokeFromEvent: state 0 keysym igrave result '\xc4\x9b'
+masterKeyHandlerHelper: '\xc4\x9b' state getArg
+strokeFromEvent: ****************************** unknown keysym 'Multi_key'
+strokeFromEvent: state 0 keysym Multi_key result ''
+masterKeyHandlerHelper: '' state getArg
+strokeFromEvent: state 0 keysym e result 'e'
+masterKeyHandlerHelper: 'e' state getArg
+-----------------------------------------------
+
+When I insert same letters in body panel, message is identical, but text in
+panel is inserted correctly.
+
+(Sorry for my english, I'm not native speaker).
+
+Milan Melena
+#@-node:ekr.20060213160417:Report
 #@-node:ekr.20060213151411:Fix problems with unicode characters
+#@+node:ekr.20060213164147:Fix crasher in Go To Line command
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3545403
+By: e
+
+more str() to remove...
+
+with some non ascii headline,
+a traceback after an executeScript
+calls goto linenumber
+
+ \leo-4-4-\src\leoCommands.py, line 1822, in goToScriptLineNumber
+    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
+ \leo-4-4-\src\leoCommands.py", line 1466, in goToLineNumber
+    if p.matchHeadline(vnodeName):
+ \leo-4-4-\src\leoNodes.py, line 1631, in matchHeadline
+    def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
+ \leo-4-4-\src\leoNodes.py, line 665, in matchHeadline
+    return s == h[0:len(s)]
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc2 in position 1: ordinal
+not in range(128)
+
+aÂ² + bÂ² = cÂ²
+#@-node:ekr.20060213164147:Fix crasher in Go To Line command
+#@+node:ekr.20060214072931:Improve unit testing
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3575014
+By: ktenney
+
+> it seems my Leo file must have a @button Unit Test  
+
+Good point. I'll add a run-unit-test command soon.
+
+> the @test output goes to the console.
+
+It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
+
+@bool unit_test_output_to_log_pane = True
+#@nonl
+#@-node:ekr.20060214072931:Improve unit testing
+#@+node:ekr.20060214082747:Caps lock reverses shift setting?
+#@-node:ekr.20060214082747:Caps lock reverses shift setting?
 #@-node:ekr.20060212110815:First: urgent
 #@+node:ekr.20060122183544:Improve isearch
 @nocolor

@@ -53,23 +53,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060124165505.1"><vh>Printing c elements</vh></v>
-<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
-<v t="ekr.20051108102719"><vh>Test backward search</vh>
-<v t="ekr.20051108102719.1"><vh>a</vh></v>
-<v t="ekr.20051108102719.2"><vh>b</vh></v>
-<v t="ekr.20051108102719.3"><vh>c</vh></v>
-<v t="ekr.20051108111341"><vh>test</vh></v>
-</v>
-<v t="ekr.20051113055640"><vh>Find bug</vh>
-<v t="ekr.20051113055640.1"><vh>Report</vh></v>
-<v t="ekr.20051113055640.2"><vh>This is a sample node</vh></v>
-<v t="ekr.20051113055640.3"><vh>@thin findBug.txt</vh></v>
-</v>
-<v t="ekr.20051120173510"><vh>@@button remove-blank-lines</vh></v>
-<v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
-<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-</v>
 <v t="ekr.20051120173230" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20051111114555"><vh>Subprocess tests</vh>
 <v t="ekr.20051112134206.1"><vh>subprocess.py (For study, but not very helpful)</vh>
@@ -243,9 +226,23 @@
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
 </v>
+<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051108102719"><vh>Test backward search</vh>
+<v t="ekr.20051108102719.1"><vh>a</vh></v>
+<v t="ekr.20051108102719.2"><vh>b</vh></v>
+<v t="ekr.20051108102719.3"><vh>c</vh></v>
+<v t="ekr.20051108111341"><vh>test</vh></v>
+</v>
+<v t="ekr.20051113055640"><vh>Find bug</vh>
+<v t="ekr.20051113055640.1"><vh>Report</vh></v>
+<v t="ekr.20051113055640.2"><vh>This is a sample node</vh></v>
+<v t="ekr.20051113055640.3"><vh>@thin findBug.txt</vh></v>
+</v>
+<v t="ekr.20051120173510"><vh>@@button remove-blank-lines</vh></v>
+<v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
+<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
-<v t="ekr.20060209204257"><vh>prototype of menu post commands</vh></v>
-<v t="ekr.20060213085838" a="V"><vh>Test of search for unicode characters</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4417,10 +4414,6 @@ while s != 'kill':
         print &amp;gt;&amp;gt; stdout, s,
         print &amp;gt;&amp;gt; stderr, s,
 print 'bye'</t>
-<t tx="ekr.20060124165505.1">commands = dir(c)
-commands.sort()
-g.es(g.listToString(commands))
-</t>
 <t tx="ekr.20060201163600"></t>
 <t tx="ekr.20060201170217"></t>
 <t tx="ekr.20060202155426">c.debugCommands.printStats()</t>
@@ -4431,25 +4424,5 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
-<t tx="ekr.20060209204257">import tkFont
-name = 'Outline'
-menus = ('File','Edit','Outline','Plugins','Cmds','Window','Help')
-
-# Compute the *approximate* x offsets of each menu.
-offsets = {} ; n = 0
-for z in menus:
-    menu = c.frame.menu.getMenu(z)
-    fontName = menu.cget('font')
-    font = tkFont.Font(font=fontName)
-    # print '%8s' % (z),menu.winfo_reqwidth(),menu.master,menu.winfo_x()
-    offsets[z] = n
-    # A total hack: sorta works on windows.
-    n += font.measure(z+' '*4)+1 
-
-top = c.frame.top
-topx,topy = top.winfo_rootx(),top.winfo_rooty()
-menu = c.frame.menu.getMenu(name)
-menu.post(topx+offsets.get(name,0),topy)</t>
-<t tx="ekr.20060213085838">Ö</t>
 </tnodes>
 </leo_file>
