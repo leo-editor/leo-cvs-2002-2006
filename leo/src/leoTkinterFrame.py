@@ -1946,8 +1946,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
         i,j = g.app.gui.getTextSelection(w)
         
         # Update the widget and set the clipboard text.
+        s = w.get(i,j)
         if i != j:
-            s = w.get(i,j)
             w.delete(i,j)
             g.app.gui.replaceClipboardWith(s)
     
