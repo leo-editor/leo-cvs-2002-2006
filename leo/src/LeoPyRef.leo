@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9077" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="32" left="489" height="870" width="793"/>
+	<global_window_position top="48" left="451" height="870" width="793"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -15,11 +15,11 @@
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.2"><vh>To do</vh>
+<v t="EKR.20040519090151.2" a="V"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -258,6 +258,7 @@
 <v t="ekr.20050418084539.2"><vh>&lt;&lt; put only needed info in copiedBunchList &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="ekr.20060214082933"><vh>Fixed crasher cutText</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -308,12 +309,12 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
+<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
-<v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1517,7 +1518,7 @@ def onDragSplitterBar (self, event, verticalFlag):
     return "Leo 4.4 beta 2, build %s, February 14, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.408 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.413 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -2991,7 +2992,6 @@ zodb.py</t>
     
     # Give priority to later requests, but default to previously set widget.
     w = c.requestedFocusWidget or c.hasFocusWidget
-    wname = c.widget_name(w)
     
     if trace: g.trace(
         'requested',c.widget_name(c.requestedFocusWidget),
@@ -3000,7 +3000,7 @@ zodb.py</t>
     
     if c.hasFocusWidget and (
         not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget):
-        # if trace: g.trace('no change.',wname)
+        # if trace: g.trace('no change.',c.widget_name(w))
         c.requestedFocusWidget = None
     elif w:
         # Ignore whatever g.app.gui.get_focus might say.
@@ -3100,10 +3100,10 @@ isn't it?  (If it isn't, there's no explanation at that point that would tell
 me otherwise, that's the value I used anyway...)  Just an out-of-box-experience
 issue.</t>
 <t tx="ekr.20060211140947.1">try:
-    id = os.getenv('USER')
-    if id:
-        if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(id)),color='red')
-        g.app.leoID = id
+    theId = os.getenv('USER')
+    if theId:
+        if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(theId)),color='red')
+        g.app.leoID = theId
         return
         
 except Exception:
@@ -3254,5 +3254,14 @@ What I did:
 <t tx="ekr.20060213090947"></t>
 <t tx="ekr.20060213143106"></t>
 <t tx="ekr.20060213154136"></t>
+<t tx="ekr.20060214082933">@nocolor
+
+Traceback (most recent call last):
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 265, in doCommand
+    val = command(event)
+  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 1959, in cutText
+    w.configure(width=f.tree.headWidth(s=s))
+UnboundLocalError: local variable 's' referenced before assignment
+</t>
 </tnodes>
 </leo_file>

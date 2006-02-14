@@ -1416,10 +1416,10 @@ for theDir in (homeDir,globalConfigDir,loadDir):
 #@-node:ekr.20031218072017.1980:<< return if we can set leoID from "leoID.txt" >>
 #@+node:ekr.20060211140947.1:<< return if we can set leoID from os.getenv('USER') >>
 try:
-    id = os.getenv('USER')
-    if id:
-        if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(id)),color='red')
-        g.app.leoID = id
+    theId = os.getenv('USER')
+    if theId:
+        if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(theId)),color='red')
+        g.app.leoID = theId
         return
         
 except Exception:
@@ -2161,7 +2161,6 @@ def masterFocusHandler (self):
     
     # Give priority to later requests, but default to previously set widget.
     w = c.requestedFocusWidget or c.hasFocusWidget
-    wname = c.widget_name(w)
     
     if trace: g.trace(
         'requested',c.widget_name(c.requestedFocusWidget),
@@ -2170,7 +2169,7 @@ def masterFocusHandler (self):
     
     if c.hasFocusWidget and (
         not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget):
-        # if trace: g.trace('no change.',wname)
+        # if trace: g.trace('no change.',c.widget_name(w))
         c.requestedFocusWidget = None
     elif w:
         # Ignore whatever g.app.gui.get_focus might say.
@@ -2276,7 +2275,6 @@ def masterFocusHandler (self):
     
     # Give priority to later requests, but default to previously set widget.
     w = c.requestedFocusWidget or c.hasFocusWidget
-    wname = c.widget_name(w)
     
     if trace: g.trace(
         'requested',c.widget_name(c.requestedFocusWidget),
@@ -2285,7 +2283,7 @@ def masterFocusHandler (self):
     
     if c.hasFocusWidget and (
         not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget):
-        # if trace: g.trace('no change.',wname)
+        # if trace: g.trace('no change.',c.widget_name(w))
         c.requestedFocusWidget = None
     elif w:
         # Ignore whatever g.app.gui.get_focus might say.
@@ -3855,6 +3853,16 @@ for t in tnodeInfoDict.keys():
 #@-node:ekr.20050418084539.2:<< put only needed info in copiedBunchList >>
 #@-node:ekr.20031218072017.1551:pasteOutline
 #@-node:ekr.20060213154136:Fixed bug: paste outline lost headline editing
+#@+node:ekr.20060214082933:Fixed crasher cutText
+@nocolor
+
+Traceback (most recent call last):
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 265, in doCommand
+    val = command(event)
+  File "C:\prog\leoCVS\leo\src\leoTkinterFrame.py", line 1959, in cutText
+    w.configure(width=f.tree.headWidth(s=s))
+UnboundLocalError: local variable 's' referenced before assignment
+#@-node:ekr.20060214082933:Fixed crasher cutText
 #@-node:ekr.20060208080524:4.4b2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
