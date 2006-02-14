@@ -1344,13 +1344,7 @@ class keyHandlerClass:
     
         # g.trace(ch,keysym,k.stroke)
         
-        if ch == '\b': # Handle backspace.
-            # Don't backspace over the prompt.
-            if len(s) <= k.mb_prefix:
-                return 
-            elif len(s) == 1: s = ''
-            else: s = s [0:-1]
-        elif suppressControlChars and ch not in string.printable:
+        if suppressControlChars and ch not in string.printable:
             return
         elif ch and ch not in ('\n','\r'):
             if self.useTextWidget:
@@ -1364,6 +1358,7 @@ class keyHandlerClass:
             else:
                 # Just add the character.
                 k.setLabel(k.getLabel() + ch)
+    #@nonl
     #@-node:ekr.20050920085536.38:updateLabel
     #@+node:ekr.20060210141604.1:getEditableTextRange
     def getEditableTextRange (self):
@@ -1513,7 +1508,7 @@ class keyHandlerClass:
         if wname.startswith('body'):
             i = w.index('@%s,%s' % (event.x,event.y))
             g.app.gui.setTextSelection(w,i,i,insert=i)
-            c.editCommands.setMoveCol(w,i)
+            c.editCommands.setMoveCol(i)
             c.frame.updateStatusLine()
         elif wname.startswith('mini'):
             x = w.index('@%s,%s' % (event.x,event.y))

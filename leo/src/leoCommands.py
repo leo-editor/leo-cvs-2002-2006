@@ -5443,7 +5443,6 @@ class baseCommands:
         
         # Give priority to later requests, but default to previously set widget.
         w = c.requestedFocusWidget or c.hasFocusWidget
-        wname = c.widget_name(w)
         
         if trace: g.trace(
             'requested',c.widget_name(c.requestedFocusWidget),
@@ -5452,7 +5451,7 @@ class baseCommands:
         
         if c.hasFocusWidget and (
             not c.requestedFocusWidget or c.requestedFocusWidget == c.hasFocusWidget):
-            # if trace: g.trace('no change.',wname)
+            # if trace: g.trace('no change.',c.widget_name(w))
             c.requestedFocusWidget = None
         elif w:
             # Ignore whatever g.app.gui.get_focus might say.

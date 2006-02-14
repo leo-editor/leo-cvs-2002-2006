@@ -332,7 +332,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
             widget.bind("<Key>",        self.resetWrap)
             widget.bind("<Control-a>",  self.selectAllFindText)
         
-        for widget in (outer, self.find_ctrl, self.change_ctrl):
+        for widget in (self.find_ctrl, self.change_ctrl):
             widget.bind("<Key-Return>", findButtonCallback2)
             widget.bind("<Key-Escape>", self.onCloseWindow)
         

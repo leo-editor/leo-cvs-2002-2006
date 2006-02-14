@@ -1639,7 +1639,7 @@ class editCommandsClass (baseEditCommandsClass):
     def simulateEndDrag (self,event=None):
     
         '''Simulate the end of a drag in the presently selected headline.'''
-        c = self.c ; p = c.currentPosition()
+        c = self.c
         
         # Note: this assumes that tree.startDrag has already been called.
         c.frame.tree.endDrag(event)
@@ -2839,7 +2839,7 @@ class editCommandsClass (baseEditCommandsClass):
         else:
             # Don't change the moveCol while extending: that would mess up the selection.
             if setSpot or not moveSpot:
-                self.setMoveCol(w,spot)
+                self.setMoveCol(spot)
             g.app.gui.setTextSelection(w,spot,spot,insert=None)
     #@nonl
     #@-node:ekr.20060113130510:extendHelper
@@ -3054,7 +3054,7 @@ class editCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20051218133207:backwardParagraphHelper
     #@+node:ekr.20060209095101:setMoveCol
-    def setMoveCol (self,w,spot):
+    def setMoveCol (self,spot):
         
         self.moveSpot = spot
         self.moveCol = int(spot.split('.')[1])

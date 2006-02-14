@@ -465,10 +465,10 @@ class LeoApp:
         #@    << return if we can set leoID from os.getenv('USER') >>
         #@+node:ekr.20060211140947.1:<< return if we can set leoID from os.getenv('USER') >>
         try:
-            id = os.getenv('USER')
-            if id:
-                if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(id)),color='red')
-                g.app.leoID = id
+            theId = os.getenv('USER')
+            if theId:
+                if verbose: g.es_print("using os.getenv('USER'): %s " % (repr(theId)),color='red')
+                g.app.leoID = theId
                 return
                 
         except Exception:
