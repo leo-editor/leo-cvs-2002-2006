@@ -2068,7 +2068,7 @@ class keyHandlerClass:
         table = (
             (alt, 'Alt+'),
             (ctrl,'Ctrl+'),
-            (cmd, 'Cmnd+'),
+            (cmd, 'Command+'),
             (shift,'Shift+'),
             (True,last),
         )
