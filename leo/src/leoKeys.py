@@ -803,7 +803,8 @@ class keyHandlerClass:
         elif keysym == 'BackSpace':
             k.doBackSpace(c.commandsDict.keys())
             c.minibufferWantsFocus()
-        elif ch not in string.printable:
+        elif k.ignore_unbound_non_ascii_keys and len(ch) > 1:
+            # g.trace('non-ascii')
             if specialStroke:
                 g.trace(specialStroke)
                 specialFunc()
@@ -1339,7 +1340,7 @@ class keyHandlerClass:
     #@nonl
     #@-node:ekr.20050920085536.35:setLabelGrey
     #@+node:ekr.20050920085536.38:updateLabel
-    def updateLabel (self,event,suppressControlChars=True):
+    def updateLabel (self,event):
     
         '''Mimic what would happen with the keyboard and a Text editor
         instead of plain accumalation.'''
@@ -1350,15 +1351,14 @@ class keyHandlerClass:
     
         # g.trace(ch,keysym,k.stroke)
         
-        if suppressControlChars and ch not in string.printable:
-            return
-        elif ch and ch not in ('\n','\r'):
+        if ch and ch not in ('\n','\r'):
             if self.useTextWidget:
                 c.widgetWantsFocusNow(w)
                 i,j = g.app.gui.getTextSelection(w)
                 if i != j:
                     w.delete(i,j)
                 i = w.index('insert')
+                g.trace(repr(ch))
                 w.insert(i,ch)
                 # g.trace(k.mb_prefix)       
             else:
@@ -1430,7 +1430,7 @@ class keyHandlerClass:
             d = k.masterBindingsDict.get('mini')
             b = d.get(stroke)
             if b:
-                # if trace: g.trace(repr(stroke),'mini binding',b.commandName)
+                if trace: g.trace(repr(stroke),'mini binding',b.commandName)
                 # Pass this on for macro recording.
                 k.masterCommand(event,b.func,stroke,b.commandName)
                 c.minibufferWantsFocus()
@@ -1439,17 +1439,22 @@ class keyHandlerClass:
             if state == 'getArg':
                 return k.getArg(event)
             elif state == 'full-command':
-                d = k.masterBindingsDict.get('mini')
-                b = d.get(stroke)
-                if b:
-                    # Pass this on for macro recording.
-                    k.masterCommand(event,b.func,stroke,b.commandName)
-                    c.minibufferWantsFocus()
-                    return 'break'
-                else:
+                if 1:
                     # Do the default state action.
                     k.callStateFunction(event) # Calls end-command.
                     return 'break'
+                else:
+                    d = k.masterBindingsDict.get('mini')
+                    b = d.get(stroke)
+                    if b:
+                        # Pass this on for macro recording.
+                        k.masterCommand(event,b.func,stroke,b.commandName)
+                        c.minibufferWantsFocus()
+                        return 'break'
+                    else:
+                        # Do the default state action.
+                        k.callStateFunction(event) # Calls end-command.
+                        return 'break'
             # Third, pass keys to the general mode handler.
             d =  k.masterBindingsDict.get(state)
             if d:
@@ -1488,14 +1493,14 @@ class keyHandlerClass:
                         if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
                         return k.masterCommand(event,b.func,b.stroke,b.commandName)
     
-        if (k.ignore_unbound_non_ascii_keys and
-            (stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1)
-        ):
+        if k.ignore_unbound_non_ascii_keys and len(event.char) > 1:
+            # (stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1)):
             if trace: g.trace('ignoring unbound non-ascii key')
             return 'break'
         else:
             if trace: g.trace(repr(stroke),'no func')
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+    #@nonl
     #@-node:ekr.20060205221734:masterKeyHandlerHelper
     #@-node:ekr.20060127183752:masterKeyHandler & helper
     #@+node:ekr.20060129052538.2:masterClickHandler

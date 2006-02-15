@@ -30,6 +30,7 @@ COMMENT1
 CVS
 CWEB
 C_EXTENSION
+Caps_Lock
 CashRegister
 Chaovavanich
 CheckVersion
@@ -180,6 +181,7 @@ NewHeadline
 Niklas
 NoNodeEditors
 Norwitz
+Num_Lock
 OLDconvert
 OLDfilter
 OLDsearch
@@ -1083,6 +1085,7 @@ keycode
 keymap
 keymapping
 keypress
+keysym
 killcolor
 kk
 knuth
@@ -1232,6 +1235,7 @@ markHeadline
 marshallresearch
 massageBody
 massageIvars
+masterCommand
 matchTokens
 matchWord
 match_c_word
@@ -1819,6 +1823,7 @@ subtree_iter
 suppressErrors
 suppress_newlines
 sveinbjorn
+swap_mac_keys
 synch
 synchVnode
 syntax_prefs
@@ -1888,6 +1893,7 @@ timestamp
 tkEncoding
 tkFont
 tkIcon
+tkNamesList
 tk_encoding
 tk_relief
 tkinterLog
