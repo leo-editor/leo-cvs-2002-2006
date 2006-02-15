@@ -268,7 +268,7 @@ class keyHandlerClass:
         self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
         self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
         self.trace_key_event                = c.config.getBool('trace_key_event')
-        self.swap_mac_keys                   c.config.getBool('swap_mac_keys')
+        self.swap_mac_keys                  = c.config.getBool('swap_mac_keys')
         #@    << define Tk ivars >>
         #@+node:ekr.20051006092617:<< define Tk ivars >>
         if self.useTextWidget:
