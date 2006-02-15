@@ -40,8 +40,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
             x = d.get(menuName)
             if x is None:
                  x = 0 ; g.trace('oops, no menu offset: %s' % menuName)
-            menu.post(topx+d.get(menuName,0),topy)
-            menu.focus() # Fix by caugm.  Thanks!
+            
+            menu.tk_popup(topx+d.get(menuName,0),topy) # Fix by caugm.  Thanks!
         else:
             g.trace('oops, no menu: %s' % menuName)
     #@nonl
