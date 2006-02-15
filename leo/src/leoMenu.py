@@ -458,7 +458,7 @@ class leoMenu:
     #@+node:ekr.20031218072017.3803:createHelpMenuFromTable
     def createHelpMenuFromTable (self):
     
-        if sys.platform == 'darwin':
+        if 0: ## sys.platform == 'darwin':
             helpMenu = self.getMacHelpMenu()
             if not helpMenu: return
         else:
