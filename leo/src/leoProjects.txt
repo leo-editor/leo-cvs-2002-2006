@@ -1014,6 +1014,11 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     self.x_hasNumeric = ['sort-lines','sort-fields']
 
     self.altX_prompt = 'full-command: '
+    
+    self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
+    self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
+    self.trace_key_event                = c.config.getBool('trace_key_event')
+    self.swap_mac_keys                  = c.config.getBool('swap_mac_keys')
     << define Tk ivars >>
     << define externally visible ivars >>
     << define internal ivars >>
@@ -1156,7 +1161,7 @@ def setDefaultUnboundKeyAction (self):
 #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
 #@-node:ekr.20050920085536.1: Birth (keyHandler)
 #@-node:ekr.20060203112912.1:Initing
-#@+node:ekr.20060214140930:4.4b3 projects
+#@+node:ekr.20060214140930:4.4x1 projects
 #@+node:ekr.20060214140930.1:Restored some legacy bindings
 extract                             = Shift-Ctrl-D
 extract-names                       = Shift-Ctrl-N
@@ -1168,7 +1173,1052 @@ write-dirty-at-file-nodes           = Shift+Ctrl+Q
 # Removed definitions of find and file modes.  I never used them.
 #@nonl
 #@-node:ekr.20060214140930.1:Restored some legacy bindings
-#@-node:ekr.20060214140930:4.4b3 projects
+#@+node:ekr.20060213164147:Fixed crasher in Go To Line command
+#@+node:ekr.20060215090312:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3545403
+By: e
+
+more str() to remove...
+
+with some non ascii headline,
+a traceback after an executeScript
+calls goto linenumber
+
+ \leo-4-4-\src\leoCommands.py, line 1822, in goToScriptLineNumber
+    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
+ \leo-4-4-\src\leoCommands.py", line 1466, in goToLineNumber
+    if p.matchHeadline(vnodeName):
+ \leo-4-4-\src\leoNodes.py, line 1631, in matchHeadline
+    def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
+ \leo-4-4-\src\leoNodes.py, line 665, in matchHeadline
+    return s == h[0:len(s)]
+UnicodeDecodeError: 'ascii' codec can't decode byte 0xc2 in position 1: ordinal
+not in range(128)
+
+aÂ² + bÂ² = cÂ²
+#@-node:ekr.20060215090312:Report
+#@+node:ekr.20031218072017.3353:matchHeadline
+def matchHeadline (self,pattern):
+
+    """Returns True if the headline matches the pattern ignoring whitespace and case.
+    
+    The headline may contain characters following the successfully matched pattern."""
+    
+    v = self
+    
+    h = g.toUnicode(v.headString(),'utf-8')
+    h = h.lower().replace(' ','').replace('\t','')
+
+    pattern = g.toUnicode(pattern,'utf-8')
+    pattern = pattern.lower().replace(' ','').replace('\t','')
+    
+    return h.startswith(pattern)
+#@nonl
+#@-node:ekr.20031218072017.3353:matchHeadline
+#@-node:ekr.20060213164147:Fixed crasher in Go To Line command
+#@+node:ekr.20060215092723:Fixed menu problem on Linux
+#@+node:ekr.20060215092723.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3577681
+By: caugm
+
+I added this line on leoTkinterMenu.py and now the activate-x-menu commands
+works on Linux, at least for me ;-)
+
+--- src/leoTkinterMenu.py       2006-02-15 12:06:28.000000000 -0200
++++ src2/leoTkinterMenu.py      2006-02-15 12:06:24.000000000 -0200
+@@ -41,6 +41,7 @@
+             if x is None:
+                  x = 0 ; g.trace('oops, no menu offset: %s' % menuName)
+             menu.post(topx+d.get(menuName,0),topy)
++            menu.focus()
+         else:
+             g.trace('oops, no menu: %s' % menuName)
+#@verbatim
+     #@nonl
+
+
+#@-node:ekr.20060215092723.1:Report
+#@+node:ekr.20060211100905.1:tkMenu.activateMenu
+def activateMenu (self,menuName):
+    
+    c = self.c ;  top = c.frame.top
+    topx,topy = top.winfo_rootx(),top.winfo_rooty()
+    menu = c.frame.menu.getMenu(menuName)
+
+    if menu:
+        d = self.computeMenuPositions()
+        x = d.get(menuName)
+        if x is None:
+             x = 0 ; g.trace('oops, no menu offset: %s' % menuName)
+        menu.post(topx+d.get(menuName,0),topy)
+        menu.focus() # Fix by caugm.  Thanks!
+    else:
+        g.trace('oops, no menu: %s' % menuName)
+#@nonl
+#@-node:ekr.20060211100905.1:tkMenu.activateMenu
+#@-node:ekr.20060215092723:Fixed menu problem on Linux
+#@+node:ekr.20060213151411:Fixed (maybe) problems with unicode characters & caps lock
+#@+node:ekr.20060215092723.2:To do & what I did
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3573470
+
+Still to do:
+
+? What are the state masks for Num_Lock on Linux and darwin?
+
+What I did:
+
+- Added support for trace_key_event setting.
+- Added support for ignore_caps_lock setting.
+- Added Caps_Lock and Num_Lock to k.tkNamesList and in the list of
+  special keys in k.masterCommand and k.masterKeyHandlerHelper.
+- Added support for k.ignore_unbound_non_ascii_keys logic in masterKeyHandlerHelper.
+- Disabled unknown keysym trace in k.strokeFromEvent.
+- Enabled the international keyboard on XP as an aid to testing.
+- Added support for swap_mac_keys setting in k.shortcutFromSetting.
+#@nonl
+#@-node:ekr.20060215092723.2:To do & what I did
+#@+node:ekr.20050920085536.1: Birth (keyHandler)
+#@+node:ekr.20050920085536.2: ctor (keyHandler)
+def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
+    
+    '''Create a key handler for c.
+    c.frame.miniBufferWidget is a Tk.Label.
+    
+    useGlobalRegisters and useGlobalKillbuffer indicate whether to use
+    global (class vars) or per-instance (ivars) for kill buffers and registers.'''
+    
+    self.c = c
+    self.widget = c.frame.miniBufferWidget
+    self.useTextWidget = c.useTextMinibuffer
+        # A Tk Label or Text widget.
+        # Exists even if c.showMinibuffer is False.
+    self.useGlobalKillbuffer = useGlobalKillbuffer
+    self.useGlobalRegisters = useGlobalRegisters
+
+    # Generalize...
+    self.x_hasNumeric = ['sort-lines','sort-fields']
+
+    self.altX_prompt = 'full-command: '
+    
+    self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
+    self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
+    self.trace_key_event                = c.config.getBool('trace_key_event')
+    self.swap_mac_keys                  = c.config.getBool('swap_mac_keys')
+    << define Tk ivars >>
+    << define externally visible ivars >>
+    << define internal ivars >>
+#@nonl
+#@+node:ekr.20051006092617:<< define Tk ivars >>
+if self.useTextWidget:
+    self.svar = None
+else:
+    if self.widget:
+        self.svar = Tk.StringVar()
+        self.widget.configure(textvariable=self.svar)
+        
+    else:
+        self.svar = None
+#@nonl
+#@-node:ekr.20051006092617:<< define Tk ivars >>
+#@+node:ekr.20051006092617.1:<< define externally visible ivars >>
+self.abbrevOn = False # True: abbreviations are on.
+self.arg = '' # The value returned by k.getArg.
+self.commandName = None # The name of the command being executed.
+self.funcReturn = None # For k.simulateCommand
+self.inputModeBindings = {}
+self.inputModeName = '' # The name of the input mode, or None.
+self.inverseCommandsDict = {}
+    # Completed in k.finishCreate, but leoCommands.getPublicCommands adds entries first.
+self.negativeArg = False
+self.regx = g.bunch(iter=None,key=None)
+self.repeatCount = None
+self.state = g.bunch(kind=None,n=None,handler=None)
+self.setDefaultUnboundKeyAction()
+#@nonl
+#@-node:ekr.20051006092617.1:<< define externally visible ivars >>
+#@+node:ekr.20050923213858:<< define internal ivars >>
+self.abbreviationsDict = {} # Abbreviations created by @alias nodes.
+
+# Previously defined bindings.
+self.bindingsDict = {}
+    # Keys are Tk key names, values are lists of g.bunch(pane,func,commandName)
+# Previously defined binding tags.
+self.bindtagsDict = {}
+    # Keys are strings (the tag), values are 'True'
+    
+self.masterBindingsDict = {}
+    # keys are scope names: 'all','text',etc. or mode names.
+    # Values are dicts: keys are strokes, values are g.bunch(commandName,func,pane,stroke)
+
+# Special bindings for k.fullCommand.
+self.mb_copyKey = None
+self.mb_pasteKey = None
+self.mb_cutKey = None
+
+self.abortAllModesKey = None
+self.fullCommandKey = None
+self.universalArgKey = None
+
+# Keepting track of the characters in the mini-buffer.
+self.arg_completion = True
+self.mb_event = None
+self.mb_history = []
+self.mb_prefix = ''
+self.mb_tabListPrefix = ''
+self.mb_tabList = []
+self.mb_tabListIndex = -1
+self.mb_prompt = ''
+
+self.func = None
+self.keysymHistory = []
+self.previous = []
+self.stroke = None
+
+# For onIdleTime
+self.idleCount = 0
+
+# For modes
+self.afterGetArgState = None
+self.argTabList = []
+self.modeBindingsDict = {}
+#@nonl
+#@-node:ekr.20050923213858:<< define internal ivars >>
+#@-node:ekr.20050920085536.2: ctor (keyHandler)
+#@+node:ekr.20050920094633:k.finishCreate & helpers
+def finishCreate (self):
+    
+    '''Complete the construction of the keyHandler class.
+    c.commandsDict has been created when this is called.'''
+    
+    k = self ; c = k.c
+    
+    # g.trace('keyHandler')
+   
+    k.createInverseCommandsDict()
+    
+    if not c.miniBufferWidget:
+        # Does not exist for leoSettings.leo files.
+        return
+
+    # Important: bindings exist even if c.showMiniBuffer is False.
+    k.makeAllBindings()
+
+    k.setInputState(self.unboundKeyAction)
+#@nonl
+#@+node:ekr.20051008082929:createInverseCommandsDict
+def createInverseCommandsDict (self):
+    
+    '''Add entries to k.inverseCommandsDict using c.commandDict.
+    
+    c.commandsDict:        keys are command names, values are funcions f.
+    k.inverseCommandsDict: keys are f.__name__, values are minibuffer command names.
+    '''
+
+    k = self ; c = k.c
+
+    for name in c.commandsDict.keys():
+        f = c.commandsDict.get(name)
+        try:
+            k.inverseCommandsDict [f.__name__] = name
+            # g.trace('%24s = %s' % (f.__name__,name))
+                
+        except Exception:
+            g.es_exception()
+            g.trace(repr(name),repr(f),g.callers())
+#@nonl
+#@-node:ekr.20051008082929:createInverseCommandsDict
+#@-node:ekr.20050920094633:k.finishCreate & helpers
+#@+node:ekr.20060115195302:setDefaultUnboundKeyAction
+def setDefaultUnboundKeyAction (self):
+    
+    k = self ; c = k.c
+
+    defaultAction = c.config.getString('top_level_unbound_key_action') or 'insert'
+    defaultAction.lower()
+    if defaultAction in ('ignore','insert','overwrite'):
+        self.unboundKeyAction = defaultAction
+    else:
+        g.trace('ignoring top_level_unbound_key_action setting: %s' % defaultAction)
+        self.unboundKeyAction = 'insert'
+        
+    k.setInputState(self.unboundKeyAction)
+#@nonl
+#@-node:ekr.20060115195302:setDefaultUnboundKeyAction
+#@-node:ekr.20050920085536.1: Birth (keyHandler)
+#@+node:ekr.20060214172823:canonicalizeShortcut (4.3.3)
+@ This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, mostly ignoring case and the order in which special keys are specified in leoConfig.txt.
+
+For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and Control+A as the argument to bind.
+
+Returns (bind_shortcut, menu_shortcut)
+@c
+
+def canonicalizeShortcut (self,shortcut):
+    
+    if shortcut == None or len(shortcut) == 0:
+        return None,None
+    s = shortcut.strip().lower()
+    
+    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
+    has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
+    has_alt   = s.find("alt") >= 0
+    has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
+    if sys.platform == "darwin":
+        if has_ctrl and not has_cmd:
+            has_cmd = True ; has_ctrl = False
+        if has_alt and not has_ctrl: # 9/14/04
+            has_ctrl = True ; has_alt = False
+    << set the last field, preserving case >>
+    << canonicalize the last field >>
+    << synthesize the shortcuts from the information >>
+    # print shortcut,bind_shortcut,menu_shortcut
+    return bind_shortcut,menu_shortcut
+#@nonl
+#@+node:ekr.20060214172823.1:<< set the last field, preserving case >>
+s2 = shortcut
+s2 = string.strip(s2)
+
+# Replace all minus signs by plus signs, except a trailing minus:
+if len(s2) > 0 and s2[-1] == "-":
+    s2 = string.replace(s2,"-","+")
+    s2 = s2[:-1] + "-"
+else:
+    s2 = string.replace(s2,"-","+")
+
+fields = string.split(s2,"+")
+if fields == None or len(fields) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+
+last = fields[-1]
+if last == None or len(last) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+#@nonl
+#@-node:ekr.20060214172823.1:<< set the last field, preserving case >>
+#@+node:ekr.20060214172823.2:<< canonicalize the last field >>
+bind_last = menu_last = last
+if len(last) == 1:
+    ch = last[0]
+    if ch in string.ascii_letters:
+        menu_last = string.upper(last)
+        if has_shift:
+            bind_last = string.upper(last)
+        else:
+            bind_last = string.lower(last)
+    elif ch in string.digits:
+        bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+    else:
+        << define dict of Tk bind names >>
+        if ch in theDict.keys():
+            bind_last = theDict[ch]
+elif len(last) > 0:
+    << define dict of special names >>
+    last2 = string.lower(last)
+    if last2 in theDict.keys():
+        bind_last,menu_last = theDict[last2]
+#@nonl
+#@+node:ekr.20060214172823.3:<< define dict of Tk bind names >>
+# These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+theDict = {
+    "!" : "exclam",
+    '"' : "quotedbl",
+    "#" : "numbersign",
+    "$" : "dollar",
+    "%" : "percent",
+    "&" : "ampersand",
+    "'" : "quoteright",
+    "(" : "parenleft",
+    ")" : "parenright",
+    "*" : "asterisk",
+    "+" : "plus",
+    "," : "comma",
+    "-" : "minus",
+    "." : "period",
+    "/" : "slash",
+    ":" : "colon",
+    ";" : "semicolon",
+    "<" : "less",
+    "=" : "equal",
+    ">" : "greater",
+    "?" : "question",
+    "@" : "at",
+    "[" : "bracketleft",
+    "\\": "backslash",
+    "]" : "bracketright",
+    "^" : "asciicircum",
+    "_" : "underscore",
+    "`" : "quoteleft",
+    "{" : "braceleft",
+    "|" : "bar",
+    "}" : "braceright",
+    "~" : "asciitilde" }
+#@nonl
+#@-node:ekr.20060214172823.3:<< define dict of Tk bind names >>
+#@+node:ekr.20060214172823.4:<< define dict of special names >>
+# These keys are simply made-up names.  The menu_bind values are known to Tk.
+# Case is not significant in the keys.
+
+theDict = {
+    "bksp"    : ("BackSpace","BkSp"),
+    "esc"     : ("Escape","Esc"),
+    # Arrow keys...
+    "dnarrow" : ("Down", "DnArrow"),
+    "ltarrow" : ("Left", "LtArrow"),
+    "rtarrow" : ("Right","RtArrow"),
+    "uparrow" : ("Up",   "UpArrow"),
+    # Page up/down keys...
+    "pageup"  : ("Prior","PgUp"),
+    "pagedn"  : ("Next", "PgDn")
+}
+
+@  The following are not translated, so what appears in the menu is the same as what is passed to Tk.  Case is significant.
+
+Note: the Tk documentation states that not all of these may be available on all platforms.
+
+F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+Down, Left, Right, Up,
+Begin, End, Home, Next, Prior,
+Num_Lock, Pause, Scroll_Lock, Sys_Req,
+KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+KP_F1,KP_F2,KP_F3,KP_F4,
+KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
+#@-node:ekr.20060214172823.4:<< define dict of special names >>
+#@-node:ekr.20060214172823.2:<< canonicalize the last field >>
+#@+node:ekr.20060214172823.5:<< synthesize the shortcuts from the information >>
+bind_head = menu_head = ""
+
+if has_shift:
+    menu_head = "Shift+"
+    if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+        bind_head = "Shift-"
+if has_alt:
+    bind_head = bind_head + "Alt-"
+    menu_head = menu_head + "Alt+"
+
+if has_ctrl:
+    bind_head = bind_head + "Control-"
+    menu_head = menu_head + "Ctrl+"
+    
+if has_cmd: # 11/18/03
+    bind_head = bind_head + "Command-"
+    menu_head = menu_head + "Command+"
+    
+bind_shortcut = "<" + bind_head + bind_last + ">"
+menu_shortcut = menu_head + menu_last
+#@nonl
+#@-node:ekr.20060214172823.5:<< synthesize the shortcuts from the information >>
+#@-node:ekr.20060214172823:canonicalizeShortcut (4.3.3)
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.k
+    if g.app.unitTesting: return
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        accelerator = stroke = k.shortcutFromSetting(accel) or ''
+        accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('<').rstrip('>')
+        def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+            return k.masterMenuHandler(stroke,command,commandName)
+        realLabel = self.getRealMenuName(label)
+        amp_index = realLabel.find("&")
+        realLabel = realLabel.replace("&","")
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator,
+            command=masterMenuCallback,
+            underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+accel = None
+if minibufferCommand:
+    commandName = command 
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
+    else:
+        g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@+node:ekr.20060128092340:Shortcuts (keyHandler)
+#@+node:ekr.20060120071949:isPlainKey
+def isPlainKey (self,shortcut):
+    
+    '''Return true if the shortcut refers to a plain key.'''
+    
+    shortcut = shortcut or ''
+    shortcut1 = shortcut[:]
+
+    shift = 'Shift-'
+    shortcut = shortcut or ''
+    if shortcut.startswith('<'):   shortcut = shortcut[1:]
+    if shortcut.endswith('>'):     shortcut = shortcut[:-1]
+    if shortcut.startswith(shift): shortcut = shortcut[len(shift):]
+
+    return len(shortcut) == 1
+#@nonl
+#@-node:ekr.20060120071949:isPlainKey
+#@+node:ekr.20060128081317:shortcutFromSetting
+def shortcutFromSetting (self,setting):
+    
+    k = self
+
+    if not setting:
+        return None
+
+    s = setting.strip()
+    << define cmd, ctrl, alt, shift >>
+    if k.swap_mac_keys and sys.platform == "darwin":
+        << swap cmd and ctrl keys >>
+    << convert minus signs to plus signs >>
+    << compute the last field >>
+    << compute shortcut >>
+    return shortcut
+    
+canonicalizeShortcut = shortcutFromSetting # For compatibility.
+strokeFromSetting    = shortcutFromSetting
+#@nonl
+#@+node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
+s2 = s.lower()
+
+cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+alt   = s2.find("alt") >= 0
+shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
+#@nonl
+#@-node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
+#@+node:ekr.20060215104239:<< swap cmd and ctrl keys >>
+if ctrl and not cmd:
+    cmd = True ; ctrl = False
+if alt and not ctrl:
+    ctrl = True ; alt = False
+#@nonl
+#@-node:ekr.20060215104239:<< swap cmd and ctrl keys >>
+#@+node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+# Replace all minus signs by plus signs, except a trailing minus:
+if s.endswith('-'):
+    s = s[:-1].replace('-','+') + '-'
+else:
+    s = s.replace('-','+')
+#@nonl
+#@-node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+#@+node:ekr.20060128103640.2:<< compute the last field >>
+if s.endswith('+'):
+    last = '+'
+else:
+    fields = s.split('+') # Don't lower this field.
+    last = fields and fields[-1]
+    if not last:
+        if not g.app.menuWarningsGiven:
+            print "bad shortcut specifier:", s
+        return None
+
+if len(last) == 1:
+    if shift:
+        last = last.upper()
+        shift = False
+    else:
+        last = last.lower()
+else:
+    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+    # This is a *one-way* translation, done only here.
+    d = self.settingsNameDict
+    last = d.get(last.lower(),last)
+#@nonl
+#@-node:ekr.20060128103640.2:<< compute the last field >>
+#@+node:ekr.20060128103640.4:<< compute shortcut >>
+table = (
+    (alt, 'Alt+'),
+    (ctrl,'Ctrl+'),
+    (cmd, 'Command+'),
+    (shift,'Shift+'),
+    (True,last),
+)
+    
+shortcut = ''.join([val for flag,val in table if flag])
+#@nonl
+#@-node:ekr.20060128103640.4:<< compute shortcut >>
+#@-node:ekr.20060128081317:shortcutFromSetting
+#@+node:ekr.20060126163152.2:k.strokeFromEvent
+# The keys to k.bindingsDict must be consistent with what this method returns.
+# See 'about internal bindings' for details.
+ 
+def strokeFromEvent (self,event):
+    
+    k = self ; k.c
+    if event is None: return ''
+    trace = k.trace_key_event and not g.app.unitTesting
+    state = event.state or 0
+    keysym = event.keysym or ''
+    ch = event.char
+    result = []
+    shift = (state & 1) == 1 # Not used for alpha chars.
+    caps  = (state & 2) == 2
+    ctrl  = (state & 4) == 4
+    # Linux uses, 8 and 0x80, XP uses 0x20000.
+    if sys.platform=='darwin':
+        alt = (state&0x10) == 0x10
+        num = False
+    elif sys.platform.startswith('win'):
+        alt = (state & 0x20000) == 0x20000
+        num = (state & 8) == 8
+    else:
+        num = False # ???
+        alt = (state & 8) == 8 or (state & 0x80) == 0x80
+    plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
+    
+    if trace: g.trace('ch',repr(ch),'keysym',repr(keysym),'state: %x' % state)
+    
+    # Undo the effect of the caps-lock key.
+    if caps:
+        if alt or ctrl or k.ignore_caps_lock:
+            if shift:
+                ch = ch.upper() ; keysym = keysym.upper()
+                event.char=event.char.upper()
+                event.keysym=event.keysym.upper()
+            else:
+                ch = ch.lower() ; keysym = keysym.lower()
+                event.char=event.char.lower()
+                event.keysym=event.keysym.lower()
+    
+    # The big aha: we can ignore the shift state.
+    if plain:
+        if shift and ch.isalpha() and ch.islower():
+            g.trace('oops: inconsistent shift state. shift: %s, ch: %s' % (shift,ch))
+        ch = keysym
+        shift = False
+    else:
+        ch2 = k.tkBindNamesInverseDict.get(keysym)
+        if ch2:
+            ch = ch2
+            if len(ch) == 1: shift = False
+        else:
+            # Just use the unknown keysym.
+            pass # There are lots of keysyms that Leo may not know about.
+            # g.trace('*'*30,'unknown keysym',repr(keysym))
+    
+    if alt: result.append('Alt+')
+    if ctrl: result.append('Ctrl+')
+    if shift: result.append('Shift+')
+    result.append(ch)
+    result = ''.join(result)
+    # g.trace('state',state,'keysym',keysym,'result',repr(result))
+    return result
+#@nonl
+#@-node:ekr.20060126163152.2:k.strokeFromEvent
+#@+node:ekr.20060131075440:k.tkbindingFromStroke
+def tkbindingFromStroke (self,stroke):
+    
+    '''Convert a stroke (key to k.bindingsDict) to an actual Tk binding.
+    
+    Used only to simulate keystrokes.'''
+    
+    stroke = stroke.lstrip('<').rstrip('>')
+    
+    for a,b in (
+        ('Alt+','Alt-'),
+        ('Ctrl+','Control-'),
+        ('Shift+','Shift-'),
+    ):
+        stroke = stroke.replace(a,b)
+        
+    return '<%s>' % stroke
+#@nonl
+#@-node:ekr.20060131075440:k.tkbindingFromStroke
+#@+node:ekr.20060201083154:k.prettyPrintKey
+def prettyPrintKey (self,stroke):
+    
+    s = stroke and stroke.strip().lstrip('<').rstrip('>')
+    if not s: return ''
+
+    shift = s.find("shift") >= 0 or s.find("shft") >= 0
+    
+    # Replace all minus signs by plus signs, except a trailing minus:
+    if s.endswith('-'): s = s[:-1].replace('-','+') + '-'
+    else:               s = s.replace('-','+')
+    fields = s.split('+')
+    last = fields and fields[-1]
+
+    if last and len(last) == 1:
+        prev = s[:-1]
+        if last.isalpha():
+            if last.isupper():
+                if not shift:
+                    s = prev + 'Shift+' + last
+            elif last.islower():
+                if not prev:
+                    s = 'Key+' + last.upper()
+                else:
+                    s = prev + last.upper()
+
+    return '<%s>' % s
+#@nonl
+#@-node:ekr.20060201083154:k.prettyPrintKey
+#@-node:ekr.20060128092340:Shortcuts (keyHandler)
+#@+node:ekr.20050920085536.65:masterCommand & helpers
+def masterCommand (self,event,func,stroke,commandName=None):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    c.setLog()
+    trace = c.config.getBool('trace_masterCommand')
+  
+    c.startRedrawCount = c.frame.tree.redrawCount
+    k.stroke = stroke # Set this global for general use.
+    keysym = event and event.keysym or ''
+    ch = event and event.char or ''
+    w = event and event.widget
+    state = event and hasattr(event,'state') and event.state or 0
+    k.func = func
+    k.funcReturn = None # For unit testing.
+    commandName = commandName or func and func.__name__ or '<no function>'
+    special = keysym in (
+        'Caps_Lock','Num_Lock','Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func is not None
+
+    if trace and interesting:
+        g.trace(
+            # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+            'w:',w and c.widget_name(w),'func:',func and func.__name__
+        )
+
+    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+
+    inserted = not special or (
+        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
+
+    if inserted:
+        # g.trace(stroke,keysym)
+        << add character to history >>
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName)
+        return 'break'
+        
+    if special: # Don't pass these on.
+        return 'break' 
+
+    if 0: # *** This is now handled by k.masterKeyHandler.
+        if k.inState():
+            val = k.callStateFunction(event) # Calls end-command.
+            if val != 'do-func': return 'break'
+            g.trace('Executing key outside of mode')
+
+    if k.regx.iter:
+        try:
+            k.regXKey = keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        if trace: g.trace('command',commandName)
+        if commandName.startswith('specialCallback'):
+            # The callback function will call c.doCommand
+            val = func(event)
+            # k.simulateCommand uses k.funcReturn.
+            k.funcReturn = k.funcReturn or val # For unit tests.
+        else:
+            # Call c.doCommand directly
+            c.doCommand(func,commandName,event=event)
+        k.endCommand(event,commandName)
+        return 'break'
+    elif k.inState():
+        return 'break' # New in 4.4b2: ignore unbound keys in a state.
+    else:
+        val = k.handleDefaultChar(event)
+        return val
+#@nonl
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+k.keysymHistory.insert(0,keysym)
+
+if len(ch) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,ch)
+
+if 0: # traces
+    g.trace(keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self ; val = None
+    
+    # g.trace(k.state.kind)
+    
+    if k.state.kind:
+        if k.state.handler:
+            val = k.state.handler(event)
+            if val != 'continue':
+                k.endCommand(event,k.commandName)
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+            
+    return val
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        k.endCommand(event,commandName)
+    
+    return func
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+#@+node:ekr.20051026083544:handleDefaultChar
+def handleDefaultChar(self,event):
+    
+    k = self ; c = k.c
+    w = event and event.widget
+    name = c.widget_name(w)
+
+    if name.startswith('body'):
+        action = k.unboundKeyAction
+        if action in ('insert','overwrite'):
+            c.editCommands.selfInsertCommand(event,action=action)
+        else:
+            pass ; g.trace('ignoring key')
+        return 'break'
+    elif name.startswith('head'):
+        c.frame.tree.onHeadlineKey(event)
+        return 'break'
+    else:
+        # Let tkinter handle the event.
+        # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
+        return None
+#@nonl
+#@-node:ekr.20051026083544:handleDefaultChar
+#@-node:ekr.20050920085536.65:masterCommand & helpers
+#@+node:ekr.20060127183752:masterKeyHandler & helper
+master_key_count = 0
+
+def masterKeyHandler (self,event):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    k = self ; c = k.c
+    val = self.masterKeyHandlerHelper(event)
+    if val and c and c.exists: # Ignore special keys.
+        c.frame.updateStatusLine()
+        c.masterFocusHandler()
+    return val
+#@nonl
+#@+node:ekr.20060205221734:masterKeyHandlerHelper
+def masterKeyHandlerHelper (self,event):
+
+    k = self ; c = k.c
+    w = event and event.widget
+    w_name = c.widget_name(w)
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+    keysym = event.keysym or ''
+    if keysym in (
+        'Caps_Lock', 'Num_Lock', 'Control_L', 'Alt_L',
+        'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R'):
+        return None
+        
+    self.master_key_count += 1
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
+
+    stroke = k.strokeFromEvent(event)
+
+    # Pass keyboard-quit to k.masterCommand for macro recording.
+    if k.abortAllModesKey and stroke == k.abortAllModesKey:
+        return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
+        
+    state = k.state.kind
+    if trace: g.trace(repr(stroke),'state',state)
+    if k.inState():
+        # First: honor the 'mini' bindings.
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            # if trace: g.trace(repr(stroke),'mini binding',b.commandName)
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return 'break'
+        # Second, pass keys to getArg or full-command modes if they are active.
+        if state == 'getArg':
+            return k.getArg(event)
+        elif state == 'full-command':
+            d = k.masterBindingsDict.get('mini')
+            b = d.get(stroke)
+            if b:
+                # Pass this on for macro recording.
+                k.masterCommand(event,b.func,stroke,b.commandName)
+                c.minibufferWantsFocus()
+                return 'break'
+            else:
+                # Do the default state action.
+                k.callStateFunction(event) # Calls end-command.
+                return 'break'
+        # Third, pass keys to the general mode handler.
+        d =  k.masterBindingsDict.get(state)
+        if d:
+            # A typical state
+            b = d.get(stroke)
+            g.trace(d.keys())
+            if b:
+                return k.generalModeHandler (event,
+                    commandName=b.commandName,func=b.func,
+                    modeName=state,nextMode=b.nextMode)
+            else:
+                return k.modeHelp(event)
+        else:
+            g.trace('No state dictionary for %s' % state)
+            return 'break'
+    
+    for key,name in (
+        # Order here is similar to bindtags order.
+        ('body','body'),
+        ('text','head'), # Important: text bindings in head before tree bindings.
+        ('tree','head'),
+        ('tree','canvas'),
+        ('log', 'log'),
+        ('text',None), ('all',None),
+    ):
+        if (
+            name and w_name.startswith(name) or
+            key == 'text' and g.app.gui.isTextWidget(w) or
+            key == 'all'
+        ):
+            d = k.masterBindingsDict.get(key)
+            # g.trace(key,name,d and len(d.keys()))
+            if d:
+                b = d.get(stroke)
+                if b:
+                    if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                    return k.masterCommand(event,b.func,b.stroke,b.commandName)
+
+    if (k.ignore_unbound_non_ascii_keys and
+        (stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1)
+    ):
+        if trace: g.trace('ignoring unbound non-ascii key')
+        return 'break'
+    else:
+        if trace: g.trace(repr(stroke),'no func')
+        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+#@-node:ekr.20060205221734:masterKeyHandlerHelper
+#@-node:ekr.20060127183752:masterKeyHandler & helper
+#@-node:ekr.20060213151411:Fixed (maybe) problems with unicode characters & caps lock
+#@-node:ekr.20060214140930:4.4x1 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

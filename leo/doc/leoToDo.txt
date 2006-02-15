@@ -2,87 +2,16 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060116073938:To do 4.4b3
-#@+node:ekr.20060213164147:Fix crasher in Go To Line command
+#@+node:ekr.20060215055823:Arrow keys destroy UNL line
 @nocolor
 
-http://sourceforge.net/forum/message.php?msg_id=3545403
-By: e
+http://sourceforge.net/forum/message.php?msg_id=3577022
+By: tfer
 
-more str() to remove...
-
-with some non ascii headline,
-a traceback after an executeScript
-calls goto linenumber
-
- \leo-4-4-\src\leoCommands.py, line 1822, in goToScriptLineNumber
-    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
- \leo-4-4-\src\leoCommands.py", line 1466, in goToLineNumber
-    if p.matchHeadline(vnodeName):
- \leo-4-4-\src\leoNodes.py, line 1631, in matchHeadline
-    def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
- \leo-4-4-\src\leoNodes.py, line 665, in matchHeadline
-    return s == h[0:len(s)]
-UnicodeDecodeError: 'ascii' codec can't decode byte 0xc2 in position 1: ordinal
-not in range(128)
-
-aÂ² + bÂ² = cÂ²
-#@-node:ekr.20060213164147:Fix crasher in Go To Line command
-#@+node:ekr.20060213151411:Fix problems with unicode characters & caps lock
-#@+node:ekr.20060213160417:Report
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3573470
-By: nobody
-
-Thank you for fast respond. I made some next testing and here are results.
-
-OS - WindowsXP
->> locale.getdefaultlocale()
-('cs_CZ', 'cp1250')
-
-I'm trying write letters 'eÃ©Ä>Ã«' in mini-buffer:
-
-e = LATIN SMALL LETTER E
-Ã© = LATIN SMALL LETTER E WITH ACUTE
-Ä> = LATIN SMALL LETTER E WITH CARON
-Ã« = LATIN SMALL LETTER E WITH DIAERESIS
-
-Letters 'Ä>' and 'Ã©' are directly on the keyboard,
-letter 'Ã«' I have to insert as multi key.
-
->> @bool trace_masterKeyHandler = True 
->> In leoSettings.leo. You should see the message: 
->> 'ignoring unbound special key' 
-
-No - I got message:
-
------------------------------------------------
-strokeFromEvent: state 4 keysym f result 'Ctrl+f'
-masterKeyHandlerHelper: 'Ctrl+f' state None
-masterKeyHandlerHelper: all found Ctrl+f = search-with-present-options
-strokeFromEvent: state 0 keysym e result 'e'
-masterKeyHandlerHelper: 'e' state getArg
-strokeFromEvent: ****************************** unknown keysym 'eacute'
-strokeFromEvent: state 0 keysym eacute result '\xc3\xa9'
-masterKeyHandlerHelper: '\xc3\xa9' state getArg
-strokeFromEvent: ****************************** unknown keysym 'igrave'
-strokeFromEvent: state 0 keysym igrave result '\xc4\x9b'
-masterKeyHandlerHelper: '\xc4\x9b' state getArg
-strokeFromEvent: ****************************** unknown keysym 'Multi_key'
-strokeFromEvent: state 0 keysym Multi_key result ''
-masterKeyHandlerHelper: '' state getArg
-strokeFromEvent: state 0 keysym e result 'e'
-masterKeyHandlerHelper: 'e' state getArg
------------------------------------------------
-
-When I insert same letters in body panel, message is identical, but text in
-panel is inserted correctly.
-
-(Sorry for my english, I'm not native speaker).
-
-Milan Melena
-#@-node:ekr.20060213160417:Report
-#@-node:ekr.20060213151411:Fix problems with unicode characters & caps lock
+You can click nodes and get the UNL to display, but when arrowing around the
+tree, UNL area flashes the unl and then clears it immediately.
+#@nonl
+#@-node:ekr.20060215055823:Arrow keys destroy UNL line
 #@+node:ekr.20051126122638:Autocompletion tab
 - Use typing completion to select desired word.
 - No auto-scan: use database instead.
@@ -2150,7 +2079,7 @@ def createBalloon (tab,sv):
 #@+node:ekr.20031218072017.3803:createHelpMenuFromTable
 def createHelpMenuFromTable (self):
 
-    if sys.platform == 'darwin':
+    if 0: ## sys.platform == 'darwin':
         helpMenu = self.getMacHelpMenu()
         if not helpMenu: return
     else:
@@ -2360,9 +2289,9 @@ def masterCommand (self,event,func,stroke,commandName=None):
     k.funcReturn = None # For unit testing.
     commandName = commandName or func and func.__name__ or '<no function>'
     special = keysym in (
-        'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+        'Caps_Lock','Num_Lock','Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
     interesting = func is not None
-    
+
     if trace and interesting:
         g.trace(
             # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
@@ -3406,7 +3335,7 @@ def createWindowMenuFromTable (self):
 #@+node:ekr.20031218072017.3803:createHelpMenuFromTable
 def createHelpMenuFromTable (self):
 
-    if sys.platform == 'darwin':
+    if 0: ## sys.platform == 'darwin':
         helpMenu = self.getMacHelpMenu()
         if not helpMenu: return
     else:

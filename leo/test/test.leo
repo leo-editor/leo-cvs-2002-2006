@@ -226,7 +226,7 @@
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
 </v>
-<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -243,6 +243,7 @@
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
 </v>
+<v t="ekr.20060215083254" a="EV"><vh>Э Test of matchHeadline</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4424,5 +4425,7 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
+<t tx="ekr.20060215083254">print p.matchHeadline('Э')
+print p.matchHeadline('a')</t>
 </tnodes>
 </leo_file>
