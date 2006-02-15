@@ -30,6 +30,7 @@ include doc/LeoDocs.leo
 include doc/leoNotes.txt
 include doc/LeoPostings.leo
 include doc/leoToDo.txt
+include doc/leoToDoLater.txt
 
 include doc/README.TXT
 include doc/INSTALL.TXT

@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1124" clone_windows="0"/>
-<globals body_outline_ratio="0.475703324808">
-	<global_window_position top="57" left="339" height="782" width="822"/>
+<globals body_outline_ratio="0.714833759591">
+	<global_window_position top="40" left="441" height="782" width="822"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -189,7 +189,7 @@
 </v>
 <v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="EKR.20040519090846" a="E"><vh>Distribution files (update for each release)</vh>
+<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@asis ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -199,7 +199,7 @@
 </v>
 <v t="EKR.20040519090846.1"><vh>@asis ../doc/LICENSE.TXT</vh></v>
 <v t="EKR.20040519090846.8"><vh>@asis ../doc/PKG-INFO.TXT</vh></v>
-<v t="EKR.20040519090846.9" a="V"><vh>@asis ../doc/README.TXT</vh></v>
+<v t="EKR.20040519090846.9"><vh>@asis ../doc/README.TXT</vh></v>
 <v t="EKR.20040519082027.23"><vh>@thin createLeoDist.py</vh></v>
 <v t="EKR.20040519100230"><vh>In leo directory</vh>
 <v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
@@ -209,9 +209,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
-<v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
+<v t="EKR.20040519090846.10" a="V"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
@@ -739,6 +739,7 @@ include doc/LeoDocs.leo
 include doc/leoNotes.txt
 include doc/LeoPostings.leo
 include doc/leoToDo.txt
+include doc/leoToDoLater.txt
 
 include doc/README.TXT
 include doc/INSTALL.TXT
