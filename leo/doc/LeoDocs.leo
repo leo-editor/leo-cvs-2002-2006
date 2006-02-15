@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="22811" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="22857" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
 	<global_window_position top="40" left="391" height="857" width="731"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -745,7 +745,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="V"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -2461,8 +2461,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20060206111508" a="EV"><vh>4.4 beta 2</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20060206111508"><vh>4.4 beta 2</vh>
 <v t="ekr.20060206111508.2"><vh>Bugs fixed</vh>
 <v t="ekr.20060206111508.3"><vh>Fixed crasher in Save button</vh></v>
 <v t="ekr.20060206111508.4"><vh>Fixed minor bugs &amp; made minor improvements</vh>
@@ -2582,6 +2582,12 @@
 <v t="ekr.20060214092741"><vh>User input modes</vh>
 <v t="ekr.20060105214753"><vh>Input modes</vh></v>
 </v>
+</v>
+<v t="ekr.20060215112429" a="E"><vh>4.4 experimental 1</vh>
+<v t="ekr.20060215112429.9" a="E"><vh>Fixed (maybe) problems with unicode characters &amp; caps lock</vh></v>
+<v t="ekr.20060215112429.2"><vh>Restored some legacy bindings</vh></v>
+<v t="ekr.20060215112429.3" a="E"><vh>Fixed crasher in Go To Line command</vh></v>
+<v t="ekr.20060215112429.6" a="E"><vh>Fixed menu problem on Linux</vh></v>
 </v>
 </v>
 </v>
@@ -23984,5 +23990,54 @@ See the child of this node for full details.
 - All key bindings specified with !mini pane specifier apply to all modes.
 
 </t>
+<t tx="ekr.20060215112429">Leo 4.4 experimental 1                                      February 15, 2006
+
+This version is an emergency measure.  It's goals:
+
+1.  To fix some of the key-handling issues in Leo 4.4 b2.
+2.  To allow further experimentation with key handling.
+3.  To allow easy reporting of any other key handling problems.
+
+Please do not use this version (or Leo 4.4b2) unless you are ready to report bugs.
+
+My apologies for the key handling problems in Leo 4.4 b2.  I hope this version will
+be all that is necessary to fix those problems.
+
+Here are the details of the key-handling changes:
+
+- Added support for trace_key_event setting.
+- Added support for ignore_caps_lock setting.
+- Added Caps_Lock and Num_Lock to k.tkNamesList and in the list of
+  special keys in k.masterCommand and k.masterKeyHandlerHelper.
+- Added support for k.ignore_unbound_non_ascii_keys logic in masterKeyHandlerHelper.
+- Disabled unknown keysym trace in k.strokeFromEvent.
+- Enabled the international keyboard on XP as an aid to testing.
+- Added support for swap_mac_keys setting in k.shortcutFromSetting.</t>
+<t tx="ekr.20060215112429.2">extract                             = Shift-Ctrl-D
+extract-names                       = Shift-Ctrl-N
+extract-section                     = Shift-Ctrl-S  # Shift-Ctrl-E: end-of-line-extend-selection
+
+write-at-file-nodes                 = Shift-Ctrl-W # Was enter-file-mode.
+write-dirty-at-file-nodes           = Shift+Ctrl+Q
+
+# Removed definitions of find and file modes.  I never used them.</t>
+<t tx="ekr.20060215112429.3">http://sourceforge.net/forum/message.php?msg_id=3545403</t>
+<t tx="ekr.20060215112429.6">The patch was reported at:
+
+http://sourceforge.net/forum/message.php?msg_id=3577681
+
+Thanks to caugm.</t>
+<t tx="ekr.20060215112429.9">http://sourceforge.net/forum/message.php?msg_id=3573470
+
+What I did:
+
+- Added support for trace_key_event setting.
+- Added support for ignore_caps_lock setting.
+- Added Caps_Lock and Num_Lock to k.tkNamesList and in the list of
+  special keys in k.masterCommand and k.masterKeyHandlerHelper.
+- Added support for k.ignore_unbound_non_ascii_keys logic in masterKeyHandlerHelper.
+- Disabled unknown keysym trace in k.strokeFromEvent.
+- Enabled the international keyboard on XP as an aid to testing.
+- Added support for swap_mac_keys setting in k.shortcutFromSetting.</t>
 </tnodes>
 </leo_file>
