@@ -122,6 +122,7 @@ class keyHandlerClass:
     #@+middle:ekr.20060131101205.1: constants and dicts
     #@+node:ekr.20060131101205.2:<< define list of special names >>
     tkNamesList = (
+        'Caps_Lock','Num_Lock', # New in 4.4b3.
         'space',
         'BackSpace','Begin','Break','Clear',
         'Delete','Down',
@@ -263,6 +264,11 @@ class keyHandlerClass:
         self.x_hasNumeric = ['sort-lines','sort-fields']
     
         self.altX_prompt = 'full-command: '
+        
+        self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
+        self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
+        self.trace_key_event                = c.config.getBool('trace_key_event')
+        self.swap_mac_keys                   c.config.getBool('swap_mac_keys')
         #@    << define Tk ivars >>
         #@+node:ekr.20051006092617:<< define Tk ivars >>
         if self.useTextWidget:
@@ -627,9 +633,9 @@ class keyHandlerClass:
         k.funcReturn = None # For unit testing.
         commandName = commandName or func and func.__name__ or '<no function>'
         special = keysym in (
-            'Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+            'Caps_Lock','Num_Lock','Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
         interesting = func is not None
-        
+    
         if trace and interesting:
             g.trace(
                 # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
@@ -1401,7 +1407,9 @@ class keyHandlerClass:
         w_name = c.widget_name(w)
         trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
         keysym = event.keysym or ''
-        if keysym in ('Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R','Win_L','Win_R'):
+        if keysym in (
+            'Caps_Lock', 'Num_Lock', 'Control_L', 'Alt_L',
+            'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R'):
             return None
             
         self.master_key_count += 1
@@ -1480,13 +1488,14 @@ class keyHandlerClass:
                         if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
                         return k.masterCommand(event,b.func,b.stroke,b.commandName)
     
-        if stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1:
-            if trace: g.trace('ignoring unbound special key')
+        if (k.ignore_unbound_non_ascii_keys and
+            (stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1)
+        ):
+            if trace: g.trace('ignoring unbound non-ascii key')
             return 'break'
         else:
             if trace: g.trace(repr(stroke),'no func')
             return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
-    #@nonl
     #@-node:ekr.20060205221734:masterKeyHandlerHelper
     #@-node:ekr.20060127183752:masterKeyHandler & helper
     #@+node:ekr.20060129052538.2:masterClickHandler
@@ -2005,6 +2014,8 @@ class keyHandlerClass:
     #@-node:ekr.20060120071949:isPlainKey
     #@+node:ekr.20060128081317:shortcutFromSetting
     def shortcutFromSetting (self,setting):
+        
+        k = self
     
         if not setting:
             return None
@@ -2018,15 +2029,19 @@ class keyHandlerClass:
         ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
         alt   = s2.find("alt") >= 0
         shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
-        
-        if sys.platform == "darwin":
+        #@nonl
+        #@-node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
+        #@nl
+        if k.swap_mac_keys and sys.platform == "darwin":
+            #@        << swap cmd and ctrl keys >>
+            #@+node:ekr.20060215104239:<< swap cmd and ctrl keys >>
             if ctrl and not cmd:
                 cmd = True ; ctrl = False
             if alt and not ctrl:
                 ctrl = True ; alt = False
-        #@nonl
-        #@-node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
-        #@nl
+            #@nonl
+            #@-node:ekr.20060215104239:<< swap cmd and ctrl keys >>
+            #@nl
         #@    << convert minus signs to plus signs >>
         #@+node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
         # Replace all minus signs by plus signs, except a trailing minus:
@@ -2089,20 +2104,41 @@ class keyHandlerClass:
      
     def strokeFromEvent (self,event):
         
-        c = self.c ; k = c.k
+        k = self ; k.c
         if event is None: return ''
         state = event.state or 0
         keysym = event.keysym or ''
         ch = event.char
         result = []
         shift = (state & 1) == 1 # Not used for alpha chars.
-        caps  = (state & 2) == 2 # Not used at all.
+        caps  = (state & 2) == 2
         ctrl  = (state & 4) == 4
         # Linux uses, 8 and 0x80, XP uses 0x20000.
-        alt   = (state & 0x20000) == 0x20000 or (state & 8) == 8 or (state & 0x80) == 0x80
+        if sys.platform=='darwin':
+            alt = (state&0x10) == 0x10
+            num = False
+        elif sys.platform.startswith('win'):
+            alt = (state & 0x20000) == 0x20000
+            num = (state & 8) == 8
+        else:
+            num = False # ???
+            alt = (state & 8) == 8 or (state & 0x80) == 0x80
         plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
         
-        # g.trace('ch',repr(ch),'keysym',repr(keysym),'state: %x' % state)
+        if k.trace_key_event: g.trace('ch',repr(ch),'keysym',repr(keysym),'state: %x' % state)
+        
+        # Undo the effect of the caps-lock key.
+        if caps:
+            g.trace(k.ignore_caps_lock)
+            if alt or ctrl or k.ignore_caps_lock:
+                if shift:
+                    ch = ch.upper() ; keysym = keysym.upper()
+                    event.char=event.char.upper()
+                    event.keysym=event.keysym.upper()
+                else:
+                    ch = ch.lower() ; keysym = keysym.lower()
+                    event.char=event.char.lower()
+                    event.keysym=event.keysym.lower()
         
         # The big aha: we can ignore the shift state.
         if plain:
@@ -2117,7 +2153,8 @@ class keyHandlerClass:
                 if len(ch) == 1: shift = False
             else:
                 # Just use the unknown keysym.
-                g.trace('*'*30,'unknown keysym',repr(keysym))
+                pass # There are lots of keysyms that Leo may not know about.
+                # g.trace('*'*30,'unknown keysym',repr(keysym))
         
         if alt: result.append('Alt+')
         if ctrl: result.append('Ctrl+')
