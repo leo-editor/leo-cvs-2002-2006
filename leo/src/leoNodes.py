@@ -652,17 +652,16 @@ class baseVnode (object):
         """Returns True if the headline matches the pattern ignoring whitespace and case.
         
         The headline may contain characters following the successfully matched pattern."""
+        
+        v = self
+        
+        h = g.toUnicode(v.headString(),'utf-8')
+        h = h.lower().replace(' ','').replace('\t','')
     
-        h = string.lower(self.headString())
-        h = string.replace(h,' ','')
-        h = string.replace(h,'\t','')
-    
-        s = string.lower(pattern)
-        s = string.replace(s,' ','')
-        s = string.replace(s,'\t','')
-    
-        # ignore characters in the headline following the match
-        return s == h[0:len(s)]
+        pattern = g.toUnicode(pattern,'utf-8')
+        pattern = pattern.lower().replace(' ','').replace('\t','')
+        
+        return h.startswith(pattern)
     #@nonl
     #@-node:ekr.20031218072017.3353:matchHeadline
     #@-node:ekr.20031218072017.3346:v.Comparisons
