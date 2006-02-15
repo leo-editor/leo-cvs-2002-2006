@@ -2106,6 +2106,7 @@ class keyHandlerClass:
         
         k = self ; k.c
         if event is None: return ''
+        trace = k.trace_key_event and not g.app.unitTesting
         state = event.state or 0
         keysym = event.keysym or ''
         ch = event.char
@@ -2125,11 +2126,10 @@ class keyHandlerClass:
             alt = (state & 8) == 8 or (state & 0x80) == 0x80
         plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
         
-        if k.trace_key_event: g.trace('ch',repr(ch),'keysym',repr(keysym),'state: %x' % state)
+        if trace: g.trace('ch',repr(ch),'keysym',repr(keysym),'state: %x' % state)
         
         # Undo the effect of the caps-lock key.
         if caps:
-            g.trace(k.ignore_caps_lock)
             if alt or ctrl or k.ignore_caps_lock:
                 if shift:
                     ch = ch.upper() ; keysym = keysym.upper()
