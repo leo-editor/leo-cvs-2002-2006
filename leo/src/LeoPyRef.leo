@@ -169,7 +169,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060216071129"><vh>4.4x2 projects</vh>
+<v t="ekr.20060216071129"><vh>4.4a6 projects</vh>
 <v t="ekr.20060216120335"><vh>What I did</vh></v>
 <v t="ekr.20060216093552"><vh>Added support for trace_minibuffer setting</vh>
 <v t="ekr.20050924064254"><vh>Label...</vh>
@@ -258,10 +258,37 @@
 </v>
 <v t="ekr.20060216115304.2"><vh>g.safeStringCompare &amp; test</vh></v>
 </v>
+<v t="ekr.20060215055823"><vh>Arrow keys no longer destroy UNL line</vh>
+<v t="ekr.20060216134253"><vh>Report</vh></v>
+<v t="ekr.20050924064254"><vh>Label...</vh>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus/Now</vh></v>
+<v t="ekr.20051023132350"><vh>getLabel</vh></v>
+<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
+<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
+<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
+<v t="ekr.20060206064635"><vh>extendLabel</vh></v>
+<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
+<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
+<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
+<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
+</v>
+<v t="ekr.20041223104933"><vh>class statusLineClass</vh>
+<v t="ekr.20031218072017.3961"><vh> ctor</vh></v>
+<v t="ekr.20031218072017.3962"><vh>clear</vh></v>
+<v t="EKR.20040424153344"><vh>enable, disable &amp; isEnabled</vh></v>
+<v t="ekr.20041026132435"><vh>get</vh></v>
+<v t="ekr.20041223114744"><vh>getFrame</vh></v>
+<v t="ekr.20050120093555"><vh>onActivate</vh></v>
+<v t="ekr.20041223111916"><vh>pack &amp; show</vh></v>
+<v t="ekr.20031218072017.3963"><vh>put (leoTkinterFrame:statusLineClass)</vh></v>
+<v t="ekr.20041223111916.1"><vh>unpack &amp; hide</vh></v>
+<v t="ekr.20031218072017.1733"><vh>update</vh></v>
+</v>
+<v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
 </v>
 </v>
-<v t="ekr.20060116073938"><vh>To do 4.4a6-b3</vh>
-<v t="ekr.20060215055823"><vh>Arrow keys destroy UNL line</vh></v>
+</v>
+<v t="ekr.20060116073938" a="V"><vh>To do 4.4 b3</vh>
 <v t="ekr.20051126122638"><vh>Autocompletion tab</vh>
 <v t="ekr.20060214110318"><vh>Options</vh></v>
 <v t="ekr.20051205093049"><vh>Use dir for auto-complete ?</vh></v>
@@ -605,7 +632,7 @@
 <v t="ekr.20060207085518"><vh>Improve c.insertHeadline (minor)</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -662,6 +689,27 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
+<t tx="EKR.20040424153344">def disable (self,background=None):
+    
+    c = self.c ; t = self.textWidget
+    if t:
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.enabled = False
+    c.bodyWantsFocus()
+    
+def enable (self,background="white"):
+    
+    # g.trace()
+    c = self.c ; t = self.textWidget
+    if t:
+        t.configure(state="normal",background=background)
+        c.widgetWantsFocus(t)
+    self.enabled = True
+        
+def isEnabled(self):
+    return self.enabled</t>
 <t tx="EKR.20040430162943"></t>
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
@@ -902,6 +950,26 @@ else:
                     # g.trace('2',bunch)
         elif not dynamicMenu:
             g.trace('No inverse for %s' % commandName)</t>
+<t tx="ekr.20031218072017.1733">def update (self):
+    
+    c = self.c ; w = self.bodyCtrl ; lab = self.labelWidget
+    if g.app.killed or not self.isVisible:
+        return
+
+    index = w.index("insert")
+    row,col = g.app.gui.getindex(w,index)
+
+    if col &gt; 0:
+        s = w.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding)
+        col = g.computeWidth (s,c.tab_width)
+
+    if 1: # row != self.lastRow or col != self.lastCol:
+        s = "line %d, col %d " % (row,col)
+        # Important: this does not change the focus because labels never get focus.
+        lab.configure(text=s)
+        self.lastRow = row
+        self.lastCol = col</t>
 <t tx="ekr.20031218072017.1801">def __init__(self,title,gui):
 
     # Init the base class.
@@ -914,6 +982,7 @@ else:
     self.c = None # Set in finishCreate.
     self.iconBar = None
 
+    self.trace_status_line = None # Set in finishCreate.
     &lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</t>
 <t tx="ekr.20031218072017.1802"># "Official ivars created in createLeoFrame and its allies.
 self.bar1 = None
@@ -1022,6 +1091,7 @@ vList = [] ; tDict = {} # Remove these references immediately.</t>
     c.signOnWithVersion()
     f.miniBufferWidget = f.createMiniBufferWidget()
     c.bodyWantsFocusNow()
+    self.trace_status_line = c.config.getBool('trace_status_line')
     # f.enableTclTraces()</t>
 <t tx="ekr.20031218072017.2187">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
     
@@ -2091,6 +2161,64 @@ def onDragSplitterBar (self, event, verticalFlag):
         pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
         pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
         bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)</t>
+<t tx="ekr.20031218072017.3961">def __init__ (self,c,parentFrame):
+    
+    self.c = c
+    self.bodyCtrl = c.frame.bodyCtrl
+    self.colorTags = [] # list of color names used as tags.
+    self.enabled = False
+    self.isVisible = False
+    self.lastRow = self.lastCol = 0
+    self.log = c.frame.log
+    #if 'black' not in self.log.colorTags:
+    #    self.log.colorTags.append("black")
+    self.parentFrame = parentFrame
+    self.statusFrame = Tk.Frame(parentFrame,bd=2)
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
+    self.labelWidget.pack(side="left",padx=1)
+    
+    bg = self.statusFrame.cget("background")
+    self.textWidget = Tk.Text(self.statusFrame,
+        height=1,state="disabled",bg=bg,relief="groove",name='status-line')
+    self.textWidget.pack(side="left",expand=1,fill="x")
+    self.textWidget.bind("&lt;Button-1&gt;", self.onActivate)</t>
+<t tx="ekr.20031218072017.3962">def clear (self):
+    
+    t = self.textWidget
+    if not t: return
+    
+    trace = self.c.frame.trace_status_line and not g.app.unitTesting
+    if trace: g.trace(g.callers())
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")</t>
+<t tx="ekr.20031218072017.3963">def put(self,s,color=None):
+    
+    t = self.textWidget
+    if not t: return
+    
+    trace = self.c.frame.trace_status_line and not g.app.unitTesting
+    if trace: g.trace(s,g.callers())
+    
+    t.configure(state="normal")
+        
+    if color and color not in self.colorTags:
+        self.colorTags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+    t.update_idletasks()</t>
 <t tx="ekr.20031218072017.3964"></t>
 <t tx="ekr.20031218072017.3965">def destroyAllPanels (self):
 
@@ -2536,6 +2664,27 @@ self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable)</
     &lt;&lt; initialize ivars &gt;&gt;
     self.config = configSettings(c)
     g.app.config.setIvarsFromSettings(c)</t>
+<t tx="ekr.20040803072955.126">def endEditLabel (self):
+    
+    '''End editing of a headline and update p.headString().'''
+
+    c = self.c ; k = c.k ; p = c.currentPosition()
+
+    self.setEditPosition(None) # That is, self._editPosition = None
+    
+    if k:
+        k.setDefaultUnboundKeyAction()
+        # k.showStateAndMode() # Destroys UNL info.
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)</t>
+<t tx="ekr.20041026132435">def get (self):
+    
+    t = self.textWidget
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""</t>
 <t tx="ekr.20041119040438">@nocolor
 
 This tree contains settings unique to this outline.</t>
@@ -2715,6 +2864,28 @@ def components (self):
 
 Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.</t>
 <t tx="ekr.20041221195402"></t>
+<t tx="ekr.20041223104933">class statusLineClass:
+    
+    '''A class representing the status line.'''
+    
+    @others</t>
+<t tx="ekr.20041223111916">def pack (self):
+    
+    if not self.isVisible:
+        self.isVisible = True
+        self.statusFrame.pack(fill="x",pady=1)
+        
+show = pack</t>
+<t tx="ekr.20041223111916.1">def unpack (self):
+    
+    if self.isVisible:
+        self.isVisible = False
+        self.statusFrame.pack_forget()
+
+hide = unpack</t>
+<t tx="ekr.20041223114744">def getFrame (self):
+    
+    return self.statusFrame</t>
 <t tx="ekr.20041223130032"># Create splitter1 and its components.
 splitter1 = self.createLeoPmwSplitter(parentFrame,self.splitVerticalFlag,'splitter1')
 self.split1Pane1 = splitter2Frame = splitter1.add('splitter2Frame',min=50,size=300)
@@ -2761,6 +2932,11 @@ def mapWheel(e):
         return frame.OnMouseWheel(e)
 
 canvas.bind("&lt;ButtonPress&gt;",mapWheel,add=1)</t>
+<t tx="ekr.20050120093555">def onActivate (self,event=None):
+    
+    # Don't change background as the result of simple mouse clicks.
+    background = self.statusFrame.cget("background")
+    self.enable(background=background)</t>
 <t tx="ekr.20050420073615">c:\prog\leoCVS\leo\doc\LeoDocs.leo
 LeoPy.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
@@ -6247,13 +6423,7 @@ if has_cmd: # 11/18/03
     
 bind_shortcut = "&lt;" + bind_head + bind_last + "&gt;"
 menu_shortcut = menu_head + menu_last</t>
-<t tx="ekr.20060215055823">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3577022
-By: tfer
-
-You can click nodes and get the UNL to display, but when arrowing around the
-tree, UNL area flashes the unl and then clears it immediately.</t>
+<t tx="ekr.20060215055823"></t>
 <t tx="ekr.20060215090312">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3545403
@@ -6713,5 +6883,11 @@ It's a bit tricky to test.
 - The ignore_caps_lock is no longer functional. Sigh. This depends on knowing
 the Caps_Lock bit in key events. I may put this back later, but I can't delay a6
 even a minute for this.</t>
+<t tx="ekr.20060216134253">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3577022
+
+You can click nodes and get the UNL to display, but when arrowing around the
+tree, UNL area flashes the unl and then clears it immediately.</t>
 </tnodes>
 </leo_file>

@@ -259,6 +259,7 @@ def __init__(self,title,gui):
     self.c = None # Set in finishCreate.
     self.iconBar = None
 
+    self.trace_status_line = None # Set in finishCreate.
     << set the leoTkinterFrame ivars >>
 #@nonl
 #@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
@@ -331,6 +332,7 @@ def finishCreate (self,c):
     c.signOnWithVersion()
     f.miniBufferWidget = f.createMiniBufferWidget()
     c.bodyWantsFocusNow()
+    self.trace_status_line = c.config.getBool('trace_status_line')
     # f.enableTclTraces()
 #@nonl
 #@+node:ekr.20051009044751:createOuterFrames
@@ -2536,7 +2538,7 @@ def callAltXFunction (self,event):
 #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
 #@-node:ekr.20060213151411:Fixed (maybe) problems with unicode characters & caps lock
 #@-node:ekr.20060214140930:4.4x1 projects
-#@+node:ekr.20060216071129:4.4x2 projects
+#@+node:ekr.20060216071129:4.4a6 projects
 #@+node:ekr.20060216120335:What I did
 @nocolor
 
@@ -4284,7 +4286,380 @@ def test_g_safeStringCompare ():
 #@nonl
 #@-node:ekr.20060216115304.2:g.safeStringCompare & test
 #@-node:ekr.20060216115304:Fixed crasher in k.masterCommand
-#@-node:ekr.20060216071129:4.4x2 projects
+#@+node:ekr.20060215055823:Arrow keys no longer destroy UNL line
+#@+node:ekr.20060216134253:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3577022
+
+You can click nodes and get the UNL to display, but when arrowing around the
+tree, UNL area flashes the unl and then clears it immediately.
+#@nonl
+#@-node:ekr.20060216134253:Report
+#@+node:ekr.20050924064254:Label...
+@ There is something dubious about tracking states separately for separate commands.
+In fact, there is only one mini-buffer, and it has only one state.
+OTOH, maintaining separate states makes it impossible for one command to influence another.
+
+trace = self.trace_minibuffer and not g.app.unitTesting
+#@nonl
+#@+node:ekr.20060125175103:k.minibufferWantsFocus/Now
+def minibufferWantsFocus(self):
+    
+    c = self.c
+    if self.useTextWidget:
+        c.widgetWantsFocus(c.miniBufferWidget)
+    else:
+        c.bodyWantsFocus()
+
+def minibufferWantsFocusNow(self):
+    
+    c = self.c
+    if self.useTextWidget:
+        c.widgetWantsFocusNow(c.miniBufferWidget)
+    else:
+        c.bodyWantsFocusNow()
+#@nonl
+#@-node:ekr.20060125175103:k.minibufferWantsFocus/Now
+#@+node:ekr.20051023132350:getLabel
+def getLabel (self,ignorePrompt=False):
+    
+    k = self ; w = self.widget
+    if not w: return ''
+    trace = self.trace_minibuffer and not g.app.unitTesting
+    
+    if self.useTextWidget:
+        w.update_idletasks()
+        s = w and w.get('1.0','end')
+        # Remove the cursed Tk newline.
+        while s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
+        
+    else:
+        s = k.svar and k.svar.get()
+        
+    if trace: g.trace(repr(s))
+
+    if ignorePrompt:
+        return s[len(k.mb_prefix):]
+    else:
+        return s or ''
+
+#@-node:ekr.20051023132350:getLabel
+#@+node:ekr.20051023132350.2:protectLabel
+def protectLabel (self):
+    
+    k = self ; w = self.widget
+    if not w: return
+
+    if self.useTextWidget:
+        w.update_idletasks()
+        k.mb_prefix = w.get('1.0','end')
+    else:
+        if k.svar:
+            k.mb_prefix = k.svar.get()
+#@nonl
+#@-node:ekr.20051023132350.2:protectLabel
+#@+node:ekr.20050920085536.37:resetLabel
+def resetLabel (self):
+    
+    k = self
+    k.setLabelGrey('')
+    k.mb_prefix = ''
+#@nonl
+#@-node:ekr.20050920085536.37:resetLabel
+#@+node:ekr.20051023132350.1:setLabel
+def setLabel (self,s,protect=False):
+
+    k = self ; c = k.c ; w = self.widget
+    if not w: return
+    trace = self.trace_minibuffer and not g.app.unitTesting
+
+    if trace: g.trace(repr(s),g.callers())
+
+    if self.useTextWidget:
+        w.delete('1.0','end')
+        w.insert('1.0',s)
+        c.masterFocusHandler() # Restore to the previously requested focus.
+    else:
+        if k.svar: k.svar.set(s)
+
+    if protect:
+        k.mb_prefix = s
+#@nonl
+#@-node:ekr.20051023132350.1:setLabel
+#@+node:ekr.20060206064635:extendLabel
+def extendLabel(self,s,select=False,protect=False):
+    
+    k = self ; c = k.c ; w = self.widget
+    if not w: return
+    trace = self.trace_minibuffer and not g.app.unitTesting
+    
+    if trace: g.trace(repr(s))
+    if not s: return
+
+    if self.useTextWidget:
+        c.widgetWantsFocusNow(w)
+        w.insert('end',s)
+        if select:
+            i,j = k.getEditableTextRange()
+            g.app.gui.setTextSelection(w,i,j,insert=j)
+        if protect:
+            k.protectLabel()
+#@-node:ekr.20060206064635:extendLabel
+#@+node:ekr.20050920085536.36:setLabelBlue
+def setLabelBlue (self,label=None,protect=False):
+    
+    k = self ; w = k.widget
+    if not w: return
+    
+    w.configure(background='lightblue')
+
+    if label is not None:
+        k.setLabel(label,protect)
+#@nonl
+#@-node:ekr.20050920085536.36:setLabelBlue
+#@+node:ekr.20050920085536.35:setLabelGrey
+def setLabelGrey (self,label=None):
+
+    k = self ; w = self.widget
+    if not w: return
+    
+    w.configure(background='lightgrey')
+    if label is not None:
+        k.setLabel(label)
+
+setLabelGray = setLabelGrey
+#@nonl
+#@-node:ekr.20050920085536.35:setLabelGrey
+#@+node:ekr.20050920085536.38:updateLabel
+def updateLabel (self,event):
+
+    '''Mimic what would happen with the keyboard and a Text editor
+    instead of plain accumalation.'''
+    
+    k = self ; c = k.c ; w = self.widget
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
+    trace = self.trace_minibuffer and not g.app.unitTesting
+
+    if trace: g.trace('ch',ch,'keysym',keysym,'k.stroke',k.stroke)
+    
+    if ch and ch not in ('\n','\r'):
+        if self.useTextWidget:
+            c.widgetWantsFocusNow(w)
+            i,j = g.app.gui.getTextSelection(w)
+            if i != j:
+                w.delete(i,j)
+            i = w.index('insert')
+            w.insert(i,ch)
+            # g.trace(k.mb_prefix)       
+        else:
+            # Just add the character.
+            k.setLabel(k.getLabel() + ch)
+#@-node:ekr.20050920085536.38:updateLabel
+#@+node:ekr.20060210141604.1:getEditableTextRange
+def getEditableTextRange (self):
+    
+    k = self ; w = self.widget ; n = 0
+    # trace = self.trace_minibuffer and not g.app.unitTesting
+    
+    s = w.get('1.0','end')
+    while s.endswith('\n') or s.endswith('\r'):
+        s = s[:-1] ; n += 1
+        
+    i = w.index('1.%d' % len(k.mb_prefix))
+    j = w.index('end -%dc' % n)
+    
+    # if trace: g.trace(i,j)
+    return i,j
+#@-node:ekr.20060210141604.1:getEditableTextRange
+#@-node:ekr.20050924064254:Label...
+#@+node:ekr.20041223104933:class statusLineClass
+class statusLineClass:
+    
+    '''A class representing the status line.'''
+    
+    @others
+#@nonl
+#@+node:ekr.20031218072017.3961: ctor
+def __init__ (self,c,parentFrame):
+    
+    self.c = c
+    self.bodyCtrl = c.frame.bodyCtrl
+    self.colorTags = [] # list of color names used as tags.
+    self.enabled = False
+    self.isVisible = False
+    self.lastRow = self.lastCol = 0
+    self.log = c.frame.log
+    #if 'black' not in self.log.colorTags:
+    #    self.log.colorTags.append("black")
+    self.parentFrame = parentFrame
+    self.statusFrame = Tk.Frame(parentFrame,bd=2)
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
+    self.labelWidget.pack(side="left",padx=1)
+    
+    bg = self.statusFrame.cget("background")
+    self.textWidget = Tk.Text(self.statusFrame,
+        height=1,state="disabled",bg=bg,relief="groove",name='status-line')
+    self.textWidget.pack(side="left",expand=1,fill="x")
+    self.textWidget.bind("<Button-1>", self.onActivate)
+#@nonl
+#@-node:ekr.20031218072017.3961: ctor
+#@+node:ekr.20031218072017.3962:clear
+def clear (self):
+    
+    t = self.textWidget
+    if not t: return
+    
+    trace = self.c.frame.trace_status_line and not g.app.unitTesting
+    if trace: g.trace(g.callers())
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")
+#@nonl
+#@-node:ekr.20031218072017.3962:clear
+#@+node:EKR.20040424153344:enable, disable & isEnabled
+def disable (self,background=None):
+    
+    c = self.c ; t = self.textWidget
+    if t:
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.enabled = False
+    c.bodyWantsFocus()
+    
+def enable (self,background="white"):
+    
+    # g.trace()
+    c = self.c ; t = self.textWidget
+    if t:
+        t.configure(state="normal",background=background)
+        c.widgetWantsFocus(t)
+    self.enabled = True
+        
+def isEnabled(self):
+    return self.enabled
+#@nonl
+#@-node:EKR.20040424153344:enable, disable & isEnabled
+#@+node:ekr.20041026132435:get
+def get (self):
+    
+    t = self.textWidget
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""
+#@nonl
+#@-node:ekr.20041026132435:get
+#@+node:ekr.20041223114744:getFrame
+def getFrame (self):
+    
+    return self.statusFrame
+#@nonl
+#@-node:ekr.20041223114744:getFrame
+#@+node:ekr.20050120093555:onActivate
+def onActivate (self,event=None):
+    
+    # Don't change background as the result of simple mouse clicks.
+    background = self.statusFrame.cget("background")
+    self.enable(background=background)
+#@nonl
+#@-node:ekr.20050120093555:onActivate
+#@+node:ekr.20041223111916:pack & show
+def pack (self):
+    
+    if not self.isVisible:
+        self.isVisible = True
+        self.statusFrame.pack(fill="x",pady=1)
+        
+show = pack
+#@nonl
+#@-node:ekr.20041223111916:pack & show
+#@+node:ekr.20031218072017.3963:put (leoTkinterFrame:statusLineClass)
+def put(self,s,color=None):
+    
+    t = self.textWidget
+    if not t: return
+    
+    trace = self.c.frame.trace_status_line and not g.app.unitTesting
+    if trace: g.trace(s,g.callers())
+    
+    t.configure(state="normal")
+        
+    if color and color not in self.colorTags:
+        self.colorTags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+    t.update_idletasks()
+#@nonl
+#@-node:ekr.20031218072017.3963:put (leoTkinterFrame:statusLineClass)
+#@+node:ekr.20041223111916.1:unpack & hide
+def unpack (self):
+    
+    if self.isVisible:
+        self.isVisible = False
+        self.statusFrame.pack_forget()
+
+hide = unpack
+#@nonl
+#@-node:ekr.20041223111916.1:unpack & hide
+#@+node:ekr.20031218072017.1733:update
+def update (self):
+    
+    c = self.c ; w = self.bodyCtrl ; lab = self.labelWidget
+    if g.app.killed or not self.isVisible:
+        return
+
+    index = w.index("insert")
+    row,col = g.app.gui.getindex(w,index)
+
+    if col > 0:
+        s = w.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding)
+        col = g.computeWidth (s,c.tab_width)
+
+    if 1: # row != self.lastRow or col != self.lastCol:
+        s = "line %d, col %d " % (row,col)
+        # Important: this does not change the focus because labels never get focus.
+        lab.configure(text=s)
+        self.lastRow = row
+        self.lastCol = col
+#@nonl
+#@-node:ekr.20031218072017.1733:update
+#@-node:ekr.20041223104933:class statusLineClass
+#@+node:ekr.20040803072955.126:tree.endEditLabel
+def endEditLabel (self):
+    
+    '''End editing of a headline and update p.headString().'''
+
+    c = self.c ; k = c.k ; p = c.currentPosition()
+
+    self.setEditPosition(None) # That is, self._editPosition = None
+    
+    if k:
+        k.setDefaultUnboundKeyAction()
+        # k.showStateAndMode() # Destroys UNL info.
+    
+    # Important: this will redraw if necessary.
+    self.onHeadChanged(p)
+#@nonl
+#@-node:ekr.20040803072955.126:tree.endEditLabel
+#@-node:ekr.20060215055823:Arrow keys no longer destroy UNL line
+#@-node:ekr.20060216071129:4.4a6 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl
