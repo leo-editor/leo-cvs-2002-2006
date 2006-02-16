@@ -704,7 +704,7 @@ class keyHandlerClass:
             
         # g.trace(stroke,k.abortAllModesKey)
     
-        if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
+        if k.abortAllModesKey and g.safeStringCompare(stroke,k.abortAllModesKey): # 'Control-g'
             k.keyboardQuit(event)
             k.endCommand(event,commandName)
             return 'break'
@@ -1402,7 +1402,6 @@ class keyHandlerClass:
                 if i != j:
                     w.delete(i,j)
                 i = w.index('insert')
-                g.trace(repr(ch))
                 w.insert(i,ch)
                 # g.trace(k.mb_prefix)       
             else:
@@ -1617,7 +1616,7 @@ class keyHandlerClass:
         event = g.Bunch(char='',keysym='',widget=w)
         # g.trace(c.widget_name(w))
         
-        if 1: # New in 4.4a6:
+        if stroke: # New in 4.4a6:
             return k.masterKeyHandler(event,stroke=stroke)
         else:
             return k.masterCommand(event,func,stroke,commandName)
