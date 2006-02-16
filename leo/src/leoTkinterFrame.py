@@ -51,6 +51,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.c = None # Set in finishCreate.
         self.iconBar = None
     
+        self.trace_status_line = None # Set in finishCreate.
         #@    << set the leoTkinterFrame ivars >>
         #@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
         # "Official ivars created in createLeoFrame and its allies.
@@ -124,6 +125,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c.signOnWithVersion()
         f.miniBufferWidget = f.createMiniBufferWidget()
         c.bodyWantsFocusNow()
+        self.trace_status_line = c.config.getBool('trace_status_line')
         # f.enableTclTraces()
     #@nonl
     #@+node:ekr.20051009044751:createOuterFrames
@@ -906,6 +908,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
             t = self.textWidget
             if not t: return
             
+            trace = self.c.frame.trace_status_line and not g.app.unitTesting
+            if trace: g.trace(g.callers())
+            
             t.configure(state="normal")
             t.delete("1.0","end")
             t.configure(state="disabled")
@@ -974,6 +979,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
             
             t = self.textWidget
             if not t: return
+            
+            trace = self.c.frame.trace_status_line and not g.app.unitTesting
+            if trace: g.trace(s,g.callers())
             
             t.configure(state="normal")
                 
