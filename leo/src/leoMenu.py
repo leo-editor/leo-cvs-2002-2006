@@ -1365,13 +1365,20 @@ class leoMenu:
             realLabel = self.getRealMenuName(label)
             amp_index = realLabel.find("&")
             realLabel = realLabel.replace("&","")
-            if sys.platform == 'darwin' and accelerator in ('Return','Tab','Escape'):
-                # MacOS grabs all keys bound in the menu.  Not good.
-                accelerator = ''
+            if 0:  ## sys.platform == 'darwin':
+                #@            << clear accelerator if it is a plain key >>
+                #@+node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+                for z in ('Alt','Ctrl','Command'):
+                    if accelerator.find(z) != -1:
+                        accelerator = '' ; break
+                #@nonl
+                #@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+                #@nl
             self.add_command(menu,label=realLabel,
                 accelerator=accelerator,
                 command=masterMenuCallback,
                 underline=amp_index)
+    #@nonl
     #@-node:ekr.20031218072017.1723:createMenuEntries
     #@+node:ekr.20051022053758.1:Helpers
     #@+node:ekr.20031218072017.3783:canonicalizeMenuName & cononicalizeTranslatedMenuName

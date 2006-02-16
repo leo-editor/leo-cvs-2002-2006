@@ -1617,7 +1617,10 @@ class keyHandlerClass:
         event = g.Bunch(char='',keysym='',widget=w)
         # g.trace(c.widget_name(w))
         
-        return k.masterCommand(event,func,stroke,commandName)
+        if 1: # New in 4.4a6:
+            return k.masterKeyHandler(event,stroke=stroke)
+        else:
+            return k.masterCommand(event,func,stroke,commandName)
     #@nonl
     #@-node:ekr.20060128090219:masterMenuHandler
     #@-node:ekr.20060129052538.1:Master event handlers (keyHandler)
@@ -2221,6 +2224,7 @@ class keyHandlerClass:
             ('Alt+','Alt-'),
             ('Ctrl+','Control-'),
             ('Shift+','Shift-'),
+            ('Command+','Command-'),
             ('--','-minus'),
         ):
             stroke = stroke.replace(a,b)
