@@ -5926,6 +5926,7 @@ class minibufferFind:
         c = self.c ; k = c.k ; h = self.finder ; t = h.change_ctrl
     
         s = t.get('1.0','end')
+    
         while s.endswith('\n') or s.endswith('\r'):
             s = s[:-1]
     
@@ -6060,7 +6061,6 @@ class minibufferFind:
         k = self.k ; tag = 'replace-string' ; state = k.getState(tag)
         pattern_match = self.getOption ('pattern_match')
         prompt = 'Replace ' + g.choose(pattern_match,'Regex','String')
-    
         if state == 0:
             self.setupArgs(forward=None,regexp=None,word=None)
             prefix = '%s: ' % prompt
