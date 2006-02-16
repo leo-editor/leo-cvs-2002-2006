@@ -480,7 +480,7 @@ class keyHandlerClass:
     #@+node:ekr.20060130093055:bindKeyToDict
     def bindKeyToDict (self,pane,stroke,func,commandName):
         
-        k = self
+        k = self ; c = k.c ; f = c.frame
         d =  k.masterBindingsDict.get(pane,{})
         
         stroke = stroke.lstrip('<').rstrip('>')
@@ -534,6 +534,33 @@ class keyHandlerClass:
                     g.trace('No shortcut for %s = %s' % (name,key))
     #@nonl
     #@-node:ekr.20051011103654:checkBindings
+    #@+node:ekr.20060216074643:k.completeAllBindings
+    def completeAllBindings (self):
+        
+        '''New in 4.4b3: make an actual binding in *all* the standard places.
+        
+        The event will go to k.masterKeyHandler as always, so nothing really changes.
+        except that k.masterKeyHandler will know the proper stroke.'''
+        
+        k = self ; c = k.c ; f = c.frame
+        bodyCtrl = f.body and hasattr(f.body,'bodyCtrl') and f.body.bodyCtrl or None
+        canvas   = f.tree and hasattr(f.tree,'canvas')   and f.tree.canvas   or None
+        # g.trace(bodyCtrl,canvas)
+        if not bodyCtrl or not canvas: return
+        
+        for stroke in  k.bindingsDict.keys():
+            for w in (c.miniBufferWidget,bodyCtrl,canvas):
+                def bindKeyCallback (event,k=k,stroke=stroke):
+                    k.masterKeyHandler(event,stroke=stroke)
+                bindStroke = k.tkbindingFromStroke(stroke)
+                try:
+                    #g.trace(bindStroke,c.widget_name(w))
+                    w.bind(bindStroke,bindKeyCallback)
+                except Exception:
+                    g.es_print('exception binding %s to %s' % (
+                        bindStroke,c.widget_name(w)),color='blue')
+    #@nonl
+    #@-node:ekr.20060216074643:k.completeAllBindings
     #@+node:ekr.20051007080058:k.makeAllBindings
     def makeAllBindings (self):
         
@@ -548,6 +575,7 @@ class keyHandlerClass:
         c.frame.log.setTabBindings('Log')
         c.frame.tree.setBindings()
         c.frame.setMinibufferBindings()
+        k.completeAllBindings()
         k.checkBindings()
     #@nonl
     #@-node:ekr.20051007080058:k.makeAllBindings
@@ -1386,21 +1414,21 @@ class keyHandlerClass:
     #@+node:ekr.20060127183752:masterKeyHandler & helper
     master_key_count = 0
     
-    def masterKeyHandler (self,event):
+    def masterKeyHandler (self,event,stroke=None):
         
         '''In the new binding scheme, there is only one key binding.
         
         This is the handler for that binding.'''
         
         k = self ; c = k.c
-        val = self.masterKeyHandlerHelper(event)
+        val = self.masterKeyHandlerHelper(event,stroke)
         if val and c and c.exists: # Ignore special keys.
             c.frame.updateStatusLine()
             c.masterFocusHandler()
         return val
     #@nonl
     #@+node:ekr.20060205221734:masterKeyHandlerHelper
-    def masterKeyHandlerHelper (self,event):
+    def masterKeyHandlerHelper (self,event,stroke):
     
         k = self ; c = k.c
         w = event and event.widget
@@ -1417,7 +1445,9 @@ class keyHandlerClass:
             if (self.master_key_count % 100) == 0:
                 g.printGcSummary(trace=True)
     
-        stroke = k.strokeFromEvent(event)
+        if stroke is None:
+            g.trace('no stroke: using strokeFromEvent')
+            stroke = k.strokeFromEvent(event)
     
         # Pass keyboard-quit to k.masterCommand for macro recording.
         if k.abortAllModesKey and stroke == k.abortAllModesKey:
@@ -2173,9 +2203,7 @@ class keyHandlerClass:
     #@+node:ekr.20060131075440:k.tkbindingFromStroke
     def tkbindingFromStroke (self,stroke):
         
-        '''Convert a stroke (key to k.bindingsDict) to an actual Tk binding.
-        
-        Used only to simulate keystrokes.'''
+        '''Convert a stroke (key to k.bindingsDict) to an actual Tk binding.'''
         
         stroke = stroke.lstrip('<').rstrip('>')
         
@@ -2183,6 +2211,7 @@ class keyHandlerClass:
             ('Alt+','Alt-'),
             ('Ctrl+','Control-'),
             ('Shift+','Shift-'),
+            ('--','-minus'),
         ):
             stroke = stroke.replace(a,b)
             
