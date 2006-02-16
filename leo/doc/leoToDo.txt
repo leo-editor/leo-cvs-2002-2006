@@ -1,7 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
-#@+node:ekr.20060116073938:To do 4.4b3
+#@+node:ekr.20060116073938:To do 4.4a6-b3
 #@+node:ekr.20060215055823:Arrow keys destroy UNL line
 @nocolor
 
@@ -4086,7 +4086,7 @@ c.insertHeadlineTime uses the edit widget.  It shouldn't.
 #@nonl
 #@-node:ekr.20060207085518:Improve c.insertHeadline (minor)
 #@-node:ekr.20060122184800:Later
-#@-node:ekr.20060116073938:To do 4.4b3
+#@-node:ekr.20060116073938:To do 4.4a6-b3
 #@-all
 #@nonl
 #@-node:ekr.20040117181936:@thin ../doc/leoToDo.txt

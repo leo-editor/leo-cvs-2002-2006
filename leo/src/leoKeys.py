@@ -1130,7 +1130,7 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; state = k.getState('getArg')
         keysym = (event and event.keysym) or ''
-        trace = c.config.getBool('trace_modes')
+        trace = c.config.getBool('trace_modes') and not g.app.unitTesting
         if trace: g.trace(
             'state',state,'keysym',keysym,
             'completion', state==0 and completion or state!=0 and k.arg_completion)
