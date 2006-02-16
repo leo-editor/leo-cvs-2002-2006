@@ -13,8 +13,7 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051024102724,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -83,7 +82,7 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 <v t="ekr.20031218072017.1974"><vh>destroySelf (tkFrame)</vh></v>
 </v>
 </v>
-<v t="ekr.20050920085536.1" a="E"><vh> Birth (keyHandler)</vh>
+<v t="ekr.20050920085536.1"><vh> Birth (keyHandler)</vh>
 <v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
 <v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
@@ -107,7 +106,7 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 </v>
 <v t="ekr.20060213151411"><vh>Fixed (maybe) problems with unicode characters &amp; caps lock</vh>
 <v t="ekr.20060215092723.2"><vh>To do &amp; what I did</vh></v>
-<v t="ekr.20050920085536.1" a="E"><vh> Birth (keyHandler)</vh>
+<v t="ekr.20050920085536.1"><vh> Birth (keyHandler)</vh>
 <v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
 <v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
@@ -131,6 +130,7 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060128092340"><vh>Shortcuts (keyHandler)</vh>
 <v t="ekr.20060120071949"><vh>isPlainKey</vh></v>
@@ -151,7 +151,7 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 <v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
 <v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
 </v>
-<v t="ekr.20060127183752" a="E"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
 </v>
 <v t="ekr.20050920085536.62"><vh>getArg</vh>
@@ -170,6 +170,20 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 </v>
 </v>
 <v t="ekr.20060216071129"><vh>4.4x2 projects</vh>
+<v t="ekr.20060216093552"><vh>Added support for trace_minibuffer setting</vh>
+<v t="ekr.20050924064254"><vh>Label...</vh>
+<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus/Now</vh></v>
+<v t="ekr.20051023132350"><vh>getLabel</vh></v>
+<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
+<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
+<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
+<v t="ekr.20060206064635"><vh>extendLabel</vh></v>
+<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
+<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
+<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
+<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
+</v>
+</v>
 <v t="ekr.20060216071953"><vh>Bind to strokes, not commands</vh>
 <v t="ekr.20060216070014"><vh>Key report 1</vh></v>
 <v t="ekr.20060216065048"><vh>Key report  2 (and bug report)</vh></v>
@@ -178,7 +192,7 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 <v t="ekr.20060203114017"><vh>f.setMinibufferBindings</vh></v>
 <v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
 <v t="ekr.20051022162730"><vh>setTabBindings</vh></v>
-<v t="ekr.20051024102724" a="E"><vh>tkTtree.setBindings</vh>
+<v t="ekr.20051024102724"><vh>tkTtree.setBindings</vh>
 <v t="ekr.20060131173440"><vh>&lt;&lt; make bindings for a common binding widget &gt;&gt;</vh></v>
 <v t="ekr.20060131173440.2"><vh>&lt;&lt; make bindings for tagged items on the canvas &gt;&gt;</vh></v>
 </v>
@@ -221,27 +235,21 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 <v t="ekr.20050920085536.62"><vh>getArg</vh>
 <v t="ekr.20050928092516"><vh>&lt;&lt; init altX vars &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20060128090219"><vh>masterMenuHandler</vh></v>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
 </v>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20051021091958"><vh>&lt;&lt; get label &amp; command or continue &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
+<v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20060216093552"><vh>Added support for trace_minibuffer setting</vh>
-<v t="ekr.20050924064254"><vh>Label...</vh>
-<v t="ekr.20060125175103"><vh>k.minibufferWantsFocus/Now</vh></v>
-<v t="ekr.20051023132350"><vh>getLabel</vh></v>
-<v t="ekr.20051023132350.2"><vh>protectLabel</vh></v>
-<v t="ekr.20050920085536.37"><vh>resetLabel</vh></v>
-<v t="ekr.20051023132350.1"><vh>setLabel</vh></v>
-<v t="ekr.20060206064635"><vh>extendLabel</vh></v>
-<v t="ekr.20050920085536.36"><vh>setLabelBlue</vh></v>
-<v t="ekr.20050920085536.35"><vh>setLabelGrey</vh></v>
-<v t="ekr.20050920085536.38"><vh>updateLabel</vh></v>
-<v t="ekr.20060210141604.1"><vh>getEditableTextRange</vh></v>
+<v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20060116073938" a="V"><vh>To do 4.4a6-b3</vh>
+<v t="ekr.20060116073938"><vh>To do 4.4a6-b3</vh>
 <v t="ekr.20060215055823"><vh>Arrow keys destroy UNL line</vh></v>
 <v t="ekr.20051126122638"><vh>Autocompletion tab</vh>
 <v t="ekr.20060214110318"><vh>Options</vh></v>
@@ -526,6 +534,7 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 <v t="ekr.20031218072017.1725"><vh>&lt;&lt; compute commandName &amp; accel from label &amp; command &gt;&gt;</vh>
 <v t="ekr.20051021100806.1"><vh>&lt;&lt; compute emacs_name &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="ekr.20060117123143"><vh>editing commands</vh></v>
@@ -585,7 +594,7 @@ expanded="ekr.20050920085536.1,ekr.20050920085536.1,ekr.20060127183752,ekr.20051
 <v t="ekr.20060207085518"><vh>Improve c.insertHeadline (minor)</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -626,7 +635,7 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3719"><vh>@thin leoGui.py</vh></v>
 <v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
 </v>
-<v t="ekr.20031218072017.3821" a="E"><vh>Gui Tkinter classes</vh>
+<v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
 <v t="ekr.20031218072017.3838"><vh>@thin leoTkinterComparePanel.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
@@ -634,13 +643,11 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
-<v t="ekr.20040803072955"
-expanded="ekr.20051024102724,"><vh>@thin leoTkinterTree.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20031218072017.3748"
-expanded="ekr.20050920085536.1,ekr.20051006125633,ekr.20060127183752,"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -840,6 +847,8 @@ def yviewCallback (self,*args,**keys):
         realLabel = self.getRealMenuName(label)
         amp_index = realLabel.find("&amp;")
         realLabel = realLabel.replace("&amp;","")
+        if sys.platform == 'darwin':
+            &lt;&lt; clear accelerator if it is a plain key &gt;&gt;
         self.add_command(menu,label=realLabel,
             accelerator=accelerator,
             command=masterMenuCallback,
@@ -5648,6 +5657,18 @@ def masterKeyHandler (self,event,stroke=None):
     
 canonicalizeShortcut = shortcutFromSetting # For compatibility.
 strokeFromSetting    = shortcutFromSetting</t>
+<t tx="ekr.20060128090219">def masterMenuHandler (self,stroke,func,commandName):
+    
+    k = self ; c = k.c ; w = c.frame.getFocus()
+    
+    # Create a minimal event for commands that require them.
+    event = g.Bunch(char='',keysym='',widget=w)
+    # g.trace(c.widget_name(w))
+    
+    if 1: # New in 4.4a6:
+        return k.masterKeyHandler(event,stroke=stroke)
+    else:
+        return k.masterCommand(event,func,stroke,commandName)</t>
 <t tx="ekr.20060128092340"></t>
 <t tx="ekr.20060128103640.1"># Replace all minus signs by plus signs, except a trailing minus:
 if s.endswith('-'):
@@ -5711,6 +5732,7 @@ shortcut = ''.join([val for flag,val in table if flag])</t>
         ('Alt+','Alt-'),
         ('Ctrl+','Control-'),
         ('Shift+','Shift-'),
+        ('Command+','Command-'),
         ('--','-minus'),
     ):
         stroke = stroke.replace(a,b)
@@ -6635,5 +6657,10 @@ David
                 g.es_print('exception binding %s to %s' % (
                     bindStroke,c.widget_name(w)),color='blue')</t>
 <t tx="ekr.20060216093552"></t>
+<t tx="ekr.20060216110502">for z in ('Alt','Ctrl','Command'):
+    if accelerator.find(z) != -1:
+        break # Found.
+else:
+    accelerator = ''</t>
 </tnodes>
 </leo_file>

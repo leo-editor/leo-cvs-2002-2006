@@ -1641,6 +1641,8 @@ def createMenuEntries (self,menu,table,dynamicMenu=False):
         realLabel = self.getRealMenuName(label)
         amp_index = realLabel.find("&")
         realLabel = realLabel.replace("&","")
+        if sys.platform == 'darwin':
+            << clear accelerator if it is a plain key >>
         self.add_command(menu,label=realLabel,
             accelerator=accelerator,
             command=masterMenuCallback,
@@ -1727,6 +1729,14 @@ else:
 #@nonl
 #@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+for z in ('Alt','Ctrl','Command'):
+    if accelerator.find(z) != -1:
+        break # Found.
+else:
+    accelerator = ''
+#@nonl
+#@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
 #@+node:ekr.20060128092340:Shortcuts (keyHandler)
 #@+node:ekr.20060120071949:isPlainKey
@@ -1905,6 +1915,7 @@ def tkbindingFromStroke (self,stroke):
         ('Alt+','Alt-'),
         ('Ctrl+','Control-'),
         ('Shift+','Shift-'),
+        ('Command+','Command-'),
         ('--','-minus'),
     ):
         stroke = stroke.replace(a,b)
@@ -2527,6 +2538,188 @@ def callAltXFunction (self,event):
 #@-node:ekr.20060213151411:Fixed (maybe) problems with unicode characters & caps lock
 #@-node:ekr.20060214140930:4.4x1 projects
 #@+node:ekr.20060216071129:4.4x2 projects
+#@+node:ekr.20060216093552:Added support for trace_minibuffer setting
+#@+node:ekr.20050924064254:Label...
+@ There is something dubious about tracking states separately for separate commands.
+In fact, there is only one mini-buffer, and it has only one state.
+OTOH, maintaining separate states makes it impossible for one command to influence another.
+
+trace = self.trace_minibuffer and not g.app.unitTesting
+#@nonl
+#@+node:ekr.20060125175103:k.minibufferWantsFocus/Now
+def minibufferWantsFocus(self):
+    
+    c = self.c
+    if self.useTextWidget:
+        c.widgetWantsFocus(c.miniBufferWidget)
+    else:
+        c.bodyWantsFocus()
+
+def minibufferWantsFocusNow(self):
+    
+    c = self.c
+    if self.useTextWidget:
+        c.widgetWantsFocusNow(c.miniBufferWidget)
+    else:
+        c.bodyWantsFocusNow()
+#@nonl
+#@-node:ekr.20060125175103:k.minibufferWantsFocus/Now
+#@+node:ekr.20051023132350:getLabel
+def getLabel (self,ignorePrompt=False):
+    
+    k = self ; w = self.widget
+    if not w: return ''
+    trace = self.trace_minibuffer and not g.app.unitTesting
+    
+    if self.useTextWidget:
+        w.update_idletasks()
+        s = w and w.get('1.0','end')
+        # Remove the cursed Tk newline.
+        while s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
+        
+    else:
+        s = k.svar and k.svar.get()
+        
+    if trace: g.trace(repr(s))
+
+    if ignorePrompt:
+        return s[len(k.mb_prefix):]
+    else:
+        return s or ''
+
+#@-node:ekr.20051023132350:getLabel
+#@+node:ekr.20051023132350.2:protectLabel
+def protectLabel (self):
+    
+    k = self ; w = self.widget
+    if not w: return
+
+    if self.useTextWidget:
+        w.update_idletasks()
+        k.mb_prefix = w.get('1.0','end')
+    else:
+        if k.svar:
+            k.mb_prefix = k.svar.get()
+#@nonl
+#@-node:ekr.20051023132350.2:protectLabel
+#@+node:ekr.20050920085536.37:resetLabel
+def resetLabel (self):
+    
+    k = self
+    k.setLabelGrey('')
+    k.mb_prefix = ''
+#@nonl
+#@-node:ekr.20050920085536.37:resetLabel
+#@+node:ekr.20051023132350.1:setLabel
+def setLabel (self,s,protect=False):
+
+    k = self ; c = k.c ; w = self.widget
+    if not w: return
+    trace = self.trace_minibuffer and not g.app.unitTesting
+
+    if trace: g.trace(repr(s),g.callers())
+
+    if self.useTextWidget:
+        w.delete('1.0','end')
+        w.insert('1.0',s)
+        c.masterFocusHandler() # Restore to the previously requested focus.
+    else:
+        if k.svar: k.svar.set(s)
+
+    if protect:
+        k.mb_prefix = s
+#@nonl
+#@-node:ekr.20051023132350.1:setLabel
+#@+node:ekr.20060206064635:extendLabel
+def extendLabel(self,s,select=False,protect=False):
+    
+    k = self ; c = k.c ; w = self.widget
+    if not w: return
+    trace = self.trace_minibuffer and not g.app.unitTesting
+    
+    if trace: g.trace(repr(s))
+    if not s: return
+
+    if self.useTextWidget:
+        c.widgetWantsFocusNow(w)
+        w.insert('end',s)
+        if select:
+            i,j = k.getEditableTextRange()
+            g.app.gui.setTextSelection(w,i,j,insert=j)
+        if protect:
+            k.protectLabel()
+#@-node:ekr.20060206064635:extendLabel
+#@+node:ekr.20050920085536.36:setLabelBlue
+def setLabelBlue (self,label=None,protect=False):
+    
+    k = self ; w = k.widget
+    if not w: return
+    
+    w.configure(background='lightblue')
+
+    if label is not None:
+        k.setLabel(label,protect)
+#@nonl
+#@-node:ekr.20050920085536.36:setLabelBlue
+#@+node:ekr.20050920085536.35:setLabelGrey
+def setLabelGrey (self,label=None):
+
+    k = self ; w = self.widget
+    if not w: return
+    
+    w.configure(background='lightgrey')
+    if label is not None:
+        k.setLabel(label)
+
+setLabelGray = setLabelGrey
+#@nonl
+#@-node:ekr.20050920085536.35:setLabelGrey
+#@+node:ekr.20050920085536.38:updateLabel
+def updateLabel (self,event):
+
+    '''Mimic what would happen with the keyboard and a Text editor
+    instead of plain accumalation.'''
+    
+    k = self ; c = k.c ; w = self.widget
+    ch = (event and event.char) or ''
+    keysym = (event and event.keysym) or ''
+    trace = self.trace_minibuffer and not g.app.unitTesting
+
+    if trace: g.trace('ch',ch,'keysym',keysym,'k.stroke',k.stroke)
+    
+    if ch and ch not in ('\n','\r'):
+        if self.useTextWidget:
+            c.widgetWantsFocusNow(w)
+            i,j = g.app.gui.getTextSelection(w)
+            if i != j:
+                w.delete(i,j)
+            i = w.index('insert')
+            g.trace(repr(ch))
+            w.insert(i,ch)
+            # g.trace(k.mb_prefix)       
+        else:
+            # Just add the character.
+            k.setLabel(k.getLabel() + ch)
+#@-node:ekr.20050920085536.38:updateLabel
+#@+node:ekr.20060210141604.1:getEditableTextRange
+def getEditableTextRange (self):
+    
+    k = self ; w = self.widget ; n = 0
+    # trace = self.trace_minibuffer and not g.app.unitTesting
+    
+    s = w.get('1.0','end')
+    while s.endswith('\n') or s.endswith('\r'):
+        s = s[:-1] ; n += 1
+        
+    i = w.index('1.%d' % len(k.mb_prefix))
+    j = w.index('end -%dc' % n)
+    
+    # if trace: g.trace(i,j)
+    return i,j
+#@-node:ekr.20060210141604.1:getEditableTextRange
+#@-node:ekr.20050924064254:Label...
+#@-node:ekr.20060216093552:Added support for trace_minibuffer setting
 #@+node:ekr.20060216071953:Bind to strokes, not commands
 #@+node:ekr.20060216070014:Key report 1
 @killcolor
@@ -3514,6 +3707,7 @@ def tkbindingFromStroke (self,stroke):
         ('Alt+','Alt-'),
         ('Ctrl+','Control-'),
         ('Shift+','Shift-'),
+        ('Command+','Command-'),
         ('--','-minus'),
     ):
         stroke = stroke.replace(a,b)
@@ -3633,6 +3827,21 @@ else:
 #@nonl
 #@-node:ekr.20050928092516:<< init altX vars >>
 #@-node:ekr.20050920085536.62:getArg
+#@+node:ekr.20060128090219:masterMenuHandler
+def masterMenuHandler (self,stroke,func,commandName):
+    
+    k = self ; c = k.c ; w = c.frame.getFocus()
+    
+    # Create a minimal event for commands that require them.
+    event = g.Bunch(char='',keysym='',widget=w)
+    # g.trace(c.widget_name(w))
+    
+    if 1: # New in 4.4a6:
+        return k.masterKeyHandler(event,stroke=stroke)
+    else:
+        return k.masterCommand(event,func,stroke,commandName)
+#@nonl
+#@-node:ekr.20060128090219:masterMenuHandler
 #@+node:ekr.20060127183752:masterKeyHandler & helper
 master_key_count = 0
 
@@ -3749,189 +3958,123 @@ def masterKeyHandlerHelper (self,event,stroke):
 #@nonl
 #@-node:ekr.20060205221734:masterKeyHandlerHelper
 #@-node:ekr.20060127183752:masterKeyHandler & helper
+#@+node:ekr.20031218072017.1723:createMenuEntries
+def createMenuEntries (self,menu,table,dynamicMenu=False):
+        
+    '''Create a menu entry from the table.
+    New in 4.4: this method shows the shortcut in the menu,
+    but this method **never** binds any shortcuts.'''
+    
+    c = self.c ; f = c.frame ; k = c.k
+    if g.app.unitTesting: return
+    for data in table:
+        << get label & command or continue >>
+        << compute commandName & accel from label & command >>
+        accelerator = stroke = k.shortcutFromSetting(accel) or ''
+        accelerator = accelerator and k.prettyPrintKey(accelerator).lstrip('<').rstrip('>')
+        def masterMenuCallback (k=k,stroke=stroke,command=command,commandName=commandName):
+            return k.masterMenuHandler(stroke,command,commandName)
+        realLabel = self.getRealMenuName(label)
+        amp_index = realLabel.find("&")
+        realLabel = realLabel.replace("&","")
+        if sys.platform == 'darwin':
+            << clear accelerator if it is a plain key >>
+        self.add_command(menu,label=realLabel,
+            accelerator=accelerator,
+            command=masterMenuCallback,
+            underline=amp_index)
+#@nonl
+#@+node:ekr.20051021091958:<< get label & command or continue >>
+ok = (
+    type(data) in (type(()), type([])) and
+    len(data) in (2,3)
+)
+    
+if ok:
+    if len(data) == 2:
+        # New in 4.4b2: command can be a minibuffer-command name (a string)
+        label,command = data
+    else:
+        # New in 4.4: we ignore shortcuts bound in menu tables.
+        label,junk,command = data
+else:
+    g.trace('bad data in menu table: %s' % repr(data))
+    continue # Ignore bad data
+     
+if ok and label in (None,'-'):
+    self.add_separator(menu)
+    continue # That's all.
+#@nonl
+#@-node:ekr.20051021091958:<< get label & command or continue >>
+#@+node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+# New in 4.4b2: command can be a minibuffer-command name (a string)
+minibufferCommand = type(command) == type('')
+accel = None
+if minibufferCommand:
+    commandName = command 
+    command = c.commandsDict.get(commandName)
+    if command:
+        rawKey,bunchList = c.config.getShortcut(commandName)
+        # Pick the first entry that is not a mode.
+        for bunch in bunchList:
+            if not bunch.pane.endswith('-mode'):
+                # g.trace('1',bunch)
+                accel = bunch and bunch.val ; break
+    else:
+        g.trace('No inverse for %s' % commandName)
+        continue # There is no way to make this menu entry.
+else:
+    # First, get the old-style name.
+    commandName = self.computeOldStyleShortcutKey(label)
+    rawKey,bunchList = c.config.getShortcut(commandName)
+    for bunch in bunchList:
+        if not bunch.pane.endswith('-mode'):
+            # g.trace('2',bunch)
+            accel = bunch and bunch.val ; break
+    # Second, get new-style name.
+    if not accel:
+        << compute emacs_name >>
+            # Contains the not-so-horrible kludge.
+        if emacs_name:
+            commandName = emacs_name
+            rawKey,bunchList = c.config.getShortcut(emacs_name)
+            # Pick the first entry that is not a mode.
+            for bunch in bunchList:
+                if not bunch.pane.endswith('-mode'):
+                    accel = bunch.val ; break
+                    # g.trace('2',bunch)
+        elif not dynamicMenu:
+            g.trace('No inverse for %s' % commandName)
+#@nonl
+#@+node:ekr.20051021100806.1:<< compute emacs_name >>
+@ One not-so-horrible kludge remains.
+
+The cut/copy/paste commands in the menu tables are not the same as the methods
+actually bound to cut/copy/paste-text minibuffer commands, so we must do a bit
+of extra translation to discover whether the user has overridden their
+bindings.
+@c
+
+if command in (f.OnCutFromMenu,f.OnCopyFromMenu,f.OnPasteFromMenu):
+    emacs_name = '%s-text' % commandName
+else:
+    try: # User errors in the table can cause this.
+        emacs_name = k.inverseCommandsDict.get(command.__name__)
+    except Exception:
+        emacs_name = None
+#@nonl
+#@-node:ekr.20051021100806.1:<< compute emacs_name >>
+#@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+for z in ('Alt','Ctrl','Command'):
+    if accelerator.find(z) != -1:
+        break # Found.
+else:
+    accelerator = ''
+#@nonl
+#@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
 #@-node:ekr.20060216071953:Bind to strokes, not commands
-#@+node:ekr.20060216093552:Added support for trace_minibuffer setting
-#@+node:ekr.20050924064254:Label...
-@ There is something dubious about tracking states separately for separate commands.
-In fact, there is only one mini-buffer, and it has only one state.
-OTOH, maintaining separate states makes it impossible for one command to influence another.
-
-trace = self.trace_minibuffer and not g.app.unitTesting
-#@nonl
-#@+node:ekr.20060125175103:k.minibufferWantsFocus/Now
-def minibufferWantsFocus(self):
-    
-    c = self.c
-    if self.useTextWidget:
-        c.widgetWantsFocus(c.miniBufferWidget)
-    else:
-        c.bodyWantsFocus()
-
-def minibufferWantsFocusNow(self):
-    
-    c = self.c
-    if self.useTextWidget:
-        c.widgetWantsFocusNow(c.miniBufferWidget)
-    else:
-        c.bodyWantsFocusNow()
-#@nonl
-#@-node:ekr.20060125175103:k.minibufferWantsFocus/Now
-#@+node:ekr.20051023132350:getLabel
-def getLabel (self,ignorePrompt=False):
-    
-    k = self ; w = self.widget
-    if not w: return ''
-    trace = self.trace_minibuffer and not g.app.unitTesting
-    
-    if self.useTextWidget:
-        w.update_idletasks()
-        s = w and w.get('1.0','end')
-        # Remove the cursed Tk newline.
-        while s.endswith('\n') or s.endswith('\r'):
-            s = s[:-1]
-        
-    else:
-        s = k.svar and k.svar.get()
-        
-    if trace: g.trace(repr(s))
-
-    if ignorePrompt:
-        return s[len(k.mb_prefix):]
-    else:
-        return s or ''
-
-#@-node:ekr.20051023132350:getLabel
-#@+node:ekr.20051023132350.2:protectLabel
-def protectLabel (self):
-    
-    k = self ; w = self.widget
-    if not w: return
-
-    if self.useTextWidget:
-        w.update_idletasks()
-        k.mb_prefix = w.get('1.0','end')
-    else:
-        if k.svar:
-            k.mb_prefix = k.svar.get()
-#@nonl
-#@-node:ekr.20051023132350.2:protectLabel
-#@+node:ekr.20050920085536.37:resetLabel
-def resetLabel (self):
-    
-    k = self
-    k.setLabelGrey('')
-    k.mb_prefix = ''
-#@nonl
-#@-node:ekr.20050920085536.37:resetLabel
-#@+node:ekr.20051023132350.1:setLabel
-def setLabel (self,s,protect=False):
-
-    k = self ; c = k.c ; w = self.widget
-    if not w: return
-    trace = self.trace_minibuffer and not g.app.unitTesting
-
-    if trace: g.trace(repr(s),g.callers())
-
-    if self.useTextWidget:
-        w.delete('1.0','end')
-        w.insert('1.0',s)
-        c.masterFocusHandler() # Restore to the previously requested focus.
-    else:
-        if k.svar: k.svar.set(s)
-
-    if protect:
-        k.mb_prefix = s
-#@nonl
-#@-node:ekr.20051023132350.1:setLabel
-#@+node:ekr.20060206064635:extendLabel
-def extendLabel(self,s,select=False,protect=False):
-    
-    k = self ; c = k.c ; w = self.widget
-    if not w: return
-    trace = self.trace_minibuffer and not g.app.unitTesting
-    
-    if trace: g.trace(repr(s))
-    if not s: return
-
-    if self.useTextWidget:
-        c.widgetWantsFocusNow(w)
-        w.insert('end',s)
-        if select:
-            i,j = k.getEditableTextRange()
-            g.app.gui.setTextSelection(w,i,j,insert=j)
-        if protect:
-            k.protectLabel()
-#@-node:ekr.20060206064635:extendLabel
-#@+node:ekr.20050920085536.36:setLabelBlue
-def setLabelBlue (self,label=None,protect=False):
-    
-    k = self ; w = k.widget
-    if not w: return
-    
-    w.configure(background='lightblue')
-
-    if label is not None:
-        k.setLabel(label,protect)
-#@nonl
-#@-node:ekr.20050920085536.36:setLabelBlue
-#@+node:ekr.20050920085536.35:setLabelGrey
-def setLabelGrey (self,label=None):
-
-    k = self ; w = self.widget
-    if not w: return
-    
-    w.configure(background='lightgrey')
-    if label is not None:
-        k.setLabel(label)
-
-setLabelGray = setLabelGrey
-#@nonl
-#@-node:ekr.20050920085536.35:setLabelGrey
-#@+node:ekr.20050920085536.38:updateLabel
-def updateLabel (self,event):
-
-    '''Mimic what would happen with the keyboard and a Text editor
-    instead of plain accumalation.'''
-    
-    k = self ; c = k.c ; w = self.widget
-    ch = (event and event.char) or ''
-    keysym = (event and event.keysym) or ''
-    trace = self.trace_minibuffer and not g.app.unitTesting
-
-    if trace: g.trace('ch',ch,'keysym',keysym,'k.stroke',k.stroke)
-    
-    if ch and ch not in ('\n','\r'):
-        if self.useTextWidget:
-            c.widgetWantsFocusNow(w)
-            i,j = g.app.gui.getTextSelection(w)
-            if i != j:
-                w.delete(i,j)
-            i = w.index('insert')
-            g.trace(repr(ch))
-            w.insert(i,ch)
-            # g.trace(k.mb_prefix)       
-        else:
-            # Just add the character.
-            k.setLabel(k.getLabel() + ch)
-#@-node:ekr.20050920085536.38:updateLabel
-#@+node:ekr.20060210141604.1:getEditableTextRange
-def getEditableTextRange (self):
-    
-    k = self ; w = self.widget ; n = 0
-    # trace = self.trace_minibuffer and not g.app.unitTesting
-    
-    s = w.get('1.0','end')
-    while s.endswith('\n') or s.endswith('\r'):
-        s = s[:-1] ; n += 1
-        
-    i = w.index('1.%d' % len(k.mb_prefix))
-    j = w.index('end -%dc' % n)
-    
-    # if trace: g.trace(i,j)
-    return i,j
-#@-node:ekr.20060210141604.1:getEditableTextRange
-#@-node:ekr.20050924064254:Label...
-#@-node:ekr.20060216093552:Added support for trace_minibuffer setting
 #@-node:ekr.20060216071129:4.4x2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

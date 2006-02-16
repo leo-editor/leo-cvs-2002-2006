@@ -3392,6 +3392,8 @@ def createMenuEntries (self,menu,table,dynamicMenu=False):
         realLabel = self.getRealMenuName(label)
         amp_index = realLabel.find("&")
         realLabel = realLabel.replace("&","")
+        if sys.platform == 'darwin':
+            << clear accelerator if it is a plain key >>
         self.add_command(menu,label=realLabel,
             accelerator=accelerator,
             command=masterMenuCallback,
@@ -3478,6 +3480,14 @@ else:
 #@nonl
 #@-node:ekr.20051021100806.1:<< compute emacs_name >>
 #@-node:ekr.20031218072017.1725:<< compute commandName & accel from label & command >>
+#@+node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
+for z in ('Alt','Ctrl','Command'):
+    if accelerator.find(z) != -1:
+        break # Found.
+else:
+    accelerator = ''
+#@nonl
+#@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
 #@-node:ekr.20060117114903:Others
 #@+node:ekr.20060117123143:editing commands

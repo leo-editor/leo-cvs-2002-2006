@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
@@ -63,8 +63,8 @@
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
-<v t="ekr.20060121102627"><vh>@bool trace_modes = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
@@ -349,14 +349,14 @@
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
-<v t="ekr.20060122105527.11" a="E" annotate="7d71002e"><vh>@@mode File</vh>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@@mode File</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12" a="E"><vh>@@mode Find </vh>
+<v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 <v t="ekr.20060122105527.14"><vh>@@mode Find-options</vh></v>
-<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-Shift-O)</vh>
+<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-Shift-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
@@ -383,14 +383,14 @@
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
 <v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
 </v>
-<v t="ekr.20060122105527.11" a="E" annotate="7d71002e"><vh>@@mode File</vh>
+<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@@mode File</vh>
 <v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
 </v>
-<v t="ekr.20060122105527.12" a="E"><vh>@@mode Find </vh>
+<v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
 <v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
 </v>
 <v t="ekr.20060122105527.14"><vh>@@mode Find-options</vh></v>
-<v t="ekr.20060122105732" a="E" annotate="7d71002e"><vh>@mode Outline (Control-Shift-O)</vh>
+<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-Shift-O)</vh>
 <v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
@@ -404,7 +404,7 @@
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
-<v t="ekr.20051126062243" a="E"><vh>Debugging options</vh>
+<v t="ekr.20051126062243" a="V"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -417,12 +417,12 @@
 <v t="ekr.20060212103826"><vh>@bool trace_gc_calls = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20060215054710"><vh>@bool trace_key_event= False</vh></v>
-<v t="ekr.20060216091239" a="V"><vh>@bool trace_minibuffer = False</vh></v>
+<v t="ekr.20060216091239"><vh>@bool trace_minibuffer = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
-<v t="ekr.20060121102627"><vh>@bool trace_modes = True</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
