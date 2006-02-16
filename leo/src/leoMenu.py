@@ -1370,7 +1370,9 @@ class leoMenu:
                 #@+node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
                 for z in ('Alt','Ctrl','Command'):
                     if accelerator.find(z) != -1:
-                        accelerator = '' ; break
+                        break # Found.
+                else:
+                    accelerator = ''
                 #@nonl
                 #@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
                 #@nl
