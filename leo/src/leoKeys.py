@@ -267,8 +267,9 @@ class keyHandlerClass:
         
         self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
         self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
-        self.trace_key_event                = c.config.getBool('trace_key_event')
         self.swap_mac_keys                  = c.config.getBool('swap_mac_keys')
+        self.trace_key_event                = c.config.getBool('trace_key_event')
+        self.trace_minibuffer               = c.config.getBool('trace_minibuffer')
         #@    << define Tk ivars >>
         #@+node:ekr.20051006092617:<< define Tk ivars >>
         if self.useTextWidget:
@@ -480,7 +481,7 @@ class keyHandlerClass:
     #@+node:ekr.20060130093055:bindKeyToDict
     def bindKeyToDict (self,pane,stroke,func,commandName):
         
-        k = self ; c = k.c ; f = c.frame
+        k = self
         d =  k.masterBindingsDict.get(pane,{})
         
         stroke = stroke.lstrip('<').rstrip('>')
@@ -551,7 +552,7 @@ class keyHandlerClass:
         for stroke in  k.bindingsDict.keys():
             for w in (c.miniBufferWidget,bodyCtrl,canvas):
                 def bindKeyCallback (event,k=k,stroke=stroke):
-                    k.masterKeyHandler(event,stroke=stroke)
+                    return k.masterKeyHandler(event,stroke=stroke)
                 bindStroke = k.tkbindingFromStroke(stroke)
                 try:
                     #g.trace(bindStroke,c.widget_name(w))
@@ -1129,7 +1130,9 @@ class keyHandlerClass:
         k = self ; c = k.c ; state = k.getState('getArg')
         keysym = (event and event.keysym) or ''
         trace = c.config.getBool('trace_modes')
-        if trace: g.trace('state',state,'keysym',keysym,'completion',completion)
+        if trace: g.trace(
+            'state',state,'keysym',keysym,
+            'completion', state==0 and completion or state!=0 and k.arg_completion)
         if state == 0:
             k.arg = '' ; k.arg_completion = completion
             if tabList: k.argTabList = tabList[:]
@@ -1161,6 +1164,7 @@ class keyHandlerClass:
             kind,n,handler = k.afterGetArgState
             if kind: k.setState(kind,n,handler)
             c.frame.log.deleteTab('Completion')
+            g.trace('kind',kind,'n',n,'handler',handler and handler.__name__)
             if handler: handler(event)
         elif keysym == 'Tab':
             k.doTabCompletion(k.argTabList,k.arg_completion)
@@ -1172,7 +1176,6 @@ class keyHandlerClass:
             k.mb_tabList = []
             k.updateLabel(event)
             k.mb_tabListPrefix = k.getLabel()
-    
         return 'break'
     #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.63:keyboardQuit
@@ -1244,6 +1247,8 @@ class keyHandlerClass:
     # In fact, there is only one mini-buffer, and it has only one state.
     # OTOH, maintaining separate states makes it impossible for one command to 
     # influence another.
+    # 
+    # trace = self.trace_minibuffer and not g.app.unitTesting
     #@-at
     #@nonl
     #@+node:ekr.20060125175103:k.minibufferWantsFocus/Now
@@ -1269,6 +1274,7 @@ class keyHandlerClass:
         
         k = self ; w = self.widget
         if not w: return ''
+        trace = self.trace_minibuffer and not g.app.unitTesting
         
         if self.useTextWidget:
             w.update_idletasks()
@@ -1276,9 +1282,11 @@ class keyHandlerClass:
             # Remove the cursed Tk newline.
             while s.endswith('\n') or s.endswith('\r'):
                 s = s[:-1]
-            # g.trace(repr(s))
+            
         else:
             s = k.svar and k.svar.get()
+            
+        if trace: g.trace(repr(s))
     
         if ignorePrompt:
             return s[len(k.mb_prefix):]
@@ -1313,8 +1321,9 @@ class keyHandlerClass:
     
         k = self ; c = k.c ; w = self.widget
         if not w: return
+        trace = self.trace_minibuffer and not g.app.unitTesting
     
-        # g.trace(repr(s))
+        if trace: g.trace(repr(s),g.callers())
     
         if self.useTextWidget:
             w.delete('1.0','end')
@@ -1332,6 +1341,10 @@ class keyHandlerClass:
         
         k = self ; c = k.c ; w = self.widget
         if not w: return
+        trace = self.trace_minibuffer and not g.app.unitTesting
+        
+        if trace: g.trace(repr(s))
+        if not s: return
     
         if self.useTextWidget:
             c.widgetWantsFocusNow(w)
@@ -1376,8 +1389,9 @@ class keyHandlerClass:
         k = self ; c = k.c ; w = self.widget
         ch = (event and event.char) or ''
         keysym = (event and event.keysym) or ''
+        trace = self.trace_minibuffer and not g.app.unitTesting
     
-        # g.trace(ch,keysym,k.stroke)
+        if trace: g.trace('ch',ch,'keysym',keysym,'k.stroke',k.stroke)
         
         if ch and ch not in ('\n','\r'):
             if self.useTextWidget:
@@ -1392,12 +1406,12 @@ class keyHandlerClass:
             else:
                 # Just add the character.
                 k.setLabel(k.getLabel() + ch)
-    #@nonl
     #@-node:ekr.20050920085536.38:updateLabel
     #@+node:ekr.20060210141604.1:getEditableTextRange
     def getEditableTextRange (self):
         
         k = self ; w = self.widget ; n = 0
+        # trace = self.trace_minibuffer and not g.app.unitTesting
         
         s = w.get('1.0','end')
         while s.endswith('\n') or s.endswith('\r'):
@@ -1406,7 +1420,7 @@ class keyHandlerClass:
         i = w.index('1.%d' % len(k.mb_prefix))
         j = w.index('end -%dc' % n)
         
-        # g.trace(i,j)
+        # if trace: g.trace(i,j)
         return i,j
     #@-node:ekr.20060210141604.1:getEditableTextRange
     #@-node:ekr.20050924064254:Label...
@@ -1469,37 +1483,30 @@ class keyHandlerClass:
             if state == 'getArg':
                 return k.getArg(event)
             elif state == 'full-command':
-                if 1:
-                    # Do the default state action.
-                    k.callStateFunction(event) # Calls end-command.
-                    return 'break'
-                else:
-                    d = k.masterBindingsDict.get('mini')
+                # Do the default state action.
+                if trace: g.trace('calling state function')
+                k.callStateFunction(event) # Calls end-command.
+                return 'break'
+            # Third, pass keys to the general mode handler.
+            else:
+                d =  k.masterBindingsDict.get(state)
+                if d:
+                    # A typical state
                     b = d.get(stroke)
+                    # g.trace(d.keys())
                     if b:
-                        # Pass this on for macro recording.
-                        k.masterCommand(event,b.func,stroke,b.commandName)
-                        c.minibufferWantsFocus()
+                        if trace: g.trace('calling generalModeHandler')
+                        k.generalModeHandler (event,
+                            commandName=b.commandName,func=b.func,
+                            modeName=state,nextMode=b.nextMode)
                         return 'break'
                     else:
-                        # Do the default state action.
-                        k.callStateFunction(event) # Calls end-command.
+                        if trace: g.trace('calling modeHelp')
+                        k.modeHelp(event)
                         return 'break'
-            # Third, pass keys to the general mode handler.
-            d =  k.masterBindingsDict.get(state)
-            if d:
-                # A typical state
-                b = d.get(stroke)
-                g.trace(d.keys())
-                if b:
-                    return k.generalModeHandler (event,
-                        commandName=b.commandName,func=b.func,
-                        modeName=state,nextMode=b.nextMode)
                 else:
-                    return k.modeHelp(event)
-            else:
-                g.trace('No state dictionary for %s' % state)
-                return 'break'
+                    g.trace('No state dictionary for %s' % state)
+                    return 'break'
         
         for key,name in (
             # Order here is similar to bindtags order.
