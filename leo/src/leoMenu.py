@@ -1365,7 +1365,7 @@ class leoMenu:
             realLabel = self.getRealMenuName(label)
             amp_index = realLabel.find("&")
             realLabel = realLabel.replace("&","")
-            if 0:  ## sys.platform == 'darwin':
+            if sys.platform == 'darwin':
                 #@            << clear accelerator if it is a plain key >>
                 #@+node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
                 for z in ('Alt','Ctrl','Command'):
