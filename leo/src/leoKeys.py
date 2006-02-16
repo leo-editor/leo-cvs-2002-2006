@@ -546,11 +546,12 @@ class keyHandlerClass:
         k = self ; c = k.c ; f = c.frame
         bodyCtrl = f.body and hasattr(f.body,'bodyCtrl') and f.body.bodyCtrl or None
         canvas   = f.tree and hasattr(f.tree,'canvas')   and f.tree.canvas   or None
+        bindingWidget = f.tree and hasattr(f.tree,'bindingWidget') and f.tree.bindingWidget or None
         # g.trace(bodyCtrl,canvas)
         if not bodyCtrl or not canvas: return
         
         for stroke in  k.bindingsDict.keys():
-            for w in (c.miniBufferWidget,bodyCtrl,canvas):
+            for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
                 def bindKeyCallback (event,k=k,stroke=stroke):
                     return k.masterKeyHandler(event,stroke=stroke)
                 bindStroke = k.tkbindingFromStroke(stroke)
@@ -1164,7 +1165,7 @@ class keyHandlerClass:
             kind,n,handler = k.afterGetArgState
             if kind: k.setState(kind,n,handler)
             c.frame.log.deleteTab('Completion')
-            g.trace('kind',kind,'n',n,'handler',handler and handler.__name__)
+            if trace: g.trace('kind',kind,'n',n,'handler',handler and handler.__name__)
             if handler: handler(event)
         elif keysym == 'Tab':
             k.doTabCompletion(k.argTabList,k.arg_completion)
@@ -1177,6 +1178,7 @@ class keyHandlerClass:
             k.updateLabel(event)
             k.mb_tabListPrefix = k.getLabel()
         return 'break'
+    #@nonl
     #@-node:ekr.20050920085536.62:getArg
     #@+node:ekr.20050920085536.63:keyboardQuit
     def keyboardQuit (self,event):
@@ -1459,9 +1461,10 @@ class keyHandlerClass:
             if (self.master_key_count % 100) == 0:
                 g.printGcSummary(trace=True)
     
-        if stroke is None:
-            g.trace('no stroke: using strokeFromEvent')
-            stroke = k.strokeFromEvent(event)
+        if 0:
+            if stroke is None:
+                if trace: g.trace('no stroke: using strokeFromEvent')
+                stroke = k.strokeFromEvent(event)
     
         # Pass keyboard-quit to k.masterCommand for macro recording.
         if k.abortAllModesKey and stroke == k.abortAllModesKey:
