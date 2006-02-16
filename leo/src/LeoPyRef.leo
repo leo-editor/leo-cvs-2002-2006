@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9087" clone_windows="0"/>
 <globals body_outline_ratio="0.664367816092">
-	<global_window_position top="11" left="465" height="870" width="771"/>
+	<global_window_position top="13" left="397" height="870" width="771"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -170,6 +170,7 @@
 </v>
 </v>
 <v t="ekr.20060216071129"><vh>4.4x2 projects</vh>
+<v t="ekr.20060216120335"><vh>What I did</vh></v>
 <v t="ekr.20060216093552"><vh>Added support for trace_minibuffer setting</vh>
 <v t="ekr.20050924064254"><vh>Label...</vh>
 <v t="ekr.20060125175103"><vh>k.minibufferWantsFocus/Now</vh></v>
@@ -246,6 +247,16 @@
 </v>
 <v t="ekr.20060216110502"><vh>&lt;&lt; clear accelerator if it is a plain key &gt;&gt;</vh></v>
 </v>
+</v>
+<v t="ekr.20060216115304"><vh>Fixed crasher in k.masterCommand</vh>
+<v t="ekr.20060216115304.1"><vh>Report</vh></v>
+<v t="ekr.20050920085536.65"><vh>masterCommand &amp; helpers</vh>
+<v t="ekr.20050920085536.67"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
+<v t="ekr.20050923172809.1"><vh>callStateFunction</vh></v>
+<v t="ekr.20050923174229.3"><vh>callKeystrokeFunction (not used)</vh></v>
+<v t="ekr.20051026083544"><vh>handleDefaultChar</vh></v>
+</v>
+<v t="ekr.20060216115304.2"><vh>g.safeStringCompare &amp; test</vh></v>
 </v>
 </v>
 </v>
@@ -594,7 +605,7 @@
 <v t="ekr.20060207085518"><vh>Improve c.insertHeadline (minor)</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -619,12 +630,12 @@
 marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20041117062700"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
+<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
 <v t="ekr.20051104075904" annotate="7d71002e"><vh>@thin leoTest.py</vh></v>
-<v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
@@ -2945,7 +2956,6 @@ setLabelGray = setLabelGrey</t>
             if i != j:
                 w.delete(i,j)
             i = w.index('insert')
-            g.trace(repr(ch))
             w.insert(i,ch)
             # g.trace(k.mb_prefix)       
         else:
@@ -3105,7 +3115,7 @@ setLabelGray = setLabelGrey</t>
         
     # g.trace(stroke,k.abortAllModesKey)
 
-    if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
+    if k.abortAllModesKey and g.safeStringCompare(stroke,k.abortAllModesKey): # 'Control-g'
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
         return 'break'
@@ -5665,7 +5675,7 @@ strokeFromSetting    = shortcutFromSetting</t>
     event = g.Bunch(char='',keysym='',widget=w)
     # g.trace(c.widget_name(w))
     
-    if 1: # New in 4.4a6:
+    if stroke: # New in 4.4a6:
         return k.masterKeyHandler(event,stroke=stroke)
     else:
         return k.masterCommand(event,func,stroke,commandName)</t>
@@ -6662,5 +6672,46 @@ David
         break # Found.
 else:
     accelerator = ''</t>
+<t tx="ekr.20060216115304"> if k.abortAllModesKey and stroke == k.abortAllModesKey:
+       UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position
+4: ordinal not in range(128)
+</t>
+<t tx="ekr.20060216115304.1">if k.abortAllModesKey and stroke == k.abortAllModesKey:
+       UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position
+4: ordinal not in range(128)
+</t>
+<t tx="ekr.20060216115304.2">def safeStringCompare (s1,s2):
+
+    s1 = g.toUnicode(s1,'utf-8')
+    s2 = g.toUnicode(s2,'utf-8')
+    return s1 == s2
+    
+def test_g_safeStringCompare ():
+    
+    assert g.safeStringCompare('a','á') is False
+    assert g.safeStringCompare('','á') is False
+    assert g.safeStringCompare('',u'á') is False
+    assert g.safeStringCompare('a','a') is True
+    assert g.safeStringCompare('á','á') is True
+    assert g.safeStringCompare(u'á',u'á') is True</t>
+<t tx="ekr.20060216120335">@nocolor
+
+- Created k.completeAllBindings, called last in k.makeAllBindings. This binds
+all keystrokes in k.bindingsDict to k.masterKeyHandler with an optional stroke
+argument. This allows k.masterKeyhandler to dispense with the problematic call
+to k.strokeFromEvent. This is all that is really required. 
+
+- Added code to menu.createMenuEntries that clears the accelerator on MacOS for
+any key that isn't a control, alt or command key. This solves the recurring
+problems with the Return key. The only effect is that the menu won't mention a
+binding that is actually in effect, but apparently that cannot be helped.
+
+- Added g.safeCompareStrings, which may, or may not, fix the crasher when
+comparing k.abortAllModesKey to the incoming keystroke in k.masterKeyHandler.
+It's a bit tricky to test.
+
+- The ignore_caps_lock is no longer functional. Sigh. This depends on knowing
+the Caps_Lock bit in key events. I may put this back later, but I can't delay a6
+even a minute for this.</t>
 </tnodes>
 </leo_file>

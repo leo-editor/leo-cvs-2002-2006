@@ -63,7 +63,7 @@
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = True</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
@@ -284,7 +284,7 @@
 <v t="ekr.20041119050105.16"><vh>@bool suboutline_only = False</vh></v>
 </v>
 <v t="ekr.20060122105527.3"><vh>Keyboard and minibuffer Options</vh>
-<v t="ekr.20060215094146"><vh>@bool ignore_caps_lock = True</vh></v>
+<v t="ekr.20060215094146"><vh>@@bool ignore_caps_lock = True</vh></v>
 <v t="ekr.20060215102141"><vh>@bool ignore_unbound_non_ascii_keys = False</vh></v>
 <v t="ekr.20060215104345"><vh>@bool swap_mac_keys = False</vh></v>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
@@ -404,7 +404,7 @@
 <v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
 </v>
 </v>
-<v t="ekr.20051126062243" a="V"><vh>Debugging options</vh>
+<v t="ekr.20051126062243" a="E"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -421,7 +421,7 @@
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = True</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
@@ -4417,7 +4417,9 @@ Important: the Find Tab always exists regardless of this setting.</t>
 # Warning: this slows Leo considerably.</t>
 <t tx="ekr.20060212103826"># True (recommended): print a message when Leo calls gc.collect explicitly.</t>
 <t tx="ekr.20060215054710"></t>
-<t tx="ekr.20060215094146">True (recommended): Leo completely ignores the caps-lock key.
+<t tx="ekr.20060215094146">No longer functional
+
+True (recommended): Leo completely ignores the caps-lock key.
 False: The caps-lock key reverses the case of alphabetic characters.
 
 Regardless of this setting, the caps-lock key has no effect on Control or Alt keys.</t>

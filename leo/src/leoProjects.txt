@@ -1998,7 +1998,7 @@ def masterCommand (self,event,func,stroke,commandName=None):
         
     # g.trace(stroke,k.abortAllModesKey)
 
-    if k.abortAllModesKey and stroke == k.abortAllModesKey: # 'Control-g'
+    if k.abortAllModesKey and g.safeStringCompare(stroke,k.abortAllModesKey): # 'Control-g'
         k.keyboardQuit(event)
         k.endCommand(event,commandName)
         return 'break'
@@ -2312,7 +2312,6 @@ def updateLabel (self,event):
             if i != j:
                 w.delete(i,j)
             i = w.index('insert')
-            g.trace(repr(ch))
             w.insert(i,ch)
             # g.trace(k.mb_prefix)       
         else:
@@ -2538,6 +2537,28 @@ def callAltXFunction (self,event):
 #@-node:ekr.20060213151411:Fixed (maybe) problems with unicode characters & caps lock
 #@-node:ekr.20060214140930:4.4x1 projects
 #@+node:ekr.20060216071129:4.4x2 projects
+#@+node:ekr.20060216120335:What I did
+@nocolor
+
+- Created k.completeAllBindings, called last in k.makeAllBindings. This binds
+all keystrokes in k.bindingsDict to k.masterKeyHandler with an optional stroke
+argument. This allows k.masterKeyhandler to dispense with the problematic call
+to k.strokeFromEvent. This is all that is really required. 
+
+- Added code to menu.createMenuEntries that clears the accelerator on MacOS for
+any key that isn't a control, alt or command key. This solves the recurring
+problems with the Return key. The only effect is that the menu won't mention a
+binding that is actually in effect, but apparently that cannot be helped.
+
+- Added g.safeCompareStrings, which may, or may not, fix the crasher when
+comparing k.abortAllModesKey to the incoming keystroke in k.masterKeyHandler.
+It's a bit tricky to test.
+
+- The ignore_caps_lock is no longer functional. Sigh. This depends on knowing
+the Caps_Lock bit in key events. I may put this back later, but I can't delay a6
+even a minute for this.
+#@nonl
+#@-node:ekr.20060216120335:What I did
 #@+node:ekr.20060216093552:Added support for trace_minibuffer setting
 #@+node:ekr.20050924064254:Label...
 @ There is something dubious about tracking states separately for separate commands.
@@ -2695,7 +2716,6 @@ def updateLabel (self,event):
             if i != j:
                 w.delete(i,j)
             i = w.index('insert')
-            g.trace(repr(ch))
             w.insert(i,ch)
             # g.trace(k.mb_prefix)       
         else:
@@ -3836,7 +3856,7 @@ def masterMenuHandler (self,stroke,func,commandName):
     event = g.Bunch(char='',keysym='',widget=w)
     # g.trace(c.widget_name(w))
     
-    if 1: # New in 4.4a6:
+    if stroke: # New in 4.4a6:
         return k.masterKeyHandler(event,stroke=stroke)
     else:
         return k.masterCommand(event,func,stroke,commandName)
@@ -4075,6 +4095,195 @@ else:
 #@-node:ekr.20060216110502:<< clear accelerator if it is a plain key >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
 #@-node:ekr.20060216071953:Bind to strokes, not commands
+#@+node:ekr.20060216115304:Fixed crasher in k.masterCommand
+ if k.abortAllModesKey and stroke == k.abortAllModesKey:
+       UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position
+4: ordinal not in range(128)
+#@+node:ekr.20060216115304.1:Report
+if k.abortAllModesKey and stroke == k.abortAllModesKey:
+       UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position
+4: ordinal not in range(128)
+#@-node:ekr.20060216115304.1:Report
+#@+node:ekr.20050920085536.65:masterCommand & helpers
+def masterCommand (self,event,func,stroke,commandName=None):
+
+    '''This is the central dispatching method.
+    All commands and keystrokes pass through here.'''
+
+    k = self ; c = k.c
+    c.setLog()
+    trace = c.config.getBool('trace_masterCommand')
+  
+    c.startRedrawCount = c.frame.tree.redrawCount
+    k.stroke = stroke # Set this global for general use.
+    keysym = event and event.keysym or ''
+    ch = event and event.char or ''
+    w = event and event.widget
+    state = event and hasattr(event,'state') and event.state or 0
+    k.func = func
+    k.funcReturn = None # For unit testing.
+    commandName = commandName or func and func.__name__ or '<no function>'
+    special = keysym in (
+        'Caps_Lock','Num_Lock','Control_L','Alt_L','Shift_L','Control_R','Alt_R','Shift_R')
+    interesting = func is not None
+
+    if trace and interesting:
+        g.trace(
+            # 'stroke: ',stroke,'state:','%x' % state,'ch:',repr(ch),'keysym:',repr(keysym),
+            'w:',w and c.widget_name(w),'func:',func and func.__name__
+        )
+
+    # if interesting: g.trace(stroke,commandName,k.getStateKind())
+
+    inserted = not special or (
+        stroke != '<Key>' and (len(k.keysymHistory)==0 or k.keysymHistory[0]!=keysym))
+
+    if inserted:
+        # g.trace(stroke,keysym)
+        << add character to history >>
+        
+    # We *must not* interfere with the global state in the macro class.
+    if c.macroCommands.recordingMacro:
+        done = c.macroCommands.startKbdMacro(event)
+        if done: return 'break'
+        
+    # g.trace(stroke,k.abortAllModesKey)
+
+    if k.abortAllModesKey and g.safeStringCompare(stroke,k.abortAllModesKey): # 'Control-g'
+        k.keyboardQuit(event)
+        k.endCommand(event,commandName)
+        return 'break'
+        
+    if special: # Don't pass these on.
+        return 'break' 
+
+    if 0: # *** This is now handled by k.masterKeyHandler.
+        if k.inState():
+            val = k.callStateFunction(event) # Calls end-command.
+            if val != 'do-func': return 'break'
+            g.trace('Executing key outside of mode')
+
+    if k.regx.iter:
+        try:
+            k.regXKey = keysym
+            k.regx.iter.next() # EKR: next() may throw StopIteration.
+        finally:
+            return 'break'
+
+    if k.abbrevOn:
+        expanded = c.abbrevCommands.expandAbbrev(event)
+        if expanded: return 'break'
+
+    if func: # Func is an argument.
+        if trace: g.trace('command',commandName)
+        if commandName.startswith('specialCallback'):
+            # The callback function will call c.doCommand
+            val = func(event)
+            # k.simulateCommand uses k.funcReturn.
+            k.funcReturn = k.funcReturn or val # For unit tests.
+        else:
+            # Call c.doCommand directly
+            c.doCommand(func,commandName,event=event)
+        k.endCommand(event,commandName)
+        return 'break'
+    elif k.inState():
+        return 'break' # New in 4.4b2: ignore unbound keys in a state.
+    else:
+        val = k.handleDefaultChar(event)
+        return val
+#@nonl
+#@+node:ekr.20050920085536.67:<< add character to history >>
+# Don't add multiple special characters to history.
+k.keysymHistory.insert(0,keysym)
+
+if len(ch) > 0:
+    if len(keyHandlerClass.lossage) > 99:
+        keyHandlerClass.lossage.pop()
+    keyHandlerClass.lossage.insert(0,ch)
+
+if 0: # traces
+    g.trace(keysym,stroke)
+    g.trace(k.keysymHistory)
+    g.trace(keyHandlerClass.lossage)
+#@nonl
+#@-node:ekr.20050920085536.67:<< add character to history >>
+#@+node:ekr.20050923172809.1:callStateFunction
+def callStateFunction (self,event):
+    
+    k = self ; val = None
+    
+    # g.trace(k.state.kind)
+    
+    if k.state.kind:
+        if k.state.handler:
+            val = k.state.handler(event)
+            if val != 'continue':
+                k.endCommand(event,k.commandName)
+        else:
+            g.es_print('no state function for %s' % (k.state.kind),color='red')
+            
+    return val
+#@nonl
+#@-node:ekr.20050923172809.1:callStateFunction
+#@+node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+def callKeystrokeFunction (self,event):
+    
+    '''Handle a quick keystroke function.
+    Return the function or None.'''
+    
+    k = self
+    numberOfArgs, func = k.keystrokeFunctionDict [k.stroke]
+
+    if func:
+        func(event)
+        commandName = k.inverseCommandsDict.get(func) # Get the emacs command name.
+        k.endCommand(event,commandName)
+    
+    return func
+#@nonl
+#@-node:ekr.20050923174229.3:callKeystrokeFunction (not used)
+#@+node:ekr.20051026083544:handleDefaultChar
+def handleDefaultChar(self,event):
+    
+    k = self ; c = k.c
+    w = event and event.widget
+    name = c.widget_name(w)
+
+    if name.startswith('body'):
+        action = k.unboundKeyAction
+        if action in ('insert','overwrite'):
+            c.editCommands.selfInsertCommand(event,action=action)
+        else:
+            pass ; g.trace('ignoring key')
+        return 'break'
+    elif name.startswith('head'):
+        c.frame.tree.onHeadlineKey(event)
+        return 'break'
+    else:
+        # Let tkinter handle the event.
+        # ch = event and event.char ; g.trace('to tk:',name,repr(ch))
+        return None
+#@nonl
+#@-node:ekr.20051026083544:handleDefaultChar
+#@-node:ekr.20050920085536.65:masterCommand & helpers
+#@+node:ekr.20060216115304.2:g.safeStringCompare & test
+def safeStringCompare (s1,s2):
+
+    s1 = g.toUnicode(s1,'utf-8')
+    s2 = g.toUnicode(s2,'utf-8')
+    return s1 == s2
+    
+def test_g_safeStringCompare ():
+    
+    assert g.safeStringCompare('a','á') is False
+    assert g.safeStringCompare('','á') is False
+    assert g.safeStringCompare('',u'á') is False
+    assert g.safeStringCompare('a','a') is True
+    assert g.safeStringCompare('á','á') is True
+    assert g.safeStringCompare(u'á',u'á') is True
+#@nonl
+#@-node:ekr.20060216115304.2:g.safeStringCompare & test
+#@-node:ekr.20060216115304:Fixed crasher in k.masterCommand
 #@-node:ekr.20060216071129:4.4x2 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
