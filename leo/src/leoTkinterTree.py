@@ -2401,7 +2401,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         if k:
             k.setDefaultUnboundKeyAction()
-            k.showStateAndMode()
+            # k.showStateAndMode() # Destroys UNL info.
         
         # Important: this will redraw if necessary.
         self.onHeadChanged(p)
