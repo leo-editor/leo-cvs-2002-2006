@@ -2151,7 +2151,7 @@ class keyHandlerClass:
      
     def strokeFromEvent (self,event):
         
-        k = self ; k.c
+        k = self
         if event is None: return ''
         trace = k.trace_key_event and not g.app.unitTesting
         state = event.state or 0
@@ -2164,12 +2164,12 @@ class keyHandlerClass:
         # Linux uses, 8 and 0x80, XP uses 0x20000.
         if sys.platform=='darwin':
             alt = (state&0x10) == 0x10
-            num = False
+            #num = False
         elif sys.platform.startswith('win'):
             alt = (state & 0x20000) == 0x20000
-            num = (state & 8) == 8
+            #num = (state & 8) == 8
         else:
-            num = False # ???
+            #num = False # ???
             alt = (state & 8) == 8 or (state & 0x80) == 0x80
         plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
         
