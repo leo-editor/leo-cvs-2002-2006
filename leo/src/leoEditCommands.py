@@ -365,7 +365,7 @@ class Tracker:
     #@-others
 #@nonl
 #@-node:ekr.20050920085536.84:class  Tracker (an iterator)
-#@+node:ekr.20051126123249:class autoCompleterClass (prototype)
+#@+node:ekr.20051126123249:class autoCompleterClass
 class autoCompleterCommandsClass (baseEditCommandsClass):
     
     '''Similar to typing completion in the minibuffer,
@@ -380,52 +380,109 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
         
         self.c = c
         self.k = c.k
+        
+        self.calltips = {}
+        self.enable_autocompleter   = c.config.getBool('enable_autocompleter')
+        self.enable_calltips        = c.config.getBool('enable_calltips')
         self.membersList = None
         self.prefix = None
         self.tabList = []
         self.tabListIndex = -1
         self.text = None # For Escape.
-        self.widget = None
+        self.trace = c.config.getBool('trace_autocompleter')
+        self.watchwords = {}
+        self.widget = None # The widget that should get focus after autocomplete is done.
+    
+        self.definePatterns()
     #@nonl
     #@-node:ekr.20051126123759.1: ctor
+    #@+node:ekr.20060216163305:definePatterns
+    def definePatterns (self):
+        
+        self.space = r'[ \t\r\f\v ]+'
+        self.end = r'\w+\s*\([^)]*\)'
+        self.r  = string.punctuation.replace('(','').replace('.','')
+        self.pt = string.digits + string.letters + self.r
+        ripout = string.punctuation + string.whitespace + '\n'
+        self.ripout = ripout.replace('_','')
+        self.pats = {}
+        self.pats ['python'] = re.compile(r'def\s+%s' % self.end)
+        self.pats ['java'] = re.compile(
+            r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
+                self.space,self.space,self.end))
+        self.pats ['perl'] = re.compile(r'sub\s+%s' % self.end)
+        self.pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (self.space,self.end))
+        self.pats ['c'] = re.compile(r'\w+%s%s' % (self.space,self.end))
+        okchars = {}
+        for z in string.ascii_letters:
+            okchars [z] = z
+        okchars ['_'] = '_'
+        self.okchars = okchars
+    #@nonl
+    #@-node:ekr.20060216163305:definePatterns
     #@+node:ekr.20051126123759.2: getPublicCommands (autoCommandsClass)
     def getPublicCommands (self):
     
-        k = self.k
-    
         return {
-            'auto-complete':    self.autoComplete,
+            'auto-complete':            self.autoComplete,
+            'scan-for-autocompleter':   self.scan,
         }
     #@nonl
     #@-node:ekr.20051126123759.2: getPublicCommands (autoCommandsClass)
     #@-node:ekr.20051126123759: birth
+    #@+node:ekr.20060216155558:Top level
+    #@+node:ekr.20051126122952.1:autoComplete
+    def autoComplete (self,event=None):
+    
+        c = self.c ; k = self.k ; gui = g.app.gui
+    
+        if not self.enable_autocompleter: return
+        w = event and event.widget or c.get_focus()
+        if not w: return
+    
+        self.widget = w
+        self.prefix = gui.getSelectedText(w) or ''
+        self.text = gui.getAllText(w)
+        self.membersList = c.commandsDict.keys() ## Testing only.
+        self.autoCompleterStateHandler(event)
+    #@-node:ekr.20051126122952.1:autoComplete
+    #@+node:ekr.20060216155558.1:scan
+    def scan (self,event=None):
+        
+        if g.app.unitTesting: return
+        
+        g.trace('autocompleter')
+        
+        self.scanOutline()
+        
+        if 0:
+            # Use a thread to do the initial scan so as not to interfere with the user.            
+            def scan ():
+                #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
+                # During unit testing c gets destroyed before the scan finishes.
+                if not g.app.unitTesting:
+                    self.scanOutline()
+        
+            t = threading.Thread(target=scan)
+            t.setDaemon(True)
+            t.start()
+    #@nonl
+    #@-node:ekr.20060216155558.1:scan
+    #@-node:ekr.20060216155558:Top level
+    #@+node:ekr.20060216160332.2:Helpers
     #@+node:ekr.20051127105431:abort
     def abort (self):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
         
-        c.widgetWantsFocus(w)
-    
-        w.delete('1.0','end')
-        w.insert('1.0',self.text)
-        gui.setTextSelection(w,'1.0','1.0')
+        c.widgetWantsFocusNow(w)
+        i = '1.0'
+        w.delete(i,'end')
+        w.insert(i,self.text)
+        gui.setTextSelection(w,i,i,insert=i)
     #@nonl
     #@-node:ekr.20051127105431:abort
-    #@+node:ekr.20051126122952.1:autoComplete
-    def autoComplete (self,event):
-    
-        c = self.c ; k = self.k ; gui = g.app.gui
-        self.widget = w = event and event.widget 
-        self.prefix = gui.getSelectedText(w) or ''
-        self.text = gui.getAllText(w)
-    
-        c.frame.log.clearTab('Completion') # Creates the tab if necessary.
-        self.membersList = c.commandsDict.keys() ## Testing only.
-        k.setState('auto-completer',1,handler=self.stateHandler)
-        self.computeCompletionList()
-    #@nonl
-    #@-node:ekr.20051126122952.1:autoComplete
-    #@+node:ekr.20051126123149:computeCompletionList (autoCompleter)
+    #@+node:ekr.20051126123149:auto.computeCompletionList
     def computeCompletionList (self):
         
         c = self.c ; gui = g.app.gui ; w = self.widget
@@ -440,8 +497,8 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
             for name in self.tabList:
                 g.es('%s' % (name),tabName='Completion')
     #@nonl
-    #@-node:ekr.20051126123149:computeCompletionList (autoCompleter)
-    #@+node:ekr.20051126131103:doBackSpace
+    #@-node:ekr.20051126123149:auto.computeCompletionList
+    #@+node:ekr.20051126131103:auto.doBackSpace
     def doBackSpace (self):
     
         '''Cut back to previous prefix.'''
@@ -450,8 +507,8 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
         self.setSelection(self.prefix)
         self.computeCompletionList()
     #@nonl
-    #@-node:ekr.20051126131103:doBackSpace
-    #@+node:ekr.20051126123249.1:doTabCompletion (autoCompleter)
+    #@-node:ekr.20051126131103:auto.doBackSpace
+    #@+node:ekr.20051126123249.1:auto.doTabCompletion
     def doTabCompletion (self):
         
         '''Handle tab completion when the user hits a tab.'''
@@ -469,30 +526,30 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
         else:
             self.computeCompletionList()
     
-        c.bodyWantsFocus()
+        c.widgetWantsFocusNow(w)
     #@nonl
-    #@-node:ekr.20051126123249.1:doTabCompletion (autoCompleter)
+    #@-node:ekr.20051126123249.1:auto.doTabCompletion
     #@+node:ekr.20051127065601:extendSelection
     def extendSelection (self,s):
         
-        c = self.c ; w = self.widget ; gui = g.app.gui
-        c.widgetWantsFocus(w)
+        c = self.c ; w = self.widget
+        c.widgetWantsFocusNow(w)
         
-        if gui.hasSelection(w):
-            i,j = gui.getSelectionRange(w)
+        if g.app.gui.hasSelection(w):
+            i,j = g.app.gui.getSelectionRange(w)
         else:
-            i = j = gui.getInsertPoint(w)
+            i = j = g.app.gui.getInsertPoint(w)
         
         w.insert(j,s)
         j = w.index('%s + 1c' % (j))
-        gui.setSelectionRange(w,i,j)
+        g.app.gui.setSelectionRange(w,i,j,insert=j)
     #@nonl
     #@-node:ekr.20051127065601:extendSelection
     #@+node:ekr.20051127105102:finish
     def finish (self):
         
         c = self.c ; w = self.widget ; gui = g.app.gui
-        c.widgetWantsFocus(w)
+        c.widgetWantsFocusNow(w)
         
         i,j = gui.getTextSelection(w)
         if i != j:
@@ -502,28 +559,35 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
     #@+node:ekr.20051127070018:setSelection
     def setSelection (self,s):
         
-        c = self.c ; w = self.widget ; gui = g.app.gui
-        c.widgetWantsFocus(w)
+        c = self.c ; w = self.widget
+        c.widgetWantsFocusNow(w)
         
-        if gui.hasSelection(w):
-            i,j = gui.getSelectionRange(w)
+        if g.app.gui.hasSelection(w):
+            i,j = g.app.gui.getSelectionRange(w)
             w.delete(i,j)
         else:
-            i = gui.getInsertPoint(w)
+            i = g.app.gui.getInsertPoint(w)
         
         w.insert(i,s)
         j = w.index('%s + %dc' % (i,len(s)))
-        gui.setSelectionRange(w,i,j)
+        g.app.gui.setSelectionRange(w,i,j,insert=j)
     #@nonl
     #@-node:ekr.20051127070018:setSelection
-    #@+node:ekr.20051126124705:stateHandler (autoCompleter)
-    def stateHandler (self,event):
+    #@-node:ekr.20060216160332.2:Helpers
+    #@+node:ekr.20051126124705:autoCompleterStateHandler
+    def autoCompleterStateHandler (self,event):
         
-        c = self.c ; k = self.k ; gui = g.app.gui ; w = self.widget
+        c = self.c ; k = self.k ; w = self.widget
+        tag = 'auto-complete' ; state = k.getState(tag)
         keysym = event and event.keysym
         ch = event and event.char or ''
-        # g.trace(repr(ch),repr(keysym))
-        if keysym == 'Return':
+        trace = self.trace and not g.app.unitTesting
+        if trace: g.trace(repr(ch),repr(keysym),state)
+    
+        if state == 0:
+            self.computeCompletionList()
+            k.setState(tag,1,handler=self.autoCompleterStateHandler) 
+        elif keysym == 'Return':
             c.frame.log.deleteTab('Completion')
             k.clearState()
             self.finish()
@@ -535,18 +599,158 @@ class autoCompleterCommandsClass (baseEditCommandsClass):
             self.doTabCompletion()
         elif keysym == 'BackSpace':
             self.doBackSpace()
-        elif ch in string.printable:
+        # elif ch in string.printable:
+        else:
             self.extendSelection(ch)
-            s = gui.getSelectedText(w)
+            s = g.app.gui.getSelectedText(w)
             if s.startswith(self.prefix):
                 self.prefix = self.prefix + ch
-                # g.trace('prefix',self.prefix)
             self.computeCompletionList()
     #@nonl
-    #@-node:ekr.20051126124705:stateHandler (autoCompleter)
+    #@-node:ekr.20051126124705:autoCompleterStateHandler
+    #@+node:ekr.20060216160332.1:Scanning
+    #@+node:ekr.20060216161220:scanOutline
+    def scanOutline (self):
+    
+        '''Traverse an outline and build the autocommander database.'''
+    
+        c = self.c
+        for p in c.rootPosition().allNodes_iter():
+            self.language = g.scanForAtLanguage(c,p)
+            # g.trace('language',self.language,p.headString())
+            s = p.bodyString()
+            if self.enable_autocompleter:
+                self.scanForAutoCompleter(s)
+            if self.enable_calltips:
+                self.scanForCallTip(s)
+    
+        if 1:
+            g.trace('watchwords...\n\n')
+            keys = self.watchwords.keys() ; keys.sort()
+            for key in keys:  # ('c','p','v','t'):
+                aList = self.watchwords.get(key)
+                g.trace('%s:\n\n' % (key), g.listToString(aList))
+            g.trace('calltips...\n\n')
+            keys = self.calltips.keys() ; keys.sort()
+            for key in keys:
+                d = self.calltips.get(key)
+                g.trace('%s:\n\n' % (key), g.dictToString(d))
+    #@nonl
+    #@-node:ekr.20060216161220:scanOutline
+    #@+node:ekr.20060216161234:scanForCallTip
+    def scanForCallTip (self,s):
+    
+        '''this function scans text for calltip info'''
+    
+        d = self.calltips.get(self.language,{})
+        pat = self.pats.get(self.language or 'python')
+        results = pat and pat.findall(s) or []
+        
+        for z in results:
+            if isinstance(z,tuple): z = z [0]
+            pieces2 = z.split('(')
+            pieces2 [0] = pieces2 [0].split() [-1]
+            a, b = pieces2 [0], pieces2 [1]
+            aList = d.get(a,[])
+            if str(z) not in aList:
+                aList.append(str(z))
+                d [a] = aList
+        
+        self.calltips [self.language] = d
+    #@nonl
+    #@-node:ekr.20060216161234:scanForCallTip
+    #@+node:ekr.20060216161247:scanForAutoCompleter
+    def scanForAutoCompleter (self,s):
+    
+        '''This function scans text for the autocompleter database.'''
+    
+        t1 = s.split('.') ; aList = []
+    
+        reduce(lambda a,b: self.makeAutocompletionList(a,b,aList),t1)
+    
+        if aList:
+            for a, b in aList:
+                z = self.watchwords.get(a,[])
+                if str(b) not in z:
+                    z.append(str(b))
+                    self.watchwords [a] = z
+        
+    #@+at 
+    #@nonl
+    # reduce( function, sequence[, initializer])
+    # 
+    # Apply function of two arguments cumulatively to the items of sequence, 
+    # from left
+    # to right, so as to reduce the sequence to a single value.
+    # 
+    # For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) gives 
+    # ((((1+2)+3)+4)+5).
+    # 
+    # The left argument, x, is the accumulated value and the right argument, 
+    # y, is the
+    # update value from the sequence.
+    # 
+    # If the optional initializer is present, it is placed before the items of 
+    # the
+    # sequence in the calculation, and serves as a default when the sequence 
+    # is empty.
+    # If initializer is not given and sequence contains only one item, the 
+    # first item
+    # is returned.
+    #@-at
+    #@nonl
+    #@+node:ekr.20051025144611.20:makeAutocompletionList
+    def makeAutocompletionList (self,a,b,glist):
+        
+        '''A helper function for autocompletion'''
+    
+        a1 = self.reverseFindWhitespace(a)
+    
+        if a1:
+            b2 = self.getCleanString(b)
+            if b2!='':
+                glist.append((a1,b2))
+        
+        return b 
+    
+    #@+node:ekr.20060216161258:reverseFindWhitespace
+    def reverseFindWhitespace (self,s):
+    
+        '''Return the longest tail of s containing no whitespace or period.'''
+    
+        i = len(s) -1
+        while i >= 0:
+            if s[i].isspace() or s [i] == '.': return s [i+1:]
+            i -= 1
+    
+        # Original code: requires Python 2.3 and may be slower.
+        # for n, l in enumerate(s):
+            # n =(n+1)*-1
+            # if s[n].isspace()or s[n]=='.':return s[n+1:]
+    
+        return s
+    #@nonl
+    #@-node:ekr.20060216161258:reverseFindWhitespace
+    #@+node:ekr.20060216161253:getCleanString
+    def getCleanString (self,s):
+        
+        '''Return the prefix of s containing only chars in okchars.'''
+        
+        i = 0
+        for ch in s:
+            if ch not in self.okchars:
+                return s[:i]
+            i += 1
+    
+        return s
+    #@nonl
+    #@-node:ekr.20060216161253:getCleanString
+    #@-node:ekr.20051025144611.20:makeAutocompletionList
+    #@-node:ekr.20060216161247:scanForAutoCompleter
+    #@-node:ekr.20060216160332.1:Scanning
     #@-others
 #@nonl
-#@-node:ekr.20051126123249:class autoCompleterClass (prototype)
+#@-node:ekr.20051126123249:class autoCompleterClass
 #@+node:ekr.20050920084036.13:class abbrevCommandsClass (test)
 #@+at
 # 

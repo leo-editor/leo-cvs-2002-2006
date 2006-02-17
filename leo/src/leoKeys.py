@@ -1484,7 +1484,7 @@ class keyHandlerClass:
             # Second, pass keys to getArg or full-command modes if they are active.
             if state == 'getArg':
                 return k.getArg(event)
-            elif state == 'full-command':
+            elif state in ('full-command','auto-complete'):
                 # Do the default state action.
                 if trace: g.trace('calling state function')
                 k.callStateFunction(event) # Calls end-command.
@@ -1951,7 +1951,7 @@ class keyHandlerClass:
         return d
     #@nonl
     #@-node:ekr.20051018070524:computeInverseBindingDict
-    #@+node:ekr.20050920085536.46:doBackSpace
+    #@+node:ekr.20050920085536.46:k.doBackSpace
     # Used by getArg and fullCommand.
     
     def doBackSpace (self,defaultCompletionList,completion=True):
@@ -1973,8 +1973,8 @@ class keyHandlerClass:
             if s and len(s) > len(k.mb_prefix):
                 k.setLabel(s[:-1])
     #@nonl
-    #@-node:ekr.20050920085536.46:doBackSpace
-    #@+node:ekr.20050920085536.44:doTabCompletion
+    #@-node:ekr.20050920085536.46:k.doBackSpace
+    #@+node:ekr.20050920085536.44:k.doTabCompletion
     # Used by getArg and fullCommand.
     
     def doTabCompletion (self,defaultTabList,redraw=True):
@@ -1995,7 +1995,7 @@ class keyHandlerClass:
                 k.computeCompletionList(defaultTabList,backspace=False)
     
         c.bodyWantsFocus()
-    #@-node:ekr.20050920085536.44:doTabCompletion
+    #@-node:ekr.20050920085536.44:k.doTabCompletion
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
     def getShortcutForCommandName (self,commandName):
         

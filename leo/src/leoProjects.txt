@@ -2175,7 +2175,7 @@ def masterKeyHandlerHelper (self,event,stroke):
         # Second, pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
-        elif state == 'full-command':
+        elif state in ('full-command','auto-complete'):
             # Do the default state action.
             if trace: g.trace('calling state function')
             k.callStateFunction(event) # Calls end-command.
@@ -3922,7 +3922,7 @@ def masterKeyHandlerHelper (self,event,stroke):
         # Second, pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
-        elif state == 'full-command':
+        elif state in ('full-command','auto-complete'):
             # Do the default state action.
             if trace: g.trace('calling state function')
             k.callStateFunction(event) # Calls end-command.
