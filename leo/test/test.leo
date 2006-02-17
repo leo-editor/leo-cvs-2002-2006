@@ -242,8 +242,12 @@
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
+<v t="ekr.20060215083254" a="E"><vh>Э Test of matchHeadline</vh></v>
 </v>
-<v t="ekr.20060215083254" a="EV"><vh>Э Test of matchHeadline</vh></v>
+<v t="ekr.20060216144005"><vh>autocompleter test</vh>
+<v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
+</v>
+<v t="ekr.20060216170135" a="V"><vh>autocompleter scan test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4427,5 +4431,39 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
 <t tx="ekr.20060215083254">print p.matchHeadline('Э')
 print p.matchHeadline('a')</t>
+<t tx="ekr.20060216144005">@others
+
+print '-' * 20
+
+for s in (
+    'a bc',
+    'a.bc',
+    'abc ',
+    ' abc',
+):
+    print 's',repr(s), repr(reverseFindWhitespace(s))</t>
+<t tx="ekr.20060216163942">def reverseFindWhitespace (s):
+    
+    '''find the longest tail of s containing no whitespace or period.'''
+    
+    if 1:
+        i = len(s) - 1
+        while i &gt;= 0:
+            ch = s[i]
+            if ch.isspace()or ch=='.':return s[i+1:]
+            i -= 1
+    elif 0:
+        i = len(s) ; aList = list(s) ; aList.reverse()
+        for ch in aList:
+            if ch.isspace()or ch=='.':return s[i:]
+            i -= 1
+    else:
+        for n, l in enumerate(s):
+            n =(n+1)*-1
+            # print n
+            if s[n].isspace()or s[n]=='.':return s[n+1:]
+
+    return s </t>
+<t tx="ekr.20060216170135">c.autoCompleter.scan()</t>
 </tnodes>
 </leo_file>

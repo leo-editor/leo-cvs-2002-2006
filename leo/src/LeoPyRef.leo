@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="9087" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="9093" clone_windows="0"/>
 <globals body_outline_ratio="0.664367816092">
 	<global_window_position top="13" left="397" height="870" width="771"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -16,7 +16,8 @@
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936"
+marks="ekr.20060216161247,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
@@ -288,60 +289,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060116073938" a="V"><vh>To do 4.4 b3</vh>
+<v t="ekr.20060116073938"><vh>To do 4.4 b3</vh>
 <v t="ekr.20051126122638"><vh>Autocompletion tab</vh>
-<v t="ekr.20060214110318"><vh>Options</vh></v>
+<v t="ekr.20060216135646"><vh>To do</vh>
 <v t="ekr.20051205093049"><vh>Use dir for auto-complete ?</vh></v>
-<v t="ekr.20051025144611"><vh>Reference (Do not delete)</vh>
-<v t="ekr.20051025144611.1"><vh>Configuration</vh>
-<v t="ekr.20051025144611.2"><vh>autocompleter.ini</vh></v>
-<v t="ekr.20051025144611.3"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
-<v t="ekr.20051025144611.4"><vh>autocompleter.py</vh>
-<v t="ekr.20051025144611.5"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
-<v t="ekr.20051025144611.6"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20051025144611.7"><vh>&lt;&lt;version history&gt;&gt;</vh></v>
-<v t="ekr.20051025144611.8"><vh>&lt;&lt;a note on newCreateControl&gt;&gt;</vh></v>
-<v t="ekr.20051025144611.10"><vh>&lt;&lt;coding conventions&gt;&gt;</vh></v>
-<v t="ekr.20051025144611.11"><vh>&lt;&lt; configuration &gt;&gt;</vh></v>
-<v t="ekr.20051025144611.12"><vh>&lt;&lt; globals &gt;&gt;</vh>
-<v t="ekr.20051025144611.13"><vh>&lt;&lt;DictSet&gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051025144611.14"><vh>&lt;&lt; patterns &gt;&gt;</vh></v>
-<v t="ekr.20051025170832"><vh>Initialization</vh>
-<v t="ekr.20051025144611.15"><vh>init</vh></v>
-<v t="ekr.20051025170832.1"><vh>Config stuff</vh>
-<v t="ekr.20051025144611.24"><vh>has read config file meths</vh></v>
-<v t="ekr.20051025144611.25"><vh>readConfigFile</vh></v>
-<v t="ekr.20051025144611.26"><vh>createConfigFile</vh></v>
-<v t="ekr.20051025144611.27"><vh>readLanguageFiles</vh></v>
-<v t="ekr.20051025144611.28"><vh>readOutline</vh></v>
-</v>
-<v t="ekr.20051025144611.16"><vh>watcher</vh></v>
-<v t="ekr.20051025144611.23"><vh>initialScan</vh></v>
-</v>
-<v t="ekr.20051025144611.17"><vh>scanText</vh></v>
-<v t="ekr.20051025144611.18"><vh>scanForAutoCompleter</vh></v>
-<v t="ekr.20051025144611.19"><vh>scanForCallTip</vh></v>
-<v t="ekr.20051025144611.20"><vh>makeAutocompletionList</vh></v>
-<v t="ekr.20051025144611.21"><vh>_getCleanString</vh></v>
-<v t="ekr.20051025144611.22"><vh>_reverseFindWhitespace</vh></v>
-<v t="ekr.20051025144611.29"><vh>reducer</vh></v>
-<v t="ekr.20051025144611.30"><vh>unbind</vh></v>
-<v t="ekr.20051025144611.31"><vh>moveSelItem</vh></v>
-<v t="ekr.20051025144611.32"><vh>processKeyStroke</vh></v>
-<v t="ekr.20051025144611.33"><vh>testForUnbind</vh></v>
-<v t="ekr.20051025144611.34"><vh>processAutoBox</vh></v>
-<v t="ekr.20051025144611.35"><vh>add_item</vh></v>
-<v t="ekr.20051025144611.36"><vh>add_bindings</vh></v>
-<v t="ekr.20051025144611.37"><vh>configureAutoBox</vh></v>
-<v t="ekr.20051025144611.38"><vh>calculatePlace</vh></v>
-<v t="ekr.20051025144611.39"><vh>setLanguage</vh></v>
-<v t="ekr.20051025144611.40"><vh>newCreateControl</vh></v>
-<v t="ekr.20051025144611.41"><vh>addAutoboxAndCalltipWidgets</vh></v>
-<v t="ekr.20051025144611.42"><vh>onOpenWindow</vh></v>
-</v>
-</v>
+<v t="ekr.20051025144611"><vh>Reference</vh>
 <v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
 <v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
 <v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
@@ -402,20 +355,91 @@
 </v>
 <v t="ekr.20051220144507"><vh>isTextWidget</vh></v>
 </v>
-<v t="ekr.20051126123249"><vh>class autoCompleterClass (prototype)</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+<v t="ekr.20051025144611.1"><vh>Configuration</vh>
+<v t="ekr.20051025144611.2"><vh>autocompleter.ini</vh></v>
+<v t="ekr.20051025144611.3"><vh>.ato files in the autocompleter folder</vh></v>
+</v>
+<v t="ekr.20051025144611.4"><vh>autocompleter.py</vh>
+<v t="ekr.20051025144611.5"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20051025144611.14"><vh>&lt;&lt; patterns &gt;&gt;</vh></v>
+<v t="ekr.20051025144611.10"><vh>&lt;&lt;coding conventions&gt;&gt;</vh></v>
+<v t="ekr.20051025144611.12"><vh>&lt;&lt; globals &gt;&gt;</vh>
+<v t="ekr.20051025144611.13"><vh>&lt;&lt;DictSet&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060216150132"><vh>ignore</vh>
+<v t="ekr.20051025144611.6"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20051025144611.7"><vh>&lt;&lt;version history&gt;&gt;</vh></v>
+<v t="ekr.20051025144611.8"><vh>&lt;&lt;a note on newCreateControl&gt;&gt;</vh></v>
+<v t="ekr.20051025144611.11"><vh>&lt;&lt; configuration &gt;&gt;</vh></v>
+<v t="ekr.20051025170832"><vh>Initialization</vh>
+<v t="ekr.20051025144611.15"><vh>init</vh></v>
+</v>
+<v t="ekr.20051025144611.30"><vh>unbind</vh></v>
+<v t="ekr.20051025144611.31"><vh>moveSelItem</vh></v>
+<v t="ekr.20051025144611.32"><vh>processKeyStroke</vh></v>
+<v t="ekr.20051025144611.33"><vh>testForUnbind</vh></v>
+<v t="ekr.20051025144611.34"><vh>processAutoBox</vh></v>
+<v t="ekr.20051025144611.35"><vh>add_item</vh></v>
+<v t="ekr.20051025144611.36"><vh>add_bindings</vh></v>
+<v t="ekr.20051025144611.37"><vh>configureAutoBox</vh></v>
+<v t="ekr.20051025144611.38"><vh>calculatePlace</vh></v>
+<v t="ekr.20051025144611.40"><vh>newCreateControl</vh></v>
+<v t="ekr.20051025144611.41"><vh>addAutoboxAndCalltipWidgets</vh></v>
+<v t="ekr.20051025144611.42"><vh>onOpenWindow</vh></v>
+<v t="ekr.20051025144611.23"><vh>initialScan</vh>
+<v t="ekr.20060216160332"><vh>&lt;&lt; set config &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20051025144611.39"><vh>setLanguage</vh></v>
+<v t="ekr.20051025144611.17"><vh>scanText</vh></v>
+<v t="ekr.20051025144611.29"><vh>reducer (used by prefix matcher)</vh></v>
+</v>
+<v t="ekr.20051025170832.1"><vh>Config stuff</vh>
+<v t="ekr.20051025144611.24"><vh>has/setReadConfig</vh></v>
+<v t="ekr.20051025144611.25"><vh>readConfigFile</vh></v>
+<v t="ekr.20051025144611.26"><vh>createConfigFile</vh></v>
+<v t="ekr.20051025144611.27"><vh>readLanguageFiles</vh></v>
+<v t="ekr.20051025144611.28"><vh>readOutline</vh></v>
+</v>
+<v t="ekr.20060216150132.1"><vh>Scanning</vh>
+<v t="ekr.20051025144611.18"><vh>scanForAutoCompleter</vh></v>
+<v t="ekr.20051025144611.19"><vh>scanForCallTip</vh></v>
+<v t="ekr.20051025144611.21"><vh>_getCleanString</vh></v>
+<v t="ekr.20051025144611.22"><vh>_reverseFindWhitespace</vh></v>
+</v>
+<v t="ekr.20051025144611.16"><vh>watcher (put in k.masterKeyHandler)</vh></v>
+</v>
+</v>
+<v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
 <v t="ekr.20051126123759"><vh> birth</vh>
 <v t="ekr.20051126123759.1"><vh> ctor</vh></v>
+<v t="ekr.20060216163305"><vh>definePatterns</vh></v>
 <v t="ekr.20051126123759.2"><vh> getPublicCommands (autoCommandsClass)</vh></v>
 </v>
-<v t="ekr.20051127105431"><vh>abort</vh></v>
+<v t="ekr.20060216155558"><vh>Top level</vh>
 <v t="ekr.20051126122952.1"><vh>autoComplete</vh></v>
-<v t="ekr.20051126123149"><vh>computeCompletionList (autoCompleter)</vh></v>
-<v t="ekr.20051126131103"><vh>doBackSpace</vh></v>
-<v t="ekr.20051126123249.1"><vh>doTabCompletion (autoCompleter)</vh></v>
+<v t="ekr.20060216155558.1"><vh>scan</vh></v>
+</v>
+<v t="ekr.20060216160332.2"><vh>Helpers</vh>
+<v t="ekr.20051127105431"><vh>abort</vh></v>
+<v t="ekr.20051126123149"><vh>auto.computeCompletionList</vh></v>
+<v t="ekr.20051126131103"><vh>auto.doBackSpace</vh></v>
+<v t="ekr.20051126123249.1"><vh>auto.doTabCompletion</vh></v>
 <v t="ekr.20051127065601"><vh>extendSelection</vh></v>
 <v t="ekr.20051127105102"><vh>finish</vh></v>
 <v t="ekr.20051127070018"><vh>setSelection</vh></v>
-<v t="ekr.20051126124705"><vh>stateHandler (autoCompleter)</vh></v>
+</v>
+<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
+<v t="ekr.20060216160332.1"><vh>Scanning</vh>
+<v t="ekr.20060216161220"><vh>scanOutline</vh></v>
+<v t="ekr.20060216161234"><vh>scanForCallTip</vh></v>
+<v t="ekr.20060216161247" a="M"><vh>scanForAutoCompleter</vh>
+<v t="ekr.20051025144611.20"><vh>makeAutocompletionList</vh>
+<v t="ekr.20060216161258"><vh>reverseFindWhitespace</vh></v>
+<v t="ekr.20060216161253"><vh>getCleanString</vh></v>
+</v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20060214110318.1"><vh>After autocompleter</vh>
@@ -632,7 +656,7 @@
 <v t="ekr.20060207085518"><vh>Improve c.insertHeadline (minor)</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -684,7 +708,7 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="ekr.20050710142719"
-marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
+marks="ekr.20060216161247,ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 </v>
 </vnodes>
@@ -2572,10 +2596,10 @@ setSelectionRange = setTextSelection</t>
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.4 experimental 1, build %s, February 15, 2006" % c.getBuildNumber()</t>
+    return "Leo 4.4 a6, build %s, February 17, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.415 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.416 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -4009,21 +4033,9 @@ burt.you
 public static void main( String[] args )
 
 and dog.eat, burt.you would be added to autocompletion and the 3rd line would be added to the calltips section.</t>
-<t tx="ekr.20051025144611.4">&lt;&lt; docstring &gt;&gt;
-&lt;&lt;imports&gt;&gt;
-&lt;&lt;version history&gt;&gt;
-&lt;&lt;a note on newCreateControl&gt;&gt;
-&lt;&lt;coding conventions&gt;&gt;
-&lt;&lt; configuration &gt;&gt;
-
-#These two global determine if the autocompleter and calltip systems are used.  Default is on.
+<t tx="ekr.20051025144611.4">#These two global determine if the autocompleter and calltip systems are used.  Default is on.
 useauto = 1
-usecall = 1
-
-&lt;&lt;globals&gt;&gt;
-&lt;&lt;patterns&gt;&gt;
-
-@others</t>
+usecall = 1</t>
 <t tx="ekr.20051025144611.5">'''Autocompletion and calltips plugin.
 
 - ``.`` summons the autocompletion.
@@ -4303,14 +4315,17 @@ whitespace char entered.This will help when the nodes become big.
         pieces2 [0] = pieces2 [0].split() [ -1]
         a, b = pieces2 [0], pieces2 [1]
         calltips [lang][a].add(z)</t>
-<t tx="ekr.20051025144611.20">def makeAutocompletionList (a,b,glist):
+<t tx="ekr.20051025144611.20">def makeAutocompletionList (self,a,b,glist):
     
     '''A helper function for autocompletion'''
-    a1 = _reverseFindWhitespace(a)
+
+    a1 = self.reverseFindWhitespace(a)
+
     if a1:
-        b2 = _getCleanString(b)
+        b2 = self.getCleanString(b)
         if b2!='':
             glist.append((a1,b2))
+    
     return b 
 
 </t>
@@ -4330,40 +4345,27 @@ whitespace char entered.This will help when the nodes become big.
         if s[n].isspace()or s[n]=='.':return s[n+1:]
     return s 
 </t>
-<t tx="ekr.20051025144611.23">def initialScan (tag,keywords):
-    '''This method walks the node structure to build the in memory database.'''
-    c = keywords.get("c")
-    if not c or haveseen.has_key(c):
-        return 
+<t tx="ekr.20051025144611.23">def initialScan (self):
 
-    haveseen[c] = None 
+    c = self.c
     
-    #This part used to be in its own thread until problems were encountered on Windows 98 and XP with g.es
-    pth = os.path.split(g.app.loadDir)  
-    aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )    
-    if not os.path.exists(aini):
-        createConfigFile( aini )
-    try:
-        if not hasReadConfig():
-            if os.path.exists(aini):
-                readConfigFile(aini) 
+    if g.app.unitTesting: return
 
-            bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
-            readLanguageFiles(bankpath)#This could be too expensive to do here if the user has many and large language files.
-    finally:
-        setReadConfig()
+    # haveseen[c] = None
     
+    if 0:
+        &lt;&lt; set config &gt;&gt;
+
     # Use a thread to do the initial scan so as not to interfere with the user.            
-    def scan():
+    def scan ():
         #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
         # During unit testing c gets destroyed before the scan finishes.
         if not g.app.unitTesting:
-            readOutline( c )
-        
-    t = threading.Thread( target = scan )
+            self.scanOutline()
+
+    t = threading.Thread(target=scan)
     t.setDaemon(True)
-    t.start()
-</t>
+    t.start()</t>
 <t tx="ekr.20051025144611.24">#These functions determine if the config and language files have been read or not.
 # No need to read it more than once.
 
@@ -4660,18 +4662,16 @@ def setReadConfig():
      context.on = True
      context.bind_all( '&lt;Button&gt;', context.do_unbind )
 </t>
-<t tx="ekr.20051025144611.39">def setLanguage ( pos ):
+<t tx="ekr.20051025144611.39">def setLanguage (p):
+
     '''This method checks a node for the current language in effect
        and accends the parent line until it finds a language.'''
-    global lang 
-    while pos:
-        xs1 = pos.bodyString()
+
+        xs1 = p.bodyString()
         dict = g.get_directives_dict(xs1)
         if dict.has_key('language'):
-            lang = g.set_language(xs1,dict['language'])[0]
-            break 
-        pos = pos.parent()
-</t>
+            self.lang = g.set_language(xs1,dict['language']) [0]
+            break</t>
 <t tx="ekr.20051025144611.40">def newCreateControl (self,frame,parentFrame):
     '''A decoration of the createControl def.
     We set up the ancestory of the control so we can draw
@@ -4992,25 +4992,21 @@ for z in ('borderframe','clipper','frame','hull'):
             
     g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     return 'break'</t>
-<t tx="ekr.20051126122638">- Use typing completion to select desired word.
-- No auto-scan: use database instead.
-- Scan button does manual scan.
-- Use import or inspect instead of text scan.
-- @strings autocompleter-info
-list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
-  (Autocompleter may already do this)
-</t>
-<t tx="ekr.20051126122952.1">def autoComplete (self,event):
+<t tx="ekr.20051126122638"></t>
+<t tx="ekr.20051126122952.1">def autoComplete (self,event=None):
 
     c = self.c ; k = self.k ; gui = g.app.gui
-    self.widget = w = event and event.widget 
+
+    if not self.enable_autocompleter: return
+    w = event and event.widget or c.get_focus()
+    if not w: return
+
+    self.widget = w
     self.prefix = gui.getSelectedText(w) or ''
     self.text = gui.getAllText(w)
-
-    c.frame.log.clearTab('Completion') # Creates the tab if necessary.
     self.membersList = c.commandsDict.keys() ## Testing only.
-    k.setState('auto-completer',1,handler=self.stateHandler)
-    self.computeCompletionList()</t>
+    self.autoCompleterStateHandler(event)
+</t>
 <t tx="ekr.20051126123149">def computeCompletionList (self):
     
     c = self.c ; gui = g.app.gui ; w = self.widget
@@ -5047,7 +5043,7 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
     else:
         self.computeCompletionList()
 
-    c.bodyWantsFocus()</t>
+    c.widgetWantsFocusNow(w)</t>
 <t tx="ekr.20051126123759"></t>
 <t tx="ekr.20051126123759.1">def __init__ (self,c):
 
@@ -5055,26 +5051,39 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
     
     self.c = c
     self.k = c.k
+    
+    self.calltips = {}
+    self.enable_autocompleter   = c.config.getBool('enable_autocompleter')
+    self.enable_calltips        = c.config.getBool('enable_calltips')
     self.membersList = None
     self.prefix = None
     self.tabList = []
     self.tabListIndex = -1
     self.text = None # For Escape.
-    self.widget = None</t>
+    self.trace = c.config.getBool('trace_autocompleter')
+    self.watchwords = {}
+    self.widget = None # The widget that should get focus after autocomplete is done.
+
+    self.definePatterns()</t>
 <t tx="ekr.20051126123759.2">def getPublicCommands (self):
 
-    k = self.k
-
     return {
-        'auto-complete':    self.autoComplete,
+        'auto-complete':            self.autoComplete,
+        'scan-for-autocompleter':   self.scan,
     }</t>
-<t tx="ekr.20051126124705">def stateHandler (self,event):
+<t tx="ekr.20051126124705">def autoCompleterStateHandler (self,event):
     
-    c = self.c ; k = self.k ; gui = g.app.gui ; w = self.widget
+    c = self.c ; k = self.k ; w = self.widget
+    tag = 'auto-complete' ; state = k.getState(tag)
     keysym = event and event.keysym
     ch = event and event.char or ''
-    # g.trace(repr(ch),repr(keysym))
-    if keysym == 'Return':
+    trace = self.trace and not g.app.unitTesting
+    if trace: g.trace(repr(ch),repr(keysym),state)
+
+    if state == 0:
+        self.computeCompletionList()
+        k.setState(tag,1,handler=self.autoCompleterStateHandler) 
+    elif keysym == 'Return':
         c.frame.log.deleteTab('Completion')
         k.clearState()
         self.finish()
@@ -5086,12 +5095,12 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
         self.doTabCompletion()
     elif keysym == 'BackSpace':
         self.doBackSpace()
-    elif ch in string.printable:
+    # elif ch in string.printable:
+    else:
         self.extendSelection(ch)
-        s = gui.getSelectedText(w)
+        s = g.app.gui.getSelectedText(w)
         if s.startswith(self.prefix):
             self.prefix = self.prefix + ch
-            # g.trace('prefix',self.prefix)
         self.computeCompletionList()</t>
 <t tx="ekr.20051126125950">def getSelectedText (self,t):
 
@@ -5117,35 +5126,35 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
     return i and j and i != j</t>
 <t tx="ekr.20051127065601">def extendSelection (self,s):
     
-    c = self.c ; w = self.widget ; gui = g.app.gui
-    c.widgetWantsFocus(w)
+    c = self.c ; w = self.widget
+    c.widgetWantsFocusNow(w)
     
-    if gui.hasSelection(w):
-        i,j = gui.getSelectionRange(w)
+    if g.app.gui.hasSelection(w):
+        i,j = g.app.gui.getSelectionRange(w)
     else:
-        i = j = gui.getInsertPoint(w)
+        i = j = g.app.gui.getInsertPoint(w)
     
     w.insert(j,s)
     j = w.index('%s + 1c' % (j))
-    gui.setSelectionRange(w,i,j)</t>
+    g.app.gui.setSelectionRange(w,i,j,insert=j)</t>
 <t tx="ekr.20051127070018">def setSelection (self,s):
     
-    c = self.c ; w = self.widget ; gui = g.app.gui
-    c.widgetWantsFocus(w)
+    c = self.c ; w = self.widget
+    c.widgetWantsFocusNow(w)
     
-    if gui.hasSelection(w):
-        i,j = gui.getSelectionRange(w)
+    if g.app.gui.hasSelection(w):
+        i,j = g.app.gui.getSelectionRange(w)
         w.delete(i,j)
     else:
-        i = gui.getInsertPoint(w)
+        i = g.app.gui.getInsertPoint(w)
     
     w.insert(i,s)
     j = w.index('%s + %dc' % (i,len(s)))
-    gui.setSelectionRange(w,i,j)</t>
+    g.app.gui.setSelectionRange(w,i,j,insert=j)</t>
 <t tx="ekr.20051127105102">def finish (self):
     
     c = self.c ; w = self.widget ; gui = g.app.gui
-    c.widgetWantsFocus(w)
+    c.widgetWantsFocusNow(w)
     
     i,j = gui.getTextSelection(w)
     if i != j:
@@ -5154,11 +5163,11 @@ list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
     
     c = self.c ; w = self.widget ; gui = g.app.gui
     
-    c.widgetWantsFocus(w)
-
-    w.delete('1.0','end')
-    w.insert('1.0',self.text)
-    gui.setTextSelection(w,'1.0','1.0')</t>
+    c.widgetWantsFocusNow(w)
+    i = '1.0'
+    w.delete(i,'end')
+    w.insert(i,self.text)
+    gui.setTextSelection(w,i,i,insert=i)</t>
 <t tx="ekr.20051202095626">Use docstrings as the help message.</t>
 <t tx="ekr.20051202102337">@nocolor</t>
 <t tx="ekr.20051202102337.1">auto-complete command is merely a prototype.</t>
@@ -6054,7 +6063,7 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
         # Second, pass keys to getArg or full-command modes if they are active.
         if state == 'getArg':
             return k.getArg(event)
-        elif state == 'full-command':
+        elif state in ('full-command','auto-complete'):
             # Do the default state action.
             if trace: g.trace('calling state function')
             k.callStateFunction(event) # Calls end-command.
@@ -6259,7 +6268,6 @@ Good point. I'll add a run-unit-test command soon.
 It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
 
 @bool unit_test_output_to_log_pane = True</t>
-<t tx="ekr.20060214110318">- Manual update only.</t>
 <t tx="ekr.20060214110318.1"></t>
 <t tx="ekr.20060214140221"></t>
 <t tx="ekr.20060214140930"></t>
@@ -6889,5 +6897,181 @@ http://sourceforge.net/forum/message.php?msg_id=3577022
 
 You can click nodes and get the UNL to display, but when arrowing around the
 tree, UNL area flashes the unl and then clears it immediately.</t>
+<t tx="ekr.20060216135646">@nocolor
+
+Context:
+
+c.[invoke] should bring up a list of commands methods.
+
+Scanning:
+
+- No auto-scan: use database instead.
+- scan-for-autocompleter command does manual scan.
+- Use import or inspect instead of text scan.
+
+Options:
+
+- @strings autocompleter-info
+   list of names for which classes are known: c,frame,g,k,p,t,tree,v etc.
+  (Autocompleter may already do this)</t>
+<t tx="ekr.20060216150132"></t>
+<t tx="ekr.20060216150132.1"></t>
+<t tx="ekr.20060216155558"></t>
+<t tx="ekr.20060216155558.1">def scan (self,event=None):
+    
+    if g.app.unitTesting: return
+    
+    g.trace('autocompleter')
+    
+    self.scanOutline()
+    
+    if 0:
+        # Use a thread to do the initial scan so as not to interfere with the user.            
+        def scan ():
+            #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
+            # During unit testing c gets destroyed before the scan finishes.
+            if not g.app.unitTesting:
+                self.scanOutline()
+    
+        t = threading.Thread(target=scan)
+        t.setDaemon(True)
+        t.start()</t>
+<t tx="ekr.20060216160332">
+    #This part used to be in its own thread until problems were encountered on Windows 98 and XP with g.es
+    pth = os.path.split(g.app.loadDir)
+    aini = pth [0] + r"%splugins%sautocompleter.ini" % (os.sep,os.sep)
+    if not os.path.exists(aini):
+        createConfigFile(aini)
+    try:
+        if not hasReadConfig():
+            if os.path.exists(aini):
+                readConfigFile(aini)
+
+            bankpath = pth [0] + r"%splugins%sautocompleter%s" % (os.sep,os.sep,os.sep)
+            readLanguageFiles(bankpath) #This could be too expensive to do here if the user has many and large language files.
+    finally:
+        setReadConfig()</t>
+<t tx="ekr.20060216160332.1"></t>
+<t tx="ekr.20060216160332.2"></t>
+<t tx="ekr.20060216161220">def scanOutline (self):
+
+    '''Traverse an outline and build the autocommander database.'''
+
+    c = self.c
+    for p in c.rootPosition().allNodes_iter():
+        self.language = g.scanForAtLanguage(c,p)
+        # g.trace('language',self.language,p.headString())
+        s = p.bodyString()
+        if self.enable_autocompleter:
+            self.scanForAutoCompleter(s)
+        if self.enable_calltips:
+            self.scanForCallTip(s)
+
+    if 1:
+        g.trace('watchwords...\n\n')
+        keys = self.watchwords.keys() ; keys.sort()
+        for key in keys:  # ('c','p','v','t'):
+            aList = self.watchwords.get(key)
+            g.trace('%s:\n\n' % (key), g.listToString(aList))
+        g.trace('calltips...\n\n')
+        keys = self.calltips.keys() ; keys.sort()
+        for key in keys:
+            d = self.calltips.get(key)
+            g.trace('%s:\n\n' % (key), g.dictToString(d))</t>
+<t tx="ekr.20060216161234">def scanForCallTip (self,s):
+
+    '''this function scans text for calltip info'''
+
+    d = self.calltips.get(self.language,{})
+    pat = self.pats.get(self.language or 'python')
+    results = pat and pat.findall(s) or []
+    
+    for z in results:
+        if isinstance(z,tuple): z = z [0]
+        pieces2 = z.split('(')
+        pieces2 [0] = pieces2 [0].split() [-1]
+        a, b = pieces2 [0], pieces2 [1]
+        aList = d.get(a,[])
+        if str(z) not in aList:
+            aList.append(str(z))
+            d [a] = aList
+    
+    self.calltips [self.language] = d</t>
+<t tx="ekr.20060216161247">def scanForAutoCompleter (self,s):
+
+    '''This function scans text for the autocompleter database.'''
+
+    t1 = s.split('.') ; aList = []
+
+    reduce(lambda a,b: self.makeAutocompletionList(a,b,aList),t1)
+
+    if aList:
+        for a, b in aList:
+            z = self.watchwords.get(a,[])
+            if str(b) not in z:
+                z.append(str(b))
+                self.watchwords [a] = z
+    
+@ reduce( function, sequence[, initializer])
+
+Apply function of two arguments cumulatively to the items of sequence, from left
+to right, so as to reduce the sequence to a single value.
+
+For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) gives ((((1+2)+3)+4)+5).
+
+The left argument, x, is the accumulated value and the right argument, y, is the
+update value from the sequence.
+
+If the optional initializer is present, it is placed before the items of the
+sequence in the calculation, and serves as a default when the sequence is empty.
+If initializer is not given and sequence contains only one item, the first item
+is returned.</t>
+<t tx="ekr.20060216161253">def getCleanString (self,s):
+    
+    '''Return the prefix of s containing only chars in okchars.'''
+    
+    i = 0
+    for ch in s:
+        if ch not in self.okchars:
+            return s[:i]
+        i += 1
+
+    return s</t>
+<t tx="ekr.20060216161258">def reverseFindWhitespace (self,s):
+
+    '''Return the longest tail of s containing no whitespace or period.'''
+
+    i = len(s) -1
+    while i &gt;= 0:
+        if s[i].isspace() or s [i] == '.': return s [i+1:]
+        i -= 1
+
+    # Original code: requires Python 2.3 and may be slower.
+    # for n, l in enumerate(s):
+        # n =(n+1)*-1
+        # if s[n].isspace()or s[n]=='.':return s[n+1:]
+
+    return s</t>
+<t tx="ekr.20060216163305">def definePatterns (self):
+    
+    self.space = r'[ \t\r\f\v ]+'
+    self.end = r'\w+\s*\([^)]*\)'
+    self.r  = string.punctuation.replace('(','').replace('.','')
+    self.pt = string.digits + string.letters + self.r
+    ripout = string.punctuation + string.whitespace + '\n'
+    self.ripout = ripout.replace('_','')
+    self.pats = {}
+    self.pats ['python'] = re.compile(r'def\s+%s' % self.end)
+    self.pats ['java'] = re.compile(
+        r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
+            self.space,self.space,self.end))
+    self.pats ['perl'] = re.compile(r'sub\s+%s' % self.end)
+    self.pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (self.space,self.end))
+    self.pats ['c'] = re.compile(r'\w+%s%s' % (self.space,self.end))
+    okchars = {}
+    for z in string.ascii_letters:
+        okchars [z] = z
+    okchars ['_'] = '_'
+    self.okchars = okchars</t>
 </tnodes>
 </leo_file>

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1124" clone_windows="0"/>
 <globals body_outline_ratio="0.714833759591">
-	<global_window_position top="40" left="441" height="782" width="822"/>
+	<global_window_position top="-12" left="246" height="862" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -25,6 +25,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
+<v t="ekr.20060217073112"><vh>ANN: Leo 4.4a6</vh></v>
 <v t="ekr.20060215120457"><vh>ANN: Leo 4.4x1</vh></v>
 <v t="ekr.20060213161050"><vh>ANN: Leo 4.4b2</vh></v>
 <v t="ekr.20060116101806"><vh>ANN: Leo 4.4b1</vh></v>
@@ -133,8 +134,8 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20051205102401"><vh>Note: do search replace to update version numbers</vh></v>
-<v t="ekr.20050118095021" a="E"><vh>Leo 4.x installer  (update for each release)</vh>
+<v t="ekr.20051205102401" a="V"><vh>Note: do search replace to update version numbers</vh></v>
+<v t="ekr.20050118095021"><vh>Leo 4.x installer  (update for each release)</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
@@ -209,9 +210,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
-<v t="EKR.20040519090846.10" a="V"><vh>@asis ../manifest.in</vh></v>
+<v t="EKR.20040519090846.10"><vh>@asis ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.x.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
@@ -492,7 +493,7 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-4-x1", # No spaces here!
+version="4-4-a6", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -665,7 +666,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.4-x1
+Version: 4.4-a6
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -684,29 +685,55 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.4 experimental 1                                      February 15, 2006
+<t tx="EKR.20040519090846.9">Leo 4.4 alpha 6                                               February 17, 2006
 
-My apologies for the key handling problems in Leo 4.4 b2.
+Leo 4.4 b2 was broken on some platforms. Leo 4.4 a6 should fix those problems
+forever. However, only wider distribution will verify that for certain. Besides
+fixing the fatal problems with Leo 4.4b2, this version fixes two minor bugs and
+adds some new settings in leoSettings.leo.
 
-This version is an emergency measure.  It's goals:
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
 
-1.  To fix some of the key-handling issues in Leo 4.4 b2.
-2.  To allow further experimentation with key handling.
-3.  To allow easy reporting of any other key handling problems.
+What's new in Leo 4.4 a6:
+------------------------
+- Smoother user interface.
+- New commands that support mouseless Leo.
+- Minibuffer search commands provide all features of Leo's legacy search commands.
+- User modes are fully functional; you can create bindings just for the minibuffer.
+- New master key and click handlers and improved allocation of screen widgets.
 
-Please do not use this version (or Leo 4.4b2) unless you are ready to report bugs.
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+  name, with tab completion.
+- Many new commands, including cursor and screen movement, basic character, word
+  and paragraph manipulation, and commands to manipulate buffers, the kill ring,
+  regions and rectangles. You can use Leo without using a mouse.
+- Flexible key bindings and input modes. You can emulate the operation of Emacs,
+  Vim, or any other editor.
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+  dialogs, making those commands much easier to use. Plugins or scripts can easily
+  create new tabs. The Completion tab shows possible typing completions. - Dozens
+  of other new features and bug fixes since Leo 4.3.3.
 
-Here are the details of the key-handling changes:
+Coming soon in Leo 4.4:
+-----------------------
+- A revived chapters plugin.
+- Autocompleter Tab.
+- Improved incremental searches.
 
-- Added support for trace_key_event setting.
-- Added support for ignore_caps_lock setting.
-- Added Caps_Lock and Num_Lock to k.tkNamesList and in the list of
-  special keys in k.masterCommand and k.masterKeyHandlerHelper.
-- Added support for k.ignore_unbound_non_ascii_keys logic in masterKeyHandlerHelper.
-- Disabled unknown keysym trace in k.strokeFromEvent.
-- Enabled the international keyboard on XP as an aid to testing.
-- Added support for swap_mac_keys setting in k.shortcutFromSetting.
-- Added support for non-ascii characters in the minibuffer.</t>
+Quote of the month:
+-------------------
+"Thanks for a wonderful program – everybody should be using it! It blows the socks off that Java Mind mapping software that won project of the month a while back on sourceforge!" -- Derick van Niekerk.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
 <t tx="EKR.20040519090846.10"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns.
@@ -3490,7 +3517,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-4-x1.exe"
+OutFile "LeoSetup-4-4-a6.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3704,7 +3731,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 Delete "$INSTDIR\test\test.leo"
 Delete "$INSTDIR\test\unitTest.leo"
 </t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-x1"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.4-a6"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
@@ -4839,5 +4866,45 @@ Here are the details of the key-handling changes:
 - Disabled unknown keysym trace in k.strokeFromEvent.
 - Enabled the international keyboard on XP as an aid to testing.
 - Added support for swap_mac_keys setting in k.shortcutFromSetting.</t>
+<t tx="ekr.20060217073112">Leo 4.4 alpha 6                                         February 17, 2006
+
+Leo 4.4 b2 was broken on some platforms.  Leo 4.4 a6 should fix those problems forever.  However, only wider distribution will verify that for certain.  Besides fixing the fatal problems with Leo 4.4b2, this version fixes two minor bugs and adds some new settings in leoSettings.leo.
+
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
+
+What's new in Leo 4.4 a6:
+------------------------
+- Smoother user interface.
+- New commands that support mouseless Leo.
+- Minibuffer search commands provide all features of Leo's legacy search commands.
+- User modes are fully functional; you can create special bindings for the minibuffer.
+- New master key and click handlers and improved allocation of screen widgets.
+
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long name, with tab completion.
+- Many new commands, including cursor and screen movement, basic character, word and paragraph manipulation, and commands to manipulate buffers, the kill ring, regions and rectangles. You can use Leo without using a mouse.
+- Flexible key bindings and input modes. You can emulate the operation of Emacs, Vim, or any other editor.
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of dialogs, making those commands much easier to use. Plugins or scripts can easily create new tabs. The Completion tab shows possible typing completions.
+- Dozens of other new features and bug fixes since Leo 4.3.3.
+
+Coming soon in Leo 4.4:
+-----------------------
+- A revived chapters plugin.
+- Autocompleter Tab.
+- Improved incremental searches.
+
+Quote of the month:
+-------------------
+"Thanks for a wonderful program – everybody should be using it! It blows the socks off that Java Mind mapping software that won project of the month a while back on sourceforge!" -- Derick van Niekerk.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
 </tnodes>
 </leo_file>

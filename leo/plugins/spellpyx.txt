@@ -178,6 +178,7 @@ NannyNag
 Naud
 Netzer
 NewHeadline
+Niekerk
 Niklas
 NoNodeEditors
 Norwitz
@@ -343,6 +344,7 @@ a1
 a2
 a3
 a4
+a6
 aClass
 aColor
 aDirectory
@@ -417,6 +419,7 @@ autosave
 autoscrolling
 b1
 b2
+b3
 b4
 backticks
 backwards
@@ -1227,6 +1230,7 @@ mailarchive
 mailto
 mainloop
 mak
+makeAllBindings
 makeOutlineSuite
 makeSuite
 makeTestCase
@@ -1236,6 +1240,7 @@ marshallresearch
 massageBody
 massageIvars
 masterCommand
+masterKeyHandler
 matchTokens
 matchWord
 match_c_word
@@ -1927,6 +1932,7 @@ tp
 traceDrawing
 tracePositions
 trace_gc
+trace_minibuffer
 treeCanvas
 treeWantsFocus
 trees_

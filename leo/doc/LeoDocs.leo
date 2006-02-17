@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="22857" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="22944" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
 	<global_window_position top="40" left="391" height="857" width="731"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -745,7 +745,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="V"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -2459,135 +2459,19 @@
 <v t="ekr.20060105214753"><vh>Input modes</vh></v>
 </v>
 </v>
-</v>
-</v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="ekr.20060206111508"><vh>4.4 beta 2</vh>
-<v t="ekr.20060206111508.2"><vh>Bugs fixed</vh>
-<v t="ekr.20060206111508.3"><vh>Fixed crasher in Save button</vh></v>
-<v t="ekr.20060206111508.4"><vh>Fixed minor bugs &amp; made minor improvements</vh>
-<v t="ekr.20060206111508.5"><vh>Fixed two annoying headline glitches</vh>
-<v t="ekr.20060206111508.6"><vh>tree.set...LabelState</vh>
-<v t="ekr.20060206111508.7"><vh>setEditLabelState</vh></v>
-<v t="ekr.20060206111508.8"><vh>setSelectedLabelState</vh></v>
-<v t="ekr.20060206111508.9"><vh>setUnselectedLabelState</vh></v>
-<v t="ekr.20060206111508.10"><vh>setDisabledHeadlineColors</vh></v>
-<v t="ekr.20060206111508.11"><vh>setEditHeadlineColors</vh></v>
-<v t="ekr.20060206111508.12"><vh>setUnselectedHeadlineColors</vh></v>
-</v>
-<v t="ekr.20060206111508.13"><vh>onClickBoxClick</vh></v>
-</v>
-<v t="ekr.20060206111508.14"><vh>Insert headline didn't redraw headline properly in vim mode</vh>
-<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
-<v t="ekr.20060206111508.16"><vh>masterCommand &amp; helpers</vh>
-<v t="ekr.20060206111508.17"><vh>&lt;&lt; add character to history &gt;&gt;</vh></v>
-<v t="ekr.20060206111508.18"><vh>callStateFunction</vh></v>
-<v t="ekr.20060206111508.19"><vh>callKeystrokeFunction (not used)</vh></v>
-<v t="ekr.20060206111508.20"><vh>handleDefaultChar</vh></v>
-</v>
-<v t="ekr.20060206111508.21"><vh>head key handlers</vh>
-<v t="ekr.20060206111508.22"><vh>onHeadlineKey</vh></v>
-<v t="ekr.20060206111508.23"><vh>updateHead</vh></v>
-<v t="ekr.20060206111508.24"><vh>onHeadChanged</vh>
-<v t="ekr.20060206111508.25"><vh>&lt;&lt; truncate s if it has multiple lines &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20060206111508.26"><vh>Modes</vh>
-<v t="ekr.20060206111508.27"><vh>badMode</vh></v>
-<v t="ekr.20060206111508.28"><vh>createModeBindings</vh></v>
-<v t="ekr.20060206111508.29"><vh>endMode</vh></v>
-<v t="ekr.20060206111508.30"><vh>enterNamedMode</vh></v>
-<v t="ekr.20060206111508.31"><vh>exitNamedMode</vh></v>
-<v t="ekr.20060206111508.32"><vh>generalModeHandler</vh></v>
-<v t="ekr.20060206111508.33"><vh>initMode</vh></v>
-<v t="ekr.20060206111508.34"><vh>reinitMode</vh></v>
-<v t="ekr.20060206111508.35"><vh>modeHelp</vh>
-<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
-</v>
-<v t="ekr.20060206111508.37"><vh>set-xxx-State</vh></v>
-<v t="ekr.20060206111508.38"><vh>setInputState</vh></v>
-<v t="ekr.20060206111508.39"><vh>showStateAndMode</vh></v>
-</v>
-</v>
-<v t="ekr.20060206111508.40"><vh>Improved printBindings, printCommands &amp; modeHelp</vh>
-<v t="ekr.20060206111508.41"><vh>Externally visible commands</vh>
-<v t="ekr.20060206111508.42"><vh>digitArgument &amp; universalArgument</vh></v>
-<v t="ekr.20060206111508.43"><vh>k.show/hide/toggleMinibuffer</vh></v>
-<v t="ekr.20060206111508.44"><vh>negativeArgument (redo?)</vh></v>
-<v t="ekr.20060206111508.45"><vh>numberCommand</vh></v>
-<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
-<v t="ekr.20060206111508.46"><vh>printCommands</vh></v>
-<v t="ekr.20060206111508.47"><vh>repeatComplexCommand &amp; helper</vh></v>
-</v>
-<v t="ekr.20060206111508.15"><vh>printBindings</vh></v>
-<v t="ekr.20060206111508.46"><vh>printCommands</vh></v>
-<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
-<v t="ekr.20060206111508.35"><vh>modeHelp</vh>
-<v t="ekr.20060206111508.36"><vh>modeHelpHelper</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060206111508.48"><vh>Fixed crasher re BackSpace in log window</vh></v>
-<v t="ekr.20060206111508.49"><vh>Fixed crashers in cut/copy/paste commands</vh>
-<v t="ekr.20060206111508.50"><vh>Cut/Copy/Paste (tkFrame)</vh>
-<v t="ekr.20060206111508.51"><vh>copyText</vh></v>
-<v t="ekr.20060206111508.52"><vh>cutText</vh></v>
-<v t="ekr.20060206111508.53"><vh>pasteText</vh></v>
-</v>
-</v>
-<v t="ekr.20060206111508.54"><vh>Fixed crasher when clicking the close box during a long command</vh>
-<v t="ekr.20060206111508.55"><vh>frame.OnCloseLeoEvent</vh></v>
-<v t="ekr.20060206111508.56"><vh>app.closeLeoWindow</vh></v>
-<v t="ekr.20060206111508.57"><vh> doCommand</vh></v>
-</v>
-<v t="ekr.20060206111508.58"><vh>cloneFindAll now honor present find settings</vh></v>
-<v t="ekr.20060206111508.63"><vh>Double-click didn't work in the body pane.</vh></v>
-<v t="ekr.20060206111508.74"><vh>Improved body.makeInsertPointVisible</vh></v>
-<v t="ekr.20060206111508.75"><vh>Fixed cut/copy/paste from menu</vh></v>
-<v t="ekr.20060206111508.553"><vh>Fixed major blunder: tree.onHeadChanged sets focus only if there was a real change</vh></v>
-<v t="ekr.20060206111508.97"><vh>Disabled plain-key bindings in insert/overwrite modes</vh></v>
-<v t="ekr.20060206111508.103"><vh>Disabled auto-scrolling in outline pane on clicks</vh></v>
-<v t="ekr.20060206111508.136"><vh>move-outline and find commands force a screen scroll</vh></v>
-<v t="ekr.20060211104746.2"><vh>Fixed undo problem in headlines</vh></v>
-<v t="ekr.20060214085054"><vh>Found the cause of 'sticking focus' problem</vh></v>
-<v t="ekr.20060211104746.162"><vh>Fixed tree icon bug</vh></v>
-<v t="ekr.20060211104746.177"><vh>Set remembered column properly in prev-line and next-line</vh></v>
-<v t="ekr.20060211104746.208"><vh>Fixed focus problems in spell tab</vh></v>
-<v t="ekr.20060214074035.9"><vh>Fixed problem with body_gmt_time setting</vh></v>
-<v t="ekr.20060214074035.20"><vh>Made sure save updates the open directory</vh></v>
-<v t="ekr.20060214074035.41"><vh>Fixed sort-lines problems</vh></v>
-<v t="ekr.20060214074035.101"><vh>Fixed bug: paste outline lost headline editing</vh></v>
-</v>
-<v t="ekr.20060206111508.547"><vh>Code improvements</vh>
-<v t="ekr.20060206111508.550"><vh>Removed code in c.begin/EndUpdate and c.endEditLabel that tried to save/restore focus</vh></v>
-<v t="ekr.20060206111508.596"><vh>Improved tree allocation</vh></v>
-<v t="ekr.20060211104746.12"><vh>Created c.masterFocusHandler</vh></v>
-<v t="ekr.20060211104746.168"><vh>Added unit tests for key dicts</vh></v>
-<v t="ekr.20060211104746.346"><vh>Special-cased commands for minibuffer</vh></v>
-<v t="ekr.20060214074035.6"><vh>Made sure yield works with Python 2.2</vh></v>
-<v t="ekr.20060214074035.12"><vh>Use os.getenv('User") if it exists to get initial cvs name</vh></v>
-</v>
-<v t="ekr.20060206112001"><vh>Improved commands</vh>
-<v t="ekr.20060212102459.4"><vh>Minibuffer-oriented find commands</vh></v>
-<v t="ekr.20060214074035.67"><vh>Leo remembers the previous open directory</vh></v>
-</v>
-<v t="ekr.20060214090742"><vh>Improved plugins</vh>
-<v t="ekr.20060214074035.65"><vh>Fixed problem with view plugin</vh></v>
-<v t="ekr.20060214074035.66"><vh>Installed cleo patch</vh></v>
-</v>
-<v t="ekr.20060214083808"><vh>New commands</vh>
-<v t="ekr.20060212102459.4"><vh>Minibuffer-oriented find commands</vh></v>
-</v>
-<v t="ekr.20060214083647"><vh>New settings</vh></v>
-<v t="ekr.20060214092741"><vh>User input modes</vh>
-<v t="ekr.20060105214753"><vh>Input modes</vh></v>
-</v>
-</v>
-<v t="ekr.20060215112429" a="E"><vh>4.4 experimental 1</vh>
+<v t="ekr.20060215112429"><vh>4.4 experimental 1</vh>
 <v t="ekr.20060215112429.9" a="E"><vh>Fixed (maybe) problems with unicode characters &amp; caps lock</vh></v>
 <v t="ekr.20060215112429.2"><vh>Restored some legacy bindings</vh></v>
 <v t="ekr.20060215112429.3" a="E"><vh>Fixed crasher in Go To Line command</vh></v>
 <v t="ekr.20060215112429.6" a="E"><vh>Fixed menu problem on Linux</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20060217071505" a="V"><vh>4.4 a6</vh>
+<v t="ekr.20060217071505.1"><vh>Fixed urgent compatibility problems</vh></v>
+<v t="ekr.20060217072324"><vh>Minor bugs fixed</vh></v>
+<v t="ekr.20060217072647"><vh>New debugging options in leoSettings.leo</vh></v>
 </v>
 </v>
 </v>
@@ -24039,5 +23923,83 @@ What I did:
 - Disabled unknown keysym trace in k.strokeFromEvent.
 - Enabled the international keyboard on XP as an aid to testing.
 - Added support for swap_mac_keys setting in k.shortcutFromSetting.</t>
+<t tx="ekr.20060217071505">Leo 4.4 alpha 6                                         February 17, 2006
+
+Leo 4.4 b2 was broken on some platforms.  Leo 4.4 a6 should fix those problems
+forever.  However, only wider distribution will verify that for certain.
+
+Besides fixing the fatal problems with Leo 4.4b2, this version fixes two minor bugs
+and adds some new settings in leoSettings.leo.
+
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4 b2 and a6:
+----------------------------
+- Smoother user interface.
+- New commands that support mouseless Leo.
+- Minibuffer search commands provide all features of Leo's legacy search commands.
+- User modes are fully functional; you can create special bindings for the minibuffer.
+- New master key and click handlers and improved allocation of screen widgets.
+
+Coming in Leo 4.4b3:
+--------------------
+- A revived chapters plugin.
+- Autocompleter Tab.
+- Improved incremental searches.
+
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word
+and paragraph manipulation, and commands to manipulate buffers, the kill ring,
+regions and rectangles. You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes. You can emulate the operation of Emacs,
+Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+dialogs, making those commands much easier to use. Plugins or scripts can easily
+create new tabs. The Completion tab shows possible typing completions.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
+<t tx="ekr.20060217071505.1">The new scheme binds to keystrokes, not commands.  This should be as portable
+and robust as all previous versions (except b2, which was broken).
+
+- Created k.completeAllBindings, called last in k.makeAllBindings. This binds
+all keystrokes in k.bindingsDict to k.masterKeyHandler with an optional stroke
+argument. This allows k.masterKeyhandler to dispense with the problematic call
+to k.strokeFromEvent. This is all that is really required. 
+
+- Added code to menu.createMenuEntries that clears the accelerator on MacOS for
+any key that isn't a control, alt or command key. This solves the recurring
+problems with the Return key. The only effect is that the menu won't mention a
+binding that is actually in effect, but apparently that cannot be helped.
+
+- Added g.safeCompareStrings, which may, or may not, fix the crasher when
+comparing k.abortAllModesKey to the incoming keystroke in k.masterKeyHandler.
+It's a bit tricky to test.
+
+- The ignore_caps_lock is no longer functional. Sigh. This depends on knowing
+the Caps_Lock bit in key events. I may put this back later, but I can't delay a6
+even a minute for this.</t>
+<t tx="ekr.20060217072324">- Fixed crasher in k.masterCommand.
+
+- Arrow keys no longer destroy UNL line
+</t>
+<t tx="ekr.20060217072647">- @bool trace_autocompleter # The autocompleter itself is not ready yet.
+- @bool trace_key_event
+- @bool trace_minibuffer
+- @bool trace_status_line</t>
 </tnodes>
 </leo_file>

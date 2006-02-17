@@ -45,11 +45,12 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="V" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
+<v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
 <v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
@@ -64,7 +65,7 @@
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
-<v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
+<v t="ekr.20060121102627"><vh>@bool trace_modes = True</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
 <v t="ekr.20060216130607"><vh>@bool trace_status_line = False</vh></v>
@@ -286,14 +287,16 @@
 </v>
 <v t="ekr.20060122105527.3"><vh>Keyboard and minibuffer Options</vh>
 <v t="ekr.20060215094146"><vh>@@bool ignore_caps_lock = True</vh></v>
+<v t="ekr.20060216135834"><vh>@bool enable_autocompleter = True</vh></v>
+<v t="ekr.20060216170801"><vh>@bool enable_calltips = True</vh></v>
 <v t="ekr.20060215102141"><vh>@bool ignore_unbound_non_ascii_keys = False</vh></v>
+<v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
+<v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
 <v t="ekr.20060215104345"><vh>@bool swap_mac_keys = False</vh></v>
-<v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 <v t="ekr.20060122105527.5" annotate="7d71002e"><vh>@bool useCmdMenu = True</vh></v>
 <v t="ekr.20060122105527.6" annotate="7d71002e"><vh>@bool useMinibuffer = True</vh></v>
-<v t="ekr.20060122105527.7" annotate="7d71002e"><vh>@bool stayInTreeAfterSelect = True</vh></v>
-<v t="ekr.20060122105527.8"><vh>@bool showHelpWhenEnteringModes = False</vh></v>
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
+<v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
 <v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
@@ -372,67 +375,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20060110141538.1"><vh>No bindings</vh>
-<v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
-<v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
-<v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
-</v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
-<v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
-<v t="ekr.20060122105527.9"><vh>Modes</vh>
-<v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
-<v t="ekr.20060122122150"><vh>@mode Edit-extend</vh></v>
-</v>
-<v t="ekr.20060122105527.11" annotate="7d71002e"><vh>@@mode File</vh>
-<v t="ekr.20060122182825"><vh>@mode File-open</vh></v>
-</v>
-<v t="ekr.20060122105527.12"><vh>@@mode Find </vh>
-<v t="ekr.20060122105527.13"><vh>@@mode Find-reverse</vh></v>
-</v>
-<v t="ekr.20060122105527.14"><vh>@@mode Find-options</vh></v>
-<v t="ekr.20060122105732" annotate="7d71002e"><vh>@mode Outline (Control-Shift-O)</vh>
-<v t="ekr.20060122130002"><vh>@mode Outline-move</vh></v>
-</v>
-<v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
-</v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
-<v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
-<v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
-<v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
-<v t="ekr.20060122105527.20" annotate="7d71002e"><vh>@shortcuts EKR: A-E</vh></v>
-<v t="ekr.20060122105527.21"><vh>@shortcuts EKR: F-M</vh></v>
-<v t="ekr.20060122105527.22" annotate="7d71002e"><vh>@shortcuts EKR: N-Z</vh></v>
-</v>
-</v>
-<v t="ekr.20051126062243" a="E"><vh>Debugging options</vh>
-<v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
-<v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
-<v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
-<v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
-<v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
-<v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
-<v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
-<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
-<v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
-<v t="ekr.20060212103826"><vh>@bool trace_gc_calls = False</vh></v>
-<v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
-<v t="ekr.20060215054710"><vh>@bool trace_key_event= False</vh></v>
-<v t="ekr.20060216091239"><vh>@bool trace_minibuffer = False</vh></v>
-<v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
-<v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
-<v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
-<v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
-<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
-<v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
-<v t="ekr.20060216130607" a="V"><vh>@bool trace_status_line = False</vh></v>
-<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
-<v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
-<v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
-<v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
-<v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
-<v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -3315,6 +3257,7 @@ save-buffers-kill-leo               = None
 save-file                           = None
 save-file-as                        = None
 save-file-to                        = None
+scan-for-autocompleter              = None
 scroll-down                         = None
 scroll-down-extend-selection        = None
 scroll-up                           = None
@@ -4430,5 +4373,8 @@ Regardless of this setting, the caps-lock key has no effect on Control or Alt ke
 False (recommended):  No translation.</t>
 <t tx="ekr.20060216091239">True: trace all changes to the minibuffer</t>
 <t tx="ekr.20060216130607">True: trace all changes to the status line.</t>
+<t tx="ekr.20060216135834"></t>
+<t tx="ekr.20060216145416"></t>
+<t tx="ekr.20060216170801"></t>
 </tnodes>
 </leo_file>
