@@ -446,7 +446,8 @@ class leoFrame:
         self.colorPanel = None 
         self.comparePanel = None
         self.findPanel = None
-        self.fontPanel = None 
+        self.fontPanel = None
+        self.isNullFrame = False
         self.keys = None
         self.menu = None
         self.miniBufferWidget = None # New in 4.4.
@@ -1442,6 +1443,7 @@ class nullFrame (leoFrame):
         leoFrame.__init__(self,gui) # Init the base class.
         assert(self.c is None)
         
+        self.isNullFrame = True
         self.title = title
         self.useNullUndoer = useNullUndoer
         
