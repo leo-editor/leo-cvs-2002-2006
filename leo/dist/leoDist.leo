@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1124" clone_windows="0"/>
 <globals body_outline_ratio="0.714833759591">
-	<global_window_position top="-12" left="246" height="862" width="842"/>
+	<global_window_position top="10" left="246" height="862" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button Spell</vh></v>
 <v t="ekr.20051015172713"><vh>@button Save</vh></v>
 </v>
-<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259" a="E"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20060213160806"><vh>February 2005</vh></v>
@@ -25,7 +25,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20060217073112"><vh>ANN: Leo 4.4a6</vh></v>
+<v t="ekr.20060217073112" a="V"><vh>ANN: Leo 4.4a6</vh></v>
 <v t="ekr.20060215120457"><vh>ANN: Leo 4.4x1</vh></v>
 <v t="ekr.20060213161050"><vh>ANN: Leo 4.4b2</vh></v>
 <v t="ekr.20060116101806"><vh>ANN: Leo 4.4b1</vh></v>
@@ -134,7 +134,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20051205102401" a="V"><vh>Note: do search replace to update version numbers</vh></v>
+<v t="ekr.20051205102401"><vh>Note: do search replace to update version numbers</vh></v>
 <v t="ekr.20050118095021"><vh>Leo 4.x installer  (update for each release)</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
@@ -4866,7 +4866,11 @@ Here are the details of the key-handling changes:
 - Disabled unknown keysym trace in k.strokeFromEvent.
 - Enabled the international keyboard on XP as an aid to testing.
 - Added support for swap_mac_keys setting in k.shortcutFromSetting.</t>
-<t tx="ekr.20060217073112">Leo 4.4 alpha 6                                         February 17, 2006
+<t tx="ekr.20060217073112">[ANN: Leo 4.4a6 released]
+
+Leo 4.4 alpha 6 is now available at:
+
+http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
 
 Leo 4.4 b2 was broken on some platforms.  Leo 4.4 a6 should fix those problems forever.  However, only wider distribution will verify that for certain.  Besides fixing the fatal problems with Leo 4.4b2, this version fixes two minor bugs and adds some new settings in leoSettings.leo.
 

@@ -23,7 +23,6 @@
 <v t="ekr.20050930124917"><vh>@@button outlineToClipboard</vh></v>
 <v t="ekr.20041001194357"><vh>@@button Unit Test</vh></v>
 <v t="ekr.20051221091553"><vh>@@command dbl-click @key = Alt-Shift-C</vh></v>
-<v t="ekr.20051219184032"><vh>@@button run timer</vh></v>
 <v t="ekr.20051121143509"><vh>@@button shorten-lines</vh>
 <v t="ekr.20051124065932"><vh>to do</vh></v>
 <v t="ekr.20051121143951.1"><vh>splitLongLine</vh></v>
@@ -38,6 +37,7 @@
 <v t="ekr.20060202162051"><vh>@@button All-obj</vh></v>
 <v t="ekr.20060202155426"><vh>@@button Stats</vh></v>
 </v>
+<v t="ekr.20051219184032"><vh>@button run timer</vh></v>
 <v t="ekr.20051025070722"><vh>@button Beautify</vh></v>
 <v t="ekr.20051105114247"><vh>@button scripts.leo</vh></v>
 <v t="ekr.20051025091355"><vh>@button Spell</vh></v>
@@ -4055,7 +4055,7 @@ else:
 
 This is a test of colorizer stuff.</t>
 <t tx="ekr.20051219184032">import leoTest
-leoTest.runTimerOnNode(p,count=1000)</t>
+leoTest.runTimerOnNode(c,p,count=100)</t>
 <t tx="ekr.20051221091553">c.frame.tree.OnIconDoubleClick(p)
 </t>
 <t tx="ekr.20060103102234">@nocolor
@@ -4464,6 +4464,6 @@ for s in (
             if s[n].isspace()or s[n]=='.':return s[n+1:]
 
     return s </t>
-<t tx="ekr.20060216170135">c.autoCompleter.scan()</t>
+<t tx="ekr.20060216170135">c.autoCompleter.scan(verbose=False)</t>
 </tnodes>
 </leo_file>

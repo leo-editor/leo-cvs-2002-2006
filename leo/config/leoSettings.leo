@@ -305,7 +305,7 @@
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
@@ -347,7 +347,7 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -365,7 +365,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -375,6 +375,9 @@
 </v>
 </v>
 </v>
+</v>
+<v t="ekr.20060218065259" a="E"><vh>Add to legacy settings</vh>
+<v t="ekr.20060218065259.1"><vh>@bool ignore_unbound_non_ascii_keys = True</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -3923,7 +3926,7 @@ close-window                        = Alt-F4
 contract-all                        = Alt--
 contract-log-pane                   = Alt-Ctrl-RtArrow # Alt-Ctrl-DnArrow in other orientation.
 contract-pane                       = Alt+Ctrl+-
-contract-node                       = Alt-[
+contract-node                       = Alt-bracketleft
 contract-or-go-left                 ! text = Alt-LtArrow
 contract-or-go-left                 ! tree = Alt-LtArrow
 contract-or-go-left                 ! tree = LtArrow
@@ -3955,7 +3958,7 @@ expand-log-pane                     = Alt-Ctrl-LtArrow  # Alt-Ctrl-UpArrow in ot
 expand-pane                         = Alt+Ctrl-=
 expand-outline-pane                 = Alt-Ctrl-DnArrow  # Alt-Ctrl-RtArrow in other orientation.
 expand-next-level                   = Alt-=
-expand-node                         = Alt-]
+expand-node                         = Alt-bracketright
 extract                             = Shift-Ctrl-D
 extract-names                       = Shift-Ctrl-N
 extract-section                     = Shift-Ctrl-S  # Shift-Ctrl-E: end-of-line-extend-selection</t>
@@ -4376,5 +4379,8 @@ False (recommended):  No translation.</t>
 <t tx="ekr.20060216135834"></t>
 <t tx="ekr.20060216145416"></t>
 <t tx="ekr.20060216170801"></t>
+<t tx="ekr.20060218065259"></t>
+<t tx="ekr.20060218065259.1">
+</t>
 </tnodes>
 </leo_file>

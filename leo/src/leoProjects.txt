@@ -1164,7 +1164,7 @@ def setDefaultUnboundKeyAction (self):
 #@-node:ekr.20060115195302:setDefaultUnboundKeyAction
 #@-node:ekr.20050920085536.1: Birth (keyHandler)
 #@-node:ekr.20060203112912.1:Initing
-#@+node:ekr.20060214140930:4.4x1 projects
+#@+node:ekr.20060214140930:4.4 x1 projects
 #@+node:ekr.20060214140930.1:Restored some legacy bindings
 extract                             = Shift-Ctrl-D
 extract-names                       = Shift-Ctrl-N
@@ -2540,8 +2540,8 @@ def callAltXFunction (self,event):
 #@-node:ekr.20050920085536.45:callAltXFunction
 #@-node:ekr.20050920085536.41:fullCommand (alt-x) & helper
 #@-node:ekr.20060213151411:Fixed (maybe) problems with unicode characters & caps lock
-#@-node:ekr.20060214140930:4.4x1 projects
-#@+node:ekr.20060216071129:4.4a6 projects
+#@-node:ekr.20060214140930:4.4 x1 projects
+#@+node:ekr.20060216071129:4.4 a6 projects
 #@+node:ekr.20060216120335:What I did
 @nocolor
 
@@ -4665,7 +4665,145 @@ def endEditLabel (self):
 #@nonl
 #@-node:ekr.20040803072955.126:tree.endEditLabel
 #@-node:ekr.20060215055823:Arrow keys no longer destroy UNL line
-#@-node:ekr.20060216071129:4.4a6 projects
+#@-node:ekr.20060216071129:4.4 a6 projects
+#@+node:ekr.20060218075614:4.4 a7 projects
+#@+node:ekr.20060218071531:Fixed binding bug
+# http://sourceforge.net/forum/message.php?msg_id=3583335
+#@+node:ekr.20060218075614.1:R
+#@-node:ekr.20060218075614.1:R
+#@+node:ekr.20060216074643:k.completeAllBindings
+def completeAllBindings (self):
+    
+    '''New in 4.4b3: make an actual binding in *all* the standard places.
+    
+    The event will go to k.masterKeyHandler as always, so nothing really changes.
+    except that k.masterKeyHandler will know the proper stroke.'''
+    
+    k = self ; c = k.c ; f = c.frame
+    bodyCtrl = f.body and hasattr(f.body,'bodyCtrl') and f.body.bodyCtrl or None
+    canvas   = f.tree and hasattr(f.tree,'canvas')   and f.tree.canvas   or None
+    bindingWidget = f.tree and hasattr(f.tree,'bindingWidget') and f.tree.bindingWidget or None
+    # g.trace(bodyCtrl,canvas)
+    if not bodyCtrl or not canvas: return
+    
+    for stroke in  k.bindingsDict.keys():
+        for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
+            def bindKeyCallback (event,k=k,stroke=stroke):
+                return k.masterKeyHandler(event,stroke=stroke)
+            bindStroke = k.tkbindingFromStroke(stroke)
+            try:
+                # g.trace(bindStroke,c.widget_name(w))
+                w.bind(bindStroke,bindKeyCallback)
+            except Exception:
+                g.es_print('exception binding %s to %s' % (
+                    bindStroke,c.widget_name(w)),color='blue')
+#@nonl
+#@-node:ekr.20060216074643:k.completeAllBindings
+#@+node:ekr.20060131075440:k.tkbindingFromStroke
+def tkbindingFromStroke (self,stroke):
+    
+    '''Convert a stroke (key to k.bindingsDict) to an actual Tk binding.'''
+    
+    stroke = stroke.lstrip('<').rstrip('>')
+    
+    for a,b in (
+        ('Alt+','Alt-'),
+        ('Ctrl+','Control-'),
+        ('Shift+','Shift-'),
+        ('Command+','Command-'),
+    ):
+        stroke = stroke.replace(a,b)
+        
+    return '<%s>' % stroke
+#@nonl
+#@-node:ekr.20060131075440:k.tkbindingFromStroke
+#@+node:ekr.20060128081317:shortcutFromSetting
+def shortcutFromSetting (self,setting):
+    
+    k = self
+
+    if not setting:
+        return None
+
+    s = setting.strip()
+    << define cmd, ctrl, alt, shift >>
+    if k.swap_mac_keys and sys.platform == "darwin":
+        << swap cmd and ctrl keys >>
+    << convert minus signs to plus signs >>
+    << compute the last field >>
+    << compute shortcut >>
+    return shortcut
+    
+canonicalizeShortcut = shortcutFromSetting # For compatibility.
+strokeFromSetting    = shortcutFromSetting
+#@nonl
+#@+node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
+s2 = s.lower()
+
+cmd   = s2.find("cmd") >= 0     or s2.find("command") >= 0
+ctrl  = s2.find("control") >= 0 or s2.find("ctrl") >= 0
+alt   = s2.find("alt") >= 0
+shift = s2.find("shift") >= 0   or s2.find("shft") >= 0
+#@nonl
+#@-node:ekr.20060201065809:<< define cmd, ctrl, alt, shift >>
+#@+node:ekr.20060215104239:<< swap cmd and ctrl keys >>
+if ctrl and not cmd:
+    cmd = True ; ctrl = False
+if alt and not ctrl:
+    ctrl = True ; alt = False
+#@nonl
+#@-node:ekr.20060215104239:<< swap cmd and ctrl keys >>
+#@+node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+# Replace all minus signs by plus signs, except a trailing minus:
+if s.endswith('-'):
+    s = s[:-1].replace('-','+') + '-'
+else:
+    s = s.replace('-','+')
+#@nonl
+#@-node:ekr.20060128103640.1:<< convert minus signs to plus signs >>
+#@+node:ekr.20060128103640.2:<< compute the last field >>
+if s.endswith('+'):
+    last = '+'
+else:
+    fields = s.split('+') # Don't lower this field.
+    last = fields and fields[-1]
+    if not last:
+        if not g.app.menuWarningsGiven:
+            print "bad shortcut specifier:", s
+        return None
+
+if len(last) == 1:
+    last2 = k.tkBindNamesDict.get(last) # Fix new bug introduced in 4.4b2.
+    if last2:
+        last = last2 ; shift = False # Ignore the shift state for these special chars.
+    else:
+        if shift:
+            last = last.upper()
+            shift = False
+        else:
+            last = last.lower()
+else:
+    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+    # This is a *one-way* translation, done only here.
+    d = self.settingsNameDict
+    last = d.get(last.lower(),last)
+#@nonl
+#@-node:ekr.20060128103640.2:<< compute the last field >>
+#@+node:ekr.20060128103640.4:<< compute shortcut >>
+table = (
+    (alt, 'Alt+'),
+    (ctrl,'Ctrl+'),
+    (cmd, 'Command+'),
+    (shift,'Shift+'),
+    (True,last),
+)
+    
+shortcut = ''.join([val for flag,val in table if flag])
+#@nonl
+#@-node:ekr.20060128103640.4:<< compute shortcut >>
+#@-node:ekr.20060128081317:shortcutFromSetting
+#@-node:ekr.20060218071531:Fixed binding bug
+#@-node:ekr.20060218075614:4.4 a7 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all
 #@nonl

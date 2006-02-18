@@ -246,7 +246,7 @@ def runTimerOnNode (c,p,count):
         if count is None:
             count = 1000000
         result = t.timeit(count)
-        print "count: %d time/count: %f %s" % (count,result/count,p.headString())
+        g.es_print("count: %d time/count: %f %s" % (count,result/count,p.headString()))
     except:
         t.print_exc()
 #@nonl
