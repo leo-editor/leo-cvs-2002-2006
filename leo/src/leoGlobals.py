@@ -1431,7 +1431,7 @@ def dictToString(d,tag=None,verbose=True,indent=''):
     keys = d.keys() ; keys.sort()
     n = 6
     for key in keys:
-        if type(key) == type(''):
+        if type(key) in (type(''),type(u'')):
             n = max(n,len(key))
     lines = ["%s%*s: %s" % (indent,n,key,repr(d.get(key)).strip()) for key in keys]
     s = '\n'.join(lines)
@@ -1449,11 +1449,11 @@ def print_list(aList,tag=None,sort=False,indent=''):
         else:   print '{}'
         return
     if sort:
-        aList = aList[:] # Sort a copy! Pychecker incorrectly complains.
-        aList.sort()
+        bList = aList[:] # Sort a copy! Pychecker incorrectly complains.
+        bList.sort()
     if tag: print '%s...[' % tag
     else:   print '['
-    for e in aList:
+    for e in bList:
         print '%s%s' % (indent,repr(e).strip())
     print ']'
 
