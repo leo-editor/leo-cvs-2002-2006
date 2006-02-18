@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="22944" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
-	<global_window_position top="40" left="391" height="857" width="731"/>
+	<global_window_position top="15" left="266" height="857" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647"><vh>Users Guide</vh>
+<v t="ekr.20040414161647" a="V"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -433,6 +433,19 @@
 <v t="ekr.20050901092232.5"><vh>Speed</vh></v>
 <v t="ekr.20050901092232.6"><vh>Conclusions</vh></v>
 </v>
+<v t="ekr.20060218085144"><vh>Why Leo is special</vh>
+<v t="ekr.20060218085144.1"><vh>1. You can execute Python scripts directly from anywhere in a Leo outline</vh></v>
+<v t="ekr.20060218085144.2"><vh>2. Leo's outlines are the perfect tool for organizing scripts</vh></v>
+<v t="ekr.20060218085144.3"><vh>3. Scripts can access the structure of Leo's outlines</vh></v>
+<v t="ekr.20060218085144.4"><vh>4. Leo's nodes naturally separate data from meta-data</vh></v>
+<v t="ekr.20060218085144.5"><vh>5. Leo is the ultimate platform for unit testing</vh></v>
+<v t="ekr.20060218085144.6"><vh>6. Leo is the ultimate platform for finding and changing text.</vh></v>
+<v t="ekr.20060218085144.7"><vh>7. Leo outlines are the ultimate filing cabinet</vh></v>
+<v t="ekr.20060218095651"><vh>To do: script buttons</vh></v>
+<v t="ekr.20060218092654"><vh>To do @button, @script, @test, @suite, @timer nodes</vh></v>
+<v t="ekr.20060218092725"><vh>To do @rst3 plugin</vh></v>
+<v t="ekr.20060218085144.8"><vh>Conclusion</vh></v>
+</v>
 <v t="ekr.20050901092232.7"><vh>@rst-no-head end stuff</vh></v>
 </v>
 </v>
@@ -745,7 +758,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -2460,15 +2473,15 @@
 </v>
 </v>
 <v t="ekr.20060215112429"><vh>4.4 experimental 1</vh>
-<v t="ekr.20060215112429.9" a="E"><vh>Fixed (maybe) problems with unicode characters &amp; caps lock</vh></v>
+<v t="ekr.20060215112429.9"><vh>Fixed (maybe) problems with unicode characters &amp; caps lock</vh></v>
 <v t="ekr.20060215112429.2"><vh>Restored some legacy bindings</vh></v>
-<v t="ekr.20060215112429.3" a="E"><vh>Fixed crasher in Go To Line command</vh></v>
-<v t="ekr.20060215112429.6" a="E"><vh>Fixed menu problem on Linux</vh></v>
+<v t="ekr.20060215112429.3"><vh>Fixed crasher in Go To Line command</vh></v>
+<v t="ekr.20060215112429.6"><vh>Fixed menu problem on Linux</vh></v>
 </v>
 </v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="ekr.20060217071505" a="V"><vh>4.4 a6</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="ekr.20060217071505"><vh>4.4 a6</vh>
 <v t="ekr.20060217071505.1"><vh>Fixed urgent compatibility problems</vh></v>
 <v t="ekr.20060217072324"><vh>Minor bugs fixed</vh></v>
 <v t="ekr.20060217072647"><vh>New debugging options in leoSettings.leo</vh></v>
@@ -4888,7 +4901,6 @@ The code is pretty fragile; it should handle either None or "", but in fact it r
 <t tx="edream.110203163054.46">@nocolor</t>
 <t tx="edream.110203163054.48">@ @rst-options
 code_mode=False
-default_path = .
 generate_rst=True
 http_server_support = False
 show_organizer_nodes=True
@@ -18242,7 +18254,7 @@ write_intermediate_file = False
 verbose=True
 @c
 
-.. August 30, 2005
+.. February, 2006
 
 |back| |leo| |next|
 
@@ -18250,8 +18262,9 @@ verbose=True
 Chapter 11: White Papers
 ##########################
 
-The following are some papers I wrote just after discovering Python.
+I wrote the first two white papers soon after discovering Python.
 The conclusions in these papers have remained largely unchanged.
+I wrote the third in November 2004, and rewrote it in February 2006.
 
 .. contents::
 </t>
@@ -24001,5 +24014,322 @@ even a minute for this.</t>
 - @bool trace_key_event
 - @bool trace_minibuffer
 - @bool trace_status_line</t>
+<t tx="ekr.20060218085144">This white paper originally appeared in November 2003 as a series of postings to comp.lang.python.
+Many features have been added since then.
+I rewrote this paper in February 2006.
+
+Those who use Leo know that it is a superb environment for
+programming, authoring and managing data and project.
+Leo's power comes from combining just two basic elements:
+
+- The organization power of outlines, including clones.
+- The power and simplicity of the Python language.
+
+This paper explains in detail how combining these two features can, in fact,
+create immense and largely unexpected power and flexibility.
+To summarize:
+
+- Outlines with clones are a superb filing cabinet for organizing text,
+  including programs and scripts, or in fact any other information.
+  This is the obvious aspect of outlines, but it is by no means the most powerful.
+
+- Scripts can be composed of multiple nodes using noweb markup.
+  Not only do outlines organize scripts, but scripts can be composed of outlines.
+  In other words, Leo can *compose* scripts by concatentaing descendent nodes and sections.
+  Leo uses the noweb markup language to compose scripts in a flexible manner.
+
+- Outline nodes split text, including programs and scripts, into *easily accessible*, discreet parts.
+  Scripts may access nodes and their headlines and body text without any parsing.
+
+- Nodes provide an easy associating the *description* of data with the data itself.
+  Indeed, headlines naturally describe the node's body text.
+  Leo's users have discovered many ways to take advantage of the unification of data and its description.
+
+- Programs may treat nodes as *separate objects*, no matter what data the nodes contain.
+  Because nodes are truly separate objects,
+  it becomes easy and natural to define new *operations* on those objects,
+  **based on the description of those outline found in the node's headline**.
+
+The combination of these features created a chain reaction of creative uses for outlines.
+The result has been an explosion of new ideas and capabilities.
+
+Leo supports the following kinds of 'special' nodes:
+@test, @suite, @script, @url, @button, @button timer, @rst, @command, etc.
+Each of these kinds of nodes defines new objects and new operations on those objects.
+The following paragraph show how Leo's users can use these new objects and their operations
+
+Scripting
+
+- The execute script command executes the body text of the presently selected node
+  in an environment containing three variables: ``c``, ``g`` and ``p``.
+  Thus, all scripts have full and *easy* access to all data in the outline containing the script.
+
+- The scripting plugin creates support for script nodes.
+  We can treat a node as a script, and *apply that script to any other part of an outline*.
+  This is called 'bringing scripts to data'.
+  Leo's users can do this using script buttons as follos.
+  Any @button node creates a script button in Leo's icon area.
+  The name of the button is the node's headline; the script is the node's body text.
+  The user can also create new script buttons using the 'Script Button' button.
+  Pressing the 'Script Button' button creates a new script button,
+  just as if the presently selected node were an @button node.
+  Bringing scripts to data is an immensely powerful and useful feature:
+  it has eliminated the need for Leo's previous script-find feeatures.
+
+- @command nodes create new minibuffer commands, complete with keyboard shortcuts.
+  The headline defines the command name and an optional keyboard shortcut;
+  the body text defines the command.
+
+Unit testing
+
+- We can treat a node as an individual unit test,
+  and *automatically* create a subclass of UnitTest.TestCase for the script in that node.
+  This is Leo's @test node feature.
+  Leo will convert the body text of any @test node into a unit tests.
+
+- Similarly, @suite nodes create suites of unit tests using the script in the @suite node.
+
+- A unit test can get test data from any node in the outline in which it resides.
+  Thus, outlines can contain not only unit tests, but the data for those tests.
+
+Text formatting
+
+- The rst3 plugin creates support for @rst nodes.
+  @rst trees use outline structure to create document structure.
+  This is a revolution in organizing documents.
+  Full details [ref]
+
+Organizing data
+
+- @url nodes contain references to web addresses, including files on a local disk.
+  Double-clicking an @url node opens a web browser on the given URL.
+
+Plugins
+
+- Plugins supppor many other kinds of user-defined objects and their associated operations.
+  Some examples are @view, @read-only, @folder, @produce, @run, @startfile, etc.
+  Writing plugins is easy.
+  Python makes the programming as easy as possible;
+  and Leo provides plugins with easy access to outlines and their data.</t>
+<t tx="ekr.20060218085144.1">The body text of any Leo node may contain a Python script.
+The Execute Script commands executes this script in a in an environment,
+that predefines three variables: ``c``, ``g`` and ``p``.
+These variables allow easy access to all the data in the present outline.
+For example: the following script prints all the node of the
+outline in which the script is embedded::
+
+    for p in c.allNodes_iter():
+        indent = ' '*p.level()
+        print '%s + %s' % (indent,p.headString()) # print the node's headline.
+        print p.bodyString() # print the node's body.
+
+For that matter, scripts can access any data anywhere on your hard drive, or all
+the data available on the web, for that matter. You knew that, but this
+"innocent" fact will be important later.
+
+**Result 1**:  Leo is a great environment in which to write Python scripts.</t>
+<t tx="ekr.20060218085144.2">Leo's outline can organize any text (or other data for that matter).
+
+**Result 2**:  Leo is a great way to organize standalone scripts.
+
+This seemingly simple result will turn out to have important implications.</t>
+<t tx="ekr.20060218085144.3">As shown in the example above, scripts may get access to the
+headline or body text of any node in a Leo outline.  Therefore, scripts may
+use the *structure* of the outline to gain access to
+
+a) other scripts,
+b) fragments of code for exec or eval or
+c) other data.
+
+**Result 3**: Scipts have can treat outline structure as first-class data.
+
+The first "big" reason why the combination of Python &amp; Leo is spectacular.
+It gets better...</t>
+<t tx="ekr.20060218085144.4">The body text of a node is the perfect place data itself (including other
+scripts).  The headline of the node is the perfect place to *describe* the
+data.  That is, headlines are a natural place for meta-data.  Scripts can
+use this meta-data in many creative ways.
+
+**Result 4**: Scripts have easy access to user-definable meta-data.</t>
+<t tx="ekr.20060218085144.5">I first saw the power of results 2, 3 and 4 when creating unit tests for Leo.
+Indeed, the body text of a node is the perfect place for putting regression test
+data. Headlines describe the data, which is exactly what is needed for
+organizing tests. Indeed, I use a script to create regression tests based on the
+structure of the outline of the children of the node containing the script (!)
+
+For example, I run the following script to create and run unit tests of
+Leo's colorizer::
+
+    import unittest,leoTest
+    suite = leoTest.makeColorSuite("colorizerTests","tempNode")
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+    
+This works as follows:  the arguments to makeColorSuite tell it to look up
+the tree for of an ancestor of the present node (the node containing this
+script) for a node whose headline is "colorizerTests".  makeColorSuite then
+looks for children of *that* node for nodes containing test data.  The node
+whose headline is "tempNode" is used by the colorizer during the tests.
+Here is the actual code of makeColorSuite::
+
+    def makeColorSuite(testParentHeadline,tempHeadline):
+        """Create a colorizer test for every descendant of testParentHeadline."""
+        u = testUtils() ; c = top() ; v = c.currentVnode()
+        root = u.findRootNode(v)
+        temp_v = u.findNodeInTree(root,tempHeadline)
+        vList = u.findSubnodesOf(testParentHeadline)
+        # Create the suite and add all test cases.
+        suite = unittest.makeSuite(unittest.TestCase)
+        for v in vList:
+            test = colorTestCase(c,v,temp_v)
+            suite.addTest(test)
+        return suite
+    
+The power and simplicity of this code is breathtaking.  All that is required
+are two utility routines, findNodeInTree and findSubnodesOf that find
+various nodes in an outline based on the outline structure and the headlines
+of the nodes:
+
+- findNodeInTree(root,tempHeadline) returns the node in the entire tree
+  contain the current node whose headline is tempHeadline.
+
+- u.findSubnodesOf(testParentHeadline) returns a list of all children of the
+  node whose name is testParentHeadline.
+
+In short, it is absolutely trivial for a script embedded in a Leo outline to
+generate unit tests based on the data in the outline in which the script is
+embedded!
+
+Notice, please, what does *not* have to be done:
+
+A. No unit tests are created statically: everything is driven by data (the
+   outline itself)
+
+B. No Python test data is created *at all*.   Before I saw this approach, I
+   was putting text for the syntax-coloring text in Python strings and passing
+   those strings to the regression tests.  Now, the *unchanged* data in the
+   body text of nodes becomes the regression test data.
+
+C.  There is no need to mark meta-data as separate from test data: headlines
+are naturally distinct from body text.
+
+We see now that Reasons 2, 3 and 4 are a lot more potent than they might
+appear at first.  Indeed, Leo plus Python is the ultimate merging of code,
+structure and data.   Scripts can use data organized in outlines.  Outlines
+organize scripts.  Outlines (particularly their structure) are *data* for
+scripts.  Outlines contains metadata for scripts.  Outlines naturally keep
+data and meta-data separate.
+
+Please notice, this discussion merely hints at all the games that scripts
+could play with outline structure.  Just for example, scripts can easily
+insert, delete and reorganize nodes.  And the uses to which outline
+structure may be put are practically unlimited, as we shall see later...
+
+Let's turn now to a completely separate topic...</t>
+<t tx="ekr.20060218085144.6">A few days ago I have added a script-based option to Leo's Find/Change
+panel.  For more than 30 years I have been disgusted with tools like regular
+expressions.  Calling re powerful is an utter joke; it's way too complex and
+way too wimpy.  Script-based find-change is infinitely more powerful.
+Instead of containing find text or change *text*, Leo's Find/Change panel
+may contains find or change *scripts*.  This becomes possible because scripts
+have complete access to both the structure of the outline and all of Leo's
+code.
+
+It all works so smoothly:   The find script is responsible for traversing
+the tree and for highlighting the found text or otherwise indicating to the
+change script what the found text was.  Leo dedicates a Python dict called
+app.searchDict for communication between the search script and the change
+script.  The change script is responsible for:
+
+-  changing the text, typically by using v.setBodyStringOrPane(newText), and
+
+-  implementing undo, typically by calling c.frame.onBodyChanged(v,"Change",oldText=oldText).
+
+Some details:
+
+- When executing the search and change scripts when the user selects the Find
+  All or Change All commands, Leo executes the find or change scripts repeatedly
+  only if app.searchDict.get("continue") evaluates to True. Otherwise these
+  scripts are only executed once. Otherwise, scripts can use app.searchDict as
+  they please.
+
+- For simplicity, most find and change scripts will ignore settings in the Find
+  Panel like "whole word", "pattern match", and "reverse": the scripts know what
+  to do! However, these settings are available to the scripts via ivars such as
+  c.whole_word_flag, etc. if desired.
+
+- Either the find and change scripts may use Python's re module. For example,
+  the find script could set app.searchDict["m"] to the match object returned by
+  re's match method. The change script would then compute the result, change the
+  text and set the undo info as usual.
+
+In effect, Leo's Find/Change panel becomes a new platform for running
+scripts interactively.  Leo now has all the find/change capability of
+pattern matching languages like Snobol and Icon, using the capabilities of
+the plain Python language.  Moreover, Leo can deliver these capabilities
+interactively or not depending which buttons you push in Leo's Find/Change
+panel.
+
+One last point.  As I mentioned much earlier, there is no reason to confine
+the find and change scripts to operate on data only within a Leo outline.
+These scripts could as easily traverse your file system as the Leo outline.
+But notice: scripts could pull data from the file system into the outline so
+that you can see the effects of changes as the scripts operate.  Again, this
+can all happen interactively if you like.
+
+No, one more last point.  It's convenient to defined an initScriptFind
+utility very similar to the makeColorSuite utility, used like this::
+
+    # Initialize Leo's find panel using the named children of this node.
+    from leoGlobals import *
+    initScriptFind("Find script","Change script")
+    # Start searching at the top.
+    top().selectVnode(c.rootVnode())
+
+Put the search script in a child node called "Find script" (no quotes), put
+the change script in a child node called "Change script", execute this
+script and the following happens:
+
+- The body text of "Find script" node gets put in the find text of Leo's Find/Change dialog.
+
+- The body text of "Change script" node gets put in the find text of Leo's Find/Change dialog.
+
+- The Script Find radio buttons gets selected, as does the Script Change checkbox.
+
+- The root of the outline becomes the selected node.
+
+Presto!  Leo is ready for a script search.</t>
+<t tx="ekr.20060218085144.7">One more feature greatly expands the generality and power of
+Leo's outlines combined with Python.  Plugins may now attach arbitrary data
+to any node of a Leo outline.  This is done merely by "injecting" an ivar
+called  unknownAttributes ivar into Leo's fundamental vnode or tnode objects
+(or adding items to the unknownAttributes dict if it already exists).  The
+unknownAttributes ivar should be a Python dictionary whose keys are xml
+attribute names and whose values are the values of those attributes.
+
+When writing a file, Leo will write "foreign" attributes in the &lt;v&gt; or &lt;t&gt;
+xml elements of Leo's .leo file if the corresponding vnode or tnode contains
+this unknownAttributes ivar.  Similarly, Leo will create an
+unknownAttributes ivar for a vnode or tnode if the corresponding &lt;v&gt; or &lt;t&gt;
+element contains an attribute not normally used by Leo.  Leo performs the
+standard xml escapes when writing unknown attributes, so plugins can put
+*anything* in the unknownAttributes dictionary.  In particular, plugins may
+put xml in v.unknownAttributes or t.unknownAttributes.
+
+This means, for example, that plugins may add anything that can be
+represented by xml (and that is *everything*) in any node of a Leo outline.
+In effect, Leo's file format is now completely extensible.  BTW, plugins can
+override any aspect of Leo's behavior, so not only can Leo passively accept
+the data in "extended" .leo files, but plugins can extend Leo to *use* this
+data!</t>
+<t tx="ekr.20060218085144.8">All the power of Leo derives directly from the power, flexibility and
+dynamism of Python.  But making structure explicit as Leo outlines do adds
+an important new dimension, literally and figuratively, to Python.
+Moreover, Leo's Find/Change dialog creates a new environment from which to
+run Python scripts. At long last the full power of the unification of code
+and data is becoming apparent.</t>
+<t tx="ekr.20060218092654"></t>
+<t tx="ekr.20060218092725"></t>
+<t tx="ekr.20060218095651"></t>
 </tnodes>
 </leo_file>
