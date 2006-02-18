@@ -1814,11 +1814,15 @@ else:
         return None
 
 if len(last) == 1:
-    if shift:
-        last = last.upper()
-        shift = False
+    last2 = k.tkBindNamesDict.get(last) # Fix new bug introduced in 4.4b2.
+    if last2:
+        last = last2 ; shift = False # Ignore the shift state for these special chars.
     else:
-        last = last.lower()
+        if shift:
+            last = last.upper()
+            shift = False
+        else:
+            last = last.lower()
 else:
     # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
     # This is a *one-way* translation, done only here.
@@ -1845,7 +1849,7 @@ shortcut = ''.join([val for flag,val in table if flag])
  
 def strokeFromEvent (self,event):
     
-    k = self ; k.c
+    k = self
     if event is None: return ''
     trace = k.trace_key_event and not g.app.unitTesting
     state = event.state or 0
@@ -1858,12 +1862,12 @@ def strokeFromEvent (self,event):
     # Linux uses, 8 and 0x80, XP uses 0x20000.
     if sys.platform=='darwin':
         alt = (state&0x10) == 0x10
-        num = False
+        #num = False
     elif sys.platform.startswith('win'):
         alt = (state & 0x20000) == 0x20000
-        num = (state & 8) == 8
+        #num = (state & 8) == 8
     else:
-        num = False # ???
+        #num = False # ???
         alt = (state & 8) == 8 or (state & 0x80) == 0x80
     plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
     
@@ -1918,7 +1922,6 @@ def tkbindingFromStroke (self,stroke):
         ('Ctrl+','Control-'),
         ('Shift+','Shift-'),
         ('Command+','Command-'),
-        ('--','-minus'),
     ):
         stroke = stroke.replace(a,b)
         
@@ -3466,7 +3469,7 @@ def completeAllBindings (self):
                 return k.masterKeyHandler(event,stroke=stroke)
             bindStroke = k.tkbindingFromStroke(stroke)
             try:
-                #g.trace(bindStroke,c.widget_name(w))
+                # g.trace(bindStroke,c.widget_name(w))
                 w.bind(bindStroke,bindKeyCallback)
             except Exception:
                 g.es_print('exception binding %s to %s' % (
@@ -3626,11 +3629,15 @@ else:
         return None
 
 if len(last) == 1:
-    if shift:
-        last = last.upper()
-        shift = False
+    last2 = k.tkBindNamesDict.get(last) # Fix new bug introduced in 4.4b2.
+    if last2:
+        last = last2 ; shift = False # Ignore the shift state for these special chars.
     else:
-        last = last.lower()
+        if shift:
+            last = last.upper()
+            shift = False
+        else:
+            last = last.lower()
 else:
     # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
     # This is a *one-way* translation, done only here.
@@ -3657,7 +3664,7 @@ shortcut = ''.join([val for flag,val in table if flag])
  
 def strokeFromEvent (self,event):
     
-    k = self ; k.c
+    k = self
     if event is None: return ''
     trace = k.trace_key_event and not g.app.unitTesting
     state = event.state or 0
@@ -3670,12 +3677,12 @@ def strokeFromEvent (self,event):
     # Linux uses, 8 and 0x80, XP uses 0x20000.
     if sys.platform=='darwin':
         alt = (state&0x10) == 0x10
-        num = False
+        #num = False
     elif sys.platform.startswith('win'):
         alt = (state & 0x20000) == 0x20000
-        num = (state & 8) == 8
+        #num = (state & 8) == 8
     else:
-        num = False # ???
+        #num = False # ???
         alt = (state & 8) == 8 or (state & 0x80) == 0x80
     plain = len(keysym) == 1 # E.g., for ctrl-v the keysym is 'v' but ch is empty.
     
@@ -3730,7 +3737,6 @@ def tkbindingFromStroke (self,stroke):
         ('Ctrl+','Control-'),
         ('Shift+','Shift-'),
         ('Command+','Command-'),
-        ('--','-minus'),
     ):
         stroke = stroke.replace(a,b)
         
