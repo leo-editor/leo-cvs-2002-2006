@@ -160,7 +160,6 @@ class keyHandlerClass:
     # These keys settings that may be specied in leoSettings.leo.
     # Keys are lowercase, so that case is not significant *for these items only* in leoSettings.leo.
     
-    
     settingsNameDict = {
         'bksp'    : 'BackSpace',
         'dnarrow' : 'Down',
@@ -556,7 +555,7 @@ class keyHandlerClass:
                     return k.masterKeyHandler(event,stroke=stroke)
                 bindStroke = k.tkbindingFromStroke(stroke)
                 try:
-                    #g.trace(bindStroke,c.widget_name(w))
+                    # g.trace(bindStroke,c.widget_name(w))
                     w.bind(bindStroke,bindKeyCallback)
                 except Exception:
                     g.es_print('exception binding %s to %s' % (
@@ -2112,11 +2111,15 @@ class keyHandlerClass:
                 return None
         
         if len(last) == 1:
-            if shift:
-                last = last.upper()
-                shift = False
+            last2 = k.tkBindNamesDict.get(last) # Fix new bug introduced in 4.4b2.
+            if last2:
+                last = last2 ; shift = False # Ignore the shift state for these special chars.
             else:
-                last = last.lower()
+                if shift:
+                    last = last.upper()
+                    shift = False
+                else:
+                    last = last.lower()
         else:
             # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
             # This is a *one-way* translation, done only here.
@@ -2224,7 +2227,6 @@ class keyHandlerClass:
             ('Ctrl+','Control-'),
             ('Shift+','Shift-'),
             ('Command+','Command-'),
-            ('--','-minus'),
         ):
             stroke = stroke.replace(a,b)
             
