@@ -4469,22 +4469,39 @@ for s in (
 
 c.autoCompleter.scan(verbose=False)</t>
 <t tx="ekr.20060219120931">import inspect
-import leoCommands,leoGlobals,leoNodes,leoUndo
+
 table = (
-    (leoCommands.Commands,'Commands'),
-    (leoNodes.position,'position'),
-    (leoNodes.vnode,'vnode'),
-    (leoNodes.tnode,'tnode'),
-    (leoGlobals,'globals'),
-    (leoUndo.undoer,'undoer'),
-    (''.__class__,'string'),
+    #('leoCommands','Commands'),
+    ('leoNodes','vnode'),
+    ('leoGlobals',None),
+    ('python','list'),
+    ('python','string'),
+    ('python','dictionary'),
+    # ('leoKeys','keyHandlerClass'),
 )
+
+d = {'string':'', 'dictionary':{}, 'list':[]}
+
 print '-' * 40
-for theObject,name in table:
+for moduleName,className in table:
+    if moduleName.lower() == 'python':
+        o = d.get(className)
+        theObject = o is not None and o.__class__
+        name = className
+    else:
+        module = g.importModule (moduleName,verbose=True)
+        if not module: continue
+        if className:
+            theObject = hasattr(module,className) and getattr(module,className) or None
+            name = className
+        else:
+            theObject = module
+            name = moduleName
+    if not theObject: continue
     aList = inspect.getmembers(theObject)
-    members = [a for a,b in aList if not a.startswith('__')]
+    members = [a + str(type(b)) for a,b in aList if not a.startswith('__')]
     members.sort()
-    if 1:
+    if 0:
         print ; print len(members),name,'docstrings...\n\n',
         aList.sort()
         for a,b in aList:
@@ -4493,6 +4510,34 @@ for theObject,name in table:
     else:
         # print name, len(members)
         print ; print len(members),name,'methods...\n\n',g.listToString(members)
-    </t>
+        
+    
+if 0: # Original code.
+    import leoCommands,leoGlobals,leoKeys,leoNodes,leoUndo
+    table = (
+        #(leoCommands.Commands,'Commands'),
+        #(leoNodes.position,'position'),
+        #(leoNodes.vnode,'vnode'),
+        #(leoNodes.tnode,'tnode'),
+        (leoGlobals,'globals'),
+        #(leoUndo.undoer,'undoer'),
+        (''.__class__,'string'),
+        (leoKeys.keyHandlerClass,'keyHandler'),
+    )
+    
+    print '-' * 40
+    for theObject,name in table:
+        aList = inspect.getmembers(theObject)
+        members = [a + str(type(b)) for a,b in aList if not a.startswith('__')]
+        members.sort()
+        if 0:
+            print ; print len(members),name,'docstrings...\n\n',
+            aList.sort()
+            for a,b in aList:
+                if b.__doc__ and not a.startswith('__') and type(b) != type(''):
+                    print ; print '**', a, b.__doc__
+        else:
+            # print name, len(members)
+            print ; print len(members),name,'methods...\n\n',g.listToString(members)</t>
 </tnodes>
 </leo_file>
