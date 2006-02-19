@@ -4469,19 +4469,30 @@ for s in (
 
 c.autoCompleter.scan(verbose=False)</t>
 <t tx="ekr.20060219120931">import inspect
-import leoCommands,leoGlobals,leoNodes
+import leoCommands,leoGlobals,leoNodes,leoUndo
 table = (
     (leoCommands.Commands,'Commands'),
     (leoNodes.position,'position'),
     (leoNodes.vnode,'vnode'),
     (leoNodes.tnode,'tnode'),
     (leoGlobals,'globals'),
+    (leoUndo.undoer,'undoer'),
+    (''.__class__,'string'),
 )
 print '-' * 40
 for theObject,name in table:
     aList = inspect.getmembers(theObject)
-    members = [a for a,b in aList]
-    # print ; print name,'...\n\n',g.listToString(members,sort=True)
-    print name, len(members)</t>
+    members = [a for a,b in aList if not a.startswith('__')]
+    members.sort()
+    if 1:
+        print ; print len(members),name,'docstrings...\n\n',
+        aList.sort()
+        for a,b in aList:
+            if b.__doc__ and not a.startswith('__') and type(b) != type(''):
+                print ; print '**', a, b.__doc__
+    else:
+        # print name, len(members)
+        print ; print len(members),name,'methods...\n\n',g.listToString(members)
+    </t>
 </tnodes>
 </leo_file>
