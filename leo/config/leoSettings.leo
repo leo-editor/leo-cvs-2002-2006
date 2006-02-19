@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="V" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
@@ -305,7 +305,7 @@
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
@@ -376,8 +376,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060218065259" a="E"><vh>Add to legacy settings</vh>
-<v t="ekr.20060218065259.1"><vh>@bool ignore_unbound_non_ascii_keys = True</vh></v>
+<v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
+<v t="ekr.20060216135834" a="V"><vh>@bool enable_autocompleter = True</vh></v>
+<v t="ekr.20060216170801"><vh>@bool enable_calltips = True</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1419,6 +1420,7 @@ append-to-register                  = None
 apropos-bindings                    = None
 apropos-find-commands               = None
 auto-complete                       = None
+auto-complete-force                 = None
 back-char                           = None
 back-char-extend-selection          = None
 back-paragraph                      = None
@@ -3287,6 +3289,7 @@ set-overwrite-state                 = None
 settings                            = None
 shell-command                       = None
 shell-command-on-region             = None
+show-calltips                       = None
 show-colors                         = None
 show-find-options                   = None
 show-fonts                          = None
@@ -3905,7 +3908,8 @@ enter-quick-command-mode    = Alt-C</t>
 
 abort-edit-headline                 = Esc
 add-comments                        = Ctrl-(
-auto-complete                       = Ctrl-Tab
+auto-complete-force                 = Ctrl-Tab
+auto-complete                       = period
 back-char                           ! text = LtArrow
 back-char-extend-selection          ! text = Shift-LtArrow
 back-word                           ! text = Alt-b  
@@ -4034,6 +4038,7 @@ scroll-down-extend-selection        ! text = Shift-PageDn
 scroll-up-extend-selection          ! text = Shift-PageUp
 select-all                          ! text =  Alt-Shift-A 
     # Shift-Ctrl-A conflicts with beginning-of-line-extend-selection.
+show-calltips                       = parenleft
 sort-siblings                       = Alt-A
 split-line                          = Alt-Ctrl-o
 
@@ -4371,7 +4376,8 @@ True (recommended): Leo completely ignores the caps-lock key.
 False: The caps-lock key reverses the case of alphabetic characters.
 
 Regardless of this setting, the caps-lock key has no effect on Control or Alt keys.</t>
-<t tx="ekr.20060215102141"></t>
+<t tx="ekr.20060215102141">True (Legacy):          ignore unbound non-ascii keys, like Ä.
+False: (Recommended):   allow unicode characters in Leo's text.</t>
 <t tx="ekr.20060215104345">True (legacy):      Translate control-only keys to command keys on the Mac.
 False (recommended):  No translation.</t>
 <t tx="ekr.20060216091239">True: trace all changes to the minibuffer</t>
@@ -4379,8 +4385,6 @@ False (recommended):  No translation.</t>
 <t tx="ekr.20060216135834"></t>
 <t tx="ekr.20060216145416"></t>
 <t tx="ekr.20060216170801"></t>
-<t tx="ekr.20060218065259"></t>
-<t tx="ekr.20060218065259.1">
-</t>
+<t tx="ekr.20060219103020"></t>
 </tnodes>
 </leo_file>

@@ -3,12 +3,16 @@
 #@+all
 #@+node:ekr.20060116073938:To do 4.4 b3
 #@+node:ekr.20051126122638:Autocompletion tab
+auto-complete                       = Ctrl-Tab
+auto-completer-invoke-character     = period
+calltip-invoke-character            = parenleft
+#@nonl
 #@+node:ekr.20060216135646:To do
 @nocolor
 
-Context:
-
-c.[invoke] should bring up a list of commands methods.
+- Escape should retain present insert point and selection.
+- Use space as escape too.
+- Scan backwards from the invokation character to get the name to autocomplete or for the calltip.
 
 Scanning:
 
@@ -1623,73 +1627,290 @@ def openWithFileName(fileName,old_c,
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20060217111834:@url http://docs.python.org/lib/re-syntax.html
 #@-node:ekr.20060217111834:@url http://docs.python.org/lib/re-syntax.html
-#@+node:ekr.20051126123249:class autoCompleterClass
-class autoCompleterCommandsClass (baseEditCommandsClass):
+#@+node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+def getPublicCommands (self):
     
-    '''Similar to typing completion in the minibuffer,
-    but the presently selected completion is shown in the widget itself.'''
+    k = self.k
+    
+    return {
+        'auto-complete':            k.autoCompleter.autoComplete,
+        'auto-complete-force':      k.autoCompleter.autoCompleteForce,
+        'digit-argument':           k.digitArgument,
+        'exit-named-mode':          k.exitNamedMode,
+        'full-command':             k.fullCommand, # For menu.
+        'hide-mini-buffer':         k.hideMinibuffer,
+        'mode-help':                k.modeHelp,
+        'negative-argument':        k.negativeArgument,
+        'number-command':           k.numberCommand,
+        'number-command-0':         k.numberCommand0,
+        'number-command-1':         k.numberCommand1,
+        'number-command-2':         k.numberCommand2,
+        'number-command-3':         k.numberCommand3,
+        'number-command-4':         k.numberCommand4,
+        'number-command-5':         k.numberCommand5,
+        'number-command-6':         k.numberCommand6,
+        'number-command-7':         k.numberCommand7,
+        'number-command-8':         k.numberCommand8,
+        'number-command-9':         k.numberCommand9,
+        'print-bindings':           k.printBindings,
+        'print-commands':           k.printCommands,
+        'repeat-complex-command':   k.repeatComplexCommand,
+        'scan-for-autocompleter':   k.autoCompleter.scan,
+        'set-ignore-state':         k.setIgnoreState,
+        'set-insert-state':         k.setInsertState,
+        'set-overwrite-state':      k.setOverwriteState,
+        'show-calltips':            k.autoCompleter.showCalltips,
+        'show-mini-buffer':         k.showMinibuffer,
+        'toggle-mini-buffer':       k.toggleMinibuffer,
+        'universal-argument':       k.universalArgument,
+    }
+#@nonl
+#@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+#@+node:ekr.20060127183752:masterKeyHandler & helper
+master_key_count = 0
+
+def masterKeyHandler (self,event,stroke=None):
+    
+    '''In the new binding scheme, there is only one key binding.
+    
+    This is the handler for that binding.'''
+    
+    k = self ; c = k.c
+    val = self.masterKeyHandlerHelper(event,stroke)
+    if val and c and c.exists: # Ignore special keys.
+        c.frame.updateStatusLine()
+        c.masterFocusHandler()
+    return val
+#@nonl
+#@+node:ekr.20060205221734:masterKeyHandlerHelper
+def masterKeyHandlerHelper (self,event,stroke):
+
+    k = self ; c = k.c
+    w = event and event.widget
+    w_name = c.widget_name(w)
+    trace = c.config.getBool('trace_masterKeyHandler') and not g.app.unitTesting
+    keysym = event.keysym or ''
+    if keysym in (
+        'Caps_Lock', 'Num_Lock', 'Control_L', 'Alt_L',
+        'Shift_L', 'Control_R', 'Alt_R','Shift_R','Win_L','Win_R'):
+        return None
+        
+    self.master_key_count += 1
+    if not g.app.unitTesting and c.config.getBool('trace_gc'):
+        if (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
+
+    if 0:
+        if stroke is None:
+            if trace: g.trace('no stroke: using strokeFromEvent')
+            stroke = k.strokeFromEvent(event)
+
+    # Pass keyboard-quit to k.masterCommand for macro recording.
+    if k.abortAllModesKey and stroke == k.abortAllModesKey:
+        return k.masterCommand(event,k.keyboardQuit,stroke,'keyboard-quit')
+        
+    state = k.state.kind
+    if trace: g.trace(repr(stroke),'state',state)
+    if k.inState():
+        # First: honor the 'mini' bindings.
+        d = k.masterBindingsDict.get('mini')
+        b = d.get(stroke)
+        if b:
+            if trace: g.trace(repr(stroke),'mini binding',b.commandName)
+            # Pass this on for macro recording.
+            k.masterCommand(event,b.func,stroke,b.commandName)
+            c.minibufferWantsFocus()
+            return 'break'
+        # Second, pass keys to getArg or full-command modes if they are active.
+        if state == 'getArg':
+            return k.getArg(event)
+        elif state in ('full-command','auto-complete'):
+            # Do the default state action.
+            if trace: g.trace('calling state function')
+            k.callStateFunction(event) # Calls end-command.
+            return 'break'
+        # Third, pass keys to the general mode handler.
+        else:
+            d =  k.masterBindingsDict.get(state)
+            if d:
+                # A typical state
+                b = d.get(stroke)
+                # g.trace(d.keys())
+                if b:
+                    if trace: g.trace('calling generalModeHandler')
+                    k.generalModeHandler (event,
+                        commandName=b.commandName,func=b.func,
+                        modeName=state,nextMode=b.nextMode)
+                    return 'break'
+                else:
+                    if trace: g.trace('calling modeHelp')
+                    k.modeHelp(event)
+                    return 'break'
+            else:
+                g.trace('No state dictionary for %s' % state)
+                return 'break'
+    
+    for key,name in (
+        # Order here is similar to bindtags order.
+        ('body','body'),
+        ('text','head'), # Important: text bindings in head before tree bindings.
+        ('tree','head'),
+        ('tree','canvas'),
+        ('log', 'log'),
+        ('text',None), ('all',None),
+    ):
+        if (
+            name and w_name.startswith(name) or
+            key == 'text' and g.app.gui.isTextWidget(w) or
+            key == 'all'
+        ):
+            d = k.masterBindingsDict.get(key)
+            # g.trace(key,name,d and len(d.keys()))
+            if d:
+                b = d.get(stroke)
+                if b:
+                    if trace: g.trace('%s found %s = %s' % (key,b.stroke,b.commandName))
+                    return k.masterCommand(event,b.func,b.stroke,b.commandName)
+
+    if k.ignore_unbound_non_ascii_keys and len(event.char) > 1:
+        # (stroke.find('Alt+') > -1 or stroke.find('Ctrl+') > -1)):
+        if trace: g.trace('ignoring unbound non-ascii key')
+        return 'break'
+    else:
+        if trace: g.trace(repr(stroke),'no func')
+        return k.masterCommand(event,func=None,stroke=stroke,commandName=None)
+#@nonl
+#@-node:ekr.20060205221734:masterKeyHandlerHelper
+#@-node:ekr.20060127183752:masterKeyHandler & helper
+#@+node:ekr.20051126123249:class autoCompleterClass
+class autoCompleterClass:
+    
+    '''A class that inserts autocompleted and calltip text in text widgets.
+    This class shows alternatives in the tabbed log pane.
+    
+    The keyHandler class contains hooks to support these characters:
+    invoke-autocompleter-character (default binding is '.')
+    invoke-calltips-character (default binding is '(')
+    '''
 
     @others
 #@nonl
-#@+node:ekr.20051126123759: birth
-#@+node:ekr.20051126123759.1: ctor
-def __init__ (self,c):
-
-    baseEditCommandsClass.__init__(self,c) # init the base class.
+#@+node:ekr.20051126123759.1: ctor (autocompleter)
+def __init__ (self,k):
     
-    self.c = c
-    self.k = c.k
-    
+    self.c = c = k.c
+    self.k = k
     self.calltips = {} # Keys are language, values are dicts: keys are ids, values are signatures.
-    self.enable_autocompleter   = c.config.getBool('enable_autocompleter')
-    self.enable_calltips        = c.config.getBool('enable_calltips')
+    self.insertPoint = None # The insert point before the invocation character is inserted.
     self.membersList = None
+    self.selection = None # The selection range on entry to autocompleter or calltips.
+    self.selectedText = None # The selected text on entry to autocompleter or calltips.
     self.prefix = None
     self.tabList = []
     self.tabListIndex = -1
-    self.text = None # For Escape.
+   
     self.trace = c.config.getBool('trace_autocompleter')
     self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
     self.widget = None # The widget that should get focus after autocomplete is done.
 
     self.definePatterns()
 #@nonl
-#@-node:ekr.20051126123759.1: ctor
-#@+node:ekr.20051126123759.2: getPublicCommands (autoCommandsClass)
-def getPublicCommands (self):
-
-    return {
-        'auto-complete':            self.autoComplete,
-        'scan-for-autocompleter':   self.scan,
-    }
-#@nonl
-#@-node:ekr.20051126123759.2: getPublicCommands (autoCommandsClass)
-#@+node:ekr.20060217132329:initialScan
-# Don't call this finishCreate: the startup logic would call it too soon.
-
-def initialScan (self):
-    
-    g.trace(g.callers())
-    
-    self.scan(thread=True)
-#@nonl
-#@-node:ekr.20060217132329:initialScan
-#@-node:ekr.20051126123759: birth
+#@-node:ekr.20051126123759.1: ctor (autocompleter)
+#@+node:ekr.20060219103046:Top level
 #@+node:ekr.20051126122952.1:autoComplete
-def autoComplete (self,event=None):
+def autoComplete (self,event=None,force=False):
+    
+    '''An event handler called from k.masterKeyHanderlerHelper.'''
 
-    c = self.c ; k = self.k ; gui = g.app.gui
-
-    if not self.enable_autocompleter: return
+    c = self.c ; k = self.k
     w = event and event.widget or c.get_focus()
-    if not w: return
+    
+    # Remember the insert point for getLeadinWord.
+    if w: self.insertPoint = g.app.gui.getInsertPoint(w)
 
-    self.widget = w
-    self.prefix = gui.getSelectedText(w) or ''
-    self.text = gui.getAllText(w)
-    self.membersList = c.commandsDict.keys() ## Testing only.
-    self.autoCompleterStateHandler(event)
+    # First, handle the invocation character as usual.
+    k.masterCommand(event,func=None,stroke=None,commandName=None)
+
+    if w and (k.enable_autocompleter or force):
+        self.widget = w
+        self.prefix = ''
+        self.selection = g.app.gui.getTextSelection(w)
+        self.selectedText = g.app.gui.getSelectedText(w)
+        self.getLeadinWord(w)
+        self.membersList = c.commandsDict.keys() ## Testing only.
+        self.tabName = 'AutoComplete ' + (self.leadinWord and self.leadinWord + '.' or '')
+        self.autoCompleterStateHandler(event)
+    return 'break'
+#@nonl
 #@-node:ekr.20051126122952.1:autoComplete
+#@+node:ekr.20060219103822:autoCompleteForce
+def autoCompleteForce (self,event=None):
+    
+    return self.autoComplete(event,force=True)
+#@nonl
+#@-node:ekr.20060219103822:autoCompleteForce
+#@+node:ekr.20060219103046.1:showCalltips
+def showCalltips (self,event=None):
+    
+    k = self.k
+    
+    w = event and event.widget or c.get_focus()
+    
+    # Remember the insert point for getLeadinWord.
+    if w: self.insertPoint = g.app.gui.getInsertPoint(w)
+    
+    # First, insert the invocation character as usual.
+    k.masterCommand(event,func=None,stroke=None,commandName=None)
+    
+    # Insert the calltip if possible.
+    if k.enable_calltips:
+        # g.trace('calltips not ready yet')
+        self.widget = w
+        self.prefix = ''
+        self.selection = g.app.gui.getTextSelection(w)
+        self.selectedText = g.app.gui.getSelectedText(w)
+        self.getLeadinWord(w)
+        self.tabName = 'Calltips'
+        
+    return 'break'
+#@nonl
+#@-node:ekr.20060219103046.1:showCalltips
+#@+node:ekr.20051126124705:autoCompleterStateHandler
+def autoCompleterStateHandler (self,event):
+    
+    c = self.c ; k = self.k ; w = self.widget
+    tag = 'auto-complete' ; state = k.getState(tag)
+    keysym = event and event.keysym
+    ch = event and event.char or ''
+    trace = self.trace and not g.app.unitTesting
+    if trace: g.trace(repr(ch),repr(keysym),state)
+
+    if state == 0:
+        c.frame.log.clearTab(self.tabName)
+        self.computeCompletionList()
+        k.setState(tag,1,handler=self.autoCompleterStateHandler) 
+    elif keysym == 'space':
+        self.finish()
+        c.frame.log.deleteTab(self.tabName)
+        k.clearState()
+    elif keysym in ('Return','Escape'):
+        self.abort()
+        c.frame.log.deleteTab(self.tabName)
+        k.clearState()
+    elif keysym == 'Tab':
+        self.doTabCompletion()
+    elif keysym == 'BackSpace':
+        self.doBackSpace()
+    # elif ch in string.printable:
+    else:
+        self.extendSelection(ch)
+        s = g.app.gui.getSelectedText(w)
+        if s.startswith(self.prefix):
+            self.prefix = self.prefix + ch
+        self.computeCompletionList()
+#@nonl
+#@-node:ekr.20051126124705:autoCompleterStateHandler
+#@-node:ekr.20060219103046:Top level
 #@+node:ekr.20060216160332.2:Helpers
 #@+node:ekr.20051127105431:abort
 def abort (self):
@@ -1697,10 +1918,11 @@ def abort (self):
     c = self.c ; w = self.widget ; gui = g.app.gui
     
     c.widgetWantsFocusNow(w)
-    i = '1.0'
-    w.delete(i,'end')
-    w.insert(i,self.text)
-    gui.setTextSelection(w,i,i,insert=i)
+
+    i,j = gui.getTextSelection(w)
+    w.delete(i,j)
+    w.insert(i,self.selectedText)
+    gui.setTextSelection(w,i,j,insert=j)
 #@nonl
 #@-node:ekr.20051127105431:abort
 #@+node:ekr.20051126123149:auto.computeCompletionList
@@ -1711,12 +1933,12 @@ def computeCompletionList (self):
     s = gui.getSelectedText(w)
     if s:
         self.tabList,common_prefix = g.itemsMatchingPrefixInList(s,self.membersList)
-        c.frame.log.clearTab('Completion') # Creates the tab if necessary.
+        c.frame.log.clearTab(self.tabName) # Creates the tab if necessary.
         if self.tabList:
             self.tabListIndex = -1 # The next item will be item 0.
             self.setSelection(common_prefix)
         for name in self.tabList:
-            g.es('%s' % (name),tabName='Completion')
+            g.es('%s' % (name),tabName=self.tabName)
 #@nonl
 #@-node:ekr.20051126123149:auto.computeCompletionList
 #@+node:ekr.20051126131103:auto.doBackSpace
@@ -1777,6 +1999,14 @@ def finish (self):
         gui.setTextSelection(w,j,j)
 #@nonl
 #@-node:ekr.20051127105102:finish
+#@+node:ekr.20060219111416:getLeadinWord
+def getLeadinWord (self,w):
+    
+    i = self.insertPoint
+    self.leadinWord = w.get(i + '-1c wordstart', i + '-1c wordstart wordend').strip()
+    g.trace(i,self.leadinWord)
+#@nonl
+#@-node:ekr.20060219111416:getLeadinWord
 #@+node:ekr.20051127070018:setSelection
 def setSelection (self,s):
     
@@ -1795,41 +2025,17 @@ def setSelection (self,s):
 #@nonl
 #@-node:ekr.20051127070018:setSelection
 #@-node:ekr.20060216160332.2:Helpers
-#@+node:ekr.20051126124705:autoCompleterStateHandler
-def autoCompleterStateHandler (self,event):
-    
-    c = self.c ; k = self.k ; w = self.widget
-    tag = 'auto-complete' ; state = k.getState(tag)
-    keysym = event and event.keysym
-    ch = event and event.char or ''
-    trace = self.trace and not g.app.unitTesting
-    if trace: g.trace(repr(ch),repr(keysym),state)
-
-    if state == 0:
-        self.computeCompletionList()
-        k.setState(tag,1,handler=self.autoCompleterStateHandler) 
-    elif keysym == 'Return':
-        c.frame.log.deleteTab('Completion')
-        k.clearState()
-        self.finish()
-    elif keysym == 'Escape':
-        c.frame.log.deleteTab('Completion')
-        k.clearState()
-        self.abort()
-    elif keysym == 'Tab':
-        self.doTabCompletion()
-    elif keysym == 'BackSpace':
-        self.doBackSpace()
-    # elif ch in string.printable:
-    else:
-        self.extendSelection(ch)
-        s = g.app.gui.getSelectedText(w)
-        if s.startswith(self.prefix):
-            self.prefix = self.prefix + ch
-        self.computeCompletionList()
-#@nonl
-#@-node:ekr.20051126124705:autoCompleterStateHandler
 #@+node:ekr.20060216160332.1:Scanning
+#@+node:ekr.20060217132329:initialScan
+# Don't call this finishCreate: the startup logic would call it too soon.
+
+def initialScan (self):
+    
+    g.trace(g.callers())
+    
+    self.scan(thread=True)
+#@nonl
+#@-node:ekr.20060217132329:initialScan
 #@+node:ekr.20060216155558.1:scan
 def scan (self,event=None,verbose=True,thread=True):
     
@@ -1892,7 +2098,7 @@ def scanOutline (self,verbose=True):
     
     if verbose: g.es_print('Scanning for auto-completer...')
 
-    c = self.c ; count = 0
+    c = self.c ; k = self.k ; count = 0
     for p in c.rootPosition().allNodes_iter():
         if verbose:
             count += 1 ;
@@ -1900,9 +2106,9 @@ def scanOutline (self,verbose=True):
         language = g.scanForAtLanguage(c,p)
         # g.trace('language',language,p.headString())
         s = p.bodyString()
-        if self.enable_autocompleter:
+        if k.enable_autocompleter:
             self.scanForAutoCompleter(s)
-        if self.enable_calltips:
+        if k.enable_calltips:
             self.scanForCallTip(s,language)
 
     if 0:

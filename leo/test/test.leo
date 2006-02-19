@@ -4464,6 +4464,8 @@ for s in (
             if s[n].isspace()or s[n]=='.':return s[n+1:]
 
     return s </t>
-<t tx="ekr.20060216170135">c.autoCompleter.scan(verbose=False)</t>
+<t tx="ekr.20060216170135">
+
+c.autoCompleter.scan(verbose=False)</t>
 </tnodes>
 </leo_file>

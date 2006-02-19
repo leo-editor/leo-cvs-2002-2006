@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9093" clone_windows="0"/>
 <globals body_outline_ratio="0.664367816092">
-	<global_window_position top="31" left="248" height="870" width="911"/>
+	<global_window_position top="24" left="272" height="870" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,16 +13,15 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-expanded="ekr.20060128081317,ekr.20060128081317,ekr.20060218075614,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"
 marks="ekr.20031218072017.2052,ekr.20060216155558.1,ekr.20060216161247,"
-expanded="ekr.20051025144611.20,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+expanded="ekr.20031218072017.4059,ekr.20031218072017.4084,ekr.20060216160332.2,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
-<v t="ekr.20050924073836" a="V"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20051029070945"><vh>Pychecker report</vh></v>
 <v t="ekr.20060203112912.1"><vh>Initing</vh>
@@ -137,7 +136,7 @@ expanded="ekr.20051025144611.20,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060128092340"><vh>Shortcuts (keyHandler)</vh>
 <v t="ekr.20060120071949"><vh>isPlainKey</vh></v>
-<v t="ekr.20060128081317" a="E"><vh>shortcutFromSetting</vh>
+<v t="ekr.20060128081317"><vh>shortcutFromSetting</vh>
 <v t="ekr.20060201065809"><vh>&lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;</vh></v>
 <v t="ekr.20060215104239"><vh>&lt;&lt; swap cmd and ctrl keys &gt;&gt;</vh></v>
 <v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
@@ -224,7 +223,7 @@ expanded="ekr.20051025144611.20,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20060128092340"><vh>Shortcuts (keyHandler)</vh>
 <v t="ekr.20060120071949"><vh>isPlainKey</vh></v>
-<v t="ekr.20060128081317" a="E"><vh>shortcutFromSetting</vh>
+<v t="ekr.20060128081317"><vh>shortcutFromSetting</vh>
 <v t="ekr.20060201065809"><vh>&lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;</vh></v>
 <v t="ekr.20060215104239"><vh>&lt;&lt; swap cmd and ctrl keys &gt;&gt;</vh></v>
 <v t="ekr.20060128103640.1"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
@@ -290,7 +289,7 @@ expanded="ekr.20051025144611.20,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20040803072955.126"><vh>tree.endEditLabel</vh></v>
 </v>
 </v>
-<v t="ekr.20060218075614" a="E"><vh>4.4 a7 projects</vh>
+<v t="ekr.20060218075614"><vh>4.4 a7 projects</vh>
 <v t="ekr.20060218071531"><vh>Fixed binding bug</vh>
 <v t="ekr.20060218075614.1"><vh>R</vh></v>
 <v t="ekr.20060216074643"><vh>k.completeAllBindings</vh></v>
@@ -311,7 +310,7 @@ expanded="ekr.20051025144611.20,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20051205093049"><vh>Use dir for auto-complete ?</vh></v>
 </v>
 <v t="ekr.20051025144611"><vh>Reference</vh>
-<v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
+<v t="ekr.20031218072017.4059" a="E"><vh>app.gui.Tkinter.utils</vh>
 <v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
 <v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
 <v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
@@ -350,7 +349,7 @@ expanded="ekr.20051025144611.20,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.4082"><vh>getInsertPoint</vh></v>
 <v t="ekr.20031218072017.4083"><vh>setInsertPoint</vh></v>
 </v>
-<v t="ekr.20031218072017.4084"><vh>Selection</vh>
+<v t="ekr.20031218072017.4084" a="E"><vh>Selection</vh>
 <v t="ekr.20031218072017.4085"><vh>getSelectionRange</vh></v>
 <v t="ekr.20051126125950"><vh>getSelectedText</vh></v>
 <v t="ekr.20031218072017.4086"><vh>getTextSelection</vh></v>
@@ -428,30 +427,36 @@ expanded="ekr.20051025144611.20,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
 <v t="ekr.20060217111834"><vh>@url http://docs.python.org/lib/re-syntax.html</vh></v>
-<v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
-<v t="ekr.20051126123759"><vh> birth</vh>
-<v t="ekr.20051126123759.1"><vh> ctor</vh></v>
-<v t="ekr.20051126123759.2"><vh> getPublicCommands (autoCommandsClass)</vh></v>
-<v t="ekr.20060217132329"><vh>initialScan</vh></v>
+<v t="ekr.20050920084036.173"><vh>getPublicCommands (for keyHandler)</vh></v>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
 </v>
+<v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
+<v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh></v>
+<v t="ekr.20060219103046"><vh>Top level</vh>
 <v t="ekr.20051126122952.1"><vh>autoComplete</vh></v>
-<v t="ekr.20060216160332.2"><vh>Helpers</vh>
+<v t="ekr.20060219103822"><vh>autoCompleteForce</vh></v>
+<v t="ekr.20060219103046.1"><vh>showCalltips</vh></v>
+<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
+</v>
+<v t="ekr.20060216160332.2" a="E"><vh>Helpers</vh>
 <v t="ekr.20051127105431"><vh>abort</vh></v>
 <v t="ekr.20051126123149"><vh>auto.computeCompletionList</vh></v>
 <v t="ekr.20051126131103"><vh>auto.doBackSpace</vh></v>
 <v t="ekr.20051126123249.1"><vh>auto.doTabCompletion</vh></v>
 <v t="ekr.20051127065601"><vh>extendSelection</vh></v>
 <v t="ekr.20051127105102"><vh>finish</vh></v>
+<v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
 <v t="ekr.20051127070018"><vh>setSelection</vh></v>
 </v>
-<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
 <v t="ekr.20060216160332.1"><vh>Scanning</vh>
+<v t="ekr.20060217132329"><vh>initialScan</vh></v>
 <v t="ekr.20060216155558.1" a="M"><vh>scan</vh></v>
 <v t="ekr.20060216163305"><vh>definePatterns</vh></v>
 <v t="ekr.20060216161220"><vh>scanOutline</vh></v>
 <v t="ekr.20060216161234"><vh>scanForCallTip</vh></v>
 <v t="ekr.20060216161247" a="M"><vh>scanForAutoCompleter</vh>
-<v t="ekr.20051025144611.20" a="E"><vh>makeAutocompletionList</vh>
+<v t="ekr.20051025144611.20"><vh>makeAutocompletionList</vh>
 <v t="ekr.20060216161258"><vh>reverseFindWhitespace</vh></v>
 <v t="ekr.20060216161253"><vh>getCleanString</vh></v>
 </v>
@@ -720,23 +725,24 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
 <v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
-<v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
+<v t="ekr.20031218072017.4047"
+expanded="ekr.20031218072017.4084,"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="ekr.20050710142719"
-marks="ekr.20060216155558.1,ekr.20060216161247,ekr.20051022142249,"
-expanded="ekr.20051126123249,ekr.20051025144611.20,"><vh>@thin leoEditCommands.py</vh></v>
+marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3748"
-expanded="ekr.20060128092340,ekr.20060128081317,"><vh>@thin leoKeys.py</vh></v>
+marks="ekr.20060216155558.1,ekr.20060216161247,"
+expanded="ekr.20060216160332.2,"><vh>@thin leoKeys.py</vh></v>
 </v>
-<v t="ekr.20051126122638"><vh>Autocompletion tab</vh>
+<v t="ekr.20051126122638" a="V"><vh>Autocompletion tab</vh>
 <v t="ekr.20060216135646"><vh>To do</vh>
 <v t="ekr.20051205093049"><vh>Use dir for auto-complete ?</vh></v>
 </v>
 <v t="ekr.20051025144611"><vh>Reference</vh>
-<v t="ekr.20031218072017.4059"><vh>app.gui.Tkinter.utils</vh>
+<v t="ekr.20031218072017.4059" a="E"><vh>app.gui.Tkinter.utils</vh>
 <v t="ekr.20031218072017.844"><vh>Clipboard (tkGui)</vh>
 <v t="ekr.20031218072017.845"><vh>replaceClipboardWith</vh></v>
 <v t="ekr.20031218072017.846"><vh>getTextFromClipboard</vh></v>
@@ -775,7 +781,7 @@ expanded="ekr.20060128092340,ekr.20060128081317,"><vh>@thin leoKeys.py</vh></v>
 <v t="ekr.20031218072017.4082"><vh>getInsertPoint</vh></v>
 <v t="ekr.20031218072017.4083"><vh>setInsertPoint</vh></v>
 </v>
-<v t="ekr.20031218072017.4084"><vh>Selection</vh>
+<v t="ekr.20031218072017.4084" a="E"><vh>Selection</vh>
 <v t="ekr.20031218072017.4085"><vh>getSelectionRange</vh></v>
 <v t="ekr.20051126125950"><vh>getSelectedText</vh></v>
 <v t="ekr.20031218072017.4086"><vh>getTextSelection</vh></v>
@@ -853,30 +859,36 @@ expanded="ekr.20060128092340,ekr.20060128081317,"><vh>@thin leoKeys.py</vh></v>
 </v>
 <v t="ekr.20031218072017.2052" a="M"><vh>g.openWithFileName</vh></v>
 <v t="ekr.20060217111834"><vh>@url http://docs.python.org/lib/re-syntax.html</vh></v>
-<v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
-<v t="ekr.20051126123759"><vh> birth</vh>
-<v t="ekr.20051126123759.1"><vh> ctor</vh></v>
-<v t="ekr.20051126123759.2"><vh> getPublicCommands (autoCommandsClass)</vh></v>
-<v t="ekr.20060217132329"><vh>initialScan</vh></v>
+<v t="ekr.20050920084036.173"><vh>getPublicCommands (for keyHandler)</vh></v>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
 </v>
+<v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
+<v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh></v>
+<v t="ekr.20060219103046"><vh>Top level</vh>
 <v t="ekr.20051126122952.1"><vh>autoComplete</vh></v>
-<v t="ekr.20060216160332.2"><vh>Helpers</vh>
+<v t="ekr.20060219103822"><vh>autoCompleteForce</vh></v>
+<v t="ekr.20060219103046.1"><vh>showCalltips</vh></v>
+<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
+</v>
+<v t="ekr.20060216160332.2" a="E"><vh>Helpers</vh>
 <v t="ekr.20051127105431"><vh>abort</vh></v>
 <v t="ekr.20051126123149"><vh>auto.computeCompletionList</vh></v>
 <v t="ekr.20051126131103"><vh>auto.doBackSpace</vh></v>
 <v t="ekr.20051126123249.1"><vh>auto.doTabCompletion</vh></v>
 <v t="ekr.20051127065601"><vh>extendSelection</vh></v>
 <v t="ekr.20051127105102"><vh>finish</vh></v>
+<v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
 <v t="ekr.20051127070018"><vh>setSelection</vh></v>
 </v>
-<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
 <v t="ekr.20060216160332.1"><vh>Scanning</vh>
+<v t="ekr.20060217132329"><vh>initialScan</vh></v>
 <v t="ekr.20060216155558.1" a="M"><vh>scan</vh></v>
 <v t="ekr.20060216163305"><vh>definePatterns</vh></v>
 <v t="ekr.20060216161220"><vh>scanOutline</vh></v>
 <v t="ekr.20060216161234"><vh>scanForCallTip</vh></v>
 <v t="ekr.20060216161247" a="M"><vh>scanForAutoCompleter</vh>
-<v t="ekr.20051025144611.20" a="E"><vh>makeAutocompletionList</vh>
+<v t="ekr.20051025144611.20"><vh>makeAutocompletionList</vh>
 <v t="ekr.20060216161258"><vh>reverseFindWhitespace</vh></v>
 <v t="ekr.20060216161253"><vh>getCleanString</vh></v>
 </v>
@@ -3287,6 +3299,42 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
     elif state == 2:
         self.lastStateHelper()
         self.generalChangeHelper(self._sString,k.arg)</t>
+<t tx="ekr.20050920084036.173">def getPublicCommands (self):
+    
+    k = self.k
+    
+    return {
+        'auto-complete':            k.autoCompleter.autoComplete,
+        'auto-complete-force':      k.autoCompleter.autoCompleteForce,
+        'digit-argument':           k.digitArgument,
+        'exit-named-mode':          k.exitNamedMode,
+        'full-command':             k.fullCommand, # For menu.
+        'hide-mini-buffer':         k.hideMinibuffer,
+        'mode-help':                k.modeHelp,
+        'negative-argument':        k.negativeArgument,
+        'number-command':           k.numberCommand,
+        'number-command-0':         k.numberCommand0,
+        'number-command-1':         k.numberCommand1,
+        'number-command-2':         k.numberCommand2,
+        'number-command-3':         k.numberCommand3,
+        'number-command-4':         k.numberCommand4,
+        'number-command-5':         k.numberCommand5,
+        'number-command-6':         k.numberCommand6,
+        'number-command-7':         k.numberCommand7,
+        'number-command-8':         k.numberCommand8,
+        'number-command-9':         k.numberCommand9,
+        'print-bindings':           k.printBindings,
+        'print-commands':           k.printCommands,
+        'repeat-complex-command':   k.repeatComplexCommand,
+        'scan-for-autocompleter':   k.autoCompleter.scan,
+        'set-ignore-state':         k.setIgnoreState,
+        'set-insert-state':         k.setInsertState,
+        'set-overwrite-state':      k.setOverwriteState,
+        'show-calltips':            k.autoCompleter.showCalltips,
+        'show-mini-buffer':         k.showMinibuffer,
+        'toggle-mini-buffer':       k.toggleMinibuffer,
+        'universal-argument':       k.universalArgument,
+    }</t>
 <t tx="ekr.20050920085536.1"></t>
 <t tx="ekr.20050920085536.2">def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     
@@ -3309,6 +3357,8 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
 
     self.altX_prompt = 'full-command: '
     
+    self.enable_autocompleter           = c.config.getBool('enable_autocompleter')
+    self.enable_calltips                = c.config.getBool('enable_calltips')
     self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
     self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
     self.swap_mac_keys                  = c.config.getBool('swap_mac_keys')
@@ -3316,7 +3366,9 @@ Important:  the first Tkinter index is '1.0', not '0.0', but the row returned by
     self.trace_minibuffer               = c.config.getBool('trace_minibuffer')
     &lt;&lt; define Tk ivars &gt;&gt;
     &lt;&lt; define externally visible ivars &gt;&gt;
-    &lt;&lt; define internal ivars &gt;&gt;</t>
+    &lt;&lt; define internal ivars &gt;&gt;
+    
+    self.autoCompleter = autoCompleterClass(self)</t>
 <t tx="ekr.20050920085536.16">def bindKey (self,pane,shortcut,callback,commandName):
 
     '''Bind the indicated shortcut (a Tk keystroke) to the callback.
@@ -5254,21 +5306,32 @@ for z in ('borderframe','clipper','frame','hull'):
             
     g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     return 'break'</t>
-<t tx="ekr.20051126122638"></t>
-<t tx="ekr.20051126122952.1">def autoComplete (self,event=None):
+<t tx="ekr.20051126122638">auto-complete                       = Ctrl-Tab
+auto-completer-invoke-character     = period
+calltip-invoke-character            = parenleft</t>
+<t tx="ekr.20051126122952.1">def autoComplete (self,event=None,force=False):
+    
+    '''An event handler called from k.masterKeyHanderlerHelper.'''
 
-    c = self.c ; k = self.k ; gui = g.app.gui
-
-    if not self.enable_autocompleter: return
+    c = self.c ; k = self.k
     w = event and event.widget or c.get_focus()
-    if not w: return
+    
+    # Remember the insert point for getLeadinWord.
+    if w: self.insertPoint = g.app.gui.getInsertPoint(w)
 
-    self.widget = w
-    self.prefix = gui.getSelectedText(w) or ''
-    self.text = gui.getAllText(w)
-    self.membersList = c.commandsDict.keys() ## Testing only.
-    self.autoCompleterStateHandler(event)
-</t>
+    # First, handle the invocation character as usual.
+    k.masterCommand(event,func=None,stroke=None,commandName=None)
+
+    if w and (k.enable_autocompleter or force):
+        self.widget = w
+        self.prefix = ''
+        self.selection = g.app.gui.getTextSelection(w)
+        self.selectedText = g.app.gui.getSelectedText(w)
+        self.getLeadinWord(w)
+        self.membersList = c.commandsDict.keys() ## Testing only.
+        self.tabName = 'AutoComplete ' + (self.leadinWord and self.leadinWord + '.' or '')
+        self.autoCompleterStateHandler(event)
+    return 'break'</t>
 <t tx="ekr.20051126123149">def computeCompletionList (self):
     
     c = self.c ; gui = g.app.gui ; w = self.widget
@@ -5276,16 +5339,21 @@ for z in ('borderframe','clipper','frame','hull'):
     s = gui.getSelectedText(w)
     if s:
         self.tabList,common_prefix = g.itemsMatchingPrefixInList(s,self.membersList)
-        c.frame.log.clearTab('Completion') # Creates the tab if necessary.
+        c.frame.log.clearTab(self.tabName) # Creates the tab if necessary.
         if self.tabList:
             self.tabListIndex = -1 # The next item will be item 0.
             self.setSelection(common_prefix)
         for name in self.tabList:
-            g.es('%s' % (name),tabName='Completion')</t>
-<t tx="ekr.20051126123249">class autoCompleterCommandsClass (baseEditCommandsClass):
+            g.es('%s' % (name),tabName=self.tabName)</t>
+<t tx="ekr.20051126123249">class autoCompleterClass:
     
-    '''Similar to typing completion in the minibuffer,
-    but the presently selected completion is shown in the widget itself.'''
+    '''A class that inserts autocompleted and calltip text in text widgets.
+    This class shows alternatives in the tabbed log pane.
+    
+    The keyHandler class contains hooks to support these characters:
+    invoke-autocompleter-character (default binding is '.')
+    invoke-calltips-character (default binding is '(')
+    '''
 
     @others</t>
 <t tx="ekr.20051126123249.1">def doTabCompletion (self):
@@ -5306,33 +5374,24 @@ for z in ('borderframe','clipper','frame','hull'):
         self.computeCompletionList()
 
     c.widgetWantsFocusNow(w)</t>
-<t tx="ekr.20051126123759"></t>
-<t tx="ekr.20051126123759.1">def __init__ (self,c):
-
-    baseEditCommandsClass.__init__(self,c) # init the base class.
+<t tx="ekr.20051126123759.1">def __init__ (self,k):
     
-    self.c = c
-    self.k = c.k
-    
+    self.c = c = k.c
+    self.k = k
     self.calltips = {} # Keys are language, values are dicts: keys are ids, values are signatures.
-    self.enable_autocompleter   = c.config.getBool('enable_autocompleter')
-    self.enable_calltips        = c.config.getBool('enable_calltips')
+    self.insertPoint = None # The insert point before the invocation character is inserted.
     self.membersList = None
+    self.selection = None # The selection range on entry to autocompleter or calltips.
+    self.selectedText = None # The selected text on entry to autocompleter or calltips.
     self.prefix = None
     self.tabList = []
     self.tabListIndex = -1
-    self.text = None # For Escape.
+   
     self.trace = c.config.getBool('trace_autocompleter')
     self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
     self.widget = None # The widget that should get focus after autocomplete is done.
 
     self.definePatterns()</t>
-<t tx="ekr.20051126123759.2">def getPublicCommands (self):
-
-    return {
-        'auto-complete':            self.autoComplete,
-        'scan-for-autocompleter':   self.scan,
-    }</t>
 <t tx="ekr.20051126124705">def autoCompleterStateHandler (self,event):
     
     c = self.c ; k = self.k ; w = self.widget
@@ -5343,16 +5402,17 @@ for z in ('borderframe','clipper','frame','hull'):
     if trace: g.trace(repr(ch),repr(keysym),state)
 
     if state == 0:
+        c.frame.log.clearTab(self.tabName)
         self.computeCompletionList()
         k.setState(tag,1,handler=self.autoCompleterStateHandler) 
-    elif keysym == 'Return':
-        c.frame.log.deleteTab('Completion')
-        k.clearState()
+    elif keysym == 'space':
         self.finish()
-    elif keysym == 'Escape':
-        c.frame.log.deleteTab('Completion')
+        c.frame.log.deleteTab(self.tabName)
         k.clearState()
+    elif keysym in ('Return','Escape'):
         self.abort()
+        c.frame.log.deleteTab(self.tabName)
+        k.clearState()
     elif keysym == 'Tab':
         self.doTabCompletion()
     elif keysym == 'BackSpace':
@@ -5426,10 +5486,11 @@ for z in ('borderframe','clipper','frame','hull'):
     c = self.c ; w = self.widget ; gui = g.app.gui
     
     c.widgetWantsFocusNow(w)
-    i = '1.0'
-    w.delete(i,'end')
-    w.insert(i,self.text)
-    gui.setTextSelection(w,i,i,insert=i)</t>
+
+    i,j = gui.getTextSelection(w)
+    w.delete(i,j)
+    w.insert(i,self.selectedText)
+    gui.setTextSelection(w,i,j,insert=j)</t>
 <t tx="ekr.20051202095626">Use docstrings as the help message.</t>
 <t tx="ekr.20051202102337">@nocolor</t>
 <t tx="ekr.20051202102337.1">auto-complete command is merely a prototype.</t>
@@ -7164,9 +7225,9 @@ You can click nodes and get the UNL to display, but when arrowing around the
 tree, UNL area flashes the unl and then clears it immediately.</t>
 <t tx="ekr.20060216135646">@nocolor
 
-Context:
-
-c.[invoke] should bring up a list of commands methods.
+- Escape should retain present insert point and selection.
+- Use space as escape too.
+- Scan backwards from the invokation character to get the name to autocomplete or for the calltip.
 
 Scanning:
 
@@ -7225,7 +7286,7 @@ Options:
     
     if verbose: g.es_print('Scanning for auto-completer...')
 
-    c = self.c ; count = 0
+    c = self.c ; k = self.k ; count = 0
     for p in c.rootPosition().allNodes_iter():
         if verbose:
             count += 1 ;
@@ -7233,9 +7294,9 @@ Options:
         language = g.scanForAtLanguage(c,p)
         # g.trace('language',language,p.headString())
         s = p.bodyString()
-        if self.enable_autocompleter:
+        if k.enable_autocompleter:
             self.scanForAutoCompleter(s)
-        if self.enable_calltips:
+        if k.enable_calltips:
             self.scanForCallTip(s,language)
 
     if 0:
@@ -7358,5 +7419,37 @@ def initialScan (self):
 </t>
 <t tx="ekr.20060218075614"></t>
 <t tx="ekr.20060218075614.1"></t>
+<t tx="ekr.20060219103046"></t>
+<t tx="ekr.20060219103046.1">def showCalltips (self,event=None):
+    
+    k = self.k
+    
+    w = event and event.widget or c.get_focus()
+    
+    # Remember the insert point for getLeadinWord.
+    if w: self.insertPoint = g.app.gui.getInsertPoint(w)
+    
+    # First, insert the invocation character as usual.
+    k.masterCommand(event,func=None,stroke=None,commandName=None)
+    
+    # Insert the calltip if possible.
+    if k.enable_calltips:
+        # g.trace('calltips not ready yet')
+        self.widget = w
+        self.prefix = ''
+        self.selection = g.app.gui.getTextSelection(w)
+        self.selectedText = g.app.gui.getSelectedText(w)
+        self.getLeadinWord(w)
+        self.tabName = 'Calltips'
+        
+    return 'break'</t>
+<t tx="ekr.20060219103822">def autoCompleteForce (self,event=None):
+    
+    return self.autoComplete(event,force=True)</t>
+<t tx="ekr.20060219111416">def getLeadinWord (self,w):
+    
+    i = self.insertPoint
+    self.leadinWord = w.get(i + '-1c wordstart', i + '-1c wordstart wordend').strip()
+    g.trace(i,self.leadinWord)</t>
 </tnodes>
 </leo_file>
