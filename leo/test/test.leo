@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7901" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7920" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="14" left="306" height="857" width="787"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -247,7 +247,8 @@
 <v t="ekr.20060216144005"><vh>autocompleter test</vh>
 <v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
 </v>
-<v t="ekr.20060216170135" a="V"><vh>autocompleter scan test</vh></v>
+<v t="ekr.20060216170135"><vh>autocompleter scan test</vh></v>
+<v t="ekr.20060219120931" a="EV"><vh>inspect Leo main objects</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4467,5 +4468,20 @@ for s in (
 <t tx="ekr.20060216170135">
 
 c.autoCompleter.scan(verbose=False)</t>
+<t tx="ekr.20060219120931">import inspect
+import leoCommands,leoGlobals,leoNodes
+table = (
+    (leoCommands.Commands,'Commands'),
+    (leoNodes.position,'position'),
+    (leoNodes.vnode,'vnode'),
+    (leoNodes.tnode,'tnode'),
+    (leoGlobals,'globals'),
+)
+print '-' * 40
+for theObject,name in table:
+    aList = inspect.getmembers(theObject)
+    members = [a for a,b in aList]
+    # print ; print name,'...\n\n',g.listToString(members,sort=True)
+    print name, len(members)</t>
 </tnodes>
 </leo_file>
