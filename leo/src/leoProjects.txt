@@ -1017,6 +1017,8 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
 
     self.altX_prompt = 'full-command: '
     
+    self.enable_autocompleter           = c.config.getBool('enable_autocompleter')
+    self.enable_calltips                = c.config.getBool('enable_calltips')
     self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
     self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
     self.swap_mac_keys                  = c.config.getBool('swap_mac_keys')
@@ -1025,6 +1027,8 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     << define Tk ivars >>
     << define externally visible ivars >>
     << define internal ivars >>
+    
+    self.autoCompleter = autoCompleterClass(self)
 #@nonl
 #@+node:ekr.20051006092617:<< define Tk ivars >>
 if self.useTextWidget:
@@ -1310,6 +1314,8 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
 
     self.altX_prompt = 'full-command: '
     
+    self.enable_autocompleter           = c.config.getBool('enable_autocompleter')
+    self.enable_calltips                = c.config.getBool('enable_calltips')
     self.ignore_caps_lock               = c.config.getBool('ignore_caps_lock')
     self.ignore_unbound_non_ascii_keys  = c.config.getBool('ignore_unbound_non_ascii_keys')
     self.swap_mac_keys                  = c.config.getBool('swap_mac_keys')
@@ -1318,6 +1324,8 @@ def __init__ (self,c,useGlobalKillbuffer=False,useGlobalRegisters=False):
     << define Tk ivars >>
     << define externally visible ivars >>
     << define internal ivars >>
+    
+    self.autoCompleter = autoCompleterClass(self)
 #@nonl
 #@+node:ekr.20051006092617:<< define Tk ivars >>
 if self.useTextWidget:
