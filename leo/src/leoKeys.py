@@ -403,11 +403,13 @@ class autoCompleterClass:
             s = s[0] + s[5:].strip()
     
         if isStringMethod:
-            # Remove 's' from s.
+            # Remove 's' from s *and* args.
             if g.match(s,1,'s,'):
                 s = s[0] + s[3:]
+                args = args[0] + args[3:]
             elif g.match_word(s,1,'s'):
                 s = s[0] + s[2:]
+                args = args[0] + args[2:]
                 
         remove = removeCloseParen and len(s) > 2
         if remove: s = s.rstrip(')')
@@ -549,7 +551,7 @@ class autoCompleterClass:
         if not doc: return
         
         # doc = self.prettyPrintDoc(obj.__doc__)
-        c.frame.log.clearTab('Info')
+        c.frame.log.clearTab('Info',wrap='word')
         g.es(doc,tabName='Info')
     #@nonl
     #@+node:ekr.20060220132919:prettyPrintDoc

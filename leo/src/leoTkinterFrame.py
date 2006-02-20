@@ -3505,15 +3505,17 @@ class leoTkinterLog (leoFrame.leoLog):
     #@-node:ekr.20051016101927:put & putnl (tkLog)
     #@+node:ekr.20051018061932:Tab (TkLog)
     #@+node:ekr.20051017212057:clearTab
-    def clearTab (self,tabName):
+    def clearTab (self,tabName,wrap='none'):
         
-        self.selectTab(tabName)
+        self.selectTab(tabName,wrap=wrap)
         t = self.logCtrl
         t and t.delete('1.0','end')
     #@nonl
     #@-node:ekr.20051017212057:clearTab
     #@+node:ekr.20051024173701:createTab
-    def createTab (self,tabName):
+    def createTab (self,tabName,wrap='none'):
+        
+        # g.trace(tabName,wrap)
         
         c = self.c ; k = c.k
         tabFrame = self.nb.add(tabName)
@@ -3525,7 +3527,9 @@ class leoTkinterLog (leoFrame.leoLog):
         # Set the background color.
         configName = 'log_pane_%s_tab_background_color' % tabName
         bg = c.config.getColor(configName) or 'MistyRose1'
-        try: t.configure(bg=bg)
+        
+        if wrap not in ('none','char','word'): wrap = 'none'
+        try: t.configure(bg=bg,wrap=wrap)
         except Exception: pass # Could be a user error.
         
         self.SetWidgetFontFromConfig(logCtrl=t)
@@ -3612,7 +3616,7 @@ class leoTkinterLog (leoFrame.leoLog):
     #@nonl
     #@-node:ekr.20051019170806:renameTab
     #@+node:ekr.20051016101724.1:selectTab
-    def selectTab (self,tabName):
+    def selectTab (self,tabName,wrap='none'):
     
         '''Create the tab if necessary and make it active.'''
     
@@ -3624,7 +3628,7 @@ class leoTkinterLog (leoFrame.leoLog):
             self.colorTagsDict [self.tabName] = self.colorTags [:]
             self.colorTags = newColorTags
         else:
-            self.createTab(tabName)
+            self.createTab(tabName,wrap=wrap)
             
         self.nb.selectpage(tabName)
         # Update the status vars.
