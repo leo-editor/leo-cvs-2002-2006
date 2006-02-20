@@ -416,7 +416,7 @@ class autoCompleterClass:
         
         w = self.widget
         newLeadinWord = g.app.gui.getSelectedText(w)
-        g.trace(newLeadinWord)
+        # g.trace(newLeadinWord)
         if newLeadinWord:
             obj = self.theObject
             self.finish()
@@ -431,8 +431,8 @@ class autoCompleterClass:
                 self.extendSelection('.')
                 i = g.app.gui.getInsertPoint(w)
                 g.app.gui.setTextSelection(w,i,i,insert=i)
-                g.trace('chaining to',newLeadinWord,self.object)
-                self.tabName = self.tabName + newLeadinWord + '.'
+                # g.trace('chaining to',newLeadinWord,self.object)
+                self.tabName = self.tabName + newLeadinWord.replace('_','') + '.'
                 # Similar to start logic.
                 self.prefix = ''
                 self.selection = g.app.gui.getTextSelection(w)
