@@ -4117,7 +4117,7 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
         baseEditCommandsClass.__init__(self,c) # init the base class.
     #@nonl
     #@-node:ekr.20050920084036.172: ctor
-    #@+node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+    #@+node:ekr.20050920084036.173:getPublicCommands (keyHandler)
     def getPublicCommands (self):
         
         k = self.k
@@ -4126,6 +4126,10 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'auto-complete':            k.autoCompleter.autoComplete,
             'auto-complete-force':      k.autoCompleter.autoCompleteForce,
             'digit-argument':           k.digitArgument,
+            'disable-auto-completer-command':   k.autoCompleter.disableAutocompleter,
+            'disable-calltips-command':         k.autoCompleter.disableCalltips,
+            'enable-auto-completer-command':    k.autoCompleter.disableAutocompleter,
+            'enable-calltips-command':          k.autoCompleter.disableCalltips,
             'exit-named-mode':          k.exitNamedMode,
             'full-command':             k.fullCommand, # For menu.
             'hide-mini-buffer':         k.hideMinibuffer,
@@ -4145,17 +4149,18 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'print-bindings':           k.printBindings,
             'print-commands':           k.printCommands,
             'repeat-complex-command':   k.repeatComplexCommand,
-            'scan-for-autocompleter':   k.autoCompleter.scan,
+            # 'scan-for-autocompleter':   k.autoCompleter.scan,
             'set-ignore-state':         k.setIgnoreState,
             'set-insert-state':         k.setInsertState,
             'set-overwrite-state':      k.setOverwriteState,
             'show-calltips':            k.autoCompleter.showCalltips,
+            'show-calltips-force':      k.autoCompleter.showCalltipsForce,
             'show-mini-buffer':         k.showMinibuffer,
             'toggle-mini-buffer':       k.toggleMinibuffer,
             'universal-argument':       k.universalArgument,
         }
     #@nonl
-    #@-node:ekr.20050920084036.173:getPublicCommands (for keyHandler)
+    #@-node:ekr.20050920084036.173:getPublicCommands (keyHandler)
     #@-others
 #@nonl
 #@-node:ekr.20050920084036.171:class keyHandlerCommandsClass

@@ -1445,12 +1445,14 @@ def dictToString(d,tag=None,verbose=True,indent=''):
 def print_list(aList,tag=None,sort=False,indent=''):
     
     if not aList:
-        if tag: print '%s...{}' % tag
-        else:   print '{}'
+        if tag: print '%s...[]' % tag
+        else:   print '[]'
         return
     if sort:
         bList = aList[:] # Sort a copy! Pychecker incorrectly complains.
         bList.sort()
+    else:
+        bList = aList
     if tag: print '%s...[' % tag
     else:   print '['
     for e in bList:
@@ -5030,15 +5032,18 @@ def longestCommonPrefix (s1,s2):
             return prefix
     return prefix
         
-def itemsMatchingPrefixInList (s,aList):
+def itemsMatchingPrefixInList (s,aList,matchEmptyPrefix=False):
     
     '''This method returns a sorted list items of aList whose prefix is s.
     
     It also returns the longest common prefix of all the matches.'''
 
-    if s: pmatches = [a for a in aList if a.startswith(s)]
+    if s:
+        pmatches = [a for a in aList if a.startswith(s)]
+    elif matchEmptyPrefix:
+        pmatches = aList[:]
     else: pmatches = []
-        
+
     if pmatches:
         pmatches.sort()
         common_prefix = reduce(g.longestCommonPrefix,pmatches)
