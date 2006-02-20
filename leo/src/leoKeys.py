@@ -276,26 +276,14 @@ class autoCompleterClass:
         elif keysym == 'period':
             self.chain()
         elif keysym == 'exclam':
-            # An Easter Egg.
+            # An Easter Egg: to be deleted.
             c.frame.log.clearTab('Modules')
             c.widgetWantsFocusNow(self.widget)
             self.setSelection('') # Delete the selection.
             self.membersList = self.getModulesList()
             self.computeCompletionList()
         elif ch and ch in string.printable:
-            if trace: g.trace('adding',repr(ch))
-            self.extendSelection(ch)
-            s = g.app.gui.getSelectedText(w)
-            if s.startswith(self.prefix):
-                self.prefix = self.prefix + ch
-            if ch in (string.letters + string.digits + '_' ):
-                self.computeCompletionList()
-            elif keysym == 'parenleft':
-                self.finish()
-                if k.enable_calltips:
-                    pass # To do.
-            else:
-                self.finish()
+            self.insertNormalChar(ch,keysym)
         else:
             if trace: g.trace('ignore',repr(ch))
             return 'break'
@@ -303,22 +291,26 @@ class autoCompleterClass:
     #@-node:ekr.20051126124705:autoCompleterStateHandler
     #@-node:ekr.20060219103046:Top level
     #@+node:ekr.20060216160332.2:Helpers
-    #@+node:ekr.20051127105431:abort
+    #@+node:ekr.20051127105431:abort & exit
     def abort (self):
         
-        c = self.c ; k = self.k ; w = self.widget ; gui = g.app.gui
-        
+        k = self.k
         k.keyboardQuit(event=None)
+        self.exit(restore=True)
+        
+    def exit (self,restore=False): # Called from keyboard-quit.
+        
+        c = self.c ; w = self.widget
         c.frame.log.deleteTab(self.tabName)
         c.frame.log.deleteTab('Modules')
-    
         c.widgetWantsFocusNow(w)
-        i,j = gui.getTextSelection(w)
-        w.delete(i,j)
-        w.insert(i,self.selectedText)
-        gui.setTextSelection(w,i,j,insert=j)
+        i,j = g.app.gui.getTextSelection(w)
+        if restore:
+            w.delete(i,j)
+            w.insert(i,self.selectedText)
+        g.app.gui.setTextSelection(w,j,j,insert=j)
     #@nonl
-    #@-node:ekr.20051127105431:abort
+    #@-node:ekr.20051127105431:abort & exit
     #@+node:ekr.20051126123149:auto.computeCompletionList
     def computeCompletionList (self):
         
@@ -333,7 +325,8 @@ class autoCompleterClass:
                 for z in self.tabList:
                     ch = z and z[0] or ''
                     if ch: d[ch] = None
-                self.tabList = [ch+'...' for ch in d.keys()]
+                aList = [ch+'...' for ch in d.keys()] ; aList.sort()
+                self.tabList = aList
             else: # Often creates too many entries.
                 self.tabList,common_prefix = g.itemsMatchingPrefixInList(
                     s,self.membersList,matchEmptyPrefix=False)
@@ -379,36 +372,69 @@ class autoCompleterClass:
         c.widgetWantsFocusNow(w)
     #@nonl
     #@-node:ekr.20051126123249.1:auto.doTabCompletion
+    #@+node:ekr.20060220110302:calltip
+    def calltip (self,obj=None):
+        
+        c = self.c ; w = self.widget
+        
+        try:
+            s1,s2,s3,s4 = inspect.getargspec(obj)
+        except:
+            return # Not a function.  Ignore the '('.
+    
+        s = inspect.formatargspec(s1,s2,s3,s4)
+        g.trace(repr(s))
+        # s = s.lstrip('(').rstrip(')') + ')'
+        
+        # Insert the text and remember what to select.
+        if g.app.gui.hasSelection(w):
+            i,j = g.app.gui.getSelectionRange(w)
+        else:
+            i = j = g.app.gui.getInsertPoint(w)
+        w.insert(j,s)
+        j1 = w.index('%s + 1c' % j)
+        j2 = w.index('%s + %sc' % (j,len(s)-1))
+    
+        # End autocompletion mode, restoring the selection.
+        self.finish()
+        self.object = obj
+        c.widgetWantsFocusNow(w)
+        g.app.gui.setSelectionRange(w,j1,j2,insert=j2)
+    #@nonl
+    #@-node:ekr.20060220110302:calltip
     #@+node:ekr.20060220085402:chain
     def chain (self):
         
         w = self.widget
         newLeadinWord = g.app.gui.getSelectedText(w)
+        g.trace(newLeadinWord)
         if newLeadinWord:
             obj = self.theObject
             self.finish()
-            if hasattr(obj,newLeadinWord):
-                self.object = getattr(obj,newLeadinWord)
-                self.leadinWord = newLeadinWord
-                self.membersList = self.getMembersList(obj=obj)
+            if obj:
+                if hasattr(obj,newLeadinWord):
+                    self.object = obj = getattr(obj,newLeadinWord)
+                    self.leadinWord = newLeadinWord
+                    self.membersList = self.getMembersList(obj=obj)
+            if not obj:
+                self.membersList = self.getMembersList()
+            if self.membersList:
+                self.extendSelection('.')
+                i = g.app.gui.getInsertPoint(w)
+                g.app.gui.setTextSelection(w,i,i,insert=i)
+                g.trace('chaining to',newLeadinWord,self.object)
+                self.tabName = self.tabName + newLeadinWord + '.'
+                # Similar to start logic.
+                self.prefix = ''
+                self.selection = g.app.gui.getTextSelection(w)
+                self.selectedText = g.app.gui.getSelectedText(w)
+                self.membersList = self.getMembersList(obj=self.object)
+                # self.computeCompletionList()
                 if self.membersList:
-                    self.extendSelection('.')
-                    i = g.app.gui.getInsertPoint(w)
-                    g.app.gui.setTextSelection(w,i,i,insert=i)
-                    g.trace('chaining to',newLeadinWord,self.object)
-                    self.tabName = self.tabName + newLeadinWord + '.'
-                    # Similar to start logic.
-                    self.prefix = ''
-                    self.selection = g.app.gui.getTextSelection(w)
-                    self.selectedText = g.app.gui.getSelectedText(w)
-                    self.membersList = self.getMembersList(obj=self.object)
-                    # self.computeCompletionList()
-                    if self.membersList:
-                        self.autoCompleterStateHandler(event=None)                
-                else:
-                    self.finish()
-        else:
-            self.finish()
+                    self.autoCompleterStateHandler(event=None)
+                    return
+        self.extendSelection('.')
+        self.finish()
     #@nonl
     #@-node:ekr.20060220085402:chain
     #@+node:ekr.20060219180034:computeTabName
@@ -470,6 +496,47 @@ class autoCompleterClass:
         # g.trace(i,self.leadinWord)
     #@nonl
     #@-node:ekr.20060219111416:getLeadinWord
+    #@+node:ekr.20060220104902:insertNormalChar
+    def insertNormalChar (self,ch,keysym):
+        
+        k = self.k ; w = self.widget
+        trace = self.trace and not g.app.unitTesting
+    
+        if ch in (string.letters + string.digits + '_' ):
+            # Look ahead to see if the character completes any item.
+            s = g.app.gui.getSelectedText(w) + ch
+            tabList,common_prefix = g.itemsMatchingPrefixInList(
+                s,self.membersList,matchEmptyPrefix=True)
+            if tabList:
+                # Add the character.
+                self.tabList = tabList
+                self.extendSelection(ch)
+                s = g.app.gui.getSelectedText(w)
+                if s.startswith(self.prefix):
+                    self.prefix = self.prefix + ch
+                self.computeCompletionList()
+        else:
+            newLeadinWord = g.app.gui.getSelectedText(w)
+            if keysym == 'parenleft':
+                # Similar to chain logic.
+                obj = self.theObject
+                if hasattr(obj,newLeadinWord):
+                    self.object = obj = getattr(obj,newLeadinWord)
+                    self.leadinWord = newLeadinWord
+                    self.membersList = self.getMembersList(obj=obj)
+                else:
+                    obj = None
+                if k.enable_calltips:
+                    # This calls self.finish if the '(' is valid.
+                    self.calltip(obj=obj)
+                else:
+                    self.extendSelection(ch)
+                    self.finish()
+            else:
+                self.extendSelection(ch)
+                self.finish()
+    #@nonl
+    #@-node:ekr.20060220104902:insertNormalChar
     #@+node:ekr.20060219174642:getMembersList
     def getMembersList (self,obj=None):
         
@@ -1643,7 +1710,8 @@ class keyHandlerClass:
         if g.app.quitting:
             return
     
-        c.frame.log.deleteTab('Completion')
+        # c.frame.log.deleteTab('Completion')
+        k.autoCompleter.exit()
         c.frame.log.deleteTab('Mode')
         
         # Completely clear the mode.
