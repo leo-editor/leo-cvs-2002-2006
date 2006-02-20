@@ -138,13 +138,14 @@ class autoCompleterClass:
     
         table = (
             (['aList','bList'],     'python','list'),
-            (['c','old_c','new_c'], 'object',c),      # 'leoCommands','Commands'),
+            (['aString'],           'object','aString'),    # An actual string object.
+            (['c','old_c','new_c'], 'object',c),            # 'leoCommands','Commands'),
             (['d','d1','d2'],       'python','dict'),
             (['f'],                 'object',c.frame), # 'leoTkinterFrame','leoTkinterFrame'),
             (['g'],                 'object',g),       # 'leoGlobals',None),
             (['p','p1','p2'],       'object',p),       # 'leoNodes','position'),         
             (['s','s1','s2','ch'],  'python','string'),
-            (['string'],            'string',None),     # Python's string module.
+            (['string'],            'object',string),     # Python's string module.
             (['t','t1','t2'],       'object',p.v.t),   # 'leoNodes','tnode'),  
             (['v','v1','v2'],       'object',p.v),     # 'leoNodes','vnode'),
             (['w','widget'],        'Tkinter','Text'),
@@ -275,6 +276,8 @@ class autoCompleterClass:
             self.doBackSpace()
         elif keysym == 'period':
             self.chain()
+        elif keysym == 'question':
+            self.info()
         elif keysym == 'exclam':
             # An Easter Egg: to be deleted.
             c.frame.log.clearTab('Modules')
@@ -301,8 +304,8 @@ class autoCompleterClass:
     def exit (self,restore=False): # Called from keyboard-quit.
         
         c = self.c ; w = self.widget
-        c.frame.log.deleteTab(self.tabName)
-        c.frame.log.deleteTab('Modules')
+        for name in (self.tabName,'Modules','Info'):
+            c.frame.log.deleteTab(name)
         c.widgetWantsFocusNow(w)
         i,j = g.app.gui.getTextSelection(w)
         if restore:
@@ -376,6 +379,15 @@ class autoCompleterClass:
     def calltip (self,obj=None):
         
         c = self.c ; w = self.widget
+        removeCloseParen = True # Should be a user arg.
+        isStringMethod = inspect.isbuiltin(obj) and obj.__name__ in dir(string)
+    
+        if isStringMethod:
+            # A hack. String functions are builtins, and getargspec doesn't handle them.
+            # Get the corresponding string function instead, and remove the s arg later.
+            obj = getattr(string,obj.__name__)
+            
+        # g.trace(isStringMethod,obj)
         
         try:
             s1,s2,s3,s4 = inspect.getargspec(obj)
@@ -383,12 +395,22 @@ class autoCompleterClass:
             return # Not a function.  Ignore the '('.
     
         s = args = inspect.formatargspec(s1,s2,s3,s4)
-        
+    
         # Remove 'self' from s, but not from args.
         if g.match(s,1,'self,'):
             s = s[0] + s[6:].strip()
         elif g.match_word(s,1,'self'):
             s = s[0] + s[5:].strip()
+    
+        if isStringMethod:
+            # Remove 's' from s.
+            if g.match(s,1,'s,'):
+                s = s[0] + s[3:]
+            elif g.match_word(s,1,'s'):
+                s = s[0] + s[2:]
+                
+        remove = removeCloseParen and len(s) > 2
+        if remove: s = s.rstrip(')')
         
         # Insert the text and remember what to select.
         if g.app.gui.hasSelection(w):
@@ -396,8 +418,12 @@ class autoCompleterClass:
         else:
             i = j = g.app.gui.getInsertPoint(w)
         w.insert(j,s)
-        j1 = w.index('%s + 1c' % j)
-        j2 = w.index('%s + %sc' % (j,len(s)-1))
+        
+        if remove:
+            j1 = w.index('%s + 1c' % j)
+            j2 = w.index('%s + %sc' % (j,len(s)))
+        else:
+            j1 = j2 = w.index('%s + 2c' % j)
     
         # End autocompletion mode, restoring the selection.
         self.finish()
@@ -502,9 +528,40 @@ class autoCompleterClass:
         # Skip over the invocation character.
         self.leadinWord = w.get(i + '-2c wordstart', i + '-2c wordstart wordend').strip()
     
-        # g.trace(i,self.leadinWord)
+        if self.leadinWord in ( "'",'"'):
+            self.leadinWord = 'aString' # This is in the objectsDict.
+            self.theObject = 'aString' # To make calltips and chaining work.
+    
+        g.trace(self.leadinWord)
     #@nonl
     #@-node:ekr.20060219111416:getLeadinWord
+    #@+node:ekr.20060220132026:info
+    def info (self):
+        
+        c = self.c ; obj = self.theObject ; w = self.widget
+    
+        word = g.app.gui.getSelectedText(w)
+         
+        if not hasattr(obj,word): return
+        
+        obj = getattr(obj,word)
+        doc = inspect.getdoc(obj)
+        if not doc: return
+        
+        # doc = self.prettyPrintDoc(obj.__doc__)
+        c.frame.log.clearTab('Info')
+        g.es(doc,tabName='Info')
+    #@nonl
+    #@+node:ekr.20060220132919:prettyPrintDoc
+    def prettyPrintDoc (self,s):
+        
+        c = self.c
+        
+        lines = [s.strip() for s in g.splitLines(s)]
+        return ''.join(s)
+    #@nonl
+    #@-node:ekr.20060220132919:prettyPrintDoc
+    #@-node:ekr.20060220132026:info
     #@+node:ekr.20060220104902:insertNormalChar
     def insertNormalChar (self,ch,keysym):
         
@@ -529,6 +586,7 @@ class autoCompleterClass:
             if keysym == 'parenleft':
                 # Similar to chain logic.
                 obj = self.theObject
+                # g.trace(obj,newLeadinWord,hasattr(obj,newLeadinWord))
                 if hasattr(obj,newLeadinWord):
                     self.object = obj = getattr(obj,newLeadinWord)
                     self.leadinWord = newLeadinWord
