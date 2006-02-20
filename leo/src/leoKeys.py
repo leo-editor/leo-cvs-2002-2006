@@ -382,9 +382,13 @@ class autoCompleterClass:
         except:
             return # Not a function.  Ignore the '('.
     
-        s = inspect.formatargspec(s1,s2,s3,s4)
-        g.trace(repr(s))
-        # s = s.lstrip('(').rstrip(')') + ')'
+        s = args = inspect.formatargspec(s1,s2,s3,s4)
+        
+        # Remove 'self' from s, but not from args.
+        if g.match(s,1,'self,'):
+            s = s[0] + s[6:].strip()
+        elif g.match_word(s,1,'self'):
+            s = s[0] + s[5:].strip()
         
         # Insert the text and remember what to select.
         if g.app.gui.hasSelection(w):
@@ -397,9 +401,14 @@ class autoCompleterClass:
     
         # End autocompletion mode, restoring the selection.
         self.finish()
-        self.object = obj
+        self.object = obj # Might be useful later?
         c.widgetWantsFocusNow(w)
         g.app.gui.setSelectionRange(w,j1,j2,insert=j2)
+        
+        # Put the status line last.
+        c.frame.clearStatusLine()
+        name = hasattr(obj,'__name__') and obj.__name__ or repr(obj)
+        c.frame.putStatusLine('%s %s' % (name,args))
     #@nonl
     #@-node:ekr.20060220110302:calltip
     #@+node:ekr.20060220085402:chain
