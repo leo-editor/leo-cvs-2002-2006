@@ -4021,6 +4021,19 @@ def flattenList (theList):
     return result
 #@nonl
 #@-node:ekr.20031218072017.3142:flattenList
+#@+node:ekr.20060221081328:maxStringListLength
+def maxStringListLength(aList):
+    
+    '''Return the maximum string length in a list of strings.'''
+    
+    n = 0
+    for z in aList:
+        if type(z) in (type(''),type(u'')):
+            n = max(n,len(z))
+
+    return n
+#@nonl
+#@-node:ekr.20060221081328:maxStringListLength
 #@-node:ekr.20031218072017.3140: List utilities...
 #@+node:ekr.20050315073003: Index utilities...
 #@+node:ekr.20050314140957:g.convertPythonIndexToRowCol  & test
@@ -5186,6 +5199,27 @@ def importFromPath (name,path,pluginName=None,verbose=False):
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
+#@+node:ekr.20060221083356:prettyPrintType
+def prettyPrintType (obj):
+
+    if type(obj) in (
+        types.MethodType,types.UnboundMethodType,types.BuiltinMethodType):
+        return 'method'
+    elif type(obj) in (types.BuiltinFunctionType,types.FunctionType):
+        return 'function'
+    elif type(obj) == types.ModuleType:
+        return 'module'
+    elif type(obj) == types.InstanceType:
+        return 'object'
+    elif type(obj) in (types.UnicodeType,types.StringType):
+        return 'string'
+    else:
+        theType = str(type(obj))
+        if theType.startswith("<type '"): theType = theType[7:]
+        if theType.endswith("'>"): theType = theType[:-2]
+        return theType
+#@nonl
+#@-node:ekr.20060221083356:prettyPrintType
 #@+node:ekr.20040629162023:readLines class and generator
 #@+node:EKR.20040612114220.3:g.readLinesGenerator
 def readLinesGenerator(s):
