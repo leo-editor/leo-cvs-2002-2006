@@ -6048,7 +6048,7 @@ class findTab (leoFind.leoFind):
             self.resetWrap(event)
             return k.masterKeyHandler(event)
             
-        def findButtonCallback(event=None,self=self):
+        def findButtonBindingCallback(event=None,self=self):
             self.findButton()
             return 'break'
     
@@ -6058,7 +6058,7 @@ class findTab (leoFind.leoFind):
             ('<Button-3>',  k.masterClickHandler),
             ('<Double-3>',  k.masterClickHandler),
             ('<Key>',       resetWrapCallback),
-            ('<Return>',    self.findButtonCallback),
+            ('<Return>',    findButtonBindingCallback),
             ("<Escape>",    self.hideTab),
         )
     
@@ -6374,6 +6374,23 @@ class findTab (leoFind.leoFind):
         self.change_text = s
     #@nonl
     #@-node:ekr.20051020120306.22:find.update_ivars
+    #@+node:ekr.20060221074900:Callbacks
+    #@+node:ekr.20060221074900.1:findButtonCallback
+    def findButtonCallback(self,event=None):
+        
+        self.findButton()
+        return 'break'
+    #@nonl
+    #@-node:ekr.20060221074900.1:findButtonCallback
+    #@+node:ekr.20051020120306.25:hideTab
+    def hideTab (self,event=None):
+        
+        c = self.c
+        c.frame.log.selectTab('Log')
+        c.bodyWantsFocus()
+    #@nonl
+    #@-node:ekr.20051020120306.25:hideTab
+    #@-node:ekr.20060221074900:Callbacks
     #@+node:ekr.20051024192602: Top level
     #@+node:ekr.20060209064832:findAllCommand
     def findAllCommand (self,event=None):
@@ -6436,15 +6453,6 @@ class findTab (leoFind.leoFind):
     #@nonl
     #@-node:ekr.20051024192642.3:change/ThenFindCommand
     #@-node:ekr.20051024192602: Top level
-    #@+node:ekr.20051020120306.25:hideTab
-    def hideTab (self,event=None):
-        
-        c = self.c
-        
-        c.frame.log.selectTab('Log')
-        c.bodyWantsFocus()
-    #@nonl
-    #@-node:ekr.20051020120306.25:hideTab
     #@+node:ekr.20051020120306.26:bringToFront
     def bringToFront (self):
     
