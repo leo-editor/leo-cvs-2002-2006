@@ -127,6 +127,7 @@ class autoCompleterClass:
         self.prefix = None
         self.tabList = []
         self.tabListIndex = -1
+        self.tabName = None # The name of the main completion tab.
         self.theObject = None # The previously found object, for . chaining.
         self.trace = c.config.getBool('trace_autocompleter')
         self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
@@ -549,8 +550,7 @@ class autoCompleterClass:
         obj = getattr(obj,word)
         doc = inspect.getdoc(obj)
         if not doc: return
-        
-        # doc = self.prettyPrintDoc(obj.__doc__)
+    
         c.frame.log.clearTab('Info',wrap='word')
         g.es(doc,tabName='Info')
     #@nonl
@@ -1134,7 +1134,6 @@ class keyHandlerClass:
         bodyCtrl = f.body and hasattr(f.body,'bodyCtrl') and f.body.bodyCtrl or None
         canvas   = f.tree and hasattr(f.tree,'canvas')   and f.tree.canvas   or None
         bindingWidget = f.tree and hasattr(f.tree,'bindingWidget') and f.tree.bindingWidget or None
-        # g.trace(bodyCtrl,canvas)
         if not bodyCtrl or not canvas: return
         
         for stroke in  k.bindingsDict.keys():
@@ -1184,6 +1183,7 @@ class keyHandlerClass:
     
             c.commandsDict[key] = f = enterModeCallback
             k.inverseCommandsDict [f.__name__] = key
+            # g.trace('leoCommands %24s = %s' % (f.__name__,key))
     #@nonl
     #@-node:ekr.20060104154937:addModeCommands
     #@+node:ekr.20051008152134:initSpecialIvars
@@ -1817,6 +1817,7 @@ class keyHandlerClass:
             
         c.commandsDict [commandName] = func
         k.inverseCommandsDict [func.__name__] = commandName
+        # g.trace('leoCommands %24s = %s' % (func.__name__,commandName))
         
         if shortcut:
             shortcut = k.shortcutFromSetting(shortcut)
