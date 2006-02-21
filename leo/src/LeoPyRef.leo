@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9094" clone_windows="0"/>
 <globals body_outline_ratio="0.442906574394">
-	<global_window_position top="37" left="485" height="867" width="751"/>
+	<global_window_position top="9" left="423" height="867" width="751"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -306,7 +306,7 @@ marks="ekr.20060216155558.1,ekr.20060216161247,"><vh>@thin ../doc/leoNotes.txt</
 </v>
 <v t="ekr.20051126122638"><vh>Autocompletion tab</vh>
 <v t="ekr.20060216135646"><vh>To do</vh></v>
-<v t="ekr.20060219183519"><vh>Ref</vh>
+<v t="ekr.20060219183519"><vh>Ref code</vh>
 <v t="ekr.20060219172026.1"><vh>inspect Leo main objects</vh></v>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
@@ -323,6 +323,7 @@ marks="ekr.20060216155558.1,ekr.20060216161247,"><vh>@thin ../doc/leoNotes.txt</
 <v t="ekr.20060115195302"><vh>setDefaultUnboundKeyAction</vh></v>
 </v>
 <v t="ekr.20050920084036.173"><vh>getPublicCommands (keyHandler)</vh></v>
+<v t="ekr.20060221083356"><vh>prettyPrintType</vh></v>
 </v>
 <v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
 <v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh>
@@ -343,11 +344,13 @@ marks="ekr.20060216155558.1,ekr.20060216161247,"><vh>@thin ../doc/leoNotes.txt</
 <v t="ekr.20051126123249.1"><vh>auto.doTabCompletion</vh></v>
 <v t="ekr.20060220110302"><vh>calltip</vh></v>
 <v t="ekr.20060220085402"><vh>chain</vh></v>
-<v t="ekr.20060219180034"><vh>computeTabName</vh></v>
 <v t="ekr.20051127065601"><vh>extendSelection</vh></v>
 <v t="ekr.20051127105102"><vh>finish</vh></v>
-<v t="ekr.20060220092715"><vh>getLeadinObject</vh></v>
-<v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
+<v t="ekr.20060219111416"><vh>getLeadinWord &amp; helpers</vh>
+<v t="ekr.20060219180034"><vh>beginTabName &amp; appendTabName</vh></v>
+<v t="ekr.20060221104137"><vh>findAnchor</vh></v>
+<v t="ekr.20060221112937"><vh>setObjectAndMembersList</vh></v>
+</v>
 <v t="ekr.20060220132026"><vh>info</vh>
 <v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
 </v>
@@ -366,7 +369,7 @@ marks="ekr.20060216155558.1,ekr.20060216161247,"><vh>@thin ../doc/leoNotes.txt</
 <v t="ekr.20060219172026"><vh>Dialogs must get grab focus and keystrokes</vh></v>
 <v t="ekr.20060220155313"><vh>update-leo-settings-file</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -422,9 +425,9 @@ marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 </v>
-<v t="ekr.20051126122638"><vh>Autocompletion tab</vh>
+<v t="ekr.20051126122638" a="V"><vh>Autocompletion tab</vh>
 <v t="ekr.20060216135646"><vh>To do</vh></v>
-<v t="ekr.20060219183519"><vh>Ref</vh>
+<v t="ekr.20060219183519"><vh>Ref code</vh>
 <v t="ekr.20060219172026.1"><vh>inspect Leo main objects</vh></v>
 <v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
 <v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
@@ -441,6 +444,7 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20060115195302"><vh>setDefaultUnboundKeyAction</vh></v>
 </v>
 <v t="ekr.20050920084036.173"><vh>getPublicCommands (keyHandler)</vh></v>
+<v t="ekr.20060221083356"><vh>prettyPrintType</vh></v>
 </v>
 <v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
 <v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh>
@@ -461,11 +465,13 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20051126123249.1"><vh>auto.doTabCompletion</vh></v>
 <v t="ekr.20060220110302"><vh>calltip</vh></v>
 <v t="ekr.20060220085402"><vh>chain</vh></v>
-<v t="ekr.20060219180034"><vh>computeTabName</vh></v>
 <v t="ekr.20051127065601"><vh>extendSelection</vh></v>
 <v t="ekr.20051127105102"><vh>finish</vh></v>
-<v t="ekr.20060220092715"><vh>getLeadinObject</vh></v>
-<v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
+<v t="ekr.20060219111416"><vh>getLeadinWord &amp; helpers</vh>
+<v t="ekr.20060219180034"><vh>beginTabName &amp; appendTabName</vh></v>
+<v t="ekr.20060221104137"><vh>findAnchor</vh></v>
+<v t="ekr.20060221112937"><vh>setObjectAndMembersList</vh></v>
+</v>
 <v t="ekr.20060220132026"><vh>info</vh>
 <v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
 </v>
@@ -2695,8 +2701,10 @@ for z in ('borderframe','clipper','frame','hull'):
             d = {}
             for z in self.tabList:
                 ch = z and z[0] or ''
-                if ch: d[ch] = None
-            aList = [ch+'...' for ch in d.keys()] ; aList.sort()
+                if ch:
+                    n = d.get(ch,0)
+                    d[ch] = n + 1
+            aList = [ch+'...%d' % (d.get(ch)) for ch in d.keys()] ; aList.sort()
             self.tabList = aList
         else: # Often creates too many entries.
             self.tabList,common_prefix = g.itemsMatchingPrefixInList(
@@ -2746,13 +2754,15 @@ for z in ('borderframe','clipper','frame','hull'):
     self.selection = None # The selection range on entry to autocompleter or calltips.
     self.selectedText = None # The selected text on entry to autocompleter or calltips.
     self.prefix = None
+    self.prevObject = None
     self.tabList = []
     self.tabListIndex = -1
     self.tabName = None # The name of the main completion tab.
-    self.theObject = None # The previously found object, for . chaining.
+    self.object = None # The previously found object, for . chaining.
     self.trace = c.config.getBool('trace_autocompleter')
     self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
     self.widget = None # The widget that should get focus after autocomplete is done.
+
 </t>
 <t tx="ekr.20051126124705">def autoCompleterStateHandler (self,event):
     
@@ -2824,6 +2834,10 @@ for z in ('borderframe','clipper','frame','hull'):
         w.delete(i,j)
     else:
         i = g.app.gui.getInsertPoint(w)
+        
+    # Don't go past the ':' that separates the completion from the type.
+    n = s.find(':')
+    if n &gt; -1: s = s[:n]
     
     w.insert(i,s)
     j = w.index('%s + %dc' % (i,len(s)))
@@ -2841,13 +2855,14 @@ for z in ('borderframe','clipper','frame','hull'):
     if i != j:
         gui.setTextSelection(w,j,j,insert=j)
         
-    self.theObject = None</t>
+    self.prevObject = None
+    self.object = None</t>
 <t tx="ekr.20051127105431">def abort (self):
     
     k = self.k
     k.keyboardQuit(event=None)
     self.exit(restore=True)
-    
+
 def exit (self,restore=False): # Called from keyboard-quit.
     
     c = self.c ; w = self.widget
@@ -2858,7 +2873,10 @@ def exit (self,restore=False): # Called from keyboard-quit.
     if restore:
         w.delete(i,j)
         w.insert(i,self.selectedText)
-    g.app.gui.setTextSelection(w,j,j,insert=j)</t>
+    g.app.gui.setTextSelection(w,j,j,insert=j)
+    
+    self.prevObject = None
+    self.object = None</t>
 <t tx="ekr.20060104154937">def addModeCommands (self):
     
     '''Add commands created by @mode settings to c.commandsDict and k.inverseCommandsDict.'''
@@ -3976,12 +3994,15 @@ You can click nodes and get the UNL to display, but when arrowing around the
 tree, UNL area flashes the unl and then clears it immediately.</t>
 <t tx="ekr.20060216135646">@nocolor
 
-- x? gives docstring.
-- Support ''.whatever()
-- Sort x... stuff.
-- Scan forward if no object found.
+- Start at the anchor (back chaining)
 - Scan only present body text if all else fails.
+- Make sure typing completion sticks.
+- Info for builtins. (Maybe a separate command).
 
+- (done) Print number of matches for ... entries
+- (done) Print types in Autocomplete tab.
+- (done) Support ''.whatever()
+- (done) x? gives docstring.
 - (done) Dot chaining: remember previous object.
 - (done) Add f, frame, log, body to dicts.
 - (done) Define objectDict on first use so all objects are completely created.
@@ -4035,16 +4056,32 @@ Allow moduleName to be 'python' and className to be 'list', 'string' or 'diction
     return self.autoComplete(event,force=True)</t>
 <t tx="ekr.20060219111416">def getLeadinWord (self,w):
     
-    i = g.app.gui.getInsertPoint(w)
-    
-    # Skip over the invocation character.
-    self.leadinWord = w.get(i + '-2c wordstart', i + '-2c wordstart wordend').strip()
+    start = g.app.gui.getInsertPoint(w)
+    start = w.index(start+'-1c')
+    i,word = self.findAnchor(w)
+    self.setObjectAndMembersList(word)
+    if not self.object:
+        g.trace('unknown',word)
+        return False
+    self.beginTabName(word)
 
-    if self.leadinWord in ( "'",'"'):
-        self.leadinWord = 'aString' # This is in the objectsDict.
-        self.theObject = 'aString' # To make calltips and chaining work.
-
-    g.trace(self.leadinWord)</t>
+    while w.compare(i,'&lt;',start):
+        if w.get(i) != '.':
+            g.trace('oops: %s' % (repr(w.get(i))))
+            return False
+        i = w.index(i+'+1c')
+        j = w.index(i+' wordend')
+        word = w.get(i,j)
+        self.setObjectAndMembersList(word)
+        if not self.object:
+            g.trace('unknown',word)
+            return False
+        self.appendTabName(word)
+        i = j
+            
+    self.leadinWord = word
+    # g.trace(self.leadinWord)
+    return True</t>
 <t tx="ekr.20060219170043">def showCalltipsForce (self,event=None):
     
     return self.showCalltips(event,force=True)</t>
@@ -4063,7 +4100,8 @@ def enableCalltips (self,event=None):
     
     c = self.c ; k = c.k ; p = c.currentPosition()
 
-    table = (
+    table = [
+        # Python globals...
         (['aList','bList'],     'python','list'),
         (['aString'],           'object','aString'),    # An actual string object.
         (['c','old_c','new_c'], 'object',c),            # 'leoCommands','Commands'),
@@ -4071,18 +4109,20 @@ def enableCalltips (self,event=None):
         (['f'],                 'object',c.frame), # 'leoTkinterFrame','leoTkinterFrame'),
         (['g'],                 'object',g),       # 'leoGlobals',None),
         (['p','p1','p2'],       'object',p),       # 'leoNodes','position'),         
-        (['s','s1','s2','ch'],  'python','string'),
+        (['s','s1','s2','ch'],  'object','aString'),
         (['string'],            'object',string),     # Python's string module.
         (['t','t1','t2'],       'object',p.v.t),   # 'leoNodes','tnode'),  
         (['v','v1','v2'],       'object',p.v),     # 'leoNodes','vnode'),
         (['w','widget'],        'Tkinter','Text'),
-        # Not needed with chaining...
-        #(['app'],               'object',g.app),
-        #(['gui'],               'object',g.app.gui),
-        #(['k'],                 'object',c.keyHandler),  
-        #(['log'],               'object',c.frame.log),
-        #(['body'],              'object',c.frame.body),
-    )
+    ]
+    
+    if 0: # Not useful at this point.
+        for key in __builtins__.keys():
+            obj = __builtins__.get(key)
+            if obj in (True,False,None): continue
+            data = [key],'object',obj
+            table.append(data)
+    
     d = {'dict':{},'int':1,'list':[],'string':''}
 
     for idList,kind,nameOrObject in table:
@@ -4105,9 +4145,12 @@ def enableCalltips (self,event=None):
                     g.trace('%s module has no class %s' % (kind,nameOrObject))
             else:
                 theObject = module
-        if not theObject: continue
+        if not theObject:
+            g.trace('bad object',theObject)
+            continue
         for z in idList:
-            self.objectDict[z]=theObject</t>
+            self.objectDict[z]=theObject
+            # g.trace(theObject)</t>
 <t tx="ekr.20060219172026"></t>
 <t tx="ekr.20060219172026.1">import inspect
 
@@ -4180,30 +4223,34 @@ if 0: # Original code.
         else:
             # print name, len(members)
             print ; print len(members),name,'methods...\n\n',g.listToString(members)</t>
-<t tx="ekr.20060219174642">def getMembersList (self,obj=None):
+<t tx="ekr.20060219174642">def getMembersList (self,obj):
     
     '''Return a list of possible autocompletions for self.leadinWord.'''
     
-    obj = obj or (
-        self.objectDict.get(self.leadinWord) or
-        self.theObject or
-        sys.modules.get(self.leadinWord)
-    )
+    # g.trace('word',obj)
 
     if obj:
         aList = inspect.getmembers(obj)
-        self.theObject = obj
-        members = [a for a,b in aList if not a.startswith('__')]
+        self.prevObject = self.object
+        self.object = obj
+        members = ['%s:%s' % (a,g.prettyPrintType(b))
+            for a,b in aList if not a.startswith('__')]
         members.sort()
         return members
     else:
         return []</t>
-<t tx="ekr.20060219180034">def computeTabName (self):
+<t tx="ekr.20060219180034"># Underscores are not valid in Pmw tab names!
+
+def appendTabName (self,word):
     
-    word = self.leadinWord or ''
-    # Underscores are not valid in Pmw tab names!
-    word = word and word.replace('_','') 
-    return 'AutoComplete %s.' % (word or '')</t>
+    word = word and word.replace('_','') or ''
+    
+    self.tabName = self.tabName + word + '.'
+
+def beginTabName (self,word):
+    
+    self.tabName = 'AutoComplete '
+    self.appendTabName(word)</t>
 <t tx="ekr.20060219183519"></t>
 <t tx="ekr.20060220055415">def getModulesList (self):
     
@@ -4223,15 +4270,7 @@ if 0: # Original code.
     self.prefix = ''
     self.selection = g.app.gui.getTextSelection(w)
     self.selectedText = g.app.gui.getSelectedText(w)
-    self.getLeadinWord(w)
-    if self.leadinWord:
-        self.membersList = self.getMembersList()
-        self.tabName = self.computeTabName()
-    else:
-        self.membersList = self.getModulesList()
-        self.tabName = 'Modules'
-    # g.trace(len(self.membersList))
-    if self.membersList:
+    if self.getLeadinWord(w):
         self.autoCompleterStateHandler(event)</t>
 <t tx="ekr.20060220085402">def chain (self):
     
@@ -4239,35 +4278,26 @@ if 0: # Original code.
     newLeadinWord = g.app.gui.getSelectedText(w)
     # g.trace(newLeadinWord)
     if newLeadinWord:
-        obj = self.theObject
+        obj = self.object
         self.finish()
-        if obj:
-            if hasattr(obj,newLeadinWord):
-                self.object = obj = getattr(obj,newLeadinWord)
-                self.leadinWord = newLeadinWord
-                self.membersList = self.getMembersList(obj=obj)
-        if not obj:
-            self.membersList = self.getMembersList()
-        if self.membersList:
+        if obj and hasattr(obj,newLeadinWord):
+            self.object = obj = getattr(obj,newLeadinWord)
+            self.leadinWord = newLeadinWord
+            self.membersList = self.getMembersList(obj)
             self.extendSelection('.')
             i = g.app.gui.getInsertPoint(w)
             g.app.gui.setTextSelection(w,i,i,insert=i)
-            # g.trace('chaining to',newLeadinWord,self.object)
+            g.trace('chaining to',newLeadinWord,self.object)
             self.tabName = self.tabName + newLeadinWord.replace('_','') + '.'
             # Similar to start logic.
             self.prefix = ''
             self.selection = g.app.gui.getTextSelection(w)
             self.selectedText = g.app.gui.getSelectedText(w)
-            self.membersList = self.getMembersList(obj=self.object)
-            # self.computeCompletionList()
             if self.membersList:
                 self.autoCompleterStateHandler(event=None)
                 return
     self.extendSelection('.')
     self.finish()</t>
-<t tx="ekr.20060220092715">def getLeadinObject (self):
-    
-    pass</t>
 <t tx="ekr.20060220104902">def insertNormalChar (self,ch,keysym):
     
     k = self.k ; w = self.widget
@@ -4288,42 +4318,44 @@ if 0: # Original code.
             self.computeCompletionList()
     else:
         newLeadinWord = g.app.gui.getSelectedText(w)
+        # g.trace(newLeadinWord)
         if keysym == 'parenleft':
             # Similar to chain logic.
-            obj = self.theObject
+            obj = self.object
             # g.trace(obj,newLeadinWord,hasattr(obj,newLeadinWord))
             if hasattr(obj,newLeadinWord):
-                self.object = obj = getattr(obj,newLeadinWord)
+                obj = getattr(obj,newLeadinWord)
+                self.prevObject = self.object
+                self.object = obj
                 self.leadinWord = newLeadinWord
-                self.membersList = self.getMembersList(obj=obj)
-            else:
-                obj = None
-            if k.enable_calltips:
-                # This calls self.finish if the '(' is valid.
-                self.calltip(obj=obj)
-            else:
-                self.extendSelection(ch)
-                self.finish()
-        else:
-            self.extendSelection(ch)
-            self.finish()</t>
+                self.membersList = self.getMembersList(obj)
+                if k.enable_calltips:
+                    # This calls self.finish if the '(' is valid.
+                    self.calltip(obj)
+                    return
+        self.extendSelection(ch)
+        self.finish()</t>
 <t tx="ekr.20060220110302">def calltip (self,obj=None):
     
     c = self.c ; w = self.widget
     removeCloseParen = True # Should be a user arg.
-    isStringMethod = inspect.isbuiltin(obj) and obj.__name__ in dir(string)
+    
+    isStringMethod = type(self.prevObject) == types.StringType
+
+    # g.trace(self.prevObject)
 
     if isStringMethod:
         # A hack. String functions are builtins, and getargspec doesn't handle them.
         # Get the corresponding string function instead, and remove the s arg later.
         obj = getattr(string,obj.__name__)
-        
-    # g.trace(isStringMethod,obj)
     
     try:
         s1,s2,s3,s4 = inspect.getargspec(obj)
     except:
-        return # Not a function.  Ignore the '('.
+        g.es('inspect failed:',repr(obj))
+        self.extendSelection('(')
+        self.finish()
+        return # Not a function.  Just '('.
 
     s = args = inspect.formatargspec(s1,s2,s3,s4)
 
@@ -4360,7 +4392,6 @@ if 0: # Original code.
 
     # End autocompletion mode, restoring the selection.
     self.finish()
-    self.object = obj # Might be useful later?
     c.widgetWantsFocusNow(w)
     g.app.gui.setSelectionRange(w,j1,j2,insert=j2)
     
@@ -4370,7 +4401,7 @@ if 0: # Original code.
     c.frame.putStatusLine('%s %s' % (name,args))</t>
 <t tx="ekr.20060220132026">def info (self):
     
-    c = self.c ; obj = self.theObject ; w = self.widget
+    c = self.c ; obj = self.object ; w = self.widget
 
     word = g.app.gui.getSelectedText(w)
      
@@ -4407,5 +4438,60 @@ return apply(self.func, args)
 TypeError: findButtonCallback() takes at least 1 argument (0 given) 
 </t>
 <t tx="ekr.20060221073409"></t>
+<t tx="ekr.20060221083356">def prettyPrintType (obj):
+
+    if type(obj) in (
+        types.MethodType,types.UnboundMethodType,types.BuiltinMethodType):
+        return 'method'
+    elif type(obj) in (types.BuiltinFunctionType,types.FunctionType):
+        return 'function'
+    elif type(obj) == types.ModuleType:
+        return 'module'
+    elif type(obj) == types.InstanceType:
+        return 'object'
+    elif type(obj) in (types.UnicodeType,types.StringType):
+        return 'string'
+    else:
+        theType = str(type(obj))
+        if theType.startswith("&lt;type '"): theType = theType[7:]
+        if theType.endswith("'&gt;"): theType = theType[:-2]
+        return theType</t>
+<t tx="ekr.20060221104137">def findAnchor (self,w):
+    
+    i = g.app.gui.getInsertPoint(w)
+    
+    while w.get(i + '-1c') == '.' and w.compare(i,'&gt;','1.0'):
+        i = w.index(i + '-2c wordstart')
+
+    j = w.index(i+' wordend')
+    word = w.get(i,j)
+    
+    g.trace(i,j,repr(word),w.get(j))
+    return j,word</t>
+<t tx="ekr.20060221112937">def setObjectAndMembersList (self,word):
+    
+    obj = self.object
+    self.prevObject = obj
+
+    if word in ( "'",'"'):
+        word = 'aString' # This is in the objectsDict.
+        self.prevObject = None
+        self.object = obj = 'aString'
+        self.membersList = self.getMembersList(obj)
+    elif self.prevObject:
+        if hasattr(self.prevObject,word):
+            self.object = obj = getattr(obj,word)
+            self.membersList = self.getMembersList(obj)
+    else:
+        obj = self.objectDict.get(word) or sys.modules.get(word)
+        if obj:
+            self.prevObject = self.object
+            self.object = obj
+            self.membersList = self.getMembersList(obj=obj)
+        else:
+            self.object = self.prevObject = None
+            self.membersList = []
+        
+    g.trace(word,self.object,len(self.membersList))</t>
 </tnodes>
 </leo_file>
