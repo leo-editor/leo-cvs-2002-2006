@@ -3644,7 +3644,7 @@ class leoTkinterLog (leoFrame.leoLog):
         
         c = self.c ; k = c.k
         tab = self.nb.tab(tabName)
-        text = self.textDict.get(tabName)
+        w = self.textDict.get(tabName)
         
         # Send all event in the text area to the master handlers.
         for kind,handler in (
@@ -3652,7 +3652,7 @@ class leoTkinterLog (leoFrame.leoLog):
             ('<Button-1>',  k.masterClickHandler),
             ('<Button-3>',  k.masterClick3Handler),
         ):
-            text.bind(kind,handler)
+            w.bind(kind,handler)
         
         # Clicks in the tab area are harmless: use the old code.
         def tabMenuRightClickCallback(event,menu=self.menu):
@@ -3663,6 +3663,8 @@ class leoTkinterLog (leoFrame.leoLog):
         
         tab.bind('<Button-1>',tabMenuClickCallback)
         tab.bind('<Button-3>',tabMenuRightClickCallback)
+        
+        k.completeAllBindingsForWidget(w)
     #@nonl
     #@-node:ekr.20051022162730:setTabBindings
     #@+node:ekr.20051019134106:Tab menu callbacks & helpers

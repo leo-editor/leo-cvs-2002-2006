@@ -305,7 +305,7 @@ class autoCompleterClass:
             self.insertNormalChar(ch,keysym)
         else:
             if trace: g.trace('ignore',repr(ch))
-            return 'break'
+            return 'do-standard-keys'
     #@nonl
     #@-node:ekr.20051126124705:autoCompleterStateHandler
     #@-node:ekr.20060219103046:Top level
@@ -1223,18 +1223,41 @@ class keyHandlerClass:
         bindingWidget = f.tree and hasattr(f.tree,'bindingWidget') and f.tree.bindingWidget or None
         if not bodyCtrl or not canvas: return
         
-        for stroke in  k.bindingsDict.keys():
-            for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
-                def bindKeyCallback (event,k=k,stroke=stroke):
-                    return k.masterKeyHandler(event,stroke=stroke)
-                bindStroke = k.tkbindingFromStroke(stroke)
-                try:
-                    # g.trace(bindStroke,c.widget_name(w))
-                    w.bind(bindStroke,bindKeyCallback)
-                except Exception:
-                    g.es_print('exception binding %s to %s' % (
-                        bindStroke,c.widget_name(w)),color='blue')
+        for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
+            self.completeAllBindingsForWidget(w)
+            
+            
+            # for stroke in  k.bindingsDict.keys():
+            # 
+                # def bindKeyCallback (event,k=k,stroke=stroke):
+                    # return k.masterKeyHandler(event,stroke=stroke)
+                # bindStroke = k.tkbindingFromStroke(stroke)
+                # try:
+                    # # g.trace(bindStroke,c.widget_name(w))
+                    # w.bind(bindStroke,bindKeyCallback)
+                # except Exception:
+                    # g.es_print('exception binding %s to %s' % (
+                        # bindStroke,c.widget_name(w)),color='blue')
     #@nonl
+    #@+node:ekr.20060221141535:completeAllBindingsForWidget
+    def completeAllBindingsForWidget (self,w):
+        
+        k = self ; c = k.c
+        
+        for stroke in  k.bindingsDict.keys():
+        
+            def bindKeyCallback (event,k=k,stroke=stroke):
+                return k.masterKeyHandler(event,stroke=stroke)
+            bindStroke = k.tkbindingFromStroke(stroke)
+    
+            try:
+                # g.trace(bindStroke,c.widget_name(w))
+                w.bind(bindStroke,bindKeyCallback)
+            except Exception:
+                g.es_print('exception binding %s to %s' % (
+                    bindStroke,c.widget_name(w)),color='blue')
+    #@nonl
+    #@-node:ekr.20060221141535:completeAllBindingsForWidget
     #@-node:ekr.20060216074643:k.completeAllBindings
     #@+node:ekr.20051007080058:k.makeAllBindings
     def makeAllBindings (self):
@@ -2164,8 +2187,10 @@ class keyHandlerClass:
             elif state in ('full-command','auto-complete'):
                 # Do the default state action.
                 if trace: g.trace('calling state function')
-                k.callStateFunction(event) # Calls end-command.
-                return 'break'
+                val = k.callStateFunction(event) # Calls end-command.
+                if val != 'do-standard-keys':
+                    return 'break'
+                g.trace('do-standard-keys',w_name,stroke)
             # Third, pass keys to the general mode handler.
             else:
                 d =  k.masterBindingsDict.get(state)
@@ -2194,6 +2219,7 @@ class keyHandlerClass:
             ('tree','head'),
             ('tree','canvas'),
             ('log', 'log'),
+            ('text','log'),
             ('text',None), ('all',None),
         ):
             if (
