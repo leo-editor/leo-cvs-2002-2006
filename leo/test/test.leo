@@ -194,6 +194,25 @@
 <v t="ekr.20060103102234"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
+<v t="ekr.20060219120931" a="E"><vh>inspect Leo objects (autocompleter)</vh></v>
+</v>
+<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051108102719"><vh>Test backward search</vh>
+<v t="ekr.20051108102719.1"><vh>a</vh></v>
+<v t="ekr.20051108102719.2"><vh>b</vh></v>
+<v t="ekr.20051108102719.3"><vh>c</vh></v>
+<v t="ekr.20051108111341"><vh>test</vh></v>
+</v>
+<v t="ekr.20051113055640"><vh>Find bug</vh>
+<v t="ekr.20051113055640.1"><vh>Report</vh></v>
+<v t="ekr.20051113055640.2"><vh>This is a sample node</vh></v>
+<v t="ekr.20051113055640.3"><vh>@thin findBug.txt</vh></v>
+</v>
+<v t="ekr.20051120173510"><vh>@@button remove-blank-lines</vh></v>
+<v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
+<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
+<v t="ekr.20060122115629"><vh>Edit tests</vh></v>
+<v t="ekr.20060215083254" a="E"><vh>Э Test of matchHeadline</vh></v>
 <v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
@@ -225,30 +244,11 @@
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
 <v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
-</v>
-<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
-<v t="ekr.20051108102719"><vh>Test backward search</vh>
-<v t="ekr.20051108102719.1"><vh>a</vh></v>
-<v t="ekr.20051108102719.2"><vh>b</vh></v>
-<v t="ekr.20051108102719.3"><vh>c</vh></v>
-<v t="ekr.20051108111341"><vh>test</vh></v>
-</v>
-<v t="ekr.20051113055640"><vh>Find bug</vh>
-<v t="ekr.20051113055640.1"><vh>Report</vh></v>
-<v t="ekr.20051113055640.2"><vh>This is a sample node</vh></v>
-<v t="ekr.20051113055640.3"><vh>@thin findBug.txt</vh></v>
-</v>
-<v t="ekr.20051120173510"><vh>@@button remove-blank-lines</vh></v>
-<v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
-<v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
-<v t="ekr.20060122115629"><vh>Edit tests</vh></v>
-<v t="ekr.20060215083254" a="E"><vh>Э Test of matchHeadline</vh></v>
-</v>
 <v t="ekr.20060216144005"><vh>autocompleter test</vh>
 <v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
 </v>
-<v t="ekr.20060216170135"><vh>autocompleter scan test</vh></v>
-<v t="ekr.20060219120931" a="EV"><vh>inspect Leo main objects</vh></v>
+</v>
+<v t="ekr.20060216170135" a="V"><vh>autocompleter test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4465,9 +4465,7 @@ for s in (
             if s[n].isspace()or s[n]=='.':return s[n+1:]
 
     return s </t>
-<t tx="ekr.20060216170135">
-
-c.autoCompleter.scan(verbose=False)</t>
+<t tx="ekr.20060216170135"></t>
 <t tx="ekr.20060219120931">import inspect
 
 table = (
@@ -4476,11 +4474,11 @@ table = (
     ('leoGlobals',None),
     ('python','list'),
     ('python','string'),
-    ('python','dictionary'),
+    ('python','dict'),
     # ('leoKeys','keyHandlerClass'),
 )
 
-d = {'string':'', 'dictionary':{}, 'list':[]}
+d = {'dict':{},'int':2,'list':[],'string':''}
 
 print '-' * 40
 for moduleName,className in table:

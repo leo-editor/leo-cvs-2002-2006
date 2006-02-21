@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="256" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="77" left="367" height="701" width="841"/>
+	<global_window_position top="77" left="369" height="789" width="862"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -46,7 +46,7 @@
 </v>
 </v>
 <v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
-<v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
+<v t="ekr.20051126062243" a="E" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
@@ -65,7 +65,7 @@
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
-<v t="ekr.20060121102627"><vh>@bool trace_modes = True</vh></v>
+<v t="ekr.20060121102627" a="V"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
 <v t="ekr.20060216130607"><vh>@bool trace_status_line = False</vh></v>
@@ -347,7 +347,7 @@
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -365,7 +365,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -377,8 +377,10 @@
 </v>
 </v>
 <v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
-<v t="ekr.20060216135834" a="V"><vh>@bool enable_autocompleter = True</vh></v>
+<v t="ekr.20060216135834"><vh>@bool enable_autocompleter = True</vh></v>
 <v t="ekr.20060216170801"><vh>@bool enable_calltips = True</vh></v>
+<v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
+<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1490,6 +1492,8 @@ delete-spaces                       = None
 demote                              = None
 diff                                = None
 digit-argument                      = None
+disable-auto-completer-command      = None
+disable-calltips-command            = None
 disable-gc-trace                    = None
 downcase-region                     = None
 downcase-word                       = None
@@ -1499,6 +1503,8 @@ dump-all-objects                    = None
 dump-new-objects                    = None
 dump-outline                        = None
 edit-headline                       = None
+enable-auto-completer-command       = None
+enable-calltips-command             = None
 enable-gc-trace                     = None
 end-edit-headline                   = None
 end-of-buffer                       = None
@@ -3082,6 +3088,7 @@ find-tab-change                     = None
 find-tab-change-all                 = None
 find-tab-change-then-find           = None
 find-tab-find                       = None
+find-tab-find-all                   = None
 find-tab-find-prev                  = None
 flatten-outline                     = None
 flush-lines                         = None
@@ -3103,6 +3110,7 @@ full-command                        = None
 fully-expand-body-pane              = None
 fully-expand-log-pane               = None
 fully-expand-outline-pane           = None
+fully-expand-pane                   = None
 go-back                             = None
 go-forward                          = None
 goto-char                           = None
@@ -3236,6 +3244,7 @@ previous-line                       = None
 previous-line-extend-selection      = None
 print-bindings                      = None
 print-commands                      = None
+print-focus                         = None
 print-gc-summary                    = None
 print-stats                         = None
 promote                             = None
@@ -3262,7 +3271,7 @@ save-buffers-kill-leo               = None
 save-file                           = None
 save-file-as                        = None
 save-file-to                        = None
-scan-for-autocompleter              = None
+# scan-for-autocompleter            = None
 scroll-down                         = None
 scroll-down-extend-selection        = None
 scroll-up                           = None
@@ -3290,6 +3299,7 @@ settings                            = None
 shell-command                       = None
 shell-command-on-region             = None
 show-calltips                       = None
+show-calltips-force                 = None
 show-colors                         = None
 show-find-options                   = None
 show-fonts                          = None
