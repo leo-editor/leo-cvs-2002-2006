@@ -121,6 +121,7 @@ class autoCompleterClass:
         self.c = c = k.c
         self.k = k
         self.calltips = {} # Keys are language, values are dicts: keys are ids, values are signatures.
+        self.knownObjects = {}
         self.membersList = None
         self.objectDict = {} # Created on first use of the autocompleter.
         self.selection = None # The selection range on entry to autocompleter or calltips.
@@ -132,6 +133,7 @@ class autoCompleterClass:
         self.tabName = None # The name of the main completion tab.
         self.object = None # The previously found object, for . chaining.
         self.trace = c.config.getBool('trace_autocompleter')
+        self.verbose = False # True: print all members.
         self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
         self.widget = None # The widget that should get focus after autocomplete is done.
     
@@ -168,29 +170,32 @@ class autoCompleterClass:
         for idList,kind,nameOrObject in table:
             if kind == 'object':
                 # Works, but hard to generalize for settings.
-                theObject = nameOrObject
+                obj = nameOrObject
             elif kind == 'python':
                 className = nameOrObject
                 o = d.get(className)
-                theObject = o is not None and o.__class__
+                obj = o is not None and o.__class__
             else:
                 module = g.importModule (kind,verbose=True)
                 if not module:
                     g.trace('Can not import ',nameOrObject)
                     continue
+                self.appendToKnownObjects(module)
                 if nameOrObject:
                     className = nameOrObject
-                    theObject = hasattr(module,className) and getattr(module,className) or None
-                    if not theObject:
+                    obj = hasattr(module,className) and getattr(module,className) or None
+                    if not obj:
                         g.trace('%s module has no class %s' % (kind,nameOrObject))
+                    else:
+                        self.appendToKnownObjects(getattr(module,className))
                 else:
-                    theObject = module
-            if not theObject:
-                g.trace('bad object',theObject)
+                    obj = module
+            if not obj:
+                g.trace('bad object',obj)
                 continue
             for z in idList:
-                self.objectDict[z]=theObject
-                # g.trace(theObject)
+                self.objectDict[z]=obj
+                # g.trace(obj)
     #@nonl
     #@-node:ekr.20060219171914:defineObjectDict
     #@-node:ekr.20051126123759.1: ctor (autocompleter)
@@ -289,12 +294,13 @@ class autoCompleterClass:
         elif keysym == 'question':
             self.info()
         elif keysym == 'exclam':
-            # An Easter Egg: to be deleted.
-            c.frame.log.clearTab('Modules')
-            c.widgetWantsFocusNow(self.widget)
-            self.setSelection('') # Delete the selection.
-            self.membersList = self.getModulesList()
-            self.computeCompletionList()
+            # Toggle between verbose and brief listing.
+            self.verbose = not self.verbose
+            if type(self.object) == types.DictType:
+                self.membersList = self.object.keys()
+            elif type(self.object) in (types.ListType,types.TupleType):
+                self.membersList = self.object
+            self.computeCompletionList(verbose=self.verbose)
         elif ch and ch in string.printable:
             self.insertNormalChar(ch,keysym)
         else:
@@ -328,7 +334,7 @@ class autoCompleterClass:
     #@nonl
     #@-node:ekr.20051127105431:abort & exit
     #@+node:ekr.20051126123149:auto.computeCompletionList
-    def computeCompletionList (self):
+    def computeCompletionList (self,verbose=False):
         
         c = self.c ; gui = g.app.gui ; w = self.widget
         c.widgetWantsFocus(w)
@@ -336,7 +342,10 @@ class autoCompleterClass:
         self.tabList,common_prefix = g.itemsMatchingPrefixInList(
             s,self.membersList,matchEmptyPrefix=True)
         if not common_prefix:
-            if 1: # Show the possible starting letters.
+            if verbose or len(self.tabList) < 25:
+                self.tabList,common_prefix = g.itemsMatchingPrefixInList(
+                    s,self.membersList,matchEmptyPrefix=True)
+            else: # Show the possible starting letters.
                 d = {}
                 for z in self.tabList:
                     ch = z and z[0] or ''
@@ -345,9 +354,7 @@ class autoCompleterClass:
                         d[ch] = n + 1
                 aList = [ch+'...%d' % (d.get(ch)) for ch in d.keys()] ; aList.sort()
                 self.tabList = aList
-            else: # Often creates too many entries.
-                self.tabList,common_prefix = g.itemsMatchingPrefixInList(
-                    s,self.membersList,matchEmptyPrefix=False)
+           
         c.frame.log.clearTab(self.tabName) # Creates the tab if necessary.
         if self.tabList:
             self.tabListIndex = -1 # The next item will be item 0.
@@ -461,20 +468,21 @@ class autoCompleterClass:
     def chain (self):
         
         w = self.widget
-        newLeadinWord = g.app.gui.getSelectedText(w)
-        # g.trace(newLeadinWord)
-        if newLeadinWord:
+        word = g.app.gui.getSelectedText(w)
+        if word:
             obj = self.object
             self.finish()
-            if obj and hasattr(obj,newLeadinWord):
-                self.object = obj = getattr(obj,newLeadinWord)
-                self.leadinWord = newLeadinWord
+            if obj and hasattr(obj,word):
+                self.prevOject = self.object
+                self.object = obj = getattr(obj,word)
+                self.appendToKnownObjects(obj)
+                self.leadinWord = word
                 self.membersList = self.getMembersList(obj)
+                self.appendTabName(word)
                 self.extendSelection('.')
                 i = g.app.gui.getInsertPoint(w)
                 g.app.gui.setTextSelection(w,i,i,insert=i)
-                g.trace('chaining to',newLeadinWord,self.object)
-                self.tabName = self.tabName + newLeadinWord.replace('_','') + '.'
+                # g.trace('chaining to',word,self.object)
                 # Similar to start logic.
                 self.prefix = ''
                 self.selection = g.app.gui.getTextSelection(w)
@@ -484,7 +492,6 @@ class autoCompleterClass:
                     return
         self.extendSelection('.')
         self.finish()
-    #@nonl
     #@-node:ekr.20060220085402:chain
     #@+node:ekr.20051127065601:extendSelection
     def extendSelection (self,s):
@@ -516,6 +523,8 @@ class autoCompleterClass:
         if i != j:
             gui.setTextSelection(w,j,j,insert=j)
             
+        c.frame.body.onBodyChanged('Typing')
+            
         self.prevObject = None
         self.object = None
     #@nonl
@@ -523,12 +532,13 @@ class autoCompleterClass:
     #@+node:ekr.20060219111416:getLeadinWord & helpers
     def getLeadinWord (self,w):
         
+        self.verbose = False # User must explicitly ask for verbose.
         start = g.app.gui.getInsertPoint(w)
         start = w.index(start+'-1c')
         i,word = self.findAnchor(w)
         self.setObjectAndMembersList(word)
         if not self.object:
-            g.trace('unknown',word)
+            # g.trace('unknown',word)
             return False
         self.beginTabName(word)
     
@@ -550,6 +560,15 @@ class autoCompleterClass:
         # g.trace(self.leadinWord)
         return True
     #@nonl
+    #@+node:ekr.20060221131304:appendToKnownObjects
+    def appendToKnownObjects (self,obj):
+        
+        if type(obj) in (types.InstanceType,types.ModuleType,types):
+            if hasattr(obj,'__name__'):
+                self.knownObjects[obj.__name__] = obj
+                # g.trace('adding',obj.__name__)
+    #@nonl
+    #@-node:ekr.20060221131304:appendToKnownObjects
     #@+node:ekr.20060219180034:beginTabName & appendTabName
     # Underscores are not valid in Pmw tab names!
     
@@ -576,7 +595,7 @@ class autoCompleterClass:
         j = w.index(i+' wordend')
         word = w.get(i,j)
         
-        g.trace(i,j,repr(word),w.get(j))
+        # g.trace(i,j,repr(word),w.get(j))
         return j,word
     #@nonl
     #@-node:ekr.20060221104137:findAnchor
@@ -594,10 +613,15 @@ class autoCompleterClass:
         elif self.prevObject:
             if hasattr(self.prevObject,word):
                 self.object = obj = getattr(obj,word)
+                self.appendToKnownObjects(obj)
                 self.membersList = self.getMembersList(obj)
+            else:
+                self.object = self.prevObject = None
+                self.membersList = []
         else:
             obj = self.objectDict.get(word) or sys.modules.get(word)
             if obj:
+                self.appendToKnownObjects(obj)
                 self.prevObject = self.object
                 self.object = obj
                 self.membersList = self.getMembersList(obj=obj)
@@ -605,7 +629,7 @@ class autoCompleterClass:
                 self.object = self.prevObject = None
                 self.membersList = []
             
-        g.trace(word,self.object,len(self.membersList))
+        # g.trace(word,self.object,len(self.membersList))
     #@nonl
     #@-node:ekr.20060221112937:setObjectAndMembersList
     #@-node:ekr.20060219111416:getLeadinWord & helpers
@@ -655,17 +679,17 @@ class autoCompleterClass:
                     self.prefix = self.prefix + ch
                 self.computeCompletionList()
         else:
-            newLeadinWord = g.app.gui.getSelectedText(w)
-            # g.trace(newLeadinWord)
+            word = g.app.gui.getSelectedText(w)
+            # g.trace(word)
             if keysym == 'parenleft':
                 # Similar to chain logic.
                 obj = self.object
-                # g.trace(obj,newLeadinWord,hasattr(obj,newLeadinWord))
-                if hasattr(obj,newLeadinWord):
-                    obj = getattr(obj,newLeadinWord)
+                # g.trace(obj,word,hasattr(obj,word))
+                if hasattr(obj,word):
+                    obj = getattr(obj,word)
                     self.prevObject = self.object
                     self.object = obj
-                    self.leadinWord = newLeadinWord
+                    self.leadinWord = word
                     self.membersList = self.getMembersList(obj)
                     if k.enable_calltips:
                         # This calls self.finish if the '(' is valid.
@@ -694,7 +718,7 @@ class autoCompleterClass:
             return []
     #@nonl
     #@-node:ekr.20060219174642:getMembersList
-    #@+node:ekr.20060220055415:getModulesList
+    #@+node:ekr.20060220055415:getModulesList (not used)
     def getModulesList (self):
         
         '''Return a list all (loaded) Python modules.'''
@@ -703,7 +727,7 @@ class autoCompleterClass:
         aList.sort()
         return aList
     #@nonl
-    #@-node:ekr.20060220055415:getModulesList
+    #@-node:ekr.20060220055415:getModulesList (not used)
     #@+node:ekr.20051127070018:setSelection
     def setSelection (self,s):
         
