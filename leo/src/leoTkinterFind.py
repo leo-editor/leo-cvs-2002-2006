@@ -271,7 +271,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         # HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
         # HotKeys used for plain buttons (enter),d,g,t
         
-        def findButtonCallback(event,self=self):
+        def findButtonCallback(event=None,self=self):
             self.findButton()
             return 'break'
         

@@ -4128,8 +4128,8 @@ class keyHandlerCommandsClass (baseEditCommandsClass):
             'digit-argument':           k.digitArgument,
             'disable-auto-completer-command':   k.autoCompleter.disableAutocompleter,
             'disable-calltips-command':         k.autoCompleter.disableCalltips,
-            'enable-auto-completer-command':    k.autoCompleter.disableAutocompleter,
-            'enable-calltips-command':          k.autoCompleter.disableCalltips,
+            'enable-auto-completer-command':    k.autoCompleter.enableAutocompleter,
+            'enable-calltips-command':          k.autoCompleter.enableCalltips,
             'exit-named-mode':          k.exitNamedMode,
             'full-command':             k.fullCommand, # For menu.
             'hide-mini-buffer':         k.hideMinibuffer,
@@ -6047,6 +6047,10 @@ class findTab (leoFind.leoFind):
         def resetWrapCallback(event,self=self,k=k):
             self.resetWrap(event)
             return k.masterKeyHandler(event)
+            
+        def findButtonCallback(event=None,self=self):
+            self.findButton()
+            return 'break'
     
         table = (
             ('<Button-1>',  k.masterClickHandler),
@@ -6370,15 +6374,6 @@ class findTab (leoFind.leoFind):
         self.change_text = s
     #@nonl
     #@-node:ekr.20051020120306.22:find.update_ivars
-    #@+node:ekr.20051023183028:findButtonCallback
-    def findButtonCallback(self,event=None):
-        
-        __pychecker__ = '--no-argsused'
-    
-        self.findButton()
-        return 'break'
-    #@nonl
-    #@-node:ekr.20051023183028:findButtonCallback
     #@+node:ekr.20051024192602: Top level
     #@+node:ekr.20060209064832:findAllCommand
     def findAllCommand (self,event=None):
