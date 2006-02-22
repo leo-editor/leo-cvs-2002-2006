@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7920" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7941" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
-	<global_window_position top="14" left="306" height="857" width="787"/>
+	<global_window_position top="37" left="347" height="857" width="780"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -194,7 +194,8 @@
 <v t="ekr.20060103102234"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
-<v t="ekr.20060219120931" a="E"><vh>inspect Leo objects (autocompleter)</vh></v>
+<v t="ekr.20060219120931"><vh>inspect Leo objects (autocompleter)</vh></v>
+<v t="ekr.20060222082236"><vh>call autocompleter class scanner</vh></v>
 </v>
 <v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
@@ -212,7 +213,7 @@
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
-<v t="ekr.20060215083254" a="E"><vh>Э Test of matchHeadline</vh></v>
+<v t="ekr.20060215083254"><vh>Э Test of matchHeadline</vh></v>
 <v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
 <v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
@@ -248,7 +249,8 @@
 <v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
 </v>
 </v>
-<v t="ekr.20060216170135" a="V"><vh>autocompleter test</vh></v>
+<v t="ekr.20060222084658"><vh>autocomplete test</vh></v>
+<v t="ekr.20060222112248" a="V"><vh>find classes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4465,7 +4467,6 @@ for s in (
             if s[n].isspace()or s[n]=='.':return s[n+1:]
 
     return s </t>
-<t tx="ekr.20060216170135"></t>
 <t tx="ekr.20060219120931">import inspect
 
 table = (
@@ -4537,5 +4538,15 @@ if 0: # Original code.
         else:
             # print name, len(members)
             print ; print len(members),name,'methods...\n\n',g.listToString(members)</t>
+<t tx="ekr.20060222082236">scanner = c.k.autoCompleter.classScanner
+print scanner.findParentClass(p)</t>
+<t tx="ekr.20060222084658"></t>
+<t tx="ekr.20060222112248">import gc, types
+d = {}
+for z in gc.get_objects():
+    if type(z) == types.InstanceType:
+        d[z.__class__.__name__] = z
+keys = d.keys() ; keys.sort()
+g.printList(keys,tag='Classes',sort=True)</t>
 </tnodes>
 </leo_file>
