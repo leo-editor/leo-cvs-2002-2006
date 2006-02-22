@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7941" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7971" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="37" left="347" height="857" width="780"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -250,7 +250,17 @@
 </v>
 </v>
 <v t="ekr.20060222084658"><vh>autocomplete test</vh></v>
-<v t="ekr.20060222112248" a="V"><vh>find classes</vh></v>
+<v t="ekr.20060222112248"><vh>find classes</vh></v>
+<v t="ekr.20060222140651"><vh>testClass</vh>
+<v t="ekr.20060222140651.1"><vh>ctor</vh></v>
+<v t="ekr.20060222140651.2"><vh>good</vh></v>
+<v t="ekr.20060222140651.3"><vh>bad</vh></v>
+</v>
+<v t="ekr.20060222140651.4" a="E"><vh>forgiving parser prototype</vh>
+<v t="ekr.20060222145802" a="V"><vh>forgivingParser</vh></v>
+<v t="ekr.20060222142158" a="E"><vh>computeErrorNode</vh></v>
+<v t="ekr.20060222145802.2"><vh>putBody</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4548,5 +4558,76 @@ for z in gc.get_objects():
         d[z.__class__.__name__] = z
 keys = d.keys() ; keys.sort()
 g.printList(keys,tag='Classes',sort=True)</t>
+<t tx="ekr.20060222140651">class testClass:
+    
+    '''A class to test the forgiving parser.'''
+    
+    @others</t>
+<t tx="ekr.20060222140651.1">def __init__ (c):
+    
+    self.c = c</t>
+<t tx="ekr.20060222140651.2">def good (self):
+    
+    pass</t>
+<t tx="ekr.20060222140651.3">def bad (self):
+    
+    self = </t>
+<t tx="ekr.20060222140651.4">import compiler, parser
+
+old_putBody = c.atFileCommands.putBody
+
+@others
+
+try:
+    c.atFileCommands.putBody = putBody
+    forgivingParser(c,p)
+finally:
+    c.atFileCommands.putBody = old_putBody</t>
+<t tx="ekr.20060222142158">def computeErrorNode (c,root,n,lines):
+    
+    '''The from c.goToLineNumber that applies to scripts.
+    Unlike c.gotoLineNumberOpen, this function returns a position.'''
+
+    if n==1 or n &gt;= len(lines):
+        return root
+    
+    vnodeName,junk,junk,junk,junk = c.convertLineToVnodeNameIndexLine(
+        lines,n,root,scriptFind=True)
+
+    if vnodeName:
+        for p in root.self_and_subtree_iter():
+            if p.matchHeadline(vnodeName):
+                return p
+
+    return None</t>
+<t tx="ekr.20060222145802">def forgivingParser(c,p):
+
+    root = p.copy()
+    g.app.excludedTnodesList = [] # Global communication with the new putBody.
+    s = g.getScript(c,p,useSelectedText=False)
+    n = len(s) + 1 # To ensure progress.
+    while s and len(s) &lt; n:
+        n = len(s)
+        try:
+            compiler.parse(s+'\n')
+            g.es_print('pass')
+            break
+        except (parser.ParserError,SyntaxError):
+            fileName, n = g.getLastTracebackFileAndLineNumber()
+            p2 = computeErrorNode(c,p,n,lines=g.splitLines(s))
+            if not p or p2 == root:
+                g.es_print('Syntax error in class node: can not continue')
+                break
+            else:
+                g.es_print('Syntax error: deleting',p2.headString())
+                g.app.excludedTnodesList.append(p.v.t)
+                s = g.getScript(c,p,useSelectedText=False)</t>
+<t tx="ekr.20060222145802.2">def putBody(p,oneNodeOnly=False,fromString=''):
+
+    g.trace(p.headString(),len(g.app.excludedTnodesList))
+    
+    if p.v.t not in g.app.excludedTnodesList:
+        global old_putBody
+        old_putBody(p,oneNodeOnly,fromString)</t>
 </tnodes>
 </leo_file>
