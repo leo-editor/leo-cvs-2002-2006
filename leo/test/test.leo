@@ -251,15 +251,15 @@
 </v>
 <v t="ekr.20060222084658"><vh>autocomplete test</vh></v>
 <v t="ekr.20060222112248"><vh>find classes</vh></v>
-<v t="ekr.20060222140651"><vh>testClass</vh>
-<v t="ekr.20060222140651.1"><vh>ctor</vh></v>
+<v t="ekr.20060222140651" a="E"><vh>testClass</vh>
+<v t="ekr.20060222140651.1" a="V"><vh>ctor</vh></v>
 <v t="ekr.20060222140651.2"><vh>good</vh></v>
 <v t="ekr.20060222140651.3"><vh>bad</vh></v>
 </v>
 <v t="ekr.20060222140651.4" a="E"><vh>forgiving parser prototype</vh>
-<v t="ekr.20060222145802" a="V"><vh>forgivingParser</vh></v>
-<v t="ekr.20060222142158" a="E"><vh>computeErrorNode</vh></v>
-<v t="ekr.20060222145802.2"><vh>putBody</vh></v>
+<v t="ekr.20060222145802"><vh>forgivingParser</vh></v>
+<v t="ekr.20060222142158"><vh>computeErrorNode</vh></v>
+<v t="ekr.20060222145802.2" a="E"><vh>putBody</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4563,20 +4563,19 @@ g.printList(keys,tag='Classes',sort=True)</t>
     '''A class to test the forgiving parser.'''
     
     @others</t>
-<t tx="ekr.20060222140651.1">def __init__ (c):
-    
+<t tx="ekr.20060222140651.1">def __init__ (self,c):
     self.c = c</t>
 <t tx="ekr.20060222140651.2">def good (self):
-    
     pass</t>
 <t tx="ekr.20060222140651.3">def bad (self):
-    
     self = </t>
 <t tx="ekr.20060222140651.4">import compiler, parser
 
 old_putBody = c.atFileCommands.putBody
 
 @others
+
+print '*' * 40
 
 try:
     c.atFileCommands.putBody = putBody
@@ -4604,29 +4603,34 @@ finally:
 
     root = p.copy()
     g.app.excludedTnodesList = [] # Global communication with the new putBody.
-    s = g.getScript(c,p,useSelectedText=False)
-    n = len(s) + 1 # To ensure progress.
-    while s and len(s) &lt; n:
-        n = len(s)
+    s = g.getScript(c,root,useSelectedText=False)
+    while s:
+        # g.trace(s)
         try:
-            compiler.parse(s+'\n')
-            g.es_print('pass')
+            val = compiler.parse(s+'\n')
             break
         except (parser.ParserError,SyntaxError):
             fileName, n = g.getLastTracebackFileAndLineNumber()
-            p2 = computeErrorNode(c,p,n,lines=g.splitLines(s))
-            if not p or p2 == root:
+            p = computeErrorNode(c,root,n,lines=g.splitLines(s))
+            g.trace(p)
+            if not p or p == root:
                 g.es_print('Syntax error in class node: can not continue')
-                break
+                s = None ; break
             else:
-                g.es_print('Syntax error: deleting',p2.headString())
+                g.es_print('Syntax error: deleting %s' % p.headString())
                 g.app.excludedTnodesList.append(p.v.t)
-                s = g.getScript(c,p,useSelectedText=False)</t>
+                s = g.getScript(c,root,useSelectedText=False)
+    if s:
+        exec s # Adds the objects in s (e.g., testClass) to the present environment.
+        print g.listToString(dir()) # Shows that testClass has been created.
+        print repr(testClass)
+        obj = testClass(c)
+        print repr(obj)</t>
 <t tx="ekr.20060222145802.2">def putBody(p,oneNodeOnly=False,fromString=''):
 
-    g.trace(p.headString(),len(g.app.excludedTnodesList))
-    
-    if p.v.t not in g.app.excludedTnodesList:
+    if p.v.t in g.app.excludedTnodesList:
+        g.trace('ignoring',p.headString())
+    else:
         global old_putBody
         old_putBody(p,oneNodeOnly,fromString)</t>
 </tnodes>
