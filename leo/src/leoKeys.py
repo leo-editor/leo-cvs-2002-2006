@@ -128,7 +128,7 @@ class autoCompleterClass:
         self.selection = None # The selection range on entry to autocompleter or calltips.
         self.selectedText = None # The selected text on entry to autocompleter or calltips.
         self.prefix = None
-        self.prevObject = None
+        self.prevObjects = []
         self.tabList = []
         self.tabListIndex = -1
         self.tabName = None # The name of the main completion tab.
@@ -330,83 +330,54 @@ class autoCompleterClass:
             w.insert(i,self.selectedText)
         g.app.gui.setTextSelection(w,j,j,insert=j)
         
-        self.prevObject = None
+        self.clear()
         self.object = None
     #@nonl
     #@-node:ekr.20051127105431:abort & exit
-    #@+node:ekr.20051126123149:auto.computeCompletionList
-    def computeCompletionList (self,verbose=False):
+    #@+node:ekr.20060219180034:append/begin/popTabName
+    def appendTabName (self,word):
         
-        c = self.c ; gui = g.app.gui ; w = self.widget
-        c.widgetWantsFocus(w)
-        s = gui.getSelectedText(w)
-        self.tabList,common_prefix = g.itemsMatchingPrefixInList(
-            s,self.membersList,matchEmptyPrefix=True)
-        if not common_prefix:
-            if verbose or len(self.tabList) < 25:
-                self.tabList,common_prefix = g.itemsMatchingPrefixInList(
-                    s,self.membersList,matchEmptyPrefix=True)
-            else: # Show the possible starting letters.
-                d = {}
-                for z in self.tabList:
-                    ch = z and z[0] or ''
-                    if ch:
-                        n = d.get(ch,0)
-                        d[ch] = n + 1
-                aList = [ch+'...%d' % (d.get(ch)) for ch in d.keys()] ; aList.sort()
-                self.tabList = aList
-           
-        c.frame.log.clearTab(self.tabName) # Creates the tab if necessary.
-        if self.tabList:
-            self.tabListIndex = -1 # The next item will be item 0.
-            self.setSelection(common_prefix)
-        for name in self.tabList:
-            g.es('%s' % (name),tabName=self.tabName)
-    #@nonl
-    #@-node:ekr.20051126123149:auto.computeCompletionList
-    #@+node:ekr.20051126131103:auto.doBackSpace
-    def doBackSpace (self):
+        self.setTabName(self.tabName + word + '.')
     
-        '''Cut back to previous prefix.'''
-        
-        if self.prefix:
-            self.prefix = self.prefix[:-1]
-            self.setSelection(self.prefix)
-            self.computeCompletionList()
-        else:
-            self.abort()
-    #@nonl
-    #@-node:ekr.20051126131103:auto.doBackSpace
-    #@+node:ekr.20051126123249.1:auto.doTabCompletion
-    def doTabCompletion (self):
-        
-        '''Handle tab completion when the user hits a tab.'''
-        
-        c = self.c ; gui = g.app.gui ; w = self.widget
-        s = gui.getSelectedText(w)
+    def beginTabName (self,word):
     
-        if s.startswith(self.prefix) and self.tabList:
-            # g.trace('cycle','prefix',repr(self.prefix),len(self.tabList),repr(s))
-            # Set the label to the next item on the tab list.
-            self.tabListIndex +=1
-            if self.tabListIndex >= len(self.tabList):
-               self.tabListIndex = 0
-            self.setSelection(self.tabList[self.tabListIndex])
-        else:
-            self.computeCompletionList()
+        self.setTabName('AutoComplete ' + word + '.')
+        
+    def popTabName (self):
+        
+        s = self.tabName
+        i = s.rfind('.',0,-1)
+        if i > -1:
+            self.setTabName(s[0:i])
+        
+    # Underscores are not valid in Pmw tab names!
+    def setTabName (self,s):
     
-        c.widgetWantsFocusNow(w)
+        c = self.c
+        if self.tabName:
+            c.frame.log.deleteTab(self.tabName)
+        self.tabName = s.replace('_','') or ''
+        c.frame.log.clearTab(self.tabName)
     #@nonl
-    #@-node:ekr.20051126123249.1:auto.doTabCompletion
+    #@-node:ekr.20060219180034:append/begin/popTabName
+    #@+node:ekr.20060221131304:appendToKnownObjects
+    def appendToKnownObjects (self,obj):
+        
+        if type(obj) in (types.InstanceType,types.ModuleType,types):
+            if hasattr(obj,'__name__'):
+                self.knownObjects[obj.__name__] = obj
+                # g.trace('adding',obj.__name__)
+    #@nonl
+    #@-node:ekr.20060221131304:appendToKnownObjects
     #@+node:ekr.20060220110302:calltip
     def calltip (self,obj=None):
         
         c = self.c ; w = self.widget
         removeCloseParen = True # Should be a user arg.
         
-        isStringMethod = type(self.prevObject) == types.StringType
+        isStringMethod = self.prevObjects and type(self.prevObjects[-1]) == types.StringType
     
-        # g.trace(self.prevObject)
+        # g.trace(self.prevObjects)
     
         if isStringMethod:
             # A hack. String functions are builtins, and getargspec doesn't handle them.
@@ -468,32 +439,114 @@ class autoCompleterClass:
     #@+node:ekr.20060220085402:chain
     def chain (self):
         
-        w = self.widget
+        c = self.c ; w = self.widget
         word = g.app.gui.getSelectedText(w)
-        if word:
-            obj = self.object
-            self.finish()
-            if obj and hasattr(obj,word):
-                self.prevOject = self.object
-                self.object = obj = getattr(obj,word)
-                self.appendToKnownObjects(obj)
-                self.leadinWord = word
-                self.membersList = self.getMembersList(obj)
-                self.appendTabName(word)
-                self.extendSelection('.')
-                i = g.app.gui.getInsertPoint(w)
-                g.app.gui.setTextSelection(w,i,i,insert=i)
-                # g.trace('chaining to',word,self.object)
-                # Similar to start logic.
-                self.prefix = ''
-                self.selection = g.app.gui.getTextSelection(w)
-                self.selectedText = g.app.gui.getSelectedText(w)
-                if self.membersList:
-                    self.autoCompleterStateHandler(event=None)
-                    return
+        old_obj = self.object
+        if word and old_obj and hasattr(old_obj,word):
+            self.push(old_obj)
+            self.object = obj = getattr(old_obj,word)
+            self.appendToKnownObjects(obj)
+            self.leadinWord = word
+            self.membersList = self.getMembersList(obj)
+            self.appendTabName(word)
+            self.extendSelection('.')
+            i = g.app.gui.getInsertPoint(w)
+            g.app.gui.setTextSelection(w,i,i,insert=i)
+            # g.trace('chaining to',word,self.object)
+            # Similar to start logic.
+            self.prefix = ''
+            self.selection = g.app.gui.getTextSelection(w)
+            self.selectedText = g.app.gui.getSelectedText(w)
+            if self.membersList:
+                self.autoCompleterStateHandler(event=None)
+                return
         self.extendSelection('.')
         self.finish()
+    #@nonl
     #@-node:ekr.20060220085402:chain
+    #@+node:ekr.20051126123149:computeCompletionList
+    def computeCompletionList (self,verbose=False):
+        
+        c = self.c ; gui = g.app.gui ; w = self.widget
+        c.widgetWantsFocus(w)
+        s = gui.getSelectedText(w)
+        self.tabList,common_prefix = g.itemsMatchingPrefixInList(
+            s,self.membersList,matchEmptyPrefix=True)
+        if not common_prefix:
+            if verbose or len(self.tabList) < 25:
+                self.tabList,common_prefix = g.itemsMatchingPrefixInList(
+                    s,self.membersList,matchEmptyPrefix=True)
+            else: # Show the possible starting letters.
+                d = {}
+                for z in self.tabList:
+                    ch = z and z[0] or ''
+                    if ch:
+                        n = d.get(ch,0)
+                        d[ch] = n + 1
+                aList = [ch+'...%d' % (d.get(ch)) for ch in d.keys()] ; aList.sort()
+                self.tabList = aList
+           
+        c.frame.log.clearTab(self.tabName) # Creates the tab if necessary.
+        if self.tabList:
+            self.tabListIndex = -1 # The next item will be item 0.
+            self.setSelection(common_prefix)
+        for name in self.tabList:
+            g.es('%s' % (name),tabName=self.tabName)
+    #@nonl
+    #@-node:ekr.20051126123149:computeCompletionList
+    #@+node:ekr.20051126131103:doBackSpace
+    def doBackSpace (self):
+    
+        '''Cut back to previous prefix.'''
+        
+        if self.prefix:
+            self.prefix = self.prefix[:-1]
+            self.setSelection(self.prefix)
+            self.computeCompletionList()
+        elif self.prevObjects:
+            obj = self.pop()
+            # g.trace(self.object,obj)
+            w = self.widget
+            i,j = g.app.gui.getTextSelection(w)
+            ch = w.get(i+'-1c')
+            if ch == '.':
+                self.object = obj
+                w.delete(i+'-1c')
+                i = w.index(i+'-1c wordstart')
+                j = w.index(i+' wordend')
+                word = w.get(i,j)
+                g.app.gui.setSelectionRange(w,i,j,insert=j)
+                self.prefix = word
+                self.popTabName()
+                self.membersList = self.getMembersList(obj)
+                self.computeCompletionList()
+            else:
+                self.abort() # should not happen.
+        else:
+            self.abort()
+    #@nonl
+    #@-node:ekr.20051126131103:doBackSpace
+    #@+node:ekr.20051126123249.1:doTabCompletion
+    def doTabCompletion (self):
+        
+        '''Handle tab completion when the user hits a tab.'''
+        
+        c = self.c ; gui = g.app.gui ; w = self.widget
+        s = gui.getSelectedText(w)
+    
+        if s.startswith(self.prefix) and self.tabList:
+            # g.trace('cycle','prefix',repr(self.prefix),len(self.tabList),repr(s))
+            # Set the label to the next item on the tab list.
+            self.tabListIndex +=1
+            if self.tabListIndex >= len(self.tabList):
+               self.tabListIndex = 0
+            self.setSelection(self.tabList[self.tabListIndex])
+        else:
+            self.computeCompletionList()
+    
+        c.widgetWantsFocusNow(w)
+    #@nonl
+    #@-node:ekr.20051126123249.1:doTabCompletion
     #@+node:ekr.20051127065601:extendSelection
     def extendSelection (self,s):
         
@@ -510,27 +563,38 @@ class autoCompleterClass:
         g.app.gui.setSelectionRange(w,i,j,insert=j)
     #@nonl
     #@-node:ekr.20051127065601:extendSelection
+    #@+node:ekr.20060221104137:findAnchor
+    def findAnchor (self,w):
+        
+        i = g.app.gui.getInsertPoint(w)
+        
+        while w.get(i + '-1c') == '.' and w.compare(i,'>','1.0'):
+            i = w.index(i + '-2c wordstart')
+    
+        j = w.index(i+' wordend')
+        word = w.get(i,j)
+        
+        # g.trace(i,j,repr(word),w.get(j))
+        return j,word
+    #@nonl
+    #@-node:ekr.20060221104137:findAnchor
     #@+node:ekr.20051127105102:finish
     def finish (self):
         
         c = self.c ; k = self.k ; w = self.widget ; gui = g.app.gui
         
         k.keyboardQuit(event=None)
-        c.frame.log.deleteTab(self.tabName)
-        c.frame.log.deleteTab('Modules')
-           
-        c.widgetWantsFocusNow(w)
-        i,j = gui.getTextSelection(w)
-        if i != j:
-            gui.setTextSelection(w,j,j,insert=j)
+        
+        for name in (self.tabName,'Modules','Info'):
+            c.frame.log.deleteTab(name)
             
         c.frame.body.onBodyChanged('Typing')
             
-        self.prevObject = None
+        self.clear()
         self.object = None
     #@nonl
     #@-node:ekr.20051127105102:finish
-    #@+node:ekr.20060219111416:getLeadinWord & helpers
+    #@+node:ekr.20060219111416:getLeadinWord
     def getLeadinWord (self,w):
         
         self.verbose = False # User must explicitly ask for verbose.
@@ -561,79 +625,32 @@ class autoCompleterClass:
         # g.trace(self.leadinWord)
         return True
     #@nonl
-    #@+node:ekr.20060221131304:appendToKnownObjects
-    def appendToKnownObjects (self,obj):
+    #@-node:ekr.20060219111416:getLeadinWord
+    #@+node:ekr.20060219174642:getMembersList
+    def getMembersList (self,obj):
         
-        if type(obj) in (types.InstanceType,types.ModuleType,types):
-            if hasattr(obj,'__name__'):
-                self.knownObjects[obj.__name__] = obj
-                # g.trace('adding',obj.__name__)
-    #@nonl
-    #@-node:ekr.20060221131304:appendToKnownObjects
-    #@+node:ekr.20060219180034:beginTabName & appendTabName
-    # Underscores are not valid in Pmw tab names!
+        '''Return a list of possible autocompletions for self.leadinWord.'''
     
-    def appendTabName (self,word):
-        
-        word = word and word.replace('_','') or ''
-        
-        self.tabName = self.tabName + word + '.'
-    
-    def beginTabName (self,word):
-        
-        self.tabName = 'AutoComplete '
-        self.appendTabName(word)
-    #@nonl
-    #@-node:ekr.20060219180034:beginTabName & appendTabName
-    #@+node:ekr.20060221104137:findAnchor
-    def findAnchor (self,w):
-        
-        i = g.app.gui.getInsertPoint(w)
-        
-        while w.get(i + '-1c') == '.' and w.compare(i,'>','1.0'):
-            i = w.index(i + '-2c wordstart')
-    
-        j = w.index(i+' wordend')
-        word = w.get(i,j)
-        
-        # g.trace(i,j,repr(word),w.get(j))
-        return j,word
-    #@nonl
-    #@-node:ekr.20060221104137:findAnchor
-    #@+node:ekr.20060221112937:setObjectAndMembersList
-    def setObjectAndMembersList (self,word):
-        
-        obj = self.object
-        self.prevObject = obj
-    
-        if word in ( "'",'"'):
-            word = 'aString' # This is in the objectsDict.
-            self.prevObject = None
-            self.object = obj = 'aString'
-            self.membersList = self.getMembersList(obj)
-        elif self.prevObject:
-            if hasattr(self.prevObject,word):
-                self.object = obj = getattr(obj,word)
-                self.appendToKnownObjects(obj)
-                self.membersList = self.getMembersList(obj)
-            else:
-                self.object = self.prevObject = None
-                self.membersList = []
+        if obj:
+            aList = inspect.getmembers(obj)
+            members = ['%s:%s' % (a,g.prettyPrintType(b))
+                for a,b in aList if not a.startswith('__')]
+            members.sort()
+            return members
         else:
-            obj = self.objectDict.get(word) or sys.modules.get(word)
-            if obj:
-                self.appendToKnownObjects(obj)
-                self.prevObject = self.object
-                self.object = obj
-                self.membersList = self.getMembersList(obj=obj)
-            else:
-                self.object = self.prevObject = None
-                self.membersList = []
-            
-        # g.trace(word,self.object,len(self.membersList))
+            return []
     #@nonl
-    #@-node:ekr.20060221112937:setObjectAndMembersList
-    #@-node:ekr.20060219111416:getLeadinWord & helpers
+    #@-node:ekr.20060219174642:getMembersList
+    #@+node:ekr.20060220055415:getModulesList (not used)
+    def getModulesList (self):
+        
+        '''Return a list all (loaded) Python modules.'''
+        
+        aList = sys.modules.keys()
+        aList.sort()
+        return aList
+    #@nonl
+    #@-node:ekr.20060220055415:getModulesList (not used)
     #@+node:ekr.20060220132026:info
     def info (self):
         
@@ -688,7 +705,7 @@ class autoCompleterClass:
                 # g.trace(obj,word,hasattr(obj,word))
                 if hasattr(obj,word):
                     obj = getattr(obj,word)
-                    self.prevObject = self.object
+                    self.push(self.object)
                     self.object = obj
                     self.leadinWord = word
                     self.membersList = self.getMembersList(obj)
@@ -700,35 +717,70 @@ class autoCompleterClass:
             self.finish()
     #@nonl
     #@-node:ekr.20060220104902:insertNormalChar
-    #@+node:ekr.20060219174642:getMembersList
-    def getMembersList (self,obj):
+    #@+node:ekr.20060222092243:push, pop, clear, stackNames
+    def push (self,obj):
         
-        '''Return a list of possible autocompletions for self.leadinWord.'''
+        if obj is not None:
+            self.prevObjects.append(obj)
+            # g.trace(self.stackNames())
+            
+    def pop (self):
         
-        # g.trace('word',obj)
-    
-        if obj:
-            aList = inspect.getmembers(obj)
-            self.prevObject = self.object
-            self.object = obj
-            members = ['%s:%s' % (a,g.prettyPrintType(b))
-                for a,b in aList if not a.startswith('__')]
-            members.sort()
-            return members
-        else:
-            return []
-    #@nonl
-    #@-node:ekr.20060219174642:getMembersList
-    #@+node:ekr.20060220055415:getModulesList (not used)
-    def getModulesList (self):
+        obj = self.prevObjects.pop()
+        # g.trace(obj)
+        return obj
         
-        '''Return a list all (loaded) Python modules.'''
+    def clear (self):
         
-        aList = sys.modules.keys()
-        aList.sort()
+        self.prevObjects = []
+        # g.trace(g.callers())
+        
+    def stackNames (self):
+        
+        aList = []
+        for z in self.prevObjects:
+            if hasattr(z,'__name__'):
+                aList.append(z.__name__)
+            elif hasattr(z,'__class__'):
+                aList.append(z.__class__.__name__)
+            else:
+                aList.append(str(z))
         return aList
     #@nonl
-    #@-node:ekr.20060220055415:getModulesList (not used)
+    #@-node:ekr.20060222092243:push, pop, clear, stackNames
+    #@+node:ekr.20060221112937:setObjectAndMembersList
+    def setObjectAndMembersList (self,word):
+        
+        obj = self.object ; self.push(obj)
+    
+        if word in ( "'",'"'):
+            word = 'aString' # This is in the objectsDict.
+            self.clear()
+            self.object = obj = 'aString'
+            self.membersList = self.getMembersList(obj)
+        elif self.prevObjects:
+            if hasattr(self.prevObjects[-1],word):
+                self.object = obj = getattr(obj,word)
+                self.appendToKnownObjects(obj)
+                self.membersList = self.getMembersList(obj)
+            else:
+                # Don't clear the stack here!
+                self.membersList = []
+                self.object = None
+        else:
+            obj = self.objectDict.get(word) or sys.modules.get(word)
+            if obj:
+                self.appendToKnownObjects(obj)
+                self.push(self.object)
+                self.object = obj
+                self.membersList = self.getMembersList(obj=obj)
+            else:
+                self.object = None
+                self.clear()
+                self.membersList = []
+        # g.trace(word,self.object,len(self.membersList))
+    #@nonl
+    #@-node:ekr.20060221112937:setObjectAndMembersList
     #@+node:ekr.20051127070018:setSelection
     def setSelection (self,s):
         
@@ -767,233 +819,10 @@ class autoCompleterClass:
     #@nonl
     #@-node:ekr.20060220062710:start
     #@-node:ekr.20060216160332.2:Helpers
-    #@+node:ekr.20060216160332.1:Scanning
-    # Not use at present, but soon.
-    #@nonl
-    #@+node:ekr.20060217132329:initialScan
-    # Don't call this finishCreate: the startup logic would call it too soon.
-    
-    def initialScan (self):
-        
-        g.trace(g.callers())
-        
-        self.scan(thread=True)
-    #@nonl
-    #@-node:ekr.20060217132329:initialScan
-    #@+node:ekr.20060216155558.1:scan
-    def scan (self,event=None,verbose=True,thread=True):
-        
-        c = self.c
-        if not c or not c.exists or c.frame.isNullFrame: return
-        if g.app.unitTesting: return
-        
-        # g.trace('autocompleter')
-        
-        if 0: ## thread:
-            # Use a thread to do the initial scan so as not to interfere with the user.            
-            def scan ():
-                #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
-                # During unit testing c gets destroyed before the scan finishes.
-                if not g.app.unitTesting:
-                    self.scanOutline(verbose=True)
-        
-            t = threading.Thread(target=scan)
-            t.setDaemon(True)
-            t.start()
-        else:
-            self.scanOutline(verbose=verbose)
-    #@nonl
-    #@-node:ekr.20060216155558.1:scan
-    #@+node:ekr.20060216163305:definePatterns
-    def definePatterns (self):
-        
-        self.space = r'[ \t\r\f\v ]+' # one or more whitespace characters.
-        self.end = r'\w+\s*\([^)]*\)' # word (\w) ws ( any ) (can cross lines)
-    
-        # Define re patterns for various languages.
-        # These patterns match method/function definitions.
-        self.pats = {}
-        self.pats ['python'] = re.compile(r'def\s+%s' % self.end)  # def ws word ( any ) # Can cross line boundaries.
-        self.pats ['java'] = re.compile(
-            r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
-                self.space,self.space,self.end))
-        self.pats ['perl'] = re.compile(r'sub\s+%s' % self.end)
-        self.pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (self.space,self.end))
-        self.pats ['c'] = re.compile(r'\w+%s%s' % (self.space,self.end))
-        
-        # Define self.okchars for getCleaString.
-        okchars = {}
-        for z in string.ascii_letters:
-            okchars [z] = z
-        okchars ['_'] = '_'
-        self.okchars = okchars 
-        
-        if 0: # not used
-            self.r  = string.punctuation.replace('(','').replace('.','') # punctuation except ( and .
-            self.pt = string.digits + string.letters + self.r
-            ripout = string.punctuation + string.whitespace + '\n'
-            self.ripout = ripout.replace('_','') # punctuation except underscore.
-    #@nonl
-    #@-node:ekr.20060216163305:definePatterns
-    #@+node:ekr.20060216161220:scanOutline
-    def scanOutline (self,verbose=True):
-    
-        '''Traverse an outline and build the autocommander database.'''
-        
-        if verbose: g.es_print('Scanning for auto-completer...')
-    
-        c = self.c ; k = self.k ; count = 0
-        for p in c.rootPosition().allNodes_iter():
-            if verbose:
-                count += 1 ;
-                if (count % 200) == 0: g.es('.',newline=False)
-            language = g.scanForAtLanguage(c,p)
-            # g.trace('language',language,p.headString())
-            s = p.bodyString()
-            if k.enable_autocompleter:
-                self.scanForAutoCompleter(s)
-            if k.enable_calltips:
-                self.scanForCallTip(s,language)
-    
-        if 0:
-            g.trace('watchwords...\n\n')
-            keys = self.watchwords.keys() ; keys.sort()
-            for key in keys:
-                aList = self.watchwords.get(key)
-                g.trace('%s:\n\n' % (key), g.listToString(aList))
-        if 0:
-            g.trace('calltips...\n\n')
-            keys = self.calltips.keys() ; keys.sort()
-            for key in keys:
-                d = self.calltips.get(key)
-                if d:
-                    g.trace('%s:\n\n' % (key), g.dictToString(d))
-            
-        if verbose:        
-            g.es_print('\nauto-completer scan complete',color='blue')
-    #@nonl
-    #@-node:ekr.20060216161220:scanOutline
-    #@+node:ekr.20060216161234:scanForCallTip
-    def scanForCallTip (self,s,language):
-    
-        '''this function scans text for calltip info'''
-    
-        d = self.calltips.get(language,{})
-        pat = self.pats.get(language or 'python')
-        
-        # Set results to a list of all the function/method defintions in s.
-        results = pat and pat.findall(s) or []
-    
-        for z in results:
-            if isinstance(z,tuple): z = z [0]
-            pieces2 = z.split('(')
-            # g.trace(pieces2)
-            pieces2 [0] = pieces2 [0].split() [-1]
-            a, b = pieces2 [0], pieces2 [1]
-            aList = d.get(a,[])
-            if str(z) not in aList:
-                aList.append(str(z))
-                d [a] = aList
-        
-        self.calltips [language] = d
-    #@nonl
-    #@-node:ekr.20060216161234:scanForCallTip
-    #@+node:ekr.20060216161247:scanForAutoCompleter
-    def scanForAutoCompleter (self,s):
-    
-        '''This function scans text for the autocompleter database.'''
-    
-        aList = [] ; t1 = s.split('.')
-        
-        if 1: # Slightly faster.
-            t1 = s.split('.') ; 
-            i = 0 ; n = len(t1)-1
-            while i < n:
-                self.makeAutocompletionList(t1[i],t1[i+1],aList)
-                i += 1
-        else:
-            reduce(lambda a,b: self.makeAutocompletionList(a,b,aList),t1)
-    
-        if aList:
-            for a, b in aList:
-                z = self.watchwords.get(a,[])
-                if str(b) not in z:
-                    z.append(str(b))
-                    self.watchwords [a] = z
-    #@nonl
-    #@+node:ekr.20051025144611.20:makeAutocompletionList
-    def makeAutocompletionList (self,a,b,glist):
-        
-        '''We have seen a.b, where a and b are arbitrary strings.
-        Append (a1.b1) to glist.
-        To compute a1, scan backwards in a until finding whitespace.
-        To compute b1, scan forwards in b until finding a char not in okchars.
-        '''
-        
-        if 1: # Do everything inline.  It's a few percent faster.
-    
-            # Compute reverseFindWhitespace inline.
-            i = len(a) -1
-            while i >= 0:
-                if a[i].isspace() or a [i] == '.':
-                    a1 = a [i+1:] ; break
-                i -= 1
-            else:
-                a1 = a
-                
-            # Compute getCleanString inline.
-            i = 0
-            for ch in b:
-                if ch not in self.okchars:
-                    b1 = b[:i] ; break
-                i += 1
-            else:
-                b1 = b
-    
-            if b1:
-                glist.append((a1,b1),)
-                
-            return b # Not needed unless we are using reduce.
-        else:
-            a1 = self.reverseFindWhitespace(a)
-            if a1:
-                b1 = self.getCleanString(b)
-                if b1:
-                    glist.append((a1,b1))
-            return b 
-    #@nonl
-    #@+node:ekr.20060216161258:reverseFindWhitespace
-    def reverseFindWhitespace (self,s):
-    
-        '''Return the longest tail of s containing no whitespace or period.'''
-    
-        i = len(s) -1
-        while i >= 0:
-            if s[i].isspace() or s [i] == '.': return s [i+1:]
-            i -= 1
-    
-        return s
-    #@nonl
-    #@-node:ekr.20060216161258:reverseFindWhitespace
-    #@+node:ekr.20060216161253:getCleanString
-    def getCleanString (self,s):
-        
-        '''Return the prefix of s containing only chars in okchars.'''
-        
-        i = 0
-        for ch in s:
-            if ch not in self.okchars:
-                return s[:i]
-            i += 1
-    
-        return s
-    #@nonl
-    #@-node:ekr.20060216161253:getCleanString
-    #@-node:ekr.20051025144611.20:makeAutocompletionList
-    #@-node:ekr.20060216161247:scanForAutoCompleter
-    #@-node:ekr.20060216160332.1:Scanning
     #@+node:ekr.20060222082041:class classScannerClass
     class classScannerClass:
+        
+        '''A class to find class definitions in a node or its parents.'''
         
         #@    @+others
         #@+node:ekr.20060222082041.1:ctor
