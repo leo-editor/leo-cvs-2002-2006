@@ -121,6 +121,7 @@ class autoCompleterClass:
         self.c = c = k.c
         self.k = k
         self.calltips = {} # Keys are language, values are dicts: keys are ids, values are signatures.
+        self.classScanner = self.classScannerClass(c)
         self.knownObjects = {}
         self.membersList = None
         self.objectDict = {} # Created on first use of the autocompleter.
@@ -766,6 +767,311 @@ class autoCompleterClass:
     #@nonl
     #@-node:ekr.20060220062710:start
     #@-node:ekr.20060216160332.2:Helpers
+    #@+node:ekr.20060216160332.1:Scanning
+    # Not use at present, but soon.
+    #@nonl
+    #@+node:ekr.20060217132329:initialScan
+    # Don't call this finishCreate: the startup logic would call it too soon.
+    
+    def initialScan (self):
+        
+        g.trace(g.callers())
+        
+        self.scan(thread=True)
+    #@nonl
+    #@-node:ekr.20060217132329:initialScan
+    #@+node:ekr.20060216155558.1:scan
+    def scan (self,event=None,verbose=True,thread=True):
+        
+        c = self.c
+        if not c or not c.exists or c.frame.isNullFrame: return
+        if g.app.unitTesting: return
+        
+        # g.trace('autocompleter')
+        
+        if 0: ## thread:
+            # Use a thread to do the initial scan so as not to interfere with the user.            
+            def scan ():
+                #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
+                # During unit testing c gets destroyed before the scan finishes.
+                if not g.app.unitTesting:
+                    self.scanOutline(verbose=True)
+        
+            t = threading.Thread(target=scan)
+            t.setDaemon(True)
+            t.start()
+        else:
+            self.scanOutline(verbose=verbose)
+    #@nonl
+    #@-node:ekr.20060216155558.1:scan
+    #@+node:ekr.20060216163305:definePatterns
+    def definePatterns (self):
+        
+        self.space = r'[ \t\r\f\v ]+' # one or more whitespace characters.
+        self.end = r'\w+\s*\([^)]*\)' # word (\w) ws ( any ) (can cross lines)
+    
+        # Define re patterns for various languages.
+        # These patterns match method/function definitions.
+        self.pats = {}
+        self.pats ['python'] = re.compile(r'def\s+%s' % self.end)  # def ws word ( any ) # Can cross line boundaries.
+        self.pats ['java'] = re.compile(
+            r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
+                self.space,self.space,self.end))
+        self.pats ['perl'] = re.compile(r'sub\s+%s' % self.end)
+        self.pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (self.space,self.end))
+        self.pats ['c'] = re.compile(r'\w+%s%s' % (self.space,self.end))
+        
+        # Define self.okchars for getCleaString.
+        okchars = {}
+        for z in string.ascii_letters:
+            okchars [z] = z
+        okchars ['_'] = '_'
+        self.okchars = okchars 
+        
+        if 0: # not used
+            self.r  = string.punctuation.replace('(','').replace('.','') # punctuation except ( and .
+            self.pt = string.digits + string.letters + self.r
+            ripout = string.punctuation + string.whitespace + '\n'
+            self.ripout = ripout.replace('_','') # punctuation except underscore.
+    #@nonl
+    #@-node:ekr.20060216163305:definePatterns
+    #@+node:ekr.20060216161220:scanOutline
+    def scanOutline (self,verbose=True):
+    
+        '''Traverse an outline and build the autocommander database.'''
+        
+        if verbose: g.es_print('Scanning for auto-completer...')
+    
+        c = self.c ; k = self.k ; count = 0
+        for p in c.rootPosition().allNodes_iter():
+            if verbose:
+                count += 1 ;
+                if (count % 200) == 0: g.es('.',newline=False)
+            language = g.scanForAtLanguage(c,p)
+            # g.trace('language',language,p.headString())
+            s = p.bodyString()
+            if k.enable_autocompleter:
+                self.scanForAutoCompleter(s)
+            if k.enable_calltips:
+                self.scanForCallTip(s,language)
+    
+        if 0:
+            g.trace('watchwords...\n\n')
+            keys = self.watchwords.keys() ; keys.sort()
+            for key in keys:
+                aList = self.watchwords.get(key)
+                g.trace('%s:\n\n' % (key), g.listToString(aList))
+        if 0:
+            g.trace('calltips...\n\n')
+            keys = self.calltips.keys() ; keys.sort()
+            for key in keys:
+                d = self.calltips.get(key)
+                if d:
+                    g.trace('%s:\n\n' % (key), g.dictToString(d))
+            
+        if verbose:        
+            g.es_print('\nauto-completer scan complete',color='blue')
+    #@nonl
+    #@-node:ekr.20060216161220:scanOutline
+    #@+node:ekr.20060216161234:scanForCallTip
+    def scanForCallTip (self,s,language):
+    
+        '''this function scans text for calltip info'''
+    
+        d = self.calltips.get(language,{})
+        pat = self.pats.get(language or 'python')
+        
+        # Set results to a list of all the function/method defintions in s.
+        results = pat and pat.findall(s) or []
+    
+        for z in results:
+            if isinstance(z,tuple): z = z [0]
+            pieces2 = z.split('(')
+            # g.trace(pieces2)
+            pieces2 [0] = pieces2 [0].split() [-1]
+            a, b = pieces2 [0], pieces2 [1]
+            aList = d.get(a,[])
+            if str(z) not in aList:
+                aList.append(str(z))
+                d [a] = aList
+        
+        self.calltips [language] = d
+    #@nonl
+    #@-node:ekr.20060216161234:scanForCallTip
+    #@+node:ekr.20060216161247:scanForAutoCompleter
+    def scanForAutoCompleter (self,s):
+    
+        '''This function scans text for the autocompleter database.'''
+    
+        aList = [] ; t1 = s.split('.')
+        
+        if 1: # Slightly faster.
+            t1 = s.split('.') ; 
+            i = 0 ; n = len(t1)-1
+            while i < n:
+                self.makeAutocompletionList(t1[i],t1[i+1],aList)
+                i += 1
+        else:
+            reduce(lambda a,b: self.makeAutocompletionList(a,b,aList),t1)
+    
+        if aList:
+            for a, b in aList:
+                z = self.watchwords.get(a,[])
+                if str(b) not in z:
+                    z.append(str(b))
+                    self.watchwords [a] = z
+    #@nonl
+    #@+node:ekr.20051025144611.20:makeAutocompletionList
+    def makeAutocompletionList (self,a,b,glist):
+        
+        '''We have seen a.b, where a and b are arbitrary strings.
+        Append (a1.b1) to glist.
+        To compute a1, scan backwards in a until finding whitespace.
+        To compute b1, scan forwards in b until finding a char not in okchars.
+        '''
+        
+        if 1: # Do everything inline.  It's a few percent faster.
+    
+            # Compute reverseFindWhitespace inline.
+            i = len(a) -1
+            while i >= 0:
+                if a[i].isspace() or a [i] == '.':
+                    a1 = a [i+1:] ; break
+                i -= 1
+            else:
+                a1 = a
+                
+            # Compute getCleanString inline.
+            i = 0
+            for ch in b:
+                if ch not in self.okchars:
+                    b1 = b[:i] ; break
+                i += 1
+            else:
+                b1 = b
+    
+            if b1:
+                glist.append((a1,b1),)
+                
+            return b # Not needed unless we are using reduce.
+        else:
+            a1 = self.reverseFindWhitespace(a)
+            if a1:
+                b1 = self.getCleanString(b)
+                if b1:
+                    glist.append((a1,b1))
+            return b 
+    #@nonl
+    #@+node:ekr.20060216161258:reverseFindWhitespace
+    def reverseFindWhitespace (self,s):
+    
+        '''Return the longest tail of s containing no whitespace or period.'''
+    
+        i = len(s) -1
+        while i >= 0:
+            if s[i].isspace() or s [i] == '.': return s [i+1:]
+            i -= 1
+    
+        return s
+    #@nonl
+    #@-node:ekr.20060216161258:reverseFindWhitespace
+    #@+node:ekr.20060216161253:getCleanString
+    def getCleanString (self,s):
+        
+        '''Return the prefix of s containing only chars in okchars.'''
+        
+        i = 0
+        for ch in s:
+            if ch not in self.okchars:
+                return s[:i]
+            i += 1
+    
+        return s
+    #@nonl
+    #@-node:ekr.20060216161253:getCleanString
+    #@-node:ekr.20051025144611.20:makeAutocompletionList
+    #@-node:ekr.20060216161247:scanForAutoCompleter
+    #@-node:ekr.20060216160332.1:Scanning
+    #@+node:ekr.20060222082041:class classScannerClass
+    class classScannerClass:
+        
+        #@    @+others
+        #@+node:ekr.20060222082041.1:ctor
+        def __init__ (self,c):
+            
+            self.c = c
+            
+            # Ignore @root for now:
+            # self.start_in_doc = c.config.getBool('at_root_bodies_start_in_doc_mode')
+        
+            self.start_in_doc = False
+        #@nonl
+        #@-node:ekr.20060222082041.1:ctor
+        #@+node:ekr.20060222082041.2:findParentClass
+        def findParentClass (self,p):
+            
+            for p in p.self_and_parents_iter():
+                className = self.findClass(p)
+                if className: return className
+            else:
+                return None
+        #@nonl
+        #@-node:ekr.20060222082041.2:findParentClass
+        #@+node:ekr.20060222082041.3:findClass & helpers
+        def findClass (self,p):
+        
+            lines = g.splitLines(p.bodyString())
+            inDoc = self.start_in_doc
+            # g.trace(p.headString())
+            for s in lines:
+                if inDoc:
+                    if self.endsDoc(s):
+                        inDoc = False
+                else:
+                    if self.startsDoc(s):
+                        inDoc = True
+                    else:
+                        # Not a perfect scan: a triple-string could start with 'class',
+                        # but perfection is not important.
+                        className = self.startsClass(s)
+                        if className: return className
+            else:
+                return None
+        #@nonl
+        #@+node:ekr.20060222082041.4:endsDoc
+        def endsDoc (self,s):
+            
+            return s.startswith('@c')
+        #@nonl
+        #@-node:ekr.20060222082041.4:endsDoc
+        #@+node:ekr.20060222082041.5:startsClass
+        def startsClass (self,s):
+            
+            if s.startswith('class'):
+                i = 5
+                i = g.skip_ws(s,i)
+                j = g.skip_id(s,i)
+                word = s[i:j]
+                # g.trace(word)
+                return word
+            else:
+                return None
+        #@nonl
+        #@-node:ekr.20060222082041.5:startsClass
+        #@+node:ekr.20060222082041.6:startsDoc
+        def startsDoc (self,s):
+        
+            for s2 in ('@doc','@ ','@\n', '@r', '@\t'):
+                if s.startswith(s2):
+                    return True
+            else:
+                return False
+        #@nonl
+        #@-node:ekr.20060222082041.6:startsDoc
+        #@-node:ekr.20060222082041.3:findClass & helpers
+        #@-others
+    #@nonl
+    #@-node:ekr.20060222082041:class classScannerClass
     #@-others
 #@nonl
 #@-node:ekr.20051126123249:class autoCompleterClass
