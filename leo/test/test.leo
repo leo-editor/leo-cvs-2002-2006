@@ -255,19 +255,20 @@
 <v t="ekr.20060222142158"><vh>computeErrorNode</vh></v>
 <v t="ekr.20060222145802.2" a="E"><vh>putBody</vh></v>
 </v>
-<v t="ekr.20060222140651"><vh>testClass</vh>
-<v t="ekr.20060222140651.1"><vh>ctor</vh></v>
-<v t="ekr.20060222140651.2"><vh>good</vh></v>
-<v t="ekr.20060222140651.3"><vh>bad</vh></v>
-<v t="ekr.20060223082400"><vh>test</vh></v>
-</v>
-<v t="ekr.20060223103456"><vh>Previous code to be deleted</vh></v>
-<v t="ekr.20060223094536" a="EV"><vh>get members from class objects</vh>
+<v t="ekr.20060223094536"><vh>get members from class objects</vh>
 <v t="ekr.20060223094614" a="E"><vh>testClass</vh>
 <v t="ekr.20060223094614.1"><vh>ctor</vh></v>
 <v t="ekr.20060223094614.2"><vh>good</vh></v>
 </v>
 </v>
+<v t="ekr.20060222140651" a="E"><vh>testClass (for test of self completion)</vh>
+<v t="ekr.20060222140651.1"><vh>ctor</vh></v>
+<v t="ekr.20060222140651.2" a="E"><vh>spam</vh></v>
+<v t="ekr.20060223125426"><vh>eggs</vh></v>
+<v t="ekr.20060222140651.3"><vh>bad</vh></v>
+<v t="ekr.20060223120040"><vh>test of self</vh></v>
+</v>
+<v t="ekr.20060223131415" a="V"><vh>Test of meaningless self</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4565,7 +4566,7 @@ print scanner.findParentClass(p)</t>
     @others</t>
 <t tx="ekr.20060222140651.1">def __init__ (self,c):
     self.c = c</t>
-<t tx="ekr.20060222140651.2">def good (self):
+<t tx="ekr.20060222140651.2">def spam (self):
     pass</t>
 <t tx="ekr.20060222140651.3">def bad (self):
     self = </t>
@@ -4633,7 +4634,6 @@ finally:
     else:
         global old_putBody
         old_putBody(p,oneNodeOnly,fromString)</t>
-<t tx="ekr.20060223082400">self.</t>
 <t tx="ekr.20060223094536">import inspect,types
 
 # Define valid test class
@@ -4673,31 +4673,9 @@ g.trace(g.listToString(dir(obj)))</t>
     # assert(a)</t>
 <t tx="ekr.20060223094614.2">def good (self):
     pass</t>
-<t tx="ekr.20060223103456">if 0:
-
-    print '-' * 40
-    g.trace(g.listToString(aList,sort=True,tag='aList...'))
-    
-    okTypes = (
-        types.ClassType,types.FunctionType,
-        types.InstanceType,types.MethodType,
-        types.UnboundMethodType,
-    )
-    
-    # The 'proxy object is an object containing only these memebers as attributes.
-    members = [b for a,b in aList if type(b) in okTypes and hasattr(b,'__name__')]
-    
-    print '-' * 40
-    g.trace(g.listToString(members,sort=True,tag='Members...'))
-    
-    obj = g.Bunch(isAutoCompleterProxyObject=True,members=members)
-    
-    if 0:
-        for z in members:
-            if not hasattr(obj,z.__name__):
-                setattr(obj,z.__name__,z)
-        
-        print '*' * 40
-        print g.listToString(dir(obj),sort=True)</t>
+<t tx="ekr.20060223120040"></t>
+<t tx="ekr.20060223125426">def eggs(self):
+    pass</t>
+<t tx="ekr.20060223131415"></t>
 </tnodes>
 </leo_file>
