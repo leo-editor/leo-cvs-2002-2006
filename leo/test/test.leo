@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7971" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7976" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="37" left="347" height="857" width="780"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -250,16 +250,23 @@
 </v>
 </v>
 <v t="ekr.20060222084658"><vh>autocomplete test</vh></v>
-<v t="ekr.20060222112248"><vh>find classes</vh></v>
-<v t="ekr.20060222140651" a="E"><vh>testClass</vh>
-<v t="ekr.20060222140651.1" a="V"><vh>ctor</vh></v>
-<v t="ekr.20060222140651.2"><vh>good</vh></v>
-<v t="ekr.20060222140651.3"><vh>bad</vh></v>
-</v>
-<v t="ekr.20060222140651.4" a="E"><vh>forgiving parser prototype</vh>
+<v t="ekr.20060222140651.4"><vh>forgiving parser prototype</vh>
 <v t="ekr.20060222145802"><vh>forgivingParser</vh></v>
 <v t="ekr.20060222142158"><vh>computeErrorNode</vh></v>
 <v t="ekr.20060222145802.2" a="E"><vh>putBody</vh></v>
+</v>
+<v t="ekr.20060222140651"><vh>testClass</vh>
+<v t="ekr.20060222140651.1"><vh>ctor</vh></v>
+<v t="ekr.20060222140651.2"><vh>good</vh></v>
+<v t="ekr.20060222140651.3"><vh>bad</vh></v>
+<v t="ekr.20060223082400"><vh>test</vh></v>
+</v>
+<v t="ekr.20060223103456"><vh>Previous code to be deleted</vh></v>
+<v t="ekr.20060223094536" a="ETV"><vh>get members from class objects</vh>
+<v t="ekr.20060223094614" a="E"><vh>testClass</vh>
+<v t="ekr.20060223094614.1"><vh>ctor</vh></v>
+<v t="ekr.20060223094614.2"><vh>good</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -4551,13 +4558,6 @@ if 0: # Original code.
 <t tx="ekr.20060222082236">scanner = c.k.autoCompleter.classScanner
 print scanner.findParentClass(p)</t>
 <t tx="ekr.20060222084658"></t>
-<t tx="ekr.20060222112248">import gc, types
-d = {}
-for z in gc.get_objects():
-    if type(z) == types.InstanceType:
-        d[z.__class__.__name__] = z
-keys = d.keys() ; keys.sort()
-g.printList(keys,tag='Classes',sort=True)</t>
 <t tx="ekr.20060222140651">class testClass:
     
     '''A class to test the forgiving parser.'''
@@ -4633,5 +4633,66 @@ finally:
     else:
         global old_putBody
         old_putBody(p,oneNodeOnly,fromString)</t>
+<t tx="ekr.20060223082400">self.</t>
+<t tx="ekr.20060223094536">import inspect,types
+
+# Define valid test class
+@others
+
+aList = inspect.getmembers(testClass)
+
+# Set args to the list of required arguments.
+args = inspect.getargs(testClass.__init__.im_func.func_code)
+args = args[0]
+
+# Create the proxy object by passing None for all required arguments.
+n = len(args)-1
+args = [None for z in xrange(n)]
+obj = testClass(*args)
+
+# Verify that it has all the proper attributes.
+g.trace(g.listToString(dir(obj)))</t>
+<t tx="ekr.20060223094614">class testClass:
+    
+    '''A class to test the forgiving parser.'''
+    
+    @others</t>
+<t tx="ekr.20060223094614.1">def __init__ (self,a,b,c,d='d',*args,**keys):
+    
+    g.trace(self,a,b,c)
+    self.a = a
+    self.b = b
+    self.c = c
+    self.d = d
+    self.args = args
+    self.keys = keys</t>
+<t tx="ekr.20060223094614.2">def good (self):
+    pass</t>
+<t tx="ekr.20060223103456">if 0:
+
+    print '-' * 40
+    g.trace(g.listToString(aList,sort=True,tag='aList...'))
+    
+    okTypes = (
+        types.ClassType,types.FunctionType,
+        types.InstanceType,types.MethodType,
+        types.UnboundMethodType,
+    )
+    
+    # The 'proxy object is an object containing only these memebers as attributes.
+    members = [b for a,b in aList if type(b) in okTypes and hasattr(b,'__name__')]
+    
+    print '-' * 40
+    g.trace(g.listToString(members,sort=True,tag='Members...'))
+    
+    obj = g.Bunch(isAutoCompleterProxyObject=True,members=members)
+    
+    if 0:
+        for z in members:
+            if not hasattr(obj,z.__name__):
+                setattr(obj,z.__name__,z)
+        
+        print '*' * 40
+        print g.listToString(dir(obj),sort=True)</t>
 </tnodes>
 </leo_file>
