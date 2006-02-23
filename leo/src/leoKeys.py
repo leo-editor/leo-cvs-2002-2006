@@ -842,21 +842,19 @@ class autoCompleterClass:
     #@+node:ekr.20060223124014.2:completeSelf
     def completeSelf (self):
         
-        c = self.c ; p = c.currentPosition()
+        className,obj,p,s = self.classScanner.scan()
+        # g.trace(className,obj,p,s)
     
-        obj = self.selfTnodesDict.get(p.v.t) # **Much** quicker than scanning.
-    
-        if not obj:
-            className, s = self.classScanner.parse()
-            if className and s:
-                obj = self.selfObjectsDict.get(className)
-                if not obj:
-                    theClass = self.computeClassObjectFromString(className,s)
-                    if theClass:
-                        obj = self.createProxyObjectFromClass(className,theClass)
-                        if obj:
-                            self.selfObjectsDict [className] = obj
-                            self.selfTnodesDict [p.v.t] = obj
+        if not obj and className and s:
+            obj = self.selfObjectsDict.get(className)
+            if not obj:
+                theClass = self.computeClassObjectFromString(className,s)
+                if theClass:
+                    obj = self.createProxyObjectFromClass(className,theClass)
+                    if obj:
+                        self.selfObjectsDict [className] = obj
+                        # This prevents future rescanning, even if the node moves.
+                        self.selfTnodesDict [p.v.t] = obj
         if obj:
             self.push(self.object)
             self.object = obj
@@ -1317,29 +1315,44 @@ class autoCompleterClass:
             self.start_in_doc = False
         #@nonl
         #@-node:ekr.20060222082041.1:ctor
-        #@+node:ekr.20060223120755:parse
-        def parse (self):
+        #@+node:ekr.20060223120755:scan
+        def scan (self):
             
-            c = self.c ; p = c.currentPosition()
-            parser = c.k.autoCompleter.forgivingParser
-            
-            p,className = self.findParentClass(p)
-            if p and className:
+            c = self.c
+        
+            className,obj,p = self.findParentClass(c.currentPosition())
+            # g.trace(className,obj,p)
+        
+            if p and not obj:
+                parser = c.k.autoCompleter.forgivingParser
                 s = parser.parse(p)
-                return className,s
             else:
-                return None,None
+                s = None
+                
+            return className,obj,p,s
         #@nonl
-        #@-node:ekr.20060223120755:parse
+        #@-node:ekr.20060223120755:scan
         #@+node:ekr.20060222082041.2:findParentClass
-        def findParentClass (self,p):
+        def findParentClass (self,root):
             
-            for p in p.self_and_parents_iter():
+            autoCompleter = self.c.k.autoCompleter
+            
+            # First, see if any parent has already been scanned.
+            for p in root.self_and_parents_iter():
+                obj = autoCompleter.selfTnodesDict.get(p.v.t)
+                if obj:
+                    # g.trace('found',obj,'in',p.headString())
+                    return None,obj,p
+            
+            # Next, do a much slower scan.
+            # g.trace('slow scanning...')
+            for p in root.self_and_parents_iter():
                 className = self.findClass(p)
                 if className:
-                    return p,className
+                    # g.trace('found',className,'in',p.headString())
+                    return className,None,p
             
-            return None,None
+            return None,None,None
         #@nonl
         #@-node:ekr.20060222082041.2:findParentClass
         #@+node:ekr.20060222082041.3:findClass & helpers

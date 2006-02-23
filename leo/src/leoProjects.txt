@@ -5268,87 +5268,6 @@ def getPublicCommands (self):
     }
 #@nonl
 #@-node:ekr.20050920084036.173:getPublicCommands (keyHandler)
-#@+node:ekr.20060221112937:setObjectAndMembersList & helpers
-def setObjectAndMembersList (self,word):
-    
-    c = self.c
-
-    if word in ( "'",'"'):
-        word = 'aString' # This is in the objectsDict.
-        self.clear()
-        self.push(self.object)
-        self.object = 'aString'
-        self.membersList = self.getMembersList(self.object)
-    elif self.prevObjects:
-        self.getObjectFromAttribute(word)
-    elif word == 'self':
-        self.completeSelf()
-    else:
-        obj = self.objectDict.get(word) or sys.modules.get(word)
-        self.completeFromObject(obj)
-
-    # g.trace(word,self.object,len(self.membersList))
-#@nonl
-#@+node:ekr.20060223124014:getObjectFromAttribute
-def backup (self,word):
-    
-    prevObj = self.prevObjects and self.prevObjects[-1]
-
-    if prevObj and self.hasAttr(prevObj,word):
-        self.object = self.getAttr(prevObj,word)
-        self.appendToKnownObjects(self.object)
-        self.membersList = self.getMembersList(self.object)
-    else:
-        # No special support for 'self' here.
-        # Don't clear the stack here!
-        self.membersList = []
-        self.object = None
-#@nonl
-#@-node:ekr.20060223124014:getObjectFromAttribute
-#@+node:ekr.20060223124014.2:completeSelf
-def completeSelf (self):
-    
-    c = self.c ; p = c.currentPosition()
-
-    obj = self.selfTnodesDict.get(p.v.t) # **Much** quicker than scanning.
-
-    if not obj:
-        className, s = self.classScanner.parse()
-        if className and s:
-            obj = self.selfObjectsDict.get(className)
-            if not obj:
-                theClass = self.computeClassObjectFromString(className,s)
-                if theClass:
-                    obj = self.createProxyObjectFromClass(className,theClass)
-                    if obj:
-                        self.selfObjectsDict [className] = obj
-                        self.selfTnodesDict [p.v.t] = obj
-    if obj:
-        self.push(self.object)
-        self.object = obj
-        self.membersList = self.getMembersList(obj=obj)
-    else:
-        # No further action possible or desirable.
-        self.object = None
-        self.clear()
-        self.membersList = []
-#@nonl
-#@-node:ekr.20060223124014.2:completeSelf
-#@+node:ekr.20060223124014.3:completeFromObject
-def completeFromObject (self,obj):
-
-    if obj:
-        self.appendToKnownObjects(obj)
-        self.push(self.object)
-        self.object = obj
-        self.membersList = self.getMembersList(obj=obj)
-    else:
-        self.object = None
-        self.clear()
-        self.membersList = []
-#@nonl
-#@-node:ekr.20060223124014.3:completeFromObject
-#@-node:ekr.20060221112937:setObjectAndMembersList & helpers
 #@-node:ekr.20060219183519:Ref code
 #@+node:ekr.20051126123249:class autoCompleterClass
 class autoCompleterClass:
@@ -6089,21 +6008,19 @@ def backup (self,word):
 #@+node:ekr.20060223124014.2:completeSelf
 def completeSelf (self):
     
-    c = self.c ; p = c.currentPosition()
+    className,obj,p,s = self.classScanner.scan()
+    # g.trace(className,obj,p,s)
 
-    obj = self.selfTnodesDict.get(p.v.t) # **Much** quicker than scanning.
-
-    if not obj:
-        className, s = self.classScanner.parse()
-        if className and s:
-            obj = self.selfObjectsDict.get(className)
-            if not obj:
-                theClass = self.computeClassObjectFromString(className,s)
-                if theClass:
-                    obj = self.createProxyObjectFromClass(className,theClass)
-                    if obj:
-                        self.selfObjectsDict [className] = obj
-                        self.selfTnodesDict [p.v.t] = obj
+    if not obj and className and s:
+        obj = self.selfObjectsDict.get(className)
+        if not obj:
+            theClass = self.computeClassObjectFromString(className,s)
+            if theClass:
+                obj = self.createProxyObjectFromClass(className,theClass)
+                if obj:
+                    self.selfObjectsDict [className] = obj
+                    # This prevents future rescanning, even if the node moves.
+                    self.selfTnodesDict [p.v.t] = obj
     if obj:
         self.push(self.object)
         self.object = obj
@@ -6560,29 +6477,44 @@ def __init__ (self,c):
     self.start_in_doc = False
 #@nonl
 #@-node:ekr.20060222082041.1:ctor
-#@+node:ekr.20060223120755:parse
-def parse (self):
+#@+node:ekr.20060223120755:scan
+def scan (self):
     
-    c = self.c ; p = c.currentPosition()
-    parser = c.k.autoCompleter.forgivingParser
-    
-    p,className = self.findParentClass(p)
-    if p and className:
+    c = self.c
+
+    className,obj,p = self.findParentClass(c.currentPosition())
+    # g.trace(className,obj,p)
+
+    if p and not obj:
+        parser = c.k.autoCompleter.forgivingParser
         s = parser.parse(p)
-        return className,s
     else:
-        return None,None
+        s = None
+        
+    return className,obj,p,s
 #@nonl
-#@-node:ekr.20060223120755:parse
+#@-node:ekr.20060223120755:scan
 #@+node:ekr.20060222082041.2:findParentClass
-def findParentClass (self,p):
+def findParentClass (self,root):
     
-    for p in p.self_and_parents_iter():
+    autoCompleter = self.c.k.autoCompleter
+    
+    # First, see if any parent has already been scanned.
+    for p in root.self_and_parents_iter():
+        obj = autoCompleter.selfTnodesDict.get(p.v.t)
+        if obj:
+            # g.trace('found',obj,'in',p.headString())
+            return None,obj,p
+    
+    # Next, do a much slower scan.
+    # g.trace('slow scanning...')
+    for p in root.self_and_parents_iter():
         className = self.findClass(p)
         if className:
-            return p,className
+            # g.trace('found',className,'in',p.headString())
+            return className,None,p
     
-    return None,None
+    return None,None,None
 #@nonl
 #@-node:ekr.20060222082041.2:findParentClass
 #@+node:ekr.20060222082041.3:findClass & helpers
@@ -6639,6 +6571,85 @@ def startsDoc (self,s):
 #@-node:ekr.20060222082041.3:findClass & helpers
 #@-node:ekr.20060222082041:class classScannerClass
 #@-node:ekr.20051126123249:class autoCompleterClass
+#@+node:ekr.20060221112937:setObjectAndMembersList & helpers
+def setObjectAndMembersList (self,word):
+    
+    c = self.c
+
+    if word in ( "'",'"'):
+        word = 'aString' # This is in the objectsDict.
+        self.clear()
+        self.push(self.object)
+        self.object = 'aString'
+        self.membersList = self.getMembersList(self.object)
+    elif self.prevObjects:
+        self.getObjectFromAttribute(word)
+    elif word == 'self':
+        self.completeSelf()
+    else:
+        obj = self.objectDict.get(word) or sys.modules.get(word)
+        self.completeFromObject(obj)
+
+    # g.trace(word,self.object,len(self.membersList))
+#@nonl
+#@+node:ekr.20060223124014:getObjectFromAttribute
+def backup (self,word):
+    
+    prevObj = self.prevObjects and self.prevObjects[-1]
+
+    if prevObj and self.hasAttr(prevObj,word):
+        self.object = self.getAttr(prevObj,word)
+        self.appendToKnownObjects(self.object)
+        self.membersList = self.getMembersList(self.object)
+    else:
+        # No special support for 'self' here.
+        # Don't clear the stack here!
+        self.membersList = []
+        self.object = None
+#@nonl
+#@-node:ekr.20060223124014:getObjectFromAttribute
+#@+node:ekr.20060223124014.2:completeSelf
+def completeSelf (self):
+    
+    className,obj,p,s = self.classScanner.scan()
+    # g.trace(className,obj,p,s)
+
+    if not obj and className and s:
+        obj = self.selfObjectsDict.get(className)
+        if not obj:
+            theClass = self.computeClassObjectFromString(className,s)
+            if theClass:
+                obj = self.createProxyObjectFromClass(className,theClass)
+                if obj:
+                    self.selfObjectsDict [className] = obj
+                    # This prevents future rescanning, even if the node moves.
+                    self.selfTnodesDict [p.v.t] = obj
+    if obj:
+        self.push(self.object)
+        self.object = obj
+        self.membersList = self.getMembersList(obj=obj)
+    else:
+        # No further action possible or desirable.
+        self.object = None
+        self.clear()
+        self.membersList = []
+#@nonl
+#@-node:ekr.20060223124014.2:completeSelf
+#@+node:ekr.20060223124014.3:completeFromObject
+def completeFromObject (self,obj):
+
+    if obj:
+        self.appendToKnownObjects(obj)
+        self.push(self.object)
+        self.object = obj
+        self.membersList = self.getMembersList(obj=obj)
+    else:
+        self.object = None
+        self.clear()
+        self.membersList = []
+#@nonl
+#@-node:ekr.20060223124014.3:completeFromObject
+#@-node:ekr.20060221112937:setObjectAndMembersList & helpers
 #@-node:ekr.20051126122638:Finish autocompletion
 #@-node:ekr.20060218075614:4.4 a7 projects
 #@-node:ekr.20050924073836:4.4 projects
