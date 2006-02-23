@@ -5199,7 +5199,7 @@ def importFromPath (name,path,pluginName=None,verbose=False):
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
-#@+node:ekr.20060221083356:prettyPrintType
+#@+node:ekr.20060221083356:g.prettyPrintType
 def prettyPrintType (obj):
 
     if type(obj) in (
@@ -5219,7 +5219,7 @@ def prettyPrintType (obj):
         if theType.endswith("'>"): theType = theType[:-2]
         return theType
 #@nonl
-#@-node:ekr.20060221083356:prettyPrintType
+#@-node:ekr.20060221083356:g.prettyPrintType
 #@+node:ekr.20040629162023:readLines class and generator
 #@+node:EKR.20040612114220.3:g.readLinesGenerator
 def readLinesGenerator(s):

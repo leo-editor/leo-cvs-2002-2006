@@ -13,12 +13,13 @@ import leoEditCommands
 
 Tk = g.importExtension('Tkinter',pluginName=None,verbose=False)
 
+import compiler
 import inspect
+import parser
 import re
 import string
 import sys
 import types
-#@nonl
 #@-node:ekr.20050920094258:<< imports >>
 #@nl
 #@<< about 'internal' bindings >>
@@ -120,13 +121,19 @@ class autoCompleterClass:
         
         self.c = c = k.c
         self.k = k
+        self.allClassesDict = {} # Will be completed after more classes exist.
+        self.attrDictDict = {}  # Keys are languages (strings); values are anonymous attrDicts.
+            # attrDicts: keys are strings; values are list of strings (attributes).
         self.calltips = {} # Keys are language, values are dicts: keys are ids, values are signatures.
         self.classScanner = self.classScannerClass(c)
+        self.forgivingParser = self.forgivingParserClass(c)
         self.knownObjects = {}
+        self.language = None
         self.membersList = None
         self.objectDict = {} # Created on first use of the autocompleter.
         self.selection = None # The selection range on entry to autocompleter or calltips.
         self.selectedText = None # The selected text on entry to autocompleter or calltips.
+        self.selfObjectsDict = {} # Keys are classNames, values are real proxy objects.
         self.prefix = None
         self.prevObjects = []
         self.tabList = []
@@ -138,6 +145,25 @@ class autoCompleterClass:
         self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
         self.widget = None # The widget that should get focus after autocomplete is done.
     
+    #@+node:ekr.20060223085549:defineClassesDict
+    def defineClassesDict (self):
+        
+        # gc does not necessarily exist everywhere.
+        try:
+            import gc
+        except ImportError:
+            return {}
+    
+        d = {}
+        for z in gc.get_objects():
+            if type(z) == types.InstanceType:
+                d[z.__class__.__name__] = z
+    
+        # g.printList(d.keys(),tag='Classes',sort=True)
+        
+        return d
+    #@nonl
+    #@-node:ekr.20060223085549:defineClassesDict
     #@+node:ekr.20060219171914:defineObjectDict
     def defineObjectDict (self):
         
@@ -212,8 +238,8 @@ class autoCompleterClass:
         # First, handle the invocation character as usual.
         k.masterCommand(event,func=None,stroke=None,commandName=None)
     
-        language = g.scanForAtLanguage(c,c.currentPosition())
-        if w and language == 'python' and (k.enable_autocompleter or force):
+        self.language = g.scanForAtLanguage(c,c.currentPosition())
+        if w and self.language == 'python' and (k.enable_autocompleter or force):
             self.start(event=event,w=w)
     
         return 'break'
@@ -442,9 +468,9 @@ class autoCompleterClass:
         c = self.c ; w = self.widget
         word = g.app.gui.getSelectedText(w)
         old_obj = self.object
-        if word and old_obj and hasattr(old_obj,word):
+        if word and old_obj and self.hasAttr(old_obj,word):
             self.push(old_obj)
-            self.object = obj = getattr(old_obj,word)
+            self.object = obj = self.getAttr(old_obj,word)
             self.appendToKnownObjects(obj)
             self.leadinWord = word
             self.membersList = self.getMembersList(obj)
@@ -594,6 +620,33 @@ class autoCompleterClass:
         self.object = None
     #@nonl
     #@-node:ekr.20051127105102:finish
+    #@+node:ekr.20060223081914:getAttr and hasAttr
+    # The values of self.attrDictDic are anonymous attrDict's.
+    # attrDicts: keys are strings, values are lists of strings.
+    
+    def getAttr (self,obj,attr):
+        
+        '''Simulate getattr function, regardless of langauge.'''
+        
+        if self.language == 'python':
+            return getattr(obj,attr)
+        else:
+            d = self.attrDictDict.get(self.language)
+            aList = d.get(obj,[])
+            return attr in aList and attr
+    
+    def hasAttr (self,obj,attr):
+        
+        '''Simulate hasattr function, regardless of langauge.'''
+    
+        if self.language == 'python':
+            return hasattr(obj,attr)
+        else:
+            d = self.attrDictDict.get(self.language)
+            aList = d.get(obj,[])
+            return attr in aList
+    #@nonl
+    #@-node:ekr.20060223081914:getAttr and hasAttr
     #@+node:ekr.20060219111416:getLeadinWord
     def getLeadinWord (self,w):
         
@@ -658,9 +711,9 @@ class autoCompleterClass:
     
         word = g.app.gui.getSelectedText(w)
          
-        if not hasattr(obj,word): return
+        if not self.hasAttr(obj,word): return
         
-        obj = getattr(obj,word)
+        obj = self.getAttr(obj,word)
         doc = inspect.getdoc(obj)
         if not doc: return
     
@@ -702,9 +755,9 @@ class autoCompleterClass:
             if keysym == 'parenleft':
                 # Similar to chain logic.
                 obj = self.object
-                # g.trace(obj,word,hasattr(obj,word))
-                if hasattr(obj,word):
-                    obj = getattr(obj,word)
+                # g.trace(obj,word,self.hasAttr(obj,word))
+                if self.hasAttr(obj,word):
+                    obj = self.getAttr(obj,word)
                     self.push(self.object)
                     self.object = obj
                     self.leadinWord = word
@@ -748,39 +801,84 @@ class autoCompleterClass:
         return aList
     #@nonl
     #@-node:ekr.20060222092243:push, pop, clear, stackNames
-    #@+node:ekr.20060221112937:setObjectAndMembersList
+    #@+node:ekr.20060221112937:setObjectAndMembersList & helpers
     def setObjectAndMembersList (self,word):
         
-        obj = self.object ; self.push(obj)
+        c = self.c
     
         if word in ( "'",'"'):
             word = 'aString' # This is in the objectsDict.
             self.clear()
-            self.object = obj = 'aString'
-            self.membersList = self.getMembersList(obj)
+            self.push(self.object)
+            self.object = 'aString'
+            self.membersList = self.getMembersList(self.object)
         elif self.prevObjects:
-            if hasattr(self.prevObjects[-1],word):
-                self.object = obj = getattr(obj,word)
-                self.appendToKnownObjects(obj)
-                self.membersList = self.getMembersList(obj)
-            else:
-                # Don't clear the stack here!
-                self.membersList = []
-                self.object = None
+            self.getObjectFromAttribute(word)
+        elif word == 'self':
+            self.completeSelf()
         else:
             obj = self.objectDict.get(word) or sys.modules.get(word)
+            self.completeFromObject(obj)
+    
+        # g.trace(word,self.object,len(self.membersList))
+    #@nonl
+    #@+node:ekr.20060223124014:getObjectFromAttribute
+    def backup (self,word):
+        
+        prevObj = self.prevObjects and self.prevObjects[-1]
+    
+        if prevObj and self.hasAttr(prevObj,word):
+            self.object = self.getAttr(prevObj,word)
+            self.appendToKnownObjects(self.object)
+            self.membersList = self.getMembersList(self.object)
+        else:
+            # No special support for 'self' here.
+            # Don't clear the stack here!
+            self.membersList = []
+            self.object = None
+    #@nonl
+    #@-node:ekr.20060223124014:getObjectFromAttribute
+    #@+node:ekr.20060223124014.2:completeSelf
+    def completeSelf (self): 
+     
+        className, s = self.classScanner.parse()
+        
+        if className and s:
+            obj = self.selfObjectsDict.get(className)
+            if not obj:
+                theClass = self.computeClassObjectFromString(className,s)
+                if theClass:
+                    obj = self.createProxyObjectFromClass(className,theClass)
+                    g.trace(obj)
+                    self.selfObjectsDict [className] = obj
             if obj:
-                self.appendToKnownObjects(obj)
                 self.push(self.object)
                 self.object = obj
                 self.membersList = self.getMembersList(obj=obj)
-            else:
-                self.object = None
-                self.clear()
-                self.membersList = []
-        # g.trace(word,self.object,len(self.membersList))
+                # self.computeMembersList()
+                return
+    
+        # No further action possible or desirable.
+        self.object = None
+        self.clear()
+        self.membersList = []
     #@nonl
-    #@-node:ekr.20060221112937:setObjectAndMembersList
+    #@-node:ekr.20060223124014.2:completeSelf
+    #@+node:ekr.20060223124014.3:completeFromObject
+    def completeFromObject (self,obj):
+    
+        if obj:
+            self.appendToKnownObjects(obj)
+            self.push(self.object)
+            self.object = obj
+            self.membersList = self.getMembersList(obj=obj)
+        else:
+            self.object = None
+            self.clear()
+            self.membersList = []
+    #@nonl
+    #@-node:ekr.20060223124014.3:completeFromObject
+    #@-node:ekr.20060221112937:setObjectAndMembersList & helpers
     #@+node:ekr.20051127070018:setSelection
     def setSelection (self,s):
         
@@ -808,7 +906,9 @@ class autoCompleterClass:
         if w: self.widget = w
         else: w = self.widget
         
+        # We wait until now to define these dicts so that more classes and objects will exist.
         if not self.objectDict:
+            self.defineClassesDict()
             self.defineObjectDict()
     
         self.prefix = ''
@@ -819,6 +919,384 @@ class autoCompleterClass:
     #@nonl
     #@-node:ekr.20060220062710:start
     #@-node:ekr.20060216160332.2:Helpers
+    #@+node:ekr.20060216160332.1:Scanning
+    # Not used at present, but soon.
+    #@nonl
+    #@+node:ekr.20060217132329:initialScan
+    # Don't call this finishCreate: the startup logic would call it too soon.
+    
+    def initialScan (self):
+        
+        g.trace(g.callers())
+        
+        self.scan(thread=True)
+    #@nonl
+    #@-node:ekr.20060217132329:initialScan
+    #@+node:ekr.20060216155558.1:scan
+    def scan (self,event=None,verbose=True,thread=True):
+        
+        c = self.c
+        if not c or not c.exists or c.frame.isNullFrame: return
+        if g.app.unitTesting: return
+        
+        # g.trace('autocompleter')
+        
+        if 0: ## thread:
+            # Use a thread to do the initial scan so as not to interfere with the user.            
+            def scan ():
+                #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
+                # During unit testing c gets destroyed before the scan finishes.
+                if not g.app.unitTesting:
+                    self.scanOutline(verbose=True)
+        
+            t = threading.Thread(target=scan)
+            t.setDaemon(True)
+            t.start()
+        else:
+            self.scanOutline(verbose=verbose)
+    #@nonl
+    #@-node:ekr.20060216155558.1:scan
+    #@+node:ekr.20060216163305:definePatterns
+    def definePatterns (self):
+        
+        self.space = r'[ \t\r\f\v ]+' # one or more whitespace characters.
+        self.end = r'\w+\s*\([^)]*\)' # word (\w) ws ( any ) (can cross lines)
+    
+        # Define re patterns for various languages.
+        # These patterns match method/function definitions.
+        self.pats = {}
+        self.pats ['python'] = re.compile(r'def\s+%s' % self.end)  # def ws word ( any ) # Can cross line boundaries.
+        self.pats ['java'] = re.compile(
+            r'((public\s+|private\s+|protected\s+)?(static%s|\w+%s){1,2}%s)' % (
+                self.space,self.space,self.end))
+        self.pats ['perl'] = re.compile(r'sub\s+%s' % self.end)
+        self.pats ['c++'] = re.compile(r'((virtual\s+)?\w+%s%s)' % (self.space,self.end))
+        self.pats ['c'] = re.compile(r'\w+%s%s' % (self.space,self.end))
+        
+        # Define self.okchars for getCleaString.
+        okchars = {}
+        for z in string.ascii_letters:
+            okchars [z] = z
+        okchars ['_'] = '_'
+        self.okchars = okchars 
+        
+        if 0: # not used
+            self.r  = string.punctuation.replace('(','').replace('.','') # punctuation except ( and .
+            self.pt = string.digits + string.letters + self.r
+            ripout = string.punctuation + string.whitespace + '\n'
+            self.ripout = ripout.replace('_','') # punctuation except underscore.
+    #@nonl
+    #@-node:ekr.20060216163305:definePatterns
+    #@+node:ekr.20060216161220:scanOutline
+    def scanOutline (self,verbose=True):
+    
+        '''Traverse an outline and build the autocommander database.'''
+        
+        if verbose: g.es_print('Scanning for auto-completer...')
+    
+        c = self.c ; k = self.k ; count = 0
+        for p in c.rootPosition().allNodes_iter():
+            if verbose:
+                count += 1 ;
+                if (count % 200) == 0: g.es('.',newline=False)
+            language = g.scanForAtLanguage(c,p)
+            # g.trace('language',language,p.headString())
+            s = p.bodyString()
+            if k.enable_autocompleter:
+                self.scanForAutoCompleter(s)
+            if k.enable_calltips:
+                self.scanForCallTip(s,language)
+    
+        if 0:
+            g.trace('watchwords...\n\n')
+            keys = self.watchwords.keys() ; keys.sort()
+            for key in keys:
+                aList = self.watchwords.get(key)
+                g.trace('%s:\n\n' % (key), g.listToString(aList))
+        if 0:
+            g.trace('calltips...\n\n')
+            keys = self.calltips.keys() ; keys.sort()
+            for key in keys:
+                d = self.calltips.get(key)
+                if d:
+                    g.trace('%s:\n\n' % (key), g.dictToString(d))
+            
+        if verbose:        
+            g.es_print('\nauto-completer scan complete',color='blue')
+    #@nonl
+    #@-node:ekr.20060216161220:scanOutline
+    #@+node:ekr.20060216161234:scanForCallTip
+    def scanForCallTip (self,s,language):
+    
+        '''this function scans text for calltip info'''
+    
+        d = self.calltips.get(language,{})
+        pat = self.pats.get(language or 'python')
+        
+        # Set results to a list of all the function/method defintions in s.
+        results = pat and pat.findall(s) or []
+    
+        for z in results:
+            if isinstance(z,tuple): z = z [0]
+            pieces2 = z.split('(')
+            # g.trace(pieces2)
+            pieces2 [0] = pieces2 [0].split() [-1]
+            a, b = pieces2 [0], pieces2 [1]
+            aList = d.get(a,[])
+            if str(z) not in aList:
+                aList.append(str(z))
+                d [a] = aList
+        
+        self.calltips [language] = d
+    #@nonl
+    #@-node:ekr.20060216161234:scanForCallTip
+    #@+node:ekr.20060216161247:scanForAutoCompleter
+    def scanForAutoCompleter (self,s):
+    
+        '''This function scans text for the autocompleter database.'''
+    
+        aList = [] ; t1 = s.split('.')
+        
+        if 1: # Slightly faster.
+            t1 = s.split('.') ; 
+            i = 0 ; n = len(t1)-1
+            while i < n:
+                self.makeAutocompletionList(t1[i],t1[i+1],aList)
+                i += 1
+        else:
+            reduce(lambda a,b: self.makeAutocompletionList(a,b,aList),t1)
+    
+        if aList:
+            for a, b in aList:
+                z = self.watchwords.get(a,[])
+                if str(b) not in z:
+                    z.append(str(b))
+                    self.watchwords [a] = z
+    #@nonl
+    #@+node:ekr.20051025144611.20:makeAutocompletionList
+    def makeAutocompletionList (self,a,b,glist):
+        
+        '''We have seen a.b, where a and b are arbitrary strings.
+        Append (a1.b1) to glist.
+        To compute a1, scan backwards in a until finding whitespace.
+        To compute b1, scan forwards in b until finding a char not in okchars.
+        '''
+        
+        if 1: # Do everything inline.  It's a few percent faster.
+    
+            # Compute reverseFindWhitespace inline.
+            i = len(a) -1
+            while i >= 0:
+                if a[i].isspace() or a [i] == '.':
+                    a1 = a [i+1:] ; break
+                i -= 1
+            else:
+                a1 = a
+                
+            # Compute getCleanString inline.
+            i = 0
+            for ch in b:
+                if ch not in self.okchars:
+                    b1 = b[:i] ; break
+                i += 1
+            else:
+                b1 = b
+    
+            if b1:
+                glist.append((a1,b1),)
+                
+            return b # Not needed unless we are using reduce.
+        else:
+            a1 = self.reverseFindWhitespace(a)
+            if a1:
+                b1 = self.getCleanString(b)
+                if b1:
+                    glist.append((a1,b1))
+            return b 
+    #@nonl
+    #@+node:ekr.20060216161258:reverseFindWhitespace
+    def reverseFindWhitespace (self,s):
+    
+        '''Return the longest tail of s containing no whitespace or period.'''
+    
+        i = len(s) -1
+        while i >= 0:
+            if s[i].isspace() or s [i] == '.': return s [i+1:]
+            i -= 1
+    
+        return s
+    #@nonl
+    #@-node:ekr.20060216161258:reverseFindWhitespace
+    #@+node:ekr.20060216161253:getCleanString
+    def getCleanString (self,s):
+        
+        '''Return the prefix of s containing only chars in okchars.'''
+        
+        i = 0
+        for ch in s:
+            if ch not in self.okchars:
+                return s[:i]
+            i += 1
+    
+        return s
+    #@nonl
+    #@-node:ekr.20060216161253:getCleanString
+    #@-node:ekr.20051025144611.20:makeAutocompletionList
+    #@-node:ekr.20060216161247:scanForAutoCompleter
+    #@-node:ekr.20060216160332.1:Scanning
+    #@+node:ekr.20060223114802:Proxy classes and objects
+    #@+node:ekr.20060223114802.1:createProxyObjectFromClass
+    #@+at 
+    #@nonl
+    # Warning:
+    # This code passes None to the ctor as the value of all required args.
+    # This may generate arbitrary exceptions and may be too dangerous.
+    # A safer way would be to create a dummy ctor, but then we don't get any 
+    # ivars.
+    #@-at
+    #@@c
+    
+    def createProxyObjectFromClass (self,className,theClass):
+        
+        '''Create a real instance object by instantiating theClass.
+        
+        This will create all ivars unless the ctor throws an exception.'''
+    
+        # g.trace(type(theClass))
+    
+        # Set args to the list of required arguments.
+        args = inspect.getargs(theClass.__init__.im_func.func_code)
+        args = args[0] ; n = len(args)-1
+        args = [None for z in xrange(n)]
+        try:
+            obj = theClass(*args)
+        except Exception:
+            g.es_print('Warning: exception creating proxy for %s' % (className),color='red')
+            def dummyCtor (self,*args,**keys):
+                pass
+            theClass.__init__ = dummyCtor
+            obj = testClass()
+        
+        # Verify that it has all the proper attributes.
+        # g.trace(g.listToString(dir(obj)))
+        return obj
+    #@nonl
+    #@-node:ekr.20060223114802.1:createProxyObjectFromClass
+    #@+node:ekr.20060223093358:createClassObjectFromString
+    def computeClassObjectFromString (self,className,s):
+    
+        try:
+            oldDir = dir()
+    
+            # Add the the class definition to the present environment.
+            exec s
+    
+            theClass = locals().get(className)
+            g.trace(theClass)
+            return theClass
+    
+        except Exception:
+            g.es_print('unexpected exception in computeProxyObject')
+            g.es_exception()
+            return None
+    #@nonl
+    #@-node:ekr.20060223093358:createClassObjectFromString
+    #@-node:ekr.20060223114802:Proxy classes and objects
+    #@+node:ekr.20060223093117:class forgivingParserClass
+    class forgivingParserClass:
+        
+        '''A class to create a valid class instances from
+        a class definition that may contain syntax errors.'''
+        
+        #@    @+others
+        #@+node:ekr.20060223093117.1:ctor (forgivingParserClass)
+        def __init__ (self,c):
+            
+            self.c = c
+            self.excludedTnodesList = []
+            self.old_putBody = None # Set in parse for communication with newPutBody.
+        #@nonl
+        #@-node:ekr.20060223093117.1:ctor (forgivingParserClass)
+        #@+node:ekr.20060223093117.2:parse
+        def parse (self,p):
+            
+            '''The top-level parser method.
+            
+            It patches c.atFileCommands.putBody, calls the forgiving parser and finally
+            restores c.atFileCommands.putBody.'''
+            
+            c = self.c
+            
+            # Create an ivar for communication with newPutBody.
+            self.old_putBody = c.atFileCommands.putBody
+            
+            # Override atFile.putBody.
+            c.atFileCommands.putBody = self.newPutBody
+            
+            try:
+                s = None
+                s = self.forgivingParser(p)
+            finally:
+                c.atFileCommands.putBody = self.old_putBody
+                return s
+        #@nonl
+        #@-node:ekr.20060223093117.2:parse
+        #@+node:ekr.20060223093117.3:forgivingParser
+        def forgivingParser (self,p):
+        
+            c = self.c ; root = p.copy()
+            self.excludedTnodesList = []
+            s = g.getScript(c,root,useSelectedText=False)
+            while s:
+                try:
+                    val = compiler.parse(s+'\n')
+                    break
+                except (parser.ParserError,SyntaxError):
+                    fileName, n = g.getLastTracebackFileAndLineNumber()
+                    p = self.computeErrorNode(c,root,n,lines=g.splitLines(s))
+                    if not p or p == root:
+                        g.es_print('Syntax error in class node: can not continue')
+                        s = None ; break
+                    else:
+                        # g.es_print('Syntax error: deleting %s' % p.headString())
+                        self.excludedTnodesList.append(p.v.t)
+                        s = g.getScript(c,root,useSelectedText=False)
+            return s or ''
+        #@nonl
+        #@-node:ekr.20060223093117.3:forgivingParser
+        #@+node:ekr.20060223093117.4:computeErrorNode
+        def computeErrorNode (self,c,root,n,lines):
+        
+            '''The from c.goToLineNumber that applies to scripts.
+            Unlike c.gotoLineNumberOpen, this function returns a position.'''
+        
+            if n == 1 or n >= len(lines):
+                return root
+        
+            vnodeName, junk, junk, junk, junk = c.convertLineToVnodeNameIndexLine(
+                lines, n, root, scriptFind = True)
+        
+            if vnodeName:
+                for p in root.self_and_subtree_iter():
+                    if p.matchHeadline(vnodeName):
+                        return p
+        
+            return None
+        #@nonl
+        #@-node:ekr.20060223093117.4:computeErrorNode
+        #@+node:ekr.20060223093117.5:newPutBody
+        def newPutBody (self,p,oneNodeOnly=False,fromString=''):
+        
+            if p.v.t in self.excludedTnodesList:
+                pass
+                # g.trace('ignoring',p.headString())
+            else:
+                self.old_putBody(p,oneNodeOnly,fromString)
+        #@nonl
+        #@-node:ekr.20060223093117.5:newPutBody
+        #@-others
+    #@nonl
+    #@-node:ekr.20060223093117:class forgivingParserClass
     #@+node:ekr.20060222082041:class classScannerClass
     class classScannerClass:
         
@@ -836,14 +1314,27 @@ class autoCompleterClass:
             self.start_in_doc = False
         #@nonl
         #@-node:ekr.20060222082041.1:ctor
+        #@+node:ekr.20060223120755:parse
+        def parse (self):
+            
+            c = self.c ; p = c.currentPosition()
+            parser = c.k.autoCompleter.forgivingParser
+            
+            p,className = self.findParentClass(p)
+            if p and className:
+                s = parser.parse(p)
+                return className,s
+        #@nonl
+        #@-node:ekr.20060223120755:parse
         #@+node:ekr.20060222082041.2:findParentClass
         def findParentClass (self,p):
             
             for p in p.self_and_parents_iter():
                 className = self.findClass(p)
-                if className: return className
-            else:
-                return None
+                if className:
+                    return p,className
+            
+            return None,None
         #@nonl
         #@-node:ekr.20060222082041.2:findParentClass
         #@+node:ekr.20060222082041.3:findClass & helpers

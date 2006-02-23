@@ -2940,7 +2940,7 @@ class atFile:
             else:
                 at.writeException() # Sets dirty and orphan bits.
     #@-node:ekr.20041005105605.144:write
-    #@+node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+    #@+node:ekr.20050506084734:writeFromString
     # This is at.write specialized for scripting.
     
     def writeFromString(self,root,s,forcePythonSentinels=True):
@@ -2969,7 +2969,7 @@ class atFile:
     
         return at.stringOutput
     #@nonl
-    #@-node:ekr.20050506084734:writeFromString (new in 4.3 beta2)
+    #@-node:ekr.20050506084734:writeFromString
     #@+node:ekr.20041005105605.147:writeAll
     def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False,toString=False):
         
