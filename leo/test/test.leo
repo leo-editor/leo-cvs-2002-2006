@@ -262,7 +262,7 @@
 <v t="ekr.20060223082400"><vh>test</vh></v>
 </v>
 <v t="ekr.20060223103456"><vh>Previous code to be deleted</vh></v>
-<v t="ekr.20060223094536" a="ETV"><vh>get members from class objects</vh>
+<v t="ekr.20060223094536" a="EV"><vh>get members from class objects</vh>
 <v t="ekr.20060223094614" a="E"><vh>testClass</vh>
 <v t="ekr.20060223094614.1"><vh>ctor</vh></v>
 <v t="ekr.20060223094614.2"><vh>good</vh></v>
@@ -4639,8 +4639,6 @@ finally:
 # Define valid test class
 @others
 
-aList = inspect.getmembers(testClass)
-
 # Set args to the list of required arguments.
 args = inspect.getargs(testClass.__init__.im_func.func_code)
 args = args[0]
@@ -4648,7 +4646,13 @@ args = args[0]
 # Create the proxy object by passing None for all required arguments.
 n = len(args)-1
 args = [None for z in xrange(n)]
-obj = testClass(*args)
+try:
+    obj = testClass(*args)
+except Exception:
+    def dummyCtor (self,*args,**keys):
+        pass
+    testClass.__init__ = dummyCtor
+    obj = testClass()
 
 # Verify that it has all the proper attributes.
 g.trace(g.listToString(dir(obj)))</t>
@@ -4665,7 +4669,8 @@ g.trace(g.listToString(dir(obj)))</t>
     self.c = c
     self.d = d
     self.args = args
-    self.keys = keys</t>
+    self.keys = keys
+    # assert(a)</t>
 <t tx="ekr.20060223094614.2">def good (self):
     pass</t>
 <t tx="ekr.20060223103456">if 0:
