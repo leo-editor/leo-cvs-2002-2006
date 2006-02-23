@@ -134,6 +134,7 @@ class autoCompleterClass:
         self.selection = None # The selection range on entry to autocompleter or calltips.
         self.selectedText = None # The selected text on entry to autocompleter or calltips.
         self.selfObjectsDict = {} # Keys are classNames, values are real proxy objects.
+        self.selfTnodesDict = {} # Keys are tnodes, values are real proxy objects.
         self.prefix = None
         self.prevObjects = []
         self.tabList = []
@@ -839,29 +840,32 @@ class autoCompleterClass:
     #@nonl
     #@-node:ekr.20060223124014:getObjectFromAttribute
     #@+node:ekr.20060223124014.2:completeSelf
-    def completeSelf (self): 
-     
-        className, s = self.classScanner.parse()
+    def completeSelf (self):
         
-        if className and s:
-            obj = self.selfObjectsDict.get(className)
-            if not obj:
-                theClass = self.computeClassObjectFromString(className,s)
-                if theClass:
-                    obj = self.createProxyObjectFromClass(className,theClass)
-                    g.trace(obj)
-                    self.selfObjectsDict [className] = obj
-            if obj:
-                self.push(self.object)
-                self.object = obj
-                self.membersList = self.getMembersList(obj=obj)
-                # self.computeMembersList()
-                return
+        c = self.c ; p = c.currentPosition()
     
-        # No further action possible or desirable.
-        self.object = None
-        self.clear()
-        self.membersList = []
+        obj = self.selfTnodesDict.get(p.v.t) # **Much** quicker than scanning.
+    
+        if not obj:
+            className, s = self.classScanner.parse()
+            if className and s:
+                obj = self.selfObjectsDict.get(className)
+                if not obj:
+                    theClass = self.computeClassObjectFromString(className,s)
+                    if theClass:
+                        obj = self.createProxyObjectFromClass(className,theClass)
+                        if obj:
+                            self.selfObjectsDict [className] = obj
+                            self.selfTnodesDict [p.v.t] = obj
+        if obj:
+            self.push(self.object)
+            self.object = obj
+            self.membersList = self.getMembersList(obj=obj)
+        else:
+            # No further action possible or desirable.
+            self.object = None
+            self.clear()
+            self.membersList = []
     #@nonl
     #@-node:ekr.20060223124014.2:completeSelf
     #@+node:ekr.20060223124014.3:completeFromObject
@@ -1186,18 +1190,17 @@ class autoCompleterClass:
     def computeClassObjectFromString (self,className,s):
     
         try:
-            oldDir = dir()
-    
             # Add the the class definition to the present environment.
             exec s
     
+            # Get the newly created object from the locals dict.
             theClass = locals().get(className)
-            g.trace(theClass)
             return theClass
     
         except Exception:
-            g.es_print('unexpected exception in computeProxyObject')
-            g.es_exception()
+            if 1: # Could be a weird kind of user error.
+                g.es_print('unexpected exception in computeProxyObject')
+                g.es_exception()
             return None
     #@nonl
     #@-node:ekr.20060223093358:createClassObjectFromString
@@ -1324,6 +1327,8 @@ class autoCompleterClass:
             if p and className:
                 s = parser.parse(p)
                 return className,s
+            else:
+                return None,None
         #@nonl
         #@-node:ekr.20060223120755:parse
         #@+node:ekr.20060222082041.2:findParentClass

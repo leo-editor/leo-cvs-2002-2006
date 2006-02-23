@@ -4931,80 +4931,6 @@ Maybe:
 #@nonl
 #@-node:ekr.20060222083704:What I did
 #@+node:ekr.20060219183519:Ref code
-#@+node:ekr.20060219172026.1:inspect Leo main objects
-import inspect
-
-table = (
-    #('leoCommands','Commands'),
-    ('leoNodes','vnode'),
-    ('leoGlobals',None),
-    ('python','list'),
-    ('python','string'),
-    ('python','dictionary'),
-    # ('leoKeys','keyHandlerClass'),
-)
-
-d = {'string':'', 'dictionary':{}, 'list':[]}
-
-print '-' * 40
-for moduleName,className in table:
-    if moduleName.lower() == 'python':
-        o = d.get(className)
-        theObject = o is not None and o.__class__
-        name = className
-    else:
-        module = g.importModule (moduleName,verbose=True)
-        if not module: continue
-        if className:
-            theObject = hasattr(module,className) and getattr(module,className) or None
-            name = className
-        else:
-            theObject = module
-            name = moduleName
-    if not theObject: continue
-    aList = inspect.getmembers(theObject)
-    members = [a + str(type(b)) for a,b in aList if not a.startswith('__')]
-    members.sort()
-    if 0:
-        print ; print len(members),name,'docstrings...\n\n',
-        aList.sort()
-        for a,b in aList:
-            if b.__doc__ and not a.startswith('__') and type(b) != type(''):
-                print ; print '**', a, b.__doc__
-    else:
-        # print name, len(members)
-        print ; print len(members),name,'methods...\n\n',g.listToString(members)
-        
-    
-if 0: # Original code.
-    import leoCommands,leoGlobals,leoKeys,leoNodes,leoUndo
-    table = (
-        #(leoCommands.Commands,'Commands'),
-        #(leoNodes.position,'position'),
-        #(leoNodes.vnode,'vnode'),
-        #(leoNodes.tnode,'tnode'),
-        (leoGlobals,'globals'),
-        #(leoUndo.undoer,'undoer'),
-        (''.__class__,'string'),
-        (leoKeys.keyHandlerClass,'keyHandler'),
-    )
-    
-    print '-' * 40
-    for theObject,name in table:
-        aList = inspect.getmembers(theObject)
-        members = [a + str(type(b)) for a,b in aList if not a.startswith('__')]
-        members.sort()
-        if 0:
-            print ; print len(members),name,'docstrings...\n\n',
-            aList.sort()
-            for a,b in aList:
-                if b.__doc__ and not a.startswith('__') and type(b) != type(''):
-                    print ; print '**', a, b.__doc__
-        else:
-            # print name, len(members)
-            print ; print len(members),name,'methods...\n\n',g.listToString(members)
-#@nonl
-#@-node:ekr.20060219172026.1:inspect Leo main objects
 #@+node:ekr.20060127183752:masterKeyHandler & helper
 master_key_count = 0
 
@@ -5342,6 +5268,87 @@ def getPublicCommands (self):
     }
 #@nonl
 #@-node:ekr.20050920084036.173:getPublicCommands (keyHandler)
+#@+node:ekr.20060221112937:setObjectAndMembersList & helpers
+def setObjectAndMembersList (self,word):
+    
+    c = self.c
+
+    if word in ( "'",'"'):
+        word = 'aString' # This is in the objectsDict.
+        self.clear()
+        self.push(self.object)
+        self.object = 'aString'
+        self.membersList = self.getMembersList(self.object)
+    elif self.prevObjects:
+        self.getObjectFromAttribute(word)
+    elif word == 'self':
+        self.completeSelf()
+    else:
+        obj = self.objectDict.get(word) or sys.modules.get(word)
+        self.completeFromObject(obj)
+
+    # g.trace(word,self.object,len(self.membersList))
+#@nonl
+#@+node:ekr.20060223124014:getObjectFromAttribute
+def backup (self,word):
+    
+    prevObj = self.prevObjects and self.prevObjects[-1]
+
+    if prevObj and self.hasAttr(prevObj,word):
+        self.object = self.getAttr(prevObj,word)
+        self.appendToKnownObjects(self.object)
+        self.membersList = self.getMembersList(self.object)
+    else:
+        # No special support for 'self' here.
+        # Don't clear the stack here!
+        self.membersList = []
+        self.object = None
+#@nonl
+#@-node:ekr.20060223124014:getObjectFromAttribute
+#@+node:ekr.20060223124014.2:completeSelf
+def completeSelf (self):
+    
+    c = self.c ; p = c.currentPosition()
+
+    obj = self.selfTnodesDict.get(p.v.t) # **Much** quicker than scanning.
+
+    if not obj:
+        className, s = self.classScanner.parse()
+        if className and s:
+            obj = self.selfObjectsDict.get(className)
+            if not obj:
+                theClass = self.computeClassObjectFromString(className,s)
+                if theClass:
+                    obj = self.createProxyObjectFromClass(className,theClass)
+                    if obj:
+                        self.selfObjectsDict [className] = obj
+                        self.selfTnodesDict [p.v.t] = obj
+    if obj:
+        self.push(self.object)
+        self.object = obj
+        self.membersList = self.getMembersList(obj=obj)
+    else:
+        # No further action possible or desirable.
+        self.object = None
+        self.clear()
+        self.membersList = []
+#@nonl
+#@-node:ekr.20060223124014.2:completeSelf
+#@+node:ekr.20060223124014.3:completeFromObject
+def completeFromObject (self,obj):
+
+    if obj:
+        self.appendToKnownObjects(obj)
+        self.push(self.object)
+        self.object = obj
+        self.membersList = self.getMembersList(obj=obj)
+    else:
+        self.object = None
+        self.clear()
+        self.membersList = []
+#@nonl
+#@-node:ekr.20060223124014.3:completeFromObject
+#@-node:ekr.20060221112937:setObjectAndMembersList & helpers
 #@-node:ekr.20060219183519:Ref code
 #@+node:ekr.20051126123249:class autoCompleterClass
 class autoCompleterClass:
@@ -5374,6 +5381,7 @@ def __init__ (self,k):
     self.selection = None # The selection range on entry to autocompleter or calltips.
     self.selectedText = None # The selected text on entry to autocompleter or calltips.
     self.selfObjectsDict = {} # Keys are classNames, values are real proxy objects.
+    self.selfTnodesDict = {} # Keys are tnodes, values are real proxy objects.
     self.prefix = None
     self.prevObjects = []
     self.tabList = []
@@ -6079,29 +6087,32 @@ def backup (self,word):
 #@nonl
 #@-node:ekr.20060223124014:getObjectFromAttribute
 #@+node:ekr.20060223124014.2:completeSelf
-def completeSelf (self): 
- 
-    className, s = self.classScanner.parse()
+def completeSelf (self):
     
-    if className and s:
-        obj = self.selfObjectsDict.get(className)
-        if not obj:
-            theClass = self.computeClassObjectFromString(className,s)
-            if theClass:
-                obj = self.createProxyObjectFromClass(className,theClass)
-                g.trace(obj)
-                self.selfObjectsDict [className] = obj
-        if obj:
-            self.push(self.object)
-            self.object = obj
-            self.membersList = self.getMembersList(obj=obj)
-            # self.computeMembersList()
-            return
+    c = self.c ; p = c.currentPosition()
 
-    # No further action possible or desirable.
-    self.object = None
-    self.clear()
-    self.membersList = []
+    obj = self.selfTnodesDict.get(p.v.t) # **Much** quicker than scanning.
+
+    if not obj:
+        className, s = self.classScanner.parse()
+        if className and s:
+            obj = self.selfObjectsDict.get(className)
+            if not obj:
+                theClass = self.computeClassObjectFromString(className,s)
+                if theClass:
+                    obj = self.createProxyObjectFromClass(className,theClass)
+                    if obj:
+                        self.selfObjectsDict [className] = obj
+                        self.selfTnodesDict [p.v.t] = obj
+    if obj:
+        self.push(self.object)
+        self.object = obj
+        self.membersList = self.getMembersList(obj=obj)
+    else:
+        # No further action possible or desirable.
+        self.object = None
+        self.clear()
+        self.membersList = []
 #@nonl
 #@-node:ekr.20060223124014.2:completeSelf
 #@+node:ekr.20060223124014.3:completeFromObject
@@ -6422,18 +6433,17 @@ def createProxyObjectFromClass (self,className,theClass):
 def computeClassObjectFromString (self,className,s):
 
     try:
-        oldDir = dir()
-
         # Add the the class definition to the present environment.
         exec s
 
+        # Get the newly created object from the locals dict.
         theClass = locals().get(className)
-        g.trace(theClass)
         return theClass
 
     except Exception:
-        g.es_print('unexpected exception in computeProxyObject')
-        g.es_exception()
+        if 1: # Could be a weird kind of user error.
+            g.es_print('unexpected exception in computeProxyObject')
+            g.es_exception()
         return None
 #@nonl
 #@-node:ekr.20060223093358:createClassObjectFromString
@@ -6560,6 +6570,8 @@ def parse (self):
     if p and className:
         s = parser.parse(p)
         return className,s
+    else:
+        return None,None
 #@nonl
 #@-node:ekr.20060223120755:parse
 #@+node:ekr.20060222082041.2:findParentClass
