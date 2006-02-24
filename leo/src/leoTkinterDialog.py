@@ -145,7 +145,7 @@ class leoTkinterDialog:
         
         """Disable all attempts to close this frame with the close box."""
         
-        g.app.dialogs -= 1
+        pass
     #@nonl
     #@-node:ekr.20040731065422:onClose
     #@+node:ekr.20031218072017.3866:run (tkDialog)
@@ -170,10 +170,7 @@ class leoTkinterDialog:
         if self.focus_widget == None:
             self.focus_widget = self.top
             
-        # New in 4.4 a2: g.app.dialogs is a count of the open dialogs.
-        g.app.dialogs += 1
-            
-        c and c.widgetWantsFocus(self.focus_widget)
+        c and c.widgetWantsFocusNow(self.focus_widget)
            
         self.root.wait_window(self.top)
         
