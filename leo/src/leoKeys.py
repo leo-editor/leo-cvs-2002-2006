@@ -872,12 +872,12 @@ class autoCompleterClass:
         
         # This scan will be fast if an instant object already exists.
         className,obj,p,s = self.classScanner.scan()
-        g.trace(className,obj,p,s and len(s))
+        # g.trace(className,obj,p,s and len(s))
     
         # First, look up the className.
         if not obj and className:
             obj = self.allClassesDict.get(className)
-            if obj: g.trace('found in allClassesDict: %s = %s' % (className,obj))
+            # if obj: g.trace('found in allClassesDict: %s = %s' % (className,obj))
     
         # Second, create the object from class definition.
         if not obj and s:
