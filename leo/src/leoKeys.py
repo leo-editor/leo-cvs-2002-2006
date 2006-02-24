@@ -149,21 +149,31 @@ class autoCompleterClass:
     #@+node:ekr.20060223085549:defineClassesDict
     def defineClassesDict (self):
         
-        # gc does not necessarily exist everywhere.
-        try:
-            import gc
-        except ImportError:
-            return {}
-    
-        d = {}
-        for z in gc.get_objects():
-            if type(z) == types.InstanceType:
-                d[z.__class__.__name__] = z
-    
-        # g.printList(d.keys(),tag='Classes',sort=True)
+        self.allClassesDict = {}
         
-        return d
-    #@nonl
+        # gc may not exist.
+        try: import gc
+        except ImportError: return
+    
+        for z in gc.get_objects():
+            t = type(z)
+            if t == types.ClassType:
+                name = z.__name__
+            elif t == types.InstanceType:
+                name = z.__class__.__name__
+            elif repr(t).startswith('<class'): # A wretched kludge.
+                name = z.__class__.__name__
+            elif t == types.TypeType:
+                name = z.__name__
+            else:
+                name = None
+            if name:
+                # if name == 'position': g.trace(t,z)
+                self.allClassesDict [name] = z
+            
+        # g.printList(self.allClassesDict.keys(),tag='Classes',sort=True)
+        # g.trace(len(self.allClassesDict.keys()))
+        # g.trace('position:',self.allClassesDict.get('position'))
     #@-node:ekr.20060223085549:defineClassesDict
     #@+node:ekr.20060219171914:defineObjectDict
     def defineObjectDict (self):
@@ -370,6 +380,10 @@ class autoCompleterClass:
     
         self.setTabName('AutoComplete ' + word + '.')
         
+    def clearTabName (self):
+        
+        self.setTabName('AutoComplete ')
+        
     def popTabName (self):
         
         s = self.tabName
@@ -469,9 +483,18 @@ class autoCompleterClass:
         c = self.c ; w = self.widget
         word = g.app.gui.getSelectedText(w)
         old_obj = self.object
-        if word and old_obj and self.hasAttr(old_obj,word):
+    
+        if word and old_obj:
+            type(old_obj) == type([]) and old_obj == sys.modules:
+            obj = old_obj.get(word)
+            if obj:
+                self.object = obj
+                self.clearTabName()
+        elif word and old_obj and self.hasAttr(old_obj,word):
             self.push(old_obj)
             self.object = obj = self.getAttr(old_obj,word)
+    
+        if obj:
             self.appendToKnownObjects(obj)
             self.leadinWord = word
             self.membersList = self.getMembersList(obj)
@@ -485,11 +508,11 @@ class autoCompleterClass:
             self.selection = g.app.gui.getTextSelection(w)
             self.selectedText = g.app.gui.getSelectedText(w)
             if self.membersList:
-                self.autoCompleterStateHandler(event=None)
+                # self.autoCompleterStateHandler(event=None)
+                self.computeCompletionList()
                 return
         self.extendSelection('.')
         self.finish()
-    #@nonl
     #@-node:ekr.20060220085402:chain
     #@+node:ekr.20051126123149:computeCompletionList
     def computeCompletionList (self,verbose=False):
@@ -499,6 +522,7 @@ class autoCompleterClass:
         s = gui.getSelectedText(w)
         self.tabList,common_prefix = g.itemsMatchingPrefixInList(
             s,self.membersList,matchEmptyPrefix=True)
+    
         if not common_prefix:
             if verbose or len(self.tabList) < 25:
                 self.tabList,common_prefix = g.itemsMatchingPrefixInList(
@@ -601,6 +625,8 @@ class autoCompleterClass:
         j = w.index(i+' wordend')
         word = w.get(i,j)
         
+        if word == '.': word = None
+        
         # g.trace(i,j,repr(word),w.get(j))
         return j,word
     #@nonl
@@ -656,28 +682,32 @@ class autoCompleterClass:
         start = w.index(start+'-1c')
         i,word = self.findAnchor(w)
         self.setObjectAndMembersList(word)
-        if not self.object:
-            # g.trace('unknown',word)
-            return False
-        self.beginTabName(word)
+        
+        # g.trace(word,self.object,len(self.membersList))
     
-        while w.compare(i,'<',start):
-            if w.get(i) != '.':
-                g.trace('oops: %s' % (repr(w.get(i))))
-                return False
-            i = w.index(i+'+1c')
-            j = w.index(i+' wordend')
-            word = w.get(i,j)
-            self.setObjectAndMembersList(word)
-            if not self.object:
-                g.trace('unknown',word)
-                return False
-            self.appendTabName(word)
-            i = j
-                
-        self.leadinWord = word
-        # g.trace(self.leadinWord)
-        return True
+        if not word:
+            return False
+        elif not self.object:
+            self.membersList = []
+            return False
+        else:
+            self.beginTabName(word)
+            while w.compare(i,'<',start):
+                if w.get(i) != '.':
+                    g.trace('oops: %s' % (repr(w.get(i))))
+                    return False
+                i = w.index(i+'+1c')
+                j = w.index(i+' wordend')
+                word = w.get(i,j)
+                self.setObjectAndMembersList(word)
+                if not self.object:
+                    g.trace('unknown',word)
+                    return False
+                self.appendTabName(word)
+                i = j
+            self.leadinWord = word
+            return True
+        
     #@nonl
     #@-node:ekr.20060219111416:getLeadinWord
     #@+node:ekr.20060219174642:getMembersList
@@ -695,16 +725,6 @@ class autoCompleterClass:
             return []
     #@nonl
     #@-node:ekr.20060219174642:getMembersList
-    #@+node:ekr.20060220055415:getModulesList (not used)
-    def getModulesList (self):
-        
-        '''Return a list all (loaded) Python modules.'''
-        
-        aList = sys.modules.keys()
-        aList.sort()
-        return aList
-    #@nonl
-    #@-node:ekr.20060220055415:getModulesList (not used)
     #@+node:ekr.20060220132026:info
     def info (self):
         
@@ -806,8 +826,17 @@ class autoCompleterClass:
     def setObjectAndMembersList (self,word):
         
         c = self.c
-    
-        if word in ( "'",'"'):
+        
+        if not word:
+            # Leading dot shows all classes.
+            self.leadinWord = None
+            if 1: # Experimental.
+                self.object = sys.modules
+                self.membersList = sys.modules.keys()
+                self.beginTabName('Modules')
+            else:
+                self.membersList = []
+        elif word in ( "'",'"'):
             word = 'aString' # This is in the objectsDict.
             self.clear()
             self.push(self.object)
@@ -842,19 +871,24 @@ class autoCompleterClass:
     #@+node:ekr.20060223124014.2:completeSelf
     def completeSelf (self):
         
+        # This scan will be fast if an instant object already exists.
         className,obj,p,s = self.classScanner.scan()
-        # g.trace(className,obj,p,s)
+        g.trace(className,obj,p,s and len(s))
     
-        if not obj and className and s:
-            obj = self.selfObjectsDict.get(className)
-            if not obj:
-                theClass = self.computeClassObjectFromString(className,s)
-                if theClass:
-                    obj = self.createProxyObjectFromClass(className,theClass)
-                    if obj:
-                        self.selfObjectsDict [className] = obj
-                        # This prevents future rescanning, even if the node moves.
-                        self.selfTnodesDict [p.v.t] = obj
+        # First, look up the className.
+        if not obj and className:
+            obj = self.allClassesDict.get(className)
+            if obj: g.trace('found in allClassesDict: %s = %s' % (className,obj))
+    
+        # Second, create the object from class definition.
+        if not obj and s:
+            theClass = self.computeClassObjectFromString(className,s)
+            if theClass:
+                obj = self.createProxyObjectFromClass(className,theClass)
+                if obj:
+                    self.selfObjectsDict [className] = obj
+                    # This prevents future rescanning, even if the node moves.
+                    self.selfTnodesDict [p.v.t] = obj
         if obj:
             self.push(self.object)
             self.object = obj
@@ -916,7 +950,15 @@ class autoCompleterClass:
         self.prefix = ''
         self.selection = g.app.gui.getTextSelection(w)
         self.selectedText = g.app.gui.getSelectedText(w)
-        if self.getLeadinWord(w):
+        flag = self.getLeadinWord(w)
+        if self.membersList:
+            if 1:
+                if not flag:
+                    # Remove the invocation character.
+                    i = g.app.gui.getInsertPoint(w)
+                    if w.get(i+'-1c') == '.':
+                        w.delete(i+'-1c')
+                    
             self.autoCompleterStateHandler(event)
     #@nonl
     #@-node:ekr.20060220062710:start
@@ -1148,37 +1190,32 @@ class autoCompleterClass:
     #@-node:ekr.20060216160332.1:Scanning
     #@+node:ekr.20060223114802:Proxy classes and objects
     #@+node:ekr.20060223114802.1:createProxyObjectFromClass
-    #@+at 
-    #@nonl
-    # Warning:
-    # This code passes None to the ctor as the value of all required args.
-    # This may generate arbitrary exceptions and may be too dangerous.
-    # A safer way would be to create a dummy ctor, but then we don't get any 
-    # ivars.
-    #@-at
-    #@@c
-    
     def createProxyObjectFromClass (self,className,theClass):
         
-        '''Create a real instance object by instantiating theClass.
-        
-        This will create all ivars unless the ctor throws an exception.'''
+        '''Create a dummy instance object by instantiating theClass with a dummy ctor.'''
     
-        # g.trace(type(theClass))
-    
-        # Set args to the list of required arguments.
-        args = inspect.getargs(theClass.__init__.im_func.func_code)
-        args = args[0] ; n = len(args)-1
-        args = [None for z in xrange(n)]
+        if 0: # Calling the real ctor is way too dangerous.
+            # Set args to the list of required arguments.
+            args = inspect.getargs(theClass.__init__.im_func.func_code)
+            args = args[0] ; n = len(args)-1
+            args = [None for z in xrange(n)]
+            
+        def dummyCtor (self):
+            pass
+            
         try:
-            obj = theClass(*args)
-        except Exception:
-            g.es_print('Warning: exception creating proxy for %s' % (className),color='red')
-            def dummyCtor (self,*args,**keys):
-                pass
+            obj = None
+            old_init = hasattr(theClass,'__init__') and theClass.__init__
             theClass.__init__ = dummyCtor
-            obj = testClass()
-        
+            obj = theClass()
+        finally:
+            if old_init:
+                theClass.__init__ = old_init
+            else:
+                delattr(theClass,'__init__')
+            
+        g.trace(type(theClass),obj)
+    
         # Verify that it has all the proper attributes.
         # g.trace(g.listToString(dir(obj)))
         return obj
