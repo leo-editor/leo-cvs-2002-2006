@@ -127,12 +127,14 @@ class autoCompleterClass:
         self.calltips = {} # Keys are language, values are dicts: keys are ids, values are signatures.
         self.classScanner = self.classScannerClass(c)
         self.forgivingParser = self.forgivingParserClass(c)
-        self.knownObjects = {}
+        self.globalPythonFunctionsDict = {}
         self.language = None
+        self.leadinWord = None
         self.membersList = None
         self.objectDict = {} # Created on first use of the autocompleter.
         self.selection = None # The selection range on entry to autocompleter or calltips.
         self.selectedText = None # The selected text on entry to autocompleter or calltips.
+        self.selfClassName = None
         self.selfObjectsDict = {} # Keys are classNames, values are real proxy objects.
         self.selfTnodesDict = {} # Keys are tnodes, values are real proxy objects.
         self.prefix = None
@@ -146,6 +148,101 @@ class autoCompleterClass:
         self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
         self.widget = None # The widget that should get focus after autocomplete is done.
     
+    #@+node:ekr.20060224092426:definePythonGlobalFunctionsDict
+    def definePythonGlobalFunctionsDict (self):
+        
+        '''Return a dict whose keys are the names of Python's global functions
+        and whose values are the functions themselves.'''
+        
+        #@    << define calltips table >>
+        #@+node:ekr.20060224100239:<< define calltips table >>
+        table = (
+            ('__import__',   '(name[,globals[,locals[,fromlist]]])'),
+            ('abs',          '(x)'),
+            ('bool',         '([x])'),
+            ('callable',     '(object)'),
+            ('chr',          '(i)'),
+            ('classmethod',  '(function)'),
+            ('cmp',          '(x,y)'),
+            ('compile',      '(string,filename,kind[,flags[,dont_inherit]])'),
+            ('complex',      '([real[,imag]])'),
+            ('delattr',      '(object,name)'),
+            ('dict',         '([mapping-or-sequence])'),
+            ('dir',          '([object])'),
+            ('divmod',       '(a,b)'),
+            ('enumerate',    '(iterable)'),
+            ('eval',         '(expression[,globals[,locals]])'),
+            ('execfile',     '(filename[,globals[,locals]])'),
+            ('file',         '(filename[,mode[,bufsize]])'),
+            ('filter',       '(function,list)'),
+            ('float',        '([x])'),
+            ('frozenset',    '([iterable])'),
+            ('getattr',      '(object,name[,default])'),
+            ('globals',      '()'),
+            ('hasattr',      '(object,name)'),
+            ('hash',         '(object)'),
+            ('help',         '([object])'),
+            ('hex',          '(x)'),
+            ('id',           '(object)'),
+            ('input',        '([prompt])'),
+            ('int',          '([x[,radix]])'),
+            ('isinstance',   '(object,classinfo)'),
+            ('issubclass',   '(class,classinfo)'),
+            ('iter',         '(o[,sentinel])'),
+            ('len',          '(s)'),
+            ('list',         '([sequence])'),
+            ('locals',       '()'),
+            ('long',         '([x[,radix]])'),
+            ('map',          '(function,list,...)'),
+            ('max',          '(s[,args...])'),
+            ('min',          '(s[,args...])'),
+            ('object',       '()'),
+            ('oct',          '(x)'),
+            ('open',         '(filename[,mode[,bufsize]])'),
+            ('ord',          '(c)'),
+            ('pow',          '(x,y[,z])'),
+            ('property',     '([fget[,fset[,fdel[,doc]]]])'),
+            ('range',        '([start,] stop[,step])'),
+            ('raw_input',    '([prompt])'),
+            ('reduce',       '(function,sequence[,initializer])'),
+            ('reload',       '(module)'),
+            ('repr',         '(object)'),
+            ('reversed',     '(seq)'),
+            ('round',        '(x[,n])'),
+            ('set',          '([iterable])'),
+            ('setattr',      '(object,name,value)'),
+            ('slice',        '([start,] stop[,step])'),
+            ('sorted',       '(iterable[,cmp[,key[,reverse]]])'),
+            ('staticmethod', '(function)'),
+            ('str',          '([object])'),
+            ('sum',          '(sequence[,start])'),
+            ('super',        '(type[,object-or-type])'),
+            ('tuple',        '([sequence])'),
+            ('unichr',       '(i)'),
+            ('unicode',      '([object[,encoding[,errors]]])'),
+            ('vars',         '([object])'),
+            ('xrange',       '([start,] stop[,step])'),
+            ('zip',          '([seq1,...])'),
+        )
+        #@nonl
+        #@-node:ekr.20060224100239:<< define calltips table >>
+        #@nl
+        tipsDict = {}
+        for a,b in table:
+            tipsDict [a] = b
+    
+        d = {}
+        for z in __builtins__.keys():
+            f = __builtins__.get(z)
+            if type(f) == types.BuiltinFunctionType:
+                # d [z] = f
+                d [z] = tipsDict.get(z)
+            
+        # g.trace(g.dictToString(d))
+        
+        self.globalPythonFunctionsDict = d
+    #@nonl
+    #@-node:ekr.20060224092426:definePythonGlobalFunctionsDict
     #@+node:ekr.20060223085549:defineClassesDict
     def defineClassesDict (self):
         
@@ -283,18 +380,20 @@ class autoCompleterClass:
         
         w = event and event.widget or c.get_focus()
         
-        # First, insert the invocation character as usual.
-        k.masterCommand(event,func=None,stroke=None,commandName=None)
-        
         # Insert the calltip if possible.
         if k.enable_calltips or force:
-            # g.trace('calltips not ready yet')
             self.widget = w
             self.prefix = ''
             self.selection = g.app.gui.getTextSelection(w)
             self.selectedText = g.app.gui.getSelectedText(w)
-            self.getLeadinWord(w)
-            self.tabName = 'Calltips'
+            # self.getLeadinWord(w)
+            self.leadinWord = self.findCalltipWord(w)
+            self.object = None
+            self.membersList = None
+            self.calltip()
+        else:
+            # Just insert the invocation character as usual.
+            k.masterCommand(event,func=None,stroke=None,commandName=None)
             
         return 'break'
     #@nonl
@@ -378,6 +477,9 @@ class autoCompleterClass:
     
     def beginTabName (self,word):
     
+        # g.trace(word,g.callers())
+        if word == 'self' and self.selfClassName:
+            word = '%s (%s)' % (word,self.selfClassName)
         self.setTabName('AutoComplete ' + word + '.')
         
     def clearTabName (self):
@@ -404,10 +506,11 @@ class autoCompleterClass:
     #@+node:ekr.20060221131304:appendToKnownObjects
     def appendToKnownObjects (self,obj):
         
-        if type(obj) in (types.InstanceType,types.ModuleType,types):
-            if hasattr(obj,'__name__'):
-                self.knownObjects[obj.__name__] = obj
-                # g.trace('adding',obj.__name__)
+        if 0:
+            if type(obj) in (types.InstanceType,types.ModuleType,types):
+                if hasattr(obj,'__name__'):
+                    self.knownObjects[obj.__name__] = obj
+                    # g.trace('adding',obj.__name__)
     #@nonl
     #@-node:ekr.20060221131304:appendToKnownObjects
     #@+node:ekr.20060220110302:calltip
@@ -415,45 +518,68 @@ class autoCompleterClass:
         
         c = self.c ; w = self.widget
         removeCloseParen = True # Should be a user arg.
-        
-        isStringMethod = self.prevObjects and type(self.prevObjects[-1]) == types.StringType
+        # g.trace(self.leadinWord)
     
-        # g.trace(self.prevObjects)
-    
-        if isStringMethod:
-            # A hack. String functions are builtins, and getargspec doesn't handle them.
-            # Get the corresponding string function instead, and remove the s arg later.
-            obj = getattr(string,obj.__name__)
-        
-        try:
-            s1,s2,s3,s4 = inspect.getargspec(obj)
-        except:
-            g.es('inspect failed:',repr(obj))
-            self.extendSelection('(')
-            self.finish()
-            return # Not a function.  Just '('.
-    
-        s = args = inspect.formatargspec(s1,s2,s3,s4)
-    
-        # Remove 'self' from s, but not from args.
+        if self.leadinWord and not obj:
+            #@        << try to set s from a Python global function >>
+            #@+node:ekr.20060224103829:<< try to set s from a Python global function >>
+            if not self.globalPythonFunctionsDict:
+                self.definePythonGlobalFunctionsDict()
+            s = args = self.globalPythonFunctionsDict.get(self.leadinWord)
+            if s: isStringMethod = False
+            #@nonl
+            #@-node:ekr.20060224103829:<< try to set s from a Python global function >>
+            #@nl
+        if not s:
+            #@        << get s using inspect >>
+            #@+node:ekr.20060224103829.1:<< get s using inspect >>
+            isStringMethod = self.prevObjects and type(self.prevObjects[-1]) == types.StringType
+            
+            # g.trace(self.prevObjects)
+            
+            if isStringMethod:
+                # A hack. String functions are builtins, and getargspec doesn't handle them.
+                # Get the corresponding string function instead, and remove the s arg later.
+                obj = getattr(string,obj.__name__)
+            
+            try:
+                s1,s2,s3,s4 = inspect.getargspec(obj)
+            except:
+                # g.es('inspect failed:',repr(obj))
+                self.extendSelection('(')
+                self.finish()
+                return # Not a function.  Just '('.
+            
+            s = args = inspect.formatargspec(s1,s2,s3,s4)
+            #@nonl
+            #@-node:ekr.20060224103829.1:<< get s using inspect >>
+            #@nl
+            
+        #@    << remove 'self' from s, but not from args >>
+        #@+node:ekr.20060224103829.2:<< remove 'self' from s, but not from args >>
         if g.match(s,1,'self,'):
             s = s[0] + s[6:].strip()
         elif g.match_word(s,1,'self'):
             s = s[0] + s[5:].strip()
-    
+        #@nonl
+        #@-node:ekr.20060224103829.2:<< remove 'self' from s, but not from args >>
+        #@nl
         if isStringMethod:
-            # Remove 's' from s *and* args.
+            #@        << remove 's' from s *and* args >>
+            #@+node:ekr.20060224103829.3:<< remove 's' from s *and* args >>
             if g.match(s,1,'s,'):
                 s = s[0] + s[3:]
                 args = args[0] + args[3:]
             elif g.match_word(s,1,'s'):
                 s = s[0] + s[2:]
                 args = args[0] + args[2:]
-                
+            #@nonl
+            #@-node:ekr.20060224103829.3:<< remove 's' from s *and* args >>
+            #@nl
         remove = removeCloseParen and len(s) > 2
         if remove: s = s.rstrip(')')
-        
-        # Insert the text and remember what to select.
+        #@    << insert the text and remember what to select >>
+        #@+node:ekr.20060224103829.4:<< insert the text and remember what to select >>
         if g.app.gui.hasSelection(w):
             i,j = g.app.gui.getSelectionRange(w)
         else:
@@ -465,16 +591,25 @@ class autoCompleterClass:
             j2 = w.index('%s + %sc' % (j,len(s)))
         else:
             j1 = j2 = w.index('%s + 2c' % j)
+        #@nonl
+        #@-node:ekr.20060224103829.4:<< insert the text and remember what to select >>
+        #@nl
     
         # End autocompletion mode, restoring the selection.
         self.finish()
         c.widgetWantsFocusNow(w)
         g.app.gui.setSelectionRange(w,j1,j2,insert=j2)
-        
-        # Put the status line last.
+        #@    << put the status line >>
+        #@+node:ekr.20060224103829.5:<< put the status line >>
         c.frame.clearStatusLine()
-        name = hasattr(obj,'__name__') and obj.__name__ or repr(obj)
+        if obj:
+            name = hasattr(obj,'__name__') and obj.__name__ or repr(obj)
+        else:
+            name = self.leadinWord
         c.frame.putStatusLine('%s %s' % (name,args))
+        #@nonl
+        #@-node:ekr.20060224103829.5:<< put the status line >>
+        #@nl
     #@nonl
     #@-node:ekr.20060220110302:calltip
     #@+node:ekr.20060220085402:chain
@@ -630,6 +765,17 @@ class autoCompleterClass:
         return j,word
     #@nonl
     #@-node:ekr.20060221104137:findAnchor
+    #@+node:ekr.20060224094501:findCalltipWord
+    def findCalltipWord (self,w):
+        
+        i = g.app.gui.getInsertPoint(w)
+        
+        if w.compare(i,'>','1.0'):
+            return w.get(i+'-1c wordstart',i+'-1c wordstart wordend')
+        else:
+            return ''
+    #@nonl
+    #@-node:ekr.20060224094501:findCalltipWord
     #@+node:ekr.20051127105102:finish
     def finish (self):
         
@@ -677,6 +823,7 @@ class autoCompleterClass:
     def getLeadinWord (self,w):
         
         self.verbose = False # User must explicitly ask for verbose.
+        self.leadinWord = None
         start = g.app.gui.getInsertPoint(w)
         start = w.index(start+'-1c')
         i,word = self.findAnchor(w)
@@ -829,12 +976,9 @@ class autoCompleterClass:
         if not word:
             # Leading dot shows all classes.
             self.leadinWord = None
-            if 1: # Experimental.
-                self.object = sys.modules
-                self.membersList = sys.modules.keys()
-                self.beginTabName('Modules')
-            else:
-                self.membersList = []
+            self.object = sys.modules
+            self.membersList = sys.modules.keys()
+            self.beginTabName('Modules')
         elif word in ( "'",'"'):
             word = 'aString' # This is in the objectsDict.
             self.clear()
@@ -889,11 +1033,13 @@ class autoCompleterClass:
                     # This prevents future rescanning, even if the node moves.
                     self.selfTnodesDict [p.v.t] = obj
         if obj:
+            self.selfClassName = className
             self.push(self.object)
             self.object = obj
             self.membersList = self.getMembersList(obj=obj)
         else:
             # No further action possible or desirable.
+            self.selfClassName = None
             self.object = None
             self.clear()
             self.membersList = []
@@ -951,12 +1097,11 @@ class autoCompleterClass:
         self.selectedText = g.app.gui.getSelectedText(w)
         flag = self.getLeadinWord(w)
         if self.membersList:
-            if 1:
-                if not flag:
-                    # Remove the invocation character.
-                    i = g.app.gui.getInsertPoint(w)
-                    if w.get(i+'-1c') == '.':
-                        w.delete(i+'-1c')
+            if not flag:
+                # Remove the (leading) invocation character.
+                i = g.app.gui.getInsertPoint(w)
+                if w.get(i+'-1c') == '.':
+                    w.delete(i+'-1c')
                     
             self.autoCompleterStateHandler(event)
     #@nonl
