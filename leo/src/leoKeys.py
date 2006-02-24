@@ -484,8 +484,7 @@ class autoCompleterClass:
         word = g.app.gui.getSelectedText(w)
         old_obj = self.object
     
-        if word and old_obj:
-            type(old_obj) == type([]) and old_obj == sys.modules:
+        if word and old_obj and type(old_obj) == type([]) and old_obj == sys.modules:
             obj = old_obj.get(word)
             if obj:
                 self.object = obj
