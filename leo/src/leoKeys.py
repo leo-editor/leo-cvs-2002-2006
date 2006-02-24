@@ -148,101 +148,6 @@ class autoCompleterClass:
         self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
         self.widget = None # The widget that should get focus after autocomplete is done.
     
-    #@+node:ekr.20060224092426:definePythonGlobalFunctionsDict
-    def definePythonGlobalFunctionsDict (self):
-        
-        '''Return a dict whose keys are the names of Python's global functions
-        and whose values are the functions themselves.'''
-        
-        #@    << define calltips table >>
-        #@+node:ekr.20060224100239:<< define calltips table >>
-        table = (
-            ('__import__',   '(name[,globals[,locals[,fromlist]]])'),
-            ('abs',          '(x)'),
-            ('bool',         '([x])'),
-            ('callable',     '(object)'),
-            ('chr',          '(i)'),
-            ('classmethod',  '(function)'),
-            ('cmp',          '(x,y)'),
-            ('compile',      '(string,filename,kind[,flags[,dont_inherit]])'),
-            ('complex',      '([real[,imag]])'),
-            ('delattr',      '(object,name)'),
-            ('dict',         '([mapping-or-sequence])'),
-            ('dir',          '([object])'),
-            ('divmod',       '(a,b)'),
-            ('enumerate',    '(iterable)'),
-            ('eval',         '(expression[,globals[,locals]])'),
-            ('execfile',     '(filename[,globals[,locals]])'),
-            ('file',         '(filename[,mode[,bufsize]])'),
-            ('filter',       '(function,list)'),
-            ('float',        '([x])'),
-            ('frozenset',    '([iterable])'),
-            ('getattr',      '(object,name[,default])'),
-            ('globals',      '()'),
-            ('hasattr',      '(object,name)'),
-            ('hash',         '(object)'),
-            ('help',         '([object])'),
-            ('hex',          '(x)'),
-            ('id',           '(object)'),
-            ('input',        '([prompt])'),
-            ('int',          '([x[,radix]])'),
-            ('isinstance',   '(object,classinfo)'),
-            ('issubclass',   '(class,classinfo)'),
-            ('iter',         '(o[,sentinel])'),
-            ('len',          '(s)'),
-            ('list',         '([sequence])'),
-            ('locals',       '()'),
-            ('long',         '([x[,radix]])'),
-            ('map',          '(function,list,...)'),
-            ('max',          '(s[,args...])'),
-            ('min',          '(s[,args...])'),
-            ('object',       '()'),
-            ('oct',          '(x)'),
-            ('open',         '(filename[,mode[,bufsize]])'),
-            ('ord',          '(c)'),
-            ('pow',          '(x,y[,z])'),
-            ('property',     '([fget[,fset[,fdel[,doc]]]])'),
-            ('range',        '([start,] stop[,step])'),
-            ('raw_input',    '([prompt])'),
-            ('reduce',       '(function,sequence[,initializer])'),
-            ('reload',       '(module)'),
-            ('repr',         '(object)'),
-            ('reversed',     '(seq)'),
-            ('round',        '(x[,n])'),
-            ('set',          '([iterable])'),
-            ('setattr',      '(object,name,value)'),
-            ('slice',        '([start,] stop[,step])'),
-            ('sorted',       '(iterable[,cmp[,key[,reverse]]])'),
-            ('staticmethod', '(function)'),
-            ('str',          '([object])'),
-            ('sum',          '(sequence[,start])'),
-            ('super',        '(type[,object-or-type])'),
-            ('tuple',        '([sequence])'),
-            ('unichr',       '(i)'),
-            ('unicode',      '([object[,encoding[,errors]]])'),
-            ('vars',         '([object])'),
-            ('xrange',       '([start,] stop[,step])'),
-            ('zip',          '([seq1,...])'),
-        )
-        #@nonl
-        #@-node:ekr.20060224100239:<< define calltips table >>
-        #@nl
-        tipsDict = {}
-        for a,b in table:
-            tipsDict [a] = b
-    
-        d = {}
-        for z in __builtins__.keys():
-            f = __builtins__.get(z)
-            if type(f) == types.BuiltinFunctionType:
-                # d [z] = f
-                d [z] = tipsDict.get(z)
-            
-        # g.trace(g.dictToString(d))
-        
-        self.globalPythonFunctionsDict = d
-    #@nonl
-    #@-node:ekr.20060224092426:definePythonGlobalFunctionsDict
     #@+node:ekr.20060223085549:defineClassesDict
     def defineClassesDict (self):
         
@@ -345,10 +250,12 @@ class autoCompleterClass:
     
         # First, handle the invocation character as usual.
         k.masterCommand(event,func=None,stroke=None,commandName=None)
-    
-        self.language = g.scanForAtLanguage(c,c.currentPosition())
-        if w and self.language == 'python' and (k.enable_autocompleter or force):
-            self.start(event=event,w=w)
+        
+        # Don't allow autocompletion in headlines.
+        if not c.widget_name(w).startswith('head'):
+            self.language = g.scanForAtLanguage(c,c.currentPosition())
+            if w and self.language == 'python' and (k.enable_autocompleter or force):
+                self.start(event=event,w=w)
     
         return 'break'
     #@nonl
@@ -517,19 +424,27 @@ class autoCompleterClass:
     def calltip (self,obj=None):
         
         c = self.c ; w = self.widget
-        removeCloseParen = True # Should be a user arg.
+        isStringMethod = False
+        removeCloseParen = True # Might better be a user arg.
+        s = None
+        
         # g.trace(self.leadinWord)
-    
         if self.leadinWord and not obj:
             #@        << try to set s from a Python global function >>
             #@+node:ekr.20060224103829:<< try to set s from a Python global function >>
-            if not self.globalPythonFunctionsDict:
-                self.definePythonGlobalFunctionsDict()
-            s = args = self.globalPythonFunctionsDict.get(self.leadinWord)
-            if s: isStringMethod = False
+            # The first line of the docstring is good enough.
+            f = __builtins__.get(self.leadinWord)
+            doc = f and f.__doc__
+            if doc:
+                s = g.splitLines(doc)
+                s = args = s and s[0] or ''
+                i = s.find('(')
+                if i > -1: s = s[i:]
+                s = s and s.strip() or ''
             #@nonl
             #@-node:ekr.20060224103829:<< try to set s from a Python global function >>
             #@nl
+    
         if not s:
             #@        << get s using inspect >>
             #@+node:ekr.20060224103829.1:<< get s using inspect >>
@@ -610,7 +525,6 @@ class autoCompleterClass:
         #@nonl
         #@-node:ekr.20060224103829.5:<< put the status line >>
         #@nl
-    #@nonl
     #@-node:ekr.20060220110302:calltip
     #@+node:ekr.20060220085402:chain
     def chain (self):
@@ -874,18 +788,26 @@ class autoCompleterClass:
     #@+node:ekr.20060220132026:info
     def info (self):
         
-        c = self.c ; obj = self.object ; w = self.widget
+        c = self.c ; doc = None ; obj = self.object ; w = self.widget
     
         word = g.app.gui.getSelectedText(w)
-         
-        if not self.hasAttr(obj,word): return
         
-        obj = self.getAttr(obj,word)
-        doc = inspect.getdoc(obj)
-        if not doc: return
+        if not word:
+            # Never gets called, but __builtin__.f will work.
+            word = self.findCalltipWord(w)
+            if word:
+                # Try to get the docstring for the Python global.
+                f = __builtins__.get(self.leadinWord)
+                doc = f and f.__doc__
     
-        c.frame.log.clearTab('Info',wrap='word')
-        g.es(doc,tabName='Info')
+        if not doc:
+            if not self.hasAttr(obj,word): return
+            obj = self.getAttr(obj,word)
+            doc = inspect.getdoc(obj)
+    
+        if doc:
+            c.frame.log.clearTab('Info',wrap='word')
+            g.es(doc,tabName='Info')
     #@nonl
     #@+node:ekr.20060220132919:prettyPrintDoc
     def prettyPrintDoc (self,s):
