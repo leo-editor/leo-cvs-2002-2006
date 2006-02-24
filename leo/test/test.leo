@@ -261,14 +261,17 @@
 <v t="ekr.20060223094614.2"><vh>good</vh></v>
 </v>
 </v>
-<v t="ekr.20060222140651" a="E"><vh>testClass (for test of self completion)</vh>
-<v t="ekr.20060222140651.1"><vh>ctor</vh></v>
+<v t="ekr.20060222140651"><vh>testClass (for test of self completion)</vh>
+<v t="ekr.20060222140651.1" a="E"><vh>ctor</vh></v>
 <v t="ekr.20060222140651.2" a="E"><vh>spam</vh></v>
 <v t="ekr.20060223125426"><vh>eggs</vh></v>
 <v t="ekr.20060222140651.3"><vh>bad</vh></v>
 <v t="ekr.20060223120040"><vh>test of self</vh></v>
 </v>
-<v t="ekr.20060223131415" a="V"><vh>Test of meaningless self</vh></v>
+<v t="ekr.20060223181726" a="E"><vh>class position</vh>
+<v t="ekr.20060223181815" a="V"><vh>test of position.self</vh></v>
+</v>
+<v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4565,8 +4568,10 @@ print scanner.findParentClass(p)</t>
     
     @others</t>
 <t tx="ekr.20060222140651.1">def __init__ (self,c):
-    self.c = c</t>
-<t tx="ekr.20060222140651.2">def spam (self):
+    self.c = c
+    self.d = '1'
+    self.e = '2'</t>
+<t tx="ekr.20060222140651.2">def spam (self,s,p,a,m=[]):
     pass</t>
 <t tx="ekr.20060222140651.3">def bad (self):
     self = </t>
@@ -4673,9 +4678,20 @@ g.trace(g.listToString(dir(obj)))</t>
     # assert(a)</t>
 <t tx="ekr.20060223094614.2">def good (self):
     pass</t>
-<t tx="ekr.20060223120040"></t>
-<t tx="ekr.20060223125426">def eggs(self):
+<t tx="ekr.20060223120040">self.</t>
+<t tx="ekr.20060223125426">def eggs(self,e,g,s):
     pass</t>
-<t tx="ekr.20060223131415"></t>
+<t tx="ekr.20060223131415">self.</t>
+<t tx="ekr.20060223181726">class position:
+    
+    def __init__ (self):
+        pass
+        
+    def f1(self):
+        pass
+        
+    def f2(self):
+        pass</t>
+<t tx="ekr.20060223181815"></t>
 </tnodes>
 </leo_file>

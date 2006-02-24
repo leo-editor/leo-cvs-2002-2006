@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9109" clone_windows="0"/>
 <globals body_outline_ratio="0.442906574394">
-	<global_window_position top="10" left="423" height="867" width="751"/>
+	<global_window_position top="17" left="383" height="874" width="751"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -326,11 +326,6 @@
 <v t="ekr.20060115195302"><vh>setDefaultUnboundKeyAction</vh></v>
 </v>
 <v t="ekr.20050920084036.173"><vh>getPublicCommands (keyHandler)</vh></v>
-<v t="ekr.20060221112937"><vh>setObjectAndMembersList &amp; helpers</vh>
-<v t="ekr.20060223124014"><vh>getObjectFromAttribute</vh></v>
-<v t="ekr.20060223124014.2"><vh>completeSelf</vh></v>
-<v t="ekr.20060223124014.3"><vh>completeFromObject</vh></v>
-</v>
 </v>
 <v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
 <v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh>
@@ -360,7 +355,6 @@
 <v t="ekr.20060223081914"><vh>getAttr and hasAttr</vh></v>
 <v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
 <v t="ekr.20060219174642"><vh>getMembersList</vh></v>
-<v t="ekr.20060220055415"><vh>getModulesList (not used)</vh></v>
 <v t="ekr.20060220132026"><vh>info</vh>
 <v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
 </v>
@@ -400,7 +394,7 @@
 </v>
 <v t="ekr.20060222082041"><vh>class classScannerClass</vh>
 <v t="ekr.20060222082041.1"><vh>ctor</vh></v>
-<v t="ekr.20060223120755"><vh>parse</vh></v>
+<v t="ekr.20060223120755"><vh>scan</vh></v>
 <v t="ekr.20060222082041.2"><vh>findParentClass</vh></v>
 <v t="ekr.20060222082041.3"><vh>findClass &amp; helpers</vh>
 <v t="ekr.20060222082041.4"><vh>endsDoc</vh></v>
@@ -492,11 +486,6 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20060115195302"><vh>setDefaultUnboundKeyAction</vh></v>
 </v>
 <v t="ekr.20050920084036.173"><vh>getPublicCommands (keyHandler)</vh></v>
-<v t="ekr.20060221112937"><vh>setObjectAndMembersList &amp; helpers</vh>
-<v t="ekr.20060223124014"><vh>getObjectFromAttribute</vh></v>
-<v t="ekr.20060223124014.2"><vh>completeSelf</vh></v>
-<v t="ekr.20060223124014.3"><vh>completeFromObject</vh></v>
-</v>
 </v>
 <v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
 <v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh>
@@ -526,7 +515,6 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 <v t="ekr.20060223081914"><vh>getAttr and hasAttr</vh></v>
 <v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
 <v t="ekr.20060219174642"><vh>getMembersList</vh></v>
-<v t="ekr.20060220055415"><vh>getModulesList (not used)</vh></v>
 <v t="ekr.20060220132026"><vh>info</vh>
 <v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
 </v>
@@ -566,7 +554,7 @@ marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
 </v>
 <v t="ekr.20060222082041"><vh>class classScannerClass</vh>
 <v t="ekr.20060222082041.1"><vh>ctor</vh></v>
-<v t="ekr.20060223120755"><vh>parse</vh></v>
+<v t="ekr.20060223120755"><vh>scan</vh></v>
 <v t="ekr.20060222082041.2"><vh>findParentClass</vh></v>
 <v t="ekr.20060222082041.3"><vh>findClass &amp; helpers</vh>
 <v t="ekr.20060222082041.4"><vh>endsDoc</vh></v>
@@ -2830,6 +2818,7 @@ for z in ('borderframe','clipper','frame','hull'):
     s = gui.getSelectedText(w)
     self.tabList,common_prefix = g.itemsMatchingPrefixInList(
         s,self.membersList,matchEmptyPrefix=True)
+
     if not common_prefix:
         if verbose or len(self.tabList) &lt; 25:
             self.tabList,common_prefix = g.itemsMatchingPrefixInList(
@@ -4164,11 +4153,7 @@ You can click nodes and get the UNL to display, but when arrowing around the
 tree, UNL area flashes the unl and then clears it immediately.</t>
 <t tx="ekr.20060216135646">@nocolor
 
-- Allow 'self' as an anchor.
-
-- leading . shows all classes.
-
-- Info for builtins like reduce, getattr, etc. (Maybe a separate command).
+- Calltips for builtins like reduce, getattr, etc. (Maybe a separate command).
 
 Maybe:
 
@@ -4368,28 +4353,32 @@ def initialScan (self):
     start = w.index(start+'-1c')
     i,word = self.findAnchor(w)
     self.setObjectAndMembersList(word)
-    if not self.object:
-        # g.trace('unknown',word)
-        return False
-    self.beginTabName(word)
+    
+    # g.trace(word,self.object,len(self.membersList))
 
-    while w.compare(i,'&lt;',start):
-        if w.get(i) != '.':
-            g.trace('oops: %s' % (repr(w.get(i))))
-            return False
-        i = w.index(i+'+1c')
-        j = w.index(i+' wordend')
-        word = w.get(i,j)
-        self.setObjectAndMembersList(word)
-        if not self.object:
-            g.trace('unknown',word)
-            return False
-        self.appendTabName(word)
-        i = j
-            
-    self.leadinWord = word
-    # g.trace(self.leadinWord)
-    return True</t>
+    if not word:
+        return False
+    elif not self.object:
+        self.membersList = []
+        return False
+    else:
+        self.beginTabName(word)
+        while w.compare(i,'&lt;',start):
+            if w.get(i) != '.':
+                g.trace('oops: %s' % (repr(w.get(i))))
+                return False
+            i = w.index(i+'+1c')
+            j = w.index(i+' wordend')
+            word = w.get(i,j)
+            self.setObjectAndMembersList(word)
+            if not self.object:
+                g.trace('unknown',word)
+                return False
+            self.appendTabName(word)
+            i = j
+        self.leadinWord = word
+        return True
+    </t>
 <t tx="ekr.20060219170043">def showCalltipsForce (self,event=None):
     
     return self.showCalltips(event,force=True)</t>
@@ -4483,6 +4472,10 @@ def beginTabName (self,word):
 
     self.setTabName('AutoComplete ' + word + '.')
     
+def clearTabName (self):
+    
+    self.setTabName('AutoComplete ')
+    
 def popTabName (self):
     
     s = self.tabName
@@ -4499,13 +4492,6 @@ def setTabName (self,s):
     self.tabName = s.replace('_','') or ''
     c.frame.log.clearTab(self.tabName)</t>
 <t tx="ekr.20060219183519"></t>
-<t tx="ekr.20060220055415">def getModulesList (self):
-    
-    '''Return a list all (loaded) Python modules.'''
-    
-    aList = sys.modules.keys()
-    aList.sort()
-    return aList</t>
 <t tx="ekr.20060220062710">def start (self,event=None,w=None):
     
     if w: self.widget = w
@@ -4519,16 +4505,33 @@ def setTabName (self,s):
     self.prefix = ''
     self.selection = g.app.gui.getTextSelection(w)
     self.selectedText = g.app.gui.getSelectedText(w)
-    if self.getLeadinWord(w):
+    flag = self.getLeadinWord(w)
+    if self.membersList:
+        if 1:
+            if not flag:
+                # Remove the invocation character.
+                i = g.app.gui.getInsertPoint(w)
+                if w.get(i+'-1c') == '.':
+                    w.delete(i+'-1c')
+                
         self.autoCompleterStateHandler(event)</t>
 <t tx="ekr.20060220085402">def chain (self):
     
     c = self.c ; w = self.widget
     word = g.app.gui.getSelectedText(w)
     old_obj = self.object
-    if word and old_obj and self.hasAttr(old_obj,word):
+
+    if word and old_obj:
+        type(old_obj) == type([]) and old_obj == sys.modules:
+        obj = old_obj.get(word)
+        if obj:
+            self.object = obj
+            self.clearTabName()
+    elif word and old_obj and self.hasAttr(old_obj,word):
         self.push(old_obj)
         self.object = obj = self.getAttr(old_obj,word)
+
+    if obj:
         self.appendToKnownObjects(obj)
         self.leadinWord = word
         self.membersList = self.getMembersList(obj)
@@ -4542,10 +4545,12 @@ def setTabName (self,s):
         self.selection = g.app.gui.getTextSelection(w)
         self.selectedText = g.app.gui.getSelectedText(w)
         if self.membersList:
-            self.autoCompleterStateHandler(event=None)
+            # self.autoCompleterStateHandler(event=None)
+            self.computeCompletionList()
             return
     self.extendSelection('.')
-    self.finish()</t>
+    self.finish()
+</t>
 <t tx="ekr.20060220104902">def insertNormalChar (self,ch,keysym):
     
     k = self.k ; w = self.widget
@@ -4696,13 +4701,24 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
     j = w.index(i+' wordend')
     word = w.get(i,j)
     
+    if word == '.': word = None
+    
     # g.trace(i,j,repr(word),w.get(j))
     return j,word</t>
 <t tx="ekr.20060221112937">def setObjectAndMembersList (self,word):
     
     c = self.c
-
-    if word in ( "'",'"'):
+    
+    if not word:
+        # Leading dot shows all classes.
+        self.leadinWord = None
+        if 1: # Experimental.
+            self.object = sys.modules
+            self.membersList = sys.modules.keys()
+            self.beginTabName('Modules')
+        else:
+            self.membersList = []
+    elif word in ( "'",'"'):
         word = 'aString' # This is in the objectsDict.
         self.clear()
         self.push(self.object)
@@ -4752,14 +4768,26 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
     # self.start_in_doc = c.config.getBool('at_root_bodies_start_in_doc_mode')
 
     self.start_in_doc = False</t>
-<t tx="ekr.20060222082041.2">def findParentClass (self,p):
+<t tx="ekr.20060222082041.2">def findParentClass (self,root):
     
-    for p in p.self_and_parents_iter():
+    autoCompleter = self.c.k.autoCompleter
+    
+    # First, see if any parent has already been scanned.
+    for p in root.self_and_parents_iter():
+        obj = autoCompleter.selfTnodesDict.get(p.v.t)
+        if obj:
+            # g.trace('found',obj,'in',p.headString())
+            return None,obj,p
+    
+    # Next, do a much slower scan.
+    # g.trace('slow scanning...')
+    for p in root.self_and_parents_iter():
         className = self.findClass(p)
         if className:
-            return p,className
+            # g.trace('found',className,'in',p.headString())
+            return className,None,p
     
-    return None,None</t>
+    return None,None,None</t>
 <t tx="ekr.20060222082041.3">def findClass (self,p):
 
     lines = g.splitLines(p.bodyString())
@@ -4800,7 +4828,11 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
             return True
     else:
         return False</t>
-<t tx="ekr.20060222083704">- Handle backspace across '.'
+<t tx="ekr.20060222083704">@nocolor
+
+- Allow 'self' as an anchor.
+- leading . shows all classes.  (must set self.object for this to be useful.
+- Handle backspace across '.'
 - . prints dict.keys and contents of lists.
 - ! now toggles between brief and full listings.
 - Make sure typing completion sticks.
@@ -4874,20 +4906,32 @@ def hasAttr (self,obj,attr):
         return attr in aList</t>
 <t tx="ekr.20060223085549">def defineClassesDict (self):
     
-    # gc does not necessarily exist everywhere.
-    try:
-        import gc
-    except ImportError:
-        return {}
-
-    d = {}
-    for z in gc.get_objects():
-        if type(z) == types.InstanceType:
-            d[z.__class__.__name__] = z
-
-    # g.printList(d.keys(),tag='Classes',sort=True)
+    self.allClassesDict = {}
     
-    return d</t>
+    # gc may not exist.
+    try: import gc
+    except ImportError: return
+
+    for z in gc.get_objects():
+        t = type(z)
+        if t == types.ClassType:
+            name = z.__name__
+        elif t == types.InstanceType:
+            name = z.__class__.__name__
+        elif repr(t).startswith('&lt;class'): # A wretched kludge.
+            name = z.__class__.__name__
+        elif t == types.TypeType:
+            name = z.__name__
+        else:
+            name = None
+        if name:
+            # if name == 'position': g.trace(t,z)
+            self.allClassesDict [name] = z
+        
+    # g.printList(self.allClassesDict.keys(),tag='Classes',sort=True)
+    # g.trace(len(self.allClassesDict.keys()))
+    # g.trace('position:',self.allClassesDict.get('position'))
+</t>
 <t tx="ekr.20060223093117">class forgivingParserClass:
     
     '''A class to create a valid class instances from
@@ -4980,47 +5024,49 @@ def hasAttr (self,obj,attr):
             g.es_exception()
         return None</t>
 <t tx="ekr.20060223114802"></t>
-<t tx="ekr.20060223114802.1">@ Warning:
-This code passes None to the ctor as the value of all required args.
-This may generate arbitrary exceptions and may be too dangerous.
-A safer way would be to create a dummy ctor, but then we don't get any ivars.
-@c
-
-def createProxyObjectFromClass (self,className,theClass):
+<t tx="ekr.20060223114802.1">def createProxyObjectFromClass (self,className,theClass):
     
-    '''Create a real instance object by instantiating theClass.
-    
-    This will create all ivars unless the ctor throws an exception.'''
+    '''Create a dummy instance object by instantiating theClass with a dummy ctor.'''
 
-    # g.trace(type(theClass))
-
-    # Set args to the list of required arguments.
-    args = inspect.getargs(theClass.__init__.im_func.func_code)
-    args = args[0] ; n = len(args)-1
-    args = [None for z in xrange(n)]
+    if 0: # Calling the real ctor is way too dangerous.
+        # Set args to the list of required arguments.
+        args = inspect.getargs(theClass.__init__.im_func.func_code)
+        args = args[0] ; n = len(args)-1
+        args = [None for z in xrange(n)]
+        
+    def dummyCtor (self):
+        pass
+        
     try:
-        obj = theClass(*args)
-    except Exception:
-        g.es_print('Warning: exception creating proxy for %s' % (className),color='red')
-        def dummyCtor (self,*args,**keys):
-            pass
+        obj = None
+        old_init = hasattr(theClass,'__init__') and theClass.__init__
         theClass.__init__ = dummyCtor
-        obj = testClass()
-    
+        obj = theClass()
+    finally:
+        if old_init:
+            theClass.__init__ = old_init
+        else:
+            delattr(theClass,'__init__')
+        
+    g.trace(type(theClass),obj)
+
     # Verify that it has all the proper attributes.
     # g.trace(g.listToString(dir(obj)))
     return obj</t>
-<t tx="ekr.20060223120755">def parse (self):
+<t tx="ekr.20060223120755">def scan (self):
     
-    c = self.c ; p = c.currentPosition()
-    parser = c.k.autoCompleter.forgivingParser
-    
-    p,className = self.findParentClass(p)
-    if p and className:
+    c = self.c
+
+    className,obj,p = self.findParentClass(c.currentPosition())
+    # g.trace(className,obj,p)
+
+    if p and not obj:
+        parser = c.k.autoCompleter.forgivingParser
         s = parser.parse(p)
-        return className,s
     else:
-        return None,None</t>
+        s = None
+        
+    return className,obj,p,s</t>
 <t tx="ekr.20060223124014">def backup (self,word):
     
     prevObj = self.prevObjects and self.prevObjects[-1]
@@ -5036,21 +5082,24 @@ def createProxyObjectFromClass (self,className,theClass):
         self.object = None</t>
 <t tx="ekr.20060223124014.2">def completeSelf (self):
     
-    c = self.c ; p = c.currentPosition()
+    # This scan will be fast if an instant object already exists.
+    className,obj,p,s = self.classScanner.scan()
+    g.trace(className,obj,p,s and len(s))
 
-    obj = self.selfTnodesDict.get(p.v.t) # **Much** quicker than scanning.
+    # First, look up the className.
+    if not obj and className:
+        obj = self.allClassesDict.get(className)
+        if obj: g.trace('found in allClassesDict: %s = %s' % (className,obj))
 
-    if not obj:
-        className, s = self.classScanner.parse()
-        if className and s:
-            obj = self.selfObjectsDict.get(className)
-            if not obj:
-                theClass = self.computeClassObjectFromString(className,s)
-                if theClass:
-                    obj = self.createProxyObjectFromClass(className,theClass)
-                    if obj:
-                        self.selfObjectsDict [className] = obj
-                        self.selfTnodesDict [p.v.t] = obj
+    # Second, create the object from class definition.
+    if not obj and s:
+        theClass = self.computeClassObjectFromString(className,s)
+        if theClass:
+            obj = self.createProxyObjectFromClass(className,theClass)
+            if obj:
+                self.selfObjectsDict [className] = obj
+                # This prevents future rescanning, even if the node moves.
+                self.selfTnodesDict [p.v.t] = obj
     if obj:
         self.push(self.object)
         self.object = obj

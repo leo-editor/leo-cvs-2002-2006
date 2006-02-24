@@ -4893,11 +4893,7 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
 #@+node:ekr.20060216135646:To do
 @nocolor
 
-- Allow 'self' as an anchor.
-
-- leading . shows all classes.
-
-- Info for builtins like reduce, getattr, etc. (Maybe a separate command).
+- Calltips for builtins like reduce, getattr, etc. (Maybe a separate command).
 
 Maybe:
 
@@ -4908,6 +4904,10 @@ Maybe:
 #@nonl
 #@-node:ekr.20060216135646:To do
 #@+node:ekr.20060222083704:What I did
+@nocolor
+
+- Allow 'self' as an anchor.
+- leading . shows all classes.  (must set self.object for this to be useful.
 - Handle backspace across '.'
 - . prints dict.keys and contents of lists.
 - ! now toggles between brief and full listings.
@@ -5315,21 +5315,31 @@ def __init__ (self,k):
 #@+node:ekr.20060223085549:defineClassesDict
 def defineClassesDict (self):
     
-    # gc does not necessarily exist everywhere.
-    try:
-        import gc
-    except ImportError:
-        return {}
-
-    d = {}
-    for z in gc.get_objects():
-        if type(z) == types.InstanceType:
-            d[z.__class__.__name__] = z
-
-    # g.printList(d.keys(),tag='Classes',sort=True)
+    self.allClassesDict = {}
     
-    return d
-#@nonl
+    # gc may not exist.
+    try: import gc
+    except ImportError: return
+
+    for z in gc.get_objects():
+        t = type(z)
+        if t == types.ClassType:
+            name = z.__name__
+        elif t == types.InstanceType:
+            name = z.__class__.__name__
+        elif repr(t).startswith('<class'): # A wretched kludge.
+            name = z.__class__.__name__
+        elif t == types.TypeType:
+            name = z.__name__
+        else:
+            name = None
+        if name:
+            # if name == 'position': g.trace(t,z)
+            self.allClassesDict [name] = z
+        
+    # g.printList(self.allClassesDict.keys(),tag='Classes',sort=True)
+    # g.trace(len(self.allClassesDict.keys()))
+    # g.trace('position:',self.allClassesDict.get('position'))
 #@-node:ekr.20060223085549:defineClassesDict
 #@+node:ekr.20060219171914:defineObjectDict
 def defineObjectDict (self):
@@ -5536,6 +5546,10 @@ def beginTabName (self,word):
 
     self.setTabName('AutoComplete ' + word + '.')
     
+def clearTabName (self):
+    
+    self.setTabName('AutoComplete ')
+    
 def popTabName (self):
     
     s = self.tabName
@@ -5635,9 +5649,17 @@ def chain (self):
     c = self.c ; w = self.widget
     word = g.app.gui.getSelectedText(w)
     old_obj = self.object
-    if word and old_obj and self.hasAttr(old_obj,word):
+
+    if word and old_obj and type(old_obj) == type([]) and old_obj == sys.modules:
+        obj = old_obj.get(word)
+        if obj:
+            self.object = obj
+            self.clearTabName()
+    elif word and old_obj and self.hasAttr(old_obj,word):
         self.push(old_obj)
         self.object = obj = self.getAttr(old_obj,word)
+
+    if obj:
         self.appendToKnownObjects(obj)
         self.leadinWord = word
         self.membersList = self.getMembersList(obj)
@@ -5651,11 +5673,11 @@ def chain (self):
         self.selection = g.app.gui.getTextSelection(w)
         self.selectedText = g.app.gui.getSelectedText(w)
         if self.membersList:
-            self.autoCompleterStateHandler(event=None)
+            # self.autoCompleterStateHandler(event=None)
+            self.computeCompletionList()
             return
     self.extendSelection('.')
     self.finish()
-#@nonl
 #@-node:ekr.20060220085402:chain
 #@+node:ekr.20051126123149:computeCompletionList
 def computeCompletionList (self,verbose=False):
@@ -5665,6 +5687,7 @@ def computeCompletionList (self,verbose=False):
     s = gui.getSelectedText(w)
     self.tabList,common_prefix = g.itemsMatchingPrefixInList(
         s,self.membersList,matchEmptyPrefix=True)
+
     if not common_prefix:
         if verbose or len(self.tabList) < 25:
             self.tabList,common_prefix = g.itemsMatchingPrefixInList(
@@ -5767,6 +5790,8 @@ def findAnchor (self,w):
     j = w.index(i+' wordend')
     word = w.get(i,j)
     
+    if word == '.': word = None
+    
     # g.trace(i,j,repr(word),w.get(j))
     return j,word
 #@nonl
@@ -5822,28 +5847,32 @@ def getLeadinWord (self,w):
     start = w.index(start+'-1c')
     i,word = self.findAnchor(w)
     self.setObjectAndMembersList(word)
-    if not self.object:
-        # g.trace('unknown',word)
-        return False
-    self.beginTabName(word)
+    
+    # g.trace(word,self.object,len(self.membersList))
 
-    while w.compare(i,'<',start):
-        if w.get(i) != '.':
-            g.trace('oops: %s' % (repr(w.get(i))))
-            return False
-        i = w.index(i+'+1c')
-        j = w.index(i+' wordend')
-        word = w.get(i,j)
-        self.setObjectAndMembersList(word)
-        if not self.object:
-            g.trace('unknown',word)
-            return False
-        self.appendTabName(word)
-        i = j
-            
-    self.leadinWord = word
-    # g.trace(self.leadinWord)
-    return True
+    if not word:
+        return False
+    elif not self.object:
+        self.membersList = []
+        return False
+    else:
+        self.beginTabName(word)
+        while w.compare(i,'<',start):
+            if w.get(i) != '.':
+                g.trace('oops: %s' % (repr(w.get(i))))
+                return False
+            i = w.index(i+'+1c')
+            j = w.index(i+' wordend')
+            word = w.get(i,j)
+            self.setObjectAndMembersList(word)
+            if not self.object:
+                g.trace('unknown',word)
+                return False
+            self.appendTabName(word)
+            i = j
+        self.leadinWord = word
+        return True
+    
 #@nonl
 #@-node:ekr.20060219111416:getLeadinWord
 #@+node:ekr.20060219174642:getMembersList
@@ -5861,16 +5890,6 @@ def getMembersList (self,obj):
         return []
 #@nonl
 #@-node:ekr.20060219174642:getMembersList
-#@+node:ekr.20060220055415:getModulesList (not used)
-def getModulesList (self):
-    
-    '''Return a list all (loaded) Python modules.'''
-    
-    aList = sys.modules.keys()
-    aList.sort()
-    return aList
-#@nonl
-#@-node:ekr.20060220055415:getModulesList (not used)
 #@+node:ekr.20060220132026:info
 def info (self):
     
@@ -5972,8 +5991,17 @@ def stackNames (self):
 def setObjectAndMembersList (self,word):
     
     c = self.c
-
-    if word in ( "'",'"'):
+    
+    if not word:
+        # Leading dot shows all classes.
+        self.leadinWord = None
+        if 1: # Experimental.
+            self.object = sys.modules
+            self.membersList = sys.modules.keys()
+            self.beginTabName('Modules')
+        else:
+            self.membersList = []
+    elif word in ( "'",'"'):
         word = 'aString' # This is in the objectsDict.
         self.clear()
         self.push(self.object)
@@ -6008,19 +6036,24 @@ def backup (self,word):
 #@+node:ekr.20060223124014.2:completeSelf
 def completeSelf (self):
     
+    # This scan will be fast if an instant object already exists.
     className,obj,p,s = self.classScanner.scan()
-    # g.trace(className,obj,p,s)
+    # g.trace(className,obj,p,s and len(s))
 
-    if not obj and className and s:
-        obj = self.selfObjectsDict.get(className)
-        if not obj:
-            theClass = self.computeClassObjectFromString(className,s)
-            if theClass:
-                obj = self.createProxyObjectFromClass(className,theClass)
-                if obj:
-                    self.selfObjectsDict [className] = obj
-                    # This prevents future rescanning, even if the node moves.
-                    self.selfTnodesDict [p.v.t] = obj
+    # First, look up the className.
+    if not obj and className:
+        obj = self.allClassesDict.get(className)
+        # if obj: g.trace('found in allClassesDict: %s = %s' % (className,obj))
+
+    # Second, create the object from class definition.
+    if not obj and s:
+        theClass = self.computeClassObjectFromString(className,s)
+        if theClass:
+            obj = self.createProxyObjectFromClass(className,theClass)
+            if obj:
+                self.selfObjectsDict [className] = obj
+                # This prevents future rescanning, even if the node moves.
+                self.selfTnodesDict [p.v.t] = obj
     if obj:
         self.push(self.object)
         self.object = obj
@@ -6082,7 +6115,15 @@ def start (self,event=None,w=None):
     self.prefix = ''
     self.selection = g.app.gui.getTextSelection(w)
     self.selectedText = g.app.gui.getSelectedText(w)
-    if self.getLeadinWord(w):
+    flag = self.getLeadinWord(w)
+    if self.membersList:
+        if 1:
+            if not flag:
+                # Remove the invocation character.
+                i = g.app.gui.getInsertPoint(w)
+                if w.get(i+'-1c') == '.':
+                    w.delete(i+'-1c')
+                
         self.autoCompleterStateHandler(event)
 #@nonl
 #@-node:ekr.20060220062710:start
@@ -6314,33 +6355,32 @@ def getCleanString (self,s):
 #@-node:ekr.20060216160332.1:Scanning
 #@+node:ekr.20060223114802:Proxy classes and objects
 #@+node:ekr.20060223114802.1:createProxyObjectFromClass
-@ Warning:
-This code passes None to the ctor as the value of all required args.
-This may generate arbitrary exceptions and may be too dangerous.
-A safer way would be to create a dummy ctor, but then we don't get any ivars.
-@c
-
 def createProxyObjectFromClass (self,className,theClass):
     
-    '''Create a real instance object by instantiating theClass.
-    
-    This will create all ivars unless the ctor throws an exception.'''
+    '''Create a dummy instance object by instantiating theClass with a dummy ctor.'''
 
-    # g.trace(type(theClass))
-
-    # Set args to the list of required arguments.
-    args = inspect.getargs(theClass.__init__.im_func.func_code)
-    args = args[0] ; n = len(args)-1
-    args = [None for z in xrange(n)]
+    if 0: # Calling the real ctor is way too dangerous.
+        # Set args to the list of required arguments.
+        args = inspect.getargs(theClass.__init__.im_func.func_code)
+        args = args[0] ; n = len(args)-1
+        args = [None for z in xrange(n)]
+        
+    def dummyCtor (self):
+        pass
+        
     try:
-        obj = theClass(*args)
-    except Exception:
-        g.es_print('Warning: exception creating proxy for %s' % (className),color='red')
-        def dummyCtor (self,*args,**keys):
-            pass
+        obj = None
+        old_init = hasattr(theClass,'__init__') and theClass.__init__
         theClass.__init__ = dummyCtor
-        obj = testClass()
-    
+        obj = theClass()
+    finally:
+        if old_init:
+            theClass.__init__ = old_init
+        else:
+            delattr(theClass,'__init__')
+        
+    g.trace(type(theClass),obj)
+
     # Verify that it has all the proper attributes.
     # g.trace(g.listToString(dir(obj)))
     return obj
@@ -6571,85 +6611,6 @@ def startsDoc (self,s):
 #@-node:ekr.20060222082041.3:findClass & helpers
 #@-node:ekr.20060222082041:class classScannerClass
 #@-node:ekr.20051126123249:class autoCompleterClass
-#@+node:ekr.20060221112937:setObjectAndMembersList & helpers
-def setObjectAndMembersList (self,word):
-    
-    c = self.c
-
-    if word in ( "'",'"'):
-        word = 'aString' # This is in the objectsDict.
-        self.clear()
-        self.push(self.object)
-        self.object = 'aString'
-        self.membersList = self.getMembersList(self.object)
-    elif self.prevObjects:
-        self.getObjectFromAttribute(word)
-    elif word == 'self':
-        self.completeSelf()
-    else:
-        obj = self.objectDict.get(word) or sys.modules.get(word)
-        self.completeFromObject(obj)
-
-    # g.trace(word,self.object,len(self.membersList))
-#@nonl
-#@+node:ekr.20060223124014:getObjectFromAttribute
-def backup (self,word):
-    
-    prevObj = self.prevObjects and self.prevObjects[-1]
-
-    if prevObj and self.hasAttr(prevObj,word):
-        self.object = self.getAttr(prevObj,word)
-        self.appendToKnownObjects(self.object)
-        self.membersList = self.getMembersList(self.object)
-    else:
-        # No special support for 'self' here.
-        # Don't clear the stack here!
-        self.membersList = []
-        self.object = None
-#@nonl
-#@-node:ekr.20060223124014:getObjectFromAttribute
-#@+node:ekr.20060223124014.2:completeSelf
-def completeSelf (self):
-    
-    className,obj,p,s = self.classScanner.scan()
-    # g.trace(className,obj,p,s)
-
-    if not obj and className and s:
-        obj = self.selfObjectsDict.get(className)
-        if not obj:
-            theClass = self.computeClassObjectFromString(className,s)
-            if theClass:
-                obj = self.createProxyObjectFromClass(className,theClass)
-                if obj:
-                    self.selfObjectsDict [className] = obj
-                    # This prevents future rescanning, even if the node moves.
-                    self.selfTnodesDict [p.v.t] = obj
-    if obj:
-        self.push(self.object)
-        self.object = obj
-        self.membersList = self.getMembersList(obj=obj)
-    else:
-        # No further action possible or desirable.
-        self.object = None
-        self.clear()
-        self.membersList = []
-#@nonl
-#@-node:ekr.20060223124014.2:completeSelf
-#@+node:ekr.20060223124014.3:completeFromObject
-def completeFromObject (self,obj):
-
-    if obj:
-        self.appendToKnownObjects(obj)
-        self.push(self.object)
-        self.object = obj
-        self.membersList = self.getMembersList(obj=obj)
-    else:
-        self.object = None
-        self.clear()
-        self.membersList = []
-#@nonl
-#@-node:ekr.20060223124014.3:completeFromObject
-#@-node:ekr.20060221112937:setObjectAndMembersList & helpers
 #@-node:ekr.20051126122638:Finish autocompletion
 #@-node:ekr.20060218075614:4.4 a7 projects
 #@-node:ekr.20050924073836:4.4 projects
