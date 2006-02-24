@@ -248,19 +248,6 @@
 <v t="ekr.20060216144005"><vh>autocompleter test</vh>
 <v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
 </v>
-</v>
-<v t="ekr.20060222084658"><vh>autocomplete test</vh></v>
-<v t="ekr.20060222140651.4"><vh>forgiving parser prototype</vh>
-<v t="ekr.20060222145802"><vh>forgivingParser</vh></v>
-<v t="ekr.20060222142158"><vh>computeErrorNode</vh></v>
-<v t="ekr.20060222145802.2" a="E"><vh>putBody</vh></v>
-</v>
-<v t="ekr.20060223094536"><vh>get members from class objects</vh>
-<v t="ekr.20060223094614" a="E"><vh>testClass</vh>
-<v t="ekr.20060223094614.1"><vh>ctor</vh></v>
-<v t="ekr.20060223094614.2"><vh>good</vh></v>
-</v>
-</v>
 <v t="ekr.20060222140651"><vh>testClass (for test of self completion)</vh>
 <v t="ekr.20060222140651.1" a="E"><vh>ctor</vh></v>
 <v t="ekr.20060222140651.2" a="E"><vh>spam</vh></v>
@@ -268,10 +255,13 @@
 <v t="ekr.20060222140651.3"><vh>bad</vh></v>
 <v t="ekr.20060223120040"><vh>test of self</vh></v>
 </v>
-<v t="ekr.20060223181726" a="E"><vh>class position</vh>
-<v t="ekr.20060223181815" a="V"><vh>test of position.self</vh></v>
+<v t="ekr.20060223181726"><vh>test of self in position class</vh>
+<v t="ekr.20060223181815"><vh>test of position.self</vh></v>
 </v>
 <v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
+</v>
+<v t="ekr.20060224091836"><vh>Get list of all globals</vh></v>
+<v t="ekr.20060224093344" a="V"><vh>Test of calltips for global functions</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4561,7 +4551,6 @@ if 0: # Original code.
             print ; print len(members),name,'methods...\n\n',g.listToString(members)</t>
 <t tx="ekr.20060222082236">scanner = c.k.autoCompleter.classScanner
 print scanner.findParentClass(p)</t>
-<t tx="ekr.20060222084658"></t>
 <t tx="ekr.20060222140651">class testClass:
     
     '''A class to test the forgiving parser.'''
@@ -4575,109 +4564,6 @@ print scanner.findParentClass(p)</t>
     pass</t>
 <t tx="ekr.20060222140651.3">def bad (self):
     self = </t>
-<t tx="ekr.20060222140651.4">import compiler, parser
-
-old_putBody = c.atFileCommands.putBody
-
-@others
-
-print '*' * 40
-
-try:
-    c.atFileCommands.putBody = putBody
-    forgivingParser(c,p)
-finally:
-    c.atFileCommands.putBody = old_putBody</t>
-<t tx="ekr.20060222142158">def computeErrorNode (c,root,n,lines):
-    
-    '''The from c.goToLineNumber that applies to scripts.
-    Unlike c.gotoLineNumberOpen, this function returns a position.'''
-
-    if n==1 or n &gt;= len(lines):
-        return root
-    
-    vnodeName,junk,junk,junk,junk = c.convertLineToVnodeNameIndexLine(
-        lines,n,root,scriptFind=True)
-
-    if vnodeName:
-        for p in root.self_and_subtree_iter():
-            if p.matchHeadline(vnodeName):
-                return p
-
-    return None</t>
-<t tx="ekr.20060222145802">def forgivingParser(c,p):
-
-    root = p.copy()
-    g.app.excludedTnodesList = [] # Global communication with the new putBody.
-    s = g.getScript(c,root,useSelectedText=False)
-    while s:
-        # g.trace(s)
-        try:
-            val = compiler.parse(s+'\n')
-            break
-        except (parser.ParserError,SyntaxError):
-            fileName, n = g.getLastTracebackFileAndLineNumber()
-            p = computeErrorNode(c,root,n,lines=g.splitLines(s))
-            g.trace(p)
-            if not p or p == root:
-                g.es_print('Syntax error in class node: can not continue')
-                s = None ; break
-            else:
-                g.es_print('Syntax error: deleting %s' % p.headString())
-                g.app.excludedTnodesList.append(p.v.t)
-                s = g.getScript(c,root,useSelectedText=False)
-    if s:
-        exec s # Adds the objects in s (e.g., testClass) to the present environment.
-        print g.listToString(dir()) # Shows that testClass has been created.
-        print repr(testClass)
-        obj = testClass(c)
-        print repr(obj)</t>
-<t tx="ekr.20060222145802.2">def putBody(p,oneNodeOnly=False,fromString=''):
-
-    if p.v.t in g.app.excludedTnodesList:
-        g.trace('ignoring',p.headString())
-    else:
-        global old_putBody
-        old_putBody(p,oneNodeOnly,fromString)</t>
-<t tx="ekr.20060223094536">import inspect,types
-
-# Define valid test class
-@others
-
-# Set args to the list of required arguments.
-args = inspect.getargs(testClass.__init__.im_func.func_code)
-args = args[0]
-
-# Create the proxy object by passing None for all required arguments.
-n = len(args)-1
-args = [None for z in xrange(n)]
-try:
-    obj = testClass(*args)
-except Exception:
-    def dummyCtor (self,*args,**keys):
-        pass
-    testClass.__init__ = dummyCtor
-    obj = testClass()
-
-# Verify that it has all the proper attributes.
-g.trace(g.listToString(dir(obj)))</t>
-<t tx="ekr.20060223094614">class testClass:
-    
-    '''A class to test the forgiving parser.'''
-    
-    @others</t>
-<t tx="ekr.20060223094614.1">def __init__ (self,a,b,c,d='d',*args,**keys):
-    
-    g.trace(self,a,b,c)
-    self.a = a
-    self.b = b
-    self.c = c
-    self.d = d
-    self.args = args
-    self.keys = keys
-    # assert(a)</t>
-<t tx="ekr.20060223094614.2">def good (self):
-    pass</t>
 <t tx="ekr.20060223120040">self.</t>
 <t tx="ekr.20060223125426">def eggs(self,e,g,s):
     pass</t>
@@ -4693,5 +4579,7 @@ g.trace(g.listToString(dir(obj)))</t>
     def f2(self):
         pass</t>
 <t tx="ekr.20060223181815"></t>
+<t tx="ekr.20060224091836">print g.printList(__builtins__.keys(),sort=True)</t>
+<t tx="ekr.20060224093344"></t>
 </tnodes>
 </leo_file>
