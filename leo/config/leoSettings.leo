@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
@@ -299,7 +299,7 @@
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
 <v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
-<v t="ekr.20051101160257" a="E" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
+<v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
@@ -377,10 +377,9 @@
 </v>
 </v>
 <v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
-<v t="ekr.20060216135834"><vh>@bool enable_autocompleter = True</vh></v>
-<v t="ekr.20060216170801"><vh>@bool enable_calltips = True</vh></v>
-<v t="ekr.20060216145416" a="V"><vh>@bool trace_autocompleter = False</vh></v>
+<v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20051126062830" a="V"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 </v>
 </vnodes>
 <tnodes>

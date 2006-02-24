@@ -4888,12 +4888,18 @@ File "C:\Python24\lib\site-packages\Pmw\Pmw_1_2\lib\PmwBase.py", line 1747, in _
 return apply(self.func, args) 
 TypeError: findButtonCallback() takes at least 1 argument (0 given) 
 #@-node:ekr.20060221073238:Fixed bug in open-find-dialog
+#@+node:ekr.20060224143628.1:Ensure dialogs properly get focus
+#@-node:ekr.20060224143628.1:Ensure dialogs properly get focus
+#@+node:ekr.20060224143628.2:Disabled autocompleter in headlines
+# This was causing problems.  It may be an easy fix, but I kinda doubt it.
+#@nonl
+#@-node:ekr.20060224143628.2:Disabled autocompleter in headlines
+#@+node:ekr.20060224143628:Removed horrible g.app.dialogs hack
+
+#@-node:ekr.20060224143628:Removed horrible g.app.dialogs hack
 #@-node:ekr.20060221073409:Bugs
-#@+node:ekr.20051126122638:Finish autocompletion
-@ To do:
-    
-- Make sure code completion doesn't interfere witht the Find tab.
-    - For example, leading periods are common in finds.
+#@+node:ekr.20051126122638:Finished autocompletion
+@ To do after 4.4a7:
 
 - scan text for foreign languages.
 #@nonl
@@ -5264,16 +5270,19 @@ def getPublicCommands (self):
     }
 #@nonl
 #@-node:ekr.20050920084036.173:getPublicCommands (keyHandler)
-#@+node:ekr.20060224093506:Calltips for globals
+#@+node:ekr.20060224093506:Calltips and info for globals
 #@+node:ekr.20060220110302:calltip
 def calltip (self,obj=None):
     
     c = self.c ; w = self.widget
-    removeCloseParen = True # Should be a user arg.
+    isStringMethod = False
+    removeCloseParen = True # Might better be a user arg.
+    s = None
+    
     # g.trace(self.leadinWord)
-
     if self.leadinWord and not obj:
         << try to set s from a Python global function >>
+
     if not s:
         << get s using inspect >>
         
@@ -5289,12 +5298,16 @@ def calltip (self,obj=None):
     c.widgetWantsFocusNow(w)
     g.app.gui.setSelectionRange(w,j1,j2,insert=j2)
     << put the status line >>
-#@nonl
 #@+node:ekr.20060224103829:<< try to set s from a Python global function >>
-if not self.globalPythonFunctionsDict:
-    self.definePythonGlobalFunctionsDict()
-s = args = self.globalPythonFunctionsDict.get(self.leadinWord)
-if s: isStringMethod = False
+# The first line of the docstring is good enough.
+f = __builtins__.get(self.leadinWord)
+doc = f and f.__doc__
+if doc:
+    s = g.splitLines(doc)
+    s = args = s and s[0] or ''
+    i = s.find('(')
+    if i > -1: s = s[i:]
+    s = s and s.strip() or ''
 #@nonl
 #@-node:ekr.20060224103829:<< try to set s from a Python global function >>
 #@+node:ekr.20060224103829.1:<< get s using inspect >>
@@ -5383,101 +5396,41 @@ def showCalltips (self,event=None,force=False):
     return 'break'
 #@nonl
 #@-node:ekr.20060219103046.1:showCalltips
-#@+node:ekr.20060224092426:definePythonGlobalFunctionsDict
-def definePythonGlobalFunctionsDict (self):
+#@+node:ekr.20060220132026:info
+def info (self):
     
-    '''Return a dict whose keys are the names of Python's global functions
-    and whose values are the functions themselves.'''
-    
-    << define calltips table >>
-    tipsDict = {}
-    for a,b in table:
-        tipsDict [a] = b
+    c = self.c ; doc = None ; obj = self.object ; w = self.widget
 
-    d = {}
-    for z in __builtins__.keys():
-        f = __builtins__.get(z)
-        if type(f) == types.BuiltinFunctionType:
-            # d [z] = f
-            d [z] = tipsDict.get(z)
-        
-    # g.trace(g.dictToString(d))
+    word = g.app.gui.getSelectedText(w)
     
-    self.globalPythonFunctionsDict = d
+    if not word:
+        # Never gets called, but __builtin__.f will work.
+        word = self.findCalltipWord(w)
+        if word:
+            # Try to get the docstring for the Python global.
+            f = __builtins__.get(self.leadinWord)
+            doc = f and f.__doc__
+
+    if not doc:
+        if not self.hasAttr(obj,word): return
+        obj = self.getAttr(obj,word)
+        doc = inspect.getdoc(obj)
+
+    if doc:
+        c.frame.log.clearTab('Info',wrap='word')
+        g.es(doc,tabName='Info')
 #@nonl
-#@+node:ekr.20060224100239:<< define calltips table >>
-table = (
-    ('__import__',   '(name[,globals[,locals[,fromlist]]])'),
-    ('abs',          '(x)'),
-    ('bool',         '([x])'),
-    ('callable',     '(object)'),
-    ('chr',          '(i)'),
-    ('classmethod',  '(function)'),
-    ('cmp',          '(x,y)'),
-    ('compile',      '(string,filename,kind[,flags[,dont_inherit]])'),
-    ('complex',      '([real[,imag]])'),
-    ('delattr',      '(object,name)'),
-    ('dict',         '([mapping-or-sequence])'),
-    ('dir',          '([object])'),
-    ('divmod',       '(a,b)'),
-    ('enumerate',    '(iterable)'),
-    ('eval',         '(expression[,globals[,locals]])'),
-    ('execfile',     '(filename[,globals[,locals]])'),
-    ('file',         '(filename[,mode[,bufsize]])'),
-    ('filter',       '(function,list)'),
-    ('float',        '([x])'),
-    ('frozenset',    '([iterable])'),
-    ('getattr',      '(object,name[,default])'),
-    ('globals',      '()'),
-    ('hasattr',      '(object,name)'),
-    ('hash',         '(object)'),
-    ('help',         '([object])'),
-    ('hex',          '(x)'),
-    ('id',           '(object)'),
-    ('input',        '([prompt])'),
-    ('int',          '([x[,radix]])'),
-    ('isinstance',   '(object,classinfo)'),
-    ('issubclass',   '(class,classinfo)'),
-    ('iter',         '(o[,sentinel])'),
-    ('len',          '(s)'),
-    ('list',         '([sequence])'),
-    ('locals',       '()'),
-    ('long',         '([x[,radix]])'),
-    ('map',          '(function,list,...)'),
-    ('max',          '(s[,args...])'),
-    ('min',          '(s[,args...])'),
-    ('object',       '()'),
-    ('oct',          '(x)'),
-    ('open',         '(filename[,mode[,bufsize]])'),
-    ('ord',          '(c)'),
-    ('pow',          '(x,y[,z])'),
-    ('property',     '([fget[,fset[,fdel[,doc]]]])'),
-    ('range',        '([start,] stop[,step])'),
-    ('raw_input',    '([prompt])'),
-    ('reduce',       '(function,sequence[,initializer])'),
-    ('reload',       '(module)'),
-    ('repr',         '(object)'),
-    ('reversed',     '(seq)'),
-    ('round',        '(x[,n])'),
-    ('set',          '([iterable])'),
-    ('setattr',      '(object,name,value)'),
-    ('slice',        '([start,] stop[,step])'),
-    ('sorted',       '(iterable[,cmp[,key[,reverse]]])'),
-    ('staticmethod', '(function)'),
-    ('str',          '([object])'),
-    ('sum',          '(sequence[,start])'),
-    ('super',        '(type[,object-or-type])'),
-    ('tuple',        '([sequence])'),
-    ('unichr',       '(i)'),
-    ('unicode',      '([object[,encoding[,errors]]])'),
-    ('vars',         '([object])'),
-    ('xrange',       '([start,] stop[,step])'),
-    ('zip',          '([seq1,...])'),
-)
+#@+node:ekr.20060220132919:prettyPrintDoc
+def prettyPrintDoc (self,s):
+    
+    c = self.c
+    
+    lines = [s.strip() for s in g.splitLines(s)]
+    return ''.join(s)
 #@nonl
-#@-node:ekr.20060224100239:<< define calltips table >>
-#@-node:ekr.20060224092426:definePythonGlobalFunctionsDict
-#@-node:ekr.20060224093506:Calltips for globals
+#@-node:ekr.20060220132919:prettyPrintDoc
+#@-node:ekr.20060220132026:info
+#@-node:ekr.20060224093506:Calltips and info for globals
 #@-node:ekr.20060219183519:Ref code
 #@+node:ekr.20051126123249:class autoCompleterClass
 class autoCompleterClass:
@@ -5524,100 +5477,6 @@ def __init__ (self,k):
     self.watchwords = {} # Keys are ids, values are lists of ids that can follow a id dot.
     self.widget = None # The widget that should get focus after autocomplete is done.
 
-#@+node:ekr.20060224092426:definePythonGlobalFunctionsDict
-def definePythonGlobalFunctionsDict (self):
-    
-    '''Return a dict whose keys are the names of Python's global functions
-    and whose values are the functions themselves.'''
-    
-    << define calltips table >>
-    tipsDict = {}
-    for a,b in table:
-        tipsDict [a] = b
-
-    d = {}
-    for z in __builtins__.keys():
-        f = __builtins__.get(z)
-        if type(f) == types.BuiltinFunctionType:
-            # d [z] = f
-            d [z] = tipsDict.get(z)
-        
-    # g.trace(g.dictToString(d))
-    
-    self.globalPythonFunctionsDict = d
-#@nonl
-#@+node:ekr.20060224100239:<< define calltips table >>
-table = (
-    ('__import__',   '(name[,globals[,locals[,fromlist]]])'),
-    ('abs',          '(x)'),
-    ('bool',         '([x])'),
-    ('callable',     '(object)'),
-    ('chr',          '(i)'),
-    ('classmethod',  '(function)'),
-    ('cmp',          '(x,y)'),
-    ('compile',      '(string,filename,kind[,flags[,dont_inherit]])'),
-    ('complex',      '([real[,imag]])'),
-    ('delattr',      '(object,name)'),
-    ('dict',         '([mapping-or-sequence])'),
-    ('dir',          '([object])'),
-    ('divmod',       '(a,b)'),
-    ('enumerate',    '(iterable)'),
-    ('eval',         '(expression[,globals[,locals]])'),
-    ('execfile',     '(filename[,globals[,locals]])'),
-    ('file',         '(filename[,mode[,bufsize]])'),
-    ('filter',       '(function,list)'),
-    ('float',        '([x])'),
-    ('frozenset',    '([iterable])'),
-    ('getattr',      '(object,name[,default])'),
-    ('globals',      '()'),
-    ('hasattr',      '(object,name)'),
-    ('hash',         '(object)'),
-    ('help',         '([object])'),
-    ('hex',          '(x)'),
-    ('id',           '(object)'),
-    ('input',        '([prompt])'),
-    ('int',          '([x[,radix]])'),
-    ('isinstance',   '(object,classinfo)'),
-    ('issubclass',   '(class,classinfo)'),
-    ('iter',         '(o[,sentinel])'),
-    ('len',          '(s)'),
-    ('list',         '([sequence])'),
-    ('locals',       '()'),
-    ('long',         '([x[,radix]])'),
-    ('map',          '(function,list,...)'),
-    ('max',          '(s[,args...])'),
-    ('min',          '(s[,args...])'),
-    ('object',       '()'),
-    ('oct',          '(x)'),
-    ('open',         '(filename[,mode[,bufsize]])'),
-    ('ord',          '(c)'),
-    ('pow',          '(x,y[,z])'),
-    ('property',     '([fget[,fset[,fdel[,doc]]]])'),
-    ('range',        '([start,] stop[,step])'),
-    ('raw_input',    '([prompt])'),
-    ('reduce',       '(function,sequence[,initializer])'),
-    ('reload',       '(module)'),
-    ('repr',         '(object)'),
-    ('reversed',     '(seq)'),
-    ('round',        '(x[,n])'),
-    ('set',          '([iterable])'),
-    ('setattr',      '(object,name,value)'),
-    ('slice',        '([start,] stop[,step])'),
-    ('sorted',       '(iterable[,cmp[,key[,reverse]]])'),
-    ('staticmethod', '(function)'),
-    ('str',          '([object])'),
-    ('sum',          '(sequence[,start])'),
-    ('super',        '(type[,object-or-type])'),
-    ('tuple',        '([sequence])'),
-    ('unichr',       '(i)'),
-    ('unicode',      '([object[,encoding[,errors]]])'),
-    ('vars',         '([object])'),
-    ('xrange',       '([start,] stop[,step])'),
-    ('zip',          '([seq1,...])'),
-)
-#@nonl
-#@-node:ekr.20060224100239:<< define calltips table >>
-#@-node:ekr.20060224092426:definePythonGlobalFunctionsDict
 #@+node:ekr.20060223085549:defineClassesDict
 def defineClassesDict (self):
     
@@ -5720,10 +5579,12 @@ def autoComplete (self,event=None,force=False):
 
     # First, handle the invocation character as usual.
     k.masterCommand(event,func=None,stroke=None,commandName=None)
-
-    self.language = g.scanForAtLanguage(c,c.currentPosition())
-    if w and self.language == 'python' and (k.enable_autocompleter or force):
-        self.start(event=event,w=w)
+    
+    # Don't allow autocompletion in headlines.
+    if not c.widget_name(w).startswith('head'):
+        self.language = g.scanForAtLanguage(c,c.currentPosition())
+        if w and self.language == 'python' and (k.enable_autocompleter or force):
+            self.start(event=event,w=w)
 
     return 'break'
 #@nonl
@@ -5892,11 +5753,14 @@ def appendToKnownObjects (self,obj):
 def calltip (self,obj=None):
     
     c = self.c ; w = self.widget
-    removeCloseParen = True # Should be a user arg.
+    isStringMethod = False
+    removeCloseParen = True # Might better be a user arg.
+    s = None
+    
     # g.trace(self.leadinWord)
-
     if self.leadinWord and not obj:
         << try to set s from a Python global function >>
+
     if not s:
         << get s using inspect >>
         
@@ -5912,12 +5776,16 @@ def calltip (self,obj=None):
     c.widgetWantsFocusNow(w)
     g.app.gui.setSelectionRange(w,j1,j2,insert=j2)
     << put the status line >>
-#@nonl
 #@+node:ekr.20060224103829:<< try to set s from a Python global function >>
-if not self.globalPythonFunctionsDict:
-    self.definePythonGlobalFunctionsDict()
-s = args = self.globalPythonFunctionsDict.get(self.leadinWord)
-if s: isStringMethod = False
+# The first line of the docstring is good enough.
+f = __builtins__.get(self.leadinWord)
+doc = f and f.__doc__
+if doc:
+    s = g.splitLines(doc)
+    s = args = s and s[0] or ''
+    i = s.find('(')
+    if i > -1: s = s[i:]
+    s = s and s.strip() or ''
 #@nonl
 #@-node:ekr.20060224103829:<< try to set s from a Python global function >>
 #@+node:ekr.20060224103829.1:<< get s using inspect >>
@@ -6243,18 +6111,26 @@ def getMembersList (self,obj):
 #@+node:ekr.20060220132026:info
 def info (self):
     
-    c = self.c ; obj = self.object ; w = self.widget
+    c = self.c ; doc = None ; obj = self.object ; w = self.widget
 
     word = g.app.gui.getSelectedText(w)
-     
-    if not self.hasAttr(obj,word): return
     
-    obj = self.getAttr(obj,word)
-    doc = inspect.getdoc(obj)
-    if not doc: return
+    if not word:
+        # Never gets called, but __builtin__.f will work.
+        word = self.findCalltipWord(w)
+        if word:
+            # Try to get the docstring for the Python global.
+            f = __builtins__.get(self.leadinWord)
+            doc = f and f.__doc__
 
-    c.frame.log.clearTab('Info',wrap='word')
-    g.es(doc,tabName='Info')
+    if not doc:
+        if not self.hasAttr(obj,word): return
+        obj = self.getAttr(obj,word)
+        doc = inspect.getdoc(obj)
+
+    if doc:
+        c.frame.log.clearTab('Info',wrap='word')
+        g.es(doc,tabName='Info')
 #@nonl
 #@+node:ekr.20060220132919:prettyPrintDoc
 def prettyPrintDoc (self,s):
@@ -6959,7 +6835,7 @@ def startsDoc (self,s):
 #@-node:ekr.20060222082041.3:findClass & helpers
 #@-node:ekr.20060222082041:class classScannerClass
 #@-node:ekr.20051126123249:class autoCompleterClass
-#@-node:ekr.20051126122638:Finish autocompletion
+#@-node:ekr.20051126122638:Finished autocompletion
 #@-node:ekr.20060218075614:4.4 a7 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

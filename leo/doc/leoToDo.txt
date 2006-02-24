@@ -3,11 +3,13 @@
 #@+all
 #@+node:ekr.20060116073938:To do 4.4 a7
 #@+node:ekr.20060220153557:Make sure focus doesn't get ripped from find/change text areas
+# A click in the Find tab should end the find command.
+#@nonl
 #@-node:ekr.20060220153557:Make sure focus doesn't get ripped from find/change text areas
-#@+node:ekr.20060219172026:Dialogs must get grab focus and keystrokes
-#@-node:ekr.20060219172026:Dialogs must get grab focus and keystrokes
-#@+node:ekr.20060220155313:update-leo-settings-file
-#@-node:ekr.20060220155313:update-leo-settings-file
+#@+node:ekr.20060220155313:Script: update-leo-settings-file
+#@-node:ekr.20060220155313:Script: update-leo-settings-file
+#@+node:ekr.20060224143402:F3 etc in search command should start command
+#@-node:ekr.20060224143402:F3 etc in search command should start command
 #@-node:ekr.20060116073938:To do 4.4 a7
 #@-all
 #@nonl

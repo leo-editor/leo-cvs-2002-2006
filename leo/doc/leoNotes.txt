@@ -4394,6 +4394,116 @@ xwem-worklog-tasks-description
 @language python
 @color
 #@nonl
+#@+node:ekr.20060224141227:From calltip
+if 1:
+    # The first line of the docstring is good enough.
+    f = __builtins__.get(self.leadinWord)
+    doc = f and f.__doc__
+    if doc:
+        s = g.splitLines(doc)
+        s = args = s and s[0] or ''
+else:
+    if not self.globalPythonFunctionsDict:
+        self.definePythonGlobalFunctionsDict()
+    s = args = self.globalPythonFunctionsDict.get(self.leadinWord)
+
+if s: isStringMethod = False
+#@nonl
+#@-node:ekr.20060224141227:From calltip
+#@+node:ekr.20060224092426:definePythonGlobalFunctionsDict
+def definePythonGlobalFunctionsDict (self):
+    
+    '''Return a dict whose keys are the names of Python's global functions
+    and whose values are the functions themselves.'''
+    
+    << define calltips table >>
+    tipsDict = {}
+    for a,b in table:
+        tipsDict [a] = b
+
+    d = {}
+    for z in __builtins__.keys():
+        f = __builtins__.get(z)
+        if type(f) == types.BuiltinFunctionType:
+            # d [z] = f
+            d [z] = tipsDict.get(z)
+        
+    # g.trace(g.dictToString(d))
+    
+    self.globalPythonFunctionsDict = d
+#@nonl
+#@+node:ekr.20060224100239:<< define calltips table >>
+table = (
+    ('__import__',   '(name[,globals[,locals[,fromlist]]])'),
+    ('abs',          '(x)'),
+    ('bool',         '([x])'),
+    ('callable',     '(object)'),
+    ('chr',          '(i)'),
+    ('classmethod',  '(function)'),
+    ('cmp',          '(x,y)'),
+    ('compile',      '(string,filename,kind[,flags[,dont_inherit]])'),
+    ('complex',      '([real[,imag]])'),
+    ('delattr',      '(object,name)'),
+    ('dict',         '([mapping-or-sequence])'),
+    ('dir',          '([object])'),
+    ('divmod',       '(a,b)'),
+    ('enumerate',    '(iterable)'),
+    ('eval',         '(expression[,globals[,locals]])'),
+    ('execfile',     '(filename[,globals[,locals]])'),
+    ('file',         '(filename[,mode[,bufsize]])'),
+    ('filter',       '(function,list)'),
+    ('float',        '([x])'),
+    ('frozenset',    '([iterable])'),
+    ('getattr',      '(object,name[,default])'),
+    ('globals',      '()'),
+    ('hasattr',      '(object,name)'),
+    ('hash',         '(object)'),
+    ('help',         '([object])'),
+    ('hex',          '(x)'),
+    ('id',           '(object)'),
+    ('input',        '([prompt])'),
+    ('int',          '([x[,radix]])'),
+    ('isinstance',   '(object,classinfo)'),
+    ('issubclass',   '(class,classinfo)'),
+    ('iter',         '(o[,sentinel])'),
+    ('len',          '(s)'),
+    ('list',         '([sequence])'),
+    ('locals',       '()'),
+    ('long',         '([x[,radix]])'),
+    ('map',          '(function,list,...)'),
+    ('max',          '(s[,args...])'),
+    ('min',          '(s[,args...])'),
+    ('object',       '()'),
+    ('oct',          '(x)'),
+    ('open',         '(filename[,mode[,bufsize]])'),
+    ('ord',          '(c)'),
+    ('pow',          '(x,y[,z])'),
+    ('property',     '([fget[,fset[,fdel[,doc]]]])'),
+    ('range',        '([start,] stop[,step])'),
+    ('raw_input',    '([prompt])'),
+    ('reduce',       '(function,sequence[,initializer])'),
+    ('reload',       '(module)'),
+    ('repr',         '(object)'),
+    ('reversed',     '(seq)'),
+    ('round',        '(x[,n])'),
+    ('set',          '([iterable])'),
+    ('setattr',      '(object,name,value)'),
+    ('slice',        '([start,] stop[,step])'),
+    ('sorted',       '(iterable[,cmp[,key[,reverse]]])'),
+    ('staticmethod', '(function)'),
+    ('str',          '([object])'),
+    ('sum',          '(sequence[,start])'),
+    ('super',        '(type[,object-or-type])'),
+    ('tuple',        '([sequence])'),
+    ('unichr',       '(i)'),
+    ('unicode',      '([object[,encoding[,errors]]])'),
+    ('vars',         '([object])'),
+    ('xrange',       '([start,] stop[,step])'),
+    ('zip',          '([seq1,...])'),
+)
+#@nonl
+#@-node:ekr.20060224100239:<< define calltips table >>
+#@-node:ekr.20060224092426:definePythonGlobalFunctionsDict
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

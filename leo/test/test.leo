@@ -4580,6 +4580,6 @@ print scanner.findParentClass(p)</t>
         pass</t>
 <t tx="ekr.20060223181815"></t>
 <t tx="ekr.20060224091836">print g.printList(__builtins__.keys(),sort=True)</t>
-<t tx="ekr.20060224093344"></t>
+<t tx="ekr.20060224093344">pow</t>
 </tnodes>
 </leo_file>
