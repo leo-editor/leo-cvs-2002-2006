@@ -2,8 +2,10 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060116073938:To do 4.4 a7
-#@+node:ekr.20060225092546:Don't add trailing ) for empty calltips
-#@-node:ekr.20060225092546:Don't add trailing ) for empty calltips
+#@+node:ekr.20060225100739:make __builtin__reduce( work
+#@-node:ekr.20060225100739:make __builtin__reduce( work
+#@+node:ekr.20060225100739.1:Don't do calltips in headlines
+#@-node:ekr.20060225100739.1:Don't do calltips in headlines
 #@+node:ekr.20060225093428:Make sure backspace always escapes completion
 #@-node:ekr.20060225093428:Make sure backspace always escapes completion
 #@+node:ekr.20060225092546.1:Backspace doesn't get proper anchor always
@@ -12,6 +14,48 @@
 #@-node:ekr.20060224143402:F3 etc in search command should start command
 #@+node:ekr.20060220155313:Script: update-leo-settings-file
 #@-node:ekr.20060220155313:Script: update-leo-settings-file
+#@+node:ekr.20060225095216:apropos-autocompletion command
+@nocolor
+
+'self.' discovers the type of 'self'.  The name of the tab is 'Autocomplete self (theType).'
+The code that discovers all objects works pretty well, but it can be called 'too soon' so that ivars of some classes aren't known.  I may try to fix this, or not.
+
+A leading period brings up 'Autocomplete Modules'.  (The period goes away.) You can also get any module by typing its name.  For instance: 'os.'  If more than 25 items would appear in the Autocompleter tab, Leo shows an abbreviation.  For example, 'sys.' shows:
+
+_...1
+a...2
+b...2
+c...3
+d...2
+e...8
+g...6
+h...1
+m...4
+p...5
+s...7
+v...2
+w...2
+
+(The numbers indicate how many items there are that start with each letter.)
+
+At this point, typing an exclamation mark shows the complete list.  Thereafter, typing further exclamation marks toggles between full and abbreviated modes.
+
+if x is a list 'x.!' shows all its elements, and if x is a Python dictionary, 'x.!' shows x.keys().
+For example, 'sys.modules.!'  Again, further exclamation marks toggles between full and abbreviated modes.
+
+Calltips work for any Python function or method, including Python's global function.  Examples:
+
+a)  'g.toUnicode('  gives 'g.toUnicode(s, encoding, reportErrors=False'
+b) 'c.widgetWantsFocusNow' gives 'c.widgetWantsFocusNow(w'
+c) 'reduce(' gives 'reduce(function, sequence[, initial]) -> value'
+
+The calltips appear directly in the text and the argument list is highlighted so you can just type to replace it.  The calltips appear also in the status line for reference after you have started to replace the args.
+
+During autocompletion, typing a question mark shows the docstring for the object.  For example:  'g.app?' shows the docstring for g.app.  This doesn't work (yet) directly for Python globals, but '__builtin__.f?' does.  Example: '__builtin__.pow?' shows the docstring for pow.
+
+The Find tab remembers previous find/change patterns, and you can use <Tab> to cycle through the previous choice.  The 'Completion' tab appears while you are doing this; the Find tab reappears once the completion is finished.
+#@nonl
+#@-node:ekr.20060225095216:apropos-autocompletion command
 #@-node:ekr.20060116073938:To do 4.4 a7
 #@-all
 #@nonl

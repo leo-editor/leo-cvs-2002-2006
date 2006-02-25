@@ -13,7 +13,8 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"
+expanded="ekr.20060216160332.2,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -334,7 +335,7 @@
 <v t="ekr.20060224103829.1"><vh>&lt;&lt; get s using inspect &gt;&gt;</vh></v>
 <v t="ekr.20060224103829.2"><vh>&lt;&lt; remove 'self' from s, but not from args &gt;&gt;</vh></v>
 <v t="ekr.20060224103829.3"><vh>&lt;&lt; remove 's' from s *and* args &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and remember what to select &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and set j1 and j2 &gt;&gt;</vh></v>
 <v t="ekr.20060224103829.5"><vh>&lt;&lt; put the status line &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060219103046.1"><vh>showCalltips</vh></v>
@@ -357,7 +358,7 @@
 <v t="ekr.20060219170043"><vh>showCalltipsForce</vh></v>
 <v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
 </v>
-<v t="ekr.20060216160332.2"><vh>Helpers</vh>
+<v t="ekr.20060216160332.2" a="E"><vh>Helpers</vh>
 <v t="ekr.20051127105431"><vh>abort &amp; exit</vh></v>
 <v t="ekr.20060219180034"><vh>append/begin/popTabName</vh></v>
 <v t="ekr.20060221131304"><vh>appendToKnownObjects</vh></v>
@@ -366,7 +367,7 @@
 <v t="ekr.20060224103829.1"><vh>&lt;&lt; get s using inspect &gt;&gt;</vh></v>
 <v t="ekr.20060224103829.2"><vh>&lt;&lt; remove 'self' from s, but not from args &gt;&gt;</vh></v>
 <v t="ekr.20060224103829.3"><vh>&lt;&lt; remove 's' from s *and* args &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and remember what to select &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and set j1 and j2 &gt;&gt;</vh></v>
 <v t="ekr.20060224103829.5"><vh>&lt;&lt; put the status line &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060220085402"><vh>chain</vh></v>
@@ -640,11 +641,13 @@
 </v>
 </v>
 <v t="ekr.20060116073938"><vh>To do 4.4 a7</vh>
-<v t="ekr.20060225092546"><vh>Don't add trailing ) for empty calltips</vh></v>
+<v t="ekr.20060225100739"><vh>make __builtin__reduce( work</vh></v>
+<v t="ekr.20060225100739.1"><vh>Don't do calltips in headlines</vh></v>
 <v t="ekr.20060225093428"><vh>Make sure backspace always escapes completion</vh></v>
 <v t="ekr.20060225092546.1"><vh>Backspace doesn't get proper anchor always</vh></v>
 <v t="ekr.20060224143402"><vh>F3 etc in search command should start command</vh></v>
 <v t="ekr.20060220155313"><vh>Script: update-leo-settings-file</vh></v>
+<v t="ekr.20060225095216"><vh>apropos-autocompletion command</vh></v>
 </v>
 <v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -700,7 +703,8 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20031218072017.3748"
+expanded="ekr.20051126123249,ekr.20060216160332.2,"><vh>@thin leoKeys.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -5971,11 +5975,9 @@ def setTabName (self,s):
 <t tx="ekr.20060220110302">def calltip (self,obj=None):
     
     c = self.c ; w = self.widget
-    isStringMethod = False
-    removeCloseParen = True # Might better be a user arg.
-    s = None
-    
-    # g.trace(self.leadinWord)
+    isStringMethod = False ; s = None
+    g.trace(self.leadinWord)
+
     if self.leadinWord and not obj:
         &lt;&lt; try to set s from a Python global function &gt;&gt;
 
@@ -5985,9 +5987,9 @@ def setTabName (self,s):
     &lt;&lt; remove 'self' from s, but not from args &gt;&gt;
     if isStringMethod:
         &lt;&lt; remove 's' from s *and* args &gt;&gt;
-    remove = removeCloseParen and len(s) &gt; 2
-    if remove: s = s.rstrip(')')
-    &lt;&lt; insert the text and remember what to select &gt;&gt;
+
+    s = s.rstrip(')') # Convenient.
+    &lt;&lt; insert the text and set j1 and j2 &gt;&gt;
 
     # End autocompletion mode, restoring the selection.
     self.finish()
@@ -6529,7 +6531,7 @@ else:
     i = j = g.app.gui.getInsertPoint(w)
 w.insert(j,s)
 
-if remove:
+if 1:
     j1 = w.index('%s + 1c' % j)
     j2 = w.index('%s + %sc' % (j,len(s)))
 else:
@@ -6555,8 +6557,48 @@ def updateFindList (self,s):
 
     if s not in self.findTextList:
         self.findTextList.append(s)</t>
-<t tx="ekr.20060225092546"></t>
 <t tx="ekr.20060225092546.1"></t>
 <t tx="ekr.20060225093428"></t>
+<t tx="ekr.20060225095216">@nocolor
+
+'self.' discovers the type of 'self'.  The name of the tab is 'Autocomplete self (theType).'
+The code that discovers all objects works pretty well, but it can be called 'too soon' so that ivars of some classes aren't known.  I may try to fix this, or not.
+
+A leading period brings up 'Autocomplete Modules'.  (The period goes away.) You can also get any module by typing its name.  For instance: 'os.'  If more than 25 items would appear in the Autocompleter tab, Leo shows an abbreviation.  For example, 'sys.' shows:
+
+_...1
+a...2
+b...2
+c...3
+d...2
+e...8
+g...6
+h...1
+m...4
+p...5
+s...7
+v...2
+w...2
+
+(The numbers indicate how many items there are that start with each letter.)
+
+At this point, typing an exclamation mark shows the complete list.  Thereafter, typing further exclamation marks toggles between full and abbreviated modes.
+
+if x is a list 'x.!' shows all its elements, and if x is a Python dictionary, 'x.!' shows x.keys().
+For example, 'sys.modules.!'  Again, further exclamation marks toggles between full and abbreviated modes.
+
+Calltips work for any Python function or method, including Python's global function.  Examples:
+
+a)  'g.toUnicode('  gives 'g.toUnicode(s, encoding, reportErrors=False'
+b) 'c.widgetWantsFocusNow' gives 'c.widgetWantsFocusNow(w'
+c) 'reduce(' gives 'reduce(function, sequence[, initial]) -&gt; value'
+
+The calltips appear directly in the text and the argument list is highlighted so you can just type to replace it.  The calltips appear also in the status line for reference after you have started to replace the args.
+
+During autocompletion, typing a question mark shows the docstring for the object.  For example:  'g.app?' shows the docstring for g.app.  This doesn't work (yet) directly for Python globals, but '__builtin__.f?' does.  Example: '__builtin__.pow?' shows the docstring for pow.
+
+The Find tab remembers previous find/change patterns, and you can use &lt;Tab&gt; to cycle through the previous choice.  The 'Completion' tab appears while you are doing this; the Find tab reappears once the completion is finished.</t>
+<t tx="ekr.20060225100739"></t>
+<t tx="ekr.20060225100739.1"></t>
 </tnodes>
 </leo_file>
