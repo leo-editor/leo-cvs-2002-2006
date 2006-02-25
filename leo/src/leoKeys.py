@@ -424,11 +424,9 @@ class autoCompleterClass:
     def calltip (self,obj=None):
         
         c = self.c ; w = self.widget
-        isStringMethod = False
-        removeCloseParen = True # Might better be a user arg.
-        s = None
-        
+        isStringMethod = False ; s = None
         # g.trace(self.leadinWord)
+    
         if self.leadinWord and not obj:
             #@        << try to set s from a Python global function >>
             #@+node:ekr.20060224103829:<< try to set s from a Python global function >>
@@ -491,23 +489,23 @@ class autoCompleterClass:
             #@nonl
             #@-node:ekr.20060224103829.3:<< remove 's' from s *and* args >>
             #@nl
-        remove = removeCloseParen and len(s) > 2
-        if remove: s = s.rstrip(')')
-        #@    << insert the text and remember what to select >>
-        #@+node:ekr.20060224103829.4:<< insert the text and remember what to select >>
+    
+        s = s.rstrip(')') # Convenient.
+        #@    << insert the text and set j1 and j2 >>
+        #@+node:ekr.20060224103829.4:<< insert the text and set j1 and j2 >>
         if g.app.gui.hasSelection(w):
             i,j = g.app.gui.getSelectionRange(w)
         else:
             i = j = g.app.gui.getInsertPoint(w)
         w.insert(j,s)
         
-        if remove:
+        if 1:
             j1 = w.index('%s + 1c' % j)
             j2 = w.index('%s + %sc' % (j,len(s)))
         else:
             j1 = j2 = w.index('%s + 2c' % j)
         #@nonl
-        #@-node:ekr.20060224103829.4:<< insert the text and remember what to select >>
+        #@-node:ekr.20060224103829.4:<< insert the text and set j1 and j2 >>
         #@nl
     
         # End autocompletion mode, restoring the selection.
