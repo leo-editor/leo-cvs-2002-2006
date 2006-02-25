@@ -4904,7 +4904,8 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
 @ To do:
     
 - scan text for foreign languages.
-#@nonl
+@c
+
 #@+node:ekr.20060222083704:What I did
 @nocolor
 
@@ -6883,9 +6884,10 @@ def masterClickHandler (self,event,func=None):
         
     # A click outside the minibuffer terminates any state.
     if k.inState() and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
-        k.keyboardQuit(event)
-        w and c.widgetWantsFocusNow(w)
-        return 'break'
+        if not c.widget_name(w).startswith('log'):
+            k.keyboardQuit(event)
+            w and c.widgetWantsFocusNow(w)
+            return 'break'
 
     # Update the selection point immediately for updateStatusLine.
     if wname.startswith('body'):

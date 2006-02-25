@@ -2,6 +2,12 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060116073938:To do 4.4 a7
+#@+node:ekr.20060225092546:Don't add trailing ) for empty calltips
+#@-node:ekr.20060225092546:Don't add trailing ) for empty calltips
+#@+node:ekr.20060225093428:Make sure backspace always escapes completion
+#@-node:ekr.20060225093428:Make sure backspace always escapes completion
+#@+node:ekr.20060225092546.1:Backspace doesn't get proper anchor always
+#@-node:ekr.20060225092546.1:Backspace doesn't get proper anchor always
 #@+node:ekr.20060224143402:F3 etc in search command should start command
 #@-node:ekr.20060224143402:F3 etc in search command should start command
 #@+node:ekr.20060220155313:Script: update-leo-settings-file
