@@ -761,7 +761,7 @@ class autoCompleterClass:
                 word = w.get(i,j)
                 self.setObjectAndMembersList(word)
                 if not self.object:
-                    g.trace('unknown',word)
+                    # g.trace('unknown',word)
                     return False
                 self.appendTabName(word)
                 i = j
@@ -2565,7 +2565,7 @@ class keyHandlerClass:
     #@+node:ekr.20050920085536.62:getArg
     def getArg (self,event,
         returnKind=None,returnState=None,handler=None,
-        prefix=None,tabList=None,completion=True):
+        prefix=None,tabList=[],completion=True):
         
         '''Accumulate an argument until the user hits return (or control-g).
         Enter the given return state when done.
@@ -2579,21 +2579,19 @@ class keyHandlerClass:
             'state',state,'keysym',keysym,
             'completion', state==0 and completion or state!=0 and k.arg_completion)
         if state == 0:
-            k.arg = '' ; k.arg_completion = completion
-            if tabList: k.argTabList = tabList[:]
-            else:       k.argTabList = []
+            k.arg = ''
+            
             #@        << init altX vars >>
             #@+node:ekr.20050928092516:<< init altX vars >>
-            # Clear the list, any other character besides tab indicates that a new prefix is in effect.
+            k.argTabList = tabList and tabList[:] or []
+            k.arg_completion = completion
+            
+            k.mb_prefix = prefix or k.getLabel()
+            k.mb_prompt = prefix or ''
             k.mb_tabList = []
             
-            if prefix:
-                k.mb_tabListPrefix = prefix
-                k.mb_prefix = prefix
-                k.mb_prompt = prefix
-            else:
-                k.mb_tabListPrefix = k.mb_prefix = k.getLabel()
-                k.mb_prompt = ''
+            # Clear the list: any non-tab indicates that a new prefix is in effect.
+            k.mb_tabListPrefix = k.getLabel()
             #@nonl
             #@-node:ekr.20050928092516:<< init altX vars >>
             #@nl
@@ -2609,7 +2607,7 @@ class keyHandlerClass:
             kind,n,handler = k.afterGetArgState
             if kind: k.setState(kind,n,handler)
             c.frame.log.deleteTab('Completion')
-            if trace: g.trace('kind',kind,'n',n,'handler',handler and handler.__name__)
+            trace and g.trace('kind',kind,'n',n,'handler',handler and handler.__name__)
             if handler: handler(event)
         elif keysym == 'Tab':
             k.doTabCompletion(k.argTabList,k.arg_completion)
@@ -2734,7 +2732,7 @@ class keyHandlerClass:
         else:
             s = k.svar and k.svar.get()
             
-        if trace: g.trace(repr(s))
+        trace and g.trace(repr(s))
     
         if ignorePrompt:
             return s[len(k.mb_prefix):]
@@ -2771,7 +2769,7 @@ class keyHandlerClass:
         if not w: return
         trace = self.trace_minibuffer and not g.app.unitTesting
     
-        if trace: g.trace(repr(s),g.callers())
+        trace and g.trace(repr(s),g.callers())
     
         if self.useTextWidget:
             w.delete('1.0','end')
@@ -2791,7 +2789,7 @@ class keyHandlerClass:
         if not w: return
         trace = self.trace_minibuffer and not g.app.unitTesting
         
-        if trace: g.trace(repr(s))
+        trace and g.trace(repr(s))
         if not s: return
     
         if self.useTextWidget:
@@ -2839,7 +2837,7 @@ class keyHandlerClass:
         keysym = (event and event.keysym) or ''
         trace = self.trace_minibuffer and not g.app.unitTesting
     
-        if trace: g.trace('ch',ch,'keysym',keysym,'k.stroke',k.stroke)
+        trace and g.trace('ch',ch,'keysym',keysym,'k.stroke',k.stroke)
         
         if ch and ch not in ('\n','\r'):
             if self.useTextWidget:
@@ -2902,9 +2900,8 @@ class keyHandlerClass:
             return None
             
         self.master_key_count += 1
-        if not g.app.unitTesting and c.config.getBool('trace_gc'):
-            if (self.master_key_count % 100) == 0:
-                g.printGcSummary(trace=True)
+        if trace and (self.master_key_count % 100) == 0:
+            g.printGcSummary(trace=True)
     
         if 0:
             if stroke is None:
@@ -2998,13 +2995,14 @@ class keyHandlerClass:
         k = self ; c = k.c
         if not event: return
         w = event.widget ; wname = c.widget_name(w)
+        trace = c.config.getBool('trace_masterClickHandler') and not g.app.unitTesting
     
-        if c.config.getBool('trace_masterClickHandler'):
-            g.trace(wname,func and func.__name__)
-    
-        if k.inState('full-command') and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
-            g.es_print('Ignoring click outside active minibuffer',color='blue')
-            c.minibufferWantsFocus()
+        if trace: g.trace(wname,func and func.__name__)
+            
+        # A click outside the minibuffer terminates any state.
+        if k.inState() and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
+            k.keyboardQuit(event)
+            w and c.widgetWantsFocusNow(w)
             return 'break'
     
         # Update the selection point immediately for updateStatusLine.
@@ -3346,7 +3344,7 @@ class keyHandlerClass:
     # Important: this code must not change mb_tabListPrefix.  Only doBackSpace should do that.
     
     def computeCompletionList (self,defaultTabList,backspace):
-        
+    
         k = self ; c = k.c ; s = k.getLabel() ; tabName = 'Completion'
         command = s [len(k.mb_prompt):]
             # s always includes prefix, so command is well defined.
@@ -3410,7 +3408,10 @@ class keyHandlerClass:
     
         k = self ; c = k.c
         
-        # g.trace('completion',completion)
+        if 0:
+            g.trace('completion',completion,
+                len(k.mb_tabListPrefix) > len(k.mb_prefix),
+                repr(k.mb_tabListPrefix),repr(k.mb_prefix))
         
         if completion:
             if len(k.mb_tabListPrefix) > len(k.mb_prefix):
@@ -3444,7 +3445,8 @@ class keyHandlerClass:
             if redraw:
                 k.computeCompletionList(defaultTabList,backspace=False)
     
-        c.bodyWantsFocus()
+        c.minibufferWantsFocusNow()
+    #@nonl
     #@-node:ekr.20050920085536.44:k.doTabCompletion
     #@+node:ekr.20051014170754.1:getShortcutForCommand/Name (should return lists)
     def getShortcutForCommandName (self,commandName):
