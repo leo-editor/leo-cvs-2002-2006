@@ -3001,9 +3001,10 @@ class keyHandlerClass:
             
         # A click outside the minibuffer terminates any state.
         if k.inState() and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
-            k.keyboardQuit(event)
-            w and c.widgetWantsFocusNow(w)
-            return 'break'
+            if not c.widget_name(w).startswith('log'):
+                k.keyboardQuit(event)
+                w and c.widgetWantsFocusNow(w)
+                return 'break'
     
         # Update the selection point immediately for updateStatusLine.
         if wname.startswith('body'):
