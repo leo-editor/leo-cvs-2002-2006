@@ -5598,7 +5598,11 @@ class minibufferFind:
     
         self.c = c
         self.k = c.k
+        self.w = None
         self.finder = finder
+        self.findTextList = []
+        self.changeTextList = []
+    #@nonl
     #@-node:ekr.20060123125317.2: ctor (minibufferFind)
     #@+node:ekr.20060124140114: Options
     #@+node:ekr.20060124123133:setFindScope
@@ -5641,8 +5645,7 @@ class minibufferFind:
         var = h.dict.get(ivar)
         if var:
             val = var.get()
-            if verbose:
-                 g.trace('%s = %s' % (ivar,val))
+            verbose and g.trace('%s = %s' % (ivar,val))
             return val
         else:
             g.trace('bad ivar name: %s' % ivar)
@@ -5736,71 +5739,35 @@ class minibufferFind:
     #@nonl
     #@-node:ekr.20060125091234:setupSearchPattern
     #@-node:ekr.20060124140114: Options
-    #@+node:ekr.20060210164421:addFindStringToLabel
-    def addFindStringToLabel (self):
-        
-        c = self.c ; k = c.k ; h = self.finder ; t = h.find_ctrl
-    
-        s = t.get('1.0','end')
-        while s.endswith('\n') or s.endswith('\r'):
-            s = s[:-1]
-    
-        k.extendLabel(s,select=True,protect=True)
-    #@nonl
-    #@-node:ekr.20060210164421:addFindStringToLabel
     #@+node:ekr.20060210180352:addChangeStringToLabel
-    def addChangeStringToLabel (self):
+    def addChangeStringToLabel (self,protect=True):
         
         c = self.c ; k = c.k ; h = self.finder ; t = h.change_ctrl
-    
+        
+        c.frame.log.selectTab('Find')
+        c.minibufferWantsFocusNow()
+        
         s = t.get('1.0','end')
     
         while s.endswith('\n') or s.endswith('\r'):
             s = s[:-1]
     
-        k.extendLabel(s,select=True,protect=True)
-    #@nonl
+        k.extendLabel(s,select=True,protect=protect)
     #@-node:ekr.20060210180352:addChangeStringToLabel
-    #@+node:ekr.20060124134356: setupArgs
-    def setupArgs (self,forward=False,regexp=False,word=False):
+    #@+node:ekr.20060210164421:addFindStringToLabel
+    def addFindStringToLabel (self,protect=True):
         
-        h = self.finder ; k = self.k
+        c = self.c ; k = c.k ; h = self.finder ; t = h.find_ctrl
         
-        if forward is None:
-            reverse = None
-        else:
-            reverse = not forward
+        c.frame.log.selectTab('Find')
+        c.minibufferWantsFocusNow()
     
-        for ivar,val,in (
-            ('reverse', reverse),
-            ('pattern_match',regexp),
-            ('whole_word',word),
-        ):
-            if val is not None:
-                self.setOption(ivar,val)
-                
-        h.p = p = self.c.currentPosition()
-        h.v = p.v
-        h.update_ivars()
-        self.showFindOptions()
-    #@nonl
-    #@-node:ekr.20060124134356: setupArgs
-    #@+node:ekr.20060209064140:findAll
-    def findAll (self,event):
+        s = t.get('1.0','end')
+        while s.endswith('\n') or s.endswith('\r'):
+            s = s[:-1]
     
-        k = self.k ; state = k.getState('find-all')
-        if state == 0:
-            self.w = event and event.widget
-            self.setupArgs(forward=True,regexp=False,word=True)
-            k.setLabelBlue('Find All: ',protect=True)
-            k.getArg(event,'find-all',1,self.findAll)
-        else:
-            k.clearState()
-            k.resetLabel()
-            k.showStateAndMode()
-            self.generalSearchHelper(k.arg,findAll=True)
-    #@nonl
-    #@-node:ekr.20060209064140:findAll
+        k.extendLabel(s,select=True,protect=protect)
+    #@-node:ekr.20060210164421:addFindStringToLabel
     #@+node:ekr.20060128080201:cloneFindAll
     def cloneFindAll (self,event):
     
@@ -5832,25 +5799,22 @@ class minibufferFind:
             
     #@nonl
     #@-node:ekr.20060204120158:findAgain
-    #@+node:ekr.20060210173041:stateZeroHelper
-    def stateZeroHelper (self,event,tag,prefix,handler):
+    #@+node:ekr.20060209064140:findAll
+    def findAll (self,event):
     
-        k = self.k
-        self.w = event and event.widget
-        k.setLabelBlue(prefix,protect=True)
-        self.addFindStringToLabel()
-        k.getArg(event,tag,1,handler,completion=False,prefix=prefix)
+        k = self.k ; state = k.getState('find-all')
+        if state == 0:
+            self.w = event and event.widget
+            self.setupArgs(forward=True,regexp=False,word=True)
+            k.setLabelBlue('Find All: ',protect=True)
+            k.getArg(event,'find-all',1,self.findAll)
+        else:
+            k.clearState()
+            k.resetLabel()
+            k.showStateAndMode()
+            self.generalSearchHelper(k.arg,findAll=True)
     #@nonl
-    #@-node:ekr.20060210173041:stateZeroHelper
-    #@+node:ekr.20060210174441:lastStateHelper
-    def lastStateHelper (self):
-        
-        k = self.k
-        k.clearState()
-        k.resetLabel()
-        k.showStateAndMode()
-    #@nonl
-    #@-node:ekr.20060210174441:lastStateHelper
+    #@-node:ekr.20060209064140:findAll
     #@+node:ekr.20060205105950.1:generalChangeHelper
     def generalChangeHelper (self,find_pattern,change_pattern):
         
@@ -5858,6 +5822,7 @@ class minibufferFind:
         
         self.setupSearchPattern(find_pattern)
         self.setupChangePattern(change_pattern)
+        c.widgetWantsFocusNow(self.w)
     
         self.finder.p = self.c.currentPosition()
         self.finder.v = self.finder.p.v
@@ -5869,7 +5834,10 @@ class minibufferFind:
     #@+node:ekr.20060124181213.4:generalSearchHelper
     def generalSearchHelper (self,pattern,cloneFindAll=False,findAll=False):
         
+        c = self.c
+        
         self.setupSearchPattern(pattern)
+        c.widgetWantsFocusNow(self.w)
     
         self.finder.p = self.c.currentPosition()
         self.finder.v = self.finder.p.v
@@ -5883,6 +5851,15 @@ class minibufferFind:
             self.finder.findNextCommand()
     #@nonl
     #@-node:ekr.20060124181213.4:generalSearchHelper
+    #@+node:ekr.20060210174441:lastStateHelper
+    def lastStateHelper (self):
+        
+        k = self.k
+        k.clearState()
+        k.resetLabel()
+        k.showStateAndMode()
+    #@nonl
+    #@-node:ekr.20060210174441:lastStateHelper
     #@+node:ekr.20050920084036.113:replaceString
     def replaceString (self,event):
     
@@ -5895,14 +5872,15 @@ class minibufferFind:
             self.stateZeroHelper(event,tag,prefix,self.replaceString)
         elif state == 1:
             self._sString = k.arg
+            self.updateFindList(k.arg)
             s = '%s: %s With: ' % (prompt,self._sString)
             k.setLabelBlue(s,protect=True)
             self.addChangeStringToLabel()
             k.getArg(event,'replace-string',2,self.replaceString,completion=False,prefix=s)
         elif state == 2:
+            self.updateChangeList(k.arg)
             self.lastStateHelper()
             self.generalChangeHelper(self._sString,k.arg)
-    #@nonl
     #@-node:ekr.20050920084036.113:replaceString
     #@+node:ekr.20060124140224.3:reSearchBackward/Forward
     def reSearchBackward (self,event):
@@ -5913,6 +5891,7 @@ class minibufferFind:
             self.setupArgs(forward=False,regexp=True,word=None)
             self.stateZeroHelper(event,tag,'Regexp Search Backward:',self.reSearchBackward)
         else:
+            self.updateFindList(k.arg)
             self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     
@@ -5923,6 +5902,7 @@ class minibufferFind:
             self.setupArgs(forward=True,regexp=True,word=None)
             self.stateZeroHelper(event,tag,'Regexp Search:',self.reSearchForward)
         else:
+            self.updateFindList(k.arg)
             self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     #@nonl
@@ -5936,6 +5916,7 @@ class minibufferFind:
             self.setupArgs(forward=False,regexp=False,word=False)
             self.stateZeroHelper(event,tag,'Search Backward: ',self.searchBackward)
         else:
+            self.updateFindList(k.arg)
             self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     
@@ -5947,6 +5928,7 @@ class minibufferFind:
             self.setupArgs(forward=True,regexp=False,word=False)
             self.stateZeroHelper(event,tag,'Search: ',self.searchForward)
         else:
+            self.updateFindList(k.arg)
             self.lastStateHelper()
             self.generalSearchHelper(k.arg)
     #@nonl
@@ -5961,12 +5943,61 @@ class minibufferFind:
             self.setupArgs(forward=None,regexp=None,word=None)
             self.stateZeroHelper(event,tag,'Search: ',self.searchWithPresentOptions)
         else:
+            self.updateFindList(k.arg)
             k.clearState()
             k.resetLabel()
             k.showStateAndMode()
             self.generalSearchHelper(k.arg)
     #@nonl
     #@-node:ekr.20060125093807:searchWithPresentOptions
+    #@+node:ekr.20060124134356:setupArgs
+    def setupArgs (self,forward=False,regexp=False,word=False):
+        
+        h = self.finder ; k = self.k
+        
+        if forward is None:
+            reverse = None
+        else:
+            reverse = not forward
+    
+        for ivar,val,in (
+            ('reverse', reverse),
+            ('pattern_match',regexp),
+            ('whole_word',word),
+        ):
+            if val is not None:
+                self.setOption(ivar,val)
+                
+        h.p = p = self.c.currentPosition()
+        h.v = p.v
+        h.update_ivars()
+        self.showFindOptions()
+    #@nonl
+    #@-node:ekr.20060124134356:setupArgs
+    #@+node:ekr.20060210173041:stateZeroHelper
+    def stateZeroHelper (self,event,tag,prefix,handler):
+    
+        k = self.k
+        self.w = event and event.widget
+        k.setLabelBlue(prefix,protect=True)
+        self.addFindStringToLabel(protect=False)
+        
+        k.getArg(event,tag,1,handler,
+            tabList=self.findTextList,completion=True,prefix=prefix)
+    #@nonl
+    #@-node:ekr.20060210173041:stateZeroHelper
+    #@+node:ekr.20060224171851:updateChange/FindList
+    def updateChangeList (self,s):
+    
+        if s not in self.findChangeList:
+            self.changeTextList.append(s)
+            
+    def updateFindList (self,s):
+    
+        if s not in self.findTextList:
+            self.findTextList.append(s)
+    #@nonl
+    #@-node:ekr.20060224171851:updateChange/FindList
     #@+node:ekr.20060124140224.2:wordSearchBackward/Forward
     def wordSearchBackward (self,event):
     
@@ -6051,12 +6082,19 @@ class findTab (leoFind.leoFind):
         def findButtonBindingCallback(event=None,self=self):
             self.findButton()
             return 'break'
+            
+        if 0: # No longer needed.
+            def findTabClickCallback(event,self=self):
+                c = self.c ; k = c.k ; w = event.widget
+                k.keyboardQuit(event)
+                w and c.widgetWantsFocusNow(w)
+                return k.masterClickHandler(event)
     
         table = (
-            ('<Button-1>',  k.masterClickHandler),
-            ('<Double-1>',  k.masterClickHandler),
-            ('<Button-3>',  k.masterClickHandler),
-            ('<Double-3>',  k.masterClickHandler),
+            ('<Button-1>',  k.masterClickHandler), # findTabClickCallback),
+            ('<Double-1>',  k.masterClickHandler), # findTabClickCallback),
+            ('<Button-3>',  k.masterClickHandler), # findTabClickCallback),
+            ('<Double-3>',  k.masterClickHandler), # findTabClickCallback),
             ('<Key>',       resetWrapCallback),
             ('<Return>',    findButtonBindingCallback),
             ("<Escape>",    self.hideTab),
