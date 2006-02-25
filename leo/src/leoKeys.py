@@ -283,12 +283,12 @@ class autoCompleterClass:
     #@+node:ekr.20060219103046.1:showCalltips
     def showCalltips (self,event=None,force=False):
         
-        k = self.k
+        c = self.c ; k = c.k
         
         w = event and event.widget or c.get_focus()
         
-        # Insert the calltip if possible.
-        if k.enable_calltips or force:
+        # Insert the calltip if possible, but not in headlines.
+        if (k.enable_calltips or force) and not c.widget_name(w).startswith('head'):
             self.widget = w
             self.prefix = ''
             self.selection = g.app.gui.getTextSelection(w)
@@ -591,21 +591,27 @@ class autoCompleterClass:
             g.es('%s' % (name),tabName=self.tabName)
     #@nonl
     #@-node:ekr.20051126123149:computeCompletionList
-    #@+node:ekr.20051126131103:doBackSpace
+    #@+node:ekr.20051126131103:doBackSpace (autocompleter)
     def doBackSpace (self):
     
         '''Cut back to previous prefix.'''
+        
+        # g.trace(self.prefix,self.object,self.prevObjects)
         
         if self.prefix:
             self.prefix = self.prefix[:-1]
             self.setSelection(self.prefix)
             self.computeCompletionList()
-        elif self.prevObjects:
-            obj = self.pop()
+        elif self.object:
+            if self.prevObjects:
+                obj = self.pop()
+            else:
+                obj = self.object
             # g.trace(self.object,obj)
             w = self.widget
             i,j = g.app.gui.getTextSelection(w)
             ch = w.get(i+'-1c')
+            # g.trace(ch)
             if ch == '.':
                 self.object = obj
                 w.delete(i+'-1c')
@@ -616,13 +622,17 @@ class autoCompleterClass:
                 self.prefix = word
                 self.popTabName()
                 self.membersList = self.getMembersList(obj)
-                self.computeCompletionList()
+                # g.trace(len(self.membersList))
+                if self.membersList:
+                    self.computeCompletionList()
+                else:
+                    self.abort()
             else:
                 self.abort() # should not happen.
         else:
             self.abort()
     #@nonl
-    #@-node:ekr.20051126131103:doBackSpace
+    #@-node:ekr.20051126131103:doBackSpace (autocompleter)
     #@+node:ekr.20051126123249.1:doTabCompletion
     def doTabCompletion (self):
         
@@ -757,6 +767,7 @@ class autoCompleterClass:
                 i = w.index(i+'+1c')
                 j = w.index(i+' wordend')
                 word = w.get(i,j)
+                # g.trace(word,i,j,start)
                 self.setObjectAndMembersList(word)
                 if not self.object:
                     # g.trace('unknown',word)
@@ -905,7 +916,7 @@ class autoCompleterClass:
             self.push(self.object)
             self.object = 'aString'
             self.membersList = self.getMembersList(self.object)
-        elif self.prevObjects:
+        elif self.object:
             self.getObjectFromAttribute(word)
         elif word == 'self':
             self.completeSelf()
@@ -916,12 +927,13 @@ class autoCompleterClass:
         # g.trace(word,self.object,len(self.membersList))
     #@nonl
     #@+node:ekr.20060223124014:getObjectFromAttribute
-    def backup (self,word):
+    def getObjectFromAttribute (self,word):
         
-        prevObj = self.prevObjects and self.prevObjects[-1]
+        obj = self.object
     
-        if prevObj and self.hasAttr(prevObj,word):
-            self.object = self.getAttr(prevObj,word)
+        if obj and self.hasAttr(obj,word):
+            self.push(self.object)
+            self.object = self.getAttr(obj,word)
             self.appendToKnownObjects(self.object)
             self.membersList = self.getMembersList(self.object)
         else:
@@ -1024,6 +1036,8 @@ class autoCompleterClass:
                     w.delete(i+'-1c')
                     
             self.autoCompleterStateHandler(event)
+        else:
+            self.abort()
     #@nonl
     #@-node:ekr.20060220062710:start
     #@-node:ekr.20060216160332.2:Helpers
@@ -2631,10 +2645,10 @@ class keyHandlerClass:
     
         if g.app.quitting:
             return
-    
-        # c.frame.log.deleteTab('Completion')
+        
         k.autoCompleter.exit()
         c.frame.log.deleteTab('Mode')
+        c.frame.log.hideTab('Completion')
         
         # Completely clear the mode.
         if k.inputModeName:
@@ -3417,6 +3431,8 @@ class keyHandlerClass:
                 k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
                 k.setLabel(k.mb_tabListPrefix)
                 k.computeCompletionList(defaultCompletionList,backspace=True)
+            # else:
+                # k.keyboardQuit(event=None)
         else:
             s = k.getLabel(ignorePrompt=False)
             # g.trace(repr(s),repr(k.mb_prefix))
