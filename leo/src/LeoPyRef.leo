@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9109" clone_windows="0"/>
 <globals body_outline_ratio="0.442906574394">
-	<global_window_position top="19" left="486" height="874" width="751"/>
+	<global_window_position top="25" left="443" height="874" width="751"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,8 +13,7 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-expanded="ekr.20060216160332.2,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -311,221 +310,6 @@ expanded="ekr.20060216160332.2,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060224143628.2"><vh>Disabled autocompleter in headlines</vh></v>
 <v t="ekr.20060224143628"><vh>Removed horrible g.app.dialogs hack</vh></v>
 </v>
-<v t="ekr.20051126122638"><vh>Finished autocompletion</vh>
-<v t="ekr.20060222083704"><vh>What I did</vh></v>
-<v t="ekr.20060219183519"><vh>Ref code</vh>
-<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
-<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
-</v>
-<v t="ekr.20050920085536.1"><vh> Birth (keyHandler)</vh>
-<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
-<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
-<v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
-<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
-<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
-</v>
-<v t="ekr.20060115195302"><vh>setDefaultUnboundKeyAction</vh></v>
-</v>
-<v t="ekr.20050920084036.173"><vh>getPublicCommands (keyHandler)</vh></v>
-<v t="ekr.20060224093506"><vh>Calltips and info for globals</vh>
-<v t="ekr.20060220110302"><vh>calltip</vh>
-<v t="ekr.20060224103829"><vh>&lt;&lt; try to set s from a Python global function &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.1"><vh>&lt;&lt; get s using inspect &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.2"><vh>&lt;&lt; remove 'self' from s, but not from args &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.3"><vh>&lt;&lt; remove 's' from s *and* args &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and set j1 and j2 &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.5"><vh>&lt;&lt; put the status line &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060219103046.1"><vh>showCalltips</vh></v>
-<v t="ekr.20060220132026"><vh>info</vh>
-<v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
-<v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
-<v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh>
-<v t="ekr.20060223085549"><vh>defineClassesDict</vh></v>
-<v t="ekr.20060219171914"><vh>defineObjectDict</vh></v>
-</v>
-<v t="ekr.20060219103046"><vh>Top level</vh>
-<v t="ekr.20051126122952.1"><vh>autoComplete</vh></v>
-<v t="ekr.20060219103822"><vh>autoCompleteForce</vh></v>
-<v t="ekr.20060219170612"><vh>enable/disableAutocompleter/Calltips</vh></v>
-<v t="ekr.20060219103046.1"><vh>showCalltips</vh></v>
-<v t="ekr.20060219170043"><vh>showCalltipsForce</vh></v>
-<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
-</v>
-<v t="ekr.20060216160332.2" a="E"><vh>Helpers</vh>
-<v t="ekr.20051127105431"><vh>abort &amp; exit</vh></v>
-<v t="ekr.20060219180034"><vh>append/begin/popTabName</vh></v>
-<v t="ekr.20060221131304"><vh>appendToKnownObjects</vh></v>
-<v t="ekr.20060220110302"><vh>calltip</vh>
-<v t="ekr.20060224103829"><vh>&lt;&lt; try to set s from a Python global function &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.1"><vh>&lt;&lt; get s using inspect &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.2"><vh>&lt;&lt; remove 'self' from s, but not from args &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.3"><vh>&lt;&lt; remove 's' from s *and* args &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and set j1 and j2 &gt;&gt;</vh></v>
-<v t="ekr.20060224103829.5"><vh>&lt;&lt; put the status line &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060220085402"><vh>chain</vh></v>
-<v t="ekr.20051126123149"><vh>computeCompletionList</vh></v>
-<v t="ekr.20051126131103"><vh>doBackSpace</vh></v>
-<v t="ekr.20051126123249.1"><vh>doTabCompletion</vh></v>
-<v t="ekr.20051127065601"><vh>extendSelection</vh></v>
-<v t="ekr.20060221104137"><vh>findAnchor</vh></v>
-<v t="ekr.20060224094501"><vh>findCalltipWord</vh></v>
-<v t="ekr.20051127105102"><vh>finish</vh></v>
-<v t="ekr.20060223081914"><vh>getAttr and hasAttr</vh></v>
-<v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
-<v t="ekr.20060219174642"><vh>getMembersList</vh></v>
-<v t="ekr.20060220132026"><vh>info</vh>
-<v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
-</v>
-<v t="ekr.20060220104902"><vh>insertNormalChar</vh></v>
-<v t="ekr.20060222092243"><vh>push, pop, clear, stackNames</vh></v>
-<v t="ekr.20060221112937"><vh>setObjectAndMembersList &amp; helpers</vh>
-<v t="ekr.20060223124014"><vh>getObjectFromAttribute</vh></v>
-<v t="ekr.20060223124014.2"><vh>completeSelf</vh></v>
-<v t="ekr.20060223124014.3"><vh>completeFromObject</vh></v>
-</v>
-<v t="ekr.20051127070018"><vh>setSelection</vh></v>
-<v t="ekr.20060220062710"><vh>start</vh></v>
-</v>
-<v t="ekr.20060216160332.1"><vh>Scanning</vh>
-<v t="ekr.20060217132329"><vh>initialScan</vh></v>
-<v t="ekr.20060216155558.1"><vh>scan</vh></v>
-<v t="ekr.20060216163305"><vh>definePatterns</vh></v>
-<v t="ekr.20060216161220"><vh>scanOutline</vh></v>
-<v t="ekr.20060216161234"><vh>scanForCallTip</vh></v>
-<v t="ekr.20060216161247"><vh>scanForAutoCompleter</vh>
-<v t="ekr.20051025144611.20"><vh>makeAutocompletionList</vh>
-<v t="ekr.20060216161258"><vh>reverseFindWhitespace</vh></v>
-<v t="ekr.20060216161253"><vh>getCleanString</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060223114802"><vh>Proxy classes and objects</vh>
-<v t="ekr.20060223114802.1"><vh>createProxyObjectFromClass</vh></v>
-<v t="ekr.20060223093358"><vh>createClassObjectFromString</vh></v>
-</v>
-<v t="ekr.20060223093117"><vh>class forgivingParserClass</vh>
-<v t="ekr.20060223093117.1"><vh>ctor (forgivingParserClass)</vh></v>
-<v t="ekr.20060223093117.2"><vh>parse</vh></v>
-<v t="ekr.20060223093117.3"><vh>forgivingParser</vh></v>
-<v t="ekr.20060223093117.4"><vh>computeErrorNode</vh></v>
-<v t="ekr.20060223093117.5"><vh>newPutBody</vh></v>
-</v>
-<v t="ekr.20060222082041"><vh>class classScannerClass</vh>
-<v t="ekr.20060222082041.1"><vh>ctor</vh></v>
-<v t="ekr.20060223120755"><vh>scan</vh></v>
-<v t="ekr.20060222082041.2"><vh>findParentClass</vh></v>
-<v t="ekr.20060222082041.3"><vh>findClass &amp; helpers</vh>
-<v t="ekr.20060222082041.4"><vh>endsDoc</vh></v>
-<v t="ekr.20060222082041.5"><vh>startsClass</vh></v>
-<v t="ekr.20060222082041.6"><vh>startsDoc</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060129052538.2"><vh>masterClickHandler</vh></v>
-<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
-<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
-</v>
-<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
-<v t="ekr.20051023094009"><vh>Search classes</vh>
-<v t="ekr.20060123125256"><vh>class minibufferFind (the findHandler)</vh>
-<v t="ekr.20060123125317.2"><vh> ctor (minibufferFind)</vh></v>
-<v t="ekr.20060124140114"><vh> Options</vh>
-<v t="ekr.20060124123133"><vh>setFindScope</vh></v>
-<v t="ekr.20060124122844"><vh>setOption</vh></v>
-<v t="ekr.20060125082510"><vh>getOption</vh></v>
-<v t="ekr.20060125074939"><vh>showFindOptions</vh></v>
-<v t="ekr.20060124135401"><vh>toggleOption</vh></v>
-<v t="ekr.20060205105950"><vh>setupChangePattern</vh></v>
-<v t="ekr.20060125091234"><vh>setupSearchPattern</vh></v>
-</v>
-<v t="ekr.20060210180352"><vh>addChangeStringToLabel</vh></v>
-<v t="ekr.20060210164421"><vh>addFindStringToLabel</vh></v>
-<v t="ekr.20060128080201"><vh>cloneFindAll</vh></v>
-<v t="ekr.20060204120158"><vh>findAgain</vh></v>
-<v t="ekr.20060209064140"><vh>findAll</vh></v>
-<v t="ekr.20060205105950.1"><vh>generalChangeHelper</vh></v>
-<v t="ekr.20060124181213.4"><vh>generalSearchHelper</vh></v>
-<v t="ekr.20060210174441"><vh>lastStateHelper</vh></v>
-<v t="ekr.20050920084036.113"><vh>replaceString</vh></v>
-<v t="ekr.20060124140224.3"><vh>reSearchBackward/Forward</vh></v>
-<v t="ekr.20060124140224.1"><vh>seachForward/Backward</vh></v>
-<v t="ekr.20060125093807"><vh>searchWithPresentOptions</vh></v>
-<v t="ekr.20060124134356"><vh>setupArgs</vh></v>
-<v t="ekr.20060210173041"><vh>stateZeroHelper</vh></v>
-<v t="ekr.20060224171851"><vh>updateChange/FindList</vh></v>
-<v t="ekr.20060124140224.2"><vh>wordSearchBackward/Forward</vh></v>
-</v>
-<v t="ekr.20051020120306.6"><vh>class findTab (leoFind.leoFind)</vh>
-<v t="ekr.20051020120306.10"><vh>Birth &amp; death</vh>
-<v t="ekr.20051020120306.11"><vh>__init__</vh>
-<v t="ekr.20051020120306.12"><vh>&lt;&lt; create the tkinter intVars &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
-<v t="ekr.20051020120306.13"><vh>createFrame (findTab)</vh>
-<v t="ekr.20051020120306.14"><vh>&lt;&lt; Create the outer frames &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.15"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh>
-<v t="ekr.20051020120306.16"><vh>&lt;&lt; Bind Tab and control-tab &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.17"><vh>&lt;&lt; Create two columns of radio and checkboxes &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.18"><vh>&lt;&lt; Create two columns of buttons &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.19"><vh>find.init</vh>
-<v t="ekr.20051020120306.20"><vh>&lt;&lt; set find/change widgets &gt;&gt;</vh></v>
-<v t="ekr.20051020120306.21"><vh>&lt;&lt; set radio buttons from ivars &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20051020120306.22"><vh>find.update_ivars</vh></v>
-<v t="ekr.20060221074900"><vh>Callbacks</vh>
-<v t="ekr.20060221074900.1"><vh>findButtonCallback</vh></v>
-<v t="ekr.20051020120306.25"><vh>hideTab</vh></v>
-</v>
-<v t="ekr.20051024192602"><vh> Top level</vh>
-<v t="ekr.20060209064832"><vh>findAllCommand</vh></v>
-<v t="ekr.20060204120158.1"><vh>findAgainCommand</vh></v>
-<v t="ekr.20060128075225"><vh>cloneFindAllCommand</vh></v>
-<v t="ekr.20051024192642.2"><vh>findNext/PrefCommand</vh></v>
-<v t="ekr.20051024192642.3"><vh>change/ThenFindCommand</vh></v>
-</v>
-<v t="ekr.20051020120306.26"><vh>bringToFront</vh></v>
-<v t="ekr.20051020120306.27"><vh>selectAllFindText</vh></v>
-<v t="ekr.20051020120306.28"><vh>Tkinter wrappers (leoTkinterFind)</vh></v>
-<v t="ekr.20051020120306.1"><vh>class underlinedTkButton</vh>
-<v t="ekr.20051020120306.2"><vh>__init__</vh>
-<v t="ekr.20051020120306.3"><vh>&lt;&lt; set self.hotKey if '&amp;' is in the string &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20051020120306.4"><vh>bindHotKey</vh></v>
-<v t="ekr.20051020120306.5"><vh>buttonCallback</vh></v>
-</v>
-</v>
-<v t="ekr.20050920084036.257"><vh>class searchCommandsClass</vh>
-<v t="ekr.20050920084036.258"><vh> ctor</vh></v>
-<v t="ekr.20050920084036.259"><vh>getPublicCommands (searchCommandsClass)</vh></v>
-<v t="ekr.20060123131421"><vh>Top-level methods</vh>
-<v t="ekr.20051020120306"><vh>openFindTab</vh></v>
-<v t="ekr.20051022212004"><vh>Find Tab commands</vh></v>
-<v t="ekr.20060124115801"><vh>getHandler</vh></v>
-<v t="ekr.20060123115459"><vh>Find options wrappers</vh></v>
-<v t="ekr.20060124093828"><vh>Find wrappers</vh></v>
-<v t="ekr.20060204120158.2"><vh>findAgain</vh></v>
-</v>
-<v t="ekr.20050920084036.261"><vh>incremental search...</vh>
-<v t="ekr.20050920084036.262"><vh>startIncremental</vh></v>
-<v t="ekr.20050920084036.264"><vh>iSearchStateHandler &amp; helper</vh></v>
-<v t="ekr.20050920084036.265"><vh>scolorizer</vh></v>
-<v t="ekr.20050920084036.263"><vh>iSearchHelper</vh></v>
-<v t="ekr.20060203072636"><vh>endSearch</vh></v>
-</v>
-</v>
-</v>
-</v>
 <v t="ekr.20060224164724"><vh>Added typing completion in Find commands</vh>
 <v t="ekr.20051023094009"><vh>Search classes</vh>
 <v t="ekr.20060123125256"><vh>class minibufferFind (the findHandler)</vh>
@@ -638,18 +422,140 @@ expanded="ekr.20060216160332.2,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20050920085536.44"><vh>k.doTabCompletion</vh></v>
 <v t="ekr.20050920085536.46"><vh>k.doBackSpace</vh></v>
 </v>
+<v t="ekr.20051126122638"><vh>Finished autocompletion</vh>
+<v t="ekr.20060222083704"><vh>What I did</vh></v>
+<v t="ekr.20060219183519"><vh>Ref code</vh>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+</v>
+<v t="ekr.20050920085536.1"><vh> Birth (keyHandler)</vh>
+<v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
+<v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
+<v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
+<v t="ekr.20050923213858"><vh>&lt;&lt; define internal ivars &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050920094633"><vh>k.finishCreate &amp; helpers</vh>
+<v t="ekr.20051008082929"><vh>createInverseCommandsDict</vh></v>
+</v>
+<v t="ekr.20060115195302"><vh>setDefaultUnboundKeyAction</vh></v>
+</v>
+<v t="ekr.20050920084036.173"><vh>getPublicCommands (keyHandler)</vh></v>
+<v t="ekr.20060224093506"><vh>Calltips and info for globals</vh>
+<v t="ekr.20060220110302"><vh>calltip</vh>
+<v t="ekr.20060224103829"><vh>&lt;&lt; try to set s from a Python global function &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.1"><vh>&lt;&lt; get s using inspect &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.2"><vh>&lt;&lt; remove 'self' from s, but not from args &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.3"><vh>&lt;&lt; remove 's' from s *and* args &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and set j1 and j2 &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.5"><vh>&lt;&lt; put the status line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060219103046.1"><vh>showCalltips</vh></v>
+<v t="ekr.20060220132026"><vh>info</vh>
+<v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
 </v>
 </v>
-<v t="ekr.20060116073938"><vh>To do 4.4 a7</vh>
-<v t="ekr.20060225100739"><vh>make __builtin__reduce( work</vh></v>
-<v t="ekr.20060225100739.1"><vh>Don't do calltips in headlines</vh></v>
-<v t="ekr.20060225093428"><vh>Make sure backspace always escapes completion</vh></v>
-<v t="ekr.20060225092546.1"><vh>Backspace doesn't get proper anchor always</vh></v>
+</v>
+<v t="ekr.20051023181449"><vh>createBindings (findTab)</vh></v>
+<v t="ekr.20051126123249"><vh>class autoCompleterClass</vh>
+<v t="ekr.20051126123759.1"><vh> ctor (autocompleter)</vh>
+<v t="ekr.20060223085549"><vh>defineClassesDict</vh></v>
+<v t="ekr.20060219171914"><vh>defineObjectDict</vh></v>
+</v>
+<v t="ekr.20060219103046"><vh>Top level</vh>
+<v t="ekr.20051126122952.1"><vh>autoComplete</vh></v>
+<v t="ekr.20060219103822"><vh>autoCompleteForce</vh></v>
+<v t="ekr.20060219170612"><vh>enable/disableAutocompleter/Calltips</vh></v>
+<v t="ekr.20060219103046.1"><vh>showCalltips</vh></v>
+<v t="ekr.20060219170043"><vh>showCalltipsForce</vh></v>
+<v t="ekr.20051126124705"><vh>autoCompleterStateHandler</vh></v>
+</v>
+<v t="ekr.20060216160332.2"><vh>Helpers</vh>
+<v t="ekr.20051127105431"><vh>abort &amp; exit</vh></v>
+<v t="ekr.20060219180034"><vh>append/begin/popTabName</vh></v>
+<v t="ekr.20060221131304"><vh>appendToKnownObjects</vh></v>
+<v t="ekr.20060220110302"><vh>calltip</vh>
+<v t="ekr.20060224103829"><vh>&lt;&lt; try to set s from a Python global function &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.1"><vh>&lt;&lt; get s using inspect &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.2"><vh>&lt;&lt; remove 'self' from s, but not from args &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.3"><vh>&lt;&lt; remove 's' from s *and* args &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.4"><vh>&lt;&lt; insert the text and set j1 and j2 &gt;&gt;</vh></v>
+<v t="ekr.20060224103829.5"><vh>&lt;&lt; put the status line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060220085402"><vh>chain</vh></v>
+<v t="ekr.20051126123149"><vh>computeCompletionList</vh></v>
+<v t="ekr.20051126131103"><vh>doBackSpace (autocompleter)</vh></v>
+<v t="ekr.20051126123249.1"><vh>doTabCompletion</vh></v>
+<v t="ekr.20051127065601"><vh>extendSelection</vh></v>
+<v t="ekr.20060221104137"><vh>findAnchor</vh></v>
+<v t="ekr.20060224094501"><vh>findCalltipWord</vh></v>
+<v t="ekr.20051127105102"><vh>finish</vh></v>
+<v t="ekr.20060223081914"><vh>getAttr and hasAttr</vh></v>
+<v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
+<v t="ekr.20060219174642"><vh>getMembersList</vh></v>
+<v t="ekr.20060220132026"><vh>info</vh>
+<v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
+</v>
+<v t="ekr.20060220104902"><vh>insertNormalChar</vh></v>
+<v t="ekr.20060222092243"><vh>push, pop, clear, stackNames</vh></v>
+<v t="ekr.20060221112937"><vh>setObjectAndMembersList &amp; helpers</vh>
+<v t="ekr.20060223124014"><vh>getObjectFromAttribute</vh></v>
+<v t="ekr.20060223124014.2"><vh>completeSelf</vh></v>
+<v t="ekr.20060223124014.3"><vh>completeFromObject</vh></v>
+</v>
+<v t="ekr.20051127070018"><vh>setSelection</vh></v>
+<v t="ekr.20060220062710"><vh>start</vh></v>
+</v>
+<v t="ekr.20060216160332.1"><vh>Scanning</vh>
+<v t="ekr.20060217132329"><vh>initialScan</vh></v>
+<v t="ekr.20060216155558.1"><vh>scan</vh></v>
+<v t="ekr.20060216163305"><vh>definePatterns</vh></v>
+<v t="ekr.20060216161220"><vh>scanOutline</vh></v>
+<v t="ekr.20060216161234"><vh>scanForCallTip</vh></v>
+<v t="ekr.20060216161247"><vh>scanForAutoCompleter</vh>
+<v t="ekr.20051025144611.20"><vh>makeAutocompletionList</vh>
+<v t="ekr.20060216161258"><vh>reverseFindWhitespace</vh></v>
+<v t="ekr.20060216161253"><vh>getCleanString</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060223114802"><vh>Proxy classes and objects</vh>
+<v t="ekr.20060223114802.1"><vh>createProxyObjectFromClass</vh></v>
+<v t="ekr.20060223093358"><vh>createClassObjectFromString</vh></v>
+</v>
+<v t="ekr.20060223093117"><vh>class forgivingParserClass</vh>
+<v t="ekr.20060223093117.1"><vh>ctor (forgivingParserClass)</vh></v>
+<v t="ekr.20060223093117.2"><vh>parse</vh></v>
+<v t="ekr.20060223093117.3"><vh>forgivingParser</vh></v>
+<v t="ekr.20060223093117.4"><vh>computeErrorNode</vh></v>
+<v t="ekr.20060223093117.5"><vh>newPutBody</vh></v>
+</v>
+<v t="ekr.20060222082041"><vh>class classScannerClass</vh>
+<v t="ekr.20060222082041.1"><vh>ctor</vh></v>
+<v t="ekr.20060223120755"><vh>scan</vh></v>
+<v t="ekr.20060222082041.2"><vh>findParentClass</vh></v>
+<v t="ekr.20060222082041.3"><vh>findClass &amp; helpers</vh>
+<v t="ekr.20060222082041.4"><vh>endsDoc</vh></v>
+<v t="ekr.20060222082041.5"><vh>startsClass</vh></v>
+<v t="ekr.20060222082041.6"><vh>startsDoc</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060127183752"><vh>masterKeyHandler &amp; helper</vh>
+<v t="ekr.20060205221734"><vh>masterKeyHandlerHelper</vh></v>
+</v>
+<v t="ekr.20051126131103"><vh>doBackSpace (autocompleter)</vh></v>
+<v t="ekr.20050920085536.46"><vh>k.doBackSpace</vh></v>
+<v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060116073938" a="EV"><vh>To do 4.4 a7</vh>
 <v t="ekr.20060224143402"><vh>F3 etc in search command should start command</vh></v>
 <v t="ekr.20060220155313"><vh>Script: update-leo-settings-file</vh></v>
 <v t="ekr.20060225095216"><vh>apropos-autocompletion command</vh></v>
+<v t="ekr.20060225100739"><vh>make __builtin__reduce( work</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -703,8 +609,7 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20031218072017.3748"
-expanded="ekr.20051126123249,ekr.20060216160332.2,"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2190,6 +2095,8 @@ def doBackSpace (self,defaultCompletionList,completion=True):
             k.mb_tabListPrefix = k.mb_tabListPrefix [:-1]
             k.setLabel(k.mb_tabListPrefix)
             k.computeCompletionList(defaultCompletionList,backspace=True)
+        # else:
+            # k.keyboardQuit(event=None)
     else:
         s = k.getLabel(ignorePrompt=False)
         # g.trace(repr(s),repr(k.mb_prefix))
@@ -3865,16 +3772,22 @@ for z in ('borderframe','clipper','frame','hull'):
 
     '''Cut back to previous prefix.'''
     
+    # g.trace(self.prefix,self.object,self.prevObjects)
+    
     if self.prefix:
         self.prefix = self.prefix[:-1]
         self.setSelection(self.prefix)
         self.computeCompletionList()
-    elif self.prevObjects:
-        obj = self.pop()
+    elif self.object:
+        if self.prevObjects:
+            obj = self.pop()
+        else:
+            obj = self.object
         # g.trace(self.object,obj)
         w = self.widget
         i,j = g.app.gui.getTextSelection(w)
         ch = w.get(i+'-1c')
+        # g.trace(ch)
         if ch == '.':
             self.object = obj
             w.delete(i+'-1c')
@@ -3885,7 +3798,11 @@ for z in ('borderframe','clipper','frame','hull'):
             self.prefix = word
             self.popTabName()
             self.membersList = self.getMembersList(obj)
-            self.computeCompletionList()
+            # g.trace(len(self.membersList))
+            if self.membersList:
+                self.computeCompletionList()
+            else:
+                self.abort()
         else:
             self.abort() # should not happen.
     else:
@@ -4483,53 +4400,6 @@ else:
 )
     
 shortcut = ''.join([val for flag,val in table if flag])</t>
-<t tx="ekr.20060129052538.2">def masterClickHandler (self,event,func=None):
-
-    k = self ; c = k.c
-    if not event: return
-    w = event.widget ; wname = c.widget_name(w)
-    trace = c.config.getBool('trace_masterClickHandler') and not g.app.unitTesting
-
-    if trace: g.trace(wname,func and func.__name__)
-        
-    # A click outside the minibuffer terminates any state.
-    if k.inState() and c.useTextMinibuffer and w != c.frame.miniBufferWidget:
-        if not c.widget_name(w).startswith('log'):
-            k.keyboardQuit(event)
-            w and c.widgetWantsFocusNow(w)
-            return 'break'
-
-    # Update the selection point immediately for updateStatusLine.
-    if wname.startswith('body'):
-        i = w.index('@%s,%s' % (event.x,event.y))
-        g.app.gui.setTextSelection(w,i,i,insert=i)
-        c.editCommands.setMoveCol(i)
-        c.frame.updateStatusLine()
-    elif wname.startswith('mini'):
-        x = w.index('@%s,%s' % (event.x,event.y))
-        i, j = k.getEditableTextRange()
-        xcol = int(x.split('.')[1])
-        icol = int(i.split('.')[1])
-        jcol = int(j.split('.')[1])
-        # g.trace(xcol,icol,jcol,icol &lt;= xcol &lt;= jcol)
-        if icol &lt;= xcol &lt;= jcol:
-            g.app.gui.setTextSelection(w,x,x,insert=x)
-        else: return 'break'
-
-    if event and func:
-        # Don't even *think* of overriding this.
-        val = func(event)
-        c.masterFocusHandler()
-        return val
-    else:
-        # All tree callbacks have a func, so we can't be in the tree.
-        # g.trace('*'*20,'auto-deactivate tree: %s' % wname)
-        c.frame.tree.OnDeactivate()
-        c.widgetWantsFocusNow(w)
-        return None
-
-masterClick3Handler = masterClickHandler
-masterDoubleClick3Handler = masterClickHandler</t>
 <t tx="ekr.20060130093055">def bindKeyToDict (self,pane,stroke,func,commandName):
     
     k = self
@@ -5706,12 +5576,12 @@ def initialScan (self):
 <t tx="ekr.20060219103046"></t>
 <t tx="ekr.20060219103046.1">def showCalltips (self,event=None,force=False):
     
-    k = self.k
+    c = self.c ; k = c.k
     
     w = event and event.widget or c.get_focus()
     
-    # Insert the calltip if possible.
-    if k.enable_calltips or force:
+    # Insert the calltip if possible, but not in headlines.
+    if (k.enable_calltips or force) and not c.widget_name(w).startswith('head'):
         self.widget = w
         self.prefix = ''
         self.selection = g.app.gui.getTextSelection(w)
@@ -5754,6 +5624,7 @@ def initialScan (self):
             i = w.index(i+'+1c')
             j = w.index(i+' wordend')
             word = w.get(i,j)
+            # g.trace(word,i,j,start)
             self.setObjectAndMembersList(word)
             if not self.object:
                 # g.trace('unknown',word)
@@ -5899,7 +5770,9 @@ def setTabName (self,s):
             if w.get(i+'-1c') == '.':
                 w.delete(i+'-1c')
                 
-        self.autoCompleterStateHandler(event)</t>
+        self.autoCompleterStateHandler(event)
+    else:
+        self.abort()</t>
 <t tx="ekr.20060220085402">def chain (self):
     
     c = self.c ; w = self.widget
@@ -5976,7 +5849,7 @@ def setTabName (self,s):
     
     c = self.c ; w = self.widget
     isStringMethod = False ; s = None
-    g.trace(self.leadinWord)
+    # g.trace(self.leadinWord)
 
     if self.leadinWord and not obj:
         &lt;&lt; try to set s from a Python global function &gt;&gt;
@@ -6078,7 +5951,7 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
         self.push(self.object)
         self.object = 'aString'
         self.membersList = self.getMembersList(self.object)
-    elif self.prevObjects:
+    elif self.object:
         self.getObjectFromAttribute(word)
     elif word == 'self':
         self.completeSelf()
@@ -6185,6 +6058,10 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
         return False</t>
 <t tx="ekr.20060222083704">@nocolor
 
+- Fixed bug in setObjectAndMembersList so initial leadin is computed correctly.
+- k.doBackSpace and autocompleter.doBackspace call keyboardQuit if there are no more completions.
+- Disabled calltips in headlines.
+- Calltips no longer add ')' in any circumstance.
 - Calltips for builtins like reduce, getattr, etc.
 - Better tab name when completing 'self'.
 - Allow 'self' as an anchor.
@@ -6424,12 +6301,13 @@ def hasAttr (self,obj,attr):
         s = None
         
     return className,obj,p,s</t>
-<t tx="ekr.20060223124014">def backup (self,word):
+<t tx="ekr.20060223124014">def getObjectFromAttribute (self,word):
     
-    prevObj = self.prevObjects and self.prevObjects[-1]
+    obj = self.object
 
-    if prevObj and self.hasAttr(prevObj,word):
-        self.object = self.getAttr(prevObj,word)
+    if obj and self.hasAttr(obj,word):
+        self.push(self.object)
+        self.object = self.getAttr(obj,word)
         self.appendToKnownObjects(self.object)
         self.membersList = self.getMembersList(self.object)
     else:
@@ -6557,8 +6435,6 @@ def updateFindList (self,s):
 
     if s not in self.findTextList:
         self.findTextList.append(s)</t>
-<t tx="ekr.20060225092546.1"></t>
-<t tx="ekr.20060225093428"></t>
 <t tx="ekr.20060225095216">@nocolor
 
 'self.' discovers the type of 'self'.  The name of the tab is 'Autocomplete self (theType).'
@@ -6599,6 +6475,5 @@ During autocompletion, typing a question mark shows the docstring for the object
 
 The Find tab remembers previous find/change patterns, and you can use &lt;Tab&gt; to cycle through the previous choice.  The 'Completion' tab appears while you are doing this; the Find tab reappears once the completion is finished.</t>
 <t tx="ekr.20060225100739"></t>
-<t tx="ekr.20060225100739.1"></t>
 </tnodes>
 </leo_file>

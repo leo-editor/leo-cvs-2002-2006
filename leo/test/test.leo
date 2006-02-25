@@ -4578,6 +4578,7 @@ print scanner.findParentClass(p)</t>
     def f2(self):
         pass</t>
 <t tx="ekr.20060223181815"></t>
-<t tx="ekr.20060224163737"></t>
+<t tx="ekr.20060224163737">g.app
+</t>
 </tnodes>
 </leo_file>

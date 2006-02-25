@@ -2,14 +2,6 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060116073938:To do 4.4 a7
-#@+node:ekr.20060225100739:make __builtin__reduce( work
-#@-node:ekr.20060225100739:make __builtin__reduce( work
-#@+node:ekr.20060225100739.1:Don't do calltips in headlines
-#@-node:ekr.20060225100739.1:Don't do calltips in headlines
-#@+node:ekr.20060225093428:Make sure backspace always escapes completion
-#@-node:ekr.20060225093428:Make sure backspace always escapes completion
-#@+node:ekr.20060225092546.1:Backspace doesn't get proper anchor always
-#@-node:ekr.20060225092546.1:Backspace doesn't get proper anchor always
 #@+node:ekr.20060224143402:F3 etc in search command should start command
 #@-node:ekr.20060224143402:F3 etc in search command should start command
 #@+node:ekr.20060220155313:Script: update-leo-settings-file
@@ -56,6 +48,8 @@ During autocompletion, typing a question mark shows the docstring for the object
 The Find tab remembers previous find/change patterns, and you can use <Tab> to cycle through the previous choice.  The 'Completion' tab appears while you are doing this; the Find tab reappears once the completion is finished.
 #@nonl
 #@-node:ekr.20060225095216:apropos-autocompletion command
+#@+node:ekr.20060225100739:make __builtin__reduce( work
+#@-node:ekr.20060225100739:make __builtin__reduce( work
 #@-node:ekr.20060116073938:To do 4.4 a7
 #@-all
 #@nonl
