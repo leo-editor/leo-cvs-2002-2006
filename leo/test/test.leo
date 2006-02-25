@@ -260,8 +260,7 @@
 </v>
 <v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
 </v>
-<v t="ekr.20060224091836"><vh>Get list of all globals</vh></v>
-<v t="ekr.20060224093344" a="V"><vh>Test of calltips for global functions</vh></v>
+<v t="ekr.20060224163737" a="V"><vh>Typing Test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4579,7 +4578,6 @@ print scanner.findParentClass(p)</t>
     def f2(self):
         pass</t>
 <t tx="ekr.20060223181815"></t>
-<t tx="ekr.20060224091836">print g.printList(__builtins__.keys(),sort=True)</t>
-<t tx="ekr.20060224093344">pow</t>
+<t tx="ekr.20060224163737"></t>
 </tnodes>
 </leo_file>

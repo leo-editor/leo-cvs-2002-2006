@@ -45,7 +45,7 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
@@ -57,7 +57,7 @@
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
-<v t="ekr.20060212103826"><vh>@bool trace_gc_calls = False</vh></v>
+<v t="ekr.20060212103826" a="E"><vh>@bool trace_gc_calls = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20060215054710"><vh>@bool trace_key_event= False</vh></v>
 <v t="ekr.20060216091239"><vh>@bool trace_minibuffer = False</vh></v>
@@ -72,10 +72,10 @@
 <v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 <v t="ekr.20060206155101"><vh>@bool trace_tree_alloc = False</vh></v>
 <v t="ekr.20060206161839"><vh>@bool trace_tree_edit = False</vh></v>
-<v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 <v t="ekr.20060114082205"><vh>@string trace_bindings_filter = </vh></v>
 <v t="ekr.20060114083009"><vh>@string trace_bindings_pane_filter =</vh></v>
 </v>
+<v t="ekr.20060201111002"><vh>@bool use_syntax_coloring = True</vh></v>
 <v t="ekr.20060113182439"><vh>Other options</vh>
 <v t="ekr.20041119034357.10" annotate="7d71002e"><vh>Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
@@ -379,7 +379,8 @@
 <v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
 <v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
-<v t="ekr.20051126062830" a="V"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
+<v t="ekr.20060121102627" a="V"><vh>@bool trace_modes = False</vh></v>
 </v>
 </vnodes>
 <tnodes>

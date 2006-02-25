@@ -6091,10 +6091,10 @@ class findTab (leoFind.leoFind):
                 return k.masterClickHandler(event)
     
         table = (
-            ('<Button-1>',  k.masterClickHandler), # findTabClickCallback),
-            ('<Double-1>',  k.masterClickHandler), # findTabClickCallback),
-            ('<Button-3>',  k.masterClickHandler), # findTabClickCallback),
-            ('<Double-3>',  k.masterClickHandler), # findTabClickCallback),
+            ('<Button-1>',  k.masterClickHandler),
+            ('<Double-1>',  k.masterClickHandler),
+            ('<Button-3>',  k.masterClickHandler),
+            ('<Double-3>',  k.masterClickHandler),
             ('<Key>',       resetWrapCallback),
             ('<Return>',    findButtonBindingCallback),
             ("<Escape>",    self.hideTab),
