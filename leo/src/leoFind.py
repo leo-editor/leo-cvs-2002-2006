@@ -1007,6 +1007,7 @@ class leoFind:
         #g.trace(c.widget_name(t))
         
         if 1: # I prefer always putting the focus in the body.
+            c.invalidateFocus()
             c.bodyWantsFocusNow()
         else:
             c.widgetWantsFocusNow(t)
