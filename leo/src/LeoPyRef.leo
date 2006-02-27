@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9110" clone_windows="0"/>
-<globals body_outline_ratio="0.442906574394">
+<globals body_outline_ratio="0.535469107551">
 	<global_window_position top="25" left="443" height="874" width="751"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -13,8 +13,7 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-expanded="ekr.20050920085536.1,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
@@ -83,7 +82,7 @@ expanded="ekr.20050920085536.1,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20031218072017.1974"><vh>destroySelf (tkFrame)</vh></v>
 </v>
 </v>
-<v t="ekr.20050920085536.1" a="E"><vh> Birth (keyHandler)</vh>
+<v t="ekr.20050920085536.1"><vh> Birth (keyHandler)</vh>
 <v t="ekr.20050920085536.2"><vh> ctor (keyHandler)</vh>
 <v t="ekr.20051006092617"><vh>&lt;&lt; define Tk ivars &gt;&gt;</vh></v>
 <v t="ekr.20051006092617.1"><vh>&lt;&lt; define externally visible ivars &gt;&gt;</vh></v>
@@ -115,6 +114,7 @@ expanded="ekr.20050920085536.1,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060224143628.1"><vh>Ensure dialogs properly get focus</vh></v>
 <v t="ekr.20060224143628.2"><vh>Disabled autocompleter in headlines</vh></v>
 <v t="ekr.20060224143628"><vh>Removed horrible g.app.dialogs hack</vh></v>
+<v t="ekr.20060227070350.1"><vh>Fix crasher in plugin</vh></v>
 </v>
 <v t="ekr.20060224164724"><vh>Added typing completion in Find commands</vh>
 <v t="ekr.20051023094009"><vh>Search classes</vh>
@@ -266,9 +266,7 @@ expanded="ekr.20050920085536.1,"><vh>@thin leoProjects.txt</vh></v>
 <v t="ekr.20060223081914"><vh>getAttr and hasAttr</vh></v>
 <v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
 <v t="ekr.20060219174642"><vh>getMembersList</vh></v>
-<v t="ekr.20060220132026"><vh>info</vh>
-<v t="ekr.20060220132919"><vh>prettyPrintDoc</vh></v>
-</v>
+<v t="ekr.20060220132026"><vh>info</vh></v>
 <v t="ekr.20060220104902"><vh>insertNormalChar</vh></v>
 <v t="ekr.20060222092243"><vh>push, pop, clear, stackNames</vh></v>
 <v t="ekr.20060221112937"><vh>setObjectAndMembersList &amp; helpers</vh>
@@ -329,13 +327,10 @@ expanded="ekr.20050920085536.1,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="ekr.20060219111416"><vh>getLeadinWord</vh></v>
 </v>
+<v t="ekr.20060225125519"><vh>Applied rst3 patch from Kent Tenney</vh></v>
 </v>
 </v>
-<v t="ekr.20060116073938" a="V"><vh>To do 4.4 a7</vh>
-<v t="ekr.20060225125519"><vh>Apply rst3 patch</vh></v>
-<v t="ekr.20060224143402"><vh>F3 etc in search command should start command</vh></v>
-</v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
@@ -815,10 +810,10 @@ def onDragSplitterBar (self, event, verticalFlag):
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.4 a6, build %s, February 17, 2006" % c.getBuildNumber()</t>
+    return "Leo 4.4 a7, build %s, February 28, 2006" % c.getBuildNumber()</t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.416 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.417 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -2598,7 +2593,7 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
 </t>
 <t tx="ekr.20051126124705">def autoCompleterStateHandler (self,event):
     
-    c = self.c ; k = self.k ; w = self.widget
+    c = self.c ; k = self.k
     tag = 'auto-complete' ; state = k.getState(tag)
     keysym = event and event.keysym
     ch = event and event.char or ''
@@ -2706,7 +2701,7 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
     g.app.gui.setSelectionRange(w,i,j,insert=j)</t>
 <t tx="ekr.20051127105102">def finish (self):
     
-    c = self.c ; k = self.k ; w = self.widget ; gui = g.app.gui
+    c = self.c ; k = self.k
     
     k.keyboardQuit(event=None)
     
@@ -2714,7 +2709,6 @@ C:\prog\leoCVS\leo\src\leoImport.py:158: No class attribute (_forcedGnxPositionL
         c.frame.log.deleteTab(name)
         
     c.frame.body.onBodyChanged('Typing')
-        
     self.clear()
     self.object = None</t>
 <t tx="ekr.20051127105431">def abort (self):
@@ -2750,7 +2744,6 @@ def exit (self,restore=False): # Called from keyboard-quit.
         self.unboundKeyAction = 'insert'
         
     k.setInputState(self.unboundKeyAction)</t>
-<t tx="ekr.20060116073938"></t>
 <t tx="ekr.20060123115459">def setFindScopeEveryWhere     (self, event): return self.setFindScope('entire-outline')
 def setFindScopeNodeOnly       (self, event): return self.setFindScope('node-only')
 def setFindScopeSuboutlineOnly (self, event): return self.setFindScope('suboutline-only')
@@ -3197,6 +3190,8 @@ shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
     
     # g.trace(repr(change_pattern))
     
+    c = self.c
+
     self.setupSearchPattern(find_pattern)
     self.setupChangePattern(change_pattern)
     c.widgetWantsFocusNow(self.w)
@@ -3729,7 +3724,6 @@ def setTabName (self,s):
 <t tx="ekr.20060220104902">def insertNormalChar (self,ch,keysym):
     
     k = self.k ; w = self.widget
-    trace = self.trace and not g.app.unitTesting
 
     if ch in (string.letters + string.digits + '_' ):
         # Look ahead to see if the character completes any item.
@@ -3746,7 +3740,6 @@ def setTabName (self,s):
             self.computeCompletionList()
     else:
         word = g.app.gui.getSelectedText(w)
-        # g.trace(word)
         if keysym == 'parenleft':
             # Similar to chain logic.
             obj = self.object
@@ -3810,12 +3803,6 @@ def setTabName (self,s):
     if doc:
         c.frame.log.clearTab('Info',wrap='word')
         g.es(doc,tabName='Info')</t>
-<t tx="ekr.20060220132919">def prettyPrintDoc (self,s):
-    
-    c = self.c
-    
-    lines = [s.strip() for s in g.splitLines(s)]
-    return ''.join(s)</t>
 <t tx="ekr.20060221073238">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=3586962
@@ -4336,7 +4323,6 @@ if obj:
 else:
     name = self.leadinWord
 c.frame.putStatusLine('%s %s' % (name,args))</t>
-<t tx="ekr.20060224143402"></t>
 <t tx="ekr.20060224143628">
 </t>
 <t tx="ekr.20060224143628.1"></t>
@@ -4344,7 +4330,7 @@ c.frame.putStatusLine('%s %s' % (name,args))</t>
 <t tx="ekr.20060224164724"># To do: use the protected range to see whether can cut back.</t>
 <t tx="ekr.20060224171851">def updateChangeList (self,s):
 
-    if s not in self.findChangeList:
+    if s not in self.changeTextList:
         self.changeTextList.append(s)
         
 def updateFindList (self,s):
@@ -4352,7 +4338,23 @@ def updateFindList (self,s):
     if s not in self.findTextList:
         self.findTextList.append(s)</t>
 <t tx="ekr.20060225100739"></t>
-<t tx="ekr.20060225125519"></t>
+<t tx="ekr.20060225125519">Index: plugins/rst3.py
+===================================================================
+RCS file: /cvsroot//leo/leo/plugins/rst3.py,v
+retrieving revision 1.42
+diff -r1.42 rst3.py
+1158c1158
+&lt;         source = self.outputFile.getvalue()
+---
+&gt;         self.source = self.outputFile.getvalue()
+1167c1167
+&lt;             f.write(source)
+---
+&gt;             f.write(self.source)
+1172c1172
+&lt;             output = self.writeToDocutils(source)
+---
+&gt;             output = self.writeToDocutils(self.source)</t>
 <t tx="ekr.20060226131603.1">def aproposAutocompletion (self,event=None):
     
     c = self.c ; s = '''
@@ -4416,8 +4418,23 @@ disable-auto-completer-command and disable-calltips-command.
         # Remove indentation from indentation of this function.
         s = g.adjustTripleString(s,c.tab_width)
         g.es_print(s)</t>
-<t tx="ekr.20060226132000">def test_apropos_bindings (self):
+<t tx="ekr.20060226132000">def test_aproposAutocompletion (self):
 
     c.helpCommands.aproposAutocompletion()</t>
+<t tx="ekr.20060227070350.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3597694
+By: tfer
+
+Template Plug-in (maybe others tooo) co,plain when activated:
+exception executing command
+Traceback (most recent call last):
+  File "leoCommands.py", line 265, in doCommand
+    val = command(event)
+  File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 350, in about
+    PluginAbout(self.name, self.version, self.doc)
+  File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 576, in __init__
+    g.app.dialogs += 1
+AttributeError: LeoApp instance has no attribute 'dialogs'</t>
 </tnodes>
 </leo_file>
