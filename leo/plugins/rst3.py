@@ -43,7 +43,7 @@ http://webpages.charter.net/edreamleo/rstplugin3.html
 
 from __future__ import generators # To make this plugin work with Python 2.2.
 
-__version__ = '1.9'
+__version__ = '1.10'
 
 #@<< imports >>
 #@+node:ekr.20050805162550.2:<< imports >>
@@ -370,40 +370,32 @@ except ImportError:
 # 1.0 EKR:
 # Write output files to the directory containing the .leo file by default.
 # This is c.frame.openDirectory, *not* g.app.loadDir.
-# 
 # 1.1 EKR:
 # By default, look for stylesheet in output directory.
-# 
 # 1.2 EKR:
 # Make sure code doesn't crash if docutils can not be imported.
-# 
 # 1.3 EKR:
 # Make the stylesheet path relative to the directory containing the output 
 # file.
-# 
 # 1.4 EKR:
 # - Allow relative paths.
 # - Added processTopTree.  This has the same functionality as found in 
 # previous @button rst3 nodes.
-# 
 # 1.5 EKR:
 # Removed used recomputation of sytlesheet_path
-# 
 # 1.6 EKR:
 # - Added support for default_path
 # - Removed duplicate messages about Silver City.
-# 
 # 1.7 EKR:
 # - Fixed bug: preprocess ancestors as well as descendants in preprocessTree.
 # - Fixed bug: use the same path for the intermediate file as for the output 
 # file.
-# 
 # 1.8 EKR:
 # - Added event=None to arg list of rst3PluginCallback.
-# 
 # 1.9 EKR:
-#     - Added from __future__ import generators to suppress warning in Python 
-# 2.2.
+# - Added from __future__ import generators to suppress warning in Python 2.2.
+# 1.10 EKR:
+# - Created self.source ivar to support work by Kent Tenney.
 #@-at
 #@nonl
 #@-node:ekr.20050908120111:v 1.x
@@ -622,6 +614,7 @@ class rstClass:
         self.ext = None # The file extension.
         self.outputFileName = None # The name of the file being written.
         self.outputFile = None # The open file being written.
+        self.source = None # The written source as a string.
         #@nonl
         #@-node:ekr.20050805162550.11:<< init ivars >>
         #@nl
@@ -1155,7 +1148,7 @@ class rstClass:
         self.initWrite(p,encoding=g.choose(isHtml,'utf-8','iso-8859-1'))
         self.outputFile = StringIO.StringIO()
         self.writeTree(p)
-        source = self.outputFile.getvalue()
+        self.source = self.outputFile.getvalue()
         self.outputFile = None
         
         # Bug fix 12/4/05: Compute this here for use by intermediate file.
@@ -1164,12 +1157,12 @@ class rstClass:
         if self.getOption('write_intermediate_file'):
             name = self.outputFileName + '.txt'
             f = file(name,'w')
-            f.write(source)
+            f.write(self.source)
             f.close()
             self.report(name)
             
         try:
-            output = self.writeToDocutils(source)
+            output = self.writeToDocutils(self.source)
             ok = True
         except Exception:
             print 'Exception in docutils'
