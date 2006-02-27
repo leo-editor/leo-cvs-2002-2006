@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="22944" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="23130" clone_windows="0"/>
 <globals body_outline_ratio="0.60175879397">
-	<global_window_position top="15" left="266" height="857" width="911"/>
+	<global_window_position top="24" left="339" height="857" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -42,7 +42,7 @@
 <v t="ekr.20050902080416"><vh>@@button reformat-paragraph</vh></v>
 </v>
 <v t="ekr.20050831195449"><vh>Read me first</vh></v>
-<v t="ekr.20040414161647" a="V"><vh>Users Guide</vh>
+<v t="ekr.20040414161647"><vh>Users Guide</vh>
 <v t="ekr.20050831184021.1"><vh>Documentation for rst3 plugin</vh>
 <v t="ekr.20050818163826"><vh>@rst html\rstplugin3.html</vh>
 <v t="ekr.20050818163826.1"><vh>@rst-no-head links</vh></v>
@@ -758,7 +758,7 @@
 <v t="ekr.20050916065715"><vh>suggestions for tutorial</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
 <v t="ekr.20060206111717"><vh>Ancient...</vh>
 <v t="edream.110203163054.118"><vh>3.x...</vh>
@@ -2478,13 +2478,37 @@
 <v t="ekr.20060215112429.3"><vh>Fixed crasher in Go To Line command</vh></v>
 <v t="ekr.20060215112429.6"><vh>Fixed menu problem on Linux</vh></v>
 </v>
-</v>
-</v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
 <v t="ekr.20060217071505"><vh>4.4 a6</vh>
 <v t="ekr.20060217071505.1"><vh>Fixed urgent compatibility problems</vh></v>
 <v t="ekr.20060217072324"><vh>Minor bugs fixed</vh></v>
 <v t="ekr.20060217072647"><vh>New debugging options in leoSettings.leo</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="ekr.20060227102028" a="EV"><vh>4.4a7</vh>
+<v t="ekr.20060227102028.2"><vh>Bugs Fixed</vh>
+<v t="ekr.20060227102028.3"><vh>Fixed binding bug</vh>
+<v t="ekr.20060227102028.4"><vh>R</vh></v>
+<v t="ekr.20060227102028.5"><vh>k.completeAllBindings</vh>
+<v t="ekr.20060227102028.6"><vh>completeAllBindingsForWidget</vh></v>
+</v>
+<v t="ekr.20060227102028.7"><vh>k.tkbindingFromStroke</vh></v>
+<v t="ekr.20060227102028.8"><vh>shortcutFromSetting</vh>
+<v t="ekr.20060227102028.9"><vh>&lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;</vh></v>
+<v t="ekr.20060227102028.10"><vh>&lt;&lt; swap cmd and ctrl keys &gt;&gt;</vh></v>
+<v t="ekr.20060227102028.11"><vh>&lt;&lt; convert minus signs to plus signs &gt;&gt;</vh></v>
+<v t="ekr.20060227102028.12"><vh>&lt;&lt; compute the last field &gt;&gt;</vh></v>
+<v t="ekr.20060227102028.13"><vh>&lt;&lt; compute shortcut &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20060227102028.14"><vh>Fixed bug in open-find-dialog</vh></v>
+<v t="ekr.20060227102028.15"><vh>Ensure dialogs properly get focus</vh></v>
+<v t="ekr.20060227102028.16"><vh>Disabled autocompleter in headlines</vh></v>
+<v t="ekr.20060227102028.17"><vh>Removed horrible g.app.dialogs hack</vh></v>
+<v t="ekr.20060227102028.18"><vh>Fix crasher in plugin</vh></v>
+</v>
+<v t="ekr.20060227102028.111" a="E"><vh>Autocompletion and calltips</vh></v>
 </v>
 </v>
 </v>
@@ -24331,5 +24355,259 @@ and data is becoming apparent.</t>
 <t tx="ekr.20060218092654"></t>
 <t tx="ekr.20060218092725"></t>
 <t tx="ekr.20060218095651"></t>
+<t tx="ekr.20060227102028">Leo 4.4 alpha 7                                             February 28, 2006
+
+The version fixes some minor problems with Leo 4.4a7 and adds autocompletion
+and calltips.
+
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long
+name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word
+and paragraph manipulation, and commands to manipulate buffers, the kill ring,
+regions and rectangles. You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes. You can emulate the operation of Emacs,
+Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
+dialogs, making those commands much easier to use. Plugins or scripts can easily
+create new tabs. The Completion tab shows possible typing completions.
+
+- Autocompletion and calltips.  Autocompletion works much like tab completion.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
+<t tx="ekr.20060227102028.2"></t>
+<t tx="ekr.20060227102028.3"># http://sourceforge.net/forum/message.php?msg_id=3583335
+</t>
+<t tx="ekr.20060227102028.4"></t>
+<t tx="ekr.20060227102028.5">def completeAllBindings (self):
+    
+    '''New in 4.4b3: make an actual binding in *all* the standard places.
+    
+    The event will go to k.masterKeyHandler as always, so nothing really changes.
+    except that k.masterKeyHandler will know the proper stroke.'''
+    
+    k = self ; c = k.c ; f = c.frame
+    bodyCtrl = f.body and hasattr(f.body,'bodyCtrl') and f.body.bodyCtrl or None
+    canvas   = f.tree and hasattr(f.tree,'canvas')   and f.tree.canvas   or None
+    bindingWidget = f.tree and hasattr(f.tree,'bindingWidget') and f.tree.bindingWidget or None
+    if not bodyCtrl or not canvas: return
+    
+    for w in (c.miniBufferWidget,bodyCtrl,canvas,bindingWidget):
+        self.completeAllBindingsForWidget(w)
+        
+        
+        # for stroke in  k.bindingsDict.keys():
+        # 
+            # def bindKeyCallback (event,k=k,stroke=stroke):
+                # return k.masterKeyHandler(event,stroke=stroke)
+            # bindStroke = k.tkbindingFromStroke(stroke)
+            # try:
+                # # g.trace(bindStroke,c.widget_name(w))
+                # w.bind(bindStroke,bindKeyCallback)
+            # except Exception:
+                # g.es_print('exception binding %s to %s' % (
+                    # bindStroke,c.widget_name(w)),color='blue')</t>
+<t tx="ekr.20060227102028.6">def completeAllBindingsForWidget (self,w):
+    
+    k = self ; c = k.c
+    
+    for stroke in  k.bindingsDict.keys():
+    
+        def bindKeyCallback (event,k=k,stroke=stroke):
+            return k.masterKeyHandler(event,stroke=stroke)
+        bindStroke = k.tkbindingFromStroke(stroke)
+
+        try:
+            # g.trace(bindStroke,c.widget_name(w))
+            w.bind(bindStroke,bindKeyCallback)
+        except Exception:
+            g.es_print('exception binding %s to %s' % (
+                bindStroke,c.widget_name(w)),color='blue')</t>
+<t tx="ekr.20060227102028.7">def tkbindingFromStroke (self,stroke):
+    
+    '''Convert a stroke (key to k.bindingsDict) to an actual Tk binding.'''
+    
+    stroke = stroke.lstrip('&lt;').rstrip('&gt;')
+    
+    for a,b in (
+        ('Alt+','Alt-'),
+        ('Ctrl+','Control-'),
+        ('Shift+','Shift-'),
+        ('Command+','Command-'),
+    ):
+        stroke = stroke.replace(a,b)
+        
+    return '&lt;%s&gt;' % stroke</t>
+<t tx="ekr.20060227102028.8">def shortcutFromSetting (self,setting):
+    
+    k = self
+
+    if not setting:
+        return None
+
+    s = setting.strip()
+    &lt;&lt; define cmd, ctrl, alt, shift &gt;&gt;
+    if k.swap_mac_keys and sys.platform == "darwin":
+        &lt;&lt; swap cmd and ctrl keys &gt;&gt;
+    &lt;&lt; convert minus signs to plus signs &gt;&gt;
+    &lt;&lt; compute the last field &gt;&gt;
+    &lt;&lt; compute shortcut &gt;&gt;
+    return shortcut
+    
+canonicalizeShortcut = shortcutFromSetting # For compatibility.
+strokeFromSetting    = shortcutFromSetting</t>
+<t tx="ekr.20060227102028.9">s2 = s.lower()
+
+cmd   = s2.find("cmd") &gt;= 0     or s2.find("command") &gt;= 0
+ctrl  = s2.find("control") &gt;= 0 or s2.find("ctrl") &gt;= 0
+alt   = s2.find("alt") &gt;= 0
+shift = s2.find("shift") &gt;= 0   or s2.find("shft") &gt;= 0</t>
+<t tx="ekr.20060227102028.10">if ctrl and not cmd:
+    cmd = True ; ctrl = False
+if alt and not ctrl:
+    ctrl = True ; alt = False</t>
+<t tx="ekr.20060227102028.11"># Replace all minus signs by plus signs, except a trailing minus:
+if s.endswith('-'):
+    s = s[:-1].replace('-','+') + '-'
+else:
+    s = s.replace('-','+')</t>
+<t tx="ekr.20060227102028.12">if s.endswith('+'):
+    last = '+'
+else:
+    fields = s.split('+') # Don't lower this field.
+    last = fields and fields[-1]
+    if not last:
+        if not g.app.menuWarningsGiven:
+            print "bad shortcut specifier:", s
+        return None
+
+if len(last) == 1:
+    last2 = k.tkBindNamesDict.get(last) # Fix new bug introduced in 4.4b2.
+    if last2:
+        last = last2 ; shift = False # Ignore the shift state for these special chars.
+    else:
+        if shift:
+            last = last.upper()
+            shift = False
+        else:
+            last = last.lower()
+else:
+    # Translate from a made-up (or lowercase) name to 'official' Tk binding name.
+    # This is a *one-way* translation, done only here.
+    d = self.settingsNameDict
+    last = d.get(last.lower(),last)</t>
+<t tx="ekr.20060227102028.13">table = (
+    (alt, 'Alt+'),
+    (ctrl,'Ctrl+'),
+    (cmd, 'Command+'),
+    (shift,'Shift+'),
+    (True,last),
+)
+    
+shortcut = ''.join([val for flag,val in table if flag])</t>
+<t tx="ekr.20060227102028.14">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3586962
+By: bwmulder
+
+the open-find-dialog is broken. 
+ 
+Error: 4 
+TypeError Exception in Tk callback 
+Function: &lt;function findButtonCallback at 0x04E219F0&gt; (type: &lt;type 'function'&gt;) 
+Args: () 
+Traceback (innermost last): 
+File "C:\Python24\lib\site-packages\Pmw\Pmw_1_2\lib\PmwBase.py", line 1747, in __call__ 
+return apply(self.func, args) 
+TypeError: findButtonCallback() takes at least 1 argument (0 given) 
+</t>
+<t tx="ekr.20060227102028.15"></t>
+<t tx="ekr.20060227102028.16"># This was causing problems.  It may be an easy fix, but I kinda doubt it.</t>
+<t tx="ekr.20060227102028.17">
+</t>
+<t tx="ekr.20060227102028.18">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3597694
+By: tfer
+
+Template Plug-in (maybe others tooo) co,plain when activated:
+exception executing command
+Traceback (most recent call last):
+  File "leoCommands.py", line 265, in doCommand
+    val = command(event)
+  File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 350, in about
+    PluginAbout(self.name, self.version, self.doc)
+  File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 576, in __init__
+    g.app.dialogs += 1
+AttributeError: LeoApp instance has no attribute 'dialogs'</t>
+<t tx="ekr.20060227102028.111">This documentation describes both autocompletion and calltips.
+
+Typing a period when @language python is in effect starts autocompletion. Typing
+'(' during autocompletion shows the calltip. Typing Return or Control-g
+(keyboard-quit) exits autocompletion or calltips.
+
+Autocompletion
+    
+Autocompletion shows what may follow a period in code. For example, after typing
+g. Leo will show a list of all the global functions in leoGlobals.py.
+Autocompletion works much like tab completion in the minibuffer. Unlike the
+minibuffer, the presently selected completion appears directly in the body
+pane.
+
+A leading period brings up 'Autocomplete Modules'. (The period goes away.) You
+can also get any module by typing its name. If more than 25 items would appear
+in the Autocompleter tab, Leo shows only the valid starting characters. At this
+point, typing an exclamation mark shows the complete list. Thereafter, typing
+further exclamation marks toggles between full and abbreviated modes.
+
+If x is a list 'x.!' shows all its elements, and if x is a Python dictionary,
+'x.!' shows x.keys(). For example, 'sys.modules.!' Again, further exclamation
+marks toggles between full and abbreviated modes.
+
+During autocompletion, typing a question mark shows the docstring for the
+object. For example: 'g.app?' shows the docstring for g.app. This doesn't work
+(yet) directly for Python globals, but '__builtin__.f?' does. Example:
+'__builtin__.pow?' shows the docstring for pow.
+
+Autocompletion works in the Find tab; you can use &lt;Tab&gt; to cycle through the
+choices. The 'Completion' tab appears while you are doing this; the Find tab
+reappears once the completion is finished.
+
+Calltips
+
+Calltips appear after you type an open parenthesis in code. Calltips shows the
+expected arguments to a function or method. Calltips work for any Python
+function or method, including Python's global function. Examples:
+
+a)  'g.toUnicode('  gives 'g.toUnicode(s, encoding, reportErrors=False'
+b) 'c.widgetWantsFocusNow' gives 'c.widgetWantsFocusNow(w'
+c) 'reduce(' gives 'reduce(function, sequence[, initial]) -&gt; value'
+
+The calltips appear directly in the text and the argument list is highlighted so
+you can just type to replace it. The calltips appear also in the status line for
+reference after you have started to replace the args.
+
+Options
+
+Both autocompletion and calltips are initially enabled or disabled by the
+enable_autocompleter and enable_calltips settings in leoSettings.leo. You may
+enable or disable these features at any time with these commands:
+enable-auto-completer-command, enable-calltips-command,
+disable-auto-completer-command and disable-calltips-command.</t>
 </tnodes>
 </leo_file>
