@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.20"
+__version__ = "0.21"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -101,6 +101,8 @@ __plugin_group__ = "Core"
 #     - LocalPluginCollection uses self.c rather than g.top>
 #     - Can't enable plugins dynamically when called stand-alone.
 #     - Removed KEYWORDS hack.
+# 0.21 EKR
+#     - Removed the g.app.dialog hack.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -873,16 +875,12 @@ class ManagerDialog:
         #@nl
         self.plugin_list.populateList("All")
         
-        g.app.dialogs += 1 # Make *sure* that the dialog stays in front.
-        
         if not standalone:
             top.grab_set() # Make the dialog a modal dialog.
             top.focus_force() # Get all keystrokes.
             root.wait_window(top)
         else:
             root.mainloop()
-    
-        g.app.dialogs -= 1 # Tell Leo that the dialog has closed.
     #@nonl
     #@-node:pap.20041006215108.1:ManagerDialog._init__
     #@+node:pap.20041006224151:enablePlugin

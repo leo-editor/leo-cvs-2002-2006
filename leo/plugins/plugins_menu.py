@@ -57,7 +57,7 @@ import sys
 #@nonl
 #@-node:ekr.20050101090207.10:<< imports >>
 #@nl
-__version__ = "1.9"
+__version__ = "1.10"
 #@<< version history >>
 #@+node:ekr.20050101100033:<< version history >>
 #@+at
@@ -87,6 +87,8 @@ __version__ = "1.9"
 #     - Refactored to allow dynamically adding plugins to the menu after 
 # initial load
 #     - Reformatted menu items for cmd_ThisIsIt to be "This Is It"
+# 1.10 EKR:
+#     - Removed the g.app.dialog hack.
 #@-at
 #@nonl
 #@-node:ekr.20050101100033:<< version history >>
@@ -485,10 +487,7 @@ class PropertiesWindow:
         top.grab_set() # Make the dialog a modal dialog.
         top.focus_force() # Get all keystrokes.
         
-        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
-        g.app.dialogs += 1
         root.wait_window(top)
-        g.app.dialogs -= 1
         #@nonl
         #@-node:EKR.20040517080555.13:<< create the frame from the configuration data >>
         #@nl
@@ -572,10 +571,7 @@ class PluginAbout:
         top.grab_set() # Make the dialog a modal dialog.
         top.focus_force() # Get all keystrokes.
         
-        # New (temp) in 4.4 a2: g.app.dialogs is a count of the open dialogs.
-        g.app.dialogs += 1
         root.wait_window(top)
-        g.app.dialogs -= 1
     #@nonl
     #@-node:EKR.20040517080555.20:__init__
     #@-others
