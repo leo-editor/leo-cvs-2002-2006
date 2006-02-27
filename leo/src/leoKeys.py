@@ -425,9 +425,9 @@ class autoCompleterClass:
         
         c = self.c ; w = self.widget
         isStringMethod = False ; s = None
-        # g.trace(self.leadinWord)
+        # g.trace(self.leadinWord,obj)
     
-        if self.leadinWord and not obj:
+        if self.leadinWord and (not obj or type(obj) == types.BuiltinFunctionType):
             #@        << try to set s from a Python global function >>
             #@+node:ekr.20060224103829:<< try to set s from a Python global function >>
             # The first line of the docstring is good enough.
@@ -539,6 +539,7 @@ class autoCompleterClass:
         elif word and old_obj and self.hasAttr(old_obj,word):
             self.push(old_obj)
             self.object = obj = self.getAttr(old_obj,word)
+        else: obj = None
     
         if obj:
             self.appendToKnownObjects(obj)
