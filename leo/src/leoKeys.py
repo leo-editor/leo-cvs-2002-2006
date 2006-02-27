@@ -314,7 +314,7 @@ class autoCompleterClass:
     #@+node:ekr.20051126124705:autoCompleterStateHandler
     def autoCompleterStateHandler (self,event):
         
-        c = self.c ; k = self.k ; w = self.widget
+        c = self.c ; k = self.k
         tag = 'auto-complete' ; state = k.getState(tag)
         keysym = event and event.keysym
         ch = event and event.char or ''
@@ -702,7 +702,7 @@ class autoCompleterClass:
     #@+node:ekr.20051127105102:finish
     def finish (self):
         
-        c = self.c ; k = self.k ; w = self.widget ; gui = g.app.gui
+        c = self.c ; k = self.k
         
         k.keyboardQuit(event=None)
         
@@ -710,7 +710,6 @@ class autoCompleterClass:
             c.frame.log.deleteTab(name)
             
         c.frame.body.onBodyChanged('Typing')
-            
         self.clear()
         self.object = None
     #@nonl
@@ -819,21 +818,11 @@ class autoCompleterClass:
             c.frame.log.clearTab('Info',wrap='word')
             g.es(doc,tabName='Info')
     #@nonl
-    #@+node:ekr.20060220132919:prettyPrintDoc
-    def prettyPrintDoc (self,s):
-        
-        c = self.c
-        
-        lines = [s.strip() for s in g.splitLines(s)]
-        return ''.join(s)
-    #@nonl
-    #@-node:ekr.20060220132919:prettyPrintDoc
     #@-node:ekr.20060220132026:info
     #@+node:ekr.20060220104902:insertNormalChar
     def insertNormalChar (self,ch,keysym):
         
         k = self.k ; w = self.widget
-        trace = self.trace and not g.app.unitTesting
     
         if ch in (string.letters + string.digits + '_' ):
             # Look ahead to see if the character completes any item.
@@ -850,7 +839,6 @@ class autoCompleterClass:
                 self.computeCompletionList()
         else:
             word = g.app.gui.getSelectedText(w)
-            # g.trace(word)
             if keysym == 'parenleft':
                 # Similar to chain logic.
                 obj = self.object

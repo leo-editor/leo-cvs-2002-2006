@@ -3983,7 +3983,7 @@ class helpCommandsClass (baseEditCommandsClass):
             g.es_print(s)
     #@nonl
     #@+node:ekr.20060226132000:test_aproposAutocompletion
-    def test_apropos_bindings (self):
+    def test_aproposAutocompletion (self):
     
         c.helpCommands.aproposAutocompletion()
     #@nonl
@@ -5893,6 +5893,8 @@ class minibufferFind:
         
         # g.trace(repr(change_pattern))
         
+        c = self.c
+    
         self.setupSearchPattern(find_pattern)
         self.setupChangePattern(change_pattern)
         c.widgetWantsFocusNow(self.w)
@@ -6062,7 +6064,7 @@ class minibufferFind:
     #@+node:ekr.20060224171851:updateChange/FindList
     def updateChangeList (self,s):
     
-        if s not in self.findChangeList:
+        if s not in self.changeTextList:
             self.changeTextList.append(s)
             
     def updateFindList (self,s):
