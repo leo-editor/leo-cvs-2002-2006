@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20060207133601:@thin ../doc/leoToDoLater.txt
 #@+all
+#@+node:ekr.20060219172147:To do 4.4
 #@+node:ekr.20060209104733:Urgent and big (overdue)
 #@+node:ekr.20060224104109:Fix regex searches
 # \1 does not work in the replacement text.  Incredibly annoying.
@@ -1034,45 +1035,7 @@ Scott
 
 #@-node:ekr.20031218072017.1032:Drive syntax colorer from jEdit files
 #@-node:ekr.20060209104733:Urgent and big (overdue)
-#@+node:ekr.20060219172147:To do 4.4
-#@+node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
-Having to define dummy methods is getting odious.
-#@nonl
-#@-node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
-#@+node:ekr.20060214072931:Improve unit testing
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3575014
-By: ktenney
-
-> it seems my Leo file must have a @button Unit Test  
-
-Good point. I'll add a run-unit-test command soon.
-
-> the @test output goes to the console.
-
-It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
-
-@bool unit_test_output_to_log_pane = True
-#@nonl
-#@-node:ekr.20060214072931:Improve unit testing
-#@+node:ekr.20060213151918:Add baloons
-#@+node:ekr.20060212125650:createBalloon
-def createBalloon (tab,sv):
-
-    'Create a balloon for a widget.' ''
-
-    balloon = Pmw.Balloon(tab,initwait=100)
-    balloon.bind(tab,'')
-    hull = balloon.component('hull')
-    def blockExpose (event):
-        if sv.get() == '':
-             hull.withdraw()
-    hull.bind('<Expose>',blockExpose,'+')
-    balloon._label.configure(textvariable=sv)
-#@nonl
-#@-node:ekr.20060212125650:createBalloon
-#@-node:ekr.20060213151918:Add baloons
+#@+node:ekr.20060227163215:Bugs (minor)
 #@+node:ekr.20060116083043:Use special Help menu on the Mac
 # http://sourceforge.net/forum/message.php?msg_id=3237845
 #@nonl
@@ -1163,6 +1126,162 @@ def getMacHelpMenu (self):
 #@nonl
 #@-node:ekr.20060211144330.1:getMacHelpMenu
 #@-node:ekr.20060116083043:Use special Help menu on the Mac
+#@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@+node:ekr.20051104152338.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3413805
+By: nobody
+
+I thought this might be for 4.4a2, but I see the same effect w/ 
+Leo 4.3.3, build  1.282 , September 17, 2005
+Python 2.3.5, Tk 8.4.7, win32
+
+I haven't used Leo for code, but just started to try to re-organize some Perl
+I inherited.
+
+Leo apears to remove sentinels, AND preceding newlines, so the effect is something
+like this:
+
+.... some code....
+
+   next line;
+}
+#@verbatim
+#@ leo sentinel here...
+#
+
+    If  ( something ) {
+      more code;
+......
+
+becomes:
+
+.... some code....
+
+   next line;
+} If  ( something ) {
+      more code;
+......
+
+Now, that may be annoying, but mildly so - it still runs.
+When this:
+
+#
+#@verbatim
+#@ sentinel
+if () {
+
+turns to this:
+
+# if() {
+
+code just breaks.
+#@nonl
+#@-node:ekr.20051104152338.1:Report
+#@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
+#@+node:ekr.20051014152256:Fix long-standing bug in import code
+Improve import code so it handles stufff like this from Ipyton/iplib
+
+### This should *not* terminate the function!
+
+    self.LOGHEAD = Itpl(
+"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
+#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
+#log# opts = $self.rc.opts
+#log# args = $self.rc.args
+#log# It is safe to make manual edits below here.
+#log#-----------------------------------------------------------------------
+""")
+
+- Handle blanks better in imports:
+    - Add tab_width keyword arg to import command.
+    - Convert tabs to blanks if tab width < 0.
+- Ignore position of blank lines wrt sentinels.
+- Ignore (optionally?) underindented blank lines.
+- Use pyclbr to parse Python imports?
+#@nonl
+#@+node:ekr.20040930075711:Handle underindented lines
+@nocolor
+
+Leo can't represent some files using nodes!
+
+I call this the "underindented blank line" problem.
+
+Example:
+
+@color
+
+class aClass:
+    def spam(): pass
+# comment line
+    def eggs(): pass
+    
+@nocolor
+
+Leo's import code can't handle this:
+    
+- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
+
+- Having the comment line stop the scanning of aClass is even worse.
+
+- This usually shows up with an unindented blank line instead of the comment line.
+#@nonl
+#@-node:ekr.20040930075711:Handle underindented lines
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20051014152256:Fix long-standing bug in import code
+#@+node:ekr.20060107082929:Fix problem reporting indentation errors
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=3510448
+By: ktenney
+
+Howdy,
+
+I'm executing a script in a Leo node which has
+an indentation error. I get the following report,
+which doesn't help locate the error.
+
+Pardon me if this is well known issue, I don't
+remember discussion of it.
+
+Thanks,
+Kent
+
+################################################
+exception executing script
+Traceback (most recent call last):
+  File "C:\python24\lib\site-packages\leo\src\leoCommands.py", line 1277, in
+executeScript
+    exec script in d
+IndentationError: unindent does not match any outer indentation level (line
+103)
+--------------------
+  line 1276:                     # g.trace(script)
+* line 1277:                     exec script in d
+  line 1278:                     if not script1 and not silent:
+  line 1279:                         g.es("end of script",color="purple")
+
+#@-node:ekr.20060107082929:Fix problem reporting indentation errors
+#@-node:ekr.20060227163215:Bugs (minor)
+#@+node:ekr.20060214072931:Improve unit testing
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3575014
+By: ktenney
+
+> it seems my Leo file must have a @button Unit Test  
+
+Good point. I'll add a run-unit-test command soon.
+
+> the @test output goes to the console.
+
+It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
+
+@bool unit_test_output_to_log_pane = True
+#@nonl
+#@-node:ekr.20060214072931:Improve unit testing
 #@+node:ekr.20060122185507:New commands
 #@+node:ekr.20060210140415.1:Others
 #@+node:ekr.20060209105218.2:contract-all-except-present-tree
@@ -2672,6 +2791,23 @@ def defineCmdsMenuSpellCheckTable (self):
 #@-node:ekr.20051121070552:Finish Cmds menu
 #@-node:ekr.20060122185507:New commands
 #@+node:ekr.20060206104841:New features
+#@+node:ekr.20060213151918:Add baloons
+#@+node:ekr.20060212125650:createBalloon
+def createBalloon (tab,sv):
+
+    'Create a balloon for a widget.' ''
+
+    balloon = Pmw.Balloon(tab,initwait=100)
+    balloon.bind(tab,'')
+    hull = balloon.component('hull')
+    def blockExpose (event):
+        if sv.get() == '':
+             hull.withdraw()
+    hull.bind('<Expose>',blockExpose,'+')
+    balloon._label.configure(textvariable=sv)
+#@nonl
+#@-node:ekr.20060212125650:createBalloon
+#@-node:ekr.20060213151918:Add baloons
 #@+node:ekr.20060116083043.1:Add context-menus on nodes or text
 #@-node:ekr.20060116083043.1:Add context-menus on nodes or text
 #@+node:ekr.20060122184114:Support the exectution of a command when entering a mode
@@ -3033,148 +3169,6 @@ c.insertHeadlineTime uses the edit widget.  It shouldn't.
 #@-node:ekr.20060122184800:Later
 #@-node:ekr.20060219172147:To do 4.4
 #@+node:ekr.20060116073229:To do 4.4.1
-#@+node:ekr.20060116074450.1:Bugs
-# These are minor
-#@nonl
-#@+node:ekr.20051104152338:Fix bug in Remove Sentinels command
-#@+node:ekr.20051104152338.1:Report
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3413805
-By: nobody
-
-I thought this might be for 4.4a2, but I see the same effect w/ 
-Leo 4.3.3, build  1.282 , September 17, 2005
-Python 2.3.5, Tk 8.4.7, win32
-
-I haven't used Leo for code, but just started to try to re-organize some Perl
-I inherited.
-
-Leo apears to remove sentinels, AND preceding newlines, so the effect is something
-like this:
-
-.... some code....
-
-   next line;
-}
-#@verbatim
-#@ leo sentinel here...
-#
-
-    If  ( something ) {
-      more code;
-......
-
-becomes:
-
-.... some code....
-
-   next line;
-} If  ( something ) {
-      more code;
-......
-
-Now, that may be annoying, but mildly so - it still runs.
-When this:
-
-#
-#@verbatim
-#@ sentinel
-if () {
-
-turns to this:
-
-# if() {
-
-code just breaks.
-#@nonl
-#@-node:ekr.20051104152338.1:Report
-#@-node:ekr.20051104152338:Fix bug in Remove Sentinels command
-#@+node:ekr.20051014152256:Fix long-standing bug in import code
-Improve import code so it handles stufff like this from Ipyton/iplib
-
-### This should *not* terminate the function!
-
-    self.LOGHEAD = Itpl(
-"""#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
-#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW
-#log# opts = $self.rc.opts
-#log# args = $self.rc.args
-#log# It is safe to make manual edits below here.
-#log#-----------------------------------------------------------------------
-""")
-
-- Handle blanks better in imports:
-    - Add tab_width keyword arg to import command.
-    - Convert tabs to blanks if tab width < 0.
-- Ignore position of blank lines wrt sentinels.
-- Ignore (optionally?) underindented blank lines.
-- Use pyclbr to parse Python imports?
-#@nonl
-#@+node:ekr.20040930075711:Handle underindented lines
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "underindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code puts the comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
-#@nonl
-#@-node:ekr.20040930075711:Handle underindented lines
-#@+node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20040722132104:Write script to report underindented lines
-#@-node:ekr.20051014152256:Fix long-standing bug in import code
-#@+node:ekr.20060107082929:Fix problem reporting indentation errors
-@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=3510448
-By: ktenney
-
-Howdy,
-
-I'm executing a script in a Leo node which has
-an indentation error. I get the following report,
-which doesn't help locate the error.
-
-Pardon me if this is well known issue, I don't
-remember discussion of it.
-
-Thanks,
-Kent
-
-################################################
-exception executing script
-Traceback (most recent call last):
-  File "C:\python24\lib\site-packages\leo\src\leoCommands.py", line 1277, in
-executeScript
-    exec script in d
-IndentationError: unindent does not match any outer indentation level (line
-103)
---------------------
-  line 1276:                     # g.trace(script)
-* line 1277:                     exec script in d
-  line 1278:                     if not script1 and not silent:
-  line 1279:                         g.es("end of script",color="purple")
-
-#@-node:ekr.20060107082929:Fix problem reporting indentation errors
-#@-node:ekr.20060116074450.1:Bugs
 #@+node:ekr.20060116073938.2:Other
 #@+node:ekr.20060110102039:--script option
 @nocolor

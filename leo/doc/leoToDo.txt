@@ -2,14 +2,49 @@
 #@+node:ekr.20040117181936:@thin ../doc/leoToDo.txt
 #@+all
 #@+node:ekr.20060226131603:To do 4.4b3
-#@+node:ekr.20060227133940:Post re breaking @ref links
-#@-node:ekr.20060227133940:Post re breaking @ref links
+#@+node:ekr.20060227163504:First
 #@+node:ekr.20060227123644:There are still problems with focus: remove the optimizations
 @ It's much better to call g.app.gui.set_focus a few extra times than to mess up the focus!
 
 - Make c.invalidateFocus a do-nothing method.
 #@nonl
 #@-node:ekr.20060227123644:There are still problems with focus: remove the optimizations
+#@+node:ekr.20060227133940:Post re breaking @ref links
+#@-node:ekr.20060227133940:Post re breaking @ref links
+#@+node:ekr.20060227124057:Lua
+#@+node:ekr.20060227120635:Lua patch
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3572598
+By: davidmcnab
+
+I have added support to Leo for the Lua programming language (www.lua.org).
+
+A patch, against Leo 4.4 beta 1, build  1.375, is up at:
+http://www.freenet.org.nz/misc/leo-with-lua.patch.gz
+
+Patch should be executed with '-p1' inside the leo 'src' directory.
+
+Summary: support for importing Lua files; support for Lua comments and keywords;
+no auto-detect of Lua function definitions or classes (because Lua function/class
+idioms vary); no support for Lua v5+ metamethods.
+
+Implementation method - I loaded LeoPy.leo, searched the whole outline for 'java',
+and added lua counterparts throughout, including a Lua comment scanner.
+#@nonl
+#@-node:ekr.20060227120635:Lua patch
+#@-node:ekr.20060227124057:Lua
+#@+node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+Having to define dummy methods is getting odious.
+#@nonl
+#@-node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+#@+node:ekr.20060227163911:Autocompleter options & directives
+- enable_autocomplete_in_nocolor = False
+
+- @noautocomplete.
+#@nonl
+#@-node:ekr.20060227163911:Autocompleter options & directives
+#@-node:ekr.20060227163504:First
+#@+node:ekr.20060227163504.1:Bugs
 #@+node:ekr.20060227125713:Fix colorizer problems
 @nocolor
 http://sourceforge.net/forum/message.php?msg_id=3585710
@@ -44,6 +79,385 @@ I know its a tradeoff of constant colorizing runs vrs incremental update, its
 not technically a new problem, but this seems way buggier.
 #@nonl
 #@-node:ekr.20060227125713:Fix colorizer problems
+#@+node:ekr.20060213094300:Fix problems with open with
+#@+node:ekr.20060213145539:The causes
+@nocolor
+
+1.  Both the vim and xemacs plugins require that open_with plugin be enabled.
+    I changed the docstrings for each.
+
+2.  The open_with plugin now explicitly calls g.enableIdleTimeHook.
+    That is, the idle time hook is no longer enabled by default.
+   
+These were easy fixes to make.  A similar fix should be done for files opened from the Open With menu, but it's too late to do that for b2.
+#@nonl
+#@-node:ekr.20060213145539:The causes
+#@+node:ekr.20060213144352:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3573148
+By: yarkot
+
+With the "latest" CVS snapshot. Do this:
+
+[] Open LeoDocs.leo from the latest workspace;
+[] Expand node "What's new in Leo 4.4" (I'll refer to this as the "parent");
+[] Dbl-click parent (VIM opens text; text is single line: "@nocolor");
+[] Add a second "@nocolor" line; write and save from VIM;
+[] Leo view does not show line;
+[] re-open w/ vim - vim shows new line;
+
+[] Save;  add more text;  shows w/ vim, not in Leo; Apparently doesn't get save.
+You can add a line in Leo, "This is a test", modify it in vim - "This was a
+test", save vim, save Leo - close leo, re-open leo - the vim changes never got
+saved.
+
+Ok  - that's one.
+
+Here's the second (same file, node, fresh session):
+
+[] Open parent w/ vim (dbl-clk); opens ok;
+[] open child "New commands not in legacy Leo" w/ vim; opens ok.
+[] FAILS:  try to open first child: "Minibuffer-oriented find commands" - vim
+doesn't open, status line flashes node name (once for each click it looks like),
+and console window shows this:
+
+open_in_vim: {'p': <pos 20987888 lvl: 1 [0] New commands not in legacy Leo>,
+'c'
+: Commander 25144936: u'C:\\Workspace\\Leo\\leo\\doc\\LeoDocs.leo', 'event':
+<Tk
+inter.Event instance at 0x0132BE90>, 'v': <pos 20987888 lvl: 1 [0] New commands
+not in legacy Leo>}
+#@nonl
+#@-node:ekr.20060213144352:Report
+#@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:EKR.20040602125018:enableIdleTimeHook
+@ Enables the "idle" hook.
+After enableIdleTimeHook is called, Leo will call the "idle" hook
+approximately every g.idleTimeDelay milliseconds.
+@c
+
+def enableIdleTimeHook(idleTimeDelay=100):
+
+    if not g.app.idleTimeHook:
+        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
+        # Start idle-time processing only after the first idle-time event.
+        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+        
+    # 1/4/05: Always update these.
+    g.app.idleTimeHook = True
+    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
+#@nonl
+#@-node:EKR.20040602125018:enableIdleTimeHook
+#@+node:EKR.20040602125018.1:disableIdleTimeHook
+# Disables the "idle" hook.
+def disableIdleTimeHook():
+    
+    g.app.idleTimeHook = False
+#@nonl
+#@-node:EKR.20040602125018.1:disableIdleTimeHook
+#@+node:EKR.20040602125018.2:idleTimeHookHandler
+# An internal routine used to dispatch the "idle" hook.
+trace_count = 0
+
+def idleTimeHookHandler(*args,**keys):
+    
+    __pychecker__ = '--no-argsused' # args & keys not used.
+    
+    if 0: # Do not use g.trace here!
+        global trace_count ; trace_count += 1
+        if trace_count % 10 == 0:
+            for w in g.app.windowList:
+                c = w.c
+                print "idleTimeHookHandler",trace_count,c.shortFileName()
+
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed: return
+    
+    for w in g.app.windowList:
+        c = w.c
+        # Do NOT compute c.currentPosition.
+        # This would be a MAJOR leak of positions.
+        g.doHook("idle",c=c)
+
+    # Requeue this routine after g.app.idleTimeDelay msec.
+    # (This delay is set by g.enableIdleTimeHook.)
+    # Faster requeues overload the system.
+    if g.app.idleTimeHook:
+        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+    else:
+        g.app.afterHandler = None
+#@nonl
+#@-node:EKR.20040602125018.2:idleTimeHookHandler
+#@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:ekr.20031218072017.2823:openWith and allies
+def openWith(self,event=None,data=None):
+
+    """This routine handles the items in the Open With... menu.
+
+    These items can only be created by createOpenWithMenuFromTable().
+    Typically this would be done from the "open2" hook.
+    
+    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+    using a list, e.g.:
+        
+    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+    """
+    
+    c = self ; p = c.currentPosition()
+    n = data and len(data) or 0
+    if n != 3:
+        g.trace('bad data, length must be 3, got %d' % n)
+        return
+    try:
+        openType,arg,ext=data
+        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
+            << set ext based on the present language >>
+            << create or reopen temp file, testing for conflicting changes >>
+            << execute a command to open path in external editor >>
+        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+    except Exception:
+        g.es("unexpected exception in c.openWith")
+        g.es_exception()
+
+    return "break"
+#@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
+if not ext:
+    theDict = g.scanDirectives(c)
+    language = theDict.get("language")
+    ext = g.app.language_extension_dict.get(language)
+    # print language,ext
+    if ext == None:
+        ext = "txt"
+    
+if ext[0] != ".":
+    ext = "."+ext
+    
+# print "ext",ext
+#@nonl
+#@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
+#@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+theDict = None ; path = None
+<< set dict and path if a temp file already refers to p.v.t >>
+if path:
+    << create or recreate temp file as needed >>
+else:
+    path = c.createOpenWithTempFile(p,ext)
+
+if not path:
+    return # An error has occured.
+#@nonl
+#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+searchPath = c.openWithTempFilePath(p,ext)
+
+if g.os_path_exists(searchPath):
+    for theDict in g.app.openWithFiles:
+        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
+            path = searchPath
+            break
+#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+#@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+@ We test for changes in both p and the temp file:
+
+- If only p's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = theDict.get("encoding")
+old_body = theDict.get("body")
+new_body = p.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
+
+old_time = theDict.get("time")
+try:
+    new_time = g.os_path_getmtime(path)
+except:
+    new_time = None
+    
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+    << Raise dialog about conflict and set result >>
+    if result == "cancel": return
+    rewrite = result == "outline"
+else:
+    rewrite = body_changed
+        
+if rewrite:
+    path = c.createOpenWithTempFile(p,ext)
+else:
+    g.es("reopening: " + g.shortFileName(path),color="blue")
+#@nonl
+#@+node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+message = (
+    "Conflicting changes in outline and temp file\n\n" +
+    "Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(c,
+    "Conflict!", message,
+    yesMessage = "Outline",
+    noMessage = "File",
+    defaultButton = "Cancel")
+#@nonl
+#@-node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+#@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+#@-node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+#@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+try:
+    if arg == None: arg = ""
+    shortPath = path # g.shortFileName(path)
+    if openType == "os.system":
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
+    elif openType == "os.startfile":
+        command = "os.startfile(%s)" % (arg+shortPath)
+        os.startfile(arg+path)
+    elif openType == "exec":
+        command = "exec(%s)" % (arg+shortPath)
+        exec arg+path in {}
+    elif openType == "os.spawnl":
+        filename = g.os_path_basename(arg)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
+        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+    elif openType == "os.spawnv":
+        filename = os.path.basename(arg[0]) 
+        vtuple = arg[1:]
+        vtuple.insert(0, filename)
+            # add the name of the program as the first argument.
+            # Change suggested by Jim Sizelove.
+        vtuple.append(path)
+        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+    # This clause by Jim Sizelove.
+    elif openType == "subprocess.Popen":
+        if isinstance(arg, basestring):
+            vtuple = arg + " " + path
+        elif isinstance(arg, (list, tuple)):
+            vtuple = arg[:]
+            vtuple.append(path)
+        command = "subprocess.Popen(%s)" % repr(vtuple)
+        if subprocess:
+            subprocess.Popen(vtuple)
+        else:
+            g.grace('Can not import subprocess.  Skipping: "%s"' % command)
+    else:
+        command="bad command:"+str(openType)
+        g.trace(command)
+except Exception:
+    g.es("exception executing: "+command)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+#@+node:ekr.20031218072017.2830:createOpenWithTempFile
+def createOpenWithTempFile (self,p,ext):
+    
+    c = self
+    path = c.openWithTempFilePath(p,ext)
+    try:
+        if g.os_path_exists(path):
+            g.es("recreating:  " + g.shortFileName(path),color="red")
+        else:
+            g.es("creating:  " + g.shortFileName(path),color="blue")
+        theFile = open(path,"w")
+        # Convert s to whatever encoding is in effect.
+        s = p.bodyString()
+        theDict = g.scanDirectives(c,p=p)
+        encoding = theDict.get("encoding",None)
+        if encoding == None:
+            encoding = c.config.default_derived_file_encoding
+        s = g.toEncodedString(s,encoding,reportErrors=True) 
+        theFile.write(s)
+        theFile.flush()
+        theFile.close()
+        try:    time = g.os_path_getmtime(path)
+        except: time = None
+        # g.es("time: " + str(time))
+        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+        theDict = {
+            "body":s, "c":c, "encoding":encoding,
+            "f":theFile, "path":path, "time":time,
+            "p":p, "v":p.v }
+        << remove previous entry from app.openWithFiles if it exists >>
+        g.app.openWithFiles.append(theDict)
+        return path
+    except:
+        if theFile:
+            theFile.close()
+        theFile = None
+        g.es("exception creating temp file",color="red")
+        g.es_exception()
+        return None
+#@nonl
+#@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+for d in g.app.openWithFiles[:]:
+    p2 = d.get("p")
+    if p.v.t == p2.v.t:
+        # print "removing previous entry in g.app.openWithFiles for",p.headString()
+        g.app.openWithFiles.remove(d)
+#@nonl
+#@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+#@-node:ekr.20031218072017.2830:createOpenWithTempFile
+#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
+def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+    
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(g.os_path_abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path
+#@nonl
+#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
+#@-node:ekr.20031218072017.2823:openWith and allies
+#@-node:ekr.20060213094300:Fix problems with open with
+#@+node:ekr.20060211184834:Review all commands in leoEditCommands.py
+Any command that alters text should call begin/endCommand.
+#@nonl
+#@+node:ekr.20060122185244.2:Fix unindent command
+# unindent-region should work in all panes.
+#@nonl
+#@-node:ekr.20060122185244.2:Fix unindent command
+#@-node:ekr.20060211184834:Review all commands in leoEditCommands.py
+#@-node:ekr.20060227163504.1:Bugs
+#@+node:ekr.20060227163504.3:Important
 #@+node:ekr.20060211100150:Fix chapters plugin
 #@+node:ekr.20051217175058:Add commands
 show-chapters
@@ -2834,407 +3248,16 @@ Use docstrings as the help message.
 #@+node:ekr.20060214140221:update-settings-file command
 #@-node:ekr.20060214140221:update-settings-file command
 #@-node:ekr.20060210140415:Most important new commands
-#@+node:ekr.20060213094300:Fix problems with open with
-#@+node:ekr.20060213145539:The causes
-@nocolor
-
-1.  Both the vim and xemacs plugins require that open_with plugin be enabled.
-    I changed the docstrings for each.
-
-2.  The open_with plugin now explicitly calls g.enableIdleTimeHook.
-    That is, the idle time hook is no longer enabled by default.
-   
-These were easy fixes to make.  A similar fix should be done for files opened from the Open With menu, but it's too late to do that for b2.
-#@nonl
-#@-node:ekr.20060213145539:The causes
-#@+node:ekr.20060213144352:Report
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3573148
-By: yarkot
-
-With the "latest" CVS snapshot. Do this:
-
-[] Open LeoDocs.leo from the latest workspace;
-[] Expand node "What's new in Leo 4.4" (I'll refer to this as the "parent");
-[] Dbl-click parent (VIM opens text; text is single line: "@nocolor");
-[] Add a second "@nocolor" line; write and save from VIM;
-[] Leo view does not show line;
-[] re-open w/ vim - vim shows new line;
-
-[] Save;  add more text;  shows w/ vim, not in Leo; Apparently doesn't get save.
-You can add a line in Leo, "This is a test", modify it in vim - "This was a
-test", save vim, save Leo - close leo, re-open leo - the vim changes never got
-saved.
-
-Ok  - that's one.
-
-Here's the second (same file, node, fresh session):
-
-[] Open parent w/ vim (dbl-clk); opens ok;
-[] open child "New commands not in legacy Leo" w/ vim; opens ok.
-[] FAILS:  try to open first child: "Minibuffer-oriented find commands" - vim
-doesn't open, status line flashes node name (once for each click it looks like),
-and console window shows this:
-
-open_in_vim: {'p': <pos 20987888 lvl: 1 [0] New commands not in legacy Leo>,
-'c'
-: Commander 25144936: u'C:\\Workspace\\Leo\\leo\\doc\\LeoDocs.leo', 'event':
-<Tk
-inter.Event instance at 0x0132BE90>, 'v': <pos 20987888 lvl: 1 [0] New commands
-not in legacy Leo>}
-#@nonl
-#@-node:ekr.20060213144352:Report
-#@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
-#@+node:EKR.20040602125018:enableIdleTimeHook
-@ Enables the "idle" hook.
-After enableIdleTimeHook is called, Leo will call the "idle" hook
-approximately every g.idleTimeDelay milliseconds.
-@c
-
-def enableIdleTimeHook(idleTimeDelay=100):
-
-    if not g.app.idleTimeHook:
-        # g.trace('start idle-time hook: %d msec.' % idleTimeDelay)
-        # Start idle-time processing only after the first idle-time event.
-        g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
-        g.app.afterHandler = g.idleTimeHookHandler
-        
-    # 1/4/05: Always update these.
-    g.app.idleTimeHook = True
-    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
-#@nonl
-#@-node:EKR.20040602125018:enableIdleTimeHook
-#@+node:EKR.20040602125018.1:disableIdleTimeHook
-# Disables the "idle" hook.
-def disableIdleTimeHook():
-    
-    g.app.idleTimeHook = False
-#@nonl
-#@-node:EKR.20040602125018.1:disableIdleTimeHook
-#@+node:EKR.20040602125018.2:idleTimeHookHandler
-# An internal routine used to dispatch the "idle" hook.
-trace_count = 0
-
-def idleTimeHookHandler(*args,**keys):
-    
-    __pychecker__ = '--no-argsused' # args & keys not used.
-    
-    if 0: # Do not use g.trace here!
-        global trace_count ; trace_count += 1
-        if trace_count % 10 == 0:
-            for w in g.app.windowList:
-                c = w.c
-                print "idleTimeHookHandler",trace_count,c.shortFileName()
-
-    # New for Python 2.3: may be called during shutdown.
-    if g.app.killed: return
-    
-    for w in g.app.windowList:
-        c = w.c
-        # Do NOT compute c.currentPosition.
-        # This would be a MAJOR leak of positions.
-        g.doHook("idle",c=c)
-
-    # Requeue this routine after g.app.idleTimeDelay msec.
-    # (This delay is set by g.enableIdleTimeHook.)
-    # Faster requeues overload the system.
-    if g.app.idleTimeHook:
-        g.app.gui.setIdleTimeHookAfterDelay(g.idleTimeHookHandler)
-        g.app.afterHandler = g.idleTimeHookHandler
-    else:
-        g.app.afterHandler = None
-#@nonl
-#@-node:EKR.20040602125018.2:idleTimeHookHandler
-#@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
-#@+node:ekr.20031218072017.2823:openWith and allies
-def openWith(self,event=None,data=None):
-
-    """This routine handles the items in the Open With... menu.
-
-    These items can only be created by createOpenWithMenuFromTable().
-    Typically this would be done from the "open2" hook.
-    
-    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
-    using a list, e.g.:
-        
-    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
-    """
-    
-    c = self ; p = c.currentPosition()
-    n = data and len(data) or 0
-    if n != 3:
-        g.trace('bad data, length must be 3, got %d' % n)
-        return
-    try:
-        openType,arg,ext=data
-        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
-            << set ext based on the present language >>
-            << create or reopen temp file, testing for conflicting changes >>
-            << execute a command to open path in external editor >>
-        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
-    except Exception:
-        g.es("unexpected exception in c.openWith")
-        g.es_exception()
-
-    return "break"
-#@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
-if not ext:
-    theDict = g.scanDirectives(c)
-    language = theDict.get("language")
-    ext = g.app.language_extension_dict.get(language)
-    # print language,ext
-    if ext == None:
-        ext = "txt"
-    
-if ext[0] != ".":
-    ext = "."+ext
-    
-# print "ext",ext
-#@nonl
-#@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
-#@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
-theDict = None ; path = None
-<< set dict and path if a temp file already refers to p.v.t >>
-if path:
-    << create or recreate temp file as needed >>
-else:
-    path = c.createOpenWithTempFile(p,ext)
-
-if not path:
-    return # An error has occured.
-#@nonl
-#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
-searchPath = c.openWithTempFilePath(p,ext)
-
-if g.os_path_exists(searchPath):
-    for theDict in g.app.openWithFiles:
-        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
-            path = searchPath
-            break
-#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
-#@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
-@ We test for changes in both p and the temp file:
-
-- If only p's body text has changed, we recreate the temp file.
-- If only the temp file has changed, do nothing here.
-- If both have changed we must prompt the user to see which code to use.
-@c
-
-encoding = theDict.get("encoding")
-old_body = theDict.get("body")
-new_body = p.bodyString()
-new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
-
-old_time = theDict.get("time")
-try:
-    new_time = g.os_path_getmtime(path)
-except:
-    new_time = None
-    
-body_changed = old_body != new_body
-temp_changed = old_time != new_time
-
-if body_changed and temp_changed:
-    << Raise dialog about conflict and set result >>
-    if result == "cancel": return
-    rewrite = result == "outline"
-else:
-    rewrite = body_changed
-        
-if rewrite:
-    path = c.createOpenWithTempFile(p,ext)
-else:
-    g.es("reopening: " + g.shortFileName(path),color="blue")
-#@nonl
-#@+node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
-message = (
-    "Conflicting changes in outline and temp file\n\n" +
-    "Do you want to use the code in the outline or the temp file?\n\n")
-
-result = g.app.gui.runAskYesNoCancelDialog(c,
-    "Conflict!", message,
-    yesMessage = "Outline",
-    noMessage = "File",
-    defaultButton = "Cancel")
-#@nonl
-#@-node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
-#@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
-#@-node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
-#@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
-try:
-    if arg == None: arg = ""
-    shortPath = path # g.shortFileName(path)
-    if openType == "os.system":
-        if 1:
-            # This works, _provided_ that arg does not contain blanks.  Sheesh.
-            command = 'os.system(%s)' % (arg+shortPath)
-            os.system(arg+shortPath)
-        else:
-            # XP does not like this format!
-            command = 'os.system("%s" "%s")' % (arg,shortPath)
-            os.system('"%s" "%s"' % (arg,shortPath))
-    elif openType == "os.startfile":
-        command = "os.startfile(%s)" % (arg+shortPath)
-        os.startfile(arg+path)
-    elif openType == "exec":
-        command = "exec(%s)" % (arg+shortPath)
-        exec arg+path in {}
-    elif openType == "os.spawnl":
-        filename = g.os_path_basename(arg)
-        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
-        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
-    elif openType == "os.spawnv":
-        filename = os.path.basename(arg[0]) 
-        vtuple = arg[1:]
-        vtuple.insert(0, filename)
-            # add the name of the program as the first argument.
-            # Change suggested by Jim Sizelove.
-        vtuple.append(path)
-        command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-        apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
-    # This clause by Jim Sizelove.
-    elif openType == "subprocess.Popen":
-        if isinstance(arg, basestring):
-            vtuple = arg + " " + path
-        elif isinstance(arg, (list, tuple)):
-            vtuple = arg[:]
-            vtuple.append(path)
-        command = "subprocess.Popen(%s)" % repr(vtuple)
-        if subprocess:
-            subprocess.Popen(vtuple)
-        else:
-            g.grace('Can not import subprocess.  Skipping: "%s"' % command)
-    else:
-        command="bad command:"+str(openType)
-        g.trace(command)
-except Exception:
-    g.es("exception executing: "+command)
-    g.es_exception()
-#@nonl
-#@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
-#@+node:ekr.20031218072017.2830:createOpenWithTempFile
-def createOpenWithTempFile (self,p,ext):
-    
-    c = self
-    path = c.openWithTempFilePath(p,ext)
-    try:
-        if g.os_path_exists(path):
-            g.es("recreating:  " + g.shortFileName(path),color="red")
-        else:
-            g.es("creating:  " + g.shortFileName(path),color="blue")
-        theFile = open(path,"w")
-        # Convert s to whatever encoding is in effect.
-        s = p.bodyString()
-        theDict = g.scanDirectives(c,p=p)
-        encoding = theDict.get("encoding",None)
-        if encoding == None:
-            encoding = c.config.default_derived_file_encoding
-        s = g.toEncodedString(s,encoding,reportErrors=True) 
-        theFile.write(s)
-        theFile.flush()
-        theFile.close()
-        try:    time = g.os_path_getmtime(path)
-        except: time = None
-        # g.es("time: " + str(time))
-        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
-        theDict = {
-            "body":s, "c":c, "encoding":encoding,
-            "f":theFile, "path":path, "time":time,
-            "p":p, "v":p.v }
-        << remove previous entry from app.openWithFiles if it exists >>
-        g.app.openWithFiles.append(theDict)
-        return path
-    except:
-        if theFile:
-            theFile.close()
-        theFile = None
-        g.es("exception creating temp file",color="red")
-        g.es_exception()
-        return None
-#@nonl
-#@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
-for d in g.app.openWithFiles[:]:
-    p2 = d.get("p")
-    if p.v.t == p2.v.t:
-        # print "removing previous entry in g.app.openWithFiles for",p.headString()
-        g.app.openWithFiles.remove(d)
-#@nonl
-#@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
-#@-node:ekr.20031218072017.2830:createOpenWithTempFile
-#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
-def openWithTempFilePath (self,p,ext):
-    
-    """Return the path to the temp file corresponding to p and ext."""
-    
-    if 0: # new code: similar to code in mod_tempfname.py plugin.
-        try:
-            # At least in Windows, user name may contain special characters
-            # which would require escaping quotes.
-            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
-        except:
-            leoTempDir = "LeoTemp"
-            g.es("Could not retrieve your user name.")
-            g.es("Temporary files will be stored in: %s" % leoTempDir)
-        
-        td = os.path.join(g.os_path_abspath(tempfile.gettempdir()),leoTempDir)
-        if not os.path.exists(td):
-            os.mkdir(td)
-        
-        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
-        path = os.path.join(td,name)
-        return path
-    else: # Original code.
-        name = "LeoTemp_%s_%s%s" % (
-            str(id(p.v.t)),
-            g.sanitize_filename(p.headString()),
-            ext)
-    
-        name = g.toUnicode(name,g.app.tkEncoding)
-    
-        if 1:
-            td = g.os_path_abspath(tempfile.gettempdir())
-        else:
-            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
-    
-        path = g.os_path_join(td,name)
-    
-        return path
-#@nonl
-#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
-#@-node:ekr.20031218072017.2823:openWith and allies
-#@-node:ekr.20060213094300:Fix problems with open with
-#@+node:ekr.20060211184834:Review all commands in leoEditCommands.py
-Any command that alters text should call begin/endCommand.
-#@nonl
-#@+node:ekr.20060122185244.2:Fix unindent command
-# unindent-region should work in all panes.
-#@nonl
-#@-node:ekr.20060122185244.2:Fix unindent command
-#@-node:ekr.20060211184834:Review all commands in leoEditCommands.py
 #@+node:ekr.20060116173818:*** Fix vampire nodes
 #@-node:ekr.20060116173818:*** Fix vampire nodes
-#@+node:ekr.20060227124057:Lua
-#@+node:ekr.20060227120635:Lua patch
+#@-node:ekr.20060227163504.3:Important
+#@+node:ekr.20060227163911.1:Leo's web site
 @nocolor
-http://sourceforge.net/forum/message.php?msg_id=3572598
-By: davidmcnab
 
-I have added support to Leo for the Lua programming language (www.lua.org).
-
-A patch, against Leo 4.4 beta 1, build  1.375, is up at:
-http://www.freenet.org.nz/misc/leo-with-lua.patch.gz
-
-Patch should be executed with '-p1' inside the leo 'src' directory.
-
-Summary: support for importing Lua files; support for Lua comments and keywords;
-no auto-detect of Lua function definitions or classes (because Lua function/class
-idioms vary); no support for Lua v5+ metamethods.
-
-Implementation method - I loaded LeoPy.leo, searched the whole outline for 'java',
-and added lua counterparts throughout, including a Lua comment scanner.
+- Put more screen shots on Leo's web site.
+- Put complete slide show on Leo's web site.
 #@nonl
-#@-node:ekr.20060227120635:Lua patch
-#@-node:ekr.20060227124057:Lua
+#@-node:ekr.20060227163911.1:Leo's web site
 #@-node:ekr.20060226131603:To do 4.4b3
 #@-all
 #@nonl
