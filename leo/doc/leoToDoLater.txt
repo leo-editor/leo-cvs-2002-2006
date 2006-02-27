@@ -3109,34 +3109,15 @@ def printGcRefs (message=''):
 #@-node:ekr.20060127100926:(Improved gc stats)
 #@-node:ekr.20060130151453:Find leaks (may be fixed)
 #@-node:ekr.20060209104733:Urgent and big (overdue)
-#@+node:ekr.20060219172147:To do 4.4
-#@+node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
-Having to define dummy methods is getting odious.
-#@nonl
-#@-node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+#@+node:ekr.20060226131603:To do 4.4b3
+#@+node:ekr.20060220155313:Script: update-leo-settings-file
+#@-node:ekr.20060220155313:Script: update-leo-settings-file
 #@+node:ekr.20060122183544:Improve isearch
 @nocolor
 
 - Handle backspace for isearch: keep a stack of previous matches.
 - Allow cross-node isearches.
 #@-node:ekr.20060122183544:Improve isearch
-#@+node:ekr.20060214072931:Improve unit testing
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=3575014
-By: ktenney
-
-> it seems my Leo file must have a @button Unit Test  
-
-Good point. I'll add a run-unit-test command soon.
-
-> the @test output goes to the console.
-
-It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
-
-@bool unit_test_output_to_log_pane = True
-#@nonl
-#@-node:ekr.20060214072931:Improve unit testing
 #@+node:ekr.20060213094300:Fix problems with open with
 #@+node:ekr.20060213145539:The causes
 @nocolor
@@ -3506,6 +3487,31 @@ def openWithTempFilePath (self,p,ext):
 #@-node:ekr.20031218072017.2832:c.openWithTempFilePath
 #@-node:ekr.20031218072017.2823:openWith and allies
 #@-node:ekr.20060213094300:Fix problems with open with
+#@+node:ekr.20060116173818:*** Fix vampire nodes
+#@-node:ekr.20060116173818:*** Fix vampire nodes
+#@-node:ekr.20060226131603:To do 4.4b3
+#@+node:ekr.20060219172147:To do 4.4
+#@+node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+Having to define dummy methods is getting odious.
+#@nonl
+#@-node:ekr.20060209201859.1:Trap AttributeErrors in dummy base classes
+#@+node:ekr.20060214072931:Improve unit testing
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3575014
+By: ktenney
+
+> it seems my Leo file must have a @button Unit Test  
+
+Good point. I'll add a run-unit-test command soon.
+
+> the @test output goes to the console.
+
+It goes to sys.stderr, iirc.  Perhaps run-unit-test should support this setting:
+
+@bool unit_test_output_to_log_pane = True
+#@nonl
+#@-node:ekr.20060214072931:Improve unit testing
 #@+node:ekr.20060211184834:Review all commands in leoEditCommands.py
 Any command that alters text should call begin/endCommand.
 #@nonl
@@ -5244,8 +5250,6 @@ It would be shown in the Find tab.
 #@nonl
 #@-node:ekr.20060206131908.1:set-first-search-node command (indicate it in the find tab)
 #@-node:ekr.20060206104841:New features
-#@+node:ekr.20060116173818:*** Fix vampire nodes
-#@-node:ekr.20060116173818:*** Fix vampire nodes
 #@+node:ekr.20060122184800:Later
 #@+node:ekr.20060117074259:Handle Mac issues
 #@+node:ekr.20060117074259.1:Report

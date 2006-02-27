@@ -197,7 +197,7 @@
 <v t="ekr.20060219120931"><vh>inspect Leo objects (autocompleter)</vh></v>
 <v t="ekr.20060222082236"><vh>call autocompleter class scanner</vh></v>
 </v>
-<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -260,7 +260,6 @@
 </v>
 <v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
 </v>
-<v t="ekr.20060224163737" a="V"><vh>Typing Test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
@@ -4578,7 +4577,5 @@ print scanner.findParentClass(p)</t>
     def f2(self):
         pass</t>
 <t tx="ekr.20060223181815"></t>
-<t tx="ekr.20060224163737">g.app
-</t>
 </tnodes>
 </leo_file>
