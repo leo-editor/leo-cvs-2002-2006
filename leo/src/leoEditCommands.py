@@ -3875,6 +3875,7 @@ class helpCommandsClass (baseEditCommandsClass):
         
         return {
             'help':                     self.help,
+            'apropos-autocompletion':   self.aproposAutocompletion,
             'apropos-bindings':         self.aproposBindings,
             'apropos-find-commands':    self.aproposFindCommands,
         }
@@ -3916,6 +3917,78 @@ class helpCommandsClass (baseEditCommandsClass):
     #@nonl
     #@-node:ekr.20060205165654:test_help
     #@-node:ekr.20051014170754:help
+    #@+node:ekr.20060226131603.1:aproposAutocompletion
+    def aproposAutocompletion (self,event=None):
+        
+        c = self.c ; s = '''
+    This documentation describes both autocompletion and calltips.
+    
+    Typing a period when @language python is in effect starts autocompletion. Typing
+    '(' during autocompletion shows the calltip. Typing Return or Control-g
+    (keyboard-quit) exits autocompletion or calltips.
+    
+    Autocompletion
+        
+    Autocompletion shows what may follow a period in code. For example, after typing
+    g. Leo will show a list of all the global functions in leoGlobals.py.
+    Autocompletion works much like tab completion in the minibuffer. Unlike the
+    minibuffer, the presently selected completion appears directly in the body
+    pane.
+    
+    A leading period brings up 'Autocomplete Modules'. (The period goes away.) You
+    can also get any module by typing its name. If more than 25 items would appear
+    in the Autocompleter tab, Leo shows only the valid starting characters. At this
+    point, typing an exclamation mark shows the complete list. Thereafter, typing
+    further exclamation marks toggles between full and abbreviated modes.
+    
+    If x is a list 'x.!' shows all its elements, and if x is a Python dictionary,
+    'x.!' shows x.keys(). For example, 'sys.modules.!' Again, further exclamation
+    marks toggles between full and abbreviated modes.
+    
+    During autocompletion, typing a question mark shows the docstring for the
+    object. For example: 'g.app?' shows the docstring for g.app. This doesn't work
+    (yet) directly for Python globals, but '__builtin__.f?' does. Example:
+    '__builtin__.pow?' shows the docstring for pow.
+    
+    Autocompletion works in the Find tab; you can use <Tab> to cycle through the
+    choices. The 'Completion' tab appears while you are doing this; the Find tab
+    reappears once the completion is finished.
+    
+    Calltips
+    
+    Calltips appear after you type an open parenthesis in code. Calltips shows the
+    expected arguments to a function or method. Calltips work for any Python
+    function or method, including Python's global function. Examples:
+    
+    a)  'g.toUnicode('  gives 'g.toUnicode(s, encoding, reportErrors=False'
+    b) 'c.widgetWantsFocusNow' gives 'c.widgetWantsFocusNow(w'
+    c) 'reduce(' gives 'reduce(function, sequence[, initial]) -> value'
+    
+    The calltips appear directly in the text and the argument list is highlighted so
+    you can just type to replace it. The calltips appear also in the status line for
+    reference after you have started to replace the args.
+    
+    Options
+    
+    Both autocompletion and calltips are initially enabled or disabled by the
+    enable_autocompleter and enable_calltips settings in leoSettings.leo. You may
+    enable or disable these features at any time with these commands:
+    enable-auto-completer-command, enable-calltips-command,
+    disable-auto-completer-command and disable-calltips-command.
+    '''
+    
+        if not g.app.unitTesting:
+            # Remove indentation from indentation of this function.
+            s = g.adjustTripleString(s,c.tab_width)
+            g.es_print(s)
+    #@nonl
+    #@+node:ekr.20060226132000:test_aproposAutocompletion
+    def test_apropos_bindings (self):
+    
+        c.helpCommands.aproposAutocompletion()
+    #@nonl
+    #@-node:ekr.20060226132000:test_aproposAutocompletion
+    #@-node:ekr.20060226131603.1:aproposAutocompletion
     #@+node:ekr.20060205170335:aproposBindings
     def aproposBindings (self,event=None):
         
