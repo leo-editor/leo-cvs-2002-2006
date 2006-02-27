@@ -24357,7 +24357,7 @@ and data is becoming apparent.</t>
 <t tx="ekr.20060218095651"></t>
 <t tx="ekr.20060227102028">Leo 4.4 alpha 7                                             February 28, 2006
 
-The version fixes some minor problems with Leo 4.4a7 and adds autocompletion
+This version fixes some minor problems with Leo 4.4a6 and adds autocompletion
 and calltips.
 
 Leo is a text editor, data organizer, project manager and much more. See:

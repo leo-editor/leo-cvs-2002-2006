@@ -9,8 +9,8 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
-<v t="ekr.20051020124457"><vh>Disabled buttons</vh>
+<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20051020124457" a="E"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
 <v t="ekr.20050704170739"><vh>@@button Ipython</vh></v>
@@ -194,10 +194,8 @@
 <v t="ekr.20060103102234"><vh>notes</vh></v>
 <v t="ekr.20051214094526"><vh>createFrame</vh></v>
 </v>
-<v t="ekr.20060219120931"><vh>inspect Leo objects (autocompleter)</vh></v>
-<v t="ekr.20060222082236"><vh>call autocompleter class scanner</vh></v>
 </v>
-<v t="ekr.20051104081824" a="V" annotate="7d71002e"><vh>Tests</vh>
+<v t="ekr.20051104081824" annotate="7d71002e"><vh>Tests</vh>
 <v t="ekr.20051108102719"><vh>Test backward search</vh>
 <v t="ekr.20051108102719.1"><vh>a</vh></v>
 <v t="ekr.20051108102719.2"><vh>b</vh></v>
@@ -213,9 +211,7 @@
 <v t="ekr.20051121064026"><vh>@@button indent-relative</vh></v>
 <v t="ekr.20051017093427"><vh>Test of remove-blank-lines</vh></v>
 <v t="ekr.20060122115629"><vh>Edit tests</vh></v>
-<v t="ekr.20060215083254"><vh>Э Test of matchHeadline</vh></v>
 <v t="ekr.20051214100048" annotate="7d71002e"><vh>Recent tests</vh>
-<v t="ekr.20051201153400"><vh>Print Hi</vh></v>
 <v t="ekr.20051209074151"><vh>@read-only findBug.txt</vh></v>
 <v t="ekr.20051209084028"><vh>@view findBug.txt</vh></v>
 <v t="ekr.20060107082808"><vh>Error test</vh>
@@ -243,7 +239,6 @@
 <v t="ekr.20060114164015"><vh>test editing state</vh></v>
 <v t="ekr.20060119121607.5"><vh>tcl show bindings</vh></v>
 <v t="ekr.20060119170038"><vh>python show bindings</vh></v>
-<v t="ekr.20060119110527"><vh>Using bindtags</vh></v>
 </v>
 <v t="ekr.20060216144005"><vh>autocompleter test</vh>
 <v t="ekr.20060216163942"><vh>reverseFindWhitespace</vh></v>
@@ -4016,12 +4011,6 @@ bin\IronPythonConsole c:\prog\leoCVS\leo\test\ironPythonTest.py
 <t tx="ekr.20051130182536.1">@comment REM_</t>
 <t tx="ekr.20051201063427.1">### execute-script = Ctrl-e # Ctrl-e conflicts with end-of-line</t>
 <t tx="ekr.20051201090822"></t>
-<t tx="ekr.20051201153400">before
-
-print    'hi'.
-print    'there'.
-
-after</t>
 <t tx="ekr.20051209074151"></t>
 <t tx="ekr.20051209084028"></t>
 <t tx="ekr.20051214093711">import sys
@@ -4270,24 +4259,6 @@ c.endEditing()
 c.selectPosition(p)
 w = p.edit_widget()
 print name(w),w.cget('state')</t>
-<t tx="ekr.20060119110527">def callback(event):
-    print event.keysym_num,event.state
-
-b = c.frame.body.bodyCtrl
-print b.bindtags()
-
-if 0:
-    aList = list(b.bindtags())
-    tag = 'default-leo-bindings'
-    
-    # Associates the callback with the tag.
-    b.bind_class(tag,'&lt;Key&gt;',callback,'+')
-    aList.insert(0,tag)
-    
-    # The binding will not be active until this statement
-    
-    b.bindtags(tuple(aList)) # Must be a tuple, not a list.
-    print b.bindtags()</t>
 <t tx="ekr.20060119121607">@language tcltk</t>
 <t tx="ekr.20060119121607.1"># To use this script, you must make this a script button, either with the
 # 'Script Button' button or by making this an @button node.
@@ -4317,16 +4288,7 @@ foreach tag [bindtags .t] {
 
 for tag in t.bindtags():
     print '-' * 20, tag
-    print t.bind_class(tag)
-
-# foreach tag [bindtags .t] {
-  # foreach keysym [bind $tag] {
-    # set script [bind $tag $keysym]
-    # puts "event $keysym for tag $tag executes: $script\n"
-  # }
-# }
-# 
-</t>
+    print t.bind_class(tag)</t>
 <t tx="ekr.20060122115629">import sys
 import time
 
@@ -4441,8 +4403,6 @@ g.collectGarbage()</t>
 <t tx="ekr.20060202160656">c.debugCommands.verboseDumpObjects()</t>
 <t tx="ekr.20060202160706">c.debugCommands.dumpNewObjects()</t>
 <t tx="ekr.20060202162051">c.debugCommands.dumpAllObjects()</t>
-<t tx="ekr.20060215083254">print p.matchHeadline('Э')
-print p.matchHeadline('a')</t>
 <t tx="ekr.20060216144005">@others
 
 print '-' * 20
@@ -4476,79 +4436,6 @@ for s in (
             if s[n].isspace()or s[n]=='.':return s[n+1:]
 
     return s </t>
-<t tx="ekr.20060219120931">import inspect
-
-table = (
-    #('leoCommands','Commands'),
-    ('leoNodes','vnode'),
-    ('leoGlobals',None),
-    ('python','list'),
-    ('python','string'),
-    ('python','dict'),
-    # ('leoKeys','keyHandlerClass'),
-)
-
-d = {'dict':{},'int':2,'list':[],'string':''}
-
-print '-' * 40
-for moduleName,className in table:
-    if moduleName.lower() == 'python':
-        o = d.get(className)
-        theObject = o is not None and o.__class__
-        name = className
-    else:
-        module = g.importModule (moduleName,verbose=True)
-        if not module: continue
-        if className:
-            theObject = hasattr(module,className) and getattr(module,className) or None
-            name = className
-        else:
-            theObject = module
-            name = moduleName
-    if not theObject: continue
-    aList = inspect.getmembers(theObject)
-    members = [a + str(type(b)) for a,b in aList if not a.startswith('__')]
-    members.sort()
-    if 0:
-        print ; print len(members),name,'docstrings...\n\n',
-        aList.sort()
-        for a,b in aList:
-            if b.__doc__ and not a.startswith('__') and type(b) != type(''):
-                print ; print '**', a, b.__doc__
-    else:
-        # print name, len(members)
-        print ; print len(members),name,'methods...\n\n',g.listToString(members)
-        
-    
-if 0: # Original code.
-    import leoCommands,leoGlobals,leoKeys,leoNodes,leoUndo
-    table = (
-        #(leoCommands.Commands,'Commands'),
-        #(leoNodes.position,'position'),
-        #(leoNodes.vnode,'vnode'),
-        #(leoNodes.tnode,'tnode'),
-        (leoGlobals,'globals'),
-        #(leoUndo.undoer,'undoer'),
-        (''.__class__,'string'),
-        (leoKeys.keyHandlerClass,'keyHandler'),
-    )
-    
-    print '-' * 40
-    for theObject,name in table:
-        aList = inspect.getmembers(theObject)
-        members = [a + str(type(b)) for a,b in aList if not a.startswith('__')]
-        members.sort()
-        if 0:
-            print ; print len(members),name,'docstrings...\n\n',
-            aList.sort()
-            for a,b in aList:
-                if b.__doc__ and not a.startswith('__') and type(b) != type(''):
-                    print ; print '**', a, b.__doc__
-        else:
-            # print name, len(members)
-            print ; print len(members),name,'methods...\n\n',g.listToString(members)</t>
-<t tx="ekr.20060222082236">scanner = c.k.autoCompleter.classScanner
-print scanner.findParentClass(p)</t>
 <t tx="ekr.20060222140651">class testClass:
     
     '''A class to test the forgiving parser.'''

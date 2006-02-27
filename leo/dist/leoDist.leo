@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1124" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1125" clone_windows="0"/>
 <globals body_outline_ratio="0.714833759591">
-	<global_window_position top="10" left="246" height="862" width="842"/>
+	<global_window_position top="10" left="246" height="862" width="863"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -16,7 +16,7 @@
 <v t="ekr.20050315084922"><vh>@button Spell</vh></v>
 <v t="ekr.20051015172713"><vh>@button Save</vh></v>
 </v>
-<v t="EKR.20040519091259" a="E"><vh>Annoucnements (don't split into lines)</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements (don't split into lines)</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20060213160806"><vh>February 2005</vh></v>
@@ -25,7 +25,8 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20060217073112" a="V"><vh>ANN: Leo 4.4a6</vh></v>
+<v t="ekr.20060227110642"><vh>ANN: Leo 4.4a7</vh></v>
+<v t="ekr.20060217073112"><vh>ANN: Leo 4.4a6</vh></v>
 <v t="ekr.20060215120457"><vh>ANN: Leo 4.4x1</vh></v>
 <v t="ekr.20060213161050"><vh>ANN: Leo 4.4b2</vh></v>
 <v t="ekr.20060116101806"><vh>ANN: Leo 4.4b1</vh></v>
@@ -190,7 +191,7 @@
 </v>
 <v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
+<v t="EKR.20040519090846" a="V"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@asis ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -685,47 +686,26 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.4 alpha 6                                               February 17, 2006
+<t tx="EKR.20040519090846.9">Leo 4.4 alpha 7                                             February 28, 2006
 
-Leo 4.4 b2 was broken on some platforms. Leo 4.4 a6 should fix those problems
-forever. However, only wider distribution will verify that for certain. Besides
-fixing the fatal problems with Leo 4.4b2, this version fixes two minor bugs and
-adds some new settings in leoSettings.leo.
+This version fixes some minor problems with Leo 4.4a6 and adds autocompletion and calltips.
 
 Leo is a text editor, data organizer, project manager and much more. See:
 http://webpages.charter.net/edreamleo/intro.html
 
-What's new in Leo 4.4 a6:
-------------------------
-- Smoother user interface.
-- New commands that support mouseless Leo.
-- Minibuffer search commands provide all features of Leo's legacy search commands.
-- User modes are fully functional; you can create bindings just for the minibuffer.
-- New master key and click handlers and improved allocation of screen widgets.
-
 The highlights of Leo 4.4:
 --------------------------
-- An Emacs-like mini-buffer: you can now execute any command by typing its long
-  name, with tab completion.
-- Many new commands, including cursor and screen movement, basic character, word
-  and paragraph manipulation, and commands to manipulate buffers, the kill ring,
-  regions and rectangles. You can use Leo without using a mouse.
-- Flexible key bindings and input modes. You can emulate the operation of Emacs,
-  Vim, or any other editor.
-- A tabbed log pane. The Find and Spell Check commands now use tabs instead of
-  dialogs, making those commands much easier to use. Plugins or scripts can easily
-  create new tabs. The Completion tab shows possible typing completions. - Dozens
-  of other new features and bug fixes since Leo 4.3.3.
+- An Emacs-like mini-buffer: you can now execute any command by typing its long name, with tab completion.
 
-Coming soon in Leo 4.4:
------------------------
-- A revived chapters plugin.
-- Autocompleter Tab.
-- Improved incremental searches.
+- Many new commands, including cursor and screen movement, basic character, word and paragraph manipulation, and commands to manipulate buffers, the kill ring, regions and rectangles. You can use Leo without using a mouse.
 
-Quote of the month:
--------------------
-"Thanks for a wonderful program – everybody should be using it! It blows the socks off that Java Mind mapping software that won project of the month a while back on sourceforge!" -- Derick van Niekerk.
+- Flexible key bindings and input modes. You can emulate the operation of Emacs, Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of dialogs, making those commands much easier to use. Plugins or scripts can easily create new tabs. The Completion tab shows possible typing completions.
+
+- Autocompletion and calltips.  Autocompletion works much like tab completion.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
 
 Links:
 ------
@@ -4898,6 +4878,41 @@ Coming soon in Leo 4.4:
 - A revived chapters plugin.
 - Autocompleter Tab.
 - Improved incremental searches.
+
+Quote of the month:
+-------------------
+"Thanks for a wonderful program – everybody should be using it! It blows the socks off that Java Mind mapping software that won project of the month a while back on sourceforge!" -- Derick van Niekerk.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html</t>
+<t tx="ekr.20060227110642">[ANN: Leo 4.4a7 released]
+
+Leo 4.4 alpha 7 is now available at:
+http://sourceforge.net/project/showfiles.php?group_id=3458&amp;package_id=29106
+
+This version fixes some minor problems with Leo 4.4a6 and adds autocompletion and calltips.
+
+Leo is a text editor, data organizer, project manager and much more. See:
+http://webpages.charter.net/edreamleo/intro.html
+
+The highlights of Leo 4.4:
+--------------------------
+- An Emacs-like mini-buffer: you can now execute any command by typing its long name, with tab completion.
+
+- Many new commands, including cursor and screen movement, basic character, word and paragraph manipulation, and commands to manipulate buffers, the kill ring, regions and rectangles. You can use Leo without using a mouse.
+
+- Flexible key bindings and input modes. You can emulate the operation of Emacs, Vim, or any other editor.
+
+- A tabbed log pane. The Find and Spell Check commands now use tabs instead of dialogs, making those commands much easier to use. Plugins or scripts can easily create new tabs. The Completion tab shows possible typing completions.
+
+- Autocompletion and calltips.
+
+- Dozens of other new features and bug fixes since Leo 4.3.3.
 
 Quote of the month:
 -------------------

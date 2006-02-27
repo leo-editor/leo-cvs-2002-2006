@@ -15,9 +15,10 @@
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.2"><vh>To do</vh>
-<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="EKR.20040519090151.2" a="V"><vh>To do</vh>
+<v t="ekr.20040117181936" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20060207133601"
+expanded="ekr.20050816165305,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -330,7 +331,7 @@
 <v t="ekr.20060225125519"><vh>Applied rst3 patch from Kent Tenney</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>

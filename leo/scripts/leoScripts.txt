@@ -8498,6 +8498,60 @@ return [expr $x*10]
 #@-node:the actual script
 #@-node:My second tcl scrip, organized with noweb markup
 #@-node:Runniung tcl scripts from the body pane
+#@+node:Run a Lua program
+# http://sourceforge.net/forum/message.php?msg_id=3581176
+# By: e
+
+"""
+run lua program
+work alike for perl too
+
+edit in path to lua if required
+make a script button
+
+
+no fallback for no subprocess
+download from eff.bot.org 
+if you are on python <2.4
+
+added option to pipe script to stdin
+
+todo:
+if your os can fork, use a fork.
+"""
+
+import subprocess as sub
+from dynacommon import stripSentinels
+import sys
+
+if sys.platform[:3] == 'win':
+    ex = 'c:/UTIL/lua.exe'
+else:
+    ex = '/usr/bin/lua'
+
+script = g.getScript(c, p, forcePythonSentinels= False)
+#print script
+
+source = stripSentinels(script)
+#print source
+
+def run_cmd(cmdlst, tostdin=None):
+    ps = sub.Popen(cmdlst, 
+        universal_newlines= True,
+        stdout= sub.PIPE, stderr= sub.PIPE,
+        stdin= sub.PIPE)
+    (outstd, outerr) = ps.communicate(tostdin)
+    return (ps.wait(), outstd, outerr)
+
+# send complete script on stdin
+# many comandline programs have this same option.
+ret,sto,sde = run_cmd([ex, '-'], source)
+
+if not ret:
+    print sto
+if sde: print sde
+#@nonl
+#@-node:Run a Lua program
 #@+node:Script to import a file
 # Note: the source files contain mixed tabs/blanks, and that's very hard for Leo's imports to handle.
 
