@@ -1354,6 +1354,24 @@ TypeError: findButtonCallback() takes at least 1 argument (0 given)
 #@+node:ekr.20060224143628:Removed horrible g.app.dialogs hack
 
 #@-node:ekr.20060224143628:Removed horrible g.app.dialogs hack
+#@+node:ekr.20060227070350.1:Fix crasher in plugin
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=3597694
+By: tfer
+
+Template Plug-in (maybe others tooo) co,plain when activated:
+exception executing command
+Traceback (most recent call last):
+  File "leoCommands.py", line 265, in doCommand
+    val = command(event)
+  File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 350, in about
+    PluginAbout(self.name, self.version, self.doc)
+  File "c:\Leo_Cvs\Leo\plugins\plugins_menu.py", line 576, in __init__
+    g.app.dialogs += 1
+AttributeError: LeoApp instance has no attribute 'dialogs'
+#@nonl
+#@-node:ekr.20060227070350.1:Fix crasher in plugin
 #@-node:ekr.20060221073409:Bugs
 #@+node:ekr.20060224164724:Added typing completion in Find commands
 # To do: use the protected range to see whether can cut back.
@@ -4740,6 +4758,26 @@ def getLeadinWord (self,w):
 #@nonl
 #@-node:ekr.20060219111416:getLeadinWord
 #@-node:ekr.20060225100739:made __builtin__reduce( work
+#@+node:ekr.20060225125519:Applied rst3 patch from Kent Tenney
+Index: plugins/rst3.py
+===================================================================
+RCS file: /cvsroot//leo/leo/plugins/rst3.py,v
+retrieving revision 1.42
+diff -r1.42 rst3.py
+1158c1158
+<         source = self.outputFile.getvalue()
+---
+>         self.source = self.outputFile.getvalue()
+1167c1167
+<             f.write(source)
+---
+>             f.write(self.source)
+1172c1172
+<             output = self.writeToDocutils(source)
+---
+>             output = self.writeToDocutils(self.source)
+#@nonl
+#@-node:ekr.20060225125519:Applied rst3 patch from Kent Tenney
 #@-node:ekr.20060218075614:4.4 a7 projects
 #@-node:ekr.20050924073836:4.4 projects
 #@-all

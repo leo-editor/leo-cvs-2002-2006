@@ -305,13 +305,13 @@
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
 <v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
-<v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
+<v t="ekr.20060110141538.2" a="E" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
@@ -342,12 +342,12 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
-<v t="ekr.20051218202206" a="V" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
+<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
 </v>
-<v t="ekr.20060122105527"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
+<v t="ekr.20060122105527" a="E"><vh>EKR bindings: Mode-oriented bindings + Emacs bindings</vh>
 <v t="ekr.20060122105527.2"><vh>Summary of Ctrl bindings</vh></v>
 <v t="ekr.20060122105527.9"><vh>Modes</vh>
 <v t="ekr.20060122113439"><vh>@mode Edit (Control-space)</vh>
@@ -365,7 +365,7 @@
 </v>
 <v t="ekr.20060122105527.15"><vh>@mode Quick-command (Alt-C)</vh></v>
 </v>
-<v t="ekr.20060122105527.18"><vh>Shortcuts</vh>
+<v t="ekr.20060122105527.18" a="E"><vh>Shortcuts</vh>
 <v t="ekr.20060122105527.19" annotate="7d71002e"><vh>@shortcuts EKR: mode-changing commands</vh></v>
 <v t="ekr.20060124070546"><vh>@shortcuts Find Commands</vh></v>
 <v t="ekr.20060203131942"><vh>@shortcuts Minibuffer bindings</vh></v>
@@ -378,7 +378,7 @@
 </v>
 <v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
 <v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
-<v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060131071612" a="V"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 </v>
@@ -3709,7 +3709,6 @@ undo                    = Ctrl-Z</t>
 <t tx="ekr.20060122105527">@color</t>
 <t tx="ekr.20060122105527.2">#enter-command-mode     = Ctrl-space
 add-comments            = Ctrl-(
-auto-complete           = Ctrl-Tab
 clone-node              = Ctrl-`
 set-mark-command        = Ctrl-space    # Also Ctrl-Shift-at
 
@@ -4356,6 +4355,11 @@ forward-word-extend-selection       ! mini = Ctrl-Shift-RtArrow
 select-all                          ! mini = Alt-Shift-A
 
 # Find options.  Important: conflicts with non-minibuffer bindings do not matter here!
+find-tab-find                       ! mini = F3
+find-tab-find-prev                  ! mini = F2
+find-tab-change                     ! mini  =Ctrl-=
+find-tab-change-then-find           ! mini = Ctrl--
+
 set-find-everywhere                 ! mini = Alt-Ctrl-e
 set-find-node-only                  ! mini = Alt-Ctrl-n
 set-find-suboutline-only            ! mini = Alt-Ctrl-s

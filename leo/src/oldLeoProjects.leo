@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5280" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5281" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="10" left="127" height="827" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -31,7 +31,8 @@
 </v>
 <v t="ekr.20031218072017.1926"><vh>Linux headline bug</vh></v>
 </v>
-<v t="ekr.20050924073836" a="E"><vh>4.4 projects</vh>
+<v t="ekr.20050924073836" a="EV"><vh>4.4 projects</vh>
+<v t="ekr.20060227101317" a="E"><vh>Found memory leaks</vh></v>
 <v t="ekr.20060106104442"><vh>4.4a5 projects</vh>
 <v t="ekr.20060106104442.1"><vh>cvs snapshot 1</vh>
 <v t="ekr.20060106104442.2"><vh>Bugs fixed</vh>
@@ -3046,7 +3047,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060226131237.57" a="TV"><vh>4.4 a6 projects</vh>
+<v t="ekr.20060226131237.57"><vh>4.4 a6 projects</vh>
 <v t="ekr.20060226131237.58"><vh>What I did</vh></v>
 <v t="ekr.20060226131237.59"><vh>Added support for trace_minibuffer setting</vh>
 <v t="ekr.20060226131237.60"><vh>Label...</vh>
@@ -31521,5 +31522,23 @@ hide = unpack</t>
     
     # Important: this will redraw if necessary.
     self.onHeadChanged(p)</t>
+<t tx="ekr.20060227101317">@nocolor
+
+Turned off plugins.
+Turned off idle-time hook.
+Turned off colorizer.
+
+** Leak 1:  c.beadList and c.visitedList
+
+** Leak 2:  There is one object leaked for every headline visited.
+    This may be p.edit_widget()
+    
+** The entire headline widget logic is bizarre.
+    - Create p.id() -&gt; concatenation of vnodes.
+    - Create tree.widgetForPositionDict.
+        - keys are p.id's, values are widgets.
+    - Change p.edit_widget() to tree.edit_widget(p)
+
+** It looks like the find command is a major leak.</t>
 </tnodes>
 </leo_file>
