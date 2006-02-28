@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="241" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="248" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="166" left="276" height="660" width="799"/>
+	<global_window_position top="152" left="376" height="660" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
+<v t="ekr.20060228085204"><vh>Buttons</vh>
+<v t="ekr.20060228085204.1"><vh>@button Save</vh></v>
+</v>
 <v t="ekr.20060228081537"><vh>Original code</vh>
 <v t="ekr.20060213023732.1"><vh>chapters.py ORIGINAL</vh>
 <v t="ekr.20060213023732.2"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
@@ -24,7 +27,7 @@
 <v t="ekr.20060213023732.11"><vh>setVariables</vh></v>
 <v t="ekr.20060213023732.12"><vh>makeCurrent</vh></v>
 </v>
-<v t="ekr.20060213023732.13" a="E"><vh>Creating widgets...</vh>
+<v t="ekr.20060213023732.13"><vh>Creating widgets...</vh>
 <v t="ekr.20060213023732.14"><vh>newCreateControl</vh></v>
 <v t="ekr.20060213023732.15"><vh>createPanedWidget</vh></v>
 <v t="ekr.20060213023732.16"><vh>newEditorPane</vh></v>
@@ -183,14 +186,149 @@
 </v>
 </v>
 </v>
+<v t="ekr.20060228082602"><vh>No longer used</vh>
+<v t="ekr.20060213023839.22"><vh>&lt;&lt; globals &gt;&gt;</vh></v>
+<v t="ekr.20060213023839.36"><vh>makeNameMaker</vh></v>
 </v>
-<v t="ekr.20060228081537.2"><vh>Recent</vh>
-<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+</v>
+<v t="ekr.20060228081628"><vh>To do</vh></v>
+<v t="ekr.20060213023839.3"><vh>chapters2bad.py</vh>
+<v t="ekr.20060213023839.8"><vh>Module level</vh>
+<v t="ekr.20060213023839.4"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
+<v t="ekr.20060213023839.5"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20060213023839.7"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20060213023839.1"><vh>&lt;&lt; remember the originals for decorated methods &gt;&gt;</vh></v>
+<v t="ekr.20060213023839.9" a="E"><vh>init</vh>
+<v t="ekr.20060213023839.10"><vh>&lt;&lt; override various methods &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20060228081628" a="V"><vh>To do</vh></v>
+<v t="ekr.20060228113912"><vh>afterCreate</vh></v>
+<v t="ekr.20060213023839.11"><vh>decorated Leo functions</vh>
+<v t="ekr.20060213023839.12"><vh>new_createCanvas (leoTkinterFrame)  (creates chapterControllers)</vh></v>
+<v t="ekr.20060213023839.13"><vh>new_os_path_dirname (leoGlobals) (ok)</vh></v>
+<v t="ekr.20060213023839.14"><vh>new_createControl (leoTkinterBody)</vh></v>
+<v t="ekr.20060213023839.15"><vh>new_doDelete (position)</vh></v>
+<v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
+<v t="ekr.20060213023839.17"><vh>new_getLeoFile (fileCommands)</vh></v>
+<v t="ekr.20060213023839.18"><vh>new_open (fileCommands)</vh></v>
+<v t="ekr.20060213023839.19"><vh>new_select (leoTkinterTree)</vh></v>
+<v t="ekr.20060213023839.20"><vh>new_tree_init (leoTkinterTree</vh></v>
+<v t="ekr.20060213023839.21"><vh>new_write_Leo_file</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.23"><vh>class Chapter</vh>
+<v t="ekr.20060213023839.24"><vh>__init__ (Chapter)</vh></v>
+<v t="ekr.20060213023839.25"><vh>_saveInfo</vh></v>
+<v t="ekr.20060213023839.26"><vh>setVariables</vh></v>
+<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
+</v>
+<v t="ekr.20060213023839.28" a="E"><vh>class chapterController</vh>
+<v t="ekr.20060213023839.29" a="E"><vh>Birth...</vh>
+<v t="ekr.20060213023839.30"><vh> ctor chapterController</vh></v>
+<v t="ekr.20060213023839.31"><vh>addPage</vh></v>
+<v t="ekr.20060213023839.32"><vh>constructTree</vh></v>
+<v t="ekr.20060213023839.33"><vh>createBalloon</vh></v>
+<v t="ekr.20060213023839.34"><vh>createNoteBook</vh></v>
+<v t="ekr.20060213023839.35"><vh>createPanedWidget</vh></v>
+<v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
+<v t="ekr.20060213023839.38"><vh>newEditorPane</vh></v>
+<v t="ekr.20060228113912.1"><vh>finishCreate</vh></v>
+</v>
+<v t="ekr.20060228094838"><vh>Getters...</vh>
+<v t="ekr.20060228094838.1"><vh>getChapter</vh></v>
+<v t="ekr.20060213023839.79"><vh>getStringVar</vh></v>
+<v t="ekr.20060228092227"><vh>nextPageNumber</vh></v>
+</v>
+<v t="ekr.20060213023839.39"><vh>Called from decorated functions</vh>
+<v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
+<v t="ekr.20060213023839.41"><vh>createControl</vh></v>
+<v t="ekr.20060213023839.42"><vh>doDelete</vh></v>
+<v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
+<v t="ekr.20060213023839.44"><vh>getLeoFile</vh></v>
+<v t="ekr.20060213023839.45"><vh>select</vh></v>
+<v t="ekr.20060213023839.46"><vh>open</vh></v>
+<v t="ekr.20060213023839.47"><vh>treeInit</vh></v>
+<v t="ekr.20060213023839.48"><vh>write_Leo_file &amp; helper</vh>
+<v t="ekr.20060213023839.49"><vh>writeChapters</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.50"><vh>tab menu stuff</vh>
+<v t="ekr.20060213023839.51"><vh>makeTabMenu</vh></v>
+<v t="ekr.20060213023839.52"><vh>tab callbacks</vh>
+<v t="ekr.20060213023839.53"><vh>addChapter</vh></v>
+<v t="ekr.20060213023839.54"><vh>removeChapter &amp; helper</vh>
+<v t="ekr.20060213023839.55"><vh>removeOneChapter</vh></v>
+</v>
+<v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
+<v t="ekr.20060213023839.57"><vh>addTrashBarrel</vh></v>
+<v t="ekr.20060213023839.58"><vh>setupMenu</vh></v>
+<v t="ekr.20060213023839.59"><vh>importLeoFile</vh></v>
+<v t="ekr.20060213023839.60"><vh>exportLeoFile</vh></v>
+<v t="ekr.20060213023839.61"><vh>doPDFConversion &amp; helper</vh>
+<v t="ekr.20060213023839.62"><vh>&lt;&lt; define otherPages callback &gt;&gt;</vh></v>
+<v t="ekr.20060213023839.63"><vh>_changeTreeToPDF</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20060213023839.64"><vh>Multi-Editor stuff</vh>
+<v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
+<v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
+<v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
+<v t="ekr.20060213023839.68"><vh>addHeading</vh></v>
+</v>
+<v t="ekr.20060213023839.69"><vh>Indexing</vh>
+<v t="ekr.20060213023839.70"><vh>viewIndex</vh>
+<v t="ekr.20060213023839.71"><vh>&lt;&lt; define scTo callback &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060213023839.72"><vh>buildIndex</vh>
+<v t="ekr.20060213023839.73"><vh>&lt;&lt; def callbacks &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20060213023839.74"><vh>regexViewIndex</vh></v>
+</v>
+<v t="ekr.20060213023839.75"><vh>Chapter-Notebook ops</vh>
+<v t="ekr.20060213023839.76"><vh>renumber</vh></v>
+<v t="ekr.20060213023839.77"><vh>getGoodPage &amp; helper</vh>
+<v t="ekr.20060213023839.78"><vh>checkChapterValidity</vh></v>
+</v>
+<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+<v t="ekr.20060213023839.80"><vh>lowerPage</vh></v>
+<v t="ekr.20060213023839.81"><vh>walkChapters</vh></v>
+</v>
+<v t="ekr.20060213023839.82"><vh>opening and closing</vh>
+<v t="ekr.20060213023839.83"><vh>opening</vh>
+<v t="ekr.20060213023839.84"><vh>openChaptersFile</vh></v>
+<v t="ekr.20060213023839.85"><vh>insertChapters</vh></v>
+</v>
+<v t="ekr.20060213023839.86"><vh>closing</vh>
+<v t="ekr.20060213023839.87"><vh>getMakeStringIO</vh></v>
+<v t="ekr.20060213023839.88"><vh>zipChapters</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.89"><vh>operation( node ) to Chapter</vh>
+<v t="ekr.20060213023839.90"><vh>cloneToChapter</vh></v>
+<v t="ekr.20060213023839.91"><vh>moveToChapter</vh></v>
+<v t="ekr.20060213023839.92"><vh>copyToChapter</vh></v>
+<v t="ekr.20060213023839.93"><vh>makeNodeIntoChapter</vh></v>
+</v>
+<v t="ekr.20060213023839.94"><vh>Conversions</vh>
+<v t="ekr.20060213023839.95"><vh>conversionToSimple</vh></v>
+<v t="ekr.20060213023839.96"><vh>conversionToChapters</vh></v>
+</v>
+<v t="ekr.20060213023839.97"><vh>Misc</vh>
+<v t="ekr.20060213023839.98"><vh>swapChapters</vh></v>
+<v t="ekr.20060213023839.99"><vh>emptyTrash</vh></v>
+<v t="ekr.20060213023839.100"><vh>regexClone</vh>
+<v t="ekr.20060213023839.101"><vh>&lt;&lt; define cloneWalk callback &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
 <v t="ekr.20060213023839.3" a="E"
-expanded="ekr.20060213023839.8,ekr.20060213023839.50,ekr.20060213023839.64,ekr.20060213023839.69,ekr.20060213023839.75,ekr.20060213023839.82,ekr.20060213023839.89,ekr.20060213023839.94,ekr.20060213023839.97,"><vh>@thin chapters2.py</vh></v>
+expanded="ekr.20060213023839.64,ekr.20060213023839.75,"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060228123606" a="E"><vh>Recent</vh>
+<v t="ekr.20060228123606.1"><vh>addPage (bad)</vh></v>
+<v t="ekr.20060213023839.31"><vh>addPage</vh></v>
+<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20060213023732.1">&lt;&lt;docstring&gt;&gt;
@@ -1509,18 +1647,6 @@ couldn't think of any parent node to group these under.
             Story.append( Spacer( 1, 0.2 * inch ) )
         #v = v.threadNext() 
     Story.append( PageBreak() )</t>
-<t tx="ekr.20060213023839.1"># Define these at the module level so they exist early in the load process.
-
-old_createCanvas            = leoTkinterFrame.leoTkinterFrame.createCanvas
-old_createControl           = leoTkinterFrame.leoTkinterBody.createControl
-old_doDelete                = leoNodes.position.doDelete
-old_editLabel               = leoTkinterTree.leoTkinterTree.endEditLabel
-old_getLeoFile              = leoFileCommands.fileCommands.getLeoFile
-old_open                    = leoFileCommands.fileCommands.open
-old_os_path_dirname         = g.os_path_dirname
-old_select                  = leoTkinterTree.leoTkinterTree.select
-old_tree_init               = leoTkinterTree.leoTkinterTree.__init__
-old_write_Leo_file          = leoFileCommands.fileCommands.write_Leo_file</t>
 <t tx="ekr.20060213023839.2">def setTree (self,name):
 
     c = self.c ; nb = self.nb
@@ -1531,7 +1657,7 @@ old_write_Leo_file          = leoFileCommands.fileCommands.write_Leo_file</t>
         g.trace('no sv attr for page',g.callers(),color='red')
         return None
     sv = page.sv
-    chapter = chapters [sv]
+    chapter = self.chapters [sv]
     chapter.makeCurrent()
     frame = c.frame
     frame.body.lastChapter = name
@@ -1540,6 +1666,40 @@ old_write_Leo_file          = leoFileCommands.fileCommands.write_Leo_file</t>
     tab = nb.tab(pindex)
     tab.configure(background='grey',foreground='white')
     self.activateEditor(frame.body)</t>
+<t tx="ekr.20060213023839.22">chapters = {}
+editorNames = {}
+frames = {}
+iscStringIO = False
+notebooks = {}
+pbodies = {}
+twidgets = {}</t>
+<t tx="ekr.20060213023839.31">def addPage (self,pageName=None):
+
+    c = self.c ### ; frame = self.frame ; nb = self.nb
+
+    ###name = name or str(len(nb.pagenames())+1)
+    if not pageName: pageName = self.nextPageName()
+    self.nb.add(pageName)
+    ####tab = nb.tab(pageName)
+    o_chapter = c.cChapter
+    g.trace(pageName)
+    otree, page = self.constructTree(self.frame,pageName)
+    c.cChapter.makeCurrent()
+    o_chapter.makeCurrent()
+    return page
+</t>
+<t tx="ekr.20060213023839.36">def makeNameMaker (self):
+
+    '''Create a numbering mechanism for tabs.'''
+
+    def nameMaker ():
+        i = 0
+        while 1:
+            if len(self.nb.pagenames())== 0: i = 0
+            i += 1
+            yield str(i)
+
+    return nameMaker()</t>
 <t tx="ekr.20060228072530">@ignore
 
 from __future__ import generators
@@ -3237,15 +3397,61 @@ swing.JOptionPane.YES_NO_OPTION )
 </t>
 <t tx="ekr.20060228072530.54"></t>
 <t tx="ekr.20060228081537"></t>
-<t tx="ekr.20060228081537.2"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- Remove most globals.
+* Remove most (all?) calls to getStringVar.
 
 - What should the type of lastNode be? v or p??  See newSelect.
 
-- Replace all v refs by p refs.
+- Replace all v refs by p refs.  vnd
 
-- Find/Change does not appear to work.</t>
+- Find/Change does not appear to work.
+
+- Close box in window crashes the plugin.</t>
+<t tx="ekr.20060228082602"></t>
+<t tx="ekr.20060228085204"></t>
+<t tx="ekr.20060228085204.1">c.save()
+c.redraw_now() # Must be done here.</t>
+<t tx="ekr.20060228092227">def nextPageName (self):
+    
+    n = str(len(self.nb.pagenames()) + 1)
+    g.trace(n)
+    return n</t>
+<t tx="ekr.20060228094838"></t>
+<t tx="ekr.20060228094838.1">def getChapter (self,pageName):
+    
+    return self.chapters.get(pageName)</t>
+<t tx="ekr.20060228113912">def afterCreate (tag, keys):
+    
+    c = keys.get('c')
+    
+    g.trace(c)
+    
+    cc = controllers.get(c)
+    cc.finishCreate()</t>
+<t tx="ekr.20060228113912.1">def finishCreate (self):
+    
+    c = self.c
+    
+    pageName = '1'
+    g.trace()
+    self.stringVars[pageName] = Tk.StringVar()
+    self.chapters [pageName] = Chapter(c,c.frame.tree,c.frame,c.frame.tree.canvas)
+    self.inited = True
+    self.setTree(pageName)</t>
+<t tx="ekr.20060228123606"></t>
+<t tx="ekr.20060228123606.1">def addPage (self,pageName=None):
+
+    c = self.c ; frame = self.frame ; nb = self.nb
+    
+    if not pageName: pageName = self.nextPageName()
+    o_chapter = c.cChapter
+    self.nb.add(pageName)
+    tab = nb.tab(pageName)
+    otree = self.constructTree(frame,pageName)
+    g.trace(pageName,otree)
+    c.cChapter.makeCurrent()
+    o_chapter.makeCurrent() ## Huh???
+    return tab,pageName</t>
 </tnodes>
 </leo_file>

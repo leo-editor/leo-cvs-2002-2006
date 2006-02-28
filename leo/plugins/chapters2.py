@@ -69,7 +69,7 @@ from leoTkinterFrame import leoTkinterBody
 import copy
 import cStringIO
 import os
-import string
+import string ; string.atoi = int # Solve problems with string.atoi...
 import sys
 import time
 import tkFileDialog
@@ -82,8 +82,9 @@ import zipfile
 #@<< remember the originals for decorated methods >>
 #@+middle:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.1:<< remember the originals for decorated methods >>
-# Define these at the module level so they exist early in the load process.
+# Remember the originals of the 10 overridden methods...
 
+# Define these at the module level so they are defined early in the load process.
 old_createCanvas            = leoTkinterFrame.leoTkinterFrame.createCanvas
 old_createControl           = leoTkinterFrame.leoTkinterBody.createControl
 old_doDelete                = leoNodes.position.doDelete
@@ -99,30 +100,10 @@ old_write_Leo_file          = leoFileCommands.fileCommands.write_Leo_file
 #@-middle:ekr.20060213023839.8:Module level
 #@nl
 
-# Solve problems with string.atoi...
-import string
-string.atoi = int
-
-if 1:
-    # The global data.
-    controllers = {} # Keys are commanders, values are chapterControllers.
-    iscStringIO = False # Used by g.os_path_dirname
-    stringIOCommander = None # Used by g.os_path_dirname
-else:
-    #@    << globals >>
-    #@+middle:ekr.20060213023839.8:Module level
-    #@+node:ekr.20060213023839.22:<< globals >>
-    chapters = {}
-    editorNames = {}
-    frames = {}
-    iscStringIO = False
-    notebooks = {}
-    pbodies = {}
-    twidgets = {}
-    #@nonl
-    #@-node:ekr.20060213023839.22:<< globals >>
-    #@-middle:ekr.20060213023839.8:Module level
-    #@nl
+# The global data.
+controllers = {} # Keys are commanders, values are chapterControllers.
+iscStringIO = False # Used by g.os_path_dirname
+stringIOCommander = None # Used by g.os_path_dirname
 
 #@+others
 #@+node:ekr.20060213023839.8:Module level
@@ -400,19 +381,22 @@ class chapterController:
         # frames [c] = self
         # self.notebooks = {}
     
-        self.nameMaker = self.makeNameMaker()
+        ### self.nameMaker = self.makeNameMaker()
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
     #@-node:ekr.20060213023839.30: ctor chapterController
     #@+node:ekr.20060213023839.31:addPage
-    def addPage (self,name=None):
+    def addPage (self,pageName=None):
     
-        c = self.c ; frame = self.frame ; nb = self.nb
+        c = self.c ### ; frame = self.frame ; nb = self.nb
     
-        name = name or str(len(nb.pagenames())+1)
+        ###name = name or str(len(nb.pagenames())+1)
+        if not pageName: pageName = self.nextPageName()
+        self.nb.add(pageName)
+        ####tab = nb.tab(pageName)
         o_chapter = c.cChapter
-        g.trace(name)
-        otree, page = self.constructTree(frame,name)
+        g.trace(pageName)
+        otree, page = self.constructTree(self.frame,pageName)
         c.cChapter.makeCurrent()
         o_chapter.makeCurrent()
         return page
@@ -473,7 +457,7 @@ class chapterController:
         nb.configure(lowercommand=lowerCallback)
     
         nb.pack(fill='both',expand=1)
-        nb.nameMaker = self.nameMaker
+        ### nb.nameMaker = self.nameMaker
         return nb
     #@nonl
     #@-node:ekr.20060213023839.34:createNoteBook
@@ -490,21 +474,6 @@ class chapterController:
         return parentFrame
     #@nonl
     #@-node:ekr.20060213023839.35:createPanedWidget
-    #@+node:ekr.20060213023839.36:makeNameMaker
-    def makeNameMaker (self):
-    
-        '''Create a numbering mechanism for tabs.'''
-    
-        def nameMaker ():
-            i = 0
-            while 1:
-                if len(self.nb.pagenames())== 0: i = 0
-                i += 1
-                yield str(i)
-    
-        return nameMaker()
-    #@nonl
-    #@-node:ekr.20060213023839.36:makeNameMaker
     #@+node:ekr.20060213023839.37:newEditor
     def newEditor (self):
     
@@ -532,12 +501,46 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.38:newEditorPane
     #@-node:ekr.20060213023839.29:Birth...
+    #@+node:ekr.20060228123056:Getters...
+    #@+node:ekr.20060213023839.79:getStringVar
+    def getStringVar (self,name):
+    
+        '''return a Tk StrinVar that is a primary identifier.'''
+        
+        if 1: # old code:
+        
+            nb = self.nb
+            index = nb.index(name)
+            page  = nb.page(index)
+            # g.trace(name,page,hasattr(page,'sv') and page.sv or 'no sv')
+            return page.sv
+            
+        else:
+            return self.stringVars.get(pageName)
+    #@nonl
+    #@-node:ekr.20060213023839.79:getStringVar
+    #@+node:ekr.20060228123056.1:getChapter
+    def getChapter (self,pageName):
+        
+        return self.chapters.get(pageName)
+    #@nonl
+    #@-node:ekr.20060228123056.1:getChapter
+    #@+node:ekr.20060228123056.3:nextPageName
+    def nextPageName (self):
+        
+        n = str(len(self.nb.pagenames()) + 1)
+        g.trace(n,g.callers())
+        return n
+    #@nonl
+    #@-node:ekr.20060228123056.3:nextPageName
+    #@-node:ekr.20060228123056:Getters...
     #@+node:ekr.20060213023839.39:Called from decorated functions
     #@+node:ekr.20060213023839.40:createCanvas
     def createCanvas (self,frame,parentFrame):
         
         nb = self.nb
-        pname = self.nameMaker.next()
+        ### pname = self.nameMaker.next()
+        pname = self.nextPageName()
         page = nb.add(pname)
         indx = nb.index(pname)
         tab = nb.tab(indx)
@@ -1065,7 +1068,7 @@ class chapterController:
         '''Activate an editor.'''
         
         p = body.lastPosition ; h = p.headString()
-        g.trace(h,body,hasattr(body,'r')and body.r,g.callers())
+        # g.trace(h,body,hasattr(body,'r')and body.r,g.callers())
         body.r.configure(text=h)
         ip = body.lastPosition.t.insertSpot
         body.deleteAllText()
@@ -1302,18 +1305,6 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.78:checkChapterValidity
     #@-node:ekr.20060213023839.77:getGoodPage & helper
-    #@+node:ekr.20060213023839.79:getStringVar
-    def getStringVar (self,name):
-    
-        '''return a Tk StrinVar that is a primary identifier.'''
-        
-        nb = self.nb
-        index = nb.index(name)
-        page  = nb.page(index)
-        g.trace(name,page,hasattr(page,'sv') and page.sv or 'no sv')
-        return page.sv
-    #@nonl
-    #@-node:ekr.20060213023839.79:getStringVar
     #@+node:ekr.20060213023839.2:setTree
     def setTree (self,name):
     
@@ -1325,7 +1316,7 @@ class chapterController:
             g.trace('no sv attr for page',g.callers(),color='red')
             return None
         sv = page.sv
-        chapter = chapters [sv]
+        chapter = self.chapters [sv]
         chapter.makeCurrent()
         frame = c.frame
         frame.body.lastChapter = name
