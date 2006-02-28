@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20060213023839.3:@thin chapters2.py
 #@<<docstring>>
+#@+middle:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.4:<<docstring>>
 '''This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
 
@@ -25,17 +26,15 @@ Warnings:
 '''
 #@nonl
 #@-node:ekr.20060213023839.4:<<docstring>>
+#@-middle:ekr.20060213023839.8:Module level
 #@nl
-
-# To do:  Find/Change does not appear to work.
-# To do: replace all v refs by p refs.
-# ***Testing***.
 
 #@@language python
 #@@tabwidth -4
 
 __version__ = "0.101"
 #@<< version history >>
+#@+middle:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
 
@@ -45,8 +44,10 @@ __version__ = "0.101"
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
+#@-middle:ekr.20060213023839.8:Module level
 #@nl
 #@<< imports >>
+#@+middle:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.7:<< imports >>
 import leoGlobals as g
 import leoColor
@@ -76,13 +77,13 @@ import tkFont
 import zipfile
 #@nonl
 #@-node:ekr.20060213023839.7:<< imports >>
+#@-middle:ekr.20060213023839.8:Module level
 #@nl
 #@<< remember the originals for decorated methods >>
 #@+middle:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.1:<< remember the originals for decorated methods >>
-# Remember the originals of the 10 overridden methods...
+# Define these at the module level so they exist early in the load process.
 
-# Define these at the module level so they are defined early in the load process.
 old_createCanvas            = leoTkinterFrame.leoTkinterFrame.createCanvas
 old_createControl           = leoTkinterFrame.leoTkinterBody.createControl
 old_doDelete                = leoNodes.position.doDelete
@@ -109,6 +110,7 @@ if 1:
     stringIOCommander = None # Used by g.os_path_dirname
 else:
     #@    << globals >>
+    #@+middle:ekr.20060213023839.8:Module level
     #@+node:ekr.20060213023839.22:<< globals >>
     chapters = {}
     editorNames = {}
@@ -119,6 +121,7 @@ else:
     twidgets = {}
     #@nonl
     #@-node:ekr.20060213023839.22:<< globals >>
+    #@-middle:ekr.20060213023839.8:Module level
     #@nl
 
 #@+others
