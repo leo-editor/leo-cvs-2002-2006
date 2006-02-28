@@ -202,9 +202,12 @@ class tkinterAboutLeo (leoTkinterDialog):
         self.email = email
         self.url = url
         self.version = version
+        
+        c.inCommand = False # Allow the app to close immediately.
     
         self.createTopFrame()
         self.createFrame()
+        
     #@-node:ekr.20031218072017.3868:tkinterAboutLeo.__init__
     #@+node:ekr.20031218072017.3869:tkinterAboutLeo.createFrame
     def createFrame (self):
