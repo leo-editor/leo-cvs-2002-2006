@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041001211817" a="V" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Buttons &amp; settings</vh>
 <v t="ekr.20051020124457" a="E"><vh>Disabled buttons</vh>
 <v t="ekr.20041230121429"><vh>@@ button pydoc</vh></v>
 <v t="ekr.20050210180937"><vh>@@ button jython</vh></v>
@@ -254,6 +254,10 @@
 <v t="ekr.20060223181815"><vh>test of position.self</vh></v>
 </v>
 <v t="ekr.20060223131415"><vh>Test of meaningless self</vh></v>
+</v>
+<v t="ekr.20060228081859" a="E"><vh>Mini-tests for chapters</vh>
+<v t="ekr.20060228083913"><vh>print chapters</vh></v>
+<v t="ekr.20060228082132" a="V"><vh>@button addChapter</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4464,5 +4468,12 @@ for s in (
     def f2(self):
         pass</t>
 <t tx="ekr.20060223181815"></t>
+<t tx="ekr.20060228081859">Test.</t>
+<t tx="ekr.20060228082132">import chapters2 as ch
+cc = ch.controllers.get(c)
+cc.addChapter()</t>
+<t tx="ekr.20060228083913">import chapters2 as ch
+cc = ch.controllers.get(c)
+</t>
 </tnodes>
 </leo_file>
