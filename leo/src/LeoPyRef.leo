@@ -13,13 +13,11 @@
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-expanded="ekr.20060219103046,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2"><vh>To do</vh>
 <v t="ekr.20040117181936" descendentTnodeUnknownAttributes="7d71005814000000656b722e32303036303230313135303534372e3871017d710255092f3e0d0a3c742074787103551a7a6f7263616e6461212e32303035303932353136303131382e31710473732e"><vh>@thin ../doc/leoToDo.txt</vh></v>
-<v t="ekr.20060207133601"
-expanded="ekr.20060219172147,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
+<v t="ekr.20060207133601"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 </v>
 <v t="ekr.20050924073836"><vh>4.4 projects</vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
@@ -237,7 +235,7 @@ expanded="ekr.20060219172147,"><vh>@thin ../doc/leoToDoLater.txt</vh></v>
 <v t="ekr.20060223085549"><vh>defineClassesDict</vh></v>
 <v t="ekr.20060219171914"><vh>defineObjectDict</vh></v>
 </v>
-<v t="ekr.20060219103046" a="E"><vh>Top level</vh>
+<v t="ekr.20060219103046"><vh>Top level</vh>
 <v t="ekr.20051126122952.1"><vh>autoComplete</vh></v>
 <v t="ekr.20060219103822"><vh>autoCompleteForce</vh></v>
 <v t="ekr.20060219170612"><vh>enable/disableAutocompleter/Calltips</vh></v>
@@ -386,8 +384,7 @@ marks="ekr.20040629121554.2,"><vh>@thin leoCommands.py</vh></v>
 marks="ekr.20031218072017.2052,"><vh>@thin leoGlobals.py</vh></v>
 <v t="ekr.20050710142719"
 marks="ekr.20051022142249,"><vh>@thin leoEditCommands.py</vh></v>
-<v t="ekr.20031218072017.3748"
-expanded="ekr.20051126123249,ekr.20060219103046,"><vh>@thin leoKeys.py</vh></v>
+<v t="ekr.20031218072017.3748"><vh>@thin leoKeys.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
