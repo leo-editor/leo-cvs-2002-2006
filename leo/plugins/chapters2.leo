@@ -198,7 +198,7 @@
 <v t="ekr.20060213023839.5"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20060213023839.7"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20060213023839.1"><vh>&lt;&lt; remember the originals for decorated methods &gt;&gt;</vh></v>
-<v t="ekr.20060213023839.9" a="E"><vh>init</vh>
+<v t="ekr.20060213023839.9"><vh>init</vh>
 <v t="ekr.20060213023839.10"><vh>&lt;&lt; override various methods &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20060228113912"><vh>afterCreate</vh></v>
@@ -221,8 +221,8 @@
 <v t="ekr.20060213023839.26"><vh>setVariables</vh></v>
 <v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
 </v>
-<v t="ekr.20060213023839.28" a="E"><vh>class chapterController</vh>
-<v t="ekr.20060213023839.29" a="E"><vh>Birth...</vh>
+<v t="ekr.20060213023839.28"><vh>class chapterController</vh>
+<v t="ekr.20060213023839.29"><vh>Birth...</vh>
 <v t="ekr.20060213023839.30"><vh> ctor chapterController</vh></v>
 <v t="ekr.20060213023839.31"><vh>addPage</vh></v>
 <v t="ekr.20060213023839.32"><vh>constructTree</vh></v>
@@ -322,10 +322,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060213023839.3" a="E"
-expanded="ekr.20060213023839.64,ekr.20060213023839.75,"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060228123606" a="E"><vh>Recent</vh>
-<v t="ekr.20060228123606.1"><vh>addPage (bad)</vh></v>
+<v t="ekr.20060213023839.3" a="V"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060228123606"><vh>Recent</vh>
+<v t="ekr.20060213023839.30"><vh> ctor chapterController</vh></v>
 <v t="ekr.20060213023839.31"><vh>addPage</vh></v>
 <v t="ekr.20060213023839.2"><vh>setTree</vh></v>
 </v>
@@ -1654,10 +1653,11 @@ couldn't think of any parent node to group these under.
     page = nb.page(pindex)
     if not hasattr(page,'sv'):
         # The page hasn't been fully created yet.
-        g.trace('no sv attr for page',g.callers(),color='red')
+        g.trace('******* no sv attr for page',g.callers(),color='red')
         return None
-    sv = page.sv
-    chapter = self.chapters [sv]
+    ###sv = page.sv
+    ###chapter = self.chapters [sv]
+    chapter = self.getChapter(name)
     chapter.makeCurrent()
     frame = c.frame
     frame.body.lastChapter = name
@@ -1673,6 +1673,21 @@ iscStringIO = False
 notebooks = {}
 pbodies = {}
 twidgets = {}</t>
+<t tx="ekr.20060213023839.30">def __init__ (self,c,frame,parentFrame):
+    
+    self.c = c
+    self.frame = frame
+    self.parentFrame = parentFrame
+
+    self.chapters = {} # Keys are tab names, (no longer stringVars.)
+    self.editorNames = {}
+    
+    self.pbodies = {}
+    self.rnframes = {}
+    self.twidgets = {}
+    
+
+    self.createNoteBook(parentFrame) # sets self.nb</t>
 <t tx="ekr.20060213023839.31">def addPage (self,pageName=None):
 
     c = self.c ### ; frame = self.frame ; nb = self.nb
@@ -1686,7 +1701,7 @@ twidgets = {}</t>
     otree, page = self.constructTree(self.frame,pageName)
     c.cChapter.makeCurrent()
     o_chapter.makeCurrent()
-    return page
+    return page,pageName
 </t>
 <t tx="ekr.20060213023839.36">def makeNameMaker (self):
 
@@ -3440,18 +3455,5 @@ c.redraw_now() # Must be done here.</t>
     self.inited = True
     self.setTree(pageName)</t>
 <t tx="ekr.20060228123606"></t>
-<t tx="ekr.20060228123606.1">def addPage (self,pageName=None):
-
-    c = self.c ; frame = self.frame ; nb = self.nb
-    
-    if not pageName: pageName = self.nextPageName()
-    o_chapter = c.cChapter
-    self.nb.add(pageName)
-    tab = nb.tab(pageName)
-    otree = self.constructTree(frame,pageName)
-    g.trace(pageName,otree)
-    c.cChapter.makeCurrent()
-    o_chapter.makeCurrent() ## Huh???
-    return tab,pageName</t>
 </tnodes>
 </leo_file>

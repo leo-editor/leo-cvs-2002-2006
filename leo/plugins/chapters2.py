@@ -370,18 +370,14 @@ class chapterController:
         self.frame = frame
         self.parentFrame = parentFrame
     
-        self.chapters = {} # Keys are stringVars.
+        self.chapters = {} # Keys are tab names, (no longer stringVars.)
         self.editorNames = {}
         
         self.pbodies = {}
         self.rnframes = {}
         self.twidgets = {}
         
-        # self.frames = {}
-        # frames [c] = self
-        # self.notebooks = {}
     
-        ### self.nameMaker = self.makeNameMaker()
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
     #@-node:ekr.20060213023839.30: ctor chapterController
@@ -399,7 +395,7 @@ class chapterController:
         otree, page = self.constructTree(self.frame,pageName)
         c.cChapter.makeCurrent()
         o_chapter.makeCurrent()
-        return page
+        return page,pageName
     #@-node:ekr.20060213023839.31:addPage
     #@+node:ekr.20060213023839.32:constructTree
     def constructTree (self,frame,name):
@@ -584,17 +580,21 @@ class chapterController:
     #@+node:ekr.20060213023839.42:doDelete
     def doDelete (self,p,newPosition):
         
-        c = self.c ; nb = self.nb ; pagenames = nb.pagenames()
+        c = self.c ### ; nb = self.nb ; pagenames = nb.pagenames()
         
-        pagenames = [self.setStringVar(x).get().upper() for x in pagenames]
-        nbnam = nb.getcurselection()
-        if nbnam != None:
-            name = self.getStringVar(nb.getcurselection()).get().upper()
-        else: name = 'TRASH'
-        tsh = 'TRASH'
-        if name != tsh and tsh in pagenames:
+        # pagenames = [self.setStringVar(x).get().upper() for x in pagenames]
+        # nbnam = nb.getcurselection()
+        # if nbnam != None:
+            # name = self.getStringVar(nb.getcurselection()).get().upper()
+        # else: name = 'TRASH'
+        # tsh = 'TRASH'
+        
+        trash = 'Trash'
+        # if name != tsh and tsh in pagenames:
+        if name != trash and trash in self.nb.pagenames():
             index = pagenames.index(tsh)
-            trchapter = self.chapters [self.getStringVar(index)]
+            ### trchapter = self.chapters [self.getStringVar(index)]
+            trchapter = self.getChapter(trash)
             trashnode = trchapter.rp
             trchapter.setVariables()
             p.moveAfter(trashnode)
@@ -602,6 +602,7 @@ class chapterController:
             c.selectPosition(newPosition)
             return p
         return old_doDelete(p,newPosition)
+    #@nonl
     #@-node:ekr.20060213023839.42:doDelete
     #@+node:ekr.20060213023839.43:endEditLabel
     def endEditLabel (self,tree):
@@ -672,11 +673,12 @@ class chapterController:
     #@+node:ekr.20060213023839.47:treeInit
     def treeInit (self,tree,c,frame,canvas):
         
-        sv = self.getStringVar(canvas.name)
+        ### sv = self.getStringVar(canvas.name)
         
         old_tree_init(tree,c,frame,canvas)
     
-        self.chapters [sv] = Chapter(c,tree,frame,canvas)
+        ### self.chapters [sv] = Chapter(c,tree,frame,canvas)
+        self.chapters ['1'] = Chapter(c,tree,frame,canvas)
     #@nonl
     #@-node:ekr.20060213023839.47:treeInit
     #@+node:ekr.20060213023839.48:write_Leo_file & helper
@@ -703,8 +705,9 @@ class chapterController:
         c = self.c
     
         for z in pagenames:
-            sv = self.getStringVar(z)
-            chapter = self.chapters [sv]
+            ###sv = self.getStringVar(z)
+            ###chapter = self.chapters [sv]
+            chapter = self.getChapter(z)
             chapter.setVariables()
             rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag)
     
@@ -834,8 +837,9 @@ class chapterController:
         
         c = self.c ; nb = self.nb
         if len(nb.pagenames()) == 1: return
-        sv = self.getStringVar(name)
-        chapter = self.chapters [sv]
+        ###sv = self.getStringVar(name)
+        ###chapter = self.chapters [sv]
+        chapter = self.getChapter(name)
         tree = chapter.tree
         vnd = chapter.rp
         cvnd = c.cChapter.cp
@@ -921,12 +925,12 @@ class chapterController:
         
         c = self.c ; nb = self.nb
     
-        name = tkFileDialog.askopenfilename()
+        fileName = tkFileDialog.askopenfilename()
     
-        if name:
-            page = self.addPage(name)
+        if fileName:
+            page,pageName = self.addPage(pageName)
             nb.selectpage(nb.pagenames()[-1])
-            c.fileCommands.open(file(name,'r'),name)
+            c.fileCommands.open(file(fileName,'r'),fileName)
             c.cChapter.makeCurrent()
             self.renumber()
     #@nonl
@@ -965,8 +969,9 @@ class chapterController:
         cChapter = c.cChapter
         for n, z in enumerate(pagenames):
             n = n + 1
-            sv = self.getStringVar(z)
-            chapter = self.chapters [sv]
+            ###sv = self.getStringVar(z)
+            ###chapter = self.chapters [sv]
+            chapter = self.getChapter(z)
             chapter.setVariables()
             p = chapter.rp
             if p:
@@ -1313,10 +1318,11 @@ class chapterController:
         page = nb.page(pindex)
         if not hasattr(page,'sv'):
             # The page hasn't been fully created yet.
-            g.trace('no sv attr for page',g.callers(),color='red')
+            g.trace('******* no sv attr for page',g.callers(),color='red')
             return None
-        sv = page.sv
-        chapter = self.chapters [sv]
+        ###sv = page.sv
+        ###chapter = self.chapters [sv]
+        chapter = self.getChapter(name)
         chapter.makeCurrent()
         frame = c.frame
         frame.body.lastChapter = name
@@ -1395,7 +1401,9 @@ class chapterController:
         for num, tup in enumerate(chapters):
             x, y = tup
             if num > 0:
-                sv = self.addPage(c,x).sv
+                ### sv = self.addPage(c,x).sv
+                page,pageName = self.addPage(x)
+                sv = page.sv
                 nb.nextpage()
                 cselection = nb.getcurselection()
             else:
@@ -1461,7 +1469,8 @@ class chapterController:
         c.beginUpdate()
         try:
             clone = vnd.clone(c.currentPosition())
-            chapter = self.chapters [page.sv]
+            ### chapter = self.chapters [page.sv]
+            chapter = self.getChapter(name)
             p = chapter.cp
             clone.unlink()
             clone.linkAfter(p)
@@ -1474,7 +1483,9 @@ class chapterController:
         
         c = self.c ; nb = self.nb
         page = nb.page(nb.index(name))
-        mvChapter = self.chapters [page.sv]
+        ###mvChapter = self.chapters [page.sv]
+        mvChapter = self.getChapter(page)
+        
         c.beginUpdate()
         try:
             p = c.currentPosition()
@@ -1487,13 +1498,16 @@ class chapterController:
         finally:
             c.endUpdate()
         c.selectPosition(c.rootPosition())
+    
     #@-node:ekr.20060213023839.91:moveToChapter
     #@+node:ekr.20060213023839.92:copyToChapter
     def copyToChapter (c,name):
     
         c = self.c ; nb = self.nb
         page = nb.page(nb.index(name))
-        cpChapter = self.chapters [page.sv]
+        # cpChapter = self.chapters [page.sv]
+        cpChapter = self.getChapter(name)
+    
         c.beginUpdate()
         try:
             s = c.fileCommands.putLeoOutline()
@@ -1515,8 +1529,9 @@ class chapterController:
         nxt = p.next()
         if nxt: p.doDelete(nxt)
     
-        page = self.addPage(c)
-        mnChapter = self.chapters [page.sv]
+        page,pageName = self.addPage()
+        ###mnChapter = self.chapters [page.sv]
+        mnChapter = self.getChapter(pageName)
         c.beginUpdate()
         try:
             oChapter = c.cChapter
@@ -1547,9 +1562,10 @@ class chapterController:
         c.beginUpdate()
         try:
             for z in pagenames:
-                index = nb.index(z)
-                page = nb.page(index)
-                chapter = self.chapters [page.sv]
+                ###index = nb.index(z)
+                ###page = nb.page(index)
+                ###chapter = self.chapters [page.sv]
+                chapter = self.getChapter(z)
                 rvNode = chapter.rp
                 while 1:
                     nxt = rvNode.next()
@@ -1589,7 +1605,8 @@ class chapterController:
         tv1 = self.getStringVar(cselection)
         tv2 = self.getStringVar(name)
         chap1 = c.cChapter
-        chap2 = self.chapters [tv2]
+        ###chap2 = self.chapters [tv2]
+        chap2 = self.getChapter(name)
         rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
         chap2.rp, chap2.tp, chap2.cp = chap1.rp, chap1.tp, chap1.cp
         chap1.rp, chap1.tp, chap1.cp = rp, tp, cp
@@ -1614,7 +1631,8 @@ class chapterController:
     
         for z in pagenames:
             if z.get().upper() == 'TRASH':
-                trChapter = self.chapters [z]
+                ### trChapter = self.chapters [z]
+                trChapter = self.getChapter(z)
                 rvND = trChapter.rp
                 c.beginUpdate()
                 trChapter.setVariables()
@@ -1636,8 +1654,9 @@ class chapterController:
     def regexClone (self,name):
     
         c = self.c ; nb = self.nb
-        sv = self.getStringVar(c,name)
-        chapter = self.chapters [sv]
+        ###sv = self.getStringVar(c,name)
+        ###chapter = self.chapters [sv]
+        chapter = self.getChapter(name)
         #@    << define cloneWalk callback >>
         #@+node:ekr.20060213023839.101:<< define cloneWalk callback >>
         def cloneWalk (result,entry,widget,self=self):
