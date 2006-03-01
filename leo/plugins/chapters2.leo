@@ -12,8 +12,8 @@
 <v t="ekr.20060228085204"><vh>Buttons</vh>
 <v t="ekr.20060228085204.1"><vh>@button Save</vh></v>
 </v>
-<v t="ekr.20060228081537" a="E"><vh>Original code</vh>
-<v t="ekr.20060213023732.1" a="E"><vh>chapters.py ORIGINAL</vh>
+<v t="ekr.20060228081537"><vh>Original code</vh>
+<v t="ekr.20060213023732.1"><vh>chapters.py ORIGINAL</vh>
 <v t="ekr.20060213023732.2"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
 <v t="ekr.20060213023732.3"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20060213023732.4"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -56,7 +56,7 @@
 <v t="ekr.20060213023732.36"><vh>removeEditor</vh></v>
 <v t="ekr.20060213023732.37"><vh>addHeading</vh></v>
 </v>
-<v t="ekr.20060213023732.38" a="E"><vh>Indexing</vh>
+<v t="ekr.20060213023732.38"><vh>Indexing</vh>
 <v t="ekr.20060213023732.39"><vh>viewIndex</vh></v>
 <v t="ekr.20060213023732.40"><vh>buildIndex</vh></v>
 <v t="ekr.20060213023732.41"><vh>regexViewIndex</vh></v>
@@ -191,10 +191,9 @@
 <v t="ekr.20060213023839.36"><vh>makeNameMaker</vh></v>
 </v>
 </v>
-<v t="ekr.20060228081628" a="V"><vh>To do</vh></v>
-<v t="ekr.20060213023839.3" a="E"
-expanded="ekr.20060213023839.28,ekr.20060213023839.50,ekr.20060213023839.69,ekr.20060213023839.70,"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060228123606" a="E"><vh>Recent</vh>
+<v t="ekr.20060228081628" a="EV"><vh>To do</vh></v>
+<v t="ekr.20060213023839.3" a="E"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060228123606"><vh>Recent</vh>
 <v t="ekr.20060301123117"><vh>Init</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
 <v t="ekr.20060213023839.24"><vh> ctor: Chapter</vh></v>
@@ -236,6 +235,21 @@ expanded="ekr.20060213023839.28,ekr.20060213023839.50,ekr.20060213023839.69,ekr.
 <v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
 <v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
 </v>
+</v>
+<v t="ekr.20060301173126" a="E"><vh>Crash in open</vh>
+<v t="ekr.20060213023839.46"><vh>open</vh></v>
+<v t="ekr.20060213023839.41"><vh>createControl</vh>
+<v t="ekr.20060213023839.42"><vh>doDelete</vh></v>
+<v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
+<v t="ekr.20060213023839.44"><vh>getLeoFile</vh></v>
+<v t="ekr.20060213023839.45"><vh>select</vh></v>
+<v t="ekr.20060213023839.46"><vh>open</vh></v>
+<v t="ekr.20060213023839.47"><vh>treeInit</vh></v>
+<v t="ekr.20060213023839.48"><vh>write_Leo_file &amp; helper</vh>
+<v t="ekr.20060213023839.49"><vh>writeChapters</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.18"><vh>new_open (fileCommands)</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1579,6 +1593,23 @@ couldn't think of any parent node to group these under.
     tab = cc.nb.tab(name)
     tab.configure(background='grey',foreground='white')
     self.activateEditor(c.frame.body)</t>
+<t tx="ekr.20060213023839.18">def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
+    
+    # self = fileCommands
+    c = self.c
+    if g.app.unitTesting:
+        return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
+    else:
+        global controllers
+        cc = controllers.get(c)
+        if cc:
+            return cc.open(self,file,fileName,readAtFileNodesFlag,silent)
+        else:
+            # Surprisingly, this works.
+            # The file has not been opened completely.
+            # This may be the settings file.
+            # The controller will be created later in new_createCanvas.
+            return</t>
 <t tx="ekr.20060213023839.22">chapters = {}
 editorNames = {}
 frames = {}
@@ -3738,5 +3769,6 @@ c.redraw_now() # Must be done here.</t>
 <t tx="ekr.20060301123117"></t>
 <t tx="ekr.20060301123117.1"></t>
 <t tx="ekr.20060301125235"></t>
+<t tx="ekr.20060301173126"></t>
 </tnodes>
 </leo_file>

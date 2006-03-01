@@ -163,10 +163,11 @@ def new_createCanvas (self,parentFrame,tabName='1'):
         return old_createCanvas(self,parentFrame)
     else:
         global controllers
-        cc = controllers.get(self.c)
+        cc = controllers.get(c)
         if not cc:
+            g.trace(c.widget_name(parentFrame))
             controllers [c] = cc = chapterController(c,self,parentFrame)
-            g.trace('created controller',cc)
+            # g.trace('created controller',cc)
         g.trace('tabName',tabName)
         return cc.createCanvas(self,parentFrame,tabName=tabName)
 #@nonl
@@ -236,12 +237,20 @@ def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
 def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self = fileCommands
+    c = self.c
     if g.app.unitTesting:
         return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
     else:
         global controllers
-        cc = controllers.get(self.c)
-        return cc.open(self,file,fileName,readAtFileNodesFlag,silent)
+        cc = controllers.get(c)
+        if cc:
+            return cc.open(self,file,fileName,readAtFileNodesFlag,silent)
+        else:
+            # Surprisingly, this works.
+            # The file has not been opened completely.
+            # This may be the settings file.
+            # The controller will be created later in new_createCanvas.
+            return
 #@nonl
 #@-node:ekr.20060213023839.18:new_open (fileCommands)
 #@+node:ekr.20060213023839.19:new_select (leoTkinterTree)
