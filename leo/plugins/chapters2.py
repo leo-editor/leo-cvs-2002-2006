@@ -155,7 +155,7 @@ def init ():
 #@@c
 #@+others
 #@+node:ekr.20060213023839.12:new_createCanvas (leoTkinterFrame)  (creates chapterControllers)
-def new_createCanvas (self,parentFrame):
+def new_createCanvas (self,parentFrame,tabName='1'):
     
     # self is c.frame
     c = self.c
@@ -163,18 +163,12 @@ def new_createCanvas (self,parentFrame):
         return old_createCanvas(self,page)
     else:
         global controllers
-        controllers [c] = cc = chapterController(c,self,parentFrame)
-        return cc.createCanvas(self,parentFrame)
-
-    # else:
-        # c = self.c
-        # if c in frames:
-            # notebook = notebooks.get(c)
-        # else:
-            # global controllers
-            # controllers [c] = cc = chapterController(c,parentFrame)
-            # frames [c] = self
-            # notebook = createNoteBook(c,parentFrame)
+        cc = controllers.get(self.c)
+        if not cc:
+            controllers [c] = cc = chapterController(c,self,parentFrame)
+            g.trace('created controller',cc)
+        g.trace('tabName',tabName)
+        return cc.createCanvas(self,parentFrame,tabName=tabName)
 #@nonl
 #@-node:ekr.20060213023839.12:new_createCanvas (leoTkinterFrame)  (creates chapterControllers)
 #@+node:ekr.20060213023839.13:new_os_path_dirname (leoGlobals) (ok)
@@ -191,7 +185,7 @@ def new_os_path_dirname (path,encoding=None):
         return old_os_path_dirname(path,encoding)
 #@nonl
 #@-node:ekr.20060213023839.13:new_os_path_dirname (leoGlobals) (ok)
-#@+node:ekr.20060213023839.14:new_createControl (leoTkinterBody) (revised)
+#@+node:ekr.20060213023839.14:new_createControl (leoTkinterBody)
 def new_createControl (self,frame,parentFrame):
 
     # self is c.frame.body
@@ -202,20 +196,20 @@ def new_createControl (self,frame,parentFrame):
         cc = controllers.get(self.c)
         return cc.createControl(self,frame,parentFrame)
 #@nonl
-#@-node:ekr.20060213023839.14:new_createControl (leoTkinterBody) (revised)
-#@+node:ekr.20060213023839.15:new_doDelete (position) (revised)
-def new_doDelete (self,newPosition):
+#@-node:ekr.20060213023839.14:new_createControl (leoTkinterBody)
+#@+node:ekr.20060213023839.15:new_doDelete (position)
+def new_doDelete (self):
     
     # self is position.
     if g.app.unitTesting:
-        return old_doDelete(self,newPosition)
+        return old_doDelete(self)
     else:
         global controllers
         cc = controllers.get(self.c)
-        return cc.doDelete(self,newPosition)
+        return cc.doDelete(self)
 #@nonl
-#@-node:ekr.20060213023839.15:new_doDelete (position) (revised)
-#@+node:ekr.20060213023839.16:new_endEditLabel (leoTkinterTree) (revised)
+#@-node:ekr.20060213023839.15:new_doDelete (position)
+#@+node:ekr.20060213023839.16:new_endEditLabel (leoTkinterTree)
 def new_endEditLabel (self):
     
     # self is a c.frame.tree
@@ -225,8 +219,8 @@ def new_endEditLabel (self):
         cc = controllers.get(self.c)
         return cc.endEditLabel(self)
 #@nonl
-#@-node:ekr.20060213023839.16:new_endEditLabel (leoTkinterTree) (revised)
-#@+node:ekr.20060213023839.17:new_getLeoFile (fileCommands) (revised)
+#@-node:ekr.20060213023839.16:new_endEditLabel (leoTkinterTree)
+#@+node:ekr.20060213023839.17:new_getLeoFile (fileCommands)
 def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self is c.fileCommands
@@ -237,8 +231,8 @@ def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
         cc = controllers.get(self.c)
         return cc.getLeoFile(self,fileName,readAtFileNodesFlag,silent)
 #@nonl
-#@-node:ekr.20060213023839.17:new_getLeoFile (fileCommands) (revised)
-#@+node:ekr.20060213023839.18:new_open (fileCommands) (revised)
+#@-node:ekr.20060213023839.17:new_getLeoFile (fileCommands)
+#@+node:ekr.20060213023839.18:new_open (fileCommands)
 def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self = fileCommands
@@ -249,8 +243,8 @@ def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
         cc = controllers.get(self.c)
         return cc.open(self,file,fileName,readAtFileNodesFlag,silent)
 #@nonl
-#@-node:ekr.20060213023839.18:new_open (fileCommands) (revised)
-#@+node:ekr.20060213023839.19:new_select (leoTkinterTree) (revised)
+#@-node:ekr.20060213023839.18:new_open (fileCommands)
+#@+node:ekr.20060213023839.19:new_select (leoTkinterTree)
 def new_select (self,p,updateBeadList=True):
     
     # self is c.frame.tree
@@ -261,9 +255,9 @@ def new_select (self,p,updateBeadList=True):
         cc = controllers.get(self.c)
         return cc.select(self,p,updateBeadList)
 #@nonl
-#@-node:ekr.20060213023839.19:new_select (leoTkinterTree) (revised)
-#@+node:ekr.20060213023839.20:new_tree_init (leoTkinterTree) revised
-def new_tree_init (self,c,frame,canvas):
+#@-node:ekr.20060213023839.19:new_select (leoTkinterTree)
+#@+node:ekr.20060213023839.20:new_tree_init (leoTkinterTree
+def new_tree_init (self,c,frame,canvas,tabName=''):
     
     # self is c.frame.tree
     if g.app.unitTesting:
@@ -273,7 +267,7 @@ def new_tree_init (self,c,frame,canvas):
         cc = controllers.get(c)
         return cc.treeInit(self,c,frame,canvas)
 #@nonl
-#@-node:ekr.20060213023839.20:new_tree_init (leoTkinterTree) revised
+#@-node:ekr.20060213023839.20:new_tree_init (leoTkinterTree
 #@+node:ekr.20060213023839.21:new_write_Leo_file
 def new_write_Leo_file (self,fileName,outlineOnlyFlag,singleChapter=False):
     
@@ -295,11 +289,12 @@ class Chapter:
        It enables the tracking of Chapters tree information.'''
        
     #@    @+others
-    #@+node:ekr.20060213023839.24:__init__
+    #@+node:ekr.20060213023839.24:__init__ (Chapter)
     def __init__ (self,c,tree,frame,canvas):
         
-        g.trace('Chapter',c.fileName())
+        # g.trace('Chapter',c.fileName())
     
+        # Set the ivars.
         self.c = c
         self.tree = tree
         self.frame = frame
@@ -307,19 +302,20 @@ class Chapter:
         self.treeBar = frame.treeBar
     
         if hasattr(c,'cChapter'):
+            self.cp = c._currentPosition or c.nullPosition()
+            self.tp = c._topPosition or c.nullPosition()
+            self.rp = c._rootPosition or c.nullPosition()
+        else:
+            g.trace('Creating new root',c)
+            c.cChapter = self
             t = leoNodes.tnode('','New Headline')
             v = leoNodes.vnode(c,t)
             p = leoNodes.position(c,v,[])
             self.cp = p.copy()
             self.rp = p.copy()
             self.tp = p.copy()
-        else:
-            c.cChapter = self
-            self.cp = c._currentPosition or c.nullPosition()
-            self.tp = c._topPosition or c.nullPosition()
-            self.rp = c._rootPosition or c.nullPosition()
     #@nonl
-    #@-node:ekr.20060213023839.24:__init__
+    #@-node:ekr.20060213023839.24:__init__ (Chapter)
     #@+node:ekr.20060213023839.25:_saveInfo
     def _saveInfo (self):
     
@@ -372,11 +368,10 @@ class chapterController:
     
         self.chapters = {} # Keys are tab names, (no longer stringVars.)
         self.editorNames = {}
-        
         self.pbodies = {}
         self.rnframes = {}
+        self.stringVars = {} # Keys are tab names, values are stringVars.
         self.twidgets = {}
-        
     
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
@@ -386,12 +381,13 @@ class chapterController:
     
         c = self.c ### ; frame = self.frame ; nb = self.nb
     
-        ###name = name or str(len(nb.pagenames())+1)
         if not pageName: pageName = self.nextPageName()
-        self.nb.add(pageName)
-        ####tab = nb.tab(pageName)
-        o_chapter = c.cChapter
         g.trace(pageName)
+        self.nb.add(pageName)
+        self.chapters [pageName] = Chapter(c,c.frame.tree,c.frame,c.frame.tree.canvas)
+        g.trace(g.dictToString(self.chapters))
+        g.trace(pageName,self.nb.pagenames())
+        o_chapter = c.cChapter
         otree, page = self.constructTree(self.frame,pageName)
         c.cChapter.makeCurrent()
         o_chapter.makeCurrent()
@@ -400,7 +396,7 @@ class chapterController:
     #@+node:ekr.20060213023839.32:constructTree
     def constructTree (self,frame,name):
     
-        c = self.c ; nb = self.nb
+        c = self.c ### ; nb = self.nb
         canvas = treeBar = tree = None
         if frame.canvas:
             canvas = frame.canvas
@@ -408,16 +404,18 @@ class chapterController:
             tree = frame.tree
         sv = Tk.StringVar()
         sv.set(name)
-        frame.canvas = canvas = frame.createCanvas(parentFrame=None)
-        frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas)
+        self.stringVars[name] = sv
+        frame.canvas = canvas = frame.createCanvas(parentFrame=None,tabName=name)
+        frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas,tabName=name)
         frame.tree.setColorFromConfig()
-        indx = nb.index(nb.pagenames()[-1])
-        tab = nb.tab(indx)
-        tnum = str(len(nb.pagenames()))
-        tab.configure(text=tnum)
-        hull = nb.component('hull')
+        ###indx = nb.index(nb.pagenames()[-1])
+        ###tab = nb.tab(indx)
+        ###tnum = str(len(nb.pagenames()))
+        ###tab.configure(text=tnum)
+        tab = self.nb.tab(name)
+        hull = self.nb.component('hull')
         tab.bind('<Button-3>',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
-        return tree, nb.page(nb.pagenames()[-1])
+        return tree, tab ###, nb.page(nb.pagenames()[-1])
     #@nonl
     #@-node:ekr.20060213023839.32:constructTree
     #@+node:ekr.20060213023839.33:createBalloon
@@ -496,58 +494,49 @@ class chapterController:
         return zpane
     #@nonl
     #@-node:ekr.20060213023839.38:newEditorPane
+    #@+node:ekr.20060228113912.1:finishCreate
+    #@-node:ekr.20060228113912.1:finishCreate
     #@-node:ekr.20060213023839.29:Birth...
-    #@+node:ekr.20060228123056:Getters...
+    #@+node:ekr.20060228094838:Getters...
+    #@+node:ekr.20060228094838.1:getChapter
+    #@-node:ekr.20060228094838.1:getChapter
     #@+node:ekr.20060213023839.79:getStringVar
-    def getStringVar (self,name):
+    def getStringVar (self,pageName):
     
         '''return a Tk StrinVar that is a primary identifier.'''
         
-        if 1: # old code:
-        
-            nb = self.nb
-            index = nb.index(name)
-            page  = nb.page(index)
-            # g.trace(name,page,hasattr(page,'sv') and page.sv or 'no sv')
-            return page.sv
-            
-        else:
-            return self.stringVars.get(pageName)
+        cc = self
+        return cc.stringVars.get(pageName)
     #@nonl
     #@-node:ekr.20060213023839.79:getStringVar
-    #@+node:ekr.20060228123056.1:getChapter
-    def getChapter (self,pageName):
-        
-        return self.chapters.get(pageName)
-    #@nonl
-    #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060228123056.3:nextPageName
-    def nextPageName (self):
-        
-        n = str(len(self.nb.pagenames()) + 1)
-        g.trace(n,g.callers())
-        return n
-    #@nonl
-    #@-node:ekr.20060228123056.3:nextPageName
-    #@-node:ekr.20060228123056:Getters...
+    #@+node:ekr.20060228092227:nextPageNumber
+    #@-node:ekr.20060228092227:nextPageNumber
+    #@-node:ekr.20060228094838:Getters...
     #@+node:ekr.20060213023839.39:Called from decorated functions
     #@+node:ekr.20060213023839.40:createCanvas
-    def createCanvas (self,frame,parentFrame):
+    def createCanvas (self,frame,parentFrame,tabName='1'):
         
-        nb = self.nb
-        ### pname = self.nameMaker.next()
-        pname = self.nextPageName()
-        page = nb.add(pname)
-        indx = nb.index(pname)
-        tab = nb.tab(indx)
-        if indx == 0:
+        cc = self ; nb = cc.nb
+    
+        g.trace(tabName)
+    
+        if tabName == '1':
+            page = nb.add(tabName) # page is a Tk.Frame.
+            tab = nb.tab(tabName) # tab is a Tk.Button.
             tab.configure(background='grey',foreground='white')
+            cc.stringVars[tabName] = sv = Tk.StringVar()
+        else:
+            sv = cc.stringVars.get(tabName)
+            page = nb.page(tabName)
+            tab = nb.tab(tabName)
+    
         canvas = old_createCanvas(frame,page) # Substitute page for parentFrame.
+        
         hull = nb.component('hull')
         tab.bind('<Button-3>',lambda event: hull.tmenu.post(event.x_root,event.y_root))
-        page.sv = sv = Tk.StringVar()
-        self.createBalloon(tab,sv)
-        canvas.name = pname
+        cc.createBalloon(tab,sv)
+        canvas.name = tabName ####
+    
         return canvas
     #@nonl
     #@-node:ekr.20060213023839.40:createCanvas
@@ -578,9 +567,13 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.41:createControl
     #@+node:ekr.20060213023839.42:doDelete
-    def doDelete (self,p,newPosition):
+    def doDelete (self,p):
         
         c = self.c ### ; nb = self.nb ; pagenames = nb.pagenames()
+        
+        if p.hasVisBack(): newNode = p.visBack()
+        else: newNode = p.next() # _not_ p.visNext(): we are at the top level.
+        if not newNode: return
         
         # pagenames = [self.setStringVar(x).get().upper() for x in pagenames]
         # nbnam = nb.getcurselection()
@@ -588,6 +581,8 @@ class chapterController:
             # name = self.getStringVar(nb.getcurselection()).get().upper()
         # else: name = 'TRASH'
         # tsh = 'TRASH'
+        
+        name = self.nb.getcurselection()
         
         trash = 'Trash'
         # if name != tsh and tsh in pagenames:
@@ -599,9 +594,10 @@ class chapterController:
             trchapter.setVariables()
             p.moveAfter(trashnode)
             c.cChapter.setVariables()
-            c.selectPosition(newPosition)
+            c.selectPosition(newNode)
             return p
-        return old_doDelete(p,newPosition)
+        else:
+            return old_doDelete(p)
     #@nonl
     #@-node:ekr.20060213023839.42:doDelete
     #@+node:ekr.20060213023839.43:endEditLabel
@@ -673,12 +669,19 @@ class chapterController:
     #@+node:ekr.20060213023839.47:treeInit
     def treeInit (self,tree,c,frame,canvas):
         
+        # self is a chapters controller instance.
+        cc = self
+    
         ### sv = self.getStringVar(canvas.name)
         
         old_tree_init(tree,c,frame,canvas)
+        
+        g.trace(cc,cc.chapters.keys())
     
-        ### self.chapters [sv] = Chapter(c,tree,frame,canvas)
-        self.chapters ['1'] = Chapter(c,tree,frame,canvas)
+        if not cc.chapters:
+            # Create the initial chapter.
+            cc.chapters ['1'] = Chapter(c,tree,frame,canvas)
+            g.trace(g.dictToString(cc.chapters))
     #@nonl
     #@-node:ekr.20060213023839.47:treeInit
     #@+node:ekr.20060213023839.48:write_Leo_file & helper
@@ -815,10 +818,10 @@ class chapterController:
     #@+node:ekr.20060213023839.53:addChapter
     def addChapter (self,event=None):
         
-        nb = self.nb
-        cname = nb.getcurselection()
-        self.addPage()
-        self.renumber()
+        cc = self
+        cc.addPage()
+        cc.renumber()
+    #@nonl
     #@-node:ekr.20060213023839.53:addChapter
     #@+node:ekr.20060213023839.54:removeChapter & helper
     def removeChapter (self,event=None):
@@ -829,42 +832,43 @@ class chapterController:
         pn = nb.pagenames()
         for i, z in enumerate(pn):
             i += 1
+            def removeCallback(self=self,z=z):
+                self.removeOneChapter(name=z)
             # self.removeOneChapter(z)
-            rmenu.add_command(label=str(i),command=self.removeOneChapter)
+            rmenu.add_command(label=str(i),command=removeCallback)
     #@nonl
     #@+node:ekr.20060213023839.55:removeOneChapter
     def removeOneChapter (self,name):
         
-        c = self.c ; nb = self.nb
+        cc = self ; c = self.c ; nb = cc.nb
         if len(nb.pagenames()) == 1: return
-        ###sv = self.getStringVar(name)
-        ###chapter = self.chapters [sv]
+        
         chapter = self.getChapter(name)
+        g.trace(name,chapter)
+        p = chapter.rp
         tree = chapter.tree
-        vnd = chapter.rp
-        cvnd = c.cChapter.cp
+        old_tree = c.cChapter.tree
+        current = c.cChapter.cp
         c.beginUpdate()
         try:
-            otree = c.cChapter.tree
-            c.frame.tree = tree
-            if vnd:
-                v = vnd
-                nnd = vnd.next()
-                if nnd == None:
-                    nnd = vnd.insertAfter()
-                    vnd = None
-                v.doDelete(nnd)
-            c.frame.tree = otree
+            
+            c.frame.tree = chapter.tree
+            newNode = p and (p.visBack() or p.next()) # *not* p.visNext(): we are at the top level.
+            if newNode:
+                p.doDelete()
+                p.selectPosition(newNode)
+            c.frame.tree = old_tree
         finally:
             c.endUpdate()
         nb.delete(name)
-        if tree != otree:
-            c.selectPosition(cvnd)
-        if tree == otree:
+    
+        if tree == old_tree:
             pnames = nb.pagenames()
             nb.selectpage(pnames[0])
             c.selectPosition(c.currentPosition())
             c.redraw()
+        else:
+            c.selectPosition(current)
         self.renumber()
     #@nonl
     #@-node:ekr.20060213023839.55:removeOneChapter
@@ -878,7 +882,11 @@ class chapterController:
         fr = self.frame
         if not self.rnframes.has_key(frame):
             f = self.rnframes [frame] = Tk.Frame(frame)
-            e = Tk.Entry(f,background='white',textvariable=frame.sv)
+            if 1:
+                sv = self.getStringVar(pname)
+            else:
+                sv = frame.sv
+            e = Tk.Entry(f,background='white',textvariable=sv)
             b = Tk.Button(f,text="Close")
             e.pack(side='left')
             b.pack(side='right')
@@ -1273,13 +1281,13 @@ class chapterController:
         
         nb = self.nb ; pagenames = nb.pagenames()
         
-        g.trace(pagenames)
+        # g.trace(pagenames)
     
         for i, z in enumerate(pagenames):
             i = i + 1
             tab = nb.tab(z)
             tab.configure(text=str(i))
-    
+    #@nonl
     #@-node:ekr.20060213023839.76:renumber
     #@+node:ekr.20060213023839.77:getGoodPage & helper
     def getGoodPage (self,event,body):
@@ -1313,24 +1321,27 @@ class chapterController:
     #@+node:ekr.20060213023839.2:setTree
     def setTree (self,name):
     
-        c = self.c ; nb = self.nb
-        pindex = nb.index(name)
-        page = nb.page(pindex)
-        if not hasattr(page,'sv'):
+        cc = self ; c = cc.c
+        sv = cc.getStringVar(name)
+    
+        if not sv:
             # The page hasn't been fully created yet.
-            g.trace('******* no sv attr for page',g.callers(),color='red')
+            # This is *not* an error.
+            # g.trace('******* no sv attr for page',name,color='red')
             return None
-        ###sv = page.sv
-        ###chapter = self.chapters [sv]
         chapter = self.getChapter(name)
         chapter.makeCurrent()
-        frame = c.frame
-        frame.body.lastChapter = name
-        frame.body.lastPosition = chapter.cp
-        frame.body.l.configure(textvariable=sv)
-        tab = nb.tab(pindex)
+        
+        # Set body ivars.
+        body = c.frame.body
+        body.lastChapter = name
+        body.lastPosition = chapter.cp
+        body.l.configure(textvariable=sv)
+        
+        # Configure the tab.
+        tab = cc.nb.tab(name)
         tab.configure(background='grey',foreground='white')
-        self.activateEditor(frame.body)
+        self.activateEditor(c.frame.body)
     #@nonl
     #@-node:ekr.20060213023839.2:setTree
     #@+node:ekr.20060213023839.80:lowerPage
@@ -1403,7 +1414,10 @@ class chapterController:
             if num > 0:
                 ### sv = self.addPage(c,x).sv
                 page,pageName = self.addPage(x)
-                sv = page.sv
+                if 1:
+                    sv = self.getStringVar(pageName)
+                else:
+                    sv = page.sv
                 nb.nextpage()
                 cselection = nb.getcurselection()
             else:
@@ -1605,7 +1619,7 @@ class chapterController:
         tv1 = self.getStringVar(cselection)
         tv2 = self.getStringVar(name)
         chap1 = c.cChapter
-        ###chap2 = self.chapters [tv2]
+        ### chap2 = self.chapters [tv2]
         chap2 = self.getChapter(name)
         rp, tp, cp = chap2.rp, chap2.tp, chap2.cp
         chap2.rp, chap2.tp, chap2.cp = chap1.rp, chap1.tp, chap1.cp
@@ -1703,6 +1717,31 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.100:regexClone
     #@-node:ekr.20060213023839.97:Misc
+    #@+node:ekr.20060228123056:Getters...
+    #@+node:ekr.20060213023839.79:getStringVar
+    def getStringVar (self,pageName):
+    
+        '''return a Tk StrinVar that is a primary identifier.'''
+        
+        cc = self
+        return cc.stringVars.get(pageName)
+    #@nonl
+    #@-node:ekr.20060213023839.79:getStringVar
+    #@+node:ekr.20060228123056.1:getChapter
+    def getChapter (self,pageName):
+        
+        return self.chapters.get(pageName)
+    #@nonl
+    #@-node:ekr.20060228123056.1:getChapter
+    #@+node:ekr.20060228123056.3:nextPageName
+    def nextPageName (self):
+        
+        n = str(len(self.nb.pagenames()) + 1)
+        g.trace(n,self.nb.pagenames(),g.callers())
+        return n
+    #@nonl
+    #@-node:ekr.20060228123056.3:nextPageName
+    #@-node:ekr.20060228123056:Getters...
     #@-others
 #@nonl
 #@-node:ekr.20060213023839.28:class chapterController

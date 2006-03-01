@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="248" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="152" left="376" height="660" width="800"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="249" clone_windows="0"/>
+<globals body_outline_ratio="0.492424242424">
+	<global_window_position top="40" left="378" height="660" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -192,141 +192,23 @@
 </v>
 </v>
 <v t="ekr.20060228081628"><vh>To do</vh></v>
-<v t="ekr.20060213023839.3"><vh>chapters2bad.py</vh>
-<v t="ekr.20060213023839.8"><vh>Module level</vh>
-<v t="ekr.20060213023839.4"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
-<v t="ekr.20060213023839.5"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-<v t="ekr.20060213023839.7"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20060213023839.1"><vh>&lt;&lt; remember the originals for decorated methods &gt;&gt;</vh></v>
-<v t="ekr.20060213023839.9"><vh>init</vh>
-<v t="ekr.20060213023839.10"><vh>&lt;&lt; override various methods &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060228113912"><vh>afterCreate</vh></v>
-<v t="ekr.20060213023839.11"><vh>decorated Leo functions</vh>
-<v t="ekr.20060213023839.12"><vh>new_createCanvas (leoTkinterFrame)  (creates chapterControllers)</vh></v>
-<v t="ekr.20060213023839.13"><vh>new_os_path_dirname (leoGlobals) (ok)</vh></v>
-<v t="ekr.20060213023839.14"><vh>new_createControl (leoTkinterBody)</vh></v>
-<v t="ekr.20060213023839.15"><vh>new_doDelete (position)</vh></v>
-<v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
-<v t="ekr.20060213023839.17"><vh>new_getLeoFile (fileCommands)</vh></v>
-<v t="ekr.20060213023839.18"><vh>new_open (fileCommands)</vh></v>
-<v t="ekr.20060213023839.19"><vh>new_select (leoTkinterTree)</vh></v>
-<v t="ekr.20060213023839.20"><vh>new_tree_init (leoTkinterTree</vh></v>
-<v t="ekr.20060213023839.21"><vh>new_write_Leo_file</vh></v>
-</v>
-</v>
-<v t="ekr.20060213023839.23"><vh>class Chapter</vh>
-<v t="ekr.20060213023839.24"><vh>__init__ (Chapter)</vh></v>
-<v t="ekr.20060213023839.25"><vh>_saveInfo</vh></v>
-<v t="ekr.20060213023839.26"><vh>setVariables</vh></v>
-<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
-</v>
-<v t="ekr.20060213023839.28"><vh>class chapterController</vh>
-<v t="ekr.20060213023839.29"><vh>Birth...</vh>
+<v t="ekr.20060301092832"><vh>@url http://pmw.sourceforge.net/doc/NoteBook.html</vh></v>
+<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060228123606" a="E"><vh>Recent</vh>
 <v t="ekr.20060213023839.30"><vh> ctor chapterController</vh></v>
+<v t="ekr.20060228123056.1"><vh>getChapter</vh></v>
 <v t="ekr.20060213023839.31"><vh>addPage</vh></v>
-<v t="ekr.20060213023839.32"><vh>constructTree</vh></v>
-<v t="ekr.20060213023839.33"><vh>createBalloon</vh></v>
-<v t="ekr.20060213023839.34"><vh>createNoteBook</vh></v>
-<v t="ekr.20060213023839.35"><vh>createPanedWidget</vh></v>
-<v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
-<v t="ekr.20060213023839.38"><vh>newEditorPane</vh></v>
-<v t="ekr.20060228113912.1"><vh>finishCreate</vh></v>
-</v>
-<v t="ekr.20060228094838"><vh>Getters...</vh>
-<v t="ekr.20060228094838.1"><vh>getChapter</vh></v>
+<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
 <v t="ekr.20060213023839.79"><vh>getStringVar</vh></v>
-<v t="ekr.20060228092227"><vh>nextPageNumber</vh></v>
-</v>
-<v t="ekr.20060213023839.39"><vh>Called from decorated functions</vh>
-<v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
-<v t="ekr.20060213023839.41"><vh>createControl</vh></v>
 <v t="ekr.20060213023839.42"><vh>doDelete</vh></v>
-<v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
-<v t="ekr.20060213023839.44"><vh>getLeoFile</vh></v>
-<v t="ekr.20060213023839.45"><vh>select</vh></v>
-<v t="ekr.20060213023839.46"><vh>open</vh></v>
-<v t="ekr.20060213023839.47"><vh>treeInit</vh></v>
-<v t="ekr.20060213023839.48"><vh>write_Leo_file &amp; helper</vh>
-<v t="ekr.20060213023839.49"><vh>writeChapters</vh></v>
-</v>
-</v>
-<v t="ekr.20060213023839.50"><vh>tab menu stuff</vh>
-<v t="ekr.20060213023839.51"><vh>makeTabMenu</vh></v>
-<v t="ekr.20060213023839.52"><vh>tab callbacks</vh>
 <v t="ekr.20060213023839.53"><vh>addChapter</vh></v>
 <v t="ekr.20060213023839.54"><vh>removeChapter &amp; helper</vh>
 <v t="ekr.20060213023839.55"><vh>removeOneChapter</vh></v>
 </v>
-<v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
-<v t="ekr.20060213023839.57"><vh>addTrashBarrel</vh></v>
-<v t="ekr.20060213023839.58"><vh>setupMenu</vh></v>
-<v t="ekr.20060213023839.59"><vh>importLeoFile</vh></v>
-<v t="ekr.20060213023839.60"><vh>exportLeoFile</vh></v>
-<v t="ekr.20060213023839.61"><vh>doPDFConversion &amp; helper</vh>
-<v t="ekr.20060213023839.62"><vh>&lt;&lt; define otherPages callback &gt;&gt;</vh></v>
-<v t="ekr.20060213023839.63"><vh>_changeTreeToPDF</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20060213023839.64"><vh>Multi-Editor stuff</vh>
-<v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
-<v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
-<v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
-<v t="ekr.20060213023839.68"><vh>addHeading</vh></v>
-</v>
-<v t="ekr.20060213023839.69"><vh>Indexing</vh>
-<v t="ekr.20060213023839.70"><vh>viewIndex</vh>
-<v t="ekr.20060213023839.71"><vh>&lt;&lt; define scTo callback &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060213023839.72"><vh>buildIndex</vh>
-<v t="ekr.20060213023839.73"><vh>&lt;&lt; def callbacks &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20060213023839.74"><vh>regexViewIndex</vh></v>
-</v>
-<v t="ekr.20060213023839.75"><vh>Chapter-Notebook ops</vh>
-<v t="ekr.20060213023839.76"><vh>renumber</vh></v>
-<v t="ekr.20060213023839.77"><vh>getGoodPage &amp; helper</vh>
-<v t="ekr.20060213023839.78"><vh>checkChapterValidity</vh></v>
-</v>
-<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
-<v t="ekr.20060213023839.80"><vh>lowerPage</vh></v>
-<v t="ekr.20060213023839.81"><vh>walkChapters</vh></v>
-</v>
-<v t="ekr.20060213023839.82"><vh>opening and closing</vh>
-<v t="ekr.20060213023839.83"><vh>opening</vh>
-<v t="ekr.20060213023839.84"><vh>openChaptersFile</vh></v>
-<v t="ekr.20060213023839.85"><vh>insertChapters</vh></v>
-</v>
-<v t="ekr.20060213023839.86"><vh>closing</vh>
-<v t="ekr.20060213023839.87"><vh>getMakeStringIO</vh></v>
-<v t="ekr.20060213023839.88"><vh>zipChapters</vh></v>
-</v>
-</v>
-<v t="ekr.20060213023839.89"><vh>operation( node ) to Chapter</vh>
-<v t="ekr.20060213023839.90"><vh>cloneToChapter</vh></v>
-<v t="ekr.20060213023839.91"><vh>moveToChapter</vh></v>
-<v t="ekr.20060213023839.92"><vh>copyToChapter</vh></v>
-<v t="ekr.20060213023839.93"><vh>makeNodeIntoChapter</vh></v>
-</v>
-<v t="ekr.20060213023839.94"><vh>Conversions</vh>
-<v t="ekr.20060213023839.95"><vh>conversionToSimple</vh></v>
-<v t="ekr.20060213023839.96"><vh>conversionToChapters</vh></v>
-</v>
-<v t="ekr.20060213023839.97"><vh>Misc</vh>
-<v t="ekr.20060213023839.98"><vh>swapChapters</vh></v>
-<v t="ekr.20060213023839.99"><vh>emptyTrash</vh></v>
-<v t="ekr.20060213023839.100"><vh>regexClone</vh>
-<v t="ekr.20060213023839.101"><vh>&lt;&lt; define cloneWalk callback &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20060213023839.3" a="V"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060228123606"><vh>Recent</vh>
-<v t="ekr.20060213023839.30"><vh> ctor chapterController</vh></v>
-<v t="ekr.20060213023839.31"><vh>addPage</vh></v>
-<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+<v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
+<v t="ekr.20060213023839.32"><vh>constructTree</vh></v>
+<v t="ekr.20060213023839.47"><vh>treeInit</vh></v>
+<v t="ekr.20060213023839.24" a="V"><vh>__init__ (Chapter)</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1648,24 +1530,27 @@ couldn't think of any parent node to group these under.
     Story.append( PageBreak() )</t>
 <t tx="ekr.20060213023839.2">def setTree (self,name):
 
-    c = self.c ; nb = self.nb
-    pindex = nb.index(name)
-    page = nb.page(pindex)
-    if not hasattr(page,'sv'):
+    cc = self ; c = cc.c
+    sv = cc.getStringVar(name)
+
+    if not sv:
         # The page hasn't been fully created yet.
-        g.trace('******* no sv attr for page',g.callers(),color='red')
+        # This is *not* an error.
+        # g.trace('******* no sv attr for page',name,color='red')
         return None
-    ###sv = page.sv
-    ###chapter = self.chapters [sv]
     chapter = self.getChapter(name)
     chapter.makeCurrent()
-    frame = c.frame
-    frame.body.lastChapter = name
-    frame.body.lastPosition = chapter.cp
-    frame.body.l.configure(textvariable=sv)
-    tab = nb.tab(pindex)
+    
+    # Set body ivars.
+    body = c.frame.body
+    body.lastChapter = name
+    body.lastPosition = chapter.cp
+    body.l.configure(textvariable=sv)
+    
+    # Configure the tab.
+    tab = cc.nb.tab(name)
     tab.configure(background='grey',foreground='white')
-    self.activateEditor(frame.body)</t>
+    self.activateEditor(c.frame.body)</t>
 <t tx="ekr.20060213023839.22">chapters = {}
 editorNames = {}
 frames = {}
@@ -1673,6 +1558,30 @@ iscStringIO = False
 notebooks = {}
 pbodies = {}
 twidgets = {}</t>
+<t tx="ekr.20060213023839.24">def __init__ (self,c,tree,frame,canvas):
+    
+    # g.trace('Chapter',c.fileName())
+
+    # Set the ivars.
+    self.c = c
+    self.tree = tree
+    self.frame = frame
+    self.canvas = canvas
+    self.treeBar = frame.treeBar
+
+    if hasattr(c,'cChapter'):
+        self.cp = c._currentPosition or c.nullPosition()
+        self.tp = c._topPosition or c.nullPosition()
+        self.rp = c._rootPosition or c.nullPosition()
+    else:
+        g.trace('Creating new root',c)
+        c.cChapter = self
+        t = leoNodes.tnode('','New Headline')
+        v = leoNodes.vnode(c,t)
+        p = leoNodes.position(c,v,[])
+        self.cp = p.copy()
+        self.rp = p.copy()
+        self.tp = p.copy()</t>
 <t tx="ekr.20060213023839.30">def __init__ (self,c,frame,parentFrame):
     
     self.c = c
@@ -1681,28 +1590,50 @@ twidgets = {}</t>
 
     self.chapters = {} # Keys are tab names, (no longer stringVars.)
     self.editorNames = {}
-    
     self.pbodies = {}
     self.rnframes = {}
+    self.stringVars = {} # Keys are tab names, values are stringVars.
     self.twidgets = {}
-    
 
     self.createNoteBook(parentFrame) # sets self.nb</t>
 <t tx="ekr.20060213023839.31">def addPage (self,pageName=None):
 
     c = self.c ### ; frame = self.frame ; nb = self.nb
 
-    ###name = name or str(len(nb.pagenames())+1)
     if not pageName: pageName = self.nextPageName()
-    self.nb.add(pageName)
-    ####tab = nb.tab(pageName)
-    o_chapter = c.cChapter
     g.trace(pageName)
+    self.nb.add(pageName)
+    self.chapters [pageName] = Chapter(c,c.frame.tree,c.frame,c.frame.tree.canvas)
+    g.trace(g.dictToString(self.chapters))
+    g.trace(pageName,self.nb.pagenames())
+    o_chapter = c.cChapter
     otree, page = self.constructTree(self.frame,pageName)
     c.cChapter.makeCurrent()
     o_chapter.makeCurrent()
     return page,pageName
 </t>
+<t tx="ekr.20060213023839.32">def constructTree (self,frame,name):
+
+    c = self.c ### ; nb = self.nb
+    canvas = treeBar = tree = None
+    if frame.canvas:
+        canvas = frame.canvas
+        treeBar = frame.treeBar
+        tree = frame.tree
+    sv = Tk.StringVar()
+    sv.set(name)
+    self.stringVars[name] = sv
+    frame.canvas = canvas = frame.createCanvas(parentFrame=None,tabName=name)
+    frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas,tabName=name)
+    frame.tree.setColorFromConfig()
+    ###indx = nb.index(nb.pagenames()[-1])
+    ###tab = nb.tab(indx)
+    ###tnum = str(len(nb.pagenames()))
+    ###tab.configure(text=tnum)
+    tab = self.nb.tab(name)
+    hull = self.nb.component('hull')
+    tab.bind('&lt;Button-3&gt;',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
+    return tree, tab ###, nb.page(nb.pagenames()[-1])</t>
 <t tx="ekr.20060213023839.36">def makeNameMaker (self):
 
     '''Create a numbering mechanism for tabs.'''
@@ -1715,6 +1646,131 @@ twidgets = {}</t>
             yield str(i)
 
     return nameMaker()</t>
+<t tx="ekr.20060213023839.40">def createCanvas (self,frame,parentFrame,tabName='1'):
+    
+    cc = self ; nb = cc.nb
+
+    g.trace(tabName)
+
+    if tabName == '1':
+        page = nb.add(tabName) # page is a Tk.Frame.
+        tab = nb.tab(tabName) # tab is a Tk.Button.
+        tab.configure(background='grey',foreground='white')
+        cc.stringVars[tabName] = sv = Tk.StringVar()
+    else:
+        sv = cc.stringVars.get(tabName)
+        page = nb.page(tabName)
+        tab = nb.tab(tabName)
+
+    canvas = old_createCanvas(frame,page) # Substitute page for parentFrame.
+    
+    hull = nb.component('hull')
+    tab.bind('&lt;Button-3&gt;',lambda event: hull.tmenu.post(event.x_root,event.y_root))
+    cc.createBalloon(tab,sv)
+    canvas.name = tabName ####
+
+    return canvas</t>
+<t tx="ekr.20060213023839.42">def doDelete (self,p):
+    
+    c = self.c ### ; nb = self.nb ; pagenames = nb.pagenames()
+    
+    if p.hasVisBack(): newNode = p.visBack()
+    else: newNode = p.next() # _not_ p.visNext(): we are at the top level.
+    if not newNode: return
+    
+    # pagenames = [self.setStringVar(x).get().upper() for x in pagenames]
+    # nbnam = nb.getcurselection()
+    # if nbnam != None:
+        # name = self.getStringVar(nb.getcurselection()).get().upper()
+    # else: name = 'TRASH'
+    # tsh = 'TRASH'
+    
+    name = self.nb.getcurselection()
+    
+    trash = 'Trash'
+    # if name != tsh and tsh in pagenames:
+    if name != trash and trash in self.nb.pagenames():
+        index = pagenames.index(tsh)
+        ### trchapter = self.chapters [self.getStringVar(index)]
+        trchapter = self.getChapter(trash)
+        trashnode = trchapter.rp
+        trchapter.setVariables()
+        p.moveAfter(trashnode)
+        c.cChapter.setVariables()
+        c.selectPosition(newNode)
+        return p
+    else:
+        return old_doDelete(p)</t>
+<t tx="ekr.20060213023839.47">def treeInit (self,tree,c,frame,canvas):
+    
+    # self is a chapters controller instance.
+    cc = self
+
+    ### sv = self.getStringVar(canvas.name)
+    
+    old_tree_init(tree,c,frame,canvas)
+    
+    g.trace(cc,cc.chapters.keys())
+
+    if not cc.chapters:
+        # Create the initial chapter.
+        cc.chapters ['1'] = Chapter(c,tree,frame,canvas)
+        g.trace(g.dictToString(cc.chapters))</t>
+<t tx="ekr.20060213023839.53">def addChapter (self,event=None):
+    
+    cc = self
+    cc.addPage()
+    cc.renumber()</t>
+<t tx="ekr.20060213023839.54">def removeChapter (self,event=None):
+
+    c = self.c ; nb = self.nb ; rmenu = self.rmenu
+
+    rmenu.delete(0,'end')
+    pn = nb.pagenames()
+    for i, z in enumerate(pn):
+        i += 1
+        def removeCallback(self=self,z=z):
+            self.removeOneChapter(name=z)
+        # self.removeOneChapter(z)
+        rmenu.add_command(label=str(i),command=removeCallback)</t>
+<t tx="ekr.20060213023839.55">def removeOneChapter (self,name):
+    
+    cc = self ; c = self.c ; nb = cc.nb
+    if len(nb.pagenames()) == 1: return
+    
+    chapter = self.getChapter(name)
+    g.trace(name,chapter)
+    p = chapter.rp
+    tree = chapter.tree
+    old_tree = c.cChapter.tree
+    current = c.cChapter.cp
+    c.beginUpdate()
+    try:
+        
+        c.frame.tree = chapter.tree
+        newNode = p and (p.visBack() or p.next()) # *not* p.visNext(): we are at the top level.
+        if newNode:
+            p.doDelete()
+            p.selectPosition(newNode)
+        c.frame.tree = old_tree
+    finally:
+        c.endUpdate()
+    nb.delete(name)
+
+    if tree == old_tree:
+        pnames = nb.pagenames()
+        nb.selectpage(pnames[0])
+        c.selectPosition(c.currentPosition())
+        c.redraw()
+    else:
+        c.selectPosition(current)
+    self.renumber()</t>
+<t tx="ekr.20060213023839.79">def getStringVar (self,pageName):
+
+    '''return a Tk StrinVar that is a primary identifier.'''
+    
+    cc = self
+    return cc.stringVars.get(pageName)</t>
 <t tx="ekr.20060228072530">@ignore
 
 from __future__ import generators
@@ -3414,7 +3470,9 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-* Remove most (all?) calls to getStringVar.
+1. New chapters must have a root node.
+
+** cc.renumber must update cc.stringVars dict!
 
 - What should the type of lastNode be? v or p??  See newSelect.
 
@@ -3422,38 +3480,17 @@ swing.JOptionPane.YES_NO_OPTION )
 
 - Find/Change does not appear to work.
 
-- Close box in window crashes the plugin.</t>
+- Close box in window crashes the plugin.
+
+*** Build in support for Tabbed outline into Leo's core.</t>
 <t tx="ekr.20060228082602"></t>
 <t tx="ekr.20060228085204"></t>
 <t tx="ekr.20060228085204.1">c.save()
 c.redraw_now() # Must be done here.</t>
-<t tx="ekr.20060228092227">def nextPageName (self):
-    
-    n = str(len(self.nb.pagenames()) + 1)
-    g.trace(n)
-    return n</t>
-<t tx="ekr.20060228094838"></t>
-<t tx="ekr.20060228094838.1">def getChapter (self,pageName):
+<t tx="ekr.20060228123056.1">def getChapter (self,pageName):
     
     return self.chapters.get(pageName)</t>
-<t tx="ekr.20060228113912">def afterCreate (tag, keys):
-    
-    c = keys.get('c')
-    
-    g.trace(c)
-    
-    cc = controllers.get(c)
-    cc.finishCreate()</t>
-<t tx="ekr.20060228113912.1">def finishCreate (self):
-    
-    c = self.c
-    
-    pageName = '1'
-    g.trace()
-    self.stringVars[pageName] = Tk.StringVar()
-    self.chapters [pageName] = Chapter(c,c.frame.tree,c.frame,c.frame.tree.canvas)
-    self.inited = True
-    self.setTree(pageName)</t>
 <t tx="ekr.20060228123606"></t>
+<t tx="ekr.20060301092832"></t>
 </tnodes>
 </leo_file>
