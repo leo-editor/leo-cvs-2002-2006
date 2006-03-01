@@ -160,7 +160,7 @@ def new_createCanvas (self,parentFrame,tabName='1'):
     # self is c.frame
     c = self.c
     if g.app.unitTesting:
-        return old_createCanvas(self,page)
+        return old_createCanvas(self,parentFrame)
     else:
         global controllers
         cc = controllers.get(self.c)
@@ -289,7 +289,7 @@ class Chapter:
        It enables the tracking of Chapters tree information.'''
        
     #@    @+others
-    #@+node:ekr.20060213023839.24:__init__ (Chapter)
+    #@+node:ekr.20060213023839.24: ctor: Chapter
     def __init__ (self,c,tree,frame,canvas):
         
         # g.trace('Chapter',c.fileName())
@@ -315,7 +315,7 @@ class Chapter:
             self.rp = p.copy()
             self.tp = p.copy()
     #@nonl
-    #@-node:ekr.20060213023839.24:__init__ (Chapter)
+    #@-node:ekr.20060213023839.24: ctor: Chapter
     #@+node:ekr.20060213023839.25:_saveInfo
     def _saveInfo (self):
     
@@ -359,23 +359,24 @@ class chapterController:
     
     #@    @+others
     #@+node:ekr.20060213023839.29:Birth...
-    #@+node:ekr.20060213023839.30: ctor chapterController
+    #@+node:ekr.20060213023839.30: ctor: chapterController
     def __init__ (self,c,frame,parentFrame):
         
         self.c = c
         self.frame = frame
         self.parentFrame = parentFrame
+        
     
         self.chapters = {} # Keys are tab names, (no longer stringVars.)
-        self.editorNames = {}
-        self.pbodies = {}
+        ### self.editorNames = {} # Keys are Pmw.NoteBooks, values are names.
+        self.panedBody = None # The present Tk.PanedWidget.
         self.rnframes = {}
         self.stringVars = {} # Keys are tab names, values are stringVars.
-        self.twidgets = {}
+        ### self.textWidgets = [] # A list of Tk.Text widgets used for editors.
     
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
-    #@-node:ekr.20060213023839.30: ctor chapterController
+    #@-node:ekr.20060213023839.30: ctor: chapterController
     #@+node:ekr.20060213023839.31:addPage
     def addPage (self,pageName=None):
     
@@ -396,7 +397,7 @@ class chapterController:
     #@+node:ekr.20060213023839.32:constructTree
     def constructTree (self,frame,name):
     
-        c = self.c ### ; nb = self.nb
+        c = self.c ; nb = self.nb
         canvas = treeBar = tree = None
         if frame.canvas:
             canvas = frame.canvas
@@ -412,8 +413,8 @@ class chapterController:
         ###tab = nb.tab(indx)
         ###tnum = str(len(nb.pagenames()))
         ###tab.configure(text=tnum)
-        tab = self.nb.tab(name)
-        hull = self.nb.component('hull')
+        tab = nb.tab(name)
+        hull = nb.component('hull')
         tab.bind('<Button-3>',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
         return tree, tab ###, nb.page(nb.pagenames()[-1])
     #@nonl
@@ -461,19 +462,20 @@ class chapterController:
         '''Construct a new panedwidget for a frame.'''
     
         c = self.c
-        pbody = Pmw.PanedWidget(parentFrame,orient='horizontal')
-        pbody.pack(expand=1,fill='both')
-        self.pbodies [c] = pbody
+        self.panedBody = panedBody = Pmw.PanedWidget(parentFrame,orient='horizontal')
+        g.trace('creating',panedBody)
+        panedBody.pack(expand=1,fill='both')
         parentFrame = self.newEditorPane()
         return parentFrame
     #@nonl
     #@-node:ekr.20060213023839.35:createPanedWidget
-    #@+node:ekr.20060213023839.37:newEditor
+    #@+node:ekr.20060213023839.37:newEditor & helper
     def newEditor (self):
     
-        c = self.c ; frame = self.frame ; nb = self.nb ; pbody = self.pbodies[c]
-        zpane = self.newEditorPane()
-        af = leoTkinterBody(frame,zpane)
+        cc = self ; c = cc.c ; nb = cc.nb
+        pane = self.newEditorPane()
+        af = leoTkinterBody(self.frame,pane)
+        g.trace(c.widget_name(af))
         c.frame.bodyCtrl = af.bodyCtrl
         af.setFontFromConfig()
         af.createBindings()
@@ -481,25 +483,24 @@ class chapterController:
         cname = nb.getcurselection()
         af.l.configure(textvariable=self.getStringVar(cname))
         af.r.configure(text=c.currentPosition().headString())
+        af.lastPosition = c.currentPosition()
+        cc.activateEditor(af)
     #@nonl
-    #@-node:ekr.20060213023839.37:newEditor
     #@+node:ekr.20060213023839.38:newEditorPane
     def newEditorPane (self):
         
         c = self.c
-        names = self.pbodies [c].panes()
-        name = names and str(int(names[-1])+1) or '1'
-        zpane = self.pbodies [c].add(name)
-        self.editorNames [zpane] = name
-        return zpane
+        panes = self.panedBody.panes()
+        name = panes and str(int(panes[-1])+1) or '1'
+        pane = self.panedBody.add(name)
+        g.trace(repr(pane))
+        ### self.editorNames [pane] = name
+        return pane
     #@nonl
     #@-node:ekr.20060213023839.38:newEditorPane
-    #@+node:ekr.20060228113912.1:finishCreate
-    #@-node:ekr.20060228113912.1:finishCreate
+    #@-node:ekr.20060213023839.37:newEditor & helper
     #@-node:ekr.20060213023839.29:Birth...
-    #@+node:ekr.20060228094838:Getters...
-    #@+node:ekr.20060228094838.1:getChapter
-    #@-node:ekr.20060228094838.1:getChapter
+    #@+node:ekr.20060228123056:Getters...
     #@+node:ekr.20060213023839.79:getStringVar
     def getStringVar (self,pageName):
     
@@ -509,9 +510,21 @@ class chapterController:
         return cc.stringVars.get(pageName)
     #@nonl
     #@-node:ekr.20060213023839.79:getStringVar
-    #@+node:ekr.20060228092227:nextPageNumber
-    #@-node:ekr.20060228092227:nextPageNumber
-    #@-node:ekr.20060228094838:Getters...
+    #@+node:ekr.20060228123056.1:getChapter
+    def getChapter (self,pageName):
+        
+        return self.chapters.get(pageName)
+    #@nonl
+    #@-node:ekr.20060228123056.1:getChapter
+    #@+node:ekr.20060228123056.3:nextPageName
+    def nextPageName (self):
+        
+        n = str(len(self.nb.pagenames()) + 1)
+        # g.trace(n,self.nb.pagenames(),g.callers())
+        return n
+    #@nonl
+    #@-node:ekr.20060228123056.3:nextPageName
+    #@-node:ekr.20060228123056:Getters...
     #@+node:ekr.20060213023839.39:Called from decorated functions
     #@+node:ekr.20060213023839.40:createCanvas
     def createCanvas (self,frame,parentFrame,tabName='1'):
@@ -544,35 +557,40 @@ class chapterController:
     def createControl(self,body,frame,parentFrame):
     
         c = self.c ; nb = self.nb
-        if c not in self.pbodies:
+        g.trace(self.panedBody)
+        if not self.panedBody:
             parentFrame = self.createPanedWidget(parentFrame)
-        pbody = self.pbodies [c]
+        panedBody = self.panedBody
+        # l and r are the right and left tabs, *not* the editors.
         l, r = self.addHeading(parentFrame)
         ctrl = old_createControl(body,frame,parentFrame)
-        def focusInCallback(event,self=self,frame=frame):
-            return self.getGoodPage(event,frame.body)
-        ctrl.bind("<FocusIn>",focusInCallback,'+')
-        i = 1.0 / len(pbody.panes())
-        for z in pbody.panes():
-            pbody.configurepane(z,size=i)
-        pbody.updatelayout()
+        
+        if 0: # Create a focus-in event.
+            def focusInCallback(event,self=self,frame=frame):
+                return self.getGoodPage(event,frame.body)
+            ctrl.bind("<FocusIn>",focusInCallback,'+')
+        
+        i = 1.0 / len(panedBody.panes())
+        for z in panedBody.panes():
+            panedBody.configurepane(z,size=i)
+        panedBody.updatelayout()
         frame.body.l = l
         frame.body.r = r
-        frame.body.editorName = self.editorNames [parentFrame]
-        if frame not in self.twidgets:
-            self.twidgets [frame] = []
-        self.twidgets [frame].append(frame.body)
-        l.configure(textvariable=self.getStringVar(nb.getcurselection()))
+    
+        ###if frame.body not in self.textWidgets:
+        ###    self.textWidgets.append(frame.body)
+    
+        ### l.configure(textvariable=self.getStringVar(nb.getcurselection()))
         return ctrl
     #@nonl
-    #@-node:ekr.20060213023839.41:createControl
     #@+node:ekr.20060213023839.42:doDelete
     def doDelete (self,p):
         
-        c = self.c ### ; nb = self.nb ; pagenames = nb.pagenames()
+        c = self.c ; nb = self.nb
         
-        if p.hasVisBack(): newNode = p.visBack()
-        else: newNode = p.next() # _not_ p.visNext(): we are at the top level.
+        newNode = p and (p.visBack() or p.next())
+            # *not* p.visNext(): we are at the top level.
+        
         if not newNode: return
         
         # pagenames = [self.setStringVar(x).get().upper() for x in pagenames]
@@ -582,11 +600,11 @@ class chapterController:
         # else: name = 'TRASH'
         # tsh = 'TRASH'
         
-        name = self.nb.getcurselection()
+        name = nb.getcurselection()
         
         trash = 'Trash'
         # if name != tsh and tsh in pagenames:
-        if name != trash and trash in self.nb.pagenames():
+        if name != trash and trash in nb.pagenames():
             index = pagenames.index(tsh)
             ### trchapter = self.chapters [self.getStringVar(index)]
             trchapter = self.getChapter(trash)
@@ -604,9 +622,11 @@ class chapterController:
     def endEditLabel (self,tree):
         
         c = self.c ; p = c.currentPosition() ; h = p.headString()
+        
+        if 0:
     
-        if p and h and hasattr(c.frame.body,'r'):
-             c.frame.body.r.configure(text=h)
+            if p and h and hasattr(c.frame.body,'r'):
+                c.frame.body.r.configure(text=h)
     
         return old_editLabel(tree)
     #@nonl
@@ -719,6 +739,7 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.49:writeChapters
     #@-node:ekr.20060213023839.48:write_Leo_file & helper
+    #@-node:ekr.20060213023839.41:createControl
     #@-node:ekr.20060213023839.39:Called from decorated functions
     #@+node:ekr.20060213023839.50:tab menu stuff
     #@+node:ekr.20060213023839.51:makeTabMenu
@@ -730,16 +751,10 @@ class chapterController:
         widget.tmenu = tmenu
         tmenu.add_command(command=tmenu.unpost)
         tmenu.add_separator()
-        #ac = self.getAddChapter()
-        #tmenu.add_command(label='Add Chapter',command=ac)
         tmenu.add_command(label='Add Chapter',command=self.addChapter)
         self.rmenu = rmenu = Tk.Menu(tmenu,tearoff=0)
-        #remove = self.getRemove(rmenu)
-        #rmenu.configure(postcommand=remove)
         rmenu.configure(postcommand=self.removeChapter)
         tmenu.add_cascade(menu=rmenu,label="Remove Chapter")
-        #rename = self.getRename()
-        #tmenu.add_command(label="Add/Change Title",command=rename)
         tmenu.add_command(label="Add/Change Title",command=self.renameChapter)
         opmenu = Tk.Menu(tmenu,tearoff=0)
         tmenu.add_cascade(menu=opmenu,label='Node-Chapter Ops')
@@ -754,8 +769,6 @@ class chapterController:
         opmenu.add_cascade(menu=swapmenu,label='Swap With Chapter')
         opmenu.add_cascade(menu=searchmenu,label='Search and Clone To')
         opmenu.add_command(label="Make Node Into Chapter",command=self.makeNodeIntoChapter)
-        #mkTrash = self.getMakeTrash()
-        #opmenu.add_command(label="Add Trash Barrel",command=self.mkTrash)
         opmenu.add_command(label="Add Trash Barrel",command=self.addTrashBarrel)
         #lambda c = c: mkTrash(c))
         opmenu.add_command(label='Empty Trash Barrel',command=self.emptyTrash)
@@ -834,7 +847,6 @@ class chapterController:
             i += 1
             def removeCallback(self=self,z=z):
                 self.removeOneChapter(name=z)
-            # self.removeOneChapter(z)
             rmenu.add_command(label=str(i),command=removeCallback)
     #@nonl
     #@+node:ekr.20060213023839.55:removeOneChapter
@@ -844,19 +856,18 @@ class chapterController:
         if len(nb.pagenames()) == 1: return
         
         chapter = self.getChapter(name)
-        g.trace(name,chapter)
+        # g.trace(name,chapter)
         p = chapter.rp
         tree = chapter.tree
         old_tree = c.cChapter.tree
         current = c.cChapter.cp
         c.beginUpdate()
         try:
-            
             c.frame.tree = chapter.tree
             newNode = p and (p.visBack() or p.next()) # *not* p.visNext(): we are at the top level.
             if newNode:
                 p.doDelete()
-                p.selectPosition(newNode)
+                c.selectPosition(newNode)
             c.frame.tree = old_tree
         finally:
             c.endUpdate()
@@ -882,17 +893,15 @@ class chapterController:
         fr = self.frame
         if not self.rnframes.has_key(frame):
             f = self.rnframes [frame] = Tk.Frame(frame)
-            if 1:
-                sv = self.getStringVar(pname)
-            else:
-                sv = frame.sv
+            sv = self.getStringVar(name)
+            ### sv = frame.sv
             e = Tk.Entry(f,background='white',textvariable=sv)
             b = Tk.Button(f,text="Close")
             e.pack(side='left')
             b.pack(side='right')
-            def change ():
+            def changeCallback ():
                 f.pack_forget()
-            b.configure(command=change)
+            b.configure(command=changeCallback)
         else:
             f = self.rnframes [frame]
             if f.winfo_viewable(): return None
@@ -1080,8 +1089,9 @@ class chapterController:
     
         '''Activate an editor.'''
         
-        p = body.lastPosition ; h = p.headString()
-        # g.trace(h,body,hasattr(body,'r')and body.r,g.callers())
+        cc = self ; c = cc.c ;
+        p = body.lastPosition ; h = p and p.headString()
+        g.trace(c.widget_name(body))
         body.r.configure(text=h)
         ip = body.lastPosition.t.insertSpot
         body.deleteAllText()
@@ -1094,17 +1104,23 @@ class chapterController:
     #@+node:ekr.20060213023839.67:removeEditor
     def removeEditor (self):
         
-        c = self.c
-        pbody = self.pbodies [c]
-        if len(pbody.panes()) == 1: return None
-        body = c.frame.body
-        pbody.delete(body.editorName)
-        pbody.updatelayout()
-        panes = pbody.panes()
-        self.twidgets [c.frame].remove(body)
-        nBody = self.twidgets [c.frame] [0]
-        nBody.bodyCtrl.focus_set()
-        nBody.bodyCtrl.update_idletasks()
+        c = self.c ; panedBody = self.panedBody
+        
+        if len(panedBody.panes()) > 1:
+            body = c.frame.body
+            ## g.trace(body.editorName)
+            w = g.app.gui.get_focus(c)
+            g.trace(c.widget_name(w))
+            # for z in panedBody.panes():
+                
+            g.trace(panes)
+            if 0:
+                panedBody.delete(panes[0])
+                panedBody.updatelayout()
+                ###self.textWidgets.remove(body)
+                nBody = self.textWidgets[0]
+                nBody.bodyCtrl.focus_set()
+                nBody.bodyCtrl.update_idletasks()
     #@nonl
     #@-node:ekr.20060213023839.67:removeEditor
     #@+node:ekr.20060213023839.68:addHeading
@@ -1128,68 +1144,69 @@ class chapterController:
     # you can preview the node before you go to it.
     #@-at
     #@+node:ekr.20060213023839.70:viewIndex
-    def viewIndex (c,nodes=None,tle=''):
+    def viewIndex (self,nodes=None,tle=''):
+        c = self.c
         if nodes == None:
-            nodes = [x for x in walkChapters(c,chapname=True)]
-        def aN (a):
-            n = a [0].headString()
-            return n, a [0], a [1]
-        nodes = map(aN,nodes)
+            nodes = [x for x in self.walkChapters(chapname=True)]
+        nodes = [(a[0].headString(),a[0],a[1]) for a in nodes]
         nodes.sort()
-        tl = Tk.Toplevel()
-        import time
-        title = "%s Index of %s created at %s" % (tle,c.frame.shortFileName(),time.ctime())
-        tl.title(title)
-        f = Tk.Frame(tl)
-        f.pack(side='bottom')
-        l = Tk.Label(f,text='ScrollTo:')
-        e = Tk.Entry(f,bg='white',fg='blue')
-        l.pack(side='left')
-        e.pack(side='left')
-        b = Tk.Button(f,text='Close')
-        b.pack(side='left')
-        def rm (tl=tl):
-            tl.withdraw()
-            tl.destroy()
-        b.configure(command=rm)
-        sve = Tk.StringVar()
-        e.configure(textvariable=sve)
-        ms = tl.maxsize()
-        tl.geometry('%sx%s+0+0' % (ms[0],(ms[1]/4)*3))
-        sc = Pmw.ScrolledCanvas(tl,vscrollmode='static',hscrollmode='static',
-        usehullsize = 1, borderframe = 1, hull_width = ms [0], hull_height = (ms[1]/4) * 3)
-        sc.pack()
-        can = sc.interior()
-        can.configure(background='white')
-        bal = Pmw.Balloon(can)
-        tags = {}
-        buildIndex(nodes,c,can,tl,bal,tags)
-        sc.resizescrollregion()
-        #@    << define scTo callback >>
-        #@+node:ekr.20060213023839.71:<< define scTo callback >>
-        def scTo (event,nodes=nodes,sve=sve,can=can,tags=tags):
-        
-            t = sve.get()
-            if event.keysym == 'BackSpace':
-                t = t [: -1]
-            else:
-                t = t + event.char
-            if t == '': return
-            for z in nodes:
-                if z [0].startswith(t) and tags.has_key(z[1]):
-                    tg = tags [z [1]]
-                    eh = can.bbox(ltag) [1]
-                    eh = (eh*1.0) / 100
-                    bh = can.bbox(tg) [1]
-                    ncor = (bh/eh) * .01
-                    can.yview('moveto',ncor)
-                    return
-        #@nonl
-        #@-node:ekr.20060213023839.71:<< define scTo callback >>
-        #@nl
-        e.bind('<Key>',scTo)
-        e.focus_set()
-    #@nonl
+        if 1:
+            tl = Tk.Toplevel()
+            title = "%s Index of %s created at %s" % (tle,c.frame.shortFileName(),time.ctime())
+            tl.title(title)
+            f = Tk.Frame(tl)
+            f.pack(side='bottom')
+            l = Tk.Label(f,text='ScrollTo:')
+            e = Tk.Entry(f,bg='white',fg='blue')
+            l.pack(side='left')
+            e.pack(side='left')
+            b = Tk.Button(f,text='Close')
+            b.pack(side='left')
+            def rm (tl=tl):
+                tl.withdraw()
+                tl.destroy()
+            b.configure(command=rm)
+            sve = Tk.StringVar()
+            e.configure(textvariable=sve)
+            ms = tl.maxsize()
+            tl.geometry('%sx%s+0+0' % (ms[0],(ms[1]/4)*3))
+            sc = Pmw.ScrolledCanvas(
+                tl,vscrollmode='static',hscrollmode='static',
+                usehullsize = 1, borderframe = 1, hull_width = ms [0],
+                hull_height = (ms[1]/4) * 3)
+            sc.pack()
+            can = sc.interior()
+            can.configure(background='white')
+            bal = Pmw.Balloon(can)
+            tags = {}
+            self.buildIndex(nodes,can,tl,bal,tags)
+            sc.resizescrollregion()
+            #@        << define scTo callback >>
+            #@+node:ekr.20060213023839.71:<< define scTo callback >>
+            def scTo (event,nodes=nodes,sve=sve,can=can,tags=tags):
+                
+                return ## Not ready yet.
+            
+                t = sve.get()
+                if event.keysym == 'BackSpace':
+                    t = t [: -1]
+                else:
+                    t = t + event.char
+                if t:
+                    for z in nodes:
+                        if z [0].startswith(t) and tags.has_key(z[1]):
+                            tg = tags [z [1]]
+                            eh = can.bbox(ltag) [1]
+                            eh = (eh*1.0) / 100
+                            bh = can.bbox(tg) [1]
+                            ncor = (bh/eh) * .01
+                            can.yview('moveto',ncor)
+                            return
+            #@nonl
+            #@-node:ekr.20060213023839.71:<< define scTo callback >>
+            #@nl
+            e.bind('<Key>',scTo)
+            e.focus_set()
     #@-node:ekr.20060213023839.70:viewIndex
     #@+node:ekr.20060213023839.72:buildIndex
     def buildIndex (self,nodes,can,tl,bal,tags):
@@ -1204,7 +1221,7 @@ class chapterController:
             if parent: parent = parent.headString()
             else:
                 parent = 'No Parent'
-            sv = self.getStringVar(c,z[2])
+            sv = self.getStringVar(z[2])
             if sv.get(): sv = ' - ' + sv.get()
             else: sv = ''
     
@@ -1253,13 +1270,13 @@ class chapterController:
             widget.deactivate()
             widget.destroy()
             if result == 'Cancel': return None
-            nodes = [x for x in walkChapters(c,chapname=True)]
+            nodes = [x for x in self.walkChapters(chapname=True)]
             import re
             regex = re.compile(txt)
             def search (nd,regex=regex):
                 return regex.search(nd[0].bodyString())
             nodes = filter(search,nodes)
-            viewIndex(c,nodes,'Regex( %s )' % txt)
+            self.viewIndex(nodes,'Regex( %s )' % txt)
             return
     
         sd = Pmw.PromptDialog(c.frame.top,
@@ -1296,12 +1313,15 @@ class chapterController:
     
         body.frame.body = body
         body.frame.bodyCtrl = body.bodyCtrl
+    
         if not hasattr(body,'lastChapter'):
             body.lastChapter = nb.getcurselection()
+            
         page = self.checkChapterValidity(body.lastChapter)
         if page != nb.getcurselection():
             body.lastChapter = page
             nb.selectpage(page)
+        
         self.selectNodeForEditor(body)
         self.activateEditor(body)
     #@nonl
@@ -1360,18 +1380,13 @@ class chapterController:
     
         '''A generator that allows one to walk the chapters as one big tree.'''
     
-        nb = self.nb ; pagenames = nb.pagenames()
-    
-        for z in pagenames:
-            sv = self.getStringVar(z)
-            chapter = chapters [sv]
-            v = chapter.rp
-            while v:
+        for z in self.nb.pagenames():
+            chapter = self.getChapter(z)
+            for p in chapter.rp.allNodes_iter():
                 if chapname:
-                    if v not in ignorelist: yield v, z
+                    if p not in ignorelist: yield p.copy(), z
                 else:
-                    if v not in ignorelist: yield v
-                v = v.threadNext()
+                    if p not in ignorelist: yield p.copy()
     #@nonl
     #@-node:ekr.20060213023839.81:walkChapters
     #@-node:ekr.20060213023839.75:Chapter-Notebook ops
@@ -1668,7 +1683,7 @@ class chapterController:
     def regexClone (self,name):
     
         c = self.c ; nb = self.nb
-        ###sv = self.getStringVar(c,name)
+        ###sv = self.getStringVar(name)
         ###chapter = self.chapters [sv]
         chapter = self.getChapter(name)
         #@    << define cloneWalk callback >>
@@ -1688,7 +1703,7 @@ class chapterController:
             snode = leoNodes.position(c,snode,[])
             snode.moveAfter(rt)
             ignorelist = [snode]
-            it = walkChapters(c,ignorelist=ignorelist)
+            it = self.walkChapters(ignorelist=ignorelist)
             for z in it:
                 f = regex.search(z.bodyString())
                 if f:
@@ -1717,31 +1732,6 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.100:regexClone
     #@-node:ekr.20060213023839.97:Misc
-    #@+node:ekr.20060228123056:Getters...
-    #@+node:ekr.20060213023839.79:getStringVar
-    def getStringVar (self,pageName):
-    
-        '''return a Tk StrinVar that is a primary identifier.'''
-        
-        cc = self
-        return cc.stringVars.get(pageName)
-    #@nonl
-    #@-node:ekr.20060213023839.79:getStringVar
-    #@+node:ekr.20060228123056.1:getChapter
-    def getChapter (self,pageName):
-        
-        return self.chapters.get(pageName)
-    #@nonl
-    #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060228123056.3:nextPageName
-    def nextPageName (self):
-        
-        n = str(len(self.nb.pagenames()) + 1)
-        g.trace(n,self.nb.pagenames(),g.callers())
-        return n
-    #@nonl
-    #@-node:ekr.20060228123056.3:nextPageName
-    #@-node:ekr.20060228123056:Getters...
     #@-others
 #@nonl
 #@-node:ekr.20060213023839.28:class chapterController
