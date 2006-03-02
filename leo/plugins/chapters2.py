@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.103"
+__version__ = "0.104"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
@@ -52,6 +52,10 @@ __version__ = "0.103"
 # 
 # v .103 EKR:
 # - Simplied and clarified the code for multiple editors and made it work.
+# 
+# v .104 EKR:
+# - Zipped file logic now works and is compatible with original chapters 
+# plugin.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -72,7 +76,7 @@ import leoTkinterTree
 
 Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-   
+
 from leoTkinterFrame import leoTkinterLog
 from leoTkinterFrame import leoTkinterBody
 
@@ -168,6 +172,7 @@ def new_createCanvas (self,parentFrame,pageName='1'):
     # self is c.frame
     c = self.c
     if g.app.unitTesting:
+        # global old_createCanvas
         return old_createCanvas(self,parentFrame)
     else:
         global controllers
@@ -197,6 +202,7 @@ def new_createControl (self,frame,parentFrame):
 
     # self is c.frame.body
     if g.app.unitTesting:
+        # global old_createControl
         return old_createControl(self,frame,parentFrame)
     else:
         global controllers
@@ -209,6 +215,7 @@ def new_doDelete (self):
     
     # self is position.
     if g.app.unitTesting:
+        # global old_doDelete
         return old_doDelete(self)
     else:
         global controllers
@@ -221,6 +228,7 @@ def new_endEditLabel (self):
     
     # self is a c.frame.tree
     if g.app.unitTesting:
+        # global old_editLabel
         return old_editLabel(self)
     else:
         cc = controllers.get(self.c)
@@ -232,6 +240,7 @@ def new_getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     
     # self is c.fileCommands
     if g.app.unitTesting:
+        # global old_getLeoFile
         return old_getLeoFile(self,fileName,readAtFileNodesFlag,silent)
     else:
         global controllers
@@ -245,6 +254,7 @@ def new_open (self,file,fileName,readAtFileNodesFlag=True,silent=False):
     # self = fileCommands
     c = self.c
     if g.app.unitTesting:
+        # global old_open
         return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
     else:
         global controllers
@@ -264,6 +274,7 @@ def new_select (self,p,updateBeadList=True):
     
     # self is c.frame.tree
     if g.app.unitTesting:
+        # global old_select
         return old_select(self,p,updateBeadList)
     else:
         global controllers
@@ -276,6 +287,7 @@ def new_tree_init (self,c,frame,canvas):
     
     # self is c.frame.tree
     if g.app.unitTesting:
+        # global old_tree_init
         return old_tree_init(self,c,frame,canvas)
     else:
         global controllers
@@ -288,6 +300,7 @@ def new_write_Leo_file (self,fileName,outlineOnlyFlag,singleChapter=False):
     
     # self is c.frame.tree
     if g.app.unitTesting:
+        # global old_write_Leo_file
         return old_write_Leo_file(self,fileName,outlineOnlyFlag)
     else:
         cc = controllers.get(self.c)
@@ -622,15 +635,15 @@ class chapterController:
     #@+node:ekr.20060213023839.46:open
     def open (self,fc,file,fileName,readAtFileNodesFlag=True,silent=False):
     
-        c = self.c
+        cc = self ; c = cc.c
     
         if zipfile.is_zipfile(fileName):
             # Set globals for g.os_path_dirname
             global iscStringIO, stringIOCommander
             iscStringIO = True ; stringIOCommander = c
-            chapters = openChaptersFile(fileName)
+            chapters = cc.openChaptersFile(fileName)
             g.es(str(len(chapters))+" Chapters To Read",color='blue')
-            self.insertChapters(chapters)
+            cc.insertChapters(chapters)
             g.es("Finished Reading Chapters",color='blue')
             iscStringIO = False
             return True
@@ -658,14 +671,13 @@ class chapterController:
     #@+node:ekr.20060213023839.48:write_Leo_file & helper
     def write_Leo_file (self,fc,fileName,outlineOnlyFlag,singleChapter=False):
     
-        c = self.c ; nb = self.nb ; pagenames = nb.pagenames()
+        cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
     
         if len(pagenames) > 1 and not singleChapter:
-            chapList = []
-            fc.__class__.__setattr__ = getMakeStringIO(chapList)
-            rv = self.writeChapters(fc,fileName,pagenames,c,outlineOnlyFlag)
-            if rv: zipChapters(fileName,pagenames,c,chapList)
-            del self.__class__.__setattr__
+            ###fc.__class__.__setattr__ = cc.getMakeStringIO(chapList)
+            rv,chapterList = cc.writeChapters(fc,fileName,pagenames,outlineOnlyFlag)
+            if rv: cc.zipChapters(fileName,pagenames,chapterList)
+            ### del fc.__class__.__setattr__
             return rv
         else:
             global old_write_Leo_file
@@ -676,15 +688,18 @@ class chapterController:
     
         '''Writes Chapters to StringIO instances.'''
         
-        cc = self
+        cc = self ; chapterList = []
     
         for z in pagenames:
             chapter = self.getChapter(z)
             chapter.setVariables()
-            rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag)
+            global old_write_Leo_file
+            rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag,toString=True)
+            chapterList.append(g.app.write_Leo_file_string)
+            g.trace(len(g.app.write_Leo_file_string))
     
         cc.currentChapter.setVariables()
-        return rv
+        return rv,chapterList
     #@nonl
     #@-node:ekr.20060213023839.49:writeChapters
     #@-node:ekr.20060213023839.48:write_Leo_file & helper
@@ -1431,7 +1446,7 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.81:walkChapters
     #@-node:ekr.20060213023839.75:Chapter-Notebook ops
-    #@+node:ekr.20060213023839.82:opening and closing
+    #@+node:ekr.20060213023839.82:Files
     #@+at 
     #@nonl
     # We need to decorate and be tricky here, since a Chapters leo file is a 
@@ -1440,14 +1455,14 @@ class chapterController:
     # These functions are easy to break in my experience. :)
     #@-at
     #@nonl
-    #@+node:ekr.20060213023839.83:opening
+    #@+node:ekr.20060213023839.83:Reading
     #@+node:ekr.20060213023839.84:openChaptersFile
-    def openChaptersFile (fileName):
+    def openChaptersFile (self,fileName):
     
         zf = zipfile.ZipFile(fileName)
         file = cStringIO.StringIO()
         name = zf.namelist()
-        csfiles = [ [], []]
+        csfiles = [[], []]
         for x in name:
             zi = zf.getinfo(x)
             csfiles [0].append(zi.comment)
@@ -1463,12 +1478,12 @@ class chapterController:
     #@+node:ekr.20060213023839.85:insertChapters
     def insertChapters (self,chapters):
     
-        c = self.c ; nb = self.nb ; pagenames = nb.pagenames()
+        cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
     
         for num, tup in enumerate(chapters):
             x, y = tup
+            g.trace(x,y)
             if num > 0:
-                ### sv = self.addPage(c,x).sv
                 page,pageName = self.addPage(x)
                 if 1:
                     sv = self.getStringVar(pageName)
@@ -1481,24 +1496,25 @@ class chapterController:
                 sv = self.getStringVar(cselection)
             sv.set(x)
             next = cselection
-            self.setTree(c,next,nb)
-            frame.c.fileCommands.open(y,sv.get())
+            self.setTree(next)
+            c.fileCommands.open(y,sv.get())
             if num == 0: flipto = cselection
-        self.setTree(flipto,nb,c)
+        self.setTree(flipto)
         c.frame.canvas.update_idletasks()
     #@nonl
     #@-node:ekr.20060213023839.85:insertChapters
-    #@-node:ekr.20060213023839.83:opening
-    #@+node:ekr.20060213023839.86:closing
+    #@-node:ekr.20060213023839.83:Reading
+    #@+node:ekr.20060213023839.86:Writing
     #@+node:ekr.20060213023839.87:getMakeStringIO
-    def getMakeStringIO (chapList):
+    def getMakeStringIO (self,chapList):
     
         '''Insures that data is put in a StringIO instance.'''
+        
+        cc = self
     
         def makeStringIO (self,name,value,cList=chapList):
             if name == 'outputFile' and value != None:
-                import StringIO
-                cS = StringIO.StringIO()
+                cS = cStringIO.StringIO()
                 cS.close = lambda: None
                 self.__dict__ [name] = cS
                 cList.append(cS)
@@ -1511,35 +1527,39 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.87:getMakeStringIO
     #@+node:ekr.20060213023839.88:zipChapters
-    def zipChapters (fileName,pagenames,chapList):
+    def zipChapters (self,fileName,pagenames,chapList):
     
         '''Writes StringIO instances to a zipped file.'''
+        
+        cc = self
     
         zf = zipfile.ZipFile(fileName,'w',zipfile.ZIP_DEFLATED)
     
         for x, fname in enumerate(pagenames):
-            sv = self.getStringVar(fname)
+            sv = cc.getStringVar(fname)
             zif = zipfile.ZipInfo(str(x))
-            zif.comment = sv.get()
+            zif.comment = sv.get() or '' ###
             zif.compress_type = zipfile.ZIP_DEFLATED
-            chapList [x].seek(0)
-            zf.writestr(zif,chapList[x].read())
+            #chapList [x].seek(0)
+            #zf.writestr(zif,chapList[x].read())
+            g.trace(len(chapList[x]))
+            zf.writestr(zif,chapList[x])
     
         zf.close()
     #@nonl
     #@-node:ekr.20060213023839.88:zipChapters
-    #@-node:ekr.20060213023839.86:closing
-    #@-node:ekr.20060213023839.82:opening and closing
+    #@-node:ekr.20060213023839.86:Writing
+    #@-node:ekr.20060213023839.82:Files
     #@+node:ekr.20060213023839.89:operation( node ) to Chapter
     #@+node:ekr.20060213023839.90:cloneToChapter
     def cloneToChapter (self,name):
     
-        c = self.c ; nb = self.nb
+        cc = self ; c = cc.c ; nb = cc.nb
         page = nb.page(nb.index(name))
+    
         c.beginUpdate()
         try:
-            clone = vnd.clone(c.currentPosition())
-            ### chapter = self.chapters [page.sv]
+            clone = c.currentPosition().clone()
             chapter = self.getChapter(name)
             p = chapter.cp
             clone.unlink()

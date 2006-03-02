@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="252" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
-	<global_window_position top="69" left="437" height="660" width="800"/>
+	<global_window_position top="77" left="457" height="660" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,7 +13,7 @@
 <v t="ekr.20060228085204.1"><vh>@button Save</vh></v>
 </v>
 <v t="ekr.20060228081537"><vh>Original code</vh>
-<v t="ekr.20060213023732.1"><vh>chapters.py ORIGINAL</vh>
+<v t="ekr.20060213023732.1" a="E"><vh>chapters.py ORIGINAL</vh>
 <v t="ekr.20060213023732.2"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
 <v t="ekr.20060213023732.3"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20060213023732.4"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -61,7 +61,7 @@
 <v t="ekr.20060213023732.40"><vh>buildIndex</vh></v>
 <v t="ekr.20060213023732.41"><vh>regexViewIndex</vh></v>
 </v>
-<v t="ekr.20060213023732.42"><vh>Chapter-Notebook ops</vh>
+<v t="ekr.20060213023732.42" a="E"><vh>Chapter-Notebook ops</vh>
 <v t="ekr.20060213023732.43"><vh>renumber</vh></v>
 <v t="ekr.20060213023732.44"><vh>getGoodPage</vh></v>
 <v t="ekr.20060213023732.45"><vh>checkChapterValidity</vh></v>
@@ -70,17 +70,17 @@
 <v t="ekr.20060213023732.48"><vh>lowerPage</vh></v>
 <v t="ekr.20060213023732.49"><vh>walkChapters</vh></v>
 </v>
-<v t="ekr.20060213023732.50"><vh>opening and closing (to be moved into Leo's core?)</vh>
+<v t="ekr.20060213023732.50" a="EM"><vh>opening and closing (to be moved into Leo's core?)</vh>
 <v t="ekr.20060213023732.51"><vh>opening</vh>
 <v t="ekr.20060213023732.52"><vh>newGetLeoFile</vh></v>
 <v t="ekr.20060213023732.53"><vh>newOpen</vh></v>
 <v t="ekr.20060213023732.54"><vh>openChaptersFile</vh></v>
 <v t="ekr.20060213023732.55" a="M"><vh>insertChapters</vh></v>
 </v>
-<v t="ekr.20060213023732.56"><vh>closing</vh>
+<v t="ekr.20060213023732.56" a="E"><vh>closing</vh>
 <v t="ekr.20060213023732.57"><vh>newWrite_LEO_file</vh></v>
 <v t="ekr.20060213023732.58"><vh>getMakeStringIO</vh></v>
-<v t="ekr.20060213023732.59"><vh>writeChapters</vh></v>
+<v t="ekr.20060213023732.59" a="E"><vh>writeChapters</vh></v>
 <v t="ekr.20060213023732.60"><vh>zipChapters</vh></v>
 </v>
 </v>
@@ -192,15 +192,14 @@
 </v>
 </v>
 <v t="ekr.20060228081628"><vh>To do</vh></v>
-<v t="ekr.20060213023839.3" a="V"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060228123606" a="E"><vh>Recent</vh>
+<v t="ekr.20060228123606"><vh>Recent</vh>
 <v t="ekr.20060301123117.1"><vh>Commands</vh>
 <v t="ekr.20060213023839.42"><vh>doDelete</vh></v>
 <v t="ekr.20060213023839.54"><vh>removeChapter &amp; helper</vh>
 <v t="ekr.20060213023839.55"><vh>removeOneChapter</vh></v>
 </v>
 </v>
-<v t="ekr.20060302081255"><vh>Creating Chapter instances</vh>
+<v t="ekr.20060302081255" a="E"><vh>Creating Chapter instances</vh>
 <v t="ekr.20060213023839.2"><vh>setTree</vh></v>
 <v t="ekr.20060213023839.32"><vh>constructTree</vh></v>
 <v t="ekr.20060302083318.2"><vh>createTab</vh></v>
@@ -221,7 +220,7 @@
 <v t="ekr.20060213023839.45"><vh>select</vh></v>
 <v t="ekr.20060213023839.46"><vh>open</vh></v>
 <v t="ekr.20060213023839.47"><vh>treeInit (creates Chapter)</vh></v>
-<v t="ekr.20060213023839.48"><vh>write_Leo_file &amp; helper</vh>
+<v t="ekr.20060213023839.48" a="E"><vh>write_Leo_file &amp; helper</vh>
 <v t="ekr.20060213023839.49"><vh>writeChapters</vh></v>
 </v>
 </v>
@@ -231,6 +230,24 @@
 </v>
 <v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
 <v t="ekr.20060213023839.43"><vh>endEditLabel</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.3" a="V"
+expanded="ekr.20060213023839.8,ekr.20060213023839.9,ekr.20060213023839.11,ekr.20060213023839.28,ekr.20060213023839.29,ekr.20060213023839.41,ekr.20060213023839.48,ekr.20060213023839.82,ekr.20060213023839.83,ekr.20060213023839.86,"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060302125320"><vh>zipped files</vh>
+<v t="ekr.20060213023839.82" a="E"><vh>Files</vh>
+<v t="ekr.20060213023839.83" a="E"><vh>Reading</vh>
+<v t="ekr.20060213023839.84"><vh>openChaptersFile</vh></v>
+<v t="ekr.20060213023839.85"><vh>insertChapters</vh></v>
+</v>
+<v t="ekr.20060213023839.86" a="E"><vh>Writing</vh>
+<v t="ekr.20060213023839.87"><vh>getMakeStringIO</vh></v>
+<v t="ekr.20060213023839.88"><vh>zipChapters</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+<v t="ekr.20060213023839.48" a="E"><vh>write_Leo_file &amp; helper</vh>
+<v t="ekr.20060213023839.49"><vh>writeChapters</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1100,7 +1117,8 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
     
     c = self.c
     notebook = notebooks.get(c)
-    if not notebook: return # For unit testing
+    ### if not notebook: return # For unit testing
+    g.trace(singleChapter,fileName)
     pagenames = notebook.pagenames()
     at = c.atFileCommands
     if len( pagenames ) &gt; 1 and not singleChapter:        
@@ -1131,6 +1149,7 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
     return makeStringIO</t>
 <t tx="ekr.20060213023732.59">def writeChapters( self, fileName, pagenames, c , outlineOnlyFlag):
     #goes over Chapters and puts info in StringIO instances
+    g.trace(fileName)
     for z in pagenames:
         sv = getSV(c,z )
         chapter = chapters[ sv ]
@@ -1139,15 +1158,20 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
     c.cChapter.setVariables()
     return rv</t>
 <t tx="ekr.20060213023732.60">def zipChapters( fileName, pagenames, c, chapList ):
+    
+    g.trace(chapList)
     #takes list of StringIO instances and zips them to a file
     zf = zipfile.ZipFile( fileName, 'w',  zipfile.ZIP_DEFLATED )
     for x ,fname in enumerate( pagenames ):
+        g.trace(x,len(str(x))
+        continue ###
         sv = getSV(c, fname )
         zif = zipfile.ZipInfo( str( x ) )
         zif.comment = sv.get()
         zif.compress_type = zipfile.ZIP_DEFLATED
         chapList[ x ].seek( 0 )
         zf.writestr( zif ,chapList[ x ].read() )
+    return ###
     zf.close()</t>
 <t tx="ekr.20060213023732.61">@
 I prefer decorating Leo functions as opposed to patching them.  Patching them leads to long term incompatibilites with Leo and the plugin.  Though this happens anyway with code evolution/changes, this makes it worse.  Thats my experience with it. :)
@@ -1792,15 +1816,15 @@ twidgets = {}</t>
     return return_val</t>
 <t tx="ekr.20060213023839.46">def open (self,fc,file,fileName,readAtFileNodesFlag=True,silent=False):
 
-    c = self.c
+    cc = self ; c = cc.c
 
     if zipfile.is_zipfile(fileName):
         # Set globals for g.os_path_dirname
         global iscStringIO, stringIOCommander
         iscStringIO = True ; stringIOCommander = c
-        chapters = openChaptersFile(fileName)
+        chapters = cc.openChaptersFile(fileName)
         g.es(str(len(chapters))+" Chapters To Read",color='blue')
-        self.insertChapters(chapters)
+        cc.insertChapters(chapters)
         g.es("Finished Reading Chapters",color='blue')
         iscStringIO = False
         return True
@@ -1824,14 +1848,13 @@ twidgets = {}</t>
 </t>
 <t tx="ekr.20060213023839.48">def write_Leo_file (self,fc,fileName,outlineOnlyFlag,singleChapter=False):
 
-    c = self.c ; nb = self.nb ; pagenames = nb.pagenames()
+    cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
 
     if len(pagenames) &gt; 1 and not singleChapter:
-        chapList = []
-        fc.__class__.__setattr__ = getMakeStringIO(chapList)
-        rv = self.writeChapters(fc,fileName,pagenames,c,outlineOnlyFlag)
-        if rv: zipChapters(fileName,pagenames,c,chapList)
-        del self.__class__.__setattr__
+        ###fc.__class__.__setattr__ = cc.getMakeStringIO(chapList)
+        rv,chapterList = cc.writeChapters(fc,fileName,pagenames,outlineOnlyFlag)
+        if rv: cc.zipChapters(fileName,pagenames,chapterList)
+        ### del fc.__class__.__setattr__
         return rv
     else:
         global old_write_Leo_file
@@ -1840,15 +1863,18 @@ twidgets = {}</t>
 
     '''Writes Chapters to StringIO instances.'''
     
-    cc = self
+    cc = self ; chapterList = []
 
     for z in pagenames:
         chapter = self.getChapter(z)
         chapter.setVariables()
-        rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag)
+        global old_write_Leo_file
+        rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag,toString=True)
+        chapterList.append(g.app.write_Leo_file_string)
+        g.trace(len(g.app.write_Leo_file_string))
 
     cc.currentChapter.setVariables()
-    return rv</t>
+    return rv,chapterList</t>
 <t tx="ekr.20060213023839.54">def removeChapter (self,event=None):
 
     c = self.c ; nb = self.nb ; rmenu = self.rmenu
@@ -1948,6 +1974,91 @@ twidgets = {}</t>
         return name
     except:
         return nb.getcurselection()</t>
+<t tx="ekr.20060213023839.82">@ We need to decorate and be tricky here, since a Chapters leo file is a zip file.
+
+These functions are easy to break in my experience. :)</t>
+<t tx="ekr.20060213023839.83"></t>
+<t tx="ekr.20060213023839.84">def openChaptersFile (self,fileName):
+
+    zf = zipfile.ZipFile(fileName)
+    file = cStringIO.StringIO()
+    name = zf.namelist()
+    csfiles = [[], []]
+    for x in name:
+        zi = zf.getinfo(x)
+        csfiles [0].append(zi.comment)
+        cs = cStringIO.StringIO()
+        csfiles [1].append(cs)
+        cs.write(zf.read(x))
+        cs.seek(0)
+    zf.close()
+    csfiles = zip(csfiles[0],csfiles[1])
+    return csfiles
+
+</t>
+<t tx="ekr.20060213023839.85">def insertChapters (self,chapters):
+
+    cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
+
+    for num, tup in enumerate(chapters):
+        x, y = tup
+        g.trace(x,y)
+        if num &gt; 0:
+            page,pageName = self.addPage(x)
+            if 1:
+                sv = self.getStringVar(pageName)
+            else:
+                sv = page.sv
+            nb.nextpage()
+            cselection = nb.getcurselection()
+        else:
+            cselection = nb.getcurselection()
+            sv = self.getStringVar(cselection)
+        sv.set(x)
+        next = cselection
+        self.setTree(next)
+        c.fileCommands.open(y,sv.get())
+        if num == 0: flipto = cselection
+    self.setTree(flipto)
+    c.frame.canvas.update_idletasks()</t>
+<t tx="ekr.20060213023839.86"></t>
+<t tx="ekr.20060213023839.87">def getMakeStringIO (self,chapList):
+
+    '''Insures that data is put in a StringIO instance.'''
+    
+    cc = self
+
+    def makeStringIO (self,name,value,cList=chapList):
+        if name == 'outputFile' and value != None:
+            cS = cStringIO.StringIO()
+            cS.close = lambda: None
+            self.__dict__ [name] = cS
+            cList.append(cS)
+        elif name == 'outputFile' and value == None:
+            self.__dict__ [name] = None
+        else:
+            self.__dict__ [name] = value
+
+    return makeStringIO</t>
+<t tx="ekr.20060213023839.88">def zipChapters (self,fileName,pagenames,chapList):
+
+    '''Writes StringIO instances to a zipped file.'''
+    
+    cc = self
+
+    zf = zipfile.ZipFile(fileName,'w',zipfile.ZIP_DEFLATED)
+
+    for x, fname in enumerate(pagenames):
+        sv = cc.getStringVar(fname)
+        zif = zipfile.ZipInfo(str(x))
+        zif.comment = sv.get() or '' ###
+        zif.compress_type = zipfile.ZIP_DEFLATED
+        #chapList [x].seek(0)
+        #zf.writestr(zif,chapList[x].read())
+        g.trace(len(chapList[x]))
+        zf.writestr(zif,chapList[x])
+
+    zf.close()</t>
 <t tx="ekr.20060228072530">@ignore
 
 from __future__ import generators
@@ -3647,10 +3758,16 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
+* Not possible to change new chapter.
+
+- No longer necessary to override endEditLabel?
+
 - Add/change title does not work.
 
 - Eliminate cc.stringVars, etc.
     - In this case injecting sv (rename it leoChapters_sv) makes sense.
+    wrong?:  sv = self.getStringVar(pageName)
+    correct: sv = page.sv
 
 - Complete indexing:
     - Scrolling does not work yet.
@@ -3686,5 +3803,6 @@ c.redraw_now() # Must be done here.</t>
     # g.trace(tabName,page,button)
 
     return page,button</t>
+<t tx="ekr.20060302125320"></t>
 </tnodes>
 </leo_file>
