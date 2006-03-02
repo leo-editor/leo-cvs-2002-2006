@@ -192,8 +192,7 @@
 </v>
 </v>
 <v t="ekr.20060228081628"><vh>To do</vh></v>
-<v t="ekr.20060213023839.3" a="E"
-expanded="ekr.20060213023839.28,"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060213023839.3" a="V"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20060228123606" a="E"><vh>Recent</vh>
 <v t="ekr.20060301123117.1"><vh>Commands</vh>
 <v t="ekr.20060213023839.42"><vh>doDelete</vh></v>
@@ -210,9 +209,9 @@ expanded="ekr.20060213023839.28,"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
 <v t="ekr.20060213023839.31"><vh>addPage</vh></v>
 </v>
-<v t="ekr.20060301125235" a="E"><vh>Editor</vh>
+<v t="ekr.20060301125235"><vh>Editor</vh>
 <v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
-<v t="ekr.20060213023839.38" a="V"><vh>newEditorPane</vh></v>
+<v t="ekr.20060213023839.38"><vh>newEditorPane</vh></v>
 <v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
 <v t="ekr.20060213023839.35"><vh>createPanedWidget</vh></v>
 <v t="ekr.20060213023839.41"><vh>createControl</vh>

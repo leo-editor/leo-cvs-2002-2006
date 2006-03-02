@@ -1,7 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20060213023839.3:@thin chapters2.py
 #@<<docstring>>
-#@+middle:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.4:<<docstring>>
 '''This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
 
@@ -26,15 +25,13 @@ Warnings:
 '''
 #@nonl
 #@-node:ekr.20060213023839.4:<<docstring>>
-#@-middle:ekr.20060213023839.8:Module level
 #@nl
 
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.102"
+__version__ = "0.103"
 #@<< version history >>
-#@+middle:ekr.20060213023839.8:Module level
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
 
@@ -53,9 +50,11 @@ __version__ = "0.102"
 #   This puts all the weird stuff in one place.
 # - cc.addPage now just calls cc.constructTree.
 # 
+# v .103 EKR:
+# - Simplied and clarified the code for multiple editors and made it work.
 #@-at
+#@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
-#@-middle:ekr.20060213023839.8:Module level
 #@nl
 #@<< imports >>
 #@+middle:ekr.20060213023839.8:Module level
