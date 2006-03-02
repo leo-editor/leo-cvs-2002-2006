@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7976" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7977" clone_windows="0"/>
 <globals body_outline_ratio="0.58926487748">
 	<global_window_position top="37" left="347" height="857" width="780"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -257,7 +257,11 @@
 </v>
 <v t="ekr.20060228081859" a="E"><vh>Mini-tests for chapters</vh>
 <v t="ekr.20060228083913"><vh>print chapters</vh></v>
-<v t="ekr.20060228082132" a="V"><vh>@button addChapter</vh></v>
+<v t="ekr.20060228082132"><vh>@@button addChapter</vh></v>
+<v t="ekr.20060301121002"><vh>@@button rmChapter</vh></v>
+<v t="ekr.20060301132108"><vh>@button addEditor</vh></v>
+<v t="ekr.20060301132108.1"><vh>@button rmEditor</vh></v>
+<v t="ekr.20060301151555" a="V"><vh>@button index</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4469,11 +4473,24 @@ for s in (
         pass</t>
 <t tx="ekr.20060223181815"></t>
 <t tx="ekr.20060228081859">Test.</t>
-<t tx="ekr.20060228082132">import chapters2 as ch
-cc = ch.controllers.get(c)
+<t tx="ekr.20060228082132">import chapters2
+cc = chapters2.controllers.get(c)
 cc.addChapter()</t>
 <t tx="ekr.20060228083913">import chapters2 as ch
 cc = ch.controllers.get(c)
 </t>
+<t tx="ekr.20060301121002">import chapters2
+cc = chapters2.controllers.get(c)
+# cc.addChapter()
+cc.removeOneChapter(name='2')</t>
+<t tx="ekr.20060301132108">import chapters2
+cc = chapters2.controllers.get(c)
+cc.newEditor()</t>
+<t tx="ekr.20060301132108.1">import chapters2
+cc = chapters2.controllers.get(c)
+cc.removeEditor()</t>
+<t tx="ekr.20060301151555">import chapters2
+cc = chapters2.controllers.get(c)
+cc.viewIndex()</t>
 </tnodes>
 </leo_file>
