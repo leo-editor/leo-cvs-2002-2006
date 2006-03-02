@@ -1112,6 +1112,7 @@ def newWrite_LEO_file (self,fileName,outlineOnlyFlag,singleChapter=False):
     c = self.c ; at = c.atFileCommands
     notebook = notebooks.get(c)
     if not notebook: return # For unit testing
+    print singleChapter,fileName
 
     pagenames = notebook.pagenames()
     if len(pagenames) > 1 and not singleChapter:
@@ -1174,7 +1175,7 @@ def zipChapters (fileName,pagenames,c,chapList):
         zif = zipfile.ZipInfo(str(x))
         zif.comment = sv.get()
         zif.compress_type = zipfile.ZIP_DEFLATED
-        chapList [x].seek(0)
+        chapList [x].seek(0) ; g.trace(chapList[x])
         zf.writestr(zif,chapList[x].read())
 
     zf.close()
