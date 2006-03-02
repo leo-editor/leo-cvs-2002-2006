@@ -417,7 +417,6 @@ class chapterController:
     def __init__ (self,c,frame,parentFrame):
         
         self.c = c
-        self.currentChapter = None
         self.frame = frame
         self.parentFrame = parentFrame
         
@@ -427,12 +426,13 @@ class chapterController:
         self.newPageName = None
         self.newPage = None
         
+        # General ivars.
         self.chapters = {} # Keys are tab names, (no longer stringVars.)
-        ### self.editorNames = {} # Keys are Pmw.NoteBooks, values are names.
+        self.currentChapter = None
+        self.numberOfEditors = 0
         self.panedBody = None # The present Tk.PanedWidget.
         self.rnframes = {}
         self.stringVars = {} # Keys are tab names, values are stringVars.
-        ### self.textWidgets = [] # A list of Tk.Text widgets used for editors.
     
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
@@ -454,9 +454,7 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.31:addPage
     #@+node:ekr.20060213023839.32:constructTree
-    def constructTree (self,frame,name):
-        
-        g.trace(name)
+    def constructTree (self,frame,pageName):
     
         cc = self ; c = self.c ; nb = self.nb
         canvas = treeBar = tree = None
@@ -466,18 +464,14 @@ class chapterController:
             tree = frame.tree
     
         sv = Tk.StringVar()
-        sv.set(name)
-        cc.stringVars[name] = sv
+        sv.set(pageName)
+        cc.stringVars[pageName] = sv
         
-        frame.canvas = canvas = frame.createCanvas(parentFrame=None,pageName=name)
+        frame.canvas = canvas = frame.createCanvas(parentFrame=None,pageName=pageName)
         frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas)
         frame.tree.setColorFromConfig()
     
-        if 0:
-            tab = nb.tab(name)
-            hull = nb.component('hull')
-            tab.bind('<Button-3>',lambda event,hull=hull: hull.tmenu.post(event.x_root,event.y_root))
-        return tree, cc.newPage ### , tab ###, nb.page(nb.pagenames()[-1])
+        return tree, cc.newPage
     #@nonl
     #@-node:ekr.20060213023839.32:constructTree
     #@+node:ekr.20060213023839.33:createBalloon
@@ -518,13 +512,14 @@ class chapterController:
     #@+node:ekr.20060213023839.41:createControl
     def createControl(self,body,frame,parentFrame):
     
-        c = self.c ; nb = self.nb
+        cc = self ; c = cc.c ; nb = cc.nb
         # g.trace(self.panedBody)
         if not self.panedBody:
             parentFrame = self.createPanedWidget(parentFrame)
         panedBody = self.panedBody
-        # l and r are the right and left tabs, *not* the editors.
-        l, r = self.addHeading(parentFrame)
+    
+        # Create the label for the editor.
+        label = cc.addHeading(parentFrame)
         ctrl = old_createControl(body,frame,parentFrame)
         
         if 0: # Create a focus-in event.
@@ -536,15 +531,9 @@ class chapterController:
         for z in panedBody.panes():
             panedBody.configurepane(z,size=i)
         panedBody.updatelayout()
-        frame.body.l = l
-        frame.body.r = r
-    
-        ###if frame.body not in self.textWidgets:
-        ###    self.textWidgets.append(frame.body)
-    
-        ### l.configure(textvariable=self.getStringVar(nb.getcurselection()))
+        
+        frame.body.editorLabel = label
         return ctrl
-    #@nonl
     #@+node:ekr.20060213023839.42:doDelete
     def doDelete (self,p):
         
@@ -587,8 +576,8 @@ class chapterController:
         
         if 0:
     
-            if p and h and hasattr(c.frame.body,'r'):
-                c.frame.body.r.configure(text=h)
+            if p and h and hasattr(c.frame.body,'editorLabel'):
+                c.frame.body.editorLabel.configure(text=h)
     
         return old_editLabel(tree)
     #@nonl
@@ -618,13 +607,15 @@ class chapterController:
     def select (self,tree,p,updateBeadList=True):
     
         c = p.v.c ; h = p.headString() ; nb = self.nb
+        
+        # g.trace(p.headString())
     
         c.frame.body.lastPosition = p
         return_val = old_select(tree,p,updateBeadList)
         c.frame.body.lastChapter = nb.getcurselection()
     
-        if hasattr(p.c.frame.body,'r'):
-            c.frame.body.r.configure(text=h)
+        if hasattr(p.c.frame.body,'editorLabel'):
+            c.frame.body.editorLabel.configure(text=h)
     
         return return_val
     #@nonl
@@ -661,7 +652,6 @@ class chapterController:
         canvas = cc.newCanvas
         
         old_tree_init(tree,c,frame,canvas)
-    
         cc.chapters [pageName] = Chapter(cc,c,tree,frame,canvas,page,pageName)
         
         # g.trace(pageName,id(canvas),cc.chapters.keys())
@@ -751,36 +741,33 @@ class chapterController:
         return page,button
     #@nonl
     #@-node:ekr.20060302083318.2:createTab
-    #@+node:ekr.20060213023839.37:newEditor & helper
+    #@+node:ekr.20060213023839.37:newEditor
     def newEditor (self):
     
         cc = self ; c = cc.c ; nb = cc.nb
+        
         pane = self.newEditorPane()
         af = leoTkinterBody(self.frame,pane)
-        # g.trace(c.widget_name(af))
-        c.frame.bodyCtrl = af.bodyCtrl
+        c.frame.bodyCtrl = af.bodyCtrl # Make af the 'official' body.
         af.setFontFromConfig()
         af.createBindings()
         af.bodyCtrl.focus_set()
-        cname = nb.getcurselection()
-        af.l.configure(textvariable=self.getStringVar(cname))
-        af.r.configure(text=c.currentPosition().headString())
         af.lastPosition = c.currentPosition()
         cc.activateEditor(af)
     #@nonl
+    #@-node:ekr.20060213023839.37:newEditor
     #@+node:ekr.20060213023839.38:newEditorPane
     def newEditorPane (self):
         
-        c = self.c
-        panes = self.panedBody.panes()
-        name = panes and str(int(panes[-1])+1) or '1'
+        '''Create a new pane with a unique name.'''
+        
+        cc = self
+        cc.numberOfEditors += 1
+        name = str(cc.numberOfEditors)
         pane = self.panedBody.add(name)
-        # g.trace(repr(pane))
-        ### self.editorNames [pane] = name
         return pane
     #@nonl
     #@-node:ekr.20060213023839.38:newEditorPane
-    #@-node:ekr.20060213023839.37:newEditor & helper
     #@-node:ekr.20060213023839.29:Birth...
     #@+node:ekr.20060228123056:Getters...
     #@+node:ekr.20060213023839.79:getStringVar
@@ -1159,8 +1146,7 @@ class chapterController:
         
         cc = self ; c = cc.c ;
         p = body.lastPosition ; h = p and p.headString()
-        # g.trace(c.widget_name(body))
-        body.r.configure(text=h)
+        body.editorLabel.configure(text=h)
         ip = body.lastPosition.t.insertSpot
         body.deleteAllText()
         body.insertAtEnd(p.bodyString())
@@ -1172,23 +1158,13 @@ class chapterController:
     #@+node:ekr.20060213023839.67:removeEditor
     def removeEditor (self):
         
-        c = self.c ; panedBody = self.panedBody
+        cc = self ; c = cc.c
+        panedBody = cc.panedBody
+        panes = panedBody.panes()
         
-        if len(panedBody.panes()) > 1:
-            body = c.frame.body
-            ## g.trace(body.editorName)
-            w = g.app.gui.get_focus(c)
-            # g.trace(c.widget_name(w))
-            # for z in panedBody.panes():
-                
-            # g.trace(panes)
-            if 1:
-                panedBody.delete(panes[0])
-                panedBody.updatelayout()
-                ###self.textWidgets.remove(body)
-                nBody = self.textWidgets[0]
-                nBody.bodyCtrl.focus_set()
-                nBody.bodyCtrl.update_idletasks()
+        if len(panes) > 1:
+            panedBody.delete(panes[0])
+            panedBody.updatelayout()
     #@nonl
     #@-node:ekr.20060213023839.67:removeEditor
     #@+node:ekr.20060213023839.68:addHeading
@@ -1196,11 +1172,9 @@ class chapterController:
     
         f = Tk.Frame(pane)
         f.pack(side='top')
-        l = Tk.Label(f)
-        l.pack(side='left')
-        r = Tk.Label(f)
-        r.pack(side='right')
-        return l, r
+        label = Tk.Label(f)
+        label.pack(side='left')
+        return label
     #@nonl
     #@-node:ekr.20060213023839.68:addHeading
     #@-node:ekr.20060213023839.64:Multi-Editor stuff
@@ -1378,6 +1352,8 @@ class chapterController:
     def getGoodPage (self,event,body):
         
         c = self.c ; nb = self.nb
+        
+        g.trace(body)
     
         body.frame.body = body
         body.frame.bodyCtrl = body.bodyCtrl
@@ -1411,9 +1387,6 @@ class chapterController:
     
         cc = self ; c = cc.c
         sv = cc.getStringVar(name)
-        
-        # g.trace(name,sv)
-    
         if not sv:
             # The page hasn't been fully created yet.
             # This is *not* an error.
@@ -1426,7 +1399,6 @@ class chapterController:
         body = c.frame.body
         body.lastChapter = name
         body.lastPosition = chapter.cp
-        body.l.configure(textvariable=sv)
         
         # Configure the tab.
         tab = cc.nb.tab(name)
