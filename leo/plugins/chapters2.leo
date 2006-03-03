@@ -197,10 +197,8 @@
 <v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
 <v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
 </v>
-<v t="ekr.20060228081628" a="TV"><vh>To do</vh>
+<v t="ekr.20060228081628" a="V"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
-</v>
-<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20060303083246"><vh>Recent: editors</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
 <v t="ekr.20060302083318"><vh>init</vh></v>
@@ -214,6 +212,16 @@
 <v t="ekr.20060303105217"><vh>raisePage</vh></v>
 <v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
 <v t="ekr.20060213023839.34"><vh>createNoteBook</vh></v>
+</v>
+</v>
+<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060303133111"><vh>Recent: rename</vh>
+<v t="ekr.20060213023839.76"><vh>renumber</vh></v>
+<v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
+<v t="ekr.20060213023839.45"><vh>select</vh></v>
+<v t="ekr.20060213023839.66"><vh>activateEditor</vh></v>
+<v t="ekr.20060303143328.1"><vh>computeNodeLabel</vh></v>
+<v t="ekr.20060213023839.41"><vh>createControl</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1581,12 +1589,12 @@ twidgets = {}</t>
     self.newPage = None
     
     # General ivars.
-    self.chapters = {} # Keys are tab names, (no longer stringVars.)
+    self.chapters = {} # Keys are tab names, values are Chapter objects.
+    self.chapterNames = {} # Chapter objects, values are chapter names.
     self.currentChapter = None
     self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
     self.numberOfEditors = 0
     self.panedBody = None # The present Tk.PanedWidget.
-    self.rnframes = {}
     self.stringVars = {} # Keys are tab names, values are stringVars.
 
     self.createNoteBook(parentFrame) # sets self.nb</t>
@@ -1657,10 +1665,15 @@ twidgets = {}</t>
         pane = self.createEditorPane()
     panedBody = self.panedBody
     
+    n = cc.nb.getcurselection()
+    chapter = cc.chapters.get(n)
+    g.trace(n,chapter)
+    
     label,label_frame = cc.addHeading(pane)
     # Inject these ivars into the leoTkinterBody.
     body.editorLabel = label
     body.editorLabelFrame = label_frame
+    body.editorChapter = chapter
     ctrl = old_createControl(body,frame,pane)
     
     if 0: # Create a focus-in event.
@@ -1682,6 +1695,50 @@ twidgets = {}</t>
             cc.showHeading(body)
 
     return ctrl</t>
+<t tx="ekr.20060213023839.45">def select (self,tree,p,updateBeadList=True):
+
+    cc = self ; c = p.v.c ; h = p.headString() ; nb = cc.nb
+    
+    # g.trace(p.headString(),tree)
+
+    c.frame.body.lastPosition = p
+    return_val = old_select(tree,p,updateBeadList)
+    c.frame.body.lastChapter = n = nb.getcurselection()
+
+    if hasattr(p.c.frame.body,'editorLabel'):
+        n = cc.nb.getcurselection()
+        chapter = cc.chapters.get(n)
+        s = cc.computeNodeLabel(chapter,p)
+        c.frame.body.editorLabel.configure(text=s)
+
+    return return_val</t>
+<t tx="ekr.20060213023839.56"># In the original chapters plugin the effect of this was to add a prefix to all labels.
+def renameChapter (self,event=None):
+
+    cc = self ; c = cc.c ; nb = cc.nb
+    name = nb.getcurselection()
+    index = nb.index(name)
+    frame = nb.page(name)
+    tab = nb.tab(name)
+    chapter = cc.chapters.get(name)
+    g.trace(name,index,tab.cget('text'),chapter)
+    f = Tk.Frame(frame)
+    e = Tk.Entry(f,background='white')
+    b = Tk.Button(f,text="Close")
+    f.pack(side='top')
+    e.pack(side='left')
+    b.pack(side='right')
+    def changeCallback (event=None,chapter=chapter,f=f,tab=tab):
+        s = e.get().strip()
+        cc.chapterNames [chapter] = s
+        for pane in cc.editorBodies.keys():
+            body = cc.editorBodies.get(pane)
+            if body.editorChapter == chapter:
+                body.editorLabel.configure(text=cc.computeNodeLabel(chapter,body.lastPosition))
+        f.pack_forget()
+    e.bind('&lt;Return&gt;',changeCallback)
+    b.configure(command=changeCallback)
+    c.widgetWantsFocusNow(e)</t>
 <t tx="ekr.20060213023839.65">def selectNodeForEditor (self,body):
 
     '''Select the next node for the editor.'''
@@ -1700,6 +1757,20 @@ twidgets = {}</t>
         c.selectPosition(c.rootPosition())
 
     body.lastPosition = c.currentPosition()</t>
+<t tx="ekr.20060213023839.66">def activateEditor (self,body):
+
+    '''Activate an editor.'''
+    
+    cc = self ; c = cc.c ;
+    p = body.lastPosition ; h = p and p.headString()
+    chapter = body.editorChapter
+    body.editorLabel.configure(text=cc.computeNodeLabel(chapter,p))
+    ip = body.lastPosition.t.insertSpot
+    body.deleteAllText()
+    body.insertAtEnd(p.bodyString())
+    if ip: body.setInsertionPoint(ip)
+    body.colorizer.colorize(p)
+    body.bodyCtrl.update_idletasks()</t>
 <t tx="ekr.20060213023839.67">def removeEditor (self):
     
     cc = self ; c = cc.c
@@ -1741,6 +1812,15 @@ def hideHeading (self,body):
     # h = body.editorLabelFrame.cget('height')
     body.editorLabel.pack_forget()
     # body.editorLabelFrame.configure(height='0')</t>
+<t tx="ekr.20060213023839.76">def renumber (self):
+    
+    cc = self ; nb = cc.nb
+        
+    i = 0
+    for name in nb.pagenames():
+        i += 1
+        tab = nb.tab(name)
+        tab.configure(text=str(i))</t>
 <t tx="ekr.20060213023839.77">def getGoodPage (self,event,body):
     
     c = self.c ; nb = self.nb
@@ -3486,11 +3566,12 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- Eliminate cc.stringVars?
-    - Add/change title does not work.
-    - In this case injecting sv (rename it leoChapters_sv) makes sense.
-    wrong?:  sv = self.getStringVar(pageName)
-    correct: sv = page.sv
+- Make rename work as in old plugin.
+    - Almost, but not quite.  Maybe stringvars really are the way to go...
+
+- Remove enumerate.
+
+- Eliminate .sv var?
 
 - Replace all v refs by p refs.  vnd
 
@@ -3498,7 +3579,9 @@ swing.JOptionPane.YES_NO_OPTION )
 
 - Complete indexing:
     - Scrolling does not work yet.
-    - Selecting a node in the index should make it visible.</t>
+    - Selecting a node in the index should make it visible.
+
+@color</t>
 <t tx="ekr.20060228082602"></t>
 <t tx="ekr.20060228085204"></t>
 <t tx="ekr.20060228085204.1">c.save()
@@ -3549,5 +3632,15 @@ c.redraw_now() # Must be done here.</t>
     w = c.frame.body and c.frame.body.bodyCtrl
     w and w.after_idle(idleCallback)</t>
 <t tx="ekr.20060303110857"></t>
+<t tx="ekr.20060303133111"></t>
+<t tx="ekr.20060303143328.1">def computeNodeLabel (self,chapter,p):
+    
+    cc = self
+    s = cc.chapterNames.get(chapter,'')
+    h = p.headString()
+    if s:
+        return '%s %s' % (s,h)
+    else:
+        return h</t>
 </tnodes>
 </leo_file>
