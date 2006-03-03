@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="252" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="253" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
 	<global_window_position top="111" left="436" height="660" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -197,20 +197,23 @@
 <v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
 <v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
 </v>
-<v t="ekr.20060228081628"><vh>To do</vh></v>
-<v t="ekr.20060213023839.3" a="ETV"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060303083246"><vh>Recent</vh>
+<v t="ekr.20060228081628" a="TV"><vh>To do</vh>
+<v t="ekr.20060303104124"><vh>Later</vh></v>
+</v>
+<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060303083246"><vh>Recent: editors</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
 <v t="ekr.20060302083318"><vh>init</vh></v>
-<v t="ekr.20060213023839.19"><vh>new_select (leoTkinterTree)</vh></v>
-<v t="ekr.20060213023839.45"><vh>select</vh></v>
-<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
-<v t="ekr.20060213023839.47"><vh>treeInit (creates Chapter)</vh></v>
 <v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
 <v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
 <v t="ekr.20060213023839.38"><vh>createEditorPane</vh></v>
 <v t="ekr.20060213023839.41"><vh>createControl</vh></v>
 <v t="ekr.20060213023839.68"><vh>add/hide/showHeading</vh></v>
+</v>
+<v t="ekr.20060303110857"><vh>Recent: move focus out of chapter tabs</vh>
+<v t="ekr.20060303105217"><vh>raisePage</vh></v>
+<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
+<v t="ekr.20060213023839.34"><vh>createNoteBook</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1548,16 +1551,6 @@ couldn't think of any parent node to group these under.
     else:
         cc = controllers.get(self.c)
         return cc.endEditLabel(self)</t>
-<t tx="ekr.20060213023839.19">def new_select (self,p,updateBeadList=True):
-    
-    # self is c.frame.tree
-    if g.app.unitTesting:
-        # global old_select
-        return old_select(self,p,updateBeadList)
-    else:
-        global controllers
-        cc = controllers.get(self.c)
-        return cc.select(self,p,updateBeadList)</t>
 <t tx="ekr.20060213023839.22">chapters = {}
 editorNames = {}
 frames = {}
@@ -1567,13 +1560,14 @@ pbodies = {}
 twidgets = {}</t>
 <t tx="ekr.20060213023839.27">def makeCurrent (self):
 
-    g.trace(self.pageName)
+    # g.trace(self.pageName)
 
     c = self.c ; cc = self.cc
     cc.currentChapter._saveInfo()
     cc.currentChapter = self
     self.setVariables()
-    c.redraw()</t>
+    c.redraw()
+    c.bodyWantsFocusNow()</t>
 <t tx="ekr.20060213023839.30">def __init__ (self,c,frame,parentFrame):
     
     self.c = c
@@ -1596,6 +1590,26 @@ twidgets = {}</t>
     self.stringVars = {} # Keys are tab names, values are stringVars.
 
     self.createNoteBook(parentFrame) # sets self.nb</t>
+<t tx="ekr.20060213023839.34">def createNoteBook (self,parentFrame):
+
+    '''Construct a NoteBook widget for a frame.'''
+
+    c = self.c
+    self.nb = nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
+    hull = nb.component('hull')
+    self.makeTabMenu(hull)
+    
+    def lowerCallback(name,self=self):
+        return self.lowerPage(name)
+    nb.configure(lowercommand=lowerCallback)
+    
+    def raiseCallback(name,self=self):
+        return self.raisePage(name)
+    nb.configure(raisecommand=raiseCallback)
+
+    nb.pack(fill='both',expand=1)
+    ### nb.nameMaker = self.nameMaker
+    return nb</t>
 <t tx="ekr.20060213023839.36">def makeNameMaker (self):
 
     '''Create a numbering mechanism for tabs.'''
@@ -1629,32 +1643,24 @@ twidgets = {}</t>
     name = str(cc.numberOfEditors)
     pane = self.panedBody.add(name)
     
-    g.trace(pane)
+    # g.trace(pane)
     return pane</t>
 <t tx="ekr.20060213023839.41">def createControl(self,body,frame,parentFrame):
 
     cc = self ; c = cc.c ; nb = cc.nb
+    # assert(body == frame.body)
     
     if self.panedBody:
         pane = parentFrame
     else:
         self.createPanedWidget(parentFrame)
         pane = self.createEditorPane()
-
     panedBody = self.panedBody
-    
-    # assert(body == frame.body)
-    
-    # Create yet another frame to hold the label and the text area.
-    # This must be done before calling old_createControl
-    body.editorLabelFrame = f = Tk.Frame(pane)
-    f.pack(side='top',expand=1,fill='both')
     
     label,label_frame = cc.addHeading(pane)
     # Inject these ivars into the leoTkinterBody.
     body.editorLabel = label
     body.editorLabelFrame = label_frame
-    
     ctrl = old_createControl(body,frame,pane)
     
     if 0: # Create a focus-in event.
@@ -1667,11 +1673,7 @@ twidgets = {}</t>
         panedBody.configurepane(z,size=i)
     panedBody.updatelayout()
     
-    assert body not in cc.editorBodies
-    
     cc.editorBodies [pane] = body
-    
-    g.trace('pane',pane)
 
     if len(panedBody.panes()) &gt; 1:
         # Show the labels of all frames.
@@ -1680,36 +1682,6 @@ twidgets = {}</t>
             cc.showHeading(body)
 
     return ctrl</t>
-<t tx="ekr.20060213023839.45">def select (self,tree,p,updateBeadList=True):
-
-    c = p.v.c ; h = p.headString() ; nb = self.nb
-    
-    g.trace(p.headString(),tree)
-
-    c.frame.body.lastPosition = p
-    return_val = old_select(tree,p,updateBeadList)
-    c.frame.body.lastChapter = nb.getcurselection()
-
-    if hasattr(p.c.frame.body,'editorLabel'):
-        c.frame.body.editorLabel.configure(text=h)
-
-    return return_val</t>
-<t tx="ekr.20060213023839.47">def treeInit (self,tree,c,frame,canvas):
-    
-    cc = self
-    
-    assert canvas == cc.newCanvas
-    
-    # These ivars are set in cc.createCanvas.
-    pageName = cc.newPageName
-    page = cc.newPage
-    canvas = cc.newCanvas
-    
-    old_tree_init(tree,c,frame,canvas)
-    cc.chapters [pageName] = Chapter(cc,c,tree,frame,canvas,page,pageName)
-    
-    # g.trace(pageName,id(canvas),cc.chapters.keys())
-</t>
 <t tx="ekr.20060213023839.65">def selectNodeForEditor (self,body):
 
     '''Select the next node for the editor.'''
@@ -3514,32 +3486,19 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- (done) Create bindings in second and other canvases.
-- (done, sorta) Only show headline if there is more than one editor.
-
-- Add/change title does not work.
-
-** Separate editors from chapters plugin.
-    - This really should be part of Leo's core.  It's so useful.
-
-- Eliminate cc.stringVars, etc.
+- Eliminate cc.stringVars?
+    - Add/change title does not work.
     - In this case injecting sv (rename it leoChapters_sv) makes sense.
     wrong?:  sv = self.getStringVar(pageName)
     correct: sv = page.sv
-
-- Complete indexing:
-    - Scrolling does not work yet.
-    - Selecting a node in the index should make it visible.
-
-- What should the type of lastNode be? v or p??  See newSelect.
 
 - Replace all v refs by p refs.  vnd
 
 - Find/Change does not appear to work.
 
-- Close box in window crashes the plugin.
-
-*** Build in support for Tabbed outline into Leo's core.</t>
+- Complete indexing:
+    - Scrolling does not work yet.
+    - Selecting a node in the index should make it visible.</t>
 <t tx="ekr.20060228082602"></t>
 <t tx="ekr.20060228085204"></t>
 <t tx="ekr.20060228085204.1">c.save()
@@ -3571,5 +3530,24 @@ c.redraw_now() # Must be done here.</t>
 
     ### self.canvas.name = pageName ####</t>
 <t tx="ekr.20060303083246"></t>
+<t tx="ekr.20060303104124">- Separate editors from chapters plugin.
+    - This really should be part of Leo's core.  It's so useful.
+
+- Build in support for Tabbed outline into Leo's core.</t>
+<t tx="ekr.20060303105217">def raisePage (self,name):
+    
+    cc = self ; c = cc.c
+    
+    # This must be called before queuing up the callback.
+    self.setTree(name)
+    
+    # This can not be called immediately
+    def idleCallback(event=None,c=c):
+        c.invalidateFocus()
+        c.bodyWantsFocusNow()
+        
+    w = c.frame.body and c.frame.body.bodyCtrl
+    w and w.after_idle(idleCallback)</t>
+<t tx="ekr.20060303110857"></t>
 </tnodes>
 </leo_file>

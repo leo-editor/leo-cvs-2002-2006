@@ -61,6 +61,7 @@ __version__ = "0.105"
 # - Created bindings in second and other canvases.
 # - Only show editor label if there is more than one editor.
 #   Alas, it is difficult to get labels back once unpacked.
+# - Clicking on a tab puts focus in body.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -409,13 +410,14 @@ class Chapter:
     #@+node:ekr.20060213023839.27:makeCurrent
     def makeCurrent (self):
     
-        g.trace(self.pageName)
+        # g.trace(self.pageName)
     
         c = self.c ; cc = self.cc
         cc.currentChapter._saveInfo()
         cc.currentChapter = self
         self.setVariables()
         c.redraw()
+        c.bodyWantsFocusNow()
     #@nonl
     #@-node:ekr.20060213023839.27:makeCurrent
     #@-others
@@ -502,7 +504,7 @@ class chapterController:
         name = str(cc.numberOfEditors)
         pane = self.panedBody.add(name)
         
-        g.trace(pane)
+        # g.trace(pane)
         return pane
     #@nonl
     #@-node:ekr.20060213023839.38:createEditorPane
@@ -515,13 +517,14 @@ class chapterController:
         self.nb = nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
         hull = nb.component('hull')
         self.makeTabMenu(hull)
-        def raiseCallback(name,self=self):
-            return self.setTree(name)
-        nb.configure(raisecommand=raiseCallback)
         
         def lowerCallback(name,self=self):
             return self.lowerPage(name)
         nb.configure(lowercommand=lowerCallback)
+        
+        def raiseCallback(name,self=self):
+            return self.raisePage(name)
+        nb.configure(raisecommand=raiseCallback)
     
         nb.pack(fill='both',expand=1)
         ### nb.nameMaker = self.nameMaker
@@ -562,12 +565,28 @@ class chapterController:
     
         '''Set a lowered tabs color.'''
     
-        nb = self.nb
-        pindex = nb.index(name)
-        tab = nb.tab(pindex)
+        cc = self ; c = cc.c ; tab = cc.nb.tab(name)
+    
         tab.configure(background='lightgrey',foreground='black')
     #@nonl
     #@-node:ekr.20060213023839.80:lowerPage
+    #@+node:ekr.20060303105217:raisePage
+    def raisePage (self,name):
+        
+        cc = self ; c = cc.c
+        
+        # This must be called before queuing up the callback.
+        self.setTree(name)
+        
+        # This can not be called immediately
+        def idleCallback(event=None,c=c):
+            c.invalidateFocus()
+            c.bodyWantsFocusNow()
+            
+        w = c.frame.body and c.frame.body.bodyCtrl
+        w and w.after_idle(idleCallback)
+    #@nonl
+    #@-node:ekr.20060303105217:raisePage
     #@+node:ekr.20060213023839.2:setTree
     def setTree (self,name):
     
@@ -1259,27 +1278,19 @@ class chapterController:
     def createControl(self,body,frame,parentFrame):
     
         cc = self ; c = cc.c ; nb = cc.nb
+        # assert(body == frame.body)
         
         if self.panedBody:
             pane = parentFrame
         else:
             self.createPanedWidget(parentFrame)
             pane = self.createEditorPane()
-    
         panedBody = self.panedBody
-        
-        # assert(body == frame.body)
-        
-        # Create yet another frame to hold the label and the text area.
-        # This must be done before calling old_createControl
-        body.editorLabelFrame = f = Tk.Frame(pane)
-        f.pack(side='top',expand=1,fill='both')
         
         label,label_frame = cc.addHeading(pane)
         # Inject these ivars into the leoTkinterBody.
         body.editorLabel = label
         body.editorLabelFrame = label_frame
-        
         ctrl = old_createControl(body,frame,pane)
         
         if 0: # Create a focus-in event.
@@ -1292,11 +1303,7 @@ class chapterController:
             panedBody.configurepane(z,size=i)
         panedBody.updatelayout()
         
-        assert body not in cc.editorBodies
-        
         cc.editorBodies [pane] = body
-        
-        g.trace('pane',pane)
     
         if len(panedBody.panes()) > 1:
             # Show the labels of all frames.
@@ -1381,7 +1388,7 @@ class chapterController:
     
         c = p.v.c ; h = p.headString() ; nb = self.nb
         
-        g.trace(p.headString(),tree)
+        # g.trace(p.headString(),tree)
     
         c.frame.body.lastPosition = p
         return_val = old_select(tree,p,updateBeadList)
