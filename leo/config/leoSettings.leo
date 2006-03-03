@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="256" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="258" clone_windows="0"/>
 <globals body_outline_ratio="0.549828178694">
-	<global_window_position top="77" left="369" height="789" width="862"/>
+	<global_window_position top="77" left="323" height="789" width="908"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -45,26 +45,27 @@
 <v t="ekr.20060112104823"><vh>main</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.1" a="V" annotate="7d71002e"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20051126062243" annotate="7d71002e"><vh>Debugging options</vh>
 <v t="ekr.20060201110016"><vh>@bool allow_idle_time_hook = False</vh></v>
 <v t="ekr.20060212101234"><vh>@bool gc_before_redraw = False</vh></v>
 <v t="ekr.20060202113731"><vh>@bool show_tree_stats = False</vh></v>
 <v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
 <v t="ekr.20060114073238"><vh>@bool trace_bindings = False</vh></v>
+<v t="ekr.20060301085047"><vh>@bool trace_chapters = False</vh></v>
 <v t="ekr.20060204093736"><vh>@bool trace_doCommand = False</vh></v>
 <v t="ekr.20060204102644"><vh>@bool trace_f.set_focus = False</vh></v>
 <v t="ekr.20060207142012"><vh>@bool trace_focus = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060126075152"><vh>@bool trace_gc = False</vh></v>
-<v t="ekr.20060212103826" a="E"><vh>@bool trace_gc_calls = False</vh></v>
+<v t="ekr.20060212103826"><vh>@bool trace_gc_calls = False</vh></v>
 <v t="ekr.20060126083715"><vh>@bool trace_gc_verbose = False</vh></v>
 <v t="ekr.20060215054710"><vh>@bool trace_key_event= False</vh></v>
-<v t="ekr.20060216091239"><vh>@bool trace_minibuffer = False</vh></v>
 <v t="ekr.20060131071947"><vh>@bool trace_masterClickHandler = False</vh></v>
 <v t="ekr.20051126062525"><vh>@bool trace_masterCommand = False</vh></v>
 <v t="ekr.20060209045356"><vh>@bool trace_masterFocusHandler = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
+<v t="ekr.20060216091239"><vh>@bool trace_minibuffer = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
 <v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
 <v t="ekr.20060210105437"><vh>@bool trace_select = False</vh></v>
@@ -298,20 +299,21 @@
 <v t="ekr.20060125165241"><vh>@bool useTextMinibuffer = True</vh></v>
 <v t="ekr.20060122105527.4" annotate="7d71002e"><vh>@strings  [ignore,insert, overwrite] top_level_unbound_key_action = insert</vh></v>
 </v>
-<v t="ekr.20051007200824" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20051007200824" a="V" annotate="7d71002e"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20051101160257" annotate="7d71002e"><vh>About keyboard shortcuts</vh>
 <v t="ekr.20051007200824.1" annotate="7d71002e"><vh>About shortcut specifiers</vh></v>
 <v t="ekr.20060116090646"><vh>Reference for function keys</vh></v>
 </v>
 <v t="ekr.20060117092249"><vh>About modes</vh></v>
+<v t="ekr.20060303075452"><vh>Commands for mouseless Leo</vh></v>
 <v t="ekr.20060104093101" annotate="7d71002e"><vh>@ignore Unused key bindings</vh>
-<v t="ekr.20060110141538" a="E" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
+<v t="ekr.20060110141538" annotate="7d71002e"><vh>Default Emacs shortcuts</vh>
 <v t="ekr.20051007193321"><vh>@shortcuts Emacs: A-E</vh></v>
 <v t="ekr.20060112090844"><vh>@shortcuts Emacs: F-M</vh></v>
 <v t="ekr.20060112090844.1"><vh>@shortcuts Emads: N-Z</vh></v>
 <v t="ekr.20060112112006"><vh>@shortcuts Emacs: missing</vh></v>
 </v>
-<v t="ekr.20060110141538.2" a="E" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
+<v t="ekr.20060110141538.2" annotate="7d71002e"><vh>Legacy Leo bindings</vh>
 <v t="ekr.20051218203646" annotate="7d71002e"><vh>@shortcuts Legacy: A-E</vh></v>
 <v t="ekr.20060112090844.4"><vh>@shortcuts Legacy: F-M</vh></v>
 <v t="ekr.20060112090844.5"><vh>@shortcuts Legacy: N-Z</vh></v>
@@ -342,7 +344,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060110141538.1" annotate="7d71002e"><vh>No bindings</vh>
+<v t="ekr.20060110141538.1" a="E" annotate="7d71002e"><vh>No bindings</vh>
 <v t="ekr.20051218202206" annotate="7d71002e"><vh>@shortcuts No bindings: A-E</vh></v>
 <v t="ekr.20060112093227.1"><vh>@shortcuts No bindings: E-M</vh></v>
 <v t="ekr.20060112093227.2"><vh>@shortcuts No bindings: N-Z</vh></v>
@@ -376,11 +378,14 @@
 </v>
 </v>
 </v>
-<v t="ekr.20060219103020" a="E"><vh>Recent settings</vh>
+<v t="ekr.20060219103020"><vh>Recent settings</vh>
 <v t="ekr.20060216145416"><vh>@bool trace_autocompleter = False</vh></v>
 <v t="ekr.20060131071612"><vh>@bool trace_masterKeyHandler = False</vh></v>
 <v t="ekr.20051126062830"><vh>@bool trace_g.app.gui.set_focus = False</vh></v>
 <v t="ekr.20060121102627"><vh>@bool trace_modes = False</vh></v>
+<v t="ekr.20060301085047"><vh>@bool trace_chapters = False</vh></v>
+<v t="ekr.20051126062243.1"><vh>@bool trace_redraw_now = False</vh></v>
+<v t="ekr.20060202092911"><vh>@bool trace_tree = False</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4403,5 +4408,187 @@ False (recommended):  No translation.</t>
 <t tx="ekr.20060216145416"></t>
 <t tx="ekr.20060216170801"></t>
 <t tx="ekr.20060219103020"></t>
+<t tx="ekr.20060301085047"></t>
+<t tx="ekr.20060303075452">The following commands are will be useful for operating Leo without a mouse.
+
+Clicks
+
+click-headline
+click-icon-box
+double-click-headline
+double-click-icon-box
+
+Cursor moves and selection (Basic Emacs commands)
+
+back-char
+back-char-extend-selection
+back-paragraph
+back-paragraph-extend-selection
+back-sentence
+back-sentence-extend-selection
+back-to-indentation
+back-word
+back-word-extend-selection
+backward-delete-char
+backward-kill-paragraph
+backward-kill-sentence
+backward-kill-word
+beginning-of-buffer
+beginning-of-buffer-extend-selection=
+beginning-of-line
+beginning-of-line-extend-selection
+delete-char
+end-of-buffer
+end-of-buffer-extend-selection
+end-of-line
+end-of-line-extend-selection
+exchange-point-mark
+forward-char
+forward-char-extend-selection
+forward-paragraph
+forward-paragraph-extend-selection
+forward-sentence
+forward-sentence-extend-selection
+forward-word
+forward-word-extend-selection
+insert-newline
+kill-line
+kill-paragraph
+kill-rectangle
+kill-region
+kill-region-save
+kill-sentence
+kill-word
+move-past-close
+move-past-close-extend-selection
+newline-and-indent:
+next-line
+next-line-extend-selection
+paste-text
+point-to-register
+prepend-to-buffer
+previous-line
+previous-line-extend-selection
+scroll-down
+scroll-down-extend-selection
+scroll-up
+scroll-up-extend-selection
+yank
+yank-pop
+zap-to-character
+
+Focus
+
+abort-edit-headline
+cycle-focus
+edit-headline
+end-edit-headline
+focus-to-body
+focus-to-log
+focus-to-minibuffer
+focus-to-tree
+
+Menus
+
+activate-cmds-menu
+activate-edit-menu
+activate-file-menu
+activate-help-menu
+activate-outline-menu
+activate-plugins-menu
+activate-window-menu
+
+Nodes: selecting, expanding and contracting
+
+contract-all
+contract-node
+contract-or-go-left
+contract-parent
+equal-sized-panes
+expand-all
+expand-and-go-right
+expand-next-level
+expand-node
+expand-or-go-right
+expand-prev-level
+go-back
+go-forward
+goto-char
+goto-first-node
+goto-first-sibling
+goto-last-node
+goto-last-sibling
+goto-last-visible
+goto-next-node
+goto-next-sibling
+goto-next-visible
+goto-parent
+goto-prev-node
+goto-prev-sibling
+goto-prev-visible
+
+Panes
+
+contract-body-pane
+contract-log-pane
+contract-outline-pane
+contract-pane
+expand-body-pane
+expand-log-pane
+expand-outline-pane
+expand-pane
+fully-expand-body-pane
+fully-expand-log-pane
+fully-expand-outline-pane
+fully-expand-pane
+hide-body-pane
+hide-find-tab
+hide-log-pane
+hide-mini-buffer
+hide-pane
+hide-outline-pane
+hide-spell-tab
+
+Furthermore, the find commands are a good tool for using Leo without a mouse
+(More commands are coming)
+
+find-tab-change
+find-tab-change-all
+find-tab-change-then-find
+find-tab-find
+find-tab-find-all
+find-tab-find-prev
+hide-find-tab
+isearch-backward
+isearch-backward-regexp
+isearch-forward
+isearch-forward-regexp
+open-find-tab
+query-replace
+query-replace-regex
+replace-string
+search-again
+search-backward
+search-forward
+search-with-present-options
+
+Setting find options:
+
+enter-find-options-mode
+set-find-everywhere
+set-find-node-only
+set-find-suboutline-only
+show-find-options
+toggle-find-ignore-case-option
+toggle-find-in-body-option
+toggle-find-in-headline-option
+toggle-find-mark-changes-option
+toggle-find-mark-finds-option
+toggle-find-regex-option
+toggle-find-reverse-option
+toggle-find-word-option
+toggle-find-wrap-around-option
+word-search-backward
+word-search-forward</t>
 </tnodes>
 </leo_file>
