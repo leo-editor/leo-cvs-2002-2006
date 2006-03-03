@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.104"
+__version__ = "0.105"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
@@ -56,6 +56,11 @@ __version__ = "0.104"
 # v .104 EKR:
 # - Zipped file logic now works and is compatible with original chapters 
 # plugin.
+# 
+# v .105 EKR
+# - Created bindings in second and other canvases.
+# - Only show editor label if there is more than one editor.
+#   Alas, it is difficult to get labels back once unpacked.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -332,7 +337,8 @@ class Chapter:
         
         Doing this here greatly simplifies the init logic.'''
     
-        cc = self.cc ; nb = cc.nb ; pageName = self.pageName ; page = self.page
+        c = self.c ; cc = self.cc ; nb = cc.nb
+        pageName = self.pageName ; page = self.page
         
         hull = nb.component('hull')
         tab = nb.tab(pageName)
@@ -340,7 +346,16 @@ class Chapter:
         
         sv = cc.stringVars.get(pageName)
         cc.createBalloon(page,sv)
-        self.canvas.name = pageName ####
+     
+        # The keyhandler won't be defined for the first chapter,
+        # but that's ok: we only need to do this for later chapters.
+        if c.k:
+            # Same logic as in completeAllBindings, but for the new tree.
+            c.k and self.tree.setBindings()
+            for w in (self.canvas,self.tree.bindingWidget):
+                c.k.completeAllBindingsForWidget(w)
+    
+        ### self.canvas.name = pageName ####
     #@nonl
     #@-node:ekr.20060302083318:init
     #@+node:ekr.20060302083318.1:initTree
@@ -394,7 +409,7 @@ class Chapter:
     #@+node:ekr.20060213023839.27:makeCurrent
     def makeCurrent (self):
     
-        # g.trace(self.pageName)
+        g.trace(self.pageName)
     
         c = self.c ; cc = self.cc
         cc.currentChapter._saveInfo()
@@ -412,6 +427,7 @@ class chapterController:
     '''A per-commander controller.'''
     
     #@    @+others
+    #@+node:ekr.20060303073451:Birth
     #@+node:ekr.20060213023839.30: ctor: chapterController
     def __init__ (self,c,frame,parentFrame):
         
@@ -428,6 +444,7 @@ class chapterController:
         # General ivars.
         self.chapters = {} # Keys are tab names, (no longer stringVars.)
         self.currentChapter = None
+        self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
         self.numberOfEditors = 0
         self.panedBody = None # The present Tk.PanedWidget.
         self.rnframes = {}
@@ -436,7 +453,164 @@ class chapterController:
         self.createNoteBook(parentFrame) # sets self.nb
     #@nonl
     #@-node:ekr.20060213023839.30: ctor: chapterController
+    #@+node:ekr.20060213023839.29:Create widgets
+    #@+node:ekr.20060213023839.32:constructTree
+    def constructTree (self,frame,pageName):
+    
+        cc = self ; c = self.c ; nb = self.nb
+        canvas = treeBar = tree = None
+        if frame.canvas:
+            canvas = frame.canvas
+            treeBar = frame.treeBar
+            tree = frame.tree
+    
+        sv = Tk.StringVar()
+        sv.set(pageName)
+        cc.stringVars[pageName] = sv
+        
+        frame.canvas = canvas = frame.createCanvas(parentFrame=None,pageName=pageName)
+        frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas)
+        frame.tree.setColorFromConfig()
+    
+        return tree, cc.newPage
+    #@nonl
+    #@-node:ekr.20060213023839.32:constructTree
+    #@+node:ekr.20060213023839.33:createBalloon
+    def createBalloon (self,tab,sv):
+    
+        '''Create a balloon for a widget.'''
+        
+        return
+    
+        balloon = Pmw.Balloon(tab,initwait=100)
+        balloon.bind(tab,'')
+        hull = balloon.component('hull')
+        def blockExpose (event):
+            if sv.get() == '':
+                 hull.withdraw()
+        hull.bind('<Expose>',blockExpose,'+')
+        balloon._label.configure(textvariable=sv)
+    #@nonl
+    #@-node:ekr.20060213023839.33:createBalloon
+    #@+node:ekr.20060213023839.38:createEditorPane
+    def createEditorPane (self):
+        
+        '''Create a new pane with a unique name.'''
+    
+        cc = self
+        cc.numberOfEditors += 1
+        name = str(cc.numberOfEditors)
+        pane = self.panedBody.add(name)
+        
+        g.trace(pane)
+        return pane
+    #@nonl
+    #@-node:ekr.20060213023839.38:createEditorPane
+    #@+node:ekr.20060213023839.34:createNoteBook
+    def createNoteBook (self,parentFrame):
+    
+        '''Construct a NoteBook widget for a frame.'''
+    
+        c = self.c
+        self.nb = nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
+        hull = nb.component('hull')
+        self.makeTabMenu(hull)
+        def raiseCallback(name,self=self):
+            return self.setTree(name)
+        nb.configure(raisecommand=raiseCallback)
+        
+        def lowerCallback(name,self=self):
+            return self.lowerPage(name)
+        nb.configure(lowercommand=lowerCallback)
+    
+        nb.pack(fill='both',expand=1)
+        ### nb.nameMaker = self.nameMaker
+        return nb
+    #@nonl
+    #@-node:ekr.20060213023839.34:createNoteBook
+    #@+node:ekr.20060213023839.35:createPanedWidget
+    def createPanedWidget (self,parentFrame):
+    
+        '''Construct a new panedwidget for a frame.'''
+    
+        c = self.c
+        self.panedBody = panedBody = Pmw.PanedWidget(parentFrame,orient='horizontal')
+        # g.trace('creating',panedBody)
+        panedBody.pack(expand=1,fill='both')
+    #@nonl
+    #@-node:ekr.20060213023839.35:createPanedWidget
+    #@+node:ekr.20060302083318.2:createTab
+    def createTab (self,tabName):
+        
+        cc = self ; nb = cc.nb
+    
+        page = nb.add(tabName) # page is a Tk.Frame.
+        button = nb.tab(tabName) # tab is a Tk.Button.
+        button.configure(background='grey',foreground='white')
+        
+        cc.stringVars[tabName] = sv = Tk.StringVar()
+        
+        # g.trace(tabName,page,button)
+    
+        return page,button
+    #@nonl
+    #@-node:ekr.20060302083318.2:createTab
+    #@-node:ekr.20060213023839.29:Create widgets
+    #@+node:ekr.20060303090708:Callbacks
+    #@+node:ekr.20060213023839.80:lowerPage
+    def lowerPage (self,name):
+    
+        '''Set a lowered tabs color.'''
+    
+        nb = self.nb
+        pindex = nb.index(name)
+        tab = nb.tab(pindex)
+        tab.configure(background='lightgrey',foreground='black')
+    #@nonl
+    #@-node:ekr.20060213023839.80:lowerPage
+    #@+node:ekr.20060213023839.2:setTree
+    def setTree (self,name):
+    
+        cc = self ; c = cc.c
+        sv = cc.getStringVar(name)
+        if not sv:
+            # The page hasn't been fully created yet.
+            # This is *not* an error.
+            # g.trace('******* no sv attr for page',name,color='red')
+            return None
+        chapter = self.getChapter(name)
+        chapter.makeCurrent()
+        
+        # Set body ivars.
+        body = c.frame.body
+        body.lastChapter = name
+        body.lastPosition = chapter.cp
+        
+        # Configure the tab.
+        tab = cc.nb.tab(name)
+        tab.configure(background='grey',foreground='white')
+        self.activateEditor(c.frame.body)
+    #@nonl
+    #@-node:ekr.20060213023839.2:setTree
+    #@-node:ekr.20060303090708:Callbacks
+    #@-node:ekr.20060303073451:Birth
     #@+node:ekr.20060213023839.75:Chapter ops
+    #@+node:ekr.20060213023839.31:addPage
+    def addPage (self,pageName=None):
+    
+        cc = self ; c = cc.c
+        if not pageName:
+            pageName = self.nextPageName()
+        
+        # g.trace(pageName,cc.chapters.keys())
+        
+        old_chapter = cc.currentChapter
+        junk, page = cc.constructTree(self.frame,pageName)
+            # Creates a canvas, new tab and a new tree.
+        old_chapter.makeCurrent()
+        return page,pageName
+    #@nonl
+    #@-node:ekr.20060213023839.31:addPage
     #@+node:ekr.20060213023839.99:emptyTrash
     def emptyTrash (self):
         
@@ -528,30 +702,6 @@ class chapterController:
             tab.configure(text=str(i))
     #@nonl
     #@-node:ekr.20060213023839.76:renumber
-    #@+node:ekr.20060213023839.2:setTree
-    def setTree (self,name):
-    
-        cc = self ; c = cc.c
-        sv = cc.getStringVar(name)
-        if not sv:
-            # The page hasn't been fully created yet.
-            # This is *not* an error.
-            # g.trace('******* no sv attr for page',name,color='red')
-            return None
-        chapter = self.getChapter(name)
-        chapter.makeCurrent()
-        
-        # Set body ivars.
-        body = c.frame.body
-        body.lastChapter = name
-        body.lastPosition = chapter.cp
-        
-        # Configure the tab.
-        tab = cc.nb.tab(name)
-        tab.configure(background='grey',foreground='white')
-        self.activateEditor(c.frame.body)
-    #@nonl
-    #@-node:ekr.20060213023839.2:setTree
     #@+node:ekr.20060213023839.98:swapChapters
     def swapChapters (self,name):
     
@@ -727,102 +877,51 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.96:conversionToChapters
     #@-node:ekr.20060213023839.89:Conversions
-    #@+node:ekr.20060213023839.29:Create widgets & callbacks
-    #@+node:ekr.20060213023839.32:constructTree
-    def constructTree (self,frame,pageName):
+    #@+node:ekr.20060213023839.64:Editor
+    #@+node:ekr.20060213023839.68:add/hide/showHeading
+    def addHeading (self,pane):
     
-        cc = self ; c = self.c ; nb = self.nb
-        canvas = treeBar = tree = None
-        if frame.canvas:
-            canvas = frame.canvas
-            treeBar = frame.treeBar
-            tree = frame.tree
+        f = Tk.Frame(pane)
+        f.pack(side='top')
+        label = Tk.Label(f)
+        # label.pack(side='left')
+        return label,f
     
-        sv = Tk.StringVar()
-        sv.set(pageName)
-        cc.stringVars[pageName] = sv
+    # The editorLabel and editorLabelFrame ivars have been injected into body.
         
-        frame.canvas = canvas = frame.createCanvas(parentFrame=None,pageName=pageName)
-        frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas)
-        frame.tree.setColorFromConfig()
-    
-        return tree, cc.newPage
+    def showHeading (self,body):
+        body.editorLabel.pack(side='left')
+        
+    def hideHeading (self,body):
+        # If we unpack the frame we won't be able to repack it easily.
+        # Setting the height to zero also does not seem to work.
+        # h = body.editorLabelFrame.cget('height')
+        body.editorLabel.pack_forget()
+        # body.editorLabelFrame.configure(height='0')
     #@nonl
-    #@-node:ekr.20060213023839.32:constructTree
-    #@+node:ekr.20060213023839.33:createBalloon
-    def createBalloon (self,tab,sv):
+    #@-node:ekr.20060213023839.68:add/hide/showHeading
+    #@+node:ekr.20060213023839.66:activateEditor
+    def activateEditor (self,body):
     
-        '''Create a balloon for a widget.'''
+        '''Activate an editor.'''
         
-        return
-    
-        balloon = Pmw.Balloon(tab,initwait=100)
-        balloon.bind(tab,'')
-        hull = balloon.component('hull')
-        def blockExpose (event):
-            if sv.get() == '':
-                 hull.withdraw()
-        hull.bind('<Expose>',blockExpose,'+')
-        balloon._label.configure(textvariable=sv)
+        cc = self ; c = cc.c ;
+        p = body.lastPosition ; h = p and p.headString()
+        body.editorLabel.configure(text=h)
+        ip = body.lastPosition.t.insertSpot
+        body.deleteAllText()
+        body.insertAtEnd(p.bodyString())
+        if ip: body.setInsertionPoint(ip)
+        body.colorizer.colorize(p)
+        body.bodyCtrl.update_idletasks()
     #@nonl
-    #@-node:ekr.20060213023839.33:createBalloon
-    #@+node:ekr.20060213023839.34:createNoteBook
-    def createNoteBook (self,parentFrame):
-    
-        '''Construct a NoteBook widget for a frame.'''
-    
-        c = self.c
-        self.nb = nb = Pmw.NoteBook(parentFrame,borderwidth=1,pagemargin=0)
-        hull = nb.component('hull')
-        self.makeTabMenu(hull)
-        def raiseCallback(name,self=self):
-            return self.setTree(name)
-        nb.configure(raisecommand=raiseCallback)
-        
-        def lowerCallback(name,self=self):
-            return self.lowerPage(name)
-        nb.configure(lowercommand=lowerCallback)
-    
-        nb.pack(fill='both',expand=1)
-        ### nb.nameMaker = self.nameMaker
-        return nb
-    #@nonl
-    #@-node:ekr.20060213023839.34:createNoteBook
-    #@+node:ekr.20060213023839.35:createPanedWidget
-    def createPanedWidget (self,parentFrame):
-    
-        '''Construct a new panedwidget for a frame.'''
-    
-        c = self.c
-        self.panedBody = panedBody = Pmw.PanedWidget(parentFrame,orient='horizontal')
-        # g.trace('creating',panedBody)
-        panedBody.pack(expand=1,fill='both')
-        parentFrame = self.newEditorPane()
-        return parentFrame
-    #@nonl
-    #@-node:ekr.20060213023839.35:createPanedWidget
-    #@+node:ekr.20060302083318.2:createTab
-    def createTab (self,tabName):
-        
-        cc = self ; nb = cc.nb
-    
-        page = nb.add(tabName) # page is a Tk.Frame.
-        button = nb.tab(tabName) # tab is a Tk.Button.
-        button.configure(background='grey',foreground='white')
-        
-        cc.stringVars[tabName] = sv = Tk.StringVar()
-        
-        # g.trace(tabName,page,button)
-    
-        return page,button
-    #@nonl
-    #@-node:ekr.20060302083318.2:createTab
+    #@-node:ekr.20060213023839.66:activateEditor
     #@+node:ekr.20060213023839.37:newEditor
     def newEditor (self):
     
         cc = self ; c = cc.c ; nb = cc.nb
         
-        pane = self.newEditorPane()
+        pane = self.createEditorPane()
         af = leoTkinterBody(self.frame,pane)
         c.frame.bodyCtrl = af.bodyCtrl # Make af the 'official' body.
         af.setFontFromConfig()
@@ -832,30 +931,311 @@ class chapterController:
         cc.activateEditor(af)
     #@nonl
     #@-node:ekr.20060213023839.37:newEditor
-    #@+node:ekr.20060213023839.38:newEditorPane
-    def newEditorPane (self):
+    #@+node:ekr.20060213023839.67:removeEditor
+    def removeEditor (self):
         
-        '''Create a new pane with a unique name.'''
+        cc = self ; c = cc.c
+        panedBody = cc.panedBody
+        panes = panedBody.panes()
+        if not panes: return
+        
+        pane = panes[0]
+        frame = panedBody.pane(pane)
+        panedBody.delete(pane)
+        panedBody.updatelayout()
+        del cc.editorBodies[frame]
+        
+        # Hide the label if there is only one editor left.
+        if len(cc.editorBodies.keys())==1:
+            panes = panedBody.panes()
+            frame = panedBody.pane(panes[0])
+            body = cc.editorBodies.get(frame)
+            cc.hideHeading(body)
+        
+        g.trace(pane,frame)
+        g.trace(cc.editorBodies.keys())
+    #@nonl
+    #@-node:ekr.20060213023839.67:removeEditor
+    #@-node:ekr.20060213023839.64:Editor
+    #@+node:ekr.20060213023839.82:Files
+    #@+at 
+    #@nonl
+    # We need to decorate and be tricky here, since a Chapters leo file is a 
+    # zip file.
+    # 
+    # These functions are easy to break in my experience. :)
+    #@-at
+    #@nonl
+    #@+node:ekr.20060213023839.83:Reading
+    #@+node:ekr.20060213023839.84:openChaptersFile
+    def openChaptersFile (self,fileName):
+    
+        zf = zipfile.ZipFile(fileName)
+        file = cStringIO.StringIO()
+        name = zf.namelist()
+        csfiles = [[], []]
+        for x in name:
+            zi = zf.getinfo(x)
+            csfiles [0].append(zi.comment)
+            cs = cStringIO.StringIO()
+            csfiles [1].append(cs)
+            cs.write(zf.read(x))
+            cs.seek(0)
+        zf.close()
+        csfiles = zip(csfiles[0],csfiles[1])
+        return csfiles
+    
+    #@-node:ekr.20060213023839.84:openChaptersFile
+    #@+node:ekr.20060213023839.85:insertChapters
+    def insertChapters (self,chapters):
+    
+        cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
+        flipto = None
+        for num, tup in enumerate(chapters):
+            x, y = tup
+            if num > 0:
+                page,pageName = self.addPage(x)
+                if 1:
+                    sv = self.getStringVar(pageName)
+                else:
+                    sv = page.sv
+                nb.nextpage()
+                cselection = nb.getcurselection()
+            else:
+                cselection = nb.getcurselection()
+                sv = self.getStringVar(cselection)
+            sv.set(x)
+            next = cselection
+            self.setTree(next)
+            c.fileCommands.open(y,sv.get())
+            if num == 0: flipto = cselection
+        flipto and self.setTree(flipto)
+    #@nonl
+    #@-node:ekr.20060213023839.85:insertChapters
+    #@-node:ekr.20060213023839.83:Reading
+    #@+node:ekr.20060213023839.86:Writing
+    #@+node:ekr.20060213023839.49:writeChapters
+    def writeChapters (self,fc,fileName,pagenames,outlineOnlyFlag):
+    
+        '''Writes Chapters to StringIO instances.'''
+        
+        cc = self ; chapterList = []
+        global old_write_Leo_file
+    
+        for z in pagenames:
+            chapter = self.getChapter(z)
+            chapter.setVariables()
+            rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag,toString=True)
+            chapterList.append(g.app.write_Leo_file_string)
+            # g.trace(len(g.app.write_Leo_file_string))
+    
+        cc.currentChapter.setVariables()
+        return rv,chapterList
+    #@nonl
+    #@-node:ekr.20060213023839.49:writeChapters
+    #@+node:ekr.20060213023839.88:zipChapters
+    def zipChapters (self,fileName,pagenames,chapList):
+    
+        '''Writes StringIO instances to a zipped file.'''
         
         cc = self
-        cc.numberOfEditors += 1
-        name = str(cc.numberOfEditors)
-        pane = self.panedBody.add(name)
-        return pane
-    #@nonl
-    #@-node:ekr.20060213023839.38:newEditorPane
-    #@+node:ekr.20060213023839.80:lowerPage
-    def lowerPage (self,name):
     
-        '''Set a lowered tabs color.'''
+        zf = zipfile.ZipFile(fileName,'w',zipfile.ZIP_DEFLATED)
     
-        nb = self.nb
-        pindex = nb.index(name)
-        tab = nb.tab(pindex)
-        tab.configure(background='lightgrey',foreground='black')
+        for x, fname in enumerate(pagenames):
+            sv = cc.getStringVar(fname)
+            zif = zipfile.ZipInfo(str(x))
+            zif.comment = sv.get() or ''
+            zif.compress_type = zipfile.ZIP_DEFLATED
+            ## g.trace(len(chapList[x]))
+            zf.writestr(zif,chapList[x])
+    
+        zf.close()
     #@nonl
-    #@-node:ekr.20060213023839.80:lowerPage
-    #@-node:ekr.20060213023839.29:Create widgets & callbacks
+    #@-node:ekr.20060213023839.88:zipChapters
+    #@-node:ekr.20060213023839.86:Writing
+    #@-node:ekr.20060213023839.82:Files
+    #@+node:ekr.20060228123056:Getters...
+    #@+node:ekr.20060213023839.79:getStringVar
+    def getStringVar (self,pageName):
+    
+        '''return a Tk StrinVar that is a primary identifier.'''
+        
+        cc = self
+        return cc.stringVars.get(pageName)
+    #@nonl
+    #@-node:ekr.20060213023839.79:getStringVar
+    #@+node:ekr.20060228123056.1:getChapter
+    def getChapter (self,pageName):
+        
+        return self.chapters.get(pageName)
+    #@nonl
+    #@-node:ekr.20060228123056.1:getChapter
+    #@+node:ekr.20060228123056.3:nextPageName
+    def nextPageName (self):
+        
+        n = str(len(self.nb.pagenames()) + 1)
+        # g.trace(n,self.nb.pagenames(),g.callers())
+        return n
+    #@nonl
+    #@-node:ekr.20060228123056.3:nextPageName
+    #@-node:ekr.20060228123056:Getters...
+    #@+node:ekr.20060213023839.69:Indexing
+    #@+at
+    # Indexing is complementary to find, it provides a gui Index of nodes.
+    # 
+    # In comparison to regular find which bounces you around the tree,
+    # you can preview the node before you go to it.
+    #@-at
+    #@+node:ekr.20060213023839.70:viewIndex
+    def viewIndex (self,nodes=None,tle=''):
+        c = self.c
+        if nodes == None:
+            nodes = [x for x in self.walkChapters(chapname=True)]
+        nodes = [(a[0].headString(),a[0],a[1]) for a in nodes]
+        nodes.sort()
+        if 1:
+            tl = Tk.Toplevel()
+            title = "%s Index of %s created at %s" % (tle,c.frame.shortFileName(),time.ctime())
+            tl.title(title)
+            f = Tk.Frame(tl)
+            f.pack(side='bottom')
+            l = Tk.Label(f,text='ScrollTo:')
+            e = Tk.Entry(f,bg='white',fg='blue')
+            l.pack(side='left')
+            e.pack(side='left')
+            b = Tk.Button(f,text='Close')
+            b.pack(side='left')
+            def rm (tl=tl):
+                tl.withdraw()
+                tl.destroy()
+            b.configure(command=rm)
+            sve = Tk.StringVar()
+            e.configure(textvariable=sve)
+            ms = tl.maxsize()
+            tl.geometry('%sx%s+0+0' % (ms[0],(ms[1]/4)*3))
+            sc = Pmw.ScrolledCanvas(
+                tl,vscrollmode='static',hscrollmode='static',
+                usehullsize = 1, borderframe = 1, hull_width = ms [0],
+                hull_height = (ms[1]/4) * 3)
+            sc.pack()
+            can = sc.interior()
+            can.configure(background='white')
+            bal = Pmw.Balloon(can)
+            tags = {}
+            self.buildIndex(nodes,can,tl,bal,tags)
+            sc.resizescrollregion()
+            #@        << define scTo callback >>
+            #@+node:ekr.20060213023839.71:<< define scTo callback >>
+            def scTo (event,nodes=nodes,sve=sve,can=can,tags=tags):
+                
+                return ## Not ready yet.
+            
+                t = sve.get()
+                if event.keysym == 'BackSpace':
+                    t = t [: -1]
+                else:
+                    t = t + event.char
+                if t:
+                    for z in nodes:
+                        if z [0].startswith(t) and tags.has_key(z[1]):
+                            tg = tags [z [1]]
+                            eh = can.bbox(ltag) [1]
+                            eh = (eh*1.0) / 100
+                            bh = can.bbox(tg) [1]
+                            ncor = (bh/eh) * .01
+                            can.yview('moveto',ncor)
+                            return
+            #@nonl
+            #@-node:ekr.20060213023839.71:<< define scTo callback >>
+            #@nl
+            e.bind('<Key>',scTo)
+            e.focus_set()
+    #@-node:ekr.20060213023839.70:viewIndex
+    #@+node:ekr.20060213023839.72:buildIndex
+    def buildIndex (self,nodes,can,tl,bal,tags):
+    
+        c = self.c ; nb = self.nb
+        f = tkFont.Font()
+        f.configure(size=-20)
+        ltag = None
+        for i, z in enumerate(nodes):
+            tg = 'abc' + str(i)
+            parent = z [1].parent()
+            if parent: parent = parent.headString()
+            else:
+                parent = 'No Parent'
+            sv = self.getStringVar(z[2])
+            if sv.get(): sv = ' - ' + sv.get()
+            else: sv = ''
+    
+            tab = nb.tab(z[2])
+            tv = tab.cget('text')
+            isClone = z [1].isCloned()
+            if isClone: clone = ' (Clone) '
+            else:       clone = ''
+            txt = '%s  , parent: %s , chapter: %s%s%s' % (z[0],parent,tv,sv,clone)
+            ltag = tags [z [1]] = can.create_text(
+                20,i*20+20,text=txt,fill='blue',font=f,anchor=Tk.W,tag=tg)
+            bs = z [1].bodyString()
+            if bs.strip() != '':
+                bal.tagbind(can,tg,bs)
+            #@        << def callbacks >>
+            #@+node:ekr.20060213023839.73:<< def callbacks >>
+            def goto (event,self=self,z=z,tl=tl):
+                c = self.c ; nb = self.nb
+                nb.selectpage(z[2])
+                c.selectPosition(z[1])
+                c.frame.outerFrame.update_idletasks()
+                c.frame.outerFrame.event_generate('<Button-1>')
+                c.frame.bringToFront()
+                return 'break'
+            
+            def colorRd (event,tg=ltag,can=can):
+                can.itemconfig(tg,fill='red')
+            
+            def colorBl (event,tg=ltag,can=can):
+                can.itemconfig(tg,fill='blue')
+            #@nonl
+            #@-node:ekr.20060213023839.73:<< def callbacks >>
+            #@nl
+            can.tag_bind(tg,'<Button-1>',goto)
+            can.tag_bind(tg,'<Enter>',colorRd,'+')
+            can.tag_bind(tg,'<Leave>',colorBl,'+')
+    #@nonl
+    #@-node:ekr.20060213023839.72:buildIndex
+    #@+node:ekr.20060213023839.74:regexViewIndex
+    def regexViewIndex (self):
+        
+        c = self.c ; nb = self.nb
+    
+        def regexWalk (result,entry,widget):
+            txt = entry.get()
+            widget.deactivate()
+            widget.destroy()
+            if result == 'Cancel': return None
+            nodes = [x for x in self.walkChapters(chapname=True)]
+            import re
+            regex = re.compile(txt)
+            def search (nd,regex=regex):
+                return regex.search(nd[0].bodyString())
+            nodes = filter(search,nodes)
+            self.viewIndex(nodes,'Regex( %s )' % txt)
+            return
+    
+        sd = Pmw.PromptDialog(c.frame.top,
+            title = 'Regex Index',
+            buttons = ('Search','Cancel'),
+            command = regexWalk,
+        )
+        entry = sd.component('entry')
+        sd.configure(command=
+            lambda result, entry = entry, widget = sd:
+                regexWalk(result,entry,widget))
+        sd.activate(geometry='centerscreenalways')
+    #@nonl
+    #@-node:ekr.20060213023839.74:regexViewIndex
+    #@-node:ekr.20060213023839.69:Indexing
     #@+node:ekr.20060302173735:Overrides
     #@+node:ekr.20060213023839.40:createCanvas
     def createCanvas (self,frame,parentFrame,pageName):
@@ -875,18 +1255,32 @@ class chapterController:
         return canvas
     #@nonl
     #@-node:ekr.20060213023839.40:createCanvas
-    #@+node:ekr.20060213023839.41:createControl & addHeading
+    #@+node:ekr.20060213023839.41:createControl
     def createControl(self,body,frame,parentFrame):
     
         cc = self ; c = cc.c ; nb = cc.nb
-        # g.trace(self.panedBody)
-        if not self.panedBody:
-            parentFrame = self.createPanedWidget(parentFrame)
-        panedBody = self.panedBody
+        
+        if self.panedBody:
+            pane = parentFrame
+        else:
+            self.createPanedWidget(parentFrame)
+            pane = self.createEditorPane()
     
-        # Create the label for the editor.
-        label = cc.addHeading(parentFrame)
-        ctrl = old_createControl(body,frame,parentFrame)
+        panedBody = self.panedBody
+        
+        # assert(body == frame.body)
+        
+        # Create yet another frame to hold the label and the text area.
+        # This must be done before calling old_createControl
+        body.editorLabelFrame = f = Tk.Frame(pane)
+        f.pack(side='top',expand=1,fill='both')
+        
+        label,label_frame = cc.addHeading(pane)
+        # Inject these ivars into the leoTkinterBody.
+        body.editorLabel = label
+        body.editorLabelFrame = label_frame
+        
+        ctrl = old_createControl(body,frame,pane)
         
         if 0: # Create a focus-in event.
             def focusInCallback(event,self=self,frame=frame):
@@ -898,19 +1292,21 @@ class chapterController:
             panedBody.configurepane(z,size=i)
         panedBody.updatelayout()
         
-        frame.body.editorLabel = label
-        return ctrl
-    #@+node:ekr.20060213023839.68:addHeading
-    def addHeading (self,pane):
+        assert body not in cc.editorBodies
+        
+        cc.editorBodies [pane] = body
+        
+        g.trace('pane',pane)
     
-        f = Tk.Frame(pane)
-        f.pack(side='top')
-        label = Tk.Label(f)
-        label.pack(side='left')
-        return label
+        if len(panedBody.panes()) > 1:
+            # Show the labels of all frames.
+            for pane in cc.editorBodies.keys():
+                body = cc.editorBodies.get(pane)
+                cc.showHeading(body)
+    
+        return ctrl
     #@nonl
-    #@-node:ekr.20060213023839.68:addHeading
-    #@-node:ekr.20060213023839.41:createControl & addHeading
+    #@-node:ekr.20060213023839.41:createControl
     #@+node:ekr.20060213023839.42:doDelete
     def doDelete (self,p):
         
@@ -985,7 +1381,7 @@ class chapterController:
     
         c = p.v.c ; h = p.headString() ; nb = self.nb
         
-        # g.trace(p.headString())
+        g.trace(p.headString(),tree)
     
         c.frame.body.lastPosition = p
         return_val = old_select(tree,p,updateBeadList)
@@ -1048,31 +1444,6 @@ class chapterController:
     #@nonl
     #@-node:ekr.20060213023839.48:write_Leo_file
     #@-node:ekr.20060302173735:Overrides
-    #@+node:ekr.20060228123056:Getters...
-    #@+node:ekr.20060213023839.79:getStringVar
-    def getStringVar (self,pageName):
-    
-        '''return a Tk StrinVar that is a primary identifier.'''
-        
-        cc = self
-        return cc.stringVars.get(pageName)
-    #@nonl
-    #@-node:ekr.20060213023839.79:getStringVar
-    #@+node:ekr.20060228123056.1:getChapter
-    def getChapter (self,pageName):
-        
-        return self.chapters.get(pageName)
-    #@nonl
-    #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060228123056.3:nextPageName
-    def nextPageName (self):
-        
-        n = str(len(self.nb.pagenames()) + 1)
-        # g.trace(n,self.nb.pagenames(),g.callers())
-        return n
-    #@nonl
-    #@-node:ekr.20060228123056.3:nextPageName
-    #@-node:ekr.20060228123056:Getters...
     #@+node:ekr.20060213023839.50:Tab menu
     #@+node:ekr.20060213023839.51:makeTabMenu
     def makeTabMenu (self,widget):
@@ -1260,7 +1631,7 @@ class chapterController:
         
         c = self.c ; nb = self.nb
     
-        menu.delete(0,Tk.END)
+        menu.delete(0,'end')
         current = self.nb.getcurselection()
         for i, name in enumerate(nb.pagenames()):
             i = i + 1
@@ -1396,306 +1767,6 @@ class chapterController:
     #@-node:ekr.20060213023839.61:doPDFConversion & helper
     #@-node:ekr.20060213023839.52:tab callbacks
     #@-node:ekr.20060213023839.50:Tab menu
-    #@+node:ekr.20060213023839.64:Editor
-    #@+node:ekr.20060213023839.31:addPage
-    def addPage (self,pageName=None):
-    
-        cc = self ; c = cc.c
-        if not pageName:
-            pageName = self.nextPageName()
-        
-        # g.trace(pageName,cc.chapters.keys())
-        
-        old_chapter = cc.currentChapter
-        junk, page = cc.constructTree(self.frame,pageName)
-            # Creates a canvas, new tab and a new tree.
-        old_chapter.makeCurrent()
-        return page,pageName
-    #@nonl
-    #@-node:ekr.20060213023839.31:addPage
-    #@+node:ekr.20060213023839.66:activateEditor
-    def activateEditor (self,body):
-    
-        '''Activate an editor.'''
-        
-        cc = self ; c = cc.c ;
-        p = body.lastPosition ; h = p and p.headString()
-        body.editorLabel.configure(text=h)
-        ip = body.lastPosition.t.insertSpot
-        body.deleteAllText()
-        body.insertAtEnd(p.bodyString())
-        if ip: body.setInsertionPoint(ip)
-        body.colorizer.colorize(p)
-        body.bodyCtrl.update_idletasks()
-    #@nonl
-    #@-node:ekr.20060213023839.66:activateEditor
-    #@+node:ekr.20060213023839.67:removeEditor
-    def removeEditor (self):
-        
-        cc = self ; c = cc.c
-        panedBody = cc.panedBody
-        panes = panedBody.panes()
-        
-        if len(panes) > 1:
-            panedBody.delete(panes[0])
-            panedBody.updatelayout()
-    #@nonl
-    #@-node:ekr.20060213023839.67:removeEditor
-    #@-node:ekr.20060213023839.64:Editor
-    #@+node:ekr.20060213023839.69:Indexing
-    #@+at
-    # Indexing is complementary to find, it provides a gui Index of nodes.
-    # 
-    # In comparison to regular find which bounces you around the tree,
-    # you can preview the node before you go to it.
-    #@-at
-    #@+node:ekr.20060213023839.70:viewIndex
-    def viewIndex (self,nodes=None,tle=''):
-        c = self.c
-        if nodes == None:
-            nodes = [x for x in self.walkChapters(chapname=True)]
-        nodes = [(a[0].headString(),a[0],a[1]) for a in nodes]
-        nodes.sort()
-        if 1:
-            tl = Tk.Toplevel()
-            title = "%s Index of %s created at %s" % (tle,c.frame.shortFileName(),time.ctime())
-            tl.title(title)
-            f = Tk.Frame(tl)
-            f.pack(side='bottom')
-            l = Tk.Label(f,text='ScrollTo:')
-            e = Tk.Entry(f,bg='white',fg='blue')
-            l.pack(side='left')
-            e.pack(side='left')
-            b = Tk.Button(f,text='Close')
-            b.pack(side='left')
-            def rm (tl=tl):
-                tl.withdraw()
-                tl.destroy()
-            b.configure(command=rm)
-            sve = Tk.StringVar()
-            e.configure(textvariable=sve)
-            ms = tl.maxsize()
-            tl.geometry('%sx%s+0+0' % (ms[0],(ms[1]/4)*3))
-            sc = Pmw.ScrolledCanvas(
-                tl,vscrollmode='static',hscrollmode='static',
-                usehullsize = 1, borderframe = 1, hull_width = ms [0],
-                hull_height = (ms[1]/4) * 3)
-            sc.pack()
-            can = sc.interior()
-            can.configure(background='white')
-            bal = Pmw.Balloon(can)
-            tags = {}
-            self.buildIndex(nodes,can,tl,bal,tags)
-            sc.resizescrollregion()
-            #@        << define scTo callback >>
-            #@+node:ekr.20060213023839.71:<< define scTo callback >>
-            def scTo (event,nodes=nodes,sve=sve,can=can,tags=tags):
-                
-                return ## Not ready yet.
-            
-                t = sve.get()
-                if event.keysym == 'BackSpace':
-                    t = t [: -1]
-                else:
-                    t = t + event.char
-                if t:
-                    for z in nodes:
-                        if z [0].startswith(t) and tags.has_key(z[1]):
-                            tg = tags [z [1]]
-                            eh = can.bbox(ltag) [1]
-                            eh = (eh*1.0) / 100
-                            bh = can.bbox(tg) [1]
-                            ncor = (bh/eh) * .01
-                            can.yview('moveto',ncor)
-                            return
-            #@nonl
-            #@-node:ekr.20060213023839.71:<< define scTo callback >>
-            #@nl
-            e.bind('<Key>',scTo)
-            e.focus_set()
-    #@-node:ekr.20060213023839.70:viewIndex
-    #@+node:ekr.20060213023839.72:buildIndex
-    def buildIndex (self,nodes,can,tl,bal,tags):
-    
-        c = self.c ; nb = self.nb
-        f = tkFont.Font()
-        f.configure(size=-20)
-        ltag = None
-        for i, z in enumerate(nodes):
-            tg = 'abc' + str(i)
-            parent = z [1].parent()
-            if parent: parent = parent.headString()
-            else:
-                parent = 'No Parent'
-            sv = self.getStringVar(z[2])
-            if sv.get(): sv = ' - ' + sv.get()
-            else: sv = ''
-    
-            tab = nb.tab(z[2])
-            tv = tab.cget('text')
-            isClone = z [1].isCloned()
-            if isClone: clone = ' (Clone) '
-            else:       clone = ''
-            txt = '%s  , parent: %s , chapter: %s%s%s' % (z[0],parent,tv,sv,clone)
-            ltag = tags [z [1]] = can.create_text(
-                20,i*20+20,text=txt,fill='blue',font=f,anchor=Tk.W,tag=tg)
-            bs = z [1].bodyString()
-            if bs.strip() != '':
-                bal.tagbind(can,tg,bs)
-            #@        << def callbacks >>
-            #@+node:ekr.20060213023839.73:<< def callbacks >>
-            def goto (event,self=self,z=z,tl=tl):
-                c = self.c ; nb = self.nb
-                nb.selectpage(z[2])
-                c.selectPosition(z[1])
-                c.frame.outerFrame.update_idletasks()
-                c.frame.outerFrame.event_generate('<Button-1>')
-                c.frame.bringToFront()
-                return 'break'
-            
-            def colorRd (event,tg=ltag,can=can):
-                can.itemconfig(tg,fill='red')
-            
-            def colorBl (event,tg=ltag,can=can):
-                can.itemconfig(tg,fill='blue')
-            #@nonl
-            #@-node:ekr.20060213023839.73:<< def callbacks >>
-            #@nl
-            can.tag_bind(tg,'<Button-1>',goto)
-            can.tag_bind(tg,'<Enter>',colorRd,'+')
-            can.tag_bind(tg,'<Leave>',colorBl,'+')
-    #@nonl
-    #@-node:ekr.20060213023839.72:buildIndex
-    #@+node:ekr.20060213023839.74:regexViewIndex
-    def regexViewIndex (self):
-        
-        c = self.c ; nb = self.nb
-    
-        def regexWalk (result,entry,widget):
-            txt = entry.get()
-            widget.deactivate()
-            widget.destroy()
-            if result == 'Cancel': return None
-            nodes = [x for x in self.walkChapters(chapname=True)]
-            import re
-            regex = re.compile(txt)
-            def search (nd,regex=regex):
-                return regex.search(nd[0].bodyString())
-            nodes = filter(search,nodes)
-            self.viewIndex(nodes,'Regex( %s )' % txt)
-            return
-    
-        sd = Pmw.PromptDialog(c.frame.top,
-            title = 'Regex Index',
-            buttons = ('Search','Cancel'),
-            command = regexWalk,
-        )
-        entry = sd.component('entry')
-        sd.configure(command=
-            lambda result, entry = entry, widget = sd:
-                regexWalk(result,entry,widget))
-        sd.activate(geometry='centerscreenalways')
-    #@nonl
-    #@-node:ekr.20060213023839.74:regexViewIndex
-    #@-node:ekr.20060213023839.69:Indexing
-    #@+node:ekr.20060213023839.82:Files
-    #@+at 
-    #@nonl
-    # We need to decorate and be tricky here, since a Chapters leo file is a 
-    # zip file.
-    # 
-    # These functions are easy to break in my experience. :)
-    #@-at
-    #@nonl
-    #@+node:ekr.20060213023839.83:Reading
-    #@+node:ekr.20060213023839.84:openChaptersFile
-    def openChaptersFile (self,fileName):
-    
-        zf = zipfile.ZipFile(fileName)
-        file = cStringIO.StringIO()
-        name = zf.namelist()
-        csfiles = [[], []]
-        for x in name:
-            zi = zf.getinfo(x)
-            csfiles [0].append(zi.comment)
-            cs = cStringIO.StringIO()
-            csfiles [1].append(cs)
-            cs.write(zf.read(x))
-            cs.seek(0)
-        zf.close()
-        csfiles = zip(csfiles[0],csfiles[1])
-        return csfiles
-    
-    #@-node:ekr.20060213023839.84:openChaptersFile
-    #@+node:ekr.20060213023839.85:insertChapters
-    def insertChapters (self,chapters):
-    
-        cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
-        flipto = None
-        for num, tup in enumerate(chapters):
-            x, y = tup
-            if num > 0:
-                page,pageName = self.addPage(x)
-                if 1:
-                    sv = self.getStringVar(pageName)
-                else:
-                    sv = page.sv
-                nb.nextpage()
-                cselection = nb.getcurselection()
-            else:
-                cselection = nb.getcurselection()
-                sv = self.getStringVar(cselection)
-            sv.set(x)
-            next = cselection
-            self.setTree(next)
-            c.fileCommands.open(y,sv.get())
-            if num == 0: flipto = cselection
-        flipto and self.setTree(flipto)
-    #@nonl
-    #@-node:ekr.20060213023839.85:insertChapters
-    #@-node:ekr.20060213023839.83:Reading
-    #@+node:ekr.20060213023839.86:Writing
-    #@+node:ekr.20060213023839.49:writeChapters
-    def writeChapters (self,fc,fileName,pagenames,outlineOnlyFlag):
-    
-        '''Writes Chapters to StringIO instances.'''
-        
-        cc = self ; chapterList = []
-        global old_write_Leo_file
-    
-        for z in pagenames:
-            chapter = self.getChapter(z)
-            chapter.setVariables()
-            rv = old_write_Leo_file(fc,fileName,outlineOnlyFlag,toString=True)
-            chapterList.append(g.app.write_Leo_file_string)
-            # g.trace(len(g.app.write_Leo_file_string))
-    
-        cc.currentChapter.setVariables()
-        return rv,chapterList
-    #@nonl
-    #@-node:ekr.20060213023839.49:writeChapters
-    #@+node:ekr.20060213023839.88:zipChapters
-    def zipChapters (self,fileName,pagenames,chapList):
-    
-        '''Writes StringIO instances to a zipped file.'''
-        
-        cc = self
-    
-        zf = zipfile.ZipFile(fileName,'w',zipfile.ZIP_DEFLATED)
-    
-        for x, fname in enumerate(pagenames):
-            sv = cc.getStringVar(fname)
-            zif = zipfile.ZipInfo(str(x))
-            zif.comment = sv.get() or ''
-            zif.compress_type = zipfile.ZIP_DEFLATED
-            ## g.trace(len(chapList[x]))
-            zf.writestr(zif,chapList[x])
-    
-        zf.close()
-    #@nonl
-    #@-node:ekr.20060213023839.88:zipChapters
-    #@-node:ekr.20060213023839.86:Writing
-    #@-node:ekr.20060213023839.82:Files
     #@-others
 #@nonl
 #@-node:ekr.20060213023839.28:class chapterController
