@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
-	<global_window_position top="101" left="461" height="660" width="799"/>
+	<global_window_position top="58" left="271" height="797" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -201,19 +201,26 @@
 <v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
 <v t="ekr.20060303143328.1"><vh>computeNodeLabel</vh></v>
 </v>
-<v t="ekr.20060228081628" a="V"><vh>To do</vh>
+<v t="ekr.20060228081628"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
 </v>
-<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060303083246"><vh>Recent: editors &amp; rename</vh>
+<v t="ekr.20060213023839.3"
+expanded="ekr.20060303073451,ekr.20060213023839.64,"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060303083246" a="E"><vh>Recent: editors &amp; rename</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
-<v t="ekr.20060213023839.68"><vh>add/hide/showHeading</vh></v>
-<v t="ekr.20060213023839.41"><vh>createControl</vh></v>
+<v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
+<v t="ekr.20060213023839.68"><vh>...Heading</vh>
+<v t="ekr.20060304122235"><vh>addHeading</vh></v>
+<v t="ekr.20060304122235.1"><vh>hide/showHeading</vh></v>
+</v>
+<v t="ekr.20060213023839.41" a="V"><vh>createControl (tkBody)</vh></v>
 <v t="ekr.20060213023839.38"><vh>createEditorPane</vh></v>
 <v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
 <v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
 <v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
 <v t="ekr.20060213023839.45"><vh>select</vh></v>
+<v t="ekr.20060213023839.2"><vh>setTree</vh></v>
+<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1542,6 +1549,29 @@ couldn't think of any parent node to group these under.
             Story.append( Spacer( 1, 0.2 * inch ) )
         #v = v.threadNext() 
     Story.append( PageBreak() )</t>
+<t tx="ekr.20060213023839.2">def setTree (self,name):
+
+    cc = self ; c = cc.c
+
+    chapter = self.getChapter(name)
+    sv = chapter and chapter.sv
+    if not sv:
+        # The page hasn't been fully created yet.
+        # This is *not* an error.
+        # g.trace('******* no sv attr for page',name,color='red')
+        return None
+
+    chapter.makeCurrent()
+    
+    # Set body ivars.
+    body = c.frame.body
+    body.lastChapter = name
+    body.lastPosition = chapter.cp
+    
+    # Configure the tab.
+    tab = cc.nb.tab(name)
+    tab.configure(background='grey',foreground='white')
+    self.activateEditor(c.frame.body)</t>
 <t tx="ekr.20060213023839.16">def new_endEditLabel (self):
     
     # self is a c.frame.tree
@@ -1558,6 +1588,17 @@ iscStringIO = False
 notebooks = {}
 pbodies = {}
 twidgets = {}</t>
+<t tx="ekr.20060213023839.27">def makeCurrent (self):
+
+    # g.trace(self.pageName)
+
+    c = self.c ; cc = self.cc
+    cc.currentChapter._saveInfo()
+    cc.currentChapter = self
+    self.setVariables()
+    self.updateHeadingSV(self.sv)
+    c.redraw()
+    c.bodyWantsFocusNow()</t>
 <t tx="ekr.20060213023839.30">def __init__ (self,c,frame,parentFrame):
     
     self.c = c
@@ -1572,7 +1613,6 @@ twidgets = {}</t>
     
     # General ivars.
     self.chapters = {} # Keys are tab names, values are Chapter objects.
-    self.chapterNames = {} # Chapter objects, values are chapter names.
     self.currentChapter = None
     self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
     self.numberOfEditors = 0
@@ -1593,16 +1633,21 @@ twidgets = {}</t>
     return nameMaker()</t>
 <t tx="ekr.20060213023839.37">def newEditor (self):
 
-    cc = self ; c = cc.c ; nb = cc.nb
+    cc = self ; c = cc.c
     
     pane = self.createEditorPane()
-    af = leoTkinterBody(self.frame,pane)
-    c.frame.bodyCtrl = af.bodyCtrl # Make af the 'official' body.
-    af.setFontFromConfig()
-    af.createBindings()
-    af.bodyCtrl.focus_set()
-    af.lastPosition = c.currentPosition()
-    cc.activateEditor(af)</t>
+    body = leoTkinterBody(self.frame,pane)
+    c.frame.bodyCtrl = body.bodyCtrl # Make body the 'official' body.
+    body.setFontFromConfig()
+    body.createBindings()
+    body.bodyCtrl.focus_set()
+    body.lastPosition = c.currentPosition()
+    cc.activateEditor(body)
+
+    # Configure the generic editor label for this chapter and position.
+    chapter = cc.getChapter()
+    body.editorLeftLabel.configure(textvariable=chapter.sv)
+    body.editorRightLabel.configure(text=c.currentPosition().headString())</t>
 <t tx="ekr.20060213023839.38">def createEditorPane (self):
     
     '''Create a new pane with a unique name.'''
@@ -1614,7 +1659,26 @@ twidgets = {}</t>
     
     # g.trace(pane)
     return pane</t>
+<t tx="ekr.20060213023839.40">def createCanvas (self,frame,parentFrame,pageName):
+    
+    cc = self
+            
+    # Set ivars for cc.treeInit.
+    page,button = cc.createTab(pageName)
+    cc.newPageName = pageName
+    cc.newPage = page
+
+    # Create the canvas with page as the parentFrame.
+    cc.newCanvas = canvas = old_createCanvas(frame,page) 
+
+    g.trace(pageName,id(canvas))
+
+    return canvas</t>
 <t tx="ekr.20060213023839.41">def createControl(self,body,frame,parentFrame):
+    
+    '''Override for tkBody.createControl.
+    
+    This called for the 'main' body and once for each added editor. '''
 
     cc = self ; c = cc.c ; nb = cc.nb
     # assert(body == frame.body)
@@ -1626,21 +1690,17 @@ twidgets = {}</t>
         pane = self.createEditorPane()
     panedBody = self.panedBody
     
-    n = cc.nb.getcurselection()
-    chapter = cc.chapters.get(n)
+    # **Important**: addHeading creates a heading that works for *all* chapters.
+    lt_label,rt_label,label_frame = cc.addHeading(pane)
 
-    g.trace(n,chapter)
-    
-    left_label,right_label,label_frame = cc.addHeading(chapter,pane)
-    # Inject these ivars into the leoTkinterBody.
-    body.editorRightLabel = right_label
-    body.editorLeftLabel = left_label
+    # Inject editor ivars into the leoTkinterBody.
+    body.editorRightLabel = rt_label
+    body.editorLeftLabel =  lt_label
     body.editorLabelFrame = label_frame
-    body.editorChapter = chapter
 
     ctrl = old_createControl(body,frame,pane)
     
-    if 0: # Create a focus-in event.
+    if 0: # Create a focus-in event to keep the generic label widget in synch.
         def focusInCallback(event,self=self,frame=frame):
             return self.getGoodPage(event,frame.body)
         ctrl.bind("&lt;FocusIn&gt;",focusInCallback,'+')
@@ -1743,31 +1803,7 @@ twidgets = {}</t>
     
     g.trace(pane,frame)
     g.trace(cc.editorBodies.keys())</t>
-<t tx="ekr.20060213023839.68">def addHeading (self,chapter,pane):
-    '''Create a two-part editor label.
-    - The left label tracks the chapter name using a chapter.sv.
-    - The right label is the node's healine.'''
-    f = Tk.Frame(pane)
-    f.pack(side='top')
-    left_label = Tk.Label(f)
-    right_label = Tk.Label(f)
-    if 1: # Do this in showHeading only when there is more than one editor.
-        left_label.pack(side='left')
-        right_label.pack(side='right')
-    # Set the label's textvariable so the label tracks the chapter name.
-    left_label.configure(textvariable=chapter.sv)
-    return left_label, right_label, f
-
-def showHeading (self,body):
-    if 0:
-        body.editorLeftLabel.pack(side='left')
-        body.editorRightLabel.pack(side='right')
-
-def hideHeading (self,body):
-    if 0:
-        # If we unpack the frame we won't be able to repack it easily.
-        # Setting the height to zero also does not seem to work.
-        body.editorLabel.pack_forget()</t>
+<t tx="ekr.20060213023839.68"></t>
 <t tx="ekr.20060213023839.77">def getGoodPage (self,event,body):
     
     c = self.c ; nb = self.nb
@@ -3561,5 +3597,30 @@ c.redraw_now() # Must be done here.</t>
     else:
         return h</t>
 <t tx="ekr.20060304095654">c.prettyPrintPythonNode()</t>
+<t tx="ekr.20060304122235">def addHeading (self,parentFrame):
+    '''Create a two-part editor label.
+    - The left label tracks the chapter name using a chapter.sv.
+    - The right label is the node's healine.'''
+    
+    cc = self
+    f = Tk.Frame(parentFrame) ; f.pack(side='top')
+    lt_label = Tk.Label(f)    ; lt_label.pack(side='left')
+    rt_label = Tk.Label(f)    ; rt_label.pack(side='right')
+    
+    # The lt_label tracks the present chapter name.
+    # chapter.updateHeadingSV changes this textvariable when chapters change.
+    chapter = cc.getChapter()
+    lt_label.configure(textvariable=chapter.sv)
+    return lt_label, rt_label, f</t>
+<t tx="ekr.20060304122235.1">def showHeading (self,body):
+    if 0:
+        body.editorLeftLabel.pack(side='left')
+        body.editorRightLabel.pack(side='right')
+
+def hideHeading (self,body):
+    if 0:
+        # If we unpack the frame we won't be able to repack it easily.
+        # Setting the height to zero also does not seem to work.
+        body.editorLabel.pack_forget()</t>
 </tnodes>
 </leo_file>
