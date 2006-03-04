@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="254" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="255" clone_windows="0"/>
 <globals body_outline_ratio="0.492424242424">
-	<global_window_position top="58" left="271" height="797" width="891"/>
+	<global_window_position top="38" left="363" height="797" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -14,7 +14,7 @@
 <v t="ekr.20060304095654"><vh>@button Beautify</vh></v>
 </v>
 <v t="ekr.20060228081537"><vh>Original code</vh>
-<v t="ekr.20060213023732.1"><vh>chapters.py ORIGINAL</vh>
+<v t="ekr.20060213023732.1" a="E"><vh>chapters.py ORIGINAL</vh>
 <v t="ekr.20060213023732.2"><vh>&lt;&lt;docstring&gt;&gt;</vh></v>
 <v t="ekr.20060213023732.3"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20060213023732.4"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -28,7 +28,7 @@
 <v t="ekr.20060213023732.11"><vh>setVariables</vh></v>
 <v t="ekr.20060213023732.12"><vh>makeCurrent</vh></v>
 </v>
-<v t="ekr.20060213023732.13"><vh>Creating widgets...</vh>
+<v t="ekr.20060213023732.13" a="E"><vh>Creating widgets...</vh>
 <v t="ekr.20060213023732.14"><vh>newCreateControl</vh></v>
 <v t="ekr.20060213023732.15"><vh>createPanedWidget</vh></v>
 <v t="ekr.20060213023732.16"><vh>newEditorPane</vh></v>
@@ -62,7 +62,7 @@
 <v t="ekr.20060213023732.40"><vh>buildIndex</vh></v>
 <v t="ekr.20060213023732.41"><vh>regexViewIndex</vh></v>
 </v>
-<v t="ekr.20060213023732.42"><vh>Chapter-Notebook ops</vh>
+<v t="ekr.20060213023732.42" a="E"><vh>Chapter-Notebook ops</vh>
 <v t="ekr.20060213023732.43"><vh>renumber</vh></v>
 <v t="ekr.20060213023732.44"><vh>getGoodPage</vh></v>
 <v t="ekr.20060213023732.45"><vh>checkChapterValidity</vh></v>
@@ -91,7 +91,7 @@
 <v t="ekr.20060213023732.64"><vh>newselect</vh></v>
 <v t="ekr.20060213023732.65"><vh>newTrashDelete</vh></v>
 </v>
-<v t="ekr.20060213023732.66"><vh>operation( node ) to Chapter</vh>
+<v t="ekr.20060213023732.66" a="E"><vh>operation( node ) to Chapter</vh>
 <v t="ekr.20060213023732.67"><vh>cloneToChapter</vh></v>
 <v t="ekr.20060213023732.68"><vh>moveToChapter</vh></v>
 <v t="ekr.20060213023732.69"><vh>copyToChapter</vh></v>
@@ -101,7 +101,7 @@
 <v t="ekr.20060213023732.72"><vh>conversionToSimple</vh></v>
 <v t="ekr.20060213023732.73"><vh>conversionToChapters</vh></v>
 </v>
-<v t="ekr.20060213023732.74"><vh>import/export</vh>
+<v t="ekr.20060213023732.74" a="E"><vh>import/export</vh>
 <v t="ekr.20060213023732.75"><vh>importLeoFile</vh></v>
 <v t="ekr.20060213023732.76"><vh>exportLeoFile</vh></v>
 </v>
@@ -110,7 +110,7 @@
 <v t="ekr.20060213023732.79"><vh>emptyTrash</vh></v>
 <v t="ekr.20060213023732.80"><vh>regexClone</vh></v>
 </v>
-<v t="ekr.20060213023732.81"><vh>PDF</vh>
+<v t="ekr.20060213023732.81" a="E"><vh>PDF</vh>
 <v t="ekr.20060213023732.82"><vh>doPDFConversion</vh>
 <v t="ekr.20060213023732.83"><vh>&lt;&lt; define otherPages callback &gt;&gt;</vh></v>
 </v>
@@ -204,8 +204,8 @@
 <v t="ekr.20060228081628"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
 </v>
-<v t="ekr.20060213023839.3"
-expanded="ekr.20060303073451,ekr.20060213023839.64,"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060213023839.3" a="E"
+expanded="ekr.20060213023839.23,ekr.20060213023839.28,ekr.20060213023839.83,"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20060303083246" a="E"><vh>Recent: editors &amp; rename</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
 <v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
@@ -213,14 +213,15 @@ expanded="ekr.20060303073451,ekr.20060213023839.64,"><vh>@thin chapters2.py</vh>
 <v t="ekr.20060304122235"><vh>addHeading</vh></v>
 <v t="ekr.20060304122235.1"><vh>hide/showHeading</vh></v>
 </v>
-<v t="ekr.20060213023839.41" a="V"><vh>createControl (tkBody)</vh></v>
+<v t="ekr.20060213023839.41"><vh>createControl (tkBody)</vh></v>
 <v t="ekr.20060213023839.38"><vh>createEditorPane</vh></v>
 <v t="ekr.20060213023839.37"><vh>newEditor</vh></v>
 <v t="ekr.20060213023839.67"><vh>removeEditor</vh></v>
 <v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
 <v t="ekr.20060213023839.45"><vh>select</vh></v>
+<v t="ekr.20060304131300"><vh>setTree (reference)</vh></v>
 <v t="ekr.20060213023839.2"><vh>setTree</vh></v>
-<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
+<v t="ekr.20060213023839.27" a="V"><vh>makeCurrent</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1555,6 +1556,8 @@ couldn't think of any parent node to group these under.
 
     chapter = self.getChapter(name)
     sv = chapter and chapter.sv
+    
+    g.trace(name,sv)
     if not sv:
         # The page hasn't been fully created yet.
         # This is *not* an error.
@@ -1590,9 +1593,11 @@ pbodies = {}
 twidgets = {}</t>
 <t tx="ekr.20060213023839.27">def makeCurrent (self):
 
-    # g.trace(self.pageName)
+    g.trace(self.pageName)
 
     c = self.c ; cc = self.cc
+    
+    cc.nb.selectpage(self.pageName)
     cc.currentChapter._saveInfo()
     cc.currentChapter = self
     self.setVariables()
@@ -1730,9 +1735,6 @@ twidgets = {}</t>
     c.frame.body.lastChapter = n = nb.getcurselection()
 
     if hasattr(p.c.frame.body,'editorRightLabel'):
-        # n = cc.nb.getcurselection()
-        # chapter = cc.chapters.get(n)
-        # s = cc.computeNodeLabel(chapter,p)
         h = p.headString() or ''
         c.frame.body.editorRightLabel.configure(text=h)
 
@@ -3622,5 +3624,24 @@ def hideHeading (self,body):
         # If we unpack the frame we won't be able to repack it easily.
         # Setting the height to zero also does not seem to work.
         body.editorLabel.pack_forget()</t>
+<t tx="ekr.20060304131300">def setTree(c, name , notebook):
+    
+    if not c or not c.exists: return None
+    pindex = notebook.index( name )
+    page = notebook.page( pindex )
+    if not hasattr( page, 'sv' ) : return None
+
+    sv = page.sv
+    chapter = chapters[ sv ]
+    chapter.makeCurrent()
+
+    frame = c.frame
+    frame.body.lastChapter = name
+    frame.body.lastNode = chapter.cp
+    frame.body.l.configure( textvariable = sv )
+    tab = notebook.tab( pindex )
+    tab.configure( background = 'grey', foreground = 'white' )
+    activateEditor( frame.body )
+</t>
 </tnodes>
 </leo_file>

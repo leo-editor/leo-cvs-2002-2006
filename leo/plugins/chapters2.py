@@ -415,12 +415,13 @@ class Chapter:
         '''Switch variables in Leo's core to represent this chapter.'''
     
         c = self.c
-        # g.trace(self.pageName,id(self.canvas),g.callers())
+        g.trace(self.pageName,'canvas:',id(self.canvas),self.cp.headString())
     
         frame = self.frame
         frame.tree = self.tree
         frame.canvas = self.canvas
         frame.treeBar = self.treeBar
+    
         c._currentPosition = self.cp
         c._rootPosition = self.rp
         c._topPosition = self.tp
@@ -429,9 +430,11 @@ class Chapter:
     #@+node:ekr.20060213023839.27:makeCurrent
     def makeCurrent (self):
     
-        # g.trace(self.pageName)
+        g.trace(self.pageName)
     
         c = self.c ; cc = self.cc
+        
+        cc.nb.selectpage(self.pageName)
         cc.currentChapter._saveInfo()
         cc.currentChapter = self
         self.setVariables()
@@ -701,6 +704,8 @@ class chapterController:
     
         chapter = self.getChapter(name)
         sv = chapter and chapter.sv
+        
+        g.trace(name,sv)
         if not sv:
             # The page hasn't been fully created yet.
             # This is *not* an error.
@@ -1376,22 +1381,27 @@ class chapterController:
     
         cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
         flipto = None
-        for num, tup in enumerate(chapters):
-            x, y = tup
-            if num > 0:
-                page,pageName = self.addPage(x)
-                sv = cc.getChapter(pageName).sv
-                nb.nextpage()
-                cselection = nb.getcurselection()
-            else:
-                cselection = nb.getcurselection()
-                sv = cc.getChapter(cselection).sv
-            sv.set(x)
-            next = cselection
-            self.setTree(next)
-            c.fileCommands.open(y,sv.get())
-            if num == 0: flipto = cselection
-        flipto and self.setTree(flipto)
+        c.beginUpdate()
+        try:
+            for num, tup in enumerate(chapters):
+                x, y = tup
+                if num > 0:
+                    page,pageName = self.addPage(x)
+                    sv = cc.getChapter(pageName).sv
+                    nb.nextpage()
+                    cselection = nb.getcurselection()
+                else:
+                    cselection = nb.getcurselection()
+                    sv = cc.getChapter(cselection).sv
+                sv.set(x)
+                next = cselection
+                self.setTree(next)
+                c.fileCommands.open(y,sv.get())
+                if num == 0: flipto = cselection
+            self.setTree(flipto)
+        finally:
+            c.endUpdate()
+    #@nonl
     #@-node:ekr.20060213023839.85:insertChapters
     #@-node:ekr.20060213023839.83:Reading
     #@+node:ekr.20060213023839.86:Writing
@@ -1737,9 +1747,6 @@ class chapterController:
         c.frame.body.lastChapter = n = nb.getcurselection()
     
         if hasattr(p.c.frame.body,'editorRightLabel'):
-            # n = cc.nb.getcurselection()
-            # chapter = cc.chapters.get(n)
-            # s = cc.computeNodeLabel(chapter,p)
             h = p.headString() or ''
             c.frame.body.editorRightLabel.configure(text=h)
     
