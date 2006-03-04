@@ -225,6 +225,8 @@ class Chapter:
     #@    @+others
     #@+node:ekr.20041103051228:__init__
     def __init__ (self,c,tree,frame,canvas):
+	    
+        g.trace('Chapter at',id(self))
     
         self.c = c
         self.tree = tree
@@ -286,29 +288,6 @@ class Chapter:
 # This category deals with creating widgets and any support functions for doing so.
 #@nonl
 #@+node:mork.20040926105355.21:newCreateControl
-def newCreateControl (self,frame,parentFrame):
-    
-    c = self.c ; notebook = notebooks.get(c)
-    if not notebook: return # For unit testing
-
-    if c not in pbodies:
-        parentFrame = createPanedWidget(parentFrame,c)
-    pbody = pbodies [c]
-    l, r = addHeading(parentFrame)
-    ctrl = old_createControl(self,frame,parentFrame)
-    ctrl.bind("<FocusIn>",lambda event,body=frame.body: getGoodPage(event,body),'+')
-    i = 1.0 / len(pbody.panes())
-    for z in pbody.panes():
-        pbody.configurepane(z,size=i)
-    pbody.updatelayout()
-    frame.body.l = l
-    frame.body.r = r
-    frame.body.editorName = editorNames [parentFrame]
-    if frame not in twidgets:
-        twidgets [frame] = []
-    twidgets [frame].append(frame.body)
-    l.configure(textvariable=getSV(c,notebook.getcurselection()))
-    return ctrl
 #@nonl
 #@-node:mork.20040926105355.21:newCreateControl
 #@+node:mork.20040929110556:createPanedWidget
@@ -347,6 +326,7 @@ def newCreateCanvas (self,parentFrame):
         notebook = createNoteBook(c,parentFrame)
 
     pname = notebook.nameMaker.next()
+    g.trace(pname)
     page = notebook.add(pname)
     indx = notebook.index(pname)
     tab = notebook.tab(indx)
@@ -427,6 +407,7 @@ def constructTree (frame,notebook,name):
         tree = frame.tree
     sv = Tk.StringVar()
     sv.set(name)
+    g.trace(name)
     frame.canvas = canvas = frame.createCanvas(parentFrame=None)
     frame.tree = leoTkinterTree.leoTkinterTree(frame.c,frame,frame.canvas)
     frame.tree.setColorFromConfig()
@@ -954,10 +935,13 @@ def getSV (c,name):
 
     index = notebook.index(name)
     page = notebook.page(index)
+    # g.trace(page.sv.get())
     return page.sv
 #@-node:mork.20040926105355.20:getSV
 #@+node:mork.20040926105355.27:setTree
 def setTree (c,name,notebook):
+	
+    # g.trace(c)
 
     if not c or not c.exists:
         g.trace('c does not exist',color='red')
@@ -965,7 +949,7 @@ def setTree (c,name,notebook):
     pindex = notebook.index(name)
     page = notebook.page(pindex)
     if not hasattr(page,'sv'):
-        g.trace('no sv attr for page',color='red')
+        ## g.trace('no sv attr for page',color='red')
         return None
     sv = page.sv
     chapter = chapters [sv]
@@ -1100,7 +1084,7 @@ def insertChapters (chapters,frame,c):
             frame.c.fileCommands.open(y,sv.get())
             if num == 0:
                 flipto = cselection
-     setTree(flipto,notebook,c)
+     setTree(c,flipto,notebook)
      c.frame.canvas.update_idletasks()
 #@nonl
 #@-node:mork.20040926105355.8:insertChapters
@@ -1222,7 +1206,7 @@ def newEndEditLabel (self):
 def newSelect (self,p,updateBeadList=True):
 
     c = p.v.c ; h = p.headString()
-    g.trace(h)
+    #g.trace(h)
 
     self.frame.body.lastPosition = p
     return_val = old_select(self,p,updateBeadList)
@@ -1287,6 +1271,8 @@ def newCreateControl (self,frame,parentFrame):
         twidgets [frame] = []
     twidgets [frame].append(frame.body)
     l.configure(textvariable=getSV(c,notebook.getcurselection()))
+    g.trace(getSV(c,notebook.getcurselection()))
+    g.trace(notebook.getcurselection())
     return ctrl
 #@nonl
 #@-node:mork.20040926105355.21:newCreateControl
@@ -1503,7 +1489,7 @@ def conversionToChapters (c):
             makeNodeIntoChapter(c,nxt)
         else:
             break
-    setTree(notebook.pagenames()[0],notebook,c)
+    setTree(c,notebook.pagenames()[0],notebook)
 #@-node:mork.20040926105355.38:conversionToChapters
 #@-others
 #@nonl
