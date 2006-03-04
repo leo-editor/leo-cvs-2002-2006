@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.105"
+__version__ = "0.106"
 #@<< version history >>
 #@+node:ekr.20060213023839.5:<< version history >>
 #@@nocolor
@@ -62,6 +62,12 @@ __version__ = "0.105"
 # - Only show editor label if there is more than one editor.
 #   Alas, it is difficult to get labels back once unpacked.
 # - Clicking on a tab puts focus in body.
+# 
+# v .106 EKR:
+# - Moved sv var into Chapters class.
+#     - chapter.sv replaces cc.stringVars dict.
+#     - replaced cc.getStringVar(name) by cc.getChapter(name).sv
+# - Removed nextPageName.
 #@-at
 #@nonl
 #@-node:ekr.20060213023839.5:<< version history >>
@@ -702,13 +708,14 @@ class chapterController:
     
         cc = self ; c = cc.c
         if not pageName:
-            pageName = self.nextPageName()
+            pageName = str(len(cc.nb.pagenames()) + 1)
         
         # g.trace(pageName,cc.chapters.keys())
         
         old_chapter = cc.currentChapter
         junk, page = cc.constructTree(self.frame,pageName)
             # Creates a canvas, new tab and a new tree.
+    
         old_chapter.makeCurrent()
         return page,pageName
     #@nonl
@@ -845,6 +852,12 @@ class chapterController:
             return h
     #@nonl
     #@-node:ekr.20060303143328.1:computeNodeLabel
+    #@+node:ekr.20060228123056.1:getChapter
+    def getChapter (self,pageName):
+        
+        return self.chapters.get(pageName)
+    #@nonl
+    #@-node:ekr.20060228123056.1:getChapter
     #@+node:ekr.20060213023839.81:walkChapters
     def walkChapters (self,ignorelist=[],chapname=False):
     
@@ -1396,22 +1409,6 @@ class chapterController:
     #@-node:ekr.20060213023839.88:zipChapters
     #@-node:ekr.20060213023839.86:Writing
     #@-node:ekr.20060213023839.82:Files
-    #@+node:ekr.20060228123056:Getters...
-    #@+node:ekr.20060228123056.1:getChapter
-    def getChapter (self,pageName):
-        
-        return self.chapters.get(pageName)
-    #@nonl
-    #@-node:ekr.20060228123056.1:getChapter
-    #@+node:ekr.20060228123056.3:nextPageName
-    def nextPageName (self):
-        
-        n = str(len(self.nb.pagenames()) + 1)
-        # g.trace(n,self.nb.pagenames(),g.callers())
-        return n
-    #@nonl
-    #@-node:ekr.20060228123056.3:nextPageName
-    #@-node:ekr.20060228123056:Getters...
     #@+node:ekr.20060213023839.69:Indexing
     #@+at
     # Indexing is complementary to find, it provides a gui Index of nodes.

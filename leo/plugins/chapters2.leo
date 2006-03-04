@@ -197,6 +197,7 @@
 <v t="ekr.20060213023839.65"><vh>selectNodeForEditor</vh></v>
 <v t="ekr.20060213023839.16"><vh>new_endEditLabel (leoTkinterTree)</vh></v>
 <v t="ekr.20060213023839.79"><vh>getStringVar</vh></v>
+<v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
 </v>
 <v t="ekr.20060228081628"><vh>To do</vh>
 <v t="ekr.20060303104124"><vh>Later</vh></v>
@@ -215,12 +216,8 @@
 <v t="ekr.20060213023839.34"><vh>createNoteBook</vh></v>
 </v>
 </v>
-<v t="ekr.20060213023839.3"><vh>@thin chapters2.py</vh></v>
-<v t="ekr.20060303133111" a="V"><vh>Recent: rename</vh>
-<v t="ekr.20060228123056"><vh>Getters...</vh>
-<v t="ekr.20060228123056.1"><vh>getChapter</vh></v>
-<v t="ekr.20060228123056.3"><vh>nextPageName</vh></v>
-</v>
+<v t="ekr.20060213023839.3" a="E"><vh>@thin chapters2.py</vh></v>
+<v t="ekr.20060303133111" a="E"><vh>Recent: rename</vh>
 <v t="ekr.20060213023839.24"><vh> ctor: Chapter</vh></v>
 <v t="ekr.20060213023839.76"><vh>renumber</vh></v>
 <v t="ekr.20060213023839.56"><vh>renameChapter</vh></v>
@@ -3601,14 +3598,11 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228081537"></t>
 <t tx="ekr.20060228081628">@nocolor
 
-- (done) Moved sv var into Chapters class.
-    - chapter.sv replaces cc.stringVars dict.
-    - replaced cc.getStringVar by cc.getChapter(name).sv
-
 - Make rename work as in old plugin.
-    - Almost, but not quite.  Maybe stringvars really are the way to go...
 
-- Remove enumerate.
+- Test trash.
+
+- Remove all enumerates.
 
 - Replace all v refs by p refs.  vnd
 
@@ -3623,10 +3617,6 @@ swing.JOptionPane.YES_NO_OPTION )
 <t tx="ekr.20060228085204"></t>
 <t tx="ekr.20060228085204.1">c.save()
 c.redraw_now() # Must be done here.</t>
-<t tx="ekr.20060228123056"></t>
-<t tx="ekr.20060228123056.1">def getChapter (self,pageName):
-    
-    return self.chapters.get(pageName)</t>
 <t tx="ekr.20060228123056.3">def nextPageName (self):
     
     n = str(len(self.nb.pagenames()) + 1)
