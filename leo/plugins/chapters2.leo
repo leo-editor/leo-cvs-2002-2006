@@ -41,9 +41,9 @@
 <v t="ekr.20060213023732.23"><vh>addPage</vh></v>
 <v t="ekr.20060213023732.24"><vh>newEditor</vh></v>
 </v>
-<v t="ekr.20060213023732.25"><vh>tab menu stuff</vh>
+<v t="ekr.20060213023732.25" a="E"><vh>tab menu stuff</vh>
 <v t="ekr.20060213023732.26"><vh>makeTabMenu</vh></v>
-<v t="ekr.20060213023732.27"><vh>function factories</vh>
+<v t="ekr.20060213023732.27" a="E"><vh>function factories</vh>
 <v t="ekr.20060213023732.28"><vh>getAddChapter</vh></v>
 <v t="ekr.20060213023732.29"><vh>getRemove</vh></v>
 <v t="ekr.20060213023732.30"><vh>getRename</vh></v>
@@ -57,7 +57,7 @@
 <v t="ekr.20060213023732.36"><vh>removeEditor</vh></v>
 <v t="ekr.20060213023732.37"><vh>addHeading</vh></v>
 </v>
-<v t="ekr.20060213023732.38"><vh>Indexing</vh>
+<v t="ekr.20060213023732.38" a="E"><vh>Indexing</vh>
 <v t="ekr.20060213023732.39"><vh>viewIndex</vh></v>
 <v t="ekr.20060213023732.40"><vh>buildIndex</vh></v>
 <v t="ekr.20060213023732.41"><vh>regexViewIndex</vh></v>
@@ -105,7 +105,7 @@
 <v t="ekr.20060213023732.75"><vh>importLeoFile</vh></v>
 <v t="ekr.20060213023732.76"><vh>exportLeoFile</vh></v>
 </v>
-<v t="ekr.20060213023732.77"><vh>functions without classification</vh>
+<v t="ekr.20060213023732.77" a="E"><vh>functions without classification</vh>
 <v t="ekr.20060213023732.78"><vh>swapChapters</vh></v>
 <v t="ekr.20060213023732.79"><vh>emptyTrash</vh></v>
 <v t="ekr.20060213023732.80"><vh>regexClone</vh></v>
@@ -205,7 +205,7 @@
 <v t="ekr.20060303104124"><vh>Later</vh></v>
 </v>
 <v t="ekr.20060213023839.3" a="E"
-expanded="ekr.20060213023839.23,ekr.20060213023839.28,ekr.20060213023839.83,"><vh>@thin chapters2.py</vh></v>
+expanded="ekr.20060213023839.28,ekr.20060303073451,ekr.20060213023839.29,ekr.20060213023839.100,ekr.20060213023839.54,ekr.20060213023839.89,ekr.20060213023839.83,ekr.20060302173735,"><vh>@thin chapters2.py</vh></v>
 <v t="ekr.20060303083246" a="E"><vh>Recent: editors &amp; rename</vh>
 <v t="ekr.20060213023839.30"><vh> ctor: chapterController</vh></v>
 <v t="ekr.20060213023839.40"><vh>createCanvas</vh></v>
@@ -221,7 +221,9 @@ expanded="ekr.20060213023839.23,ekr.20060213023839.28,ekr.20060213023839.83,"><v
 <v t="ekr.20060213023839.45"><vh>select</vh></v>
 <v t="ekr.20060304131300"><vh>setTree (reference)</vh></v>
 <v t="ekr.20060213023839.2"><vh>setTree</vh></v>
-<v t="ekr.20060213023839.27" a="V"><vh>makeCurrent</vh></v>
+<v t="ekr.20060213023839.27"><vh>makeCurrent</vh></v>
+<v t="ekr.20060213023839.85"><vh>insertChapters</vh></v>
+<v t="ekr.20060213023839.46"><vh>open</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1557,7 +1559,7 @@ couldn't think of any parent node to group these under.
     chapter = self.getChapter(name)
     sv = chapter and chapter.sv
     
-    g.trace(name,sv)
+    # g.trace(name,sv)
     if not sv:
         # The page hasn't been fully created yet.
         # This is *not* an error.
@@ -1593,10 +1595,9 @@ pbodies = {}
 twidgets = {}</t>
 <t tx="ekr.20060213023839.27">def makeCurrent (self):
 
-    g.trace(self.pageName)
-
     c = self.c ; cc = self.cc
     
+    # g.trace(self.pageName)
     cc.nb.selectpage(self.pageName)
     cc.currentChapter._saveInfo()
     cc.currentChapter = self
@@ -1620,6 +1621,7 @@ twidgets = {}</t>
     self.chapters = {} # Keys are tab names, values are Chapter objects.
     self.currentChapter = None
     self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
+    self.opening = False # True if opening a file
     self.numberOfEditors = 0
     self.panedBody = None # The present Tk.PanedWidget.
 
@@ -1676,7 +1678,7 @@ twidgets = {}</t>
     # Create the canvas with page as the parentFrame.
     cc.newCanvas = canvas = old_createCanvas(frame,page) 
 
-    g.trace(pageName,id(canvas))
+    # g.trace(pageName,id(canvas))
 
     return canvas</t>
 <t tx="ekr.20060213023839.41">def createControl(self,body,frame,parentFrame):
@@ -1739,6 +1741,28 @@ twidgets = {}</t>
         c.frame.body.editorRightLabel.configure(text=h)
 
     return return_val</t>
+<t tx="ekr.20060213023839.46">def open (self,fc,file,fileName,readAtFileNodesFlag=True,silent=False):
+
+    cc = self ; c = cc.c
+
+    if zipfile.is_zipfile(fileName):
+        cc.opening = True
+        c.beginUpdate()
+        try:
+            # Set globals for g.os_path_dirname
+            global iscStringIO, stringIOCommander
+            iscStringIO = True ; stringIOCommander = c
+            chapters = cc.openChaptersFile(fileName)
+            g.es(str(len(chapters))+" Chapters To Read",color='blue')
+            cc.insertChapters(chapters)
+            g.es("Finished Reading Chapters",color='blue')
+            iscStringIO = False
+        finally:
+            c.endUpdate()
+            cc.opening = False
+        return True
+    else:
+        return old_open(fc,file,fileName,readAtFileNodesFlag,silent)</t>
 <t tx="ekr.20060213023839.56">def renameChapter (self,event=None):
     
     '''Insert a entry widget linked to chapter.sv.
@@ -1750,7 +1774,7 @@ twidgets = {}</t>
     frame = nb.page(name)
     tab = nb.tab(name)
     chapter = cc.chapters.get(name)
-    g.trace(chapter)
+    # g.trace(chapter)
     f = Tk.Frame(frame)
     # Elegant code.  Setting e's textvariable to chapter.sv
     # immediately updates the chapter labels as e changes.
@@ -1803,8 +1827,8 @@ twidgets = {}</t>
         body = cc.editorBodies.get(frame)
         cc.hideHeading(body)
     
-    g.trace(pane,frame)
-    g.trace(cc.editorBodies.keys())</t>
+    # g.trace(pane,frame)
+    # g.trace(cc.editorBodies.keys())</t>
 <t tx="ekr.20060213023839.68"></t>
 <t tx="ekr.20060213023839.77">def getGoodPage (self,event,body):
     
@@ -1843,6 +1867,30 @@ twidgets = {}</t>
     chapter = cc.chapters.get(pageName)
     return chapter and chapter.sv
 </t>
+<t tx="ekr.20060213023839.85">def insertChapters (self,chapters):
+
+    cc = self ; c = cc.c ; nb = cc.nb ; pagenames = nb.pagenames()
+    flipto = None
+    c.beginUpdate()
+    try:
+        for num, tup in enumerate(chapters):
+            x, y = tup
+            if num &gt; 0:
+                page,pageName = self.addPage(x)
+                sv = cc.getChapter(pageName).sv
+                nb.nextpage()
+                cselection = nb.getcurselection()
+            else:
+                cselection = nb.getcurselection()
+                sv = cc.getChapter(cselection).sv
+            sv.set(x)
+            next = cselection
+            self.setTree(next)
+            c.fileCommands.open(y,sv.get())
+            if num == 0: flipto = cselection
+        self.setTree(flipto)
+    finally:
+        c.endUpdate()</t>
 <t tx="ekr.20060213023839.87">def getMakeStringIO (self,chapList):
 
     '''Insures that data is put in a StringIO instance.'''

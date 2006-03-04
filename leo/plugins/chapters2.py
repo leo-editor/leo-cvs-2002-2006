@@ -325,7 +325,7 @@ class Chapter:
     #@+node:ekr.20060213023839.24: ctor: Chapter
     def __init__ (self,cc,c,tree,frame,canvas,page,pageName):
         
-        g.trace('Chapter',pageName,id(canvas))
+        # g.trace('Chapter',pageName,id(canvas))
     
         # Set the ivars.
         self.c = c 
@@ -415,7 +415,8 @@ class Chapter:
         '''Switch variables in Leo's core to represent this chapter.'''
     
         c = self.c
-        g.trace(self.pageName,'canvas:',id(self.canvas),self.cp.headString())
+    
+        # g.trace(self.pageName,'canvas:',id(self.canvas),self.cp.headString())
     
         frame = self.frame
         frame.tree = self.tree
@@ -430,10 +431,9 @@ class Chapter:
     #@+node:ekr.20060213023839.27:makeCurrent
     def makeCurrent (self):
     
-        g.trace(self.pageName)
-    
         c = self.c ; cc = self.cc
         
+        # g.trace(self.pageName)
         cc.nb.selectpage(self.pageName)
         cc.currentChapter._saveInfo()
         cc.currentChapter = self
@@ -449,7 +449,7 @@ class Chapter:
         body = self.c.frame.body
         
         if hasattr(body,'editorLeftLabel'):
-            g.trace(self)
+            # g.trace(self)
             body.editorLeftLabel.configure(textvariable=sv)
     #@nonl
     #@-node:ekr.20060304125815:updateHeadingSV
@@ -480,6 +480,7 @@ class chapterController:
         self.chapters = {} # Keys are tab names, values are Chapter objects.
         self.currentChapter = None
         self.editorBodies = {} # Keys are panes, values are leoTkinterBodies.
+        self.opening = False # True if opening a file
         self.numberOfEditors = 0
         self.panedBody = None # The present Tk.PanedWidget.
     
@@ -490,7 +491,7 @@ class chapterController:
     #@+node:ekr.20060213023839.32:constructTree
     def constructTree (self,frame,pageName):
         
-        g.trace(pageName)
+        # g.trace(pageName)
     
         cc = self ; c = self.c ; nb = self.nb
         canvas = treeBar = tree = None
@@ -705,7 +706,7 @@ class chapterController:
         chapter = self.getChapter(name)
         sv = chapter and chapter.sv
         
-        g.trace(name,sv)
+        # g.trace(name,sv)
         if not sv:
             # The page hasn't been fully created yet.
             # This is *not* an error.
@@ -959,7 +960,7 @@ class chapterController:
         frame = nb.page(name)
         tab = nb.tab(name)
         chapter = cc.chapters.get(name)
-        g.trace(chapter)
+        # g.trace(chapter)
         f = Tk.Frame(frame)
         # Elegant code.  Setting e's textvariable to chapter.sv
         # immediately updates the chapter labels as e changes.
@@ -1342,8 +1343,8 @@ class chapterController:
             body = cc.editorBodies.get(frame)
             cc.hideHeading(body)
         
-        g.trace(pane,frame)
-        g.trace(cc.editorBodies.keys())
+        # g.trace(pane,frame)
+        # g.trace(cc.editorBodies.keys())
     #@nonl
     #@-node:ekr.20060213023839.67:removeEditor
     #@-node:ekr.20060213023839.64:Editor
@@ -1613,7 +1614,7 @@ class chapterController:
         # Create the canvas with page as the parentFrame.
         cc.newCanvas = canvas = old_createCanvas(frame,page) 
     
-        g.trace(pageName,id(canvas))
+        # g.trace(pageName,id(canvas))
     
         return canvas
     #@nonl
@@ -1759,14 +1760,20 @@ class chapterController:
         cc = self ; c = cc.c
     
         if zipfile.is_zipfile(fileName):
-            # Set globals for g.os_path_dirname
-            global iscStringIO, stringIOCommander
-            iscStringIO = True ; stringIOCommander = c
-            chapters = cc.openChaptersFile(fileName)
-            g.es(str(len(chapters))+" Chapters To Read",color='blue')
-            cc.insertChapters(chapters)
-            g.es("Finished Reading Chapters",color='blue')
-            iscStringIO = False
+            cc.opening = True
+            c.beginUpdate()
+            try:
+                # Set globals for g.os_path_dirname
+                global iscStringIO, stringIOCommander
+                iscStringIO = True ; stringIOCommander = c
+                chapters = cc.openChaptersFile(fileName)
+                g.es(str(len(chapters))+" Chapters To Read",color='blue')
+                cc.insertChapters(chapters)
+                g.es("Finished Reading Chapters",color='blue')
+                iscStringIO = False
+            finally:
+                c.endUpdate()
+                cc.opening = False
             return True
         else:
             return old_open(fc,file,fileName,readAtFileNodesFlag,silent)
